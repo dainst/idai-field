@@ -105,12 +105,11 @@ const remote = require('electron').remote;
             provide: NavigationService,
             useFactory: (projectConfiguration: ProjectConfiguration,
                          routingService: RoutingService,
-                         viewFacade: ViewFacade,
-                         projectTypes: ProjectTypes) => {
+                         viewFacade: ViewFacade) => {
 
-                return new NavigationService(projectConfiguration, routingService, viewFacade, projectTypes);
+                return new NavigationService(projectConfiguration, routingService, viewFacade);
             },
-            deps: [ProjectConfiguration, RoutingService, ViewFacade, ProjectTypes]
+            deps: [ProjectConfiguration, RoutingService, ViewFacade]
         },
         {
             provide: ResourcesStateManager,

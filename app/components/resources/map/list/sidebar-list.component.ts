@@ -4,9 +4,7 @@ import {FieldDocument} from 'idai-components-2';
 import {ResourcesComponent} from '../../resources.component';
 import {Loading} from '../../../widgets/loading';
 import {BaseList} from '../../base-list';
-import {ResourcesMapComponent} from '../resources-map.component';
 import {ProjectTypes} from '../../../../core/configuration/project-types';
-import {RoutingService} from '../../../routing-service';
 import {ContextMenuAction} from '../../widgets/context-menu.component';
 import {ViewFacade} from '../../../../core/resources/view/view-facade';
 import {NavigationPath} from '../../../../core/resources/view/state/navigation-path';
@@ -36,9 +34,7 @@ export class SidebarListComponent extends BaseList implements AfterViewInit {
                 loading: Loading,
                 public viewFacade: ViewFacade,
                 public projectTypes: ProjectTypes,
-                private navigationService: NavigationService,
-                private resourcesMapComponent: ResourcesMapComponent,
-                private routingService: RoutingService) {
+                private navigationService: NavigationService) {
 
         super(resourcesComponent, viewFacade, loading);
 

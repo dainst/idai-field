@@ -1,7 +1,6 @@
 import {Observable, Observer} from 'rxjs';
 import {FieldDocument, Document} from 'idai-components-2';
 import {ObserverUtil} from '../../util/observer-util';
-import {ProjectTypes} from '../../configuration/project-types';
 import {ProjectConfiguration} from '../../configuration/project-configuration';
 import {RelationDefinition} from '../../configuration/model/relation-definition';
 import {IdaiType} from '../../configuration/model/idai-type';
@@ -22,8 +21,7 @@ export class NavigationService {
 
     constructor(private projectConfiguration: ProjectConfiguration,
                 private routingService: RoutingService,
-                private viewFacade: ViewFacade,
-                private projectTypes: ProjectTypes) {
+                private viewFacade: ViewFacade) {
     }
 
 

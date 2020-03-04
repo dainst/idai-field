@@ -1,4 +1,5 @@
 import {Component} from '@angular/core';
+import {I18n} from '@ngx-translate/i18n-polyfill';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {Pair, to, isNot, undefinedOrEmpty, left, right, map, flow, empty} from 'tsfun';
 import {map as asyncMap} from 'tsfun/async';
@@ -26,7 +27,10 @@ export class TypeRelationPickerComponent {
     public selectedCatalog: FieldResource|undefined;
     public availableCatalogs: Array<FieldResource> = [];
     public selectedCriterion: string = '';
-    public selectionCriteria: string[] = ['material'];
+    public selectionCriteria: any =
+        [
+            { value: 'material', label: this.i18n({id: 'typeCatalog.criterion.material', value: 'Material' }) }
+        ];
 
     public timeoutRef: any;
 
@@ -36,7 +40,8 @@ export class TypeRelationPickerComponent {
 
 
     constructor(public activeModal: NgbActiveModal,
-                public datastore: FieldReadDatastore) {
+                public datastore: FieldReadDatastore,
+                public i18n: I18n) {
 
         this.fetchCatalogs();
     }

@@ -5,7 +5,7 @@
                 [(ngModel)]="selectedCriterion"  (change)="onSelectCriterion()">
             <option value="">None</option>
             <option *ngFor="let criterion of selectionCriteria"
-                    [ngValue]="criterion">{{criterion}}</option>
+                    [ngValue]="criterion.value">{{criterion.label}}</option>
         </select>
 
         <select id="importFormatSelect" class="form-control" style="width: 175px"

@@ -2879,7 +2879,7 @@
         <target state="final">All Catalogs</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/type-relation/type-relation-picker.html</context>
-          <context context-type="linenumber">12</context>
+          <context context-type="linenumber">13</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dropdownRange.tooltip" datatype="html">
@@ -3408,6 +3408,14 @@
         <target state="final">Geometry</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/docedit/core/edit-form.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="typeCatalog.criterion.material" datatype="html">
+        <source>Material</source>
+        <target state="final">Material</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/docedit/core/forms/type-relation/type-relation-picker.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>

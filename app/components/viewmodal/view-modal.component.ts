@@ -1,4 +1,3 @@
-import {ElementRef, ViewChild} from '@angular/core';
 import {NgbActiveModal, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {Messages, Document, FieldDocument} from 'idai-components-2';
 import {DoceditComponent} from '../docedit/docedit.component';
@@ -11,8 +10,6 @@ import {ImageRowItem} from '../image/row/image-row.component';
  * @author Thomas Kleinke
  */
 export abstract class ViewModalComponent {
-
-    @ViewChild('resourceInfo', { static: false }) resourceInfo: ElementRef;
 
     public images: Array<ImageRowItem> = [];
     public selectedImage: ImageRowItem|undefined;

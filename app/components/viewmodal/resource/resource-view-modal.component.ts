@@ -1,4 +1,4 @@
-import {Component, ElementRef, ViewChild} from '@angular/core';
+import {Component} from '@angular/core';
 import {NgbActiveModal, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {on, is} from 'tsfun';
 import {Document, FieldDocument, ImageDocument, Messages} from 'idai-components-2';
@@ -20,8 +20,6 @@ import {ImagesState} from '../../../core/images/overview/view/images-state';
  * @author Thomas Kleinke
  */
 export class ResourceViewModalComponent extends ViewModalComponent {
-
-    @ViewChild('imageInfo', { static: false }) imageInfo: ElementRef;
 
     public document: FieldDocument;
 

@@ -61,16 +61,7 @@ export class ImageUploader {
         }
 
         const files = ImageUploader.getFiles(event);
-        const supportedFileTypes = ImageUploader.supportedImageFileTypes.concat(ImageUploader.supportedWorldFileTypes);
-        const result = ExtensionUtil.reportUnsupportedFileTypes(files, supportedFileTypes);
-        if (result[1]) {
-            uploadResult.messages.push([
-                M.IMAGESTORE_DROP_AREA_ERROR_UNSUPPORTED_EXTENSIONS,
-                result[1],
-                supportedFileTypes.map(extension => '.' + extension).join(', ')
-            ]);
-        }
-        if (result[0] == 0) return uploadResult;
+        uploadResult.messages = uploadResult.messages.concat(this.checkForUnsupportedFileTypes(files));
 
         const imageFiles = files.filter(file =>
             ImageUploader.supportedImageFileTypes.includes(ExtensionUtil.getExtension(file)));
@@ -78,7 +69,7 @@ export class ImageUploader {
             const type = await this.chooseType(imageFiles.length, depictsRelationTarget);
             const uploadModalRef = this.modalService.open(UploadModalComponent, { backdrop: 'static', keyboard: false });
             uploadResult = await this.uploadImageFiles(imageFiles, type, uploadResult, depictsRelationTarget);
-            uploadModalRef.close();                
+            uploadModalRef.close();
         }
 
         const wldFiles = files.filter(file =>
@@ -88,7 +79,21 @@ export class ImageUploader {
         }
         
         return uploadResult;
+    }
 
+
+    private checkForUnsupportedFileTypes(files: Array<File>): string[] {
+
+        const supportedFileTypes = ImageUploader.supportedImageFileTypes.concat(ImageUploader.supportedWorldFileTypes);
+        const result = ExtensionUtil.reportUnsupportedFileTypes(files, supportedFileTypes);
+        if (result[1]) {
+            return [
+                M.IMAGESTORE_DROP_AREA_ERROR_UNSUPPORTED_EXTENSIONS,
+                result[1],
+                supportedFileTypes.map(extension => '.' + extension).join(', ')
+            ];
+        }
+        return [];
     }
 
 
@@ -112,7 +117,7 @@ export class ImageUploader {
     private async uploadImageFiles(files: Array<File>, type: IdaiType, uploadResult: ImageUploadResult,
                         depictsRelationTarget?: Document): Promise<ImageUploadResult> {
 
-        if (!files) uploadResult;
+        if (!files) return uploadResult;
 
         this.uploadStatus.setTotalImages(files.length);
         this.uploadStatus.setHandledImages(0);
@@ -124,15 +129,13 @@ export class ImageUploader {
                 this.uploadStatus.setTotalImages(this.uploadStatus.getTotalImages() - 1);
             } else {
                 try {
-                    await this.findImageByFilename(file.name)
-                        .then(result => result.totalCount > 0)
-                        .then(isDuplicateFilename => {
-                            if (!isDuplicateFilename) {
-                                return this.uploadFile(file, type, depictsRelationTarget);
-                            } else {
-                                duplicateFilenames.push(file.name);
-                            }
-                        }).then(() => this.uploadStatus.setHandledImages(this.uploadStatus.getHandledImages() + 1));
+                    const result = await this.findImageByFilename(file.name);
+                    if (result.totalCount > 0) {
+                        duplicateFilenames.push(file.name);
+                    } else {
+                        await this.uploadFile(file, type, depictsRelationTarget);
+                    }
+                    this.uploadStatus.setHandledImages(this.uploadStatus.getHandledImages() + 1);
                 } catch(e) {
                     uploadResult.messages.push(e);
                 }

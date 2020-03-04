@@ -9,8 +9,7 @@
                 <b>{{document.resource.identifier}}</b>
             </div>
             <div class="type-thumbnail">
-                <thumbnail #thumbnail [document]="document" [resource]="document.resource"
-                           [modal]="'resource'"></thumbnail>
+                <thumbnail #thumbnail [resource]="document.resource"></thumbnail>
             </div>
         </div>
         <list-button-group [document]="document"

@@ -1,11 +1,8 @@
-import {Component, Input, OnChanges} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import {SafeResourceUrl} from '@angular/platform-browser';
-import {FieldDocument, FieldResource} from 'idai-components-2';
-import {ImageDatastore} from '../../../core/datastore/field/image-datastore';
-import {ResourcesComponent} from '../resources.component';
+import {FieldResource} from 'idai-components-2';
 import {Imagestore} from '../../../core/images/imagestore/imagestore';
 import {BlobMaker} from '../../../core/images/imagestore/blob-maker';
-import {ViewModalLauncher} from '../service/view-modal-launcher';
 
 
 @Component({
@@ -18,20 +15,20 @@ import {ViewModalLauncher} from '../service/view-modal-launcher';
  */
 export class ThumbnailComponent implements OnChanges {
 
-    @Input() document: FieldDocument;
-    @Input() resource: FieldResource;   // Triggers ngOnChanges if document has been edited
+    @Input() resource: FieldResource;
     @Input() modal: 'image'|'resource' = 'image';
+
+    @Output() onClick: EventEmitter<void> = new EventEmitter<void>();
 
     public thumbnailUrl: SafeResourceUrl|undefined;
 
 
-    constructor(private imagestore: Imagestore,
-                private datastore: ImageDatastore,
-                private viewModalLauncher: ViewModalLauncher,
-                private resourcesComponent: ResourcesComponent) {}
+    constructor(private imagestore: Imagestore) {}
 
 
     public isThumbnailFound = (): boolean => this.thumbnailUrl !== BlobMaker.blackImg;
+
+    public onImageClicked = () => this.onClick.emit();
 
 
     async ngOnChanges() {
@@ -40,22 +37,9 @@ export class ThumbnailComponent implements OnChanges {
     }
 
 
-    public async openModal() {
-
-        if (this.modal === 'image') {
-            await this.viewModalLauncher.openImageViewModal(this.document, this.resourcesComponent)
-        } else {
-            const edited: boolean = await this.viewModalLauncher.openResourceViewModal(
-                this.document, this.resourcesComponent
-            );
-            if (edited) await this.updateThumbnailUrl();
-        }
-    }
-
-
     private async updateThumbnailUrl() {
 
-        this.thumbnailUrl = await this.getThumbnailUrl(this.document.resource.relations.isDepictedIn);
+        this.thumbnailUrl = await this.getThumbnailUrl(this.resource.relations.isDepictedIn);
     }
 
 

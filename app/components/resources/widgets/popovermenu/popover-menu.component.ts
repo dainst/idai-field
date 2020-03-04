@@ -3,6 +3,7 @@ import {FieldDocument, Document} from 'idai-components-2';
 import {PopoverMenu, ResourcesComponent} from '../../resources.component';
 import {ViewFacade} from '../../../../core/resources/view/view-facade';
 import {RoutingService} from '../../../routing-service';
+import {ViewModalLauncher} from '../../service/view-modal-launcher';
 
 
 @Component({
@@ -22,7 +23,8 @@ export class PopoverMenuComponent {
 
     constructor(private resourcesComponent: ResourcesComponent,
                 private viewFacade: ViewFacade,
-                private routingService: RoutingService) {}
+                private routingService: RoutingService,
+                private viewModalLauncher: ViewModalLauncher) {}
 
 
     public getExpandAllGroups = () => this.viewFacade.getExpandAllGroups();
@@ -42,5 +44,11 @@ export class PopoverMenuComponent {
 
         await this.routingService.jumpToResource(document);
         this.resourcesComponent.setScrollTarget(document);
+    }
+
+
+    public async openImageViewModal() {
+
+        await this.viewModalLauncher.openImageViewModal(this.document, this.resourcesComponent)
     }
 }

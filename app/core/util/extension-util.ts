@@ -42,6 +42,10 @@ export class ExtensionUtil {
             : fileName.substr(0, fileName.lastIndexOf(".")) + "." + extension;
 
 
+    public static getExtension = (file: File): string =>
+        /(?:\.([^.]+))?$/.exec(file.name)?.[1] ?? ""
+
+
     private static getUnsupportedExts(files: Array<File>, supportedFileTypes: Array<string>) {
 
         let unsupportedExts: Array<string> = [];

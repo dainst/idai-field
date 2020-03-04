@@ -25,6 +25,7 @@ export class TypeRelationPickerComponent {
     public selectedCatalog: 'all-catalogs' = 'all-catalogs';
     public availableCatalogs: Array<FieldResource> = [];
     public selectedCriterion: string = '';
+    public selectionCriteria: string[] = ['material'];
 
     public timeoutRef: any;
 
@@ -47,13 +48,13 @@ export class TypeRelationPickerComponent {
     }
 
 
-    public selectCatalog() {
+    public onSelectCatalog() {
 
         this.fetchTypes();
     }
 
 
-    public async selectCriterion() {
+    public async onSelectCriterion() {
 
         await this.fetchCatalogs();
         await this.fetchTypes();
@@ -74,7 +75,7 @@ export class TypeRelationPickerComponent {
             types: ['TypeCatalog'],
             constraints: {}
         };
-        if (this.selectedCriterion) query.constraints = { 'criterion:match': 'abc' };
+        if (this.selectedCriterion) query.constraints = { 'criterion:match': this.selectedCriterion };
 
         this.availableCatalogs =
             flow(

@@ -2,6 +2,11 @@
  * @author Thomas Kleinke
  */
 type-grid {
+  document-info {
+    position: relative;
+    z-index: 6;
+  }
+
   #type-grid {
     height: calc(100vh - 100px);
     margin-top: 2px;

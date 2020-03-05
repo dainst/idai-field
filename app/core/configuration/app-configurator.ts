@@ -249,7 +249,8 @@ export class AppConfigurator {
             fields: {
                 criterion: {
                     inputType: 'catalogCriterion',
-                    constraintIndexed: true
+                    constraintIndexed: true,
+                    group: 'identification'
                 }
             }
         },

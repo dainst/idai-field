@@ -1,10 +1,11 @@
 import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import {DecimalPipe} from '@angular/common';
 import {I18n} from '@ngx-translate/i18n-polyfill';
-import {is, isnt, isUndefinedOrEmpty, isDefined, on, isNot, includedIn, undefinedOrEmpty, lookup, compose, isEmpty, isBoolean} from 'tsfun';
+import {is, isnt, isUndefinedOrEmpty, isDefined, on, isNot, isString,
+    includedIn, undefinedOrEmpty, lookup, compose, isEmpty, isBoolean} from 'tsfun';
 import {Document, FieldDocument,  ReadDatastore, Resource, Dating, Dimension} from 'idai-components-2';
 import {RoutingService} from '../../routing-service';
-import {GroupUtil} from '../../../core/model/group-util';
+import {Group, GroupUtil} from '../../../core/model/group-util';
 import {Name, ResourceId} from '../../../core/constants';
 import {GROUP_NAME} from '../../constants';
 import {pick} from '../../../core/util/utils';
@@ -17,12 +18,19 @@ import {FieldDefinition} from '../../../core/configuration/model/field-definitio
 
 
 type FieldViewGroupDefinition = {
+
     name: string;
     label: string;
     shown: boolean;
 }
 
-const NAME = 'name';
+export module FieldViewGroupDefinition {
+
+    export const NAME = 'name';
+    export const LABEL = 'label';
+    export const SHOWN = 'shown';
+}
+
 
 
 @Component({
@@ -37,7 +45,7 @@ const NAME = 'name';
 export class FieldsViewComponent implements OnChanges {
 
     @Input() resource: Resource;
-    @Input() openSection: string|undefined = 'stem';
+    @Input() openSection: string|undefined = Group.STEM;
     @Input() expandAllGroups: boolean = false;
 
     @Output() onSectionToggled = new EventEmitter<string|undefined>();
@@ -48,13 +56,13 @@ export class FieldsViewComponent implements OnChanges {
 
 
     private groups: Array<FieldViewGroupDefinition> = [
-        { name: 'stem', label: this.i18n({ id: 'docedit.group.stem', value: 'Stammdaten' }), shown: true },
-        { name: 'identification', label: this.i18n({ id: 'docedit.group.identification', value: 'Bestimmung' }), shown: false },
-        { name: 'properties', label: '', shown: false },
-        { name: 'child', label: '', shown: false },
-        { name: 'dimension', label: this.i18n({ id: 'docedit.group.dimensions', value: 'Maße' }), shown: false },
-        { name: 'position', label: this.i18n({ id: 'docedit.group.position', value: 'Lage' }), shown: false },
-        { name: 'time', label: this.i18n({ id: 'docedit.group.time', value: 'Zeit' }), shown: false }
+        { name: Group.STEM, label: this.i18n({ id: 'docedit.group.stem', value: 'Stammdaten' }), shown: true },
+        { name: Group.IDENTIFICATION, label: this.i18n({ id: 'docedit.group.identification', value: 'Bestimmung' }), shown: false },
+        { name: Group.PROPERTIES, label: '', shown: false },
+        { name: Group.CHILD, label: '', shown: false },
+        { name: Group.DIMENSION, label: this.i18n({ id: 'docedit.group.dimensions', value: 'Maße' }), shown: false },
+        { name: Group.POSITION, label: this.i18n({ id: 'docedit.group.position', value: 'Lage' }), shown: false },
+        { name: Group.TIME, label: this.i18n({ id: 'docedit.group.time', value: 'Zeit' }), shown: false }
     ];
 
 
@@ -73,13 +81,13 @@ export class FieldsViewComponent implements OnChanges {
 
         this.fields = {};
         this.relations = {};
-        this.relations['stem'] = [];
-        this.relations['identification'] = [];
-        this.relations['properties'] = [];
-        this.relations['child'] = [];
-        this.relations['dimension'] = [];
-        this.relations['position'] = [];
-        this.relations['time'] = [];
+        this.relations[Group.STEM] = [];
+        this.relations[Group.IDENTIFICATION] = [];
+        this.relations[Group.PROPERTIES] = [];
+        this.relations[Group.CHILD] = [];
+        this.relations[Group.DIMENSION] = [];
+        this.relations[Group.POSITION] = [];
+        this.relations[Group.TIME] = [];
 
         if (this.resource) {
             await this.processRelations(this.resource);
@@ -156,12 +164,12 @@ export class FieldsViewComponent implements OnChanges {
 
         const existingResourceFields = this.projectConfiguration
             .getFieldDefinitions(resource.type)
-            .filter(on(NAME, isnt('relations')))
-            .filter(on(NAME, existsInResource));
+            .filter(on(FieldViewGroupDefinition.NAME, isnt(Resource.RELATIONS)))
+            .filter(on(FieldViewGroupDefinition.NAME, existsInResource));
 
         for (let field of existingResourceFields) {
 
-            const group: string = field.group ? field.group : 'properties';
+            const group: string = field.group ? field.group : Group.PROPERTIES;
 
             if (!this.fields[group]) this.fields[group] = [];
 
@@ -202,25 +210,25 @@ export class FieldsViewComponent implements OnChanges {
             });
         }
 
-        if (this.fields['stem']) GroupUtil.sortGroups(this.fields['stem'], 'stem');
-        if (this.fields['dimension']) GroupUtil.sortGroups(this.fields['dimension'], 'dimension');
+        if (this.fields[Group.STEM]) GroupUtil.sortGroups(this.fields[Group.STEM], Group.STEM);
+        if (this.fields[Group.DIMENSION]) GroupUtil.sortGroups(this.fields[Group.DIMENSION], Group.DIMENSION);
     }
 
 
     private addBaseFields(resource: Resource) {
 
-        this.fields['stem'] = [];
+        this.fields[Group.STEM] = [];
 
         const shortDescription: string = FieldsViewComponent.getValue(resource, 'shortDescription');
         if (shortDescription) {
-            this.fields['stem'].push({
+            this.fields[Group.STEM].push({
                 label: this.getLabel(resource.type, 'shortDescription'),
                 value: shortDescription,
                 isArray: false
             });
         }
 
-        this.fields['stem'].push({
+        this.fields[Group.STEM].push({
             label: this.getLabel(resource.type, 'type'),
             value: this.projectConfiguration.getLabelForType(resource.type),
             isArray: false
@@ -231,13 +239,13 @@ export class FieldsViewComponent implements OnChanges {
     private getLabel(type: Name, field: Name): string {
 
         return (pick(this.projectConfiguration.getTypesMap(), type).fields
-            .find(on(NAME, is(field))) as FieldDefinition).label as string;
+            .find(on(FieldViewGroupDefinition.NAME, is(field))) as FieldDefinition).label as string;
     }
 
 
     private static getValue(resource: Resource, field: Name): any {
 
-        return typeof resource[field] === 'string'
+        return isString(resource[field])
             ? resource[field]
                 .replace(/^\s+|\s+$/g, '')
                 .replace(/\n/g, '<br>')
@@ -269,8 +277,8 @@ export class FieldsViewComponent implements OnChanges {
         const hasTargets = compose(lookup(resource.relations), isNot(undefinedOrEmpty));
 
         return relations
-            .filter(on(NAME, isNotHierarchical))
-            .filter(on(NAME, hasTargets));
+            .filter(on(FieldViewGroupDefinition.NAME, isNotHierarchical))
+            .filter(on(FieldViewGroupDefinition.NAME, hasTargets));
     }
 
 

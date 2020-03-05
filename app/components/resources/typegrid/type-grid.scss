@@ -5,6 +5,10 @@ type-grid {
   document-info {
     position: relative;
     z-index: 6;
+
+    .document-info {
+      border-right: 1px solid #e9ecef;
+    }
   }
 
   #type-grid {

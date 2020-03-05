@@ -34,6 +34,7 @@ type-grid {
           background-color: white;
           text-align: center;
           line-height: 30px;
+          font-size: 14px;
           user-select: none;
           border-bottom: 1px solid #e9ecef;
           border-top: 1px solid #e9ecef;
@@ -54,9 +55,11 @@ type-grid {
 
           .type-grid-resource-info {
             height: 25px;
+            line-height: 25px;
+            text-align: center;
+            font-size: 14px;
             user-select: none;
             border-bottom: 1px solid #dddddd;
-            text-align: center;
           }
 
           image-grid {

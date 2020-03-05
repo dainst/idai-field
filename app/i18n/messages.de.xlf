@@ -1998,20 +1998,12 @@
           <context context-type="linenumber">72</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="resources.contextMenu.view" datatype="html">
-        <source>Anzeigen</source>
-        <target state="final">Anzeigen</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/resources/widgets/context-menu.html</context>
-          <context context-type="linenumber">12</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="resources.contextMenu.edit" datatype="html">
         <source>Bearbeiten</source>
         <target state="final">Bearbeiten</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/widgets/context-menu.html</context>
-          <context context-type="linenumber">16</context>
+          <context context-type="linenumber">11</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.contextMenu.move" datatype="html">
@@ -2019,7 +2011,7 @@
         <target state="final">Verschieben</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/widgets/context-menu.html</context>
-          <context context-type="linenumber">21</context>
+          <context context-type="linenumber">16</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.contextMenu.delete" datatype="html">
@@ -2027,7 +2019,7 @@
         <target state="final">Löschen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/widgets/context-menu.html</context>
-          <context context-type="linenumber">25</context>
+          <context context-type="linenumber">20</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.contextMenu.createGeometry.polygon" datatype="html">
@@ -2035,7 +2027,7 @@
         <target state="final">Polygon anlegen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/widgets/context-menu.html</context>
-          <context context-type="linenumber">33</context>
+          <context context-type="linenumber">28</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.contextMenu.createGeometry.polyline" datatype="html">
@@ -2043,7 +2035,7 @@
         <target state="final">Polyline anlegen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/widgets/context-menu.html</context>
-          <context context-type="linenumber">38</context>
+          <context context-type="linenumber">33</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.contextMenu.createGeometry.point" datatype="html">
@@ -2051,7 +2043,7 @@
         <target state="final">Punkt anlegen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/widgets/context-menu.html</context>
-          <context context-type="linenumber">43</context>
+          <context context-type="linenumber">38</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.contextMenu.editGeometry.polygon" datatype="html">
@@ -2059,7 +2051,7 @@
         <target state="final">Polygon bearbeiten</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/widgets/context-menu.html</context>
-          <context context-type="linenumber">52</context>
+          <context context-type="linenumber">47</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.contextMenu.editGeometry.multipolygon" datatype="html">
@@ -2067,7 +2059,7 @@
         <target state="final">Multipolygon bearbeiten</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/widgets/context-menu.html</context>
-          <context context-type="linenumber">55</context>
+          <context context-type="linenumber">50</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.contextMenu.editGeometry.polyline" datatype="html">
@@ -2075,7 +2067,7 @@
         <target state="final">Polyline bearbeiten</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/widgets/context-menu.html</context>
-          <context context-type="linenumber">58</context>
+          <context context-type="linenumber">53</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.contextMenu.editGeometry.multipolyline" datatype="html">
@@ -2083,7 +2075,7 @@
         <target state="final">Multipolyline bearbeiten</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/widgets/context-menu.html</context>
-          <context context-type="linenumber">61</context>
+          <context context-type="linenumber">56</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.contextMenu.editGeometry.point" datatype="html">
@@ -2091,7 +2083,7 @@
         <target state="final">Punkt bearbeiten</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/widgets/context-menu.html</context>
-          <context context-type="linenumber">64</context>
+          <context context-type="linenumber">59</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.contextMenu.editGeometry.multipoint" datatype="html">
@@ -2099,7 +2091,7 @@
         <target state="final">Multipunkt bearbeiten</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/widgets/context-menu.html</context>
-          <context context-type="linenumber">67</context>
+          <context context-type="linenumber">62</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.sidebarList.expandAllGroups" datatype="html">
@@ -2160,6 +2152,22 @@
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/plus-button.html</context>
           <context context-type="linenumber">71</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.typeGrid.subtypes" datatype="html">
+        <source>Untertypen</source>
+        <target state="final">Untertypen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/typegrid/type-grid.html</context>
+          <context context-type="linenumber">19</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.typeGrid.linkedFinds" datatype="html">
+        <source>Verknüpfte Funde</source>
+        <target state="final">Verknüpfte Funde</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/typegrid/type-grid.html</context>
+          <context context-type="linenumber">37</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.list.headers.type" datatype="html">
@@ -2259,7 +2267,7 @@
         <target state="final"><x id="INTERPOLATION" equiv-text="{{numberOfLinkedResources}}"/> Typen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/typelist/type-row.html</context>
-          <context context-type="linenumber">24</context>
+          <context context-type="linenumber">23</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.typeList.oneType" datatype="html">
@@ -2267,7 +2275,7 @@
         <target state="final">Ein Typ</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/typelist/type-row.html</context>
-          <context context-type="linenumber">26</context>
+          <context context-type="linenumber">25</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.typeList.noLinkedTypes" datatype="html">
@@ -2275,7 +2283,7 @@
         <target state="final">Keine Typen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/typelist/type-row.html</context>
-          <context context-type="linenumber">28</context>
+          <context context-type="linenumber">27</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.typeList.linkedFinds" datatype="html">
@@ -2283,7 +2291,7 @@
         <target state="final"><x id="INTERPOLATION" equiv-text="{{numberOfLinkedResources}}"/> Funde</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/typelist/type-row.html</context>
-          <context context-type="linenumber">32</context>
+          <context context-type="linenumber">31</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.typeList.oneFind" datatype="html">
@@ -2291,7 +2299,7 @@
         <target state="final">Ein Fund</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/typelist/type-row.html</context>
-          <context context-type="linenumber">34</context>
+          <context context-type="linenumber">33</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.typeList.noLinkedFinds" datatype="html">
@@ -2299,7 +2307,7 @@
         <target state="final">Keine Funde</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/typelist/type-row.html</context>
-          <context context-type="linenumber">36</context>
+          <context context-type="linenumber">35</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.showResourceData.tooltip" datatype="html">
@@ -2740,7 +2748,7 @@
         <target state="final">Kein Kriterium</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/type-relation/type-relation-picker.html</context>
-          <context context-type="linenumber">6</context>
+          <context context-type="linenumber">8</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/type-relation/catalog-criterion.html</context>
@@ -2752,7 +2760,7 @@
         <target state="final">Alle Kataloge</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/type-relation/type-relation-picker.html</context>
-          <context context-type="linenumber">13</context>
+          <context context-type="linenumber">15</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dimension.add" datatype="html">

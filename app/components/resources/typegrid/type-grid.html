@@ -14,17 +14,37 @@
                    (onThumbnailClicked)="openImageViewModal(getMainDocument())"></document-info>
 
     <div id="grid-elements-container">
-        <div *ngFor="let document of documents"
-             id="type-grid-element-{{document.resource.id}}"
-             class="type-grid-element"
-             (click)="open(document)"
-             (contextmenu)="contextMenu.open($event, document)">
-            <div class="type-grid-resource-info">
-                {{document.resource.identifier}}
+        <div *ngIf="documents.length > 0" class="grid-section">
+            <div *ngIf="linkedDocuments.length > 0" class="grid-section-label first-grid-section-label"
+                 i18n="@@resources.typeGrid.subtypes">Untertypen</div>
+            <div *ngFor="let document of documents"
+                 id="type-grid-element-{{document.resource.id}}"
+                 class="type-grid-element"
+                 (click)="open(document)"
+                 (contextmenu)="contextMenu.open($event, document)">
+                <div class="type-grid-resource-info">
+                    {{document.resource.identifier}}
+                </div>
+                <div *ngFor="let imageUrl of getImageUrls(document)"
+                     class="type-grid-image-container d-flex align-items-center justify-content-center">
+                    <img [src]="imageUrl">
+                </div>
             </div>
-            <div *ngFor="let imageUrl of getImageUrls(document)"
-                 class="type-grid-image-container d-flex align-items-center justify-content-center">
-                <img [src]="imageUrl">
+        </div>
+
+        <div *ngIf="linkedDocuments.length > 0" class="grid-section">
+            <div class="grid-section-label" [class.first-grid-section-label]="documents.length === 0"
+                 i18n="@@resources.typeGrid.linkedFinds">Verknüpfte Funde</div>
+            <div *ngFor="let document of linkedDocuments"
+                 id="type-grid-element-linked-document-{{document.resource.id}}"
+                 class="type-grid-element">
+                <div class="type-grid-resource-info">
+                    {{document.resource.identifier}}
+                </div>
+                <div *ngFor="let imageUrl of getImageUrls(document)"
+                     class="type-grid-image-container d-flex align-items-center justify-content-center">
+                    <img [src]="imageUrl">
+                </div>
             </div>
         </div>
     </div>

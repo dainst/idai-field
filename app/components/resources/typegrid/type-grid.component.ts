@@ -17,6 +17,7 @@ import {ContextMenuAction} from '../widgets/context-menu.component';
 import {ViewModalLauncher} from '../service/view-modal-launcher';
 import {NavigationPath} from '../../../core/resources/view/state/navigation-path';
 import {RoutingService} from '../../routing-service';
+import {ProjectTypes} from '../../../core/configuration/project-types';
 
 
 @Component({
@@ -32,6 +33,7 @@ export class TypeGridComponent extends BaseList implements OnChanges {
 
     @Input() documents: Array<FieldDocument>;
 
+    public linkedDocuments: Array<FieldDocument> = [];
     public images: { [resourceId: string]: Array<SafeResourceUrl> } = {};
     public contextMenu: ContextMenu = new ContextMenu();
 
@@ -43,6 +45,7 @@ export class TypeGridComponent extends BaseList implements OnChanges {
                 private imagestore: ReadImagestore,
                 private viewModalLauncher: ViewModalLauncher,
                 private routingService: RoutingService,
+                private projectTypes: ProjectTypes,
                 resourcesComponent: ResourcesComponent,
                 viewFacade: ViewFacade,
                 loading: Loading) {
@@ -60,6 +63,7 @@ export class TypeGridComponent extends BaseList implements OnChanges {
 
     async ngOnChanges() {
 
+        await this.updateLinkedResources();
         await this.updateImages();
     }
 
@@ -147,25 +151,43 @@ export class TypeGridComponent extends BaseList implements OnChanges {
     }
 
 
+    private async updateLinkedResources() {
+
+        const mainDocument: FieldDocument|undefined = this.getMainDocument();
+
+        this.linkedDocuments = mainDocument && Document.hasRelations(mainDocument, 'hasInstance')
+            ? await this.fieldDatastore.getMultiple(mainDocument.resource.relations['hasInstance'])
+            : [];
+    }
+
+
     private async updateImages() {
 
         this.images = await asyncReduce(
             async (images: { [resourceId: string]: Array<SafeResourceUrl> }, document: FieldDocument) => {
                 images[document.resource.id] = await this.getImages(document);
                 return images;
-            }, {})(this.documents);
+            }, {})(this.documents.concat(this.linkedDocuments));
     }
 
 
     private async getImages(document: FieldDocument): Promise<Array<SafeResourceUrl>> {
 
         if (Document.hasRelations(document, 'isDepictedIn')) {
-            return [await this.imagestore.read(
-                document.resource.relations['isDepictedIn'][0], false, true
-            )];
-        } else {
+            return [await this.getMainImage(document)];
+        } else if (this.projectTypes.getAbstractFieldTypeNames().includes(document.resource.type)) {
             return await this.getImagesOfLinkedResources(document);
+        } else {
+            return [];
         }
+    }
+
+
+    private getMainImage(document: FieldDocument): Promise<SafeResourceUrl> {
+
+        return this.imagestore.read(
+            document.resource.relations['isDepictedIn'][0], false, true
+        );
     }
 
 

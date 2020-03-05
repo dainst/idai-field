@@ -182,7 +182,7 @@ export class ProjectConfiguration {
     public getFieldDefinitionLabel(typeName: string, fieldName: string): string {
 
         const fieldDefinitions = this.getFieldDefinitions(typeName);
-        if (fieldDefinitions.length == 0)
+        if (fieldDefinitions.length === 0)
             throw 'No type definition found for type \'' + typeName + '\'';
 
         return IdaiType.getLabel(fieldName, fieldDefinitions);

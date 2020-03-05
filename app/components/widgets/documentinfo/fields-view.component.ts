@@ -15,6 +15,7 @@ import {ProjectConfiguration} from '../../../core/configuration/project-configur
 import {IdaiType} from '../../../core/configuration/model/idai-type';
 import {RelationDefinition} from '../../../core/configuration/model/relation-definition';
 import {FieldDefinition} from '../../../core/configuration/model/field-definition';
+import {CatalogCriteria} from '../../docedit/core/forms/type-relation/catalog-criteria';
 
 
 type FieldViewGroupDefinition = {
@@ -74,7 +75,8 @@ export class FieldsViewComponent implements OnChanges {
                 private routingService: RoutingService,
                 private decimalPipe: DecimalPipe,
                 private utilTranslations: UtilTranslations,
-                private i18n: I18n) {}
+                private i18n: I18n,
+                private catalogCriteria: CatalogCriteria) {}
 
 
     async ngOnChanges() {
@@ -160,32 +162,16 @@ export class FieldsViewComponent implements OnChanges {
 
         this.addBaseFields(resource);
 
-        const existsInResource = compose(lookup(resource), isDefined);
-
         const existingResourceFields = this.projectConfiguration
             .getFieldDefinitions(resource.type)
             .filter(on(FieldViewGroupDefinition.NAME, isnt(Resource.RELATIONS)))
-            .filter(on(FieldViewGroupDefinition.NAME, existsInResource));
+            .filter(on(FieldViewGroupDefinition.NAME, compose(lookup(resource), isDefined)));
 
         for (let field of existingResourceFields) {
 
-            const group: string = field.group ? field.group : Group.PROPERTIES;
-
+            const group = field.group ? field.group : Group.PROPERTIES;
             if (!this.fields[group]) this.fields[group] = [];
-
-            if (field.name === 'period') {
-                this.handlePeriodField(resource, field, group);
-                continue;
-            }
-
-            if (!this.projectConfiguration.isVisible(resource.type, field.name)) continue;
-
-            this.fields[group].push({
-                name: field.name,
-                label: this.projectConfiguration.getFieldDefinitionLabel(resource.type, field.name),
-                value: FieldsViewComponent.getValue(resource, field.name),
-                isArray: Array.isArray(resource[field.name])
-            });
+            this.pushField(resource, field, group);
         }
 
         if (this.fields[Group.STEM]) GroupUtil.sortGroups(this.fields[Group.STEM], Group.STEM);
@@ -193,7 +179,45 @@ export class FieldsViewComponent implements OnChanges {
     }
 
 
-    private handlePeriodField(resource: Resource, field: any, group: string) {
+    private pushField(resource: Resource, field: FieldDefinition, group: string) {
+
+        if (field.name === 'period') {
+
+            this.handlePeriodField(resource, field, group);
+
+        } else if (resource.type === 'TypeCatalog' && field.name === 'criterion') {
+
+            this.handleTypeCatalogCriterionField(resource, field);
+
+        } else if (!!this.projectConfiguration.isVisible(resource.type, field.name)) {
+
+            this.handleDefaultField(resource, field, group);
+        }
+    }
+
+
+    private handleDefaultField(resource: Resource, field: FieldDefinition, group: string) {
+
+        this.fields[group].push({
+            name: field.name,
+            label: this.projectConfiguration.getFieldDefinitionLabel(resource.type, field.name),
+            value: FieldsViewComponent.getValue(resource, field.name),
+            isArray: Array.isArray(resource[field.name])
+        });
+    }
+
+
+    private handleTypeCatalogCriterionField(resource: Resource, field: FieldDefinition) {
+
+        this.fields[Group.IDENTIFICATION].push({
+            label: field.label,
+            value: this.catalogCriteria.translateCriterion(resource[field.name]),
+            isArray: false
+        });
+    }
+
+
+    private handlePeriodField(resource: Resource, field: FieldDefinition, group: string) {
 
         this.fields[group].push({
             label: this.i18n({

@@ -174,29 +174,7 @@ export class FieldsViewComponent implements OnChanges {
             if (!this.fields[group]) this.fields[group] = [];
 
             if (field.name === 'period') {
-                this.fields[group].push({
-                    label: this.i18n({
-                        id: 'widgets.fieldsView.period',
-                        value: 'Grobdatierung'
-                    }) + (!isUndefinedOrEmpty(resource['periodEnd'])
-                        ? this.i18n({
-                            id: 'widgets.fieldsView.period.from',
-                            value: ' (von)'
-                        }) : ''),
-                    value: FieldsViewComponent.getValue(resource, field.name),
-                    isArray: false
-                });
-
-                if (!isUndefinedOrEmpty(resource['periodEnd'])) {
-                    this.fields[group].push({
-                        label: this.i18n({
-                            id: 'widgets.fieldsView.period.to',
-                            value: 'Grobdatierung (bis)'
-                        }),
-                        value: FieldsViewComponent.getValue(resource, 'periodEnd'),
-                        isArray: false
-                    });
-                }
+                this.handlePeriodField(resource, field, group);
                 continue;
             }
 
@@ -212,6 +190,34 @@ export class FieldsViewComponent implements OnChanges {
 
         if (this.fields[Group.STEM]) GroupUtil.sortGroups(this.fields[Group.STEM], Group.STEM);
         if (this.fields[Group.DIMENSION]) GroupUtil.sortGroups(this.fields[Group.DIMENSION], Group.DIMENSION);
+    }
+
+
+    private handlePeriodField(resource: Resource, field: any, group: string) {
+
+        this.fields[group].push({
+            label: this.i18n({
+                id: 'widgets.fieldsView.period',
+                value: 'Grobdatierung'
+            }) + (!isUndefinedOrEmpty(resource['periodEnd'])
+                ? this.i18n({
+                    id: 'widgets.fieldsView.period.from',
+                    value: ' (von)'
+                }) : ''),
+            value: FieldsViewComponent.getValue(resource, field.name),
+            isArray: false
+        });
+
+        if (!isUndefinedOrEmpty(resource['periodEnd'])) {
+            this.fields[group].push({
+                label: this.i18n({
+                    id: 'widgets.fieldsView.period.to',
+                    value: 'Grobdatierung (bis)'
+                }),
+                value: FieldsViewComponent.getValue(resource, 'periodEnd'),
+                isArray: false
+            });
+        }
     }
 
 

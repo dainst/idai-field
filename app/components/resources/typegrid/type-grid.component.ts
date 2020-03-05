@@ -131,6 +131,16 @@ export class TypeGridComponent extends BaseList implements OnChanges {
     }
 
 
+    public async openResourceViewModal(document: Document) {
+
+        const edited: boolean = await this.viewModalLauncher.openResourceViewModal(
+            document, this.resourcesComponent
+        );
+
+        if (edited) await this.updateImages();
+    }
+
+
     public handleClick(event: any, rightClick: boolean = false) {
 
         if (!this.contextMenu.position) return;

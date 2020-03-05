@@ -48,8 +48,8 @@ export class ProjectConfiguration {
 
         const type: any = this.getTypesMap()[typeName];
         if (!type) throw [ProjectConfiguration.UNKNOWN_TYPE_ERROR, typeName];
-        return (type.name === superTypeName)
-            || (type.parentType && type.parentType.name && type.parentType.name == superTypeName);
+        return type.name === superTypeName
+            || (type.parentType?.name && type.parentType.name === superTypeName);
     }
 
 

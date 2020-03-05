@@ -1,4 +1,4 @@
-import {flow, map, values, to, on, isNot, empty, filter, is, isDefined, remove} from 'tsfun';
+import {flow, map, values, to, on, isNot, empty, filter, is, isUndefined} from 'tsfun';
 import {IdaiType} from './model/idai-type';
 import {FieldDefinition} from './model/field-definition';
 import {RelationDefinition} from './model/relation-definition';
@@ -69,7 +69,7 @@ export class ProjectConfiguration {
 
     public getTypesTree(): { [typeName: string]: IdaiType } {
 
-        return remove(on(IdaiType.PARENTTYPE, isDefined))(this.typesMap);
+        return filter(on(IdaiType.PARENTTYPE, isUndefined))(this.typesMap);
     }
 
     /**

@@ -3,7 +3,8 @@ import {DecimalPipe} from '@angular/common';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {is, isnt, isUndefinedOrEmpty, isDefined, on, isNot, isString,
     includedIn, undefinedOrEmpty, lookup, compose, isEmpty, isBoolean} from 'tsfun';
-import {Document, FieldDocument,  ReadDatastore, Resource, Dating, Dimension} from 'idai-components-2';
+import {Document, FieldDocument,  ReadDatastore, FieldResource,
+    Resource, Dating, Dimension} from 'idai-components-2';
 import {RoutingService} from '../../routing-service';
 import {Group, GroupUtil} from '../../../core/model/group-util';
 import {Name, ResourceId} from '../../../core/constants';
@@ -16,7 +17,11 @@ import {IdaiType} from '../../../core/configuration/model/idai-type';
 import {RelationDefinition} from '../../../core/configuration/model/relation-definition';
 import {FieldDefinition} from '../../../core/configuration/model/field-definition';
 import {CatalogCriteria} from '../../docedit/core/forms/type-relation/catalog-criteria';
+import {BuiltInTypes} from '../../../core/configuration/app-configurator';
 
+
+const PERIOD = 'period';
+const PERIODEND = 'periodEnd';
 
 type FieldViewGroupDefinition = {
 
@@ -109,8 +114,8 @@ export class FieldsViewComponent implements OnChanges {
 
         return this.groups.filter(group => {
 
-            return ((this.fields[group.name] !== undefined && this.fields[group.name].length > 0)
-                || this.relations[group.name].length > 0);
+            return (this.fields[group.name] !== undefined && this.fields[group.name].length > 0)
+                || this.relations[group.name].length > 0;
         });
     }
 
@@ -181,11 +186,12 @@ export class FieldsViewComponent implements OnChanges {
 
     private pushField(resource: Resource, field: FieldDefinition, group: string) {
 
-        if (field.name === 'period') {
+        if (field.name === PERIOD) {
 
             this.handlePeriodField(resource, field, group);
 
-        } else if (resource.type === 'TypeCatalog' && field.name === 'criterion') {
+        } else if (resource.type === BuiltInTypes.TYPECATALOG
+            && field.name === BuiltInTypes.TypeCatalog.CRITERION) {
 
             this.handleTypeCatalogCriterionField(resource, field);
 
@@ -223,7 +229,7 @@ export class FieldsViewComponent implements OnChanges {
             label: this.i18n({
                 id: 'widgets.fieldsView.period',
                 value: 'Grobdatierung'
-            }) + (!isUndefinedOrEmpty(resource['periodEnd'])
+            }) + (!isUndefinedOrEmpty(resource[PERIODEND])
                 ? this.i18n({
                     id: 'widgets.fieldsView.period.from',
                     value: ' (von)'
@@ -232,13 +238,13 @@ export class FieldsViewComponent implements OnChanges {
             isArray: false
         });
 
-        if (!isUndefinedOrEmpty(resource['periodEnd'])) {
+        if (!isUndefinedOrEmpty(resource[PERIODEND])) {
             this.fields[group].push({
                 label: this.i18n({
                     id: 'widgets.fieldsView.period.to',
                     value: 'Grobdatierung (bis)'
                 }),
-                value: FieldsViewComponent.getValue(resource, 'periodEnd'),
+                value: FieldsViewComponent.getValue(resource, PERIODEND),
                 isArray: false
             });
         }
@@ -249,17 +255,19 @@ export class FieldsViewComponent implements OnChanges {
 
         this.fields[Group.STEM] = [];
 
-        const shortDescription: string = FieldsViewComponent.getValue(resource, 'shortDescription');
+        const shortDescription =
+            FieldsViewComponent.getValue(resource, FieldResource.SHORTDESCRIPTION);
+
         if (shortDescription) {
             this.fields[Group.STEM].push({
-                label: this.getLabel(resource.type, 'shortDescription'),
+                label: this.getLabel(resource.type, FieldResource.SHORTDESCRIPTION),
                 value: shortDescription,
                 isArray: false
             });
         }
 
         this.fields[Group.STEM].push({
-            label: this.getLabel(resource.type, 'type'),
+            label: this.getLabel(resource.type, Resource.TYPE),
             value: this.projectConfiguration.getLabelForType(resource.type),
             isArray: false
         });
@@ -269,7 +277,8 @@ export class FieldsViewComponent implements OnChanges {
     private getLabel(type: Name, field: Name): string {
 
         return (pick(this.projectConfiguration.getTypesMap(), type).fields
-            .find(on(FieldViewGroupDefinition.NAME, is(field))) as FieldDefinition).label as string;
+            .find(on(FieldViewGroupDefinition.NAME, is(field))) as FieldDefinition)
+            .label as string;
     }
 
 
@@ -290,12 +299,12 @@ export class FieldsViewComponent implements OnChanges {
         if (isEmpty(relations)) return;
 
         for (let relation of FieldsViewComponent.computeRelationsToShow(resource, relations)) {
-            const groupName: string|undefined = GroupUtil.getGroupName(relation.name);
+            const groupName = GroupUtil.getGroupName(relation.name);
             if (!groupName) continue;
 
             this.relations[groupName].push({
                 label: relation.label,
-                targets: (await this.getTargetDocuments(resource.relations[relation.name]))});
+                targets: await this.getTargetDocuments(resource.relations[relation.name])});
         }
     }
 

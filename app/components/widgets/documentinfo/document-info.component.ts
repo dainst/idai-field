@@ -1,6 +1,7 @@
 import {Component, Input, Output, ElementRef, ViewChild, EventEmitter, DoCheck} from '@angular/core';
 import {Document, FieldDocument} from 'idai-components-2';
 import {ProjectTypes} from '../../../core/configuration/project-types';
+import {Group} from '../../../core/model/group-util';
 
 
 @Component({
@@ -25,7 +26,7 @@ export class DocumentInfoComponent implements DoCheck {
     @Output() onThumbnailClicked: EventEmitter<void> = new EventEmitter<void>();
 
     public scrollbarVisible: boolean = false;
-    public openSection: string|undefined = 'stem';
+    public openSection: string|undefined = Group.STEM;
 
 
     constructor(private projectTypes: ProjectTypes) {}

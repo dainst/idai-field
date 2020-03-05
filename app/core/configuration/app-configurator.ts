@@ -5,6 +5,18 @@ import {ProjectConfiguration} from './project-configuration';
 import {FieldDefinition} from './model/field-definition';
 import {BuiltinTypeDefinition, BuiltinTypeDefinitions} from './model/builtin-type-definition';
 import {RelationDefinition} from './model/relation-definition';
+import {Group} from '../model/group-util';
+
+
+export module BuiltInTypes {
+
+    export const TYPECATALOG = 'TypeCatalog';
+
+    export module TypeCatalog {
+
+        export const CRITERION = 'criterion';
+    }
+}
 
 
 @Injectable()
@@ -236,7 +248,7 @@ export class AppConfigurator {
             fields: {
                 instanceOf: {
                     inputType: 'instanceOf',
-                    group: 'identification'
+                    group: Group.IDENTIFICATION
                 }
             }
         },
@@ -250,7 +262,7 @@ export class AppConfigurator {
                 criterion: {
                     inputType: 'catalogCriterion',
                     constraintIndexed: true,
-                    group: 'identification'
+                    group: Group.IDENTIFICATION
                 }
             }
         },

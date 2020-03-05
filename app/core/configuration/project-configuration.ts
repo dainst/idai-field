@@ -5,7 +5,6 @@ import {RelationDefinition} from './model/relation-definition';
 import {NAME, ProjectConfigurationUtils} from './project-configuration-utils';
 import {ConfigurationDefinition} from './boot/configuration-definition';
 
-const PARENT = 'parent';
 
 /**
  * ProjectConfiguration maintains the current projects properties.
@@ -70,7 +69,7 @@ export class ProjectConfiguration {
 
     public getTypesTree(): { [typeName: string]: IdaiType } {
 
-        return remove(on(PARENT, isDefined))(this.typesMap); // TODO <- review should this not be done on parentType instead parent?
+        return remove(on(IdaiType.PARENTTYPE, isDefined))(this.typesMap);
     }
 
     /**

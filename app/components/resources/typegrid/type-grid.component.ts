@@ -159,6 +159,18 @@ export class TypeGridComponent extends BaseList implements OnChanges {
 
     private async getImages(document: FieldDocument): Promise<Array<SafeResourceUrl>> {
 
+        if (Document.hasRelations(document, 'isDepictedIn')) {
+            return [await this.imagestore.read(
+                document.resource.relations['isDepictedIn'][0], false, true
+            )];
+        } else {
+            return await this.getImagesOfLinkedResources(document);
+        }
+    }
+
+
+    private async getImagesOfLinkedResources(document: FieldDocument): Promise<Array<SafeResourceUrl>> {
+
         const linkedImages: Array<ImageRowItem>
             = (await TypeImagesUtil.getLinkedImages(document, this.fieldDatastore))
                 .filter(image => image.imageId !== PLACEHOLDER);

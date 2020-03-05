@@ -1,6 +1,6 @@
 import {Component, Input, OnChanges} from '@angular/core';
 import {SafeResourceUrl} from '@angular/platform-browser';
-import {take, flatten, set} from 'tsfun';
+import {take, flatten, set, flow, filter, map} from 'tsfun';
 import {map as asyncMap, reduce as asyncReduce} from 'tsfun/async';
 import {Document, FieldDocument} from 'idai-components-2';
 import {ViewFacade} from '../../../core/resources/view/view-facade';
@@ -180,11 +180,13 @@ export class TypeGridComponent extends BaseList implements OnChanges {
         const mainDocument: FieldDocument|undefined = this.getMainDocument();
         if (!mainDocument) return [];
 
-        const linkedResourceIds: string[] = set(flatten(
-            [mainDocument].concat(this.subtypes)
-                .filter(document => Document.hasRelations(document, 'hasInstance'))
-                .map(document => document.resource.relations['hasInstance'])
-        ));
+        const linkedResourceIds: string[] = flow(
+            [mainDocument].concat(this.subtypes),
+            filter((document: FieldDocument) => Document.hasRelations(document, 'hasInstance')),
+            map((document: FieldDocument) => document.resource.relations['hasInstance']),
+            flatten,
+            set
+        );
 
         return await this.fieldDatastore.getMultiple(linkedResourceIds);
     }

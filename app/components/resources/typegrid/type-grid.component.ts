@@ -1,6 +1,6 @@
 import {Component, Input, OnChanges} from '@angular/core';
 import {SafeResourceUrl} from '@angular/platform-browser';
-import {take} from 'tsfun';
+import {take, flatten, set} from 'tsfun';
 import {map as asyncMap, reduce as asyncReduce} from 'tsfun/async';
 import {Document, FieldDocument} from 'idai-components-2';
 import {ViewFacade} from '../../../core/resources/view/view-facade';
@@ -34,6 +34,7 @@ export class TypeGridComponent extends BaseList implements OnChanges {
     @Input() documents: Array<FieldDocument>;
 
     public linkedDocuments: Array<FieldDocument> = [];
+    public subtypes: Array<FieldDocument> = [];
     public images: { [resourceId: string]: Array<SafeResourceUrl> } = {};
     public contextMenu: ContextMenu = new ContextMenu();
 
@@ -63,8 +64,9 @@ export class TypeGridComponent extends BaseList implements OnChanges {
 
     async ngOnChanges() {
 
-        await this.updateLinkedResources();
-        await this.updateImages();
+        this.subtypes = await this.getSubtypes();
+        this.linkedDocuments = await this.getLinkedDocuments();
+        this.images = await this.getImages();
     }
 
 
@@ -133,7 +135,7 @@ export class TypeGridComponent extends BaseList implements OnChanges {
             document, this.resourcesComponent
         );
 
-        if (edited) await this.updateImages();
+        if (edited) this.images = await this.getImages();
     }
 
 
@@ -157,27 +159,48 @@ export class TypeGridComponent extends BaseList implements OnChanges {
     }
 
 
-    private async updateLinkedResources() {
+    private async getSubtypes(): Promise<Array<FieldDocument>> {
 
         const mainDocument: FieldDocument|undefined = this.getMainDocument();
+        if (!mainDocument) return [];
 
-        this.linkedDocuments = mainDocument && Document.hasRelations(mainDocument, 'hasInstance')
-            ? await this.fieldDatastore.getMultiple(mainDocument.resource.relations['hasInstance'])
-            : [];
+        return (await this.fieldDatastore.find({
+            constraints: {
+                'liesWithin:contain': {
+                    value: mainDocument.resource.id,
+                    searchRecursively: true
+                }
+            }
+        })).documents;
     }
 
 
-    private async updateImages() {
+    private async getLinkedDocuments(): Promise<Array<FieldDocument>> {
 
-        this.images = await asyncReduce(
+        const mainDocument: FieldDocument|undefined = this.getMainDocument();
+        if (!mainDocument) return [];
+
+        const linkedResourceIds: string[] = set(flatten(
+            [mainDocument].concat(this.subtypes)
+                .filter(document => Document.hasRelations(document, 'hasInstance'))
+                .map(document => document.resource.relations['hasInstance'])
+        ));
+
+        return await this.fieldDatastore.getMultiple(linkedResourceIds);
+    }
+
+
+    private async getImages(): Promise<{ [resourceId: string]: Array<SafeResourceUrl> }> {
+
+        return await asyncReduce(
             async (images: { [resourceId: string]: Array<SafeResourceUrl> }, document: FieldDocument) => {
-                images[document.resource.id] = await this.getImages(document);
+                images[document.resource.id] = await this.getLinkedImages(document);
                 return images;
             }, {})(this.documents.concat(this.linkedDocuments));
     }
 
 
-    private async getImages(document: FieldDocument): Promise<Array<SafeResourceUrl>> {
+    private async getLinkedImages(document: FieldDocument): Promise<Array<SafeResourceUrl>> {
 
         if (Document.hasRelations(document, 'isDepictedIn')) {
             return [await this.getMainImage(document)];

@@ -42,6 +42,9 @@
                 <div class="type-grid-resource-info">
                     {{document.resource.identifier}}
                 </div>
+                <span *ngIf="getLinkedSubtype(document)" class="badge badge-primary">
+                        {{getLinkedSubtype(document).resource.identifier}}
+                    </span>
                 <div *ngFor="let imageUrl of getImageUrls(document)"
                      class="type-grid-image-container d-flex align-items-center justify-content-center">
                     <img [src]="imageUrl">

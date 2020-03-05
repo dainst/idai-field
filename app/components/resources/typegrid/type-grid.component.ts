@@ -139,6 +139,16 @@ export class TypeGridComponent extends BaseList implements OnChanges {
     }
 
 
+    public getLinkedSubtype(document: FieldDocument): FieldDocument|undefined {
+
+        if (!Document.hasRelations(document, 'isInstanceOf')) return undefined;
+
+        return this.subtypes.find(subtype => {
+            return document.resource.relations['isInstanceOf'].includes(subtype.resource.id);
+        });
+    }
+
+
     public handleClick(event: any, rightClick: boolean = false) {
 
         if (!this.contextMenu.position) return;

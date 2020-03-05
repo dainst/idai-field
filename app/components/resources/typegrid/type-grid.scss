@@ -62,9 +62,11 @@ type-grid {
             border-bottom: 1px solid #dddddd;
           }
 
-          image-grid {
-            width: 100%;
-            height: 100%;
+          .badge {
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
           }
 
           &:hover {

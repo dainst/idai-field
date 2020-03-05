@@ -283,16 +283,6 @@ export class FieldsViewComponent implements OnChanges {
     }
 
 
-    private static getValue(resource: Resource, field: Name): any {
-
-        return isString(resource[field])
-            ? resource[field]
-                .replace(/^\s+|\s+$/g, '')
-                .replace(/\n/g, '<br>')
-            : resource[field];
-    }
-
-
     private async processRelations(resource: Resource) {
 
         const relations: Array<RelationDefinition>|undefined
@@ -310,6 +300,22 @@ export class FieldsViewComponent implements OnChanges {
     }
 
 
+    private getTargetDocuments(targetIds: Array<ResourceId>): Promise<Array<Document>> {
+
+        return this.datastore.getMultiple(targetIds); // what if error?
+    }
+
+
+    private static getValue(resource: Resource, field: Name): any {
+
+        return isString(resource[field])
+            ? resource[field]
+                .replace(/^\s+|\s+$/g, '')
+                .replace(/\n/g, '<br>')
+            : resource[field];
+    }
+
+
     private static computeRelationsToShow(resource: Resource,
                                           relations: Array<RelationDefinition>): Array<RelationDefinition> {
 
@@ -319,11 +325,5 @@ export class FieldsViewComponent implements OnChanges {
         return relations
             .filter(on(FieldViewGroupDefinition.NAME, isNotHierarchical))
             .filter(on(FieldViewGroupDefinition.NAME, hasTargets));
-    }
-
-
-    private getTargetDocuments(targetIds: Array<ResourceId>): Promise<Array<Document>> {
-
-        return this.datastore.getMultiple(targetIds); // what if error?
     }
 }

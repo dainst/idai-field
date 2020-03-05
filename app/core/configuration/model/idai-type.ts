@@ -23,6 +23,9 @@ export interface IdaiType {
  */
 export module IdaiType {
 
+    export const COLOR = 'color';
+
+
     export function build(definition: TypeDefinition): IdaiType {
 
         const idaiType: any = {};

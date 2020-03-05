@@ -35,3 +35,10 @@ export interface FieldDefinition {
     allowOnlyValuesOfParent?: true;
     readonly group: string;
 }
+
+
+export module FieldDefinition {
+
+    export const VISIBLE = 'visible';
+    export const MANDATORY = 'mandatory';
+}

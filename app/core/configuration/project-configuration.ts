@@ -5,9 +5,6 @@ import {RelationDefinition} from './model/relation-definition';
 import {NAME, ProjectConfigurationUtils} from './project-configuration-utils';
 import {ConfigurationDefinition} from './boot/configuration-definition';
 
-const COLOR = 'color';
-const MANDATORY = 'mandatory';
-const VISIBLE = 'visible';
 const PARENT = 'parent';
 
 /**
@@ -73,7 +70,7 @@ export class ProjectConfiguration {
 
     public getTypesTree(): { [typeName: string]: IdaiType } {
 
-        return remove(on(PARENT, isDefined))(this.typesMap);
+        return remove(on(PARENT, isDefined))(this.typesMap); // TODO <- review should this not be done on parentType instead parent?
     }
 
     /**
@@ -142,19 +139,19 @@ export class ProjectConfiguration {
 
     public getTypeColors() {
 
-        return map(to(COLOR))(this.typesMap) as { [typeName: string]: string };
+        return map(to(IdaiType.COLOR))(this.typesMap) as { [typeName: string]: string };
     }
 
 
     public isMandatory(typeName: string, fieldName: string): boolean {
 
-        return this.hasProperty(typeName, fieldName, MANDATORY);
+        return this.hasProperty(typeName, fieldName, FieldDefinition.MANDATORY);
     }
 
 
     public isVisible(typeName: string, fieldName: string): boolean {
 
-        return this.hasProperty(typeName, fieldName, VISIBLE);
+        return this.hasProperty(typeName, fieldName, FieldDefinition.VISIBLE);
     }
 
 

@@ -70,7 +70,9 @@ export class TypeGridComponent extends BaseList implements OnChanges {
 
     public getMainDocument(): FieldDocument|undefined {
 
-        return NavigationPath.getSelectedSegment(this.viewFacade.getNavigationPath())?.document;
+        return this.viewFacade.isInExtendedSearchMode()
+            ? undefined
+            : NavigationPath.getSelectedSegment(this.viewFacade.getNavigationPath())?.document;
     }
 
 
@@ -95,12 +97,6 @@ export class TypeGridComponent extends BaseList implements OnChanges {
     public async jumpToResource(document: FieldDocument) {
 
         await this.routingService.jumpToResource(document);
-    }
-
-
-    public isDocumentInfoVisible(): boolean {
-
-        return this.getMainDocument() !== undefined && !this.viewFacade.isInExtendedSearchMode();
     }
 
 

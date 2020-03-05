@@ -4,7 +4,7 @@
               (onSelectAction)="performContextMenuAction($event)"></context-menu>
 
 <div id="type-grid" class="bg-light" (scroll)="contextMenu.close()">
-    <document-info *ngIf="isDocumentInfoVisible()"
+    <document-info *ngIf="getMainDocument()"
                    [document]="getMainDocument()"
                    [getExpandAllGroups]="getExpandAllGroups"
                    [setExpandAllGroups]="setExpandAllGroups"

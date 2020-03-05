@@ -47,6 +47,7 @@ export module FieldViewGroupDefinition {
 /**
  * @author Thomas Kleinke
  * @author Sebastian Cuy
+ * @author Daniel de Oliveira
  */
 export class FieldsViewComponent implements OnChanges {
 

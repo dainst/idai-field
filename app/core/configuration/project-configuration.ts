@@ -72,6 +72,7 @@ export class ProjectConfiguration {
         return filter(on(IdaiType.PARENTTYPE, isUndefined))(this.typesMap);
     }
 
+
     /**
      * Gets the relation definitions available.
      *
@@ -98,7 +99,7 @@ export class ProjectConfiguration {
         const relationDefinitions = this.getRelationDefinitions(rangeTypeName, true);
 
         for (let relationDefinition of relationDefinitions) {
-            if (relationName == relationDefinition.name
+            if (relationName === relationDefinition.name
                 && relationDefinition.domain.indexOf(domainTypeName) > -1) return true;
         }
 

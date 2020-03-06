@@ -67,7 +67,7 @@ export module CsvExportUtils {
 
     /**
      * as: ['a','b','c', 'd']
-     * replace: (as: string[]) => ['e'])
+     * replace: (_: string[]) => ['e'])
      * where: 1
      * nrOfNewItems: 2
      * ->
@@ -93,10 +93,10 @@ export module CsvExportUtils {
 
     /**
      * as: ['a','b','c']
-     * replace: (a: string) => [a, a + a]
+     * replace: (_: string) => ['e', 'f]
      * where: 1
      * ->
-     * ['a', 'b', 'bb', 'c']
+     * ['a', 'e', 'f, 'c']
      */
     export function replaceItem<A>(where: number,
                                    replace: (_: A) => Array<A>)
@@ -114,15 +114,9 @@ export module CsvExportUtils {
      * Fills up items with defaultVal, until it reaches the specified targetSize.
      * The amount of items filled in is based on the
      * difference of the size of items to the target size.
-     *
-     * @param targetSize
-     * @param defaultVal
      */
     export function fillUpToSize(targetSize: number, defaultVal: any) {
 
-        /**
-         * @param items
-         */
         return (items: any[]) => {
 
             const fills = dense(targetSize - items.length).map(() => defaultVal);

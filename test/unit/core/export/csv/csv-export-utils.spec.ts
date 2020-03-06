@@ -1,3 +1,4 @@
+import {val} from 'tsfun';
 import {CsvExportUtils} from '../../../../../app/core/export/csv/csv-export-utils';
 
 
@@ -23,7 +24,7 @@ describe('CSVExportUtils', () => {
     it('replaceItems', () => {
 
         const result = CsvExportUtils
-            .replaceItems(1, 2, <A>(as: string[]) => ['e'])
+            .replaceItems(1, 2, val(['e']))
             (['a', 'b', 'c', 'd']);
 
         expect(result).toEqual(['a', 'e', 'd'])
@@ -33,9 +34,9 @@ describe('CSVExportUtils', () => {
     it('replaceItem', () => {
 
         const result = CsvExportUtils
-            .replaceItem(1, (a: string) => [a, a + a])
+            .replaceItem(1, val(['e', 'f']))
             (['a','b','c']);
 
-        expect(result).toEqual(['a', 'b', 'bb', 'c'])
+        expect(result).toEqual(['a', 'e', 'f', 'c'])
     });
 });

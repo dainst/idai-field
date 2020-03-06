@@ -1,4 +1,4 @@
-import {dense, drop, flow, indices, is, on, reduce, take, prepend, append, flatten} from 'tsfun';
+import {dense, drop, flow, indices, is, on, reduce, take, prepend, append} from 'tsfun';
 import {FieldDefinition} from '../../configuration/model/field-definition';
 import {FieldResource, Resource} from 'idai-components-2';
 import {clone} from '../../util/object-util';
@@ -84,9 +84,8 @@ export module CsvExportUtils {
                 drop(where),
                 take(nrOfNewItems),
                 replace,
-                prepend(take(where)(as)),
-                append(drop(where + nrOfNewItems)(as)),
-                flatten);
+                prepend(...take(where)(as)),
+                append(...drop(where + nrOfNewItems)(as)));
         }
     }
 

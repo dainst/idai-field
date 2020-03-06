@@ -21,6 +21,8 @@ export module CSVExport {
     const RELATIONS_IS_CHILD_OF = 'relations.isChildOf';
     const RELATIONS_LIES_WITHIN = 'relations.liesWithin';
 
+    const DIMENSION = 'dimension';
+
     const H = left;
     const M = right;
     type Cell = string;
@@ -82,17 +84,19 @@ export module CSVExport {
 
     function expandDimension(fieldDefinitions: Array<FieldDefinition>) {
 
-        const getDimensionIndices = getIndices(fieldDefinitions, 'dimension');
+        const getDimensionIndices = getIndices(fieldDefinitions, DIMENSION);
 
         return (headings_and_matrix: HeadingsAndMatrix) => {
 
-            const dimensionIndices = reverse(getDimensionIndices(H(headings_and_matrix)));
-
-            return expand(
+            return flow(
+                headings_and_matrix,
+                left,
+                getDimensionIndices,
+                reverse,
+                expand(
                     expandDimensionHeadings,
                     expandDimensionItems,
-                    headings_and_matrix
-                )(dimensionIndices);
+                    headings_and_matrix));
         }
     }
 

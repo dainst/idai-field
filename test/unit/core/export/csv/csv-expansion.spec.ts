@@ -1,6 +1,10 @@
 import {CSVExpansion} from '../../../../../app/core/export/csv/csv-expansion';
 import expandHomogeneousItems = CSVExpansion.expandHomogeneousItems;
 
+
+/**
+ * @author Daniel de Oliveira
+ */
 describe('CSVExpansion', () => {
 
     it('expand object', () => {

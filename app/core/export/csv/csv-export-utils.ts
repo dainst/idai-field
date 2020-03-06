@@ -16,37 +16,6 @@ import OBJECT_SEPARATOR = CsvExportConsts.OBJECT_SEPARATOR;
 export module CsvExportUtils {
 
     /**
-     * resource.relations = { someRel: ['val1', 'val2] }
-     * ->
-     * resource['relations.someRel'] = 'val1; val2'
-     *
-     * @param resource
-     * @returns a new resource instance, where relations are turned into fields.
-     */
-    export function convertToResourceWithFlattenedRelations(resource: FieldResource): FieldResource {
-
-        const cloned = clone(resource); // so we can modify in place
-
-        if (!cloned.relations) return cloned;
-        for (let relation of Object.keys(cloned.relations)) {
-            cloned[Resource.RELATIONS + '.' + relation] = cloned.relations[relation].join(ARRAY_SEPARATOR);
-        }
-        delete cloned.relations;
-
-        if (cloned[RELATIONS_LIES_WITHIN]) {
-            delete cloned[RELATIONS_IS_RECORDED_IN];
-            cloned[RELATIONS_IS_CHILD_OF] = cloned[RELATIONS_LIES_WITHIN];
-        }
-        else if (cloned[RELATIONS_IS_RECORDED_IN]) {
-            cloned[RELATIONS_IS_CHILD_OF] = cloned[RELATIONS_IS_RECORDED_IN];
-            delete cloned[RELATIONS_IS_RECORDED_IN];
-        }
-
-        return cloned;
-    }
-
-
-    /**
      * fieldDefinitions: [
      *   {name: 'a1', inputType: 'a-i'},
      *   {name: 'a2', inputType: 'a-i'},
@@ -71,7 +40,18 @@ export module CsvExportUtils {
     }
 
 
-    export function getMax(columnIndex: any) {
+    /**
+     * matrix: [
+     *   ['a', 'b', [{}, {}], 'e'],
+     *   ['a', 'b', [{}, {}, {}]],
+     *   ['a', 'c', [{}], 'd']
+     * ]
+     * columnIndex: 2
+     * ->
+     * 3
+     */
+    export function getMax(columnIndex: number)
+        : <A>(matrix: any) => number{
 
         return reduce((max: number, row: any) =>
 
@@ -89,28 +69,61 @@ export module CsvExportUtils {
                                     nrOfNewItems: number,
                                     replace: (_: Array<A>) => Array<A>) {
 
-        return (itms: Array<A>): Array<A> => {
+        return (as: Array<A>): Array<A> => {
 
             const replacements =
-                flow(itms,
+                flow(as,
                     drop(where),
                     take(nrOfNewItems),
                     replace);
 
-            return take(where)(itms)
+            return take(where)(as)
                 .concat(replacements)
-                .concat(drop(where + nrOfNewItems)(itms));
+                .concat(drop(where + nrOfNewItems)(as));
         }
     }
 
 
     export function replaceItem<A>(where: number,
-                                   replace: (_: A) => A[]) {
+                                   replace: (_: A) => Array<A>)
+            : (as: Array<A>) => Array<A> {
 
         return replaceItems(where, 1,
             (items: any[]) =>
                 items.length === 0
                     ? []
                     : replace(items[0]));
+    }
+
+
+    /**
+     * resource.relations = { someRel: ['val1', 'val2] }
+     * ->
+     * resource['relations.someRel'] = 'val1; val2'
+     *
+     * @param resource
+     * @returns a new resource instance, where relations are turned into fields.
+     */
+    export function convertToResourceWithFlattenedRelations(resource: FieldResource): FieldResource {
+
+        const cloned = clone(resource); // so we can modify in place
+
+        if (!cloned.relations) return cloned;
+        for (let relation of Object.keys(cloned.relations)) {
+            cloned[Resource.RELATIONS + OBJECT_SEPARATOR + relation]
+                = cloned.relations[relation].join(ARRAY_SEPARATOR);
+        }
+        delete cloned.relations;
+
+        if (cloned[RELATIONS_LIES_WITHIN]) {
+            delete cloned[RELATIONS_IS_RECORDED_IN];
+            cloned[RELATIONS_IS_CHILD_OF] = cloned[RELATIONS_LIES_WITHIN];
+        }
+        else if (cloned[RELATIONS_IS_RECORDED_IN]) {
+            cloned[RELATIONS_IS_CHILD_OF] = cloned[RELATIONS_IS_RECORDED_IN];
+            delete cloned[RELATIONS_IS_RECORDED_IN];
+        }
+
+        return cloned;
     }
 }

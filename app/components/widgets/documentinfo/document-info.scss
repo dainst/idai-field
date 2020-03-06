@@ -44,7 +44,8 @@ document-info {
         left: -109px;
         top: -11px;
 
-        &.active {
+        &.active,
+        &:active {
           box-shadow: inset 1px 1px 2px 1px rgba(0, 0, 0, 0.2) !important;
         }
       }
@@ -52,6 +53,10 @@ document-info {
       .edit-button {
         left: 109px;
         top: -71px;
+
+        &:active {
+          box-shadow: inset 1px 1px 2px 1px rgba(0, 0, 0, 0.2) !important;
+        }
       }
 
       .btn {

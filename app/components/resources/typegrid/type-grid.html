@@ -15,7 +15,9 @@
 
     <div id="grid-elements-container">
         <div *ngIf="documents.length > 0" class="grid-section">
-            <div *ngIf="linkedDocuments.length > 0" class="grid-section-label first-grid-section-label"
+            <div *ngIf="isTypesSectionLabelVisible()" class="grid-section-label first-grid-section-label"
+                 i18n="@@resources.typeGrid.types">Typen</div>
+            <div *ngIf="isSubtypesSectionLabelVisible()" class="grid-section-label first-grid-section-label"
                  i18n="@@resources.typeGrid.subtypes">Untertypen</div>
             <div *ngFor="let document of documents"
                  id="type-grid-element-{{document.resource.id}}"

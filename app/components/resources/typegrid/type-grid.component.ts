@@ -149,6 +149,22 @@ export class TypeGridComponent extends BaseList implements OnChanges {
     }
 
 
+    public isTypesSectionLabelVisible(): boolean {
+
+        const mainDocument: FieldDocument|undefined = this.getMainDocument();
+
+        return this.linkedDocuments.length > 0 && mainDocument?.resource.type === 'TypeCatalog';
+    }
+
+
+    public isSubtypesSectionLabelVisible(): boolean {
+
+        const mainDocument: FieldDocument|undefined = this.getMainDocument();
+
+        return this.linkedDocuments.length > 0 && mainDocument?.resource.type === 'Type';
+    }
+
+
     public handleClick(event: any, rightClick: boolean = false) {
 
         if (!this.contextMenu.position) return;

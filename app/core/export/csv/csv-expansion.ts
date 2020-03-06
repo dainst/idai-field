@@ -59,7 +59,7 @@ export module CSVExpansion {
      *   [8,   5,      , undefined]]]
      */
     export function objectArrayExpand(expandHeadings: (numItems: number) => (fieldName: string) => string[],
-                                      expandLevelTwo: (where: number, nrOfNewItems: number) => (itms: any[]) => any[],
+                                      expandObject: (where: number, nrOfNewItems: number) => (itms: any[]) => any[],
                                       headingsAndMatrix: HeadingsAndMatrix): (columnIndices: number[]) => HeadingsAndMatrix {
 
         return reduce(([headings, matrix]: HeadingsAndMatrix, columnIndex: number) => {
@@ -69,7 +69,7 @@ export module CSVExpansion {
             const expandedHeader = CsvExportUtils.replaceItem(columnIndex, expandHeadings(max))(headings);
             const expandedRows   = matrix
                 .map(expandArray(columnIndex, max))
-                .map(expandLevelTwo(columnIndex, max));
+                .map(expandObject(columnIndex, max));
 
             return [expandedHeader, expandedRows];
 
@@ -78,13 +78,13 @@ export module CSVExpansion {
 
 
     export function objectExpand(expandHeadings: (fieldName: string) => string[],
-                                 expandLevelTwo: (where: number, nrOfNewItems: number) => (itms: any[]) => any[],
+                                 expandObject: (where: number, nrOfNewItems: number) => (itms: any[]) => any[],
                                  headingsAndMatrix: HeadingsAndMatrix): (columnIndices: number[]) => HeadingsAndMatrix {
 
         return reduce(([headings, matrix]: HeadingsAndMatrix, columnIndex: number) => {
 
             const expandedHeader = CsvExportUtils.replaceItem(columnIndex, expandHeadings)(headings);
-            const expandedRows   = matrix.map(expandLevelTwo(columnIndex, 1));
+            const expandedRows   = matrix.map(expandObject(columnIndex, 1));
 
             return [expandedHeader, expandedRows];
 

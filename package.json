@@ -92,7 +92,7 @@
     "reflect-metadata": "0.1.12",
     "roboto-fontface": "0.6.0",
     "rxjs": "6.5.3",
-    "showdown": "1.8.7",
+    "showdown": "^1.9.1",
     "svg-pan-zoom": "3.6.0",
     "systemjs": "0.21.5",
     "tsfun": "4.2.35",

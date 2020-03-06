@@ -27,7 +27,7 @@
                 [ngbPopover]="filterMenu"
                 [autoClose]="false"
                 #p="ngbPopover"
-                placement="bottom">
+                placement="bottom-right">
             <span *ngIf="!isTypeSelected()" class="mdi mdi-filter"></span>
             <span *ngIf="isTypeSelected()">
                 <type-icon [type]="types[0]" size="30"></type-icon>

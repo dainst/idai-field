@@ -40,13 +40,10 @@ import {ListButtonGroupComponent} from './widgets/list-button-group.component';
 import {ChildrenViewComponent} from './widgets/popovermenu/children-view.component';
 import {ProjectConfiguration} from '../../core/configuration/project-configuration';
 import {MapComponent} from './map/map/map.component';
-import {TypeListComponent} from './typelist/type-list.component';
 import {TabManager} from '../../core/tabs/tab-manager';
 import {ResourcesStateManager} from '../../core/resources/view/resources-state-manager';
 import {ViewFacade} from '../../core/resources/view/view-facade';
 import {NavigationService} from '../../core/resources/navigation/navigation-service';
-import {ImageRowModule} from '../image/row/image-row.module';
-import {TypeRowComponent} from './typelist/type-row.component';
 import {PopoverMenuComponent} from './widgets/popovermenu/popover-menu.component';
 import {ViewModalLauncher} from './service/view-modal-launcher';
 import {ImageViewerModule} from '../image/viewer/image-viewer.module';
@@ -61,7 +58,6 @@ const remote = require('electron').remote;
         NgbModule,
         WidgetsModule,
         ImageGridModule,
-        ImageRowModule,
         DoceditModule,
         ImageViewerModule
     ],
@@ -72,12 +68,10 @@ const remote = require('electron').remote;
         LayerMapComponent,
         EditableMapComponent,
         ResourcesMapComponent,
-        TypeListComponent,
         TypeGridComponent,
         LayerMenuComponent,
         ListComponent,
         RowComponent,
-        TypeRowComponent,
         PlusButtonComponent,
         SidebarListComponent,
         ListButtonGroupComponent,

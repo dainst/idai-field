@@ -1,16 +1,17 @@
+import {isUndefinedOrEmpty} from 'tsfun';
 import {Component, Input} from '@angular/core';
-import {Resource} from 'idai-components-2';
+import {Resource, ValOptionalEndVal} from 'idai-components-2';
 import {ValuelistUtil} from '../../../../core/util/valuelist-util';
 import {HierarchyUtil} from '../../../../core/util/hierarchy-util';
 import {DocumentReadDatastore} from '../../../../core/datastore/document-read-datastore';
 
+const PROJECT = 'project';
 
 @Component({
     moduleId: module.id,
     selector: 'dai-dropdown-range',
     templateUrl: './dropdown-range.html'
 })
-
 /**
  * @author Sebastian Cuy
  * @author Daniel de Oliveira
@@ -33,9 +34,15 @@ export class DropdownRangeComponent {
 
     async ngOnChanges() {
 
+        if (this.resource) {
+            if (!this.resource[this.field.name]) {
+                this.resource[this.field.name] = {} as ValOptionalEndVal<string>;
+            }
+        }
+
         this.valuelist = ValuelistUtil.getValuelist(
             this.field,
-            await this.datastore.get('project'),
+            await this.datastore.get(PROJECT),
             await HierarchyUtil.getParent(this.resource, this.datastore)
         );
     }
@@ -44,28 +51,29 @@ export class DropdownRangeComponent {
     public showEndElements() {
 
         return this.endActivated
-            || (this.resource[this.field.name + 'End']
-                && this.resource[this.field.name + 'End'] !== '');
+            || !this.resource[this.field.name]
+            || !isUndefinedOrEmpty(this.resource[this.field.name][ValOptionalEndVal.ENDVALUE]);
     }
 
 
-    public setValue(value: any) {
+    public setValue(value: string) {
 
-        if (value === undefined || value === '') {
+        if (isUndefinedOrEmpty(value)) {
+
             this.endActivated = false;
-            delete this.resource[this.field.name];
-            this.resource[this.field.name + 'End'] = undefined;
+            delete this.resource[this.field.name][ValOptionalEndVal.VALUE];
+            delete this.resource[this.field.name][ValOptionalEndVal.ENDVALUE];
         }
     }
 
 
-    public setEndValue(value: any) {
+    public setEndValue(value: string) {
 
-        if (value === undefined || value === '') {
+        if (isUndefinedOrEmpty(value)) {
             this.endActivated = false;
-            this.resource[this.field.name + 'End'] = undefined;
+            delete this.resource[this.field.name][ValOptionalEndVal.ENDVALUE]
         } else {
-            this.resource[this.field.name + 'End'] = value;
+            this.resource[this.field.name][ValOptionalEndVal.ENDVALUE] = value;
         }
     }
 }

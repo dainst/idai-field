@@ -1,6 +1,6 @@
-import {flow, includedIn, isEmpty, isNot, equal} from 'tsfun';
+import {flow, includedIn, isEmpty, isNot, equal, isObject, isString, and, filter, keys} from 'tsfun';
 import {clone} from '../util/object-util';
-import {Document, NewDocument} from 'idai-components-2';
+import {Document, NewDocument, Resource} from 'idai-components-2';
 import {Validator} from '../model/validator';
 import {PersistenceManager} from '../model/persistence-manager';
 import {DocumentDatastore} from '../datastore/document-datastore';
@@ -166,11 +166,11 @@ export class DocumentHolder {
 
         document = flow(
             document,
+            DocumentHolder.cleanEmptyObjects,
             Document.removeRelations(this.validateRelationFields()),
             Document.removeRelations(this.getEmptyRelationFields()),
             Document.removeFields(this.validateFields()),
-            Document.removeFields(this.getEmptyFields()),
-        );
+            Document.removeFields(this.getEmptyFields()));
 
         trimFields(document.resource);
 
@@ -188,19 +188,19 @@ export class DocumentHolder {
     }
 
 
-    private validateFields(): Array<string> {
+    private validateFields(): string[] {
 
         return this.validateButKeepInvalidOldVersionFields(Validations.validateDefinedFields);
     }
 
 
-    private validateRelationFields(): Array<string> {
+    private validateRelationFields(): string[] {
 
         return this.validateButKeepInvalidOldVersionFields(Validations.validateDefinedRelations);
     }
 
 
-    private validateButKeepInvalidOldVersionFields(validate: (_: any, __: any) => Array<string>): Array<string> {
+    private validateButKeepInvalidOldVersionFields(validate: (_: any, __: any) => Array<string>): string[] {
 
         const validationResultClonedVersion = validate(this.clonedDocument.resource, this.projectConfiguration);
         const validationResultOldVersion = validate(this.oldVersion.resource, this.projectConfiguration);
@@ -209,20 +209,36 @@ export class DocumentHolder {
     }
 
 
-    private getEmptyRelationFields(): Array<string> {
+    private getEmptyRelationFields(): string[] {
 
-        return Object
-            .keys(this.clonedDocument.resource.relations)
-            .filter(relationName => isEmpty(this.clonedDocument.resource.relations[relationName]));
+        return flow(
+            this.clonedDocument.resource.relations,
+            filter(isEmpty),
+            keys);
     }
 
 
-    private getEmptyFields(): Array<string> {
+    private getEmptyFields(): string[] {
 
-        return Object.keys(this.clonedDocument.resource)
-            .filter(_ =>
-                (typeof(this.clonedDocument.resource[_]) === 'string')
-                && this.clonedDocument.resource[_].length === 0
-            );
+        return flow(
+            this.clonedDocument.resource,
+            filter(and(isString, isEmpty)),
+            keys);
+    }
+
+
+    /**
+     * @param document modified in place
+     * @return the original, now modified, document
+     */
+    private static cleanEmptyObjects(document: Document): Document {
+
+        for (let field of Object.keys(document.resource)) {
+            if (field === Resource.RELATIONS) continue;
+            if (isObject(document.resource[field]) && isEmpty(document.resource[field])) {
+                delete document.resource[field];
+            }
+        }
+        return document;
     }
 }

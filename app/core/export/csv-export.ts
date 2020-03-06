@@ -1,10 +1,15 @@
-import {compose, drop, flatMap, flow, identity, includedIn, indices, is, isDefined, isNot,
-    isnt, on, range, reduce, reverse, take, to, cond, left, right, Pair, dense, prepend} from 'tsfun';
-import {Dating, Dimension, FieldResource, Resource} from 'idai-components-2';
+import {compose, flatMap, flow, identity, includedIn, isDefined, isNot,
+    isnt, reduce, reverse, take, to, cond, left, right, Pair, dense, prepend} from 'tsfun';
+import {Dating, Dimension, FieldResource, Resource, ValOptionalEndVal} from 'idai-components-2';
 import {clone} from '../util/object-util';
 import {fillUpToSize} from './export-helper';
 import {HierarchicalRelations} from '../model/relation-constants';
 import {FieldDefinition} from '../configuration/model/field-definition';
+import {CsvExportUtils} from './csv-export-utils';
+import {CsvHeadingsExpansion} from './csv-headings-expansion';
+import {CsvExportConsts} from './csv-export-consts';
+import replaceItems = CsvExportUtils.replaceItems;
+import replaceItem = CsvExportUtils.replaceItem;
 
 
 /**
@@ -12,9 +17,9 @@ import {FieldDefinition} from '../configuration/model/field-definition';
  */
 export module CSVExport {
 
+    import OBJECT_SEPARATOR = CsvExportConsts.OBJECT_SEPARATOR;
     const EMPTY = '';
     const SEPARATOR = ',';
-    const OBJECT_SEPARATOR = '.';
     export const ARRAY_SEPARATOR = ';';
 
     const RELATIONS_IS_RECORDED_IN = 'relations.isRecordedIn';
@@ -50,6 +55,7 @@ export module CSVExport {
             .map(toRowsArrangedBy(headings));
 
         return flow([headings, matrix],
+            expandValOptionalEndVal(fieldDefinitions),
             expandDating,
             expandDimension(fieldDefinitions),
             combine);
@@ -66,8 +72,29 @@ export module CSVExport {
 
     const expandDimensionItems = expandHomogeneousItems(rowsWithDimensionElementsExpanded, 6);
 
+    const expandValOptionalEndValItems = expandHomogeneousItems(rowsWitValOptionalEndValElementsExpanded, 2);
+
+
     const expandLevelOne =
         (columnIndex: number, widthOfNewItem: number) => expandHomogeneousItems(identity, widthOfNewItem)(columnIndex, 1);
+
+
+    function expandValOptionalEndVal(fieldDefinitions: Array<FieldDefinition>) {
+
+        return (headingsAndMatrix: HeadingsAndMatrix) => {
+
+            return flow(
+                headingsAndMatrix,
+                left,
+                CsvExportUtils.getIndices(fieldDefinitions, 'dropdownRange'),
+                reverse,
+                objectExpand(
+                    CsvHeadingsExpansion.expandValOptionalEndValHeadings,
+                    expandValOptionalEndValItems,
+                    headingsAndMatrix));
+        }
+    }
+
 
 
     function expandDating(headingsAndMatrix: HeadingsAndMatrix) {
@@ -75,8 +102,8 @@ export module CSVExport {
         const indexOfDatingElement = H(headingsAndMatrix).indexOf('dating');
         if (indexOfDatingElement === -1) return headingsAndMatrix;
 
-        return expand(
-            expandDatingHeadings,
+        return objectArrayExpand(
+            CsvHeadingsExpansion.expandDatingHeadings,
             expandDatingItems,
             headingsAndMatrix)([indexOfDatingElement]);
     }
@@ -84,40 +111,24 @@ export module CSVExport {
 
     function expandDimension(fieldDefinitions: Array<FieldDefinition>) {
 
-        const getDimensionIndices = getIndices(fieldDefinitions, DIMENSION);
-
         return (headings_and_matrix: HeadingsAndMatrix) => {
 
             return flow(
                 headings_and_matrix,
                 left,
-                getDimensionIndices,
+                CsvExportUtils.getIndices(fieldDefinitions, DIMENSION),
                 reverse,
-                expand(
-                    expandDimensionHeadings,
+                objectArrayExpand(
+                    CsvHeadingsExpansion.expandDimensionHeadings,
                     expandDimensionItems,
                     headings_and_matrix));
         }
     }
 
 
-    function getIndices(fieldDefinitions: Array<FieldDefinition>, inputType: string) {
-
-        return indices((heading: string) => {
-
-                if (heading.includes(OBJECT_SEPARATOR)) return false;
-                const field = fieldDefinitions.find(on('name', is(heading)));
-                if (!field) return false;
-
-                return field.inputType === inputType;
-            });
-    }
-
-
     /**
-     * Returns a function that when provided an array of columnIndices,
-     * expands headingsAndMatrix at the columns, assuming that
-     * these columns contain array values.
+     * Expands headingsAndMatrix at the columns given by columnIndices, assuming that
+     * these columns contain array values, which in turn are objects.
      *
      * For example:
      *
@@ -130,21 +141,17 @@ export module CSVExport {
      * [['h1', 'h2.0.b', 'h2.1.b'],
      *  [[7,   2       , 3],
      *   [8,   5,      , undefined]]]
-     *
-     * @param expandHeadings
-     * @param expandLevelTwo
-     * @param headingsAndMatrix
      */
-    function expand(expandHeadings: (numItems: number) => (fieldName: string) => string[],
-                    expandLevelTwo: (where: number, nrOfNewItems: number) => (itms: any[]) => any[],
-                    headingsAndMatrix: HeadingsAndMatrix) {
+    function objectArrayExpand(expandHeadings: (numItems: number) => (fieldName: string) => string[],
+                               expandLevelTwo: (where: number, nrOfNewItems: number) => (itms: any[]) => any[],
+                               headingsAndMatrix: HeadingsAndMatrix): (columnIndices: number[]) => HeadingsAndMatrix {
 
-        return reduce((headingsAndMatrix: HeadingsAndMatrix, columnIndex: number) => {
+        return reduce(([headings, matrix]: HeadingsAndMatrix, columnIndex: number) => {
 
-                const max = Math.max(1, getMax(columnIndex)(M(headingsAndMatrix)));
+                const max = Math.max(1, CsvExportUtils.getMax(columnIndex)(matrix));
 
-                const expandedHeader = replaceItem(columnIndex, expandHeadings(max))(H(headingsAndMatrix));
-                const expandedRows   = M(headingsAndMatrix)
+                const expandedHeader = replaceItem(columnIndex, expandHeadings(max))(headings);
+                const expandedRows   = matrix
                     .map(expandLevelOne(columnIndex, max))
                     .map(expandLevelTwo(columnIndex, max));
 
@@ -154,76 +161,28 @@ export module CSVExport {
     }
 
 
-    function getMax(columnIndex: any) {
+    function objectExpand(expandHeadings: (fieldName: string) => string[],
+                          expandLevelTwo: (where: number, nrOfNewItems: number) => (itms: any[]) => any[],
+                          headingsAndMatrix: HeadingsAndMatrix): (columnIndices: number[]) => HeadingsAndMatrix {
 
-        return reduce((max: number, row: any) =>
+        return reduce(([headings, matrix]: HeadingsAndMatrix, columnIndex: number) => {
 
-                Math.max(
-                    max,
-                    row[columnIndex]
-                        ? row[columnIndex].length
-                        : 0)
+            const expandedHeader = replaceItem(columnIndex, expandHeadings)(headings);
+            const expandedRows   = matrix.map(expandLevelTwo(columnIndex, 1));
+            return [expandedHeader, expandedRows];
 
-            , 0);
+        }, headingsAndMatrix);
     }
 
 
     function makeHeadings(fieldDefinitions: Array<FieldDefinition>, relations: string[]) {
 
-        const fieldNames = insertDropdownRangeEnds(makeFieldNamesList(fieldDefinitions), fieldDefinitions);
-
-        return fieldNames
+        return makeFieldNamesList(fieldDefinitions)
             .concat(
                 relations
                     .filter(isNot(includedIn(HierarchicalRelations.ALL)))
                     .map(prepend(Resource.RELATIONS + OBJECT_SEPARATOR)))
             .concat(relations.find(includedIn(HierarchicalRelations.ALL)) ? [RELATIONS_IS_CHILD_OF] : []);
-    }
-
-
-    function insertDropdownRangeEnds(fieldNames: string[], fieldDefinitions: Array<FieldDefinition>) {
-
-        const dropdownRangeIndices = getIndices(fieldDefinitions, 'dropdownRange')(fieldNames);
-
-        return reverse(dropdownRangeIndices)
-            .reduce(
-                (fieldNamesList, index) => replaceItem(index, name => [name, name + 'End'])(fieldNamesList) as string[],
-                fieldNames);
-    }
-
-
-    function expandDatingHeadings(n: number) {
-
-        return (fieldName: string) => {
-
-            return flatMap(i => [
-                    fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'type',
-                    fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'begin.inputType',
-                    fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'begin.inputYear',
-                    fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'end.inputType',
-                    fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'end.inputYear',
-                    fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'margin',
-                    fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'source',
-                    fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'isImprecise',
-                    fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'isUncertain']
-                )(range(n));
-        }
-    }
-
-
-    function expandDimensionHeadings(n:number) {
-
-        return (fieldName: string) => {
-
-            return flatMap(i => [
-                    fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'inputValue',
-                    fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'inputRangeEndValue',
-                    fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'measurementPosition',
-                    fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'measurementComment',
-                    fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'inputUnit',
-                    fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'isImprecise']
-                )(range(n));
-        }
     }
 
 
@@ -244,6 +203,13 @@ export module CSVExport {
         if (isUncertain !== undefined) expandedDating.push(isUncertain ? 'true' : 'false');
 
         return expandedDating;
+    }
+
+
+    function rowsWitValOptionalEndValElementsExpanded(valOptionalEndVal: ValOptionalEndVal<string>): string[] {
+
+        const {value, endValue} = valOptionalEndVal;
+        return [value, endValue ? endValue : ''];
     }
 
 
@@ -292,39 +258,6 @@ export module CSVExport {
                 flatMap(compose(
                     cond(isDefined, computeReplacement, []),
                     fillUpToSize(widthOfEachNewItem, EMPTY))));
-        }
-    }
-
-
-    function replaceItem<A>(where: number,
-                            replace: (_: A) => A[]) {
-
-        return replaceItems(where, 1,
-            (items: any[]) =>
-                items.length === 0
-                    ? []
-                    : replace(items[0]));
-    }
-
-
-    function replaceItems<A>(where: number,
-                             nrOfNewItems: number,
-                             replace: (_: A[]) => A[]) {
-
-        /**
-         * @param itms
-         */
-        return (itms: A[]) => {
-
-            const replacements =
-                flow(itms,
-                    drop(where),
-                    take(nrOfNewItems),
-                    replace);
-
-            return take(where)(itms)
-                .concat(replacements)
-                .concat(drop(where + nrOfNewItems)(itms));
         }
     }
 

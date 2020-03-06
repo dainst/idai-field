@@ -125,14 +125,18 @@ describe('CSVExport', () => {
             ifResource('i3', 'identifier3', 'shortDescription3', 'type')
         ];
 
-        resources[0].period = 'A';
-        resources[0].periodEnd = 'B';
-        resources[1].period = 'A';
+        resources[0]['period'] = {
+            value: 'A',
+            endValue: 'B'
+        };
+        resources[1]['period'] = {
+            value: 'A'
+        };
 
         const result = CSVExport.createExportable(resources, t, []).map(row => row.split(','));
 
-        expect(result[0][1]).toBe('"period"');
-        expect(result[0][2]).toBe('"periodEnd"');
+        expect(result[0][1]).toBe('"period.value"');
+        expect(result[0][2]).toBe('"period.endValue"');
         expect(result[0][3]).toBe('"custom"');
 
         expect(result[1][1]).toBe('"A"');
@@ -157,18 +161,16 @@ describe('CSVExport', () => {
             ifResource('i1', 'identifier1', 'shortDescription1', 'type'),
         ];
 
-        resources[0].periodA = 'A';
-        resources[0].periodAEnd = 'B';
-        resources[0].periodB = 'C';
-        resources[0].periodBEnd = 'D';
+        resources[0].periodA = { value: 'A', endValue: 'B' };
+        resources[0].periodB = { value: 'C', endValue: 'D' };
         resources[0].custom = 'custom';
 
         const result = CSVExport.createExportable(resources, t, []).map(row => row.split(','));
 
-        expect(result[0][1]).toBe('"periodA"');
-        expect(result[0][2]).toBe('"periodAEnd"');
-        expect(result[0][3]).toBe('"periodB"');
-        expect(result[0][4]).toBe('"periodBEnd"');
+        expect(result[0][1]).toBe('"periodA.value"');
+        expect(result[0][2]).toBe('"periodA.endValue"');
+        expect(result[0][3]).toBe('"periodB.value"');
+        expect(result[0][4]).toBe('"periodB.endValue"');
         expect(result[0][5]).toBe('"custom"');
 
         expect(result[1][1]).toBe('"A"');

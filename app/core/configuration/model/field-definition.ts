@@ -41,4 +41,11 @@ export module FieldDefinition {
 
     export const VISIBLE = 'visible';
     export const MANDATORY = 'mandatory';
+    export const EDITABLE = 'editable';
+    export const NAME = 'name';
+    export const LABEL = 'label';
+    export const DESCRIPTION = 'description';
+    export const FULLTEXTINDEXED = 'fulltextIndexed';
+    export const CONSTRAINTINDEXED = 'constraintIndexed';
+    export const GROUP = 'group';
 }

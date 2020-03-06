@@ -12,7 +12,7 @@ import {FieldReadDatastore} from '../../core/datastore/field/field-read-datastor
 import {GeoJsonExporter} from '../../core/export/geojson-exporter';
 import {ShapefileExporter} from '../../core/export/shapefile-exporter';
 import {ProjectTypes} from '../../core/configuration/project-types';
-import {CsvExporter} from '../../core/export/csv-exporter';
+import {CsvExporter} from '../../core/export/csv/csv-exporter';
 import {ResourceTypeCount} from '../../core/export/export-helper';
 import {ExportRunner} from '../../core/export/export-runner';
 import {DocumentReadDatastore} from '../../core/datastore/document-read-datastore';

@@ -1,4 +1,4 @@
-import {CSVExport} from '../../../../app/core/export/csv-export';
+import {CSVExport} from '../../../../app/core/export/csv/csv-export';
 import {Static} from '../../static';
 import {FieldDefinition} from '../../../../app/core/configuration/model/field-definition';
 

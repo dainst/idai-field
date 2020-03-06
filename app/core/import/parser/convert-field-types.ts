@@ -3,7 +3,7 @@ import {Resource, Dimension, Dating} from 'idai-components-2';
 import {ParserErrors} from './parser-errors';
 import {PARENT} from '../../model/relation-constants';
 import {IdaiType} from '../../configuration/model/idai-type';
-import {CSVExport} from '../../export/csv-export';
+import {CSVExport} from '../../export/csv/csv-export';
 import ARRAY_SEPARATOR = CSVExport.ARRAY_SEPARATOR;
 import {setOn} from '../../util/utils';
 

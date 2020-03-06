@@ -1,9 +1,9 @@
 import * as fs from 'fs';
 import {FieldResource} from 'idai-components-2';
 import {CSVExport} from './csv-export';
-import {M} from '../../components/messages/m';
-import {PerformExport} from './export-helper';
-import {IdaiType} from '../configuration/model/idai-type';
+import {M} from '../../../components/messages/m';
+import {PerformExport} from '../export-helper';
+import {IdaiType} from '../../configuration/model/idai-type';
 
 /**
  * Small wrapper to separate async and file handling, including

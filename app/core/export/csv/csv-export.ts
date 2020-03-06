@@ -1,10 +1,10 @@
 import {compose, flatMap, flow, identity, includedIn, isDefined, isNot,
-    isnt, reduce, reverse, take, to, cond, left, right, Pair, dense, prepend} from 'tsfun';
+    isnt, reduce, reverse, to, cond, left, right, Pair, dense, prepend} from 'tsfun';
 import {Dating, Dimension, FieldResource, Resource, ValOptionalEndVal} from 'idai-components-2';
-import {clone} from '../util/object-util';
-import {fillUpToSize} from './export-helper';
-import {HierarchicalRelations} from '../model/relation-constants';
-import {FieldDefinition} from '../configuration/model/field-definition';
+import {clone} from '../../util/object-util';
+import {fillUpToSize} from '../export-helper';
+import {HierarchicalRelations} from '../../model/relation-constants';
+import {FieldDefinition} from '../../configuration/model/field-definition';
 import {CsvExportUtils} from './csv-export-utils';
 import {CsvHeadingsExpansion} from './csv-headings-expansion';
 import {CsvExportConsts} from './csv-export-consts';

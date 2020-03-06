@@ -1,5 +1,5 @@
 import {drop, flow, indices, is, on, reduce, take} from 'tsfun';
-import {FieldDefinition} from '../configuration/model/field-definition';
+import {FieldDefinition} from '../../configuration/model/field-definition';
 
 
 export module CsvExportUtils {

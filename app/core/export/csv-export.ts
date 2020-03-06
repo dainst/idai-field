@@ -1,6 +1,6 @@
 import {compose, drop, flatMap, flow, identity, includedIn, indices, is, isDefined, isNot,
     isnt, on, range, reduce, reverse, take, to, cond, left, right, Pair, dense, prepend} from 'tsfun';
-import {Dating, Dimension, FieldResource} from 'idai-components-2';
+import {Dating, Dimension, FieldResource, Resource} from 'idai-components-2';
 import {clone} from '../util/object-util';
 import {fillUpToSize} from './export-helper';
 import {HierarchicalRelations} from '../model/relation-constants';
@@ -176,7 +176,7 @@ export module CSVExport {
             .concat(
                 relations
                     .filter(isNot(includedIn(HierarchicalRelations.ALL)))
-                    .map(prepend('relations.')))
+                    .map(prepend(Resource.RELATIONS + OBJECT_SEPARATOR)))
             .concat(relations.find(includedIn(HierarchicalRelations.ALL)) ? [RELATIONS_IS_CHILD_OF] : []);
     }
 

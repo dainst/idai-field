@@ -1,5 +1,5 @@
-import {isObject} from 'tsfun';
-import {Document} from 'idai-components-2';
+import {isObject, flow} from 'tsfun';
+import {Document, ValOptionalEndVal} from 'idai-components-2';
 import {migrationMap, subFieldsMigrationMap, singleToMultipleValuesFieldNames} from './migration-map';
 
 
@@ -10,7 +10,34 @@ export module Migrator {
 
     export function migrate(document: Document): Document {
 
-        return migrateSingleToMultipleValues(migrateFieldNames(document));
+        return flow(
+            document,
+            migrateFieldNames,
+            migratePeriodFields,
+            migrateSingleToMultipleValues);
+    }
+
+
+    /**
+     * @param document modified in place
+     * @return the original, now modified document
+     */
+    function migratePeriodFields(document: Document): Document {
+
+        const PERIOD = 'period';
+        const PERIODEND = 'periodEnd';
+
+        if (document.resource[PERIOD] && !isObject(document.resource[PERIOD])) {
+
+            document.resource[PERIOD] = {
+                value: document.resource[PERIOD]
+            };
+            if (document.resource[PERIODEND]) {
+                document.resource[PERIOD][ValOptionalEndVal.ENDVALUE] = document.resource[PERIODEND];
+                delete document.resource[PERIODEND];
+            }
+        }
+        return document;
     }
 
 

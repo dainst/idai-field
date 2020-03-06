@@ -11,13 +11,13 @@
         where only period is used
         -->
         <select *ngIf="showEndElements()"
-                [(ngModel)]="resource[field.name]" (change)="setValue($event.target.value)"
+                [(ngModel)]="resource[field.name] && resource[field.name]['value']" (change)="setValue($event.target.value)"
                 class="form-control">
             <option value="" [selected]="!resource.hasOwnProperty(field.name)"></option>
             <option *ngFor="let item of valuelist" value="{{item}}">{{item}}</option>
         </select>
         <select *ngIf="!showEndElements()"
-                [(ngModel)]="resource[field.name]" (change)="setValue($event.target.value)"
+                [(ngModel)]="resource[field.name] && resource[field.name]['value']" (change)="setValue($event.target.value)"
                 class="form-control">
             <option value="" [selected]="!resource.hasOwnProperty(field.name)"></option>
             <option *ngFor="let item of valuelist" value="{{item}}">{{item}}</option>
@@ -28,8 +28,9 @@
         <label *ngIf="showEndElements()" class="dropdown-range-end-label">
             <span i18n="@@docedit.forms.dropdownRange.to">bis</span>
         </label>
-        <select *ngIf="showEndElements()" [disabled]="!resource[field.name] || resource[field.name] === ''"
-                [(ngModel)]="resource[field.name + 'End']" (change)="setEndValue($event.target.value)"
+        <select *ngIf="showEndElements()"
+                [disabled]="!resource[field.name] || !resource[field.name]['value'] || resource[field.name]['value'] === ''"
+                [(ngModel)]="resource[field.name]['endValue']" (change)="setEndValue($event.target.value)"
                 class="form-control">
             <option value="" [selected]="!resource.hasOwnProperty(field.name)"></option>
             <option *ngFor="let item of valuelist" value="{{item}}">{{item}}</option>

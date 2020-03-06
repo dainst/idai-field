@@ -378,13 +378,13 @@ export module CSVExport {
     function makeFieldNamesList(fieldDefinitions: Array<FieldDefinition>): string[] {
 
         let fieldNames: string[] = getUsableFieldNames(fieldDefinitions.map(to('name')));
-        const indexOfShortDescription = fieldNames.indexOf('shortDescription');
+        const indexOfShortDescription = fieldNames.indexOf(FieldResource.SHORTDESCRIPTION);
         if (indexOfShortDescription !== -1) {
             fieldNames.splice(indexOfShortDescription, 1);
-            fieldNames.unshift('shortDescription');
+            fieldNames.unshift(FieldResource.SHORTDESCRIPTION);
         }
-        fieldNames = fieldNames.filter(isnt('identifier'));
-        fieldNames.unshift('identifier');
+        fieldNames = fieldNames.filter(isnt(FieldResource.IDENTIFIER));
+        fieldNames.unshift(FieldResource.IDENTIFIER);
 
         return fieldNames;
     }

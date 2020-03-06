@@ -27,7 +27,9 @@
 
     <div class="col-md-6 mr-md-auto">
         <div class="row">
-            <div id="search-bar-container" class="col-md-9">
+            <div id="search-bar-container"
+                 [class.col-md-9]="!isInTypesManagement()"
+                 [class.col-md-12]="isInTypesManagement()">
                 <resources-search-bar [filterOptions]="filterOptions"
                                       [q]="getQueryString()"
                                       [types]="getTypeFilters()"
@@ -37,9 +39,9 @@
                 </resources-search-bar>
             </div>
 
-            <div id="buttons-container" class="col-md-3">
+            <div *ngIf="!isInTypesManagement()" id="buttons-container" class="col-md-3">
                 <div class="btn-group resources-mode-buttons">
-                    <button *ngIf="!isInTypesManagement()" id="map-mode-button"
+                    <button id="map-mode-button"
                             (click)="switchMode('map')"
                             ngbTooltip="Kartendarstellung"
                             i18n-ngbTooltip="@@resources.tooltips.mode.map"
@@ -53,7 +55,7 @@
                             [class.active]="isCurrentMode('map')">
                         <span class="mdi mdi-map"></span>
                     </button>
-                    <button *ngIf="!isInTypesManagement()" id="list-mode-button"
+                    <button id="list-mode-button"
                             (click)="switchMode('list')"
                             class="btn btn-primary m-0"
                             ngbTooltip="Listendarstellung"
@@ -67,34 +69,6 @@
                             [class.active]="isCurrentMode('list')">
                         <span class="mdi mdi-table"></span>
                     </button>
-                    <button *ngIf="isInTypesManagement()" id="type-grid-mode-button"
-                            (click)="switchMode('type-grid')"
-                            ngbTooltip="Rasterdarstellung"
-                            i18n-ngbTooltip="@@resources.tooltips.mode.grid"
-                            placement="left"
-                            triggers="manual"
-                            #typeGridModeTooltip="ngbTooltip"
-                            (mouseover)="typeGridModeTooltip.open()"
-                            (mouseleave)="typeGridModeTooltip.close()"
-                            (mousedown)="typeGridModeTooltip.close()"
-                            class="btn btn-primary m-0"
-                            [class.active]="isCurrentMode('type-grid')">
-                        <span class="mdi mdi-view-grid"></span>
-                    </button>
-                    <button *ngIf="isInTypesManagement()" id="type-list-mode-button"
-                            (click)="switchMode('type-list')"
-                            ngbTooltip="Listendarstellung"
-                            i18n-ngbTooltip="@@resources.tooltips.mode.list"
-                            placement="left"
-                            triggers="manual"
-                            #typeListModeTooltip="ngbTooltip"
-                            (mouseover)="typeListModeTooltip.open()"
-                            (mouseleave)="typeListModeTooltip.close()"
-                            (mousedown)="typeListModeTooltip.close()"
-                            class="btn btn-primary m-0"
-                            [class.active]="isCurrentMode('type-list')">
-                        <span class="mdi mdi-view-list"></span>
-                    </button>
                 </div>
             </div>
         </div>
@@ -107,7 +81,5 @@
         <list *ngIf="viewFacade.getMode() === 'list'" [documents]="viewFacade.getDocuments()"></list>
         <type-grid *ngIf="viewFacade.getMode() === 'type-grid'"
                    [documents]="viewFacade.getDocuments()"></type-grid>
-        <type-list *ngIf="viewFacade.getMode() === 'type-list'"
-                   [documents]="viewFacade.getDocuments()"></type-list>
     </div>
 </div>

@@ -33,6 +33,7 @@ export class TypeGridComponent extends BaseList implements OnChanges {
 
     @Input() documents: Array<FieldDocument>;
 
+    public mainDocument: FieldDocument|undefined;
     public linkedDocuments: Array<FieldDocument> = [];
     public subtypes: Array<FieldDocument> = [];
     public images: { [resourceId: string]: Array<SafeResourceUrl> } = {};
@@ -64,17 +65,10 @@ export class TypeGridComponent extends BaseList implements OnChanges {
 
     async ngOnChanges() {
 
+        this.mainDocument = this.getMainDocument();
         this.subtypes = await this.getSubtypes();
         this.linkedDocuments = await this.getLinkedDocuments();
         this.images = await this.getImages();
-    }
-
-
-    public getMainDocument(): FieldDocument|undefined {
-
-        return this.viewFacade.isInExtendedSearchMode()
-            ? undefined
-            : NavigationPath.getSelectedSegment(this.viewFacade.getNavigationPath())?.document;
     }
 
 
@@ -151,17 +145,13 @@ export class TypeGridComponent extends BaseList implements OnChanges {
 
     public isTypesSectionLabelVisible(): boolean {
 
-        const mainDocument: FieldDocument|undefined = this.getMainDocument();
-
-        return this.linkedDocuments.length > 0 && mainDocument?.resource.type === 'TypeCatalog';
+        return this.linkedDocuments.length > 0 && this.mainDocument?.resource.type === 'TypeCatalog';
     }
 
 
     public isSubtypesSectionLabelVisible(): boolean {
 
-        const mainDocument: FieldDocument|undefined = this.getMainDocument();
-
-        return this.linkedDocuments.length > 0 && mainDocument?.resource.type === 'Type';
+        return this.linkedDocuments.length > 0 && this.mainDocument?.resource.type === 'Type';
     }
 
 
@@ -185,15 +175,22 @@ export class TypeGridComponent extends BaseList implements OnChanges {
     }
 
 
+    private getMainDocument(): FieldDocument|undefined {
+
+        return this.viewFacade.isInExtendedSearchMode()
+            ? undefined
+            : NavigationPath.getSelectedSegment(this.viewFacade.getNavigationPath())?.document;
+    }
+
+
     private async getSubtypes(): Promise<Array<FieldDocument>> {
 
-        const mainDocument: FieldDocument|undefined = this.getMainDocument();
-        if (!mainDocument) return [];
+        if (!this.mainDocument) return [];
 
         return (await this.fieldDatastore.find({
             constraints: {
                 'liesWithin:contain': {
-                    value: mainDocument.resource.id,
+                    value: this.mainDocument.resource.id,
                     searchRecursively: true
                 }
             }
@@ -203,11 +200,10 @@ export class TypeGridComponent extends BaseList implements OnChanges {
 
     private async getLinkedDocuments(): Promise<Array<FieldDocument>> {
 
-        const mainDocument: FieldDocument|undefined = this.getMainDocument();
-        if (!mainDocument) return [];
+        if (!this.mainDocument) return [];
 
         const linkedResourceIds: string[] = flow(
-            [mainDocument].concat(this.subtypes),
+            [this.mainDocument].concat(this.subtypes),
             filter((document: FieldDocument) => Document.hasRelations(document, 'hasInstance')),
             map((document: FieldDocument) => document.resource.relations['hasInstance']),
             flatten,

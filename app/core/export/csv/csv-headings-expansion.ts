@@ -3,7 +3,7 @@ import {ValOptionalEndVal} from 'idai-components-2/index';
 import {CsvExportConsts} from './csv-export-consts';
 
 
-export module CsvHeadingsExpansion {
+export module CSVHeadingsExpansion {
 
     import OBJECT_SEPARATOR = CsvExportConsts.OBJECT_SEPARATOR;
 

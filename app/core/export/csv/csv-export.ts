@@ -1,15 +1,13 @@
-import {compose, flatMap, flow, identity, includedIn, isDefined, isNot,
-    isnt, reduce, reverse, to, cond, left, right, Pair, dense, prepend} from 'tsfun';
+import {flow, includedIn, isDefined, isNot,
+    isnt, reverse, to, cond, left, dense, prepend} from 'tsfun';
 import {Dating, Dimension, FieldResource, Resource, ValOptionalEndVal} from 'idai-components-2';
 import {clone} from '../../util/object-util';
-import {fillUpToSize} from '../export-helper';
 import {HierarchicalRelations} from '../../model/relation-constants';
 import {FieldDefinition} from '../../configuration/model/field-definition';
 import {CsvExportUtils} from './csv-export-utils';
-import {CsvHeadingsExpansion} from './csv-headings-expansion';
-import {CsvExportConsts} from './csv-export-consts';
-import replaceItems = CsvExportUtils.replaceItems;
-import replaceItem = CsvExportUtils.replaceItem;
+import {CSVHeadingsExpansion} from './csv-headings-expansion';
+import {CsvExportConsts, H, Heading, HeadingsAndMatrix, M} from './csv-export-consts';
+import {CSVExpansion} from './csv-expansion';
 
 
 /**
@@ -18,7 +16,7 @@ import replaceItem = CsvExportUtils.replaceItem;
 export module CSVExport {
 
     import OBJECT_SEPARATOR = CsvExportConsts.OBJECT_SEPARATOR;
-    const EMPTY = '';
+
     const SEPARATOR = ',';
     export const ARRAY_SEPARATOR = ';';
 
@@ -27,14 +25,6 @@ export module CSVExport {
     const RELATIONS_LIES_WITHIN = 'relations.liesWithin';
 
     const DIMENSION = 'dimension';
-
-    const H = left;
-    const M = right;
-    type Cell = string;
-    type Matrix = Cell[][];
-    type Heading = string;
-    type Headings = Heading[];
-    type HeadingsAndMatrix = Pair<Headings, Matrix>;
 
 
     /**
@@ -62,21 +52,17 @@ export module CSVExport {
     }
 
 
-    function combine(headingsAndMatrix: HeadingsAndMatrix) {
+    function combine([headings, matrix]: HeadingsAndMatrix) {
 
-        return [H(headingsAndMatrix)].concat(M(headingsAndMatrix)).map(toCsvLine);
+        return [headings].concat(matrix).map(toCsvLine);
     }
 
 
-    const expandDatingItems = expandHomogeneousItems(rowsWithDatingElementsExpanded, 9);
+    const expandDatingItems = CSVExpansion.expandHomogeneousItems(rowsWithDatingElementsExpanded, 9);
 
-    const expandDimensionItems = expandHomogeneousItems(rowsWithDimensionElementsExpanded, 6);
+    const expandDimensionItems = CSVExpansion.expandHomogeneousItems(rowsWithDimensionElementsExpanded, 6);
 
-    const expandValOptionalEndValItems = expandHomogeneousItems(rowsWitValOptionalEndValElementsExpanded, 2);
-
-
-    const expandLevelOne =
-        (columnIndex: number, widthOfNewItem: number) => expandHomogeneousItems(identity, widthOfNewItem)(columnIndex, 1);
+    const expandValOptionalEndValItems = CSVExpansion.expandHomogeneousItems(rowsWitValOptionalEndValElementsExpanded, 2);
 
 
     function expandValOptionalEndVal(fieldDefinitions: Array<FieldDefinition>) {
@@ -88,8 +74,8 @@ export module CSVExport {
                 left,
                 CsvExportUtils.getIndices(fieldDefinitions, 'dropdownRange'),
                 reverse,
-                objectExpand(
-                    CsvHeadingsExpansion.expandValOptionalEndValHeadings,
+                CSVExpansion.objectExpand(
+                    CSVHeadingsExpansion.expandValOptionalEndValHeadings,
                     expandValOptionalEndValItems,
                     headingsAndMatrix));
         }
@@ -102,8 +88,8 @@ export module CSVExport {
         const indexOfDatingElement = H(headingsAndMatrix).indexOf('dating');
         if (indexOfDatingElement === -1) return headingsAndMatrix;
 
-        return objectArrayExpand(
-            CsvHeadingsExpansion.expandDatingHeadings,
+        return CSVExpansion.objectArrayExpand(
+            CSVHeadingsExpansion.expandDatingHeadings,
             expandDatingItems,
             headingsAndMatrix)([indexOfDatingElement]);
     }
@@ -118,60 +104,11 @@ export module CSVExport {
                 left,
                 CsvExportUtils.getIndices(fieldDefinitions, DIMENSION),
                 reverse,
-                objectArrayExpand(
-                    CsvHeadingsExpansion.expandDimensionHeadings,
+                CSVExpansion.objectArrayExpand(
+                    CSVHeadingsExpansion.expandDimensionHeadings,
                     expandDimensionItems,
                     headings_and_matrix));
         }
-    }
-
-
-    /**
-     * Expands headingsAndMatrix at the columns given by columnIndices, assuming that
-     * these columns contain array values, which in turn are objects.
-     *
-     * For example:
-     *
-     * [['h1', 'h2'],
-     *  [[7,   [{b: 2}, {b: 3}],
-     *   [8,   [{b: 5}]]]
-     *
-     * Expanding at index 1, with appropriate expansion functions we can transform into
-     *
-     * [['h1', 'h2.0.b', 'h2.1.b'],
-     *  [[7,   2       , 3],
-     *   [8,   5,      , undefined]]]
-     */
-    function objectArrayExpand(expandHeadings: (numItems: number) => (fieldName: string) => string[],
-                               expandLevelTwo: (where: number, nrOfNewItems: number) => (itms: any[]) => any[],
-                               headingsAndMatrix: HeadingsAndMatrix): (columnIndices: number[]) => HeadingsAndMatrix {
-
-        return reduce(([headings, matrix]: HeadingsAndMatrix, columnIndex: number) => {
-
-                const max = Math.max(1, CsvExportUtils.getMax(columnIndex)(matrix));
-
-                const expandedHeader = replaceItem(columnIndex, expandHeadings(max))(headings);
-                const expandedRows   = matrix
-                    .map(expandLevelOne(columnIndex, max))
-                    .map(expandLevelTwo(columnIndex, max));
-
-                return [expandedHeader, expandedRows];
-
-            }, headingsAndMatrix);
-    }
-
-
-    function objectExpand(expandHeadings: (fieldName: string) => string[],
-                          expandLevelTwo: (where: number, nrOfNewItems: number) => (itms: any[]) => any[],
-                          headingsAndMatrix: HeadingsAndMatrix): (columnIndices: number[]) => HeadingsAndMatrix {
-
-        return reduce(([headings, matrix]: HeadingsAndMatrix, columnIndex: number) => {
-
-            const expandedHeader = replaceItem(columnIndex, expandHeadings)(headings);
-            const expandedRows   = matrix.map(expandLevelTwo(columnIndex, 1));
-            return [expandedHeader, expandedRows];
-
-        }, headingsAndMatrix);
     }
 
 
@@ -232,37 +169,6 @@ export module CSVExport {
 
 
     /**
-     * Takes itms, for example [A,B,C,D,E]
-     * and replaces one or more entries by a number of same-structured entries.
-     *
-     * Lets assume where is 2, nrOfNewItems is 2 and widthOfEachNewitem is 2, then
-     * we get
-     * [A,B,R1a,R1b,R2a,R2b,E]
-     * where the R1 entries replace the C entry
-     *   and the R2 entries replace the D enty
-     *
-     * @param widthOfEachNewItem
-     * @param computeReplacement should return an array of size widthOfEachNewItem
-     */
-    function expandHomogeneousItems(computeReplacement: (removed: any) => any[],
-                                    widthOfEachNewItem: number) {
-        /**
-         * @param where
-         * @param nrOfNewItems
-         */
-        return (where: number, nrOfNewItems: number) => {
-
-            return replaceItems(
-                where,
-                nrOfNewItems,
-                flatMap(compose(
-                    cond(isDefined, computeReplacement, []),
-                    fillUpToSize(widthOfEachNewItem, EMPTY))));
-        }
-    }
-
-
-    /**
      * resource.relations = { someRel: ['val1', 'val2] }
      * ->
      * resource['relations.someRel'] = 'val1; val2'
@@ -293,19 +199,21 @@ export module CSVExport {
     }
 
 
-    function toRowsArrangedBy(headings: Heading[]) { return (resource: FieldResource) => {
+    function toRowsArrangedBy(headings: Heading[]) {
 
-        const row = dense(headings.length);
+        return (resource: FieldResource) => {
 
-        return getUsableFieldNames(Object.keys(resource))
-            .reduce((row, fieldName) => {
+            return getUsableFieldNames(Object.keys(resource))
+                .reduce((row, fieldName) => {
 
-                const indexOfFoundElement = headings.indexOf(fieldName);
-                if (indexOfFoundElement !== -1) row[indexOfFoundElement] = (resource as any)[fieldName];
+                    const indexOfFoundElement = headings.indexOf(fieldName);
+                    if (indexOfFoundElement !== -1) row[indexOfFoundElement] = (resource as any)[fieldName];
 
-                return row;
-            }, row);
-    }}
+                    return row;
+
+                }, dense(headings.length));
+        }
+    }
 
 
     function makeFieldNamesList(fieldDefinitions: Array<FieldDefinition>): string[] {

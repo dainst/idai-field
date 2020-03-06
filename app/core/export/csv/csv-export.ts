@@ -1,5 +1,5 @@
 import {flow, includedIn, isDefined, isNot, isnt, to, map, cond,
-    dense, prepend, append, compose} from 'tsfun';
+    dense, prepend, append, compose, remove} from 'tsfun';
 import {FieldResource, Resource} from 'idai-components-2';
 import {HierarchicalRelations} from '../../model/relation-constants';
 import {FieldDefinition} from '../../configuration/model/field-definition';
@@ -18,6 +18,10 @@ import {join} from '../../util/utils';
 export module CSVExport {
 
     const SEPARATOR = ',';
+
+    const getUsableFieldNames =
+        remove(includedIn(['id', 'type', 'geometry', 'georeference', 'originalFilename', 'filename']));
+
 
     /**
      * Creates a header line and lines for each record.
@@ -78,9 +82,10 @@ export module CSVExport {
     }
 
 
+    // TODO reimplement
     function makeFieldNamesList(fieldDefinitions: Array<FieldDefinition>): string[] {
 
-        let fieldNames: string[] = getUsableFieldNames(fieldDefinitions.map(to('name')));
+        let fieldNames = getUsableFieldNames(fieldDefinitions.map(to(FieldDefinition.NAME)));
         const indexOfShortDescription = fieldNames.indexOf(FieldResource.SHORTDESCRIPTION);
         if (indexOfShortDescription !== -1) {
             fieldNames.splice(indexOfShortDescription, 1);
@@ -90,14 +95,6 @@ export module CSVExport {
         fieldNames.unshift(FieldResource.IDENTIFIER);
 
         return fieldNames;
-    }
-
-
-    function getUsableFieldNames(fieldNames: string[]): string[] {
-
-        return fieldNames.filter(isNot(includedIn(
-            ['id', 'type', 'geometry', 'georeference', 'originalFilename', 'filename']
-        )));
     }
 
 

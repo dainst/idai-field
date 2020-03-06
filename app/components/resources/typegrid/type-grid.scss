@@ -112,23 +112,28 @@ type-grid {
             }
           }
         }
-      }
-    }
 
-    #plus-button-container {
-      position: absolute;
-      bottom: 0;
-      height: 38px;
-      width: 100%;
-      z-index: 5;
+        #plus-button-container {
+          width: 100%;
+          height: 63px;
+          padding-top: 10px;
+          position: relative;
+          float: left;
 
-      #create-document-button .circular-button {
-        left: calc(50% - 20px);
-        margin: -22px auto auto auto;
-      }
+          #create-document-button .circular-button {
+            left: calc(50% - 20px);
+            margin: auto auto auto auto;
+          }
 
-      .loading-icon {
-        margin: -23px auto auto auto;
+          .loading-icon {
+            margin: -23px auto auto auto;
+          }
+        }
+
+        .type-grid-element + #plus-button-container {
+          height: 54px;
+          padding-top: 0;
+        }
       }
     }
   }

@@ -14,11 +14,14 @@
                    (onThumbnailClicked)="openImageViewModal(mainDocument)"></document-info>
 
     <div id="grid-elements-container">
-        <div *ngIf="documents.length > 0" class="grid-section">
-            <div *ngIf="isTypesSectionLabelVisible()" class="grid-section-label first-grid-section-label"
+        <div class="grid-section">
+            <div *ngIf="mainDocument?.resource.type === 'TypeCatalog'"
+                 class="grid-section-label first-grid-section-label"
                  i18n="@@resources.typeGrid.types">Typen</div>
-            <div *ngIf="isSubtypesSectionLabelVisible()" class="grid-section-label first-grid-section-label"
+            <div *ngIf="mainDocument?.resource.type === 'Type'"
+                 class="grid-section-label first-grid-section-label"
                  i18n="@@resources.typeGrid.subtypes">Untertypen</div>
+
             <div *ngFor="let document of documents"
                  id="type-grid-element-{{document.resource.id}}"
                  class="type-grid-element"
@@ -32,11 +35,23 @@
                     <img [src]="imageUrl">
                 </div>
             </div>
+
+            <div id="plus-button-container">
+                <plus-button *ngIf="isPlusButtonShown()"
+                             id="create-document-button"
+                             [placement]="'top'"
+                             [preselectedGeometryType]="'none'"
+                             [preselectedType]="getCurrentFilterType()"
+                             [liesWithin]="getSelectedSegmentDoc()"
+                             [isRecordedIn]="viewFacade.getCurrentOperation()"
+                             [status]="getPlusButtonStatus()"></plus-button>
+            </div>
         </div>
 
         <div *ngIf="linkedDocuments.length > 0" class="grid-section">
-            <div class="grid-section-label" [class.first-grid-section-label]="documents.length === 0"
+            <div class="grid-section-label"
                  i18n="@@resources.typeGrid.linkedFinds">Verknüpfte Funde</div>
+
             <div *ngFor="let document of linkedDocuments"
                  id="type-grid-element-linked-document-{{document.resource.id}}"
                  class="type-grid-element"
@@ -53,17 +68,5 @@
                 </div>
             </div>
         </div>
-    </div>
-
-    <div id="plus-button-container">
-        <plus-button *ngIf="isPlusButtonShown()"
-                     id="create-document-button"
-                     [placement]="'top'"
-                     [preselectedGeometryType]="'none'"
-                     [preselectedType]="getCurrentFilterType()"
-                     [liesWithin]="getSelectedSegmentDoc()"
-                     [isRecordedIn]="viewFacade.getCurrentOperation()"
-                     [status]="getPlusButtonStatus()"></plus-button>
-        <loading-icon></loading-icon>
     </div>
 </div>

@@ -1,4 +1,5 @@
-import {flow, includedIn, isDefined, isNot, isnt, to, map, cond, dense, prepend} from 'tsfun';
+import {flow, includedIn, isDefined, isNot, isnt, to, map, cond,
+    dense, prepend, append, compose} from 'tsfun';
 import {FieldResource, Resource} from 'idai-components-2';
 import {HierarchicalRelations} from '../../model/relation-constants';
 import {FieldDefinition} from '../../configuration/model/field-definition';
@@ -102,10 +103,12 @@ export module CSVExport {
 
     function toCsvLine(fields: string[]): string {
 
-        const wrapContents  = (field: string) => '"' + getFieldValue(field) + '"';
         return flow(
             fields,
-            map(cond(isDefined, wrapContents, '""')),
+            map(
+                cond(isDefined,
+                    compose(getFieldValue, append('"'), prepend('"')),
+                    '""')),
             join(SEPARATOR));
     }
 

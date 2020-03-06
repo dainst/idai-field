@@ -1,3 +1,4 @@
+import {val} from 'tsfun';
 import {CSVExpansion} from '../../../../../app/core/export/csv/csv-expansion';
 import expandHomogeneousItems = CSVExpansion.expandHomogeneousItems;
 
@@ -17,7 +18,7 @@ describe('CSVExpansion', () => {
                     ['l2', {a: 'A'}, null]
                 ]
             ] as any,
-            (_: any) => ['abc.a', 'abc.b'],
+            val(['abc.a', 'abc.b']),
             expandHomogeneousItems(({a, b}: any) => [a, b ? b : ''], 2)
             )([1]);
 
@@ -37,7 +38,7 @@ describe('CSVExpansion', () => {
                     ['l2', [{a: 'A'}], null]
                 ]
             ] as any,
-            (_: any) => (_: any) => ['abc.0.a', 'abc.0.b'],
+            val(val(['abc.0.a', 'abc.0.b'])),
             expandHomogeneousItems(({a, b}: any) => [a, b ? b : ''], 2)
         )([1]);
 

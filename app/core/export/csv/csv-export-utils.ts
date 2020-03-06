@@ -1,4 +1,5 @@
-import {dense, drop, flow, indices, is, on, reduce, take, prepend, append} from 'tsfun';
+import {dense, drop, flow, indices, is, on, reduce, first,
+    take, prepend, append, compose, cond, isEmpty} from 'tsfun';
 import {FieldDefinition} from '../../configuration/model/field-definition';
 import {FieldResource, Resource} from 'idai-components-2';
 import {clone} from '../../util/object-util';
@@ -101,11 +102,10 @@ export module CsvExportUtils {
                                    replace: (_: A) => Array<A>)
             : (as: Array<A>) => Array<A> {
 
-        return replaceItems(where, 1,
-            (items: any[]) =>
-                items.length === 0
-                    ? []
-                    : replace(items[0]));
+        return replaceItems(
+            where,
+            1,
+            compose(cond(isEmpty, [], compose(first, replace))));
     }
 
 

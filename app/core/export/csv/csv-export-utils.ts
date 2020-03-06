@@ -1,4 +1,4 @@
-import {dense, drop, flow, indices, is, on, reduce, take} from 'tsfun';
+import {dense, drop, flow, indices, is, on, reduce, take, prepend, append, flatten} from 'tsfun';
 import {FieldDefinition} from '../../configuration/model/field-definition';
 import {FieldResource, Resource} from 'idai-components-2';
 import {clone} from '../../util/object-util';
@@ -79,15 +79,14 @@ export module CsvExportUtils {
 
         return (as: Array<A>): Array<A> => {
 
-            const replacements =
-                flow(as,
-                    drop(where),
-                    take(nrOfNewItems),
-                    replace);
-
-            return take(where)(as)
-                .concat(replacements)
-                .concat(drop(where + nrOfNewItems)(as));
+            return flow(
+                as,
+                drop(where),
+                take(nrOfNewItems),
+                replace,
+                prepend(take(where)(as)),
+                append(drop(where + nrOfNewItems)(as)),
+                flatten);
         }
     }
 

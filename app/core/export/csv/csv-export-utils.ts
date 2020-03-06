@@ -67,11 +67,11 @@ export module CsvExportUtils {
 
     /**
      * as: ['a','b','c', 'd']
-     * replace: (as: string[]) => [as[0] + as[1], as[1] + as[0]])
+     * replace: (as: string[]) => ['e'])
      * where: 1
      * nrOfNewItems: 2
      * ->
-     * ['a', 'bc', 'cb', 'd']
+     * ['a', 'e', 'd']
      */
     export function replaceItems<A>(where: number,
                                     nrOfNewItems: number,

@@ -23,10 +23,10 @@ describe('CSVExportUtils', () => {
     it('replaceItems', () => {
 
         const result = CsvExportUtils
-            .replaceItems(1, 2, <A>(as: string[]) => [as[0] + as[1], as[1] + as[0]])
-            (['a','b','c', 'd']);
+            .replaceItems(1, 2, <A>(as: string[]) => ['e'])
+            (['a', 'b', 'c', 'd']);
 
-        expect(result).toEqual(['a', 'bc', 'cb', 'd'])
+        expect(result).toEqual(['a', 'e', 'd'])
     });
 
 

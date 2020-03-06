@@ -3,9 +3,9 @@ import {Resource, Dimension, Dating} from 'idai-components-2';
 import {ParserErrors} from './parser-errors';
 import {PARENT} from '../../model/relation-constants';
 import {IdaiType} from '../../configuration/model/idai-type';
-import {CSVExport} from '../../export/csv/csv-export';
-import ARRAY_SEPARATOR = CSVExport.ARRAY_SEPARATOR;
 import {setOn} from '../../util/utils';
+import {CsvExportConsts} from '../../export/csv/csv-export-consts';
+import ARRAY_SEPARATOR = CsvExportConsts.ARRAY_SEPARATOR;
 
 
 type FieldType = 'dating' | 'date' | 'dimension' | 'radio'
@@ -84,11 +84,11 @@ function convertDimension(resource: Resource, fieldName: string) {
 
         try {
             convertFloat(dimension, 'value');
-            convertFloat(dimension, 'rangeMin');
-            convertFloat(dimension, 'rangeMax');
-            convertFloat(dimension, 'inputValue');
-            convertFloat(dimension, 'inputRangeEndValue');
-            convertBoolean(dimension, 'isImprecise');
+            convertFloat(dimension, Dimension.RANGEMIN);
+            convertFloat(dimension, Dimension.RANGEMAX);
+            convertFloat(dimension, Dimension.INPUTVALUE);
+            convertFloat(dimension, Dimension.INPUTRANGEENDVALUE);
+            convertBoolean(dimension, Dimension.ISIMPRECISE);
             convertBoolean(dimension, 'isRange');
         } catch (msgWithParams) {
             throw [msgWithParams[0], msgWithParams[1], fieldName + '.' + i + '.' + msgWithParams[2]];

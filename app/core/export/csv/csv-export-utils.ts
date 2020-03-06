@@ -1,10 +1,50 @@
 import {drop, flow, indices, is, on, reduce, take} from 'tsfun';
 import {FieldDefinition} from '../../configuration/model/field-definition';
+import {FieldResource, Resource} from 'idai-components-2';
+import {clone} from '../../util/object-util';
+import {CsvExportConsts} from './csv-export-consts';
+import RELATIONS_LIES_WITHIN = CsvExportConsts.RELATIONS_LIES_WITHIN;
+import RELATIONS_IS_CHILD_OF = CsvExportConsts.RELATIONS_IS_CHILD_OF;
+import RELATIONS_IS_RECORDED_IN = CsvExportConsts.RELATIONS_IS_RECORDED_IN;
+import ARRAY_SEPARATOR = CsvExportConsts.ARRAY_SEPARATOR;
+import OBJECT_SEPARATOR = CsvExportConsts.OBJECT_SEPARATOR;
 
 
+/**
+ * @author Daniel de Oliveira
+ */
 export module CsvExportUtils {
 
-    const OBJECT_SEPARATOR = '.';
+    /**
+     * resource.relations = { someRel: ['val1', 'val2] }
+     * ->
+     * resource['relations.someRel'] = 'val1; val2'
+     *
+     * @param resource
+     * @returns a new resource instance, where relations are turned into fields.
+     */
+    export function convertToResourceWithFlattenedRelations(resource: FieldResource): FieldResource {
+
+        const cloned = clone(resource); // so we can modify in place
+
+        if (!cloned.relations) return cloned;
+        for (let relation of Object.keys(cloned.relations)) {
+            cloned[Resource.RELATIONS + '.' + relation] = cloned.relations[relation].join(ARRAY_SEPARATOR);
+        }
+        delete cloned.relations;
+
+        if (cloned[RELATIONS_LIES_WITHIN]) {
+            delete cloned[RELATIONS_IS_RECORDED_IN];
+            cloned[RELATIONS_IS_CHILD_OF] = cloned[RELATIONS_LIES_WITHIN];
+        }
+        else if (cloned[RELATIONS_IS_RECORDED_IN]) {
+            cloned[RELATIONS_IS_CHILD_OF] = cloned[RELATIONS_IS_RECORDED_IN];
+            delete cloned[RELATIONS_IS_RECORDED_IN];
+        }
+
+        return cloned;
+    }
+
 
     /**
      * fieldDefinitions = [

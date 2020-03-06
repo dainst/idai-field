@@ -1,7 +1,6 @@
 import {compose, cond, flatMap, identity, isDefined, reduce} from 'tsfun';
 import {CsvExportUtils} from './csv-export-utils';
 import {HeadingsAndMatrix} from './csv-export-consts';
-import {fillUpToSize} from '../export-helper';
 
 const EMPTY = '';
 
@@ -31,7 +30,7 @@ export module CSVExpansion {
                 nrOfNewItems,
                 flatMap(compose(
                     cond(isDefined, computeReplacement, []),
-                    fillUpToSize(widthOfEachNewItem, EMPTY))));
+                    CsvExportUtils.fillUpToSize(widthOfEachNewItem, EMPTY))));
         }
     }
 

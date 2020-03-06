@@ -1,4 +1,4 @@
-import {drop, flow, indices, is, on, reduce, take} from 'tsfun';
+import {dense, drop, flow, indices, is, on, reduce, take} from 'tsfun';
 import {FieldDefinition} from '../../configuration/model/field-definition';
 import {FieldResource, Resource} from 'idai-components-2';
 import {clone} from '../../util/object-util';
@@ -65,6 +65,14 @@ export module CsvExportUtils {
     }
 
 
+    /**
+     * as: ['a','b','c', 'd']
+     * replace: (as: string[]) => [as[0] + as[1], as[1] + as[0]])
+     * where: 1
+     * nrOfNewItems: 2
+     * ->
+     * ['a', 'bc', 'cb', 'd']
+     */
     export function replaceItems<A>(where: number,
                                     nrOfNewItems: number,
                                     replace: (_: Array<A>) => Array<A>) {
@@ -84,6 +92,13 @@ export module CsvExportUtils {
     }
 
 
+    /**
+     * as: ['a','b','c']
+     * replace: (a: string) => [a, a + a]
+     * where: 1
+     * ->
+     * ['a', 'b', 'bb', 'c']
+     */
     export function replaceItem<A>(where: number,
                                    replace: (_: A) => Array<A>)
             : (as: Array<A>) => Array<A> {
@@ -93,6 +108,27 @@ export module CsvExportUtils {
                 items.length === 0
                     ? []
                     : replace(items[0]));
+    }
+
+
+    /**
+     * Fills up items with defaultVal, until it reaches the specified targetSize.
+     * The amount of items filled in is based on the
+     * difference of the size of items to the target size.
+     *
+     * @param targetSize
+     * @param defaultVal
+     */
+    export function fillUpToSize(targetSize: number, defaultVal: any) {
+
+        /**
+         * @param items
+         */
+        return (items: any[]) => {
+
+            const fills = dense(targetSize - items.length).map(() => defaultVal);
+            return items.concat(fills);
+        }
     }
 
 

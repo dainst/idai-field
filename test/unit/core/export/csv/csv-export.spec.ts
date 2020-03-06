@@ -1,6 +1,6 @@
-import {CSVExport} from '../../../../app/core/export/csv/csv-export';
-import {Static} from '../../static';
-import {FieldDefinition} from '../../../../app/core/configuration/model/field-definition';
+import {Static} from '../../../static';
+import {FieldDefinition} from '../../../../../app/core/configuration/model/field-definition';
+import {CSVExport} from '../../../../../app/core/export/csv/csv-export';
 
 
 export function makeFieldDefinitions(fieldNames: string[]) {

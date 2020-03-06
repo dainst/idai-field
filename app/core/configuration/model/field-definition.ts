@@ -37,6 +37,28 @@ export interface FieldDefinition {
 }
 
 
+export module InputType {
+
+    export const INPUT = 'input';
+    export const UNSIGNEDINT = 'unsignedInt';
+    export const UNSIGNEDFLOAT = 'unsignedFloat';
+    export const FLOAT = 'float';
+    export const TEXT = 'text';
+    export const MULTIINPUT = 'multiinput';
+    export const DROPDOWN = 'dropdown';
+    export const DROPDOWNRANGE = 'dropdownRange';
+    export const RADIO = 'radio';
+    export const BOOLEAN = 'boolean';
+    export const CHECKBOXES = 'checkboxes';
+    export const DATING = 'dating';
+    export const DATE = 'date';
+    export const DIMENSION = 'dimension';
+    export const GEOMETRY = 'geometry';
+    export const CATALOGCRITERION = 'catalogCriterion';
+    export const DEFAULT = 'default';
+}
+
+
 export module FieldDefinition {
 
     export const VISIBLE = 'visible';

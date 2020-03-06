@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {ConfigLoader} from './boot/config-loader';
 import {ProjectConfiguration} from './project-configuration';
-import {FieldDefinition} from './model/field-definition';
+import {FieldDefinition, InputType} from './model/field-definition';
 import {BuiltinTypeDefinition, BuiltinTypeDefinitions} from './model/builtin-type-definition';
 import {RelationDefinition} from './model/relation-definition';
 import {Group} from '../model/group-util';
@@ -28,31 +28,31 @@ export class AppConfigurator {
 
     private commonFields = {
         period: {
-            inputType: 'dropdownRange',
-            group: 'time'
+            inputType: InputType.DROPDOWNRANGE,
+            group: Group.TIME
         },
         dating: {
-            inputType: 'dating',
-            group: 'time'
+            inputType: InputType.DATING,
+            group: Group.TIME
         },
         diary: {
-            inputType: 'input',
-            group: 'stem'
+            inputType: InputType.INPUT,
+            group: Group.STEM
         },
         area: {
-            inputType: 'unsignedFloat',
-            group: 'dimension'
+            inputType: InputType.UNSIGNEDFLOAT,
+            group: Group.DIMENSION
         },
         dimensionLength: {
-            inputType: 'dimension',
-            group: 'dimension',
+            inputType: InputType.DIMENSION,
+            group: Group.DIMENSION,
             positionValues: [
                 'Maximale Ausdehnung',
                 'Minimale Ausdehnung']
         },
         dimensionWidth: {
-            inputType: 'dimension',
-            group: 'dimension',
+            inputType: InputType.DIMENSION,
+            group: Group.DIMENSION,
             positionValues: [
                 'Maximale Ausdehnung',
                 'Minimale Ausdehnung']
@@ -65,86 +65,86 @@ export class AppConfigurator {
                 'Minimale Ausdehnung']
         },
         dimensionDiameter: {
-            inputType: 'dimension',
-            group: 'dimension',
+            inputType: InputType.DIMENSION,
+            group: Group.DIMENSION,
             positionValues: [
                 'Maximale Ausdehnung',
                 'Minimale Ausdehnung']
         },
         dimensionPerimeter: {
-            inputType: 'dimension',
-            group: 'dimension',
+            inputType: InputType.DIMENSION,
+            group: Group.DIMENSION,
             positionValues: [
                 'Maximale Ausdehnung',
                 'Minimale Ausdehnung']
         },
         dimensionThickness: {
-            inputType: 'dimension',
-            group: 'dimension',
+            inputType: InputType.DIMENSION,
+            group: Group.DIMENSION,
             positionValues: [
                 'Maximale Ausdehnung',
                 'Minimale Ausdehnung']
         },
         dimensionVerticalExtent: {
-            inputType: 'dimension',
-            group: 'position',
+            inputType: InputType.DIMENSION,
+            group: Group.POSITION,
             positionValues: [
                 'Oberkante',
                 'Unterkante']
         },
         dimensionOther: {
-            inputType: 'dimension',
-            group: 'dimension',
+            inputType: InputType.DIMENSION,
+            group: Group.DIMENSION,
             positionValues: [
                 'Maximale Ausdehnung',
                 'Minimale Ausdehnung']
         },
         beginningDate: {
-            inputType: 'date',
-            group: 'stem'
+            inputType: InputType.DATE,
+            group: Group.STEM
         },
         endDate: {
-            inputType: 'date',
-            group: 'stem'
+            inputType: InputType.DATE,
+            group: Group.STEM
         },
         supervisor: {
-            inputType: 'dropdown',
+            inputType: InputType.DROPDOWN,
             valuelistFromProjectField: 'staff',
-            group: 'stem'
+            group: Group.STEM
         },
         processor: {
-            inputType: 'checkboxes',
+            inputType: InputType.CHECKBOXES,
             valuelistFromProjectField: 'staff',
-            group: 'stem'
+            group: Group.STEM
         },
         campaign: {
-            inputType: 'checkboxes',
+            inputType: InputType.CHECKBOXES,
             valuelistFromProjectField: 'campaigns',
             allowOnlyValuesOfParent: true,
-            group: 'stem'
+            group: Group.STEM
         },
         draughtsmen: {
-            inputType: 'checkboxes',
+            inputType: InputType.CHECKBOXES,
             valuelistFromProjectField: 'staff',
-            group: 'stem'
+            group: Group.STEM
         },
         description: {
-            inputType: 'text'
+            inputType: InputType.TEXT
         },
         date: {
-            inputType: 'date',
-            group: 'stem'
+            inputType: InputType.DATE,
+            group: Group.STEM
         },
         spatialLocation: {
-            inputType: 'input',
-            group: 'position'
+            inputType: InputType.INPUT,
+            group: Group.POSITION
         },
         provenance: {
-            inputType: 'dropdown',
+            inputType: InputType.DROPDOWN,
         },
         orientation: {
-            inputType: 'dropdown',
-            group: 'position'
+            inputType: InputType.DROPDOWN,
+            group: Group.POSITION
         }
     };
 
@@ -153,18 +153,18 @@ export class AppConfigurator {
             label: this.i18n({ id: 'configuration.project', value: 'Projekt' }),
             fields: {
                 identifier: {
-                    inputType: 'input',
+                    inputType: InputType.INPUT,
                     editable: false
                 },
                 coordinateReferenceSystem: {
                     label: this.i18n({ id: 'configuration.project.crs', value: 'Koordinatenbezugssystem' }),
-                    inputType: 'dropdown'
+                    inputType: InputType.DROPDOWN
                 },
                 staff: {
-                    inputType: 'multiInput'
+                    inputType: InputType.MULTIINPUT
                 },
                 campaigns: {
-                    inputType: 'multiInput'
+                    inputType: InputType.MULTIINPUT
                 }
             }
         } as BuiltinTypeDefinition,
@@ -188,7 +188,7 @@ export class AppConfigurator {
         Place: {
             fields: {
                 gazId: {
-                    inputType: 'unsignedInt'
+                    inputType: InputType.UNSIGNEDINT
                 }
             }
         },
@@ -233,12 +233,12 @@ export class AppConfigurator {
             userDefinedSubtypesAllowed: true,
             fields: {
                 period: {
-                    inputType: 'dropdownRange',
-                    group: 'time'
+                    inputType: InputType.DROPDOWNRANGE,
+                    group: Group.TIME
                 },
                 dating: {
-                    inputType: 'dating',
-                    group: 'time'
+                    inputType: InputType.DATING,
+                    group: Group.TIME
                 }
             }
         },
@@ -260,7 +260,7 @@ export class AppConfigurator {
             superType: true,
             fields: {
                 criterion: {
-                    inputType: 'catalogCriterion',
+                    inputType: InputType.CATALOGCRITERION,
                     constraintIndexed: true,
                     group: Group.IDENTIFICATION
                 }
@@ -276,12 +276,12 @@ export class AppConfigurator {
             userDefinedSubtypesAllowed: true,
             fields: {
                 height: {
-                    inputType: 'unsignedInt',
+                    inputType: InputType.UNSIGNEDINT,
                     editable: false,
                     label: this.i18n({ id: 'configuration.image.height', value: 'Höhe' })
                 },
                 width: {
-                    inputType: 'unsignedInt',
+                    inputType: InputType.UNSIGNEDINT,
                     editable: false,
                     label: this.i18n({ id: 'configuration.image.width', value: 'Breite' })
                 },
@@ -289,12 +289,12 @@ export class AppConfigurator {
                 // when the image gets uploaded. However, users can change the identifier,
                 // which is why we store the originalFilename separately
                 originalFilename: {
-                    inputType: 'input',
+                    inputType: InputType.INPUT,
                     visible: false,
                     editable: false
                 },
                 georeference: {
-                    inputType: 'input', // there is no input type for georeference, really, so we set it simply to 'input'
+                    inputType: InputType.INPUT, // there is no input type for georeference, really, so we set it simply to 'input'
                     visible: false,
                     editable: false
                 }
@@ -307,7 +307,7 @@ export class AppConfigurator {
             label: this.i18n({ id: 'configuration.defaultFields.shortDescription', value: 'Kurzbeschreibung' }),
             visible: false,
             editable: true,
-            group: 'stem'
+            group: Group.STEM
         } as FieldDefinition,
         identifier: {
             description: this.i18n({
@@ -318,7 +318,7 @@ export class AppConfigurator {
             visible: false,
             editable: true,
             mandatory: true,
-            group: 'stem'
+            group: Group.STEM
         } as FieldDefinition,
         geometry: {
             visible: false,

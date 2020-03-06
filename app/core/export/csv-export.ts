@@ -1,5 +1,5 @@
 import {compose, drop, flatMap, flow, identity, includedIn, indices, is, isDefined, isNot,
-    isnt, on, range, reduce, reverse, take, to, cond, left, right, Pair, dense} from 'tsfun';
+    isnt, on, range, reduce, reverse, take, to, cond, left, right, Pair, dense, prepend} from 'tsfun';
 import {Dating, Dimension, FieldResource} from 'idai-components-2';
 import {clone} from '../util/object-util';
 import {fillUpToSize} from './export-helper';
@@ -176,7 +176,7 @@ export module CSVExport {
             .concat(
                 relations
                     .filter(isNot(includedIn(HierarchicalRelations.ALL)))
-                    .map(relation => 'relations.' + relation))
+                    .map(prepend('relations.')))
             .concat(relations.find(includedIn(HierarchicalRelations.ALL)) ? [RELATIONS_IS_CHILD_OF] : []);
     }
 
@@ -378,13 +378,13 @@ export module CSVExport {
     function makeFieldNamesList(fieldDefinitions: Array<FieldDefinition>): string[] {
 
         let fieldNames: string[] = getUsableFieldNames(fieldDefinitions.map(to('name')));
-        const indexOfShortDescription = fieldNames.indexOf('shortDescription');
+        const indexOfShortDescription = fieldNames.indexOf(FieldResource.SHORTDESCRIPTION);
         if (indexOfShortDescription !== -1) {
             fieldNames.splice(indexOfShortDescription, 1);
-            fieldNames.unshift('shortDescription');
+            fieldNames.unshift(FieldResource.SHORTDESCRIPTION);
         }
-        fieldNames = fieldNames.filter(isnt('identifier'));
-        fieldNames.unshift('identifier');
+        fieldNames = fieldNames.filter(isnt(FieldResource.IDENTIFIER));
+        fieldNames.unshift(FieldResource.IDENTIFIER);
 
         return fieldNames;
     }

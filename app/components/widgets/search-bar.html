@@ -14,7 +14,7 @@
                 [ngbPopover]="filterMenu"
                 [autoClose]="false"
                 #p="ngbPopover"
-                placement="bottom">
+                placement="bottom-right">
             <span *ngIf="!types || types.length == 0" class="mdi mdi-filter"></span>
             <span *ngIf="types && types.length > 0">
                 <type-icon [type]="types[0]" size="30"></type-icon>

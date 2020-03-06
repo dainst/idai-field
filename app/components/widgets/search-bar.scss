@@ -9,6 +9,13 @@
     position: absolute;
     right: 17px;
 
+    .arrow {
+      &::before,
+      &::after {
+        left: 16px;
+      }
+    }
+
     .search-filter {
       z-index: 3;
       padding: 4px 1em;

@@ -31,9 +31,9 @@ export module CSVMatrixExpansion {
                 CsvExportUtils.getIndices(fieldDefinitions, 'dropdownRange'),
                 reverse,
                 CSVExpansion.objectExpand(
+                    headingsAndMatrix,
                     CSVHeadingsExpansion.expandValOptionalEndValHeadings,
-                    expandValOptionalEndValItems,
-                    headingsAndMatrix));
+                    expandValOptionalEndValItems));
         }
     }
 
@@ -44,9 +44,9 @@ export module CSVMatrixExpansion {
         if (indexOfDatingElement === -1) return headingsAndMatrix;
 
         return CSVExpansion.objectArrayExpand(
+            headingsAndMatrix,
             CSVHeadingsExpansion.expandDatingHeadings,
-            expandDatingItems,
-            headingsAndMatrix)([indexOfDatingElement]);
+            expandDatingItems)([indexOfDatingElement]);
     }
 
 
@@ -60,9 +60,9 @@ export module CSVMatrixExpansion {
                 CsvExportUtils.getIndices(fieldDefinitions, DIMENSION),
                 reverse,
                 CSVExpansion.objectArrayExpand(
+                    headings_and_matrix,
                     CSVHeadingsExpansion.expandDimensionHeadings,
-                    expandDimensionItems,
-                    headings_and_matrix));
+                    expandDimensionItems));
         }
     }
 

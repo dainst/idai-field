@@ -1,5 +1,5 @@
 import {flatMap, range} from 'tsfun';
-import {ValOptionalEndVal} from 'idai-components-2/index';
+import {ValOptionalEndVal} from 'idai-components-2';
 import {CsvExportConsts} from './csv-export-consts';
 
 

@@ -47,13 +47,13 @@ export module CsvExportUtils {
 
 
     /**
-     * fieldDefinitions = [
+     * fieldDefinitions: [
      *   {name: 'a1', inputType: 'a-i'},
      *   {name: 'a2', inputType: 'a-i'},
      *   {name: 'b', inputType: 'b-i'}
      * ]
-     * inputType = 'a-i'
-     * headings = ['b', a1', 'a2']
+     * inputType: 'a-i'
+     * headings: ['b', a1', 'a2']
      * ->
      * [1, 2]
      */
@@ -87,12 +87,9 @@ export module CsvExportUtils {
 
     export function replaceItems<A>(where: number,
                                     nrOfNewItems: number,
-                                    replace: (_: A[]) => A[]) {
+                                    replace: (_: Array<A>) => Array<A>) {
 
-        /**
-         * @param itms
-         */
-        return (itms: A[]) => {
+        return (itms: Array<A>): Array<A> => {
 
             const replacements =
                 flow(itms,

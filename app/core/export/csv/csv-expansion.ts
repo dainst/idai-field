@@ -12,25 +12,19 @@ const EMPTY = '';
 export module CSVExpansion {
 
     /**
-     * Takes itms, for example [A,B,C,D,E]
-     * and replaces one or more entries by a number of same-structured entries.
-     *
-     * Lets assume where is 2, nrOfNewItems is 2 and widthOfEachNewitem is 2, then
-     * we get
+     * as: [A,B,C,D,E]
+     * where: 2
+     * nrOfNewItems: 2
+     * widthOfEachNewItem: 2
+     * ->
      * [A,B,R1a,R1b,R2a,R2b,E]
-     * where the R1 entries replace the C entry
-     *   and the R2 entries replace the D enty
      *
-     * @param widthOfEachNewItem
-     * @param computeReplacement should return an array of size widthOfEachNewItem
+     * computeReplacement should return an array of size widthOfEachNewItem
      */
     export function expandHomogeneousItems(computeReplacement: (removed: any) => any[],
                                            widthOfEachNewItem: number) {
-        /**
-         * @param where
-         * @param nrOfNewItems
-         */
-        return (where: number, nrOfNewItems: number) => {
+
+        return <A>(where: number, nrOfNewItems: number): (as: Array<A>) => Array<A> => {
 
             return CsvExportUtils.replaceItems(
                 where,
@@ -58,9 +52,10 @@ export module CSVExpansion {
      *  [[7,   2       , 3],
      *   [8,   5,      , undefined]]]
      */
-    export function objectArrayExpand(expandHeadings: (numItems: number) => (fieldName: string) => string[],
-                                      expandObject: (where: number, nrOfNewItems: number) => (itms: any[]) => any[],
-                                      headingsAndMatrix: HeadingsAndMatrix): (columnIndices: number[]) => HeadingsAndMatrix {
+    export function objectArrayExpand(headingsAndMatrix: HeadingsAndMatrix,
+                                      expandHeadings: (numItems: number) => (fieldName: string) => string[],
+                                      expandObject: (where: number, nrOfNewItems: number) => (itms: any[]) => any[])
+            : (columnIndices: number[]) => HeadingsAndMatrix {
 
         return reduce(([headings, matrix]: HeadingsAndMatrix, columnIndex: number) => {
 
@@ -77,9 +72,10 @@ export module CSVExpansion {
     }
 
 
-    export function objectExpand(expandHeadings: (fieldName: string) => string[],
-                                 expandObject: (where: number, nrOfNewItems: number) => (itms: any[]) => any[],
-                                 headingsAndMatrix: HeadingsAndMatrix): (columnIndices: number[]) => HeadingsAndMatrix {
+    export function objectExpand(headingsAndMatrix: HeadingsAndMatrix,
+                                 expandHeadings: (fieldName: string) => string[],
+                                 expandObject: (where: number, nrOfNewItems: number) => (itms: any[]) => any[])
+            : (columnIndices: number[]) => HeadingsAndMatrix {
 
         return reduce(([headings, matrix]: HeadingsAndMatrix, columnIndex: number) => {
 

@@ -1,22 +1,22 @@
-const hotkeys = require('protractor-hotkeys');
+import {element, by, Key} from 'protractor';
 
 
 export class MenuPage {
 
     public static navigateToSettings() {
 
-        hotkeys.trigger('ctrl+alt+s');
+        element(by.tagName('body')).sendKeys(Key.CONTROL, Key.ALT, 's');
     }
 
 
     public static navigateToImport() {
 
-        hotkeys.trigger('ctrl+i');
+        element(by.tagName('body')).sendKeys(Key.CONTROL, 'i');
     }
 
 
     public static navigateToImages() {
 
-        hotkeys.trigger('ctrl+b');
+        element(by.tagName('body')).sendKeys(Key.CONTROL, Key.ALT, 'b');
     }
 }

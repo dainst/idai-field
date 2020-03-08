@@ -1,4 +1,4 @@
-import {intersection, NestedArray, union, subtract, lookup, flow, map, cond, on, isNot, empty} from 'tsfun';
+import {intersection, union, subtract, lookup, flow, map, cond, on, isNot, empty} from 'tsfun';
 import {IndexItem} from './index-item';
 
 type ResourceId = string;
@@ -7,8 +7,8 @@ type IndexItemMap = {[id: string]: IndexItem};
 
 export interface ResultSets {
 
-    addSets: NestedArray<ResourceId>,
-    subtractSets: NestedArray<ResourceId>,
+    addSets: Array<Array<ResourceId>>,
+    subtractSets: Array<Array<ResourceId>>,
     map: IndexItemMap
 }
 

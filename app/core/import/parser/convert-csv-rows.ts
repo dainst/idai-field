@@ -1,4 +1,4 @@
-import {reduce, map, ObjectStruct, values, isArray, isnt, set, sort, split,
+import {reduce, map, Map, values, isArray, isnt, set, sort, split,
     flow, filter, forEach, isNot, dense, throws, first, startsWith} from 'tsfun';
 import {ParserErrors} from './parser-errors';
 import CSV_PATH_ITEM_TYPE_MISMATCH = ParserErrors.CSV_HEADING_PATH_ITEM_TYPE_MISMATCH;
@@ -35,7 +35,7 @@ type Field = string;
  */
 export function convertCsvRows(separator: string) {
 
-    return (content: string): Array<ObjectStruct> => {
+    return (content: string): Array<Object> => {
 
         const rows: string[][] = getRows(content, separator);
         if (rows.length < 0) return [];
@@ -52,7 +52,7 @@ export function convertCsvRows(separator: string) {
 
 
 function assertHeadingsIsntEmptyandDoesntContainEmptyEntries(headings: string[]) {
-
+    // TODO reimplement with cond, throws, includes
     // current implementation of parser gives at least ['']
     if (headings.length === 0) throw 'illegal argument';
 

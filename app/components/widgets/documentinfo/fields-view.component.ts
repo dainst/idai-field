@@ -277,7 +277,7 @@ export class FieldsViewComponent implements OnChanges {
 
     private getLabel(type: Name, field: Name): string {
 
-        return (pick(this.projectConfiguration.getTypesMap(), type).fields
+        return ((pick(this.projectConfiguration.getTypesMap(), type) as any).fields
             .find(on(FieldViewGroupDefinition.NAME, is(field))) as FieldDefinition)
             .label as string;
     }

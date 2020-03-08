@@ -1,4 +1,4 @@
-import {dropRightWhile, includedIn, is, isArray, isNot, isObject, assoc, isAssociative, ObjectCollection,
+import {dropRightWhile, includedIn, is, isArray, isNot, isObject, assoc, isAssociative, Map,
     Associative, keys, isEmpty, values, isnt, flow, dissoc, reduce, cond, forEach, val} from 'tsfun';
 import {NewResource, Resource} from 'idai-components-2';
 import {clone} from '../../../util/object-util';
@@ -145,8 +145,8 @@ function isObjectArray(as: Array<any>|any) {
  * @param source
  * @param exclusions
  */
-function overwriteOrDeleteProperties(target: ObjectCollection<any>|undefined,
-                                     source: ObjectCollection<any>,
+function overwriteOrDeleteProperties(target: Map<any>|undefined,
+                                     source: Map<any>,
                                      exclusions: string[]) {
 
     return keys(source)

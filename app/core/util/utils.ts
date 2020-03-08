@@ -1,12 +1,10 @@
 import {
-    copy, Pair, reduce, ObjectCollection, to, range, map, val, identity,
+    copy, Pair, reduce, ObjectCollection, to, identity,
     isDefined, convertPath, isString, getOn, dissoc
 } from 'tsfun';
 
 // @author Daniel de Oliveira
 
-
-export function startsWith(with_: string) { return (what: string) => what.startsWith(with_)}
 
 export function longerThan(than: string) { return (what: string) => what.length > than.length }
 

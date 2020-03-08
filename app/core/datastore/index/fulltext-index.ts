@@ -1,9 +1,10 @@
-import {flatMap, flow, lookup, filter, map, forEach, empty, isNot, isEmpty, keys} from 'tsfun';
+import {flatMap, flow, lookup, filter, split, toLowerCase,
+    map, forEach, empty, isNot, isEmpty, keys} from 'tsfun';
 import {Document} from 'idai-components-2';
 import {ResultSets} from './result-sets';
 import {clone} from '../../util/object-util';
 import {IdaiType} from '../../configuration/model/idai-type';
-import {split, toArray, toLowerCase} from '../../util/utils';
+import {toArray} from '../../util/utils';
 import {IndexItem} from './index-item';
 
 

@@ -1,4 +1,4 @@
-import {flow, includedIn, isDefined, isNot, isnt, to, map, cond,
+import {flow, includedIn, isDefined, isNot, isnt, to, map, cond, join,
     dense, prepend, append, compose, remove} from 'tsfun';
 import {FieldResource, Resource} from 'idai-components-2';
 import {HierarchicalRelations} from '../../model/relation-constants';
@@ -9,7 +9,6 @@ import OBJECT_SEPARATOR = CsvExportConsts.OBJECT_SEPARATOR;
 import RELATIONS_IS_CHILD_OF = CsvExportConsts.RELATIONS_IS_CHILD_OF;
 import ARRAY_SEPARATOR = CsvExportConsts.ARRAY_SEPARATOR;
 import {CSVMatrixExpansion} from './csv-matrix-expansion';
-import {join} from '../../util/utils';
 
 
 /**

@@ -175,7 +175,7 @@ describe('solveProjectDocumentConflict', () => {
             current,
             conflictedDocs);
 
-        expect(sameset(result[0].resource['staff'])(['a', 'b', 'c'])).toBeTruthy();
+        expect(sameset(result[0].resource['staff'])(['a', 'b', 'c'] as any)).toBeTruthy();
         expect(result[1]).toEqual(['c2', 'c3']);
     });
 
@@ -239,7 +239,7 @@ describe('solveProjectDocumentConflict', () => {
             current,
             conflictedDocs);
 
-        expect(sameset(result[0].resource['campaigns'])(['1', '2', '3'])).toBeTruthy();
+        expect(sameset(result[0].resource['campaigns'])(['1', '2', '3'] as any)).toBeTruthy();
         expect(result[1]).toEqual(['c1', 'c3']);
     });
 
@@ -365,7 +365,7 @@ describe('solveProjectDocumentConflict', () => {
             current,
             conflictedDocs);
 
-        expect(sameset(result[0].resource['campaigns'])(['1', '2', '3'])).toBeTruthy();
+        expect(sameset(result[0].resource['campaigns'])(['1', '2', '3'] as any)).toBeTruthy();
         expect(result[0].resource['aField']).toEqual('aValue');
         expect(result[1]).toEqual([]);
     });

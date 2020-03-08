@@ -21,24 +21,6 @@ export function debugId<T>(v: T): T {
 }
 
 
-export function split(pattern: any) {
-
-    return (content: string) => content.split(pattern);
-}
-
-
-export function join(pattern: any) {
-
-    return <A>(content: Array<A>): string => content.join(pattern);
-}
-
-
-export function toLowerCase(s: string) {
-
-    return s.toLowerCase();
-}
-
-
 export function toArray(token: any) {
 
     return Array.from(token);
@@ -111,7 +93,7 @@ export function assocReduce<T,A>(f: (a: A, i?: number|string) => [string|number,
 }
 
 
-/** o(bject)reduce experimental */
+/** o(bject)reduce - experimental */
 export function oreduce<T,A>(f: (acc: ObjectCollection<T>, a: A, i?: string|number) => void, target: ObjectCollection<T>) {
 
     return reduce(

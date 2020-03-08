@@ -111,8 +111,8 @@ export function assocReduce<T,A>(f: (a: A, i?: number|string) => [string|number,
 }
 
 
-/** experimental */
-export function objectReduce<T,A>(f: (acc: ObjectCollection<T>, a: A, i?: string|number) => void, target: ObjectCollection<T>) {
+/** o(bject)reduce experimental */
+export function oreduce<T,A>(f: (acc: ObjectCollection<T>, a: A, i?: string|number) => void, target: ObjectCollection<T>) {
 
     return reduce(
         (acc: ObjectCollection<T>, a: A, i?: string|number) => { f(acc, a, i); return acc; },

@@ -1,11 +1,12 @@
 import {map, on, separate, defined, isNot, update, flatten, flow, reduce,
-    assoc, append, Map, values, to} from 'tsfun';
+    assoc, append, Map, values, to, lookup, cond, throws} from 'tsfun';
 import {TypeDefinition} from './model/type-definition';
 import {IdaiType} from './model/idai-type';
 import {makeLookup} from '../util/utils';
 import {RelationDefinition} from './model/relation-definition';
 import {ConfigurationDefinition} from './boot/configuration-definition';
 import {MDInternal} from 'idai-components-2';
+import {isUndefined} from 'tsfun/src/predicate';
 
 
 /**
@@ -82,15 +83,25 @@ export module ProjectConfigurationUtils {
     function addChildType(typesMap: Map<IdaiType>,
                           childDef: TypeDefinition): Map<IdaiType> {
 
-        const parentType: any = typesMap[childDef.parent as string];
-        if (parentType === undefined) throw MDInternal.PROJECT_CONFIGURATION_ERROR_GENERIC;
+        return flow(childDef.parent,
+            lookup(typesMap),
+            cond(isUndefined,
+                throws(MDInternal.PROJECT_CONFIGURATION_ERROR_GENERIC)),
+                addChildTypeToParent(typesMap, childDef));
+    }
 
-        const childType = IdaiType.build(childDef);
-        childType.fields = IdaiType.makeChildFields(parentType, childType);
 
-        const newParentType: any = update(IdaiType.CHILDREN, append(childType))(parentType);
-        childType.parentType = newParentType;
+    function addChildTypeToParent(typesMap: Map<IdaiType>, childDef: TypeDefinition) {
 
-        return assoc(childDef.parent as string, newParentType)(typesMap);
+        return (parentType: IdaiType): Map<IdaiType> => {
+
+            const childType = IdaiType.build(childDef);
+            childType.fields = IdaiType.makeChildFields(parentType, childType);
+
+            const newParentType: any = update(IdaiType.CHILDREN, append(childType))(parentType as any);
+            childType.parentType = newParentType;
+
+            return assoc(parentType.name, newParentType)(typesMap);
+        }
     }
 }

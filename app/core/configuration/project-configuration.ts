@@ -2,7 +2,7 @@ import {flow, map, values, to, on, isNot, empty, filter, is, isUndefined} from '
 import {IdaiType} from './model/idai-type';
 import {FieldDefinition} from './model/field-definition';
 import {RelationDefinition} from './model/relation-definition';
-import {NAME, ProjectConfigurationUtils} from './project-configuration-utils';
+import {ProjectConfigurationUtils} from './project-configuration-utils';
 import {ConfigurationDefinition} from './boot/configuration-definition';
 
 
@@ -192,7 +192,7 @@ export class ProjectConfiguration {
 
         return flow(
             this.typesMap[typeName].fields,
-            filter(on(NAME, is(fieldName))),
+            filter(on(IdaiType.NAME, is(fieldName))),
             filter(on(propertyName, is(true))),
             isNot(empty));
     }

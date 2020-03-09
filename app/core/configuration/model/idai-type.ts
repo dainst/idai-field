@@ -27,6 +27,7 @@ export module IdaiType {
     export const PARENTTYPE = 'parentType';
     export const CHILDREN = 'children';
     export const NAME = 'name';
+    export const FIELDS = 'fields';
 
 
     export function build(definition: TypeDefinition): IdaiType {

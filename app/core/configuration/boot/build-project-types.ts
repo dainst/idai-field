@@ -77,13 +77,7 @@ export function buildProjectTypes(builtInTypes: BuiltinTypeDefinitions,
                                   extraFields: { [extraFieldName: string]: any } = {}) {
 
     const assertInputTypePresentIfNotCommonType_ = assertInputTypePresentIfNotCommonType(commonFields);
-
-    assertTypesAndValuelistsStructurallyValid(Object.keys(builtInTypes), libraryTypes, customTypes, valuelistsConfiguration);
-    assertSubtypingIsLegal(builtInTypes, libraryTypes);
-    assertSubtypingIsLegal(builtInTypes, customTypes);
-    assertNoCommonFieldInputTypeChanges(commonFields, libraryTypes);
-    assertNoCommonFieldInputTypeChanges(commonFields, customTypes);
-    assertTypeFamiliesConsistent(libraryTypes);
+    performAssertions(builtInTypes, libraryTypes, customTypes, commonFields, valuelistsConfiguration);
 
     const selectableTypes: TransientTypeDefinitionsMap = mergeBuiltInWithLibraryTypes(builtInTypes, libraryTypes);
     assertInputTypesAreSet(selectableTypes, assertInputTypePresentIfNotCommonType_);
@@ -107,6 +101,21 @@ export function buildProjectTypes(builtInTypes: BuiltinTypeDefinitions,
         toTypesByFamilyNames,
         applyValuelistsConfiguration(valuelistsConfiguration as any),
         addExtraFields(extraFields));
+}
+
+
+function performAssertions(builtInTypes: BuiltinTypeDefinitions,
+                           libraryTypes: LibraryTypeDefinitionsMap,
+                           customTypes: CustomTypeDefinitionsMap,
+                           commonFields: CommonFields,
+                           valuelistsConfiguration: ValuelistDefinitions) {
+
+    assertTypesAndValuelistsStructurallyValid(Object.keys(builtInTypes), libraryTypes, customTypes, valuelistsConfiguration);
+    assertSubtypingIsLegal(builtInTypes, libraryTypes);
+    assertSubtypingIsLegal(builtInTypes, customTypes);
+    assertNoCommonFieldInputTypeChanges(commonFields, libraryTypes);
+    assertNoCommonFieldInputTypeChanges(commonFields, customTypes);
+    assertTypeFamiliesConsistent(libraryTypes);
 }
 
 

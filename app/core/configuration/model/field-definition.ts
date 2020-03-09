@@ -34,7 +34,7 @@ export interface FieldDefinition {
     constraintIndexed?: true;
     allowOnlyValuesOfParent?: true;
     readonly group: string;
-    source?: 'builtin'|'library'|'custom'; // TODO make non-optional
+    source?: 'builtin'|'library'|'custom'|'common'; // TODO make non-optional
 }
 
 
@@ -56,6 +56,7 @@ export module FieldDefinition {
         export const BUILTIN = 'builtin';
         export const LIBRARY = 'library';
         export const CUSTOM = 'custom';
+        export const COMMON = 'common';
     }
 
     export module InputType {

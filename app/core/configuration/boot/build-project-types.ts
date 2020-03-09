@@ -1,8 +1,8 @@
-import {BuiltinFieldDefinition, BuiltinTypeDefinitions} from '../model/builtin-type-definition';
-import {LibraryFieldDefinition, LibraryTypeDefinition, LibraryTypeDefinitionsMap} from '../model/library-type-definition';
-import {CustomFieldDefinition, CustomFieldDefinitionsMap, CustomTypeDefinition, CustomTypeDefinitionsMap} from '../model/custom-type-definition';
 import {clone, compose, filter, flow, forEach, includedIn, is, isDefined, isNot, isnt, update,
     jsonClone, keysAndValues, map, on, reduce, subtract, to, union, keys, lookup, pairWith} from 'tsfun';
+import {BuiltinFieldDefinition, BuiltinTypeDefinition, BuiltinTypeDefinitions} from '../model/builtin-type-definition';
+import {LibraryFieldDefinition, LibraryTypeDefinition, LibraryTypeDefinitionsMap} from '../model/library-type-definition';
+import {CustomFieldDefinition, CustomFieldDefinitionsMap, CustomTypeDefinition, CustomTypeDefinitionsMap} from '../model/custom-type-definition';
 import {ConfigurationErrors} from './configuration-errors';
 import {FieldDefinition} from '../model/field-definition';
 import {ValuelistDefinition, ValuelistDefinitions} from '../model/valuelist-definition';
@@ -29,6 +29,7 @@ interface TransientFieldDefinition extends BuiltinFieldDefinition, LibraryFieldD
     visible?: boolean;
     editable?: boolean;
     constraintIndexed?: true;
+    source?: 'builtin'|'library'|'custom'|'common';
 }
 
 type TransientTypeDefinitionsMap = { [typeName: string]: TransientTypeDefinition };
@@ -79,6 +80,7 @@ export function buildProjectTypes(builtInTypes: BuiltinTypeDefinitions,
     const assertInputTypePresentIfNotCommonType_ = assertInputTypePresentIfNotCommonType(commonFields);
     performAssertions(builtInTypes, libraryTypes, customTypes, commonFields, valuelistsConfiguration);
 
+    addSourceField(builtInTypes, libraryTypes, customTypes, commonFields);
     const selectableTypes: TransientTypeDefinitionsMap = mergeBuiltInWithLibraryTypes(builtInTypes, libraryTypes);
     assertInputTypesAreSet(selectableTypes, assertInputTypePresentIfNotCommonType_);
     assertNoDuplicationInSelection(selectableTypes, customTypes);
@@ -101,6 +103,30 @@ export function buildProjectTypes(builtInTypes: BuiltinTypeDefinitions,
         toTypesByFamilyNames,
         applyValuelistsConfiguration(valuelistsConfiguration as any),
         addExtraFields(extraFields));
+}
+
+
+function addSourceField(builtInTypes: BuiltinTypeDefinitions,
+                        libraryTypes: LibraryTypeDefinitionsMap,
+                        customTypes: CustomTypeDefinitionsMap,
+                        commonFields: CommonFields) {
+
+    setFieldSourceOnTypes(builtInTypes, FieldDefinition.Source.BUILTIN);
+    setFieldSourceOnTypes(libraryTypes, FieldDefinition.Source.LIBRARY);
+    setFieldSourceOnTypes(customTypes, FieldDefinition.Source.CUSTOM);
+    setFieldSourceOnFields(commonFields, FieldDefinition.Source.COMMON);
+}
+
+
+function setFieldSourceOnTypes(types: any, value: any) {
+
+    forEach((type: TransientTypeDefinition) => setFieldSourceOnFields(type.fields, value))(types);
+}
+
+
+function setFieldSourceOnFields(fields: any, value: any) {
+
+    forEach((field: TransientFieldDefinition) => field.source = value)(fields);
 }
 
 
@@ -397,6 +423,7 @@ function replaceCommonFields(mergedTypes: TransientTypeDefinitionsMap, commonFie
             }
 
             if (!mergedType.fields[commonFieldName]) mergedType.fields[commonFieldName] = {};
+            mergedType.fields[commonFieldName].source = commonFields[commonFieldName].source;
             mergedType.fields[commonFieldName].inputType = commonFields[commonFieldName].inputType;
             mergedType.fields[commonFieldName].group = commonFields[commonFieldName].group;
             mergedType.fields[commonFieldName].valuelistFromProjectField

@@ -4,6 +4,8 @@ import {buildProjectTypes} from '../../../../app/core/configuration/boot/build-p
 import {ConfigurationErrors} from '../../../../app/core/configuration/boot/configuration-errors';
 import {LibraryTypeDefinitionsMap} from '../../../../app/core/configuration/model/library-type-definition';
 import {ValuelistDefinitions} from '../../../../app/core/configuration/model/valuelist-definition';
+import {FieldDefinition} from '../../../../app/core/configuration/model/field-definition';
+import {Group} from '../../../../app/core/model/group-util';
 
 
 describe('buildProjectTypes', () => {
@@ -997,6 +999,51 @@ describe('buildProjectTypes', () => {
         expect(result['A'].fields['field1'].inputType).toBe('text');
         expect(result['A'].fields['field2'].inputType).toBe('text');
         expect(result['A'].fields['field3'].inputType).toBe('text');
+    });
+
+
+    it('source field', () => {
+
+        const commonFields = {
+            aCommon: { inputType: FieldDefinition.InputType.INPUT },
+        };
+
+        const builtInTypes: BuiltinTypeDefinitions = {
+            A: {
+                fields: {
+                    field1: { inputType: FieldDefinition.InputType.TEXT, group: Group.STEM }
+                }
+            }
+        };
+
+        const libraryTypes: LibraryTypeDefinitionsMap = {
+            'A:0': {
+                typeFamily: 'A',
+                commons: ['aCommon'],
+                valuelists: {},
+                fields: {
+                    field2: { inputType: FieldDefinition.InputType.TEXT }
+                },
+                creationDate: '',
+                createdBy: '',
+                description: {} }
+        };
+
+        const customTypes: CustomTypeDefinitionsMap = {
+            'A:0': {
+                fields: {
+                    field2: { },
+                    field3: { inputType: FieldDefinition.InputType.TEXT }
+                }
+            }
+        };
+
+        const result = buildProjectTypes(builtInTypes, libraryTypes, customTypes, commonFields, {}, {});
+
+        expect(result['A'].fields['field1'].source).toBe(FieldDefinition.Source.BUILTIN);
+        expect(result['A'].fields['field2'].source).toBe(FieldDefinition.Source.LIBRARY);
+        expect(result['A'].fields['field3'].source).toBe(FieldDefinition.Source.CUSTOM);
+        expect(result['A'].fields['aCommon'].source).toBe(FieldDefinition.Source.COMMON);
     });
 
     // err cases

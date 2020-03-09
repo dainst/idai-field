@@ -61,6 +61,7 @@
     "@angular/common": "9.0.0",
     "@angular/core": "9.0.0",
     "@angular/forms": "9.0.0",
+    "@angular/localize": "9.0.5",
     "@angular/platform-browser": "9.0.0",
     "@angular/platform-browser-dynamic": "9.0.0",
     "@angular/platform-server": "9.0.0",

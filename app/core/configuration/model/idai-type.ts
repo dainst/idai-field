@@ -25,6 +25,8 @@ export module IdaiType {
 
     export const COLOR = 'color';
     export const PARENTTYPE = 'parentType';
+    export const CHILDREN = 'children';
+    export const NAME = 'name';
 
 
     export function build(definition: TypeDefinition): IdaiType {

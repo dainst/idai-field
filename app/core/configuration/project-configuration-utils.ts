@@ -1,13 +1,12 @@
+import {map, on, separate, defined, isNot, update, flatten, flow, reduce,
+    assoc, append, Map, values, to} from 'tsfun';
 import {TypeDefinition} from './model/type-definition';
-import {map, on, separate, defined, isNot} from 'tsfun';
 import {IdaiType} from './model/idai-type';
 import {makeLookup} from '../util/utils';
 import {RelationDefinition} from './model/relation-definition';
 import {ConfigurationDefinition} from './boot/configuration-definition';
 import {MDInternal} from 'idai-components-2';
 
-export const NAME = 'name';
-export const PARENT = 'parent';
 
 /**
  * @author Thomas Kleinke
@@ -16,8 +15,9 @@ export const PARENT = 'parent';
  */
 export module ProjectConfigurationUtils {
 
-    export function getTypeAndSubtypes(projectTypesMap: { [type: string]: IdaiType },
-                                       superTypeName: string): { [typeName: string]: IdaiType } {
+    // TODO reimplement; test
+    export function getTypeAndSubtypes(projectTypesMap: Map<IdaiType>,
+                                       superTypeName: string): Map<IdaiType> {
 
         const subtypes: any = {};
 
@@ -57,26 +57,40 @@ export module ProjectConfigurationUtils {
     }
 
 
-    export function makeTypesMap(configuration: ConfigurationDefinition): { [typeName: string]: IdaiType } {
+    export function makeTypesMap(configuration: ConfigurationDefinition): Map<IdaiType> {
 
-        const [parentDefs, childDefs] = separate(on(PARENT, isNot(defined)))(configuration.types);
-        const parentTypes = makeLookup(NAME)(map(IdaiType.build)(parentDefs));
+        const [parentDefs, childDefs] =
+            separate(on(TypeDefinition.PARENT, isNot(defined)))(configuration.types);
 
-        return childDefs.reduce(addChildType, parentTypes) as { [typeName: string]: IdaiType };
+        const parentTypes = makeLookup(IdaiType.NAME)(map(IdaiType.build)(parentDefs));
+
+        return flow(
+            childDefs,
+            reduce(addChildType, parentTypes),
+            flattenTypesTreeMapToTypesMap);
     }
 
 
-    function addChildType(typesMap: { [typeName: string]: IdaiType }, childDef: TypeDefinition) {
+    function flattenTypesTreeMapToTypesMap(typesMap: Map<IdaiType>): Map<IdaiType> {
 
-        const parentType = typesMap[childDef.parent as string];
+        const topLevelTypes: Array<IdaiType> = values(typesMap);
+        const children: Array<IdaiType> = flatten(topLevelTypes.map(to(IdaiType.CHILDREN)));
+        return makeLookup(IdaiType.NAME)(topLevelTypes.concat(children))
+    }
+
+
+    function addChildType(typesMap: Map<IdaiType>,
+                          childDef: TypeDefinition): Map<IdaiType> {
+
+        const parentType: any = typesMap[childDef.parent as string];
         if (parentType === undefined) throw MDInternal.PROJECT_CONFIGURATION_ERROR_GENERIC;
 
         const childType = IdaiType.build(childDef);
         childType.fields = IdaiType.makeChildFields(parentType, childType);
-        childType.parentType = parentType;
-        typesMap[childDef.type] = childType;
-        parentType.children.push(childType);
 
-        return typesMap;
+        const newParentType: any = update(IdaiType.CHILDREN, append(childType))(parentType);
+        childType.parentType = newParentType;
+
+        return assoc(childDef.parent as string, newParentType)(typesMap);
     }
 }

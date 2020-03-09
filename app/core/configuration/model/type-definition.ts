@@ -18,3 +18,9 @@ export interface TypeDefinition {
     parent?: string;
     color?: string;
 }
+
+
+export module TypeDefinition {
+
+    export const PARENT = 'parent';
+}

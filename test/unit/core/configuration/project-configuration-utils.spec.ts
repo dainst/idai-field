@@ -23,5 +23,8 @@ describe('ProjectConfigurationUtils', () => {
       expect(result['P'].name).toEqual('P');
       expect(result['P'].children[0].name).toEqual('A');
       expect(result['P'].children[0].fields.length).toBe(2);
+      expect(result['P'].children[0].parentType).toBe(result['P']);
+      expect(result['A'].name).toEqual('A');
+      expect(result['A'].parentType).toBe(result['P']);
    });
 });

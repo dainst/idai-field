@@ -4,7 +4,7 @@ import {I18n} from '@ngx-translate/i18n-polyfill';
 import {is, isnt, isUndefinedOrEmpty, isDefined, on, isNot, isString,
     includedIn, undefinedOrEmpty, lookup, compose, isEmpty, isBoolean} from 'tsfun';
 import {Document, FieldDocument,  ReadDatastore, FieldResource,
-    Resource, Dating, Dimension} from 'idai-components-2';
+    Resource, Dating, Dimension, ValOptionalEndVal} from 'idai-components-2';
 import {RoutingService} from '../../routing-service';
 import {Group, GroupUtil} from '../../../core/model/group-util';
 import {Name, ResourceId} from '../../../core/constants';
@@ -36,7 +36,6 @@ export module FieldViewGroupDefinition {
     export const LABEL = 'label';
     export const SHOWN = 'shown';
 }
-
 
 
 @Component({
@@ -230,22 +229,22 @@ export class FieldsViewComponent implements OnChanges {
             label: this.i18n({
                 id: 'widgets.fieldsView.period',
                 value: 'Grobdatierung'
-            }) + (!isUndefinedOrEmpty(resource[PERIODEND])
+            }) + (!isUndefinedOrEmpty(resource[PERIOD][ValOptionalEndVal.VALUE])
                 ? this.i18n({
                     id: 'widgets.fieldsView.period.from',
                     value: ' (von)'
                 }) : ''),
-            value: FieldsViewComponent.getValue(resource, field.name),
+            value: resource[PERIOD][ValOptionalEndVal.VALUE],
             isArray: false
         });
 
-        if (!isUndefinedOrEmpty(resource[PERIODEND])) {
+        if (!isUndefinedOrEmpty(resource[PERIOD][ValOptionalEndVal.ENDVALUE])) {
             this.fields[group].push({
                 label: this.i18n({
                     id: 'widgets.fieldsView.period.to',
                     value: 'Grobdatierung (bis)'
                 }),
-                value: FieldsViewComponent.getValue(resource, PERIODEND),
+                value: resource[PERIOD][ValOptionalEndVal.ENDVALUE],
                 isArray: false
             });
         }

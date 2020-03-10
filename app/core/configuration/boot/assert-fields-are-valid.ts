@@ -7,7 +7,7 @@ import {LibraryFieldDefinitionsMap} from "../model/library-type-definition";
 
 const VALID_INPUT_TYPES = [
     'input', 'multiInput', 'text', 'dropdown', 'dropdownRange', 'radio', 'checkboxes', 'unsignedInt', 'float',
-    'unsignedFloat', 'dating', 'dimension', 'boolean', 'date'
+    'unsignedFloat', 'dating', 'dimension', 'literature', 'boolean', 'date'
 ];
 
 

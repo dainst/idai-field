@@ -108,7 +108,7 @@ export class AppConfigurator {
             group: Group.STEM
         },
         supervisor: {
-            inputType: FieldDefinition.InputType.DROPDOWN,
+            inputType: FieldDefinition.InputType.CHECKBOXES,
             valuelistFromProjectField: 'staff',
             group: Group.STEM
         },

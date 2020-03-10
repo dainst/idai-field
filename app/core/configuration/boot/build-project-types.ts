@@ -137,6 +137,7 @@ function _addExtraFields(typeDefinition: TransientTypeDefinition,
 }
 
 
+// TODO improve
 function applyValuelistsConfiguration(valuelistsConfiguration: {[id: string]: {values: string[]}}) {
 
     return (types: Map<TransientTypeDefinition>) => {

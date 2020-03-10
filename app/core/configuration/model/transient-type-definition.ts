@@ -9,6 +9,12 @@ export interface TransientTypeDefinition extends BuiltinFieldDefinition, Library
 }
 
 
+export module TransientTypeDefinition {
+
+    export const FIELDS = 'fields';
+}
+
+
 export interface TransientFieldDefinition extends BuiltinFieldDefinition, LibraryFieldDefinition {
 
     valuelist?: any;
@@ -18,4 +24,11 @@ export interface TransientFieldDefinition extends BuiltinFieldDefinition, Librar
     editable?: boolean;
     constraintIndexed?: true;
     source?: 'builtin'|'library'|'custom'|'common';
+}
+
+
+export module TransientFieldDefinition {
+
+    export const VALUELIST = 'valuelist';
+    export const VALUELISTID = 'valuelistId';
 }

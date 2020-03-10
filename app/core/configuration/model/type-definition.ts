@@ -22,5 +22,6 @@ export interface TypeDefinition {
 
 export module TypeDefinition {
 
+    export const FIELDS = 'fields';
     export const PARENT = 'parent';
 }

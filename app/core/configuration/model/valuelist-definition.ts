@@ -44,6 +44,3 @@ export interface ValueDefinition {
     translation?: { [label: string]: string },
     references?: { [referenceKey: string]: string },
 }
-
-
-export interface ValuelistDefinitions { [valuelistId: string]: ValuelistDefinition }

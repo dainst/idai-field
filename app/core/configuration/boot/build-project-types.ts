@@ -1,17 +1,18 @@
-import {clone, compose, filter, flow, forEach, includedIn, isDefined, isNot, isnt, keys,
-    keysAndValues, lookup, map, Map, on, pairWith, Pair, reduce, subtract, to, union, update} from 'tsfun';
+import {clone, compose, filter, flow, forEach, assoc, includedIn, cond, isDefined, isNot, isnt, keys, prune,
+    keysAndValues, lookup, map, Map, on, pairWith, dissoc, Pair, reduce, subtract, and, undefinedOrEmpty, empty, to, union, update} from 'tsfun';
 import {LibraryTypeDefinition} from '../model/library-type-definition';
 import {CustomFieldDefinition, CustomTypeDefinition} from '../model/custom-type-definition';
 import {ConfigurationErrors} from './configuration-errors';
 import {FieldDefinition} from '../model/field-definition';
-import {ValuelistDefinitions} from '../model/valuelist-definition';
-import {withDissoc} from '../../util/utils';
+import {ValuelistDefinition} from '../model/valuelist-definition';
+import {debugId, withDissoc} from '../../util/utils';
 import {TransientFieldDefinition, TransientTypeDefinition} from '../model/transient-type-definition';
 import {BuiltinTypeDefinition} from '../model/builtin-type-definition';
 import {mergeBuiltInWithLibraryTypes} from './merge-builtin-with-library-types.spec';
 import {mergeFields} from './merge-fields';
 import {Assertions} from './assertions';
 import {getDefinedParents, iterateOverFieldsOfTypes} from './helpers';
+import {BaseTypeDefinition} from '../model/base-type-definition';
 
 
 const VALUELISTS = 'valuelists';
@@ -36,7 +37,7 @@ export function buildProjectTypes(builtInTypes: Map<BuiltinTypeDefinition>,
                                   libraryTypes: Map<LibraryTypeDefinition>,
                                   customTypes: Map<CustomTypeDefinition> = {},
                                   commonFields: CommonFields = {},
-                                  valuelistsConfiguration: ValuelistDefinitions = {},
+                                  valuelistsConfiguration: Map<ValuelistDefinition> = {},
                                   extraFields: { [extraFieldName: string]: any } = {}) {
 
     Assertions.performAssertions(builtInTypes, libraryTypes, customTypes, commonFields, valuelistsConfiguration);
@@ -53,7 +54,7 @@ export function buildProjectTypes(builtInTypes: Map<BuiltinTypeDefinition>,
         Assertions.assertValuelistIdsProvided,
         hideFields(customTypes),
         toTypesByFamilyNames,
-        applyValuelistsConfiguration(valuelistsConfiguration as any),
+        replaceValuelistIdsWithValuelists(valuelistsConfiguration as any),
         addExtraFields(extraFields));
 }
 
@@ -137,25 +138,28 @@ function _addExtraFields(typeDefinition: TransientTypeDefinition,
 }
 
 
-// TODO improve
-function applyValuelistsConfiguration(valuelistsConfiguration: {[id: string]: {values: string[]}}) {
+function replaceValuelistIdsWithValuelists(valuelistDefinitionsMap: Map<ValuelistDefinition>)
+    : (types: Map<TransientTypeDefinition>) => Map<TransientTypeDefinition> {
 
-    return (types: Map<TransientTypeDefinition>) => {
+    return map(
+        cond(
+            on(TransientTypeDefinition.FIELDS, isNot(undefinedOrEmpty)),
+            update(TransientTypeDefinition.FIELDS,
+                map(
+                    cond(
+                        on(TransientFieldDefinition.VALUELISTID, isDefined),
+                        replaceValuelistIdWithActualValuelist(valuelistDefinitionsMap)))))) as any;
+}
 
-        const types_ = clone(types);
 
-        const processFields = compose(
-            filter(on('valuelistId', isDefined)),
-            forEach((fd: TransientFieldDefinition) => fd.valuelist
-                = Object.keys(valuelistsConfiguration[fd.valuelistId as string].values)));
+function replaceValuelistIdWithActualValuelist(valuelistDefinitionMap: Map<ValuelistDefinition>) {
 
-        flow(types_,
-            filter(isDefined),
-            map(to('fields')),
-            forEach(processFields));
-
-        return types_;
-    }
+    return (fd: TransientFieldDefinition) =>
+        flow(fd,
+            assoc(
+                TransientFieldDefinition.VALUELIST,
+                keys(valuelistDefinitionMap[fd.valuelistId!].values)),
+            dissoc(TransientFieldDefinition.VALUELISTID))
 }
 
 

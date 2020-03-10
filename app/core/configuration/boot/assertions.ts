@@ -2,13 +2,10 @@ import {flow, forEach, is, keysAndValues, Map} from 'tsfun';
 import {BuiltinTypeDefinition} from '../model/builtin-type-definition';
 import {LibraryTypeDefinition} from '../model/library-type-definition';
 import {CustomTypeDefinition} from '../model/custom-type-definition';
-import {ValuelistDefinition, ValuelistDefinitions} from '../model/valuelist-definition';
+import {ValuelistDefinition} from '../model/valuelist-definition';
 import {TransientTypeDefinition} from '../model/transient-type-definition';
 import {ConfigurationErrors} from './configuration-errors';
 import {getDefinedParents, iterateOverFieldsOfTypes} from './helpers';
-
-
-type CommonFields = {[fieldName: string]: any};
 
 
 export module Assertions {
@@ -16,8 +13,8 @@ export module Assertions {
     export function performAssertions(builtInTypes: Map<BuiltinTypeDefinition>,
                                libraryTypes: Map<LibraryTypeDefinition>,
                                customTypes: Map<CustomTypeDefinition>,
-                               commonFields: CommonFields,
-                               valuelistsConfiguration: ValuelistDefinitions) {
+                               commonFields: Map<any>,
+                               valuelistsConfiguration: Map<ValuelistDefinition>) {
 
         assertTypesAndValuelistsStructurallyValid(Object.keys(builtInTypes), libraryTypes, customTypes, valuelistsConfiguration);
         assertSubtypingIsLegal(builtInTypes, libraryTypes);
@@ -94,7 +91,7 @@ export module Assertions {
     function assertTypesAndValuelistsStructurallyValid(builtInTypes: string[],
                                                        libraryTypes: Map<LibraryTypeDefinition>,
                                                        customTypes: Map<CustomTypeDefinition>,
-                                                       valuelistDefinitions: ValuelistDefinitions) {
+                                                       valuelistDefinitions: Map<ValuelistDefinition>) {
 
         const assertLibraryTypeValid = LibraryTypeDefinition.makeAssertIsValid(builtInTypes);
         const assertCustomTypeValid = CustomTypeDefinition.makeAssertIsValid(builtInTypes, Object.keys(libraryTypes));
@@ -145,7 +142,7 @@ export module Assertions {
      * @param commonFields
      * @param types
      */
-    function assertNoCommonFieldInputTypeChanges(commonFields: CommonFields,
+    function assertNoCommonFieldInputTypeChanges(commonFields: Map<any>,
                                                  types: Map<LibraryTypeDefinition>|Map<CustomTypeDefinition>) {
 
         const commonFieldNames = Object.keys(commonFields);

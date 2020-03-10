@@ -1,13 +1,20 @@
 {
-  "types":{
-    "Operation":{
-      "fields":{
+  "types": {
+    "Operation": {
+      "fields": {
         "fixMe": {
           "label": "+Korrigiere mich!"
         }
       }
     },
-    "Find" :{
+    "Trench": {
+      "fields": {
+        "researchQuestion": {
+          "label": "+researchQuestion"
+        }
+      }
+    },
+    "Find": {
       "fields": {
         "measuringPointID": {
           "label": "+MesspunktID vom Tachy",
@@ -35,7 +42,7 @@
         }
       }
     },
-    "Sample" :{
+    "Sample": {
       "fields": {
         "descriptionSample": {
           "label": "descriptionSample"
@@ -63,9 +70,15 @@
         }
       }
     },
-    "Feature":{
+    "BrickCluster": {
+      "label": "Sammelfund Ziegel"
+    },
+    "PotteryCluster": {
+      "label": "Sammelfund Keramik"
+    },
+    "Feature": {
       "label": "Befund",
-      "fields":{
+      "fields": {
         "if1Befundart": {
           "label": "+if1Befundart"
         },
@@ -107,14 +120,14 @@
         }
       }
     },
-    "Image":{
+    "Image": {
       "fields": {
         "fixMe": {
           "label": "+Korrigiere mich!"
         }
       }
     },
-    "Photo" :{
+    "Photo": {
       "fields": {
         "imageSubject": {
           "label": "+Fotomotiv",
@@ -126,7 +139,7 @@
         }
       }
     },
-    "Drawing" :{
+    "Drawing": {
       "fields": {
         "imageSubject": {
           "label": "+Fotomotiv",
@@ -137,8 +150,8 @@
         }
       }
     },
-    "Metal":{
-      "fields":{
+    "Metal": {
+      "fields": {
         "objectTypeGeneral": {
           "label": "+objectTypeGeneral"
         },
@@ -150,22 +163,22 @@
     "Inscription": {
       "label": "Inschrift/Graffito"
     },
-    "Brick":{
-      "fields":{
+    "Brick": {
+      "fields": {
         "if1Verwendung": {
           "label": "+if1Verwendung"
         }
       }
     },
-    "PlasterFragment":{
-      "fields":{
+    "PlasterFragment": {
+      "fields": {
         "if1Klassifizierung": {
           "label": "+if1Klassifizierung"
         }
       }
     },
-    "Planum":{
-      "fields":{
+    "Planum": {
+      "fields": {
         "objectOrigin": {
           "label": "+objectOrigin"
         },
@@ -174,15 +187,15 @@
         }
       }
     },
-    "Pottery":{
-      "fields":{
+    "Pottery": {
+      "fields": {
         "if1Klassifizierung": {
           "label": "+if1Klassifizierung"
         }
       }
     },
-    "Layer":{
-      "fields":{
+    "Layer": {
+      "fields": {
         "if1Farbe2": {
           "label": "+if1Farbe2"
         },

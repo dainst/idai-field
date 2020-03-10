@@ -294,7 +294,11 @@
   },
   "Trench:default": {
     "hidden": [],
-    "fields": {}
+    "fields": {
+      "researchQuestion": {
+        "inputType": "text"
+      }
+    }
   },
   "Building:default": {
     "hidden": [],

@@ -8,7 +8,7 @@ import {FieldDefinition} from '../../../../core/configuration/model/field-defini
 // TODO Move to components
 export interface Literature {
 
-    quote: string;
+    quotation: string;
     zenonId?: string;
 }
 
@@ -40,7 +40,7 @@ export class LiteratureComponent {
 
     public getLabel(literature: Literature): string {
 
-        return literature.quote + (literature.zenonId
+        return literature.quotation + (literature.zenonId
             ? ' ('
                 + this.i18n({ value: 'Zenon-ID', id: 'docedit.forms.literature.zenonId' })
                 + ': ' + literature.zenonId + ')'
@@ -50,7 +50,7 @@ export class LiteratureComponent {
 
     public createNewLiterature() {
 
-        this.newLiterature = { quote: '' };
+        this.newLiterature = { quotation: '' };
         this.inEditing.push(this.newLiterature);
     }
 
@@ -81,7 +81,7 @@ export class LiteratureComponent {
 
     public validate(literature: Literature): boolean {
 
-        return literature.quote.length > 0;
+        return literature.quotation.length > 0;
     }
 
 

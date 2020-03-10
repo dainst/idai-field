@@ -2247,7 +2247,7 @@
         <target state="final">Yes</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/widgets/documentinfo/fields-view.html</context>
-          <context context-type="linenumber">23</context>
+          <context context-type="linenumber">20</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/configuration/project-configuration.html</context>
@@ -2283,7 +2283,7 @@
         <target state="final">No</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/widgets/documentinfo/fields-view.html</context>
-          <context context-type="linenumber">24</context>
+          <context context-type="linenumber">21</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/configuration/project-configuration.html</context>
@@ -2568,7 +2568,7 @@
           <context context-type="linenumber">22</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="docedit.forms.literature.quote" datatype="html">
+      <trans-unit id="docedit.forms.literature.quotation" datatype="html">
         <source>Literaturzitat nach DAI-Richtlinien:</source>
         <target state="final">Literature quotation according to DAI guidelines:</target>
         <context-group purpose="location">

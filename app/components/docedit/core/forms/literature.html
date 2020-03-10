@@ -1,0 +1,60 @@
+<div *ngFor="let literature of resource[field.name]">
+    <div class="input-group mb-2" *ngIf="!isInEditing(literature)">
+        <input value="{{getLabel(literature)}}" type="text" disabled class="form-control">
+
+        <button class="btn btn-danger" (click)="remove(literature)">
+            <span class="mdi mdi-delete"></span>
+        </button>
+
+        <button class="btn btn-info" (click)="startEditing(literature)">
+            <span class="mdi mdi-pencil"></span>
+        </button>
+    </div>
+
+    <div *ngIf="isInEditing(literature)">
+        <ng-container [ngTemplateOutlet]="literatureFormTemplate"
+                      [ngTemplateOutletContext]="{ literature: literature }">
+        </ng-container>
+    </div>
+</div>
+
+<div class="input-group" *ngIf="!newLiterature">
+    <input placeholder="Hinzufügen..." i18n-placeholder="@@docedit.forms.literature.add"
+           type="text" disabled class="form-control">
+
+    <button class="btn btn-success" (click)="createNewLiterature()">
+        <span class="mdi mdi-plus-circle"></span>
+    </button>
+</div>
+
+<div *ngIf="newLiterature">
+    <ng-container [ngTemplateOutlet]="literatureFormTemplate"
+                  [ngTemplateOutletContext]="{ literature: newLiterature }">
+    </ng-container>
+</div>
+
+
+<ng-template #literatureFormTemplate let-literature="literature">
+    <div class="card">
+        <div class="card-block">
+            <div class="form-group">
+                <label i18n="@@docedit.forms.literature.quote">Literaturzitat nach DAI-Richtlinien:</label>
+                <input [(ngModel)]="literature.quote" class="form-control" name="quote" type="text">
+            </div>
+            <div class="form-group">
+                <label i18n="@@docedit.forms.literature.zenonId">Zenon-ID:</label>
+                <input [(ngModel)]="literature.zenonId" class="form-control" name="zenonId" type="text">
+            </div>
+        </div>
+        <div class="card-footer" align="right">
+            <button class="btn btn-primary"
+                    i18n="@@buttons.ok"
+                    (click)="save(literature)"
+                    [disabled]="!validate(literature)">OK</button>
+            <button *ngIf="newLiterature == literature"
+                    class="btn btn-secondary"
+                    i18n="@@buttons.cancel"
+                    (click)="discardNewLiterature()">Abbrechen</button>
+        </div>
+    </div>
+</ng-template>

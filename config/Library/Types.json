@@ -1566,7 +1566,7 @@
     "createdBy": "",
     "creationDate": "",
     "typeFamily": "Type",
-    "commons": [],
+    "commons": ["literature"],
     "valuelists": {},
     "fields": {}
   }

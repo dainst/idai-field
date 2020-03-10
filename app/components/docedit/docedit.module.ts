@@ -48,6 +48,7 @@ import {TypeRowComponent} from './core/forms/type-relation/type-row.component';
 import {TypeRelationPickerComponent} from './core/forms/type-relation/type-relation-picker.component';
 import {CatalogCriterionComponent} from './core/forms/type-relation/catalog-criterion.component';
 import {CatalogCriteria} from './core/forms/type-relation/catalog-criteria';
+import {LiteratureComponent} from './core/forms/literature.component';
 
 
 @NgModule({
@@ -112,7 +113,8 @@ import {CatalogCriteria} from './core/forms/type-relation/catalog-criteria';
         DropdownRangeComponent,
         GeometryComponent,
         OutliersComponent,
-        EmptyValuelistInfoComponent
+        EmptyValuelistInfoComponent,
+        LiteratureComponent
     ],
     exports: [
         EditSaveDialogComponent,

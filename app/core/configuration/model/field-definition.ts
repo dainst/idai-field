@@ -21,6 +21,7 @@ export interface FieldDefinition {
         |'dating'
         |'date'
         |'dimension'
+        |'literature'
         |'geometry'
         |'instanceOf'
         |'catalogCriterion'
@@ -75,6 +76,7 @@ export module FieldDefinition {
         export const DATING = 'dating';
         export const DATE = 'date';
         export const DIMENSION = 'dimension';
+        export const LITERATURE = 'literature';
         export const GEOMETRY = 'geometry';
         export const CATALOGCRITERION = 'catalogCriterion';
         export const DEFAULT = 'default';

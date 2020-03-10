@@ -145,6 +145,9 @@ export class AppConfigurator {
         orientation: {
             inputType: FieldDefinition.InputType.DROPDOWN,
             group: Group.POSITION
+        },
+        literature: {
+            inputType: FieldDefinition.InputType.LITERATURE
         }
     };
 

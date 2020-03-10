@@ -28,28 +28,36 @@ export module Assertions {
     }
 
 
-    export function assertInputTypesAreSet(types: Map<TransientTypeDefinition>,
-                                           assertInputTypePresentIfNotCommonType: Function) {
+    export function assertInputTypesAreSet(assertInputTypePresentIfNotCommonType: Function) {
 
-        iterateOverFieldsOfTypes(types, (typeName, type, fieldName, field) => {
-            assertInputTypePresentIfNotCommonType(typeName, fieldName, field);
-        });
+        return (types: Map<TransientTypeDefinition>) => {
+
+            iterateOverFieldsOfTypes(types, (typeName, type, fieldName, field) => {
+                assertInputTypePresentIfNotCommonType(typeName, fieldName, field);
+            });
+
+            return types;
+        }
     }
 
 
-    export function assertNoDuplicationInSelection(mergedTypes: Map<TransientTypeDefinition>,
-                                                   customTypes: Map<CustomTypeDefinition>) {
+    export function assertNoDuplicationInSelection(customTypes: Map<CustomTypeDefinition>) {
 
-        Object.keys(customTypes).reduce((selectedTypeFamilies, customTypeName) => {
+        return (mergedTypes: Map<TransientTypeDefinition>) => {
 
-            const selectedType = mergedTypes[customTypeName];
-            if (!selectedType) return selectedTypeFamilies;
-            if (!selectedTypeFamilies.includes(selectedType.typeFamily)) {
-                return selectedTypeFamilies.concat([selectedType.typeFamily]);
-            }
-            throw [ConfigurationErrors.DUPLICATION_IN_SELECTION, selectedType.typeFamily];
+            Object.keys(customTypes).reduce((selectedTypeFamilies, customTypeName) => {
 
-        }, [] as string[]);
+                const selectedType = mergedTypes[customTypeName];
+                if (!selectedType) return selectedTypeFamilies;
+                if (!selectedTypeFamilies.includes(selectedType.typeFamily)) {
+                    return selectedTypeFamilies.concat([selectedType.typeFamily]);
+                }
+                throw [ConfigurationErrors.DUPLICATION_IN_SELECTION, selectedType.typeFamily];
+
+            }, [] as string[]);
+
+            return mergedTypes;
+        }
     }
 
 
@@ -63,6 +71,8 @@ export module Assertions {
                 }
             }
         });
+
+        return mergedTypes;
     }
 
 

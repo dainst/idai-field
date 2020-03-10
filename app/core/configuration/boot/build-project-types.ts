@@ -1,5 +1,5 @@
 import {clone, compose, filter, flow, forEach, includedIn, isDefined, isNot, isnt, keys,
-    keysAndValues, lookup, map, Map, on, pairWith, reduce, subtract, to, union, update} from 'tsfun';
+    keysAndValues, lookup, map, Map, on, pairWith, Pair, reduce, subtract, to, union, update} from 'tsfun';
 import {LibraryTypeDefinition} from '../model/library-type-definition';
 import {CustomFieldDefinition, CustomTypeDefinition} from '../model/custom-type-definition';
 import {ConfigurationErrors} from './configuration-errors';
@@ -31,27 +31,6 @@ type CommonFields = {[fieldName: string]: any};
  * Does not
  * - mix in parent type
  * - mix in language, order, search
- *
- * @param builtInTypes
- * @param libraryTypes
- * @param customTypes
- * @param commonFields
- * @param valuelistsConfiguration
- * @param extraFields
- *
- * @see ConfigurationErrors
- * @throws [DUPLICATION_IN_SELECTION, typeFamilyName]
- * @throws [MUST_HAVE_PARENT, typeName]
- * @throws [MISSING_TYPE_PROPERTY, propertyName, typeName]
- * @throws [MISSING_VALUELIST_PROPERTY, propertyName, valuelistId]
- * @throws [MISSING_FIELD_PROPERTY, propertyName, typeName, fieldName]
- * @throws [MUST_NOT_SET_INPUT_TYPE, typeName, fieldName]
- * @throws [ILLEGAL_FIELD_TYPE, fieldType, fieldName]
- * @throws [TRYING_TO_SUBTYPE_A_NON_EXTENDABLE_TYPE, superTypeName]
- * @throws [ILLEGAL_FIELD_PROPERTIES, [properties]]
- * @throws [ILLEGAL_FIELD_PROPERTY, 'library'|'custom', property]
- * @throws [INCONSISTENT_TYPE_FAMILY, typeFamilyName, reason (, fieldName)]
- * @throws [COMMON_FIELD_NOT_PROVIDED, commonFieldName]
  */
 export function buildProjectTypes(builtInTypes: Map<BuiltinTypeDefinition>,
                                   libraryTypes: Map<LibraryTypeDefinition>,
@@ -60,29 +39,19 @@ export function buildProjectTypes(builtInTypes: Map<BuiltinTypeDefinition>,
                                   valuelistsConfiguration: ValuelistDefinitions = {},
                                   extraFields: { [extraFieldName: string]: any } = {}) {
 
-    const assertInputTypePresentIfNotCommonType_ = assertInputTypePresentIfNotCommonType(commonFields);
     Assertions.performAssertions(builtInTypes, libraryTypes, customTypes, commonFields, valuelistsConfiguration);
-
     addSourceField(builtInTypes, libraryTypes, customTypes, commonFields);
-    const selectableTypes: Map<TransientTypeDefinition> = mergeBuiltInWithLibraryTypes(builtInTypes, libraryTypes);
-    Assertions.assertInputTypesAreSet(selectableTypes, assertInputTypePresentIfNotCommonType_);
-    Assertions.assertNoDuplicationInSelection(selectableTypes, customTypes);
-
-    const mergedTypes: Map<TransientTypeDefinition> =
-        mergeTypes(
-            selectableTypes,
-            customTypes as any,
-            assertInputTypePresentIfNotCommonType_);
-
-    const selectedTypes: Map<TransientTypeDefinition> =  eraseUnusedTypes(mergedTypes, Object.keys(customTypes));
-    replaceCommonFields(selectedTypes, commonFields);
-
-    insertValuelistIds(selectedTypes);
-    Assertions.assertValuelistIdsProvided(selectedTypes);
-    hideFields(selectedTypes, customTypes);
 
     return flow(
-        selectedTypes,
+        mergeBuiltInWithLibraryTypes(builtInTypes, libraryTypes),
+        Assertions.assertInputTypesAreSet(assertInputTypePresentIfNotCommonType(commonFields)),
+        Assertions.assertNoDuplicationInSelection(customTypes),
+        mergeTypes(customTypes, assertInputTypePresentIfNotCommonType(commonFields)),
+        eraseUnusedTypes(keys(customTypes)),
+        replaceCommonFields(commonFields),
+        insertValuelistIds,
+        Assertions.assertValuelistIdsProvided,
+        hideFields(customTypes),
         toTypesByFamilyNames,
         applyValuelistsConfiguration(valuelistsConfiguration as any),
         addExtraFields(extraFields));
@@ -97,6 +66,8 @@ function insertValuelistIds(mergedTypes: Map<TransientTypeDefinition>) {
             field.valuelistId = type.valuelists[fieldName];
         }
     });
+
+    return mergedTypes;
 }
 
 
@@ -124,31 +95,28 @@ function setFieldSourceOnFields(fields: any, value: any) {
 }
 
 
-function addExtraFields(extraFields: {[fieldName: string]: FieldDefinition }) {
+function addExtraFields(extraFields: Map<FieldDefinition>) {
 
     return (configuration: Map<TransientTypeDefinition>) => {
 
-        const configuration_ = clone(configuration);
+        return reduce((configuration: Map<TransientTypeDefinition>, typeName: string) => {
 
-        for (let typeName of Object.keys(configuration_)) {
-            const typeDefinition = configuration_[typeName];
+            return update(typeName, addExtraFieldsToType(extraFields))(configuration);
 
-            if (!typeDefinition.fields) typeDefinition.fields = {};
-
-            if (typeDefinition.parent == undefined) {
-                _addExtraFields(typeDefinition, extraFields)
-            }
-
-            for (let fieldName of Object.keys(typeDefinition.fields)) {
-                const fieldDefinition = typeDefinition.fields[fieldName];
-
-                if (fieldDefinition.editable == undefined) fieldDefinition.editable = true;
-                if (fieldDefinition.visible == undefined) fieldDefinition.visible = true;
-            }
-        }
-
-        return configuration_;
+        }, configuration)(keys(configuration));
     };
+}
+
+
+function addExtraFieldsToType(extraFields: Map<FieldDefinition>) {
+
+    return (typeDefinition: TransientTypeDefinition) => {
+
+        const newTypeDefinition = clone(typeDefinition);
+        if (!newTypeDefinition.fields) newTypeDefinition.fields = {};
+        if (newTypeDefinition.parent === undefined) _addExtraFields(newTypeDefinition, extraFields);
+        return newTypeDefinition
+    }
 }
 
 
@@ -203,64 +171,81 @@ function toTypesByFamilyNames(transientTypes: Map<TransientTypeDefinition>): Map
 }
 
 
-function hideFields(mergedTypes: any, selectedTypes: any) {
+function hideFields(customTypes: Map<CustomTypeDefinition>) {
 
-    keysAndValues(mergedTypes).forEach(([builtInTypeName, builtInType]) => {
+    return (selectedTypes_: Map<TransientTypeDefinition>) => {
 
-        keysAndValues(selectedTypes).forEach(([selectedTypeName, selectedType]) => {
-            if (selectedTypeName === builtInTypeName) {
+        const selectedTypes = clone(selectedTypes_);
 
-                if ((builtInType as any)['fields']) Object.keys((builtInType as any)['fields']).forEach(fn => {
-                    if ((selectedType as any)['hidden'] && (selectedType as any)['hidden'].includes(fn)) {
-                        (builtInType as any)['fields'][fn].visible = false;
-                        (builtInType as any)['fields'][fn].editable = false;
-                    }
-                })
-            }
-        })
-    });
+        keysAndValues(selectedTypes).forEach(
+            ([selectedTypeName, selectedType]: Pair<string, TransientTypeDefinition>) => {
+
+                keysAndValues(customTypes).forEach(
+                    ([customTypeName, customType]: Pair<string, CustomTypeDefinition>) => {
+
+                        if (customTypeName === selectedTypeName && selectedType.fields) {
+
+                            Object.keys(selectedType.fields).forEach(fieldName => {
+                                if (customType.hidden && customType.hidden.includes(fieldName)) {
+                                    selectedType.fields[fieldName].visible = false;
+                                    selectedType.fields[fieldName].editable = false;
+                                }
+
+                                if (selectedType.fields[fieldName].visible === undefined) selectedType.fields[fieldName].visible = true;
+                                if (selectedType.fields[fieldName].editable === undefined) selectedType.fields[fieldName].editable = true;
+                            })
+                        }
+                    })
+        });
+
+        return selectedTypes;
+    }
 }
 
 
-function eraseUnusedTypes(types: Map<TransientTypeDefinition>,
-                          selectedTypeNames: string[]): Map<TransientTypeDefinition> {
+function eraseUnusedTypes(selectedTypeNames: string[]) {
 
-    const keysOfNotSelectedTypes = Object.keys(types).filter(isNot(includedIn(selectedTypeNames)));
-    const parentNamesOfSelectedTypes: string[] =
-        flow(
-            keysOfNotSelectedTypes,
-            reduce(withDissoc, types),
-            getDefinedParents);
+    return (types: Map<TransientTypeDefinition>): Map<TransientTypeDefinition> => {
 
-    const typesToErase = subtract(parentNamesOfSelectedTypes)(keysOfNotSelectedTypes);
-    return typesToErase.reduce(withDissoc, types) as Map<TransientTypeDefinition>;
+        const keysOfNotSelectedTypes = Object.keys(types).filter(isNot(includedIn(selectedTypeNames)));
+        const parentNamesOfSelectedTypes: string[] =
+            flow(
+                keysOfNotSelectedTypes,
+                reduce(withDissoc, types),
+                getDefinedParents);
+
+        const typesToErase = subtract(parentNamesOfSelectedTypes)(keysOfNotSelectedTypes);
+        return typesToErase.reduce(withDissoc, types) as Map<TransientTypeDefinition>;
+    }
 }
 
 
+function replaceCommonFields(commonFields: CommonFields) {
 
+    return (mergedTypes: Map<TransientTypeDefinition>) => {
 
+        for (let mergedType of Object.values(mergedTypes)) {
 
-function replaceCommonFields(mergedTypes: Map<TransientTypeDefinition>, commonFields: CommonFields) {
+            if (!mergedType.commons) continue;
 
-    for (let mergedType of Object.values(mergedTypes)) {
+            for (let commonFieldName of mergedType.commons) {
+                if (!commonFields[commonFieldName]) {
+                    throw [ConfigurationErrors.COMMON_FIELD_NOT_PROVIDED, commonFieldName];
+                }
 
-        if (!mergedType.commons) continue;
-
-        for (let commonFieldName of mergedType.commons) {
-            if (!commonFields[commonFieldName]) {
-                throw [ConfigurationErrors.COMMON_FIELD_NOT_PROVIDED, commonFieldName];
+                if (!mergedType.fields[commonFieldName]) mergedType.fields[commonFieldName] = {};
+                mergedType.fields[commonFieldName].source = commonFields[commonFieldName].source;
+                mergedType.fields[commonFieldName].inputType = commonFields[commonFieldName].inputType;
+                mergedType.fields[commonFieldName].group = commonFields[commonFieldName].group;
+                mergedType.fields[commonFieldName].valuelistFromProjectField
+                    = commonFields[commonFieldName].valuelistFromProjectField;
+                mergedType.fields[commonFieldName].allowOnlyValuesOfParent
+                    = commonFields[commonFieldName].allowOnlyValuesOfParent;
             }
-
-            if (!mergedType.fields[commonFieldName]) mergedType.fields[commonFieldName] = {};
-            mergedType.fields[commonFieldName].source = commonFields[commonFieldName].source;
-            mergedType.fields[commonFieldName].inputType = commonFields[commonFieldName].inputType;
-            mergedType.fields[commonFieldName].group = commonFields[commonFieldName].group;
-            mergedType.fields[commonFieldName].valuelistFromProjectField
-                = commonFields[commonFieldName].valuelistFromProjectField;
-            mergedType.fields[commonFieldName].allowOnlyValuesOfParent
-                = commonFields[commonFieldName].allowOnlyValuesOfParent;
+            delete mergedType.commons;
         }
-        delete mergedType.commons;
+
+        return mergedTypes;
     }
 }
 
@@ -338,38 +323,40 @@ function checkFieldTypeChanges(customTypeName: string,
 }
 
 
-function mergeTypes(selectableTypes: Map<TransientTypeDefinition>,
-                    customTypes: Map<CustomTypeDefinition>,
+function mergeTypes(customTypes: Map<CustomTypeDefinition>,
                     assertInputTypePresentIfNotCommonType: Function) {
 
-    const mergedTypes: Map<TransientTypeDefinition> = clone(selectableTypes);
+    return (selectableTypes: Map<TransientTypeDefinition>) => {
 
-    const pairs = keysAndValues(customTypes);
+        const mergedTypes: Map<TransientTypeDefinition> = clone(selectableTypes);
 
-    forEach(([customTypeName, customType]: any) => {
+        const pairs = keysAndValues(customTypes);
 
-        const extendedType = mergedTypes[customTypeName];
+        forEach(([customTypeName, customType]: any) => {
 
-        if (extendedType) {
-            checkFieldTypeChanges(customTypeName, customType.fields, extendedType.fields);
+            const extendedType = mergedTypes[customTypeName];
 
-            const newMergedType: any = clone(extendedType);
-            mergePropertiesOfType(newMergedType, customType);
-            mergeFields(newMergedType.fields, customType.fields);
+            if (extendedType) {
+                checkFieldTypeChanges(customTypeName, customType.fields, extendedType.fields);
 
-            mergedTypes[customTypeName] = newMergedType;
-        } else {
-            if (!customType.parent) throw [ConfigurationErrors.MUST_HAVE_PARENT, customTypeName];
+                const newMergedType: any = clone(extendedType);
+                mergePropertiesOfType(newMergedType, customType);
+                mergeFields(newMergedType.fields, customType.fields);
 
-            keysAndValues(customType.fields).forEach(([fieldName, field]: any) => {
-                assertInputTypePresentIfNotCommonType(customTypeName, fieldName, field);
-            });
+                mergedTypes[customTypeName] = newMergedType;
+            } else {
+                if (!customType.parent) throw [ConfigurationErrors.MUST_HAVE_PARENT, customTypeName];
 
-            mergedTypes[customTypeName] = customType;
-        }
-    })(pairs);
+                keysAndValues(customType.fields).forEach(([fieldName, field]: any) => {
+                    assertInputTypePresentIfNotCommonType(customTypeName, fieldName, field);
+                });
 
-    return mergedTypes;
+                mergedTypes[customTypeName] = customType;
+            }
+        })(pairs);
+
+        return mergedTypes;
+    }
 }
 
 

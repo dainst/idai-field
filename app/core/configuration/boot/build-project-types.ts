@@ -13,6 +13,7 @@ import {getDefinedParents, iterateOverFieldsOfTypes} from './helpers';
 import {addSourceField} from './add-source-field';
 import {mergeTypes} from './merge-types';
 import {addExtraFields} from './add-extra-fields';
+import {copy} from 'tsfun/src/collection';
 
 
 /**
@@ -140,34 +141,27 @@ function eraseUnusedTypes(selectedTypeNames: string[]) {
 }
 
 
-// TODO reimplement
-function replaceCommonFields(commonFields: Map<any>) {
 
-    return (mergedTypes: Map<TransientTypeDefinition>) => {
+function replaceCommonFields(commonFields: Map<any>)
+    : (mergedTypes: Map<TransientTypeDefinition>) => Map<TransientTypeDefinition> {
 
-        for (let mergedType of Object.values(mergedTypes)) {
+    return map(
+        cond(
+            on(TransientTypeDefinition.COMMONS, isDefined),
+            (mergedType_: TransientTypeDefinition) => {
 
-            if (!mergedType.commons) continue;
+                const mergedType = clone(mergedType_);
+                for (let commonFieldName of mergedType.commons) {
+                    if (!commonFields[commonFieldName]) {
+                        throw [ConfigurationErrors.COMMON_FIELD_NOT_PROVIDED, commonFieldName];
+                    }
 
-            for (let commonFieldName of mergedType.commons) {
-                if (!commonFields[commonFieldName]) {
-                    throw [ConfigurationErrors.COMMON_FIELD_NOT_PROVIDED, commonFieldName];
+                    if (!mergedType.fields[commonFieldName]) mergedType.fields[commonFieldName] = {};
+                    mergedType.fields[commonFieldName] = copy(commonFields[commonFieldName]) as any;
                 }
-
-                if (!mergedType.fields[commonFieldName]) mergedType.fields[commonFieldName] = {};
-                mergedType.fields[commonFieldName].source = commonFields[commonFieldName].source;
-                mergedType.fields[commonFieldName].inputType = commonFields[commonFieldName].inputType;
-                mergedType.fields[commonFieldName].group = commonFields[commonFieldName].group;
-                mergedType.fields[commonFieldName].valuelistFromProjectField
-                    = commonFields[commonFieldName].valuelistFromProjectField;
-                mergedType.fields[commonFieldName].allowOnlyValuesOfParent
-                    = commonFields[commonFieldName].allowOnlyValuesOfParent;
-            }
-            delete mergedType.commons;
-        }
-
-        return mergedTypes;
-    }
+                delete mergedType.commons;
+                return mergedType;
+            }));
 }
 
 

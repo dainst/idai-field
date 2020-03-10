@@ -12,6 +12,7 @@ export interface TransientTypeDefinition extends BuiltinFieldDefinition, Library
 export module TransientTypeDefinition {
 
     export const FIELDS = 'fields';
+    export const COMMONS = 'commons';
 }
 
 

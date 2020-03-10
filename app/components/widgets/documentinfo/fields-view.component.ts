@@ -145,6 +145,13 @@ export class FieldsViewComponent implements OnChanges {
                 arrayItem,
                 (value: any) => this.decimalPipe.transform(value),
                 (key: string) => this.utilTranslations.getTranslation(key));
+        } else if (arrayItem.quotation) {
+            // TODO Use components
+            return arrayItem.quotation + (arrayItem.zenonId
+                ? ' ('
+                + this.i18n({ value: 'Zenon-ID', id: 'docedit.forms.literature.zenonId' })
+                + ': ' + arrayItem.zenonId + ')'
+                : '');
         } else {
             return arrayItem;
         }

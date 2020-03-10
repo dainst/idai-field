@@ -3251,6 +3251,14 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="util.literature.zenonId" datatype="html">
+        <source>Zenon-ID</source>
+        <target state="final">Zenon-ID</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/app.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="docedit.group.stem" datatype="html">
         <source>Stammdaten</source>
         <target state="final">Stammdaten</target>

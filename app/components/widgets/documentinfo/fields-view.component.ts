@@ -1,10 +1,10 @@
 import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import {DecimalPipe} from '@angular/common';
 import {I18n} from '@ngx-translate/i18n-polyfill';
-import {is, isnt, isUndefinedOrEmpty, isDefined, on, isNot, isString,
-    includedIn, undefinedOrEmpty, lookup, compose, isEmpty, isBoolean} from 'tsfun';
-import {Document, FieldDocument,  ReadDatastore, FieldResource,
-    Resource, Dating, Dimension, ValOptionalEndVal} from 'idai-components-2';
+import {is, isnt, isUndefinedOrEmpty, isDefined, on, isNot, isString, includedIn, undefinedOrEmpty, lookup,
+    compose, isEmpty, isBoolean} from 'tsfun';
+import {Document, FieldDocument,  ReadDatastore, FieldResource, Resource, Dating, Dimension, Literature,
+    ValOptionalEndVal} from 'idai-components-2';
 import {RoutingService} from '../../routing-service';
 import {Group, GroupUtil} from '../../../core/model/group-util';
 import {Name, ResourceId} from '../../../core/constants';
@@ -146,12 +146,9 @@ export class FieldsViewComponent implements OnChanges {
                 (value: any) => this.decimalPipe.transform(value),
                 (key: string) => this.utilTranslations.getTranslation(key));
         } else if (arrayItem.quotation) {
-            // TODO Use components
-            return arrayItem.quotation + (arrayItem.zenonId
-                ? ' ('
-                + this.i18n({ value: 'Zenon-ID', id: 'docedit.forms.literature.zenonId' })
-                + ': ' + arrayItem.zenonId + ')'
-                : '');
+            return Literature.generateLabel(
+                arrayItem, (key: string) => this.utilTranslations.getTranslation(key)
+            );
         } else {
             return arrayItem;
         }

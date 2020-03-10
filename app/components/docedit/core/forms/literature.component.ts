@@ -1,16 +1,8 @@
 import {Component, Input} from '@angular/core';
-import {I18n} from '@ngx-translate/i18n-polyfill';
 import {remove, is} from 'tsfun';
-import {Resource} from 'idai-components-2';
+import {Literature, Resource} from 'idai-components-2';
 import {FieldDefinition} from '../../../../core/configuration/model/field-definition';
-
-
-// TODO Move to components
-export interface Literature {
-
-    quotation: string;
-    zenonId?: string;
-}
+import {UtilTranslations} from '../../../../core/util/util-translations';
 
 
 @Component({
@@ -30,23 +22,16 @@ export class LiteratureComponent {
     public inEditing: Array<Literature> = [];
 
 
-    constructor(private i18n: I18n) {}
+    constructor(private utilTranslations: UtilTranslations) {}
 
 
     public isInEditing = (literature: Literature) => this.inEditing.includes(literature);
 
     public startEditing = (literature: Literature) => this.inEditing.push(literature);
 
-
-    // TODO Move to components
-    public getLabel(literature: Literature): string {
-
-        return literature.quotation + (literature.zenonId
-            ? ' ('
-                + this.i18n({ value: 'Zenon-ID:', id: 'docedit.forms.literature.zenonId' })
-                + literature.zenonId + ')'
-            : '');
-    }
+    public getLabel = (literature: Literature) => Literature.generateLabel(
+        literature, (key: string) => this.utilTranslations.getTranslation(key)
+    );
 
 
     public createNewLiterature() {

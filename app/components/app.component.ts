@@ -90,22 +90,25 @@ export class AppComponent {
     private initializeUtilTranslations() {
 
         this.utilTranslations.addTranslation(
-            'bce', this.i18n({ id: 'util.dating.bce', value: 'v. Chr.'})
+            'bce', this.i18n({ id: 'util.dating.bce', value: 'v. Chr.' })
         );
         this.utilTranslations.addTranslation(
-            'ce', this.i18n({ id: 'util.dating.ce', value: 'n. Chr.'})
+            'ce', this.i18n({ id: 'util.dating.ce', value: 'n. Chr.' })
         );
         this.utilTranslations.addTranslation(
-            'bp', this.i18n({ id: 'util.dating.bp', value: 'BP'})
+            'bp', this.i18n({ id: 'util.dating.bp', value: 'BP' })
         );
         this.utilTranslations.addTranslation(
-            'before', this.i18n({ id: 'util.dating.before', value: 'Vor'})
+            'before', this.i18n({ id: 'util.dating.before', value: 'Vor' })
         );
         this.utilTranslations.addTranslation(
-            'after', this.i18n({ id: 'util.dating.after', value: 'Nach'})
+            'after', this.i18n({ id: 'util.dating.after', value: 'Nach' })
         );
         this.utilTranslations.addTranslation(
-            'asMeasuredBy', this.i18n({ id: 'util.dimension.asMeasuredBy', value: 'gemessen an'})
+            'asMeasuredBy', this.i18n({ id: 'util.dimension.asMeasuredBy', value: 'gemessen an' })
+        );
+        this.utilTranslations.addTranslation(
+            'zenonId', this.i18n({ id: 'util.literature.zenonId', value: 'Zenon-ID' })
         );
     }
 }

@@ -67,7 +67,7 @@ export module FieldDefinition {
         export const UNSIGNEDFLOAT = 'unsignedFloat';
         export const FLOAT = 'float';
         export const TEXT = 'text';
-        export const MULTIINPUT = 'multiinput';
+        export const MULTIINPUT = 'multiInput';
         export const DROPDOWN = 'dropdown';
         export const DROPDOWNRANGE = 'dropdownRange';
         export const RADIO = 'radio';

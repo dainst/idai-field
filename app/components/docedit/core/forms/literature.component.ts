@@ -38,12 +38,13 @@ export class LiteratureComponent {
     public startEditing = (literature: Literature) => this.inEditing.push(literature);
 
 
+    // TODO Move to components
     public getLabel(literature: Literature): string {
 
         return literature.quotation + (literature.zenonId
             ? ' ('
-                + this.i18n({ value: 'Zenon-ID', id: 'docedit.forms.literature.zenonId' })
-                + ': ' + literature.zenonId + ')'
+                + this.i18n({ value: 'Zenon-ID:', id: 'docedit.forms.literature.zenonId' })
+                + literature.zenonId + ')'
             : '');
     }
 

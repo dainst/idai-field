@@ -143,7 +143,7 @@
         <target state="final"><x id="INTERPOLATION" equiv-text="{{getPercentValue()}}"/>%</target>
         <context-group purpose="location">
           <context context-type="sourcefile">../node_modules/@ng-bootstrap/ng-bootstrap/progressbar/progressbar.d.ts</context>
-          <context context-type="linenumber">6</context>
+          <context context-type="linenumber">7</context>
         </context-group>
       </trans-unit>
       <trans-unit id="ngb.timepicker.increment-hours" datatype="html">
@@ -271,7 +271,7 @@
         <target state="final">Ja</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/widgets/documentinfo/fields-view.html</context>
-          <context context-type="linenumber">19</context>
+          <context context-type="linenumber">23</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/configuration/project-configuration.html</context>
@@ -307,7 +307,7 @@
         <target state="final">Nein</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/widgets/documentinfo/fields-view.html</context>
-          <context context-type="linenumber">20</context>
+          <context context-type="linenumber">24</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/configuration/project-configuration.html</context>
@@ -2565,6 +2565,30 @@
           <context context-type="linenumber">10</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="docedit.forms.literature.add" datatype="html">
+        <source>Hinzufügen...</source>
+        <target state="final">Hinzufügen...</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/core/forms/literature.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.forms.literature.quote" datatype="html">
+        <source>Literaturzitat nach DAI-Richtlinien:</source>
+        <target state="final">Literaturzitat nach DAI-Richtlinien:</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/core/forms/literature.html</context>
+          <context context-type="linenumber">41</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.forms.literature.zenonId" datatype="html">
+        <source>Zenon-ID:</source>
+        <target state="final">Zenon-ID:</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/core/forms/literature.html</context>
+          <context context-type="linenumber">45</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="docedit.forms.dating.bce" datatype="html">
         <source>v. Chr.</source>
         <target state="final">v. Chr.</target>
@@ -2780,7 +2804,7 @@
         <target state="final">Start- und Endzeitraum angeben</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/dropdown-range.html</context>
-          <context context-type="linenumber">38</context>
+          <context context-type="linenumber">39</context>
         </context-group>
       </trans-unit>
       <trans-unit id="geometry.none" datatype="html">
@@ -4664,6 +4688,10 @@
           <context context-type="sourcefile">components/docedit/core/forms/dimension.html</context>
           <context context-type="linenumber">89</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/core/forms/literature.html</context>
+          <context context-type="linenumber">57</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="docedit.saveModal.header" datatype="html">
         <source>Speichern?</source>
@@ -4881,6 +4909,10 @@
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/dimension.html</context>
           <context context-type="linenumber">87</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/core/forms/literature.html</context>
+          <context context-type="linenumber">53</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.projects.deleteProject.enterName" datatype="html">

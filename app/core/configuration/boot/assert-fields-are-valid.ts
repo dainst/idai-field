@@ -1,8 +1,8 @@
-import {cond, empty, flow, forEach, includedIn, isNot, map, remove,
-    on, keysAndValues, isDefined, filter, and, keys} from 'tsfun';
+import {cond, empty, flow, forEach, includedIn, isNot, map, remove, on, keysAndValues, isDefined, filter, and,
+    keys} from 'tsfun';
 import {ConfigurationErrors} from './configuration-errors';
-import {CustomFieldDefinitionsMap} from "../model/custom-type-definition";
-import {LibraryFieldDefinitionsMap} from "../model/library-type-definition";
+import {CustomFieldDefinitionsMap} from '../model/custom-type-definition';
+import {LibraryFieldDefinitionsMap} from '../model/library-type-definition';
 
 
 const VALID_INPUT_TYPES = [
@@ -12,8 +12,7 @@ const VALID_INPUT_TYPES = [
 
 
 export function assertFieldsAreValid(fields: LibraryFieldDefinitionsMap|CustomFieldDefinitionsMap,
-                                     validFieldKeys: string[],
-                                     source: 'custom'|'library') {
+                                     validFieldKeys: string[], source: 'custom'|'library') {
 
     assertInputTypesAreValid(fields);
     assertFieldKeysAreValid(fields, validFieldKeys, source);
@@ -24,19 +23,21 @@ function assertInputTypesAreValid(fields: LibraryFieldDefinitionsMap|CustomField
 
     const isIllegal = and(
                 isDefined,
-                isNot(includedIn(VALID_INPUT_TYPES)));
+                isNot(includedIn(VALID_INPUT_TYPES))
+    );
+
     flow(
         keysAndValues(fields),
         filter(on('[1].inputType', isIllegal)),
         forEach(([fieldName, field]: any) => {
             throw [ConfigurationErrors.ILLEGAL_FIELD_INPUT_TYPE, field.inputType, fieldName];
-        }));
+        })
+    );
 }
 
 
 function assertFieldKeysAreValid(fields: LibraryFieldDefinitionsMap|CustomFieldDefinitionsMap,
-                                 validFieldKeys: string[],
-                                 source: 'custom'|'library') {
+                                 validFieldKeys: string[], source: 'custom'|'library') {
 
     function throwIllegalFieldProperty(keys: string) {
 
@@ -49,5 +50,6 @@ function assertFieldKeysAreValid(fields: LibraryFieldDefinitionsMap|CustomFieldD
         fields,
         map(keys),
         map(remove(includedIn(validFieldKeys))),
-        forEach(throwIllegalFieldPropertyIfNotEmpty));
+        forEach(throwIllegalFieldPropertyIfNotEmpty)
+    );
 }

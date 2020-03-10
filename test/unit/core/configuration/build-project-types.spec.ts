@@ -1,25 +1,26 @@
-import {BuiltinTypeDefinitions} from '../../../../app/core/configuration/model/builtin-type-definition';
-import {CustomTypeDefinitionsMap} from '../../../../app/core/configuration/model/custom-type-definition';
+import {Map} from 'tsfun';
 import {buildProjectTypes} from '../../../../app/core/configuration/boot/build-project-types';
 import {ConfigurationErrors} from '../../../../app/core/configuration/boot/configuration-errors';
-import {LibraryTypeDefinitionsMap} from '../../../../app/core/configuration/model/library-type-definition';
 import {ValuelistDefinitions} from '../../../../app/core/configuration/model/valuelist-definition';
 import {FieldDefinition} from '../../../../app/core/configuration/model/field-definition';
 import {Group} from '../../../../app/core/model/group-util';
+import {CustomTypeDefinition} from '../../../../app/core/configuration/model/custom-type-definition';
+import {BuiltinTypeDefinition} from '../../../../app/core/configuration/model/builtin-type-definition';
+import {LibraryTypeDefinition} from '../../../../app/core/configuration/model/library-type-definition';
 
 
 describe('buildProjectTypes', () => {
 
     it('auto-select parent if child defined',  () => {
 
-        const builtInTypes: BuiltinTypeDefinitions = {
+        const builtInTypes: Map<BuiltinTypeDefinition> = {
             A: {
                 superType: true,
                 userDefinedSubtypesAllowed: true,
                 fields: {}
             }
         };
-        const customTypes: CustomTypeDefinitionsMap = {
+        const customTypes: Map<CustomTypeDefinition> = {
             B: {
                 parent: 'A',
                 fields: {},
@@ -38,7 +39,7 @@ describe('buildProjectTypes', () => {
 
     it('throw away type which is neither selected explicitly or as a parent',  () => {
 
-        const builtInTypes: BuiltinTypeDefinitions = {
+        const builtInTypes: Map<BuiltinTypeDefinition> = {
             A: {
                 superType: true,
                 userDefinedSubtypesAllowed: true,
@@ -48,7 +49,7 @@ describe('buildProjectTypes', () => {
                 fields: {}
             }
         };
-        const customTypes: CustomTypeDefinitionsMap = {
+        const customTypes: Map<CustomTypeDefinition> = {
             B: {
                 parent: 'A',
                 fields: {},
@@ -68,7 +69,7 @@ describe('buildProjectTypes', () => {
 
     it('hide fields', () => {
 
-        const builtInTypes: BuiltinTypeDefinitions = {
+        const builtInTypes: Map<BuiltinTypeDefinition> = {
             A: {
                 fields: {
                     field1: { inputType: 'input' },
@@ -76,7 +77,7 @@ describe('buildProjectTypes', () => {
                 }
             }
         };
-        const libraryTypes: LibraryTypeDefinitionsMap = {
+        const libraryTypes: Map<LibraryTypeDefinition> = {
             A: {
                 typeFamily: 'A',
                 commons: ['aCommonField', 'bCommonField'],
@@ -116,9 +117,9 @@ describe('buildProjectTypes', () => {
 
     it('valuelistId - provided via valuelists property in custom type', () => {
 
-        const builtInTypes: BuiltinTypeDefinitions = { A: { fields: { aField: { inputType: 'dropdown' }} }};
-        const libraryTypes: LibraryTypeDefinitionsMap = {};
-        const customTypes: CustomTypeDefinitionsMap = {
+        const builtInTypes: Map<BuiltinTypeDefinition> = { A: { fields: { aField: { inputType: 'dropdown' }} }};
+        const libraryTypes: Map<LibraryTypeDefinition> = {};
+        const customTypes: Map<CustomTypeDefinition> = {
             'A': {
                 fields: {},
                 valuelists: { aField: 'aField-valuelist-id-1' }
@@ -138,16 +139,16 @@ describe('buildProjectTypes', () => {
 
     it('valuelistId - overwrite valuelists property in custom type, extending a library type - for a common field', () => {
 
-        const builtInTypes: BuiltinTypeDefinitions = {
+        const builtInTypes: Map<BuiltinTypeDefinition> = {
             A: { fields: {} }};
-        const libraryTypes: LibraryTypeDefinitionsMap = {
+        const libraryTypes: Map<LibraryTypeDefinition> = {
             'A:default': {
                 commons: ['aCommon'],
                 valuelists: { aCommon: 'aCommon-valuelists-id-1' },
                 creationDate: '', createdBy: '', description: {}, fields: {}, typeFamily: 'A'}
         };
         const commonFields = { aCommon: { group: 'stem', inputType: 'dropdown' }};
-        const customTypes: CustomTypeDefinitionsMap = {
+        const customTypes: Map<CustomTypeDefinition> = {
             'A:default': {
                 commons: ['aCommon'],
                 valuelists: { aCommon: 'aCommon-valuelist-id-2' },
@@ -169,8 +170,8 @@ describe('buildProjectTypes', () => {
 
     it('valuelistId - provided via valuelists property in library', () => {
 
-        const builtInTypes: BuiltinTypeDefinitions = { A: { fields: { aField: { inputType: 'dropdown' }} }};
-        const libraryTypes: LibraryTypeDefinitionsMap = {
+        const builtInTypes: Map<BuiltinTypeDefinition> = { A: { fields: { aField: { inputType: 'dropdown' }} }};
+        const libraryTypes: Map<LibraryTypeDefinition> = {
             'A:default': {
                 valuelists: { aField: 'aField-valuelist-id-1' },
                 typeFamily: 'A',
@@ -181,7 +182,7 @@ describe('buildProjectTypes', () => {
                 creationDate: ''
             }
         };
-        const customTypes: CustomTypeDefinitionsMap = {
+        const customTypes: Map<CustomTypeDefinition> = {
             'A:default': { fields: {}}
         };
 
@@ -198,8 +199,8 @@ describe('buildProjectTypes', () => {
 
     it('valuelistId - nowhere provided - built in type selected', () => {
 
-        const builtInTypes: BuiltinTypeDefinitions = { A: { fields: { aField: { inputType: 'dropdown' }} }};
-        const customTypes: CustomTypeDefinitionsMap = {
+        const builtInTypes: Map<BuiltinTypeDefinition> = { A: { fields: { aField: { inputType: 'dropdown' }} }};
+        const customTypes: Map<CustomTypeDefinition> = {
             'A': { fields: { aField: {}}}
         };
 
@@ -220,8 +221,8 @@ describe('buildProjectTypes', () => {
 
     it('valuelistId - nowhere provided - library type selected', () => {
 
-        const builtInTypes: BuiltinTypeDefinitions = { A: { fields: { aField: { inputType: 'dropdown' }} }};
-        const libraryTypes: LibraryTypeDefinitionsMap = {
+        const builtInTypes: Map<BuiltinTypeDefinition> = { A: { fields: { aField: { inputType: 'dropdown' }} }};
+        const libraryTypes: Map<LibraryTypeDefinition> = {
             'A:0': {
                 typeFamily: 'A',
                 commons: [],
@@ -232,7 +233,7 @@ describe('buildProjectTypes', () => {
                 description: {}
             },
         };
-        const customTypes: CustomTypeDefinitionsMap = {
+        const customTypes: Map<CustomTypeDefinition> = {
             'A:0': { fields: { aField: {}}}
         };
 
@@ -253,8 +254,8 @@ describe('buildProjectTypes', () => {
 
     it('duplication in selection', () => {
 
-        const builtinTypes: BuiltinTypeDefinitions = { A: { fields: {} }};
-        const libraryTypes: LibraryTypeDefinitionsMap = {
+        const builtinTypes: Map<BuiltinTypeDefinition> = { A: { fields: {} }};
+        const libraryTypes: Map<LibraryTypeDefinition> = {
             'A:0': {
                 typeFamily: 'A',
                 commons: [],
@@ -274,7 +275,7 @@ describe('buildProjectTypes', () => {
                 description: {}
             }
         };
-        const customTypes: CustomTypeDefinitionsMap = {
+        const customTypes: Map<CustomTypeDefinition> = {
             'A:0': {
                 fields: {}
             },
@@ -297,8 +298,8 @@ describe('buildProjectTypes', () => {
 
     it('duplication in selection - built in types create type family implicitely', () => {
 
-        const builtinTypes: BuiltinTypeDefinitions = { A: { fields: {} }};
-        const libraryTypes: LibraryTypeDefinitionsMap = {
+        const builtinTypes: Map<BuiltinTypeDefinition> = { A: { fields: {} }};
+        const libraryTypes: Map<LibraryTypeDefinition> = {
             'A:0': {
                 typeFamily: 'A',
                 commons: [],
@@ -309,7 +310,7 @@ describe('buildProjectTypes', () => {
                 description: {}
             }
         };
-        const customTypes: CustomTypeDefinitionsMap = {
+        const customTypes: Map<CustomTypeDefinition> = {
             'A': { fields: {} },
             'A:0': { fields: {} }
         };
@@ -328,8 +329,8 @@ describe('buildProjectTypes', () => {
 
     it('type families - divergent input type', () => {
 
-        const builtinTypes: BuiltinTypeDefinitions = { A: { fields: {}}};
-        const libraryTypes: LibraryTypeDefinitionsMap = {
+        const builtinTypes: Map<BuiltinTypeDefinition> = { A: { fields: {}}};
+        const libraryTypes: Map<LibraryTypeDefinition> = {
             'A:0': {
                 typeFamily: 'A',
                 commons: [],
@@ -364,8 +365,8 @@ describe('buildProjectTypes', () => {
 
     it('subtypes - user defined subtype not allowed', () => {
 
-        const builtInTypes: BuiltinTypeDefinitions = { A: { fields: {} }};
-        const libraryTypes: LibraryTypeDefinitionsMap = {
+        const builtInTypes: Map<BuiltinTypeDefinition> = { A: { fields: {} }};
+        const libraryTypes: Map<LibraryTypeDefinition> = {
             'B:0': {
                 typeFamily: 'B',
                 parent: 'A',
@@ -394,9 +395,9 @@ describe('buildProjectTypes', () => {
 
     it('commons - cannot set type of common in libary types', () => {
 
-        const builtInTypes: BuiltinTypeDefinitions = { A: { fields: {} }};
+        const builtInTypes: Map<BuiltinTypeDefinition> = { A: { fields: {} }};
         const commonFields = { aCommon: { group: 'stem', inputType: 'input' }};
-        const libraryTypes: LibraryTypeDefinitionsMap = {
+        const libraryTypes: Map<LibraryTypeDefinition> = {
             'A:0': {
                 typeFamily: 'A',
                 commons: [],
@@ -424,9 +425,9 @@ describe('buildProjectTypes', () => {
 
     it('commons - cannot set type of common in custom types', () => {
 
-        const builtInTypes: BuiltinTypeDefinitions = { A: { fields: {} }};
+        const builtInTypes: Map<BuiltinTypeDefinition> = { A: { fields: {} }};
         const commonFields = { aCommon: { group: 'stem', inputType: 'input' }};
-        const customTypes: CustomTypeDefinitionsMap = {
+        const customTypes: Map<CustomTypeDefinition> = {
             'A': { fields: { aCommon: { inputType: 'text' }}}
         };
 
@@ -447,9 +448,9 @@ describe('buildProjectTypes', () => {
 
     it('commons - common field not provided', () => {
 
-        const builtInTypes: BuiltinTypeDefinitions = { A: { fields: {} }};
+        const builtInTypes: Map<BuiltinTypeDefinition> = { A: { fields: {} }};
         const commonFields = {};
-        const customTypes: CustomTypeDefinitionsMap = {
+        const customTypes: Map<CustomTypeDefinition> = {
             A: { fields: {}, commons: ['missing']}
         };
 
@@ -470,9 +471,9 @@ describe('buildProjectTypes', () => {
 
     it('commons - mix in commons in library type', () => {
 
-        const builtInTypes: BuiltinTypeDefinitions = { A: { fields: {} }};
+        const builtInTypes: Map<BuiltinTypeDefinition> = { A: { fields: {} }};
         const commonFields = { aCommon: { group: 'stem', inputType: 'input' }};
-        const libraryTypes: LibraryTypeDefinitionsMap = {
+        const libraryTypes: Map<LibraryTypeDefinition> = {
             'A:0': {
                 typeFamily: 'A',
                 commons: ['aCommon'],
@@ -498,9 +499,9 @@ describe('buildProjectTypes', () => {
 
     it('commons - mix in commons in custom type', () => {
 
-        const builtInTypes: BuiltinTypeDefinitions = { A: { fields: {} }};
+        const builtInTypes: Map<BuiltinTypeDefinition> = { A: { fields: {} }};
         const commonFields = { aCommon: { group: 'stem', inputType: 'input' }};
-        const customTypes: CustomTypeDefinitionsMap = {
+        const customTypes: Map<CustomTypeDefinition> = {
             A: {
                 commons: ['aCommon'],
                 fields: { }
@@ -521,12 +522,12 @@ describe('buildProjectTypes', () => {
 
     it('commons - add together commons from library and custom type', () => {
 
-        const builtInTypes: BuiltinTypeDefinitions = { A: { fields: {} }};
+        const builtInTypes: Map<BuiltinTypeDefinition> = { A: { fields: {} }};
         const commonFields = {
             aCommon: { group: 'stem', inputType: 'input'},
             bCommon: { group: 'stem', inputType: 'input'}
         };
-        const libraryTypes: LibraryTypeDefinitionsMap = {
+        const libraryTypes: Map<LibraryTypeDefinition> = {
             'A:0': {
                 typeFamily: 'A',
                 commons: ['aCommon'],
@@ -536,7 +537,7 @@ describe('buildProjectTypes', () => {
                 creationDate: '',
                 description: {}
             }};
-        const customTypes: CustomTypeDefinitionsMap = {
+        const customTypes: Map<CustomTypeDefinition> = {
             'A:0': {
                 commons: ['bCommon'],
                 fields: { }
@@ -559,11 +560,11 @@ describe('buildProjectTypes', () => {
 
     it('commons - use valuelistFromProjectField if defined in commons', () => {
 
-        const builtInTypes: BuiltinTypeDefinitions = { A: { fields: {} }};
+        const builtInTypes: Map<BuiltinTypeDefinition> = { A: { fields: {} }};
         const commonFields = { aCommon:
                 { group: 'stem', inputType: 'dropdown', valuelistFromProjectField: 'x' }
         };
-        const libraryTypes: LibraryTypeDefinitionsMap = {
+        const libraryTypes: Map<LibraryTypeDefinition> = {
             'A:0': {
                 typeFamily: 'A',
                 commons: ['aCommon'],
@@ -592,8 +593,8 @@ describe('buildProjectTypes', () => {
 
     it('field property validation - invalid input Type', () => {
 
-        const builtInTypes: BuiltinTypeDefinitions = { A: { fields: {} }};
-        const libraryTypes: LibraryTypeDefinitionsMap = {
+        const builtInTypes: Map<BuiltinTypeDefinition> = { A: { fields: {} }};
+        const libraryTypes: Map<LibraryTypeDefinition> = {
             'A:0': {
                 typeFamily: 'A',
                 commons: [],
@@ -621,9 +622,9 @@ describe('buildProjectTypes', () => {
 
     it('field property validation - missing input type in field of entirely new custom type', () => {
 
-        const builtInTypes: BuiltinTypeDefinitions = { A: { fields: {}, superType: true, userDefinedSubtypesAllowed: true }};
-        const libraryTypes: LibraryTypeDefinitionsMap = {};
-        const customTypes: CustomTypeDefinitionsMap = { 'C': { parent: 'A', fields: { cField: {} }}};
+        const builtInTypes: Map<BuiltinTypeDefinition> = { A: { fields: {}, superType: true, userDefinedSubtypesAllowed: true }};
+        const libraryTypes: Map<LibraryTypeDefinition> = {};
+        const customTypes: Map<CustomTypeDefinition> = { 'C': { parent: 'A', fields: { cField: {} }}};
 
         try {
             buildProjectTypes(
@@ -642,11 +643,11 @@ describe('buildProjectTypes', () => {
 
     it('field property validation - missing input type in field of builtInType type - extension of supertype', () => {
 
-        const builtInTypes: BuiltinTypeDefinitions = {
+        const builtInTypes: Map<BuiltinTypeDefinition> = {
             A: { fields: {} }
         };
 
-        const libraryTypes: LibraryTypeDefinitionsMap = {
+        const libraryTypes: Map<LibraryTypeDefinition> = {
             'A:0': {
                 typeFamily: 'A',
                 commons: [],
@@ -669,11 +670,11 @@ describe('buildProjectTypes', () => {
 
     it('field property validation  - extension of supertype - inputType inherited from builtIn', () => {
 
-        const builtInTypes: BuiltinTypeDefinitions = {
+        const builtInTypes: Map<BuiltinTypeDefinition> = {
             A: { fields: { aField: { inputType: 'input' } } }
         };
 
-        const libraryTypes: LibraryTypeDefinitionsMap = {
+        const libraryTypes: Map<LibraryTypeDefinition> = {
             'A:0': {
                 typeFamily: 'A',
                 commons: [],
@@ -694,11 +695,11 @@ describe('buildProjectTypes', () => {
 
     it('field property validation - missing input type in field of library type - new subtype', () => {
 
-        const builtInTypes: BuiltinTypeDefinitions = {
+        const builtInTypes: Map<BuiltinTypeDefinition> = {
             A: { fields: {}, superType: true, userDefinedSubtypesAllowed: true }
         };
 
-        const libraryTypes: LibraryTypeDefinitionsMap = {
+        const libraryTypes: Map<LibraryTypeDefinition> = {
             'B:0': {
                 typeFamily: 'B',
                 parent: 'A',
@@ -722,11 +723,11 @@ describe('buildProjectTypes', () => {
 
     it('field property validation - must not set field type on inherited field', () => {
 
-        const builtInTypes: BuiltinTypeDefinitions = {
+        const builtInTypes: Map<BuiltinTypeDefinition> = {
             A: { fields: { aField: { inputType: 'input' }} }
         };
 
-        const libraryTypes: LibraryTypeDefinitionsMap = {
+        const libraryTypes: Map<LibraryTypeDefinition> = {
             'A:0': {
                 typeFamily: 'A',
                 commons: [],
@@ -749,11 +750,11 @@ describe('buildProjectTypes', () => {
 
     it('field property validation - undefined property in library type field', () => {
 
-        const builtInTypes: BuiltinTypeDefinitions = {
+        const builtInTypes: Map<BuiltinTypeDefinition> = {
             A: { fields: {} }
         };
 
-        const libraryTypes: LibraryTypeDefinitionsMap = {
+        const libraryTypes: Map<LibraryTypeDefinition> = {
             'A:0': {
                 typeFamily: 'A',
                 commons: [],
@@ -776,11 +777,11 @@ describe('buildProjectTypes', () => {
 
     it('field property validation - undefined property in custom type field', () => {
 
-        const builtInTypes: BuiltinTypeDefinitions = {
+        const builtInTypes: Map<BuiltinTypeDefinition> = {
             A: { fields: {} }
         };
 
-        const customTypes: CustomTypeDefinitionsMap = {
+        const customTypes: Map<CustomTypeDefinition> = {
             'A': {
                 fields: { aField: { group: 'a'} as any }
             }
@@ -800,7 +801,7 @@ describe('buildProjectTypes', () => {
 
     it('apply valuelistConfiguration', () => {
 
-        const builtInTypes: BuiltinTypeDefinitions = {
+        const builtInTypes: Map<BuiltinTypeDefinition> = {
             A: {
                 fields: {
                     field1: { inputType: 'input' }
@@ -808,7 +809,7 @@ describe('buildProjectTypes', () => {
             }
         };
 
-        const libraryTypes: LibraryTypeDefinitionsMap  = {
+        const libraryTypes: Map<LibraryTypeDefinition>  = {
             'A:0': {
                 typeFamily: 'A',
                 commons: [],
@@ -838,7 +839,7 @@ describe('buildProjectTypes', () => {
 
         const builtinTypes = {};
 
-        const libraryTypes: LibraryTypeDefinitionsMap = {
+        const libraryTypes: Map<LibraryTypeDefinition> = {
             'B:0': {
                 fields: {}
             }
@@ -858,7 +859,7 @@ describe('buildProjectTypes', () => {
 
         const builtInTypes = {} as any;
 
-        const libraryTypes: LibraryTypeDefinitionsMap = {
+        const libraryTypes: Map<LibraryTypeDefinition> = {
             'B:0': {
                 typeFamily: 'B',
                 commons: [],
@@ -882,7 +883,7 @@ describe('buildProjectTypes', () => {
 
     it('missing parent in custom type', () => {
 
-        const customTypes: CustomTypeDefinitionsMap = {
+        const customTypes: Map<CustomTypeDefinition> = {
             'B:0': { fields: {} }
         };
 
@@ -902,7 +903,7 @@ describe('buildProjectTypes', () => {
 
     it('merge libraryType with builtIn', () => {
 
-        const builtInTypes: BuiltinTypeDefinitions = {
+        const builtInTypes: Map<BuiltinTypeDefinition> = {
             A: {
                 fields: {
                     field1: { inputType: 'text', group: 'stem' }
@@ -910,7 +911,7 @@ describe('buildProjectTypes', () => {
             }
         };
 
-        const libraryTypes: LibraryTypeDefinitionsMap = {
+        const libraryTypes: Map<LibraryTypeDefinition> = {
             'A:1': {
                 typeFamily: 'A',
                 commons: [],
@@ -935,7 +936,7 @@ describe('buildProjectTypes', () => {
 
     it('merge custom types with built-in types', () => {
 
-        const builtInTypes: BuiltinTypeDefinitions = {
+        const builtInTypes: Map<BuiltinTypeDefinition> = {
             A: {
                 fields: {
                     field1: { inputType: 'text', group: 'stem' }
@@ -943,7 +944,7 @@ describe('buildProjectTypes', () => {
             }
         };
 
-        const customTypes: CustomTypeDefinitionsMap = {
+        const customTypes: Map<CustomTypeDefinition> = {
             A: {
                 fields: {
                     field1: { },
@@ -963,7 +964,7 @@ describe('buildProjectTypes', () => {
 
     it('merge custom types with library types', () => {
 
-        const builtInTypes: BuiltinTypeDefinitions = {
+        const builtInTypes: Map<BuiltinTypeDefinition> = {
             A: {
                 fields: {
                     field1: { inputType: 'text', group: 'stem' }
@@ -971,7 +972,7 @@ describe('buildProjectTypes', () => {
             }
         };
 
-        const libraryTypes: LibraryTypeDefinitionsMap = {
+        const libraryTypes: Map<LibraryTypeDefinition> = {
             'A:0': {
                 typeFamily: 'A',
                 commons: [],
@@ -984,7 +985,7 @@ describe('buildProjectTypes', () => {
                 description: {} }
         };
 
-        const customTypes: CustomTypeDefinitionsMap = {
+        const customTypes: Map<CustomTypeDefinition> = {
             'A:0': {
                 fields: {
                     field2: { },
@@ -1008,7 +1009,7 @@ describe('buildProjectTypes', () => {
             aCommon: { inputType: FieldDefinition.InputType.INPUT },
         };
 
-        const builtInTypes: BuiltinTypeDefinitions = {
+        const builtInTypes: Map<BuiltinTypeDefinition> = {
             A: {
                 fields: {
                     field1: { inputType: FieldDefinition.InputType.TEXT, group: Group.STEM }
@@ -1016,7 +1017,7 @@ describe('buildProjectTypes', () => {
             }
         };
 
-        const libraryTypes: LibraryTypeDefinitionsMap = {
+        const libraryTypes: Map<LibraryTypeDefinition> = {
             'A:0': {
                 typeFamily: 'A',
                 commons: ['aCommon'],
@@ -1029,7 +1030,7 @@ describe('buildProjectTypes', () => {
                 description: {} }
         };
 
-        const customTypes: CustomTypeDefinitionsMap = {
+        const customTypes: Map<CustomTypeDefinition> = {
             'A:0': {
                 fields: {
                     field2: { },
@@ -1050,7 +1051,7 @@ describe('buildProjectTypes', () => {
 
     xit('critical change of input type', () => {
 
-        const builtInTypes: BuiltinTypeDefinitions = {
+        const builtInTypes: Map<BuiltinTypeDefinition> = {
             A: {
                 superType: true,
                 userDefinedSubtypesAllowed: true,
@@ -1058,7 +1059,7 @@ describe('buildProjectTypes', () => {
             }
         };
 
-        const libraryTypes: LibraryTypeDefinitionsMap = {
+        const libraryTypes: Map<LibraryTypeDefinition> = {
             'B:0': {
                 typeFamily: 'B',
                 parent: 'A',
@@ -1072,7 +1073,7 @@ describe('buildProjectTypes', () => {
                 description: {} }
         };
 
-        const customTypes: CustomTypeDefinitionsMap = {
+        const customTypes: Map<CustomTypeDefinition> = {
             'B:0': {
                 fields: {
                     field1: { inputType: 'radio' },

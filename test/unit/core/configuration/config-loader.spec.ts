@@ -1,7 +1,8 @@
+import {Map} from 'tsfun';
 import {ConfigurationDefinition} from '../../../../app/core/configuration/boot/configuration-definition';
 import {ConfigLoader} from '../../../../app/core/configuration/boot/config-loader';
-import {CustomTypeDefinitionsMap} from '../../../../app/core/configuration/model/custom-type-definition';
 import {ConfigurationErrors} from '../../../../app/core/configuration/boot/configuration-errors';
+import {CustomTypeDefinition} from '../../../../app/core/configuration/model/custom-type-definition';
 
 
 /**
@@ -312,7 +313,7 @@ describe('ConfigLoader', () => {
             }
         });
 
-        const customTypes: CustomTypeDefinitionsMap = {
+        const customTypes: Map<CustomTypeDefinition> = {
             'A': { fields: { fieldA1: { } } },
             'B': { fields: { fieldB2: { inputType: 'boolean' } } },
             'F': { fields: {} },
@@ -363,7 +364,7 @@ describe('ConfigLoader', () => {
             }
         });
 
-        const customTypes: CustomTypeDefinitionsMap = {
+        const customTypes: Map<CustomTypeDefinition> = {
             'B:0': {
                 parent: 'Find',
                 fields: { fieldC1: { inputType: 'boolean'} }
@@ -399,7 +400,7 @@ describe('ConfigLoader', () => {
 
         Object.assign(libraryTypes, {});
 
-        const customFieldsConfiguration: CustomTypeDefinitionsMap = {
+        const customFieldsConfiguration: Map<CustomTypeDefinition> = {
             'B:0': {
                 parent: 'Find',
                 commons: [],
@@ -433,7 +434,7 @@ describe('ConfigLoader', () => {
 
         Object.assign(libraryTypes, {});
 
-        const customFieldsConfiguration: CustomTypeDefinitionsMap = {
+        const customFieldsConfiguration: Map<CustomTypeDefinition> = {
             'Extension:0': {
                 parent: 'Place',
                 commons: [],

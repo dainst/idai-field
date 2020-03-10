@@ -1,9 +1,10 @@
 import {Injectable} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
+import {Map} from 'tsfun';
 import {ConfigLoader} from './boot/config-loader';
 import {ProjectConfiguration} from './project-configuration';
 import {FieldDefinition} from './model/field-definition';
-import {BuiltinTypeDefinition, BuiltinTypeDefinitions} from './model/builtin-type-definition';
+import {BuiltinTypeDefinition} from './model/builtin-type-definition';
 import {RelationDefinition} from './model/relation-definition';
 import {Group} from '../model/group-util';
 
@@ -151,7 +152,7 @@ export class AppConfigurator {
         }
     };
 
-    private builtinTypes: BuiltinTypeDefinitions = {
+    private builtinTypes: Map<BuiltinTypeDefinition> = {
         Project: {
             label: this.i18n({ id: 'configuration.project', value: 'Projekt' }),
             fields: {

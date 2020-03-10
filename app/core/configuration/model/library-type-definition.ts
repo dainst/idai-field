@@ -1,3 +1,4 @@
+import {Map} from 'tsfun';
 import {assertFieldsAreValid} from '../boot/assert-fields-are-valid';
 import {ConfigurationErrors} from '../boot/configuration-errors';
 import {BaseFieldDefinition, BaseTypeDefinition} from './base-type-definition';
@@ -19,10 +20,8 @@ export interface LibraryTypeDefinition extends BaseTypeDefinition {
     description: {[language: string]: string},
     createdBy: string,
     creationDate: string;
-    fields: LibraryFieldDefinitionsMap;
+    fields: Map<LibraryFieldDefinition>;
 }
-
-export type LibraryTypeDefinitionsMap = { [typeName: string]: LibraryTypeDefinition };
 
 
 export interface LibraryFieldDefinition extends BaseFieldDefinition {
@@ -35,9 +34,6 @@ const VALID_FIELD_PROPERTIES = [
     'inputType',
     'positionValues'
 ];
-
-
-export type LibraryFieldDefinitionsMap = { [fieldName: string]: LibraryFieldDefinition };
 
 
 export module LibraryTypeDefinition {

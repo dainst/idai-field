@@ -1,40 +1,19 @@
 import {clone, compose, filter, flow, forEach, includedIn, is, isDefined, isNot, isnt, update,
-    jsonClone, keysAndValues, map, on, reduce, subtract, to, union, keys, lookup, pairWith} from 'tsfun';
-import {BuiltinFieldDefinition, BuiltinTypeDefinition, BuiltinTypeDefinitions} from '../model/builtin-type-definition';
-import {LibraryFieldDefinition, LibraryTypeDefinition, LibraryTypeDefinitionsMap} from '../model/library-type-definition';
-import {CustomFieldDefinition, CustomFieldDefinitionsMap, CustomTypeDefinition, CustomTypeDefinitionsMap} from '../model/custom-type-definition';
+    jsonClone, keysAndValues, map, on, reduce, subtract, to, union, keys, lookup, pairWith, Map} from 'tsfun';
+import {LibraryTypeDefinition} from '../model/library-type-definition';
+import {CustomFieldDefinition, CustomTypeDefinition} from '../model/custom-type-definition';
 import {ConfigurationErrors} from './configuration-errors';
 import {FieldDefinition} from '../model/field-definition';
 import {ValuelistDefinition, ValuelistDefinitions} from '../model/valuelist-definition';
 import {withDissoc} from '../../util/utils';
+import {TransientFieldDefinition, TransientTypeDefinition} from '../model/transient-type-definition';
+import {BuiltinTypeDefinition} from '../model/builtin-type-definition';
 
 
 const VALUELISTS = 'valuelists';
 const COMMONS = 'commons';
 
 type CommonFields = {[fieldName: string]: any};
-
-
-interface TransientTypeDefinition extends BuiltinFieldDefinition, LibraryTypeDefinition {
-
-    fields: TransientFieldDefinitionsMap;
-}
-
-
-interface TransientFieldDefinition extends BuiltinFieldDefinition, LibraryFieldDefinition {
-
-    valuelist?: any;
-    valuelistId?: string,
-    valuelistFromProjectField?: string;
-    visible?: boolean;
-    editable?: boolean;
-    constraintIndexed?: true;
-    source?: 'builtin'|'library'|'custom'|'common';
-}
-
-type TransientTypeDefinitionsMap = { [typeName: string]: TransientTypeDefinition };
-
-type TransientFieldDefinitionsMap = { [fieldName: string]: TransientFieldDefinition };
 
 
 /**
@@ -70,9 +49,9 @@ type TransientFieldDefinitionsMap = { [fieldName: string]: TransientFieldDefinit
  * @throws [INCONSISTENT_TYPE_FAMILY, typeFamilyName, reason (, fieldName)]
  * @throws [COMMON_FIELD_NOT_PROVIDED, commonFieldName]
  */
-export function buildProjectTypes(builtInTypes: BuiltinTypeDefinitions,
-                                  libraryTypes: LibraryTypeDefinitionsMap,
-                                  customTypes: CustomTypeDefinitionsMap = {},
+export function buildProjectTypes(builtInTypes: Map<BuiltinTypeDefinition>,
+                                  libraryTypes: Map<LibraryTypeDefinition>,
+                                  customTypes: Map<CustomTypeDefinition> = {},
                                   commonFields: CommonFields = {},
                                   valuelistsConfiguration: ValuelistDefinitions = {},
                                   extraFields: { [extraFieldName: string]: any } = {}) {
@@ -81,17 +60,17 @@ export function buildProjectTypes(builtInTypes: BuiltinTypeDefinitions,
     performAssertions(builtInTypes, libraryTypes, customTypes, commonFields, valuelistsConfiguration);
 
     addSourceField(builtInTypes, libraryTypes, customTypes, commonFields);
-    const selectableTypes: TransientTypeDefinitionsMap = mergeBuiltInWithLibraryTypes(builtInTypes, libraryTypes);
+    const selectableTypes: Map<TransientTypeDefinition> = mergeBuiltInWithLibraryTypes(builtInTypes, libraryTypes);
     assertInputTypesAreSet(selectableTypes, assertInputTypePresentIfNotCommonType_);
     assertNoDuplicationInSelection(selectableTypes, customTypes);
 
-    const mergedTypes: TransientTypeDefinitionsMap =
+    const mergedTypes: Map<TransientTypeDefinition> =
         mergeTypes(
             selectableTypes,
             customTypes as any,
             assertInputTypePresentIfNotCommonType_);
 
-    const selectedTypes: TransientTypeDefinitionsMap =  eraseUnusedTypes(mergedTypes, Object.keys(customTypes));
+    const selectedTypes: Map<TransientTypeDefinition> =  eraseUnusedTypes(mergedTypes, Object.keys(customTypes));
     replaceCommonFields(selectedTypes, commonFields);
 
     insertValuelistIds(selectedTypes);
@@ -106,9 +85,9 @@ export function buildProjectTypes(builtInTypes: BuiltinTypeDefinitions,
 }
 
 
-function addSourceField(builtInTypes: BuiltinTypeDefinitions,
-                        libraryTypes: LibraryTypeDefinitionsMap,
-                        customTypes: CustomTypeDefinitionsMap,
+function addSourceField(builtInTypes: Map<BuiltinTypeDefinition>,
+                        libraryTypes: Map<LibraryTypeDefinition>,
+                        customTypes: Map<CustomTypeDefinition>,
                         commonFields: CommonFields) {
 
     setFieldSourceOnTypes(builtInTypes, FieldDefinition.Source.BUILTIN);
@@ -130,9 +109,9 @@ function setFieldSourceOnFields(fields: any, value: any) {
 }
 
 
-function performAssertions(builtInTypes: BuiltinTypeDefinitions,
-                           libraryTypes: LibraryTypeDefinitionsMap,
-                           customTypes: CustomTypeDefinitionsMap,
+function performAssertions(builtInTypes: Map<BuiltinTypeDefinition>,
+                           libraryTypes: Map<LibraryTypeDefinition>,
+                           customTypes: Map<CustomTypeDefinition>,
                            commonFields: CommonFields,
                            valuelistsConfiguration: ValuelistDefinitions) {
 
@@ -145,7 +124,7 @@ function performAssertions(builtInTypes: BuiltinTypeDefinitions,
 }
 
 
-function insertValuelistIds(mergedTypes: TransientTypeDefinitionsMap) {
+function insertValuelistIds(mergedTypes: Map<TransientTypeDefinition>) {
 
     iterateOverFieldsOfTypes(mergedTypes, (typeName, type, fieldName, field) => {
 
@@ -156,7 +135,7 @@ function insertValuelistIds(mergedTypes: TransientTypeDefinitionsMap) {
 }
 
 
-function assertValuelistIdsProvided(mergedTypes: TransientTypeDefinitionsMap) {
+function assertValuelistIdsProvided(mergedTypes: Map<TransientTypeDefinition>) {
 
     iterateOverFieldsOfTypes(mergedTypes, (typeName, type, fieldName, field) => {
         if (['dropdown', 'checkboxes', 'radio'].includes(field.inputType ? field.inputType : '')) {
@@ -169,8 +148,8 @@ function assertValuelistIdsProvided(mergedTypes: TransientTypeDefinitionsMap) {
 }
 
 
-function assertNoDuplicationInSelection(mergedTypes: TransientTypeDefinitionsMap,
-                                        customTypes: CustomTypeDefinitionsMap) {
+function assertNoDuplicationInSelection(mergedTypes: Map<TransientTypeDefinition>,
+                                        customTypes: Map<CustomTypeDefinition>) {
 
     Object.keys(customTypes).reduce((selectedTypeFamilies, customTypeName) => {
 
@@ -185,7 +164,7 @@ function assertNoDuplicationInSelection(mergedTypes: TransientTypeDefinitionsMap
 }
 
 
-function assertTypeFamiliesConsistent(libraryTypes: LibraryTypeDefinitionsMap) {
+function assertTypeFamiliesConsistent(libraryTypes: Map<LibraryTypeDefinition>) {
 
     type InputType = string;
     const collected: { [typeFamilyName: string]: { [fieldName: string]: InputType }} = {};
@@ -226,7 +205,7 @@ function assertTypeFamiliesConsistent(libraryTypes: LibraryTypeDefinitionsMap) {
  * @param types
  */
 function assertNoCommonFieldInputTypeChanges(commonFields: CommonFields,
-                                             types: LibraryTypeDefinitionsMap|CustomTypeDefinitionsMap) {
+                                             types: Map<LibraryTypeDefinition>|Map<CustomTypeDefinition>) {
 
     const commonFieldNames = Object.keys(commonFields);
 
@@ -241,7 +220,7 @@ function assertNoCommonFieldInputTypeChanges(commonFields: CommonFields,
 }
 
 
-function assertInputTypesAreSet(types: TransientTypeDefinitionsMap,
+function assertInputTypesAreSet(types: Map<TransientTypeDefinition>,
                                 assertInputTypePresentIfNotCommonType: Function) {
 
     iterateOverFieldsOfTypes(types, (typeName, type, fieldName, field) => {
@@ -250,7 +229,7 @@ function assertInputTypesAreSet(types: TransientTypeDefinitionsMap,
 }
 
 
-function iterateOverFieldsOfTypes(types: TransientTypeDefinitionsMap,
+function iterateOverFieldsOfTypes(types: Map<TransientTypeDefinition>,
                                   f: (typeName: string, type: TransientTypeDefinition,
                                       fieldName: string, field: TransientFieldDefinition) => void) {
 
@@ -264,7 +243,7 @@ function iterateOverFieldsOfTypes(types: TransientTypeDefinitionsMap,
 
 function addExtraFields(extraFields: {[fieldName: string]: FieldDefinition }) {
 
-    return (configuration: TransientTypeDefinitionsMap) => {
+    return (configuration: Map<TransientTypeDefinition>) => {
 
         const configuration_ = clone(configuration);
 
@@ -309,7 +288,7 @@ function _addExtraFields(typeDefinition: TransientTypeDefinition,
 
 function applyValuelistsConfiguration(valuelistsConfiguration: {[id: string]: {values: string[]}}) {
 
-    return (types: TransientTypeDefinitionsMap) => {
+    return (types: Map<TransientTypeDefinition>) => {
 
         const types_ = clone(types);
 
@@ -328,7 +307,7 @@ function applyValuelistsConfiguration(valuelistsConfiguration: {[id: string]: {v
 }
 
 
-function toTypesByFamilyNames(transientTypes: TransientTypeDefinitionsMap): TransientTypeDefinitionsMap {
+function toTypesByFamilyNames(transientTypes: Map<TransientTypeDefinition>): Map<TransientTypeDefinition> {
 
     return reduce(
         (acc: any, [transientTypeName, transientType]) => {
@@ -342,8 +321,8 @@ function toTypesByFamilyNames(transientTypes: TransientTypeDefinitionsMap): Tran
 
 
 function assertTypesAndValuelistsStructurallyValid(builtInTypes: string[],
-                                                   libraryTypes: LibraryTypeDefinitionsMap,
-                                                   customTypes: CustomTypeDefinitionsMap,
+                                                   libraryTypes: Map<LibraryTypeDefinition>,
+                                                   customTypes: Map<CustomTypeDefinition>,
                                                    valuelistDefinitions: ValuelistDefinitions) {
 
     const assertLibraryTypeValid = LibraryTypeDefinition.makeAssertIsValid(builtInTypes);
@@ -381,8 +360,8 @@ const getDefinedParents =
         filter(isDefined));
 
 
-function eraseUnusedTypes(types: TransientTypeDefinitionsMap,
-                          selectedTypeNames: string[]): TransientTypeDefinitionsMap {
+function eraseUnusedTypes(types: Map<TransientTypeDefinition>,
+                          selectedTypeNames: string[]): Map<TransientTypeDefinition> {
 
     const keysOfNotSelectedTypes = Object.keys(types).filter(isNot(includedIn(selectedTypeNames)));
     const parentNamesOfSelectedTypes: string[] =
@@ -392,11 +371,11 @@ function eraseUnusedTypes(types: TransientTypeDefinitionsMap,
             getDefinedParents);
 
     const typesToErase = subtract(parentNamesOfSelectedTypes)(keysOfNotSelectedTypes);
-    return typesToErase.reduce(withDissoc, types) as TransientTypeDefinitionsMap;
+    return typesToErase.reduce(withDissoc, types) as Map<TransientTypeDefinition>;
 }
 
 
-function assertSubtypingIsLegal(builtinTypes: BuiltinTypeDefinitions, types: any) {
+function assertSubtypingIsLegal(builtinTypes: Map<BuiltinTypeDefinition>, types: any) {
 
     flow(types,
         getDefinedParents,
@@ -411,7 +390,7 @@ function assertSubtypingIsLegal(builtinTypes: BuiltinTypeDefinitions, types: any
 }
 
 
-function replaceCommonFields(mergedTypes: TransientTypeDefinitionsMap, commonFields: CommonFields) {
+function replaceCommonFields(mergedTypes: Map<TransientTypeDefinition>, commonFields: CommonFields) {
 
     for (let mergedType of Object.values(mergedTypes)) {
 
@@ -482,8 +461,8 @@ function merge(target: any, source: any) {
 }
 
 
-function mergeFields(target: TransientFieldDefinitionsMap,
-                     source: TransientFieldDefinitionsMap) {
+function mergeFields(target: Map<TransientFieldDefinition>,
+                     source: Map<TransientFieldDefinition>) {
 
     for (let sourceFieldName of Object.keys(source)) {
         let alreadyPresentInTarget = false;
@@ -535,8 +514,8 @@ function checkFieldTypeChange(
 
 
 function checkFieldTypeChanges(customTypeName: string,
-                               customTypeFields: CustomFieldDefinitionsMap,
-                               extendedTypeFields: TransientFieldDefinitionsMap) {
+                               customTypeFields: Map<CustomFieldDefinition>,
+                               extendedTypeFields: Map<TransientFieldDefinition>) {
 
     flow(customTypeFields,
         map((field: CustomFieldDefinition, fieldName: string) =>
@@ -549,10 +528,10 @@ function checkFieldTypeChanges(customTypeName: string,
 }
 
 
-function mergeBuiltInWithLibraryTypes(builtInTypes: BuiltinTypeDefinitions,
-                                      libraryTypes: LibraryTypeDefinitionsMap): TransientTypeDefinitionsMap {
+function mergeBuiltInWithLibraryTypes(builtInTypes: Map<BuiltinTypeDefinition>,
+                                      libraryTypes: Map<LibraryTypeDefinition>): Map<TransientTypeDefinition> {
 
-    const types: TransientTypeDefinitionsMap = clone(builtInTypes) as unknown as TransientTypeDefinitionsMap;
+    const types: Map<TransientTypeDefinition> = clone(builtInTypes) as unknown as Map<TransientTypeDefinition>;
     keysAndValues(types).forEach(([typeName, type]) => (type as any).typeFamily = typeName);
 
     keysAndValues(libraryTypes).forEach(([libraryTypeName, libraryType]: any) => {
@@ -580,11 +559,11 @@ function mergeBuiltInWithLibraryTypes(builtInTypes: BuiltinTypeDefinitions,
 }
 
 
-function mergeTypes(selectableTypes: TransientTypeDefinitionsMap,
-                    customTypes: CustomTypeDefinitionsMap,
+function mergeTypes(selectableTypes: Map<TransientTypeDefinition>,
+                    customTypes: Map<CustomTypeDefinition>,
                     assertInputTypePresentIfNotCommonType: Function) {
 
-    const mergedTypes: TransientTypeDefinitionsMap = clone(selectableTypes);
+    const mergedTypes: Map<TransientTypeDefinition> = clone(selectableTypes);
 
     const pairs = keysAndValues(customTypes);
 

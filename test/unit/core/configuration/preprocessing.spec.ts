@@ -1,4 +1,5 @@
-import {LibraryTypeDefinition, LibraryTypeDefinitionsMap} from '../../../../app/core/configuration/model/library-type-definition';
+import {Map} from 'tsfun';
+import {LibraryTypeDefinition} from '../../../../app/core/configuration/model/library-type-definition';
 import {UnorderedConfigurationDefinition} from '../../../../app/core/configuration/model/unordered-configuration-definition';
 import {RelationDefinition} from '../../../../app/core/configuration/model/relation-definition';
 import {Preprocessing} from '../../../../app/core/configuration/boot/preprocessing';
@@ -34,7 +35,7 @@ describe('Preprocessing', () => {
             identifier: 'test',
             types: {
                 'T1': t1
-            } as LibraryTypeDefinitionsMap
+            } as Map<LibraryTypeDefinition>
         } as any;
     });
 

@@ -1,8 +1,8 @@
 import {cond, empty, flow, forEach, includedIn, isNot, map, remove, on, keysAndValues, isDefined, filter, and,
-    keys} from 'tsfun';
+    keys, Map} from 'tsfun';
 import {ConfigurationErrors} from './configuration-errors';
-import {CustomFieldDefinitionsMap} from '../model/custom-type-definition';
-import {LibraryFieldDefinitionsMap} from '../model/library-type-definition';
+import {LibraryFieldDefinition} from '../model/library-type-definition';
+import {CustomFieldDefinition} from '../model/custom-type-definition';
 
 
 const VALID_INPUT_TYPES = [
@@ -11,7 +11,7 @@ const VALID_INPUT_TYPES = [
 ];
 
 
-export function assertFieldsAreValid(fields: LibraryFieldDefinitionsMap|CustomFieldDefinitionsMap,
+export function assertFieldsAreValid(fields: Map<LibraryFieldDefinition>|Map<CustomFieldDefinition>,
                                      validFieldKeys: string[], source: 'custom'|'library') {
 
     assertInputTypesAreValid(fields);
@@ -19,7 +19,7 @@ export function assertFieldsAreValid(fields: LibraryFieldDefinitionsMap|CustomFi
 }
 
 
-function assertInputTypesAreValid(fields: LibraryFieldDefinitionsMap|CustomFieldDefinitionsMap) {
+function assertInputTypesAreValid(fields: Map<LibraryFieldDefinition>|Map<CustomFieldDefinition>) {
 
     const isIllegal = and(
                 isDefined,
@@ -36,7 +36,7 @@ function assertInputTypesAreValid(fields: LibraryFieldDefinitionsMap|CustomField
 }
 
 
-function assertFieldKeysAreValid(fields: LibraryFieldDefinitionsMap|CustomFieldDefinitionsMap,
+function assertFieldKeysAreValid(fields: Map<LibraryFieldDefinition>|Map<CustomFieldDefinition>,
                                  validFieldKeys: string[], source: 'custom'|'library') {
 
     function throwIllegalFieldProperty(keys: string) {

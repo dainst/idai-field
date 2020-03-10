@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
+import {Map} from 'tsfun';
 import {ProjectConfiguration} from '../project-configuration';
 import {Preprocessing} from './preprocessing';
 import {ConfigurationValidation} from './configuration-validation';
@@ -7,9 +8,9 @@ import {ConfigReader} from './config-reader';
 import {RelationDefinition} from '../model/relation-definition';
 import {FieldDefinition} from '../model/field-definition';
 import {ConfigurationDefinition} from './configuration-definition';
-import {BuiltinTypeDefinitions} from "../model/builtin-type-definition";
-import {LibraryTypeDefinitionsMap} from "../model/library-type-definition";
 import {buildProjectTypes} from "./build-project-types";
+import {BuiltinTypeDefinition} from '../model/builtin-type-definition';
+import {LibraryTypeDefinition} from '../model/library-type-definition';
 
 
 @Injectable()
@@ -47,7 +48,7 @@ export class ConfigLoader {
 
     public async go(configDirPath: string,
                     commonFields: {[fieldName: string]: any},
-                    builtinTypes: BuiltinTypeDefinitions,
+                    builtinTypes: Map<BuiltinTypeDefinition>,
                     relations: Array<RelationDefinition>,
                     extraFields: {[fieldName: string]: FieldDefinition },
                     customConfigurationName: string|undefined,
@@ -55,7 +56,7 @@ export class ConfigLoader {
 
         if (customConfigurationName) console.log('Load custom configuration', customConfigurationName);
 
-        const registeredTypes: LibraryTypeDefinitionsMap = await this.readConfiguration(configDirPath);
+        const registeredTypes: Map<LibraryTypeDefinition> = await this.readConfiguration(configDirPath);
 
         const missingRelationTypeErrors = ConfigurationValidation.findMissingRelationType(relations, Object.keys(builtinTypes as any));
         if (missingRelationTypeErrors.length > 0) throw missingRelationTypeErrors;
@@ -84,9 +85,9 @@ export class ConfigLoader {
 
 
     private async preprocess(configDirPath: string,
-                             libraryTypes: LibraryTypeDefinitionsMap,
+                             libraryTypes: Map<LibraryTypeDefinition>,
                              commonFields: any,
-                             builtinTypes: BuiltinTypeDefinitions,
+                             builtinTypes: Map<BuiltinTypeDefinition>,
                              relations: Array<RelationDefinition>,
                              extraFields: {[fieldName: string]: FieldDefinition },
                              customConfigurationName: string|undefined,

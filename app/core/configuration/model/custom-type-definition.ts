@@ -26,6 +26,12 @@ export interface CustomFieldDefinition extends BaseFieldDefinition {
     positionValues?: string;
 }
 
+export module CustomFieldDefinition {
+
+    export const INPUTTYPE = 'inputType';
+}
+
+
 const VALID_TYPE_PROPERTIES = ['valuelists', 'commons', 'color', 'hidden', 'parent', 'fields'];
 
 const VALID_FIELD_PROPERTIES = ['inputType', 'positionValues'];

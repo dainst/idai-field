@@ -73,6 +73,17 @@ export module Assertions {
     }
 
 
+    export function assertInputTypePresentIfNotCommonType(commonFields: any) {
+
+        return (typeName: string, fieldName: string, field: any) => {
+
+            if (!field.inputType && !Object.keys(commonFields).includes(fieldName)) {
+                throw [ConfigurationErrors.MISSING_FIELD_PROPERTY, 'inputType', typeName, fieldName];
+            }
+        }
+    }
+
+
     function assertSubtypingIsLegal(builtinTypes: Map<BuiltinTypeDefinition>, types: any) {
 
         flow(types,

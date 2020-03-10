@@ -13,6 +13,7 @@ import {mergeFields} from './merge-fields';
 import {Assertions} from './assertions';
 import {getDefinedParents, iterateOverFieldsOfTypes} from './helpers';
 import {BaseTypeDefinition} from '../model/base-type-definition';
+import {checkFieldTypeChanges} from './check-field-type-changes';
 
 
 const VALUELISTS = 'valuelists';
@@ -45,9 +46,9 @@ export function buildProjectTypes(builtInTypes: Map<BuiltinTypeDefinition>,
 
     return flow(
         mergeBuiltInWithLibraryTypes(builtInTypes, libraryTypes),
-        Assertions.assertInputTypesAreSet(assertInputTypePresentIfNotCommonType(commonFields)),
+        Assertions.assertInputTypesAreSet(Assertions.assertInputTypePresentIfNotCommonType(commonFields)),
         Assertions.assertNoDuplicationInSelection(customTypes),
-        mergeTypes(customTypes, assertInputTypePresentIfNotCommonType(commonFields)),
+        mergeTypes(customTypes, Assertions.assertInputTypePresentIfNotCommonType(commonFields)),
         eraseUnusedTypes(keys(customTypes)),
         replaceCommonFields(commonFields),
         insertValuelistIds,
@@ -163,19 +164,6 @@ function replaceValuelistIdWithActualValuelist(valuelistDefinitionMap: Map<Value
 }
 
 
-function toTypesByFamilyNames(transientTypes: Map<TransientTypeDefinition>): Map<TransientTypeDefinition> {
-
-    return reduce(
-        (acc: any, [transientTypeName, transientType]) => {
-            acc[transientType.typeFamily
-                ? transientType.typeFamily
-                : transientTypeName] = transientType;
-            return acc;
-        }
-        , {})(keysAndValues(transientTypes));
-}
-
-
 function hideFields(customTypes: Map<CustomTypeDefinition>) {
 
     return (selectedTypes_: Map<TransientTypeDefinition>) => {
@@ -288,44 +276,7 @@ function overwriteIn(target: {[_: string]: any}) {
 }
 
 
-function isAllowedCombination(l: string, r: string, a: string, b: string) {
 
-    return (l === a && r === b) || (l === b && r === a);
-}
-
-
-function checkFieldTypeChange(
-    [customTypeName, fieldName, customFieldInputType, extendedFieldInputType]: [string, string, string, string]) {
-
-    if (customFieldInputType === extendedFieldInputType) return;
-
-    if (isAllowedCombination(customFieldInputType, extendedFieldInputType, 'checkboxes', 'input')
-        || isAllowedCombination(customFieldInputType, extendedFieldInputType, 'dropdown', 'input')
-        || isAllowedCombination(customFieldInputType, extendedFieldInputType, 'checkboxes', 'radio')
-        || isAllowedCombination(customFieldInputType, extendedFieldInputType, 'input', 'radio')
-        || isAllowedCombination(customFieldInputType, extendedFieldInputType, 'dropdown', 'radio')
-        || isAllowedCombination(customFieldInputType, extendedFieldInputType, 'dropdown', 'checkboxes')) {
-
-        console.warn('change of input type detected', customTypeName, fieldName, customFieldInputType, extendedFieldInputType);
-    } else {
-        console.error('critical change of input type detected', customTypeName, fieldName, customFieldInputType, extendedFieldInputType);
-    }
-}
-
-
-function checkFieldTypeChanges(customTypeName: string,
-                               customTypeFields: Map<CustomFieldDefinition>,
-                               extendedTypeFields: Map<TransientFieldDefinition>) {
-
-    flow(customTypeFields,
-        map((field: CustomFieldDefinition, fieldName: string) =>
-            [customTypeName, fieldName, field, lookup(extendedTypeFields)(fieldName)]),
-        filter(on('[2].inputType', isDefined)),
-        filter(on('[3].inputType', isDefined)),
-        map(update(2, to('inputType'))),
-        map(update(3, to('inputType'))),
-        forEach(checkFieldTypeChange));
-}
 
 
 function mergeTypes(customTypes: Map<CustomTypeDefinition>,
@@ -365,12 +316,16 @@ function mergeTypes(customTypes: Map<CustomTypeDefinition>,
 }
 
 
-function assertInputTypePresentIfNotCommonType(commonFields: any) {
+function toTypesByFamilyNames(transientTypes: Map<TransientTypeDefinition>): Map<TransientTypeDefinition> {
 
-    return (typeName: string, fieldName: string, field: any) => {
-
-        if (!field.inputType && !Object.keys(commonFields).includes(fieldName)) {
-            throw [ConfigurationErrors.MISSING_FIELD_PROPERTY, 'inputType', typeName, fieldName];
-        }
-    }
+    return flow(
+        transientTypes,
+        keysAndValues,
+        reduce(
+            (acc: any, [transientTypeName, transientType]) => {
+                acc[transientType.typeFamily
+                    ? transientType.typeFamily
+                    : transientTypeName] = transientType;
+                return acc;
+            }, {}));
 }

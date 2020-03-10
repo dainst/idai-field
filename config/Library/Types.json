@@ -777,7 +777,8 @@
       "processor",
       "campaign",
       "description",
-      "draughtsmen"
+      "draughtsmen",
+      "literature"
     ],
     "valuelists": {},
     "fields": {}
@@ -1557,7 +1558,7 @@
     "createdBy": "",
     "creationDate": "",
     "typeFamily": "TypeCatalog",
-    "commons": [],
+    "commons": ["literature"],
     "valuelists": {},
     "fields": {}
   },

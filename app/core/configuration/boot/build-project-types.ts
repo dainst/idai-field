@@ -1,5 +1,5 @@
 import {assoc, clone, cond, dissoc, flow, includedIn, isDefined, isNot, keys, keysAndValues, map,
-    Map, on, Pair, reduce, subtract, undefinedOrEmpty, update} from 'tsfun';
+    Map, on, reduce, subtract, undefinedOrEmpty, update} from 'tsfun';
 import {LibraryTypeDefinition} from '../model/library-type-definition';
 import {CustomTypeDefinition} from '../model/custom-type-definition';
 import {ConfigurationErrors} from './configuration-errors';
@@ -14,19 +14,12 @@ import {addSourceField} from './add-source-field';
 import {mergeTypes} from './merge-types';
 import {addExtraFields} from './add-extra-fields';
 import {copy} from 'tsfun/src/collection';
+import {hideFields} from './hide-fields';
 
 
 /**
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
- *
- * Does
- * - merge the builtin, library and custom types
- * - replace common fields
- *
- * Does not
- * - mix in parent type
- * - mix in language, order, search
  */
 export function buildProjectTypes(builtInTypes: Map<BuiltinTypeDefinition>,
                                   libraryTypes: Map<LibraryTypeDefinition>,
@@ -92,38 +85,6 @@ function replaceValuelistIdWithActualValuelist(valuelistDefinitionMap: Map<Value
 }
 
 
-function hideFields(customTypes: Map<CustomTypeDefinition>) {
-
-    return (selectedTypes_: Map<TransientTypeDefinition>) => {
-
-        const selectedTypes = clone(selectedTypes_);
-
-        keysAndValues(selectedTypes).forEach(
-            ([selectedTypeName, selectedType]: Pair<string, TransientTypeDefinition>) => {
-
-                keysAndValues(customTypes).forEach(
-                    ([customTypeName, customType]: Pair<string, CustomTypeDefinition>) => {
-
-                        if (customTypeName === selectedTypeName && selectedType.fields) {
-
-                            Object.keys(selectedType.fields).forEach(fieldName => {
-                                if (customType.hidden && customType.hidden.includes(fieldName)) {
-                                    selectedType.fields[fieldName].visible = false;
-                                    selectedType.fields[fieldName].editable = false;
-                                }
-
-                                if (selectedType.fields[fieldName].visible === undefined) selectedType.fields[fieldName].visible = true;
-                                if (selectedType.fields[fieldName].editable === undefined) selectedType.fields[fieldName].editable = true;
-                            })
-                        }
-                    })
-        });
-
-        return selectedTypes;
-    }
-}
-
-
 function eraseUnusedTypes(selectedTypeNames: string[]) {
 
     return (types: Map<TransientTypeDefinition>): Map<TransientTypeDefinition> => {
@@ -139,7 +100,6 @@ function eraseUnusedTypes(selectedTypeNames: string[]) {
         return typesToErase.reduce(withDissoc, types) as Map<TransientTypeDefinition>;
     }
 }
-
 
 
 function replaceCommonFields(commonFields: Map<any>)

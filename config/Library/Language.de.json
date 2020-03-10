@@ -80,6 +80,9 @@
     "provenance": {
       "label": "Provenienz",
       "description": "Herkunftsort"
+    },
+    "literature": {
+      "label": "Literaturverweis"
     }
   },
   "types": {

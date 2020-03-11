@@ -1,4 +1,4 @@
-import {hasNot, includedIn, isArray, isnt, isUndefinedOrEmpty} from 'tsfun';
+import {hasnt, includedIn, isArray, isnt, isUndefinedOrEmpty} from 'tsfun';
 import {Document, Relations} from 'idai-components-2';
 import {Find, Get, Id, Identifier, IdentifierMap} from './types';
 import {iterateRelationsInImport} from './utils';
@@ -79,7 +79,7 @@ async function assertNoMissingRelationTargets(relations: Relations, get: Get) {
 function assignIds(documents: Array<Document>, generateId: Function): IdentifierMap {
 
     return documents
-        .filter(hasNot(RESOURCE_ID))
+        .filter(hasnt(RESOURCE_ID))
         .reduce((identifierMap, document)  => {
             identifierMap[document.resource.identifier] = document.resource.id = generateId();
             return identifierMap;

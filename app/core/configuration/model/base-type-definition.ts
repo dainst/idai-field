@@ -19,3 +19,9 @@ export interface BaseFieldDefinition {
     constraintIndexed?: true;
     source?: 'builtin'|'library'|'custom'|'common';
 }
+
+
+export module BaseFieldDefinition {
+
+    export const INPUTTYPE = 'inputType';
+}

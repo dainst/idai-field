@@ -7,9 +7,9 @@ import {TransientFieldDefinition, TransientTypeDefinition} from '../model/transi
 
 
 export function addSourceField(builtInTypes: Map<BuiltinTypeDefinition>,
-                        libraryTypes: Map<LibraryTypeDefinition>,
-                        customTypes: Map<CustomTypeDefinition>,
-                        commonFields: Map<any>) {
+                               libraryTypes: Map<LibraryTypeDefinition>,
+                               customTypes: Map<CustomTypeDefinition>,
+                               commonFields: Map<any>) {
 
     setFieldSourceOnTypes(builtInTypes, FieldDefinition.Source.BUILTIN);
     setFieldSourceOnTypes(libraryTypes, FieldDefinition.Source.LIBRARY);

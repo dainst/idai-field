@@ -3,6 +3,7 @@ import {cond, empty, flow, forEach, includedIn, isNot, map, remove, on, keysAndV
 import {ConfigurationErrors} from './configuration-errors';
 import {LibraryFieldDefinition} from '../model/library-type-definition';
 import {CustomFieldDefinition} from '../model/custom-type-definition';
+import {BaseFieldDefinition} from '../model/base-type-definition';
 
 
 const VALID_INPUT_TYPES = [
@@ -28,7 +29,7 @@ function assertInputTypesAreValid(fields: Map<LibraryFieldDefinition>|Map<Custom
 
     flow(
         keysAndValues(fields),
-        filter(on('[1].inputType', isIllegal)),
+        filter(on([1, BaseFieldDefinition.INPUTTYPE], isIllegal)),
         forEach(([fieldName, field]: any) => {
             throw [ConfigurationErrors.ILLEGAL_FIELD_INPUT_TYPE, field.inputType, fieldName];
         })

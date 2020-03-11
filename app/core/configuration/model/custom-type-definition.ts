@@ -39,6 +39,8 @@ const VALID_FIELD_PROPERTIES = ['inputType', 'positionValues'];
 
 export module CustomTypeDefinition {
 
+    export const VALUELISTS = 'valuelists';
+
     export function makeAssertIsValid(builtinTypes: string[], libraryTypes: string[]) {
 
         return function assertIsValid([typeName, type]: [string, CustomTypeDefinition]) {

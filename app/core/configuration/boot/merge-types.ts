@@ -6,10 +6,6 @@ import {mergeFields} from './merge-fields';
 import {ConfigurationErrors} from './configuration-errors';
 
 
-const VALUELISTS = 'valuelists';
-const COMMONS = 'commons';
-
-
 export function mergeTypes(customTypes: Map<CustomTypeDefinition>,
                            assertInputTypePresentIfNotCommonType: Function) {
 
@@ -55,19 +51,24 @@ export function mergeTypes(customTypes: Map<CustomTypeDefinition>,
  */
 function mergePropertiesOfType(target: {[_: string]: any}, source: {[_: string]: any}) {
 
-    if (source[COMMONS]) {
-        target[COMMONS] = union([target[COMMONS] ? target[COMMONS] : [], source[COMMONS]]);
+    if (source[TransientTypeDefinition.COMMONS]) {
+        target[TransientTypeDefinition.COMMONS]
+            = union([
+                target[TransientTypeDefinition.COMMONS]
+                    ? target[TransientTypeDefinition.COMMONS]
+                    : [],
+            source[TransientTypeDefinition.COMMONS]]);
     }
 
-    if (source[VALUELISTS]) {
-        if (!target[VALUELISTS]) target[VALUELISTS] = {};
-        keysAndValues(source[VALUELISTS]).forEach(([k, v]: any) => {
-            target[VALUELISTS][k] = v;
+    if (source[CustomTypeDefinition.VALUELISTS]) {
+        if (!target[CustomTypeDefinition.VALUELISTS]) target[CustomTypeDefinition.VALUELISTS] = {};
+        keysAndValues(source[CustomTypeDefinition.VALUELISTS]).forEach(([k, v]: any) => {
+            target[CustomTypeDefinition.VALUELISTS][k] = v;
         });
     }
 
     Object.keys(source)
-        .filter(isnt('fields'))
+        .filter(isnt(TransientTypeDefinition.FIELDS))
         .filter(isNot(includedIn(keys(target))))
         .map(pairWith(lookup(source)))
         .forEach(overwriteIn(target));

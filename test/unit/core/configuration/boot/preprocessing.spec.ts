@@ -1,9 +1,9 @@
 import {Map} from 'tsfun';
-import {LibraryTypeDefinition} from '../../../../app/core/configuration/model/library-type-definition';
-import {UnorderedConfigurationDefinition} from '../../../../app/core/configuration/model/unordered-configuration-definition';
-import {RelationDefinition} from '../../../../app/core/configuration/model/relation-definition';
-import {Preprocessing} from '../../../../app/core/configuration/boot/preprocessing';
-import {TypeDefinition} from '../../../../app/core/configuration/model/type-definition';
+import {LibraryTypeDefinition} from '../../../../../app/core/configuration/model/library-type-definition';
+import {UnorderedConfigurationDefinition} from '../../../../../app/core/configuration/model/unordered-configuration-definition';
+import {RelationDefinition} from '../../../../../app/core/configuration/model/relation-definition';
+import {Preprocessing} from '../../../../../app/core/configuration/boot/preprocessing';
+import {TypeDefinition} from '../../../../../app/core/configuration/model/type-definition';
 
 
 /**

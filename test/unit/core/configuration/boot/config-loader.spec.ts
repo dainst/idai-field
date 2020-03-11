@@ -1,8 +1,8 @@
 import {Map} from 'tsfun';
-import {ConfigurationDefinition} from '../../../../app/core/configuration/boot/configuration-definition';
-import {ConfigLoader} from '../../../../app/core/configuration/boot/config-loader';
-import {ConfigurationErrors} from '../../../../app/core/configuration/boot/configuration-errors';
-import {CustomTypeDefinition} from '../../../../app/core/configuration/model/custom-type-definition';
+import {ConfigurationDefinition} from '../../../../../app/core/configuration/boot/configuration-definition';
+import {ConfigLoader} from '../../../../../app/core/configuration/boot/config-loader';
+import {ConfigurationErrors} from '../../../../../app/core/configuration/boot/configuration-errors';
+import {CustomTypeDefinition} from '../../../../../app/core/configuration/model/custom-type-definition';
 
 
 /**

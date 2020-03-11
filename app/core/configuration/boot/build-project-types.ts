@@ -24,9 +24,9 @@ import {hideFields} from './hide-fields';
 export function buildProjectTypes(builtInTypes: Map<BuiltinTypeDefinition>,
                                   libraryTypes: Map<LibraryTypeDefinition>,
                                   customTypes: Map<CustomTypeDefinition> = {},
-                                  commonFields: Map<any> = {},
+                                  commonFields: Map = {},
                                   valuelistsConfiguration: Map<ValuelistDefinition> = {},
-                                  extraFields: Map<any> = {}) {
+                                  extraFields: Map = {}) {
 
     Assertions.performAssertions(builtInTypes, libraryTypes, customTypes, commonFields, valuelistsConfiguration);
     addSourceField(builtInTypes, libraryTypes, customTypes, commonFields);
@@ -102,7 +102,7 @@ function eraseUnusedTypes(selectedTypeNames: string[]) {
 }
 
 
-function replaceCommonFields(commonFields: Map<any>)
+function replaceCommonFields(commonFields: Map)
     : (mergedTypes: Map<TransientTypeDefinition>) => Map<TransientTypeDefinition> {
 
     return map(

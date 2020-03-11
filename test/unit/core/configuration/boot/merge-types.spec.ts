@@ -74,4 +74,34 @@ describe('mergeTypes', () => {
         expect(result['A:default'].fields['f1'].inputType).toEqual(FieldDefinition.InputType.INPUT);
         expect(result['A:child'].fields['f2'].inputType).toEqual(FieldDefinition.InputType.INPUT);
     });
+
+
+    it('merge commons', () => {
+
+        const selectableTypes: Map<TransientTypeDefinition> = {
+            'A:default': {
+                typeFamily: 'A',
+                valuelists: {},
+                creationDate: '',
+                createdBy: '',
+                commons: ['a'],
+                description: {},
+                fields: {
+                    f1: {
+                        inputType: FieldDefinition.InputType.INPUT
+                    }
+                }
+            }
+        };
+
+        const customTypes: Map<CustomTypeDefinition> = {
+            'A:default': {
+                commons: ['b'],
+                fields: {}
+            }
+        };
+
+        const result = mergeTypes(customTypes, () => true)(selectableTypes);
+        expect(result['A:default'].commons).toEqual(['a', 'b']);
+    });
 });

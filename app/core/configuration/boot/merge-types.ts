@@ -7,6 +7,10 @@ import {mergeFields} from './merge-fields';
 import {ConfigurationErrors} from './configuration-errors';
 
 
+/**
+ * @author Daniel de Oliveira
+ * @author Thomas Kleinke
+ */
 export function mergeTypes(customTypes: Map<CustomTypeDefinition>,
                            assertInputTypePresentIfNotCommonType: Function) {
 

@@ -1,6 +1,6 @@
 import {
     copy, Pair, reduce, Map, to, identity,
-    isDefined, convertPath, isString, getOn, dissoc
+    isDefined, path, isString, getOn, dissoc
 } from 'tsfun';
 
 // @author Daniel de Oliveira
@@ -137,9 +137,9 @@ export const intoObj = <T>(keyName: string, valName: string) =>
             : object;
 
 
-export function setOn(object: any, path: string) {
+export function setOn(object: any, path_: string) {
 
-    return (val: any): void => _setOn(object, convertPath(path), val);
+    return (val: any): void => _setOn(object, path(path_), val);
 }
 
 

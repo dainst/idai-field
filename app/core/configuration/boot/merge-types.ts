@@ -1,5 +1,5 @@
 import {clone, reduce, includedIn, isNot, isnt, keys, keysAndValues,
-    lookup, Map, pairWith, union, assoc} from 'tsfun';
+    lookup, Map, pairWith, union, assoc, Pair, flow, map, filter, forEach} from 'tsfun';
 import {CustomTypeDefinition} from '../model/custom-type-definition';
 import {TransientTypeDefinition} from '../model/transient-type-definition';
 import {checkFieldTypeChanges} from './check-field-type-changes';
@@ -12,18 +12,16 @@ export function mergeTypes(customTypes: Map<CustomTypeDefinition>,
 
     return (selectableTypes: Map<TransientTypeDefinition>) => {
 
-        return reduce(
-            (mergedTypes: Map<TransientTypeDefinition>, [customTypeName, customType]: any) => {
-
-            const extendedType = mergedTypes[customTypeName];
+        return reduce((mergedTypes: Map<TransientTypeDefinition>,
+                       [customTypeName, customType]: Pair<string, CustomTypeDefinition>) => {
 
             return assoc(customTypeName,
-                extendedType
-                    ? handleDirectTypeExtension(customTypeName, customType, extendedType)
+                mergedTypes[customTypeName]
+                    ? handleDirectTypeExtension(customTypeName, customType, mergedTypes[customTypeName])
                     : handleChildTypeExtension(customTypeName, customType, assertInputTypePresentIfNotCommonType))
             (mergedTypes);
 
-        }, clone(selectableTypes) as any)(keysAndValues(customTypes));
+        }, clone(selectableTypes))(keysAndValues(customTypes));
     }
 }
 
@@ -79,15 +77,17 @@ function mergePropertiesOfType(target: {[_: string]: any}, source: {[_: string]:
         });
     }
 
-    Object.keys(source)
-        .filter(isnt(TransientTypeDefinition.FIELDS))
-        .filter(isNot(includedIn(keys(target))))
-        .map(pairWith(lookup(source)))
-        .forEach(overwriteIn(target));
+    return flow(
+        source,
+        keys,
+        filter(isnt(TransientTypeDefinition.FIELDS)),
+        filter(isNot(includedIn(keys(target)))),
+        map(pairWith(lookup(source))),
+        forEach(overwriteIn(target)));
 }
 
 
-function overwriteIn(target: {[_: string]: any}) {
+function overwriteIn(target: Map) {
 
     return ([key, value]: [string, any]) => target[key] = value;
 }

@@ -10,8 +10,8 @@ export function checkFieldTypeChanges(customTypeName: string,
     flow(customTypeFields,
         map((field: CustomFieldDefinition, fieldName: string) =>
             [customTypeName, fieldName, field, lookup(extendedTypeFields)(fieldName)]),
-        filter(on('[2].' + CustomFieldDefinition.INPUTTYPE, isDefined)),
-        filter(on('[3].' + CustomFieldDefinition.INPUTTYPE, isDefined)),
+        filter(on([2, CustomFieldDefinition.INPUTTYPE], isDefined)),
+        filter(on([3, CustomFieldDefinition.INPUTTYPE], isDefined)),
         map(update(2, to(CustomFieldDefinition.INPUTTYPE))),
         map(update(3, to(CustomFieldDefinition.INPUTTYPE))),
         forEach(checkFieldTypeChange));

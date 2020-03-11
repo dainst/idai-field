@@ -1,4 +1,5 @@
-import {clone, forEach, includedIn, isNot, isnt, keys, keysAndValues, lookup, Map, pairWith, union} from 'tsfun';
+import {clone, reduce, includedIn, isNot, isnt, keys, keysAndValues,
+    lookup, Map, pairWith, union, assoc} from 'tsfun';
 import {CustomTypeDefinition} from '../model/custom-type-definition';
 import {TransientTypeDefinition} from '../model/transient-type-definition';
 import {checkFieldTypeChanges} from './check-field-type-changes';
@@ -11,35 +12,46 @@ export function mergeTypes(customTypes: Map<CustomTypeDefinition>,
 
     return (selectableTypes: Map<TransientTypeDefinition>) => {
 
-        const mergedTypes: Map<TransientTypeDefinition> = clone(selectableTypes);
-
-        const pairs = keysAndValues(customTypes);
-
-        forEach(([customTypeName, customType]: any) => {
+        return reduce(
+            (mergedTypes: Map<TransientTypeDefinition>, [customTypeName, customType]: any) => {
 
             const extendedType = mergedTypes[customTypeName];
 
-            if (extendedType) {
-                checkFieldTypeChanges(customTypeName, customType.fields, extendedType.fields);
+            return assoc(customTypeName,
+                extendedType
+                    ? handleDirectTypeExtension(customTypeName, customType, extendedType)
+                    : handleChildTypeExtension(customTypeName, customType, assertInputTypePresentIfNotCommonType))
+            (mergedTypes);
 
-                const newMergedType: any = clone(extendedType);
-                mergePropertiesOfType(newMergedType, customType);
-                mergeFields(newMergedType.fields, customType.fields);
-
-                mergedTypes[customTypeName] = newMergedType;
-            } else {
-                if (!customType.parent) throw [ConfigurationErrors.MUST_HAVE_PARENT, customTypeName];
-
-                keysAndValues(customType.fields).forEach(([fieldName, field]: any) => {
-                    assertInputTypePresentIfNotCommonType(customTypeName, fieldName, field);
-                });
-
-                mergedTypes[customTypeName] = customType;
-            }
-        })(pairs);
-
-        return mergedTypes;
+        }, clone(selectableTypes) as any)(keysAndValues(customTypes));
     }
+}
+
+
+function handleChildTypeExtension(customTypeName: string,
+                                  customType: CustomTypeDefinition,
+                                  assertInputTypePresentIfNotCommonType: Function): TransientTypeDefinition {
+
+    if (!customType.parent) throw [ConfigurationErrors.MUST_HAVE_PARENT, customTypeName];
+
+    keysAndValues(customType.fields).forEach(([fieldName, field]: any) => {
+        assertInputTypePresentIfNotCommonType(customTypeName, fieldName, field);
+    });
+
+    return customType as TransientTypeDefinition;
+}
+
+
+function handleDirectTypeExtension(customTypeName: string,
+                                   customType: CustomTypeDefinition,
+                                   extendedType: TransientTypeDefinition) {
+
+    checkFieldTypeChanges(customTypeName, customType.fields, extendedType.fields);
+
+    const newMergedType: any = clone(extendedType);
+    mergePropertiesOfType(newMergedType, customType);
+    mergeFields(newMergedType.fields, customType.fields);
+    return newMergedType;
 }
 
 

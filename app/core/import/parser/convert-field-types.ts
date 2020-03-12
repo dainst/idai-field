@@ -8,7 +8,7 @@ import {CsvExportConsts} from '../../export/csv/csv-export-consts';
 import ARRAY_SEPARATOR = CsvExportConsts.ARRAY_SEPARATOR;
 
 
-type FieldType = 'dating' | 'date' | 'dimension' | 'radio'
+type FieldType = 'dating' | 'date' | 'dimension' | 'literature' | 'radio'
     | 'dropdownRange' | 'boolean' | 'text' | 'input' | 'unsignedInt' | 'float' | 'unsignedFloat'
     | 'checkboxes'; // | 'geometry'
 
@@ -79,7 +79,7 @@ function convertDimension(resource: Resource, fieldName: string) {
     let i = 0;
     for (let dimension of resource[fieldName] as Array<Dimension>) {
 
-        if (dimension === undefined) throw 'undefined dimension found';
+        if (dimension === undefined) throw 'Undefined dimension found';
         if (dimension === null) continue;
 
         try {
@@ -103,7 +103,7 @@ function convertDating(resource: Resource, fieldName: string) {
     let i = 0;
     for (let dating of resource[fieldName] as Array<Dating>) {
 
-        if (dating === undefined) throw 'undefined dating found';
+        if (dating === undefined) throw 'Undefined dating found';
         if (dating === null) continue;
 
         try {
@@ -138,7 +138,7 @@ function convertNumber(container: any, path: string, type: 'int'|'float') {
 
 
 /**
- * Modifies container at path by convertin string to boolan.
+ * Modifies container at path by converting string to boolean.
  * Returns early if no value at path.
  */
 function convertBoolean(container: any, path: string) {

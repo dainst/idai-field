@@ -3,6 +3,8 @@
         <sidebar-list></sidebar-list>
     </div>
 
+    <div *ngIf="resourcesComponent.isEditingGeometry" class="layover"></div>
+
     <div class="col px-0"
          [class.no-zoom-buttons]="isPopoverMenuOpened() && viewFacade.getSelectedDocument()">
         <editable-map [documents]="viewFacade.getDocuments()"

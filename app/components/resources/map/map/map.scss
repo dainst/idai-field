@@ -5,6 +5,7 @@
 @import 'layer-menu';
 
 #map-container {
+  z-index: 1008;
   width: 100%;
   height: calc(100vh - 100px);
   user-select: none;
@@ -73,6 +74,7 @@
   }
 
   .leaflet-control-zoom {
+    z-index: 1008;
     border: 1px solid rgba(0, 0, 0, 0.35) !important;
 
     .leaflet-control-zoom-in,
@@ -110,24 +112,28 @@
 #map-editor-button-add-polyline,
 #map-editor-button-add-point {
   position: absolute;
-  z-index: 1000;
+  z-index: 1008;
 }
 
 #mouse-position-coordinates-x,
 #mouse-position-coordinates-y {
+  z-index: 1008;
   left: 52px;
   pointer-events: none;
 }
 
 #mouse-position-coordinates-x {
+  z-index: 1008;
   top: 11px;
 }
 
 #mouse-position-coordinates-y {
+  z-index: 1008;
   top: 32px;
 }
 
 #map-editor-buttons {
+  z-index: 1008;
   .mdi-24px {
     position: relative;
     bottom: 3px;

@@ -9,6 +9,7 @@ import {DocumentReadDatastore} from '../../../core/datastore/document-read-datas
 import {ChangesStream} from '../../../core/datastore/changes/changes-stream';
 import {ViewFacade} from '../../../core/resources/view/view-facade';
 import {NavigationPath} from '../../../core/resources/view/state/navigation-path';
+import {MenuService} from '../../../desktop/menu-service';
 
 
 @Component({
@@ -113,6 +114,7 @@ export class ResourcesMapComponent {
             if (geometry !== undefined) await this.save();
             this.resourcesComponent.isEditingGeometry = false;
         }
+        MenuService.setContext('default');
     }
 
 

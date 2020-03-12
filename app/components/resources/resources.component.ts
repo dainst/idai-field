@@ -15,6 +15,7 @@ import {IdaiType} from '../../core/configuration/model/idai-type';
 import {TabManager} from '../../core/tabs/tab-manager';
 import {ResourcesViewMode, ViewFacade} from '../../core/resources/view/view-facade';
 import {NavigationService} from '../../core/resources/navigation/navigation-service';
+import {MenuService} from '../../desktop/menu-service';
 
 
 export type PopoverMenu = 'none'|'info'|'children';
@@ -404,6 +405,7 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
 
     private startGeometryEditing() {
 
+        MenuService.setContext('geometryedit');
         this.isEditingGeometry = true;
     }
 
@@ -415,6 +417,7 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
         }
 
         this.isEditingGeometry = false;
+        MenuService.setContext('default');
     }
 
 

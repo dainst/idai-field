@@ -5,7 +5,7 @@ const ipcRenderer = require('electron').ipcRenderer;
 const remote = require('electron').remote;
 
 
-type MenuContext = 'loading'|'default'|'docedit'|'view-modal'|'projects';
+type MenuContext = 'loading'|'default'|'docedit'|'view-modal'|'projects'|'geometryedit';
 
 
 @Injectable()

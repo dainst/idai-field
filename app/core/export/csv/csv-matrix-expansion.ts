@@ -1,10 +1,10 @@
+import {flow, left, reverse} from 'tsfun';
+import {Dating, Dimension, Literature, ValOptionalEndVal} from 'idai-components-2';
 import {CSVExpansion} from './csv-expansion';
 import {FieldDefinition} from '../../configuration/model/field-definition';
 import {H, HeadingsAndMatrix} from './csv-export-consts';
-import {flow, left, reverse} from 'tsfun';
 import {CsvExportUtils} from './csv-export-utils';
 import {CSVHeadingsExpansion} from './csv-headings-expansion';
-import {Dating, Dimension, ValOptionalEndVal} from 'idai-components-2/index';
 
 
 /**
@@ -20,6 +20,8 @@ export module CSVMatrixExpansion {
 
     const expandDatingItems = CSVExpansion.expandHomogeneousItems(rowsWithDatingElementsExpanded, 9);
 
+    const expandLiteratureItems = CSVExpansion.expandHomogeneousItems(rowsWithLiteratureElementsExpanded, 2);
+
 
     export function expandValOptionalEndVal(fieldDefinitions: Array<FieldDefinition>) {
 
@@ -33,7 +35,9 @@ export module CSVMatrixExpansion {
                 CSVExpansion.objectExpand(
                     headingsAndMatrix,
                     CSVHeadingsExpansion.expandValOptionalEndValHeadings,
-                    expandValOptionalEndValItems));
+                    expandValOptionalEndValItems
+                )
+            );
         }
     }
 
@@ -46,30 +50,46 @@ export module CSVMatrixExpansion {
         return CSVExpansion.objectArrayExpand(
             headingsAndMatrix,
             CSVHeadingsExpansion.expandDatingHeadings,
-            expandDatingItems)([indexOfDatingElement]);
+            expandDatingItems)([indexOfDatingElement]
+        );
     }
 
 
     export function expandDimension(fieldDefinitions: Array<FieldDefinition>) {
 
-        return (headings_and_matrix: HeadingsAndMatrix) => {
+        return (headingsAndMatrix: HeadingsAndMatrix) => {
 
             return flow(
-                headings_and_matrix,
+                headingsAndMatrix,
                 left,
                 CsvExportUtils.getIndices(fieldDefinitions, DIMENSION),
                 reverse,
                 CSVExpansion.objectArrayExpand(
-                    headings_and_matrix,
+                    headingsAndMatrix,
                     CSVHeadingsExpansion.expandDimensionHeadings,
-                    expandDimensionItems));
+                    expandDimensionItems
+                )
+            );
         }
+    }
+
+
+    export function expandLiterature(headingsAndMatrix: HeadingsAndMatrix) {
+
+        const indexOfDatingElement = H(headingsAndMatrix).indexOf('literature');
+        if (indexOfDatingElement === -1) return headingsAndMatrix;
+
+        return CSVExpansion.objectArrayExpand(
+            headingsAndMatrix,
+            CSVHeadingsExpansion.expandLiteratureHeadings,
+            expandLiteratureItems)([indexOfDatingElement]
+        );
     }
 
 
     function rowsWithDatingElementsExpanded(dating: Dating): string[] {
 
-        const {type, begin, end, margin, source, isImprecise, isUncertain} = dating;
+        const { type, begin, end, margin, source, isImprecise, isUncertain } = dating;
 
         const expandedDating = [
             type ? type : '',
@@ -78,7 +98,8 @@ export module CSVMatrixExpansion {
             end && end.inputType ? end.inputType : '',
             end && end.inputYear ? end.inputYear.toString() : '',
             margin ? margin.toString() : '',
-            source ? source : ''];
+            source ? source : ''
+        ];
 
         if (isImprecise !== undefined) expandedDating.push(isImprecise ? 'true' : 'false');
         if (isUncertain !== undefined) expandedDating.push(isUncertain ? 'true' : 'false');
@@ -89,25 +110,39 @@ export module CSVMatrixExpansion {
 
     function rowsWitValOptionalEndValElementsExpanded(valOptionalEndVal: ValOptionalEndVal<string>): string[] {
 
-        const {value, endValue} = valOptionalEndVal;
+        const { value, endValue } = valOptionalEndVal;
         return [value, endValue ? endValue : ''];
     }
 
 
     function rowsWithDimensionElementsExpanded(dimension: Dimension): string[] {
 
-        const {inputValue, inputRangeEndValue, measurementPosition, measurementComment,
-            inputUnit, isImprecise} = dimension;
+        const { inputValue, inputRangeEndValue, measurementPosition, measurementComment,
+            inputUnit, isImprecise } = dimension;
 
         const expandedDimension = [
             inputValue ? inputValue.toString() : '',
             inputRangeEndValue ? inputRangeEndValue.toString() : '',
             measurementPosition ? measurementPosition : '',
             measurementComment ? measurementComment : '',
-            inputUnit ? inputUnit : ''];
+            inputUnit ? inputUnit : ''
+        ];
 
         if (isImprecise !== undefined) expandedDimension.push(isImprecise ? 'true' : 'false');
 
         return expandedDimension;
+    }
+
+
+    function rowsWithLiteratureElementsExpanded(literature: Literature): string[] {
+
+        const { quotation, zenonId } = literature;
+
+        const expandedLiterature = [
+            quotation ? quotation : '',
+            zenonId ? zenonId : '',
+        ];
+
+        return expandedLiterature;
     }
 }

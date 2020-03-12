@@ -1,14 +1,14 @@
-import {flow, includedIn, isDefined, isNot, isnt, to, map, cond, join,
-    dense, prepend, append, compose, remove} from 'tsfun';
+import {flow, includedIn, isDefined, isNot, isnt, to, map, cond, join, dense, prepend, append, compose,
+    remove} from 'tsfun';
 import {FieldResource, Resource} from 'idai-components-2';
 import {HierarchicalRelations} from '../../model/relation-constants';
 import {FieldDefinition} from '../../configuration/model/field-definition';
+import {CSVMatrixExpansion} from './csv-matrix-expansion';
 import {CsvExportUtils} from './csv-export-utils';
-import {CsvExportConsts, Heading, HeadingsAndMatrix, M} from './csv-export-consts';
+import {CsvExportConsts, Heading, HeadingsAndMatrix} from './csv-export-consts';
 import OBJECT_SEPARATOR = CsvExportConsts.OBJECT_SEPARATOR;
 import RELATIONS_IS_CHILD_OF = CsvExportConsts.RELATIONS_IS_CHILD_OF;
 import ARRAY_SEPARATOR = CsvExportConsts.ARRAY_SEPARATOR;
-import {CSVMatrixExpansion} from './csv-matrix-expansion';
 
 
 /**
@@ -43,6 +43,7 @@ export module CSVExport {
             CSVMatrixExpansion.expandValOptionalEndVal(fieldDefinitions),
             CSVMatrixExpansion.expandDating,
             CSVMatrixExpansion.expandDimension(fieldDefinitions),
+            CSVMatrixExpansion.expandLiterature,
             combine);
     }
 

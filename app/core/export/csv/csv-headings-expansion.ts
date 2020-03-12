@@ -32,13 +32,13 @@ export module CSVHeadingsExpansion {
                 fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'margin',
                 fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'source',
                 fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'isImprecise',
-                fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'isUncertain']
-            )(range(n));
+                fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'isUncertain'
+            ])(range(n));
         }
     }
 
 
-    export function expandDimensionHeadings(n:number) {
+    export function expandDimensionHeadings(n: number) {
 
         return (fieldName: string) => {
 
@@ -48,7 +48,19 @@ export module CSVHeadingsExpansion {
                 fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'measurementPosition',
                 fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'measurementComment',
                 fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'inputUnit',
-                fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'isImprecise']
+                fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'isImprecise'
+            ])(range(n));
+        }
+    }
+
+
+    export function expandLiteratureHeadings(n: number) {
+
+        return (fieldName: string) => {
+
+            return flatMap(i => [
+                fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'quotation',
+                fieldName + OBJECT_SEPARATOR + i + OBJECT_SEPARATOR + 'zenonId']
             )(range(n));
         }
     }

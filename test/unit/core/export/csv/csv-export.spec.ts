@@ -422,4 +422,36 @@ describe('CSVExport', () => {
         expect(result[2][7]).toBe('"300"');
         expect(result[2][8]).toBe('"ghc"');
     });
+
+
+    it('expand literature', () => {
+
+        const t = makeFieldDefinitions(['identifier', 'literature']);
+
+        const resources = [
+            ifResource('i1', 'identifier1', 'shortDescription1', 'type'),
+            ifResource('i2', 'identifier2', 'shortDescription2', 'type')
+        ];
+        resources[0].literature = [
+            { quotation: 'Quotation 1', zenonId: '1234567' },
+            { quotation: 'Quotation 2' } ];
+        resources[1].literature = [
+            { quotation: 'Quotation 3', zenonId: '7654321' }
+        ];
+
+        const result = CSVExport.createExportable(resources, t, []).map(row => row.split(','));
+
+        expect(result[0][1]).toBe('"literature.0.quotation"');
+        expect(result[0][2]).toBe('"literature.0.zenonId"');
+        expect(result[0][3]).toBe('"literature.1.quotation"');
+        expect(result[0][4]).toBe('"literature.1.zenonId"');
+
+        expect(result[1][1]).toBe('"Quotation 1"');
+        expect(result[1][2]).toBe('"1234567"');
+        expect(result[1][3]).toBe('"Quotation 2"');
+        expect(result[1][4]).toBe('""');
+
+        expect(result[2][1]).toBe('"Quotation 3"');
+        expect(result[2][2]).toBe('"7654321"');
+    });
 });

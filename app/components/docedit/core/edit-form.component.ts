@@ -9,6 +9,7 @@ import {FieldDefinition} from '../../../core/configuration/model/field-definitio
 import {RelationDefinition} from '../../../core/configuration/model/relation-definition';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
 import {IdaiType} from '../../../core/configuration/model/idai-type';
+import {TypeRelations} from '../../../core/model/relation-constants';
 
 
 interface GroupDefinition {
@@ -120,7 +121,7 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
 
         for (let relation of this.relationDefinitions) {
             const groupName: string|undefined = GroupUtil.getGroupName(relation.name);
-            if (!groupName) continue;
+            if (!groupName || relation.name === TypeRelations.INSTANCEOF) continue;
 
             const group = this.groups.find(group => group.name === groupName) as GroupDefinition;
             group.relations.push(relation);

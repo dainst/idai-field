@@ -45,13 +45,8 @@ export module GroupUtil {
             return 'time';
         } else if (PositionRelations.ALL.includes(relationName)) {
             return 'position';
-        } else if (relationName === TypeRelations.INSTANCEOF) {
-            // we do not want to show it in any group,
-            // since this is done via an input type,
-            // unlike other relations; we use a custom widget instead
-            return undefined;
-        } else if (relationName === TypeRelations.HASINSTANCE) {
-            return 'identification'
+        } else if (TypeRelations.ALL.includes(relationName)) {
+            return 'identification';
         } else {
             return undefined;
         }

@@ -60,4 +60,5 @@ export module TypeRelations {
 
     export const INSTANCEOF = 'isInstanceOf';
     export const HASINSTANCE = 'hasInstance';
+    export const ALL = [INSTANCEOF, HASINSTANCE];
 }

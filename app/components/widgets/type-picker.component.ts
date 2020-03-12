@@ -1,3 +1,4 @@
+import {on, is} from 'tsfun';
 import {Component, Input, Output, EventEmitter, OnChanges} from '@angular/core';
 import {IdaiType} from '../../core/configuration/model/idai-type';
 
@@ -52,7 +53,7 @@ export class TypePickerComponent implements OnChanges {
     public isChildType(type: IdaiType): boolean {
 
         return type.parentType !== undefined
-            && this.types.find(typeToCheck => typeToCheck === type.parentType) !== undefined;
+            && this.types.find(on(IdaiType.NAME)(type.parentType)) !== undefined;
     }
 
 

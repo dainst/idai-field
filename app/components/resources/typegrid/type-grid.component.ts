@@ -40,6 +40,7 @@ export class TypeGridComponent extends BaseList implements OnChanges {
     public contextMenu: ContextMenu = new ContextMenu();
 
     private expandAllGroups: boolean = false;
+    private timeout: any = undefined;
 
 
     constructor(private fieldDatastore: FieldReadDatastore,
@@ -65,10 +66,15 @@ export class TypeGridComponent extends BaseList implements OnChanges {
 
     async ngOnChanges() {
 
-        this.mainDocument = this.getMainDocument();
-        this.subtypes = await this.getSubtypes();
-        this.linkedDocuments = await this.getLinkedDocuments();
-        this.images = await this.getImages();
+        if (this.timeout) clearTimeout(this.timeout);
+
+        this.timeout = setTimeout(async () => {
+            this.mainDocument = this.getMainDocument();
+            this.subtypes = await this.getSubtypes();
+            this.linkedDocuments = await this.getLinkedDocuments();
+            this.images = await this.getImages();
+            this.timeout = undefined;
+        }, 10);
     }
 
 

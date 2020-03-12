@@ -108,8 +108,10 @@ export class DocumentsManager {
     }
 
 
-    public async moveInto(document: FieldDocument|undefined, resetFiltersAndSelection: boolean = false,
+    public async moveInto(document: FieldDocument|string|undefined, resetFiltersAndSelection: boolean = false,
                           rebuildNavigationPath: boolean = false) {
+
+        if (typeof(document) === 'string') document = await this.datastore.get(document);
 
         if (rebuildNavigationPath && document) {
             await this.resourcesStateManager.updateNavigationPathForDocument(document, true);

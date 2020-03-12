@@ -4115,6 +4115,22 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="messages.import.validation.error.invalidLiteratureValue" datatype="html">
+        <source>Ungültiger Literaturverweis im Feld '[1]' der Ressource vom Typ '[0]'.</source>
+        <target state="final">Invalid literature reference in the field '[1]' of the resource of type '[0]'.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/messages/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.import.validation.error.invalidLiteratureValues" datatype="html">
+        <source>Ungültige Literaturverweise in den folgenden Feldern der Ressource vom Typ '[0]': [1].</source>
+        <target state="final">Invalid literature references in the following fields of the resource of type '[0]': [1].</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/messages/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidDropdownValues" datatype="html">
         <source>Ungültige Werte für DropdownRange-Feld ('[0]'). Ein -End Wert kann nicht allein vorkommen.</source>
         <target state="final">Invalid values for dropdown range field ('[0]'). An '-End' value cannot exist alone.</target>

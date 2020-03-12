@@ -1,10 +1,9 @@
-import {includedIn, is, isNot, on} from 'tsfun';
-import {Dating, Dimension, Document, FieldGeometry, NewDocument, NewResource,
+import {includedIn, is, isNot, on, subtract} from 'tsfun';
+import {Dating, Dimension, Literature, Document, FieldGeometry, NewDocument, NewResource,
     Resource} from 'idai-components-2';
 import {validateFloat, validateUnsignedFloat, validateUnsignedInt} from '../util/number-util';
 import {ValidationErrors} from './validation-errors';
 import {INPUT_TYPE, INPUT_TYPES} from '../constants';
-import {subtract} from 'tsfun';
 import {ProjectConfiguration} from '../configuration/project-configuration';
 import {FieldDefinition} from '../configuration/model/field-definition';
 import {RelationDefinition} from '../configuration/model/relation-definition';
@@ -92,6 +91,26 @@ export module Validations {
         if (invalidFields.length > 0) {
             throw [
                 ValidationErrors.INVALID_DIMENSION_VALUES,
+                document.resource.type,
+                invalidFields.join(', ')
+            ];
+        }
+    }
+
+
+    /**
+     * @throws [INVALID_LITERATURE_VALUES]
+     */
+    export function assertCorrectnessOfLiteratureValues(document: Document|NewDocument,
+                                                        projectConfiguration: ProjectConfiguration) {
+
+        const invalidFields: string[] = Validations.validateObjectArrays(
+            document.resource, projectConfiguration, 'literature', Literature.isValid
+        );
+
+        if (invalidFields.length > 0) {
+            throw [
+                ValidationErrors.INVALID_LITERATURE_VALUES,
                 document.resource.type,
                 invalidFields.join(', ')
             ];
@@ -378,7 +397,7 @@ export module Validations {
 
     export function validateObjectArrays(resource: Resource|NewResource,
                                          projectConfiguration: ProjectConfiguration,
-                                         inputType: 'dating'|'dimension',
+                                         inputType: 'dating'|'dimension'|'literature',
                                          validate: (object: any) => boolean): string[] {
 
         return projectConfiguration.getFieldDefinitions(resource.type)

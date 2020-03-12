@@ -28,12 +28,15 @@ describe('Validations', () => {
                         { name: 'dating4', label: 'dating4', inputType: 'dating' },
                         { name: 'dating5', label: 'dating5', inputType: 'dating' },
                         { name: 'dating6', label: 'dating6', inputType: 'dating' },
-                        { name: 'dimension1', label: 'dimension1', inputType: 'dimension'},
-                        { name: 'dimension2', label: 'dimension2', inputType: 'dimension'},
-                        { name: 'dimension3', label: 'dimension3', inputType: 'dimension'},
-                        { name: 'dimension4', label: 'dimension4', inputType: 'dimension'},
-                        { name: 'dimension5', label: 'dimension5', inputType: 'dimension'},
-                        { name: 'dimension6', label: 'dimension6', inputType: 'dimension'}
+                        { name: 'dimension1', label: 'dimension1', inputType: 'dimension' },
+                        { name: 'dimension2', label: 'dimension2', inputType: 'dimension' },
+                        { name: 'dimension3', label: 'dimension3', inputType: 'dimension' },
+                        { name: 'dimension4', label: 'dimension4', inputType: 'dimension' },
+                        { name: 'dimension5', label: 'dimension5', inputType: 'dimension' },
+                        { name: 'dimension6', label: 'dimension6', inputType: 'dimension' },
+                        { name: 'literature1', label: 'literature1', inputType: 'literature' },
+                        { name: 'literature2', label: 'literature2', inputType: 'literature' },
+                        { name: 'literature3', label: 'literature3', inputType: 'literature' }
                     ]
                 },
                 {
@@ -276,6 +279,35 @@ describe('Validations', () => {
         } catch (errWithParams) {
             expect(errWithParams).toEqual(
                 [ValidationErrors.INVALID_DIMENSION_VALUES, 'T', 'dimension3, dimension4, dimension5, dimension6']
+            );
+        }
+        done();
+    });
+
+
+    it('should report invalid literature fields', async done => {
+
+        const doc = {
+            resource: {
+                id: '1',
+                type: 'T',
+                mandatory: 'm',
+                // Correct literature reference
+                literature1: [{ quotation: 'Quotation', zenonId: '1234567' }],
+                // Correct literature reference, Zenon ID is optional
+                literature2: [{ quotation: 'Quotation' }],
+                // No quotation
+                literature3: [{ zenonId: '1234567' }],
+                relations: { isRecordedIn: ['0'] }
+            }
+        };
+
+        try {
+            Validations.assertCorrectnessOfLiteratureValues(doc, projectConfiguration);
+            fail();
+        } catch (errWithParams) {
+            expect(errWithParams).toEqual(
+                [ValidationErrors.INVALID_LITERATURE_VALUES, 'T', 'literature3']
             );
         }
         done();

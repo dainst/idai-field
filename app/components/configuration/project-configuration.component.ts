@@ -16,7 +16,8 @@ export class ProjectConfigurationComponent {
 
     constructor(public projectConfiguration: ProjectConfiguration) {
 
-        this.typesTreeList = projectConfiguration.getTypesList();
+        this.typesTreeList = projectConfiguration.getTypesList()
+            .filter(type => !type.parentType);
         this.selectedType = this.typesTreeList[0];
     }
 

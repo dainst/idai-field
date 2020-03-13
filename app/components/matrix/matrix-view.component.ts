@@ -224,7 +224,7 @@ export class MatrixViewComponent implements OnInit {
         if (clusterMode === 'none') return { 'UNKNOWN': documents };
 
         return documents.reduce((periodMap: any, document: FeatureDocument) => {
-            const period: string = document.resource.period || 'UNKNOWN';
+            const period: string = document.resource.period?.value || 'UNKNOWN';
             if (!periodMap[period]) periodMap[period] = [];
             periodMap[period].push(document);
             return periodMap;

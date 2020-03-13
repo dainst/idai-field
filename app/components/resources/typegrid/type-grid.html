@@ -13,7 +13,7 @@
                    (onJumpToResource)="jumpToResource($event)"
                    (onThumbnailClicked)="openImageViewModal(mainDocument)"></document-info>
 
-    <div id="grid-elements-container">
+    <div *ngIf="ready" id="grid-elements-container">
         <div class="grid-section">
             <div *ngIf="mainDocument?.resource.type === 'TypeCatalog'"
                  class="grid-section-label first-grid-section-label"

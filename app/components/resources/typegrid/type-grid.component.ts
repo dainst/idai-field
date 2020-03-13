@@ -45,6 +45,7 @@ export class TypeGridComponent extends BaseList implements OnChanges {
 
     private expandAllGroups: boolean = false;
     private timeout: any = undefined;
+    private ready: boolean = false;
 
 
     constructor(private fieldDatastore: FieldReadDatastore,
@@ -71,6 +72,8 @@ export class TypeGridComponent extends BaseList implements OnChanges {
 
     async ngOnChanges() {
 
+        this.ready = false;
+
         if (this.timeout) clearTimeout(this.timeout);
 
         this.timeout = setTimeout(async () => {
@@ -79,6 +82,7 @@ export class TypeGridComponent extends BaseList implements OnChanges {
             this.linkedDocuments = await this.getLinkedDocuments();
             this.images = await this.getImages();
             this.timeout = undefined;
+            this.ready = true;
         }, 10);
     }
 

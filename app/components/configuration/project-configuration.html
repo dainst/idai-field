@@ -7,10 +7,10 @@
                     allowPickingAbstractTypes="true" (onTypePicked)="selectType($event)"></type-picker>
             </div>
             <div class="col content">
-                <h1>{{ selectedType.label }} <small class="text-muted">{{ selectedType.name }}</small></h1>
+                <h5>{{ selectedType.label }} <code>{{ selectedType.name }}</code></h5>
                 
                 <div *ngFor="let field of selectedType.fields" class="card">
-                    <h5 class="card-header">{{ field.label }} <small class="text-muted">{{ field.name }}</small></h5>
+                    <div class="card-header"><b>{{ field.label }}</b> <code> {{ field.name }}</code></div>
                     <div class="card-body">
                         <p class="card-text">{{ field.description }}</p>
                         <ul class="list-group list-group-flush">

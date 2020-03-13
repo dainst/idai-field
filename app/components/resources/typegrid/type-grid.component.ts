@@ -18,13 +18,17 @@ import {ViewModalLauncher} from '../service/view-modal-launcher';
 import {NavigationPath} from '../../../core/resources/view/state/navigation-path';
 import {RoutingService} from '../../routing-service';
 import {ProjectTypes} from '../../../core/configuration/project-types';
+import {TabManager} from '../../../core/tabs/tab-manager';
 
 
 @Component({
     selector: 'type-grid',
     moduleId: module.id,
     templateUrl: './type-grid.html',
-    host: { '(window:contextmenu)': 'handleClick($event, true)' }
+    host: {
+        '(window:contextmenu)': 'handleClick($event, true)',
+        '(window:keydown)': 'onKeyDown($event)'
+    }
 })
 /**
  * @author Thomas Kleinke
@@ -49,6 +53,7 @@ export class TypeGridComponent extends BaseList implements OnChanges {
                 private viewModalLauncher: ViewModalLauncher,
                 private routingService: RoutingService,
                 private projectTypes: ProjectTypes,
+                private tabManager: TabManager,
                 resourcesComponent: ResourcesComponent,
                 viewFacade: ViewFacade,
                 loading: Loading) {
@@ -75,6 +80,14 @@ export class TypeGridComponent extends BaseList implements OnChanges {
             this.images = await this.getImages();
             this.timeout = undefined;
         }, 10);
+    }
+
+
+    public async onKeyDown(event: KeyboardEvent) {
+
+        if (event.key === 'Escape' && !this.resourcesComponent.isModalOpened) {
+            await this.tabManager.openActiveTab();
+        }
     }
 
 

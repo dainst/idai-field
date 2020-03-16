@@ -14,6 +14,7 @@
                     <div class="card-body">
                         <p class="card-text">{{ field.description }}</p>
                         <ul class="list-group list-group-flush">
+
                             <li class="list-group-item">
                                 <b i18n="@@configuration.field.group">Gruppe</b>:
                                 <span *ngIf="field.group === 'stem'" i18n="@@docedit.group.stem">Stammdaten</span>
@@ -23,10 +24,29 @@
                                 <span *ngIf="field.group === 'time'" i18n="@@docedit.group.time">Zeit</span>
                                 <span *ngIf="!field.group || field.group === 'child'">{{ selectedType.label }}</span>
                             </li>
+
                             <li class="list-group-item">
                                 <b i18n="@@configuration.field.inputType">Eingabetyp</b>:
-                                {{ field.inputType }}
+                                <span *ngIf="field.inputType === 'input'" i18n="@@config.inputType.input">Einzeiliger Text</span>
+                                <span *ngIf="field.inputType === 'unsignedInt'" i18n="@@config.inputType.unsignedInt">Positive Ganzzahl</span>
+                                <span *ngIf="field.inputType === 'float'" i18n="@@config.inputType.float">Kommazahl</span>
+                                <span *ngIf="field.inputType === 'unsignedFloat'" i18n="@@config.inputType.unsignedFloat">Positive Kommazahl</span>
+                                <span *ngIf="field.inputType === 'multiInput'" i18n="@@config.inputType.multiInput">Einzeiliger Text mit Mehrfachauswahl</span>
+                                <span *ngIf="field.inputType === 'text'" i18n="@@config.inputType.text">Mehrzeiliger Text</span>
+                                <span *ngIf="field.inputType === 'dropdown'" i18n="@@config.inputType.dropdown">Dropdown-Liste</span>
+                                <span *ngIf="field.inputType === 'dropdownRange'" i18n="@@config.inputType.dropdownRange">Dropdown-Liste (Bereich)</span>
+                                <span *ngIf="field.inputType === 'radio'" i18n="@@config.inputType.radio">Radiobutton</span>
+                                <span *ngIf="field.inputType === 'boolean'" i18n="@@config.inputType.boolean">Ja / Nein</span>
+                                <span *ngIf="field.inputType === 'checkboxes'" i18n="@@config.inputType.checkboxes">Checkboxen</span>
+                                <span *ngIf="field.inputType === 'dating'" i18n="@@config.inputType.float">Datierungsangabe</span>
+                                <span *ngIf="field.inputType === 'date'" i18n="@@config.inputType.date">Datum</span>
+                                <span *ngIf="field.inputType === 'dimension'" i18n="@@config.inputType.dimension">Maßangabe</span>
+                                <span *ngIf="field.inputType === 'literature'" i18n="@@config.inputType.literature">Literaturangabe</span>
+                                <span *ngIf="field.inputType === 'geometry'" i18n="@@config.inputType.geometry">Geometrie</span>
+                                <span *ngIf="field.inputType === 'instanceOf'" i18n="@@config.inputType.instanceOf">Typenauswahl</span>
+                                <span *ngIf="field.inputType === 'catalogCriterion'" i18n="@@config.inputType.float">Kriterium für Typenkatalog</span>
                             </li>
+                            
                             <li class="list-group-item">
                                 <b i18n="@@configuration.field.source">Quelle</b>:
                                 {{ field.source }}

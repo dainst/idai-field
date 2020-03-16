@@ -42,10 +42,10 @@ export class TypeGridComponent extends BaseList implements OnChanges {
     public subtypes: Array<FieldDocument> = [];
     public images: { [resourceId: string]: Array<SafeResourceUrl> } = {};
     public contextMenu: ContextMenu = new ContextMenu();
+    public ready: boolean = false;
 
     private expandAllGroups: boolean = false;
     private timeout: any = undefined;
-    private ready: boolean = false;
 
 
     constructor(private fieldDatastore: FieldReadDatastore,

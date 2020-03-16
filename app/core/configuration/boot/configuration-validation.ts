@@ -68,8 +68,8 @@ export module ConfigurationValidation {
             if (VALUELIST_INPUT_TYPES.indexOf(fieldDef.inputType) !== -1
                     && !fieldDef.hasOwnProperty('valuelistFromProjectField')
                     && (!fieldDef.hasOwnProperty('valuelist')
-                        || !Array.isArray(fieldDef.valuelist)
-                        || fieldDef.valuelist.length == 0
+                        || !fieldDef.valuelist.values
+                        || Object.keys(fieldDef.valuelist.values).length === 0
                 )
             ) {
                 msgs.push([ConfigurationErrors.INVALID_CONFIG_MISSINGVALUELIST, fieldDef.name]);

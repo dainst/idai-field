@@ -1,7 +1,7 @@
 <select [(ngModel)]="resource[field.name]" (change)="deleteIfEmpty($event.target.value)"
         class="form-control">
     <option value="" [selected]="!resource.hasOwnProperty(field.name)"></option>
-    <option *ngFor="let item of valuelist" value="{{item}}">{{item}}</option>
+    <option *ngFor="let item of getValues()" value="{{item}}">{{getLabel(item)}}</option>
 </select>
 
 <empty-valuelist-info *ngIf="hasEmptyValuelist()" [resource]="resource" [field]="field">

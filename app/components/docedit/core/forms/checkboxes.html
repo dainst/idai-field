@@ -1,9 +1,9 @@
-<div *ngFor="let item of valuelist" class="checkbox form-check form-check-inline">
+<div *ngFor="let item of getValues()" class="checkbox form-check form-check-inline">
     <label class="form-check-label">
         <input class="form-check-input" value="{{item}}" type="checkbox"
                (click)="toggleCheckbox(item)"
                [checked]="resource[field.name] && resource[field.name].indexOf(item) > -1">
-        {{item}}
+        {{getLabel(item)}}
     </label>
 </div>
 

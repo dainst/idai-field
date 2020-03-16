@@ -3,6 +3,7 @@ import {Resource} from 'idai-components-2';
 import {ValuelistUtil} from '../../../../core/util/valuelist-util';
 import {HierarchyUtil} from '../../../../core/util/hierarchy-util';
 import {DocumentReadDatastore} from '../../../../core/datastore/document-read-datastore';
+import {ValuelistDefinition} from '../../../../core/configuration/model/valuelist-definition';
 
 
 @Component({
@@ -21,10 +22,15 @@ export class RadioComponent implements OnChanges {
     @Input() resource: Resource;
     @Input() field: any;
 
-    public valuelist: string[];
+    public valuelist: ValuelistDefinition;
 
 
     constructor(private datastore: DocumentReadDatastore) {}
+
+
+    public getValues = () => this.valuelist ? Object.keys(this.valuelist.values) : [];
+
+    public getLabel = (valueId: string) => ValuelistUtil.getValueLabel(this.valuelist, valueId);
 
 
     async ngOnChanges() {
@@ -51,6 +57,6 @@ export class RadioComponent implements OnChanges {
 
     public hasEmptyValuelist(): boolean {
 
-        return this.valuelist && this.valuelist.length === 0
+        return this.valuelist && Object.keys(this.valuelist.values).length === 0
     }
 }

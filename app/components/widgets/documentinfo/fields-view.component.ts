@@ -191,16 +191,11 @@ export class FieldsViewComponent implements OnChanges {
     private pushField(resource: Resource, field: FieldDefinition, group: string) {
 
         if (field.name === PERIOD) {
-
             this.handlePeriodField(resource, field, group);
-
         } else if (resource.type === BuiltInTypes.TYPECATALOG
-            && field.name === BuiltInTypes.TypeCatalog.CRITERION) {
-
+                && field.name === BuiltInTypes.TypeCatalog.CRITERION) {
             this.handleTypeCatalogCriterionField(resource, field);
-
         } else if (!!this.projectConfiguration.isVisible(resource.type, field.name)) {
-
             this.handleDefaultField(resource, field, group);
         }
     }

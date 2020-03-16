@@ -1,3 +1,6 @@
+import {ValuelistDefinition} from './valuelist-definition';
+
+
 /**
  * @author Daniel de Oliveira
  */
@@ -26,7 +29,7 @@ export interface FieldDefinition {
         |'instanceOf'
         |'catalogCriterion'
         |'default';
-    valuelist?: string[];
+    valuelist?: ValuelistDefinition;
     valuelistFromProjectField?: string;
     editable?: boolean;                 // defaults to true
     visible?: boolean;                  // defaults to true

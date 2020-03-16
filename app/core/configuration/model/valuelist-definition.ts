@@ -1,4 +1,3 @@
-
 import {ConfigurationErrors} from '../boot/configuration-errors';
 
 
@@ -14,9 +13,9 @@ export interface ValuelistDefinition {
 
     values: { [key: string]: ValueDefinition }
 
-    description: { [language: string]: string }
-    createdBy: string;
-    creationDate: string;
+    description?: { [language: string]: string }
+    createdBy?: string;
+    creationDate?: string;
 
     extends?: string; // to be implemented
     constraints?: any; // to be implemented
@@ -41,6 +40,6 @@ export module ValuelistDefinition {
 
 export interface ValueDefinition {
 
-    translation?: { [label: string]: string },
+    translation?: { [locale: string]: string },
     references?: { [referenceKey: string]: string },
 }

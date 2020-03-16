@@ -4,6 +4,7 @@ import {Resource, ValOptionalEndVal} from 'idai-components-2';
 import {ValuelistUtil} from '../../../../core/util/valuelist-util';
 import {HierarchyUtil} from '../../../../core/util/hierarchy-util';
 import {DocumentReadDatastore} from '../../../../core/datastore/document-read-datastore';
+import {ValuelistDefinition} from '../../../../core/configuration/model/valuelist-definition';
 
 const PROJECT = 'project';
 
@@ -21,13 +22,17 @@ export class DropdownRangeComponent {
     @Input() resource: Resource;
     @Input() field: any;
 
-    public valuelist: string[];
+    public valuelist: ValuelistDefinition;
 
     private endActivated: boolean = false;
 
 
     constructor(private datastore: DocumentReadDatastore) {}
 
+
+    public getValues = () => this.valuelist ? Object.keys(this.valuelist.values) : [];
+
+    public getLabel = (valueId: string) => ValuelistUtil.getValueLabel(this.valuelist, valueId);
 
     public activateEnd = () => this.endActivated = true;
 

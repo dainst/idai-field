@@ -1,6 +1,11 @@
-import {includedIn, isNot, isArray} from 'tsfun';
+import {includedIn, isNot, isArray, remove} from 'tsfun';
 import {Document, Resource} from 'idai-components-2';
 import {FieldDefinition} from '../configuration/model/field-definition';
+import {ValueDefinition, ValuelistDefinition} from '../configuration/model/valuelist-definition';
+import {clone} from './object-util';
+
+const locale: string = require('electron').remote.getGlobal('config').locale;
+
 
 /**
  * @author Daniel de Oliveira
@@ -9,13 +14,13 @@ import {FieldDefinition} from '../configuration/model/field-definition';
 export module ValuelistUtil {
 
     export function getValuesNotIncludedInValuelist(resource: Resource|undefined, fieldName: string|undefined,
-                                                    valuelist: string[]|undefined): string[]|undefined {
+                                                    valuelist: ValuelistDefinition): string[]|undefined {
 
         if (!resource || !fieldName || !resource[fieldName] || !valuelist) return undefined;
 
         const itemsNotIncludedInValueList = isArray(resource[fieldName])
-            ? resource[fieldName].filter(isNot(includedIn(valuelist)))
-            : isNot(includedIn(valuelist))(resource[fieldName])
+            ? resource[fieldName].filter(isNot(includedIn(Object.keys(valuelist.values))))
+            : isNot(includedIn(Object.keys(valuelist.values)))(resource[fieldName])
                 ? [resource[fieldName]]
                 : [];
 
@@ -23,10 +28,20 @@ export module ValuelistUtil {
     }
 
 
-    export function getValuelist(field: FieldDefinition, projectDocument: Document,
-                                 parentResource?: Resource): string[] {
+    export function getValueLabel(valuelist: ValuelistDefinition, valueId: string): string {
 
-        const valuelist: string[] = field.valuelist
+        const translation: { [locale: string]: string }|undefined = valuelist.values[valueId].translation;
+
+        return translation
+            ? translation[locale] ?? valueId
+            : valueId;
+    }
+
+
+    export function getValuelist(field: FieldDefinition, projectDocument: Document,
+                                 parentResource?: Resource): ValuelistDefinition {
+
+        const valuelist: ValuelistDefinition|string[] = field.valuelist
             ? field.valuelist
             : getValuelistFromProjectField(field.valuelistFromProjectField as string, projectDocument);
 
@@ -37,18 +52,32 @@ export module ValuelistUtil {
     }
 
 
-    export function getValuelistFromProjectField(fieldName: string, projectDocument: Document): string[] {
+    export function getValuelistFromProjectField(fieldName: string,
+                                                 projectDocument: Document): ValuelistDefinition {
 
         const field: string[]|undefined = projectDocument.resource[fieldName];
-        return field && isArray(field) ? field : [];
+        return field && isArray(field)
+            ? {
+                values: field.reduce((values: { [fieldId: string]: ValueDefinition }, field) => {
+                    values[field] = {};
+                    return values;
+                }, {})
+            }
+        : { values: {} };
     }
 
 
-    function getValuesOfParentField(valuelist: string[], fieldName: string,
-                                    parentResource: Resource): string[] {
+    function getValuesOfParentField(valuelist: ValuelistDefinition, fieldName: string,
+                                    parentResource: Resource): ValuelistDefinition {
 
         const parentValues: string[] = parentResource[fieldName] || [];
-        return valuelist.filter(includedIn(parentValues));
+
+        const result: ValuelistDefinition = clone(valuelist);
+        result.values = remove((_, key: string) => {
+            return parentResource[fieldName].includes(key);
+        })(valuelist.values) as { [key: string]: ValueDefinition };
+
+        return result;
     }
 }
 

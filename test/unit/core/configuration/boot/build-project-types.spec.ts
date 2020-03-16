@@ -133,7 +133,7 @@ describe('buildProjectTypes', () => {
             {},
             { 'aField-valuelist-id-1': { values: { a: {} }, description: {}, createdBy: '', creationDate: '' }});
 
-        expect(result['A'].fields['aField']['valuelist']).toEqual(['a']);
+        expect(result['A'].fields['aField']['valuelist']['values']).toEqual({ a: {} });
     });
 
 
@@ -163,9 +163,8 @@ describe('buildProjectTypes', () => {
             { 'aCommon-valuelist-id-1': { values: { a: {} }, description: {}, createdBy: '', creationDate: '' },
               'aCommon-valuelist-id-2': { values: { b: {} }, description: {}, createdBy: '', creationDate: '' }});
 
-        expect(result['A'].fields['aCommon']['valuelist']).toEqual(['b']);
+        expect(result['A'].fields['aCommon']['valuelist']['values']).toEqual({ b: {} });
     });
-
 
 
     it('valuelistId - provided via valuelists property in library', () => {
@@ -191,9 +190,9 @@ describe('buildProjectTypes', () => {
                 libraryTypes,
                 customTypes,
                 {},
-                { 'aField-valuelist-id-1': { values: { a: {}}, description: {}, creationDate: '', createdBy: ''}});
+                { 'aField-valuelist-id-1': { values: { a: {}}, description: {}, creationDate: '', createdBy: '' }});
 
-        expect(result['A'].fields['aField']['valuelist']).toEqual(['a']);
+        expect(result['A'].fields['aField']['valuelist']['values']).toEqual({ a: {} });
     });
 
 
@@ -831,7 +830,11 @@ describe('buildProjectTypes', () => {
         const result = buildProjectTypes(builtInTypes,
             libraryTypes,
             {'A:0':{ fields: {}}}, {}, valuelistsConfiguration, {});
-        expect(result['A'].fields['a1'].valuelist).toEqual(['one', 'two', 'three']);
+        expect(result['A'].fields['a1'].valuelist.values).toEqual({
+            one: {},
+            two: {},
+            three: {}
+        });
     });
 
 

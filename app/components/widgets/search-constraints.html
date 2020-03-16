@@ -70,7 +70,9 @@
                     i18n="@@resources.searchBar.constraints.options.anyValue">- Beliebiger Wert -</option>
             <option id="constraint-search-term-dropdown-option-no-value" value="UNKNOWN"
                     i18n="@@resources.searchBar.constraints.options.noValue">- Kein Wert -</option>
-            <option *ngFor="let value of selectedField.valuelist" value="{{value}}">{{value}}</option>
+            <option *ngFor="let value of getValues(selectedField.valuelist)" value="{{value}}">
+                {{getValueLabel(selectedField.valuelist, value)}}
+            </option>
         </select>
 
         <select *ngIf="getSearchInputType(selectedField) === 'boolean'"

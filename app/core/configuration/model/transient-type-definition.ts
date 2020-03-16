@@ -1,6 +1,7 @@
 import {Map} from 'tsfun';
 import {BuiltinFieldDefinition} from './builtin-type-definition';
 import {LibraryFieldDefinition, LibraryTypeDefinition} from './library-type-definition';
+import {ValuelistDefinition} from './valuelist-definition';
 
 
 export interface TransientTypeDefinition extends BuiltinFieldDefinition, LibraryTypeDefinition {
@@ -18,7 +19,7 @@ export module TransientTypeDefinition {
 
 export interface TransientFieldDefinition extends BuiltinFieldDefinition, LibraryFieldDefinition {
 
-    valuelist?: any;
+    valuelist?: ValuelistDefinition;
     valuelistId?: string,
     valuelistFromProjectField?: string;
     visible?: boolean;

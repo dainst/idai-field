@@ -1,10 +1,10 @@
-<div *ngFor="let item of valuelist" class="radio form-check form-check-inline">
+<div *ngFor="let item of getValues()" class="radio form-check form-check-inline">
     <label class="form-check-label">
         <input class="form-check-input" value="{{item}}" type="radio"
                name="{{field.name}}"
                (click)="setValue(item)"
-               [checked]="item == resource[field.name]">
-        {{item}}
+               [checked]="item === resource[field.name]">
+        {{getLabel(item)}}
     </label>
 </div>
 

@@ -8,6 +8,7 @@ import {ProjectConfiguration} from '../../core/configuration/project-configurati
 import {ValuelistUtil} from '../../core/util/valuelist-util';
 import {clone} from '../../core/util/object-util';
 import {DocumentReadDatastore} from '../../core/datastore/document-read-datastore';
+import {ValuelistDefinition} from '../../core/configuration/model/valuelist-definition';
 
 
 type ConstraintListItem = {
@@ -55,6 +56,12 @@ export abstract class SearchConstraintsComponent implements OnChanges {
         await this.removeInvalidConstraints();
         await this.reset();
     }
+
+
+    public getValues = (valuelist: ValuelistDefinition) => Object.keys(valuelist.values);
+
+    public getValueLabel = (valuelist: ValuelistDefinition, valueId: string) =>
+        ValuelistUtil.getValueLabel(valuelist, valueId);
 
 
     public getTooltip() {
@@ -186,7 +193,7 @@ export abstract class SearchConstraintsComponent implements OnChanges {
     }
 
 
-    public async getValuelist(field: FieldDefinition): Promise<string[]> {
+    public async getValuelist(field: FieldDefinition): Promise<ValuelistDefinition> {
 
         return ValuelistUtil.getValuelist(field, await this.datastore.get('project'));
     }
@@ -236,8 +243,8 @@ export abstract class SearchConstraintsComponent implements OnChanges {
             return false;
         }
 
-        const valuelist: string[] = await this.getValuelist(field);
-        return !valuelist.includes(this.getCustomConstraints()[constraintName]);
+        const valuelist: ValuelistDefinition = await this.getValuelist(field);
+        return !Object.keys(valuelist.values).includes(this.getCustomConstraints()[constraintName]);
     }
 
 

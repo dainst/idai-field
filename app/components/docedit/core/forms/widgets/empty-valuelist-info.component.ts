@@ -53,10 +53,12 @@ export class EmptyValuelistInfoComponent implements OnChanges {
 
         if (this.field.valuelist) {
             return 'configuration';
-        } else if (ValuelistUtil.getValuelistFromProjectField(
-            this.field.valuelistFromProjectField as string,
-            await this.datastore.get('project')
-        ).length === 0) {
+        } else if (Object.keys(
+            ValuelistUtil.getValuelistFromProjectField(
+                this.field.valuelistFromProjectField as string,
+                await this.datastore.get('project')
+            )
+        ).values.length === 0) {
             return 'projectDocumentField';
         } else {
             return 'parent';

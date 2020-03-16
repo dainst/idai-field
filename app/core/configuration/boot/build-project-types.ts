@@ -1,5 +1,5 @@
-import {assoc, clone, cond, dissoc, flow, includedIn, isDefined, isNot, keys, keysAndValues, map,
-    Map, on, reduce, subtract, undefinedOrEmpty, update} from 'tsfun';
+import {assoc, clone, cond, dissoc, flow, includedIn, isDefined, isNot, keys, keysAndValues, map, Map, on,
+    reduce, subtract, undefinedOrEmpty, update} from 'tsfun';
 import {LibraryTypeDefinition} from '../model/library-type-definition';
 import {CustomTypeDefinition} from '../model/custom-type-definition';
 import {ConfigurationErrors} from './configuration-errors';
@@ -78,10 +78,9 @@ function replaceValuelistIdWithActualValuelist(valuelistDefinitionMap: Map<Value
 
     return (fd: TransientFieldDefinition) =>
         flow(fd,
-            assoc(
-                TransientFieldDefinition.VALUELIST,
-                keys(valuelistDefinitionMap[fd.valuelistId!].values)),
-            dissoc(TransientFieldDefinition.VALUELISTID))
+            assoc(TransientFieldDefinition.VALUELIST, valuelistDefinitionMap[fd.valuelistId!]),
+            dissoc(TransientFieldDefinition.VALUELISTID)
+        );
 }
 
 

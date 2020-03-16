@@ -8,7 +8,7 @@ import {ConfigReader} from './config-reader';
 import {RelationDefinition} from '../model/relation-definition';
 import {FieldDefinition} from '../model/field-definition';
 import {ConfigurationDefinition} from './configuration-definition';
-import {buildProjectTypes} from "./build-project-types";
+import {buildProjectTypes} from './build-project-types';
 import {BuiltinTypeDefinition} from '../model/builtin-type-definition';
 import {LibraryTypeDefinition} from '../model/library-type-definition';
 
@@ -46,10 +46,8 @@ export class ConfigLoader {
                 private i18n: I18n) {}
 
 
-    public async go(configDirPath: string,
-                    commonFields: {[fieldName: string]: any},
-                    builtinTypes: Map<BuiltinTypeDefinition>,
-                    relations: Array<RelationDefinition>,
+    public async go(configDirPath: string, commonFields: { [fieldName: string]: any },
+                    builtinTypes: Map<BuiltinTypeDefinition>, relations: Array<RelationDefinition>,
                     extraFields: {[fieldName: string]: FieldDefinition },
                     customConfigurationName: string|undefined,
                     locale: string): Promise<ProjectConfiguration> {
@@ -84,10 +82,8 @@ export class ConfigLoader {
     }
 
 
-    private async preprocess(configDirPath: string,
-                             libraryTypes: Map<LibraryTypeDefinition>,
-                             commonFields: any,
-                             builtinTypes: Map<BuiltinTypeDefinition>,
+    private async preprocess(configDirPath: string, libraryTypes: Map<LibraryTypeDefinition>,
+                             commonFields: any, builtinTypes: Map<BuiltinTypeDefinition>,
                              relations: Array<RelationDefinition>,
                              extraFields: {[fieldName: string]: FieldDefinition },
                              customConfigurationName: string|undefined,

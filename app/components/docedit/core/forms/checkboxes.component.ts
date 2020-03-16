@@ -3,6 +3,7 @@ import {Resource} from 'idai-components-2';
 import {ValuelistUtil} from '../../../../core/util/valuelist-util';
 import {DocumentReadDatastore} from '../../../../core/datastore/document-read-datastore';
 import {HierarchyUtil} from '../../../../core/util/hierarchy-util';
+import {ValuelistDefinition} from '../../../../core/configuration/model/valuelist-definition';
 
 @Component({
     moduleId: module.id,
@@ -20,7 +21,7 @@ export class CheckboxesComponent implements OnChanges {
     @Input() resource: Resource;
     @Input() field: any;
 
-    public valuelist: string[];
+    public valuelist: ValuelistDefinition;
 
 
     constructor(private datastore: DocumentReadDatastore) {}
@@ -36,6 +37,11 @@ export class CheckboxesComponent implements OnChanges {
     }
 
 
+    public getValues = () => this.valuelist ? Object.keys(this.valuelist.values) : [];
+
+    public getLabel = (valueId: string) => ValuelistUtil.getValueLabel(this.valuelist, valueId);
+
+
     public toggleCheckbox(item: string) {
 
         if (!this.resource[this.field.name]) this.resource[this.field.name] = [];
@@ -46,7 +52,7 @@ export class CheckboxesComponent implements OnChanges {
 
     public hasEmptyValuelist(): boolean {
 
-        return this.valuelist && this.valuelist.length === 0
+        return this.valuelist && Object.keys(this.valuelist.values).length === 0
     }
 
 

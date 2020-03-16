@@ -38,6 +38,7 @@ depicts-relations-view {
           font-size: $font-size-smaller;
           color: gray;
           margin-bottom: 4px;
+          user-select: none;
         }
 
         .field-value {

@@ -30,10 +30,10 @@ export module ValuelistUtil {
 
     export function getValueLabel(valuelist: ValuelistDefinition, valueId: string): string {
 
-        const translation: { [locale: string]: string }|undefined = valuelist.values[valueId].translation;
+        const label: { [locale: string]: string }|undefined = valuelist.values[valueId].labels;
 
-        return translation
-            ? translation[locale] ?? valueId
+        return label
+            ? label[locale] ?? valueId
             : valueId;
     }
 

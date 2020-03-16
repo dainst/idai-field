@@ -40,6 +40,6 @@ export module ValuelistDefinition {
 
 export interface ValueDefinition {
 
-    translation?: { [locale: string]: string },
+    labels?: { [locale: string]: string },
     references?: { [referenceKey: string]: string },
 }

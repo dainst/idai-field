@@ -70,11 +70,11 @@ export module ValuelistUtil {
     function getValuesOfParentField(valuelist: ValuelistDefinition, fieldName: string,
                                     parentResource: Resource): ValuelistDefinition {
 
-        const parentValues: string[] = parentResource[fieldName] || [];
+        const parentValues: string[] = parentResource[fieldName] ?? [];
 
         const result: ValuelistDefinition = clone(valuelist);
         result.values = remove((_, key: string) => {
-            return parentResource[fieldName].includes(key);
+            return parentValues.includes(key);
         })(valuelist.values) as { [key: string]: ValueDefinition };
 
         return result;

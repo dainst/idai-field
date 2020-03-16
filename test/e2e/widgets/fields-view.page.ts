@@ -11,7 +11,6 @@ const delays = require('../config/delays');
  */
 export class FieldsViewPage {
 
-
     public static getTabs() {
 
         const elDescriptor = 'fields-view div .card-header';

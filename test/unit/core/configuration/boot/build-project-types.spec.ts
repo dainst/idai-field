@@ -30,7 +30,8 @@ describe('buildProjectTypes', () => {
         const result = buildProjectTypes(
             builtInTypes,
             {},
-            customTypes);
+            customTypes
+        );
 
         expect(result['A']).toBeDefined();
         expect(result['B']).toBeDefined();
@@ -59,7 +60,8 @@ describe('buildProjectTypes', () => {
         const result = buildProjectTypes(
             builtInTypes,
             {},
-            customTypes);
+            customTypes
+        );
 
         expect(result['A']).toBeDefined();
         expect(result['B']).toBeDefined();
@@ -104,7 +106,8 @@ describe('buildProjectTypes', () => {
             builtInTypes,
             libraryTypes,
             customTypes,
-            commonFields);
+            commonFields
+        );
 
         expect(result['A']['fields']['field1'].visible).toBe(false);
         expect(result['A']['fields']['field2'].visible).toBe(true);
@@ -117,7 +120,9 @@ describe('buildProjectTypes', () => {
 
     it('valuelistId - provided via valuelists property in custom type', () => {
 
-        const builtInTypes: Map<BuiltinTypeDefinition> = { A: { fields: { aField: { inputType: 'dropdown' }} }};
+        const builtInTypes: Map<BuiltinTypeDefinition> = {
+            A: { fields: { aField: { inputType: 'dropdown' } } }
+        };
         const libraryTypes: Map<LibraryTypeDefinition> = {};
         const customTypes: Map<CustomTypeDefinition> = {
             'A': {
@@ -131,7 +136,12 @@ describe('buildProjectTypes', () => {
             libraryTypes,
             customTypes,
             {},
-            { 'aField-valuelist-id-1': { values: { a: {} }, description: {}, createdBy: '', creationDate: '' }});
+            {
+                'aField-valuelist-id-1': {
+                    values: { a: {} }, description: {}, createdBy: '', creationDate: ''
+                }
+            }
+        );
 
         expect(result['A'].fields['aField']['valuelist']['values']).toEqual({ a: {} });
     });
@@ -140,7 +150,7 @@ describe('buildProjectTypes', () => {
     it('valuelistId - overwrite valuelists property in custom type, extending a library type - for a common field', () => {
 
         const builtInTypes: Map<BuiltinTypeDefinition> = {
-            A: { fields: {} }};
+            A: { fields: {} } };
         const libraryTypes: Map<LibraryTypeDefinition> = {
             'A:default': {
                 commons: ['aCommon'],
@@ -153,15 +163,23 @@ describe('buildProjectTypes', () => {
                 commons: ['aCommon'],
                 valuelists: { aCommon: 'aCommon-valuelist-id-2' },
                 fields: { }
-            }};
+            }
+        };
 
         const result = buildProjectTypes(
             builtInTypes,
             libraryTypes,
             customTypes,
             commonFields,
-            { 'aCommon-valuelist-id-1': { values: { a: {} }, description: {}, createdBy: '', creationDate: '' },
-              'aCommon-valuelist-id-2': { values: { b: {} }, description: {}, createdBy: '', creationDate: '' }});
+            {
+                'aCommon-valuelist-id-1': {
+                    values: { a: {} }, description: {}, createdBy: '', creationDate: ''
+                },
+              'aCommon-valuelist-id-2': {
+                    values: { b: {} }, description: {}, createdBy: '', creationDate: ''
+                }
+            }
+        );
 
         expect(result['A'].fields['aCommon']['valuelist']['values']).toEqual({ b: {} });
     });
@@ -169,7 +187,9 @@ describe('buildProjectTypes', () => {
 
     it('valuelistId - provided via valuelists property in library', () => {
 
-        const builtInTypes: Map<BuiltinTypeDefinition> = { A: { fields: { aField: { inputType: 'dropdown' }} }};
+        const builtInTypes: Map<BuiltinTypeDefinition> = {
+            A: { fields: { aField: { inputType: 'dropdown' } } }
+        };
         const libraryTypes: Map<LibraryTypeDefinition> = {
             'A:default': {
                 valuelists: { aField: 'aField-valuelist-id-1' },
@@ -186,11 +206,16 @@ describe('buildProjectTypes', () => {
         };
 
         const result = buildProjectTypes(
-                builtInTypes,
-                libraryTypes,
-                customTypes,
-                {},
-                { 'aField-valuelist-id-1': { values: { a: {}}, description: {}, creationDate: '', createdBy: '' }});
+            builtInTypes,
+            libraryTypes,
+            customTypes,
+            {},
+            {
+                'aField-valuelist-id-1': {
+                    values: { a: {}}, description: {}, creationDate: '', createdBy: ''
+                }
+            }
+        );
 
         expect(result['A'].fields['aField']['valuelist']['values']).toEqual({ a: {} });
     });
@@ -198,9 +223,11 @@ describe('buildProjectTypes', () => {
 
     it('valuelistId - nowhere provided - built in type selected', () => {
 
-        const builtInTypes: Map<BuiltinTypeDefinition> = { A: { fields: { aField: { inputType: 'dropdown' }} }};
+        const builtInTypes: Map<BuiltinTypeDefinition> = {
+            A: { fields: { aField: { inputType: 'dropdown' } } }
+        };
         const customTypes: Map<CustomTypeDefinition> = {
-            'A': { fields: { aField: {}}}
+            'A': { fields: { aField: {} } }
         };
 
         try {
@@ -210,17 +237,22 @@ describe('buildProjectTypes', () => {
                 customTypes,
                 {},
                 {},
-                {});
+                {}
+            );
             fail();
         } catch (expected) {
-            expect(expected).toEqual([ConfigurationErrors.MISSING_FIELD_PROPERTY, 'valuelistId', 'A', 'aField']);
+            expect(expected).toEqual([
+                ConfigurationErrors.MISSING_FIELD_PROPERTY, 'valuelistId', 'A', 'aField'
+            ]);
         }
     });
 
 
     it('valuelistId - nowhere provided - library type selected', () => {
 
-        const builtInTypes: Map<BuiltinTypeDefinition> = { A: { fields: { aField: { inputType: 'dropdown' }} }};
+        const builtInTypes: Map<BuiltinTypeDefinition> = {
+            A: { fields: { aField: { inputType: 'dropdown' } } }
+        };
         const libraryTypes: Map<LibraryTypeDefinition> = {
             'A:0': {
                 typeFamily: 'A',
@@ -233,7 +265,7 @@ describe('buildProjectTypes', () => {
             },
         };
         const customTypes: Map<CustomTypeDefinition> = {
-            'A:0': { fields: { aField: {}}}
+            'A:0': { fields: { aField: {} } }
         };
 
         try {
@@ -243,17 +275,20 @@ describe('buildProjectTypes', () => {
                 customTypes,
                 {},
                 {},
-                {});
+                {}
+            );
             fail();
         } catch (expected) {
-            expect(expected).toEqual([ConfigurationErrors.MISSING_FIELD_PROPERTY, 'valuelistId', 'A:0', 'aField']);
+            expect(expected).toEqual([
+                ConfigurationErrors.MISSING_FIELD_PROPERTY, 'valuelistId', 'A:0', 'aField'
+            ]);
         }
     });
 
 
     it('duplication in selection', () => {
 
-        const builtinTypes: Map<BuiltinTypeDefinition> = { A: { fields: {} }};
+        const builtinTypes: Map<BuiltinTypeDefinition> = { A: { fields: {} } };
         const libraryTypes: Map<LibraryTypeDefinition> = {
             'A:0': {
                 typeFamily: 'A',
@@ -287,7 +322,8 @@ describe('buildProjectTypes', () => {
             buildProjectTypes(
                 builtinTypes,
                 libraryTypes,
-                customTypes);
+                customTypes
+            );
             fail();
         } catch (expected) {
             expect(expected).toEqual([ConfigurationErrors.DUPLICATION_IN_SELECTION, 'A']);
@@ -318,7 +354,8 @@ describe('buildProjectTypes', () => {
             buildProjectTypes(
                 builtinTypes,
                 libraryTypes,
-                customTypes);
+                customTypes
+            );
             fail();
         } catch (expected) {
             expect(expected).toEqual([ConfigurationErrors.DUPLICATION_IN_SELECTION, 'A']);
@@ -328,13 +365,13 @@ describe('buildProjectTypes', () => {
 
     it('type families - divergent input type', () => {
 
-        const builtinTypes: Map<BuiltinTypeDefinition> = { A: { fields: {}}};
+        const builtinTypes: Map<BuiltinTypeDefinition> = { A: { fields: {} } };
         const libraryTypes: Map<LibraryTypeDefinition> = {
             'A:0': {
                 typeFamily: 'A',
                 commons: [],
                 valuelists: {},
-                fields: { aField: { inputType: 'text' }},
+                fields: { aField: { inputType: 'text' } },
                 createdBy: '',
                 creationDate: '',
                 description: {}
@@ -343,7 +380,7 @@ describe('buildProjectTypes', () => {
                 typeFamily: 'A',
                 commons: [],
                 valuelists: {},
-                fields: { aField: { inputType: 'input' }},
+                fields: { aField: { inputType: 'input' } },
                 createdBy: '',
                 creationDate: '',
                 description: {}
@@ -353,18 +390,21 @@ describe('buildProjectTypes', () => {
         try {
             buildProjectTypes(
                 builtinTypes,
-                libraryTypes);
+                libraryTypes
+            );
             fail();
         } catch (expected) {
-            expect(expected).toEqual([ConfigurationErrors.INCONSISTENT_TYPE_FAMILY,
-                'A', 'divergentInputType', 'aField']);
+            expect(expected).toEqual([
+                ConfigurationErrors.INCONSISTENT_TYPE_FAMILY,
+                'A', 'divergentInputType', 'aField'
+            ]);
         }
     });
 
 
     it('subtypes - user defined subtype not allowed', () => {
 
-        const builtInTypes: Map<BuiltinTypeDefinition> = { A: { fields: {} }};
+        const builtInTypes: Map<BuiltinTypeDefinition> = { A: { fields: {} } };
         const libraryTypes: Map<LibraryTypeDefinition> = {
             'B:0': {
                 typeFamily: 'B',
@@ -375,27 +415,31 @@ describe('buildProjectTypes', () => {
                 valuelists: {},
                 creationDate: '',
                 description: {}
-            }};
+            }
+        };
 
         try {
             buildProjectTypes(
                 builtInTypes,
                 libraryTypes,
-                {'B:0': {fields: {}}},
+                { 'B:0': { fields: {} } },
                 {},
                 {},
-                {});
+                {}
+            );
             fail();
         } catch (expected) {
-            expect(expected).toEqual([ConfigurationErrors.TRYING_TO_SUBTYPE_A_NON_EXTENDABLE_TYPE, 'A']);
+            expect(expected).toEqual([
+                ConfigurationErrors.TRYING_TO_SUBTYPE_A_NON_EXTENDABLE_TYPE, 'A'
+            ]);
         }
     });
 
 
     it('commons - cannot set type of common in libary types', () => {
 
-        const builtInTypes: Map<BuiltinTypeDefinition> = { A: { fields: {} }};
-        const commonFields = { aCommon: { group: 'stem', inputType: 'input' }};
+        const builtInTypes: Map<BuiltinTypeDefinition> = { A: { fields: {} } };
+        const commonFields = { aCommon: { group: 'stem', inputType: 'input' } };
         const libraryTypes: Map<LibraryTypeDefinition> = {
             'A:0': {
                 typeFamily: 'A',
@@ -405,7 +449,8 @@ describe('buildProjectTypes', () => {
                 valuelists: {},
                 creationDate: '',
                 description: {}
-            }};
+            }
+        };
 
         try {
             buildProjectTypes(
@@ -414,20 +459,23 @@ describe('buildProjectTypes', () => {
                 { 'A:0': { fields: {} } },
                 commonFields,
                 {},
-                {});
+                {}
+            );
             fail();
         } catch (expected) {
-            expect(expected).toEqual([ConfigurationErrors.MUST_NOT_SET_INPUT_TYPE, 'A:0', 'aCommon']);
+            expect(expected).toEqual([
+                ConfigurationErrors.MUST_NOT_SET_INPUT_TYPE, 'A:0', 'aCommon'
+            ]);
         }
     });
 
 
     it('commons - cannot set type of common in custom types', () => {
 
-        const builtInTypes: Map<BuiltinTypeDefinition> = { A: { fields: {} }};
-        const commonFields = { aCommon: { group: 'stem', inputType: 'input' }};
+        const builtInTypes: Map<BuiltinTypeDefinition> = { A: { fields: {} } };
+        const commonFields = { aCommon: { group: 'stem', inputType: 'input' } };
         const customTypes: Map<CustomTypeDefinition> = {
-            'A': { fields: { aCommon: { inputType: 'text' }}}
+            'A': { fields: { aCommon: { inputType: 'text' } } }
         };
 
         try {
@@ -437,7 +485,8 @@ describe('buildProjectTypes', () => {
                 customTypes,
                 commonFields,
                 {},
-                {});
+                {}
+            );
             fail();
         } catch (expected) {
             expect(expected).toEqual([ConfigurationErrors.MUST_NOT_SET_INPUT_TYPE, 'A', 'aCommon']);
@@ -447,7 +496,7 @@ describe('buildProjectTypes', () => {
 
     it('commons - common field not provided', () => {
 
-        const builtInTypes: Map<BuiltinTypeDefinition> = { A: { fields: {} }};
+        const builtInTypes: Map<BuiltinTypeDefinition> = { A: { fields: {} } };
         const commonFields = {};
         const customTypes: Map<CustomTypeDefinition> = {
             A: { fields: {}, commons: ['missing']}
@@ -460,7 +509,8 @@ describe('buildProjectTypes', () => {
                 customTypes,
                 commonFields,
                 {},
-                {});
+                {}
+            );
             fail();
         } catch (expected) {
             expect(expected).toEqual([ConfigurationErrors.COMMON_FIELD_NOT_PROVIDED, 'missing']);
@@ -470,8 +520,8 @@ describe('buildProjectTypes', () => {
 
     it('commons - mix in commons in library type', () => {
 
-        const builtInTypes: Map<BuiltinTypeDefinition> = { A: { fields: {} }};
-        const commonFields = { aCommon: { group: 'stem', inputType: 'input' }};
+        const builtInTypes: Map<BuiltinTypeDefinition> = { A: { fields: {} } };
+        const commonFields = { aCommon: { group: 'stem', inputType: 'input' } };
         const libraryTypes: Map<LibraryTypeDefinition> = {
             'A:0': {
                 typeFamily: 'A',
@@ -481,7 +531,8 @@ describe('buildProjectTypes', () => {
                 createdBy: '',
                 creationDate: '',
                 description: {}
-            }};
+            }
+        };
 
         const result = buildProjectTypes(
             builtInTypes,
@@ -489,7 +540,8 @@ describe('buildProjectTypes', () => {
             { 'A:0': { fields: {} } },
             commonFields,
             {},
-            {});
+            {}
+        );
 
         expect(result['A'].fields['aCommon']['group']).toBe('stem');
         expect(result['A'].fields['aCommon']['inputType']).toBe('input');
@@ -498,13 +550,14 @@ describe('buildProjectTypes', () => {
 
     it('commons - mix in commons in custom type', () => {
 
-        const builtInTypes: Map<BuiltinTypeDefinition> = { A: { fields: {} }};
-        const commonFields = { aCommon: { group: 'stem', inputType: 'input' }};
+        const builtInTypes: Map<BuiltinTypeDefinition> = { A: { fields: {} } };
+        const commonFields = { aCommon: { group: 'stem', inputType: 'input' } };
         const customTypes: Map<CustomTypeDefinition> = {
             A: {
                 commons: ['aCommon'],
                 fields: { }
-            }};
+            }
+        };
 
         const result = buildProjectTypes(
             builtInTypes,
@@ -512,7 +565,8 @@ describe('buildProjectTypes', () => {
             customTypes,
             commonFields,
             {},
-            {});
+            {}
+        );
 
         expect(result['A'].fields['aCommon']['group']).toBe('stem');
         expect(result['A'].fields['aCommon']['inputType']).toBe('input');
@@ -521,10 +575,10 @@ describe('buildProjectTypes', () => {
 
     it('commons - add together commons from library and custom type', () => {
 
-        const builtInTypes: Map<BuiltinTypeDefinition> = { A: { fields: {} }};
+        const builtInTypes: Map<BuiltinTypeDefinition> = { A: { fields: {} } };
         const commonFields = {
-            aCommon: { group: 'stem', inputType: 'input'},
-            bCommon: { group: 'stem', inputType: 'input'}
+            aCommon: { group: 'stem', inputType: 'input' },
+            bCommon: { group: 'stem', inputType: 'input' }
         };
         const libraryTypes: Map<LibraryTypeDefinition> = {
             'A:0': {
@@ -535,12 +589,14 @@ describe('buildProjectTypes', () => {
                 createdBy: '',
                 creationDate: '',
                 description: {}
-            }};
+            }
+        };
         const customTypes: Map<CustomTypeDefinition> = {
             'A:0': {
                 commons: ['bCommon'],
-                fields: { }
-            }};
+                fields: {}
+            }
+        };
 
         const result = buildProjectTypes(
             builtInTypes,
@@ -548,7 +604,8 @@ describe('buildProjectTypes', () => {
             customTypes,
             commonFields,
             {},
-            {});
+            {}
+        );
 
         expect(result['A'].fields['aCommon']['group']).toBe('stem');
         expect(result['A'].fields['aCommon']['inputType']).toBe('input');
@@ -559,9 +616,9 @@ describe('buildProjectTypes', () => {
 
     it('commons - use valuelistFromProjectField if defined in commons', () => {
 
-        const builtInTypes: Map<BuiltinTypeDefinition> = { A: { fields: {} }};
-        const commonFields = { aCommon:
-                { group: 'stem', inputType: 'dropdown', valuelistFromProjectField: 'x' }
+        const builtInTypes: Map<BuiltinTypeDefinition> = { A: { fields: {} } };
+        const commonFields = {
+            aCommon: { group: 'stem', inputType: 'dropdown', valuelistFromProjectField: 'x' }
         };
         const libraryTypes: Map<LibraryTypeDefinition> = {
             'A:0': {
@@ -572,7 +629,8 @@ describe('buildProjectTypes', () => {
                 createdBy: '',
                 creationDate: '',
                 description: {}
-            }};
+            }
+        };
 
         const result = buildProjectTypes(
             builtInTypes,
@@ -580,7 +638,8 @@ describe('buildProjectTypes', () => {
             { 'A:0': { fields: {} } },
             commonFields,
             {},
-            {});
+            {}
+        );
 
         expect(result['A'].fields['aCommon']['group']).toBe('stem');
         expect(result['A'].fields['aCommon']['inputType']).toBe('dropdown');
@@ -592,17 +651,18 @@ describe('buildProjectTypes', () => {
 
     it('field property validation - invalid input Type', () => {
 
-        const builtInTypes: Map<BuiltinTypeDefinition> = { A: { fields: {} }};
+        const builtInTypes: Map<BuiltinTypeDefinition> = { A: { fields: {} } };
         const libraryTypes: Map<LibraryTypeDefinition> = {
             'A:0': {
                 typeFamily: 'A',
                 commons: [],
                 valuelists: {},
-                fields: { aField: { inputType: 'invalid' }},
+                fields: { aField: { inputType: 'invalid' } },
                 createdBy: '',
                 creationDate: '',
                 description: {}
-            }};
+            }
+        };
 
         try {
             buildProjectTypes(
@@ -611,19 +671,24 @@ describe('buildProjectTypes', () => {
                 {},
                 [],
                 {},
-                {});
+                {}
+            );
             fail();
         } catch (expected) {
-            expect(expected).toEqual([ConfigurationErrors.ILLEGAL_FIELD_INPUT_TYPE, 'invalid', 'aField'])
+            expect(expected).toEqual([
+                ConfigurationErrors.ILLEGAL_FIELD_INPUT_TYPE, 'invalid', 'aField'
+            ]);
         }
     });
 
 
     it('field property validation - missing input type in field of entirely new custom type', () => {
 
-        const builtInTypes: Map<BuiltinTypeDefinition> = { A: { fields: {}, superType: true, userDefinedSubtypesAllowed: true }};
+        const builtInTypes: Map<BuiltinTypeDefinition> = {
+            A: { fields: {}, superType: true, userDefinedSubtypesAllowed: true }
+        };
         const libraryTypes: Map<LibraryTypeDefinition> = {};
-        const customTypes: Map<CustomTypeDefinition> = { 'C': { parent: 'A', fields: { cField: {} }}};
+        const customTypes: Map<CustomTypeDefinition> = { 'C': { parent: 'A', fields: { cField: {} } } };
 
         try {
             buildProjectTypes(
@@ -632,10 +697,13 @@ describe('buildProjectTypes', () => {
                 customTypes,
                 {},
                 {},
-                {});
+                {}
+            );
             fail();
         } catch (expected) {
-            expect(expected).toEqual([ConfigurationErrors.MISSING_FIELD_PROPERTY, 'inputType', 'C', 'cField'])
+            expect(expected).toEqual([
+                ConfigurationErrors.MISSING_FIELD_PROPERTY, 'inputType', 'C', 'cField'
+            ]);
         }
     });
 
@@ -659,10 +727,13 @@ describe('buildProjectTypes', () => {
         try {
             buildProjectTypes(builtInTypes,
                 libraryTypes,
-                {},  {}, {}, {});
+                {},  {}, {}, {}
+            );
             fail();
         } catch (expected) {
-            expect(expected).toEqual([ConfigurationErrors.MISSING_FIELD_PROPERTY, 'inputType', 'A:0', 'aField'])
+            expect(expected).toEqual([
+                ConfigurationErrors.MISSING_FIELD_PROPERTY, 'inputType', 'A:0', 'aField'
+            ]);
         }
     });
 
@@ -686,7 +757,10 @@ describe('buildProjectTypes', () => {
         const result = buildProjectTypes(
             builtInTypes,
             libraryTypes,
-                {'A:0': { hidden: [], fields: {} }}, {}, {}, {});
+            { 'A:0': { hidden: [], fields: {} } },
+            {}, {},
+            {}
+        );
 
         expect(result['A'].fields['aField'].inputType).toBe('input');
     });
@@ -704,7 +778,7 @@ describe('buildProjectTypes', () => {
                 parent: 'A',
                 commons: [],
                 valuelists: {},
-                fields: { bField: {}} as any,
+                fields: { bField: {} } as any,
                 creationDate: '', createdBy: '', description: {}
             },
         };
@@ -712,10 +786,13 @@ describe('buildProjectTypes', () => {
         try {
             buildProjectTypes(builtInTypes,
                 libraryTypes,
-                {}, {}, {}, {});
+                {}, {}, {}, {}
+            );
             fail();
         } catch (expected) {
-            expect(expected).toEqual([ConfigurationErrors.MISSING_FIELD_PROPERTY, 'inputType', 'B:0', 'bField'])
+            expect(expected).toEqual([
+                ConfigurationErrors.MISSING_FIELD_PROPERTY, 'inputType', 'B:0', 'bField'
+            ]);
         }
     });
 
@@ -723,7 +800,7 @@ describe('buildProjectTypes', () => {
     it('field property validation - must not set field type on inherited field', () => {
 
         const builtInTypes: Map<BuiltinTypeDefinition> = {
-            A: { fields: { aField: { inputType: 'input' }} }
+            A: { fields: { aField: { inputType: 'input' } } }
         };
 
         const libraryTypes: Map<LibraryTypeDefinition> = {
@@ -731,7 +808,7 @@ describe('buildProjectTypes', () => {
                 typeFamily: 'A',
                 commons: [],
                 valuelists: {},
-                fields: { aField: { inputType: 'input' }} as any,
+                fields: { aField: { inputType: 'input' } } as any,
                 creationDate: '', createdBy: '', description: {}
             },
         };
@@ -739,10 +816,11 @@ describe('buildProjectTypes', () => {
         try {
             buildProjectTypes(builtInTypes,
                 libraryTypes,
-                {}, {}, {}, {});
+                {}, {}, {}, {}
+            );
             fail();
         } catch (expected) {
-            expect(expected).toEqual([ConfigurationErrors.MUST_NOT_SET_INPUT_TYPE, 'A:0', 'aField'])
+            expect(expected).toEqual([ConfigurationErrors.MUST_NOT_SET_INPUT_TYPE, 'A:0', 'aField']);
         }
     });
 
@@ -758,7 +836,7 @@ describe('buildProjectTypes', () => {
                 typeFamily: 'A',
                 commons: [],
                 valuelists: {},
-                fields: { aField: { group: 'a' }} as any,
+                fields: { aField: { group: 'a' } } as any,
                 creationDate: '', createdBy: '', description: {}
             },
         };
@@ -766,10 +844,13 @@ describe('buildProjectTypes', () => {
         try {
             buildProjectTypes(builtInTypes,
                 libraryTypes,
-                {}, {}, {}, {});
+                {}, {}, {}, {}
+            );
             fail();
         } catch (expected) {
-            expect(expected).toEqual([ConfigurationErrors.ILLEGAL_FIELD_PROPERTY, 'library', 'group'])
+            expect(expected).toEqual([
+                ConfigurationErrors.ILLEGAL_FIELD_PROPERTY, 'library', 'group'
+            ]);
         }
     });
 
@@ -790,10 +871,13 @@ describe('buildProjectTypes', () => {
             buildProjectTypes(
                 builtInTypes,
                 {},
-                customTypes, {}, {}, {});
+                customTypes, {}, {}, {}
+            );
             fail();
         } catch (expected) {
-            expect(expected).toEqual([ConfigurationErrors.ILLEGAL_FIELD_PROPERTY, 'custom', 'group'])
+            expect(expected).toEqual([
+                ConfigurationErrors.ILLEGAL_FIELD_PROPERTY, 'custom', 'group'
+            ]);
         }
     });
 
@@ -837,9 +921,11 @@ describe('buildProjectTypes', () => {
             }
         };
 
-        const result = buildProjectTypes(builtInTypes,
+        const result = buildProjectTypes(
+            builtInTypes,
             libraryTypes,
-            {'A:0':{ fields: {}}}, {}, valuelistsConfiguration, {});
+            { 'A:0': { fields: {} } }, {}, valuelistsConfiguration, {}
+        );
         expect(result['A'].fields['a1'].valuelist.values).toEqual({
             one: { labels: { de: 'Eins', en: 'One' } },
             two: { references: { externalId: '1234567' } },
@@ -861,9 +947,12 @@ describe('buildProjectTypes', () => {
         try {
             buildProjectTypes(builtinTypes,
                 libraryTypes,
-                {}, {}, {}, {});
+                {}, {}, {}, {}
+            );
         } catch (expected) {
-            expect(expected).toEqual([ConfigurationErrors.MISSING_TYPE_PROPERTY, 'description', 'B:0'])
+            expect(expected).toEqual([
+                ConfigurationErrors.MISSING_TYPE_PROPERTY, 'description', 'B:0'
+            ]);
         }
     });
 
@@ -877,19 +966,21 @@ describe('buildProjectTypes', () => {
                 typeFamily: 'B',
                 commons: [],
                 fields: {},
-                createdBy: "",
+                createdBy: '',
                 valuelists: {},
-                creationDate: "",
+                creationDate: '',
                 description: {}
             }
         };
 
         try {
-            buildProjectTypes(builtInTypes,
+            buildProjectTypes(
+                builtInTypes,
                 libraryTypes,
-                {}, {}, {}, {});
+                {}, {}, {}, {}
+            );
         } catch (expected) {
-            expect(expected).toEqual([ConfigurationErrors.MISSING_TYPE_PROPERTY, 'parent', 'B:0'])
+            expect(expected).toEqual([ConfigurationErrors.MISSING_TYPE_PROPERTY, 'parent', 'B:0']);
         }
     });
 
@@ -907,9 +998,12 @@ describe('buildProjectTypes', () => {
                 customTypes,
                 {},
                 {},
-                {});
+                {}
+            );
         } catch (expected) {
-            expect(expected).toEqual([ConfigurationErrors.MISSING_TYPE_PROPERTY, 'parent', 'B:0', 'must be set for new types'])
+            expect(expected).toEqual([
+                ConfigurationErrors.MISSING_TYPE_PROPERTY, 'parent', 'B:0', 'must be set for new types'
+            ]);
         }
     });
 
@@ -933,13 +1027,17 @@ describe('buildProjectTypes', () => {
                     field1: {},
                     field2: { inputType: 'text' }
                 },
-                creationDate: "",
-                createdBy: "",
-                description: {} }
+                creationDate: '',
+                createdBy: '',
+                description: {}
+            }
         };
 
-        const result = buildProjectTypes(builtInTypes, libraryTypes, {'A:1': { hidden: [], fields: {} }},
-            {}, {}, {});
+        const result = buildProjectTypes(
+            builtInTypes, libraryTypes,
+            { 'A:1': { hidden: [], fields: {} } },
+            {}, {}, {}
+        );
 
         expect(result['A'].fields['field1'].inputType).toBe('text');
         expect(result['A'].fields['field1'].group).toBe('stem');
@@ -960,14 +1058,16 @@ describe('buildProjectTypes', () => {
         const customTypes: Map<CustomTypeDefinition> = {
             A: {
                 fields: {
-                    field1: { },
+                    field1: {},
                     field2: { inputType: 'text' }
                 }
             }
         };
 
-        const result = buildProjectTypes(builtInTypes, {}, customTypes,
-            {}, {}, {});
+        const result = buildProjectTypes(
+            builtInTypes, {}, customTypes,
+            {}, {}, {}
+        );
 
         expect(result['A'].fields['field1'].inputType).toBe('text');
         expect(result['A'].fields['field1'].group).toBe('stem');
@@ -995,20 +1095,23 @@ describe('buildProjectTypes', () => {
                 },
                 creationDate: '',
                 createdBy: '',
-                description: {} }
+                description: {}
+            }
         };
 
         const customTypes: Map<CustomTypeDefinition> = {
             'A:0': {
                 fields: {
-                    field2: { },
+                    field2: {},
                     field3: { inputType: 'text' }
                 }
             }
         };
 
-        const result = buildProjectTypes(builtInTypes, libraryTypes, customTypes,
-            {}, {}, {});
+        const result = buildProjectTypes(
+            builtInTypes, libraryTypes, customTypes,
+            {}, {}, {}
+        );
 
         expect(result['A'].fields['field1'].inputType).toBe('text');
         expect(result['A'].fields['field2'].inputType).toBe('text');
@@ -1019,7 +1122,7 @@ describe('buildProjectTypes', () => {
     it('source field', () => {
 
         const commonFields = {
-            aCommon: { inputType: FieldDefinition.InputType.INPUT },
+            aCommon: { inputType: FieldDefinition.InputType.INPUT }
         };
 
         const builtInTypes: Map<BuiltinTypeDefinition> = {
@@ -1040,19 +1143,23 @@ describe('buildProjectTypes', () => {
                 },
                 creationDate: '',
                 createdBy: '',
-                description: {} }
+                description: {}
+            }
         };
 
         const customTypes: Map<CustomTypeDefinition> = {
             'A:0': {
                 fields: {
-                    field2: { },
+                    field2: {},
                     field3: { inputType: FieldDefinition.InputType.TEXT }
                 }
             }
         };
 
-        const result = buildProjectTypes(builtInTypes, libraryTypes, customTypes, commonFields, {}, {});
+        const result = buildProjectTypes(
+            builtInTypes, libraryTypes, customTypes, commonFields,
+            {}, {}
+        );
 
         expect(result['A'].fields['field1'].source).toBe(FieldDefinition.Source.BUILTIN);
         expect(result['A'].fields['field2'].source).toBe(FieldDefinition.Source.LIBRARY);
@@ -1083,13 +1190,14 @@ describe('buildProjectTypes', () => {
                 },
                 creationDate: '',
                 createdBy: '',
-                description: {} }
+                description: {}
+            }
         };
 
         const customTypes: Map<CustomTypeDefinition> = {
             'B:0': {
                 fields: {
-                    field1: { inputType: 'radio' },
+                    field1: { inputType: 'radio' }
                 },
                 valuelists: {
                     field1: 'valuelist_field1'
@@ -1097,8 +1205,10 @@ describe('buildProjectTypes', () => {
             }
         };
 
-        const result = buildProjectTypes(builtInTypes, libraryTypes, customTypes,
-            {}, {}, {});
+        const result = buildProjectTypes(
+            builtInTypes, libraryTypes, customTypes,
+            {}, {}, {}
+        );
 
         // expectation?
     });

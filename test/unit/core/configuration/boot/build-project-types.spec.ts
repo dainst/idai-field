@@ -812,11 +812,12 @@ describe('buildProjectTypes', () => {
             'A:0': {
                 typeFamily: 'A',
                 commons: [],
-                valuelists: { 'a1': '123'},
+                valuelists: { 'a1': '123' },
                 fields: {
                     a1: { inputType: 'dropdown' },
                     a2: { inputType: 'input' },
-                    a3: { inputType: 'input' }},
+                    a3: { inputType: 'input' }
+                },
                 creationDate: '',
                 createdBy: '',
                 description: {}
@@ -824,15 +825,24 @@ describe('buildProjectTypes', () => {
         };
 
         const valuelistsConfiguration: Map<ValuelistDefinition> = {
-            '123': { values: { 'one': {}, 'two': {}, 'three': {} }, description: {}, createdBy: '', creationDate: '' }
+            '123': {
+                values: {
+                    'one': { labels: { de: 'Eins', en: 'One' } },
+                    'two': { references: { externalId: '1234567' } },
+                    'three': {}
+                },
+                description: {},
+                createdBy: '',
+                creationDate: ''
+            }
         };
 
         const result = buildProjectTypes(builtInTypes,
             libraryTypes,
             {'A:0':{ fields: {}}}, {}, valuelistsConfiguration, {});
         expect(result['A'].fields['a1'].valuelist.values).toEqual({
-            one: {},
-            two: {},
+            one: { labels: { de: 'Eins', en: 'One' } },
+            two: { references: { externalId: '1234567' } },
             three: {}
         });
     });

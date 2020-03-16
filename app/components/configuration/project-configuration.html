@@ -49,9 +49,9 @@
                             
                             <li class="list-group-item">
                                 <b i18n="@@configuration.field.definedIn">Definiert in</b>:
-                                <span *ngIf="field.definedIn === 'library'" i18n="@@config.definedIn.library">iDAI.field Full</span>
-                                <span *ngIf="field.definedIn === 'custom'" i18n="@@config.definedIn.custom">Projektspezifische Konfiguration</span>
-                                <span *ngIf="!field.definedIn || field.definedIn === 'common'" i18n="@@config.definedIn.common">iDAI.field Core</span>
+                                <span *ngIf="field.source === 'library'" i18n="@@config.definedIn.library">iDAI.field Full</span>
+                                <span *ngIf="field.source === 'custom'" i18n="@@config.definedIn.custom">Projektspezifische Konfiguration</span>
+                                <span *ngIf="!field.source || field.source === 'common'" i18n="@@config.definedIn.common">iDAI.field Core</span>
                             </li>
 
                         </ul>

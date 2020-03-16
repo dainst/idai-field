@@ -18,6 +18,8 @@ import {RelationDefinition} from '../../../core/configuration/model/relation-def
 import {FieldDefinition} from '../../../core/configuration/model/field-definition';
 import {CatalogCriteria} from '../../docedit/core/forms/type-relation/catalog-criteria';
 import {BuiltInTypes} from '../../../core/configuration/app-configurator';
+import {ValuelistDefinition} from '../../../core/configuration/model/valuelist-definition';
+import {ValuelistUtil} from '../../../core/util/valuelist-util';
 
 
 const PERIOD = 'period';
@@ -206,7 +208,7 @@ export class FieldsViewComponent implements OnChanges {
         this.fields[group].push({
             name: field.name,
             label: this.projectConfiguration.getFieldDefinitionLabel(resource.type, field.name),
-            value: FieldsViewComponent.getValue(resource, field.name),
+            value: FieldsViewComponent.getValue(resource, field.name, field.valuelist),
             isArray: Array.isArray(resource[field.name])
         });
     }
@@ -304,13 +306,15 @@ export class FieldsViewComponent implements OnChanges {
     }
 
 
-    private static getValue(resource: Resource, field: Name): any {
+    private static getValue(resource: Resource, field: Name, valuelist?: ValuelistDefinition): any {
 
-        return isString(resource[field])
-            ? resource[field]
-                .replace(/^\s+|\s+$/g, '')
-                .replace(/\n/g, '<br>')
-            : resource[field];
+        return valuelist
+            ? ValuelistUtil.getValueLabel(valuelist, resource[field])
+            : isString(resource[field])
+                ? resource[field]
+                    .replace(/^\s+|\s+$/g, '')
+                    .replace(/\n/g, '<br>')
+                : resource[field];
     }
 
 

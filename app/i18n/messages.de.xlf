@@ -1148,12 +1148,36 @@
           <context context-type="linenumber">46</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.field.source" datatype="html">
-        <source>Quelle</source>
-        <target state="final">Quelle</target>
+      <trans-unit id="configuration.field.definedIn" datatype="html">
+        <source>Definiert in</source>
+        <target state="final">Definiert in</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/configuration/project-configuration.html</context>
           <context context-type="linenumber">51</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="config.definedIn.library" datatype="html">
+        <source>iDAI.field Full</source>
+        <target state="final">iDAI.field Full</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/configuration/project-configuration.html</context>
+          <context context-type="linenumber">52</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="config.definedIn.custom" datatype="html">
+        <source>Projektspezifische Konfiguration</source>
+        <target state="final">Projektspezifische Konfiguration</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/configuration/project-configuration.html</context>
+          <context context-type="linenumber">53</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="config.definedIn.common" datatype="html">
+        <source>iDAI.field Core</source>
+        <target state="final">iDAI.field Core</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/configuration/project-configuration.html</context>
+          <context context-type="linenumber">54</context>
         </context-group>
       </trans-unit>
       <trans-unit id="widgets.fieldsView.period" datatype="html">
@@ -3387,24 +3411,12 @@
           <context context-type="linenumber">21</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="docedit.group.dimension" datatype="html">
+      <trans-unit id="docedit.group.dimensions" datatype="html">
         <source>Maße</source>
         <target state="final">Maße</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/configuration/project-configuration.html</context>
           <context context-type="linenumber">22</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="docedit.group.dimensions" datatype="html">
-        <source>Maße</source>
-        <target state="final">Maße</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/components/docedit/core/edit-form.component.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/components/widgets/documentinfo/fields-view.component.ts</context>
-          <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.group.time" datatype="html">

@@ -274,28 +274,20 @@
           <context context-type="linenumber">20</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/configuration/project-configuration.html</context>
-          <context context-type="linenumber">27</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/configuration/project-configuration.html</context>
-          <context context-type="linenumber">32</context>
+          <context context-type="sourcefile">components/widgets/search-constraints.html</context>
+          <context context-type="linenumber">88</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/widgets/search-constraints.html</context>
-          <context context-type="linenumber">86</context>
+          <context context-type="linenumber">99</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/widgets/search-constraints.html</context>
-          <context context-type="linenumber">97</context>
+          <context context-type="linenumber">88</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/widgets/search-constraints.html</context>
-          <context context-type="linenumber">86</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/widgets/search-constraints.html</context>
-          <context context-type="linenumber">97</context>
+          <context context-type="linenumber">99</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/boolean.html</context>
@@ -310,28 +302,20 @@
           <context context-type="linenumber">21</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/configuration/project-configuration.html</context>
-          <context context-type="linenumber">28</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/configuration/project-configuration.html</context>
-          <context context-type="linenumber">33</context>
+          <context context-type="sourcefile">components/widgets/search-constraints.html</context>
+          <context context-type="linenumber">90</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/widgets/search-constraints.html</context>
-          <context context-type="linenumber">88</context>
+          <context context-type="linenumber">101</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/widgets/search-constraints.html</context>
-          <context context-type="linenumber">99</context>
+          <context context-type="linenumber">90</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/widgets/search-constraints.html</context>
-          <context context-type="linenumber">88</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/widgets/search-constraints.html</context>
-          <context context-type="linenumber">99</context>
+          <context context-type="linenumber">101</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/boolean.html</context>
@@ -1017,7 +1001,7 @@
         <target state="final">Gruppe</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/configuration/project-configuration.html</context>
-          <context context-type="linenumber">18</context>
+          <context context-type="linenumber">19</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.field.inputType" datatype="html">
@@ -1025,23 +1009,151 @@
         <target state="final">Eingabetyp</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/configuration/project-configuration.html</context>
-          <context context-type="linenumber">22</context>
+          <context context-type="linenumber">29</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.field.editable" datatype="html">
-        <source>Editierbar</source>
-        <target state="final">Editierbar</target>
+      <trans-unit id="config.inputType.input" datatype="html">
+        <source>Einzeiliger Text</source>
+        <target state="final">Einzeiliger Text</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/configuration/project-configuration.html</context>
-          <context context-type="linenumber">26</context>
+          <context context-type="linenumber">30</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.field.visible" datatype="html">
-        <source>Sichtbar</source>
-        <target state="final">Sichtbar</target>
+      <trans-unit id="config.inputType.unsignedInt" datatype="html">
+        <source>Positive Ganzzahl</source>
+        <target state="final">Positive Ganzzahl</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/configuration/project-configuration.html</context>
           <context context-type="linenumber">31</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="config.inputType.float" datatype="html">
+        <source>Kommazahl</source>
+        <target state="final">Kommazahl</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/configuration/project-configuration.html</context>
+          <context context-type="linenumber">32</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/configuration/project-configuration.html</context>
+          <context context-type="linenumber">41</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/configuration/project-configuration.html</context>
+          <context context-type="linenumber">47</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="config.inputType.unsignedFloat" datatype="html">
+        <source>Positive Kommazahl</source>
+        <target state="final">Positive Kommazahl</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/configuration/project-configuration.html</context>
+          <context context-type="linenumber">33</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="config.inputType.multiInput" datatype="html">
+        <source>Einzeiliger Text mit Mehrfachauswahl</source>
+        <target state="final">Einzeiliger Text mit Mehrfachauswahl</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/configuration/project-configuration.html</context>
+          <context context-type="linenumber">34</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="config.inputType.text" datatype="html">
+        <source>Mehrzeiliger Text</source>
+        <target state="final">Mehrzeiliger Text</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/configuration/project-configuration.html</context>
+          <context context-type="linenumber">35</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="config.inputType.dropdown" datatype="html">
+        <source>Dropdown-Liste</source>
+        <target state="final">Dropdown-Liste</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/configuration/project-configuration.html</context>
+          <context context-type="linenumber">36</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="config.inputType.dropdownRange" datatype="html">
+        <source>Dropdown-Liste (Bereich)</source>
+        <target state="final">Dropdown-Liste (Bereich)</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/configuration/project-configuration.html</context>
+          <context context-type="linenumber">37</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="config.inputType.radio" datatype="html">
+        <source>Radiobutton</source>
+        <target state="final">Radiobutton</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/configuration/project-configuration.html</context>
+          <context context-type="linenumber">38</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="config.inputType.boolean" datatype="html">
+        <source>Ja / Nein</source>
+        <target state="final">Ja / Nein</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/configuration/project-configuration.html</context>
+          <context context-type="linenumber">39</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="config.inputType.checkboxes" datatype="html">
+        <source>Checkboxen</source>
+        <target state="final">Checkboxen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/configuration/project-configuration.html</context>
+          <context context-type="linenumber">40</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="config.inputType.date" datatype="html">
+        <source>Datum</source>
+        <target state="final">Datum</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/configuration/project-configuration.html</context>
+          <context context-type="linenumber">42</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="config.inputType.dimension" datatype="html">
+        <source>Maßangabe</source>
+        <target state="final">Maßangabe</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/configuration/project-configuration.html</context>
+          <context context-type="linenumber">43</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="config.inputType.literature" datatype="html">
+        <source>Literaturangabe</source>
+        <target state="final">Literaturangabe</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/configuration/project-configuration.html</context>
+          <context context-type="linenumber">44</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="config.inputType.geometry" datatype="html">
+        <source>Geometrie</source>
+        <target state="final">Geometrie</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/configuration/project-configuration.html</context>
+          <context context-type="linenumber">45</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="config.inputType.instanceOf" datatype="html">
+        <source>Typenauswahl</source>
+        <target state="final">Typenauswahl</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/configuration/project-configuration.html</context>
+          <context context-type="linenumber">46</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.field.source" datatype="html">
+        <source>Quelle</source>
+        <target state="final">Quelle</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/configuration/project-configuration.html</context>
+          <context context-type="linenumber">51</context>
         </context-group>
       </trans-unit>
       <trans-unit id="widgets.fieldsView.period" datatype="html">
@@ -1677,11 +1789,11 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/widgets/search-constraints.html</context>
-          <context context-type="linenumber">79</context>
+          <context context-type="linenumber">81</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/widgets/search-constraints.html</context>
-          <context context-type="linenumber">94</context>
+          <context context-type="linenumber">96</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/widgets/search-constraints.html</context>
@@ -1693,11 +1805,11 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/widgets/search-constraints.html</context>
-          <context context-type="linenumber">79</context>
+          <context context-type="linenumber">81</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/widgets/search-constraints.html</context>
-          <context context-type="linenumber">94</context>
+          <context context-type="linenumber">96</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.searchBar.constraints.anyValue" datatype="html">
@@ -1745,7 +1857,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/widgets/search-constraints.html</context>
-          <context context-type="linenumber">82</context>
+          <context context-type="linenumber">84</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/widgets/search-constraints.html</context>
@@ -1753,7 +1865,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/widgets/search-constraints.html</context>
-          <context context-type="linenumber">82</context>
+          <context context-type="linenumber">84</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.searchBar.constraints.options.noValue" datatype="html">
@@ -1765,7 +1877,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/widgets/search-constraints.html</context>
-          <context context-type="linenumber">84</context>
+          <context context-type="linenumber">86</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/widgets/search-constraints.html</context>
@@ -1773,7 +1885,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/widgets/search-constraints.html</context>
-          <context context-type="linenumber">84</context>
+          <context context-type="linenumber">86</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageGrid.dropArea.tooltip" datatype="html">
@@ -3263,24 +3375,24 @@
         <source>Stammdaten</source>
         <target state="final">Stammdaten</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/docedit/core/edit-form.component.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/components/widgets/documentinfo/fields-view.component.ts</context>
-          <context context-type="linenumber">1</context>
+          <context context-type="sourcefile">components/configuration/project-configuration.html</context>
+          <context context-type="linenumber">20</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.group.identification" datatype="html">
         <source>Bestimmung</source>
         <target state="final">Bestimmung</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/docedit/core/edit-form.component.ts</context>
-          <context context-type="linenumber">1</context>
+          <context context-type="sourcefile">components/configuration/project-configuration.html</context>
+          <context context-type="linenumber">21</context>
         </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.group.dimension" datatype="html">
+        <source>Maße</source>
+        <target state="final">Maße</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/widgets/documentinfo/fields-view.component.ts</context>
-          <context context-type="linenumber">1</context>
+          <context context-type="sourcefile">components/configuration/project-configuration.html</context>
+          <context context-type="linenumber">22</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.group.dimensions" datatype="html">
@@ -3299,24 +3411,16 @@
         <source>Zeit</source>
         <target state="final">Zeit</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/docedit/core/edit-form.component.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/components/widgets/documentinfo/fields-view.component.ts</context>
-          <context context-type="linenumber">1</context>
+          <context context-type="sourcefile">components/configuration/project-configuration.html</context>
+          <context context-type="linenumber">24</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.group.position" datatype="html">
         <source>Lage</source>
         <target state="final">Lage</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/docedit/core/edit-form.component.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/components/widgets/documentinfo/fields-view.component.ts</context>
-          <context context-type="linenumber">1</context>
+          <context context-type="sourcefile">components/configuration/project-configuration.html</context>
+          <context context-type="linenumber">23</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.group.images" datatype="html">

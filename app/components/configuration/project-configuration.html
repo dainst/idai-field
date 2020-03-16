@@ -16,7 +16,12 @@
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item">
                                 <b i18n="@@configuration.field.group">Gruppe</b>:
-                                {{ field.group }}
+                                <span *ngIf="field.group === 'stem'" i18n="@@docedit.group.stem">Stammdaten</span>
+                                <span *ngIf="field.group === 'identification'" i18n="@@docedit.group.identification">Bestimmung</span>
+                                <span *ngIf="field.group === 'dimension'" i18n="@@docedit.group.dimension">Maße</span>
+                                <span *ngIf="field.group === 'position'" i18n="@@docedit.group.position">Lage</span>
+                                <span *ngIf="field.group === 'time'" i18n="@@docedit.group.time">Zeit</span>
+                                <span *ngIf="!field.group || field.group === 'child'">{{ selectedType.label }}</span>
                             </li>
                             <li class="list-group-item">
                                 <b i18n="@@configuration.field.inputType">Eingabetyp</b>:

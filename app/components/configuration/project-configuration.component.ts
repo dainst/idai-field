@@ -14,6 +14,7 @@ export class ProjectConfigurationComponent {
     public typesTreeList: Array<IdaiType>;
     public selectedType: IdaiType;
 
+
     constructor(public projectConfiguration: ProjectConfiguration) {
 
         this.typesTreeList = projectConfiguration.getTypesList()
@@ -21,7 +22,12 @@ export class ProjectConfigurationComponent {
         this.selectedType = this.typesTreeList[0];
     }
 
+
     public selectType(type: IdaiType) {
+        
         this.selectedType = type;
     }
+
+
+    public getVisibleFields = (type: IdaiType) => type.fields.filter(field => field.visible);
 }

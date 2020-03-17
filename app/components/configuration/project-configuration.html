@@ -9,7 +9,7 @@
             <div class="col content">
                 <h5>{{ selectedType.label }} <code>{{ selectedType.name }}</code></h5>
                 
-                <div *ngFor="let field of selectedType.fields" class="card">
+                <div *ngFor="let field of getVisibleFields(selectedType)" class="card">
                     <div class="card-header"><b>{{ field.label }}</b> <code> {{ field.name }}</code></div>
                     <div class="card-body">
                         <p class="card-text">{{ field.description }}</p>

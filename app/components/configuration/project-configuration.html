@@ -7,10 +7,23 @@
                     allowPickingAbstractTypes="true" (onTypePicked)="selectType($event)"></type-picker>
             </div>
             <div class="col content">
+
                 <h5>{{ selectedType.label }} <code>{{ selectedType.name }}</code></h5>
                 
-                <div *ngFor="let field of getVisibleFields(selectedType)" class="card">
-                    <div class="card-header"><b>{{ field.label }}</b> <code> {{ field.name }}</code></div>
+                <div *ngFor="let field of getVisibleFields(selectedType)"
+                        class="card"
+                        [class.bg-warning]="field.source === 'custom'">
+
+                    <div class="card-header">
+                        <span *ngIf="field.source === 'custom'"
+                            class="mdi mdi-alert-circle-outline"
+                            ngbTooltip="Projektspezifisches Feld"
+                            i18n-ngbTooltip="@@config.source.custom"
+                            placement="right">
+                        </span>
+                        <b *ngIf="field.label"> {{ field.label }}</b>
+                        <code> {{ field.name }}</code></div>
+
                     <div class="card-body">
                         <p class="card-text">{{ field.description }}</p>
                         <ul class="list-group list-group-flush">
@@ -48,16 +61,10 @@
                                 <span *ngIf="field.inputType === 'instanceOf'" i18n="@@config.inputType.instanceOf">Typenauswahl</span>
                                 <span *ngIf="field.inputType === 'catalogCriterion'" i18n="@@config.inputType.float">Kriterium für Typenkatalog</span>
                             </li>
-                            
-                            <li class="list-group-item">
-                                <b i18n="@@configuration.field.definedIn">Definiert in</b>:
-                                <span *ngIf="field.source === 'library'" i18n="@@config.definedIn.library">iDAI.field Full</span>
-                                <span *ngIf="field.source === 'custom'" i18n="@@config.definedIn.custom">Projektspezifische Konfiguration</span>
-                                <span *ngIf="!field.source || field.source === 'common'" i18n="@@config.definedIn.common">iDAI.field Core</span>
-                            </li>
 
                         </ul>
                     </div>
+
                 </div>
 
             </div>

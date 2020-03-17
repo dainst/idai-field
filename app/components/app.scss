@@ -237,7 +237,11 @@ html [type='button'],
 .card {
   border-radius: 0 !important;
   border: none !important;
-  background-color: #eee !important;
+  background-color: #eee;
+
+  &.bg-warning {
+    background-color: #fff3cd !important;
+  }
 }
 
 .card-header {

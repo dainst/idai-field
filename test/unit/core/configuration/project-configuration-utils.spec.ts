@@ -1,6 +1,13 @@
 import {ProjectConfigurationUtils} from '../../../../app/core/configuration/project-configuration-utils';
 import {ConfigurationDefinition} from '../../../../app/core/configuration/boot/configuration-definition';
+import {SortUtil} from '../../../../app/core/util/sort-util';
+import {Group} from '../../../../app/core/model/group-util';
 
+const byName = (a, b) => SortUtil.alnumCompare(a.name, b.name);
+
+/**
+ * @author Daniel de Oliveira
+ */
 describe('ProjectConfigurationUtils', () => {
 
    it('makeTypesMap', () => {
@@ -12,19 +19,24 @@ describe('ProjectConfigurationUtils', () => {
             type: 'A',
             parent: 'P',
             fields: [{ name: 'a', inputType: 'input' }]
-         },{
+         }, {
             type: 'P',
             fields: [{ name: 'p', inputType: 'input' }]
          }]
       };
 
-      const result = ProjectConfigurationUtils.makeTypesMap(confDef);
+      const typesMap = ProjectConfigurationUtils.makeTypesMap(confDef);
 
-      expect(result['P'].name).toEqual('P');
-      expect(result['P'].children[0].name).toEqual('A');
-      expect(result['P'].children[0].fields.length).toBe(2);
-      expect(result['P'].children[0].parentType).toBe(result['P']);
-      expect(result['A'].name).toEqual('A');
-      expect(result['A'].parentType).toBe(result['P']);
+      expect(typesMap['P'].name).toEqual('P');
+      expect(typesMap['P'].children[0].name).toEqual('A');
+      expect(typesMap['P'].children[0].fields.length).toBe(2);
+      expect(typesMap['P'].children[0].parentType).toBe(typesMap['P']);
+      expect(typesMap['A'].name).toEqual('A');
+      expect(typesMap['A'].parentType).toBe(typesMap['P']);
+
+      typesMap['A'].fields.sort(byName);
+      expect(typesMap['A'].fields[0].group).toBe(Group.CHILD);
+      expect(typesMap['A'].fields[1].group).toBeUndefined();
+      expect(typesMap['P'].fields[0].group).toBeUndefined();
    });
 });

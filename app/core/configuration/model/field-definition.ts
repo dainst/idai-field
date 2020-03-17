@@ -37,7 +37,7 @@ export interface FieldDefinition {
     fulltextIndexed?: true;
     constraintIndexed?: true;
     allowOnlyValuesOfParent?: true;
-    readonly group: string;
+    group: string;
     source?: 'builtin'|'library'|'custom'|'common'; // TODO make non-optional
 }
 

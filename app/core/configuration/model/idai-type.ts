@@ -1,6 +1,8 @@
+import {isUndefined, flow, cond, on, assoc, map} from 'tsfun';
 import {TypeDefinition} from './type-definition';
 import {FieldDefinition} from './field-definition';
 import {clone} from '../../util/object-util';
+import {Group} from '../../model/group-util';
 
 
 export interface IdaiType {
@@ -47,11 +49,18 @@ export module IdaiType {
     export function makeChildFields(type: IdaiType, child: IdaiType): Array<FieldDefinition> {
 
         try {
-            const childFields = getCombinedFields(type.fields, child.fields);
-            for (let field of childFields) {
-                if (!field['group']) (field as any)['group'] = 'child';
-            }
-            return childFields;
+
+            const childFields =
+                flow(
+                    child.fields,
+                    map(
+                        cond(
+                            on(FieldDefinition.GROUP, isUndefined),
+                            assoc(FieldDefinition.GROUP, Group.CHILD))));
+
+            return getCombinedFields(
+                type.fields, childFields);
+
         } catch (e) {
             e.push(type.name);
             e.push(child.name);

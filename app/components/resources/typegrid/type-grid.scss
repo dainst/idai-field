@@ -111,6 +111,14 @@ type-grid {
               box-shadow: 5px 5px 10px 0 rgba(0, 0, 0, 0.3);
             }
           }
+
+          type-icon {
+            .type-icon {
+              position: relative;
+              left: 71px;
+              top: 71px;
+            }
+          }
         }
 
         #plus-button-container {

@@ -1,3 +1,19 @@
+<ng-template #gridElement let-document="document">
+    <div class="type-grid-resource-info">
+        {{document.resource.identifier}}
+    </div>
+    <span *ngIf="getLinkedSubtype(document)" class="badge badge-primary">
+        {{getLinkedSubtype(document).resource.identifier}}
+    </span>
+    <div *ngFor="let imageUrl of getImageUrls(document)"
+         class="type-grid-image-container d-flex align-items-center justify-content-center">
+        <img [src]="imageUrl">
+    </div>
+    <type-icon *ngIf="getImageUrls(document).length === 0"
+               [size]="60"
+               [type]="document.resource.type"></type-icon>
+</ng-template>
+
 <context-menu *ngIf="contextMenu.isOpen()"
               [contextMenu]="contextMenu"
               [showViewOption]="true"
@@ -27,16 +43,8 @@
                  class="type-grid-element"
                  (click)="open(document)"
                  (contextmenu)="contextMenu.open($event, document)">
-                <div class="type-grid-resource-info">
-                    {{document.resource.identifier}}
-                </div>
-                <div *ngFor="let imageUrl of getImageUrls(document)"
-                     class="type-grid-image-container d-flex align-items-center justify-content-center">
-                    <img [src]="imageUrl">
-                </div>
-                    <type-icon *ngIf="getImageUrls(document).length === 0"
-                               [size]="60"
-                               [type]="document.resource.type"></type-icon>
+                <ng-container [ngTemplateOutlet]="gridElement"
+                              [ngTemplateOutletContext]="{ document: document }"></ng-container>
             </div>
 
             <div id="plus-button-container">
@@ -59,19 +67,8 @@
                  id="type-grid-element-linked-document-{{document.resource.id}}"
                  class="type-grid-element"
                  (click)="openResourceViewModal(document)">
-                <div class="type-grid-resource-info">
-                    {{document.resource.identifier}}
-                </div>
-                <span *ngIf="getLinkedSubtype(document)" class="badge badge-primary">
-                        {{getLinkedSubtype(document).resource.identifier}}
-                    </span>
-                <div *ngFor="let imageUrl of getImageUrls(document)"
-                     class="type-grid-image-container d-flex align-items-center justify-content-center">
-                    <img [src]="imageUrl">
-                </div>
-                <type-icon *ngIf="getImageUrls(document).length === 0"
-                           [size]="60"
-                           [type]="document.resource.type"></type-icon>
+                <ng-container [ngTemplateOutlet]="gridElement"
+                              [ngTemplateOutletContext]="{ document: document }"></ng-container>
             </div>
         </div>
     </div>

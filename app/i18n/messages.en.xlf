@@ -4136,7 +4136,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.validation.error.mustHaveLiesWithin" datatype="html">
-        <source>Resourcen der Kategorie '[0]' müssen innerhalb von anderen Resourcen angelegt werden. Betroffen ist: '[1]'.</source>
+        <source>Ressourcen der Kategorie '[0]' müssen innerhalb von anderen Ressourcen angelegt werden. Betroffen ist: '[1]'.</source>
         <target state="final">Resources of category '[0]' must be placed within other resources. Identifier of resource: '[1]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/messages/m.ts</context>

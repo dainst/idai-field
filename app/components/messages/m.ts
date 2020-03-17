@@ -761,7 +761,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.IMPORT_ERROR_MUST_LIE_WITHIN_OTHER_NON_OPERATON_RESOURCE] = {
             content: i18n({
                 id: 'messages.import.validation.error.mustHaveLiesWithin',
-                value: 'Resourcen der Kategorie \'[0]\' müssen innerhalb von anderen Resourcen angelegt werden. Betroffen ist: \'[1]\'.'
+                value: 'Ressourcen der Kategorie \'[0]\' müssen innerhalb von anderen Ressourcen angelegt werden. Betroffen ist: \'[1]\'.'
             }),
             level: 'danger',
             params: [],

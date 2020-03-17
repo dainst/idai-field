@@ -42,11 +42,11 @@
     },
     "beginningDate": {
       "label": "Startdatum",
-      "description": "Datum, an dem die Aufnahme der Resource begonnen wurde"
+      "description": "Datum, an dem die Aufnahme der Ressource begonnen wurde"
     },
     "endDate": {
       "label": "Enddatum",
-      "description": "Datum, an dem die Aufnahme der Resource abgeschlossen wurde"
+      "description": "Datum, an dem die Aufnahme der Ressource abgeschlossen wurde"
     },
     "processor": {
       "label": "Bearbeiterin/Bearbeiter",

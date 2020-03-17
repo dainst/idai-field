@@ -36,7 +36,7 @@
     <div>
         <div *ngIf="!selectedType" id="new-object-menu">
             <div class="popover-custom-title">
-                <span i18n="@@resources.plusButton.selectType">Bitte wählen Sie einen Typ aus.</span>
+                <span i18n="@@resources.plusButton.selectCategory">Bitte wählen Sie eine Kategorie aus.</span>
             </div>
             <type-picker [typesTreeList]="typesTreeList" (onTypePicked)="chooseType($event)"></type-picker>
         </div>

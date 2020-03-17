@@ -8,7 +8,8 @@
 
     <ng-template #typeChangerMenu>
         <div id="type-changer-menu">
-            <div class="popover-custom-title" i18n="@@docedit.typeSwitcherButton.changeType">Ressourcentyp ändern</div>
+            <div class="popover-custom-title"
+                 i18n="@@docedit.typeSwitcherButton.changeCategory">Kategorie ändern</div>
             <type-picker *ngIf="typesTreeList" [typesTreeList]="typesTreeList" [selectedTypes]="[type]"
                          (onTypePicked)="chooseType($event); popover.close();"></type-picker>
         </div>

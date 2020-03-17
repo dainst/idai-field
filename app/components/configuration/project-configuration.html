@@ -22,7 +22,9 @@
                                 <span *ngIf="field.group === 'dimension'" i18n="@@docedit.group.dimensions">Maße</span>
                                 <span *ngIf="field.group === 'position'" i18n="@@docedit.group.position">Lage</span>
                                 <span *ngIf="field.group === 'time'" i18n="@@docedit.group.time">Zeit</span>
-                                <span *ngIf="!field.group || field.group === 'child'">{{ selectedType.label }}</span>
+                                <span *ngIf="field.group === 'child'">{{ selectedType.label }}</span>
+                                <span *ngIf="!field.group && selectedType.parentType">{{ selectedType.parentType.label }}</span>
+                                <span *ngIf="!field.group && !selectedType.parentType">{{ selectedType.label }}</span>
                             </li>
 
                             <li class="list-group-item">

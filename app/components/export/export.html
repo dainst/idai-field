@@ -61,7 +61,7 @@
                     <div *ngIf="format === 'csv' && resourceTypeCounts.length > 0" class="form-group">
                         <label class="control-label col-form-label"
                                for="resourceTypeSelect"
-                               i18n="@@export.format.resourceTypeSelect">Ressourcentyp</label>
+                               i18n="@@export.format.categorySelect">Kategorie</label>
                         <select id="resourceTypeSelect" class="form-control"
                                 [(ngModel)]="selectedType">
                             <option *ngFor="let resourceTypeCount of resourceTypeCounts"

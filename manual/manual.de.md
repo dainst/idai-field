@@ -51,10 +51,10 @@ Verwenden Sie den grünen Plus-Button unten in der Ressourcenliste, um eine neue
 
 <p align="center"><img src="images/de/resources/create_operation.png" alt="Maßnahmen-Ressource erstellen"/></p>
 
-Dabei wählen Sie in einem ersten Schritt den Typ der Maßnahme aus und können anschließend optional eine
+Dabei wählen Sie in einem ersten Schritt die Kategorie der Maßnahme aus und können anschließend optional eine
 Geometrie für die neue Ressource anlegen. Schließlich öffnet sich der Editor, in dem Sie sämtliche Daten der
-Maßnahme eintragen können. Je nach gewähltem Maßnahmentyp stehen unterschiedliche Felder zur Auswahl, die
-jeweils in Gruppen aufgeteilt sind. Zwischen den Feldgruppen können Sie jederzeit per Klick auf einen der
+Maßnahme eintragen können. Je nach gewählter Maßnahmenkategorie stehen unterschiedliche Felder zur Auswahl,
+die jeweils in Gruppen aufgeteilt sind. Zwischen den Feldgruppen können Sie jederzeit per Klick auf einen der
 Buttons auf der linken Seite wechseln.
 
 Bevor die Maßnahme über den grünen Speichern-Button gesichert werden kann, muss in jedem Fall das Feld
@@ -67,9 +67,9 @@ Die neue Maßnahme wird nun in der Ressourcenliste angezeigt. Benutzen Sie den B
 
 <p align="center"><img src="images/de/resources/goto_operation.png" alt="Maßnahmen-Ressource öffnen"/></p>
 
-In Abhängigkeit vom Maßnahmentyp können innerhalb eines Maßnahmen-Tabs mithilfe des Plus-Buttons Ressourcen
-verschiedener Typen angelegt werden (etwa stratigraphische Einheiten innerhalb eines Schnitts oder
-Räume innerhalb eines Gebäudes).
+In Abhängigkeit von der Maßnahmenkategorie können innerhalb eines Maßnahmen-Tabs mithilfe des Plus-Buttons
+Ressourcen verschiedener Kategorien angelegt werden (etwa stratigraphische Einheiten innerhalb eines Schnitts
+oder Räume innerhalb eines Gebäudes).
 
 <p align="center"><img src="images/de/resources/create_more.png" alt="Ressource erstellen"/></p>
 
@@ -114,7 +114,7 @@ Darüber hinaus stellt das Kontextmenü Funktionen zum Anlegen bzw. Bearbeiten v
 
 In der **Übersicht**, den **Maßnahmen-Tabs** sowie in der **Bilderverwaltung** (erreichbar über das Menü
 "Werkzeuge") stehen **Suchfilter** zur Verfügung, die Sie verwenden können, um die Menge der aktuell
-angezeigten Ressourcen anhand grundlegender Suchkriterien  (Bezeichner, Kurzbeschreibung, Ressourcentyp)
+angezeigten Ressourcen anhand grundlegender Suchkriterien  (Bezeichner, Kurzbeschreibung, Kategorie)
 einzuschränken.
 
 Möchten Sie komplexere Suchanfragen formulieren, können Sie innerhalb der **Übersicht** und der
@@ -126,29 +126,30 @@ Projektes zu suchen und dabei andererseits zusätzliche feldspezifische Suchkrit
 ### Suchfilter
 
 Der Suchfilter stellt eine schnelle Möglichkeit dar, Ressourcen nach bestimmten Kriterien anzuzeigen bzw.
-auszublenden, und besteht aus einem *Textfilter* (Eingabefeld) sowie einem *Typfilter* (blauer Button).
+auszublenden, und besteht aus einem *Textfilter* (Eingabefeld) sowie einem *Kategoriefilter* (blauer Button).
 
 <p align="center"><img src="images/de/search/search_filter.png" alt="Suchfilter"/></p>
 
-Nach der Eingabe eines Suchbegriffes und/oder der Auswahl eines Ressourcentyps wird die Menge der aktuell
+Nach der Eingabe eines Suchbegriffes und/oder der Auswahl einer Kategorie wird die Menge der aktuell
 angezeigten Ressourcen so eingeschränkt, dass sie den Filterkriterien entspricht. In der **Übersicht** und den
 **Maßnahmen-Tabs** betrifft das die Ressourcen in der linken Seitenleiste und auf der Karte (in der
 Kartenansicht) bzw. die Elemente der Liste (in der Listenansicht). In der **Bilderverwaltung** sind alle im
 Raster angezeigten Bilder vom Suchfilter betroffen.
 
 
-#### Typfilter
+#### Kategoriefilter
 
-<p align="center"><img src="images/de/search/filter_menu.png" alt="Typfilter-Auswahl"/></p>
+<p align="center"><img src="images/de/search/filter_menu.png" alt="Kategoriefilter-Auswahl"/></p>
 
-Über den Typfilter-Button können Sie einen Ressourcentyp wählen. Unterschieden wird zwischen Obertypen und
-Untertypen: Wählen Sie einen Untertyp (z. B. "Erdbefund"), werden ausschließlich Ressourcen des entsprechenden
-Typs angezeigt. Wählen Sie dagegen einen Obertyp (z. B. "Stratigraphische Einheit"), werden Ressourcen des
-ausgewählten Typs sowie aller seiner Untertypen (z. B. "Erdbefund", "Grab", "Architektur",
-"Fußboden" etc.) berücksichtigt. Klicken Sie ein weiteres Mal, um lediglich den Obertyp selbst auszuwählen.
+Über den Kategoriefilter-Button können Sie eine Kategorie wählen. Unterschieden wird zwischen Oberkategorien und
+Unterkategorien: Wählen Sie eine Unterkategorie (z. B. "Erdbefund"), werden ausschließlich Ressourcen der
+entsprechenden Kategorie angezeigt. Wählen Sie dagegen eine Oberkategorie (z. B. "Stratigraphische Einheit"),
+werden Ressourcen der ausgewählten Kategorie sowie aller seiner Unterkategorien (z. B. "Erdbefund", "Grab",
+"Architektur", "Fußboden" etc.) berücksichtigt. Klicken Sie ein weiteres Mal, um lediglich die Oberkategorie
+selbst auszuwählen.
  
-Welche Typen zur Auswahl stehen, hängt jeweils vom gerade aktiven Kontext ab: In der Übersicht
-können Maßnahmentypen gewählt werden, in der Bilderverwaltung Bildtypen etc. 
+Welche Kategorien zur Auswahl stehen, hängt jeweils vom gerade aktiven Kontext ab: In der Übersicht
+können Maßnahmenkategorien gewählt werden, in der Bilderverwaltung Bildkategorien etc. 
 
 
 #### Textfilter
@@ -247,8 +248,8 @@ die ausgeblendeten Ressourcen zugreifen zu können.
 #### Feldspezifische Suchkriterien
  
 Ist der erweiterte Suchmodus aktiviert, können Sie eine Suche über spezifische Felder einer Ressource
-anstoßen, indem Sie auf den Plus-Button links neben dem Typfilter-Button klicken. Dabei werden Felder zur
-Suche angeboten, die dem als Filter ausgewählten Ressourcentyp entsprechen. Sie können beliebig viele Felder
+anstoßen, indem Sie auf den Plus-Button links neben dem Kategoriefilter-Button klicken. Dabei werden Felder
+zur Suche angeboten, die der als Filter ausgewählten Kategorie entsprechen. Sie können beliebig viele Felder
 auswählen, sodass Sie mehrere Suchkriterien miteinander kombinieren können. Darüber hinaus können Sie die
 feldspezifischen Suchkriterien selbstverständlich auch in Kombination mit dem Textfilter verwenden.
 
@@ -264,9 +265,9 @@ eingestellte Begriff muss exakt mit dem Feldinhalt des entsprechenden Feldes ein
 Alternativ zur Angabe eines konkreten Suchbegriffs kann außerdem nach allen Ressourcen gesucht werden, bei
 denen das Feld gesetzt (Option "Beliebiger Wert") bzw. nicht gesetzt ist (Option "Kein Wert").
 
-Die Zahl neben dem Typfilter-Button gibt die Anzahl der aktiven Suchkriterien an. Sie können Suchkriterien
-auch nachträglich wieder entfernen, indem Sie das Menü durch einen Klick auf die Zahl erneut öffnen und das
-entsprechende Kriterium auswählen.
+Die Zahl neben dem Kategoriefilter-Button gibt die Anzahl der aktiven Suchkriterien an. Sie können
+Suchkriterien auch nachträglich wieder entfernen, indem Sie das Menü durch einen Klick auf die Zahl erneut
+öffnen und das entsprechende Kriterium auswählen.
 
 
 <hr>

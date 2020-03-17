@@ -563,7 +563,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.IMPORT_READER_INVALID_OPERATION_RESOURCE] = {
             content: i18n({
                 id: 'messages.import.error.invalidOperationResource',
-                value: 'Beim Import ist ein Fehler aufgetreten: Ressourcen vom Typ [0] können der gewählten Maßnahme vom Typ [1] nicht zugeordnet werden.'
+                value: 'Beim Import ist ein Fehler aufgetreten: Ressourcen der Kategorie [0] können der gewählten Maßnahme der Kategorie [1] nicht zugeordnet werden.'
             }),
             level: 'danger',
             params: ['?', '?'],
@@ -752,7 +752,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.IMPORT_VALIDATION_INVALID_TYPE] = {
             content: i18n({
                 id: 'messages.import.validation.error.invalidType',
-                value: 'Ungültige Typdefinition: \'[0]\''
+                value: 'Ungültige Kategoriedefinition: \'[0]\''
             }),
             level: 'danger',
             params: [],
@@ -761,7 +761,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.IMPORT_ERROR_MUST_LIE_WITHIN_OTHER_NON_OPERATON_RESOURCE] = {
             content: i18n({
                 id: 'messages.import.validation.error.mustHaveLiesWithin',
-                value: 'Resourcen vom Typ \'[0]\' müssen innerhalb von anderen Resourcen angelegt werden. Betroffen ist: \'[1]\'.'
+                value: 'Resourcen der Kategorie \'[0]\' müssen innerhalb von anderen Resourcen angelegt werden. Betroffen ist: \'[1]\'.'
             }),
             level: 'danger',
             params: [],
@@ -770,7 +770,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.IMPORT_ERROR_TARGET_TYPE_RANGE_MISMATCH] = {
             content: i18n({
                 id: 'messages.import.validation.error.targetTypeRangeMismatch',
-                value: 'Ressource vom Typ \'[2]\' darf nicht mittels \'[1]\' mit \'[0]\' verküpft werden.'
+                value: 'Eine Ressource der Kategorie \'[2]\' darf nicht mittels \'[1]\' mit \'[0]\' verküpft werden.'
             }),
             level: 'danger',
             params: [],
@@ -779,7 +779,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_FIELD] = {
             content: i18n({
                 id: 'messages.import.validation.error.invalidField',
-                value: 'Fehlende Felddefinition für das Feld \'[1]\' der Ressource vom Typ \'[0]\'.'
+                value: 'Fehlende Felddefinition für das Feld \'[1]\' einer Ressource der Kategorie \'[0]\'.'
             }),
             level: 'danger',
             params: [],
@@ -788,7 +788,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_FIELDS] = {
             content: i18n({
                 id: 'messages.import.validation.error.invalidFields',
-                value: 'Fehlende Felddefinitionen für die Felder \'[1]\' der Ressource vom Typ \'[0]\'.'
+                value: 'Fehlende Felddefinitionen für die Felder \'[1]\' einer Ressource der Kategorie \'[0]\'.'
             }),
             level: 'danger',
             params: [],
@@ -797,7 +797,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_RELATION_FIELD] = {
             content: i18n({
                 id: 'messages.import.validation.error.invalidRelationField',
-                value: 'Fehlende Definition für die Relation \'[1]\' der Ressource vom Typ \'[0]\'.'
+                value: 'Fehlende Definition für die Relation \'[1]\' einer Ressource der Kategorie \'[0]\'.'
             }),
             level: 'danger',
             params: [],
@@ -806,7 +806,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_RELATION_FIELDS] = {
             content: i18n({
                 id: 'messages.import.validation.error.invalidRelationFields',
-                value: 'Fehlende Definitionen für die Relationen \'[1]\' der Ressource vom Typ \'[0]\'.'
+                value: 'Fehlende Definitionen für die Relationen \'[1]\' einer Ressource der Kategorie \'[0]\'.'
             }),
             level: 'danger',
             params: [],
@@ -815,7 +815,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_NUMERIC_VALUE] = {
             content: i18n({
                 id: 'messages.import.validation.error.invalidNumericValue',
-                value: 'Ungültiger Zahlenwert im Feld \'[1]\' der Ressource vom Typ \'[0]\'.'
+                value: 'Ungültiger Zahlenwert im Feld \'[1]\' einer Ressource der Kategorie \'[0]\'.'
             }),
             level: 'danger',
             params: [],
@@ -824,7 +824,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_NUMERIC_VALUES] = {
             content: i18n({
                 id: 'messages.import.validation.error.invalidNumericValues',
-                value: 'Ungültige Zahlenwerte in den folgenden Feldern der Ressource vom Typ \'[0]\': [1].'
+                value: 'Ungültige Zahlenwerte in den folgenden Feldern einer Ressource der Kategorie \'[0]\': [1].'
             }),
             level: 'danger',
             params: [],
@@ -833,7 +833,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_DATING_VALUE] = {
             content: i18n({
                 id: 'messages.import.validation.error.invalidDatingValue',
-                value: 'Ungültige Datierung im Feld \'[1]\' der Ressource vom Typ \'[0]\'.'
+                value: 'Ungültige Datierung im Feld \'[1]\' einer Ressource der Kategorie \'[0]\'.'
             }),
             level: 'danger',
             params: [],
@@ -842,7 +842,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_DATING_VALUES] = {
             content: i18n({
                 id: 'messages.import.validation.error.invalidDatingValues',
-                value: 'Ungültige Datierungen in den folgenden Feldern der Ressource vom Typ \'[0]\': [1].'
+                value: 'Ungültige Datierungen in den folgenden Feldern einer Ressource der Kategorie \'[0]\': [1].'
             }),
             level: 'danger',
             params: [],
@@ -851,7 +851,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_DIMENSION_VALUE] = {
             content: i18n({
                 id: 'messages.import.validation.error.invalidDimensionValue',
-                value: 'Ungültige Maßangabe im Feld \'[1]\' der Ressource vom Typ \'[0]\'.'
+                value: 'Ungültige Maßangabe im Feld \'[1]\' einer Ressource der Kategorie \'[0]\'.'
             }),
             level: 'danger',
             params: [],
@@ -860,7 +860,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_DIMENSION_VALUES] = {
             content: i18n({
                 id: 'messages.import.validation.error.invalidDimensionValues',
-                value: 'Ungültige Maßangaben in den folgenden Feldern der Ressource vom Typ \'[0]\': [1].'
+                value: 'Ungültige Maßangaben in den folgenden Feldern einer Ressource der Kategorie \'[0]\': [1].'
             }),
             level: 'danger',
             params: [],
@@ -869,7 +869,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_LITERATURE_VALUE] = {
             content: i18n({
                 id: 'messages.import.validation.error.invalidLiteratureValue',
-                value: 'Ungültiger Literaturverweis im Feld \'[1]\' der Ressource vom Typ \'[0]\'.'
+                value: 'Ungültiger Literaturverweis im Feld \'[1]\' einer Ressource der Kategorie \'[0]\'.'
             }),
             level: 'danger',
             params: [],
@@ -878,7 +878,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_LITERATURE_VALUES] = {
             content: i18n({
                 id: 'messages.import.validation.error.invalidLiteratureValues',
-                value: 'Ungültige Literaturverweise in den folgenden Feldern der Ressource vom Typ \'[0]\': [1].'
+                value: 'Ungültige Literaturverweise in den folgenden Feldern einer Ressource der Kategorie \'[0]\': [1].'
             }),
             level: 'danger',
             params: [],
@@ -887,7 +887,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_DROPDOWN_RANGE_VALUES] = {
             content: i18n({
                 id: 'messages.import.validation.error.invalidDropdownValues',
-                value: 'Ungültige Werte für DropdownRange-Feld (\'[0]\'). Ein -End Wert kann nicht allein vorkommen.'
+                value: 'Ungültige Werte für DropdownRange-Feld (\'[0]\'). Ein \'-End\'-Wert kann nicht allein vorkommen.'
             }),
             level: 'danger',
             params: [],
@@ -896,7 +896,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.IMPORT_VALIDATION_MISSING_PROPERTY] = {
             content: i18n({
                 id: 'messages.import.validation.error.missingProperty',
-                value: 'Eigenschaft(en) der Ressource vom Typ \'[0]\' müssen vorhanden sein: \'[1]\'.'
+                value: 'Eigenschaft(en) einer Ressource der Kategorie \'[0]\' müssen vorhanden sein: \'[1]\'.'
             }),
             level: 'danger',
             params: [],
@@ -905,7 +905,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.IMPORT_ERROR_TYPE_NOT_ALLOWED] = {
             content: i18n({
                 id: 'messages.import.error.typeNotAllowed',
-                value: 'Ressourcen von folgendem Typ sind beim Import nicht erlaubt: \'[0]\''
+                value: 'Ressourcen der folgenden Kategorie sind beim Import nicht erlaubt: \'[0]\''
             }),
             level: 'danger',
             params: ['?'],
@@ -914,7 +914,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.IMPORT_ERROR_TYPE_ONLY_ALLOWED_ON_UPDATE] = {
             content: i18n({
                 id: 'messages.import.error.typeOnlyAllowedOnUpdate',
-                value: 'Ressourcen von folgendem Typ sind beim Import nur im Ergänzungsmodus erlaubt: \'[0]\''
+                value: 'Ressourcen der folgenden Kategorie sind beim Import nur im Ergänzungsmodus erlaubt: \'[0]\''
             }),
             level: 'danger',
             params: ['?'],
@@ -932,7 +932,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.IMPORT_ERROR_TYPE_CANNOT_BE_CHANGED] = {
             content: i18n({
                 id: 'messages.import.error.typeCannotBeChanged',
-                value: 'Ressourcen-Typ kann nicht geändert werden in Import. Betroffen ist: \'[0]\''
+                value: 'Die Kategorie kann beim Import nicht geändert werden. Betroffen ist: \'[0]\''
             }),
             level: 'danger',
             params: ['?'],
@@ -1373,7 +1373,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.RESOURCES_ERROR_TYPE_NOT_FOUND] = {
             content: i18n({
                 id: 'messages.resources.error.typeNotFound',
-                value: 'Typdefinition für \'[0]\' fehlt in Fields.json.'
+                value: 'Die Kategoriedefinition für \'[0]\' fehlt in der Datei Fields.json.'
             }),
             level: 'danger',
             params: [],

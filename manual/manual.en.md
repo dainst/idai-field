@@ -45,10 +45,10 @@ Use the green plus button at the bottom of the resources list to create a new op
 
 <p align="center"><img src="images/en/resources/create_operation.png" alt="Create operation resource"/></p>
 
-In the process, you firstly choose the type of the operation, before you may optionally create a geometry for
-the new resource. Afterwards the editor is opened, where all data of the operation can be filled in. Depending
-on the chosen operation type, different fields are available, which are arranged in multiple groups. You can
-switch between field groups by clicking the buttons on the left side.
+In the process, you firstly choose the category of the operation, before you may optionally create a geometry
+for the new resource. Afterwards the editor is opened, where all data of the operation can be filled in.
+Depending on the chosen operation category, different fields are available, which are arranged in multiple
+groups. You can switch between field groups by clicking the buttons on the left side.
 
 Before the resource can be saved via the green save button, at the very least the **identifier** field in the
 core section has to be filled in.
@@ -60,8 +60,8 @@ up right) in order to open a new tab for the operation.
 
 <p align="center"><img src="images/en/resources/goto_operation.png" alt="Open operation resource"/></p>
 
-Depending on the type of the operation, resources of different types can be created within an operation tab
-via the plus button (e. g. stratigraphical units within a trench or rooms within a building).
+Depending on the category of the operation, resources of different categories can be created within an
+operation tab via the plus button (e. g. stratigraphical units within a trench or rooms within a building).
 
 <p align="center"><img src="images/en/resources/create_more.png" alt="Create resource"/></p>
 
@@ -101,7 +101,7 @@ Furthermore, the context menu contains options for creating and editing geometri
 
 In the **overview**, in the **operation tabs** as well as in the **image management** (accessible via the menu
 "Tools"), a **search filter** is available. You can use it to restrict the currently displayed resources by
-the means of some basic search criteria (identifier, short description, resource type).
+the means of some basic search criteria (identifier, short description, category).
 
 If you want to express more complex search queries, you can furthermore switch into the **extended search
 mode** while in the **overview** or one of the **operation tabs**. This mode allows you to expand the search
@@ -111,28 +111,28 @@ search criteria.
 ### Search filter
 
 The search filter is a fast way to show or hide resources based on specific criteria. It consists of a
-*text filter* (an input field) and a *type filter* (a blue button).
+*text filter* (an input field) and a *category filter* (a blue button).
 
 <p align="center"><img src="images/en/search/search_filter.png" alt="Search filter"/></p>
 
-After entering a search term and/or choosing a resource type, only the resources matching these filter
+After entering a search term and/or choosing a category, only the resources matching these filter
 criteria are shown. In the **overview** and the **operation tabs**, this affects all resources in the left
 sidebar and on the map (in map view) respectively the elements of the list (in list view). In the **image
 management**, all images shown in the grid are affected by the search filter.
 
 
-#### Type filter
+#### Category filter
 
-<p align="center"><img src="images/en/search/filter_menu.png" alt="Type filter selection"/></p>
+<p align="center"><img src="images/en/search/filter_menu.png" alt="Category filter selection"/></p>
 
-The type filter button allows you to choose a resource type. There are supertypes and subtypes: If you choose
-a subtype (e. g. "Layer"), only the resources of the respective type are shown. In contrast, if you choose a
-supertype (e. g. "Stratigraphical unit"), the resources of the selected type as well as all of its subtypes
-(e. g. "Layer", "Grave", "Architecture", "Floor" etc.) are included. Click again to select only the supertype
-itself.
+The category filter button allows you to choose a resource category. There are supercategories and
+subcategories: If you choose a subcategory (e. g. "Layer"), only the resources of the respective category are
+shown. In contrast, if you choose a supercategory (e. g. "Stratigraphical unit"), the resources of the
+selected category as well as all of its subcategories (e. g. "Layer", "Grave", "Architecture", "Floor" etc.)
+are included. Click again to select only the supercategory itself.
 
-The current context decides which types are available: In the overview you can choose operation types,
-in the image management image types etc.
+The current context decides which categories are available: In the overview you can choose operation
+categories, in the image management image categories etc.
 
 
 #### Text filter
@@ -229,8 +229,8 @@ these resources.
 #### Field specific search criteria
  
 If the extended search mode is activated, you can start a search over specific fields of a resource by
-clicking the plus button to the left of the type filter button. Fields available for search are those
-corresponding to the selected filter type. You can choose as many fields as you want in order to combine
+clicking the plus button to the left of the category filter button. Fields available for search are those
+corresponding to the selected category. You can choose as many fields as you want in order to combine
 multiple search criteria. Of course, you can also use the field specific search criteria in combination with
 the text filter. 
 
@@ -246,7 +246,7 @@ results.
 As an alternative to specifying a particular search term, you can also search for all resources in which the
 field is set (option "Any value") or not set (option "No value"). 
 
-The number appearing next to the type filter button indicates the number of active search criteria. You can
+The number appearing next to the category filter button indicates the number of active search criteria. You can
 remove search criteria by clicking the number. This opens up the menu again and you can choose the search
 criterion to remove.
 

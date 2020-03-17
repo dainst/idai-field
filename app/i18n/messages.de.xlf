@@ -418,9 +418,9 @@
           <context context-type="linenumber">12</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="widgets.searchBar.resourceTypeFilter" datatype="html">
-        <source>Nach Ressourcentyp filtern:</source>
-        <target state="final">Nach Ressourcentyp filtern:</target>
+      <trans-unit id="widgets.searchBar.categoryFilter" datatype="html">
+        <source>Nach Kategorie filtern:</source>
+        <target state="final">Nach Kategorie filtern:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/widgets/search-bar.html</context>
           <context context-type="linenumber">27</context>
@@ -430,9 +430,9 @@
           <context context-type="linenumber">40</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="widgets.typePicker.allTypes" datatype="html">
-        <source>Alle Typen</source>
-        <target state="final">Alle Typen</target>
+      <trans-unit id="widgets.typePicker.allCategories" datatype="html">
+        <source>Alle Kategorien</source>
+        <target state="final">Alle Kategorien</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/widgets/type-picker.html</context>
           <context context-type="linenumber">6</context>
@@ -476,14 +476,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
           <context context-type="linenumber">39</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="import.format.importTypeSelect" datatype="html">
-        <source>Ressourcentyp</source>
-        <target state="final">Ressourcentyp</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">124</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.path" datatype="html">
@@ -569,7 +561,7 @@
                         dabei gleichnamige Felder im existierenden Datensatz. Geometrien des Importdatensatzes
                         überschreiben bestehende im existierenden Datensatz. Im existierenden Datensatz
                         vorhandene Felder, die nicht im Importdatensatz vorhanden sind, bleiben unverändert
-                        bestehen. Der Ressourcentyp kann nicht verändert werden. Die Zuordnung von Datensätzen
+                        bestehen. Die Kategorie kann nicht verändert werden. Die Zuordnung von Datensätzen
                         geschieht per Bezeichner (Feld <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>).
                     </source>
         <target state="final">
@@ -578,7 +570,7 @@
                         dabei gleichnamige Felder im existierenden Datensatz. Geometrien des Importdatensatzes
                         überschreiben bestehende im existierenden Datensatz. Im existierenden Datensatz
                         vorhandene Felder, die nicht im Importdatensatz vorhanden sind, bleiben unverändert
-                        bestehen. Der Ressourcentyp kann nicht verändert werden. Die Zuordnung von Datensätzen
+                        bestehen. Die Kategorie kann nicht verändert werden. Die Zuordnung von Datensätzen
                         geschieht per Bezeichner (Feld <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>).
                     </target>
         <context-group purpose="location">
@@ -592,7 +584,7 @@
                         den Daten aus der Importdatei ergänzt. Felder des Importdatensatzes überschreiben
                         dabei gleichnamige Felder im existierenden Datensatz. Im existierenden Datensatz
                         vorhandene Felder, die nicht im Importdatensatz vorhanden sind, bleiben unverändert
-                        bestehen. Der Ressourcentyp kann nicht verändert werden. Die Zuordnung von Datensätzen
+                        bestehen. Die Kategorie kann nicht verändert werden. Die Zuordnung von Datensätzen
                         geschieht per Bezeichner (Spalte <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>).
                     </source>
         <target state="final">
@@ -600,7 +592,7 @@
                         den Daten aus der Importdatei ergänzt. Felder des Importdatensatzes überschreiben
                         dabei gleichnamige Felder im existierenden Datensatz. Im existierenden Datensatz
                         vorhandene Felder, die nicht im Importdatensatz vorhanden sind, bleiben unverändert
-                        bestehen. Der Ressourcentyp kann nicht verändert werden. Die Zuordnung von Datensätzen
+                        bestehen. Die Kategorie kann nicht verändert werden. Die Zuordnung von Datensätzen
                         geschieht per Bezeichner (Spalte <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>).
                     </target>
         <context-group purpose="location">
@@ -656,6 +648,14 @@
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
           <context context-type="linenumber">113</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="import.format.importCategorySelect" datatype="html">
+        <source>Kategorie</source>
+        <target state="final">Kategorie</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/import/import.html</context>
+          <context context-type="linenumber">124</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.assignToOperation.label" datatype="html">
@@ -768,6 +768,14 @@
           <context context-type="linenumber">53</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="export.format.categorySelect" datatype="html">
+        <source>Kategorie</source>
+        <target state="final">Kategorie</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/export/export.html</context>
+          <context context-type="linenumber">64</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="export.format" datatype="html">
         <source>Format</source>
         <target state="final">Format</target>
@@ -814,14 +822,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">components/export/export.html</context>
           <context context-type="linenumber">41</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="export.format.resourceTypeSelect" datatype="html">
-        <source>Ressourcentyp</source>
-        <target state="final">Ressourcentyp</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/export/export.html</context>
-          <context context-type="linenumber">64</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.csv.noResources" datatype="html">
@@ -2122,6 +2122,14 @@
           <context context-type="linenumber">61</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="resources.plusButton.selectCategory" datatype="html">
+        <source>Bitte wählen Sie eine Kategorie aus.</source>
+        <target state="final">Bitte wählen Sie eine Kategorie aus.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/plus-button.html</context>
+          <context context-type="linenumber">39</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="resources.contextMenu.edit" datatype="html">
         <source>Bearbeiten</source>
         <target state="final">Bearbeiten</target>
@@ -2230,14 +2238,6 @@
           <context context-type="linenumber">12</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="resources.plusButton.selectType" datatype="html">
-        <source>Bitte wählen Sie einen Typ aus.</source>
-        <target state="final">Bitte wählen Sie einen Typ aus.</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/resources/plus-button.html</context>
-          <context context-type="linenumber">39</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="resources.plusButton.selectGeometryType" datatype="html">
         <source>Bitte wählen Sie einen Geometrietyp aus.</source>
         <target state="final">Bitte wählen Sie einen Geometrietyp aus.</target>
@@ -2302,9 +2302,9 @@
           <context context-type="linenumber">64</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="resources.list.headers.type" datatype="html">
-        <source>Typ</source>
-        <target state="final">Typ</target>
+      <trans-unit id="resources.list.headers.category" datatype="html">
+        <source>Kategorie</source>
+        <target state="final">Kategorie</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/list/list.html</context>
           <context context-type="linenumber">4</context>
@@ -2630,12 +2630,12 @@
           <context context-type="linenumber">126</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="docedit.typeSwitcherButton.changeType" datatype="html">
-        <source>Ressourcentyp ändern</source>
-        <target state="final">Ressourcentyp ändern</target>
+      <trans-unit id="docedit.typeSwitcherButton.changeCategory" datatype="html">
+        <source>Kategorie ändern</source>
+        <target state="final">Kategorie ändern</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/widgets/type-switcher-button.html</context>
-          <context context-type="linenumber">11</context>
+          <context context-type="linenumber">12</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.relationsPicker.noTargetsFound" datatype="html">
@@ -3884,8 +3884,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.error.invalidOperationResource" datatype="html">
-        <source>Beim Import ist ein Fehler aufgetreten: Ressourcen vom Typ [0] können der gewählten Maßnahme vom Typ [1] nicht zugeordnet werden.</source>
-        <target state="final">Beim Import ist ein Fehler aufgetreten: Ressourcen vom Typ [0] können der gewählten Maßnahme vom Typ [1] nicht zugeordnet werden.</target>
+        <source>Beim Import ist ein Fehler aufgetreten: Ressourcen der Kategorie [0] können der gewählten Maßnahme der Kategorie [1] nicht zugeordnet werden.</source>
+        <target state="final">Beim Import ist ein Fehler aufgetreten: Ressourcen der Kategorie [0] können der gewählten Maßnahme der Kategorie [1] nicht zugeordnet werden.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -4052,152 +4052,152 @@
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidType" datatype="html">
-        <source>Ungültige Typdefinition: '[0]'</source>
-        <target state="final">Ungültige Typdefinition: '[0]'</target>
+        <source>Ungültige Kategoriedefinition: '[0]'</source>
+        <target state="final">Ungültige Kategoriedefinition: '[0]'</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.validation.error.mustHaveLiesWithin" datatype="html">
-        <source>Resourcen vom Typ '[0]' müssen innerhalb von anderen Resourcen angelegt werden. Betroffen ist: '[1]'.</source>
-        <target state="final">Resourcen vom Typ '[0]' müssen innerhalb von anderen Resourcen angelegt werden. Betroffen ist: '[1]'.</target>
+        <source>Resourcen der Kategorie '[0]' müssen innerhalb von anderen Resourcen angelegt werden. Betroffen ist: '[1]'.</source>
+        <target state="final">Resourcen der Kategorie '[0]' müssen innerhalb von anderen Resourcen angelegt werden. Betroffen ist: '[1]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.validation.error.targetTypeRangeMismatch" datatype="html">
-        <source>Ressource vom Typ '[2]' darf nicht mittels '[1]' mit '[0]' verküpft werden.</source>
-        <target state="final">Ressource vom Typ '[2]' darf nicht mittels '[1]' mit '[0]' verküpft werden.</target>
+        <source>Eine Ressource der Kategorie '[2]' darf nicht mittels '[1]' mit '[0]' verküpft werden.</source>
+        <target state="final">Eine Ressource der Kategorie '[2]' darf nicht mittels '[1]' mit '[0]' verküpft werden.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidField" datatype="html">
-        <source>Fehlende Felddefinition für das Feld '[1]' der Ressource vom Typ '[0]'.</source>
-        <target state="final">Fehlende Felddefinition für das Feld '[1]' der Ressource vom Typ '[0]'.</target>
+        <source>Fehlende Felddefinition für das Feld '[1]' einer Ressource der Kategorie '[0]'.</source>
+        <target state="final">Fehlende Felddefinition für das Feld '[1]' einer Ressource der Kategorie '[0]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidFields" datatype="html">
-        <source>Fehlende Felddefinitionen für die Felder '[1]' der Ressource vom Typ '[0]'.</source>
-        <target state="final">Fehlende Felddefinitionen für die Felder '[1]' der Ressource vom Typ '[0]'.</target>
+        <source>Fehlende Felddefinitionen für die Felder '[1]' einer Ressource der Kategorie '[0]'.</source>
+        <target state="final">Fehlende Felddefinitionen für die Felder '[1]' einer Ressource der Kategorie '[0]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidRelationField" datatype="html">
-        <source>Fehlende Definition für die Relation '[1]' der Ressource vom Typ '[0]'.</source>
-        <target state="final">Fehlende Definition für die Relation '[1]' der Ressource vom Typ '[0]'.</target>
+        <source>Fehlende Definition für die Relation '[1]' einer Ressource der Kategorie '[0]'.</source>
+        <target state="final">Fehlende Definition für die Relation '[1]' einer Ressource der Kategorie '[0]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidRelationFields" datatype="html">
-        <source>Fehlende Definitionen für die Relationen '[1]' der Ressource vom Typ '[0]'.</source>
-        <target state="final">Fehlende Definitionen für die Relationen '[1]' der Ressource vom Typ '[0]'.</target>
+        <source>Fehlende Definitionen für die Relationen '[1]' einer Ressource der Kategorie '[0]'.</source>
+        <target state="final">Fehlende Definitionen für die Relationen '[1]' einer Ressource der Kategorie '[0]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidNumericValue" datatype="html">
-        <source>Ungültiger Zahlenwert im Feld '[1]' der Ressource vom Typ '[0]'.</source>
-        <target state="final">Ungültiger Zahlenwert im Feld '[1]' der Ressource vom Typ '[0]'.</target>
+        <source>Ungültiger Zahlenwert im Feld '[1]' einer Ressource der Kategorie '[0]'.</source>
+        <target state="final">Ungültiger Zahlenwert im Feld '[1]' einer Ressource der Kategorie '[0]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidNumericValues" datatype="html">
-        <source>Ungültige Zahlenwerte in den folgenden Feldern der Ressource vom Typ '[0]': [1].</source>
-        <target state="final">Ungültige Zahlenwerte in den folgenden Feldern der Ressource vom Typ '[0]': [1].</target>
+        <source>Ungültige Zahlenwerte in den folgenden Feldern einer Ressource der Kategorie '[0]': [1].</source>
+        <target state="final">Ungültige Zahlenwerte in den folgenden Feldern einer Ressource der Kategorie '[0]': [1].</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidDatingValue" datatype="html">
-        <source>Ungültige Datierung im Feld '[1]' der Ressource vom Typ '[0]'.</source>
-        <target state="final">Ungültige Datierung im Feld '[1]' der Ressource vom Typ '[0]'.</target>
+        <source>Ungültige Datierung im Feld '[1]' einer Ressource der Kategorie '[0]'.</source>
+        <target state="final">Ungültige Datierung im Feld '[1]' einer Ressource der Kategorie '[0]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidDatingValues" datatype="html">
-        <source>Ungültige Datierungen in den folgenden Feldern der Ressource vom Typ '[0]': [1].</source>
-        <target state="final">Ungültige Datierungen in den folgenden Feldern der Ressource vom Typ '[0]': [1].</target>
+        <source>Ungültige Datierungen in den folgenden Feldern einer Ressource der Kategorie '[0]': [1].</source>
+        <target state="final">Ungültige Datierungen in den folgenden Feldern einer Ressource der Kategorie '[0]': [1].</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidDimensionValue" datatype="html">
-        <source>Ungültige Maßangabe im Feld '[1]' der Ressource vom Typ '[0]'.</source>
-        <target state="final">Ungültige Maßangabe im Feld '[1]' der Ressource vom Typ '[0]'.</target>
+        <source>Ungültige Maßangabe im Feld '[1]' einer Ressource der Kategorie '[0]'.</source>
+        <target state="final">Ungültige Maßangabe im Feld '[1]' einer Ressource der Kategorie '[0]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidDimensionValues" datatype="html">
-        <source>Ungültige Maßangaben in den folgenden Feldern der Ressource vom Typ '[0]': [1].</source>
-        <target state="final">Ungültige Maßangaben in den folgenden Feldern der Ressource vom Typ '[0]': [1].</target>
+        <source>Ungültige Maßangaben in den folgenden Feldern einer Ressource der Kategorie '[0]': [1].</source>
+        <target state="final">Ungültige Maßangaben in den folgenden Feldern einer Ressource der Kategorie '[0]': [1].</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidLiteratureValue" datatype="html">
-        <source>Ungültiger Literaturverweis im Feld '[1]' der Ressource vom Typ '[0]'.</source>
-        <target state="final">Ungültiger Literaturverweis im Feld '[1]' der Ressource vom Typ '[0]'.</target>
+        <source>Ungültiger Literaturverweis im Feld '[1]' einer Ressource der Kategorie '[0]'.</source>
+        <target state="final">Ungültiger Literaturverweis im Feld '[1]' einer Ressource der Kategorie '[0]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidLiteratureValues" datatype="html">
-        <source>Ungültige Literaturverweise in den folgenden Feldern der Ressource vom Typ '[0]': [1].</source>
-        <target state="final">Ungültige Literaturverweise in den folgenden Feldern der Ressource vom Typ '[0]': [1].</target>
+        <source>Ungültige Literaturverweise in den folgenden Feldern einer Ressource der Kategorie '[0]': [1].</source>
+        <target state="final">Ungültige Literaturverweise in den folgenden Feldern einer Ressource der Kategorie '[0]': [1].</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidDropdownValues" datatype="html">
-        <source>Ungültige Werte für DropdownRange-Feld ('[0]'). Ein -End Wert kann nicht allein vorkommen.</source>
-        <target state="final">Ungültige Werte für DropdownRange-Feld ('[0]'). Ein -End Wert kann nicht allein vorkommen.</target>
+        <source>Ungültige Werte für DropdownRange-Feld ('[0]'). Ein '-End'-Wert kann nicht allein vorkommen.</source>
+        <target state="final">Ungültige Werte für DropdownRange-Feld ('[0]'). Ein '-End'-Wert kann nicht allein vorkommen.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.validation.error.missingProperty" datatype="html">
-        <source>Eigenschaft(en) der Ressource vom Typ '[0]' müssen vorhanden sein: '[1]'.</source>
-        <target state="final">Eigenschaft(en) der Ressource vom Typ '[0]' müssen vorhanden sein: '[1]'.</target>
+        <source>Eigenschaft(en) einer Ressource der Kategorie '[0]' müssen vorhanden sein: '[1]'.</source>
+        <target state="final">Eigenschaft(en) einer Ressource der Kategorie '[0]' müssen vorhanden sein: '[1]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.error.typeNotAllowed" datatype="html">
-        <source>Ressourcen von folgendem Typ sind beim Import nicht erlaubt: '[0]'</source>
-        <target state="final">Ressourcen von folgendem Typ sind beim Import nicht erlaubt: '[0]'</target>
+        <source>Ressourcen der folgenden Kategorie sind beim Import nicht erlaubt: '[0]'</source>
+        <target state="final">Ressourcen der folgenden Kategorie sind beim Import nicht erlaubt: '[0]'</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.error.typeOnlyAllowedOnUpdate" datatype="html">
-        <source>Ressourcen von folgendem Typ sind beim Import nur im Ergänzungsmodus erlaubt: '[0]'</source>
-        <target state="final">Ressourcen von folgendem Typ sind beim Import nur im Ergänzungsmodus erlaubt: '[0]'</target>
+        <source>Ressourcen der folgenden Kategorie sind beim Import nur im Ergänzungsmodus erlaubt: '[0]'</source>
+        <target state="final">Ressourcen der folgenden Kategorie sind beim Import nur im Ergänzungsmodus erlaubt: '[0]'</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -4212,8 +4212,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.error.typeCannotBeChanged" datatype="html">
-        <source>Ressourcen-Typ kann nicht geändert werden in Import. Betroffen ist: '[0]'</source>
-        <target state="final">Ressourcen-Typ kann nicht geändert werden in Import. Betroffen ist: '[0]'</target>
+        <source>Die Kategorie kann beim Import nicht geändert werden. Betroffen ist: '[0]'</source>
+        <target state="final">Die Kategorie kann beim Import nicht geändert werden. Betroffen ist: '[0]'</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -4604,8 +4604,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="messages.resources.error.typeNotFound" datatype="html">
-        <source>Typdefinition für '[0]' fehlt in Fields.json.</source>
-        <target state="final">Typdefinition für '[0]' fehlt in Fields.json.</target>
+        <source>Die Kategoriedefinition für '[0]' fehlt in der Datei Fields.json.</source>
+        <target state="final">Die Kategoriedefinition für '[0]' fehlt in der Datei Fields.json.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>

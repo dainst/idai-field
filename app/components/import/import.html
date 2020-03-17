@@ -79,7 +79,7 @@
                         dabei gleichnamige Felder im existierenden Datensatz. Geometrien des Importdatensatzes
                         überschreiben bestehende im existierenden Datensatz. Im existierenden Datensatz
                         vorhandene Felder, die nicht im Importdatensatz vorhanden sind, bleiben unverändert
-                        bestehen. Der Ressourcentyp kann nicht verändert werden. Die Zuordnung von Datensätzen
+                        bestehen. Die Kategorie kann nicht verändert werden. Die Zuordnung von Datensätzen
                         geschieht per Bezeichner (Feld <em>identifier</em>).
                     </div>
 
@@ -89,7 +89,7 @@
                         den Daten aus der Importdatei ergänzt. Felder des Importdatensatzes überschreiben
                         dabei gleichnamige Felder im existierenden Datensatz. Im existierenden Datensatz
                         vorhandene Felder, die nicht im Importdatensatz vorhanden sind, bleiben unverändert
-                        bestehen. Der Ressourcentyp kann nicht verändert werden. Die Zuordnung von Datensätzen
+                        bestehen. Die Kategorie kann nicht verändert werden. Die Zuordnung von Datensätzen
                         geschieht per Bezeichner (Spalte <em>identifier</em>).
                     </div>
 
@@ -121,7 +121,7 @@
                     <div class="form-group" *ngIf="importState.format === 'csv' && importState.file && !importState.typeFromFileName">
                         <label class="control-label col-form-label"
                                for="importTypeSelect"
-                               i18n="@@import.format.importTypeSelect">Ressourcentyp</label>
+                               i18n="@@import.format.importCategorySelect">Kategorie</label>
 
                         <select id="importTypeSelect" class="form-control"
                                 [(ngModel)]="importState.selectedType">

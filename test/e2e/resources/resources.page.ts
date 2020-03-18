@@ -329,10 +329,10 @@ export class ResourcesPage {
     // sequences
 
     public static performCreateResource(identifier: string, typeName?: string, inputFieldName?: string,
-                                        inputFieldText?: string, skipGeometry?: boolean, waitForModalToClose: boolean = true) {
+                                        inputFieldText?: string, skipTypeSelect?: boolean, skipGeometry?: boolean, waitForModalToClose: boolean = true) {
 
         this.clickCreateResource();
-        this.clickSelectResourceType(typeName);
+        if (!skipTypeSelect) this.clickSelectResourceType(typeName);
         if (!skipGeometry) ResourcesPage.clickSelectGeometryType();
         DoceditPage.typeInInputField('identifier', identifier);
         if (inputFieldName && inputFieldText) {
@@ -366,7 +366,7 @@ export class ResourcesPage {
 
 
     public static performCreateRelation(identifier: string, targetIdentifier: string,
-                                                   relationGroupName: string) {
+                                        relationGroupName: string) {
 
         this.openEditByDoubleClickResource(identifier);
         DoceditPage.clickGotoTimeTab();
@@ -380,8 +380,8 @@ export class ResourcesPage {
 
     public static performCreateLink() {
 
-        this.performCreateResource('1', "feature-architecture");
-        this.performCreateResource('2', "feature-architecture");
+        this.performCreateResource('1', 'feature-architecture');
+        this.performCreateResource('2', 'feature-architecture');
         this.performCreateRelation('2', '1', 'zeitlich-vor');
     }
 

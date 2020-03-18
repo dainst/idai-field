@@ -73,6 +73,12 @@ export class DoceditPage {
     }
 
 
+    public static clickGotoIdentificationTab() {
+
+        common.click(element(by.id('edit-form-goto-identification')));
+    }
+
+
     public static clickImagesTab() {
 
         common.click(element(by.id('docedit-images-tab')));

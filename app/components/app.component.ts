@@ -82,6 +82,9 @@ export class AppComponent {
                 case 'i':
                     this.menuService.onMenuItemClicked('import');
                     break;
+                case 't':
+                    this.menuService.onMenuItemClicked('resources/types');
+                    break;
             }
         });
     }

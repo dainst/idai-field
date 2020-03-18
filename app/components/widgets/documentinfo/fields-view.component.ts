@@ -193,7 +193,7 @@ export class FieldsViewComponent implements OnChanges {
     private pushField(resource: Resource, field: FieldDefinition, group: string) {
 
         if (field.name === PERIOD) {
-            this.handlePeriodField(resource, field, group);
+            this.handlePeriodField(resource, group);
         } else if (resource.type === BuiltInTypes.TYPECATALOG
                 && field.name === BuiltInTypes.TypeCatalog.CRITERION) {
             this.handleTypeCatalogCriterionField(resource, field);
@@ -224,7 +224,7 @@ export class FieldsViewComponent implements OnChanges {
     }
 
 
-    private handlePeriodField(resource: Resource, field: FieldDefinition, group: string) {
+    private handlePeriodField(resource: Resource, group: string) {
 
         this.fields[group].push({
             label: this.i18n({

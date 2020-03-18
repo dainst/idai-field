@@ -1,8 +1,8 @@
-import {isUndefined, flow, cond, on, assoc, map} from 'tsfun';
+import {isUndefined, flow, cond, on, assoc, map, Map} from 'tsfun';
 import {TypeDefinition} from './type-definition';
 import {FieldDefinition} from './field-definition';
 import {clone} from '../../util/object-util';
-import {Group} from '../../model/group-util';
+import {Group} from '../group-util';
 
 
 export interface IdaiType {
@@ -14,8 +14,17 @@ export interface IdaiType {
     label: string;
     color: string|undefined;
     fields: Array<FieldDefinition>;
+    groups?: Map<FieldsGroup>; // TODO make mandatory
     mustLieWithin: boolean|undefined; // = undefined;
 }
+
+
+export interface FieldsGroup { // TODO rename
+
+    fields: Array<FieldDefinition>;
+    // TODO add relations, more fields?
+}
+
 
 
 /**
@@ -30,7 +39,7 @@ export module IdaiType {
     export const CHILDREN = 'children';
     export const NAME = 'name';
     export const FIELDS = 'fields';
-
+    export const GROUPS = 'groups';
 
     export function build(definition: TypeDefinition): IdaiType {
 
@@ -50,22 +59,24 @@ export module IdaiType {
 
         try {
 
-            const childFields =
-                flow(
-                    child.fields,
-                    map(
-                        cond(
-                            on(FieldDefinition.GROUP, isUndefined),
-                            assoc(FieldDefinition.GROUP, Group.CHILD))));
-
-            return getCombinedFields(
-                type.fields, childFields);
+            const childFields = ifUndefinedSetGroupTo(Group.CHILD)(child.fields);
+            return getCombinedFields(type.fields, childFields);
 
         } catch (e) {
             e.push(type.name);
             e.push(child.name);
             throw [e];
         }
+    }
+
+
+    export function ifUndefinedSetGroupTo(name: string)
+        : (_: Array<FieldDefinition>) => Array<FieldDefinition> {
+
+        return map(
+            cond(
+                on(FieldDefinition.GROUP, isUndefined),
+                assoc(FieldDefinition.GROUP, name))) as any;
     }
 
 

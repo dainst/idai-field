@@ -1,5 +1,5 @@
-import {FieldDefinition} from '../configuration/model/field-definition';
-import {PositionRelations, TimeRelations, TypeRelations} from './relation-constants';
+import {FieldDefinition} from './model/field-definition';
+import {PositionRelations, TimeRelations, TypeRelations} from '../model/relation-constants';
 
 
 export module Group {
@@ -10,6 +10,7 @@ export module Group {
     export const POSITION = 'position';
     export const IDENTIFICATION = 'identification';
     export const PROPERTIES = 'properties';
+    export const PARENT = 'parent';
     export const CHILD = 'child';
 }
 

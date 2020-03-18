@@ -6,7 +6,7 @@ import {is, isnt, isUndefinedOrEmpty, isDefined, on, isNot, isString, includedIn
 import {Document, FieldDocument,  ReadDatastore, FieldResource, Resource, Dating, Dimension, Literature,
     ValOptionalEndVal} from 'idai-components-2';
 import {RoutingService} from '../../routing-service';
-import {Group, GroupUtil} from '../../../core/model/group-util';
+import {Group, GroupUtil} from '../../../core/configuration/group-util';
 import {Name, ResourceId} from '../../../core/constants';
 import {GROUP_NAME} from '../../constants';
 import {pick} from '../../../core/util/utils';
@@ -172,7 +172,7 @@ export class FieldsViewComponent implements OnChanges {
 
         for (let field of existingResourceFields) {
 
-            const group = field.group ? field.group : Group.PROPERTIES;
+            const group = field.group !== 'parent' ? field.group : Group.PROPERTIES; // TODO review
             if (!this.fields[group]) this.fields[group] = [];
             this.pushField(resource, field, group);
         }

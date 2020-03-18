@@ -3,7 +3,7 @@ import {I18n} from '@ngx-translate/i18n-polyfill';
 import {is, isNot, on, undefinedOrEmpty} from 'tsfun';
 import {Document} from 'idai-components-2';
 import {ProjectTypes} from '../../../core/configuration/project-types';
-import {GroupUtil} from '../../../core/model/group-util';
+import {GroupUtil} from '../../../core/configuration/group-util';
 import {GROUP_NAME} from '../../constants';
 import {FieldDefinition} from '../../../core/configuration/model/field-definition';
 import {RelationDefinition} from '../../../core/configuration/model/relation-definition';
@@ -131,9 +131,10 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
 
     private setFields() {
 
+        // TODO refactor this block
         this.groups[GROUP_NAME.STEM].fields = this.fieldDefinitions.filter(on('group', is('stem')));
         this.groups[GROUP_NAME.IDENTIFICATION].fields = this.fieldDefinitions.filter(on('group', is('identification')));
-        this.groups[GROUP_NAME.PROPERTIES].fields = this.fieldDefinitions.filter(on('group', is(undefined)));
+        this.groups[GROUP_NAME.PROPERTIES].fields = this.fieldDefinitions.filter(on('group', is('parent')));
         this.groups[GROUP_NAME.CHILD_PROPERTIES].fields = this.fieldDefinitions.filter(on('group', is('child')));
         this.groups[GROUP_NAME.DIMENSION].fields = this.fieldDefinitions.filter(on('group', is('dimension')));
         this.groups[GROUP_NAME.POSITION].fields = this.fieldDefinitions.filter(on('group', is('position')));

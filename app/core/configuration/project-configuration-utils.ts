@@ -1,12 +1,15 @@
 import {map, on, separate, defined, isNot, update, flatten, flow, reduce,
-    assoc, append, Map, values, to, lookup, cond, throws} from 'tsfun';
+    assoc, append, Map, values, to, lookup, cond, throws, forEach} from 'tsfun';
 import {TypeDefinition} from './model/type-definition';
-import {IdaiType} from './model/idai-type';
+import {FieldsGroup, IdaiType} from './model/idai-type';
 import {makeLookup} from '../util/utils';
 import {RelationDefinition} from './model/relation-definition';
 import {ConfigurationDefinition} from './boot/configuration-definition';
 import {MDInternal} from 'idai-components-2';
 import {isUndefined} from 'tsfun/src/predicate';
+import {FieldDefinition} from './model/field-definition';
+import {Group} from './group-util';
+import {clone} from '../util/object-util';
 
 
 /**
@@ -63,12 +66,34 @@ export module ProjectConfigurationUtils {
         const [parentDefs, childDefs] =
             separate(on(TypeDefinition.PARENT, isNot(defined)))(configuration.types);
 
-        const parentTypes = makeLookup(IdaiType.NAME)(map(IdaiType.build)(parentDefs));
+        const parentTypes =
+            flow(
+                parentDefs,
+                map(IdaiType.build),
+                map(update(IdaiType.FIELDS, IdaiType.ifUndefinedSetGroupTo(Group.PARENT))),
+                makeLookup(IdaiType.NAME));
 
         return flow(
             childDefs,
             reduce(addChildType, parentTypes),
-            flattenTypesTreeMapToTypesMap);
+            flattenTypesTreeMapToTypesMap,
+            fillGroups);
+    }
+
+
+    // TODO make pure
+    function fillGroups(typesMap: Map<IdaiType>): Map<IdaiType> {
+
+        return map((type: IdaiType) => {
+            const groups: Map<FieldsGroup> = {};
+
+            for (let field of type.fields) {
+                if (!groups[field.group]) groups[field.group] = { fields: [] };
+                groups[field.group].fields = groups[field.group].fields.concat(field);
+            }
+            type.groups = groups;
+            return type;
+        })(typesMap);
     }
 
 

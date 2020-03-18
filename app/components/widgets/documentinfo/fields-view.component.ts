@@ -23,20 +23,12 @@ import {ValuelistUtil} from '../../../core/util/valuelist-util';
 
 
 const PERIOD = 'period';
-const PERIODEND = 'periodEnd';
 
 type FieldViewGroupDefinition = {
 
     name: string;
     label: string;
     shown: boolean;
-}
-
-export module FieldViewGroupDefinition {
-
-    export const NAME = 'name';
-    export const LABEL = 'label';
-    export const SHOWN = 'shown';
 }
 
 
@@ -175,8 +167,8 @@ export class FieldsViewComponent implements OnChanges {
 
         const existingResourceFields = this.projectConfiguration
             .getFieldDefinitions(resource.type)
-            .filter(on(FieldViewGroupDefinition.NAME, isnt(Resource.RELATIONS)))
-            .filter(on(FieldViewGroupDefinition.NAME, compose(lookup(resource), isDefined)));
+            .filter(on('name', isnt(Resource.RELATIONS)))
+            .filter(on('name', compose(lookup(resource), isDefined)));
 
         for (let field of existingResourceFields) {
 
@@ -278,7 +270,7 @@ export class FieldsViewComponent implements OnChanges {
     private getLabel(type: Name, field: Name): string {
 
         return ((pick(this.projectConfiguration.getTypesMap(), type) as any).fields
-            .find(on(FieldViewGroupDefinition.NAME, is(field))) as FieldDefinition)
+            .find(on('name', is(field))) as FieldDefinition)
             .label as string;
     }
 
@@ -325,7 +317,7 @@ export class FieldsViewComponent implements OnChanges {
         const hasTargets = compose(lookup(resource.relations), isNot(undefinedOrEmpty));
 
         return relations
-            .filter(on(FieldViewGroupDefinition.NAME, isNotHierarchical))
-            .filter(on(FieldViewGroupDefinition.NAME, hasTargets));
+            .filter(on('name', isNotHierarchical))
+            .filter(on('name', hasTargets));
     }
 }

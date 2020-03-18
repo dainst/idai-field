@@ -1,7 +1,7 @@
 import {ProjectConfigurationUtils} from '../../../../app/core/configuration/project-configuration-utils';
 import {ConfigurationDefinition} from '../../../../app/core/configuration/boot/configuration-definition';
 import {SortUtil} from '../../../../app/core/util/sort-util';
-import {Group} from '../../../../app/core/model/group-util';
+import {Group} from '../../../../app/core/configuration/group-util';
 
 const byName = (a, b) => SortUtil.alnumCompare(a.name, b.name);
 

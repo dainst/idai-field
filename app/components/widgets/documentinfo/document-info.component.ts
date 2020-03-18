@@ -1,7 +1,7 @@
 import {Component, Input, Output, ElementRef, ViewChild, EventEmitter, DoCheck} from '@angular/core';
 import {Document, FieldDocument} from 'idai-components-2';
 import {ProjectTypes} from '../../../core/configuration/project-types';
-import {Group} from '../../../core/model/group-util';
+import {Group} from '../../../core/configuration/group-util';
 
 
 @Component({

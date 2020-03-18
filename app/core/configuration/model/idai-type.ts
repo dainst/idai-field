@@ -2,7 +2,7 @@ import {isUndefined, flow, cond, on, assoc, map} from 'tsfun';
 import {TypeDefinition} from './type-definition';
 import {FieldDefinition} from './field-definition';
 import {clone} from '../../util/object-util';
-import {Group} from '../../model/group-util';
+import {Group} from '../group-util';
 
 
 export interface IdaiType {

@@ -2,7 +2,7 @@ import {Map} from 'tsfun';
 import {buildProjectTypes} from '../../../../../app/core/configuration/boot/build-project-types';
 import {ConfigurationErrors} from '../../../../../app/core/configuration/boot/configuration-errors';
 import {FieldDefinition} from '../../../../../app/core/configuration/model/field-definition';
-import {Group} from '../../../../../app/core/model/group-util';
+import {Group} from '../../../../../app/core/configuration/group-util';
 import {CustomTypeDefinition} from '../../../../../app/core/configuration/model/custom-type-definition';
 import {BuiltinTypeDefinition} from '../../../../../app/core/configuration/model/builtin-type-definition';
 import {LibraryTypeDefinition} from '../../../../../app/core/configuration/model/library-type-definition';

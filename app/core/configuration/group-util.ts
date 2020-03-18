@@ -1,5 +1,5 @@
-import {FieldDefinition} from '../configuration/model/field-definition';
-import {PositionRelations, TimeRelations, TypeRelations} from './relation-constants';
+import {FieldDefinition} from './model/field-definition';
+import {PositionRelations, TimeRelations, TypeRelations} from '../model/relation-constants';
 
 
 export module Group {

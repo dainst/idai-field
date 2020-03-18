@@ -6,7 +6,7 @@ import {ProjectConfiguration} from './project-configuration';
 import {FieldDefinition} from './model/field-definition';
 import {BuiltinTypeDefinition} from './model/builtin-type-definition';
 import {RelationDefinition} from './model/relation-definition';
-import {Group} from '../model/group-util';
+import {Group} from './group-util';
 
 
 export module BuiltInTypes {

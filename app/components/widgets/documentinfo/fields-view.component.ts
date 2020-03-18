@@ -230,7 +230,7 @@ export class FieldsViewComponent implements OnChanges {
             label: this.i18n({
                 id: 'widgets.fieldsView.period',
                 value: 'Grobdatierung'
-            }) + (!isUndefinedOrEmpty(resource[PERIOD][ValOptionalEndVal.VALUE])
+            }) + (!isUndefinedOrEmpty(resource[PERIOD][ValOptionalEndVal.ENDVALUE])
                 ? this.i18n({
                     id: 'widgets.fieldsView.period.from',
                     value: ' (von)'

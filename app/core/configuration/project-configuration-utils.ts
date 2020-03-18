@@ -107,7 +107,7 @@ export module ProjectConfigurationUtils {
     // TODO make pure
     function sortGroupFields(group: Group) {
 
-        sortGroups(group.fields, group.name);
+        group.fields = sortGroups(group.fields, group.name);
         return group;
     }
 

@@ -105,8 +105,8 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
 
         if (isNot(undefinedOrEmpty)(this.fieldDefinitions)) {
             this.setFields();
-            GroupUtil.sortGroups(this.groups[GROUP_NAME.STEM].fields, 'stem');
-            GroupUtil.sortGroups(this.groups[GROUP_NAME.DIMENSION].fields, 'dimension');
+            this.groups[GROUP_NAME.STEM].fields = GroupUtil.sortGroups(this.groups[GROUP_NAME.STEM].fields, 'stem');
+            this.groups[GROUP_NAME.DIMENSION].fields = GroupUtil.sortGroups(this.groups[GROUP_NAME.DIMENSION].fields, 'dimension');
         }
 
         if (isNot(undefinedOrEmpty)(this.relationDefinitions)) {

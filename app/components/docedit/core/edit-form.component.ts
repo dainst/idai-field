@@ -131,9 +131,10 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
 
     private setFields() {
 
+        // TODO refactor this block
         this.groups[GROUP_NAME.STEM].fields = this.fieldDefinitions.filter(on('group', is('stem')));
         this.groups[GROUP_NAME.IDENTIFICATION].fields = this.fieldDefinitions.filter(on('group', is('identification')));
-        this.groups[GROUP_NAME.PROPERTIES].fields = this.fieldDefinitions.filter(on('group', is(undefined)));
+        this.groups[GROUP_NAME.PROPERTIES].fields = this.fieldDefinitions.filter(on('group', is('parent')));
         this.groups[GROUP_NAME.CHILD_PROPERTIES].fields = this.fieldDefinitions.filter(on('group', is('child')));
         this.groups[GROUP_NAME.DIMENSION].fields = this.fieldDefinitions.filter(on('group', is('dimension')));
         this.groups[GROUP_NAME.POSITION].fields = this.fieldDefinitions.filter(on('group', is('position')));

@@ -30,8 +30,8 @@
                                     <span *ngIf="group === 'position'" i18n="@@docedit.group.position">Lage</span>
                                     <span *ngIf="group === 'time'" i18n="@@docedit.group.time">Zeit</span>
                                     <span *ngIf="group === 'child'">{{ selectedType.label }}</span>
-                                    <span *ngIf="!group && selectedType.parentType">{{ selectedType.parentType.label }}</span>
-                                    <span *ngIf="!group && !selectedType.parentType">{{ selectedType.label }}</span>
+                                    <span *ngIf="group === 'parent' && selectedType.parentType">{{ selectedType.parentType.label }}</span>
+                                    <span *ngIf="group === 'parent' && !selectedType.parentType">{{ selectedType.label }}</span>
                                 </a>
                             </li>
                         </ul>

@@ -10,6 +10,7 @@ export module Group {
     export const POSITION = 'position';
     export const IDENTIFICATION = 'identification';
     export const PROPERTIES = 'properties';
+    export const PARENT = 'parent';
     export const CHILD = 'child';
 }
 

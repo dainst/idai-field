@@ -1,10 +1,10 @@
 import {Component} from '@angular/core';
 import {ProjectConfiguration} from '../../core/configuration/project-configuration';
 import {IdaiType} from '../../core/configuration/model/idai-type';
-import {map, set, flow, to, on, is, filter, intersect, append, includedIn} from 'tsfun';
+import {to, on, is, intersect, includedIn} from 'tsfun';
 import {FieldDefinition} from '../../core/configuration/model/field-definition';
 import { GroupUtil } from '../../core/configuration/group-util';
-import { debugId } from '../../core/util/utils';
+
 
 @Component({
     moduleId: module.id,
@@ -23,7 +23,7 @@ export class ProjectConfigurationComponent {
     public availableGroups = [
         'stem',
         'identification',
-        undefined,
+        'parent',
         'child',
         'dimension',
         'position',

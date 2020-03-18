@@ -172,7 +172,7 @@ export class FieldsViewComponent implements OnChanges {
 
         for (let field of existingResourceFields) {
 
-            const group = field.group ? field.group : Group.PROPERTIES;
+            const group = field.group !== 'parent' ? field.group : Group.PROPERTIES; // TODO review
             if (!this.fields[group]) this.fields[group] = [];
             this.pushField(resource, field, group);
         }

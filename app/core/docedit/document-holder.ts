@@ -1,6 +1,6 @@
 import {flow, includedIn, isEmpty, isNot, equal, isObject, isString, and, filter, keys} from 'tsfun';
-import {clone} from '../util/object-util';
 import {Document, NewDocument, Resource} from 'idai-components-2';
+import {clone} from '../util/object-util';
 import {Validator} from '../model/validator';
 import {PersistenceManager} from '../model/persistence-manager';
 import {DocumentDatastore} from '../datastore/document-datastore';

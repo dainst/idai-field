@@ -1,5 +1,5 @@
-import {isUndefinedOrEmpty} from 'tsfun';
 import {Component, Input} from '@angular/core';
+import {isUndefinedOrEmpty} from 'tsfun';
 import {Resource, ValOptionalEndVal} from 'idai-components-2';
 import {ValuelistUtil} from '../../../../core/util/valuelist-util';
 import {HierarchyUtil} from '../../../../core/util/hierarchy-util';
@@ -39,12 +39,6 @@ export class DropdownRangeComponent {
 
     async ngOnChanges() {
 
-        if (this.resource) {
-            if (!this.resource[this.field.name]) {
-                this.resource[this.field.name] = {} as ValOptionalEndVal<string>;
-            }
-        }
-
         this.valuelist = ValuelistUtil.getValuelist(
             this.field,
             await this.datastore.get(PROJECT),
@@ -53,21 +47,22 @@ export class DropdownRangeComponent {
     }
 
 
-    public showEndElements() {
+    public showEndElements(): boolean {
 
         return this.endActivated
-            || !this.resource[this.field.name]
-            || !isUndefinedOrEmpty(this.resource[this.field.name][ValOptionalEndVal.ENDVALUE]);
+            || (this.resource[this.field.name]
+                && !isUndefinedOrEmpty(this.resource[this.field.name][ValOptionalEndVal.ENDVALUE]));
     }
 
 
     public setValue(value: string) {
 
         if (isUndefinedOrEmpty(value)) {
-
             this.endActivated = false;
-            delete this.resource[this.field.name][ValOptionalEndVal.VALUE];
-            delete this.resource[this.field.name][ValOptionalEndVal.ENDVALUE];
+            delete this.resource[this.field.name];
+        } else {
+            if (!this.resource[this.field.name]) this.resource[this.field.name] = {};
+            this.resource[this.field.name][ValOptionalEndVal.VALUE] = value;
         }
     }
 

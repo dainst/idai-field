@@ -19,9 +19,10 @@ export interface IdaiType {
 }
 
 
-export interface FieldsGroup {
+export interface FieldsGroup { // TODO rename
 
     fields: Array<FieldDefinition>;
+    // TODO add relations, more fields?
 }
 
 

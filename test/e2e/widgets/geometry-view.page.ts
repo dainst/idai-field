@@ -44,6 +44,8 @@ export class GeometryViewPage {
 
     public static waitForCreateGeoButtons(identifier: Identifier) {
 
+        browser.wait(EC.stalenessOf(element(by.css('.layover2'))), delays.ECWaitTime);
+
         if (identifier) ResourcesPage.clickOpenContextMenu(identifier);
         browser.wait(EC.visibilityOf(element(by.css('#context-menu #context-menu-create-geo-1-button'))), delays.ECWaitTime);
         browser.wait(EC.visibilityOf(element(by.css('#context-menu #context-menu-create-geo-2-button'))), delays.ECWaitTime);

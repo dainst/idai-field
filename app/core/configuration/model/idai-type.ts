@@ -14,7 +14,7 @@ export interface IdaiType {
     label: string;
     color: string|undefined;
     fields: Array<FieldDefinition>;
-    groups?: Map<FieldsGroup>; // TODO make mandatory
+    groups?: Array<FieldsGroup>; // TODO make mandatory
     mustLieWithin: boolean|undefined; // = undefined;
 }
 

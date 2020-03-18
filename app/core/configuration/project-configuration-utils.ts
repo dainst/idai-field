@@ -1,5 +1,5 @@
 import {map, on, separate, defined, isNot, update, flatten, flow, reduce,
-    assoc, append, Map, values, to, lookup, cond, throws, forEach} from 'tsfun';
+    assoc, append, Map, values, to, lookup, cond, throws, prune} from 'tsfun';
 import {TypeDefinition} from './model/type-definition';
 import {FieldsGroup, IdaiType} from './model/idai-type';
 import {makeLookup} from '../util/utils';
@@ -10,6 +10,18 @@ import {isUndefined} from 'tsfun/src/predicate';
 import {FieldDefinition} from './model/field-definition';
 import {Group} from './group-util';
 import {clone} from '../util/object-util';
+import {Name} from '../constants';
+
+
+const DEFAULT_GROUP_ORDER = [
+    'stem',
+    'identification',
+    'parent',
+    'child',
+    'dimension',
+    'position',
+    'time'
+];
 
 
 /**
@@ -81,19 +93,44 @@ export module ProjectConfigurationUtils {
     }
 
 
-    // TODO make pure
+    /**
+     * Creates the groups array for each type.
+     * @param typesMap modified in place
+     */
     function fillGroups(typesMap: Map<IdaiType>): Map<IdaiType> {
 
         return map((type: IdaiType) => {
-            const groups: Map<FieldsGroup> = {};
 
-            for (let field of type.fields) {
-                if (!groups[field.group]) groups[field.group] = { fields: [] };
-                groups[field.group].fields = groups[field.group].fields.concat(field);
-            }
-            type.groups = groups;
+            type.groups =
+                flow(
+                    type.fields,
+                    makeGroupsMap,
+                    convertToSortedArray(DEFAULT_GROUP_ORDER));
+
             return type;
+
         })(typesMap);
+    }
+
+
+    function convertToSortedArray(defaultOrder: string[]) {
+
+        return (groups: Map<FieldsGroup>) =>
+            flow(
+                defaultOrder,
+                map(lookup(groups)),
+                prune);
+    }
+
+
+    function makeGroupsMap(fields: Array<FieldDefinition>) {
+
+        const groups: Map<FieldsGroup> = {};
+        for (let field of fields) {
+            if (!groups[field.group]) groups[field.group] = { fields: [] };
+            groups[field.group].fields = groups[field.group].fields.concat(field);
+        }
+        return groups;
     }
 
 

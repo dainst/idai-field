@@ -10,8 +10,24 @@
         max-width: 300px;
     }
 
+    .header {
+        padding: 7px;
+        border-bottom: 1px solid #ccc;
+        user-select: none;
+        background-color: #e7e7e7;
+
+        h5 {
+            margin: 8px;
+        }
+    }
+
+    .groups {
+        padding-top: 1rem;
+    }
+
     .content {
-        height: calc(100vh - 50px);
+        padding-top: 1rem;
+        height: calc(100vh - 104px);
         overflow-y: auto;
         overflow-x: hidden;
         padding: 15px;

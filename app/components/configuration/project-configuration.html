@@ -7,75 +7,89 @@
                     allowPickingAbstractTypes="true" (onTypePicked)="selectType($event)"></type-picker>
             </div>
 
-            <div class="col-lg-2">
-                <ul class="nav nav-pills flex-column">
-                    <li *ngFor="let group of getGroups(selectedType)" class="nav flex-column">
-                        <a class="nav-link"
-                                [class.active]="selectedGroup === group"
-                                (click)="selectedGroup = group">
-                            <span *ngIf="group === 'stem'" i18n="@@docedit.group.stem">Stammdaten</span>
-                            <span *ngIf="group === 'identification'" i18n="@@docedit.group.identification">Bestimmung</span>
-                            <span *ngIf="group === 'dimension'" i18n="@@docedit.group.dimensions">Maße</span>
-                            <span *ngIf="group === 'position'" i18n="@@docedit.group.position">Lage</span>
-                            <span *ngIf="group === 'time'" i18n="@@docedit.group.time">Zeit</span>
-                            <span *ngIf="group === 'child'">{{ selectedType.label }}</span>
-                            <span *ngIf="!group && selectedType.parentType">{{ selectedType.parentType.label }}</span>
-                            <span *ngIf="!group && !selectedType.parentType">{{ selectedType.label }}</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
+            <div class="col">
 
-            <div class="col content">
+                <div class="row">
+                    <div class="col header d-flex">
+                        <type-icon size="41" type="{{selectedType.name}}"></type-icon>
+                        <h5>{{ selectedType.label }} <code>{{ selectedType.name }}</code></h5>
+                    </div>
+                </div>
 
-                <h5>{{ selectedType.label }} <code>{{ selectedType.name }}</code></h5>
-                
-                <div *ngFor="let field of getVisibleFields(selectedType)"
-                        class="card"
-                        [class.bg-warning]="field.source === 'custom'">
+                <div class="row">
 
-                    <div class="card-header">
-                        <span *ngIf="field.source === 'custom'"
-                            class="mdi mdi-alert-circle-outline"
-                            ngbTooltip="Projektspezifisches Feld"
-                            i18n-ngbTooltip="@@config.source.custom"
-                            placement="right">
-                        </span>
-                        <b *ngIf="field.label"> {{ field.label }}</b>
-                        <code> {{ field.name }}</code></div>
-
-                    <div class="card-body">
-                        <p class="card-text">{{ field.description }}</p>
-                        <ul class="list-group list-group-flush">
-
-                            <li class="list-group-item">
-                                <b i18n="@@configuration.field.inputType">Eingabetyp</b>:
-                                <span *ngIf="field.inputType === 'input'" i18n="@@config.inputType.input">Einzeiliger Text</span>
-                                <span *ngIf="field.inputType === 'unsignedInt'" i18n="@@config.inputType.unsignedInt">Positive Ganzzahl</span>
-                                <span *ngIf="field.inputType === 'float'" i18n="@@config.inputType.float">Kommazahl</span>
-                                <span *ngIf="field.inputType === 'unsignedFloat'" i18n="@@config.inputType.unsignedFloat">Positive Kommazahl</span>
-                                <span *ngIf="field.inputType === 'multiInput'" i18n="@@config.inputType.multiInput">Einzeiliger Text mit Mehrfachauswahl</span>
-                                <span *ngIf="field.inputType === 'text'" i18n="@@config.inputType.text">Mehrzeiliger Text</span>
-                                <span *ngIf="field.inputType === 'dropdown'" i18n="@@config.inputType.dropdown">Dropdown-Liste</span>
-                                <span *ngIf="field.inputType === 'dropdownRange'" i18n="@@config.inputType.dropdownRange">Dropdown-Liste (Bereich)</span>
-                                <span *ngIf="field.inputType === 'radio'" i18n="@@config.inputType.radio">Radiobutton</span>
-                                <span *ngIf="field.inputType === 'boolean'" i18n="@@config.inputType.boolean">Ja / Nein</span>
-                                <span *ngIf="field.inputType === 'checkboxes'" i18n="@@config.inputType.checkboxes">Checkboxen</span>
-                                <span *ngIf="field.inputType === 'dating'" i18n="@@config.inputType.float">Datierungsangabe</span>
-                                <span *ngIf="field.inputType === 'date'" i18n="@@config.inputType.date">Datum</span>
-                                <span *ngIf="field.inputType === 'dimension'" i18n="@@config.inputType.dimension">Maßangabe</span>
-                                <span *ngIf="field.inputType === 'literature'" i18n="@@config.inputType.literature">Literaturangabe</span>
-                                <span *ngIf="field.inputType === 'geometry'" i18n="@@config.inputType.geometry">Geometrie</span>
-                                <span *ngIf="field.inputType === 'instanceOf'" i18n="@@config.inputType.instanceOf">Typenauswahl</span>
-                                <span *ngIf="field.inputType === 'catalogCriterion'" i18n="@@config.inputType.float">Kriterium für Typenkatalog</span>
+                    <div class="col-lg-2 groups">
+                        <ul class="nav nav-pills flex-column">
+                            <li *ngFor="let group of getGroups(selectedType)" class="nav flex-column">
+                                <a class="nav-link"
+                                        [class.active]="selectedGroup === group"
+                                        (click)="selectedGroup = group">
+                                    <span *ngIf="group === 'stem'" i18n="@@docedit.group.stem">Stammdaten</span>
+                                    <span *ngIf="group === 'identification'" i18n="@@docedit.group.identification">Bestimmung</span>
+                                    <span *ngIf="group === 'dimension'" i18n="@@docedit.group.dimensions">Maße</span>
+                                    <span *ngIf="group === 'position'" i18n="@@docedit.group.position">Lage</span>
+                                    <span *ngIf="group === 'time'" i18n="@@docedit.group.time">Zeit</span>
+                                    <span *ngIf="group === 'child'">{{ selectedType.label }}</span>
+                                    <span *ngIf="!group && selectedType.parentType">{{ selectedType.parentType.label }}</span>
+                                    <span *ngIf="!group && !selectedType.parentType">{{ selectedType.label }}</span>
+                                </a>
                             </li>
-
                         </ul>
+                    </div>
+
+                    <div class="col content">
+                        
+                        <div *ngFor="let field of getVisibleFields(selectedType)"
+                                class="card"
+                                [class.bg-warning]="field.source === 'custom'">
+
+                            <div class="card-header">
+                                <span *ngIf="field.source === 'custom'"
+                                    class="mdi mdi-alert-circle-outline"
+                                    ngbTooltip="Projektspezifisches Feld"
+                                    i18n-ngbTooltip="@@config.source.custom"
+                                    placement="right">
+                                </span>
+                                <b *ngIf="field.label"> {{ field.label }}</b>
+                                <code> {{ field.name }}</code></div>
+
+                            <div class="card-body">
+                                <p class="card-text">{{ field.description }}</p>
+                                <ul class="list-group list-group-flush">
+
+                                    <li class="list-group-item">
+                                        <b i18n="@@configuration.field.inputType">Eingabetyp</b>:
+                                        <span *ngIf="field.inputType === 'input'" i18n="@@config.inputType.input">Einzeiliger Text</span>
+                                        <span *ngIf="field.inputType === 'unsignedInt'" i18n="@@config.inputType.unsignedInt">Positive Ganzzahl</span>
+                                        <span *ngIf="field.inputType === 'float'" i18n="@@config.inputType.float">Kommazahl</span>
+                                        <span *ngIf="field.inputType === 'unsignedFloat'" i18n="@@config.inputType.unsignedFloat">Positive Kommazahl</span>
+                                        <span *ngIf="field.inputType === 'multiInput'" i18n="@@config.inputType.multiInput">Einzeiliger Text mit Mehrfachauswahl</span>
+                                        <span *ngIf="field.inputType === 'text'" i18n="@@config.inputType.text">Mehrzeiliger Text</span>
+                                        <span *ngIf="field.inputType === 'dropdown'" i18n="@@config.inputType.dropdown">Dropdown-Liste</span>
+                                        <span *ngIf="field.inputType === 'dropdownRange'" i18n="@@config.inputType.dropdownRange">Dropdown-Liste (Bereich)</span>
+                                        <span *ngIf="field.inputType === 'radio'" i18n="@@config.inputType.radio">Radiobutton</span>
+                                        <span *ngIf="field.inputType === 'boolean'" i18n="@@config.inputType.boolean">Ja / Nein</span>
+                                        <span *ngIf="field.inputType === 'checkboxes'" i18n="@@config.inputType.checkboxes">Checkboxen</span>
+                                        <span *ngIf="field.inputType === 'dating'" i18n="@@config.inputType.float">Datierungsangabe</span>
+                                        <span *ngIf="field.inputType === 'date'" i18n="@@config.inputType.date">Datum</span>
+                                        <span *ngIf="field.inputType === 'dimension'" i18n="@@config.inputType.dimension">Maßangabe</span>
+                                        <span *ngIf="field.inputType === 'literature'" i18n="@@config.inputType.literature">Literaturangabe</span>
+                                        <span *ngIf="field.inputType === 'geometry'" i18n="@@config.inputType.geometry">Geometrie</span>
+                                        <span *ngIf="field.inputType === 'instanceOf'" i18n="@@config.inputType.instanceOf">Typenauswahl</span>
+                                        <span *ngIf="field.inputType === 'catalogCriterion'" i18n="@@config.inputType.float">Kriterium für Typenkatalog</span>
+                                    </li>
+
+                                </ul>
+                            </div>
+
+                        </div>
+
                     </div>
 
                 </div>
 
             </div>
+
         </div>
 
     </div>

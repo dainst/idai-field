@@ -58,8 +58,8 @@ export module ValuelistUtil {
         const field: string[]|undefined = projectDocument.resource[fieldName];
         return field && isArray(field)
             ? {
-                values: field.reduce((values: { [fieldId: string]: ValueDefinition }, field) => {
-                    values[field] = {};
+                values: field.reduce((values: { [fieldId: string]: ValueDefinition }, fieldName: string) => {
+                    values[fieldName] = {};
                     return values;
                 }, {})
             }

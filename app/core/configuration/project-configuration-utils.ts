@@ -1,27 +1,14 @@
 import {map, on, separate, defined, isNot, update, flatten, flow, reduce,
     assoc, append, Map, values, to, lookup, cond, throws, prune} from 'tsfun';
 import {TypeDefinition} from './model/type-definition';
-import {FieldsGroup, IdaiType} from './model/idai-type';
+import {IdaiType} from './model/idai-type';
 import {makeLookup} from '../util/utils';
 import {RelationDefinition} from './model/relation-definition';
 import {ConfigurationDefinition} from './boot/configuration-definition';
 import {MDInternal} from 'idai-components-2';
 import {isUndefined} from 'tsfun/src/predicate';
 import {FieldDefinition} from './model/field-definition';
-import {Group} from './group-util';
-import {clone} from '../util/object-util';
-import {Name} from '../constants';
-
-
-const DEFAULT_GROUP_ORDER = [
-    'stem',
-    'identification',
-    'parent',
-    'child',
-    'dimension',
-    'position',
-    'time'
-];
+import {DEFAULT_GROUP_ORDER, Group, Groups} from './model/group';
 
 
 /**
@@ -82,7 +69,7 @@ export module ProjectConfigurationUtils {
             flow(
                 parentDefs,
                 map(IdaiType.build),
-                map(update(IdaiType.FIELDS, IdaiType.ifUndefinedSetGroupTo(Group.PARENT))),
+                map(update(IdaiType.FIELDS, IdaiType.ifUndefinedSetGroupTo(Groups.PARENT))),
                 makeLookup(IdaiType.NAME));
 
         return flow(
@@ -115,7 +102,7 @@ export module ProjectConfigurationUtils {
 
     function convertToSortedArray(defaultOrder: string[]) {
 
-        return (groups: Map<FieldsGroup>) =>
+        return (groups: Map<Group>) =>
             flow(
                 defaultOrder,
                 map(lookup(groups)),
@@ -125,7 +112,7 @@ export module ProjectConfigurationUtils {
 
     function makeGroupsMap(fields: Array<FieldDefinition>) {
 
-        const groups: Map<FieldsGroup> = {};
+        const groups: Map<Group> = {};
         for (let field of fields) {
             if (!groups[field.group]) groups[field.group] = { fields: [] };
             groups[field.group].fields = groups[field.group].fields.concat(field);
@@ -147,7 +134,8 @@ export module ProjectConfigurationUtils {
 
         return flow(childDef.parent,
             lookup(typesMap),
-            cond(isUndefined,
+            cond(
+                isUndefined,
                 throws(MDInternal.PROJECT_CONFIGURATION_ERROR_GENERIC)),
                 addChildTypeToParent(typesMap, childDef));
     }

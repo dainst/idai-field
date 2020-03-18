@@ -2,19 +2,6 @@ import {FieldDefinition} from './model/field-definition';
 import {PositionRelations, TimeRelations, TypeRelations} from '../model/relation-constants';
 
 
-export module Group {
-
-    export const STEM = 'stem';
-    export const DIMENSION = 'dimension';
-    export const TIME = 'time';
-    export const POSITION = 'position';
-    export const IDENTIFICATION = 'identification';
-    export const PROPERTIES = 'properties';
-    export const PARENT = 'parent';
-    export const CHILD = 'child';
-}
-
-
 /**
  * @author Daniel de Oliveira
  * @author Thomas Kleinke

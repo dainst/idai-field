@@ -2,7 +2,7 @@ import {isUndefined, flow, cond, on, assoc, map, Map} from 'tsfun';
 import {TypeDefinition} from './type-definition';
 import {FieldDefinition} from './field-definition';
 import {clone} from '../../util/object-util';
-import {Group} from '../group-util';
+import {Group, Groups} from './group';
 
 
 export interface IdaiType {
@@ -14,17 +14,9 @@ export interface IdaiType {
     label: string;
     color: string|undefined;
     fields: Array<FieldDefinition>;
-    groups?: Array<FieldsGroup>; // TODO make mandatory
+    groups?: Array<Group>; // TODO make mandatory
     mustLieWithin: boolean|undefined; // = undefined;
 }
-
-
-export interface FieldsGroup { // TODO rename
-
-    fields: Array<FieldDefinition>;
-    // TODO add relations, more fields?
-}
-
 
 
 /**
@@ -59,7 +51,7 @@ export module IdaiType {
 
         try {
 
-            const childFields = ifUndefinedSetGroupTo(Group.CHILD)(child.fields);
+            const childFields = ifUndefinedSetGroupTo(Groups.CHILD)(child.fields);
             return getCombinedFields(type.fields, childFields);
 
         } catch (e) {

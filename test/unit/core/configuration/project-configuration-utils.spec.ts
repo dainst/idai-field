@@ -1,7 +1,7 @@
 import {ProjectConfigurationUtils} from '../../../../app/core/configuration/project-configuration-utils';
 import {ConfigurationDefinition} from '../../../../app/core/configuration/boot/configuration-definition';
 import {SortUtil} from '../../../../app/core/util/sort-util';
-import {Group} from '../../../../app/core/configuration/group-util';
+import {Groups} from '../../../../app/core/configuration/model/group';
 
 const byName = (a, b) => SortUtil.alnumCompare(a.name, b.name);
 
@@ -39,12 +39,12 @@ describe('ProjectConfigurationUtils', () => {
 
       typesMap[A].fields.sort(byName);
 
-      expect(typesMap[A].fields[0].group).toBe(Group.CHILD);
-      expect(typesMap[A].fields[1].group).toBe(Group.PARENT);
-      expect(typesMap[P].fields[0].group).toBe(Group.PARENT);
+      expect(typesMap[A].fields[0].group).toBe(Groups.CHILD);
+      expect(typesMap[A].fields[1].group).toBe(Groups.PARENT);
+      expect(typesMap[P].fields[0].group).toBe(Groups.PARENT);
 
-      expect(typesMap[A].groups[0].fields[0].group).toBe(Group.PARENT);
-      expect(typesMap[A].groups[1].fields[0].group).toBe(Group.CHILD);
-      expect(typesMap[P].groups[0].fields[0].group).toBe(Group.PARENT);
+      expect(typesMap[A].groups[0].fields[0].group).toBe(Groups.PARENT);
+      expect(typesMap[A].groups[1].fields[0].group).toBe(Groups.CHILD);
+      expect(typesMap[P].groups[0].fields[0].group).toBe(Groups.PARENT);
    });
 });

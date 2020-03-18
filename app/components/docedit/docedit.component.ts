@@ -17,7 +17,7 @@ import {RelationDefinition} from '../../core/configuration/model/relation-defini
 import {ProjectConfiguration} from '../../core/configuration/project-configuration';
 import {DocumentHolder} from '../../core/docedit/document-holder';
 import {DoceditErrors} from '../../core/docedit/docedit-errors';
-import {Group} from '../../core/configuration/group-util';
+import {Groups} from '../../core/configuration/model/group';
 
 
 @Component({
@@ -40,7 +40,7 @@ import {Group} from '../../core/configuration/group-util';
  */
 export class DoceditComponent {
 
-    public activeGroup: string = Group.STEM;
+    public activeGroup: string = Groups.STEM;
     public subModalOpened: boolean = false;
     public fieldDefinitions: Array<FieldDefinition>|undefined;
     public relationDefinitions: Array<RelationDefinition>;

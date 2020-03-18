@@ -6,7 +6,7 @@ import {ProjectConfiguration} from './project-configuration';
 import {FieldDefinition} from './model/field-definition';
 import {BuiltinTypeDefinition} from './model/builtin-type-definition';
 import {RelationDefinition} from './model/relation-definition';
-import {Group} from './group-util';
+import {Groups} from './model/group';
 
 
 export module BuiltInTypes {
@@ -30,30 +30,30 @@ export class AppConfigurator {
     private commonFields = {
         period: {
             inputType: FieldDefinition.InputType.DROPDOWNRANGE,
-            group: Group.TIME
+            group: Groups.TIME
         },
         dating: {
             inputType: FieldDefinition.InputType.DATING,
-            group: Group.TIME
+            group: Groups.TIME
         },
         diary: {
             inputType: FieldDefinition.InputType.INPUT,
-            group: Group.STEM
+            group: Groups.STEM
         },
         area: {
             inputType: FieldDefinition.InputType.UNSIGNEDFLOAT,
-            group: Group.DIMENSION
+            group: Groups.DIMENSION
         },
         dimensionLength: {
             inputType: FieldDefinition.InputType.DIMENSION,
-            group: Group.DIMENSION,
+            group: Groups.DIMENSION,
             positionValues: [
                 'Maximale Ausdehnung',
                 'Minimale Ausdehnung']
         },
         dimensionWidth: {
             inputType: FieldDefinition.InputType.DIMENSION,
-            group: Group.DIMENSION,
+            group: Groups.DIMENSION,
             positionValues: [
                 'Maximale Ausdehnung',
                 'Minimale Ausdehnung']
@@ -67,85 +67,85 @@ export class AppConfigurator {
         },
         dimensionDiameter: {
             inputType: FieldDefinition.InputType.DIMENSION,
-            group: Group.DIMENSION,
+            group: Groups.DIMENSION,
             positionValues: [
                 'Maximale Ausdehnung',
                 'Minimale Ausdehnung']
         },
         dimensionPerimeter: {
             inputType: FieldDefinition.InputType.DIMENSION,
-            group: Group.DIMENSION,
+            group: Groups.DIMENSION,
             positionValues: [
                 'Maximale Ausdehnung',
                 'Minimale Ausdehnung']
         },
         dimensionThickness: {
             inputType: FieldDefinition.InputType.DIMENSION,
-            group: Group.DIMENSION,
+            group: Groups.DIMENSION,
             positionValues: [
                 'Maximale Ausdehnung',
                 'Minimale Ausdehnung']
         },
         dimensionVerticalExtent: {
             inputType: FieldDefinition.InputType.DIMENSION,
-            group: Group.POSITION,
+            group: Groups.POSITION,
             positionValues: [
                 'Oberkante',
                 'Unterkante']
         },
         dimensionOther: {
             inputType: FieldDefinition.InputType.DIMENSION,
-            group: Group.DIMENSION,
+            group: Groups.DIMENSION,
             positionValues: [
                 'Maximale Ausdehnung',
                 'Minimale Ausdehnung']
         },
         beginningDate: {
             inputType: FieldDefinition.InputType.DATE,
-            group: Group.STEM
+            group: Groups.STEM
         },
         endDate: {
             inputType: FieldDefinition.InputType.DATE,
-            group: Group.STEM
+            group: Groups.STEM
         },
         supervisor: {
             inputType: FieldDefinition.InputType.CHECKBOXES,
             valuelistFromProjectField: 'staff',
-            group: Group.STEM
+            group: Groups.STEM
         },
         processor: {
             inputType: FieldDefinition.InputType.CHECKBOXES,
             valuelistFromProjectField: 'staff',
-            group: Group.STEM
+            group: Groups.STEM
         },
         campaign: {
             inputType: FieldDefinition.InputType.CHECKBOXES,
             valuelistFromProjectField: 'campaigns',
             allowOnlyValuesOfParent: true,
-            group: Group.STEM
+            group: Groups.STEM
         },
         draughtsmen: {
             inputType: FieldDefinition.InputType.CHECKBOXES,
             valuelistFromProjectField: 'staff',
-            group: Group.STEM
+            group: Groups.STEM
         },
         description: {
             inputType: FieldDefinition.InputType.TEXT
         },
         date: {
             inputType: FieldDefinition.InputType.DATE,
-            group: Group.STEM
+            group: Groups.STEM
         },
         spatialLocation: {
             inputType: FieldDefinition.InputType.INPUT,
-            group: Group.POSITION
+            group: Groups.POSITION
         },
         provenance: {
             inputType: FieldDefinition.InputType.DROPDOWN,
         },
         orientation: {
             inputType: FieldDefinition.InputType.DROPDOWN,
-            group: Group.POSITION
+            group: Groups.POSITION
         },
         literature: {
             inputType: FieldDefinition.InputType.LITERATURE
@@ -238,11 +238,11 @@ export class AppConfigurator {
             fields: {
                 period: {
                     inputType: FieldDefinition.InputType.DROPDOWNRANGE,
-                    group: Group.TIME
+                    group: Groups.TIME
                 },
                 dating: {
                     inputType: FieldDefinition.InputType.DATING,
-                    group: Group.TIME
+                    group: Groups.TIME
                 }
             }
         },
@@ -252,7 +252,7 @@ export class AppConfigurator {
             fields: {
                 instanceOf: {
                     inputType: 'instanceOf',
-                    group: Group.IDENTIFICATION
+                    group: Groups.IDENTIFICATION
                 }
             }
         },
@@ -266,7 +266,7 @@ export class AppConfigurator {
                 criterion: {
                     inputType: FieldDefinition.InputType.CATALOGCRITERION,
                     constraintIndexed: true,
-                    group: Group.IDENTIFICATION
+                    group: Groups.IDENTIFICATION
                 }
             }
         },
@@ -311,7 +311,7 @@ export class AppConfigurator {
             label: this.i18n({ id: 'configuration.defaultFields.shortDescription', value: 'Kurzbeschreibung' }),
             visible: false,
             editable: true,
-            group: Group.STEM
+            group: Groups.STEM
         } as FieldDefinition,
         identifier: {
             description: this.i18n({
@@ -322,7 +322,7 @@ export class AppConfigurator {
             visible: false,
             editable: true,
             mandatory: true,
-            group: Group.STEM
+            group: Groups.STEM
         } as FieldDefinition,
         geometry: {
             visible: false,

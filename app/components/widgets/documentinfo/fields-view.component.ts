@@ -6,7 +6,7 @@ import {is, isnt, isUndefinedOrEmpty, isDefined, on, isNot, isString, includedIn
 import {Document, FieldDocument,  ReadDatastore, FieldResource, Resource, Dating, Dimension, Literature,
     ValOptionalEndVal} from 'idai-components-2';
 import {RoutingService} from '../../routing-service';
-import {Group, GroupUtil} from '../../../core/configuration/group-util';
+import {GroupUtil} from '../../../core/configuration/group-util';
 import {Name, ResourceId} from '../../../core/constants';
 import {GROUP_NAME} from '../../constants';
 import {pick} from '../../../core/util/utils';
@@ -20,6 +20,7 @@ import {CatalogCriteria} from '../../docedit/core/forms/type-relation/catalog-cr
 import {BuiltInTypes} from '../../../core/configuration/app-configurator';
 import {ValuelistDefinition} from '../../../core/configuration/model/valuelist-definition';
 import {ValuelistUtil} from '../../../core/util/valuelist-util';
+import {Groups} from '../../../core/configuration/model/group';
 
 
 const PERIOD = 'period';
@@ -45,7 +46,7 @@ type FieldViewGroupDefinition = {
 export class FieldsViewComponent implements OnChanges {
 
     @Input() resource: Resource;
-    @Input() openSection: string|undefined = Group.STEM;
+    @Input() openSection: string|undefined = Groups.STEM;
     @Input() expandAllGroups: boolean = false;
 
     @Output() onSectionToggled = new EventEmitter<string|undefined>();
@@ -56,13 +57,13 @@ export class FieldsViewComponent implements OnChanges {
 
 
     private groups: Array<FieldViewGroupDefinition> = [
-        { name: Group.STEM, label: this.i18n({ id: 'docedit.group.stem', value: 'Stammdaten' }), shown: true },
-        { name: Group.IDENTIFICATION, label: this.i18n({ id: 'docedit.group.identification', value: 'Bestimmung' }), shown: false },
-        { name: Group.PROPERTIES, label: '', shown: false },
-        { name: Group.CHILD, label: '', shown: false },
-        { name: Group.DIMENSION, label: this.i18n({ id: 'docedit.group.dimensions', value: 'Maße' }), shown: false },
-        { name: Group.POSITION, label: this.i18n({ id: 'docedit.group.position', value: 'Lage' }), shown: false },
-        { name: Group.TIME, label: this.i18n({ id: 'docedit.group.time', value: 'Zeit' }), shown: false }
+        { name: Groups.STEM, label: this.i18n({ id: 'docedit.group.stem', value: 'Stammdaten' }), shown: true },
+        { name: Groups.IDENTIFICATION, label: this.i18n({ id: 'docedit.group.identification', value: 'Bestimmung' }), shown: false },
+        { name: Groups.PROPERTIES, label: '', shown: false },
+        { name: Groups.CHILD, label: '', shown: false },
+        { name: Groups.DIMENSION, label: this.i18n({ id: 'docedit.group.dimensions', value: 'Maße' }), shown: false },
+        { name: Groups.POSITION, label: this.i18n({ id: 'docedit.group.position', value: 'Lage' }), shown: false },
+        { name: Groups.TIME, label: this.i18n({ id: 'docedit.group.time', value: 'Zeit' }), shown: false }
     ];
 
 
@@ -82,13 +83,13 @@ export class FieldsViewComponent implements OnChanges {
 
         this.fields = {};
         this.relations = {};
-        this.relations[Group.STEM] = [];
-        this.relations[Group.IDENTIFICATION] = [];
-        this.relations[Group.PROPERTIES] = [];
-        this.relations[Group.CHILD] = [];
-        this.relations[Group.DIMENSION] = [];
-        this.relations[Group.POSITION] = [];
-        this.relations[Group.TIME] = [];
+        this.relations[Groups.STEM] = [];
+        this.relations[Groups.IDENTIFICATION] = [];
+        this.relations[Groups.PROPERTIES] = [];
+        this.relations[Groups.CHILD] = [];
+        this.relations[Groups.DIMENSION] = [];
+        this.relations[Groups.POSITION] = [];
+        this.relations[Groups.TIME] = [];
 
         if (this.resource) {
             await this.processRelations(this.resource);
@@ -172,13 +173,13 @@ export class FieldsViewComponent implements OnChanges {
 
         for (let field of existingResourceFields) {
 
-            const group = field.group !== 'parent' ? field.group : Group.PROPERTIES; // TODO review
+            const group = field.group !== 'parent' ? field.group : Groups.PROPERTIES; // TODO review
             if (!this.fields[group]) this.fields[group] = [];
             this.pushField(resource, field, group);
         }
 
-        if (this.fields[Group.STEM]) GroupUtil.sortGroups(this.fields[Group.STEM], Group.STEM);
-        if (this.fields[Group.DIMENSION]) GroupUtil.sortGroups(this.fields[Group.DIMENSION], Group.DIMENSION);
+        if (this.fields[Groups.STEM]) GroupUtil.sortGroups(this.fields[Groups.STEM], Groups.STEM);
+        if (this.fields[Groups.DIMENSION]) GroupUtil.sortGroups(this.fields[Groups.DIMENSION], Groups.DIMENSION);
     }
 
 
@@ -208,7 +209,7 @@ export class FieldsViewComponent implements OnChanges {
 
     private handleTypeCatalogCriterionField(resource: Resource, field: FieldDefinition) {
 
-        this.fields[Group.IDENTIFICATION].push({
+        this.fields[Groups.IDENTIFICATION].push({
             label: field.label,
             value: this.catalogCriteria.translateCriterion(resource[field.name]),
             isArray: false
@@ -246,20 +247,20 @@ export class FieldsViewComponent implements OnChanges {
 
     private addBaseFields(resource: Resource) {
 
-        this.fields[Group.STEM] = [];
+        this.fields[Groups.STEM] = [];
 
         const shortDescription =
             FieldsViewComponent.getValue(resource, FieldResource.SHORTDESCRIPTION);
 
         if (shortDescription) {
-            this.fields[Group.STEM].push({
+            this.fields[Groups.STEM].push({
                 label: this.getLabel(resource.type, FieldResource.SHORTDESCRIPTION),
                 value: shortDescription,
                 isArray: false
             });
         }
 
-        this.fields[Group.STEM].push({
+        this.fields[Groups.STEM].push({
             label: this.getLabel(resource.type, Resource.TYPE),
             value: this.projectConfiguration.getLabelForType(resource.type),
             isArray: false

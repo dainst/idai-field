@@ -9,6 +9,7 @@ import {MDInternal} from 'idai-components-2';
 import {isUndefined} from 'tsfun/src/predicate';
 import {FieldDefinition} from './model/field-definition';
 import {DEFAULT_GROUP_ORDER, Group, Groups} from './model/group';
+import {GroupUtil} from './group-util';
 
 
 /**
@@ -19,6 +20,8 @@ import {DEFAULT_GROUP_ORDER, Group, Groups} from './model/group';
 export module ProjectConfigurationUtils {
 
     // TODO reimplement; test
+    import sortGroups = GroupUtil.sortGroups;
+
     export function getTypeAndSubtypes(projectTypesMap: Map<IdaiType>,
                                        superTypeName: string): Map<IdaiType> {
 
@@ -92,11 +95,20 @@ export module ProjectConfigurationUtils {
                 flow(
                     type.fields,
                     makeGroupsMap,
+                    map(sortGroupFields),
                     convertToSortedArray(DEFAULT_GROUP_ORDER));
 
             return type;
 
         })(typesMap);
+    }
+
+
+    // TODO make pure
+    function sortGroupFields(group: Group) {
+
+        sortGroups(group.fields, group.name);
+        return group;
     }
 
 
@@ -114,7 +126,7 @@ export module ProjectConfigurationUtils {
 
         const groups: Map<Group> = {};
         for (let field of fields) {
-            if (!groups[field.group]) groups[field.group] = { fields: [] };
+            if (!groups[field.group]) groups[field.group] = { fields: [], name: field.group };
             groups[field.group].fields = groups[field.group].fields.concat(field);
         }
         return groups;

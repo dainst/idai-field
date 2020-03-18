@@ -26,6 +26,7 @@ export const DEFAULT_GROUP_ORDER = [
 
 export interface Group {
 
+    name: string;
     fields: Array<FieldDefinition>;
     // TODO add relations, more fields?
 }

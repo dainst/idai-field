@@ -8,6 +8,7 @@ import {PositionRelations, TimeRelations, TypeRelations} from '../model/relation
  */
 export module GroupUtil {
 
+    // TODO make pure
     export function sortGroups(fields: Array<FieldDefinition>, groupName: string) {
 
         switch(groupName) {

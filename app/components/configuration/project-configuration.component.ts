@@ -1,10 +1,9 @@
 import {Component} from '@angular/core';
 import {ProjectConfiguration} from '../../core/configuration/project-configuration';
 import {IdaiType} from '../../core/configuration/model/idai-type';
-import {to, on, is, intersect, includedIn} from 'tsfun';
+import {to, on, is, intersect, includedIn, or} from 'tsfun';
 import {FieldDefinition} from '../../core/configuration/model/field-definition';
-import { GroupUtil } from '../../core/configuration/group-util';
-import { ValuelistDefinition } from '../../core/configuration/model/valuelist-definition';
+import {Group} from '../../core/configuration/model/group';
 
 
 @Component({
@@ -52,11 +51,12 @@ export class ProjectConfigurationComponent {
 
     public getVisibleFields(type: IdaiType): FieldDefinition[] {
 
-        const groupFields = type.fields.filter(on(FieldDefinition.GROUP, is(this.selectedGroup)));
-        let fields = groupFields
-            .filter(on(FieldDefinition.VISIBLE, is(true)))
-            .concat(groupFields.filter(on(FieldDefinition.NAME, includedIn(this.OVERRIDE_VISIBLE_FIELDS))));
-        GroupUtil.sortGroups(fields, this.selectedGroup);
-        return fields;
+        return (type.groups as any)
+            .find(on(Group.NAME, is(this.selectedGroup)))
+            .fields
+            .filter(
+                or(
+                    on(FieldDefinition.VISIBLE, is(true)),
+                    on(FieldDefinition.NAME, includedIn(this.OVERRIDE_VISIBLE_FIELDS))));
     }
 }

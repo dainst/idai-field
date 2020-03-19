@@ -42,5 +42,6 @@ export interface EditFormGroup extends Group { // TODO review
 
 export module Group {
 
-    const FIELDS = 'fields';
+    export const FIELDS = 'fields';
+    export const NAME = 'name';
 }

@@ -28,6 +28,12 @@ export module ValuelistUtil {
     }
 
 
+    export function getValuelistDescription(valuelist: ValuelistDefinition): string|undefined {
+
+        return valuelist.description?.[locale];
+    }
+
+
     export function getValueLabel(valuelist: ValuelistDefinition, valueId: string): string {
 
         const label: { [locale: string]: string }|undefined = valuelist.values[valueId].labels;

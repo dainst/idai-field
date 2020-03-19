@@ -80,6 +80,10 @@
                                     </li>
 
                                     <li *ngIf="field.valuelist" class="list-group-item">
+                                        <div *ngIf="getValuelistDescription(field.valuelist)"
+                                                class="valuelist-description">
+                                            {{ getValuelistDescription(field.valuelist) }}
+                                        </div>
                                         <div class="row valuelist">
                                             <div *ngFor="let item of field.valuelist.values | keyvalue"
                                                     class="col-2 value-col">

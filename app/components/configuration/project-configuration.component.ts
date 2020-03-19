@@ -54,4 +54,7 @@ export class ProjectConfigurationComponent {
 
     
     public getValueLabel = ValuelistUtil.getValueLabel;
+
+
+    public getValuelistDescription = ValuelistUtil.getValuelistDescription;
 }

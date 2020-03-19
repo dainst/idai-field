@@ -130,7 +130,8 @@ export class ConfigLoader {
                 customTypes,
                 commonFields,
                 valuelistsConfiguration,
-                {...this.defaultFields, ...extraFields});
+                {...this.defaultFields, ...extraFields},
+                relations);
         } catch (msgWithParams) {
             throw [msgWithParams];
         }
@@ -141,8 +142,7 @@ export class ConfigLoader {
                 languageConfiguration,
                 customLanguageConfiguration,
                 searchConfiguration,
-                orderConfiguration,
-                relations);
+                orderConfiguration);
 
         } catch (msgWithParams) {
             throw [[msgWithParams]];

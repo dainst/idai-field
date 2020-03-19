@@ -15,6 +15,8 @@ import {mergeTypes} from './merge-types';
 import {addExtraFields} from './add-extra-fields';
 import {copy} from 'tsfun/src/collection';
 import {hideFields} from './hide-fields';
+import {RelationDefinition} from '../model/relation-definition';
+import {addRelations} from './add-relations';
 
 
 /**
@@ -26,7 +28,8 @@ export function buildProjectTypes(builtInTypes: Map<BuiltinTypeDefinition>,
                                   customTypes: Map<CustomTypeDefinition> = {},
                                   commonFields: Map = {},
                                   valuelistsConfiguration: Map<ValuelistDefinition> = {},
-                                  extraFields: Map = {}) {
+                                  extraFields: Map = {},
+                                  relations: Array<RelationDefinition> = []) {
 
     Assertions.performAssertions(builtInTypes, libraryTypes, customTypes, commonFields, valuelistsConfiguration);
     addSourceField(builtInTypes, libraryTypes, customTypes, commonFields);
@@ -44,7 +47,8 @@ export function buildProjectTypes(builtInTypes: Map<BuiltinTypeDefinition>,
         toTypesByFamilyNames,
         replaceValuelistIdsWithValuelists(valuelistsConfiguration as any),
         addExtraFields(extraFields),
-        wrapTypesInObject);
+        wrapTypesInObject,
+        addRelations(relations));
 }
 
 

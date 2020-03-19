@@ -54,7 +54,7 @@
                                 <code> {{ field.name }}</code></div>
 
                             <div class="card-body">
-                                <p class="card-text">{{ field.description }}</p>
+                                <p *ngIf="field.description" class="card-text">{{ field.description }}</p>
                                 <ul class="list-group list-group-flush">
 
                                     <li class="list-group-item">

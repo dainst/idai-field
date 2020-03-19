@@ -8,8 +8,6 @@ import {
 
 export function longerThan(than: string) { return (what: string) => what.length > than.length }
 
-export function includes(it: string) { return (what: string) => what.includes(it) }
-
 export function isEmptyString(a: any) { return typeof a === 'string' && a === '' }
 
 export function typeOf(v: any) { return typeof v }
@@ -19,11 +17,6 @@ export function debugId<T>(v: T): T {
     console.log("debug:", v);
     return v;
 }
-
-
-interface Named { name: string }
-
-type NamedIdentifiedObjectArray = Array<Named>;
 
 
 export function toArray(token: any) {
@@ -117,18 +110,6 @@ export function pick<A>(struct: Map<A>|Array<A>, targetId: string|number): A  {
 }
 
 
-/**
- * keys = ['a', 'b']
- * o = { a: 1, b: 2, c: 3 }
- * ->
- * [1, 2]
- */
-export function toTuple(...keys: string[]) { // do not remove, even if not used currently
-
-    return <T>(o: Map<T>) => keys.map(k => to(k)(o));
-}
-
-
 export function toPair<T>(k1: string, k2: string) {
 
     return (o: Map<T>): Pair<T, T> => [o[k1], o[k2]];
@@ -173,3 +154,21 @@ function _setOn(object: any, path: Array<string|number>, val: any) {
         _setOn(object[key], path, val);
     }
 }
+
+
+// --- please do not remove, even if not used currently ---
+
+/**
+ * keys = ['a', 'b']
+ * o = { a: 1, b: 2, c: 3 }
+ * ->
+ * [1, 2]
+ */
+export function toTuple(...keys: string[]) {
+
+    return <T>(o: Map<T>) => keys.map(k => to(k)(o));
+}
+
+interface Named { name: string }
+
+type NamedIdentifiedObjectArray = Array<Named>;

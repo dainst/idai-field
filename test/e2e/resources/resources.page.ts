@@ -184,12 +184,6 @@ export class ResourcesPage {
     }
 
 
-    public static getCreateDocumentButton() {
-
-        return element(by.css('#create-document-button .circular-button'));
-    }
-
-
     public static getCreateDocumentButtonTypeCharacter() {
 
         browser.wait(EC.visibilityOf(
@@ -212,12 +206,6 @@ export class ResourcesPage {
 
         browser.wait(EC.visibilityOf(element(by.css('.document-teaser div.type-icon'))), delays.ECWaitTime);
         return element(by.css('.document-teaser div.type-icon')).getText();
-    }
-
-
-    public static getConfirmDeletionInputField() {
-
-        return element(by.id('delete-resource-input'));
     }
 
 
@@ -267,6 +255,12 @@ export class ResourcesPage {
     }
 
 
+    public static getCreateDocumentButton() {
+
+        return element(by.css('#create-document-button .circular-button'));
+    }
+
+
     public static getCreateDocumentButtonTypeIcon() {
 
         return element(by.css('#create-document-button .type-icon'));
@@ -282,6 +276,12 @@ export class ResourcesPage {
     public static getContextMenu() {
 
         return element(by.id('context-menu'));
+    }
+
+
+    public static getConfirmDeletionInputField() {
+
+        return element(by.id('delete-resource-input'));
     }
 
 

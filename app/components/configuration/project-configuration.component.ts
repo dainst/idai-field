@@ -36,13 +36,13 @@ export class ProjectConfigurationComponent {
     }
 
 
-    public getGroups = (type: IdaiType): any[] => (type.groups as any).map(to(Group.NAME));
+    public getGroups = (type: IdaiType): any[] => type.groups.map(to(Group.NAME));
 
 
     public getVisibleFields(type: IdaiType): FieldDefinition[] {
 
-        return (type.groups as any)
-            .find(on(Group.NAME, is(this.selectedGroup)))
+        return (type.groups
+            .find(on(Group.NAME, is(this.selectedGroup))) as any)
             .fields
             .filter(
                 or(

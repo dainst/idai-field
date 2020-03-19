@@ -14,7 +14,7 @@ export interface IdaiType {
     label: string;
     color: string|undefined;
     fields: Array<FieldDefinition>;
-    groups?: Array<Group>; // TODO make mandatory
+    groups: Array<Group>;
     mustLieWithin: boolean|undefined; // = undefined;
 }
 
@@ -33,6 +33,7 @@ export module IdaiType {
     export const FIELDS = 'fields';
     export const GROUPS = 'groups';
 
+
     export function build(definition: TypeDefinition): IdaiType {
 
         const idaiType: any = {};
@@ -40,6 +41,7 @@ export module IdaiType {
         idaiType.name = definition.type;
         idaiType.label = definition.label || idaiType.name;
         idaiType.fields = definition.fields || [];
+        idaiType.groups = [];
         idaiType.isAbstract = definition.abstract || false;
         idaiType.color = definition.color ?? generateColorForType(definition.type);
         idaiType.children = [];

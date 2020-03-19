@@ -1,3 +1,4 @@
+import {copy} from 'tsfun';
 import {FieldDefinition} from './model/field-definition';
 import {PositionRelations, TimeRelations, TypeRelations} from '../model/relation-constants';
 
@@ -8,23 +9,26 @@ import {PositionRelations, TimeRelations, TypeRelations} from '../model/relation
  */
 export module GroupUtil {
 
-    // TODO make pure
     export function sortGroups(fields: Array<FieldDefinition>, groupName: string) {
+
+        const copiedFields = copy(fields);
 
         switch(groupName) {
             case 'stem':
-                sortGroup(fields, [
+                sortGroup(copiedFields, [
                     'identifier', 'shortDescription', 'supervisor', 'draughtsmen', 'processor', 'campaign',
                     'diary', 'date', 'beginningDate', 'endDate'
                 ]);
                 break;
             case 'dimension':
-                sortGroup(fields, [
+                sortGroup(copiedFields, [
                     'dimensionHeight', 'dimensionLength', 'dimensionWidth', 'dimensionPerimeter',
                     'dimensionDiameter', 'dimensionThickness', 'dimensionVerticalExtent', 'dimensionOther'
                 ]);
                 break;
         }
+
+        return copiedFields;
     }
 
 

@@ -32,6 +32,14 @@ export interface Group {
 }
 
 
+export interface EditFormGroup extends Group { // TODO review
+
+    label: string;
+    relations: any[];
+    widget: string|undefined;
+}
+
+
 export module Group {
 
     const FIELDS = 'fields';

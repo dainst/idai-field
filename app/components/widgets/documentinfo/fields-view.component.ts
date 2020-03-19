@@ -178,8 +178,14 @@ export class FieldsViewComponent implements OnChanges {
             this.pushField(resource, field, group);
         }
 
-        if (this.fields[Groups.STEM]) GroupUtil.sortGroups(this.fields[Groups.STEM], Groups.STEM);
-        if (this.fields[Groups.DIMENSION]) GroupUtil.sortGroups(this.fields[Groups.DIMENSION], Groups.DIMENSION);
+        if (this.fields[Groups.STEM]) {
+            this.fields[Groups.STEM]
+                = GroupUtil.sortGroups(this.fields[Groups.STEM], Groups.STEM);
+        }
+        if (this.fields[Groups.DIMENSION]) {
+            this.fields[Groups.DIMENSION]
+                = GroupUtil.sortGroups(this.fields[Groups.DIMENSION], Groups.DIMENSION);
+        }
     }
 
 

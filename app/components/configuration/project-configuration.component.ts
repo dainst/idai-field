@@ -4,6 +4,8 @@ import {IdaiType} from '../../core/configuration/model/idai-type';
 import {to, on, is, includedIn, or} from 'tsfun';
 import {FieldDefinition} from '../../core/configuration/model/field-definition';
 import {Group} from '../../core/configuration/model/group';
+import { ValueDefinition } from '../../core/configuration/model/valuelist-definition';
+import { ValuelistUtil } from '../../core/util/valuelist-util';
 
 
 @Component({
@@ -49,4 +51,7 @@ export class ProjectConfigurationComponent {
                     on(FieldDefinition.VISIBLE, is(true)),
                     on(FieldDefinition.NAME, includedIn(this.OVERRIDE_VISIBLE_FIELDS))));
     }
+
+    
+    public getValueLabel = ValuelistUtil.getValueLabel;
 }

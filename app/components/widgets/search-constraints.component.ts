@@ -1,5 +1,6 @@
 import {Input, OnChanges, Renderer2, SimpleChanges} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
+import {on, is} from 'tsfun';
 import {filter as asyncFilter} from 'tsfun/async';
 import {ConstraintIndex} from '../../core/datastore/index/constraint-index';
 import {SearchBarComponent} from './search-bar.component';
@@ -9,6 +10,7 @@ import {ValuelistUtil} from '../../core/util/valuelist-util';
 import {clone} from '../../core/util/object-util';
 import {DocumentReadDatastore} from '../../core/datastore/document-read-datastore';
 import {ValuelistDefinition} from '../../core/configuration/model/valuelist-definition';
+import {IdaiType} from '../../core/configuration/model/idai-type';
 
 
 type ConstraintListItem = {
@@ -395,7 +397,7 @@ export abstract class SearchConstraintsComponent implements OnChanges {
         if (defaultField) return defaultField.label as string;
 
         if (fieldName.endsWith('End')) {
-            const baseField = (this.projectConfiguration.getTypesMap())[this.type].fields
+            const baseField = IdaiType.getFields((this.projectConfiguration.getTypesMap())[this.type])
                 .find((field: FieldDefinition) => field.name === fieldName.substring(0, fieldName.length - 3));
             if (baseField && baseField.inputType === 'dropdownRange') {
                 return baseField.label
@@ -403,8 +405,8 @@ export abstract class SearchConstraintsComponent implements OnChanges {
             }
         }
 
-        const field = this.projectConfiguration.getTypesMap()[this.type].fields
-            .find((field: FieldDefinition) => field.name === fieldName);
+        const field = IdaiType.getFields(this.projectConfiguration.getTypesMap()[this.type])
+            .find(on(FieldDefinition.NAME, is(fieldName)));
 
         if (!field) throw 'illegal state - field does not exist';
 

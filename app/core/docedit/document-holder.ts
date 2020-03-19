@@ -150,7 +150,7 @@ export class DocumentHolder {
 
         for (let fieldName in this.clonedDocument.resource) {
             const field: FieldDefinition|undefined
-                = type.fields.find(field => field.name === fieldName);
+                = IdaiType.getFields(type).find(field => field.name === fieldName);
             if (!field) continue;
 
             if (field.inputType === 'unsignedInt') {

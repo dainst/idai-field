@@ -275,8 +275,8 @@ export module ConstraintIndex {
 
         const fields: Array<FieldDefinition> =
             getUniqueFields(
-                types.reduce((result: Array<FieldDefinition>, type: IdaiType) => {
-                    return result.concat(type.fields);
+                types.reduce((result: Array<FieldDefinition>, type: IdaiType) => { // TODO use map function
+                    return result.concat(IdaiType.getFields(type));
                 }, []) as any
             ).filter((field: FieldDefinition) => field.constraintIndexed);
 

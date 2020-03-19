@@ -6,6 +6,7 @@ import {IdaiType} from '../../configuration/model/idai-type';
 import {setOn} from '../../util/utils';
 import {CsvExportConsts} from '../../export/csv/csv-export-consts';
 import ARRAY_SEPARATOR = CsvExportConsts.ARRAY_SEPARATOR;
+import {FieldDefinition} from '../../configuration/model/field-definition';
 
 
 type FieldType = 'dating' | 'date' | 'dimension' | 'literature' | 'radio'
@@ -27,24 +28,27 @@ const fields = (resource: Resource) => Object.keys(resource).filter(isNot(includ
  *
  * @author Daniel de Oliveira
  */
-export function convertFieldTypes(type: IdaiType) { return (resource: Resource) => {
+export function convertFieldTypes(type: IdaiType) {
 
-    for (let fieldName of fields(resource)) {
+    return (resource: Resource) => {
 
-        const fieldDefinition = type.fields.find(on('name', is(fieldName)));
-        if (!fieldDefinition) continue;
+        for (let fieldName of fields(resource)) {
 
-        const inputType = fieldDefinition.inputType as unknown as FieldType;
-        if (resource[fieldName] !== null) convertTypeDependent(resource, fieldName, inputType);
+            const fieldDefinition = IdaiType.getFields(type).find(on(FieldDefinition.NAME, is(fieldName)));
+            if (!fieldDefinition) continue;
+
+            const inputType = fieldDefinition.inputType as unknown as FieldType;
+            if (resource[fieldName] !== null) convertTypeDependent(resource, fieldName, inputType);
+        }
+
+        for (let relationName of Object.keys(resource.relations).filter(isnt(PARENT))) {
+            if (resource.relations[relationName] === null) continue;
+            resource.relations[relationName] = (resource.relations[relationName] as unknown as string).split(ARRAY_SEPARATOR)
+        }
+
+        return resource;
     }
-
-    for (let relationName of Object.keys(resource.relations).filter(isnt(PARENT))) {
-        if (resource.relations[relationName] === null) continue;
-        resource.relations[relationName] = (resource.relations[relationName] as unknown as string).split(ARRAY_SEPARATOR)
-    }
-
-    return resource;
-}}
+}
 
 
 // here only string to number, validation in exec

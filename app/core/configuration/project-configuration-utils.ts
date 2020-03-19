@@ -72,7 +72,7 @@ export module ProjectConfigurationUtils {
             flow(
                 parentDefs,
                 map(IdaiType.build),
-                map(update(IdaiType.FIELDS, IdaiType.ifUndefinedSetGroupTo(Groups.PARENT))),
+                map(update('fields', IdaiType.ifUndefinedSetGroupTo(Groups.PARENT))),
                 makeLookup(IdaiType.NAME));
 
         return flow(
@@ -93,7 +93,7 @@ export module ProjectConfigurationUtils {
 
             type.groups =
                 flow(
-                    type.fields,
+                    (type as any)['fields'],
                     makeGroupsMap,
                     map(sortGroupFields),
                     convertToSortedArray(DEFAULT_GROUP_ORDER));
@@ -158,7 +158,7 @@ export module ProjectConfigurationUtils {
         return (parentType: IdaiType): Map<IdaiType> => {
 
             const childType = IdaiType.build(childDef);
-            childType.fields = IdaiType.makeChildFields(parentType, childType);
+            (childType as any)['fields'] = IdaiType.makeChildFields(parentType, childType);
 
             const newParentType: any = update(IdaiType.CHILDREN, append(childType))(parentType as any);
             childType.parentType = newParentType;

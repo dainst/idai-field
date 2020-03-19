@@ -1,8 +1,9 @@
-import {isUndefined, flow, cond, on, assoc, map, Map, Mapping} from 'tsfun';
+import {isUndefined, flow, cond, on, assoc, to, map, Mapping, values, flatten} from 'tsfun';
 import {TypeDefinition} from './type-definition';
 import {FieldDefinition} from './field-definition';
 import {clone} from '../../util/object-util';
 import {Group, Groups} from './group';
+
 
 
 export interface IdaiType {
@@ -13,7 +14,6 @@ export interface IdaiType {
     name: string;
     label: string;
     color: string|undefined;
-    fields: Array<FieldDefinition>;
     groups: Array<Group>;
     mustLieWithin: boolean|undefined; // = undefined;
 }
@@ -30,17 +30,16 @@ export module IdaiType {
     export const PARENTTYPE = 'parentType';
     export const CHILDREN = 'children';
     export const NAME = 'name';
-    export const FIELDS = 'fields';
     export const GROUPS = 'groups';
 
 
-    export function build(definition: TypeDefinition): IdaiType {
+    export function build(definition: TypeDefinition): IdaiType { // TODO make private, hide behind makeTypesMap
 
         const idaiType: any = {};
         idaiType.mustLieWithin = definition.mustLieWithin;
         idaiType.name = definition.type;
         idaiType.label = definition.label || idaiType.name;
-        idaiType.fields = definition.fields || [];
+        idaiType['fields'] = definition.fields || []; // TODO remove after construction
         idaiType.groups = [];
         idaiType.isAbstract = definition.abstract || false;
         idaiType.color = definition.color ?? generateColorForType(definition.type);
@@ -49,12 +48,22 @@ export module IdaiType {
     }
 
 
+    export function getFields(type: IdaiType): Array<FieldDefinition> {
+
+        return flow(
+            type.groups,
+            values,
+            map(to(Group.FIELDS)),
+            flatten);
+    }
+
+
     export function makeChildFields(type: IdaiType, child: IdaiType): Array<FieldDefinition> {
 
         try {
 
-            const childFields = ifUndefinedSetGroupTo(Groups.CHILD)(child.fields);
-            return getCombinedFields(type.fields, childFields);
+            const childFields = ifUndefinedSetGroupTo(Groups.CHILD)((child as any)['fields']);
+            return getCombinedFields((type as any)['fields'], childFields);
 
         } catch (e) {
             e.push(type.name);

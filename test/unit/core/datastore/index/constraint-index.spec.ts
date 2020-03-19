@@ -18,10 +18,10 @@ describe('ConstraintIndex', () => {
 
         typesMap = {
             type: {
-                fields: [
+                groups: [{ fields: [
                     { name: 'identifier' },
                     { name: 'shortDescription' }
-                ]
+                ]}]
             }
         };
     });
@@ -350,13 +350,13 @@ describe('ConstraintIndex', () => {
 
         typesMap = {
             type: {
-                fields: [
+                groups: [{ fields: [
                     { name: 'identifier' },
                     { name: 'shortDescription' },
                     { name: 'customField1', inputType: 'input', constraintIndexed: true },
                     { name: 'customField2', inputType: 'boolean', constraintIndexed: true },
                     { name: 'customField3', inputType: 'checkboxes', constraintIndexed: true }
-                ]
+                ]}]
             }
         };
 
@@ -384,11 +384,11 @@ describe('ConstraintIndex', () => {
 
         typesMap = {
             type: {
-                fields: [
+                groups: [{ fields: [
                     { name: 'identifier' },
                     { name: 'shortDescription' },
                     { name: 'dropdownRangeField', inputType: 'dropdownRange', constraintIndexed: true }
-                ]
+                ]}]
             }
         };
 
@@ -413,14 +413,14 @@ describe('ConstraintIndex', () => {
 
         typesMap = {
             type1: {
-                fields: [
+                groups: [{ fields: [
                     { name: 'field', inputType: 'input', constraintIndexed: true }
-                ]
+                ]}]
             },
             type2: {
-                fields: [
+                groups: [{ fields: [
                     { name: 'field', inputType: 'checkboxes', constraintIndexed: true }
-                ]
+                ]}]
             },
         };
 

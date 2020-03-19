@@ -4,10 +4,10 @@ export function createMockProjectConfiguration(): any {
         ['getTypesMap']);
 
     const defaultFieldConfiguration =  {
-        fields: {
+        groups: [{ fields: {
             identifier: {},
             shortDescription: {},
-        }
+        }}]
     };
 
     projectConfiguration.getTypesMap.and.returnValue({

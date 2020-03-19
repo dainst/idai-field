@@ -15,13 +15,13 @@ describe('convertFieldTypes', () => {
 
         const type = {
             name: 'TypeName',
-            fields: [{
+            groups: [{ fields: [{
                 name: 'Bool1',
                 inputType: 'boolean'
             }, {
                 name: 'Bool2',
                 inputType: 'boolean'
-            }],
+            }]}],
         } as IdaiType;
 
         const result = convertFieldTypes(type)({Bool1: 'true', Bool2: 'false', relations: {}} as unknown as Resource);
@@ -35,10 +35,10 @@ describe('convertFieldTypes', () => {
 
         const type = {
             name: 'TypeName',
-            fields: [{
+            groups: [{ fields: [{
                 name: 'dating',
                 inputType: 'dating'
-            }],
+            }]}],
         } as IdaiType;
 
         const resource = convertFieldTypes(type)({
@@ -72,10 +72,10 @@ describe('convertFieldTypes', () => {
 
         const type = {
             name: 'TypeName',
-            fields: [{
+            groups: [{ fields: [{
                 name: 'dating',
                 inputType: 'dating'
-            }],
+            }]}],
         } as IdaiType;
 
         const resource = convertFieldTypes(type)({
@@ -91,10 +91,10 @@ describe('convertFieldTypes', () => {
 
         const type = {
             name: 'TypeName',
-            fields: [{
+            groups: [{ fields: [{
                 name: 'dating',
                 inputType: 'dating'
-            }],
+            }]}],
         } as IdaiType;
 
         try {
@@ -110,10 +110,10 @@ describe('convertFieldTypes', () => {
 
         const type = {
             name: 'TypeName',
-            fields: [{
+            groups: [{ fields: [{
                 name: 'dimension',
                 inputType: 'dimension'
-            }],
+            }]}],
         } as IdaiType;
 
         const resource = convertFieldTypes(type)({
@@ -148,10 +148,10 @@ describe('convertFieldTypes', () => {
 
         const type = {
             name: 'TypeName',
-            fields: [{
+            groups: [{ fields: [{
                 name: 'dimension',
                 inputType: 'dimension'
-            }],
+            }]}],
         } as IdaiType;
 
         const resource = convertFieldTypes(type)({
@@ -167,10 +167,10 @@ describe('convertFieldTypes', () => {
 
         const type = {
             name: 'TypeName',
-            fields: [{
+            groups: [{ fields: [{
                 name: 'r',
                 inputType: 'radio'
-            }],
+            }]}],
         } as IdaiType;
 
         const resource = convertFieldTypes(type)({
@@ -186,10 +186,10 @@ describe('convertFieldTypes', () => {
 
         const type = {
             name: 'TypeName',
-            fields: [{
+            groups: [{ fields: [{
                 name: 'd',
                 inputType: 'date'
-            }],
+            }]}],
         } as IdaiType;
 
         const resource = convertFieldTypes(type)({
@@ -205,14 +205,14 @@ describe('convertFieldTypes', () => {
 
         const type = {
             name: 'TypeName',
-            fields: [{
+            groups: [{ fields: [{
                 name: 'dd1',
                 inputType: 'dropdownRange'
             },
             {
                 name: 'dd2',
                 inputType: 'dropdownRange'
-            }],
+            }]}],
         } as IdaiType;
 
         const resource = convertFieldTypes(type)({
@@ -232,10 +232,10 @@ describe('convertFieldTypes', () => {
 
         const type = {
             name: 'TypeName',
-            fields: [{
+            groups: [{ fields: [{
                 name: 'CB',
                 inputType: 'checkboxes'
-            }],
+            }]}],
         } as IdaiType;
 
         const resource = convertFieldTypes(type)({
@@ -252,10 +252,10 @@ describe('convertFieldTypes', () => {
 
         const type = {
             name: 'TypeName',
-            fields: [{
+            groups: [{ fields: [{
                 name: 'ui',
                 inputType: 'unsignedInt'
-            }],
+            }]}],
         } as IdaiType;
 
         const resource = convertFieldTypes(type)({
@@ -271,7 +271,7 @@ describe('convertFieldTypes', () => {
 
         const type = {
             name: 'TypeName',
-            fields: [{
+            groups: [{ fields: [{
                 name: 'uf1',
                 inputType: 'float'
             }, {
@@ -281,7 +281,7 @@ describe('convertFieldTypes', () => {
             {
                 name: 'uf3',
                 inputType: 'float'
-            }]
+            }]}]
         } as IdaiType;
 
         const resource = convertFieldTypes(type)({
@@ -301,13 +301,13 @@ describe('convertFieldTypes', () => {
 
         const type = {
             name: 'TypeName',
-            fields: [{
+            groups: [{ fields: [{
                 name: 'uf1',
                 inputType: 'unsignedFloat'
             }, {
                 name: 'uf2',
                 inputType: 'unsignedFloat'
-            }]
+            }]}]
         } as IdaiType;
 
         const resource = convertFieldTypes(type)({
@@ -325,10 +325,10 @@ describe('convertFieldTypes', () => {
 
         const type = {
             name: 'TypeName',
-            fields: [{
+            groups: [{ fields: [{
                 name: 'uf',
                 inputType: 'unsignedFloat'
-            }],
+            }]}],
         } as IdaiType;
 
         const resource = convertFieldTypes(type)({
@@ -350,10 +350,10 @@ describe('convertFieldTypes', () => {
 
         const type = {
             name: 'TypeName',
-            fields: [{
+            groups: [{ fields: [{
                 name: 'ui',
                 inputType: 'unsignedInt'
-            }],
+            }]}],
         } as IdaiType;
 
         expectNotANumberError(type, 'ui', 'abc');
@@ -364,10 +364,10 @@ describe('convertFieldTypes', () => {
 
         const type = {
             name: 'TypeName',
-            fields: [{
+            groups: [{ fields: [{
                 name: 'uf',
                 inputType: 'unsignedFloat'
-            }],
+            }]}],
         } as IdaiType;
 
         expectNotANumberError(type, 'uf', 'a100.0');

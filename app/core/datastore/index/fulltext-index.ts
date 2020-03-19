@@ -1,5 +1,5 @@
 import {flatMap, flow, lookup, filter, split, toLowerCase,
-    map, forEach, empty, isNot, isEmpty, keys} from 'tsfun';
+    map, forEach, empty, isNot, isEmpty, keys, Map} from 'tsfun';
 import {Document} from 'idai-components-2';
 import {ResultSets} from './result-sets';
 import {clone} from '../../util/object-util';
@@ -119,12 +119,12 @@ export module FulltextIndex {
     }
 
 
-    function getFieldsToIndex(typesMap: { [typeName: string]: IdaiType },
+    function getFieldsToIndex(typesMap: Map<IdaiType>,
                               typeName: string): string[] {
 
         return !typesMap[typeName]
             ? []
-            : Object.values(typesMap[typeName].fields)
+            : IdaiType.getFields(typesMap[typeName])
                 .filter(field => field.fulltextIndexed)
                 .map(field => field.name)
                 .concat(defaultFieldsToIndex);

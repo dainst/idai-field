@@ -6,7 +6,7 @@ import {Static} from '../../../static';
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-describe('FulltextIndexer', () => {
+describe('FulltextIndex', () => {
 
     let fi;
     let typesMap;
@@ -36,10 +36,10 @@ describe('FulltextIndexer', () => {
         fi = {};
 
         const defaultTypeConfiguration = {
-            fields: [
+            groups: [{ fields: [
                 { name: 'identifier' },
                 { name: 'shortDescription' }
-            ]
+            ]}]
         };
 
         typesMap = {
@@ -278,11 +278,11 @@ describe('FulltextIndexer', () => {
 
        typesMap = {
             type: {
-                fields: [
+                groups: [{ fields: [
                     { name: 'identifier' },
                     { name: 'shortDescription' },
                     { name: 'customField', fulltextIndexed: true }
-                ]
+                ]}]
             }
         };
 

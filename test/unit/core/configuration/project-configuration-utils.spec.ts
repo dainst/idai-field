@@ -5,6 +5,7 @@ import {SortUtil} from '../../../../app/core/util/sort-util';
 import {Groups} from '../../../../app/core/configuration/model/group';
 import {FieldDefinition} from '../../../../app/core/configuration/model/field-definition';
 import InputType = FieldDefinition.InputType;
+import {IdaiType} from '../../../../app/core/configuration/model/idai-type';
 
 
 const byName = (a, b) => SortUtil.alnumCompare(a.name, b.name);
@@ -25,10 +26,10 @@ describe('ProjectConfigurationUtils', () => {
          types: [{
             type: A,
             parent: P,
-            fields: [{ name: 'a', inputType: 'input' }]
+            fields: [{ name: 'a', inputType: InputType.INPUT }]
          }, {
             type: P,
-            fields: [{ name: 'p', inputType: 'input' }]
+            fields: [{ name: 'p', inputType: InputType.INPUT }]
          }]
       };
 
@@ -36,16 +37,16 @@ describe('ProjectConfigurationUtils', () => {
 
       expect(typesMap[P].name).toEqual(P);
       expect(typesMap[P].children[0].name).toEqual(A);
-      expect(typesMap[P].children[0].fields.length).toBe(2);
+      expect(IdaiType.getFields(typesMap[P].children[0]).length).toBe(2);
       expect(typesMap[P].children[0].parentType).toBe(typesMap[P]);
       expect(typesMap[A].name).toEqual(A);
       expect(typesMap[A].parentType).toBe(typesMap[P]);
 
-      typesMap[A].fields.sort(byName);
+      const sortedFields = IdaiType.getFields(typesMap[A]).sort(byName);
 
-      expect(typesMap[A].fields[0].group).toBe(Groups.CHILD);
-      expect(typesMap[A].fields[1].group).toBe(Groups.PARENT);
-      expect(typesMap[P].fields[0].group).toBe(Groups.PARENT);
+      expect(sortedFields[0].group).toBe(Groups.CHILD);
+      expect(sortedFields[1].group).toBe(Groups.PARENT);
+      expect(IdaiType.getFields(typesMap[P])[0].group).toBe(Groups.PARENT);
 
       expect(typesMap[A].groups[0].fields[0].group).toBe(Groups.PARENT);
       expect(typesMap[A].groups[1].fields[0].group).toBe(Groups.CHILD);

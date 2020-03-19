@@ -68,6 +68,7 @@ describe('Import/Subsystem', () => {
 
         const stored = await datastore.create({ resource: { identifier: 't1', type: 'Trench', shortDescription: 'Our Trench 1', relations: {}}});
         const t = IdaiType.build({ type: 'Find', fields:[{ name: 'dating', inputType: 'dating'}, { name: 'shortDescription', inputType: 'input'}]});
+        t['groups'] = [{ fields: [{ name: 'dating', inputType: 'dating'}, { name: 'shortDescription', inputType: 'input'}] }] as any; // TODO review
 
         await Importer.doImport(
             'csv',
@@ -115,6 +116,7 @@ describe('Import/Subsystem', () => {
             });
 
         const t = IdaiType.build({ type: 'Find', fields:[{ name: 'dating', inputType: 'dating'}, { name: 'shortDescription', inputType: 'input'}]});
+        t['groups'] = [{ fields: [{ name: 'dating', inputType: 'dating'}, { name: 'shortDescription', inputType: 'input'}] }] as any; // TODO review
 
         await Importer.doImport(
             'csv',

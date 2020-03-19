@@ -130,6 +130,7 @@ function processDocuments(documents: Array<Document>, validator: ImportValidator
 
         if (!mergeMode) validator.assertIsAllowedType(finalDocument);
         validator.assertIsWellformed(finalDocument);
+
         return finalDocument;
     });
 }

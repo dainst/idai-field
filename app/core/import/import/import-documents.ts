@@ -64,6 +64,7 @@ export function buildImportFunction(validator: ImportValidator,
             return { errors: [errWithParams], successfulImports: 0 };
         }
 
+
         const [importDocuments, targetDocuments, msgWithParams] = await process(
             documents,
             validator,

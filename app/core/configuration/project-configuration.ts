@@ -114,7 +114,7 @@ export class ProjectConfiguration {
     public getFieldDefinitions(typeName: string): FieldDefinition[] {
 
         if (!this.typesMap[typeName]) return [];
-        return this.typesMap[typeName].fields;
+        return IdaiType.getFields(this.typesMap[typeName]);
     }
 
 
@@ -191,7 +191,7 @@ export class ProjectConfiguration {
         if (!this.typesMap[typeName]) return false;
 
         return flow(
-            this.typesMap[typeName].fields,
+            IdaiType.getFields(this.typesMap[typeName]),
             filter(on(IdaiType.NAME, is(fieldName))),
             filter(on(propertyName, is(true))),
             isNot(empty));

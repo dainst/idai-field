@@ -45,8 +45,7 @@ export class ProjectConfigurationComponent {
     }
 
 
-    public getGroups = (type: IdaiType): any[] =>
-        intersect(this.availableGroups)(type.fields.map(to(FieldDefinition.GROUP)));
+    public getGroups = (type: IdaiType): any[] => (type.groups as any).map(to(Group.NAME));
 
 
     public getVisibleFields(type: IdaiType): FieldDefinition[] {

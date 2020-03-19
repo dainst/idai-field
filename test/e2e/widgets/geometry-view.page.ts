@@ -42,9 +42,15 @@ export class GeometryViewPage {
     };
 
 
-    public static waitForCreateGeoButtons(identifier: Identifier) {
+    public static waitForLayoverToDisappear() {
 
         browser.wait(EC.stalenessOf(element(by.css('.layover2'))), delays.ECWaitTime);
+    }
+
+
+    public static waitForCreateGeoButtons(identifier: Identifier) {
+
+        this.waitForLayoverToDisappear();
 
         if (identifier) ResourcesPage.clickOpenContextMenu(identifier);
         browser.wait(EC.visibilityOf(element(by.css('#context-menu #context-menu-create-geo-1-button'))), delays.ECWaitTime);

@@ -267,6 +267,7 @@ describe('map --', function() {
         createDocThenReedit('doc', 'polygon', setMultiPolygon);
         MapPage.clickMapOption('delete');
         MapPage.clickMapOption('ok');
+        GeometryViewPage.waitForLayoverToDisappear();
         GeometryViewPage.getSelectedGeometryTypeText('doc').then(text => {
             expect(text).toContain('Polygon');
         });
@@ -284,6 +285,7 @@ describe('map --', function() {
         createDocThenReedit('doc', 'polyline', setMultiPolyline);
         MapPage.clickMapOption('delete');
         MapPage.clickMapOption('ok');
+        GeometryViewPage.waitForLayoverToDisappear();
         GeometryViewPage.getSelectedGeometryTypeText('doc').then(text => {
             expect(text).toContain('Polyline');
         });
@@ -301,6 +303,7 @@ describe('map --', function() {
         createDocThenReedit('doc', 'point', setMultiPoint);
         MapPage.clickMapOption('delete');
         MapPage.clickMapOption('ok');
+        GeometryViewPage.waitForLayoverToDisappear();
         GeometryViewPage.getSelectedGeometryTypeText('doc').then(text => {
             expect(text).toContain('Punkt');
         });

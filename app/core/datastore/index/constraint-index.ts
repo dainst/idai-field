@@ -1,10 +1,9 @@
-import {getOn, values, isArray, map, flatten, flow, cond, not, to, isDefined} from 'tsfun';
+import {getOn, values, isArray, map, flatten, flow, cond, not, to, isDefined, singleton, Map} from 'tsfun';
 import {Document, Resource} from 'idai-components-2';
 import {IndexItem} from './index-item';
 import {IdaiType} from '../../configuration/model/idai-type';
 import {FieldDefinition} from '../../configuration/model/field-definition';
 import {clone} from '../../util/object-util';
-import {convertToArray} from '../../util/utils';
 
 
 export interface IndexDefinition {
@@ -126,7 +125,7 @@ export module ConstraintIndex {
 
         return flow(
             matchTerm,
-            cond(not(isArray), convertToArray),
+            cond(not(isArray), singleton),
             map(getDescendants(index, definition)),
             flatten);
     }
@@ -139,7 +138,7 @@ export module ConstraintIndex {
         const indexDefinition: IndexDefinition = index.indexDefinitions[indexName];
         if (!indexDefinition) throw 'Ignoring unknown constraint "' + indexName + '".';
 
-        const indexItems: { [id: string]: IndexItem }|undefined
+        const indexItems: Map<IndexItem>|undefined
             = getIndexItemsForSingleMatchTerm(index, indexDefinition, matchTerm);
 
         return indexItems

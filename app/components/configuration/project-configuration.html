@@ -79,6 +79,15 @@
                                         <span *ngIf="field.inputType === 'catalogCriterion'" i18n="@@config.inputType.float">Kriterium für Typenkatalog</span>
                                     </li>
 
+                                    <li *ngIf="field.valuelist" class="list-group-item">
+                                        <div class="row valuelist">
+                                            <div *ngFor="let item of field.valuelist.values | keyvalue"
+                                                    class="col-2">
+                                                <span class="badge badge-secondary">{{ item.key }}</span>
+                                            </div>
+                                        </div>
+                                    </li>
+
                                 </ul>
                             </div>
 

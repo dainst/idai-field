@@ -34,6 +34,21 @@
 
         .card {
             margin-bottom: 10px;
+
+            .valuelist .badge {
+                overflow: hidden;
+                max-width: 100%;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                cursor: default;
+
+                &:hover {
+                    position: relative;
+                    max-width: none;
+                    z-index: 50;
+                    background-color: $blue;
+                }
+            }
         }
     }
 }

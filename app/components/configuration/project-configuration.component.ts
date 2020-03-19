@@ -4,6 +4,7 @@ import {IdaiType} from '../../core/configuration/model/idai-type';
 import {to, on, is, intersect, includedIn} from 'tsfun';
 import {FieldDefinition} from '../../core/configuration/model/field-definition';
 import { GroupUtil } from '../../core/configuration/group-util';
+import { ValuelistDefinition } from '../../core/configuration/model/valuelist-definition';
 
 
 @Component({
@@ -58,5 +59,4 @@ export class ProjectConfigurationComponent {
         GroupUtil.sortGroups(fields, this.selectedGroup);
         return fields;
     }
-
 }

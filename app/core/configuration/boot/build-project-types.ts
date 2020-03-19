@@ -17,6 +17,7 @@ import {copy} from 'tsfun/src/collection';
 import {hideFields} from './hide-fields';
 import {RelationDefinition} from '../model/relation-definition';
 import {addRelations} from './add-relations';
+import {applyLanguage} from './apply-language';
 
 
 /**
@@ -29,7 +30,9 @@ export function buildProjectTypes(builtInTypes: Map<BuiltinTypeDefinition>,
                                   commonFields: Map = {},
                                   valuelistsConfiguration: Map<ValuelistDefinition> = {},
                                   extraFields: Map = {},
-                                  relations: Array<RelationDefinition> = []) {
+                                  relations: Array<RelationDefinition> = [],
+                                  languageConfiguration: any = {},
+                                  customLanguageConfiguration: any = {}) {
 
     Assertions.performAssertions(builtInTypes, libraryTypes, customTypes, commonFields, valuelistsConfiguration);
     addSourceField(builtInTypes, libraryTypes, customTypes, commonFields);
@@ -48,7 +51,9 @@ export function buildProjectTypes(builtInTypes: Map<BuiltinTypeDefinition>,
         replaceValuelistIdsWithValuelists(valuelistsConfiguration as any),
         addExtraFields(extraFields),
         wrapTypesInObject,
-        addRelations(relations));
+        addRelations(relations),
+        applyLanguage(languageConfiguration),
+        applyLanguage(customLanguageConfiguration));
 }
 
 

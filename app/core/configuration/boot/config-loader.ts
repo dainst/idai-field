@@ -131,7 +131,9 @@ export class ConfigLoader {
                 commonFields,
                 valuelistsConfiguration,
                 {...this.defaultFields, ...extraFields},
-                relations);
+                relations,
+                languageConfiguration,
+                customLanguageConfiguration,);
         } catch (msgWithParams) {
             throw [msgWithParams];
         }
@@ -139,8 +141,6 @@ export class ConfigLoader {
         try {
             return Preprocessing.preprocess2(
                 conf,
-                languageConfiguration,
-                customLanguageConfiguration,
                 searchConfiguration,
                 orderConfiguration);
 

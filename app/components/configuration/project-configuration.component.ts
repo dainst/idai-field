@@ -41,8 +41,8 @@ export class ProjectConfigurationComponent {
 
     public getVisibleFields(type: IdaiType): FieldDefinition[] {
 
-        return (type.groups
-            .find(on(Group.NAME, is(this.selectedGroup))) as any)
+        return type.groups
+            .find(on(Group.NAME, is(this.selectedGroup)))!
             .fields
             .filter(
                 or(

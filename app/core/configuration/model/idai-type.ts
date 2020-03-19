@@ -1,4 +1,4 @@
-import {isUndefined, flow, cond, on, assoc, map, Map} from 'tsfun';
+import {isUndefined, flow, cond, on, assoc, map, Map, Mapping} from 'tsfun';
 import {TypeDefinition} from './type-definition';
 import {FieldDefinition} from './field-definition';
 import {clone} from '../../util/object-util';
@@ -64,8 +64,7 @@ export module IdaiType {
     }
 
 
-    export function ifUndefinedSetGroupTo(name: string)
-        : (_: Array<FieldDefinition>) => Array<FieldDefinition> {
+    export function ifUndefinedSetGroupTo(name: string): Mapping<Array<FieldDefinition>> {
 
         return map(
             cond(

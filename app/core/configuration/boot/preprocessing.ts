@@ -12,11 +12,13 @@ import {ConfigurationDefinition} from './configuration-definition';
  */
 export module Preprocessing {
 
-    export function preprocess2(appConfiguration: any, languageConfiguration: any,
-                                customLanguageConfiguration: any, searchConfiguration: any,
-                                orderConfiguration: any, relations: any) {
+    export function preprocess2(appConfiguration: any,
+                                languageConfiguration: any,
+                                customLanguageConfiguration: any,
+                                searchConfiguration: any,
+                                orderConfiguration: any,
+                                relations: any) {
 
-        appConfiguration.relations = [];
         addExtraRelations(appConfiguration, relations);
 
         applyLanguage(appConfiguration, languageConfiguration);

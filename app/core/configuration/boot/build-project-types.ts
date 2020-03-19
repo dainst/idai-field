@@ -43,7 +43,14 @@ export function buildProjectTypes(builtInTypes: Map<BuiltinTypeDefinition>,
         hideFields(customTypes),
         toTypesByFamilyNames,
         replaceValuelistIdsWithValuelists(valuelistsConfiguration as any),
-        addExtraFields(extraFields));
+        addExtraFields(extraFields),
+        wrapTypesInObject);
+}
+
+
+function wrapTypesInObject(configuration: Map<TransientTypeDefinition>) {
+
+    return { types: configuration, relations: [] }
 }
 
 

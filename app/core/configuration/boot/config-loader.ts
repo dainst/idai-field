@@ -122,9 +122,9 @@ export class ConfigLoader {
         // unused: Preprocessing.prepareSameMainTypeResource(appConfiguration);
         // unused: Preprocessing.setIsRecordedInVisibilities(appConfiguration); See #8992
 
-        let typeDefs: any;
+        let conf: any;
         try {
-            typeDefs = buildProjectTypes(
+            conf = buildProjectTypes(
                 builtinTypes,
                 libraryTypes,
                 customTypes,
@@ -137,7 +137,7 @@ export class ConfigLoader {
 
         try {
             return Preprocessing.preprocess2(
-                { types: typeDefs },
+                conf,
                 languageConfiguration,
                 customLanguageConfiguration,
                 searchConfiguration,

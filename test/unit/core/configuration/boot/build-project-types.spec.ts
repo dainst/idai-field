@@ -31,7 +31,7 @@ describe('buildProjectTypes', () => {
             builtInTypes,
             {},
             customTypes
-        );
+        ).types;
 
         expect(result['A']).toBeDefined();
         expect(result['B']).toBeDefined();
@@ -61,7 +61,7 @@ describe('buildProjectTypes', () => {
             builtInTypes,
             {},
             customTypes
-        );
+        ).types;
 
         expect(result['A']).toBeDefined();
         expect(result['B']).toBeDefined();
@@ -107,7 +107,7 @@ describe('buildProjectTypes', () => {
             libraryTypes,
             customTypes,
             commonFields
-        );
+        ).types;
 
         expect(result['A']['fields']['field1'].visible).toBe(false);
         expect(result['A']['fields']['field2'].visible).toBe(true);
@@ -141,7 +141,7 @@ describe('buildProjectTypes', () => {
                     values: { a: {} }, description: {}, createdBy: '', creationDate: ''
                 }
             }
-        );
+        ).types;
 
         expect(result['A'].fields['aField']['valuelist']['values']).toEqual({ a: {} });
     });
@@ -179,7 +179,7 @@ describe('buildProjectTypes', () => {
                     values: { b: {} }, description: {}, createdBy: '', creationDate: ''
                 }
             }
-        );
+        ).types;
 
         expect(result['A'].fields['aCommon']['valuelist']['values']).toEqual({ b: {} });
     });
@@ -215,7 +215,7 @@ describe('buildProjectTypes', () => {
                     values: { a: {}}, description: {}, creationDate: '', createdBy: ''
                 }
             }
-        );
+        ).types;
 
         expect(result['A'].fields['aField']['valuelist']['values']).toEqual({ a: {} });
     });
@@ -541,7 +541,7 @@ describe('buildProjectTypes', () => {
             commonFields,
             {},
             {}
-        );
+        ).types;
 
         expect(result['A'].fields['aCommon']['group']).toBe('stem');
         expect(result['A'].fields['aCommon']['inputType']).toBe('input');
@@ -566,7 +566,7 @@ describe('buildProjectTypes', () => {
             commonFields,
             {},
             {}
-        );
+        ).types;
 
         expect(result['A'].fields['aCommon']['group']).toBe('stem');
         expect(result['A'].fields['aCommon']['inputType']).toBe('input');
@@ -605,7 +605,7 @@ describe('buildProjectTypes', () => {
             commonFields,
             {},
             {}
-        );
+        ).types;
 
         expect(result['A'].fields['aCommon']['group']).toBe('stem');
         expect(result['A'].fields['aCommon']['inputType']).toBe('input');
@@ -639,7 +639,7 @@ describe('buildProjectTypes', () => {
             commonFields,
             {},
             {}
-        );
+        ).types;
 
         expect(result['A'].fields['aCommon']['group']).toBe('stem');
         expect(result['A'].fields['aCommon']['inputType']).toBe('dropdown');
@@ -672,7 +672,7 @@ describe('buildProjectTypes', () => {
                 [],
                 {},
                 {}
-            );
+            ).types;
             fail();
         } catch (expected) {
             expect(expected).toEqual([
@@ -698,7 +698,7 @@ describe('buildProjectTypes', () => {
                 {},
                 {},
                 {}
-            );
+            ).types;
             fail();
         } catch (expected) {
             expect(expected).toEqual([
@@ -728,7 +728,7 @@ describe('buildProjectTypes', () => {
             buildProjectTypes(builtInTypes,
                 libraryTypes,
                 {},  {}, {}, {}
-            );
+            ).types;
             fail();
         } catch (expected) {
             expect(expected).toEqual([
@@ -760,7 +760,7 @@ describe('buildProjectTypes', () => {
             { 'A:0': { hidden: [], fields: {} } },
             {}, {},
             {}
-        );
+        ).types;
 
         expect(result['A'].fields['aField'].inputType).toBe('input');
     });
@@ -787,7 +787,7 @@ describe('buildProjectTypes', () => {
             buildProjectTypes(builtInTypes,
                 libraryTypes,
                 {}, {}, {}, {}
-            );
+            ).types;
             fail();
         } catch (expected) {
             expect(expected).toEqual([
@@ -817,7 +817,7 @@ describe('buildProjectTypes', () => {
             buildProjectTypes(builtInTypes,
                 libraryTypes,
                 {}, {}, {}, {}
-            );
+            ).types;
             fail();
         } catch (expected) {
             expect(expected).toEqual([ConfigurationErrors.MUST_NOT_SET_INPUT_TYPE, 'A:0', 'aField']);
@@ -845,7 +845,7 @@ describe('buildProjectTypes', () => {
             buildProjectTypes(builtInTypes,
                 libraryTypes,
                 {}, {}, {}, {}
-            );
+            ).types;
             fail();
         } catch (expected) {
             expect(expected).toEqual([
@@ -872,7 +872,7 @@ describe('buildProjectTypes', () => {
                 builtInTypes,
                 {},
                 customTypes, {}, {}, {}
-            );
+            ).types;
             fail();
         } catch (expected) {
             expect(expected).toEqual([
@@ -925,7 +925,7 @@ describe('buildProjectTypes', () => {
             builtInTypes,
             libraryTypes,
             { 'A:0': { fields: {} } }, {}, valuelistsConfiguration, {}
-        );
+        ).types;
         expect(result['A'].fields['a1'].valuelist.values).toEqual({
             one: { labels: { de: 'Eins', en: 'One' } },
             two: { references: { externalId: '1234567' } },
@@ -1037,7 +1037,7 @@ describe('buildProjectTypes', () => {
             builtInTypes, libraryTypes,
             { 'A:1': { hidden: [], fields: {} } },
             {}, {}, {}
-        );
+        ).types;
 
         expect(result['A'].fields['field1'].inputType).toBe('text');
         expect(result['A'].fields['field1'].group).toBe('stem');
@@ -1067,7 +1067,7 @@ describe('buildProjectTypes', () => {
         const result = buildProjectTypes(
             builtInTypes, {}, customTypes,
             {}, {}, {}
-        );
+        ).types;
 
         expect(result['A'].fields['field1'].inputType).toBe('text');
         expect(result['A'].fields['field1'].group).toBe('stem');
@@ -1111,7 +1111,7 @@ describe('buildProjectTypes', () => {
         const result = buildProjectTypes(
             builtInTypes, libraryTypes, customTypes,
             {}, {}, {}
-        );
+        ).types;
 
         expect(result['A'].fields['field1'].inputType).toBe('text');
         expect(result['A'].fields['field2'].inputType).toBe('text');
@@ -1159,7 +1159,7 @@ describe('buildProjectTypes', () => {
         const result = buildProjectTypes(
             builtInTypes, libraryTypes, customTypes, commonFields,
             {}, {}
-        );
+        ).types;
 
         expect(result['A'].fields['field1'].source).toBe(FieldDefinition.Source.BUILTIN);
         expect(result['A'].fields['field2'].source).toBe(FieldDefinition.Source.LIBRARY);

@@ -123,4 +123,22 @@ describe('resources/type-grid --', () => {
             expect(text).toEqual('tc2');
         });
     });
+
+
+    it('Delete a type', () => {
+
+        createTypeCatalogAndType();
+        ResourcesTypeGridPage.clickGridElement('t1');
+        linkWithFind();
+
+        ResourcesPage.clickNavigationButton('tc1');
+
+        ResourcesTypeGridPage.clickOpenContextMenu('t1');
+        ResourcesPage.clickContextMenuDeleteButton();
+        ResourcesPage.typeInIdentifierInConfirmDeletionInputField('t1');
+        ResourcesPage.clickConfirmDeleteInModal();
+
+        browser.wait(EC.stalenessOf(ResourcesTypeGridPage.getTypeGridElement('t1')));
+        browser.wait(EC.stalenessOf(ResourcesTypeGridPage.getLinkedDocumentGridElement('testf1')));
+    });
 });

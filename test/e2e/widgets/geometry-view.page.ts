@@ -20,6 +20,8 @@ export class GeometryViewPage {
         if (type === 'polyline') number = '2';
         if (type === 'point') number = '3';
 
+        this.waitForLayoverToDisappear();
+
         ResourcesPage.clickOpenContextMenu(identifier);
         browser.wait(EC.visibilityOf(element(by.css('#context-menu #context-menu-create-geo-' + number + '-button'))), delays.ECWaitTime);
         return common.click(element(by.css('#context-menu #context-menu-create-geo-' + number + '-button')));
@@ -27,6 +29,8 @@ export class GeometryViewPage {
 
 
     public static performReeditGeometry(identifier?: Identifier) {
+
+        this.waitForLayoverToDisappear();
 
         if (identifier) ResourcesPage.clickOpenContextMenu(identifier);
         browser.wait(EC.visibilityOf(element(by.css('#context-menu #context-menu-edit-geo-button'))), delays.ECWaitTime);
@@ -36,16 +40,12 @@ export class GeometryViewPage {
 
     public static getSelectedGeometryTypeText(identifier: Identifier) {
 
+        this.waitForLayoverToDisappear();
+
         if (identifier) ResourcesPage.clickOpenContextMenu(identifier);
         browser.wait(EC.visibilityOf(element(by.css('#context-menu #context-menu-edit-geo-button'))), delays.ECWaitTime);
         return element(by.css('#context-menu #context-menu-edit-geo-button')).element(by.css('.fieldvalue')).getText();
     };
-
-
-    public static waitForLayoverToDisappear() {
-
-        browser.wait(EC.stalenessOf(element(by.css('.layover2'))), delays.ECWaitTime);
-    }
 
 
     public static waitForCreateGeoButtons(identifier: Identifier) {
@@ -57,4 +57,10 @@ export class GeometryViewPage {
         browser.wait(EC.visibilityOf(element(by.css('#context-menu #context-menu-create-geo-2-button'))), delays.ECWaitTime);
         browser.wait(EC.visibilityOf(element(by.css('#context-menu #context-menu-create-geo-3-button'))), delays.ECWaitTime);
     };
+
+
+    public static waitForLayoverToDisappear() {
+
+        browser.wait(EC.stalenessOf(element(by.css('.layover2'))), delays.ECWaitTime);
+    }
 }

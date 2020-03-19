@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {ProjectConfiguration} from '../../core/configuration/project-configuration';
 import {IdaiType} from '../../core/configuration/model/idai-type';
-import {to, on, is, intersect, includedIn, or} from 'tsfun';
+import {to, on, is, includedIn, or} from 'tsfun';
 import {FieldDefinition} from '../../core/configuration/model/field-definition';
 import {Group} from '../../core/configuration/model/group';
 
@@ -20,15 +20,6 @@ export class ProjectConfigurationComponent {
     public typesTreeList: Array<IdaiType>;
     public selectedType: IdaiType;
     public selectedGroup: string;
-    public availableGroups = [
-        'stem',
-        'identification',
-        'parent',
-        'child',
-        'dimension',
-        'position',
-        'time'
-    ];
 
     constructor(public projectConfiguration: ProjectConfiguration) {
 

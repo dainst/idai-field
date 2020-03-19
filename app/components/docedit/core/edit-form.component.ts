@@ -10,7 +10,7 @@ import {RelationDefinition} from '../../../core/configuration/model/relation-def
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
 import {IdaiType} from '../../../core/configuration/model/idai-type';
 import {TypeRelations} from '../../../core/model/relation-constants';
-import {GroupDefinition} from '../../../core/configuration/model/group';
+import {EditFormGroup} from '../../../core/configuration/model/group';
 
 
 @Component({
@@ -35,7 +35,7 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
 
     public types: string[];
 
-    public groups: Array<GroupDefinition> = [
+    public groups: Array<EditFormGroup> = [
         { name: 'stem', label: this.i18n({ id: 'docedit.group.stem', value: 'Stammdaten' }), fields: [],
             relations: [], widget: 'generic' },
         { name: 'identification', label: this.i18n({ id: 'docedit.group.identification', value: 'Bestimmung' }),
@@ -74,13 +74,13 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
 
     public getFieldDefinitions(groupName: string): Array<FieldDefinition> {
 
-        return (this.groups.find((gd: GroupDefinition) => gd.name === groupName) as any).fields;
+        return (this.groups.find((gd: EditFormGroup) => gd.name === groupName) as any).fields;
     }
 
 
     public getRelationDefinitions(groupName: string): Array<RelationDefinition> {
 
-        return (this.groups.find((gd: GroupDefinition) => gd.name === groupName) as any).relations;
+        return (this.groups.find((gd: EditFormGroup) => gd.name === groupName) as any).relations;
     }
 
 
@@ -114,7 +114,7 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
             const groupName: string|undefined = GroupUtil.getGroupName(relation.name);
             if (!groupName || relation.name === TypeRelations.INSTANCEOF) continue;
 
-            const group = this.groups.find(group => group.name === groupName) as GroupDefinition;
+            const group = this.groups.find(group => group.name === groupName) as EditFormGroup;
             group.relations.push(relation);
         }
     }

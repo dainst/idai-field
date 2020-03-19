@@ -32,11 +32,9 @@ export interface Group {
 }
 
 
-export interface GroupDefinition { // TODO remove redundancy
+export interface EditFormGroup extends Group { // TODO review
 
-    name: string;
     label: string;
-    fields: any[];
     relations: any[];
     widget: string|undefined;
 }

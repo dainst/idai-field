@@ -36,6 +36,12 @@ export class ResourcesTypeGridPage {
     }
 
 
+    public static getTypeGridElements() {
+
+        return element.all(by.css('.type-grid-element'));
+    }
+
+
     // text
 
     public static getTypeBadgeText(identifier: string) {

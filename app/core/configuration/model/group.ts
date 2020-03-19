@@ -32,6 +32,16 @@ export interface Group {
 }
 
 
+export interface GroupDefinition { // TODO remove redundancy
+
+    name: string;
+    label: string;
+    fields: any[];
+    relations: any[];
+    widget: string|undefined;
+}
+
+
 export module Group {
 
     const FIELDS = 'fields';

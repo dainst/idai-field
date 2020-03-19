@@ -10,16 +10,7 @@ import {RelationDefinition} from '../../../core/configuration/model/relation-def
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
 import {IdaiType} from '../../../core/configuration/model/idai-type';
 import {TypeRelations} from '../../../core/model/relation-constants';
-
-
-interface GroupDefinition {
-
-    name: string;
-    label: string;
-    fields: any[];
-    relations: any[];
-    widget: string|undefined;
-}
+import {GroupDefinition} from '../../../core/configuration/model/group';
 
 
 @Component({

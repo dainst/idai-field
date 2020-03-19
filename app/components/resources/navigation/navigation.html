@@ -37,18 +37,19 @@
         </div>
 
         <div *ngFor="let document of getSegments()"
-             class="btn btn-outline-primary navigation-button"
-             [class.root-document]="isSelectedSegment(document.resource.id)"
-             [class.shortened-label]="getNavigationButtonLabel(document.resource.id).shortened"
-             ngbTooltip="{{getNavigationButtonLabel(document.resource.id).fullText}}"
-             placement="bottom"
-             container="body"
-             triggers="manual"
-             #tooltip="ngbTooltip"
-             (mouseover)="getNavigationButtonLabel(document.resource.id).shortened && tooltip.open()"
-             (mouseleave)="tooltip.close()"
-             (mousedown)="tooltip.close()"
-             (click)="moveInto(document)">
+            id="navigation-button-{{document.resource.identifier}}"
+            class="btn btn-outline-primary navigation-button"
+            [class.root-document]="isSelectedSegment(document.resource.id)"
+            [class.shortened-label]="getNavigationButtonLabel(document.resource.id).shortened"
+            ngbTooltip="{{getNavigationButtonLabel(document.resource.id).fullText}}"
+            placement="bottom"
+            container="body"
+            triggers="manual"
+            #tooltip="ngbTooltip"
+            (mouseover)="getNavigationButtonLabel(document.resource.id).shortened && tooltip.open()"
+            (mouseleave)="tooltip.close()"
+            (mousedown)="tooltip.close()"
+            (click)="moveInto(document)">
             {{getNavigationButtonLabel(document.resource.id).text}}
         </div>
     </div>

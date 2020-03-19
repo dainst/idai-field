@@ -64,7 +64,7 @@
                  i18n="@@resources.typeGrid.linkedFinds">Verknüpfte Funde</div>
 
             <div *ngFor="let document of linkedDocuments"
-                 id="type-grid-element-linked-document-{{document.resource.id}}"
+                 id="type-grid-element-linked-document-{{document.resource.identifier}}"
                  class="type-grid-element"
                  (click)="openResourceViewModal(document)">
                 <ng-container [ngTemplateOutlet]="gridElement"

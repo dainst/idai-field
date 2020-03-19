@@ -101,6 +101,12 @@ export class ResourcesPage {
     }
 
 
+    public static clickNavigationButton(identifier: string) {
+
+        common.click(element(by.id('navigation-button-' + identifier)));
+    }
+
+
     public static clickSelectResourceType(typeName: string = 'feature-architecture') {
 
         return common.click(element(by.id('choose-type-option-' + typeName)));

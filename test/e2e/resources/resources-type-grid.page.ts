@@ -28,4 +28,19 @@ export class ResourcesTypeGridPage {
 
         return element(by.id('linked-documents-grid'));
     }
+
+
+    public static getLinkedDocumentGridElement(identifier: string) {
+
+        return element(by.id('type-grid-element-linked-document-' + identifier));
+    }
+
+
+    // text
+
+    public static getTypeBadgeText(identifier: string) {
+
+        return element(by.css('#type-grid-element-linked-document-' + identifier + ' .badge'))
+            .getText();
+    }
 }

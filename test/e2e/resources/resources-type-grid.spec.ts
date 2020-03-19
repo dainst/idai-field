@@ -63,6 +63,14 @@ describe('resources/type-grid --', () => {
             0);
         DoceditPage.clickSaveDocument();
 
-        browser.wait(EC.presenceOf(ResourcesTypeGridPage.getLinkedDocumentsGrid()));
+        browser.wait(EC.presenceOf(ResourcesTypeGridPage.getLinkedDocumentGridElement('testf1')));
+
+        ResourcesPage.clickNavigationButton('tc1');
+
+        browser.wait(EC.presenceOf(ResourcesTypeGridPage.getLinkedDocumentGridElement('testf1')));
+
+        ResourcesTypeGridPage.getTypeBadgeText('testf1').then(text => {
+            expect(text).toBe('t1');
+        });
     });
 });

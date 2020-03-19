@@ -99,4 +99,28 @@ describe('resources/type-grid --', () => {
 
         browser.wait(EC.stalenessOf(ResourcesTypeGridPage.getLinkedDocumentsGrid()));
     });
+
+
+    it('Move a type to another catalog', () => {
+
+        createTypeCatalogAndType();
+
+        ResourcesTypeGridPage.clickTypeCatalogsNavigationButton();
+        ResourcesPage.performCreateResource('tc2', 'TypeCatalog', undefined,
+            undefined, true, true);
+
+        ResourcesTypeGridPage.clickGridElement('tc1');
+        ResourcesTypeGridPage.clickOpenContextMenu('t1');
+        ResourcesPage.clickContextMenuMoveButton();
+        ResourcesPage.typeInMoveModalSearchBarInput('tc2');
+        ResourcesPage.clickResourceListItemInMoveModal('tc2');
+        browser.wait(EC.stalenessOf(ResourcesPage.getMoveModal()), delays.ECWaitTime);
+
+        browser.sleep(delays.shortRest);
+        browser.wait(EC.presenceOf(ResourcesTypeGridPage.getTypeGridElement('t1')));
+
+        ResourcesTypeGridPage.getActiveNavigationButtonText().then(text => {
+            expect(text).toEqual('tc2');
+        });
+    });
 });

@@ -21,6 +21,11 @@ export function debugId<T>(v: T): T {
 }
 
 
+interface Named { name: string }
+
+type NamedIdentifiedObjectArray = Array<Named>;
+
+
 export function toArray(token: any) {
 
     return Array.from(token);

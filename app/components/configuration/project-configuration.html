@@ -15,6 +15,11 @@
                         <h5>{{ selectedType.label }} <code>{{ selectedType.name }}</code></h5>
                     </div>
                 </div>
+                <div *ngIf="getTypeDescription(selectedType)" class="row subheader">
+                    <div class="col">
+                        {{ getTypeDescription(selectedType) }}
+                    </div>
+                </div>
 
                 <div class="row">
 

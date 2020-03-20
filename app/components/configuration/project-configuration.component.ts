@@ -4,8 +4,10 @@ import {IdaiType} from '../../core/configuration/model/idai-type';
 import {to, on, is, includedIn, or} from 'tsfun';
 import {FieldDefinition} from '../../core/configuration/model/field-definition';
 import {Group} from '../../core/configuration/model/group';
-import { ValueDefinition } from '../../core/configuration/model/valuelist-definition';
-import { ValuelistUtil } from '../../core/util/valuelist-util';
+import {ValuelistDefinition} from '../../core/configuration/model/valuelist-definition';
+import {ValuelistUtil} from '../../core/util/valuelist-util';
+
+const locale: string = require('electron').remote.getGlobal('config').locale;
 
 
 @Component({
@@ -56,5 +58,8 @@ export class ProjectConfigurationComponent {
     public getValueLabel = ValuelistUtil.getValueLabel;
 
 
-    public getValuelistDescription = ValuelistUtil.getValuelistDescription;
+    public getValuelistDescription = (valuelist: ValuelistDefinition) => valuelist.description?.[locale];;
+
+
+    public getTypeDescription = (type: IdaiType) => type.description?.[locale];
 }

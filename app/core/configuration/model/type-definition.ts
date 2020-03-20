@@ -7,6 +7,7 @@ export interface TypeDefinition {
 
     label?: string;
     type: string;
+    description: {[language: string]: string};
     abstract?: boolean;
 
     /**

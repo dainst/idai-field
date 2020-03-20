@@ -13,6 +13,7 @@ export interface IdaiType {
     isAbstract: boolean;
     name: string;
     label: string;
+    description: {[language: string]: string};
     color: string|undefined;
     groups: Array<Group>;
     mustLieWithin: boolean|undefined; // = undefined;
@@ -30,6 +31,7 @@ export module IdaiType {
     export const PARENTTYPE = 'parentType';
     export const CHILDREN = 'children';
     export const NAME = 'name';
+    export const DESCRIPTION = 'description';
     export const GROUPS = 'groups';
 
 
@@ -39,6 +41,7 @@ export module IdaiType {
         idaiType.mustLieWithin = definition.mustLieWithin;
         idaiType.name = definition.type;
         idaiType.label = definition.label || idaiType.name;
+        idaiType.description = definition.description;
         idaiType['fields'] = definition.fields || []; // TODO remove after construction
         idaiType.groups = [];
         idaiType.isAbstract = definition.abstract || false;

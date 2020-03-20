@@ -18,6 +18,7 @@ import {hideFields} from './hide-fields';
 import {RelationDefinition} from '../model/relation-definition';
 import {addRelations} from './add-relations';
 import {applyLanguage} from './apply-language';
+import {ConfigurationDefinition} from './configuration-definition';
 
 
 /**
@@ -32,7 +33,7 @@ export function buildProjectTypes(builtInTypes: Map<BuiltinTypeDefinition>,
                                   extraFields: Map = {},
                                   relations: Array<RelationDefinition> = [],
                                   languageConfiguration: any = {},
-                                  customLanguageConfiguration: any = {}) {
+                                  customLanguageConfiguration: any = {}): ConfigurationDefinition {
 
     Assertions.performAssertions(builtInTypes, libraryTypes, customTypes, commonFields, valuelistsConfiguration);
     addSourceField(builtInTypes, libraryTypes, customTypes, commonFields);

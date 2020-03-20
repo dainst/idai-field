@@ -122,7 +122,7 @@ export class ConfigLoader {
         // unused: Preprocessing.prepareSameMainTypeResource(appConfiguration);
         // unused: Preprocessing.setIsRecordedInVisibilities(appConfiguration); See #8992
 
-        let conf: any;
+        let conf: ConfigurationDefinition;
         try {
             conf = buildProjectTypes(
                 builtinTypes,

@@ -7,7 +7,7 @@ import {RelationDefinition} from '../model/relation-definition';
 export interface ConfigurationDefinition {
 
     identifier: string
-    categories: Array<CategoryDefinition>;
+    categories: any;
     relations: Array<RelationDefinition>;
     groups?: any;
 }

@@ -21,23 +21,23 @@ describe('DocumentHolder', () => {
     beforeEach(() => {
 
         const pconf = new ProjectConfiguration({
-            categories: [{
+            categories: {Trench: {
                 name: 'Trench',
-                fields: [
+                groups: [{ name: 'stem', fields: [
                     { name: 'id' },
                     { name: 'category' },
                     { name: 'emptyfield' }
-                ]
-            }, {
+                ]}]
+            }, Find: {
                 name: 'Find',
-                fields: [
+                groups: [{name: 'stem', fields: [
                     { name: 'id' },
                     { name: 'category' },
                     { name: 'unsignedIntField', inputType: 'unsignedInt' },
                     { name: 'unsignedFloatField', inputType: 'unsignedFloat' },
                     { name: 'floatField', inputType: 'float' }
-                ]
-            }],
+                ]}]
+            }},
             relations: [
                 {
                     'name': 'isFoundOn',
@@ -71,7 +71,7 @@ describe('DocumentHolder', () => {
                     'isFoundOn2': ['1'],
                     'undefrel': ['2']
                 }
-            },
+            } as any,
             modified: [],
             created: { user: 'a', date: new Date() }
         };
@@ -165,7 +165,7 @@ describe('DocumentHolder', () => {
                 id: '1',
                 identifier: '1',
                 relations: {}
-            },
+            } as any,
             modified: [],
             created: { user: 'a', date: new Date() }
         };
@@ -193,7 +193,7 @@ describe('DocumentHolder', () => {
                 relations: {
                     isRecordedIn: ['tX']
                 }
-            },
+            } as any,
             modified: [],
             created: { user: 'a', date: new Date() }
         };
@@ -219,7 +219,7 @@ describe('DocumentHolder', () => {
                 id: '1',
                 identifier: '1',
                 relations: {}
-            },
+            } as any,
             modified: [],
             created: { user: 'a', date: new Date() }
         };
@@ -248,7 +248,7 @@ describe('DocumentHolder', () => {
                 unsignedFloatField: '7.49',
                 floatField: '-7.49',
                 relations: {}
-            },
+            } as any,
             modified: [],
             created: { user: 'a', date: new Date() }
         };

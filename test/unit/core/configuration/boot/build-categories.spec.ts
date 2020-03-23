@@ -9,11 +9,10 @@ import {ValuelistDefinition} from '../../../../../app/core/configuration/model/v
 import {Groups} from '../../../../../app/core/configuration/model/group';
 import {SortUtil} from '../../../../../app/core/util/sort-util';
 
-
 const byName = (a, b) => SortUtil.alnumCompare(a.name, b.name);
 
 
-describe('buildCategories', () => {
+describe('buildCategories', () => { // TODO test groups in idai type of types map
 
     it('auto-select parent if child defined',  () => {
 
@@ -37,10 +36,8 @@ describe('buildCategories', () => {
             customCategories
         ).categories;
 
-        result.sort(byName);
-
-        expect(result[0]).toBeDefined();
-        expect(result[1]).toBeDefined();
+        expect(result['A']).toBeDefined();
+        expect(result['B']).toBeDefined();
     });
 
 
@@ -69,11 +66,10 @@ describe('buildCategories', () => {
             customCategories
         ).categories;
 
-        result.sort(byName);
 
-        expect(result[0]).toBeDefined();
-        expect(result[1]).toBeDefined();
-        expect(result[2]).toBeUndefined();
+        expect(result['A']).toBeDefined();
+        expect(result['B']).toBeDefined();
+        expect(result['C']).toBeUndefined();
     });
 
 
@@ -117,12 +113,12 @@ describe('buildCategories', () => {
             commonFields
         ).categories;
 
-        expect(result[0]['fields'][0].visible).toBe(false);
-        expect(result[0]['fields'][1].visible).toBe(true);
-        expect(result[0]['fields'][2].visible).toBe(false);
-        expect(result[0]['fields'][3].visible).toBe(true);
-        expect(result[0]['fields'][4].visible).toBe(false);
-        expect(result[0]['fields'][5].visible).toBe(true);
+        expect(result['A']['fields'][0].visible).toBe(false);
+        expect(result['A']['fields'][1].visible).toBe(true);
+        expect(result['A']['fields'][2].visible).toBe(false);
+        expect(result['A']['fields'][3].visible).toBe(true);
+        expect(result['A']['fields'][4].visible).toBe(false);
+        expect(result['A']['fields'][5].visible).toBe(true);
     });
 
 
@@ -151,7 +147,7 @@ describe('buildCategories', () => {
             }
         ).categories;
 
-        expect(result[0].fields[0]['valuelist']['values']).toEqual({ a: {} });
+        expect(result['A'].fields[0]['valuelist']['values']).toEqual({ a: {} });
     });
 
 
@@ -189,7 +185,7 @@ describe('buildCategories', () => {
             }
         ).categories;
 
-        expect(result[0].fields[0]['valuelist']['values']).toEqual({ b: {} });
+        expect(result['A'].fields[0]['valuelist']['values']).toEqual({ b: {} });
     });
 
 
@@ -225,7 +221,7 @@ describe('buildCategories', () => {
             }
         ).categories;
 
-        expect(result[0].fields[0]['valuelist']['values']).toEqual({ a: {} });
+        expect(result['A'].fields[0]['valuelist']['values']).toEqual({ a: {} });
     });
 
 
@@ -551,8 +547,8 @@ describe('buildCategories', () => {
             {}
         ).categories;
 
-        expect(result[0].fields[0]['group']).toBe('stem');
-        expect(result[0].fields[0]['inputType']).toBe('input');
+        expect(result['A'].fields[0]['group']).toBe('stem');
+        expect(result['A'].fields[0]['inputType']).toBe('input');
     });
 
 
@@ -576,8 +572,8 @@ describe('buildCategories', () => {
             {}
         ).categories;
 
-        expect(result[0].fields[0]['group']).toBe('stem');
-        expect(result[0].fields[0]['inputType']).toBe('input');
+        expect(result['A'].fields[0]['group']).toBe('stem');
+        expect(result['A'].fields[0]['inputType']).toBe('input');
     });
 
 
@@ -615,10 +611,10 @@ describe('buildCategories', () => {
             {}
         ).categories;
 
-        expect(result[0].fields[0]['group']).toBe('stem');
-        expect(result[0].fields[0]['inputType']).toBe('input');
-        expect(result[0].fields[1]['group']).toBe('stem');
-        expect(result[0].fields[1]['inputType']).toBe('input');
+        expect(result['A'].fields[0]['group']).toBe('stem');
+        expect(result['A'].fields[0]['inputType']).toBe('input');
+        expect(result['A'].fields[1]['group']).toBe('stem');
+        expect(result['A'].fields[1]['inputType']).toBe('input');
     });
 
 
@@ -649,9 +645,9 @@ describe('buildCategories', () => {
             {}
         ).categories;
 
-        expect(result[0].fields[0]['group']).toBe('stem');
-        expect(result[0].fields[0]['inputType']).toBe('dropdown');
-        expect(result[0].fields[0]['valuelistFromProjectField']).toBe('x');
+        expect(result['A'].fields[0]['group']).toBe('stem');
+        expect(result['A'].fields[0]['inputType']).toBe('dropdown');
+        expect(result['A'].fields[0]['valuelistFromProjectField']).toBe('x');
     });
 
 
@@ -770,7 +766,7 @@ describe('buildCategories', () => {
             {}
         ).categories;
 
-        expect(result[0].fields[0].inputType).toBe('input');
+        expect(result['A'].fields[0].inputType).toBe('input');
     });
 
 
@@ -935,10 +931,9 @@ describe('buildCategories', () => {
             { 'A:0': { fields: {} } }, {}, valuelistsConfiguration, {}
         ).categories;
 
+        result['A'].fields.sort(byName);
 
-        result[0].fields.sort(byName);
-
-        expect(result[0].fields[0].valuelist.values).toEqual({
+        expect(result['A'].fields[0].valuelist.values).toEqual({
             one: { labels: { de: 'Eins', en: 'One' } },
             two: { references: { externalId: '1234567' } },
             three: {}
@@ -1051,10 +1046,9 @@ describe('buildCategories', () => {
             {}, {}, {}
         ).categories;
 
-        result[0].fields.sort(byName);
-        expect(result[0].fields[0].inputType).toBe('text');
-        expect(result[0].fields[0].group).toBe('stem');
-        expect(result[0].fields[1].inputType).toBe('text');
+        expect(result['A'].fields[0].inputType).toBe('text');
+        expect(result['A'].fields[0].group).toBe('stem');
+        expect(result['A'].fields[1].inputType).toBe('text');
     });
 
 
@@ -1082,9 +1076,9 @@ describe('buildCategories', () => {
             {}, {}, {}
         ).categories;
 
-        expect(result[0].fields[0].inputType).toBe('text');
-        expect(result[0].fields[0].group).toBe('stem');
-        expect(result[0].fields[1].inputType).toBe('text');
+        expect(result['A'].fields[0].inputType).toBe('text');
+        expect(result['A'].fields[0].group).toBe('stem');
+        expect(result['A'].fields[1].inputType).toBe('text');
     });
 
 
@@ -1126,9 +1120,9 @@ describe('buildCategories', () => {
             {}, {}, {}
         ).categories;
 
-        expect(result[0].fields[0].inputType).toBe('text');
-        expect(result[0].fields[1].inputType).toBe('text');
-        expect(result[0].fields[2].inputType).toBe('text');
+        expect(result['A'].fields[0].inputType).toBe('text');
+        expect(result['A'].fields[1].inputType).toBe('text');
+        expect(result['A'].fields[2].inputType).toBe('text');
     });
 
 
@@ -1174,11 +1168,12 @@ describe('buildCategories', () => {
             {}, {}
         ).categories;
 
-        result[0].fields.sort(byName);
-        expect(result[0].fields[0].source).toBe(FieldDefinition.Source.COMMON);
-        expect(result[0].fields[1].source).toBe(FieldDefinition.Source.BUILTIN);
-        expect(result[0].fields[2].source).toBe(FieldDefinition.Source.LIBRARY);
-        expect(result[0].fields[3].source).toBe(FieldDefinition.Source.CUSTOM);
+        result['A'].fields.sort(byName);
+
+        expect(result['A'].fields[0].source).toBe(FieldDefinition.Source.COMMON);
+        expect(result['A'].fields[1].source).toBe(FieldDefinition.Source.BUILTIN);
+        expect(result['A'].fields[2].source).toBe(FieldDefinition.Source.LIBRARY);
+        expect(result['A'].fields[3].source).toBe(FieldDefinition.Source.CUSTOM);
     });
 
     // err cases

@@ -27,9 +27,9 @@ export class ProjectConfiguration {
     private relations: Array<RelationDefinition> = [];
 
 
-    constructor(configuration: ConfigurationDefinition) {
+    constructor(configuration: any) {
 
-        this.categoriesMap = ProjectConfigurationUtils.makeCategoriesMap(configuration);
+        this.categoriesMap = configuration.categories;
         this.relations = configuration.relations || [];
     }
 

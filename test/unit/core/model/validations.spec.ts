@@ -11,10 +11,10 @@ describe('Validations', () => {
 
     const projectConfiguration = new ProjectConfiguration(
         {
-            categories: [
-                {
+            categories: {
+                T: {
                     name: 'T',
-                    fields: [
+                    groups: [{ name: 'stem', fields: [
                         { name: 'id' },
                         { name: 'identifier' },
                         { name: 'category' },
@@ -37,25 +37,25 @@ describe('Validations', () => {
                         { name: 'literature1', label: 'literature1', inputType: 'literature' },
                         { name: 'literature2', label: 'literature2', inputType: 'literature' },
                         { name: 'literature3', label: 'literature3', inputType: 'literature' }
-                    ]
+                    ]}]
                 },
-                {
+                T2: {
                     name: 'T2',
-                    fields: [
+                    groups: [{ name: 'stem', fields: [
                         { name: 'id' },
                         { name: 'category' }
-                    ]
+                    ]}]
                 },
-                {
+                T3: {
                     name: 'T3',
-                    fields: [
+                    groups: [{ name: 'stem', fields: [
                         { name: 'id' },
                         { name: 'category' },
                         { name: 'dating' },
                         { name: 'period', inputType: 'dropdownRange' }
-                    ]
-                },
-            ],
+                    ]}]
+                }
+            },
             relations: [
                 { name: 'isRelatedTo', domain: ['T'], range: ['T'], inverse: 'NO-INVERSE' },
                 { name: 'isDepictedIn', domain: ['T'], range: ['T2'], inverse: 'NO-INVERSE' },
@@ -80,7 +80,7 @@ describe('Validations', () => {
             }
         };
 
-        const undefinedFields = Validations.validateDefinedFields(doc.resource, projectConfiguration);
+        const undefinedFields = Validations.validateDefinedFields(doc.resource as any, projectConfiguration);
         expect(undefinedFields).toContain('undef');
     });
 
@@ -101,7 +101,7 @@ describe('Validations', () => {
             }
         };
 
-        const undefinedFields = Validations.validateDefinedFields(doc.resource, projectConfiguration);
+        const undefinedFields = Validations.validateDefinedFields(doc.resource as any, projectConfiguration);
         expect(undefinedFields.length).toBe(0);
     });
 
@@ -122,7 +122,7 @@ describe('Validations', () => {
 
 
         try {
-            Validations.assertNoFieldsMissing(doc, projectConfiguration);
+            Validations.assertNoFieldsMissing(doc as any, projectConfiguration);
         } catch (errWithParams) {
             fail(errWithParams);
         }
@@ -140,7 +140,7 @@ describe('Validations', () => {
         };
 
         try {
-            Validations.assertNoFieldsMissing(doc, projectConfiguration);
+            Validations.assertNoFieldsMissing(doc as any, projectConfiguration);
             fail();
         } catch (errWithParams) {
             expect(errWithParams).toEqual([ValidationErrors.MISSING_PROPERTY, 'T', 'mandatory']);
@@ -160,7 +160,7 @@ describe('Validations', () => {
         };
 
         try {
-            Validations.assertNoFieldsMissing(doc, projectConfiguration);
+            Validations.assertNoFieldsMissing(doc as any, projectConfiguration);
             fail();
         } catch (errWithParams) {
             expect(errWithParams).toEqual([ValidationErrors.MISSING_PROPERTY, 'T', 'mandatory']);
@@ -181,7 +181,7 @@ describe('Validations', () => {
         };
 
         try {
-            Validations.assertCorrectnessOfNumericalValues(doc, projectConfiguration);
+            Validations.assertCorrectnessOfNumericalValues(doc as any, projectConfiguration);
             fail();
         } catch (errWithParams) {
             expect(errWithParams).toEqual([ValidationErrors.INVALID_NUMERICAL_VALUES, 'T', 'number1']);
@@ -204,7 +204,7 @@ describe('Validations', () => {
         };
 
         try {
-            Validations.assertCorrectnessOfNumericalValues(doc, projectConfiguration);
+            Validations.assertCorrectnessOfNumericalValues(doc as any, projectConfiguration);
             fail();
         } catch (errWithParams) {
             expect(errWithParams).toEqual([ValidationErrors.INVALID_NUMERICAL_VALUES, 'T', 'number1, number2']);
@@ -239,7 +239,7 @@ describe('Validations', () => {
         };
 
         try {
-            Validations.assertCorrectnessOfDatingValues(doc, projectConfiguration);
+            Validations.assertCorrectnessOfDatingValues(doc as any, projectConfiguration);
             fail();
         } catch (errWithParams) {
             expect(errWithParams).toEqual(
@@ -274,7 +274,7 @@ describe('Validations', () => {
         };
 
         try {
-            Validations.assertCorrectnessOfDimensionValues(doc, projectConfiguration);
+            Validations.assertCorrectnessOfDimensionValues(doc as any, projectConfiguration);
             fail();
         } catch (errWithParams) {
             expect(errWithParams).toEqual(
@@ -303,7 +303,7 @@ describe('Validations', () => {
         };
 
         try {
-            Validations.assertCorrectnessOfLiteratureValues(doc, projectConfiguration);
+            Validations.assertCorrectnessOfLiteratureValues(doc as any, projectConfiguration);
             fail();
         } catch (errWithParams) {
             expect(errWithParams).toEqual(

@@ -22,6 +22,7 @@ import {ConfigurationDefinition} from './configuration-definition';
 import {applySearchConfiguration} from './apply-search-configuration';
 import {UnorderedConfigurationDefinition} from '../model/unordered-configuration-definition';
 import {getOrderedCategories} from './get-ordered-categories';
+import {makeCategoriesMap} from './make-categories-map';
 
 
 /**
@@ -63,8 +64,9 @@ export function buildCategories(builtInCategories: Map<BuiltinCategoryDefinition
         applyLanguage(customLanguageConfiguration),
         applySearchConfiguration(searchConfiguration),
         addExtraFieldsOrder(orderConfiguration),
-        getOrderedCategories(orderConfiguration),
-        validateFields);
+        getOrderedCategories(orderConfiguration), // TODO review: first we order, then we throw the order away
+        validateFields,
+        makeCategoriesMap); // TODO use update
 }
 
 

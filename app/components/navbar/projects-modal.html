@@ -26,7 +26,7 @@
                 <span class="delete-sign mdi mdi-delete mdi-18px"></span>
             </div>
 
-            <div id="new-project-button" class="circular-button type-button" [ngbPopover]="newProjectMenu"
+            <div id="new-project-button" class="circular-button category-button" [ngbPopover]="newProjectMenu"
                  #createPopover="ngbPopover" [triggers]="'manual'" [placement]="'bottom'"
                  [autoClose]="false" (click)="openMenu(createPopover)">
                 <category-icon [category]="'Project'" size="41"></category-icon>

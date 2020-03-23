@@ -6,11 +6,11 @@ import {NativeJsonlParser} from './parser/native-jsonl-parser';
 import {ShapefileParser} from './parser/shapefile-parser';
 import {GazGeojsonParserAddOn} from './parser/gaz-geojson-parser-add-on';
 import {ImportValidator} from './import/process/import-validator';
-import {ProjectTypes} from '../configuration/project-types';
+import {ProjectCategories} from '../configuration/project-categories';
 import {DocumentDatastore} from '../datastore/document-datastore';
 import {CsvParser} from './parser/csv-parser';
 import {ProjectConfiguration} from '../configuration/project-configuration';
-import {IdaiType} from '../configuration/model/idai-type';
+import {Category} from '../configuration/model/category';
 import {InverseRelationsMap, makeInverseRelationsMap} from '../configuration/inverse-relations-map';
 import {buildImportFunction} from './import/import-documents';
 import {FieldConverter} from './field-converter';
@@ -40,16 +40,16 @@ export module Importer {
      * if any.
      *
      * @param format
-     * @param projectTypes
+     * @param projectCategories
      * @param datastore
      * @param usernameProvider
      * @param projectConfiguration
-     * @param mainTypeDocumentId
+     * @param operationId
      * @param mergeMode
      * @param permitDeletions
      * @param fileContent
      * @param generateId
-     * @param selectedType should be defined in case format === csv
+     * @param selectedCategory should be defined in case format === csv
      * @param separator
      *
      * @returns ImportReport
@@ -57,21 +57,21 @@ export module Importer {
      *   importReport.warnings
      */
     export async function doImport(format: ImportFormat,
-                                   projectTypes: ProjectTypes,
+                                   projectCategories: ProjectCategories,
                                    datastore: DocumentDatastore,
                                    usernameProvider: UsernameProvider,
                                    projectConfiguration: ProjectConfiguration,
-                                   mainTypeDocumentId: string,
+                                   operationId: string,
                                    mergeMode: boolean,
                                    permitDeletions: boolean,
                                    fileContent: string,
                                    generateId: () => string,
-                                   selectedType?: IdaiType,
+                                   selectedCategory?: Category,
                                    separator?: string) {
 
-        const mainTypeDocumentId_ = mergeMode ? '' : mainTypeDocumentId;
+        const operationId_ = mergeMode ? '' : operationId;
 
-        const parse = createParser(format, mainTypeDocumentId_, selectedType, separator);
+        const parse = createParser(format, operationId_, selectedCategory, separator);
         const documents: Document[] = [];
 
         try {
@@ -80,8 +80,8 @@ export module Importer {
             return { errors: [msgWithParams], successfulImports: 0 };
         }
 
-        const operationTypeNames = projectTypes.getOverviewTypeNames().filter(isnt('Place'));
-        const importValidator =  new ImportValidator(projectConfiguration, datastore, projectTypes);
+        const operationCategoryNames = projectCategories.getOverviewCategoryNames().filter(isnt('Place'));
+        const importValidator =  new ImportValidator(projectConfiguration, datastore, projectCategories);
 
         const inverseRelationsMap = makeInverseRelationsMap(projectConfiguration.getAllRelationDefinitions());
 
@@ -89,8 +89,8 @@ export module Importer {
             documents,
             format,
             importValidator,
-            operationTypeNames,
-            mainTypeDocumentId_,
+            operationCategoryNames,
+            operationId_,
             mergeMode,
             permitDeletions,
             inverseRelationsMap,
@@ -104,13 +104,14 @@ export module Importer {
     }
 
 
-    function createParser(format: ImportFormat, operationId: string, selectedType?: IdaiType, separator?: string): any {
+    function createParser(format: ImportFormat, operationId: string, selectedCategory?: Category,
+                          separator?: string): any {
 
         switch (format) {
             case 'csv':
-                if (!selectedType) throw 'Selected type must be set for csv import';
+                if (!selectedCategory) throw 'Selected category must be set for csv import';
                 if (!separator) throw 'Separator must be set for csv import';
-                return CsvParser.build(selectedType, operationId, separator);
+                return CsvParser.build(selectedCategory, operationId, separator);
             case 'geojson-gazetteer':
                 return GeojsonParser.getParse(
                     GazGeojsonParserAddOn.preValidateAndTransformFeature,
@@ -129,8 +130,8 @@ export module Importer {
     function performImport(documents: Array<Document>,
                            format: ImportFormat,
                            validator: ImportValidator,
-                           operationTypeNames: string[],
-                           mainTypeDocumentId: string,
+                           operationCategoryNames: string[],
+                           operationId: string,
                            mergeMode: boolean,
                            permitDeletions: boolean,
                            inverseRelationsMap: InverseRelationsMap,
@@ -144,21 +145,21 @@ export module Importer {
 
         switch (format) {
             case 'geojson-gazetteer':
-                importFunction =  buildImportFunction(validator, operationTypeNames, inverseRelationsMap, generateId,
+                importFunction =  buildImportFunction(validator, operationCategoryNames, inverseRelationsMap, generateId,
                     preprocessDocument, postprocessDocument,
                     { mergeMode: false, permitDeletions: false });
                 break;
             case 'shapefile':
             case 'geojson':
-                importFunction = buildImportFunction(validator, operationTypeNames, inverseRelationsMap, generateId,
+                importFunction = buildImportFunction(validator, operationCategoryNames, inverseRelationsMap, generateId,
                     preprocessDocument, postprocessDocument,
                     { mergeMode: true, permitDeletions: false });
                 break;
             default: // native | csv
-                importFunction = buildImportFunction(validator, operationTypeNames, inverseRelationsMap, generateId,
+                importFunction = buildImportFunction(validator, operationCategoryNames, inverseRelationsMap, generateId,
                     preprocessDocument, postprocessDocument,
                     { mergeMode: mergeMode, permitDeletions: permitDeletions,
-                        mainTypeDocumentId: mainTypeDocumentId, useIdentifiersInRelations: true});
+                        operationId: operationId, useIdentifiersInRelations: true});
         }
 
         return importFunction(documents, datastore, username);

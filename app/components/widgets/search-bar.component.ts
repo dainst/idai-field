@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, Output, ViewChild, ElementRef, OnChanges} from '@angular/core';
 import {sameset} from 'tsfun';
-import {ProjectTypes} from '../../core/configuration/project-types';
-import {IdaiType} from '../../core/configuration/model/idai-type';
+import {ProjectCategories} from '../../core/configuration/project-categories';
+import {Category} from '../../core/configuration/model/category';
 
 
 @Component({
@@ -20,13 +20,13 @@ import {IdaiType} from '../../core/configuration/model/idai-type';
  */
 export class SearchBarComponent implements OnChanges {
 
-    @Input() filterOptions: Array<IdaiType> = [];
+    @Input() filterOptions: Array<Category> = [];
     @Input() showFiltersMenu: boolean = true;
 
     @Input() q: string = '';
-    @Input() types: string[]|undefined;
+    @Input() categories: string[]|undefined;
 
-    @Output() onTypesChanged = new EventEmitter<string[]>();
+    @Output() onCategoriesChanged = new EventEmitter<string[]>();
     @Output() onQueryStringChanged = new EventEmitter<string>();
 
     @ViewChild('p', {static: false}) protected popover: any;
@@ -37,18 +37,18 @@ export class SearchBarComponent implements OnChanges {
     private emitQueryTimeout: any = undefined;
 
 
-    constructor(private projectTypes: ProjectTypes) {}
+    constructor(private projectCategories: ProjectCategories) {}
 
 
     ngOnChanges() {
 
-        if ((!this.types || this.types.length === 0) && this.filterOptions.length === 1) {
-            this.types = [this.filterOptions[0].name];
+        if ((!this.categories || this.categories.length === 0) && this.filterOptions.length === 1) {
+            this.categories = [this.filterOptions[0].name];
         }
     }
 
 
-    public isAllTypesOptionVisible = () => this.filterOptions && this.filterOptions.length > 1;
+    public isAllCategoriesOptionVisible = () => this.filterOptions && this.filterOptions.length > 1;
 
 
     public onKeyUp(event: KeyboardEvent) {
@@ -66,18 +66,19 @@ export class SearchBarComponent implements OnChanges {
     }
 
 
-    public chooseTypeFilter(type: IdaiType) {
+    public chooseCategoryFilter(category: Category) {
 
-        let newTypes: string[]|undefined = type
-            ? this.projectTypes.getNamesOfTypeAndSubtypes(type.name)
+        let newCategories: string[]|undefined = category
+            ? this.projectCategories.getNamesOfCategoriesAndSubcategories(category.name)
             : undefined;
 
-        if (newTypes && newTypes.length > 1 && this.types && sameset(this.types)(newTypes)) {
-            newTypes = [type.name];
+        if (newCategories && newCategories.length > 1 && this.categories
+                && sameset(this.categories)(newCategories)) {
+            newCategories = [category.name];
         }
 
-        this.types = newTypes;
-        this.onTypesChanged.emit(this.types);
+        this.categories = newCategories;
+        this.onCategoriesChanged.emit(this.categories);
     }
 
 

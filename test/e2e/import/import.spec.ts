@@ -40,13 +40,13 @@ describe('import --', function() {
     });
 
 
-    let importIt = function(url, mainTypeDocumentOption = 0) {
+    let importIt = function(url: string, operationOption: number = 0) {
 
         expect(ImportPage.getSourceOptionValue(1)).toEqual('http');
         ImportPage.clickSourceOption(1);
         expect(ImportPage.getFormatOptionValue(0)).toEqual('native');
         ImportPage.clickFormatOption(0);
-        ImportPage.clickOperationOption(mainTypeDocumentOption);
+        ImportPage.clickOperationOption(operationOption);
         common.typeIn(ImportPage.getImportURLInput(), url);
         ImportPage.clickStartImportButton();
         browser.wait(EC.stalenessOf(ImportPage.getImportModal()), delays.ECWaitTime);

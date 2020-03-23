@@ -14,14 +14,14 @@ import {SearchBarComponent} from '../../../widgets/search-bar.component';
  */
 export class ImageOverviewSearchBarComponent extends SearchBarComponent {
 
-    public getSelectedType(): string|undefined {
+    public getSelectedCategory(): string|undefined {
 
-        return this.types !== undefined && this.types.length > 0 ? this.types[0] : undefined
+        return this.categories !== undefined && this.categories.length > 0 ? this.categories[0] : undefined
     }
 
 
-    public isTypeSelected(): boolean {
+    public isCategorySelected(): boolean {
 
-        return this.types !== undefined && this.types.length > 0;
+        return this.categories !== undefined && this.categories.length > 0;
     }
 }

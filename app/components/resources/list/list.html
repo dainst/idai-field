@@ -1,5 +1,5 @@
 <div id="list">
-    <div *ngIf="typesMap">
+    <div *ngIf="categoriesMap">
         <div id="list-header">
             <div i18n="@@resources.list.headers.category">Kategorie</div>
             <div i18n="@@resources.list.headers.identifier">Bezeichner</div>
@@ -10,7 +10,7 @@
         <div id="list-body">
             <div class="row-grid">
                 <div *ngFor="let document of documents">
-                    <row [document]="document" [typesMap]="typesMap"></row>
+                    <row [document]="document" [categoriesMap]="categoriesMap"></row>
                 </div>
             </div>
         </div>
@@ -21,7 +21,7 @@
                  id="create-document-button"
                  [placement]="'top'"
                  [preselectedGeometryType]="'none'"
-                 [preselectedType]="getCurrentFilterType()"
+                 [preselectedCategory]="getCurrentFilterCategory()"
                  [liesWithin]="getSelectedSegmentDoc()"
                  [isRecordedIn]="viewFacade.getCurrentOperation()"
                  [skipFormAndReturnNewDocument]="true"

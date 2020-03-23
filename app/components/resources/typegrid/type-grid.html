@@ -9,9 +9,9 @@
          class="type-grid-image-container d-flex align-items-center justify-content-center">
         <img [src]="imageUrl">
     </div>
-    <type-icon *ngIf="getImageUrls(document).length === 0"
-               [size]="60"
-               [type]="document.resource.type"></type-icon>
+    <category-icon *ngIf="getImageUrls(document).length === 0"
+                   [size]="60"
+                   [category]="document.resource.category"></category-icon>
 </ng-template>
 
 <context-menu *ngIf="contextMenu.isOpen()"
@@ -52,7 +52,7 @@
                              id="create-document-button"
                              [placement]="'top'"
                              [preselectedGeometryType]="'none'"
-                             [preselectedType]="getCurrentFilterType()"
+                             [preselectedCategory]="getCurrentFilterCategory()"
                              [liesWithin]="getSelectedSegmentDoc()"
                              [isRecordedIn]="viewFacade.getCurrentOperation()"
                              [status]="getPlusButtonStatus()"></plus-button>

@@ -5,10 +5,10 @@
             <div *ngIf="!hasSelectedImages()" class="col-sm-8 image-overview-nav-content">
                 <image-overview-search-bar [filterOptions]="filterOptions"
                                            [q]="getQuery().q"
-                                           [types]="getQuery().types"
+                                           [categories]="getQuery().categories"
                                            [hidden]="nrOfSelectedImages()"
                                            (onQueryStringChanged)="setQueryString($event)"
-                                           (onTypesChanged)="setTypeFilters($event)">
+                                           (onCategoriesChanged)="setCategoryFilters($event)">
                 </image-overview-search-bar>
             </div>
 

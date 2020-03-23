@@ -13,39 +13,39 @@ describe('ImportValidator', () => {
 
     const projectConfiguration = new ProjectConfiguration(
         {
-            types: [
+            categories: [
                 {
-                    type: 'T',
+                    name: 'T',
                     fields: [
-                        {name: 'id',},
-                        {name: 'identifier'},
-                        {name: 'type',},
-                        {name: 'optional'},
-                        {name: 'mandatory', mandatory: true},
-                        {name: 'number1', label: 'number1', inputType: 'float'},
-                        {name: 'number2', label: 'number2', inputType: 'float'},
-                        {name: 'ddr', label: 'DropdownRange', inputType: INPUT_TYPES.DROPDOWN_RANGE},
-                        {name: 'ddr2', label: 'DropdownRange2', inputType: INPUT_TYPES.DROPDOWN_RANGE}
+                        { name: 'id' },
+                        { name: 'identifier' },
+                        { name: 'category' },
+                        { name: 'optional' },
+                        { name: 'mandatory', mandatory: true },
+                        { name: 'number1', label: 'number1', inputType: 'float' },
+                        { name: 'number2', label: 'number2', inputType: 'float' },
+                        { name: 'ddr', label: 'DropdownRange', inputType: INPUT_TYPES.DROPDOWN_RANGE },
+                        { name: 'ddr2', label: 'DropdownRange2', inputType: INPUT_TYPES.DROPDOWN_RANGE }
                     ]
                 },
                 {
-                    type: 'T2',
+                    name: 'T2',
                     fields: [
-                        {name: 'id',},
-                        {name: 'type',}
+                        { name: 'id' },
+                        { name: 'category' }
                     ]
                 },
                 {
-                    type: 'T3',
-                    mustLieWithin: true,
+                    name: 'T3',
+                    mustLieWithin: true
                 }
             ],
             relations: [
-                {name: 'isRelatedTo', domain: ['T'], range: ['T'], inverse: 'NO-INVERSE'},
-                {name: 'isDepictedIn', domain: ['T'], range: ['T2'], inverse: 'NO-INVERSE'},
-                {name: 'isRecordedIn', domain: ['T'], range: ['T2'], inverse: 'NO-INVERSE'},
-                {name: 'includes', domain: ['T'], range: ['T2'], inverse: 'NO-INVERSE'}, // defined but not allowed
-                {name: 'liesWithin', domain: ['T3'], range: ['T2'], inverse: 'NO-INVERSE'}
+                { name: 'isRelatedTo', domain: ['T'], range: ['T'], inverse: 'NO-INVERSE' },
+                { name: 'isDepictedIn', domain: ['T'], range: ['T2'], inverse: 'NO-INVERSE' },
+                { name: 'isRecordedIn', domain: ['T'], range: ['T2'], inverse: 'NO-INVERSE' },
+                { name: 'includes', domain: ['T'], range: ['T2'], inverse: 'NO-INVERSE' }, // defined but not allowed
+                { name: 'liesWithin', domain: ['T3'], range: ['T2'], inverse: 'NO-INVERSE' }
             ]
         } as any
     );
@@ -56,7 +56,7 @@ describe('ImportValidator', () => {
         const doc = {
             resource: {
                 id: '1',
-                type: 'T',
+                category: 'T',
                 relations: {},
             }
         };
@@ -75,7 +75,7 @@ describe('ImportValidator', () => {
         const doc = {
             resource: {
                 id: '1',
-                type: 'T',
+                category: 'T',
                 mandatory: '',
                 relations: {},
             }
@@ -95,7 +95,7 @@ describe('ImportValidator', () => {
         const doc = {
             resource: {
                 id: '1',
-                type: 'T',
+                category: 'T',
                 a: 'b',
                 mandatory: 'm',
                 relations: {},
@@ -117,7 +117,7 @@ describe('ImportValidator', () => {
         const doc = {
             resource: {
                 id: '1',
-                type: 'T',
+                category: 'T',
                 a: 'b',
                 b: 'a',
                 mandatory: 'm',
@@ -140,7 +140,7 @@ describe('ImportValidator', () => {
         const doc = {
             resource: {
                 id: '1',
-                type: 'T2',
+                category: 'T2',
                 relations: {
                     isRelatedTo: ['2']
                 }
@@ -163,7 +163,7 @@ describe('ImportValidator', () => {
         const doc = {
             resource: {
                 id: '1',
-                type: 'T2',
+                category: 'T2',
                 relations: {
                     isRelatedTo: ['2'],
                     isDepictedIn: ['3']
@@ -188,7 +188,7 @@ describe('ImportValidator', () => {
             resource: {
                 id: '3',
                 identifier: '3',
-                type: 'T3',
+                category: 'T3',
                 relations: {
                     isRecordedIn: ['T1'],
                     liesWithin: []
@@ -215,10 +215,10 @@ describe('ImportValidator', () => {
         const doc = {
             resource: {
                 id: '1',
-                type: 'T',
+                category: 'T',
                 mandatory: 'm',
                 number1: 'ABC',
-                relations: {isRecordedIn: ['0']}
+                relations: { isRecordedIn: ['0'] }
             }
         };
 
@@ -237,11 +237,11 @@ describe('ImportValidator', () => {
         const doc = {
             resource: {
                 id: '1',
-                type: 'T',
+                category: 'T',
                 mandatory: 'm',
                 number1: 'ABC',
                 number2: '123',
-                relations: {isRecordedIn: ['0']}
+                relations: { isRecordedIn: ['0'] }
             }
         };
 
@@ -260,12 +260,12 @@ describe('ImportValidator', () => {
         const doc = {
             resource: {
                 id: '1',
-                type: 'T',
+                category: 'T',
                 mandatory: 'm',
                 ddr: 'value',
                 ddrEnd: 'endValue',
                 ddr2: 'value',
-                relations: {isRecordedIn: ['0']}
+                relations: { isRecordedIn: ['0'] }
             }
         };
 
@@ -282,11 +282,11 @@ describe('ImportValidator', () => {
         const doc = {
             resource: {
                 id: '1',
-                type: 'T',
+                category: 'T',
                 mandatory: 'm',
                 ddr: '',
                 ddrEnd: 'endValue',
-                relations: {isRecordedIn: ['0']}
+                relations: { isRecordedIn: ['0'] }
             }
         };
 
@@ -305,10 +305,10 @@ describe('ImportValidator', () => {
         const doc = {
             resource: {
                 id: '1',
-                type: 'T',
+                category: 'T',
                 mandatory: 'm',
                 ddrEnd: 'endValue',
-                relations: {isRecordedIn: ['0']}
+                relations: { isRecordedIn: ['0'] }
             }
         };
 

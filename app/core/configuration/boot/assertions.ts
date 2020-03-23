@@ -1,143 +1,146 @@
 import {flow, forEach, is, keysAndValues, Map} from 'tsfun';
-import {BuiltinTypeDefinition} from '../model/builtin-type-definition';
-import {LibraryTypeDefinition} from '../model/library-type-definition';
-import {CustomTypeDefinition} from '../model/custom-type-definition';
+import {BuiltinCategoryDefinition} from '../model/builtin-category-definition';
+import {LibraryCategoryDefinition} from '../model/library-category-definition';
+import {CustomCategoryDefinition} from '../model/custom-category-definition';
 import {ValuelistDefinition} from '../model/valuelist-definition';
-import {TransientTypeDefinition} from '../model/transient-type-definition';
+import {TransientCategoryDefinition} from '../model/transient-category-definition';
 import {ConfigurationErrors} from './configuration-errors';
-import {getDefinedParents, iterateOverFieldsOfTypes} from './helpers';
+import {getDefinedParents, iterateOverFieldsOfCategories} from './helpers';
 
 
 export module Assertions {
 
-    export function performAssertions(builtInTypes: Map<BuiltinTypeDefinition>,
-                               libraryTypes: Map<LibraryTypeDefinition>,
-                               customTypes: Map<CustomTypeDefinition>,
-                               commonFields: Map<any>,
-                               valuelistsConfiguration: Map<ValuelistDefinition>) {
+    export function performAssertions(builtInCategories: Map<BuiltinCategoryDefinition>,
+                                      libraryCategories: Map<LibraryCategoryDefinition>,
+                                      customCategories: Map<CustomCategoryDefinition>,
+                                      commonFields: Map<any>,
+                                      valuelistsConfiguration: Map<ValuelistDefinition>) {
 
-        assertTypesAndValuelistsStructurallyValid(Object.keys(builtInTypes), libraryTypes, customTypes, valuelistsConfiguration);
-        assertSubtypingIsLegal(builtInTypes, libraryTypes);
-        assertSubtypingIsLegal(builtInTypes, customTypes);
-        assertNoCommonFieldInputTypeChanges(commonFields, libraryTypes);
-        assertNoCommonFieldInputTypeChanges(commonFields, customTypes);
-        assertTypeFamiliesConsistent(libraryTypes);
+        assertCategoriesAndValuelistsStructurallyValid(Object.keys(builtInCategories), libraryCategories, customCategories, valuelistsConfiguration);
+        assertSubtypingIsLegal(builtInCategories, libraryCategories);
+        assertSubtypingIsLegal(builtInCategories, customCategories);
+        assertNoCommonFieldInputTypeChanges(commonFields, libraryCategories);
+        assertNoCommonFieldInputTypeChanges(commonFields, customCategories);
+        assertCategoryNamesConsistent(libraryCategories);
     }
 
 
     export function assertInputTypesAreSet(assertInputTypePresentIfNotCommonType: Function) {
 
-        return (types: Map<TransientTypeDefinition>) => {
+        return (categories: Map<TransientCategoryDefinition>) => {
 
-            iterateOverFieldsOfTypes(types, (typeName, type, fieldName, field) => {
-                assertInputTypePresentIfNotCommonType(typeName, fieldName, field);
+            iterateOverFieldsOfCategories(categories,
+                    (categoryName, category, fieldName, field) => {
+                assertInputTypePresentIfNotCommonType(categoryName, fieldName, field);
             });
 
-            return types;
+            return categories;
         }
     }
 
 
-    export function assertNoDuplicationInSelection(customTypes: Map<CustomTypeDefinition>) {
+    export function assertNoDuplicationInSelection(customCategories: Map<CustomCategoryDefinition>) {
 
-        return (mergedTypes: Map<TransientTypeDefinition>) => {
+        return (mergedCategories: Map<TransientCategoryDefinition>) => {
 
-            Object.keys(customTypes).reduce((selectedTypeFamilies, customTypeName) => {
+            Object.keys(customCategories).reduce((selectedCategoryNames, customCategoryName) => {
 
-                const selectedType = mergedTypes[customTypeName];
-                if (!selectedType) return selectedTypeFamilies;
-                if (!selectedTypeFamilies.includes(selectedType.typeFamily)) {
-                    return selectedTypeFamilies.concat([selectedType.typeFamily]);
+                const selectedCategory = mergedCategories[customCategoryName];
+                if (!selectedCategory) return selectedCategoryNames;
+                if (!selectedCategoryNames.includes(selectedCategory.categoryName)) {
+                    return selectedCategoryNames.concat([selectedCategory.categoryName]);
                 }
-                throw [ConfigurationErrors.DUPLICATION_IN_SELECTION, selectedType.typeFamily];
+                throw [ConfigurationErrors.DUPLICATION_IN_SELECTION, selectedCategory.categoryName];
 
             }, [] as string[]);
 
-            return mergedTypes;
+            return mergedCategories;
         }
     }
 
 
-    export function assertValuelistIdsProvided(mergedTypes: Map<TransientTypeDefinition>) {
+    export function assertValuelistIdsProvided(mergedCategories: Map<TransientCategoryDefinition>) {
 
-        iterateOverFieldsOfTypes(mergedTypes, (typeName, type, fieldName, field) => {
+        iterateOverFieldsOfCategories(mergedCategories, (categoryName, category, fieldName, field) => {
             if (['dropdown', 'checkboxes', 'radio'].includes(field.inputType ? field.inputType : '')) {
 
                 if (!field.valuelistId && !field.valuelistFromProjectField) {
-                    throw [ConfigurationErrors.MISSING_FIELD_PROPERTY, 'valuelistId', typeName, fieldName];
+                    throw [ConfigurationErrors.MISSING_FIELD_PROPERTY, 'valuelistId', categoryName, fieldName];
                 }
             }
         });
 
-        return mergedTypes;
+        return mergedCategories;
     }
 
 
-    export function assertInputTypePresentIfNotCommonType(commonFields: any) {
+    export function assertInputTypePresentIfNotCommonField(commonFields: any) {
 
-        return (typeName: string, fieldName: string, field: any) => {
+        return (categoryName: string, fieldName: string, field: any) => {
 
             if (!field.inputType && !Object.keys(commonFields).includes(fieldName)) {
-                throw [ConfigurationErrors.MISSING_FIELD_PROPERTY, 'inputType', typeName, fieldName];
+                throw [ConfigurationErrors.MISSING_FIELD_PROPERTY, 'inputType', categoryName, fieldName];
             }
         }
     }
 
 
-    function assertSubtypingIsLegal(builtinTypes: Map<BuiltinTypeDefinition>, types: any) {
+    function assertSubtypingIsLegal(builtinCategories: Map<BuiltinCategoryDefinition>, categories: any) {
 
-        flow(types,
+        flow(categories,
             getDefinedParents,
             forEach((parent: any) => {
-                const found = Object.keys(builtinTypes).find(is(parent));
+                const found = Object.keys(builtinCategories).find(is(parent));
                 if (!found) throw [ConfigurationErrors.INVALID_CONFIG_PARENT_NOT_DEFINED, parent];
-                const foundBuiltIn = builtinTypes[found];
-                if (!foundBuiltIn.superType || !foundBuiltIn.userDefinedSubtypesAllowed) {
-                    throw [ConfigurationErrors.TRYING_TO_SUBTYPE_A_NON_EXTENDABLE_TYPE, parent];
+                const foundBuiltIn = builtinCategories[found];
+                if (!foundBuiltIn.supercategory || !foundBuiltIn.userDefinedSubcategoriesAllowed) {
+                    throw [ConfigurationErrors.TRYING_TO_SUBTYPE_A_NON_EXTENDABLE_CATEGORY, parent];
                 }
             }));
     }
 
 
-    function assertTypesAndValuelistsStructurallyValid(builtInTypes: string[],
-                                                       libraryTypes: Map<LibraryTypeDefinition>,
-                                                       customTypes: Map<CustomTypeDefinition>,
-                                                       valuelistDefinitions: Map<ValuelistDefinition>) {
+    function assertCategoriesAndValuelistsStructurallyValid(builtInCategories: string[],
+                                                            libraryCategories: Map<LibraryCategoryDefinition>,
+                                                            customCategories: Map<CustomCategoryDefinition>,
+                                                            valuelistDefinitions: Map<ValuelistDefinition>) {
 
-        const assertLibraryTypeValid = LibraryTypeDefinition.makeAssertIsValid(builtInTypes);
-        const assertCustomTypeValid = CustomTypeDefinition.makeAssertIsValid(builtInTypes, Object.keys(libraryTypes));
+        const assertLibraryCategoryValid = LibraryCategoryDefinition.makeAssertIsValid(builtInCategories);
+        const assertCustomCategoryValid = CustomCategoryDefinition.makeAssertIsValid(
+            builtInCategories, Object.keys(libraryCategories)
+        );
 
-        keysAndValues(libraryTypes).forEach(assertLibraryTypeValid);
-        keysAndValues(customTypes).forEach(assertCustomTypeValid);
+        keysAndValues(libraryCategories).forEach(assertLibraryCategoryValid);
+        keysAndValues(customCategories).forEach(assertCustomCategoryValid);
         keysAndValues(valuelistDefinitions).forEach(ValuelistDefinition.assertIsValid);
     }
 
 
-    function assertTypeFamiliesConsistent(libraryTypes: Map<LibraryTypeDefinition>) {
+    function assertCategoryNamesConsistent(libraryCategories: Map<LibraryCategoryDefinition>) {
 
         type InputType = string;
-        const collected: { [typeFamilyName: string]: { [fieldName: string]: InputType }} = {};
+        const collected: { [categoryName: string]: { [fieldName: string]: InputType }} = {};
 
-        Object.values(libraryTypes).forEach((libraryType: any) => {
+        Object.values(libraryCategories).forEach((libraryCategory: any) => {
 
-            const typeFamily = libraryType.typeFamily;
+            const categoryName: string = libraryCategory.categoryName;
 
-            if (!collected[typeFamily]) collected[typeFamily] = {};
+            if (!collected[categoryName]) collected[categoryName] = {};
 
-            keysAndValues(libraryType.fields).forEach(([fieldName, field]: any) => {
+            keysAndValues(libraryCategory.fields).forEach(([fieldName, field]: any) => {
 
                 const inputType = field['inputType'];
 
-                if (collected[typeFamily][fieldName]) {
-                    if (collected[typeFamily][fieldName] !== inputType) {
+                if (collected[categoryName][fieldName]) {
+                    if (collected[categoryName][fieldName] !== inputType) {
                         throw [
-                            ConfigurationErrors.INCONSISTENT_TYPE_FAMILY,
-                            typeFamily,
+                            ConfigurationErrors.INCONSISTENT_CATEGORY_NAME,
+                            categoryName,
                             'divergentInputType',
                             fieldName];
                     }
                 } else {
-                    collected[typeFamily][fieldName] = inputType;
+                    collected[categoryName][fieldName] = inputType;
                 }
             });
         });
@@ -145,24 +148,21 @@ export module Assertions {
 
 
     /**
-     * Currently we check for every field of the library types, if
+     * Currently we check for every field of the library categories, if
      * for a field having the name of a common field, the input type differs from
-     * that one defined in the common field, regardless of whether the type actually
+     * that one defined in the common field, regardless of whether the category actually
      * uses that common field or not
-     *
-     * @param commonFields
-     * @param types
      */
     function assertNoCommonFieldInputTypeChanges(commonFields: Map<any>,
-                                                 types: Map<LibraryTypeDefinition>|Map<CustomTypeDefinition>) {
+                                                 categories: Map<LibraryCategoryDefinition>|Map<CustomCategoryDefinition>) {
 
         const commonFieldNames = Object.keys(commonFields);
 
-        iterateOverFieldsOfTypes(types as any, (typeName, type, fieldName, field) => {
+        iterateOverFieldsOfCategories(categories as any, (categoryName, category, fieldName, field) => {
 
             if (commonFieldNames.includes(fieldName)) {
                 if (field.inputType) {
-                    throw [ConfigurationErrors.MUST_NOT_SET_INPUT_TYPE, typeName, fieldName];
+                    throw [ConfigurationErrors.MUST_NOT_SET_INPUT_TYPE, categoryName, fieldName];
                 }
             }
         });

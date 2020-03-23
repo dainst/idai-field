@@ -1,67 +1,67 @@
 import {Map} from 'tsfun';
-import {buildProjectTypes} from '../../../../../app/core/configuration/boot/build-project-types';
+import {buildCategories} from '../../../../../app/core/configuration/boot/build-categories';
 import {ConfigurationErrors} from '../../../../../app/core/configuration/boot/configuration-errors';
 import {FieldDefinition} from '../../../../../app/core/configuration/model/field-definition';
-import {CustomTypeDefinition} from '../../../../../app/core/configuration/model/custom-type-definition';
-import {BuiltinTypeDefinition} from '../../../../../app/core/configuration/model/builtin-type-definition';
-import {LibraryTypeDefinition} from '../../../../../app/core/configuration/model/library-type-definition';
+import {CustomCategoryDefinition} from '../../../../../app/core/configuration/model/custom-category-definition';
+import {BuiltinCategoryDefinition} from '../../../../../app/core/configuration/model/builtin-category-definition';
+import {LibraryCategoryDefinition} from '../../../../../app/core/configuration/model/library-category-definition';
 import {ValuelistDefinition} from '../../../../../app/core/configuration/model/valuelist-definition';
 import {Groups} from '../../../../../app/core/configuration/model/group';
 
 
-describe('buildProjectTypes', () => {
+describe('buildProjectCategories', () => {
 
     it('auto-select parent if child defined',  () => {
 
-        const builtInTypes: Map<BuiltinTypeDefinition> = {
+        const builtInCategories: Map<BuiltinCategoryDefinition> = {
             A: {
-                superType: true,
-                userDefinedSubtypesAllowed: true,
+                supercategory: true,
+                userDefinedSubcategoriesAllowed: true,
                 fields: {}
             }
         };
-        const customTypes: Map<CustomTypeDefinition> = {
+        const customCategories: Map<CustomCategoryDefinition> = {
             B: {
                 parent: 'A',
                 fields: {},
                 hidden: []
             }
         };
-        const result = buildProjectTypes(
-            builtInTypes,
+        const result = buildCategories(
+            builtInCategories,
             {},
-            customTypes
-        ).types;
+            customCategories
+        ).categories;
 
         expect(result['A']).toBeDefined();
         expect(result['B']).toBeDefined();
     });
 
 
-    it('throw away type which is neither selected explicitly or as a parent',  () => {
+    it('throw away category which is neither selected explicitly or as a parent',  () => {
 
-        const builtInTypes: Map<BuiltinTypeDefinition> = {
+        const builtInCategories: Map<BuiltinCategoryDefinition> = {
             A: {
-                superType: true,
-                userDefinedSubtypesAllowed: true,
+                supercategory: true,
+                userDefinedSubcategoriesAllowed: true,
                 fields: {}
             },
             C: {
                 fields: {}
             }
         };
-        const customTypes: Map<CustomTypeDefinition> = {
+        const customCategories: Map<CustomCategoryDefinition> = {
             B: {
                 parent: 'A',
                 fields: {},
                 hidden: []
             }
         };
-        const result = buildProjectTypes(
-            builtInTypes,
+        const result = buildCategories(
+            builtInCategories,
             {},
-            customTypes
-        ).types;
+            customCategories
+        ).categories;
 
         expect(result['A']).toBeDefined();
         expect(result['B']).toBeDefined();
@@ -71,7 +71,7 @@ describe('buildProjectTypes', () => {
 
     it('hide fields', () => {
 
-        const builtInTypes: Map<BuiltinTypeDefinition> = {
+        const builtInCategories: Map<BuiltinCategoryDefinition> = {
             A: {
                 fields: {
                     field1: { inputType: 'input' },
@@ -79,9 +79,9 @@ describe('buildProjectTypes', () => {
                 }
             }
         };
-        const libraryTypes: Map<LibraryTypeDefinition> = {
+        const libraryCategories: Map<LibraryCategoryDefinition> = {
             A: {
-                typeFamily: 'A',
+                categoryName: 'A',
                 commons: ['aCommonField', 'bCommonField'],
                 valuelists: {},
                 fields: {
@@ -91,7 +91,7 @@ describe('buildProjectTypes', () => {
                 creationDate: '', createdBy: '', description: {}
             }
         };
-        const customTypes = {
+        const customCategories = {
             A: {
                 fields: {},
                 hidden: ['field1', 'aCommonField', 'field3']
@@ -102,12 +102,12 @@ describe('buildProjectTypes', () => {
             bCommonField: { inputType: 'input' }
         };
 
-        const result = buildProjectTypes(
-            builtInTypes,
-            libraryTypes,
-            customTypes,
+        const result = buildCategories(
+            builtInCategories,
+            libraryCategories,
+            customCategories,
             commonFields
-        ).types;
+        ).categories;
 
         expect(result['A']['fields']['field1'].visible).toBe(false);
         expect(result['A']['fields']['field2'].visible).toBe(true);
@@ -118,47 +118,47 @@ describe('buildProjectTypes', () => {
     });
 
 
-    it('valuelistId - provided via valuelists property in custom type', () => {
+    it('valuelistId - provided via valuelists property in custom category', () => {
 
-        const builtInTypes: Map<BuiltinTypeDefinition> = {
+        const builtInCategories: Map<BuiltinCategoryDefinition> = {
             A: { fields: { aField: { inputType: 'dropdown' } } }
         };
-        const libraryTypes: Map<LibraryTypeDefinition> = {};
-        const customTypes: Map<CustomTypeDefinition> = {
+        const libraryCategories: Map<LibraryCategoryDefinition> = {};
+        const customCategories: Map<CustomCategoryDefinition> = {
             'A': {
                 fields: {},
                 valuelists: { aField: 'aField-valuelist-id-1' }
             }
         };
 
-        const result = buildProjectTypes(
-            builtInTypes,
-            libraryTypes,
-            customTypes,
+        const result = buildCategories(
+            builtInCategories,
+            libraryCategories,
+            customCategories,
             {},
             {
                 'aField-valuelist-id-1': {
                     values: { a: {} }, description: {}, createdBy: '', creationDate: ''
                 }
             }
-        ).types;
+        ).categories;
 
         expect(result['A'].fields['aField']['valuelist']['values']).toEqual({ a: {} });
     });
 
 
-    it('valuelistId - overwrite valuelists property in custom type, extending a library type - for a common field', () => {
+    it('valuelistId - overwrite valuelists property in custom category, extending a library category - for a common field', () => {
 
-        const builtInTypes: Map<BuiltinTypeDefinition> = {
+        const builtInCategories: Map<BuiltinCategoryDefinition> = {
             A: { fields: {} } };
-        const libraryTypes: Map<LibraryTypeDefinition> = {
+        const libraryCategories: Map<LibraryCategoryDefinition> = {
             'A:default': {
                 commons: ['aCommon'],
                 valuelists: { aCommon: 'aCommon-valuelists-id-1' },
-                creationDate: '', createdBy: '', description: {}, fields: {}, typeFamily: 'A'}
+                creationDate: '', createdBy: '', description: {}, fields: {}, categoryName: 'A'}
         };
         const commonFields = { aCommon: { group: 'stem', inputType: 'dropdown' }};
-        const customTypes: Map<CustomTypeDefinition> = {
+        const customCategories: Map<CustomCategoryDefinition> = {
             'A:default': {
                 commons: ['aCommon'],
                 valuelists: { aCommon: 'aCommon-valuelist-id-2' },
@@ -166,10 +166,10 @@ describe('buildProjectTypes', () => {
             }
         };
 
-        const result = buildProjectTypes(
-            builtInTypes,
-            libraryTypes,
-            customTypes,
+        const result = buildCategories(
+            builtInCategories,
+            libraryCategories,
+            customCategories,
             commonFields,
             {
                 'aCommon-valuelist-id-1': {
@@ -179,7 +179,7 @@ describe('buildProjectTypes', () => {
                     values: { b: {} }, description: {}, createdBy: '', creationDate: ''
                 }
             }
-        ).types;
+        ).categories;
 
         expect(result['A'].fields['aCommon']['valuelist']['values']).toEqual({ b: {} });
     });
@@ -187,13 +187,13 @@ describe('buildProjectTypes', () => {
 
     it('valuelistId - provided via valuelists property in library', () => {
 
-        const builtInTypes: Map<BuiltinTypeDefinition> = {
+        const builtInCategories: Map<BuiltinCategoryDefinition> = {
             A: { fields: { aField: { inputType: 'dropdown' } } }
         };
-        const libraryTypes: Map<LibraryTypeDefinition> = {
+        const libraryCategories: Map<LibraryCategoryDefinition> = {
             'A:default': {
                 valuelists: { aField: 'aField-valuelist-id-1' },
-                typeFamily: 'A',
+                categoryName: 'A',
                 commons: [],
                 fields: {},
                 description: {},
@@ -201,40 +201,40 @@ describe('buildProjectTypes', () => {
                 creationDate: ''
             }
         };
-        const customTypes: Map<CustomTypeDefinition> = {
+        const customCategories: Map<CustomCategoryDefinition> = {
             'A:default': { fields: {}}
         };
 
-        const result = buildProjectTypes(
-            builtInTypes,
-            libraryTypes,
-            customTypes,
+        const result = buildCategories(
+            builtInCategories,
+            libraryCategories,
+            customCategories,
             {},
             {
                 'aField-valuelist-id-1': {
                     values: { a: {}}, description: {}, creationDate: '', createdBy: ''
                 }
             }
-        ).types;
+        ).categories;
 
         expect(result['A'].fields['aField']['valuelist']['values']).toEqual({ a: {} });
     });
 
 
-    it('valuelistId - nowhere provided - built in type selected', () => {
+    it('valuelistId - nowhere provided - built in category selected', () => {
 
-        const builtInTypes: Map<BuiltinTypeDefinition> = {
+        const builtInCategories: Map<BuiltinCategoryDefinition> = {
             A: { fields: { aField: { inputType: 'dropdown' } } }
         };
-        const customTypes: Map<CustomTypeDefinition> = {
+        const customCategories: Map<CustomCategoryDefinition> = {
             'A': { fields: { aField: {} } }
         };
 
         try {
-            buildProjectTypes(
-                builtInTypes,
+            buildCategories(
+                builtInCategories,
                 {},
-                customTypes,
+                customCategories,
                 {},
                 {},
                 {}
@@ -248,14 +248,14 @@ describe('buildProjectTypes', () => {
     });
 
 
-    it('valuelistId - nowhere provided - library type selected', () => {
+    it('valuelistId - nowhere provided - library category selected', () => {
 
-        const builtInTypes: Map<BuiltinTypeDefinition> = {
+        const builtInCategories: Map<BuiltinCategoryDefinition> = {
             A: { fields: { aField: { inputType: 'dropdown' } } }
         };
-        const libraryTypes: Map<LibraryTypeDefinition> = {
+        const libraryCategories: Map<LibraryCategoryDefinition> = {
             'A:0': {
-                typeFamily: 'A',
+                categoryName: 'A',
                 commons: [],
                 valuelists: {},
                 fields: { aField: {} },
@@ -264,15 +264,15 @@ describe('buildProjectTypes', () => {
                 description: {}
             },
         };
-        const customTypes: Map<CustomTypeDefinition> = {
+        const customCategories: Map<CustomCategoryDefinition> = {
             'A:0': { fields: { aField: {} } }
         };
 
         try {
-            buildProjectTypes(
-                builtInTypes,
-                libraryTypes,
-                customTypes,
+            buildCategories(
+                builtInCategories,
+                libraryCategories,
+                customCategories,
                 {},
                 {},
                 {}
@@ -288,10 +288,10 @@ describe('buildProjectTypes', () => {
 
     it('duplication in selection', () => {
 
-        const builtinTypes: Map<BuiltinTypeDefinition> = { A: { fields: {} } };
-        const libraryTypes: Map<LibraryTypeDefinition> = {
+        const builtInCategories: Map<BuiltinCategoryDefinition> = { A: { fields: {} } };
+        const libraryCategories: Map<LibraryCategoryDefinition> = {
             'A:0': {
-                typeFamily: 'A',
+                categoryName: 'A',
                 commons: [],
                 valuelists: {},
                 fields: {},
@@ -300,7 +300,7 @@ describe('buildProjectTypes', () => {
                 description: {}
             },
             'A:1': {
-                typeFamily: 'A',
+                categoryName: 'A',
                 commons: [],
                 valuelists: {},
                 fields: {},
@@ -309,7 +309,7 @@ describe('buildProjectTypes', () => {
                 description: {}
             }
         };
-        const customTypes: Map<CustomTypeDefinition> = {
+        const customCategories: Map<CustomCategoryDefinition> = {
             'A:0': {
                 fields: {}
             },
@@ -319,10 +319,10 @@ describe('buildProjectTypes', () => {
         };
 
         try {
-            buildProjectTypes(
-                builtinTypes,
-                libraryTypes,
-                customTypes
+            buildCategories(
+                builtInCategories,
+                libraryCategories,
+                customCategories
             );
             fail();
         } catch (expected) {
@@ -331,12 +331,12 @@ describe('buildProjectTypes', () => {
     });
 
 
-    it('duplication in selection - built in types create type family implicitely', () => {
+    it('duplication in selection - built in categories create category name implicitly', () => {
 
-        const builtinTypes: Map<BuiltinTypeDefinition> = { A: { fields: {} }};
-        const libraryTypes: Map<LibraryTypeDefinition> = {
+        const builtInCategories: Map<BuiltinCategoryDefinition> = { A: { fields: {} }};
+        const libraryCategories: Map<LibraryCategoryDefinition> = {
             'A:0': {
-                typeFamily: 'A',
+                categoryName: 'A',
                 commons: [],
                 fields: {},
                 valuelists: {},
@@ -345,16 +345,16 @@ describe('buildProjectTypes', () => {
                 description: {}
             }
         };
-        const customTypes: Map<CustomTypeDefinition> = {
+        const customCategories: Map<CustomCategoryDefinition> = {
             'A': { fields: {} },
             'A:0': { fields: {} }
         };
 
         try {
-            buildProjectTypes(
-                builtinTypes,
-                libraryTypes,
-                customTypes
+            buildCategories(
+                builtInCategories,
+                libraryCategories,
+                customCategories
             );
             fail();
         } catch (expected) {
@@ -363,12 +363,12 @@ describe('buildProjectTypes', () => {
     });
 
 
-    it('type families - divergent input type', () => {
+    it('category names - divergent input type', () => {
 
-        const builtinTypes: Map<BuiltinTypeDefinition> = { A: { fields: {} } };
-        const libraryTypes: Map<LibraryTypeDefinition> = {
+        const builtInCategories: Map<BuiltinCategoryDefinition> = { A: { fields: {} } };
+        const libraryCategories: Map<LibraryCategoryDefinition> = {
             'A:0': {
-                typeFamily: 'A',
+                categoryName: 'A',
                 commons: [],
                 valuelists: {},
                 fields: { aField: { inputType: 'text' } },
@@ -377,7 +377,7 @@ describe('buildProjectTypes', () => {
                 description: {}
             },
             'A:1': {
-                typeFamily: 'A',
+                categoryName: 'A',
                 commons: [],
                 valuelists: {},
                 fields: { aField: { inputType: 'input' } },
@@ -388,26 +388,26 @@ describe('buildProjectTypes', () => {
         };
 
         try {
-            buildProjectTypes(
-                builtinTypes,
-                libraryTypes
+            buildCategories(
+                builtInCategories,
+                libraryCategories
             );
             fail();
         } catch (expected) {
             expect(expected).toEqual([
-                ConfigurationErrors.INCONSISTENT_TYPE_FAMILY,
+                ConfigurationErrors.INCONSISTENT_CATEGORY_NAME,
                 'A', 'divergentInputType', 'aField'
             ]);
         }
     });
 
 
-    it('subtypes - user defined subtype not allowed', () => {
+    it('subcategories - user defined subcategory not allowed', () => {
 
-        const builtInTypes: Map<BuiltinTypeDefinition> = { A: { fields: {} } };
-        const libraryTypes: Map<LibraryTypeDefinition> = {
+        const builtInCategories: Map<BuiltinCategoryDefinition> = { A: { fields: {} } };
+        const libraryCategories: Map<LibraryCategoryDefinition> = {
             'B:0': {
-                typeFamily: 'B',
+                categoryName: 'B',
                 parent: 'A',
                 fields: {},
                 commons: [],
@@ -419,9 +419,9 @@ describe('buildProjectTypes', () => {
         };
 
         try {
-            buildProjectTypes(
-                builtInTypes,
-                libraryTypes,
+            buildCategories(
+                builtInCategories,
+                libraryCategories,
                 { 'B:0': { fields: {} } },
                 {},
                 {},
@@ -430,19 +430,19 @@ describe('buildProjectTypes', () => {
             fail();
         } catch (expected) {
             expect(expected).toEqual([
-                ConfigurationErrors.TRYING_TO_SUBTYPE_A_NON_EXTENDABLE_TYPE, 'A'
+                ConfigurationErrors.TRYING_TO_SUBTYPE_A_NON_EXTENDABLE_CATEGORY, 'A'
             ]);
         }
     });
 
 
-    it('commons - cannot set type of common in libary types', () => {
+    it('commons - cannot set type of common in library categories', () => {
 
-        const builtInTypes: Map<BuiltinTypeDefinition> = { A: { fields: {} } };
+        const builtInCategories: Map<BuiltinCategoryDefinition> = { A: { fields: {} } };
         const commonFields = { aCommon: { group: 'stem', inputType: 'input' } };
-        const libraryTypes: Map<LibraryTypeDefinition> = {
+        const libraryCategories: Map<LibraryCategoryDefinition> = {
             'A:0': {
-                typeFamily: 'A',
+                categoryName: 'A',
                 commons: [],
                 fields: { aCommon: { inputType: 'input' } },
                 createdBy: '',
@@ -453,9 +453,9 @@ describe('buildProjectTypes', () => {
         };
 
         try {
-            buildProjectTypes(
-                builtInTypes,
-                libraryTypes,
+            buildCategories(
+                builtInCategories,
+                libraryCategories,
                 { 'A:0': { fields: {} } },
                 commonFields,
                 {},
@@ -470,19 +470,19 @@ describe('buildProjectTypes', () => {
     });
 
 
-    it('commons - cannot set type of common in custom types', () => {
+    it('commons - cannot set type of common in custom categories', () => {
 
-        const builtInTypes: Map<BuiltinTypeDefinition> = { A: { fields: {} } };
+        const builtInCategories: Map<BuiltinCategoryDefinition> = { A: { fields: {} } };
         const commonFields = { aCommon: { group: 'stem', inputType: 'input' } };
-        const customTypes: Map<CustomTypeDefinition> = {
+        const customCategories: Map<CustomCategoryDefinition> = {
             'A': { fields: { aCommon: { inputType: 'text' } } }
         };
 
         try {
-            buildProjectTypes(
-                builtInTypes,
+            buildCategories(
+                builtInCategories,
                 {},
-                customTypes,
+                customCategories,
                 commonFields,
                 {},
                 {}
@@ -496,17 +496,17 @@ describe('buildProjectTypes', () => {
 
     it('commons - common field not provided', () => {
 
-        const builtInTypes: Map<BuiltinTypeDefinition> = { A: { fields: {} } };
+        const builtInCategories: Map<BuiltinCategoryDefinition> = { A: { fields: {} } };
         const commonFields = {};
-        const customTypes: Map<CustomTypeDefinition> = {
+        const customCategories: Map<CustomCategoryDefinition> = {
             A: { fields: {}, commons: ['missing']}
         };
 
         try {
-            buildProjectTypes(
-                builtInTypes,
+            buildCategories(
+                builtInCategories,
                 {},
-                customTypes,
+                customCategories,
                 commonFields,
                 {},
                 {}
@@ -518,13 +518,13 @@ describe('buildProjectTypes', () => {
     });
 
 
-    it('commons - mix in commons in library type', () => {
+    it('commons - mix in commons in library category', () => {
 
-        const builtInTypes: Map<BuiltinTypeDefinition> = { A: { fields: {} } };
+        const builtInCategories: Map<BuiltinCategoryDefinition> = { A: { fields: {} } };
         const commonFields = { aCommon: { group: 'stem', inputType: 'input' } };
-        const libraryTypes: Map<LibraryTypeDefinition> = {
+        const libraryCategories: Map<LibraryCategoryDefinition> = {
             'A:0': {
-                typeFamily: 'A',
+                categoryName: 'A',
                 commons: ['aCommon'],
                 fields: { },
                 valuelists: {},
@@ -534,55 +534,55 @@ describe('buildProjectTypes', () => {
             }
         };
 
-        const result = buildProjectTypes(
-            builtInTypes,
-            libraryTypes,
+        const result = buildCategories(
+            builtInCategories,
+            libraryCategories,
             { 'A:0': { fields: {} } },
             commonFields,
             {},
             {}
-        ).types;
+        ).categories;
 
         expect(result['A'].fields['aCommon']['group']).toBe('stem');
         expect(result['A'].fields['aCommon']['inputType']).toBe('input');
     });
 
 
-    it('commons - mix in commons in custom type', () => {
+    it('commons - mix in commons in custom category', () => {
 
-        const builtInTypes: Map<BuiltinTypeDefinition> = { A: { fields: {} } };
+        const builtInCategories: Map<BuiltinCategoryDefinition> = { A: { fields: {} } };
         const commonFields = { aCommon: { group: 'stem', inputType: 'input' } };
-        const customTypes: Map<CustomTypeDefinition> = {
+        const customCategories: Map<CustomCategoryDefinition> = {
             A: {
                 commons: ['aCommon'],
                 fields: { }
             }
         };
 
-        const result = buildProjectTypes(
-            builtInTypes,
+        const result = buildCategories(
+            builtInCategories,
             {},
-            customTypes,
+            customCategories,
             commonFields,
             {},
             {}
-        ).types;
+        ).categories;
 
         expect(result['A'].fields['aCommon']['group']).toBe('stem');
         expect(result['A'].fields['aCommon']['inputType']).toBe('input');
     });
 
 
-    it('commons - add together commons from library and custom type', () => {
+    it('commons - add together commons from library and custom category', () => {
 
-        const builtInTypes: Map<BuiltinTypeDefinition> = { A: { fields: {} } };
+        const builtInCategories: Map<BuiltinCategoryDefinition> = { A: { fields: {} } };
         const commonFields = {
             aCommon: { group: 'stem', inputType: 'input' },
             bCommon: { group: 'stem', inputType: 'input' }
         };
-        const libraryTypes: Map<LibraryTypeDefinition> = {
+        const libraryCategories: Map<LibraryCategoryDefinition> = {
             'A:0': {
-                typeFamily: 'A',
+                categoryName: 'A',
                 commons: ['aCommon'],
                 fields: { },
                 valuelists: {},
@@ -591,21 +591,21 @@ describe('buildProjectTypes', () => {
                 description: {}
             }
         };
-        const customTypes: Map<CustomTypeDefinition> = {
+        const customCategories: Map<CustomCategoryDefinition> = {
             'A:0': {
                 commons: ['bCommon'],
                 fields: {}
             }
         };
 
-        const result = buildProjectTypes(
-            builtInTypes,
-            libraryTypes,
-            customTypes,
+        const result = buildCategories(
+            builtInCategories,
+            libraryCategories,
+            customCategories,
             commonFields,
             {},
             {}
-        ).types;
+        ).categories;
 
         expect(result['A'].fields['aCommon']['group']).toBe('stem');
         expect(result['A'].fields['aCommon']['inputType']).toBe('input');
@@ -616,13 +616,13 @@ describe('buildProjectTypes', () => {
 
     it('commons - use valuelistFromProjectField if defined in commons', () => {
 
-        const builtInTypes: Map<BuiltinTypeDefinition> = { A: { fields: {} } };
+        const builtInCategories: Map<BuiltinCategoryDefinition> = { A: { fields: {} } };
         const commonFields = {
             aCommon: { group: 'stem', inputType: 'dropdown', valuelistFromProjectField: 'x' }
         };
-        const libraryTypes: Map<LibraryTypeDefinition> = {
+        const libraryCategories: Map<LibraryCategoryDefinition> = {
             'A:0': {
-                typeFamily: 'A',
+                categoryName: 'A',
                 commons: ['aCommon'],
                 fields: { },
                 valuelists: {},
@@ -632,14 +632,14 @@ describe('buildProjectTypes', () => {
             }
         };
 
-        const result = buildProjectTypes(
-            builtInTypes,
-            libraryTypes,
+        const result = buildCategories(
+            builtInCategories,
+            libraryCategories,
             { 'A:0': { fields: {} } },
             commonFields,
             {},
             {}
-        ).types;
+        ).categories;
 
         expect(result['A'].fields['aCommon']['group']).toBe('stem');
         expect(result['A'].fields['aCommon']['inputType']).toBe('dropdown');
@@ -651,10 +651,10 @@ describe('buildProjectTypes', () => {
 
     it('field property validation - invalid input Type', () => {
 
-        const builtInTypes: Map<BuiltinTypeDefinition> = { A: { fields: {} } };
-        const libraryTypes: Map<LibraryTypeDefinition> = {
+        const builtInCategories: Map<BuiltinCategoryDefinition> = { A: { fields: {} } };
+        const libraryCategories: Map<LibraryCategoryDefinition> = {
             'A:0': {
-                typeFamily: 'A',
+                categoryName: 'A',
                 commons: [],
                 valuelists: {},
                 fields: { aField: { inputType: 'invalid' } },
@@ -665,14 +665,14 @@ describe('buildProjectTypes', () => {
         };
 
         try {
-            buildProjectTypes(
-                builtInTypes,
-                libraryTypes,
+            buildCategories(
+                builtInCategories,
+                libraryCategories,
                 {},
                 [],
                 {},
                 {}
-            ).types;
+            ).categories;
             fail();
         } catch (expected) {
             expect(expected).toEqual([
@@ -682,23 +682,23 @@ describe('buildProjectTypes', () => {
     });
 
 
-    it('field property validation - missing input type in field of entirely new custom type', () => {
+    it('field property validation - missing input type in field of entirely new custom category', () => {
 
-        const builtInTypes: Map<BuiltinTypeDefinition> = {
-            A: { fields: {}, superType: true, userDefinedSubtypesAllowed: true }
+        const builtInCategories: Map<BuiltinCategoryDefinition> = {
+            A: { fields: {}, supercategory: true, userDefinedSubcategoriesAllowed: true }
         };
-        const libraryTypes: Map<LibraryTypeDefinition> = {};
-        const customTypes: Map<CustomTypeDefinition> = { 'C': { parent: 'A', fields: { cField: {} } } };
+        const libraryCategories: Map<LibraryCategoryDefinition> = {};
+        const customCategories: Map<CustomCategoryDefinition> = { 'C': { parent: 'A', fields: { cField: {} } } };
 
         try {
-            buildProjectTypes(
-                builtInTypes,
-                libraryTypes,
-                customTypes,
+            buildCategories(
+                builtInCategories,
+                libraryCategories,
+                customCategories,
                 {},
                 {},
                 {}
-            ).types;
+            ).categories;
             fail();
         } catch (expected) {
             expect(expected).toEqual([
@@ -708,15 +708,15 @@ describe('buildProjectTypes', () => {
     });
 
 
-    it('field property validation - missing input type in field of builtInType type - extension of supertype', () => {
+    it('field property validation - missing input name in field of builtInCategory name - extension of supercategory', () => {
 
-        const builtInTypes: Map<BuiltinTypeDefinition> = {
+        const builtInCategories: Map<BuiltinCategoryDefinition> = {
             A: { fields: {} }
         };
 
-        const libraryTypes: Map<LibraryTypeDefinition> = {
+        const libraryCategories: Map<LibraryCategoryDefinition> = {
             'A:0': {
-                typeFamily: 'A',
+                categoryName: 'A',
                 commons: [],
                 valuelists: {},
                 fields: { aField: {} } as any,
@@ -725,10 +725,10 @@ describe('buildProjectTypes', () => {
         };
 
         try {
-            buildProjectTypes(builtInTypes,
-                libraryTypes,
+            buildCategories(builtInCategories,
+                libraryCategories,
                 {},  {}, {}, {}
-            ).types;
+            ).categories;
             fail();
         } catch (expected) {
             expect(expected).toEqual([
@@ -738,15 +738,15 @@ describe('buildProjectTypes', () => {
     });
 
 
-    it('field property validation  - extension of supertype - inputType inherited from builtIn', () => {
+    it('field property validation  - extension of supercategory - inputType inherited from builtIn', () => {
 
-        const builtInTypes: Map<BuiltinTypeDefinition> = {
+        const builtInCategories: Map<BuiltinCategoryDefinition> = {
             A: { fields: { aField: { inputType: 'input' } } }
         };
 
-        const libraryTypes: Map<LibraryTypeDefinition> = {
+        const libraryCategories: Map<LibraryCategoryDefinition> = {
             'A:0': {
-                typeFamily: 'A',
+                categoryName: 'A',
                 commons: [],
                 valuelists: {},
                 fields: { aField: {} } as any,
@@ -754,27 +754,27 @@ describe('buildProjectTypes', () => {
             },
         };
 
-        const result = buildProjectTypes(
-            builtInTypes,
-            libraryTypes,
+        const result = buildCategories(
+            builtInCategories,
+            libraryCategories,
             { 'A:0': { hidden: [], fields: {} } },
             {}, {},
             {}
-        ).types;
+        ).categories;
 
         expect(result['A'].fields['aField'].inputType).toBe('input');
     });
 
 
-    it('field property validation - missing input type in field of library type - new subtype', () => {
+    it('field property validation - missing input type in field of library category - new subcategory', () => {
 
-        const builtInTypes: Map<BuiltinTypeDefinition> = {
-            A: { fields: {}, superType: true, userDefinedSubtypesAllowed: true }
+        const builtInCategories: Map<BuiltinCategoryDefinition> = {
+            A: { fields: {}, supercategory: true, userDefinedSubcategoriesAllowed: true }
         };
 
-        const libraryTypes: Map<LibraryTypeDefinition> = {
+        const libraryCategories: Map<LibraryCategoryDefinition> = {
             'B:0': {
-                typeFamily: 'B',
+                categoryName: 'B',
                 parent: 'A',
                 commons: [],
                 valuelists: {},
@@ -784,10 +784,10 @@ describe('buildProjectTypes', () => {
         };
 
         try {
-            buildProjectTypes(builtInTypes,
-                libraryTypes,
+            buildCategories(builtInCategories,
+                libraryCategories,
                 {}, {}, {}, {}
-            ).types;
+            ).categories;
             fail();
         } catch (expected) {
             expect(expected).toEqual([
@@ -797,15 +797,15 @@ describe('buildProjectTypes', () => {
     });
 
 
-    it('field property validation - must not set field type on inherited field', () => {
+    it('field property validation - must not set field name on inherited field', () => {
 
-        const builtInTypes: Map<BuiltinTypeDefinition> = {
+        const builtInCategories: Map<BuiltinCategoryDefinition> = {
             A: { fields: { aField: { inputType: 'input' } } }
         };
 
-        const libraryTypes: Map<LibraryTypeDefinition> = {
+        const libraryCategories: Map<LibraryCategoryDefinition> = {
             'A:0': {
-                typeFamily: 'A',
+                categoryName: 'A',
                 commons: [],
                 valuelists: {},
                 fields: { aField: { inputType: 'input' } } as any,
@@ -814,10 +814,10 @@ describe('buildProjectTypes', () => {
         };
 
         try {
-            buildProjectTypes(builtInTypes,
-                libraryTypes,
+            buildCategories(builtInCategories,
+                libraryCategories,
                 {}, {}, {}, {}
-            ).types;
+            ).categories;
             fail();
         } catch (expected) {
             expect(expected).toEqual([ConfigurationErrors.MUST_NOT_SET_INPUT_TYPE, 'A:0', 'aField']);
@@ -825,15 +825,15 @@ describe('buildProjectTypes', () => {
     });
 
 
-    it('field property validation - undefined property in library type field', () => {
+    it('field property validation - undefined property in library category field', () => {
 
-        const builtInTypes: Map<BuiltinTypeDefinition> = {
+        const builtInCategories: Map<BuiltinCategoryDefinition> = {
             A: { fields: {} }
         };
 
-        const libraryTypes: Map<LibraryTypeDefinition> = {
+        const libraryCategories: Map<LibraryCategoryDefinition> = {
             'A:0': {
-                typeFamily: 'A',
+                categoryName: 'A',
                 commons: [],
                 valuelists: {},
                 fields: { aField: { group: 'a' } } as any,
@@ -842,10 +842,10 @@ describe('buildProjectTypes', () => {
         };
 
         try {
-            buildProjectTypes(builtInTypes,
-                libraryTypes,
+            buildCategories(builtInCategories,
+                libraryCategories,
                 {}, {}, {}, {}
-            ).types;
+            ).categories;
             fail();
         } catch (expected) {
             expect(expected).toEqual([
@@ -855,24 +855,24 @@ describe('buildProjectTypes', () => {
     });
 
 
-    it('field property validation - undefined property in custom type field', () => {
+    it('field property validation - undefined property in custom category field', () => {
 
-        const builtInTypes: Map<BuiltinTypeDefinition> = {
+        const builtInCategories: Map<BuiltinCategoryDefinition> = {
             A: { fields: {} }
         };
 
-        const customTypes: Map<CustomTypeDefinition> = {
+        const customCategories: Map<CustomCategoryDefinition> = {
             'A': {
                 fields: { aField: { group: 'a'} as any }
             }
         };
 
         try {
-            buildProjectTypes(
-                builtInTypes,
+            buildCategories(
+                builtInCategories,
                 {},
-                customTypes, {}, {}, {}
-            ).types;
+                customCategories, {}, {}, {}
+            ).categories;
             fail();
         } catch (expected) {
             expect(expected).toEqual([
@@ -884,7 +884,7 @@ describe('buildProjectTypes', () => {
 
     it('apply valuelistConfiguration', () => {
 
-        const builtInTypes: Map<BuiltinTypeDefinition> = {
+        const builtInCategories: Map<BuiltinCategoryDefinition> = {
             A: {
                 fields: {
                     field1: { inputType: 'input' }
@@ -892,9 +892,9 @@ describe('buildProjectTypes', () => {
             }
         };
 
-        const libraryTypes: Map<LibraryTypeDefinition>  = {
+        const libraryCategories: Map<LibraryCategoryDefinition>  = {
             'A:0': {
-                typeFamily: 'A',
+                categoryName: 'A',
                 commons: [],
                 valuelists: { 'a1': '123' },
                 fields: {
@@ -921,11 +921,11 @@ describe('buildProjectTypes', () => {
             }
         };
 
-        const result = buildProjectTypes(
-            builtInTypes,
-            libraryTypes,
+        const result = buildCategories(
+            builtInCategories,
+            libraryCategories,
             { 'A:0': { fields: {} } }, {}, valuelistsConfiguration, {}
-        ).types;
+        ).categories;
         expect(result['A'].fields['a1'].valuelist.values).toEqual({
             one: { labels: { de: 'Eins', en: 'One' } },
             two: { references: { externalId: '1234567' } },
@@ -936,34 +936,34 @@ describe('buildProjectTypes', () => {
 
     it('missing description', () => {
 
-        const builtinTypes = {};
+        const builtInCategories = {};
 
-        const libraryTypes: Map<LibraryTypeDefinition> = {
+        const libraryCategories: Map<LibraryCategoryDefinition> = {
             'B:0': {
                 fields: {}
             }
         } as any;
 
         try {
-            buildProjectTypes(builtinTypes,
-                libraryTypes,
+            buildCategories(builtInCategories,
+                libraryCategories,
                 {}, {}, {}, {}
             );
         } catch (expected) {
             expect(expected).toEqual([
-                ConfigurationErrors.MISSING_TYPE_PROPERTY, 'description', 'B:0'
+                ConfigurationErrors.MISSING_CATEGORY_PROPERTY, 'description', 'B:0'
             ]);
         }
     });
 
 
-    it('missing parent in library type', () => {
+    it('missing parent in library category', () => {
 
-        const builtInTypes = {} as any;
+        const builtInCategories = {} as any;
 
-        const libraryTypes: Map<LibraryTypeDefinition> = {
+        const libraryCategories: Map<LibraryCategoryDefinition> = {
             'B:0': {
-                typeFamily: 'B',
+                categoryName: 'B',
                 commons: [],
                 fields: {},
                 createdBy: '',
@@ -974,43 +974,43 @@ describe('buildProjectTypes', () => {
         };
 
         try {
-            buildProjectTypes(
-                builtInTypes,
-                libraryTypes,
+            buildCategories(
+                builtInCategories,
+                libraryCategories,
                 {}, {}, {}, {}
             );
         } catch (expected) {
-            expect(expected).toEqual([ConfigurationErrors.MISSING_TYPE_PROPERTY, 'parent', 'B:0']);
+            expect(expected).toEqual([ConfigurationErrors.MISSING_CATEGORY_PROPERTY, 'parent', 'B:0']);
         }
     });
 
 
-    it('missing parent in custom type', () => {
+    it('missing parent in custom category', () => {
 
-        const customTypes: Map<CustomTypeDefinition> = {
+        const customCategories: Map<CustomCategoryDefinition> = {
             'B:0': { fields: {} }
         };
 
         try {
-            buildProjectTypes(
+            buildCategories(
                 {},
                 {},
-                customTypes,
+                customCategories,
                 {},
                 {},
                 {}
             );
         } catch (expected) {
             expect(expected).toEqual([
-                ConfigurationErrors.MISSING_TYPE_PROPERTY, 'parent', 'B:0', 'must be set for new types'
+                ConfigurationErrors.MISSING_CATEGORY_PROPERTY, 'parent', 'B:0', 'must be set for new categories'
             ]);
         }
     });
 
 
-    it('merge libraryType with builtIn', () => {
+    it('merge library category with builtIn', () => {
 
-        const builtInTypes: Map<BuiltinTypeDefinition> = {
+        const builtInCategories: Map<BuiltinCategoryDefinition> = {
             A: {
                 fields: {
                     field1: { inputType: 'text', group: 'stem' }
@@ -1018,9 +1018,9 @@ describe('buildProjectTypes', () => {
             }
         };
 
-        const libraryTypes: Map<LibraryTypeDefinition> = {
+        const libraryCategories: Map<LibraryCategoryDefinition> = {
             'A:1': {
-                typeFamily: 'A',
+                categoryName: 'A',
                 commons: [],
                 valuelists: {},
                 fields: {
@@ -1033,11 +1033,11 @@ describe('buildProjectTypes', () => {
             }
         };
 
-        const result = buildProjectTypes(
-            builtInTypes, libraryTypes,
+        const result = buildCategories(
+            builtInCategories, libraryCategories,
             { 'A:1': { hidden: [], fields: {} } },
             {}, {}, {}
-        ).types;
+        ).categories;
 
         expect(result['A'].fields['field1'].inputType).toBe('text');
         expect(result['A'].fields['field1'].group).toBe('stem');
@@ -1045,9 +1045,9 @@ describe('buildProjectTypes', () => {
     });
 
 
-    it('merge custom types with built-in types', () => {
+    it('merge custom categories with built-in categories', () => {
 
-        const builtInTypes: Map<BuiltinTypeDefinition> = {
+        const builtInCategories: Map<BuiltinCategoryDefinition> = {
             A: {
                 fields: {
                     field1: { inputType: 'text', group: 'stem' }
@@ -1055,7 +1055,7 @@ describe('buildProjectTypes', () => {
             }
         };
 
-        const customTypes: Map<CustomTypeDefinition> = {
+        const customCategories: Map<CustomCategoryDefinition> = {
             A: {
                 fields: {
                     field1: {},
@@ -1064,10 +1064,10 @@ describe('buildProjectTypes', () => {
             }
         };
 
-        const result = buildProjectTypes(
-            builtInTypes, {}, customTypes,
+        const result = buildCategories(
+            builtInCategories, {}, customCategories,
             {}, {}, {}
-        ).types;
+        ).categories;
 
         expect(result['A'].fields['field1'].inputType).toBe('text');
         expect(result['A'].fields['field1'].group).toBe('stem');
@@ -1075,9 +1075,9 @@ describe('buildProjectTypes', () => {
     });
 
 
-    it('merge custom types with library types', () => {
+    it('merge custom categories with library categories', () => {
 
-        const builtInTypes: Map<BuiltinTypeDefinition> = {
+        const builtInCategories: Map<BuiltinCategoryDefinition> = {
             A: {
                 fields: {
                     field1: { inputType: 'text', group: 'stem' }
@@ -1085,9 +1085,9 @@ describe('buildProjectTypes', () => {
             }
         };
 
-        const libraryTypes: Map<LibraryTypeDefinition> = {
+        const libraryCategories: Map<LibraryCategoryDefinition> = {
             'A:0': {
-                typeFamily: 'A',
+                categoryName: 'A',
                 commons: [],
                 valuelists: {},
                 fields: {
@@ -1099,7 +1099,7 @@ describe('buildProjectTypes', () => {
             }
         };
 
-        const customTypes: Map<CustomTypeDefinition> = {
+        const customCategories: Map<CustomCategoryDefinition> = {
             'A:0': {
                 fields: {
                     field2: {},
@@ -1108,10 +1108,10 @@ describe('buildProjectTypes', () => {
             }
         };
 
-        const result = buildProjectTypes(
-            builtInTypes, libraryTypes, customTypes,
+        const result = buildCategories(
+            builtInCategories, libraryCategories, customCategories,
             {}, {}, {}
-        ).types;
+        ).categories;
 
         expect(result['A'].fields['field1'].inputType).toBe('text');
         expect(result['A'].fields['field2'].inputType).toBe('text');
@@ -1125,7 +1125,7 @@ describe('buildProjectTypes', () => {
             aCommon: { inputType: FieldDefinition.InputType.INPUT }
         };
 
-        const builtInTypes: Map<BuiltinTypeDefinition> = {
+        const builtInCategories: Map<BuiltinCategoryDefinition> = {
             A: {
                 fields: {
                     field1: { inputType: FieldDefinition.InputType.TEXT, group: Groups.STEM }
@@ -1133,9 +1133,9 @@ describe('buildProjectTypes', () => {
             }
         };
 
-        const libraryTypes: Map<LibraryTypeDefinition> = {
+        const libraryCategories: Map<LibraryCategoryDefinition> = {
             'A:0': {
-                typeFamily: 'A',
+                categoryName: 'A',
                 commons: ['aCommon'],
                 valuelists: {},
                 fields: {
@@ -1147,7 +1147,7 @@ describe('buildProjectTypes', () => {
             }
         };
 
-        const customTypes: Map<CustomTypeDefinition> = {
+        const customCategories: Map<CustomCategoryDefinition> = {
             'A:0': {
                 fields: {
                     field2: {},
@@ -1156,10 +1156,10 @@ describe('buildProjectTypes', () => {
             }
         };
 
-        const result = buildProjectTypes(
-            builtInTypes, libraryTypes, customTypes, commonFields,
+        const result = buildCategories(
+            builtInCategories, libraryCategories, customCategories, commonFields,
             {}, {}
-        ).types;
+        ).categories;
 
         expect(result['A'].fields['field1'].source).toBe(FieldDefinition.Source.BUILTIN);
         expect(result['A'].fields['field2'].source).toBe(FieldDefinition.Source.LIBRARY);
@@ -1171,17 +1171,17 @@ describe('buildProjectTypes', () => {
 
     xit('critical change of input type', () => {
 
-        const builtInTypes: Map<BuiltinTypeDefinition> = {
+        const builtInCategories: Map<BuiltinCategoryDefinition> = {
             A: {
-                superType: true,
-                userDefinedSubtypesAllowed: true,
+                supercategory: true,
+                userDefinedSubcategoriesAllowed: true,
                 fields : {}
             }
         };
 
-        const libraryTypes: Map<LibraryTypeDefinition> = {
+        const libraryCategories: Map<LibraryCategoryDefinition> = {
             'B:0': {
-                typeFamily: 'B',
+                categoryName: 'B',
                 parent: 'A',
                 commons: [],
                 valuelists: {},
@@ -1194,7 +1194,7 @@ describe('buildProjectTypes', () => {
             }
         };
 
-        const customTypes: Map<CustomTypeDefinition> = {
+        const customCategories: Map<CustomCategoryDefinition> = {
             'B:0': {
                 fields: {
                     field1: { inputType: 'radio' }
@@ -1205,8 +1205,8 @@ describe('buildProjectTypes', () => {
             }
         };
 
-        const result = buildProjectTypes(
-            builtInTypes, libraryTypes, customTypes,
+        const result = buildCategories(
+            builtInCategories, libraryCategories, customCategories,
             {}, {}, {}
         );
 

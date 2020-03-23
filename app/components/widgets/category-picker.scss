@@ -1,50 +1,49 @@
-.type-picker {
-
+.category-picker {
   .list-group-item {
     border-top: 1px solid #eee !important;
     display: block;
     transition: background-color .65s ease;
     padding: 7px 20px;
 
-    &.child-type {
+    &.child-category {
       border: none !important;
       padding-left: 40px;
     }
 
     &:hover,
-    &.selected-type {
+    &.selected-category {
       background-color: $list-item-hover-color !important;
     }
 
-    &.parent-selected.selected-type:hover {
+    &.parent-selected.selected-category:hover {
       background-color: darken($list-item-hover-color, 5%) !important;
     }
 
-    .type-item {
+    .category-item {
       display: flex;
       align-items: center;
       min-height: 30px;
 
-      type-icon {
+      category-icon {
         position: absolute;
       }
 
-      .type-label {
+      .category-label {
         display: inline-block;
         margin-left: 40px;
       }
     }
   }
 
-  #choose-type-option-all {
+  #choose-category-option-all {
     display: flex;
     align-items: center;
     min-height: 44px;
     height: 44px;
   }
 
-  .type-label,
-  .all-types-label {
+  .category-label,
+  .all-categories-label {
     user-select: none;
   }
 }

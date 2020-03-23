@@ -41,7 +41,7 @@ export class TaskbarConflictsComponent {
 
         if (this.popover.isOpen()) this.popover.close();
 
-        if (document.resource.type === 'Project') {
+        if (document.resource.category === 'Project') {
             await this.navbarComponent.openProjectsModal(true);
         } else {
             await this.routingService.jumpToConflictResolver(document);

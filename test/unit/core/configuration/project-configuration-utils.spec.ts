@@ -5,7 +5,7 @@ import {SortUtil} from '../../../../app/core/util/sort-util';
 import {Groups} from '../../../../app/core/configuration/model/group';
 import {FieldDefinition} from '../../../../app/core/configuration/model/field-definition';
 import InputType = FieldDefinition.InputType;
-import {IdaiType} from '../../../../app/core/configuration/model/idai-type';
+import {Category} from '../../../../app/core/configuration/model/category';
 
 
 const byName = (a, b) => SortUtil.alnumCompare(a.name, b.name);
@@ -15,7 +15,7 @@ const byName = (a, b) => SortUtil.alnumCompare(a.name, b.name);
  */
 describe('ProjectConfigurationUtils', () => {
 
-   it('makeTypesMap', () => {
+   it('makeCategoriesMap', () => {
 
       const A = 'A';
       const P = 'P';
@@ -23,34 +23,34 @@ describe('ProjectConfigurationUtils', () => {
       const confDef: ConfigurationDefinition = {
          relations: [],
          identifier: '',
-         types: [{
-            type: A,
+         categories: [{
+            name: A,
             parent: P,
             fields: [{ name: 'a', inputType: InputType.INPUT }]
          }, {
-            type: P,
+            name: P,
             fields: [{ name: 'p', inputType: InputType.INPUT }]
          }]
       };
 
-      const typesMap = ProjectConfigurationUtils.makeTypesMap(confDef);
+      const categoriesMap = ProjectConfigurationUtils.makeCategoriesMap(confDef);
 
-      expect(typesMap[P].name).toEqual(P);
-      expect(typesMap[P].children[0].name).toEqual(A);
-      expect(IdaiType.getFields(typesMap[P].children[0]).length).toBe(2);
-      expect(typesMap[P].children[0].parentType).toBe(typesMap[P]);
-      expect(typesMap[A].name).toEqual(A);
-      expect(typesMap[A].parentType).toBe(typesMap[P]);
+      expect(categoriesMap[P].name).toEqual(P);
+      expect(categoriesMap[P].children[0].name).toEqual(A);
+      expect(Category.getFields(categoriesMap[P].children[0]).length).toBe(2);
+      expect(categoriesMap[P].children[0].parentCategory).toBe(categoriesMap[P]);
+      expect(categoriesMap[A].name).toEqual(A);
+      expect(categoriesMap[A].parentCategory).toBe(categoriesMap[P]);
 
-      const sortedFields = IdaiType.getFields(typesMap[A]).sort(byName);
+      const sortedFields = Category.getFields(categoriesMap[A]).sort(byName);
 
       expect(sortedFields[0].group).toBe(Groups.CHILD);
       expect(sortedFields[1].group).toBe(Groups.PARENT);
-      expect(IdaiType.getFields(typesMap[P])[0].group).toBe(Groups.PARENT);
+      expect(Category.getFields(categoriesMap[P])[0].group).toBe(Groups.PARENT);
 
-      expect(typesMap[A].groups[0].fields[0].group).toBe(Groups.PARENT);
-      expect(typesMap[A].groups[1].fields[0].group).toBe(Groups.CHILD);
-      expect(typesMap[P].groups[0].fields[0].group).toBe(Groups.PARENT);
+      expect(categoriesMap[A].groups[0].fields[0].group).toBe(Groups.PARENT);
+      expect(categoriesMap[A].groups[1].fields[0].group).toBe(Groups.CHILD);
+      expect(categoriesMap[P].groups[0].fields[0].group).toBe(Groups.PARENT);
    });
 
 
@@ -61,8 +61,8 @@ describe('ProjectConfigurationUtils', () => {
       const confDef: ConfigurationDefinition = {
          relations: [],
          identifier: '',
-         types: [{
-            type: T,
+         categories: [{
+            name: T,
             fields:
                 [
                     {
@@ -77,9 +77,9 @@ describe('ProjectConfigurationUtils', () => {
          }]
       };
 
-      const typesMap = ProjectConfigurationUtils.makeTypesMap(confDef);
+      const categoriesMap = ProjectConfigurationUtils.makeCategoriesMap(confDef);
 
-      expect(typesMap[T].groups[0].fields[0].name).toEqual(FieldResource.IDENTIFIER);
-      expect(typesMap[T].groups[0].fields[1].name).toEqual(FieldResource.SHORTDESCRIPTION);
+      expect(categoriesMap[T].groups[0].fields[0].name).toEqual(FieldResource.IDENTIFIER);
+      expect(categoriesMap[T].groups[0].fields[1].name).toEqual(FieldResource.SHORTDESCRIPTION);
    });
 });

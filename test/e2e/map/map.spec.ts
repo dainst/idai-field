@@ -124,7 +124,7 @@ describe('map --', function() {
     function beginCreateDocWithGeometry(geometry, mapClickCallback) {
 
         ResourcesPage.clickCreateResource();
-        ResourcesPage.clickSelectResourceType();
+        ResourcesPage.clickSelectCategory();
         return ResourcesPage.clickSelectGeometryType(geometry)
             .then(function() { return mapClickCallback(); });
     }

@@ -1,4 +1,4 @@
-import {Document, Action} from 'idai-components-2';
+import {Document} from 'idai-components-2';
 import {FieldConverter} from '../../../../app/core/import/field-converter';
 
 
@@ -15,7 +15,7 @@ describe('FieldConverter', () => {
             modified: [],
             resource: {
                 id: '1',
-                type: 'Object',
+                category: 'Object',
                 relations: {},
                 dimensionHeight: [{
                     inputValue: '100',

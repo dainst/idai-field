@@ -22,19 +22,19 @@ describe('getSuggestions', () => {
     it('create suggestions query', async done => {
 
         const document: Document
-            = Static.doc('shortDescription', 'identifier', 'Type','id');
+            = Static.doc('shortDescription', 'identifier', 'Category','id');
         document.resource.relations['relation'] = [''];
 
         const relationDefinition: RelationDefinition = {
             name: 'relation',
-            range: ['RangeType1', 'RangeType2']
+            range: ['RangeCategory1', 'RangeCategory2']
         };
 
         await getSuggestions(datastore, document.resource, relationDefinition, 'input');
 
         expect(datastore.find).toHaveBeenCalledWith({
             q: 'input',
-            types: ['RangeType1', 'RangeType2'],
+            categories: ['RangeCategory1', 'RangeCategory2'],
             constraints: {
                'id:match': {
                    value: ['id'],
@@ -52,21 +52,21 @@ describe('getSuggestions', () => {
     it('do not suggest resources which are already targets of the relation or inverse relation', async done => {
 
         const document: Document
-            = Static.doc('shortDescription', 'identifier', 'Type','id1');
+            = Static.doc('shortDescription', 'identifier', 'Category','id1');
         document.resource.relations['relation'] = ['id2', 'id3'];
         document.resource.relations['inverse'] = ['id4', 'id5'];
 
         const relationDefinition: RelationDefinition = {
             name: 'relation',
             inverse: 'inverse',
-            range: ['RangeType']
+            range: ['RangeCategory']
         };
 
         await getSuggestions(datastore, document.resource, relationDefinition);
 
         expect(datastore.find).toHaveBeenCalledWith({
             q: '',
-            types: ['RangeType'],
+            categories: ['RangeCategory'],
             constraints: {
                 'id:match': {
                     value: ['id1', 'id2', 'id3', 'id4', 'id5'],
@@ -82,24 +82,24 @@ describe('getSuggestions', () => {
 
 
     it('only suggest resources with an isRecordedIn relation to the same resource if the option' +
-            'sameMainTypeResource is set', async done => {
+            'sameMainCategoryResource is set', async done => {
 
         const document: Document
-            = Static.doc('shortDescription', 'identifier', 'Type','id');
+            = Static.doc('shortDescription', 'identifier', 'Category','id');
         document.resource.relations['relation'] = [''];
         document.resource.relations['isRecordedIn'] = ['operationId'];
 
         const relationDefinition: RelationDefinition = {
             name: 'relation',
-            range: ['RangeType'],
-            sameMainTypeResource: true
+            range: ['RangeCategory'],
+            sameMainCategoryResource: true
         };
 
         await getSuggestions(datastore, document.resource, relationDefinition);
 
         expect(datastore.find).toHaveBeenCalledWith({
             q: '',
-            types: ['RangeType'],
+            categories: ['RangeCategory'],
             constraints: {
                 'id:match': {
                     value: ['id'],
@@ -117,14 +117,14 @@ describe('getSuggestions', () => {
     it('show suggestions for new document without id', async done => {
 
         const document: Document
-            = Static.doc('shortDescription', 'identifier', 'Type','id');
+            = Static.doc('shortDescription', 'identifier', 'Category','id');
         document.resource.relations['relation'] = [''];
         delete document.resource.id;
 
         const relationDefinition: RelationDefinition = {
             name: 'relation',
-            range: ['RangeType'],
-            sameMainTypeResource: true
+            range: ['RangeCategory'],
+            sameMainCategoryResource: true
         };
 
         try {
@@ -135,7 +135,7 @@ describe('getSuggestions', () => {
 
         expect(datastore.find).toHaveBeenCalledWith({
             q: '',
-            types: ['RangeType'],
+            categories: ['RangeCategory'],
             constraints: {
                 'id:match': {
                     value: [],

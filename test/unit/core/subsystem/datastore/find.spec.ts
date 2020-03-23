@@ -44,12 +44,12 @@ describe('subsystem/datastore/find', () => {
     }, 5000);
 
 
-    it('FieldDatastore - throw when find called with image type ', async done => {
+    it('FieldDatastore - throw when find called with image category ', async done => {
 
 
 
         try {
-            await fieldDocumentDatastore.find({types: ['Image']});
+            await fieldDocumentDatastore.find({ categories: ['Image'] });
             fail();
         } catch (expected) {
             expectErr1(expected);
@@ -58,10 +58,10 @@ describe('subsystem/datastore/find', () => {
     });
 
 
-    it('ImageDatastore - throw when find called with non image type ', async done => {
+    it('ImageDatastore - throw when find called with non image category ', async done => {
 
         try {
-            await idaiFieldImageDocumentDatastore.find({types: ['Trench']});
+            await idaiFieldImageDocumentDatastore.find({ categories: ['Trench'] });
             fail();
         } catch (expected) {
             expectErr1(expected);
@@ -70,7 +70,7 @@ describe('subsystem/datastore/find', () => {
     });
 
 
-    it('DocumentDatastore - do not throw and return everything with all types', async done => {
+    it('DocumentDatastore - do not throw and return everything with all categories', async done => {
 
         image0 = Static.doc('Image','Image','Image','image0');
         trench0 = Static.doc('Trench','Trench','Trench','trench0');
@@ -79,7 +79,7 @@ describe('subsystem/datastore/find', () => {
         await fieldDocumentDatastore.create(trench0);
 
         try {
-            const result = await documentDatastore.find({types: ['Trench', 'Image']});
+            const result = await documentDatastore.find({ categories: ['Trench', 'Image'] });
             expect(result.documents.length).toBe(2);
         } catch (err) {
             fail(err);
@@ -88,7 +88,7 @@ describe('subsystem/datastore/find', () => {
     });
 
 
-    it('DocumentDatastore - return everything when called without types', async done => {
+    it('DocumentDatastore - return everything when called without categories', async done => {
 
         image0 = Static.doc('Image','Image','Image','image0');
         trench0 = Static.doc('Trench','Trench','Trench','trench0');
@@ -106,7 +106,7 @@ describe('subsystem/datastore/find', () => {
     });
 
 
-    it('ImageDatastore - return only image type documents when called without types', async done => {
+    it('ImageDatastore - return only image category documents when called without categories', async done => {
 
         image0 = Static.doc('Image','Image','Image','image0');
         trench0 = Static.doc('Trench','Trench','Trench','trench0');
@@ -125,7 +125,7 @@ describe('subsystem/datastore/find', () => {
     });
 
 
-    it('FieldDatastore - return only non image type documents when called without types', async done => {
+    it('FieldDatastore - return only non image category documents when called without categories', async done => {
 
         image0 = Static.doc('Image','Image','Image','image0');
         trench0 = Static.doc('Trench','Trench','Trench','trench0');

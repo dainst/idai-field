@@ -1,8 +1,8 @@
 import {Map} from 'tsfun';
-import {TransientFieldDefinition} from '../model/transient-type-definition';
+import {TransientFieldDefinition} from '../model/transient-category-definition';
 
-export function mergeFields(target: Map<TransientFieldDefinition>,
-                     source: Map<TransientFieldDefinition>) {
+
+export function mergeFields(target: Map<TransientFieldDefinition>, source: Map<TransientFieldDefinition>) {
 
     for (let sourceFieldName of Object.keys(source)) {
         let alreadyPresentInTarget = false;
@@ -12,7 +12,7 @@ export function mergeFields(target: Map<TransientFieldDefinition>,
         if (!alreadyPresentInTarget) {
             target[sourceFieldName] = source[sourceFieldName];
         } else {
-            // at the moment, this is allowed for custom type fields, see also issueWarningOnFieldTypeChanges
+            // at the moment, this is allowed for custom name fields, see also issueWarningOnFieldTypeChanges
             if (source[sourceFieldName].inputType) {
                 target[sourceFieldName].inputType = source[sourceFieldName].inputType;
             }

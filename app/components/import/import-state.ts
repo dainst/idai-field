@@ -1,5 +1,5 @@
 import {ImportFormat} from '../../core/import/importer';
-import {IdaiType} from '../../core/configuration/model/idai-type';
+import {Category} from '../../core/configuration/model/category';
 
 /**
  * @author Thomas Kleinke
@@ -7,29 +7,21 @@ import {IdaiType} from '../../core/configuration/model/idai-type';
  */
 export class ImportState {
 
-    // For CSV import
-
-    private separator: string = ',';
-
-    public resourceTypes: Array<IdaiType> = [];
-
-    public selectedType: IdaiType|undefined = undefined;
-
-    public typeFromFileName: boolean = false;
-    //
-
     public sourceType: string = 'file';
-
     public format: ImportFormat = 'native';
-
     public file: File|undefined;
-
     public selectedOperationId: string = '';
-
     public mergeMode = false;
-
     public permitDeletions = false;
 
+    // For CSV import
+
+    public categories: Array<Category> = [];
+    public selectedCategory: Category|undefined = undefined;
+    public typeFromFileName: boolean = false;
+
+    private separator: string = ',';
+    //
 
 
     public getSeparator(): string {

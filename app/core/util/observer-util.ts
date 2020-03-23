@@ -1,5 +1,5 @@
-import {Observer} from "rxjs";
-import {Observable} from 'rxjs';
+import {Observer, Observable} from 'rxjs';
+
 
 /**
  * @author Daniel de Oliveira
@@ -14,7 +14,7 @@ export class ObserverUtil {
             try {
                 observer.next(a);
             } catch (err) {
-                console.log("error in ObserverUtil.notify, calling next",err)
+                console.log('Error in ObserverUtil.notify, calling next', err);
             }
         }
     }

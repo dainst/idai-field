@@ -7,11 +7,11 @@ import {Loading} from '../widgets/loading';
 import {RoutingService} from '../routing-service';
 import {DoceditLauncher} from './service/docedit-launcher';
 import {M} from '../messages/m';
-import {ProjectTypes} from '../../core/configuration/project-types';
+import {ProjectCategories} from '../../core/configuration/project-categories';
 import {MoveModalComponent} from './move-modal.component';
 import {AngularUtility} from '../../angular/angular-utility';
 import {ResourceDeletion} from './deletion/resource-deletion';
-import {IdaiType} from '../../core/configuration/model/idai-type';
+import {Category} from '../../core/configuration/model/category';
 import {TabManager} from '../../core/tabs/tab-manager';
 import {ResourcesViewMode, ViewFacade} from '../../core/resources/view/view-facade';
 import {NavigationService} from '../../core/resources/navigation/navigation-service';
@@ -39,7 +39,7 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
     public activePopoverMenu: PopoverMenu = 'none';
     public highlightedDocument: FieldDocument|undefined = undefined;
 
-    public filterOptions: Array<IdaiType> = [];
+    public filterOptions: Array<Category> = [];
     private scrollTarget: FieldDocument|undefined;
     private clickEventObservers: Array<any> = [];
 
@@ -56,7 +56,7 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
                 private messages: Messages,
                 private loading: Loading,
                 private changeDetectorRef: ChangeDetectorRef,
-                private projectTypes: ProjectTypes,
+                private projectCategories: ProjectCategories,
                 private modalService: NgbModal,
                 private resourceDeletion: ResourceDeletion,
                 private tabManager: TabManager,
@@ -87,11 +87,11 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
 
     public getQueryString = () => this.viewFacade.getSearchString();
 
-    public getTypeFilters = () => this.viewFacade.getFilterTypes();
+    public getCategoryFilters = () => this.viewFacade.getFilterCategories();
 
     public setScrollTarget = (doc: FieldDocument|undefined) => this.scrollTarget = doc;
 
-    public setTypeFilters = (types: string[]|undefined) => this.viewFacade.setFilterTypes(types ? types : []);
+    public setCategoryFilters = (categories: string[]|undefined) => this.viewFacade.setFilterCategories(categories ? categories : []);
 
     public isInExtendedSearchMode = () => this.viewFacade.isInExtendedSearchMode();
 
@@ -132,14 +132,14 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
 
         if (this.viewFacade.isInOverview()) {
             this.filterOptions = this.viewFacade.isInExtendedSearchMode()
-                ? this.projectTypes.getFieldTypes().filter(type => !type.parentType)
-                : this.projectTypes.getOverviewTopLevelTypes();
+                ? this.projectCategories.getFieldCategories().filter(category => !category.parentCategory)
+                : this.projectCategories.getOverviewTopLevelCategories();
         } else if (this.viewFacade.isInTypesManagement()) {
-            this.filterOptions = this.projectTypes.getAbstractFieldTypes();
+            this.filterOptions = this.projectCategories.getAbstractFieldCategories();
         } else {
-            this.filterOptions = this.projectTypes.getAllowedRelationDomainTypes(
+            this.filterOptions = this.projectCategories.getAllowedRelationDomainCategories(
                 'isRecordedIn',
-                (this.viewFacade.getCurrentOperation() as FieldDocument).resource.type
+                (this.viewFacade.getCurrentOperation() as FieldDocument).resource.category
             );
         }
     }
@@ -150,7 +150,7 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
         if (geometryType == 'none') {
             this.editDocument(newDocument);
         } else {
-            newDocument.resource['geometry'] = <FieldGeometry> { 'type': geometryType };
+            newDocument.resource['geometry'] = <FieldGeometry> { type: geometryType };
 
             this.viewFacade.addNewDocument(newDocument);
             this.startGeometryEditing();
@@ -218,7 +218,7 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
 
     public createGeometry(geometryType: string) {
 
-        (this.viewFacade.getSelectedDocument() as any).resource['geometry'] = { 'type': geometryType };
+        (this.viewFacade.getSelectedDocument() as any).resource['geometry'] = { type: geometryType };
         this.startGeometryEditing();
     }
 

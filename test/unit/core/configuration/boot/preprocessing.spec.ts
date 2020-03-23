@@ -1,7 +1,7 @@
 import {Map} from 'tsfun';
-import {LibraryTypeDefinition} from '../../../../../app/core/configuration/model/library-type-definition';
+import {LibraryCategoryDefinition} from '../../../../../app/core/configuration/model/library-category-definition';
 import {Preprocessing} from '../../../../../app/core/configuration/boot/preprocessing';
-import {TypeDefinition} from '../../../../../app/core/configuration/model/type-definition';
+import {CategoryDefinition} from '../../../../../app/core/configuration/model/category-definition';
 
 
 /**
@@ -11,12 +11,12 @@ import {TypeDefinition} from '../../../../../app/core/configuration/model/type-d
 describe('Preprocessing', () => {
 
     let configuration;
-    let t1: LibraryTypeDefinition;
+    let t1: LibraryCategoryDefinition;
 
     beforeEach(() => {
 
         t1 = {
-            typeFamily: 'x1',
+            categoryName: 'x1',
             commons: [],
             parent: 'x',
             description: { 'de': '' },
@@ -27,13 +27,13 @@ describe('Preprocessing', () => {
             fields: {
                 'aField': {}
             }
-        } as LibraryTypeDefinition;
+        } as LibraryCategoryDefinition;
 
         configuration = {
             identifier: 'test',
-            types: {
+            categories: {
                 'T1': t1
-            } as Map<LibraryTypeDefinition>
+            } as Map<LibraryCategoryDefinition>
         } as any;
     });
 
@@ -42,8 +42,8 @@ describe('Preprocessing', () => {
 
         configuration = {
             identifier: 'test',
-            types: {
-                A: { fields: { a1: {}, a2: {}, a3: {} } } as TypeDefinition
+            categories: {
+                A: { fields: { a1: {}, a2: {}, a3: {} } } as CategoryDefinition
             },
             relations: []
         };
@@ -57,12 +57,12 @@ describe('Preprocessing', () => {
 
         Preprocessing.applySearchConfiguration(configuration, searchConfiguration);
 
-        expect(configuration.types['A'].fields['a1'].fulltextIndexed).toBeTruthy();
-        expect(configuration.types['A'].fields['a2'].fulltextIndexed).toBeFalsy();
-        expect(configuration.types['A'].fields['a3'].fulltextIndexed).toBeTruthy();
-        expect(configuration.types['A'].fields['a1'].constraintIndexed).toBeFalsy();
-        expect(configuration.types['A'].fields['a2'].constraintIndexed).toBeTruthy();
-        expect(configuration.types['A'].fields['a3'].constraintIndexed).toBeTruthy();
+        expect(configuration.categories['A'].fields['a1'].fulltextIndexed).toBeTruthy();
+        expect(configuration.categories['A'].fields['a2'].fulltextIndexed).toBeFalsy();
+        expect(configuration.categories['A'].fields['a3'].fulltextIndexed).toBeTruthy();
+        expect(configuration.categories['A'].fields['a1'].constraintIndexed).toBeFalsy();
+        expect(configuration.categories['A'].fields['a2'].constraintIndexed).toBeTruthy();
+        expect(configuration.categories['A'].fields['a3'].constraintIndexed).toBeTruthy();
     });
 });
 

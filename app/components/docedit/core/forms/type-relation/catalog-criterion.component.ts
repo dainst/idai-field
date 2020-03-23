@@ -1,5 +1,5 @@
 import {Component, Input, OnChanges} from '@angular/core';
-import {Resource} from 'idai-components-2/index';
+import {Resource} from 'idai-components-2';
 import {CatalogCriteria} from './catalog-criteria';
 
 

@@ -1,11 +1,11 @@
-import {map, on, separate, defined, isNot, update, flatten, flow, reduce,
-    assoc, append, Map, values, to, lookup, cond, throws, prune} from 'tsfun';
-import {TypeDefinition} from './model/type-definition';
-import {IdaiType} from './model/idai-type';
+import {map, on, separate, defined, isNot, update, flatten, flow, reduce, assoc, append, Map, values, to,
+    lookup, cond, throws, prune} from 'tsfun';
+import {MDInternal} from 'idai-components-2';
+import {CategoryDefinition} from './model/category-definition';
+import {Category} from './model/category';
 import {makeLookup} from '../util/utils';
 import {RelationDefinition} from './model/relation-definition';
 import {ConfigurationDefinition} from './boot/configuration-definition';
-import {MDInternal} from 'idai-components-2';
 import {isUndefined} from 'tsfun/src/predicate';
 import {FieldDefinition} from './model/field-definition';
 import {DEFAULT_GROUP_ORDER, Group, Groups} from './model/group';
@@ -22,36 +22,34 @@ export module ProjectConfigurationUtils {
     // TODO reimplement; test
     import sortGroups = GroupUtil.sortGroups;
 
-    export function getTypeAndSubtypes(projectTypesMap: Map<IdaiType>,
-                                       superTypeName: string): Map<IdaiType> {
+    export function getCategoryAndSubcategories(projectCategoriesMap: Map<Category>,
+                                                supercategoryName: string): Map<Category> {
 
-        const subtypes: any = {};
+        const subcategories: any = {};
 
-        if (projectTypesMap[superTypeName]) {
-            subtypes[superTypeName] = projectTypesMap[superTypeName];
+        if (projectCategoriesMap[supercategoryName]) {
+            subcategories[supercategoryName] = projectCategoriesMap[supercategoryName];
 
-            if (projectTypesMap[superTypeName].children) {
-                for (let i = projectTypesMap[superTypeName].children.length - 1; i >= 0; i--) {
-                    subtypes[projectTypesMap[superTypeName].children[i].name]
-                        = projectTypesMap[superTypeName].children[i];
+            if (projectCategoriesMap[supercategoryName].children) {
+                for (let i = projectCategoriesMap[supercategoryName].children.length - 1; i >= 0; i--) {
+                    subcategories[projectCategoriesMap[supercategoryName].children[i].name]
+                        = projectCategoriesMap[supercategoryName].children[i];
                 }
             }
         }
 
-        return subtypes;
+        return subcategories;
     }
 
 
-    export function getRelationDefinitions(relationFields: Array<RelationDefinition>,
-                                           typeName: string,
-                                           isRangeType: boolean = false,
-                                           property?: string) {
+    export function getRelationDefinitions(relationFields: Array<RelationDefinition>, categoryName: string,
+                                           isRangeCategory: boolean = false, property?: string) {
 
         const availableRelationFields: Array<RelationDefinition> = [];
         for (let relationField of relationFields) {
 
-            const types: string[] = isRangeType ? relationField.range : relationField.domain;
-            if (types.indexOf(typeName) > -1) {
+            const categories: string[] = isRangeCategory ? relationField.range : relationField.domain;
+            if (categories.indexOf(categoryName) > -1) {
                 if (!property ||
                     (relationField as any)[property] == undefined ||
                     (relationField as any)[property] == true) {
@@ -63,44 +61,45 @@ export module ProjectConfigurationUtils {
     }
 
 
-    export function makeTypesMap(configuration: ConfigurationDefinition): Map<IdaiType> {
+    export function makeCategoriesMap(configuration: ConfigurationDefinition): Map<Category> {
 
         const [parentDefs, childDefs] =
-            separate(on(TypeDefinition.PARENT, isNot(defined)))(configuration.types);
+            separate(on(CategoryDefinition.PARENT, isNot(defined)))(configuration.categories);
 
-        const parentTypes =
-            flow(
-                parentDefs,
-                map(IdaiType.build),
-                map(update('fields', IdaiType.ifUndefinedSetGroupTo(Groups.PARENT))),
-                makeLookup(IdaiType.NAME));
+        const parentCategories = flow(
+            parentDefs,
+            map(Category.build),
+            map(update('fields', Category.ifUndefinedSetGroupTo(Groups.PARENT))),
+            makeLookup(Category.NAME)
+        );
 
         return flow(
             childDefs,
-            reduce(addChildType, parentTypes),
-            flattenTypesTreeMapToTypesMap,
-            fillGroups);
+            reduce(addChildCategory, parentCategories),
+            flattenCategoriesTreeMapToCategoriesMap,
+            fillGroups
+        );
     }
 
 
     /**
-     * Creates the groups array for each type.
-     * @param typesMap modified in place
+     * Creates the groups array for each category.
+     * @param categoriesMap modified in place
      */
-    function fillGroups(typesMap: Map<IdaiType>): Map<IdaiType> {
+    function fillGroups(categoriesMap: Map<Category>): Map<Category> {
 
-        return map((type: IdaiType) => {
+        return map((category: Category) => {
 
-            type.groups =
-                flow(
-                    (type as any)['fields'],
-                    makeGroupsMap,
-                    map(sortGroupFields),
-                    convertToSortedArray(DEFAULT_GROUP_ORDER));
+            category.groups = flow(
+                (category as any)['fields'],
+                makeGroupsMap,
+                map(sortGroupFields),
+                convertToSortedArray(DEFAULT_GROUP_ORDER)
+            );
 
-            return type;
+            return category;
 
-        })(typesMap);
+        })(categoriesMap);
     }
 
 
@@ -114,11 +113,11 @@ export module ProjectConfigurationUtils {
 
     function convertToSortedArray(defaultOrder: string[]) {
 
-        return (groups: Map<Group>) =>
-            flow(
-                defaultOrder,
-                map(lookup(groups)),
-                prune);
+        return (groups: Map<Group>) => flow(
+            defaultOrder,
+            map(lookup(groups)),
+            prune
+        );
     }
 
 
@@ -133,37 +132,40 @@ export module ProjectConfigurationUtils {
     }
 
 
-    function flattenTypesTreeMapToTypesMap(typesMap: Map<IdaiType>): Map<IdaiType> {
+    function flattenCategoriesTreeMapToCategoriesMap(categoriesMap: Map<Category>): Map<Category> {
 
-        const topLevelTypes: Array<IdaiType> = values(typesMap);
-        const children: Array<IdaiType> = flatten(topLevelTypes.map(to(IdaiType.CHILDREN)));
-        return makeLookup(IdaiType.NAME)(topLevelTypes.concat(children))
+        const topLevelCategories: Array<Category> = values(categoriesMap);
+        const children: Array<Category> = flatten(topLevelCategories.map(to(Category.CHILDREN)));
+        return makeLookup(Category.NAME)(topLevelCategories.concat(children))
     }
 
 
-    function addChildType(typesMap: Map<IdaiType>,
-                          childDef: TypeDefinition): Map<IdaiType> {
+    function addChildCategory(categoriesMap: Map<Category>,
+                              childDefinition: CategoryDefinition): Map<Category> {
 
-        return flow(childDef.parent,
-            lookup(typesMap),
+        return flow(childDefinition.parent,
+            lookup(categoriesMap),
             cond(
                 isUndefined,
-                throws(MDInternal.PROJECT_CONFIGURATION_ERROR_GENERIC)),
-                addChildTypeToParent(typesMap, childDef));
+                throws(MDInternal.PROJECT_CONFIGURATION_ERROR_GENERIC)
+            ),
+            addChildCategoryToParent(categoriesMap, childDefinition)
+        );
     }
 
 
-    function addChildTypeToParent(typesMap: Map<IdaiType>, childDef: TypeDefinition) {
+    function addChildCategoryToParent(categoriesMap: Map<Category>, childDefinition: CategoryDefinition) {
 
-        return (parentType: IdaiType): Map<IdaiType> => {
+        return (parentCategory: Category): Map<Category> => {
 
-            const childType = IdaiType.build(childDef);
-            (childType as any)['fields'] = IdaiType.makeChildFields(parentType, childType);
+            const childCategory = Category.build(childDefinition);
+            (childCategory as any)['fields'] = Category.makeChildFields(parentCategory, childCategory);
 
-            const newParentType: any = update(IdaiType.CHILDREN, append(childType))(parentType as any);
-            childType.parentType = newParentType;
+            const newParentCategory: any
+                = update(Category.CHILDREN, append(childCategory))(parentCategory as any);
+            childCategory.parentCategory = newParentCategory;
 
-            return assoc(parentType.name, newParentType)(typesMap);
+            return assoc(parentCategory.name, newParentCategory)(categoriesMap);
         }
     }
 }

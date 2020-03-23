@@ -9,45 +9,51 @@ export function applyLanguage(language: any) {
 
     return (configuration: UnorderedConfigurationDefinition) => {
 
-        if (configuration.types) {
-            for (let confTypeName of Object.keys(configuration.types)) {
-                const confType = configuration.types[confTypeName];
+        if (configuration.categories) {
+            for (let configurationCategoryName of Object.keys(configuration.categories)) {
+                const configurationCategory = configuration.categories[configurationCategoryName];
 
-                if (language.types && language.types[confTypeName] && language.types[confTypeName].label) {
-                    confType.label = language.types[confTypeName].label;
+                if (language.categories
+                        && language.categories[configurationCategoryName]
+                        && language.categories[configurationCategoryName].label) {
+                    configurationCategory.label = language.categories[configurationCategoryName].label;
                 }
 
-                for (let confFieldName of Object.keys(confType.fields)) {
-                    let descriptionFoundInTypes = false;
-                    let labelFoundInTypes = false;
+                for (let configurationFieldName of Object.keys(configurationCategory.fields)) {
+                    let descriptionFoundInCategories = false;
+                    let labelFoundInCategories = false;
 
-                    const confField = confType.fields[confFieldName];
+                    const configurationField = configurationCategory.fields[configurationFieldName];
 
-                    if (language.types) {
-                        const langConfType = language.types[confTypeName];
-                        if (langConfType && langConfType.fields) {
-                            const langConfField = langConfType.fields[confFieldName];
-                            if (langConfField) {
-                                if (langConfField.label) {
-                                    labelFoundInTypes = true;
-                                    confField.label = langConfField.label;
+                    if (language.categories) {
+                        const languageConfigurationCategory = language.categories[configurationCategoryName];
+                        if (languageConfigurationCategory && languageConfigurationCategory.fields) {
+                            const languageConfigurationField
+                                = languageConfigurationCategory.fields[configurationFieldName];
+                            if (languageConfigurationField) {
+                                if (languageConfigurationField.label) {
+                                    labelFoundInCategories = true;
+                                    configurationField.label = languageConfigurationField.label;
                                 }
-                                if (langConfField.description) {
-                                    descriptionFoundInTypes = true;
-                                    confField.description = langConfField.description;
+                                if (languageConfigurationField.description) {
+                                    descriptionFoundInCategories = true;
+                                    configurationField.description = languageConfigurationField.description;
                                 }
                             }
                         }
                     }
 
-                    if (!labelFoundInTypes && language.commons) {
-                        if (language.commons[confFieldName] && language.commons[confFieldName].label) {
-                            confField.label = language.commons[confFieldName].label;
+                    if (!labelFoundInCategories && language.commons) {
+                        if (language.commons[configurationFieldName]
+                                && language.commons[configurationFieldName].label) {
+                            configurationField.label = language.commons[configurationFieldName].label;
                         }
                     }
-                    if (!descriptionFoundInTypes && language.commons) {
-                        if (language.commons[confFieldName] && language.commons[confFieldName].description) {
-                            confField.description = language.commons[confFieldName].description;
+                    if (!descriptionFoundInCategories && language.commons) {
+                        if (language.commons[configurationFieldName]
+                                && language.commons[configurationFieldName].description) {
+                            configurationField.description
+                                = language.commons[configurationFieldName].description;
                         }
                     }
                 }
@@ -55,12 +61,12 @@ export function applyLanguage(language: any) {
         }
 
         if (language.relations) {
-            for (let langConfRelationKey of Object.keys(language.relations)) {
-                for (let confRelation of configuration.relations as any) {
-                    if (confRelation.name !== langConfRelationKey) continue;
+            for (let languageConfigurationRelationKey of Object.keys(language.relations)) {
+                for (let configurationRelation of configuration.relations as any) {
+                    if (configurationRelation.name !== languageConfigurationRelationKey) continue;
 
-                    const langConfRelation = language.relations[langConfRelationKey];
-                    if (langConfRelation.label) confRelation.label = langConfRelation.label;
+                    const langConfRelation = language.relations[languageConfigurationRelationKey];
+                    if (langConfRelation.label) configurationRelation.label = langConfRelation.label;
                 }
             }
         }

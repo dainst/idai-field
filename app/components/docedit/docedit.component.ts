@@ -7,7 +7,7 @@ import {ConflictDeletedModalComponent} from './dialog/conflict-deleted-modal.com
 import {clone} from '../../core/util/object-util';
 import {EditSaveDialogComponent} from './dialog/edit-save-dialog.component';
 import {DocumentDatastore} from '../../core/datastore/document-datastore';
-import {ProjectTypes} from '../../core/configuration/project-types';
+import {ProjectCategories} from '../../core/configuration/project-categories';
 import {M} from '../messages/m';
 import {MessagesConversion} from './messages-conversion';
 import {Loading} from '../widgets/loading';
@@ -57,7 +57,7 @@ export class DoceditComponent {
         private messages: Messages,
         private modalService: NgbModal,
         private datastore: DocumentDatastore,
-        private projectTypes: ProjectTypes,
+        private projectCategories: ProjectCategories,
         public projectConfiguration: ProjectConfiguration,
         private loading: Loading,
         private i18n: I18n) {
@@ -95,9 +95,9 @@ export class DoceditComponent {
     public showDuplicateButton(): boolean {
 
         return this.documentHolder.clonedDocument !== undefined
-            && this.documentHolder.clonedDocument.resource.type !== 'Project'
-            && !this.projectConfiguration.isSubtype(
-                this.documentHolder.clonedDocument.resource.type, 'Image'
+            && this.documentHolder.clonedDocument.resource.category !== 'Project'
+            && !this.projectConfiguration.isSubcategory(
+                this.documentHolder.clonedDocument.resource.category, 'Image'
             );
     }
 
@@ -106,10 +106,11 @@ export class DoceditComponent {
 
         this.documentHolder.setDocument(document);
 
-        this.showDoceditImagesTab = !this.projectConfiguration.isSubtype(document.resource.type, 'Image');
+        this.showDoceditImagesTab
+            = !this.projectConfiguration.isSubcategory(document.resource.category, 'Image');
 
         this.getFieldDefinitionLabel = (fieldName: string) =>
-            this.projectConfiguration.getFieldDefinitionLabel(document.resource.type, fieldName);
+            this.projectConfiguration.getFieldDefinitionLabel(document.resource.category, fieldName);
 
         this.parentLabel = await this.fetchParentLabel(document);
         this.updateFieldDefinitions();
@@ -117,11 +118,11 @@ export class DoceditComponent {
     }
 
 
-    public changeType(newType: string) {
+    public changeCategory(newCategory: string) {
 
-        const {invalidFields, invalidRelations} = this.documentHolder.changeType(newType);
-        this.showTypeChangeFieldsWarning(invalidFields);
-        this.showTypeChangeRelationsWarning(invalidRelations);
+        const {invalidFields, invalidRelations} = this.documentHolder.changeCategories(newCategory);
+        this.showCategoryChangeFieldsWarning(invalidFields);
+        this.showCategoryChangeRelationsWarning(invalidRelations);
         this.updateFieldDefinitions();
     }
 
@@ -183,15 +184,16 @@ export class DoceditComponent {
 
     private updateFieldDefinitions() {
 
-        this.fieldDefinitions
-            = this.projectConfiguration.getFieldDefinitions(this.documentHolder.clonedDocument.resource.type);
+        this.fieldDefinitions = this.projectConfiguration.getFieldDefinitions(
+            this.documentHolder.clonedDocument.resource.category
+        );
     }
 
 
     private updateRelationDefinitions() {
 
         this.relationDefinitions = this.projectConfiguration.getRelationDefinitions(
-            this.documentHolder.clonedDocument.resource.type, false, 'editable');
+            this.documentHolder.clonedDocument.resource.category, false, 'editable');
     }
 
 
@@ -199,7 +201,7 @@ export class DoceditComponent {
                                     operation: 'save'|'duplicate') {
 
         try {
-            if (documentAfterSave.resource.type !== 'Project' // because it could have been solved automatically. if not we just accept that it gots shown in the taskbar as conflict then
+            if (documentAfterSave.resource.category !== 'Project' // because it could have been solved automatically. if not we just accept that it gots shown in the taskbar as conflict then
                     && DoceditComponent.detectSaveConflicts(documentBeforeSave, documentAfterSave)) {
                 this.handleSaveConflict(documentAfterSave);
             } else {
@@ -285,11 +287,11 @@ export class DoceditComponent {
     }
 
 
-    private showTypeChangeFieldsWarning(invalidFields: string[]) {
+    private showCategoryChangeFieldsWarning(invalidFields: string[]) {
 
         if (invalidFields.length > 0) {
             this.messages.add([
-                M.DOCEDIT_WARNING_TYPE_CHANGE_FIELDS,
+                M.DOCEDIT_WARNING_CATEGORY_CHANGE_FIELDS,
                 invalidFields
                     .map(this.getFieldDefinitionLabel)
                     .reduce((acc, fieldLabel) => acc + ', ' + fieldLabel)
@@ -298,11 +300,11 @@ export class DoceditComponent {
     }
 
 
-    private showTypeChangeRelationsWarning(invalidRelations: string[]) {
+    private showCategoryChangeRelationsWarning(invalidRelations: string[]) {
 
         if (invalidRelations.length > 0) {
             this.messages.add([
-                M.DOCEDIT_WARNING_TYPE_CHANGE_RELATIONS,
+                M.DOCEDIT_WARNING_CATEGORY_CHANGE_RELATIONS,
                 invalidRelations
                     .map((relationName: string) => this.projectConfiguration.getRelationDefinitionLabel(relationName))
                     .reduce((acc, relationLabel) => acc + ', ' + relationLabel)

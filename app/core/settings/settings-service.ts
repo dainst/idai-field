@@ -272,7 +272,7 @@ export class SettingsService {
         return {
             _id: 'project',
             resource: {
-                type: 'Project',
+                category: 'Project',
                 identifier: name,
                 id: 'project',
                 coordinateReferenceSystem: 'Eigenes Koordinatenbezugssystem',

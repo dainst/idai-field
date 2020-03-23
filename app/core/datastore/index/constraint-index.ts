@@ -1,7 +1,7 @@
 import {getOn, values, isArray, map, flatten, flow, cond, not, to, isDefined, singleton, Map} from 'tsfun';
 import {Document, Resource} from 'idai-components-2';
 import {IndexItem} from './index-item';
-import {IdaiType} from '../../configuration/model/idai-type';
+import {Category} from '../../configuration/model/category';
 import {FieldDefinition} from '../../configuration/model/field-definition';
 import {clone} from '../../util/object-util';
 
@@ -52,7 +52,7 @@ export interface ConstraintIndex {
 export module ConstraintIndex {
 
     export function make(defaultIndexDefinitions: { [name: string]: IndexDefinition },
-                         typesMap: { [typeName: string]: IdaiType }) {
+                         categoriesMap: { [categoryName: string]: Category }) {
 
         const constraintIndex: ConstraintIndex = {
             indexDefinitions: {}, containIndex: {}, existIndex: {}, matchIndex: {}
@@ -60,7 +60,7 @@ export module ConstraintIndex {
 
         constraintIndex.indexDefinitions = getIndexDefinitions(
             defaultIndexDefinitions,
-            Object.values(typesMap)
+            Object.values(categoriesMap)
         );
 
         const validationError = validateIndexDefinitions(Object.values(constraintIndex.indexDefinitions));
@@ -98,8 +98,7 @@ export module ConstraintIndex {
     }
 
 
-    export function get(index: ConstraintIndex,
-                        indexName: string,
+    export function get(index: ConstraintIndex, indexName: string,
                         matchTerms: string|string[]): Array<IndexItem> {
 
         const indexDefinition: IndexDefinition = index.indexDefinitions[indexName];
@@ -115,8 +114,7 @@ export module ConstraintIndex {
     }
 
 
-    export function getWithDescendants(index: ConstraintIndex,
-                                       indexName: string,
+    export function getWithDescendants(index: ConstraintIndex, indexName: string,
                                        matchTerm: string|string[]): Array<IndexItem> {
 
         const definition: IndexDefinition = index.indexDefinitions[indexName];
@@ -131,8 +129,7 @@ export module ConstraintIndex {
     }
 
 
-    export function getCount(index: ConstraintIndex,
-                             indexName: string,
+    export function getCount(index: ConstraintIndex, indexName: string,
                              matchTerm: string): number {
 
         const indexDefinition: IndexDefinition = index.indexDefinitions[indexName];
@@ -257,10 +254,10 @@ export module ConstraintIndex {
 
 
     function getIndexDefinitions(defaultIndexDefinitions: { [name: string]: IndexDefinition },
-                                 types: Array<IdaiType>): { [name: string]: IndexDefinition } {
+                                 categories: Array<Category>): { [name: string]: IndexDefinition } {
 
         const definitionsFromConfiguration: Array<{ name: string, indexDefinition: IndexDefinition }> =
-            getFieldsToIndex(types)
+            getFieldsToIndex(categories)
                 .map((field: FieldDefinition) => makeIndexDefinitions(field))
                 .reduce((result: any, definitions) => {
                     definitions.forEach(definition => result.push(definition));
@@ -271,12 +268,12 @@ export module ConstraintIndex {
     }
 
 
-    function getFieldsToIndex(types: Array<IdaiType>): Array<FieldDefinition> {
+    function getFieldsToIndex(categories: Array<Category>): Array<FieldDefinition> {
 
         const fields: Array<FieldDefinition> =
             getUniqueFields(
-                types.reduce((result: Array<FieldDefinition>, type: IdaiType) => { // TODO use map function
-                    return result.concat(IdaiType.getFields(type));
+                categories.reduce((result: Array<FieldDefinition>, category: Category) => { // TODO use map function
+                    return result.concat(Category.getFields(category));
                 }, []) as any
             ).filter((field: FieldDefinition) => field.constraintIndexed);
 

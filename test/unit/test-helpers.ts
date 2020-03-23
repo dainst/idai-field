@@ -1,14 +1,14 @@
 import {Document} from 'idai-components-2';
 
 
-export function doc(id: string, type: string = 'type'): Document {
+export function doc(id: string, category: string = 'category'): Document {
 
     return {
         _id: id,
         resource: {
             id: id,
             identifier: 'identifier' + id,
-            type: type,
+            category: category,
             relations: {}
         },
         created:

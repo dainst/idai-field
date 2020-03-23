@@ -1,16 +1,16 @@
 import {Map} from 'tsfun';
-import {BuiltinFieldDefinition} from './builtin-type-definition';
-import {LibraryFieldDefinition, LibraryTypeDefinition} from './library-type-definition';
+import {BuiltinFieldDefinition} from './builtin-category-definition';
+import {LibraryFieldDefinition, LibraryCategoryDefinition} from './library-category-definition';
 import {ValuelistDefinition} from './valuelist-definition';
 
 
-export interface TransientTypeDefinition extends BuiltinFieldDefinition, LibraryTypeDefinition {
+export interface TransientCategoryDefinition extends BuiltinFieldDefinition, LibraryCategoryDefinition {
 
     fields: Map<TransientFieldDefinition>;
 }
 
 
-export module TransientTypeDefinition {
+export module TransientCategoryDefinition {
 
     export const FIELDS = 'fields';
     export const COMMONS = 'commons';

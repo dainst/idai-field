@@ -1,0 +1,22 @@
+<div *ngIf="isCategorySwitchingPossible()" id="category-switcher-button" class="circular-button category-button"
+     [ngbPopover]="categoryChangerMenu" [autoClose]="false" #popover="ngbPopover"
+     triggers="manual" (click)="popover.toggle();" placement="bottom">
+    <category-icon [category]="category" size="41"></category-icon>
+    <div class="menu-down-sign-circle">
+        <span class="mdi mdi-menu-down mdi-18px"></span>
+    </div>
+
+    <ng-template #categoryChangerMenu>
+        <div id="category-changer-menu">
+            <div class="popover-custom-title"
+                 i18n="@@docedit.categorySwitcherButton.changeCategory">Kategorie ändern</div>
+            <category-picker *ngIf="categoriesTreeList" [categoriesTreeList]="categoriesTreeList"
+                             [selectedCategories]="[category]"
+                             (onCategoryPicked)="chooseCategory($event); popover.close();"></category-picker>
+        </div>
+    </ng-template>
+</div>
+
+<div *ngIf="!isCategorySwitchingPossible()" id="no-category-switching-icon">
+    <category-icon [category]="category" size="41"></category-icon>
+</div>

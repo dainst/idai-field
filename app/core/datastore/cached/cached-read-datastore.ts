@@ -2,9 +2,9 @@ import {jsonClone} from 'tsfun';
 import {DatastoreErrors, Document, FindResult, Query, ReadDatastore} from 'idai-components-2';
 import {PouchdbDatastore} from '../pouchdb/pouchdb-datastore';
 import {DocumentCache} from './document-cache';
-import {TypeConverter} from './type-converter';
+import {CategoryConverter} from './category-converter';
 import {IndexFacade} from '../index/index-facade';
-import {ProjectTypes} from '../../configuration/project-types';
+import {ProjectCategories} from '../../configuration/project-categories';
 
 
 export interface IdaiFieldFindResult<T extends Document> extends FindResult {
@@ -38,8 +38,8 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
     constructor(protected datastore: PouchdbDatastore,
                 protected indexFacade: IndexFacade,
                 protected documentCache: DocumentCache<T>,
-                protected typeConverter: TypeConverter<T>,
-                protected typeClass: string) { }
+                protected categoryConverter: CategoryConverter<T>,
+                protected categoryClass: string) { }
 
 
     /**
@@ -48,7 +48,7 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
      * Additional specs:
      *
      * @param options.skipCache: boolean
-     * @throws if fetched doc is not of type T, determined by resource.type
+     * @throws if fetched doc is not of category T, determined by resource.category
      */
     public async get(id: string, options?: { skipCache: boolean }): Promise<T> {
 
@@ -58,9 +58,8 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
             return cachedDocument;
         }
 
-        let document: T = await this.datastore.fetch(id) as T;
-        this.typeConverter.assertTypeToBeOfClass(document.resource.type, this.typeClass);
-        document = this.typeConverter.convert(document);
+        let document: T = this.categoryConverter.convert(await this.datastore.fetch(id));
+        this.categoryConverter.assertCategoryToBeOfClass(document.resource.category, this.categoryClass);
 
         return cachedDocument
             ? this.documentCache.reassign(document)
@@ -83,24 +82,24 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
      * Find sorts the documents by identifier ascending
      *
      * @param query
-     * @param ignoreTypes to make queries faster, the facility to return only the
-     *   types the datastore is supposed to return, can be turned off. This can make sense if
+     * @param ignoreCategories to make queries faster, the facility to return only the
+     *   categories the datastore is supposed to return, can be turned off. This can make sense if
      *   one performs constraint queries, where one knows that all documents returned are of
-     *   allowed types, due to the nature of the relations to which the constraints refer.
-     * @throws if query contains types incompatible with T
+     *   allowed categories, due to the nature of the relations to which the constraints refer.
+     * @throws if query contains categories incompatible with T
      */
-    public async find(query: Query, ignoreTypes: boolean = false): Promise<IdaiFieldFindResult<T>> {
+    public async find(query: Query, ignoreCategories: boolean = false): Promise<IdaiFieldFindResult<T>> {
 
         if (!this.suppressWait) await this.datastore.ready();
 
         const clonedQuery: Query = jsonClone(query);
 
-        if (clonedQuery.types) {
-            clonedQuery.types.forEach(type => {
-                this.typeConverter.assertTypeToBeOfClass(type, this.typeClass);
+        if (clonedQuery.categories) {
+            clonedQuery.categories.forEach(category => {
+                this.categoryConverter.assertCategoryToBeOfClass(category, this.categoryClass);
             });
-        } else if (!ignoreTypes) {
-            clonedQuery.types = this.typeConverter.getTypesForClass(this.typeClass);
+        } else if (!ignoreCategories) {
+            clonedQuery.categories = this.categoryConverter.getCategoriesForClass(this.categoryClass);
         }
 
         const orderedResults = await this.findIds(clonedQuery);
@@ -131,7 +130,7 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
      */
     public async getRevision(docId: string, revisionId: string): Promise<T> {
 
-        return this.typeConverter.convert(
+        return this.categoryConverter.convert(
             await this.datastore.fetchRevision(docId, revisionId));
     }
 
@@ -157,8 +156,7 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
     }
 
 
-    private async getDocumentsForIds(ids: string[],
-                                     limit?: number,
+    private async getDocumentsForIds(ids: string[], limit?: number,
                                      offset?: number): Promise<{documents: Array<T>, totalCount: number}> {
 
         let totalCount: number = ids.length;
@@ -220,11 +218,15 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
         const result: Array<Document> = await this.datastore.bulkFetch(ids);
 
         result.forEach(document => {
+            const convertedDocument: T = this.categoryConverter.convert(document);
+
             try {
-                this.typeConverter.assertTypeToBeOfClass(document.resource.type, this.typeClass);
-                documents.push(this.documentCache.set(this.typeConverter.convert(document)));
+                this.categoryConverter.assertCategoryToBeOfClass(
+                    convertedDocument.resource.category, this.categoryClass
+                );
+                documents.push(this.documentCache.set(convertedDocument));
             } catch (errWithParams) {
-                if (errWithParams[0] !== ProjectTypes.UNKNOWN_TYPE_ERROR) throw errWithParams;
+                if (errWithParams[0] !== ProjectCategories.UNKNOWN_TYPE_ERROR) throw errWithParams;
             }
         });
 

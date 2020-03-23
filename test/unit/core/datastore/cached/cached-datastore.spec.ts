@@ -2,7 +2,7 @@ import {FieldDocument} from 'idai-components-2';
 import {CachedDatastore} from '../../../../../app/core/datastore/cached/cached-datastore';
 import {DocumentCache} from '../../../../../app/core/datastore/cached/document-cache';
 import {FieldDatastore} from '../../../../../app/core/datastore/field/field-datastore';
-import {FieldTypeConverter} from '../../../../../app/core/datastore/field/field-type-converter';
+import {FieldCategoryConverter} from '../../../../../app/core/datastore/field/field-category-converter';
 import {Static} from '../../../static';
 
 
@@ -18,17 +18,17 @@ describe('CachedDatastore', () => {
 
     function createMockedDatastore(mockdb: any) {
 
-        const mockTypeUtility = jasmine.createSpyObj('mockTypeUtility', ['isSubtype', 'validate', 'getFieldTypeNames']);
-        const mockProjectConfiguration = jasmine.createSpyObj('mockProjectConfiguration', ['isSubtype']);
-        mockProjectConfiguration.isSubtype.and.returnValue(false);
-        mockTypeUtility.getFieldTypeNames.and.returnValue(['Find']);
+        const mockProjectCategories = jasmine.createSpyObj('mockProjectCategories', ['getFieldCategoryNames']);
+        const mockProjectConfiguration = jasmine.createSpyObj('mockProjectConfiguration', ['isSubcategory']);
+        mockProjectConfiguration.isSubcategory.and.returnValue(false);
+        mockProjectCategories.getFieldCategoryNames.and.returnValue(['Find']);
 
         const documentCache = new DocumentCache<FieldDocument>();
         const docDatastore = new FieldDatastore(
             mockdb,
             mockIndexFacade,
             documentCache,
-            new FieldTypeConverter(mockTypeUtility, mockProjectConfiguration));
+            new FieldCategoryConverter(mockProjectCategories, mockProjectConfiguration));
         docDatastore.suppressWait = true;
         return docDatastore;
     }

@@ -36,7 +36,7 @@ describe('IndexFacade', () => {
         indexFacade.put(typeDocA);
 
         const items1 = indexFacade.find(
-            { types: ['Type'], sort: { matchType: 'SomeFindType'} /* query is designed to trigger Type-based sort */
+            { categories: ['Type'], sort: { matchCategory: 'SomeFindCategory'} /* query is designed to trigger Type-based sort */
             });
         expect(items1).toEqual(['id0', 'id1']);
 
@@ -44,7 +44,7 @@ describe('IndexFacade', () => {
         indexFacade.put(findDocB);
         indexFacade.put(findDocA);
 
-        const items = indexFacade.find({ types: ['Type'], sort: { matchType: 'FindB'} });
+        const items = indexFacade.find({ categories: ['Type'], sort: { matchCategory: 'FindB'} });
         expect(items).toEqual(['id1', 'id0']);
     });
 
@@ -63,21 +63,21 @@ describe('IndexFacade', () => {
         indexFacade.put(typeDocA);
         indexFacade.put(typeDocB);
 
-        const items1 = indexFacade.find({ types: ['Type'], sort: { matchType: 'Find'} });
+        const items1 = indexFacade.find({ categories: ['Type'], sort: { matchCategory: 'Find'} });
         expect(items1).toEqual(['id0', 'id1']);
 
         indexFacade.put(findDocB);
         indexFacade.put(findDocA);
         indexFacade.put(findDocC);
 
-        const items2 = indexFacade.find({ types: ['Type'], sort: { matchType: 'Find'} });
+        const items2 = indexFacade.find({ categories: ['Type'], sort: { matchCategory: 'Find'} });
         expect(items2).toEqual(['id1', 'id0']);
 
         // ->
         indexFacade.remove(findDocB);
         indexFacade.remove(findDocC);
 
-        const result = indexFacade.find({ types: ['Type'], sort: { matchType: 'Find'} });
+        const result = indexFacade.find({ categories: ['Type'], sort: { matchCategory: 'Find'} });
         expect(result).toEqual(['id0', 'id1']);
     });
 
@@ -96,14 +96,14 @@ describe('IndexFacade', () => {
         indexFacade.put(typeDocA);
         indexFacade.put(typeDocB);
 
-        const items1 = indexFacade.find({ types: ['Type'], sort: { matchType: 'Find'} });
+        const items1 = indexFacade.find({ categories: ['Type'], sort: { matchCategory: 'Find'} });
         expect(items1).toEqual(['id0', 'id1']);
 
         indexFacade.put(findDocB);
         indexFacade.put(findDocA);
         indexFacade.put(findDocC);
 
-        const items2 = indexFacade.find({ types: ['Type'], sort: { matchType: 'Find'} });
+        const items2 = indexFacade.find({ categories: ['Type'], sort: { matchCategory: 'Find'} });
         expect(items2).toEqual(['id1', 'id0']);
 
         // ->
@@ -112,7 +112,7 @@ describe('IndexFacade', () => {
         indexFacade.put(findDocB);
         indexFacade.put(findDocC);
 
-        const result = indexFacade.find({ types: ['Type'], sort: { matchType: 'Find'} });
+        const result = indexFacade.find({ categories: ['Type'], sort: { matchCategory: 'Find'} });
         expect(result).toEqual(['id0', 'id1']);
     });
 
@@ -131,31 +131,31 @@ describe('IndexFacade', () => {
         indexFacade.put(typeDocA);
         indexFacade.put(typeDocB);
 
-        const items1 = indexFacade.find({ types: ['Type'], sort: { matchType: 'Find'} });
+        const items1 = indexFacade.find({ categories: ['Type'], sort: { matchCategory: 'Find'} });
         expect(items1).toEqual(['id0', 'id1']);
 
         indexFacade.put(findDocB);
         indexFacade.put(findDocA);
         indexFacade.put(findDocC);
 
-        const items2 = indexFacade.find({ types: ['Type'], sort: { matchType: 'Find'} });
+        const items2 = indexFacade.find({ categories: ['Type'], sort: { matchCategory: 'Find'} });
         expect(items2).toEqual(['id1', 'id0']);
 
         // ->
         indexFacade.put(typeDocA);
 
-        const result = indexFacade.find({ types: ['Type'], sort: { matchType: 'Find'} });
+        const result = indexFacade.find({ categories: ['Type'], sort: { matchCategory: 'Find'} });
         expect(result).toEqual(['id1', 'id0']);
     });
 
 
     it('should sort by identifier ascending', () => {
 
-        const doc1 = Static.doc('bla1', 'blub1', 'type1','id1');
-        const doc3 = Static.doc('bla3', 'blub3', 'type3','id3');
+        const doc1 = Static.doc('bla1', 'blub1', 'category1','id1');
+        const doc3 = Static.doc('bla3', 'blub3', 'category3','id3');
         doc3.resource.relations['isRecordedIn'] = ['id1'];
 
-        const doc2 = Static.doc('bla2', 'blub2', 'type2','id2');
+        const doc2 = Static.doc('bla2', 'blub2', 'category2','id2');
         doc2.resource.relations['isRecordedIn'] = ['id1'];
 
         const q: Query = {

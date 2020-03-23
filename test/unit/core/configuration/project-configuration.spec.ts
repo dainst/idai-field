@@ -1,5 +1,5 @@
-import {ProjectConfiguration} from '../../../../app/core/configuration/project-configuration';
 import {MDInternal} from 'idai-components-2';
+import {ProjectConfiguration} from '../../../../app/core/configuration/project-configuration';
 
 
 /**
@@ -8,8 +8,8 @@ import {MDInternal} from 'idai-components-2';
  */
 describe('ProjectConfiguration', () => {
 
-    const firstLevelType = {
-        type: 'FirstLevelType',
+    const firstLevelCategory = {
+        name: 'FirstLevelCategory',
         fields: [
             {
                 name: 'fieldA',
@@ -19,9 +19,9 @@ describe('ProjectConfiguration', () => {
         ]
     };
 
-    const secondLevelType1 = {
-        type: 'SecondLevelType',
-        parent: 'FirstLevelType',
+    const secondLevelCategory1 = {
+        name: 'SecondLevelCategory',
+        parent: 'FirstLevelCategory',
         fields: [
             {
                 name: 'fieldB'
@@ -29,9 +29,10 @@ describe('ProjectConfiguration', () => {
         ]
     };
 
-    const secondLevelType2 = {
-        type: 'SecondLevelType',
-        parent: 'FirstLevelType',
+
+    const secondLevelCategory2 = {
+        name: 'SecondLevelCategory',
+        parent: 'FirstLevelCategory',
         fields: [
             {
                 name: 'fieldA',
@@ -41,10 +42,10 @@ describe('ProjectConfiguration', () => {
     };
 
 
-    it('should get label for type', () => {
+    it('should get label for category', () => {
 
-        const type = {
-            type: 'T',
+        const category = {
+            name: 'T',
             fields: [
                 {
                     name: 'aField',
@@ -53,7 +54,7 @@ describe('ProjectConfiguration', () => {
             ]
         };
 
-        const configuration: ProjectConfiguration = new ProjectConfiguration({ types: [type] } as any);
+        const configuration: ProjectConfiguration = new ProjectConfiguration({ categories: [category] } as any);
 
         expect(configuration.getFieldDefinitionLabel('T','aField')).toBe('A Field');
     });
@@ -61,8 +62,8 @@ describe('ProjectConfiguration', () => {
 
     it('should get default label if not defined', () => {
 
-        const type = {
-            type: 'T',
+        const category = {
+            name: 'T',
             fields: [
                 {
                     name: 'aField'
@@ -70,7 +71,7 @@ describe('ProjectConfiguration', () => {
             ]
         };
 
-        const configuration: ProjectConfiguration = new ProjectConfiguration({ types: [type] } as any);
+        const configuration: ProjectConfiguration = new ProjectConfiguration({ categories: [category] } as any);
 
         expect(configuration.getFieldDefinitionLabel('T','aField')).toBe('aField');
     });
@@ -78,40 +79,40 @@ describe('ProjectConfiguration', () => {
 
     it('should throw an error if field is not defined', () => {
 
-        const configuration: ProjectConfiguration = new ProjectConfiguration({ types: [] } as any);
+        const configuration: ProjectConfiguration = new ProjectConfiguration({ categories: [] } as any);
 
         expect(() => {
-            configuration.getFieldDefinitionLabel('UndefinedType','someField');
+            configuration.getFieldDefinitionLabel('UndefinedCategory','someField');
         }).toThrow();
     });
 
 
-    it('should let types inherit fields from parent types', () => {
+    it('should let categories inherit fields from parent categories', () => {
 
         const configuration: ProjectConfiguration
-            = new ProjectConfiguration({ types: [firstLevelType, secondLevelType1] } as any);
-        const fields = configuration.getFieldDefinitions('SecondLevelType');
+            = new ProjectConfiguration({ categories: [firstLevelCategory, secondLevelCategory1] } as any);
+        const fields = configuration.getFieldDefinitions('SecondLevelCategory');
 
         expect(fields[0].name).toEqual('fieldA');
         expect(fields[1].name).toEqual('fieldB');
     });
 
 
-    it('list parent type fields first', () => {
+    it('list parent category fields first', () => {
 
         const configuration: ProjectConfiguration
-            = new ProjectConfiguration({ types: [secondLevelType1, firstLevelType]} as any);
-        const fields = configuration.getFieldDefinitions('SecondLevelType');
+            = new ProjectConfiguration({ categories: [secondLevelCategory1, firstLevelCategory]} as any);
+        const fields = configuration.getFieldDefinitions('SecondLevelCategory');
 
         expect(fields[0].name).toEqual('fieldA');
         expect(fields[1].name).toEqual('fieldB');
     });
 
 
-    it('should fail if parent type is not defined', () => {
+    it('should fail if parent category is not defined', () => {
 
         expect(() => {
-            new ProjectConfiguration({ types: [secondLevelType1] } as any);
+            new ProjectConfiguration({ categories: [secondLevelCategory1] } as any);
         }).toThrow(MDInternal.PROJECT_CONFIGURATION_ERROR_GENERIC);
     });
 
@@ -119,8 +120,8 @@ describe('ProjectConfiguration', () => {
     xit('should merge child field with parent field of the same name', () => {
 
         const configuration: ProjectConfiguration
-            = new ProjectConfiguration({ types: [secondLevelType2, firstLevelType]} as any);
-        const fields = configuration.getFieldDefinitions('SecondLevelType');
+            = new ProjectConfiguration({ categories: [secondLevelCategory2, firstLevelCategory]} as any);
+        const fields = configuration.getFieldDefinitions('SecondLevelCategory');
 
         expect(fields.length).toBe(1);
         expect(fields[0].inputType).toEqual('unsignedFloat');
@@ -130,8 +131,8 @@ describe('ProjectConfiguration', () => {
 
     xit('should only modify field in child', () => {
 
-        const firstLevelType = {
-            type: 'FirstLevelType',
+        const firstLevelCategory = {
+            type: 'FirstLevelCategory',
             fields: [
                 {
                     name: 'fieldA',
@@ -141,9 +142,9 @@ describe('ProjectConfiguration', () => {
             ]
         };
 
-        const secondLevelType = {
-            type: 'SecondLevelType',
-            parent: 'FirstLevelType',
+        const secondLevelCategory = {
+            type: 'SecondLevelCategory',
+            parent: 'FirstLevelCategory',
             fields: [
                 {
                     name: 'fieldA',
@@ -153,22 +154,22 @@ describe('ProjectConfiguration', () => {
         };
 
         const configuration: ProjectConfiguration
-            = new ProjectConfiguration({ types: [firstLevelType, secondLevelType]} as any);
-        const firstLevelTypeFields = configuration.getFieldDefinitions('FirstLevelType');
-        const secondLevelTypeFields = configuration.getFieldDefinitions('SecondLevelType');
+            = new ProjectConfiguration({ categories: [firstLevelCategory, secondLevelCategory] } as any);
+        const firstLevelCategoryFields = configuration.getFieldDefinitions('FirstLevelCategory');
+        const secondLevelCategoryFields = configuration.getFieldDefinitions('SecondLevelCategory');
 
-        expect(secondLevelTypeFields[0].label).toEqual('Field A1');
+        expect(secondLevelCategoryFields[0].label).toEqual('Field A1');
 
         // there has a bug where the parent fields label has been overwritten, so it was "Field A1", too
-        expect(firstLevelTypeFields[0].label).toEqual('Field A');
+        expect(firstLevelCategoryFields[0].label).toEqual('Field A');
     });
 
     // err cases
 
-    it('should reject a field with the same name a parent field', () => {
+    it('should reject a field with the same name as a parent field', () => {
 
-        const firstLevelType = {
-            type: 'FirstLevelType',
+        const firstLevelCategory = {
+            name: 'FirstLevelCategory',
             fields: [
                 {
                     name: 'fieldA',
@@ -178,9 +179,9 @@ describe('ProjectConfiguration', () => {
             ]
         };
 
-        const secondLevelType = {
-            type: 'SecondLevelType',
-            parent: 'FirstLevelType',
+        const secondLevelCategory = {
+            name: 'SecondLevelCategory',
+            parent: 'FirstLevelCategory',
             fields: [
                 {
                     name: 'fieldA',
@@ -190,7 +191,9 @@ describe('ProjectConfiguration', () => {
         };
 
         expect(
-            () => new ProjectConfiguration({ types: [firstLevelType, secondLevelType]} as any)
-        ).toThrow([['tried to overwrite field of parent type','fieldA','FirstLevelType','SecondLevelType']]);
+            () => new ProjectConfiguration({ categories: [firstLevelCategory, secondLevelCategory]} as any)
+        ).toThrow([[
+            'tried to overwrite field of parent category', 'fieldA', 'FirstLevelCategory', 'SecondLevelCategory'
+        ]]);
     });
 });

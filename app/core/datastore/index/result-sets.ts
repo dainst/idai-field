@@ -2,7 +2,7 @@ import {intersection, union, subtract, lookup, flow, map, cond, on, isNot, empty
 import {IndexItem} from './index-item';
 
 type ResourceId = string;
-type IndexItemMap = {[id: string]: IndexItem};
+type IndexItemMap = { [id: string]: IndexItem };
 
 
 export interface ResultSets {

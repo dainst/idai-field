@@ -3,7 +3,7 @@ import {FieldResource} from 'idai-components-2';
 import {CSVExport} from './csv-export';
 import {M} from '../../../components/messages/m';
 import {PerformExport} from '../export-helper';
-import {IdaiType} from '../../configuration/model/idai-type';
+import {Category} from '../../configuration/model/category';
 
 /**
  * Small wrapper to separate async and file handling, including
@@ -18,20 +18,19 @@ export module CsvExporter {
      */
     export function performExport(outputFilePath: string): PerformExport {
 
-        return (resourceType: IdaiType, relations: string[]) => {
+        return (category: Category, relations: string[]) => {
 
             return async (resources: Array<FieldResource>) => {
 
                 await writeFile(
                     outputFilePath,
-                    CSVExport.createExportable(resources, IdaiType.getFields(resourceType), relations));
+                    CSVExport.createExportable(resources, Category.getFields(category), relations));
             }
         }
     }
 
 
-    function writeFile(outputFilePath: string,
-                       lines: string[]): Promise<void> {
+    function writeFile(outputFilePath: string, lines: string[]): Promise<void> {
 
         return new Promise((resolve, reject) => {
             fs.writeFile(outputFilePath, lines.join('\n'),

@@ -18,7 +18,7 @@ import {InverseRelationsMap} from '../../../configuration/inverse-relations-map'
  *   to be updated of importDocument, where only ids that are not in the first list are listed.
  * @param get
  * @param inverseRelationsMap
- * @param assertIsAllowedRelationDomainType
+ * @param assertIsAllowedRelationDomainCategory
  * @param unidirectionalRelations names of relations for which not inverses get set in the db.
  *
  * @author Daniel de Oliveira
@@ -29,7 +29,7 @@ export async function setInverseRelationsForDbResources(
         getTargetIds: (document: Document) => Promise<[ResourceId[], ResourceId[]]>,
         get: (_: string) => Promise<Document>,
         inverseRelationsMap: InverseRelationsMap,
-        assertIsAllowedRelationDomainType: AssertIsAllowedRelationDomainType,
+        assertIsAllowedRelationDomainCategory: AssertIsAllowedRelationDomainType,
         unidirectionalRelations: string[]): Promise<Array<Document>> {
 
     let allFetchedDocuments: Array<Document> = []; // store already fetched documents
@@ -43,7 +43,7 @@ export async function setInverseRelationsForDbResources(
         const targetDocuments = await asyncMap(getTargetDocument(allFetchedDocuments, get))(currentAndOldTargetIds);
         allFetchedDocuments = unionOfDocuments([allFetchedDocuments, targetDocuments]);
 
-        assertTypeIsInRange(document, makeIdTypeMap(currentTargetIds, targetDocuments), assertIsAllowedRelationDomainType);
+        assertCategoryIsInRange(document, makeIdCategoryMap(currentTargetIds, targetDocuments), assertIsAllowedRelationDomainCategory);
         const copyOfTargetDocuments = getRidOfUnnecessaryTargetDocs(document, targetDocuments, unidirectionalRelations);
 
         determineDocsToUpdate(document, copyOfTargetDocuments, inverseRelationsMap)
@@ -94,28 +94,27 @@ function getRidOfUnnecessaryTargetDocs(document: Document, targetDocuments: Arra
 
 
 
-function makeIdTypeMap(targetIds: ResourceId[], documentTargetDocuments: Array<Document>) {
+function makeIdCategoryMap(targetIds: ResourceId[], documentTargetDocuments: Array<Document>) {
 
     return targetIds.reduce((acc, targetId) => {
         const lookedUp = documentTargetDocuments.find(on('resource.id', is(targetId)));
         if (!lookedUp) return acc;
-        acc[targetId] = lookedUp.resource.type;
+        acc[targetId] = lookedUp.resource.category;
         return acc;
-    }, {} as {[resourceId: string]: string /* typeName */});
+    }, {} as {[resourceId: string]: string /* category */});
 }
 
 
-function assertTypeIsInRange(document: Document,
-                             idTypeMap: any,
-                             assertIsAllowedRelationDomainType: AssertIsAllowedRelationDomainType) {
+function assertCategoryIsInRange(document: Document, idCategoryMap: any,
+                                 assertIsAllowedRelationDomainCategory: AssertIsAllowedRelationDomainType) {
 
     keysAndValues(document.resource.relations)
         .forEach(([relationName, relationTargets]: [string, string[]]) => {
             for (let relationTarget of relationTargets) {
-                const targetType = idTypeMap[relationTarget];
-                if (!targetType) continue;
-                assertIsAllowedRelationDomainType(
-                    document.resource.type, targetType, relationName, document.resource.identifier
+                const targetCategory = idCategoryMap[relationTarget];
+                if (!targetCategory) continue;
+                assertIsAllowedRelationDomainCategory(
+                    document.resource.category, targetCategory, relationName, document.resource.identifier
                 );
             }
         })

@@ -1,8 +1,6 @@
 <div id="type-relation-modal">
     <div class="modal-header">
-
         <select *ngIf="selectionCriteria.length > 0"
-
                 id="criterion" class="form-control" style="width: 175px"
                 [(ngModel)]="selectedCriterion"  (change)="onSelectCriterion()">
             <option value="" i18n="@@docedit.catalogCriteria.none">Kein Kriterium</option>

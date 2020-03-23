@@ -1,7 +1,7 @@
 // Relations
 
 /**
- * Regarding stratigraphical units (Feature type)
+ * Regarding stratigraphical units (Feature category)
  *
  * Time relations are interpretations of users, based on position relations
  */
@@ -14,7 +14,7 @@ export module TimeRelations {
 }
 
 /**
- * Regarding stratigraphical units (Feature type)
+ * Regarding stratigraphical units (Feature category)
  */
 export module PositionRelations {
 

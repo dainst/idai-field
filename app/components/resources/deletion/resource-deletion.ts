@@ -55,7 +55,9 @@ export class ResourceDeletion {
 
     private async deleteImageWithImageStore(document: FieldDocument) {
 
-        if (!this.projectConfiguration.isSubtype(document.resource.type, 'Image')) return undefined;
+        if (!this.projectConfiguration.isSubcategory(document.resource.category, 'Image')) {
+            return undefined;
+        }
 
         if (!this.imagestore.getPath()) throw [M.IMAGESTORE_ERROR_INVALID_PATH_DELETE];
         try {

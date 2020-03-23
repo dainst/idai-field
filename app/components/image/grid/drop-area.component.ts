@@ -2,6 +2,7 @@ import {Component, Output, EventEmitter, Input, ElementRef, ViewChild} from '@an
 import {Messages, Document} from 'idai-components-2';
 import {ImageUploader, ImageUploadResult} from '../upload/image-uploader';
 
+
 @Component({
     selector: 'drop-area',
     moduleId: module.id,

@@ -1,17 +1,17 @@
 import {Map} from 'tsfun';
-import {mergeTypes} from '../../../../../app/core/configuration/boot/merge-types';
-import {CustomTypeDefinition} from '../../../../../app/core/configuration/model/custom-type-definition';
+import {mergeCategories} from '../../../../../app/core/configuration/boot/merge-categories';
+import {CustomCategoryDefinition} from '../../../../../app/core/configuration/model/custom-category-definition';
 import {FieldDefinition} from '../../../../../app/core/configuration/model/field-definition';
-import {TransientTypeDefinition} from '../../../../../app/core/configuration/model/transient-type-definition';
+import {TransientCategoryDefinition} from '../../../../../app/core/configuration/model/transient-category-definition';
 
 
-describe('mergeTypes', () => {
+describe('mergeCategories', () => {
 
-    it('extend type directly - inherit a field and add a field', () => {
+    it('extend category directly - inherit a field and add a field', () => {
 
-        const selectableTypes: Map<TransientTypeDefinition> = {
+        const selectableCategories: Map<TransientCategoryDefinition> = {
             'A:default': {
-                typeFamily: 'A',
+                categoryName: 'A',
                 valuelists: {},
                 creationDate: '',
                 createdBy: '',
@@ -25,7 +25,7 @@ describe('mergeTypes', () => {
             }
         };
 
-        const customTypes: Map<CustomTypeDefinition> = {
+        const customCategories: Map<CustomCategoryDefinition> = {
             'A:default': {
                 fields: {
                     f2: {
@@ -35,17 +35,17 @@ describe('mergeTypes', () => {
             }
         };
 
-        const result = mergeTypes(customTypes, () => true)(selectableTypes);
+        const result = mergeCategories(customCategories, () => true)(selectableCategories);
         expect(result['A:default'].fields['f1'].inputType).toEqual(FieldDefinition.InputType.INPUT);
         expect(result['A:default'].fields['f2'].inputType).toEqual(FieldDefinition.InputType.INPUT);
     });
 
 
-    it('extend parent type - inherit a field and add a field', () => {
+    it('extend parent category - inherit a field and add a field', () => {
 
-        const selectableTypes: Map<TransientTypeDefinition> = {
+        const selectableCategories: Map<TransientCategoryDefinition> = {
             'A:default': {
-                typeFamily: 'A',
+                categoryName: 'A',
                 valuelists: {},
                 creationDate: '',
                 createdBy: '',
@@ -59,7 +59,7 @@ describe('mergeTypes', () => {
             }
         };
 
-        const customTypes: Map<CustomTypeDefinition> = {
+        const customCategories: Map<CustomCategoryDefinition> = {
             'A:child': {
                 parent: 'A:default',
                 fields: {
@@ -70,7 +70,7 @@ describe('mergeTypes', () => {
             }
         };
 
-        const result = mergeTypes(customTypes, () => true)(selectableTypes);
+        const result = mergeCategories(customCategories, () => true)(selectableCategories);
         expect(result['A:default'].fields['f1'].inputType).toEqual(FieldDefinition.InputType.INPUT);
         expect(result['A:child'].fields['f2'].inputType).toEqual(FieldDefinition.InputType.INPUT);
     });
@@ -78,9 +78,9 @@ describe('mergeTypes', () => {
 
     it('merge commons', () => {
 
-        const selectableTypes: Map<TransientTypeDefinition> = {
+        const selectableCategories: Map<TransientCategoryDefinition> = {
             'A:default': {
-                typeFamily: 'A',
+                categoryName: 'A',
                 valuelists: {},
                 creationDate: '',
                 createdBy: '',
@@ -94,14 +94,14 @@ describe('mergeTypes', () => {
             }
         };
 
-        const customTypes: Map<CustomTypeDefinition> = {
+        const customCategories: Map<CustomCategoryDefinition> = {
             'A:default': {
                 commons: ['b'],
                 fields: {}
             }
         };
 
-        const result = mergeTypes(customTypes, () => true)(selectableTypes);
+        const result = mergeCategories(customCategories, () => true)(selectableCategories);
         expect(result['A:default'].commons).toEqual(['a', 'b']);
     });
 });

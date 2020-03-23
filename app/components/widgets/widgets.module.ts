@@ -8,11 +8,11 @@ import {DocumentPickerComponent} from './document-picker.component';
 import {Loading} from './loading';
 import {LoadingIconComponent} from './loading-icon.component';
 import {SearchBarComponent} from './search-bar.component';
-import {TypePickerComponent} from './type-picker.component';
+import {CategoryPickerComponent} from './category-picker.component';
 import {ZoomButtonsComponent} from './zoom-buttons.component';
 import {FieldsViewComponent} from './documentinfo/fields-view.component';
 import {DocumentTeaserComponent} from './document-teaser.component';
-import {TypeIconComponent} from './type-icon.component';
+import {CategoryIconComponent} from './category-icon.component';
 import {DocumentInfoComponent} from './documentinfo/document-info.component';
 import {GeoreferenceViewComponent} from './documentinfo/georeference-view.component';
 import {DepictsRelationsViewComponent} from './documentinfo/depicts-relations-view.component';
@@ -36,9 +36,9 @@ import {ThumbnailComponent} from './documentinfo/thumbnail.component';
         ThumbnailComponent,
         LoadingIconComponent,
         SearchBarComponent,
-        TypePickerComponent,
+        CategoryPickerComponent,
         ZoomButtonsComponent,
-        TypeIconComponent
+        CategoryIconComponent
     ],
     providers: [
         Loading
@@ -51,9 +51,9 @@ import {ThumbnailComponent} from './documentinfo/thumbnail.component';
         ThumbnailComponent,
         LoadingIconComponent,
         SearchBarComponent,
-        TypePickerComponent,
+        CategoryPickerComponent,
         ZoomButtonsComponent,
-        TypeIconComponent
+        CategoryIconComponent
     ],
     entryComponents: []
 })

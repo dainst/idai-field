@@ -430,11 +430,11 @@
           <context context-type="linenumber">40</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="widgets.typePicker.allCategories" datatype="html">
+      <trans-unit id="widgets.categoryPicker.allCategories" datatype="html">
         <source>Alle Kategorien</source>
         <target state="final">Alle Kategorien</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/widgets/type-picker.html</context>
+          <context context-type="sourcefile">components/widgets/category-picker.html</context>
           <context context-type="linenumber">6</context>
         </context-group>
       </trans-unit>
@@ -839,13 +839,13 @@
       <trans-unit id="export.geojson.info" datatype="html">
         <source>
                         Exportiert werden Geometrien und die Felder <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Bezeichner<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (identifier),
-                        <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Kurzbeschreibung<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (shortDescription) und <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Typ<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (type) der jeweiligen
-                        Ressourcen.
+                        <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Kurzbeschreibung<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (shortDescription) und <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Kategorie<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (category) der
+                        jeweiligen Ressourcen.
                     </source>
         <target state="final">
                         Exportiert werden Geometrien und die Felder <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Bezeichner<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (identifier),
-                        <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Kurzbeschreibung<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (shortDescription) und <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Typ<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (type) der jeweiligen
-                        Ressourcen.
+                        <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Kurzbeschreibung<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (shortDescription) und <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Kategorie<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (category) der
+                        jeweiligen Ressourcen.
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/export/export.html</context>
@@ -869,12 +869,12 @@
       <trans-unit id="export.shapefile.info" datatype="html">
         <source>
                         Exportiert werden Geometrien und die Felder <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Bezeichner<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (identifier),
-                        <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Kurzbeschreibung<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (shortdesc) und <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Typ<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (type) der jeweiligen
+                        <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Kurzbeschreibung<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (shortdesc) und <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Kategorie<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (category) der jeweiligen
                         Ressourcen.
                     </source>
         <target state="final">
                         Exportiert werden Geometrien und die Felder <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Bezeichner<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (identifier),
-                        <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Kurzbeschreibung<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (shortdesc) und <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Typ<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (type) der jeweiligen
+                        <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Kurzbeschreibung<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (shortdesc) und <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Kategorie<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (category) der jeweiligen
                         Ressourcen.
                     </target>
         <context-group purpose="location">
@@ -996,20 +996,12 @@
           <context context-type="linenumber">51</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.field.group" datatype="html">
-        <source>Gruppe</source>
-        <target state="final">Gruppe</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/configuration/project-configuration.html</context>
-          <context context-type="linenumber">19</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="configuration.field.inputType" datatype="html">
         <source>Eingabetyp</source>
         <target state="final">Eingabetyp</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/configuration/project-configuration.html</context>
-          <context context-type="linenumber">29</context>
+          <context context-type="linenumber">62</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.input" datatype="html">
@@ -1017,7 +1009,7 @@
         <target state="final">Einzeiliger Text</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/configuration/project-configuration.html</context>
-          <context context-type="linenumber">30</context>
+          <context context-type="linenumber">63</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.unsignedInt" datatype="html">
@@ -1025,7 +1017,7 @@
         <target state="final">Positive Ganzzahl</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/configuration/project-configuration.html</context>
-          <context context-type="linenumber">31</context>
+          <context context-type="linenumber">64</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.float" datatype="html">
@@ -1033,15 +1025,15 @@
         <target state="final">Kommazahl</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/configuration/project-configuration.html</context>
-          <context context-type="linenumber">32</context>
+          <context context-type="linenumber">65</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/configuration/project-configuration.html</context>
-          <context context-type="linenumber">41</context>
+          <context context-type="linenumber">74</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/configuration/project-configuration.html</context>
-          <context context-type="linenumber">47</context>
+          <context context-type="linenumber">80</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.unsignedFloat" datatype="html">
@@ -1049,7 +1041,7 @@
         <target state="final">Positive Kommazahl</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/configuration/project-configuration.html</context>
-          <context context-type="linenumber">33</context>
+          <context context-type="linenumber">66</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.multiInput" datatype="html">
@@ -1057,7 +1049,7 @@
         <target state="final">Einzeiliger Text mit Mehrfachauswahl</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/configuration/project-configuration.html</context>
-          <context context-type="linenumber">34</context>
+          <context context-type="linenumber">67</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.text" datatype="html">
@@ -1065,7 +1057,7 @@
         <target state="final">Mehrzeiliger Text</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/configuration/project-configuration.html</context>
-          <context context-type="linenumber">35</context>
+          <context context-type="linenumber">68</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.dropdown" datatype="html">
@@ -1073,7 +1065,7 @@
         <target state="final">Dropdown-Liste</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/configuration/project-configuration.html</context>
-          <context context-type="linenumber">36</context>
+          <context context-type="linenumber">69</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.dropdownRange" datatype="html">
@@ -1081,7 +1073,7 @@
         <target state="final">Dropdown-Liste (Bereich)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/configuration/project-configuration.html</context>
-          <context context-type="linenumber">37</context>
+          <context context-type="linenumber">70</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.radio" datatype="html">
@@ -1089,7 +1081,7 @@
         <target state="final">Radiobutton</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/configuration/project-configuration.html</context>
-          <context context-type="linenumber">38</context>
+          <context context-type="linenumber">71</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.boolean" datatype="html">
@@ -1097,7 +1089,7 @@
         <target state="final">Ja / Nein</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/configuration/project-configuration.html</context>
-          <context context-type="linenumber">39</context>
+          <context context-type="linenumber">72</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.checkboxes" datatype="html">
@@ -1105,7 +1097,7 @@
         <target state="final">Checkboxen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/configuration/project-configuration.html</context>
-          <context context-type="linenumber">40</context>
+          <context context-type="linenumber">73</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.date" datatype="html">
@@ -1113,7 +1105,7 @@
         <target state="final">Datum</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/configuration/project-configuration.html</context>
-          <context context-type="linenumber">42</context>
+          <context context-type="linenumber">75</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.dimension" datatype="html">
@@ -1121,7 +1113,7 @@
         <target state="final">Maßangabe</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/configuration/project-configuration.html</context>
-          <context context-type="linenumber">43</context>
+          <context context-type="linenumber">76</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.literature" datatype="html">
@@ -1129,7 +1121,7 @@
         <target state="final">Literaturangabe</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/configuration/project-configuration.html</context>
-          <context context-type="linenumber">44</context>
+          <context context-type="linenumber">77</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.geometry" datatype="html">
@@ -1137,7 +1129,7 @@
         <target state="final">Geometrie</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/configuration/project-configuration.html</context>
-          <context context-type="linenumber">45</context>
+          <context context-type="linenumber">78</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.instanceOf" datatype="html">
@@ -1145,39 +1137,7 @@
         <target state="final">Typenauswahl</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/configuration/project-configuration.html</context>
-          <context context-type="linenumber">46</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="configuration.field.definedIn" datatype="html">
-        <source>Definiert in</source>
-        <target state="final">Definiert in</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/configuration/project-configuration.html</context>
-          <context context-type="linenumber">51</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="config.definedIn.library" datatype="html">
-        <source>iDAI.field Full</source>
-        <target state="final">iDAI.field Full</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/configuration/project-configuration.html</context>
-          <context context-type="linenumber">52</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="config.definedIn.custom" datatype="html">
-        <source>Projektspezifische Konfiguration</source>
-        <target state="final">Projektspezifische Konfiguration</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/configuration/project-configuration.html</context>
-          <context context-type="linenumber">53</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="config.definedIn.common" datatype="html">
-        <source>iDAI.field Core</source>
-        <target state="final">iDAI.field Core</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/configuration/project-configuration.html</context>
-          <context context-type="linenumber">54</context>
+          <context context-type="linenumber">79</context>
         </context-group>
       </trans-unit>
       <trans-unit id="widgets.fieldsView.period" datatype="html">
@@ -1237,14 +1197,6 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/widgets/search-constraints.component.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="configuration.defaultFields.type" datatype="html">
-        <source>Typ</source>
-        <target state="final">Typ</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/core/configuration/boot/config-loader.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -1500,6 +1452,14 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="configuration.defaultFields.category" datatype="html">
+        <source>Kategorie</source>
+        <target state="final">Kategorie</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/core/configuration/boot/config-loader.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="configuration.relations.liesWithin" datatype="html">
         <source>Liegt in</source>
         <target state="final">Liegt in</target>
@@ -1684,6 +1644,56 @@
           <context context-type="linenumber">43</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="imageUpload.imageCategoryPickerModal.warning" datatype="html">
+        <source>
+       Bitte beachten Sie, dass das Einlesen von <x id="INTERPOLATION" equiv-text="{{fileCount}}"/> Bilddateien einige Zeit in Anspruch nehmen kann.
+    </source>
+        <target state="final">
+       Bitte beachten Sie, dass das Einlesen von <x id="INTERPOLATION" equiv-text="{{fileCount}}"/> Bilddateien einige Zeit in Anspruch nehmen kann.
+    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/image/upload/image-category-picker-modal.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="imageUpload.imageCategoryPickerModal.linkInfo.single" datatype="html">
+        <source>
+            Das importierte Bild wird mit der Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{depictsRelationTarget.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> verknüpft.
+        </source>
+        <target state="final">
+            Das importierte Bild wird mit der Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{depictsRelationTarget.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> verknüpft.
+        </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/image/upload/image-category-picker-modal.html</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="imageUpload.imageCategoryPickerModal.linkInfo.multiple" datatype="html">
+        <source>
+            Die importierten Bilder werden mit der Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{depictsRelationTarget.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/>
+            verknüpft.
+        </source>
+        <target state="final">
+            Die importierten Bilder werden mit der Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{depictsRelationTarget.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/>
+            verknüpft.
+        </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/image/upload/image-category-picker-modal.html</context>
+          <context context-type="linenumber">10</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="imageUpload.imageCategoryPickerModal.chooseCategory" datatype="html">
+        <source>
+            Bitte wählen Sie die gewünschte Kategorie aus.
+        </source>
+        <target state="final">
+            Bitte wählen Sie die gewünschte Kategorie aus.
+        </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/image/upload/image-category-picker-modal.html</context>
+          <context context-type="linenumber">16</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="docedit.conflictDeletedModal.header" datatype="html">
         <source>Konflikt behandeln</source>
         <target state="final">Konflikt behandeln</target>
@@ -1768,9 +1778,9 @@
           <context context-type="linenumber">27</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="widgets.searchBar.imageTypeFilter" datatype="html">
-        <source>Nach Bildtyp filtern:</source>
-        <target state="final">Nach Bildtyp filtern:</target>
+      <trans-unit id="widgets.searchBar.imageCategoryFilter" datatype="html">
+        <source>Nach Bildkategorie filtern:</source>
+        <target state="final">Nach Bildkategorie filtern:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/image/overview/searchbar/image-overview-search-bar.html</context>
           <context context-type="linenumber">32</context>
@@ -2243,7 +2253,7 @@
         <target state="final">Bitte wählen Sie einen Geometrietyp aus.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/plus-button.html</context>
-          <context context-type="linenumber">46</context>
+          <context context-type="linenumber">47</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.plusButton.selectGeometryType.polygon" datatype="html">
@@ -2251,7 +2261,7 @@
         <target state="final">Polygon</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/plus-button.html</context>
-          <context context-type="linenumber">53</context>
+          <context context-type="linenumber">54</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.plusButton.selectGeometryType.polyline" datatype="html">
@@ -2259,7 +2269,7 @@
         <target state="final">Polyline</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/plus-button.html</context>
-          <context context-type="linenumber">59</context>
+          <context context-type="linenumber">60</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.plusButton.selectGeometryType.point" datatype="html">
@@ -2267,7 +2277,7 @@
         <target state="final">Punkt</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/plus-button.html</context>
-          <context context-type="linenumber">65</context>
+          <context context-type="linenumber">66</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.plusButton.selectGeometryType.noGeometryData" datatype="html">
@@ -2275,7 +2285,7 @@
         <target state="final">Keine Geometriedaten</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/plus-button.html</context>
-          <context context-type="linenumber">71</context>
+          <context context-type="linenumber">72</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.typeGrid.types" datatype="html">
@@ -2630,11 +2640,11 @@
           <context context-type="linenumber">126</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="docedit.typeSwitcherButton.changeCategory" datatype="html">
+      <trans-unit id="docedit.categorySwitcherButton.changeCategory" datatype="html">
         <source>Kategorie ändern</source>
         <target state="final">Kategorie ändern</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/docedit/widgets/type-switcher-button.html</context>
+          <context context-type="sourcefile">components/docedit/widgets/category-switcher-button.html</context>
           <context context-type="linenumber">12</context>
         </context-group>
       </trans-unit>
@@ -2856,7 +2866,7 @@
         <target state="final">Kein Kriterium</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/type-relation/type-relation-picker.html</context>
-          <context context-type="linenumber">8</context>
+          <context context-type="linenumber">6</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/type-relation/catalog-criterion.html</context>
@@ -2868,7 +2878,7 @@
         <target state="final">Alle Kataloge</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/type-relation/type-relation-picker.html</context>
-          <context context-type="linenumber">15</context>
+          <context context-type="linenumber">13</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dimension.add" datatype="html">
@@ -3189,12 +3199,12 @@
       </trans-unit>
       <trans-unit id="matrix.view.noTrenchesWarning" datatype="html">
         <source>
-            Legen Sie eine Ressource vom Typ 'Schnitt' in der <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>Übersicht<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/>
-            an, um hier mit ihr arbeiten zu können.
+            Legen Sie eine Ressource der Kategorie 'Schnitt' in der
+            <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>Übersicht<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> an, um hier mit ihr arbeiten zu können.
         </source>
         <target state="final">
-            Legen Sie eine Ressource vom Typ 'Schnitt' in der <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>Übersicht<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/>
-            an, um hier mit ihr arbeiten zu können.
+            Legen Sie eine Ressource der Kategorie 'Schnitt' in der
+            <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>Übersicht<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> an, um hier mit ihr arbeiten zu können.
         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/matrix/matrix-view.html</context>
@@ -3251,11 +3261,11 @@
       </trans-unit>
       <trans-unit id="matrix.view.noResourcesWarning" datatype="html">
         <source>
-            Legen Sie für den ausgewählten Schnitt Ressourcen vom Typ 'Stratigraphische Einheit' in der
+            Legen Sie für den ausgewählten Schnitt Ressourcen der Kategorie 'Stratigraphische Einheit' in der
             Ausgrabungsansicht an und verknüpfen Sie sie mit zeitlichen oder räumlichen Relationen.
         </source>
         <target state="final">
-            Legen Sie für den ausgewählten Schnitt Ressourcen vom Typ 'Stratigraphische Einheit' in der
+            Legen Sie für den ausgewählten Schnitt Ressourcen der Kategorie 'Stratigraphische Einheit' in der
             Ausgrabungsansicht an und verknüpfen Sie sie mit zeitlichen oder räumlichen Relationen.
         </target>
         <context-group purpose="location">
@@ -3400,7 +3410,7 @@
         <target state="final">Stammdaten</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/configuration/project-configuration.html</context>
-          <context context-type="linenumber">20</context>
+          <context context-type="linenumber">28</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.group.identification" datatype="html">
@@ -3408,7 +3418,7 @@
         <target state="final">Bestimmung</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/configuration/project-configuration.html</context>
-          <context context-type="linenumber">21</context>
+          <context context-type="linenumber">29</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.group.dimensions" datatype="html">
@@ -3416,7 +3426,7 @@
         <target state="final">Maße</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/configuration/project-configuration.html</context>
-          <context context-type="linenumber">22</context>
+          <context context-type="linenumber">30</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.group.time" datatype="html">
@@ -3424,7 +3434,15 @@
         <target state="final">Zeit</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/configuration/project-configuration.html</context>
-          <context context-type="linenumber">24</context>
+          <context context-type="linenumber">32</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="config.source.custom" datatype="html">
+        <source>Projektspezifisches Feld</source>
+        <target state="final">Projektspezifisches Feld</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/configuration/project-configuration.html</context>
+          <context context-type="linenumber">50</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.group.position" datatype="html">
@@ -3432,7 +3450,7 @@
         <target state="final">Lage</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/configuration/project-configuration.html</context>
-          <context context-type="linenumber">23</context>
+          <context context-type="linenumber">31</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.group.images" datatype="html">
@@ -4051,7 +4069,7 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="messages.import.validation.error.invalidType" datatype="html">
+      <trans-unit id="messages.import.validation.error.invalidCategory" datatype="html">
         <source>Ungültige Kategoriedefinition: '[0]'</source>
         <target state="final">Ungültige Kategoriedefinition: '[0]'</target>
         <context-group purpose="location">
@@ -4067,7 +4085,7 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="messages.import.validation.error.targetTypeRangeMismatch" datatype="html">
+      <trans-unit id="messages.import.validation.error.targetCategoryRangeMismatch" datatype="html">
         <source>Eine Ressource der Kategorie '[2]' darf nicht mittels '[1]' mit '[0]' verküpft werden.</source>
         <target state="final">Eine Ressource der Kategorie '[2]' darf nicht mittels '[1]' mit '[0]' verküpft werden.</target>
         <context-group purpose="location">
@@ -4187,7 +4205,7 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="messages.import.error.typeNotAllowed" datatype="html">
+      <trans-unit id="messages.import.error.categoryNotAllowed" datatype="html">
         <source>Ressourcen der folgenden Kategorie sind beim Import nicht erlaubt: '[0]'</source>
         <target state="final">Ressourcen der folgenden Kategorie sind beim Import nicht erlaubt: '[0]'</target>
         <context-group purpose="location">
@@ -4195,7 +4213,7 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="messages.import.error.typeOnlyAllowedOnUpdate" datatype="html">
+      <trans-unit id="messages.import.error.categoryOnlyAllowedOnUpdate" datatype="html">
         <source>Ressourcen der folgenden Kategorie sind beim Import nur im Ergänzungsmodus erlaubt: '[0]'</source>
         <target state="final">Ressourcen der folgenden Kategorie sind beim Import nur im Ergänzungsmodus erlaubt: '[0]'</target>
         <context-group purpose="location">
@@ -4211,7 +4229,7 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="messages.import.error.typeCannotBeChanged" datatype="html">
+      <trans-unit id="messages.import.error.categoryCannotBeChanged" datatype="html">
         <source>Die Kategorie kann beim Import nicht geändert werden. Betroffen ist: '[0]'</source>
         <target state="final">Die Kategorie kann beim Import nicht geändert werden. Betroffen ist: '[0]'</target>
         <context-group purpose="location">
@@ -4331,7 +4349,7 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="messages.docedit.warning.typeChange.fields" datatype="html">
+      <trans-unit id="messages.docedit.warning.categoryChange.fields" datatype="html">
         <source>Bitte beachten Sie, dass die Daten der folgenden Felder beim Speichern verloren gehen: [0]</source>
         <target state="final">Bitte beachten Sie, dass die Daten der folgenden Felder beim Speichern verloren gehen: [0]</target>
         <context-group purpose="location">
@@ -4339,7 +4357,7 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="messages.docedit.warning.typeChange.relations" datatype="html">
+      <trans-unit id="messages.docedit.warning.categoryChange.relations" datatype="html">
         <source>Bitte beachten Sie, dass die Relationen der folgenden Relationstypen beim Speichern verloren gehen: [0]</source>
         <target state="final">Bitte beachten Sie, dass die Relationen der folgenden Relationstypen beim Speichern verloren gehen: [0]</target>
         <context-group purpose="location">
@@ -4603,7 +4621,7 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="messages.resources.error.typeNotFound" datatype="html">
+      <trans-unit id="messages.resources.error.categoryNotFound" datatype="html">
         <source>Die Kategoriedefinition für '[0]' fehlt in der Datei Fields.json.</source>
         <target state="final">Die Kategoriedefinition für '[0]' fehlt in der Datei Fields.json.</target>
         <context-group purpose="location">
@@ -4789,8 +4807,8 @@
           <context context-type="linenumber">39</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/image/upload/image-type-picker-modal.html</context>
-          <context context-type="linenumber">42</context>
+          <context context-type="sourcefile">components/image/upload/image-category-picker-modal.html</context>
+          <context context-type="linenumber">44</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/widgets/documentinfo/georeference-view.html</context>
@@ -4858,7 +4876,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/docedit.html</context>
-          <context context-type="linenumber">31</context>
+          <context context-type="linenumber">30</context>
         </context-group>
       </trans-unit>
       <trans-unit id="buttons.discardChanges" datatype="html">
@@ -4930,33 +4948,33 @@
         <target state="final">Vervielfältigen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/docedit.html</context>
-          <context context-type="linenumber">52</context>
+          <context context-type="linenumber">51</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.header.create" datatype="html">
         <source>
-                    <x id="INTERPOLATION" equiv-text="{{projectConfiguration.getLabelForType(this.documentHolder.clonedDocument.resource.type)}}"/>
+                    <x id="INTERPOLATION" equiv-text="{{projectConfiguration.getLabelForCategory(this.documentHolder.clonedDocument.resource.category)}}"/>
                     in <x id="INTERPOLATION_1" equiv-text="{{parentLabel}}"/> anlegen
                 </source>
         <target state="final">
-                    <x id="INTERPOLATION" equiv-text="{{projectConfiguration.getLabelForType(this.documentHolder.clonedDocument.resource.type)}}"/>
+                    <x id="INTERPOLATION" equiv-text="{{projectConfiguration.getLabelForCategory(this.documentHolder.clonedDocument.resource.category)}}"/>
                     in <x id="INTERPOLATION_1" equiv-text="{{parentLabel}}"/> anlegen
                 </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/docedit.html</context>
-          <context context-type="linenumber">13</context>
+          <context context-type="linenumber">12</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.header.edit" datatype="html">
         <source>
-                    <x id="INTERPOLATION" equiv-text="{{projectConfiguration.getLabelForType(this.documentHolder.clonedDocument.resource.type)}}"/> bearbeiten
+                    <x id="INTERPOLATION" equiv-text="{{projectConfiguration.getLabelForCategory(this.documentHolder.clonedDocument.resource.category)}}"/> bearbeiten
                 </source>
         <target state="final">
-                    <x id="INTERPOLATION" equiv-text="{{projectConfiguration.getLabelForType(this.documentHolder.clonedDocument.resource.type)}}"/> bearbeiten
+                    <x id="INTERPOLATION" equiv-text="{{projectConfiguration.getLabelForCategory(this.documentHolder.clonedDocument.resource.category)}}"/> bearbeiten
                 </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/docedit.html</context>
-          <context context-type="linenumber">17</context>
+          <context context-type="linenumber">16</context>
         </context-group>
       </trans-unit>
       <trans-unit id="buttons.createMultipleInstances" datatype="html">
@@ -4964,7 +4982,7 @@
         <target state="final">Mehrfach erstellen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/docedit.html</context>
-          <context context-type="linenumber">49</context>
+          <context context-type="linenumber">48</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.loadingInfo.save" datatype="html">
@@ -4976,7 +4994,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/docedit.html</context>
-          <context context-type="linenumber">78</context>
+          <context context-type="linenumber">77</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.loadingInfo.createMultipleInstances" datatype="html">
@@ -4988,7 +5006,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/docedit.html</context>
-          <context context-type="linenumber">82</context>
+          <context context-type="linenumber">81</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.loadingInfo.duplicate" datatype="html">
@@ -5000,7 +5018,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/docedit.html</context>
-          <context context-type="linenumber">86</context>
+          <context context-type="linenumber">85</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.projects.manageProject" datatype="html">
@@ -5035,8 +5053,8 @@
           <context context-type="linenumber">64</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/image/upload/image-type-picker-modal.html</context>
-          <context context-type="linenumber">39</context>
+          <context context-type="sourcefile">components/image/upload/image-category-picker-modal.html</context>
+          <context context-type="linenumber">41</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/map/map/editable-map.html</context>
@@ -5073,52 +5091,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">components/navbar/projects-modal.html</context>
           <context context-type="linenumber">74</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="imageUpload.imageTypePickerModal.warning" datatype="html">
-        <source>
-       Bitte beachten Sie, dass das Einlesen von <x id="INTERPOLATION" equiv-text="{{fileCount}}"/> Bilddateien einige Zeit in Anspruch nehmen kann.
-    </source>
-        <target state="final">
-       Bitte beachten Sie, dass das Einlesen von <x id="INTERPOLATION" equiv-text="{{fileCount}}"/> Bilddateien einige Zeit in Anspruch nehmen kann.
-    </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/image/upload/image-type-picker-modal.html</context>
-          <context context-type="linenumber">3</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="imageUpload.imageTypePickerModal.linkInfo.single" datatype="html">
-        <source>
-            Das importierte Bild wird mit der Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{depictsRelationTarget.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> verknüpft.
-        </source>
-        <target state="final">
-            Das importierte Bild wird mit der Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{depictsRelationTarget.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> verknüpft.
-        </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/image/upload/image-type-picker-modal.html</context>
-          <context context-type="linenumber">7</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="imageUpload.imageTypePickerModal.linkInfo.multiple" datatype="html">
-        <source>
-            Die importierten Bilder werden mit der Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{depictsRelationTarget.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/>
-            verknüpft.
-        </source>
-        <target state="final">
-            Die importierten Bilder werden mit der Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{depictsRelationTarget.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/>
-            verknüpft.
-        </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/image/upload/image-type-picker-modal.html</context>
-          <context context-type="linenumber">10</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="imageUpload.imageTypePickerModal.chooseType" datatype="html">
-        <source>Bitte wählen Sie den gewünschten Typ aus.</source>
-        <target state="final">Bitte wählen Sie den gewünschten Typ aus.</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/image/upload/image-type-picker-modal.html</context>
-          <context context-type="linenumber">16</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageUpload.uploadModal.info.single" datatype="html">

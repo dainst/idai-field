@@ -4,7 +4,7 @@ import {ResourcesComponent} from '../resources.component';
 import {Loading} from '../../widgets/loading';
 import {BaseList} from '../base-list';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
-import {IdaiType} from '../../../core/configuration/model/idai-type';
+import {Category} from '../../../core/configuration/model/category';
 import {ViewFacade} from '../../../core/resources/view/view-facade';
 
 
@@ -22,17 +22,16 @@ export class ListComponent extends BaseList {
 
     @Input() documents: Array<FieldDocument>;
 
-    public typesMap: { [type: string]: IdaiType };
+    public categoriesMap: { [category: string]: Category };
 
 
-    constructor(
-        resourcesComponent: ResourcesComponent,
-        viewFacade: ViewFacade,
-        loading: Loading,
-        projectConfiguration: ProjectConfiguration
-    ) {
+    constructor(resourcesComponent: ResourcesComponent,
+                viewFacade: ViewFacade,
+                loading: Loading,
+                projectConfiguration: ProjectConfiguration) {
+
         super(resourcesComponent, viewFacade, loading);
-        this.typesMap = projectConfiguration.getTypesMap()
+        this.categoriesMap = projectConfiguration.getCategoriesMap()
     }
 
 

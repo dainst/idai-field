@@ -1,0 +1,22 @@
+<ul class="category-picker list-group">
+    <li *ngIf="allCategoriesOptionVisible" id="choose-category-option-all"
+        class="list-group-item popover-item"
+        (click)="pickCategory(undefined)"
+        [ngClass]="{ 'selected-category': !selectedCategories || selectedCategories.length === 0 }">
+        <i class="all-categories-label" i18n="@@widgets.categoryPicker.allCategories">Alle Kategorien</i>
+    </li>
+    <li *ngFor="let category of categories"
+        class="list-group-item popover-item"
+        [ngClass]="{
+            'selected-category': selectedCategories && selectedCategories.indexOf(category.name) > -1,
+            'abstract-category': category.isAbstract,
+            'child-category': isChildCategory(category),
+            'parent-selected': isParentSelected(category)
+        }"
+        (click)="pickCategory(category)">
+        <div id="choose-category-option-{{getCategoryId(category)}}" class="category-item">
+            <category-icon [category]="category.name" size="30"></category-icon>
+            <div class="category-label">{{category.label}}</div>
+        </div>
+    </li>
+</ul>

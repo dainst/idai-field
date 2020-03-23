@@ -75,7 +75,7 @@
       "label": "Literature reference"
     }
   },
-  "types": {
+  "categories": {
     "RoomFloor": {
       "label": "Floor"
     },

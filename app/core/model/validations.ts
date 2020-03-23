@@ -29,7 +29,7 @@ export module Validations {
         if (invalidFields.length > 0) {
             throw [
                 ValidationErrors.INVALID_NUMERICAL_VALUES,
-                document.resource.type,
+                document.resource.category,
                 invalidFields.join(', ')
             ];
         }
@@ -51,7 +51,7 @@ export module Validations {
         if (invalidFields.length > 0) {
             throw [
                 ValidationErrors.INVALID_DECIMAL_SEPARATORS,
-                document.resource.type,
+                document.resource.category,
                 invalidFields.join(', ')
             ];
         }
@@ -71,7 +71,7 @@ export module Validations {
         if (invalidFields.length > 0) {
             throw [
                 ValidationErrors.INVALID_DATING_VALUES,
-                document.resource.type,
+                document.resource.category,
                 invalidFields.join(', ')
             ];
         }
@@ -91,7 +91,7 @@ export module Validations {
         if (invalidFields.length > 0) {
             throw [
                 ValidationErrors.INVALID_DIMENSION_VALUES,
-                document.resource.type,
+                document.resource.category,
                 invalidFields.join(', ')
             ];
         }
@@ -111,7 +111,7 @@ export module Validations {
         if (invalidFields.length > 0) {
             throw [
                 ValidationErrors.INVALID_LITERATURE_VALUES,
-                document.resource.type,
+                document.resource.category,
                 invalidFields.join(', ')
             ];
         }
@@ -129,7 +129,7 @@ export module Validations {
         if (missingProperties.length > 0) {
             throw [
                 ValidationErrors.MISSING_PROPERTY,
-                document.resource.type,
+                document.resource.category,
                 missingProperties.join(', ')
             ];
         }
@@ -187,10 +187,10 @@ export module Validations {
 
         const missingFields: string[] = [];
         const fieldDefinitions: Array<FieldDefinition>
-            = projectConfiguration.getFieldDefinitions(resource.type);
+            = projectConfiguration.getFieldDefinitions(resource.category);
 
         for (let fieldDefinition of fieldDefinitions) {
-            if (projectConfiguration.isMandatory(resource.type, fieldDefinition.name)) {
+            if (projectConfiguration.isMandatory(resource.category, fieldDefinition.name)) {
                 if (resource[fieldDefinition.name] === undefined || resource[fieldDefinition.name] === '') {
                     missingFields.push(fieldDefinition.name);
                 }
@@ -204,15 +204,15 @@ export module Validations {
      *
      * @param resource
      * @param projectConfiguration
-     * @returns {boolean} true if the type of the resource is valid, otherwise false
+     * @returns {boolean} true if the category of the resource is valid, otherwise false
      */
-    export function validateType(resource: Resource|NewResource,
-                                 projectConfiguration: ProjectConfiguration): boolean {
+    export function validateCategory(resource: Resource|NewResource,
+                                     projectConfiguration: ProjectConfiguration): boolean {
 
-        if (!resource.type) return false;
+        if (!resource.category) return false;
         return projectConfiguration
-            .getTypesList()
-            .some(on('name', is(resource.type)));
+            .getCategoriesList()
+            .some(on('name', is(resource.category)));
     }
 
 
@@ -222,7 +222,8 @@ export module Validations {
     export function validateDefinedFields(resource: Resource|NewResource,
                                           projectConfiguration: ProjectConfiguration): string[] {
 
-        const projectFields: Array<FieldDefinition> = projectConfiguration.getFieldDefinitions(resource.type);
+        const projectFields: Array<FieldDefinition> = projectConfiguration
+            .getFieldDefinitions(resource.category);
         const defaultFields: Array<FieldDefinition> = [{ name: 'relations' } as FieldDefinition];
 
         const definedFields: Array<any> = projectFields.concat(defaultFields);
@@ -254,7 +255,7 @@ export module Validations {
     function getDropdownRangeEndFields(resource: Resource|NewResource,
         fieldDefinitions: Array<FieldDefinition>): FieldName[] {
 
-        return reduceForFieldsOfType(
+        return reduceForFieldsOfCategory(
             resource,
             fieldDefinitions,
             INPUT_TYPES.DROPDOWN_RANGE,
@@ -271,7 +272,8 @@ export module Validations {
     export function validateDefinedRelations(resource: Resource|NewResource,
                                              projectConfiguration: ProjectConfiguration): string[] {
 
-        const fields: Array<RelationDefinition> = projectConfiguration.getRelationDefinitions(resource.type);
+        const fields: Array<RelationDefinition> = projectConfiguration
+            .getRelationDefinitions(resource.category);
         const invalidFields: Array<any> = [];
 
         for (let relationField in resource.relations) {
@@ -298,7 +300,8 @@ export module Validations {
                                           validationFunction: (value: string, inputType: string) => boolean,
                                           numericInputTypes: string[]): string[] {
 
-        const projectFields: Array<FieldDefinition> = projectConfiguration.getFieldDefinitions(resource.type);
+        const projectFields: Array<FieldDefinition> = projectConfiguration
+            .getFieldDefinitions(resource.category);
         const invalidFields: string[] = [];
 
         projectFields.filter(fieldDefinition => {
@@ -400,7 +403,7 @@ export module Validations {
                                          inputType: 'dating'|'dimension'|'literature',
                                          validate: (object: any) => boolean): string[] {
 
-        return projectConfiguration.getFieldDefinitions(resource.type)
+        return projectConfiguration.getFieldDefinitions(resource.category)
             .filter(field => field.inputType === inputType)
             .filter(field => {
                 return resource[field.name] !== undefined &&
@@ -409,7 +412,7 @@ export module Validations {
     }
 
 
-    function reduceForFieldsOfType<A>(resource: Resource|NewResource,
+    function reduceForFieldsOfCategory<A>(resource: Resource|NewResource,
                                       fieldDefinitions: Array<FieldDefinition>,
                                       fieldType: string,
                                       doForField: (acc: A, matchedFieldName: string) => A,

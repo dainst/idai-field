@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {IdaiType} from '../../core/configuration/model/idai-type';
+import {Category} from '../../core/configuration/model/category';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {empty, filter, flow, forEach, includedIn, isNot, map, take} from 'tsfun';
 import {Document, Messages} from 'idai-components-2';
@@ -19,7 +19,7 @@ import {ShapefileFileSystemReader} from '../../core/import/reader/shapefile-file
 import {JavaToolExecutor} from '../../core/java/java-tool-executor';
 import {ImportValidator} from '../../core/import/import/process/import-validator';
 import {IdGenerator} from '../../core/datastore/pouchdb/id-generator';
-import {ProjectTypes} from '../../core/configuration/project-types';
+import {ProjectCategories} from '../../core/configuration/project-categories';
 import {DocumentDatastore} from '../../core/datastore/document-datastore';
 import {ExportRunner} from '../../core/export/export-runner';
 import {ImportState} from './import-state';
@@ -27,7 +27,7 @@ import {ProjectConfiguration} from '../../core/configuration/project-configurati
 import {AngularUtility} from '../../angular/angular-utility';
 import BASE_EXCLUSION = ExportRunner.BASE_EXCLUSION;
 import {TabManager} from '../../core/tabs/tab-manager';
-import getTypesWithoutExcludedTypes = ExportRunner.getTypesWithoutExcludedTypes;
+import getCategoriesWithoutExcludedCategories = ExportRunner.getCategoriesWithoutExcludedCategories;
 import {ViewFacade} from '../../core/resources/view/view-facade';
 
 
@@ -67,7 +67,7 @@ export class ImportComponent implements OnInit {
         private modalService: NgbModal,
         private synchronizationService: SyncService,
         private idGenerator: IdGenerator,
-        private projectTypes: ProjectTypes,
+        private projectCategories: ProjectCategories,
         private tabManager: TabManager,
         public importState: ImportState) {
 
@@ -93,7 +93,7 @@ export class ImportComponent implements OnInit {
     async ngOnInit() {
 
         this.operations = await this.fetchOperations();
-        this.updateResourceTypes();
+        this.updateCategories();
         this.javaInstalled = await JavaToolExecutor.isJavaInstalled();
     }
 
@@ -152,11 +152,11 @@ export class ImportComponent implements OnInit {
             : files[0];
 
         if (this.importState.file) {
-            this.importState.selectedType = this.getResourceTypeFromFileName(this.importState.file.name);
-            if (this.importState.selectedType) {
+            this.importState.selectedCategory = this.getResourceTypeFromFileName(this.importState.file.name);
+            if (this.importState.selectedCategory) {
                 this.importState.typeFromFileName = true;
             } else {
-                this.selectFirstResourceType();
+                this.selectFirstCategory();
             }
         }
     }
@@ -215,23 +215,23 @@ export class ImportComponent implements OnInit {
     }
 
 
-    private updateResourceTypes() {
+    private updateCategories() {
 
-        this.importState.resourceTypes = getTypesWithoutExcludedTypes(
-            this.projectConfiguration.getTypesList(), this.getTypesToExclude()
+        this.importState.categories = getCategoriesWithoutExcludedCategories(
+            this.projectConfiguration.getCategoriesList(), this.getCategoriesToExclude()
         );
 
-        if (!this.importState.selectedType || !this.importState.resourceTypes.includes(this.importState.selectedType)) {
-            this.selectFirstResourceType();
+        if (!this.importState.selectedCategory || !this.importState.categories.includes(this.importState.selectedCategory)) {
+            this.selectFirstCategory();
         }
     }
 
 
-    private getTypesToExclude() {
+    private getCategoriesToExclude() {
 
         return this.importState.mergeMode
             ? BASE_EXCLUSION
-            : BASE_EXCLUSION.concat(this.projectTypes.getImageTypeNames());
+            : BASE_EXCLUSION.concat(this.projectCategories.getImageCategoryNames());
     }
 
 
@@ -239,7 +239,7 @@ export class ImportComponent implements OnInit {
 
         return Importer.doImport(
             this.importState.format,
-            this.projectTypes,
+            this.projectCategories,
             this.datastore,
             this.usernameProvider,
             this.projectConfiguration,
@@ -248,7 +248,7 @@ export class ImportComponent implements OnInit {
             this.importState.permitDeletions,
             await reader.go(),
             () => this.idGenerator.generateId(),
-            this.importState.format === 'csv' ? this.importState.selectedType : undefined,
+            this.importState.format === 'csv' ? this.importState.selectedCategory : undefined,
             this.importState.format === 'csv' ? this.getSeparator() : undefined);
     }
 
@@ -291,7 +291,7 @@ export class ImportComponent implements OnInit {
 
         try {
             return (await this.datastore.find({
-                types: this.projectTypes.getOperationTypeNames()
+                categories: this.projectCategories.getOperationCategoryNames()
             })).documents;
         } catch (msgWithParams) {
             this.messages.add(msgWithParams);
@@ -300,21 +300,21 @@ export class ImportComponent implements OnInit {
     }
 
 
-    private getResourceTypeFromFileName(fileName: string): IdaiType|undefined {
+    private getResourceTypeFromFileName(fileName: string): Category|undefined {
 
         for (let segment of fileName.split('.')) {
-            const type: IdaiType|undefined = this.projectConfiguration.getTypesList()
-                .find(type => type.name.toLowerCase() === segment.toLowerCase());
-            if (type) return type;
+            const category: Category|undefined = this.projectConfiguration.getCategoriesList()
+                .find(category => category.name.toLowerCase() === segment.toLowerCase());
+            if (category) return category;
         }
 
         return undefined;
     }
 
 
-    private selectFirstResourceType() {
+    private selectFirstCategory() {
 
-        if (this.importState.resourceTypes.length > 0) this.importState.selectedType = this.importState.resourceTypes[0];
+        if (this.importState.categories.length > 0) this.importState.selectedCategory = this.importState.categories[0];
     }
 
 

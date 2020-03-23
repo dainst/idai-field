@@ -1,7 +1,7 @@
 import {isNot, includedIn, isObject, isArray, keys, lookup, pairWith} from 'tsfun';
 import {Resource} from 'idai-components-2';
 
-const defaultFields: string[] = ['id', 'relations', 'type', 'geometry', 'georeference'];
+const defaultFields: string[] = ['id', 'relations', 'category', 'geometry', 'georeference'];
 
 
 /**

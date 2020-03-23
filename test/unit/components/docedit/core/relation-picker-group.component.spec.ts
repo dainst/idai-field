@@ -11,7 +11,7 @@ describe('RelationPickerGroupComponent', () => {
 
     beforeEach(() => {
 
-        document = { resource : { id: 'id1', identifier: 'ob1', type: 'object', relations : {} } };
+        document = { resource : { id: 'id1', identifier: 'ob1', category: 'object', relations : {} } };
 
         relationPickerGroupComponent = new RelationPickerGroupComponent();
         relationPickerGroupComponent.document = document;

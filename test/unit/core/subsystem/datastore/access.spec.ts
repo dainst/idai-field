@@ -52,7 +52,7 @@ describe('subsystem/datastore/access', () => {
 
     // create
 
-    it('FieldDatastore - throw when creating an image type', async done => {
+    it('FieldDatastore - throw when creating an image category', async done => {
 
         try {
             await fieldDocumentDatastore.create(image0);
@@ -64,7 +64,7 @@ describe('subsystem/datastore/access', () => {
     });
 
 
-    it('ImageDatastore - throw when creating a non image type', async done => {
+    it('ImageDatastore - throw when creating a non image category', async done => {
 
         try {
             await idaiFieldImageDocumentDatastore.create(trench0);
@@ -78,7 +78,7 @@ describe('subsystem/datastore/access', () => {
 
     // update
 
-    it('FieldDatastore - throw when updating an image type', async done => {
+    it('FieldDatastore - throw when updating an image category', async done => {
 
         try {
             await fieldDocumentDatastore.update(image0);
@@ -90,7 +90,7 @@ describe('subsystem/datastore/access', () => {
     });
 
 
-    it('ImageDatastore - throw when updating a non image type', async done => {
+    it('ImageDatastore - throw when updating a non image category', async done => {
 
         try {
             await idaiFieldImageDocumentDatastore.update(trench0);
@@ -104,7 +104,7 @@ describe('subsystem/datastore/access', () => {
 
     // remove
 
-    it('FieldDatastore - throw when deleting an image type', async done => {
+    it('FieldDatastore - throw when deleting an image category', async done => {
 
         try {
             await fieldDocumentDatastore.remove(image0);
@@ -116,7 +116,7 @@ describe('subsystem/datastore/access', () => {
     });
 
 
-    it('ImageDatastore - throw when deleting a non image type', async done => {
+    it('ImageDatastore - throw when deleting a non image category', async done => {
 
         try {
             await idaiFieldImageDocumentDatastore.remove(trench0);
@@ -130,7 +130,7 @@ describe('subsystem/datastore/access', () => {
 
     // get
 
-    it('FieldDatastore - throw when getting an image type', async done => {
+    it('FieldDatastore - throw when getting an image category', async done => {
 
         try {
             await fieldDocumentDatastore.get('image0', { skipCache: true });
@@ -142,7 +142,7 @@ describe('subsystem/datastore/access', () => {
     });
 
 
-    it('ImageDatastore - throw when getting a non image type', async done => {
+    it('ImageDatastore - throw when getting a non image category', async done => {
 
         try {
             await idaiFieldImageDocumentDatastore.get('trench0', { skipCache: true });

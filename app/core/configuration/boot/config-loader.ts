@@ -8,9 +8,9 @@ import {ConfigReader} from './config-reader';
 import {RelationDefinition} from '../model/relation-definition';
 import {FieldDefinition} from '../model/field-definition';
 import {ConfigurationDefinition} from './configuration-definition';
-import {buildProjectTypes} from './build-project-types';
-import {BuiltinTypeDefinition} from '../model/builtin-type-definition';
-import {LibraryTypeDefinition} from '../model/library-type-definition';
+import {buildCategories} from './build-categories';
+import {BuiltinCategoryDefinition} from '../model/builtin-category-definition';
+import {LibraryCategoryDefinition} from '../model/library-category-definition';
 
 
 @Injectable()
@@ -30,12 +30,12 @@ import {LibraryTypeDefinition} from '../model/library-type-definition';
 export class ConfigLoader {
 
     private defaultFields = {
-        'id': {
+        id: {
             editable: false,
             visible: false
         } as FieldDefinition,
-        'type': {
-            label: this.i18n({ id: 'configuration.defaultFields.type', value: 'Typ' }),
+        category: {
+            label: this.i18n({ id: 'configuration.defaultFields.category', value: 'Kategorie' }),
             visible: false,
             editable: false
         } as FieldDefinition
@@ -47,20 +47,22 @@ export class ConfigLoader {
 
 
     public async go(configDirPath: string, commonFields: { [fieldName: string]: any },
-                    builtinTypes: Map<BuiltinTypeDefinition>, relations: Array<RelationDefinition>,
+                    builtinCategories: Map<BuiltinCategoryDefinition>, relations: Array<RelationDefinition>,
                     extraFields: {[fieldName: string]: FieldDefinition },
                     customConfigurationName: string|undefined,
                     locale: string): Promise<ProjectConfiguration> {
 
         if (customConfigurationName) console.log('Load custom configuration', customConfigurationName);
 
-        const registeredTypes: Map<LibraryTypeDefinition> = await this.readConfiguration(configDirPath);
+        const registeredCategories: Map<LibraryCategoryDefinition> = await this.readConfiguration(configDirPath);
 
-        const missingRelationTypeErrors = ConfigurationValidation.findMissingRelationType(relations, Object.keys(builtinTypes as any));
-        if (missingRelationTypeErrors.length > 0) throw missingRelationTypeErrors;
+        const missingRelationCategoryErrors = ConfigurationValidation.findMissingRelationType(
+            relations, Object.keys(builtinCategories as any)
+        );
+        if (missingRelationCategoryErrors.length > 0) throw missingRelationCategoryErrors;
 
         const appConfiguration = await this.preprocess(
-            configDirPath, registeredTypes, commonFields, builtinTypes, relations,
+            configDirPath, registeredCategories, commonFields, builtinCategories, relations,
             extraFields, customConfigurationName, locale);
 
         const fieldValidationErrors = ConfigurationValidation.validateFieldDefinitions(appConfiguration);
@@ -72,7 +74,7 @@ export class ConfigLoader {
 
     private async readConfiguration(configDirPath: string): Promise<any> {
 
-        const appConfigurationPath = configDirPath + '/Library/Types.json';
+        const appConfigurationPath = configDirPath + '/Library/Categories.json';
 
         try {
             return await this.configReader.read(appConfigurationPath);
@@ -82,10 +84,10 @@ export class ConfigLoader {
     }
 
 
-    private async preprocess(configDirPath: string, libraryTypes: Map<LibraryTypeDefinition>,
-                             commonFields: any, builtinTypes: Map<BuiltinTypeDefinition>,
+    private async preprocess(configDirPath: string, libraryCategories: Map<LibraryCategoryDefinition>,
+                             commonFields: any, builtinCategories: Map<BuiltinCategoryDefinition>,
                              relations: Array<RelationDefinition>,
-                             extraFields: {[fieldName: string]: FieldDefinition },
+                             extraFields: { [fieldName: string]: FieldDefinition },
                              customConfigurationName: string|undefined,
                              locale: string): Promise<ConfigurationDefinition> {
 
@@ -96,7 +98,7 @@ export class ConfigLoader {
         const customConfigPath = configDirPath
             + '/Config-' + (customConfigurationName ? customConfigurationName : 'Default') + '.json';
 
-        let customTypes;
+        let customCategories;
         let languageConfiguration: any;
         let customLanguageConfiguration: any;
         let searchConfiguration: any;
@@ -104,7 +106,7 @@ export class ConfigLoader {
         let orderConfiguration: any;
 
         try {
-            customTypes = await this.configReader.read(customConfigPath);
+            customCategories = await this.configReader.read(customConfigPath);
             languageConfiguration = await this.configReader.read(languageConfigurationPath);
             customLanguageConfiguration = await this.configReader.read(configDirPath + '/Language-'
                 + (customConfigurationName
@@ -119,15 +121,15 @@ export class ConfigLoader {
         }
 
 
-        // unused: Preprocessing.prepareSameMainTypeResource(appConfiguration);
+        // unused: Preprocessing.prepareSameMainCategoryResource(appConfiguration);
         // unused: Preprocessing.setIsRecordedInVisibilities(appConfiguration); See #8992
 
         let conf: any;
         try {
-            conf = buildProjectTypes(
-                builtinTypes,
-                libraryTypes,
-                customTypes,
+            conf = buildCategories(
+                builtinCategories,
+                libraryCategories,
+                customCategories,
                 commonFields,
                 valuelistsConfiguration,
                 {...this.defaultFields, ...extraFields},

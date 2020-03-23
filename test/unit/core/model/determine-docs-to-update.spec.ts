@@ -7,7 +7,6 @@ import {determineDocsToUpdate} from '../../../../app/core/model/determine-docs-t
  */
 describe('determineDocsToUpdate', () => {
 
-
     let doc;
     let relatedDoc;
     let anotherRelatedDoc;
@@ -22,17 +21,17 @@ describe('determineDocsToUpdate', () => {
 
         doc = { 'resource' : {
             'id' :'1', 'identifier': 'ob1',
-            'type': 'object',
+            'category': 'object',
             'relations' : {}
         }};
         relatedDoc = { 'resource' : {
             'id': '2' , 'identifier': 'ob2',
-            'type': 'object',
+            'category': 'object',
             'relations' : {}
         }};
         anotherRelatedDoc = { 'resource' : {
             'id': '3' , 'identifier': 'ob3',
-            'type': 'object',
+            'category': 'object',
             'relations' : {}
         }};
     });

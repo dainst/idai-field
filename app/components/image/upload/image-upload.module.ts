@@ -3,7 +3,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {ImageUploader} from './image-uploader';
 import {UploadStatus} from './upload-status';
 import {UploadModalComponent} from './upload-modal.component';
-import {ImageTypePickerModalComponent} from './image-type-picker-modal.component';
+import {ImageCategoryPickerModalComponent} from './image-category-picker-modal.component';
 import {WidgetsModule} from '../../widgets/widgets.module';
 
 @NgModule({
@@ -13,11 +13,11 @@ import {WidgetsModule} from '../../widgets/widgets.module';
     ],
     declarations: [
         UploadModalComponent,
-        ImageTypePickerModalComponent
+        ImageCategoryPickerModalComponent
     ],
     entryComponents: [
         UploadModalComponent,
-        ImageTypePickerModalComponent
+        ImageCategoryPickerModalComponent
     ],
     providers: [
         ImageUploader,

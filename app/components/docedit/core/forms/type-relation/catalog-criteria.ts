@@ -1,6 +1,6 @@
-import {on, is, to, isEmpty} from 'tsfun';
-import {I18n} from '@ngx-translate/i18n-polyfill';
 import {Injectable} from '@angular/core';
+import {I18n} from '@ngx-translate/i18n-polyfill';
+import {on, is, to, isEmpty} from 'tsfun';
 
 
 @Injectable()
@@ -10,7 +10,7 @@ import {Injectable} from '@angular/core';
 export class CatalogCriteria {
 
     public catalogCriteria: Array<CatalogCriterion> = [
-        { value: 'material', label: this.i18n({id: 'typeCatalog.criterion.material', value: 'Material' }) }
+        { value: 'material', label: this.i18n({ id: 'typeCatalog.criterion.material', value: 'Material' }) }
     ];
 
     constructor(private i18n: I18n) {}

@@ -87,5 +87,5 @@ function computeLatLng(imageX: number, imageY: number, worldfileContent: string[
     const lngTranslation: number = parseFloat(worldfileContent[4]);
     const lng: number = lngPosition + lngRotation + lngTranslation;
 
-    return [ lat, lng ];
+    return [lat, lng];
 }

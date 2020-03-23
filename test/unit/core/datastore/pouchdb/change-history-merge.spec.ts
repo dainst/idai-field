@@ -19,7 +19,7 @@ describe('ChangeHistoryMerge', () => {
             _id: 'id1',
             resource: {
                 id: 'id1',
-                type: 'Object',
+                category: 'Object',
                 relations: {}
             },
             created: {
@@ -44,7 +44,7 @@ describe('ChangeHistoryMerge', () => {
             _id: 'id1',
             resource: {
                 id: 'id1',
-                type: 'Object',
+                category: 'Object',
                 relations: {}
             },
             created: {
@@ -72,7 +72,7 @@ describe('ChangeHistoryMerge', () => {
             _id: 'id1',
             resource: {
                 id: 'id1',
-                type: 'Object',
+                category: 'Object',
                 relations: {}
             },
             created: {
@@ -94,7 +94,7 @@ describe('ChangeHistoryMerge', () => {
             _id: 'id2',
             resource: {
                 id: 'id2',
-                type: 'Object',
+                category: 'Object',
                 relations: {}
             },
             created: {
@@ -113,7 +113,7 @@ describe('ChangeHistoryMerge', () => {
             _id: 'id2',
             resource: {
                 id: 'id2',
-                type: 'Object',
+                category: 'Object',
                 relations: {}
             },
             created: {

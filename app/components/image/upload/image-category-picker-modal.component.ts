@@ -1,13 +1,13 @@
 import {Component} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {Document} from 'idai-components-2';
-import {IdaiType} from '../../../core/configuration/model/idai-type';
+import {Category} from '../../../core/configuration/model/category';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
 
 @Component({
-    selector: 'type-picker-modal',
+    selector: 'image-category-picker-modal',
     moduleId: module.id,
-    templateUrl: './image-type-picker-modal.html',
+    templateUrl: './image-category-picker-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)'
     }
@@ -16,17 +16,17 @@ import {ProjectConfiguration} from '../../../core/configuration/project-configur
 /**
  * @author Thomas Kleinke
  */
-export class ImageTypePickerModalComponent {
+export class ImageCategoryPickerModalComponent {
 
     public fileCount: number;
     public depictsRelationTarget: Document;
-    public imageType: IdaiType;
+    public imageCategory: Category;
 
 
     constructor(public activeModal: NgbActiveModal,
                 projectConfiguration: ProjectConfiguration) {
 
-        this.imageType = projectConfiguration.getTypesTree()['Image'];
+        this.imageCategory = projectConfiguration.getCategoriesTree()['Image'];
     }
 
 

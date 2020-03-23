@@ -227,7 +227,7 @@ describe('convertCsvRows', () => {
             convertCsvRows(',')('a.b,0.d');
             fail();
         } catch (expected) {
-            expect(expected).toEqual([ParserErrors.CSV_HEADING_PATH_ITEM_TYPE_MISMATCH, ['a.b','0.d']]);
+            expect(expected).toEqual([ParserErrors.CSV_HEADING_PATH_ITEM_TYPE_MISMATCH, ['a.b', '0.d']]);
         }
     });
 

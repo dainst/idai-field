@@ -3,8 +3,8 @@ import {Document, ImageDocument, Query} from 'idai-components-2';
 import {ImageDatastore} from '../../../../app/core/datastore/field/image-datastore';
 import {FieldDatastore} from '../../../../app/core/datastore/field/field-datastore';
 import {DocumentDatastore} from '../../../../app/core/datastore/document-datastore';
-import {ProjectTypes} from '../../../../app/core/configuration/project-types';
-import {FieldTypeConverter} from '../../../../app/core/datastore/field/field-type-converter';
+import {ProjectCategories} from '../../../../app/core/configuration/project-categories';
+import {FieldCategoryConverter} from '../../../../app/core/datastore/field/field-category-converter';
 import {IndexerConfiguration} from '../../../../app/indexer-configuration';
 import {PouchdbDatastore} from '../../../../app/core/datastore/pouchdb/pouchdb-datastore';
 import {DocumentCache} from '../../../../app/core/datastore/cached/document-cache';
@@ -95,21 +95,21 @@ export async function createApp(projectName = 'testdb', startSync = false) {
         true);
 
     const documentCache = new DocumentCache<Document>();
-    const projectTypes = new ProjectTypes(projectConfiguration);
-    const typeConverter = new FieldTypeConverter(projectTypes, projectConfiguration);
+    const projectCategories = new ProjectCategories(projectConfiguration);
+    const categoryConverter = new FieldCategoryConverter(projectCategories, projectConfiguration);
 
     const fieldDocumentDatastore = new FieldDatastore(
-        datastore, createdIndexFacade, documentCache as any, typeConverter);
+        datastore, createdIndexFacade, documentCache as any, categoryConverter);
     const documentDatastore = new DocumentDatastore(
-        datastore, createdIndexFacade, documentCache, typeConverter);
+        datastore, createdIndexFacade, documentCache, categoryConverter);
     const imageDatastore = new ImageDatastore(datastore, createdIndexFacade,
-        documentCache as DocumentCache<ImageDocument>, typeConverter);
+        documentCache as DocumentCache<ImageDocument>, categoryConverter);
 
     const remoteChangesStream = new ChangesStream(
         datastore,
         createdIndexFacade,
         documentCache,
-        typeConverter,
+        categoryConverter,
         settingsService);
 
     const stateSerializer = jasmine.createSpyObj('stateSerializer', ['load', 'store']);
@@ -130,7 +130,7 @@ export async function createApp(projectName = 'testdb', startSync = false) {
         fieldDocumentDatastore,
         createdIndexFacade,
         stateSerializer,
-        projectTypes,
+        projectCategories,
         tabManager,
         projectName,
         true
@@ -146,7 +146,7 @@ export async function createApp(projectName = 'testdb', startSync = false) {
     );
 
     const descendantsUtility = new DescendantsUtility(
-        projectTypes, projectConfiguration, documentDatastore
+        projectCategories, projectConfiguration, documentDatastore
     );
 
     const persistenceManager = new PersistenceManager(
@@ -158,15 +158,15 @@ export async function createApp(projectName = 'testdb', startSync = false) {
     const documentHolder = new DocumentHolder(
         projectConfiguration,
         persistenceManager,
-        new Validator(projectConfiguration, (q: Query) => fieldDocumentDatastore.find(q), projectTypes),
-        projectTypes,
+        new Validator(projectConfiguration, (q: Query) => fieldDocumentDatastore.find(q), projectCategories),
+        projectCategories,
         { getUsername: () => 'fakeuser' },
         documentDatastore
     );
 
     const imagesState = new ImagesState();
     const imageDocumentsManager = new ImageDocumentsManager(imagesState, imageDatastore);
-    const imageOverviewFacade = new ImageOverviewFacade(imageDocumentsManager, imagesState, projectTypes);
+    const imageOverviewFacade = new ImageOverviewFacade(imageDocumentsManager, imagesState, projectCategories);
 
     return {
         remoteChangesStream,
@@ -196,7 +196,7 @@ export async function setupSyncTestDb(projectName = 'testdb') {
     await synctest.put({
         '_id': 'project',
         'resource': {
-            'type': 'Project',
+            'category': 'Project',
             'id': 'project',
             'identifier': projectName
         }

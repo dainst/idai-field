@@ -36,7 +36,7 @@ export class ResourcesSearchConstraintsComponent extends SearchConstraintsCompon
         this.initializeDefaultFields();
 
         this.viewFacade.navigationPathNotifications().subscribe(() => {
-            if (this.type) this.reset();
+            if (this.category) this.reset();
         });
     }
 

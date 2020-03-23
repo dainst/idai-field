@@ -1,4 +1,4 @@
-#image-type-picker-modal {
+#image-category-picker-modal {
   ul {
     li {
       &.list-group-item {
@@ -24,11 +24,11 @@
     }
   }
 
-  #choose-image-subtype {
+  #choose-image-subcategory {
     padding: 0;
   }
 
-  .image-type-label {
+  .image-category-label {
     position: relative;
     left: 10px;
     bottom: 4px;

@@ -1,6 +1,6 @@
+import {empty, isNot, on, subtract} from 'tsfun';
 import {UnorderedConfigurationDefinition} from '../model/unordered-configuration-definition';
 import {RelationDefinition} from '../model/relation-definition';
-import {empty, isNot, on, subtract} from 'tsfun';
 
 
 /**
@@ -46,11 +46,11 @@ function expandInherits(configuration: Readonly<UnorderedConfigurationDefinition
     for (let item of (extraRelation as any)[itemSet]) {
 
         if (item.indexOf(':inherit') !== -1) {
-            for (let typeName of Object.keys(configuration.types)) {
-                const type = configuration.types[typeName];
+            for (let categoryName of Object.keys(configuration.categories)) {
+                const category = configuration.categories[categoryName];
 
-                if (type.parent === item.split(':')[0]) {
-                    itemsNew.push(typeName);
+                if (category.parent === item.split(':')[0]) {
+                    itemsNew.push(categoryName);
                 }
             }
             itemsNew.push(item.split(':')[0]);
@@ -75,9 +75,9 @@ function expandOnUndefined(configuration: UnorderedConfigurationDefinition,
     if (itemSet == 'range') opposite = 'domain';
 
     extraRelation[itemSet] = [];
-    for (let typeName of Object.keys(configuration.types)) {
-        if (extraRelation[opposite].indexOf(typeName) == -1) {
-            extraRelation[itemSet].push(typeName);
+    for (let categoryName of Object.keys(configuration.categories)) {
+        if (extraRelation[opposite].indexOf(categoryName) == -1) {
+            extraRelation[itemSet].push(categoryName);
         }
     }
 }

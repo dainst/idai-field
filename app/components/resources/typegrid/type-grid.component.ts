@@ -17,7 +17,7 @@ import {ContextMenuAction} from '../widgets/context-menu.component';
 import {ViewModalLauncher} from '../service/view-modal-launcher';
 import {NavigationPath} from '../../../core/resources/view/state/navigation-path';
 import {RoutingService} from '../../routing-service';
-import {ProjectTypes} from '../../../core/configuration/project-types';
+import {ProjectCategories} from '../../../core/configuration/project-categories';
 import {TabManager} from '../../../core/tabs/tab-manager';
 
 
@@ -53,7 +53,7 @@ export class TypeGridComponent extends BaseList implements OnChanges {
                 private imagestore: ReadImagestore,
                 private viewModalLauncher: ViewModalLauncher,
                 private routingService: RoutingService,
-                private projectTypes: ProjectTypes,
+                private projectCategories: ProjectCategories,
                 private tabManager: TabManager,
                 resourcesComponent: ResourcesComponent,
                 viewFacade: ViewFacade,
@@ -239,7 +239,7 @@ export class TypeGridComponent extends BaseList implements OnChanges {
 
         if (Document.hasRelations(document, 'isDepictedIn')) {
             return [await this.getMainImage(document)];
-        } else if (this.projectTypes.getAbstractFieldTypeNames().includes(document.resource.type)) {
+        } else if (this.projectCategories.getAbstractFieldCategoryNames().includes(document.resource.category)) {
             return await this.getImagesOfLinkedResources(document);
         } else {
             return [];

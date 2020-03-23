@@ -1,4 +1,4 @@
-import {TypeDefinition} from './type-definition';
+import {CategoryDefinition} from './category-definition';
 import {RelationDefinition} from './relation-definition';
 
 /**
@@ -7,6 +7,6 @@ import {RelationDefinition} from './relation-definition';
 export interface UnorderedConfigurationDefinition {
 
     identifier: string
-    types: { [typeName: string]: TypeDefinition };
+    categories: { [categoryName: string]: CategoryDefinition };
     relations: Array<RelationDefinition>;
 }

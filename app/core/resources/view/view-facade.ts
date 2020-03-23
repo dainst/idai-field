@@ -11,14 +11,14 @@ import {ProjectConfiguration} from '../../configuration/project-configuration';
 
 export type ResourcesViewMode = 'map'|'list'|'type-grid';
 
-
+// TODO Update comment
 /**
- * Manages an overview of operation type resources
- * and different views for each operation type.
+ * Manages an overview of operation category resources
+ * and different views for each operation category.
  *
- * In the overview the document list contains the operation type resources.
- * In the operation type views the list contains resources recorded in
- * one selected operation type resource.
+ * In the overview the document list contains the operation category resources.
+ * In the operation category views the list contains resources recorded in
+ * one selected operation category resource.
  *
  * Apart from that, each view behaves the same in that the document list
  * can get filteres etc.
@@ -67,7 +67,7 @@ export class ViewFacade {
 
     public getMode = () => this.resourcesStateManager.getMode();
 
-    public getFilterTypes = () => ResourcesState.getTypeFilters(this.resourcesStateManager.get());
+    public getFilterCategories = () => ResourcesState.getCategoryFilters(this.resourcesStateManager.get());
 
     public getCustomConstraints = () => ResourcesState.getCustomConstraints(this.resourcesStateManager.get());
 
@@ -97,7 +97,7 @@ export class ViewFacade {
 
     public setSearchString = (q: string, populate?: boolean) => this.documentsManager.setQueryString(q, populate);
 
-    public setFilterTypes = (types: string[]) => this.documentsManager.setTypeFilters(types);
+    public setFilterCategories = (categories: string[]) => this.documentsManager.setCategoryFilters(categories);
 
     public setCustomConstraints = (constraints: { [name: string]: string}) => this.documentsManager.setCustomConstraints(constraints);
 

@@ -6,7 +6,9 @@ import {ResultSets} from './result-sets';
 import {IndexItem} from './index-item';
 
 
-// @author Daniel de Oliveira
+/**
+ * @author Daniel de Oliveira
+ */
 
 /**
  * Runtime info: Skips the fulltime query if query is empty and constraint search delivered results
@@ -36,15 +38,14 @@ function performFulltext(fulltextIndex: FulltextIndex,
     : ResultSets {
 
     const q = !query.q || query.q.trim() === '' ? '*' : query.q;
-    ResultSets.combine(resultSets, FulltextIndex.get(fulltextIndex, q, query.types));
+    ResultSets.combine(resultSets, FulltextIndex.get(fulltextIndex, q, query.categories));
 
     return resultSets;
 }
 
 
 function performConstraints(constraintIndex: ConstraintIndex,
-                            constraints: { [name: string]: Constraint|string|string[] })
-    : ResultSets {
+                            constraints: { [name: string]: Constraint|string|string[] }): ResultSets {
 
     return keys(constraints)
         .reduce((resultSets, name: string) => {

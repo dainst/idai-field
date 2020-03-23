@@ -25,11 +25,11 @@ export class ResourcesPage {
     }
 
 
-    public static clickSelectGeometryType(type?) {
+    public static clickSelectGeometryType(type?: string) {
 
-        let geom = 'none';
-        if (type) geom = type;
-        return common.click(element(by.id('choose-geometry-option-' + geom)));
+        let geometry: string = 'none';
+        if (type) geometry = type;
+        return common.click(element(by.id('choose-geometry-option-' + geometry)));
     }
 
 
@@ -107,9 +107,9 @@ export class ResourcesPage {
     }
 
 
-    public static clickSelectResourceType(typeName: string = 'feature-architecture') {
+    public static clickSelectCategory(categoryName: string = 'feature-architecture') {
 
-        return common.click(element(by.id('choose-type-option-' + typeName)));
+        return common.click(element(by.id('choose-category-option-' + categoryName)));
     }
 
 
@@ -184,28 +184,28 @@ export class ResourcesPage {
     }
 
 
-    public static getCreateDocumentButtonTypeCharacter() {
+    public static getCreateDocumentButtonCategoryCharacter() {
 
         browser.wait(EC.visibilityOf(
-            element(by.css('#create-document-button div.type-icon'))),
+            element(by.css('#create-document-button div.category-icon'))),
             delays.ECWaitTime);
-        return element(by.css('#create-document-button div.type-icon')).getText();
+        return element(by.css('#create-document-button div.category-icon')).getText();
     }
 
 
-    public static getListModeTypeLabel(identifier) {
+    public static getListModeCategoryLabel(identifier) {
 
         browser.wait(EC.visibilityOf(
-            element(by.css('#resource-' + identifier + ' .list-type-label'))),
+            element(by.css('#resource-' + identifier + ' .list-category-label'))),
             delays.ECWaitTime);
-        return element(by.css('#resource-' + identifier + ' .list-type-label')).getText();
+        return element(by.css('#resource-' + identifier + ' .list-category-label')).getText();
     }
 
 
-    public static getDocumentTeaserTypeCharacter() {
+    public static getDocumentTeaserCategoryCharacter() {
 
-        browser.wait(EC.visibilityOf(element(by.css('.document-teaser div.type-icon'))), delays.ECWaitTime);
-        return element(by.css('.document-teaser div.type-icon')).getText();
+        browser.wait(EC.visibilityOf(element(by.css('.document-teaser div.category-icon'))), delays.ECWaitTime);
+        return element(by.css('.document-teaser div.category-icon')).getText();
     }
 
 
@@ -249,9 +249,9 @@ export class ResourcesPage {
     }
 
 
-    public static getResourceTypeOption(typeName: string) {
+    public static getCategoryOption(categoryName: string) {
 
-        return element(by.id('choose-type-option-' + typeName));
+        return element(by.id('choose-category-option-' + categoryName));
     }
 
 
@@ -261,9 +261,9 @@ export class ResourcesPage {
     }
 
 
-    public static getCreateDocumentButtonTypeIcon() {
+    public static getCreateDocumentButtonCategoryIcon() {
 
-        return element(by.css('#create-document-button .type-icon'));
+        return element(by.css('#create-document-button .category-icon'));
     }
 
 
@@ -334,11 +334,11 @@ export class ResourcesPage {
 
     // sequences
 
-    public static performCreateResource(identifier: string, typeName?: string, inputFieldName?: string,
+    public static performCreateResource(identifier: string, categoryName?: string, inputFieldName?: string,
                                         inputFieldText?: string, skipTypeSelect?: boolean, skipGeometry?: boolean, waitForModalToClose: boolean = true) {
 
         this.clickCreateResource();
-        if (!skipTypeSelect) this.clickSelectResourceType(typeName);
+        if (!skipTypeSelect) this.clickSelectCategory(categoryName);
         if (!skipGeometry) ResourcesPage.clickSelectGeometryType();
         DoceditPage.typeInInputField('identifier', identifier);
         if (inputFieldName && inputFieldText) {
@@ -355,10 +355,10 @@ export class ResourcesPage {
     }
 
 
-    public static performCreateResourceInList(identifier: string, typeName: string) {
+    public static performCreateResourceInList(identifier: string, categoryName: string) {
 
         this.clickCreateResource();
-        this.clickSelectResourceType(typeName);
+        this.clickSelectCategory(categoryName);
         this.typeInNewResourceAndHitEnterInList(identifier);
     }
 

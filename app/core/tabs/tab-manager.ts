@@ -33,7 +33,7 @@ export class TabManager {
 
     public getHiddenTabs = (): Array<Tab> => this.tabs.filter(tab => !tab.shown && this.isComplete(tab));
 
-    public isComplete = (tab: Tab): boolean => tab.operationType !== undefined && tab.label !== undefined;
+    public isComplete = (tab: Tab): boolean => tab.operationCategory !== undefined && tab.label !== undefined;
 
     public getTabSpaceWidth = (): number => this.tabSpaceCalculator.getTabSpaceWidth();
 
@@ -77,7 +77,7 @@ export class TabManager {
 
 
     public async openTab(routeName: string, operationId: string, operationIdentifier: string,
-                         operationType: string) {
+                         operationCategory: string) {
 
         if (this.getTab(routeName, operationId)) return;
 
@@ -85,7 +85,7 @@ export class TabManager {
             routeName: routeName,
             label: TabManager.getLabel(routeName, operationIdentifier),
             operationId: operationId,
-            operationType: operationType,
+            operationCategory: operationCategory,
             shown: true
         });
 
@@ -152,7 +152,7 @@ export class TabManager {
             });
             if (!tab) continue;
             tab.label = TabManager.getLabel(tab.routeName, operation.resource.identifier);
-            tab.operationType = operation.resource.type;
+            tab.operationCategory = operation.resource.category;
             validatedTabs.push(tab);
         }
 
@@ -210,7 +210,7 @@ export class TabManager {
             try {
                 const document: FieldDocument = await this.datastore.get(operationId);
                 await this.openTab(
-                    routeName, operationId, document.resource.identifier,document.resource.type
+                    routeName, operationId, document.resource.identifier,document.resource.category
                 );
             } catch (err) {
                 // This error occurs when switching projects while a resources tab in opened. No tab is

@@ -1,6 +1,6 @@
-import {to, set} from 'tsfun';
 import {Component, Input, OnChanges} from '@angular/core';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
+import {to, set} from 'tsfun';
 import {Resource} from 'idai-components-2';
 import {DoceditComponent} from '../../../docedit.component';
 import {TypeRelationPickerComponent} from './type-relation-picker.component';

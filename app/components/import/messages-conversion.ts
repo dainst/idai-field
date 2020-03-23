@@ -59,12 +59,12 @@ export module MessagesConversion {
         if (msg === ValidationErrors.GENERIC_DATASTORE) replacement = M.IMPORT_READER_GENERIC_DATASTORE;
 
         if (msg === ImportErrors.INVALID_DROPDOWN_RANGE_VALUES) replacement = M.IMPORT_VALIDATION_ERROR_INVALID_DROPDOWN_RANGE_VALUES;
-        if (msg === ImportErrors.INVALID_TYPE) replacement = M.IMPORT_VALIDATION_INVALID_TYPE;
+        if (msg === ImportErrors.INVALID_CATEGORY) replacement = M.IMPORT_VALIDATION_INVALID_CATEGORY;
         if (msg === ImportErrors.EMPTY_RELATION) replacement = M.IMPORT_EXEC_EMPTY_RELATION;
         if (msg === ImportErrors.BAD_INTERRELATION) replacement = M.IMPORT_EXEC_NOT_INTERRELATED;
         if (msg === ImportErrors.UPDATE_TARGET_NOT_FOUND) replacement = M.IMPORT_ERROR_NOT_UPDATED;
-        if (msg === ImportErrors.TYPE_NOT_ALLOWED) replacement = M.IMPORT_ERROR_TYPE_NOT_ALLOWED;
-        if (msg === ImportErrors.TYPE_ONLY_ALLOWED_ON_UPDATE) replacement = M.IMPORT_ERROR_TYPE_ONLY_ALLOWED_ON_UPDATE;
+        if (msg === ImportErrors.CATEGORY_NOT_ALLOWED) replacement = M.IMPORT_ERROR_CATEGORY_NOT_ALLOWED;
+        if (msg === ImportErrors.CATEGORY_ONLY_ALLOWED_ON_UPDATE) replacement = M.IMPORT_ERROR_CATEGORY_ONLY_ALLOWED_ON_UPDATE;
         if (msg === ImportErrors.OPERATIONS_NOT_ALLOWED) replacement = M.IMPORT_PREVALIDATION_OPERATIONS_NOT_ALLOWED;
         if (msg === ImportErrors.NO_PARENT_ASSIGNED) replacement = M.IMPORT_EXEC_NO_LIES_WITHIN_SET;
         if (msg === ImportErrors.DUPLICATE_IDENTIFIER) replacement = M.IMPORT_PREVALIDATION_DUPLICATE_IDENTIFIER;
@@ -73,16 +73,16 @@ export module MessagesConversion {
         if (msg === ImportErrors.MENINX_FIND_NO_FEATURE_ASSIGNABLE) replacement = M.IMPORT_NO_FEATURE_ASSIGNABLE;
         if (msg === ImportErrors.RESOURCE_EXISTS) replacement = M.MODEL_VALIDATION_IDENTIFIER_ALREADY_EXISTS;
         if (msg === ImportErrors.EXEC_MISSING_RELATION_TARGET) replacement = M.IMPORT_EXEC_MISSING_RELATION_TARGET;
-        if (msg === ImportErrors.INVALID_MAIN_TYPE_DOCUMENT) replacement = M.IMPORT_READER_INVALID_OPERATION_RESOURCE;
+        if (msg === ImportErrors.INVALID_OPERATION) replacement = M.IMPORT_READER_INVALID_OPERATION_RESOURCE;
         if (msg === ImportErrors.LIES_WITHIN_TARGET_NOT_MATCHES_ON_IS_RECORDED_IN) replacement = M.IMPORT_LIES_WITHIN_TARGET_NOT_MATCHES_ON_IS_RECORDED_IN;
         if (msg === ImportErrors.PARENT_ASSIGNMENT_TO_OPERATIONS_NOT_ALLOWED) replacement = M.IMPORT_PARENT_ASSIGNMENT_TO_OPERATIONS_NOT_ALLOWED;
         if (msg === ImportErrors.PARENT_MUST_NOT_BE_ARRAY) replacement = M.IMPORT_PARENT_MUST_NOT_BE_ARRAY;
         if (msg === ImportErrors.MUST_BE_ARRAY) replacement = M.IMPORT_MUST_BE_ARRAY;
         if (msg === ImportErrors.MUST_BE_IN_SAME_OPERATION) replacement = M.IMPORT_MUST_BE_IN_SAME_OPERATION;
         if (msg === ImportErrors.MUST_LIE_WITHIN_OTHER_NON_OPERATON_RESOURCE) replacement = M.IMPORT_ERROR_MUST_LIE_WITHIN_OTHER_NON_OPERATON_RESOURCE;
-        if (msg === ImportErrors.TARGET_TYPE_RANGE_MISMATCH) replacement = M.IMPORT_ERROR_TARGET_TYPE_RANGE_MISMATCH;
+        if (msg === ImportErrors.TARGET_CATEGORY_RANGE_MISMATCH) replacement = M.IMPORT_ERROR_TARGET_CATEGORY_RANGE_MISMATCH;
         if (msg === ImportErrors.MUST_NOT_BE_EMPTY_STRING) replacement = M.IMPORT_ERROR_MUST_NOT_BE_EMPTY_STRING;
-        if (msg === ImportErrors.TYPE_CANNOT_BE_CHANGED) replacement = M.IMPORT_ERROR_TYPE_CANNOT_BE_CHANGED;
+        if (msg === ImportErrors.CATEGORY_CANNOT_BE_CHANGED) replacement = M.IMPORT_ERROR_CATEGORY_CANNOT_BE_CHANGED;
         if (msg === ImportErrors.EMPTY_SLOTS_IN_ARRAYS_FORBIDDEN) replacement = M.IMPORT_ERROR_EMPTY_SLOTS_IN_ARRAYS_FORBIDDEN;
         if (msg === ImportErrors.ARRAY_OF_HETEROGENEOUS_TYPES) replacement = M.IMPORT_ERROR_ARRAY_OF_HETEROGENEOUS_TYPES;
 

@@ -87,9 +87,9 @@ export class DocumentsManager {
     }
 
 
-    public async setTypeFilters(types: string[], populate: boolean = true) {
+    public async setCategoryFilters(categories: string[], populate: boolean = true) {
 
-        this.resourcesStateManager.setTypeFilters(types);
+        this.resourcesStateManager.setCategoryFilters(categories);
         if (populate) await this.populateAndDeselectIfNecessary();
     }
 
@@ -120,7 +120,7 @@ export class DocumentsManager {
         await this.resourcesStateManager.moveInto(document);
 
         if (resetFiltersAndSelection) {
-            await this.setTypeFilters([], false);
+            await this.setCategoryFilters([], false);
             await this.setQueryString('', false);
             await this.deselect();
             await this.populateDocumentList();
@@ -250,10 +250,10 @@ export class DocumentsManager {
 
         return this.resourcesStateManager.isInOverview()
                 && !this.resourcesStateManager.isInExtendedSearchMode()
-            ? this.resourcesStateManager.getOverviewTypeNames()
+            ? this.resourcesStateManager.getOverviewCategoryNames()
             : this.resourcesStateManager.isInTypesManagement()
-                ? this.resourcesStateManager.getAbstractTypeNames()
-                : this.resourcesStateManager.getConcreteTypeNames();
+                ? this.resourcesStateManager.getAbstractCategoryNames()
+                : this.resourcesStateManager.getConcreteCategoryNames();
     }
 
 
@@ -326,7 +326,7 @@ export class DocumentsManager {
 
         if (!(await this.updatedDocumentListContainsSelectedDocument(documentToSelect))) {
             this.resourcesStateManager.setQueryString('');
-            this.resourcesStateManager.setTypeFilters([]);
+            this.resourcesStateManager.setCategoryFilters([]);
             this.resourcesStateManager.setCustomConstraints({});
         }
     }
@@ -341,9 +341,9 @@ export class DocumentsManager {
     private async fetchDocuments(query: Query): Promise<IdaiFieldFindResult<FieldDocument>> {
 
         try {
-            const ignoreTypes = !query.types
+            const ignoreCategories = !query.categories
                 && !(this.resourcesStateManager.isInOverview() && ResourcesState.isInExtendedSearchMode(this.resourcesStateManager.get()));
-            return await this.datastore.find(query, ignoreTypes);
+            return await this.datastore.find(query, ignoreCategories);
 
         } catch (errWithParams) {
             DocumentsManager.handleFindErr(errWithParams, query);
@@ -353,11 +353,11 @@ export class DocumentsManager {
 
 
     private static buildQuery(operationId: string|undefined, resourcesStateManager: ResourcesStateManager,
-                              allowedTypeNames: string[], queryId?: string): Query {
+                              allowedCategoryNames: string[], queryId?: string): Query {
 
         const extendedSearchMode: boolean = resourcesStateManager.isInExtendedSearchMode();
         const state: ResourcesState = resourcesStateManager.get();
-        const typeFilters: string[] = ResourcesState.getTypeFilters(state);
+        const categoryFilters: string[] = ResourcesState.getCategoryFilters(state);
         const customConstraints: { [name: string]: string } = ResourcesState.getCustomConstraints(state);
 
         return {
@@ -368,9 +368,9 @@ export class DocumentsManager {
                 ResourcesState.getNavigationPath(state).selectedSegmentId,
                 !extendedSearchMode
             ),
-            types: (typeFilters.length > 0)
-                ? typeFilters
-                : allowedTypeNames,
+            categories: (categoryFilters.length > 0)
+                ? categoryFilters
+                : allowedCategoryNames,
             limit: extendedSearchMode ? DocumentsManager.documentLimit : undefined,
             id: queryId
         };

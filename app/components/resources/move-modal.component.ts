@@ -2,12 +2,12 @@ import {Component} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {set} from 'tsfun';
 import {Document, FieldDocument, Constraint, Messages} from 'idai-components-2';
-import {ProjectTypes} from '../../core/configuration/project-types';
+import {ProjectCategories} from '../../core/configuration/project-categories';
 import {PersistenceManager} from '../../core/model/persistence-manager';
 import {SettingsService} from '../../core/settings/settings-service';
 import {MoveUtility} from '../../core/resources/move-utility';
 import {IndexFacade} from '../../core/datastore/index/index-facade';
-import {IdaiType} from '../../core/configuration/model/idai-type';
+import {Category} from '../../core/configuration/model/category';
 import {ProjectConfiguration} from '../../core/configuration/project-configuration';
 import {ViewFacade} from '../../core/resources/view/view-facade';
 
@@ -26,23 +26,22 @@ import {ViewFacade} from '../../core/resources/view/view-facade';
 export class MoveModalComponent {
 
     public document: FieldDocument;
-    public filterOptions: Array<IdaiType> = [];
+    public filterOptions: Array<Category> = [];
     public constraints: Promise<{ [name: string]: Constraint }>;
     public showProjectOption: boolean = false;
 
-    private isRecordedInTargetTypes: Array<IdaiType>;
-    private liesWithinTargetTypes: Array<IdaiType>;
+    private isRecordedInTargetCategories: Array<Category>;
+    private liesWithinTargetCategories: Array<Category>;
 
 
     constructor(public activeModal: NgbActiveModal,
-                private projectTypes: ProjectTypes,
+                private projectCategories: ProjectCategories,
                 private persistenceManager: PersistenceManager,
                 private settingsService: SettingsService,
                 private indexFacade: IndexFacade,
                 private messages: Messages,
                 private viewFacade: ViewFacade,
-                private projectConfiguration: ProjectConfiguration) {
-    }
+                private projectConfiguration: ProjectConfiguration) {}
 
 
     public getConstraints = () => {
@@ -59,12 +58,12 @@ export class MoveModalComponent {
 
         this.document = document;
         this.showProjectOption = this.isProjectOptionAllowed();
-        this.isRecordedInTargetTypes = this.getIsRecordedInTargetTypes();
-        this.liesWithinTargetTypes = this.getLiesWithinTargetTypes();
+        this.isRecordedInTargetCategories = this.getIsRecordedInTargetCategories();
+        this.liesWithinTargetCategories = this.getLiesWithinTargetCategories();
 
-        this.filterOptions = set(this.isRecordedInTargetTypes.concat(this.liesWithinTargetTypes));
+        this.filterOptions = set(this.isRecordedInTargetCategories.concat(this.liesWithinTargetCategories));
         if (this.showProjectOption) {
-            this.filterOptions = [this.projectConfiguration.getTypesMap()['Project']]
+            this.filterOptions = [this.projectConfiguration.getCategoriesMap()['Project']]
                 .concat(this.filterOptions);
         }
     }
@@ -84,7 +83,7 @@ export class MoveModalComponent {
                 newParent,
                 this.settingsService.getUsername(),
                 this.persistenceManager,
-                this.isRecordedInTargetTypes
+                this.isRecordedInTargetCategories
             );
         } catch (msgWithParams) {
             this.messages.add(msgWithParams);
@@ -101,18 +100,18 @@ export class MoveModalComponent {
     }
 
 
-    private getIsRecordedInTargetTypes(): Array<IdaiType> {
+    private getIsRecordedInTargetCategories(): Array<Category> {
 
-        return this.projectTypes.getAllowedRelationRangeTypes(
-            'isRecordedIn', this.document.resource.type
+        return this.projectCategories.getAllowedRelationRangeCategories(
+            'isRecordedIn', this.document.resource.category
         );
     }
 
 
-    private getLiesWithinTargetTypes(): Array<IdaiType> {
+    private getLiesWithinTargetCategories(): Array<Category> {
 
-        return this.projectTypes.getAllowedRelationRangeTypes(
-            'liesWithin', this.document.resource.type
+        return this.projectCategories.getAllowedRelationRangeCategories(
+            'liesWithin', this.document.resource.category
         );
     }
 }

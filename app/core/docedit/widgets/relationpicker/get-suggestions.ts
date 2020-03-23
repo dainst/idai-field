@@ -22,7 +22,7 @@ function makeQuery(resource: Resource, relationDefinition: RelationDefinition,
 
     return {
         q: idSearchString ? idSearchString : '',
-        types: relationDefinition.range,
+        categories: relationDefinition.range,
         constraints: makeConstraints(resource, relationDefinition),
         limit: MAX_SUGGESTIONS,
         sort: { mode: 'exactMatchFirst' }
@@ -40,7 +40,7 @@ function makeConstraints(resource: Resource,
         }
     };
 
-    if (relationDefinition.sameMainTypeResource
+    if (relationDefinition.sameMainCategoryResource
             && Resource.hasRelations(resource, 'isRecordedIn')) {
         (constraints as any)['isRecordedIn:contain'] = resource.relations['isRecordedIn'][0];
     }

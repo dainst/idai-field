@@ -1,7 +1,7 @@
 import {Document, FindResult} from 'idai-components-2';
 import {DocumentReadDatastore} from '../datastore/document-read-datastore';
 import {ProjectConfiguration} from '../configuration/project-configuration';
-import {ProjectTypes} from '../configuration/project-types';
+import {ProjectCategories} from '../configuration/project-categories';
 
 
 /**
@@ -10,7 +10,7 @@ import {ProjectTypes} from '../configuration/project-types';
  */
 export class DescendantsUtility {
 
-    constructor(private projectTypes: ProjectTypes,
+    constructor(private projectCategories: ProjectCategories,
                 private projectConfiguration: ProjectConfiguration,
                 private datastore: DocumentReadDatastore) {}
 
@@ -36,7 +36,7 @@ export class DescendantsUtility {
 
     private async findDescendants(document: Document, skipDocuments = false): Promise<FindResult> {
 
-        return this.projectConfiguration.isSubtype(document.resource.type, 'Operation')
+        return this.projectConfiguration.isSubcategory(document.resource.category, 'Operation')
             ? await this.findRecordedInDocs(document.resource.id, skipDocuments)
             : await this.findLiesWithinDocs(document.resource.id, skipDocuments);
     }

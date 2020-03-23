@@ -9,7 +9,7 @@ import {FieldReadDatastore} from '../../datastore/field/field-read-datastore';
 import {clone} from '../../util/object-util';
 import {IndexFacade} from '../../datastore/index/index-facade';
 import {TabManager} from '../../tabs/tab-manager';
-import {ProjectTypes} from '../../configuration/project-types';
+import {ProjectCategories} from '../../configuration/project-categories';
 import {ResourcesViewMode} from './view-facade';
 
 
@@ -47,7 +47,7 @@ export class ResourcesStateManager {
         private datastore: FieldReadDatastore,
         private indexFacade: IndexFacade,
         private serializer: StateSerializer,
-        private projectTypes: ProjectTypes,
+        private projectCategories: ProjectCategories,
         private tabManager: TabManager,
         private project: string,
         private suppressLoadMapInTestProject: boolean = false,
@@ -65,11 +65,11 @@ export class ResourcesStateManager {
     public getCurrentOperation = (): FieldDocument|undefined =>
         ResourcesState.getCurrentOperation(this.resourcesState);
 
-    public getOverviewTypeNames = (): string[] => this.projectTypes.getOverviewTypeNames();
+    public getOverviewCategoryNames = (): string[] => this.projectCategories.getOverviewCategoryNames();
 
-    public getConcreteTypeNames = (): string[] => this.projectTypes.getConcreteFieldTypeNames();
+    public getConcreteCategoryNames = (): string[] => this.projectCategories.getConcreteFieldCategoryNames();
 
-    public getAbstractTypeNames = (): string[] => this.projectTypes.getAbstractFieldTypeNames();
+    public getAbstractCategoryNames = (): string[] => this.projectCategories.getAbstractFieldCategoryNames();
 
     public isInExtendedSearchMode = (): boolean => ResourcesState.isInExtendedSearchMode(this.resourcesState);
 
@@ -143,9 +143,9 @@ export class ResourcesStateManager {
     }
 
 
-    public setTypeFilters(types: string[]) {
+    public setCategoryFilters(categories: string[]) {
 
-        ResourcesState.setTypeFilters(this.resourcesState, types);
+        ResourcesState.setCategoryFilters(this.resourcesState, categories);
     }
 
 

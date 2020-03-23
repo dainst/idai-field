@@ -1,7 +1,6 @@
 /**
  * @author Thomas Kleinke
  */
-
 export const validateUnsignedInt = (value: string): boolean => {
 
     const regex = new RegExp(/^\d+$/);

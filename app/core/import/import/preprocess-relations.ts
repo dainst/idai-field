@@ -111,7 +111,9 @@ function assertHasNoHierarchicalRelations(document: Document) {
     const foundForbiddenRelations = Object.keys(document.resource.relations)
         .filter(includedIn(HierarchicalRelations.ALL))
         .join(', ');
-    if (foundForbiddenRelations) throw [E.INVALID_RELATIONS, document.resource.type, foundForbiddenRelations];
+    if (foundForbiddenRelations) {
+        throw [E.INVALID_RELATIONS, document.resource.category, foundForbiddenRelations];
+    }
 }
 
 

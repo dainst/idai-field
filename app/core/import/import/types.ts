@@ -2,8 +2,8 @@ import {Document} from 'idai-components-2';
 import {DocumentDatastore} from '../../datastore/document-datastore';
 
 
-export type AssertIsAllowedRelationDomainType = (domainTypeName: string,
-                                                 rangeTypeName: string,
+export type AssertIsAllowedRelationDomainType = (domainCategoryName: string,
+                                                 rangeCategoryName: string,
                                                  relationName: string,
                                                  identifier: string) => void;
 

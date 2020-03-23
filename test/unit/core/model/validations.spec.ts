@@ -11,13 +11,13 @@ describe('Validations', () => {
 
     const projectConfiguration = new ProjectConfiguration(
         {
-            types: [
+            categories: [
                 {
-                    type: 'T',
+                    name: 'T',
                     fields: [
                         { name: 'id' },
                         { name: 'identifier' },
-                        { name: 'type' },
+                        { name: 'category' },
                         { name: 'optional' },
                         { name: 'mandatory', mandatory: true },
                         { name: 'number1', label: 'number1', inputType: 'float' },
@@ -40,17 +40,17 @@ describe('Validations', () => {
                     ]
                 },
                 {
-                    type: 'T2',
+                    name: 'T2',
                     fields: [
                         { name: 'id' },
-                        { name: 'type' }
+                        { name: 'category' }
                     ]
                 },
                 {
-                    type: 'T3',
+                    name: 'T3',
                     fields: [
                         { name: 'id' },
-                        { name: 'type' },
+                        { name: 'category' },
                         { name: 'dating' },
                         { name: 'period', inputType: 'dropdownRange' }
                     ]
@@ -73,7 +73,7 @@ describe('Validations', () => {
         const doc = {
             resource: {
                 id: '1',
-                type: 'T',
+                category: 'T',
                 mandatory: 'm',
                 undef: 'abc',
                 relations: {isRecordedIn: ['0']},
@@ -85,7 +85,7 @@ describe('Validations', () => {
     });
 
 
-    it('validate defined fields - exclude period, periodEnd if dating defined for type', () => {
+    it('validate defined fields - exclude period, periodEnd if dating defined for category', () => {
 
         const datastore = jasmine.createSpyObj('datastore',['find']);
         datastore.find.and.returnValues(Promise.resolve({ totalCount: 0, documents: [] }));
@@ -93,7 +93,7 @@ describe('Validations', () => {
         const doc = {
             resource: {
                 id: '1',
-                type: 'T3',
+                category: 'T3',
                 dating: 'abc',
                 period: 'abc',
                 periodEnd: 'abc',
@@ -114,7 +114,7 @@ describe('Validations', () => {
         const doc = {
             resource: {
                 id: '1',
-                type: 'T',
+                category: 'T',
                 mandatory: 'm',
                 relations: { isRecordedIn: ['0'] },
             }
@@ -134,7 +134,7 @@ describe('Validations', () => {
         const doc = {
             resource: {
                 id: '1',
-                type: 'T',
+                category: 'T',
                 relations: {},
             }
         };
@@ -153,7 +153,7 @@ describe('Validations', () => {
         const doc = {
             resource: {
                 id: '1',
-                type: 'T',
+                category: 'T',
                 mandatory: '',
                 relations: {},
             }
@@ -173,7 +173,7 @@ describe('Validations', () => {
         const doc = {
             resource: {
                 id: '1',
-                type: 'T',
+                category: 'T',
                 mandatory: 'm',
                 number1: 'ABC',
                 relations: { isRecordedIn: ['0'] }
@@ -195,7 +195,7 @@ describe('Validations', () => {
         const doc = {
             resource: {
                 id: '1',
-                type: 'T',
+                category: 'T',
                 mandatory: 'm',
                 number1: 'ABC',
                 number2: 'DEF',
@@ -218,7 +218,7 @@ describe('Validations', () => {
         const doc = {
             resource: {
                 id: '1',
-                type: 'T',
+                category: 'T',
                 mandatory: 'm',
                 // Accept datings with label (deprecated)
                 dating1: [{ label: 'Dating 1' }],
@@ -255,7 +255,7 @@ describe('Validations', () => {
         const doc = {
             resource: {
                 id: '1',
-                type: 'T',
+                category: 'T',
                 mandatory: 'm',
                 // Accept dimensions with label (deprecated)
                 dimension1: [{ label: 'Dating 1' }],
@@ -290,7 +290,7 @@ describe('Validations', () => {
         const doc = {
             resource: {
                 id: '1',
-                type: 'T',
+                category: 'T',
                 mandatory: 'm',
                 // Correct literature reference
                 literature1: [{ quotation: 'Quotation', zenonId: '1234567' }],

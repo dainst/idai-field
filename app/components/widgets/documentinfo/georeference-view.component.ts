@@ -4,8 +4,8 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {PersistenceManager} from '../../../core/model/persistence-manager';
 import {UsernameProvider} from '../../../core/settings/username-provider';
 import {M} from '../../messages/m';
-import { readWldFile, Errors } from '../../../core/images/wld/wld-import';
-import { downloadWldFile } from '../../../core/images/wld/wld-export';
+import {readWldFile, Errors} from '../../../core/images/wld/wld-import';
+import {downloadWldFile} from '../../../core/images/wld/wld-export';
 
 
 @Component({

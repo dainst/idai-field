@@ -18,7 +18,7 @@ describe('images/upload --', () => {
 
         ImageOverviewPage.clickUploadArea();
         ImageOverviewPage.uploadImage(path.resolve(__dirname, '../../test-data/' + imageUploadFileName));
-        ImageOverviewPage.chooseImageSubtype(0);
+        ImageOverviewPage.chooseImageSubcategory(0);
     };
 
 

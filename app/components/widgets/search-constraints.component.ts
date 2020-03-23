@@ -10,7 +10,7 @@ import {ValuelistUtil} from '../../core/util/valuelist-util';
 import {clone} from '../../core/util/object-util';
 import {DocumentReadDatastore} from '../../core/datastore/document-read-datastore';
 import {ValuelistDefinition} from '../../core/configuration/model/valuelist-definition';
-import {IdaiType} from '../../core/configuration/model/idai-type';
+import {Category} from '../../core/configuration/model/category';
 
 
 type ConstraintListItem = {
@@ -29,7 +29,7 @@ type SearchInputType = 'input'|'dropdown'|'boolean'|'exists';
  */
 export abstract class SearchConstraintsComponent implements OnChanges {
 
-    @Input() type: string;
+    @Input() category: string;
 
     public fields: Array<FieldDefinition>;
     public selectedField: FieldDefinition|undefined;
@@ -301,7 +301,7 @@ export abstract class SearchConstraintsComponent implements OnChanges {
     private async updateFields() {
 
         const fields: Array<FieldDefinition> = this.defaultFields
-            .concat(clone(this.projectConfiguration.getFieldDefinitions(this.type)))
+            .concat(clone(this.projectConfiguration.getFieldDefinitions(this.category)))
             .filter(field => field.constraintIndexed && this.getSearchInputType(field));
 
         for (let field of fields) {
@@ -384,7 +384,7 @@ export abstract class SearchConstraintsComponent implements OnChanges {
         const defaultField: FieldDefinition|undefined = this.getDefaultField(fieldName);
         if (defaultField) return defaultField;
 
-        return this.projectConfiguration.getFieldDefinitions(this.type)
+        return this.projectConfiguration.getFieldDefinitions(this.category)
             .find(field => field.name === fieldName) as FieldDefinition;
     }
 
@@ -397,15 +397,18 @@ export abstract class SearchConstraintsComponent implements OnChanges {
         if (defaultField) return defaultField.label as string;
 
         if (fieldName.endsWith('End')) {
-            const baseField = IdaiType.getFields((this.projectConfiguration.getTypesMap())[this.type])
-                .find((field: FieldDefinition) => field.name === fieldName.substring(0, fieldName.length - 3));
+            const baseField = Category
+                .getFields((this.projectConfiguration.getCategoriesMap())[this.category])
+                .find((field: FieldDefinition) => {
+                    return field.name === fieldName.substring(0, fieldName.length - 3);
+                });
             if (baseField && baseField.inputType === 'dropdownRange') {
                 return baseField.label
                     + this.i18n({ id: 'searchConstraints.dropdownRange.to', value: ' (bis)' });
             }
         }
 
-        const field = IdaiType.getFields(this.projectConfiguration.getTypesMap()[this.type])
+        const field = Category.getFields(this.projectConfiguration.getCategoriesMap()[this.category])
             .find(on(FieldDefinition.NAME, is(fieldName)));
 
         if (!field) throw 'illegal state - field does not exist';

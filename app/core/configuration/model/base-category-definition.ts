@@ -1,13 +1,13 @@
 import {Map} from 'tsfun';
 
 
-export interface BaseTypeDefinition {
+export interface BaseCategoryDefinition {
 
     fields: Map<BaseFieldDefinition>;
 }
 
 
-export module BaseTypeDefinition {
+export module BaseCategoryDefinition {
 
     export const FIELDS = 'fields';
 }

@@ -2,7 +2,7 @@ import {equal} from 'tsfun';
 import {Query, ImageDocument} from 'idai-components-2';
 import {ImagesState} from './images-state';
 import {ImageDocumentsManager} from './image-documents-manager';
-import {ProjectTypes} from '../../../configuration/project-types';
+import {ProjectCategories} from '../../../configuration/project-categories';
 import {clone} from '../../../util/object-util';
 
 
@@ -19,11 +19,9 @@ export class ImageOverviewFacade {
     private minNrImagesPerRow: number = 2;
 
 
-    constructor(
-        private imageDocumentsManager: ImageDocumentsManager,
-        private imagesState: ImagesState,
-        private projectTypes: ProjectTypes
-    ) {}
+    constructor(private imageDocumentsManager: ImageDocumentsManager,
+                private imagesState: ImagesState,
+                private projectCategories: ProjectCategories) {}
 
 
     public getMaxNrImagesPerRow = () => this.maxNrImagesPerRow;
@@ -165,12 +163,12 @@ export class ImageOverviewFacade {
     }
 
 
-    public setTypeFilters(types: string[]) {
+    public setCategoryFilters(categories: string[]) {
 
         this.currentOffset = 0;
 
         const query: Query = this.imagesState.getQuery();
-        query.types = types;
+        query.categories = categories;
         this.imagesState.setQuery(query);
 
         this.fetchDocuments();
@@ -189,7 +187,7 @@ export class ImageOverviewFacade {
 
         return {
             q: '',
-            types: this.projectTypes.getImageTypeNames()
+            categories: this.projectCategories.getImageCategoryNames()
         };
     }
 

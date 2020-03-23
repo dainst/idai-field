@@ -7,7 +7,7 @@ import {FieldDocument} from 'idai-components-2';
 export interface ViewContext {
 
     q: string;
-    types: string[];
+    categories: string[];
     selected?: FieldDocument;
 }
 
@@ -18,7 +18,7 @@ export module ViewContext {
 
         return {
             q: '',
-            types: []
+            categories: []
         }
     }
 }

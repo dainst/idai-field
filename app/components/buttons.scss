@@ -78,14 +78,14 @@ $lightgraybgr: #eeeeee;
 }
 
 plus-button,
-type-switcher-button {
+category-switcher-button {
 
-  .abstract-idai-type {
+  .abstract-category {
     cursor: not-allowed;
     font-style: italic;
   }
 
-  .abstract-idai-type ul {
+  .abstract-category ul {
     font-style: normal;
   }
 
@@ -93,13 +93,13 @@ type-switcher-button {
     width: 41px;
     height: 41px;
 
-    &.type-button {
+    &.category-button {
       padding: 0;
     }
   }
 }
 
-.type-button {
+.category-button {
   background-color: rgb(240, 240, 240);
 
   .plus-sign-circle,
@@ -132,9 +132,9 @@ type-switcher-button {
   }
 }
 
-.type-button:hover {
+.category-button:hover {
 
-  type-icon {
+  category-icon {
     filter: brightness(1.15);
     transition: filter .3s ease;
   }

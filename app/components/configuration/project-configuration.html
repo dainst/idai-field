@@ -3,16 +3,17 @@
 
         <div class="row">
             <div class="col-lg-3 sidebar">
-                <type-picker *ngIf="typesTreeList" [typesTreeList]="typesTreeList"
-                    allowPickingAbstractTypes="true" (onTypePicked)="selectType($event)"></type-picker>
+                <category-picker *ngIf="categoriesTreeList" [categoriesTreeList]="categoriesTreeList"
+                                 allowPickingAbstractCategories="true"
+                                 (onCategoryPicked)="selectCategory($event)"></category-picker>
             </div>
 
             <div class="col">
 
                 <div class="row">
                     <div class="col header d-flex">
-                        <type-icon size="41" type="{{selectedType.name}}"></type-icon>
-                        <h5>{{ selectedType.label }} <code>{{ selectedType.name }}</code></h5>
+                        <category-icon size="41" category="{{selectedCategory.name}}"></category-icon>
+                        <h5>{{ selectedCategory.label }} <code>{{ selectedCategory.name }}</code></h5>
                     </div>
                 </div>
 
@@ -20,7 +21,7 @@
 
                     <div class="col-lg-2 groups">
                         <ul class="nav nav-pills flex-column">
-                            <li *ngFor="let group of getGroups(selectedType)" class="nav flex-column">
+                            <li *ngFor="let group of getGroups(selectedCategory)" class="nav flex-column">
                                 <a class="nav-link"
                                         [class.active]="selectedGroup === group"
                                         (click)="selectedGroup = group">
@@ -29,9 +30,9 @@
                                     <span *ngIf="group === 'dimension'" i18n="@@docedit.group.dimensions">Maße</span>
                                     <span *ngIf="group === 'position'" i18n="@@docedit.group.position">Lage</span>
                                     <span *ngIf="group === 'time'" i18n="@@docedit.group.time">Zeit</span>
-                                    <span *ngIf="group === 'child'">{{ selectedType.label }}</span>
-                                    <span *ngIf="group === 'parent' && selectedType.parentType">{{ selectedType.parentType.label }}</span>
-                                    <span *ngIf="group === 'parent' && !selectedType.parentType">{{ selectedType.label }}</span>
+                                    <span *ngIf="group === 'child'">{{ selectedCategory.label }}</span>
+                                    <span *ngIf="group === 'parent' && selectedCategory.parentCategory">{{ selectedCategory.parentCategory.label }}</span>
+                                    <span *ngIf="group === 'parent' && !selectedCategory.parentCategory">{{ selectedCategory.label }}</span>
                                 </a>
                             </li>
                         </ul>
@@ -39,7 +40,7 @@
 
                     <div class="col content">
                         
-                        <div *ngFor="let field of getVisibleFields(selectedType)"
+                        <div *ngFor="let field of getVisibleFields(selectedCategory)"
                                 class="card"
                                 [class.bg-warning]="field.source === 'custom'">
 

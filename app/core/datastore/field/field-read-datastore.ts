@@ -1,5 +1,4 @@
-import {Query} from 'idai-components-2';
-import {FieldDocument} from 'idai-components-2';
+import {Query, FieldDocument} from 'idai-components-2';
 import {CachedReadDatastore, IdaiFieldFindResult} from '../cached/cached-read-datastore';
 
 

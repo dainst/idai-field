@@ -23,13 +23,13 @@ export module IndexerConfiguration {
             'geometry:exist': { path: 'resource.geometry', type: 'exist' },
             'georeference:exist': { path: 'resource.georeference', type: 'exist' },
             'conflicts:exist': { path: '_conflicts', type: 'exist' },
-        }, projectConfiguration.getTypesMap());
+        }, projectConfiguration.getCategoriesMap());
 
         const createdFulltextIndex = {};
         const createdIndexFacade = new IndexFacade(
             createdConstraintIndex,
             createdFulltextIndex,
-            projectConfiguration.getTypesMap(),
+            projectConfiguration.getCategoriesMap(),
             showWarnings
         );
 

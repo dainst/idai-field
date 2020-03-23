@@ -1,11 +1,8 @@
-import {
-    copy, Pair, reduce, Map, to, identity,
-    isDefined, path, isString, getOn, dissoc
-} from 'tsfun';
+import {copy, Pair, reduce, Map, to, identity, isDefined, path, isString, getOn, dissoc} from 'tsfun';
 
-// @author Daniel de Oliveira
-
-
+/**
+ * @author Daniel de Oliveira
+ */
 export function longerThan(than: string) { return (what: string) => what.length > than.length }
 
 export function isEmptyString(a: any) { return typeof a === 'string' && a === '' }
@@ -14,7 +11,7 @@ export function typeOf(v: any) { return typeof v }
 
 export function debugId<T>(v: T): T {
 
-    console.log("debug:", v);
+    console.log('debug:', v);
     return v;
 }
 

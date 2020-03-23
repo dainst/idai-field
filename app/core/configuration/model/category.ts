@@ -1,15 +1,14 @@
 import {isUndefined, flow, cond, on, assoc, to, map, Mapping, values, flatten} from 'tsfun';
-import {TypeDefinition} from './type-definition';
+import {CategoryDefinition} from './category-definition';
 import {FieldDefinition} from './field-definition';
 import {clone} from '../../util/object-util';
 import {Group, Groups} from './group';
 
 
+export interface Category {
 
-export interface IdaiType {
-
-    children: Array<IdaiType>;
-    parentType: IdaiType|undefined; //  = undefined;
+    children: Array<Category>;
+    parentCategory: Category|undefined; //  = undefined;
     isAbstract: boolean;
     name: string;
     label: string;
@@ -24,49 +23,47 @@ export interface IdaiType {
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-export module IdaiType {
+export module Category {
 
     export const COLOR = 'color';
-    export const PARENTTYPE = 'parentType';
+    export const PARENT_CATEGORY = 'parentCategory';
     export const CHILDREN = 'children';
     export const NAME = 'name';
     export const GROUPS = 'groups';
 
 
-    export function build(definition: TypeDefinition): IdaiType { // TODO make private, hide behind makeTypesMap
+    export function build(definition: CategoryDefinition): Category { // TODO make private, hide behind makeCategoriesMap
 
-        const idaiType: any = {};
-        idaiType.mustLieWithin = definition.mustLieWithin;
-        idaiType.name = definition.type;
-        idaiType.label = definition.label || idaiType.name;
-        idaiType['fields'] = definition.fields || []; // TODO remove after construction
-        idaiType.groups = [];
-        idaiType.isAbstract = definition.abstract || false;
-        idaiType.color = definition.color ?? generateColorForType(definition.type);
-        idaiType.children = [];
-        return idaiType as IdaiType;
+        const category: any = {};
+        category.mustLieWithin = definition.mustLieWithin;
+        category.name = definition.name;
+        category.label = definition.label || category.name;
+        category['fields'] = definition.fields || []; // TODO remove after construction
+        category.groups = [];
+        category.isAbstract = definition.abstract || false;
+        category.color = definition.color ?? generateColorForCategory(definition.name);
+        category.children = [];
+        return category as Category;
     }
 
 
-    export function getFields(type: IdaiType): Array<FieldDefinition> {
+    export function getFields(category: Category): Array<FieldDefinition> {
 
         return flow(
-            type.groups,
+            category.groups,
             values,
             map(to(Group.FIELDS)),
             flatten);
     }
 
 
-    export function makeChildFields(type: IdaiType, child: IdaiType): Array<FieldDefinition> {
+    export function makeChildFields(category: Category, child: Category): Array<FieldDefinition> {
 
         try {
-
             const childFields = ifUndefinedSetGroupTo(Groups.CHILD)((child as any)['fields']);
-            return getCombinedFields((type as any)['fields'], childFields);
-
+            return getCombinedFields((category as any)['fields'], childFields);
         } catch (e) {
-            e.push(type.name);
+            e.push(category.name);
             e.push(child.name);
             throw [e];
         }
@@ -78,7 +75,9 @@ export module IdaiType {
         return map(
             cond(
                 on(FieldDefinition.GROUP, isUndefined),
-                assoc(FieldDefinition.GROUP, name))) as any;
+                assoc(FieldDefinition.GROUP, name)
+            )
+        ) as any;
     }
 
 
@@ -108,8 +107,7 @@ export module IdaiType {
     }
 
 
-    function getCombinedFields(parentFields: Array<FieldDefinition>,
-                               childFields: Array<FieldDefinition>) {
+    function getCombinedFields(parentFields: Array<FieldDefinition>, childFields: Array<FieldDefinition>) {
 
         const fields: Array<FieldDefinition> = clone(parentFields);
 
@@ -119,7 +117,7 @@ export module IdaiType {
 
             if (field) {
                 if (field.name !== 'campaign') {
-                    throw ['tried to overwrite field of parent type', field.name];
+                    throw ['tried to overwrite field of parent category', field.name];
                 }
             } else {
                 fields.push(childField);
@@ -130,9 +128,9 @@ export module IdaiType {
     }
 
 
-    function generateColorForType(typeName: string): string {
+    function generateColorForCategory(categoryName: string): string {
 
-        const hash = hashCode(typeName);
+        const hash = hashCode(categoryName);
         const r = (hash & 0xFF0000) >> 16;
         const g = (hash & 0x00FF00) >> 8;
         const b = hash & 0x0000FF;

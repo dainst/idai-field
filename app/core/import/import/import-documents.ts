@@ -1,4 +1,4 @@
-import {identity, to} from 'tsfun';
+import {identity} from 'tsfun';
 import {Document} from 'idai-components-2';
 import {ImportValidator} from './process/import-validator';
 import {DocumentDatastore} from '../../datastore/document-datastore';
@@ -19,7 +19,7 @@ export interface ImportOptions {
 
     mergeMode?: boolean;
     permitDeletions?: boolean;
-    mainTypeDocumentId?: string;
+    operationId?: string;
     useIdentifiersInRelations?: boolean;
 }
 
@@ -29,14 +29,14 @@ export interface ImportOptions {
  * @author Thomas Kleinke
  */
 export function buildImportFunction(validator: ImportValidator,
-                                    operationTypeNames: string[],
+                                    operationCategoryNames: string[],
                                     inverseRelationsMap: InverseRelationsMap,
                                     generateId: () => string,
                                     preprocessDocument: (_: Document) => Document = identity,
                                     postprocessDocument: (_: Document) => Document = identity,
                                     importOptions: ImportOptions = {}): ImportFunction {
 
-    assertLegalCombination(importOptions.mergeMode, importOptions.mainTypeDocumentId);
+    assertLegalCombination(importOptions.mergeMode, importOptions.operationId);
 
     /**
      * @param datastore
@@ -44,7 +44,7 @@ export function buildImportFunction(validator: ImportValidator,
      * @param documents documents with the field resource.identifier set to a non empty string.
      *   If resource.id is set, it will be taken as document.id on creation.
      *   The relations map is assumed to be at least existent, but can be empty.
-     *   The resource.type field may be empty.
+     *   The resource.category field may be empty.
      * @param importReport
      *   .errors of ImportError or Validation Error
      */
@@ -68,14 +68,14 @@ export function buildImportFunction(validator: ImportValidator,
         const [importDocuments, targetDocuments, msgWithParams] = await process(
             documents,
             validator,
-            operationTypeNames,
+            operationCategoryNames,
             get,
             inverseRelationsMap,
             importOptions
         );
 
         if (msgWithParams) {
-            if (msgWithParams[0] === E.TARGET_TYPE_RANGE_MISMATCH
+            if (msgWithParams[0] === E.TARGET_CATEGORY_RANGE_MISMATCH
                 && ([LIES_WITHIN, RECORDED_IN].includes(msgWithParams[2]))) msgWithParams[2] = PARENT;
             return { errors: [msgWithParams], successfulImports: 0 };
         }

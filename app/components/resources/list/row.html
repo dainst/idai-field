@@ -1,8 +1,8 @@
 <div id="{{makeId()}}"
      class="row-wrapper">
     <div class="label-field">
-        <div class="type-label" [class.text-info]="!document.resource.id">
-            <i>{{getTypeLabel()}}</i>
+        <div class="category-label" [class.text-info]="!document.resource.id">
+            <i>{{getCategoryLabel()}}</i>
         </div>
 
         <button *ngIf="shouldShowArrowBottomRight()"

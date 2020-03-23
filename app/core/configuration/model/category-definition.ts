@@ -1,12 +1,12 @@
 /**
- * TypeDefinition, as used in ProjectConfiguration
+ * CategoryDefinition, as used in ProjectConfiguration
  *
  * @author Daniel de Oliveira
  */
-export interface TypeDefinition {
+export interface CategoryDefinition {
 
+    name: string;
     label?: string;
-    type: string;
     abstract?: boolean;
 
     /**
@@ -20,7 +20,7 @@ export interface TypeDefinition {
 }
 
 
-export module TypeDefinition {
+export module CategoryDefinition {
 
     export const FIELDS = 'fields';
     export const PARENT = 'parent';

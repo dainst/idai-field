@@ -4,6 +4,7 @@ import {Parser} from './parser';
 
 
 export interface Geojson {
+
     type: string,
     features: Geojson[];
     properties?: any;
@@ -12,13 +13,14 @@ export interface Geojson {
 
 
 export interface GazetteerProperties {
+
     prefName: {
         title: string;
     };
     identifier: string;
     id: string;
     gazId: string;
-    type: string;
+    category: string;
     geometry: { type: string };
     parent: string;
     relations: any;

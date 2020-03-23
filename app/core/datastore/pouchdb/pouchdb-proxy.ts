@@ -3,7 +3,6 @@
  */
 export class PouchdbProxy {
 
-
     constructor(private rdy: Promise<any>) {}
 
 

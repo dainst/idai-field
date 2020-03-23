@@ -2,7 +2,7 @@ import {Datastore, Document, NewDocument} from 'idai-components-2';
 import {PouchdbDatastore} from '../pouchdb/pouchdb-datastore';
 import {DocumentCache} from './document-cache';
 import {CachedReadDatastore} from './cached-read-datastore';
-import {TypeConverter} from './type-converter';
+import {CategoryConverter} from './category-converter';
 import {IndexFacade} from "../index/index-facade";
 
 
@@ -18,26 +18,25 @@ import {IndexFacade} from "../index/index-facade";
  */
 export abstract class CachedDatastore<T extends Document> extends CachedReadDatastore<T> {
 
-    constructor(
-        datastore: PouchdbDatastore,
-        indexFacade: IndexFacade,
-        documentCache: DocumentCache<T>,
-        typeConverter: TypeConverter<T>,
-        typeClass: string) {
+    constructor(datastore: PouchdbDatastore,
+                indexFacade: IndexFacade,
+                documentCache: DocumentCache<T>,
+                categoryConverter: CategoryConverter<T>,
+                categoryClass: string) {
 
-        super(datastore, indexFacade, documentCache, typeConverter, typeClass);
+        super(datastore, indexFacade, documentCache, categoryConverter, categoryClass);
     }
 
 
     /**
      * Implements {@link Datastore#create}
      *
-     * @throws if document is not of type T, determined by resource.type
-     * @throws if resource.type is unknown
+     * @throws if document is not of category T, determined by resource.category
+     * @throws if resource.category is unknown
      */
     public async create(document: NewDocument, username: string): Promise<T> {
 
-        this.typeConverter.assertTypeToBeOfClass(document.resource.type, this.typeClass);
+        this.categoryConverter.assertCategoryToBeOfClass(document.resource.category, this.categoryClass);
         return this.updateIndex(await this.datastore.create(document, username));
     }
 
@@ -45,7 +44,7 @@ export abstract class CachedDatastore<T extends Document> extends CachedReadData
     public async bulkCreate(documents: Array<NewDocument>, username: string): Promise<Array<T>> {
 
         for (let document of documents) {
-            this.typeConverter.assertTypeToBeOfClass(document.resource.type, this.typeClass);
+            this.categoryConverter.assertCategoryToBeOfClass(document.resource.category, this.categoryClass);
         }
 
         return (await this.datastore.bulkCreate(documents, username)).map(document => {
@@ -56,11 +55,11 @@ export abstract class CachedDatastore<T extends Document> extends CachedReadData
 
     /**
      * Implements {@link Datastore#update}
-     * @throws if document is not of type T, determined by resource.type
+     * @throws if document is not of category T, determined by resource.category
      */
     public async update(document: Document, username: string, squashRevisionsIds?: string[]): Promise<T> {
 
-        this.typeConverter.assertTypeToBeOfClass(document.resource.type, this.typeClass);
+        this.categoryConverter.assertCategoryToBeOfClass(document.resource.category, this.categoryClass);
         return this.updateIndex(await this.datastore.update(document, username, squashRevisionsIds));
     }
 
@@ -68,7 +67,7 @@ export abstract class CachedDatastore<T extends Document> extends CachedReadData
     public async bulkUpdate(documents: Array<Document>, username: string): Promise<Array<T>> {
 
         for (let document of documents) {
-            this.typeConverter.assertTypeToBeOfClass(document.resource.type, this.typeClass);
+            this.categoryConverter.assertCategoryToBeOfClass(document.resource.category, this.categoryClass);
         }
 
         return (await this.datastore.bulkUpdate(documents, username)).map(document => {
@@ -80,7 +79,7 @@ export abstract class CachedDatastore<T extends Document> extends CachedReadData
     private updateIndex(document: Document) {
 
         this.indexFacade.put(document);
-        const convertedDocument = this.typeConverter.convert(document);
+        const convertedDocument = this.categoryConverter.convert(document);
         return !this.documentCache.get(document.resource.id as any)
             ? this.documentCache.set(convertedDocument)
             : this.documentCache.reassign(convertedDocument);
@@ -88,11 +87,11 @@ export abstract class CachedDatastore<T extends Document> extends CachedReadData
 
 
     /**
-     * @throws if document is not of type T, determined by resource.type
+     * @throws if document is not of category T, determined by resource.category
      */
     public async remove(document: Document): Promise<void> {
 
-        this.typeConverter.assertTypeToBeOfClass(document.resource.type, this.typeClass);
+        this.categoryConverter.assertCategoryToBeOfClass(document.resource.category, this.categoryClass);
 
         // we want the doc removed from the indices asap,
         // in order to not risk someone finding it still with findIds due to

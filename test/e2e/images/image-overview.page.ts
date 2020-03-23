@@ -42,9 +42,9 @@ export module ImageOverviewPage {
     }
 
 
-    export function chooseImageSubtype(index) {
+    export function chooseImageSubcategory(index) {
 
-        return common.click(element(by.id('choose-image-subtype-option-' + index)));
+        return common.click(element(by.id('choose-image-subcategory-option-' + index)));
     }
 
 

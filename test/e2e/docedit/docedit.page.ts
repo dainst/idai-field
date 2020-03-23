@@ -144,17 +144,18 @@ export class DoceditPage {
     };
 
 
-    public static clickTypeSwitcherButton() {
+    public static clickCategorySwitcherButton() {
 
-        browser.wait(EC.visibilityOf(element(by.id('type-switcher-button'))), delays.ECWaitTime);
-        element(by.id('type-switcher-button')).click();
+        browser.wait(EC.visibilityOf(element(by.id('category-switcher-button'))), delays.ECWaitTime);
+        element(by.id('category-switcher-button')).click();
     };
 
 
-    public static clickTypeSwitcherOption(typeName: string) {
+    public static clickCategorySwitcherOption(categoryName: string) {
 
-        browser.wait(EC.visibilityOf(element(by.id('choose-type-option-' + typeName))), delays.ECWaitTime);
-        element(by.id('choose-type-option-' + typeName)).click();
+        browser.wait(EC.visibilityOf(element(by.id('choose-category-option-' + categoryName))),
+            delays.ECWaitTime);
+        element(by.id('choose-category-option-' + categoryName)).click();
     };
 
 

@@ -1,7 +1,8 @@
 import {Document} from 'idai-components-2';
-import {PersistenceManager} from "../../../../app/core/model/persistence-manager";
+import {PersistenceManager} from '../../../../app/core/model/persistence-manager';
 import {clone} from '../../../../app/core/util/object-util';
 import {ProjectConfiguration} from '../../../../app/core/configuration/project-configuration';
+
 
 /**
  * @author Daniel de Oliveira
@@ -10,9 +11,7 @@ import {ProjectConfiguration} from '../../../../app/core/configuration/project-c
 describe('PersistenceManager', () => {
 
     const projectConfiguration = new ProjectConfiguration({
-        'types': [
-
-        ],
+        'categories': [],
         'relations': [
             {
                 'name': 'BelongsTo',
@@ -75,19 +74,19 @@ describe('PersistenceManager', () => {
 
         doc = { 'resource' : {
             'id' :'1', 'identifier': 'ob1',
-            'type': 'object',
+            'category': 'object',
             'relations' : {}
         }} as any;
 
         relatedDoc = { 'resource' : {
             'id': '2' , 'identifier': 'ob2',
-            'type': 'object',
+            'category': 'object',
             'relations' : {}
         }};
 
         anotherRelatedDoc = { 'resource' : {
             'id': '3' , 'identifier': 'ob3',
-            'type': 'object',
+            'category': 'object',
             'relations' : {}
         }};
 
@@ -108,7 +107,7 @@ describe('PersistenceManager', () => {
 
         const squashVersion = { 'resource' : {
                 'id' :'1', 'identifier': 'ob1',
-                'type': 'object',
+                'category': 'object',
                 'relations' : { 'BelongsTo' : [ '2' ] }
             }, '_rev' : '1-a' };
 
@@ -148,7 +147,7 @@ describe('PersistenceManager', () => {
     });
 
 
-    it('remove: should remove an operation type resource, another related resource gets relation updated', async done => {
+    it('remove: should remove an operation, another related resource gets relation updated', async done => {
 
         mockDescendantsUtility.fetchChildren.and.returnValue([relatedDoc]);
 
@@ -167,7 +166,7 @@ describe('PersistenceManager', () => {
     });
 
 
-    it('remove: should remove an operation type resource, with two dependent resources', async done => {
+    it('remove: should remove an operation, with two dependent resources', async done => {
 
         mockDescendantsUtility.fetchChildren.and.returnValue([relatedDoc, anotherRelatedDoc]);
 

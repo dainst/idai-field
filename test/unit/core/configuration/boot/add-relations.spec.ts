@@ -1,6 +1,6 @@
-import {RelationDefinition} from '../../../../../app/core/configuration/model/relation-definition';
-import {LibraryTypeDefinition} from '../../../../../app/core/configuration/model/library-type-definition';
 import {Map} from 'tsfun';
+import {RelationDefinition} from '../../../../../app/core/configuration/model/relation-definition';
+import {LibraryCategoryDefinition} from '../../../../../app/core/configuration/model/library-category-definition';
 import {addRelations} from '../../../../../app/core/configuration/boot/add-relations';
 
 
@@ -11,12 +11,12 @@ import {addRelations} from '../../../../../app/core/configuration/boot/add-relat
 describe('addRelations', () => {
 
     let configuration;
-    let t1: LibraryTypeDefinition;
+    let t1: LibraryCategoryDefinition;
 
     beforeEach(() => {
 
         t1 = {
-            typeFamily: 'x1',
+            categoryName: 'x1',
             commons: [],
             parent: 'x',
             description: { 'de': '' },
@@ -27,13 +27,13 @@ describe('addRelations', () => {
             fields: {
                 'aField': {}
             }
-        } as LibraryTypeDefinition;
+        } as LibraryCategoryDefinition;
 
         configuration = {
             identifier: 'test',
-            types: {
+            categories: {
                 'T1': t1
-            } as Map<LibraryTypeDefinition>
+            } as Map<LibraryCategoryDefinition>
         } as any;
     });
 
@@ -68,7 +68,7 @@ describe('addRelations', () => {
             range : ['rangeB']
         };
 
-        configuration = { identifier: 'test', types: { T1: t1 }, relations: []};
+        configuration = { identifier: 'test', categories: { T1: t1 }, relations: []};
 
         configuration = addRelations([r1, r2])(configuration);
         expect(configuration.relations[0].domain).toContain('domainB');
@@ -94,7 +94,7 @@ describe('addRelations', () => {
             range : ['rangeA', 'rangeB', 'rangeC']
         };
 
-        configuration = { identifier: 'test', types: { T1: t1 }, relations: []};
+        configuration = { identifier: 'test', categories: { T1: t1 }, relations: []};
 
         configuration = addRelations([r1, r2])(configuration);
 
@@ -105,7 +105,7 @@ describe('addRelations', () => {
     });
 
 
-    it('replace range ALL with all types except the domain types', () => {
+    it('replace range ALL with all categories except the domain categories', () => {
 
         const r: RelationDefinition = {
             name: 'R',
@@ -121,7 +121,7 @@ describe('addRelations', () => {
     });
 
 
-    it('should replace domain ALL with all types except the range types', () => {
+    it('should replace domain ALL with all categories except the range categories', () => {
 
         const r: RelationDefinition = {
             name: 'R',
@@ -137,7 +137,7 @@ describe('addRelations', () => {
     });
 
 
-    it('should replace range :inherit with all subtypes', () => {
+    it('should replace range :inherit with all subcategories', () => {
 
         const r: RelationDefinition = { name: 'R',
             domain: [ 'T3' ],
@@ -145,8 +145,8 @@ describe('addRelations', () => {
         };
 
         configuration.relations = [];
-        configuration.types['T2'] = { fields: {}, parent: 'T1' };
-        configuration.types['T3'] = { fields: {} };
+        configuration.categories['T2'] = { fields: {}, parent: 'T1' };
+        configuration.categories['T3'] = { fields: {} };
 
         configuration = addRelations([r])(configuration);
 
@@ -157,7 +157,7 @@ describe('addRelations', () => {
     });
 
 
-    it('should replace domain :inherit with all subtypes', function() {
+    it('should replace domain :inherit with all subcategories', function() {
 
         const r: RelationDefinition = { name: 'R',
             domain: [ 'T1:inherit' ],
@@ -165,8 +165,8 @@ describe('addRelations', () => {
         };
 
         configuration.relations = [];
-        configuration.types['T2'] = { fields: {}, parent: 'T1' };
-        configuration.types['T3'] = { fields: {} };
+        configuration.categories['T2'] = { fields: {}, parent: 'T1' };
+        configuration.categories['T3'] = { fields: {} };
 
         configuration = addRelations([r])(configuration);
 
@@ -178,15 +178,15 @@ describe('addRelations', () => {
 
 
     // This test can detect problems coming from a wrong order of expandInherits and expandAllMarker calls
-    it('should exclude the type and subtypes when using :inherit and total range', function() {
+    it('should exclude the category and subcategories when using :inherit and total range', function() {
 
         const r: RelationDefinition = { name: 'R',
             domain: [ 'T1:inherit' ]
         };
 
         configuration.relations = [];
-        configuration.types['T2'] = { fields: {}, parent: 'T1' };
-        configuration.types['T3'] = { fields: {} };
+        configuration.categories['T2'] = { fields: {}, parent: 'T1' };
+        configuration.categories['T3'] = { fields: {} };
         configuration = addRelations([r])(configuration);
 
         expect(configuration.relations[0].range[0]).toBe('T3');

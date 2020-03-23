@@ -5,7 +5,7 @@ import {ConstraintIndex} from './constraint-index';
 import {FulltextIndex} from './fulltext-index';
 import {IndexItem, TypeResourceIndexItem} from './index-item';
 import {ObserverUtil} from '../../util/observer-util';
-import {IdaiType} from '../../configuration/model/idai-type';
+import {Category} from '../../configuration/model/category';
 import {performQuery} from './perform-query';
 import {ResourceId} from '../../constants';
 import {getSortedIds} from './get-sorted-ids';
@@ -26,7 +26,7 @@ export class IndexFacade {
     constructor(
         private constraintIndex: ConstraintIndex,
         private fulltextIndex: FulltextIndex,
-        private typesMap: { [typeName: string]: IdaiType },
+        private categoriesMap: { [categoryName: string]: Category },
         private showWarnings: boolean
     ) {}
 
@@ -54,8 +54,7 @@ export class IndexFacade {
 
     public putMultiple(documents: Array<Document>) {
 
-        const [typeDocuments, nonTypeDocuments]
-            = separate(on('resource.type', is(TYPE)))(documents);
+        const [typeDocuments, nonTypeDocuments] = separate(on('resource.category', is(TYPE)))(documents);
 
         typeDocuments.forEach(_ => this._put(_, true, false));
         nonTypeDocuments.forEach(_ => this._put(_, true, false));
@@ -67,7 +66,7 @@ export class IndexFacade {
         ConstraintIndex.remove(this.constraintIndex, document);
         FulltextIndex.remove(this.fulltextIndex, document);
         delete this.indexItems[document.resource.id];
-        if (document.resource.type !== TYPE) {
+        if (document.resource.category !== TYPE) {
             IndexFacade.deleteAssociatedTypeItem(this.indexItems, document);
         }
         ObserverUtil.notify(this.observers, document);
@@ -101,7 +100,7 @@ export class IndexFacade {
         const item = this.getIndexItem(document);
         if (!item) return;
 
-        if (document.resource.type === TYPE) {
+        if (document.resource.category === TYPE) {
             IndexFacade.updateTypeItem(item as TypeResourceIndexItem);
         } else {
             if (!skipRemoval) {
@@ -111,7 +110,7 @@ export class IndexFacade {
         }
 
         ConstraintIndex.put(this.constraintIndex, document, item, skipRemoval);
-        FulltextIndex.put(this.fulltextIndex, document, item, this.typesMap, skipRemoval);
+        FulltextIndex.put(this.fulltextIndex, document, item, this.categoriesMap, skipRemoval);
 
         if (notify) ObserverUtil.notify(this.observers, document);
     }
@@ -136,7 +135,7 @@ export class IndexFacade {
         for (let target of document.resource.relations[INSTANCE_OF]) {
             const typeItem = items[target] as TypeResourceIndexItem;
             if (typeItem) {
-                typeItem.instances[document.resource.id] = document.resource.type;
+                typeItem.instances[document.resource.id] = document.resource.category;
             }
         }
     }

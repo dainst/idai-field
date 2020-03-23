@@ -212,7 +212,7 @@ describe('EdgesBuilder', () => {
     });
 
 
-    it('build edges for relation configuration with multiple above/below relation types', () => {
+    it('build edges for relation configuration with multiple above/below relation categories', () => {
 
         const relations: GraphRelationsConfiguration = {
             above: ['isAbove', 'cuts'],

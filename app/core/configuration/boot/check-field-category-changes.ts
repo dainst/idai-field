@@ -1,15 +1,15 @@
 import {filter, flow, forEach, isDefined, lookup, map, Map, on, to, update} from 'tsfun';
-import {CustomFieldDefinition} from '../model/custom-type-definition';
-import {TransientFieldDefinition} from '../model/transient-type-definition';
+import {CustomFieldDefinition} from '../model/custom-category-definition';
+import {TransientFieldDefinition} from '../model/transient-category-definition';
 
 
-export function checkFieldTypeChanges(customTypeName: string,
-                                      customTypeFields: Map<CustomFieldDefinition>,
-                                      extendedTypeFields: Map<TransientFieldDefinition>) {
+export function checkFieldCategoryChanges(customCategoryName: string,
+                                          customCategoryFields: Map<CustomFieldDefinition>,
+                                          extendedCategoryFields: Map<TransientFieldDefinition>) {
 
-    flow(customTypeFields,
+    flow(customCategoryFields,
         map((field: CustomFieldDefinition, fieldName: string) =>
-            [customTypeName, fieldName, field, lookup(extendedTypeFields)(fieldName)]),
+            [customCategoryName, fieldName, field, lookup(extendedCategoryFields)(fieldName)]),
         filter(on([2, CustomFieldDefinition.INPUTTYPE], isDefined)),
         filter(on([3, CustomFieldDefinition.INPUTTYPE], isDefined)),
         map(update(2, to(CustomFieldDefinition.INPUTTYPE))),
@@ -25,7 +25,7 @@ function isAllowedCombination(l: string, r: string, a: string, b: string) {
 
 
 function checkFieldTypeChange(
-    [customTypeName, fieldName, customFieldInputType, extendedFieldInputType]: [string, string, string, string]) {
+    [customCategoryName, fieldName, customFieldInputType, extendedFieldInputType]: [string, string, string, string]) {
 
     if (customFieldInputType === extendedFieldInputType) return;
 
@@ -36,8 +36,8 @@ function checkFieldTypeChange(
         || isAllowedCombination(customFieldInputType, extendedFieldInputType, 'dropdown', 'radio')
         || isAllowedCombination(customFieldInputType, extendedFieldInputType, 'dropdown', 'checkboxes')) {
 
-        console.warn('change of input type detected', customTypeName, fieldName, customFieldInputType, extendedFieldInputType);
+        console.warn('change of input type detected', customCategoryName, fieldName, customFieldInputType, extendedFieldInputType);
     } else {
-        console.error('critical change of input type detected', customTypeName, fieldName, customFieldInputType, extendedFieldInputType);
+        console.error('critical change of input type detected', customCategoryName, fieldName, customFieldInputType, extendedFieldInputType);
     }
 }

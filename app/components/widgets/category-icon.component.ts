@@ -3,8 +3,8 @@ import {ProjectConfiguration} from '../../core/configuration/project-configurati
 
 
 @Component({
-  selector: 'type-icon',
-  template: '<div class="type-icon" [style.width]="pxSize" [style.height]="pxSize" [style.font-size]="pxSize" [style.line-height]="pxSize" [style.background-color]="color">' +
+  selector: 'category-icon',
+  template: '<div class="category-icon" [style.width]="pxSize" [style.height]="pxSize" [style.font-size]="pxSize" [style.line-height]="pxSize" [style.background-color]="color">' +
     '<span class="character" [style.color]="textColor">{{character}}</span>' +
   '</div>'
 })
@@ -12,10 +12,10 @@ import {ProjectConfiguration} from '../../core/configuration/project-configurati
 /**
  * @author Sebastian Cuy
  */
-export class TypeIconComponent implements OnChanges {
+export class CategoryIconComponent implements OnChanges {
 
     @Input() size: number;
-    @Input() type: string;
+    @Input() category: string;
 
     public character: string;
     public color: string;
@@ -28,9 +28,9 @@ export class TypeIconComponent implements OnChanges {
 
     ngOnChanges() {
 
-        this.character = this.projectConfiguration.getLabelForType(this.type).substr(0, 1);
-        this.color = this.projectConfiguration.getColorForType(this.type);
-        this.textColor = TypeIconComponent.isColorTooBright(this.color) ? 'black' : 'white';
+        this.character = this.projectConfiguration.getLabelForCategory(this.category).substr(0, 1);
+        this.color = this.projectConfiguration.getColorForCategory(this.category);
+        this.textColor = CategoryIconComponent.isColorTooBright(this.color) ? 'black' : 'white';
         this.pxSize = this.size + 'px';
     }
 

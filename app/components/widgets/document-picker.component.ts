@@ -7,7 +7,7 @@ import {Loading} from './loading';
 import {clone} from '../../core/util/object-util';
 import {AngularUtility} from '../../angular/angular-utility';
 import {FieldDocumentFindResult} from '../../core/datastore/field/field-read-datastore';
-import {IdaiType} from '../../core/configuration/model/idai-type';
+import {Category} from '../../core/configuration/model/category';
 import {ProjectConfiguration} from '../../core/configuration/project-configuration';
 
 
@@ -23,7 +23,7 @@ import {ProjectConfiguration} from '../../core/configuration/project-configurati
  */
 export class DocumentPickerComponent implements OnChanges {
 
-    @Input() filterOptions: Array<IdaiType>;
+    @Input() filterOptions: Array<Category>;
     @Input() getConstraints: () => Promise<{ [name: string]: string|Constraint }>;
     @Input() showProjectOption: boolean = false;
 
@@ -47,19 +47,19 @@ export class DocumentPickerComponent implements OnChanges {
 
     async ngOnChanges() {
 
-        this.query.types = this.getAllAvailableTypeNames();
+        this.query.categories = this.getAllAvailableCategoryNames();
         await this.updateResultList();
     }
 
 
-    public getQueryTypes(): string[]|undefined {
+    public getQueryCategories(): string[]|undefined {
 
-        if (!this.query.types) return undefined;
+        if (!this.query.categories) return undefined;
 
-        return this.query.types.length === this.getAllAvailableTypeNames().length
+        return this.query.categories.length === this.getAllAvailableCategoryNames().length
                 && this.filterOptions.length > 1
             ? undefined
-            : this.query.types;
+            : this.query.categories;
     }
 
 
@@ -70,12 +70,12 @@ export class DocumentPickerComponent implements OnChanges {
     }
 
 
-    public async setQueryTypes(types: string[]) {
+    public async setQueryCategories(categories: string[]) {
 
-        if (types && types.length > 0) {
-            this.query.types = types;
+        if (categories && categories.length > 0) {
+            this.query.categories = categories;
         } else {
-            this.query.types = this.getAllAvailableTypeNames();
+            this.query.categories = this.getAllAvailableCategoryNames();
         }
 
         await this.updateResultList();
@@ -85,9 +85,9 @@ export class DocumentPickerComponent implements OnChanges {
     public isQuerySpecified(): boolean {
 
         return ((this.query.q !== undefined && this.query.q.length > 0)
-            || (this.query.types !== undefined
-                && (this.query.types.length < this.getAllAvailableTypeNames().length
-                    || this.query.types.length === 1)));
+            || (this.query.categories !== undefined
+                && (this.query.categories.length < this.getAllAvailableCategoryNames().length
+                    || this.query.categories.length === 1)));
     }
 
 
@@ -122,18 +122,18 @@ export class DocumentPickerComponent implements OnChanges {
 
         return this.isProjectOptionVisible()
             ? [this.getProjectOption()].concat(
-                result.documents.filter(document => document.resource.type !== 'Project')
+                result.documents.filter(document => document.resource.category !== 'Project')
             )
             : result.documents;
     }
 
 
-    private getAllAvailableTypeNames(): string[] {
+    private getAllAvailableCategoryNames(): string[] {
 
-        return union(this.filterOptions.map(type => {
-            return type.children
-                ? [type.name].concat(type.children.map(child => child.name))
-                : [type.name];
+        return union(this.filterOptions.map(category => {
+            return category.children
+                ? [category.name].concat(category.children.map(child => child.name))
+                : [category.name];
         }));
     }
 
@@ -144,7 +144,7 @@ export class DocumentPickerComponent implements OnChanges {
             resource: {
                 id: 'project',
                 identifier: this.i18n({ id: 'widgets.documentPicker.project', value: 'Projekt' }),
-                type: 'Project'
+                category: 'Project'
             }
         } as any;
     }
@@ -156,6 +156,6 @@ export class DocumentPickerComponent implements OnChanges {
             && ((this.query.q !== undefined && this.query.q.length > 0
                 && this.i18n({ id: 'widgets.documentPicker.project', value: 'Projekt' })
                     .toLowerCase().startsWith(this.query.q.toLowerCase()))
-                || (this.query.types !== undefined && this.query.types.includes('Project')));
+                || (this.query.categories !== undefined && this.query.categories.includes('Project')));
     }
 }

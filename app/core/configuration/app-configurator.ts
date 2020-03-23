@@ -4,12 +4,12 @@ import {Map} from 'tsfun';
 import {ConfigLoader} from './boot/config-loader';
 import {ProjectConfiguration} from './project-configuration';
 import {FieldDefinition} from './model/field-definition';
-import {BuiltinTypeDefinition} from './model/builtin-type-definition';
+import {BuiltinCategoryDefinition} from './model/builtin-category-definition';
 import {RelationDefinition} from './model/relation-definition';
 import {Groups} from './model/group';
 
 
-export module BuiltInTypes {
+export module BuiltInCategories {
 
     export const TYPECATALOG = 'TypeCatalog';
 
@@ -152,7 +152,7 @@ export class AppConfigurator {
         }
     };
 
-    private builtinTypes: Map<BuiltinTypeDefinition> = {
+    private builtinCategories: Map<BuiltinCategoryDefinition> = {
         Project: {
             label: this.i18n({ id: 'configuration.project', value: 'Projekt' }),
             fields: {
@@ -171,9 +171,9 @@ export class AppConfigurator {
                     inputType: FieldDefinition.InputType.MULTIINPUT
                 }
             }
-        } as BuiltinTypeDefinition,
+        } as BuiltinCategoryDefinition,
         Operation: {
-            superType: true,
+            supercategory: true,
             abstract: true,
             fields: {}
         },
@@ -202,8 +202,8 @@ export class AppConfigurator {
         },
         // Room is an idealized (non material) entity
         Room: {
-            superType: true,
-            userDefinedSubtypesAllowed: true,
+            supercategory: true,
+            userDefinedSubcategoriesAllowed: true,
             fields: {}
         },
         // An idealized (non material) entity, must be created within a Room
@@ -223,18 +223,18 @@ export class AppConfigurator {
         },
         // The material counterpart to Room, RoomCeiling, RoomWall, RoomFloor
         BuildingPart: {
-            superType: true,
-            userDefinedSubtypesAllowed: true,
+            supercategory: true,
+            userDefinedSubcategoriesAllowed: true,
             fields: {}
         },
         Area: {
-            superType: true,
-            userDefinedSubtypesAllowed: true,
+            supercategory: true,
+            userDefinedSubcategoriesAllowed: true,
             fields: {}
         },
         Feature: {
-            superType: true,
-            userDefinedSubtypesAllowed: true,
+            supercategory: true,
+            userDefinedSubcategoriesAllowed: true,
             fields: {
                 period: {
                     inputType: FieldDefinition.InputType.DROPDOWNRANGE,
@@ -247,8 +247,8 @@ export class AppConfigurator {
             }
         },
         Find: {
-            superType: true,
-            userDefinedSubtypesAllowed: true,
+            supercategory: true,
+            userDefinedSubcategoriesAllowed: true,
             fields: {
                 instanceOf: {
                     inputType: 'instanceOf',
@@ -261,7 +261,7 @@ export class AppConfigurator {
             fields: {}
         },
         TypeCatalog: {
-            superType: true,
+            supercategory: true,
             fields: {
                 criterion: {
                     inputType: FieldDefinition.InputType.CATALOGCRITERION,
@@ -271,13 +271,13 @@ export class AppConfigurator {
             }
         },
         Type: {
-            superType: true,
+            supercategory: true,
             mustLieWithin: true,
             fields: {}
         },
         Image: {
-            superType: true,
-            userDefinedSubtypesAllowed: true,
+            supercategory: true,
+            userDefinedSubcategoriesAllowed: true,
             fields: {
                 height: {
                     inputType: FieldDefinition.InputType.UNSIGNEDINT,
@@ -303,7 +303,7 @@ export class AppConfigurator {
                     editable: false
                 }
             }
-        } as BuiltinTypeDefinition,
+        } as BuiltinCategoryDefinition,
     };
 
     private defaultFields = {
@@ -353,7 +353,7 @@ export class AppConfigurator {
             label: this.i18n({ id: 'configuration.relations.isAfter', value: 'Zeitlich nach' }),
             domain: ['Feature:inherit'],
             range: ['Feature:inherit'],
-            sameMainTypeResource: true
+            sameMainCategoryResource: true
         },
         {
             name: 'isBefore',
@@ -361,7 +361,7 @@ export class AppConfigurator {
             label: this.i18n({ id: 'configuration.relations.isBefore', value: 'Zeitlich vor' }),
             domain: ['Feature:inherit'],
             range: ['Feature:inherit'],
-            sameMainTypeResource: true
+            sameMainCategoryResource: true
         },
         {
             name: 'isEquivalentTo',
@@ -369,7 +369,7 @@ export class AppConfigurator {
             label: this.i18n({ id: 'configuration.relations.isEquivalentTo', value: 'Gleich wie' }),
             domain: ['Feature:inherit'],
             range: ['Feature:inherit'],
-            sameMainTypeResource: true
+            sameMainCategoryResource: true
         },
         {
             name: 'isContemporaryWith',
@@ -377,7 +377,7 @@ export class AppConfigurator {
             label: this.i18n({ id: 'configuration.relations.isContemporaryWith', value: 'Zeitgleich mit' }),
             domain: ['Feature:inherit'],
             range: ['Feature:inherit'],
-            sameMainTypeResource: true
+            sameMainCategoryResource: true
         },
         {
             name: 'isAbove',
@@ -385,7 +385,7 @@ export class AppConfigurator {
             label: this.i18n({ id: 'configuration.relations.isAbove', value: 'Liegt über' }),
             domain: ['Feature:inherit'],
             range: ['Feature:inherit'],
-            sameMainTypeResource: true
+            sameMainCategoryResource: true
         },
         {
             name: 'isBelow',
@@ -393,7 +393,7 @@ export class AppConfigurator {
             label: this.i18n({ id: 'configuration.relations.isBelow', value: 'Liegt unter' }),
             domain: ['Feature:inherit'],
             range: ['Feature:inherit'],
-            sameMainTypeResource: true
+            sameMainCategoryResource: true
         },
         {
             name: 'cuts',
@@ -401,7 +401,7 @@ export class AppConfigurator {
             label: this.i18n({ id: 'configuration.relations.cuts', value: 'Schneidet' }),
             domain: ['Feature:inherit'],
             range: ['Feature:inherit'],
-            sameMainTypeResource: true
+            sameMainCategoryResource: true
         },
         {
             name: 'isCutBy',
@@ -409,7 +409,7 @@ export class AppConfigurator {
             label: this.i18n({ id: 'configuration.relations.isCutBy', value: 'Wird geschnitten von' }),
             domain: ['Feature:inherit'],
             range: ['Feature:inherit'],
-            sameMainTypeResource: true
+            sameMainCategoryResource: true
         },
         {
             name: 'borders',
@@ -417,7 +417,7 @@ export class AppConfigurator {
             label: this.i18n({ id: 'configuration.relations.borders', value: 'Grenzt an' }),
             domain: ['Feature:inherit'],
             range: ['Feature:inherit'],
-            sameMainTypeResource: true
+            sameMainCategoryResource: true
         },
         {
             name: 'borders',
@@ -425,7 +425,7 @@ export class AppConfigurator {
             label: this.i18n({ id: 'configuration.relations.borders', value: 'Grenzt an' }),
             domain: ['BuildingPart:inherit'],
             range: ['BuildingPart:inherit'],
-            sameMainTypeResource: true
+            sameMainCategoryResource: true
         },
         {
             name: 'isRecordedIn',
@@ -509,7 +509,7 @@ export class AppConfigurator {
             label: this.i18n({ id: 'configuration.relations.liesWithin', value: 'Liegt in' }),
             domain: ['Find:inherit'],
             range: ['Feature:inherit', 'Area:inherit'],
-            sameMainTypeResource: true,
+            sameMainCategoryResource: true,
             editable: false
         },
         {
@@ -517,7 +517,7 @@ export class AppConfigurator {
             label: this.i18n({ id: 'configuration.relations.liesWithin', value: 'Liegt in' }),
             domain: ['Inscription'],
             range: ['Find:inherit'],
-            sameMainTypeResource: true,
+            sameMainCategoryResource: true,
             editable: false
         },
         {
@@ -525,7 +525,7 @@ export class AppConfigurator {
             label: this.i18n({ id: 'configuration.relations.liesWithin', value: 'Liegt in' }),
             domain: ['Feature:inherit'],
             range: ['Feature:inherit'],
-            sameMainTypeResource: true,
+            sameMainCategoryResource: true,
             editable: false
         },
         {
@@ -533,7 +533,7 @@ export class AppConfigurator {
             label: this.i18n({ id: 'configuration.relations.liesWithin', value: 'Liegt in' }),
             domain: ['Sample'],
             range: ['Feature:inherit', 'Find:inherit'],
-            sameMainTypeResource: true,
+            sameMainCategoryResource: true,
             editable: false
         },
         {
@@ -541,7 +541,7 @@ export class AppConfigurator {
             label: this.i18n({ id: 'configuration.relations.liesWithin', value: 'Liegt in' }),
             domain: ['BuildingPart:inherit'],
             range: ['BuildingPart:inherit', 'Area:inherit'],
-            sameMainTypeResource: true,
+            sameMainCategoryResource: true,
             editable: false
         },
         {
@@ -549,7 +549,7 @@ export class AppConfigurator {
             label: this.i18n({ id: 'configuration.relations.liesWithin', value: 'Liegt in' }),
             domain: ['Area:inherit'],
             range: ['Area:inherit'],
-            sameMainTypeResource: true,
+            sameMainCategoryResource: true,
             editable: false
         },
         {
@@ -557,7 +557,7 @@ export class AppConfigurator {
             label: this.i18n({ id: 'configuration.relations.liesWithin', value: 'Liegt in' }),
             domain: ['RoomFloor'],
             range: ['Room'],
-            sameMainTypeResource: true,
+            sameMainCategoryResource: true,
             editable: false
         },
         {
@@ -565,7 +565,7 @@ export class AppConfigurator {
             label: this.i18n({ id: 'configuration.relations.liesWithin', value: 'Liegt in' }),
             domain: ['RoomWall'],
             range: ['Room'],
-            sameMainTypeResource: true,
+            sameMainCategoryResource: true,
             editable: false
         },
         {
@@ -573,7 +573,7 @@ export class AppConfigurator {
             label: this.i18n({ id: 'configuration.relations.liesWithin', value: 'Liegt in' }),
             domain: ['RoomCeiling'],
             range: ['Room'],
-            sameMainTypeResource: true,
+            sameMainCategoryResource: true,
             editable: false
         },
         {
@@ -609,7 +609,7 @@ export class AppConfigurator {
 
         if (customConfigurationName === 'Meninx' || customConfigurationName === 'Pergamon') {
 
-            (this.builtinTypes as any)['Other'] = {
+            (this.builtinCategories as any)['Other'] = {
                 color: '#CC6600',
                 parent: 'Feature',
                 fields: {}
@@ -619,11 +619,11 @@ export class AppConfigurator {
 
         if (customConfigurationName === 'Meninx') {
 
-            (this.builtinTypes as any)['Wall_surface'] = {
+            (this.builtinCategories as any)['Wall_surface'] = {
                 color: '#ffff99',
                 fields: {}
             };
-            (this.builtinTypes as any)['Drilling'] = {
+            (this.builtinCategories as any)['Drilling'] = {
                 color: '#08519c',
                 fields: {}
             };
@@ -646,23 +646,23 @@ export class AppConfigurator {
 
         if (customConfigurationName === 'Pergamon') {
 
-            (this.builtinTypes as any)['ProcessUnit'] = {
-                superType: true,
-                userDefinedSubtypesAllowed: true,
+            (this.builtinCategories as any)['ProcessUnit'] = {
+                supercategory: true,
+                userDefinedSubcategoriesAllowed: true,
                 abstract: true,
                 color: '#08306b',
                 fields: {}
             };
-            (this.builtinTypes as any)['Profile'] = {
+            (this.builtinCategories as any)['Profile'] = {
                 color: '#c6dbef',
                 parent: 'ProcessUnit',
                 fields: {}
             };
-            (this.builtinTypes as any)['BuildingFloor'] = {
+            (this.builtinCategories as any)['BuildingFloor'] = {
                 color: '#6600cc',
                 fields: {}
             };
-            (this.builtinTypes as any)['SurveyBurial'] = {
+            (this.builtinCategories as any)['SurveyBurial'] = {
                 color: '#45ff95',
                 fields: {}
             };
@@ -697,7 +697,7 @@ export class AppConfigurator {
                 label: this.i18n({ id: 'configuration.relations.includes', value: 'Beinhaltet' }),
                 domain: ['Area:inherit'],
                 range: ['Area:inherit', 'BuildingPart:inherit', 'Find:inherit', 'SurveyBurial'],
-                sameMainTypeResource: true
+                sameMainCategoryResource: true
             });
 
             this.defaultRelations.push({
@@ -706,7 +706,7 @@ export class AppConfigurator {
                 label: this.i18n({ id: 'configuration.relations.liesWithin', value: 'Liegt in' }),
                 domain: ['SurveyBurial'],
                 range: ['Area:inherit'],
-                sameMainTypeResource: true,
+                sameMainCategoryResource: true,
                 editable: false
             });
 
@@ -716,7 +716,7 @@ export class AppConfigurator {
                 label: this.i18n({ id: 'configuration.relations.borders', value: 'Grenzt an' }),
                 domain: ['BuildingFloor'],
                 range: ['BuildingPart:inherit'],
-                sameMainTypeResource: true
+                sameMainCategoryResource: true
             });
 
             this.defaultRelations.push({ // override existing definition
@@ -725,7 +725,7 @@ export class AppConfigurator {
                 label: this.i18n({ id: 'configuration.relations.borders', value: 'Grenzt an' }),
                 domain: ['BuildingPart:inherit'],
                 range: ['BuildingPart:inherit', 'BuildingFloor'],
-                sameMainTypeResource: true
+                sameMainCategoryResource: true
             });
         }
 
@@ -733,7 +733,7 @@ export class AppConfigurator {
         return this.configLoader.go(
             configDirPath,
             this.commonFields,
-            this.builtinTypes,
+            this.builtinCategories,
             this.defaultRelations,
             this.defaultFields,
             customConfigurationName,

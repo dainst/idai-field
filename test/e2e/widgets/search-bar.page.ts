@@ -20,31 +20,31 @@ export class SearchBarPage {
     }
 
 
-    public static getSelectedTypeFilterCharacter(context: SearchBarContext = 'resources') {
+    public static getSelectedCategoryFilterCharacter(context: SearchBarContext = 'resources') {
 
-        browser.wait(EC.presenceOf(SearchBarPage.getSelectedTypeFilterButton(context)), delays.ECWaitTime);
-        return SearchBarPage.getSelectedTypeFilterButton(context).element(by.css('.character')).getText();
+        browser.wait(EC.presenceOf(SearchBarPage.getSelectedCategoryFilterButton(context)), delays.ECWaitTime);
+        return SearchBarPage.getSelectedCategoryFilterButton(context).element(by.css('.character')).getText();
     }
 
 
-    public static getTypeFilterOptionLabels() {
+    public static getCategoryFilterOptionLabels() {
 
-        browser.wait(EC.presenceOf(element(by.css('.type-picker'))), delays.ECWaitTime);
-        return element.all(by.css('.type-label'));
+        browser.wait(EC.presenceOf(element(by.css('.category-picker'))), delays.ECWaitTime);
+        return element.all(by.css('.category-label'));
     }
 
 
     // click
 
-    public static clickChooseTypeFilter(typeName: string, context: SearchBarContext = 'resources') {
+    public static clickChooseCategoryFilter(categoryName: string, context: SearchBarContext = 'resources') {
 
-        this.clickTypeFilterButton(context);
-        common.click(element(by.id('choose-type-option-' + typeName)));
-        this.clickTypeFilterButton(context);
+        this.clickCategoryFilterButton(context);
+        common.click(element(by.id('choose-category-option-' + categoryName)));
+        this.clickCategoryFilterButton(context);
     }
 
 
-    public static clickTypeFilterButton(context: SearchBarContext = 'resources') {
+    public static clickCategoryFilterButton(context: SearchBarContext = 'resources') {
 
         common.click(this.getFilterButton(context).element(by.css('.search-filter')));
     }
@@ -73,9 +73,9 @@ export class SearchBarPage {
     }
 
 
-    private static getSelectedTypeFilterButton(context: SearchBarContext) {
+    private static getSelectedCategoryFilterButton(context: SearchBarContext) {
 
-        return this.getFilterButton(context).element(by.css('type-icon'));
+        return this.getFilterButton(context).element(by.css('category-icon'));
     }
 
 

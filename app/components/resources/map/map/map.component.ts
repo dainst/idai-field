@@ -41,12 +41,12 @@ export class MapComponent implements AfterViewInit, OnChanges {
     protected markers: { [resourceId: string]: Array<FieldMarker> } = {};
 
     protected bounds: any[] = []; // in fact L.LatLng[], but leaflet typings are incomplete
-    protected typeColors: { [typeName: string]: string } = {};
+    protected categoryColors: { [categoryName: string]: string } = {};
 
 
     constructor(projectConfiguration: ProjectConfiguration) {
 
-        this.typeColors = projectConfiguration.getTypeColors();
+        this.categoryColors = projectConfiguration.getCategoryColors();
     }
 
 
@@ -238,7 +238,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
 
         const latLng = L.latLng([coordinates[1], coordinates[0]]);
 
-        const color = this.typeColors[document.resource.type];
+        const color = this.categoryColors[document.resource.category];
         const extraClasses = (this.selectedDocument && this.selectedDocument.resource.id == document.resource.id) ?
             'active' : '';
         const icon = MapComponent.generateMarkerIcon(color, extraClasses);
@@ -313,7 +313,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
             className = className + ' active';
         }
 
-        const style = { color: this.typeColors[document.resource.type], className: className };
+        const style = { color: this.categoryColors[document.resource.category], className: className };
 
         path.setStyle(style);
 
@@ -334,7 +334,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
     private setPathOptionsForParentDocument(path: L.Path, document: FieldDocument) {
 
         path.setStyle({
-            color: this.typeColors[document.resource.type],
+            color: this.categoryColors[document.resource.category],
             className: 'parent',
             interactive: false
         });

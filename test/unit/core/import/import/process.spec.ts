@@ -13,10 +13,10 @@ describe('process()', () => {
 
     let validator;
 
-    let opTypeNames = ['Trench'];
+    let operationCategoryNames = ['Trench'];
 
-    const existingFeature = {resource: {type: 'Feature', identifier: 'existingFeature', id: 'ef1', relations:{ isRecordedIn: ['et1']}}};
-    const existingFeature2 = {resource: {type: 'Feature', identifier: 'existingFeature2', id: 'ef2', relations:{ isRecordedIn: ['et2']}}};
+    const existingFeature = {resource: { category: 'Feature', identifier: 'existingFeature', id: 'ef1', relations: { isRecordedIn: ['et1'] } } };
+    const existingFeature2 = {resource: { category: 'Feature', identifier: 'existingFeature2', id: 'ef2', relations :{ isRecordedIn: ['et2'] } } };
 
     const relationInverses = { isAfter: 'isBefore' };
 
@@ -24,8 +24,8 @@ describe('process()', () => {
 
         if (resourceId === 'ef1') return existingFeature;
         if (resourceId === 'ef2') return existingFeature2;
-        if (resourceId === 'et1') return {resource: {type: 'Trench', identifier: 'existingTrench', id: 'et1', relations:{ }}};
-        if (resourceId === 'et2') return {resource: {type: 'Trench', identifier: 'existingTrench2', id: 'et2', relations:{ }}};
+        if (resourceId === 'et1') return { resource: { category: 'Trench', identifier: 'existingTrench', id: 'et1', relations: {} } };
+        if (resourceId === 'et2') return { resource: { category: 'Trench', identifier: 'existingTrench2', id: 'et2', relations: {} } };
         else throw 'missing';
     };
 
@@ -45,7 +45,7 @@ describe('process()', () => {
         const result = await process([
                 d('nf1', 'Feature', 'newFeature', { liesWithin: ['et1'], isAfter: ['ef1']})
             ],
-            validator, opTypeNames, get, relationInverses, { mergeMode: false });
+            validator, operationCategoryNames, get, relationInverses, { mergeMode: false });
 
         expect(result[1][0].resource.relations['isBefore'][0]).toEqual('nf1');
         done();
@@ -57,7 +57,7 @@ describe('process()', () => {
         const result = await process([
             d('nf1', 'Feature', 'newFeature', { liesWithin: ['et1'] })
             ],
-            validator, opTypeNames, get, relationInverses, { mergeMode: false });
+            validator, operationCategoryNames, get, relationInverses, { mergeMode: false });
 
         const resource = result[0][0].resource;
         expect(resource.id).toBe('nf1');
@@ -73,7 +73,7 @@ describe('process()', () => {
             [
                 d('nf1', 'Feature', 'newFeature', { liesWithin: ['et1'] })
             ],
-            validator, opTypeNames, get, relationInverses, { mergeMode: false });
+            validator, operationCategoryNames, get, relationInverses, { mergeMode: false });
 
         const resource = result[0][0].resource;
         expect(resource.id).toBe('nf1');
@@ -88,7 +88,7 @@ describe('process()', () => {
         const result = await process([
                 d('nf1', 'Feature', 'newFeature', { liesWithin: ['ef1']})
             ],
-            validator, opTypeNames, get, relationInverses,
+            validator, operationCategoryNames, get, relationInverses,
             {});
 
         const resource = result[0][0].resource;
@@ -105,7 +105,7 @@ describe('process()', () => {
             d('t', 'Trench', 'zero')
         ],
             validator,
-            opTypeNames,
+            operationCategoryNames,
             get, relationInverses);
 
         const resource = result[0][0].resource;
@@ -122,7 +122,7 @@ describe('process()', () => {
             d('tOne', 'Trench', 'one'),
             d('fTwo', 'Feature', 'two', { liesWithin: ['tOne'] })
         ],
-            validator, opTypeNames, get, relationInverses);
+            validator, operationCategoryNames, get, relationInverses);
 
         const resource = result[0][1].resource;
         expect(resource.identifier).toBe('two');
@@ -137,7 +137,7 @@ describe('process()', () => {
         const result = await process([
             d('nf1', 'Feature', 'two', { liesWithin: ['nt1'] }),
             d('nt1', 'Trench', 'one')
-        ], validator, opTypeNames, get, relationInverses);
+        ], validator, operationCategoryNames, get, relationInverses);
 
         const resource = result[0][0].resource;
         expect(resource.identifier).toBe('two');
@@ -153,7 +153,7 @@ describe('process()', () => {
             d('nt1', 'Trench', 'one'),
             d('nf1', 'Feature', 'two', { liesWithin: ['nt1'] }),
             d('nfi1', 'Find', 'three', { liesWithin: ['nf1'] })
-        ], validator, opTypeNames, get, relationInverses);
+        ], validator, operationCategoryNames, get, relationInverses);
 
         const resource = result[0][2].resource;
         expect(resource.identifier).toBe('three');
@@ -169,7 +169,7 @@ describe('process()', () => {
             d('nfi1', 'Find', 'three', { liesWithin: ['nf1'] }),
             d('nf1', 'Feature', 'two', { liesWithin: ['nt1'] }),
             d('nt1', 'Trench', 'one')
-        ], validator, opTypeNames, get, relationInverses);
+        ], validator, operationCategoryNames, get, relationInverses);
 
         const resource = result[0][0].resource;
         expect(resource.identifier).toBe('three');
@@ -183,7 +183,7 @@ describe('process()', () => {
 
         const result = await process([
             d('nf1', 'Feature', 'one', { liesWithin: ['et1'] })
-        ], validator, opTypeNames, get, relationInverses);
+        ], validator, operationCategoryNames, get, relationInverses);
 
         const resource = result[0][0].resource;
         expect(resource.relations[RECORDED_IN][0]).toBe('et1');
@@ -196,7 +196,7 @@ describe('process()', () => {
 
         const result = await process([
                 d('nf1', 'Feature', 'one')
-            ],validator, opTypeNames, get, relationInverses, { mainTypeDocumentId: 'et1' });
+            ],validator, operationCategoryNames, get, relationInverses, { operationId: 'et1' });
 
         const resource = result[0][0].resource;
         expect(resource.relations[RECORDED_IN][0]).toBe('et1');
@@ -210,7 +210,7 @@ describe('process()', () => {
         const result = await process([
             d('nf1', 'Feature', 'one', { liesWithin: ['et1'] }),
             d('nfi1', 'Find', 'two', { liesWithin: ['nf1'] })
-        ], validator, opTypeNames, get, relationInverses);
+        ], validator, operationCategoryNames, get, relationInverses);
 
         expect(result[0][0].resource.relations[RECORDED_IN][0]).toBe('et1');
         expect(result[0][0].resource.relations[LIES_WITHIN]).toBeUndefined();
@@ -225,7 +225,7 @@ describe('process()', () => {
         const result = await process([
             d('nfi1', 'Find', 'two', { liesWithin: ['nf1'] }),
             d('nf1', 'Feature', 'one', { liesWithin: ['et1']})
-        ], validator, opTypeNames, get, relationInverses);
+        ], validator, operationCategoryNames, get, relationInverses);
 
         expect(result[0][0].resource.relations[RECORDED_IN][0]).toBe('et1');
         expect(result[0][0].resource.relations[LIES_WITHIN][0]).toBe('nf1');
@@ -240,7 +240,7 @@ describe('process()', () => {
         const result = await process([
                 d('nf1', 'Feature', 'one'),
                 d('nfi1', 'Find', 'two', { liesWithin: ['nf1'] })
-            ],validator, opTypeNames, get, relationInverses, { mainTypeDocumentId: 'et1' });
+            ],validator, operationCategoryNames, get, relationInverses, { operationId: 'et1' });
 
         expect(result[0][0].resource.relations[RECORDED_IN][0]).toBe('et1');
         expect(result[0][0].resource.relations[LIES_WITHIN]).toBeUndefined();
@@ -255,7 +255,7 @@ describe('process()', () => {
         const result = await process([
             d('nfi1', 'Find', 'two', { liesWithin: ['nf1'] }),
             d('nf1', 'Feature', 'one')
-        ],validator, opTypeNames, get, relationInverses, { mainTypeDocumentId: 'et1' });
+        ],validator, operationCategoryNames, get, relationInverses, { operationId: 'et1' });
 
         expect(result[0][0].resource.relations[RECORDED_IN][0]).toBe('et1');
         expect(result[0][0].resource.relations[LIES_WITHIN][0]).toBe('nf1');
@@ -269,7 +269,7 @@ describe('process()', () => {
 
         const result = await process([
             d('nf1', 'Feature', 'one', { liesWithin: ['ef1']})
-        ], validator, opTypeNames, get, relationInverses, { mainTypeDocumentId: 'et1' });
+        ], validator, operationCategoryNames, get, relationInverses, { operationId: 'et1' });
 
         const resource = result[0][0].resource;
         expect(resource.id).toBe('nf1');
@@ -288,7 +288,7 @@ describe('process()', () => {
             created: { user: '', date: new Date() },
             modified: [],
             resource: {
-                type: 'Feature',
+                category: 'Feature',
                 identifier: 'existingFeature',
                 field: 'new',
                 id: '1',
@@ -298,7 +298,7 @@ describe('process()', () => {
         };
         (document as any)['mergeTarget'] = existingFeature;
 
-        const result = await process([document], validator, opTypeNames, get, relationInverses, { mergeMode: true });
+        const result = await process([document], validator, operationCategoryNames, get, relationInverses, { mergeMode: true });
 
         const resource = result[0][0].resource;
         expect(resource.id).toBe('ef1');
@@ -315,7 +315,7 @@ describe('process()', () => {
         (document as any)['mergeTarget'] = existingFeature;
 
         const result = await process([document],
-            validator, opTypeNames, get, relationInverses, { mergeMode: true });
+            validator, operationCategoryNames, get, relationInverses, { mergeMode: true });
 
         expect(result[0][0].resource.relations['isAfter'][0]).toEqual('ef2');
         expect(result[1][0].resource.id).toEqual('ef2');
@@ -330,7 +330,7 @@ describe('process()', () => {
         (document as any)['mergeTarget'] = existingFeature2;
 
         const result = await process([document],
-            validator, opTypeNames, get, relationInverses, { mergeMode: true });
+            validator, operationCategoryNames, get, relationInverses, { mergeMode: true });
 
         const resource = result[0][0].resource;
         expect(resource.relations[RECORDED_IN][0]).toBe('et1');
@@ -345,7 +345,7 @@ describe('process()', () => {
         (document as any)['mergeTarget'] = existingFeature;
 
         const result = await process([document],
-            validator, opTypeNames, get, relationInverses, { mergeMode: true });
+            validator, operationCategoryNames, get, relationInverses, { mergeMode: true });
 
         expect(result[0].length).toBe(0);
         expect(result[2]).not.toBeUndefined();
@@ -362,7 +362,7 @@ describe('process()', () => {
         const result = await process([
                 d('nfi1', 'Find', 'one', { isChildOf: 'et1'})
             ],
-            validator, opTypeNames, get, relationInverses);
+            validator, operationCategoryNames, get, relationInverses);
 
         expect(result[2][0]).toEqual(E.INVALID_FIELDS);
         done();
@@ -375,7 +375,7 @@ describe('process()', () => {
         const result = await process([
             d('nfi1', 'Find', 'one', { isChildOf: 'et1'})
         ],
-            validator, opTypeNames, get, relationInverses);
+            validator, operationCategoryNames, get, relationInverses);
 
         expect(result[2][0]).toEqual(E.MUST_LIE_WITHIN_OTHER_NON_OPERATON_RESOURCE);
         done();
@@ -386,7 +386,7 @@ describe('process()', () => {
 
         const result = await process([
             d('nf1', 'Feature', 'one', { liesWithin: ['ef2']})
-        ], validator, opTypeNames, get, relationInverses, { mainTypeDocumentId: 'et1' });
+        ], validator, operationCategoryNames, get, relationInverses, { operationId: 'et1' });
 
         expect(result[2][0]).toEqual(E.LIES_WITHIN_TARGET_NOT_MATCHES_ON_IS_RECORDED_IN);
         expect(result[2][1]).toEqual('one');
@@ -399,7 +399,7 @@ describe('process()', () => {
         const result = await process(<any>[
             d('nf1', 'Feature', 'dup', { liesWithin: ['etc1']}),
             d('nf2', 'Feature', 'dup', { liesWithin: ['etc1']}),
-        ], validator, opTypeNames, get, relationInverses);
+        ], validator, operationCategoryNames, get, relationInverses);
 
         const error = result[2];
         expect(error[0]).toEqual(E.DUPLICATE_IDENTIFIER);
@@ -408,11 +408,11 @@ describe('process()', () => {
     });
 
 
-    it('clash of assigned main type id with use of parent', async done => {
+    it('clash of assigned operation id with use of parent', async done => {
 
         const result = await process([
             d('nf1', 'Feature', 'one', { liesWithin: ['et1']})
-        ], validator, opTypeNames, get, relationInverses, { mainTypeDocumentId: 'et1'});
+        ], validator, operationCategoryNames, get, relationInverses, { operationId: 'et1'});
         expect(result[2][0]).toEqual(E.PARENT_ASSIGNMENT_TO_OPERATIONS_NOT_ALLOWED);
         done();
     });
@@ -425,7 +425,7 @@ describe('process()', () => {
         const result = await process([
             d('nf1', 'Feature', 'one')
         ],
-            validator, opTypeNames, get, relationInverses);
+            validator, operationCategoryNames, get, relationInverses);
         expect(result[2][0]).toEqual(E.NO_PARENT_ASSIGNED);
         done();
     });
@@ -437,7 +437,7 @@ describe('process()', () => {
 
         const result = await process([
             d('nf1', 'Feature', 'one')
-        ],validator, opTypeNames, get, relationInverses, { mainTypeDocumentId: 'et1' });
+        ],validator, operationCategoryNames, get, relationInverses, { operationId: 'et1' });
 
         expect(result[2][0]).toEqual(E.INVALID_FIELDS);
         expect(result[2][1]).toEqual('invalidField');
@@ -451,7 +451,7 @@ describe('process()', () => {
 
         const result = await process([
             d('nf1', 'Feature', 'one')
-        ],validator, opTypeNames, get, relationInverses, { mainTypeDocumentId: 'et1' });
+        ],validator, operationCategoryNames, get, relationInverses, { operationId: 'et1' });
 
         expect(result[2][0]).toEqual(E.INVALID_DROPDOWN_RANGE_VALUES);
         expect(result[2][1]).toEqual('abc');

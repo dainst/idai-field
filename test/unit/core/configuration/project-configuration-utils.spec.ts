@@ -26,9 +26,11 @@ describe('ProjectConfigurationUtils', () => {
          categories: [{
             name: A,
             parent: P,
+            description: { 'de': '' },
             fields: [{ name: 'a', inputType: InputType.INPUT }]
          }, {
             name: P,
+            description: { 'de': '' },
             fields: [{ name: 'p', inputType: InputType.INPUT }]
          }]
       };
@@ -63,17 +65,19 @@ describe('ProjectConfigurationUtils', () => {
          identifier: '',
          categories: [{
             name: T,
-            fields:
-                [
-                    {
-                       name: FieldResource.SHORTDESCRIPTION,
-                       inputType: InputType.INPUT,
-                       group: Groups.STEM },
-                   {
-                      name: FieldResource.IDENTIFIER,
-                      inputType: InputType.INPUT,
-                      group: Groups.STEM }
-                ]
+            description: { 'de': '' },
+            fields: [
+                 {
+                    name: FieldResource.SHORTDESCRIPTION,
+                    inputType: InputType.INPUT,
+                    group: Groups.STEM
+                 },
+                {
+                   name: FieldResource.IDENTIFIER,
+                   inputType: InputType.INPUT,
+                   group: Groups.STEM
+                }
+             ]
          }]
       };
 

@@ -66,9 +66,29 @@ describe('Import/Subsystem', () => {
 
     it('create a find with csv import', async done => {
 
-        const stored = await datastore.create({ resource: { identifier: 't1', category: 'Trench', shortDescription: 'Our Trench 1', relations: {}}});
-        const t = Category.build({ name: 'Find', fields:[{ name: 'dating', inputType: 'dating'}, { name: 'shortDescription', inputType: 'input'}]});
-        t['groups'] = [{ fields: [{ name: 'dating', inputType: 'dating'}, { name: 'shortDescription', inputType: 'input'}] }] as any; // TODO review
+        const stored = await datastore.create({
+            resource: {
+                identifier: 't1',
+                category: 'Trench',
+                shortDescription: 'Our Trench 1',
+                relations: {}
+            }
+        });
+
+        const t = Category.build({
+            name: 'Find', description: { 'de': '' },
+            fields: [
+                { name: 'dating', inputType: 'dating' },
+                { name: 'shortDescription', inputType: 'input' }
+            ]
+        });
+
+        t['groups'] = [{
+            fields: [
+                { name: 'dating', inputType: 'dating' },
+                { name: 'shortDescription', inputType: 'input' }
+            ]
+        }] as any; // TODO review
 
         await Importer.doImport(
             'csv',
@@ -101,22 +121,35 @@ describe('Import/Subsystem', () => {
 
     it('update a find with csv import', async done => {
 
-        await datastore.create(
-            { resource:
-                    {
-                        identifier: 'f1',
-                        category: 'Find',
-                        shortDescription: 'originalSD',
-                        relations: {},
-                        dating: [
-                            { type: 'exact', end: { year: -2000, inputYear: 2000, inputType: 'bce' } },
-                            { type: 'exact', end: { year: -3000, inputYear: 3000, inputType: 'bce' } }
-                        ]
-                    }
+        await datastore.create({
+            resource:
+                {
+                    identifier: 'f1',
+                    category: 'Find',
+                    shortDescription: 'originalSD',
+                    relations: {},
+                    dating: [
+                        { type: 'exact', end: { year: -2000, inputYear: 2000, inputType: 'bce' } },
+                        { type: 'exact', end: { year: -3000, inputYear: 3000, inputType: 'bce' } }
+                    ]
+                }
             });
 
-        const t = Category.build({ name: 'Find', fields:[{ name: 'dating', inputType: 'dating' }, { name: 'shortDescription', inputType: 'input' }] });
-        t['groups'] = [{ fields: [{ name: 'dating', inputType: 'dating'}, { name: 'shortDescription', inputType: 'input' }] }] as any; // TODO review
+        const t = Category.build({
+            name: 'Find',
+            description: { 'de': '' },
+            fields: [
+                { name: 'dating', inputType: 'dating' },
+                { name: 'shortDescription', inputType: 'input' }
+            ]
+        });
+
+        t['groups'] = [{
+            fields: [
+                { name: 'dating', inputType: 'dating' },
+                { name: 'shortDescription', inputType: 'input' }
+            ]
+        }] as any; // TODO review
 
         await Importer.doImport(
             'csv',

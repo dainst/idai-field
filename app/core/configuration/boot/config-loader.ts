@@ -6,7 +6,6 @@ import {ConfigurationValidation} from './configuration-validation';
 import {ConfigReader} from './config-reader';
 import {RelationDefinition} from '../model/relation-definition';
 import {FieldDefinition} from '../model/field-definition';
-import {ConfigurationDefinition} from './configuration-definition';
 import {buildCategories} from './build-categories';
 import {BuiltinCategoryDefinition} from '../model/builtin-category-definition';
 import {LibraryCategoryDefinition} from '../model/library-category-definition';
@@ -34,7 +33,7 @@ export class ConfigLoader {
             visible: false
         } as FieldDefinition,
         category: {
-            label: this.i18n({ id: 'configuration.defaultFields.category', value: 'Kategorie' }),
+            label: this.i18n({ id: 'configuration.defaultFields.category', value: 'Kategorie' }), // TODO put to language conf
             visible: false,
             editable: false
         } as FieldDefinition
@@ -60,7 +59,7 @@ export class ConfigLoader {
         );
         if (missingRelationCategoryErrors.length > 0) throw missingRelationCategoryErrors;
 
-        const appConfiguration = await this.preprocess(
+        return await this.preprocess(
             configDirPath,
             registeredCategories,
             commonFields,
@@ -69,8 +68,6 @@ export class ConfigLoader {
             extraFields,
             customConfigurationName,
             locale);
-
-        return new ProjectConfiguration(appConfiguration);
     }
 
 
@@ -91,7 +88,7 @@ export class ConfigLoader {
                              relations: Array<RelationDefinition>,
                              extraFields: { [fieldName: string]: FieldDefinition },
                              customConfigurationName: string|undefined,
-                             locale: string): Promise<ConfigurationDefinition> {
+                             locale: string): Promise<ProjectConfiguration> {
 
         const languageConfigurationPath = configDirPath + '/Library/Language.' + locale + '.json';
         const orderConfigurationPath = configDirPath + '/Order.json';
@@ -122,29 +119,29 @@ export class ConfigLoader {
             throw [[msgWithParams]];
         }
 
-
         // unused: Preprocessing.prepareSameMainCategoryResource(appConfiguration);
         // unused: Preprocessing.setIsRecordedInVisibilities(appConfiguration); See #8992
 
-        try { // TODO extract this block
+        try {
 
-            return buildCategories(
-                builtinCategories,
-                libraryCategories,
-                customCategories,
-                commonFields,
-                valuelistsConfiguration,
-                {...this.defaultFields, ...extraFields},
-                relations,
-                languageConfiguration,
-                customLanguageConfiguration,
-                searchConfiguration,
-                orderConfiguration,
-                (categories: any) => {
-                    const fieldValidationErrors = ConfigurationValidation.validateFieldDefinitions(categories);
-                    if (fieldValidationErrors.length > 0) throw fieldValidationErrors;
-                    return categories;
-                });
+            return new ProjectConfiguration(
+                buildCategories(
+                    builtinCategories,
+                    libraryCategories,
+                    customCategories,
+                    commonFields,
+                    valuelistsConfiguration,
+                    {...this.defaultFields, ...extraFields},
+                    relations,
+                    languageConfiguration,
+                    customLanguageConfiguration,
+                    searchConfiguration,
+                    orderConfiguration,
+                    (categories: any) => {
+                        const fieldValidationErrors = ConfigurationValidation.validateFieldDefinitions(categories);
+                        if (fieldValidationErrors.length > 0) throw fieldValidationErrors;
+                        return categories;
+                    }));
 
         } catch (msgWithParams) {
             throw [msgWithParams];

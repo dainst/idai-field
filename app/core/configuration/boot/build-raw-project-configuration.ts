@@ -70,7 +70,9 @@ export function buildRawProjectConfiguration(builtInCategories: Map<BuiltinCateg
                 addExtraFieldsOrder(orderConfiguration),
                 orderFields(orderConfiguration),
                 validateFields,
-                makeCategoriesMap)),
+                makeCategoriesMap
+                // TODO map dissoc fields
+            )),
         ({categories, relations}: any) => ([categories, relations]));
 }
 

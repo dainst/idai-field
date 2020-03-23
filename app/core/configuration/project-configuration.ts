@@ -23,14 +23,14 @@ export class ProjectConfiguration {
 
     public static UNKNOWN_CATEGORY_ERROR = 'ProjectConfiguration.Errors.UnknownCategory';
 
-    private categoriesMap: Map<Category> = {};
+    private categoriesMap: Map<Category>;
 
-    private relations: Array<RelationDefinition> = [];
+    private relations: Array<RelationDefinition>;
 
 
     constructor([categories, relations]: RawProjectConfiguration) {
 
-        this.categoriesMap = categories;
+        this.categoriesMap = categories || {};
         this.relations = relations || [];
     }
 

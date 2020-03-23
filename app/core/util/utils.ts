@@ -83,7 +83,7 @@ export function assocReduce<T,A>(f: (a: A, i?: number|string) => [string|number,
 }
 
 
-/** o(bject)reduce - experimental */
+/** o(bject)reduce - experimental TODO review if this is the same as map */
 export function oreduce<T,A>(f: (acc: Map<T>, a: A, i?: string|number) => void, target: Map<T>) {
 
     return reduce(
@@ -177,7 +177,7 @@ export const byName = (a: Named, b: Named) => SortUtil.alnumCompare(a.name, b.na
 
 export type NameIdentifiedObjectArray<A extends Named> = Array<A>;
 
-type NamesIdentifiedObjectArray = Array<Named>;
+type NameIdentifiedObjectArray = Array<Named>;
 
 
 

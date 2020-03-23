@@ -12,7 +12,7 @@ import {byName} from '../../../../../app/core/util/utils';
 
 const categories = left;
 
-describe('buildCategories', () => { // TODO test groups in idai type of types map
+describe('buildRawProjectConfiguration', () => { // TODO test groups in idai type of types map
 
     it('auto-select parent if child defined',  () => {
 

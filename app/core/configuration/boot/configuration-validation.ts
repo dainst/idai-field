@@ -44,14 +44,13 @@ export module ConfigurationValidation {
      * Searches for missing mandatory categories or duplicate categories.
      * Returns on the first occurrence of either one.
      *
-     * @param configuration
      * @returns {Array<string>} msgWithParams. undefined if no error.
      */
-    export function validateFieldDefinitions(configuration: ConfigurationDefinition): Array<Array<string>> {
+    export function validateFieldDefinitions(categories: any): Array<Array<string>> {
 
         let msgs: any[] = [];
 
-        const fieldError = validateFieldDefinitions__(configuration.categories);
+        const fieldError = validateFieldDefinitions__(categories);
         if (fieldError.length) msgs = msgs.concat(fieldError);
 
         return msgs;

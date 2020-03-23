@@ -140,10 +140,10 @@ export class ConfigLoader {
                 customLanguageConfiguration,
                 searchConfiguration,
                 orderConfiguration,
-                (config: any) => {
-                    const fieldValidationErrors = ConfigurationValidation.validateFieldDefinitions(config);
+                (categories: any) => {
+                    const fieldValidationErrors = ConfigurationValidation.validateFieldDefinitions(categories);
                     if (fieldValidationErrors.length > 0) throw fieldValidationErrors;
-                    return config;
+                    return categories;
                 });
 
         } catch (msgWithParams) {

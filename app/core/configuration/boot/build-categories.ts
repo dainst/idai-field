@@ -64,7 +64,7 @@ export function buildCategories(builtInCategories: Map<BuiltinCategoryDefinition
         applySearchConfiguration(searchConfiguration),
         addExtraFieldsOrder(orderConfiguration),
         getOrderedCategories(orderConfiguration), // TODO review: first we order, then we throw the order away
-        validateFields,
+        update('categories', validateFields),
         update('categories', makeCategoriesMap));
 }
 

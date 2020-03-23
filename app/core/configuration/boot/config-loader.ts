@@ -126,6 +126,7 @@ export class ConfigLoader {
 
         let conf: ConfigurationDefinition;
         try {
+
             conf = buildCategories(
                 builtinCategories,
                 libraryCategories,
@@ -135,17 +136,15 @@ export class ConfigLoader {
                 {...this.defaultFields, ...extraFields},
                 relations,
                 languageConfiguration,
-                customLanguageConfiguration,);
+                customLanguageConfiguration,
+                searchConfiguration);
+
         } catch (msgWithParams) {
             throw [msgWithParams];
         }
 
         try {
-            return Preprocessing.preprocess2(
-                conf,
-                searchConfiguration,
-                orderConfiguration);
-
+            return Preprocessing.preprocess2(conf, orderConfiguration);
         } catch (msgWithParams) {
             throw [[msgWithParams]];
         }

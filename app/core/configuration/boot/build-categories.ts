@@ -19,6 +19,7 @@ import {RelationDefinition} from '../model/relation-definition';
 import {addRelations} from './add-relations';
 import {applyLanguage} from './apply-language';
 import {ConfigurationDefinition} from './configuration-definition';
+import {applySearchConfiguration} from './apply-search-configuration';
 
 
 /**
@@ -33,7 +34,8 @@ export function buildCategories(builtInCategories: Map<BuiltinCategoryDefinition
                                 extraFields: Map = {},
                                 relations: Array<RelationDefinition> = [],
                                 languageConfiguration: any = {},
-                                customLanguageConfiguration: any = {}): ConfigurationDefinition {
+                                customLanguageConfiguration: any = {},
+                                searchConfiguration: any = {}): ConfigurationDefinition {
 
     Assertions.performAssertions(builtInCategories, libraryCategories, customCategories, commonFields, valuelistsConfiguration);
     addSourceField(builtInCategories, libraryCategories, customCategories, commonFields);
@@ -54,7 +56,8 @@ export function buildCategories(builtInCategories: Map<BuiltinCategoryDefinition
         wrapCategoriesInObject,
         addRelations(relations),
         applyLanguage(languageConfiguration),
-        applyLanguage(customLanguageConfiguration));
+        applyLanguage(customLanguageConfiguration),
+        applySearchConfiguration(searchConfiguration));
 }
 
 

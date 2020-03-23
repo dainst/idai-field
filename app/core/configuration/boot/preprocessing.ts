@@ -12,10 +12,9 @@ import {ConfigurationDefinition} from './configuration-definition';
 export module Preprocessing {
 
     export function preprocess2(appConfiguration: any,
-                                searchConfiguration: any,
                                 orderConfiguration: any) {
 
-        applySearchConfiguration(appConfiguration, searchConfiguration);
+
         addExtraFieldsOrder(appConfiguration, orderConfiguration);
 
         return {
@@ -23,38 +22,6 @@ export module Preprocessing {
             relations: appConfiguration.relations,
             categories: getOrderedCategories(appConfiguration, orderConfiguration)
         } as ConfigurationDefinition;
-    }
-
-
-
-
-
-    export function applySearchConfiguration(configuration: UnorderedConfigurationDefinition,
-                                             searchConfiguration: any) {
-
-        Object.keys(searchConfiguration).forEach(categoryName => {
-            const category: CategoryDefinition = configuration.categories[categoryName];
-            if (!category) return;
-
-            applySearchConfigurationForCategory(searchConfiguration, category, categoryName, 'fulltext',
-                'fulltextIndexed');
-            applySearchConfigurationForCategory(searchConfiguration, category, categoryName, 'constraint',
-                'constraintIndexed');
-        });
-    }
-
-
-    function applySearchConfigurationForCategory(searchConfiguration: any, category: CategoryDefinition,
-                                                 categoryName: string, indexType: string,
-                                                 indexFieldName: string) {
-
-        const fulltextFieldNames: string[]|undefined = searchConfiguration[categoryName][indexType];
-        if (!fulltextFieldNames) return;
-
-        fulltextFieldNames.forEach(fieldName => {
-            const field = category.fields[fieldName];
-            if (field) field[indexFieldName] = true;
-        });
     }
 
 

@@ -2,13 +2,14 @@ import {Map} from 'tsfun';
 import {LibraryCategoryDefinition} from '../../../../../app/core/configuration/model/library-category-definition';
 import {Preprocessing} from '../../../../../app/core/configuration/boot/preprocessing';
 import {CategoryDefinition} from '../../../../../app/core/configuration/model/category-definition';
+import {applySearchConfiguration} from '../../../../../app/core/configuration/boot/apply-search-configuration';
 
 
 /**
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-describe('Preprocessing', () => {
+describe('applySearchConfiguration', () => {
 
     let configuration;
     let t1: LibraryCategoryDefinition;
@@ -55,7 +56,7 @@ describe('Preprocessing', () => {
             }
         };
 
-        Preprocessing.applySearchConfiguration(configuration, searchConfiguration);
+        applySearchConfiguration(searchConfiguration)(configuration);
 
         expect(configuration.categories['A'].fields['a1'].fulltextIndexed).toBeTruthy();
         expect(configuration.categories['A'].fields['a2'].fulltextIndexed).toBeFalsy();
@@ -65,28 +66,3 @@ describe('Preprocessing', () => {
         expect(configuration.categories['A'].fields['a3'].constraintIndexed).toBeTruthy();
     });
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

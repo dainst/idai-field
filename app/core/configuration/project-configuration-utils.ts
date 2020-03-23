@@ -19,9 +19,9 @@ import {GroupUtil} from './group-util';
  */
 export module ProjectConfigurationUtils {
 
-    // TODO reimplement; test
     import sortGroups = GroupUtil.sortGroups;
 
+    // TODO reimplement; test
     export function getCategoryAndSubcategories(projectCategoriesMap: Map<Category>,
                                                 supercategoryName: string): Map<Category> {
 

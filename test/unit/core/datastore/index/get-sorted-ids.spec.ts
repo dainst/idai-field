@@ -25,7 +25,7 @@ describe('getSortedIds', () => {
     });
 
 
-    it('rankTypes', () => {
+    it('rankCategories', () => {
 
         const indexItems = [
             { id: 'c', identifier: '1', instances: { 'h': 'Terracotta', 'i': 'Terracotta' }  },
@@ -35,21 +35,21 @@ describe('getSortedIds', () => {
 
         const result1 = getSortedIds(indexItems as any,
             {
-                types: ['Type'],
-                sort: { matchType: 'Pottery' }
+                categories: ['Type'],
+                sort: { matchCategory: 'Pottery' }
             });
         expect(result1).toEqual(['a', 'b', 'c']);
 
         const result2 = getSortedIds(indexItems as any,
             {
-                types: ['Type'],
-                sort: { matchType: 'Terracotta' }
+                categories: ['Type'],
+                sort: { matchCategory: 'Terracotta' }
             });
         expect(result2).toEqual(['c', 'b', 'a']);
     });
 
 
-    it('rankTypes - sort by type, then by count', () => {
+    it('rankCategories - sort by category, then by count', () => {
 
         const indexItems = [
             { id: 'b', identifier: '1', instances: { 'c': 'Terracotta'}  },
@@ -58,8 +58,8 @@ describe('getSortedIds', () => {
 
         const result1 = getSortedIds(indexItems as any,
             {
-                types: ['Type'],
-                sort: { matchType: 'Terracotta' }
+                categories: ['Type'],
+                sort: { matchCategory: 'Terracotta' }
             });
         expect(result1).toEqual(['a', 'b']);
     });

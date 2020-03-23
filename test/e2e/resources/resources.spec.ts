@@ -34,7 +34,7 @@ const common = require('../common');
  *   showing in docedit afterwards
  * move
  *   contextMenu/moveModal
- * typechange
+ * change category
  * docedit/images
  *
  * @author Daniel de Oliveira
@@ -322,20 +322,22 @@ describe('resources --', () => {
     });
 
 
-    it('typechange', () => {
+    it('change category', () => {
 
-        // toggleRangeOnOff to child type
+        // toggleRangeOnOff to child category
         ResourcesPage.performCreateResource('1', 'feature');
         DetailSidebarPage.doubleClickEditDocument('1');
-        DoceditPage.clickTypeSwitcherButton();
-        DoceditPage.clickTypeSwitcherOption('feature-architecture');
+        DoceditPage.clickCategorySwitcherButton();
+        DoceditPage.clickCategorySwitcherOption('feature-architecture');
         browser.wait(EC.stalenessOf(element(by.id('message-0'))), delays.ECWaitTime);
         DoceditPage.clickSaveDocument();
         ResourcesPage.clickSelectResource('1', 'info');
-        FieldsViewPage.getFieldValue(0, 0).then(typeLabel => expect(typeLabel).toEqual('Architektur'));
+        FieldsViewPage.getFieldValue(0, 0).then(categoryLabel => {
+            expect(categoryLabel).toEqual('Architektur');
+        });
 
 
-        // delete invalid fields when changing the type of a resource to its parent type
+        // delete invalid fields when changing the category of a resource to its parent category
         DetailSidebarPage.doubleClickEditDocument('1');
 
         DoceditPage.clickGotoChildPropertiesTab();
@@ -345,17 +347,21 @@ describe('resources --', () => {
         browser.sleep(delays.shortRest);
         // ResourcesPage.clickSelectResource('1', 'info');
         FieldsViewPage.clickAccordionTab(1);
-        FieldsViewPage.getFieldValue(1, 0).then(fieldValue => expect(fieldValue).toEqual('Außenmauer'));
+        FieldsViewPage.getFieldValue(1, 0).then(fieldValue => {
+            expect(fieldValue).toEqual('Außenmauer');
+        });
         DetailSidebarPage.doubleClickEditDocument('1');
-        DoceditPage.clickTypeSwitcherButton();
-        DoceditPage.clickTypeSwitcherOption('feature');
-        NavbarPage.awaitAlert('Bitte beachten Sie, dass die Daten der folgenden Felder beim Speichern verloren ' +
-            'gehen: Mauertyp');
+        DoceditPage.clickCategorySwitcherButton();
+        DoceditPage.clickCategorySwitcherOption('feature');
+        NavbarPage.awaitAlert('Bitte beachten Sie, dass die Daten der folgenden Felder beim Speichern ' +
+            'verloren gehen: Mauertyp');
         NavbarPage.clickCloseAllMessages();
         DoceditPage.clickSaveDocument();
 
         FieldsViewPage.clickAccordionTab(0);
-        FieldsViewPage.getFieldValue(0, 0).then(fieldValue => expect(fieldValue).toEqual('Stratigraphische Einheit'));
+        FieldsViewPage.getFieldValue(0, 0).then(fieldValue => {
+            expect(fieldValue).toEqual('Stratigraphische Einheit');
+        });
         FieldsViewPage.getTabs().then(tabs => expect(tabs.length).toBe(1));
     });
 
@@ -363,7 +369,7 @@ describe('resources --', () => {
     xit('hide the new resource button while creating a new resource', () => {
 
         ResourcesPage.clickCreateResource();
-        ResourcesPage.clickSelectResourceType();
+        ResourcesPage.clickSelectCategory();
         ResourcesPage.clickSelectGeometryType('point');
         ResourcesPage.getListItemMarkedNewEls().then(els => expect(els.length).toBe(1));
         browser.wait(EC.stalenessOf(ResourcesPage.getCreateDocumentButton()), delays.ECWaitTime);
@@ -373,7 +379,7 @@ describe('resources --', () => {
     xit('remove new resource from list if docedit modal is canceled during resource creation', () => {
 
         ResourcesPage.clickCreateResource();
-        ResourcesPage.clickSelectResourceType();
+        ResourcesPage.clickSelectCategory();
         ResourcesPage.clickSelectGeometryType('point');
         ResourcesPage.getListItemMarkedNewEls().then(els => expect(els.length).toBe(1));
         MapPage.clickMapOption('ok');
@@ -399,7 +405,7 @@ describe('resources --', () => {
     xit('create two instances of a new resource', () => {
 
         ResourcesPage.clickCreateResource();
-        ResourcesPage.clickSelectResourceType();
+        ResourcesPage.clickSelectCategory();
         ResourcesPage.clickSelectGeometryType();
         DoceditPage.typeInInputField('identifier', 'resource1');
         DoceditPage.clickDuplicateDocument();
@@ -457,29 +463,29 @@ describe('resources --', () => {
     });
 
 
-    it('contextMenu/moveModal - show only type filter options for allowed parent types in move modal', () => {
+    it('contextMenu/moveModal - show only category filter options for allowed parent categories in move modal', () => {
 
         browser.sleep(delays.shortRest * 2);
         ResourcesPage.clickOpenContextMenu('SE0');
         ResourcesPage.clickContextMenuMoveButton();
-        SearchBarPage.clickTypeFilterButton('modal');
-        SearchBarPage.getTypeFilterOptionLabels().then(labels => {
+        SearchBarPage.clickCategoryFilterButton('modal');
+        SearchBarPage.getCategoryFilterOptionLabels().then(labels => {
             expect(labels.length).toBe(7);
             expect(labels[0].getText()).toEqual('Schnitt');
             expect(labels[1].getText()).toEqual('Stratigraphische Einheit');
         });
-        SearchBarPage.clickTypeFilterButton('modal');
+        SearchBarPage.clickCategoryFilterButton('modal');
         ResourcesPage.clickCancelInMoveModal();
 
         NavbarPage.clickTab('project');
         ResourcesPage.clickOpenContextMenu('S1');
         ResourcesPage.clickContextMenuMoveButton();
-        SearchBarPage.clickTypeFilterButton('modal');
-        SearchBarPage.getTypeFilterOptionLabels().then(labels => {
+        SearchBarPage.clickCategoryFilterButton('modal');
+        SearchBarPage.getCategoryFilterOptionLabels().then(labels => {
             expect(labels.length).toBe(1);
             expect(labels[0].getText()).toEqual('Ort');
         });
-        SearchBarPage.clickTypeFilterButton('modal');
+        SearchBarPage.clickCategoryFilterButton('modal');
         ResourcesPage.clickCancelInMoveModal();
     });
 
@@ -489,7 +495,7 @@ describe('resources --', () => {
         browser.sleep(delays.shortRest * 2);
         ResourcesPage.clickOpenContextMenu('SE0');
         ResourcesPage.clickContextMenuMoveButton();
-        SearchBarPage.clickChooseTypeFilter('trench', 'modal');
+        SearchBarPage.clickChooseCategoryFilter('trench', 'modal');
         ResourcesPage.getResourceIdentifierLabelsInMoveModal().then(labels => {
            for (let label of labels) expect(label.getText()).not.toEqual('S1');
         });
@@ -500,7 +506,7 @@ describe('resources --', () => {
         ResourcesPage.clickOpenContextMenu('testf1');
         browser.sleep(delays.shortRest * 2);
         ResourcesPage.clickContextMenuMoveButton();
-        SearchBarPage.clickChooseTypeFilter('feature', 'modal');
+        SearchBarPage.clickChooseCategoryFilter('feature', 'modal');
         ResourcesPage.getResourceIdentifierLabelsInMoveModal().then(labels => {
             for (let label of labels) expect(label.getText()).not.toEqual('SE0');
         });
@@ -518,7 +524,7 @@ describe('resources --', () => {
         ResourcesPage.clickOperationNavigationButton();
         ResourcesPage.clickOpenContextMenu('SE0');
         ResourcesPage.clickContextMenuMoveButton();
-        SearchBarPage.clickChooseTypeFilter('feature', 'modal');
+        SearchBarPage.clickChooseCategoryFilter('feature', 'modal');
         ResourcesPage.getResourceIdentifierLabelsInMoveModal().then(labels => {
             for (let label of labels) {
                 expect(label.getText()).not.toEqual('SE-D1');

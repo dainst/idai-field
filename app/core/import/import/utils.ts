@@ -16,10 +16,10 @@ export const unionOfDocuments = unionBy(on('resource.id'));
 export const makeDocumentsLookup = makeLookup('resource.id');
 
 
-export function assertLegalCombination(mergeMode: boolean|undefined, mainTypeDocumentId: string|undefined) {
+export function assertLegalCombination(mergeMode: boolean|undefined, operationId: string|undefined) {
 
-    if (mainTypeDocumentId && mergeMode) {
-        throw 'FATAL ERROR - illegal argument combination - mainTypeDocumentId and mergeIfExists must not be both truthy';
+    if (operationId && mergeMode) {
+        throw 'FATAL ERROR - illegal argument combination - operationId and mergeIfExists must not be both truthy';
     }
 }
 

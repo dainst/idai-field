@@ -7,12 +7,13 @@ import {Document, FieldDocument, FeatureDocument} from 'idai-components-2';
  */
 export class Static {
 
-    public static fieldDoc = (sd, identifier?, type?, id?) => Static.doc(sd, identifier, type, id) as FieldDocument;
+    public static fieldDoc = (sd, identifier?, category?, id?) =>
+        Static.doc(sd, identifier, category, id) as FieldDocument;
 
 
-    public static featureDoc = (sd, identifier?, type?, id?) => {
+    public static featureDoc = (sd, identifier?, category?, id?) => {
 
-        const doc = Static.doc(sd, identifier, type, id) as FeatureDocument;
+        const doc = Static.doc(sd, identifier, category, id) as FeatureDocument;
         doc.resource.relations.isContemporaryWith = [];
         doc.resource.relations.isBefore = [];
         doc.resource.relations.isAfter = [];
@@ -20,10 +21,10 @@ export class Static {
     };
 
 
-    public static doc(sd, identifier?, type?, id?): Document {
+    public static doc(sd, identifier?, category?, id?): Document {
 
         if (!identifier) identifier = 'identifer';
-        if (!type) type = 'Find';
+        if (!category) category = 'Find';
         const doc: Document = {
             _id: 'A',
             resource : {
@@ -31,7 +32,7 @@ export class Static {
                 shortDescription: sd,
                 identifier: identifier,
                 title: 'title',
-                type: type,
+                category: category,
                 relations : {}
             },
             created: {

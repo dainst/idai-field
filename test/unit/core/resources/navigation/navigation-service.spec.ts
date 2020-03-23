@@ -18,7 +18,7 @@ describe('NavigationService', () => {
 
         projectConfiguration = jasmine.createSpyObj(
             'pc',
-            ['getRelationDefinitions', 'getTypesMap']
+            ['getRelationDefinitions', 'getCategoriesMap']
         );
 
         navigationService = new NavigationService(projectConfiguration, undefined, viewFacade);
@@ -28,15 +28,15 @@ describe('NavigationService', () => {
     });
 
 
-    it('show jump to view buttons in overview for operation subtypes ', () => {
+    it('show jump to view buttons in overview for operation subcategories ', () => {
 
         viewFacade.isInOverview.and.returnValue(true);
-        projectConfiguration.getTypesMap.and.returnValue({
-            Operation: { children: [ { name: 'operationSubtype' } ] }
+        projectConfiguration.getCategoriesMap.and.returnValue({
+            Operation: { children: [ { name: 'operationSubcategory' } ] }
         });
 
         expect(navigationService.showJumpToViewOption(
-            Static.fieldDoc('abc', 'def', 'operationSubtype', 'jkl'))
+            Static.fieldDoc('abc', 'def', 'operationSubcategory', 'jkl'))
         ).toEqual(true);
     });
 
@@ -44,7 +44,7 @@ describe('NavigationService', () => {
     it('show move into buttons for resources that can be a liesWithin target', () => {
 
         projectConfiguration.getRelationDefinitions.and.returnValue(
-            [{name: 'liesWithin'}]
+            [{ name: 'liesWithin' }]
         );
 
         expect(navigationService.shouldShowArrowBottomRight(
@@ -56,7 +56,7 @@ describe('NavigationService', () => {
     it('do not show move into buttons for resources that cannot be a liesWithin target', () => {
 
         projectConfiguration.getRelationDefinitions.and.returnValue(
-            [{name: 'abc'}]
+            [{ name: 'abc' }]
         );
 
         expect(navigationService.shouldShowArrowBottomRight(
@@ -68,7 +68,7 @@ describe('NavigationService', () => {
     it('do not show move into buttons for newly created resources without id', () => {
 
         projectConfiguration.getRelationDefinitions.and.returnValue(
-            [{name: 'liesWithin'}]
+            [{ name: 'liesWithin' }]
         );
 
         expect(navigationService.shouldShowArrowBottomRight(
@@ -82,8 +82,8 @@ describe('NavigationService', () => {
         viewFacade.isInOverview.and.returnValue(true);
         viewFacade.isInExtendedSearchMode.and.returnValue(true);
 
-        projectConfiguration.getTypesMap.and.returnValue({
-            Operation: { children: [ { name: 'operationSubtype' } ] }
+        projectConfiguration.getCategoriesMap.and.returnValue({
+            Operation: { children: [ { name: 'operationSubcategory' } ] }
         });
 
         expect(navigationService.shouldShowArrowBottomRight(
@@ -91,7 +91,7 @@ describe('NavigationService', () => {
         ).toEqual(false);
 
         expect(navigationService.showJumpToViewOption(
-            Static.fieldDoc('abc', 'def', 'operationSubtype', 'jkl'))
+            Static.fieldDoc('abc', 'def', 'operationSubcategory', 'jkl'))
         ).toEqual(false);
     });
 });

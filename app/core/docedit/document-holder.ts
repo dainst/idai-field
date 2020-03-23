@@ -5,12 +5,12 @@ import {Validator} from '../model/validator';
 import {PersistenceManager} from '../model/persistence-manager';
 import {DocumentDatastore} from '../datastore/document-datastore';
 import {Validations} from '../model/validations';
-import {ProjectTypes} from '../configuration/project-types';
+import {ProjectCategories} from '../configuration/project-categories';
 import {UsernameProvider} from '../settings/username-provider';
 import {DuplicationUtil} from './duplication-util';
 import {ProjectConfiguration} from '../configuration/project-configuration';
 import {FieldDefinition} from '../configuration/model/field-definition';
-import {IdaiType} from '../configuration/model/idai-type';
+import {Category} from '../configuration/model/category';
 import {trimFields} from '../util/trim-fields';
 import {DoceditErrors} from './docedit-errors';
 
@@ -41,7 +41,7 @@ export class DocumentHolder {
         private projectConfiguration: ProjectConfiguration,
         private persistenceManager: PersistenceManager,
         private validator: Validator,
-        private projectTypes: ProjectTypes,
+        private projectCategories: ProjectCategories,
         private usernameProvider: UsernameProvider,
         private datastore: DocumentDatastore) {
     }
@@ -55,9 +55,9 @@ export class DocumentHolder {
     }
 
 
-    public changeType(newType: string) {
+    public changeCategories(newCategory: string) {
 
-        this.clonedDocument.resource.type = newType;
+        this.clonedDocument.resource.category = newCategory;
 
         return {
             invalidFields: this.validateFields(),
@@ -146,11 +146,12 @@ export class DocumentHolder {
 
     private convertStringsToNumbers() {
 
-        const type: IdaiType = this.projectConfiguration.getTypesMap()[this.clonedDocument.resource.type];
+        const category: Category = this.projectConfiguration
+            .getCategoriesMap()[this.clonedDocument.resource.category];
 
         for (let fieldName in this.clonedDocument.resource) {
             const field: FieldDefinition|undefined
-                = IdaiType.getFields(type).find(field => field.name === fieldName);
+                = Category.getFields(category).find(field => field.name === fieldName);
             if (!field) continue;
 
             if (field.inputType === 'unsignedInt') {

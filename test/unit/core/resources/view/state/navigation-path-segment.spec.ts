@@ -12,7 +12,7 @@ describe('NavigationPathSegment', () => {
 
         const document: FieldDocument = Static.fieldDoc('', 'Feature', 'Feature', 'f');
         document.resource.relations.isRecordedIn = ['t'];
-        const segments: Array<NavigationPathSegment> = [{ document: document, q: '', types: [] }];
+        const segments: Array<NavigationPathSegment> = [{ document: document, q: '', categories: [] }];
 
         expect(NavigationPathSegment.isValid(
             't', segments[0], segments, () => true)
@@ -24,7 +24,7 @@ describe('NavigationPathSegment', () => {
 
         const document: FieldDocument = Static.fieldDoc('', 'Feature', 'Feature', 'f');
         document.resource.relations.isRecordedIn = ['t2'];
-        const segments: Array<NavigationPathSegment> = [{ document: document, q: '', types: [] }];
+        const segments: Array<NavigationPathSegment> = [{ document: document, q: '', categories: [] }];
 
         expect(NavigationPathSegment.isValid(
             't1', segments[0], segments, () => true)
@@ -32,10 +32,10 @@ describe('NavigationPathSegment', () => {
     });
 
 
-    it('consider the first segment valid if the corresponding document is of type Place', () => {
+    it('consider the first segment valid if the corresponding document is of category Place', () => {
 
         const document: FieldDocument = Static.fieldDoc('', 'Place', 'Place', 'p');
-        const segments: Array<NavigationPathSegment> = [{ document: document, q: '', types: [] }];
+        const segments: Array<NavigationPathSegment> = [{ document: document, q: '', categories: [] }];
 
         expect(NavigationPathSegment.isValid(
             'project', segments[0], segments, () => true)
@@ -43,12 +43,12 @@ describe('NavigationPathSegment', () => {
     });
 
 
-    it('consider the first segment valid if the corresponding document is of type TypeCatalog', () => {
+    it('consider the first segment valid if the corresponding document is of category TypeCatalog', () => {
 
         const document: FieldDocument = Static.fieldDoc(
             '', 'TypeCatalog', 'TypeCatalog','tc'
         );
-        const segments: Array<NavigationPathSegment> = [{ document: document, q: '', types: [] }];
+        const segments: Array<NavigationPathSegment> = [{ document: document, q: '', categories: [] }];
 
 
         expect(NavigationPathSegment.isValid(
@@ -64,8 +64,8 @@ describe('NavigationPathSegment', () => {
         document2.resource.relations.liesWithin = ['f1'];
 
         const segments: Array<NavigationPathSegment> = [
-            { document: document1, q: '', types: [] },
-            { document: document2, q: '', types: [] }
+            { document: document1, q: '', categories: [] },
+            { document: document2, q: '', categories: [] }
         ];
 
         expect(NavigationPathSegment.isValid(
@@ -81,8 +81,8 @@ describe('NavigationPathSegment', () => {
         document2.resource.relations.liesWithin = ['f3'];
 
         const segments: Array<NavigationPathSegment> = [
-            { document: document1, q: '', types: [] },
-            { document: document2, q: '', types: [] }
+            { document: document1, q: '', categories: [] },
+            { document: document2, q: '', categories: [] }
         ];
 
         expect(NavigationPathSegment.isValid(
@@ -98,8 +98,8 @@ describe('NavigationPathSegment', () => {
         document2.resource.relations.liesWithin = ['f1'];
 
         const segments: Array<NavigationPathSegment> = [
-            { document: document1, q: '', types: [] },
-            { document: document2, q: '', types: [] }
+            { document: document1, q: '', categories: [] },
+            { document: document2, q: '', categories: [] }
         ];
 
         expect(NavigationPathSegment.isValid(

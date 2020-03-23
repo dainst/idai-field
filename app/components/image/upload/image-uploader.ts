@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {Document, NewImageDocument} from 'idai-components-2';
-import {ImageTypePickerModalComponent} from './image-type-picker-modal.component';
+import {ImageCategoryPickerModalComponent} from './image-category-picker-modal.component';
 import {UploadModalComponent} from './upload-modal.component';
 import {ExtensionUtil} from '../../../core/util/extension-util';
 import {UploadStatus} from './upload-status';
@@ -10,7 +10,7 @@ import {DocumentReadDatastore} from '../../../core/datastore/document-read-datas
 import {ImageReadDatastore} from '../../../core/datastore/field/image-read-datastore';
 import {UsernameProvider} from '../../../core/settings/username-provider';
 import {M} from '../../messages/m';
-import {IdaiType} from '../../../core/configuration/model/idai-type';
+import {Category} from '../../../core/configuration/model/category';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
 import {Imagestore} from '../../../core/images/imagestore/imagestore';
 import {IdaiFieldFindResult} from '../../../core/datastore/cached/cached-read-datastore';
@@ -66,9 +66,13 @@ export class ImageUploader {
         const imageFiles = files.filter(file =>
             ImageUploader.supportedImageFileTypes.includes(ExtensionUtil.getExtension(file)));
         if (imageFiles.length) {
-            const type = await this.chooseType(imageFiles.length, depictsRelationTarget);
-            const uploadModalRef = this.modalService.open(UploadModalComponent, { backdrop: 'static', keyboard: false });
-            uploadResult = await this.uploadImageFiles(imageFiles, type, uploadResult, depictsRelationTarget);
+            const category: Category = await this.chooseCategory(imageFiles.length, depictsRelationTarget);
+            const uploadModalRef = this.modalService.open(
+                UploadModalComponent, { backdrop: 'static', keyboard: false }
+                );
+            uploadResult = await this.uploadImageFiles(
+                imageFiles, category, uploadResult, depictsRelationTarget
+            );
             uploadModalRef.close();
         }
 
@@ -97,25 +101,27 @@ export class ImageUploader {
     }
 
 
-    private async chooseType(fileCount: number, depictsRelationTarget?: Document): Promise<IdaiType> {
+    private async chooseCategory(fileCount: number, depictsRelationTarget?: Document): Promise<Category> {
 
-        const imageType: IdaiType = this.projectConfiguration.getTypesTree()['Image'];
-        if ((imageType.children && imageType.children.length > 0) || fileCount >= 100 || depictsRelationTarget) {
-            const modal: NgbModalRef
-                = this.modalService.open(ImageTypePickerModalComponent, { backdrop: 'static', keyboard: false });
+        const imageCategory: Category = this.projectConfiguration.getCategoriesTree()['Image'];
+        if ((imageCategory.children && imageCategory.children.length > 0)
+                || fileCount >= 100 || depictsRelationTarget) {
+            const modal: NgbModalRef = this.modalService.open(
+                ImageCategoryPickerModalComponent, { backdrop: 'static', keyboard: false }
+            );
 
             modal.componentInstance.fileCount = fileCount;
             modal.componentInstance.depictsRelationTarget = depictsRelationTarget;
 
             return await modal.result;
         } else {
-            return imageType;
+            return imageCategory;
         }
     }
 
 
-    private async uploadImageFiles(files: Array<File>, type: IdaiType, uploadResult: ImageUploadResult,
-                        depictsRelationTarget?: Document): Promise<ImageUploadResult> {
+    private async uploadImageFiles(files: Array<File>, category: Category, uploadResult: ImageUploadResult,
+                                   depictsRelationTarget?: Document): Promise<ImageUploadResult> {
 
         if (!files) return uploadResult;
 
@@ -133,7 +139,7 @@ export class ImageUploader {
                     if (result.totalCount > 0) {
                         duplicateFilenames.push(file.name);
                     } else {
-                        await this.uploadFile(file, type, depictsRelationTarget);
+                        await this.uploadFile(file, category, depictsRelationTarget);
                     }
                     this.uploadStatus.setHandledImages(this.uploadStatus.getHandledImages() + 1);
                 } catch(e) {
@@ -202,14 +208,14 @@ export class ImageUploader {
     }
 
 
-    private uploadFile(file: File, type: IdaiType, depictsRelationTarget?: Document): Promise<any> {
+    private uploadFile(file: File, category: Category, depictsRelationTarget?: Document): Promise<any> {
 
         return new Promise<any>((resolve, reject) => {
 
             let reader = new FileReader();
             reader.onloadend = (that => {
                 return () => {
-                    that.createImageDocument(file, type, depictsRelationTarget)
+                    that.createImageDocument(file, category, depictsRelationTarget)
                         .catch(error => {
                             console.error(error);
                             reject([M.IMAGESTORE_ERROR_UPLOAD, file.name]);
@@ -238,7 +244,8 @@ export class ImageUploader {
     }
 
 
-    private createImageDocument(file: File, type: IdaiType, depictsRelationTarget?: Document): Promise<any> {
+    private createImageDocument(file: File, category: Category,
+                                depictsRelationTarget?: Document): Promise<any> {
 
         return new Promise((resolve, reject) => {
 
@@ -249,7 +256,7 @@ export class ImageUploader {
                     resource: {
                         identifier: file.name,
                         shortDescription: '',
-                        type: type.name,
+                        category: category.name,
                         originalFilename: file.name,
                         width: img.width,
                         height: img.height,

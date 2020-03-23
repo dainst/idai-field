@@ -1,9 +1,9 @@
-/**
- * @author Thomas Kleinke
- */
 import {Tab} from './tab';
 
 
+/**
+ * @author Thomas Kleinke
+ */
 export module TabUtil {
 
     export function getTabId(tab: Tab): string {

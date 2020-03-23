@@ -173,7 +173,7 @@ export class EditableMapComponent extends LayerMapComponent {
 
     private createEditableMarker(position: L.LatLng): L.Marker {
 
-        const color: string = this.typeColors[this.selectedDocument.resource.type];
+        const color: string = this.categoryColors[this.selectedDocument.resource.category];
         const editableMarker: L.Marker = L.marker(position, {
             icon: EditableMapComponent.generateMarkerIcon(color, 'active'),
             draggable: true,
@@ -203,7 +203,10 @@ export class EditableMapComponent extends LayerMapComponent {
         const drawOptions = {
             templineStyle: { className: 'templine' },
             hintlineStyle: { className: 'hintline' },
-            pathOptions: { className: className, color: this.typeColors[this.selectedDocument.resource.type] }
+            pathOptions: {
+                className: className,
+                color: this.categoryColors[this.selectedDocument.resource.category]
+            }
         };
 
         this.map.pm.enableDraw(drawMode, drawOptions);
@@ -536,7 +539,7 @@ export class EditableMapComponent extends LayerMapComponent {
     private startPointEditing() {
 
         this.editableMarkers = this.markers[this.selectedDocument.resource.id];
-        const color: string = this.typeColors[this.selectedDocument.resource.type];
+        const color: string = this.categoryColors[this.selectedDocument.resource.category];
 
         for (let editableMarker of this.editableMarkers) {
             editableMarker.setIcon(EditableMapComponent.generateMarkerIcon(color, ''));
@@ -561,7 +564,7 @@ export class EditableMapComponent extends LayerMapComponent {
 
     private setSelectedMarker(marker: L.Marker) {
 
-        const color: string = this.typeColors[this.selectedDocument.resource.type];
+        const color: string = this.categoryColors[this.selectedDocument.resource.category];
 
         if (this.selectedMarker) {
             this.selectedMarker.setIcon(EditableMapComponent.generateMarkerIcon(color, ''));

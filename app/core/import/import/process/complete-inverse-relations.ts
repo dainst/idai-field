@@ -1,6 +1,5 @@
-import {compose, filter, flatten, flow, forEach, intersect, isDefined,
-    isNot, isUndefinedOrEmpty, lookup, keys, values, empty, pairWith,
-    map, remove, subtract, to, undefinedOrEmpty, throws} from 'tsfun';
+import {compose, filter, flatten, flow, forEach, intersect, isDefined, isNot, isUndefinedOrEmpty, lookup,
+    keys, values, empty, pairWith, map, remove, subtract, to, undefinedOrEmpty, throws} from 'tsfun';
 import {Document, Relations} from 'idai-components-2';
 import {ImportErrors as E} from '../import-errors';
 import {HierarchicalRelations, PositionRelations, TimeRelations} from '../../../model/relation-constants';
@@ -26,7 +25,7 @@ import {InverseRelationsMap} from '../../../configuration/inverse-relations-map'
  *
  * @param get
  * @param inverseRelationsMap
- * @param assertIsAllowedRelationDomainType
+ * @param assertIsAllowedRelationDomainCategory
  * @param mergeMode
  *
  * @param importDocuments If one of these references another from the import file, the validity of the relations gets checked
@@ -48,7 +47,7 @@ import {InverseRelationsMap} from '../../../configuration/inverse-relations-map'
 export async function completeInverseRelations(importDocuments: Array<Document>,
                                                get: (_: string) => Promise<Document>,
                                                inverseRelationsMap: InverseRelationsMap,
-                                               assertIsAllowedRelationDomainType: AssertIsAllowedRelationDomainType = () => {},
+                                               assertIsAllowedRelationDomainCategory: AssertIsAllowedRelationDomainType = () => {},
                                                mergeMode: boolean = false): Promise<Array<Document>> {
 
     const documentsLookup = makeDocumentsLookup(importDocuments);
@@ -57,20 +56,19 @@ export async function completeInverseRelations(importDocuments: Array<Document>,
         importDocuments,
         documentsLookup,
         inverseRelationsMap,
-        assertIsAllowedRelationDomainType);
+        assertIsAllowedRelationDomainCategory);
 
     return await setInverseRelationsForDbResources(
         importDocuments,
         getTargetIds(mergeMode, get, documentsLookup),
         get,
         inverseRelationsMap,
-        assertIsAllowedRelationDomainType,
+        assertIsAllowedRelationDomainCategory,
         [LIES_WITHIN, RECORDED_IN]);
 }
 
 
-function getTargetIds(mergeMode: boolean,
-                      get: (_: string) => Promise<Document>,
+function getTargetIds(mergeMode: boolean, get: (_: string) => Promise<Document>,
                       documentsLookup: { [_: string]: Document },) {
 
     return async (document: Document): Promise<[ResourceId[], ResourceId[]]>  => {
@@ -96,8 +94,7 @@ function getTargetIds(mergeMode: boolean,
 }
 
 
-function targetIdsReferingToDbResources(document: Document,
-                                        documentsLookup: { [_: string]: Document }) {
+function targetIdsReferingToDbResources(document: Document, documentsLookup: { [_: string]: Document }) {
 
     return flow(
         document.resource.relations,
@@ -110,7 +107,7 @@ function targetIdsReferingToDbResources(document: Document,
 function setInverseRelationsForImportResources(importDocuments: Array<Document>,
                                                documentsLookup: { [_: string]: Document },
                                                inverseRelationsMap: InverseRelationsMap,
-                                               assertIsAllowedRelationDomainType: AssertIsAllowedRelationDomainType): void {
+                                               assertIsAllowedRelationDomainCategory: AssertIsAllowedRelationDomainType): void {
 
     for (let importDocument of importDocuments) {
 
@@ -118,22 +115,21 @@ function setInverseRelationsForImportResources(importDocuments: Array<Document>,
             keys,
             map(pairWith(lookup(inverseRelationsMap))),
             forEach(assertNotBadlyInterrelated(importDocument)),
-            forEach(setInverses(importDocument, documentsLookup, assertIsAllowedRelationDomainType)));
+            forEach(setInverses(importDocument, documentsLookup, assertIsAllowedRelationDomainCategory)));
     }
 }
 
 
-function setInverses(importDocument: Document,
-                     documentsLookup: { [_: string]: Document },
-                     assertIsAllowedRelationDomainType: AssertIsAllowedRelationDomainType) {
+function setInverses(importDocument: Document, documentsLookup: { [_: string]: Document },
+                     assertIsAllowedRelationDomainCategory: AssertIsAllowedRelationDomainType) {
 
     return ([relationName, inverseRelationName]: [string, string|undefined]) => {
 
-        const assertIsAllowedRelationDomainType_ = (targetDocument: Document) => {
+        const assertIsAllowedRelationDomainCategory_ = (targetDocument: Document) => {
 
-            assertIsAllowedRelationDomainType(
-                importDocument.resource.type,
-                targetDocument.resource.type,
+            assertIsAllowedRelationDomainCategory(
+                importDocument.resource.category,
+                targetDocument.resource.category,
                 relationName,
                 importDocument.resource.identifier);
         };
@@ -142,7 +138,7 @@ function setInverses(importDocument: Document,
             importDocument.resource.relations[relationName],
             map(lookup(documentsLookup)),
             filter(isDefined),
-            forEach(assertIsAllowedRelationDomainType_));
+            forEach(assertIsAllowedRelationDomainCategory_));
 
         if (!inverseRelationName) return;
         if (inverseRelationName === HierarchicalRelations.INCLUDES) return;

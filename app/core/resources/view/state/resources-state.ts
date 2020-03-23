@@ -31,11 +31,11 @@ export module ResourcesState {
     }
 
 
-    export function getTypeFilters(state: ResourcesState) {
+    export function getCategoryFilters(state: ResourcesState) {
 
         return viewState(state).bypassHierarchy
-            ? viewState(state).searchContext.types
-            : NavigationPath.getTypeFilters(getNavigationPath(state));
+            ? viewState(state).searchContext.categories
+            : NavigationPath.getCategoryFilters(getNavigationPath(state));
     }
 
 
@@ -110,12 +110,12 @@ export module ResourcesState {
     }
 
 
-    export function setTypeFilters(state: ResourcesState, types: string[]) {
+    export function setCategoryFilters(state: ResourcesState, categories: string[]) {
 
         if (viewState(state).bypassHierarchy) {
-            viewState(state).searchContext.types = types;
+            viewState(state).searchContext.categories = categories;
         } else {
-            NavigationPath.setTypeFilters(getNavigationPath(state), types);
+            NavigationPath.setCategoryFilters(getNavigationPath(state), categories);
             updateNavigationPath(state, getNavigationPath(state));
         }
     }

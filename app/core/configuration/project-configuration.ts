@@ -1,18 +1,19 @@
-import {flow, map, values, to, on, isNot, empty, filter, is, isUndefined} from 'tsfun';
-import {IdaiType} from './model/idai-type';
+import {flow, map, values, to, on, isNot, empty, filter, is, isUndefined, Pair, Map} from 'tsfun';
+import {Category} from './model/category';
 import {FieldDefinition} from './model/field-definition';
 import {RelationDefinition} from './model/relation-definition';
-import {ProjectConfigurationUtils} from './project-configuration-utils';
-import {ConfigurationDefinition} from './boot/configuration-definition';
+
+
+export type RawProjectConfiguration = Pair<Map<Category>, Array<RelationDefinition>>;
 
 
 /**
  * ProjectConfiguration maintains the current projects properties.
- * Amongst them is the set of types for the current project,
+ * Amongst them is the set of categories for the current project,
  * which ProjectConfiguration provides to its clients.
  *
- * Within a project, objects of the available types can get created,
- * where every type is a configuration of different fields.
+ * Within a project, objects of the available categories can get created,
+ * where every name is a configuration of different fields.
  *
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
@@ -20,17 +21,17 @@ import {ConfigurationDefinition} from './boot/configuration-definition';
  */
 export class ProjectConfiguration {
 
-    public static UNKNOWN_TYPE_ERROR = 'ProjectConfiguration.Errors.UnknownType';
+    public static UNKNOWN_CATEGORY_ERROR = 'ProjectConfiguration.Errors.UnknownCategory';
 
-    private typesMap: { [typeName: string]: IdaiType } = {};
+    private categoriesMap: Map<Category>;
 
-    private relations: Array<RelationDefinition> = [];
+    private relations: Array<RelationDefinition>;
 
 
-    constructor(configuration: ConfigurationDefinition) {
+    constructor([categories, relations]: RawProjectConfiguration) {
 
-        this.typesMap = ProjectConfigurationUtils.makeTypesMap(configuration);
-        this.relations = configuration.relations || [];
+        this.categoriesMap = categories || {};
+        this.relations = relations || [];
     }
 
 
@@ -40,67 +41,68 @@ export class ProjectConfiguration {
     }
 
 
-    public isSubtype(typeName: string, superTypeName: string): boolean {
+    public isSubcategory(categoryName: string, superCategoryName: string): boolean {
 
-        const type: any = this.getTypesMap()[typeName];
-        if (!type) throw [ProjectConfiguration.UNKNOWN_TYPE_ERROR, typeName];
-        return type.name === superTypeName
-            || (type.parentType?.name && type.parentType.name === superTypeName);
+        const category: Category = this.getCategoriesMap()[categoryName];
+        if (!category) throw [ProjectConfiguration.UNKNOWN_CATEGORY_ERROR, categoryName];
+
+        return category.name === superCategoryName
+            || (category.parentCategory?.name !== undefined
+                && category.parentCategory.name === superCategoryName);
     }
 
 
-    public getTypeAndSubtypes(superTypeName: string): { [typeName: string]: IdaiType } {
+    public getCategoryAndSubcategories(supercategoryName: string): { [categoryName: string]: Category } {
 
-        return ProjectConfigurationUtils.getTypeAndSubtypes(this.getTypesMap(), superTypeName);
+        return this.getCategoryAndSubcategories_(supercategoryName);
     }
 
 
-    public getTypesList(): Array<IdaiType> {
+    public getCategoriesList(): Array<Category> {
 
-        return values(this.typesMap);
+        return values(this.categoriesMap);
     }
 
 
-    public getTypesMap(): { [typeName: string]: IdaiType } {
+    public getCategoriesMap(): { [categoryName: string]: Category } {
 
-        return this.typesMap;
+        return this.categoriesMap;
     }
 
 
-    public getTypesTree(): { [typeName: string]: IdaiType } {
+    public getCategoriesTree(): { [categoryName: string]: Category } {
 
-        return filter(on(IdaiType.PARENTTYPE, isUndefined))(this.typesMap);
+        return filter(on(Category.PARENT_CATEGORY, isUndefined))(this.categoriesMap);
     }
 
 
     /**
      * Gets the relation definitions available.
      *
-     * @param typeName the name of the type to get the relation definitions for.
-     * @param isRangeType If true, get relation definitions where the given type is part of the relation's range
-     *                    (instead of domain)
+     * @param categoryName the name of the category to get the relation definitions for.
+     * @param isRangeCategory If true, get relation definitions where the given category is part of the relation's
+     * range (instead of domain)
      * @param property to give only the definitions with a certain boolean property not set or set to true
-     * @returns {Array<RelationDefinition>} the definitions for the type.
+     * @returns {Array<RelationDefinition>} the definitions for the category.
      */
-    public getRelationDefinitions(typeName: string,
-                                  isRangeType: boolean = false,
+    public getRelationDefinitions(categoryName: string, isRangeCategory: boolean = false,
                                   property?: string): Array<RelationDefinition> {
 
-        return ProjectConfigurationUtils.getRelationDefinitions(
-            this.relations, typeName, isRangeType, property);
+        return this.getRelationDefinitions_(categoryName, isRangeCategory, property);
     }
 
     /**
-     * @returns {boolean} True if the given domain type is a valid domain type for a relation definition which has the
-     * given range type & name
+     * @returns {boolean} True if the given domain category is a valid domain name for a relation definition
+     * which has the given range category & name
      */
-    public isAllowedRelationDomainType(domainTypeName: string, rangeTypeName: string, relationName: string): boolean {
+    public isAllowedRelationDomainCategory(domainCategoryName: string, rangeCategoryName: string,
+                                           relationName: string): boolean {
 
-        const relationDefinitions = this.getRelationDefinitions(rangeTypeName, true);
+        const relationDefinitions = this.getRelationDefinitions(rangeCategoryName, true);
 
         for (let relationDefinition of relationDefinitions) {
             if (relationName === relationDefinition.name
-                && relationDefinition.domain.indexOf(domainTypeName) > -1) return true;
+                && relationDefinition.domain.indexOf(domainCategoryName) > -1) return true;
         }
 
         return false;
@@ -108,50 +110,50 @@ export class ProjectConfiguration {
 
 
     /**
-     * @param typeName
-     * @returns {any[]} the fields definitions for the type.
+     * @param categoryName
+     * @returns {any[]} the fields definitions for the category.
      */
-    public getFieldDefinitions(typeName: string): FieldDefinition[] {
+    public getFieldDefinitions(categoryName: string): FieldDefinition[] {
 
-        if (!this.typesMap[typeName]) return [];
-        return IdaiType.getFields(this.typesMap[typeName]);
+        if (!this.categoriesMap[categoryName]) return [];
+        return Category.getFields(this.categoriesMap[categoryName]);
     }
 
 
-    public getLabelForType(typeName: string): string {
+    public getLabelForCategory(categoryName: string): string {
 
-        if (!this.typesMap[typeName]) return '';
-        return this.typesMap[typeName].label;
+        if (!this.categoriesMap[categoryName]) return '';
+        return this.categoriesMap[categoryName].label;
     }
 
 
-    public getColorForType(typeName: string): string {
+    public getColorForCategory(categoryName: string): string {
 
-        return this.getTypeColors()[typeName];
+        return this.getCategoryColors()[categoryName];
     }
 
 
-    public getTextColorForType(typeName: string): string {
+    public getTextColorForCategory(categoryName: string): string {
 
-        return IdaiType.isBrightColor(this.getColorForType(typeName)) ? '#000000' : '#ffffff';
+        return Category.isBrightColor(this.getColorForCategory(categoryName)) ? '#000000' : '#ffffff';
     }
 
 
-    public getTypeColors() {
+    public getCategoryColors() {
 
-        return map(to(IdaiType.COLOR))(this.typesMap) as { [typeName: string]: string };
+        return map(to(Category.COLOR))(this.categoriesMap) as { [categoryName: string]: string };
     }
 
 
-    public isMandatory(typeName: string, fieldName: string): boolean {
+    public isMandatory(categoryName: string, fieldName: string): boolean {
 
-        return this.hasProperty(typeName, fieldName, FieldDefinition.MANDATORY);
+        return this.hasProperty(categoryName, fieldName, FieldDefinition.MANDATORY);
     }
 
 
-    public isVisible(typeName: string, fieldName: string): boolean {
+    public isVisible(categoryName: string, fieldName: string): boolean {
 
-        return this.hasProperty(typeName, fieldName, FieldDefinition.VISIBLE);
+        return this.hasProperty(categoryName, fieldName, FieldDefinition.VISIBLE);
     }
 
 
@@ -163,7 +165,7 @@ export class ProjectConfiguration {
      */
     public getRelationDefinitionLabel(relationName: string): string {
 
-        return IdaiType.getLabel(relationName, this.relations);
+        return Category.getLabel(relationName, this.relations);
     }
 
 
@@ -171,29 +173,70 @@ export class ProjectConfiguration {
      * Gets the label for the field if it is defined.
      * Otherwise it returns the fields definitions name.
      *
-     * @param typeName
+     * @param categoryName
      * @param fieldName
      * @returns {string}
-     * @throws {string} with an error description in case the type is not defined.
+     * @throws {string} with an error description in case the category is not defined.
      */
-    public getFieldDefinitionLabel(typeName: string, fieldName: string): string {
+    public getFieldDefinitionLabel(categoryName: string, fieldName: string): string {
 
-        const fieldDefinitions = this.getFieldDefinitions(typeName);
+        const fieldDefinitions = this.getFieldDefinitions(categoryName);
         if (fieldDefinitions.length === 0)
-            throw 'No type definition found for type \'' + typeName + '\'';
+            throw 'No category definition found for category \'' + categoryName + '\'';
 
-        return IdaiType.getLabel(fieldName, fieldDefinitions);
+        return Category.getLabel(fieldName, fieldDefinitions);
     }
 
 
-    private hasProperty(typeName: string, fieldName: string, propertyName: string) {
+    private hasProperty(categoryName: string, fieldName: string, propertyName: string) {
 
-        if (!this.typesMap[typeName]) return false;
+        if (!this.categoriesMap[categoryName]) return false;
 
         return flow(
-            IdaiType.getFields(this.typesMap[typeName]),
-            filter(on(IdaiType.NAME, is(fieldName))),
+            Category.getFields(this.categoriesMap[categoryName]),
+            filter(on(Category.NAME, is(fieldName))),
             filter(on(propertyName, is(true))),
-            isNot(empty));
+            isNot(empty)
+        );
+    }
+
+
+    private getRelationDefinitions_(categoryName: string, isRangeCategory: boolean = false, property?: string) {
+
+        const availableRelationFields: Array<RelationDefinition> = [];
+        for (let relationField of this.relations) {
+
+            const categories: string[] = isRangeCategory ? relationField.range : relationField.domain;
+            if (categories.indexOf(categoryName) > -1) {
+                if (!property ||
+                    (relationField as any)[property] == undefined ||
+                    (relationField as any)[property] == true) {
+                    availableRelationFields.push(relationField);
+                }
+            }
+        }
+        return availableRelationFields;
+    }
+
+
+    // TODO reimplement; test
+    private getCategoryAndSubcategories_(supercategoryName: string): Map<Category> {
+
+        const projectCategoriesMap: Map<Category> = this.getCategoriesMap();
+
+        const subcategories: any = {};
+
+        if (projectCategoriesMap[supercategoryName]) {
+            subcategories[supercategoryName] = projectCategoriesMap[supercategoryName];
+
+            if (projectCategoriesMap[supercategoryName].children) {
+                for (let i = projectCategoriesMap[supercategoryName].children.length - 1; i >= 0; i--) {
+                    subcategories[projectCategoriesMap[supercategoryName].children[i].name]
+                        = projectCategoriesMap[supercategoryName].children[i];
+                }
+            }
+        }
+
+        return subcategories;
     }
 }

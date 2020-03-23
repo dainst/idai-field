@@ -37,7 +37,7 @@ describe('DuplicationUtil', () => {
                     type: 'Point',
                     coordinates: [1.0, 1.0]
                 },
-                type: 'Find'
+                category: 'Find'
             },
             created: {
                 user: 'testuser',
@@ -81,7 +81,7 @@ describe('DuplicationUtil', () => {
     it('set unique identifier', async done => {
 
         identifiers = ['test1', 'test2', 'test3'];
-        const document: NewDocument = { resource: { identifier: 'test1', relations: {}, type: 'Find' } };
+        const document: NewDocument = { resource: { identifier: 'test1', relations: {}, category: 'Find' } };
 
         await DuplicationUtil.setUniqueIdentifierForDuplicate(
             document, 'test', 1, 1, validator
@@ -95,7 +95,7 @@ describe('DuplicationUtil', () => {
     it('keep min number of digits', async done => {
 
         identifiers = ['test-0001'];
-        const document: NewDocument = { resource: { identifier: 'test-0001', relations: {}, type: 'Find' } };
+        const document: NewDocument = { resource: { identifier: 'test-0001', relations: {}, category: 'Find' } };
 
         await DuplicationUtil.setUniqueIdentifierForDuplicate(
             document, 'test-', 1, 4, validator

@@ -20,25 +20,25 @@ describe('DocumentHolder', () => {
 
     beforeEach(() => {
 
-        const pconf = new ProjectConfiguration({
-            types: [{
-                type: 'Trench',
-                fields: [
+        const pconf = new ProjectConfiguration([
+            {Trench: {
+                name: 'Trench',
+                groups: [{ name: 'stem', fields: [
                     { name: 'id' },
-                    { name: 'type' },
+                    { name: 'category' },
                     { name: 'emptyfield' }
-                ]
-            }, {
-                type: 'Find',
-                fields: [
+                ]}]
+            }, Find: {
+                name: 'Find',
+                groups: [{name: 'stem', fields: [
                     { name: 'id' },
-                    { name: 'type' },
+                    { name: 'category' },
                     { name: 'unsignedIntField', inputType: 'unsignedInt' },
                     { name: 'unsignedFloatField', inputType: 'unsignedFloat' },
                     { name: 'floatField', inputType: 'float' }
-                ]
-            }],
-            relations: [
+                ]}]
+            }} as any
+            ,[
                 {
                     'name': 'isFoundOn',
                     'inverse': 'bears',
@@ -56,13 +56,12 @@ describe('DocumentHolder', () => {
                     'domain': ['Find'],
                     'range': ['Trench']
                 }
-            ]
-        } as any);
+            ]]);
 
         defaultDocument = {
             _id: '1',
             resource: {
-                type: 'Trench',
+                category: 'Trench',
                 id: '1',
                 emptyfield: '',
                 undeffield: 'some',
@@ -71,7 +70,7 @@ describe('DocumentHolder', () => {
                     'isFoundOn2': ['1'],
                     'undefrel': ['2']
                 }
-            },
+            } as any,
             modified: [],
             created: { user: 'a', date: new Date() }
         };
@@ -87,8 +86,8 @@ describe('DocumentHolder', () => {
             return Promise.resolve(changedDocument);
         });
 
-        const projectTypes = jasmine.createSpyObj('TypeUtility', ['getRegularTypeNames']);
-        projectTypes.getRegularTypeNames.and.returnValue(['Find']);
+        const projectCategories = jasmine.createSpyObj('ProjectCategories', ['getRegularCategoryNames']);
+        projectCategories.getRegularCategoryNames.and.returnValue(['Find']);
 
         const usernameProvider = jasmine.createSpyObj('UsernameProvider', ['getUsername']);
         datastore = jasmine.createSpyObj('Datastore', ['get']);
@@ -98,7 +97,7 @@ describe('DocumentHolder', () => {
             pconf,
             persistenceManager,
             validator,
-            projectTypes,
+            projectCategories,
             usernameProvider,
             datastore
         );
@@ -131,7 +130,7 @@ describe('DocumentHolder', () => {
 
         expect(savedDocument.resource.undeffield).toBeUndefined();
         expect(savedDocument.resource.emptyfield).toBeUndefined();
-        expect(savedDocument.resource.type).not.toBeUndefined();
+        expect(savedDocument.resource.category).not.toBeUndefined();
         done();
     });
 
@@ -161,11 +160,11 @@ describe('DocumentHolder', () => {
         const document: Document = {
             _id: '1',
             resource: {
-                type: 'Find',
+                category: 'Find',
                 id: '1',
                 identifier: '1',
                 relations: {}
-            },
+            } as any,
             modified: [],
             created: { user: 'a', date: new Date() }
         };
@@ -187,13 +186,13 @@ describe('DocumentHolder', () => {
         const document: Document = {
             _id: '1',
             resource: {
-                type: 'Find',
+                category: 'Find',
                 id: '1',
                 identifier: '1',
                 relations: {
                     isRecordedIn: ['tX']
                 }
-            },
+            } as any,
             modified: [],
             created: { user: 'a', date: new Date() }
         };
@@ -215,11 +214,11 @@ describe('DocumentHolder', () => {
         const document: Document = {
             _id: '1',
             resource: {
-                type: 'Trench',
+                category: 'Trench',
                 id: '1',
                 identifier: '1',
                 relations: {}
-            },
+            } as any,
             modified: [],
             created: { user: 'a', date: new Date() }
         };
@@ -241,14 +240,14 @@ describe('DocumentHolder', () => {
         const document: Document = {
             _id: '1',
             resource: {
-                type: 'Find',
+                category: 'Find',
                 id: '1',
                 identifier: '1',
                 unsignedIntField: '7',
                 unsignedFloatField: '7.49',
                 floatField: '-7.49',
                 relations: {}
-            },
+            } as any,
             modified: [],
             created: { user: 'a', date: new Date() }
         };

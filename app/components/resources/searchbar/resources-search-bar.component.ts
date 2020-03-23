@@ -1,6 +1,6 @@
 import {Component, ElementRef, Input} from '@angular/core';
 import {SearchBarComponent} from '../../widgets/search-bar.component';
-import {ProjectTypes} from '../../../core/configuration/project-types';
+import {ProjectCategories} from '../../../core/configuration/project-categories';
 
 @Component({
     moduleId: module.id,
@@ -21,15 +21,15 @@ export class ResourcesSearchBarComponent extends SearchBarComponent {
 
 
     constructor(private elementRef: ElementRef,
-                projectTypes: ProjectTypes) {
+                projectCategories: ProjectCategories) {
 
-        super(projectTypes);
+        super(projectCategories);
     }
 
 
-    public getSelectedType(): string|undefined {
+    public getSelectedCategory(): string|undefined {
 
-        return this.types !== undefined && this.types.length > 0 ? this.types[0] : undefined
+        return this.categories !== undefined && this.categories.length > 0 ? this.categories[0] : undefined
     }
 
 
@@ -45,9 +45,9 @@ export class ResourcesSearchBarComponent extends SearchBarComponent {
     }
 
 
-    public isTypeSelected(): boolean {
+    public isCategorySelected(): boolean {
 
-        return this.types !== undefined && this.types.length > 0;
+        return this.categories !== undefined && this.categories.length > 0;
     }
 
 

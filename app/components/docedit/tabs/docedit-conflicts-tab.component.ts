@@ -216,7 +216,7 @@ export class DoceditConflictsTabComponent implements OnChanges {
                 label = this.i18n({ id: 'docedit.tabs.conflicts.georeference', value: 'Georeferenz' });
             } else {
                 type = 'field';
-                label = projectConfiguration.getFieldDefinitionLabel(document.resource.type, fieldName);
+                label = projectConfiguration.getFieldDefinitionLabel(document.resource.category, fieldName);
             }
 
             differingFields.push({

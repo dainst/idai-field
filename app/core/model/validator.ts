@@ -5,11 +5,11 @@ import {Validations} from './validations';
 import {ProjectConfiguration} from '../configuration/project-configuration';
 import {HierarchicalRelations} from './relation-constants';
 import RECORDED_IN = HierarchicalRelations.RECORDEDIN;
-import {ProjectTypes} from '../configuration/project-types';
+import {ProjectCategories} from '../configuration/project-categories';
 
 
 /**
- * Validates against data model of ProjectConfiguration and TypeUtility and contents of Database
+ * Validates against data model of ProjectConfiguration and ProjectCategories and contents of Database
  *
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
@@ -18,7 +18,7 @@ export class Validator {
 
     constructor(protected projectConfiguration: ProjectConfiguration,
                 protected find: (query: Query) => Promise<FindResult>,
-                protected projectTypes: ProjectTypes) {}
+                protected projectCategories: ProjectCategories) {}
 
 
     /**
@@ -92,9 +92,9 @@ export class Validator {
 
     protected isExpectedToHaveIsRecordedInRelation(document: Document|NewDocument): boolean {
 
-        return this.projectTypes
-            .getRegularTypeNames()
-            .includes(document.resource.type);
+        return this.projectCategories
+            .getRegularCategoryNames()
+            .includes(document.resource.category);
     }
 
 

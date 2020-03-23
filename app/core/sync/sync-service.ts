@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
-import { SyncStatus } from './sync-process';
-import { PouchdbManager } from '../datastore/pouchdb/pouchdb-manager';
+import {SyncStatus} from './sync-process';
+import {PouchdbManager} from '../datastore/pouchdb/pouchdb-manager';
 
 
 @Injectable()
@@ -13,13 +13,11 @@ export class SyncService {
     private status: SyncStatus = SyncStatus.Offline;
     private syncTarget: string;
     private project: string;
-    private password: string = "";
+    private password: string = '';
     private currentSyncTimeout: any;
 
 
-    public constructor(private pouchdbManager: PouchdbManager) {
-        
-    }
+    public constructor(private pouchdbManager: PouchdbManager) {}
 
 
     public getStatus = (): SyncStatus => this.status;

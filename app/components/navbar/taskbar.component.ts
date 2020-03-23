@@ -11,6 +11,4 @@ import {Component} from '@angular/core';
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-export class TaskbarComponent {
-
-}
+export class TaskbarComponent {}

@@ -10,7 +10,7 @@
            placeholder="Suchen..."
            i18n-placeholder="@@widgets.searchBar.placeholder">
 
-    <image-overview-search-constraints [type]="getSelectedType()">
+    <image-overview-search-constraints [category]="getSelectedCategory()">
     </image-overview-search-constraints>
 
     <div *ngIf="showFiltersMenu" id="images-search-bar-filter-button" class="filter-button">
@@ -20,23 +20,23 @@
                 [autoClose]="false"
                 #p="ngbPopover"
                 placement="bottom-right">
-            <span *ngIf="!isTypeSelected()" class="mdi mdi-filter"></span>
-            <span *ngIf="isTypeSelected()">
-                <type-icon [type]="types[0]" size="30"></type-icon>
+            <span *ngIf="!isCategorySelected()" class="mdi mdi-filter"></span>
+            <span *ngIf="isCategorySelected()">
+                <category-icon [category]="categories[0]" size="30"></category-icon>
             </span>
         </button>
 
         <ng-template #filterMenu>
             <div class="filtermenu">
                 <div class="popover-custom-title">
-                    <span i18n="@@widgets.searchBar.imageTypeFilter">Nach Bildtyp filtern:</span>
+                    <span i18n="@@widgets.searchBar.imageCategoryFilter">Nach Bildkategorie filtern:</span>
                 </div>
-                <type-picker [typesTreeList]="filterOptions"
-                             [allTypesOptionVisible]="isAllTypesOptionVisible()"
-                             [selectedTypes]="types"
-                             [allowPickingAbstractTypes]="true"
-                             (onTypePicked)="chooseTypeFilter($event)">
-                </type-picker>
+                <category-picker [categoriesTreeList]="filterOptions"
+                                 [allCategoriesOptionVisible]="isAllCategoriesOptionVisible()"
+                                 [selectedCategories]="categories"
+                                 [allowPickingAbstractCategories]="true"
+                                 (onCategoryPicked)="chooseCategoryFilter($event)">
+                </category-picker>
             </div>
         </ng-template>
     </div>

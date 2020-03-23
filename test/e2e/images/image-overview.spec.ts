@@ -190,14 +190,14 @@ describe('images --', function() {
     });
 
 
-    it('link -- filter types in overview', done => {
+    it('link -- filter categories in overview', done => {
 
         ImageOverviewPage.clickCell(0);
         ImageOverviewPage.clickLinkButton();
         SearchBarPage.typeInSearchField('S');
         ImageOverviewPage.getLinkModalListEntries()
             .then(esBefore => expect(esBefore.length).toBeGreaterThan(2));
-        SearchBarPage.clickChooseTypeFilter('operation-trench', 'modal');
+        SearchBarPage.clickChooseCategoryFilter('operation-trench', 'modal');
         ImageOverviewPage.getLinkModalListEntries()
             .then(esAfter => expect(esAfter.length).toBe(2));
         ImageOverviewPage.clickCancelLinkModalButton();

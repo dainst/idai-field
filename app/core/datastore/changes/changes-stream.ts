@@ -4,7 +4,7 @@ import {map as asyncMap} from 'tsfun/async';
 import {Action, Document, DatastoreErrors} from 'idai-components-2';
 import {PouchdbDatastore} from '../pouchdb/pouchdb-datastore';
 import {DocumentCache} from '../cached/document-cache';
-import {TypeConverter} from '../cached/type-converter';
+import {CategoryConverter} from '../cached/category-converter';
 import {IndexFacade} from '../index/index-facade';
 import {ObserverUtil} from '../../util/observer-util';
 import {CAMPAIGNS, solveProjectDocumentConflict, STAFF} from './solve-project-document-conflicts';
@@ -34,7 +34,7 @@ export class ChangesStream {
     constructor(private datastore: PouchdbDatastore,
                 private indexFacade: IndexFacade,
                 private documentCache: DocumentCache<Document>,
-                private typeConverter: TypeConverter<Document>,
+                private categoryConverter: CategoryConverter<Document>,
                 private settingsService: SettingsService) {
 
         datastore.deletedNotifications().subscribe(document => {
@@ -45,8 +45,8 @@ export class ChangesStream {
 
         datastore.changesNotifications().subscribe(async document => {
 
-            if (document.resource.type === 'Project') {
-                ObserverUtil.notify(this.projectDocumentObservers, this.typeConverter.convert(document));
+            if (document.resource.category === 'Project') {
+                ObserverUtil.notify(this.projectDocumentObservers, this.categoryConverter.convert(document));
             }
 
             if (await ChangesStream.isRemoteChange(
@@ -128,7 +128,7 @@ export class ChangesStream {
 
     private async welcomeDocument(document: Document) {
 
-        const convertedDocument = this.typeConverter.convert(document);
+        const convertedDocument = this.categoryConverter.convert(document);
         this.indexFacade.put(convertedDocument);
 
         // explicitly assign by value in order for changes to be detected by angular

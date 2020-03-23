@@ -2,7 +2,7 @@ import {Document} from 'idai-components-2';
 import {CachedDatastore} from './cached/cached-datastore';
 import {PouchdbDatastore} from './pouchdb/pouchdb-datastore';
 import {DocumentCache} from './cached/document-cache';
-import {TypeConverter} from './cached/type-converter';
+import {CategoryConverter} from './cached/category-converter';
 import {IndexFacade} from './index/index-facade';
 
 /**
@@ -13,9 +13,9 @@ import {IndexFacade} from './index/index-facade';
 export class DocumentDatastore extends CachedDatastore<Document> {
 
     constructor(datastore: PouchdbDatastore,
-        indexFacade: IndexFacade,
-        documentCache: DocumentCache<Document>,
-        documentConverter: TypeConverter<Document>) {
+                indexFacade: IndexFacade,
+                documentCache: DocumentCache<Document>,
+                documentConverter: CategoryConverter<Document>) {
 
         super(datastore, indexFacade, documentCache, documentConverter, 'Document');
     }

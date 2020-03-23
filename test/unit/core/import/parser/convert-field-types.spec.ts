@@ -1,6 +1,6 @@
 import {Dating, Dimension, Resource} from 'idai-components-2';
 import {ParserErrors} from '../../../../../app/core/import/parser/parser-errors';
-import {IdaiType} from '../../../../../app/core/configuration/model/idai-type';
+import {Category} from '../../../../../app/core/configuration/model/category';
 import CSV_NOT_A_BOOLEAN = ParserErrors.CSV_NOT_A_BOOLEAN;
 import {convertFieldTypes} from '../../../../../app/core/import/parser/convert-field-types';
 
@@ -13,8 +13,8 @@ describe('convertFieldTypes', () => {
 
     it('field type boolean', () => {
 
-        const type = {
-            name: 'TypeName',
+        const category = {
+            name: 'Category',
             groups: [{ fields: [{
                 name: 'Bool1',
                 inputType: 'boolean'
@@ -22,9 +22,9 @@ describe('convertFieldTypes', () => {
                 name: 'Bool2',
                 inputType: 'boolean'
             }]}],
-        } as IdaiType;
+        } as Category;
 
-        const result = convertFieldTypes(type)({Bool1: 'true', Bool2: 'false', relations: {}} as unknown as Resource);
+        const result = convertFieldTypes(category)({Bool1: 'true', Bool2: 'false', relations: {}} as unknown as Resource);
 
         expect(result['Bool1']).toBe(true);
         expect(result['Bool2']).toBe(false);
@@ -33,15 +33,15 @@ describe('convertFieldTypes', () => {
 
     it('field type dating', () => {
 
-        const type = {
-            name: 'TypeName',
+        const category = {
+            name: 'Category',
             groups: [{ fields: [{
                 name: 'dating',
                 inputType: 'dating'
             }]}],
-        } as IdaiType;
+        } as Category;
 
-        const resource = convertFieldTypes(type)({
+        const resource = convertFieldTypes(category)({
                 dating: [{
                     type: 'range',
                     begin: { inputType: 'bce', inputYear: '0' },
@@ -70,15 +70,15 @@ describe('convertFieldTypes', () => {
 
     it('field type dating - leave nulls unconverted', () => {
 
-        const type = {
-            name: 'TypeName',
+        const category = {
+            name: 'Category',
             groups: [{ fields: [{
                 name: 'dating',
                 inputType: 'dating'
             }]}],
-        } as IdaiType;
+        } as Category;
 
-        const resource = convertFieldTypes(type)({
+        const resource = convertFieldTypes(category)({
                 dating: [null],
                 relations: {}
             } as unknown as Resource);
@@ -89,16 +89,16 @@ describe('convertFieldTypes', () => {
 
     it('dating.isUncertain is not a boolean', () => {
 
-        const type = {
-            name: 'TypeName',
+        const category = {
+            name: 'Category',
             groups: [{ fields: [{
                 name: 'dating',
                 inputType: 'dating'
             }]}],
-        } as IdaiType;
+        } as Category;
 
         try {
-            convertFieldTypes(type)({ dating: [{ isUncertain: 'false123' }], relations: {}} as unknown as Resource);
+            convertFieldTypes(category)({ dating: [{ isUncertain: 'false123' }], relations: {}} as unknown as Resource);
             fail();
         } catch (msgWithParams) {
             expect(msgWithParams).toEqual([CSV_NOT_A_BOOLEAN, 'false123', 'dating.0.isUncertain'])
@@ -108,15 +108,15 @@ describe('convertFieldTypes', () => {
 
     it('field type dimension', () => {
 
-        const type = {
-            name: 'TypeName',
+        const category = {
+            name: 'Category',
             groups: [{ fields: [{
                 name: 'dimension',
                 inputType: 'dimension'
             }]}],
-        } as IdaiType;
+        } as Category;
 
-        const resource = convertFieldTypes(type)({
+        const resource = convertFieldTypes(category)({
                 dimension: [{
                     value: '1',
                     rangeMin: '2',
@@ -146,15 +146,15 @@ describe('convertFieldTypes', () => {
 
     it('field type dimension - leave nulls unconverted', () => {
 
-        const type = {
-            name: 'TypeName',
+        const category = {
+            name: 'Category',
             groups: [{ fields: [{
                 name: 'dimension',
                 inputType: 'dimension'
             }]}],
-        } as IdaiType;
+        } as Category;
 
-        const resource = convertFieldTypes(type)({
+        const resource = convertFieldTypes(category)({
             dimension: [null],
             relations: {}
         } as unknown as Resource);
@@ -165,15 +165,15 @@ describe('convertFieldTypes', () => {
 
     it('field type radio', () => {
 
-        const type = {
-            name: 'TypeName',
+        const category = {
+            name: 'Category',
             groups: [{ fields: [{
                 name: 'r',
                 inputType: 'radio'
             }]}],
-        } as IdaiType;
+        } as Category;
 
-        const resource = convertFieldTypes(type)({
+        const resource = convertFieldTypes(category)({
                 r: 'rr',
                 relations: {}
             } as unknown as Resource);
@@ -184,15 +184,15 @@ describe('convertFieldTypes', () => {
 
     it('field type date', () => {
 
-        const type = {
-            name: 'TypeName',
+        const category = {
+            name: 'Category',
             groups: [{ fields: [{
                 name: 'd',
                 inputType: 'date'
             }]}],
-        } as IdaiType;
+        } as Category;
 
-        const resource = convertFieldTypes(type)({
+        const resource = convertFieldTypes(category)({
                 d: '10.07.2019',
                 relations: {}
             } as unknown as Resource);
@@ -203,8 +203,8 @@ describe('convertFieldTypes', () => {
 
     it('field type dropdown range', () => {
 
-        const type = {
-            name: 'TypeName',
+        const category = {
+            name: 'Category',
             groups: [{ fields: [{
                 name: 'dd1',
                 inputType: 'dropdownRange'
@@ -213,9 +213,9 @@ describe('convertFieldTypes', () => {
                 name: 'dd2',
                 inputType: 'dropdownRange'
             }]}],
-        } as IdaiType;
+        } as Category;
 
-        const resource = convertFieldTypes(type)({
+        const resource = convertFieldTypes(category)({
                 dd1: 'a',
                 dd2: 'b',
                 dd2End: 'c', // currently, the code handles this as a regular field, so this is not a special case. we test is here for completeness
@@ -230,15 +230,15 @@ describe('convertFieldTypes', () => {
 
     it('field type checkboxes', () => {
 
-        const type = {
-            name: 'TypeName',
+        const category = {
+            name: 'Category',
             groups: [{ fields: [{
                 name: 'CB',
                 inputType: 'checkboxes'
             }]}],
-        } as IdaiType;
+        } as Category;
 
-        const resource = convertFieldTypes(type)({
+        const resource = convertFieldTypes(category)({
                 CB: 'a;b;c',
                 relations: {}
             } as unknown as Resource);
@@ -250,15 +250,15 @@ describe('convertFieldTypes', () => {
 
     it('field type unsignedInt', () => {
 
-        const type = {
-            name: 'TypeName',
+        const category = {
+            name: 'Category',
             groups: [{ fields: [{
                 name: 'ui',
                 inputType: 'unsignedInt'
             }]}],
-        } as IdaiType;
+        } as Category;
 
-        const resource = convertFieldTypes(type)({
+        const resource = convertFieldTypes(category)({
                 ui: '100',
                 relations: {}
             } as unknown as Resource);
@@ -269,8 +269,8 @@ describe('convertFieldTypes', () => {
 
     it('field type float', () => {
 
-        const type = {
-            name: 'TypeName',
+        const category = {
+            name: 'Category',
             groups: [{ fields: [{
                 name: 'uf1',
                 inputType: 'float'
@@ -282,9 +282,9 @@ describe('convertFieldTypes', () => {
                 name: 'uf3',
                 inputType: 'float'
             }]}]
-        } as IdaiType;
+        } as Category;
 
-        const resource = convertFieldTypes(type)({
+        const resource = convertFieldTypes(category)({
                 uf1: '100.1',
                 uf2: '100,2',
                 uf3: '-100,3',
@@ -299,8 +299,8 @@ describe('convertFieldTypes', () => {
 
     it('field type unsignedFloat', () => {
 
-        const type = {
-            name: 'TypeName',
+        const category = {
+            name: 'Category',
             groups: [{ fields: [{
                 name: 'uf1',
                 inputType: 'unsignedFloat'
@@ -308,9 +308,9 @@ describe('convertFieldTypes', () => {
                 name: 'uf2',
                 inputType: 'unsignedFloat'
             }]}]
-        } as IdaiType;
+        } as Category;
 
-        const resource = convertFieldTypes(type)({
+        const resource = convertFieldTypes(category)({
                 uf1: '100.1',
                 uf2: '100,2',
                 relations: {}
@@ -323,15 +323,15 @@ describe('convertFieldTypes', () => {
 
     it('relations', () => {
 
-        const type = {
-            name: 'TypeName',
+        const category = {
+            name: 'Category',
             groups: [{ fields: [{
                 name: 'uf',
                 inputType: 'unsignedFloat'
             }]}],
-        } as IdaiType;
+        } as Category;
 
-        const resource = convertFieldTypes(type)({
+        const resource = convertFieldTypes(category)({
                 relations: {
                     isAbove: 'a;b',
                     isBelow: 'd'
@@ -345,48 +345,44 @@ describe('convertFieldTypes', () => {
 
     // err cases
 
-
     it('field type unsignedInt - not a number', () => {
 
-        const type = {
-            name: 'TypeName',
+        const category = {
+            name: 'Category',
             groups: [{ fields: [{
                 name: 'ui',
                 inputType: 'unsignedInt'
             }]}],
-        } as IdaiType;
+        } as Category;
 
-        expectNotANumberError(type, 'ui', 'abc');
+        expectNotANumberError(category, 'ui', 'abc');
     });
 
 
     it('field type unsignedFloat - not a number', () => {
 
-        const type = {
-            name: 'TypeName',
+        const category = {
+            name: 'Category',
             groups: [{ fields: [{
                 name: 'uf',
                 inputType: 'unsignedFloat'
             }]}],
-        } as IdaiType;
+        } as Category;
 
-        expectNotANumberError(type, 'uf', 'a100.0');
+        expectNotANumberError(category, 'uf', 'a100.0');
     });
 
 
-    async function expectNotANumberError(type: IdaiType, fieldName: string, value: string) {
+    async function expectNotANumberError(category: Category, fieldName: string, value: string) {
 
         try {
-
             const resource: Resource = {} as unknown as Resource;
             (resource as any)[fieldName] = value;
-            convertFieldTypes(type)(resource);
+            convertFieldTypes(category)(resource);
 
             fail();
         } catch (msgWithParams) {
-
             expect(msgWithParams).toEqual([ParserErrors.CSV_NOT_A_NUMBER, value, fieldName]);
-
         }
     }
 });

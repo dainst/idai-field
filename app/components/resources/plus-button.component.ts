@@ -2,9 +2,9 @@ import {Component, Input, ElementRef, ViewChild, OnChanges, EventEmitter, Output
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {Relations, FieldDocument, Messages} from 'idai-components-2';
 import {ResourcesComponent} from './resources.component';
-import {ProjectTypes} from '../../core/configuration/project-types';
+import {ProjectCategories} from '../../core/configuration/project-categories';
 import {M} from '../messages/m';
-import {IdaiType} from '../../core/configuration/model/idai-type';
+import {Category} from '../../core/configuration/model/category';
 import {ProjectConfiguration} from '../../core/configuration/project-configuration';
 import {ViewFacade} from '../../core/resources/view/view-facade';
 
@@ -32,8 +32,7 @@ export class PlusButtonComponent implements OnChanges {
     // undefined when current level is operation
     @Input() liesWithin: FieldDocument | undefined;
 
-
-    @Input() preselectedType: string;
+    @Input() preselectedCategory: string;
     @Input() preselectedGeometryType: string;
     @Input() skipFormAndReturnNewDocument: boolean = false;
     @Input() status: PlusButtonStatus = 'enabled';
@@ -42,8 +41,8 @@ export class PlusButtonComponent implements OnChanges {
 
     @ViewChild('popover', { static: false }) private popover: any;
 
-    public selectedType: string|undefined;
-    public typesTreeList: Array<IdaiType>;
+    public selectedCategory: string|undefined;
+    public categoriesTreeList: Array<Category>;
 
 
     constructor(
@@ -51,7 +50,7 @@ export class PlusButtonComponent implements OnChanges {
         private resourcesComponent: ResourcesComponent,
         private projectConfiguration: ProjectConfiguration,
         private messages: Messages,
-        private projectTypes: ProjectTypes,
+        private projectCategories: ProjectCategories,
         private viewFacade: ViewFacade,
         private i18n: I18n) {
 
@@ -61,12 +60,13 @@ export class PlusButtonComponent implements OnChanges {
     }
 
 
-    public isGeometryType = (typeName: string) => this.projectTypes.isGeometryType(typeName);
+    public isGeometryCategory = (categoryName: string) =>
+        this.projectCategories.isGeometryCategory(categoryName);
 
 
     ngOnChanges() {
 
-        this.initializeTypesTreeList(this.projectConfiguration);
+        this.initializeCategoriesTreeList(this.projectConfiguration);
     }
 
 
@@ -75,9 +75,9 @@ export class PlusButtonComponent implements OnChanges {
         if (this.popover) this.popover.close();
 
         const newDocument: FieldDocument = <FieldDocument> {
-            'resource': {
-                'relations': this.createRelations(),
-                'type': this.selectedType
+            resource: {
+                relations: this.createRelations(),
+                category: this.selectedCategory
             }
         };
         if (this.skipFormAndReturnNewDocument) this.documentRequested.emit(newDocument);
@@ -87,32 +87,32 @@ export class PlusButtonComponent implements OnChanges {
 
     public reset() {
 
-        this.selectedType = this.getButtonType() === 'singleType'
-            ? this.typesTreeList[0].name
-            : this.selectedType = undefined;
+        this.selectedCategory = this.getButtonType() === 'singleCategory'
+            ? this.categoriesTreeList[0].name
+            : this.selectedCategory = undefined;
     }
 
 
-    public getButtonType(): 'singleType' | 'multipleTypes' | 'none' {
+    public getButtonType(): 'singleCategory'|'multipleCategories'|'none' {
 
-        if (this.typesTreeList.length === 0) return 'none';
+        if (this.categoriesTreeList.length === 0) return 'none';
 
-        if (this.typesTreeList.length === 1
-                && (!this.typesTreeList[0].children || this.typesTreeList[0].children.length === 0)) {
-            return 'singleType';
+        if (this.categoriesTreeList.length === 1
+                && (!this.categoriesTreeList[0].children || this.categoriesTreeList[0].children.length === 0)) {
+            return 'singleCategory';
         }
 
-        return 'multipleTypes';
+        return 'multipleCategories';
     }
 
 
-    public chooseType(type: IdaiType) {
+    public chooseCategory(category: Category) {
 
-        this.selectedType = type.name;
+        this.selectedCategory = category.name;
 
         if (this.preselectedGeometryType) {
             this.startDocumentCreation();
-        } else if (!this.isGeometryType(this.selectedType)) {
+        } else if (!this.isGeometryCategory(this.selectedCategory)) {
             this.startDocumentCreation('none');
         }
     }
@@ -153,22 +153,23 @@ export class PlusButtonComponent implements OnChanges {
     }
 
 
-    private initializeTypesTreeList(projectConfiguration: ProjectConfiguration) {
+    private initializeCategoriesTreeList(projectConfiguration: ProjectConfiguration) {
 
-        this.typesTreeList = [];
+        this.categoriesTreeList = [];
 
-        if (this.preselectedType) {
-            const type = projectConfiguration.getTypesMap()[this.preselectedType];
-            if (type) {
-                this.typesTreeList.push(type);
+        if (this.preselectedCategory) {
+            const category: Category = projectConfiguration.getCategoriesMap()[this.preselectedCategory];
+            if (category) {
+                this.categoriesTreeList.push(category);
             } else {
-                this.messages.add([M.RESOURCES_ERROR_TYPE_NOT_FOUND, this.preselectedType]);
+                this.messages.add([M.RESOURCES_ERROR_CATEGORY_NOT_FOUND, this.preselectedCategory]);
             }
         } else {
-            for (let type of projectConfiguration.getTypesList()) {
-                if (this.isAllowedType(type, projectConfiguration)
-                        && (!type.parentType || !this.isAllowedType(type.parentType, projectConfiguration))) {
-                    this.typesTreeList.push(type);
+            for (let category of projectConfiguration.getCategoriesList()) {
+                if (this.isAllowedCategory(category, projectConfiguration)
+                        && (!category.parentCategory
+                            || !this.isAllowedCategory(category.parentCategory, projectConfiguration))) {
+                    this.categoriesTreeList.push(category);
                 }
             }
         }
@@ -187,27 +188,27 @@ export class PlusButtonComponent implements OnChanges {
     }
 
 
-    private isAllowedType(type: IdaiType, projectConfiguration: ProjectConfiguration): boolean {
+    private isAllowedCategory(category: Category, projectConfiguration: ProjectConfiguration): boolean {
 
-        if (type.name === 'Image') return false;
+        if (category.name === 'Image') return false;
 
         if (this.isRecordedIn) {
-            if (!projectConfiguration.isAllowedRelationDomainType(type.name,
-                this.isRecordedIn.resource.type, 'isRecordedIn')) {
+            if (!projectConfiguration.isAllowedRelationDomainCategory(category.name,
+                this.isRecordedIn.resource.category, 'isRecordedIn')) {
                 return false;
             }
         } else {
             if (!(this.viewFacade.isInOverview()
-                    ? this.projectTypes.getOverviewTypes().includes(type.name)
-                    : this.projectTypes.getTypeManagementTypes().includes(type.name))) {
+                    ? this.projectCategories.getOverviewCategories().includes(category.name)
+                    : this.projectCategories.getTypeCategories().includes(category.name))) {
                 return false;
             }
         }
 
-        if (!this.liesWithin) return !type.mustLieWithin;
+        if (!this.liesWithin) return !category.mustLieWithin;
 
-        return projectConfiguration.isAllowedRelationDomainType(
-            type.name, this.liesWithin.resource.type, 'liesWithin'
+        return projectConfiguration.isAllowedRelationDomainCategory(
+            category.name, this.liesWithin.resource.category, 'liesWithin'
         );
     }
 }

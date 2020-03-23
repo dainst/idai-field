@@ -7,7 +7,7 @@ import {ProjectConfiguration} from '../../../../../app/core/configuration/projec
 /**
  * This test suite focuses on the differences between the datastores.
  *
- * Depending of the Type Class T and based on document.resource.type,
+ * Depending on the Category Class T and based on document.resource.category,
  * well-formed documents are about to be created.
  *
  * @author Daniel de Oliveira
@@ -25,7 +25,7 @@ describe('subsystem/datastore/convert', () => {
     function expectErr(err) {
 
         if (!err) fail('Wrong Err - undefined');
-        if (err.indexOf(ProjectConfiguration.UNKNOWN_TYPE_ERROR) === -1) fail('Wrong Err' + err);
+        if (err.indexOf(ProjectConfiguration.UNKNOWN_CATEGORY_ERROR) === -1) fail('Wrong Err' + err);
     }
 
 
@@ -87,7 +87,7 @@ describe('subsystem/datastore/convert', () => {
     });
 
 
-    it('create - unknown type', async done => {
+    it('create - unknown category', async done => {
 
         try {
             expect((await fieldDocumentDatastore.

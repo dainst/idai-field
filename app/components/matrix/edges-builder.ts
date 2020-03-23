@@ -1,6 +1,6 @@
-import {Document, Relations} from 'idai-components-2';
 import {set, to, on, is} from 'tsfun';
 import {unionBy} from 'tsfun/by';
+import {Document, Relations} from 'idai-components-2';
 import {intoObj} from '../../core/util/utils';
 
 
@@ -152,8 +152,7 @@ export module EdgesBuilder {
     }
 
 
-    function isProcessableEdgeType(relations: GraphRelationsConfiguration,
-                                   processedTargetIds: string[],
+    function isProcessableEdgeType(relations: GraphRelationsConfiguration, processedTargetIds: string[],
                                    pathType?: string) {
 
         return (targetIdResult: TargetAndRelationType) => {
@@ -165,11 +164,9 @@ export module EdgesBuilder {
     }
 
 
-    function convertToTargetsAndPathTypes(graphDocuments: Array<Document>,
-                                          totalDocuments: Array<Document>,
+    function convertToTargetsAndPathTypes(graphDocuments: Array<Document>, totalDocuments: Array<Document>,
                                           relations: GraphRelationsConfiguration,
-                                          processedTargetIds: string[],
-                                          pathType?: string) {
+                                          processedTargetIds: string[], pathType?: string) {
 
         return (targetIdResult: TargetAndRelationType): TargetsAndPathTypes => {
 

@@ -17,9 +17,6 @@ describe('LayerManager', () => {
         Static.doc('Layer 2', 'layer2', 'Image', 'l2') as ImageDocument,
     ];
 
-    const mainTypeDocument: FieldDocument
-        = Static.doc('Main Type Document', 'MTD', 'trench', 'mtd') as FieldDocument;
-
     let mockViewFacade;
 
 
@@ -27,10 +24,6 @@ describe('LayerManager', () => {
 
         const mockDatastore = jasmine.createSpyObj('datastore', ['find']);
         mockDatastore.find.and.returnValue(Promise.resolve({ documents: layerDocuments }));
-
-        const mockImageTypeUtility = jasmine.createSpyObj('imageTypeUtility',
-            ['getImageTypeNames']);
-        mockImageTypeUtility.getImageTypeNames.and.returnValue(['Image']);
 
         mockViewFacade = jasmine.createSpyObj('viewFacade',
             ['getActiveLayersIds', 'setActiveLayersIds']);

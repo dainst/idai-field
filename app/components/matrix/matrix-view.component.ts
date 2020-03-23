@@ -159,9 +159,9 @@ export class MatrixViewComponent implements OnInit {
 
     private async populateTrenches(): Promise<void> {
 
-        if (!this.projectConfiguration.getTypesMap()['Trench']) return;
+        if (!this.projectConfiguration.getCategoriesMap()['Trench']) return;
 
-        this.trenches = (await this.datastore.find({ types: ['Trench'] })).documents;
+        this.trenches = (await this.datastore.find({ categories: ['Trench'] })).documents;
         if (this.trenches.length === 0) return;
 
         const previouslySelectedTrench = this.trenches

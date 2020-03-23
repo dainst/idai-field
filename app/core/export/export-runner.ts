@@ -3,8 +3,8 @@ import {map as asyncMap, flow as asyncFlow} from 'tsfun/async';
 import {Query, FieldDocument} from 'idai-components-2';
 import {ISRECORDEDIN_CONTAIN} from '../constants';
 import {clone} from '../util/object-util';
-import {Find, GetIdentifierForId, PerformExport, ResourceTypeCount} from './export-helper';
-import {IdaiType} from '../configuration/model/idai-type';
+import {Find, GetIdentifierForId, PerformExport, CategoryCount} from './export-helper';
+import {Category} from '../configuration/model/category';
 
 
 const NAME = 'name';
@@ -25,61 +25,59 @@ export module ExportRunner {
     const ADD_EXCLUSION = ['Place', 'Survey', 'Trench', 'Building'];
 
 
-    export async function performExport(find: Find,
-                                        selectedOperationId: string|undefined,
-                                        selectedType: IdaiType,
-                                        relations: string[],
+    export async function performExport(find: Find, selectedOperationId: string|undefined,
+                                        selectedCategory: Category, relations: string[],
                                         getIdentifierForId: GetIdentifierForId,
                                         performExport: PerformExport) {
 
         return await asyncFlow(
                 selectedOperationId
-                    ? await fetchDocuments(find, selectedOperationId, selectedType)
+                    ? await fetchDocuments(find, selectedOperationId, selectedCategory)
                     : [],
                 asyncMap(rewriteIdentifiers(getIdentifierForId)),
                 map(to(RESOURCE)),
-                performExport(selectedType, relations));
+                performExport(selectedCategory, relations));
     }
 
 
-    export function getTypesWithoutExcludedTypes(types: Array<IdaiType>, exclusion: string[]) {
+    export function getCategoriesWithoutExcludedCategories(categories: Array<Category>, exclusion: string[]) {
 
-        return types.filter(on(NAME, isNot(includedIn(exclusion))))
+        return categories.filter(on(NAME, isNot(includedIn(exclusion))))
     }
 
 
     /**
      * @param find
      * @param selectedOperationId
-     * @param typesList
+     * @param categoriesList
      */
-    export async function determineTypeCounts(find: Find,
-                                              selectedOperationId: string|undefined,
-                                              typesList: Array<IdaiType>): Promise<Array<ResourceTypeCount>> {
+    export async function determineCategoryCounts(find: Find,
+                                                  selectedOperationId: string|undefined,
+                                                  categoriesList: Array<Category>): Promise<Array<CategoryCount>> {
 
-        if (!selectedOperationId) return determineTypeCountsForSchema(typesList);
+        if (!selectedOperationId) return determineCategoryCountsForSchema(categoriesList);
 
-        const resourceTypes =
-            getTypesWithoutExcludedTypes(
-                typesList,
-                BASE_EXCLUSION.concat(selectedOperationId === 'project' ? [] : ADD_EXCLUSION));
+        const categories = getCategoriesWithoutExcludedCategories(
+            categoriesList,
+            BASE_EXCLUSION.concat(selectedOperationId === 'project' ? [] : ADD_EXCLUSION)
+        );
 
-        const resourceTypeCounts: Array<ResourceTypeCount> = [];
-        for (let resourceType of resourceTypes) {
-            const query = getQuery(resourceType.name, selectedOperationId, 0);
-            resourceTypeCounts.push([
-                resourceType,
+        const resourceCategoryCounts: Array<CategoryCount> = [];
+        for (let category of categories) {
+            const query = getQuery(category.name, selectedOperationId, 0);
+            resourceCategoryCounts.push([
+                category,
                 (await find(query)).totalCount
             ]);
         }
-        return resourceTypeCounts.filter(on('[1]', greaterThan(0)));
+        return resourceCategoryCounts.filter(on('[1]', greaterThan(0)));
     }
 
 
-    function determineTypeCountsForSchema(typesList: Array<IdaiType>) {
+    function determineCategoryCountsForSchema(categoriesList: Array<Category>) {
 
-        const resourceTypes = getTypesWithoutExcludedTypes(typesList, BASE_EXCLUSION);
-        return resourceTypes.map(pairWith(val(-1))) as Array<ResourceTypeCount>;
+        const categories = getCategoriesWithoutExcludedCategories(categoriesList, BASE_EXCLUSION);
+        return categories.map(pairWith(val(-1))) as Array<CategoryCount>;
     }
 
 
@@ -88,14 +86,14 @@ export module ExportRunner {
      *
      * @param find
      * @param selectedOperationId
-     * @param selectedType
+     * @param selectedCategory
      */
     async function fetchDocuments(find: Find,
                                   selectedOperationId: string,
-                                  selectedType: IdaiType): Promise<Array<FieldDocument>> {
+                                  selectedCategory: Category): Promise<Array<FieldDocument>> {
 
         try {
-            const query = getQuery(selectedType.name, selectedOperationId);
+            const query = getQuery(selectedCategory.name, selectedOperationId);
             return (await find(query)).documents as Array<FieldDocument>;
         } catch (msgWithParams) {
             console.error(msgWithParams);
@@ -129,10 +127,10 @@ export module ExportRunner {
     }
 
 
-    function getQuery(typeName: string, selectedOperationId: string, limit?: number) {
+    function getQuery(categoryName: string, selectedOperationId: string, limit?: number) {
 
         const query: Query = {
-            types: [typeName],
+            categories: [categoryName],
             constraints: {},
             limit: limit
         };

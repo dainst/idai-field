@@ -1,6 +1,6 @@
 @import 'tabs/docedit-image-tab';
 @import 'tabs/docedit-conflicts-tab';
-@import 'widgets/type-switcher-button';
+@import 'widgets/category-switcher-button';
 @import 'widgets/image-picker';
 @import 'widgets/relationpicker/relation-picker';
 @import 'widgets/relationpicker/relation-picker-group';
@@ -39,7 +39,7 @@
     user-select: none;
     background-color: $modal-header-background-color;
     
-    #type-switcher-button-container {
+    #category-switcher-button-container {
       min-width: 55px;
       padding: 4px;
     }

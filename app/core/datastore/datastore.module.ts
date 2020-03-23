@@ -9,10 +9,10 @@ import {FieldDatastore} from './field/field-datastore';
 import {FieldReadDatastore} from './field/field-read-datastore';
 import {ImageDatastore} from './field/image-datastore';
 import {ImageReadDatastore} from './field/image-read-datastore';
-import {TypeConverter} from './cached/type-converter';
+import {CategoryConverter} from './cached/category-converter';
 import {DocumentDatastore} from './document-datastore';
 import {DocumentReadDatastore} from './document-read-datastore';
-import {FieldTypeConverter} from './field/field-type-converter';
+import {FieldCategoryConverter} from './field/field-category-converter';
 import {ChangesStream} from './changes/changes-stream';
 import {IndexFacade} from './index/index-facade';
 import {IdGenerator} from './pouchdb/id-generator';
@@ -30,7 +30,7 @@ import {FeatureReadDatastore} from './field/feature-read-datastore';
         ChangesStream,
         PouchdbManager,
         PouchdbServer,
-        { provide: TypeConverter, useClass: FieldTypeConverter },
+        { provide: CategoryConverter, useClass: FieldCategoryConverter },
         DocumentCache,
         IdGenerator,
         {
@@ -47,8 +47,8 @@ import {FeatureReadDatastore} from './field/feature-read-datastore';
         // It is important to note that we only have one instance of a pouchdbdatastore and
         // only one instance of a document cache running, however, we have different 'wrapper'
         // objects which are basically all instances of CachedDatastore with litte extensions
-        // to make sure the correct queries (constraints, correct types of objects) are issued
-        // and only the documents of the correct types are returned. All of these datastore
+        // to make sure the correct queries (constraints, correct categories of objects) are issued
+        // and only the documents of the correct categories are returned. All of these datastore
         // 'wrappers' come with the full set of constraints, since the
         // constraints are configured directly in the PouchdbDatastore.
 
@@ -68,11 +68,11 @@ import {FeatureReadDatastore} from './field/feature-read-datastore';
             useFactory: function(pouchdbDatastore: PouchdbDatastore,
                                  indexFacade: IndexFacade,
                                  documentCache: DocumentCache<Document>,
-                                 documentConverter: TypeConverter<Document>,
+                                 documentConverter: CategoryConverter<Document>,
             ): DocumentDatastore {
                 return new DocumentDatastore(pouchdbDatastore, indexFacade, documentCache, documentConverter);
             },
-            deps: [PouchdbDatastore, IndexFacade, DocumentCache, TypeConverter]
+            deps: [PouchdbDatastore, IndexFacade, DocumentCache, CategoryConverter]
         },
         { provide: DocumentReadDatastore, useExisting: DocumentDatastore },
         { provide: Datastore, useExisting: DocumentDatastore },     // used by components-2 lib
@@ -88,11 +88,11 @@ import {FeatureReadDatastore} from './field/feature-read-datastore';
             useFactory: function(pouchdbDatastore: PouchdbDatastore,
                                  indexFacade: IndexFacade,
                                  documentCache: DocumentCache<FieldDocument>,
-                                 documentConverter: TypeConverter<FieldDocument>
+                                 documentConverter: CategoryConverter<FieldDocument>
             ): FieldDatastore {
                 return new FieldDatastore(pouchdbDatastore, indexFacade, documentCache, documentConverter);
             },
-            deps: [PouchdbDatastore, IndexFacade, DocumentCache, TypeConverter]
+            deps: [PouchdbDatastore, IndexFacade, DocumentCache, CategoryConverter]
         },
         { provide: FieldReadDatastore, useExisting: FieldDatastore }, // read-only version of it
 
@@ -106,11 +106,11 @@ import {FeatureReadDatastore} from './field/feature-read-datastore';
             useFactory: function(pouchdbDatastore: PouchdbDatastore,
                                  indexFacade: IndexFacade,
                                  documentCache: DocumentCache<ImageDocument>,
-                                 documentConverter: TypeConverter<ImageDocument>,
+                                 documentConverter: CategoryConverter<ImageDocument>,
             ): ImageDatastore {
                 return new ImageDatastore(pouchdbDatastore, indexFacade, documentCache, documentConverter);
                 },
-            deps: [PouchdbDatastore, IndexFacade, DocumentCache, TypeConverter]
+            deps: [PouchdbDatastore, IndexFacade, DocumentCache, CategoryConverter]
         },
         { provide: ImageReadDatastore, useExisting: ImageDatastore }, // read-only version of it
 
@@ -124,11 +124,11 @@ import {FeatureReadDatastore} from './field/feature-read-datastore';
             useFactory: function(pouchdbDatastore: PouchdbDatastore,
                                  indexFacade: IndexFacade,
                                  documentCache: DocumentCache<FeatureDocument>,
-                                 documentConverter: TypeConverter<FeatureDocument>,
+                                 documentConverter: CategoryConverter<FeatureDocument>,
             ): FeatureDatastore {
                 return new FeatureDatastore(pouchdbDatastore, indexFacade, documentCache, documentConverter);
             },
-            deps: [PouchdbDatastore, IndexFacade, DocumentCache, TypeConverter]
+            deps: [PouchdbDatastore, IndexFacade, DocumentCache, CategoryConverter]
         },
         { provide: FeatureReadDatastore, useExisting: FeatureDatastore }, // read-only version of it
     ]

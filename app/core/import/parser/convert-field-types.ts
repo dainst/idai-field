@@ -2,7 +2,7 @@ import {getOn, includedIn, is, isNot, on, isnt} from 'tsfun';
 import {Resource, Dimension, Dating} from 'idai-components-2';
 import {ParserErrors} from './parser-errors';
 import {PARENT} from '../../model/relation-constants';
-import {IdaiType} from '../../configuration/model/idai-type';
+import {Category} from '../../configuration/model/category';
 import {setOn} from '../../util/utils';
 import {CsvExportConsts} from '../../export/csv/csv-export-consts';
 import ARRAY_SEPARATOR = CsvExportConsts.ARRAY_SEPARATOR;
@@ -14,27 +14,27 @@ type FieldType = 'dating' | 'date' | 'dimension' | 'literature' | 'radio'
     | 'checkboxes'; // | 'geometry'
 
 
-const UNCHECKED_FIELDS = ['relation', 'geometry', 'type'];
+const UNCHECKED_FIELDS = ['relation', 'geometry', 'category'];
 
 
 const fields = (resource: Resource) => Object.keys(resource).filter(isNot(includedIn(UNCHECKED_FIELDS)));
 
 
 /**
- * Converts string values to values of other types, based on field type information.
+ * Converts string values to values of other categories, based on field type information.
  * No validation other than errors resulting from parsing values from strings is handled here.
  *
  * Conversion of resource done by reference, i.e. in place
  *
  * @author Daniel de Oliveira
  */
-export function convertFieldTypes(type: IdaiType) {
+export function convertFieldTypes(category: Category) {
 
     return (resource: Resource) => {
 
         for (let fieldName of fields(resource)) {
 
-            const fieldDefinition = IdaiType.getFields(type).find(on(FieldDefinition.NAME, is(fieldName)));
+            const fieldDefinition = Category.getFields(category).find(on(FieldDefinition.NAME, is(fieldName)));
             if (!fieldDefinition) continue;
 
             const inputType = fieldDefinition.inputType as unknown as FieldType;

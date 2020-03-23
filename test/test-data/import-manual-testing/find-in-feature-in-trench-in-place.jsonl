@@ -1,4 +1,4 @@
-{ "type" : "Place", "identifier" : "Place0"}
-{ "type" : "Trench", "identifier" : "Trench0", "relations": { "isChildOf" : "Place0" }}
-{ "type" : "Feature", "identifier" : "Feature0", "relations": { "isChildOf" : "Trench0" }}
-{ "type" : "Find", "identifier" : "Find0", "relations": { "isChildOf" : "Feature0" }}
+{ "category" : "Place", "identifier" : "Place0"}
+{ "category" : "Trench", "identifier" : "Trench0", "relations": { "isChildOf" : "Place0" }}
+{ "category" : "Feature", "identifier" : "Feature0", "relations": { "isChildOf" : "Trench0" }}
+{ "category" : "Find", "identifier" : "Find0", "relations": { "isChildOf" : "Feature0" }}

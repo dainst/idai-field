@@ -1,7 +1,7 @@
 export function createMockProjectConfiguration(): any {
 
     const projectConfiguration = jasmine.createSpyObj('projectConfiguration',
-        ['getTypesMap']);
+        ['getCategoriesMap']);
 
     const defaultFieldConfiguration =  {
         groups: [{ fields: {
@@ -10,10 +10,10 @@ export function createMockProjectConfiguration(): any {
         }}]
     };
 
-    projectConfiguration.getTypesMap.and.returnValue({
-        type1: defaultFieldConfiguration,
-        type2: defaultFieldConfiguration,
-        type3: defaultFieldConfiguration,
+    projectConfiguration.getCategoriesMap.and.returnValue({
+        category1: defaultFieldConfiguration,
+        category2: defaultFieldConfiguration,
+        category3: defaultFieldConfiguration,
         Find: defaultFieldConfiguration,
         Type: defaultFieldConfiguration
     });

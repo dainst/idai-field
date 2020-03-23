@@ -1,7 +1,7 @@
 import {assoc, update, flow, map} from 'tsfun';
 import {Document, Resource, Relations} from 'idai-components-2';
 import {Parser} from './parser';
-import {IdaiType} from '../../configuration/model/idai-type';
+import {Category} from '../../configuration/model/category';
 import {convertCsvRows} from './convert-csv-rows';
 import {convertFieldTypes} from './convert-field-types';
 
@@ -20,11 +20,11 @@ export module CsvParser {
 
 
     /**
-     * @param type
+     * @param category
      * @param operationId converted into isChildOf entry if not empty
      * @param separator
      */
-    export const build = (type: IdaiType, operationId: string, separator: string): Parser => {
+    export const build = (category: Category, operationId: string, separator: string): Parser => {
 
         /**
          * ParserErrors
@@ -35,7 +35,7 @@ export module CsvParser {
         return (content: string) => {
 
             try {
-                return Promise.resolve(doParse(type, content, separator));
+                return Promise.resolve(doParse(category, content, separator));
             } catch (msgWithParams) {
                 return Promise.reject(msgWithParams);
             }
@@ -43,13 +43,13 @@ export module CsvParser {
     };
 
 
-    function doParse(type: IdaiType, content: string, separator: string) {
+    function doParse(category: Category, content: string, separator: string) {
 
         return flow(content,
             convertCsvRows(separator),
-            map(assoc('type', type.name)),
+            map(assoc('category', category.name)),
             map(insertRelations),
-            map(convertFieldTypes(type)),
+            map(convertFieldTypes(category)),
             map(toDocument));
     }
 }

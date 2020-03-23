@@ -4,7 +4,7 @@ import {FieldReadDatastore} from '../../../core/datastore/field/field-read-datas
 import {RoutingService} from '../../routing-service';
 import {ResourcesComponent} from '../resources.component';
 import {ResourcesSearchBarComponent} from './resources-search-bar.component';
-import {ProjectTypes} from '../../../core/configuration/project-types';
+import {ProjectCategories} from '../../../core/configuration/project-categories';
 import {ViewFacade} from '../../../core/resources/view/view-facade';
 
 @Component({
@@ -34,7 +34,7 @@ export class SearchSuggestionsComponent implements OnChanges {
                 private resourcesSearchBarComponent: ResourcesSearchBarComponent,
                 private resourcesComponent: ResourcesComponent,
                 private renderer: Renderer2,
-                private projectTypes: ProjectTypes) {
+                private projectCategories: ProjectCategories) {
 
         this.viewFacade.populateDocumentsNotifications().subscribe(async documents => {
             this.documentsFound = documents.length > 0;
@@ -82,7 +82,7 @@ export class SearchSuggestionsComponent implements OnChanges {
     public isSuggestionBoxVisible(): boolean {
 
         return this.visible && !this.documentsFound
-            && (this.viewFacade.getSearchString().length > 0 || this.viewFacade.getFilterTypes().length > 0);
+            && (this.viewFacade.getSearchString().length > 0 || this.viewFacade.getFilterCategories().length > 0);
     }
 
 
@@ -101,7 +101,7 @@ export class SearchSuggestionsComponent implements OnChanges {
 
     private async updateSuggestions() {
 
-        if ((this.viewFacade.getSearchString().length === 0 && this.viewFacade.getFilterTypes().length === 0)
+        if ((this.viewFacade.getSearchString().length === 0 && this.viewFacade.getFilterCategories().length === 0)
                 || this.documentsFound) {
             return this.suggestedDocuments = [];
         }
@@ -115,20 +115,20 @@ export class SearchSuggestionsComponent implements OnChanges {
 
         return {
             q: this.viewFacade.getSearchString(),
-            types: this.getTypes(),
+            categories: this.getCategories(),
             constraints: this.viewFacade.getCustomConstraints(),
             limit: this.maxSuggestions
         };
     }
 
 
-    private getTypes(): string[]|undefined {
+    private getCategories(): string[]|undefined {
 
-        return this.viewFacade.getFilterTypes().length > 0
-            ? this.viewFacade.getFilterTypes()
+        return this.viewFacade.getFilterCategories().length > 0
+            ? this.viewFacade.getFilterCategories()
             : this.viewFacade.isInTypesManagement()
-                ? this.projectTypes.getAbstractFieldTypeNames()
-                : this.projectTypes.getConcreteFieldTypeNames();
+                ? this.projectCategories.getAbstractFieldCategoryNames()
+                : this.projectCategories.getConcreteFieldCategoryNames();
     }
 
 

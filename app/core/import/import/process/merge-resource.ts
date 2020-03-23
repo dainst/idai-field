@@ -1,5 +1,5 @@
 import {dropRightWhile, includedIn, is, isArray, isNot, isObject, assoc, isAssociative, Map,
-    Associative, keys, isEmpty, values, isnt, flow, dissoc, reduce, cond, forEach, val} from 'tsfun';
+    Associative, keys, isEmpty, values, isnt, flow, dissoc, reduce, cond, forEach} from 'tsfun';
 import {NewResource, Resource} from 'idai-components-2';
 import {clone} from '../../../util/object-util';
 import {HierarchicalRelations} from '../../../model/relation-constants';
@@ -19,7 +19,7 @@ export const RELATIONS = 'relations';
  * @param additional Must not contain empty objects or arrays as any leaf of the tree.
  *
  * @throws
- *   [ImportErrors.TYPE_CANNOT_BE_CHANGED, identifier]
+ *   [ImportErrors.CATEGORY_CANNOT_BE_CHANGED, identifier]
  *   [ImportErrors.EMPTY_SLOTS_IN_ARRAYS_FORBIDDEN, identifier]
  *     - if a new array object is to be created at an index which would leave unfilled indices between
  *       the new index and the last index of the array which is filled in the original field.
@@ -34,7 +34,7 @@ export function mergeResource(into: Resource, additional: NewResource): Resource
 
     try {
         assertArraysHomogeneouslyTyped(additional);
-        assertNoAttemptToChangeType(into, additional);
+        assertNoAttemptToChangeCategory(into, additional);
 
         const target =
             overwriteOrDeleteProperties(
@@ -99,10 +99,10 @@ function assertRelationsSet(into: Resource) {
 }
 
 
-function assertNoAttemptToChangeType(into: Resource, additional: NewResource) {
+function assertNoAttemptToChangeCategory(into: Resource, additional: NewResource) {
 
-    if (additional.type && into.type !== additional.type) {
-        throw [ImportErrors.TYPE_CANNOT_BE_CHANGED];
+    if (additional.category && into.category !== additional.category) {
+        throw [ImportErrors.CATEGORY_CANNOT_BE_CHANGED];
     }
 }
 

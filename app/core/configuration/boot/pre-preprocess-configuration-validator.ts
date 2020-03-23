@@ -13,17 +13,16 @@ export class PrePreprocessConfigurationValidator {
 
     private static evaluateRelationDomain(relation: RelationDefinition, appConfiguration: any) {
 
-        if (intersection([relation.domain, this.imageTypes(appConfiguration)]).length > 0) {
-            return (['image type/ isRecordedIn must not be defined manually', relation] as any);
-
-        } else if (intersection([relation.domain, this.operationSubtypes(appConfiguration)]).length > 0) {
-            return ['operation subtype as domain type/ isRecordedIn must not be defined manually', relation] as any;
+        if (intersection([relation.domain, this.imageCategories(appConfiguration)]).length > 0) {
+            return (['image category/isRecordedIn must not be defined manually', relation] as any);
+        } else if (intersection([relation.domain, this.operationSubcategories(appConfiguration)]).length > 0) {
+            return ['operation subcategory as domain category/isRecordedIn must not be defined manually',
+                relation] as any;
         } else {
-
-            if (subtract(this.operationSubtypes(appConfiguration))(relation.domain).length > 0) {
-                for (let rangeType of relation.range) {
-                    if (!this.operationSubtypes(appConfiguration).includes(rangeType)) {
-                        return ['isRecordedIn - only operation subtypes allowed in range', relation] as any;
+            if (subtract(this.operationSubcategories(appConfiguration))(relation.domain).length > 0) {
+                for (let rangeCategory of relation.range) {
+                    if (!this.operationSubcategories(appConfiguration).includes(rangeCategory)) {
+                        return ['isRecordedIn - only operation subcategories allowed in range', relation] as any;
                     }
                 }
             }
@@ -31,17 +30,17 @@ export class PrePreprocessConfigurationValidator {
     }
 
 
-    private static operationSubtypes(appConfiguration: any) {
+    private static operationSubcategories(appConfiguration: any) {
 
-        return Object.keys(appConfiguration.types)
-            .filter(typeName => appConfiguration.types[typeName].parent === 'Operation');
+        return Object.keys(appConfiguration.categories)
+            .filter(categoryName => appConfiguration.categories[categoryName].parent === 'Operation');
     }
 
 
-    private static imageTypes(appConfiguration: any) {
+    private static imageCategories(appConfiguration: any) {
 
-        return Object.keys(appConfiguration.types)
-            .filter(typeName => appConfiguration.types[typeName].parent === 'Image')
+        return Object.keys(appConfiguration.categories)
+            .filter(categoryName => appConfiguration.categories[categoryName].parent === 'Image')
             .concat(['Image']);
     }
 }

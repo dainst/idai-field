@@ -1,12 +1,9 @@
 import {browser, element, by, protractor} from 'protractor';
 
 const common = require('../common.js');
-const EC = protractor.ExpectedConditions;
-const delays = require('../config/delays');
 
 
 export module ImageViewPage {
-
 
     export function get(id: string, menu: string) {
 

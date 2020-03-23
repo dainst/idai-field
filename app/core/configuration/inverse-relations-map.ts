@@ -2,9 +2,10 @@ import {flow} from 'tsfun';
 import {RelationDefinition} from './model/relation-definition';
 import {assocReduce, toPair} from '../util/utils';
 
-// @author Daniel de Oliveira
 
-
+/**
+ * @author Daniel de Oliveira
+ */
 export type InverseRelationsMap = {
 
     [_: string]:    // relation name for every defined relation, independent if it has an inverse or not

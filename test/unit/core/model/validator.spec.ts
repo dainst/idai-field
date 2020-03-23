@@ -1,6 +1,6 @@
 import {FindResult} from 'idai-components-2';
 import {Validator} from '../../../../app/core/model/validator';
-import {ProjectTypes} from '../../../../app/core/configuration/project-types';
+import {ProjectCategories} from '../../../../app/core/configuration/project-categories';
 import {ValidationErrors} from '../../../../app/core/model/validation-errors';
 import {ProjectConfiguration} from '../../../../app/core/configuration/project-configuration';
 
@@ -13,31 +13,31 @@ describe('Validator', () => {
 
     const projectConfiguration = new ProjectConfiguration(
         {
-            types: [
+            categories: [
                 {
-                    type: 'T',
+                    name: 'T',
                     fields: [
-                        {name: 'id',},
-                        {name: 'identifier'},
-                        {name: 'type',},
-                        {name: 'optional'},
-                        {name: 'mandatory', mandatory: true},
-                        {name: 'number1', label: 'number1', inputType: 'float'},
-                        {name: 'number2', label: 'number2', inputType: 'float'}
+                        { name: 'id' },
+                        { name: 'identifier' },
+                        { name: 'category' },
+                        { name: 'optional' },
+                        { name: 'mandatory', mandatory: true },
+                        { name: 'number1', label: 'number1', inputType: 'float' },
+                        { name: 'number2', label: 'number2', inputType: 'float' }
                     ]
                 },
                 {
-                    type: 'T2',
+                    name: 'T2',
                     fields: [
-                        {name: 'id',},
-                        {name: 'type',}
+                        { name: 'id' },
+                        { name: 'category' }
                     ]
                 },
             ],
             relations: [
-                {name: 'isRelatedTo', domain: ['T'], range: ['T'], inverse: 'NO-INVERSE'},
-                {name: 'isDepictedIn', domain: ['T'], range: ['T2'], inverse: 'NO-INVERSE'},
-                {name: 'isRecordedIn', domain: ['T'], range: ['T2'], inverse: 'NO-INVERSE'}
+                { name: 'isRelatedTo', domain: ['T'], range: ['T'], inverse: 'NO-INVERSE' },
+                { name: 'isDepictedIn', domain: ['T'], range: ['T2'], inverse: 'NO-INVERSE' },
+                { name: 'isRecordedIn', domain: ['T'], range: ['T2'], inverse: 'NO-INVERSE' }
             ]
         } as any
     );
@@ -50,14 +50,14 @@ describe('Validator', () => {
         const doc = {
             resource: {
                 id: '1',
-                type: 'T',
+                category: 'T',
                 mandatory: 'm',
                 relations: {
                     isRelatedTo: ['2']
                 },
             }
         };
-        await new Validator(projectConfiguration, find, new ProjectTypes(projectConfiguration))
+        await new Validator(projectConfiguration, find, new ProjectCategories(projectConfiguration))
             .assertIsRecordedInTargetsExist(doc).then(() => done(), msgWithParams => fail(msgWithParams));
         done();
     });
@@ -67,10 +67,10 @@ describe('Validator', () => {
 
         const find = () => Promise.resolve({ documents: [] } as FindResult);
 
-        const doc = {resource: {id: '1', type: 'T', mandatory: 'm', relations: {'isRecordedIn': ['notexisting']}}};
+        const doc = { resource: { id: '1', category: 'T', mandatory: 'm', relations: { 'isRecordedIn': ['notexisting'] } } };
 
         try {
-            await new Validator(projectConfiguration, find, new ProjectTypes(projectConfiguration))
+            await new Validator(projectConfiguration, find, new ProjectCategories(projectConfiguration))
                 .assertIsRecordedInTargetsExist(doc);
             fail();
         } catch (expected) {
@@ -83,15 +83,16 @@ describe('Validator', () => {
     it('should report duplicate identifier', async done => {
 
         const find = () =>
-            Promise.resolve({totalCount: 1, documents: [{resource: {id: '2', identifier: 'eins' }}]} as unknown as FindResult);
+            Promise.resolve({totalCount: 1, documents: [{resource: {id: '2', identifier: 'eins' } }]} as unknown as FindResult);
 
         const doc = {
             resource: {
-                id: '1', identifier: 'eins', type: 'T', mandatory: 'm', relations: {'isRecordedIn': []}}
+                id: '1', identifier: 'eins', category: 'T', mandatory: 'm', relations: { 'isRecordedIn': [] }
+            }
         };
 
         try {
-            await new Validator(projectConfiguration, find, new ProjectTypes(projectConfiguration)).assertIdentifierIsUnique(doc);
+            await new Validator(projectConfiguration, find, new ProjectCategories(projectConfiguration)).assertIdentifierIsUnique(doc);
             fail();
         } catch (expected) {
             expect(expected).toEqual([ValidationErrors.IDENTIFIER_ALREADY_EXISTS, 'eins']);

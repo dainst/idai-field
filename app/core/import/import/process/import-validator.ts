@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {includedIn, is, isNot, isnt, on} from 'tsfun';
 import {Document, NewDocument, NewResource, Query, Resource} from 'idai-components-2';
-import {ProjectTypes} from '../../../configuration/project-types';
+import {ProjectCategories} from '../../../configuration/project-categories';
 import {Validator} from '../../../model/validator';
 import {Validations} from '../../../model/validations';
 import {ImportErrors as E} from '../import-errors';
@@ -16,7 +16,7 @@ import {ProjectConfiguration} from '../../../configuration/project-configuration
 
 @Injectable()
 /**
- * Validates against data model of ProjectConfiguration and projectTypes and contents of Database
+ * Validates against data model of ProjectConfiguration and projectCategories and contents of Database
  *
  * Errors thrown are of type
  *   ImportError.* if specified in ImportValidator itself and of type
@@ -27,24 +27,24 @@ import {ProjectConfiguration} from '../../../configuration/project-configuration
  */
 export class ImportValidator extends Validator {
 
-    constructor(projectConfiguration: ProjectConfiguration,
-                private datastore: DocumentDatastore,
-                projectTypes: ProjectTypes) {
+    constructor(projectConfiguration: ProjectConfiguration, private datastore: DocumentDatastore,
+                projectCategories: ProjectCategories) {
 
-        super(projectConfiguration, (q: Query) => datastore.find(q), projectTypes);
+        super(projectConfiguration, (q: Query) => datastore.find(q), projectCategories);
     }
 
 
-    public assertIsAllowedRelationDomainType(domainTypeName: string, rangeTypeName: string,
-                                             relationName: string, identifier: string) {
+    public assertIsAllowedRelationDomainCategory(domainCategoryName: string, rangeCategoryName: string,
+                                                 relationName: string, identifier: string) {
 
-        if (!this.projectConfiguration.isAllowedRelationDomainType(domainTypeName, rangeTypeName, relationName)) {
+        if (!this.projectConfiguration.isAllowedRelationDomainCategory(
+                domainCategoryName, rangeCategoryName,relationName)) {
 
             throw [
-                E.TARGET_TYPE_RANGE_MISMATCH,
+                E.TARGET_CATEGORY_RANGE_MISMATCH,
                 identifier,
                 relationName,
-                rangeTypeName
+                rangeCategoryName
             ];
         }
     }
@@ -54,53 +54,56 @@ export class ImportValidator extends Validator {
 
         for (let resource of resources) {
 
-            const type = this.projectConfiguration.getTypesList().find(on('name', is(resource.type)));
-            if (!type) {
-                console.error('Resource type not found', resource.type);
+            const category = this.projectConfiguration.getCategoriesList().find(
+                on('name', is(resource.category))
+            );
+            if (!category) {
+                console.error('Category not found', resource.category);
                 continue;
             }
-            if (!type.mustLieWithin) continue;
+            if (!category.mustLieWithin) continue;
 
             const recordedIn = resource.relations[RECORDED_IN];
             const liesWithin = resource.relations[LIES_WITHIN];
 
             if (recordedIn && recordedIn.length > 0 && (!liesWithin || liesWithin.length === 0)) {
 
-                throw [E.MUST_LIE_WITHIN_OTHER_NON_OPERATON_RESOURCE, resource.type, resource.identifier];
+                throw [E.MUST_LIE_WITHIN_OTHER_NON_OPERATON_RESOURCE, resource.category, resource.identifier];
             }
         }
     }
 
 
     /**
-     * @throws [INVALID_TYPE]
+     * @throws [INVALID_CATEGORY]
      */
-    public assertIsKnownType(document: Document|NewDocument) {
+    public assertIsKnownCategory(document: Document|NewDocument) {
 
-        if (!Validations.validateType(document.resource, this.projectConfiguration)) {
-            throw [E.INVALID_TYPE, document.resource.type];
+        if (!Validations.validateCategory(document.resource, this.projectConfiguration)) {
+            throw [E.INVALID_CATEGORY, document.resource.category];
         }
     }
 
 
-    public assertIsAllowedType(document: Document|NewDocument) {
+    public assertIsAllowedCategory(document: Document|NewDocument) {
 
-        if (document.resource.type === 'Operation'
-            || document.resource.type === 'Project') {
+        if (document.resource.category === 'Operation'
+            || document.resource.category === 'Project') {
 
-            throw [E.TYPE_NOT_ALLOWED, document.resource.type];
+            throw [E.CATEGORY_NOT_ALLOWED, document.resource.category];
         }
 
-        if (document.resource.type === 'Image' || this.projectConfiguration.isSubtype(document.resource.type, 'Image')) {
+        if (document.resource.category === 'Image' || this.projectConfiguration.isSubcategory(
+                document.resource.category, 'Image')) {
 
-            throw [E.TYPE_ONLY_ALLOWED_ON_UPDATE, document.resource.type];
+            throw [E.CATEGORY_ONLY_ALLOWED_ON_UPDATE, document.resource.category];
         }
     }
 
 
-    public async assertIsNotOverviewType(document: Document|NewDocument) {
+    public async assertIsNotOverviewCategory(document: Document|NewDocument) {
 
-        if (this.projectTypes.getOverviewTypeNames().includes(document.resource.type)) {
+        if (this.projectCategories.getOverviewCategoryNames().includes(document.resource.category)) {
 
             throw [E.OPERATIONS_NOT_ALLOWED];
         }
@@ -113,13 +116,13 @@ export class ImportValidator extends Validator {
 
             const invalidRelationFields = Validations
                 .validateDefinedRelations(document.resource, this.projectConfiguration)
-                // operations have empty RECORDED_IN which however is not defined. image types must not be imported. regular types all have RECORDED_IN
+                // operations have empty RECORDED_IN which however is not defined. image categories must not be imported. regular categories all have RECORDED_IN
                 .filter(isnt(RECORDED_IN));
 
             if (invalidRelationFields.length > 0) {
                 throw [
                     E.INVALID_RELATIONS,
-                    document.resource.type,
+                    document.resource.category,
                     invalidRelationFields.join(', ')
                 ];
             }
@@ -137,7 +140,7 @@ export class ImportValidator extends Validator {
         if (undefinedFields.length > 0) {
             throw [
                 E.INVALID_FIELDS,
-                document.resource.type,
+                document.resource.category,
                 undefinedFields.join(', ')
             ];
         }
@@ -148,11 +151,11 @@ export class ImportValidator extends Validator {
      * Wellformedness test specifically written for use in import package.
      *
      * Assumes
-     *   * that the type of the document is a valid type from the active ProjectConfiguration
+     *   * that the category of the document is a valid category from the active ProjectConfiguration
      *
      * Asserts
      *   * the fields and relations defined in a given document are actually configured
-     *     fields and relations for the type of resource defined.
+     *     fields and relations for the category of resource defined.
      *   * that the geometries are structurally valid
      *   * there are no mandatory fields missing
      *   * the numerical values are correct
@@ -191,15 +194,14 @@ export class ImportValidator extends Validator {
     }
 
 
-    public async isRecordedInTargetAllowedRelationDomainType(document: NewDocument,
-                                                             mainTypeDocumentId: ResourceId) {
+    public async isRecordedInTargetAllowedRelationDomainCategory(document: NewDocument,
+                                                                 operationId: ResourceId) {
 
-        const mainTypeDocument = await this.datastore.get(mainTypeDocumentId);
-        if (!this.projectConfiguration.isAllowedRelationDomainType(document.resource.type,
-            mainTypeDocument.resource.type, RECORDED_IN)) {
+        const operation = await this.datastore.get(operationId);
+        if (!this.projectConfiguration.isAllowedRelationDomainCategory(document.resource.category,
+            operation.resource.category, RECORDED_IN)) {
 
-            throw [E.INVALID_MAIN_TYPE_DOCUMENT, document.resource.type,
-                mainTypeDocument.resource.type];
+            throw [E.INVALID_OPERATION, document.resource.category, operation.resource.category];
         }
     }
 
@@ -209,7 +211,7 @@ export class ImportValidator extends Validator {
      */
     public assertDropdownRangeComplete(resource: NewResource): void {
 
-        const fieldDefinitions = this.projectConfiguration.getFieldDefinitions(resource.type);
+        const fieldDefinitions = this.projectConfiguration.getFieldDefinitions(resource.category);
 
         for (let fieldName of Object.keys(resource).filter(isNot(includedIn(['relations', 'geometry'])))) {
 

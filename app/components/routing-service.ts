@@ -3,7 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Location} from '@angular/common';
 import {Observable, Observer} from 'rxjs';
 import {DatastoreErrors, Document} from 'idai-components-2';
-import {ProjectTypes} from '../core/configuration/project-types';
+import {ProjectCategories} from '../core/configuration/project-categories';
 import {ViewFacade} from '../core/resources/view/view-facade';
 import {ProjectConfiguration} from '../core/configuration/project-configuration';
 
@@ -26,7 +26,7 @@ export class RoutingService {
     constructor(private router: Router,
                 private viewFacade: ViewFacade,
                 private location: Location,
-                private projectTypes: ProjectTypes,
+                private projectCategories: ProjectCategories,
                 private projectConfiguration: ProjectConfiguration) {}
 
 
@@ -50,17 +50,17 @@ export class RoutingService {
 
         if (comingFromOutsideResourcesComponent) this.currentRoute = undefined;
 
-        if (this.projectConfiguration.isSubtype(documentToSelect.resource.type, 'Image')) {
-            await this.jumpToImageTypeResource(documentToSelect, comingFromOutsideResourcesComponent);
+        if (this.projectConfiguration.isSubcategory(documentToSelect.resource.category, 'Image')) {
+            await this.jumpToImageCategoryResource(documentToSelect, comingFromOutsideResourcesComponent);
         } else {
-            await this.jumpToFieldTypeResource(documentToSelect, comingFromOutsideResourcesComponent);
+            await this.jumpToFieldCategoryResource(documentToSelect, comingFromOutsideResourcesComponent);
         }
     }
 
 
     public async jumpToConflictResolver(document: Document) {
 
-        if (this.projectConfiguration.isSubtype(document.resource.type, 'Image')) {
+        if (this.projectConfiguration.isSubcategory(document.resource.category, 'Image')) {
             return this.router.navigate(['images', document.resource.id, 'edit', 'conflicts']);
         } else {
             const viewName: 'project'|'types'|string = this.getViewName(document);
@@ -75,8 +75,8 @@ export class RoutingService {
     }
 
 
-    private async jumpToImageTypeResource(documentToSelect: Document,
-                                          comingFromOutsideResourcesComponent: boolean) {
+    private async jumpToImageCategoryResource(documentToSelect: Document,
+                                              comingFromOutsideResourcesComponent: boolean) {
 
         const selectedDocument = this.viewFacade.getSelectedDocument();
         if (selectedDocument) {
@@ -93,8 +93,8 @@ export class RoutingService {
     }
 
 
-    private async jumpToFieldTypeResource(documentToSelect: Document,
-                                          comingFromOutsideResourcesComponent: boolean = false) {
+    private async jumpToFieldCategoryResource(documentToSelect: Document,
+                                              comingFromOutsideResourcesComponent: boolean = false) {
 
         const viewName: 'project'|'types'|string = this.getViewName(documentToSelect);
 
@@ -135,9 +135,9 @@ export class RoutingService {
 
     private getViewName(document: Document): 'project'|'types'|string {
 
-        return this.projectTypes.getOverviewTypeNames().includes(document.resource.type)
+        return this.projectCategories.getOverviewCategoryNames().includes(document.resource.category)
             ? 'project'
-            : this.projectTypes.getAbstractFieldTypeNames().includes(document.resource.type)
+            : this.projectCategories.getAbstractFieldCategoryNames().includes(document.resource.category)
                 ? 'types'
                 : document.resource.relations['isRecordedIn'][0];
     }

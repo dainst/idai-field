@@ -16,7 +16,7 @@
             <div *ngIf="isPlaceholder(image) && !initializing"
                  class="image-placeholder"
                  [class.highlightOnHover]="highlightOnHover">
-                <type-icon [type]="image.document.resource.type" [size]="60"></type-icon>
+                <category-icon [category]="image.document.resource.category" [size]="60"></category-icon>
             </div>
             <div *ngIf="showResourceInfoOnHover" class="resource-info badge badge-light">
                 {{image.document.resource.identifier}}

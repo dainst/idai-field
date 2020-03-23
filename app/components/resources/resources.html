@@ -32,10 +32,10 @@
                  [class.col-md-12]="isInTypesManagement()">
                 <resources-search-bar [filterOptions]="filterOptions"
                                       [q]="getQueryString()"
-                                      [types]="getTypeFilters()"
+                                      [categories]="getCategoryFilters()"
                                       [extendedSearch]="isInExtendedSearchMode()"
                                       (onQueryStringChanged)="setQueryString($event)"
-                                      (onTypesChanged)="setTypeFilters($event)">
+                                      (onCategoriesChanged)="setCategoryFilters($event)">
                 </resources-search-bar>
             </div>
 

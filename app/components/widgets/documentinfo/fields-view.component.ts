@@ -13,11 +13,11 @@ import {pick} from '../../../core/util/utils';
 import {UtilTranslations} from '../../../core/util/util-translations';
 import {HierarchicalRelations} from '../../../core/model/relation-constants';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
-import {IdaiType} from '../../../core/configuration/model/idai-type';
+import {Category} from '../../../core/configuration/model/category';
 import {RelationDefinition} from '../../../core/configuration/model/relation-definition';
 import {FieldDefinition} from '../../../core/configuration/model/field-definition';
 import {CatalogCriteria} from '../../docedit/core/forms/type-relation/catalog-criteria';
-import {BuiltInTypes} from '../../../core/configuration/app-configurator';
+import {BuiltInCategories} from '../../../core/configuration/app-configurator';
 import {ValuelistDefinition} from '../../../core/configuration/model/valuelist-definition';
 import {ValuelistUtil} from '../../../core/util/valuelist-util';
 import {Groups} from '../../../core/configuration/model/group';
@@ -94,7 +94,7 @@ export class FieldsViewComponent implements OnChanges {
         if (this.resource) {
             await this.processRelations(this.resource);
             this.processFields(this.resource);
-            this.updateGroupLabels(this.resource.type);
+            this.updateGroupLabels(this.resource.category);
         }
     }
 
@@ -150,14 +150,14 @@ export class FieldsViewComponent implements OnChanges {
     }
 
 
-    private updateGroupLabels(typeName: Name) {
+    private updateGroupLabels(categoryName: Name) {
 
-        const type: IdaiType = this.projectConfiguration.getTypesMap()[typeName];
-        if (type.parentType) {
-            this.groups[GROUP_NAME.PROPERTIES].label = type.parentType.label;
-            this.groups[GROUP_NAME.CHILD_PROPERTIES].label = type.label;
+        const category: Category = this.projectConfiguration.getCategoriesMap()[categoryName];
+        if (category.parentCategory) {
+            this.groups[GROUP_NAME.PROPERTIES].label = category.parentCategory.label;
+            this.groups[GROUP_NAME.CHILD_PROPERTIES].label = category.label;
         } else {
-            this.groups[GROUP_NAME.PROPERTIES].label = type.label;
+            this.groups[GROUP_NAME.PROPERTIES].label = category.label;
         }
     }
 
@@ -167,7 +167,7 @@ export class FieldsViewComponent implements OnChanges {
         this.addBaseFields(resource);
 
         const existingResourceFields = this.projectConfiguration
-            .getFieldDefinitions(resource.type)
+            .getFieldDefinitions(resource.category)
             .filter(on('name', isnt(Resource.RELATIONS)))
             .filter(on('name', compose(lookup(resource), isDefined)));
 
@@ -193,10 +193,10 @@ export class FieldsViewComponent implements OnChanges {
 
         if (field.name === PERIOD) {
             this.handlePeriodField(resource, group);
-        } else if (resource.type === BuiltInTypes.TYPECATALOG
-                && field.name === BuiltInTypes.TypeCatalog.CRITERION) {
+        } else if (resource.category === BuiltInCategories.TYPECATALOG
+                && field.name === BuiltInCategories.TypeCatalog.CRITERION) {
             this.handleTypeCatalogCriterionField(resource, field);
-        } else if (!!this.projectConfiguration.isVisible(resource.type, field.name)) {
+        } else if (!!this.projectConfiguration.isVisible(resource.category, field.name)) {
             this.handleDefaultField(resource, field, group);
         }
     }
@@ -206,7 +206,7 @@ export class FieldsViewComponent implements OnChanges {
 
         this.fields[group].push({
             name: field.name,
-            label: this.projectConfiguration.getFieldDefinitionLabel(resource.type, field.name),
+            label: this.projectConfiguration.getFieldDefinitionLabel(resource.category, field.name),
             value: FieldsViewComponent.getValue(resource, field.name, field.valuelist),
             isArray: Array.isArray(resource[field.name])
         });
@@ -260,23 +260,23 @@ export class FieldsViewComponent implements OnChanges {
 
         if (shortDescription) {
             this.fields[Groups.STEM].push({
-                label: this.getLabel(resource.type, FieldResource.SHORTDESCRIPTION),
+                label: this.getLabel(resource.category, FieldResource.SHORTDESCRIPTION),
                 value: shortDescription,
                 isArray: false
             });
         }
 
         this.fields[Groups.STEM].push({
-            label: this.getLabel(resource.type, Resource.TYPE),
-            value: this.projectConfiguration.getLabelForType(resource.type),
+            label: this.getLabel(resource.category, Resource.CATEGORY),
+            value: this.projectConfiguration.getLabelForCategory(resource.category),
             isArray: false
         });
     }
 
 
-    private getLabel(type: Name, field: Name): string {
+    private getLabel(category: Name, field: Name): string {
 
-        return ((pick(this.projectConfiguration.getTypesMap(), type) as any).fields
+        return ((pick(this.projectConfiguration.getCategoriesMap(), category) as any).fields
             .find(on('name', is(field))) as FieldDefinition)
             .label as string;
     }
@@ -285,7 +285,7 @@ export class FieldsViewComponent implements OnChanges {
     private async processRelations(resource: Resource) {
 
         const relations: Array<RelationDefinition>|undefined
-            = this.projectConfiguration.getRelationDefinitions(resource.type);
+            = this.projectConfiguration.getRelationDefinitions(resource.category);
         if (isEmpty(relations)) return;
 
         for (let relation of FieldsViewComponent.computeRelationsToShow(resource, relations)) {

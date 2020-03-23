@@ -15,7 +15,7 @@ describe('mergeResource', () => {
 
     const template: Resource = {
         id: 'id1',
-        type: 'Object',
+        category: 'Object',
         identifier: identifier,
         shortDescription: 'shortDescription1',
         relations: { }
@@ -49,7 +49,7 @@ describe('mergeResource', () => {
 
         const source: Resource = {
             id: 'id1',
-            type: 'Object',
+            category: 'Object',
             identifier: identifier,
             shortDescription: 'shortDescription2',
             anotherField: 'field2',
@@ -298,7 +298,7 @@ describe('mergeResource', () => {
 
         const source: Resource = {
             id: 'id2',
-            type: 'Object',
+            category: 'Object',
             identifier: 'identifier2',
             shortDescription: 'shortDescription2',
             anotherField: 'field2',
@@ -308,7 +308,7 @@ describe('mergeResource', () => {
         const result = mergeResource(target, source);
         expect(result.identifier).toEqual('identifier1');
         expect(result.id).toEqual('id1');
-        expect(result.type).toEqual('Object');
+        expect(result.category).toEqual('Object');
         expect(result.relations).toEqual({});
     });
 
@@ -359,7 +359,7 @@ describe('mergeResource', () => {
     });
 
 
-    it('null or undefined values in object arrays are not considered as arrayOfHeterogeneous types', () => {
+    it('null or undefined values in object arrays are not considered as array of heterogeneous types', () => {
 
         const o = {a: 1};
 
@@ -395,7 +395,7 @@ describe('mergeResource', () => {
 
     // err cases
 
-    it('array of heterogeneous types - top level', () => {
+    it('array of heterogeneous categories - top level', () => {
 
         source['array'] = [{a: 1}, 2];
 
@@ -408,7 +408,7 @@ describe('mergeResource', () => {
     });
 
 
-    it('array of heterogeneous types - nested', () => {
+    it('array of heterogeneous categories - nested', () => {
 
         source['array'] = { b: [{a: 1}, 2] };
 
@@ -421,7 +421,7 @@ describe('mergeResource', () => {
     });
 
 
-    it('array of heterogeneous types - non-object array must not contain undefined', () => {
+    it('array of heterogeneous categories - non-object array must not contain undefined', () => {
 
         source['array'] = [2, undefined];
 
@@ -443,7 +443,7 @@ describe('mergeResource', () => {
     });
 
 
-    it('array of heterogeneous types - non-object array cannot contain null', () => {
+    it('array of heterogeneous categories - non-object array cannot contain null', () => {
 
         source['array'] = [2, null];
 
@@ -465,11 +465,11 @@ describe('mergeResource', () => {
     });
 
 
-    it('attempted to change type', () => {
+    it('attempted to change category', () => {
 
         const source: Resource = {
             id: 'id2',
-            type: 'Object2',
+            category: 'Object2',
             identifier: identifier,
             shortDescription: 'shortDescription2',
             anotherField: 'field2',
@@ -480,7 +480,7 @@ describe('mergeResource', () => {
             mergeResource(target, source);
             fail();
         } catch (expected) {
-            expect(expected).toEqual([ImportErrors.TYPE_CANNOT_BE_CHANGED, identifier]);
+            expect(expected).toEqual([ImportErrors.CATEGORY_CANNOT_BE_CHANGED, identifier]);
         }
     });
 

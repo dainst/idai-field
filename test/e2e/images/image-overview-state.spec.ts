@@ -19,17 +19,17 @@ describe('images/state --', () => {
     afterEach(done => common.resetConfigJson().then(done));
 
 
-    xit('autoselect last selected type filter after returning to images overview', () => {
+    xit('autoselect last selected category filter after returning to images overview', () => {
 
         ImageOverviewPage.getAllCells().then(cells => expect(cells.length).toBe(2));
 
-        SearchBarPage.clickChooseTypeFilter('image-drawing', 'images');
+        SearchBarPage.clickChooseCategoryFilter('image-drawing', 'images');
         ImageOverviewPage.getAllCells().then(cells => expect(cells.length).toBe(1));
 
         NavbarPage.clickCloseNonResourcesTab();
         MenuPage.navigateToImages();
 
-        SearchBarPage.getSelectedTypeFilterCharacter('images').then(value => expect(value).toEqual('Z'));
+        SearchBarPage.getSelectedCategoryFilterCharacter('images').then(value => expect(value).toEqual('Z'));
         ImageOverviewPage.getAllCells().then(cells => expect(cells.length).toBe(1));
     });
 

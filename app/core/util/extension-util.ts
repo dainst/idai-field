@@ -5,7 +5,6 @@
  */
 export class ExtensionUtil {
 
-
     /**
      * @param files
      * @param supportedFileTypes
@@ -13,14 +12,17 @@ export class ExtensionUtil {
      *   [0] if there are no files to import, after considering unsupported extensions
      *   [count,extensionsAsJoinedString] if there are files to import and also unsupported extensions
      */
-    public static reportUnsupportedFileTypes(files: Array<File>, supportedFileTypes: Array<string>): Array<any> {
+    public static reportUnsupportedFileTypes(files: Array<File>,
+                                             supportedFileTypes: Array<string>): Array<any> {
 
-        const uniqueUnsupportedExts = ExtensionUtil.getUnsupportedExts(files, supportedFileTypes).reduce(function(c, p) {
-            if (c.indexOf(p as never) < 0) c.push(p as never);
-            return c;
-        }, []);
+        const uniqueUnsupportedExts = ExtensionUtil.getUnsupportedExts(files, supportedFileTypes)
+            .reduce(function(c, p) {
+                if (c.indexOf(p as never) < 0) c.push(p as never);
+                return c;
+            }, []);
 
-        let result: Array<any> = [(files.length - ExtensionUtil.getUnsupportedExts(files, supportedFileTypes).length)];
+        let result: Array<any>
+            = [(files.length - ExtensionUtil.getUnsupportedExts(files, supportedFileTypes).length)];
         if (uniqueUnsupportedExts.length > 0) {
             result.push(uniqueUnsupportedExts.join(','));
         }
@@ -39,11 +41,11 @@ export class ExtensionUtil {
     public static replaceExtension = (fileName: string, extension: string): string =>
         (fileName.indexOf('.') === -1)
             ? fileName + '.' + extension
-            : fileName.substr(0, fileName.lastIndexOf(".")) + "." + extension;
+            : fileName.substr(0, fileName.lastIndexOf('.')) + '.' + extension;
 
 
     public static getExtension = (file: File): string =>
-        /(?:\.([^.]+))?$/.exec(file.name)?.[1] ?? ""
+        /(?:\.([^.]+))?$/.exec(file.name)?.[1] ?? '';
 
 
     private static getUnsupportedExts(files: Array<File>, supportedFileTypes: Array<string>) {
@@ -51,7 +53,9 @@ export class ExtensionUtil {
         let unsupportedExts: Array<string> = [];
         for (let file of files) {
             let ext;
-            if ((ext = ExtensionUtil.ofUnsupportedExtension(file, supportedFileTypes)) != undefined) unsupportedExts.push('"*.' + ext + '"');
+            if ((ext = ExtensionUtil.ofUnsupportedExtension(file, supportedFileTypes)) != undefined) {
+                unsupportedExts.push('"*.' + ext + '"');
+            }
         }
         return unsupportedExts;
     }

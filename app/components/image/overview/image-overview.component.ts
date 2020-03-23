@@ -8,7 +8,7 @@ import {ImageUploadResult} from '../upload/image-uploader';
 import {ImageViewModalComponent} from '../../viewmodal/image/image-view-modal.component';
 import {MenuService} from '../../../desktop/menu-service';
 import {M} from '../../messages/m';
-import {IdaiType} from '../../../core/configuration/model/idai-type';
+import {Category} from '../../../core/configuration/model/category';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
 import {TabManager} from '../../../core/tabs/tab-manager';
 import {ViewFacade} from '../../../core/resources/view/view-facade';
@@ -31,7 +31,7 @@ export class ImageOverviewComponent implements OnInit {
 
     @ViewChild('imageGrid', { static: true }) public imageGrid: ImageGridComponent;
 
-    public filterOptions: Array<IdaiType> = [];
+    public filterOptions: Array<Category> = [];
     public modalOpened: boolean = false;
 
 
@@ -70,7 +70,7 @@ export class ImageOverviewComponent implements OnInit {
 
     public getQuery = () => this.imageOverviewFacade.getQuery();
 
-    public setTypeFilters = (types: string[]) => this.imageOverviewFacade.setTypeFilters(types);
+    public setCategoryFilters = (categories: string[]) => this.imageOverviewFacade.setCategoryFilters(categories);
 
     public setQueryString = (q: string) => this.imageOverviewFacade.setQueryString(q);
 
@@ -94,7 +94,7 @@ export class ImageOverviewComponent implements OnInit {
     ngOnInit() {
 
         this.imageGrid.nrOfColumns = this.imageOverviewFacade.getNrImagesPerRow();
-        this.filterOptions = [this.projectConfiguration.getTypesTree()['Image']];
+        this.filterOptions = [this.projectConfiguration.getCategoriesTree()['Image']];
     }
 
 

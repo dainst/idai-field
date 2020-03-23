@@ -45,7 +45,7 @@ describe('resources/list --', () => {
     });
 
 
-    it('show newly created resource in list view', () => {
+   it('show newly created resource in list view', () => {
 
         ResourcesPage.performCreateResourceInList('1', 'feature-architecture');
         ResourcesPage.getListModeInputFieldValue('1', 0)
@@ -67,7 +67,7 @@ describe('resources/list --', () => {
         ResourcesPage.clickSelectResource('1', 'info');
         FieldsViewPage
             .getFieldValue(0, 1)
-            .then(typeLabel => expect(typeLabel).toEqual('Changed resource 1'));
+            .then(categoryLabel => expect(categoryLabel).toEqual('Changed resource 1'));
     });
 
 

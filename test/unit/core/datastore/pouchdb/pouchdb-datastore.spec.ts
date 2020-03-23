@@ -59,7 +59,7 @@ describe('PouchdbDatastore', () => {
             }
             return {
                 resource: {
-                    id: doc, type: 'some', relations: []},
+                    id: doc, category: 'some', relations: []},
                 created: {date:'2011/01/01'},
                 modified: [{date:'2011/01/01'}]
             };
@@ -230,7 +230,7 @@ describe('PouchdbDatastore', () => {
         pouchdbProxy.get.and.callFake(async (resourceId: string, params?: any) => {
             if (params && params.rev) {
                 const rev = Static.doc('sd1');
-                rev.modified[0] = {user: 'u2', date: new Date('2018-04-27T11:07:05.760Z')};
+                rev.modified[0] = { user: 'u2', date: new Date('2018-04-27T11:07:05.760Z') };
                 rev.created = rev.modified[0];
                 rev.resource.id = '1';
                 rev['_rev'] = 'r-1';
@@ -238,7 +238,7 @@ describe('PouchdbDatastore', () => {
             } else if (i === 0) {
                 i = i + 1;
                 const existingDoc = Static.doc('sd1');
-                existingDoc.created = {user: 'u1', date: new Date('2018-04-26T11:07:05.760Z')};
+                existingDoc.created = { user: 'u1', date: new Date('2018-04-26T11:07:05.760Z') };
                 existingDoc.modified = [];
                 existingDoc.resource.id = '1';
                 return existingDoc;
@@ -267,7 +267,7 @@ describe('PouchdbDatastore', () => {
             if (i === 0) {
                 i = i + 1;
                 const existingDoc = Static.doc('sd1');
-                existingDoc.created = {user: 'u1', date: new Date('2018-04-26T11:07:05.760Z')};
+                existingDoc.created = { user: 'u1', date: new Date('2018-04-26T11:07:05.760Z') };
                 existingDoc.modified = [];
                 existingDoc.resource.id = '1';
                 return existingDoc;
@@ -300,8 +300,8 @@ describe('PouchdbDatastore', () => {
 
         pouchdbProxy.get.and.callFake(async resourceId => {
             return {resource: {
-                id: resourceId, type: 'some', relations: []}, created: {date:'2011/01/01'},
-                modified: [{date:'2011/01/01'}]
+                id: resourceId, category: 'some', relations: []}, created: { date:'2011/01/01' },
+                modified: [{ date:'2011/01/01' }]
             };
         });
 

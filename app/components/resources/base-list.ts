@@ -22,10 +22,10 @@ export class BaseList {
     }
 
 
-    public getCurrentFilterType()  {
+    public getCurrentFilterCategory()  {
 
-        const filterTypes = this.viewFacade.getFilterTypes();
-        return filterTypes && filterTypes.length > 0 ? filterTypes[0] : undefined;
+        const filterCategories: string[] = this.viewFacade.getFilterCategories();
+        return filterCategories && filterCategories.length > 0 ? filterCategories[0] : undefined;
     }
 
 

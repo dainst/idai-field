@@ -10,14 +10,14 @@ import {ProjectConfiguration} from '../../../../app/core/configuration/project-c
 describe('Validations', () => {
 
     const projectConfiguration = new ProjectConfiguration(
-        {
-            types: [
-                {
-                    type: 'T',
-                    fields: [
+        [
+         {
+                T: {
+                    name: 'T',
+                    groups: [{ name: 'stem', fields: [
                         { name: 'id' },
                         { name: 'identifier' },
-                        { name: 'type' },
+                        { name: 'category' },
                         { name: 'optional' },
                         { name: 'mandatory', mandatory: true },
                         { name: 'number1', label: 'number1', inputType: 'float' },
@@ -37,31 +37,31 @@ describe('Validations', () => {
                         { name: 'literature1', label: 'literature1', inputType: 'literature' },
                         { name: 'literature2', label: 'literature2', inputType: 'literature' },
                         { name: 'literature3', label: 'literature3', inputType: 'literature' }
-                    ]
+                    ]}]
                 },
-                {
-                    type: 'T2',
-                    fields: [
+                T2: {
+                    name: 'T2',
+                    groups: [{ name: 'stem', fields: [
                         { name: 'id' },
-                        { name: 'type' }
-                    ]
+                        { name: 'category' }
+                    ]}]
                 },
-                {
-                    type: 'T3',
-                    fields: [
+                T3: {
+                    name: 'T3',
+                    groups: [{ name: 'stem', fields: [
                         { name: 'id' },
-                        { name: 'type' },
+                        { name: 'category' },
                         { name: 'dating' },
                         { name: 'period', inputType: 'dropdownRange' }
-                    ]
-                },
-            ],
-            relations: [
+                    ]}]
+                }
+            } as any, [
+
                 { name: 'isRelatedTo', domain: ['T'], range: ['T'], inverse: 'NO-INVERSE' },
                 { name: 'isDepictedIn', domain: ['T'], range: ['T2'], inverse: 'NO-INVERSE' },
                 { name: 'isRecordedIn', domain: ['T'], range: ['T2'], inverse: 'NO-INVERSE' }
             ]
-        } as any
+        ]
     );
 
 
@@ -73,19 +73,19 @@ describe('Validations', () => {
         const doc = {
             resource: {
                 id: '1',
-                type: 'T',
+                category: 'T',
                 mandatory: 'm',
                 undef: 'abc',
                 relations: {isRecordedIn: ['0']},
             }
         };
 
-        const undefinedFields = Validations.validateDefinedFields(doc.resource, projectConfiguration);
+        const undefinedFields = Validations.validateDefinedFields(doc.resource as any, projectConfiguration);
         expect(undefinedFields).toContain('undef');
     });
 
 
-    it('validate defined fields - exclude period, periodEnd if dating defined for type', () => {
+    it('validate defined fields - exclude period, periodEnd if dating defined for category', () => {
 
         const datastore = jasmine.createSpyObj('datastore',['find']);
         datastore.find.and.returnValues(Promise.resolve({ totalCount: 0, documents: [] }));
@@ -93,7 +93,7 @@ describe('Validations', () => {
         const doc = {
             resource: {
                 id: '1',
-                type: 'T3',
+                category: 'T3',
                 dating: 'abc',
                 period: 'abc',
                 periodEnd: 'abc',
@@ -101,7 +101,7 @@ describe('Validations', () => {
             }
         };
 
-        const undefinedFields = Validations.validateDefinedFields(doc.resource, projectConfiguration);
+        const undefinedFields = Validations.validateDefinedFields(doc.resource as any, projectConfiguration);
         expect(undefinedFields.length).toBe(0);
     });
 
@@ -114,7 +114,7 @@ describe('Validations', () => {
         const doc = {
             resource: {
                 id: '1',
-                type: 'T',
+                category: 'T',
                 mandatory: 'm',
                 relations: { isRecordedIn: ['0'] },
             }
@@ -122,7 +122,7 @@ describe('Validations', () => {
 
 
         try {
-            Validations.assertNoFieldsMissing(doc, projectConfiguration);
+            Validations.assertNoFieldsMissing(doc as any, projectConfiguration);
         } catch (errWithParams) {
             fail(errWithParams);
         }
@@ -134,13 +134,13 @@ describe('Validations', () => {
         const doc = {
             resource: {
                 id: '1',
-                type: 'T',
+                category: 'T',
                 relations: {},
             }
         };
 
         try {
-            Validations.assertNoFieldsMissing(doc, projectConfiguration);
+            Validations.assertNoFieldsMissing(doc as any, projectConfiguration);
             fail();
         } catch (errWithParams) {
             expect(errWithParams).toEqual([ValidationErrors.MISSING_PROPERTY, 'T', 'mandatory']);
@@ -153,14 +153,14 @@ describe('Validations', () => {
         const doc = {
             resource: {
                 id: '1',
-                type: 'T',
+                category: 'T',
                 mandatory: '',
                 relations: {},
             }
         };
 
         try {
-            Validations.assertNoFieldsMissing(doc, projectConfiguration);
+            Validations.assertNoFieldsMissing(doc as any, projectConfiguration);
             fail();
         } catch (errWithParams) {
             expect(errWithParams).toEqual([ValidationErrors.MISSING_PROPERTY, 'T', 'mandatory']);
@@ -173,7 +173,7 @@ describe('Validations', () => {
         const doc = {
             resource: {
                 id: '1',
-                type: 'T',
+                category: 'T',
                 mandatory: 'm',
                 number1: 'ABC',
                 relations: { isRecordedIn: ['0'] }
@@ -181,7 +181,7 @@ describe('Validations', () => {
         };
 
         try {
-            Validations.assertCorrectnessOfNumericalValues(doc, projectConfiguration);
+            Validations.assertCorrectnessOfNumericalValues(doc as any, projectConfiguration);
             fail();
         } catch (errWithParams) {
             expect(errWithParams).toEqual([ValidationErrors.INVALID_NUMERICAL_VALUES, 'T', 'number1']);
@@ -195,7 +195,7 @@ describe('Validations', () => {
         const doc = {
             resource: {
                 id: '1',
-                type: 'T',
+                category: 'T',
                 mandatory: 'm',
                 number1: 'ABC',
                 number2: 'DEF',
@@ -204,7 +204,7 @@ describe('Validations', () => {
         };
 
         try {
-            Validations.assertCorrectnessOfNumericalValues(doc, projectConfiguration);
+            Validations.assertCorrectnessOfNumericalValues(doc as any, projectConfiguration);
             fail();
         } catch (errWithParams) {
             expect(errWithParams).toEqual([ValidationErrors.INVALID_NUMERICAL_VALUES, 'T', 'number1, number2']);
@@ -218,7 +218,7 @@ describe('Validations', () => {
         const doc = {
             resource: {
                 id: '1',
-                type: 'T',
+                category: 'T',
                 mandatory: 'm',
                 // Accept datings with label (deprecated)
                 dating1: [{ label: 'Dating 1' }],
@@ -239,7 +239,7 @@ describe('Validations', () => {
         };
 
         try {
-            Validations.assertCorrectnessOfDatingValues(doc, projectConfiguration);
+            Validations.assertCorrectnessOfDatingValues(doc as any, projectConfiguration);
             fail();
         } catch (errWithParams) {
             expect(errWithParams).toEqual(
@@ -255,7 +255,7 @@ describe('Validations', () => {
         const doc = {
             resource: {
                 id: '1',
-                type: 'T',
+                category: 'T',
                 mandatory: 'm',
                 // Accept dimensions with label (deprecated)
                 dimension1: [{ label: 'Dating 1' }],
@@ -274,7 +274,7 @@ describe('Validations', () => {
         };
 
         try {
-            Validations.assertCorrectnessOfDimensionValues(doc, projectConfiguration);
+            Validations.assertCorrectnessOfDimensionValues(doc as any, projectConfiguration);
             fail();
         } catch (errWithParams) {
             expect(errWithParams).toEqual(
@@ -290,7 +290,7 @@ describe('Validations', () => {
         const doc = {
             resource: {
                 id: '1',
-                type: 'T',
+                category: 'T',
                 mandatory: 'm',
                 // Correct literature reference
                 literature1: [{ quotation: 'Quotation', zenonId: '1234567' }],
@@ -303,7 +303,7 @@ describe('Validations', () => {
         };
 
         try {
-            Validations.assertCorrectnessOfLiteratureValues(doc, projectConfiguration);
+            Validations.assertCorrectnessOfLiteratureValues(doc as any, projectConfiguration);
             fail();
         } catch (errWithParams) {
             expect(errWithParams).toEqual(

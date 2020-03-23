@@ -5,11 +5,11 @@
 describe('PrePreprocessConfigurationValidator',() => {
 
     /*
-    it('reject if isRecordedIn defined for image type', () => {
+    it('reject if isRecordedIn defined for image category', () => {
 
         const configuration = {
             identifier: 'Conf',
-            types: {
+            categories: {
                 'Image': {}
             },
             relations: [{
@@ -20,15 +20,15 @@ describe('PrePreprocessConfigurationValidator',() => {
 
 
         const result = new IdaiFieldPrePreprocessConfigurationValidator().validateFieldDefinitions_(configuration);
-        expect(result[0][0]).toContain('image type/ isRecordedIn must not be defined manually');
+        expect(result[0][0]).toContain('image category/ isRecordedIn must not be defined manually');
     });
 
 
-    it('reject if isRecordedIn defined for image subtype', () => {
+    it('reject if isRecordedIn defined for image subcategory', () => {
 
         const configuration = {
             identifier: 'Conf',
-            types: {
+            categories: {
                 'Drawing': { parent: 'Image' }
             },
             relations: [{
@@ -39,15 +39,15 @@ describe('PrePreprocessConfigurationValidator',() => {
 
 
         const result = new IdaiFieldPrePreprocessConfigurationValidator().validateFieldDefinitions_(configuration);
-        expect(result[0][0]).toContain('image type/ isRecordedIn must not be defined manually');
+        expect(result[0][0]).toContain('image category/ isRecordedIn must not be defined manually');
     });
 
 
-    it('reject if isRecordedIn defined for operation subtype', () => {
+    it('reject if isRecordedIn defined for operation subcategory', () => {
 
         const configuration = {
             identifier: 'Conf',
-            types: {
+            categories: {
                 'A': { parent: 'Operation' }
             },
             relations: [{
@@ -58,15 +58,15 @@ describe('PrePreprocessConfigurationValidator',() => {
 
 
         const result = new IdaiFieldPrePreprocessConfigurationValidator().validateFieldDefinitions_(configuration);
-        expect(result[0][0]).toContain('operation subtype as domain type/ isRecordedIn must not be defined manually');
+        expect(result[0][0]).toContain('operation subcategory as domain category/ isRecordedIn must not be defined manually');
     });
 
 
-    it('reject if isRecordedIn range not operation subtype', () => {
+    it('reject if isRecordedIn range not operation subcategory', () => {
 
         const configuration = {
             identifier: 'Conf',
-            types: {
+            categories: {
                 'A': {},
                 'B': {}
             },
@@ -78,7 +78,7 @@ describe('PrePreprocessConfigurationValidator',() => {
         };
 
         const result = new IdaiFieldPrePreprocessConfigurationValidator().validateFieldDefinitions_(configuration);
-        expect(result[0][0]).toContain('isRecordedIn - only operation subtypes allowed in range');
+        expect(result[0][0]).toContain('isRecordedIn - only operation subcategories allowed in range');
     });
 
 
@@ -86,7 +86,7 @@ describe('PrePreprocessConfigurationValidator',() => {
 
         const configuration = {
             identifier: 'Conf',
-            types: {
+            categories: {
                 'A': {}
             },
             relations: [{

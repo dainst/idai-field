@@ -1,7 +1,7 @@
+import {ImageDocument} from 'idai-components-2';
 import {PouchdbDatastore} from '../pouchdb/pouchdb-datastore';
 import {DocumentCache} from '../cached/document-cache';
-import {ImageDocument} from 'idai-components-2';
-import {TypeConverter} from '../cached/type-converter';
+import {CategoryConverter} from '../cached/category-converter';
 import {CachedDatastore} from '../cached/cached-datastore';
 import {IndexFacade} from "../index/index-facade";
 
@@ -17,7 +17,7 @@ export class ImageDatastore
         datastore: PouchdbDatastore,
         indexFacade: IndexFacade,
         documentCache: DocumentCache<ImageDocument>,
-        documentConverter: TypeConverter<ImageDocument>) {
+        documentConverter: CategoryConverter<ImageDocument>) {
 
         super(datastore, indexFacade, documentCache, documentConverter, 'ImageDocument');
     }

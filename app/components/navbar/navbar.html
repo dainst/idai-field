@@ -13,7 +13,7 @@
                 <a class="nav-link"
                    [class.active]="isActiveRoute(getTabRoute(tab))"
                    (click)="router.navigate(getTabRouteArray(tab))">
-                    <type-icon [size]="23" [type]="tab.operationType" ></type-icon>
+                    <category-icon [size]="23" [category]="tab.operationCategory"></category-icon>
                     <span class="closable-tab-label">{{tab.label}}</span>
                     <span class="mdi mdi-close" (click)="$event.stopPropagation(); close(tab);"></span>
                 </a>
@@ -24,7 +24,7 @@
                     <a *ngFor="let tab of getHiddenTabs()"
                        class="dropdown-item hidden-tab"
                        (click)="router.navigate(getTabRouteArray(tab))">
-                        <type-icon [size]="19" [type]="tab.operationType"></type-icon>
+                        <category-icon [size]="19" [category]="tab.operationCategory"></category-icon>
                         <span class="hidden-tab-label">{{tab.label}}</span>
                     </a>
                 </div>

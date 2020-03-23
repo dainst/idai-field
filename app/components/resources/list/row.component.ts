@@ -7,9 +7,9 @@ import {Validator} from '../../../core/model/validator';
 import {UsernameProvider} from '../../../core/settings/username-provider';
 import {M} from '../../messages/m';
 import {MessagesConversion} from '../../docedit/messages-conversion';
-import {IdaiType} from '../../../core/configuration/model/idai-type';
+import {Category} from '../../../core/configuration/model/category';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
-import {ProjectTypes} from '../../../core/configuration/project-types';
+import {ProjectCategories} from '../../../core/configuration/project-categories';
 import {ViewFacade} from '../../../core/resources/view/view-facade';
 import {NavigationService} from '../../../core/resources/navigation/navigation-service';
 
@@ -27,7 +27,7 @@ import {NavigationService} from '../../../core/resources/navigation/navigation-s
 export class RowComponent implements AfterViewInit {
 
     @Input() document: FieldDocument;
-    @Input() typesMap: { [type: string]: IdaiType };
+    @Input() categoriesMap: { [category: string]: Category };
 
     @ViewChild('identifierInput', {static: false}) identifierInput: ElementRef;
 
@@ -44,7 +44,7 @@ export class RowComponent implements AfterViewInit {
         private datastore: FieldReadDatastore,
         private navigationService: NavigationService,
         private projectConfiguration: ProjectConfiguration,
-        private projectTypes: ProjectTypes
+        private projectCategories: ProjectCategories
     ) {}
 
 
@@ -70,7 +70,7 @@ export class RowComponent implements AfterViewInit {
 
     public jumpToView = () => this.navigationService.jumpToView(this.document);
 
-    public getTypeLabel = () => this.typesMap[this.document.resource.type].label;
+    public getCategoryLabel = () => this.categoriesMap[this.document.resource.category].label;
 
     public makeId = () => this.document.resource.id
         ? 'resource-' + this.document.resource.identifier
@@ -105,7 +105,7 @@ export class RowComponent implements AfterViewInit {
 
     public isMoveOptionAvailable(): boolean {
 
-        return this.projectTypes.getHierarchyParentTypes(this.document.resource.type).length > 0;
+        return this.projectCategories.getHierarchyParentCategories(this.document.resource.category).length > 0;
     }
 
 

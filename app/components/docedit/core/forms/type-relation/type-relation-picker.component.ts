@@ -1,10 +1,10 @@
-import {Pair, to, isNot, undefinedOrEmpty, left, on, includedIn,
-    right, map, flow, empty, prune} from 'tsfun';
 import {Component} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+import {Pair, to, isNot, undefinedOrEmpty, left, on, includedIn, right, map, flow, empty, prune} from 'tsfun';
 import {map as asyncMap} from 'tsfun/async';
-import {FieldDocument, FieldResource, Resource, Query, Constraint, Document, FindResult} from 'idai-components-2';
+import {FieldDocument, FieldResource, Resource, Query, Constraint, Document,
+    FindResult} from 'idai-components-2';
 import {FieldReadDatastore} from '../../../../../core/datastore/field/field-read-datastore';
 import {TypeImagesUtil} from '../../../../../core/util/type-images-util';
 import getLinkedImages = TypeImagesUtil.getLinkedImages;
@@ -94,7 +94,7 @@ export class TypeRelationPickerComponent {
     private async usedCatalogCriteria() {
 
         return flow(
-            await this.datastore.find({ types: [TYPECATALOG] }),
+            await this.datastore.find({ categories: [TYPECATALOG] }),
             to(FindResult.DOCUMENTS),
             map(to(Document.RESOURCE)),
             map(to(CRITERION)),
@@ -104,8 +104,8 @@ export class TypeRelationPickerComponent {
 
     private async fetchCatalogs() {
 
-        const query = {
-            types: [TYPECATALOG],
+        const query: Query = {
+            categories: [TYPECATALOG],
             constraints: {}
         };
         if (this.selectedCriterion) query.constraints = { 'criterion:match': this.selectedCriterion };
@@ -122,13 +122,13 @@ export class TypeRelationPickerComponent {
 
         if (!this.resource) return;
 
-        const query = TypeRelationPickerComponent
-            .constructQuery(
-                this.resource,
-                this.q,
-                this.selectedCatalog
-                    ? [this.selectedCatalog]
-                    : this.availableCatalogs);
+        const query = TypeRelationPickerComponent.constructQuery(
+            this.resource,
+            this.q,
+            this.selectedCatalog
+                ? [this.selectedCatalog]
+                : this.availableCatalogs
+        );
 
         const documents = (await this.datastore.find(query)).documents;
         this.typeDocumentsWithLinkedImages = await this.pairWithLinkedImages(documents);
@@ -136,6 +136,7 @@ export class TypeRelationPickerComponent {
 
 
     private pairWithLinkedImages = asyncMap(async (document: FieldDocument) => {
+
         return [
             document,
             await getLinkedImages(document, this.datastore)
@@ -143,16 +144,14 @@ export class TypeRelationPickerComponent {
     });
 
 
-    private static constructQuery(resource: Resource,
-                                  q: string,
-                                  selectedCatalogs: Array<FieldResource>) {
+    private static constructQuery(resource: Resource, q: string, selectedCatalogs: Array<FieldResource>) {
 
         const query: Query = {
             q: q,
-            types: [TYPE],
+            categories: [TYPE],
             limit: 5,
             sort: {
-                matchType: resource.type,
+                matchCategory: resource.category,
                 mode: Query.SORT_MODE_EXACTMATCHFIRST,
             },
             constraints: {}

@@ -1,17 +1,16 @@
 import {PouchdbManager} from '../../../../../app/core/datastore/pouchdb/pouchdb-manager';
 import {IndexFacade} from '../../../../../app/core/datastore/index/index-facade';
-
-import fs = require('fs');
-import rimraf = require('rimraf');
-import PouchDB = require('pouchdb');
 import {ConstraintIndex} from '../../../../../app/core/datastore/index/constraint-index';
 import {PouchDbFsImagestore} from '../../../../../app/core/images/imagestore/pouch-db-fs-imagestore';
 import {ImagestoreErrors} from '../../../../../app/core/images/imagestore/imagestore-errors';
+import fs = require('fs');
+import rimraf = require('rimraf');
+import PouchDB = require('pouchdb');
+
 
 /**
  * @author Sebastian Cuy
  */
-
 // helper functions for converting strings to ArrayBuffers and vice versa
 function str2ab(str: string): ArrayBuffer {
 

@@ -207,7 +207,7 @@ describe('ResourcesStateManager', () => {
     });
 
 
-    it('set type filters and q', async done => {
+    it('set category filters and q', async done => {
 
         const trenchDocument1 = Static.fieldDoc('trench1', 'trench1', 'Trench', 't1');
         const featureDocument1 = Static.fieldDoc('Feature 1', 'feature1', 'Feature', 'feature1');
@@ -215,45 +215,45 @@ describe('ResourcesStateManager', () => {
 
         await resourcesStateManager.initialize(trenchDocument1.resource.id);
 
-        resourcesStateManager.setTypeFilters(['Find']);
+        resourcesStateManager.setCategoryFilters(['Find']);
         resourcesStateManager.setQueryString('abc');
 
         await resourcesStateManager.initialize('anotherOperationId');
-        expect(ResourcesState.getTypeFilters(resourcesStateManager.get())).toEqual([]);
+        expect(ResourcesState.getCategoryFilters(resourcesStateManager.get())).toEqual([]);
         expect(ResourcesState.getQueryString(resourcesStateManager.get())).toEqual('');
         await resourcesStateManager.initialize(trenchDocument1.resource.id);
 
-        expect(ResourcesState.getTypeFilters(resourcesStateManager.get())).toEqual(['Find']);
+        expect(ResourcesState.getCategoryFilters(resourcesStateManager.get())).toEqual(['Find']);
         expect(ResourcesState.getQueryString(resourcesStateManager.get())).toEqual('abc');
 
         done();
     });
 
 
-    it('delete type filter and q of segment', async done => {
+    it('delete category filter and q of segment', async done => {
 
         const trenchDocument1 = Static.fieldDoc('trench1', 'trench1', 'Trench', 't1');
 
         await resourcesStateManager.initialize(trenchDocument1.resource.id);
 
-        resourcesStateManager.setTypeFilters(undefined);
+        resourcesStateManager.setCategoryFilters(undefined);
         resourcesStateManager.setQueryString('');
-        expect(ResourcesState.getTypeFilters(resourcesStateManager.get())).toEqual(undefined);
+        expect(ResourcesState.getCategoryFilters(resourcesStateManager.get())).toEqual(undefined);
         expect(ResourcesState.getQueryString(resourcesStateManager.get())).toEqual('');
 
         done();
     });
 
 
-    it('delete type filter and q of non segment', async done => {
+    it('delete category filter and q of non segment', async done => {
 
         const trenchDocument1 = Static.fieldDoc('trench1', 'trench1', 'Trench', 't1');
 
         await resourcesStateManager.initialize(trenchDocument1.resource.id);
 
-        resourcesStateManager.setTypeFilters(undefined);
+        resourcesStateManager.setCategoryFilters(undefined);
         resourcesStateManager.setQueryString('');
-        expect(ResourcesState.getTypeFilters(resourcesStateManager.get())).toEqual(undefined);
+        expect(ResourcesState.getCategoryFilters(resourcesStateManager.get())).toEqual(undefined);
         expect(ResourcesState.getQueryString(resourcesStateManager.get())).toEqual('');
 
         done();

@@ -1,4 +1,4 @@
-import {ImageGeoreference, ImageDocument} from 'idai-components-2';
+import {ImageDocument} from 'idai-components-2';
 import {ExtensionUtil} from '../../util/extension-util';
 
 
@@ -12,8 +12,8 @@ export function downloadWldFile(imageDoc: ImageDocument) {
 
 function triggerDownload(content: string, fileName: string) {
 
-    const link = document.createElement("a");
-    const blob = new Blob([content], { type: "application/octet-stream;charset=utf-8" });
+    const link = document.createElement('a');
+    const blob = new Blob([content], { type: 'application/octet-stream;charset=utf-8' });
     link.href = window.URL.createObjectURL(blob);
     link.download = fileName;
     link.click();
@@ -23,7 +23,7 @@ function triggerDownload(content: string, fileName: string) {
 function getWldFileContent(imageDoc: ImageDocument): string {
 
     if (!imageDoc.resource.georeference)
-        throw Error("No georefence present in the document");
+        throw Error('No georefence present in the document');
     
     let lines: number[] = [];
     const georef = imageDoc.resource.georeference;

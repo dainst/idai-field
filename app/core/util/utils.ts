@@ -1,11 +1,9 @@
-import {
-    copy, Pair, reduce, Map, to, identity,
-    isDefined, path, isString, getOn, dissoc
-} from 'tsfun';
+import {copy, Pair, reduce, Map, to, identity, isDefined, path, isString, getOn, dissoc} from 'tsfun';
+import {SortUtil} from './sort-util';
 
-// @author Daniel de Oliveira
-
-
+/**
+ * @author Daniel de Oliveira
+ */
 export function longerThan(than: string) { return (what: string) => what.length > than.length }
 
 export function isEmptyString(a: any) { return typeof a === 'string' && a === '' }
@@ -14,7 +12,7 @@ export function typeOf(v: any) { return typeof v }
 
 export function debugId<T>(v: T): T {
 
-    console.log("debug:", v);
+    console.log('debug:', v);
     return v;
 }
 
@@ -165,9 +163,6 @@ export function toTuple(...keys: string[]) {
 
 export interface Named { name: string }
 
-export type NamedIdentifiedObjectArray<A extends Named> = Array<A>;
-
-
 /**
  * as: [{ name: '17', e: 9 }, { name: '19', e: 7 }]
  * ->
@@ -177,3 +172,12 @@ export function makeNamedLookup<A extends Named>(as: Array<A>): Map<A> {
 
     return makeLookup('name')(as); // TODO maybe remove names afterwards; add inverse function
 }
+
+export const byName = (a: Named, b: Named) => SortUtil.alnumCompare(a.name, b.name); // to be used with sort
+
+export type NameIdentifiedObjectArray<A extends Named> = Array<A>;
+
+type NamesIdentifiedObjectArray = Array<Named>;
+
+
+

@@ -114,15 +114,15 @@ export module NavigationPath {
     }
 
 
-    export function setTypeFilters(navPath: NavigationPath, types: string[]) {
+    export function setCategoryFilters(navPath: NavigationPath, categories: string[]) {
 
-        getViewContext(navPath).types = types;
+        getViewContext(navPath).categories = categories;
     }
 
 
-    export function getTypeFilters(navPath: NavigationPath): string[] {
+    export function getCategoryFilters(navPath: NavigationPath): string[] {
 
-        return getViewContext(navPath).types;
+        return getViewContext(navPath).categories;
     }
 
 
@@ -152,12 +152,12 @@ export module NavigationPath {
     }
 
 
-    export function findInvalidSegment(mainTypeDocumentResourceId: string|undefined, navPath: NavigationPath,
+    export function findInvalidSegment(operationId: string|undefined, navPath: NavigationPath,
                                        exists: (_: string) => boolean): NavigationPathSegment|undefined {
 
         for (let segment of navPath.segments) {
             if (!NavigationPathSegment.isValid(
-                mainTypeDocumentResourceId, segment, navPath.segments, exists
+                operationId, segment, navPath.segments, exists
             )) {
                 return segment;
             }
@@ -168,16 +168,16 @@ export module NavigationPath {
 
 
     export function isPartOfNavigationPath(document: FieldDocument, navPath: NavigationPath,
-                                           mainTypeDocumentResourceId: string|undefined): boolean {
+                                           operationId: string|undefined): boolean {
 
         if (navPath.selectedSegmentId && Document.hasRelationTarget(document, 'liesWithin',
                 navPath.selectedSegmentId)) {
             return true;
         }
 
-        return (!navPath.selectedSegmentId && mainTypeDocumentResourceId != undefined
+        return (!navPath.selectedSegmentId && operationId != undefined
             && Document.hasRelationTarget(document, 'isRecordedIn',
-                mainTypeDocumentResourceId)
+                operationId)
             && !Document.hasRelations(document, 'liesWithin'));
     }
 
@@ -193,7 +193,7 @@ export module NavigationPath {
         while (currentResourceId) {
             const currentSegmentDoc = await get(currentResourceId);
             currentResourceId = ModelUtil.getRelationTargetId(currentSegmentDoc, 'liesWithin', 0);
-            segments.unshift( { document: currentSegmentDoc, q: '', types: [] });
+            segments.unshift( { document: currentSegmentDoc, q: '', categories: [] });
         }
 
         return segments;
@@ -230,6 +230,6 @@ export module NavigationPath {
             : (oldSelectedSegmentId
                     ? takeUntil(on('document.resource.id', is(oldSelectedSegmentId)))(oldSegments)
                     : []
-            ).concat([{ document: newSelectedSegmentDoc, q: '', types: [] }]) as NavigationPathSegment[];
+            ).concat([{ document: newSelectedSegmentDoc, q: '', categories: [] }]) as NavigationPathSegment[];
     }
 }

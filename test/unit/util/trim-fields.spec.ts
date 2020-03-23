@@ -13,7 +13,7 @@ describe('trim fields', () => {
         const resource: Resource = {
             id: '1',
             identifier: 'resource1',
-            type: 'Trench',
+            category: 'Trench',
             relations: {},
             field1: '    ABC',
             field2: 'ABC    ',
@@ -35,7 +35,7 @@ describe('trim fields', () => {
         const resource: Resource = {
             id: '1',
             identifier: 'resource1',
-            type: 'Trench',
+            category: 'Trench',
             relations: {},
             field: {
                 subfield1: '    ABC DEF    ',
@@ -55,7 +55,7 @@ describe('trim fields', () => {
         const resource: Resource = {
             id: '1',
             identifier: 'resource1',
-            type: 'Trench',
+            category: 'Trench',
             relations: {},
             fields: [{
                 subfield1: '    ABC',

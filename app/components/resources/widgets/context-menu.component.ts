@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import {ResourcesComponent} from '../resources.component';
-import {ProjectTypes} from '../../../core/configuration/project-types';
+import {ProjectCategories} from '../../../core/configuration/project-categories';
 import {ViewFacade} from '../../../core/resources/view/view-facade';
 import {ContextMenu} from './context-menu';
 
@@ -31,7 +31,7 @@ export class ContextMenuComponent implements OnChanges {
 
     constructor(private resourcesComponent: ResourcesComponent,
                 private viewFacade: ViewFacade,
-                private projectTypes: ProjectTypes) {}
+                private projectCategories: ProjectCategories) {}
 
 
     ngOnChanges() {
@@ -55,7 +55,7 @@ export class ContextMenuComponent implements OnChanges {
     public isCreateGeometryOptionAvailable(): boolean {
 
         return this.contextMenu.document !== undefined
-            && this.projectTypes.isGeometryType(this.contextMenu.document.resource.type)
+            && this.projectCategories.isGeometryCategory(this.contextMenu.document.resource.category)
             && !this.contextMenu.document.resource.geometry;
     }
 
@@ -63,7 +63,7 @@ export class ContextMenuComponent implements OnChanges {
     public isEditGeometryOptionAvailable(): boolean {
 
         return this.contextMenu.document !== undefined
-            && this.projectTypes.isGeometryType(this.contextMenu.document.resource.type)
+            && this.projectCategories.isGeometryCategory(this.contextMenu.document.resource.category)
             && this.contextMenu.document.resource.geometry !== undefined;
     }
 
@@ -72,7 +72,8 @@ export class ContextMenuComponent implements OnChanges {
 
         if (!this.contextMenu.document) return false;
 
-        return this.projectTypes.getHierarchyParentTypes(this.contextMenu.document.resource.type).length > 0;
+        return this.projectCategories
+            .getHierarchyParentCategories(this.contextMenu.document.resource.category).length > 0;
     }
 
 

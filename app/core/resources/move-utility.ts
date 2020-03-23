@@ -2,7 +2,7 @@ import {FieldDocument, Document, Constraint} from 'idai-components-2';
 import {clone} from '../util/object-util';
 import {PersistenceManager} from '../model/persistence-manager';
 import {IndexFacade} from '../datastore/index/index-facade';
-import {IdaiType} from '../configuration/model/idai-type';
+import {Category} from '../configuration/model/category';
 
 
 /**
@@ -12,22 +12,22 @@ export module MoveUtility {
 
     export async function moveDocument(document: FieldDocument, newParent: FieldDocument, username: string,
                                        persistenceManager: PersistenceManager,
-                                       isRecordedInTargetTypes: Array<IdaiType>) {
+                                       isRecordedInTargetCategories: Array<Category>) {
 
         const oldVersion: FieldDocument = clone(document);
-        updateRelations(document, newParent, isRecordedInTargetTypes);
+        updateRelations(document, newParent, isRecordedInTargetCategories);
         await persistenceManager.persist(document, username, oldVersion);
     }
 
 
     function updateRelations(document: FieldDocument, newParent: FieldDocument,
-                             isRecordedInTargetTypes: Array<IdaiType>) {
+                             isRecordedInTargetCategories: Array<Category>) {
 
-        if (newParent.resource.type === 'Project') {
+        if (newParent.resource.category === 'Project') {
             document.resource.relations['isRecordedIn'] = [];
             document.resource.relations['liesWithin'] = [];
-        } else if (isRecordedInTargetTypes.map(type => type.name)
-                .includes(newParent.resource.type)) {
+        } else if (isRecordedInTargetCategories.map(category => category.name)
+                .includes(newParent.resource.category)) {
             document.resource.relations['isRecordedIn'] = [newParent.resource.id];
             document.resource.relations['liesWithin'] = [];
         } else {

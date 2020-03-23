@@ -8,21 +8,21 @@ export function createMockValidator() {
         'assertFieldsDefined',
         'assertLiesWithinCorrectness',
         'assertRelationsWellformedness',
-        'assertIsKnownType',
+        'assertIsKnownCategory',
         'assertHasLiesWithin',
-        'assertIsAllowedType',
-        'assertIsAllowedRelationDomainType',
-        'assertSettingIsRecordedInIsPermissibleForType',
+        'assertIsAllowedCategory',
+        'assertIsAllowedRelationDomainCategory',
+        'assertSettingIsRecordedInIsPermissibleForCategory',
         'assertDropdownRangeComplete',
-        'assertIsNotOverviewType',
-        'isRecordedInTargetAllowedRelationDomainType',
+        'assertIsNotOverviewCategory',
+        'isRecordedInTargetAllowedRelationDomainCategory',
         'assertNoForbiddenRelations']);
 }
 
 
-export function d(id: string, type: string, identifier: string, rels?: any) {
+export function d(id: string, category: string, identifier: string, rels?: any) {
 
-    const document = { resource: { id: id, identifier: identifier, type: type, relations: {} }};
+    const document = { resource: { id: id, identifier: identifier, category: category, relations: {} }};
     if (rels) document.resource['relations'] = rels;
     return document as unknown as Document;
 }

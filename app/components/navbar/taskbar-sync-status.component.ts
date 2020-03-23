@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {SyncService} from '../../core/sync/sync-service';
-import { SyncStatus } from '../../core/sync/sync-process';
+import {SyncStatus} from '../../core/sync/sync-process';
 
 
 @Component({
@@ -15,10 +15,7 @@ import { SyncStatus } from '../../core/sync/sync-process';
  */
 export class TaskbarSyncStatusComponent {
 
-
-    constructor(private synchronizationService: SyncService) {
-
-    }
+    constructor(private synchronizationService: SyncService) {}
 
 
     public getStatus = (): SyncStatus => this.synchronizationService.getStatus();

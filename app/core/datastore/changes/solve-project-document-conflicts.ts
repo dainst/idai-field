@@ -1,5 +1,5 @@
-import {assoc, assocOn, to, lookup, flow, map, filter, isDefined, union as tsfunUnion, equal,
-    isEmpty, compose, dissoc, append, Pair, left, right} from 'tsfun';
+import {assoc, assocOn, to, lookup, flow, map, filter, isDefined, union as tsfunUnion, equal, isEmpty,
+    compose, dissoc, append, Pair, left, right} from 'tsfun';
 import {Document, Resource} from 'idai-components-2';
 import {RevisionId} from '../../constants';
 import {dissocIndices, last2, replaceLastPair, sortRevisionsByLastModified,} from '../helpers';

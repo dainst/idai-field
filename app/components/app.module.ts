@@ -28,7 +28,7 @@ import {MatrixModule} from './matrix/matrix.module';
 import {PouchdbManager} from '../core/datastore/pouchdb/pouchdb-manager';
 import {PouchdbServer} from '../core/datastore/pouchdb/pouchdb-server';
 import {TaskbarConflictsComponent} from './navbar/taskbar-conflicts.component';
-import {ProjectTypes} from '../core/configuration/project-types';
+import {ProjectCategories} from '../core/configuration/project-categories';
 import {UsernameProvider} from '../core/settings/username-provider';
 import {IndexFacade} from '../core/datastore/index/index-facade';
 import {FulltextIndex} from '../core/datastore/index/fulltext-index';
@@ -157,14 +157,14 @@ registerLocaleData(localeDe, 'de');
             deps: [PouchdbManager, ImageConverter, BlobMaker]
         },
         {
-            provide: ProjectTypes,
-            useClass: ProjectTypes,
+            provide: ProjectCategories,
+            useClass: ProjectCategories,
             deps: [ProjectConfiguration]
         },
         {
             provide: DescendantsUtility,
             useClass: DescendantsUtility,
-            deps: [ProjectTypes, ProjectConfiguration, DocumentReadDatastore]
+            deps: [ProjectCategories, ProjectConfiguration, DocumentReadDatastore]
         },
         { provide: ReadImagestore, useExisting: Imagestore },
         { provide: LocationStrategy, useClass: HashLocationStrategy },
@@ -221,7 +221,7 @@ registerLocaleData(localeDe, 'de');
             useFactory: (
                 documentReadDatastore: DocumentReadDatastore,
                 projectConfiguration: ProjectConfiguration,
-                projectTypes: ProjectTypes) => {
+                projectTypes: ProjectCategories) => {
 
                 return new Validator(
                     projectConfiguration,
@@ -229,7 +229,7 @@ registerLocaleData(localeDe, 'de');
                     projectTypes
                 )
             },
-            deps: [DocumentReadDatastore, ProjectConfiguration, ProjectTypes]
+            deps: [DocumentReadDatastore, ProjectConfiguration, ProjectCategories]
         },
         ImportValidator,
         { provide: MD, useClass: M},

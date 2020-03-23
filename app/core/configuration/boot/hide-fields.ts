@@ -1,35 +1,34 @@
 import {clone, keysAndValues, Map, Pair} from 'tsfun';
-import {CustomTypeDefinition} from '../model/custom-type-definition';
-import {TransientTypeDefinition} from '../model/transient-type-definition';
+import {CustomCategoryDefinition} from '../model/custom-category-definition';
+import {TransientCategoryDefinition} from '../model/transient-category-definition';
 
 
-export function hideFields(customTypes: Map<CustomTypeDefinition>) {
+export function hideFields(customCategories: Map<CustomCategoryDefinition>) {
 
-    return (selectedTypes_: Map<TransientTypeDefinition>) => {
+    return (selectedCategories: Map<TransientCategoryDefinition>) => {
 
-        const selectedTypes = clone(selectedTypes_);
+        const clonedSelectedCategories = clone(selectedCategories);
 
-        keysAndValues(selectedTypes).forEach(
-            ([selectedTypeName, selectedType]: Pair<string, TransientTypeDefinition>) => {
+        keysAndValues(clonedSelectedCategories).forEach(
+            ([selectedCategoryName, selectedCategory]: Pair<string, TransientCategoryDefinition>) => {
 
-                keysAndValues(customTypes).forEach(
-                    ([customTypeName, customType]: Pair<string, CustomTypeDefinition>) => {
+                keysAndValues(customCategories).forEach(
+                    ([customCategoryName, customCategory]: Pair<string, CustomCategoryDefinition>) => {
 
-                        if (customTypeName === selectedTypeName && selectedType.fields) {
-
-                            Object.keys(selectedType.fields).forEach(fieldName => {
-                                if (customType.hidden && customType.hidden.includes(fieldName)) {
-                                    selectedType.fields[fieldName].visible = false;
-                                    selectedType.fields[fieldName].editable = false;
+                        if (customCategoryName === selectedCategoryName && selectedCategory.fields) {
+                            Object.keys(selectedCategory.fields).forEach(fieldName => {
+                                if (customCategory.hidden && customCategory.hidden.includes(fieldName)) {
+                                    selectedCategory.fields[fieldName].visible = false;
+                                    selectedCategory.fields[fieldName].editable = false;
                                 }
 
-                                if (selectedType.fields[fieldName].visible === undefined) selectedType.fields[fieldName].visible = true;
-                                if (selectedType.fields[fieldName].editable === undefined) selectedType.fields[fieldName].editable = true;
+                                if (selectedCategory.fields[fieldName].visible === undefined) selectedCategory.fields[fieldName].visible = true;
+                                if (selectedCategory.fields[fieldName].editable === undefined) selectedCategory.fields[fieldName].editable = true;
                             })
                         }
                     })
             });
 
-        return selectedTypes;
+        return clonedSelectedCategories;
     }
 }

@@ -1,6 +1,6 @@
 'use strict';
 
-import {protractor, element, by} from 'protractor';
+import {element, by} from 'protractor';
 
 const common = require('../common.js');
 

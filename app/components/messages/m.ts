@@ -95,13 +95,13 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_NO_FEATURE_ASSIGNABLE = 'M.Import.ImportErrors.noFeatureAssignable';
     public static IMPORT_EXEC_NO_LIES_WITHIN_SET = 'M.Import.ImportErrors.onlyPlaceAndOperationWithoutRecordedInAllowed';
     public static IMPORT_PREVALIDATION_OPERATIONS_NOT_ALLOWED = 'M.Import.ImportErrors.operationsNotAllowed';
-    public static IMPORT_VALIDATION_INVALID_TYPE = 'M.Import.ImportErrors.invalidType';
+    public static IMPORT_VALIDATION_INVALID_CATEGORY = 'M.Import.ImportErrors.invalidCategory';
     public static IMPORT_ERROR_MUST_LIE_WITHIN_OTHER_NON_OPERATON_RESOURCE = 'M.Import.ImportErrors.mustLieWithinOtherNonOperationResource';
-    public static IMPORT_ERROR_TARGET_TYPE_RANGE_MISMATCH = 'M.Import.ImportErrors.targetTypeRangeMismatch';
+    public static IMPORT_ERROR_TARGET_CATEGORY_RANGE_MISMATCH = 'M.Import.ImportErrors.targetCategoryRangeMismatch';
     public static IMPORT_PREVALIDATION_DUPLICATE_IDENTIFIER = 'M.Import.ImportErrors.duplicateIdentifier';
     public static IMPORT_PREVALIDATION_MISSING_RELATION_TARGET = 'M.Import.ImportErrors.missingRelationTarget';
-    public static IMPORT_ERROR_TYPE_NOT_ALLOWED = 'M.Import.ImportErrors.typeNotAllowed';
-    public static IMPORT_ERROR_TYPE_ONLY_ALLOWED_ON_UPDATE = 'M.Import.ImportErrors.typeOnlyAllowedOnUpdate';
+    public static IMPORT_ERROR_CATEGORY_NOT_ALLOWED = 'M.Import.ImportErrors.categoryNotAllowed';
+    public static IMPORT_ERROR_CATEGORY_ONLY_ALLOWED_ON_UPDATE = 'M.Import.ImportErrors.categoryOnlyAllowedOnUpdate';
     public static IMPORT_ERROR_NOT_UPDATED = 'M.Import.ImportErrors.notUpdated';
     public static IMPORT_WARNING_EMPTY = 'M.Import.warning.empty';
     public static IMPORT_SUCCESS_SINGLE = 'M.Import.success.single';
@@ -115,7 +115,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_MUST_BE_ARRAY = 'M.Import.ImportErrors.relationMustBeArray';
     public static IMPORT_MUST_BE_IN_SAME_OPERATION = 'M.Import.ImportErrors.mustBeInSameOperation';
     public static IMPORT_ERROR_MUST_NOT_BE_EMPTY_STRING = 'M.Import.ImportErrors.mustNotBeEmptyString';
-    public static IMPORT_ERROR_TYPE_CANNOT_BE_CHANGED = 'M.Import.ImportErrors.typeCannotBeChanged';
+    public static IMPORT_ERROR_CATEGORY_CANNOT_BE_CHANGED = 'M.Import.ImportErrors.categoryCannotBeChanged';
     public static IMPORT_ERROR_EMPTY_SLOTS_IN_ARRAYS_FORBIDDEN = 'M.Import.ImportErrors.emptySlotsInArraysForbidden';
     public static IMPORT_ERROR_ARRAY_OF_HETEROGENEOUS_TYPES = 'M.Import.ImportErrors.arrayOfHeterogeneousType';
 
@@ -133,8 +133,8 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
 
     // Docedit Package
     public static DOCEDIT_WARNING_SAVE_CONFLICT = 'docedit.warning.saveConflict';
-    public static DOCEDIT_WARNING_TYPE_CHANGE_FIELDS = 'docedit.warning.typeChange.fields';
-    public static DOCEDIT_WARNING_TYPE_CHANGE_RELATIONS = 'docedit.warning.typeChange.relations';
+    public static DOCEDIT_WARNING_CATEGORY_CHANGE_FIELDS = 'docedit.warning.categoryChange.fields';
+    public static DOCEDIT_WARNING_CATEGORY_CHANGE_RELATIONS = 'docedit.warning.categoryChange.relations';
     public static DOCEDIT_ERROR_SAVE = 'docedit.error.save';
     public static DOCEDIT_ERROR_DELETE = 'docedit.error.delete';
     public static DOCEDIT_ERROR_RESOLVE_CONFLICT = 'docedit.error.resolveConflict';
@@ -173,7 +173,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     // Resources Package
     public static RESOURCES_SUCCESS_IMAGES_UPLOADED = 'resources.success.imagesImported';
     public static RESOURCES_WARNING_PROJECT_NAME_NOT_SAME = 'resources.error.projectNameNotSame';
-    public static RESOURCES_ERROR_TYPE_NOT_FOUND = 'resources.error.typeNotFound';
+    public static RESOURCES_ERROR_CATEGORY_NOT_FOUND = 'resources.error.categoryNotFound';
     public static RESOURCES_ERROR_NO_PROJECT_NAME = 'resources.error.noProjectName';
     public static RESOURCES_ERROR_PROJECT_NAME_LENGTH = 'resources.error.projectNameLength';
     public static RESOURCES_ERROR_PROJECT_NAME_SYMBOLS = 'resources.error.projectNameSymbols';
@@ -497,6 +497,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: ['?'],
             hidden: false
         };
+        // TODO Make message more understandable
         this.msgs[M.IMPORT_PARSER_CSV_HEADING_PATH_ITEM_TYPE_MISMATCH] = {
             content: i18n({
                 id: 'messages.import.parser.error.csvHeadingPathItemTypeMismatch',
@@ -749,9 +750,9 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: [],
             hidden: false
         };
-        this.msgs[M.IMPORT_VALIDATION_INVALID_TYPE] = {
+        this.msgs[M.IMPORT_VALIDATION_INVALID_CATEGORY] = {
             content: i18n({
-                id: 'messages.import.validation.error.invalidType',
+                id: 'messages.import.validation.error.invalidCategory',
                 value: 'Ungültige Kategoriedefinition: \'[0]\''
             }),
             level: 'danger',
@@ -767,9 +768,9 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: [],
             hidden: false
         };
-        this.msgs[M.IMPORT_ERROR_TARGET_TYPE_RANGE_MISMATCH] = {
+        this.msgs[M.IMPORT_ERROR_TARGET_CATEGORY_RANGE_MISMATCH] = {
             content: i18n({
-                id: 'messages.import.validation.error.targetTypeRangeMismatch',
+                id: 'messages.import.validation.error.targetCategoryRangeMismatch',
                 value: 'Eine Ressource der Kategorie \'[2]\' darf nicht mittels \'[1]\' mit \'[0]\' verküpft werden.'
             }),
             level: 'danger',
@@ -902,18 +903,18 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: [],
             hidden: false
         };
-        this.msgs[M.IMPORT_ERROR_TYPE_NOT_ALLOWED] = {
+        this.msgs[M.IMPORT_ERROR_CATEGORY_NOT_ALLOWED] = {
             content: i18n({
-                id: 'messages.import.error.typeNotAllowed',
+                id: 'messages.import.error.categoryNotAllowed',
                 value: 'Ressourcen der folgenden Kategorie sind beim Import nicht erlaubt: \'[0]\''
             }),
             level: 'danger',
             params: ['?'],
             hidden: false
         };
-        this.msgs[M.IMPORT_ERROR_TYPE_ONLY_ALLOWED_ON_UPDATE] = {
+        this.msgs[M.IMPORT_ERROR_CATEGORY_ONLY_ALLOWED_ON_UPDATE] = {
             content: i18n({
-                id: 'messages.import.error.typeOnlyAllowedOnUpdate',
+                id: 'messages.import.error.categoryOnlyAllowedOnUpdate',
                 value: 'Ressourcen der folgenden Kategorie sind beim Import nur im Ergänzungsmodus erlaubt: \'[0]\''
             }),
             level: 'danger',
@@ -929,9 +930,9 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: ['?', '?'],
             hidden: false
         };
-        this.msgs[M.IMPORT_ERROR_TYPE_CANNOT_BE_CHANGED] = {
+        this.msgs[M.IMPORT_ERROR_CATEGORY_CANNOT_BE_CHANGED] = {
             content: i18n({
-                id: 'messages.import.error.typeCannotBeChanged',
+                id: 'messages.import.error.categoryCannotBeChanged',
                 value: 'Die Kategorie kann beim Import nicht geändert werden. Betroffen ist: \'[0]\''
             }),
             level: 'danger',
@@ -1064,18 +1065,18 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: [],
             hidden: false
         };
-        this.msgs[M.DOCEDIT_WARNING_TYPE_CHANGE_FIELDS] = {
+        this.msgs[M.DOCEDIT_WARNING_CATEGORY_CHANGE_FIELDS] = {
             content: i18n({
-                id: 'messages.docedit.warning.typeChange.fields',
+                id: 'messages.docedit.warning.categoryChange.fields',
                 value: 'Bitte beachten Sie, dass die Daten der folgenden Felder beim Speichern verloren gehen: [0]'
             }),
             level: 'warning',
             params: [''],
             hidden: false
         };
-        this.msgs[M.DOCEDIT_WARNING_TYPE_CHANGE_RELATIONS] = {
+        this.msgs[M.DOCEDIT_WARNING_CATEGORY_CHANGE_RELATIONS] = {
             content: i18n({
-                id: 'messages.docedit.warning.typeChange.relations',
+                id: 'messages.docedit.warning.categoryChange.relations',
                 value: 'Bitte beachten Sie, dass die Relationen der folgenden Relationstypen beim Speichern verloren gehen: [0]'
             }),
             level: 'warning',
@@ -1370,9 +1371,9 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: [],
             hidden: false
         };
-        this.msgs[M.RESOURCES_ERROR_TYPE_NOT_FOUND] = {
+        this.msgs[M.RESOURCES_ERROR_CATEGORY_NOT_FOUND] = {
             content: i18n({
-                id: 'messages.resources.error.typeNotFound',
+                id: 'messages.resources.error.categoryNotFound',
                 value: 'Die Kategoriedefinition für \'[0]\' fehlt in der Datei Fields.json.'
             }),
             level: 'danger',

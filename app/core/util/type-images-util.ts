@@ -14,22 +14,22 @@ import {ImageRowItem, PLACEHOLDER} from '../../components/image/row/image-row.co
 export module TypeImagesUtil {
 
     /**
-     * @param document: A document of resource type Type or TypeCatalog
+     * @param document: A document of category Type or TypeCatalog
      * @param datastore
      *
-     * Returns images of linked types (for type catalogs) or finds (for types). If the types linked to a
-     * type catalog are not directly linked to an image, the images of finds linked to the types are returned.
+     * Returns images of linked categories (for type catalogs) or finds (for categories). If the categories linked to a
+     * type catalog are not directly linked to an image, the images of finds linked to the categories are returned.
      */
     export function getLinkedImages(document: FieldDocument,
                                     datastore: FieldReadDatastore): Promise<Array<ImageRowItem>> {
 
-        if (document.resource.type !== 'Type' && document.resource.type !== 'TypeCatalog') {
-            throw 'Illegal argument: Document must be of resource type Type or TypeCatalog.';
+        if (document.resource.category !== 'Type' && document.resource.category !== 'TypeCatalog') {
+            throw 'Illegal argument: Document must be of category Type or TypeCatalog.';
         }
 
         const find = (q: Query) => datastore.find(q);
 
-        return document.resource.type === 'TypeCatalog'
+        return document.resource.category === 'TypeCatalog'
             ? getLinkedImagesForTypeCatalog(document.resource.id, find)
             : getLinkedImagesForType(document.resource.id, find);
     }

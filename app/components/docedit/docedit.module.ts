@@ -10,7 +10,7 @@ import {DoceditImageTabComponent} from './tabs/docedit-image-tab.component';
 import {DoceditConflictsTabComponent} from './tabs/docedit-conflicts-tab.component';
 import {ConflictDeletedModalComponent} from './dialog/conflict-deleted-modal.component';
 import {EditSaveDialogComponent} from './dialog/edit-save-dialog.component';
-import {TypeSwitcherButtonComponent} from './widgets/type-switcher-button.component';
+import {CategorySwitcherButtonComponent} from './widgets/category-switcher-button.component';
 import {ImagePickerComponent} from './widgets/image-picker.component';
 import {ImageGridModule} from '../image/grid/image-grid.module';
 import {DeleteModalComponent} from '../resources/deletion/delete-modal.component';
@@ -39,7 +39,7 @@ import {DocumentHolder} from '../../core/docedit/document-holder';
 import {ProjectConfiguration} from '../../core/configuration/project-configuration';
 import {PersistenceManager} from '../../core/model/persistence-manager';
 import {Validator} from '../../core/model/validator';
-import {ProjectTypes} from '../../core/configuration/project-types';
+import {ProjectCategories} from '../../core/configuration/project-categories';
 import {UsernameProvider} from '../../core/settings/username-provider';
 import {DocumentDatastore} from '../../core/datastore/document-datastore';
 import {ImageRowModule} from '../image/row/image-row.module';
@@ -59,7 +59,7 @@ import {LiteratureComponent} from './core/forms/literature.component';
             useFactory: (projectConfiguration: ProjectConfiguration,
                          persistenceManager: PersistenceManager,
                          validator: Validator,
-                         projectTypes: ProjectTypes,
+                         projectTypes: ProjectCategories,
                          usernameProvider: UsernameProvider,
                          datastore: DocumentDatastore) => {
 
@@ -67,7 +67,7 @@ import {LiteratureComponent} from './core/forms/literature.component';
                     validator, projectTypes, usernameProvider, datastore);
             },
             deps: [ProjectConfiguration, PersistenceManager, Validator,
-                ProjectTypes, UsernameProvider, DocumentDatastore]
+                ProjectCategories, UsernameProvider, DocumentDatastore]
         },
         { provide: NgbDateParserFormatter, useClass: NgbDateDEParserFormatter }
     ],
@@ -89,7 +89,7 @@ import {LiteratureComponent} from './core/forms/literature.component';
         EditSaveDialogComponent,
         DoceditImageTabComponent,
         DoceditConflictsTabComponent,
-        TypeSwitcherButtonComponent,
+        CategorySwitcherButtonComponent,
         ImagePickerComponent,
         EditFormComponent,
         EditFormFieldComponent,

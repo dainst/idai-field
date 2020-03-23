@@ -5,6 +5,6 @@ export type Tab = {
     routeName: string,
     label: string
     operationId: string,
-    operationType: string;
+    operationCategory: string;
     shown: boolean
 }

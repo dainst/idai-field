@@ -1,7 +1,8 @@
 import {Map} from 'tsfun';
-import {LibraryTypeDefinition} from '../../../../../app/core/configuration/model/library-type-definition';
-import {TypeDefinition} from '../../../../../app/core/configuration/model/type-definition';
+import {LibraryCategoryDefinition} from '../../../../../app/core/configuration/model/library-category-definition';
+import {CategoryDefinition} from '../../../../../app/core/configuration/model/category-definition';
 import {applyLanguage} from '../../../../../app/core/configuration/boot/apply-language';
+import {Groups} from '../../../../../app/core/configuration/model/group';
 
 
 /**
@@ -11,12 +12,12 @@ import {applyLanguage} from '../../../../../app/core/configuration/boot/apply-la
 describe('applyLanguage', () => {
 
     let configuration;
-    let t1: LibraryTypeDefinition;
+    let t1: LibraryCategoryDefinition;
 
     beforeEach(() => {
 
         t1 = {
-            typeFamily: 'x1',
+            categoryName: 'x1',
             commons: [],
             parent: 'x',
             description: { 'de': '' },
@@ -27,13 +28,13 @@ describe('applyLanguage', () => {
             fields: {
                 'aField': {}
             }
-        } as LibraryTypeDefinition;
+        } as LibraryCategoryDefinition;
 
         configuration = {
             identifier: 'test',
-            types: {
+            categories: {
                 'T1': t1
-            } as Map<LibraryTypeDefinition>
+            } as Map<LibraryCategoryDefinition>
         } as any;
     });
 
@@ -42,15 +43,15 @@ describe('applyLanguage', () => {
 
         configuration = {
             identifier: 'test',
-            types: {
-                A: { fields: { a: {}, a1: {} } } as TypeDefinition,
-                B: { fields: { b: {} } } as TypeDefinition
+            categories: {
+                A: { fields: { a: {}, a1: {} } } as CategoryDefinition,
+                B: { fields: { b: {} } } as CategoryDefinition
             },
             relations: [{ name: 'isRecordedIn' }, { name: 'isContemporaryWith' }]
         };
 
         const languageConfiguration = {
-            types: {
+            categories: {
                 A: {
                     label: 'A_',
                     fields: {
@@ -72,14 +73,40 @@ describe('applyLanguage', () => {
 
         configuration = applyLanguage(languageConfiguration)(configuration);
 
-        expect(configuration.types['A'].label).toEqual('A_');
-        expect(configuration.types['B'].label).toBeUndefined();
-        expect(configuration.types['A'].fields['a'].label).toEqual('a_');
-        expect(configuration.types['A'].fields['a1'].label).toBeUndefined();
-        expect(configuration.types['A'].fields['a'].description).toBeUndefined();
-        expect(configuration.types['A'].fields['a1'].description).toEqual('a1_desc');
+        expect(configuration.categories['A'].label).toEqual('A_');
+        expect(configuration.categories['B'].label).toBeUndefined();
+        expect(configuration.categories['A'].fields['a'].label).toEqual('a_');
+        expect(configuration.categories['A'].fields['a1'].label).toBeUndefined();
+        expect(configuration.categories['A'].fields['a'].description).toBeUndefined();
+        expect(configuration.categories['A'].fields['a1'].description).toEqual('a1_desc');
         expect(configuration.relations[0].label).toEqual('isRecordedIn_');
         expect(configuration.relations[1].label).toBeUndefined();
+    });
+
+
+    it('apply groups', () => {
+
+        configuration = {
+            identifier: 'test',
+            categories: {
+                A: { fields: { a: { group: Groups.STEM }, a1: { group: Groups.CHILD }}} as CategoryDefinition,
+                B: { fields: { b: { group: Groups.STEM }}} as CategoryDefinition
+            },
+            relations: [{ name: 'isRecordedIn' }, { name: 'isContemporaryWith' }],
+            groups: {}
+        };
+
+        const languageConfiguration = {
+            groups: {
+                'stem': { label: 'Stem' },
+                'child': { label: 'Child' }
+            }
+        };
+
+        configuration = applyLanguage(languageConfiguration)(configuration);
+
+        expect(configuration.groups['stem'].label).toEqual('Stem');
+        expect(configuration.groups['child'].label).toEqual('Child');
     });
 });
 

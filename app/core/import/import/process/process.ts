@@ -29,9 +29,9 @@ import {InverseRelationsMap} from '../../../configuration/inverse-relations-map'
  *
  *   Possibly occuring ImportErrors:
  *
- *   [MUST_LIE_WITHIN_OTHER_NON_OPERATON_RESOURCE, resourceType, resourceIdentifier]
+ *   [MUST_LIE_WITHIN_OTHER_NON_OPERATON_RESOURCE, category, resourceIdentifier]
  *     - if a resource of
- *       a defined builtin type should be placed inside another resource of a legal LIES_WITHIN range type, but is placed
+ *       a defined builtin category should be placed inside another resource of a legal LIES_WITHIN range category, but is placed
  *       directly below an operation.
  *
  *   [BAD_INTERRELATION, sourceId]
@@ -40,12 +40,12 @@ import {InverseRelationsMap} from '../../../configuration/inverse-relations-map'
  *     - if mutually exluding relations are pointing to the same resource.
  *       For example IS_CONTEMPORARY_WITH and IS_AFTER both from document '1' to '2'.
  *
- *   [TARGET_TYPE_RANGE_MISMATCH, resourceIdentifier, relationName, relationTargetResourceType]
+ *   [TARGET_CATEGORY_RANGE_MISMATCH, resourceIdentifier, relationName, relationTargetCategory]
  *     - if a resource points to another resource, however, the specified relation is not allowed between the
- *       types of the resources.
+ *       categories of the resources.
  *
  *   [PARENT_ASSIGNMENT_TO_OPERATIONS_NOT_ALLOWED]
- *     - if mainTypeDocumentId is not '' and
+ *     - if operationId is not '' and
  *       a resource references an operation as parent.
  *
  *   [LIES_WITHIN_TARGET_NOT_MATCHES_ON_IS_RECORDED_IN, resourceIdentifier]
@@ -54,8 +54,8 @@ import {InverseRelationsMap} from '../../../configuration/inverse-relations-map'
  *
  *   [EXEC_MISSING_RELATION_TARGET, targetId]
  *
- * [TYPE_CANNOT_BE_CHANGED, identifier]
- *   - if it is tried to change the type of a resource
+ * [CATEGORY_CANNOT_BE_CHANGED, identifier]
+ *   - if it is tried to change the category of a resource
  *
  * [EMPTY_SLOTS_IN_ARRAYS_FORBIDDEN, identifier]
  *   - if deletion would result in empty array slots
@@ -71,13 +71,13 @@ import {InverseRelationsMap} from '../../../configuration/inverse-relations-map'
  */
 export async function process(documents: Array<Document>,
                               validator: ImportValidator,
-                              operationTypeNames: string[],
+                              operationCategoryNames: string[],
                               get: Get,
                               inverseRelationsMap: InverseRelationsMap,
                               importOptions : ImportOptions = {})
         : Promise<[Array<Document>, Array<Document>, string[]|undefined]> {
 
-    assertLegalCombination(importOptions.mergeMode, importOptions.mainTypeDocumentId);
+    assertLegalCombination(importOptions.mergeMode, importOptions.operationId);
 
     try {
         assertNoDuplicates(documents);
@@ -87,7 +87,7 @@ export async function process(documents: Array<Document>,
         const relatedDocuments = await processRelations(
             processedDocuments,
             validator,
-            operationTypeNames,
+            operationCategoryNames,
             inverseRelationsMap,
             get,
             importOptions
@@ -118,17 +118,17 @@ function processDocuments(documents: Array<Document>, validator: ImportValidator
 
         validator.assertDropdownRangeComplete(document.resource); // we want dropdown fields to be complete before merge
 
-        if (!mergeMode) validator.assertIsKnownType(document);
+        if (!mergeMode) validator.assertIsKnownCategory(document);
 
         const finalDocument = mergeOrUseAsIs(document);
 
         // While we want to leave existing documents' fields as they come from the database,
         // we do test for fields of import document if they are defined.
-        // We need to make sure the resourceType is set in any case.
-        document.resource.type = finalDocument.resource.type;
+        // We need to make sure the category is set in any case.
+        document.resource.category = finalDocument.resource.category;
         validator.assertFieldsDefined(document);
 
-        if (!mergeMode) validator.assertIsAllowedType(finalDocument);
+        if (!mergeMode) validator.assertIsAllowedCategory(finalDocument);
         validator.assertIsWellformed(finalDocument);
 
         return finalDocument;

@@ -3,7 +3,7 @@ import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {Messages, Query, FieldDocument, ImageDocument} from 'idai-components-2';
 import {ImageGridComponent} from '../../image/grid/image-grid.component';
 import {ImageReadDatastore} from '../../../core/datastore/field/image-read-datastore';
-import {ProjectTypes} from '../../../core/configuration/project-types';
+import {ProjectCategories} from '../../../core/configuration/project-categories';
 import {M} from '../../messages/m';
 import {clone} from '../../../core/util/object-util';
 
@@ -39,7 +39,7 @@ export class ImagePickerComponent implements OnInit {
         private messages: Messages,
         private datastore: ImageReadDatastore,
         private el: ElementRef,
-        private projectTypes: ProjectTypes
+        private projectCategories: ProjectCategories
     ) {}
 
 
@@ -113,7 +113,7 @@ export class ImagePickerComponent implements OnInit {
         this.query = query;
         if (!this.query) this.query = {};
 
-        this.query.types = this.projectTypes.getImageTypeNames();
+        this.query.categories = this.projectCategories.getImageCategoryNames();
         this.query.constraints = {
             'depicts:contain': { value: this.document.resource.id, subtract: true }
         };

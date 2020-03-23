@@ -104,7 +104,7 @@ describe('resources/state --', function() {
         // filter
         SearchBarPage.typeInSearchField(' ');
         browser.wait(EC.visibilityOf(ResourcesPage.getListItemEl('SE2')), delays.ECWaitTime);
-        SearchBarPage.clickChooseTypeFilter('feature-architecture');
+        SearchBarPage.clickChooseCategoryFilter('feature-architecture');
         browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('SE2')), delays.ECWaitTime);
     });
 
@@ -151,71 +151,71 @@ describe('resources/state --', function() {
 
         ResourcesPage.performCreateResource('1', 'feature-architecture');
         ResourcesPage.performCreateResource('2', 'feature-floor');
-        SearchBarPage.clickChooseTypeFilter('inscription');
+        SearchBarPage.clickChooseCategoryFilter('inscription');
         browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
         browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('2')), delays.ECWaitTime);
-        SearchBarPage.clickChooseTypeFilter('all');
+        SearchBarPage.clickChooseCategoryFilter('all');
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('2')), delays.ECWaitTime);
     });
 
 
-    it('filter -- show correct types in plus type menu after choosing type filter', () => {
+    it('filter -- show correct categories in plus button menu after choosing category filter', () => {
 
         ResourcesPage.clickHierarchyButton('S1');
 
-        const checkTypeOptions = () => {
+        const checkCategoryOptions = () => {
 
-            SearchBarPage.clickChooseTypeFilter('feature');
+            SearchBarPage.clickChooseCategoryFilter('feature');
             ResourcesPage.clickCreateResource();
-            browser.wait(EC.presenceOf(ResourcesPage.getResourceTypeOption('feature')), delays.ECWaitTime);
-            browser.wait(EC.presenceOf(ResourcesPage.getResourceTypeOption('feature-architecture')), delays.ECWaitTime);
-            browser.wait(EC.stalenessOf(ResourcesPage.getResourceTypeOption('find')), delays.ECWaitTime);
-            browser.wait(EC.stalenessOf(ResourcesPage.getResourceTypeOption('find-pottery')), delays.ECWaitTime);
+            browser.wait(EC.presenceOf(ResourcesPage.getCategoryOption('feature')), delays.ECWaitTime);
+            browser.wait(EC.presenceOf(ResourcesPage.getCategoryOption('feature-architecture')), delays.ECWaitTime);
+            browser.wait(EC.stalenessOf(ResourcesPage.getCategoryOption('find')), delays.ECWaitTime);
+            browser.wait(EC.stalenessOf(ResourcesPage.getCategoryOption('find-pottery')), delays.ECWaitTime);
 
-            SearchBarPage.clickChooseTypeFilter('find');
+            SearchBarPage.clickChooseCategoryFilter('find');
             ResourcesPage.clickCreateResource();
-            browser.wait(EC.presenceOf(ResourcesPage.getResourceTypeOption('find')), delays.ECWaitTime);
-            browser.wait(EC.presenceOf(ResourcesPage.getResourceTypeOption('find-pottery')), delays.ECWaitTime);
-            browser.wait(EC.stalenessOf(ResourcesPage.getResourceTypeOption('feature')), delays.ECWaitTime);
-            browser.wait(EC.stalenessOf(ResourcesPage.getResourceTypeOption('feature-architecture')), delays.ECWaitTime);
+            browser.wait(EC.presenceOf(ResourcesPage.getCategoryOption('find')), delays.ECWaitTime);
+            browser.wait(EC.presenceOf(ResourcesPage.getCategoryOption('find-pottery')), delays.ECWaitTime);
+            browser.wait(EC.stalenessOf(ResourcesPage.getCategoryOption('feature')), delays.ECWaitTime);
+            browser.wait(EC.stalenessOf(ResourcesPage.getCategoryOption('feature-architecture')), delays.ECWaitTime);
 
-            SearchBarPage.clickChooseTypeFilter('all');
+            SearchBarPage.clickChooseCategoryFilter('all');
             ResourcesPage.clickCreateResource();
-            browser.wait(EC.presenceOf(ResourcesPage.getResourceTypeOption('feature')), delays.ECWaitTime);
-            browser.wait(EC.presenceOf(ResourcesPage.getResourceTypeOption('feature-architecture')), delays.ECWaitTime);
-            browser.wait(EC.presenceOf(ResourcesPage.getResourceTypeOption('find')), delays.ECWaitTime);
-            browser.wait(EC.presenceOf(ResourcesPage.getResourceTypeOption('find-pottery')), delays.ECWaitTime);
+            browser.wait(EC.presenceOf(ResourcesPage.getCategoryOption('feature')), delays.ECWaitTime);
+            browser.wait(EC.presenceOf(ResourcesPage.getCategoryOption('feature-architecture')), delays.ECWaitTime);
+            browser.wait(EC.presenceOf(ResourcesPage.getCategoryOption('find')), delays.ECWaitTime);
+            browser.wait(EC.presenceOf(ResourcesPage.getCategoryOption('find-pottery')), delays.ECWaitTime);
         };
 
-        checkTypeOptions();
+        checkCategoryOptions();
         ResourcesPage.clickListModeButton();
-        checkTypeOptions();
+        checkCategoryOptions();
     });
 
 
-    it('filter -- set type of newly created resource to filter type if a child type is chosen as filter type', () => {
+    it('filter -- set category of newly created resource to filter category if a child category is chosen as filter category', () => {
 
         ResourcesPage.clickHierarchyButton('S1');
         browser.sleep(delays.shortRest * 3);
 
-        const checkTypeIcon = () => {
+        const checkCategoryIcon = () => {
 
-            SearchBarPage.clickChooseTypeFilter('feature-architecture');
-            ResourcesPage.getCreateDocumentButtonTypeCharacter()
+            SearchBarPage.clickChooseCategoryFilter('feature-architecture');
+            ResourcesPage.getCreateDocumentButtonCategoryCharacter()
                 .then(character => expect(character).toEqual('A'));
 
-            SearchBarPage.clickChooseTypeFilter('feature');
-            browser.wait(EC.stalenessOf(ResourcesPage.getCreateDocumentButtonTypeIcon()), delays.ECWaitTime);
+            SearchBarPage.clickChooseCategoryFilter('feature');
+            browser.wait(EC.stalenessOf(ResourcesPage.getCreateDocumentButtonCategoryIcon()), delays.ECWaitTime);
 
-            SearchBarPage.clickChooseTypeFilter('all');
-            browser.wait(EC.stalenessOf(ResourcesPage.getCreateDocumentButtonTypeIcon()), delays.ECWaitTime);
+            SearchBarPage.clickChooseCategoryFilter('all');
+            browser.wait(EC.stalenessOf(ResourcesPage.getCreateDocumentButtonCategoryIcon()), delays.ECWaitTime);
         };
 
-        const createResourceWithPresetType = (identifier: string, listMode: boolean) => {
+        const createResourceWithPresetCategory = (identifier: string, listMode: boolean) => {
 
-            SearchBarPage.clickChooseTypeFilter('feature-layer');
-            ResourcesPage.getCreateDocumentButtonTypeCharacter()
+            SearchBarPage.clickChooseCategoryFilter('feature-layer');
+            ResourcesPage.getCreateDocumentButtonCategoryCharacter()
                 .then(character => expect(character).toEqual('E'));
             ResourcesPage.clickCreateResource();
 
@@ -231,18 +231,20 @@ describe('resources/state --', function() {
             browser.sleep(delays.shortRest);
         };
 
-        checkTypeIcon();
-        createResourceWithPresetType('1', false);
+        checkCategoryIcon();
+        createResourceWithPresetCategory('1', false);
         ResourcesPage.clickSelectResource('1', 'info');
-        FieldsViewPage.getFieldValue(0, 0).then(typeLabel => expect(typeLabel).toEqual('Erdbefund'));
+        FieldsViewPage.getFieldValue(0, 0).then(categoryLabel => {
+            expect(categoryLabel).toEqual('Erdbefund');
+        });
 
         ResourcesPage.clickListModeButton();
-        checkTypeIcon();
-        createResourceWithPresetType('2', true);
+        checkCategoryIcon();
+        createResourceWithPresetCategory('2', true);
     });
 
 
-    it('filter -- by parent type', () => {
+    it('filter -- by parent category', () => {
 
         ResourcesPage.clickHierarchyButton('S1');
         browser.sleep(delays.shortRest * 3);
@@ -251,7 +253,7 @@ describe('resources/state --', function() {
         ResourcesPage.performCreateResource('2', 'find-glass');
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('2')), delays.ECWaitTime);
-        SearchBarPage.clickChooseTypeFilter('feature');
+        SearchBarPage.clickChooseCategoryFilter('feature');
         browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('2')), delays.ECWaitTime);
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
     });
@@ -270,7 +272,7 @@ describe('resources/state --', function() {
         ResourcesPage.clickHierarchyButton('S1');
         ResourcesPage.clickSwitchHierarchyMode();
 
-        SearchBarPage.clickChooseTypeFilter('feature-layer');
+        SearchBarPage.clickChooseCategoryFilter('feature-layer');
         SearchConstraintsPage.clickConstraintsMenuButton();
         SearchConstraintsPage.clickSelectConstraintField('layerClassification');
         SearchConstraintsPage.clickSelectDropdownValue(1);
@@ -335,7 +337,7 @@ describe('resources/state --', function() {
         DoceditPage.typeInInputField('diary', 'testvalue');
         DoceditPage.clickSaveDocument();
 
-        SearchBarPage.clickChooseTypeFilter('operation-trench');
+        SearchBarPage.clickChooseCategoryFilter('operation-trench');
         SearchConstraintsPage.clickConstraintsMenuButton();
         SearchConstraintsPage.clickSelectConstraintField('diary');
         SearchConstraintsPage.typeInConstraintSearchTerm('testvalue');
@@ -355,7 +357,7 @@ describe('resources/state --', function() {
         DoceditPage.clickSelectOption('layerClassification', 1);
         DoceditPage.clickSaveDocument();
 
-        SearchBarPage.clickChooseTypeFilter('feature-layer');
+        SearchBarPage.clickChooseCategoryFilter('feature-layer');
         SearchConstraintsPage.clickConstraintsMenuButton();
         SearchConstraintsPage.clickSelectConstraintField('layerClassification');
         SearchConstraintsPage.clickSelectDropdownValue(1);
@@ -379,7 +381,7 @@ describe('resources/state --', function() {
         DoceditPage.clickBooleanRadioButton('hasDisturbance', 1);
         DoceditPage.clickSaveDocument();
 
-        SearchBarPage.clickChooseTypeFilter('feature');
+        SearchBarPage.clickChooseCategoryFilter('feature');
         SearchConstraintsPage.clickConstraintsMenuButton();
         SearchConstraintsPage.clickSelectConstraintField('hasDisturbance');
         SearchConstraintsPage.clickSelectBooleanValue(true);
@@ -406,7 +408,7 @@ describe('resources/state --', function() {
 
         ResourcesPage.clickSwitchHierarchyMode();
 
-        SearchBarPage.clickChooseTypeFilter('operation-trench');
+        SearchBarPage.clickChooseCategoryFilter('operation-trench');
         SearchConstraintsPage.clickConstraintsMenuButton();
         SearchConstraintsPage.clickSelectConstraintField('diary');
 
@@ -419,7 +421,7 @@ describe('resources/state --', function() {
     });
 
 
-    it('search -- remove constraints if invalid after filter type change', () => {
+    it('search -- remove constraints if invalid after filter category change', () => {
 
         ResourcesPage.clickSwitchHierarchyMode();
 
@@ -428,7 +430,7 @@ describe('resources/state --', function() {
         SearchConstraintsPage.clickSelectExistsDropdownValue(1);
         SearchConstraintsPage.clickAddConstraintButton();
 
-        SearchBarPage.clickChooseTypeFilter('feature');
+        SearchBarPage.clickChooseCategoryFilter('feature');
         SearchConstraintsPage.clickConstraintsMenuButton();
         browser.wait(EC.presenceOf(SearchConstraintsPage.getRemoveConstraintButton('geometry')),
             delays.ECWaitTime);
@@ -437,7 +439,7 @@ describe('resources/state --', function() {
         SearchConstraintsPage.clickSelectBooleanValue(true);
         SearchConstraintsPage.clickAddConstraintButton();
 
-        SearchBarPage.clickChooseTypeFilter('feature-layer');
+        SearchBarPage.clickChooseCategoryFilter('feature-layer');
         SearchConstraintsPage.clickConstraintsMenuButton();
         browser.wait(EC.presenceOf(SearchConstraintsPage.getRemoveConstraintButton('geometry')),
             delays.ECWaitTime);
@@ -446,7 +448,7 @@ describe('resources/state --', function() {
             delays.ECWaitTime
         );
 
-        SearchBarPage.clickChooseTypeFilter('find');
+        SearchBarPage.clickChooseCategoryFilter('find');
         SearchConstraintsPage.clickConstraintsMenuButton();
         browser.wait(EC.presenceOf(SearchConstraintsPage.getRemoveConstraintButton('geometry')),
             delays.ECWaitTime);
@@ -468,7 +470,7 @@ describe('resources/state --', function() {
     it('invalidate filter (if necessary) when switching from image to map view after click on depicts relation link', () => {
 
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('S1')), delays.ECWaitTime);
-        SearchBarPage.clickChooseTypeFilter('place');
+        SearchBarPage.clickChooseCategoryFilter('place');
         browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('S1')), delays.ECWaitTime);
 
         createDepictsRelation();

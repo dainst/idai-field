@@ -1,4 +1,4 @@
-import {is, isNot, on, includedIn, identity} from 'tsfun';
+import {is, isNot, on, includedIn} from 'tsfun';
 import {Document, Dating, Dimension} from 'idai-components-2';
 import {ProjectConfiguration} from '../configuration/project-configuration';
 
@@ -24,11 +24,11 @@ export module FieldConverter {
 
         const resource = document.resource;
 
-        for (let field of Object.keys(resource).filter(isNot(includedIn(['relations', 'geometry', 'type'])))) {
+        for (let field of Object.keys(resource).filter(isNot(includedIn(['relations', 'geometry', 'category'])))) {
 
             const fieldDefinition =
                 projectConfiguration
-                    .getFieldDefinitions(resource.type)
+                    .getFieldDefinitions(resource.category)
                     .find(on('name', is(field)));
 
             if (!fieldDefinition) continue;
@@ -48,8 +48,8 @@ export module FieldConverter {
 
         const resource = document.resource;
 
-        for (let field of Object.keys(resource).filter(isNot(includedIn(['relations', 'geometry', 'type'])))) {
-            const fieldDefinition = projectConfiguration.getFieldDefinitions(resource.type).find(on('name', is(field)));
+        for (let field of Object.keys(resource).filter(isNot(includedIn(['relations', 'geometry', 'category'])))) {
+            const fieldDefinition = projectConfiguration.getFieldDefinitions(resource.category).find(on('name', is(field)));
 
             // This could be and -End suffixed field of a dropdownRange input
             // However, all the necessary validation validation is assumed to have taken place already

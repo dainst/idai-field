@@ -19,7 +19,7 @@ export module CSVExport {
     const SEPARATOR = ',';
 
     const getUsableFieldNames =
-        remove(includedIn(['id', 'type', 'geometry', 'georeference', 'originalFilename', 'filename']));
+        remove(includedIn(['id', 'category', 'geometry', 'georeference', 'originalFilename', 'filename']));
 
 
     /**

@@ -125,7 +125,7 @@ export module GeoJsonExporter {
         const properties: any = {
             identifier: document.resource.identifier,
             shortDescription: document.resource.shortDescription,
-            type: document.resource.type
+            category: document.resource.category
         };
 
         if (!properties.shortDescription) delete properties.shortDescription;

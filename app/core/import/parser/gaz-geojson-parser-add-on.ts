@@ -41,7 +41,7 @@ export module GazGeojsonParserAddOn {
         identifiers.push(identifier);
         properties.identifier = identifier;
 
-        properties.type = 'Place';
+        properties.category = 'Place';
         properties.id = 'gazetteer' + properties.gazId;
         if (properties.parent) properties.relations['liesWithin'] =
             ['gazetteer' + (properties.parent as any).replace(placePath, '')];

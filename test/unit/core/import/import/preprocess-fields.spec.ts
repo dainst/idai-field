@@ -4,7 +4,7 @@ describe('preprocessFields', () => {
 
     it('deletions permitted', () => {
 
-        const docs: any = [{ resource: { a: null, relations: {}, type: 'O' }}];
+        const docs: any = [{ resource: { a: null, relations: {}, category: 'O' } }];
         preprocessFields(docs, true);
         expect(docs[0].resource['a']).toEqual(null);
     });
@@ -12,7 +12,7 @@ describe('preprocessFields', () => {
 
     it('deletions not permitted', () => {
 
-        const docs: any = [{ resource: { a: null, relations: {}, type: 'O' }}];
+        const docs: any = [{ resource: { a: null, relations: {}, category: 'O' } }];
         preprocessFields(docs, false);
         expect(docs[0].resource['a']).toBeUndefined();
     });

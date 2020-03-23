@@ -29,7 +29,7 @@ import {InverseRelationsMap} from '../../../configuration/inverse-relations-map'
  *
  * @param documents get modified in place (document.resource.relations)
  * @param validator
- * @param operationTypeNames
+ * @param operationCategoryNames
  * @param inverseRelationsMap
  * @param get
  * @param mergeMode
@@ -39,18 +39,16 @@ import {InverseRelationsMap} from '../../../configuration/inverse-relations-map'
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export async function processRelations(documents: Array<Document>,
-                                       validator: ImportValidator,
-                                       operationTypeNames: string[],
-                                       inverseRelationsMap: InverseRelationsMap,
-                                       get: Get,
-                                       { mergeMode, permitDeletions, mainTypeDocumentId }: ImportOptions) {
+export async function processRelations(documents: Array<Document>, validator: ImportValidator,
+                                       operationCategoryNames: string[],
+                                       inverseRelationsMap: InverseRelationsMap, get: Get,
+                                       { mergeMode, permitDeletions, operationId }: ImportOptions) {
 
-    const assertIsAllowedRelationDomainType_ = (_: any, __: any, ___: any, ____: any) =>
-        validator.assertIsAllowedRelationDomainType(_, __, ___, ____);
+    const assertIsAllowedRelationDomainCategory_ = (_: any, __: any, ___: any, ____: any) =>
+        validator.assertIsAllowedRelationDomainCategory(_, __, ___, ____);
 
-    await prepareIsRecordedIns(documents, validator, operationTypeNames, get,
-        mergeMode === true, mainTypeDocumentId ? mainTypeDocumentId : '');
+    await prepareIsRecordedIns(documents, validator, operationCategoryNames, get,
+        mergeMode === true, operationId ? operationId : '');
 
     await validator.assertRelationsWellformedness(documents);
     await validator.assertLiesWithinCorrectness(documents.map(to('resource')));
@@ -58,47 +56,42 @@ export async function processRelations(documents: Array<Document>,
             documents,
             get,
             inverseRelationsMap,
-            assertIsAllowedRelationDomainType_,
+            assertIsAllowedRelationDomainCategory_,
             mergeMode);
 }
 
 
-async function prepareIsRecordedIns(documents: Array<Document>,
-                                    validator: ImportValidator,
-                                    operationTypeNames: string[],
-                                    get: Get,
-                                    mergeMode: boolean,
-                                    mainTypeDocumentId: string) {
+async function prepareIsRecordedIns(documents: Array<Document>, validator: ImportValidator,
+                                    operationCategoryNames: string[], get: Get, mergeMode: boolean,
+                                    operationId: string) {
 
     if (!mergeMode) {
-        await validateIsRecordedInRelation(documents, validator, mainTypeDocumentId);
-        prepareIsRecordedInRelation(documents, mainTypeDocumentId);
+        await validateIsRecordedInRelation(documents, validator, operationId);
+        prepareIsRecordedInRelation(documents, operationId);
     }
-    await replaceTopLevelLiesWithins(documents, operationTypeNames, get, mainTypeDocumentId);
-    await inferRecordedIns(documents, operationTypeNames, get, makeAssertNoRecordedInMismatch(mainTypeDocumentId));
+    await replaceTopLevelLiesWithins(documents, operationCategoryNames, get, operationId);
+    await inferRecordedIns(documents, operationCategoryNames, get, makeAssertNoRecordedInMismatch(operationId));
 }
 
 
 async function validateIsRecordedInRelation(documentsForUpdate: Array<NewDocument>,
-                                            validator: ImportValidator,
-                                            mainTypeDocumentId: Id) {
+                                            validator: ImportValidator, operationId: Id) {
 
     for (let document of documentsForUpdate) {
-        if (!mainTypeDocumentId) {
+        if (!operationId) {
             validator.assertHasLiesWithin(document);
         } else {
-            await validator.assertIsNotOverviewType(document);
-            await validator.isRecordedInTargetAllowedRelationDomainType(document, mainTypeDocumentId);
+            await validator.assertIsNotOverviewCategory(document);
+            await validator.isRecordedInTargetAllowedRelationDomainCategory(document, operationId);
         }
     }
 }
 
 
-function prepareIsRecordedInRelation(documentsForUpdate: Array<NewDocument>,
-                                     mainTypeDocumentId: Id) {
+function prepareIsRecordedInRelation(documentsForUpdate: Array<NewDocument>, operationId: Id) {
 
-    if (mainTypeDocumentId) {
-        for (let document of documentsForUpdate) initRecordedIn(document, mainTypeDocumentId);
+    if (operationId) {
+        for (let document of documentsForUpdate) initRecordedIn(document, operationId);
     }
 }
 
@@ -110,9 +103,7 @@ function prepareIsRecordedInRelation(documentsForUpdate: Array<NewDocument>,
  *
  * documents get modified in place
  */
-async function inferRecordedIns(documents: Array<Document>,
-                                operationTypeNames: string[],
-                                get: Get,
+async function inferRecordedIns(documents: Array<Document>, operationCategoryNames: string[], get: Get,
                                 assertNoRecordedInMismatch: (document: Document,
                                                              inferredRecordedIn: string|undefined) => void) {
 
@@ -135,7 +126,7 @@ async function inferRecordedIns(documents: Array<Document>,
 
         try {
             const got = await get(targetId);
-            return  operationTypeNames.includes(got.resource.type)
+            return  operationCategoryNames.includes(got.resource.category)
                 ? got.resource.id
                 : got.resource.relations[RECORDED_IN][0];
         } catch { console.log('FATAL: Not found'); } // should have been caught earlier, in process()
@@ -147,7 +138,7 @@ async function inferRecordedIns(documents: Array<Document>,
         const relations = document.resource.relations;
         if (!relations || isUndefinedOrEmpty(relations[LIES_WITHIN])) return;
 
-        const liesWithinTargetInImport = searchInImport(relations[LIES_WITHIN][0], idMap, operationTypeNames);
+        const liesWithinTargetInImport = searchInImport(relations[LIES_WITHIN][0], idMap, operationCategoryNames);
         return liesWithinTargetInImport
             ? getRecordedInFromImportDocument(liesWithinTargetInImport)
             : getRecordedInFromExistingDocument(relations[LIES_WITHIN][0]);
@@ -172,12 +163,12 @@ async function inferRecordedIns(documents: Array<Document>,
 }
 
 
-function makeAssertNoRecordedInMismatch(mainTypeDocumentId: Id) {
+function makeAssertNoRecordedInMismatch(operationId: Id) {
 
     return function assertNoRecordedInMismatch(document: Document, compare: string|undefined) {
 
         const relations = document.resource.relations;
-        if (mainTypeDocumentId
+        if (operationId
             && isNot(undefinedOrEmpty)(relations[RECORDED_IN])
             && relations[RECORDED_IN][0] !== compare
             && isDefined(compare)) {
@@ -189,15 +180,13 @@ function makeAssertNoRecordedInMismatch(mainTypeDocumentId: Id) {
 
 
 /**
- * Replaces LIES_WITHIN entries with RECORDED_IN entries where operation type documents
+ * Replaces LIES_WITHIN entries with RECORDED_IN entries where operation category documents
  * are referenced.
  *
  * documents get modified in place
  */
-async function replaceTopLevelLiesWithins(documents: Array<Document>,
-                                          operationTypeNames: string[],
-                                          get: Get,
-                                          mainTypeDocumentId: Id) {
+async function replaceTopLevelLiesWithins(documents: Array<Document>, operationCategoryNames: string[],
+                                          get: Get, operationId: Id) {
 
     const relationsForDocumentsWhereLiesWithinIsDefined: Array<Relations> = documents
         .map(to('resource.relations'))
@@ -208,25 +197,25 @@ async function replaceTopLevelLiesWithins(documents: Array<Document>,
 
         let liesWithinTarget: Document|undefined = undefined;
         try { liesWithinTarget = await get(relations[LIES_WITHIN][0]) } catch {}
-        if (!liesWithinTarget || !operationTypeNames.includes(liesWithinTarget.resource.type)) continue;
+        if (!liesWithinTarget || !operationCategoryNames.includes(liesWithinTarget.resource.category)) {
+            continue;
+        }
 
-        if (mainTypeDocumentId) throw [E.PARENT_ASSIGNMENT_TO_OPERATIONS_NOT_ALLOWED];
+        if (operationId) throw [E.PARENT_ASSIGNMENT_TO_OPERATIONS_NOT_ALLOWED];
         relations[RECORDED_IN] = relations[LIES_WITHIN];
         delete relations[LIES_WITHIN];
     }
 }
 
 
-function searchInImport(targetDocumentResourceId: Id,
-                        idMap: IdMap,
-                        operationTypeNames: string[]
+function searchInImport(targetDocumentResourceId: Id, idMap: IdMap, operationCategoryNames: string[]
         ): Either<string, Document> // recordedInResourceId|targetDocument
         |undefined {                // targetDocument not found
 
     const targetInImport = idMap[targetDocumentResourceId];
     if (!targetInImport) return undefined;
 
-    if (operationTypeNames.includes(targetInImport.resource.type)) {
+    if (operationCategoryNames.includes(targetInImport.resource.category)) {
         return [targetInImport.resource.id, undefined];
     }
     if (targetInImport.resource.relations.isRecordedIn
@@ -237,11 +226,11 @@ function searchInImport(targetDocumentResourceId: Id,
 }
 
 
-function initRecordedIn(document: NewDocument, mainTypeDocumentId: Id) {
+function initRecordedIn(document: NewDocument, operationId: Id) {
 
     const relations = document.resource.relations;
     if (!relations[RECORDED_IN]) relations[RECORDED_IN] = [];
-    if (!relations[RECORDED_IN].includes(mainTypeDocumentId)) {
-        relations[RECORDED_IN].push(mainTypeDocumentId);
+    if (!relations[RECORDED_IN].includes(operationId)) {
+        relations[RECORDED_IN].push(operationId);
     }
 }

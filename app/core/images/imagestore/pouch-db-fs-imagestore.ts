@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
+import {SafeResourceUrl} from '@angular/platform-browser';
 import * as fs from 'fs';
 import {BlobMaker, BlobUrlSet} from './blob-maker';
 import {ImageConverter} from './image-converter';
 import {ImagestoreErrors} from './imagestore-errors';
-import {SafeResourceUrl} from '@angular/platform-browser';
 import {PouchdbProxy} from '../../datastore/pouchdb/pouchdb-proxy';
 
 

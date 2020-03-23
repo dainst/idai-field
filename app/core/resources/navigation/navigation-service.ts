@@ -3,7 +3,7 @@ import {FieldDocument, Document} from 'idai-components-2';
 import {ObserverUtil} from '../../util/observer-util';
 import {ProjectConfiguration} from '../../configuration/project-configuration';
 import {RelationDefinition} from '../../configuration/model/relation-definition';
-import {IdaiType} from '../../configuration/model/idai-type';
+import {Category} from '../../configuration/model/category';
 import {ViewFacade} from '../view/view-facade';
 import {RoutingService} from '../../../components/routing-service';
 
@@ -69,7 +69,7 @@ export class NavigationService {
         if (this.viewFacade.isInExtendedSearchMode()) return false;
 
         return ((this.projectConfiguration
-            .getRelationDefinitions(document.resource.type, true))
+            .getRelationDefinitions(document.resource.category, true))
             .map((_: RelationDefinition) => _.name)
             .indexOf('liesWithin') !== -1);
     }
@@ -78,7 +78,10 @@ export class NavigationService {
     public shouldShowArrowTopRightForSearchMode(document: FieldDocument) {
 
         return (this.viewFacade.isInOverview() && this.viewFacade.isInExtendedSearchMode()
-            && (!this.projectConfiguration.isSubtype(document.resource.type, 'Operation') && document.resource.type !== 'Place'));
+            && (!this.projectConfiguration
+                .isSubcategory(document.resource.category, 'Operation')
+                    && document.resource.category !== 'Place')
+        );
     }
 
 
@@ -86,7 +89,10 @@ export class NavigationService {
 
         return (!this.viewFacade.isInOverview() && this.viewFacade.isInExtendedSearchMode())
             || (this.viewFacade.isInOverview() && this.viewFacade.isInExtendedSearchMode()
-                && (this.projectConfiguration.isSubtype(document.resource.type, 'Operation') || document.resource.type === 'Place'))
+                && (this.projectConfiguration
+                    .isSubcategory(document.resource.category, 'Operation')
+                    || document.resource.category === 'Place')
+            );
     }
 
 
@@ -95,11 +101,12 @@ export class NavigationService {
         if (!document.resource.id) return false; // do not show as long as it is not saved
         if (this.viewFacade.isInExtendedSearchMode()) return false;
 
-        const operationType: IdaiType|undefined = this.projectConfiguration.getTypesMap()['Operation'];
+        const operationCategory: Category|undefined
+            = this.projectConfiguration.getCategoriesMap()['Operation'];
 
-        return operationType !== undefined && operationType.children !== undefined
-            && operationType.children
-                .map((type: IdaiType) => type.name)
-                .includes(document.resource.type);
+        return operationCategory !== undefined && operationCategory.children !== undefined
+            && operationCategory.children
+                .map((category: Category) => category.name)
+                .includes(document.resource.category);
     }
 }

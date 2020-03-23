@@ -1,9 +1,9 @@
-/**
- * @author Thomas Kleinke
- */
 import {Tab} from './tab';
 
 
+/**
+ * @author Thomas Kleinke
+ */
 export class TabSpaceCalculator {
 
     private canvas: HTMLCanvasElement = document.createElement('canvas');

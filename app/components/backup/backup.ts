@@ -9,7 +9,7 @@ const stream = require('stream');
 
 /**
  * @author Daniel de Oliveira
- **/
+ */
 export module Backup {
 
     export const FILE_NOT_EXIST = 'filenotexist';

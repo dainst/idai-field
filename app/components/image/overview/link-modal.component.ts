@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import {ProjectTypes} from '../../../core/configuration/project-types';
-import {IdaiType} from '../../../core/configuration/model/idai-type';
+import {ProjectCategories} from '../../../core/configuration/project-categories';
+import {Category} from '../../../core/configuration/model/category';
 
 
 @Component({
@@ -14,11 +14,11 @@ import {IdaiType} from '../../../core/configuration/model/idai-type';
 })
 export class LinkModalComponent {
 
-    public filterOptions: Array<IdaiType> = [];
+    public filterOptions: Array<Category> = [];
 
 
     constructor(public activeModal: NgbActiveModal,
-                private projectTypes: ProjectTypes) {}
+                private projectCategories: ProjectCategories) {}
 
 
     public onKeyDown(event: KeyboardEvent) {
@@ -29,7 +29,7 @@ export class LinkModalComponent {
 
     public initializeFilterOptions() {
 
-        this.filterOptions = this.projectTypes.getAllowedRelationDomainTypes(
+        this.filterOptions = this.projectCategories.getAllowedRelationDomainCategories(
             'isDepictedIn', 'Image'
         );
     }

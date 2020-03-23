@@ -19,14 +19,12 @@ const remote = require('electron').remote;
  */
 export class AppController {
 
-    constructor(
-        private pouchdbManager: PouchdbManager,
-        private resourcesState: ResourcesStateManager,
-        private documentCache: DocumentCache<Document>,
-        private imagesState: ImagesState,
-        private indexFacade: IndexFacade,
-        private tabManager: TabManager) {
-    }
+    constructor(private pouchdbManager: PouchdbManager,
+                private resourcesState: ResourcesStateManager,
+                private documentCache: DocumentCache<Document>,
+                private imagesState: ImagesState,
+                private indexFacade: IndexFacade,
+                private tabManager: TabManager) {}
     
 
     public setupServer(): Promise<any> {

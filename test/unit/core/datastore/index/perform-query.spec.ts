@@ -15,7 +15,7 @@ describe('performQuery', () => {
 
     let constraintIndex;
     let fulltextIndex;
-    let typesMap;
+    let categoriesMap;
 
     beforeEach(() => {
 
@@ -24,7 +24,7 @@ describe('performQuery', () => {
             IndexerConfiguration.configureIndexers(projectConfiguration);
         constraintIndex = createdConstraintIndex;
         fulltextIndex = createdFulltextIndex;
-        typesMap = projectConfiguration.getTypesMap();
+        categoriesMap = projectConfiguration.getCategoriesMap();
     });
 
 
@@ -32,7 +32,7 @@ describe('performQuery', () => {
 
         const indexItem = IndexItem.from(document);
         ConstraintIndex.put(constraintIndex, document, indexItem);
-        FulltextIndex.put(fulltextIndex, document, indexItem, typesMap);
+        FulltextIndex.put(fulltextIndex, document, indexItem, categoriesMap);
     }
 
 
@@ -94,16 +94,16 @@ describe('performQuery', () => {
     });
 
 
-    it('should filter by one type in find', () => {
+    it('should filter by one category in find', () => {
 
-        const doc1 = Static.doc('bla1', 'blub', 'type1', 'id1');
-        const doc2 = Static.doc('bla2', 'blub', 'type2', 'id2');
-        const doc3 = Static.doc('bla3', 'blub', 'type3', 'id3');
+        const doc1 = Static.doc('bla1', 'blub', 'category1', 'id1');
+        const doc2 = Static.doc('bla2', 'blub', 'category2', 'id2');
+        const doc3 = Static.doc('bla3', 'blub', 'category3', 'id3');
         put(doc1);
         put(doc2);
         put(doc3);
 
-        const result = performQuery({ q: 'blub', types: ['type3'] }).map(to('id'));
+        const result = performQuery({ q: 'blub', categories: ['category3'] }).map(to('id'));
         expect(result.length).toBe(1);
         expect(result[0]).toBe('id3');
     });
@@ -111,10 +111,10 @@ describe('performQuery', () => {
 
     it('should filter with constraint', () => {
 
-        const doc1 = Static.doc('bla1', 'blub1', 'type1','id1');
-        const doc2 = Static.doc('bla2', 'blub2', 'type2','id2');
-        const doc3 = Static.doc('bla3', 'blub3', 'type2','id3');
-        const doc4 = Static.doc('bla4', 'blub4', 'type2','id4');
+        const doc1 = Static.doc('bla1', 'blub1', 'category1','id1');
+        const doc2 = Static.doc('bla2', 'blub2', 'category2','id2');
+        const doc3 = Static.doc('bla3', 'blub3', 'category2','id3');
+        const doc4 = Static.doc('bla4', 'blub4', 'category2','id4');
         doc2.resource.relations['isRecordedIn'] = ['id1'];
         doc3.resource.relations['isRecordedIn'] = ['id1'];
         doc4.resource.relations['isRecordedIn'] = ['id2'];
@@ -140,16 +140,16 @@ describe('performQuery', () => {
 
     it('should find by prefix query and filter', () => {
 
-        const doc1 = Static.doc('bla1', 'blub1', 'type1', 'id1');
-        const doc2 = Static.doc('bla2', 'blub2', 'type2', 'id2');
-        const doc3 = Static.doc('bla3', 'blub3', 'type2', 'id3');
+        const doc1 = Static.doc('bla1', 'blub1', 'category1', 'id1');
+        const doc2 = Static.doc('bla2', 'blub2', 'category2', 'id2');
+        const doc3 = Static.doc('bla3', 'blub3', 'category2', 'id3');
         put(doc1);
         put(doc2);
         put(doc3);
 
         const result = performQuery({
             q: 'blub',
-            types: ['type2']
+            categories: ['category2']
         }).map(to('id'));
 
         expect(result.length).toBe(2);
@@ -160,10 +160,10 @@ describe('performQuery', () => {
 
     it('should filter with multiple constraints', () => {
 
-        const doc1 = Static.doc('bla1', 'blub1', 'type1','id1');
-        const doc2 = Static.doc('bla2', 'blub2', 'type2','id2');
+        const doc1 = Static.doc('bla1', 'blub1', 'category1','id1');
+        const doc2 = Static.doc('bla2', 'blub2', 'category2','id2');
         doc2.resource.relations['isRecordedIn'] = ['id1'];
-        const doc3 = Static.doc('bla3', 'blub3', 'type2','id3');
+        const doc3 = Static.doc('bla3', 'blub3', 'category2','id3');
         doc3.resource.relations['isRecordedIn'] = ['id1'];
         doc3.resource.relations['liesWithin'] = ['id2'];
 
@@ -187,11 +187,11 @@ describe('performQuery', () => {
 
     it('should filter with a subtract constraint', () => {
 
-        const doc1 = Static.doc('Document 1', 'doc1', 'type1','id1');
-        const doc2 = Static.doc('Document 2', 'doc2', 'type1','id2');
-        const doc3 = Static.doc('Document 3', 'doc3', 'type2','id3');
+        const doc1 = Static.doc('Document 1', 'doc1', 'category1','id1');
+        const doc2 = Static.doc('Document 2', 'doc2', 'category1','id2');
+        const doc3 = Static.doc('Document 3', 'doc3', 'category2','id3');
         doc3.resource.relations['isRecordedIn'] = ['id1'];
-        const doc4 = Static.doc('Document 4', 'doc4', 'type2','id4');
+        const doc4 = Static.doc('Document 4', 'doc4', 'category2','id4');
         doc4.resource.relations['isRecordedIn'] = ['id2'];
 
         const q: Query = {
@@ -214,9 +214,9 @@ describe('performQuery', () => {
 
     it('should get with descendants', () => {
 
-        const doc1 = Static.doc('Document 1', 'doc1', 'type1','id1');
-        const doc2 = Static.doc('Document 2', 'doc2', 'type1','id2');
-        const doc3 = Static.doc('Document 3', 'doc3', 'type2','id3');
+        const doc1 = Static.doc('Document 1', 'doc1', 'category1','id1');
+        const doc2 = Static.doc('Document 2', 'doc2', 'category1','id2');
+        const doc3 = Static.doc('Document 3', 'doc3', 'category2','id3');
         doc2.resource.relations['liesWithin'] = ['id1'];
         doc3.resource.relations['liesWithin'] = ['id2'];
 

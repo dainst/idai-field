@@ -118,17 +118,17 @@
     <matrix-options-menu (onChange)="calculateGraph()"></matrix-options-menu>
 
     <div *ngIf="showNoTrenchesWarning()"
-         class="col-8 text-center alert alert-warning no-main-type-resource-alert">
+         class="col-8 text-center alert alert-warning matrix-alert">
         <em i18n="@@matrix.view.noTrenchesWarning">
-            Legen Sie eine Ressource vom Typ 'Schnitt' in der <a href="#" routerLink="/resources/project">Übersicht</a>
-            an, um hier mit ihr arbeiten zu können.
+            Legen Sie eine Ressource der Kategorie 'Schnitt' in der
+            <a href="#" routerLink="/resources/project">Übersicht</a> an, um hier mit ihr arbeiten zu können.
         </em>
     </div>
 
     <div *ngIf="showNoResourcesWarning()"
-         class="col-8 text-center alert alert-warning no-main-type-resource-alert">
+         class="col-8 text-center alert alert-warning matrix-alert">
         <em i18n="@@matrix.view.noResourcesWarning">
-            Legen Sie für den ausgewählten Schnitt Ressourcen vom Typ 'Stratigraphische Einheit' in der
+            Legen Sie für den ausgewählten Schnitt Ressourcen der Kategorie 'Stratigraphische Einheit' in der
             Ausgrabungsansicht an und verknüpfen Sie sie mit zeitlichen oder räumlichen Relationen.
         </em>
     </div>

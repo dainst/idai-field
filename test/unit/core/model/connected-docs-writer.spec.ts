@@ -8,11 +8,9 @@ import {ProjectConfiguration} from '../../../../app/core/configuration/project-c
  */
 describe('ConnectedDocsWriter', () => {
 
-    const projectConfiguration = new ProjectConfiguration({
-        'types': [
-
-        ],
-        'relations': [
+    const projectConfiguration = new ProjectConfiguration(
+        [{} as any,
+         [
             {
                 'name': 'BelongsTo',
                 'inverse': 'Contains',
@@ -26,9 +24,7 @@ describe('ConnectedDocsWriter', () => {
             {
                 'name': 'isRecordedIn',
                 'label': 'Gehört zu'
-            }
-        ]
-    } as any);
+            }]]);
 
     let mockDatastore;
     let connectedDocsWriter: ConnectedDocsWriter;
@@ -57,19 +53,19 @@ describe('ConnectedDocsWriter', () => {
 
         doc = { 'resource' : {
                 'id' :'1', 'identifier': 'ob1',
-                'type': 'object',
+                'category': 'object',
                 'relations' : {}
             }} as any;
 
         relatedDoc = { 'resource' : {
                 'id': '2' , 'identifier': 'ob2',
-                'type': 'object',
+                'category': 'object',
                 'relations' : {}
             }};
 
         anotherRelatedDoc = { 'resource' : {
                 'id': '3' , 'identifier': 'ob3',
-                'type': 'object',
+                'category': 'object',
                 'relations' : {}
             }};
     });
@@ -104,7 +100,7 @@ describe('ConnectedDocsWriter', () => {
 
         const oldVersion = { 'resource' : {
                 'id' :'1', 'identifier': 'ob1',
-                'type': 'object',
+                'category': 'object',
                 'relations' : { 'BelongsTo' : [ '2' ] }
             }};
 
@@ -121,7 +117,7 @@ describe('ConnectedDocsWriter', () => {
     });
 
 
-    it('should add two relations of the same type', async done => {
+    it('should add two relations of the same category', async done => {
 
         doc.resource.relations['BelongsTo'] = ['2', '3'];
         mockDatastore.update.and.returnValue(Promise.resolve(doc));

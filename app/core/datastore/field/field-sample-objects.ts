@@ -11,7 +11,7 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
                 ? ['Testkampagne 1', 'Testkampagne 2']
                 : ['Test campaign 1', 'Test campaign 2'],
             'relations': {},
-            'type': 'Project'
+            'category': 'Project'
         }
     },
     {
@@ -29,7 +29,7 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
                     [27.18929159641266, 39.14118945598602],
                     [27.18926513195038, 39.14123618602753]]]
             },
-            'type': 'Trench'
+            'category': 'Trench'
         }
     },
     {
@@ -47,7 +47,7 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
                     [27.18934917449951, 39.141135454177856]
                 ]]
             },
-            'type': 'Trench'
+            'category': 'Trench'
         }
     },
     {
@@ -83,7 +83,7 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
                     ]
                 ]
             },
-            'type': 'Feature'
+            'category': 'Feature'
         }
     },
     {
@@ -120,7 +120,7 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
                     ]
                 ]
             },
-            'type': 'Layer'
+            'category': 'Layer'
         }
     },
     {
@@ -170,7 +170,7 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
                     ]
                 ]
             },
-            'type': 'Architecture'
+            'category': 'Architecture'
         }
     },
     {
@@ -206,7 +206,7 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
                     ]
                 ]
             },
-            'type': 'Grave'
+            'category': 'Grave'
         }
     },
     {
@@ -218,7 +218,7 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
                 'isRecordedIn': ['t2'],
                 'liesWithin': ['si4'],
             },
-            'type': 'Coin'
+            'category': 'Coin'
         }
     },
     {
@@ -230,7 +230,7 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
                 'isRecordedIn': ['t2'],
                 'liesWithin': ['si4'],
             },
-            'type': 'Coin'
+            'category': 'Coin'
         }
     },
     {
@@ -291,7 +291,7 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
                     ]
                 ]
             },
-            'type': 'Layer'
+            'category': 'Layer'
         }
     },
     {
@@ -303,7 +303,7 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
             'relations': {
                 'isRecordedIn': ['t2'],
             },
-            'type': 'Layer'
+            'category': 'Layer'
         }
     },
     {
@@ -325,7 +325,7 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
                     [27.189332902431488, 39.1412228345871]
                 ]]
             },
-            'type': 'Feature'
+            'category': 'Feature'
         }
     },
     {
@@ -341,7 +341,7 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
                 'type': 'Point',
                 'coordinates': [ 27.189335972070694, 39.14122423529625]
             },
-            'type': 'Find'
+            'category': 'Find'
         }
     },
     {
@@ -349,7 +349,7 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
             'id': 'o25',
             'identifier': 'PE07-So-07_Z001.jpg',
             'shortDescription': 'Test Layer 1',
-            'type': 'Drawing',
+            'category': 'Drawing',
             'originalFilename' : 'PE07-So-07_Z001.jpg',
             'height' : 2423,
             'width' : 3513,
@@ -366,7 +366,7 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
             'id': 'o26',
             'identifier': 'mapLayerTest2.png',
             'shortDescription': 'Test Layer 2',
-            'type': 'Image',
+            'category': 'Image',
             'relations': {},
             'originalFilename' : 'mapLayerTest2.png',
             'height' : 782,
@@ -383,7 +383,7 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
             'id': 'sa1',
             'identifier': 'A1',
             'shortDescription': locale === 'de' ? 'Survey-Areal 1' : 'Survey area 1',
-            'type': 'Survey',
+            'category': 'Survey',
             'relations': {},
             'geometry': {
                 'type': 'Polygon',
@@ -427,7 +427,7 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
             'id': 'syu1',
             'identifier': locale === 'de' ? 'PQ1' : 'SUR1',
             'shortDescription': locale === 'de' ? 'Planquadrat 1' : 'Survey unit 1',
-            'type': 'SurveyUnit',
+            'category': 'SurveyUnit',
             'relations': {
                 'isRecordedIn': ['sa1']
             },
@@ -461,7 +461,7 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
             'id': 'syu2',
             'identifier': locale === 'de' ? 'PQ2' : 'SUR2',
             'shortDescription': locale === 'de' ? 'Planquadrat 2' : 'Survey unit 2',
-            'type': 'SurveyUnit',
+            'category': 'SurveyUnit',
             'relations': {
                 'isRecordedIn': ['sa1']
             },
@@ -495,7 +495,7 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
             'id': 'st1',
             'identifier': locale === 'de' ? 'PQ1-ST1' : 'SUR1-ST1',
             'shortDescription': locale === 'de' ? 'Ein Stein' : 'A stone',
-            'type': 'SurveyUnit',
+            'category': 'SurveyUnit',
             'relations': {
                 'isRecordedIn': ['sa1'],
                 'liesWithin': ['syu1']
@@ -514,7 +514,7 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
             'id': 'bu1',
             'identifier': 'B1',
             'shortDescription': locale === 'de' ? 'Gebäude 1' : 'Building 1',
-            'type': 'Building',
+            'category': 'Building',
             'relations': {},
             'geometry': {
                 'type': 'Polygon',
@@ -546,7 +546,7 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
             'id': 'r1',
             'identifier': 'R1',
             'shortDescription': locale === 'de' ? 'Raum 1' : 'Room 1',
-            'type': 'Room',
+            'category': 'Room',
             'relations': {
                 'isRecordedIn': ['bu1']
             },

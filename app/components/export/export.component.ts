@@ -11,12 +11,12 @@ import {JavaToolExecutor} from '../../core/java/java-tool-executor';
 import {FieldReadDatastore} from '../../core/datastore/field/field-read-datastore';
 import {GeoJsonExporter} from '../../core/export/geojson-exporter';
 import {ShapefileExporter} from '../../core/export/shapefile-exporter';
-import {ProjectTypes} from '../../core/configuration/project-types';
+import {ProjectCategories} from '../../core/configuration/project-categories';
 import {CsvExporter} from '../../core/export/csv/csv-exporter';
-import {ResourceTypeCount} from '../../core/export/export-helper';
+import {CategoryCount} from '../../core/export/export-helper';
 import {ExportRunner} from '../../core/export/export-runner';
 import {DocumentReadDatastore} from '../../core/datastore/document-read-datastore';
-import {IdaiType} from '../../core/configuration/model/idai-type';
+import {Category} from '../../core/configuration/model/category';
 import {ProjectConfiguration} from '../../core/configuration/project-configuration';
 import {TabManager} from '../../core/tabs/tab-manager';
 import {ViewFacade} from '../../core/resources/view/view-facade';
@@ -43,8 +43,8 @@ export class ExportComponent implements OnInit {
     public javaInstalled: boolean = true;
     public operations: Array<FieldDocument> = [];
 
-    public resourceTypeCounts: Array<ResourceTypeCount> = [];
-    public selectedType: IdaiType|undefined = undefined;
+    public categoryCounts: Array<CategoryCount> = [];
+    public selectedCategory: Category|undefined = undefined;
     public selectedOperationId: string = 'project';
     public csvExportMode: 'schema' | 'complete' = 'complete';
 
@@ -60,7 +60,7 @@ export class ExportComponent implements OnInit {
                 private viewFacade: ViewFacade,
                 private fieldDatastore: FieldReadDatastore,
                 private documentDatastore: DocumentReadDatastore,
-                private projectTypes: ProjectTypes,
+                private projectCategories: ProjectCategories,
                 private tabManager: TabManager,
                 private projectConfiguration: ProjectConfiguration) {}
 
@@ -69,7 +69,7 @@ export class ExportComponent implements OnInit {
 
     public isJavaInstallationMissing = () => this.format === 'shapefile' && !this.javaInstalled;
 
-    public noResourcesFound = () => this.resourceTypeCounts.length === 0 && !this.initializing;
+    public noResourcesFound = () => this.categoryCounts.length === 0 && !this.initializing;
 
     public find = (query: Query) => this.documentDatastore.find(query);
 
@@ -81,21 +81,22 @@ export class ExportComponent implements OnInit {
         this.initializing = true;
 
         this.operations = await this.fetchOperations();
-        await this.setTypeCounts();
+        await this.setCategoryCounts();
         this.javaInstalled = await JavaToolExecutor.isJavaInstalled();
 
         this.initializing = false;
     }
 
 
-    public async setTypeCounts() {
+    public async setCategoryCounts() {
 
-        this.resourceTypeCounts = await ExportRunner.determineTypeCounts(
+        this.categoryCounts = await ExportRunner.determineCategoryCounts(
             this.find,
             this.getOperationIdForMode(),
-            this.projectConfiguration.getTypesList());
+            this.projectConfiguration.getCategoriesList()
+        );
 
-        if (this.resourceTypeCounts.length > 0) this.selectedType = this.resourceTypeCounts[0][0];
+        if (this.categoryCounts.length > 0) this.selectedCategory = this.categoryCounts[0][0];
     }
 
 
@@ -110,7 +111,7 @@ export class ExportComponent implements OnInit {
         return !this.isJavaInstallationMissing()
             && !this.initializing
             && !this.running
-            && this.resourceTypeCounts.length > 0;
+            && this.categoryCounts.length > 0;
     }
 
 
@@ -168,14 +169,14 @@ export class ExportComponent implements OnInit {
 
     private async startCsvExport(filePath: string) {
 
-        if (!this.selectedType) return console.error('No resource type selected');
+        if (!this.selectedCategory) return console.error('No category selected');
 
         try {
             await ExportRunner.performExport(
                 this.find,
                 this.getOperationIdForMode(),
-                this.selectedType,
-                this.projectConfiguration.getRelationDefinitions(this.selectedType.name).map(to('name')),
+                this.selectedCategory,
+                this.projectConfiguration.getRelationDefinitions(this.selectedCategory.name).map(to('name')),
                 (async resourceId => (await this.documentDatastore.get(resourceId)).resource.identifier),
                 CsvExporter.performExport(filePath)
             );
@@ -191,9 +192,9 @@ export class ExportComponent implements OnInit {
         return new Promise<string>(async resolve => {
 
             const options: any = { filters: [this.getFileFilter()] };
-            if (this.selectedType) {
+            if (this.selectedCategory) {
                 options.defaultPath = this.i18n({ id: 'export.dialog.untitled', value: 'Ohne Titel' });
-                if (this.format === 'csv') options.defaultPath += '.' + this.selectedType.name.toLowerCase();
+                if (this.format === 'csv') options.defaultPath += '.' + this.selectedCategory.name.toLowerCase();
             }
 
             const saveDialogReturnValue = await remote.dialog.showSaveDialog(options);
@@ -248,7 +249,7 @@ export class ExportComponent implements OnInit {
 
         try {
             return (await this.fieldDatastore.find({
-                types: this.projectTypes.getOperationTypeNames()
+                categories: this.projectCategories.getOperationCategoryNames()
             })).documents;
         } catch (msgWithParams) {
             this.messages.add(msgWithParams);

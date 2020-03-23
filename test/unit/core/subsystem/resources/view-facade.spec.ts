@@ -142,7 +142,7 @@ describe('ViewFacade/Subsystem', () => {
 
         await viewFacade.selectView('t1');
         await viewFacade.setSearchString('test');
-        await viewFacade.setFilterTypes(['Find']);
+        await viewFacade.setFilterCategories(['Find']);
         await viewFacade.setSelectedDocument('feature1');
         viewFacade.setMode('list');
         viewFacade.setActiveLayersIds(['layer1']);
@@ -151,7 +151,7 @@ describe('ViewFacade/Subsystem', () => {
         await viewFacade.selectView('t1');
 
         expect(viewFacade.getSearchString()).toEqual('');
-        expect(viewFacade.getFilterTypes()).toEqual([]);
+        expect(viewFacade.getFilterCategories()).toEqual([]);
         expect(viewFacade.getSelectedDocument()).toBeUndefined();
         expect(viewFacade.getMode()).toEqual('map');
         expect(viewFacade.getActiveLayersIds()).toEqual(['layer1']);
@@ -160,7 +160,7 @@ describe('ViewFacade/Subsystem', () => {
     });
 
 
-    it('search -- show only resources of the selected type', async done => {
+    it('search -- show only resources of the selected category', async done => {
 
         const findDocument3 = Static.fieldDoc('Find 3','find3','Find', 'find3');
         findDocument3.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
@@ -171,7 +171,7 @@ describe('ViewFacade/Subsystem', () => {
         expect(viewFacade.getDocuments().map(_ => _.resource.id)).toContain('feature2');
         expect(viewFacade.getDocuments().map(_ => _.resource.id)).toContain('find3');
 
-        await viewFacade.setFilterTypes(['Find']);
+        await viewFacade.setFilterCategories(['Find']);
         expect(viewFacade.getDocuments().length).toBe(1);
         expect(viewFacade.getDocuments()[0].resource.id).toEqual('find3');
         done();
@@ -181,11 +181,11 @@ describe('ViewFacade/Subsystem', () => {
     it('ViewContext -- keep filter when switching views', async done => {
 
         await viewFacade.selectView('t1');
-        await viewFacade.setFilterTypes(['Feature']);
+        await viewFacade.setFilterCategories(['Feature']);
         await viewFacade.selectView('project');
-        expect(viewFacade.getFilterTypes()).toEqual([]);
+        expect(viewFacade.getFilterCategories()).toEqual([]);
         await viewFacade.selectView('t1');
-        expect(viewFacade.getFilterTypes()).toEqual(['Feature']);
+        expect(viewFacade.getFilterCategories()).toEqual(['Feature']);
         done();
     });
 
@@ -193,11 +193,11 @@ describe('ViewFacade/Subsystem', () => {
     it('ViewContext -- keep filter when move into', async done => {
 
         await viewFacade.selectView('t1');
-        await viewFacade.setFilterTypes(['Feature']);
+        await viewFacade.setFilterCategories(['Feature']);
         await viewFacade.moveInto(featureDocument1);
-        expect(viewFacade.getFilterTypes()).toEqual([]);
+        expect(viewFacade.getFilterCategories()).toEqual([]);
         await viewFacade.moveInto(undefined);
-        expect(viewFacade.getFilterTypes()).toEqual(['Feature']);
+        expect(viewFacade.getFilterCategories()).toEqual(['Feature']);
         done();
     });
 
@@ -205,11 +205,11 @@ describe('ViewFacade/Subsystem', () => {
     it('ViewContext -- keep filter on switching mode', async done => {
 
         await viewFacade.selectView('t1');
-        await viewFacade.setFilterTypes(['Feature']);
+        await viewFacade.setFilterCategories(['Feature']);
         viewFacade.setMode('list');
-        expect(viewFacade.getFilterTypes()).toEqual(['Feature']);
+        expect(viewFacade.getFilterCategories()).toEqual(['Feature']);
         viewFacade.setMode('map');
-        expect(viewFacade.getFilterTypes()).toEqual(['Feature']);
+        expect(viewFacade.getFilterCategories()).toEqual(['Feature']);
         done();
     });
 
@@ -254,7 +254,7 @@ describe('ViewFacade/Subsystem', () => {
 
         await viewFacade.selectView('t1');
         await viewFacade.setExtendedSearchMode(true);
-        await viewFacade.setFilterTypes(['Find']);
+        await viewFacade.setFilterCategories(['Find']);
         await viewFacade.setCustomConstraints({ 'processor:contain': 'person' });
         await viewFacade.selectView('project');
         expect(viewFacade.getCustomConstraints()).toEqual({});
@@ -268,7 +268,7 @@ describe('ViewFacade/Subsystem', () => {
 
         await viewFacade.selectView('t1');
         await viewFacade.setExtendedSearchMode(true);
-        await viewFacade.setFilterTypes(['Find']);
+        await viewFacade.setFilterCategories(['Find']);
         await viewFacade.setCustomConstraints({ 'processor:contain': 'person' });
         viewFacade.setMode('list');
         expect(viewFacade.getCustomConstraints()).toEqual({ 'processor:contain': 'person' });
@@ -507,7 +507,7 @@ describe('ViewFacade/Subsystem', () => {
         await viewFacade.selectView('t1');
         await viewFacade.setExtendedSearchMode(true);
 
-        await viewFacade.setFilterTypes(['Find']);
+        await viewFacade.setFilterCategories(['Find']);
         expect(viewFacade.getDocuments().length).toBe(2);
 
         await viewFacade.setCustomConstraints({ 'processor:contain': 'person' });

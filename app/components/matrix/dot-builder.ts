@@ -246,11 +246,11 @@ export module DotBuilder {
 
             return '"' + document.resource.identifier + '"' // <- important to enclose the identifier in "", otherwise -.*# etc. cause errors or unexpected behaviour
                 + ' [id="node-' + document.resource.id + '" fillcolor="'
-                + projectConfiguration.getColorForType(document.resource.type)
+                + projectConfiguration.getColorForCategory(document.resource.category)
                 + '" color="'
-                + projectConfiguration.getColorForType(document.resource.type)
+                + projectConfiguration.getColorForCategory(document.resource.category)
                 + '" fontcolor="'
-                + projectConfiguration.getTextColorForType(document.resource.type)
+                + projectConfiguration.getTextColorForCategory(document.resource.category)
                 + '"] ';
         }
     }

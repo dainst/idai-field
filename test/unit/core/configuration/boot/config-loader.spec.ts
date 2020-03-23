@@ -3,11 +3,6 @@ import {ConfigurationDefinition} from '../../../../../app/core/configuration/boo
 import {ConfigLoader} from '../../../../../app/core/configuration/boot/config-loader';
 import {ConfigurationErrors} from '../../../../../app/core/configuration/boot/configuration-errors';
 import {CustomCategoryDefinition} from '../../../../../app/core/configuration/model/custom-category-definition';
-import {SortUtil} from '../../../../../app/core/util/sort-util';
-
-
-
-const byName = (a, b) => SortUtil.alnumCompare(a.name, b.name);
 
 
 /**
@@ -19,7 +14,6 @@ describe('ConfigLoader', () => {
     let libraryCategories = {} as ConfigurationDefinition;
     let configLoader: ConfigLoader;
     let configReader;
-
 
     function applyConfig(
         customFieldsConfiguration = {},
@@ -90,7 +84,7 @@ describe('ConfigLoader', () => {
             done();
         }
 
-        expect(pconf.getCategoriesList()[1]['fields'][2]['name']).toBe('processor');
+        expect(pconf.getCategoriesMap()['B'].groups[0].fields[0]['name']).toBe('processor');
         done();
     });
 
@@ -136,8 +130,9 @@ describe('ConfigLoader', () => {
             fail(err);
             done();
         }
-        expect(pconf.getCategoriesList()[1]['fields'][2]['label']).toBe('Bearbeiter/Bearbeiterin');
-        expect(pconf.getCategoriesList()[1]['fields'][2]['description']).toBe('abc');
+
+        expect(pconf.getCategoriesMap()['B'].groups[0].fields[0]['label']).toBe('Bearbeiter/Bearbeiterin');
+        expect(pconf.getCategoriesMap()['B'].groups[0].fields[0]['description']).toBe('abc');
         done();
     });
 
@@ -340,11 +335,11 @@ describe('ConfigLoader', () => {
                 undefined, 'de'
             );
 
-            expect(pconf.getCategoriesList()[2].fields.find(field => field.name == 'fieldA1')
+            expect(pconf.getCategoriesMap()['A'].groups[1].fields.find(field => field.name == 'fieldA1')
                 .inputType).toEqual('unsignedInt');
-            expect(pconf.getCategoriesList()[3].fields.find(field => field.name == 'fieldB1')
+            expect(pconf.getCategoriesMap()['B'].groups[1].fields.find(field => field.name == 'fieldB1')
                 .inputType).toEqual('input');
-            expect(pconf.getCategoriesList()[3].fields.find(field => field.name == 'fieldB2')
+            expect(pconf.getCategoriesMap()['B'].groups[1].fields.find(field => field.name == 'fieldB2')
                 .inputType).toEqual('boolean');
 
         } catch(err) {
@@ -390,7 +385,7 @@ describe('ConfigLoader', () => {
                 undefined, 'de'
             );
 
-            expect(pconf.getCategoriesList()[1].fields.find(field => field.name == 'fieldC1')
+            expect(pconf.getCategoriesMap()['B:0'].groups[1].fields.find(field => field.name == 'fieldC1')
                 .inputType).toEqual('boolean');
 
         } catch(err) {
@@ -525,19 +520,18 @@ describe('ConfigLoader', () => {
                  undefined, 'de'
             );
 
-            const result = pconf.getCategoriesList();
-            result.sort(byName);
+            const result = pconf.getCategoriesMap();
 
-            expect(result[0].name).toEqual('A');
-            expect(result[0].fields[2].name).toEqual('fieldA1');
-            expect(result[0].fields[3].name).toEqual('fieldA2');
-            expect(result[1].name).toEqual('B');
-            expect(result[1].fields[2].name).toEqual('fieldB1');
-            expect(result[1].fields[3].name).toEqual('fieldB2');
-            expect(result[1].fields[4].name).toEqual('fieldB3');
-            expect(result[2].name).toEqual('C');
-            expect(result[2].fields[2].name).toEqual('fieldC1');
-            expect(result[2].fields[3].name).toEqual('fieldC2');
+            expect(result['A'].name).toEqual('A');
+            expect(result['A'].groups[1].fields[0].name).toEqual('fieldA1');
+            expect(result['A'].groups[1].fields[1].name).toEqual('fieldA2');
+            expect(result['B'].name).toEqual('B');
+            expect(result['B'].groups[1].fields[0].name).toEqual('fieldB1');
+            expect(result['B'].groups[1].fields[1].name).toEqual('fieldB2');
+            expect(result['B'].groups[1].fields[2].name).toEqual('fieldB3');
+            expect(result['C'].name).toEqual('C');
+            expect(result['C'].groups[1].fields[0].name).toEqual('fieldC1');
+            expect(result['C'].groups[1].fields[1].name).toEqual('fieldC2');
 
             done();
         } catch(err) {
@@ -564,11 +558,11 @@ describe('ConfigLoader', () => {
             }
         });
 
-        applyConfig({ 'A': { fields: {} }, 'Parent': { fields: {} } },
+        applyConfig({ A: { fields: {} }, Parent: { fields: {} } },
             {}, {}, {
                 categories: ['A', 'A'],
                 fields: {
-                    'A': ['fieldA1', 'fieldA2', 'fieldA1']
+                    A: ['fieldA1', 'fieldA2', 'fieldA1']
                 }
             });
 
@@ -580,9 +574,10 @@ describe('ConfigLoader', () => {
             );
 
             expect(pconf.getCategoriesList().length).toBe(2);
-            expect(pconf.getCategoriesList()[1].fields.length).toBe(4);  // fieldA1, fieldA2, id, category
-            expect(pconf.getCategoriesList()[1].fields[2].name).toEqual('fieldA1');
-            expect(pconf.getCategoriesList()[1].fields[3].name).toEqual('fieldA2');
+            expect(pconf.getCategoriesMap()['A'].groups[0].fields.length).toBe(2);  // id, category
+            expect(pconf.getCategoriesMap()['A'].groups[1].fields.length).toBe(2);  // fieldA1, fieldA2
+            expect(pconf.getCategoriesMap()['A'].groups[1].fields[0].name).toEqual('fieldA1');
+            expect(pconf.getCategoriesMap()['A'].groups[1].fields[1].name).toEqual('fieldA2');
 
             done();
         } catch(err) {
@@ -620,16 +615,17 @@ describe('ConfigLoader', () => {
             pconf = await configLoader.go('', {}, { A: { fields: {} }}, [], {},
                 undefined, 'de'
             );
+            const result = pconf.getCategoriesMap()['A'].groups[0];
 
-            expect(pconf.getCategoriesList()[0].fields[0].name).toEqual('fieldA1');
-            expect(pconf.getCategoriesList()[0].fields[0].visible).toBe(false);
-            expect(pconf.getCategoriesList()[0].fields[0].editable).toBe(false);
-            expect(pconf.getCategoriesList()[0].fields[1].name).toEqual('fieldA2');
-            expect(pconf.getCategoriesList()[0].fields[1].visible).toBe(false);
-            expect(pconf.getCategoriesList()[0].fields[1].editable).toBe(false);
-            expect(pconf.getCategoriesList()[0].fields[2].name).toEqual('fieldA3');
-            expect(pconf.getCategoriesList()[0].fields[2].visible).toBe(true);
-            expect(pconf.getCategoriesList()[0].fields[2].editable).toBe(true);
+            expect(result.fields[0].name).toEqual('fieldA1');
+            expect(result.fields[0].visible).toBe(false);
+            expect(result.fields[0].editable).toBe(false);
+            expect(result.fields[1].name).toEqual('fieldA2');
+            expect(result.fields[1].visible).toBe(false);
+            expect(result.fields[1].editable).toBe(false);
+            expect(result.fields[2].name).toEqual('fieldA3');
+            expect(result.fields[2].visible).toBe(true);
+            expect(result.fields[2].editable).toBe(true);
 
             done();
         } catch(err) {

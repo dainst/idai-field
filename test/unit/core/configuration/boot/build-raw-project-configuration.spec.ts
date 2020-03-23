@@ -8,6 +8,7 @@ import {LibraryCategoryDefinition} from '../../../../../app/core/configuration/m
 import {ValuelistDefinition} from '../../../../../app/core/configuration/model/valuelist-definition';
 import {Groups} from '../../../../../app/core/configuration/model/group';
 import {byName} from '../../../../../app/core/util/utils';
+import InputType = FieldDefinition.InputType;
 
 
 const categories = left;
@@ -112,12 +113,12 @@ describe('buildRawProjectConfiguration', () => { // TODO test groups in idai typ
             commonFields
         ));
 
-        expect(result['A']['fields'][0].visible).toBe(false);
-        expect(result['A']['fields'][1].visible).toBe(true);
-        expect(result['A']['fields'][2].visible).toBe(false);
-        expect(result['A']['fields'][3].visible).toBe(true);
-        expect(result['A']['fields'][4].visible).toBe(false);
-        expect(result['A']['fields'][5].visible).toBe(true);
+        expect(result['A'].groups[0].fields[0].visible).toBe(false);
+        expect(result['A'].groups[0].fields[1].visible).toBe(true);
+        expect(result['A'].groups[0].fields[2].visible).toBe(false);
+        expect(result['A'].groups[0].fields[3].visible).toBe(true);
+        expect(result['A'].groups[0].fields[4].visible).toBe(false);
+        expect(result['A'].groups[0].fields[5].visible).toBe(true);
     });
 
 
@@ -146,7 +147,7 @@ describe('buildRawProjectConfiguration', () => { // TODO test groups in idai typ
             }
         ));
 
-        expect((result['A'] as any).fields[0]['valuelist']['values']).toEqual({ a: {} });
+        expect(result['A'].groups[0].fields[0]['valuelist']['values']).toEqual({ a: {} });
     });
 
 
@@ -184,7 +185,7 @@ describe('buildRawProjectConfiguration', () => { // TODO test groups in idai typ
             }
         ));
 
-        expect((result['A'] as any).fields[0]['valuelist']['values']).toEqual({ b: {} });
+        expect(result['A'].groups[0].fields[0]['valuelist']['values']).toEqual({ b: {} });
     });
 
 
@@ -220,7 +221,7 @@ describe('buildRawProjectConfiguration', () => { // TODO test groups in idai typ
             }
         ));
 
-        expect((result['A'] as any).fields[0]['valuelist']['values']).toEqual({ a: {} });
+        expect(result['A'].groups[0].fields[0]['valuelist']['values']).toEqual({ a: {} });
     });
 
 
@@ -546,8 +547,8 @@ describe('buildRawProjectConfiguration', () => { // TODO test groups in idai typ
             {}
         ));
 
-        expect((result['A'] as any).fields[0]['group']).toBe('stem');
-        expect((result['A'] as any).fields[0]['inputType']).toBe('input');
+        expect(result['A'].groups[0].fields[0]['group']).toBe('stem');
+        expect(result['A'].groups[0].fields[0]['inputType']).toBe('input');
     });
 
 
@@ -571,8 +572,8 @@ describe('buildRawProjectConfiguration', () => { // TODO test groups in idai typ
             {}
         ));
 
-        expect((result['A'] as any).fields[0]['group']).toBe('stem');
-        expect((result['A'] as any).fields[0]['inputType']).toBe('input');
+        expect(result['A'].groups['0'].fields[0]['group']).toBe('stem');
+        expect(result['A'].groups['0'].fields[0]['inputType']).toBe('input');
     });
 
 
@@ -610,10 +611,10 @@ describe('buildRawProjectConfiguration', () => { // TODO test groups in idai typ
             {}
         ));
 
-        expect((result['A'] as any).fields[0]['group']).toBe('stem');
-        expect((result['A'] as any).fields[0]['inputType']).toBe('input');
-        expect((result['A'] as any).fields[1]['group']).toBe('stem');
-        expect((result['A'] as any).fields[1]['inputType']).toBe('input');
+        expect(result['A'].groups[0].fields[0]['group']).toBe('stem');
+        expect(result['A'].groups[0].fields[0]['inputType']).toBe('input');
+        expect(result['A'].groups[0].fields[1]['group']).toBe('stem');
+        expect(result['A'].groups[0].fields[1]['inputType']).toBe('input');
     });
 
 
@@ -644,9 +645,9 @@ describe('buildRawProjectConfiguration', () => { // TODO test groups in idai typ
             {}
         ));
 
-        expect((result['A'] as any).fields[0]['group']).toBe('stem');
-        expect((result['A'] as any).fields[0]['inputType']).toBe('dropdown');
-        expect((result['A'] as any).fields[0]['valuelistFromProjectField']).toBe('x');
+        expect(result['A'].groups[0].fields[0]['group']).toBe('stem');
+        expect(result['A'].groups[0].fields[0]['inputType']).toBe('dropdown');
+        expect(result['A'].groups[0].fields[0]['valuelistFromProjectField']).toBe('x');
     });
 
 
@@ -765,7 +766,7 @@ describe('buildRawProjectConfiguration', () => { // TODO test groups in idai typ
             {}
         ));
 
-        expect((result['A'] as any).fields[0].inputType).toBe('input');
+        expect(result['A'].groups[0].fields[0].inputType).toBe('input');
     });
 
 
@@ -930,9 +931,9 @@ describe('buildRawProjectConfiguration', () => { // TODO test groups in idai typ
             { 'A:0': { fields: {} } }, {}, valuelistsConfiguration, {}
         ));
 
-        (result['A'] as any).fields.sort(byName);
+        result['A'].groups['0'].fields.sort(byName);
 
-        expect((result['A'] as any).fields[0].valuelist.values).toEqual({
+        expect(result['A'].groups['0'].fields[0].valuelist.values).toEqual({
             one: { labels: { de: 'Eins', en: 'One' } },
             two: { references: { externalId: '1234567' } },
             three: {}
@@ -1019,7 +1020,7 @@ describe('buildRawProjectConfiguration', () => { // TODO test groups in idai typ
         const builtInCategories: Map<BuiltinCategoryDefinition> = {
             A: {
                 fields: {
-                    field1: { inputType: 'text', group: 'stem' }
+                    field1: { inputType: InputType.TEXT, group: Groups.STEM }
                 }
             }
         };
@@ -1031,7 +1032,7 @@ describe('buildRawProjectConfiguration', () => { // TODO test groups in idai typ
                 valuelists: {},
                 fields: {
                     field1: {},
-                    field2: { inputType: 'text' }
+                    field2: { inputType: InputType.TEXT }
                 },
                 creationDate: '',
                 createdBy: '',
@@ -1045,9 +1046,9 @@ describe('buildRawProjectConfiguration', () => { // TODO test groups in idai typ
             {}, {}, {}
         ));
 
-        expect((result['A'] as any).fields[0].inputType).toBe('text');
-        expect((result['A'] as any).fields[0].group).toBe('stem');
-        expect((result['A'] as any).fields[1].inputType).toBe('text');
+        expect(result['A'].groups[0].fields[0].inputType).toBe(InputType.TEXT);
+        expect(result['A'].groups[0].fields[0].group).toBe(Groups.STEM); // TODO remove group from FieldDefinition
+        expect(result['A'].groups[1].fields[0].inputType).toBe(InputType.TEXT);
     });
 
 
@@ -1075,9 +1076,9 @@ describe('buildRawProjectConfiguration', () => { // TODO test groups in idai typ
             {}, {}, {}
         ));
 
-        expect((result['A'] as any).fields[0].inputType).toBe('text');
-        expect((result['A'] as any).fields[0].group).toBe('stem');
-        expect((result['A'] as any).fields[1].inputType).toBe('text');
+        expect(result['A'].groups[0].fields[0].inputType).toBe('text');
+        expect(result['A'].groups[0].fields[0].group).toBe('stem');
+        expect(result['A'].groups[1].fields[0].inputType).toBe('text');
     });
 
 
@@ -1086,7 +1087,7 @@ describe('buildRawProjectConfiguration', () => { // TODO test groups in idai typ
         const builtInCategories: Map<BuiltinCategoryDefinition> = {
             A: {
                 fields: {
-                    field1: { inputType: 'text', group: 'stem' }
+                    field1: { inputType: InputType.TEXT, group: Groups.STEM }
                 }
             }
         };
@@ -1097,7 +1098,7 @@ describe('buildRawProjectConfiguration', () => { // TODO test groups in idai typ
                 commons: [],
                 valuelists: {},
                 fields: {
-                    field2: { inputType: 'text' }
+                    field2: { inputType: InputType.TEXT }
                 },
                 creationDate: '',
                 createdBy: '',
@@ -1109,7 +1110,7 @@ describe('buildRawProjectConfiguration', () => { // TODO test groups in idai typ
             'A:0': {
                 fields: {
                     field2: {},
-                    field3: { inputType: 'text' }
+                    field3: { inputType: InputType.TEXT }
                 }
             }
         };
@@ -1119,9 +1120,9 @@ describe('buildRawProjectConfiguration', () => { // TODO test groups in idai typ
             {}, {}, {}
         ));
 
-        expect((result['A'] as any).fields[0].inputType).toBe('text');
-        expect((result['A'] as any).fields[1].inputType).toBe('text');
-        expect((result['A'] as any).fields[2].inputType).toBe('text');
+        expect(result['A'].groups[0].fields[0].inputType).toBe(InputType.TEXT);
+        expect(result['A'].groups[1].fields[0].inputType).toBe(InputType.TEXT);
+        expect(result['A'].groups[1].fields[1].inputType).toBe(InputType.TEXT);
     });
 
 
@@ -1167,12 +1168,12 @@ describe('buildRawProjectConfiguration', () => { // TODO test groups in idai typ
             {}, {}
         ));
 
-        (result['A'] as any).fields.sort(byName);
+        result['A'].groups[1].fields.sort(byName);
 
-        expect((result['A'] as any).fields[0].source).toBe(FieldDefinition.Source.COMMON);
-        expect((result['A'] as any).fields[1].source).toBe(FieldDefinition.Source.BUILTIN);
-        expect((result['A'] as any).fields[2].source).toBe(FieldDefinition.Source.LIBRARY);
-        expect((result['A'] as any).fields[3].source).toBe(FieldDefinition.Source.CUSTOM);
+        expect(result['A'].groups[0].fields[0].source).toBe(FieldDefinition.Source.BUILTIN);
+        expect(result['A'].groups[1].fields[0].source).toBe(FieldDefinition.Source.COMMON);
+        expect(result['A'].groups[1].fields[1].source).toBe(FieldDefinition.Source.LIBRARY);
+        expect(result['A'].groups[1].fields[2].source).toBe(FieldDefinition.Source.CUSTOM);
     });
 
     // err cases

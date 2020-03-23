@@ -1,10 +1,9 @@
-import {ConfigurationDefinition} from './configuration-definition';
-import {append, assoc, cond, defined, flatten, flow, isNot, lookup, map, Map, on, prune, reduce,
-    separate, throws, to, update, values} from 'tsfun';
+import {append, assoc, cond, defined, flatten, flow, isNot, lookup,
+    map, Map, on, prune, reduce, separate, throws, to, update, values} from 'tsfun';
 import {Category} from '../model/category';
 import {CategoryDefinition} from '../model/category-definition';
 import {DEFAULT_GROUP_ORDER, Group, Groups} from '../model/group';
-import {debugId, makeLookup} from '../../util/utils';
+import {makeLookup} from '../../util/utils';
 import {FieldDefinition} from '../model/field-definition';
 import {isUndefined} from 'tsfun/src/predicate';
 import {MDInternal} from 'idai-components-2/index';

@@ -1,10 +1,10 @@
-import {assoc, clone, cond, dissoc, flow, includedIn, isDefined, isNot, keys, keysAndValues, map, Map, on,
-    reduce, subtract, undefinedOrEmpty, update, identity, compose, Pair} from 'tsfun';
+import {assoc, clone, cond, dissoc, dissocOn, flow, includedIn, isDefined, isNot, keys, keysAndValues, map, Map, on,
+    reduce, subtract, undefinedOrEmpty, update, identity, compose} from 'tsfun';
 import {LibraryCategoryDefinition} from '../model/library-category-definition';
 import {CustomCategoryDefinition} from '../model/custom-category-definition';
 import {ConfigurationErrors} from './configuration-errors';
 import {ValuelistDefinition} from '../model/valuelist-definition';
-import {withDissoc} from '../../util/utils';
+import {debugId, withDissoc} from '../../util/utils';
 import {TransientFieldDefinition, TransientCategoryDefinition} from '../model/transient-category-definition';
 import {BuiltinCategoryDefinition} from '../model/builtin-category-definition';
 import {mergeBuiltInWithLibraryCategories} from './merge-builtin-with-library-categories';
@@ -65,15 +65,24 @@ export function buildRawProjectConfiguration(builtInCategories: Map<BuiltinCateg
         applyLanguage(languageConfiguration),
         applyLanguage(customLanguageConfiguration),
         applySearchConfiguration(searchConfiguration),
-        update(CATEGORIES,
-            compose(
-                addExtraFieldsOrder(orderConfiguration),
-                orderFields(orderConfiguration),
-                validateFields,
-                makeCategoriesMap
-                // TODO map dissoc fields
-            )),
-        ({categories, relations}: any) => ([categories, relations]));
+        update(CATEGORIES, processCategories(orderConfiguration, validateFields)),
+        asRawProjectConfiguration);
+}
+
+
+const asRawProjectConfiguration = ({categories, relations}: any) => ([categories, relations]);
+
+
+function processCategories(orderConfiguration: any, validateFields: any) {
+
+    return compose(
+        addExtraFieldsOrder(orderConfiguration),
+        orderFields(orderConfiguration),
+        validateFields,
+        makeCategoriesMap,
+        // map(dissoc('fields')), // TODO enable
+        // map(dissocOn('parentCategory.fields'))
+    );
 }
 
 

@@ -1,4 +1,4 @@
-import {Map} from 'tsfun';
+import {Map, left} from 'tsfun';
 import {buildCategories} from '../../../../../app/core/configuration/boot/build-categories';
 import {ConfigurationErrors} from '../../../../../app/core/configuration/boot/configuration-errors';
 import {FieldDefinition} from '../../../../../app/core/configuration/model/field-definition';
@@ -7,9 +7,10 @@ import {BuiltinCategoryDefinition} from '../../../../../app/core/configuration/m
 import {LibraryCategoryDefinition} from '../../../../../app/core/configuration/model/library-category-definition';
 import {ValuelistDefinition} from '../../../../../app/core/configuration/model/valuelist-definition';
 import {Groups} from '../../../../../app/core/configuration/model/group';
-import {SortUtil} from '../../../../../app/core/util/sort-util';
 import {byName} from '../../../../../app/core/util/utils';
 
+
+const categories = left;
 
 describe('buildCategories', () => { // TODO test groups in idai type of types map
 
@@ -29,11 +30,11 @@ describe('buildCategories', () => { // TODO test groups in idai type of types ma
                 hidden: []
             }
         };
-        const result = buildCategories(
+        const result = categories(buildCategories(
             builtInCategories,
             {},
             customCategories
-        ).categories;
+        ));
 
         expect(result['A']).toBeDefined();
         expect(result['B']).toBeDefined();
@@ -59,11 +60,11 @@ describe('buildCategories', () => { // TODO test groups in idai type of types ma
                 hidden: []
             }
         };
-        const result = buildCategories(
+        const result = categories(buildCategories(
             builtInCategories,
             {},
             customCategories
-        ).categories;
+        ));
 
         expect(result['A']).toBeDefined();
         expect(result['B']).toBeDefined();
@@ -104,12 +105,12 @@ describe('buildCategories', () => { // TODO test groups in idai type of types ma
             bCommonField: { inputType: 'input' }
         };
 
-        const result = buildCategories(
+        const result = categories(buildCategories(
             builtInCategories,
             libraryCategories,
             customCategories,
             commonFields
-        ).categories;
+        ));
 
         expect(result['A']['fields'][0].visible).toBe(false);
         expect(result['A']['fields'][1].visible).toBe(true);
@@ -133,7 +134,7 @@ describe('buildCategories', () => { // TODO test groups in idai type of types ma
             }
         };
 
-        const result = buildCategories(
+        const result = categories(buildCategories(
             builtInCategories,
             libraryCategories,
             customCategories,
@@ -143,9 +144,9 @@ describe('buildCategories', () => { // TODO test groups in idai type of types ma
                     values: { a: {} }, description: {}, createdBy: '', creationDate: ''
                 }
             }
-        ).categories;
+        ));
 
-        expect(result['A'].fields[0]['valuelist']['values']).toEqual({ a: {} });
+        expect((result['A'] as any).fields[0]['valuelist']['values']).toEqual({ a: {} });
     });
 
 
@@ -168,7 +169,7 @@ describe('buildCategories', () => { // TODO test groups in idai type of types ma
             }
         };
 
-        const result = buildCategories(
+        const result = categories(buildCategories(
             builtInCategories,
             libraryCategories,
             customCategories,
@@ -181,9 +182,9 @@ describe('buildCategories', () => { // TODO test groups in idai type of types ma
                     values: { b: {} }, description: {}, createdBy: '', creationDate: ''
                 }
             }
-        ).categories;
+        ));
 
-        expect(result['A'].fields[0]['valuelist']['values']).toEqual({ b: {} });
+        expect((result['A'] as any).fields[0]['valuelist']['values']).toEqual({ b: {} });
     });
 
 
@@ -207,7 +208,7 @@ describe('buildCategories', () => { // TODO test groups in idai type of types ma
             'A:default': { fields: {}}
         };
 
-        const result = buildCategories(
+        const result = categories(buildCategories(
             builtInCategories,
             libraryCategories,
             customCategories,
@@ -217,9 +218,9 @@ describe('buildCategories', () => { // TODO test groups in idai type of types ma
                     values: { a: {}}, description: {}, creationDate: '', createdBy: ''
                 }
             }
-        ).categories;
+        ));
 
-        expect(result['A'].fields[0]['valuelist']['values']).toEqual({ a: {} });
+        expect((result['A'] as any).fields[0]['valuelist']['values']).toEqual({ a: {} });
     });
 
 
@@ -536,17 +537,17 @@ describe('buildCategories', () => { // TODO test groups in idai type of types ma
             }
         };
 
-        const result = buildCategories(
+        const result = categories(buildCategories(
             builtInCategories,
             libraryCategories,
             { 'A:0': { fields: {} } },
             commonFields,
             {},
             {}
-        ).categories;
+        ));
 
-        expect(result['A'].fields[0]['group']).toBe('stem');
-        expect(result['A'].fields[0]['inputType']).toBe('input');
+        expect((result['A'] as any).fields[0]['group']).toBe('stem');
+        expect((result['A'] as any).fields[0]['inputType']).toBe('input');
     });
 
 
@@ -561,17 +562,17 @@ describe('buildCategories', () => { // TODO test groups in idai type of types ma
             }
         };
 
-        const result = buildCategories(
+        const result = categories(buildCategories(
             builtInCategories,
             {},
             customCategories,
             commonFields,
             {},
             {}
-        ).categories;
+        ));
 
-        expect(result['A'].fields[0]['group']).toBe('stem');
-        expect(result['A'].fields[0]['inputType']).toBe('input');
+        expect((result['A'] as any).fields[0]['group']).toBe('stem');
+        expect((result['A'] as any).fields[0]['inputType']).toBe('input');
     });
 
 
@@ -600,19 +601,19 @@ describe('buildCategories', () => { // TODO test groups in idai type of types ma
             }
         };
 
-        const result = buildCategories(
+        const result = categories(buildCategories(
             builtInCategories,
             libraryCategories,
             customCategories,
             commonFields,
             {},
             {}
-        ).categories;
+        ));
 
-        expect(result['A'].fields[0]['group']).toBe('stem');
-        expect(result['A'].fields[0]['inputType']).toBe('input');
-        expect(result['A'].fields[1]['group']).toBe('stem');
-        expect(result['A'].fields[1]['inputType']).toBe('input');
+        expect((result['A'] as any).fields[0]['group']).toBe('stem');
+        expect((result['A'] as any).fields[0]['inputType']).toBe('input');
+        expect((result['A'] as any).fields[1]['group']).toBe('stem');
+        expect((result['A'] as any).fields[1]['inputType']).toBe('input');
     });
 
 
@@ -634,18 +635,18 @@ describe('buildCategories', () => { // TODO test groups in idai type of types ma
             }
         };
 
-        const result = buildCategories(
+        const result = categories(buildCategories(
             builtInCategories,
             libraryCategories,
             { 'A:0': { fields: {} } },
             commonFields,
             {},
             {}
-        ).categories;
+        ));
 
-        expect(result['A'].fields[0]['group']).toBe('stem');
-        expect(result['A'].fields[0]['inputType']).toBe('dropdown');
-        expect(result['A'].fields[0]['valuelistFromProjectField']).toBe('x');
+        expect((result['A'] as any).fields[0]['group']).toBe('stem');
+        expect((result['A'] as any).fields[0]['inputType']).toBe('dropdown');
+        expect((result['A'] as any).fields[0]['valuelistFromProjectField']).toBe('x');
     });
 
 
@@ -756,15 +757,15 @@ describe('buildCategories', () => { // TODO test groups in idai type of types ma
             },
         };
 
-        const result = buildCategories(
+        const result = categories(buildCategories(
             builtInCategories,
             libraryCategories,
             { 'A:0': { hidden: [], fields: {} } },
             {}, {},
             {}
-        ).categories;
+        ));
 
-        expect(result['A'].fields[0].inputType).toBe('input');
+        expect((result['A'] as any).fields[0].inputType).toBe('input');
     });
 
 
@@ -874,7 +875,7 @@ describe('buildCategories', () => { // TODO test groups in idai type of types ma
                 builtInCategories,
                 {},
                 customCategories, {}, {}, {}
-            ).categories;
+            );
             fail();
         } catch (expected) {
             expect(expected).toEqual([
@@ -923,15 +924,15 @@ describe('buildCategories', () => { // TODO test groups in idai type of types ma
             }
         };
 
-        const result = buildCategories(
+        const result = categories(buildCategories(
             builtInCategories,
             libraryCategories,
             { 'A:0': { fields: {} } }, {}, valuelistsConfiguration, {}
-        ).categories;
+        ));
 
-        result['A'].fields.sort(byName);
+        (result['A'] as any).fields.sort(byName);
 
-        expect(result['A'].fields[0].valuelist.values).toEqual({
+        expect((result['A'] as any).fields[0].valuelist.values).toEqual({
             one: { labels: { de: 'Eins', en: 'One' } },
             two: { references: { externalId: '1234567' } },
             three: {}
@@ -1038,15 +1039,15 @@ describe('buildCategories', () => { // TODO test groups in idai type of types ma
             }
         };
 
-        const result = buildCategories(
+        const result = categories(buildCategories(
             builtInCategories, libraryCategories,
             { 'A:1': { hidden: [], fields: {} } },
             {}, {}, {}
-        ).categories;
+        ));
 
-        expect(result['A'].fields[0].inputType).toBe('text');
-        expect(result['A'].fields[0].group).toBe('stem');
-        expect(result['A'].fields[1].inputType).toBe('text');
+        expect((result['A'] as any).fields[0].inputType).toBe('text');
+        expect((result['A'] as any).fields[0].group).toBe('stem');
+        expect((result['A'] as any).fields[1].inputType).toBe('text');
     });
 
 
@@ -1069,14 +1070,14 @@ describe('buildCategories', () => { // TODO test groups in idai type of types ma
             }
         };
 
-        const result = buildCategories(
+        const result = categories(buildCategories(
             builtInCategories, {}, customCategories,
             {}, {}, {}
-        ).categories;
+        ));
 
-        expect(result['A'].fields[0].inputType).toBe('text');
-        expect(result['A'].fields[0].group).toBe('stem');
-        expect(result['A'].fields[1].inputType).toBe('text');
+        expect((result['A'] as any).fields[0].inputType).toBe('text');
+        expect((result['A'] as any).fields[0].group).toBe('stem');
+        expect((result['A'] as any).fields[1].inputType).toBe('text');
     });
 
 
@@ -1113,14 +1114,14 @@ describe('buildCategories', () => { // TODO test groups in idai type of types ma
             }
         };
 
-        const result = buildCategories(
+        const result = categories(buildCategories(
             builtInCategories, libraryCategories, customCategories,
             {}, {}, {}
-        ).categories;
+        ));
 
-        expect(result['A'].fields[0].inputType).toBe('text');
-        expect(result['A'].fields[1].inputType).toBe('text');
-        expect(result['A'].fields[2].inputType).toBe('text');
+        expect((result['A'] as any).fields[0].inputType).toBe('text');
+        expect((result['A'] as any).fields[1].inputType).toBe('text');
+        expect((result['A'] as any).fields[2].inputType).toBe('text');
     });
 
 
@@ -1161,17 +1162,17 @@ describe('buildCategories', () => { // TODO test groups in idai type of types ma
             }
         };
 
-        const result = buildCategories(
+        const result = categories(buildCategories(
             builtInCategories, libraryCategories, customCategories, commonFields,
             {}, {}
-        ).categories;
+        ));
 
-        result['A'].fields.sort(byName);
+        (result['A'] as any).fields.sort(byName);
 
-        expect(result['A'].fields[0].source).toBe(FieldDefinition.Source.COMMON);
-        expect(result['A'].fields[1].source).toBe(FieldDefinition.Source.BUILTIN);
-        expect(result['A'].fields[2].source).toBe(FieldDefinition.Source.LIBRARY);
-        expect(result['A'].fields[3].source).toBe(FieldDefinition.Source.CUSTOM);
+        expect((result['A'] as any).fields[0].source).toBe(FieldDefinition.Source.COMMON);
+        expect((result['A'] as any).fields[1].source).toBe(FieldDefinition.Source.BUILTIN);
+        expect((result['A'] as any).fields[2].source).toBe(FieldDefinition.Source.LIBRARY);
+        expect((result['A'] as any).fields[3].source).toBe(FieldDefinition.Source.CUSTOM);
     });
 
     // err cases

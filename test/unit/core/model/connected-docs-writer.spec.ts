@@ -8,9 +8,9 @@ import {ProjectConfiguration} from '../../../../app/core/configuration/project-c
  */
 describe('ConnectedDocsWriter', () => {
 
-    const projectConfiguration = new ProjectConfiguration({
-        'categories': [],
-        'relations': [
+    const projectConfiguration = new ProjectConfiguration(
+        [{} as any,
+         [
             {
                 'name': 'BelongsTo',
                 'inverse': 'Contains',
@@ -24,9 +24,7 @@ describe('ConnectedDocsWriter', () => {
             {
                 'name': 'isRecordedIn',
                 'label': 'Gehört zu'
-            }
-        ]
-    } as any);
+            }]]);
 
     let mockDatastore;
     let connectedDocsWriter: ConnectedDocsWriter;

@@ -1,5 +1,5 @@
 import {assoc, clone, cond, dissoc, flow, includedIn, isDefined, isNot, keys, keysAndValues, map, Map, on,
-    reduce, subtract, undefinedOrEmpty, update, identity, compose} from 'tsfun';
+    reduce, subtract, undefinedOrEmpty, update, identity, compose, Pair} from 'tsfun';
 import {LibraryCategoryDefinition} from '../model/library-category-definition';
 import {CustomCategoryDefinition} from '../model/custom-category-definition';
 import {ConfigurationErrors} from './configuration-errors';
@@ -21,6 +21,7 @@ import {applyLanguage} from './apply-language';
 import {applySearchConfiguration} from './apply-search-configuration';
 import {orderFields} from './order-fields';
 import {makeCategoriesMap} from './make-categories-map';
+import {Category} from '../model/category';
 
 
 const CATEGORIES = 'categories';
@@ -41,7 +42,7 @@ export function buildCategories(builtInCategories: Map<BuiltinCategoryDefinition
                                 customLanguageConfiguration: any = {},
                                 searchConfiguration: any = {},
                                 orderConfiguration: any = {},
-                                validateFields: any = identity) {
+                                validateFields: any = identity): Pair<Map<Category>, Array<RelationDefinition>> {
 
     Assertions.performAssertions(builtInCategories, libraryCategories, customCategories, commonFields, valuelistsConfiguration);
     addSourceField(builtInCategories, libraryCategories, customCategories, commonFields);
@@ -69,7 +70,14 @@ export function buildCategories(builtInCategories: Map<BuiltinCategoryDefinition
                 addExtraFieldsOrder(orderConfiguration),
                 orderFields(orderConfiguration),
                 validateFields,
-                makeCategoriesMap)));
+                makeCategoriesMap)),
+        toResult);
+}
+
+
+function toResult(config: any) {
+
+    return [config.categories, config.relations];
 }
 
 

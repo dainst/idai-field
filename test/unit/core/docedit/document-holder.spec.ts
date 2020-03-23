@@ -20,8 +20,8 @@ describe('DocumentHolder', () => {
 
     beforeEach(() => {
 
-        const pconf = new ProjectConfiguration({
-            categories: {Trench: {
+        const pconf = new ProjectConfiguration([
+            {Trench: {
                 name: 'Trench',
                 groups: [{ name: 'stem', fields: [
                     { name: 'id' },
@@ -37,8 +37,8 @@ describe('DocumentHolder', () => {
                     { name: 'unsignedFloatField', inputType: 'unsignedFloat' },
                     { name: 'floatField', inputType: 'float' }
                 ]}]
-            }},
-            relations: [
+            }} as any
+            ,[
                 {
                     'name': 'isFoundOn',
                     'inverse': 'bears',
@@ -56,8 +56,7 @@ describe('DocumentHolder', () => {
                     'domain': ['Find'],
                     'range': ['Trench']
                 }
-            ]
-        } as any);
+            ]]);
 
         defaultDocument = {
             _id: '1',

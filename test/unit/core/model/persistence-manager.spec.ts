@@ -10,9 +10,9 @@ import {ProjectConfiguration} from '../../../../app/core/configuration/project-c
  */
 describe('PersistenceManager', () => {
 
-    const projectConfiguration = new ProjectConfiguration({
-        'categories': [],
-        'relations': [
+    const projectConfiguration = new ProjectConfiguration([
+        {},
+        [
             {
                 'name': 'BelongsTo',
                 'inverse': 'Contains',
@@ -27,8 +27,7 @@ describe('PersistenceManager', () => {
                 'name': 'isRecordedIn',
                 'label': 'Gehört zu'
             }
-        ]
-    } as any);
+        ]]);
 
     let mockDatastore;
     let mockDescendantsUtility;

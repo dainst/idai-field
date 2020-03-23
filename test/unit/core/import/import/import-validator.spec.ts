@@ -12,8 +12,8 @@ import {ProjectConfiguration} from '../../../../../app/core/configuration/projec
 describe('ImportValidator', () => {
 
     const projectConfiguration = new ProjectConfiguration(
-        {
-            categories: { 'T' :
+        [
+            { 'T' :
                 {
                     name: 'T',
                     groups: [{ name: 'stem', fields: [
@@ -39,15 +39,15 @@ describe('ImportValidator', () => {
                     name: 'T3',
                     mustLieWithin: true
                 }
-            },
-            relations: [
+            } as any,
+            [
                 { name: 'isRelatedTo', domain: ['T'], range: ['T'], inverse: 'NO-INVERSE' },
                 { name: 'isDepictedIn', domain: ['T'], range: ['T2'], inverse: 'NO-INVERSE' },
                 { name: 'isRecordedIn', domain: ['T'], range: ['T2'], inverse: 'NO-INVERSE' },
                 { name: 'includes', domain: ['T'], range: ['T2'], inverse: 'NO-INVERSE' }, // defined but not allowed
                 { name: 'liesWithin', domain: ['T3'], range: ['T2'], inverse: 'NO-INVERSE' }
             ]
-        } as any
+        ]
     );
 
 

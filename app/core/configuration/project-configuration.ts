@@ -1,4 +1,4 @@
-import {flow, map, values, to, on, isNot, empty, filter, is, isUndefined} from 'tsfun';
+import {flow, map, values, to, on, isNot, empty, filter, is, isUndefined, Pair, Map} from 'tsfun';
 import {Category} from './model/category';
 import {FieldDefinition} from './model/field-definition';
 import {RelationDefinition} from './model/relation-definition';
@@ -27,10 +27,10 @@ export class ProjectConfiguration {
     private relations: Array<RelationDefinition> = [];
 
 
-    constructor(configuration: any) {
+    constructor([categories, relations]: Pair<Map<Category>, Array<RelationDefinition>>) {
 
-        this.categoriesMap = configuration.categories;
-        this.relations = configuration.relations || [];
+        this.categoriesMap = categories;
+        this.relations = relations || [];
     }
 
 

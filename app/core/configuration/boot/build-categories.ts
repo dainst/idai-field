@@ -1,5 +1,5 @@
 import {assoc, clone, cond, dissoc, flow, includedIn, isDefined, isNot, keys, keysAndValues, map, Map, on,
-    reduce, subtract, undefinedOrEmpty, update, identity} from 'tsfun';
+    reduce, subtract, undefinedOrEmpty, update, identity, compose} from 'tsfun';
 import {LibraryCategoryDefinition} from '../model/library-category-definition';
 import {CustomCategoryDefinition} from '../model/custom-category-definition';
 import {ConfigurationErrors} from './configuration-errors';
@@ -65,26 +65,28 @@ export function buildCategories(builtInCategories: Map<BuiltinCategoryDefinition
         applyLanguage(languageConfiguration),
         applyLanguage(customLanguageConfiguration),
         applySearchConfiguration(searchConfiguration),
-        addExtraFieldsOrder(orderConfiguration),
-        update(CATEGORIES, orderFields(orderConfiguration)),
-        update(CATEGORIES, validateFields),
-        update(CATEGORIES, makeCategoriesMap));
+        update(CATEGORIES,
+            compose(
+                addExtraFieldsOrder(orderConfiguration),
+                orderFields(orderConfiguration),
+                validateFields,
+                makeCategoriesMap)));
 }
 
 
 function addExtraFieldsOrder(orderConfiguration: any) {
 
-    return (appConfiguration: UnorderedConfigurationDefinition) => {
+    return (categories: any) => {
 
         if (!orderConfiguration.fields) orderConfiguration.fields = {};
 
-        Object.keys(appConfiguration.categories).forEach(categoryName => {
+        Object.keys(categories).forEach(categoryName => {
             if (!orderConfiguration.fields[categoryName]) orderConfiguration.fields[categoryName] = [];
             orderConfiguration.fields[categoryName]
                 = [].concat(orderConfiguration.fields[categoryName]);
         });
 
-        return appConfiguration;
+        return categories;
     }
 }
 

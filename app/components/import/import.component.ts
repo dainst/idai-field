@@ -152,7 +152,7 @@ export class ImportComponent implements OnInit {
             : files[0];
 
         if (this.importState.file) {
-            this.importState.selectedCategory = this.getResourceTypeFromFileName(this.importState.file.name);
+            this.importState.selectedCategory = this.getCategoryFromFileName(this.importState.file.name);
             if (this.importState.selectedCategory) {
                 this.importState.typeFromFileName = true;
             } else {
@@ -300,7 +300,7 @@ export class ImportComponent implements OnInit {
     }
 
 
-    private getResourceTypeFromFileName(fileName: string): Category|undefined {
+    private getCategoryFromFileName(fileName: string): Category|undefined {
 
         for (let segment of fileName.split('.')) {
             const category: Category|undefined = this.projectConfiguration.getCategoriesList()

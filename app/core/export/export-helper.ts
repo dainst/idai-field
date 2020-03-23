@@ -8,5 +8,5 @@ export type CategoryCount = [Category, Count];
 
 export type Find = (query: Query) => Promise<IdaiFieldFindResult<Document>>;
 export type GetIdentifierForId = (resourceId: string) => Promise<string>;
-export type PerformExport = (resourceType: Category, relations: string[])
+export type PerformExport = (category: Category, relations: string[])
     => (resources: Array<FieldResource>) => Promise<void>;

@@ -137,7 +137,7 @@ export class ConfigLoader {
                     customLanguageConfiguration,
                     searchConfiguration,
                     orderConfiguration,
-                    (categories: any) => {
+                    (categories: any) => { // TODO push into buildRawProjectConfiguration, instead of passing as param
                         const fieldValidationErrors = ConfigurationValidation.validateFieldDefinitions(values(categories));
                         if (fieldValidationErrors.length > 0) throw fieldValidationErrors;
                         return categories;

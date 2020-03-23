@@ -24,6 +24,9 @@ import {getOrderedCategories} from './get-ordered-categories';
 import {makeCategoriesMap} from './make-categories-map';
 
 
+const CATEGORIES = 'categories';
+
+
 /**
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
@@ -64,8 +67,8 @@ export function buildCategories(builtInCategories: Map<BuiltinCategoryDefinition
         applySearchConfiguration(searchConfiguration),
         addExtraFieldsOrder(orderConfiguration),
         getOrderedCategories(orderConfiguration), // TODO review: first we order, then we throw the order away
-        update('categories', validateFields),
-        update('categories', makeCategoriesMap));
+        update(CATEGORIES, validateFields),
+        update(CATEGORIES, makeCategoriesMap));
 }
 
 

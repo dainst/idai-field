@@ -1,7 +1,5 @@
-import {UnorderedConfigurationDefinition} from '../model/unordered-configuration-definition';
 import {CategoryDefinition} from '../model/category-definition';
 import {FieldDefinition} from '../model/field-definition';
-import {ConfigurationDefinition} from './configuration-definition';
 
 
 /**
@@ -10,31 +8,26 @@ import {ConfigurationDefinition} from './configuration-definition';
  */
 export function getOrderedCategories(orderConfiguration: any){
 
-    return (appConfiguration: UnorderedConfigurationDefinition): ConfigurationDefinition  => {
+    return (categories_: any): any  => {
 
         const categories: Array<CategoryDefinition> = [];
 
         if (orderConfiguration.categories) {
             orderConfiguration.categories.forEach((categoryName: string) => {
-                const category: CategoryDefinition | undefined = appConfiguration.categories[categoryName];
+                const category: CategoryDefinition | undefined = categories_[categoryName];
                 if (category) addToOrderedCategories(category, categoryName, categories, orderConfiguration);
             });
         }
 
-        Object.keys(appConfiguration.categories).forEach(categoryName => {
+        Object.keys(categories_).forEach(categoryName => {
             if (!categories.find(category => category.name === categoryName)) {
                 addToOrderedCategories(
-                    appConfiguration.categories[categoryName], categoryName, categories, orderConfiguration
+                    categories_[categoryName], categoryName, categories, orderConfiguration
                 );
             }
         });
 
-        return {
-            categories: categories,
-            relations: appConfiguration.relations,
-            identifier: appConfiguration.identifier,
-            groups: appConfiguration.groups
-        }
+        return categories;
     }
 }
 

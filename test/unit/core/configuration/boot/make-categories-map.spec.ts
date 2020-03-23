@@ -20,16 +20,17 @@ describe('makeCategoriesMap', () => {
       const A = 'A';
       const P = 'P';
 
-      const confDef = [{
+      const confDef = { A: {
             name: A,
             parent: P,
             description: { 'de': '' },
             fields: [{ name: 'a', inputType: InputType.INPUT }]
-         }, {
+         }, P: {
             name: P,
             description: { 'de': '' },
             fields: [{ name: 'p', inputType: InputType.INPUT }]
-         }];
+         }
+      };
 
       const categoriesMap = makeCategoriesMap(confDef);
 
@@ -56,7 +57,7 @@ describe('makeCategoriesMap', () => {
 
       const T = 'T';
 
-      const confDef = [{
+      const confDef = { T: {
             name: T,
             description: { 'de': '' },
             fields: [
@@ -71,7 +72,7 @@ describe('makeCategoriesMap', () => {
                    group: Groups.STEM
                 }
              ]
-         }];
+         }};
 
       const categoriesMap = makeCategoriesMap(confDef);
 

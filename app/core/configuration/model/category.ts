@@ -29,7 +29,7 @@ export module Category {
     export const COLOR = 'color';
     export const PARENT_CATEGORY = 'parentCategory';
     export const CHILDREN = 'children';
-    export const NAME = 'name';
+    export const NAME = 'name'; // TODO rename to name
     export const DESCRIPTION = 'description';
     export const GROUPS = 'groups';
 

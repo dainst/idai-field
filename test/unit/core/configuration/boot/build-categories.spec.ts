@@ -66,7 +66,6 @@ describe('buildCategories', () => { // TODO test groups in idai type of types ma
             customCategories
         ).categories;
 
-
         expect(result['A']).toBeDefined();
         expect(result['B']).toBeDefined();
         expect(result['C']).toBeUndefined();

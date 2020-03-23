@@ -4,7 +4,7 @@ import {append, assoc, cond, defined, flatten, flow, isNot, lookup, map, Map, on
 import {Category} from '../model/category';
 import {CategoryDefinition} from '../model/category-definition';
 import {DEFAULT_GROUP_ORDER, Group, Groups} from '../model/group';
-import {makeLookup} from '../../util/utils';
+import {debugId, makeLookup} from '../../util/utils';
 import {FieldDefinition} from '../model/field-definition';
 import {isUndefined} from 'tsfun/src/predicate';
 import {MDInternal} from 'idai-components-2/index';
@@ -25,8 +25,7 @@ export function makeCategoriesMap(categories: any): Map<Category> {
         parentDefs,
         map(Category.build),
         map(update('fields', Category.ifUndefinedSetGroupTo(Groups.PARENT))),
-        makeLookup(Category.NAME)
-    );
+        makeLookup(Category.NAME));
 
     return flow(
         childDefs,

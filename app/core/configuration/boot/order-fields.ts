@@ -1,3 +1,4 @@
+import {map} from 'tsfun';
 import {CategoryDefinition} from '../model/category-definition';
 import {FieldDefinition} from '../model/field-definition';
 
@@ -6,40 +7,17 @@ import {FieldDefinition} from '../model/field-definition';
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export function getOrderedCategories(orderConfiguration: any){
+export function orderFields(orderConfiguration: any){
 
     return (categories_: any): any  => {
 
-        const categories: Array<CategoryDefinition> = [];
+        return map((category: any, k: string) => { // TODO review
 
-        if (orderConfiguration.categories) {
-            orderConfiguration.categories.forEach((categoryName: string) => {
-                const category: CategoryDefinition | undefined = categories_[categoryName];
-                if (category) addToOrderedCategories(category, categoryName, categories, orderConfiguration);
-            });
-        }
-
-        Object.keys(categories_).forEach(categoryName => {
-            if (!categories.find(category => category.name === categoryName)) {
-                addToOrderedCategories(
-                    categories_[categoryName], categoryName, categories, orderConfiguration
-                );
-            }
-        });
-
-        return categories;
+            category.name = k;
+            category.fields = getOrderedFields(category, orderConfiguration);
+            return category;
+        })(categories_);
     }
-}
-
-
-function addToOrderedCategories(category: CategoryDefinition, categoryName: string,
-                                categories: Array<CategoryDefinition>, orderConfiguration: any) {
-
-    if (categories.includes(category)) return;
-
-    category.name = categoryName;
-    category.fields = getOrderedFields(category, orderConfiguration);
-    categories.push(category);
 }
 
 

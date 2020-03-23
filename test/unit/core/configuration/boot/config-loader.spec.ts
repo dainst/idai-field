@@ -3,6 +3,11 @@ import {ConfigurationDefinition} from '../../../../../app/core/configuration/boo
 import {ConfigLoader} from '../../../../../app/core/configuration/boot/config-loader';
 import {ConfigurationErrors} from '../../../../../app/core/configuration/boot/configuration-errors';
 import {CustomCategoryDefinition} from '../../../../../app/core/configuration/model/custom-category-definition';
+import {SortUtil} from '../../../../../app/core/util/sort-util';
+
+
+
+const byName = (a, b) => SortUtil.alnumCompare(a.name, b.name);
 
 
 /**
@@ -520,16 +525,19 @@ describe('ConfigLoader', () => {
                  undefined, 'de'
             );
 
-            expect(pconf.getCategoriesList()[1].name).toEqual('A');
-            expect(pconf.getCategoriesList()[1].fields[2].name).toEqual('fieldA1');
-            expect(pconf.getCategoriesList()[1].fields[3].name).toEqual('fieldA2');
-            expect(pconf.getCategoriesList()[2].name).toEqual('B');
-            expect(pconf.getCategoriesList()[2].fields[2].name).toEqual('fieldB1');
-            expect(pconf.getCategoriesList()[2].fields[3].name).toEqual('fieldB2');
-            expect(pconf.getCategoriesList()[2].fields[4].name).toEqual('fieldB3');
-            expect(pconf.getCategoriesList()[3].name).toEqual('C');
-            expect(pconf.getCategoriesList()[3].fields[2].name).toEqual('fieldC1');
-            expect(pconf.getCategoriesList()[3].fields[3].name).toEqual('fieldC2');
+            const result = pconf.getCategoriesList();
+            result.sort(byName);
+
+            expect(result[0].name).toEqual('A');
+            expect(result[0].fields[2].name).toEqual('fieldA1');
+            expect(result[0].fields[3].name).toEqual('fieldA2');
+            expect(result[1].name).toEqual('B');
+            expect(result[1].fields[2].name).toEqual('fieldB1');
+            expect(result[1].fields[3].name).toEqual('fieldB2');
+            expect(result[1].fields[4].name).toEqual('fieldB3');
+            expect(result[2].name).toEqual('C');
+            expect(result[2].fields[2].name).toEqual('fieldC1');
+            expect(result[2].fields[3].name).toEqual('fieldC2');
 
             done();
         } catch(err) {

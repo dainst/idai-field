@@ -7,9 +7,13 @@ import {BuiltinCategoryDefinition} from '../../../../../app/core/configuration/m
 import {LibraryCategoryDefinition} from '../../../../../app/core/configuration/model/library-category-definition';
 import {ValuelistDefinition} from '../../../../../app/core/configuration/model/valuelist-definition';
 import {Groups} from '../../../../../app/core/configuration/model/group';
+import {SortUtil} from '../../../../../app/core/util/sort-util';
 
 
-describe('buildProjectCategories', () => {
+const byName = (a, b) => SortUtil.alnumCompare(a.name, b.name);
+
+
+describe('buildCategories', () => {
 
     it('auto-select parent if child defined',  () => {
 
@@ -33,8 +37,10 @@ describe('buildProjectCategories', () => {
             customCategories
         ).categories;
 
-        expect(result['A']).toBeDefined();
-        expect(result['B']).toBeDefined();
+        result.sort(byName);
+
+        expect(result[0]).toBeDefined();
+        expect(result[1]).toBeDefined();
     });
 
 
@@ -63,9 +69,11 @@ describe('buildProjectCategories', () => {
             customCategories
         ).categories;
 
-        expect(result['A']).toBeDefined();
-        expect(result['B']).toBeDefined();
-        expect(result['C']).toBeUndefined();
+        result.sort(byName);
+
+        expect(result[0]).toBeDefined();
+        expect(result[1]).toBeDefined();
+        expect(result[2]).toBeUndefined();
     });
 
 
@@ -109,12 +117,12 @@ describe('buildProjectCategories', () => {
             commonFields
         ).categories;
 
-        expect(result['A']['fields']['field1'].visible).toBe(false);
-        expect(result['A']['fields']['field2'].visible).toBe(true);
-        expect(result['A']['fields']['field3'].visible).toBe(false);
-        expect(result['A']['fields']['field4'].visible).toBe(true);
-        expect(result['A']['fields']['aCommonField'].visible).toBe(false);
-        expect(result['A']['fields']['bCommonField'].visible).toBe(true);
+        expect(result[0]['fields'][0].visible).toBe(false);
+        expect(result[0]['fields'][1].visible).toBe(true);
+        expect(result[0]['fields'][2].visible).toBe(false);
+        expect(result[0]['fields'][3].visible).toBe(true);
+        expect(result[0]['fields'][4].visible).toBe(false);
+        expect(result[0]['fields'][5].visible).toBe(true);
     });
 
 
@@ -143,7 +151,7 @@ describe('buildProjectCategories', () => {
             }
         ).categories;
 
-        expect(result['A'].fields['aField']['valuelist']['values']).toEqual({ a: {} });
+        expect(result[0].fields[0]['valuelist']['values']).toEqual({ a: {} });
     });
 
 
@@ -181,7 +189,7 @@ describe('buildProjectCategories', () => {
             }
         ).categories;
 
-        expect(result['A'].fields['aCommon']['valuelist']['values']).toEqual({ b: {} });
+        expect(result[0].fields[0]['valuelist']['values']).toEqual({ b: {} });
     });
 
 
@@ -217,7 +225,7 @@ describe('buildProjectCategories', () => {
             }
         ).categories;
 
-        expect(result['A'].fields['aField']['valuelist']['values']).toEqual({ a: {} });
+        expect(result[0].fields[0]['valuelist']['values']).toEqual({ a: {} });
     });
 
 
@@ -543,8 +551,8 @@ describe('buildProjectCategories', () => {
             {}
         ).categories;
 
-        expect(result['A'].fields['aCommon']['group']).toBe('stem');
-        expect(result['A'].fields['aCommon']['inputType']).toBe('input');
+        expect(result[0].fields[0]['group']).toBe('stem');
+        expect(result[0].fields[0]['inputType']).toBe('input');
     });
 
 
@@ -568,8 +576,8 @@ describe('buildProjectCategories', () => {
             {}
         ).categories;
 
-        expect(result['A'].fields['aCommon']['group']).toBe('stem');
-        expect(result['A'].fields['aCommon']['inputType']).toBe('input');
+        expect(result[0].fields[0]['group']).toBe('stem');
+        expect(result[0].fields[0]['inputType']).toBe('input');
     });
 
 
@@ -607,10 +615,10 @@ describe('buildProjectCategories', () => {
             {}
         ).categories;
 
-        expect(result['A'].fields['aCommon']['group']).toBe('stem');
-        expect(result['A'].fields['aCommon']['inputType']).toBe('input');
-        expect(result['A'].fields['bCommon']['group']).toBe('stem');
-        expect(result['A'].fields['bCommon']['inputType']).toBe('input');
+        expect(result[0].fields[0]['group']).toBe('stem');
+        expect(result[0].fields[0]['inputType']).toBe('input');
+        expect(result[0].fields[1]['group']).toBe('stem');
+        expect(result[0].fields[1]['inputType']).toBe('input');
     });
 
 
@@ -641,9 +649,9 @@ describe('buildProjectCategories', () => {
             {}
         ).categories;
 
-        expect(result['A'].fields['aCommon']['group']).toBe('stem');
-        expect(result['A'].fields['aCommon']['inputType']).toBe('dropdown');
-        expect(result['A'].fields['aCommon']['valuelistFromProjectField']).toBe('x');
+        expect(result[0].fields[0]['group']).toBe('stem');
+        expect(result[0].fields[0]['inputType']).toBe('dropdown');
+        expect(result[0].fields[0]['valuelistFromProjectField']).toBe('x');
     });
 
 
@@ -672,7 +680,7 @@ describe('buildProjectCategories', () => {
                 [],
                 {},
                 {}
-            ).categories;
+            );
             fail();
         } catch (expected) {
             expect(expected).toEqual([
@@ -698,7 +706,7 @@ describe('buildProjectCategories', () => {
                 {},
                 {},
                 {}
-            ).categories;
+            );
             fail();
         } catch (expected) {
             expect(expected).toEqual([
@@ -728,7 +736,7 @@ describe('buildProjectCategories', () => {
             buildCategories(builtInCategories,
                 libraryCategories,
                 {},  {}, {}, {}
-            ).categories;
+            );
             fail();
         } catch (expected) {
             expect(expected).toEqual([
@@ -762,7 +770,7 @@ describe('buildProjectCategories', () => {
             {}
         ).categories;
 
-        expect(result['A'].fields['aField'].inputType).toBe('input');
+        expect(result[0].fields[0].inputType).toBe('input');
     });
 
 
@@ -787,7 +795,7 @@ describe('buildProjectCategories', () => {
             buildCategories(builtInCategories,
                 libraryCategories,
                 {}, {}, {}, {}
-            ).categories;
+            );
             fail();
         } catch (expected) {
             expect(expected).toEqual([
@@ -817,7 +825,7 @@ describe('buildProjectCategories', () => {
             buildCategories(builtInCategories,
                 libraryCategories,
                 {}, {}, {}, {}
-            ).categories;
+            );
             fail();
         } catch (expected) {
             expect(expected).toEqual([ConfigurationErrors.MUST_NOT_SET_INPUT_TYPE, 'A:0', 'aField']);
@@ -845,7 +853,7 @@ describe('buildProjectCategories', () => {
             buildCategories(builtInCategories,
                 libraryCategories,
                 {}, {}, {}, {}
-            ).categories;
+            );
             fail();
         } catch (expected) {
             expect(expected).toEqual([
@@ -926,7 +934,11 @@ describe('buildProjectCategories', () => {
             libraryCategories,
             { 'A:0': { fields: {} } }, {}, valuelistsConfiguration, {}
         ).categories;
-        expect(result['A'].fields['a1'].valuelist.values).toEqual({
+
+
+        result[0].fields.sort(byName);
+
+        expect(result[0].fields[0].valuelist.values).toEqual({
             one: { labels: { de: 'Eins', en: 'One' } },
             two: { references: { externalId: '1234567' } },
             three: {}
@@ -1039,9 +1051,10 @@ describe('buildProjectCategories', () => {
             {}, {}, {}
         ).categories;
 
-        expect(result['A'].fields['field1'].inputType).toBe('text');
-        expect(result['A'].fields['field1'].group).toBe('stem');
-        expect(result['A'].fields['field2'].inputType).toBe('text');
+        result[0].fields.sort(byName);
+        expect(result[0].fields[0].inputType).toBe('text');
+        expect(result[0].fields[0].group).toBe('stem');
+        expect(result[0].fields[1].inputType).toBe('text');
     });
 
 
@@ -1069,9 +1082,9 @@ describe('buildProjectCategories', () => {
             {}, {}, {}
         ).categories;
 
-        expect(result['A'].fields['field1'].inputType).toBe('text');
-        expect(result['A'].fields['field1'].group).toBe('stem');
-        expect(result['A'].fields['field2'].inputType).toBe('text');
+        expect(result[0].fields[0].inputType).toBe('text');
+        expect(result[0].fields[0].group).toBe('stem');
+        expect(result[0].fields[1].inputType).toBe('text');
     });
 
 
@@ -1113,9 +1126,9 @@ describe('buildProjectCategories', () => {
             {}, {}, {}
         ).categories;
 
-        expect(result['A'].fields['field1'].inputType).toBe('text');
-        expect(result['A'].fields['field2'].inputType).toBe('text');
-        expect(result['A'].fields['field3'].inputType).toBe('text');
+        expect(result[0].fields[0].inputType).toBe('text');
+        expect(result[0].fields[1].inputType).toBe('text');
+        expect(result[0].fields[2].inputType).toBe('text');
     });
 
 
@@ -1161,10 +1174,11 @@ describe('buildProjectCategories', () => {
             {}, {}
         ).categories;
 
-        expect(result['A'].fields['field1'].source).toBe(FieldDefinition.Source.BUILTIN);
-        expect(result['A'].fields['field2'].source).toBe(FieldDefinition.Source.LIBRARY);
-        expect(result['A'].fields['field3'].source).toBe(FieldDefinition.Source.CUSTOM);
-        expect(result['A'].fields['aCommon'].source).toBe(FieldDefinition.Source.COMMON);
+        result[0].fields.sort(byName);
+        expect(result[0].fields[0].source).toBe(FieldDefinition.Source.COMMON);
+        expect(result[0].fields[1].source).toBe(FieldDefinition.Source.BUILTIN);
+        expect(result[0].fields[2].source).toBe(FieldDefinition.Source.LIBRARY);
+        expect(result[0].fields[3].source).toBe(FieldDefinition.Source.CUSTOM);
     });
 
     // err cases

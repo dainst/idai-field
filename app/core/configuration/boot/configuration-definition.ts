@@ -9,4 +9,5 @@ export interface ConfigurationDefinition {
     identifier: string
     categories: Array<CategoryDefinition>;
     relations: Array<RelationDefinition>;
+    groups?: any;
 }

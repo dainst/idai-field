@@ -1,5 +1,5 @@
 import {assoc, clone, cond, dissoc, flow, includedIn, isDefined, isNot, keys, keysAndValues, map, Map, on,
-    reduce, subtract, undefinedOrEmpty, update} from 'tsfun';
+    reduce, subtract, undefinedOrEmpty, update, identity} from 'tsfun';
 import {LibraryCategoryDefinition} from '../model/library-category-definition';
 import {CustomCategoryDefinition} from '../model/custom-category-definition';
 import {ConfigurationErrors} from './configuration-errors';
@@ -20,6 +20,8 @@ import {addRelations} from './add-relations';
 import {applyLanguage} from './apply-language';
 import {ConfigurationDefinition} from './configuration-definition';
 import {applySearchConfiguration} from './apply-search-configuration';
+import {UnorderedConfigurationDefinition} from '../model/unordered-configuration-definition';
+import {getOrderedCategories} from './get-ordered-categories';
 
 
 /**
@@ -35,7 +37,9 @@ export function buildCategories(builtInCategories: Map<BuiltinCategoryDefinition
                                 relations: Array<RelationDefinition> = [],
                                 languageConfiguration: any = {},
                                 customLanguageConfiguration: any = {},
-                                searchConfiguration: any = {}): ConfigurationDefinition {
+                                searchConfiguration: any = {},
+                                orderConfiguration: any = {},
+                                validateFields: any = identity) {
 
     Assertions.performAssertions(builtInCategories, libraryCategories, customCategories, commonFields, valuelistsConfiguration);
     addSourceField(builtInCategories, libraryCategories, customCategories, commonFields);
@@ -57,7 +61,27 @@ export function buildCategories(builtInCategories: Map<BuiltinCategoryDefinition
         addRelations(relations),
         applyLanguage(languageConfiguration),
         applyLanguage(customLanguageConfiguration),
-        applySearchConfiguration(searchConfiguration));
+        applySearchConfiguration(searchConfiguration),
+        addExtraFieldsOrder(orderConfiguration),
+        getOrderedCategories(orderConfiguration),
+        validateFields);
+}
+
+
+function addExtraFieldsOrder(orderConfiguration: any) {
+
+    return (appConfiguration: UnorderedConfigurationDefinition) => {
+
+        if (!orderConfiguration.fields) orderConfiguration.fields = {};
+
+        Object.keys(appConfiguration.categories).forEach(categoryName => {
+            if (!orderConfiguration.fields[categoryName]) orderConfiguration.fields[categoryName] = [];
+            orderConfiguration.fields[categoryName]
+                = [].concat(orderConfiguration.fields[categoryName]);
+        });
+
+        return appConfiguration;
+    }
 }
 
 

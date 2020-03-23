@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {Map} from 'tsfun';
 import {ProjectConfiguration} from '../project-configuration';
-import {Preprocessing} from './preprocessing';
 import {ConfigurationValidation} from './configuration-validation';
 import {ConfigReader} from './config-reader';
 import {RelationDefinition} from '../model/relation-definition';
@@ -62,11 +61,14 @@ export class ConfigLoader {
         if (missingRelationCategoryErrors.length > 0) throw missingRelationCategoryErrors;
 
         const appConfiguration = await this.preprocess(
-            configDirPath, registeredCategories, commonFields, builtinCategories, relations,
-            extraFields, customConfigurationName, locale);
-
-        const fieldValidationErrors = ConfigurationValidation.validateFieldDefinitions(appConfiguration);
-        if (fieldValidationErrors.length > 0) throw fieldValidationErrors;
+            configDirPath,
+            registeredCategories,
+            commonFields,
+            builtinCategories,
+            relations,
+            extraFields,
+            customConfigurationName,
+            locale);
 
         return new ProjectConfiguration(appConfiguration);
     }
@@ -124,10 +126,9 @@ export class ConfigLoader {
         // unused: Preprocessing.prepareSameMainCategoryResource(appConfiguration);
         // unused: Preprocessing.setIsRecordedInVisibilities(appConfiguration); See #8992
 
-        let conf: ConfigurationDefinition;
-        try {
+        try { // TODO extract this block
 
-            conf = buildCategories(
+            return buildCategories(
                 builtinCategories,
                 libraryCategories,
                 customCategories,
@@ -137,16 +138,16 @@ export class ConfigLoader {
                 relations,
                 languageConfiguration,
                 customLanguageConfiguration,
-                searchConfiguration);
+                searchConfiguration,
+                orderConfiguration,
+                (config: any) => {
+                    const fieldValidationErrors = ConfigurationValidation.validateFieldDefinitions(config);
+                    if (fieldValidationErrors.length > 0) throw fieldValidationErrors;
+                    return config;
+                });
 
         } catch (msgWithParams) {
             throw [msgWithParams];
-        }
-
-        try {
-            return Preprocessing.preprocess2(conf, orderConfiguration);
-        } catch (msgWithParams) {
-            throw [[msgWithParams]];
         }
     }
 }

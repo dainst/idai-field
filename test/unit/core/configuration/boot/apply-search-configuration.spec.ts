@@ -1,6 +1,5 @@
 import {Map} from 'tsfun';
 import {LibraryCategoryDefinition} from '../../../../../app/core/configuration/model/library-category-definition';
-import {Preprocessing} from '../../../../../app/core/configuration/boot/preprocessing';
 import {CategoryDefinition} from '../../../../../app/core/configuration/model/category-definition';
 import {applySearchConfiguration} from '../../../../../app/core/configuration/boot/apply-search-configuration';
 

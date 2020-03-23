@@ -29,23 +29,4 @@ export module ProjectConfigurationUtils { // TODO inline into project-configurat
 
         return subcategories;
     }
-
-
-    export function getRelationDefinitions(relationFields: Array<RelationDefinition>, categoryName: string,
-                                           isRangeCategory: boolean = false, property?: string) {
-
-        const availableRelationFields: Array<RelationDefinition> = [];
-        for (let relationField of relationFields) {
-
-            const categories: string[] = isRangeCategory ? relationField.range : relationField.domain;
-            if (categories.indexOf(categoryName) > -1) {
-                if (!property ||
-                    (relationField as any)[property] == undefined ||
-                    (relationField as any)[property] == true) {
-                    availableRelationFields.push(relationField);
-                }
-            }
-        }
-        return availableRelationFields;
-    }
 }

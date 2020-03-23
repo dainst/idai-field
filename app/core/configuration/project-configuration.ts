@@ -89,8 +89,7 @@ export class ProjectConfiguration {
     public getRelationDefinitions(categoryName: string, isRangeCategory: boolean = false,
                                   property?: string): Array<RelationDefinition> {
 
-        return ProjectConfigurationUtils.getRelationDefinitions(
-            this.relations, categoryName, isRangeCategory, property);
+        return this.getRelationDefinitions_(categoryName, isRangeCategory, property);
     }
 
     /**
@@ -200,5 +199,23 @@ export class ProjectConfiguration {
             filter(on(propertyName, is(true))),
             isNot(empty)
         );
+    }
+
+
+    private getRelationDefinitions_(categoryName: string, isRangeCategory: boolean = false, property?: string) {
+
+        const availableRelationFields: Array<RelationDefinition> = [];
+        for (let relationField of this.relations) {
+
+            const categories: string[] = isRangeCategory ? relationField.range : relationField.domain;
+            if (categories.indexOf(categoryName) > -1) {
+                if (!property ||
+                    (relationField as any)[property] == undefined ||
+                    (relationField as any)[property] == true) {
+                    availableRelationFields.push(relationField);
+                }
+            }
+        }
+        return availableRelationFields;
     }
 }

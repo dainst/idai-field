@@ -2,7 +2,6 @@ import {flow, map, values, to, on, isNot, empty, filter, is, isUndefined, Pair, 
 import {Category} from './model/category';
 import {FieldDefinition} from './model/field-definition';
 import {RelationDefinition} from './model/relation-definition';
-import {ProjectConfigurationUtils} from './project-configuration-utils';
 
 
 export type RawProjectConfiguration = Pair<Map<Category>, Array<RelationDefinition>>;
@@ -24,7 +23,7 @@ export class ProjectConfiguration {
 
     public static UNKNOWN_CATEGORY_ERROR = 'ProjectConfiguration.Errors.UnknownCategory';
 
-    private categoriesMap: { [categoryName: string]: Category } = {};
+    private categoriesMap: Map<Category> = {};
 
     private relations: Array<RelationDefinition> = [];
 
@@ -55,7 +54,7 @@ export class ProjectConfiguration {
 
     public getCategoryAndSubcategories(supercategoryName: string): { [categoryName: string]: Category } {
 
-        return ProjectConfigurationUtils.getCategoryAndSubcategories(this.getCategoriesMap(), supercategoryName);
+        return this.getCategoryAndSubcategories_(supercategoryName);
     }
 
 
@@ -217,5 +216,27 @@ export class ProjectConfiguration {
             }
         }
         return availableRelationFields;
+    }
+
+
+    // TODO reimplement; test
+    private getCategoryAndSubcategories_(supercategoryName: string): Map<Category> {
+
+        const projectCategoriesMap: Map<Category> = this.getCategoriesMap();
+
+        const subcategories: any = {};
+
+        if (projectCategoriesMap[supercategoryName]) {
+            subcategories[supercategoryName] = projectCategoriesMap[supercategoryName];
+
+            if (projectCategoriesMap[supercategoryName].children) {
+                for (let i = projectCategoriesMap[supercategoryName].children.length - 1; i >= 0; i--) {
+                    subcategories[projectCategoriesMap[supercategoryName].children[i].name]
+                        = projectCategoriesMap[supercategoryName].children[i];
+                }
+            }
+        }
+
+        return subcategories;
     }
 }

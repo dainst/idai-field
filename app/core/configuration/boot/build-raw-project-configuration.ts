@@ -71,13 +71,7 @@ export function buildRawProjectConfiguration(builtInCategories: Map<BuiltinCateg
                 orderFields(orderConfiguration),
                 validateFields,
                 makeCategoriesMap)),
-        toResult);
-}
-
-
-function toResult(config: any): RawProjectConfiguration {
-
-    return [config.categories, config.relations];
+        ({categories, relations}: any) => ([categories, relations]));
 }
 
 

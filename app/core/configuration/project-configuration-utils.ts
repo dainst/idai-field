@@ -8,7 +8,7 @@ import {RelationDefinition} from './model/relation-definition';
  * @author Daniel de Oliveira
  * @author Sebastian Cuy
  */
-export module ProjectConfigurationUtils {
+export module ProjectConfigurationUtils { // TODO inline into project-configuration
 
     // TODO reimplement; test
     export function getCategoryAndSubcategories(projectCategoriesMap: Map<Category>,

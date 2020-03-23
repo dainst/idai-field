@@ -124,7 +124,7 @@ export class ConfigLoader {
         // unused: Preprocessing.prepareSameMainCategoryResource(appConfiguration);
         // unused: Preprocessing.setIsRecordedInVisibilities(appConfiguration); See #8992
 
-        let conf: any;
+        let conf: ConfigurationDefinition;
         try {
             conf = buildCategories(
                 builtinCategories,

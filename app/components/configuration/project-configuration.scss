@@ -13,12 +13,16 @@
     .header {
         padding: 7px;
         border-bottom: 1px solid #ccc;
-        user-select: none;
         background-color: #e7e7e7;
 
         h5 {
             margin: 8px;
         }
+    }
+
+    .subheader {
+        padding: 1rem;
+        background-color: #eee;
     }
 
     .groups {

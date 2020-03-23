@@ -7,6 +7,7 @@ export interface CategoryDefinition {
 
     name: string;
     label?: string;
+    description: { [language: string]: string };
     abstract?: boolean;
 
     /**

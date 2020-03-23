@@ -12,6 +12,7 @@ export interface Category {
     isAbstract: boolean;
     name: string;
     label: string;
+    description: {[language: string]: string};
     color: string|undefined;
     groups: Array<Group>;
     mustLieWithin: boolean|undefined; // = undefined;
@@ -29,6 +30,7 @@ export module Category {
     export const PARENT_CATEGORY = 'parentCategory';
     export const CHILDREN = 'children';
     export const NAME = 'name';
+    export const DESCRIPTION = 'description';
     export const GROUPS = 'groups';
 
 
@@ -38,6 +40,7 @@ export module Category {
         category.mustLieWithin = definition.mustLieWithin;
         category.name = definition.name;
         category.label = definition.label || category.name;
+        category.description = category.description;
         category['fields'] = definition.fields || []; // TODO remove after construction
         category.groups = [];
         category.isAbstract = definition.abstract || false;

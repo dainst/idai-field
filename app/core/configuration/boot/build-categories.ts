@@ -18,6 +18,7 @@ import {hideFields} from './hide-fields';
 import {RelationDefinition} from '../model/relation-definition';
 import {addRelations} from './add-relations';
 import {applyLanguage} from './apply-language';
+import {ConfigurationDefinition} from './configuration-definition';
 
 
 /**
@@ -32,7 +33,7 @@ export function buildCategories(builtInCategories: Map<BuiltinCategoryDefinition
                                 extraFields: Map = {},
                                 relations: Array<RelationDefinition> = [],
                                 languageConfiguration: any = {},
-                                customLanguageConfiguration: any = {}) {
+                                customLanguageConfiguration: any = {}): ConfigurationDefinition {
 
     Assertions.performAssertions(builtInCategories, libraryCategories, customCategories, commonFields, valuelistsConfiguration);
     addSourceField(builtInCategories, libraryCategories, customCategories, commonFields);

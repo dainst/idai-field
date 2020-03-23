@@ -4,7 +4,10 @@ import {ProjectConfiguration} from '../../core/configuration/project-configurati
 import {Category} from '../../core/configuration/model/category';
 import {FieldDefinition} from '../../core/configuration/model/field-definition';
 import {Group} from '../../core/configuration/model/group';
+import {ValuelistDefinition} from '../../core/configuration/model/valuelist-definition';
 import {ValuelistUtil} from '../../core/util/valuelist-util';
+
+const locale: string = require('electron').remote.getGlobal('config').locale;
 
 
 @Component({
@@ -57,5 +60,8 @@ export class ProjectConfigurationComponent {
     public getValueLabel = ValuelistUtil.getValueLabel;
 
 
-    public getValuelistDescription = ValuelistUtil.getValuelistDescription;
+    public getValuelistDescription = (valuelist: ValuelistDefinition) => valuelist.description?.[locale];
+
+
+    public getCategoryDescription = (category: Category) => category.description?.[locale];
 }

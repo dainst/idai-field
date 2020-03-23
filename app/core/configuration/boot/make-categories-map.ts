@@ -16,10 +16,10 @@ import {GroupUtil} from '../group-util';
  * @author Daniel de Oliveira
  * @author Sebastian Cuy
  */
-export function makeCategoriesMap(configuration: ConfigurationDefinition) {
+export function makeCategoriesMap(categories: any): Map<Category> {
 
     const [parentDefs, childDefs] =
-        separate(on(CategoryDefinition.PARENT, isNot(defined)))(configuration.categories);
+        separate(on(CategoryDefinition.PARENT, isNot(defined)))(categories);
 
     const parentCategories = flow(
         parentDefs,
@@ -28,19 +28,12 @@ export function makeCategoriesMap(configuration: ConfigurationDefinition) {
         makeLookup(Category.NAME)
     );
 
-    const categories: Map<Category> = flow(
+    return flow(
         childDefs,
         reduce(addChildCategory, parentCategories),
         flattenCategoriesTreeMapToCategoriesMap,
         fillGroups
     );
-
-    return {
-        categories: categories,
-        relations: configuration.relations,
-        identifier: configuration.identifier,
-        groups: configuration.groups
-    }
 }
 
 

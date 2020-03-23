@@ -18,7 +18,6 @@ import {hideFields} from './hide-fields';
 import {RelationDefinition} from '../model/relation-definition';
 import {addRelations} from './add-relations';
 import {applyLanguage} from './apply-language';
-import {ConfigurationDefinition} from './configuration-definition';
 import {applySearchConfiguration} from './apply-search-configuration';
 import {UnorderedConfigurationDefinition} from '../model/unordered-configuration-definition';
 import {getOrderedCategories} from './get-ordered-categories';
@@ -66,7 +65,7 @@ export function buildCategories(builtInCategories: Map<BuiltinCategoryDefinition
         addExtraFieldsOrder(orderConfiguration),
         getOrderedCategories(orderConfiguration), // TODO review: first we order, then we throw the order away
         validateFields,
-        makeCategoriesMap); // TODO use update
+        update('categories', makeCategoriesMap));
 }
 
 

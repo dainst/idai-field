@@ -20,10 +20,7 @@ describe('makeCategoriesMap', () => {
       const A = 'A';
       const P = 'P';
 
-      const confDef: ConfigurationDefinition = {
-         relations: [],
-         identifier: '',
-         categories: [{
+      const confDef = [{
             name: A,
             parent: P,
             description: { 'de': '' },
@@ -32,10 +29,9 @@ describe('makeCategoriesMap', () => {
             name: P,
             description: { 'de': '' },
             fields: [{ name: 'p', inputType: InputType.INPUT }]
-         }]
-      };
+         }];
 
-      const categoriesMap = makeCategoriesMap(confDef).categories;
+      const categoriesMap = makeCategoriesMap(confDef);
 
       expect(categoriesMap[P].name).toEqual(P);
       expect(categoriesMap[P].children[0].name).toEqual(A);
@@ -60,10 +56,7 @@ describe('makeCategoriesMap', () => {
 
       const T = 'T';
 
-      const confDef: ConfigurationDefinition = {
-         relations: [],
-         identifier: '',
-         categories: [{
+      const confDef = [{
             name: T,
             description: { 'de': '' },
             fields: [
@@ -78,10 +71,9 @@ describe('makeCategoriesMap', () => {
                    group: Groups.STEM
                 }
              ]
-         }]
-      };
+         }];
 
-      const categoriesMap = makeCategoriesMap(confDef).categories;
+      const categoriesMap = makeCategoriesMap(confDef);
 
       expect(categoriesMap[T].groups[0].fields[0].name).toEqual(FieldResource.IDENTIFIER);
       expect(categoriesMap[T].groups[0].fields[1].name).toEqual(FieldResource.SHORTDESCRIPTION);

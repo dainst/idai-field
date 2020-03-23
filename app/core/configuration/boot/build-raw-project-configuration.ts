@@ -21,7 +21,7 @@ import {applyLanguage} from './apply-language';
 import {applySearchConfiguration} from './apply-search-configuration';
 import {orderFields} from './order-fields';
 import {makeCategoriesMap} from './make-categories-map';
-import {Category} from '../model/category';
+import {RawProjectConfiguration} from '../project-configuration';
 
 
 const CATEGORIES = 'categories';
@@ -42,7 +42,7 @@ export function buildRawProjectConfiguration(builtInCategories: Map<BuiltinCateg
                                              customLanguageConfiguration: any = {},
                                              searchConfiguration: any = {},
                                              orderConfiguration: any = {},
-                                             validateFields: any = identity): Pair<Map<Category>, Array<RelationDefinition>> {
+                                             validateFields: any = identity): RawProjectConfiguration {
 
     Assertions.performAssertions(builtInCategories, libraryCategories, customCategories, commonFields, valuelistsConfiguration);
     addSourceField(builtInCategories, libraryCategories, customCategories, commonFields);
@@ -75,7 +75,7 @@ export function buildRawProjectConfiguration(builtInCategories: Map<BuiltinCateg
 }
 
 
-function toResult(config: any) {
+function toResult(config: any): RawProjectConfiguration {
 
     return [config.categories, config.relations];
 }

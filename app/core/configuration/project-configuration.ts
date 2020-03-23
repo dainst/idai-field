@@ -3,7 +3,9 @@ import {Category} from './model/category';
 import {FieldDefinition} from './model/field-definition';
 import {RelationDefinition} from './model/relation-definition';
 import {ProjectConfigurationUtils} from './project-configuration-utils';
-import {ConfigurationDefinition} from './boot/configuration-definition';
+
+
+export type RawProjectConfiguration = Pair<Map<Category>, Array<RelationDefinition>>;
 
 
 /**
@@ -27,7 +29,7 @@ export class ProjectConfiguration {
     private relations: Array<RelationDefinition> = [];
 
 
-    constructor([categories, relations]: Pair<Map<Category>, Array<RelationDefinition>>) {
+    constructor([categories, relations]: RawProjectConfiguration) {
 
         this.categoriesMap = categories;
         this.relations = relations || [];

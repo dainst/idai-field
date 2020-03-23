@@ -163,6 +163,17 @@ export function toTuple(...keys: string[]) {
     return <T>(o: Map<T>) => keys.map(k => to(k)(o));
 }
 
-interface Named { name: string }
+export interface Named { name: string }
 
-type NamedIdentifiedObjectArray = Array<Named>;
+export type NamedIdentifiedObjectArray<A extends Named> = Array<A>;
+
+
+/**
+ * as: [{ name: '17', e: 9 }, { name: '19', e: 7 }]
+ * ->
+ * { '17': { e: 9, name: '17' }, { '19': { e: 7, name: '19' }}}
+ */
+export function makeNamedLookup<A extends Named>(as: Array<A>): Map<A> {
+
+    return makeLookup('name')(as); // TODO maybe remove names afterwards; add inverse function
+}

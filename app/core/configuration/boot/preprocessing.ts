@@ -27,9 +27,6 @@ export module Preprocessing {
     }
 
 
-
-
-
     export function applySearchConfiguration(configuration: UnorderedConfigurationDefinition,
                                              searchConfiguration: any) {
 

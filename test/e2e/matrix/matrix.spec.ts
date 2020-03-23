@@ -13,7 +13,7 @@ const common = require('../common');
 /**
  * @author Thomas Kleinke
  */
-xdescribe('matrix --', () => {
+describe('matrix --', () => {
 
     let i = 0;
 

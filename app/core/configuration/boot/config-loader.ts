@@ -6,7 +6,7 @@ import {ConfigurationValidation} from './configuration-validation';
 import {ConfigReader} from './config-reader';
 import {RelationDefinition} from '../model/relation-definition';
 import {FieldDefinition} from '../model/field-definition';
-import {buildCategories} from './build-categories';
+import {buildRawProjectConfiguration} from './build-raw-project-configuration';
 import {BuiltinCategoryDefinition} from '../model/builtin-category-definition';
 import {LibraryCategoryDefinition} from '../model/library-category-definition';
 
@@ -125,7 +125,7 @@ export class ConfigLoader {
         try {
 
             return new ProjectConfiguration(
-                buildCategories(
+                buildRawProjectConfiguration(
                     builtinCategories,
                     libraryCategories,
                     customCategories,

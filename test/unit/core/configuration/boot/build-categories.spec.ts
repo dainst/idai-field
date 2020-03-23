@@ -1,5 +1,5 @@
 import {Map, left} from 'tsfun';
-import {buildCategories} from '../../../../../app/core/configuration/boot/build-categories';
+import {buildRawProjectConfiguration} from '../../../../../app/core/configuration/boot/build-raw-project-configuration';
 import {ConfigurationErrors} from '../../../../../app/core/configuration/boot/configuration-errors';
 import {FieldDefinition} from '../../../../../app/core/configuration/model/field-definition';
 import {CustomCategoryDefinition} from '../../../../../app/core/configuration/model/custom-category-definition';
@@ -30,7 +30,7 @@ describe('buildCategories', () => { // TODO test groups in idai type of types ma
                 hidden: []
             }
         };
-        const result = categories(buildCategories(
+        const result = categories(buildRawProjectConfiguration(
             builtInCategories,
             {},
             customCategories
@@ -60,7 +60,7 @@ describe('buildCategories', () => { // TODO test groups in idai type of types ma
                 hidden: []
             }
         };
-        const result = categories(buildCategories(
+        const result = categories(buildRawProjectConfiguration(
             builtInCategories,
             {},
             customCategories
@@ -105,7 +105,7 @@ describe('buildCategories', () => { // TODO test groups in idai type of types ma
             bCommonField: { inputType: 'input' }
         };
 
-        const result = categories(buildCategories(
+        const result = categories(buildRawProjectConfiguration(
             builtInCategories,
             libraryCategories,
             customCategories,
@@ -134,7 +134,7 @@ describe('buildCategories', () => { // TODO test groups in idai type of types ma
             }
         };
 
-        const result = categories(buildCategories(
+        const result = categories(buildRawProjectConfiguration(
             builtInCategories,
             libraryCategories,
             customCategories,
@@ -169,7 +169,7 @@ describe('buildCategories', () => { // TODO test groups in idai type of types ma
             }
         };
 
-        const result = categories(buildCategories(
+        const result = categories(buildRawProjectConfiguration(
             builtInCategories,
             libraryCategories,
             customCategories,
@@ -208,7 +208,7 @@ describe('buildCategories', () => { // TODO test groups in idai type of types ma
             'A:default': { fields: {}}
         };
 
-        const result = categories(buildCategories(
+        const result = categories(buildRawProjectConfiguration(
             builtInCategories,
             libraryCategories,
             customCategories,
@@ -234,7 +234,7 @@ describe('buildCategories', () => { // TODO test groups in idai type of types ma
         };
 
         try {
-            buildCategories(
+            buildRawProjectConfiguration(
                 builtInCategories,
                 {},
                 customCategories,
@@ -272,7 +272,7 @@ describe('buildCategories', () => { // TODO test groups in idai type of types ma
         };
 
         try {
-            buildCategories(
+            buildRawProjectConfiguration(
                 builtInCategories,
                 libraryCategories,
                 customCategories,
@@ -322,7 +322,7 @@ describe('buildCategories', () => { // TODO test groups in idai type of types ma
         };
 
         try {
-            buildCategories(
+            buildRawProjectConfiguration(
                 builtInCategories,
                 libraryCategories,
                 customCategories
@@ -354,7 +354,7 @@ describe('buildCategories', () => { // TODO test groups in idai type of types ma
         };
 
         try {
-            buildCategories(
+            buildRawProjectConfiguration(
                 builtInCategories,
                 libraryCategories,
                 customCategories
@@ -391,7 +391,7 @@ describe('buildCategories', () => { // TODO test groups in idai type of types ma
         };
 
         try {
-            buildCategories(
+            buildRawProjectConfiguration(
                 builtInCategories,
                 libraryCategories
             );
@@ -422,7 +422,7 @@ describe('buildCategories', () => { // TODO test groups in idai type of types ma
         };
 
         try {
-            buildCategories(
+            buildRawProjectConfiguration(
                 builtInCategories,
                 libraryCategories,
                 { 'B:0': { fields: {} } },
@@ -456,7 +456,7 @@ describe('buildCategories', () => { // TODO test groups in idai type of types ma
         };
 
         try {
-            buildCategories(
+            buildRawProjectConfiguration(
                 builtInCategories,
                 libraryCategories,
                 { 'A:0': { fields: {} } },
@@ -482,7 +482,7 @@ describe('buildCategories', () => { // TODO test groups in idai type of types ma
         };
 
         try {
-            buildCategories(
+            buildRawProjectConfiguration(
                 builtInCategories,
                 {},
                 customCategories,
@@ -506,7 +506,7 @@ describe('buildCategories', () => { // TODO test groups in idai type of types ma
         };
 
         try {
-            buildCategories(
+            buildRawProjectConfiguration(
                 builtInCategories,
                 {},
                 customCategories,
@@ -537,7 +537,7 @@ describe('buildCategories', () => { // TODO test groups in idai type of types ma
             }
         };
 
-        const result = categories(buildCategories(
+        const result = categories(buildRawProjectConfiguration(
             builtInCategories,
             libraryCategories,
             { 'A:0': { fields: {} } },
@@ -562,7 +562,7 @@ describe('buildCategories', () => { // TODO test groups in idai type of types ma
             }
         };
 
-        const result = categories(buildCategories(
+        const result = categories(buildRawProjectConfiguration(
             builtInCategories,
             {},
             customCategories,
@@ -601,7 +601,7 @@ describe('buildCategories', () => { // TODO test groups in idai type of types ma
             }
         };
 
-        const result = categories(buildCategories(
+        const result = categories(buildRawProjectConfiguration(
             builtInCategories,
             libraryCategories,
             customCategories,
@@ -635,7 +635,7 @@ describe('buildCategories', () => { // TODO test groups in idai type of types ma
             }
         };
 
-        const result = categories(buildCategories(
+        const result = categories(buildRawProjectConfiguration(
             builtInCategories,
             libraryCategories,
             { 'A:0': { fields: {} } },
@@ -668,7 +668,7 @@ describe('buildCategories', () => { // TODO test groups in idai type of types ma
         };
 
         try {
-            buildCategories(
+            buildRawProjectConfiguration(
                 builtInCategories,
                 libraryCategories,
                 {},
@@ -694,7 +694,7 @@ describe('buildCategories', () => { // TODO test groups in idai type of types ma
         const customCategories: Map<CustomCategoryDefinition> = { 'C': { parent: 'A', fields: { cField: {} } } };
 
         try {
-            buildCategories(
+            buildRawProjectConfiguration(
                 builtInCategories,
                 libraryCategories,
                 customCategories,
@@ -728,7 +728,7 @@ describe('buildCategories', () => { // TODO test groups in idai type of types ma
         };
 
         try {
-            buildCategories(builtInCategories,
+            buildRawProjectConfiguration(builtInCategories,
                 libraryCategories,
                 {},  {}, {}, {}
             );
@@ -757,7 +757,7 @@ describe('buildCategories', () => { // TODO test groups in idai type of types ma
             },
         };
 
-        const result = categories(buildCategories(
+        const result = categories(buildRawProjectConfiguration(
             builtInCategories,
             libraryCategories,
             { 'A:0': { hidden: [], fields: {} } },
@@ -787,7 +787,7 @@ describe('buildCategories', () => { // TODO test groups in idai type of types ma
         };
 
         try {
-            buildCategories(builtInCategories,
+            buildRawProjectConfiguration(builtInCategories,
                 libraryCategories,
                 {}, {}, {}, {}
             );
@@ -817,7 +817,7 @@ describe('buildCategories', () => { // TODO test groups in idai type of types ma
         };
 
         try {
-            buildCategories(builtInCategories,
+            buildRawProjectConfiguration(builtInCategories,
                 libraryCategories,
                 {}, {}, {}, {}
             );
@@ -845,7 +845,7 @@ describe('buildCategories', () => { // TODO test groups in idai type of types ma
         };
 
         try {
-            buildCategories(builtInCategories,
+            buildRawProjectConfiguration(builtInCategories,
                 libraryCategories,
                 {}, {}, {}, {}
             );
@@ -871,7 +871,7 @@ describe('buildCategories', () => { // TODO test groups in idai type of types ma
         };
 
         try {
-            buildCategories(
+            buildRawProjectConfiguration(
                 builtInCategories,
                 {},
                 customCategories, {}, {}, {}
@@ -924,7 +924,7 @@ describe('buildCategories', () => { // TODO test groups in idai type of types ma
             }
         };
 
-        const result = categories(buildCategories(
+        const result = categories(buildRawProjectConfiguration(
             builtInCategories,
             libraryCategories,
             { 'A:0': { fields: {} } }, {}, valuelistsConfiguration, {}
@@ -951,7 +951,7 @@ describe('buildCategories', () => { // TODO test groups in idai type of types ma
         } as any;
 
         try {
-            buildCategories(builtInCategories,
+            buildRawProjectConfiguration(builtInCategories,
                 libraryCategories,
                 {}, {}, {}, {}
             );
@@ -980,7 +980,7 @@ describe('buildCategories', () => { // TODO test groups in idai type of types ma
         };
 
         try {
-            buildCategories(
+            buildRawProjectConfiguration(
                 builtInCategories,
                 libraryCategories,
                 {}, {}, {}, {}
@@ -998,7 +998,7 @@ describe('buildCategories', () => { // TODO test groups in idai type of types ma
         };
 
         try {
-            buildCategories(
+            buildRawProjectConfiguration(
                 {},
                 {},
                 customCategories,
@@ -1039,7 +1039,7 @@ describe('buildCategories', () => { // TODO test groups in idai type of types ma
             }
         };
 
-        const result = categories(buildCategories(
+        const result = categories(buildRawProjectConfiguration(
             builtInCategories, libraryCategories,
             { 'A:1': { hidden: [], fields: {} } },
             {}, {}, {}
@@ -1070,7 +1070,7 @@ describe('buildCategories', () => { // TODO test groups in idai type of types ma
             }
         };
 
-        const result = categories(buildCategories(
+        const result = categories(buildRawProjectConfiguration(
             builtInCategories, {}, customCategories,
             {}, {}, {}
         ));
@@ -1114,7 +1114,7 @@ describe('buildCategories', () => { // TODO test groups in idai type of types ma
             }
         };
 
-        const result = categories(buildCategories(
+        const result = categories(buildRawProjectConfiguration(
             builtInCategories, libraryCategories, customCategories,
             {}, {}, {}
         ));
@@ -1162,7 +1162,7 @@ describe('buildCategories', () => { // TODO test groups in idai type of types ma
             }
         };
 
-        const result = categories(buildCategories(
+        const result = categories(buildRawProjectConfiguration(
             builtInCategories, libraryCategories, customCategories, commonFields,
             {}, {}
         ));
@@ -1213,7 +1213,7 @@ describe('buildCategories', () => { // TODO test groups in idai type of types ma
             }
         };
 
-        const result = buildCategories(
+        const result = buildRawProjectConfiguration(
             builtInCategories, libraryCategories, customCategories,
             {}, {}, {}
         );

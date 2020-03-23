@@ -31,18 +31,18 @@ const CATEGORIES = 'categories';
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export function buildCategories(builtInCategories: Map<BuiltinCategoryDefinition>,
-                                libraryCategories: Map<LibraryCategoryDefinition>,
-                                customCategories: Map<CustomCategoryDefinition> = {},
-                                commonFields: Map = {},
-                                valuelistsConfiguration: Map<ValuelistDefinition> = {},
-                                extraFields: Map = {},
-                                relations: Array<RelationDefinition> = [],
-                                languageConfiguration: any = {},
-                                customLanguageConfiguration: any = {},
-                                searchConfiguration: any = {},
-                                orderConfiguration: any = {},
-                                validateFields: any = identity): Pair<Map<Category>, Array<RelationDefinition>> {
+export function buildRawProjectConfiguration(builtInCategories: Map<BuiltinCategoryDefinition>,
+                                             libraryCategories: Map<LibraryCategoryDefinition>,
+                                             customCategories: Map<CustomCategoryDefinition> = {},
+                                             commonFields: Map = {},
+                                             valuelistsConfiguration: Map<ValuelistDefinition> = {},
+                                             extraFields: Map = {},
+                                             relations: Array<RelationDefinition> = [],
+                                             languageConfiguration: any = {},
+                                             customLanguageConfiguration: any = {},
+                                             searchConfiguration: any = {},
+                                             orderConfiguration: any = {},
+                                             validateFields: any = identity): Pair<Map<Category>, Array<RelationDefinition>> {
 
     Assertions.performAssertions(builtInCategories, libraryCategories, customCategories, commonFields, valuelistsConfiguration);
     addSourceField(builtInCategories, libraryCategories, customCategories, commonFields);

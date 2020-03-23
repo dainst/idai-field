@@ -118,7 +118,7 @@ describe('ProjectConfiguration', () => {
     });
 
 
-    xit('should fail if parent category is not defined', () => { // TODO move test to buildCategories
+    xit('should fail if parent category is not defined', () => { // TODO move test to buildRawProjectConfiguration
 
         expect(() => {
             new ProjectConfiguration({ categories: { SecondLevelCategory: secondLevelCategory1 } } as any);

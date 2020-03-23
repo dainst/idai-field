@@ -60,7 +60,7 @@ export function buildCategories(builtInCategories: Map<BuiltinCategoryDefinition
 
 function wrapCategoriesInObject(configuration: Map<TransientCategoryDefinition>) {
 
-    return { categories: configuration, relations: [] }
+    return { categories: configuration, relations: [], groups: {} }
 }
 
 

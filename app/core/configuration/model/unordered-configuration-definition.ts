@@ -9,4 +9,5 @@ export interface UnorderedConfigurationDefinition {
     identifier: string
     categories: { [categoryName: string]: CategoryDefinition };
     relations: Array<RelationDefinition>;
+    groups?: any // TODO improve typing
 }

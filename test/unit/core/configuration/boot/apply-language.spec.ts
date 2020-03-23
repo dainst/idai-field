@@ -2,6 +2,7 @@ import {Map} from 'tsfun';
 import {LibraryCategoryDefinition} from '../../../../../app/core/configuration/model/library-category-definition';
 import {CategoryDefinition} from '../../../../../app/core/configuration/model/category-definition';
 import {applyLanguage} from '../../../../../app/core/configuration/boot/apply-language';
+import {Groups} from '../../../../../app/core/configuration/model/group';
 
 
 /**
@@ -80,6 +81,32 @@ describe('applyLanguage', () => {
         expect(configuration.categories['A'].fields['a1'].description).toEqual('a1_desc');
         expect(configuration.relations[0].label).toEqual('isRecordedIn_');
         expect(configuration.relations[1].label).toBeUndefined();
+    });
+
+
+    it('apply groups', () => {
+
+        configuration = {
+            identifier: 'test',
+            categories: {
+                A: { fields: { a: { group: Groups.STEM }, a1: { group: Groups.CHILD }}} as CategoryDefinition,
+                B: { fields: { b: { group: Groups.STEM }}} as CategoryDefinition
+            },
+            relations: [{ name: 'isRecordedIn' }, { name: 'isContemporaryWith' }],
+            groups: {}
+        };
+
+        const languageConfiguration = {
+            groups: {
+                'stem': { label: 'Stem' },
+                'child': { label: 'Child' }
+            }
+        };
+
+        configuration = applyLanguage(languageConfiguration)(configuration);
+
+        expect(configuration.groups['stem'].label).toEqual('Stem');
+        expect(configuration.groups['child'].label).toEqual('Child');
     });
 });
 

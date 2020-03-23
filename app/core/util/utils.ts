@@ -1,4 +1,5 @@
 import {copy, Pair, reduce, Map, to, identity, isDefined, path, isString, getOn, dissoc} from 'tsfun';
+import {SortUtil} from './sort-util';
 
 /**
  * @author Daniel de Oliveira
@@ -163,3 +164,5 @@ export function toTuple(...keys: string[]) {
 interface Named { name: string }
 
 type NamedIdentifiedObjectArray = Array<Named>;
+
+export const byName = (a: Named, b: Named) => SortUtil.alnumCompare(a.name, b.name);

@@ -1,14 +1,11 @@
 import {FieldResource} from 'idai-components-2';
-import {ConfigurationDefinition} from '../../../../../app/core/configuration/boot/configuration-definition';
-import {SortUtil} from '../../../../../app/core/util/sort-util';
 import {Groups} from '../../../../../app/core/configuration/model/group';
 import {FieldDefinition} from '../../../../../app/core/configuration/model/field-definition';
 import InputType = FieldDefinition.InputType;
 import {Category} from '../../../../../app/core/configuration/model/category';
 import {makeCategoriesMap} from '../../../../../app/core/configuration/boot/make-categories-map';
+import {byName} from '../../../../../app/core/util/utils';
 
-
-const byName = (a, b) => SortUtil.alnumCompare(a.name, b.name);
 
 /**
  * @author Daniel de Oliveira

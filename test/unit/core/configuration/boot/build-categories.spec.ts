@@ -8,8 +8,7 @@ import {LibraryCategoryDefinition} from '../../../../../app/core/configuration/m
 import {ValuelistDefinition} from '../../../../../app/core/configuration/model/valuelist-definition';
 import {Groups} from '../../../../../app/core/configuration/model/group';
 import {SortUtil} from '../../../../../app/core/util/sort-util';
-
-const byName = (a, b) => SortUtil.alnumCompare(a.name, b.name);
+import {byName} from '../../../../../app/core/util/utils';
 
 
 describe('buildCategories', () => { // TODO test groups in idai type of types map

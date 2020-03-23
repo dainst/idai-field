@@ -16,6 +16,7 @@ export function orderFields(orderConfiguration: any){
             category.name = k;
             category.fields = getOrderedFields(category, orderConfiguration);
             return category;
+
         })(categories_);
     }
 }

@@ -1,5 +1,4 @@
 import {Component} from '@angular/core';
-import {I18n} from '@ngx-translate/i18n-polyfill';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {Pair, to, isNot, undefinedOrEmpty, left, on, includedIn, right, map, flow, empty, prune,
     is} from 'tsfun';
@@ -41,24 +40,22 @@ type Criterion = {
  */
 export class TypeRelationPickerComponent {
 
-    public resource: Resource|undefined = undefined;
-
-    public q: string = '';
     public selectedCatalog: FieldResource|undefined;
     public availableCatalogs: Array<FieldResource> = [];
     public selectedCriterion: string = '';
     public availableCriteria: Array<Criterion> = [];
 
-    public timeoutRef: any;
-
+    public typeDocumentsWithLinkedImages: Array<Pair<FieldDocument, Array<ImageRowItem>>> = [];
     public typeDocument = left;
     public images = right;
-    public typeDocumentsWithLinkedImages: Array<Pair<FieldDocument, Array<ImageRowItem>>> = [];
+
+    private resource: Resource|undefined = undefined;
+    private q: string = '';
+    private timeoutRef: any;
 
 
     constructor(public activeModal: NgbActiveModal,
-                public datastore: FieldReadDatastore,
-                public i18n: I18n,
+                private datastore: FieldReadDatastore,
                 projectConfiguration: ProjectConfiguration) {
 
         this.initialize(projectConfiguration.getCategoriesMap()[TYPECATALOG]);

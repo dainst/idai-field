@@ -34,23 +34,6 @@ export module Category {
     export const GROUPS = 'groups';
 
 
-    export function build(definition: CategoryDefinition): Category { // TODO make private, hide behind makeCategoriesMap
-
-        const category: any = {};
-        category.mustLieWithin = definition.mustLieWithin;
-        category.name = definition.name;
-        category.label = definition.label || category.name;
-        category.description = definition.description;
-        category.groups = [];
-        category.isAbstract = definition.abstract || false;
-        category.color = definition.color ?? generateColorForCategory(definition.name);
-        category.children = [];
-
-        category['fields'] = definition.fields || []; // TODO remove after construction
-        return category as Category;
-    }
-
-
     export function getFields(category: Category): Array<FieldDefinition> {
 
         return flow(
@@ -132,7 +115,7 @@ export module Category {
     }
 
 
-    function generateColorForCategory(categoryName: string): string {
+    export function generateColorForCategory(categoryName: string): string {
 
         const hash = hashCode(categoryName);
         const r = (hash & 0xFF0000) >> 16;

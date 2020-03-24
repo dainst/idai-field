@@ -22,7 +22,7 @@ export function makeCategoriesMap(categories: any): Map<Category> {
 
     const parentCategories = flow(
         parentDefs,
-        map(Category.build),
+        map(buildCategoryFromDefinition),
         map(update('fields', Category.ifUndefinedSetGroupTo(Groups.PARENT))),
         makeLookup(Category.NAME));
 
@@ -112,7 +112,7 @@ function addChildCategoryToParent(categoriesMap: Map<Category>, childDefinition:
 
     return (parentCategory: Category): Map<Category> => {
 
-        const childCategory = Category.build(childDefinition);
+        const childCategory = buildCategoryFromDefinition(childDefinition);
         (childCategory as any)['fields'] = Category.makeChildFields(parentCategory, childCategory);
 
         const newParentCategory: any
@@ -121,4 +121,21 @@ function addChildCategoryToParent(categoriesMap: Map<Category>, childDefinition:
 
         return assoc(parentCategory.name, newParentCategory)(categoriesMap);
     }
+}
+
+
+function buildCategoryFromDefinition(definition: CategoryDefinition): Category {
+
+    const category: any = {};
+    category.mustLieWithin = definition.mustLieWithin;
+    category.name = definition.name;
+    category.label = definition.label || category.name;
+    category.description = definition.description;
+    category.groups = [];
+    category.isAbstract = definition.abstract || false;
+    category.color = definition.color ?? Category.generateColorForCategory(definition.name);
+    category.children = [];
+
+    category['fields'] = definition.fields || []; // TODO remove after construction
+    return category as Category;
 }

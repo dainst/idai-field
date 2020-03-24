@@ -75,13 +75,13 @@ describe('Import/Subsystem', () => {
             }
         });
 
-        const t = Category.build({
+        const t: Category = {
             name: 'Find', description: { 'de': '' },
             fields: [
                 { name: 'dating', inputType: 'dating' },
                 { name: 'shortDescription', inputType: 'input' }
             ]
-        });
+        } as any;
 
         t['groups'] = [{
             fields: [
@@ -135,14 +135,13 @@ describe('Import/Subsystem', () => {
                 }
             });
 
-        const t = Category.build({
+        const t: Category = {
             name: 'Find',
-            description: { 'de': '' },
             fields: [
                 { name: 'dating', inputType: 'dating' },
                 { name: 'shortDescription', inputType: 'input' }
             ]
-        });
+        } as any;
 
         t['groups'] = [{
             fields: [

@@ -3055,6 +3055,34 @@
       "Pollenanalyse": {}
     }
   },
+  "TypeCatalog-criterion-default": {
+    "createdBy": "",
+    "creationDate": "",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "Form": {
+        "labels": {
+          "de": "Form",
+          "en": "Shape"
+        }
+      },
+      "Material": {
+        "labels": {
+          "de": "Material",
+          "en": "Material"
+        }
+      },
+      "Dekoration": {
+        "labels": {
+          "de": "Dekoration",
+          "en": "Decoration"
+        }
+      }
+    }
+  },
   "Feature-stratigraphicReliability-Boha": {
     "createdBy": "",
     "creationDate": "",

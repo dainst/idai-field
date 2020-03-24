@@ -16,8 +16,6 @@ import {ProjectConfiguration} from '../../../core/configuration/project-configur
 import {Category} from '../../../core/configuration/model/category';
 import {RelationDefinition} from '../../../core/configuration/model/relation-definition';
 import {FieldDefinition} from '../../../core/configuration/model/field-definition';
-import {CatalogCriteria} from '../../docedit/core/forms/type-relation/catalog-criteria';
-import {BuiltInCategories} from '../../../core/configuration/app-configurator';
 import {ValuelistDefinition} from '../../../core/configuration/model/valuelist-definition';
 import {ValuelistUtil} from '../../../core/util/valuelist-util';
 import {Groups} from '../../../core/configuration/model/group';
@@ -75,8 +73,7 @@ export class FieldsViewComponent implements OnChanges {
                 private routingService: RoutingService,
                 private decimalPipe: DecimalPipe,
                 private utilTranslations: UtilTranslations,
-                private i18n: I18n,
-                private catalogCriteria: CatalogCriteria) {}
+                private i18n: I18n) {}
 
 
     async ngOnChanges() {
@@ -193,9 +190,6 @@ export class FieldsViewComponent implements OnChanges {
 
         if (field.name === PERIOD) {
             this.handlePeriodField(resource, group);
-        } else if (resource.category === BuiltInCategories.TYPECATALOG
-                && field.name === BuiltInCategories.TypeCatalog.CRITERION) {
-            this.handleTypeCatalogCriterionField(resource, field);
         } else if (!!this.projectConfiguration.isVisible(resource.category, field.name)) {
             this.handleDefaultField(resource, field, group);
         }
@@ -209,16 +203,6 @@ export class FieldsViewComponent implements OnChanges {
             label: this.projectConfiguration.getFieldDefinitionLabel(resource.category, field.name),
             value: FieldsViewComponent.getValue(resource, field.name, field.valuelist),
             isArray: Array.isArray(resource[field.name])
-        });
-    }
-
-
-    private handleTypeCatalogCriterionField(resource: Resource, field: FieldDefinition) {
-
-        this.fields[Groups.IDENTIFICATION].push({
-            label: field.label,
-            value: this.catalogCriteria.translateCriterion(resource[field.name]),
-            isArray: false
         });
     }
 

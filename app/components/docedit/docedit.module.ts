@@ -46,14 +46,11 @@ import {ImageRowModule} from '../image/row/image-row.module';
 import {TypeRelationComponent} from './core/forms/type-relation/type-relation.component';
 import {TypeRowComponent} from './core/forms/type-relation/type-row.component';
 import {TypeRelationPickerComponent} from './core/forms/type-relation/type-relation-picker.component';
-import {CatalogCriterionComponent} from './core/forms/type-relation/catalog-criterion.component';
-import {CatalogCriteria} from './core/forms/type-relation/catalog-criteria';
 import {LiteratureComponent} from './core/forms/literature.component';
 
 
 @NgModule({
     providers: [
-        CatalogCriteria,
         {
             provide: DocumentHolder,
             useFactory: (projectConfiguration: ProjectConfiguration,
@@ -108,7 +105,6 @@ import {LiteratureComponent} from './core/forms/literature.component';
         TypeRelationComponent,
         TypeRowComponent,
         TypeRelationPickerComponent,
-        CatalogCriterionComponent,
         DimensionComponent,
         DropdownRangeComponent,
         GeometryComponent,

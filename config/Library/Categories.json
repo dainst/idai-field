@@ -1559,7 +1559,9 @@
     "creationDate": "",
     "categoryName": "TypeCatalog",
     "commons": ["literature"],
-    "valuelists": {},
+    "valuelists": {
+      "criterion": "TypeCatalog-criterion-default"
+    },
     "fields": {}
   },
   "Type:default": {

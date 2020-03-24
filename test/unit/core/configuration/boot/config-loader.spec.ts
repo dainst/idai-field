@@ -278,9 +278,9 @@ describe('ConfigLoader', () => {
             done();
         }
 
-        expect(pconf.getCategoriesList()[1].label).toEqual('A_');
-        expect(pconf.getCategoriesList()[2].label).toEqual('B__');
-        expect(pconf.getCategoriesList()[3].label).toEqual('C'); // took name as label
+        expect(pconf.getCategoriesArray()[1].label).toEqual('A_');
+        expect(pconf.getCategoriesArray()[2].label).toEqual('B__');
+        expect(pconf.getCategoriesArray()[3].label).toEqual('C'); // took name as label
 
         expect(pconf.getRelationDefinitions('A')[1].label).toEqual('r1_');
         expect(pconf.getRelationDefinitions('A')[0].label).toBeUndefined();
@@ -573,7 +573,7 @@ describe('ConfigLoader', () => {
                 undefined, 'de'
             );
 
-            expect(pconf.getCategoriesList().length).toBe(2);
+            expect(pconf.getCategoriesArray().length).toBe(2);
             expect(pconf.getCategoriesMap()['A'].groups[0].fields.length).toBe(2);  // id, category
             expect(pconf.getCategoriesMap()['A'].groups[1].fields.length).toBe(2);  // fieldA1, fieldA2
             expect(pconf.getCategoriesMap()['A'].groups[1].fields[0].name).toEqual('fieldA1');

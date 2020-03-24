@@ -21,14 +21,14 @@ export class ProjectCategories {
 
     public getOverviewTopLevelCategories(): Array<Category> {
 
-        return this.projectConfiguration.getCategoriesList()
+        return this.projectConfiguration.getCategoriesArray()
             .filter(category => category.name === 'Operation' || category.name === 'Place');
     }
 
 
     public getFieldCategories(): Array<Category> {
 
-        return this.projectConfiguration.getCategoriesList()
+        return this.projectConfiguration.getCategoriesArray()
             .filter(category => !this.projectConfiguration.isSubcategory(category.name, 'Image'))
             .filter(category => !ProjectCategories.isProjectCategory(category.name));
     }
@@ -36,7 +36,7 @@ export class ProjectCategories {
 
     public getConcreteFieldCategories(): Array<Category> {
 
-        return this.projectConfiguration.getCategoriesList()
+        return this.projectConfiguration.getCategoriesArray()
             .filter(category => !this.projectConfiguration.isSubcategory(category.name, 'Image'))
             .filter(category => !this.projectConfiguration.isSubcategory(category.name, 'TypeCatalog'))
             .filter(category => !this.projectConfiguration.isSubcategory(category.name, 'Type'))
@@ -46,7 +46,7 @@ export class ProjectCategories {
 
     public getAbstractFieldCategories(): Array<Category> {
 
-        return this.projectConfiguration.getCategoriesList()
+        return this.projectConfiguration.getCategoriesArray()
             .filter(category => category.name === 'TypeCatalog' || category.name === 'Type');
     }
 
@@ -96,7 +96,7 @@ export class ProjectCategories {
     public getRegularCategoryNames(): string[] {
 
         return this.projectConfiguration
-            .getCategoriesList()
+            .getCategoriesArray()
             .map(to(NAME))
             .filter(isnt('Place'))
             .filter(isnt('Project'))
@@ -110,7 +110,7 @@ export class ProjectCategories {
     public getOverviewCategoryNames(): string[] {
 
         return this.projectConfiguration
-            .getCategoriesList()
+            .getCategoriesArray()
             .map(to(NAME))
             .filter(categoryName => this.projectConfiguration.isSubcategory(categoryName, 'Operation'))
             .concat('Place');
@@ -120,7 +120,7 @@ export class ProjectCategories {
     public getAllowedRelationDomainCategories(relationName: string,
                                               rangeCategoryName: string): Array<Category> {
 
-        return this.projectConfiguration.getCategoriesList()
+        return this.projectConfiguration.getCategoriesArray()
             .filter(category => {
                 return this.projectConfiguration.isAllowedRelationDomainCategory(
                     category.name, rangeCategoryName, relationName
@@ -134,7 +134,7 @@ export class ProjectCategories {
     public getAllowedRelationRangeCategories(relationName: string,
                                              domainCategoryName: string): Array<Category> {
 
-        return this.projectConfiguration.getCategoriesList()
+        return this.projectConfiguration.getCategoriesArray()
             .filter(category => {
                 return this.projectConfiguration.isAllowedRelationDomainCategory(
                     domainCategoryName, category.name, relationName

@@ -33,7 +33,7 @@ export class ProjectConfigurationComponent {
     constructor(private projectConfiguration: ProjectConfiguration,
                 private tabManager: TabManager) {
 
-        this.categoriesTreeList = projectConfiguration.getCategoriesList()
+        this.categoriesTreeList = projectConfiguration.getCategoriesArray()
             .filter(category => !category.parentCategory);
         this.selectCategory(this.categoriesTreeList[0]);
     }

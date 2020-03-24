@@ -211,7 +211,7 @@ export module Validations {
 
         if (!resource.category) return false;
         return projectConfiguration
-            .getCategoriesList()
+            .getCategoriesArray()
             .some(on('name', is(resource.category)));
     }
 

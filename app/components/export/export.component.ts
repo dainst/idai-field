@@ -93,7 +93,7 @@ export class ExportComponent implements OnInit {
         this.categoryCounts = await ExportRunner.determineCategoryCounts(
             this.find,
             this.getOperationIdForMode(),
-            this.projectConfiguration.getCategoriesList()
+            this.projectConfiguration.getCategoriesArray()
         );
 
         if (this.categoryCounts.length > 0) this.selectedCategory = this.categoryCounts[0][0];

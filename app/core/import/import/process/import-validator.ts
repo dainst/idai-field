@@ -54,7 +54,7 @@ export class ImportValidator extends Validator {
 
         for (let resource of resources) {
 
-            const category = this.projectConfiguration.getCategoriesList().find(
+            const category = this.projectConfiguration.getCategoriesArray().find(
                 on('name', is(resource.category))
             );
             if (!category) {

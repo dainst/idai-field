@@ -29,7 +29,7 @@ import {namedMapToNamedArray} from '../../util/named';
 
 const CATEGORIES = 'categories';
 
-// TODO apply order to categories
+// TODO apply order to categories, add test, get rid of test in config loader then
 // TODO put into relations into groups
 /**
  * @author Daniel de Oliveira

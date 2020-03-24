@@ -218,7 +218,7 @@ export class ImportComponent implements OnInit {
     private updateCategories() {
 
         this.importState.categories = getCategoriesWithoutExcludedCategories(
-            this.projectConfiguration.getCategoriesList(), this.getCategoriesToExclude()
+            this.projectConfiguration.getCategoriesArray(), this.getCategoriesToExclude()
         );
 
         if (!this.importState.selectedCategory || !this.importState.categories.includes(this.importState.selectedCategory)) {
@@ -303,7 +303,7 @@ export class ImportComponent implements OnInit {
     private getCategoryFromFileName(fileName: string): Category|undefined {
 
         for (let segment of fileName.split('.')) {
-            const category: Category|undefined = this.projectConfiguration.getCategoriesList()
+            const category: Category|undefined = this.projectConfiguration.getCategoriesArray()
                 .find(category => category.name.toLowerCase() === segment.toLowerCase());
             if (category) return category;
         }

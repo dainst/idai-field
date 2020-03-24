@@ -53,27 +53,27 @@ export class ProjectConfiguration {
     }
 
 
-    public getCategoryAndSubcategories(supercategoryName: string): { [categoryName: string]: Category } {
-
-        return this.getCategoryAndSubcategories_(supercategoryName);
-    }
-
-
-    public getCategoriesList(): Array<Category> {
+    public getCategoriesArray(): Array<Category> {
 
         return this.categories;
     }
 
 
-    public getCategoriesMap(): { [categoryName: string]: Category } {
+    public getCategoriesMap(): Map<Category> {
 
         return namedArrayToNamedMap(this.categories);
     }
 
 
-    public getCategoriesTree(): { [categoryName: string]: Category } {
+    public getCategoriesTree(): Map<Category> {
 
         return filter(on(Category.PARENT_CATEGORY, isUndefined))(this.getCategoriesMap());
+    }
+
+    // TODO review if duplicate of getCategoriesTree
+    public getCategoryAndSubcategories(supercategoryName: string): Map<Category> {
+
+        return this.getCategoryAndSubcategories_(supercategoryName);
     }
 
 
@@ -142,7 +142,7 @@ export class ProjectConfiguration {
 
     public getCategoryColors() {
 
-        return map(to(Category.COLOR))(this.getCategoriesMap()) as { [categoryName: string]: string };
+        return map(to(Category.COLOR))(this.getCategoriesMap()) as Map<string>;
     }
 
 

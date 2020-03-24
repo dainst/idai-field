@@ -11,7 +11,7 @@ import {ProjectConfiguration} from '../../../../app/core/configuration/project-c
 describe('PersistenceManager', () => {
 
     const projectConfiguration = new ProjectConfiguration([
-        {},
+        [],
         [
             {
                 'name': 'BelongsTo',

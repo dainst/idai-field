@@ -13,33 +13,33 @@ describe('ImportValidator', () => {
 
     const projectConfiguration = new ProjectConfiguration(
         [
-            { 'T' :
-                {
-                    name: 'T',
-                    groups: [{ name: 'stem', fields: [
-                        { name: 'id' },
-                        { name: 'identifier' },
-                        { name: 'category' },
-                        { name: 'optional' },
-                        { name: 'mandatory', mandatory: true },
-                        { name: 'number1', label: 'number1', inputType: 'float' },
-                        { name: 'number2', label: 'number2', inputType: 'float' },
-                        { name: 'ddr', label: 'DropdownRange', inputType: INPUT_TYPES.DROPDOWN_RANGE },
-                        { name: 'ddr2', label: 'DropdownRange2', inputType: INPUT_TYPES.DROPDOWN_RANGE }
-                    ]}]
-                },
-                T2: {
-                    name: 'T2',
-                    groups: [{ name: 'stem', fields: [
-                        { name: 'id' },
-                        { name: 'category' }
-                    ]}]
-                },
-                T3: {
-                    name: 'T3',
-                    mustLieWithin: true
-                }
-            } as any,
+          [
+            {
+                name: 'T',
+                groups: [{ name: 'stem', fields: [
+                    { name: 'id' },
+                    { name: 'identifier' },
+                    { name: 'category' },
+                    { name: 'optional' },
+                    { name: 'mandatory', mandatory: true },
+                    { name: 'number1', label: 'number1', inputType: 'float' },
+                    { name: 'number2', label: 'number2', inputType: 'float' },
+                    { name: 'ddr', label: 'DropdownRange', inputType: INPUT_TYPES.DROPDOWN_RANGE },
+                    { name: 'ddr2', label: 'DropdownRange2', inputType: INPUT_TYPES.DROPDOWN_RANGE }
+                ]}]
+            },
+            {
+                name: 'T2',
+                groups: [{ name: 'stem', fields: [
+                    { name: 'id' },
+                    { name: 'category' }
+                ]}]
+            },
+            {
+                name: 'T3',
+                mustLieWithin: true
+            }
+        ] as any,
             [
                 { name: 'isRelatedTo', domain: ['T'], range: ['T'], inverse: 'NO-INVERSE' },
                 { name: 'isDepictedIn', domain: ['T'], range: ['T2'], inverse: 'NO-INVERSE' },

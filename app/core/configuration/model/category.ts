@@ -1,14 +1,14 @@
 import {flatten, flow, map, to, values} from 'tsfun';
 import {FieldDefinition} from './field-definition';
 import {Group} from './group';
+import {Named} from '../../util/named';
 
 
-export interface Category {
+export interface Category extends Named {
 
     children: Array<Category>;
     parentCategory: Category|undefined; //  = undefined;
     isAbstract: boolean;
-    name: string;
     label: string;
     description: {[language: string]: string};
     color: string|undefined;
@@ -27,7 +27,6 @@ export module Category {
     export const COLOR = 'color';
     export const PARENT_CATEGORY = 'parentCategory';
     export const CHILDREN = 'children';
-    export const NAME = 'name'; // TODO rename to name
     export const DESCRIPTION = 'description';
     export const GROUPS = 'groups';
 

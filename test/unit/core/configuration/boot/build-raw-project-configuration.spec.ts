@@ -8,7 +8,7 @@ import {LibraryCategoryDefinition} from '../../../../../app/core/configuration/m
 import {ValuelistDefinition} from '../../../../../app/core/configuration/model/valuelist-definition';
 import {Groups} from '../../../../../app/core/configuration/model/group';
 import InputType = FieldDefinition.InputType;
-import {byName} from '../../../../../app/core/util/named';
+import {byName, namedArrayToNamedMap,} from '../../../../../app/core/util/named';
 
 
 const categories = left;
@@ -31,11 +31,11 @@ describe('buildRawProjectConfiguration', () => { // TODO test groups in idai typ
                 hidden: []
             }
         };
-        const result = categories(buildRawProjectConfiguration(
+        const result = namedArrayToNamedMap(categories(buildRawProjectConfiguration(
             builtInCategories,
             {},
             customCategories
-        ));
+        )));
 
         expect(result['A']).toBeDefined();
         expect(result['B']).toBeDefined();
@@ -61,11 +61,11 @@ describe('buildRawProjectConfiguration', () => { // TODO test groups in idai typ
                 hidden: []
             }
         };
-        const result = categories(buildRawProjectConfiguration(
+        const result = namedArrayToNamedMap(categories(buildRawProjectConfiguration(
             builtInCategories,
             {},
             customCategories
-        ));
+        )));
 
         expect(result['A']).toBeDefined();
         expect(result['B']).toBeDefined();
@@ -106,12 +106,12 @@ describe('buildRawProjectConfiguration', () => { // TODO test groups in idai typ
             bCommonField: { inputType: 'input' }
         };
 
-        const result = categories(buildRawProjectConfiguration(
+        const result = namedArrayToNamedMap(categories(buildRawProjectConfiguration(
             builtInCategories,
             libraryCategories,
             customCategories,
             commonFields
-        ));
+        )));
 
         expect(result['A'].groups[0].fields[0].visible).toBe(false);
         expect(result['A'].groups[0].fields[1].visible).toBe(true);
@@ -135,7 +135,7 @@ describe('buildRawProjectConfiguration', () => { // TODO test groups in idai typ
             }
         };
 
-        const result = categories(buildRawProjectConfiguration(
+        const result = namedArrayToNamedMap(categories(buildRawProjectConfiguration(
             builtInCategories,
             libraryCategories,
             customCategories,
@@ -145,7 +145,7 @@ describe('buildRawProjectConfiguration', () => { // TODO test groups in idai typ
                     values: { a: {} }, description: {}, createdBy: '', creationDate: ''
                 }
             }
-        ));
+        )));
 
         expect(result['A'].groups[0].fields[0]['valuelist']['values']).toEqual({ a: {} });
     });
@@ -170,7 +170,7 @@ describe('buildRawProjectConfiguration', () => { // TODO test groups in idai typ
             }
         };
 
-        const result = categories(buildRawProjectConfiguration(
+        const result = namedArrayToNamedMap(categories(buildRawProjectConfiguration(
             builtInCategories,
             libraryCategories,
             customCategories,
@@ -183,7 +183,7 @@ describe('buildRawProjectConfiguration', () => { // TODO test groups in idai typ
                     values: { b: {} }, description: {}, createdBy: '', creationDate: ''
                 }
             }
-        ));
+        )));
 
         expect(result['A'].groups[0].fields[0]['valuelist']['values']).toEqual({ b: {} });
     });
@@ -209,7 +209,7 @@ describe('buildRawProjectConfiguration', () => { // TODO test groups in idai typ
             'A:default': { fields: {}}
         };
 
-        const result = categories(buildRawProjectConfiguration(
+        const result = namedArrayToNamedMap(categories(buildRawProjectConfiguration(
             builtInCategories,
             libraryCategories,
             customCategories,
@@ -219,7 +219,7 @@ describe('buildRawProjectConfiguration', () => { // TODO test groups in idai typ
                     values: { a: {}}, description: {}, creationDate: '', createdBy: ''
                 }
             }
-        ));
+        )));
 
         expect(result['A'].groups[0].fields[0]['valuelist']['values']).toEqual({ a: {} });
     });
@@ -538,14 +538,14 @@ describe('buildRawProjectConfiguration', () => { // TODO test groups in idai typ
             }
         };
 
-        const result = categories(buildRawProjectConfiguration(
+        const result = namedArrayToNamedMap(categories(buildRawProjectConfiguration(
             builtInCategories,
             libraryCategories,
             { 'A:0': { fields: {} } },
             commonFields,
             {},
             {}
-        ));
+        )));
 
         expect(result['A'].groups[0].fields[0]['group']).toBe('stem');
         expect(result['A'].groups[0].fields[0]['inputType']).toBe('input');
@@ -563,14 +563,14 @@ describe('buildRawProjectConfiguration', () => { // TODO test groups in idai typ
             }
         };
 
-        const result = categories(buildRawProjectConfiguration(
+        const result = namedArrayToNamedMap(categories(buildRawProjectConfiguration(
             builtInCategories,
             {},
             customCategories,
             commonFields,
             {},
             {}
-        ));
+        )));
 
         expect(result['A'].groups['0'].fields[0]['group']).toBe('stem');
         expect(result['A'].groups['0'].fields[0]['inputType']).toBe('input');
@@ -602,14 +602,14 @@ describe('buildRawProjectConfiguration', () => { // TODO test groups in idai typ
             }
         };
 
-        const result = categories(buildRawProjectConfiguration(
+        const result = namedArrayToNamedMap(categories(buildRawProjectConfiguration(
             builtInCategories,
             libraryCategories,
             customCategories,
             commonFields,
             {},
             {}
-        ));
+        )));
 
         expect(result['A'].groups[0].fields[0]['group']).toBe('stem');
         expect(result['A'].groups[0].fields[0]['inputType']).toBe('input');
@@ -636,14 +636,14 @@ describe('buildRawProjectConfiguration', () => { // TODO test groups in idai typ
             }
         };
 
-        const result = categories(buildRawProjectConfiguration(
+        const result = namedArrayToNamedMap(categories(buildRawProjectConfiguration(
             builtInCategories,
             libraryCategories,
             { 'A:0': { fields: {} } },
             commonFields,
             {},
             {}
-        ));
+        )));
 
         expect(result['A'].groups[0].fields[0]['group']).toBe('stem');
         expect(result['A'].groups[0].fields[0]['inputType']).toBe('dropdown');
@@ -758,13 +758,13 @@ describe('buildRawProjectConfiguration', () => { // TODO test groups in idai typ
             },
         };
 
-        const result = categories(buildRawProjectConfiguration(
+        const result = namedArrayToNamedMap(categories(buildRawProjectConfiguration(
             builtInCategories,
             libraryCategories,
             { 'A:0': { hidden: [], fields: {} } },
             {}, {},
             {}
-        ));
+        )));
 
         expect(result['A'].groups[0].fields[0].inputType).toBe('input');
     });
@@ -925,11 +925,11 @@ describe('buildRawProjectConfiguration', () => { // TODO test groups in idai typ
             }
         };
 
-        const result = categories(buildRawProjectConfiguration(
+        const result = namedArrayToNamedMap(categories(buildRawProjectConfiguration(
             builtInCategories,
             libraryCategories,
             { 'A:0': { fields: {} } }, {}, valuelistsConfiguration, {}
-        ));
+        )));
 
         result['A'].groups['0'].fields.sort(byName);
 
@@ -1040,11 +1040,11 @@ describe('buildRawProjectConfiguration', () => { // TODO test groups in idai typ
             }
         };
 
-        const result = categories(buildRawProjectConfiguration(
+        const result = namedArrayToNamedMap(categories(buildRawProjectConfiguration(
             builtInCategories, libraryCategories,
             { 'A:1': { hidden: [], fields: {} } },
             {}, {}, {}
-        ));
+        )));
 
         expect(result['A'].groups[0].fields[0].inputType).toBe(InputType.TEXT);
         expect(result['A'].groups[0].fields[0].group).toBe(Groups.STEM); // TODO remove group from FieldDefinition
@@ -1071,10 +1071,10 @@ describe('buildRawProjectConfiguration', () => { // TODO test groups in idai typ
             }
         };
 
-        const result = categories(buildRawProjectConfiguration(
+        const result = namedArrayToNamedMap(categories(buildRawProjectConfiguration(
             builtInCategories, {}, customCategories,
             {}, {}, {}
-        ));
+        )));
 
         expect(result['A'].groups[0].fields[0].inputType).toBe('text');
         expect(result['A'].groups[0].fields[0].group).toBe('stem');
@@ -1115,10 +1115,10 @@ describe('buildRawProjectConfiguration', () => { // TODO test groups in idai typ
             }
         };
 
-        const result = categories(buildRawProjectConfiguration(
+        const result = namedArrayToNamedMap(categories(buildRawProjectConfiguration(
             builtInCategories, libraryCategories, customCategories,
             {}, {}, {}
-        ));
+        )));
 
         expect(result['A'].groups[0].fields[0].inputType).toBe(InputType.TEXT);
         expect(result['A'].groups[1].fields[0].inputType).toBe(InputType.TEXT);
@@ -1163,10 +1163,10 @@ describe('buildRawProjectConfiguration', () => { // TODO test groups in idai typ
             }
         };
 
-        const result = categories(buildRawProjectConfiguration(
+        const result = namedArrayToNamedMap(categories(buildRawProjectConfiguration(
             builtInCategories, libraryCategories, customCategories, commonFields,
             {}, {}
-        ));
+        )));
 
         result['A'].groups[1].fields.sort(byName);
 
@@ -1190,7 +1190,6 @@ describe('buildRawProjectConfiguration', () => { // TODO test groups in idai typ
             }
         };
 
-
         const customCategories: Map<CustomCategoryDefinition> = {
             A: { fields: { field3: { inputType: FieldDefinition.InputType.TEXT }} },
             B: { parent: 'A', fields: { field4: { inputType: FieldDefinition.InputType.TEXT }} }
@@ -1207,9 +1206,9 @@ describe('buildRawProjectConfiguration', () => { // TODO test groups in idai typ
             }
         };
 
-        const result = categories(buildRawProjectConfiguration(
+        const result = namedArrayToNamedMap(categories(buildRawProjectConfiguration(
             builtInCategories, {}, customCategories, {}, {}, {}, [], languageConf
-        ));
+        )));
 
         expect(result['A'].groups[0].label).toEqual('Stem');
         expect(result['A'].groups[1].label).toEqual('A_');
@@ -1262,6 +1261,6 @@ describe('buildRawProjectConfiguration', () => { // TODO test groups in idai typ
             {}, {}, {}
         );
 
-        // expectation?
+        // TODO expectation?
     });
 });

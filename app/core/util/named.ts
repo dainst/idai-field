@@ -7,9 +7,13 @@ import {makeLookup} from './utils';
 
 // --- please do not remove, even if not used currently ---
 
-const NAME = 'name';
-
+// TODO move to tsfun/util ?
 export interface Named { name: string }
+
+export module Named {
+
+    export const NAME = 'name';
+}
 
 /**
  * as: [{ name: '17', e: 9 }, { name: '19', e: 7 }]
@@ -18,7 +22,7 @@ export interface Named { name: string }
  */
 export function namedArrayToNamedMap<A extends Named>(as: Array<A>): Map<A> {
 
-    return makeLookup(NAME)(as); // TODO maybe remove names afterwards
+    return makeLookup(Named.NAME)(as); // TODO maybe remove names afterwards
 }
 
 export function namedMapToNamedArray<A extends Named>(m: Map<A>): Array<A> {

@@ -11,6 +11,7 @@ import {isUndefined} from 'tsfun/src/predicate';
 import {MDInternal} from 'idai-components-2/index';
 import {GroupUtil} from '../group-util';
 import {clone} from '../../util/object-util';
+import {Named} from '../../util/named';
 
 
 const TEMP_FIELDS = 'fields';
@@ -30,7 +31,7 @@ export function makeCategoriesMap(categories: any): Map<Category> {
         parentDefs,
         map(buildCategoryFromDefinition),
         map(update(TEMP_FIELDS, ifUndefinedSetGroupTo(Groups.PARENT))),
-        makeLookup(Category.NAME));
+        makeLookup(Named.NAME));
 
     return flow(
         childDefs,
@@ -73,7 +74,7 @@ function flattenCategoriesTreeMapToCategoriesMap(categoriesMap: Map<Category>): 
 
     const topLevelCategories: Array<Category> = values(categoriesMap);
     const children: Array<Category> = flatten(topLevelCategories.map(to(Category.CHILDREN)));
-    return makeLookup(Category.NAME)(topLevelCategories.concat(children))
+    return makeLookup(Named.NAME)(topLevelCategories.concat(children))
 }
 
 

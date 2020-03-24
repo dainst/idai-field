@@ -1,6 +1,7 @@
 import {Component, Input, Output, EventEmitter, OnChanges} from '@angular/core';
 import {on} from 'tsfun';
 import {Category} from '../../core/configuration/model/category';
+import {Named} from '../../core/util/named';
 
 
 @Component({
@@ -53,7 +54,7 @@ export class CategoryPickerComponent implements OnChanges {
     public isChildCategory(category: Category): boolean {
 
         return category.parentCategory !== undefined
-            && this.categories.find(on(Category.NAME)(category.parentCategory)) !== undefined;
+            && this.categories.find(on(Named.NAME)(category.parentCategory)) !== undefined;
     }
 
 

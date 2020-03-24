@@ -24,11 +24,13 @@ import {makeCategoriesMap} from './make-categories-map';
 import {RawProjectConfiguration} from '../project-configuration';
 import {Category} from '../model/category';
 import {Group, Groups} from '../model/group';
+import {namedMapToNamedArray} from '../../util/named';
 
 
 const CATEGORIES = 'categories';
 
-
+// TODO apply order to categories
+// TODO put into relations into groups
 /**
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
@@ -72,10 +74,12 @@ export function buildRawProjectConfiguration(builtInCategories: Map<BuiltinCateg
 }
 
 
-const asRawProjectConfiguration = ({categories, relations}: any) => ([categories, relations]);
+const asRawProjectConfiguration = ({categories, relations}: any) => ([namedMapToNamedArray(categories), relations]);
 
 
-function processCategories(orderConfiguration: any, validateFields: any, languageConfiguration: any) {
+function processCategories(orderConfiguration: any,
+                           validateFields: any,
+                           languageConfiguration: any) {
 
     return compose(
         addExtraFieldsOrder(orderConfiguration),

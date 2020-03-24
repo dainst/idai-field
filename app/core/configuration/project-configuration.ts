@@ -1,10 +1,11 @@
-import {flow, map, values, to, on, isNot, empty, filter, is, isUndefined, Pair, Map} from 'tsfun';
+import {flow, map, to, on, isNot, empty, filter, is, isUndefined, Pair, Map} from 'tsfun';
 import {Category} from './model/category';
 import {FieldDefinition} from './model/field-definition';
 import {RelationDefinition} from './model/relation-definition';
+import {Named, namedArrayToNamedMap} from '../util/named';
 
 
-export type RawProjectConfiguration = Pair<Map<Category>, Array<RelationDefinition>>;
+export type RawProjectConfiguration = Pair<Array<Category>, Array<RelationDefinition>>;
 
 
 /**
@@ -23,14 +24,14 @@ export class ProjectConfiguration {
 
     public static UNKNOWN_CATEGORY_ERROR = 'ProjectConfiguration.Errors.UnknownCategory';
 
-    private categoriesMap: Map<Category>;
+    private categories: Array<Category>;
 
     private relations: Array<RelationDefinition>;
 
 
     constructor([categories, relations]: RawProjectConfiguration) {
 
-        this.categoriesMap = categories || {};
+        this.categories = categories || [];
         this.relations = relations || [];
     }
 
@@ -60,19 +61,19 @@ export class ProjectConfiguration {
 
     public getCategoriesList(): Array<Category> {
 
-        return values(this.categoriesMap);
+        return this.categories;
     }
 
 
     public getCategoriesMap(): { [categoryName: string]: Category } {
 
-        return this.categoriesMap;
+        return namedArrayToNamedMap(this.categories);
     }
 
 
     public getCategoriesTree(): { [categoryName: string]: Category } {
 
-        return filter(on(Category.PARENT_CATEGORY, isUndefined))(this.categoriesMap);
+        return filter(on(Category.PARENT_CATEGORY, isUndefined))(this.getCategoriesMap());
     }
 
 
@@ -115,15 +116,15 @@ export class ProjectConfiguration {
      */
     public getFieldDefinitions(categoryName: string): FieldDefinition[] {
 
-        if (!this.categoriesMap[categoryName]) return [];
-        return Category.getFields(this.categoriesMap[categoryName]);
+        if (!this.getCategoriesMap()[categoryName]) return [];
+        return Category.getFields(this.getCategoriesMap()[categoryName]);
     }
 
 
     public getLabelForCategory(categoryName: string): string {
 
-        if (!this.categoriesMap[categoryName]) return '';
-        return this.categoriesMap[categoryName].label;
+        if (!this.getCategoriesMap()[categoryName]) return '';
+        return this.getCategoriesMap()[categoryName].label;
     }
 
 
@@ -141,7 +142,7 @@ export class ProjectConfiguration {
 
     public getCategoryColors() {
 
-        return map(to(Category.COLOR))(this.categoriesMap) as { [categoryName: string]: string };
+        return map(to(Category.COLOR))(this.getCategoriesMap()) as { [categoryName: string]: string };
     }
 
 
@@ -190,14 +191,13 @@ export class ProjectConfiguration {
 
     private hasProperty(categoryName: string, fieldName: string, propertyName: string) {
 
-        if (!this.categoriesMap[categoryName]) return false;
+        if (!this.getCategoriesMap()[categoryName]) return false;
 
         return flow(
-            Category.getFields(this.categoriesMap[categoryName]),
-            filter(on(Category.NAME, is(fieldName))),
+            Category.getFields(this.getCategoriesMap()[categoryName]),
+            filter(on(Named.NAME, is(fieldName))),
             filter(on(propertyName, is(true))),
-            isNot(empty)
-        );
+            isNot(empty));
     }
 
 

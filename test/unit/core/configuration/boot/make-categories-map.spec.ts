@@ -34,19 +34,15 @@ describe('makeCategoriesMap', () => {
       expect(categoriesMap[P].name).toEqual(P);
       expect(categoriesMap[P].children[0].name).toEqual(A);
       expect(Category.getFields(categoriesMap[P].children[0]).length).toBe(2);
-      expect(categoriesMap[P].children[0].parentCategory).toBe(categoriesMap[P]);
+      expect(categoriesMap[P].children[0].parentCategory.name).toBe(categoriesMap[P].name);
       expect(categoriesMap[A].name).toEqual(A);
-      expect(categoriesMap[A].parentCategory).toBe(categoriesMap[P]);
+      expect(categoriesMap[A].parentCategory.name).toBe(categoriesMap[P].name);
 
       const sortedFields = Category.getFields(categoriesMap[A]).sort(byName);
 
       expect(sortedFields[0].group).toBe(Groups.CHILD);
       expect(sortedFields[1].group).toBe(Groups.PARENT);
       expect(Category.getFields(categoriesMap[P])[0].group).toBe(Groups.PARENT);
-
-      expect(categoriesMap[A].groups[0].fields[0].group).toBe(Groups.PARENT);
-      expect(categoriesMap[A].groups[1].fields[0].group).toBe(Groups.CHILD);
-      expect(categoriesMap[P].groups[0].fields[0].group).toBe(Groups.PARENT);
    });
 
 

@@ -1,5 +1,5 @@
 import {
-    append, assoc, cond, defined, flatten, flow, isNot, lookup,
+    append, assoc, cond, defined, dissoc, dissocOn, flatten, flow, isNot, lookup,
     map, Map, Mapping, on, prune, reduce, separate, throws, to, update, values
 } from 'tsfun';
 import {Category} from '../model/category';
@@ -11,6 +11,9 @@ import {isUndefined} from 'tsfun/src/predicate';
 import {MDInternal} from 'idai-components-2/index';
 import {GroupUtil} from '../group-util';
 import {clone} from '../../util/object-util';
+
+
+const TEMP_FIELDS = 'fields';
 
 
 /**
@@ -26,15 +29,16 @@ export function makeCategoriesMap(categories: any): Map<Category> {
     const parentCategories = flow(
         parentDefs,
         map(buildCategoryFromDefinition),
-        map(update('fields', ifUndefinedSetGroupTo(Groups.PARENT))),
+        map(update(TEMP_FIELDS, ifUndefinedSetGroupTo(Groups.PARENT))),
         makeLookup(Category.NAME));
 
     return flow(
         childDefs,
         reduce(addChildCategory, parentCategories),
         flattenCategoriesTreeMapToCategoriesMap,
-        fillGroups
-    );
+        fillGroups,
+        map(dissoc(TEMP_FIELDS)),
+        map(dissocOn([Category.PARENT_CATEGORY, TEMP_FIELDS])));
 }
 
 
@@ -47,7 +51,7 @@ function fillGroups(categoriesMap: Map<Category>): Map<Category> {
     return map((category: Category) => {
 
         category.groups = flow(
-            (category as any)['fields'],
+            (category as any)[TEMP_FIELDS],
             makeGroupsMap,
             map(sortGroupFields),
             convertToSortedArray(DEFAULT_GROUP_ORDER)
@@ -115,7 +119,7 @@ function addChildCategoryToParent(categoriesMap: Map<Category>, childDefinition:
     return (parentCategory: Category): Map<Category> => {
 
         const childCategory = buildCategoryFromDefinition(childDefinition);
-        (childCategory as any)['fields'] = makeChildFields(parentCategory, childCategory);
+        (childCategory as any)[TEMP_FIELDS] = makeChildFields(parentCategory, childCategory);
 
         const newParentCategory: any
             = update(Category.CHILDREN, append(childCategory))(parentCategory as any);
@@ -138,7 +142,7 @@ function buildCategoryFromDefinition(definition: CategoryDefinition): Category {
     category.color = definition.color ?? Category.generateColorForCategory(definition.name);
     category.children = [];
 
-    category['fields'] = definition.fields || []; // TODO remove after construction
+    category[TEMP_FIELDS] = definition.fields || [];
     return category as Category;
 }
 

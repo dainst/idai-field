@@ -11,6 +11,7 @@ import {ProjectConfiguration} from '../../../core/configuration/project-configur
 import {Category} from '../../../core/configuration/model/category';
 import {TypeRelations} from '../../../core/model/relation-constants';
 import {EditFormGroup, Group} from '../../../core/configuration/model/group';
+import {Named} from '../../../core/util/named';
 
 
 @Component({
@@ -109,7 +110,7 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
     private setFields() {
 
         for (let originalGroup of this.originalGroups) {
-            const group = this.groups.find(on(Group.NAME)(originalGroup))!;
+            const group = this.groups.find(on(Named.NAME)(originalGroup))!;
             if (originalGroup.label) group.label = originalGroup.label; // TODO do unconditional
             group.fields = originalGroup.fields;
         }

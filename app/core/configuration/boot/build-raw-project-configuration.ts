@@ -24,7 +24,7 @@ import {makeCategoriesMap} from './make-categories-map';
 import {RawProjectConfiguration} from '../project-configuration';
 import {Category} from '../model/category';
 import {Group, Groups} from '../model/group';
-import {namedMapToNamedArray} from '../../util/named';
+import {Named, namedMapToNamedArray} from '../../util/named';
 
 
 const CATEGORIES = 'categories';
@@ -104,7 +104,7 @@ function setGroupLabels(languageConfiguration: any) {
         return update(
             Category.GROUPS,
             compose(
-                map(pairWith(compose(to(Group.NAME), getLabel))),
+                map(pairWith(compose(to(Named.NAME), getLabel))),
                 map(([group, label]: Pair<Group, string>) => assoc(Group.LABEL, label)(group as any))))(category);
     });
 }

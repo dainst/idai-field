@@ -8,7 +8,9 @@ import {makeLookup} from './utils';
 // --- please do not remove, even if not used currently ---
 
 // TODO move to tsfun/util ?
-export interface Named { name: string }
+export interface Named { name: Name }
+
+type Name = string;
 
 export module Named {
 

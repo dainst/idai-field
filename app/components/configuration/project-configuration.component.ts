@@ -7,6 +7,7 @@ import {Group} from '../../core/configuration/model/group';
 import {ValuelistDefinition} from '../../core/configuration/model/valuelist-definition';
 import {ValuelistUtil} from '../../core/util/valuelist-util';
 import {TabManager} from '../../core/tabs/tab-manager';
+import {Named} from '../../core/util/named';
 
 const locale: string = require('electron').remote.getGlobal('config').locale;
 
@@ -41,7 +42,7 @@ export class ProjectConfigurationComponent {
 
     public getValueLabel = ValuelistUtil.getValueLabel;
 
-    public getGroups = (category: Category): any[] => category.groups.map(to(Group.NAME));
+    public getGroups = (category: Category): any[] => category.groups.map(to(Named.NAME));
 
     public getValuelistDescription = (valuelist: ValuelistDefinition) => valuelist.description?.[locale];
 
@@ -64,7 +65,7 @@ export class ProjectConfigurationComponent {
     public getVisibleFields(category: Category): FieldDefinition[] {
 
         return category.groups
-            .find(on(Group.NAME, is(this.selectedGroup)))!
+            .find(on(Named.NAME, is(this.selectedGroup)))!
             .fields
             .filter(
                 or(

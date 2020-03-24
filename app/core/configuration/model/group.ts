@@ -1,4 +1,5 @@
 import {FieldDefinition} from './field-definition';
+import {Named} from '../../util/named';
 
 export module Groups {
 
@@ -24,9 +25,8 @@ export const DEFAULT_GROUP_ORDER = [
 ];
 
 
-export interface Group {
+export interface Group extends Named {
 
-    name: string;
     fields: Array<FieldDefinition>;
     label: string;
     // TODO add relations, more fields?
@@ -43,6 +43,5 @@ export interface EditFormGroup extends Group { // TODO review
 export module Group {
 
     export const FIELDS = 'fields';
-    export const NAME = 'name';
     export const LABEL = 'label';
 }

@@ -80,8 +80,8 @@ function processCategories(orderConfiguration: any, validateFields: any) {
         orderFields(orderConfiguration),
         validateFields,
         makeCategoriesMap,
-        // map(dissoc('fields')), // TODO enable
-        // map(dissocOn('parentCategory.fields'))
+        map(dissoc('fields')),
+        map(dissocOn('parentCategory.fields'))
     );
 }
 

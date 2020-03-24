@@ -1,4 +1,4 @@
-import {assoc, clone, cond, dissoc, dissocOn, flow, includedIn, isDefined, isNot, keys, keysAndValues, map, Map, on,
+import {assoc, clone, cond, dissoc, flow, includedIn, isDefined, isNot, keys, keysAndValues, map, Map, on,
     reduce, subtract, undefinedOrEmpty, update, identity, compose} from 'tsfun';
 import {LibraryCategoryDefinition} from '../model/library-category-definition';
 import {CustomCategoryDefinition} from '../model/custom-category-definition';
@@ -79,10 +79,7 @@ function processCategories(orderConfiguration: any, validateFields: any) {
         addExtraFieldsOrder(orderConfiguration),
         orderFields(orderConfiguration),
         validateFields,
-        makeCategoriesMap,
-        map(dissoc('fields')),
-        map(dissocOn('parentCategory.fields'))
-    );
+        makeCategoriesMap);
 }
 
 

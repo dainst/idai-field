@@ -44,11 +44,8 @@ export function makeCategoriesMap(categories: any): Map<Category> {
 
 /**
  * Creates the groups array for each category.
- * @param categoriesMap modified in place
  */
-function fillGroups(categoriesMap: Map<Category>): Map<Category> {
-
-    return map((category: Category) => {
+const fillGroups = map((category: Category) => {
 
         category.groups = flow(
             (category as any)[TEMP_FIELDS],
@@ -58,9 +55,7 @@ function fillGroups(categoriesMap: Map<Category>): Map<Category> {
         );
 
         return category;
-
-    })(categoriesMap);
-}
+    });
 
 
 function makeGroupsMap(fields: Array<FieldDefinition>) {

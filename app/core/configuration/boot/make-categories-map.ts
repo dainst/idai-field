@@ -1,5 +1,7 @@
-import {append, assoc, cond, defined, flatten, flow, isNot, lookup,
-    map, Map, on, prune, reduce, separate, throws, to, update, values} from 'tsfun';
+import {
+    append, assoc, cond, defined, flatten, flow, isNot, lookup,
+    map, Map, Mapping, on, prune, reduce, separate, throws, to, update, values
+} from 'tsfun';
 import {Category} from '../model/category';
 import {CategoryDefinition} from '../model/category-definition';
 import {DEFAULT_GROUP_ORDER, Group, Groups} from '../model/group';
@@ -8,6 +10,7 @@ import {FieldDefinition} from '../model/field-definition';
 import {isUndefined} from 'tsfun/src/predicate';
 import {MDInternal} from 'idai-components-2/index';
 import {GroupUtil} from '../group-util';
+import {clone} from '../../util/object-util';
 
 
 /**
@@ -23,7 +26,7 @@ export function makeCategoriesMap(categories: any): Map<Category> {
     const parentCategories = flow(
         parentDefs,
         map(buildCategoryFromDefinition),
-        map(update('fields', Category.ifUndefinedSetGroupTo(Groups.PARENT))),
+        map(update('fields', ifUndefinedSetGroupTo(Groups.PARENT))),
         makeLookup(Category.NAME));
 
     return flow(
@@ -113,7 +116,7 @@ function addChildCategoryToParent(categoriesMap: Map<Category>, childDefinition:
     return (parentCategory: Category): Map<Category> => {
 
         const childCategory = buildCategoryFromDefinition(childDefinition);
-        (childCategory as any)['fields'] = Category.makeChildFields(parentCategory, childCategory);
+        (childCategory as any)['fields'] = makeChildFields(parentCategory, childCategory);
 
         const newParentCategory: any
             = update(Category.CHILDREN, append(childCategory))(parentCategory as any);
@@ -138,4 +141,49 @@ function buildCategoryFromDefinition(definition: CategoryDefinition): Category {
 
     category['fields'] = definition.fields || []; // TODO remove after construction
     return category as Category;
+}
+
+
+function makeChildFields(category: Category, child: Category): Array<FieldDefinition> {
+
+    try {
+        const childFields = ifUndefinedSetGroupTo(Groups.CHILD)((child as any)['fields']);
+        return getCombinedFields((category as any)['fields'], childFields);
+    } catch (e) {
+        e.push(category.name);
+        e.push(child.name);
+        throw [e];
+    }
+}
+
+
+function getCombinedFields(parentFields: Array<FieldDefinition>, childFields: Array<FieldDefinition>) {
+
+    const fields: Array<FieldDefinition> = clone(parentFields);
+
+    childFields.forEach(childField => {
+        const field: FieldDefinition|undefined
+            = fields.find(field => field.name === childField.name);
+
+        if (field) {
+            if (field.name !== 'campaign') {
+                throw ['tried to overwrite field of parent category', field.name];
+            }
+        } else {
+            fields.push(childField);
+        }
+    });
+
+    return fields;
+}
+
+
+function ifUndefinedSetGroupTo(name: string): Mapping<Array<FieldDefinition>> {
+
+    return map(
+        cond(
+            on(FieldDefinition.GROUP, isUndefined),
+            assoc(FieldDefinition.GROUP, name)
+        )
+    ) as any;
 }

@@ -1,8 +1,6 @@
-import {isUndefined, flow, cond, on, assoc, to, map, Mapping, values, flatten} from 'tsfun';
-import {CategoryDefinition} from './category-definition';
+import {flatten, flow, map, to, values} from 'tsfun';
 import {FieldDefinition} from './field-definition';
-import {clone} from '../../util/object-util';
-import {Group, Groups} from './group';
+import {Group} from './group';
 
 
 export interface Category {
@@ -44,30 +42,6 @@ export module Category {
     }
 
 
-    export function makeChildFields(category: Category, child: Category): Array<FieldDefinition> {
-
-        try {
-            const childFields = ifUndefinedSetGroupTo(Groups.CHILD)((child as any)['fields']);
-            return getCombinedFields((category as any)['fields'], childFields);
-        } catch (e) {
-            e.push(category.name);
-            e.push(child.name);
-            throw [e];
-        }
-    }
-
-
-    export function ifUndefinedSetGroupTo(name: string): Mapping<Array<FieldDefinition>> {
-
-        return map(
-            cond(
-                on(FieldDefinition.GROUP, isUndefined),
-                assoc(FieldDefinition.GROUP, name)
-            )
-        ) as any;
-    }
-
-
     export function getLabel(fieldName: string, fields: Array<any>): string {
 
         for (let field of fields) {
@@ -91,27 +65,6 @@ export module Category {
         let luma = 0.2126 * r + 0.7152 * g + 0.0722 * b; // per ITU-R BT.709
 
         return luma > 200;
-    }
-
-
-    function getCombinedFields(parentFields: Array<FieldDefinition>, childFields: Array<FieldDefinition>) {
-
-        const fields: Array<FieldDefinition> = clone(parentFields);
-
-        childFields.forEach(childField => {
-            const field: FieldDefinition|undefined
-                = fields.find(field => field.name === childField.name);
-
-            if (field) {
-                if (field.name !== 'campaign') {
-                    throw ['tried to overwrite field of parent category', field.name];
-                }
-            } else {
-                fields.push(childField);
-            }
-        });
-
-        return fields;
     }
 
 

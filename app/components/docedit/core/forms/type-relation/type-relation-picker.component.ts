@@ -16,7 +16,6 @@ import {Category} from '../../../../../core/configuration/model/category';
 import {ValuelistDefinition} from '../../../../../core/configuration/model/valuelist-definition';
 import {Group} from '../../../../../core/configuration/model/group';
 import {FieldDefinition} from '../../../../../core/configuration/model/field-definition';
-import {SettingsService} from '../../../../../core/settings/settings-service';
 import {ValuelistUtil} from '../../../../../core/util/valuelist-util';
 
 
@@ -60,7 +59,6 @@ export class TypeRelationPickerComponent {
     constructor(public activeModal: NgbActiveModal,
                 public datastore: FieldReadDatastore,
                 public i18n: I18n,
-                private settingsService: SettingsService,
                 projectConfiguration: ProjectConfiguration) {
 
         this.initialize(projectConfiguration.getCategoriesMap()[TYPECATALOG]);

@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
-import {I18n} from '@ngx-translate/i18n-polyfill';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import {Pair, to, isNot, undefinedOrEmpty, left, on, includedIn, right, map, flow, empty, prune} from 'tsfun';
+import {Pair, to, isNot, undefinedOrEmpty, left, on, includedIn, right, map, flow, empty, prune,
+    is} from 'tsfun';
 import {map as asyncMap} from 'tsfun/async';
 import {FieldDocument, FieldResource, Resource, Query, Constraint, Document,
     FindResult} from 'idai-components-2';
@@ -10,56 +10,77 @@ import {TypeImagesUtil} from '../../../../../core/util/type-images-util';
 import getLinkedImages = TypeImagesUtil.getLinkedImages;
 import {ImageRowItem} from '../../../../image/row/image-row.component';
 import {TypeRelations} from '../../../../../core/model/relation-constants';
-import {CatalogCriteria, CatalogCriterion} from './catalog-criteria';
+import {ProjectConfiguration} from '../../../../../core/configuration/project-configuration';
+import {Category} from '../../../../../core/configuration/model/category';
+import {ValuelistDefinition} from '../../../../../core/configuration/model/valuelist-definition';
+import {Group} from '../../../../../core/configuration/model/group';
+import {FieldDefinition} from '../../../../../core/configuration/model/field-definition';
+import {ValuelistUtil} from '../../../../../core/util/valuelist-util';
+
 
 const CRITERION = 'criterion';
 const TYPECATALOG = 'TypeCatalog';
 const TYPE = 'Type';
 
+
+type Criterion = {
+    name: string;
+    label: string;
+}
+
+
 @Component({
     selector: 'type-relation-picker',
     moduleId: module.id,
-    templateUrl: './type-relation-picker.html'
+    templateUrl: './type-relation-picker.html',
+    host: {
+        '(window:keydown)': 'onKeyDown($event)'
+    }
 })
 /**
  * @author Daniel de Oliveira
+ * @author Thomas Kleinke
  */
 export class TypeRelationPickerComponent {
 
-    public resource: Resource|undefined = undefined;
-
-    public q: string = '';
     public selectedCatalog: FieldResource|undefined;
     public availableCatalogs: Array<FieldResource> = [];
     public selectedCriterion: string = '';
-    public selectionCriteria: Array<CatalogCriterion> = [];
+    public availableCriteria: Array<Criterion> = [];
 
-    public timeoutRef: any;
-
+    public typeDocumentsWithLinkedImages: Array<Pair<FieldDocument, Array<ImageRowItem>>> = [];
     public typeDocument = left;
     public images = right;
-    public typeDocumentsWithLinkedImages: Array<Pair<FieldDocument, Array<ImageRowItem>>> = [];
+
+    private resource: Resource|undefined = undefined;
+    private q: string = '';
+    private timeoutRef: any;
 
 
     constructor(public activeModal: NgbActiveModal,
-                public datastore: FieldReadDatastore,
-                public i18n: I18n,
-                catalogCriteria: CatalogCriteria) {
+                private datastore: FieldReadDatastore,
+                projectConfiguration: ProjectConfiguration) {
 
-        this.init(catalogCriteria);
+        this.initialize(projectConfiguration.getCategoriesMap()[TYPECATALOG]);
     }
 
 
-    public setResource(resource: Resource) {
+    public onKeyDown(event: KeyboardEvent) {
+
+        if (event.key === 'Escape') this.activeModal.close();
+    }
+
+
+    public async setResource(resource: Resource) {
 
         this.resource = resource;
-        this.fetchTypes();
+        await this.fetchTypes();
     }
 
 
-    public onSelectCatalog() {
+    public async onSelectCatalog() {
 
-        this.fetchTypes();
+        await this.fetchTypes();
     }
 
 
@@ -79,26 +100,26 @@ export class TypeRelationPickerComponent {
     }
 
 
-    private async init(catalogCriteria: CatalogCriteria) {
+    private async initialize(typeCatalogCategory: Category) {
 
-        const usedCriteria = await this.usedCatalogCriteria();
+        const usedCriteria = await this.getUsedCatalogCriteria();
 
-        this.selectionCriteria =
-            catalogCriteria.catalogCriteria
-                .filter(on(CatalogCriterion.VALUE, includedIn(usedCriteria)));
+        this.availableCriteria = TypeRelationPickerComponent.getConfiguredCriteria(typeCatalogCategory)
+            .filter(on('name', includedIn(usedCriteria)));
 
         this.fetchCatalogs();
     }
 
 
-    private async usedCatalogCriteria() {
+    private async getUsedCatalogCriteria(): Promise<string[]> {
 
         return flow(
             await this.datastore.find({ categories: [TYPECATALOG] }),
             to(FindResult.DOCUMENTS),
             map(to(Document.RESOURCE)),
             map(to(CRITERION)),
-            prune);
+            prune
+        );
     }
 
 
@@ -110,11 +131,11 @@ export class TypeRelationPickerComponent {
         };
         if (this.selectedCriterion) query.constraints = { 'criterion:match': this.selectedCriterion };
 
-        this.availableCatalogs =
-            flow(
-                await this.datastore.find(query),
-                to(FindResult.DOCUMENTS),
-                map(to(Document.RESOURCE)));
+        this.availableCatalogs = flow(
+            await this.datastore.find(query),
+            to(FindResult.DOCUMENTS),
+            map(to(Document.RESOURCE))
+        );
     }
 
 
@@ -169,5 +190,24 @@ export class TypeRelationPickerComponent {
             } as Constraint;
         }
         return query;
+    }
+
+
+    private static getConfiguredCriteria(typeCatalogCategory: Category): Array<Criterion> {
+
+        const identificationGroup: Group = typeCatalogCategory.groups
+            .find(on('name', is('identification'))) as Group;
+
+        const criterionField: FieldDefinition = identificationGroup.fields
+            .find(on('name', is('criterion'))) as FieldDefinition;
+
+        const valuelist: ValuelistDefinition = (criterionField.valuelist as ValuelistDefinition);
+
+        return Object.keys(valuelist.values).map((valueName: string) => {
+            return {
+                name: valueName,
+                label: ValuelistUtil.getValueLabel(valuelist, valueName)
+            }
+        });
     }
 }

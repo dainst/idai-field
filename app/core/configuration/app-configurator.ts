@@ -9,17 +9,6 @@ import {RelationDefinition} from './model/relation-definition';
 import {Groups} from './model/group';
 
 
-export module BuiltInCategories {
-
-    export const TYPECATALOG = 'TypeCatalog';
-
-    export module TypeCatalog {
-
-        export const CRITERION = 'criterion';
-    }
-}
-
-
 @Injectable()
 /**
  * @author Daniel de Oliveira
@@ -264,7 +253,7 @@ export class AppConfigurator {
             supercategory: true,
             fields: {
                 criterion: {
-                    inputType: FieldDefinition.InputType.CATALOGCRITERION,
+                    inputType: FieldDefinition.InputType.DROPDOWN,
                     constraintIndexed: true,
                     group: Groups.IDENTIFICATION
                 }

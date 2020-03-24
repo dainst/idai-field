@@ -27,7 +27,6 @@ export interface FieldDefinition {
         |'literature'
         |'geometry'
         |'instanceOf'
-        |'catalogCriterion'
         |'default';
     valuelist?: ValuelistDefinition;
     valuelistFromProjectField?: string;
@@ -81,7 +80,6 @@ export module FieldDefinition {
         export const DIMENSION = 'dimension';
         export const LITERATURE = 'literature';
         export const GEOMETRY = 'geometry';
-        export const CATALOGCRITERION = 'catalogCriterion';
         export const DEFAULT = 'default';
     }
 }

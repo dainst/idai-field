@@ -9,6 +9,7 @@ import {PositionRelations, TimeRelations, TypeRelations} from '../model/relation
  */
 export module GroupUtil {
 
+    // TODO move into makeCategoriesMap and make private
     export function sortGroups(fields: Array<FieldDefinition>, groupName: string) {
 
         const copiedFields = copy(fields);

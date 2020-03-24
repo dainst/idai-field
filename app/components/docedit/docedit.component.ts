@@ -17,7 +17,7 @@ import {RelationDefinition} from '../../core/configuration/model/relation-defini
 import {ProjectConfiguration} from '../../core/configuration/project-configuration';
 import {DocumentHolder} from '../../core/docedit/document-holder';
 import {DoceditErrors} from '../../core/docedit/docedit-errors';
-import {Groups} from '../../core/configuration/model/group';
+import {Group, Groups} from '../../core/configuration/model/group';
 
 
 @Component({
@@ -43,6 +43,7 @@ export class DoceditComponent {
     public activeGroup: string = Groups.STEM;
     public subModalOpened: boolean = false;
     public fieldDefinitions: Array<FieldDefinition>|undefined;
+    public groups: Array<Group>|undefined;
     public relationDefinitions: Array<RelationDefinition>;
 
     private parentLabel: string|undefined = undefined;
@@ -187,6 +188,7 @@ export class DoceditComponent {
         this.fieldDefinitions = this.projectConfiguration.getFieldDefinitions(
             this.documentHolder.clonedDocument.resource.category
         );
+        this.groups = (this.projectConfiguration.getCategoriesMap()[this.documentHolder.clonedDocument.resource.category]).groups;
     }
 
 

@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, ElementRef, Input, OnChanges, ViewChild} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
-import {is, isNot, on, undefinedOrEmpty} from 'tsfun';
+import {is, isNot, to, on, undefinedOrEmpty} from 'tsfun';
 import {Document} from 'idai-components-2';
 import {ProjectCategories} from '../../../core/configuration/project-categories';
 import {GroupUtil} from '../../../core/configuration/group-util';
@@ -10,7 +10,7 @@ import {RelationDefinition} from '../../../core/configuration/model/relation-def
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
 import {Category} from '../../../core/configuration/model/category';
 import {TypeRelations} from '../../../core/model/relation-constants';
-import {EditFormGroup} from '../../../core/configuration/model/group';
+import {EditFormGroup, Group} from '../../../core/configuration/model/group';
 
 
 @Component({
@@ -28,6 +28,7 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
 
     @Input() document: any;
     @Input() fieldDefinitions: Array<FieldDefinition>;
+    @Input() originalGroups: Array<Group>;
     @Input() relationDefinitions: Array<RelationDefinition>;
     @Input() inspectedRevisions: Document[];
     @Input() activeGroup: string;
@@ -40,8 +41,8 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
             relations: [], widget: 'generic' },
         { name: 'identification', label: this.i18n({ id: 'docedit.group.identification', value: 'Bestimmung' }),
             fields: [], relations: [], widget: 'generic' },
-        { name: 'properties', label: '', fields: [], relations: [], widget: 'generic' },
-        { name: 'childProperties', label: '', fields: [], relations: [], widget: 'generic' },
+        { name: 'parent', label: '', fields: [], relations: [], widget: 'generic' },
+        { name: 'child', label: '', fields: [], relations: [], widget: 'generic' },
         { name: 'dimension', label: this.i18n({ id: 'docedit.group.dimensions', value: 'Maße' }),
             fields: [], relations: [], widget: 'generic' },
         { name: 'position', label: this.i18n({ id: 'docedit.group.position', value: 'Lage' }),
@@ -94,16 +95,8 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
     ngOnChanges() {
 
         this.setLabels();
-
-        if (isNot(undefinedOrEmpty)(this.fieldDefinitions)) {
-            this.setFields();
-            this.groups[GROUP_NAME.STEM].fields = GroupUtil.sortGroups(this.groups[GROUP_NAME.STEM].fields, 'stem');
-            this.groups[GROUP_NAME.DIMENSION].fields = GroupUtil.sortGroups(this.groups[GROUP_NAME.DIMENSION].fields, 'dimension');
-        }
-
-        if (isNot(undefinedOrEmpty)(this.relationDefinitions)) {
-            this.setRelations();
-        }
+        if (isNot(undefinedOrEmpty)(this.originalGroups)) this.setFields();
+        if (isNot(undefinedOrEmpty)(this.relationDefinitions)) this.setRelations();
     }
 
 
@@ -123,13 +116,10 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
 
     private setFields() {
 
-        // TODO refactor this block
-        this.groups[GROUP_NAME.STEM].fields = this.fieldDefinitions.filter(on('group', is('stem')));
-        this.groups[GROUP_NAME.IDENTIFICATION].fields = this.fieldDefinitions.filter(on('group', is('identification')));
-        this.groups[GROUP_NAME.PROPERTIES].fields = this.fieldDefinitions.filter(on('group', is('parent')));
-        this.groups[GROUP_NAME.CHILD_PROPERTIES].fields = this.fieldDefinitions.filter(on('group', is('child')));
-        this.groups[GROUP_NAME.DIMENSION].fields = this.fieldDefinitions.filter(on('group', is('dimension')));
-        this.groups[GROUP_NAME.POSITION].fields = this.fieldDefinitions.filter(on('group', is('position')));
+        for (let originalGroup of this.originalGroups) {
+            const group = this.groups.find(on(Group.NAME)(originalGroup))!;
+            group.fields = originalGroup.fields;
+        }
 
         if (this.projectCategories.isGeometryCategory(this.document.resource.category)) {
             this.groups[GROUP_NAME.POSITION].fields.push({
@@ -141,7 +131,7 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
             });
         }
 
-        this.groups[GROUP_NAME.TIME].fields = this.fieldDefinitions.filter(on('group', is('time')));
+        // this.groups[GROUP_NAME.TIME].fields = this.fieldDefinitions.filter(on('group', is('time')));
     }
 
 

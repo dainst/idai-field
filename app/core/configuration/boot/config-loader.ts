@@ -33,7 +33,7 @@ export class ConfigLoader {
             visible: false
         } as FieldDefinition,
         category: {
-            label: this.i18n({ id: 'configuration.defaultFields.category', value: 'Kategorie' }), // TODO put to language conf
+            label: this.i18n({ id: 'configuration.defaultFields.category', value: 'Kategorie' }),
             visible: false,
             editable: false
         } as FieldDefinition
@@ -137,7 +137,7 @@ export class ConfigLoader {
                     customLanguageConfiguration,
                     searchConfiguration,
                     orderConfiguration,
-                    (categories: any) => { // TODO push into buildRawProjectConfiguration, instead of passing as param
+                    (categories: any) => {
                         const fieldValidationErrors = ConfigurationValidation.validateFieldDefinitions(values(categories));
                         if (fieldValidationErrors.length > 0) throw fieldValidationErrors;
                         return categories;

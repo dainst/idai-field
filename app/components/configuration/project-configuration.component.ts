@@ -6,13 +6,17 @@ import {FieldDefinition} from '../../core/configuration/model/field-definition';
 import {Group} from '../../core/configuration/model/group';
 import {ValuelistDefinition} from '../../core/configuration/model/valuelist-definition';
 import {ValuelistUtil} from '../../core/util/valuelist-util';
+import {TabManager} from '../../core/tabs/tab-manager';
 
 const locale: string = require('electron').remote.getGlobal('config').locale;
 
 
 @Component({
     moduleId: module.id,
-    templateUrl: './project-configuration.html'
+    templateUrl: './project-configuration.html',
+    host: {
+        '(window:keydown)': 'onKeyDown($event)'
+    }
 })
 /**
  * @author Sebastian Cuy
@@ -25,11 +29,19 @@ export class ProjectConfigurationComponent {
     public selectedCategory: Category;
     public selectedGroup: string;
 
-    constructor(public projectConfiguration: ProjectConfiguration) {
+
+    constructor(public projectConfiguration: ProjectConfiguration,
+                private tabManager: TabManager) {
 
         this.categoriesTreeList = projectConfiguration.getCategoriesList()
             .filter(category => !category.parentCategory);
         this.selectCategory(this.categoriesTreeList[0]);
+    }
+
+
+    public async onKeyDown(event: KeyboardEvent) {
+
+        if (event.key === 'Escape') await this.tabManager.openActiveTab();
     }
 
 

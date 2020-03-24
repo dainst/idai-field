@@ -32,7 +32,10 @@ type Criterion = {
 @Component({
     selector: 'type-relation-picker',
     moduleId: module.id,
-    templateUrl: './type-relation-picker.html'
+    templateUrl: './type-relation-picker.html',
+    host: {
+        '(window:keydown)': 'onKeyDown($event)'
+    }
 })
 /**
  * @author Daniel de Oliveira
@@ -59,6 +62,12 @@ export class TypeRelationPickerComponent {
                 projectConfiguration: ProjectConfiguration) {
 
         this.initialize(projectConfiguration.getCategoriesMap()[TYPECATALOG]);
+    }
+
+
+    public onKeyDown(event: KeyboardEvent) {
+
+        if (event.key === 'Escape') this.activeModal.close();
     }
 
 

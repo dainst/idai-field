@@ -4,7 +4,7 @@ import {FieldDefinition} from '../../../../../app/core/configuration/model/field
 import InputType = FieldDefinition.InputType;
 import {Category} from '../../../../../app/core/configuration/model/category';
 import {makeCategoriesMap} from '../../../../../app/core/configuration/boot/make-categories-map';
-import {byName} from '../../../../../app/core/util/utils';
+import {byName} from '../../../../../app/core/util/named';
 
 
 /**

@@ -7,8 +7,8 @@ import {BuiltinCategoryDefinition} from '../../../../../app/core/configuration/m
 import {LibraryCategoryDefinition} from '../../../../../app/core/configuration/model/library-category-definition';
 import {ValuelistDefinition} from '../../../../../app/core/configuration/model/valuelist-definition';
 import {Groups} from '../../../../../app/core/configuration/model/group';
-import {byName} from '../../../../../app/core/util/utils';
 import InputType = FieldDefinition.InputType;
+import {byName} from '../../../../../app/core/util/named';
 
 
 const categories = left;

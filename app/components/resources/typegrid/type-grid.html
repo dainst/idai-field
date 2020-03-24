@@ -31,10 +31,10 @@
 
     <div *ngIf="ready" id="grid-elements-container">
         <div class="grid-section">
-            <div *ngIf="mainDocument?.resource.type === 'TypeCatalog'"
+            <div *ngIf="mainDocument?.resource.category === 'TypeCatalog'"
                  class="grid-section-label first-grid-section-label"
                  i18n="@@resources.typeGrid.types">Typen</div>
-            <div *ngIf="mainDocument?.resource.type === 'Type'"
+            <div *ngIf="mainDocument?.resource.category === 'Type'"
                  class="grid-section-label first-grid-section-label"
                  i18n="@@resources.typeGrid.subtypes">Untertypen</div>
 

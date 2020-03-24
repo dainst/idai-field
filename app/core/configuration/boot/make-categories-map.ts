@@ -110,7 +110,6 @@ function convertToSortedArray(defaultOrder: string[]) {
 }
 
 
-
 function addChildCategoryToParent(categoriesMap: Map<Category>, childDefinition: CategoryDefinition) {
 
     return (parentCategory: Category): Map<Category> => {

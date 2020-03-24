@@ -3,8 +3,10 @@
 
         <div class="row">
             <div class="col-lg-3 sidebar">
-                <category-picker *ngIf="categoriesTreeList" [categoriesTreeList]="categoriesTreeList"
-                                 allowPickingAbstractCategories="true"
+                <category-picker *ngIf="categoriesTreeList"
+                                 [categoriesTreeList]="categoriesTreeList"
+                                 [selectedCategories]="[selectedCategory.name]"
+                                 [allowPickingAbstractCategories]="true"
                                  (onCategoryPicked)="selectCategory($event)"></category-picker>
             </div>
 

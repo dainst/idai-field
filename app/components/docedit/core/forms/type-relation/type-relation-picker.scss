@@ -1,13 +1,15 @@
-// taken from widgets/image-picker
-
 #type-relation-modal {
   .modal-body {
     height: calc(100vh - 138px);
     overflow: auto;
+  }
 
-    .type-search-bar {
-      margin-bottom: 20px;
-      height: 38px;
-    }
+  #criterion-select,
+  #import-format-select {
+    width: 175px;
+  }
+
+  .type-search-bar {
+    width: 100%;
   }
 }

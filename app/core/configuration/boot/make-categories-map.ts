@@ -67,7 +67,7 @@ function makeGroupsMap(fields: Array<FieldDefinition>) {
 
     const groups: Map<Group> = {};
     for (let field of fields) {
-        if (!groups[field.group]) groups[field.group] = { fields: [], name: field.group };
+        if (!groups[field.group]) groups[field.group] = { fields: [], name: field.group, label: '' };
         groups[field.group].fields = groups[field.group].fields.concat(field);
     }
     return groups;

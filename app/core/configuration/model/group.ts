@@ -28,13 +28,13 @@ export interface Group {
 
     name: string;
     fields: Array<FieldDefinition>;
+    label: string;
     // TODO add relations, more fields?
 }
 
 
 export interface EditFormGroup extends Group { // TODO review
 
-    label: string;
     relations: any[];
     widget: string|undefined;
 }
@@ -44,4 +44,5 @@ export module Group {
 
     export const FIELDS = 'fields';
     export const NAME = 'name';
+    export const LABEL = 'label';
 }

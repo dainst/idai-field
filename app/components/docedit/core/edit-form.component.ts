@@ -37,22 +37,15 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
     public categories: string[];
 
     public groups: Array<EditFormGroup> = [
-        { name: 'stem', label: this.i18n({ id: 'docedit.group.stem', value: 'Stammdaten' }), fields: [],
-            relations: [], widget: 'generic' },
-        { name: 'identification', label: this.i18n({ id: 'docedit.group.identification', value: 'Bestimmung' }),
-            fields: [], relations: [], widget: 'generic' },
+        { name: 'stem', label: '', fields: [], relations: [], widget: 'generic' },
+        { name: 'identification', label: '', fields: [], relations: [], widget: 'generic' },
         { name: 'parent', label: '', fields: [], relations: [], widget: 'generic' },
         { name: 'child', label: '', fields: [], relations: [], widget: 'generic' },
-        { name: 'dimension', label: this.i18n({ id: 'docedit.group.dimensions', value: 'Maße' }),
-            fields: [], relations: [], widget: 'generic' },
-        { name: 'position', label: this.i18n({ id: 'docedit.group.position', value: 'Lage' }),
-            fields: [], relations: [], widget: 'generic' },
-        { name: 'time', label: this.i18n({ id: 'docedit.group.time', value: 'Zeit' }), fields: [],
-            relations: [], widget: 'generic' },
-        { name: 'images', label: this.i18n({ id: 'docedit.group.images', value: 'Bilder' }), fields: [],
-            relations: [], widget: undefined },
-        { name: 'conflicts', label: this.i18n({ id: 'docedit.group.conflicts', value: 'Konflikte' }),
-            fields: [], relations: [], widget: undefined } ];
+        { name: 'dimension', label: '', fields: [], relations: [], widget: 'generic' },
+        { name: 'position', label: '', fields: [], relations: [], widget: 'generic' },
+        { name: 'time', label: '', fields: [], relations: [], widget: 'generic' },
+        { name: 'images', label: this.i18n({ id: 'docedit.group.images', value: 'Bilder' }), fields: [], relations: [], widget: undefined },
+        { name: 'conflicts', label: this.i18n({ id: 'docedit.group.conflicts', value: 'Konflikte' }), fields: [], relations: [], widget: undefined } ];
 
 
     constructor(private elementRef: ElementRef,
@@ -94,7 +87,6 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
 
     ngOnChanges() {
 
-        this.setLabels();
         if (isNot(undefinedOrEmpty)(this.originalGroups)) this.setFields();
         if (isNot(undefinedOrEmpty)(this.relationDefinitions)) this.setRelations();
     }
@@ -118,6 +110,7 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
 
         for (let originalGroup of this.originalGroups) {
             const group = this.groups.find(on(Group.NAME)(originalGroup))!;
+            if (originalGroup.label) group.label = originalGroup.label; // TODO do unconditional
             group.fields = originalGroup.fields;
         }
 
@@ -129,22 +122,6 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
                 inputType: 'geometry',
                 editable: true
             });
-        }
-
-        // this.groups[GROUP_NAME.TIME].fields = this.fieldDefinitions.filter(on('group', is('time')));
-    }
-
-
-    private setLabels() {
-
-        const category: Category
-            = this.projectConfiguration.getCategoriesMap()[this.document.resource.category];
-
-        if (category.parentCategory) {
-            this.groups[GROUP_NAME.PROPERTIES].label = category.parentCategory.label;
-            this.groups[GROUP_NAME.CHILD_PROPERTIES].label = category.label;
-        } else {
-            this.groups[GROUP_NAME.PROPERTIES].label = category.label;
         }
     }
 

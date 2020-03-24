@@ -1176,6 +1176,49 @@ describe('buildRawProjectConfiguration', () => { // TODO test groups in idai typ
         expect(result['A'].groups[1].fields[2].source).toBe(FieldDefinition.Source.CUSTOM);
     });
 
+
+    it('set group labels', () => {
+
+        const builtInCategories: Map<BuiltinCategoryDefinition> = {
+            A: {
+                supercategory: true,
+                userDefinedSubcategoriesAllowed: true,
+                fields: {
+                    field1: { inputType: FieldDefinition.InputType.TEXT, group: Groups.STEM },
+                    field2: { inputType: FieldDefinition.InputType.TEXT }
+                }
+            }
+        };
+
+
+        const customCategories: Map<CustomCategoryDefinition> = {
+            A: { fields: { field3: { inputType: FieldDefinition.InputType.TEXT }} },
+            B: { parent: 'A', fields: { field4: { inputType: FieldDefinition.InputType.TEXT }} }
+        };
+
+        const languageConf = {
+            groups: {
+                'stem': 'Stem',
+                'parent': 'Parent'
+            },
+            categories: {
+                'A': { label: 'A_' },
+                'B': { label: 'B_' }
+            }
+        };
+
+        const result = categories(buildRawProjectConfiguration(
+            builtInCategories, {}, customCategories, {}, {}, {}, [], languageConf
+        ));
+
+        expect(result['A'].groups[0].label).toEqual('Stem');
+        expect(result['A'].groups[1].label).toEqual('A_');
+
+        expect(result['B'].groups[0].label).toEqual('Stem');
+        expect(result['B'].groups[1].label).toEqual('A_');
+        expect(result['B'].groups[2].label).toEqual('B_');
+    });
+
     // err cases
 
     xit('critical change of input type', () => {

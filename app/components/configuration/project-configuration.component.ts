@@ -23,20 +23,29 @@ const locale: string = require('electron').remote.getGlobal('config').locale;
  */
 export class ProjectConfigurationComponent {
 
-    public OVERRIDE_VISIBLE_FIELDS = ['identifier', 'shortDescription'];
-
     public categoriesTreeList: Array<Category>;
     public selectedCategory: Category;
     public selectedGroup: string;
 
+    private OVERRIDE_VISIBLE_FIELDS = ['identifier', 'shortDescription'];
 
-    constructor(public projectConfiguration: ProjectConfiguration,
+
+    constructor(private projectConfiguration: ProjectConfiguration,
                 private tabManager: TabManager) {
 
         this.categoriesTreeList = projectConfiguration.getCategoriesList()
             .filter(category => !category.parentCategory);
         this.selectCategory(this.categoriesTreeList[0]);
     }
+
+
+    public getValueLabel = ValuelistUtil.getValueLabel;
+
+    public getGroups = (category: Category): any[] => category.groups.map(to(Group.NAME));
+
+    public getValuelistDescription = (valuelist: ValuelistDefinition) => valuelist.description?.[locale];
+
+    public getCategoryDescription = (category: Category) => category.description?.[locale];
 
 
     public async onKeyDown(event: KeyboardEvent) {
@@ -52,9 +61,6 @@ export class ProjectConfigurationComponent {
     }
 
 
-    public getGroups = (category: Category): any[] => category.groups.map(to(Group.NAME));
-
-
     public getVisibleFields(category: Category): FieldDefinition[] {
 
         return category.groups
@@ -67,13 +73,4 @@ export class ProjectConfigurationComponent {
                 )
             );
     }
-
-    
-    public getValueLabel = ValuelistUtil.getValueLabel;
-
-
-    public getValuelistDescription = (valuelist: ValuelistDefinition) => valuelist.description?.[locale];
-
-
-    public getCategoryDescription = (category: Category) => category.description?.[locale];
 }

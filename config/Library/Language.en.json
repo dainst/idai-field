@@ -1,4 +1,11 @@
 {
+  "groups": {
+    "stem": "Core",
+    "time": "Time",
+    "position": "Position",
+    "dimension": "Dimensions",
+    "identification": "Identification"
+  },
   "commons": {
     "dimensionLength": {
       "label": "Length"

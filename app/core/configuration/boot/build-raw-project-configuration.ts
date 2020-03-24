@@ -1,5 +1,5 @@
 import {assoc, clone, cond, dissoc, flow, includedIn, isDefined, isNot, keys, keysAndValues, map, Map, on,
-    reduce, subtract, undefinedOrEmpty, update, identity, compose} from 'tsfun';
+    reduce, subtract, undefinedOrEmpty, update, identity, compose, lookup, Pair, pairWith, to} from 'tsfun';
 import {LibraryCategoryDefinition} from '../model/library-category-definition';
 import {CustomCategoryDefinition} from '../model/custom-category-definition';
 import {ConfigurationErrors} from './configuration-errors';
@@ -22,6 +22,8 @@ import {applySearchConfiguration} from './apply-search-configuration';
 import {orderFields} from './order-fields';
 import {makeCategoriesMap} from './make-categories-map';
 import {RawProjectConfiguration} from '../project-configuration';
+import {Category} from '../model/category';
+import {Group, Groups} from '../model/group';
 
 
 const CATEGORIES = 'categories';
@@ -65,7 +67,7 @@ export function buildRawProjectConfiguration(builtInCategories: Map<BuiltinCateg
         applyLanguage(languageConfiguration),
         applyLanguage(customLanguageConfiguration),
         applySearchConfiguration(searchConfiguration),
-        update(CATEGORIES, processCategories(orderConfiguration, validateFields)),
+        update(CATEGORIES, processCategories(orderConfiguration, validateFields, languageConfiguration)),
         asRawProjectConfiguration);
 }
 
@@ -73,13 +75,34 @@ export function buildRawProjectConfiguration(builtInCategories: Map<BuiltinCateg
 const asRawProjectConfiguration = ({categories, relations}: any) => ([categories, relations]);
 
 
-function processCategories(orderConfiguration: any, validateFields: any) {
+function processCategories(orderConfiguration: any, validateFields: any, languageConfiguration: any) {
 
     return compose(
         addExtraFieldsOrder(orderConfiguration),
         orderFields(orderConfiguration),
         validateFields,
-        makeCategoriesMap);
+        makeCategoriesMap,
+        setGroupLabels(languageConfiguration));
+}
+
+
+function setGroupLabels(languageConfiguration: any) {
+
+    return map((category: Category) => {
+
+        const getLabel = (name: string) => {
+
+            if (name === Groups.PARENT) return category.parentCategory?.label ?? category.label;
+            else if (name === Groups.CHILD) return category.label;
+            else return lookup(languageConfiguration.groups || {} /* TODO review */)(name)
+        };
+
+        return update(
+            Category.GROUPS,
+            compose(
+                map(pairWith(compose(to(Group.NAME), getLabel))),
+                map(([group, label]: Pair<Group, string>) => assoc(Group.LABEL, label)(group as any))))(category);
+    });
 }
 
 

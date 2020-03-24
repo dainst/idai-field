@@ -1,4 +1,11 @@
 {
+  "groups": {
+    "stem": "Stammdaten",
+    "time": "Zeit",
+    "position": "Lage",
+    "dimension": "Maße",
+    "identification": "Bestimmung"
+  },
   "commons": {
     "dimensionLength": {
       "label": "Länge",

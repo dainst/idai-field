@@ -62,16 +62,16 @@ export class TypeRelationPickerComponent {
     }
 
 
-    public setResource(resource: Resource) {
+    public async setResource(resource: Resource) {
 
         this.resource = resource;
-        this.fetchTypes();
+        await this.fetchTypes();
     }
 
 
-    public onSelectCatalog() {
+    public async onSelectCatalog() {
 
-        this.fetchTypes();
+        await this.fetchTypes();
     }
 
 
@@ -109,7 +109,8 @@ export class TypeRelationPickerComponent {
             to(FindResult.DOCUMENTS),
             map(to(Document.RESOURCE)),
             map(to(CRITERION)),
-            prune);
+            prune
+        );
     }
 
 
@@ -121,11 +122,11 @@ export class TypeRelationPickerComponent {
         };
         if (this.selectedCriterion) query.constraints = { 'criterion:match': this.selectedCriterion };
 
-        this.availableCatalogs =
-            flow(
-                await this.datastore.find(query),
-                to(FindResult.DOCUMENTS),
-                map(to(Document.RESOURCE)));
+        this.availableCatalogs = flow(
+            await this.datastore.find(query),
+            to(FindResult.DOCUMENTS),
+            map(to(Document.RESOURCE))
+        );
     }
 
 

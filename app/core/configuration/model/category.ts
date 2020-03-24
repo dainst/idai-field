@@ -40,12 +40,13 @@ export module Category {
         category.mustLieWithin = definition.mustLieWithin;
         category.name = definition.name;
         category.label = definition.label || category.name;
-        category.description = category.description;
-        category['fields'] = definition.fields || []; // TODO remove after construction
+        category.description = definition.description;
         category.groups = [];
         category.isAbstract = definition.abstract || false;
         category.color = definition.color ?? generateColorForCategory(definition.name);
         category.children = [];
+
+        category['fields'] = definition.fields || []; // TODO remove after construction
         return category as Category;
     }
 

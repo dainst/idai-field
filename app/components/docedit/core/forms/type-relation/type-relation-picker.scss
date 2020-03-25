@@ -4,12 +4,22 @@
     overflow: auto;
   }
 
+  input {
+    height: 39px;
+  }
+
   #criterion-select,
   #import-format-select {
     width: 175px;
+    margin-right: 8px;
   }
 
   .type-search-bar {
     width: 100%;
+    margin-right: 8px;
+
+    .search-bar-input {
+      width: 100%;
+    }
   }
 }

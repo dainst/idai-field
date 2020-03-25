@@ -1,4 +1,4 @@
-import {assoc, clone, cond, dissoc, flow, includedIn, isDefined, isNot, keys, keysAndValues, map, Map, on, is,
+import {assoc, clone, cond, dissoc, flow, includedIn, isDefined, isNot, keys, keysAndValues, Mapping, map, Map, on, is,
     reduce, subtract, undefinedOrEmpty, update, identity, compose, lookup, Pair, pairWith, to, separate} from 'tsfun';
 import {LibraryCategoryDefinition} from '../model/library-category-definition';
 import {CustomCategoryDefinition} from '../model/custom-category-definition';
@@ -176,7 +176,7 @@ function insertValuelistIds(mergedCategories: Map<TransientCategoryDefinition>) 
 
 
 function replaceValuelistIdsWithValuelists(valuelistDefinitionsMap: Map<ValuelistDefinition>)
-    : (categories: Map<TransientCategoryDefinition>) => Map<TransientCategoryDefinition> {
+    : Mapping<Map<TransientCategoryDefinition>> {
 
     return map(
         cond(
@@ -219,7 +219,7 @@ function eraseUnusedCategories(selectedCategoriesNames: string[]) {
 
 
 function replaceCommonFields(commonFields: Map)
-        : (mergedCategories: Map<TransientCategoryDefinition>) => Map<TransientCategoryDefinition> {
+        : Mapping<Map<TransientCategoryDefinition>> {
 
     return map(
         cond(

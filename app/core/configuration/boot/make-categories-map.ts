@@ -31,7 +31,7 @@ export function makeCategoriesMap(categories: any): Map<Category> {
         makeLookup(Named.NAME)
     );
 
-    const categoriesMap = flow(
+    return flow(
         childDefs,
         reduce(addChildCategory, parentCategories),
         flattenCategoriesTreeMapToCategoriesMap,
@@ -39,15 +39,6 @@ export function makeCategoriesMap(categories: any): Map<Category> {
         map(dissoc(TEMP_FIELDS)),
         map(dissocOn([Category.PARENT_CATEGORY, TEMP_FIELDS]))
     );
-
-    // TODO Remove this as soon as dissocOn does not create an empty object for undefined fields anymore
-    Object.keys(categoriesMap).forEach((categoryName: string) => {
-        if (categoriesMap[categoryName].parentCategory && !categoriesMap[categoryName].parentCategory.name) {
-            delete categoriesMap[categoryName].parentCategory;
-        }
-    });
-
-    return categoriesMap;
 }
 
 

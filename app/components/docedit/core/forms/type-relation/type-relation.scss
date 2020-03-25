@@ -6,19 +6,36 @@
 
   .add-type-relation {
     position: relative;
+    left: 16px;
     margin-bottom: 25px;
+
+    &:hover {
+      color: #fff !important;
+      background-color: #28a745;
+      transition: color .3s ease, background-color .3s ease;
+    }
   }
 
   .type-relation-entry {
     position: relative;
     height: 40px;
-    left: 3px;
+    left: 19px;
     margin-bottom: 10px;
+
+    .mdi-delete {
+      position: relative;
+      top: -1px;
+    }
 
     .relation-identifier {
       position: relative;
-      left: 40px;
-      top: 8px;
+      left: 59px;
+      top: 6px;
+
+      .badge {
+        font-weight: normal;
+        user-select: none;
+      }
     }
   }
 }

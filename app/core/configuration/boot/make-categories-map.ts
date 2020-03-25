@@ -8,7 +8,7 @@ import {makeLookup} from '../../util/utils';
 import {FieldDefinition} from '../model/field-definition';
 import {GroupUtil} from '../group-util';
 import {clone} from '../../util/object-util';
-import {Named} from '../../util/named';
+import {Named, namedArrayToNamedMap} from '../../util/named';
 
 
 const TEMP_FIELDS = 'fields';
@@ -71,7 +71,7 @@ function flattenCategoriesTreeMapToCategoriesMap(categoriesMap: Map<Category>): 
 
     const topLevelCategories: Array<Category> = values(categoriesMap);
     const children: Array<Category> = flatten(topLevelCategories.map(to(Category.CHILDREN)));
-    return makeLookup(Named.NAME)(topLevelCategories.concat(children))
+    return namedArrayToNamedMap(topLevelCategories.concat(children))
 }
 
 

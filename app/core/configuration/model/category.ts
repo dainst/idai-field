@@ -37,7 +37,8 @@ export module Category {
             category.groups,
             values,
             map(to(Group.FIELDS)),
-            flatten);
+            flatten
+        );
     }
 
 

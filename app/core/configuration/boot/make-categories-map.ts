@@ -28,15 +28,26 @@ export function makeCategoriesMap(categories: any): Map<Category> {
         parentDefs,
         map(buildCategoryFromDefinition),
         map(update(TEMP_FIELDS, ifUndefinedSetGroupTo(Groups.PARENT))),
-        makeLookup(Named.NAME));
+        makeLookup(Named.NAME)
+    );
 
-    return flow(
+    const categoriesMap = flow(
         childDefs,
         reduce(addChildCategory, parentCategories),
         flattenCategoriesTreeMapToCategoriesMap,
         fillGroups,
         map(dissoc(TEMP_FIELDS)),
-        map(dissocOn([Category.PARENT_CATEGORY, TEMP_FIELDS])));
+        map(dissocOn([Category.PARENT_CATEGORY, TEMP_FIELDS]))
+    );
+
+    // TODO Remove this as soon as dissocOn does not create an empty object for undefined fields anymore
+    Object.keys(categoriesMap).forEach((categoryName: string) => {
+        if (categoriesMap[categoryName].parentCategory && !categoriesMap[categoryName].parentCategory.name) {
+            delete categoriesMap[categoryName].parentCategory;
+        }
+    });
+
+    return categoriesMap;
 }
 
 
@@ -71,12 +82,11 @@ function flattenCategoriesTreeMapToCategoriesMap(categoriesMap: Map<Category>): 
 
     const topLevelCategories: Array<Category> = values(categoriesMap);
     const children: Array<Category> = flatten(topLevelCategories.map(to(Category.CHILDREN)));
-    return makeLookup(Named.NAME)(topLevelCategories.concat(children))
+    return makeLookup(Named.NAME)(topLevelCategories.concat(children));
 }
 
 
-function addChildCategory(categoriesMap: Map<Category>,
-                          childDefinition: CategoryDefinition): Map<Category> {
+function addChildCategory(categoriesMap: Map<Category>, childDefinition: CategoryDefinition): Map<Category> {
 
     return flow(childDefinition.parent,
         lookup(categoriesMap),

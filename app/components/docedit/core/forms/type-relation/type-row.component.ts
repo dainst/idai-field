@@ -22,6 +22,7 @@ export class TypeRowComponent implements OnChanges {
     @Input() images: Array<ImageRowItem>;
     @Output() onSelect: EventEmitter<void> = new EventEmitter<void>();
 
+
     constructor(private imagestore: ReadImagestore) {}
 
 

@@ -1,25 +1,39 @@
 #type-relation-modal {
+  .modal-header {
+    padding: 15px 7px;
+
+    input {
+      height: 39px;
+    }
+
+    #criterion-select,
+    #import-format-select {
+      width: 175px;
+      margin-right: 7px;
+    }
+
+    .type-search-bar {
+      width: 100%;
+      margin-right: 7px;
+
+      .search-bar-input {
+        width: 100%;
+      }
+    }
+
+    #close-button {
+      width: 40px;
+
+      span {
+        position: relative;
+        left: -1px;
+      }
+    }
+  }
+
   .modal-body {
     height: calc(100vh - 138px);
+    padding: 0;
     overflow: auto;
-  }
-
-  input {
-    height: 39px;
-  }
-
-  #criterion-select,
-  #import-format-select {
-    width: 175px;
-    margin-right: 8px;
-  }
-
-  .type-search-bar {
-    width: 100%;
-    margin-right: 8px;
-
-    .search-bar-input {
-      width: 100%;
-    }
   }
 }

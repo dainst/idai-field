@@ -3,7 +3,6 @@ import {to, on, is, includedIn, or} from 'tsfun';
 import {ProjectConfiguration} from '../../core/configuration/project-configuration';
 import {Category} from '../../core/configuration/model/category';
 import {FieldDefinition} from '../../core/configuration/model/field-definition';
-import {Group} from '../../core/configuration/model/group';
 import {ValuelistDefinition} from '../../core/configuration/model/valuelist-definition';
 import {ValuelistUtil} from '../../core/util/valuelist-util';
 import {TabManager} from '../../core/tabs/tab-manager';

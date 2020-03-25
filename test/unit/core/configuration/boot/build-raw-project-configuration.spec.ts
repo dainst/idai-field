@@ -1,4 +1,4 @@
-import {Map, left} from 'tsfun';
+import {Map, left, to} from 'tsfun';
 import {buildRawProjectConfiguration} from '../../../../../app/core/configuration/boot/build-raw-project-configuration';
 import {ConfigurationErrors} from '../../../../../app/core/configuration/boot/configuration-errors';
 import {FieldDefinition} from '../../../../../app/core/configuration/model/field-definition';
@@ -8,7 +8,7 @@ import {LibraryCategoryDefinition} from '../../../../../app/core/configuration/m
 import {ValuelistDefinition} from '../../../../../app/core/configuration/model/valuelist-definition';
 import {Groups} from '../../../../../app/core/configuration/model/group';
 import InputType = FieldDefinition.InputType;
-import {byName, namedArrayToNamedMap,} from '../../../../../app/core/util/named';
+import {byName, Named, namedArrayToNamedMap,} from '../../../../../app/core/util/named';
 
 
 const categories = left;
@@ -1216,6 +1216,30 @@ describe('buildRawProjectConfiguration', () => { // TODO test groups in idai typ
         expect(result['B'].groups[0].label).toEqual('Stem');
         expect(result['B'].groups[1].label).toEqual('A_');
         expect(result['B'].groups[2].label).toEqual('B_');
+    });
+
+
+    it('apply order', () => {
+
+        const builtInCategories: Map<BuiltinCategoryDefinition> = {
+            B: { fields: {} },
+            A: { fields: {} },
+            C: { fields: {} },
+        };
+
+        const customCategories: Map<CustomCategoryDefinition> = {
+            B: { fields: {} },
+            A: { fields: {} },
+            C: { fields: {} }
+        };
+
+        const orderConf = { categories: ['C', 'A'] };
+
+        const result = categories(buildRawProjectConfiguration(
+            builtInCategories, {}, customCategories, {}, {}, {}, [], {}, {}, {}, orderConf
+        )).map(to(Named.NAME));
+
+        expect(result).toEqual(['C', 'A', 'B']);
     });
 
     // err cases

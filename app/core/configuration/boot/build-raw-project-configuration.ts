@@ -1,5 +1,5 @@
-import {assoc, clone, cond, dissoc, flow, includedIn, isDefined, isNot, keys, keysAndValues, map, Map, on,
-    reduce, subtract, undefinedOrEmpty, update, identity, compose, lookup, Pair, pairWith, to} from 'tsfun';
+import {assoc, clone, cond, dissoc, flow, includedIn, isDefined, isNot, keys, keysAndValues, map, Map, on, is,
+    reduce, subtract, undefinedOrEmpty, update, identity, compose, lookup, Pair, pairWith, to, separate} from 'tsfun';
 import {LibraryCategoryDefinition} from '../model/library-category-definition';
 import {CustomCategoryDefinition} from '../model/custom-category-definition';
 import {ConfigurationErrors} from './configuration-errors';
@@ -29,7 +29,6 @@ import {Named, namedMapToNamedArray} from '../../util/named';
 
 const CATEGORIES = 'categories';
 
-// TODO apply order to categories, add test, get rid of test in config loader then
 // TODO put into relations into groups
 /**
  * @author Daniel de Oliveira
@@ -74,7 +73,7 @@ export function buildRawProjectConfiguration(builtInCategories: Map<BuiltinCateg
 }
 
 
-const asRawProjectConfiguration = ({categories, relations}: any) => ([namedMapToNamedArray(categories), relations]);
+const asRawProjectConfiguration = ({categories, relations}: any) => ([categories, relations]);
 
 
 function processCategories(orderConfiguration: any,
@@ -86,7 +85,36 @@ function processCategories(orderConfiguration: any,
         orderFields(orderConfiguration),
         validateFields,
         makeCategoriesMap,
-        setGroupLabels(languageConfiguration));
+        setGroupLabels(languageConfiguration),
+        namedMapToNamedArray,
+        orderCategories(orderConfiguration?.categories));
+}
+
+
+function orderCategories(categoriesOrder: string[] = []) {
+
+    return (categories: Array<Category>) => order(categories, categoriesOrder);
+}
+
+
+function order(categories: Array<Category>, categoriesOrder: string[]) { // TODO reimplement with reduce
+
+    let source = copy(categories);
+    let sortedCategories: Array<Category> = [];
+
+    for (let categoryName of categoriesOrder) {
+        const [match, rest] = separate(on(Named.NAME, is(categoryName)))(source);
+        sortedCategories = sortedCategories.concat(match);
+        source = rest;
+    }
+
+    const result = sortedCategories.concat(source);
+    for (let category of result) { // TODO test
+        if (category.children) {
+            category.children = order(category.children, categoriesOrder) as any;
+        }
+    }
+    return result;
 }
 
 

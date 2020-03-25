@@ -245,7 +245,7 @@ function replaceCommonFields(commonFields: Map)
 
 
 function toCategoriesByFamilyNames(transientCategories: Map<TransientCategoryDefinition>)
-        : Map<TransientCategoryDefinition> {
+        : Map<TransientCategoryDefinition> { // TODO impl this as const, with compose
 
     return flow(
         transientCategories,

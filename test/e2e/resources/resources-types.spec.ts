@@ -17,7 +17,7 @@ const common = require('../common');
 /**
  * @author Thomas Kleinke
  */
-describe('resources/type-grid --', () => {
+describe('resources/types --', () => {
 
     let index = 0;
 

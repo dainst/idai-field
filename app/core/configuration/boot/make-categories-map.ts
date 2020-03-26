@@ -1,10 +1,10 @@
 import {append, assoc, cond, defined, dissoc, dissocOn, flatten, flow, isNot, lookup, map, Map, Mapping, on,
-    prune, reduce, separate, throws, to, update, values, isUndefined} from 'tsfun';
+    reduce, separate, throws, to, update, values, isUndefined} from 'tsfun';
 import {MDInternal} from 'idai-components-2';
 import {Category} from '../model/category';
 import {CategoryDefinition} from '../model/category-definition';
-import {DEFAULT_GROUP_ORDER, Group, Groups} from '../model/group';
-import {makeLookup} from '../../util/utils';
+import {Group, Groups} from '../model/group';
+import {debugId, makeLookup} from '../../util/utils';
 import {FieldDefinition} from '../model/field-definition';
 import {GroupUtil} from '../group-util';
 import {clone} from '../../util/object-util';
@@ -51,7 +51,6 @@ const fillGroups = map((category: Category) => {
             (category as any)[TEMP_FIELDS],
             makeGroupsMap,
             map(sortGroupFields),
-            convertToSortedArray(DEFAULT_GROUP_ORDER)
         );
 
         return category;
@@ -95,16 +94,6 @@ function sortGroupFields(group: Group) {
 
     group.fields = GroupUtil.sortGroups(group.fields, group.name);
     return group;
-}
-
-
-function convertToSortedArray(defaultOrder: string[]) {
-
-    return (groups: Map<Group>) => flow(
-        defaultOrder,
-        map(lookup(groups)),
-        prune
-    );
 }
 
 

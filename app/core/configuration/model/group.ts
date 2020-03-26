@@ -12,18 +12,17 @@ export module Groups {
     export const PROPERTIES = 'properties';
     export const PARENT = 'parent';
     export const CHILD = 'child';
+
+    export const DEFAULT_ORDER = [
+        'stem',
+        'identification',
+        'parent',
+        'child',
+        'dimension',
+        'position',
+        'time'
+    ];
 }
-
-
-export const DEFAULT_GROUP_ORDER = [
-    'stem',
-    'identification',
-    'parent',
-    'child',
-    'dimension',
-    'position',
-    'time'
-];
 
 
 export interface Group extends Named {

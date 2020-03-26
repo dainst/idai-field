@@ -69,7 +69,7 @@ describe('makeCategoriesMap', () => {
 
       const categoriesMap = makeCategoriesMap(confDef);
 
-      expect(categoriesMap[T].groups[0].fields[0].name).toEqual(FieldResource.IDENTIFIER);
-      expect(categoriesMap[T].groups[0].fields[1].name).toEqual(FieldResource.SHORTDESCRIPTION);
+      expect(categoriesMap[T].groups[Groups.STEM].fields[0].name).toEqual(FieldResource.IDENTIFIER);
+      expect(categoriesMap[T].groups[Groups.STEM].fields[1].name).toEqual(FieldResource.SHORTDESCRIPTION);
    });
 });

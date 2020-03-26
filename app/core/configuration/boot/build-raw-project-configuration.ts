@@ -1,5 +1,5 @@
 import {assoc, clone, cond, dissoc, flow, includedIn, isDefined, isNot, keys, keysAndValues, Mapping, map, Map, on, is,
-    reduce, subtract, undefinedOrEmpty, update, identity, compose, lookup, Pair, pairWith, to, separate} from 'tsfun';
+    reduce, subtract, undefinedOrEmpty, update, identity, compose, lookup, Pair, pairWith, to, separate, prune} from 'tsfun';
 import {LibraryCategoryDefinition} from '../model/library-category-definition';
 import {CustomCategoryDefinition} from '../model/custom-category-definition';
 import {ConfigurationErrors} from './configuration-errors';
@@ -76,6 +76,27 @@ export function buildRawProjectConfiguration(builtInCategories: Map<BuiltinCateg
 }
 
 
+const asRawProjectConfiguration = ({categories, relations}: any) => ([categories, relations]);
+
+
+function processCategories(orderConfiguration: any,
+                           validateFields: any,
+                           languageConfiguration: any,
+                           relations: Array<RelationDefinition>): Mapping<Array<Category>> {
+
+    return compose(
+        addExtraFieldsOrder(orderConfiguration),
+        orderFields(orderConfiguration),
+        validateFields,
+        makeCategoriesMap,
+        map(putRelationsIntoGroups(relations)),
+        map(update(Category.GROUPS, sortGroups(Groups.DEFAULT_ORDER))),
+        setGroupLabels(languageConfiguration),
+        mapToNamedArray,
+        orderCategories(orderConfiguration?.categories));
+}
+
+
 function putRelationsIntoGroups(relations: Array<RelationDefinition>) {
 
     return (category: Category): /* ! modified in place */ Category => {
@@ -87,10 +108,10 @@ function putRelationsIntoGroups(relations: Array<RelationDefinition>) {
             const groupName: string|undefined = GroupUtil.getGroupName(relation.name);
             if (!groupName || relation.name === TypeRelations.INSTANCEOF) continue;
 
-            let group = category.groups.find(on(Named.NAME, is(groupName)));
+            let group = (category.groups as any)[groupName];
             if (!group) {
                 group = Group.create(groupName);
-                category.groups.push(group);
+                (category.groups as any)[groupName] = group;
             }
             group.relations.push(relation);
         }
@@ -99,25 +120,15 @@ function putRelationsIntoGroups(relations: Array<RelationDefinition>) {
 }
 
 
-const asRawProjectConfiguration = ({categories, relations}: any) => ([categories, relations]);
+function sortGroups(defaultOrder: string[]) {
 
-
-function processCategories(orderConfiguration: any,
-                           validateFields: any,
-                           languageConfiguration: any,
-                           relations: Array<RelationDefinition>) {
-
-    return compose(
-        addExtraFieldsOrder(orderConfiguration),
-        orderFields(orderConfiguration),
-        validateFields,
-        makeCategoriesMap,
-        map(putRelationsIntoGroups(relations)),
-        // TODO order groups here
-        setGroupLabels(languageConfiguration),
-        mapToNamedArray,
-        orderCategories(orderConfiguration?.categories));
+    return (groups: Map<Group>) => flow(
+        defaultOrder,
+        map(lookup(groups)),
+        prune
+    );
 }
+
 
 
 function orderCategories(categoriesOrder: string[] = []) {

@@ -31,7 +31,7 @@ export class DoceditPage {
     }
 
 
-     public static clickCloseEdit(action?: 'discard' | 'cancel' | 'save') {
+     public static clickCloseEdit(action?: 'discard'|'cancel'|'save') {
 
         browser.wait(EC.visibilityOf(element(by.id('document-edit-button-goto-view'))), delays.ECWaitTime);
         element(by.id('document-edit-button-goto-view')).click();
@@ -70,18 +70,6 @@ export class DoceditPage {
 
         common.click(element(by.id('edit-form-goto-identification')));
     }
-
-
-    public static clickImagesTab() {
-
-        common.click(element(by.id('docedit-images-tab')));
-    };
-
-
-    public static clickConflictsTab() {
-
-        common.click(element(by.id('docedit-conflicts-tab')));
-    };
 
 
     public static clickSaveDocument(clickMsgAway: boolean = false, waitForModalToClose: boolean = true) {

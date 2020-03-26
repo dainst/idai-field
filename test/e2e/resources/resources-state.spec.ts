@@ -525,6 +525,14 @@ describe('resources/state --', function() {
 
         ResourcesPage.clickHierarchyButton('S1');
         ResourcesPage.clickHierarchyButton('SE0');
+        ResourcesPage.clickOpenChildCollectionButton();
+
+        ResourcesPage.getNavigationButtons().then(navigationButtons => {
+            expect(navigationButtons.length).toBe(2);
+            expect(navigationButtons[0].getText()).toEqual('S1');
+            expect(navigationButtons[1].getText()).toEqual('SE0');
+        });
+
         ResourcesPage.clickOperationNavigationButton();
 
         ResourcesPage.clickOpenContextMenu('SE0');

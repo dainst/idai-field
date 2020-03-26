@@ -1,13 +1,13 @@
-import {UnorderedConfigurationDefinition} from '../model/unordered-configuration-definition';
+import {Map} from 'tsfun';
 import {CategoryDefinition} from '../model/category-definition';
 
 
 export function applySearchConfiguration(searchConfiguration: any) {
 
-    return (configuration: UnorderedConfigurationDefinition) => {
+    return (categories: Map<CategoryDefinition>) => {
 
         Object.keys(searchConfiguration).forEach(categoryName => {
-            const category: CategoryDefinition = configuration.categories[categoryName];
+            const category: CategoryDefinition = categories[categoryName];
             if (!category) return;
 
             applySearchConfigurationForCategory(searchConfiguration, category, categoryName, 'fulltext',
@@ -16,7 +16,7 @@ export function applySearchConfiguration(searchConfiguration: any) {
                 'constraintIndexed');
         });
 
-        return configuration;
+        return categories;
     }
 }
 

@@ -10,7 +10,7 @@ import {applySearchConfiguration} from '../../../../../app/core/configuration/bo
  */
 describe('applySearchConfiguration', () => {
 
-    let configuration;
+    let categories;
     let t1: LibraryCategoryDefinition;
 
     beforeEach(() => {
@@ -29,24 +29,17 @@ describe('applySearchConfiguration', () => {
             }
         } as LibraryCategoryDefinition;
 
-        configuration = {
-            identifier: 'test',
-            categories: {
-                'T1': t1
-            } as Map<LibraryCategoryDefinition>
-        } as any;
+        categories = {
+            'T1': t1
+        } as Map<LibraryCategoryDefinition>
     });
 
 
     it('apply search configuration', () => {
 
-        configuration = {
-            identifier: 'test',
-            categories: {
+        categories = {
                 A: { fields: { a1: {}, a2: {}, a3: {} } } as CategoryDefinition
-            },
-            relations: []
-        };
+        } ;
 
         const searchConfiguration = {
             'A': {
@@ -55,13 +48,13 @@ describe('applySearchConfiguration', () => {
             }
         };
 
-        applySearchConfiguration(searchConfiguration)(configuration);
+        applySearchConfiguration(searchConfiguration)(categories);
 
-        expect(configuration.categories['A'].fields['a1'].fulltextIndexed).toBeTruthy();
-        expect(configuration.categories['A'].fields['a2'].fulltextIndexed).toBeFalsy();
-        expect(configuration.categories['A'].fields['a3'].fulltextIndexed).toBeTruthy();
-        expect(configuration.categories['A'].fields['a1'].constraintIndexed).toBeFalsy();
-        expect(configuration.categories['A'].fields['a2'].constraintIndexed).toBeTruthy();
-        expect(configuration.categories['A'].fields['a3'].constraintIndexed).toBeTruthy();
+        expect(categories['A'].fields['a1'].fulltextIndexed).toBeTruthy();
+        expect(categories['A'].fields['a2'].fulltextIndexed).toBeFalsy();
+        expect(categories['A'].fields['a3'].fulltextIndexed).toBeTruthy();
+        expect(categories['A'].fields['a1'].constraintIndexed).toBeFalsy();
+        expect(categories['A'].fields['a2'].constraintIndexed).toBeTruthy();
+        expect(categories['A'].fields['a3'].constraintIndexed).toBeTruthy();
     });
 });

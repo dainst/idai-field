@@ -28,6 +28,7 @@ import {Named, mapToNamedArray} from '../../util/named';
 import {RelationsUtil} from '../relations-utils';
 import {GroupUtil} from '../group-util';
 import {TypeRelations} from '../../model/relation-constants';
+import {CategoryDefinition} from '../model/category-definition';
 
 
 const CATEGORIES = 'categories';
@@ -70,8 +71,8 @@ export function buildRawProjectConfiguration(builtInCategories: Map<BuiltinCateg
         addRelations(relations),
         applyLanguage(languageConfiguration),
         applyLanguage(customLanguageConfiguration),
-        applySearchConfiguration(searchConfiguration),
-        update(CATEGORIES, processCategories(orderConfiguration, validateFields, languageConfiguration, relations)),
+        update<any /* TODO make it possible to update from A->B */>(CATEGORIES, processCategories(
+            orderConfiguration, validateFields, languageConfiguration, searchConfiguration, relations)),
         asRawProjectConfiguration);
 }
 
@@ -82,9 +83,11 @@ const asRawProjectConfiguration = ({categories, relations}: any) => ([categories
 function processCategories(orderConfiguration: any,
                            validateFields: any,
                            languageConfiguration: any,
-                           relations: Array<RelationDefinition>): Mapping<Array<Category>> {
+                           searchConfiguration: any,
+                           relations: Array<RelationDefinition>): Mapping<Map<CategoryDefinition>, Array<Category>> {
 
     return compose(
+        applySearchConfiguration(searchConfiguration),
         addExtraFieldsOrder(orderConfiguration),
         orderFields(orderConfiguration),
         validateFields,
@@ -197,7 +200,7 @@ function addExtraFieldsOrder(orderConfiguration: any) {
 
 function wrapCategoriesInObject(configuration: Map<TransientCategoryDefinition>) {
 
-    return { categories: configuration, relations: [], groups: {} }
+    return { categories: configuration, relations: [], groups: {} } // TODO remove groups here
 }
 
 

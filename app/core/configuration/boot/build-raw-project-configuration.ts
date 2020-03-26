@@ -32,7 +32,7 @@ import {TypeRelations} from '../../model/relation-constants';
 
 const CATEGORIES = 'categories';
 
-// TODO put into relations into groups
+
 /**
  * @author Daniel de Oliveira
  * @author Thomas Kleinke

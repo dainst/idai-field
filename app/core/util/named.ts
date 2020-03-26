@@ -27,7 +27,7 @@ export function namedArrayToNamedMap<A extends Named>(as: Array<A>): Map<A> {
     return makeLookup(Named.NAME)(as); // TODO maybe remove names afterwards
 }
 
-export function namedMapToNamedArray<A extends Map>(m: Map<A>) {
+export function mapToNamedArray<A extends Map>(m: Map<A>) {
 
     return mapToArray(Named.NAME)(m) as Array<Named | Map>;
 }

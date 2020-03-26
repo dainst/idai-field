@@ -1,5 +1,4 @@
-import {Map} from 'tsfun';
-import {namedArrayToNamedMap, namedMapToNamedArray} from '../../../../app/core/util/named';
+import {namedArrayToNamedMap, mapToNamedArray} from '../../../../app/core/util/named';
 
 /**
  * @author Daniel de Oliveira
@@ -26,7 +25,7 @@ describe('named', () => {
         const namedMap =  {'17': { e: 3 }, '19': { e: 7 }};
 
         expect(
-            namedMapToNamedArray(namedMap)
+            mapToNamedArray(namedMap)
         ).toEqual(
             [{e: 3, name: '17'}, {e: 7, name: '19'}]
         );

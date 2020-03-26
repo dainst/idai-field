@@ -24,7 +24,7 @@ import {makeCategoriesMap} from './make-categories-map';
 import {RawProjectConfiguration} from '../project-configuration';
 import {Category} from '../model/category';
 import {Group, Groups} from '../model/group';
-import {Named, namedMapToNamedArray} from '../../util/named';
+import {Named, mapToNamedArray} from '../../util/named';
 import {RelationsUtil} from '../relations-utils';
 import {GroupUtil} from '../group-util';
 import {TypeRelations} from '../../model/relation-constants';
@@ -115,7 +115,7 @@ function processCategories(orderConfiguration: any,
         map(putRelationsIntoGroups(relations)),
         // TODO order groups here
         setGroupLabels(languageConfiguration),
-        namedMapToNamedArray,
+        mapToNamedArray,
         orderCategories(orderConfiguration?.categories));
 }
 

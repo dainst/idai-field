@@ -1,6 +1,6 @@
 import {Map, values} from 'tsfun';
 import {SortUtil} from './sort-util';
-import {makeLookup} from './utils';
+import {makeLookup, mapToArray} from './utils';
 
 
 // @author Daniel de Oliveira
@@ -27,9 +27,9 @@ export function namedArrayToNamedMap<A extends Named>(as: Array<A>): Map<A> {
     return makeLookup(Named.NAME)(as); // TODO maybe remove names afterwards
 }
 
-export function namedMapToNamedArray<A extends Named>(m: Map<A>): Array<A> {
+export function namedMapToNamedArray<A extends Map>(m: Map<A>) {
 
-    return values(m);
+    return mapToArray(Named.NAME)(m) as Array<Named | Map>;
 }
 
 export const byName = (a: Named, b: Named) => SortUtil.alnumCompare(a.name, b.name); // to be used with sort

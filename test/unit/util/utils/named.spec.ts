@@ -1,3 +1,4 @@
+import {Map} from 'tsfun';
 import {namedArrayToNamedMap, namedMapToNamedArray} from '../../../../app/core/util/named';
 
 /**
@@ -22,7 +23,7 @@ describe('named', () => {
 
     it('namedArrayToNamedMap', () => {
 
-        const namedMap =  {'17': { name: '17', e: 3 }, '19': { name: '19', e: 7 }};
+        const namedMap =  {'17': { e: 3 }, '19': { e: 7 }};
 
         expect(
             namedMapToNamedArray(namedMap)

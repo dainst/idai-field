@@ -281,7 +281,7 @@ export module ConstraintIndex {
             fields.push({
                 name: field.name + 'End',
                 group: field.group
-            })
+            } as any /* TODO review */)
         });
 
         return fields;

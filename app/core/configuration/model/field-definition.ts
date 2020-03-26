@@ -6,28 +6,10 @@ import {ValuelistDefinition} from './valuelist-definition';
  */
 export interface FieldDefinition {
 
-    label?: string;
     name: string;
+    inputType: FieldDefinition.InputType,
+    label?: string;
     description?: string;
-    inputType?:
-        'input'
-        |'unsignedInt'
-        |'unsignedFloat'
-        |'float'
-        |'text'
-        |'multiInput'
-        |'dropdown'
-        |'dropdownRange'
-        |'radio'
-        |'boolean'
-        |'checkboxes'
-        |'dating'
-        |'date'
-        |'dimension'
-        |'literature'
-        |'geometry'
-        |'instanceOf'
-        |'default';
     valuelist?: ValuelistDefinition;
     valuelistFromProjectField?: string;
     editable?: boolean;                 // defaults to true
@@ -61,6 +43,25 @@ export module FieldDefinition {
         export const CUSTOM = 'custom';
         export const COMMON = 'common';
     }
+
+    export type InputType = 'input'
+        |'unsignedInt'
+        |'unsignedFloat'
+        |'float'
+        |'text'
+        |'multiInput'
+        |'dropdown'
+        |'dropdownRange'
+        |'radio'
+        |'boolean'
+        |'checkboxes'
+        |'dating'
+        |'date'
+        |'dimension'
+        |'literature'
+        |'geometry'
+        |'instanceOf'
+        |'default';
 
     export module InputType {
 

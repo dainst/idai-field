@@ -89,7 +89,7 @@ function putRelationsIntoGroups(relations: Array<RelationDefinition>) {
 
             let group = category.groups.find(on(Named.NAME, is(groupName)));
             if (!group) {
-                group = { fields: [], name: groupName, label: '', relations: [] }; // TODO extract
+                group = Group.create(groupName);
                 category.groups.push(group);
             }
             group.relations.push(relation);

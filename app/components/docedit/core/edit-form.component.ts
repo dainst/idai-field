@@ -101,7 +101,7 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
             const groupName: string|undefined = GroupUtil.getGroupName(relation.name);
             if (!groupName || relation.name === TypeRelations.INSTANCEOF) continue;
 
-            const group = this.groups.find(group => group.name === groupName) as EditFormGroup;
+            const group = this.groups.find(on(Named.NAME, is(groupName))) as EditFormGroup;
             group.relations.push(relation);
         }
     }
@@ -111,7 +111,7 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
 
         for (let originalGroup of this.originalGroups) {
             const group = this.groups.find(on(Named.NAME)(originalGroup))!;
-            if (originalGroup.label) group.label = originalGroup.label; // TODO do unconditional
+            group.label = originalGroup.label;
             group.fields = originalGroup.fields;
         }
 

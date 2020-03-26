@@ -97,7 +97,7 @@ function orderCategories(categoriesOrder: string[] = []) {
 }
 
 
-function order(categories: Array<Category>, categoriesOrder: string[]) { // TODO reimplement with reduce
+function order(categories: Array<Category>, categoriesOrder: string[]) {
 
     let source = copy(categories);
     let sortedCategories: Array<Category> = [];

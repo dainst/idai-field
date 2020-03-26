@@ -46,12 +46,12 @@ describe('resources/types --', () => {
     });
 
 
-    function createTypeCatalogAndType() {
+    function createTypeCatalogAndType(typeCatalogIdentifier: string = 'TC1', typeIdentifier: string = 'T1') {
 
-        ResourcesPage.performCreateResource('tc1', 'TypeCatalog', undefined,
-            undefined, true, true);
-        ResourcesTypeGridPage.clickGridElement('tc1');
-        ResourcesPage.performCreateResource('t1', 'Type', undefined,
+        ResourcesPage.performCreateResource(typeCatalogIdentifier, 'TypeCatalog',
+            undefined, undefined, true, true);
+        ResourcesTypeGridPage.clickGridElement(typeCatalogIdentifier);
+        ResourcesPage.performCreateResource(typeIdentifier, 'Type', undefined,
             undefined, true, true);
     }
 
@@ -69,22 +69,53 @@ describe('resources/types --', () => {
     }
 
 
+    function setCriterion(criterionIndex: number) {
+
+        ResourcesTypeGridPage.clickEditButton();
+        DoceditPage.clickGotoIdentificationTab();
+        DoceditPage.clickSelectOption('criterion', criterionIndex);
+        DoceditPage.clickSaveDocument();
+    }
+
+
+    function checkCriterionOptions(expectedOptions: string[]) {
+
+        DoceditTypeRelationsTabPage.getCriterionOptions().then(options => {
+            expect(options.length).toBe(expectedOptions.length);
+            for (let i = 0; i < options.length; i++) {
+                expect(options[i].getText()).toEqual(expectedOptions[i]);
+            }
+        });
+    }
+
+
+    function checkCatalogOptions(expectedOptions: string[]) {
+
+        DoceditTypeRelationsTabPage.getCatalogOptions().then(options => {
+            expect(options.length).toBe(expectedOptions.length);
+            for (let i = 0; i < options.length; i++) {
+                expect(options[i].getText()).toEqual(expectedOptions[i]);
+            }
+        });
+    }
+
+
     it('Show linked find for type', () => {
 
         createTypeCatalogAndType();
 
-        ResourcesTypeGridPage.clickGridElement('t1');
+        ResourcesTypeGridPage.clickGridElement('T1');
         browser.wait(EC.stalenessOf(ResourcesTypeGridPage.getLinkedDocumentsGrid()));
 
         linkWithFind();
         browser.wait(EC.presenceOf(ResourcesTypeGridPage.getLinkedDocumentGridElement('testf1')));
 
-        ResourcesPage.clickNavigationButton('tc1');
+        ResourcesPage.clickNavigationButton('TC1');
         browser.sleep(delays.shortRest);
         browser.wait(EC.presenceOf(ResourcesTypeGridPage.getLinkedDocumentGridElement('testf1')));
 
         ResourcesTypeGridPage.getTypeBadgeText('testf1').then(text => {
-            expect(text).toBe('t1');
+            expect(text).toBe('T1');
         });
     });
 
@@ -92,7 +123,7 @@ describe('resources/types --', () => {
     it('Do not show linked finds in extended search mode', () => {
 
         createTypeCatalogAndType();
-        ResourcesTypeGridPage.clickGridElement('t1');
+        ResourcesTypeGridPage.clickGridElement('T1');
         linkWithFind();
 
         ResourcesPage.clickSwitchHierarchyMode();
@@ -109,22 +140,22 @@ describe('resources/types --', () => {
         createTypeCatalogAndType();
 
         ResourcesTypeGridPage.clickTypeCatalogsNavigationButton();
-        ResourcesPage.performCreateResource('tc2', 'TypeCatalog', undefined,
+        ResourcesPage.performCreateResource('TC2', 'TypeCatalog', undefined,
             undefined, true, true);
 
-        ResourcesTypeGridPage.clickGridElement('tc1');
-        ResourcesTypeGridPage.clickOpenContextMenu('t1');
+        ResourcesTypeGridPage.clickGridElement('TC1');
+        ResourcesTypeGridPage.clickOpenContextMenu('T1');
         ResourcesPage.clickContextMenuMoveButton();
-        ResourcesPage.typeInMoveModalSearchBarInput('tc2');
-        ResourcesPage.clickResourceListItemInMoveModal('tc2');
+        ResourcesPage.typeInMoveModalSearchBarInput('TC2');
+        ResourcesPage.clickResourceListItemInMoveModal('TC2');
         browser.wait(EC.stalenessOf(ResourcesPage.getMoveModal()), delays.ECWaitTime);
 
         browser.sleep(delays.shortRest);
-        browser.wait(EC.presenceOf(ResourcesTypeGridPage.getTypeGridElement('t1')),
+        browser.wait(EC.presenceOf(ResourcesTypeGridPage.getTypeGridElement('T1')),
             delays.ECWaitTime);
 
         ResourcesTypeGridPage.getActiveNavigationButtonText().then(text => {
-            expect(text).toEqual('tc2');
+            expect(text).toEqual('TC2');
         });
     });
 
@@ -132,17 +163,17 @@ describe('resources/types --', () => {
     it('Delete a type', () => {
 
         createTypeCatalogAndType();
-        ResourcesTypeGridPage.clickGridElement('t1');
+        ResourcesTypeGridPage.clickGridElement('T1');
         linkWithFind();
 
-        ResourcesPage.clickNavigationButton('tc1');
+        ResourcesPage.clickNavigationButton('TC1');
 
-        ResourcesTypeGridPage.clickOpenContextMenu('t1');
+        ResourcesTypeGridPage.clickOpenContextMenu('T1');
         ResourcesPage.clickContextMenuDeleteButton();
-        ResourcesPage.typeInIdentifierInConfirmDeletionInputField('t1');
+        ResourcesPage.typeInIdentifierInConfirmDeletionInputField('T1');
         ResourcesPage.clickConfirmDeleteInModal();
 
-        browser.wait(EC.stalenessOf(ResourcesTypeGridPage.getTypeGridElement('t1')),
+        browser.wait(EC.stalenessOf(ResourcesTypeGridPage.getTypeGridElement('T1')),
             delays.ECWaitTime);
         browser.wait(EC.stalenessOf(ResourcesTypeGridPage.getLinkedDocumentGridElement('testf1')),
             delays.ECWaitTime);
@@ -161,17 +192,62 @@ describe('resources/types --', () => {
         ResourcesPage.openEditByDoubleClickResource('testf1');
         DoceditPage.clickGotoIdentificationTab();
         DoceditTypeRelationsTabPage.clickAddTypeRelationButton('instanceOf');
-        DoceditTypeRelationsTabPage.clickType('t1');
+        DoceditTypeRelationsTabPage.clickType('T1');
         DoceditPage.clickSaveDocument();
 
         ResourcesPage.clickSelectResource('testf1', 'info');
         FieldsViewPage.clickAccordionTab(1);
         FieldsViewPage.getRelationValue(1, 0).then(relationValue => {
-            expect(relationValue).toEqual('t1');
+            expect(relationValue).toEqual('T1');
         });
 
         MenuPage.navigateToTypes();
         browser.wait(EC.presenceOf(ResourcesTypeGridPage.getLinkedDocumentGridElement('testf1')),
             delays.ECWaitTime);
+    });
+
+
+    it('Filter types in type relation picker by criterion & catalog', () => {
+
+        createTypeCatalogAndType();
+        setCriterion(1);
+
+        ResourcesTypeGridPage.clickTypeCatalogsNavigationButton();
+        createTypeCatalogAndType('TC2', 'T2');
+        setCriterion(2);
+
+        NavbarPage.clickCloseNonResourcesTab();
+        ResourcesPage.clickHierarchyButton('S1');
+        ResourcesPage.clickHierarchyButton('SE0');
+        ResourcesPage.clickOpenChildCollectionButton();
+
+        ResourcesPage.openEditByDoubleClickResource('testf1');
+        DoceditPage.clickGotoIdentificationTab();
+        DoceditTypeRelationsTabPage.clickAddTypeRelationButton('instanceOf');
+
+        checkCriterionOptions(['Kein Kriterium', 'Form', 'Material']);
+        checkCatalogOptions(['Alle Kataloge', 'TC1', 'TC2']);
+        browser.wait(EC.presenceOf(DoceditTypeRelationsTabPage.getTypeRow('T1')), delays.ECWaitTime);
+        browser.wait(EC.presenceOf(DoceditTypeRelationsTabPage.getTypeRow('T2')), delays.ECWaitTime);
+
+        DoceditTypeRelationsTabPage.clickCriterionOption(1);
+        checkCatalogOptions(['Alle Kataloge', 'TC1']);
+        browser.wait(EC.stalenessOf(DoceditTypeRelationsTabPage.getTypeRow('T2')), delays.ECWaitTime);
+
+        DoceditTypeRelationsTabPage.clickCriterionOption(2);
+        checkCatalogOptions(['Alle Kataloge', 'TC2']);
+        browser.wait(EC.stalenessOf(DoceditTypeRelationsTabPage.getTypeRow('T1')), delays.ECWaitTime);
+        browser.wait(EC.presenceOf(DoceditTypeRelationsTabPage.getTypeRow('T2')), delays.ECWaitTime);
+
+        DoceditTypeRelationsTabPage.clickCriterionOption(0);
+        checkCatalogOptions(['Alle Kataloge', 'TC1', 'TC2']);
+        browser.wait(EC.presenceOf(DoceditTypeRelationsTabPage.getTypeRow('T1')), delays.ECWaitTime);
+
+        DoceditTypeRelationsTabPage.clickCatalogOption(1);
+        browser.wait(EC.stalenessOf(DoceditTypeRelationsTabPage.getTypeRow('T2')), delays.ECWaitTime);
+
+        DoceditTypeRelationsTabPage.clickCatalogOption(2);
+        browser.wait(EC.stalenessOf(DoceditTypeRelationsTabPage.getTypeRow('T1')), delays.ECWaitTime);
+        browser.wait(EC.presenceOf(DoceditTypeRelationsTabPage.getTypeRow('T2')), delays.ECWaitTime);
     });
 });

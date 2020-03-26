@@ -11,7 +11,6 @@ let EC = protractor.ExpectedConditions;
  */
 export class DoceditPage {
 
-
     private static clickSaveInModal() {
 
         common.click(element(by.id('overview-save-confirmation-modal-save-button')));
@@ -40,12 +39,6 @@ export class DoceditPage {
         if (action === 'discard') this.clickDiscardInModal();
         if (action === 'cancel') this.clickCancelInModal();
         if (action === 'save') this.clickSaveInModal();
-    };
-
-
-    public static clickFieldsTab() {
-
-        common.click(element(by.id('docedit-fields-tab')));
     };
 
 

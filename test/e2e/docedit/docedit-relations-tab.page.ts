@@ -16,20 +16,22 @@ export class DoceditRelationsTabPage {
 
     public static clickChooseRelationSuggestion(groupName, pickerIndex, suggestionIndex) {
 
-        browser.wait(EC.visibilityOf(element.all(by.css('.suggestion')).get(suggestionIndex)), delays.ECWaitTime);
-        element(by.id(groupName)).all(by.css('.suggestion')).get(suggestionIndex).click();
+        browser.wait(EC.visibilityOf(element.all(by.css('.suggestion')).get(suggestionIndex)),
+            delays.ECWaitTime);
+        common.click(element(by.id(groupName)).all(by.css('.suggestion')).get(suggestionIndex));
     };
 
 
     public static clickAddRelationForGroupWithIndex(groupName) {
 
-        element(by.id(groupName)).element(by.css('.circular-button.add-relation')).click();
+        common.click(element(by.id(groupName)).element(by.css('.circular-button.add-relation')));
     };
 
 
     public static clickRelationDeleteButtonByIndices(groupName, pickerIndex = 0) {
 
-        return this.getRelationElByName(groupName, pickerIndex).element(by.css('.delete-relation')).click();
+        common.click(this.getRelationElByName(groupName, pickerIndex)
+            .element(by.css('.delete-relation')));
     };
 
 

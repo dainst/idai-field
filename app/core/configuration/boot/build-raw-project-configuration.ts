@@ -65,13 +65,13 @@ export function buildRawProjectConfiguration(builtInCategories: Map<BuiltinCateg
         Assertions.assertValuelistIdsProvided,
         hideFields(customCategories),
         toCategoriesByFamilyNames,
-        replaceValuelistIdsWithValuelists(valuelistsConfiguration as any),
+        replaceValuelistIdsWithValuelists(valuelistsConfiguration),
         addExtraFields(extraFields),
         wrapCategoriesInObject,
         addRelations(relations),
         applyLanguage(languageConfiguration),
         applyLanguage(customLanguageConfiguration),
-        update<any /* TODO make it possible to update from A->B */>(CATEGORIES, processCategories(
+        update<any>(CATEGORIES, processCategories(
             orderConfiguration, validateFields, languageConfiguration, searchConfiguration, relations)),
         asRawProjectConfiguration);
 }

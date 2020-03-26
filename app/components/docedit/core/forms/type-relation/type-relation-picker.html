@@ -8,7 +8,7 @@
                     [ngValue]="criterion.name">{{criterion.label}}</option>
         </select>
 
-        <select id="import-format-select" class="form-control"
+        <select id="catalog-select" class="form-control"
                 [(ngModel)]="selectedCatalog" (change)="onSelectCatalog()">
             <option [ngValue]="undefined"
                     i18n="@@docedit.forms.typeRelationPicker.allCatalogs">Alle Kataloge</option>

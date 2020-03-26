@@ -71,19 +71,15 @@ export function buildRawProjectConfiguration(builtInCategories: Map<BuiltinCateg
         applyLanguage(languageConfiguration),
         applyLanguage(customLanguageConfiguration),
         applySearchConfiguration(searchConfiguration),
-        update(CATEGORIES, processCategories(orderConfiguration, validateFields, languageConfiguration)),
-        putRelationsIntoGroups, // TODO groups should be ordered only after this step
+        update(CATEGORIES, processCategories(orderConfiguration, validateFields, languageConfiguration, relations)),
         asRawProjectConfiguration);
 }
 
 
-/**
- * @param categories ! modified in place
- * @param relations
- */
-function putRelationsIntoGroups({categories, relations}: any) { // TODO review; maybe we could also store the relations as is in projectConfiguration, and deliver them only via the category getters, by associng to the groups on the fly
+function putRelationsIntoGroups(relations: Array<RelationDefinition>) {
 
-    for (let category of categories) {
+    return (category: Category): /* ! modified in place */ Category => {
+
         const relDefs = RelationsUtil.getRelationDefinitions(relations, category.name);
 
         for (let relation of relDefs) {
@@ -93,13 +89,13 @@ function putRelationsIntoGroups({categories, relations}: any) { // TODO review; 
 
             let group = category.groups.find(on(Named.NAME, is(groupName)));
             if (!group) {
-                group = { fields: [], name: groupName, label: '', relations: [] }; // TODO extract, setLabel
+                group = { fields: [], name: groupName, label: '', relations: [] }; // TODO extract
                 category.groups.push(group);
             }
             group.relations.push(relation);
         }
+        return category;
     }
-    return {categories, relations};
 }
 
 
@@ -108,13 +104,16 @@ const asRawProjectConfiguration = ({categories, relations}: any) => ([categories
 
 function processCategories(orderConfiguration: any,
                            validateFields: any,
-                           languageConfiguration: any) {
+                           languageConfiguration: any,
+                           relations: Array<RelationDefinition>) {
 
     return compose(
         addExtraFieldsOrder(orderConfiguration),
         orderFields(orderConfiguration),
         validateFields,
         makeCategoriesMap,
+        map(putRelationsIntoGroups(relations)),
+        // TODO order groups here
         setGroupLabels(languageConfiguration),
         namedMapToNamedArray,
         orderCategories(orderConfiguration?.categories));

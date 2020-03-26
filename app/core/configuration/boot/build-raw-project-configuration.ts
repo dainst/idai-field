@@ -72,7 +72,7 @@ export function buildRawProjectConfiguration(builtInCategories: Map<BuiltinCateg
         applyLanguage(customLanguageConfiguration),
         applySearchConfiguration(searchConfiguration),
         update(CATEGORIES, processCategories(orderConfiguration, validateFields, languageConfiguration)),
-        putRelationsIntoGroups,
+        putRelationsIntoGroups, // TODO groups should be ordered only after this step
         asRawProjectConfiguration);
 }
 

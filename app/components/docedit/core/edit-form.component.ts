@@ -1,17 +1,19 @@
 import {AfterViewInit, Component, ElementRef, Input, OnChanges, ViewChild} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
-import {is, isNot, to, on, undefinedOrEmpty} from 'tsfun';
+import {isUndefinedOrEmpty, copy} from 'tsfun';
 import {Document} from 'idai-components-2';
 import {ProjectCategories} from '../../../core/configuration/project-categories';
-import {GroupUtil} from '../../../core/configuration/group-util';
 import {GROUP_NAME} from '../../constants';
 import {FieldDefinition} from '../../../core/configuration/model/field-definition';
 import {RelationDefinition} from '../../../core/configuration/model/relation-definition';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
-import {Category} from '../../../core/configuration/model/category';
-import {TypeRelations} from '../../../core/model/relation-constants';
-import {EditFormGroup, Group} from '../../../core/configuration/model/group';
-import {Named} from '../../../core/util/named';
+import {Group} from '../../../core/configuration/model/group';
+
+
+export interface EditFormGroup extends Group {
+
+    widget: string|undefined;
+}
 
 
 @Component({
@@ -30,24 +32,17 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
     @Input() document: any;
     @Input() fieldDefinitions: Array<FieldDefinition>;
     @Input() originalGroups: Array<Group>;
-    @Input() relationDefinitions: Array<RelationDefinition>;
     @Input() inspectedRevisions: Document[];
     @Input() activeGroup: string;
 
 
     public categories: string[];
 
-    public groups: Array<EditFormGroup> = [
-        { name: 'stem', label: '', fields: [], relations: [], widget: 'generic' },
-        { name: 'identification', label: '', fields: [], relations: [], widget: 'generic' },
-        { name: 'parent', label: '', fields: [], relations: [], widget: 'generic' },
-        { name: 'child', label: '', fields: [], relations: [], widget: 'generic' },
-        { name: 'dimension', label: '', fields: [], relations: [], widget: 'generic' },
-        { name: 'position', label: '', fields: [], relations: [], widget: 'generic' },
-        { name: 'time', label: '', fields: [], relations: [], widget: 'generic' },
+    public extraGroups: Array<EditFormGroup> = [
         { name: 'images', label: this.i18n({ id: 'docedit.group.images', value: 'Bilder' }), fields: [], relations: [], widget: undefined },
-        { name: 'conflicts', label: this.i18n({ id: 'docedit.group.conflicts', value: 'Konflikte' }), fields: [], relations: [], widget: undefined } ];
+        { name: 'conflicts', label: this.i18n({ id: 'docedit.group.conflicts', value: 'Konflikte' }), fields: [], relations: [], widget: undefined }];
 
+    public groups: Array<EditFormGroup> = [];
 
     constructor(private elementRef: ElementRef,
                 private i18n: I18n,
@@ -88,32 +83,15 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
 
     ngOnChanges() {
 
-        if (isNot(undefinedOrEmpty)(this.originalGroups)) this.setFields();
-        if (isNot(undefinedOrEmpty)(this.relationDefinitions)) this.setRelations();
-    }
+        if (isUndefinedOrEmpty(this.originalGroups)) return;
 
-
-    private setRelations() {
-
-        this.groups.forEach(group => group.relations = []);
-
-        for (let relation of this.relationDefinitions) {
-            const groupName: string|undefined = GroupUtil.getGroupName(relation.name);
-            if (!groupName || relation.name === TypeRelations.INSTANCEOF) continue;
-
-            const group = this.groups.find(on(Named.NAME, is(groupName))) as EditFormGroup;
-            group.relations.push(relation);
-        }
-    }
-
-
-    private setFields() {
-
+        this.groups = [];
         for (let originalGroup of this.originalGroups) {
-            const group = this.groups.find(on(Named.NAME)(originalGroup))!;
-            group.label = originalGroup.label;
-            group.fields = originalGroup.fields;
+            const group = copy(originalGroup);
+            group['widget'] = 'generic'; // TODO unnecessary?
+            this.groups.push(group as any);
         }
+        this.groups = this.groups.concat(this.extraGroups);
 
         if (this.projectCategories.isGeometryCategory(this.document.resource.category)) {
             this.groups[GROUP_NAME.POSITION].fields.push({

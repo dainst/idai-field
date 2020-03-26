@@ -3,6 +3,7 @@ import {Category} from './model/category';
 import {FieldDefinition} from './model/field-definition';
 import {RelationDefinition} from './model/relation-definition';
 import {Named, namedArrayToNamedMap} from '../util/named';
+import {RelationsUtil} from './relations-utils';
 
 
 export type RawProjectConfiguration = Pair<Array<Category>, Array<RelationDefinition>>;
@@ -89,7 +90,7 @@ export class ProjectConfiguration {
     public getRelationDefinitions(categoryName: string, isRangeCategory: boolean = false,
                                   property?: string): Array<RelationDefinition> {
 
-        return this.getRelationDefinitions_(categoryName, isRangeCategory, property);
+        return RelationsUtil.getRelationDefinitions(this.relations, categoryName, isRangeCategory, property);
     }
 
     /**
@@ -198,24 +199,6 @@ export class ProjectConfiguration {
             filter(on(Named.NAME, is(fieldName))),
             filter(on(propertyName, is(true))),
             isNot(empty));
-    }
-
-
-    private getRelationDefinitions_(categoryName: string, isRangeCategory: boolean = false, property?: string) {
-
-        const availableRelationFields: Array<RelationDefinition> = [];
-        for (let relationField of this.relations) {
-
-            const categories: string[] = isRangeCategory ? relationField.range : relationField.domain;
-            if (categories.indexOf(categoryName) > -1) {
-                if (!property ||
-                    (relationField as any)[property] == undefined ||
-                    (relationField as any)[property] == true) {
-                    availableRelationFields.push(relationField);
-                }
-            }
-        }
-        return availableRelationFields;
     }
 
 

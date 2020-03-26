@@ -44,7 +44,7 @@ export class DoceditComponent {
     public subModalOpened: boolean = false;
     public fieldDefinitions: Array<FieldDefinition>|undefined;
     public groups: Array<Group>|undefined;
-    public relationDefinitions: Array<RelationDefinition>;
+    public relationDefinitions: Array<RelationDefinition>; // TODO maybe unnecessary
 
     private parentLabel: string|undefined = undefined;
     private showDoceditImagesTab: boolean = false;

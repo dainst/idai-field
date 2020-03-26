@@ -25,6 +25,9 @@ import {RawProjectConfiguration} from '../project-configuration';
 import {Category} from '../model/category';
 import {Group, Groups} from '../model/group';
 import {Named, namedMapToNamedArray} from '../../util/named';
+import {RelationsUtil} from '../relations-utils';
+import {GroupUtil} from '../group-util';
+import {TypeRelations} from '../../model/relation-constants';
 
 
 const CATEGORIES = 'categories';
@@ -69,7 +72,34 @@ export function buildRawProjectConfiguration(builtInCategories: Map<BuiltinCateg
         applyLanguage(customLanguageConfiguration),
         applySearchConfiguration(searchConfiguration),
         update(CATEGORIES, processCategories(orderConfiguration, validateFields, languageConfiguration)),
+        putRelationsIntoGroups,
         asRawProjectConfiguration);
+}
+
+
+/**
+ * @param categories ! modified in place
+ * @param relations
+ */
+function putRelationsIntoGroups({categories, relations}: any) { // TODO review; maybe we could also store the relations as is in projectConfiguration, and deliver them only via the category getters, by associng to the groups on the fly
+
+    for (let category of categories) {
+        const relDefs = RelationsUtil.getRelationDefinitions(relations, category.name);
+
+        for (let relation of relDefs) {
+
+            const groupName: string|undefined = GroupUtil.getGroupName(relation.name);
+            if (!groupName || relation.name === TypeRelations.INSTANCEOF) continue;
+
+            let group = category.groups.find(on(Named.NAME, is(groupName)));
+            if (!group) {
+                group = { fields: [], name: groupName, label: '', relations: [] }; // TODO extract, setLabel
+                category.groups.push(group);
+            }
+            group.relations.push(relation);
+        }
+    }
+    return {categories, relations};
 }
 
 

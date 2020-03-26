@@ -1242,6 +1242,34 @@ describe('buildRawProjectConfiguration', () => { // TODO test groups in idai typ
         expect(result).toEqual(['C', 'A', 'B']);
     });
 
+
+    it('put relations into groups', () => {
+
+        const builtInCategories: Map<BuiltinCategoryDefinition> = {
+            C: { fields: {} },
+        };
+
+        const customCategories: Map<CustomCategoryDefinition> = {
+            C: { fields: {} }
+        };
+
+        const result = namedArrayToNamedMap(categories(buildRawProjectConfiguration(
+            builtInCategories, {}, customCategories, {}, {}, {}, [
+                {
+                    name: 'isAbove',
+                    inverse: 'isBelow',
+                    label: 'relationLabel',
+                    domain: ['C:inherit'],
+                    range: ['C:inherit'],
+                    sameMainCategoryResource: true
+                },
+            ]
+        )))['C'].groups[0];
+
+        expect(result.name).toEqual('position');
+        expect(result.relations[0].name).toEqual('isAbove');
+    });
+
     // err cases
 
     xit('critical change of input type', () => {

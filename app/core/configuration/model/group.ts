@@ -29,14 +29,7 @@ export interface Group extends Named {
 
     fields: Array<FieldDefinition>;
     label: string;
-    // TODO add relations, more fields?
-}
-
-
-export interface EditFormGroup extends Group { // TODO review
-
     relations: any[];
-    widget: string|undefined;
 }
 
 

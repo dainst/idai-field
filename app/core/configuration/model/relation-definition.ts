@@ -1,10 +1,12 @@
+import {Named} from '../../util/named';
+
+
 /**
  * @author Daniel de Oliveira
  */
-export interface RelationDefinition {
+export interface RelationDefinition extends Named {
 
     label? : string;
-    name: string;
     domain?: any;
     range?: any;
     inverse?: any;

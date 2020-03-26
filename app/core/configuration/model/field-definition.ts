@@ -8,7 +8,9 @@ export interface FieldDefinition {
 
     name: string;
     inputType: FieldDefinition.InputType,
-    label?: string;
+    label: string;
+
+    group: string;
     description?: string;
     valuelist?: ValuelistDefinition;
     valuelistFromProjectField?: string;
@@ -18,7 +20,6 @@ export interface FieldDefinition {
     fulltextIndexed?: true;
     constraintIndexed?: true;
     allowOnlyValuesOfParent?: true;
-    group: string;
     source?: 'builtin'|'library'|'custom'|'common'; // TODO make non-optional
 }
 

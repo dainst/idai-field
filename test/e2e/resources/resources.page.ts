@@ -57,6 +57,12 @@ export class ResourcesPage {
     }
 
 
+    public static clickOpenChildCollectionButton() {
+
+        return common.click(element(by.id('open-child-collection-button')));
+    }
+
+
     public static clickThumbnail() {
 
         return common.click(this.getThumbnail());

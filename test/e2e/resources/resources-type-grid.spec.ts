@@ -5,6 +5,9 @@ import {SettingsPage} from '../settings/settings.page';
 import {ResourcesTypeGridPage} from './resources-type-grid.page';
 import {DoceditPage} from '../docedit/docedit.page';
 import {DoceditRelationsTabPage} from '../docedit/docedit-relations-tab.page';
+import {NavbarPage} from '../navbar.page';
+import {DoceditTypeRelationsTabPage} from '../docedit/docedit-type-relations-tab.page';
+import {FieldsViewPage} from '../widgets/fields-view.page';
 
 const EC = protractor.ExpectedConditions;
 const delays = require('../config/delays');
@@ -117,7 +120,8 @@ describe('resources/type-grid --', () => {
         browser.wait(EC.stalenessOf(ResourcesPage.getMoveModal()), delays.ECWaitTime);
 
         browser.sleep(delays.shortRest);
-        browser.wait(EC.presenceOf(ResourcesTypeGridPage.getTypeGridElement('t1')));
+        browser.wait(EC.presenceOf(ResourcesTypeGridPage.getTypeGridElement('t1')),
+            delays.ECWaitTime);
 
         ResourcesTypeGridPage.getActiveNavigationButtonText().then(text => {
             expect(text).toEqual('tc2');
@@ -138,7 +142,36 @@ describe('resources/type-grid --', () => {
         ResourcesPage.typeInIdentifierInConfirmDeletionInputField('t1');
         ResourcesPage.clickConfirmDeleteInModal();
 
-        browser.wait(EC.stalenessOf(ResourcesTypeGridPage.getTypeGridElement('t1')));
-        browser.wait(EC.stalenessOf(ResourcesTypeGridPage.getLinkedDocumentGridElement('testf1')));
+        browser.wait(EC.stalenessOf(ResourcesTypeGridPage.getTypeGridElement('t1')),
+            delays.ECWaitTime);
+        browser.wait(EC.stalenessOf(ResourcesTypeGridPage.getLinkedDocumentGridElement('testf1')),
+            delays.ECWaitTime);
+    });
+
+
+    it('Link find with type via type relation picker', () => {
+
+        createTypeCatalogAndType();
+
+        NavbarPage.clickCloseNonResourcesTab();
+        ResourcesPage.clickHierarchyButton('S1');
+        ResourcesPage.clickHierarchyButton('SE0');
+        ResourcesPage.clickOpenChildCollectionButton();
+
+        ResourcesPage.openEditByDoubleClickResource('testf1');
+        DoceditPage.clickGotoIdentificationTab();
+        DoceditTypeRelationsTabPage.clickAddTypeRelationButton('instanceOf');
+        DoceditTypeRelationsTabPage.clickType('t1');
+        DoceditPage.clickSaveDocument();
+
+        ResourcesPage.clickSelectResource('testf1', 'info');
+        FieldsViewPage.clickAccordionTab(1);
+        FieldsViewPage.getRelationValue(1, 0).then(relationValue => {
+            expect(relationValue).toEqual('t1');
+        });
+
+        MenuPage.navigateToTypes();
+        browser.wait(EC.presenceOf(ResourcesTypeGridPage.getLinkedDocumentGridElement('testf1')),
+            delays.ECWaitTime);
     });
 });

@@ -82,32 +82,6 @@ describe('applyLanguage', () => {
         expect(configuration.relations[0].label).toEqual('isRecordedIn_');
         expect(configuration.relations[1].label).toBeUndefined();
     });
-
-
-    it('apply groups', () => {
-
-        configuration = {
-            identifier: 'test',
-            categories: {
-                A: { fields: { a: { group: Groups.STEM }, a1: { group: Groups.CHILD }}} as CategoryDefinition,
-                B: { fields: { b: { group: Groups.STEM }}} as CategoryDefinition
-            },
-            relations: [{ name: 'isRecordedIn' }, { name: 'isContemporaryWith' }],
-            groups: {}
-        };
-
-        const languageConfiguration = {
-            groups: {
-                'stem': { label: 'Stem' },
-                'child': { label: 'Child' }
-            }
-        };
-
-        configuration = applyLanguage(languageConfiguration)(configuration);
-
-        expect(configuration.groups['stem'].label).toEqual('Stem');
-        expect(configuration.groups['child'].label).toEqual('Child');
-    });
 });
 
 

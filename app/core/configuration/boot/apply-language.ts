@@ -1,4 +1,3 @@
-import {flow, map, to, values, flatten, set} from 'tsfun';
 import {UnorderedConfigurationDefinition} from '../model/unordered-configuration-definition';
 
 
@@ -12,29 +11,8 @@ export function applyLanguage(language: any) {
 
         if (configuration.categories) applyCategories(language, configuration);
         if (language.relations) applyRelations(language, configuration);
-        if (language.groups && configuration.groups) applyGroups(language, configuration);
 
         return configuration;
-    }
-}
-
-
-function applyGroups(language: any, configuration: UnorderedConfigurationDefinition) {
-
-    const allUsedGroups =
-        flow(
-            configuration.categories,
-            values,
-            map(to('fields')), // TODO use constants
-            map(values),
-            flatten,
-            map(to('group')),  // TODO use constants
-            set);
-
-    for (let usedGroup of allUsedGroups) {
-        if (language.groups[usedGroup]) {
-            configuration.groups[usedGroup] = { label: language.groups[usedGroup].label };
-        }
     }
 }
 

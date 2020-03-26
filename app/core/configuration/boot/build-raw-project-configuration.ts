@@ -200,7 +200,7 @@ function addExtraFieldsOrder(orderConfiguration: any) {
 
 function wrapCategoriesInObject(configuration: Map<TransientCategoryDefinition>) {
 
-    return { categories: configuration, relations: [], groups: {} } // TODO remove groups here
+    return { categories: configuration, relations: [] }
 }
 
 

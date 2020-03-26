@@ -1,4 +1,4 @@
-import {copy, Pair, reduce, Map, to, identity, isDefined, path, isString, getOn, dissoc, map, assoc, values} from 'tsfun';
+import {copy, Pair, reduce, Map, to, identity, isDefined, path, isString, getOn, dissoc, map, assoc, values, compose} from 'tsfun';
 import {SortUtil} from './sort-util';
 
 /**
@@ -46,10 +46,15 @@ export function makeLookup(path: string) {
 }
 
 
+export function addKeyAsProp<A extends Map>(prop: string): (m: Map<A>) => Map<A> {
+
+    return map<any>((a: A, key: string) => assoc(prop, key)(a));
+}
+
+
 export function mapToArray(prop: string) {
 
-    return <A extends Map>(m: Map<A>): Array<A> => 
-        values<A>(map<any>((a: A, key: string) => assoc(prop, key)(a))(m));
+    return compose(addKeyAsProp(prop), values);
 }
 
 

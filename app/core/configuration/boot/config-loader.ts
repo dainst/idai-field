@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
-import {Map, values} from 'tsfun';
+import {Map, values, map, assoc} from 'tsfun';
 import {ProjectConfiguration} from '../project-configuration';
 import {ConfigurationValidation} from './configuration-validation';
 import {ConfigReader} from './config-reader';
@@ -9,6 +9,8 @@ import {FieldDefinition} from '../model/field-definition';
 import {buildRawProjectConfiguration} from './build-raw-project-configuration';
 import {BuiltinCategoryDefinition} from '../model/builtin-category-definition';
 import {LibraryCategoryDefinition} from '../model/library-category-definition';
+import { mapToArray, addKeyAsProp } from '../../util/utils';
+import { mapToNamedArray } from '../../util/named';
 
 
 @Injectable()
@@ -52,7 +54,7 @@ export class ConfigLoader {
 
         if (customConfigurationName) console.log('Load custom configuration', customConfigurationName);
 
-        const registeredCategories: Map<LibraryCategoryDefinition> = await this.readConfiguration(configDirPath);
+        const libraryCategories: Map<LibraryCategoryDefinition> = await this.readLibraryCategories(configDirPath);
 
         const missingRelationCategoryErrors = ConfigurationValidation.findMissingRelationType(
             relations, Object.keys(builtinCategories as any)
@@ -61,7 +63,7 @@ export class ConfigLoader {
 
         return await this.preprocess(
             configDirPath,
-            registeredCategories,
+            libraryCategories,
             commonFields,
             builtinCategories,
             relations,
@@ -71,20 +73,22 @@ export class ConfigLoader {
     }
 
 
-    private async readConfiguration(configDirPath: string): Promise<any> {
+    private async readLibraryCategories(configDirPath: string): Promise<any> {
 
         const appConfigurationPath = configDirPath + '/Library/Categories.json';
 
         try {
-            return await this.configReader.read(appConfigurationPath);
+            return addKeyAsProp('libraryId')(await this.configReader.read(appConfigurationPath));
         } catch (msgWithParams) {
             throw [[msgWithParams]];
         }
     }
 
 
-    private async preprocess(configDirPath: string, libraryCategories: Map<LibraryCategoryDefinition>,
-                             commonFields: any, builtinCategories: Map<BuiltinCategoryDefinition>,
+    private async preprocess(configDirPath: string,
+                             libraryCategories: Map<LibraryCategoryDefinition>,
+                             commonFields: any,
+                             builtinCategories: Map<BuiltinCategoryDefinition>,
                              relations: Array<RelationDefinition>,
                              extraFields: { [fieldName: string]: FieldDefinition },
                              customConfigurationName: string|undefined,

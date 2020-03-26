@@ -15,7 +15,15 @@
                 <div class="row">
                     <div class="col header d-flex">
                         <category-icon size="41" category="{{selectedCategory.name}}"></category-icon>
-                        <h5>{{ selectedCategory.label }} <code>{{ selectedCategory.name }}</code></h5>
+                        <h5>
+                            {{ selectedCategory.label }}
+                            <code>
+                                &nbsp;{{ selectedCategory.name }}
+                                <span *ngIf="selectedCategory.libraryId">
+                                    [{{ selectedCategory.libraryId }}]
+                                </span>
+                            </code>
+                        </h5>
                     </div>
                 </div>
                 <div *ngIf="getCategoryDescription(selectedCategory)" class="row subheader">

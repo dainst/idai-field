@@ -135,6 +135,7 @@ function buildCategoryFromDefinition(definition: CategoryDefinition): Category {
     category.isAbstract = definition.abstract || false;
     category.color = definition.color ?? Category.generateColorForCategory(definition.name);
     category.children = [];
+    category.libraryId = definition.libraryId;
 
     category[TEMP_FIELDS] = definition.fields || [];
     return category as Category;

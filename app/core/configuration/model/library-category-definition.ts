@@ -17,6 +17,7 @@ export interface LibraryCategoryDefinition extends BaseCategoryDefinition {
     commons: string[];
     parent?: string,
     categoryName: string;
+    libraryId?: string;
     description: {[language: string]: string},
     createdBy: string,
     creationDate: string;

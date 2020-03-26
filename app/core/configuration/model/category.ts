@@ -14,6 +14,7 @@ export interface Category extends Named {
     color: string|undefined;
     groups: Array<Group>;
     mustLieWithin: boolean|undefined; // = undefined;
+    libraryId?: string;
 }
 
 

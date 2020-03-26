@@ -18,6 +18,7 @@ export interface CategoryDefinition {
     fields?: any;
     parent?: string;
     color?: string;
+    libraryId?: string;
 }
 
 

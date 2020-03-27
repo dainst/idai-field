@@ -11,7 +11,8 @@
             'selected-category': selectedCategories && selectedCategories.indexOf(category.name) > -1,
             'abstract-category': category.isAbstract,
             'child-category': isChildCategory(category),
-            'parent-selected': isParentSelected(category)
+            'parent-selected': isParentSelected(category),
+            'custom-category': highlightCustomCategories && isCustomCategory(category)
         }"
         (click)="pickCategory(category)">
         <div id="choose-category-option-{{getCategoryId(category)}}" class="category-item">

@@ -18,6 +18,7 @@ export class CategoryPickerComponent implements OnChanges {
     @Input() selectedCategories: string[];
     @Input() allCategoriesOptionVisible: boolean = false;
     @Input() allowPickingAbstractCategories: boolean = false;
+    @Input() highlightCustomCategories: boolean = false;
 
     @Output() onCategoryPicked: EventEmitter<Category> = new EventEmitter<Category>();
 
@@ -67,4 +68,7 @@ export class CategoryPickerComponent implements OnChanges {
             return categoryName === parentName;
         }) !== undefined;
     }
+
+
+    public isCustomCategory = (category: Category): boolean => !category.libraryId;
 }

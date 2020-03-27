@@ -1,5 +1,5 @@
 import {assoc, clone, cond, dissoc, flow, includedIn, isDefined, isNot, keys, keysAndValues, Mapping, map, Map, on, is,
-    reduce, subtract, undefinedOrEmpty, update, identity, compose, lookup, Pair, pairWith, to, separate, prune} from 'tsfun';
+    reduce, subtract, undefinedOrEmpty, update, identity, compose, lookup, Pair, pairWith, to, separate, prune, updateOn} from 'tsfun';
 import {LibraryCategoryDefinition} from '../model/library-category-definition';
 import {CustomCategoryDefinition} from '../model/custom-category-definition';
 import {ConfigurationErrors} from './configuration-errors';
@@ -94,6 +94,7 @@ function processCategories(orderConfiguration: any,
         makeCategoriesMap,
         map(putRelationsIntoGroups(relations)),
         map(update(Category.GROUPS, sortGroups(Groups.DEFAULT_ORDER))),
+        map(update(Category.CHILDREN, map(update(Category.GROUPS, sortGroups(Groups.DEFAULT_ORDER))))),
         setGroupLabels(languageConfiguration),
         mapToNamedArray,
         orderCategories(orderConfiguration?.categories));

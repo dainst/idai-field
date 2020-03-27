@@ -340,7 +340,7 @@ describe('resources --', () => {
         // delete invalid fields when changing the category of a resource to its parent category
         DetailSidebarPage.doubleClickEditDocument('1');
 
-        DoceditPage.clickGotoChildPropertiesTab();
+        DoceditPage.clickGotoChildTab();
         DoceditPage.clickSelectOption('wallType', 1);
         DoceditPage.clickSaveDocument();
 

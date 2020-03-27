@@ -48,15 +48,15 @@ export class DoceditPage {
     };
 
 
-    public static clickGotoPropertiesTab() {
+    public static clickGotoParentTab() {
 
-        common.click(element(by.id('edit-form-goto-properties')));
+        common.click(element(by.id('edit-form-goto-parent')));
     }
 
 
-    public static clickGotoChildPropertiesTab() {
+    public static clickGotoChildTab() {
 
-        common.click(element(by.id('edit-form-goto-childProperties')));
+        common.click(element(by.id('edit-form-goto-child')));
     }
 
 

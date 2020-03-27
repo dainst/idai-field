@@ -264,7 +264,7 @@ describe('resources/state --', function() {
         ResourcesPage.clickSwitchHierarchyMode();
 
         ResourcesPage.openEditByDoubleClickResource('SE2');
-        DoceditPage.clickGotoChildPropertiesTab();
+        DoceditPage.clickGotoChildTab();
         DoceditPage.clickSelectOption('layerClassification', 1);
         DoceditPage.clickSaveDocument();
 
@@ -353,7 +353,7 @@ describe('resources/state --', function() {
         ResourcesPage.clickSwitchHierarchyMode();
 
         ResourcesPage.openEditByDoubleClickResource('SE2');
-        DoceditPage.clickGotoChildPropertiesTab();
+        DoceditPage.clickGotoChildTab();
         DoceditPage.clickSelectOption('layerClassification', 1);
         DoceditPage.clickSaveDocument();
 
@@ -373,11 +373,11 @@ describe('resources/state --', function() {
         ResourcesPage.clickSwitchHierarchyMode();
 
         ResourcesPage.openEditByDoubleClickResource('SE0');
-        DoceditPage.clickGotoPropertiesTab();
+        DoceditPage.clickGotoParentTab();
         DoceditPage.clickBooleanRadioButton('hasDisturbance', 0);
         DoceditPage.clickSaveDocument();
         ResourcesPage.openEditByDoubleClickResource('SE1');
-        DoceditPage.clickGotoPropertiesTab();
+        DoceditPage.clickGotoParentTab();
         DoceditPage.clickBooleanRadioButton('hasDisturbance', 1);
         DoceditPage.clickSaveDocument();
 

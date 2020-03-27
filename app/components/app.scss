@@ -240,7 +240,7 @@ html [type='button'],
   background-color: #eee;
 
   &.bg-warning {
-    background-color: #fff3cd !important;
+    background-color: $custom-highlight-color !important;
   }
 }
 

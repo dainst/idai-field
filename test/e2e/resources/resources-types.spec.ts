@@ -23,6 +23,7 @@ describe('resources/types --', () => {
 
 
     beforeAll(function() {
+
         SettingsPage.get();
         browser.sleep(delays.shortRest);
         MenuPage.navigateToTypes();

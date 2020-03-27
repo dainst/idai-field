@@ -108,6 +108,7 @@ export class TabManager {
     public resetForE2E() {
 
         this.tabs = [];
+        this.activeTab = undefined;
     }
 
 

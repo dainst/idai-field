@@ -1272,7 +1272,7 @@ describe('buildRawProjectConfiguration', () => { // TODO test groups in idai typ
 
     // err cases
 
-    xit('critical change of input type', () => {
+    /*xit('critical change of input type', () => {
 
         const builtInCategories: Map<BuiltinCategoryDefinition> = {
             A: {
@@ -1314,5 +1314,5 @@ describe('buildRawProjectConfiguration', () => { // TODO test groups in idai typ
         );
 
         // TODO expectation?
-    });
+    });*/
 });

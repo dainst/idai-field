@@ -118,7 +118,7 @@ describe('ProjectConfiguration', () => {
     });
 
 
-    xit('should fail if parent category is not defined', () => { // TODO move test to buildRawProjectConfiguration
+    /*xit('should fail if parent category is not defined', () => { // TODO move test to buildRawProjectConfiguration
 
         expect(() => {
             new ProjectConfiguration({ categories: { SecondLevelCategory: secondLevelCategory1 } } as any);
@@ -204,5 +204,5 @@ describe('ProjectConfiguration', () => {
         ).toThrow([[
             'tried to overwrite field of parent category', 'fieldA', 'FirstLevelCategory', 'SecondLevelCategory'
         ]]);
-    });
+    });*/
 });

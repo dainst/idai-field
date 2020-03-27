@@ -1,9 +1,9 @@
 import {browser, protractor} from 'protractor';
-import {NavbarPage} from '../navbar.page';
 import {MenuPage} from '../menu.page';
 import {MatrixPage} from './matrix.page';
 import {DoceditPage} from '../docedit/docedit.page';
 import {DoceditRelationsTabPage} from '../docedit/docedit-relations-tab.page';
+import {SettingsPage} from '../settings/settings.page';
 
 const EC = protractor.ExpectedConditions;
 const delays = require('../config/delays');
@@ -18,11 +18,14 @@ describe('matrix --', () => {
     let i = 0;
 
 
-    beforeAll(async done => {
+    beforeAll(() => {
 
-        MatrixPage.get();
+        SettingsPage.get();
+        browser.sleep(delays.shortRest);
+        MenuPage.navigateToMatrix();
+        browser.sleep(delays.shortRest);
         MatrixPage.performSelectOperation(1);
-        done();
+        browser.sleep(delays.shortRest);
     });
 
 
@@ -30,10 +33,11 @@ describe('matrix --', () => {
 
         if (i > 0) {
             MenuPage.navigateToSettings();
+            browser.sleep(delays.shortRest);
             await common.resetApp();
-            browser.sleep(delays.shortRest * 2);
-            NavbarPage.clickCloseNonResourcesTab();
-            MatrixPage.get();
+            browser.sleep(delays.shortRest);
+            MenuPage.navigateToMatrix();
+            browser.sleep(delays.shortRest);
             MatrixPage.performSelectOperation(1);
         }
 

@@ -22,7 +22,7 @@ describe('resources/types --', () => {
     let index = 0;
 
 
-    beforeAll(function() {
+    beforeAll(() => {
 
         SettingsPage.get();
         browser.sleep(delays.shortRest);

@@ -28,4 +28,10 @@ export class MenuPage {
 
         element(by.tagName('body')).sendKeys(Key.CONTROL, 't');
     }
+
+
+    public static navigateToMatrix() {
+
+        element(by.tagName('body')).sendKeys(Key.CONTROL, 'y');
+    }
 }

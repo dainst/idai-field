@@ -11,9 +11,16 @@
     }
 
     .header {
-        padding: 7px;
         border-bottom: 1px solid #ccc;
         background-color: #e7e7e7;
+
+        &.header-left {
+            padding: 7px;
+        }
+
+        &.header-right {
+            padding: 1rem;
+        }
 
         h5 {
             margin: 8px;

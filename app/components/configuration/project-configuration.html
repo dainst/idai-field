@@ -13,17 +13,20 @@
             <div class="col">
 
                 <div class="row">
-                    <div class="col header d-flex">
+                    <div class="col header header-left d-flex">
                         <category-icon size="41" category="{{selectedCategory.name}}"></category-icon>
-                        <h5>
-                            {{ selectedCategory.label }}
-                            <code>
-                                &nbsp;{{ selectedCategory.name }}
-                                <span *ngIf="selectedCategory.libraryId">
-                                    [{{ selectedCategory.libraryId }}]
-                                </span>
-                            </code>
-                        </h5>
+                        <h5>{{ selectedCategory.label }}</h5>
+                    </div>
+                    <div class="col header header-right text-right">
+                        <span *ngIf="selectedCategory.name">
+                            <strong i18n="@@configuration.defaultFields.category" class="">Kategorie</strong>:
+                            <code>{{ selectedCategory.name }}</code>
+                        </span>
+                        &nbsp;
+                        <span *ngIf="selectedCategory.libraryId">
+                            <strong i18n="@@config.libraryId" class="">Formular</strong>:
+                            <code>{{ selectedCategory.libraryId }}</code>
+                        </span>
                     </div>
                 </div>
                 <div *ngIf="getCategoryDescription(selectedCategory)" class="row subheader">

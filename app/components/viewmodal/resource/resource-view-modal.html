@@ -33,5 +33,12 @@
                    [highlightOnHover]="true"
                    [allowSelection]="true"
                    (onImageSelected)="onSelected($event)"></image-row>
+
+        <div *ngIf="images.length === 0" id="no-images-placeholder"
+             class="d-flex align-items-center justify-content-center">
+            <div class="alert alert-info" i18n="@@resourceViewModal.noImages">
+                Mit dieser Ressource sind keine Bilder verknüpft.
+            </div>
+        </div>
     </div>
 </div>

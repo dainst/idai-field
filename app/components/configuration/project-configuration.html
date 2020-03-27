@@ -12,10 +12,18 @@
 
             <div class="col">
 
-                <div class="row">
+                <div class="row" [class.custom-category]="!selectedCategory.libraryId">
                     <div class="col header header-left d-flex">
                         <category-icon size="41" category="{{selectedCategory.name}}"></category-icon>
-                        <h5>{{ selectedCategory.label }}</h5>
+                        <h5>
+                            <span *ngIf="!selectedCategory.libraryId"
+                                class="mdi mdi-alert-circle-outline"
+                                ngbTooltip="Projektspezifisches Formular"
+                                i18n-ngbTooltip="@@config.form.custom"
+                                placement="right">
+                            </span>
+                            {{ selectedCategory.label }}
+                        </h5>
                     </div>
                     <div class="col header header-right text-right">
                         <span *ngIf="selectedCategory.name">

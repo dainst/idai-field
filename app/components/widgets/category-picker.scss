@@ -12,6 +12,11 @@
 
     &.custom-category {
       background-color: $custom-highlight-color;
+
+      &:hover,
+      &.selected-category {
+        background-color: darken($color: $custom-highlight-color, $amount: 5) !important;
+      }
     }
 
     &:hover,

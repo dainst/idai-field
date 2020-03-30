@@ -85,6 +85,7 @@ export class AppComponent {
                 case 't':
                     this.menuService.onMenuItemClicked('resources/types');
                     break;
+                case 'y':
                 case 'z':
                     this.menuService.onMenuItemClicked('matrix');
                     break;

@@ -86,6 +86,8 @@ function processCategories(orderConfiguration: any,
                            searchConfiguration: any,
                            relations: Array<RelationDefinition>): Mapping<Map<CategoryDefinition>, Array<Category>> {
 
+    const sortCategoryGroups = update(Category.GROUPS, sortGroups(Groups.DEFAULT_ORDER));
+
     return compose(
         applySearchConfiguration(searchConfiguration),
         addExtraFieldsOrder(orderConfiguration),
@@ -93,8 +95,8 @@ function processCategories(orderConfiguration: any,
         validateFields,
         makeCategoriesMap,
         map(putRelationsIntoGroups(relations)),
-        map(update(Category.GROUPS, sortGroups(Groups.DEFAULT_ORDER))),
-        map(update(Category.CHILDREN, map(update(Category.GROUPS, sortGroups(Groups.DEFAULT_ORDER))))),
+        map(sortCategoryGroups),
+        map(update(Category.CHILDREN, map(sortCategoryGroups))),
         setGroupLabels(languageConfiguration),
         mapToNamedArray,
         orderCategories(orderConfiguration?.categories));

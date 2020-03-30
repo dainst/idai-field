@@ -168,7 +168,7 @@ function setGroupLabels(languageConfiguration: any) {
 
     return map((category: Category) => {
 
-        const getLabel = (name: string) => {
+        const getLabel = (name: string) => { // TODO pass group instead name
 
             if (name === Groups.PARENT) return category.parentCategory?.label ?? category.label;
             else if (name === Groups.CHILD) return category.label;

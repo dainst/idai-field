@@ -168,7 +168,7 @@ function setGroupLabels(languageConfiguration: any) {
 
     return map((category: Category) => {
 
-        const getLabel = ({ name: name }: Group) => {
+        const groupLabel = ({ name: name }: Group) => {
 
             if (name === Groups.PARENT) return category.parentCategory?.label ?? category.label;
             else if (name === Groups.CHILD) return category.label;
@@ -178,7 +178,7 @@ function setGroupLabels(languageConfiguration: any) {
         return update(
             Category.GROUPS,
             compose(
-                map(pairWith(getLabel)),
+                map(pairWith(groupLabel)),
                 map(([group, label]: Pair<Group, string>) => assoc(Group.LABEL, label)(group as any))))(category);
     });
 }

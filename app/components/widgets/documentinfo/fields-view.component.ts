@@ -2,13 +2,12 @@ import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import {DecimalPipe} from '@angular/common';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {is, isnt, isUndefinedOrEmpty, isDefined, on, isNot, isString, includedIn, undefinedOrEmpty, lookup,
-    compose, isEmpty, isBoolean} from 'tsfun';
+    compose, isEmpty, isBoolean, copy, assoc} from 'tsfun';
 import {Document, FieldDocument,  ReadDatastore, FieldResource, Resource, Dating, Dimension, Literature,
     ValOptionalEndVal} from 'idai-components-2';
 import {RoutingService} from '../../routing-service';
 import {GroupUtil} from '../../../core/configuration/group-util';
 import {Name, ResourceId} from '../../../core/constants';
-import {GROUP_NAME} from '../../constants';
 import {pick} from '../../../core/util/utils';
 import {UtilTranslations} from '../../../core/util/util-translations';
 import {HierarchicalRelations} from '../../../core/model/relation-constants';
@@ -18,7 +17,7 @@ import {RelationDefinition} from '../../../core/configuration/model/relation-def
 import {FieldDefinition} from '../../../core/configuration/model/field-definition';
 import {ValuelistDefinition} from '../../../core/configuration/model/valuelist-definition';
 import {ValuelistUtil} from '../../../core/util/valuelist-util';
-import {Groups} from '../../../core/configuration/model/group';
+import {Group, Groups} from '../../../core/configuration/model/group';
 import {Named} from '../../../core/util/named';
 
 
@@ -51,19 +50,11 @@ export class FieldsViewComponent implements OnChanges {
     @Output() onSectionToggled = new EventEmitter<string|undefined>();
     @Output() onJumpToResource = new EventEmitter<FieldDocument>();
 
-    public fields: { [groupName: string]: Array<any> };
+    public fields: { [groupName: string]: Array<any> } = {};
     public relations: { [groupName: string]: Array<any> } = {};
 
 
-    private groups: Array<FieldViewGroupDefinition> = [
-        { name: Groups.STEM, label: this.i18n({ id: 'docedit.group.stem', value: 'Stammdaten' }), shown: true },
-        { name: Groups.IDENTIFICATION, label: this.i18n({ id: 'docedit.group.identification', value: 'Bestimmung' }), shown: false },
-        { name: Groups.PROPERTIES, label: '', shown: false },
-        { name: Groups.CHILD, label: '', shown: false },
-        { name: Groups.DIMENSION, label: this.i18n({ id: 'docedit.group.dimensions', value: 'Maße' }), shown: false },
-        { name: Groups.POSITION, label: this.i18n({ id: 'docedit.group.position', value: 'Lage' }), shown: false },
-        { name: Groups.TIME, label: this.i18n({ id: 'docedit.group.time', value: 'Zeit' }), shown: false }
-    ];
+    public groups: Array<FieldViewGroupDefinition> = [];
 
 
     public isBoolean = (value: any) => isBoolean(value);
@@ -90,9 +81,19 @@ export class FieldsViewComponent implements OnChanges {
         this.relations[Groups.TIME] = [];
 
         if (this.resource) {
+
+            const groups = this.projectConfiguration.getCategoriesMap()[this.resource.category]
+                .groups
+                .map(group => assoc<any>('shown', group.name === 'stem')(group)) as Array<FieldViewGroupDefinition>;
+
             await this.processRelations(this.resource);
             this.processFields(this.resource);
-            this.updateGroupLabels(this.resource.category);
+
+            this.groups = groups.filter(group => {
+
+                return (this.fields[group.name] !== undefined && this.fields[group.name].length > 0)
+                    || (this.relations[group.name] !== undefined && this.relations[group.name].length > 0);
+            });
         }
     }
 
@@ -100,16 +101,6 @@ export class FieldsViewComponent implements OnChanges {
     public showGroupSection(group: Name) {
 
         return this.expandAllGroups || this.openSection === group;
-    }
-
-
-    public getGroups(): Array<FieldViewGroupDefinition> {
-
-        return this.groups.filter(group => {
-
-            return (this.fields[group.name] !== undefined && this.fields[group.name].length > 0)
-                || this.relations[group.name].length > 0;
-        });
     }
 
 
@@ -148,18 +139,6 @@ export class FieldsViewComponent implements OnChanges {
     }
 
 
-    private updateGroupLabels(categoryName: Name) {
-
-        const category: Category = this.projectConfiguration.getCategoriesMap()[categoryName];
-        if (category.parentCategory) {
-            this.groups[GROUP_NAME.PROPERTIES].label = category.parentCategory.label;
-            this.groups[GROUP_NAME.CHILD_PROPERTIES].label = category.label;
-        } else {
-            this.groups[GROUP_NAME.PROPERTIES].label = category.label;
-        }
-    }
-
-
     private processFields(resource: Resource) {
 
         this.addBaseFields(resource);
@@ -171,18 +150,9 @@ export class FieldsViewComponent implements OnChanges {
 
         for (let field of existingResourceFields) {
 
-            const group = field.group !== Groups.PARENT ? field.group : Groups.PROPERTIES; // TODO review
+            const group = field.group;
             if (!this.fields[group]) this.fields[group] = [];
             this.pushField(resource, field, group);
-        }
-
-        if (this.fields[Groups.STEM]) {
-            this.fields[Groups.STEM]
-                = GroupUtil.sortGroups(this.fields[Groups.STEM], Groups.STEM);
-        }
-        if (this.fields[Groups.DIMENSION]) {
-            this.fields[Groups.DIMENSION]
-                = GroupUtil.sortGroups(this.fields[Groups.DIMENSION], Groups.DIMENSION);
         }
     }
 

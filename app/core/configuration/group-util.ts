@@ -1,5 +1,3 @@
-import {copy} from 'tsfun';
-import {FieldDefinition} from './model/field-definition';
 import {PositionRelations, TimeRelations, TypeRelations} from '../model/relation-constants';
 
 
@@ -9,31 +7,7 @@ import {PositionRelations, TimeRelations, TypeRelations} from '../model/relation
  */
 export module GroupUtil {
 
-    // TODO move into makeCategoriesMap and make private
-    export function sortGroups(fields: Array<FieldDefinition>, groupName: string) {
-
-        const copiedFields = copy(fields);
-
-        switch(groupName) {
-            case 'stem':
-                sortGroup(copiedFields, [
-                    'identifier', 'shortDescription', 'supervisor', 'draughtsmen', 'processor', 'campaign',
-                    'diary', 'date', 'beginningDate', 'endDate'
-                ]);
-                break;
-            case 'dimension':
-                sortGroup(copiedFields, [
-                    'dimensionHeight', 'dimensionLength', 'dimensionWidth', 'dimensionPerimeter',
-                    'dimensionDiameter', 'dimensionThickness', 'dimensionVerticalExtent', 'dimensionOther'
-                ]);
-                break;
-        }
-
-        return copiedFields;
-    }
-
-
-    export function getGroupName(relationName: string): string|undefined {
+    export function getGroupName(relationName: string): string|undefined { // TODO make private, after putting to buildRawProjectConfiguration
 
         if (TimeRelations.ALL.includes(relationName)) {
             return 'time';
@@ -44,16 +18,5 @@ export module GroupUtil {
         } else {
             return undefined;
         }
-    }
-
-
-    /**
-     * Fields not defined via 'order' are not considered
-     */
-    function sortGroup(fields: Array<FieldDefinition>, order: string[]) {
-
-        fields.sort((field1: FieldDefinition, field2: FieldDefinition) => {
-           return order.indexOf(field1.name) > order.indexOf(field2.name) ? 1 : -1;
-        });
     }
 }

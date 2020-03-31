@@ -10,12 +10,6 @@ import {ProjectConfiguration} from '../../../core/configuration/project-configur
 import {Group} from '../../../core/configuration/model/group';
 
 
-export interface EditFormGroup extends Group {
-
-    widget: string|undefined;
-}
-
-
 @Component({
     moduleId: module.id,
     selector: 'edit-form',
@@ -38,11 +32,11 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
 
     public categories: string[];
 
-    public extraGroups: Array<EditFormGroup> = [
-        { name: 'images', label: this.i18n({ id: 'docedit.group.images', value: 'Bilder' }), fields: [], relations: [], widget: undefined },
-        { name: 'conflicts', label: this.i18n({ id: 'docedit.group.conflicts', value: 'Konflikte' }), fields: [], relations: [], widget: undefined }];
+    public extraGroups: Array<Group> = [
+        { name: 'images', label: this.i18n({ id: 'docedit.group.images', value: 'Bilder' }), fields: [], relations: [] },
+        { name: 'conflicts', label: this.i18n({ id: 'docedit.group.conflicts', value: 'Konflikte' }), fields: [], relations: [] }];
 
-    public groups: Array<EditFormGroup> = [];
+    public groups: Array<Group> = [];
 
     constructor(private elementRef: ElementRef,
                 private i18n: I18n,
@@ -65,13 +59,13 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
 
     public getFieldDefinitions(groupName: string): Array<FieldDefinition> {
 
-        return (this.groups.find((gd: EditFormGroup) => gd.name === groupName) as any).fields;
+        return (this.groups.find((group: Group) => group.name === groupName) as any).fields;
     }
 
 
     public getRelationDefinitions(groupName: string): Array<RelationDefinition> {
 
-        return (this.groups.find((gd: EditFormGroup) => gd.name === groupName) as any).relations;
+        return (this.groups.find((group: Group) => group.name === groupName) as any).relations;
     }
 
 
@@ -88,7 +82,6 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
         this.groups = [];
         for (let originalGroup of this.originalGroups) {
             const group = copy(originalGroup);
-            group['widget'] = 'generic'; // TODO unnecessary?
             this.groups.push(group as any);
         }
         this.groups = this.groups.concat(this.extraGroups);

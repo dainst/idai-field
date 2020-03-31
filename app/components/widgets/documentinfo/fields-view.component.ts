@@ -17,16 +17,14 @@ import {RelationDefinition} from '../../../core/configuration/model/relation-def
 import {FieldDefinition} from '../../../core/configuration/model/field-definition';
 import {ValuelistDefinition} from '../../../core/configuration/model/valuelist-definition';
 import {ValuelistUtil} from '../../../core/util/valuelist-util';
-import {Group, Groups} from '../../../core/configuration/model/group';
-import {Named} from '../../../core/util/named';
+import {Groups} from '../../../core/configuration/model/group';
+import {Labelled, Named} from '../../../core/util/named';
 
 
 const PERIOD = 'period';
 
-type FieldViewGroupDefinition = {
+interface FieldViewGroupDefinition extends Named, Labelled {
 
-    name: string;
-    label: string;
     shown: boolean;
 }
 

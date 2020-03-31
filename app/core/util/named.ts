@@ -1,16 +1,17 @@
-import {Map, values} from 'tsfun';
+import {is, Map, on, separate} from 'tsfun';
 import {SortUtil} from './sort-util';
 import {makeLookup, mapToArray} from './utils';
+import {copy} from 'tsfun/src/collection';
+import {Category} from '../configuration/model/category';
 
 
 // @author Daniel de Oliveira
 
-// --- please do not remove, even if not used currently ---
+type Name = string;
 
-// TODO move to tsfun/util ?
+
 export interface Named { name: Name }
 
-type Name = string;
 
 export module Named {
 
@@ -24,16 +25,36 @@ export module Named {
  */
 export function namedArrayToNamedMap<A extends Named>(as: Array<A>): Map<A> {
 
-    return makeLookup(Named.NAME)(as); // TODO maybe remove names afterwards
+    return makeLookup(Named.NAME)(as);
 }
+
 
 export function mapToNamedArray<A extends Map>(m: Map<A>) {
 
     return mapToArray(Named.NAME)(m) as Array<Named | Map>;
 }
 
-export const byName = (a: Named, b: Named) => SortUtil.alnumCompare(a.name, b.name); // to be used with sort
 
-export type NameIdentifiedObjectArray<A extends Named> = Array<A>;
+export function sortNamedArray(order: string[]) {
 
-type NameIdentifiedObjectArray = Array<Named>;
+    return <A extends (Named | Map)>(items: Array<A>): Array<A> => {
+
+        let source = copy(items);
+        let sortedCategories: Array<Category> = [];
+
+        for (let categoryName of order) {
+            const [match, rest] = separate(on(Named.NAME, is(categoryName)))(source);
+            sortedCategories = sortedCategories.concat(match);
+            source = rest;
+        }
+
+        return sortedCategories.concat(source as any) as any;
+    }
+}
+
+
+export function byName(a: Named, b: Named) { // to be used with sort
+
+    return SortUtil.alnumCompare(a.name, b.name);
+}
+

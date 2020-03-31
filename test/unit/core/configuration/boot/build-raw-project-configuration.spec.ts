@@ -1243,6 +1243,32 @@ describe('buildRawProjectConfiguration', () => { // TODO test groups in idai typ
     });
 
 
+    it('apply order - children', () => {
+
+        const builtInCategories: Map<BuiltinCategoryDefinition> = {
+            B: { fields: {}, parent: 'D' },
+            A: { fields: {}, parent: 'D' },
+            C: { fields: {}, parent: 'D' },
+            D: { fields: {} }
+        };
+
+        const customCategories: Map<CustomCategoryDefinition> = {
+            B: { fields: {} },
+            A: { fields: {} },
+            C: { fields: {} },
+            D: { fields: {} }
+        };
+
+        const orderConf = { categories: ['C', 'A'] };
+
+        const result = namedArrayToNamedMap(categories(buildRawProjectConfiguration(
+            builtInCategories, {}, customCategories, {}, {}, {}, [], {}, {}, {}, orderConf
+        )))['D'].children.map(to(Named.NAME));
+
+        expect(result).toEqual(['C', 'A', 'B']);
+    });
+
+
     it('put relations into groups', () => {
 
         const builtInCategories: Map<BuiltinCategoryDefinition> = {

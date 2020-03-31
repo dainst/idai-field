@@ -24,7 +24,7 @@ import {makeCategoriesMap} from './make-categories-map';
 import {RawProjectConfiguration} from '../project-configuration';
 import {Category} from '../model/category';
 import {Group, Groups} from '../model/group';
-import {Named, mapToNamedArray} from '../../util/named';
+import {Named, mapToNamedArray, sortNamedArray} from '../../util/named';
 import {RelationsUtil} from '../relations-utils';
 import {GroupUtil} from '../group-util';
 import {TypeRelations} from '../../model/relation-constants';
@@ -97,7 +97,7 @@ function processCategories(orderConfiguration: any,
         map(putRelationsIntoGroups(relations)),
         map(sortCategoryGroups),
         map(update(Category.CHILDREN, map(sortCategoryGroups))),
-        setGroupLabels(languageConfiguration),
+        setGroupLabels(languageConfiguration.groups || {}),
         mapToNamedArray,
         orderCategories(orderConfiguration?.categories));
 }
@@ -136,35 +136,20 @@ function sortGroups(defaultOrder: string[]) {
 }
 
 
-
 function orderCategories(categoriesOrder: string[] = []) {
 
-    return (categories: Array<Category>) => order(categories, categoriesOrder);
+    return (categories: Array<Category>): Array<Category> => {
+
+        return flow(
+            categories,
+            sortNamedArray(categoriesOrder),
+            map(update(Category.CHILDREN, orderCategories(categoriesOrder)))
+        );
+    }
 }
 
 
-function order(categories: Array<Category>, categoriesOrder: string[]) {
-
-    let source = copy(categories);
-    let sortedCategories: Array<Category> = [];
-
-    for (let categoryName of categoriesOrder) {
-        const [match, rest] = separate(on(Named.NAME, is(categoryName)))(source);
-        sortedCategories = sortedCategories.concat(match);
-        source = rest;
-    }
-
-    const result = sortedCategories.concat(source);
-    for (let category of result) { // TODO test
-        if (category.children) {
-            category.children = order(category.children, categoriesOrder) as any;
-        }
-    }
-    return result;
-}
-
-
-function setGroupLabels(languageConfiguration: any) {
+function setGroupLabels(groupLabels: Map<string>) {
 
     return map((category: Category) => {
 
@@ -172,7 +157,7 @@ function setGroupLabels(languageConfiguration: any) {
 
             if (name === Groups.PARENT) return category.parentCategory?.label ?? category.label;
             else if (name === Groups.CHILD) return category.label;
-            else return lookup(languageConfiguration.groups || {} /* TODO review */)(name)
+            else return lookup(groupLabels)(name)
         };
 
         return update(

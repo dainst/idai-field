@@ -1,4 +1,4 @@
-import {namedArrayToNamedMap, mapToNamedArray} from '../../../../app/core/util/named';
+import {namedArrayToNamedMap, mapToNamedArray, sortNamedArray} from '../../../../app/core/util/named';
 
 /**
  * @author Daniel de Oliveira
@@ -28,6 +28,18 @@ describe('named', () => {
             mapToNamedArray(namedMap)
         ).toEqual(
             [{e: 3, name: '17'}, {e: 7, name: '19'}]
+        );
+    });
+
+
+    it('sortByName', () => {
+
+       const namedArray = [{ name: '18', e: 1}, { name: '17'}, { name: '19'}];
+
+        expect(
+            sortNamedArray(['17', '19'])(namedArray)
+        ).toEqual(
+            [{name: '17'}, {name: '19'}, {name: '18', e: 1}]
         );
     });
 });

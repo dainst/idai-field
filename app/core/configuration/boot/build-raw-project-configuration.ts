@@ -1,5 +1,5 @@
-import {assoc, clone, cond, dissoc, flow, includedIn, isDefined, isNot, keys, keysAndValues, Mapping, map, Map, on, is,
-    reduce, subtract, undefinedOrEmpty, update, identity, compose, lookup, Pair, pairWith, to, separate, prune, updateOn} from 'tsfun';
+import {assoc, clone, cond, dissoc, flow, includedIn, isDefined, isNot, keys, keysAndValues, Mapping, map, Map, on,
+    reduce, subtract, undefinedOrEmpty, update, identity, compose, lookup, Pair, pairWith, prune} from 'tsfun';
 import {LibraryCategoryDefinition} from '../model/library-category-definition';
 import {CustomCategoryDefinition} from '../model/custom-category-definition';
 import {ConfigurationErrors} from './configuration-errors';
@@ -276,7 +276,7 @@ function replaceCommonFields(commonFields: Map)
 
 
 function toCategoriesByFamilyNames(transientCategories: Map<TransientCategoryDefinition>)
-        : Map<TransientCategoryDefinition> { // TODO impl this as const, with compose
+        : Map<TransientCategoryDefinition> {
 
     return flow(
         transientCategories,

@@ -23,10 +23,17 @@ import {Labelled, Named} from '../../../core/util/named';
 
 const PERIOD = 'period';
 
-interface FieldViewGroupDefinition extends Named, Labelled {
+interface FieldsViewGroupDefinition extends Named, Labelled {
 
     shown: boolean;
 }
+
+
+module FieldsViewGroupDefinition {
+
+    export const SHOWN = 'shown';
+}
+
 
 
 @Component({
@@ -52,7 +59,7 @@ export class FieldsViewComponent implements OnChanges {
     public relations: { [groupName: string]: Array<any> } = {};
 
 
-    public groups: Array<FieldViewGroupDefinition> = [];
+    public groups: Array<FieldsViewGroupDefinition> = [];
 
 
     public isBoolean = (value: any) => isBoolean(value);
@@ -82,7 +89,11 @@ export class FieldsViewComponent implements OnChanges {
 
             const groups = this.projectConfiguration.getCategoriesMap()[this.resource.category]
                 .groups
-                .map(group => assoc<any>('shown', group.name === 'stem')(group)) as Array<FieldViewGroupDefinition>;
+                .map(group =>
+                    assoc<any>(
+                        FieldsViewGroupDefinition.SHOWN,
+                        group.name === Groups.STEM)(group)
+                ) as Array<FieldsViewGroupDefinition>;
 
             await this.processRelations(this.resource);
             this.addBaseFields(this.resource);
@@ -103,7 +114,7 @@ export class FieldsViewComponent implements OnChanges {
     }
 
 
-    public toggleGroupSection(group: FieldViewGroupDefinition) {
+    public toggleGroupSection(group: FieldsViewGroupDefinition) {
 
         this.openSection = this.openSection === group.name && !this.expandAllGroups
             ? undefined

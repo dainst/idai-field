@@ -19,6 +19,7 @@ import {FieldDefinition} from '../../../core/configuration/model/field-definitio
 import {ValuelistDefinition} from '../../../core/configuration/model/valuelist-definition';
 import {ValuelistUtil} from '../../../core/util/valuelist-util';
 import {Groups} from '../../../core/configuration/model/group';
+import {Named} from '../../../core/util/named';
 
 
 const PERIOD = 'period';
@@ -114,7 +115,7 @@ export class FieldsViewComponent implements OnChanges {
 
     public toggleGroupSection(group: FieldViewGroupDefinition) {
 
-        this.openSection = (this.openSection === group.name && !this.expandAllGroups)
+        this.openSection = this.openSection === group.name && !this.expandAllGroups
             ? undefined
             : group.name;
 
@@ -165,12 +166,12 @@ export class FieldsViewComponent implements OnChanges {
 
         const existingResourceFields = this.projectConfiguration
             .getFieldDefinitions(resource.category)
-            .filter(on('name', isnt(Resource.RELATIONS)))
-            .filter(on('name', compose(lookup(resource), isDefined)));
+            .filter(on(Named.NAME, isnt(Resource.RELATIONS)))
+            .filter(on(Named.NAME, compose(lookup(resource), isDefined)));
 
         for (let field of existingResourceFields) {
 
-            const group = field.group !== 'parent' ? field.group : Groups.PROPERTIES; // TODO review
+            const group = field.group !== Groups.PARENT ? field.group : Groups.PROPERTIES; // TODO review
             if (!this.fields[group]) this.fields[group] = [];
             this.pushField(resource, field, group);
         }
@@ -261,7 +262,7 @@ export class FieldsViewComponent implements OnChanges {
     private getLabel(category: Name, field: Name): string {
 
         return ((Category.getFields(pick(this.projectConfiguration.getCategoriesMap(), category) as any))
-            .find(on('name', is(field))) as FieldDefinition)
+            .find(on(Named.NAME, is(field))) as FieldDefinition)
             .label as string;
     }
 
@@ -308,7 +309,7 @@ export class FieldsViewComponent implements OnChanges {
         const hasTargets = compose(lookup(resource.relations), isNot(undefinedOrEmpty));
 
         return relations
-            .filter(on('name', isNotHierarchical))
-            .filter(on('name', hasTargets));
+            .filter(on(Named.NAME, isNotHierarchical))
+            .filter(on(Named.NAME, hasTargets));
     }
 }

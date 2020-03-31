@@ -203,7 +203,8 @@ export class LayerMapComponent extends MapComponent {
         // TODO Check if this is still necessary
         // Update layers after switching from a view without operations to another view without
         // operations.
-        return (changes['documents'] && changes['documents'].currentValue
-            && changes['documents'].currentValue.length === 0);
+        return changes['documents']
+            && changes['documents'].currentValue
+            && changes['documents'].currentValue.length === 0;
     }
 }

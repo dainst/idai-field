@@ -1,5 +1,5 @@
 import {assoc, clone, cond, dissoc, flow, includedIn, isDefined, isNot, keys, keysAndValues, Mapping, map, Map, on,
-    reduce, subtract, undefinedOrEmpty, update, identity, compose, lookup, Pair, pairWith, prune} from 'tsfun';
+    reduce, subtract, undefinedOrEmpty, update, identity, compose, lookup, Pair, pairWith, prune, filter} from 'tsfun';
 import {LibraryCategoryDefinition} from '../model/library-category-definition';
 import {CustomCategoryDefinition} from '../model/custom-category-definition';
 import {ConfigurationErrors} from './configuration-errors';
@@ -230,12 +230,17 @@ function replaceValuelistIdWithActualValuelist(valuelistDefinitionMap: Map<Value
 }
 
 
-function eraseUnusedCategories(selectedCategoriesNames: string[]) {
+function eraseUnusedCategories(selectedCategoriesNames: string[])
+    : Mapping<Map<TransientCategoryDefinition>> {
 
-    return (categories: Map<TransientCategoryDefinition>): Map<TransientCategoryDefinition> => {
+    return (categories: Map<TransientCategoryDefinition>) => {
 
-        const keysOfUnselectedCategories = Object.keys(categories)
-            .filter(isNot(includedIn(selectedCategoriesNames)));
+        const keysOfUnselectedCategories =
+            flow(
+                categories,
+                keys,
+                filter(isNot(includedIn(selectedCategoriesNames)))
+            );
 
         const parentNamesOfSelectedCategories: string[] = flow(
             keysOfUnselectedCategories,

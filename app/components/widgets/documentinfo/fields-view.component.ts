@@ -1,39 +1,24 @@
 import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import {DecimalPipe} from '@angular/common';
 import {I18n} from '@ngx-translate/i18n-polyfill';
-import {is, isnt, isUndefinedOrEmpty, isDefined, on, isNot, isString, includedIn, undefinedOrEmpty, lookup,
-    compose, isEmpty, isBoolean, assoc, to, flow, map, Map} from 'tsfun';
+import {is, isnt, isUndefinedOrEmpty, isDefined, on, lookup,
+    compose, isEmpty, isBoolean} from 'tsfun';
 import {Document, FieldDocument,  ReadDatastore, FieldResource, Resource, Dating, Dimension, Literature,
     ValOptionalEndVal} from 'idai-components-2';
 import {RoutingService} from '../../routing-service';
 import {Name, ResourceId} from '../../../core/constants';
 import {pick} from '../../../core/util/utils';
 import {UtilTranslations} from '../../../core/util/util-translations';
-import {HierarchicalRelations} from '../../../core/model/relation-constants';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
 import {Category} from '../../../core/configuration/model/category';
 import {RelationDefinition} from '../../../core/configuration/model/relation-definition';
 import {FieldDefinition} from '../../../core/configuration/model/field-definition';
-import {ValuelistDefinition} from '../../../core/configuration/model/valuelist-definition';
-import {ValuelistUtil} from '../../../core/util/valuelist-util';
-import {Group, Groups} from '../../../core/configuration/model/group';
+import {Groups} from '../../../core/configuration/model/group';
 import {Named} from '../../../core/util/named';
+import {FieldsViewGroupDefinition, FieldsViewUtil} from '../../../core/util/fields-view-util';
 
 
 const PERIOD = 'period';
-
-interface FieldsViewGroupDefinition extends Group {
-
-    shown: boolean;
-    _relations: Array<any>;
-}
-
-
-module FieldsViewGroupDefinition {
-
-    export const SHOWN = 'shown';
-    export const _RELATIONS = '_relations';
-}
 
 
 @Component({
@@ -56,12 +41,9 @@ export class FieldsViewComponent implements OnChanges {
     @Output() onJumpToResource = new EventEmitter<FieldDocument>();
 
     public fields: { [groupName: string]: Array<any> } = {};
-
     public groups: Array<FieldsViewGroupDefinition> = [];
 
-
     public isBoolean = (value: any) => isBoolean(value);
-
 
     constructor(private projectConfiguration: ProjectConfiguration,
                 private datastore: ReadDatastore,
@@ -78,7 +60,7 @@ export class FieldsViewComponent implements OnChanges {
 
         if (this.resource) {
 
-            let groups = FieldsViewComponent
+            let groups = FieldsViewUtil
                 .getGroups(this.resource.category, this.projectConfiguration.getCategoriesMap());
             await this.processRelations(groups, this.resource);
             this.addBaseFields(this.resource);
@@ -165,7 +147,7 @@ export class FieldsViewComponent implements OnChanges {
         this.fields[group].push({
             name: field.name,
             label: this.projectConfiguration.getFieldDefinitionLabel(resource.category, field.name),
-            value: FieldsViewComponent.getValue(resource, field.name, field.valuelist),
+            value: FieldsViewUtil.getValue(resource, field.name, field.valuelist),
             isArray: Array.isArray(resource[field.name])
         });
     }
@@ -204,7 +186,7 @@ export class FieldsViewComponent implements OnChanges {
         this.fields[Groups.STEM] = [];
 
         const shortDescription =
-            FieldsViewComponent.getValue(resource, FieldResource.SHORTDESCRIPTION);
+            FieldsViewUtil.getValue(resource, FieldResource.SHORTDESCRIPTION);
 
         if (shortDescription) {
             this.fields[Groups.STEM].push({
@@ -241,7 +223,7 @@ export class FieldsViewComponent implements OnChanges {
         if (isEmpty(relations)) return;
 
         for (let group of groups) {
-            for (let relation of FieldsViewComponent.computeRelationsToShow(resource, group.relations)) {
+            for (let relation of FieldsViewUtil.computeRelationsToShow(resource, group.relations)) {
                 group._relations.push({
                     label: relation.label,
                     targets: await this.getTargetDocuments(resource.relations[relation.name])
@@ -257,44 +239,5 @@ export class FieldsViewComponent implements OnChanges {
     }
 
 
-    private static getValue(resource: Resource, field: Name, valuelist?: ValuelistDefinition): any {
 
-        return valuelist
-            ? ValuelistUtil.getValueLabel(valuelist, resource[field])
-            : isString(resource[field])
-                ? resource[field]
-                    .replace(/^\s+|\s+$/g, '')
-                    .replace(/\n/g, '<br>')
-                : resource[field];
-    }
-
-
-    private static computeRelationsToShow(resource: Resource,
-                                          relations: Array<RelationDefinition>): Array<RelationDefinition> {
-
-        const isNotHierarchical = isNot(includedIn(HierarchicalRelations.ALL));
-        const hasTargets = compose(lookup(resource.relations), isNot(undefinedOrEmpty));
-
-        return relations
-            .filter(on(Named.NAME, isNotHierarchical))
-            .filter(on(Named.NAME, hasTargets));
-    }
-
-
-    private static getGroups(category: string, categories: Map<Category>) {
-
-        return flow(category,
-            lookup(categories),
-            to(Category.GROUPS),
-            map(group =>
-                assoc<any>(
-                    FieldsViewGroupDefinition.SHOWN,
-                    group.name === Groups.STEM)(group)
-            ),
-            map(group =>
-                assoc<any>(
-                    FieldsViewGroupDefinition._RELATIONS,
-                    [])(group)
-            )) as Array<FieldsViewGroupDefinition>;
-    }
 }

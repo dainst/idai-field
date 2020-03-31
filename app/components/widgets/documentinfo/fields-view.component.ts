@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import {DecimalPipe} from '@angular/common';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {is, isnt, isUndefinedOrEmpty, isDefined, on, isNot, isString, includedIn, undefinedOrEmpty, lookup,
-    compose, isEmpty, isBoolean, assoc, to, flow, map} from 'tsfun';
+    compose, isEmpty, isBoolean, assoc, to, flow, map, Map} from 'tsfun';
 import {Document, FieldDocument,  ReadDatastore, FieldResource, Resource, Dating, Dimension, Literature,
     ValOptionalEndVal} from 'idai-components-2';
 import {RoutingService} from '../../routing-service';
@@ -78,7 +78,8 @@ export class FieldsViewComponent implements OnChanges {
 
         if (this.resource) {
 
-            let groups = this.getGroups(this.resource.category);
+            let groups = FieldsViewComponent
+                .getGroups(this.resource.category, this.projectConfiguration.getCategoriesMap());
             await this.processRelations(groups, this.resource);
             this.addBaseFields(this.resource);
             this.processFields(this.resource);
@@ -130,24 +131,6 @@ export class FieldsViewComponent implements OnChanges {
         } else {
             return arrayItem;
         }
-    }
-
-
-    private getGroups(category: string) {
-
-        return flow(category,
-            lookup(this.projectConfiguration.getCategoriesMap()),
-            to(Category.GROUPS),
-            map(group =>
-                assoc<any>(
-                    FieldsViewGroupDefinition.SHOWN,
-                    group.name === Groups.STEM)(group)
-            ),
-            map(group =>
-                assoc<any>(
-                    FieldsViewGroupDefinition._RELATIONS,
-                    [])(group)
-            )) as Array<FieldsViewGroupDefinition>;
     }
 
 
@@ -300,5 +283,23 @@ export class FieldsViewComponent implements OnChanges {
         return relations
             .filter(on(Named.NAME, isNotHierarchical))
             .filter(on(Named.NAME, hasTargets));
+    }
+
+
+    private static getGroups(category: string, categories: Map<Category>) {
+
+        return flow(category,
+            lookup(categories),
+            to(Category.GROUPS),
+            map(group =>
+                assoc<any>(
+                    FieldsViewGroupDefinition.SHOWN,
+                    group.name === Groups.STEM)(group)
+            ),
+            map(group =>
+                assoc<any>(
+                    FieldsViewGroupDefinition._RELATIONS,
+                    [])(group)
+            )) as Array<FieldsViewGroupDefinition>;
     }
 }

@@ -87,6 +87,7 @@ export class FieldsViewComponent implements OnChanges {
                 .map(group => assoc<any>('shown', group.name === 'stem')(group)) as Array<FieldViewGroupDefinition>;
 
             await this.processRelations(this.resource);
+            this.addBaseFields(this.resource);
             this.processFields(this.resource);
 
             this.groups = groups.filter(group => {
@@ -140,8 +141,6 @@ export class FieldsViewComponent implements OnChanges {
 
 
     private processFields(resource: Resource) {
-
-        this.addBaseFields(resource);
 
         const existingResourceFields = this.projectConfiguration
             .getFieldDefinitions(resource.category)

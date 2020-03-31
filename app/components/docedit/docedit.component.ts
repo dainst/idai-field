@@ -13,7 +13,6 @@ import {MessagesConversion} from './messages-conversion';
 import {Loading} from '../widgets/loading';
 import {DuplicateModalComponent} from './dialog/duplicate-modal.component';
 import {FieldDefinition} from '../../core/configuration/model/field-definition';
-import {RelationDefinition} from '../../core/configuration/model/relation-definition';
 import {ProjectConfiguration} from '../../core/configuration/project-configuration';
 import {DocumentHolder} from '../../core/docedit/document-holder';
 import {DoceditErrors} from '../../core/docedit/docedit-errors';
@@ -44,7 +43,6 @@ export class DoceditComponent {
     public subModalOpened: boolean = false;
     public fieldDefinitions: Array<FieldDefinition>|undefined;
     public groups: Array<Group>|undefined;
-    public relationDefinitions: Array<RelationDefinition>; // TODO maybe unnecessary
 
     private parentLabel: string|undefined = undefined;
     private showDoceditImagesTab: boolean = false;
@@ -115,7 +113,6 @@ export class DoceditComponent {
 
         this.parentLabel = await this.fetchParentLabel(document);
         this.updateFieldDefinitions();
-        this.updateRelationDefinitions();
     }
 
 
@@ -189,13 +186,6 @@ export class DoceditComponent {
             this.documentHolder.clonedDocument.resource.category
         );
         this.groups = (this.projectConfiguration.getCategoriesMap()[this.documentHolder.clonedDocument.resource.category]).groups;
-    }
-
-
-    private updateRelationDefinitions() {
-
-        this.relationDefinitions = this.projectConfiguration.getRelationDefinitions(
-            this.documentHolder.clonedDocument.resource.category, false, 'editable');
     }
 
 
@@ -360,6 +350,3 @@ export class DoceditComponent {
         return conflictsAfterSave.find(isNot(includedIn(conflictsBeforeSave))) !== undefined;
     }
 }
-
-
-const doNothing = () => {};

@@ -1243,7 +1243,7 @@ describe('buildRawProjectConfiguration', () => { // TODO test groups in idai typ
     });
 
 
-    it('apply order - children', () => {
+    it('apply order to children', () => {
 
         const builtInCategories: Map<BuiltinCategoryDefinition> = {
             B: { fields: {}, parent: 'D' },

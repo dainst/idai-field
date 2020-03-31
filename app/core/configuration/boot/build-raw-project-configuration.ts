@@ -24,9 +24,8 @@ import {makeCategoriesMap} from './make-categories-map';
 import {RawProjectConfiguration} from '../project-configuration';
 import {Category} from '../model/category';
 import {Group, Groups} from '../model/group';
-import {Named, mapToNamedArray, sortNamedArray} from '../../util/named';
+import {mapToNamedArray, sortNamedArray} from '../../util/named';
 import {RelationsUtil} from '../relations-utils';
-import {GroupUtil} from '../group-util';
 import {TypeRelations} from '../../model/relation-constants';
 import {CategoryDefinition} from '../model/category-definition';
 
@@ -111,7 +110,7 @@ function putRelationsIntoGroups(relations: Array<RelationDefinition>) {
 
         for (let relation of relDefs) {
 
-            const groupName: string|undefined = GroupUtil.getGroupName(relation.name);
+            const groupName: string|undefined = Groups.getGroupNameForRelation(relation.name);
             if (!groupName || relation.name === TypeRelations.INSTANCEOF) continue;
 
             let group = (category.groups as any)[groupName];

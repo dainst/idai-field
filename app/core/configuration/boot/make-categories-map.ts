@@ -6,9 +6,8 @@ import {MDInternal} from 'idai-components-2';
 import {Category} from '../model/category';
 import {CategoryDefinition} from '../model/category-definition';
 import {Group, Groups} from '../model/group';
-import {debugId, makeLookup} from '../../util/utils';
+import {makeLookup} from '../../util/utils';
 import {FieldDefinition} from '../model/field-definition';
-import {GroupUtil} from '../group-util';
 import {clone} from '../../util/object-util';
 import {Named, namedArrayToNamedMap} from '../../util/named';
 

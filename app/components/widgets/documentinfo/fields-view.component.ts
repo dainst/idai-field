@@ -6,7 +6,6 @@ import {is, isnt, isUndefinedOrEmpty, isDefined, on, isNot, isString, includedIn
 import {Document, FieldDocument,  ReadDatastore, FieldResource, Resource, Dating, Dimension, Literature,
     ValOptionalEndVal} from 'idai-components-2';
 import {RoutingService} from '../../routing-service';
-import {GroupUtil} from '../../../core/configuration/group-util';
 import {Name, ResourceId} from '../../../core/constants';
 import {pick} from '../../../core/util/utils';
 import {UtilTranslations} from '../../../core/util/util-translations';
@@ -50,10 +49,10 @@ module FieldsViewGroupDefinition {
 export class FieldsViewComponent implements OnChanges {
 
     @Input() resource: Resource;
-    @Input() openSection: string|undefined = Groups.STEM;
+    @Input() openSection: string | undefined = Groups.STEM;
     @Input() expandAllGroups: boolean = false;
 
-    @Output() onSectionToggled = new EventEmitter<string|undefined>();
+    @Output() onSectionToggled = new EventEmitter<string | undefined>();
     @Output() onJumpToResource = new EventEmitter<FieldDocument>();
 
     public fields: { [groupName: string]: Array<any> } = {};
@@ -69,7 +68,8 @@ export class FieldsViewComponent implements OnChanges {
                 private routingService: RoutingService,
                 private decimalPipe: DecimalPipe,
                 private utilTranslations: UtilTranslations,
-                private i18n: I18n) {}
+                private i18n: I18n) {
+    }
 
 
     async ngOnChanges() {
@@ -236,17 +236,12 @@ export class FieldsViewComponent implements OnChanges {
      */
     private async processRelations(groups: Array<FieldsViewGroupDefinition>, resource: Resource) {
 
-        const relations: Array<RelationDefinition>|undefined
+        const relations: Array<RelationDefinition> | undefined
             = this.projectConfiguration.getRelationDefinitions(resource.category);
         if (isEmpty(relations)) return;
 
-        for (let relation of FieldsViewComponent.computeRelationsToShow(resource, relations)) {
-
-            const groupName = GroupUtil.getGroupName(relation.name);
-            if (!groupName) continue;
-            const group = groups.find(on(Named.NAME, is(groupName)))!;
-
-            if (includedIn(group.relations.map(to(Named.NAME)))(relation.name)) {
+        for (let group of groups) {
+            for (let relation of FieldsViewComponent.computeRelationsToShow(resource, group.relations)) {
                 group._relations.push({
                     label: relation.label,
                     targets: await this.getTargetDocuments(resource.relations[relation.name])

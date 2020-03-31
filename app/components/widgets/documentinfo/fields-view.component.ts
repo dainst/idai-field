@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import {DecimalPipe} from '@angular/common';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {is, isnt, isUndefinedOrEmpty, isDefined, on, isNot, isString, includedIn, undefinedOrEmpty, lookup,
-    compose, isEmpty, isBoolean, copy, assoc} from 'tsfun';
+    compose, isEmpty, isBoolean, assoc, to, flow, map} from 'tsfun';
 import {Document, FieldDocument,  ReadDatastore, FieldResource, Resource, Dating, Dimension, Literature,
     ValOptionalEndVal} from 'idai-components-2';
 import {RoutingService} from '../../routing-service';
@@ -17,23 +17,24 @@ import {RelationDefinition} from '../../../core/configuration/model/relation-def
 import {FieldDefinition} from '../../../core/configuration/model/field-definition';
 import {ValuelistDefinition} from '../../../core/configuration/model/valuelist-definition';
 import {ValuelistUtil} from '../../../core/util/valuelist-util';
-import {Groups} from '../../../core/configuration/model/group';
-import {Labelled, Named} from '../../../core/util/named';
+import {Group, Groups} from '../../../core/configuration/model/group';
+import {Named} from '../../../core/util/named';
 
 
 const PERIOD = 'period';
 
-interface FieldsViewGroupDefinition extends Named, Labelled {
+interface FieldsViewGroupDefinition extends Group {
 
     shown: boolean;
+    _relations: Array<any>;
 }
 
 
 module FieldsViewGroupDefinition {
 
     export const SHOWN = 'shown';
+    export const _RELATIONS = '_relations';
 }
-
 
 
 @Component({
@@ -56,8 +57,6 @@ export class FieldsViewComponent implements OnChanges {
     @Output() onJumpToResource = new EventEmitter<FieldDocument>();
 
     public fields: { [groupName: string]: Array<any> } = {};
-    public relations: { [groupName: string]: Array<any> } = {};
-
 
     public groups: Array<FieldsViewGroupDefinition> = [];
 
@@ -76,33 +75,18 @@ export class FieldsViewComponent implements OnChanges {
     async ngOnChanges() {
 
         this.fields = {};
-        this.relations = {};
-        this.relations[Groups.STEM] = [];
-        this.relations[Groups.IDENTIFICATION] = [];
-        this.relations[Groups.PROPERTIES] = [];
-        this.relations[Groups.CHILD] = [];
-        this.relations[Groups.DIMENSION] = [];
-        this.relations[Groups.POSITION] = [];
-        this.relations[Groups.TIME] = [];
 
         if (this.resource) {
 
-            const groups = this.projectConfiguration.getCategoriesMap()[this.resource.category]
-                .groups
-                .map(group =>
-                    assoc<any>(
-                        FieldsViewGroupDefinition.SHOWN,
-                        group.name === Groups.STEM)(group)
-                ) as Array<FieldsViewGroupDefinition>;
-
-            await this.processRelations(this.resource);
+            let groups = this.getGroups(this.resource.category);
+            await this.processRelations(groups, this.resource);
             this.addBaseFields(this.resource);
             this.processFields(this.resource);
 
             this.groups = groups.filter(group => {
 
                 return (this.fields[group.name] !== undefined && this.fields[group.name].length > 0)
-                    || (this.relations[group.name] !== undefined && this.relations[group.name].length > 0);
+                    || group._relations.length > 0;
             });
         }
     }
@@ -146,6 +130,24 @@ export class FieldsViewComponent implements OnChanges {
         } else {
             return arrayItem;
         }
+    }
+
+
+    private getGroups(category: string) {
+
+        return flow(category,
+            lookup(this.projectConfiguration.getCategoriesMap()),
+            to(Category.GROUPS),
+            map(group =>
+                assoc<any>(
+                    FieldsViewGroupDefinition.SHOWN,
+                    group.name === Groups.STEM)(group)
+            ),
+            map(group =>
+                assoc<any>(
+                    FieldsViewGroupDefinition._RELATIONS,
+                    [])(group)
+            )) as Array<FieldsViewGroupDefinition>;
     }
 
 
@@ -245,19 +247,28 @@ export class FieldsViewComponent implements OnChanges {
     }
 
 
-    private async processRelations(resource: Resource) {
+    /**
+     * @param groups ! modified in place !
+     * @param resource
+     */
+    private async processRelations(groups: Array<FieldsViewGroupDefinition>, resource: Resource) {
 
         const relations: Array<RelationDefinition>|undefined
             = this.projectConfiguration.getRelationDefinitions(resource.category);
         if (isEmpty(relations)) return;
 
         for (let relation of FieldsViewComponent.computeRelationsToShow(resource, relations)) {
+
             const groupName = GroupUtil.getGroupName(relation.name);
             if (!groupName) continue;
+            const group = groups.find(on(Named.NAME, is(groupName)))!;
 
-            this.relations[groupName].push({
-                label: relation.label,
-                targets: await this.getTargetDocuments(resource.relations[relation.name])});
+            if (includedIn(group.relations.map(to(Named.NAME)))(relation.name)) {
+                group._relations.push({
+                    label: relation.label,
+                    targets: await this.getTargetDocuments(resource.relations[relation.name])
+                });
+            }
         }
     }
 

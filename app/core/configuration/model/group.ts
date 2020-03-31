@@ -1,5 +1,5 @@
 import {FieldDefinition} from './field-definition';
-import {Named} from '../../util/named';
+import {Labelled, Named} from '../../util/named';
 import {RelationDefinition} from './relation-definition';
 
 export module Groups {
@@ -25,10 +25,9 @@ export module Groups {
 }
 
 
-export interface Group extends Named {
+export interface Group extends Named, Labelled {
 
     fields: Array<FieldDefinition>;
-    label: string;
     relations: Array<RelationDefinition>;
 }
 
@@ -37,7 +36,7 @@ export module Group {
 
     export const FIELDS = 'fields';
     export const RELATIONS = 'relations';
-    export const LABEL = 'label';
+    export const LABEL = 'label'; // TODO remove
 
 
     export function create(name: string) {

@@ -1,5 +1,5 @@
-import {copy, Pair, reduce, Map, to, identity, isDefined, path, isString, getOn, dissoc, map, assoc, values, compose} from 'tsfun';
-import {SortUtil} from './sort-util';
+import {copy, Pair, reduce, Map, to, identity, isDefined, path, isString, getOn,
+    dissoc, map, assoc, values, compose} from 'tsfun';
 
 /**
  * @author Daniel de Oliveira
@@ -92,15 +92,6 @@ export function assocReduce<T,A>(f: (a: A, i?: number|string) => [string|number,
         },
         /* we do not modify target in place */
         copy(target as any) as any) as (source: Array<A>|Map<A>) => Map<T>;
-}
-
-
-/** o(bject)reduce - experimental TODO review if this is the same as map */
-export function oreduce<T,A>(f: (acc: Map<T>, a: A, i?: string|number) => void, target: Map<T>) {
-
-    return reduce(
-        (acc: Map<T>, a: A, i?: string|number) => { f(acc, a, i); return acc; },
-        copy(target as Map<T>));
 }
 
 

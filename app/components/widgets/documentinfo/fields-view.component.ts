@@ -3,7 +3,7 @@ import {DecimalPipe} from '@angular/common';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {isUndefinedOrEmpty, isBoolean, isArray, filter, or, on, update, compose, Mapping,
     isNot, empty, map, flatten} from 'tsfun';
-import {flow as asyncFlow} from 'tsfun/async';
+import {flow as asyncFlow, map as asyncMap} from 'tsfun/async';
 import {Document, FieldDocument,  ReadDatastore, FieldResource, Resource,
     Dating, Dimension, Literature, ValOptionalEndVal} from 'idai-components-2';
 import {RoutingService} from '../../routing-service';
@@ -18,6 +18,7 @@ import {
     FieldsViewUtil
 } from '../../../core/util/fields-view-util';
 import {debugId} from '../../../core/util/utils';
+import {RelationDefinition} from '../../../core/configuration/model/relation-definition';
 
 
 @Component({
@@ -183,19 +184,19 @@ export class FieldsViewComponent implements OnChanges {
 
     private async putActualResourceRelationsIntoGroups(resource: Resource) {
 
-        return async (groups: Array<FieldsViewGroup> /* ! modified in place ! */)
-            : Promise<Array<FieldsViewGroup>> => {
+        return asyncMap(async (group: any /* ! modified in place ! */) => {
 
-            for (let group of groups) {
-                for (let relation of FieldsViewUtil.computeRelationsToShow(resource)(group.relations)) {
-                    group._relations.push({
+            group.relations = await asyncFlow( // TODO make asyncCompose and asyncUpdate
+                group.relations,
+                FieldsViewUtil.computeRelationsToShow(resource),
+                asyncMap(async (relation: RelationDefinition) => {
+                    return {
                         label: relation.label,
                         targets: await this.getTargetDocuments(resource.relations[relation.name])
-                    });
-                }
-            }
-            return groups;
-        }
+                    }
+                }));
+            return group;
+        });
     }
 
 

@@ -14,8 +14,7 @@ import {Filter} from './utils';
 export interface FieldsViewGroup extends Named { // TODO review Named usage
 
     shown: boolean;
-    _relations: Array<FieldsViewRelation>;
-    relations: Array<RelationDefinition>; // TODO remove
+    relations: Array<FieldsViewRelation>;
     fields: Array<FieldsViewField>;
 }
 
@@ -35,7 +34,7 @@ export interface FieldsViewField extends Labelled {
 export module FieldsViewGroup {
 
     export const SHOWN = 'shown';
-    export const _RELATIONS = '_relations';
+    export const _RELATIONS = 'relations';
     export const FIELDS = 'fields';
 }
 
@@ -78,11 +77,6 @@ export module FieldsViewUtil {
                 assoc<any>(
                     FieldsViewGroup.SHOWN,
                     group.name === Groups.STEM)(group)
-            ),
-            map(group =>
-                assoc<any>(
-                    FieldsViewGroup._RELATIONS,
-                    [])(group)
             )) as Array<FieldsViewGroup>;
     }
 }

@@ -17,6 +17,9 @@ import {RelationDefinition} from '../../../core/configuration/model/relation-def
 import {Named} from '../../../core/util/named';
 
 
+type FieldContent = any;
+
+
 @Component({
     selector: 'fields-view',
     moduleId: module.id,
@@ -116,7 +119,7 @@ export class FieldsViewComponent implements OnChanges {
     }
 
     
-    private convertToFieldsViewField: Mapping<Pair<FieldDefinition, any>, Array<FieldsViewField>>
+    private convertToFieldsViewField: Mapping<Pair<FieldDefinition, FieldContent>, Array<FieldsViewField>>
         = conds(
             [
                 on([0, FieldDefinition.INPUTTYPE], is(FieldDefinition.InputType.DROPDOWNRANGE)),
@@ -130,7 +133,7 @@ export class FieldsViewComponent implements OnChanges {
         );
 
 
-    private makeDefaultField([field, fieldContent]: [FieldDefinition, any]): FieldsViewField {
+    private makeDefaultField([field, fieldContent]: [FieldDefinition, FieldContent]): FieldsViewField {
 
         return {
             label: field.label,
@@ -143,7 +146,7 @@ export class FieldsViewComponent implements OnChanges {
     }
 
 
-    private makeValOptionalEndValField([field, fieldContent]: [FieldDefinition, any]): Array<FieldsViewField> {
+    private makeValOptionalEndValField([field, fieldContent]: [FieldDefinition, FieldContent]): Array<FieldsViewField> {
 
         const val = {
             label: field.label + (!isUndefinedOrEmpty(fieldContent[ValOptionalEndVal.ENDVALUE])

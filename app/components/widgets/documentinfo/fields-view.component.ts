@@ -7,10 +7,8 @@ import {Document, FieldDocument,  ReadDatastore, FieldResource, Resource, Dating
     ValOptionalEndVal, FeatureResource} from 'idai-components-2';
 import {RoutingService} from '../../routing-service';
 import {Name, ResourceId} from '../../../core/constants';
-import {pick} from '../../../core/util/utils';
 import {UtilTranslations} from '../../../core/util/util-translations';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
-import {Category} from '../../../core/configuration/model/category';
 import {RelationDefinition} from '../../../core/configuration/model/relation-definition';
 import {FieldDefinition} from '../../../core/configuration/model/field-definition';
 import {Groups} from '../../../core/configuration/model/group';

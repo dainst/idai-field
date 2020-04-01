@@ -78,8 +78,9 @@ export abstract class CachedDatastore<T extends Document> extends CachedReadData
 
     private updateIndex(document: Document) {
 
-        this.indexFacade.put(document);
         const convertedDocument = this.categoryConverter.convert(document);
+        this.indexFacade.put(convertedDocument);
+
         return !this.documentCache.get(document.resource.id as any)
             ? this.documentCache.set(convertedDocument)
             : this.documentCache.reassign(convertedDocument);

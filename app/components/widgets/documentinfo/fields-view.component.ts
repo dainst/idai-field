@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import {DecimalPipe} from '@angular/common';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {isUndefinedOrEmpty, isBoolean, isArray, filter, or, Pair, update, compose, Mapping, on, is, isDefined,
-    isNot, empty, map, flatten, lookup, to, pairWith, conds, singleton, otherwise} from 'tsfun';
+    isNot, empty, map, flatten, lookup, to, pairWith, conds, singleton, otherwise, Predicate} from 'tsfun';
 import {flow as asyncFlow, map as asyncMap} from 'tsfun/async';
 import {FieldDocument,  ReadDatastore, FieldResource, Resource,
     Dating, Dimension, Literature, ValOptionalEndVal} from 'idai-components-2';
@@ -59,9 +59,7 @@ export class FieldsViewComponent implements OnChanges {
             FieldsViewUtil.getGroups(this.resource.category, this.projectConfiguration.getCategoriesMap()),
             await this.putActualResourceRelationsIntoGroups(this.resource),
             this.putActualResourceFieldsIntoGroups(this.resource),
-            filter(or(
-                    on(FieldsViewGroup.FIELDS, isNot(empty)),
-                    on(FieldsViewGroup._RELATIONS, isNot(empty)))));
+            filter(FieldsViewUtil.shouldBeDisplayed));
     }
 
 
@@ -117,7 +115,7 @@ export class FieldsViewComponent implements OnChanges {
                         flatten)));
     }
 
-
+    
     private convertToFieldsViewField: Mapping<Pair<FieldDefinition, any>, Array<FieldsViewField>>
         = conds(
             [
@@ -125,10 +123,7 @@ export class FieldsViewComponent implements OnChanges {
                 this.makeValOptionalEndValField.bind(this)
             ],
             [
-                or(
-                    on([0, FieldDefinition.VISIBLE], is(true)),
-                    on([0, Named.NAME], is(Resource.CATEGORY)),
-                    on([0, Named.NAME], is(FieldResource.SHORTDESCRIPTION))),
+                on([0], FieldsViewUtil.isDefaultField),
                 compose(this.makeDefaultField.bind(this), singleton)
             ],
             [otherwise, []]

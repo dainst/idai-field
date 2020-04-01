@@ -1,14 +1,17 @@
-import {Resource} from 'idai-components-2/index';
+import {FieldResource, Resource} from 'idai-components-2/index';
 import {ValuelistDefinition} from '../configuration/model/valuelist-definition';
 import {ValuelistUtil} from './valuelist-util';
-import {assoc, compose, flow, and, includedIn, isNot, filter,
-    isString, lookup, map, Map, on, to, undefinedOrEmpty} from 'tsfun';
+import {
+    assoc, compose, flow, and, includedIn, isNot, filter,
+    isString, lookup, map, Map, on, to, undefinedOrEmpty, Predicate, or, is, empty
+} from 'tsfun';
 import {RelationDefinition} from '../configuration/model/relation-definition';
 import {HierarchicalRelations} from '../model/relation-constants';
 import {Labelled, Named} from './named';
 import {Category} from '../configuration/model/category';
 import {Group, Groups} from '../configuration/model/group';
 import {Filter} from './utils';
+import {FieldDefinition} from '../configuration/model/field-definition';
 
 
 export interface FieldsViewGroup extends Named { // TODO review Named usage
@@ -34,7 +37,7 @@ export interface FieldsViewField extends Labelled {
 export module FieldsViewGroup {
 
     export const SHOWN = 'shown';
-    export const _RELATIONS = 'relations';
+    export const RELATIONS = 'relations';
     export const FIELDS = 'fields';
 }
 
@@ -68,7 +71,18 @@ export module FieldsViewUtil {
     }
 
 
-    export function getGroups(category: string, categories: Map<Category>) {
+    export const isDefaultField: Predicate<FieldDefinition> = or(
+        on(FieldDefinition.VISIBLE, is(true)),
+        on(Named.NAME, is(Resource.CATEGORY)),
+        on(Named.NAME, is(FieldResource.SHORTDESCRIPTION)));
+
+
+    export const shouldBeDisplayed: Predicate<FieldsViewGroup> = or(
+        on(FieldsViewGroup.FIELDS, isNot(empty)),
+        on(FieldsViewGroup.RELATIONS, isNot(empty)));
+
+
+    export function getGroups(category: string, categories: Map<Category>) { // TODO review
 
         return flow(category,
             lookup(categories),

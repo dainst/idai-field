@@ -7,7 +7,7 @@ describe('InverseRelationsMap', () => {
    it('make', () => {
 
        const inverseRelationsMap: InverseRelationsMap
-           = makeInverseRelationsMap([{ name: 'a', inverse: 'b' }, { name: 'c' }]);
+           = makeInverseRelationsMap([{ name: 'a', label: '', inverse: 'b' }, { name: 'c', label: '' }]);
 
        expect(inverseRelationsMap).toEqual({
            a: 'b',

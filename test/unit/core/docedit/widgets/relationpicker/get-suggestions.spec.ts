@@ -27,6 +27,7 @@ describe('getSuggestions', () => {
 
         const relationDefinition: RelationDefinition = {
             name: 'relation',
+            label: '',
             range: ['RangeCategory1', 'RangeCategory2']
         };
 
@@ -58,6 +59,7 @@ describe('getSuggestions', () => {
 
         const relationDefinition: RelationDefinition = {
             name: 'relation',
+            label: '',
             inverse: 'inverse',
             range: ['RangeCategory']
         };
@@ -91,6 +93,7 @@ describe('getSuggestions', () => {
 
         const relationDefinition: RelationDefinition = {
             name: 'relation',
+            label: '',
             range: ['RangeCategory'],
             sameMainCategoryResource: true
         };
@@ -123,6 +126,7 @@ describe('getSuggestions', () => {
 
         const relationDefinition: RelationDefinition = {
             name: 'relation',
+            label: '',
             range: ['RangeCategory'],
             sameMainCategoryResource: true
         };

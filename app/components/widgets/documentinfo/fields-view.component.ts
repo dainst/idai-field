@@ -228,7 +228,7 @@ export class FieldsViewComponent implements OnChanges {
         for (let group of groups) {
             for (let relation of FieldsViewUtil.computeRelationsToShow(resource, group.relations)) {
                 group._relations.push({
-                    label: relation.label!, // TODO remove !
+                    label: relation.label,
                     targets: await this.getTargetDocuments(resource.relations[relation.name])
                 });
             }
@@ -240,7 +240,7 @@ export class FieldsViewComponent implements OnChanges {
 
         return ((Category.getFields(pick(this.projectConfiguration.getCategoriesMap(), category) as any))
             .find(on(Named.NAME, is(field))) as FieldDefinition)
-            .label as string;
+            .label;
     }
 
 

@@ -42,6 +42,7 @@ describe('addRelations', () => {
 
         const extraRelation: RelationDefinition = {
             name: 'R',
+            label: '',
             domain: ['domainA'],
             range : ['rangeA']
         };
@@ -58,12 +59,14 @@ describe('addRelations', () => {
 
         const r1: RelationDefinition = {
             name: 'R',
+            label: '',
             domain: ['domainA', 'domainB', 'domainC'],
             range : ['rangeA']
         };
 
         const r2: RelationDefinition = {
             name: 'R',
+            label: '',
             domain: ['domainB', 'domainC'],
             range : ['rangeB']
         };
@@ -84,12 +87,14 @@ describe('addRelations', () => {
 
         const r1: RelationDefinition = {
             name: 'R',
+            label: '',
             domain: ['T1:inherit'],
             range : ['rangeA']
         };
 
         const r2: RelationDefinition = {
             name: 'R',
+            label: '',
             domain: ['T1:inherit'],
             range : ['rangeA', 'rangeB', 'rangeC']
         };
@@ -109,6 +114,7 @@ describe('addRelations', () => {
 
         const r: RelationDefinition = {
             name: 'R',
+            label: '',
             domain: ['T2', 'T3']
         };
 
@@ -125,6 +131,7 @@ describe('addRelations', () => {
 
         const r: RelationDefinition = {
             name: 'R',
+            label: '',
             range: ['T2', 'T3']
         };
 
@@ -141,6 +148,7 @@ describe('addRelations', () => {
 
         const r: RelationDefinition = { name: 'R',
             domain: [ 'T3' ],
+            label: '',
             range: [ 'T1:inherit' ]
         };
 
@@ -159,7 +167,9 @@ describe('addRelations', () => {
 
     it('should replace domain :inherit with all subcategories', function() {
 
-        const r: RelationDefinition = { name: 'R',
+        const r: RelationDefinition = {
+            name: 'R',
+            label: '',
             domain: [ 'T1:inherit' ],
             range: [ 'T3' ]
         };
@@ -180,7 +190,9 @@ describe('addRelations', () => {
     // This test can detect problems coming from a wrong order of expandInherits and expandAllMarker calls
     it('should exclude the category and subcategories when using :inherit and total range', function() {
 
-        const r: RelationDefinition = { name: 'R',
+        const r: RelationDefinition = {
+            name: 'R',
+            label: '',
             domain: [ 'T1:inherit' ]
         };
 

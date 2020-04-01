@@ -1,13 +1,12 @@
-import {Named} from '../../util/named';
+import {Labelled, Named} from '../../util/named';
 
 
 /**
  * @author Daniel de Oliveira
  */
-export interface RelationDefinition extends Named {
+export interface RelationDefinition extends Named, Labelled {
 
-    label? : string; // TODO make mandatory
-    domain?: any;
+    domain?: any; // TODO make mandatory
     range?: any;
     inverse?: any;
     visible?: boolean; // determines the visibility of that relation in show type widgets

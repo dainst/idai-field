@@ -41,11 +41,11 @@ describe('ImportValidator', () => {
             }
         ] as any,
             [
-                { name: 'isRelatedTo', domain: ['T'], range: ['T'], inverse: 'NO-INVERSE' },
-                { name: 'isDepictedIn', domain: ['T'], range: ['T2'], inverse: 'NO-INVERSE' },
-                { name: 'isRecordedIn', domain: ['T'], range: ['T2'], inverse: 'NO-INVERSE' },
-                { name: 'includes', domain: ['T'], range: ['T2'], inverse: 'NO-INVERSE' }, // defined but not allowed
-                { name: 'liesWithin', domain: ['T3'], range: ['T2'], inverse: 'NO-INVERSE' }
+                { name: 'isRelatedTo', label: '', domain: ['T'], range: ['T'], inverse: 'NO-INVERSE' },
+                { name: 'isDepictedIn', label: '', domain: ['T'], range: ['T2'], inverse: 'NO-INVERSE' },
+                { name: 'isRecordedIn', label: '', domain: ['T'], range: ['T2'], inverse: 'NO-INVERSE' },
+                { name: 'includes', label: '', domain: ['T'], range: ['T2'], inverse: 'NO-INVERSE' }, // defined but not allowed
+                { name: 'liesWithin', label: '', domain: ['T3'], range: ['T2'], inverse: 'NO-INVERSE' }
             ]
         ]
     );

@@ -57,9 +57,9 @@ describe('Validations', () => {
                 }
             } as any, [
 
-                { name: 'isRelatedTo', domain: ['T'], range: ['T'], inverse: 'NO-INVERSE' },
-                { name: 'isDepictedIn', domain: ['T'], range: ['T2'], inverse: 'NO-INVERSE' },
-                { name: 'isRecordedIn', domain: ['T'], range: ['T2'], inverse: 'NO-INVERSE' }
+                { name: 'isRelatedTo', label: '', domain: ['T'], range: ['T'], inverse: 'NO-INVERSE' },
+                { name: 'isDepictedIn', label: '', domain: ['T'], range: ['T2'], inverse: 'NO-INVERSE' },
+                { name: 'isRecordedIn', label: '', domain: ['T'], range: ['T2'], inverse: 'NO-INVERSE' }
             ]
         ]
     );

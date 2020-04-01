@@ -40,21 +40,24 @@ describe('DocumentHolder', () => {
             }} as any
             ,[
                 {
-                    'name': 'isFoundOn',
-                    'inverse': 'bears',
-                    'domain': ['Trench'],
-                    'range': ['Find']
+                    name: 'isFoundOn',
+                    label: '',
+                    inverse: 'bears',
+                    domain: ['Trench'],
+                    range: ['Find']
                 },
                 {
-                    'name': 'isFoundOn2',
-                    'inverse': 'bears',
-                    'domain': ['Trench'],
-                    'range': ['Find']
+                    name: 'isFoundOn2',
+                    label: '',
+                    inverse: 'bears',
+                    domain: ['Trench'],
+                    range: ['Find']
                 },
                 {
-                    'name': 'isRecordedIn',
-                    'domain': ['Find'],
-                    'range': ['Trench']
+                    name: 'isRecordedIn',
+                    label: '',
+                    domain: ['Find'],
+                    range: ['Trench']
                 }
             ]]);
 

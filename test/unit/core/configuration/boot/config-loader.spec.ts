@@ -176,10 +176,12 @@ describe('ConfigLoader', () => {
                 [
                     {
                         name: 'connection',
+                        label: '',
                         domain: ['C'],
                         range: ['D']
                     }, {
                         name: 'connection',
+                        label: '',
                         domain: ['A:inherit'],
                         range: ['B:inherit']
                     }],
@@ -218,7 +220,7 @@ describe('ConfigLoader', () => {
                     A: { fields: {}},
                     B: { fields: {}},
                     T: { fields: {}, supercategory: true, userDefinedSubcategoriesAllowed: true }},
-                [{ name: 'abc', domain: ['A'], range: ['B'], sameMainCategoryResource: false }], {},
+                [{ name: 'abc', label: '', domain: ['A'], range: ['B'], sameMainCategoryResource: false }], {},
                 undefined, 'de');
         } catch(err) {
             fail(err);
@@ -269,8 +271,8 @@ describe('ConfigLoader', () => {
                         A: { fields: {} },
                         B: { fields: {} }
                     },
-                [{ name: 'r1', domain: ['A'], range: ['B']},
-                         { name: 'r2', domain: ['A'], range: ['B']}],
+                [{ name: 'r1', label: '', domain: ['A'], range: ['B']},
+                         { name: 'r2', label: '', domain: ['A'], range: ['B']}],
                 {},
                  undefined, 'de');
         } catch(err) {
@@ -283,7 +285,7 @@ describe('ConfigLoader', () => {
         expect(pconf.getCategoriesArray()[3].label).toEqual('C'); // took name as label
 
         expect(pconf.getRelationDefinitions('A')[1].label).toEqual('r1_');
-        expect(pconf.getRelationDefinitions('A')[0].label).toBeUndefined();
+        expect(pconf.getRelationDefinitions('A')[0].label).toBeFalsy();
         done();
     });
 

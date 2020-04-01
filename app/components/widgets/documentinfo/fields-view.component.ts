@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import {DecimalPipe} from '@angular/common';
 import {I18n} from '@ngx-translate/i18n-polyfill';
-import {isUndefinedOrEmpty, isBoolean, isArray, filter} from 'tsfun';
+import {isUndefinedOrEmpty, isBoolean, isArray, filter, or, on, isNot, empty} from 'tsfun';
 import {flow as asyncFlow} from 'tsfun/async';
 import {Document, FieldDocument,  ReadDatastore, FieldResource, Resource,
     Dating, Dimension, Literature, ValOptionalEndVal} from 'idai-components-2';
@@ -56,7 +56,9 @@ export class FieldsViewComponent implements OnChanges {
             FieldsViewUtil.getGroups(this.resource.category, this.projectConfiguration.getCategoriesMap()),
             await this.processRelations(this.resource),
             this.processFields(this.resource),
-            filter((group: any) => group._fields.length > 0 || group._relations.length > 0))
+            filter(or(
+                    on(FieldsViewGroup._FIELDS, isNot(empty)),
+                    on(FieldsViewGroup._RELATIONS, isNot(empty)))));
     }
 
 

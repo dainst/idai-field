@@ -30,7 +30,7 @@ export interface FieldsViewField extends Labelled {
 }
 
 
-module FieldsViewGroupDefinition {
+export module FieldsViewGroup {
 
     export const SHOWN = 'shown';
     export const _RELATIONS = '_relations';
@@ -76,17 +76,17 @@ export module FieldsViewUtil {
             to(Category.GROUPS),
             map(group =>
                 assoc<any>(
-                    FieldsViewGroupDefinition.SHOWN,
+                    FieldsViewGroup.SHOWN,
                     group.name === Groups.STEM)(group)
             ),
             map(group =>
                 assoc<any>(
-                    FieldsViewGroupDefinition._RELATIONS,
+                    FieldsViewGroup._RELATIONS,
                     [])(group)
             ),
             map(group =>
                 assoc<any>(
-                    FieldsViewGroupDefinition._FIELDS,
+                    FieldsViewGroup._FIELDS,
                     [])(group)
             )) as Array<FieldsViewGroup>;
     }

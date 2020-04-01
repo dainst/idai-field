@@ -3,7 +3,8 @@
     <img [src]="thumbnailUrl"
          [class.not-found]="!isThumbnailFound()"
          (click)="onImageClicked()">
-    <div class="badge badge-secondary">
+    <div class="badge badge-secondary"
+         ngbTooltip="{{getNumberOfImagesTooltip()}}" placement="bottom" container="body">
          <span class="mdi mdi-image"> {{getNumberOfImages()}}</span>
     </div>
 </div>

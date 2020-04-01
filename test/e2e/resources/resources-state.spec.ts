@@ -485,7 +485,6 @@ describe('resources/state --', function() {
         SearchBarPage.typeInSearchField('xyz');
         browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('S1')), delays.ECWaitTime);
 
-        createDepictsRelation();
         clickDepictsRelationLink();
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('S1')), delays.ECWaitTime);
         SearchBarPage.getSearchBarInputFieldValue().then(value => expect(value).toEqual(''));
@@ -517,6 +516,32 @@ describe('resources/state --', function() {
             expect(navigationButtons.length).toBe(2);
             expect(navigationButtons[0].getText()).toEqual('S1');
             expect(navigationButtons[1].getText()).toEqual('c2');
+        });
+    });
+
+
+    it('navpath -- update navigation path after editing resource', () => {
+
+        ResourcesPage.clickHierarchyButton('S1');
+        ResourcesPage.clickHierarchyButton('SE0');
+        ResourcesPage.clickOpenChildCollectionButton();
+
+        ResourcesPage.getNavigationButtons().then(navigationButtons => {
+            expect(navigationButtons.length).toBe(2);
+            expect(navigationButtons[0].getText()).toEqual('S1');
+            expect(navigationButtons[1].getText()).toEqual('SE0');
+        });
+
+        ResourcesPage.clickOperationNavigationButton();
+
+        ResourcesPage.openEditByDoubleClickResource('SE0');
+        DoceditPage.typeInInputField('identifier', 'Edit');
+        DoceditPage.clickSaveDocument();
+
+        ResourcesPage.getNavigationButtons().then(navigationButtons => {
+            expect(navigationButtons.length).toBe(2);
+            expect(navigationButtons[0].getText()).toEqual('S1');
+            expect(navigationButtons[1].getText()).toEqual('Edit');
         });
     });
 

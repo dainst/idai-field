@@ -175,10 +175,6 @@ export class FieldsViewComponent implements OnChanges {
         return async (groups: Array<FieldsViewGroup> /* ! modified in place ! */)
             : Promise<Array<FieldsViewGroup>> => {
 
-            const relations: Array<RelationDefinition> | undefined
-                = this.projectConfiguration.getRelationDefinitions(resource.category);
-            if (isEmpty(relations)) return groups;
-
             for (let group of groups) {
                 for (let relation of FieldsViewUtil.computeRelationsToShow(resource, group.relations)) {
                     group._relations.push({

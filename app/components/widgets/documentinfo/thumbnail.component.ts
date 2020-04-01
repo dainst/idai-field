@@ -29,6 +29,8 @@ export class ThumbnailComponent implements OnChanges {
 
     public onImageClicked = () => this.onClick.emit();
 
+    public getNumberOfImages = () => this.resource.relations.isDepictedIn.length;
+
 
     async ngOnChanges() {
 

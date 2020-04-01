@@ -12,7 +12,11 @@ import {UtilTranslations} from '../../../core/util/util-translations';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
 import {FieldDefinition} from '../../../core/configuration/model/field-definition';
 import {Group, Groups} from '../../../core/configuration/model/group';
-import {FieldsViewGroup, FieldsViewUtil} from '../../../core/util/fields-view-util';
+import {
+    FieldsViewField,
+    FieldsViewGroup,
+    FieldsViewUtil
+} from '../../../core/util/fields-view-util';
 import {RelationDefinition} from '../../../core/configuration/model/relation-definition';
 import {Named} from '../../../core/util/named';
 
@@ -136,7 +140,7 @@ export class FieldsViewComponent implements OnChanges {
 
 
     private makeDefaultField(field: FieldDefinition,
-                             fieldContent: any) {
+                             fieldContent: any): FieldsViewField {
 
         return {
             label: field.label,
@@ -149,7 +153,7 @@ export class FieldsViewComponent implements OnChanges {
     }
 
 
-    private addValOptionalEndValFieldToGroup(field: FieldDefinition, fieldContent: any) {
+    private addValOptionalEndValFieldToGroup(field: FieldDefinition, fieldContent: any): Array<FieldsViewField> {
 
         const val = {
             label: field.label + (!isUndefinedOrEmpty(fieldContent[ValOptionalEndVal.ENDVALUE])

@@ -7,10 +7,8 @@ import {Document, FieldDocument,  ReadDatastore, FieldResource, Resource, Dating
     ValOptionalEndVal, FeatureResource} from 'idai-components-2';
 import {RoutingService} from '../../routing-service';
 import {Name, ResourceId} from '../../../core/constants';
-import {pick} from '../../../core/util/utils';
 import {UtilTranslations} from '../../../core/util/util-translations';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
-import {Category} from '../../../core/configuration/model/category';
 import {RelationDefinition} from '../../../core/configuration/model/relation-definition';
 import {FieldDefinition} from '../../../core/configuration/model/field-definition';
 import {Groups} from '../../../core/configuration/model/group';
@@ -184,6 +182,8 @@ export class FieldsViewComponent implements OnChanges {
 
 
     /**
+     * TODO get rid of this function and treat fields as all other fields
+     *
      * @param groups ! modified in place
      * @param resource
      */
@@ -192,15 +192,16 @@ export class FieldsViewComponent implements OnChanges {
         const group = groups.find(on(Named.NAME, is(Groups.STEM)))!;
 
         group._fields.push({
-            label: this.getLabel(resource.category, Resource.CATEGORY),
+            label: this.projectConfiguration.getFieldDefinitionLabel(resource.category, Resource.CATEGORY),
             value: this.projectConfiguration.getLabelForCategory(resource.category),
             isArray: false
         });
+
         const shortDescription =
             FieldsViewUtil.getValue(resource[FieldResource.SHORTDESCRIPTION]);
         if (shortDescription) {
             group._fields.push({
-                label: this.getLabel(resource.category, FieldResource.SHORTDESCRIPTION),
+                label: this.projectConfiguration.getFieldDefinitionLabel(resource.category, FieldResource.SHORTDESCRIPTION),
                 value: shortDescription,
                 isArray: false
             });
@@ -226,14 +227,6 @@ export class FieldsViewComponent implements OnChanges {
                 });
             }
         }
-    }
-
-
-    private getLabel(category: Name, field: Name): string { // TODO get rid of function
-
-        return ((Category.getFields(pick(this.projectConfiguration.getCategoriesMap(), category) as any))
-            .find(on(Named.NAME, is(field))) as FieldDefinition)
-            .label;
     }
 
 

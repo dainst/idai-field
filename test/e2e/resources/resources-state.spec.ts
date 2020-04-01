@@ -485,6 +485,7 @@ describe('resources/state --', function() {
         SearchBarPage.typeInSearchField('xyz');
         browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('S1')), delays.ECWaitTime);
 
+        createDepictsRelation();
         clickDepictsRelationLink();
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('S1')), delays.ECWaitTime);
         SearchBarPage.getSearchBarInputFieldValue().then(value => expect(value).toEqual(''));

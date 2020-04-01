@@ -54,8 +54,8 @@ export class FieldsViewComponent implements OnChanges {
 
         this.groups = await asyncFlow(
             FieldsViewUtil.getGroups(this.resource.category, this.projectConfiguration.getCategoriesMap()),
-            await this.processRelations(this.resource),
-            this.processFields(this.resource),
+            await this.putActualResourceRelationsIntoGroups(this.resource),
+            this.putActualResourceFieldsIntoGroups(this.resource),
             filter(or(
                     on(FieldsViewGroup._FIELDS, isNot(empty)),
                     on(FieldsViewGroup._RELATIONS, isNot(empty)))));
@@ -103,7 +103,7 @@ export class FieldsViewComponent implements OnChanges {
     }
 
 
-    private processFields(resource: Resource) {
+    private putActualResourceFieldsIntoGroups(resource: Resource) {
 
         return (groups: Array<FieldsViewGroup> /* ! modified in place !*/): Array<FieldsViewGroup> => {
 
@@ -197,7 +197,7 @@ export class FieldsViewComponent implements OnChanges {
     }
 
 
-    private async processRelations(resource: Resource) {
+    private async putActualResourceRelationsIntoGroups(resource: Resource) {
 
         return async (groups: Array<FieldsViewGroup> /* ! modified in place ! */)
             : Promise<Array<FieldsViewGroup>> => {

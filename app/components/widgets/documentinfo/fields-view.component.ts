@@ -151,14 +151,13 @@ export class FieldsViewComponent implements OnChanges {
     private handleDefaultField(resource: Resource, field: FieldDefinition, group: FieldsViewGroup) {
 
         group._fields.push({
-            name: field.name,
             label: this.projectConfiguration.getFieldDefinitionLabel(resource.category, field.name),
             value: isArray(resource[field.name])
                 ? resource[field.name].map((fieldContent: any) =>
                     FieldsViewUtil.getValue(fieldContent, field.valuelist))
                 : FieldsViewUtil.getValue(resource[field.name], field.valuelist),
-            isArray: isArray(resource[field.name]) // TODO get rid of isArray, show everything as array instead
-        } as any /* TODO review; see name property */);
+            isArray: isArray(resource[field.name])
+        });
     }
 
 

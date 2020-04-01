@@ -1,7 +1,7 @@
 import {Resource} from 'idai-components-2/index';
 import {ValuelistDefinition} from '../configuration/model/valuelist-definition';
 import {ValuelistUtil} from './valuelist-util';
-import {assoc, compose, flow, includedIn, isNot, isString, lookup, map, Map, on, to, undefinedOrEmpty} from 'tsfun';
+import {assoc, compose, flow, and, includedIn, isNot, isString, lookup, map, Map, on, to, undefinedOrEmpty} from 'tsfun';
 import {RelationDefinition} from '../configuration/model/relation-definition';
 import {HierarchicalRelations} from '../model/relation-constants';
 import {Labelled, Named} from './named';
@@ -59,12 +59,12 @@ export module FieldsViewUtil {
     export function computeRelationsToShow(resource: Resource,
             relations: Array<RelationDefinition>): Array<RelationDefinition> {
 
-        const isNotHierarchical = isNot(includedIn(HierarchicalRelations.ALL));
-        const hasTargets = compose(lookup(resource.relations), isNot(undefinedOrEmpty));
-
         return relations
-            .filter(on(Named.NAME, isNotHierarchical))
-            .filter(on(Named.NAME, hasTargets));
+            .filter(
+                on(Named.NAME,
+                    and(
+                        isNot(includedIn(HierarchicalRelations.ALL)),
+                        compose(lookup(resource.relations), isNot(undefinedOrEmpty)))));
     }
 
 

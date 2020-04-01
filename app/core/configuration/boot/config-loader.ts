@@ -10,6 +10,7 @@ import {buildRawProjectConfiguration} from './build-raw-project-configuration';
 import {BuiltinCategoryDefinition} from '../model/builtin-category-definition';
 import {LibraryCategoryDefinition} from '../model/library-category-definition';
 import { addKeyAsProp } from '../../util/utils';
+import {Groups} from '../model/group';
 
 
 @Injectable()
@@ -31,12 +32,16 @@ export class ConfigLoader {
     private defaultFields = {
         id: {
             editable: false,
-            visible: false
+            visible: false,
+            group: Groups.STEM,
+            source: 'builtin'
         } as FieldDefinition,
         category: {
             label: this.i18n({ id: 'configuration.defaultFields.category', value: 'Kategorie' }),
             visible: false,
-            editable: false
+            editable: false,
+            group: Groups.STEM, // TODO autoconvert all extra fields from here and from app-configurator to group STEM in build-raw-project-configuration
+            source: 'builtin'
         } as FieldDefinition
     };
 

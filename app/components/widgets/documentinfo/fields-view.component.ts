@@ -16,6 +16,9 @@ import {Named} from '../../../core/util/named';
 import {FieldsViewGroup, FieldsViewUtil} from '../../../core/util/fields-view-util';
 
 
+const fieldsToExclude = [Resource.ID, Resource.RELATIONS, FieldResource.IDENTIFIER];
+
+
 @Component({
     selector: 'fields-view',
     moduleId: module.id,
@@ -55,7 +58,6 @@ export class FieldsViewComponent implements OnChanges {
             let groups = FieldsViewUtil
                 .getGroups(this.resource.category, this.projectConfiguration.getCategoriesMap());
             await this.processRelations(groups, this.resource);
-            this.addBaseFields(groups, this.resource);
             this.processFields(groups, this.resource);
             this.groups = groups.filter(group => group._fields.length > 0 || group._relations.length > 0);
         }
@@ -110,7 +112,7 @@ export class FieldsViewComponent implements OnChanges {
     private processFields(groups: Array<FieldsViewGroup>, resource: Resource) {
 
         for (let group of groups) {
-            for (let field of this.getResourceFieldsToShowInGroupsOtherThanStem(resource)) {
+            for (let field of this.getResourceFieldsToShowInGroupsOtherThanStem(resource)) { // TODO why not iterate over group.fields instead
                 if (isNot(includedIn(group.fields.map(to(Named.NAME))))(field.name)) continue;
 
                 if (field.name === FeatureResource.PERIOD) {
@@ -118,6 +120,7 @@ export class FieldsViewComponent implements OnChanges {
                     this.handlePeriodField(resource, group);
 
                 } else if (this.projectConfiguration.isVisible(resource.category, field.name)
+                    || field.name === Resource.CATEGORY
                     || field.name === FieldResource.SHORTDESCRIPTION) {
 
                     this.handleDefaultField(resource, field, group);
@@ -131,14 +134,7 @@ export class FieldsViewComponent implements OnChanges {
 
         return this.projectConfiguration
             .getFieldDefinitions(resource.category)
-            .filter(on(Named.NAME, isNot(includedIn(
-                [
-                    Resource.ID,
-                    Resource.CATEGORY,
-                    Resource.RELATIONS,
-                    FieldResource.IDENTIFIER,
-                ]
-            ))))
+            .filter(on(Named.NAME, isNot(includedIn(fieldsToExclude))))
             .filter(on(Named.NAME, compose(lookup(resource), isDefined)));
     }
 
@@ -181,24 +177,6 @@ export class FieldsViewComponent implements OnChanges {
                 isArray: false
             });
         }
-    }
-
-
-    /**
-     * TODO get rid of this function and treat fields as all other fields
-     *
-     * @param groups ! modified in place
-     * @param resource
-     */
-    private addBaseFields(groups: Array<FieldsViewGroup>, resource: Resource) {
-
-        const group = groups.find(on(Named.NAME, is(Groups.STEM)))!;
-
-        group._fields.push({
-            label: this.projectConfiguration.getFieldDefinitionLabel(resource.category, Resource.CATEGORY),
-            value: this.projectConfiguration.getLabelForCategory(resource.category),
-            isArray: false
-        });
     }
 
 

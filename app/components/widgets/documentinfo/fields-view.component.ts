@@ -125,7 +125,7 @@ export class FieldsViewComponent implements OnChanges {
 
             return this.addValOptionalEndValFieldToGroup(fieldContent, field);
 
-        } else if (this.projectConfiguration.isVisible(category, field.name)
+        } else if (this.projectConfiguration.isVisible(category, field.name) // TODO use isVisible of the fieldDefinition directly, then get rid of explicit this binding
             || field.name === Resource.CATEGORY
             || field.name === FieldResource.SHORTDESCRIPTION) {
 

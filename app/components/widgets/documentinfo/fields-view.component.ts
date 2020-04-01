@@ -190,6 +190,6 @@ export class FieldsViewComponent implements OnChanges {
 
     private getTargetDocuments(targetIds: Array<ResourceId>): Promise<Array<Document>> {
 
-        return this.datastore.getMultiple(targetIds); // what if error?
+        return this.datastore.getMultiple(targetIds);
     }
 }

@@ -3,8 +3,8 @@ import {DecimalPipe} from '@angular/common';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {isUndefinedOrEmpty, isEmpty, isBoolean, isArray, filter} from 'tsfun';
 import {flow as asyncFlow} from 'tsfun/async';
-import {Document, FieldDocument,  ReadDatastore, FieldResource, Resource, Dating, Dimension, Literature,
-    ValOptionalEndVal, FeatureResource} from 'idai-components-2';
+import {Document, FieldDocument,  ReadDatastore, FieldResource, Resource,
+    Dating, Dimension, Literature, ValOptionalEndVal} from 'idai-components-2';
 import {RoutingService} from '../../routing-service';
 import {Name, ResourceId} from '../../../core/constants';
 import {UtilTranslations} from '../../../core/util/util-translations';

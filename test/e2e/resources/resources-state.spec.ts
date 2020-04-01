@@ -521,6 +521,32 @@ describe('resources/state --', function() {
     });
 
 
+    it('navpath -- update navigation path after editing resource', () => {
+
+        ResourcesPage.clickHierarchyButton('S1');
+        ResourcesPage.clickHierarchyButton('SE0');
+        ResourcesPage.clickOpenChildCollectionButton();
+
+        ResourcesPage.getNavigationButtons().then(navigationButtons => {
+            expect(navigationButtons.length).toBe(2);
+            expect(navigationButtons[0].getText()).toEqual('S1');
+            expect(navigationButtons[1].getText()).toEqual('SE0');
+        });
+
+        ResourcesPage.clickOperationNavigationButton();
+
+        ResourcesPage.openEditByDoubleClickResource('SE0');
+        DoceditPage.typeInInputField('identifier', 'Edit');
+        DoceditPage.clickSaveDocument();
+
+        ResourcesPage.getNavigationButtons().then(navigationButtons => {
+            expect(navigationButtons.length).toBe(2);
+            expect(navigationButtons[0].getText()).toEqual('S1');
+            expect(navigationButtons[1].getText()).toEqual('Edit');
+        });
+    });
+
+
     it('navpath -- update navigation path after deleting resource', () => {
 
         ResourcesPage.clickHierarchyButton('S1');

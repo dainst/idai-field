@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import {DecimalPipe} from '@angular/common';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {isUndefinedOrEmpty, isBoolean, isArray, filter, or, on, update, compose, Mapping,
-    isNot, empty, map, flatten, tuplify, lookup, to, identity, val} from 'tsfun';
+    isNot, empty, map, flatten, lookup, to, pairWith} from 'tsfun';
 import {flow as asyncFlow, map as asyncMap} from 'tsfun/async';
 import {FieldDocument,  ReadDatastore, FieldResource, Resource,
     Dating, Dimension, Literature, ValOptionalEndVal} from 'idai-components-2';
@@ -111,36 +111,35 @@ export class FieldsViewComponent implements OnChanges {
         return map(
                 update(Group.FIELDS,
                     compose(
-                        map(tuplify(identity, compose(to(Named.NAME), lookup(resource)), val(resource.category))),
+                        map(pairWith(compose(to(Named.NAME), lookup(resource)))),
                         map(this.convertToFieldsViewField.bind(this)),
                         flatten)));
     }
 
 
-    private convertToFieldsViewField([field, fieldContent, category]: [FieldDefinition, any, string]): Array<any> {
+    private convertToFieldsViewField([field, fieldContent]: [FieldDefinition, any]): Array<any> {
 
         if (!fieldContent) return [];
 
-        if (field.inputType === FieldDefinition.InputType.DROPDOWNRANGE) {
+        if (field.inputType === FieldDefinition.InputType.DROPDOWNRANGE) { // TODO use conds
 
-            return this.addValOptionalEndValFieldToGroup(fieldContent, field);
+            return this.addValOptionalEndValFieldToGroup(field, fieldContent);
 
         } else if (field.visible
             || field.name === Resource.CATEGORY
             || field.name === FieldResource.SHORTDESCRIPTION) {
 
-            return [this.makeDefaultField(fieldContent, field, category)];
+            return [this.makeDefaultField(field, fieldContent)];
 
         } else return [];
     }
 
 
-    private makeDefaultField(fieldContent: any,
-                             field: FieldDefinition,
-                             category: string) {
+    private makeDefaultField(field: FieldDefinition,
+                             fieldContent: any) {
 
         return {
-            label: this.projectConfiguration.getFieldDefinitionLabel(category, field.name), // TODO use label from definition directly
+            label: field.label,
             value: isArray(fieldContent)
                 ? fieldContent.map((fieldContent: any) =>
                     FieldsViewUtil.getValue(fieldContent, field.valuelist))
@@ -150,8 +149,7 @@ export class FieldsViewComponent implements OnChanges {
     }
 
 
-    private addValOptionalEndValFieldToGroup(fieldContent: any,
-                                             field: FieldDefinition) {
+    private addValOptionalEndValFieldToGroup(field: FieldDefinition, fieldContent: any) {
 
         const val = {
             label: field.label + (!isUndefinedOrEmpty(fieldContent[ValOptionalEndVal.ENDVALUE])

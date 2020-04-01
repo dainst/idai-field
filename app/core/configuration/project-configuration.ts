@@ -182,7 +182,7 @@ export class ProjectConfiguration {
      * @returns {string}
      * @throws {string} with an error description in case the category is not defined.
      */
-    public getFieldDefinitionLabel(categoryName: string, fieldName: string): string {
+    public getFieldDefinitionLabel(categoryName: string, fieldName: string): string { // TODO remove
 
         const fieldDefinitions = this.getFieldDefinitions(categoryName);
         if (fieldDefinitions.length === 0)

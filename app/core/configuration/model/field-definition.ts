@@ -4,7 +4,7 @@ import {ValuelistDefinition} from './valuelist-definition';
 /**
  * @author Daniel de Oliveira
  */
-export interface FieldDefinition {
+export interface FieldDefinition { // TODO rename to Field (and RelationDefinition to Relation, for consistency with Category and Group
 
     name: string;
     inputType: FieldDefinition.InputType,

@@ -106,17 +106,18 @@ export class FieldsViewComponent implements OnChanges {
 
             for (let group of groups) {
                 for (let field of group.fields) {
-                    if (!resource[field.name]) continue;
+                    const fieldContent = resource[field.name];
+                    if (!fieldContent) continue;
 
                     if (field.name === FeatureResource.PERIOD) {
 
-                        this.handlePeriodField(resource, group);
+                        this.handlePeriodField(fieldContent, group);
 
                     } else if (this.projectConfiguration.isVisible(resource.category, field.name)
                         || field.name === Resource.CATEGORY
                         || field.name === FieldResource.SHORTDESCRIPTION) {
 
-                        this.handleDefaultField(resource, field, group);
+                        this.handleDefaultField(fieldContent, resource.category, field, group);
                     }
                 }
             }
@@ -125,41 +126,44 @@ export class FieldsViewComponent implements OnChanges {
     }
 
 
-    private handleDefaultField(resource: Resource, field: FieldDefinition, group: FieldsViewGroup) {
+    private handleDefaultField(fieldContent: any,
+                               category: string,
+                               field: FieldDefinition,
+                               group: FieldsViewGroup) {
 
         group._fields.push({
-            label: this.projectConfiguration.getFieldDefinitionLabel(resource.category, field.name),
-            value: isArray(resource[field.name])
-                ? resource[field.name].map((fieldContent: any) =>
+            label: this.projectConfiguration.getFieldDefinitionLabel(category, field.name),
+            value: isArray(fieldContent)
+                ? fieldContent.map((fieldContent: any) =>
                     FieldsViewUtil.getValue(fieldContent, field.valuelist))
-                : FieldsViewUtil.getValue(resource[field.name], field.valuelist),
-            isArray: isArray(resource[field.name])
+                : FieldsViewUtil.getValue(fieldContent, field.valuelist),
+            isArray: isArray(fieldContent)
         });
     }
 
 
-    private handlePeriodField(resource: Resource, group: FieldsViewGroup) {
+    private handlePeriodField(fieldContent: any, group: FieldsViewGroup) {
 
         group._fields.push({
             label: this.i18n({
                 id: 'widgets.fieldsView.period',
                 value: 'Grobdatierung' // TODO generalize this, do not use i18n
-            }) + (!isUndefinedOrEmpty(resource[FeatureResource.PERIOD][ValOptionalEndVal.ENDVALUE])
+            }) + (!isUndefinedOrEmpty(fieldContent[ValOptionalEndVal.ENDVALUE])
                 ? this.i18n({
                     id: 'widgets.fieldsView.period.from',
                     value: ' (von)'
                 }) : ''),
-            value: resource[FeatureResource.PERIOD][ValOptionalEndVal.VALUE],
+            value: fieldContent[ValOptionalEndVal.VALUE],
             isArray: false
         });
 
-        if (!isUndefinedOrEmpty(resource[FeatureResource.PERIOD][ValOptionalEndVal.ENDVALUE])) {
+        if (!isUndefinedOrEmpty(fieldContent[ValOptionalEndVal.ENDVALUE])) {
             group._fields.push({
                 label: this.i18n({
                     id: 'widgets.fieldsView.period.to',
                     value: 'Grobdatierung (bis)'
                 }),
-                value: resource[FeatureResource.PERIOD][ValOptionalEndVal.ENDVALUE],
+                value: fieldContent[ValOptionalEndVal.ENDVALUE],
                 isArray: false
             });
         }

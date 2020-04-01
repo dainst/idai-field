@@ -204,7 +204,9 @@ export class PouchdbDatastore {
     }
 
 
-    private async performPut(document: any) {
+    private async performPut(document: Document) {
+
+        document = PouchdbDatastore.replaceCategoryWithType(document);
 
         await this.db.put(document, { force: true });
         return this.fetch(document.resource.id);
@@ -212,6 +214,8 @@ export class PouchdbDatastore {
 
 
     private async performBulkDocs(documents: Array<Document>): Promise<Array<Document>> {
+
+        documents.forEach(PouchdbDatastore.replaceCategoryWithType);
 
         await this.db.bulkDocs(documents);
         return this.bulkFetch(documents.map(document => document.resource.id));
@@ -311,6 +315,20 @@ export class PouchdbDatastore {
         (clonedDocument as any)['_id'] = clonedDocument.resource.id;
         (clonedDocument as any)['created'] = { user: username, date: new Date() };
         (clonedDocument as any)['modified'] = [];
+
+        return clonedDocument;
+    }
+
+
+    // TODO Remove this in a future version
+    private static replaceCategoryWithType(document: Document): Document {
+
+        const clonedDocument: Document = clone(document);
+
+        if (clonedDocument.resource.category) {
+            clonedDocument.resource.type = clonedDocument.resource.category;
+            delete clonedDocument.resource.category;
+        }
 
         return clonedDocument;
     }

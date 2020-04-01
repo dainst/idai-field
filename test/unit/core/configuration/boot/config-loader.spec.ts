@@ -84,7 +84,7 @@ describe('ConfigLoader', () => {
             done();
         }
 
-        expect(pconf.getCategoriesMap()['B'].groups[0].fields[0]['name']).toBe('processor');
+        expect(pconf.getCategoriesMap()['B'].groups[0].fields[2]['name']).toBe('processor');
         done();
     });
 
@@ -131,8 +131,8 @@ describe('ConfigLoader', () => {
             done();
         }
 
-        expect(pconf.getCategoriesMap()['B'].groups[0].fields[0]['label']).toBe('Bearbeiter/Bearbeiterin');
-        expect(pconf.getCategoriesMap()['B'].groups[0].fields[0]['description']).toBe('abc');
+        expect(pconf.getCategoriesMap()['B'].groups[0].fields[2]['label']).toBe('Bearbeiter/Bearbeiterin');
+        expect(pconf.getCategoriesMap()['B'].groups[0].fields[2]['description']).toBe('abc');
         done();
     });
 
@@ -387,7 +387,7 @@ describe('ConfigLoader', () => {
                 undefined, 'de'
             );
 
-            expect(pconf.getCategoriesMap()['B:0'].groups[1].fields.find(field => field.name == 'fieldC1')
+            expect(pconf.getCategoriesMap()['B:0'].groups[2].fields.find(field => field.name == 'fieldC1')
                 .inputType).toEqual('boolean');
 
         } catch(err) {
@@ -617,7 +617,7 @@ describe('ConfigLoader', () => {
             pconf = await configLoader.go('', {}, { A: { fields: {} }}, [], {},
                 undefined, 'de'
             );
-            const result = pconf.getCategoriesMap()['A'].groups[0];
+            const result = pconf.getCategoriesMap()['A'].groups[1];
 
             expect(result.fields[0].name).toEqual('fieldA1');
             expect(result.fields[0].visible).toBe(false);

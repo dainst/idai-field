@@ -1,10 +1,10 @@
 import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import {DecimalPipe} from '@angular/common';
 import {I18n} from '@ngx-translate/i18n-polyfill';
-import {is, isnt, isUndefinedOrEmpty, isDefined, on, lookup, isNot, includedIn, to,
+import {is, isUndefinedOrEmpty, isDefined, on, lookup, isNot, includedIn, to,
     compose, isEmpty, isBoolean, isArray} from 'tsfun';
 import {Document, FieldDocument,  ReadDatastore, FieldResource, Resource, Dating, Dimension, Literature,
-    ValOptionalEndVal} from 'idai-components-2';
+    ValOptionalEndVal, FeatureResource} from 'idai-components-2';
 import {RoutingService} from '../../routing-service';
 import {Name, ResourceId} from '../../../core/constants';
 import {pick} from '../../../core/util/utils';
@@ -16,9 +16,6 @@ import {FieldDefinition} from '../../../core/configuration/model/field-definitio
 import {Groups} from '../../../core/configuration/model/group';
 import {Named} from '../../../core/util/named';
 import {FieldsViewGroup, FieldsViewUtil} from '../../../core/util/fields-view-util';
-
-
-const PERIOD = 'period';
 
 
 @Component({
@@ -114,15 +111,13 @@ export class FieldsViewComponent implements OnChanges {
      */
     private processFields(groups: Array<FieldsViewGroup>, resource: Resource) {
 
-        const existingResourceFields = this.getResourceFieldsToShowInGroupsOtherThanStem(resource);
-
         for (let group of groups) {
-            for (let field of existingResourceFields) {
+            for (let field of this.getResourceFieldsToShowInGroupsOtherThanStem(resource)) {
                 if (isNot(includedIn(group.fields.map(to(Named.NAME))))(field.name)) continue;
 
-                if (field.name === PERIOD) {
+                if (field.name === FeatureResource.PERIOD) {
                     this.handlePeriodField(resource, group);
-                } else if (!!this.projectConfiguration.isVisible(resource.category, field.name)) {
+                } else if (this.projectConfiguration.isVisible(resource.category, field.name)) {
                     this.handleDefaultField(resource, field, group);
                 }
             }
@@ -143,7 +138,6 @@ export class FieldsViewComponent implements OnChanges {
                     FieldResource.IDENTIFIER,
                 ]
             ))))
-            .filter(on(Named.NAME, isnt('geometry'))) // TODO review
             .filter(on(Named.NAME, compose(lookup(resource), isDefined)));
     }
 
@@ -167,22 +161,22 @@ export class FieldsViewComponent implements OnChanges {
             label: this.i18n({
                 id: 'widgets.fieldsView.period',
                 value: 'Grobdatierung'
-            }) + (!isUndefinedOrEmpty(resource[PERIOD][ValOptionalEndVal.ENDVALUE])
+            }) + (!isUndefinedOrEmpty(resource[FeatureResource.PERIOD][ValOptionalEndVal.ENDVALUE])
                 ? this.i18n({
                     id: 'widgets.fieldsView.period.from',
                     value: ' (von)'
                 }) : ''),
-            value: resource[PERIOD][ValOptionalEndVal.VALUE],
+            value: resource[FeatureResource.PERIOD][ValOptionalEndVal.VALUE],
             isArray: false
         });
 
-        if (!isUndefinedOrEmpty(resource[PERIOD][ValOptionalEndVal.ENDVALUE])) {
+        if (!isUndefinedOrEmpty(resource[FeatureResource.PERIOD][ValOptionalEndVal.ENDVALUE])) {
             group._fields.push({
                 label: this.i18n({
                     id: 'widgets.fieldsView.period.to',
                     value: 'Grobdatierung (bis)'
                 }),
-                value: resource[PERIOD][ValOptionalEndVal.ENDVALUE],
+                value: resource[FeatureResource.PERIOD][ValOptionalEndVal.ENDVALUE],
                 isArray: false
             });
         }

@@ -20,7 +20,11 @@ export interface FieldDefinition {
     fulltextIndexed?: true;
     constraintIndexed?: true;
     allowOnlyValuesOfParent?: true;
-    source?: 'builtin'|'library'|'custom'|'common'; // TODO make non-optional
+    source?: // TODO make non-optional
+        'builtin'
+        |'library'
+        |'custom'
+        |'common';
 }
 
 

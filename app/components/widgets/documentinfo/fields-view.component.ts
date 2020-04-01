@@ -1,8 +1,7 @@
 import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import {DecimalPipe} from '@angular/common';
 import {I18n} from '@ngx-translate/i18n-polyfill';
-import {is, isUndefinedOrEmpty, isDefined, on, lookup, isNot, includedIn, to,
-    compose, isEmpty, isBoolean, isArray} from 'tsfun';
+import {isUndefinedOrEmpty, isEmpty, isBoolean, isArray} from 'tsfun';
 import {Document, FieldDocument,  ReadDatastore, FieldResource, Resource, Dating, Dimension, Literature,
     ValOptionalEndVal, FeatureResource} from 'idai-components-2';
 import {RoutingService} from '../../routing-service';
@@ -12,7 +11,6 @@ import {ProjectConfiguration} from '../../../core/configuration/project-configur
 import {RelationDefinition} from '../../../core/configuration/model/relation-definition';
 import {FieldDefinition} from '../../../core/configuration/model/field-definition';
 import {Groups} from '../../../core/configuration/model/group';
-import {Named} from '../../../core/util/named';
 import {FieldsViewGroup, FieldsViewUtil} from '../../../core/util/fields-view-util';
 
 
@@ -55,7 +53,6 @@ export class FieldsViewComponent implements OnChanges {
             let groups = FieldsViewUtil
                 .getGroups(this.resource.category, this.projectConfiguration.getCategoriesMap());
             await this.processRelations(groups, this.resource);
-            this.addBaseFields(groups, this.resource);
             this.processFields(groups, this.resource);
             this.groups = groups.filter(group => group._fields.length > 0 || group._relations.length > 0);
         }
@@ -110,36 +107,21 @@ export class FieldsViewComponent implements OnChanges {
     private processFields(groups: Array<FieldsViewGroup>, resource: Resource) {
 
         for (let group of groups) {
-            for (let field of this.getResourceFieldsToShowInGroupsOtherThanStem(resource)) {
-                if (isNot(includedIn(group.fields.map(to(Named.NAME))))(field.name)) continue;
+            for (let field of group.fields) {
+                if (!resource[field.name]) continue;
 
                 if (field.name === FeatureResource.PERIOD) {
 
                     this.handlePeriodField(resource, group);
 
                 } else if (this.projectConfiguration.isVisible(resource.category, field.name)
+                    || field.name === Resource.CATEGORY
                     || field.name === FieldResource.SHORTDESCRIPTION) {
 
                     this.handleDefaultField(resource, field, group);
                 }
             }
         }
-    }
-
-
-    private getResourceFieldsToShowInGroupsOtherThanStem(resource: Resource): Array<FieldDefinition> {
-
-        return this.projectConfiguration
-            .getFieldDefinitions(resource.category)
-            .filter(on(Named.NAME, isNot(includedIn(
-                [
-                    Resource.ID,
-                    Resource.CATEGORY,
-                    Resource.RELATIONS,
-                    FieldResource.IDENTIFIER,
-                ]
-            ))))
-            .filter(on(Named.NAME, compose(lookup(resource), isDefined)));
     }
 
 
@@ -181,24 +163,6 @@ export class FieldsViewComponent implements OnChanges {
                 isArray: false
             });
         }
-    }
-
-
-    /**
-     * TODO get rid of this function and treat fields as all other fields
-     *
-     * @param groups ! modified in place
-     * @param resource
-     */
-    private addBaseFields(groups: Array<FieldsViewGroup>, resource: Resource) {
-
-        const group = groups.find(on(Named.NAME, is(Groups.STEM)))!;
-
-        group._fields.push({
-            label: this.projectConfiguration.getFieldDefinitionLabel(resource.category, Resource.CATEGORY),
-            value: this.projectConfiguration.getLabelForCategory(resource.category),
-            isArray: false
-        });
     }
 
 

@@ -15,6 +15,10 @@ import {Group, Groups} from '../../../core/configuration/model/group';
 import {FieldsViewField, FieldsViewGroup, FieldsViewUtil} from '../../../core/util/fields-view-util';
 import {RelationDefinition} from '../../../core/configuration/model/relation-definition';
 import {Named} from '../../../core/util/named';
+import INPUTTYPE = FieldDefinition.INPUTTYPE;
+import isDefaultField = FieldsViewUtil.isDefaultField;
+import DROPDOWNRANGE = FieldDefinition.InputType.DROPDOWNRANGE;
+import shouldBeDisplayed = FieldsViewUtil.shouldBeDisplayed;
 
 
 type FieldContent = any;
@@ -62,7 +66,7 @@ export class FieldsViewComponent implements OnChanges {
             FieldsViewUtil.getGroups(this.resource.category, this.projectConfiguration.getCategoriesMap()),
             await this.putActualResourceRelationsIntoGroups(this.resource),
             this.putActualResourceFieldsIntoGroups(this.resource),
-            filter(FieldsViewUtil.shouldBeDisplayed));
+            filter(shouldBeDisplayed));
     }
 
 
@@ -122,11 +126,11 @@ export class FieldsViewComponent implements OnChanges {
     private convertToFieldsViewField: Mapping<Pair<FieldDefinition, FieldContent>, Array<FieldsViewField>>
         = conds(
             [
-                on([0, FieldDefinition.INPUTTYPE], is(FieldDefinition.InputType.DROPDOWNRANGE)),
+                on([0, INPUTTYPE], is(DROPDOWNRANGE)),
                 this.makeValOptionalEndValField.bind(this)
             ],
             [
-                on([0], FieldsViewUtil.isDefaultField),
+                on([0], isDefaultField),
                 compose(this.makeDefaultField.bind(this), singleton)
             ],
             [otherwise, []]

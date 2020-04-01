@@ -48,6 +48,7 @@ export class DoceditLauncher {
     private async handleSaveResult(document: FieldDocument) {
 
         await this.viewFacade.populateDocumentList();
+        await this.viewFacade.rebuildNavigationPath();
 
         if (!this.viewFacade.isInTypesManagement()) {
             await this.viewFacade.setSelectedDocument(document.resource.id);

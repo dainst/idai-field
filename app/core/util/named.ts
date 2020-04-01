@@ -9,13 +9,22 @@ import {Category} from '../configuration/model/category';
 
 type Name = string;
 
+type Label = string;
+
 
 export interface Named { name: Name }
+
+export interface Labelled { label: Label }
 
 
 export module Named {
 
     export const NAME = 'name';
+}
+
+export module Labelled {
+
+    export const LABEL = 'label';
 }
 
 /**

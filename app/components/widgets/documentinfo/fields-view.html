@@ -1,4 +1,4 @@
-<div *ngFor="let group of getGroups()" class="card">
+<div *ngFor="let group of groups" class="card">
 	<div class="card-header">
 		<button class="btn btn-block" (click)="toggleGroupSection(group)">{{group.label}}</button>
 	</div>
@@ -24,7 +24,7 @@
 				</div>
 			</div>
 
-            <div *ngFor="let relation of relations[group.name]">
+            <div *ngFor="let relation of group._relations">
                 <div class="field">
                     <h3 class="field-label">{{relation.label}}</h3>
                     <div *ngFor="let target of relation.targets"

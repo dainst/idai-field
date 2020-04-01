@@ -1,6 +1,7 @@
 import {FieldDefinition} from './field-definition';
-import {Named} from '../../util/named';
+import {Labelled, Named} from '../../util/named';
 import {RelationDefinition} from './relation-definition';
+import {PositionRelations, TimeRelations, TypeRelations} from '../../model/relation-constants';
 
 export module Groups {
 
@@ -22,13 +23,25 @@ export module Groups {
         'position',
         'time'
     ];
+
+    export function getGroupNameForRelation(relationName: string): string|undefined {
+
+        if (TimeRelations.ALL.includes(relationName)) {
+            return TIME;
+        } else if (PositionRelations.ALL.includes(relationName)) {
+            return POSITION;
+        } else if (TypeRelations.ALL.includes(relationName)) {
+            return IDENTIFICATION;
+        } else {
+            return undefined;
+        }
+    }
 }
 
 
-export interface Group extends Named {
+export interface Group extends Named, Labelled {
 
     fields: Array<FieldDefinition>;
-    label: string;
     relations: Array<RelationDefinition>;
 }
 
@@ -37,7 +50,7 @@ export module Group {
 
     export const FIELDS = 'fields';
     export const RELATIONS = 'relations';
-    export const LABEL = 'label';
+    export const LABEL = 'label'; // TODO remove
 
 
     export function create(name: string) {

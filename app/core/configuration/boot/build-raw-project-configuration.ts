@@ -1,5 +1,5 @@
-import {assoc, clone, cond, dissoc, flow, includedIn, isDefined, isNot, keys, keysAndValues, Mapping, map, Map, on, is,
-    reduce, subtract, undefinedOrEmpty, update, identity, compose, lookup, Pair, pairWith, to, separate, prune, updateOn} from 'tsfun';
+import {assoc, clone, cond, dissoc, flow, includedIn, isDefined, isNot, keys, keysAndValues, Mapping, map, Map, on,
+    reduce, subtract, undefinedOrEmpty, update, identity, compose, lookup, Pair, pairWith, prune, filter} from 'tsfun';
 import {LibraryCategoryDefinition} from '../model/library-category-definition';
 import {CustomCategoryDefinition} from '../model/custom-category-definition';
 import {ConfigurationErrors} from './configuration-errors';
@@ -24,9 +24,8 @@ import {makeCategoriesMap} from './make-categories-map';
 import {RawProjectConfiguration} from '../project-configuration';
 import {Category} from '../model/category';
 import {Group, Groups} from '../model/group';
-import {Named, mapToNamedArray, sortNamedArray} from '../../util/named';
+import {mapToNamedArray, sortNamedArray} from '../../util/named';
 import {RelationsUtil} from '../relations-utils';
-import {GroupUtil} from '../group-util';
 import {TypeRelations} from '../../model/relation-constants';
 import {CategoryDefinition} from '../model/category-definition';
 
@@ -111,7 +110,7 @@ function putRelationsIntoGroups(relations: Array<RelationDefinition>) {
 
         for (let relation of relDefs) {
 
-            const groupName: string|undefined = GroupUtil.getGroupName(relation.name);
+            const groupName: string|undefined = Groups.getGroupNameForRelation(relation.name);
             if (!groupName || relation.name === TypeRelations.INSTANCEOF) continue;
 
             let group = (category.groups as any)[groupName];
@@ -230,12 +229,17 @@ function replaceValuelistIdWithActualValuelist(valuelistDefinitionMap: Map<Value
 }
 
 
-function eraseUnusedCategories(selectedCategoriesNames: string[]) {
+function eraseUnusedCategories(selectedCategoriesNames: string[])
+    : Mapping<Map<TransientCategoryDefinition>> {
 
-    return (categories: Map<TransientCategoryDefinition>): Map<TransientCategoryDefinition> => {
+    return (categories: Map<TransientCategoryDefinition>) => {
 
-        const keysOfUnselectedCategories = Object.keys(categories)
-            .filter(isNot(includedIn(selectedCategoriesNames)));
+        const keysOfUnselectedCategories =
+            flow(
+                categories,
+                keys,
+                filter(isNot(includedIn(selectedCategoriesNames)))
+            );
 
         const parentNamesOfSelectedCategories: string[] = flow(
             keysOfUnselectedCategories,
@@ -276,7 +280,7 @@ function replaceCommonFields(commonFields: Map)
 
 
 function toCategoriesByFamilyNames(transientCategories: Map<TransientCategoryDefinition>)
-        : Map<TransientCategoryDefinition> { // TODO impl this as const, with compose
+        : Map<TransientCategoryDefinition> {
 
     return flow(
         transientCategories,

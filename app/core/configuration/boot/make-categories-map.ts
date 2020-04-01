@@ -1,12 +1,13 @@
-import {append, assoc, cond, defined, dissoc, dissocOn, flatten, flow, isNot, lookup, map, Map, Mapping, on,
-    reduce, separate, throws, to, update, values, isUndefined} from 'tsfun';
+import {
+    append, assoc, cond, defined, dissoc, dissocOn, flatten, flow, isNot, lookup, map, Map, Mapping, on,
+    reduce, separate, throws, to, update, values, isUndefined, copy
+} from 'tsfun';
 import {MDInternal} from 'idai-components-2';
 import {Category} from '../model/category';
 import {CategoryDefinition} from '../model/category-definition';
 import {Group, Groups} from '../model/group';
-import {debugId, makeLookup} from '../../util/utils';
+import {makeLookup} from '../../util/utils';
 import {FieldDefinition} from '../model/field-definition';
-import {GroupUtil} from '../group-util';
 import {clone} from '../../util/object-util';
 import {Named, namedArrayToNamedMap} from '../../util/named';
 
@@ -92,7 +93,7 @@ function addChildCategory(categoriesMap: Map<Category>, childDefinition: Categor
 // TODO make pure
 function sortGroupFields(group: Group) {
 
-    group.fields = GroupUtil.sortGroups(group.fields, group.name);
+    group.fields = sortGroups(group.fields, group.name);
     return group;
 }
 
@@ -173,4 +174,38 @@ function ifUndefinedSetGroupTo(name: string): Mapping<Array<FieldDefinition>> {
             assoc(FieldDefinition.GROUP, name)
         )
     ) as any;
+}
+
+
+function sortGroups(fields: Array<FieldDefinition>, groupName: string) {
+
+    const copiedFields = copy(fields);
+
+    switch(groupName) {
+        case 'stem':
+            sortGroup(copiedFields, [
+                'identifier', 'shortDescription', 'supervisor', 'draughtsmen', 'processor', 'campaign',
+                'diary', 'date', 'beginningDate', 'endDate'
+            ]);
+            break;
+        case 'dimension':
+            sortGroup(copiedFields, [
+                'dimensionHeight', 'dimensionLength', 'dimensionWidth', 'dimensionPerimeter',
+                'dimensionDiameter', 'dimensionThickness', 'dimensionVerticalExtent', 'dimensionOther'
+            ]);
+            break;
+    }
+
+    return copiedFields;
+}
+
+
+/**
+ * Fields not defined via 'order' are not considered
+ */
+function sortGroup(fields: Array<FieldDefinition>, order: string[]) {
+
+    fields.sort((field1: FieldDefinition, field2: FieldDefinition) => {
+        return order.indexOf(field1.name) > order.indexOf(field2.name) ? 1 : -1;
+    });
 }

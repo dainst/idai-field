@@ -114,8 +114,12 @@ export class FieldsViewComponent implements OnChanges {
                 if (isNot(includedIn(group.fields.map(to(Named.NAME))))(field.name)) continue;
 
                 if (field.name === FeatureResource.PERIOD) {
+
                     this.handlePeriodField(resource, group);
-                } else if (this.projectConfiguration.isVisible(resource.category, field.name)) {
+
+                } else if (this.projectConfiguration.isVisible(resource.category, field.name)
+                    || field.name === FieldResource.SHORTDESCRIPTION) {
+
                     this.handleDefaultField(resource, field, group);
                 }
             }
@@ -132,7 +136,6 @@ export class FieldsViewComponent implements OnChanges {
                     Resource.ID,
                     Resource.CATEGORY,
                     Resource.RELATIONS,
-                    FieldResource.SHORTDESCRIPTION,
                     FieldResource.IDENTIFIER,
                 ]
             ))))
@@ -196,16 +199,6 @@ export class FieldsViewComponent implements OnChanges {
             value: this.projectConfiguration.getLabelForCategory(resource.category),
             isArray: false
         });
-
-        const shortDescription =
-            FieldsViewUtil.getValue(resource[FieldResource.SHORTDESCRIPTION]);
-        if (shortDescription) {
-            group._fields.push({
-                label: this.projectConfiguration.getFieldDefinitionLabel(resource.category, FieldResource.SHORTDESCRIPTION),
-                value: shortDescription,
-                isArray: false
-            });
-        }
     }
 
 

@@ -35,7 +35,9 @@ export class FieldsViewComponent implements OnChanges {
 
     public groups: Array<FieldsViewGroup> = [];
 
+
     public isBoolean = (value: any) => isBoolean(value);
+
 
     constructor(private projectConfiguration: ProjectConfiguration,
                 private datastore: ReadDatastore,
@@ -107,18 +109,7 @@ export class FieldsViewComponent implements OnChanges {
                 for (let field of group.fields) {
 
                     const fieldContent = resource[field.name];
-                    if (!fieldContent) continue;
-
-                    if (field.inputType === FieldDefinition.InputType.DROPDOWNRANGE) {
-
-                        this.handleValOptionalEndValField(fieldContent, field, group);
-
-                    } else if (this.projectConfiguration.isVisible(resource.category, field.name)
-                        || field.name === Resource.CATEGORY
-                        || field.name === FieldResource.SHORTDESCRIPTION) {
-
-                        this.handleDefaultField(fieldContent, field, group, resource.category);
-                    }
+                    if (fieldContent) this.addFieldContentToGroup(group, fieldContent, field, resource.category);
                 }
             }
             return groups;
@@ -126,10 +117,40 @@ export class FieldsViewComponent implements OnChanges {
     }
 
 
-    private handleDefaultField(fieldContent: any,
-                               field: FieldDefinition,
-                               group: FieldsViewGroup,
-                               category: string) {
+    /**
+     * @param group ! modified in place !
+     * @param fieldContent
+     * @param field
+     * @param category
+     */
+    private addFieldContentToGroup(group: FieldsViewGroup,
+                                   fieldContent: any,
+                                   field: FieldDefinition,
+                                   category: string) {
+
+        if (field.inputType === FieldDefinition.InputType.DROPDOWNRANGE) {
+
+            this.addValOptionalEndValFieldToGroup(group, fieldContent, field);
+
+        } else if (this.projectConfiguration.isVisible(category, field.name)
+            || field.name === Resource.CATEGORY
+            || field.name === FieldResource.SHORTDESCRIPTION) {
+
+            this.addDefaultFieldToGroup(group, fieldContent, field, category);
+        }
+    }
+
+
+    /**
+     * @param group ! modified in place !
+     * @param fieldContent
+     * @param field
+     * @param category
+     */
+    private addDefaultFieldToGroup(group: FieldsViewGroup,
+                                   fieldContent: any,
+                                   field: FieldDefinition,
+                                   category: string) {
 
         group._fields.push({
             label: this.projectConfiguration.getFieldDefinitionLabel(category, field.name),
@@ -142,9 +163,14 @@ export class FieldsViewComponent implements OnChanges {
     }
 
 
-    private handleValOptionalEndValField(fieldContent: any,
-                                         field: FieldDefinition,
-                                         group: FieldsViewGroup) {
+    /**
+     * @param group ! modified in place !
+     * @param fieldContent
+     * @param field
+     */
+    private addValOptionalEndValFieldToGroup(group: FieldsViewGroup,
+                                             fieldContent: any,
+                                             field: FieldDefinition) {
 
         group._fields.push({
             label: field.label + (!isUndefinedOrEmpty(fieldContent[ValOptionalEndVal.ENDVALUE])

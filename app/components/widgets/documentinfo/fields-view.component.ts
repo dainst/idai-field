@@ -1,10 +1,10 @@
 import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import {DecimalPipe} from '@angular/common';
 import {I18n} from '@ngx-translate/i18n-polyfill';
-import {isUndefinedOrEmpty, isBoolean, isArray, filter, or, Pair, update, compose, Mapping, on, is, isDefined,
-    isNot, empty, map, flatten, lookup, to, pairWith, conds, singleton, otherwise, Predicate} from 'tsfun';
+import {isUndefinedOrEmpty, isBoolean, isArray, filter, Pair, update, compose, Mapping, on, is, isDefined,
+    map, flatten, lookup, to, pairWith, conds, singleton, otherwise} from 'tsfun';
 import {flow as asyncFlow, map as asyncMap} from 'tsfun/async';
-import {FieldDocument,  ReadDatastore, FieldResource, Resource,
+import {FieldDocument,  ReadDatastore, Resource,
     Dating, Dimension, Literature, ValOptionalEndVal} from 'idai-components-2';
 import {RoutingService} from '../../routing-service';
 import {Name} from '../../../core/constants';
@@ -175,7 +175,7 @@ export class FieldsViewComponent implements OnChanges {
 
             group.relations = await asyncFlow(
                 group.relations,
-                FieldsViewUtil.computeRelationsToShow(resource),
+                FieldsViewUtil.filterRelationsToShowFor(resource),
                 asyncMap(async (relation: RelationDefinition) => {
                     return {
                         label: relation.label,

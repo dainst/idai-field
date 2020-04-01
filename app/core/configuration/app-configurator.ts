@@ -324,12 +324,14 @@ export class AppConfigurator {
         {
             name: 'depicts',
             domain: ['Image:inherit'],
+            range: [],
             inverse: 'isDepictedIn',
             label: this.i18n({ id: 'configuration.relations.depicts', value: 'Zeigt' }),
             editable: true
         },
         {
             name: 'isDepictedIn',
+            domain: [],
             range: ['Image:inherit'],
             inverse: 'depicts',
             label: this.i18n({ id: 'configuration.relations.isDepictedIn', value: 'Wird gezeigt in' }),

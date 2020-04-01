@@ -14,18 +14,24 @@ describe('PersistenceManager', () => {
         [],
         [
             {
-                'name': 'BelongsTo',
-                'inverse': 'Contains',
-                'label': 'Enthalten in'
+                name: 'BelongsTo',
+                inverse: 'Contains',
+                label: 'Enthalten in',
+                domain: [],
+                range: []
             },
             {
-                'name': 'Contains',
-                'inverse': 'BelongsTo',
-                'label': 'Enthält'
+                name: 'Contains',
+                inverse: 'BelongsTo',
+                label: 'Enthält',
+                domain: [],
+                range: []
             },
             {
-                'name': 'isRecordedIn',
-                'label': 'Gehört zu'
+                name: 'isRecordedIn',
+                label: 'Gehört zu',
+                domain: [],
+                range: []
             }
         ]]);
 

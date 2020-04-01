@@ -1,6 +1,7 @@
 import {empty, isNot, on, subtract} from 'tsfun';
 import {UnorderedConfigurationDefinition} from '../model/unordered-configuration-definition';
 import {RelationDefinition} from '../model/relation-definition';
+import {Named} from '../../util/named';
 
 
 /**
@@ -15,20 +16,21 @@ export function addRelations(extraRelations: Array<RelationDefinition>) {
 
         for (let extraRelation of extraRelations) {
 
-            expandInherits(configuration, extraRelation, 'domain');
+            expandInherits(configuration, extraRelation, RelationDefinition.DOMAIN);
 
             configuration.relations
-                .filter(on('name')(extraRelation))
+                .filter(on(Named.NAME)(extraRelation))
                 .forEach(relation => {
                     relation.domain = subtract(extraRelation.domain)(relation.domain)
                 });
-            configuration.relations = configuration.relations.filter(isNot(on('domain', empty)));
+            configuration.relations = configuration.relations
+                .filter(isNot(on(RelationDefinition.DOMAIN, empty)));
 
             configuration.relations.splice(0,0, extraRelation);
 
-            expandInherits(configuration, extraRelation, 'range');
-            expandOnUndefined(configuration, extraRelation, 'range');
-            expandOnUndefined(configuration, extraRelation, 'domain');
+            expandInherits(configuration, extraRelation, RelationDefinition.RANGE);
+            expandOnEmpty(configuration, extraRelation, RelationDefinition.RANGE);
+            expandOnEmpty(configuration, extraRelation, RelationDefinition.DOMAIN);
         }
 
         return configuration;
@@ -64,19 +66,19 @@ function expandInherits(configuration: Readonly<UnorderedConfigurationDefinition
 }
 
 
-function expandOnUndefined(configuration: UnorderedConfigurationDefinition,
+function expandOnEmpty(configuration: UnorderedConfigurationDefinition,
                            extraRelation_: RelationDefinition, itemSet: string) {
 
     const extraRelation: any = extraRelation_;
 
-    if (extraRelation[itemSet] != undefined) return;
+    if (isNot(empty)(extraRelation[itemSet])) return;
 
-    let opposite = 'range';
-    if (itemSet == 'range') opposite = 'domain';
+    let opposite = RelationDefinition.RANGE;
+    if (itemSet === RelationDefinition.RANGE) opposite = RelationDefinition.DOMAIN;
 
     extraRelation[itemSet] = [];
     for (let categoryName of Object.keys(configuration.categories)) {
-        if (extraRelation[opposite].indexOf(categoryName) == -1) {
+        if (extraRelation[opposite].indexOf(categoryName) === -1) {
             extraRelation[itemSet].push(categoryName);
         }
     }

@@ -208,7 +208,7 @@ export class FieldsViewComponent implements OnChanges {
         if (shortDescription) {
             group._fields.push({
                 label: this.getLabel(resource.category, FieldResource.SHORTDESCRIPTION),
-                value: shortDescription, // TODO convert value to name
+                value: shortDescription,
                 isArray: false
             });
         }

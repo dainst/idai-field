@@ -129,7 +129,7 @@ export class FieldsViewComponent implements OnChanges {
     private handleDefaultField(fieldContent: any,
                                field: FieldDefinition,
                                group: FieldsViewGroup,
-                               category: string,) {
+                               category: string) {
 
         group._fields.push({
             label: this.projectConfiguration.getFieldDefinitionLabel(category, field.name),

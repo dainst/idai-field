@@ -45,15 +45,15 @@ module FieldsViewGroupDefinition {
  */
 export module FieldsViewUtil {
 
-    export function getValue(resource: Resource, field: Name, valuelist?: ValuelistDefinition): any {
+    export function getValue(fieldContent: any, valuelist?: ValuelistDefinition): any {
 
         return valuelist
-            ? ValuelistUtil.getValueLabel(valuelist, resource[field])
-            : isString(resource[field])
-                ? resource[field]
+            ? ValuelistUtil.getValueLabel(valuelist, fieldContent)
+            : isString(fieldContent)
+                ? fieldContent
                     .replace(/^\s+|\s+$/g, '')
                     .replace(/\n/g, '<br>')
-                : resource[field];
+                : fieldContent;
     }
 
 

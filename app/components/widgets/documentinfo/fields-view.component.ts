@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import {DecimalPipe} from '@angular/common';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {is, isnt, isUndefinedOrEmpty, isDefined, on, lookup, isNot, includedIn, to,
-    compose, isEmpty, isBoolean} from 'tsfun';
+    compose, isEmpty, isBoolean, isArray} from 'tsfun';
 import {Document, FieldDocument,  ReadDatastore, FieldResource, Resource, Dating, Dimension, Literature,
     ValOptionalEndVal} from 'idai-components-2';
 import {RoutingService} from '../../routing-service';
@@ -153,8 +153,11 @@ export class FieldsViewComponent implements OnChanges {
         group._fields.push({
             name: field.name,
             label: this.projectConfiguration.getFieldDefinitionLabel(resource.category, field.name),
-            value: FieldsViewUtil.getValue(resource, field.name, field.valuelist),
-            isArray: Array.isArray(resource[field.name])
+            value: isArray(resource[field.name])
+                ? resource[field.name].map((fieldContent: any) =>
+                    FieldsViewUtil.getValue(fieldContent, field.valuelist))
+                : FieldsViewUtil.getValue(resource[field.name], field.valuelist),
+            isArray: isArray(resource[field.name]) // TODO get rid of isArray, show everything as array instead
         } as any /* TODO review; see name property */);
     }
 
@@ -201,7 +204,7 @@ export class FieldsViewComponent implements OnChanges {
             isArray: false
         });
         const shortDescription =
-            FieldsViewUtil.getValue(resource, FieldResource.SHORTDESCRIPTION);
+            FieldsViewUtil.getValue(resource[FieldResource.SHORTDESCRIPTION]);
         if (shortDescription) {
             group._fields.push({
                 label: this.getLabel(resource.category, FieldResource.SHORTDESCRIPTION),

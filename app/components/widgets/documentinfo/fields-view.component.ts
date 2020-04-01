@@ -2,23 +2,19 @@ import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import {DecimalPipe} from '@angular/common';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {isUndefinedOrEmpty, isBoolean, isArray, filter, or, on, update, compose, Mapping,
-    isNot, empty, map, flatten} from 'tsfun';
+    isNot, empty, map, flatten, tuplify, lookup, to, identity, val} from 'tsfun';
 import {flow as asyncFlow, map as asyncMap} from 'tsfun/async';
-import {Document, FieldDocument,  ReadDatastore, FieldResource, Resource,
+import {FieldDocument,  ReadDatastore, FieldResource, Resource,
     Dating, Dimension, Literature, ValOptionalEndVal} from 'idai-components-2';
 import {RoutingService} from '../../routing-service';
-import {Name, ResourceId} from '../../../core/constants';
+import {Name} from '../../../core/constants';
 import {UtilTranslations} from '../../../core/util/util-translations';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
 import {FieldDefinition} from '../../../core/configuration/model/field-definition';
 import {Group, Groups} from '../../../core/configuration/model/group';
-import {
-    FieldsViewField,
-    FieldsViewGroup,
-    FieldsViewUtil
-} from '../../../core/util/fields-view-util';
-import {debugId} from '../../../core/util/utils';
+import {FieldsViewGroup, FieldsViewUtil} from '../../../core/util/fields-view-util';
 import {RelationDefinition} from '../../../core/configuration/model/relation-definition';
+import {Named} from '../../../core/util/named';
 
 
 @Component({
@@ -115,14 +111,13 @@ export class FieldsViewComponent implements OnChanges {
         return map(
                 update(Group.FIELDS,
                     compose(
-                        map((field: FieldDefinition) => this.makeField(resource[field.name], field, resource.category)), // TODO write more concise
+                        map(tuplify(identity, compose(to(Named.NAME), lookup(resource)), val(resource.category))),
+                        map(this.convertToFieldsViewField.bind(this)),
                         flatten)));
     }
 
 
-    private makeField(fieldContent: any,
-                      field: FieldDefinition,
-                      category: string): Array<any> {
+    private convertToFieldsViewField([field, fieldContent, category]: [any, FieldDefinition, string]): Array<any> {
 
         if (!fieldContent) return [];
 
@@ -186,22 +181,16 @@ export class FieldsViewComponent implements OnChanges {
 
         return asyncMap(async (group: any /* ! modified in place ! */) => {
 
-            group.relations = await asyncFlow( // TODO make asyncCompose and asyncUpdate
+            group.relations = await asyncFlow(
                 group.relations,
                 FieldsViewUtil.computeRelationsToShow(resource),
                 asyncMap(async (relation: RelationDefinition) => {
                     return {
                         label: relation.label,
-                        targets: await this.getTargetDocuments(resource.relations[relation.name])
+                        targets: await this.datastore.getMultiple(resource.relations[relation.name])
                     }
                 }));
             return group;
         });
-    }
-
-
-    private getTargetDocuments(targetIds: Array<ResourceId>): Promise<Array<Document>> {
-
-        return this.datastore.getMultiple(targetIds);
     }
 }

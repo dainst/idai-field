@@ -229,7 +229,7 @@ export class FieldsViewComponent implements OnChanges {
     }
 
 
-    private getLabel(category: Name, field: Name): string {
+    private getLabel(category: Name, field: Name): string { // TODO get rid of function
 
         return ((Category.getFields(pick(this.projectConfiguration.getCategoriesMap(), category) as any))
             .find(on(Named.NAME, is(field))) as FieldDefinition)

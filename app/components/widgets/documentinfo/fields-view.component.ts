@@ -1,7 +1,8 @@
 import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import {DecimalPipe} from '@angular/common';
 import {I18n} from '@ngx-translate/i18n-polyfill';
-import {isUndefinedOrEmpty, isEmpty, isBoolean, isArray} from 'tsfun';
+import {isUndefinedOrEmpty, isEmpty, isBoolean, isArray, filter} from 'tsfun';
+import {flow as asyncFlow} from 'tsfun/async';
 import {Document, FieldDocument,  ReadDatastore, FieldResource, Resource, Dating, Dimension, Literature,
     ValOptionalEndVal, FeatureResource} from 'idai-components-2';
 import {RoutingService} from '../../routing-service';
@@ -48,14 +49,13 @@ export class FieldsViewComponent implements OnChanges {
 
     async ngOnChanges() {
 
-        if (this.resource) {
+        if (!this.resource) return;
 
-            let groups = FieldsViewUtil
-                .getGroups(this.resource.category, this.projectConfiguration.getCategoriesMap());
-            await this.processRelations(groups, this.resource);
-            this.processFields(groups, this.resource);
-            this.groups = groups.filter(group => group._fields.length > 0 || group._relations.length > 0);
-        }
+        this.groups = await asyncFlow(
+            FieldsViewUtil.getGroups(this.resource.category, this.projectConfiguration.getCategoriesMap()),
+            await this.processRelations(this.resource),
+            this.processFields(this.resource),
+            filter((group: any) => group._fields.length > 0 || group._relations.length > 0))
     }
 
 
@@ -100,27 +100,27 @@ export class FieldsViewComponent implements OnChanges {
     }
 
 
-    /**
-     * @param groups !modified in place
-     * @param resource
-     */
-    private processFields(groups: Array<FieldsViewGroup>, resource: Resource) {
+    private processFields(resource: Resource) {
 
-        for (let group of groups) {
-            for (let field of group.fields) {
-                if (!resource[field.name]) continue;
+        return (groups: Array<FieldsViewGroup> /* ! modified in place !*/): Array<FieldsViewGroup> => {
 
-                if (field.name === FeatureResource.PERIOD) {
+            for (let group of groups) {
+                for (let field of group.fields) {
+                    if (!resource[field.name]) continue;
 
-                    this.handlePeriodField(resource, group);
+                    if (field.name === FeatureResource.PERIOD) {
 
-                } else if (this.projectConfiguration.isVisible(resource.category, field.name)
-                    || field.name === Resource.CATEGORY
-                    || field.name === FieldResource.SHORTDESCRIPTION) {
+                        this.handlePeriodField(resource, group);
 
-                    this.handleDefaultField(resource, field, group);
+                    } else if (this.projectConfiguration.isVisible(resource.category, field.name)
+                        || field.name === Resource.CATEGORY
+                        || field.name === FieldResource.SHORTDESCRIPTION) {
+
+                        this.handleDefaultField(resource, field, group);
+                    }
                 }
             }
+            return groups;
         }
     }
 
@@ -143,7 +143,7 @@ export class FieldsViewComponent implements OnChanges {
         group._fields.push({
             label: this.i18n({
                 id: 'widgets.fieldsView.period',
-                value: 'Grobdatierung'
+                value: 'Grobdatierung' // TODO generalize this, do not use i18n
             }) + (!isUndefinedOrEmpty(resource[FeatureResource.PERIOD][ValOptionalEndVal.ENDVALUE])
                 ? this.i18n({
                     id: 'widgets.fieldsView.period.from',
@@ -166,24 +166,26 @@ export class FieldsViewComponent implements OnChanges {
     }
 
 
-    /**
-     * @param groups ! modified in place !
-     * @param resource
-     */
-    private async processRelations(groups: Array<FieldsViewGroup>, resource: Resource) {
+    private async processRelations(resource: Resource) {
 
-        const relations: Array<RelationDefinition> | undefined
-            = this.projectConfiguration.getRelationDefinitions(resource.category);
-        if (isEmpty(relations)) return;
+        return async (groups: Array<FieldsViewGroup> /* ! modified in place ! */)
+            : Promise<Array<FieldsViewGroup>> => {
 
-        for (let group of groups) {
-            for (let relation of FieldsViewUtil.computeRelationsToShow(resource, group.relations)) {
-                group._relations.push({
-                    label: relation.label,
-                    targets: await this.getTargetDocuments(resource.relations[relation.name])
-                });
+            const relations: Array<RelationDefinition> | undefined
+                = this.projectConfiguration.getRelationDefinitions(resource.category);
+            if (isEmpty(relations)) return groups;
+
+            for (let group of groups) {
+                for (let relation of FieldsViewUtil.computeRelationsToShow(resource, group.relations)) {
+                    group._relations.push({
+                        label: relation.label,
+                        targets: await this.getTargetDocuments(resource.relations[relation.name])
+                    });
+                }
             }
+            return groups;
         }
+
     }
 
 

@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import {DecimalPipe} from '@angular/common';
 import {I18n} from '@ngx-translate/i18n-polyfill';
-import {isUndefinedOrEmpty, isBoolean, isArray, filter, or, val, update, compose, Mapping, on, is, isDefined,
+import {isUndefinedOrEmpty, isBoolean, isArray, filter, or, Pair, update, compose, Mapping, on, is, isDefined,
     isNot, empty, map, flatten, lookup, to, pairWith, conds, singleton, otherwise} from 'tsfun';
 import {flow as asyncFlow, map as asyncMap} from 'tsfun/async';
 import {FieldDocument,  ReadDatastore, FieldResource, Resource,
@@ -118,7 +118,8 @@ export class FieldsViewComponent implements OnChanges {
     }
 
 
-    private convertToFieldsViewField = conds(
+    private convertToFieldsViewField: Mapping<Pair<FieldDefinition, any>, Array<FieldsViewField>>
+        = conds(
             [
                 on([0, FieldDefinition.INPUTTYPE], is(FieldDefinition.InputType.DROPDOWNRANGE)),
                 this.makeValOptionalEndValField.bind(this)

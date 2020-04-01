@@ -212,7 +212,6 @@ export class FieldsViewComponent implements OnChanges {
             }
             return groups;
         }
-
     }
 
 

@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import {DecimalPipe} from '@angular/common';
 import {I18n} from '@ngx-translate/i18n-polyfill';
-import {isUndefinedOrEmpty, isEmpty, isBoolean, isArray, filter} from 'tsfun';
+import {isUndefinedOrEmpty, isBoolean, isArray, filter} from 'tsfun';
 import {flow as asyncFlow} from 'tsfun/async';
 import {Document, FieldDocument,  ReadDatastore, FieldResource, Resource,
     Dating, Dimension, Literature, ValOptionalEndVal} from 'idai-components-2';
@@ -9,7 +9,6 @@ import {RoutingService} from '../../routing-service';
 import {Name, ResourceId} from '../../../core/constants';
 import {UtilTranslations} from '../../../core/util/util-translations';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
-import {RelationDefinition} from '../../../core/configuration/model/relation-definition';
 import {FieldDefinition} from '../../../core/configuration/model/field-definition';
 import {Groups} from '../../../core/configuration/model/group';
 import {FieldsViewGroup, FieldsViewUtil} from '../../../core/util/fields-view-util';

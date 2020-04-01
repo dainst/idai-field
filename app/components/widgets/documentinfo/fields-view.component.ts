@@ -111,7 +111,8 @@ export class FieldsViewComponent implements OnChanges {
                 for (let field of group.fields) {
 
                     const fieldContent = resource[field.name];
-                    if (fieldContent) this.addFieldContentToGroup(group, fieldContent, field, resource.category);
+                    if (fieldContent) group._fields =
+                        group._fields.concat(this.makeField(fieldContent, field, resource.category));
                 }
             }
             return groups;
@@ -120,61 +121,56 @@ export class FieldsViewComponent implements OnChanges {
 
 
     /**
-     * @param group ! modified in place !
      * @param fieldContent
      * @param field
      * @param category
      */
-    private addFieldContentToGroup(group: FieldsViewGroup,
-                                   fieldContent: any,
-                                   field: FieldDefinition,
-                                   category: string) {
+    private makeField(fieldContent: any,
+                      field: FieldDefinition,
+                      category: string): Array<any> {
 
         if (field.inputType === FieldDefinition.InputType.DROPDOWNRANGE) {
 
-            this.addValOptionalEndValFieldToGroup(group, fieldContent, field);
+            return this.addValOptionalEndValFieldToGroup(fieldContent, field);
 
         } else if (this.projectConfiguration.isVisible(category, field.name)
             || field.name === Resource.CATEGORY
             || field.name === FieldResource.SHORTDESCRIPTION) {
 
-            this.addDefaultFieldToGroup(group, fieldContent, field, category);
-        }
+            return [this.makeDefaultField(fieldContent, field, category)];
+
+        } else return [];
     }
 
 
     /**
-     * @param group ! modified in place !
      * @param fieldContent
      * @param field
      * @param category
      */
-    private addDefaultFieldToGroup(group: FieldsViewGroup,
-                                   fieldContent: any,
-                                   field: FieldDefinition,
-                                   category: string) {
+    private makeDefaultField(fieldContent: any,
+                             field: FieldDefinition,
+                             category: string) {
 
-        group._fields.push({
+        return {
             label: this.projectConfiguration.getFieldDefinitionLabel(category, field.name),
             value: isArray(fieldContent)
                 ? fieldContent.map((fieldContent: any) =>
                     FieldsViewUtil.getValue(fieldContent, field.valuelist))
                 : FieldsViewUtil.getValue(fieldContent, field.valuelist),
             isArray: isArray(fieldContent)
-        });
+        };
     }
 
 
     /**
-     * @param group ! modified in place !
      * @param fieldContent
      * @param field
      */
-    private addValOptionalEndValFieldToGroup(group: FieldsViewGroup,
-                                             fieldContent: any,
+    private addValOptionalEndValFieldToGroup(fieldContent: any,
                                              field: FieldDefinition) {
 
-        group._fields.push({
+        const val = {
             label: field.label + (!isUndefinedOrEmpty(fieldContent[ValOptionalEndVal.ENDVALUE])
                 ? ' ' + this.i18n({
                     id: 'widgets.fieldsView.range.from',
@@ -182,18 +178,19 @@ export class FieldsViewComponent implements OnChanges {
                 }) : ''),
             value: fieldContent[ValOptionalEndVal.VALUE],
             isArray: false
-        });
+        };
 
-        if (!isUndefinedOrEmpty(fieldContent[ValOptionalEndVal.ENDVALUE])) {
-            group._fields.push({
-                label: field.label + ' ' + this.i18n({
-                    id: 'widgets.fieldsView.range.to',
-                    value: field.label + '(bis)'
-                }),
-                value: fieldContent[ValOptionalEndVal.ENDVALUE],
-                isArray: false
-            });
-        }
+        if (isUndefinedOrEmpty(fieldContent[ValOptionalEndVal.ENDVALUE])) return [val];
+        else return [
+                val,
+                {
+                    label: field.label + ' ' + this.i18n({
+                        id: 'widgets.fieldsView.range.to',
+                        value: field.label + '(bis)'
+                    }),
+                    value: fieldContent[ValOptionalEndVal.ENDVALUE],
+                    isArray: false
+                }];
     }
 
 

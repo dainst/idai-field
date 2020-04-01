@@ -110,7 +110,7 @@ export class FieldsViewComponent implements OnChanges {
                     const fieldContent = resource[field.name];
                     if (!fieldContent) continue;
 
-                    if (field.name === FeatureResource.PERIOD) {
+                    if (field.inputType === FieldDefinition.InputType.DROPDOWNRANGE) {
 
                         this.handleValOptionalEndValField(fieldContent, field, group);
 

@@ -1,7 +1,8 @@
 import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import {DecimalPipe} from '@angular/common';
 import {I18n} from '@ngx-translate/i18n-polyfill';
-import {isUndefinedOrEmpty, isBoolean, isArray, filter, or, on, isNot, empty, flow, map, flatten, prune} from 'tsfun';
+import {isUndefinedOrEmpty, isBoolean, isArray, filter, or, on, update, compose, Mapping,
+    isNot, empty, flow, map, flatten, prune} from 'tsfun';
 import {flow as asyncFlow} from 'tsfun/async';
 import {Document, FieldDocument,  ReadDatastore, FieldResource, Resource,
     Dating, Dimension, Literature, ValOptionalEndVal} from 'idai-components-2';
@@ -10,12 +11,13 @@ import {Name, ResourceId} from '../../../core/constants';
 import {UtilTranslations} from '../../../core/util/util-translations';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
 import {FieldDefinition} from '../../../core/configuration/model/field-definition';
-import {Groups} from '../../../core/configuration/model/group';
+import {Group, Groups} from '../../../core/configuration/model/group';
 import {
     FieldsViewField,
     FieldsViewGroup,
     FieldsViewUtil
 } from '../../../core/util/fields-view-util';
+import {debugId} from '../../../core/util/utils';
 
 
 @Component({
@@ -61,7 +63,7 @@ export class FieldsViewComponent implements OnChanges {
             await this.putActualResourceRelationsIntoGroups(this.resource),
             this.putActualResourceFieldsIntoGroups(this.resource),
             filter(or(
-                    on(FieldsViewGroup._FIELDS, isNot(empty)),
+                    on(FieldsViewGroup.FIELDS, isNot(empty)),
                     on(FieldsViewGroup._RELATIONS, isNot(empty)))));
     }
 
@@ -107,21 +109,13 @@ export class FieldsViewComponent implements OnChanges {
     }
 
 
-    private putActualResourceFieldsIntoGroups(resource: Resource) {
+    private putActualResourceFieldsIntoGroups(resource: Resource): Mapping {
 
-        return (groups: Array<FieldsViewGroup> /* ! modified in place !*/): Array<FieldsViewGroup> => {
-
-            for (let group of groups) {
-
-                group._fields =
-                    flow(group.fields,
-                        map((field: FieldDefinition) => {
-                            return this.makeField(resource[field.name], field, resource.category);
-                        }),
-                        flatten);
-            }
-            return groups;
-        }
+        return map(
+                update(Group.FIELDS,
+                    compose(
+                        map((field: FieldDefinition) => this.makeField(resource[field.name], field, resource.category)), // TODO write more concise
+                        flatten)));
     }
 
 

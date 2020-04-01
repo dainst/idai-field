@@ -11,11 +11,12 @@ import {Group, Groups} from '../configuration/model/group';
 import {Filter} from './utils';
 
 
-export interface FieldsViewGroup extends Group {
+export interface FieldsViewGroup extends Named { // TODO review Named usage
 
     shown: boolean;
     _relations: Array<FieldsViewRelation>;
-    _fields: Array<FieldsViewField>;
+    relations: Array<RelationDefinition>; // TODO remove
+    fields: Array<FieldsViewField>;
 }
 
 
@@ -35,7 +36,7 @@ export module FieldsViewGroup {
 
     export const SHOWN = 'shown';
     export const _RELATIONS = '_relations';
-    export const _FIELDS = '_fields';
+    export const FIELDS = 'fields';
 }
 
 
@@ -81,11 +82,6 @@ export module FieldsViewUtil {
             map(group =>
                 assoc<any>(
                     FieldsViewGroup._RELATIONS,
-                    [])(group)
-            ),
-            map(group =>
-                assoc<any>(
-                    FieldsViewGroup._FIELDS,
                     [])(group)
             )) as Array<FieldsViewGroup>;
     }

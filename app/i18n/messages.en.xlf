@@ -1062,6 +1062,22 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="widgets.documentInfo.thumbnail.oneLinkedImage" datatype="html">
+        <source>Ein verknüpftes Bild</source>
+        <target state="final">One linked image</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/widgets/documentinfo/thumbnail.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="widgets.documentInfo.thumbnail.linkedImages" datatype="html">
+        <source>verknüpfte Bilder</source>
+        <target state="final">linked images</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/widgets/documentinfo/thumbnail.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="navbar.taskbar.conflicts" datatype="html">
         <source>Konflikte</source>
         <target state="final">Conflicts</target>

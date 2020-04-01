@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import {SafeResourceUrl} from '@angular/platform-browser';
+import {I18n} from '@ngx-translate/i18n-polyfill';
 import {FieldResource} from 'idai-components-2';
 import {Imagestore} from '../../../core/images/imagestore/imagestore';
 import {BlobMaker} from '../../../core/images/imagestore/blob-maker';
@@ -22,17 +23,34 @@ export class ThumbnailComponent implements OnChanges {
     public thumbnailUrl: SafeResourceUrl|undefined;
 
 
-    constructor(private imagestore: Imagestore) {}
+    constructor(private imagestore: Imagestore,
+                private i18n: I18n) {}
 
 
     public isThumbnailFound = (): boolean => this.thumbnailUrl !== BlobMaker.blackImg;
 
     public onImageClicked = () => this.onClick.emit();
 
+    public getNumberOfImages = () => this.resource.relations.isDepictedIn.length;
+
 
     async ngOnChanges() {
 
         await this.updateThumbnailUrl();
+    }
+
+
+    public getNumberOfImagesTooltip(): string {
+
+        return this.getNumberOfImages() === 1
+            ? this.i18n({
+                id: 'widgets.documentInfo.thumbnail.oneLinkedImage',
+                value: 'Ein verknüpftes Bild'
+            })
+            : this.getNumberOfImages() + ' ' + this.i18n({
+                id: 'widgets.documentInfo.thumbnail.linkedImages',
+                value: 'verknüpfte Bilder'
+            });
     }
 
 

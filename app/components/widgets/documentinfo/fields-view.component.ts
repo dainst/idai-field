@@ -203,7 +203,7 @@ export class FieldsViewComponent implements OnChanges {
             : Promise<Array<FieldsViewGroup>> => {
 
             for (let group of groups) {
-                for (let relation of FieldsViewUtil.computeRelationsToShow(resource, group.relations)) {
+                for (let relation of FieldsViewUtil.computeRelationsToShow(resource)(group.relations)) {
                     group._relations.push({
                         label: relation.label,
                         targets: await this.getTargetDocuments(resource.relations[relation.name])

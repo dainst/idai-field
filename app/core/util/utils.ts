@@ -1,9 +1,15 @@
 import {copy, Pair, reduce, Map, to, identity, isDefined, path, isString, getOn,
     dissoc, map, assoc, values, compose} from 'tsfun';
+import {Mapping} from 'tsfun/src/type';
 
-/**
- * @author Daniel de Oliveira
- */
+
+
+
+// @author Daniel de Oliveira
+
+export type Filter<T> = Mapping<T>; // TODO move to tsfun; a Filter is a Mapping, but with only one generic type argument
+
+
 export function longerThan(than: string) { return (what: string) => what.length > than.length }
 
 export function isEmptyString(a: any) { return typeof a === 'string' && a === '' }

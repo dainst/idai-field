@@ -1,12 +1,14 @@
 import {Resource} from 'idai-components-2/index';
 import {ValuelistDefinition} from '../configuration/model/valuelist-definition';
 import {ValuelistUtil} from './valuelist-util';
-import {assoc, compose, flow, and, includedIn, isNot, isString, lookup, map, Map, on, to, undefinedOrEmpty} from 'tsfun';
+import {assoc, compose, flow, and, includedIn, isNot, filter,
+    isString, lookup, map, Map, on, to, undefinedOrEmpty} from 'tsfun';
 import {RelationDefinition} from '../configuration/model/relation-definition';
 import {HierarchicalRelations} from '../model/relation-constants';
 import {Labelled, Named} from './named';
 import {Category} from '../configuration/model/category';
 import {Group, Groups} from '../configuration/model/group';
+import {Filter} from './utils';
 
 
 export interface FieldsViewGroup extends Group {
@@ -56,11 +58,9 @@ export module FieldsViewUtil {
     }
 
 
-    export function computeRelationsToShow(resource: Resource,
-            relations: Array<RelationDefinition>): Array<RelationDefinition> {
+    export function computeRelationsToShow(resource: Resource): Filter<Array<RelationDefinition>> {
 
-        return relations
-            .filter(
+        return filter(
                 on(Named.NAME,
                     and(
                         isNot(includedIn(HierarchicalRelations.ALL)),

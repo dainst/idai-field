@@ -1144,25 +1144,17 @@
           <context context-type="linenumber">106</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="widgets.fieldsView.period" datatype="html">
-        <source>Grobdatierung</source>
-        <target state="final">Grobdatierung</target>
+      <trans-unit id="widgets.fieldsView.range.from" datatype="html">
+        <source>(von)</source>
+        <target state="final">(von)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/widgets/documentinfo/fields-view.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="widgets.fieldsView.period.from" datatype="html">
-        <source> (von)</source>
-        <target state="final"> (von)</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/components/widgets/documentinfo/fields-view.component.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="widgets.fieldsView.period.to" datatype="html">
-        <source>Grobdatierung (bis)</source>
-        <target state="final">Grobdatierung (bis)</target>
+      <trans-unit id="widgets.fieldsView.range.to" datatype="html">
+        <source>(bis)</source>
+        <target state="final">(bis)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/widgets/documentinfo/fields-view.component.ts</context>
           <context context-type="linenumber">1</context>

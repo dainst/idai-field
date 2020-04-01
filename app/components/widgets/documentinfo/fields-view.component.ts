@@ -106,18 +106,19 @@ export class FieldsViewComponent implements OnChanges {
 
             for (let group of groups) {
                 for (let field of group.fields) {
+
                     const fieldContent = resource[field.name];
                     if (!fieldContent) continue;
 
                     if (field.name === FeatureResource.PERIOD) {
 
-                        this.handlePeriodField(fieldContent, group);
+                        this.handleValOptionalEndValField(fieldContent, field, group);
 
                     } else if (this.projectConfiguration.isVisible(resource.category, field.name)
                         || field.name === Resource.CATEGORY
                         || field.name === FieldResource.SHORTDESCRIPTION) {
 
-                        this.handleDefaultField(fieldContent, resource.category, field, group);
+                        this.handleDefaultField(fieldContent, field, group, resource.category);
                     }
                 }
             }
@@ -127,9 +128,9 @@ export class FieldsViewComponent implements OnChanges {
 
 
     private handleDefaultField(fieldContent: any,
-                               category: string,
                                field: FieldDefinition,
-                               group: FieldsViewGroup) {
+                               group: FieldsViewGroup,
+                               category: string,) {
 
         group._fields.push({
             label: this.projectConfiguration.getFieldDefinitionLabel(category, field.name),
@@ -142,16 +143,15 @@ export class FieldsViewComponent implements OnChanges {
     }
 
 
-    private handlePeriodField(fieldContent: any, group: FieldsViewGroup) {
+    private handleValOptionalEndValField(fieldContent: any,
+                                         field: FieldDefinition,
+                                         group: FieldsViewGroup) {
 
         group._fields.push({
-            label: this.i18n({
-                id: 'widgets.fieldsView.period',
-                value: 'Grobdatierung' // TODO generalize this, do not use i18n
-            }) + (!isUndefinedOrEmpty(fieldContent[ValOptionalEndVal.ENDVALUE])
-                ? this.i18n({
-                    id: 'widgets.fieldsView.period.from',
-                    value: ' (von)'
+            label: field.label + (!isUndefinedOrEmpty(fieldContent[ValOptionalEndVal.ENDVALUE])
+                ? ' ' + this.i18n({
+                    id: 'widgets.fieldsView.range.from',
+                    value: '(von)'
                 }) : ''),
             value: fieldContent[ValOptionalEndVal.VALUE],
             isArray: false
@@ -159,9 +159,9 @@ export class FieldsViewComponent implements OnChanges {
 
         if (!isUndefinedOrEmpty(fieldContent[ValOptionalEndVal.ENDVALUE])) {
             group._fields.push({
-                label: this.i18n({
-                    id: 'widgets.fieldsView.period.to',
-                    value: 'Grobdatierung (bis)'
+                label: field.label + ' ' + this.i18n({
+                    id: 'widgets.fieldsView.range.to',
+                    value: field.label + '(bis)'
                 }),
                 value: fieldContent[ValOptionalEndVal.ENDVALUE],
                 isArray: false

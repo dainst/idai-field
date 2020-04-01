@@ -117,7 +117,7 @@ export class FieldsViewComponent implements OnChanges {
     }
 
 
-    private convertToFieldsViewField([field, fieldContent, category]: [any, FieldDefinition, string]): Array<any> {
+    private convertToFieldsViewField([field, fieldContent, category]: [FieldDefinition, any, string]): Array<any> {
 
         if (!fieldContent) return [];
 
@@ -125,7 +125,7 @@ export class FieldsViewComponent implements OnChanges {
 
             return this.addValOptionalEndValFieldToGroup(fieldContent, field);
 
-        } else if (this.projectConfiguration.isVisible(category, field.name) // TODO use isVisible of the fieldDefinition directly, then get rid of explicit this binding
+        } else if (field.visible
             || field.name === Resource.CATEGORY
             || field.name === FieldResource.SHORTDESCRIPTION) {
 
@@ -140,7 +140,7 @@ export class FieldsViewComponent implements OnChanges {
                              category: string) {
 
         return {
-            label: this.projectConfiguration.getFieldDefinitionLabel(category, field.name),
+            label: this.projectConfiguration.getFieldDefinitionLabel(category, field.name), // TODO use label from definition directly
             value: isArray(fieldContent)
                 ? fieldContent.map((fieldContent: any) =>
                     FieldsViewUtil.getValue(fieldContent, field.valuelist))

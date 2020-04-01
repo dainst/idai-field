@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import {DecimalPipe} from '@angular/common';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {isUndefinedOrEmpty, isBoolean, isArray, filter, or, on, update, compose, Mapping,
-    isNot, empty, flow, map, flatten, prune} from 'tsfun';
+    isNot, empty, map, flatten} from 'tsfun';
 import {flow as asyncFlow} from 'tsfun/async';
 import {Document, FieldDocument,  ReadDatastore, FieldResource, Resource,
     Dating, Dimension, Literature, ValOptionalEndVal} from 'idai-components-2';
@@ -119,11 +119,6 @@ export class FieldsViewComponent implements OnChanges {
     }
 
 
-    /**
-     * @param fieldContent
-     * @param field
-     * @param category
-     */
     private makeField(fieldContent: any,
                       field: FieldDefinition,
                       category: string): Array<any> {
@@ -144,11 +139,6 @@ export class FieldsViewComponent implements OnChanges {
     }
 
 
-    /**
-     * @param fieldContent
-     * @param field
-     * @param category
-     */
     private makeDefaultField(fieldContent: any,
                              field: FieldDefinition,
                              category: string) {
@@ -164,10 +154,6 @@ export class FieldsViewComponent implements OnChanges {
     }
 
 
-    /**
-     * @param fieldContent
-     * @param field
-     */
     private addValOptionalEndValFieldToGroup(fieldContent: any,
                                              field: FieldDefinition) {
 

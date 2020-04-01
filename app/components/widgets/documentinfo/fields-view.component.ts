@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import {DecimalPipe} from '@angular/common';
 import {I18n} from '@ngx-translate/i18n-polyfill';
-import {isUndefinedOrEmpty, isBoolean, isArray, filter, or, on, isNot, empty} from 'tsfun';
+import {isUndefinedOrEmpty, isBoolean, isArray, filter, or, on, isNot, empty, flow, map, flatten, prune} from 'tsfun';
 import {flow as asyncFlow} from 'tsfun/async';
 import {Document, FieldDocument,  ReadDatastore, FieldResource, Resource,
     Dating, Dimension, Literature, ValOptionalEndVal} from 'idai-components-2';
@@ -11,7 +11,11 @@ import {UtilTranslations} from '../../../core/util/util-translations';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
 import {FieldDefinition} from '../../../core/configuration/model/field-definition';
 import {Groups} from '../../../core/configuration/model/group';
-import {FieldsViewGroup, FieldsViewUtil} from '../../../core/util/fields-view-util';
+import {
+    FieldsViewField,
+    FieldsViewGroup,
+    FieldsViewUtil
+} from '../../../core/util/fields-view-util';
 
 
 @Component({
@@ -108,12 +112,13 @@ export class FieldsViewComponent implements OnChanges {
         return (groups: Array<FieldsViewGroup> /* ! modified in place !*/): Array<FieldsViewGroup> => {
 
             for (let group of groups) {
-                for (let field of group.fields) {
 
-                    const fieldContent = resource[field.name];
-                    if (fieldContent) group._fields =
-                        group._fields.concat(this.makeField(fieldContent, field, resource.category));
-                }
+                group._fields =
+                    flow(group.fields,
+                        map((field: FieldDefinition) => {
+                            return this.makeField(resource[field.name], field, resource.category);
+                        }),
+                        flatten);
             }
             return groups;
         }
@@ -128,6 +133,8 @@ export class FieldsViewComponent implements OnChanges {
     private makeField(fieldContent: any,
                       field: FieldDefinition,
                       category: string): Array<any> {
+
+        if (!fieldContent) return [];
 
         if (field.inputType === FieldDefinition.InputType.DROPDOWNRANGE) {
 

@@ -1,5 +1,4 @@
 import {Resource} from 'idai-components-2/index';
-import {Name} from '../constants';
 import {ValuelistDefinition} from '../configuration/model/valuelist-definition';
 import {ValuelistUtil} from './valuelist-util';
 import {assoc, compose, flow, includedIn, isNot, isString, lookup, map, Map, on, to, undefinedOrEmpty} from 'tsfun';

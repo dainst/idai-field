@@ -30,6 +30,7 @@ export interface FieldDefinition { // TODO rename to Field (and RelationDefiniti
 
 export module FieldDefinition {
 
+    export const INPUTTYPE = 'inputType';
     export const SOURCE = 'source';
     export const VISIBLE = 'visible';
     export const MANDATORY = 'mandatory';

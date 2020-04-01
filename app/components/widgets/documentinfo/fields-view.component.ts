@@ -1,8 +1,8 @@
 import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import {DecimalPipe} from '@angular/common';
 import {I18n} from '@ngx-translate/i18n-polyfill';
-import {isUndefinedOrEmpty, isBoolean, isArray, filter, or, on, update, compose, Mapping,
-    isNot, empty, map, flatten, lookup, to, pairWith} from 'tsfun';
+import {isUndefinedOrEmpty, isBoolean, isArray, filter, or, val, update, compose, Mapping, on, is, isDefined,
+    isNot, empty, map, flatten, lookup, to, pairWith, conds, singleton} from 'tsfun';
 import {flow as asyncFlow, map as asyncMap} from 'tsfun/async';
 import {FieldDocument,  ReadDatastore, FieldResource, Resource,
     Dating, Dimension, Literature, ValOptionalEndVal} from 'idai-components-2';
@@ -12,11 +12,7 @@ import {UtilTranslations} from '../../../core/util/util-translations';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
 import {FieldDefinition} from '../../../core/configuration/model/field-definition';
 import {Group, Groups} from '../../../core/configuration/model/group';
-import {
-    FieldsViewField,
-    FieldsViewGroup,
-    FieldsViewUtil
-} from '../../../core/util/fields-view-util';
+import {FieldsViewField, FieldsViewGroup, FieldsViewUtil} from '../../../core/util/fields-view-util';
 import {RelationDefinition} from '../../../core/configuration/model/relation-definition';
 import {Named} from '../../../core/util/named';
 
@@ -116,31 +112,30 @@ export class FieldsViewComponent implements OnChanges {
                 update(Group.FIELDS,
                     compose(
                         map(pairWith(compose(to(Named.NAME), lookup(resource)))),
+                        filter(on('1', isDefined)),
                         map(this.convertToFieldsViewField.bind(this)),
                         flatten)));
     }
 
 
-    private convertToFieldsViewField([field, fieldContent]: [FieldDefinition, any]): Array<any> {
+    // TODO pass arrays to on
+    private convertToFieldsViewField = conds(
+            [
+                on('[0].inputType', is(FieldDefinition.InputType.DROPDOWNRANGE)),
+                this.addValOptionalEndValFieldToGroup.bind(this)
+            ],
+            [
+                or(
+                    on('[0].visible', is(true)),
+                    on('[0].name', is(Resource.CATEGORY)),
+                    on('[0].name', is(FieldResource.SHORTDESCRIPTION))),
+                compose(this.makeDefaultField.bind(this), singleton)
+            ],
+            [val(true), []] // TODO use otherwise
+        );
 
-        if (!fieldContent) return [];
 
-        if (field.inputType === FieldDefinition.InputType.DROPDOWNRANGE) { // TODO use conds
-
-            return this.addValOptionalEndValFieldToGroup(field, fieldContent);
-
-        } else if (field.visible
-            || field.name === Resource.CATEGORY
-            || field.name === FieldResource.SHORTDESCRIPTION) {
-
-            return [this.makeDefaultField(field, fieldContent)];
-
-        } else return [];
-    }
-
-
-    private makeDefaultField(field: FieldDefinition,
-                             fieldContent: any): FieldsViewField {
+    private makeDefaultField([field, fieldContent]: [FieldDefinition, any]): FieldsViewField {
 
         return {
             label: field.label,
@@ -153,7 +148,9 @@ export class FieldsViewComponent implements OnChanges {
     }
 
 
-    private addValOptionalEndValFieldToGroup(field: FieldDefinition, fieldContent: any): Array<FieldsViewField> {
+    private addValOptionalEndValFieldToGroup([field, fieldContent]: [FieldDefinition, any]): Array<FieldsViewField> {
+
+        console.log(':a', field.name, fieldContent);
 
         const val = {
             label: field.label + (!isUndefinedOrEmpty(fieldContent[ValOptionalEndVal.ENDVALUE])

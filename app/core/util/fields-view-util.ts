@@ -5,20 +5,28 @@ import {ValuelistUtil} from './valuelist-util';
 import {assoc, compose, flow, includedIn, isNot, isString, lookup, map, Map, on, to, undefinedOrEmpty} from 'tsfun';
 import {RelationDefinition} from '../configuration/model/relation-definition';
 import {HierarchicalRelations} from '../model/relation-constants';
-import {Named} from './named';
+import {Labelled, Named} from './named';
 import {Category} from '../configuration/model/category';
 import {Group, Groups} from '../configuration/model/group';
 
 
-export interface FieldsViewGroupDefinition extends Group {
+export interface FieldsViewGroup extends Group {
 
     shown: boolean;
-    _relations: Array<FieldsViewRelationDefinition>;
+    _relations: Array<FieldsViewRelation>;
+    _fields: Array<FieldsViewField>;
 }
 
 
-export interface FieldsViewRelationDefinition {
+export interface FieldsViewRelation extends Labelled {
 
+    targets: Array<any>;
+}
+
+export interface FieldsViewField extends Labelled {
+
+    value: string;
+    isArray: boolean;
 }
 
 
@@ -26,6 +34,7 @@ module FieldsViewGroupDefinition {
 
     export const SHOWN = 'shown';
     export const _RELATIONS = '_relations';
+    export const _FIELDS = '_fields';
 }
 
 
@@ -51,7 +60,7 @@ export module FieldsViewUtil {
     export function computeRelationsToShow(resource: Resource,
             relations: Array<RelationDefinition>): Array<RelationDefinition> {
 
-            const isNotHierarchical = isNot(includedIn(HierarchicalRelations.ALL));
+        const isNotHierarchical = isNot(includedIn(HierarchicalRelations.ALL));
         const hasTargets = compose(lookup(resource.relations), isNot(undefinedOrEmpty));
 
         return relations
@@ -74,6 +83,11 @@ export module FieldsViewUtil {
                 assoc<any>(
                     FieldsViewGroupDefinition._RELATIONS,
                     [])(group)
-            )) as Array<FieldsViewGroupDefinition>;
+            ),
+            map(group =>
+                assoc<any>(
+                    FieldsViewGroupDefinition._FIELDS,
+                    [])(group)
+            )) as Array<FieldsViewGroup>;
     }
 }

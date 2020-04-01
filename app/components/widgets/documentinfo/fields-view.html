@@ -4,7 +4,7 @@
 	</div>
 	<div *ngIf="showGroupSection(group.name)" class="collapse show">
 		<div class="card-body">
-			<div *ngFor="let field of fields[group.name]">
+			<div *ngFor="let field of group._fields">
 				<div *ngIf="field.isArray && field.value.length > 0" class="field">
 					<h3 class="field-label">{{field.label}}</h3>
 					<ul>

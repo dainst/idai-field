@@ -6,7 +6,7 @@ import {Named} from '../../util/named';
  */
 export interface RelationDefinition extends Named {
 
-    label? : string;
+    label? : string; // TODO make mandatory
     domain?: any;
     range?: any;
     inverse?: any;

@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import {DecimalPipe} from '@angular/common';
 import {I18n} from '@ngx-translate/i18n-polyfill';
-import {is, isnt, isUndefinedOrEmpty, isDefined, on, lookup,
+import {is, isnt, isUndefinedOrEmpty, isDefined, on, lookup, isNot, includedIn, to,
     compose, isEmpty, isBoolean} from 'tsfun';
 import {Document, FieldDocument,  ReadDatastore, FieldResource, Resource, Dating, Dimension, Literature,
     ValOptionalEndVal} from 'idai-components-2';
@@ -15,7 +15,7 @@ import {RelationDefinition} from '../../../core/configuration/model/relation-def
 import {FieldDefinition} from '../../../core/configuration/model/field-definition';
 import {Groups} from '../../../core/configuration/model/group';
 import {Named} from '../../../core/util/named';
-import {FieldsViewGroupDefinition, FieldsViewUtil} from '../../../core/util/fields-view-util';
+import {FieldsViewGroup, FieldsViewUtil} from '../../../core/util/fields-view-util';
 
 
 const PERIOD = 'period';
@@ -40,8 +40,7 @@ export class FieldsViewComponent implements OnChanges {
     @Output() onSectionToggled = new EventEmitter<string | undefined>();
     @Output() onJumpToResource = new EventEmitter<FieldDocument>();
 
-    public fields: { [groupName: string]: Array<any> } = {};
-    public groups: Array<FieldsViewGroupDefinition> = [];
+    public groups: Array<FieldsViewGroup> = [];
 
     public isBoolean = (value: any) => isBoolean(value);
 
@@ -56,21 +55,14 @@ export class FieldsViewComponent implements OnChanges {
 
     async ngOnChanges() {
 
-        this.fields = {};
-
         if (this.resource) {
 
             let groups = FieldsViewUtil
                 .getGroups(this.resource.category, this.projectConfiguration.getCategoriesMap());
             await this.processRelations(groups, this.resource);
-            this.addBaseFields(this.resource);
-            this.processFields(this.resource);
-
-            this.groups = groups.filter(group => {
-
-                return (this.fields[group.name] !== undefined && this.fields[group.name].length > 0)
-                    || group._relations.length > 0;
-            });
+            this.addBaseFields(groups, this.resource);
+            this.processFields(groups, this.resource);
+            this.groups = groups.filter(group => group._fields.length > 0 || group._relations.length > 0);
         }
     }
 
@@ -81,7 +73,7 @@ export class FieldsViewComponent implements OnChanges {
     }
 
 
-    public toggleGroupSection(group: FieldsViewGroupDefinition) {
+    public toggleGroupSection(group: FieldsViewGroup) {
 
         this.openSection = this.openSection === group.name && !this.expandAllGroups
             ? undefined
@@ -116,46 +108,60 @@ export class FieldsViewComponent implements OnChanges {
     }
 
 
-    private processFields(resource: Resource) {
+    /**
+     * @param groups !modified in place
+     * @param resource
+     */
+    private processFields(groups: Array<FieldsViewGroup>, resource: Resource) {
 
-        const existingResourceFields = this.projectConfiguration
+        const existingResourceFields = this.getResourceFieldsToShowInGroupsOtherThanStem(resource);
+
+        for (let group of groups) {
+            for (let field of existingResourceFields) {
+                if (isNot(includedIn(group.fields.map(to(Named.NAME))))(field.name)) continue;
+
+                if (field.name === PERIOD) {
+                    this.handlePeriodField(resource, group);
+                } else if (!!this.projectConfiguration.isVisible(resource.category, field.name)) {
+                    this.handleDefaultField(resource, field, group);
+                }
+            }
+        }
+    }
+
+
+    private getResourceFieldsToShowInGroupsOtherThanStem(resource: Resource): Array<FieldDefinition> {
+
+        return this.projectConfiguration
             .getFieldDefinitions(resource.category)
-            .filter(on(Named.NAME, isnt(Resource.RELATIONS)))
+            .filter(on(Named.NAME, isNot(includedIn(
+                [
+                    Resource.ID,
+                    Resource.CATEGORY,
+                    Resource.RELATIONS,
+                    FieldResource.SHORTDESCRIPTION,
+                    FieldResource.IDENTIFIER,
+                ]
+            ))))
+            .filter(on(Named.NAME, isnt('geometry'))) // TODO review
             .filter(on(Named.NAME, compose(lookup(resource), isDefined)));
-
-        for (let field of existingResourceFields) {
-
-            const group = field.group;
-            if (!this.fields[group]) this.fields[group] = [];
-            this.pushField(resource, field, group);
-        }
     }
 
 
-    private pushField(resource: Resource, field: FieldDefinition, group: string) {
+    private handleDefaultField(resource: Resource, field: FieldDefinition, group: FieldsViewGroup) {
 
-        if (field.name === PERIOD) {
-            this.handlePeriodField(resource, group);
-        } else if (!!this.projectConfiguration.isVisible(resource.category, field.name)) {
-            this.handleDefaultField(resource, field, group);
-        }
-    }
-
-
-    private handleDefaultField(resource: Resource, field: FieldDefinition, group: string) {
-
-        this.fields[group].push({
+        group._fields.push({
             name: field.name,
             label: this.projectConfiguration.getFieldDefinitionLabel(resource.category, field.name),
             value: FieldsViewUtil.getValue(resource, field.name, field.valuelist),
             isArray: Array.isArray(resource[field.name])
-        });
+        } as any /* TODO review; see name property */);
     }
 
 
-    private handlePeriodField(resource: Resource, group: string) {
+    private handlePeriodField(resource: Resource, group: FieldsViewGroup) {
 
-        this.fields[group].push({
+        group._fields.push({
             label: this.i18n({
                 id: 'widgets.fieldsView.period',
                 value: 'Grobdatierung'
@@ -169,7 +175,7 @@ export class FieldsViewComponent implements OnChanges {
         });
 
         if (!isUndefinedOrEmpty(resource[PERIOD][ValOptionalEndVal.ENDVALUE])) {
-            this.fields[group].push({
+            group._fields.push({
                 label: this.i18n({
                     id: 'widgets.fieldsView.period.to',
                     value: 'Grobdatierung (bis)'
@@ -181,26 +187,49 @@ export class FieldsViewComponent implements OnChanges {
     }
 
 
-    private addBaseFields(resource: Resource) {
+    /**
+     * @param groups ! modified in place
+     * @param resource
+     */
+    private addBaseFields(groups: Array<FieldsViewGroup>, resource: Resource) {
 
-        this.fields[Groups.STEM] = [];
+        const group = groups.find(on(Named.NAME, is(Groups.STEM)))!;
 
-        const shortDescription =
-            FieldsViewUtil.getValue(resource, FieldResource.SHORTDESCRIPTION);
-
-        if (shortDescription) {
-            this.fields[Groups.STEM].push({
-                label: this.getLabel(resource.category, FieldResource.SHORTDESCRIPTION),
-                value: shortDescription,
-                isArray: false
-            });
-        }
-
-        this.fields[Groups.STEM].push({
+        group._fields.push({
             label: this.getLabel(resource.category, Resource.CATEGORY),
             value: this.projectConfiguration.getLabelForCategory(resource.category),
             isArray: false
         });
+        const shortDescription =
+            FieldsViewUtil.getValue(resource, FieldResource.SHORTDESCRIPTION);
+        if (shortDescription) {
+            group._fields.push({
+                label: this.getLabel(resource.category, FieldResource.SHORTDESCRIPTION),
+                value: shortDescription, // TODO convert value to name
+                isArray: false
+            });
+        }
+    }
+
+
+    /**
+     * @param groups ! modified in place !
+     * @param resource
+     */
+    private async processRelations(groups: Array<FieldsViewGroup>, resource: Resource) {
+
+        const relations: Array<RelationDefinition> | undefined
+            = this.projectConfiguration.getRelationDefinitions(resource.category);
+        if (isEmpty(relations)) return;
+
+        for (let group of groups) {
+            for (let relation of FieldsViewUtil.computeRelationsToShow(resource, group.relations)) {
+                group._relations.push({
+                    label: relation.label!, // TODO remove !
+                    targets: await this.getTargetDocuments(resource.relations[relation.name])
+                });
+            }
+        }
     }
 
 
@@ -212,32 +241,8 @@ export class FieldsViewComponent implements OnChanges {
     }
 
 
-    /**
-     * @param groups ! modified in place !
-     * @param resource
-     */
-    private async processRelations(groups: Array<FieldsViewGroupDefinition>, resource: Resource) {
-
-        const relations: Array<RelationDefinition> | undefined
-            = this.projectConfiguration.getRelationDefinitions(resource.category);
-        if (isEmpty(relations)) return;
-
-        for (let group of groups) {
-            for (let relation of FieldsViewUtil.computeRelationsToShow(resource, group.relations)) {
-                group._relations.push({
-                    label: relation.label,
-                    targets: await this.getTargetDocuments(resource.relations[relation.name])
-                });
-            }
-        }
-    }
-
-
     private getTargetDocuments(targetIds: Array<ResourceId>): Promise<Array<Document>> {
 
         return this.datastore.getMultiple(targetIds); // what if error?
     }
-
-
-
 }

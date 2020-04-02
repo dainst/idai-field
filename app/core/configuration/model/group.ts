@@ -3,6 +3,7 @@ import {Labelled, Named} from '../../util/named';
 import {RelationDefinition} from './relation-definition';
 import {PositionRelations, TimeRelations, TypeRelations} from '../../model/relation-constants';
 
+
 export module Groups {
 
     export const STEM = 'stem';

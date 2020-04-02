@@ -28,7 +28,6 @@ type FieldContent = any;
     selector: 'fields-view',
     moduleId: module.id,
     templateUrl: './fields-view.html'
-    // TODO review // item.label ? item.label - missing typing
 })
 /**
  * @author Thomas Kleinke

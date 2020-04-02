@@ -373,6 +373,8 @@ describe('resources --', () => {
         ResourcesPage.clickSelectGeometryType('point');
         ResourcesPage.getListItemMarkedNewEls().then(els => expect(els.length).toBe(1));
         browser.wait(EC.stalenessOf(ResourcesPage.getCreateDocumentButton()), delays.ECWaitTime);
+        MapPage.clickMapOption('abort');
+        browser.wait(EC.presenceOf(ResourcesPage.getCreateDocumentButton()), delays.ECWaitTime);
     });
 
 

@@ -57,8 +57,6 @@ export module Group {
 
     export const FIELDS = 'fields';
     export const RELATIONS = 'relations';
-    export const LABEL = 'label'; // TODO remove
-
 
     export function create(name: string) {
 

@@ -241,6 +241,11 @@ describe('resources/state --', function() {
         ResourcesPage.clickListModeButton();
         checkCategoryIcon();
         createResourceWithPresetCategory('2', true);
+        ResourcesPage.clickMapModeButton();
+        ResourcesPage.clickSelectResource('2', 'info');
+        FieldsViewPage.getFieldValue(0, 0).then(categoryLabel => {
+            expect(categoryLabel).toEqual('Erdbefund');
+        });
     });
 
 

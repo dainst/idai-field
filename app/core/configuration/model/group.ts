@@ -39,10 +39,17 @@ export module Groups {
 }
 
 
-export interface Group extends Named, Labelled {
+export interface Group extends BaseGroup {
 
     fields: Array<FieldDefinition>;
     relations: Array<RelationDefinition>;
+}
+
+
+export interface BaseGroup extends Named, Labelled {
+
+    fields: Array<any>;
+    relations: Array<any>;
 }
 
 

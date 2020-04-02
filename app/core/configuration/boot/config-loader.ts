@@ -9,7 +9,7 @@ import {FieldDefinition} from '../model/field-definition';
 import {buildRawProjectConfiguration} from './build-raw-project-configuration';
 import {BuiltinCategoryDefinition} from '../model/builtin-category-definition';
 import {LibraryCategoryDefinition} from '../model/library-category-definition';
-import { addKeyAsProp } from '../../util/utils';
+import {addKeyAsProp} from '../../util/transformers';
 import {Groups} from '../model/group';
 
 

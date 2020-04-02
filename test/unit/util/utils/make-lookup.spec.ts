@@ -1,4 +1,4 @@
-import {makeLookup} from '../../../../app/core/util/utils';
+import {makeLookup} from '../../../../app/core/util/transformers';
 
 
 describe('makeLookup', () => {

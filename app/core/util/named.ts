@@ -1,6 +1,6 @@
 import {is, Map, on, separate} from 'tsfun';
 import {SortUtil} from './sort-util';
-import {makeLookup, mapToArray} from './utils';
+import {makeLookup, mapToArray} from './transformers';
 import {copy} from 'tsfun/src/collection';
 import {Category} from '../configuration/model/category';
 

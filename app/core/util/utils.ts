@@ -1,14 +1,10 @@
-import {copy, Pair, reduce, Map, to, identity, isDefined, path, isString, getOn,
-    dissoc, map, assoc, values, compose} from 'tsfun';
+import {copy, Pair, reduce, Map, to, identity, isDefined, path, isString, getOn, dissoc} from 'tsfun';
 import {Mapping} from 'tsfun/src/type';
-
-
 
 
 // @author Daniel de Oliveira
 
 export type Filter<T> = Mapping<T>; // TODO move to tsfun; a Filter is a Mapping, but with only one generic type argument
-
 
 export function longerThan(than: string) { return (what: string) => what.length > than.length }
 
@@ -37,31 +33,6 @@ export function withDissoc(struct: any, path: string) {
     return dissoc(path)(struct);
 }
 // return map(val(undefined))(range(size));
-
-
-/**
- * path: 'd.e'
- * as: [{ d: { e: 17 }}, { d: { e: 19 }}]
- * ->
- * { 17: { d: { e: 17 }}, 19: { d: { e: 19 }}}
- */
-export function makeLookup(path: string) {
-
-    return <A>(as: Array<A>): Map<A> =>
-        assocReduce((a: A) => [getOn(path)(a), a], {})(as);
-}
-
-
-export function addKeyAsProp<A extends Map>(prop: string): (m: Map<A>) => Map<A> {
-
-    return map<any>((a: A, key: string) => assoc(prop, key)(a));
-}
-
-
-export function mapToArray(prop: string) {
-
-    return compose(addKeyAsProp(prop), values);
-}
 
 
 /**

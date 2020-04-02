@@ -26,6 +26,7 @@ export interface FieldsViewRelation extends Labelled {
     targets: Array<any>;
 }
 
+
 export interface FieldsViewField extends Labelled {
 
     value: string;

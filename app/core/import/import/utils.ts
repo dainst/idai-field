@@ -7,7 +7,7 @@ import {HierarchicalRelations} from '../../model/relation-constants';
 import RECORDED_IN = HierarchicalRelations.RECORDEDIN;
 import {Id, Identifier} from './types';
 import {DocumentDatastore} from '../../datastore/document-datastore';
-import {makeLookup} from '../../util/utils';
+import {makeLookup} from '../../util/transformers';
 
 
 export const unionOfDocuments = unionBy(on('resource.id'));

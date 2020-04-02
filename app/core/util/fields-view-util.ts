@@ -13,7 +13,7 @@ import {FieldDefinition} from '../configuration/model/field-definition';
 import {ProjectConfiguration} from '../configuration/project-configuration';
 
 
-export interface FieldsViewGroup extends Named { // TODO review Named usage
+export interface FieldsViewGroup extends Named, Labelled {
 
     shown: boolean;
     relations: Array<FieldsViewRelation>;

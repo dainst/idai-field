@@ -366,7 +366,7 @@ describe('resources --', () => {
     });
 
 
-    xit('hide the new resource button while creating a new resource', () => {
+    it('hide the new resource button while creating a new resource', () => {
 
         ResourcesPage.clickCreateResource();
         ResourcesPage.clickSelectCategory();

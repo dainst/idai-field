@@ -3080,6 +3080,12 @@
           "de": "Dekoration",
           "en": "Decoration"
         }
+      },
+      "Spuren": {
+        "labels": {
+          "de": "Spuren",
+          "en": "Traces"
+        }
       }
     }
   },

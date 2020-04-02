@@ -1,4 +1,4 @@
-import {browser, protractor, element, by} from 'protractor';
+import {browser, protractor} from 'protractor';
 import {MapPage} from './map.page';
 import {ResourcesPage} from '../resources/resources.page';
 import {DoceditPage} from '../docedit/docedit.page';

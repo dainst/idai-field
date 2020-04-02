@@ -4,8 +4,7 @@ import {I18n} from '@ngx-translate/i18n-polyfill';
 import {isUndefinedOrEmpty, isBoolean, isArray, filter, Pair, update, compose, Mapping, on, is, isDefined,
     map, flatten, lookup, to, pairWith, conds, singleton, otherwise} from 'tsfun';
 import {flow as asyncFlow, map as asyncMap} from 'tsfun/async';
-import {FieldDocument,  ReadDatastore, Resource, Dating, Dimension, Literature,
-    ValOptionalEndVal} from 'idai-components-2';
+import {FieldDocument,  ReadDatastore, Resource, Dating, Dimension, Literature, ValOptionalEndVal} from 'idai-components-2';
 import {RoutingService} from '../../routing-service';
 import {Name} from '../../../core/constants';
 import {UtilTranslations} from '../../../core/util/util-translations';
@@ -22,6 +21,9 @@ import shouldBeDisplayed = FieldsViewUtil.shouldBeDisplayed;
 
 
 type FieldContent = any;
+
+const LEFT = 0;  // TODO move to tsfun
+const RIGHT = 1;
 
 
 @Component({
@@ -118,11 +120,14 @@ export class FieldsViewComponent implements OnChanges {
 
     private putActualResourceFieldsIntoGroups(resource: Resource): Mapping {
 
+        const fieldContent: Mapping<FieldDefinition, FieldContent>
+            = compose(to(Named.NAME), lookup(resource));
+
         return map(
             update(Group.FIELDS,
                 compose(
-                    map(pairWith(compose(to(Named.NAME), lookup(resource)))),
-                    filter(on([1], isDefined)),
+                    map(pairWith(fieldContent)),
+                    filter(on([RIGHT], isDefined)),
                     map(this.convertToFieldsViewField.bind(this)),
                     flatten
                 )
@@ -134,11 +139,11 @@ export class FieldsViewComponent implements OnChanges {
     private convertToFieldsViewField: Mapping<Pair<FieldDefinition, FieldContent>, Array<FieldsViewField>>
         = conds(
             [
-                on([0, INPUTTYPE], is(DROPDOWNRANGE)),
+                on([LEFT, INPUTTYPE], is(DROPDOWNRANGE)),
                 this.makeValOptionalEndValField.bind(this)
             ],
             [
-                on([0], isDefaultField),
+                on([LEFT], isDefaultField),
                 compose(this.makeDefaultField.bind(this), singleton)
             ],
             [otherwise, []]

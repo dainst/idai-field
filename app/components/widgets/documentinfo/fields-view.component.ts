@@ -18,12 +18,10 @@ import INPUTTYPE = FieldDefinition.INPUTTYPE;
 import isDefaultField = FieldsViewUtil.isDefaultField;
 import DROPDOWNRANGE = FieldDefinition.InputType.DROPDOWNRANGE;
 import shouldBeDisplayed = FieldsViewUtil.shouldBeDisplayed;
+import {LEFT, RIGHT} from '../../../core/util/utils';
 
 
 type FieldContent = any;
-
-const LEFT = 0;  // TODO move to tsfun
-const RIGHT = 1;
 
 
 @Component({

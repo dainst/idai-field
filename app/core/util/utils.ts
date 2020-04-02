@@ -6,6 +6,9 @@ import {Mapping} from 'tsfun/src/type';
 
 export type Filter<T> = Mapping<T>; // TODO move to tsfun; a Filter is a Mapping, but with only one generic type argument
 
+export const LEFT = 0;  // TODO move to tsfun
+export const RIGHT = 1;
+
 export function longerThan(than: string) { return (what: string) => what.length > than.length }
 
 export function isEmptyString(a: any) { return typeof a === 'string' && a === '' }

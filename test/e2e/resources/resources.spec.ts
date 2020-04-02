@@ -376,7 +376,7 @@ describe('resources --', () => {
     });
 
 
-    xit('remove new resource from list if docedit modal is canceled during resource creation', () => {
+    it('remove new resource from list if docedit modal is canceled during resource creation', () => {
 
         ResourcesPage.clickCreateResource();
         ResourcesPage.clickSelectCategory();
@@ -388,7 +388,7 @@ describe('resources --', () => {
     });
 
 
-    xit('duplicate a resource', () => {
+    it('duplicate a resource', () => {
 
         ResourcesPage.performCreateResource('resource1', 'feature');
         ResourcesPage.openEditByDoubleClickResource('resource1');
@@ -402,7 +402,7 @@ describe('resources --', () => {
     });
 
 
-    xit('create two instances of a new resource', () => {
+    it('create two instances of a new resource', () => {
 
         ResourcesPage.clickCreateResource();
         ResourcesPage.clickSelectCategory();
@@ -417,7 +417,7 @@ describe('resources --', () => {
     });
 
 
-    xit('contextMenu/moveModal - move a resource', () => {
+    it('contextMenu/moveModal - move a resource', () => {
 
         browser.sleep(delays.shortRest * 2);
         ResourcesPage.clickOpenContextMenu('SE0');
@@ -435,7 +435,7 @@ describe('resources --', () => {
     });
 
 
-    xit('contextMenu/moveModal - move an operation to root level', () => {
+    it('contextMenu/moveModal - move an operation to root level', () => {
 
         NavbarPage.clickTab('project');
         browser.sleep(delays.shortRest * 2);

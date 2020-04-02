@@ -4,8 +4,8 @@ import {I18n} from '@ngx-translate/i18n-polyfill';
 import {isUndefinedOrEmpty, isBoolean, isArray, filter, Pair, update, compose, Mapping, on, is, isDefined,
     map, flatten, lookup, to, pairWith, conds, singleton, otherwise} from 'tsfun';
 import {flow as asyncFlow, map as asyncMap} from 'tsfun/async';
-import {FieldDocument,  ReadDatastore, Resource,
-    Dating, Dimension, Literature, ValOptionalEndVal} from 'idai-components-2';
+import {FieldDocument,  ReadDatastore, Resource, Dating, Dimension, Literature,
+    ValOptionalEndVal} from 'idai-components-2';
 import {RoutingService} from '../../routing-service';
 import {Name} from '../../../core/constants';
 import {UtilTranslations} from '../../../core/util/util-translations';
@@ -54,8 +54,7 @@ export class FieldsViewComponent implements OnChanges {
                 private routingService: RoutingService,
                 private decimalPipe: DecimalPipe,
                 private utilTranslations: UtilTranslations,
-                private i18n: I18n) {
-    }
+                private i18n: I18n) {}
 
 
     async ngOnChanges() {
@@ -66,7 +65,8 @@ export class FieldsViewComponent implements OnChanges {
             FieldsViewUtil.getGroups(this.resource.category, this.projectConfiguration.getCategoriesMap()),
             await this.putActualResourceRelationsIntoGroups(this.resource),
             this.putActualResourceFieldsIntoGroups(this.resource),
-            filter(shouldBeDisplayed));
+            filter(shouldBeDisplayed)
+        );
     }
 
 
@@ -95,12 +95,16 @@ export class FieldsViewComponent implements OnChanges {
     public getArrayItemLabel(arrayItem: any): string {
 
         if (arrayItem.begin || arrayItem.end) {
-            return Dating.generateLabel(arrayItem, (key: string) => this.utilTranslations.getTranslation(key));
+            return Dating.generateLabel(
+                arrayItem,
+                (key: string) => this.utilTranslations.getTranslation(key)
+            );
         } else if (arrayItem.inputUnit) {
             return Dimension.generateLabel(
                 arrayItem,
                 (value: any) => this.decimalPipe.transform(value),
-                (key: string) => this.utilTranslations.getTranslation(key));
+                (key: string) => this.utilTranslations.getTranslation(key)
+            );
         } else if (arrayItem.quotation) {
             return Literature.generateLabel(
                 arrayItem, (key: string) => this.utilTranslations.getTranslation(key)
@@ -114,12 +118,15 @@ export class FieldsViewComponent implements OnChanges {
     private putActualResourceFieldsIntoGroups(resource: Resource): Mapping {
 
         return map(
-                update(Group.FIELDS,
-                    compose(
-                        map(pairWith(compose(to(Named.NAME), lookup(resource)))),
-                        filter(on([1], isDefined)),
-                        map(this.convertToFieldsViewField.bind(this)),
-                        flatten)));
+            update(Group.FIELDS,
+                compose(
+                    map(pairWith(compose(to(Named.NAME), lookup(resource)))),
+                    filter(on([1], isDefined)),
+                    map(this.convertToFieldsViewField.bind(this)),
+                    flatten
+                )
+            )
+        );
     }
 
     
@@ -143,8 +150,11 @@ export class FieldsViewComponent implements OnChanges {
             label: field.label,
             value: isArray(fieldContent)
                 ? fieldContent.map((fieldContent: any) =>
-                    FieldsViewUtil.getValue(fieldContent, field.valuelist))
-                : FieldsViewUtil.getValue(fieldContent, field.valuelist),
+                    FieldsViewUtil.getValue(fieldContent, field.name, this.projectConfiguration,
+                        field.valuelist)
+                )
+                : FieldsViewUtil.getValue(fieldContent, field.name, this.projectConfiguration,
+                    field.valuelist),
             isArray: isArray(fieldContent)
         };
     }
@@ -162,8 +172,10 @@ export class FieldsViewComponent implements OnChanges {
             isArray: false
         };
 
-        if (isUndefinedOrEmpty(fieldContent[ValOptionalEndVal.ENDVALUE])) return [val];
-        else return [
+        if (isUndefinedOrEmpty(fieldContent[ValOptionalEndVal.ENDVALUE])) {
+            return [val];
+        } else {
+            return [
                 val,
                 {
                     label: field.label + ' ' + this.i18n({
@@ -172,7 +184,9 @@ export class FieldsViewComponent implements OnChanges {
                     }),
                     value: fieldContent[ValOptionalEndVal.ENDVALUE],
                     isArray: false
-                }];
+                }
+            ];
+        }
     }
 
 
@@ -188,7 +202,8 @@ export class FieldsViewComponent implements OnChanges {
                         label: relation.label,
                         targets: await this.datastore.getMultiple(resource.relations[relation.name])
                     }
-                }));
+                })
+            );
             return group;
         });
     }

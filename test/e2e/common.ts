@@ -28,12 +28,14 @@ function click(element) {
 
 function rightClick(element) {
 
+    browser.wait(EC.visibilityOf(element), delays.ECWaitTime);
     browser.actions().click(element, protractor.Button.RIGHT).perform();
 }
 
 
 function doubleClick(element) {
 
+    browser.wait(EC.visibilityOf(element), delays.ECWaitTime);
     browser.actions().doubleClick(element).perform();
 }
 

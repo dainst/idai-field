@@ -419,7 +419,6 @@ describe('resources --', () => {
 
     it('contextMenu/moveModal - move a resource', () => {
 
-        browser.sleep(delays.shortRest * 2);
         ResourcesPage.clickOpenContextMenu('SE0');
         ResourcesPage.clickContextMenuMoveButton();
         ResourcesPage.typeInMoveModalSearchBarInput('S2');
@@ -465,7 +464,6 @@ describe('resources --', () => {
 
     it('contextMenu/moveModal - show only category filter options for allowed parent categories in move modal', () => {
 
-        browser.sleep(delays.shortRest * 2);
         ResourcesPage.clickOpenContextMenu('SE0');
         ResourcesPage.clickContextMenuMoveButton();
         SearchBarPage.clickCategoryFilterButton('modal');
@@ -492,7 +490,6 @@ describe('resources --', () => {
 
     it('contextMenu/moveModal - do not suggest current parent resource', () => {
 
-        browser.sleep(delays.shortRest * 2);
         ResourcesPage.clickOpenContextMenu('SE0');
         ResourcesPage.clickContextMenuMoveButton();
         SearchBarPage.clickChooseCategoryFilter('trench', 'modal');

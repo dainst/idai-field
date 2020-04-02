@@ -19,7 +19,7 @@ describe('images/state --', () => {
     afterEach(done => common.resetConfigJson().then(done));
 
 
-    xit('autoselect last selected category filter after returning to images overview', () => {
+    it('autoselect last selected category filter after returning to images overview', () => {
 
         ImageOverviewPage.getAllCells().then(cells => expect(cells.length).toBe(2));
 
@@ -49,7 +49,7 @@ describe('images/state --', () => {
     });
 
 
-    xit('restore grid size after returning to images overview', () => {
+    it('restore grid size after returning to images overview', () => {
 
         ImageOverviewPage.clickIncreaseGridSizeButton();
         ImageOverviewPage.getGridSizeSliderValue().then(value => expect(value).toEqual('5'));

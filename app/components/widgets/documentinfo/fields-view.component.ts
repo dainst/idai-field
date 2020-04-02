@@ -190,7 +190,7 @@ export class FieldsViewComponent implements OnChanges {
                 {
                     label: field.label + ' ' + this.i18n({
                         id: 'widgets.fieldsView.range.to',
-                        value: field.label + '(bis)'
+                        value: '(bis)'
                     }),
                     value: fieldContent[ValOptionalEndVal.ENDVALUE],
                     isArray: false

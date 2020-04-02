@@ -90,7 +90,7 @@ export module FieldsViewUtil {
     );
 
 
-    export function getGroups(category: string, categories: Map<Category>) { // TODO review
+    export function getGroups(category: string, categories: Map<Category>) {
 
         return flow(category,
             lookup(categories),

@@ -15,8 +15,8 @@ export module SortUtil {
      */
     export function alnumCompare(a: string, b: string): number {
 
-        let arrayA = makeAlNumArray(a);
-        let arrayB = makeAlNumArray(b);
+        const arrayA = makeAlNumArray(a);
+        const arrayB = makeAlNumArray(b);
 
         for (let i = 0; i < arrayA.length; i++) {
             // a is longer than b
@@ -59,10 +59,8 @@ export module SortUtil {
      */
     export function compare(a: any, b: any): number {
 
-        if (a > b)
-            return 1;
-        if (a < b)
-            return -1;
+        if (a > b) return 1;
+        if (a < b) return -1;
         return 0;
     }
 

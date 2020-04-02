@@ -140,6 +140,3 @@ export function toTuple(...keys: string[]) {
 
     return <T>(o: Map<T>) => keys.map(k => to(k)(o));
 }
-
-
-

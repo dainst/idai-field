@@ -156,11 +156,13 @@ export class FieldsViewComponent implements OnChanges {
             label: field.label,
             value: isArray(fieldContent)
                 ? fieldContent.map((fieldContent: any) =>
-                    FieldsViewUtil.getValue(fieldContent, field.name, this.projectConfiguration,
-                        field.valuelist)
+                    FieldsViewUtil.getValue(
+                        fieldContent, field.name, this.projectConfiguration, field.valuelist
+                    )
                 )
-                : FieldsViewUtil.getValue(fieldContent, field.name, this.projectConfiguration,
-                    field.valuelist),
+                : FieldsViewUtil.getValue(
+                    fieldContent, field.name, this.projectConfiguration, field.valuelist
+                ),
             isArray: isArray(fieldContent)
         };
     }

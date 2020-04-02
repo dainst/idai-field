@@ -12,14 +12,14 @@ describe('images/state --', () => {
 
     beforeEach(() => {
 
-        ImageOverviewPage.getAndWaitForImageCells()
+        ImageOverviewPage.getAndWaitForImageCells();
     });
 
 
     afterEach(done => common.resetConfigJson().then(done));
 
 
-    it('autoselect last selected category filter after returning to images overview', () => {
+    it('autoselect last selected category filter after returning to image overview', () => {
 
         ImageOverviewPage.getAllCells().then(cells => expect(cells.length).toBe(2));
 
@@ -29,12 +29,14 @@ describe('images/state --', () => {
         NavbarPage.clickCloseNonResourcesTab();
         MenuPage.navigateToImages();
 
-        SearchBarPage.getSelectedCategoryFilterCharacter('images').then(value => expect(value).toEqual('Z'));
+        SearchBarPage.getSelectedCategoryFilterCharacter('images').then(value => {
+            expect(value).toEqual('Z');
+        });
         ImageOverviewPage.getAllCells().then(cells => expect(cells.length).toBe(1));
     });
 
 
-    it('restore query string after returning to images overview', () => {
+    it('restore query string after returning to image overview', () => {
 
         ImageOverviewPage.getAllCells().then(cells => expect(cells.length).toBe(2));
 
@@ -44,19 +46,25 @@ describe('images/state --', () => {
         NavbarPage.clickCloseNonResourcesTab();
         MenuPage.navigateToImages();
 
-        SearchBarPage.getSearchBarInputFieldValue().then(value => expect(value).toEqual('Layer 1'));
+        SearchBarPage.getSearchBarInputFieldValue().then(value => {
+            expect(value).toEqual('Layer 1');
+        });
         ImageOverviewPage.getAllCells().then(cells => expect(cells.length).toBe(1));
     });
 
 
-    it('restore grid size after returning to images overview', () => {
+    it('restore grid size after returning to image overview', () => {
 
         ImageOverviewPage.clickIncreaseGridSizeButton();
-        ImageOverviewPage.getGridSizeSliderValue().then(value => expect(value).toEqual('5'));
+        ImageOverviewPage.getGridSizeSliderValue().then(value => {
+            expect(value).toEqual('5');
+        });
 
         NavbarPage.clickCloseNonResourcesTab();
         MenuPage.navigateToImages();
 
-        ImageOverviewPage.getGridSizeSliderValue().then(value => expect(value).toEqual('5'));
+        ImageOverviewPage.getGridSizeSliderValue().then(value => {
+            expect(value).toEqual('5');
+        });
     });
 });

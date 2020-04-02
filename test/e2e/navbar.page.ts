@@ -17,7 +17,7 @@ export class NavbarPage {
 
     public static clickCloseNonResourcesTab() {
 
-        return common.click(element(by.css('#non-resources-tab .mdi')));
+        return common.click(element(by.css('#non-resources-tab .btn')));
     }
 
 

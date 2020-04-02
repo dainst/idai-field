@@ -33,6 +33,12 @@ export class ProjectPage {
     }
 
 
+    public static clickCloseProjectsModal() {
+
+        common.click(element(by.id('close-projects-modal-button')));
+    }
+
+
     // type in
 
     public static typeInProjectName(projectName) {

@@ -63,8 +63,12 @@ describe('project --', function() {
         ResourcesPage.get();
 
         ProjectPage.clickProjectsBadge();
-        ProjectPage.getProjectNameOptionText(0).then(text => { expect(text).toContain('abc') });
-        ProjectPage.getProjectNameOptionText(1).then(text => { expect(text).toContain('test') });
+        ProjectPage.getProjectNameOptionText(0).then(text => {
+            expect(text).toContain('abc');
+        });
+        ProjectPage.getProjectNameOptionText(1).then(text => {
+            expect(text).toContain('test');
+        });
 
         ProjectPage.clickDeleteProject();
         browser.sleep(delays.shortRest);
@@ -82,7 +86,10 @@ describe('project --', function() {
         browser.wait(EC.visibilityOf(ResourcesPage.getListItemEl('SE0')), delays.ECWaitTime);
 
         ProjectPage.clickProjectsBadge();
-        ProjectPage.getProjectNameOptionText(0).then(t => { expect(t).toContain('test') });
+        ProjectPage.getProjectNameOptionText(0).then(t => {
+            expect(t).toContain('test');
+        });
+        ProjectPage.clickCloseProjectsModal();
     });
 
 
@@ -102,11 +109,15 @@ describe('project --', function() {
         browser.sleep(200);
 
         ResourcesPage.performCreateResource('abc_t1', 'trench');
-        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('abc_t1'));
+        ResourcesPage.getListItemIdentifierText(0).then(text => {
+            expect(text).toEqual('abc_t1');
+        });
 
         ProjectPage.clickProjectsBadge();
 
-        ProjectPage.getProjectNameOptionText(1).then(text => expect(text).toContain('test'));
+        ProjectPage.getProjectNameOptionText(1).then(text => {
+            expect(text).toContain('test');
+        });
         NavbarPage.clickSelectProject(1);
         ResourcesPage.get();
 
@@ -121,15 +132,21 @@ describe('project --', function() {
         SearchBarPage.typeInSearchField('SE');
         browser.sleep(delays.shortRest * 5);
 
-        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('SE0'));
+        ResourcesPage.getListItemIdentifierText(0).then(text => {
+            expect(text).toEqual('SE0');
+        });
 
         ProjectPage.clickProjectsBadge();
 
-        ProjectPage.getProjectNameOptionText(1).then(text => expect(text).toContain('abc'));
+        ProjectPage.getProjectNameOptionText(1).then(text => {
+            expect(text).toContain('abc');
+        });
         NavbarPage.clickSelectProject(1);
 
         ResourcesPage.get();
         browser.sleep(delays.shortRest * 10);
-        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('abc_t1'));
+        ResourcesPage.getListItemIdentifierText(0).then(text => {
+            expect(text).toEqual('abc_t1');
+        });
     });
 });

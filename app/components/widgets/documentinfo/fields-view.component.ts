@@ -179,7 +179,9 @@ export class FieldsViewComponent implements OnChanges {
         };
 
         if (isUndefinedOrEmpty(fieldContent[ValOptionalEndVal.ENDVALUE])) {
-            return [val];
+            return [
+                val
+            ];
         } else {
             return [
                 val,

@@ -33,14 +33,12 @@ export class ImageOverviewTaskbarComponent {
     public clearSelection = () => this.imageOverviewFacade.clearSelection();
 
 
-    constructor(
-        public viewFacade: ViewFacade,
-        private modalService: NgbModal,
-        private messages: Messages,
-        private imageOverviewFacade: ImageOverviewFacade,
-        private persistenceHelper: PersistenceHelper,
-        private imageOverviewComponent: ImageOverviewComponent
-    ) {}
+    constructor(public viewFacade: ViewFacade,
+                private modalService: NgbModal,
+                private messages: Messages,
+                private imageOverviewFacade: ImageOverviewFacade,
+                private persistenceHelper: PersistenceHelper,
+                private imageOverviewComponent: ImageOverviewComponent) {}
 
 
     public onKeyDown(event: KeyboardEvent) {
@@ -123,10 +121,10 @@ export class ImageOverviewTaskbarComponent {
             let m = msgWithParams;
             if (msgWithParams.length > 0) {
                 if (msgWithParams[0] === PersistenceHelperErrors.IMAGESTORE_ERROR_DELETE) {
-                    m = M.IMAGESTORE_ERROR_DELETE;
+                    m = [M.IMAGESTORE_ERROR_DELETE];
                 }
                 if (msgWithParams[0] === PersistenceHelperErrors.IMAGESTORE_ERROR_INVALID_PATH_DELETE) {
-                    m = M.IMAGESTORE_ERROR_INVALID_PATH_DELETE;
+                    m = [M.IMAGESTORE_ERROR_INVALID_PATH_DELETE];
                 }
             }
             this.messages.add(m);

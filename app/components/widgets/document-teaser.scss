@@ -25,6 +25,10 @@
     color: #111;
     -webkit-line-clamp: 1;
     font-size: $font-size-bigger;
+
+    &.new {
+      font-style: italic;
+    }
   }
 
   .subtitle {

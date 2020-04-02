@@ -8,6 +8,7 @@ import {FieldDefinition} from '../../../core/configuration/model/field-definitio
 import {RelationDefinition} from '../../../core/configuration/model/relation-definition';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
 import {Group} from '../../../core/configuration/model/group';
+import {TypeRelations} from '../../../core/model/relation-constants';
 
 
 @Component({
@@ -65,7 +66,8 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
 
     public getRelationDefinitions(groupName: string): Array<RelationDefinition> {
 
-        return (this.groups.find((group: Group) => group.name === groupName) as any).relations;
+        return (this.groups.find((group: Group) => group.name === groupName) as any).relations
+            .filter((relation: RelationDefinition) => relation.name !== TypeRelations.INSTANCEOF);
     }
 
 
@@ -100,7 +102,8 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
 
     private focusFirstInputElement() {
 
-        const inputElements: Array<HTMLElement> = this.elementRef.nativeElement.getElementsByTagName('input');
+        const inputElements: Array<HTMLElement> = this.elementRef.nativeElement
+            .getElementsByTagName('input');
         if (inputElements.length > 0) inputElements[0].focus();
     }
 }

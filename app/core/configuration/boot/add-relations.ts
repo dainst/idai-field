@@ -15,7 +15,6 @@ export function addRelations(extraRelations: Array<RelationDefinition>) {
         if (!configuration.relations) return;
 
         for (let extraRelation of extraRelations) {
-
             expandInherits(configuration, extraRelation, RelationDefinition.DOMAIN);
 
             configuration.relations

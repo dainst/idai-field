@@ -4,7 +4,7 @@ import {LibraryCategoryDefinition} from '../model/library-category-definition';
 import {CustomCategoryDefinition} from '../model/custom-category-definition';
 import {ConfigurationErrors} from './configuration-errors';
 import {ValuelistDefinition} from '../model/valuelist-definition';
-import {debugId, withDissoc} from '../../util/utils';
+import {withDissoc} from '../../util/utils';
 import {TransientFieldDefinition, TransientCategoryDefinition} from '../model/transient-category-definition';
 import {BuiltinCategoryDefinition} from '../model/builtin-category-definition';
 import {mergeBuiltInWithLibraryCategories} from './merge-builtin-with-library-categories';
@@ -26,7 +26,6 @@ import {Category} from '../model/category';
 import {Group, Groups} from '../model/group';
 import {mapToNamedArray, sortNamedArray} from '../../util/named';
 import {RelationsUtil} from '../relations-utils';
-import {TypeRelations} from '../../model/relation-constants';
 import {CategoryDefinition} from '../model/category-definition';
 
 
@@ -109,9 +108,8 @@ function putRelationsIntoGroups(relations: Array<RelationDefinition>) {
         const relDefs = RelationsUtil.getRelationDefinitions(relations, category.name);
 
         for (let relation of relDefs) {
-
             const groupName: string|undefined = Groups.getGroupNameForRelation(relation.name);
-            if (!groupName || relation.name === TypeRelations.INSTANCEOF) continue;
+            if (!groupName) continue;
 
             let group = (category.groups as any)[groupName];
             if (!group) {

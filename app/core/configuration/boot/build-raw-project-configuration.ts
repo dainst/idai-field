@@ -24,7 +24,7 @@ import {makeCategoriesMap} from './make-categories-map';
 import {RawProjectConfiguration} from '../project-configuration';
 import {Category} from '../model/category';
 import {Group, Groups} from '../model/group';
-import {mapToNamedArray, sortNamedArray} from '../../util/named';
+import {Labelled, mapToNamedArray, sortNamedArray} from '../../util/named';
 import {RelationsUtil} from '../relations-utils';
 import {CategoryDefinition} from '../model/category-definition';
 
@@ -161,7 +161,7 @@ function setGroupLabels(groupLabels: Map<string>) {
             Category.GROUPS,
             compose(
                 map(pairWith(groupLabel)),
-                map(([group, label]: Pair<Group, string>) => assoc(Group.LABEL, label)(group as any))))(category);
+                map(([group, label]: Pair<Group, string>) => assoc(Labelled.LABEL, label)(group as any))))(category);
     });
 }
 

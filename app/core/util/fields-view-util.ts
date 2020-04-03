@@ -7,13 +7,13 @@ import {RelationDefinition} from '../configuration/model/relation-definition';
 import {HierarchicalRelations} from '../model/relation-constants';
 import {Labelled, Named} from './named';
 import {Category} from '../configuration/model/category';
-import {Groups} from '../configuration/model/group';
+import {BaseGroup, Groups} from '../configuration/model/group';
 import {Filter} from './utils';
 import {FieldDefinition} from '../configuration/model/field-definition';
 import {ProjectConfiguration} from '../configuration/project-configuration';
 
 
-export interface FieldsViewGroup extends Named, Labelled {
+export interface FieldsViewGroup extends BaseGroup {
 
     shown: boolean;
     relations: Array<FieldsViewRelation>;

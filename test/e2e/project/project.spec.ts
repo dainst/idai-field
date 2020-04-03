@@ -28,7 +28,8 @@ describe('project --', function() {
 
     beforeEach(() => {
 
-        return ResourcesPage.get('project');
+        ResourcesPage.get('project');
+        browser.sleep(delays.shortRest * 5);
     });
 
 

@@ -150,7 +150,7 @@ export class DoceditPage {
 
     public static clickCheckbox(fieldName: string, checkboxIndex: number) {
 
-        browser.wait(EC.visibilityOf(element(by.css('#edit-form-element-' + fieldName + ' .checkbox'))),
+        browser.wait(EC.visibilityOf(element(by.css('#edit-form-element-' + fieldName))),
             delays.ECWaitTime);
         element.all(by.css('#edit-form-element-' + fieldName + ' .checkbox')).get(checkboxIndex).click();
     };

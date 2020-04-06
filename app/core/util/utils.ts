@@ -3,7 +3,6 @@ import {copy, Pair, reduce, Map, to, identity, isDefined, path, isString, getOn,
 
 // @author Daniel de Oliveira
 
-export function longerThan(than: string) { return (what: string) => what.length > than.length } // TODO move to tsfun, for Lists
 
 export function isEmptyString(a: any) { return typeof a === 'string' && a === '' }
 

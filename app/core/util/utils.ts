@@ -22,7 +22,7 @@ export function debugId<T>(v: T): T {
 }
 
 
-export function toArray(token: any) { // TODO use singleton
+export function toArray(token: any) {
 
     return Array.from(token);
 }

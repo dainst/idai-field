@@ -41,6 +41,7 @@ const VALID_FIELD_PROPERTIES = ['inputType', 'positionValues'];
 export module CustomCategoryDefinition {
 
     export const VALUELISTS = 'valuelists';
+    export const PARENT = 'parent';
 
     export function makeAssertIsValid(builtinCategories: string[], libraryCategories: string[]) {
 
@@ -50,20 +51,28 @@ export module CustomCategoryDefinition {
                 .filter(isNot(includedIn(VALID_CATEGORY_PROPERTIES)))
                 .map(pairWith(val(ConfigurationErrors.ILLEGAL_CATEGORY_PROPERTY)))
                 .map(swap)
-                .forEach(e => {throw e}); // TODO review
+                .forEach(throws());
 
             if (!builtinCategories.includes(typeName) && !libraryCategories.includes(typeName)) {
                 if (!category.parent) {
-                    throw [ConfigurationErrors.MISSING_CATEGORY_PROPERTY, 'parent', typeName, 'must be set for new categories'];
+                    throw [
+                        ConfigurationErrors.MISSING_CATEGORY_PROPERTY,
+                        CustomCategoryDefinition.PARENT,
+                        typeName,
+                        'must be set for new categories'];
                 }
             } else {
                 if (category.parent) {
-                    throw [ConfigurationErrors.ILLEGAL_CATEGORY_PROPERTY, 'parent', typeName, 'must not be set if not a new category']
+                    throw [
+                        ConfigurationErrors.ILLEGAL_CATEGORY_PROPERTY,
+                        CustomCategoryDefinition.PARENT,
+                        typeName,
+                        'must not be set if not a new category']
                 }
             }
 
             if (!category.fields) {
-                throw [ConfigurationErrors.MISSING_CATEGORY_PROPERTY, 'fields', category];
+                throw [ConfigurationErrors.MISSING_CATEGORY_PROPERTY, BaseCategoryDefinition.FIELDS, category];
             }
             assertFieldsAreValid(category.fields, VALID_FIELD_PROPERTIES, 'custom');
         }

@@ -15,10 +15,20 @@ export function isEmptyString(a: any) { return typeof a === 'string' && a === ''
 
 export function typeOf(v: any) { return typeof v }
 
+
 export function debugId<T>(v: T): T {
 
     console.log('debug:', v);
     return v;
+}
+
+export function debugId1<T>(msg: string) {
+
+    return (v: T): T => {
+
+        console.log(msg, v);
+        return v;
+    }
 }
 
 

@@ -1,8 +1,9 @@
-import {keys, isNot, includedIn, Map} from 'tsfun';
+import {keys, isNot, includedIn, Map, pairWith, val, swap, throws} from 'tsfun';
 import {assertFieldsAreValid} from '../boot/assert-fields-are-valid';
 import {ConfigurationErrors} from '../boot/configuration-errors';
 import {BaseFieldDefinition, BaseCategoryDefinition} from './base-category-definition';
 import {Valuelists} from './valuelist-definition';
+
 
 /**
  * CategoryDefinition, as provided by users.
@@ -47,7 +48,9 @@ export module CustomCategoryDefinition {
 
             keys(category)
                 .filter(isNot(includedIn(VALID_CATEGORY_PROPERTIES)))
-                .forEach(key => { throw [ConfigurationErrors.ILLEGAL_CATEGORY_PROPERTY, key] }); // TODO use pairWith, swap, throws
+                .map(pairWith(val(ConfigurationErrors.ILLEGAL_CATEGORY_PROPERTY)))
+                .map(swap)
+                .forEach(e => {throw e}); // TODO review
 
             if (!builtinCategories.includes(typeName) && !libraryCategories.includes(typeName)) {
                 if (!category.parent) {

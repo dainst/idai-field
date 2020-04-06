@@ -1,7 +1,8 @@
-import {defined, dropRightWhile, isArray, isEmpty, isAssociative, isNot, keysAndValues, copy, Map,
-    isObject} from 'tsfun';
+import {
+    defined, dropRightWhile, isArray, isEmpty, isAssociative, isNot, keysAndValues, copy, Map,
+    isObject, and, isString
+} from 'tsfun';
 import {ImportErrors} from './import-errors';
-import {isEmptyString} from '../../util/utils';
 
 
 /**
@@ -9,9 +10,9 @@ import {isEmptyString} from '../../util/utils';
  *
  * @author Daniel de Oliveira
  */
-export function removeNullProperties(struct: Map<any>): Map<any>|undefined;
+export function removeNullProperties(struct: Map): Map|undefined;
 export function removeNullProperties(struct: Array<any>): Array<any>|undefined;
-export function removeNullProperties(struct: Map<any>|Array<any>): Map<any>|Array<any>|undefined {
+export function removeNullProperties(struct: Map|Array<any>): Map|Array<any>|undefined {
 
     if (isEmpty(struct)) throw Error("illegal parameter. empty collection given to removeNullProperties");
     let struct_ = copy(struct) as any;
@@ -19,7 +20,7 @@ export function removeNullProperties(struct: Map<any>|Array<any>): Map<any>|Arra
     keysAndValues(struct_).forEach(([fieldName, originalFieldValue]: any) => {
 
         if (isObject(struct) && originalFieldValue === undefined) throw "unexpected 'undefined' value found in object parameter in removeNullProperties()";
-        if (isEmptyString(originalFieldValue)) throw [ImportErrors.MUST_NOT_BE_EMPTY_STRING];
+        if (and(isString, isEmpty)(originalFieldValue)) throw [ImportErrors.MUST_NOT_BE_EMPTY_STRING];
 
         if (isAssociative(originalFieldValue)) {
             struct_[fieldName] = removeNullProperties(originalFieldValue);

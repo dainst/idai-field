@@ -1,10 +1,8 @@
-import {copy, Pair, reduce, Map, to, identity, isDefined, path, isString, getOn, dissoc} from 'tsfun';
+import {copy, Pair, reduce, Map, to, identity, isDefined, path, isString, getOn, dissoc, and, isEmpty} from 'tsfun';
 
 
 // @author Daniel de Oliveira
 
-
-export function isEmptyString(a: any) { return typeof a === 'string' && a === '' }
 
 export function typeOf(v: any) { return typeof v }
 

@@ -65,10 +65,12 @@ export class FieldsViewPage {
 
     public static getFields(cardIndex) {
 
-        const elDescriptor = 'fields-view div:nth-child(' + (cardIndex + 1) + ') .card-body > div';
+        const fieldsViewElementDescriptor = 'fields-view';
+        const elementsDescriptor = fieldsViewElementDescriptor + ' div:nth-child(' + (cardIndex + 1)
+            + ') .card-body > div';
 
-        browser.wait(EC.visibilityOf(element(by.css(elDescriptor))), delays.ECWaitTime);
-        return element.all(by.css(elDescriptor))
+        browser.wait(EC.visibilityOf(element(by.css(fieldsViewElementDescriptor))), delays.ECWaitTime);
+        return element.all(by.css(elementsDescriptor));
     };
 
 

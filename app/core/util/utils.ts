@@ -1,15 +1,15 @@
 import {copy, Pair, reduce, Map, to, identity, isDefined, path, isString, getOn, dissoc} from 'tsfun';
-import {Mapping} from 'tsfun/src/type';
 
 
 // @author Daniel de Oliveira
 
-export type Filter<T> = Mapping<T>; // TODO move to tsfun; a Filter is a Mapping, but with only one generic type argument
 
-export const LEFT = 0;  // TODO move to tsfun
+// TODO move to tsfun
+export const LEFT = 0;
 export const RIGHT = 1;
-
 export function longerThan(than: string) { return (what: string) => what.length > than.length }
+// -
+
 
 export function isEmptyString(a: any) { return typeof a === 'string' && a === '' }
 
@@ -22,7 +22,7 @@ export function debugId<T>(v: T): T {
 }
 
 
-export function toArray(token: any) {
+export function toArray(token: any) { // TODO use singleton
 
     return Array.from(token);
 }

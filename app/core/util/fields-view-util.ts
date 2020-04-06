@@ -1,14 +1,13 @@
 import {FieldResource, Resource} from 'idai-components-2/index';
 import {ValuelistDefinition} from '../configuration/model/valuelist-definition';
 import {ValuelistUtil} from './valuelist-util';
-import {assoc, compose, flow, and, includedIn, isNot, filter,
+import {assoc, compose, flow, and, includedIn, isNot, filter, Filter,
     isString, lookup, map, Map, on, to, undefinedOrEmpty, Predicate, or, is, empty} from 'tsfun';
 import {RelationDefinition} from '../configuration/model/relation-definition';
 import {HierarchicalRelations} from '../model/relation-constants';
 import {Labelled, Named} from './named';
 import {Category} from '../configuration/model/category';
 import {BaseGroup, Groups} from '../configuration/model/group';
-import {Filter} from './utils';
 import {FieldDefinition} from '../configuration/model/field-definition';
 import {ProjectConfiguration} from '../configuration/project-configuration';
 

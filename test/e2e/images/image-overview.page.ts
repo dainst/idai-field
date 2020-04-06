@@ -16,14 +16,15 @@ export module ImageOverviewPage {
 
     export function get() {
 
-        browser.get('#/images');
+        return browser.get('#/images');
     }
 
 
     export function getAndWaitForImageCells() {
 
-        ImageOverviewPage.get();
-        ImageOverviewPage.waitForCells();
+        return ImageOverviewPage.get().then(() => {
+            return ImageOverviewPage.waitForCells();
+        });
     }
 
 

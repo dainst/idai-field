@@ -159,11 +159,13 @@ describe('map --', function() {
     }
 
 
-    beforeAll(() => {
+    beforeAll(done => {
 
-        ResourcesPage.get();
-        browser.sleep(delays.shortRest * 4);
-        ResourcesPage.clickHierarchyButton('S1');
+        ResourcesPage.get().then(() => {
+            browser.sleep(delays.shortRest * 4);
+            ResourcesPage.clickHierarchyButton('S1');
+            done();
+        });
     });
 
 

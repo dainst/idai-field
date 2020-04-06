@@ -22,9 +22,9 @@ describe('images/upload --', () => {
     };
 
 
-    beforeEach(() => {
+    beforeEach(done => {
 
-        ImageOverviewPage.getAndWaitForImageCells();
+        ImageOverviewPage.getAndWaitForImageCells().then(() => done());
     });
 
 

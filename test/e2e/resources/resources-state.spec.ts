@@ -32,9 +32,11 @@ describe('resources/state --', function() {
     let index = 0;
 
 
-    beforeAll(() => ResourcesPage.get('project'));
+    beforeAll(done => {
 
-    beforeAll(() => removeResourcesStateFile());
+        removeResourcesStateFile();
+        ResourcesPage.get('project').then(() => done());
+    });
 
 
     beforeEach(async done => {

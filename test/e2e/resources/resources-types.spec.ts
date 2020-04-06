@@ -22,12 +22,14 @@ describe('resources/types --', () => {
     let index = 0;
 
 
-    beforeAll(() => {
+    beforeAll(done => {
 
-        SettingsPage.get();
-        browser.sleep(delays.shortRest);
-        MenuPage.navigateToTypes();
-        browser.sleep(delays.shortRest);
+        SettingsPage.get().then(() => {
+            browser.sleep(delays.shortRest);
+            MenuPage.navigateToTypes();
+            browser.sleep(delays.shortRest);
+            done();
+        });
     });
 
 

@@ -25,6 +25,12 @@ describe('settings --', function() {
     });
 
 
+    beforeEach(done => {
+
+        SettingsPage.get().then(() => done());
+    });
+
+
     afterEach(done => {
 
         common.resetConfigJson().then(done);
@@ -33,7 +39,6 @@ describe('settings --', function() {
 
     it('save syncing settings to config file and load them after restart', done => {
 
-        SettingsPage.get();
         common.typeIn(SettingsPage.getUserNameInput(), 'settings_test_user');
         SettingsPage.clickSaveSettingsButton();
         NavbarPage.clickCloseNonResourcesTab();
@@ -41,8 +46,9 @@ describe('settings --', function() {
         NavbarPage.clickTab('project')
             .then(() => {
                 browser.sleep(5000);
-                return SettingsPage.get().then(() => browser.sleep(2000));
-            }).then(() => SettingsPage.getUserName())
+                return SettingsPage.get();
+            }).then(() => browser.sleep(2000))
+            .then(() => SettingsPage.getUserName())
             .then(username => {
                 expect(username).toEqual('settings_test_user');
                 done();
@@ -55,7 +61,6 @@ describe('settings --', function() {
 
     it('show warnings if an invalid imagestore path is set', () => {
 
-        SettingsPage.get();
         common.typeIn(SettingsPage.getImagestorePathInput(), '/invalid/path/to/imagestore');
         SettingsPage.clickSaveSettingsButton();
         NavbarPage.awaitAlert('Das Bilderverzeichnis konnte nicht gefunden werden', false);

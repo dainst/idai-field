@@ -10,9 +10,9 @@ const common = require('../common');
  */
 describe('images/state --', () => {
 
-    beforeEach(() => {
+    beforeEach(done => {
 
-        ImageOverviewPage.getAndWaitForImageCells();
+        ImageOverviewPage.getAndWaitForImageCells().then(() => done());
     });
 
 

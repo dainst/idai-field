@@ -15,13 +15,16 @@ describe('resources/list --', () => {
     let index = 0;
 
 
-    beforeAll(function() {
-        ResourcesPage.get();
-        browser.sleep(delays.shortRest);
-        ResourcesPage.clickHierarchyButton('S1');
-        browser.sleep(delays.shortRest);
-        ResourcesPage.clickListModeButton();
-        browser.sleep(delays.shortRest);
+    beforeAll(done => {
+
+        ResourcesPage.get().then(() => {
+            browser.sleep(delays.shortRest);
+            ResourcesPage.clickHierarchyButton('S1');
+            browser.sleep(delays.shortRest);
+            ResourcesPage.clickListModeButton();
+            browser.sleep(delays.shortRest);
+            done();
+        });
     });
 
 

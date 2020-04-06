@@ -17,9 +17,9 @@ describe('import --', function() {
     let index = 0;
 
 
-    beforeAll(function() {
+    beforeAll(done => {
 
-        ImportPage.get();
+        ImportPage.get().then(() => done());
     });
 
 

@@ -53,10 +53,12 @@ describe('images --', function() {
     }
 
 
-    beforeAll(() => {
+    beforeAll(done => {
 
-        ImageOverviewPage.getAndWaitForImageCells();
-        browser.sleep(delays.shortRest * 3);
+        ImageOverviewPage.getAndWaitForImageCells().then(() => {
+            browser.sleep(delays.shortRest * 3);
+            done();
+        });
     });
 
 

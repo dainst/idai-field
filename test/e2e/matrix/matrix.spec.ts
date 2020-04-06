@@ -18,14 +18,16 @@ describe('matrix --', () => {
     let i = 0;
 
 
-    beforeAll(() => {
+    beforeAll(done => {
 
-        SettingsPage.get();
-        browser.sleep(delays.shortRest);
-        MenuPage.navigateToMatrix();
-        browser.sleep(delays.shortRest);
-        MatrixPage.performSelectOperation(1);
-        browser.sleep(delays.shortRest);
+        SettingsPage.get().then(() => {
+            browser.sleep(delays.shortRest);
+            MenuPage.navigateToMatrix();
+            browser.sleep(delays.shortRest);
+            MatrixPage.performSelectOperation(1);
+            browser.sleep(delays.shortRest);
+            done();
+        });
     });
 
 

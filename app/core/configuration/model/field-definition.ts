@@ -4,7 +4,7 @@ import {ValuelistDefinition} from './valuelist-definition';
 /**
  * @author Daniel de Oliveira
  */
-export interface FieldDefinition { // TODO rename to Field (and RelationDefinition to Relation, for consistency with Category and Group
+export interface FieldDefinition {
 
     name: string;
     inputType: FieldDefinition.InputType,
@@ -20,11 +20,7 @@ export interface FieldDefinition { // TODO rename to Field (and RelationDefiniti
     fulltextIndexed?: true;
     constraintIndexed?: true;
     allowOnlyValuesOfParent?: true;
-    source?: // TODO make non-optional
-        'builtin'
-        |'library'
-        |'custom'
-        |'common';
+    source?: 'builtin' |'library' |'custom' |'common';
 }
 
 

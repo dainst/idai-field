@@ -4,6 +4,7 @@ import {SettingsService} from '../../core/settings/settings-service';
 import {Settings} from '../../core/settings/settings';
 import {M} from '../messages/m';
 import {TabManager} from '../../core/tabs/tab-manager';
+import OpenDialogReturnValue = Electron.OpenDialogReturnValue;
 
 const address = require('address');
 const remote = require('electron').remote;
@@ -72,6 +73,19 @@ export class SettingsComponent implements OnInit {
         }
 
         await this.handleSaveSuccess(localeChanged);
+    }
+
+
+    public async chooseImagestoreDirectory() {
+
+        const result: OpenDialogReturnValue = await remote.dialog.showOpenDialog(
+            remote.getCurrentWindow(),
+            { properties: ['openDirectory'] }
+        );
+
+        if (result && result.filePaths.length > 0) {
+            this.settings.imagestorePath = result.filePaths[0];
+        }
     }
 
 

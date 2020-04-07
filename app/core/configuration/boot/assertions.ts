@@ -22,12 +22,12 @@ export module Assertions {
         assertSubtypingIsLegal(builtInCategories, customCategories);
         assertNoCommonFieldInputTypeChanges(commonFields, libraryCategories);
         assertNoCommonFieldInputTypeChanges(commonFields, customCategories);
-        assertNoCommonFieldWithValuelistFromProjectFieldGetsnewValuelist(commonFields, libraryCategories, customCategories);
+        assertNoCommonFieldWithValuelistFromProjectFieldGetsNewValuelist(commonFields, libraryCategories, customCategories);
         assertCategoryNamesConsistent(libraryCategories);
     }
 
 
-    function assertNoCommonFieldWithValuelistFromProjectFieldGetsnewValuelist(commonFields: Map<any>,
+    function assertNoCommonFieldWithValuelistFromProjectFieldGetsNewValuelist(commonFields: Map<any>,
                                                                               libraryCategories: Map<LibraryCategoryDefinition>,
                                                                               customCategories: Map<CustomCategoryDefinition>) {
 

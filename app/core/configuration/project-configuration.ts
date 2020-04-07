@@ -204,7 +204,6 @@ export class ProjectConfiguration {
     }
 
 
-    // TODO reimplement; test
     private getCategoryAndSubcategories_(supercategoryName: string): Map<Category> {
 
         const projectCategoriesMap: Map<Category> = this.getCategoriesMap();

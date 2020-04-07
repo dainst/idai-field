@@ -4,6 +4,7 @@ import {IndexItem} from './index-item';
 import {Category} from '../../configuration/model/category';
 import {FieldDefinition} from '../../configuration/model/field-definition';
 import {clone} from '../../util/object-util';
+import {Named} from '../../util/named';
 
 
 export interface IndexDefinition {
@@ -326,27 +327,45 @@ export module ConstraintIndex {
     function makeIndexDefinitions(field: FieldDefinition)
             : Array<{ name: string, indexDefinition: IndexDefinition }> {
 
-        return [
-            makeIndexDefinition(field, getIndexType(field)),
-            makeIndexDefinition(field, 'exist')
-        ];
+        return flatten([
+            makeIndexDefinitionForField(field, getIndexType(field)),
+            makeIndexDefinitionForField(field, 'exist')
+        ]);
     }
 
 
-    function makeIndexDefinition(field: FieldDefinition, indexType: string)
-            : { name: string, indexDefinition: IndexDefinition } {
+    function makeIndexDefinitionForField(field: FieldDefinition, indexType: string)
+            : Array<{ name: string, indexDefinition: IndexDefinition }> {
 
-        return {
+        if (field.inputType === FieldDefinition.InputType.DROPDOWNRANGE) {
+            return [
+                {
+                    name: field.name + '.value'+ ':' + indexType,
+                    indexDefinition: {
+                        path: 'resource.' + field.name + '.value',
+                        type: indexType
+                    }
+                },
+                {
+                    name: field.name + '.endValue' + ':' + indexType,
+                    indexDefinition: {
+                        path: 'resource.' + field.name + '.endValue',
+                        type: indexType
+                    }
+                }];
+        }
+
+        return [{
             name: field.name + ':' + indexType,
             indexDefinition: {
                 path: 'resource.' + field.name,
                 type: indexType
             }
-        };
+        }];
     }
 
 
-    function combine(indexDefinitionsFromConfiguration // TODO make more general
+    function combine(indexDefinitionsFromConfiguration
                                : Array<{ name: string, indexDefinition: IndexDefinition }>,
                      defaultIndexDefinitions: { [name: string]: IndexDefinition }) {
 

@@ -2,6 +2,8 @@ import {to} from 'tsfun';
 import {ConstraintIndex} from '../../../../../app/core/datastore/index/constraint-index';
 import {IndexItem} from '../../../../../app/core/datastore/index/index-item';
 import {doc} from '../../../test-helpers';
+import {Category} from '../../../../../app/core/configuration/model/category';
+import {FieldDefinition} from '../../../../../app/core/configuration/model/field-definition';
 
 
 /**
@@ -522,6 +524,32 @@ describe('ConstraintIndex', () => {
 
         expect(ConstraintIndex.getWithDescendants(ci, 'liesWithin:contain', ['1', '4']).map(to('id')))
             .toEqual(['2', '3', '5', '6']);
+    });
+
+
+    it('index valOptionalEndVal field', () => {
+
+        categoriesMap = {
+            category: {
+                groups: [
+                    {
+                        fields: [
+                            {
+                                name: 'period',
+                                inputType: FieldDefinition.InputType.DROPDOWNRANGE,
+                                constraintIndexed: true
+                            }]
+                    }]
+            }
+        };
+        const docs = [doc('1'),doc('2')];
+        docs[0].resource.period = { value: 'a1' };
+        ci = ConstraintIndex.make({}, categoriesMap);
+        const ie1 = IndexItem.from(docs[0]);
+        ConstraintIndex.put(ci, docs[0], ie1);
+
+        const result = ConstraintIndex.get(ci, 'period.value:match', 'a1').map(to('id'));
+        expect(result[0]).toBe('1');
     });
 
 

@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {to, on, is, includedIn, or, any} from 'tsfun';
+import {to, on, is, includedIn, or, any, compose, map} from 'tsfun';
 import {ProjectConfiguration} from '../../core/configuration/project-configuration';
 import {Category} from '../../core/configuration/model/category';
 import {Group} from '../../core/configuration/model/group';
@@ -76,8 +76,9 @@ export class ProjectConfigurationComponent {
             );
     }
 
-    public hasCustomFields = on(
-        Group.FIELDS, 
-        any(on(FieldDefinition.SOURCE, is(FieldDefinition.Source.CUSTOM)))
+    public hasCustomFields: (group: Group) => boolean = compose(
+        map(to(Group.FIELDS)),
+        map(to(FieldDefinition.SOURCE)),
+        any(is(FieldDefinition.Source.CUSTOM))
     );
 }

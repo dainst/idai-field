@@ -1,4 +1,4 @@
-import {getOn, values, isArray, map, flatten, flow, cond, not, to, isDefined, singleton, Map, filter} from 'tsfun';
+import {getOn, values, isArray, map, flatten, flatMap, flow, cond, not, to, isDefined, singleton, Map, filter} from 'tsfun';
 import {Document, Resource} from 'idai-components-2';
 import {IndexItem} from './index-item';
 import {Category} from '../../configuration/model/category';
@@ -253,18 +253,12 @@ export module ConstraintIndex {
     }
 
 
-    function getIndexDefinitions(defaultIndexDefinitions: { [name: string]: IndexDefinition },
-                                 categories: Array<Category>): { [name: string]: IndexDefinition } {
+    function getIndexDefinitions(defaultIndexDefinitions: Map<IndexDefinition>,
+                                 categories: Array<Category>): Map<IndexDefinition> {
 
-        const definitionsFromConfiguration: Array<{ name: string, indexDefinition: IndexDefinition }> =
-            getFieldsToIndex(categories)
-                .map((field: FieldDefinition) => makeIndexDefinitions(field))
-                .reduce((result: any, definitions) => {
-                    definitions.forEach(definition => result.push(definition));
-                    return result;
-                }, []);
-
-        return combine(definitionsFromConfiguration, defaultIndexDefinitions);
+        return combine(
+            flatMap(makeIndexDefinitions)(getFieldsToIndex(categories)),
+            defaultIndexDefinitions);
     }
 
 
@@ -352,7 +346,7 @@ export module ConstraintIndex {
     }
 
 
-    function combine(indexDefinitionsFromConfiguration
+    function combine(indexDefinitionsFromConfiguration // TODO make more general
                                : Array<{ name: string, indexDefinition: IndexDefinition }>,
                      defaultIndexDefinitions: { [name: string]: IndexDefinition }) {
 

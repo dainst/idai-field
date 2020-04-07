@@ -36,7 +36,11 @@ export module Assertions {
             if (!(category as any)['valuelists']) return;
             for (let valuelist of Object.keys((category as any)['valuelists'])) {
                 if (commonFields[valuelist] && commonFields[valuelist].valuelistFromProjectField) {
-                    throw [ConfigurationErrors.COMMON_FIELD_VALUELIST_FROM_PROJECTDOC_NOT_TO_BE_OVERWRITTEN, category.name];
+                    throw [
+                        ConfigurationErrors.COMMON_FIELD_VALUELIST_FROM_PROJECTDOC_NOT_TO_BE_OVERWRITTEN,
+                        category.name,
+                        valuelist
+                    ];
                 }
             }
         }

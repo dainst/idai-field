@@ -41,7 +41,7 @@ describe('Assertions', () => {
            fail();
        } catch (expected) {
            expect(expected).toEqual(
-               [ConfigurationErrors.COMMON_FIELD_VALUELIST_FROM_PROJECTDOC_NOT_TO_BE_OVERWRITTEN, 'C:default']);
+               [ConfigurationErrors.COMMON_FIELD_VALUELIST_FROM_PROJECTDOC_NOT_TO_BE_OVERWRITTEN, 'C:default', 'aCommon']);
        }
    });
 });

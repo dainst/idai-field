@@ -11,18 +11,8 @@ import {ProjectConfiguration} from '../../configuration/project-configuration';
 
 export type ResourcesViewMode = 'map'|'list'|'type-grid';
 
-// TODO Update comment
+
 /**
- * Manages an overview of operation category resources
- * and different views for each operation category.
- *
- * In the overview the document list contains the operation category resources.
- * In the operation category views the list contains resources recorded in
- * one selected operation category resource.
- *
- * Apart from that, each view behaves the same in that the document list
- * can get filteres etc.
- *
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */

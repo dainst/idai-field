@@ -11,7 +11,7 @@ export function orderFields(orderConfiguration: any){
 
     return (categories_: any): any  => {
 
-        return map((category: any, k: string) => { // TODO review
+        return map((category: any, k: string) => {
 
             category.name = k;
             category.fields = getOrderedFields(category, orderConfiguration);

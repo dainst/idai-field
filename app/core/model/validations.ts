@@ -118,6 +118,34 @@ export module Validations {
     }
 
 
+    export function assertCorrectnessOfBeginningAndEndDates(document: Document|NewDocument) {
+
+        if (!document.resource.beginningDate || !document.resource.endDate) return;
+
+        const beginningDate: Date = parseDate(document.resource.beginningDate);
+        const endDate: Date = parseDate(document.resource.endDate);
+
+        if (beginningDate > endDate) {
+            throw [
+                ValidationErrors.END_DATE_BEFORE_BEGINNING_DATE,
+                document.resource.category
+            ];
+        }
+    }
+
+
+    function parseDate(dateString: string): Date {
+
+        const dateComponents: string[] = dateString.split('.');
+
+        return new Date(
+            parseInt(dateComponents[2]),
+            parseInt(dateComponents[1]) - 1,
+            parseInt(dateComponents[0])
+        );
+    }
+
+
     /**
      * @throws [MISSING_PROPERTY]
      */

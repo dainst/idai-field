@@ -36,7 +36,9 @@ describe('Validations', () => {
                         { name: 'dimension6', label: 'dimension6', inputType: 'dimension' },
                         { name: 'literature1', label: 'literature1', inputType: 'literature' },
                         { name: 'literature2', label: 'literature2', inputType: 'literature' },
-                        { name: 'literature3', label: 'literature3', inputType: 'literature' }
+                        { name: 'literature3', label: 'literature3', inputType: 'literature' },
+                        { name: 'beginningDate', label: 'beginningDate', inputType: 'date' },
+                        { name: 'endDate', label: 'endDate', inputType: 'date' }
                     ]}]
                 },
                 T2: {
@@ -311,5 +313,55 @@ describe('Validations', () => {
             );
         }
         done();
+    });
+
+
+    it('should report incorrect beginning and end dates', () => {
+
+        const correctDocument1 = {
+            resource: {
+                id: '1',
+                category: 'T',
+                beginningDate: '01.01.2020',
+                endDate: '01.01.2020',
+                relations: {}
+            }
+        };
+
+        const correctDocument2 = {
+            resource: {
+                id: '1',
+                category: 'T',
+                beginningDate: '01.01.2020',
+                endDate: '02.01.2020',
+                relations: {}
+            }
+        };
+
+        const incorrectDocument = {
+            resource: {
+                id: '1',
+                category: 'T',
+                beginningDate: '01.01.2020',
+                endDate: '31.12.2019',
+                relations: {}
+            }
+        };
+
+        try {
+            Validations.assertCorrectnessOfBeginningAndEndDates(correctDocument1);
+            Validations.assertCorrectnessOfBeginningAndEndDates(correctDocument2);
+        } catch (errWithParams) {
+            fail();
+        }
+
+        try {
+            Validations.assertCorrectnessOfBeginningAndEndDates(incorrectDocument);
+            fail();
+        } catch (errWithParams) {
+            expect(errWithParams).toEqual(
+                [ValidationErrors.END_DATE_BEFORE_BEGINNING_DATE, 'T']
+            );
+        }
     });
 });

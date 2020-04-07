@@ -139,6 +139,7 @@ export class DocumentHolder {
         Validations.assertUsageOfDotAsDecimalSeparator(this.clonedDocument, this.projectConfiguration);
         Validations.assertCorrectnessOfDatingValues(this.clonedDocument, this.projectConfiguration);
         Validations.assertCorrectnessOfDimensionValues(this.clonedDocument, this.projectConfiguration);
+        Validations.assertCorrectnessOfBeginningAndEndDates(this.clonedDocument);
         await this.validator.assertIsRecordedInTargetsExist(this.clonedDocument);
         await this.validator.assertGeometryIsValid(this.clonedDocument);
     }

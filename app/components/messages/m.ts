@@ -89,6 +89,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_VALIDATION_ERROR_INVALID_LITERATURE_VALUE = 'M.Import.ValidationErrors.invalidLiteratureValue';
     public static IMPORT_VALIDATION_ERROR_INVALID_LITERATURE_VALUES = 'M.Import.ValidationErrors.invalidLiteratureValues';
     public static IMPORT_VALIDATION_ERROR_INVALID_DROPDOWN_RANGE_VALUES = 'M.Import.ValidationErrors.invalidDropdownRangeValues';
+    public static IMPORT_VALIDATION_ERROR_END_DATE_BEFORE_BEGINNING_DATE = 'M.Import.ValidationErrors.endDateBeforeBeginningDate';
 
     // Import Package - ImportErrors
     public static IMPORT_NO_OPERATION_ASSIGNABLE = 'M.Import.ImportErrors.noOperationAssignable';
@@ -149,6 +150,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static DOCEDIT_VALIDATION_ERROR_MISSING_PROPERTY = 'docedit.validation.error.missingProperty';
     public static DOCEDIT_VALIDATION_ERROR_NO_RECORDEDIN = 'docedit.validation.error.noRecordedIn';
     public static DOCEDIT_VALIDATION_ERROR_NO_RECORDEDIN_TARGET = 'docedit.validation.error.noRecordedInTarget';
+    public static DOCEDIT_VALIDATION_ERROR_END_DATE_BEFORE_BEGINNING_DATE = 'docedit.validation.error.endDateBeforeBeginningDate';
 
     // Images Package
     public static IMAGES_SUCCESS_IMAGES_UPLOADED = 'images.success.imagesUploaded';
@@ -894,6 +896,15 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: [],
             hidden: false
         };
+        this.msgs[M.IMPORT_VALIDATION_ERROR_END_DATE_BEFORE_BEGINNING_DATE] = {
+            content: i18n({
+                id: 'messages.import.validation.error.endDateBeforeBeginningDate',
+                value: 'Das Enddatum einer Ressource der Kategorie \'[0]\' liegt vor dem Startdatum.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
         this.msgs[M.IMPORT_VALIDATION_MISSING_PROPERTY] = {
             content: i18n({
                 id: 'messages.import.validation.error.missingProperty',
@@ -1204,6 +1215,15 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             content: i18n({
                 id: 'messages.docedit.validation.error.noRecordedInTarget',
                 value: 'Die Zielressource [0] der Relation \'Aufgenommen in Maßnahme\' konnte nicht gefunden werden.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.DOCEDIT_VALIDATION_ERROR_END_DATE_BEFORE_BEGINNING_DATE] = {
+            content: i18n({
+                id: 'messages.docedit.validation.error.endDateBeforeBeginningDate',
+                value: 'Das angegebene Enddatum liegt vor dem Startdatum. Bitte prüfen Sie die eingetragenen Daten.'
             }),
             level: 'danger',
             params: [],

@@ -182,7 +182,7 @@ export class ProjectConfiguration {
      * @returns {string}
      * @throws {string} with an error description in case the category is not defined.
      */
-    public getFieldDefinitionLabel(categoryName: string, fieldName: string): string { // TODO remove
+    public getFieldDefinitionLabel(categoryName: string, fieldName: string): string {
 
         const fieldDefinitions = this.getFieldDefinitions(categoryName);
         if (fieldDefinitions.length === 0)
@@ -204,7 +204,6 @@ export class ProjectConfiguration {
     }
 
 
-    // TODO reimplement; test
     private getCategoryAndSubcategories_(supercategoryName: string): Map<Category> {
 
         const projectCategoriesMap: Map<Category> = this.getCategoriesMap();

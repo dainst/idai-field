@@ -1,4 +1,3 @@
-import {UnorderedConfigurationDefinition} from '../model/unordered-configuration-definition';
 
 
 /**
@@ -7,7 +6,7 @@ import {UnorderedConfigurationDefinition} from '../model/unordered-configuration
  */
 export function applyLanguage(language: any) {
 
-    return (configuration: UnorderedConfigurationDefinition) => {
+    return (configuration: any) => {
 
         if (configuration.categories) applyCategories(language, configuration);
         if (language.relations) applyRelations(language, configuration);
@@ -17,7 +16,7 @@ export function applyLanguage(language: any) {
 }
 
 
-function applyRelations(language: any, configuration: UnorderedConfigurationDefinition) {
+function applyRelations(language: any, configuration: any) {
 
     for (let languageConfigurationRelationKey of Object.keys(language.relations)) {
         for (let configurationRelation of configuration.relations as any) {
@@ -30,7 +29,7 @@ function applyRelations(language: any, configuration: UnorderedConfigurationDefi
 }
 
 
-function applyCategories(language: any, configuration: UnorderedConfigurationDefinition) {
+function applyCategories(language: any, configuration: any) {
 
     for (let configurationCategoryName of Object.keys(configuration.categories)) {
         const configurationCategory = configuration.categories[configurationCategoryName];

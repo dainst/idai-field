@@ -1,5 +1,4 @@
 import {empty, isNot, on, subtract} from 'tsfun';
-import {UnorderedConfigurationDefinition} from '../model/unordered-configuration-definition';
 import {RelationDefinition} from '../model/relation-definition';
 import {Named} from '../../util/named';
 
@@ -10,7 +9,7 @@ import {Named} from '../../util/named';
  */
 export function addRelations(extraRelations: Array<RelationDefinition>) {
 
-    return (configuration: UnorderedConfigurationDefinition) => {
+    return (configuration: any) => {
 
         if (!configuration.relations) return;
 
@@ -19,7 +18,7 @@ export function addRelations(extraRelations: Array<RelationDefinition>) {
 
             configuration.relations
                 .filter(on(Named.NAME)(extraRelation))
-                .forEach(relation => {
+                .forEach((relation: any) => {
                     relation.domain = subtract(extraRelation.domain)(relation.domain)
                 });
             configuration.relations = configuration.relations
@@ -37,7 +36,7 @@ export function addRelations(extraRelations: Array<RelationDefinition>) {
 }
 
 
-function expandInherits(configuration: Readonly<UnorderedConfigurationDefinition>,
+function expandInherits(configuration: any,
                         extraRelation: RelationDefinition, itemSet: string) {
 
     if (!extraRelation) return;
@@ -65,8 +64,8 @@ function expandInherits(configuration: Readonly<UnorderedConfigurationDefinition
 }
 
 
-function expandOnEmpty(configuration: UnorderedConfigurationDefinition,
-                           extraRelation_: RelationDefinition, itemSet: string) {
+function expandOnEmpty(configuration: any,
+                       extraRelation_: RelationDefinition, itemSet: string) {
 
     const extraRelation: any = extraRelation_;
 

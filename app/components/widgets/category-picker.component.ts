@@ -1,5 +1,5 @@
 import {Component, Input, Output, EventEmitter, OnChanges} from '@angular/core';
-import {on, any, is, flow, compose} from 'tsfun';
+import {on, any, is, flow, compose, map, to} from 'tsfun';
 import {Category} from '../../core/configuration/model/category';
 import {Named} from '../../core/util/named';
 import {FieldDefinition} from '../../core/configuration/model/field-definition';
@@ -74,8 +74,9 @@ export class CategoryPickerComponent implements OnChanges {
     public isCustomCategory = (category: Category): boolean => !category.libraryId;
 
 
-    public hasCustomFields = compose(
+    public hasCustomFields: (category: Category) => boolean = compose(
         Category.getFields,
-        any(on(FieldDefinition.SOURCE, is(FieldDefinition.Source.CUSTOM)))
+        map(to(FieldDefinition.SOURCE)),
+        any(is(FieldDefinition.Source.CUSTOM))
     );
 }

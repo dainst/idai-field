@@ -76,7 +76,7 @@ export class ProjectConfigurationComponent {
             );
     }
 
-    public hasCustomFields = on(
+    public hasCustomFields: (group: Group) => boolean = on(
         Group.FIELDS, 
         any(on(FieldDefinition.SOURCE, is(FieldDefinition.Source.CUSTOM)))
     );

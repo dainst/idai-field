@@ -128,9 +128,8 @@
                                    [ngModel]="settings.imagestorePath"
                                    (ngModelChange)="settings.imagestorePath = $event"
                                    class="form-control">
-                            <input id="imagestorepath-file" class="file-input" type="file"
+                            <label for="imagestorepath-input" class="btn btn-secondary file-input-label"
                                    (click)="chooseImagestoreDirectory()">
-                            <label for="imagestorepath-file" class="btn btn-secondary file-input-label">
                                 <span class="mdi mdi-folder"></span>
                             </label>
                         </div>

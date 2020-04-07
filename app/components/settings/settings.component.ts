@@ -81,7 +81,7 @@ export class SettingsComponent implements OnInit {
         const result: OpenDialogReturnValue = await remote.dialog.showOpenDialog(
             remote.getCurrentWindow(),
             {
-                properties: ['openDirectory'],
+                properties: ['openDirectory', 'createDirectory'],
                 defaultPath: this.settings.imagestorePath
             }
         );

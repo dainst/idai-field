@@ -7,7 +7,7 @@ import {Assertions} from '../../../../../app/core/configuration/boot/assertions'
 import {ConfigurationErrors} from '../../../../../app/core/configuration/boot/configuration-errors';
 
 
-describe('performAssertions', () => {
+describe('Assertions', () => {
 
    it('cannot overwrite valuelist of common fields where valuelistFromProjectField is set', () => {
 

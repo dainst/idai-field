@@ -43,7 +43,7 @@ export module Assertions {
     }
 
 
-    export function assertInputTypesAreSet(assertInputTypePresentIfNotCommonType: Function) { // TODO make private, convert module file to function file
+    export function assertInputTypesAreSet(assertInputTypePresentIfNotCommonType: Function) {
 
         return (categories: Map<TransientCategoryDefinition>) => {
 

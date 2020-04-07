@@ -6,14 +6,14 @@ import {RelationDefinition} from '../../../core/configuration/model/relation-def
 
 @Component({
     moduleId: module.id,
-    selector: 'generic-form',
-    templateUrl: './generic-form.html'
+    selector: 'edit-form-group',
+    templateUrl: './edit-form-group.html'
 })
 /**
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export class GenericFormComponent {
+export class EditFormGroup {
 
     @Input() fieldDefinitions: Array<FieldDefinition>;
     @Input() relationDefinitions: Array<RelationDefinition>;

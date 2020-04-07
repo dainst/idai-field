@@ -30,7 +30,7 @@ import {BooleanComponent} from './core/forms/boolean.component';
 import {EditFormFieldComponent} from './core/edit-form-field.component';
 import {DropdownRangeComponent} from './core/forms/dropdown-range.component';
 import {DuplicateModalComponent} from './dialog/duplicate-modal.component';
-import {GenericFormComponent} from './core/generic-form.component';
+import {EditFormGroup} from './core/edit-form-group.component';
 import {GeometryComponent} from './core/forms/geometry.component';
 import {MultiInputComponent} from './core/forms/multi-input.component';
 import {OutliersComponent} from './core/forms/widgets/outliers.component';
@@ -91,7 +91,7 @@ import {LiteratureComponent} from './core/forms/literature.component';
         EditFormComponent,
         EditFormFieldComponent,
         RelationPickerComponent,
-        GenericFormComponent,
+        EditFormGroup,
         RelationPickerGroupComponent,
         CheckboxesComponent,
         BooleanComponent,

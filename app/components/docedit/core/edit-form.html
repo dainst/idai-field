@@ -19,11 +19,11 @@
         <div class="col-md-9 forms-container">
             <div id="{{activeGroup}}-group" class="scrollable-group"
                  *ngIf="activeGroup !== 'conflicts' && activeGroup !== 'images'">
-                <generic-form
+                <edit-form-group
                         [document]="document"
                         [fieldDefinitions]="getFieldDefinitions(activeGroup)"
                         [relationDefinitions]="getRelationDefinitions(activeGroup)">
-                </generic-form>
+                </edit-form-group>
             </div>
 
             <div *ngIf="activeGroup === 'images'" id="docedit-images-tab">

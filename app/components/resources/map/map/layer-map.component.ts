@@ -200,7 +200,6 @@ export class LayerMapComponent extends MapComponent {
             return true;
         }
 
-        // TODO Check if this is still necessary
         // Update layers after switching from a view without operations to another view without
         // operations.
         return changes['documents']

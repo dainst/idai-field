@@ -88,7 +88,7 @@ describe('Import/Subsystem', () => {
                 { name: 'dating', inputType: 'dating' },
                 { name: 'shortDescription', inputType: 'input' }
             ]
-        }] as any; // TODO review
+        }] as any;
 
         await Importer.doImport(
             'csv',
@@ -148,7 +148,7 @@ describe('Import/Subsystem', () => {
                 { name: 'dating', inputType: 'dating' },
                 { name: 'shortDescription', inputType: 'input' }
             ]
-        }] as any; // TODO review
+        }] as any;
 
         await Importer.doImport(
             'csv',

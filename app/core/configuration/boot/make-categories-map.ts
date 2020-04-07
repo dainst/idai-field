@@ -90,7 +90,6 @@ function addChildCategory(categoriesMap: Map<Category>, childDefinition: Categor
 }
 
 
-// TODO make pure
 function sortGroupFields(group: Group) {
 
     group.fields = sortGroups(group.fields, group.name);

@@ -13,7 +13,7 @@ import {byName, Named, namedArrayToNamedMap,} from '../../../../../app/core/util
 
 const categories = left;
 
-describe('buildRawProjectConfiguration', () => { // TODO test groups in idai type of types map
+describe('buildRawProjectConfiguration', () => {
 
     it('auto-select parent if child defined',  () => {
 

@@ -499,7 +499,6 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: ['?'],
             hidden: false
         };
-        // TODO Make message more understandable
         this.msgs[M.IMPORT_PARSER_CSV_HEADING_PATH_ITEM_TYPE_MISMATCH] = {
             content: i18n({
                 id: 'messages.import.parser.error.csvHeadingPathItemTypeMismatch',

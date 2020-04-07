@@ -82,7 +82,6 @@ export module CSVExport {
     }
 
 
-    // TODO reimplement
     function makeFieldNamesList(fieldDefinitions: Array<FieldDefinition>): string[] {
 
         let fieldNames = getUsableFieldNames(fieldDefinitions.map(to(FieldDefinition.NAME)));

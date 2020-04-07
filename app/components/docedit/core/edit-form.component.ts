@@ -1,14 +1,14 @@
 import {AfterViewInit, Component, ElementRef, Input, OnChanges, ViewChild} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
-import {isUndefinedOrEmpty, copy} from 'tsfun';
+import {isUndefinedOrEmpty} from 'tsfun';
 import {Document} from 'idai-components-2';
 import {ProjectCategories} from '../../../core/configuration/project-categories';
-import {GROUP_NAME} from '../../constants';
 import {FieldDefinition} from '../../../core/configuration/model/field-definition';
 import {RelationDefinition} from '../../../core/configuration/model/relation-definition';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
 import {Group} from '../../../core/configuration/model/group';
 import {TypeRelations} from '../../../core/model/relation-constants';
+import {clone} from '../../../core/util/object-util';
 
 
 @Component({
@@ -83,19 +83,13 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
 
         this.groups = [];
         for (let originalGroup of this.originalGroups) {
-            const group = copy(originalGroup);
+            const group = clone(originalGroup);
             this.groups.push(group as any);
         }
         this.groups = this.groups.concat(this.extraGroups);
 
         if (this.projectCategories.isGeometryCategory(this.document.resource.category)) {
-            this.groups[GROUP_NAME.POSITION].fields.push({
-                name: 'geometry',
-                label: this.i18n({ id: 'docedit.geometry', value: 'Geometrie' }),
-                group: 'position',
-                inputType: 'geometry',
-                editable: true
-            });
+            this.addGeometryField();
         }
     }
 
@@ -105,5 +99,17 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
         const inputElements: Array<HTMLElement> = this.elementRef.nativeElement
             .getElementsByTagName('input');
         if (inputElements.length > 0) inputElements[0].focus();
+    }
+
+
+    private addGeometryField() {
+
+        (this.groups.find(group => group.name === 'position') as Group).fields.unshift({
+            name: 'geometry',
+            label: this.i18n({ id: 'docedit.geometry', value: 'Geometrie' }),
+            group: 'position',
+            inputType: 'geometry',
+            editable: true
+        });
     }
 }

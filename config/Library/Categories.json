@@ -69,7 +69,6 @@
       "dimensionLength",
       "dimensionWidth",
       "dimensionVerticalExtent",
-      "spatialLocation",
       "orientation"
     ],
     "valuelists": {
@@ -553,7 +552,8 @@
       "processor",
       "campaign",
       "description",
-      "area"
+      "area",
+      "spatialLocation"
     ],
     "valuelists": {},
     "fields": {
@@ -570,7 +570,8 @@
     "color": "#5572A1",
     "commons": [
       "dating",
-      "description"
+      "description",
+      "spatialLocation"
     ],
     "valuelists": {
       "findspotClassification": "Place-findspotClassification-default",

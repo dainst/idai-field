@@ -40,7 +40,7 @@ export class ConfigLoader {
             label: this.i18n({ id: 'configuration.defaultFields.category', value: 'Kategorie' }),
             visible: false,
             editable: false,
-            group: Groups.STEM, // TODO autoconvert all extra fields from here and from app-configurator to group STEM in build-raw-project-configuration
+            group: Groups.STEM,
             source: 'builtin'
         } as FieldDefinition
     };

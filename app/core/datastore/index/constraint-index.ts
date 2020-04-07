@@ -1,4 +1,4 @@
-import {getOn, values, isArray, map, flatten, flow, cond, not, to, isDefined, singleton, Map} from 'tsfun';
+import {getOn, values, isArray, map, flatten, flow, cond, not, to, isDefined, singleton, Map, filter} from 'tsfun';
 import {Document, Resource} from 'idai-components-2';
 import {IndexItem} from './index-item';
 import {Category} from '../../configuration/model/category';
@@ -270,21 +270,12 @@ export module ConstraintIndex {
 
     function getFieldsToIndex(categories: Array<Category>): Array<FieldDefinition> {
 
-        const fields: Array<FieldDefinition> =
-            getUniqueFields(
-                categories.reduce((result: Array<FieldDefinition>, category: Category) => { // TODO use map function
-                    return result.concat(Category.getFields(category));
-                }, []) as any
-            ).filter((field: FieldDefinition) => field.constraintIndexed);
-
-        fields.filter(field => field.inputType === 'dropdownRange').forEach(field => {
-            fields.push({
-                name: field.name + 'End',
-                group: field.group
-            } as any /* TODO review */)
-        });
-
-        return fields;
+        return flow(
+                categories,
+                map(Category.getFields),
+                flatten,
+                getUniqueFields,
+                filter(to(FieldDefinition.CONSTRAINTINDEXED)));
     }
 
 

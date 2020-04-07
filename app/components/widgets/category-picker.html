@@ -17,7 +17,10 @@
         (click)="pickCategory(category)">
         <div id="choose-category-option-{{getCategoryId(category)}}" class="category-item">
             <category-icon [category]="category.name" size="30"></category-icon>
-            <div class="category-label">{{category.label}}</div>
+            <div class="category-label">
+                {{category.label}}
+                <span *ngIf="hasCustomFields(category)"> *</span>
+            </div>
         </div>
     </li>
 </ul>

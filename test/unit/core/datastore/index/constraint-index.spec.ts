@@ -380,35 +380,6 @@ describe('ConstraintIndex', () => {
     });
 
 
-    it('index dropdownRange field specified in search configuration', () => {
-
-        categoriesMap = {
-            category: {
-                groups: [{ fields: [
-                    { name: 'identifier' },
-                    { name: 'shortDescription' },
-                    { name: 'dropdownRangeField', inputType: 'dropdownRange', constraintIndexed: true }
-                ]}]
-            }
-        };
-
-        const docs = [doc('1')];
-        docs[0].resource.dropdownRangeField = 'testValue1';
-        docs[0].resource.dropdownRangeFieldEnd = 'testValue2';
-
-        ci = ConstraintIndex.make({}, categoriesMap);
-
-        const ie = IndexItem.from(docs[0]);
-
-        ConstraintIndex.put(ci, docs[0], ie);
-
-        expect(ConstraintIndex.get(ci, 'dropdownRangeField:match', 'testValue1')).toEqual([indexItem('1')]);
-        expect(ConstraintIndex.get(ci, 'dropdownRangeFieldEnd:match', 'testValue2')).toEqual([indexItem('1')]);
-        expect(ConstraintIndex.get(ci, 'dropdownRangeField:exist', 'KNOWN')).toEqual([indexItem('1')]);
-        expect(ConstraintIndex.get(ci, 'dropdownRangeFieldEnd:exist', 'KNOWN')).toEqual([indexItem('1')]);
-    });
-
-
     it('index a single value field and an array field of the same name', () => {
 
         categoriesMap = {

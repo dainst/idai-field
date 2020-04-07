@@ -6,6 +6,7 @@ import {ValuelistDefinition} from '../model/valuelist-definition';
 import {TransientCategoryDefinition} from '../model/transient-category-definition';
 import {ConfigurationErrors} from './configuration-errors';
 import {getDefinedParents, iterateOverFieldsOfCategories} from './helpers';
+import {mapToNamedArray, Named} from '../../util/named';
 
 
 export module Assertions {
@@ -21,7 +22,28 @@ export module Assertions {
         assertSubtypingIsLegal(builtInCategories, customCategories);
         assertNoCommonFieldInputTypeChanges(commonFields, libraryCategories);
         assertNoCommonFieldInputTypeChanges(commonFields, customCategories);
+        assertNoCommonFieldWithValuelistFromProjectFieldGetsNewValuelist(commonFields, libraryCategories, customCategories);
         assertCategoryNamesConsistent(libraryCategories);
+    }
+
+
+    function assertNoCommonFieldWithValuelistFromProjectFieldGetsNewValuelist(commonFields: Map<any>,
+                                                                              libraryCategories: Map<LibraryCategoryDefinition>,
+                                                                              customCategories: Map<CustomCategoryDefinition>) {
+
+        const categories = mapToNamedArray(libraryCategories).concat(mapToNamedArray(customCategories)) as Array<Named>;
+        for (let category of categories) {
+            if (!(category as any)['valuelists']) return;
+            for (let valuelist of Object.keys((category as any)['valuelists'])) {
+                if (commonFields[valuelist] && commonFields[valuelist].valuelistFromProjectField) {
+                    throw [
+                        ConfigurationErrors.COMMON_FIELD_VALUELIST_FROM_PROJECTDOC_NOT_TO_BE_OVERWRITTEN,
+                        category.name,
+                        valuelist
+                    ];
+                }
+            }
+        }
     }
 
 

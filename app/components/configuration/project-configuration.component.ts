@@ -1,12 +1,14 @@
 import {Component} from '@angular/core';
-import {to, on, is, includedIn, or} from 'tsfun';
+import {to, on, is, includedIn, or, any} from 'tsfun';
 import {ProjectConfiguration} from '../../core/configuration/project-configuration';
 import {Category} from '../../core/configuration/model/category';
+import {Group} from '../../core/configuration/model/group';
 import {FieldDefinition} from '../../core/configuration/model/field-definition';
 import {ValuelistDefinition} from '../../core/configuration/model/valuelist-definition';
 import {ValuelistUtil} from '../../core/util/valuelist-util';
 import {TabManager} from '../../core/tabs/tab-manager';
 import {Named} from '../../core/util/named';
+import { debugId } from '../../core/util/utils';
 
 const locale: string = require('electron').remote.getGlobal('config').locale;
 
@@ -41,7 +43,7 @@ export class ProjectConfigurationComponent {
 
     public getValueLabel = ValuelistUtil.getValueLabel;
 
-    public getGroups = (category: Category): any[] => category.groups.map(to(Named.NAME));
+    public getGroups = (category: Category): any[] => category.groups;
 
     public getValuelistDescription = (valuelist: ValuelistDefinition) => valuelist.description?.[locale];
 
@@ -57,7 +59,7 @@ export class ProjectConfigurationComponent {
     public selectCategory(category: Category) {
 
         this.selectedCategory = category;
-        this.selectedGroup = this.getGroups(category)[0];
+        this.selectedGroup = this.getGroups(category)[0].name;
     }
 
 
@@ -73,4 +75,7 @@ export class ProjectConfigurationComponent {
                 )
             );
     }
+
+    public hasCustomFields = (group: Group): boolean =>
+        any(on(FieldDefinition.SOURCE, is(FieldDefinition.Source.CUSTOM)))(group.fields);
 }

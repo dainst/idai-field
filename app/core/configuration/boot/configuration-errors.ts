@@ -19,6 +19,7 @@ export module ConfigurationErrors {
     export const TRYING_TO_SUBTYPE_A_NON_EXTENDABLE_CATEGORY = 'config/fields/custom/tryingToSubtypeANonExtendableCategory';
     export const INCONSISTENT_CATEGORY_NAME = 'config/fields/custom/inconsistentCategoryName';
     export const COMMON_FIELD_NOT_PROVIDED = 'config/fields/custom/commonFieldNotProvided';
+    export const COMMON_FIELD_VALUELIST_FROM_PROJECTDOC_NOT_TO_BE_OVERWRITTEN = 'config/fields/custom/commonFieldValuelistFromProjectDocNotToBeOverwritten';
 
     // buildProjectCategories
     export const DUPLICATION_IN_SELECTION = 'configuration/buildProjectCategories/duplicationInSelection';

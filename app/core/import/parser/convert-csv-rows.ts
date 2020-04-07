@@ -52,7 +52,6 @@ export function convertCsvRows(separator: string) {
 
 function assertHeadingsIsntEmptyandDoesntContainEmptyEntries(headings: string[]) {
 
-    // TODO reimplement with cond, throws, includes
     // current implementation of parser gives at least ['']
     if (headings.length === 0) throw 'illegal argument';
 

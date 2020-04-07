@@ -50,16 +50,17 @@
                         <ul class="nav nav-pills flex-column">
                             <li *ngFor="let group of getGroups(selectedCategory)" class="nav flex-column">
                                 <a class="nav-link"
-                                        [class.active]="selectedGroup === group"
-                                        (click)="selectedGroup = group">
-                                    <span *ngIf="group === 'stem'" i18n="@@docedit.group.stem">Stammdaten</span>
-                                    <span *ngIf="group === 'identification'" i18n="@@docedit.group.identification">Bestimmung</span>
-                                    <span *ngIf="group === 'dimension'" i18n="@@docedit.group.dimensions">Maße</span>
-                                    <span *ngIf="group === 'position'" i18n="@@docedit.group.position">Lage</span>
-                                    <span *ngIf="group === 'time'" i18n="@@docedit.group.time">Zeit</span>
-                                    <span *ngIf="group === 'child'">{{ selectedCategory.label }}</span>
-                                    <span *ngIf="group === 'parent' && selectedCategory.parentCategory">{{ selectedCategory.parentCategory.label }}</span>
-                                    <span *ngIf="group === 'parent' && !selectedCategory.parentCategory">{{ selectedCategory.label }}</span>
+                                        [class.active]="selectedGroup === group.name"
+                                        (click)="selectedGroup = group.name">
+                                    <span *ngIf="group.name === 'stem'" i18n="@@docedit.group.stem">Stammdaten</span>
+                                    <span *ngIf="group.name === 'identification'" i18n="@@docedit.group.identification">Bestimmung</span>
+                                    <span *ngIf="group.name === 'dimension'" i18n="@@docedit.group.dimensions">Maße</span>
+                                    <span *ngIf="group.name === 'position'" i18n="@@docedit.group.position">Lage</span>
+                                    <span *ngIf="group.name === 'time'" i18n="@@docedit.group.time">Zeit</span>
+                                    <span *ngIf="group.name === 'child'">{{ selectedCategory.label }}</span>
+                                    <span *ngIf="group.name === 'parent' && selectedCategory.parentCategory">{{ selectedCategory.parentCategory.label }}</span>
+                                    <span *ngIf="group.name === 'parent' && !selectedCategory.parentCategory">{{ selectedCategory.label }}</span>
+                                    <span *ngIf="hasCustomFields(group)"> *</span>
                                 </a>
                             </li>
                         </ul>

@@ -15,10 +15,8 @@ const common = require('../common');
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  *
- * Deactivated due to occasional failures (see https://github.com/angular/protractor/issues/5347)
- *
  */
-xdescribe('project --', function() {
+describe('project --', function() {
 
     const appDataPath = browser.params.appDataPath;
 

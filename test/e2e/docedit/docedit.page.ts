@@ -72,6 +72,12 @@ export class DoceditPage {
     }
 
 
+    public static clickGotoPositionTab() {
+
+        common.click(element(by.id('edit-form-goto-position')));
+    }
+
+
     public static clickSaveDocument(clickMsgAway: boolean = false, waitForModalToClose: boolean = true) {
 
         return browser.wait(EC.visibilityOf(element(by.id('document-edit-button-save-document'))), delays.ECWaitTime)
@@ -183,6 +189,12 @@ export class DoceditPage {
     public static getCheckboxes(fieldName: string) {
 
         return element.all(by.css('#edit-form-element-' + fieldName + ' .checkbox'));
+    }
+
+
+    public static getGeometryEditWidget() {
+
+        return element(by.css('dai-geometry'));
     }
 
 

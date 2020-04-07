@@ -294,6 +294,16 @@ describe('resources --', () => {
     });
 
 
+    it('show geometry edit widget for suitable categories', () => {
+
+        ResourcesPage.performCreateResource('1', 'feature');
+        ResourcesPage.openEditByDoubleClickResource('1');
+        DoceditPage.clickGotoPositionTab();
+        browser.wait(EC.presenceOf(DoceditPage.getGeometryEditWidget()), delays.ECWaitTime);
+        DoceditPage.clickCloseEdit();
+    });
+
+
     it('deletion', () => {
 
         ResourcesPage.performCreateLink();

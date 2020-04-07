@@ -319,10 +319,14 @@ export abstract class SearchConstraintsComponent implements OnChanges {
 
         fields = clone(fields);
 
-        fields.filter(field => field.inputType === 'dropdownRange').forEach(field => {
-            this.addDropdownRangeEndField(fields, field);
-            field.label = this.getDropdownRangeLabel(field);
-        });
+        fields
+            .filter(field => field.inputType === 'dropdownRange')
+            .forEach(field => {
+
+                this.addDropdownRangeEndField(fields, field);
+                field.label = this.getDropdownRangeLabel(field);
+                field.name = field.name += '.value';
+            });
 
         return fields;
     }
@@ -338,7 +342,7 @@ export abstract class SearchConstraintsComponent implements OnChanges {
     private addDropdownRangeEndField(fields: Array<FieldDefinition>, dropdownRangeField: FieldDefinition) {
 
         fields.splice(fields.indexOf(dropdownRangeField) + 1, 0, {
-            name: dropdownRangeField.name + 'End',
+            name: dropdownRangeField.name + '.endValue',
             label: dropdownRangeField.label
                 + this.i18n({ id: 'searchConstraints.dropdownRange.to', value: ' (bis)' }),
             group: dropdownRangeField.group,
@@ -396,16 +400,18 @@ export abstract class SearchConstraintsComponent implements OnChanges {
         const defaultField: FieldDefinition|undefined = this.getDefaultField(fieldName);
         if (defaultField) return defaultField.label as string;
 
-        if (fieldName.endsWith('End')) {
+        if (fieldName.includes('.')) {
+
             const baseField = Category
                 .getFields((this.projectConfiguration.getCategoriesMap())[this.category])
                 .find((field: FieldDefinition) => {
-                    return field.name === fieldName.substring(0, fieldName.length - 3);
+                    return field.name === fieldName.substring(0, fieldName.indexOf('.'));
                 });
-            if (baseField && baseField.inputType === 'dropdownRange') {
-                return baseField.label
-                    + this.i18n({ id: 'searchConstraints.dropdownRange.to', value: ' (bis)' });
-            }
+
+            if (baseField) return baseField.label
+                    + baseField.inputType === 'dropdownRange'
+                        ? this.i18n({ id: 'searchConstraints.dropdownRange.to', value: ' (bis)' })
+                        : ''
         }
 
         const field = Category.getFields(this.projectConfiguration.getCategoriesMap()[this.category])

@@ -21,12 +21,12 @@ describe('makeCategoriesMap', () => {
             A: {
                 name: A,
                 parent: P,
-                description: {'de': ''},
-                fields: [{name: 'a', inputType: InputType.INPUT}]
+                description: { 'de': '' },
+                fields: [{ name: 'a', inputType: InputType.INPUT }]
             }, P: {
                 name: P,
-                description: {'de': ''},
-                fields: [{name: 'p', inputType: InputType.INPUT}]
+                description: { 'de': '' },
+                fields: [{ name: 'p', inputType: InputType.INPUT }]
             }
         };
 
@@ -44,6 +44,41 @@ describe('makeCategoriesMap', () => {
         expect(sortedFields[0].group).toBe(Groups.CHILD);
         expect(sortedFields[1].group).toBe(Groups.PARENT);
         expect(Category.getFields(categoriesMap[P])[0].group).toBe(Groups.PARENT);
+    });
+
+
+    it('Set all children in parent category', () => {
+
+        const A = 'A';
+        const B = 'B';
+        const P = 'P';
+
+        const confDef = {
+            A: {
+                name: A,
+                parent: P,
+                description: { 'de': '' },
+                fields: []
+            }, B: {
+                name: B,
+                parent: P,
+                description: { 'de': '' },
+                fields: []
+            }, P: {
+                name: P,
+                description: { 'de': '' },
+                fields: []
+            }
+        };
+
+        const categoriesMap = makeCategoriesMap(confDef);
+
+        expect(categoriesMap[A].parentCategory.children.length).toBe(2);
+        expect(categoriesMap[A].parentCategory.children[0].name).toEqual(A);
+        expect(categoriesMap[A].parentCategory.children[1].name).toEqual(B);
+        expect(categoriesMap[B].parentCategory.children.length).toBe(2);
+        expect(categoriesMap[B].parentCategory.children[0].name).toEqual(A);
+        expect(categoriesMap[B].parentCategory.children[1].name).toEqual(B);
     });
 
 

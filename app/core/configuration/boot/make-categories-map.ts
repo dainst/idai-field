@@ -1,4 +1,4 @@
-import {append, assoc, cond, defined, dissoc, dissocOn, flatten, flow, isNot, lookup, map, Map, Mapping, on,
+import {assoc, cond, defined, dissoc, dissocOn, flatten, flow, isNot, lookup, map, Map, Mapping, on,
     reduce, separate, throws, to, update, values, isUndefined, copy} from 'tsfun';
 import {MDInternal} from 'idai-components-2';
 import {Category} from '../model/category';
@@ -106,11 +106,10 @@ function addChildCategoryToParent(categoriesMap: Map<Category>, childDefinition:
         const childCategory = buildCategoryFromDefinition(childDefinition);
         (childCategory as any)[TEMP_FIELDS] = makeChildFields(parentCategory, childCategory);
 
-        const newParentCategory: any
-            = update(Category.CHILDREN, append(childCategory))(parentCategory as any);
-        childCategory.parentCategory = newParentCategory;
+        parentCategory.children = parentCategory.children.concat(childCategory);
+        childCategory.parentCategory = parentCategory;
 
-        return assoc(parentCategory.name, newParentCategory)(categoriesMap);
+        return categoriesMap;
     }
 }
 

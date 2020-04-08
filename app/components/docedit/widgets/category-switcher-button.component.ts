@@ -21,7 +21,7 @@ export class CategorySwitcherButtonComponent implements OnChanges{
 
     @Output() onCategoryChanged: EventEmitter<string> = new EventEmitter<string>();
 
-    @ViewChild('popover', {static: false}) private popover: any;
+    @ViewChild('popover', { static: false }) private popover: any;
 
     private categoriesTreeList: Array<Category>;
 

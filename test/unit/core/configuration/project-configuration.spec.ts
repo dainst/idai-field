@@ -1,4 +1,3 @@
-import {MDInternal} from 'idai-components-2';
 import {ProjectConfiguration} from '../../../../app/core/configuration/project-configuration';
 
 

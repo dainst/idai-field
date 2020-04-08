@@ -46,10 +46,10 @@
 
                 <div class="row">
 
-                    <div class="col-lg-2 groups">
+                    <div class="groups">
                         <ul class="nav nav-pills flex-column">
                             <li *ngFor="let group of getGroups(selectedCategory)" class="nav flex-column">
-                                <a class="nav-link"
+                                <a class="nav-link group-button"
                                         [class.active]="selectedGroup === group.name"
                                         (click)="selectedGroup = group.name">
                                     <span *ngIf="group.name === 'stem'" i18n="@@docedit.group.stem">Stammdaten</span>

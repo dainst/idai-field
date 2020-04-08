@@ -48,23 +48,26 @@ type-grid {
           position: relative;
           width: 202px;
           height: 227px;
-          margin: 10px;
+          margin: 3px;
           float: left;
           background-color: #fff;
-          border: 1px solid #dddddd;
 
           .type-grid-resource-info {
+            position: absolute;
             height: 25px;
+            width: 192px;
             line-height: 25px;
             text-align: center;
             font-size: 14px;
             user-select: none;
-            border-bottom: 1px solid #dddddd;
+            top: 195px;
+            left: 50%;
+            transform: translateX(-50%);
           }
 
           .badge {
             position: absolute;
-            bottom: 5px;
+            top: 5px;
             left: 50%;
             transform: translateX(-50%);
           }

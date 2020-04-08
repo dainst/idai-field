@@ -1,12 +1,12 @@
 <ng-template #gridElement let-document="document">
-    <div class="type-grid-resource-info">
-        {{document.resource.identifier}}
-    </div>
     <span *ngIf="getLinkedSubtype(document)" class="badge badge-primary">
         {{getLinkedSubtype(document).resource.identifier}}
     </span>
     <type-icon [category]="document.resource.category"
                [imageUrls]="getImageUrls(document)"></type-icon>
+    <div class="type-grid-resource-info">
+        {{document.resource.identifier}}
+    </div>
 </ng-template>
 
 <context-menu *ngIf="contextMenu.isOpen()"

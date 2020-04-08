@@ -5,7 +5,7 @@
   }
 
   .type-row {
-    $type-row-height: 175px;
+    $type-row-height: 181px;
 
     width: 100%;
     height: $type-row-height;
@@ -57,11 +57,11 @@
 
       .image-row .image-container {
         img {
-          max-height: $type-row-height;
+          max-height: $type-row-height - 6px;
         }
 
         .image-placeholder {
-          height: $type-row-height;
+          height: $type-row-height - 6px;
         }
       }
     }

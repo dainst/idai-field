@@ -73,7 +73,7 @@ export class ProjectConfiguration {
 
     public getCategoryAndSubcategories(supercategoryName: string): Map<Category> {
 
-        return this.getCategoryAndSubcategories_(supercategoryName);
+        return ProjectConfiguration.getCategoryAndSubcategories_(supercategoryName, this.getCategoriesMap());
     }
 
 
@@ -201,23 +201,20 @@ export class ProjectConfiguration {
     }
 
 
-    private getCategoryAndSubcategories_(supercategoryName: string): Map<Category> {
+    private static getCategoryAndSubcategories_(supercategoryName: string, projectCategoriesMap: Map<Category>)
+        : Map<Category> {
 
-        const projectCategoriesMap: Map<Category> = this.getCategoriesMap();
+        if (!projectCategoriesMap[supercategoryName]) return {};
 
-        const subcategories: any = {};
+        const subcategories: Map<Category> = {};
+        subcategories[supercategoryName] = projectCategoriesMap[supercategoryName];
 
-        if (projectCategoriesMap[supercategoryName]) {
-            subcategories[supercategoryName] = projectCategoriesMap[supercategoryName];
-
-            if (projectCategoriesMap[supercategoryName].children) {
-                for (let i = projectCategoriesMap[supercategoryName].children.length - 1; i >= 0; i--) {
-                    subcategories[projectCategoriesMap[supercategoryName].children[i].name]
-                        = projectCategoriesMap[supercategoryName].children[i];
-                }
+        if (projectCategoriesMap[supercategoryName].children) {
+            for (let i = projectCategoriesMap[supercategoryName].children.length - 1; i >= 0; i--) {
+                subcategories[projectCategoriesMap[supercategoryName].children[i].name]
+                    = projectCategoriesMap[supercategoryName].children[i];
             }
         }
-
         return subcategories;
     }
 }

@@ -152,12 +152,6 @@ export class ProjectConfiguration {
     }
 
 
-    public isVisible(categoryName: string, fieldName: string): boolean {
-
-        return this.hasProperty(categoryName, fieldName, FieldDefinition.VISIBLE);
-    }
-
-
     /**
      * Should be used only from within components.
      * 

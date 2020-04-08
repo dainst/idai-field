@@ -1,10 +1,13 @@
 <div id="type-row-{{document.resource.identifier}}" class="type-row" (click)="onSelect.emit()">
     <div class="type-info">
-        <div class="type-title">
-            <b>{{document.resource.identifier}}</b>
-        </div>
         <div class="type-image-container">
             <img *ngIf="mainThumbnailUrl" [src]="mainThumbnailUrl">
+            <category-icon *ngIf="!mainThumbnailUrl"
+                   [size]="60"
+                   [category]="document.resource.category"></category-icon>
+        </div>
+        <div class="type-title">
+            {{document.resource.identifier}}
         </div>
     </div>
 

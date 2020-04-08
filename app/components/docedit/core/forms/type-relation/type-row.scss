@@ -1,52 +1,68 @@
-#type-relation-modal .type-row {
-  $type-row-height: 175px;
+#type-relation-modal {
 
-  width: 100%;
-  height: $type-row-height;
-  max-height: $type-row-height;
-  position: relative;
-  display: flex;
-  background-color: #37588e;
-
-  &:hover {
-    opacity: 0.75;
+  .modal-body {
+    background-color: #efefef;
   }
 
-  .type-info {
-    min-width: 150px;
-    max-width: 150px;
+  .type-row {
+    $type-row-height: 175px;
+
+    width: 100%;
     height: $type-row-height;
-    border-right: 1px solid lightgrey;
-    background-color: white;
-    transition: opacity 0.25s ease-in-out;
+    max-height: $type-row-height;
+    position: relative;
+    display: flex;
+    background-color: #37588e;
+    border: 3px solid white;
+    margin: 3px 0;
 
-    .type-title {
-      text-align: center;
-      height: 25px;
-      user-select: none;
+    &:hover {
+      box-shadow: 1px 10px 30px 0 rgba(0, 0, 0, 0.3);
+      z-index: 100;
     }
 
-    .type-image-container {
-      display: flex;
-      justify-content: center;
+    .type-info {
+      min-width: 150px;
+      max-width: 150px;
+      height: $type-row-height - 6px;
+      border-right: 1px solid lightgrey;
+      background-color: white;
+      transition: opacity 0.25s ease-in-out;
 
-      img {
-        max-width: 150px;
-        max-height: 150px;
+      .type-title {
+        text-align: center;
+        height: 25px;
+        user-select: none;
+      }
+
+      .type-image-container {
+        display: flex;
+        justify-content: center;
+        height: 144px;
+
+        img {
+          object-fit: contain;
+          max-width: 150px;
+          max-height: 144px;
+        }
+
+        .category-icon {
+          margin-top: 45px;
+        }
       }
     }
-  }
 
-  image-row {
-    background-color: white;
+    image-row {
+      background-color: white;
 
-    .image-row .image-container {
-      img {
-        max-height: $type-row-height;
-      }
+      .image-row .image-container {
+        img {
+          max-height: $type-row-height;
+        }
 
-      .image-placeholder {
-        height: $type-row-height;
+        .image-placeholder {
+          height: $type-row-height;
+        }
       }
     }
   }

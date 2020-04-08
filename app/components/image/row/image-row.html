@@ -1,5 +1,5 @@
 <div #imageRowContainer class="image-row-container">
-    <div *ngIf="hasPreviousPage()" class="previous-page-button" (click)="previousPage()">
+    <div *ngIf="hasPreviousPage()" class="previous-page-button" (click)="previousPage(); $event.stopPropagation()">
         <span class="mdi mdi-chevron-left"></span>
     </div>
     <div #imageRow
@@ -23,7 +23,7 @@
             </div>
         </div>
     </div>
-    <div *ngIf="hasNextPage()" class="next-page-button" (click)="nextPage()">
+    <div *ngIf="hasNextPage()" class="next-page-button" (click)="nextPage(); $event.stopPropagation()">
         <span class="mdi mdi-chevron-right"></span>
     </div>
 </div>

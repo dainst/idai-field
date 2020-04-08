@@ -1,6 +1,6 @@
 <span class="type-icon">
     <div *ngFor="let imageUrl of imageUrls"
-         class="type-grid-image-container d-flex align-items-center justify-content-center">
+         class="image-container d-flex align-items-center justify-content-center">
         <img [src]="imageUrl">
     </div>
     <category-icon *ngIf="imageUrls.length === 0"

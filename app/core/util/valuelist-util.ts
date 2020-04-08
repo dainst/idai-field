@@ -36,6 +36,9 @@ export module ValuelistUtil {
 
     export function getValueLabel(valuelist: ValuelistDefinition, valueId: string): string {
 
+        const value: ValueDefinition|undefined = valuelist.values[valueId];
+        if (!value) return valueId;
+
         const label: { [locale: string]: string }|undefined = valuelist.values[valueId].labels;
 
         return label

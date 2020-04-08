@@ -6,7 +6,7 @@ export module ImageWidthCalculator {
     export function computeWidth(imageWidth: number, imageHeight: number, targetHeight: number,
                                  maxWidth: number): number {
 
-        const targetWidth: number = Math.round(Math.min((targetHeight / imageHeight), 1) * imageWidth);
+        const targetWidth: number = Math.round((targetHeight / imageHeight) * imageWidth);
 
         return Math.min(targetWidth, maxWidth);
     }

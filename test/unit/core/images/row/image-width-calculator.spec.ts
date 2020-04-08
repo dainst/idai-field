@@ -14,7 +14,7 @@ describe('ImageWidthCalculator', () => {
 
        expect(
            ImageWidthCalculator.computeWidth(50, 100, 200, 1000)
-       ).toBe(50);
+       ).toBe(100);
    });
 
 

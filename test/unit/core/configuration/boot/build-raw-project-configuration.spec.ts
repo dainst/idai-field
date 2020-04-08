@@ -1047,7 +1047,7 @@ describe('buildRawProjectConfiguration', () => {
         )));
 
         expect(result['A'].groups[0].fields[0].inputType).toBe(InputType.TEXT);
-        expect(result['A'].groups[0].fields[0].group).toBe(Groups.STEM); // TODO remove group from FieldDefinition
+        expect(result['A'].groups[0].fields[0].group).toBe(Groups.STEM);
         expect(result['A'].groups[1].fields[0].inputType).toBe(InputType.TEXT);
     });
 
@@ -1339,6 +1339,6 @@ describe('buildRawProjectConfiguration', () => {
             {}, {}, {}
         );
 
-        // TODO expectation?
+        // expectation?
     });*/
 });

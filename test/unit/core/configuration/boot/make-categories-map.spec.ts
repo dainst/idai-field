@@ -1,4 +1,4 @@
-import {FieldResource} from 'idai-components-2';
+import {FieldResource, MDInternal} from 'idai-components-2';
 import {Groups} from '../../../../../app/core/configuration/model/group';
 import {FieldDefinition} from '../../../../../app/core/configuration/model/field-definition';
 import {Category} from '../../../../../app/core/configuration/model/category';
@@ -112,5 +112,28 @@ describe('makeCategoriesMap', () => {
         ).toThrow([[
             'tried to overwrite field of parent category', 'fieldA', 'FirstLevelCategory', 'SecondLevelCategory'
         ]]);
+    });
+
+
+    it('should fail if parent category is not defined', () => {
+
+        const secondLevelCategory = {
+            name: 'SecondLevelCategory',
+            parent: 'FirstLevelCategory',
+            groups: [{
+                name: 'stem',
+                fields: [
+                    {
+                        name: 'fieldA'
+                    },
+                    {
+                        name: 'fieldB'
+                    }]
+            }]
+        };
+
+        expect(() =>
+            makeCategoriesMap({ SecondLevelCategory: secondLevelCategory } as any)
+        ).toThrow(MDInternal.PROJECT_CONFIGURATION_ERROR_GENERIC);
     });
 });

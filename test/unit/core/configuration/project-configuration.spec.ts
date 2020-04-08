@@ -118,13 +118,7 @@ describe('ProjectConfiguration', () => {
     });
 
 
-    /*xit('should fail if parent category is not defined', () => { // TODO move test to buildRawProjectConfiguration
-
-        expect(() => {
-            new ProjectConfiguration({ categories: { SecondLevelCategory: secondLevelCategory1 } } as any);
-        }).toThrow(MDInternal.PROJECT_CONFIGURATION_ERROR_GENERIC);
-    });
-
+    /* // TODO move test to buildRawProjectConfiguration
 
     xit('should merge child field with parent field of the same name', () => {
 

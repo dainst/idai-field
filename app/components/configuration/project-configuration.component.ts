@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {to, on, is, includedIn, or, any, compose, map} from 'tsfun';
+import {to, on, is, includedIn, or, any, compose, map, Predicate} from 'tsfun';
 import {ProjectConfiguration} from '../../core/configuration/project-configuration';
 import {Category} from '../../core/configuration/model/category';
 import {Group} from '../../core/configuration/model/group';
@@ -8,6 +8,7 @@ import {ValuelistDefinition} from '../../core/configuration/model/valuelist-defi
 import {ValuelistUtil} from '../../core/util/valuelist-util';
 import {TabManager} from '../../core/tabs/tab-manager';
 import {Named} from '../../core/util/named';
+import { debugId } from '../../core/util/utils';
 
 const locale: string = require('electron').remote.getGlobal('config').locale;
 
@@ -75,11 +76,9 @@ export class ProjectConfigurationComponent {
             );
     }
 
-    public hasCustomFields(group: Group): boolean {
-
-        return compose(
-            map(to(FieldDefinition.SOURCE)),
-            any(is(FieldDefinition.Source.CUSTOM))
-        )(group.fields);
-    };
+    public hasCustomFields: Predicate<Group> = compose(
+        to(Group.FIELDS),
+        map(to(FieldDefinition.SOURCE)),
+        any(is(FieldDefinition.Source.CUSTOM))
+    );
 }

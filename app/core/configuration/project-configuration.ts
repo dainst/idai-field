@@ -171,8 +171,6 @@ export class ProjectConfiguration {
 
 
     /**
-     * TODO since the labels are stored in the field definitions inside the groups, we should be able to get rid of this function
-     *
      * Gets the label for the field if it is defined.
      * Otherwise it returns the fields definitions name.
      *

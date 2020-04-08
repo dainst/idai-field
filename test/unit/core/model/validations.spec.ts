@@ -89,7 +89,7 @@ describe('Validations', () => {
 
     it('validate defined fields - exclude period, periodEnd if dating defined for category', () => {
 
-        const datastore = jasmine.createSpyObj('datastore',['find']);
+        const datastore = jasmine.createSpyObj('datastore', ['find']);
         datastore.find.and.returnValues(Promise.resolve({ totalCount: 0, documents: [] }));
 
         const doc = {
@@ -97,8 +97,7 @@ describe('Validations', () => {
                 id: '1',
                 category: 'T3',
                 dating: 'abc',
-                period: 'abc',
-                periodEnd: 'abc',
+                period: { value: 'abc', endValue: 'de' },
                 relations: { isRecordedIn: ['0'] },
             }
         };

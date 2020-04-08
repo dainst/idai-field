@@ -257,13 +257,13 @@ export module Validations {
 
         const definedFields: Array<any> = projectFields.concat(defaultFields);
 
-        let invalidFields: Array<any> = [];
+        const invalidFields: Array<any> = [];
 
         for (let resourceField in resource) {
             if (resource.hasOwnProperty(resourceField)) {
                 let fieldFound: boolean = false;
-                for (let i in definedFields) {
-                    if (definedFields[i].name === resourceField) {
+                for (let definedField of definedFields) {
+                    if (definedField.name === resourceField) {
                         fieldFound = true;
                         break;
                     }
@@ -272,26 +272,7 @@ export module Validations {
             }
         }
 
-        const dropDownRangeEndFields = getDropdownRangeEndFields(resource, projectFields);
-        invalidFields = subtract(dropDownRangeEndFields)(invalidFields);
-        return (invalidFields.length > 0) ? invalidFields : [];
-    }
-
-
-    /**
-     * @returns dropDownRange 'End'-fields
-     */
-    function getDropdownRangeEndFields(resource: Resource|NewResource,
-        fieldDefinitions: Array<FieldDefinition>): FieldName[] {
-
-        return reduceForFieldsOfCategory(
-            resource,
-            fieldDefinitions,
-            INPUT_TYPES.DROPDOWN_RANGE,
-            (dropdownRangeEndFields: any, dropdownRangeFieldName: any) => {
-                return dropdownRangeEndFields.concat(dropdownRangeFieldName + 'End')
-            },
-            []);
+        return invalidFields;
     }
 
 

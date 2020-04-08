@@ -22,6 +22,7 @@ import {ImagesState} from '../../../core/images/overview/view/images-state';
 export class ResourceViewModalComponent extends ViewModalComponent {
 
     public document: FieldDocument;
+    public ready: boolean = false;
 
     private resourceEdited: boolean = false;
     private expandAllGroups: boolean = false;
@@ -49,8 +50,12 @@ export class ResourceViewModalComponent extends ViewModalComponent {
 
     public async initialize(document: FieldDocument) {
 
+        this.ready = false;
+
         this.document = document;
         await this.reloadImages();
+
+        this.ready = true;
     }
 
 

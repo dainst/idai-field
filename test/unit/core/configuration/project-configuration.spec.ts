@@ -172,37 +172,5 @@ describe('ProjectConfiguration', () => {
         // there has a bug where the parent fields label has been overwritten, so it was "Field A1", too
         expect(firstLevelCategoryFields[0].label).toEqual('Field A');
     });
-
-    // err cases
-
-    xit('should reject a field with the same name as a parent field', () => { // TODO move to build categories
-
-        const firstLevelCategory = {
-            name: 'FirstLevelCategory',
-            fields: [
-                {
-                    name: 'fieldA',
-                    label: 'Field A',
-                    inputType: 'text'
-                }
-            ]
-        };
-
-        const secondLevelCategory = {
-            name: 'SecondLevelCategory',
-            parent: 'FirstLevelCategory',
-            fields: [
-                {
-                    name: 'fieldA',
-                    label: 'Field A1'
-                }
-            ]
-        };
-
-        expect(
-            () => new ProjectConfiguration({ categories: [firstLevelCategory, secondLevelCategory]} as any)
-        ).toThrow([[
-            'tried to overwrite field of parent category', 'fieldA', 'FirstLevelCategory', 'SecondLevelCategory'
-        ]]);
-    });*/
+    */
 });

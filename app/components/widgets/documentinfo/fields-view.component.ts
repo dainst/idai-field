@@ -4,7 +4,8 @@ import {I18n} from '@ngx-translate/i18n-polyfill';
 import {isUndefinedOrEmpty, isBoolean, isArray, filter, Pair, update, compose, Mapping, on, is, isDefined,
     map, flatten, lookup, to, pairWith, conds, singleton, otherwise, LEFT, RIGHT} from 'tsfun';
 import {flow as asyncFlow, map as asyncMap} from 'tsfun/async';
-import {FieldDocument,  ReadDatastore, Resource, Dating, Dimension, Literature, ValOptionalEndVal} from 'idai-components-2';
+import {FieldDocument,  ReadDatastore, Resource, Dating, Dimension, Literature,
+    ValOptionalEndVal} from 'idai-components-2';
 import {RoutingService} from '../../routing-service';
 import {Name} from '../../../core/constants';
 import {UtilTranslations} from '../../../core/util/util-translations';

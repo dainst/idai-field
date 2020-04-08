@@ -120,8 +120,7 @@
       },
       "wallSide": {
         "inputType": "radio"
-      },
-      "orientation": {}
+      }
     },
     "commons": [
       "orientation",

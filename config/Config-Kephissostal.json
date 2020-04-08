@@ -10,7 +10,6 @@
   "Survey:default": {
     "hidden": [],
     "fields": {
-      "orientation": {},
       "researchMethod": {
         "inputType": "checkboxes"
       },

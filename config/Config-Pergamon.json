@@ -1003,11 +1003,10 @@
     "hidden": [],
     "commons": [
       "dimensionHeight",
-      "dimensionVerticalExtent"
+      "dimensionVerticalExtent",
+      "orientation"
     ],
-    "fields": {
-      "orientation": {}
-    },
+    "fields": {},
     "color": "#c6dbef",
     "valuelists": {
       "orientation": "orientation-default-1"

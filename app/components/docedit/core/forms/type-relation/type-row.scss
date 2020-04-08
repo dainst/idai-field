@@ -8,6 +8,10 @@
   display: flex;
   background-color: #37588e;
 
+  &:hover {
+    opacity: 0.75;
+  }
+
   .type-info {
     min-width: 150px;
     max-width: 150px;
@@ -15,10 +19,6 @@
     border-right: 1px solid lightgrey;
     background-color: white;
     transition: opacity 0.25s ease-in-out;
-
-    &:hover {
-      opacity: 0.75;
-    }
 
     .type-title {
       text-align: center;

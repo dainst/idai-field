@@ -19,7 +19,7 @@
             <category-icon [category]="category.name" size="30"></category-icon>
             <div class="category-label">
                 {{category.label}}
-                <span *ngIf="hasCustomFields(category)"> *</span>
+                <span *ngIf="highlightCustomCategories && hasCustomFields(category)"> *</span>
             </div>
         </div>
     </li>

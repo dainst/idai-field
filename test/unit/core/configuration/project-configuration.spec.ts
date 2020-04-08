@@ -116,46 +116,4 @@ describe('ProjectConfiguration', () => {
         expect(fields[0].name).toEqual('fieldA');
         expect(fields[1].name).toEqual('fieldB');
     });
-
-
-    /* // TODO move test to buildRawProjectConfiguration
-
-
-
-
-    xit('should only modify field in child', () => {
-
-        const firstLevelCategory = {
-            type: 'FirstLevelCategory',
-            fields: [
-                {
-                    name: 'fieldA',
-                    label: 'Field A',
-                    inputType: 'text'
-                }
-            ]
-        };
-
-        const secondLevelCategory = {
-            type: 'SecondLevelCategory',
-            parent: 'FirstLevelCategory',
-            fields: [
-                {
-                    name: 'fieldA',
-                    label: 'Field A1'
-                }
-            ]
-        };
-
-        const configuration: ProjectConfiguration
-            = new ProjectConfiguration({ categories: [firstLevelCategory, secondLevelCategory] } as any);
-        const firstLevelCategoryFields = configuration.getFieldDefinitions('FirstLevelCategory');
-        const secondLevelCategoryFields = configuration.getFieldDefinitions('SecondLevelCategory');
-
-        expect(secondLevelCategoryFields[0].label).toEqual('Field A1');
-
-        // there has a bug where the parent fields label has been overwritten, so it was "Field A1", too
-        expect(firstLevelCategoryFields[0].label).toEqual('Field A');
-    });
-    */
 });

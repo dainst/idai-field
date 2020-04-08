@@ -7,6 +7,7 @@ import {INPUT_TYPE, INPUT_TYPES} from '../constants';
 import {ProjectConfiguration} from '../configuration/project-configuration';
 import {FieldDefinition} from '../configuration/model/field-definition';
 import {RelationDefinition} from '../configuration/model/relation-definition';
+import {Named} from '../util/named';
 
 
 export module Validations {
@@ -240,7 +241,7 @@ export module Validations {
         if (!resource.category) return false;
         return projectConfiguration
             .getCategoriesArray()
-            .some(on('name', is(resource.category)));
+            .some(on(Named.NAME, is(resource.category)));
     }
 
 

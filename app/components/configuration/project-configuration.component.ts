@@ -76,9 +76,11 @@ export class ProjectConfigurationComponent {
             );
     }
 
-    public hasCustomFields: (group: Group) => boolean = compose(
-        map(to(Group.FIELDS)),
-        map(to(FieldDefinition.SOURCE)),
-        any(is(FieldDefinition.Source.CUSTOM))
-    );
+    public hasCustomFields(group: Group): boolean {
+
+        return compose(
+            map(to(FieldDefinition.SOURCE)),
+            any(is(FieldDefinition.Source.CUSTOM))
+        )(group.fields);
+    };
 }

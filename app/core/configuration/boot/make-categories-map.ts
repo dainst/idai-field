@@ -1,7 +1,5 @@
-import {
-    append, assoc, cond, defined, dissoc, dissocOn, flatten, flow, isNot, lookup, map, Map, Mapping, on,
-    reduce, separate, throws, to, update, values, isUndefined, copy
-} from 'tsfun';
+import {append, assoc, cond, defined, dissoc, dissocOn, flatten, flow, isNot, lookup, map, Map, Mapping, on,
+    reduce, separate, throws, to, update, values, isUndefined, copy} from 'tsfun';
 import {MDInternal} from 'idai-components-2';
 import {Category} from '../model/category';
 import {CategoryDefinition} from '../model/category-definition';
@@ -58,13 +56,14 @@ const fillGroups = map((category: Category) => {
     });
 
 
-function makeGroupsMap(fields: Array<FieldDefinition>) {
+function makeGroupsMap(fields: Array<FieldDefinition>): Map<Group> {
 
     const groups: Map<Group> = {};
     for (let field of fields) {
         if (!groups[field.group]) groups[field.group] = Group.create(field.group);
         groups[field.group].fields = groups[field.group].fields.concat(field);
     }
+
     return groups;
 }
 
@@ -73,6 +72,7 @@ function flattenCategoriesTreeMapToCategoriesMap(categoriesMap: Map<Category>): 
 
     const topLevelCategories: Array<Category> = values(categoriesMap);
     const children: Array<Category> = flatten(topLevelCategories.map(to(Category.CHILDREN)));
+
     return namedArrayToNamedMap(topLevelCategories.concat(children));
 }
 
@@ -90,10 +90,12 @@ function addChildCategory(categoriesMap: Map<Category>, childDefinition: Categor
 }
 
 
-function sortGroupFields(group: Group) {
+function sortGroupFields(group: Group): Group {
 
-    group.fields = sortGroups(group.fields, group.name);
-    return group;
+    const clonedGroup: Group = clone(group);
+    clonedGroup.fields = sortGroups(clonedGroup.fields, clonedGroup.name);
+
+    return clonedGroup;
 }
 
 
@@ -144,7 +146,8 @@ function makeChildFields(category: Category, child: Category): Array<FieldDefini
 }
 
 
-function getCombinedFields(parentFields: Array<FieldDefinition>, childFields: Array<FieldDefinition>) {
+function getCombinedFields(parentFields: Array<FieldDefinition>,
+                           childFields: Array<FieldDefinition>): Array<FieldDefinition> {
 
     const fields: Array<FieldDefinition> = clone(parentFields);
 
@@ -176,7 +179,7 @@ function ifUndefinedSetGroupTo(name: string): Mapping<Array<FieldDefinition>> {
 }
 
 
-function sortGroups(fields: Array<FieldDefinition>, groupName: string) {
+function sortGroups(fields: Array<FieldDefinition>, groupName: string): Array<FieldDefinition> {
 
     const copiedFields = copy(fields);
 

@@ -120,16 +120,7 @@ describe('ProjectConfiguration', () => {
 
     /* // TODO move test to buildRawProjectConfiguration
 
-    xit('should merge child field with parent field of the same name', () => {
 
-        const configuration: ProjectConfiguration
-            = new ProjectConfiguration({ categories: [secondLevelCategory2, firstLevelCategory]} as any);
-        const fields = configuration.getFieldDefinitions('SecondLevelCategory');
-
-        expect(fields.length).toBe(1);
-        expect(fields[0].inputType).toEqual('unsignedFloat');
-        expect(fields[0].label).toEqual('Field A');
-    });
 
 
     xit('should only modify field in child', () => {

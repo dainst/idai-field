@@ -71,7 +71,6 @@ export class ProjectConfiguration {
         return filter(on(Category.PARENT_CATEGORY, isUndefined))(this.getCategoriesMap());
     }
 
-    // TODO review if duplicate of getCategoriesTree
     public getCategoryAndSubcategories(supercategoryName: string): Map<Category> {
 
         return this.getCategoryAndSubcategories_(supercategoryName);

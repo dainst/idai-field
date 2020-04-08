@@ -20,7 +20,7 @@ describe('ProjectConfiguration', () => {
         }]
     };
 
-    const secondLevelCategory1 = {
+    const secondLevelCategory = {
         name: 'SecondLevelCategory',
         parent: 'FirstLevelCategory',
         groups: [{
@@ -32,19 +32,6 @@ describe('ProjectConfiguration', () => {
                 {
                     name: 'fieldB'
                 }]
-        }]
-    };
-
-
-    const secondLevelCategory2 = {
-        name: 'SecondLevelCategory',
-        parent: 'FirstLevelCategory',
-        groups: [{
-            name: 'stem',
-            fields: [{
-                name: 'fieldA',
-                inputType: 'unsignedFloat'
-            }]
         }]
     };
 
@@ -98,7 +85,7 @@ describe('ProjectConfiguration', () => {
     it('should let categories inherit fields from parent categories', () => {
 
         const configuration: ProjectConfiguration
-            = new ProjectConfiguration([[firstLevelCategory, secondLevelCategory1 ] as any, []]);
+            = new ProjectConfiguration([[firstLevelCategory, secondLevelCategory ] as any, []]);
         const fields = configuration.getFieldDefinitions('SecondLevelCategory');
 
         expect(fields[0].name).toEqual('fieldA');
@@ -109,7 +96,7 @@ describe('ProjectConfiguration', () => {
     it('list parent category fields first', () => {
 
         const configuration: ProjectConfiguration
-            = new ProjectConfiguration([[secondLevelCategory1, firstLevelCategory] as any, []]);
+            = new ProjectConfiguration([[secondLevelCategory, firstLevelCategory] as any, []]);
         const fields = configuration.getFieldDefinitions('SecondLevelCategory');
 
         expect(fields[0].name).toEqual('fieldA');

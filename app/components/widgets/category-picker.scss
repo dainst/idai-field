@@ -54,5 +54,8 @@
   .category-label,
   .all-categories-label {
     user-select: none;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 }

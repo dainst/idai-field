@@ -45,7 +45,7 @@
             <div id="plus-button-container">
                 <plus-button *ngIf="isPlusButtonShown()"
                              id="create-document-button"
-                             [placement]="'top'"
+                             [placement]="documents.length > 0 ? 'top' : 'bottom'"
                              [preselectedGeometryType]="'none'"
                              [preselectedCategory]="getCurrentFilterCategory()"
                              [liesWithin]="getSelectedSegmentDoc()"

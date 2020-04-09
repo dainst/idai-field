@@ -8,7 +8,6 @@ import {ValuelistDefinition} from '../../core/configuration/model/valuelist-defi
 import {ValuelistUtil} from '../../core/util/valuelist-util';
 import {TabManager} from '../../core/tabs/tab-manager';
 import {Named} from '../../core/util/named';
-import { debugId } from '../../core/util/utils';
 
 const locale: string = require('electron').remote.getGlobal('config').locale;
 

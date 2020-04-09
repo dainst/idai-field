@@ -1117,7 +1117,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.DOCEDIT_ERROR_RESOLVE_CONFLICT] = {
             content: i18n({
                 id: 'messages.docedit.error.resolveConflict',
-                value: 'Der Konflikt konnte nicht gelöst werden. Bitte prüfen Sie, ob der Konflikt bereits von einem anderen Benutzer gelöst wurde.'
+                value: 'Der Konflikt konnte nicht gelöst werden. Bitte prüfen Sie, ob der Konflikt bereits von einem anderen Benutzer bzw. einer anderen Benutzerin gelöst wurde.'
             }),
             level: 'danger',
             params: [],
@@ -1450,7 +1450,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.RESOURCES_ERROR_RESOURCE_DELETED] = {
             content: i18n({
                 id: 'messages.resources.error.resourceDeleted',
-                value: 'Die Ressource \'[0]\' kann nicht aufgerufen werden, da sie in der Zwischenzeit von einem anderen Benutzer gelöscht wurde.'
+                value: 'Die Ressource \'[0]\' kann nicht aufgerufen werden, da sie in der Zwischenzeit von einem anderen Benutzer bzw. einer anderen Benutzerin gelöscht wurde.'
             }),
             level: 'danger',
             params: [],
@@ -1459,7 +1459,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.RESOURCES_ERROR_UNKNOWN_RESOURCE_DELETED] = {
             content: i18n({
                 id: 'messages.resources.error.unknownResourceDeleted',
-                value: 'Die Ressource kann nicht aufgerufen werden, da sie in der Zwischenzeit von einem anderen Benutzer gelöscht wurde.'
+                value: 'Die Ressource kann nicht aufgerufen werden, da sie in der Zwischenzeit von einem anderen Benutzer bzw. einer anderen Benutzerin gelöscht wurde.'
             }),
             level: 'danger',
             params: [],
@@ -1468,7 +1468,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.RESOURCES_ERROR_PARENT_RESOURCE_DELETED] = {
             content: i18n({
                 id: 'messages.resources.error.parentResourceDeleted',
-                value: 'Die Ressource kann nicht angelegt werden, da die übergeordnete Ressource in der Zwischenzeit von einem anderen Benutzer gelöscht wurde.'
+                value: 'Die Ressource kann nicht angelegt werden, da die übergeordnete Ressource in der Zwischenzeit von einem anderen Benutzer bzw. einer anderen Benutzerin gelöscht wurde.'
             }),
             level: 'danger',
             params: [],

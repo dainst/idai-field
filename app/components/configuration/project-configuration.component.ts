@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {to, on, is, includedIn, or, any, compose, map, Predicate, longerThan} from 'tsfun';
+import {FieldResource} from 'idai-components-2';
 import {ProjectConfiguration} from '../../core/configuration/project-configuration';
 import {Category} from '../../core/configuration/model/category';
 import {Group} from '../../core/configuration/model/group';
@@ -28,7 +29,7 @@ export class ProjectConfigurationComponent {
     public selectedCategory: Category;
     public selectedGroup: string;
 
-    private OVERRIDE_VISIBLE_FIELDS = ['identifier', 'shortDescription'];
+    private OVERRIDE_VISIBLE_FIELDS = [FieldResource.IDENTIFIER, FieldResource.SHORTDESCRIPTION];
 
 
     constructor(private projectConfiguration: ProjectConfiguration,

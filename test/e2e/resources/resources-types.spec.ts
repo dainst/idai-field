@@ -63,10 +63,10 @@ describe('resources/types --', () => {
 
         ResourcesTypeGridPage.clickEditButton();
         DoceditPage.clickGotoIdentificationTab();
-        DoceditRelationsTabPage.clickAddRelationForGroupWithIndex('hat-instanz');
-        DoceditRelationsTabPage.typeInRelationByIndices('hat-instanz', 0,
+        DoceditRelationsTabPage.clickAddRelationForGroupWithIndex('zugeordnete-funde');
+        DoceditRelationsTabPage.typeInRelationByIndices('zugeordnete-funde', 0,
             'testf1');
-        DoceditRelationsTabPage.clickChooseRelationSuggestion('hat-instanz', 0,
+        DoceditRelationsTabPage.clickChooseRelationSuggestion('zugeordnete-funde', 0,
             0);
         DoceditPage.clickSaveDocument();
     }

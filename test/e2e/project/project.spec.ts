@@ -16,7 +16,7 @@ const common = require('../common');
  * @author Thomas Kleinke
  *
  */
-describe('project --', function() {
+xdescribe('project --', function() {
 
     const appDataPath = browser.params.appDataPath;
 

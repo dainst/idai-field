@@ -2,6 +2,7 @@ import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {FormsModule} from '@angular/forms';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {Messages} from 'idai-components-2';
 import {ResourcesComponent} from './resources.component';
 import {GeometryViewComponent} from './map/list/geometry-view.component';
 import {EditableMapComponent} from './map/map/editable-map.component';
@@ -141,7 +142,8 @@ const remote = require('electron').remote;
                 changesStream: ChangesStream,
                 resourcesStateManager: ResourcesStateManager,
                 loading: Loading,
-                indexFacade: IndexFacade
+                indexFacade: IndexFacade,
+                messages: Messages
             ) {
                 return new ViewFacade(
                     projectConfiguration,
@@ -149,7 +151,8 @@ const remote = require('electron').remote;
                     changesStream,
                     resourcesStateManager,
                     loading,
-                    indexFacade
+                    indexFacade,
+                    messages
                 );
             },
             deps: [
@@ -158,7 +161,8 @@ const remote = require('electron').remote;
                 ChangesStream,
                 ResourcesStateManager,
                 Loading,
-                IndexFacade
+                IndexFacade,
+                Messages
             ]
         },
     ],

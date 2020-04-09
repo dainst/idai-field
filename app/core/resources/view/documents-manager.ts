@@ -111,7 +111,15 @@ export class DocumentsManager {
     public async moveInto(document: FieldDocument|string|undefined, resetFiltersAndSelection: boolean = false,
                           rebuildNavigationPath: boolean = false) {
 
-        if (typeof(document) === 'string') document = await this.datastore.get(document);
+        try {
+            if (typeof (document) === 'string') {
+                document = await this.datastore.get(document);
+            } else if (document) {
+                await this.datastore.get(document.resource.id);
+            }
+        } catch (errWithParams) {
+            throw errWithParams; // Throw error if the resource has been deleted from remote
+        }
 
         if (rebuildNavigationPath && document) {
             await this.resourcesStateManager.updateNavigationPathForDocument(document, true);
@@ -157,20 +165,16 @@ export class DocumentsManager {
 
         this.removeNewDocument();
 
-        try {
-            const documentToSelect: FieldDocument = await this.datastore.get(resourceId);
-            this.newDocumentsFromRemote
-                = subtract([documentToSelect.resource.id])(this.newDocumentsFromRemote);
+        const documentToSelect: FieldDocument = await this.datastore.get(resourceId);
+        this.newDocumentsFromRemote
+            = subtract([documentToSelect.resource.id])(this.newDocumentsFromRemote);
 
-            if (adjustListIfNecessary && !(await this.isDocumentInList(documentToSelect))) {
-                await this.makeSureSelectedDocumentAppearsInList(documentToSelect);
-                await this.populateDocumentList();
-            }
-
-            this.selectAndNotify(documentToSelect);
-        } catch (e) {
-            console.error('documentToSelect undefined in DocumentsManager.setSelected()');
+        if (adjustListIfNecessary && !(await this.isDocumentInList(documentToSelect))) {
+            await this.makeSureSelectedDocumentAppearsInList(documentToSelect);
+            await this.populateDocumentList();
         }
+
+        this.selectAndNotify(documentToSelect);
     }
 
 

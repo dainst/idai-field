@@ -408,5 +408,13 @@
   "Metal:default": {
     "fields": {},
     "hidden": []
+  },
+  "TypeCatalog:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Type:default": {
+    "hidden": [],
+    "fields": {}
   }
 }

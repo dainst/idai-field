@@ -1241,5 +1241,13 @@
       "color": "colors-default-1",
       "featureBorders": "Feature-featureBorders-default"
     }
+  },
+  "TypeCatalog:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Type:default": {
+    "hidden": [],
+    "fields": {}
   }
 }

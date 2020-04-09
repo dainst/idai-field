@@ -323,5 +323,13 @@
     "valuelists": {
       "material": "Sample-material-ayamonte"
     }
+  },
+  "TypeCatalog:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Type:default": {
+    "hidden": [],
+    "fields": {}
   }
 }

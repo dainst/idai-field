@@ -631,5 +631,13 @@
     "valuelists": {
       "classification": "Mollusk-classification-WES"
     }
+  },
+  "TypeCatalog:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Type:default": {
+    "hidden": [],
+    "fields": {}
   }
 }

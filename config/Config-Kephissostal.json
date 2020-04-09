@@ -764,5 +764,13 @@
     "valuelists": {
       "GeländemerkmalType": "TerrainFeature-GeländemerkmalType-Kephissostal"
     }
+  },
+  "TypeCatalog:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Type:default": {
+    "hidden": [],
+    "fields": {}
   }
 }

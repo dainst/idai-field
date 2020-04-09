@@ -59,5 +59,13 @@
   "Image:default": {
     "hidden": [],
     "fields": {}
+  },
+  "TypeCatalog:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Type:default": {
+    "hidden": [],
+    "fields": {}
   }
 }

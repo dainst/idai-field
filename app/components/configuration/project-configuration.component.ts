@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {to, on, is, includedIn, or, any, compose, map, Predicate} from 'tsfun';
+import {to, on, is, includedIn, or, any, compose, map, Predicate, longerThan} from 'tsfun';
 import {ProjectConfiguration} from '../../core/configuration/project-configuration';
 import {Category} from '../../core/configuration/model/category';
 import {Group} from '../../core/configuration/model/group';
@@ -42,7 +42,7 @@ export class ProjectConfigurationComponent {
 
     public getValueLabel = ValuelistUtil.getValueLabel;
 
-    public getGroups = (category: Category): any[] => category.groups;
+    public getGroups = (category: Category): Array<Group> => category.groups.filter(on(Group.FIELDS, longerThan([])));
 
     public getValuelistDescription = (valuelist: ValuelistDefinition) => valuelist.description?.[locale];
 

@@ -52,14 +52,7 @@
                                 <a class="nav-link group-button"
                                         [class.active]="selectedGroup === group.name"
                                         (click)="selectedGroup = group.name">
-                                    <span *ngIf="group.name === 'stem'" i18n="@@docedit.group.stem">Stammdaten</span>
-                                    <span *ngIf="group.name === 'identification'" i18n="@@docedit.group.identification">Bestimmung</span>
-                                    <span *ngIf="group.name === 'dimension'" i18n="@@docedit.group.dimensions">Maße</span>
-                                    <span *ngIf="group.name === 'position'" i18n="@@docedit.group.position">Lage</span>
-                                    <span *ngIf="group.name === 'time'" i18n="@@docedit.group.time">Zeit</span>
-                                    <span *ngIf="group.name === 'child'">{{ selectedCategory.label }}</span>
-                                    <span *ngIf="group.name === 'parent' && selectedCategory.parentCategory">{{ selectedCategory.parentCategory.label }}</span>
-                                    <span *ngIf="group.name === 'parent' && !selectedCategory.parentCategory">{{ selectedCategory.label }}</span>
+                                    {{group.label}}
                                     <span *ngIf="hasCustomFields(group)"> *</span>
                                 </a>
                             </li>

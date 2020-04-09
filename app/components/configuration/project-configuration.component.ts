@@ -42,7 +42,7 @@ export class ProjectConfigurationComponent {
 
     public getValueLabel = ValuelistUtil.getValueLabel;
 
-    public getGroups = (category: Category): any[] => category.groups.filter(on(Group.FIELDS, longerThan([])));
+    public getGroups = (category: Category): Array<Group> => category.groups.filter(on(Group.FIELDS, longerThan([])));
 
     public getValuelistDescription = (valuelist: ValuelistDefinition) => valuelist.description?.[locale];
 

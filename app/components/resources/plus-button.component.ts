@@ -7,6 +7,7 @@ import {M} from '../messages/m';
 import {Category} from '../../core/configuration/model/category';
 import {ProjectConfiguration} from '../../core/configuration/project-configuration';
 import {ViewFacade} from '../../core/resources/view/view-facade';
+import {FieldReadDatastore} from '../../core/datastore/field/field-read-datastore';
 
 
 export type PlusButtonStatus = 'enabled'|'disabled-hierarchy';
@@ -27,10 +28,10 @@ export class PlusButtonComponent implements OnChanges {
     @Input() placement: string = 'bottom'; // top | bottom | left | right
 
     // undefined when in overview or type management
-    @Input() isRecordedIn: FieldDocument | undefined;
+    @Input() isRecordedIn: FieldDocument|undefined;
 
     // undefined when current level is operation
-    @Input() liesWithin: FieldDocument | undefined;
+    @Input() liesWithin: FieldDocument|undefined;
 
     @Input() preselectedCategory: string;
     @Input() preselectedGeometryType: string;
@@ -52,6 +53,7 @@ export class PlusButtonComponent implements OnChanges {
         private messages: Messages,
         private projectCategories: ProjectCategories,
         private viewFacade: ViewFacade,
+        private datastore: FieldReadDatastore,
         private i18n: I18n) {
 
         this.resourcesComponent.listenToClickEvents().subscribe(event => {
@@ -70,9 +72,15 @@ export class PlusButtonComponent implements OnChanges {
     }
 
 
-    public startDocumentCreation(geometryType: string = this.preselectedGeometryType) {
+    public async startDocumentCreation(geometryType: string = this.preselectedGeometryType) {
 
         if (this.popover) this.popover.close();
+
+        try {
+            await this.assertParentResourceStillExists();
+        } catch (msgWithParams) {
+            return this.messages.add(msgWithParams);
+        }
 
         const newDocument: FieldDocument = <FieldDocument> {
             resource: {
@@ -210,5 +218,16 @@ export class PlusButtonComponent implements OnChanges {
         return projectConfiguration.isAllowedRelationDomainCategory(
             category.name, this.liesWithin.resource.category, 'liesWithin'
         );
+    }
+
+
+    private async assertParentResourceStillExists() {
+
+        try {
+            if (this.isRecordedIn) await this.datastore.get(this.isRecordedIn.resource.id);
+            if (this.liesWithin) await this.datastore.get(this.liesWithin.resource.id);
+        } catch {
+            throw [M.RESOURCES_ERROR_PARENT_RESOURCE_DELETED];
+        }
     }
 }

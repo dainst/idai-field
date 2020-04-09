@@ -183,6 +183,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static RESOURCES_ERROR_ONE_PROJECT_MUST_EXIST = 'resources.error.oneProjectMustExist';
     public static RESOURCES_ERROR_RESOURCE_DELETED = 'resources.error.resourceDeleted';
     public static RESOURCES_ERROR_UNKNOWN_RESOURCE_DELETED = 'resources.error.unknownResourceDeleted';
+    public static RESOURCES_ERROR_PARENT_RESOURCE_DELETED = 'resources.error.parentResourceDeleted';
 
 
     public msgs : { [id: string]: Message } = {};
@@ -1459,6 +1460,15 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             content: i18n({
                 id: 'messages.resources.error.unknownResourceDeleted',
                 value: 'Die Ressource kann nicht aufgerufen werden, da sie in der Zwischenzeit von einem anderen Benutzer gelöscht wurde.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.RESOURCES_ERROR_PARENT_RESOURCE_DELETED] = {
+            content: i18n({
+                id: 'messages.resources.error.parentResourceDeleted',
+                value: 'Die Ressource kann nicht angelegt werden, da die übergeordnete Ressource in der Zwischenzeit von einem anderen Benutzer gelöscht wurde.'
             }),
             level: 'danger',
             params: [],

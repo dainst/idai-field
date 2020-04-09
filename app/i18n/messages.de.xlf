@@ -4398,8 +4398,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="messages.docedit.error.resolveConflict" datatype="html">
-        <source>Der Konflikt konnte nicht gelöst werden. Bitte prüfen Sie, ob der Konflikt bereits von einem anderen Benutzer gelöst wurde.</source>
-        <target state="final">Der Konflikt konnte nicht gelöst werden. Bitte prüfen Sie, ob der Konflikt bereits von einem anderen Benutzer gelöst wurde.</target>
+        <source>Der Konflikt konnte nicht gelöst werden. Bitte prüfen Sie, ob der Konflikt bereits von einem anderen Benutzer bzw. einer anderen Benutzerin gelöst wurde.</source>
+        <target state="final">Der Konflikt konnte nicht gelöst werden. Bitte prüfen Sie, ob der Konflikt bereits von einem anderen Benutzer bzw. einer anderen Benutzerin gelöst wurde.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -4688,6 +4688,30 @@
       <trans-unit id="messages.resources.error.oneProjectMustExist" datatype="html">
         <source>Das Projekt kann nicht gelöscht werden. Es muss mindestens ein Projekt vorhanden sein.</source>
         <target state="final">Das Projekt kann nicht gelöscht werden. Es muss mindestens ein Projekt vorhanden sein.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/messages/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.resources.error.resourceDeleted" datatype="html">
+        <source>Die Ressource '[0]' kann nicht aufgerufen werden, da sie in der Zwischenzeit von einem anderen Benutzer bzw. einer anderen Benutzerin gelöscht wurde.</source>
+        <target state="final">Die Ressource '[0]' kann nicht aufgerufen werden, da sie in der Zwischenzeit von einem anderen Benutzer bzw. einer anderen Benutzerin gelöscht wurde.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/messages/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.resources.error.unknownResourceDeleted" datatype="html">
+        <source>Die Ressource kann nicht aufgerufen werden, da sie in der Zwischenzeit von einem anderen Benutzer bzw. einer anderen Benutzerin gelöscht wurde.</source>
+        <target state="final">Die Ressource kann nicht aufgerufen werden, da sie in der Zwischenzeit von einem anderen Benutzer bzw. einer anderen Benutzerin gelöscht wurde.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/messages/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.resources.error.parentResourceDeleted" datatype="html">
+        <source>Die Ressource kann nicht angelegt werden, da die übergeordnete Ressource in der Zwischenzeit von einem anderen Benutzer bzw. einer anderen Benutzerin gelöscht wurde.</source>
+        <target state="final">Die Ressource kann nicht angelegt werden, da die übergeordnete Ressource in der Zwischenzeit von einem anderen Benutzer bzw. einer anderen Benutzerin gelöscht wurde.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>

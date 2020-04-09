@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges} from '@angular/core';
+import {ChangeDetectorRef, Component, Input, OnChanges} from '@angular/core';
 import {SafeResourceUrl} from '@angular/platform-browser';
 import {take, flatten, set, flow, filter, map} from 'tsfun';
 import {map as asyncMap, reduce as asyncReduce} from 'tsfun/async';
@@ -55,6 +55,7 @@ export class TypeGridComponent extends BaseList implements OnChanges {
                 private routingService: RoutingService,
                 private projectCategories: ProjectCategories,
                 private tabManager: TabManager,
+                private changeDetectorRef: ChangeDetectorRef,
                 resourcesComponent: ResourcesComponent,
                 viewFacade: ViewFacade,
                 loading: Loading) {
@@ -83,6 +84,7 @@ export class TypeGridComponent extends BaseList implements OnChanges {
             this.images = await this.getImages();
             this.timeout = undefined;
             this.ready = true;
+            this.changeDetectorRef.detectChanges();
         }, 10);
     }
 

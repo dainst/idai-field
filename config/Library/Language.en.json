@@ -1094,7 +1094,7 @@
       "label": "Find",
       "fields": {
         "instanceOf": {
-          "label": "Instance of"
+          "label": "Typological classification"
         },
         "amount": {
           "label": "Total number"

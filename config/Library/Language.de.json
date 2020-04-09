@@ -1220,7 +1220,7 @@
       "label": "Fund",
       "fields": {
         "instanceOf": {
-          "label": "Instanz von"
+          "label": "Typologische Einordnung"
         },
         "amount": {
           "label": "Anzahl (gesamt)",

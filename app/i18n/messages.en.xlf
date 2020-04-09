@@ -903,7 +903,7 @@
         <target state="final">Input type</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/configuration/project-configuration.html</context>
-          <context context-type="linenumber">90</context>
+          <context context-type="linenumber">83</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.input" datatype="html">
@@ -911,7 +911,7 @@
         <target state="final">Single line text</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/configuration/project-configuration.html</context>
-          <context context-type="linenumber">91</context>
+          <context context-type="linenumber">84</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.unsignedInt" datatype="html">
@@ -919,7 +919,7 @@
         <target state="final">Positive whole number</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/configuration/project-configuration.html</context>
-          <context context-type="linenumber">92</context>
+          <context context-type="linenumber">85</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.float" datatype="html">
@@ -927,11 +927,11 @@
         <target state="final">Decimal number</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/configuration/project-configuration.html</context>
-          <context context-type="linenumber">93</context>
+          <context context-type="linenumber">86</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/configuration/project-configuration.html</context>
-          <context context-type="linenumber">102</context>
+          <context context-type="linenumber">95</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.unsignedFloat" datatype="html">
@@ -939,7 +939,7 @@
         <target state="final">Positive decimal number</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/configuration/project-configuration.html</context>
-          <context context-type="linenumber">94</context>
+          <context context-type="linenumber">87</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.multiInput" datatype="html">
@@ -947,7 +947,7 @@
         <target state="final">Single line text with multiple selection</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/configuration/project-configuration.html</context>
-          <context context-type="linenumber">95</context>
+          <context context-type="linenumber">88</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.text" datatype="html">
@@ -955,7 +955,7 @@
         <target state="final">Multiline text</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/configuration/project-configuration.html</context>
-          <context context-type="linenumber">96</context>
+          <context context-type="linenumber">89</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.dropdown" datatype="html">
@@ -963,7 +963,7 @@
         <target state="final">Dropdown list</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/configuration/project-configuration.html</context>
-          <context context-type="linenumber">97</context>
+          <context context-type="linenumber">90</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.dropdownRange" datatype="html">
@@ -971,7 +971,7 @@
         <target state="final">Dropdown list (range)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/configuration/project-configuration.html</context>
-          <context context-type="linenumber">98</context>
+          <context context-type="linenumber">91</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.radio" datatype="html">
@@ -979,7 +979,7 @@
         <target state="final">Radiobutton</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/configuration/project-configuration.html</context>
-          <context context-type="linenumber">99</context>
+          <context context-type="linenumber">92</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.boolean" datatype="html">
@@ -987,7 +987,7 @@
         <target state="final">Yes / No</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/configuration/project-configuration.html</context>
-          <context context-type="linenumber">100</context>
+          <context context-type="linenumber">93</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.checkboxes" datatype="html">
@@ -995,7 +995,7 @@
         <target state="final">Checkboxes</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/configuration/project-configuration.html</context>
-          <context context-type="linenumber">101</context>
+          <context context-type="linenumber">94</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.date" datatype="html">
@@ -1003,7 +1003,7 @@
         <target state="final">Date</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/configuration/project-configuration.html</context>
-          <context context-type="linenumber">103</context>
+          <context context-type="linenumber">96</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.dimension" datatype="html">
@@ -1011,7 +1011,7 @@
         <target state="final">Dimension</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/configuration/project-configuration.html</context>
-          <context context-type="linenumber">104</context>
+          <context context-type="linenumber">97</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.literature" datatype="html">
@@ -1019,7 +1019,7 @@
         <target state="final">Bibliographic reference</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/configuration/project-configuration.html</context>
-          <context context-type="linenumber">105</context>
+          <context context-type="linenumber">98</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.geometry" datatype="html">
@@ -1027,7 +1027,7 @@
         <target state="final">Geometry</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/configuration/project-configuration.html</context>
-          <context context-type="linenumber">106</context>
+          <context context-type="linenumber">99</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.instanceOf" datatype="html">
@@ -1035,7 +1035,7 @@
         <target state="final">Type selection</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/configuration/project-configuration.html</context>
-          <context context-type="linenumber">107</context>
+          <context context-type="linenumber">100</context>
         </context-group>
       </trans-unit>
       <trans-unit id="widgets.fieldsView.range.from" datatype="html">
@@ -1943,8 +1943,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="resources.typeGrid.linkedFinds" datatype="html">
-        <source>Verknüpfte Funde</source>
-        <target state="final">Linked finds</target>
+        <source>Zugeordnete Funde</source>
+        <target state="final">Associated finds</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/typegrid/type-grid.html</context>
           <context context-type="linenumber">59</context>
@@ -3455,52 +3455,12 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="docedit.group.stem" datatype="html">
-        <source>Stammdaten</source>
-        <target state="final">Core</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/configuration/project-configuration.html</context>
-          <context context-type="linenumber">55</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="docedit.group.identification" datatype="html">
-        <source>Bestimmung</source>
-        <target state="final">Identification</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/configuration/project-configuration.html</context>
-          <context context-type="linenumber">56</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="docedit.group.dimensions" datatype="html">
-        <source>Maße</source>
-        <target state="final">Dimensions</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/configuration/project-configuration.html</context>
-          <context context-type="linenumber">57</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="docedit.group.time" datatype="html">
-        <source>Zeit</source>
-        <target state="final">Time</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/configuration/project-configuration.html</context>
-          <context context-type="linenumber">59</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="config.source.custom" datatype="html">
         <source>Projektspezifisches Feld</source>
         <target state="final">Project-specific field</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/configuration/project-configuration.html</context>
-          <context context-type="linenumber">78</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="docedit.group.position" datatype="html">
-        <source>Lage</source>
-        <target state="final">Position</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/configuration/project-configuration.html</context>
-          <context context-type="linenumber">58</context>
+          <context context-type="linenumber">71</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.group.images" datatype="html">
@@ -5228,16 +5188,16 @@
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.relations.isInstanceOf" datatype="html">
-        <source>Instanz von</source>
-        <target state="final">Instance of</target>
+        <source>Typologische Einordnung</source>
+        <target state="final">Typological classification</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/core/configuration/app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.relations.hasInstance" datatype="html">
-        <source>Hat Instanz</source>
-        <target state="final">Has instance</target>
+        <source>Zugeordnete Funde</source>
+        <target state="final">Associated finds</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/core/configuration/app-configurator.ts</context>
           <context context-type="linenumber">1</context>

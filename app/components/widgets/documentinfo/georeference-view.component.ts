@@ -1,5 +1,5 @@
 import {Component, ElementRef, EventEmitter, Input, Output, ViewChild} from '@angular/core';
-import {ImageGeoreference, Messages} from 'idai-components-2';
+import {Messages} from 'idai-components-2';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {PersistenceManager} from '../../../core/model/persistence-manager';
 import {UsernameProvider} from '../../../core/settings/username-provider';
@@ -36,6 +36,9 @@ export class GeoreferenceViewComponent {
     ) {}
 
 
+    public exportWldFile = () => downloadWldFile(this.document);
+
+
     public toggle() {
 
         if (this.openSection === 'georeference' && !this.expandAllGroups) {
@@ -51,35 +54,43 @@ export class GeoreferenceViewComponent {
     public async onSelectFile(event: any) {
 
         const files = event.target.files;
+
         if (files && files.length > 0) {
             try {
-                this.document.georeference = await readWldFile(files[0], this.document);
+                this.document.resource.georeference = await readWldFile(files[0], this.document);
             } catch (e) {
                 const msgWithParams = (e === Errors.FileReaderError) ? [M.IMAGES_ERROR_FILEREADER, files[0].name]
                     : (e === Errors.InvalidWldFileError) ? [M.IMAGESTORE_ERROR_INVALID_WORLDFILE, files[0].name]
                     : [M.MESSAGES_ERROR_UNKNOWN_MESSAGE];
+                this.messages.add(msgWithParams);
+                return;
+            }
+
+            try {
+                await this.save();
+            } catch(msgWithParams) {
                 this.messages.add(msgWithParams);
             }
         }
     }
 
 
-    public openDeleteModal(modal: any) {
+    public async openDeleteModal(modal: any) {
 
-        this.modalService.open(modal).result.then(result => {
-            if (result == 'delete') this.deleteGeoreference();
-        });
+        const result = await this.modalService.open(modal).result;
+        if (result == 'delete') await this.deleteGeoreference();
     }
 
-    
-    public exportWldFile = () => downloadWldFile(this.document);
 
-
-    private deleteGeoreference() {
+    private async deleteGeoreference() {
 
         this.document.resource.georeference = undefined;
 
-        this.save().catch(msgWithParams => this.messages.add(msgWithParams));
+        try {
+            await this.save();
+        } catch(msgWithParams) {
+            this.messages.add(msgWithParams);
+        }
     }
 
 

@@ -1363,7 +1363,7 @@
       }
     },
     "Type": {
-      "label": "Typus",
+      "label": "Typ",
       "fields": {}
     },
     "TypeCatalog": {

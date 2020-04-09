@@ -1,23 +1,24 @@
-import {copy, Pair, reduce, Map, to, identity, isDefined, path, isString, getOn, dissoc, and, isEmpty} from 'tsfun';
+import {copy, Pair, reduce, Map, to, identity, isDefined, path, isString, getOn, dissoc} from 'tsfun';
 
 
-// @author Daniel de Oliveira
-
+/**
+ * @author Daniel de Oliveira
+ */
 
 export function typeOf(v: any) { return typeof v }
 
 
-export function debugId<T>(v: T): T {
+export function log<T>(v: T): T {
 
-    console.log('debug:', v);
+    console.log(v);
     return v;
 }
 
-export function debugId1<T>(msg: string) {
+export function logWithMessage<T>(message: string) {
 
     return (v: T): T => {
 
-        console.log(msg, v);
+        console.log(message, v);
         return v;
     }
 }

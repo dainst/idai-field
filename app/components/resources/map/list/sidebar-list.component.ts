@@ -165,9 +165,8 @@ export class SidebarListComponent extends BaseList implements AfterViewInit {
 
     private async openChildCollection() {
 
-        if (this.viewFacade.getSelectedDocument()) {
-            await this.navigationService.moveInto(this.viewFacade.getSelectedDocument());
-        }
+        const selectedDocument: FieldDocument|undefined = this.viewFacade.getSelectedDocument();
+        if (selectedDocument) await this.navigationService.moveInto(selectedDocument);
     }
 
 

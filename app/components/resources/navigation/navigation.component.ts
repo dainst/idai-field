@@ -28,12 +28,11 @@ export class NavigationComponent {
     private static maxTotalLabelCharacters: number = 40;
 
 
-    constructor(
-        public viewFacade: ViewFacade,
-        public projectConfiguration: ProjectConfiguration,
-        private navigationService: NavigationService,
-        private loading: Loading,
-        private i18n: I18n) {
+    constructor(public viewFacade: ViewFacade,
+                public projectConfiguration: ProjectConfiguration,
+                private navigationService: NavigationService,
+                private loading: Loading,
+                private i18n: I18n) {
 
         this.viewFacade.navigationPathNotifications().subscribe(path => {
             this.navigationPath = path;

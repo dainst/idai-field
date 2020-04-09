@@ -297,10 +297,14 @@ export class ResourcesStateManager {
 
         if (!selectedDocument) return navigationPath;
 
-        NavigationPath.setSelectedDocument(
-            navigationPath,
-            await this.datastore.get(selectedDocument.resource.id)
-        );
+        try {
+            NavigationPath.setSelectedDocument(
+                navigationPath,
+                await this.datastore.get(selectedDocument.resource.id)
+            );
+        } catch (err) {
+            NavigationPath.setSelectedDocument(navigationPath, undefined);
+        }
         return navigationPath;
     }
 

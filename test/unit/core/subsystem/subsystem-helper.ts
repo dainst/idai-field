@@ -136,13 +136,16 @@ export async function createApp(projectName = 'testdb', startSync = false) {
         true
     );
 
+    const messages = jasmine.createSpyObj('messages', ['add']);
+
     const viewFacade = new ViewFacade(
         projectConfiguration,
         fieldDocumentDatastore,
         remoteChangesStream,
         resourcesStateManager,
         undefined,
-        createdIndexFacade
+        createdIndexFacade,
+        messages
     );
 
     const descendantsUtility = new DescendantsUtility(

@@ -1,4 +1,4 @@
-import {Document, FieldDocument} from 'idai-components-2';
+import {Document, FieldDocument, Messages} from 'idai-components-2';
 import {DocumentsManager} from './documents-manager';
 import {FieldReadDatastore} from '../../datastore/field/field-read-datastore';
 import {ChangesStream} from '../../datastore/changes/changes-stream';
@@ -7,6 +7,7 @@ import {ResourcesStateManager} from './resources-state-manager';
 import {ResourcesState} from './state/resources-state';
 import {IndexFacade} from '../../datastore/index/index-facade';
 import {ProjectConfiguration} from '../../configuration/project-configuration';
+import {M} from '../../../components/messages/m';
 
 
 export type ResourcesViewMode = 'map'|'list'|'type-grid';
@@ -28,7 +29,8 @@ export class ViewFacade {
         private remoteChangesStream: ChangesStream,
         private resourcesStateManager: ResourcesStateManager,
         private loading: Loading,
-        private indexFacade: IndexFacade
+        private indexFacade: IndexFacade,
+        private messages: Messages
     ) {
         this.documentsManager = new DocumentsManager(
             datastore,
@@ -69,10 +71,6 @@ export class ViewFacade {
 
     public getChildrenCount = (document: FieldDocument) => this.documentsManager.getChildrenCount(document);
 
-    public setSelectedDocument = (resourceId: string, adjustListIfNecessary?: boolean) => this.documentsManager.setSelected(resourceId, adjustListIfNecessary);
-
-    public navigateDocumentList = (direction: 'previous'|'next') => this.documentsManager.navigateDocumentList(direction);
-
     public getActiveLayersIds = () => ResourcesState.getActiveLayersIds(this.resourcesStateManager.get());
 
     public deselect = () => this.documentsManager.deselect();
@@ -90,10 +88,6 @@ export class ViewFacade {
     public setFilterCategories = (categories: string[]) => this.documentsManager.setCategoryFilters(categories);
 
     public setCustomConstraints = (constraints: { [name: string]: string}) => this.documentsManager.setCustomConstraints(constraints);
-
-    public moveInto = (document: FieldDocument|string|undefined, resetFiltersAndSelection: boolean = false,
-                       rebuildNavigationPath: boolean = false) =>
-        this.documentsManager.moveInto(document, resetFiltersAndSelection, rebuildNavigationPath);
 
     public rebuildNavigationPath = () => this.resourcesStateManager.rebuildNavigationPath();
 
@@ -132,5 +126,46 @@ export class ViewFacade {
         await this.resourcesStateManager.initialize(viewName);
         await this.populateDocumentList();
         this.ready = true;
+    }
+
+
+    public async setSelectedDocument(resourceId: string, adjustListIfNecessary?: boolean) {
+
+        try {
+            await this.documentsManager.setSelected(resourceId, adjustListIfNecessary);
+        } catch (err) {
+            await this.populateDocumentList();
+            await this.rebuildNavigationPath();
+            this.messages.add([M.RESOURCES_ERROR_UNKNOWN_RESOURCE_DELETED]);
+        }
+    }
+
+
+    public async moveInto(document: FieldDocument|string|undefined, resetFiltersAndSelection: boolean = false,
+                          rebuildNavigationPath: boolean = false) {
+
+        try {
+            await this.documentsManager.moveInto(document, resetFiltersAndSelection, rebuildNavigationPath);
+        } catch (err) {
+            await this.populateDocumentList();
+            await this.rebuildNavigationPath();
+            if (document && typeof(document) !== 'string') {
+                this.messages.add([M.RESOURCES_ERROR_RESOURCE_DELETED, document.resource.identifier]);
+            } else {
+                this.messages.add([M.RESOURCES_ERROR_UNKNOWN_RESOURCE_DELETED]);
+            }
+        }
+    }
+
+
+    public async navigateDocumentList(direction: 'previous'|'next') {
+
+        try {
+            await this.documentsManager.navigateDocumentList(direction);
+        } catch (err) {
+            await this.populateDocumentList();
+            await this.rebuildNavigationPath();
+            this.messages.add([M.RESOURCES_ERROR_UNKNOWN_RESOURCE_DELETED]);
+        }
     }
 }

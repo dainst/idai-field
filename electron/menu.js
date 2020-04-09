@@ -180,7 +180,7 @@ const getTemplate = (mainWindow, context) => {
             click: () => mainWindow.webContents.send('menuItemClicked', 'help'),
             enabled: context === 'default'
         }, {
-            label: messages.get('menu.tools.configuration'),
+            label: messages.get('menu.help.configuration'),
             accelerator: 'CmdOrCtrl+F',
             click: () => mainWindow.webContents.send('menuItemClicked', 'configuration'),
             enabled: context === 'default'

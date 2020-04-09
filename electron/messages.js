@@ -23,7 +23,6 @@ const messageDictionary = {
         'menu.edit.paste': 'Einfügen',
         'menu.edit.selectAll': 'Alles auswählen',
         'menu.tools': 'Werkzeuge',
-        'menu.tools.configuration': 'Formularkonfiguration',
         'menu.tools.images': 'Bilderverwaltung',
         'menu.tools.types': 'Typenverwaltung',
         'menu.tools.matrix': 'Matrix',
@@ -35,7 +34,8 @@ const messageDictionary = {
         'menu.view.toggleDeveloperTools': 'Entwicklertools an/aus',
         'menu.window': 'Fenster',
         'menu.window.minimize': 'Minimieren',
-        'menu.help': 'Hilfe'
+        'menu.help': 'Hilfe',
+        'menu.help.configuration': 'Formularkonfiguration',
     },
     en: {
         'autoUpdate.available.title': 'Update available',
@@ -72,7 +72,8 @@ const messageDictionary = {
         'menu.view.toggleDeveloperTools': 'Developer tools on/off',
         'menu.window': 'Window',
         'menu.window.minimize': 'Minimize',
-        'menu.help': 'Help'
+        'menu.help': 'Help',
+        'menu.help.configuration': 'Form configuration'
     },
 };
 

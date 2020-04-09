@@ -96,6 +96,7 @@ function processCategories(orderConfiguration: any,
         map(sortCategoryGroups),
         map(update(Category.CHILDREN, map(sortCategoryGroups))),
         setGroupLabels(languageConfiguration.groups || {}),
+        map(update(Category.CHILDREN, setGroupLabels(languageConfiguration.groups || {}))),
         mapToNamedArray,
         orderCategories(orderConfiguration?.categories));
 }

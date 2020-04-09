@@ -72,7 +72,7 @@ export abstract class ViewModalComponent {
 
     public async jumpToResource(documentToJumpTo: FieldDocument) {
 
-        await this.routingService.jumpToResource(documentToJumpTo, true);
         this.close();
+        await this.routingService.jumpToResource(documentToJumpTo, true);
     }
 }

@@ -1,11 +1,15 @@
 import {Injectable} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Location} from '@angular/common';
+import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {Observable, Observer} from 'rxjs';
 import {DatastoreErrors, Document} from 'idai-components-2';
 import {ProjectCategories} from '../core/configuration/project-categories';
 import {ViewFacade} from '../core/resources/view/view-facade';
 import {ProjectConfiguration} from '../core/configuration/project-configuration';
+import {MenuService} from '../desktop/menu-service';
+import {ProjectsModalComponent} from './navbar/projects-modal.component';
+import {SettingsService} from '../core/settings/settings-service';
 
 
 @Injectable()
@@ -27,7 +31,9 @@ export class RoutingService {
                 private viewFacade: ViewFacade,
                 private location: Location,
                 private projectCategories: ProjectCategories,
-                private projectConfiguration: ProjectConfiguration) {}
+                private projectConfiguration: ProjectConfiguration,
+                private modalService: NgbModal,
+                private settingsService: SettingsService) {}
 
 
     // For ResourcesComponent
@@ -50,7 +56,9 @@ export class RoutingService {
 
         if (comingFromOutsideResourcesComponent) this.currentRoute = undefined;
 
-        if (this.projectConfiguration.isSubcategory(documentToSelect.resource.category, 'Image')) {
+        if (documentToSelect.resource.category === 'Project') {
+            return this.openProjectsModal();
+        } else if (this.projectConfiguration.isSubcategory(documentToSelect.resource.category, 'Image')) {
             await this.jumpToImageCategoryResource(documentToSelect, comingFromOutsideResourcesComponent);
         } else {
             await this.jumpToFieldCategoryResource(documentToSelect, comingFromOutsideResourcesComponent);
@@ -71,6 +79,24 @@ export class RoutingService {
             return this.router.navigate(
                 ['resources', viewName, document.resource.id, 'edit', 'conflicts']
             );
+        }
+    }
+
+
+    public async openProjectsModal(openConflictResolver: boolean = false) {
+
+        MenuService.setContext('projects');
+
+        const ref: NgbModalRef = this.modalService.open(ProjectsModalComponent, { keyboard: false });
+        ref.componentInstance.selectedProject = this.settingsService.getSelectedProject();
+        ref.componentInstance.openConflictResolver = openConflictResolver;
+
+        try {
+            await ref.result;
+        } catch(err) {
+            // Projects modal has been canceled
+        } finally {
+            MenuService.setContext('default');
         }
     }
 

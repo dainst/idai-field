@@ -1,6 +1,6 @@
-import { Component, Input } from "@angular/core";
-import { SafeResourceUrl } from "@angular/platform-browser";
-import { Category } from "../../../core/configuration/model/category";
+import {Component, Input} from '@angular/core';
+import {SafeResourceUrl} from '@angular/platform-browser';
+import {Category} from '../../../core/configuration/model/category';
 
 @Component({
     selector: 'type-icon',
@@ -15,5 +15,4 @@ export class TypeIconComponent {
 
     @Input() category: Category;
     @Input() imageUrls: Array<SafeResourceUrl>;
-
 }

@@ -76,6 +76,7 @@ export class ProjectConfigurationComponent {
             );
     }
 
+
     public hasCustomFields: Predicate<Group> = compose(
         to(Group.FIELDS),
         map(to(FieldDefinition.SOURCE)),

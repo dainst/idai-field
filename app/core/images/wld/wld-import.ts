@@ -11,7 +11,13 @@ export function readWldFile(file: File, doc: Document): Promise<ImageGeoreferenc
 
     return new Promise((resolve, reject) => {
         const reader = new FileReader();
-        reader.onload = () => resolve(importWldFile(reader.result as string, doc));
+        reader.onload = () => {
+            try {
+                resolve(importWldFile(reader.result as string, doc));
+            } catch (err) {
+                reject(err);
+            }
+        };
         reader.onerror = () => reject(Errors.FileReaderError);
         reader.readAsText(file);
     });

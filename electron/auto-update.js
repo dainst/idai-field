@@ -28,7 +28,13 @@ const setUp = async (mainWindow) => {
             noLink: true
         });
 
-        if (result.response === 0) await autoUpdater.downloadUpdate();
+        if (result.response === 0) {
+            mainWindow.webContents.send('downloadProgress', {
+                progressPercent: 0,
+                version: updateVersion
+            });
+            await autoUpdater.downloadUpdate();
+        }
     });
 
     autoUpdater.on('download-progress', progress => {

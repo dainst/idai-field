@@ -58,8 +58,7 @@
       "diary",
       "dimensionLength",
       "dimensionWidth",
-      "dimensionVerticalExtent",
-      "spatialLocation"
+      "dimensionVerticalExtent"
     ],
     "valuelists": {
       "orientation": "orientation-default-1",

@@ -49,9 +49,7 @@
       "inputType": "input"
     }
     },
-    "commons": [
-      "spatialLocation"
-    ],
+    "commons": [],
     "valuelists": {
       "excavationType": "Trench-excavationType-ayamonte"
     }

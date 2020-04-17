@@ -33,7 +33,7 @@ const setUp = async (mainWindow) => {
                 progressPercent: 0,
                 version: updateVersion
             });
-            await autoUpdater.downloadUpdate();
+            autoUpdater.downloadUpdate();
         }
     });
 

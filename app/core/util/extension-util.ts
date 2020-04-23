@@ -40,12 +40,12 @@ export class ExtensionUtil {
     
     public static replaceExtension = (fileName: string, extension: string): string =>
         (fileName.indexOf('.') === -1)
-            ? fileName + '.' + extension
-            : fileName.substr(0, fileName.lastIndexOf('.')) + '.' + extension;
+            ? fileName + '.' + extension.toLowerCase()
+            : fileName.substr(0, fileName.lastIndexOf('.')) + '.' + extension.toLowerCase();
 
 
     public static getExtension = (file: File): string =>
-        /(?:\.([^.]+))?$/.exec(file.name)?.[1] ?? '';
+        (/(?:\.([^.]+))?$/.exec(file.name)?.[1] ?? '').toLowerCase();
 
 
     private static getUnsupportedExts(files: Array<File>, supportedFileTypes: Array<string>) {

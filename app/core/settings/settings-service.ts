@@ -98,7 +98,7 @@ export class SettingsService {
         if (this.getSelectedProject().startsWith('monte-turcisi')) customProjectName = 'MonTur';
         if (this.getSelectedProject().startsWith('al-ula')) customProjectName = 'AlUla';
         if (this.getSelectedProject().startsWith('kalapodi')) customProjectName = 'Kalapodi';
-        if (this.getSelectedProject().startsWith('gadara-project')) customProjectName = 'Gadara';
+        if (this.getSelectedProject().startsWith('gadara_bm')) customProjectName = 'Gadara';
         if (this.getSelectedProject().startsWith('sudan-heritage')) customProjectName = 'SudanHeritage';
         if (this.getSelectedProject().startsWith('ayamonte')) customProjectName = 'Ayamonte';
         if (this.getSelectedProject().startsWith('abbircella')) customProjectName = 'AbbirCella';

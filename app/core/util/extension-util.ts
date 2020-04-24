@@ -24,7 +24,7 @@ export class ExtensionUtil {
         let result: Array<any>
             = [(files.length - ExtensionUtil.getUnsupportedExts(files, supportedFileTypes).length)];
         if (uniqueUnsupportedExts.length > 0) {
-            result.push(uniqueUnsupportedExts.join(','));
+            result.push(uniqueUnsupportedExts.join(', '));
         }
         return result;
     }

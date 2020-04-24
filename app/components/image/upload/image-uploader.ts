@@ -61,7 +61,8 @@ export class ImageUploader {
         }
 
         const files = ImageUploader.getFiles(event);
-        uploadResult.messages = uploadResult.messages.concat(this.checkForUnsupportedFileTypes(files));
+        const message: string[]|undefined = this.checkForUnsupportedFileTypes(files);
+        if (message) uploadResult.messages.push(message);
 
         const imageFiles = files.filter(file =>
             ImageUploader.supportedImageFileTypes.includes(ExtensionUtil.getExtension(file)));
@@ -86,7 +87,7 @@ export class ImageUploader {
     }
 
 
-    private checkForUnsupportedFileTypes(files: Array<File>): string[] {
+    private checkForUnsupportedFileTypes(files: Array<File>): string[]|undefined {
 
         const supportedFileTypes = ImageUploader.supportedImageFileTypes.concat(ImageUploader.supportedWorldFileTypes);
         const result = ExtensionUtil.reportUnsupportedFileTypes(files, supportedFileTypes);
@@ -97,7 +98,7 @@ export class ImageUploader {
                 supportedFileTypes.map(extension => '.' + extension).join(', ')
             ];
         }
-        return [];
+        return undefined;
     }
 
 

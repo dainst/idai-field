@@ -28,15 +28,18 @@ describe('Validations', () => {
                         { name: 'dating4', label: 'dating4', inputType: 'dating' },
                         { name: 'dating5', label: 'dating5', inputType: 'dating' },
                         { name: 'dating6', label: 'dating6', inputType: 'dating' },
+                        { name: 'dating7', label: 'dating7', inputType: 'dating' },
                         { name: 'dimension1', label: 'dimension1', inputType: 'dimension' },
                         { name: 'dimension2', label: 'dimension2', inputType: 'dimension' },
                         { name: 'dimension3', label: 'dimension3', inputType: 'dimension' },
                         { name: 'dimension4', label: 'dimension4', inputType: 'dimension' },
                         { name: 'dimension5', label: 'dimension5', inputType: 'dimension' },
                         { name: 'dimension6', label: 'dimension6', inputType: 'dimension' },
+                        { name: 'dimension7', label: 'dimension7', inputType: 'dimension' },
                         { name: 'literature1', label: 'literature1', inputType: 'literature' },
                         { name: 'literature2', label: 'literature2', inputType: 'literature' },
                         { name: 'literature3', label: 'literature3', inputType: 'literature' },
+                        { name: 'literature4', label: 'literature4', inputType: 'literature' },
                         { name: 'beginningDate', label: 'beginningDate', inputType: 'date' },
                         { name: 'endDate', label: 'endDate', inputType: 'date' }
                     ]}]
@@ -235,6 +238,8 @@ describe('Validations', () => {
                 dating5: [{ type: 'exact', end: { inputYear: 10.5, inputType: 'ce'} }],
                 // Negative value
                 dating6: [{ type: 'exact', end: { inputYear: -10, inputType: 'ce'} }],
+                // No array
+                dating7: 'Dating',
                 relations: { isRecordedIn: ['0'] }
             }
         };
@@ -244,7 +249,11 @@ describe('Validations', () => {
             fail();
         } catch (errWithParams) {
             expect(errWithParams).toEqual(
-                [ValidationErrors.INVALID_DATING_VALUES, 'T', 'dating3, dating4, dating5, dating6']
+                [
+                    ValidationErrors.INVALID_DATING_VALUES,
+                    'T',
+                    'dating3, dating4, dating5, dating6, dating7'
+                ]
             );
         }
         done();
@@ -270,6 +279,8 @@ describe('Validations', () => {
                 dimension5: [{ inputValue: '15', inputUnit: 'mm' }],
                 // No number value in range end value
                 dimension6: [{ inputValue: 15, inputRangeEndValue: '25', inputUnit: 'mm' }],
+                // No array
+                dimension7: 'Dimension',
                 relations: { isRecordedIn: ['0'] }
             }
         };
@@ -279,7 +290,11 @@ describe('Validations', () => {
             fail();
         } catch (errWithParams) {
             expect(errWithParams).toEqual(
-                [ValidationErrors.INVALID_DIMENSION_VALUES, 'T', 'dimension3, dimension4, dimension5, dimension6']
+                [
+                    ValidationErrors.INVALID_DIMENSION_VALUES,
+                    'T',
+                    'dimension3, dimension4, dimension5, dimension6, dimension7'
+                ]
             );
         }
         done();
@@ -299,6 +314,8 @@ describe('Validations', () => {
                 literature2: [{ quotation: 'Quotation' }],
                 // No quotation
                 literature3: [{ zenonId: '1234567' }],
+                // No array
+                literature4: 'Literature',
                 relations: { isRecordedIn: ['0'] }
             }
         };
@@ -308,7 +325,7 @@ describe('Validations', () => {
             fail();
         } catch (errWithParams) {
             expect(errWithParams).toEqual(
-                [ValidationErrors.INVALID_LITERATURE_VALUES, 'T', 'literature3']
+                [ValidationErrors.INVALID_LITERATURE_VALUES, 'T', 'literature3, literature4']
             );
         }
         done();

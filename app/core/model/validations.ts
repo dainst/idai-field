@@ -1,9 +1,9 @@
-import {includedIn, is, isNot, on, subtract} from 'tsfun';
+import {includedIn, is, isNot, on} from 'tsfun';
 import {Dating, Dimension, Literature, Document, FieldGeometry, NewDocument, NewResource,
     Resource} from 'idai-components-2';
 import {validateFloat, validateUnsignedFloat, validateUnsignedInt} from '../util/number-util';
 import {ValidationErrors} from './validation-errors';
-import {INPUT_TYPE, INPUT_TYPES} from '../constants';
+import {INPUT_TYPE} from '../constants';
 import {ProjectConfiguration} from '../configuration/project-configuration';
 import {FieldDefinition} from '../configuration/model/field-definition';
 import {RelationDefinition} from '../configuration/model/relation-definition';
@@ -11,8 +11,6 @@ import {Named} from '../util/named';
 
 
 export module Validations {
-
-    type FieldName = string;
 
     /**
      * @throws [INVALID_NUMERICAL_VALUES]
@@ -417,7 +415,8 @@ export module Validations {
             .filter(field => field.inputType === inputType)
             .filter(field => {
                 return resource[field.name] !== undefined &&
-                    resource[field.name].filter((object: any) => !validate(object)).length > 0;
+                    (!Array.isArray(resource[field.name])
+                        || resource[field.name].filter((object: any) => !validate(object)).length > 0);
             }).map(field => field.name);
     }
 

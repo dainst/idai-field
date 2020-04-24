@@ -2,7 +2,7 @@
   "groups": {
     "stem": "Core",
     "time": "Time",
-    "position": "Position",
+    "position": "Position / Context",
     "dimension": "Dimensions",
     "identification": "Identification"
   },

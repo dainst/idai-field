@@ -2,7 +2,7 @@
   "groups": {
     "stem": "Stammdaten",
     "time": "Zeit",
-    "position": "Lage",
+    "position": "Lage / Kontext",
     "dimension": "Maße",
     "identification": "Bestimmung"
   },

@@ -19,7 +19,7 @@ export class DropAreaComponent {
 
     @Output() onImagesUploaded: EventEmitter<ImageUploadResult> = new EventEmitter<ImageUploadResult>();
 
-    @ViewChild('fileInput', {static: false}) fileInputElement: ElementRef;
+    @ViewChild('fileInput', { static: false }) fileInputElement: ElementRef;
 
     private dragOverActive: boolean = false;
 

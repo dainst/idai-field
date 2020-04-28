@@ -1157,13 +1157,17 @@
           <context context-type="sourcefile">components/navbar/taskbar-update.html</context>
           <context context-type="linenumber">3</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/navbar/taskbar-update.html</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.update.tooltips.downloadComplete" datatype="html">
         <source>Version <x id="INTERPOLATION" equiv-text="{{version}}"/> wurde heruntergeladen und wird beim Neustart installiert</source>
         <target state="final">Version <x id="INTERPOLATION" equiv-text="{{version}}"/> has been downloaded and will be installed on restart</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/navbar/taskbar-update.html</context>
-          <context context-type="linenumber">13</context>
+          <context context-type="linenumber">23</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.update.tooltips.downloadInterrupted" datatype="html">
@@ -1171,7 +1175,7 @@
         <target state="final">The download of version <x id="INTERPOLATION" equiv-text="{{version}}"/> has been interrupted. Please restart the application to try again.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/navbar/taskbar-update.html</context>
-          <context context-type="linenumber">23</context>
+          <context context-type="linenumber">33</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.update.tooltips.downloadError" datatype="html">
@@ -1179,7 +1183,7 @@
         <target state="final">An error occurred while downloading version <x id="INTERPOLATION" equiv-text="{{version}}"/>. Please download the newest version from http://field.dainst.org.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/navbar/taskbar-update.html</context>
-          <context context-type="linenumber">33</context>
+          <context context-type="linenumber">43</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.update.tooltips.deactivated" datatype="html">
@@ -1187,7 +1191,7 @@
         <target state="final">The automatic update check is deactivated. You are possibly not using the latest version of iDAI.field.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/navbar/taskbar-update.html</context>
-          <context context-type="linenumber">43</context>
+          <context context-type="linenumber">53</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageUpload.imageCategoryPickerModal.warning" datatype="html">
@@ -3096,7 +3100,7 @@
       </trans-unit>
       <trans-unit id="settings.userName" datatype="html">
         <source>
-                            Name des Bearbeiters
+                            Name des Bearbeiters/der Bearbeiterin
                         </source>
         <target state="final">
                             Editor name
@@ -3111,10 +3115,10 @@
                         Dieser Name wird in der Bearbeitungshistorie gespeichert,
                         damit Änderungen an Datensätzen einer Person zugeordnet werden können.
                         Diese Einstellung ist sehr <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>wichtig<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> bei der Datenbanksynchronisation,
-                        sowohl zwischen Nutzern als auch zum iDAI.field-Server, da das System so eventuelle
-                        Konflikte besser zuordnen und lösen kann. Sie sollte also in jedem Fall vor Inbetriebnahme
-                        gesetzt werden. Empfohlen wird, den vollen Namen des aktuellen Datenbanknutzers
-                        einzutragen.
+                        sowohl zwischen Nutzern bzw. Nutzerinnen als auch zum iDAI.field-Server, da das System
+                        so eventuelle Konflikte besser zuordnen und lösen kann. Sie sollte also in jedem Fall
+                        vor Inbetriebnahme gesetzt werden. Empfohlen wird, den vollen Namen des aktuellen
+                        Datenbanknutzers bzw. der Datenbanknutzerin einzutragen.
                     </source>
         <target state="final">
                         The editor name is saved in the editing history in order to allow dataset changes to be attributable to a person.
@@ -3212,7 +3216,7 @@
         <source>
                             Dieser Pfad kann normalerweise auf seiner Grundeinstellung belassen werden. Es kann nötig
                             sein, ihn zu verändern, wenn das von iDAI.field genutzte Bilderverzeichnis auf einem
-                            Netzwerk-Gerät (NAS) liegt, das von verschiedenen Nutzern geteilt wird.
+                            Netzwerk-Gerät (NAS) liegt, das von verschiedenen Nutzern bzw. Nutzerinnen geteilt wird.
                             Die Anwendung legt unterhalb dieses Pfades für jedes Projekt ein Unterverzeichnis an.
                             Die in diesen Verzeichnissen abgelegten Bilddateien werden vollständig durch iDAI.field
                             verwaltet. Bilddateien sollten nicht per Hand dort abgelegt werden, sondern in der

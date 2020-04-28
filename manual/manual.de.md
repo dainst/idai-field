@@ -12,9 +12,9 @@ durchführen:
 
 1. Im Untermenü **Einstellungen**, das Sie über das Menü "iDAI.field" (MacOS) bzw. "Datei" (Windows)
 erreichen, können Sie grundlegende Einstellungen vornehmen, die für sämtliche Projekte gelten. Legen Sie hier
-bitte zunächst Ihren Bearbeiternamen fest. Dieser Name wird bei allen von Ihnen vorgenommenen Änderungen in
-der Datenbank hinterlegt und sollte unbedingt gesetzt werden, insbesondere wenn Daten mit anderen Clients
-synchronisiert werden sollen.
+bitte zunächst Ihren Bearbeiternamen bzw. Bearbeiterinnennamen fest. Dieser Name wird bei allen von Ihnen
+vorgenommenen Änderungen in der Datenbank hinterlegt und sollte unbedingt gesetzt werden, insbesondere wenn
+Daten mit anderen Clients synchronisiert werden sollen.
 
 2. Darüber hinaus können Sie im Untermenü **Einstellungen** den Pfad des Bilderverzeichnisses
 ändern. Dies ist erforderlich, wenn Sie auf ein Bilderverzeichnis zugreifen möchten,

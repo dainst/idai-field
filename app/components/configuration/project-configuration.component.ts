@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {to, on, is, includedIn, or, any, compose, map, Predicate, longerThan} from 'tsfun';
+import {to, on, is, isnt, includedIn, or, any, compose, map, Predicate, longerThan} from 'tsfun';
 import {FieldResource} from 'idai-components-2';
 import {ProjectConfiguration} from '../../core/configuration/project-configuration';
 import {Category} from '../../core/configuration/model/category';
@@ -10,6 +10,7 @@ import {ValuelistUtil} from '../../core/util/valuelist-util';
 import {TabManager} from '../../core/tabs/tab-manager';
 import {Named} from '../../core/util/named';
 import {RelationDefinition} from '../../core/configuration/model/relation-definition';
+import {TypeRelations} from '../../core/model/relation-constants';
 
 const locale: string = require('electron').remote.getGlobal('config').locale;
 
@@ -91,7 +92,8 @@ export class ProjectConfigurationComponent {
 
         return category.groups
             .find(on(Named.NAME, is(this.selectedGroup)))!
-            .relations;
+            .relations
+            .filter(on(Named.NAME, isnt(TypeRelations.INSTANCEOF)));
     }
 
 

@@ -905,6 +905,10 @@
           <context context-type="sourcefile">components/configuration/project-configuration.html</context>
           <context context-type="linenumber">83</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/configuration/project-configuration.html</context>
+          <context context-type="linenumber">132</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.input" datatype="html">
         <source>Einzeiliger Text</source>
@@ -1036,6 +1040,14 @@
         <context-group purpose="location">
           <context context-type="sourcefile">components/configuration/project-configuration.html</context>
           <context context-type="linenumber">100</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="config.inputType.relation" datatype="html">
+        <source>Relation</source>
+        <target state="final">Relation</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/configuration/project-configuration.html</context>
+          <context context-type="linenumber">133</context>
         </context-group>
       </trans-unit>
       <trans-unit id="widgets.fieldsView.range.from" datatype="html">

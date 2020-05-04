@@ -44,8 +44,6 @@ export class ProjectConfigurationComponent {
 
     public getValueLabel = ValuelistUtil.getValueLabel;
 
-    public getGroups = (category: Category): Array<Group> => category.groups.filter(on(Group.FIELDS, longerThan([])));
-
     public getValuelistDescription = (valuelist: ValuelistDefinition) => valuelist.description?.[locale];
 
     public getCategoryDescription = (category: Category) => category.description?.[locale];
@@ -61,6 +59,17 @@ export class ProjectConfigurationComponent {
 
         this.selectedCategory = category;
         this.selectedGroup = this.getGroups(category)[0].name;
+    }
+
+
+    public getGroups(category: Category): Array<Group> {
+
+        return category.groups.filter(
+            or(
+                on(Group.FIELDS, longerThan([])),
+                on(Group.RELATIONS, longerThan([]))
+            )
+        );
     }
 
 

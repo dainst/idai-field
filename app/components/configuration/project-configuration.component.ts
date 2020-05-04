@@ -9,6 +9,7 @@ import {ValuelistDefinition} from '../../core/configuration/model/valuelist-defi
 import {ValuelistUtil} from '../../core/util/valuelist-util';
 import {TabManager} from '../../core/tabs/tab-manager';
 import {Named} from '../../core/util/named';
+import {RelationDefinition} from '../../core/configuration/model/relation-definition';
 
 const locale: string = require('electron').remote.getGlobal('config').locale;
 
@@ -63,7 +64,7 @@ export class ProjectConfigurationComponent {
     }
 
 
-    public getVisibleFields(category: Category): FieldDefinition[] {
+    public getVisibleFields(category: Category): Array<FieldDefinition> {
 
         return category.groups
             .find(on(Named.NAME, is(this.selectedGroup)))!
@@ -74,6 +75,14 @@ export class ProjectConfigurationComponent {
                     on(FieldDefinition.NAME, includedIn(this.OVERRIDE_VISIBLE_FIELDS))
                 )
             );
+    }
+
+
+    public getRelations(category: Category): Array<RelationDefinition> {
+
+        return category.groups
+            .find(on(Named.NAME, is(this.selectedGroup)))!
+            .relations;
     }
 
 

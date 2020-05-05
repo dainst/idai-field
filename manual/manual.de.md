@@ -357,7 +357,7 @@ selektieren und eine neue Teilmatrix aus der aktuellen Selektion zu erstellen:
 * *Gruppenauswahlmodus*: Einheiten können gruppenweise selektiert werden, indem ein Rechteck mit der Maus
   gezogen wird.
 
-<p align="center"><img src="images/de/matrix/subgraph_buttons.png" alt="Buttons zur Erstellung von Teilmatrizen"/></p>
+   <p align="center"><img src="images/de/matrix/subgraph_buttons.png" alt="Buttons zur Erstellung von Teilmatrizen"/></p>
   
 * *Auswahl aufheben*: Alle Einheiten werden deselektiert.
 * *Matrix aus Auswahl erstellen*: Eine neue Matrix wird generiert, in der ausschließlich die selektierten

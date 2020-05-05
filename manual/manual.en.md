@@ -331,7 +331,7 @@ from the current selection:
 * *Group selection mode*: Units can be selected in groups by drawing a rectangle using the mouse.
 
 <p align="center"><img src="images/en/matrix/subgraph_buttons.png" alt="Sub-matrix creation buttons"/></p>
-  
+
 * *Deselect*: All units are deselected.
 * *Create matrix from selection*: A new matrix is generated consisting only of the selected units. Edges are
   still built on the basis of all stratigraphical units of the trench; thus the function can also be used as a

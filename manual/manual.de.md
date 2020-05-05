@@ -357,8 +357,8 @@ selektieren und eine neue Teilmatrix aus der aktuellen Selektion zu erstellen:
 * *Gruppenauswahlmodus*: Einheiten können gruppenweise selektiert werden, indem ein Rechteck mit der Maus
   gezogen wird.
 
-   <p align="center"><img src="images/de/matrix/subgraph_buttons.png" alt="Buttons zur Erstellung von Teilmatrizen"/></p>
-  
+<p align="center"><img src="images/de/matrix/subgraph_buttons.png" alt="Buttons zur Erstellung von Teilmatrizen"/></p>
+
 * *Auswahl aufheben*: Alle Einheiten werden deselektiert.
 * *Matrix aus Auswahl erstellen*: Eine neue Matrix wird generiert, in der ausschließlich die selektierten
   Einheiten angezeigt werden. Die Generierung der Kanten geschieht weiterhin auf Grundlage aller
@@ -367,4 +367,3 @@ selektieren und eine neue Teilmatrix aus der aktuellen Selektion zu erstellen:
   verknüpft sind.
 * *Matrix neu laden*: Die ursprüngliche Matrix mit allen stratigraphischen Einheiten des gewählten Schnitts
   wird wiederhergestellt.
-  

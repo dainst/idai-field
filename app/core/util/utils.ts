@@ -1,4 +1,6 @@
-import {copy, Pair, reduce, Map, to, identity, isDefined, path, isString, getOn, dissoc} from 'tsfun';
+import {copy, Pair, Map, to, identity, isDefined, isString, reduce} from 'tsfun';
+import {dissoc} from 'tsfun/associative';
+import {path, getOn} from 'tsfun/struct';
 
 
 /**

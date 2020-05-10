@@ -1,4 +1,4 @@
-import {clone as tsfunClone, jsonClone} from 'tsfun';
+import {clone as tsfunClone, jsonClone} from 'tsfun/struct';
 
 
 /**

@@ -1,4 +1,4 @@
-import {dissoc} from 'tsfun';
+import {dissoc} from 'tsfun/associative';
 import {Document, Resource} from 'idai-components-2';
 import {trimFields} from '../../util/trim-fields';
 import {removeNullProperties} from './remove-null-properties';

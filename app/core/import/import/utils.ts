@@ -1,4 +1,5 @@
-import {arrayEqual, getOn, isNot, on, undefinedOrEmpty} from 'tsfun';
+import {arrayEqual, isNot, on, undefinedOrEmpty} from 'tsfun';
+import {getOn} from 'tsfun/struct';
 import {unionBy} from 'tsfun/by';
 import {forEach as asyncForEach} from 'tsfun/async';
 import {Document, Relations} from 'idai-components-2';

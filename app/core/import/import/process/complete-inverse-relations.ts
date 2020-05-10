@@ -1,5 +1,6 @@
-import {compose, filter, flatten, flow, forEach, intersect, isDefined, isNot, isUndefinedOrEmpty, lookup,
+import {compose, filter, flatten, flow, forEach, intersect, isDefined, isNot, isUndefinedOrEmpty,
     keys, values, empty, pairWith, map, remove, subtract, to, undefinedOrEmpty, throws} from 'tsfun';
+import {lookup} from 'tsfun/associative';
 import {Document, Relations} from 'idai-components-2';
 import {ImportErrors as E} from '../import-errors';
 import {HierarchicalRelations, PositionRelations, TimeRelations} from '../../../model/relation-constants';

@@ -1,5 +1,6 @@
 import {Observer, Observable} from 'rxjs';
-import {subtract, set, jsonClone} from 'tsfun';
+import {subtract, set} from 'tsfun';
+import {jsonClone} from 'tsfun/struct';
 import {Document, Query, FieldDocument} from 'idai-components-2';
 import {FieldReadDatastore} from '../../datastore/field/field-read-datastore';
 import {ChangesStream} from '../../datastore/changes/changes-stream';

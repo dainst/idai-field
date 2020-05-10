@@ -1,5 +1,5 @@
 import * as fs from 'fs';
-import {assoc} from 'tsfun';
+import {assoc} from 'tsfun/associative';
 import {Name} from '../../core/constants';
 
 const PouchDB = require('pouchdb');

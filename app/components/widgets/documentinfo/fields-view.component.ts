@@ -1,8 +1,9 @@
 import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import {DecimalPipe} from '@angular/common';
 import {I18n} from '@ngx-translate/i18n-polyfill';
-import {isUndefinedOrEmpty, isBoolean, isArray, filter, Pair, update, compose, Mapping, on, is, isDefined,
-    map, flatten, lookup, to, pairWith, conds, singleton, otherwise, LEFT, RIGHT} from 'tsfun';
+import {isUndefinedOrEmpty, isBoolean, isArray, filter, Pair, compose, Mapping, on, is, isDefined,
+    map, flatten, to, pairWith, conds, singleton, otherwise, LEFT, RIGHT} from 'tsfun';
+import {update, lookup} from 'tsfun/associative';
 import {flow as asyncFlow, map as asyncMap} from 'tsfun/async';
 import {FieldDocument,  ReadDatastore, Resource, Dating, Dimension, Literature,
     ValOptionalEndVal} from 'idai-components-2';

@@ -1,4 +1,5 @@
-import {getOn, values, isArray, map, flatten, flatMap, flow, cond, not, to, isDefined, singleton, Map, filter} from 'tsfun';
+import {values, isArray, map, flatten, flatMap, flow, cond, not, to, isDefined, singleton, Map, filter} from 'tsfun';
+import {getOn} from 'tsfun/struct';
 import {Document, Resource} from 'idai-components-2';
 import {IndexItem} from './index-item';
 import {Category} from '../../configuration/model/category';

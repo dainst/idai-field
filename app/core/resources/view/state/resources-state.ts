@@ -1,4 +1,5 @@
-import {lookup, flow, map, forEach} from 'tsfun';
+import {flow, map, forEach} from 'tsfun';
+import {lookup} from 'tsfun/associative';
 import {FieldDocument} from 'idai-components-2';
 import {ViewState} from './view-state';
 import {NavigationPath} from './navigation-path';

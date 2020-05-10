@@ -1,4 +1,6 @@
-import {assoc, compose, getOn, map, Map, values} from 'tsfun';
+import {compose, map, Map, values} from 'tsfun';
+import {assoc} from 'tsfun/associative';
+import {getOn} from 'tsfun/struct';
 import {assocReduce} from './utils';
 
 

@@ -1,4 +1,5 @@
-import {intersection, union, subtract, lookup, flow, map, cond, on, isNot, empty} from 'tsfun';
+import {intersection, union, subtract, flow, map, cond, isNot, empty} from 'tsfun';
+import {lookup} from 'tsfun/associative';
 import {IndexItem} from './index-item';
 
 type ResourceId = string;

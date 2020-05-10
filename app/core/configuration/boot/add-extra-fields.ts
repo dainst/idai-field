@@ -1,4 +1,6 @@
-import {clone, keys, Map, reduce, update} from 'tsfun';
+import {keys, Map, reduce} from 'tsfun';
+import {update} from 'tsfun/associative';
+import {clone} from 'tsfun/struct';
 import {FieldDefinition} from '../model/field-definition';
 import {TransientCategoryDefinition} from '../model/transient-category-definition';
 

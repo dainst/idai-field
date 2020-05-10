@@ -1,4 +1,5 @@
-import {assoc, update, flow, map} from 'tsfun';
+import {flow, map} from 'tsfun';
+import {assoc, update} from 'tsfun/associative'
 import {Document, Resource, Relations} from 'idai-components-2';
 import {Parser} from './parser';
 import {Category} from '../../configuration/model/category';

@@ -1,4 +1,5 @@
-import {assoc, duplicates, to} from 'tsfun';
+import {duplicates, to} from 'tsfun';
+import {assoc} from 'tsfun/associative';
 import {Document, NewDocument} from 'idai-components-2';
 import {ImportValidator} from './import-validator';
 import {ImportErrors as E} from '../import-errors';

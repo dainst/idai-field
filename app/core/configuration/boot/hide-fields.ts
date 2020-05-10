@@ -1,4 +1,5 @@
-import {clone, keysAndValues, Map, Pair} from 'tsfun';
+import {keysAndValues, Map, Pair} from 'tsfun';
+import {clone} from 'tsfun/struct';
 import {CustomCategoryDefinition} from '../model/custom-category-definition';
 import {TransientCategoryDefinition} from '../model/transient-category-definition';
 

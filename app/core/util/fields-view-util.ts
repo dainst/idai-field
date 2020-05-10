@@ -1,8 +1,8 @@
 import {FieldResource, Resource} from 'idai-components-2/index';
 import {ValuelistDefinition} from '../configuration/model/valuelist-definition';
 import {ValuelistUtil} from './valuelist-util';
-import {assoc, compose, flow, and, includedIn, isNot, filter, Filter,
-    isString, lookup, map, Map, on, to, undefinedOrEmpty, Predicate, or, is, empty} from 'tsfun';
+import {compose, flow, and, includedIn, isNot, filter, Filter, map, isString, Map, on, to, undefinedOrEmpty, Predicate, or, is, empty} from 'tsfun';
+import {assoc, lookup} from 'tsfun/associative';
 import {RelationDefinition} from '../configuration/model/relation-definition';
 import {HierarchicalRelations} from '../model/relation-constants';
 import {Labelled, Named} from './named';

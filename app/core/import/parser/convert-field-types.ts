@@ -1,4 +1,5 @@
-import {getOn, includedIn, is, isNot, on, isnt} from 'tsfun';
+import {includedIn, is, isNot, on, isnt} from 'tsfun';
+import {getOn} from 'tsfun/struct';
 import {Resource, Dimension, Dating} from 'idai-components-2';
 import {ParserErrors} from './parser-errors';
 import {PARENT} from '../../model/relation-constants';

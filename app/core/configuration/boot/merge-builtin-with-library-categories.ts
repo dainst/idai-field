@@ -1,4 +1,5 @@
-import {clone, jsonClone, keysAndValues, Map} from 'tsfun';
+import {keysAndValues, Map} from 'tsfun';
+import {clone, jsonClone} from 'tsfun/struct';
 import {BuiltinCategoryDefinition} from '../model/builtin-category-definition';
 import {LibraryCategoryDefinition} from '../model/library-category-definition';
 import {TransientCategoryDefinition} from '../model/transient-category-definition';

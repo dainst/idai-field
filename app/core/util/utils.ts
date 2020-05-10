@@ -1,6 +1,6 @@
 import {copy, Pair, Map, to, identity, isDefined, isString, reduce} from 'tsfun';
 import {dissoc} from 'tsfun/associative';
-import {path, getOn} from 'tsfun/struct';
+import {path, get} from 'tsfun/struct';
 
 
 /**
@@ -113,7 +113,7 @@ export function setOn(object: any, path_: string) {
  */
 export function takeOrMake<T>(o: T, path: string, alternative: any) {
 
-    return setOn(o, path)(getOn(path , alternative)(o));
+    return setOn(o, path)(get(path , alternative)(o));
 }
 
 

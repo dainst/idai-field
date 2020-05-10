@@ -1,6 +1,6 @@
 import {compose, map, Map, values} from 'tsfun';
 import {assoc} from 'tsfun/associative';
-import {getOn} from 'tsfun/struct';
+import {get} from 'tsfun/struct';
 import {assocReduce} from './utils';
 
 
@@ -17,7 +17,7 @@ import {assocReduce} from './utils';
 export function makeLookup(path: string) {
 
     return <A>(as: Array<A>): Map<A> =>
-        assocReduce((a: A) => [getOn(path)(a), a], {})(as);
+        assocReduce((a: A) => [get(path)(a), a], {})(as);
 }
 
 

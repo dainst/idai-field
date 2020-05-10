@@ -1,7 +1,7 @@
 import {cond, defined, flatten, flow, isNot, map, Map, Mapping, on,
     reduce, separate, throws, to, values, isUndefined, copy} from 'tsfun';
 import {assoc, dissoc, update, lookup} from 'tsfun/associative';
-import {dissocOn} from 'tsfun/struct';
+import {dissoc as dissocOn} from 'tsfun/struct';
 import {MDInternal} from 'idai-components-2';
 import {Category} from '../model/category';
 import {CategoryDefinition} from '../model/category-definition';

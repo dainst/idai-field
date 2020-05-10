@@ -1,11 +1,10 @@
 import {values, isArray, map, flatten, flatMap, flow, cond, not, to, isDefined, singleton, Map, filter} from 'tsfun';
-import {getOn} from 'tsfun/struct';
+import {get as getOn} from 'tsfun/struct';
 import {Document, Resource} from 'idai-components-2';
 import {IndexItem} from './index-item';
 import {Category} from '../../configuration/model/category';
 import {FieldDefinition} from '../../configuration/model/field-definition';
 import {clone} from '../../util/object-util';
-import {Named} from '../../util/named';
 
 
 export interface IndexDefinition {

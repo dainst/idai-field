@@ -1,5 +1,5 @@
 import {includedIn, is, isNot, on, isnt} from 'tsfun';
-import {getOn} from 'tsfun/struct';
+import {get} from 'tsfun/struct';
 import {Resource, Dimension, Dating} from 'idai-components-2';
 import {ParserErrors} from './parser-errors';
 import {PARENT} from '../../model/relation-constants';
@@ -131,7 +131,7 @@ function convertDating(resource: Resource, fieldName: string) {
  */
 function convertNumber(container: any, path: string, type: 'int'|'float') {
 
-    let value = getOn(path, undefined)(container);
+    let value = get(path, undefined)(container);
     if (!value) return;
 
     if (type === 'float') value = value.replace(',', '.');
@@ -148,7 +148,7 @@ function convertNumber(container: any, path: string, type: 'int'|'float') {
  */
 function convertBoolean(container: any, path: string) {
 
-    const val = getOn(path, undefined)(container);
+    const val = get(path, undefined)(container);
     if (!val) return;
     if (isNot(includedIn(['true', 'false']))(val)) throw [ParserErrors.CSV_NOT_A_BOOLEAN, val, path];
     setOn(container, path)(val === 'true');

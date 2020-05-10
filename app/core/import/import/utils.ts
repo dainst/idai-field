@@ -1,5 +1,5 @@
 import {arrayEqual, isNot, on, undefinedOrEmpty} from 'tsfun';
-import {getOn} from 'tsfun/struct';
+import {get} from 'tsfun/struct';
 import {unionBy} from 'tsfun/by';
 import {forEach as asyncForEach} from 'tsfun/async';
 import {Document, Relations} from 'idai-components-2';
@@ -27,8 +27,8 @@ export function assertLegalCombination(mergeMode: boolean|undefined, operationId
 
 export function assertInSameOperationWith(document: Document) { return (targetDocument: Document) => {
 
-    const documentRecordedIn = getOn('resource.relations.' + RECORDED_IN, undefined)(document);
-    const targetDocumentRecordedIn = getOn('resource.relations.' + RECORDED_IN, undefined)(targetDocument);
+    const documentRecordedIn = get('resource.relations.' + RECORDED_IN, undefined)(document);
+    const targetDocumentRecordedIn = get('resource.relations.' + RECORDED_IN, undefined)(targetDocument);
 
 
     if (isNot(undefinedOrEmpty)(documentRecordedIn)

@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {to} from 'tsfun';
-import {FieldDocument, Messages, Query} from 'idai-components-2';
+import {FieldDocument, Query} from 'idai-components-2';
 import {SettingsService} from '../../core/settings/settings-service';
 import {M} from '../messages/m';
 import {ExportModalComponent} from './export-modal.component';
@@ -20,6 +20,7 @@ import {Category} from '../../core/configuration/model/category';
 import {ProjectConfiguration} from '../../core/configuration/project-configuration';
 import {TabManager} from '../../core/tabs/tab-manager';
 import {ViewFacade} from '../../core/resources/view/view-facade';
+import {Messages} from '../messages/messages';
 
 const remote = require('electron').remote;
 

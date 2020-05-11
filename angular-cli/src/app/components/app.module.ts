@@ -6,7 +6,7 @@ import localeDe from '@angular/common/locales/de';
 import {FormsModule} from '@angular/forms';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import {MD, Messages, Query} from 'idai-components-2';
+import {Query} from 'idai-components-2';
 import {routing} from './app.routing';
 import {AppComponent} from './app.component';
 import {ResourcesModule} from './resources/resources.module';
@@ -64,6 +64,8 @@ import {DescendantsUtility} from '../core/model/descendants-utility';
 import {ViewModalModule} from './viewmodal/view-modal.module';
 import {ConfigurationModule} from './configuration/configuration.module';
 import {IdaiMessagesModule} from './messages/idai-messages.module';
+import {MD} from './messages/md';
+import {Messages} from './messages/messages';
 
 
 const remote = require('electron').remote;

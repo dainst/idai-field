@@ -1,10 +1,11 @@
 import {Component, OnChanges, Input, OnInit} from '@angular/core';
-import {ImageDocument, Messages} from 'idai-components-2';
+import {ImageDocument} from 'idai-components-2';
 import {ImageContainer} from '../../../core/images/imagestore/image-container';
 import {BlobMaker} from '../../../core/images/imagestore/blob-maker';
 import {showMissingImageMessageOnConsole, showMissingOriginalImageMessageOnConsole} from '../log-messages';
 import {M} from '../../messages/m';
 import {Imagestore} from '../../../core/images/imagestore/imagestore';
+import {Messages} from '../../messages/messages';
 
 
 @Component({

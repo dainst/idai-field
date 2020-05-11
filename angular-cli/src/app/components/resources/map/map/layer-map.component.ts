@@ -1,12 +1,13 @@
 import * as fs from 'fs';
 import {Component, Input, SimpleChanges} from '@angular/core';
-import {Messages, ImageDocument, ImageGeoreference} from 'idai-components-2';
+import {ImageDocument, ImageGeoreference} from 'idai-components-2';
 import {LayerManager, ListDiffResult} from './layer-manager';
 import {LayerImageProvider} from './layer-image-provider';
 import {SettingsService} from '../../../../core/settings/settings-service';
 import {ProjectConfiguration} from '../../../../core/configuration/project-configuration';
 import {MapComponent} from './map.component';
 import {ImageContainer} from '../../../../core/images/imagestore/image-container';
+import {Messages} from '../../../messages/messages';
 import L from 'leaflet';
 import 'leaflet.pm'
 

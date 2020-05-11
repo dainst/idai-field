@@ -1,6 +1,7 @@
 import {Component, Output, EventEmitter, Input, ElementRef, ViewChild} from '@angular/core';
-import {Messages, Document} from 'idai-components-2';
+import {Document} from 'idai-components-2';
 import {ImageUploader, ImageUploadResult} from '../upload/image-uploader';
+import {Messages} from '../../messages/messages';
 
 
 @Component({

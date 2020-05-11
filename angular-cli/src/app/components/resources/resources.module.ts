@@ -2,7 +2,6 @@ import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {FormsModule} from '@angular/forms';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import {Messages} from 'idai-components-2';
 import {ResourcesComponent} from './resources.component';
 import {GeometryViewComponent} from './map/list/geometry-view.component';
 import {EditableMapComponent} from './map/map/editable-map.component';
@@ -50,6 +49,7 @@ import {ViewModalLauncher} from './service/view-modal-launcher';
 import {ImageViewerModule} from '../image/viewer/image-viewer.module';
 import {TypeGridComponent} from './typegrid/type-grid.component';
 import {TypeIconComponent} from './typegrid/type-icon.component';
+import {Messages} from '../messages/messages';
 
 const remote = require('electron').remote;
 

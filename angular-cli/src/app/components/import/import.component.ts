@@ -3,7 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {Category} from '../../core/configuration/model/category';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {empty, filter, flow, forEach, includedIn, isNot, map, take} from 'tsfun';
-import {Document, Messages} from 'idai-components-2';
+import {Document} from 'idai-components-2';
 import {Importer, ImportReport} from '../../core/import/importer';
 import {Reader} from '../../core/import/reader/reader';
 import {FileSystemReader} from '../../core/import/reader/file-system-reader';
@@ -29,6 +29,7 @@ import BASE_EXCLUSION = ExportRunner.BASE_EXCLUSION;
 import {TabManager} from '../../core/tabs/tab-manager';
 import getCategoriesWithoutExcludedCategories = ExportRunner.getCategoriesWithoutExcludedCategories;
 import {ViewFacade} from '../../core/resources/view/view-facade';
+import {Messages} from '../messages/messages';
 
 
 @Component({

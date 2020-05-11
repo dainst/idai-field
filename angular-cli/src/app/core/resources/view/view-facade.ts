@@ -1,4 +1,4 @@
-import {Document, FieldDocument, Messages} from 'idai-components-2';
+import {Document, FieldDocument} from 'idai-components-2';
 import {DocumentsManager} from './documents-manager';
 import {FieldReadDatastore} from '../../datastore/field/field-read-datastore';
 import {ChangesStream} from '../../datastore/changes/changes-stream';
@@ -8,6 +8,7 @@ import {ResourcesState} from './state/resources-state';
 import {IndexFacade} from '../../datastore/index/index-facade';
 import {ProjectConfiguration} from '../../configuration/project-configuration';
 import {M} from '../../../components/messages/m';
+import {Messages} from '../../../components/messages/messages';
 
 
 export type ResourcesViewMode = 'map'|'list'|'type-grid';

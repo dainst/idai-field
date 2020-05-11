@@ -7,7 +7,6 @@ import {MD} from './md'
  *
  * @author Daniel de Oliveira
  */
-@Injectable()
 export class MDInternal extends MD {
 
     public static MESSAGES_ERROR_UNKNOWN_MESSAGE: string = 'messages.error.unknownMessage';

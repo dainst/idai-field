@@ -1,11 +1,11 @@
 import {Component, ElementRef, EventEmitter, Input, Output, ViewChild} from '@angular/core';
-import {Messages} from 'idai-components-2';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {PersistenceManager} from '../../../core/model/persistence-manager';
 import {UsernameProvider} from '../../../core/settings/username-provider';
 import {M} from '../../messages/m';
 import {readWldFile, Errors} from '../../../core/images/wld/wld-import';
 import {downloadWldFile} from '../../../core/images/wld/wld-export';
+import {Messages} from '../../messages/messages';
 
 
 @Component({

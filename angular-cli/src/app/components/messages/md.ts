@@ -9,7 +9,6 @@ import {Injectable} from "@angular/core";
  * @author Daniel de Oliveira
  * @author Jan G. Wieners
  */
-@Injectable()
 export abstract class MD { // = Messages Dictionary. For reasons of brevity of calls to it just "MD".
     public msgs: any;
 }

@@ -27,7 +27,7 @@
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2",
     "tsfun": "4.3.1",
-    "idai-components-2": "1.46.74",
+    "idai-components-2": "1.46.76",
     "bootstrap": "4.4.1",
     "@angular/localize": "9.0.5",
     "@mdi/font": "3.5.95",

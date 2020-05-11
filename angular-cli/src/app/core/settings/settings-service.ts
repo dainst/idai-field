@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import {set} from 'tsfun';
-import {Messages} from 'idai-components-2';
 import {Settings} from './settings';
 import {SettingsSerializer} from './settings-serializer';
 import {PouchdbManager} from '../datastore/pouchdb/pouchdb-manager';
@@ -14,6 +13,7 @@ import {ProjectConfiguration} from '../configuration/project-configuration';
 import {Imagestore} from '../images/imagestore/imagestore';
 import {ImageConverter} from '../images/imagestore/image-converter';
 import {ImagestoreErrors} from '../images/imagestore/imagestore-errors';
+import {Messages} from '../../components/messages/messages';
 
 const {remote, ipcRenderer} = require('electron');
 

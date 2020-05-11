@@ -1,9 +1,10 @@
 import {NgbActiveModal, NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {Messages, Document, FieldDocument} from 'idai-components-2';
+import {Document, FieldDocument} from 'idai-components-2';
 import {DoceditComponent} from '../docedit/docedit.component';
 import {RoutingService} from '../routing-service';
 import {MenuService} from '../../desktop/menu-service';
 import {ImageRowItem} from '../image/row/image-row.component';
+import {Messages} from '../messages/messages';
 
 
 /**

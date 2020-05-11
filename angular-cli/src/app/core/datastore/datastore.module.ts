@@ -6,6 +6,8 @@ import {Datastore, Document, ReadDatastore, FieldDocument, ImageDocument,
 import {PouchdbManager} from './pouchdb/pouchdb-manager';
 import {IdGenerator} from './pouchdb/id-generator';
 import {PouchdbDatastore} from './pouchdb/pouchdb-datastore';
+import {DocumentCache} from './cached/document-cache';
+import {PouchdbServer} from './pouchdb/pouchdb-server';
 // import {PouchdbServer} from './pouchdb/pouchdb-server';
 // import {FieldDatastore} from './field/field-datastore';
 // import {FieldReadDatastore} from './field/field-read-datastore';
@@ -32,9 +34,9 @@ import {PouchdbDatastore} from './pouchdb/pouchdb-datastore';
         // ChangesStream,
         PouchdbManager,
         IdGenerator,
-        // PouchdbServer,
+        PouchdbServer,
         // { provide: CategoryConverter, useClass: FieldCategoryConverter },
-        // DocumentCache,
+        DocumentCache,
 
         {
             provide: PouchdbDatastore,

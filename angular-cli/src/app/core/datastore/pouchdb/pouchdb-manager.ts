@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {Observable, Observer} from 'rxjs';
 import * as PouchDB from 'pouchdb';
-// import {IndexFacade} from '../index/index-facade';
-// import {Migrator} from '../field/migrator';
+import {IndexFacade} from '../index/index-facade';
+import {Migrator} from '../field/migrator';
 import {Name} from '../../constants';
 import {PouchdbProxy} from './pouchdb-proxy';
 import {SampleDataLoader} from './sample-data-loader';
@@ -147,14 +147,12 @@ export class PouchdbManager {
     }
 
 
-    /*
+
     public async reindex(indexFacade: IndexFacade) {
 
         await indexFacade.clear();
         await this.fetchAll((docs: Array<any>) => indexFacade.putMultiple(docs));
     }
-
-     */
 
 
     private async fetchAll(callback: Function) {

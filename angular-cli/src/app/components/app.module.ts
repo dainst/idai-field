@@ -57,6 +57,15 @@ import {Router} from '@angular/router';
 import {HelpComponent} from './help/help.component';
 import {ConfigReader} from '../core/configuration/boot/config-reader';
 import {DatastoreModule} from '../core/datastore/datastore.module';
+import {SettingsService} from '../core/settings/settings-service';
+import {PouchdbManager} from '../core/datastore/pouchdb/pouchdb-manager';
+import {PouchdbServer} from '../core/datastore/pouchdb/pouchdb-server';
+import {SettingsSerializer} from '../core/settings/settings-serializer';
+import {UsernameProvider} from '../core/settings/username-provider';
+import {ProjectConfiguration} from '../core/configuration/project-configuration';
+import {FulltextIndex} from '../core/datastore/index/fulltext-index';
+import {ConstraintIndex} from '../core/datastore/index/constraint-index';
+import {IndexFacade} from '../core/datastore/index/index-facade';
 // import {TabManager} from '../core/tabs/tab-manager';
 // import {TabSpaceCalculator} from '../core/tabs/tab-space-calculator';
 // import {Imagestore} from '../core/images/imagestore/imagestore';
@@ -76,10 +85,10 @@ import {DatastoreModule} from '../core/datastore/datastore.module';
 
 // const remote = require('electron').remote;
 
-// let projectConfiguration: ProjectConfiguration|undefined = undefined;
-// let fulltextIndex: FulltextIndex|undefined = undefined;
-// let constraintIndex: ConstraintIndex|undefined = undefined;
-// let indexFacade: IndexFacade|undefined = undefined;
+let projectConfiguration: ProjectConfiguration|undefined = undefined;
+let fulltextIndex: FulltextIndex|undefined = undefined;
+let constraintIndex: ConstraintIndex|undefined = undefined;
+let indexFacade: IndexFacade|undefined = undefined;
 
 
 // registerLocaleData(localeDe, 'de');
@@ -118,7 +127,7 @@ import {DatastoreModule} from '../core/datastore/datastore.module';
         HelpComponent
     ],
     providers: [
-      ConfigReader
+      ConfigReader,
       /*
         DecimalPipe,
         { provide: LOCALE_ID, useValue: remote.getGlobal('config').locale },
@@ -127,6 +136,7 @@ import {DatastoreModule} from '../core/datastore/datastore.module';
         I18n,
         ConfigLoader,
         AppConfigurator,
+       */
         {
             provide: APP_INITIALIZER,
             multi: true,
@@ -136,7 +146,12 @@ import {DatastoreModule} from '../core/datastore/datastore.module';
                     .then(() => (new SettingsSerializer).load())
                     .then(settings =>
                         settingsService.bootProjectDb(settings).then(() =>
-                            settingsService.loadConfiguration(remote.getGlobal('configurationDirPath'))))
+                            settingsService.loadConfiguration(
+
+                              "../config"
+                              // TODO remote.getGlobal('configurationDirPath')
+
+                            )))
                     .then(configuration => {
                         projectConfiguration = configuration;
 
@@ -153,7 +168,7 @@ import {DatastoreModule} from '../core/datastore/datastore.module';
         SettingsService,
         { provide: UsernameProvider, useExisting: SettingsService },
 
-       */
+
         // {
         //     provide: Messages,
         //     useFactory: function(md: MD) {

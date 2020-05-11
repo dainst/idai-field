@@ -1,4 +1,8 @@
-import * as fs from 'fs';
+
+// import fs from 'fs';
+var fs = window.require("fs"); // TODO review
+
+
 import {SampleDataLoader} from '../pouchdb/sample-data-loader';
 import {getSampleDocuments} from './field-sample-objects';
 import {ImageConverter} from '../../images/imagestore/image-converter';
@@ -50,7 +54,7 @@ export class FieldSampleDataLoader implements SampleDataLoader {
         const base = '/test/test-data/imagestore-samples/';
 
         let path = process.cwd() + base;
-        if (!fs.existsSync(path)) path = process.resourcesPath + base;
+        if (!fs.existsSync(path)) path = (process as any /* TODO review any */).resourcesPath + base;
 
         return this.loadDirectory(db, path, this.imagestorePath + project);
     }

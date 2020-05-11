@@ -15,7 +15,7 @@ import {ImageConverter} from '../images/imagestore/image-converter';
 import {ImagestoreErrors} from '../images/imagestore/imagestore-errors';
 import {Messages} from '../../components/messages/messages';
 
-const {remote, ipcRenderer} = require('electron');
+
 
 
 @Injectable()

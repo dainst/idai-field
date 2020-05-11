@@ -1,8 +1,9 @@
 import {Settings} from './settings';
 
-const remote = require('electron').remote;
-import * as fs from 'fs';
+// import fs from 'fs';
+var fs = window.require("fs"); // TODO review
 
+const remote = window.require('electron').remote;
 
 /**
  * @author Thomas Kleinke

@@ -1,6 +1,6 @@
-// import {ConstraintIndex} from './core/datastore/index/constraint-index';
-// import {IndexFacade} from './core/datastore/index/index-facade';
-// import {ProjectConfiguration} from './core/configuration/project-configuration';
+import {IndexFacade} from './core/datastore/index/index-facade';
+import {ConstraintIndex} from './core/datastore/index/constraint-index';
+import {ProjectConfiguration} from './core/configuration/project-configuration';
 
 /**
  * @author Thomas Kleinke
@@ -8,7 +8,7 @@
  */
 export module IndexerConfiguration {
 
-  /*
+
     export function configureIndexers(projectConfiguration: ProjectConfiguration, showWarnings = true) {
 
         const createdConstraintIndex = ConstraintIndex.make({
@@ -36,6 +36,4 @@ export module IndexerConfiguration {
 
         return { createdConstraintIndex, createdFulltextIndex, createdIndexFacade };
     }
-
-   */
 }

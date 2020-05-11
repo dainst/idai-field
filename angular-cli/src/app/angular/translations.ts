@@ -1,9 +1,10 @@
-const remote = require('electron').remote;
+/*const remote = require('electron').remote;
 const fs = require('fs');
-
+*/
 /**
  * @author Thomas Kleinke
  */
+/*
 export module Translations {
 
     export function getTranslations(): string {
@@ -14,3 +15,4 @@ export module Translations {
         return fs.readFileSync(filePath, 'utf8');
     }
 }
+*/

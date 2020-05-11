@@ -1,8 +1,8 @@
 import {Router} from '@angular/router';
 import {Injectable, NgZone} from '@angular/core';
 
-const ipcRenderer = require('electron').ipcRenderer;
-const remote = require('electron').remote;
+// const ipcRenderer = require('electron').ipcRenderer;
+// const remote = require('electron').remote;
 
 
 type MenuContext = 'loading'|'default'|'docedit'|'view-modal'|'projects'|'geometryedit';
@@ -20,9 +20,9 @@ export class MenuService {
 
     public initialize() {
 
-        ipcRenderer.on('menuItemClicked', async (event: any, menuItem: string) => {
-            await this.onMenuItemClicked(menuItem);
-        });
+        // ipcRenderer.on('menuItemClicked', async (event: any, menuItem: string) => {
+        //     await this.onMenuItemClicked(menuItem);
+        // });
 
         MenuService.setContext('default');
     }
@@ -36,6 +36,6 @@ export class MenuService {
 
     public static setContext(context: MenuContext) {
 
-        remote.getGlobal('setMenuContext')(context);
+        // remote.getGlobal('setMenuContext')(context);
     }
 }

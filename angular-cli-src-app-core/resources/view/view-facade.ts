@@ -2,7 +2,7 @@ import {Document, FieldDocument} from 'idai-components-2';
 import {DocumentsManager} from './documents-manager';
 import {FieldReadDatastore} from '../../datastore/field/field-read-datastore';
 import {ChangesStream} from '../../datastore/changes/changes-stream';
-import {Loading} from '../../../components/widgets/loading';
+// TODO import {Loading} from '../../../components/widgets/loading';
 import {ResourcesStateManager} from './resources-state-manager';
 import {ResourcesState} from './state/resources-state';
 import {IndexFacade} from '../../datastore/index/index-facade';
@@ -29,7 +29,7 @@ export class ViewFacade {
         private datastore: FieldReadDatastore,
         private remoteChangesStream: ChangesStream,
         private resourcesStateManager: ResourcesStateManager,
-        private loading: Loading,
+        // TODO private loading: Loading,
         private indexFacade: IndexFacade,
         private messages: Messages
     ) {
@@ -37,7 +37,7 @@ export class ViewFacade {
             datastore,
             remoteChangesStream,
             resourcesStateManager,
-            loading,
+            // TODO loading,
             (indexName: string, matchTerm: string) =>
                 indexFacade.getCount(indexName, matchTerm)
         );

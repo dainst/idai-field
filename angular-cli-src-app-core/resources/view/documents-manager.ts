@@ -5,7 +5,7 @@ import {Document, Query, FieldDocument} from 'idai-components-2';
 import {FieldReadDatastore} from '../../datastore/field/field-read-datastore';
 import {ChangesStream} from '../../datastore/changes/changes-stream';
 import {ObserverUtil} from '../../util/observer-util';
-import {Loading} from '../../../components/widgets/loading';
+// TODO import {Loading} from '../../../components/widgets/loading';
 import {ResourcesStateManager} from './resources-state-manager';
 import {IdaiFieldFindResult} from '../../datastore/cached/cached-read-datastore';
 import {ResourcesState} from './state/resources-state';
@@ -48,7 +48,7 @@ export class DocumentsManager {
         private datastore: FieldReadDatastore,
         private changesStream: ChangesStream,
         private resourcesStateManager: ResourcesStateManager,
-        private loading: Loading,
+        // TODO private loading: Loading,
         private getIndexMatchTermCount: (indexName: string, matchTerm: string) => number
     ) {
         changesStream.remoteChangesNotifications()
@@ -200,7 +200,7 @@ export class DocumentsManager {
     public async populateDocumentList(reset: boolean = true) {
 
         this.populateInProgress = true;
-        if (this.loading) this.loading.start();
+        // TODO if (this.loading) this.loading.start();
 
         if (reset) {
             this.newDocumentsFromRemote = [];
@@ -215,7 +215,7 @@ export class DocumentsManager {
 
         await this.updateChildrenCountMap(result.documents);
 
-        if (this.loading) this.loading.stop();
+        // TODO if (this.loading) this.loading.stop();
         if (result.queryId !== this.currentQueryId) {
             this.populateInProgress = false;
             return;

@@ -1,13 +1,14 @@
 import {Component, Renderer2} from '@angular/core';
 import {Event, NavigationStart, Router} from '@angular/router';
 import {I18n} from '@ngx-translate/i18n-polyfill';
-import {AppController} from '../core/app-controller';
-import {MenuService} from '../desktop/menu-service';
-import {UtilTranslations} from '../core/util/util-translations';
-import {ReadImagestore} from '../core/images/imagestore/read-imagestore';
-import {Messages} from './messages/messages';
+// import {AppController} from '../core/app-controller';
+// import {MenuService} from '../desktop/menu-service';
+// import {UtilTranslations} from '../core/util/util-translations';
+// import {ReadImagestore} from '../core/images/imagestore/read-imagestore';
+// import {Messages} from './messages/messages';
 
-const remote = require('electron').remote;
+// const remote = require('electron').remote;
+
 
 @Component({
     moduleId: module.id,
@@ -21,16 +22,17 @@ const remote = require('electron').remote;
  */
 export class AppComponent {
 
-    public alwaysShowClose = remote.getGlobal('switches').messages_timeout == undefined;
+    // TODO public alwaysShowClose = remote.getGlobal('switches').messages_timeout == undefined;
 
     constructor(private router: Router,
-                private messages: Messages,
-                private renderer: Renderer2,
-                private menuService: MenuService,
-                private i18n: I18n,
-                private utilTranslations: UtilTranslations,
-                appController: AppController,
-                imagestore: ReadImagestore) {
+                // private messages: Messages,
+                private renderer: Renderer2
+                // private menuService: MenuService,
+                // private i18n: I18n,
+                // private utilTranslations: UtilTranslations,
+                // appController: AppController,
+                // imagestore: ReadImagestore
+    ) {
 
         // To get rid of stale messages when changing routes.
         // Note that if you want show a message to the user
@@ -40,21 +42,23 @@ export class AppComponent {
         //
         router.events.subscribe((event: Event) => {
             if (event instanceof NavigationStart) {
-                imagestore.revokeAll();
-                this.messages.removeAllMessages();
+                // TODO imagestore.revokeAll();
+                // this.messages.removeAllMessages();
             }
         });
 
-        appController.setupServer();
-        menuService.initialize();
+        // TODO appController.setupServer();
+        // menuService.initialize();
 
+        /*
         AppComponent.preventDefaultDragAndDropBehavior();
         this.initializeUtilTranslations();
 
         if (remote.getGlobal('mode') === 'test') this.enableMenuShortCutsForTests();
+         */
     }
 
-
+    /*
     private static preventDefaultDragAndDropBehavior() {
 
         document.addEventListener('dragover', event => event.preventDefault());
@@ -117,5 +121,5 @@ export class AppComponent {
         this.utilTranslations.addTranslation(
             'zenonId', this.i18n({ id: 'util.literature.zenonId', value: 'Zenon-ID' })
         );
-    }
+    }*/
 }

@@ -39,6 +39,10 @@ app/**/*.js
 app/**/*.js.map
 angular-cli/src/app/**/*.js
 angular-cli/src/app/**/*.js.map
+angular-cli-src-app-components/**/*.js
+angular-cli-src-app-components/**/*.js.map
+angular-cli-src-app-core/**/*.js
+angular-cli-src-app-core/**/*.js.map
 config/Scripts/**/*.js.map
 config/Scripts/**/*.js
 app/messages.xlf

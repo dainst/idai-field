@@ -37,6 +37,8 @@ tools
 app/app.css
 app/**/*.js
 app/**/*.js.map
+angular-cli/src/app/**/*.js
+angular-cli/src/app/**/*.js.map
 config/Scripts/**/*.js.map
 config/Scripts/**/*.js
 app/messages.xlf

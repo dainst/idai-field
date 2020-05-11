@@ -55,6 +55,7 @@ import {MenuService} from '../desktop/menu-service';
 // import {FieldReadDatastore} from '../core/datastore/field/field-read-datastore';
 import {Router} from '@angular/router';
 import {HelpComponent} from './help/help.component';
+import {ConfigReader} from '../core/configuration/boot/config-reader';
 // import {TabManager} from '../core/tabs/tab-manager';
 // import {TabSpaceCalculator} from '../core/tabs/tab-space-calculator';
 // import {Imagestore} from '../core/images/imagestore/imagestore';
@@ -116,13 +117,13 @@ import {HelpComponent} from './help/help.component';
         HelpComponent
     ],
     providers: [
+      ConfigReader
       /*
         DecimalPipe,
         { provide: LOCALE_ID, useValue: remote.getGlobal('config').locale },
         { provide: TRANSLATIONS, useValue: Translations.getTranslations() },
         { provide: TRANSLATIONS_FORMAT, useValue: 'xlf' },
         I18n,
-        ConfigReader,
         ConfigLoader,
         AppConfigurator,
         {

@@ -2,6 +2,7 @@ import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 import {HttpClient} from '@angular/common/http';
 import {Chapter, HelpLoader} from './help-loader';
+import {ConfigReader} from '../../core/configuration/boot/config-reader';
 // import {SettingsService} from '../../core/settings/settings-service';
 // import {TabManager} from '../../core/tabs/tab-manager';
 
@@ -34,10 +35,18 @@ export class HelpComponent implements OnInit {
               private http: HttpClient,
               // private settingsService: SettingsService,
               // private tabManager: TabManager
+
+              // TODO take this out,
+              private configReader: ConfigReader
   ) {}
 
 
   async ngOnInit() {
+
+    // TODO throw away
+    this.configReader.read('../src/throwaway.json').then(result => {
+      console.log("test", result)
+    })
 
     const {html, chapters} = await HelpLoader.load(
       HelpComponent.getFilePath(

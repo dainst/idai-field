@@ -5,6 +5,8 @@ import {Chapter, HelpLoader} from './help-loader';
 import {ConfigReader} from '../../core/configuration/boot/config-reader';
 // import {SettingsService} from '../../core/settings/settings-service';
 // import {TabManager} from '../../core/tabs/tab-manager';
+import {map} from 'tsfun';
+import {assoc} from 'tsfun/associative';
 
 
 @Component({
@@ -47,6 +49,15 @@ export class HelpComponent implements OnInit {
     this.configReader.read('../src/throwaway.json').then(result => {
       console.log("test", result)
     })
+    // TODO throw away
+    console.log(assoc(0, 1)([13]))
+    console.log(map((_: any) => _ * 2)([13]))
+
+
+
+
+
+
 
     const {html, chapters} = await HelpLoader.load(
       HelpComponent.getFilePath(

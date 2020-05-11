@@ -6,9 +6,20 @@
   },
   "files": [
     "src/main.ts",
-    "src/polyfills.ts"
+    "src/polyfills.ts",
+    "node_modules/idai-components-2/index.ts",
+    "node_modules/tsfun/index.ts",
+    "node_modules/tsfun/struct.ts",
+    "node_modules/tsfun/associative.ts",
+    "node_modules/tsfun/async.ts",
+    "node_modules/tsfun/by.ts"
   ],
   "include": [
+    "node_modules/idai-components-2/src/**/*.ts",
+    "node_modules/tsfun/src/**/*.ts",
     "src/**/*.d.ts"
+  ],
+  "exclude": [
+
   ]
 }

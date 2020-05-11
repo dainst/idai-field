@@ -56,6 +56,7 @@ import {MenuService} from '../desktop/menu-service';
 import {Router} from '@angular/router';
 import {HelpComponent} from './help/help.component';
 import {ConfigReader} from '../core/configuration/boot/config-reader';
+import {DatastoreModule} from '../core/datastore/datastore.module';
 // import {TabManager} from '../core/tabs/tab-manager';
 // import {TabSpaceCalculator} from '../core/tabs/tab-space-calculator';
 // import {Imagestore} from '../core/images/imagestore/imagestore';
@@ -97,11 +98,11 @@ import {ConfigReader} from '../core/configuration/boot/config-reader';
         // // NgbModule.forRoot(),
         // IdaiMessagesModule,
         routing,
+        DatastoreModule,
         // WidgetsModule,
         // ImportModule,
         // ExportModule,
         // BackupModule,
-        // DatastoreModule,
         // MatrixModule,
         // ConfigurationModule
     ],

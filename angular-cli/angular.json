@@ -122,6 +122,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "idai-field"
+    }
+  },
+  "defaultProject": "idai-field",
+  "cli": {
+    "analytics": false
+  }
 }

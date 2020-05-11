@@ -1,0 +1,35 @@
+/**
+ * @author: Jan G. Wieners
+ * @author: Thomas Kleinke
+ */
+.alert {
+  text-align: center;
+
+  .close {
+    cursor: default !important;
+    user-select: none;
+  }
+
+  .close:focus {
+    outline: none;
+  }
+}
+
+@-webkit-keyframes fadeIn { from { opacity:0; opacity: 1\9; /* IE9 only */ } to { opacity:1; } }
+@-moz-keyframes fadeIn { from { opacity:0; opacity: 1\9; /* IE9 only */ } to { opacity:1; } }
+@keyframes fadeIn { from { opacity:0; opacity: 1\9; /* IE9 only */ } to { opacity:1; } }
+
+.fade-in {
+  opacity:0;
+  -webkit-animation: fadeIn ease-in .5s;
+  -moz-animation: fadeIn ease-in .5s;
+  animation: fadeIn ease-in .5s;
+
+  -webkit-animation-fill-mode: forwards;
+  -moz-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+
+  -webkit-animation-duration: .5s;
+  -moz-animation-duration: .5s;
+  animation-duration: .5s;
+}

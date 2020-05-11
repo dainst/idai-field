@@ -1,6 +1,6 @@
 import {AfterViewInit, AfterViewChecked, Component, ElementRef, ViewChild} from '@angular/core';
 import {NgbActiveModal, NgbModal, NgbPopover} from '@ng-bootstrap/ng-bootstrap';
-import {Messages, Document} from 'idai-components-2';
+import {Document} from 'idai-components-2';
 import {SettingsService} from '../../core/settings/settings-service';
 import {DoceditComponent} from '../docedit/docedit.component';
 import {M} from '../messages/m';
@@ -9,6 +9,7 @@ import {MenuService} from '../../desktop/menu-service';
 import {StateSerializer} from '../../core/common/state-serializer';
 import {DocumentReadDatastore} from '../../core/datastore/document-read-datastore';
 import {ProjectNameValidatorMsgConversion} from '../messages/project-name-validator-msg-conversion';
+import {Messages} from '../messages/messages';
 
 const remote = require('electron').remote;
 

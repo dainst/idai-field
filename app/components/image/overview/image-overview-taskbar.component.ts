@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {FieldDocument, Messages} from 'idai-components-2';
+import {FieldDocument} from 'idai-components-2';
 import {LinkModalComponent} from './link-modal.component';
 import {RemoveLinkModalComponent} from './remove-link-modal.component';
 import {ImageOverviewFacade} from '../../../core/images/overview/view/imageoverview-facade';
@@ -10,6 +10,7 @@ import {ImageOverviewComponent} from './image-overview.component';
 import {ViewFacade} from '../../../core/resources/view/view-facade';
 import {PersistenceHelperErrors} from '../../../core/images/overview/service/persistence-helper-errors';
 import {M} from '../../messages/m';
+import {Messages} from '../../messages/messages';
 
 
 @Component({

@@ -1,10 +1,11 @@
 import {ChangeDetectorRef, Component, Input, OnChanges} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
-import {Relations, Resource, Document, Messages} from 'idai-components-2';
+import {Relations, Resource, Document} from 'idai-components-2';
 import {DocumentReadDatastore} from '../../../core/datastore/document-read-datastore';
 import {M} from '../../messages/m';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
 import {Loading} from '../../widgets/loading';
+import {Messages} from '../../messages/messages';
 
 const moment = require('moment');
 
@@ -21,9 +22,9 @@ export class DoceditConflictsTabComponent implements OnChanges {
     @Input() document: Document;
     @Input() inspectedRevisions: Document[];
 
-    private conflictedRevisions: Array<Document> = [];
-    private selectedRevision: Document|undefined;
-    private differingFields: any[];
+    public conflictedRevisions: Array<Document> = [];
+    public selectedRevision: Document|undefined;
+    public differingFields: any[];
     private relationTargets: { [targetId: string]: Document|undefined };
 
 

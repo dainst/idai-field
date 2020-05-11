@@ -2,7 +2,6 @@ import {cond, defined, flatten, flow, isNot, map, Map, Mapping, on,
     reduce, separate, throws, to, values, isUndefined, copy} from 'tsfun';
 import {assoc, dissoc, update, lookup} from 'tsfun/associative';
 import {dissoc as dissocOn} from 'tsfun/struct';
-import {MDInternal} from 'idai-components-2';
 import {Category} from '../model/category';
 import {CategoryDefinition} from '../model/category-definition';
 import {Group, Groups} from '../model/group';
@@ -10,6 +9,7 @@ import {makeLookup} from '../../util/transformers';
 import {FieldDefinition} from '../model/field-definition';
 import {clone} from '../../util/object-util';
 import {Named, namedArrayToNamedMap} from '../../util/named';
+import {MDInternal} from '../../../components/messages/md-internal';
 
 
 const TEMP_FIELDS = 'fields';

@@ -3,7 +3,6 @@ import {BrowserModule} from '@angular/platform-browser';
 import {NgbModule, NgbDateParserFormatter} from '@ng-bootstrap/ng-bootstrap';
 import {FormsModule} from '@angular/forms';
 import {RouterModule} from '@angular/router';
-import {IdaiMessagesModule} from 'idai-components-2';
 import {DoceditComponent} from './docedit.component';
 import {WidgetsModule} from '../widgets/widgets.module';
 import {DoceditImageTabComponent} from './tabs/docedit-image-tab.component';
@@ -47,6 +46,7 @@ import {TypeRelationComponent} from './core/forms/type-relation/type-relation.co
 import {TypeRowComponent} from './core/forms/type-relation/type-row.component';
 import {TypeRelationPickerComponent} from './core/forms/type-relation/type-relation-picker.component';
 import {LiteratureComponent} from './core/forms/literature.component';
+import {IdaiMessagesModule} from '../messages/idai-messages.module';
 
 
 @NgModule({

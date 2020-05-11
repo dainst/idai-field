@@ -2,7 +2,7 @@ import {AfterViewChecked, ChangeDetectorRef, Component, OnDestroy, Renderer2} fr
 import {ActivatedRoute} from '@angular/router';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {Observable, Subscription} from 'rxjs';
-import {Document, FieldDocument, FieldGeometry, Messages} from 'idai-components-2';
+import {Document, FieldDocument, FieldGeometry} from 'idai-components-2';
 import {Loading} from '../widgets/loading';
 import {RoutingService} from '../routing-service';
 import {DoceditLauncher} from './service/docedit-launcher';
@@ -16,6 +16,7 @@ import {TabManager} from '../../core/tabs/tab-manager';
 import {ResourcesViewMode, ViewFacade} from '../../core/resources/view/view-facade';
 import {NavigationService} from '../../core/resources/navigation/navigation-service';
 import {MenuService} from '../../desktop/menu-service';
+import {Messages} from '../messages/messages';
 
 
 export type PopoverMenu = 'none'|'info'|'children';

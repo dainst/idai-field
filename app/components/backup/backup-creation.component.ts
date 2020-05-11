@@ -1,12 +1,12 @@
 import {Component} from '@angular/core';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {Messages} from 'idai-components-2';
 import {SettingsService} from '../../core/settings/settings-service';
 import {BackupCreationModalComponent} from './backup-creation-modal.component';
 import {DialogProvider} from './dialog-provider';
 import {BackupProvider} from './backup-provider';
 import {M} from '../messages/m';
 import {TabManager} from '../../core/tabs/tab-manager';
+import {Messages} from '../messages/messages';
 
 
 @Component({

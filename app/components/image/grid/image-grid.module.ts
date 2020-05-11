@@ -3,11 +3,11 @@ import {BrowserModule} from '@angular/platform-browser';
 import {FormsModule} from '@angular/forms';
 import {RouterModule} from '@angular/router';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import {IdaiMessagesModule} from 'idai-components-2';
 import {ImageGridComponent} from './image-grid.component';
 import {DropAreaComponent} from './drop-area.component';
 import {ImageUploadModule} from '../upload/image-upload.module';
 import {ImageGridCellComponent} from "./image-grid-cell.component";
+import {IdaiMessagesModule} from '../../messages/idai-messages.module';
 
 
 @NgModule({

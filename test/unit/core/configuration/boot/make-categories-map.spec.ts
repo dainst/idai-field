@@ -1,10 +1,11 @@
-import {FieldResource, MDInternal} from 'idai-components-2';
+import {FieldResource} from 'idai-components-2';
 import {Groups} from '../../../../../app/core/configuration/model/group';
 import {FieldDefinition} from '../../../../../app/core/configuration/model/field-definition';
 import {Category} from '../../../../../app/core/configuration/model/category';
 import {makeCategoriesMap} from '../../../../../app/core/configuration/boot/make-categories-map';
 import {byName} from '../../../../../app/core/util/named';
 import InputType = FieldDefinition.InputType;
+import {MDInternal} from '../../../../../app/components/messages/md-internal';
 
 
 /**

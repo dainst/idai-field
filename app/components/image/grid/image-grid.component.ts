@@ -1,10 +1,11 @@
 import {Component, EventEmitter, Input, OnChanges, SimpleChanges, Output, ElementRef} from '@angular/core';
-import {Messages, Document, ImageDocument} from 'idai-components-2';
+import {Document, ImageDocument} from 'idai-components-2';
 import {FieldReadDatastore} from '../../../core/datastore/field/field-read-datastore';
 import {ImageUploadResult} from '../upload/image-uploader';
 import {showMissingImageMessageOnConsole} from '../log-messages';
 import {Imagestore} from '../../../core/images/imagestore/imagestore';
 import {constructGrid} from '../../../core/images/grid/construct-grid';
+import {Messages} from '../../messages/messages';
 
 
 @Component({

@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {Messages} from 'idai-components-2';
 import {SettingsService} from '../../core/settings/settings-service';
 import {Settings} from '../../core/settings/settings';
 import {M} from '../messages/m';
 import {TabManager} from '../../core/tabs/tab-manager';
 import OpenDialogReturnValue = Electron.OpenDialogReturnValue;
+import {Messages} from '../messages/messages';
 
 const address = require('address');
 const remote = require('electron').remote;

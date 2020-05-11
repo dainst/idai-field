@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {union} from 'tsfun';
-import {Query, FieldDocument, Constraint, Messages} from 'idai-components-2';
+import {Query, FieldDocument, Constraint} from 'idai-components-2';
 import {FieldDatastore} from '../../core/datastore/field/field-datastore';
 import {Loading} from './loading';
 import {clone} from '../../core/util/object-util';
@@ -9,6 +9,7 @@ import {AngularUtility} from '../../angular/angular-utility';
 import {FieldDocumentFindResult} from '../../core/datastore/field/field-read-datastore';
 import {Category} from '../../core/configuration/model/category';
 import {ProjectConfiguration} from '../../core/configuration/project-configuration';
+import {Messages} from '../messages/messages';
 
 
 @Component({

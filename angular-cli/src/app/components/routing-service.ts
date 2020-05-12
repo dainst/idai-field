@@ -8,7 +8,7 @@ import {ProjectCategories} from '../core/configuration/project-categories';
 import {ViewFacade} from '../core/resources/view/view-facade';
 import {ProjectConfiguration} from '../core/configuration/project-configuration';
 import {MenuService} from '../desktop/menu-service';
-import {ProjectsModalComponent} from './navbar/projects-modal.component';
+// import {ProjectsModalComponent} from './navbar/projects-modal.component';
 import {SettingsService} from '../core/settings/settings-service';
 
 
@@ -28,7 +28,7 @@ export class RoutingService {
 
 
     constructor(private router: Router,
-                private viewFacade: ViewFacade,
+                // private viewFacade: ViewFacade, TODO
                 private location: Location,
                 private projectCategories: ProjectCategories,
                 private projectConfiguration: ProjectConfiguration,
@@ -85,6 +85,7 @@ export class RoutingService {
 
     public async openProjectsModal(openConflictResolver: boolean = false) {
 
+      /*
         MenuService.setContext('projects');
 
         const ref: NgbModalRef = this.modalService.open(ProjectsModalComponent, { keyboard: false });
@@ -98,12 +99,14 @@ export class RoutingService {
         } finally {
             MenuService.setContext('default');
         }
+       */
     }
 
 
     private async jumpToImageCategoryResource(documentToSelect: Document,
                                               comingFromOutsideResourcesComponent: boolean) {
 
+      /*
         const selectedDocument = this.viewFacade.getSelectedDocument();
         if (selectedDocument) {
             if (this.currentRoute && selectedDocument.resource && selectedDocument.resource.id) {
@@ -116,12 +119,15 @@ export class RoutingService {
                 comingFromOutsideResourcesComponent ? 'fields' : 'relations'],
             { queryParams: { from: this.currentRoute } }
         );
+        */
+
     }
 
 
     private async jumpToFieldCategoryResource(documentToSelect: Document,
                                               comingFromOutsideResourcesComponent: boolean = false) {
 
+      /*
         const viewName: 'project'|'types'|string = this.getViewName(documentToSelect);
 
         if (comingFromOutsideResourcesComponent || viewName !== this.viewFacade.getView()) {
@@ -129,6 +135,8 @@ export class RoutingService {
         } else {
             await this.viewFacade.setSelectedDocument(documentToSelect.resource.id);
         }
+        */
+
     }
 
 
@@ -136,6 +144,7 @@ export class RoutingService {
     // We need a setter because the route must come from the component it is bound to
     private setRoute(route: ActivatedRoute, observer: Observer<any>) {
 
+      /*
         route.params.subscribe(async (params) => {
 
             this.currentRoute = undefined;
@@ -156,6 +165,8 @@ export class RoutingService {
                 }
             }
         });
+
+       */
     }
 
 

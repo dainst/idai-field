@@ -80,12 +80,12 @@ import {IdaiMessagesModule} from '../messages/idai-messages.module';
     ],
     declarations: [
         ConflictDeletedModalComponent,
-        DuplicateModalComponent,
+        // DuplicateModalComponent,
         DeleteModalComponent,
-        DoceditComponent,
+        // DoceditComponent,
         EditSaveDialogComponent,
-        DoceditImageTabComponent,
-        DoceditConflictsTabComponent,
+        // DoceditImageTabComponent,
+        // DoceditConflictsTabComponent,
         CategorySwitcherButtonComponent,
         ImagePickerComponent,
         EditFormComponent,
@@ -114,14 +114,14 @@ import {IdaiMessagesModule} from '../messages/idai-messages.module';
     ],
     exports: [
         EditSaveDialogComponent,
-        DoceditComponent
+        // DoceditComponent
     ],
     entryComponents: [
-        DoceditComponent,
+        // DoceditComponent,
         ConflictDeletedModalComponent,
         TypeRelationPickerComponent,
         ImagePickerComponent,
-        DuplicateModalComponent,
+        // DuplicateModalComponent,
         DeleteModalComponent,
         EditSaveDialogComponent
     ]

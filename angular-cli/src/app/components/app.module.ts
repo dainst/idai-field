@@ -77,8 +77,18 @@ import {I18n} from '@ngx-translate/i18n-polyfill';
 import {AppConfigurator} from '../core/configuration/app-configurator';
 import {ConfigLoader} from '../core/configuration/boot/config-loader';
 import {SyncService} from '../core/sync/sync-service';
-// import {TabManager} from '../core/tabs/tab-manager';
-// import {TabSpaceCalculator} from '../core/tabs/tab-space-calculator';
+import {StateSerializer} from '../core/common/state-serializer';
+import {FieldReadDatastore} from '../core/datastore/field/field-read-datastore';
+import {TabManager} from '../core/tabs/tab-manager';
+import {TabSpaceCalculator} from '../core/tabs/tab-space-calculator';
+import {WidgetsModule} from './widgets/widgets.module';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {ConfigurationModule} from './configuration/configuration.module';
+import {PersistenceManager} from '../core/model/persistence-manager';
+import {RoutingService} from './routing-service';
+import {StandardStateSerializer} from '../core/common/standard-state-serializer';
+import {ProjectCategories} from '../core/configuration/project-categories';
+
 // import {Imagestore} from '../core/images/imagestore/imagestore';
 // import {PouchDbFsImagestore} from '../core/images/imagestore/pouch-db-fs-imagestore';
 // import {ImageConverter} from '../core/images/imagestore/image-converter';
@@ -109,22 +119,22 @@ let indexFacade: IndexFacade|undefined = undefined;
     imports: [
         // ViewModalModule,
         // ImageOverviewModule,
-        // ResourcesModule,
         // SettingsModule,
         BrowserModule,
         FormsModule,
         HttpClientModule,
-        // NgbModule,
+        NgbModule,
         // // NgbModule.forRoot(),
         // IdaiMessagesModule,
         routing,
         DatastoreModule,
-        // WidgetsModule,
+        WidgetsModule,
         // ImportModule,
         // ExportModule,
         // BackupModule,
         // MatrixModule,
-        // ConfigurationModule
+        ConfigurationModule
+        // ResourcesModule
     ],
     declarations: [
         AppComponent,
@@ -138,6 +148,12 @@ let indexFacade: IndexFacade|undefined = undefined;
         HelpComponent
     ],
     providers: [
+
+
+      { provide: StateSerializer, useClass: StandardStateSerializer }, // TODO do in resources.module
+
+
+
       { provide: ConfigReader, useClass: ConfigReader },
       I18n,
       { provide: LOCALE_ID, useValue:
@@ -149,6 +165,12 @@ let indexFacade: IndexFacade|undefined = undefined;
       AppConfigurator,
       ConfigLoader,
       SyncService,
+      PersistenceManager,
+
+
+      RoutingService, // TODO should be loaded in ResourcesModule
+
+
     /*
         DecimalPipe,
        */
@@ -204,12 +226,34 @@ let indexFacade: IndexFacade|undefined = undefined;
       ImageConverter,
       BlobMaker,
       { provide: MD, useClass: M},
-      /*
+      {
+        provide: ProjectConfiguration,
+        useFactory: () => {
+          if (!projectConfiguration) {
+            console.error('project configuration has not yet been provided');
+            throw 'project configuration has not yet been provided';
+          }
+          return projectConfiguration;
+        },
+        deps: []
+      },
+      {
+        provide: IndexFacade,
+        useFactory: () => {
+          if (!indexFacade) {
+            console.error('index facade has not yet been provided');
+            throw 'index facade has not yet been provided';
+          }
+          return indexFacade;
+        },
+        deps: []
+      },
         {
             provide: ProjectCategories,
             useClass: ProjectCategories,
             deps: [ProjectConfiguration]
         },
+      /*
         {
             provide: DescendantsUtility,
             useClass: DescendantsUtility,
@@ -219,17 +263,6 @@ let indexFacade: IndexFacade|undefined = undefined;
         { provide: LocationStrategy, useClass: HashLocationStrategy },
 
         AppController,
-        {
-            provide: ProjectConfiguration,
-            useFactory: () => {
-                if (!projectConfiguration) {
-                    console.error('project configuration has not yet been provided');
-                    throw 'project configuration has not yet been provided';
-                }
-                return projectConfiguration;
-            },
-            deps: []
-        },
         {
             provide: FulltextIndex,
             useFactory: () => {
@@ -252,18 +285,8 @@ let indexFacade: IndexFacade|undefined = undefined;
             },
             deps: []
         },
-        {
-            provide: IndexFacade,
-            useFactory: () => {
-                if (!indexFacade) {
-                    console.error('index facade has not yet been provided');
-                    throw 'index facade has not yet been provided';
-                }
-                return indexFacade;
-            },
-            deps: []
-        },
-        PersistenceManager,
+
+
         {
             provide: Validator,
             useFactory: (
@@ -285,7 +308,7 @@ let indexFacade: IndexFacade|undefined = undefined;
 
         //
 
-      /*
+
 
         {
             provide: TabManager,
@@ -305,6 +328,8 @@ let indexFacade: IndexFacade|undefined = undefined;
             deps: [IndexFacade, TabSpaceCalculator, StateSerializer, FieldReadDatastore, Router]
         },
         TabSpaceCalculator,
+
+      /*
         MenuService,
         UtilTranslations
         */

@@ -8,6 +8,13 @@ import {IdGenerator} from './pouchdb/id-generator';
 import {PouchdbDatastore} from './pouchdb/pouchdb-datastore';
 import {DocumentCache} from './cached/document-cache';
 import {PouchdbServer} from './pouchdb/pouchdb-server';
+import {IndexFacade} from './index/index-facade';
+import {CategoryConverter} from './cached/category-converter';
+import {DocumentReadDatastore} from './document-read-datastore';
+import {DocumentDatastore} from './document-datastore';
+import {FieldReadDatastore} from './field/field-read-datastore';
+import {FieldDatastore} from './field/field-datastore';
+import {FieldCategoryConverter} from './field/field-category-converter';
 // import {PouchdbServer} from './pouchdb/pouchdb-server';
 // import {FieldDatastore} from './field/field-datastore';
 // import {FieldReadDatastore} from './field/field-read-datastore';
@@ -35,7 +42,7 @@ import {PouchdbServer} from './pouchdb/pouchdb-server';
         PouchdbManager,
         IdGenerator,
         PouchdbServer,
-        // { provide: CategoryConverter, useClass: FieldCategoryConverter },
+        { provide: CategoryConverter, useClass: FieldCategoryConverter },
         DocumentCache,
 
         {
@@ -69,7 +76,6 @@ import {PouchdbServer} from './pouchdb/pouchdb-server';
         // guarantees that identifier, liesWithin, isRecordedIn constraints are available
         // provides caching
 
-        /*
         {
             provide: DocumentDatastore,
             useFactory: function(pouchdbDatastore: PouchdbDatastore,
@@ -84,13 +90,13 @@ import {PouchdbServer} from './pouchdb/pouchdb-server';
         { provide: DocumentReadDatastore, useExisting: DocumentDatastore },
         { provide: Datastore, useExisting: DocumentDatastore },     // used by components-2 lib
         { provide: ReadDatastore, useExisting: DocumentDatastore }, // used by components-2 lib
-        */
+
 
         // idai-field datastore
         // knows FieldDocument, guarantees for its instances to be null-checked, i.e. all declared fields are defined
         // guarantees that identifier, liesWithin, isRecordedIn constraints are available
         // provides caching
-        /*
+
         {
             provide: FieldDatastore,
             useFactory: function(pouchdbDatastore: PouchdbDatastore,
@@ -103,7 +109,7 @@ import {PouchdbServer} from './pouchdb/pouchdb-server';
             deps: [PouchdbDatastore, IndexFacade, DocumentCache, CategoryConverter]
         },
         { provide: FieldReadDatastore, useExisting: FieldDatastore }, // read-only version of it
-        */
+
 
         // idai-field datastore
         // knows ImageDocument, guarantees for its instances to be null-checked, i.e. all declared fields are defined

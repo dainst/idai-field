@@ -1,14 +1,14 @@
+import {Injectable} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {MD} from './md';
 import {Message} from './message';
-import {Injectable} from '@angular/core';
 
 /**
  * @author Daniel de Oliveira
  * @author Jan G. Wieners
  * @author Thomas Kleinke
  */
-@Injectable()
+@Injectable() 
 export class M extends MD { // = Messages Dictionary. For reasons of brevity of calls to it just 'M'.
 
     // Internal messages from components

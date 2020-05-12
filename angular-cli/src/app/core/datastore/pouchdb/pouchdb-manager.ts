@@ -1,6 +1,9 @@
 import {Injectable} from '@angular/core';
 import {Observable, Observer} from 'rxjs';
-import * as PouchDB from 'pouchdb';
+
+// TODO import * as PouchDB from 'pouchdb';
+const PouchDB = window.require('pouchdb')
+
 import {IndexFacade} from '../index/index-facade';
 import {Migrator} from '../field/migrator';
 import {Name} from '../../constants';

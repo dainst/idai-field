@@ -4,7 +4,7 @@ import {FieldDefinition} from '../configuration/model/field-definition';
 import {ValueDefinition, ValuelistDefinition} from '../configuration/model/valuelist-definition';
 import {clone} from './object-util';
 
-const locale: string = require('electron').remote.getGlobal('config').locale;
+const locale: string = window.require('electron').remote.getGlobal('config').locale;
 
 
 /**

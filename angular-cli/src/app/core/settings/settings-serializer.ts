@@ -1,7 +1,7 @@
 import {Settings} from './settings';
 
-const remote = require('electron').remote;
-import * as fs from 'fs';
+const remote = window.require('electron').remote;
+const fs = window.require('fs');
 
 
 /**

@@ -6,8 +6,8 @@ import {TabManager} from '../../core/tabs/tab-manager';
 import OpenDialogReturnValue = Electron.OpenDialogReturnValue;
 import {Messages} from '../messages/messages';
 
-const address = require('address');
-const remote = require('electron').remote;
+const address = window.require('address');
+const remote = window.require('electron').remote;
 
 
 @Component({

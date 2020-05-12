@@ -10,7 +10,7 @@ import {IndexFacade} from './datastore/index/index-facade';
 import {TabManager} from './tabs/tab-manager';
 import {ResourcesStateManager} from './resources/view/resources-state-manager';
 
-const remote = require('electron').remote;
+const remote = window.require('electron').remote;
 
 
 @Injectable()
@@ -25,10 +25,10 @@ export class AppController {
                 private imagesState: ImagesState,
                 private indexFacade: IndexFacade,
                 private tabManager: TabManager) {}
-    
+
 
     public setupServer(): Promise<any> {
-        
+
         return new Promise(resolve => {
 
             if (!remote.getGlobal('switches').provide_reset) return resolve();

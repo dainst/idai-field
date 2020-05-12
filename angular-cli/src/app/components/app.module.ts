@@ -68,7 +68,7 @@ import {MD} from './messages/md';
 import {Messages} from './messages/messages';
 
 
-const remote = require('electron').remote;
+const remote = window.require('electron').remote;
 
 let projectConfiguration: ProjectConfiguration|undefined = undefined;
 let fulltextIndex: FulltextIndex|undefined = undefined;

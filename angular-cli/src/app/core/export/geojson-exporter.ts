@@ -1,11 +1,11 @@
-import * as fs from 'fs';
 import {Feature, FeatureCollection, GeometryObject} from 'geojson';
 import {jsonClone} from 'tsfun/struct';
 import {FieldDocument, FieldGeometry, Query} from 'idai-components-2';
 import {FieldReadDatastore} from '../datastore/field/field-read-datastore';
 import {M} from '../../components/messages/m';
 
-const geojsonRewind = require('geojson-rewind');
+const geojsonRewind = window.require('geojson-rewind');
+const fs = window.require('fs');
 
 
 /**

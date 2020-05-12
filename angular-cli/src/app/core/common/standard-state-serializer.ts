@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
-import * as fs from 'fs';
 import {StateSerializer} from './state-serializer';
 import {SettingsService} from '../settings/settings-service';
 
-const remote = require('electron').remote;
+const remote = window.require('electron').remote;
+const fs = window.require('fs');
 
 
 export type StateType = 'resources-state'|'matrix-state'|'tabs-state';

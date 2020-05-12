@@ -1,8 +1,8 @@
 import {Router} from '@angular/router';
 import {Injectable, NgZone} from '@angular/core';
 
-const ipcRenderer = require('electron').ipcRenderer;
-const remote = require('electron').remote;
+const ipcRenderer = window.require('electron').ipcRenderer;
+const remote = window.require('electron').remote;
 
 
 type MenuContext = 'loading'|'default'|'docedit'|'view-modal'|'projects'|'geometryedit';

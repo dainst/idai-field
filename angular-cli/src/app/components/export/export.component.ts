@@ -22,7 +22,7 @@ import {TabManager} from '../../core/tabs/tab-manager';
 import {ViewFacade} from '../../core/resources/view/view-facade';
 import {Messages} from '../messages/messages';
 
-const remote = require('electron').remote;
+const remote = window.require('electron').remote;
 
 
 

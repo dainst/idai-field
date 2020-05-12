@@ -1,10 +1,10 @@
-import * as fs from 'fs';
 import {assoc} from 'tsfun/associative';
 import {Name} from '../../core/constants';
 
-const PouchDB = require('pouchdb');
-const replicationStream = require('pouchdb-replication-stream');
-const stream = require('stream');
+const PouchDB = window.require('pouchdb');
+const replicationStream = window.require('pouchdb-replication-stream');
+const stream = window.require('stream');
+const fs = window.require('fs');
 
 
 /**

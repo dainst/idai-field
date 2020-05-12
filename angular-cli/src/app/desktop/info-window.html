@@ -17,7 +17,7 @@
             </p>
         </div>
         <script>
-            const electron = require('electron');
+            const electron = window.require('electron');
             const remote = electron.remote;
 
             document.getElementById('about-version').textContent = 'Version: ' + remote.app.getVersion();

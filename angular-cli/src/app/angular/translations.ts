@@ -1,5 +1,5 @@
-const remote = require('electron').remote;
-const fs = require('fs');
+const remote = window.require('electron').remote;
+const fs = window.require('fs');
 
 /**
  * @author Thomas Kleinke

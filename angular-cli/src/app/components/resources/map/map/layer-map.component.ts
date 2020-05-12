@@ -1,4 +1,3 @@
-import * as fs from 'fs';
 import {Component, Input, SimpleChanges} from '@angular/core';
 import {ImageDocument, ImageGeoreference} from 'idai-components-2';
 import {LayerManager, ListDiffResult} from './layer-manager';
@@ -10,6 +9,8 @@ import {ImageContainer} from '../../../../core/images/imagestore/image-container
 import {Messages} from '../../../messages/messages';
 import L from 'leaflet';
 import 'leaflet.pm'
+
+const fs = window.require('fs');
 
 
 @Component({

@@ -1,7 +1,8 @@
-import * as fs from 'fs';
 import {SampleDataLoader} from '../pouchdb/sample-data-loader';
 import {getSampleDocuments} from './field-sample-objects';
 import {ImageConverter} from '../../images/imagestore/image-converter';
+
+const fs = window.require('fs');
 
 
 /**

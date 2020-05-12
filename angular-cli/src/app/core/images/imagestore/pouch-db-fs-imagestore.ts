@@ -1,10 +1,11 @@
 import {Injectable} from '@angular/core';
 import {SafeResourceUrl} from '@angular/platform-browser';
-import * as fs from 'fs';
 import {BlobMaker, BlobUrlSet} from './blob-maker';
 import {ImageConverter} from './image-converter';
 import {ImagestoreErrors} from './imagestore-errors';
 import {PouchdbProxy} from '../../datastore/pouchdb/pouchdb-proxy';
+
+const fs = window.require('fs');
 
 
 @Injectable()
@@ -61,7 +62,7 @@ export class PouchDbFsImagestore /*implements Imagestore */{
         });
     }
 
-    
+
     /**
      * @param key the identifier for the data
      * @param data the binary data to be stored
@@ -72,7 +73,7 @@ export class PouchDbFsImagestore /*implements Imagestore */{
         return this.write(key, data, false, documentExists);
     }
 
-    
+
     /**
      * Implements {@link ReadImagestore#read}
      *
@@ -234,7 +235,7 @@ export class PouchDbFsImagestore /*implements Imagestore */{
         });
     }
 
-    
+
     private readOriginal(key: string): Promise<any> {
 
         let path = this.projectPath + key;

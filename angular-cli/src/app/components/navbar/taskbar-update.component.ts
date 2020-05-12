@@ -1,7 +1,7 @@
 import {ChangeDetectorRef, Component} from '@angular/core';
 import {SettingsService} from '../../core/settings/settings-service';
 
-const ipcRenderer = require('electron').ipcRenderer;
+const ipcRenderer = window.require('electron').ipcRenderer;
 
 
 @Component({

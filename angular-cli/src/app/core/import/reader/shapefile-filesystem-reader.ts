@@ -1,9 +1,9 @@
-import * as fs from 'fs';
 import {Reader} from './reader';
 import {JavaToolExecutor} from '../../java/java-tool-executor';
 import {ReaderErrors} from './reader-errors';
 
-const remote = require('electron').remote;
+const remote = window.require('electron').remote;
+const fs = window.require('fs');
 
 
 /**

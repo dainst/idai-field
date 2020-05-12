@@ -15,7 +15,7 @@ import {ImageConverter} from '../images/imagestore/image-converter';
 import {ImagestoreErrors} from '../images/imagestore/imagestore-errors';
 import {Messages} from '../../components/messages/messages';
 
-const {remote, ipcRenderer} = require('electron');
+const {remote, ipcRenderer} = window.require('electron');
 
 
 @Injectable()
@@ -160,7 +160,7 @@ export class SettingsService {
 
 
     public async deleteProject(project: Name) {
-        
+
         this.synchronizationService.stopSync();
 
         await this.pouchdbManager.destroyDb(project);
@@ -170,7 +170,7 @@ export class SettingsService {
 
 
     public async createProject(project: Name, destroyBeforeCreate: boolean) {
-        
+
         this.synchronizationService.stopSync();
 
         await this.selectProject(project);
@@ -283,7 +283,7 @@ export class SettingsService {
         };
     }
 
-    
+
     private static generatePassword(): string {
         const length = 8,
             charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";

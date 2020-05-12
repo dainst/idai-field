@@ -1,4 +1,4 @@
-const {dialog} = require('electron').remote;
+const {dialog} = window.require('electron').remote;
 
 /**
  * @author Daniel de Oliveira

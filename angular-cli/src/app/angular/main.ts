@@ -3,7 +3,7 @@ import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
 import {AppModule} from '../components/app.module';
 import {Translations} from './translations';
 
-const remote = require('electron').remote;
+const remote = window.require('electron').remote;
 
 
 if (['production', 'test'].includes(remote.getGlobal('mode'))) enableProdMode();

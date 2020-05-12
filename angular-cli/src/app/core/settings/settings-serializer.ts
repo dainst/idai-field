@@ -14,7 +14,7 @@ export class SettingsSerializer {
     public load(): Promise<Settings> {
 
         return new Promise((resolve, reject) => {
-          /*
+
             fs.readFile(remote.getGlobal('configPath'), 'utf-8', (err: any, content: any) => {
                 if (err) {
                     reject(err);
@@ -24,8 +24,8 @@ export class SettingsSerializer {
                 }
             });
 
-           */
-          resolve(undefined)
+
+          // TODO resolve(undefined)
         });
     }
 

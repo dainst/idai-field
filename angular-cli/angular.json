@@ -25,7 +25,9 @@
             "aot": true,
             "deleteOutputPath": false,
             "assets": [
-              "src/favicon.ico"
+              "src/favicon.ico",
+              "src/fonts",
+              "src/app.css"
             ],
             "styles": [
               "src/styles.scss"

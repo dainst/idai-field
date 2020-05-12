@@ -1,11 +1,20 @@
 import {ImageDocument} from 'idai-components-2';
 import {ImageWidthCalculator} from './image-width-calculator';
-import {ImageRowItem, PLACEHOLDER} from '../../../components/image/row/image-row.component';
+import {PLACEHOLDER} from '../../../components/image/row/image-row.component';
+import {Document} from 'idai-components-2/index';
 
 
 export type ImageRowUpdate = { newImageIds: string[], firstShownImageIndex: number };
 
 type PageInfo = 'same'|'previous'|'next';
+
+
+
+export type ImageRowItem = {
+
+    imageId: string|'PLACEHOLDER';
+    document: Document;
+}
 
 
 /**

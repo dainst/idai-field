@@ -3,7 +3,7 @@ import {SafeResourceUrl} from '@angular/platform-browser';
 import {FieldDocument} from 'idai-components-2';
 import {ModelUtil} from '../../../../../core/model/model-util';
 import {ReadImagestore} from '../../../../../core/images/imagestore/read-imagestore';
-import {ImageRowItem} from '../../../../image/row/image-row.component';
+import {ImageRowItem} from '../../../../../core/images/row/image-row';
 
 
 @Component({

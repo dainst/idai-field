@@ -85,6 +85,8 @@ export class SettingsService {
 
     public async loadConfiguration(configurationDirPath: string): Promise<ProjectConfiguration> {
 
+        console.log("hallo")
+
         let customProjectName = undefined;
         if (this.getSelectedProject().startsWith('meninx-project')) customProjectName = 'Meninx';
         if (this.getSelectedProject().startsWith('pergamongrabung')) customProjectName = 'Pergamon';
@@ -160,7 +162,7 @@ export class SettingsService {
 
 
     public async deleteProject(project: Name) {
-        
+
         this.synchronizationService.stopSync();
 
         await this.pouchdbManager.destroyDb(project);
@@ -170,7 +172,7 @@ export class SettingsService {
 
 
     public async createProject(project: Name, destroyBeforeCreate: boolean) {
-        
+
         this.synchronizationService.stopSync();
 
         await this.selectProject(project);
@@ -283,7 +285,7 @@ export class SettingsService {
         };
     }
 
-    
+
     private static generatePassword(): string {
         const length = 8,
             charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";

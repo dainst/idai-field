@@ -127,7 +127,7 @@ let indexFacade: IndexFacade|undefined = undefined;
         HelpComponent
     ],
     providers: [
-      ConfigReader,
+      { provide: ConfigReader, useExisting: ConfigReader },
       /*
         DecimalPipe,
         { provide: LOCALE_ID, useValue: remote.getGlobal('config').locale },

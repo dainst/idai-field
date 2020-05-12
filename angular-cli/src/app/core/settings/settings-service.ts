@@ -191,6 +191,8 @@ export class SettingsService {
      */
     public async updateSettings(settings: Settings) {
 
+        console.log("settings: ", settings)
+
         settings = JSON.parse(JSON.stringify(settings)); // deep copy
         this.settings = SettingsService.initSettings(settings);
 

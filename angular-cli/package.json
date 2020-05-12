@@ -105,5 +105,8 @@
   "browser": {
     "fs": false,
     "path": false
+  },
+  "engines": {
+    "node": ">=10.13.0"
   }
 }

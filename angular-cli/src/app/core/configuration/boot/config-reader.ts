@@ -1,3 +1,4 @@
+import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {MDInternal} from '../../../components/messages/md-internal';
 
@@ -6,6 +7,7 @@ import {MDInternal} from '../../../components/messages/md-internal';
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
+@Injectable()
 export class ConfigReader {
 
     constructor(private http: HttpClient) {}

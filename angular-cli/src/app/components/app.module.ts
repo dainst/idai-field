@@ -42,7 +42,7 @@ import {Query} from 'idai-components-2';
 // import {SettingsSerializer} from '../core/settings/settings-serializer';
 import {IndexerConfiguration} from '../indexer-configuration';
 // import {SyncService} from '../core/sync/sync-service';
-// import {Translations} from '../angular/translations';
+import {Translations} from '../angular/translations';
 // import {ExportModule} from './export/export.module';
 // import {ProjectsModalComponent} from './navbar/projects-modal.component';
 import {MenuService} from '../desktop/menu-service';
@@ -66,6 +66,17 @@ import {ProjectConfiguration} from '../core/configuration/project-configuration'
 import {FulltextIndex} from '../core/datastore/index/fulltext-index';
 import {ConstraintIndex} from '../core/datastore/index/constraint-index';
 import {IndexFacade} from '../core/datastore/index/index-facade';
+import {Imagestore} from '../core/images/imagestore/imagestore';
+import {PouchDbFsImagestore} from '../core/images/imagestore/pouch-db-fs-imagestore';
+import {ImageConverter} from '../core/images/imagestore/image-converter';
+import {BlobMaker} from '../core/images/imagestore/blob-maker';
+import {Messages} from './messages/messages';
+import {MD} from './messages/md';
+import {M} from './messages/m';
+import {I18n} from '@ngx-translate/i18n-polyfill';
+import {AppConfigurator} from '../core/configuration/app-configurator';
+import {ConfigLoader} from '../core/configuration/boot/config-loader';
+import {SyncService} from '../core/sync/sync-service';
 // import {TabManager} from '../core/tabs/tab-manager';
 // import {TabSpaceCalculator} from '../core/tabs/tab-space-calculator';
 // import {Imagestore} from '../core/images/imagestore/imagestore';
@@ -127,15 +138,19 @@ let indexFacade: IndexFacade|undefined = undefined;
         HelpComponent
     ],
     providers: [
-      { provide: ConfigReader, useExisting: ConfigReader },
-      /*
+      { provide: ConfigReader, useClass: ConfigReader },
+      I18n,
+      { provide: LOCALE_ID, useValue:
+        "de"
+        // TODO remote.getGlobal('config').locale
+      },
+      { provide: TRANSLATIONS, useValue: Translations.getTranslations() },
+      { provide: TRANSLATIONS_FORMAT, useValue: 'xlf' },
+      AppConfigurator,
+      ConfigLoader,
+      SyncService,
+    /*
         DecimalPipe,
-        { provide: LOCALE_ID, useValue: remote.getGlobal('config').locale },
-        { provide: TRANSLATIONS, useValue: Translations.getTranslations() },
-        { provide: TRANSLATIONS_FORMAT, useValue: 'xlf' },
-        I18n,
-        ConfigLoader,
-        AppConfigurator,
        */
         {
             provide: APP_INITIALIZER,
@@ -169,14 +184,16 @@ let indexFacade: IndexFacade|undefined = undefined;
         { provide: UsernameProvider, useExisting: SettingsService },
 
 
-        // {
-        //     provide: Messages,
-        //     useFactory: function(md: MD) {
-        //         return new Messages(md, remote.getGlobal('switches').messages_timeout);
-        //     },
-        //     deps: [MD]
-        // },
-      /*
+        {
+            provide: Messages,
+            useFactory: function(md: MD) {
+                return new Messages(md,
+                500
+                // TODO remote.getGlobal('switches').messages_timeout
+                );
+            },
+            deps: [MD],
+        },
         {
             provide: Imagestore,
             useFactory: function(pouchdbManager: PouchdbManager, converter: ImageConverter, blobMaker: BlobMaker) {
@@ -184,6 +201,10 @@ let indexFacade: IndexFacade|undefined = undefined;
             },
             deps: [PouchdbManager, ImageConverter, BlobMaker]
         },
+      ImageConverter,
+      BlobMaker,
+      { provide: MD, useClass: M},
+      /*
         {
             provide: ProjectCategories,
             useClass: ProjectCategories,
@@ -196,8 +217,7 @@ let indexFacade: IndexFacade|undefined = undefined;
         },
         { provide: ReadImagestore, useExisting: Imagestore },
         { provide: LocationStrategy, useClass: HashLocationStrategy },
-        BlobMaker,
-        ImageConverter,
+
         AppController,
         {
             provide: ProjectConfiguration,
@@ -263,10 +283,10 @@ let indexFacade: IndexFacade|undefined = undefined;
 
        */
 
-        // { provide: MD, useClass: M},
+        //
 
       /*
-        SyncService,
+
         {
             provide: TabManager,
             useFactory: (

@@ -14,6 +14,7 @@ export class SettingsSerializer {
     public load(): Promise<Settings> {
 
         return new Promise((resolve, reject) => {
+          /*
             fs.readFile(remote.getGlobal('configPath'), 'utf-8', (err: any, content: any) => {
                 if (err) {
                     reject(err);
@@ -22,6 +23,9 @@ export class SettingsSerializer {
                     resolve(remote.getGlobal('setConfigDefaults')(settings));
                 }
             });
+
+           */
+          resolve(undefined)
         });
     }
 
@@ -54,7 +58,7 @@ export class SettingsSerializer {
             configToWrite['dbs'] = settings.dbs;
         }
 
-        if (remote) return this.writeConfigFile(configToWrite);
+        // TODO if (remote) return this.writeConfigFile(configToWrite);
         else return Promise.resolve(); // only for synctest
     }
 
@@ -62,6 +66,8 @@ export class SettingsSerializer {
     private writeConfigFile(config: any): Promise<any> {
 
         return new Promise((resolve, reject) => {
+          resolve(undefined)
+          /*
             fs.writeFile(remote.getGlobal('configPath'), JSON.stringify(config), (err: any) => {
                 if (err) {
                     reject(err);
@@ -69,6 +75,8 @@ export class SettingsSerializer {
                     resolve();
                 }
             });
+
+           */
         });
     }
 }

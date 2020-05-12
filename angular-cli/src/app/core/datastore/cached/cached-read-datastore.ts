@@ -9,7 +9,11 @@ import {ProjectCategories} from '../../configuration/project-categories';
 
 export interface IdaiFieldFindResult<T extends Document> extends FindResult {
 
-    documents: Array<T>
+    documents: Array<T>,
+
+    // TODO Check why extending from FindResult doesn't work
+    totalCount: number,
+    queryId?: string
 }
 
 

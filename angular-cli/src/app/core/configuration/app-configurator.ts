@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
-import {Map} from 'tsfun';
 import {ConfigLoader} from './boot/config-loader';
 import {ProjectConfiguration} from './project-configuration';
 import {FieldDefinition} from './model/field-definition';
@@ -141,7 +140,8 @@ export class AppConfigurator {
         }
     };
 
-    private builtinCategories: Map<BuiltinCategoryDefinition> = {
+    // TODO Importing Map from tsfun doesn't work, the typing should be Map<BuiltinCategoryDefinition>
+    private builtinCategories: any = {
         Project: {
             label: this.i18n({ id: 'configuration.project', value: 'Projekt' }),
             fields: {

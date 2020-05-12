@@ -109,7 +109,7 @@ function assertCategoryIsInRange(document: Document, idCategoryMap: any,
                                  assertIsAllowedRelationDomainCategory: AssertIsAllowedRelationDomainType) {
 
     keysAndValues(document.resource.relations)
-        .forEach(([relationName, relationTargets]: [string, string[]]) => {
+        .forEach(([relationName, relationTargets]: [any, any[]]) => { // TODO Fix typing
             for (let relationTarget of relationTargets) {
                 const targetCategory = idCategoryMap[relationTarget];
                 if (!targetCategory) continue;

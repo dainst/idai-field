@@ -10,16 +10,21 @@
     "module": "esnext",
     "moduleResolution": "node",
     "importHelpers": true,
-    "target": "ES6",
+    "target": "ES5",
     "allowSyntheticDefaultImports": true,
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "jszip": [
+        "node_modules/jszip/dist/jszip.min.js"
+      ]
+    }
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
     "strictInjectionParameters": true,
-    "enableIvy": false
+    "enableIvy": true
   }
 }

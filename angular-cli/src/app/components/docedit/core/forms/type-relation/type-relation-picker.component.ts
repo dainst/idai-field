@@ -8,7 +8,6 @@ import {FieldDocument, FieldResource, Resource, Query, Constraint, Document,
 import {FieldReadDatastore} from '../../../../../core/datastore/field/field-read-datastore';
 import {TypeImagesUtil} from '../../../../../core/util/type-images-util';
 import getLinkedImages = TypeImagesUtil.getLinkedImages;
-import {ImageRowItem} from '../../../../image/row/image-row.component';
 import {TypeRelations} from '../../../../../core/model/relation-constants';
 import {ProjectConfiguration} from '../../../../../core/configuration/project-configuration';
 import {Category} from '../../../../../core/configuration/model/category';
@@ -16,6 +15,7 @@ import {ValuelistDefinition} from '../../../../../core/configuration/model/value
 import {Group} from '../../../../../core/configuration/model/group';
 import {FieldDefinition} from '../../../../../core/configuration/model/field-definition';
 import {ValuelistUtil} from '../../../../../core/util/valuelist-util';
+import {ImageRowItem} from '../../../../../core/images/row/image-row';
 
 
 const CRITERION = 'criterion';

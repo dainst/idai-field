@@ -3,8 +3,8 @@ import {Component, ElementRef, Input, OnChanges, ViewChild, EventEmitter, Output
 import {SafeResourceUrl} from '@angular/platform-browser';
 import {to} from 'tsfun';
 import {reduce as asyncReduce} from 'tsfun/async';
-import {Document, ImageDocument} from 'idai-components-2';
-import {ImageRow, ImageRowUpdate} from '../../../core/images/row/image-row';
+import {ImageDocument} from 'idai-components-2';
+import {ImageRow, ImageRowItem, ImageRowUpdate, PLACEHOLDER} from '../../../core/images/row/image-row';
 import {ReadImagestore} from '../../../core/images/imagestore/read-imagestore';
 import {ImageReadDatastore} from '../../../core/datastore/field/image-read-datastore';
 import {AngularUtility} from '../../../angular/angular-utility';
@@ -14,14 +14,6 @@ import {BlobMaker} from '../../../core/images/imagestore/blob-maker';
 
 const MAX_IMAGE_WIDTH: number = 600;
 const PLACEHOLDER_WIDTH: number = 150;
-
-export const PLACEHOLDER = 'PLACEHOLDER';
-
-export type ImageRowItem = {
-
-    imageId: string|'PLACEHOLDER';
-    document: Document;
-}
 
 
 @Component({

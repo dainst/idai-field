@@ -9,7 +9,6 @@ import {BaseList} from '../base-list';
 import {ResourcesComponent} from '../resources.component';
 import {TypeImagesUtil} from '../../../core/util/type-images-util';
 import {FieldReadDatastore} from '../../../core/datastore/field/field-read-datastore';
-import {ImageRowItem, PLACEHOLDER} from '../../image/row/image-row.component';
 import {ReadImagestore} from '../../../core/images/imagestore/read-imagestore';
 import {ImageReadDatastore} from '../../../core/datastore/field/image-read-datastore';
 import {ContextMenu} from '../widgets/context-menu';
@@ -19,6 +18,7 @@ import {NavigationPath} from '../../../core/resources/view/state/navigation-path
 import {RoutingService} from '../../routing-service';
 import {ProjectCategories} from '../../../core/configuration/project-categories';
 import {TabManager} from '../../../core/tabs/tab-manager';
+import {ImageRowItem, PLACEHOLDER} from '../../../core/images/row/image-row';
 
 
 @Component({

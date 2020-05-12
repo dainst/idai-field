@@ -2,7 +2,6 @@ import {Component} from '@angular/core';
 
 
 @Component({
-    moduleId: module.id,
     selector: 'taskbar',
     templateUrl: './taskbar.html'
 })

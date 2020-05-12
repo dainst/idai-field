@@ -17,7 +17,6 @@ import {Messages} from '../../messages/messages';
 
 @Component({
     selector: 'row',
-    moduleId: module.id,
     templateUrl: './row.html'
 })
 /**

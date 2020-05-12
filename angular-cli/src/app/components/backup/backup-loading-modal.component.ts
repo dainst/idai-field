@@ -2,7 +2,6 @@ import {Component} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-    moduleId: module.id,
     templateUrl: './backup-loading-modal.html'
 })
 /**

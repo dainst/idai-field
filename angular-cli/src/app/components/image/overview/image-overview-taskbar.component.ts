@@ -15,7 +15,6 @@ import {Messages} from '../../messages/messages';
 
 @Component({
     selector: 'image-overview-taskbar',
-    moduleId: module.id,
     templateUrl: './image-overview-taskbar.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)'

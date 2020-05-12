@@ -3,7 +3,6 @@ import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'delete-modal',
-    moduleId: module.id,
     templateUrl: './delete-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)'

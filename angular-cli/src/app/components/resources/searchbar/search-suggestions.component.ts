@@ -8,7 +8,6 @@ import {ProjectCategories} from '../../../core/configuration/project-categories'
 import {ViewFacade} from '../../../core/resources/view/view-facade';
 
 @Component({
-    moduleId: module.id,
     selector: 'search-suggestions',
     templateUrl: './search-suggestions.html'
 })

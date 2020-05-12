@@ -33,7 +33,6 @@ import {Messages} from '../messages/messages';
 
 
 @Component({
-    moduleId: module.id,
     templateUrl: './import.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)'

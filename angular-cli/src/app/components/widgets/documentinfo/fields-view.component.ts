@@ -27,7 +27,6 @@ type FieldContent = any;
 
 @Component({
     selector: 'fields-view',
-    moduleId: module.id,
     templateUrl: './fields-view.html'
 })
 /**
@@ -133,7 +132,7 @@ export class FieldsViewComponent implements OnChanges {
         );
     }
 
-    
+
     private convertToFieldsViewField: Mapping<Pair<FieldDefinition, FieldContent>, Array<FieldsViewField>>
         = conds(
             [

@@ -4,7 +4,6 @@ import {SyncStatus} from '../../core/sync/sync-process';
 
 
 @Component({
-    moduleId: module.id,
     selector: 'taskbar-sync-status',
     templateUrl: './taskbar-sync-status.html'
 })

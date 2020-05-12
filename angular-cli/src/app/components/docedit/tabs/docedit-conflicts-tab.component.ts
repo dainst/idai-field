@@ -13,7 +13,6 @@ const moment = require('moment');
  * @author Thomas Kleinke
  */
 @Component({
-    moduleId: module.id,
     selector: 'docedit-conflicts-tab',
     templateUrl: './docedit-conflicts-tab.html'
 })

@@ -23,7 +23,6 @@ export type PopoverMenu = 'none'|'info'|'children';
 
 
 @Component({
-    moduleId: module.id,
     templateUrl: './resources.html'
 })
 /**

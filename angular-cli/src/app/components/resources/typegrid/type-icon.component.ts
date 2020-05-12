@@ -4,7 +4,6 @@ import {Category} from '../../../core/configuration/model/category';
 
 @Component({
     selector: 'type-icon',
-    moduleId: module.id,
     templateUrl: './type-icon.html',
 })
 /**

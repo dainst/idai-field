@@ -22,7 +22,6 @@ import {Messages} from '../messages/messages';
 
 @Component({
     selector: 'detail-modal',
-    moduleId: module.id,
     templateUrl: './docedit.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)',

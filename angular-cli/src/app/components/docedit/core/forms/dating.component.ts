@@ -4,7 +4,6 @@ import {UtilTranslations} from '../../../../core/util/util-translations';
 
 
 @Component({
-    moduleId: module.id,
     selector: 'dai-dating',
     templateUrl: './dating.html'
 })

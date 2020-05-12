@@ -3,7 +3,6 @@ import {Loading} from './loading';
 
 @Component({
     selector: 'loading-icon',
-    moduleId: module.id,
     templateUrl: './loading-icon.html'
 })
 

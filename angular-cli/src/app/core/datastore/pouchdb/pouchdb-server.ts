@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
-import * as express from 'express';
-import * as PouchDB from 'pouchdb';
+//import * as express from 'express';
+//import * as PouchDB from 'pouchdb';
 
-const expressPouchDB = window.require('express-pouchdb');
-const expressBasicAuth = require('express-basic-auth');
+//const expressPouchDB = window.require('express-pouchdb');
+//const expressBasicAuth = require('express-basic-auth');
 
 
 @Injectable()
@@ -23,7 +23,7 @@ export class PouchdbServer {
      */
     public async setupServer() {
 
-        const app = express();
+        /*const app = express();
 
         app.use(expressBasicAuth( {
             challenge: true,
@@ -50,7 +50,7 @@ export class PouchdbServer {
         }));
         await app.listen(3000, function() {
             console.debug('PouchDB Server is listening on port 3000');
-        });
+        });*/
     }
 
 }

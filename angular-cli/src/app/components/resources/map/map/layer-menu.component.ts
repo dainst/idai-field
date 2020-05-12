@@ -4,7 +4,6 @@ import {LayerManager} from './layer-manager';
 import {MenuComponent} from '../../../widgets/menu.component';
 
 @Component({
-    moduleId: module.id,
     selector: 'layer-menu',
     templateUrl: './layer-menu.html'
 })

@@ -8,7 +8,6 @@ import {ValuelistDefinition} from '../../../../core/configuration/model/valuelis
 
 
 @Component({
-    moduleId: module.id,
     selector: 'dai-dropdown',
     templateUrl: './dropdown.html'
 })
@@ -44,7 +43,7 @@ export class DropdownComponent implements OnChanges {
 
 
     public deleteIfEmpty(value: string) {
-        
+
         if (value === '') delete this.resource[this.field.name];
     }
 

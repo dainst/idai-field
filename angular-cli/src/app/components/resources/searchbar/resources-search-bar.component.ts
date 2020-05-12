@@ -3,7 +3,6 @@ import {SearchBarComponent} from '../../widgets/search-bar.component';
 import {ProjectCategories} from '../../../core/configuration/project-categories';
 
 @Component({
-    moduleId: module.id,
     selector: 'resources-search-bar',
     templateUrl: './resources-search-bar.html',
     host: {

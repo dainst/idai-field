@@ -7,7 +7,6 @@ import {TabManager} from '../../core/tabs/tab-manager';
 
 
 @Component({
-    moduleId: module.id,
     selector: 'help',
     templateUrl: './help.html',
     host: {

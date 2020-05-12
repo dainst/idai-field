@@ -14,7 +14,6 @@ import {Messages} from '../messages/messages';
 
 @Component({
     selector: 'document-picker',
-    moduleId: module.id,
     templateUrl: './document-picker.html'
 })
 /**

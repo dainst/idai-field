@@ -4,7 +4,6 @@ import {Category} from '../../../core/configuration/model/category';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
 
 @Component({
-    moduleId: module.id,
     selector: 'category-switcher-button',
     templateUrl: './category-switcher-button.html',
     host: {

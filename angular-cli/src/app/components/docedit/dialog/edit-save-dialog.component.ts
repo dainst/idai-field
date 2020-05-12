@@ -3,7 +3,6 @@ import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'edit-save-dialog',
-    moduleId: module.id,
     templateUrl: './edit-save-dialog.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)',

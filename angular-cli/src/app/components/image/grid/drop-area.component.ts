@@ -6,7 +6,6 @@ import {Messages} from '../../messages/messages';
 
 @Component({
     selector: 'drop-area',
-    moduleId: module.id,
     templateUrl: './drop-area.html'
 })
 /**

@@ -4,7 +4,6 @@ import {FieldDocument} from 'idai-components-2';
 
 @Component({
     selector: 'geometry-view',
-    moduleId: module.id,
     templateUrl: './geometry-view.html'
 })
 

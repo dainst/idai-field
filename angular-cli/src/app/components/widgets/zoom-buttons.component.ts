@@ -2,7 +2,6 @@ import {Component, Output, EventEmitter, Input} from '@angular/core';
 
 
 @Component({
-    moduleId: module.id,
     selector: 'zoom-buttons',
     templateUrl: './zoom-buttons.html'
 })

@@ -16,7 +16,6 @@ declare global {
 }
 
 @Component({
-    moduleId: module.id,
     selector: 'map',
     template: '<div id="map-container"></div>'
 })

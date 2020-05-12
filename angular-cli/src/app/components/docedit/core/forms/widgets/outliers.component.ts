@@ -5,7 +5,6 @@ import {ValuelistDefinition} from '../../../../../core/configuration/model/value
 
 
 @Component({
-    moduleId: module.id,
     selector: 'outliers',
     templateUrl: './outliers.html'
 })

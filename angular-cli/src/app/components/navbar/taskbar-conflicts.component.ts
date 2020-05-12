@@ -7,7 +7,6 @@ import {NavbarComponent} from './navbar.component';
 
 
 @Component({
-    moduleId: module.id,
     selector: 'taskbar-conflicts',
     templateUrl: './taskbar-conflicts.html'
 })

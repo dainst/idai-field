@@ -12,7 +12,6 @@ type EmptyValuelistInfoType = 'configuration'|'projectDocumentField'|'parent';
 
 @Component({
     selector: 'empty-valuelist-info',
-    moduleId: module.id,
     templateUrl: './empty-valuelist-info.html'
 })
 

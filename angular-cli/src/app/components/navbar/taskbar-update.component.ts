@@ -5,7 +5,6 @@ const ipcRenderer = window.require('electron').ipcRenderer;
 
 
 @Component({
-    moduleId: module.id,
     selector: 'taskbar-update',
     templateUrl: './taskbar-update.html'
 })

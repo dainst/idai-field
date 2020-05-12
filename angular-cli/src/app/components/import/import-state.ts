@@ -9,7 +9,7 @@ export class ImportState {
 
     public sourceType: string = 'file';
     public format: ImportFormat = 'native';
-    public file: File|undefined;
+    public file: any|undefined; // TODO Use type File
     public selectedOperationId: string = '';
     public mergeMode = false;
     public permitDeletions = false;

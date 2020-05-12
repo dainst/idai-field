@@ -11,7 +11,6 @@ import {ImageRowItem} from '../../../core/images/row/image-row';
 
 
 @Component({
-    moduleId: module.id,
     templateUrl: './resource-view-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)'

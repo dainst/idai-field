@@ -7,7 +7,6 @@ type GeometryType = 'Point'|'MultiPoint'|'LineString'|'MultiLineString'|'Polygon
 
 
 @Component({
-    moduleId: module.id,
     selector: 'dai-geometry',
     templateUrl: './geometry.html'
 })

@@ -4,7 +4,6 @@ import {Resource} from 'idai-components-2';
 
 
 @Component({
-    moduleId: module.id,
     selector: 'dai-date',
     templateUrl: './date.html'
 })

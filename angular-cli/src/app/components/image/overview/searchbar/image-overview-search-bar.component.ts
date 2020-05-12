@@ -2,7 +2,6 @@ import {Component} from '@angular/core';
 import {SearchBarComponent} from '../../../widgets/search-bar.component';
 
 @Component({
-    moduleId: module.id,
     selector: 'image-overview-search-bar',
     templateUrl: './image-overview-search-bar.html',
     host: {

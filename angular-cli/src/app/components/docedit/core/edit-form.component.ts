@@ -12,7 +12,6 @@ import {clone} from '../../../core/util/object-util';
 
 
 @Component({
-    moduleId: module.id,
     selector: 'edit-form',
     templateUrl: './edit-form.html'
 })

@@ -18,7 +18,6 @@ const PLACEHOLDER_WIDTH: number = 150;
 
 @Component({
     selector: 'image-row',
-    moduleId: module.id,
     templateUrl: './image-row.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)',

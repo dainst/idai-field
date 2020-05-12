@@ -5,7 +5,6 @@ import {RelationDefinition} from '../../../core/configuration/model/relation-def
 
 
 @Component({
-    moduleId: module.id,
     selector: 'edit-form-group',
     templateUrl: './edit-form-group.html'
 })

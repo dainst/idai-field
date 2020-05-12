@@ -10,7 +10,6 @@ import {SearchConstraintsComponent} from '../../../widgets/search-constraints.co
 
 
 @Component({
-    moduleId: module.id,
     selector: 'image-overview-search-constraints',
     templateUrl: '../../../widgets/search-constraints.html',
     host: {

@@ -10,7 +10,6 @@ import {ViewFacade} from '../../../core/resources/view/view-facade';
 
 
 @Component({
-    moduleId: module.id,
     selector: 'resources-search-constraints',
     templateUrl: '../../widgets/search-constraints.html',
     host: {

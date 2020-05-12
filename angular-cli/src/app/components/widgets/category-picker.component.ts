@@ -7,7 +7,6 @@ import {FieldDefinition} from '../../core/configuration/model/field-definition';
 
 @Component({
     selector: 'category-picker',
-    moduleId: module.id,
     templateUrl: './category-picker.html'
 })
 /**

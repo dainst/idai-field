@@ -9,7 +9,6 @@ import {NavigationService} from '../../../core/resources/navigation/navigation-s
 
 @Component({
     selector: 'list-button-group',
-    moduleId: module.id,
     templateUrl: './list-button-group.html'
 })
 /**

@@ -15,7 +15,6 @@ declare global { namespace L { namespace PM { namespace Draw { interface Line { 
 }
 
 @Component({
-    moduleId: module.id,
     selector: 'editable-map',
     templateUrl: './editable-map.html'
 })

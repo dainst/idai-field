@@ -31,7 +31,6 @@ type Criterion = {
 
 @Component({
     selector: 'type-relation-picker',
-    moduleId: module.id,
     templateUrl: './type-relation-picker.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)'

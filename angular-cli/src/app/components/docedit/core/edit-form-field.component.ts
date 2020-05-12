@@ -4,7 +4,6 @@ import {FieldDefinition} from '../../../core/configuration/model/field-definitio
 
 
 @Component({
-    moduleId: module.id,
     selector: 'edit-form-field',
     templateUrl: './edit-form-field.html'
 })

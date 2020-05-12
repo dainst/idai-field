@@ -12,7 +12,6 @@ type NavigationButtonLabelMap = { [id: string]: { text: string, fullText: string
 
 
 @Component({
-    moduleId: module.id,
     selector: 'navigation',
     templateUrl: './navigation.html'
 })

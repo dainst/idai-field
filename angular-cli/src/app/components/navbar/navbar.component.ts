@@ -11,7 +11,6 @@ import {RoutingService} from '../routing-service';
 
 
 @Component({
-    moduleId: module.id,
     selector: 'navbar',
     templateUrl: './navbar.html',
     host: {

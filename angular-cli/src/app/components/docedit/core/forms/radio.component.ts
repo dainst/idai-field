@@ -7,7 +7,6 @@ import {ValuelistDefinition} from '../../../../core/configuration/model/valuelis
 
 
 @Component({
-    moduleId: module.id,
     selector: 'dai-radio',
     templateUrl: `./radio.html`
 })
@@ -41,16 +40,16 @@ export class RadioComponent implements OnChanges {
             await HierarchyUtil.getParent(this.resource, this.datastore)
         );
     }
-    
+
 
     public setValue(value: any) {
-        
+
         this.resource[this.field.name] = value;
     }
 
 
     public resetValue() {
-        
+
         delete this.resource[this.field.name];
     }
 

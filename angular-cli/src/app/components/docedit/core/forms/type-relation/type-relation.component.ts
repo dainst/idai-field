@@ -11,7 +11,6 @@ const INSTANCE_OF = 'isInstanceOf';
 const toResourceIdentifier = to('resource.identifier');
 
 @Component({
-    moduleId: module.id,
     selector: 'dai-type-relation',
     templateUrl: './type-relation.html'
 })

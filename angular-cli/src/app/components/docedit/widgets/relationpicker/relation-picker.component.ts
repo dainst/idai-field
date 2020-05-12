@@ -7,7 +7,6 @@ import {FieldReadDatastore} from '../../../../core/datastore/field/field-read-da
 
 
 @Component({
-    moduleId: module.id,
     selector: 'relation-picker',
     templateUrl: './relation-picker.html'
 })

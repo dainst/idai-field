@@ -6,7 +6,6 @@ import {HierarchyUtil} from '../../../../core/util/hierarchy-util';
 import {ValuelistDefinition} from '../../../../core/configuration/model/valuelist-definition';
 
 @Component({
-    moduleId: module.id,
     selector: 'dai-checkboxes',
     templateUrl: './checkboxes.html'
 })

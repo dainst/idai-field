@@ -16,7 +16,6 @@ import {Messages} from '../../messages/messages';
 
 
 @Component({
-    moduleId: module.id,
     templateUrl: './image-overview.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)'

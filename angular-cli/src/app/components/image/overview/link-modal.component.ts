@@ -6,7 +6,6 @@ import {Category} from '../../../core/configuration/model/category';
 
 @Component({
     selector: 'link-modal',
-    moduleId: module.id,
     templateUrl: './link-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)'

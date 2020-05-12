@@ -25,7 +25,6 @@ import {TabManager} from '../../core/tabs/tab-manager';
 
 
 @Component({
-    moduleId: module.id,
     templateUrl: './matrix-view.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)'

@@ -14,7 +14,6 @@ const fs = window.require('fs');
 
 
 @Component({
-    moduleId: module.id,
     selector: 'layer-map',
     templateUrl: './layer-map.html'
 })

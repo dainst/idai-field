@@ -13,7 +13,6 @@ type ContextMenuOrientation = 'top'|'bottom';
 
 @Component({
     selector: 'context-menu',
-    moduleId: module.id,
     templateUrl: './context-menu.html'
 })
 /**

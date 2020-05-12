@@ -15,7 +15,6 @@ import {MenuService} from '../../../../desktop/menu-service';
 
 @Component({
     selector: 'sidebar-list',
-    moduleId: module.id,
     templateUrl: './sidebar-list.html',
     host: { '(window:contextmenu)': 'handleClick($event, true)' }
 })

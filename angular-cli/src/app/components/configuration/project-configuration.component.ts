@@ -16,7 +16,6 @@ const locale: string = window.require('electron').remote.getGlobal('config').loc
 
 
 @Component({
-    moduleId: module.id,
     templateUrl: './project-configuration.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)'

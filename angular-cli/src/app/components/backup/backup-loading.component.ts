@@ -12,7 +12,6 @@ import {Messages} from '../messages/messages';
 
 
 @Component({
-    moduleId: module.id,
     templateUrl: './backup-loading.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)'

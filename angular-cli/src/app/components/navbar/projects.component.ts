@@ -5,7 +5,6 @@ import {NavbarComponent} from './navbar.component';
 
 @Component({
     selector: 'projects',
-    moduleId: module.id,
     templateUrl: './projects.html'
 })
 /**

@@ -9,7 +9,6 @@ import {ResourcesComponent} from '../../resources.component';
 
 @Component({
     selector: 'children-view',
-    moduleId: module.id,
     templateUrl: './children-view.html'
 })
 /**

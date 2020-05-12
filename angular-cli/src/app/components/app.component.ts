@@ -10,7 +10,6 @@ import {Messages} from './messages/messages';
 const remote = window.require('electron').remote;
 
 @Component({
-    moduleId: module.id,
     selector: 'idai-field-app',
     templateUrl: './app.html'
 })

@@ -7,7 +7,6 @@ import {ImageRowItem} from '../../../../../core/images/row/image-row';
 
 
 @Component({
-    moduleId: module.id,
     selector: 'dai-type-row',
     templateUrl: './type-row.html'
 })

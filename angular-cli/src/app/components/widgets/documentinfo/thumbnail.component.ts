@@ -8,7 +8,6 @@ import {BlobMaker} from '../../../core/images/imagestore/blob-maker';
 
 @Component({
     selector: 'thumbnail',
-    moduleId: module.id,
     templateUrl: './thumbnail.html'
 })
 /**

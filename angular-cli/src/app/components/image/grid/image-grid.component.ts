@@ -10,7 +10,6 @@ import {Messages} from '../../messages/messages';
 
 @Component({
     selector: 'image-grid',
-    moduleId: module.id,
     templateUrl: './image-grid.html'
 })
 /**

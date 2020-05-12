@@ -6,7 +6,6 @@ import {FieldDefinition} from '../../../../core/configuration/model/field-defini
 
 
 @Component({
-    moduleId: module.id,
     selector: 'dai-dimension',
     templateUrl: './dimension.html'
 })

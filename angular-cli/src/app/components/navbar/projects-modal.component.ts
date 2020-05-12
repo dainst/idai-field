@@ -15,7 +15,6 @@ const remote = window.require('electron').remote;
 
 @Component({
     selector: 'projects-modal',
-    moduleId: module.id,
     templateUrl: './projects-modal.html',
     host: {
         '(document:click)': 'handleClick($event)',

@@ -5,7 +5,6 @@ import {Category} from '../../core/configuration/model/category';
 
 
 @Component({
-    moduleId: module.id,
     selector: 'search-bar',
     templateUrl: './search-bar.html',
     host: {

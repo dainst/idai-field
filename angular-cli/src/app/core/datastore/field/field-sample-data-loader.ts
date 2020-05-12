@@ -51,7 +51,7 @@ export class FieldSampleDataLoader implements SampleDataLoader {
         const base = '/test/test-data/imagestore-samples/';
 
         let path = process.cwd() + base;
-        if (!fs.existsSync(path)) path = process.resourcesPath + base;
+        if (!fs.existsSync(path)) path = (process as any).resourcesPath + base; // TODO Remove "as any"
 
         return this.loadDirectory(db, path, this.imagestorePath + project);
     }

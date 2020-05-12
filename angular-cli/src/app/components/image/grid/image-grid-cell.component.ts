@@ -3,7 +3,6 @@ import {ImageDocument} from 'idai-components-2';
 
 @Component({
     selector: 'image-grid-cell',
-    moduleId: module.id,
     templateUrl: './image-grid-cell.html'
 })
 /**

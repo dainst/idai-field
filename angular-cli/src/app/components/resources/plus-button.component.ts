@@ -16,7 +16,6 @@ export type PlusButtonStatus = 'enabled'|'disabled-hierarchy';
 
 @Component({
     selector: 'plus-button',
-    moduleId: module.id,
     templateUrl: './plus-button.html'
 })
 

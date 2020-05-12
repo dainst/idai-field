@@ -10,7 +10,6 @@ import {Messages} from '../../messages/messages';
 
 @Component({
     selector: 'image-viewer',
-    moduleId: module.id,
     templateUrl: './image-viewer.html'
 })
 /**

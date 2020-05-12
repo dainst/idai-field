@@ -1,12 +1,13 @@
 import {Injectable} from '@angular/core';
 import {Observable, Observer} from 'rxjs';
-import * as PouchDB from 'pouchdb';
 import {IndexFacade} from '../index/index-facade';
 import {Migrator} from '../field/migrator';
 import {Name} from '../../constants';
 import {PouchdbProxy} from './pouchdb-proxy';
 import {SampleDataLoader} from './sample-data-loader';
 import {SyncProcess, SyncStatus} from '../../sync/sync-process';
+
+const PouchDB = (window as any).require('pouchdb');
 
 
 @Injectable()
@@ -89,7 +90,7 @@ export class PouchdbManager {
 
         let db = await this.getDbProxy().ready();
         let sync = db.sync(fullUrl, { live: true, retry: false });
-        
+
         this.syncHandles.push(sync as never);
         return {
             url: url,
@@ -186,7 +187,7 @@ const getSyncStatusFromInfo = (info: any) =>
     info.direction === 'push' ? SyncStatus.Pushing : SyncStatus.Pulling;
 
 
-const getSyncStatusFromError = (err: any) => 
+const getSyncStatusFromError = (err: any) =>
     err.status === 401
         ? err.reason === "Name or password is incorrect."
             ? SyncStatus.AuthenticationError

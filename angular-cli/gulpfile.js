@@ -7,7 +7,7 @@ var rename = require('gulp-rename');
 gulp.task('convert-sass', () => {
 
     return gulp.src([
-        'app/components/app.scss',
+        'src/app/components/app.scss',
         'node_modules/leaflet/dist/leaflet.css',
         'node_modules/Leaflet.vector-markers/dist/leaflet-vector-markers.css',
         'node_modules/leaflet.pm/dist/leaflet.pm.css'
@@ -15,13 +15,12 @@ gulp.task('convert-sass', () => {
         .pipe(sass({
             includePaths: [
                 'node_modules/roboto-fontface/css/roboto/sass',
-                'node_modules/idai-components-2/src/scss',
                 'node_modules/bootstrap/scss',
                 'node_modules/@mdi/font/scss/'
             ], precision: 8
         }))
         .pipe(concat('app.css'))
-        .pipe(gulp.dest('app/'));
+        .pipe(gulp.dest('src/app/'));
 });
 
 gulp.task('copy-fonts-convert-sass', gulp.series('convert-sass', () => {

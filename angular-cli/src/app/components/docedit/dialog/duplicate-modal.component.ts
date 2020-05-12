@@ -4,7 +4,6 @@ import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'duplicate-modal',
-    moduleId: module.id,
     templateUrl: './duplicate-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)',

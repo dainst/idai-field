@@ -11,7 +11,8 @@ const fs = window.require('fs');
  */
 export class ShapefileFileSystemReader implements Reader {
 
-    constructor(private file: File) {}
+    // TODO Use type File
+    constructor(private file: any) {}
 
 
     public go(): Promise<string> {

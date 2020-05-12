@@ -4,9 +4,7 @@ import {ProjectCategories} from '../../../core/configuration/project-categories'
 import {Groups} from '../../../core/configuration/model/group';
 
 
-@Component({
-    moduleId: module.id,
-    selector: 'document-info',
+@Component({   selector: 'document-info',
     templateUrl: './document-info.html'
 })
 /**

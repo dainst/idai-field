@@ -4,7 +4,6 @@ import {MatrixLineMode, MatrixRelationsMode, MatrixState} from './matrix-state';
 
 
 @Component({
-    moduleId: module.id,
     selector: 'matrix-options-menu',
     templateUrl: './matrix-options-menu.html'
 })

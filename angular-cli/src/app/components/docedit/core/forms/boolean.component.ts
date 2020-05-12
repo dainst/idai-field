@@ -3,7 +3,6 @@ import {Resource} from 'idai-components-2';
 
 
 @Component({
-    moduleId: module.id,
     selector: 'dai-boolean',
     templateUrl: './boolean.html'
 })

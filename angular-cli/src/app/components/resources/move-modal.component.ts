@@ -15,7 +15,6 @@ import {Messages} from '../messages/messages';
 
 @Component({
     selector: 'move-modal',
-    moduleId: module.id,
     templateUrl: './move-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)'

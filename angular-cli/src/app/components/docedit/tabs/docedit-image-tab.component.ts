@@ -10,7 +10,6 @@ import {DoceditComponent} from '../docedit.component';
 
 @Component({
     selector: 'docedit-image-tab',
-    moduleId: module.id,
     templateUrl: './docedit-image-tab.html'
 })
 /**

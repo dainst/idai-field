@@ -15,7 +15,6 @@ import {Messages} from '../../messages/messages';
 
 @Component({
     selector: 'resources-map',
-    moduleId: module.id,
     templateUrl: './resources-map.html',
     host: {'(window:keydown)': 'onKeyDown($event)'}
 })

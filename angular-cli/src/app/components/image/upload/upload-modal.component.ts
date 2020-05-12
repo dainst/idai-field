@@ -3,7 +3,6 @@ import {UploadStatus} from './upload-status';
 
 @Component({
     selector: 'upload-modal',
-    moduleId: module.id,
     templateUrl: './upload-modal.html'
 })
 /**

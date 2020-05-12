@@ -1,7 +1,5 @@
-/// <reference path="../desktop/express-import" />
-
 import {Injectable} from '@angular/core';
-import * as express from 'express';
+//import * as express from 'express';
 import {Document} from 'idai-components-2';
 import {PouchdbManager} from './datastore/pouchdb/pouchdb-manager';
 import {DocumentCache} from './datastore/cached/document-cache';
@@ -29,6 +27,8 @@ export class AppController {
 
     public setupServer(): Promise<any> {
 
+      return Promise.resolve();
+/*
         return new Promise(resolve => {
 
             if (!remote.getGlobal('switches').provide_reset) return resolve();
@@ -45,7 +45,7 @@ export class AppController {
                 console.log('App Control listening on port 3003');
                 resolve();
             });
-        });
+        });*/
     }
 
 

@@ -9,7 +9,6 @@ import {ValuelistDefinition} from '../../../../core/configuration/model/valuelis
 const PROJECT = 'project';
 
 @Component({
-    moduleId: module.id,
     selector: 'dai-dropdown-range',
     templateUrl: './dropdown-range.html'
 })

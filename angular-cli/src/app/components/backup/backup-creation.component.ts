@@ -10,7 +10,6 @@ import {Messages} from '../messages/messages';
 
 
 @Component({
-    moduleId: module.id,
     templateUrl: './backup-creation.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)'

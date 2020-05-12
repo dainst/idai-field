@@ -5,7 +5,6 @@ import {FieldDatastore} from '../../../core/datastore/field/field-datastore';
 
 @Component({
     selector: 'depicts-relations-view',
-    moduleId: module.id,
     templateUrl: './depicts-relations-view.html'
 })
 /**

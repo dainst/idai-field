@@ -7,7 +7,6 @@ import {Message} from './message';
  * @author Thomas Kleinke
  */
 @Component({
-    moduleId: module.id,
     selector: 'messages',
     templateUrl: './messages.html'
 })
@@ -24,7 +23,7 @@ export class MessagesComponent {
 
     public closeAlert = (message: Message) => this.messages.hideMessage(message);
 
-    
+
     public getMessageContent(message: Message): string {
 
         let content = message.content;

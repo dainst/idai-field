@@ -8,7 +8,6 @@ import {ViewModalLauncher} from '../../service/view-modal-launcher';
 
 @Component({
     selector: 'popover-menu',
-    moduleId: module.id,
     templateUrl: './popover-menu.html'
 })
 /**

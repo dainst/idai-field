@@ -6,7 +6,6 @@ import {ProjectConfiguration} from '../../../core/configuration/project-configur
 
 @Component({
     selector: 'image-category-picker-modal',
-    moduleId: module.id,
     templateUrl: './image-category-picker-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)'

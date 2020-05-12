@@ -10,7 +10,6 @@ import {ViewFacade} from '../../../core/resources/view/view-facade';
 
 @Component({
     selector: 'list',
-    moduleId: module.id,
     templateUrl: './list.html'
 })
 /**

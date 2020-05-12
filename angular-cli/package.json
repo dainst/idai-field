@@ -5,7 +5,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng build --watch --base-href ./ & electron . dev",
-    "build": "ng build --base-href ./",
+    "build": "gulp copy-fonts-convert-sass && ng build --base-href ./",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -31,7 +31,7 @@
     "electron-log": "3.0.7",
     "electron-updater": "4.2.5",
     "es6-shim": "0.35.4",
-    "express": "4.16.4",
+    "express": "4.17.1",
     "express-basic-auth": "1.2.0",
     "express-pouchdb": "4.2.0",
     "geojson-rewind": "0.3.1",
@@ -59,7 +59,7 @@
     "@angular-devkit/build-angular": "~0.901.5",
     "@angular/cli": "~9.1.5",
     "@angular/compiler-cli": "~9.1.6",
-    "@types/node": "^12.11.1",
+    "@types/node": "^12.12.38",
     "@types/jasmine": "~3.5.0",
     "@types/jasminewd2": "~2.0.3",
     "codelyzer": "^5.1.2",

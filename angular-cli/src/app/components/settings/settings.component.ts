@@ -3,7 +3,6 @@ import {SettingsService} from '../../core/settings/settings-service';
 import {Settings} from '../../core/settings/settings';
 import {M} from '../messages/m';
 import {TabManager} from '../../core/tabs/tab-manager';
-import OpenDialogReturnValue = Electron.OpenDialogReturnValue;
 import {Messages} from '../messages/messages';
 
 const address = window.require('address');
@@ -11,7 +10,6 @@ const remote = window.require('electron').remote;
 
 
 @Component({
-    moduleId: module.id,
     templateUrl: './settings.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)'
@@ -78,7 +76,8 @@ export class SettingsComponent implements OnInit {
 
     public async chooseImagestoreDirectory() {
 
-        const result: OpenDialogReturnValue = await remote.dialog.showOpenDialog(
+      // TODO Use type Electron.OpenDialogReturnValue
+        const result: any = await remote.dialog.showOpenDialog(
             remote.getCurrentWindow(),
             {
                 properties: ['openDirectory', 'createDirectory'],

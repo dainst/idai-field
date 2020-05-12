@@ -10,7 +10,6 @@ import {MatrixSelection, MatrixSelectionChange} from './matrix-selection';
 
 
 @Component({
-    moduleId: module.id,
     selector: 'graph',
     templateUrl: './graph.html'
 })

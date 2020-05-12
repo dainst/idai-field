@@ -27,7 +27,6 @@ const remote = window.require('electron').remote;
 
 
 @Component({
-    moduleId: module.id,
     templateUrl: './export.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)'

@@ -23,7 +23,6 @@ import {ImageRowItem, PLACEHOLDER} from '../../../core/images/row/image-row';
 
 @Component({
     selector: 'type-grid',
-    moduleId: module.id,
     templateUrl: './type-grid.html',
     host: {
         '(window:contextmenu)': 'handleClick($event, true)',

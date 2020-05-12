@@ -10,7 +10,6 @@ import {Messages} from '../../messages/messages';
 
 @Component({
     selector: 'georeference-view',
-    moduleId: module.id,
     templateUrl: './georeference-view.html'
 })
 /**

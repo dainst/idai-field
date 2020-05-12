@@ -5,7 +5,6 @@ import {Document} from 'idai-components-2';
 
 @Component({
     selector: 'delete-modal',
-    moduleId: module.id,
     templateUrl: './delete-modal.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)',

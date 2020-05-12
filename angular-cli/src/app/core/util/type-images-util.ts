@@ -4,7 +4,8 @@ import {FieldDocument, Query} from 'idai-components-2';
 import {FieldDocumentFindResult, FieldReadDatastore} from '../datastore/field/field-read-datastore';
 import {ResourceId} from '../constants';
 import {ModelUtil} from '../model/model-util';
-import {ImageRowItem, PLACEHOLDER} from '../../components/image/row/image-row.component';
+import {PLACEHOLDER} from '../../components/image/row/image-row.component';
+import {ImageRowItem} from '../images/row/image-row';
 
 
 /**

@@ -126,7 +126,7 @@ export module ConstraintIndex {
             matchTerm,
             cond(not(isArray), singleton),
             map(getDescendants(index, definition)),
-            flatten);
+            flatten as any /* TODO review, impl flatten for associative */);
     }
 
 
@@ -267,10 +267,10 @@ export module ConstraintIndex {
 
         return flow(
                 categories,
-                map(Category.getFields),
+                map(Category.getFields) as any /* TODO review */,
                 flatten,
-                getUniqueFields,
-                filter(to(FieldDefinition.CONSTRAINTINDEXED)));
+                getUniqueFields as any /* TODO review */,
+                filter(to(FieldDefinition.CONSTRAINTINDEXED)) as any /* TODO review */);
     }
 
 
@@ -311,7 +311,7 @@ export module ConstraintIndex {
                         indexItems,
                         map(to(Resource.ID)),
                         map(getDescendants(index, definition)),
-                        flatten));
+                        flatten as any /* TODO review */));
         }
     }
 

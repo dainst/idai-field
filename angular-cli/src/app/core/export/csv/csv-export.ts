@@ -19,7 +19,7 @@ export module CSVExport {
     const SEPARATOR = ',';
 
     const getUsableFieldNames =
-        remove(includedIn(['id', 'category', 'geometry', 'georeference', 'originalFilename', 'filename']));
+        remove(includedIn(['id', 'category', 'geometry', 'georeference', 'originalFilename', 'filename'])) as any /* TODO review any */;
 
 
     /**
@@ -60,7 +60,7 @@ export module CSVExport {
             .concat(
                 relations
                     .filter(isNot(includedIn(HierarchicalRelations.ALL)))
-                    .map(prepend(Resource.RELATIONS + OBJECT_SEPARATOR)))
+                    .map(prepend(Resource.RELATIONS + OBJECT_SEPARATOR)) as any /* TODO review any */)
             .concat(relations.find(includedIn(HierarchicalRelations.ALL)) ? [RELATIONS_IS_CHILD_OF] : []);
     }
 

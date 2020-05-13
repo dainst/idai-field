@@ -66,7 +66,7 @@ export module ResultSets {
             cond(
                 isNot(empty)(resultSets.subtractSets),
                 subtract(union(resultSets.subtractSets))),
-            pickFrom(resultSets));
+            pickFrom(resultSets) as any /* TODO review any */);
     }
 
 
@@ -74,7 +74,7 @@ export module ResultSets {
 
         return flow(
             union(resultSets.addSets),
-            pickFrom(resultSets));
+            pickFrom(resultSets) as any /* TODO review any */);
     }
 
 

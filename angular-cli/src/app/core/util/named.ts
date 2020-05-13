@@ -52,7 +52,7 @@ export function sortNamedArray(order: string[]) {
         let sortedCategories: Array<Category> = [];
 
         for (let categoryName of order) {
-            const [match, rest] = separate(on(Named.NAME, is(categoryName)))(source);
+            const [match, rest] = separate(on(Named.NAME, is(categoryName)), source);
             sortedCategories = sortedCategories.concat(match);
             source = rest;
         }

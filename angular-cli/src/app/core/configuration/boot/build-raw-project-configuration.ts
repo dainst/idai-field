@@ -1,6 +1,7 @@
 import {cond, flow, includedIn, isDefined, isNot, keys, Mapping, Map, on,
-    subtract, undefinedOrEmpty, map, identity, compose, Pair, pairWith, prune, filter, keysAndValues, reduce} from 'tsfun';
-import {assoc, dissoc, update, lookup} from 'tsfun/associative';
+    subtract, undefinedOrEmpty, map, identity, compose, Pair, dissoc,
+  pairWith, prune, filter, keysAndValues, reduce} from 'tsfun';
+import {assoc, update, lookup} from 'tsfun/associative';
 import {clone} from 'tsfun/struct';
 import {LibraryCategoryDefinition} from '../model/library-category-definition';
 import {CustomCategoryDefinition} from '../model/custom-category-definition';
@@ -86,7 +87,7 @@ function processCategories(orderConfiguration: any,
                            searchConfiguration: any,
                            relations: Array<RelationDefinition>): Mapping<Map<CategoryDefinition>, Array<Category>> {
 
-    const sortCategoryGroups = update(Category.GROUPS, sortGroups(Groups.DEFAULT_ORDER));
+    const sortCategoryGroups = update(Category.GROUPS, sortGroups(Groups.DEFAULT_ORDER) as any /* TODO review any */);
 
     return compose(
         applySearchConfiguration(searchConfiguration),
@@ -144,7 +145,7 @@ function orderCategories(categoriesOrder: string[] = []) {
             categories,
             sortNamedArray(categoriesOrder),
             map(update(Category.CHILDREN, orderCategories(categoriesOrder)))
-        );
+        ) as any /* TODO review any */;
     }
 }
 
@@ -164,7 +165,7 @@ function setGroupLabels(groupLabels: Map<string>) {
             Category.GROUPS,
             compose(
                 map(pairWith(groupLabel)),
-                map(([group, label]: Pair<Group, string>) => assoc(Labelled.LABEL, label)(group as any))))(category);
+                map(([group, label]: Pair<Group, string>) => assoc(Labelled.LABEL, label)(group as any))) as any /* TODO review any */)(category);
     });
 }
 
@@ -246,9 +247,9 @@ function eraseUnusedCategories(selectedCategoriesNames: string[])
             keysOfUnselectedCategories,
             reduce(withDissoc, categories),
             getDefinedParents
-        );
+        ) as any /* TODO review any */;
 
-        const categoriesToErase = subtract(parentNamesOfSelectedCategories)(keysOfUnselectedCategories);
+        const categoriesToErase = subtract(parentNamesOfSelectedCategories)(keysOfUnselectedCategories as any /* TODO review any */);
         return categoriesToErase.reduce(withDissoc, categories) as Map<TransientCategoryDefinition>;
     }
 }
@@ -276,7 +277,7 @@ function replaceCommonFields(commonFields: Map)
                 }
                 delete clonedMergedCategory.commons;
                 return clonedMergedCategory;
-            }));
+            })) as any /* TODO review any */;
 }
 
 

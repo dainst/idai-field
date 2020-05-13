@@ -217,9 +217,9 @@ export class TypeGridComponent extends BaseList implements OnChanges {
         const linkedResourceIds: string[] = flow(
             [this.mainDocument].concat(this.subtypes),
             filter((document: FieldDocument) => Document.hasRelations(document, 'hasInstance')),
-            map((document: FieldDocument) => document.resource.relations['hasInstance']),
+            map((document: FieldDocument) => document.resource.relations['hasInstance']) as any /* TODO review */,
             flatten,
-            set
+            set as any /* TODO review */
         );
 
         return await this.fieldDatastore.getMultiple(linkedResourceIds);
@@ -264,6 +264,6 @@ export class TypeGridComponent extends BaseList implements OnChanges {
 
         return asyncMap((image: ImageRowItem) => {
             return this.imagestore.read(image.imageId, false, true);
-        })(take(4)(linkedImages));
+        })(take(4, linkedImages));
     }
 }

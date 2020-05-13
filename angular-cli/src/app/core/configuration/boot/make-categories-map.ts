@@ -37,8 +37,8 @@ export function makeCategoriesMap(categories: any): Map<Category> {
         reduce(addChildCategory, parentCategories),
         flattenCategoriesTreeMapToCategoriesMap,
         fillGroups,
-        map(dissoc(TEMP_FIELDS)),
-        map(dissocOn([Category.PARENT_CATEGORY, TEMP_FIELDS]))
+        map(dissoc(TEMP_FIELDS)) as any /* TODO review any */,
+        map(dissocOn([Category.PARENT_CATEGORY, TEMP_FIELDS])) as any /* TODO review any */
     );
 }
 
@@ -51,7 +51,7 @@ const fillGroups = map((category: Category) => {
         category.groups = flow(
             (category as any)[TEMP_FIELDS],
             makeGroupsMap,
-            map(sortGroupFields),
+            map(sortGroupFields) as any /* TODO review any */
         );
 
         return category;

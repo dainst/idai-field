@@ -86,7 +86,7 @@ export module CsvExportUtils {
                 take(nrOfNewItems),
                 replace,
                 prepend(...take(where)(as)),
-                append(...drop(where + nrOfNewItems)(as)));
+                append(...drop(where + nrOfNewItems)(as)) as any /* TODO review any */);
         }
     }
 

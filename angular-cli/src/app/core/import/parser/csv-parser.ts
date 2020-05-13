@@ -1,5 +1,5 @@
-import {flow, map} from 'tsfun';
-import {assoc, update} from 'tsfun/associative'
+import {flow, map, assoc} from 'tsfun';
+import {update} from 'tsfun/associative'
 import {Document, Resource, Relations} from 'idai-components-2';
 import {Parser} from './parser';
 import {Category} from '../../configuration/model/category';
@@ -51,6 +51,6 @@ export module CsvParser {
             map(assoc('category', category.name)),
             map(insertRelations),
             map(convertFieldTypes(category)),
-            map(toDocument));
+            map(toDocument)) as any /* TODO review any */;
     }
 }

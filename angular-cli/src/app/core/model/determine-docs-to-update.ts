@@ -43,7 +43,7 @@ export function determineDocsToUpdate(document: Document,
                 targetDocument.resource.relations,
                 document.resource.id,
                 setInverses,
-                hasInverseRelation);
+                hasInverseRelation) as any /* TODO review */;
 
         if (setInverses) {
             setInverseRelations(
@@ -112,7 +112,7 @@ function setInverseRelation(target: Resource, resource: Resource) {
                     target.relations,
                     get(inverse, []),
                     filter(isnt(resource.id)),
-                    append(resource.id));
+                    append(resource.id)) as any /* TODO review any */;
         }
     }
 }

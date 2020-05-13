@@ -68,7 +68,7 @@ export class ProjectConfiguration {
 
     public getCategoriesTree(): Map<Category> {
 
-        return filter(on(Category.PARENT_CATEGORY, isUndefined))(this.getCategoriesMap());
+        return filter(on(Category.PARENT_CATEGORY, isUndefined), this.getCategoriesMap());
     }
 
     public getCategoryAndSubcategories(supercategoryName: string): Map<Category> {
@@ -154,7 +154,7 @@ export class ProjectConfiguration {
 
     /**
      * Should be used only from within components.
-     * 
+     *
      * @param relationName
      * @returns {string}
      */

@@ -78,12 +78,12 @@ function unifyCampaignAndStaffFields(latestRevision: Resource) {
         if (conflictedRevisions.length === 0) return latestRevision;
 
         const unifyFields = (fieldName: string) => {
-            return flow(conflictedRevisions, append(latestRevision), map(to(fieldName)), union);
+            return flow(conflictedRevisions, append(latestRevision), map(to(fieldName)) as any /* TODO review any */, union);
         };
 
         return flow(latestRevision,
             assoc(STAFF, unifyFields(STAFF)),
-            assoc(CAMPAIGNS, unifyFields(CAMPAIGNS)));
+            assoc(CAMPAIGNS, unifyFields(CAMPAIGNS)) as any /* TODO review any */);
     }
 }
 
@@ -114,7 +114,7 @@ function collapse(revisions: Array<Resource>, indicesOfUsedRevisions: Array<Arra
         : [Array<Resource>, Array<ArrayIndex>] {
 
     if (revisions.length < 2) return [revisions, indicesOfUsedRevisions];
-    const lastPair: Pair<Resource, Resource> = last2(revisions);
+    const lastPair: Pair<Resource, Resource> = last2(revisions as any /* TODO review any */);
 
     const resolved = solveConflictBetweenTwoRevisions(left(lastPair), right(lastPair));
     return resolved !== undefined
@@ -133,10 +133,10 @@ function solveConflictBetweenTwoRevisions(l: Resource, r: Resource): Resource|un
     if (isEmpty(l_) && l[CRS] === r[CRS]) return r;
     else if (isEmpty(r_) && l[CRS] === r[CRS]) return l;
 
-    if (equal(withoutStaffAndCampaigns(l))(withoutStaffAndCampaigns(r))) {
+    if (equal(withoutStaffAndCampaigns(l as any))(withoutStaffAndCampaigns(r as any))) { // TODO review any
         return flow(r,
             assoc(STAFF, union([l[STAFF], r[STAFF]])),
-            assoc(CAMPAIGNS, union([l[CAMPAIGNS], r[CAMPAIGNS]])));
+            assoc(CAMPAIGNS, union([l[CAMPAIGNS], r[CAMPAIGNS]])) as any /* TODO review any */);
     }
 
     return undefined;

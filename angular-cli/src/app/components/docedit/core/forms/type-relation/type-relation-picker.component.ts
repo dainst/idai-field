@@ -117,7 +117,7 @@ export class TypeRelationPickerComponent {
             to(FindResult.DOCUMENTS),
             map(to(Document.RESOURCE)),
             map(to(CRITERION)),
-            prune
+            prune as any /* TODO review any */
         );
     }
 
@@ -133,7 +133,7 @@ export class TypeRelationPickerComponent {
         this.availableCatalogs = flow(
             await this.datastore.find(query),
             to(FindResult.DOCUMENTS),
-            map(to(Document.RESOURCE))
+            map(to(Document.RESOURCE)) as any /* TODO review any */
         );
     }
 

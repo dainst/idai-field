@@ -45,7 +45,7 @@ export function convertCsvRows(separator: string) {
         assertRowsAndHeadingLengthsMatch(headings, rows);
 
         return map((row: string[]) =>
-            reduce(insertFieldIntoDocument(headings), {})(row))(rows);
+            reduce(insertFieldIntoDocument(headings), {})(row), rows);
     }
 }
 
@@ -95,7 +95,7 @@ function extractLeadingIndices(paths: string[]): number[] {
         map(first),
         map((s: string) => parseInt(s)), // deliberate use of explicit form to avoid cases where '0' was parsed to NaN
         filter(isNot(isNaN)),
-        sort);
+        sort as any /* TODO review any */);
 }
 
 

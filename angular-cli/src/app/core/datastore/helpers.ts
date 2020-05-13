@@ -32,7 +32,7 @@ export function replaceLastPair<A>(as: Array<A>, replacement: A): Array<A> {
 
 function replaceRight<A>(as: Array<A>, itemsToReplace: number, replacement: A): Array<A> {
 
-    return flow(as, dropRight(itemsToReplace), append(replacement));
+    return flow(as, dropRight(itemsToReplace), append(replacement)) as any /* TODO review any */;
 }
 
 
@@ -61,7 +61,13 @@ export function dissocIndices<A>(indices: Array<number>) {
         if (index === undefined) return as;
 
         return dissocIndices
-                (dropRight(1)(indices))
-                (take(index)(as).concat(drop(index + 1)(as))) as Array<A>;
+                (dropRight(1, indices))
+                (
+                  take(index)(as)
+                  .concat(
+                    (drop(index + 1)(as)) as any /* TODO review any */
+                  ) as any /* TODO review any */
+
+                ) as Array<A>;
     }
 }

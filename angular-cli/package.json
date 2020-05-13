@@ -36,7 +36,7 @@
     "express-basic-auth": "1.2.0",
     "express-pouchdb": "4.2.0",
     "geojson-rewind": "0.3.1",
-    "idai-components-2": "1.47.1",
+    "idai-components-2": "1.47.2",
     "leaflet": "1.5.1",
     "leaflet-imageoverlay-rotated": "0.1.1",
     "leaflet.pm": "0.17.3",
@@ -51,7 +51,7 @@
     "showdown": "1.9.1",
     "svg-pan-zoom": "3.6.0",
     "systemjs": "0.21.5",
-    "tsfun": "4.3.3",
+    "tsfun": "4.4.1",
     "tslib": "^1.10.0",
     "viz.js": "1.8.1",
     "zone.js": "~0.10.2"

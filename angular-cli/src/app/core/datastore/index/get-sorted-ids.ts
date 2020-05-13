@@ -48,7 +48,7 @@ export function getSortedIds(indexItems: Array<IndexItem>, query: Query): Array<
         indexItems,
         rankEntries,
         handleExactMatchIfQuerySaysSo,
-        map(to(Resource.ID)));
+        map(to(Resource.ID)) as any /* TODO review any */);
 }
 
 
@@ -106,7 +106,7 @@ const handleExactMatch = (q: string)
     : (indexItems: Array<IndexItem>) => Array<IndexItem> =>
      compose(
         separate(on(Resource.IDENTIFIER, is(q))),
-        flatten);
+        flatten as any /* TODO review any */);
 
 
 const rankRegularIndexItems
@@ -130,5 +130,5 @@ const rankRegularIndexItems
 const rankTypeResourceIndexItems = (categoryToMatch: Name): (indexItems: Array<IndexItem>) =>
     Array<IndexItem> => compose(
         map(pairWith(calcPercentage(categoryToMatch))),
-        sort(comparePercentages),
-        map(left));
+        sort(comparePercentages) as any /* TODO review any */,
+        map(left)) as any /* TODO review any*/;

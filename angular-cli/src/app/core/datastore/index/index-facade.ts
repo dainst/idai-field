@@ -54,7 +54,7 @@ export class IndexFacade {
 
     public putMultiple(documents: Array<Document>) {
 
-        const [typeDocuments, nonTypeDocuments] = separate(on('resource.category', is(TYPE)))(documents);
+        const [typeDocuments, nonTypeDocuments] = separate(on('resource.category', is(TYPE)), documents);
 
         typeDocuments.forEach(_ => this._put(_, true, false));
         nonTypeDocuments.forEach(_ => this._put(_, true, false));

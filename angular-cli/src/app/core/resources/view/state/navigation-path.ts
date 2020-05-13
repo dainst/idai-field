@@ -130,7 +130,7 @@ export module NavigationPath {
 
         const oldNavPath = clone(navPath);
         (navPath as any /* cast ok on construction */).segments
-            = takeWhile(differentFrom(firstToBeExcluded))(oldNavPath.segments);
+            = takeWhile(differentFrom(firstToBeExcluded))(oldNavPath.segments as any /* TODO review any */);
 
         if (navPath.selectedSegmentId) {
 

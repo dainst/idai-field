@@ -44,7 +44,7 @@ export class LiteratureComponent {
 
         if (!this.newLiterature) return;
 
-        this.inEditing = remove(is(this.newLiterature))(this.inEditing);
+        this.inEditing = remove(is(this.newLiterature), this.inEditing);
         this.newLiterature = undefined;
     }
 
@@ -53,14 +53,14 @@ export class LiteratureComponent {
 
         if (!literature.zenonId || literature.zenonId.length === 0) delete literature.zenonId;
         if (this.newLiterature === literature) this.add(literature);
-        this.inEditing = remove(is(literature))(this.inEditing);
+        this.inEditing = remove(is(literature), this.inEditing);
     }
 
 
     public remove(literature: Literature) {
 
         this.resource[this.field.name] = remove(is(literature))(this.resource[this.field.name]);
-        this.inEditing = remove(is(literature))(this.inEditing);
+        this.inEditing = remove(is(literature), this.inEditing);
     }
 
 

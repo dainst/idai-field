@@ -16,14 +16,14 @@ export module Updater {
 
         const hasConflict = (_: any): boolean => (_['_conflicts']);
 
-        const [documentsWithConflicts, documentsWithoutConflicts] = separate(hasConflict)(documents);
+        const [documentsWithConflicts, documentsWithoutConflicts] = separate(hasConflict, documents);
         await performBulk(documentsWithoutConflicts, datastore, username, useUpdateMethod);
         await performRegular(documentsWithConflicts, datastore, username, useUpdateMethod);
 
 
         if (targetDocuments) {
 
-            const [targetDocumentsWithConflicts, targetDocumentsWithoutConflicts] = separate(hasConflict)(targetDocuments);
+            const [targetDocumentsWithConflicts, targetDocumentsWithoutConflicts] = separate(hasConflict, targetDocuments);
             await performBulk(targetDocumentsWithoutConflicts, datastore, username, true);
             await performRegular(targetDocumentsWithConflicts, datastore, username, true);
         }

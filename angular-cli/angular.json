@@ -28,7 +28,8 @@
               "src/favicon.png",
               "src/fonts",
               "src/app.css",
-              "src/samples"
+              "src/samples",
+              "src/img"
             ],
             "styles": [
               "src/styles.scss"

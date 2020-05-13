@@ -1,10 +1,10 @@
 import {assoc} from 'tsfun/associative';
 import {Name} from '../../core/constants';
 
-const PouchDB = window.require('pouchdb');
-const replicationStream = window.require('pouchdb-replication-stream');
-const stream = window.require('stream');
-const fs = window.require('fs');
+const PouchDB = typeof window !== 'undefined' ? window.require('pouchdb') : require('pouchdb');
+const replicationStream = typeof window !== 'undefined' ? window.require('pouchdb-replication-stream') : require('pouchdb-replication-stream');
+const stream = typeof window !== 'undefined' ? window.require('stream') : require('stream');
+const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
 
 
 /**

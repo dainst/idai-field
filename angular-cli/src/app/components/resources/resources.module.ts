@@ -51,7 +51,9 @@ import {TypeGridComponent} from './typegrid/type-grid.component';
 import {TypeIconComponent} from './typegrid/type-icon.component';
 import {Messages} from '../messages/messages';
 
-const remote = window.require('electron').remote;
+const remote = typeof window !== 'undefined'
+  ? window.require('electron').remote
+  : require('electron').remote;
 
 @NgModule({
     imports: [

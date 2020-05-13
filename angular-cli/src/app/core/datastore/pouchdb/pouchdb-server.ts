@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 //import * as express from 'express';
 //import * as PouchDB from 'pouchdb';
 
-//const expressPouchDB = window.require('express-pouchdb');
+//const expressPouchDB = (typeof window !== 'undefined' ? window.require : require)('express-pouchdb');
 //const expressBasicAuth = require('express-basic-auth');
 
 

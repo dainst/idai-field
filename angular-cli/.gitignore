@@ -1,5 +1,15 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
+test/CURRENT
+test/LOCK
+test/LOG
+test/MANIFEST-*
+test/*.log
+unittest
+test/**/*.js
+test/**/*.js.map
+app.css
+
 # compiled output
 /dist
 /tmp

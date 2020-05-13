@@ -7,7 +7,9 @@ import {UtilTranslations} from '../core/util/util-translations';
 import {ReadImagestore} from '../core/images/imagestore/read-imagestore';
 import {Messages} from './messages/messages';
 
-const remote = window.require('electron').remote;
+const remote = typeof window !== 'undefined'
+  ? window.require('electron').remote
+  : require('electron').remote;
 
 @Component({
     selector: 'idai-field-app',

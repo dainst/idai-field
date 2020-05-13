@@ -4,8 +4,8 @@ import {FieldDocument, FieldGeometry, Query} from 'idai-components-2';
 import {FieldReadDatastore} from '../datastore/field/field-read-datastore';
 import {M} from '../../components/messages/m';
 
-const geojsonRewind = window.require('geojson-rewind');
-const fs = window.require('fs');
+const geojsonRewind = typeof window !== 'undefined' ? window.require('geojson-rewind') : require('geojson-rewind');
+const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
 
 
 /**

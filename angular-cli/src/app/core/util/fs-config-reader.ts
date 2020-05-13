@@ -9,7 +9,7 @@ export class FsConfigReader {
                 const obj = JSON.parse(data);
                 resolve(obj);
             }
-          window.require('fs').readFile(path, handleFile);
+          (typeof window !== 'undefined' ? window.require : require)('fs').readFile(path, handleFile);
         });
     }
 }

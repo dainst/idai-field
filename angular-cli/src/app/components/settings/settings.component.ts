@@ -5,8 +5,8 @@ import {M} from '../messages/m';
 import {TabManager} from '../../core/tabs/tab-manager';
 import {Messages} from '../messages/messages';
 
-const address = window.require('address');
-const remote = window.require('electron').remote;
+const address = typeof window !== 'undefined' ? window.require('address') : require('address');
+const remote = typeof window !== 'undefined' ? window.require('electron').remote : require('electron').remote;
 
 
 @Component({

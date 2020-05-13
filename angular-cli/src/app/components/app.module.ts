@@ -67,8 +67,7 @@ import {IdaiMessagesModule} from './messages/idai-messages.module';
 import {MD} from './messages/md';
 import {Messages} from './messages/messages';
 
-
-const remote = window.require('electron').remote;
+const remote = typeof window !== 'undefined' ? window.require('electron').remote : require('electron').remote;
 
 let projectConfiguration: ProjectConfiguration|undefined = undefined;
 let fulltextIndex: FulltextIndex|undefined = undefined;

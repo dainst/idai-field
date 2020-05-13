@@ -5,7 +5,7 @@ import {ImageConverter} from './image-converter';
 import {ImagestoreErrors} from './imagestore-errors';
 import {PouchdbProxy} from '../../datastore/pouchdb/pouchdb-proxy';
 
-const fs = window.require('fs');
+const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
 
 
 @Injectable()

@@ -4,7 +4,7 @@ import {M} from '../../../components/messages/m';
 import {PerformExport} from '../export-helper';
 import {Category} from '../../configuration/model/category';
 
-const fs = window.require('fs');
+const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
 
 /**
  * Small wrapper to separate async and file handling, including

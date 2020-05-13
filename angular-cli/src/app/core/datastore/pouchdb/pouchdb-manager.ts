@@ -7,7 +7,7 @@ import {PouchdbProxy} from './pouchdb-proxy';
 import {SampleDataLoader} from './sample-data-loader';
 import {SyncProcess, SyncStatus} from '../../sync/sync-process';
 
-const PouchDB = (window as any).require('pouchdb');
+const PouchDB = typeof window !== 'undefined' ? window.require('pouchdb') : require('pouchdb');
 
 
 @Injectable()

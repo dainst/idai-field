@@ -2,7 +2,7 @@ import {Document} from 'idai-components-2';
 import {JavaToolExecutor} from '../java/java-tool-executor';
 import {M} from '../../components/messages/m';
 
-const remote = window.require('electron').remote;
+const remote = typeof window !== 'undefined' ? window.require('electron').remote : require('electron').remote;
 
 
 /**

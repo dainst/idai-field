@@ -1,4 +1,4 @@
-const {dialog} = window.require('electron').remote;
+const {dialog} = typeof window !== 'undefined' ? window.require('electron').remote : require('electron').remote;
 
 /**
  * @author Daniel de Oliveira

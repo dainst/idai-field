@@ -1,5 +1,7 @@
 import {Injectable} from '@angular/core';
-const nativeImage = window.require('electron').nativeImage;
+const nativeImage = typeof window !== 'undefined'
+  ? window.require('electron').nativeImage
+  : require('electron').nativeImage;
 
 
 @Injectable()

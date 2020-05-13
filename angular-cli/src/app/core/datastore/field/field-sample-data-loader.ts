@@ -2,7 +2,7 @@ import {SampleDataLoader} from '../pouchdb/sample-data-loader';
 import {getSampleDocuments} from './field-sample-objects';
 import {ImageConverter} from '../../images/imagestore/image-converter';
 
-const fs = window.require('fs');
+const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
 
 
 /**

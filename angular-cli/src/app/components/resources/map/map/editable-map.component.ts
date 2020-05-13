@@ -7,7 +7,9 @@ import {FieldPolyline} from './field-polyline';
 import {FieldMarker} from './field-marker';
 import L from 'leaflet';
 
-const remote = window.require('electron').remote;
+const remote = typeof window !== 'undefined'
+  ? window.require('electron').remote
+  : require('electron').remote;
 
 declare global { namespace L { namespace PM { namespace Draw { interface Line { _finishShape(): void
                      _layer: any } }

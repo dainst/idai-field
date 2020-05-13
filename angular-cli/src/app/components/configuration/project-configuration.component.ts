@@ -12,7 +12,9 @@ import {Named} from '../../core/util/named';
 import {RelationDefinition} from '../../core/configuration/model/relation-definition';
 import {TypeRelations} from '../../core/model/relation-constants';
 
-const locale: string = window.require('electron').remote.getGlobal('config').locale;
+const locale: string = typeof window !== 'undefined'
+  ? window.require('electron').remote.getGlobal('config').locale
+  : require('electron').remote.getGlobal('config').locale;
 
 
 @Component({

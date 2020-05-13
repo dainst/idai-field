@@ -10,7 +10,9 @@ import {Messages} from '../../../messages/messages';
 import L from 'leaflet';
 import 'leaflet.pm'
 
-const fs = window.require('fs');
+const fs = typeof window !== 'undefined'
+  ? window.require('fs')
+  : require('fs');
 
 
 @Component({

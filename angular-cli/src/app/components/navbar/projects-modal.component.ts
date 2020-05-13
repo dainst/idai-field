@@ -11,7 +11,7 @@ import {DocumentReadDatastore} from '../../core/datastore/document-read-datastor
 import {ProjectNameValidatorMsgConversion} from '../messages/project-name-validator-msg-conversion';
 import {Messages} from '../messages/messages';
 
-const remote = window.require('electron').remote;
+const remote = typeof window !== 'undefined' ? window.require('electron').remote : require('electron').remote;
 
 @Component({
     selector: 'projects-modal',

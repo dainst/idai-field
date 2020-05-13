@@ -8,7 +8,7 @@ import {IndexFacade} from './datastore/index/index-facade';
 import {TabManager} from './tabs/tab-manager';
 import {ResourcesStateManager} from './resources/view/resources-state-manager';
 
-const remote = window.require('electron').remote;
+const remote = typeof window !== 'undefined' ? window.require('electron').remote : require('electron').remote;
 
 
 @Injectable()

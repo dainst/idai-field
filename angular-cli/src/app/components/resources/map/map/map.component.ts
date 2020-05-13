@@ -6,14 +6,8 @@ import {FieldMarker} from './field-marker';
 import {CoordinatesUtility} from './coordinates-utility';
 import {ProjectConfiguration} from '../../../../core/configuration/project-configuration';
 
-// no typings for VectorMarkers available
-declare global {
-    namespace L {
-        module VectorMarkers {
-            function icon(option: any): any;
-        }
-    }
-}
+const {VectorMarkers} = require('Leaflet.vector-markers');
+
 
 @Component({
     selector: 'map',
@@ -457,7 +451,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
 
     protected static generateMarkerIcon(color: string, extraClasses: string = ''): L.Icon {
 
-        return L.VectorMarkers.icon({
+        return VectorMarkers.icon({
             prefix: 'mdi',
             icon: 'checkbox-blank-circle',
             markerColor: color,

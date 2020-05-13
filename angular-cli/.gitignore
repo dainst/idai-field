@@ -9,6 +9,7 @@ unittest
 test/**/*.js
 test/**/*.js.map
 app.css
+test/dist
 
 # compiled output
 /dist

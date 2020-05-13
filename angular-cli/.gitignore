@@ -12,7 +12,6 @@ test/e2e/**/*.js
 test/e2e/**/*.js.map
 app.css
 test/dist
-config
 
 # compiled output
 /dist

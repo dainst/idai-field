@@ -59,7 +59,7 @@ if (process.argv && process.argv.length > 2) {
 }
 
 if (env) { // is environment 'dev' (npm start) or 'test' (npm run e2e)
-    global.configurationDirPath = '../../config';
+    global.configurationDirPath = '../config';
 }
 
 if (!env) {
@@ -79,7 +79,7 @@ if (['production', 'development'].includes(global.mode)) {
     copyConfigFile(global.appDataPath + '/config.json', global.appDataPath);
     global.configPath = global.appDataPath + '/config.json';
 
-    if (global.mode === 'production') global.configurationDirPath = '../../config';
+    if (global.mode === 'production') global.configurationDirPath = '../config';
 } else {
     global.configPath = 'config/config.test.json';
     global.appDataPath = 'test/test-temp';

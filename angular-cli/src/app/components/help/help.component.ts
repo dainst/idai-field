@@ -22,7 +22,7 @@ export class HelpComponent implements OnInit {
     public chapters: Array<Chapter> = [];
     public activeChapter: Chapter;
 
-    @ViewChild('help', {static: false}) rootElement: ElementRef;
+    @ViewChild('help', { static: false }) rootElement: ElementRef;
 
     private static scrollOffset: number = -15;
     private static headerTopOffset: number = -62;
@@ -80,7 +80,7 @@ export class HelpComponent implements OnInit {
 
     private static getFilePath(locale: string): string {
 
-        return '../manual/manual.' + locale + '.md';
+        return '../../manual/manual.' + locale + '.md';
     }
 
 

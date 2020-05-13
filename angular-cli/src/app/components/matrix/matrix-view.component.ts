@@ -23,6 +23,8 @@ import IS_CUT_BY = PositionRelations.CUTBY;
 import CUTS = PositionRelations.CUTS;
 import {TabManager} from '../../core/tabs/tab-manager';
 
+const Viz = require('viz.js');
+
 
 @Component({
     templateUrl: './matrix-view.html',

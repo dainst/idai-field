@@ -96,7 +96,8 @@ export class SettingsComponent implements OnInit {
         remote.getGlobal('updateConfig')(this.settings);
 
         if (localeChanged) {
-            window.location.reload();
+          remote.app.relaunch();
+          remote.app.exit(0);
         } else {
             try {
                 await this.settingsService.setupSync();

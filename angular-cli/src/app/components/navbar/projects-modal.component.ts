@@ -208,7 +208,8 @@ export class ProjectsModalComponent implements AfterViewInit, AfterViewChecked {
     private static reload() {
 
         if (!remote.getGlobal('switches') || !remote.getGlobal('switches').prevent_reload) {
-            window.location.reload();
+            remote.app.relaunch();
+            remote.app.exit(0);
         }
     }
 }

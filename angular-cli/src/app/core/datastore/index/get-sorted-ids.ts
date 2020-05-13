@@ -106,7 +106,7 @@ const handleExactMatch = (q: string)
     : (indexItems: Array<IndexItem>) => Array<IndexItem> =>
      compose(
         separate(on(Resource.IDENTIFIER, is(q))),
-        flatten as any /* TODO review any */);
+        flatten() as any /* TODO review any */);
 
 
 const rankRegularIndexItems

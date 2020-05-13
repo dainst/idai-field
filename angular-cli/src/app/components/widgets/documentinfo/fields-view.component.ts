@@ -126,7 +126,7 @@ export class FieldsViewComponent implements OnChanges {
                     map(pairWith(fieldContent)),
                     filter(on([RIGHT], isDefined)),
                     map(this.convertToFieldsViewField.bind(this)),
-                    flatten as any /* TODO review any */
+                    flatten()
                 )
             )
         );

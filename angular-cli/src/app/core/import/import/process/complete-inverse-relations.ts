@@ -100,7 +100,7 @@ function targetIdsReferingToDbResources(document: Document, documentsLookup: { [
     return flow(
         document.resource.relations,
         values,
-        flatten as any /* TODO review any */,
+        flatten() as any /* TODO review any */,
         remove(compose(lookup(documentsLookup), isDefined))) as any /* TODO review any */;
 }
 

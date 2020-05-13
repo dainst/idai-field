@@ -38,7 +38,7 @@ export module Category {
             category.groups,
             values,
             map(to(Group.FIELDS)),
-            flatten as any /* TODO review if we implement flatten for associative, then get rid of any cast */
+            flatten()
         );
     }
 

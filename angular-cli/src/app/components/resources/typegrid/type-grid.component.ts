@@ -218,7 +218,7 @@ export class TypeGridComponent extends BaseList implements OnChanges {
             [this.mainDocument].concat(this.subtypes),
             filter((document: FieldDocument) => Document.hasRelations(document, 'hasInstance')),
             map((document: FieldDocument) => document.resource.relations['hasInstance']) as any /* TODO review */,
-            flatten,
+            flatten(),
             set as any /* TODO review */
         );
 

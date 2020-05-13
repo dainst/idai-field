@@ -73,7 +73,7 @@ function makeGroupsMap(fields: Array<FieldDefinition>): Map<Group> {
 function flattenCategoriesTreeMapToCategoriesMap(categoriesMap: Map<Category>): Map<Category> {
 
     const topLevelCategories: Array<Category> = values(categoriesMap);
-    const children: Array<Category> = flatten(topLevelCategories.map(to(Category.CHILDREN)));
+    const children: Array<Category> = flatten(1, topLevelCategories.map(to(Category.CHILDREN)));
 
     return namedArrayToNamedMap(topLevelCategories.concat(children));
 }

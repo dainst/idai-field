@@ -7,7 +7,7 @@ import {MenuPage} from '../menu.page';
 import {GeometryViewPage} from '../widgets/geometry-view.page';
 
 const EC = protractor.ExpectedConditions;
-const delays = require('../config/delays');
+const delays = require('../../../../delays');
 const common = require('../common');
 
 
@@ -129,7 +129,7 @@ describe('map --', function() {
             .then(function() { return mapClickCallback(); });
     }
 
-    
+
     function createDocWithGeometry(identifier, geometry, mapClickCallback) {
 
         beginCreateDocWithGeometry(geometry, mapClickCallback).then(
@@ -151,7 +151,7 @@ describe('map --', function() {
         }
     }
 
-    
+
     function createDocThenReedit(identifier, geometryType, mapClickCallback) {
 
         createDoc(identifier, geometryType, mapClickCallback);

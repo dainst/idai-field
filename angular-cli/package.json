@@ -6,9 +6,10 @@
     "ng": "ng",
     "start": "ng build --watch --base-href ./ & electron . dev",
     "build": "gulp copy-fonts-convert-sass && ng build --base-href ./",
-    "test": "tsc -p test/tsconfig.json && jasmine JASMINE_CONFIG_PATH=test/unit/config/jasmine.json",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "build-test": "tsc -p test/tsconfig.json",
+    "test": "jasmine JASMINE_CONFIG_PATH=test/unit/config/jasmine.json",
+    "e2e": "node test/dist/test/e2e/spectron.js"
   },
   "private": true,
   "dependencies": {

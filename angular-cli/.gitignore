@@ -6,10 +6,13 @@ test/LOG
 test/MANIFEST-*
 test/*.log
 unittest
-test/**/*.js
-test/**/*.js.map
+test/unit/**/*.js
+test/unit/**/*.js.map
+test/e2e/**/*.js
+test/e2e/**/*.js.map
 app.css
 test/dist
+config
 
 # compiled output
 /dist

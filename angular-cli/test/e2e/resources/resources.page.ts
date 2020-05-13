@@ -7,7 +7,7 @@ import {NavbarPage} from '../navbar.page';
 
 const common = require('../common.js');
 const EC = protractor.ExpectedConditions;
-const delays = require('../config/delays');
+const delays = require('../../../../delays');
 
 
 export class ResourcesPage {
@@ -318,7 +318,7 @@ export class ResourcesPage {
 
 
     public static typeInNewResourceAndHitEnterInList(inputText: string) {
-  
+
         browser.wait(EC.visibilityOf(element.all(by.css('#list .identifier-input')).first()),
             delays.ECWaitTime);
         common.typeIn(element.all(by.css('#list .identifier-input')).last(), inputText);

@@ -33,7 +33,7 @@ app.start()
         const sessionId = sessions.value[0].id;
         console.log('electron webdriver session id:', sessionId);
         const args = [
-            'test/e2e/config/protractor-spectron.conf.js', '--seleniumSessionId=' + sessionId, '--params=' + failFast
+            'test/protractor-spectron.conf.js', '--seleniumSessionId=' + sessionId, '--params=' + failFast
         ];
 
         const protractor = (/^win/.test(process.platform))

@@ -11,7 +11,7 @@ import {Category} from '../../../../../src/app/core/configuration/model/category
 /**
  * @author Daniel de Oliveira
  */
-describe('Import/Subsystem', () => {
+xdescribe('Import/Subsystem', () => {
 
     let datastore;
     let _projectConfiguration;

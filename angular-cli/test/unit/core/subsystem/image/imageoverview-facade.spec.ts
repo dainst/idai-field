@@ -14,7 +14,7 @@ import {Static} from '../../../static';
  * @author Daniel de Oliveira
  */
 
-describe('ImageOverviewFacade/Subsystem', () => {
+xdescribe('ImageOverviewFacade/Subsystem', () => {
 
     let imageOverviewFacade: ImageOverviewFacade;
 

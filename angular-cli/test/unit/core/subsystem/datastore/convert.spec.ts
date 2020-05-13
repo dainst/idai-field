@@ -13,7 +13,7 @@ import {ProjectConfiguration} from '../../../../../src/app/core/configuration/pr
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-describe('subsystem/datastore/convert', () => {
+xdescribe('subsystem/datastore/convert', () => {
 
     let image0;
     let trench0;

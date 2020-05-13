@@ -23,7 +23,7 @@ function str2ab(str: string): ArrayBuffer {
 }
 
 
-describe('PouchDbFsImagestore', () => {
+xdescribe('PouchDbFsImagestore', () => {
 
     let store: PouchDbFsImagestore;
     let manager: PouchdbManager;

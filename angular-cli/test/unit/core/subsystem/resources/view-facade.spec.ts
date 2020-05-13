@@ -17,7 +17,7 @@ import {Static} from '../../../static';
  * @author Thomas Kleinke
  */
 
-describe('ViewFacade/Subsystem', () => {
+xdescribe('ViewFacade/Subsystem', () => {
 
     let viewFacade: ViewFacade;
     let changesStream;

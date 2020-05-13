@@ -8,7 +8,7 @@ import {PersistenceManager} from '../../../../../src/app/core/model/persistence-
 /**
  * @author Daniel de Oliveira
  */
-xdescribe('subsystem/persistence-manager',() => {
+describe('subsystem/persistence-manager',() => {
 
     let fieldDocumentDatastore: FieldDatastore;
     let persistenceManager: PersistenceManager;

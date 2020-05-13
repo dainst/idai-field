@@ -73,7 +73,7 @@ export async function setupSettingsService(pouchdbmanager, pouchdbserver, projec
         username: 'synctestuser'
     });
 
-    const projectConfiguration = await settingsService.loadConfiguration('./config/');
+    const projectConfiguration = await settingsService.loadConfiguration('../config/');
     return {settingsService, projectConfiguration};
 }
 

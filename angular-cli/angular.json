@@ -27,7 +27,8 @@
             "assets": [
               "src/favicon.png",
               "src/fonts",
-              "src/app.css"
+              "src/app.css",
+              "src/samples"
             ],
             "styles": [
               "src/styles.scss"

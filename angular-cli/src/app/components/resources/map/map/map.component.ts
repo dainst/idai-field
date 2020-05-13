@@ -455,7 +455,8 @@ export class MapComponent implements AfterViewInit, OnChanges {
             prefix: 'mdi',
             icon: 'checkbox-blank-circle',
             markerColor: color,
-            extraClasses: extraClasses
+            extraClasses: extraClasses,
+            tooltipAnchor: L.point(0, 0)
         });
     }
 }

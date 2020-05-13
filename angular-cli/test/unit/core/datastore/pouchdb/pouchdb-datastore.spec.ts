@@ -8,7 +8,7 @@ import {Static} from '../../../static';
  * @author Sebastian Cuy
  * @author Thomas Kleinke
  */
-xdescribe('PouchdbDatastore', () => {
+describe('PouchdbDatastore', () => {
 
     let datastore: PouchdbDatastore;
     let pouchdbProxy: any;

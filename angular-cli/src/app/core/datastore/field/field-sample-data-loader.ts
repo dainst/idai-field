@@ -78,10 +78,10 @@ export class FieldSampleDataLoader implements SampleDataLoader {
                                 promises.push(
                                     db.get(file)
                                         .then((doc: any) =>
-                                            db.putAttachment(file, 'thumb', doc._rev, new Blob([buffer]), 'image/jpeg')
+                                            db.putAttachment(file, 'thumb', doc._rev, buffer, 'image/jpeg')
                                                 .catch((putAttachmentErr: any) =>
-                                                    Promise.reject("putAttachmentErr:"+putAttachmentErr))
-                                        , (dbGetErr: any) => Promise.reject("dbGetErr:"+dbGetErr))
+                                                    Promise.reject('putAttachmentErr: ' + putAttachmentErr))
+                                        , (dbGetErr: any) => Promise.reject('dbGetErr: ' + dbGetErr))
                                 );
                             }
                         });

@@ -3,7 +3,7 @@ import {StateSerializer} from './state-serializer';
 import {SettingsService} from '../settings/settings-service';
 
 const remote = typeof window !== 'undefined' ? window.require('electron').remote : require('electron').remote;
-const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs')
+const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
 
 
 export type StateType = 'resources-state'|'matrix-state'|'tabs-state';

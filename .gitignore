@@ -1,53 +1,64 @@
-*.rb
-logs
-*.log
-log.txt
-test.html
-pids
-*.pid
-*.seed
+# See http://help.github.com/ignore-files/ for more about ignoring files.
 
-# Compiled binary addons (http://nodejs.org/api/addons.html)
-build
-build/Release
-
-# Dependency directory
-# https://www.npmjs.org/doc/misc/npm-faq.html#should-i-check-my-node_modules-folder-into-git
-
-# PouchDB data directories
-synctest*
-_users/
-pouch__all_dbs__/
-proddb
-remotedb
-
-######
-
-/.idea
-.DS_Store
-*iml
-node_modules
-dist
-release
-cache
-typings
-css
-fonts
-tools
-app/app.css
-app/**/*.js
-app/**/*.js.map
-angular-cli/src/app/**/*.js
-angular-cli/src/app/**/*.js.map
-config/Scripts/**/*.js.map
-config/Scripts/**/*.js
-app/messages.xlf
-config.json
-idai-field-documents
-_replicator
-idai-field-documents-test
+test/CURRENT
 test/LOCK
 test/LOG
-test/CURRENT
-test/MANIFEST*
-testdb
+test/MANIFEST-*
+test/*.log
+unittest
+test/unit/**/*.js
+test/unit/**/*.js.map
+test/e2e/**/*.js
+test/e2e/**/*.js.map
+app.css
+test/dist
+
+# compiled output
+/dist
+/tmp
+/out-tsc
+# Only exists if Bazel was run
+/bazel-out
+
+# dependencies
+/node_modules
+
+# profiling files
+chrome-profiler-events*.json
+speed-measure-plugin*.json
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/*
+
+# misc
+/.sass-cache
+/connect.lock
+/coverage
+/libpeerconnection.log
+npm-debug.log
+yarn-error.log
+testem.log
+/typings
+
+# System Files
+.DS_Store
+Thumbs.db
+
+src/app/app.css
+release
+fonts
+

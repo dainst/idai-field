@@ -326,7 +326,7 @@ export module ConstraintIndex {
     function makeIndexDefinitions(field: FieldDefinition)
             : Array<{ name: string, indexDefinition: IndexDefinition }> {
 
-        return flatten(1, [
+        return flatten([
             makeIndexDefinitionForField(field, getIndexType(field)),
             makeIndexDefinitionForField(field, 'exist')
         ]);

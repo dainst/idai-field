@@ -10,8 +10,10 @@ import {StateSerializer} from '../../core/common/state-serializer';
 import {DocumentReadDatastore} from '../../core/datastore/document-read-datastore';
 import {ProjectNameValidatorMsgConversion} from '../messages/project-name-validator-msg-conversion';
 import {Messages} from '../messages/messages';
+import {reload} from '../../core/common/reload';
 
 const remote = typeof window !== 'undefined' ? window.require('electron').remote : require('electron').remote;
+
 
 @Component({
     selector: 'projects-modal',
@@ -208,8 +210,7 @@ export class ProjectsModalComponent implements AfterViewInit, AfterViewChecked {
     private static reload() {
 
         if (!remote.getGlobal('switches') || !remote.getGlobal('switches').prevent_reload) {
-            remote.app.relaunch();
-            remote.app.exit(0);
+            reload();
         }
     }
 }

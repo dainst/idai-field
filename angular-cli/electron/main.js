@@ -3,6 +3,7 @@
 const electron = require('electron');
 const fs = require('fs');
 const os = require('os');
+const url = require('url');
 //const autoUpdate = require('./auto-update.js');
 
 let menuContext = 'loading';
@@ -200,4 +201,16 @@ electron.app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {
         electron.app.quit();
     }
+});
+
+electron.ipcMain.on('reload', (event, route) => {
+    mainWindow.reload();
+    mainWindow.loadURL(
+        url.format({
+            pathname: require('path').join(__dirname, '/../dist/index.html'),
+            protocol: 'file:',
+            slahes: true,
+            hash: route
+        })
+    );
 });

@@ -4,6 +4,7 @@ import {Settings} from '../../core/settings/settings';
 import {M} from '../messages/m';
 import {TabManager} from '../../core/tabs/tab-manager';
 import {Messages} from '../messages/messages';
+import {reload} from '../../core/common/reload';
 
 const address = typeof window !== 'undefined' ? window.require('address') : require('address');
 const remote = typeof window !== 'undefined' ? window.require('electron').remote : require('electron').remote;
@@ -96,8 +97,7 @@ export class SettingsComponent implements OnInit {
         remote.getGlobal('updateConfig')(this.settings);
 
         if (localeChanged) {
-          remote.app.relaunch();
-          remote.app.exit(0);
+            reload();
         } else {
             try {
                 await this.settingsService.setupSync();

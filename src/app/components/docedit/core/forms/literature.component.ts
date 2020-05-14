@@ -1,6 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {is} from 'tsfun';
-import {remove} from 'tsfun/collection';
+import {is, remove} from 'tsfun';
 import {Literature, Resource} from 'idai-components-2';
 import {FieldDefinition} from '../../../../core/configuration/model/field-definition';
 import {UtilTranslations} from '../../../../core/util/util-translations';

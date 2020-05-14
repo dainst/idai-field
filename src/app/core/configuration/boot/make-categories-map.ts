@@ -1,6 +1,5 @@
 import {cond, defined, flatten, flow, isNot, Map, Mapping, on,
-    reduce, throws, to, values, isUndefined, copy} from 'tsfun';
-import {separate} from 'tsfun/collection';
+    reduce, throws, to, values, isUndefined, copy, separate} from 'tsfun';
 import {assoc, dissoc, update, lookup, map} from 'tsfun/associative';
 import {dissoc as dissocOn} from 'tsfun/struct';
 import {Category} from '../model/category';

@@ -1,7 +1,7 @@
 import {compose, flatten, flow, forEach, intersect, isDefined, isNot, isUndefinedOrEmpty,
-    keys, values, empty, pairWith, subtract, to, undefinedOrEmpty, throws} from 'tsfun';
+    keys, values, empty, pairWith, subtract, to, undefinedOrEmpty, throws, remove} from 'tsfun';
 import {lookup, map} from 'tsfun/associative';
-import {remove, filter} from 'tsfun/collection';
+import {filter} from 'tsfun/collection';
 import {Document, Relations} from 'idai-components-2';
 import {ImportErrors as E} from '../import-errors';
 import {HierarchicalRelations, PositionRelations, TimeRelations} from '../../../model/relation-constants';
@@ -101,8 +101,8 @@ function targetIdsReferingToDbResources(document: Document, documentsLookup: { [
     return flow(
         document.resource.relations,
         values,
-        flatten() as any /* TODO review any */,
-        remove(compose(lookup(documentsLookup), isDefined))) as any /* TODO review any */;
+        flatten(),
+        remove(compose(lookup(documentsLookup), isDefined)));
 }
 
 

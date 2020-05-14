@@ -1,5 +1,4 @@
-import {flow, includedIn, isDefined, isNot, isnt, to, map, cond, join, dense, prepend, append, compose} from 'tsfun';
-import {remove} from 'tsfun/collection';
+import {flow, includedIn, isDefined, isNot, isnt, to, map, cond, join, dense, prepend, append, compose, remove} from 'tsfun';
 import {FieldResource, Resource} from 'idai-components-2';
 import {HierarchicalRelations} from '../../model/relation-constants';
 import {FieldDefinition} from '../../configuration/model/field-definition';

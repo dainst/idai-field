@@ -1,6 +1,6 @@
 import {NewDocument, Document} from 'idai-components-2';
 import {DocumentDatastore} from '../../datastore/document-datastore';
-import {separate} from 'tsfun/collection';
+import {separate} from 'tsfun';
 
 
 /**

@@ -1,5 +1,4 @@
-import {is, Map, on} from 'tsfun';
-import {separate} from 'tsfun/collection';
+import {is, Map, on, separate} from 'tsfun';
 import {SortUtil} from './sort-util';
 import {makeLookup, mapToArray} from './transformers';
 import {copy} from 'tsfun/src/collection';

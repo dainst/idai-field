@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
 
-const express = (typeof window !== 'undefined' ? window.require : require)('express');
-const PouchDB = (typeof window !== 'undefined' ? window.require : require)('pouchdb');
+const express = typeof window !== 'undefined' ? window.require('express') : require('express');
+const PouchDB = typeof window !== 'undefined' ? window.require('pouchdb') : require('pouchdb');
 
-const expressPouchDB = (typeof window !== 'undefined' ? window.require : require)('express-pouchdb');
-const expressBasicAuth = (typeof window !== 'undefined' ? window.require : require)('express-basic-auth');
+const expressPouchDB = (typeof window !== 'undefined' ? window.require : require)('express-pouchdb'); // TODO Get rid of warning
+const expressBasicAuth = typeof window !== 'undefined' ? window.require('express-basic-auth') : require('express-basic-auth');
 
 
 @Injectable()

@@ -8,7 +8,7 @@ import {TabManager} from './tabs/tab-manager';
 import {ResourcesStateManager} from './resources/view/resources-state-manager';
 
 const remote = typeof window !== 'undefined' ? window.require('electron').remote : require('electron').remote;
-const express = (typeof window !== 'undefined' ? window.require : require)('express');
+const express = typeof window !== 'undefined' ? window.require('express') : require('express');
 
 
 @Injectable()

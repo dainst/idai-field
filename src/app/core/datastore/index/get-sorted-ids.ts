@@ -1,5 +1,6 @@
-import {equal, is, isNot, on, Pair, to, sort, count, flow, map, tuplify, flatten, compose, separate,
+import {equal, is, isNot, on, Pair, to, sort, count, flow, map, tuplify, flatten, compose,
     undefinedOrEmpty, size, isUndefinedOrEmpty, cond, pairWith, left} from 'tsfun';
+import {separate} from 'tsfun/collection';
 import {Query, Resource} from 'idai-components-2';
 import {IndexItem, TypeResourceIndexItem} from './index-item';
 import {SortUtil} from '../../util/sort-util';

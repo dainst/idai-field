@@ -1,6 +1,7 @@
-import {on, Predicate, flow, keys, isnt, append, isDefined, compose, remove, isEmpty, map,
-    pairWith, filter, cond, zip, Pair, forEach} from 'tsfun';
-import {lookup, get, update} from 'tsfun/associative';
+import {on, Predicate, flow, keys, isnt, append, isDefined, compose, isEmpty,
+    pairWith, cond, zip, Pair, forEach} from 'tsfun';
+import {lookup, get, update, map} from 'tsfun/associative';
+import {remove, filter} from 'tsfun/collection';
 import {Document, Resource, relationsEquivalent, Relations} from 'idai-components-2';
 import {Name} from '../constants';
 import {clone} from '../util/object-util';

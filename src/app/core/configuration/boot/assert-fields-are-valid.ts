@@ -1,5 +1,7 @@
-import {cond, empty, flow, forEach, includedIn, isNot, map, remove, on, keysAndValues, isDefined, filter, and,
+import {cond, empty, flow, forEach, includedIn, isNot, on, keysAndValues, isDefined, filter, and,
     keys, Map} from 'tsfun';
+import {map} from 'tsfun/associative';
+import {remove} from 'tsfun/collection';
 import {ConfigurationErrors} from './configuration-errors';
 import {LibraryFieldDefinition} from '../model/library-category-definition';
 import {CustomFieldDefinition} from '../model/custom-category-definition';

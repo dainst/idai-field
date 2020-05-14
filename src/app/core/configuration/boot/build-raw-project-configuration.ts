@@ -1,7 +1,7 @@
 import {cond, flow, includedIn, isDefined, isNot, keys, Mapping, Map, on,
-    subtract, undefinedOrEmpty, map, identity, compose, Pair, dissoc,
+    subtract, undefinedOrEmpty, identity, compose, Pair, dissoc,
   pairWith, prune, filter, keysAndValues, reduce} from 'tsfun';
-import {assoc, update, lookup} from 'tsfun/associative';
+import {assoc, update, lookup, map} from 'tsfun/associative';
 import {clone} from 'tsfun/struct';
 import {LibraryCategoryDefinition} from '../model/library-category-definition';
 import {CustomCategoryDefinition} from '../model/custom-category-definition';

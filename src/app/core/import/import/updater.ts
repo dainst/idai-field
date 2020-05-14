@@ -1,6 +1,6 @@
 import {NewDocument, Document} from 'idai-components-2';
 import {DocumentDatastore} from '../../datastore/document-datastore';
-import {separate} from 'tsfun';
+import {separate} from 'tsfun/collection';
 
 
 /**
@@ -8,7 +8,6 @@ import {separate} from 'tsfun';
  * @author Thomas Kleinke
  */
 export module Updater {
-
 
     export async function go(documents: Array<Document>, targetDocuments: Array<Document>|undefined,
                              datastore: DocumentDatastore, username: string,

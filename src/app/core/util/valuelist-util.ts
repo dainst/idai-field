@@ -1,4 +1,5 @@
-import {includedIn, isNot, isArray, filter} from 'tsfun';
+import {includedIn, isNot, isArray} from 'tsfun';
+import {filter} from 'tsfun/collection';
 import {Document, Resource} from 'idai-components-2';
 import {FieldDefinition} from '../configuration/model/field-definition';
 import {ValueDefinition, ValuelistDefinition} from '../configuration/model/valuelist-definition';

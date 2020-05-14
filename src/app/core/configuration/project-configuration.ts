@@ -1,4 +1,6 @@
-import {flow, map, to, on, isNot, empty, filter, is, isUndefined, Pair, Map} from 'tsfun';
+import {flow, to, on, isNot, empty, is, isUndefined, Pair, Map} from 'tsfun';
+import {map} from 'tsfun/associative';
+import {filter} from 'tsfun/collection';
 import {Category} from './model/category';
 import {FieldDefinition} from './model/field-definition';
 import {RelationDefinition} from './model/relation-definition';

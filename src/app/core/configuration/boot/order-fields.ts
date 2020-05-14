@@ -1,4 +1,4 @@
-import {map} from 'tsfun';
+import {map} from 'tsfun/associative';
 import {CategoryDefinition} from '../model/category-definition';
 import {FieldDefinition} from '../model/field-definition';
 

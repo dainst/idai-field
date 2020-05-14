@@ -1,4 +1,5 @@
-import {flow, includedIn, isEmpty, isNot, equal, isObject, isString, and, filter, keys} from 'tsfun';
+import {flow, includedIn, isEmpty, isNot, equal, isObject, isString, and, keys} from 'tsfun';
+import {filter} from 'tsfun/collection';
 import {Document, NewDocument, Resource} from 'idai-components-2';
 import {clone} from '../util/object-util';
 import {Validator} from '../model/validator';

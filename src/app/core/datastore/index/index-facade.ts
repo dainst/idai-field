@@ -1,5 +1,6 @@
 import {Observable, Observer} from 'rxjs';
-import {is, on, separate, flow, filter, forEach, isDefined, to} from 'tsfun';
+import {is, on, flow, forEach, isDefined, to} from 'tsfun';
+import {separate, filter} from 'tsfun/collection';
 import {Document, Query} from 'idai-components-2';
 import {ConstraintIndex} from './constraint-index';
 import {FulltextIndex} from './fulltext-index';

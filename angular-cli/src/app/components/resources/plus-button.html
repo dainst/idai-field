@@ -1,9 +1,9 @@
 <div *ngIf="categoriesTreeList && status === 'enabled'">
     <div *ngIf="getButtonType() === 'multipleCategories'"
-            class="circular-button green-button"
+             class="circular-button green-button"
              [ngbPopover]="newObjectMenu" #popover="ngbPopover"
              triggers="manual" [autoClose]="false"
-            (click)="reset(); popover.toggle();"
+             (click)="reset(); popover.toggle();"
              [placement]="placement">
         <span class="mdi mdi-plus"></span>
     </div>

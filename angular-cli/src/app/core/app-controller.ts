@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-//import * as express from 'express';
 import {Document} from 'idai-components-2';
 import {PouchdbManager} from './datastore/pouchdb/pouchdb-manager';
 import {DocumentCache} from './datastore/cached/document-cache';
@@ -9,6 +8,7 @@ import {TabManager} from './tabs/tab-manager';
 import {ResourcesStateManager} from './resources/view/resources-state-manager';
 
 const remote = typeof window !== 'undefined' ? window.require('electron').remote : require('electron').remote;
+const express = (typeof window !== 'undefined' ? window.require : require)('express');
 
 
 @Injectable()
@@ -27,8 +27,6 @@ export class AppController {
 
     public setupServer(): Promise<any> {
 
-      return Promise.resolve();
-/*
         return new Promise(resolve => {
 
             if (!remote.getGlobal('switches').provide_reset) return resolve();
@@ -45,7 +43,7 @@ export class AppController {
                 console.log('App Control listening on port 3003');
                 resolve();
             });
-        });*/
+        });
     }
 
 

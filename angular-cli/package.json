@@ -1,17 +1,60 @@
 {
   "name": "idai-field",
-  "version": "0.0.0",
+  "description": "iDAI.field 2 Client",
+  "version": "2.16.0",
   "main": "electron/main.js",
+  "license": "Apache-2.0",
+  "author": "German Archaeological Institute",
   "scripts": {
     "ng": "ng",
     "start": "ng build --watch --base-href ./ & electron . dev",
     "build": "gulp copy-fonts-convert-sass && ng build --base-href ./",
+    "build-java": "mvn -f java/pom.xml clean package && gulp copy-shapefile-tool",
+    "build-all": "npm run build && npm run build-java",
     "lint": "ng lint",
     "build-test": "tsc -p test/tsconfig.json",
     "test": "jasmine JASMINE_CONFIG_PATH=test/unit/config/jasmine.json",
-    "e2e": "node test/dist/test/e2e/spectron.js"
+    "e2e": "node test/dist/test/e2e/spectron.js",
+    "clean": "git clean -xdf app test",
+    "reset": "npm install && npm run clean && npm run build",
+    "reset-all": "npm install && npm run clean && npm run build-all",
+    "package-mac": "electron-builder -m",
+    "package-win": "electron-builder -w nsis --x64 --ia32",
+    "i18n": "ng-xi18n --locale de --project app && ngx-extractor -i \"./app/**/*.ts\" \"./node_modules/idai-components-2/src/**/*.ts\" -o ./app/messages.xlf -l de && xliffmerge --profile xliff-merge.json && rimraf app/messages.xlf"
   },
-  "private": true,
+  "build": {
+    "appId": "org.dainst.field",
+    "productName": "iDAI.field",
+    "directories": {
+        "output": "release"
+    },
+    "mac": {
+      "category": "public.app-category.productivity",
+      "icon": "img/logo.icns",
+      "artifactName": "iDAI.field-${version}-MacOS.${ext}",
+      "publish": "github",
+      "hardenedRuntime": true,
+      "gatekeeperAssess": false,
+      "entitlements": "entitlements.mac.plist",
+      "entitlementsInherit": "entitlements.mac.plist"
+    },
+    "win": {
+      "target": "zip",
+      "icon": "img/logo.ico",
+      "artifactName": "iDAI.field-${version}-Windows.${ext}",
+      "publish": "github"
+    },
+    "npmRebuild": false,
+    "afterSign": "notarize.js",
+    "extraResources": [
+      "config",
+      "tools"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dainst/idai-field.git"
+  },
   "dependencies": {
     "@angular/animations": "~9.1.6",
     "@angular/common": "~9.1.6",

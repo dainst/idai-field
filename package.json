@@ -49,7 +49,8 @@
     "afterSign": "notarize.js",
     "extraResources": [
       "config",
-      "tools"
+      "tools",
+      "manual"
     ]
   },
   "repository": {

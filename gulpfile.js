@@ -29,7 +29,7 @@ gulp.task('copy-fonts-convert-sass', gulp.series('convert-sass', () => {
         'node_modules/roboto-fontface/fonts/**/*',
         'node_modules/@mdi/font/fonts/**/*'
     ])
-    .pipe(gulp.dest('fonts'));
+    .pipe(gulp.dest('src/fonts'));
 }));
 
 gulp.task('copy-shapefile-tool', () => {

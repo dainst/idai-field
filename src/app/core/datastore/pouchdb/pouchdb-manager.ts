@@ -7,12 +7,12 @@ import {PouchdbProxy} from './pouchdb-proxy';
 import {SampleDataLoader} from './sample-data-loader';
 import {SyncProcess, SyncStatus} from '../../sync/sync-process';
 
+
 let PouchDB;
 let adapterName;
 if (typeof window !== 'undefined') {
-  PouchDB = window.require('pouchdb-browser');
-   const IDBAdapter = window.require('pouchdb-adapter-idb');
-   PouchDB.plugin(IDBAdapter);
+   PouchDB = window.require('pouchdb-browser');
+   PouchDB.plugin(require('pouchdb-adapter-idb'));
    adapterName = 'idb';
 } else {
     PouchDB = require('pouchdb');
@@ -191,6 +191,8 @@ export class PouchdbManager {
 
     private static isDesignDoc = (row: any) => row.id.indexOf('_') === 0;
 }
+
+PouchDB.plugin(require('pouchdb-adapter-idb'));
 
 
 const getSyncStatusFromInfo = (info: any) =>

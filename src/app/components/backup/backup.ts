@@ -4,8 +4,7 @@ import {Name} from '../../core/constants';
 let PouchDB;
 if (typeof window !== 'undefined') {
     PouchDB = window.require('pouchdb-browser');
-    const IDBAdapter = window.require('pouchdb-adapter-idb');
-    PouchDB.plugin(IDBAdapter);
+    PouchDB.plugin(require('pouchdb-adapter-idb'));
 } else {
     PouchDB = require('pouchdb');
 }

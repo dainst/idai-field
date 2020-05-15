@@ -5,8 +5,7 @@ const express = typeof window !== 'undefined' ? window.require('express') : requ
 let PouchDB;
 if (typeof window !== 'undefined') {
     PouchDB = window.require('pouchdb-browser');
-    const IDBAdapter = window.require('pouchdb-adapter-idb');
-    PouchDB.plugin(IDBAdapter);
+    PouchDB.plugin(require('pouchdb-adapter-idb'));
 } else {
     PouchDB = require('pouchdb');
 }

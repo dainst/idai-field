@@ -8,6 +8,7 @@ import {Messages} from '../../../../src/app/components/messages/messages';
  * @author Thomas Kleinke
  */
 
+
 let messagesDictionary = {
     msgs: {
         'key1' : {
@@ -37,15 +38,15 @@ const verifyUnknownError = (consoleError) => {
 };
 
 
-beforeEach(() => {
-
-    spyOn(console, 'error');
-    messages = new Messages(messagesDictionary, 100);
-    messages.add(['key1']);
-});
-
 
 describe('Messages', () => {
+
+    beforeEach(() => {
+
+        spyOn(console, 'error');
+        messages = new Messages(messagesDictionary, 100);
+        messages.add(['key1']);
+    });
 
     it('should store, retrieve and delete a message', () => {
 

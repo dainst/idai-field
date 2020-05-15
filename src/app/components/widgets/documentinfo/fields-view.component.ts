@@ -5,8 +5,7 @@ import {isUndefinedOrEmpty, isBoolean, isArray, filter, Pair, compose, Mapping, 
     map, flatten, to, pairWith, conds, singleton, otherwise, LEFT, RIGHT} from 'tsfun';
 import {update, lookup} from 'tsfun/associative';
 import {flow as asyncFlow, map as asyncMap} from 'tsfun/async';
-import {FieldDocument,  ReadDatastore, Resource, Dating, Dimension, Literature,
-    ValOptionalEndVal} from 'idai-components-2';
+import {FieldDocument,  Resource, Dating, Dimension, Literature, ValOptionalEndVal} from 'idai-components-2';
 import {RoutingService} from '../../routing-service';
 import {Name} from '../../../core/constants';
 import {UtilTranslations} from '../../../core/util/util-translations';
@@ -20,6 +19,7 @@ import INPUTTYPE = FieldDefinition.INPUTTYPE;
 import isDefaultField = FieldsViewUtil.isDefaultField;
 import DROPDOWNRANGE = FieldDefinition.InputType.DROPDOWNRANGE;
 import shouldBeDisplayed = FieldsViewUtil.shouldBeDisplayed;
+import {ReadDatastore} from '../../../core/datastore/model/read-datastore';
 
 
 type FieldContent = any;

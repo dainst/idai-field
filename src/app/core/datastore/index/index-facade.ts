@@ -1,7 +1,7 @@
 import {Observable, Observer} from 'rxjs';
 import {is, on, flow, forEach, isDefined, to, separate} from 'tsfun';
 import {filter} from 'tsfun/collection';
-import {Document, Query} from 'idai-components-2';
+import {Document} from 'idai-components-2';
 import {ConstraintIndex} from './constraint-index';
 import {FulltextIndex} from './fulltext-index';
 import {IndexItem, TypeResourceIndexItem} from './index-item';
@@ -10,6 +10,7 @@ import {Category} from '../../configuration/model/category';
 import {performQuery} from './perform-query';
 import {ResourceId} from '../../constants';
 import {getSortedIds} from './get-sorted-ids';
+import {Query} from '../model/query';
 
 const TYPE = 'Type';
 const INSTANCES = 'instances';

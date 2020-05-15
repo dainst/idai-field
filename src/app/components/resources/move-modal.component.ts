@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {set} from 'tsfun';
-import {Document, FieldDocument, Constraint} from 'idai-components-2';
+import {Document, FieldDocument} from 'idai-components-2';
 import {ProjectCategories} from '../../core/configuration/project-categories';
 import {PersistenceManager} from '../../core/model/persistence-manager';
 import {SettingsService} from '../../core/settings/settings-service';
@@ -11,6 +11,7 @@ import {Category} from '../../core/configuration/model/category';
 import {ProjectConfiguration} from '../../core/configuration/project-configuration';
 import {ViewFacade} from '../../core/resources/view/view-facade';
 import {Messages} from '../messages/messages';
+import {Constraint} from '../../core/datastore/model/constraint';
 
 
 @Component({

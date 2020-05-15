@@ -3,13 +3,14 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Location} from '@angular/common';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {Observable, Observer} from 'rxjs';
-import {DatastoreErrors, Document} from 'idai-components-2';
+import {Document} from 'idai-components-2';
 import {ProjectCategories} from '../core/configuration/project-categories';
 import {ViewFacade} from '../core/resources/view/view-facade';
 import {ProjectConfiguration} from '../core/configuration/project-configuration';
 import {MenuService} from '../desktop/menu-service';
 import {ProjectsModalComponent} from './navbar/projects-modal.component';
 import {SettingsService} from '../core/settings/settings-service';
+import {DatastoreErrors} from '../core/datastore/model/datastore-errors';
 
 
 @Injectable()

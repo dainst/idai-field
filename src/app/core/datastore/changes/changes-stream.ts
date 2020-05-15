@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Observable, Observer} from 'rxjs';
 import {map as asyncMap} from 'tsfun/async';
-import {Action, Document, DatastoreErrors} from 'idai-components-2';
+import {Action, Document} from 'idai-components-2';
 import {PouchdbDatastore} from '../pouchdb/pouchdb-datastore';
 import {DocumentCache} from '../cached/document-cache';
 import {CategoryConverter} from '../cached/category-converter';
@@ -11,6 +11,7 @@ import {CAMPAIGNS, solveProjectDocumentConflict, STAFF} from './solve-project-do
 import {ResourceId, RevisionId} from '../../constants';
 import {SettingsService} from '../../settings/settings-service';
 import {isProjectDocument} from '../helpers';
+import {DatastoreErrors} from '../model/datastore-errors';
 
 
 @Injectable()

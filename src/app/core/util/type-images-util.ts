@@ -1,10 +1,11 @@
 import {isDefined, filter} from 'tsfun';
 import {map as asyncMap, flow as asyncFlow} from 'tsfun/async';
-import {FieldDocument, Query} from 'idai-components-2';
+import {FieldDocument} from 'idai-components-2';
 import {FieldDocumentFindResult, FieldReadDatastore} from '../datastore/field/field-read-datastore';
 import {ResourceId} from '../constants';
 import {ModelUtil} from '../model/model-util';
 import {ImageRowItem, PLACEHOLDER} from '../images/row/image-row';
+import {Query} from '../datastore/model/query';
 
 
 /**

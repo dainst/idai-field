@@ -1,8 +1,8 @@
-import {FindResult} from 'idai-components-2';
 import {Validator} from '../../../../src/app/core/model/validator';
 import {ProjectCategories} from '../../../../src/app/core/configuration/project-categories';
 import {ValidationErrors} from '../../../../src/app/core/model/validation-errors';
 import {ProjectConfiguration} from '../../../../src/app/core/configuration/project-configuration';
+import {FindResult} from '../../../../src/app/core/datastore/model/read-datastore';
 
 
 /**

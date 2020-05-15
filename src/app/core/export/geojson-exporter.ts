@@ -1,8 +1,9 @@
 import {Feature, FeatureCollection, GeometryObject} from 'geojson';
 import {jsonClone} from 'tsfun/struct';
-import {FieldDocument, FieldGeometry, Query} from 'idai-components-2';
+import {FieldDocument, FieldGeometry} from 'idai-components-2';
 import {FieldReadDatastore} from '../datastore/field/field-read-datastore';
 import {M} from '../../components/messages/m';
+import {Query} from '../datastore/model/query';
 
 const geojsonRewind = typeof window !== 'undefined' ? window.require('geojson-rewind') : require('geojson-rewind');
 const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');

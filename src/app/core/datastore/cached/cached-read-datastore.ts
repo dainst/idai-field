@@ -1,10 +1,13 @@
 import {jsonClone} from 'tsfun/struct';
-import {DatastoreErrors, Document, FindResult, Query, ReadDatastore} from 'idai-components-2';
+import {Document} from 'idai-components-2';
 import {PouchdbDatastore} from '../pouchdb/pouchdb-datastore';
 import {DocumentCache} from './document-cache';
 import {CategoryConverter} from './category-converter';
 import {IndexFacade} from '../index/index-facade';
 import {ProjectCategories} from '../../configuration/project-categories';
+import {DatastoreErrors} from '../model/datastore-errors';
+import {FindResult, ReadDatastore} from '../model/read-datastore';
+import {Query} from '../model/query';
 
 
 export interface IdaiFieldFindResult<T extends Document> extends FindResult {

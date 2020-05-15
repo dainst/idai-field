@@ -1,5 +1,5 @@
 import * as PouchDB from 'pouchdb';
-import {Document, ImageDocument, Query} from 'idai-components-2';
+import {Document, ImageDocument} from 'idai-components-2';
 import {ImageDatastore} from '../../../../src/app/core/datastore/field/image-datastore';
 import {FieldDatastore} from '../../../../src/app/core/datastore/field/field-datastore';
 import {DocumentDatastore} from '../../../../src/app/core/datastore/document-datastore';
@@ -29,6 +29,7 @@ import {ResourcesStateManager} from '../../../../src/app/core/resources/view/res
 import {DocumentHolder} from '../../../../src/app/core/docedit/document-holder';
 import { PouchdbServer } from '../../../../src/app/core/datastore/pouchdb/pouchdb-server';
 import {DescendantsUtility} from '../../../../src/app/core/model/descendants-utility';
+import {Query} from '../../../../src/app/core/datastore/model/query';
 
 
 class IdGenerator {

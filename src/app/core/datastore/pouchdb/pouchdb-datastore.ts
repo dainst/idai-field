@@ -1,10 +1,11 @@
 import {Observable} from 'rxjs';
-import {DatastoreErrors, Document, NewDocument} from 'idai-components-2';
+import {Document, NewDocument} from 'idai-components-2';
 import {IdGenerator} from './id-generator';
 import {ObserverUtil} from '../../util/observer-util';
 import {PouchdbProxy} from './pouchdb-proxy';
 import {ChangeHistoryMerge} from './change-history-merge';
 import {clone} from '../../util/object-util';
+import {DatastoreErrors} from '../model/datastore-errors';
 
 /**
  * @author Sebastian Cuy

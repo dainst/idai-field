@@ -1,6 +1,5 @@
 import {NgModule} from '@angular/core';
-import {Datastore, Document, ReadDatastore, FieldDocument, ImageDocument,
-    FeatureDocument} from 'idai-components-2';
+import {Document, FieldDocument, ImageDocument, FeatureDocument} from 'idai-components-2';
 import {DocumentCache} from './cached/document-cache';
 import {PouchdbDatastore} from './pouchdb/pouchdb-datastore';
 import {PouchdbManager} from './pouchdb/pouchdb-manager';
@@ -18,6 +17,8 @@ import {IndexFacade} from './index/index-facade';
 import {IdGenerator} from './pouchdb/id-generator';
 import {FeatureDatastore} from './field/feature-datastore';
 import {FeatureReadDatastore} from './field/feature-read-datastore';
+import {Datastore} from './model/datastore';
+import {ReadDatastore} from './model/read-datastore';
 
 /**
  * There is the top level package, in which everything idai-field specific resides,

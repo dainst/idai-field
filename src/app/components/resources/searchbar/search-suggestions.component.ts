@@ -1,11 +1,12 @@
 import {Component, Input, OnChanges, Renderer2, SimpleChanges} from '@angular/core';
-import {Query, FieldDocument} from 'idai-components-2';
+import {FieldDocument} from 'idai-components-2';
 import {FieldReadDatastore} from '../../../core/datastore/field/field-read-datastore';
 import {RoutingService} from '../../routing-service';
 import {ResourcesComponent} from '../resources.component';
 import {ResourcesSearchBarComponent} from './resources-search-bar.component';
 import {ProjectCategories} from '../../../core/configuration/project-categories';
 import {ViewFacade} from '../../../core/resources/view/view-facade';
+import {Query} from '../../../core/datastore/model/query';
 
 @Component({
     selector: 'search-suggestions',

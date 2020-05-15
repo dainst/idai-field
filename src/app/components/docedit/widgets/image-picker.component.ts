@@ -1,12 +1,13 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import {Query, FieldDocument, ImageDocument} from 'idai-components-2';
+import {FieldDocument, ImageDocument} from 'idai-components-2';
 import {ImageGridComponent} from '../../image/grid/image-grid.component';
 import {ImageReadDatastore} from '../../../core/datastore/field/image-read-datastore';
 import {ProjectCategories} from '../../../core/configuration/project-categories';
 import {M} from '../../messages/m';
 import {clone} from '../../../core/util/object-util';
 import {Messages} from '../../messages/messages';
+import {Query} from '../../../core/datastore/model/query';
 
 
 @Component({

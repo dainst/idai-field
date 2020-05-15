@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {NgbActiveModal, NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {includedIn, isNot} from 'tsfun';
-import {DatastoreErrors, Document, FieldDocument, ImageDocument} from 'idai-components-2';
+import {Document, FieldDocument, ImageDocument} from 'idai-components-2';
 import {ConflictDeletedModalComponent} from './dialog/conflict-deleted-modal.component';
 import {clone} from '../../core/util/object-util';
 import {EditSaveDialogComponent} from './dialog/edit-save-dialog.component';
@@ -18,6 +18,7 @@ import {DocumentHolder} from '../../core/docedit/document-holder';
 import {DoceditErrors} from '../../core/docedit/docedit-errors';
 import {Group, Groups} from '../../core/configuration/model/group';
 import {Messages} from '../messages/messages';
+import {DatastoreErrors} from '../../core/datastore/model/datastore-errors';
 
 
 @Component({

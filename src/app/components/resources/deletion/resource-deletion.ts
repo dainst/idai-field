@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {FieldDocument, DatastoreErrors} from 'idai-components-2';
+import {FieldDocument} from 'idai-components-2';
 import {DeleteModalComponent} from './delete-modal.component';
 import {PersistenceManager} from '../../../core/model/persistence-manager';
 import {UsernameProvider} from '../../../core/settings/username-provider';
@@ -9,6 +9,7 @@ import {DeletionInProgressModalComponent} from './deletion-in-progress-modal.com
 import {Imagestore} from '../../../core/images/imagestore/imagestore';
 import {DescendantsUtility} from '../../../core/model/descendants-utility';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
+import {DatastoreErrors} from '../../../core/datastore/model/datastore-errors';
 
 
 /**

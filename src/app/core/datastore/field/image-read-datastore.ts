@@ -1,6 +1,6 @@
-import {Query} from 'idai-components-2';
 import {ImageDocument} from 'idai-components-2';
 import {CachedReadDatastore, IdaiFieldFindResult} from '../cached/cached-read-datastore';
+import {Query} from '../model/query';
 
 
 export interface IdaiFieldImageDocumentFindResult extends IdaiFieldFindResult<ImageDocument> {}

@@ -6,7 +6,6 @@ import localeDe from '@angular/common/locales/de';
 import {FormsModule} from '@angular/forms';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import {Query} from 'idai-components-2';
 import {routing} from './app.routing';
 import {AppComponent} from './app.component';
 import {ResourcesModule} from './resources/resources.module';
@@ -66,6 +65,7 @@ import {ConfigurationModule} from './configuration/configuration.module';
 import {IdaiMessagesModule} from './messages/idai-messages.module';
 import {MD} from './messages/md';
 import {Messages} from './messages/messages';
+import {Query} from '../core/datastore/model/query';
 
 const remote = typeof window !== 'undefined' ? window.require('electron').remote : require('electron').remote;
 

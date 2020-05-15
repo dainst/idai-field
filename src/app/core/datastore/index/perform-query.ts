@@ -1,9 +1,10 @@
 import {keys} from 'tsfun';
-import {Constraint, Query} from 'idai-components-2';
 import {ConstraintIndex} from './constraint-index';
 import {FulltextIndex} from './fulltext-index';
 import {ResultSets} from './result-sets';
 import {IndexItem} from './index-item';
+import {Query} from '../model/query';
+import {Constraint} from '../model/constraint';
 
 
 /**

@@ -1,9 +1,9 @@
-import {Query} from 'idai-components-2';
-
-
 /**
  * @author Thomas Kleinke
  */
+import {Query} from '../../../datastore/model/query';
+
+
 export class ImagesState {
 
     private query: Query;

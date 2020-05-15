@@ -3,8 +3,7 @@ import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {Pair, to, isNot, undefinedOrEmpty, left, on, includedIn, right, map, flow, empty, prune,
     is} from 'tsfun';
 import {map as asyncMap} from 'tsfun/async';
-import {FieldDocument, FieldResource, Resource, Query, Constraint, Document,
-    FindResult} from 'idai-components-2';
+import {FieldDocument, FieldResource, Resource, Document} from 'idai-components-2';
 import {FieldReadDatastore} from '../../../../../core/datastore/field/field-read-datastore';
 import {TypeImagesUtil} from '../../../../../core/util/type-images-util';
 import getLinkedImages = TypeImagesUtil.getLinkedImages;
@@ -16,6 +15,9 @@ import {Group} from '../../../../../core/configuration/model/group';
 import {FieldDefinition} from '../../../../../core/configuration/model/field-definition';
 import {ValuelistUtil} from '../../../../../core/util/valuelist-util';
 import {ImageRowItem} from '../../../../../core/images/row/image-row';
+import {FindResult} from '../../../../../core/datastore/model/read-datastore';
+import {Query} from '../../../../../core/datastore/model/query';
+import {Constraint} from '../../../../../core/datastore/model/constraint';
 
 
 const CRITERION = 'criterion';

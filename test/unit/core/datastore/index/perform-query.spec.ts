@@ -1,5 +1,5 @@
 import {to} from 'tsfun';
-import {Document, Query} from 'idai-components-2';
+import {Document} from 'idai-components-2';
 import {IndexerConfiguration} from '../../../../../src/app/indexer-configuration';
 import {createMockProjectConfiguration} from './helpers';
 import {Static} from '../../../static';
@@ -7,6 +7,7 @@ import {performQuery as performQuery_} from '../../../../../src/app/core/datasto
 import {FulltextIndex} from '../../../../../src/app/core/datastore/index/fulltext-index';
 import {ConstraintIndex} from '../../../../../src/app/core/datastore/index/constraint-index';
 import {IndexItem} from '../../../../../src/app/core/datastore/index/index-item';
+import {Query} from '../../../../../src/app/core/datastore/model/query';
 
 /**
  * @author Daniel de Oliveira

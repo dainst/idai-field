@@ -1,7 +1,8 @@
-import {Document, FindResult} from 'idai-components-2';
+import {Document} from 'idai-components-2';
 import {DocumentReadDatastore} from '../datastore/document-read-datastore';
 import {ProjectConfiguration} from '../configuration/project-configuration';
 import {ProjectCategories} from '../configuration/project-categories';
+import {FindResult} from '../datastore/model/read-datastore';
 
 
 /**

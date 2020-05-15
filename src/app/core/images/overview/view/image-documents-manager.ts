@@ -1,6 +1,7 @@
-import {Query, ImageDocument} from 'idai-components-2';
+import {ImageDocument} from 'idai-components-2';
 import {ImagesState} from './images-state';
 import {ImageReadDatastore} from '../../../datastore/field/image-read-datastore';
+import {Query} from '../../../datastore/model/query';
 
 
 /**

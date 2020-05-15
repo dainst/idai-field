@@ -1,10 +1,10 @@
-@import 'variables';
+$mdi-font-path: '../dist/fonts';
+$roboto-font-path: '../dist/fonts/';
 
+@import 'variables';
 @import 'messages/messages';
 @import 'bootstrap';
 @import 'materialdesignicons';
-
-$roboto-font-path: '../fonts/';
 @import 'roboto-fontface';
 
 @import 'navbar/navbar';

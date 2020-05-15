@@ -10,7 +10,6 @@ test/unit/**/*.js
 test/unit/**/*.js.map
 test/e2e/**/*.js
 test/e2e/**/*.js.map
-app.css
 test/dist
 
 # compiled output
@@ -58,7 +57,7 @@ testem.log
 .DS_Store
 Thumbs.db
 
-src/app/app.css
+src/app.css
 release
 fonts
 

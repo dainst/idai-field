@@ -31,8 +31,8 @@ install:
 
 script:
 - npm rebuild node-sass
-- npm run build-all
-- npm run package-mac
+- npm run build:all
+- npm run package:mac
 
 env:
   global:

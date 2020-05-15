@@ -1,8 +1,15 @@
 import {Injectable} from '@angular/core';
 
 const express = typeof window !== 'undefined' ? window.require('express') : require('express');
-const PouchDB = typeof window !== 'undefined' ? window.require('pouchdb-browser') : require('pouchdb-browser');
-PouchDB.plugin(require('pouchdb-adapter-idb'));
+
+let PouchDB;
+if (typeof window !== 'undefined') {
+    PouchDB = window.require('pouchdb-browser');
+    const IDBAdapter = window.require('pouchdb-adapter-idb');
+    PouchDB.plugin(IDBAdapter);
+} else {
+    PouchDB = require('pouchdb');
+}
 
 const expressPouchDB = (typeof window !== 'undefined' ? window.require : require)('express-pouchdb'); // TODO Get rid of warning
 const expressBasicAuth = typeof window !== 'undefined' ? window.require('express-basic-auth') : require('express-basic-auth');

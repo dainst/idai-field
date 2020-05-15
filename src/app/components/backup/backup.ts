@@ -1,8 +1,15 @@
 import {assoc} from 'tsfun/associative';
 import {Name} from '../../core/constants';
 
-const PouchDB = typeof window !== 'undefined' ? window.require('pouchdb-browser') : require('pouchdb-browser');
-PouchDB.plugin(require('pouchdb-adapter-idb'));
+let PouchDB;
+if (typeof window !== 'undefined') {
+    PouchDB = window.require('pouchdb-browser');
+    const IDBAdapter = window.require('pouchdb-adapter-idb');
+    PouchDB.plugin(IDBAdapter);
+} else {
+    PouchDB = require('pouchdb');
+}
+
 const replicationStream = typeof window !== 'undefined' ? window.require('pouchdb-replication-stream') : require('pouchdb-replication-stream');
 const stream = typeof window !== 'undefined' ? window.require('stream') : require('stream');
 const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');

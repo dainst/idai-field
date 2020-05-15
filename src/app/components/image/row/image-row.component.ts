@@ -1,5 +1,4 @@
-import {Component, ElementRef, Input, OnChanges, ViewChild, EventEmitter, Output,
-    SimpleChanges} from '@angular/core';
+import {Component, ElementRef, Input, OnChanges, ViewChild, EventEmitter, Output, SimpleChanges} from '@angular/core';
 import {SafeResourceUrl} from '@angular/platform-browser';
 import {to} from 'tsfun';
 import {reduce as asyncReduce} from 'tsfun/async';

@@ -15,6 +15,14 @@ type PageInfo = 'same'|'previous'|'next';
 export const PLACEHOLDER = 'PLACEHOLDER';
 
 
+
+export type ImageRowItem = {
+
+    imageId: string|'PLACEHOLDER';
+    document: Document;
+}
+
+
 /**
  * @author Thomas Kleinke
  */

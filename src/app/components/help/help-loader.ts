@@ -12,9 +12,9 @@ export type Chapter = { id: string, label: string };
  */
 export module HelpLoader {
 
-    export async function load(filePath: string, http: HttpClient, domSanitizer: DomSanitizer) {
+    export async function load(filePath: string, folderPath: string, http: HttpClient, domSanitizer: DomSanitizer) {
 
-        const markdown: string = await getMarkdown(filePath, http);
+        const markdown: string = await getMarkdown(filePath, folderPath, http);
         const htmlString: string = createMarkdownConverter().makeHtml(markdown);
 
         return {
@@ -24,9 +24,9 @@ export module HelpLoader {
     }
 
 
-    function adjustImageLinks(markdown: string): string {
+    function adjustImageLinks(markdown: string, folderPath: string): string {
 
-        return markdown.replace(/img src="images/g, 'img src="../../manual/images');
+        return markdown.replace(/img src="images/g, 'img src="' + folderPath + '/images');
     }
 
 
@@ -57,10 +57,10 @@ export module HelpLoader {
     }
 
 
-    async function getMarkdown(filePath: string, http: HttpClient): Promise<string> {
+    async function getMarkdown(filePath: string, folderPath: string, http: HttpClient): Promise<string> {
 
         const reader = new HttpReader(filePath, http);
         const markdown: string = await reader.go();
-        return adjustImageLinks(markdown);
+        return adjustImageLinks(markdown, folderPath);
     }
 }

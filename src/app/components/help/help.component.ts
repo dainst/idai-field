@@ -5,6 +5,8 @@ import {Chapter, HelpLoader} from './help-loader';
 import {SettingsService} from '../../core/settings/settings-service';
 import {TabManager} from '../../core/tabs/tab-manager';
 
+const remote = typeof window !== 'undefined' ? window.require('electron').remote : require('electron').remote;
+
 
 @Component({
     selector: 'help',
@@ -36,8 +38,11 @@ export class HelpComponent implements OnInit {
 
     async ngOnInit() {
 
+        const folderPath: string = remote.getGlobal('manualPath');
+
         const {html, chapters} = await HelpLoader.load(
-            HelpComponent.getFilePath(this.settingsService.getSettings().locale),
+            HelpComponent.getFilePath(this.settingsService.getSettings().locale, folderPath),
+            folderPath,
             this.http,
             this.domSanitizer
         );
@@ -78,9 +83,9 @@ export class HelpComponent implements OnInit {
     }
 
 
-    private static getFilePath(locale: string): string {
+    private static getFilePath(locale: string, folderPath: string): string {
 
-        return '../../manual/manual.' + locale + '.md';
+        return folderPath + '/manual.' + locale + '.md';
     }
 
 

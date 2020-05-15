@@ -111,6 +111,8 @@ global.toolsPath = global.mode === 'production' ?
     electron.app.getAppPath().replace('app.asar', '') + 'tools'
     : 'tools';
 
+global.manualPath = global.mode === 'production' ? '../../manual' : '../manual';
+
 process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = true;
 process.env['NODE_OPTIONS'] = '--no-deprecation';
 

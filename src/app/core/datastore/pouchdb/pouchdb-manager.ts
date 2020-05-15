@@ -7,7 +7,8 @@ import {PouchdbProxy} from './pouchdb-proxy';
 import {SampleDataLoader} from './sample-data-loader';
 import {SyncProcess, SyncStatus} from '../../sync/sync-process';
 
-const PouchDB = typeof window !== 'undefined' ? window.require('pouchdb') : require('pouchdb');
+const PouchDB = typeof window !== 'undefined' ? window.require('pouchdb-browser') : require('pouchdb-browser');
+PouchDB.plugin(require('pouchdb-adapter-idb'));
 
 
 @Injectable()
@@ -175,7 +176,7 @@ export class PouchdbManager {
 
     private static createPouchDBObject(name: string): any {
 
-        return new PouchDB(name);
+        return new PouchDB(name, {adapter: 'idb'});
     }
 
 

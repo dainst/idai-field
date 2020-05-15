@@ -8,6 +8,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng build --watch --base-href ./ & electron . dev",
+    "start-no-watch": "electron . dev",
     "build": "gulp copy-fonts-convert-sass && ng build --base-href ./",
     "build-java": "mvn -f java/pom.xml clean package && gulp copy-shapefile-tool",
     "build-all": "npm run build && npm run build-java",

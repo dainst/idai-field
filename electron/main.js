@@ -4,7 +4,7 @@ const electron = require('electron');
 const fs = require('fs');
 const os = require('os');
 const url = require('url');
-//const autoUpdate = require('./auto-update.js');
+const autoUpdate = require('./auto-update.js');
 
 let menuContext = 'loading';
 
@@ -181,11 +181,11 @@ electron.app.on('ready', () => {
     loadConfig();
     createMenu();
 
-    //if (global.config.isAutoUpdateActive) autoUpdate.setUp(mainWindow);
+    if (global.config.isAutoUpdateActive) autoUpdate.setUp(mainWindow);
 
-    //electron.ipcMain.on('settingsChanged', (event, settings) => {
-      //  if (settings.isAutoUpdateActive) autoUpdate.setUp(mainWindow);
-    //});
+    electron.ipcMain.on('settingsChanged', (event, settings) => {
+        if (settings.isAutoUpdateActive) autoUpdate.setUp(mainWindow);
+    });
 });
 
 electron.app.on('activate', () => {

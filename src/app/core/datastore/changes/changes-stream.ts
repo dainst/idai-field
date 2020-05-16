@@ -123,7 +123,7 @@ export class ChangesStream {
 
         return await asyncMap((revisionId: string) => {
             return this.datastore.fetchRevision(resourceId, revisionId);
-        })(conflicts);
+        }, conflicts);
     }
 
 

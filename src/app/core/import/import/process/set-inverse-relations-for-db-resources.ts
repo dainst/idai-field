@@ -40,7 +40,7 @@ export async function setInverseRelationsForDbResources(
         const currentAndOldTargetIds = union(allTargetIds);
         const [currentTargetIds, _] = allTargetIds;
 
-        const targetDocuments = await asyncMap(getTargetDocument(allFetchedDocuments, get))(currentAndOldTargetIds);
+        const targetDocuments = await asyncMap(getTargetDocument(allFetchedDocuments, get), currentAndOldTargetIds);
         allFetchedDocuments = unionOfDocuments([allFetchedDocuments, targetDocuments]);
 
         assertCategoryIsInRange(document, makeIdCategoryMap(currentTargetIds, targetDocuments), assertIsAllowedRelationDomainCategory);

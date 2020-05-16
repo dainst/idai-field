@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {Pair, to, isNot, undefinedOrEmpty, left, on, includedIn, right, map, flow, empty, prune,
     is} from 'tsfun';
-import {map as asyncMap} from 'tsfun/async';
+import {AsyncMapping, map as asyncMap} from 'tsfun/async';
 import {FieldDocument, FieldResource, Resource, Document} from 'idai-components-2';
 import {FieldReadDatastore} from '../../../../../core/datastore/field/field-read-datastore';
 import {TypeImagesUtil} from '../../../../../core/util/type-images-util';
@@ -157,13 +157,13 @@ export class TypeRelationPickerComponent {
     }
 
 
-    private pairWithLinkedImages = asyncMap(async (document: FieldDocument) => {
-
-        return [
-            document,
-            await getLinkedImages(document, this.datastore)
-        ] as Pair<FieldDocument, Array<ImageRowItem>>;
-    });
+    private pairWithLinkedImages: AsyncMapping
+        = async ($: Array<FieldDocument>) => asyncMap(async (document: FieldDocument) => {
+            return [
+                document,
+                await getLinkedImages(document, this.datastore)
+            ] as Pair<FieldDocument, Array<ImageRowItem>>;
+        }, $);
 
 
     private static constructQuery(resource: Resource, q: string, selectedCatalogs: Array<FieldResource>) {

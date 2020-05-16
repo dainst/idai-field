@@ -4,7 +4,7 @@ import {I18n} from '@ngx-translate/i18n-polyfill';
 import {isUndefinedOrEmpty, isBoolean, isArray, filter, Pair, compose, Mapping, on, is, isDefined,
     map, flatten, to, pairWith, conds, singleton, otherwise, LEFT, RIGHT} from 'tsfun';
 import {update, lookup} from 'tsfun/associative';
-import {flow as asyncFlow, map as asyncMap} from 'tsfun/async';
+import {AsyncMapping, flow as asyncFlow, map as asyncMap} from 'tsfun/async';
 import {FieldDocument,  Resource, Dating, Dimension, Literature, ValOptionalEndVal} from 'idai-components-2';
 import {RoutingService} from '../../routing-service';
 import {Name} from '../../../core/constants';
@@ -197,9 +197,9 @@ export class FieldsViewComponent implements OnChanges {
     }
 
 
-    private async putActualResourceRelationsIntoGroups(resource: Resource) {
+    private putActualResourceRelationsIntoGroups(resource: Resource): AsyncMapping {
 
-        return asyncMap(async (group: any /* ! modified in place ! */) => {
+        return ($: any) => asyncMap(async (group: any /* ! modified in place ! */) => {
 
             group.relations = await asyncFlow(
                 group.relations,
@@ -212,6 +212,6 @@ export class FieldsViewComponent implements OnChanges {
                 })
             );
             return group;
-        });
+        }, $);
     }
 }

@@ -60,6 +60,8 @@ export class SettingsService {
 
     public getDbs = () => this.settings.dbs;
 
+    public getHostPassword = (): string => this.settings.hostPassword;
+
 
     public getSelectedProject(): string {
 

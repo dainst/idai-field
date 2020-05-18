@@ -161,6 +161,7 @@ export class ExportComponent implements OnInit {
 
         await ShapefileExporter.performExport(
             this.settingsService.getSelectedProject(),
+            this.settingsService.getHostPassword(),
             await this.documentDatastore.get('project'),
             filePath,
             this.selectedOperationId

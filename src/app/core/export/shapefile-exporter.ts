@@ -10,13 +10,13 @@ const remote = typeof window !== 'undefined' ? window.require('electron').remote
  */
 export module ShapefileExporter {
 
-    export async function performExport(projectName: string, projectDocument: Document,
+    export async function performExport(projectName: string, password: string, projectDocument: Document,
                                         outputFilePath: string, operationId: string): Promise<any> {
 
         try {
             await JavaToolExecutor.executeJavaTool(
                 'shapefile-tool.jar',
-                getArguments(projectName, projectDocument, outputFilePath, operationId)
+                getArguments(projectName, password, projectDocument, outputFilePath, operationId)
             );
         } catch (err) {
             return Promise.reject(getErrorMsgWithParams(err));
@@ -24,13 +24,14 @@ export module ShapefileExporter {
     }
 
 
-    function getArguments(projectName: string, projectDocument: Document, outputFilepath: string,
+    function getArguments(projectName: string, password: String, projectDocument: Document, outputFilepath: string,
                           operationId: string): string {
 
         const epsg: string|undefined = getEPSGCode(projectDocument);
 
         return '"export" '
             + '"' + projectName + '" '
+            + '"' + password + '" '
             + '"' + outputFilepath + '" '
             + '"' + remote.getGlobal('appDataPath') + '/temp" '
             + '"' + operationId + '"'

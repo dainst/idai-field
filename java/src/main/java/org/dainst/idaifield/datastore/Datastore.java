@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Base64;
 
 
 /**
@@ -25,7 +26,7 @@ import java.util.Map;
  */
 public class Datastore {
 
-    public static Map<GeometryType, List<Resource>> getResourcesWithGeometry(String projectName,
+    public static Map<GeometryType, List<Resource>> getResourcesWithGeometry(String projectName, String password,
                                                                              String operationId) throws Exception {
 
         String query = "{ \"selector\": { \"resource.geometry\": { \"$gt\": null }";
@@ -39,19 +40,23 @@ public class Datastore {
         query += " } }";
 
         try {
-            return getResourcesMap(extractResources(getJsonData(projectName, query)));
+            return getResourcesMap(extractResources(getJsonData(projectName, password, query)));
         } catch (Exception e) {
             throw new Exception(ErrorMessage.DATASTORE_GET_RESOURCES_ERROR.name());
         }
     }
 
 
-    private static JSONArray getJsonData(String projectName, String query) throws Exception {
+    private static JSONArray getJsonData(String projectName, String password, String query) throws Exception {
 
         try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
             HttpPost httpPost = new HttpPost("http://localhost:3000/" + projectName + "/_find");
             httpPost.setHeader(HttpHeaders.CONTENT_TYPE, "application/json");
             httpPost.setHeader(HttpHeaders.ACCEPT, "application/json");
+
+            String encoding = Base64.getEncoder().encodeToString((projectName + ":" + password).getBytes("UTF-8"));
+            httpPost.setHeader(HttpHeaders.AUTHORIZATION, "Basic " + encoding);
+
             httpPost.setEntity(new StringEntity(query));
 
             try (CloseableHttpResponse response = httpClient.execute(httpPost)) {

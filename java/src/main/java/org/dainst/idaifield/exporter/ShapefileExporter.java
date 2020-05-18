@@ -16,7 +16,7 @@ import java.util.Map;
  */
 public class ShapefileExporter {
 
-    public static void run(String projectName, String outputFilePath, String tempFolderPath,
+    public static void run(String projectName, String password, String outputFilePath, String tempFolderPath,
                            String operationId, String epsg) throws Exception {
 
         String outputFolderPath = outputFilePath.substring(0, outputFilePath.lastIndexOf(File.separator));
@@ -32,7 +32,7 @@ public class ShapefileExporter {
 
         try {
             Map<GeometryType, List<Resource>> resources = Datastore.getResourcesWithGeometry(
-                    projectName, operationId
+                    projectName, password, operationId
             );
             ShapefileWriter.write(shapefileFolder, resources, epsg);
             ZipArchiveBuilder.buildZipArchive(shapefileFolder, outputFolderPath);

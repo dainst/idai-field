@@ -48,20 +48,20 @@ public class ShapefileTool {
 
     private static void runExporter(String[] arguments) throws Exception {
 
-        if (arguments.length < 5 || arguments.length > 6 || !arguments[2].contains(File.separator)) {
+        if (arguments.length < 6 || arguments.length > 7 || !arguments[3].contains(File.separator)) {
             printUsageInformation();
             return;
         }
 
-        ShapefileExporter.run(arguments[1], arguments[2], arguments[3], arguments[4],
-                arguments.length == 6 ? arguments[5] : null);
+        ShapefileExporter.run(arguments[1], arguments[2], arguments[3], arguments[4], arguments[5],
+                arguments.length == 7 ? arguments[6] : null);
     }
 
 
     private static void printUsageInformation() {
 
         System.err.println("java -jar shapefile-tool.jar convert [shapefilePath] [outputFilePath]");
-        System.err.println("java -jar shapefile-tool.jar export [projectName] [outputFilePath] "
+        System.err.println("java -jar shapefile-tool.jar export [projectName] [password] [outputFilePath] "
                 + "[tempFolderPath] [operation] [epsg]");
     }
 }

@@ -10,7 +10,7 @@ import PouchDB = require('pouchdb-node');
  */
 describe('Backup', () => {
 
-    const backupFilePath = process.cwd() + '/store/backup_test_file.txt';
+    const backupFilePath = process.cwd() + '/test/store/backup_test_file.txt';
 
 
     beforeEach(() => spyOn(console, 'warn'));

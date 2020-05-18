@@ -6,7 +6,7 @@ import PouchDB = require('pouchdb-node');
  */
 describe('BackupCreationComponent', () => {
 
-    const backupFilePath = 'store/backup_test_file.txt';
+    const backupFilePath = 'test/store/backup_test_file.txt';
     const unittestdb = 'unittestdb';
 
     let c: BackupCreationComponent;

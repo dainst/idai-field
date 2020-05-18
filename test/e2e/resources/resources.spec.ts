@@ -14,7 +14,7 @@ import {ImageViewPage} from '../images/image-view.page';
 import {ImageRowPage} from '../images/image-row.page';
 
 const EC = protractor.ExpectedConditions;
-const delays = require('../config/delays');
+const delays = require('../delays');
 const common = require('../common');
 
 
@@ -42,33 +42,15 @@ const common = require('../common');
  */
 describe('resources --', () => {
 
-    let i = 0;
+    beforeEach(() => {
 
+        browser.sleep(1000);
 
-    beforeAll(done => {
-
-        ResourcesPage.get().then(() => {
-            browser.sleep(delays.shortRest * 4);
-            ResourcesPage.clickHierarchyButton('S1');
-            done();
-        });
-    });
-
-
-    beforeEach(async done => {
-
-        if (i > 0) {
-            MenuPage.navigateToSettings();
-            await common.resetApp();
-            browser.sleep(delays.shortRest);
-            NavbarPage.clickCloseNonResourcesTab();
-            NavbarPage.clickTab('project');
-            browser.sleep(delays.shortRest * 3);
-            ResourcesPage.clickHierarchyButton('S1');
-        }
-
-        i++;
-        done();
+        MenuPage.navigateToSettings();
+        common.resetApp();
+        NavbarPage.clickCloseNonResourcesTab();
+        NavbarPage.clickTab('project');
+        ResourcesPage.clickHierarchyButton('S1');
     });
 
 

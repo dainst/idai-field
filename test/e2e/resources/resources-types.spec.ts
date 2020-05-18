@@ -1,7 +1,6 @@
 import {browser, protractor} from 'protractor';
 import {MenuPage} from '../menu.page';
 import {ResourcesPage} from './resources.page';
-import {SettingsPage} from '../settings/settings.page';
 import {ResourcesTypeGridPage} from './resources-type-grid.page';
 import {DoceditPage} from '../docedit/docedit.page';
 import {DoceditRelationsTabPage} from '../docedit/docedit-relations-tab.page';
@@ -10,7 +9,7 @@ import {DoceditTypeRelationsTabPage} from '../docedit/docedit-type-relations-tab
 import {FieldsViewPage} from '../widgets/fields-view.page';
 
 const EC = protractor.ExpectedConditions;
-const delays = require('../config/delays');
+const delays = require('../delays');
 const common = require('../common');
 
 
@@ -19,33 +18,13 @@ const common = require('../common');
  */
 describe('resources/types --', () => {
 
-    let index = 0;
+    beforeEach( () => {
 
+        browser.sleep(1000);
 
-    beforeAll(done => {
-
-        SettingsPage.get().then(() => {
-            browser.sleep(delays.shortRest);
-            MenuPage.navigateToTypes();
-            browser.sleep(delays.shortRest);
-            done();
-        });
-    });
-
-
-    beforeEach(async done => {
-
-        if (index > 0) {
-            MenuPage.navigateToSettings();
-            browser.sleep(delays.shortRest);
-            await common.resetApp();
-            browser.sleep(delays.shortRest);
-            MenuPage.navigateToTypes();
-            browser.sleep(delays.shortRest);
-        }
-
-        index++;
-        done();
+        MenuPage.navigateToSettings();
+        common.resetApp();
+        MenuPage.navigateToTypes();
     });
 
 
@@ -252,5 +231,8 @@ describe('resources/types --', () => {
         DoceditTypeRelationsTabPage.clickCatalogOption(2);
         browser.wait(EC.stalenessOf(DoceditTypeRelationsTabPage.getTypeRow('T1')), delays.ECWaitTime);
         browser.wait(EC.presenceOf(DoceditTypeRelationsTabPage.getTypeRow('T2')), delays.ECWaitTime);
+
+        DoceditTypeRelationsTabPage.clickType('T2');
+        DoceditPage.clickCloseEdit('discard');
     });
 });

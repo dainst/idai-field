@@ -1,8 +1,12 @@
+import {browser} from 'protractor';
+import {protractor} from 'protractor';
+
+
 // use higher values to slow down tests for debugging
-var promisesDelay = 0;
+const promisesDelay = 0;
 
 function delayPromises(milliseconds) {
-    
+
     var executeFunction = browser.driver.controlFlow().execute;
 
     browser.driver.controlFlow().execute = function() {
@@ -20,9 +24,8 @@ console.log('Set promises delay to ' + promisesDelay + ' ms.');
 delayPromises(promisesDelay);
 
 
-var ECWaitTime = 20000;
-var shortRest = 200;
-var veryShortRest = 20;
+const ECWaitTime = 20000;
+const shortRest = 200;
 
 
 module.exports = {

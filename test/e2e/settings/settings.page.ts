@@ -1,7 +1,7 @@
 import {browser, protractor, element, by} from 'protractor';
 
 let EC = protractor.ExpectedConditions;
-let delays = require('../config/delays');
+let delays = require('../delays');
 let common = require('../common.js');
 
 /**

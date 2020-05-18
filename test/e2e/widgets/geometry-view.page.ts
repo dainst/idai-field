@@ -5,7 +5,7 @@ type Identifier = string;
 
 const common = require('../common.js');
 const EC = protractor.ExpectedConditions;
-const delays = require('../../../../delays');
+const delays = require('../delays');
 
 /**
  * @author Daniel de Oliveira

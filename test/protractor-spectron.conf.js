@@ -7,13 +7,13 @@ const failFastActive = (process.argv.length > 4 && process.argv[4] == '--params=
 exports.config = {
 
     seleniumAddress: 'http://localhost:9515/wd/hub',
-    baseUrl: fileUrl(path.resolve(__dirname, '../../..') + '/src/index.html'),
+    baseUrl: fileUrl(path.resolve(__dirname, '../../..') + '/dist/index.html'),
 
     specs: [
         // '../matrix/*.spec.js',
         // '../project/*.spec.js',
-        // '../resources/*.spec.js',
         // '../images/*.spec.js',
+        'dist/test/e2e/resources/*.spec.js',
         'dist/test/e2e/map/*.spec.js',
         // '../import/*.spec.js',
         // '../settings/*.spec.js'

@@ -9,7 +9,7 @@ import {ImageViewPage} from '../images/image-view.page';
 
 PouchDB.plugin(require('pouchdb-adapter-memory'));
 
-const delays = require('../config/delays');
+const delays = require('../delays');
 const path = require('path');
 const common = require('../common');
 

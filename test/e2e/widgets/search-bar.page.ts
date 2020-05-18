@@ -2,7 +2,7 @@ import {browser, protractor, element, by} from 'protractor';
 
 const EC = protractor.ExpectedConditions;
 const common = require('../common.js');
-const delays = require('../config/delays');
+const delays = require('../delays');
 
 export type SearchBarContext = 'resources'|'images'|'modal';
 

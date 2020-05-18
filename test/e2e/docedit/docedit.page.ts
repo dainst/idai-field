@@ -2,7 +2,7 @@ import {browser, protractor, element, by} from 'protractor';
 import {NavbarPage} from '../navbar.page';
 
 let common = require('../common.js');
-const delays = require('../../../../delays');
+const delays = require('../delays');
 let EC = protractor.ExpectedConditions;
 
 /**

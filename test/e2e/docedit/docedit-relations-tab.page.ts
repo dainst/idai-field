@@ -2,7 +2,7 @@ import {browser, protractor, element, by} from 'protractor';
 import {DoceditPage} from './docedit.page';
 
 const common = require('../common.js');
-const delays = require('../../../../delays');
+const delays = require('../delays');
 const EC = protractor.ExpectedConditions;
 
 

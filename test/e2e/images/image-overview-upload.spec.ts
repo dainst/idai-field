@@ -5,7 +5,7 @@ import {NavbarPage} from '../navbar.page';
 const path = require('path');
 
 const EC = protractor.ExpectedConditions;
-const delays = require('../config/delays');
+const delays = require('../delays');
 
 
 describe('images/upload --', () => {

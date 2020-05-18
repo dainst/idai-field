@@ -7,14 +7,11 @@ import {MenuPage} from '../menu.page';
 import {GeometryViewPage} from '../widgets/geometry-view.page';
 
 const EC = protractor.ExpectedConditions;
-const delays = require('../../../../delays');
+const delays = require('../delays');
 const common = require('../common');
 
 
 describe('map --', function() {
-
-    let index = 0;
-
 
     function setPolygon() {
 
@@ -159,30 +156,15 @@ describe('map --', function() {
     }
 
 
-    beforeAll(done => {
+    beforeEach( () => {
 
-        ResourcesPage.get().then(() => {
-            browser.sleep(delays.shortRest * 4);
-            ResourcesPage.clickHierarchyButton('S1');
-            done();
-        });
-    });
+        browser.sleep(1000);
 
-
-    beforeEach(async done => {
-
-        if (index > 0) {
-            MenuPage.navigateToSettings();
-            await common.resetApp();
-            browser.sleep(delays.shortRest);
-            NavbarPage.clickCloseNonResourcesTab();
-            NavbarPage.clickTab('project');
-            browser.sleep(delays.shortRest * 4);
-            ResourcesPage.clickHierarchyButton('S1');
-        }
-
-        index++;
-        done();
+        MenuPage.navigateToSettings();
+        common.resetApp();
+        NavbarPage.clickCloseNonResourcesTab();
+        NavbarPage.clickTab('project');
+        ResourcesPage.clickHierarchyButton('S1');
     });
 
 

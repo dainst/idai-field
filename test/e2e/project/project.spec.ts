@@ -7,7 +7,7 @@ import {SearchBarPage} from '../widgets/search-bar.page';
 
 const fs = require('fs');
 const EC = protractor.ExpectedConditions;
-const delays = require('../config/delays');
+const delays = require('../delays');
 const common = require('../common');
 
 
@@ -16,7 +16,7 @@ const common = require('../common');
  * @author Thomas Kleinke
  *
  */
-xdescribe('project --', function() {
+/*xdescribe('project --', function() {
 
     const appDataPath = browser.params.appDataPath;
 
@@ -151,4 +151,4 @@ xdescribe('project --', function() {
             expect(text).toEqual('abc_t1');
         });
     });
-});
+});*/

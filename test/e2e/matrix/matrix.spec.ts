@@ -6,7 +6,7 @@ import {DoceditRelationsTabPage} from '../docedit/docedit-relations-tab.page';
 import {SettingsPage} from '../settings/settings.page';
 
 const EC = protractor.ExpectedConditions;
-const delays = require('../config/delays');
+const delays = require('../delays');
 const common = require('../common');
 
 

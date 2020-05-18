@@ -6,45 +6,28 @@ import {DoceditPage} from '../docedit/docedit.page';
 import {FieldsViewPage} from '../widgets/fields-view.page';
 
 const EC = protractor.ExpectedConditions;
-const delays = require('../config/delays');
+const delays = require('../delays');
 const common = require('../common');
 
 
 describe('resources/list --', () => {
 
-    let index = 0;
+    beforeEach(() => {
 
+        browser.sleep(1000);
 
-    beforeAll(done => {
-
-        ResourcesPage.get().then(() => {
-            browser.sleep(delays.shortRest);
-            ResourcesPage.clickHierarchyButton('S1');
-            browser.sleep(delays.shortRest);
-            ResourcesPage.clickListModeButton();
-            browser.sleep(delays.shortRest);
-            done();
-        });
+        MenuPage.navigateToSettings();
+        common.resetApp();
+        NavbarPage.clickCloseNonResourcesTab();
+        NavbarPage.clickTab('project');
+        ResourcesPage.clickHierarchyButton('S1');
+        ResourcesPage.clickListModeButton();
     });
 
 
-    beforeEach(async done => {
+    afterAll(() => {
 
-        if (index > 0) {
-            MenuPage.navigateToSettings();
-            await common.resetApp();
-            browser.sleep(delays.shortRest);
-            NavbarPage.clickCloseNonResourcesTab();
-            NavbarPage.clickTab('project');
-            browser.sleep(delays.shortRest * 2);
-            ResourcesPage.clickHierarchyButton('S1');
-            browser.sleep(delays.shortRest);
-            ResourcesPage.clickListModeButton();
-            browser.sleep(delays.shortRest);
-        }
-
-        index++;
-        done();
+        ResourcesPage.clickMapModeButton();
     });
 
 

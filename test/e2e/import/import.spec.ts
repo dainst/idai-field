@@ -5,7 +5,7 @@ import {NavbarPage} from '../navbar.page';
 import {MenuPage} from '../menu.page';
 
 const common = require('../common.js');
-const delays = require('../config/delays');
+const delays = require('../delays');
 const EC = protractor.ExpectedConditions;
 
 /**

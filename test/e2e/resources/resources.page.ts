@@ -7,15 +7,10 @@ import {NavbarPage} from '../navbar.page';
 
 const common = require('../common.js');
 const EC = protractor.ExpectedConditions;
-const delays = require('../../../../delays');
+const delays = require('../delays');
 
 
 export class ResourcesPage {
-
-    public static get(view: string = 'project') {
-
-        return browser.get('#/resources/' + view);
-    }
 
     // click
 

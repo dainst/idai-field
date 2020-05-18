@@ -7,7 +7,7 @@ import {SearchConstraintsPage} from '../widgets/search-constraints.page';
 import {ImageViewPage} from './image-view.page';
 
 const EC = protractor.ExpectedConditions;
-const delays = require('../config/delays');
+const delays = require('../delays');
 const common = require('../common');
 
 

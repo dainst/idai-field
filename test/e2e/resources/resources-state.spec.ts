@@ -11,7 +11,7 @@ import {FieldsViewPage} from '../widgets/fields-view.page';
 import {ImageViewPage} from '../images/image-view.page';
 
 const fs = require('fs');
-const delays = require('../config/delays');
+const delays = require('../delays');
 const EC = protractor.ExpectedConditions;
 const common = require('../common');
 
@@ -29,29 +29,21 @@ describe('resources/state --', function() {
 
     const appDataPath = browser.params.appDataPath;
 
-    let index = 0;
 
-
-    beforeAll(done => {
+    beforeAll(() => {
 
         removeResourcesStateFile();
-        ResourcesPage.get('project').then(() => done());
     });
 
 
-    beforeEach(async done => {
+    beforeEach(() => {
 
-        if (index > 0) {
-            MenuPage.navigateToSettings();
-            await common.resetApp();
-            browser.sleep(delays.shortRest);
-            NavbarPage.clickCloseNonResourcesTab();
-            NavbarPage.clickTab('project');
-            browser.sleep(delays.shortRest * 3);
-        }
+        browser.sleep(1000);
 
-        index++;
-        done();
+        MenuPage.navigateToSettings();
+        common.resetApp();
+        NavbarPage.clickCloseNonResourcesTab();
+        NavbarPage.clickTab('project');
     });
 
 

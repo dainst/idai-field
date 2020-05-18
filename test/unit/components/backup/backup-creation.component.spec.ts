@@ -1,5 +1,5 @@
 import {BackupCreationComponent} from '../../../../src/app/components/backup/backup-creation.component';
-import PouchDB = require('pouchdb');
+import PouchDB = require('pouchdb-node');
 
 /**
  * @author Daniel de Oliviera

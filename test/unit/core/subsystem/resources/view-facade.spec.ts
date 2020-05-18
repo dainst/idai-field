@@ -1,5 +1,5 @@
 import {Document, FieldDocument} from 'idai-components-2';
-import * as PouchDB from 'pouchdb';
+import * as PouchDB from 'pouchdb-node';
 import {createApp, setupSyncTestDb} from '../subsystem-helper';
 import {CachedDatastore} from '../../../../../src/app/core/datastore/cached/cached-datastore';
 import {TabManager} from '../../../../../src/app/core/tabs/tab-manager';

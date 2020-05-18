@@ -15,7 +15,7 @@ if (typeof window !== 'undefined') {
    PouchDB.plugin(require('pouchdb-adapter-idb'));
    adapterName = 'idb';
 } else {
-    PouchDB = require('pouchdb');
+    PouchDB = require('pouchdb-node');
     adapterName = 'leveldb';
 }
 

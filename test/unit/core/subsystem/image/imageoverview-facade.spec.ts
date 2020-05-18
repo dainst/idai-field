@@ -1,5 +1,5 @@
 import {ImageDocument} from 'idai-components-2';
-import * as PouchDB from 'pouchdb';
+import * as PouchDB from 'pouchdb-node';
 import {createApp, setupSyncTestDb} from '../subsystem-helper';
 import {CachedDatastore} from '../../../../../src/app/core/datastore/cached/cached-datastore';
 import {ImageOverviewFacade} from '../../../../../src/app/core/images/overview/view/imageoverview-facade';

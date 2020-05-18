@@ -7,7 +7,7 @@ if (typeof window !== 'undefined') {
     PouchDB = window.require('pouchdb-browser');
     PouchDB.plugin(require('pouchdb-adapter-idb'));
 } else {
-    PouchDB = require('pouchdb');
+    PouchDB = require('pouchdb-node');
 }
 
 const expressPouchDB = (typeof window !== 'undefined' ? window.require : require)('express-pouchdb'); // TODO Get rid of warning

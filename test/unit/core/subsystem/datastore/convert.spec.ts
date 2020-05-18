@@ -1,4 +1,4 @@
-import * as PouchDB from 'pouchdb';
+import * as PouchDB from 'pouchdb-node';
 import {createApp, setupSyncTestDb} from '../subsystem-helper';
 import {Static} from '../../../static';
 import {ProjectConfiguration} from '../../../../../src/app/core/configuration/project-configuration';

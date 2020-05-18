@@ -5,7 +5,7 @@ import {PouchDbFsImagestore} from '../../../../../src/app/core/images/imagestore
 import {ImagestoreErrors} from '../../../../../src/app/core/images/imagestore/imagestore-errors';
 import fs = require('fs');
 import rimraf = require('rimraf');
-import PouchDB = require('pouchdb');
+import PouchDB = require('pouchdb-node');
 
 
 /**

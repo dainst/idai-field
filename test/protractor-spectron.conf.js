@@ -15,7 +15,7 @@ exports.config = {
         // '../images/*.spec.js',
         'dist/test/e2e/resources/*.spec.js',
         'dist/test/e2e/map/*.spec.js',
-        // '../import/*.spec.js',
+        'dist/test/e2e/import/*.spec.js',
         // '../settings/*.spec.js'
     ],
 

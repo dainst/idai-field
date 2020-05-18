@@ -12,35 +12,21 @@ const EC = protractor.ExpectedConditions;
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-describe('import --', function() {
+describe('import --', () => {
 
-    let index = 0;
+    beforeEach(() => {
 
+        browser.sleep(1000);
 
-    beforeAll(done => {
-
-        ImportPage.get().then(() => done());
+        MenuPage.navigateToSettings();
+        common.resetApp();
+        NavbarPage.clickCloseNonResourcesTab();
+        NavbarPage.clickTab('project');
+        MenuPage.navigateToImport();
     });
 
 
-    beforeEach(async done => {
-
-        if (index > 0) {
-            MenuPage.navigateToSettings();
-            await common.resetApp();
-            browser.sleep(delays.shortRest);
-            NavbarPage.clickCloseNonResourcesTab();
-            NavbarPage.clickTab('project');
-            browser.sleep(delays.shortRest * 4);
-            MenuPage.navigateToImport();
-        }
-
-        index++;
-        done();
-    });
-
-
-    let importIt = function(url: string, operationOption: number = 0) {
+    const importIt = (url: string, operationOption: number = 0) => {
 
         expect(ImportPage.getSourceOptionValue(1)).toEqual('http');
         ImportPage.clickSourceOption(1);

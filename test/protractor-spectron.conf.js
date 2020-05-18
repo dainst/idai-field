@@ -10,7 +10,7 @@ exports.config = {
     baseUrl: fileUrl(path.resolve(__dirname, '../../..') + '/dist/index.html'),
 
     specs: [
-        // '../matrix/*.spec.js',
+        'dist/test/e2e/matrix/*.spec.js',
         // '../project/*.spec.js',
         // '../images/*.spec.js',
         'dist/test/e2e/resources/*.spec.js',

@@ -3,7 +3,6 @@ import {MenuPage} from '../menu.page';
 import {MatrixPage} from './matrix.page';
 import {DoceditPage} from '../docedit/docedit.page';
 import {DoceditRelationsTabPage} from '../docedit/docedit-relations-tab.page';
-import {SettingsPage} from '../settings/settings.page';
 
 const EC = protractor.ExpectedConditions;
 const delays = require('../delays');
@@ -15,43 +14,20 @@ const common = require('../common');
  */
 describe('matrix --', () => {
 
-    let i = 0;
+    beforeEach(() => {
 
+        browser.sleep(1000);
 
-    beforeAll(done => {
-
-        SettingsPage.get().then(() => {
-            browser.sleep(delays.shortRest);
-            MenuPage.navigateToMatrix();
-            browser.sleep(delays.shortRest);
-            MatrixPage.performSelectOperation(1);
-            browser.sleep(delays.shortRest);
-            done();
-        });
-    });
-
-
-    beforeEach(async done => {
-
-        if (i > 0) {
-            MenuPage.navigateToSettings();
-            browser.sleep(delays.shortRest);
-            await common.resetApp();
-            browser.sleep(delays.shortRest);
-            MenuPage.navigateToMatrix();
-            browser.sleep(delays.shortRest);
-            MatrixPage.performSelectOperation(1);
-        }
-
-        i++;
+        MenuPage.navigateToSettings();
+        common.resetApp();
+        MenuPage.navigateToMatrix();
+        MatrixPage.performSelectOperation(1);
 
         browser.wait(EC.presenceOf(MatrixPage.getSvgRoot()), delays.ECWaitTime);
-
-        done();
     });
 
 
-    function testDefaultMatrix() {
+    const testDefaultMatrix = () => {
 
         MatrixPage.getNodes().then(nodes => expect(nodes.length).toBe(6));
         for (let i = 1; i <= 6; i++) {
@@ -65,7 +41,7 @@ describe('matrix --', () => {
         browser.wait(EC.presenceOf(MatrixPage.getAboveEdge('si3', 'si4')), delays.ECWaitTime);
         browser.wait(EC.presenceOf(MatrixPage.getSameRankEdge('si3', 'si5')),
             delays.ECWaitTime);
-    }
+    };
 
 
     it('select and deselect resources', () => {

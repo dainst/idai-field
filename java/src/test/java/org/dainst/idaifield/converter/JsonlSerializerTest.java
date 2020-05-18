@@ -28,14 +28,14 @@ public class JsonlSerializerTest extends TestCase {
         Resource resource = new Resource();
         resource.setIdentifier("identifier");
         resource.setShortDescription("short description");
-        resource.setType("type");
+        resource.setCategory("category");
         resource.setGeometry(geometry);
 
         List<Resource> resources = new ArrayList<>();
         resources.add(resource);
 
         assertEquals("{ \"identifier\": \"identifier\", "
-                        + "\"shortDescription\": \"short description\", \"type\": \"type\", "
+                        + "\"shortDescription\": \"short description\", \"category\": \"category\", "
                         + "\"geometry\": { \"coordinates\": [1.0, 1.0], "
                         + "\"type\": \"Point\" } }\n",
                 JsonlSerializer.getJsonl(resources)

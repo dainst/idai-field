@@ -85,7 +85,7 @@ public class Datastore {
 
         Resource resource = new Resource();
         resource.setIdentifier(jsonResource.getString("identifier"));
-        resource.setType(jsonResource.getString("type"));
+        resource.setCategory(jsonResource.getString("type"));
         if (jsonResource.has("shortDescription")) {
             resource.setShortDescription(jsonResource.getString("shortDescription"));
         }

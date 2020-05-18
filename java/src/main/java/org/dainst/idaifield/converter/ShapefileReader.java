@@ -79,8 +79,9 @@ class ShapefileReader {
                 case "shortdesc":
                     resource.setShortDescription(attribute.getValue().toString());
                     break;
+                case "category":
                 case "type":
-                    resource.setType(attribute.getValue().toString());
+                    resource.setCategory(attribute.getValue().toString());
             }
         }
     }

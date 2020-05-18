@@ -35,8 +35,8 @@ class JsonlSerializer {
             jsonl.append(" \"shortDescription\": \"").append(resource.getShortDescription()).append("\",");
         }
 
-        if (hasValue(resource.getType())) {
-            jsonl.append(" \"type\": \"").append(resource.getType()).append("\",");
+        if (hasValue(resource.getCategory())) {
+            jsonl.append(" \"category\": \"").append(resource.getCategory()).append("\",");
         }
 
         return jsonl.append(" \"geometry\": ")

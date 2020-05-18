@@ -34,7 +34,7 @@ class ShapefileWriter {
     private static final String dataSchema =
             "identifier:String,"
             + "shortdesc:String,"
-            + "type:String";
+            + "category:String";
 
 
     static void write(File shapefileFolder, Map<GeometryType, List<Resource>> resources,
@@ -167,7 +167,7 @@ class ShapefileWriter {
             featureBuilder.add("");
         }
 
-        featureBuilder.add(resource.getType());
+        featureBuilder.add(resource.getCategory());
     }
 
 

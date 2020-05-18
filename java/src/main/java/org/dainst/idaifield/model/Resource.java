@@ -8,7 +8,7 @@ public class Resource {
 
     private String identifier;
     private String shortDescription;
-    private String type;
+    private String category;
     private Geometry geometry;
 
 
@@ -36,15 +36,15 @@ public class Resource {
     }
 
 
-    public String getType() {
+    public String getCategory() {
 
-        return type;
+        return category;
     }
 
 
-    public void setType(String type) {
+    public void setCategory(String category) {
 
-        this.type = type;
+        this.category = category;
     }
 
 

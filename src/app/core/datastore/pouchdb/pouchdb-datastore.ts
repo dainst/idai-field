@@ -216,8 +216,7 @@ export class PouchdbDatastore {
 
     private async performBulkDocs(documents: Array<Document>): Promise<Array<Document>> {
 
-        documents.forEach(PouchdbDatastore.replaceCategoryWithType);
-
+        documents = documents.map(PouchdbDatastore.replaceCategoryWithType);
         await this.db.bulkDocs(documents);
         return this.bulkFetch(documents.map(document => document.resource.id));
     }

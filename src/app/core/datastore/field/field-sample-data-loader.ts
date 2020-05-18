@@ -30,6 +30,8 @@ export class FieldSampleDataLoader implements SampleDataLoader {
             (doc as any)['created'] = { user: 'sample_data', date: new Date() };
             (doc as any)['modified'] = [{ user: 'sample_data', date: new Date() }];
             (doc as any)['_id'] = doc.resource.id;
+            doc.resource['type'] = doc.resource.category;
+            delete doc.resource.category;
             promises.push(db.put(doc, { force: true }) as never);
             setTimeout(() => {}, 15);
         }

@@ -6,7 +6,7 @@ if (typeof window !== 'undefined') {
     PouchDB = window.require('pouchdb-browser');
     PouchDB.plugin(require('pouchdb-adapter-idb'));
 } else {
-    PouchDB = require('pouchdb');
+    PouchDB = require('pouchdb-node');
 }
 
 const replicationStream = typeof window !== 'undefined' ? window.require('pouchdb-replication-stream') : require('pouchdb-replication-stream');

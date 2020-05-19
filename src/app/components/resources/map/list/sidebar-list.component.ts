@@ -52,11 +52,7 @@ export class SidebarListComponent extends BaseList implements AfterViewInit {
     }
 
 
-    public highlightDocument = (document: FieldDocument|undefined) => this.resourcesComponent.highlightDocument(document);
-
     public select = (document: FieldDocument) => this.resourcesComponent.select(document);
-
-    public isScrollbarVisible = (element: HTMLElement) => element.scrollHeight > element.clientHeight;
 
 
     ngAfterViewInit() {
@@ -160,6 +156,9 @@ export class SidebarListComponent extends BaseList implements AfterViewInit {
 
         if (!inside) this.contextMenu.close();
     }
+
+
+    public trackDocument = (index: number, item: FieldDocument) => item.resource.id;
 
 
     private async openChildCollection() {

@@ -12,7 +12,7 @@ const geojsonHint = require('@mapbox/geojsonhint');
 
 describe('GeojsonExporter', () => {
 
-    const exportFilePath: string = process.cwd() + '/store/test.geojson';
+    const exportFilePath: string = process.cwd() + '/test/store/test.geojson';
 
     let mockDatastore: any;
 

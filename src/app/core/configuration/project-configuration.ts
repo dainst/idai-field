@@ -29,6 +29,8 @@ export class ProjectConfiguration {
 
     private categories: Array<Category>;
 
+    private categoriesMap: Map<Category>;
+
     private relations: Array<RelationDefinition>;
 
 
@@ -36,6 +38,7 @@ export class ProjectConfiguration {
 
         this.categories = categories || [];
         this.relations = relations || [];
+        this.categoriesMap = namedArrayToNamedMap(categories);
     }
 
 
@@ -64,7 +67,7 @@ export class ProjectConfiguration {
 
     public getCategoriesMap(): Map<Category> {
 
-        return namedArrayToNamedMap(this.categories);
+        return this.categoriesMap;
     }
 
 

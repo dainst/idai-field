@@ -130,27 +130,11 @@ $deactivated-button-color: lightgray;
   }
 
   .resources-listing-item-slim {
-    width: $teaser-width;
     background-color: transparent;
   }
 
   .resources-listing-item-wide {
-    width: $resources-listing-item-wide-width;
     background-color: white;
-  }
-
-  &.scrollbar-visible {
-    .resources-listing-item-slim {
-      width: $resources-listing-item-slim-width-with-scrollbar;
-    }
-
-    .resources-listing-item-wide {
-      width: $resources-listing-item-wide-width-with-scrollbar;
-    }
-
-    document-teaser {
-      width: $resources-listing-item-slim-width-with-scrollbar;
-    }
   }
 
   document-teaser {

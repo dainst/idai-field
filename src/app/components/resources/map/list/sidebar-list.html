@@ -4,12 +4,10 @@
 
 <popover-menu [document]="viewFacade.getSelectedDocument()"></popover-menu>
 
-<ul #sidebar id="sidebar" class="resources-listing" [class.scrollbar-visible]="isScrollbarVisible(sidebar)"
+<ul #sidebar id="sidebar" class="resources-listing"
     tabindex="0" (scroll)="contextMenu.close()" (keydown)="onKeyDown($event)">
-    <li *ngFor="let document of viewFacade.getDocuments()"
+    <li *ngFor="let document of viewFacade.getDocuments(); trackBy: trackDocument"
         class="resources-listing-item resources-listing-item-wide"
-        (mouseover)="highlightDocument(document)"
-        (mouseleave)="highlightDocument(undefined)"
         (contextmenu)="contextMenu.open($event, document)"
         [class.new-from-remote]="viewFacade.isNewDocumentFromRemote(document)"
         [class.conflicted]="document['_conflicts']"
@@ -17,7 +15,11 @@
                 && viewFacade.getSelectedDocument().resource.id === document.resource.id"
         [id]="'resource-' + document.resource.identifier">
 
-        <list-button-group [document]="document"></list-button-group>
+        <list-button-group [document]="document"
+                           [activePopoverMenu]="resourcesComponent.activePopoverMenu"
+                           [isDocumentSelected]="resourcesComponent.isSelected(document)"
+                           (popoverMenuToggled)="resourcesComponent.togglePopoverMenu($event, document)">
+        </list-button-group>
 
         <document-teaser (click)="select(document)"
                          (dblclick)="editDocument(document)"

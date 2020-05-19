@@ -1,4 +1,4 @@
-import * as PouchDB from 'pouchdb';
+import * as PouchDB from 'pouchdb-node';
 import {Document, ImageDocument} from 'idai-components-2';
 import {ImageDatastore} from '../../../../src/app/core/datastore/field/image-datastore';
 import {FieldDatastore} from '../../../../src/app/core/datastore/field/field-datastore';

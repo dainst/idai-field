@@ -5,7 +5,7 @@ import {PouchDbFsImagestore} from '../../../../../src/app/core/images/imagestore
 import {ImagestoreErrors} from '../../../../../src/app/core/images/imagestore/imagestore-errors';
 import fs = require('fs');
 import rimraf = require('rimraf');
-import PouchDB = require('pouchdb');
+import PouchDB = require('pouchdb-node');
 
 
 /**
@@ -27,7 +27,7 @@ xdescribe('PouchDbFsImagestore', () => {
 
     let store: PouchDbFsImagestore;
     let manager: PouchdbManager;
-    const storeProjectPath = 'store/unittest/';
+    const storeProjectPath = 'test/store/unittest/';
 
 
     beforeEach(async done => {
@@ -47,7 +47,7 @@ xdescribe('PouchDbFsImagestore', () => {
         await manager.reindex(new IndexFacade(mockConstraintIndexer, mockFulltextIndexer, undefined, false));
 
         store = new PouchDbFsImagestore(mockImageConverter, mockBlobMaker, manager.getDbProxy());
-        await store.setPath('store/', 'unittest');
+        await store.setPath('test/store/', 'unittest');
 
         done();
     });

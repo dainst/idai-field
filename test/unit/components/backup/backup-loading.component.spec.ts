@@ -1,14 +1,14 @@
 import {BackupLoadingComponent} from '../../../../src/app/components/backup/backup-loading.component';
 import {Backup} from '../../../../src/app/components/backup/backup';
 import {M} from '../../../../src/app/components/messages/m';
-import PouchDB = require('pouchdb');
+import PouchDB = require('pouchdb-node');
 
 /**
  * @author Daniel de Oliviera
  */
 describe('BackupLoadingComponent', () => {
 
-    const backupFilePath = 'store/backup_test_file.txt';
+    const backupFilePath = 'test/store/backup_test_file.txt';
     const unittestdb = 'unittestdb';
 
     let c: BackupLoadingComponent;
@@ -48,7 +48,7 @@ describe('BackupLoadingComponent', () => {
     it('load backup: project not specified', async done => {
 
         c.projectName = '';
-        c.path = './store/backup_test_file.txt';
+        c.path = './test/store/backup_test_file.txt';
         await c.loadBackup();
 
         expect(messages.add).toHaveBeenCalledWith([M.BACKUP_READ_ERROR_NO_PROJECT_NAME]);
@@ -59,7 +59,7 @@ describe('BackupLoadingComponent', () => {
     it('load backup: filenotexists', async done => {
 
         c.projectName = unittestdb;
-        c.path = './store/backup_test_file.txt';
+        c.path = './test/store/backup_test_file.txt';
 
         backupProvider.readDump.and.returnValue(Promise.reject(Backup.FILE_NOT_EXIST));
         await c.loadBackup();

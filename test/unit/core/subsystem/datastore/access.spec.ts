@@ -1,5 +1,5 @@
 import {createApp, setupSyncTestDb} from '../subsystem-helper';
-import * as PouchDB from 'pouchdb';
+import * as PouchDB from 'pouchdb-node';
 import {Static} from '../../../static';
 
 

@@ -1,81 +1,96 @@
+'use strict';
+
 import {browser, protractor, element, by} from 'protractor';
+
 let EC = protractor.ExpectedConditions;
 let delays = require('../delays');
 
-'use strict';
 
 export class ImportPage {
 
-    public static getSourceOptions = function() {
+    public static getSourceOptions() {
 
         return element(by.id('importSourceSelect')).all(by.css('select option'));
     };
 
-    public static clickSourceOption = function(index) {
+
+    public static clickSourceOption(index) {
 
         return this.getSourceOptions().get(index).click();
     };
 
-    public static getSourceOptionValue = function(index) {
+
+    public static getSourceOptionValue(index) {
 
         return this.getSourceOptions().get(index).getAttribute("value");
     };
 
-    public static getFormatOptions = function() {
+
+    public static getFormatOptions() {
 
         return element(by.id('importFormatSelect')).all(by.css('select option'));
     };
 
-    public static clickFormatOption = function(index) {
+
+    public static clickFormatOption (index) {
 
         return this.getFormatOptions().get(index).click();
     };
 
-    public static getFormatOptionValue = function(index) {
+
+    public static getFormatOptionValue(index) {
 
         return this.getFormatOptions().get(index).getAttribute("value");
     };
 
-    public static getOperationOptions = function() {
+
+    public static getOperationOptions() {
 
         browser.wait(EC.presenceOf(element(by.id('operationSelect'))), delays.ECWaitTime);
         return element(by.id('operationSelect')).all(by.css('select option'));
     };
 
-    public static clickOperationOption = function(index) {
+
+    public static clickOperationOption(index) {
 
         browser.wait(EC.presenceOf(this.getOperationOptions().get(index)), delays.ECWaitTime);
         return this.getOperationOptions().get(index).click();
     };
 
-    public static getImportURLInput = function() {
+
+    public static getImportURLInput() {
 
         return element(by.id('importUrlInput'));
     };
 
-    public static getMessageEl = function(index) {
+
+    public static getMessageEl(index) {
 
         return element(by.id('message-' + index));
     };
 
-    public static getMessageText = function(index) {
+
+    public static getMessageText(index) {
 
         browser.wait(EC.presenceOf(this.getMessageEl(index)), delays.ECWaitTime);
         return this.getMessageEl(index).getText();
     };
 
-    public static clickStartImportButton = function() {
+
+    public static clickStartImportButton() {
 
         browser.wait(EC.visibilityOf(element(by.id('importStartButton'))), delays.ECWaitTime);
         return element(by.id('importStartButton')).click();
     };
 
-    public static getImportModal = function () {
+
+    public static getImportModal() {
 
         return element(by.id('import-upload-modal'));
     };
 
-    public static get = function() {
+
+    public static get() {
 
         return browser.get('#/import/');
     };

@@ -1,7 +1,7 @@
 <div class="sidebar-list-button-group">
     <div class="btn info-button"
          [class.sidebar-list-button-group-active-button]="isDocumentSelected && activePopoverMenu === 'info'"
-         (click)="togglePopoverMenu('info', document); $event.stopPropagation();"
+         (click)="togglePopoverMenu('info'); $event.stopPropagation();"
          placement="right"
          container="body"
          ngbTooltip="Daten anzeigen"
@@ -16,7 +16,7 @@
     <div *ngIf="shouldShowArrowBottomRight()"
          class="btn hierarchy-button"
          [class.sidebar-list-button-group-active-button]="isDocumentSelected && activePopoverMenu === 'children'"
-         (click)="togglePopoverMenu('children', document); $event.stopPropagation();"
+         (click)="togglePopoverMenu('children'); $event.stopPropagation();"
          placement="right"
          container="body"
          ngbTooltip="Untergeordnete Ressourcen anzeigen"

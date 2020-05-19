@@ -18,8 +18,6 @@ import {NavigationService} from '../../../core/resources/navigation/navigation-s
 export class ListButtonGroupComponent {
 
     @Input() document: FieldDocument;
-    @Input() alwaysShowInfoButtons: boolean = false;
-    @Input() hideInfoButtons: boolean = false;
 
     constructor(public resourcesComponent: ResourcesComponent,
                 public viewFacade: ViewFacade,
@@ -40,14 +38,6 @@ export class ListButtonGroupComponent {
     public shouldShowArrowBottomRight = () => this.navigationService.shouldShowArrowBottomRight(this.document);
 
     public jumpToView = () => this.navigationService.jumpToView(this.document);
-
-
-    public shouldShowInfoButton(): boolean {
-
-        return this.alwaysShowInfoButtons
-            || this.resourcesComponent.isHighlighted(this.document)
-            || this.resourcesComponent.isSelected(this.document);
-    }
 
 
     public async jumpToResourceFromOverviewToOperation() {

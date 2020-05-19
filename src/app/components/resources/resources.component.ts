@@ -37,7 +37,6 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
     public isModalOpened: boolean = false;
 
     public activePopoverMenu: PopoverMenu = 'none';
-    public highlightedDocument: FieldDocument|undefined = undefined;
 
     public filterOptions: Array<Category> = [];
     private scrollTarget: FieldDocument|undefined;
@@ -281,19 +280,6 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
     }
 
 
-    public highlightDocument(document: FieldDocument|undefined) {
-
-        this.highlightedDocument = document;
-    };
-
-
-    public isHighlighted(document: FieldDocument): boolean {
-
-        if (!this.highlightedDocument) return false;
-        return this.highlightedDocument.resource.id === document.resource.id;
-    }
-
-
     public async togglePopoverMenu(popoverMenu: PopoverMenu, document: FieldDocument) {
 
         if (this.isPopoverMenuOpened(popoverMenu, document) || popoverMenu === 'none') {
@@ -316,7 +302,6 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
     public closePopover() {
 
         this.activePopoverMenu = 'none';
-        this.highlightedDocument = undefined;
     };
 
 

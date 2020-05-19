@@ -52,8 +52,6 @@ export class SidebarListComponent extends BaseList implements AfterViewInit {
     }
 
 
-    public highlightDocument = (document: FieldDocument|undefined) => this.resourcesComponent.highlightDocument(document);
-
     public select = (document: FieldDocument) => this.resourcesComponent.select(document);
 
     public isScrollbarVisible = (element: HTMLElement) => element.scrollHeight > element.clientHeight;

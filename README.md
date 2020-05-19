@@ -82,8 +82,6 @@ Please note that when using **Windows**, due to nested node_modules and the
 windows default maximum path length you might be running into errors while attempting
 to extract the package. In that case, please use a different archiver, for example [7-Zip](http://www.7-zip.org/download.html).
 
-When using **MacOS**, you need [Wine](http://www.davidbaumgold.com/tutorials/wine-mac/) to build Windows [packages](https://github.com/dainst/idai-field-client/blob/master/README.md#packacking).
-
 Note that creating **Linux** packages should be possible with Electron, but this is yet untested and not enabled.
 
 

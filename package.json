@@ -12,6 +12,7 @@
     "start:watch": "ng build --watch --base-href ./ & electron . dev",
     "build": "gulp copy-fonts-convert-sass && ng build --base-href ./",
     "build:test": "tsc -p test/tsconfig.json",
+    "build:test+watch": "tsc -watch -p test/tsconfig.json",
     "build:java": "mvn -f java/pom.xml clean package && gulp copy-shapefile-tool",
     "build:all": "npm run build && npm run build:test && npm run build:java",
     "build:sass": "gulp convert-sass",

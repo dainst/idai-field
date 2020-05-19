@@ -72,7 +72,7 @@ The optional fail fast parameter specifies if test execution stops on the first 
 To create binaries run:
 
 ```
-$ npm run package[-mac|-win]
+$ npm run package[:mac|:win]
 ```
 
 Without using one of the specified suffixes, this will create packages for both **MacOS** and **Windows** 32/64 bit.

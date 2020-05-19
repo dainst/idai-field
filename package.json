@@ -14,6 +14,7 @@
     "build:test": "tsc -p test/tsconfig.json",
     "build:java": "mvn -f java/pom.xml clean package && gulp copy-shapefile-tool",
     "build:all": "npm run build && npm run build:test && npm run build:java",
+    "build:sass": "gulp convert-sass",
     "lint": "ng lint",
     "test": "jasmine JASMINE_CONFIG_PATH=test/unit/config/jasmine.json",
     "e2e": "node test/dist/test/e2e/spectron.js",

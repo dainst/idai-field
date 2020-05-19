@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, ChangeDetectionStrategy} from '@angular/core';
 import {FieldDocument} from 'idai-components-2';
 import {ProjectCategories} from '../../../core/configuration/project-categories';
 import {RoutingService} from '../../routing-service';
@@ -9,7 +9,8 @@ import {NavigationService} from '../../../core/resources/navigation/navigation-s
 
 @Component({
     selector: 'list-button-group',
-    templateUrl: './list-button-group.html'
+    templateUrl: './list-button-group.html',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 /**
  * @author Daniel de Oliveira

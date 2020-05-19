@@ -110,7 +110,7 @@ $deactivated-button-color: lightgray;
 .resources-listing {
   .resources-listing-item {
     position: relative;
-    display: block;
+    display: flex;
     cursor: default;
     border: 0;
     border-radius: 0;
@@ -138,11 +138,9 @@ $deactivated-button-color: lightgray;
   }
 
   document-teaser {
-    position: absolute;
-    width: $teaser-width;
-    top: 0;
     height: $item-height;
     padding-left: $item-horizontal-padding;
-    padding-right: $item-horizontal-padding;
+    padding-right: 0;
+    flex-grow: 1;
   }
 }

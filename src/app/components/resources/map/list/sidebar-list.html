@@ -15,15 +15,16 @@
                 && viewFacade.getSelectedDocument().resource.id === document.resource.id"
         [id]="'resource-' + document.resource.identifier">
 
-        <list-button-group [document]="document"
-                           [activePopoverMenu]="resourcesComponent.activePopoverMenu"
-                           [isDocumentSelected]="resourcesComponent.isSelected(document)"
-                           (popoverMenuToggled)="resourcesComponent.togglePopoverMenu($event, document)">
-        </list-button-group>
-
         <document-teaser (click)="select(document)"
                          (dblclick)="editDocument(document)"
                          [document]="document"></document-teaser>
+
+        <list-button-group [document]="document"
+                        [activePopoverMenu]="resourcesComponent.activePopoverMenu"
+                        [isDocumentSelected]="resourcesComponent.isSelected(document)"
+                        (popoverMenuToggled)="resourcesComponent.togglePopoverMenu($event, document)">
+        </list-button-group>
+
     </li>
 </ul>
 

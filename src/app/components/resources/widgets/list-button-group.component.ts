@@ -3,7 +3,7 @@ import {FieldDocument} from 'idai-components-2';
 import {ProjectCategories} from '../../../core/configuration/project-categories';
 import {ViewFacade} from '../../../core/resources/view/view-facade';
 import {NavigationService} from '../../../core/resources/navigation/navigation-service';
-import { PopoverMenu } from '../resources.component';
+import { PopoverMenu, ResourcesComponent } from '../resources.component';
 
 
 @Component({
@@ -22,7 +22,8 @@ export class ListButtonGroupComponent {
     @Input() isDocumentSelected: boolean;
     @Output() popoverMenuToggled = new EventEmitter<PopoverMenu>();
 
-    constructor(public viewFacade: ViewFacade,
+    constructor(public resourcesComponent: ResourcesComponent,
+                public viewFacade: ViewFacade,
                 public projectCategories: ProjectCategories,
                 private navigationService: NavigationService) {
     }
@@ -45,8 +46,8 @@ export class ListButtonGroupComponent {
 
     public async jumpToResourceFromOverviewToOperation() {
 
-        // this.resourcesComponent.closePopover();
-        // await this.navigationService.jumpToResourceFromOverviewToOperation(this.document);
-        // this.resourcesComponent.setScrollTarget(this.document);
+        this.resourcesComponent.closePopover();
+        await this.navigationService.jumpToResourceFromOverviewToOperation(this.document);
+        this.resourcesComponent.setScrollTarget(this.document);
     }
 }

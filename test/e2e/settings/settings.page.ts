@@ -9,12 +9,6 @@ let common = require('../common.js');
  */
 export class SettingsPage {
 
-    public static get = function() {
-
-        return browser.get('#/settings');
-    };
-
-
     public static clickSaveSettingsButton = function() {
 
         common.click(element(by.id('save-settings-button')));

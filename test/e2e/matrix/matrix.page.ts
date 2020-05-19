@@ -9,11 +9,6 @@ const delays = require('../delays');
  */
 export class MatrixPage {
 
-    public static get() {
-
-        return browser.get('#/matrix');
-    }
-
     // click
 
     public static clickNode(id: string) {

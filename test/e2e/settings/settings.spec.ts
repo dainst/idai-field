@@ -47,10 +47,11 @@ describe('settings --', function() {
         NavbarPage.clickCloseNonResourcesTab();
 
         NavbarPage.clickTab('project')
-            .then(() => {
-                browser.sleep(5000);
-                return SettingsPage.get();
-            }).then(() => browser.sleep(2000))
+            //.then(() => {
+                // browser.sleep(5000);
+                //return SettingsPage.get();
+            //})
+            .then(() => browser.sleep(2000))
             .then(() => SettingsPage.getUserName())
             .then(username => {
                 expect(username).toEqual('settings_test_user');

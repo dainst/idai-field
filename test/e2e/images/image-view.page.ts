@@ -1,15 +1,9 @@
-import {browser, element, by, protractor} from 'protractor';
+import {element, by} from 'protractor';
 
 const common = require('../common.js');
 
 
 export module ImageViewPage {
-
-    export function get(id: string, menu: string) {
-
-        browser.get('#/images/' + id + '/' + menu);
-    }
-
 
     export function editDocument() {
 

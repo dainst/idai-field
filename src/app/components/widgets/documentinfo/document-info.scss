@@ -82,12 +82,6 @@ document-info {
       &.short-document-info {
         height: calc(100% - 212px);
       }
-
-      &.scrollbar-visible {
-        document-teaser {
-          width: $resources-listing-item-slim-width-with-scrollbar;
-        }
-      }
     }
   }
 }

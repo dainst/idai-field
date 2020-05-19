@@ -54,8 +54,6 @@ export class SidebarListComponent extends BaseList implements AfterViewInit {
 
     public select = (document: FieldDocument) => this.resourcesComponent.select(document);
 
-    public isScrollbarVisible = (element: HTMLElement) => element.scrollHeight > element.clientHeight;
-
 
     ngAfterViewInit() {
 

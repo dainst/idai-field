@@ -2,6 +2,7 @@ import {ImageOverviewPage} from './image-overview.page';
 import {NavbarPage} from '../navbar.page';
 import {SearchBarPage} from '../widgets/search-bar.page';
 import {MenuPage} from '../menu.page';
+import {browser} from 'protractor';
 
 const common = require('../common');
 
@@ -10,9 +11,14 @@ const common = require('../common');
  */
 describe('images/state --', () => {
 
-    beforeEach(done => {
+    beforeEach(() => {
 
-        ImageOverviewPage.getAndWaitForImageCells().then(() => done());
+        browser.sleep(1000);
+
+        MenuPage.navigateToSettings();
+        common.resetApp();
+        MenuPage.navigateToImages();
+        ImageOverviewPage.waitForCells();
     });
 
 

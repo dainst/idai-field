@@ -1,9 +1,12 @@
+import {Injectable} from '@angular/core';
+import {Query} from '../../../datastore/model/query';
+import {ProjectCategories} from '../../../configuration/project-categories';
+
+
+@Injectable()
 /**
  * @author Thomas Kleinke
  */
-import {Query} from '../../../datastore/model/query';
-
-
 export class ImagesState {
 
     private query: Query;
@@ -12,7 +15,7 @@ export class ImagesState {
     private expandAllGroups: boolean = false;
 
 
-    constructor() {}
+    constructor(private projectCategories: ProjectCategories) {}
 
 
     public getQuery(): Query {
@@ -60,5 +63,18 @@ export class ImagesState {
     public setExpandAllGroups(expandAllGroups: boolean) {
 
         this.expandAllGroups = expandAllGroups;
+    }
+
+
+    public resetForE2E() {
+
+        if (this.query) {
+            this.query.q = '';
+            this.query.categories = this.projectCategories.getImageCategoryNames();
+        }
+
+        this.customConstraints = {};
+        this.gridSize = 4;
+        this.expandAllGroups = false;
     }
 }

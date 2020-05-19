@@ -1,11 +1,13 @@
 import {browser, protractor} from 'protractor';
 import {ImageOverviewPage} from './image-overview.page';
 import {NavbarPage} from '../navbar.page';
+import {MenuPage} from '../menu.page';
 
 const path = require('path');
 
 const EC = protractor.ExpectedConditions;
 const delays = require('../delays');
+const common = require('../common');
 
 
 describe('images/upload --', () => {
@@ -17,14 +19,19 @@ describe('images/upload --', () => {
     const uploadImage = () => {
 
         ImageOverviewPage.clickUploadArea();
-        ImageOverviewPage.uploadImage(path.resolve(__dirname, '../../test-data/' + imageUploadFileName));
+        ImageOverviewPage.uploadImage(path.resolve(__dirname, '../../../../test-data/' + imageUploadFileName));
         ImageOverviewPage.chooseImageSubcategory(0);
     };
 
 
-    beforeEach(done => {
+    beforeEach(() => {
 
-        ImageOverviewPage.getAndWaitForImageCells().then(() => done());
+        browser.sleep(1000);
+
+        MenuPage.navigateToSettings();
+        common.resetApp();
+        MenuPage.navigateToImages();
+        ImageOverviewPage.waitForCells();
     });
 
 

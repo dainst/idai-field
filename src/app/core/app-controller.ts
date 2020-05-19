@@ -50,6 +50,7 @@ export class AppController {
     private async reset() {
 
         this.resourcesState.resetForE2E();
+        this.imagesState.resetForE2E();
         this.tabManager.resetForE2E();
         this.documentCache.resetForE2E();
         await this.pouchdbManager.resetForE2E();

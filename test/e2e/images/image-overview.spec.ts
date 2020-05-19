@@ -16,8 +16,6 @@ describe('images --', function() {
     const resourceId1 = 'tf1';
     const resourceId2 = 'si0';
 
-    let i = 0;
-
 
     function createTwo() {
 
@@ -35,12 +33,12 @@ describe('images --', function() {
 
     function _expectLinkBadgePresence(toBeTruthy, relatedResourceId) {
 
-        const exp = expect(ImageOverviewPage.getCell(0)
-            .all(by.id('related-resource-'+relatedResourceId))
+        const expectation = expect(ImageOverviewPage.getCell(0)
+            .all(by.id('related-resource-' + relatedResourceId))
             .first().isPresent());
 
-        if (toBeTruthy) exp.toBeTruthy();
-        else exp.toBeFalsy();
+        if (toBeTruthy) expectation.toBeTruthy();
+        else expectation.toBeFalsy();
     }
 
 
@@ -53,28 +51,14 @@ describe('images --', function() {
     }
 
 
-    beforeAll(done => {
+    beforeEach(() => {
 
-        ImageOverviewPage.getAndWaitForImageCells().then(() => {
-            browser.sleep(delays.shortRest * 3);
-            done();
-        });
-    });
+        browser.sleep(1000);
 
-
-    beforeEach(async done => {
-
-        if (i > 0) {
-            MenuPage.navigateToSettings();
-            await common.resetApp();
-            browser.sleep(delays.shortRest * 3);
-            MenuPage.navigateToImages();
-            ImageOverviewPage.waitForCells();
-            browser.sleep(delays.shortRest);
-        }
-
-        i++;
-        done();
+        MenuPage.navigateToSettings();
+        common.resetApp();
+        MenuPage.navigateToImages();
+        ImageOverviewPage.waitForCells();
     });
 
 

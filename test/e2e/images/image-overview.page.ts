@@ -14,20 +14,6 @@ export module ImageOverviewPage {
     export const selectedClass = 'selected';
 
 
-    export function get() {
-
-        return browser.get('#/images');
-    }
-
-
-    export function getAndWaitForImageCells() {
-
-        return ImageOverviewPage.get().then(() => {
-            return ImageOverviewPage.waitForCells();
-        });
-    }
-
-
     export function waitForCells() {
 
         return browser.wait(EC.presenceOf(element(by.css('.cell'))), delays.ECWaitTime,

@@ -33,27 +33,29 @@ $ npm run build
 $ npm start
 ```
 
-`npm install` fetches the necessary dependencies. `npm run build` compiles the typescript files, creates [configuration](config/README.md) files, gathers the necessary fonts and converts scss files. `npm start` starts the Electron app. For a fast development workflow it is recommended to set up your IDE to compile the typescript files continuously while you are 
- working on the sources. That way you can just hit reload to see changes made to the *.ts* or *.html* files.
+`npm install` fetches the necessary dependencies. `npm run build` compiles the typescript files, creates [configuration](config/README.md) files, gathers the necessary fonts and converts scss files. `npm start` starts the Electron app. To have the TypeScript compilation run continuously while running the app, start the app with `npm start:watch`. In this case, a subprocess for watching gets started. To properly shut it down,
+make sure to close the app via `ctrl-c` in your terminal. Alternatively, you can also start the watch process separately, by entering `npm run watch` in one, and then `npm start` in another terminal window. Changes take effect after the watcher reports success and the window is reloaded manually. Scss files are not monitored, so any changes would take effect after calling `npm run build:sass`.
  
 Shapefile import/export is handled by a Java command line tool which is called by the Electron app. If Java 8 or higher and [Maven](https://maven.apache.org/) are installed, the Java tool can be built via the command:
 ```
-$ npm run build-java
+$ npm run build:java
 ```
-You can also call `npm run build-all` to build everything in one step. 
-
+You can also call `npm run build:all` to build everything in one step (including tests).
 
 See also [idai-components-2](https://github.com/dainst/idai-components-2).
 
 ## Tests
 
-The app must have been built (`npm run build`) before running the tests.
+The app must have been built (`npm run build:test`) before running the tests.
 
 To execute the **unit tests**, run 
 
 ```
 $ npm test   
 ```
+
+The project is set up to have the compilation of the sources (test as well as regular sources) separately from angular. It is done on the 
+basis of `test/tsconfig.json`. To rebuild the sources for tests continually, you can `npm run build:test+watch` in one terminal window, and `npm test` in another.
 
 For troubleshooting information see [here](docs/unit-test-troubleshooting.md).
 

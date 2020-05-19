@@ -11,12 +11,12 @@ exports.config = {
 
     specs: [
         'dist/test/e2e/matrix/*.spec.js',
-        // '../project/*.spec.js',
         'dist/test/e2e/images/*.spec.js',
         'dist/test/e2e/resources/*.spec.js',
         'dist/test/e2e/map/*.spec.js',
         'dist/test/e2e/import/*.spec.js',
-        // '../settings/*.spec.js'
+        'dist/test/e2e/settings/*.spec.js',
+        // 'dist/test/e2e/project/*.spec.js'
     ],
 
     allScriptsTimeout: 110000,

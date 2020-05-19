@@ -6,12 +6,12 @@ import {SettingsPage} from './settings.page';
 import {ImageOverviewPage} from '../images/image-overview.page';
 import {ImageViewPage} from '../images/image-view.page';
 
-
 PouchDB.plugin(require('pouchdb-adapter-memory'));
 
 const delays = require('../delays');
 const path = require('path');
 const common = require('../common');
+
 
 /**
  * @author Thomas Kleinke
@@ -25,9 +25,12 @@ describe('settings --', function() {
     });
 
 
-    beforeEach(done => {
+    beforeEach(() => {
 
-        SettingsPage.get().then(() => done());
+        browser.sleep(1000);
+
+        MenuPage.navigateToSettings();
+        common.resetApp();
     });
 
 
@@ -37,7 +40,7 @@ describe('settings --', function() {
     });
 
 
-    it('save syncing settings to config file and load them after restart', done => {
+    xit('save syncing settings to config file and load them after restart', done => {
 
         common.typeIn(SettingsPage.getUserNameInput(), 'settings_test_user');
         SettingsPage.clickSaveSettingsButton();
@@ -69,7 +72,7 @@ describe('settings --', function() {
         MenuPage.navigateToImages();
         browser.sleep(delays.shortRest * 50);
         ImageOverviewPage.clickUploadArea();
-        ImageOverviewPage.uploadImage(path.resolve(__dirname, '../../test-data/Aldrin_Apollo_11.jpg'));
+        ImageOverviewPage.uploadImage(path.resolve(__dirname, '../../../../test-data/Aldrin_Apollo_11.jpg'));
         NavbarPage.awaitAlert('Es können keine Dateien im Bilderverzeichnis gespeichert werden', false);
         NavbarPage.clickCloseAllMessages();
 

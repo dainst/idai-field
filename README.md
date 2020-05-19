@@ -17,7 +17,7 @@ interested third party is free to reuse and adjust it to their needs.
 
 ## Installation
 
-You can install the latest version of iDAI.field by downloading it from the [github releases page](https://github.com/dainst/idai-field/releases/latest) or the [idai-field page](field.dainst.org). Choose the installer for your operating system (**MacOS** or **Windows**).
+You can install the latest version of iDAI.field by downloading it from the [github releases page](https://github.com/dainst/idai-field/releases/latest) or the [idai-field page](http://field.dainst.org). Choose the installer for your operating system (**MacOS** or **Windows**).
 
    
 ## Development

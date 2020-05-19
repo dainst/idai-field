@@ -34,7 +34,7 @@ $ npm start
 ```
 
 `npm install` fetches the necessary dependencies. `npm run build` compiles the typescript files, creates [configuration](config/README.md) files, gathers the necessary fonts and converts scss files. `npm start` starts the Electron app. To have the TypeScript compilation run continuously while running the app, start the app with `npm start:watch`. In this case, a subprocess for watching gets started. To properly shut it down,
-make sure to close the app via `ctrl-c` in your terminal. Alternatively, you can also start the watch process separately, by entering `npm run watch` in one, and then `npm start` in another terminal window. Changes take effect after the watcher reports success and the window is reloaded manually. Scss files are not monitored, so any changes would take effect after calling `npm run build:sass`.
+make sure to close the app via `ctrl-c` in your terminal. Alternatively, you can also start the watch process separately, by entering `npm run watch` in one, and then `npm start` in another terminal window. Changes take effect after the watcher reports success and the window is reloaded manually. Scss files are not monitored, so any changes would take effect only after calling `npm run build:sass`.
  
 Shapefile import/export is handled by a Java command line tool which is called by the Electron app. If Java 8 or higher and [Maven](https://maven.apache.org/) are installed, the Java tool can be built via the command:
 ```

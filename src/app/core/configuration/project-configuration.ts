@@ -27,7 +27,7 @@ export class ProjectConfiguration {
 
     public static UNKNOWN_CATEGORY_ERROR = 'ProjectConfiguration.Errors.UnknownCategory';
 
-    private categories: Array<Category>;
+    private categoriesArray: Array<Category>;
 
     private categoriesMap: Map<Category>;
 
@@ -36,7 +36,7 @@ export class ProjectConfiguration {
 
     constructor([categories, relations]: RawProjectConfiguration) {
 
-        this.categories = categories || [];
+        this.categoriesArray = categories || [];
         this.relations = relations || [];
         this.categoriesMap = namedArrayToNamedMap(categories);
     }
@@ -61,7 +61,7 @@ export class ProjectConfiguration {
 
     public getCategoriesArray(): Array<Category> {
 
-        return this.categories;
+        return this.categoriesArray;
     }
 
 
@@ -75,6 +75,7 @@ export class ProjectConfiguration {
 
         return filter(on(Category.PARENT_CATEGORY, isUndefined), this.getCategoriesMap());
     }
+
 
     public getCategoryAndSubcategories(supercategoryName: string): Map<Category> {
 
@@ -181,8 +182,9 @@ export class ProjectConfiguration {
     public getFieldDefinitionLabel(categoryName: string, fieldName: string): string {
 
         const fieldDefinitions = this.getFieldDefinitions(categoryName);
-        if (fieldDefinitions.length === 0)
+        if (fieldDefinitions.length === 0) {
             throw 'No category definition found for category \'' + categoryName + '\'';
+        }
 
         return Category.getLabel(fieldName, fieldDefinitions);
     }

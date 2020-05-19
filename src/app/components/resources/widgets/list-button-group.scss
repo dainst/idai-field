@@ -1,34 +1,24 @@
 $activated-color: #868e96;
 $button-width: 24px;
-$button-group-width: 2 * $button-width;
 
 
 .sidebar-list-button-group {
-  position: absolute;
-  right: 0;
   height: $item-height;
-  width: $button-group-width;
   color: gray;
+  display: flex;
 
   .btn {
     border: 0;
     color: $activated-color;
   }
 
-  .sidebar-list-button-group-inner {
-    position: relative;
-    width: $button-width;
-    top: 14px;
-  }
-
   .info-button,
-  .link-button,
   .hierarchy-button {
-    position: absolute;
     width: $button-width;
     height: $item-height;
     padding-left: 0;
     padding-right: 0;
+    padding-top: 17px;
 
     &:hover {
       color: darken($activated-color, 10%);
@@ -38,39 +28,10 @@ $button-group-width: 2 * $button-width;
   }
 
   .info-button {
-    left: 0;
     display: none;
 
     &.sidebar-list-button-group-active-button {
       display: block !important;
-    }
-
-    span {
-      position: absolute;
-      left: 0;
-      top: 19px;
-    }
-  }
-
-  .hierarchy-button {
-    left: $button-width;
-
-    span {
-      position: absolute;
-      top: 20px;
-      left: 1px;
-    }
-
-    &.hierarchy-button-overview span {
-      left: 3px;
-
-      &.arrow-up {
-        top: 19px;
-      }
-
-      &.arrow-top-right {
-        top: 18px;
-      }
     }
   }
 
@@ -82,6 +43,5 @@ $button-group-width: 2 * $button-width;
 }
 
 #sidebar .resources-listing-item:hover .info-button {
-
   display: block;
 }

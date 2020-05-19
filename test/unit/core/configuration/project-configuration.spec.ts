@@ -77,7 +77,7 @@ describe('ProjectConfiguration', () => {
         const configuration: ProjectConfiguration = new ProjectConfiguration({ categories: {} } as any);
 
         expect(() => {
-            configuration.getFieldDefinitionLabel('UndefinedCategory','someField');
+            configuration.getFieldDefinitionLabel('UndefinedCategory', 'someField');
         }).toThrow();
     });
 

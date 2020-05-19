@@ -41,6 +41,10 @@ $button-group-width: 2 * $button-width;
     left: 0;
     display: none;
 
+    &.sidebar-list-button-group-active-button {
+      display: block !important;
+    }
+
     span {
       position: absolute;
       left: 0;
@@ -79,5 +83,5 @@ $button-group-width: 2 * $button-width;
 
 #sidebar .resources-listing-item:hover .info-button {
 
-    display: block;
+  display: block;
 }

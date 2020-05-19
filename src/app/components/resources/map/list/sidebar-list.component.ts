@@ -158,6 +158,9 @@ export class SidebarListComponent extends BaseList implements AfterViewInit {
     }
 
 
+    public trackDocument = (index: number, item: FieldDocument) => item.resource.id;
+
+
     private async openChildCollection() {
 
         const selectedDocument: FieldDocument|undefined = this.viewFacade.getSelectedDocument();

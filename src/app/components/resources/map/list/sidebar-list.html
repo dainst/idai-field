@@ -6,7 +6,7 @@
 
 <ul #sidebar id="sidebar" class="resources-listing"
     tabindex="0" (scroll)="contextMenu.close()" (keydown)="onKeyDown($event)">
-    <li *ngFor="let document of viewFacade.getDocuments();"
+    <li *ngFor="let document of viewFacade.getDocuments(); trackBy: trackDocument"
         class="resources-listing-item resources-listing-item-wide"
         (contextmenu)="contextMenu.open($event, document)"
         [class.new-from-remote]="viewFacade.isNewDocumentFromRemote(document)"

@@ -2,7 +2,7 @@
               [contextMenu]="contextMenu"
               (onSelectAction)="performContextMenuAction($event)"></context-menu>
 
-<popover-menu [document]="viewFacade.getSelectedDocument()"></popover-menu>
+<popover-menu [document]="selectedDocument"></popover-menu>
 
 <ul #sidebar id="sidebar" class="resources-listing"
     tabindex="0" (scroll)="contextMenu.close()" (keydown)="onKeyDown($event)">
@@ -11,8 +11,8 @@
         (contextmenu)="contextMenu.open($event, document)"
         [class.new-from-remote]="viewFacade.isNewDocumentFromRemote(document)"
         [class.conflicted]="document['_conflicts']"
-        [class.selected]="viewFacade.getSelectedDocument()
-                && viewFacade.getSelectedDocument().resource.id === document.resource.id"
+        [class.selected]="selectedDocument
+                && selectedDocument.resource.id === document.resource.id"
         [id]="'resource-' + document.resource.identifier">
 
         <document-teaser (click)="select(document)"

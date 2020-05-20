@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, ViewChild, Input} from '@angular/core';
 import {to} from 'tsfun';
 import {FieldDocument} from 'idai-components-2';
 import {ResourcesComponent} from '../../resources.component';
@@ -26,6 +26,8 @@ import {MenuService} from '../../../../desktop/menu-service';
 export class SidebarListComponent extends BaseList implements AfterViewInit {
 
     public contextMenu: ContextMenu = new ContextMenu();
+
+    @Input() selectedDocument: FieldDocument;
 
     @ViewChild('sidebar', { static: false }) sidebarElement: ElementRef;
 
@@ -66,7 +68,7 @@ export class SidebarListComponent extends BaseList implements AfterViewInit {
         if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
             await this.viewFacade.navigateDocumentList(event.key === 'ArrowUp' ? 'previous' : 'next');
             event.preventDefault();
-            this.resourcesComponent.setScrollTarget(this.viewFacade.getSelectedDocument());
+            this.resourcesComponent.setScrollTarget(this.selectedDocument);
         }
 
         if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
@@ -163,7 +165,7 @@ export class SidebarListComponent extends BaseList implements AfterViewInit {
 
     private async openChildCollection() {
 
-        const selectedDocument: FieldDocument|undefined = this.viewFacade.getSelectedDocument();
+        const selectedDocument: FieldDocument|undefined = this.selectedDocument;
         if (selectedDocument) await this.navigationService.moveInto(selectedDocument);
     }
 

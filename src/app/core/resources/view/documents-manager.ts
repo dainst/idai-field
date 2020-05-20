@@ -42,7 +42,7 @@ export class DocumentsManager {
     private currentQueryId: string;
     private populateInProgress: boolean = false;
 
-    private static documentLimit: number = 200;
+    private static documentLimit: number = 10000;
 
 
     constructor(

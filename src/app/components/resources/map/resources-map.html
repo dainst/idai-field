@@ -1,6 +1,6 @@
 <div class="row flex-nowrap">
     <div id="sidebar-list-container" class="col">
-        <sidebar-list></sidebar-list>
+        <sidebar-list [selectedDocument]="viewFacade.getSelectedDocument()"></sidebar-list>
     </div>
 
     <div *ngIf="resourcesComponent.isEditingGeometry" class="layover1"></div>

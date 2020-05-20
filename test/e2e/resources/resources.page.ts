@@ -66,6 +66,8 @@ export class ResourcesPage {
 
     public static clickSelectResource(identifier: string, tab?: 'info' | 'children') {
 
+        common.hover(element(by.css('#resource-' + identifier)));
+
         let buttonClass = '';
         if (tab) {
             if (tab === 'info') buttonClass = '.info-button';

@@ -40,6 +40,13 @@ function doubleClick(element) {
 }
 
 
+function hover(element) {
+
+    browser.wait(EC.visibilityOf(element), delays.ECWaitTime);
+    browser.actions().mouseMove(element).perform();
+}
+
+
 function resetConfigJson(): Promise<any> {
 
     const configPath = browser.params.configPath;
@@ -69,6 +76,7 @@ module.exports = {
     click: click,
     rightClick: rightClick,
     doubleClick: doubleClick,
+    hover: hover,
     resetConfigJson: resetConfigJson,
     resetApp: resetApp
 };

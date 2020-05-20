@@ -41,7 +41,7 @@
   "Building:default": {
     "commons": [],
     "valuelists": {
-      "period": "periods-meninx-1"
+      "period": "periods-gadara"
     },
     "fields": {},
     "hidden": []
@@ -73,7 +73,7 @@
     ],
     "hidden": [],
     "valuelists": {
-      "period": "periods-meninx-1"
+      "period": "periods-gadara"
     },
     "fields": {
       "colorSoil": {
@@ -87,7 +87,7 @@
     ],
     "hidden": [],
     "valuelists": {
-      "period": "periods-meninx-1"
+      "period": "periods-gadara"
     },
     "fields": {}
   },
@@ -109,7 +109,7 @@
     ],
     "hidden": [],
     "valuelists": {
-      "period": "periods-meninx-1"
+      "period": "periods-gadara"
     },
     "fields": {}
   },

@@ -11,8 +11,7 @@
         (contextmenu)="contextMenu.open($event, document)"
         [class.new-from-remote]="viewFacade.isNewDocumentFromRemote(document)"
         [class.conflicted]="document['_conflicts']"
-        [class.selected]="selectedDocument
-                && selectedDocument.resource.id === document.resource.id"
+        [class.selected]="selectedDocument?.resource.id === document.resource.id"
         [id]="'resource-' + document.resource.identifier">
 
         <document-teaser (click)="select(document)"
@@ -21,7 +20,7 @@
 
         <list-button-group [document]="document"
                         [activePopoverMenu]="resourcesComponent.activePopoverMenu"
-                        [isDocumentSelected]="resourcesComponent.isSelected(document)"
+                        [isDocumentSelected]="selectedDocument?.resource.id === document.resource.id"
                         (popoverMenuToggled)="resourcesComponent.togglePopoverMenu($event, document)">
         </list-button-group>
 

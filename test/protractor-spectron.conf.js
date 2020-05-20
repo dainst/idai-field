@@ -15,8 +15,7 @@ exports.config = {
         'dist/test/e2e/resources/*.spec.js',
         'dist/test/e2e/map/*.spec.js',
         'dist/test/e2e/import/*.spec.js',
-        'dist/test/e2e/settings/*.spec.js',
-        // 'dist/test/e2e/project/*.spec.js'
+        'dist/test/e2e/settings/*.spec.js'
     ],
 
     allScriptsTimeout: 110000,

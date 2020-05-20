@@ -30,8 +30,6 @@ export class ThumbnailComponent implements OnChanges {
 
     public onImageClicked = () => this.onClick.emit();
 
-    public getNumberOfImages = () => this.resource.relations.isDepictedIn.length;
-
 
     async ngOnChanges() {
 
@@ -50,6 +48,14 @@ export class ThumbnailComponent implements OnChanges {
                 id: 'widgets.documentInfo.thumbnail.linkedImages',
                 value: 'verknüpfte Bilder'
             });
+    }
+
+
+    public getNumberOfImages(): number {
+
+        return this.resource.relations.isDepictedIn
+            ? this.resource.relations.isDepictedIn.length
+            : 0;
     }
 
 

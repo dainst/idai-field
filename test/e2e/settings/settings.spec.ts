@@ -1,12 +1,9 @@
 import {browser} from 'protractor';
 import {NavbarPage} from '../navbar.page';
 import {MenuPage} from '../menu.page';
-import * as PouchDB from 'pouchdb';
 import {SettingsPage} from './settings.page';
 import {ImageOverviewPage} from '../images/image-overview.page';
 import {ImageViewPage} from '../images/image-view.page';
-
-PouchDB.plugin(require('pouchdb-adapter-memory'));
 
 const delays = require('../delays');
 const path = require('path');

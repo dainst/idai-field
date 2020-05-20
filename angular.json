@@ -22,14 +22,15 @@
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
-            "aot": true,
+            "aot": false,
             "deleteOutputPath": false,
             "assets": [
               "src/favicon.png",
               "src/fonts",
               "src/app.css",
               "src/samples",
-              "src/img"
+              "src/img",
+              "src/config"
             ],
             "styles": [
               "src/styles.scss"
@@ -38,6 +39,7 @@
           },
           "configurations": {
             "production": {
+              "aot": true,
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",

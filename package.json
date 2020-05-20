@@ -7,7 +7,9 @@
   "author": "German Archaeological Institute",
   "scripts": {
     "ng": "ng",
-    "start": "electron . dev",
+    "ng:serve": "ng serve --servePath=dist --baseHref=dist",
+    "start": "electron . prod",
+    "start:dev": "electron . dev",
     "watch": "ng-build --watch --base-href ./",
     "start:watch": "ng build --watch --base-href ./ & electron . dev",
     "build": "gulp copy-fonts-convert-sass && ng build --base-href ./",

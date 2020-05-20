@@ -59,8 +59,10 @@ if (process.argv && process.argv.length > 2) {
     env = process.argv[2];
 }
 
+let entryUrl = 'file://' + __dirname + '/../dist/index.html';
 if (env) { // is environment 'dev' (npm start) or 'test' (npm run e2e)
-    global.configurationDirPath = '../config';
+    global.configurationDirPath = './config';
+    entryUrl = 'http://localhost:4200/dist/';
 }
 
 if (!env) {
@@ -142,7 +144,7 @@ const createWindow = () => {
     });
 
     // and load the index.html of the app.
-    mainWindow.loadURL('file://' + __dirname + '/../dist/index.html');
+       mainWindow.loadURL(entryUrl);
 
     // Open the DevTools.
     // mainWindow.webContents.openDevTools();
@@ -209,9 +211,7 @@ electron.ipcMain.on('reload', (event, route) => {
     mainWindow.reload();
     mainWindow.loadURL(
         url.format({
-            pathname: require('path').join(__dirname, '/../dist/index.html'),
-            protocol: 'file:',
-            slahes: true,
+            pathname: entryUrl,
             hash: route
         })
     );

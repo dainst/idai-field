@@ -115,7 +115,6 @@ const getTemplate = (mainWindow, context) => {
             click: function (item, focusedWindow) {
                 if (focusedWindow) {
                   focusedWindow.reload();
-                  focusedWindow.loadURL('file://' + __dirname + '/../dist/index.html');
                 }
             }
         }, {

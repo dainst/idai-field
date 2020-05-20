@@ -17,7 +17,9 @@
     <link rel="stylesheet" type="text/css" href="app.css">
 
     <script>
-        window.__zone_symbol__UNPATCHED_EVENTS = ['scroll', 'mousemove', 'pointermove']; // disable patch specified eventNames
+        window.__Zone_disable_requestAnimationFrame = true; // disable patch requestAnimationFrame
+        window.__Zone_disable_on_property = true; // disable patch onProperty such as onclick
+        window.__zone_symbol__UNPATCHED_EVENTS = ['scroll', 'mousemove', 'pointermove', 'wheel', 'mouseover', 'mouseout', 'pointerout']; // disable patch specified eventNames
     </script>
 </head>
 

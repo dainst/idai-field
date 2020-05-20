@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild, ChangeDetectorRef} from '@angular/core';
 import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 import {HttpClient} from '@angular/common/http';
 import {Chapter, HelpLoader} from './help-loader';
@@ -33,7 +33,8 @@ export class HelpComponent implements OnInit {
     constructor(private domSanitizer: DomSanitizer,
                 private http: HttpClient,
                 private settingsService: SettingsService,
-                private tabManager: TabManager) {}
+                private tabManager: TabManager,
+                private changeDetectorRef: ChangeDetectorRef) {}
 
 
     async ngOnInit() {
@@ -80,6 +81,7 @@ export class HelpComponent implements OnInit {
                 this.activeChapter = chapter;
             }
         });
+        this.changeDetectorRef.detectChanges();
     }
 
 

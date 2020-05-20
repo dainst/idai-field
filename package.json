@@ -20,7 +20,7 @@
     "test": "jasmine JASMINE_CONFIG_PATH=test/unit/config/jasmine.json",
     "e2e": "node test/dist/test/e2e/spectron.js",
     "clean": "git clean -xdf app test",
-    "reset": "npm install && npm run clean && npm run build",
+    "reset": "npm install && npm run clean && npm run build && npm run build:test",
     "reset:all": "npm install && npm run clean && npm run build:all",
     "package:mac": "electron-builder -m",
     "package:win": "electron-builder -w nsis --x64 --ia32",

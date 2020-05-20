@@ -74,7 +74,7 @@ describe('ProjectConfiguration', () => {
 
     it('should throw an error if field is not defined', () => {
 
-        const configuration: ProjectConfiguration = new ProjectConfiguration({ categories: {} } as any);
+        const configuration: ProjectConfiguration = new ProjectConfiguration([[], []]);
 
         expect(() => {
             configuration.getFieldDefinitionLabel('UndefinedCategory', 'someField');

@@ -12,34 +12,40 @@ import {FindResult} from '../../../../src/app/core/datastore/model/read-datastor
 describe('Validator', () => {
 
     const projectConfiguration = new ProjectConfiguration(
-        {
-            categories: [
+        [
+            [
                 {
                     name: 'T',
-                    fields: [
-                        { name: 'id' },
-                        { name: 'identifier' },
-                        { name: 'category' },
-                        { name: 'optional' },
-                        { name: 'mandatory', mandatory: true },
-                        { name: 'number1', label: 'number1', inputType: 'float' },
-                        { name: 'number2', label: 'number2', inputType: 'float' }
+                    groups: [
+                        {
+                            name: 'G',
+                            fields: [
+                                { name: 'id' },
+                                { name: 'identifier' },
+                                { name: 'category' },
+                                { name: 'optional' },
+                                { name: 'mandatory', mandatory: true },
+                                { name: 'number1', label: 'number1', inputType: 'float' },
+                                { name: 'number2', label: 'number2', inputType: 'float' }
+                            ]
+                        }
                     ]
                 },
                 {
                     name: 'T2',
-                    fields: [
-                        { name: 'id' },
-                        { name: 'category' }
+                    groups: [
+                        {
+                            name: 'G',
+                            fields: [
+                                { name: 'id' },
+                                { name: 'category' }
+                            ]
+                        }
                     ]
-                },
+                }
             ],
-            relations: [
-                { name: 'isRelatedTo', domain: ['T'], range: ['T'], inverse: 'NO-INVERSE' },
-                { name: 'isDepictedIn', domain: ['T'], range: ['T2'], inverse: 'NO-INVERSE' },
-                { name: 'isRecordedIn', domain: ['T'], range: ['T2'], inverse: 'NO-INVERSE' }
-            ]
-        } as any
+            []
+        ] as any
     );
 
 

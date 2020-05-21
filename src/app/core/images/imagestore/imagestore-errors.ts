@@ -3,8 +3,8 @@
  */
 export class ImagestoreErrors {
 
-    public static NOT_FOUND: string = 'idai-field-client/app/imagestore/notfound';
-    public static EMPTY: string = 'idai-field-client/app/imagestore/empty';
-    public static GENERIC_ERROR: string = 'idai-field-client/app/imagestore/error';
-    public static INVALID_PATH: string = 'idai-field-client/app/imagestore/invalidpath';
+    public static NOT_FOUND: string = 'error:app/core/images/imagestore/imagestore-errors.ts:notfound';
+    public static EMPTY: string = 'error:app/core/images/imagestore/imagestore-errors.ts:empty';
+    public static GENERIC_ERROR: string = 'error:app/core/images/imagestore/imagestore-errors.ts:error';
+    public static INVALID_PATH: string = 'error:app/core/images/imagestore/imagestore-errors.ts:invalidpath';
 }

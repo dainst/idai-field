@@ -248,11 +248,16 @@ export class TypeGridComponent extends BaseList implements OnChanges {
     }
 
 
-    private getMainImage(document: FieldDocument): Promise<SafeResourceUrl> {
+    private async getMainImage(document: FieldDocument): Promise<SafeResourceUrl> {
 
-        return this.imagestore.read(
-            document.resource.relations['isDepictedIn'][0], false, true
-        );
+        try {
+            return await this.imagestore.read(
+                document.resource.relations['isDepictedIn'][0], false, true
+            );
+        } catch (error) {
+            console.warn('did not find image in type-grid-component.ts#getMainImage', document.resource.relations['isDepictedIn'][0]);
+            return [];
+        }
     }
 
 
@@ -262,8 +267,15 @@ export class TypeGridComponent extends BaseList implements OnChanges {
             = (await TypeImagesUtil.getLinkedImages(document, this.fieldDatastore))
                 .filter(image => image.imageId !== PLACEHOLDER);
 
-        return asyncMap((image: ImageRowItem) => {
-            return this.imagestore.read(image.imageId, false, true);
-        }, take(4, linkedImages));
+        return asyncReduce(async (images: any, image: ImageRowItem) => {
+
+            try {
+                return images.concat(await this.imagestore.read(image.imageId, false, true));
+            } catch (error) {
+                console.warn('did not find image in type-grid-component#getImagesOfLinkedResources', image.imageId);
+                return images;
+            }
+
+        }, [])(take(4, linkedImages));
     }
 }

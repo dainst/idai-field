@@ -59,14 +59,16 @@ export async function setInverseRelationsForDbResources(
 function reduceToDBDocumentsToBeUpdated(
         getDocumentTargetDocsToUpdate: (document: Document) => Promise<Array<Document>>) {
 
-    return asyncReduce(
+    return (documents: Array<Document>) => asyncReduce(
+        documents,
         async (totalDocsToUpdate: Array<Document>, document: Document) => {
 
             return unionOfDocuments([
                 totalDocsToUpdate,
                 await getDocumentTargetDocsToUpdate(document)]);
 
-        }, []);
+        },
+        []);
 }
 
 

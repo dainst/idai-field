@@ -229,10 +229,12 @@ export class TypeGridComponent extends BaseList implements OnChanges {
     private async getImages(): Promise<{ [resourceId: string]: Array<SafeResourceUrl> }> {
 
         return await asyncReduce(
+            this.documents.concat(this.linkedDocuments),
             async (images: { [resourceId: string]: Array<SafeResourceUrl> }, document: FieldDocument) => {
                 images[document.resource.id] = await this.getLinkedImages(document);
                 return images;
-            }, {})(this.documents.concat(this.linkedDocuments));
+            },
+            {});
     }
 
 
@@ -267,15 +269,17 @@ export class TypeGridComponent extends BaseList implements OnChanges {
             = (await TypeImagesUtil.getLinkedImages(document, this.fieldDatastore))
                 .filter(image => image.imageId !== PLACEHOLDER);
 
-        return asyncReduce(async (images: any, image: ImageRowItem) => {
+        return asyncReduce(
+            take(4, linkedImages), // TODO get rid of take; check in reducer if we have reached 4 images instead
+            async (images: any, image: ImageRowItem) => {
 
-            try {
-                return images.concat(await this.imagestore.read(image.imageId, false, true));
-            } catch (error) {
-                console.warn('did not find image in type-grid-component#getImagesOfLinkedResources', image.imageId);
-                return images;
-            }
-
-        }, [])(take(4, linkedImages));
+                try {
+                    return images.concat(await this.imagestore.read(image.imageId, false, true));
+                } catch (error) {
+                    console.warn('did not find image in type-grid-component#getImagesOfLinkedResources', image.imageId);
+                    return images;
+                }
+            },
+            []);
     }
 }

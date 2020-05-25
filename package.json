@@ -8,7 +8,9 @@
   "scripts": {
     "ng": "ng",
     "ng:serve": "ng serve --servePath=dist",
+    "ng:serve:en": "ng serve --servePath=dist --configuration=en",
     "start": "npm-run-all -p ng:serve start:dev",
+    "start:en": "npm-run-all -p ng:serve:en start:dev",
     "start:dev": "wait-on http-get://localhost:4200/dist/ && electron . dev",
     "watch": "ng-build --watch --base-href ./",
     "start:watch": "ng build --watch --base-href ./ & electron . dev",

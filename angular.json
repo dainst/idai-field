@@ -36,6 +36,7 @@
             "tsConfig": "tsconfig.app.json",
             "aot": true,
             "deleteOutputPath": false,
+            "sourceMap": false,
             "assets": [
               "src/favicon.png",
               "src/fonts",
@@ -51,8 +52,10 @@
             "scripts": []
           },
           "configurations": {
+            "en": {
+              "localize": ["en"]
+            },
             "production": {
-              "aot": true,
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -96,6 +99,9 @@
             "browserTarget": "idai-field:build"
           },
           "configurations": {
+            "en": {
+              "browserTarget": "idai-field:build:en"
+            },
             "production": {
               "browserTarget": "idai-field:build:production"
             }

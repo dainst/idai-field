@@ -24,7 +24,7 @@
     "reset:all": "npm install && npm run clean && npm run build:all",
     "package:mac": "electron-builder -m",
     "package:win": "electron-builder -w nsis --x64 --ia32",
-    "i18n": "ng-xi18n --locale de--project . && ngx-extractor -i \"./src/app/**/*.ts\" -o ./src/app/messages.xlf -l de && xliffmerge --profile xliff-merge.json && rimraf src/app/messages.xlf"
+    "i18n": "ng xi18n idai-field && ngx-extractor -i \"./src/app/**/*.ts\" -o ./messages.xlf -l de && xliffmerge --profile xliff-merge.json && rimraf ./messages.xlf"
   },
   "build": {
     "appId": "org.dainst.field",

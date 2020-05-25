@@ -7,7 +7,7 @@
   "author": "German Archaeological Institute",
   "scripts": {
     "ng": "ng",
-    "ng:serve": "ng serve --servePath=dist --baseHref=dist",
+    "ng:serve": "ng serve --servePath=dist",
     "start": "npm-run-all -p ng:serve start:dev",
     "start:dev": "wait-on http-get://localhost:4200/dist/ && electron . dev",
     "watch": "ng-build --watch --base-href ./",

@@ -216,8 +216,8 @@ export class TypeGridComponent extends BaseList implements OnChanges {
 
         const linkedResourceIds: string[] = flow(
             [this.mainDocument].concat(this.subtypes),
-            filter((document: FieldDocument) => Document.hasRelations(document, 'hasInstance')),
-            map((document: FieldDocument) => document.resource.relations['hasInstance']) as any /* TODO review */,
+            filter(document => Document.hasRelations(document, 'hasInstance')),
+            map(document => document.resource.relations['hasInstance']),
             flatten(),
             set as any /* TODO review */
         );

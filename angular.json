@@ -42,7 +42,8 @@
               "src/app.css",
               "src/samples",
               "src/img",
-              "src/info"
+              "src/info",
+              "src/config"
             ],
             "styles": [
               "src/styles.scss"
@@ -51,11 +52,20 @@
           },
           "configurations": {
             "production": {
+              "aot": true,
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.prod.ts"
                 }
+              ],
+              "assets": [
+                "src/favicon.png",
+                "src/fonts",
+                "src/app.css",
+                "src/samples",
+                "src/img",
+                "src/info"
               ],
               "optimization": true,
               "outputHashing": "all",

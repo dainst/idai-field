@@ -59,15 +59,12 @@ if (process.argv && process.argv.length > 2) {
     env = process.argv[2];
 }
 
-if (!env) {
-    // Packaged app
-    global.mode = 'production';
+if (env === 'dev') {
+    global.mode = 'development';
 } else if (env === 'test') {
-    // npm run e2e
     global.mode = 'test';
 } else {
-    // npm start
-    global.mode = 'development';
+    global.mode = 'production';
 }
 
 if (['production', 'development'].includes(global.mode)) {
@@ -78,8 +75,6 @@ if (['production', 'development'].includes(global.mode)) {
     global.configPath = 'config/config.test.json';
     global.appDataPath = 'test/test-temp';
 }
-
-global.configurationDirPath = global.mode === 'production' ?  '../../../config' : '../../config';
 
 // -- CONFIGURATION
 
@@ -137,7 +132,7 @@ const createWindow = () => {
     });
 
     // and load the index.html of the app.
-    mainWindow.loadURL('file://' + __dirname + '/../dist/' + global.config.locale + '/index.html');
+    mainWindow.loadURL(global.distUrl + 'index.html');
 
     // Open the DevTools.
     // mainWindow.webContents.openDevTools();
@@ -173,6 +168,15 @@ const createMenu = () => {
 // initialization and is ready to create browser windows.
 electron.app.on('ready', () => {
     loadConfig();
+
+    global.distUrl = global.mode === 'production'
+        ? 'file://' + __dirname + '/../dist/' + global.config.locale + '/'
+        : 'http://localhost:4200/dist/';
+
+    global.configurationDirPath = global.mode === 'production'
+        ?  '../../../config'
+        : './config';
+
     createWindow();
     createMenu();
 
@@ -203,11 +207,19 @@ electron.app.on('window-all-closed', () => {
 electron.ipcMain.on('reload', (event, route) => {
     mainWindow.reload();
     mainWindow.loadURL(
-        url.format({
-            pathname: require('path').join(__dirname, '/../dist/' + global.config.locale + '/index.html'),
-            protocol: 'file:',
-            slahes: true,
-            hash: route
-        })
+        url.format(
+            global.mode === 'production'
+            ? {
+                pathname: require('path').join(__dirname, '/../dist/' + global.config.locale + '/index.html'),
+                protocol: 'file:',
+                slahes: true,
+                hash: route
+            }
+            : {
+                pathname: 'localhost:4200/dist/index.html',
+                protocol: 'http:',
+                slahes: true,
+                hash: route
+            })
     );
 });

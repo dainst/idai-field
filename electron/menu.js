@@ -115,7 +115,9 @@ const getTemplate = (mainWindow, context) => {
             click: function (item, focusedWindow) {
                 if (focusedWindow) {
                   focusedWindow.reload();
-                  focusedWindow.loadURL('file://' + __dirname + '/../dist/' + global.config.locale + '/index.html');
+                  if (global.mode === 'production') {
+                    focusedWindow.loadURL('file://' + __dirname + '/../dist/' + global.config.locale + '/index.html');
+                  }
                 }
             }
         }, {
@@ -175,8 +177,7 @@ const getTemplate = (mainWindow, context) => {
                     infoWindow.show();
                 });
 
-                infoWindow.loadURL('file://' + __dirname + '/../dist/' + global.config.locale +
-                    '/info/info-window.html');
+                infoWindow.loadURL(global.distUrl + '/info/info-window.html');
             }
         }, {
             label: messages.get('menu.help'),

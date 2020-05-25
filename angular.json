@@ -41,7 +41,8 @@
               "src/fonts",
               "src/app.css",
               "src/samples",
-              "src/img"
+              "src/img",
+              "src/info"
             ],
             "styles": [
               "src/styles.scss"

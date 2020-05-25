@@ -59,10 +59,6 @@ if (process.argv && process.argv.length > 2) {
     env = process.argv[2];
 }
 
-if (env) { // is environment 'dev' (npm start) or 'test' (npm run e2e)
-    global.configurationDirPath = '../config';
-}
-
 if (!env) {
     // Packaged app
     global.mode = 'production';
@@ -74,17 +70,16 @@ if (!env) {
     global.mode = 'development';
 }
 
-
 if (['production', 'development'].includes(global.mode)) {
     global.appDataPath = electron.app.getPath('appData') + '/' + electron.app.getName();
     copyConfigFile(global.appDataPath + '/config.json', global.appDataPath);
     global.configPath = global.appDataPath + '/config.json';
-
-    if (global.mode === 'production') global.configurationDirPath = '../../config';
 } else {
     global.configPath = 'config/config.test.json';
     global.appDataPath = 'test/test-temp';
 }
+
+global.configurationDirPath = '../../config';
 
 // -- CONFIGURATION
 
@@ -142,7 +137,7 @@ const createWindow = () => {
     });
 
     // and load the index.html of the app.
-    mainWindow.loadURL('file://' + __dirname + '/../dist/index.html');
+    mainWindow.loadURL('file://' + __dirname + '/../dist/' + global.config.locale + '/index.html');
 
     // Open the DevTools.
     // mainWindow.webContents.openDevTools();
@@ -177,8 +172,8 @@ const createMenu = () => {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 electron.app.on('ready', () => {
-    createWindow();
     loadConfig();
+    createWindow();
     createMenu();
 
     if (global.config.isAutoUpdateActive) autoUpdate.setUp(mainWindow);
@@ -209,7 +204,7 @@ electron.ipcMain.on('reload', (event, route) => {
     mainWindow.reload();
     mainWindow.loadURL(
         url.format({
-            pathname: require('path').join(__dirname, '/../dist/index.html'),
+            pathname: require('path').join(__dirname, '/../dist/' + global.config.locale + '/index.html'),
             protocol: 'file:',
             slahes: true,
             hash: route

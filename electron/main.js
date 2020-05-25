@@ -60,20 +60,17 @@ if (process.argv && process.argv.length > 2) {
 }
 
 let entryUrl = 'file://' + __dirname + '/../dist/index.html';
-if (env) { // is environment 'dev' (npm start) or 'test' (npm run e2e)
-    global.configurationDirPath = './config';
+global.configurationDirPath = './config';
+if (env === 'dev' || env === 'test') {
     entryUrl = 'http://localhost:4200/dist/';
 }
 
-if (!env) {
-    // Packaged app
-    global.mode = 'production';
+if (env === 'dev') {
+    global.mode = 'development';
 } else if (env === 'test') {
-    // npm run e2e
     global.mode = 'test';
 } else {
-    // npm start
-    global.mode = 'development';
+    global.mode = 'production';
 }
 
 
@@ -81,8 +78,6 @@ if (['production', 'development'].includes(global.mode)) {
     global.appDataPath = electron.app.getPath('appData') + '/' + electron.app.getName();
     copyConfigFile(global.appDataPath + '/config.json', global.appDataPath);
     global.configPath = global.appDataPath + '/config.json';
-
-    if (global.mode === 'production') global.configurationDirPath = '../../config';
 } else {
     global.configPath = 'config/config.test.json';
     global.appDataPath = 'test/test-temp';

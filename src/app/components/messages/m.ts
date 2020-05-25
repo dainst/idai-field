@@ -8,7 +8,7 @@ import {Message} from './message';
  * @author Jan G. Wieners
  * @author Thomas Kleinke
  */
-@Injectable() 
+@Injectable()
 export class M extends MD { // = Messages Dictionary. For reasons of brevity of calls to it just 'M'.
 
     // Internal messages from components
@@ -776,7 +776,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.IMPORT_ERROR_TARGET_CATEGORY_RANGE_MISMATCH] = {
             content: i18n({
                 id: 'messages.import.validation.error.targetCategoryRangeMismatch',
-                value: 'Eine Ressource der Kategorie \'[2]\' darf nicht mittels \'[1]\' mit \'[0]\' verküpft werden.'
+                value: 'Eine Ressource der Kategorie \'[2]\' darf nicht mittels \'[1]\' mit \'[0]\' verknüpft werden.'
             }),
             level: 'danger',
             params: [],

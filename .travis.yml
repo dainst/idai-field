@@ -31,7 +31,7 @@ install:
 
 script:
 - npm rebuild node-sass
-- npm run build:all
+- npm run build:all:prod
 - npm run package:mac
 
 env:

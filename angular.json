@@ -47,7 +47,6 @@
               "src/config"
             ],
             "styles": [
-              "src/styles.scss"
             ],
             "scripts": []
           },

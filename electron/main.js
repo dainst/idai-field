@@ -79,7 +79,7 @@ if (['production', 'development'].includes(global.mode)) {
     global.appDataPath = 'test/test-temp';
 }
 
-global.configurationDirPath = '../../config';
+global.configurationDirPath = global.mode === 'production' ?  '../../../config' : '../../config';
 
 // -- CONFIGURATION
 

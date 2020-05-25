@@ -46,6 +46,13 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
+              "assets": [
+                "src/favicon.png",
+                "src/fonts",
+                "src/app.css",
+                "src/samples",
+                "src/img"
+              ],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,

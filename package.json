@@ -53,7 +53,10 @@
     "npmRebuild": false,
     "afterSign": "notarize.js",
     "extraResources": [
-      "config",
+      {
+        "from": "src/config",
+        "to": "config"
+      },
       "tools",
       "manual"
     ]

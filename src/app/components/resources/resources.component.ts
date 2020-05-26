@@ -15,7 +15,7 @@ import {Category} from '../../core/configuration/model/category';
 import {TabManager} from '../../core/tabs/tab-manager';
 import {ResourcesViewMode, ViewFacade} from '../../core/resources/view/view-facade';
 import {NavigationService} from '../../core/resources/navigation/navigation-service';
-import {MenuService} from '../../desktop/menu-service';
+import {MenuService} from '../menu-service';
 import {Messages} from '../messages/messages';
 
 

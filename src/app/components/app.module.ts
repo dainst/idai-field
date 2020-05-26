@@ -41,7 +41,7 @@ import {SyncService} from '../core/sync/sync-service';
 import {Translations} from '../angular/translations';
 import {ExportModule} from './export/export.module';
 import {ProjectsModalComponent} from './navbar/projects-modal.component';
-import {MenuService} from '../desktop/menu-service';
+import {MenuService} from './menu-service';
 import {UtilTranslations} from '../core/util/util-translations';
 import {ProjectConfiguration} from '../core/configuration/project-configuration';
 import {ConfigReader} from '../core/configuration/boot/config-reader';

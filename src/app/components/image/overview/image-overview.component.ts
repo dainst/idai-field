@@ -6,7 +6,7 @@ import {ImageOverviewFacade} from '../../../core/images/overview/view/imageoverv
 import {RoutingService} from '../../routing-service';
 import {ImageUploadResult} from '../upload/image-uploader';
 import {ImageViewModalComponent} from '../../viewmodal/image/image-view-modal.component';
-import {MenuService} from '../../../desktop/menu-service';
+import {MenuService} from '../../menu-service';
 import {M} from '../../messages/m';
 import {Category} from '../../../core/configuration/model/category';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';

@@ -2,7 +2,7 @@ import {NgbActiveModal, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {Document, FieldDocument} from 'idai-components-2';
 import {DoceditComponent} from '../docedit/docedit.component';
 import {RoutingService} from '../routing-service';
-import {MenuService} from '../../desktop/menu-service';
+import {MenuService} from '../menu-service';
 import {Messages} from '../messages/messages';
 import {ImageRowItem} from '../../core/images/row/image-row';
 

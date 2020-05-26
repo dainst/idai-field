@@ -5,7 +5,7 @@ import {SettingsService} from '../../core/settings/settings-service';
 import {DoceditComponent} from '../docedit/docedit.component';
 import {M} from '../messages/m';
 import {ProjectNameValidator} from '../../core/model/project-name-validator';
-import {MenuService} from '../../desktop/menu-service';
+import {MenuService} from '../menu-service';
 import {StateSerializer} from '../../core/common/state-serializer';
 import {DocumentReadDatastore} from '../../core/datastore/document-read-datastore';
 import {ProjectNameValidatorMsgConversion} from '../messages/project-name-validator-msg-conversion';

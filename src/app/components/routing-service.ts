@@ -7,7 +7,7 @@ import {Document} from 'idai-components-2';
 import {ProjectCategories} from '../core/configuration/project-categories';
 import {ViewFacade} from '../core/resources/view/view-facade';
 import {ProjectConfiguration} from '../core/configuration/project-configuration';
-import {MenuService} from '../desktop/menu-service';
+import {MenuService} from './menu-service';
 import {ProjectsModalComponent} from './navbar/projects-modal.component';
 import {SettingsService} from '../core/settings/settings-service';
 import {DatastoreErrors} from '../core/datastore/model/datastore-errors';

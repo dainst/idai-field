@@ -10,7 +10,7 @@ import {ViewFacade} from '../../../../core/resources/view/view-facade';
 import {NavigationPath} from '../../../../core/resources/view/state/navigation-path';
 import {NavigationService} from '../../../../core/resources/navigation/navigation-service';
 import {ContextMenu} from '../../widgets/context-menu';
-import {MenuService} from '../../../../desktop/menu-service';
+import {MenuService} from '../../../menu-service';
 
 
 @Component({

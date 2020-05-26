@@ -8,7 +8,7 @@ const failFast = (process.argv.length > 2 && process.argv[2] == 'ff') ? 'ff' : '
 console.log('Fail fast mode:', failFast);
 console.log('\n');
 
-fs.writeFileSync('config/config.test.json', JSON.stringify({ 'dbs': ['test'] }));
+fs.writeFileSync('test/config/config.test.json', JSON.stringify({ 'dbs': ['test'] }));
 
 let app = new Application({
     path: require('electron'),

@@ -72,7 +72,7 @@ if (['production', 'development'].includes(global.mode)) {
     copyConfigFile(global.appDataPath + '/config.json', global.appDataPath);
     global.configPath = global.appDataPath + '/config.json';
 } else {
-    global.configPath = 'config/config.test.json';
+    global.configPath = 'test/config/config.test.json';
     global.appDataPath = 'test/test-temp';
 }
 

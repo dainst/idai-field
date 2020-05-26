@@ -3,6 +3,7 @@ import {getSampleDocuments} from './field-sample-objects';
 import {ImageConverter} from '../../images/imagestore/image-converter';
 
 const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
+const remote = typeof window !== 'undefined' ? window.require('electron').remote : require('electron').remote;
 
 
 /**
@@ -50,11 +51,8 @@ export class FieldSampleDataLoader implements SampleDataLoader {
 
     private loadSampleImages(db: any, project: string): Promise<any> {
 
-        const base = '/samples/images/';
-
-        let path = process.cwd() + '/dist' + base;
-        if (!fs.existsSync(path)) path = (process as any).resourcesPath + base; // TODO Remove "as any"
-
+        let path = remote.getGlobal('samplesPath');
+        console.log("path:", path)
         return this.loadDirectory(db, path, this.imagestorePath + project);
     }
 

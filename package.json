@@ -56,7 +56,8 @@
         "to": "config"
       },
       "tools",
-      "manual"
+      "manual",
+      "samples"
     ]
   },
   "repository": {

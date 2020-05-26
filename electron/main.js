@@ -177,6 +177,10 @@ electron.app.on('ready', () => {
         ?  '../../../config'
         : './config';
 
+    global.samplesPath = global.mode === 'production'
+        ? __dirname + '/../../../samples/'
+        : __dirname + '/../samples/';
+
     createWindow();
     createMenu();
 

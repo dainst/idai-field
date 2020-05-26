@@ -38,7 +38,7 @@ exports.config = {
     }],
     params: {
         appDataPath: 'test/test-temp',
-        configPath: 'config/config.test.json',
+        configPath: 'test/config/config.test.json',
         configTemplate: { 'dbs' : ['test'] }
     },
     onPrepare: function() {

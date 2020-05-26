@@ -1,5 +1,5 @@
 import * as PouchDB from 'pouchdb-node';
-import {Document, ImageDocument} from 'idai-components-2';
+import {Document, FieldDocument, ImageDocument} from 'idai-components-2';
 import {ImageDatastore} from '../../../../src/app/core/datastore/field/image-datastore';
 import {FieldDatastore} from '../../../../src/app/core/datastore/field/field-datastore';
 import {DocumentDatastore} from '../../../../src/app/core/datastore/document-datastore';
@@ -30,6 +30,7 @@ import {DocumentHolder} from '../../../../src/app/core/docedit/document-holder';
 import { PouchdbServer } from '../../../../src/app/core/datastore/pouchdb/pouchdb-server';
 import {DescendantsUtility} from '../../../../src/app/core/model/descendants-utility';
 import {Query} from '../../../../src/app/core/datastore/model/query';
+import {CategoryConverter} from '../../../../src/app/core/datastore/cached/category-converter';
 
 
 class IdGenerator {
@@ -63,7 +64,7 @@ export async function setupSettingsService(pouchdbmanager, pouchdbserver, projec
         isAutoUpdateActive: false,
         isSyncActive: startSync,
         remoteSites: [],
-        hostPassword: "",
+        hostPassword: '',
         syncTarget: new class implements SyncTarget {
             address: string = 'http://localhost:3003/';
             password: string;
@@ -100,11 +101,11 @@ export async function createApp(projectName = 'testdb', startSync = false) {
     const categoryConverter = new FieldCategoryConverter(projectCategories, projectConfiguration);
 
     const fieldDocumentDatastore = new FieldDatastore(
-        datastore, createdIndexFacade, documentCache as any, categoryConverter);
+        datastore, createdIndexFacade, documentCache as any, categoryConverter as CategoryConverter<FieldDocument>);
     const documentDatastore = new DocumentDatastore(
         datastore, createdIndexFacade, documentCache, categoryConverter);
     const imageDatastore = new ImageDatastore(datastore, createdIndexFacade,
-        documentCache as DocumentCache<ImageDocument>, categoryConverter);
+        documentCache as DocumentCache<ImageDocument>, categoryConverter as CategoryConverter<ImageDocument>);
 
     const remoteChangesStream = new ChangesStream(
         datastore,

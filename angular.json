@@ -39,8 +39,6 @@
             "sourceMap": false,
             "assets": [
               "src/favicon.png",
-              "src/fonts",
-              "src/app.css",
               "src/samples",
               "src/img",
               "src/info",
@@ -75,8 +73,6 @@
               ],
               "assets": [
                 "src/favicon.png",
-                "src/fonts",
-                "src/app.css",
                 "src/samples",
                 "src/img",
                 "src/info"

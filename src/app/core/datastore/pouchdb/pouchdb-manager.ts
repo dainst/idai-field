@@ -201,7 +201,7 @@ const getSyncStatusFromInfo = (info: any) =>
 
 const getSyncStatusFromError = (err: any) =>
     err.status === 401
-        ? err.reason === "Name or password is incorrect."
+        ? err.reason === 'Name or password is incorrect.'
             ? SyncStatus.AuthenticationError
             : SyncStatus.AuthorizationError
         : SyncStatus.Error;

@@ -33,13 +33,12 @@ export class PouchdbServer {
 
         const app = express();
 
-        app.use(expressBasicAuth( {
+        app.use(expressBasicAuth({
             challenge: true,
             authorizer: (_: string, password: string) =>
                 expressBasicAuth.safeCompare(password, this.password),
-            unauthorizedResponse: () =>
-                ({ status: 401, reason: "Name or password is incorrect." })
-        } ));
+            unauthorizedResponse: () => ({ status: 401, reason: 'Name or password is incorrect.' })
+        }));
 
         // prevent the creation of new databases when syncing
         app.put('/:db', (_: any, res: any) =>
@@ -60,5 +59,4 @@ export class PouchdbServer {
             console.debug('PouchDB Server is listening on port 3000');
         });
     }
-
 }

@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Input, NgZone, OnChanges, Output, SimpleChanges} from '@angular/core';
 import {FieldDocument, FieldResource, FieldGeometry} from 'idai-components-2';
 import {FieldPolyline} from './field-polyline';
 import {FieldPolygon} from './field-polygon';
@@ -37,7 +37,8 @@ export class MapComponent implements AfterViewInit, OnChanges {
     protected categoryColors: { [categoryName: string]: string } = {};
 
 
-    constructor(projectConfiguration: ProjectConfiguration) {
+    constructor(projectConfiguration: ProjectConfiguration,
+                protected zone: NgZone) {
 
         this.categoryColors = projectConfiguration.getCategoryColors();
     }
@@ -45,16 +46,20 @@ export class MapComponent implements AfterViewInit, OnChanges {
 
     public ngAfterViewInit() {
 
-        if (this.map) this.map.invalidateSize(false);
+        this.zone.runOutsideAngular(() => {
+            if (this.map) this.map.invalidateSize(false);
+        });
     }
 
 
     public ngOnChanges(changes: SimpleChanges) {
 
-        if (!this.map) this.map = this.createMap();
+        this.zone.runOutsideAngular(() => {
+            if (!this.map) this.map = this.createMap();
 
-        // The promise is necessary to make sure the map is updated based on the current map container size
-        Promise.resolve().then(() => this.updateMap(changes));
+            // The promise is necessary to make sure the map is updated based on the current map container size
+            Promise.resolve().then(() => this.updateMap(changes));
+        });
     }
 
 
@@ -378,14 +383,19 @@ export class MapComponent implements AfterViewInit, OnChanges {
 
     protected select(document: FieldDocument): boolean {
 
-        this.onSelectDocument.emit(document);
+        this.zone.run(() => {
+            this.onSelectDocument.emit(document);
+        });
+
         return true;
     }
 
 
     protected deselect() {
 
-        this.onSelectDocument.emit(undefined);
+        this.zone.run(() => {
+            this.onSelectDocument.emit(undefined);
+        });
     }
 
 

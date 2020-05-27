@@ -1,4 +1,4 @@
-import {Component, Input, SimpleChanges} from '@angular/core';
+import {Component, Input, NgZone, SimpleChanges} from '@angular/core';
 import {ImageDocument, ImageGeoreference} from 'idai-components-2';
 import {LayerManager, ListDiffResult} from './layer-manager';
 import {LayerImageProvider} from './layer-image-provider';
@@ -36,13 +36,14 @@ export class LayerMapComponent extends MapComponent {
     private tileLayer: L.TileLayer;
 
 
-    constructor(private layerManager: LayerManager,
+    constructor(projectConfiguration: ProjectConfiguration,
+                private layerManager: LayerManager,
                 private layerImageProvider: LayerImageProvider,
                 protected messages: Messages,
-                projectConfiguration: ProjectConfiguration,
-                private settingsService: SettingsService) {
+                private settingsService: SettingsService,
+                protected zone: NgZone) {
 
-        super(projectConfiguration);
+        super(projectConfiguration, zone);
 
         this.layerManager.reset();
     }
@@ -60,24 +61,28 @@ export class LayerMapComponent extends MapComponent {
 
         this.layerManager.toggleLayer(layer.resource.id as any);
 
-        if (this.layerManager.isActiveLayer(layer.resource.id as any)) {
-            await this.addLayerToMap(layer.resource.id as any);
-        } else {
-            this.removeLayerFromMap(layer.resource.id as any);
-        }
+        await this.zone.runOutsideAngular(async () => {
+            if (this.layerManager.isActiveLayer(layer.resource.id as any)) {
+                await this.addLayerToMap(layer.resource.id as any);
+            } else {
+                this.removeLayerFromMap(layer.resource.id as any);
+            }
+        });
     }
 
 
     public focusLayer(layer: ImageDocument) {
 
-        const georeference = layer.resource.georeference;
-        const bounds = [] as any;
+        this.zone.runOutsideAngular(() => {
+            const georeference = layer.resource.georeference;
+            const bounds = [] as any;
 
-        bounds.push(L.latLng((georeference as any).topLeftCoordinates) as never);
-        bounds.push(L.latLng((georeference as any).topRightCoordinates) as never);
-        bounds.push(L.latLng((georeference as any).bottomLeftCoordinates) as never);
+            bounds.push(L.latLng((georeference as any).topLeftCoordinates) as never);
+            bounds.push(L.latLng((georeference as any).topRightCoordinates) as never);
+            bounds.push(L.latLng((georeference as any).bottomLeftCoordinates) as never);
 
-        this.map.fitBounds(bounds);
+            this.map.fitBounds(bounds);
+        });
     }
 
 

@@ -101,7 +101,17 @@ global.toolsPath = global.mode === 'production' ?
     electron.app.getAppPath().replace('app.asar', '') + 'tools'
     : 'tools';
 
-global.manualPath = global.mode === 'production' ? '../../manual' : '../manual';
+global.configurationDirPath = global.mode === 'production'
+    ?  '../../../config'
+    : './config';
+
+global.samplesPath = global.mode === 'production'
+    ? __dirname + '/../../samples/'
+    : __dirname + '/../samples/';
+
+global.manualPath = global.mode === 'production'
+    ? __dirname + '/../../manual'
+    : 'file://' + __dirname + '/../manual';
 
 process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = true;
 process.env['NODE_OPTIONS'] = '--no-deprecation';
@@ -172,14 +182,6 @@ electron.app.on('ready', () => {
     global.distUrl = global.mode === 'production'
         ? 'file://' + __dirname + '/../dist/' + global.config.locale + '/'
         : 'http://localhost:4200/dist/';
-
-    global.configurationDirPath = global.mode === 'production'
-        ?  '../../../config'
-        : './config';
-
-    global.samplesPath = global.mode === 'production'
-        ? __dirname + '/../../samples/'
-        : __dirname + '/../samples/';
 
     createWindow();
     createMenu();

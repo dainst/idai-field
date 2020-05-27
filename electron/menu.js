@@ -167,6 +167,7 @@ const getTemplate = (mainWindow, context) => {
                     width: 300,
                     height: 350,
                     frame: false,
+                    resizable: false,
                     parent: BrowserWindow.getFocusedWindow(),
                     modal: true,
                     show: false,

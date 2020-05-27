@@ -1,0 +1,42 @@
+img {
+    width: 300px;
+    height: 210px;
+    -webkit-user-drag: none;
+}
+
+body {
+    background-color: #fff;
+    margin: 0;
+}
+
+.centered {
+  text-align: center;
+}
+
+p#about-version {
+  text-align: center;
+  margin-top: 10px;
+}
+
+#header-block {
+  margin-bottom: 20px;
+  background-color: rgba(85, 114, 161, 1);
+  height: 38px;
+}
+
+h4#about-heading {
+  color: #fff;
+  position: absolute;
+  font-weight: lighter;
+  padding: 3px;
+}
+
+#close-button {
+    background-color: rgb(114, 123, 132);
+    border: 0;
+    color: white;
+    font-weight: 400;
+    font-size: 16px;
+    padding: 6px 12px;
+    height: 38px;
+}

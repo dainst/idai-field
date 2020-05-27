@@ -57,7 +57,7 @@ export module Backup {
         const db2 = new PouchDB(project);
         PouchDB.plugin(require('pouchdb-load'));
 
-        await db2.load(filePath);
+        await db2.load('file://' + filePath);
 
         const setIdentifier = assoc('resource.identifier', project);
         const projectDocument = await db2.get('project');

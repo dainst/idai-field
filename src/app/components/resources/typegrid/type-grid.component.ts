@@ -1,7 +1,7 @@
 import {ChangeDetectorRef, Component, Input, OnChanges} from '@angular/core';
 import {SafeResourceUrl} from '@angular/platform-browser';
 import {take, flatten, set, flow, filter, map} from 'tsfun';
-import {map as asyncMap, reduce as asyncReduce} from 'tsfun/async';
+import {reduce as asyncReduce} from 'tsfun/async';
 import {Document, FieldDocument} from 'idai-components-2';
 import {ViewFacade} from '../../../core/resources/view/view-facade';
 import {Loading} from '../../widgets/loading';
@@ -34,11 +34,31 @@ import {ImageRowItem, PLACEHOLDER} from '../../../core/images/row/image-row';
  */
 export class TypeGridComponent extends BaseList implements OnChanges {
 
+    /**
+     * These are the Type documents found at the current level,
+     * as given by the current selected segment of the navigation path.
+     */
     @Input() documents: Array<FieldDocument>;
 
+    /**
+     * Undefined if we are on the top level.
+     * If defined, this is the document also represented
+     * by the current selected segment of the navigation path,
+     * which is either a Type Catalogue, a Type, or a Subtype of a Type.
+     */
     public mainDocument: FieldDocument|undefined;
-    public linkedDocuments: Array<FieldDocument> = [];
+
+    /**
+     * All Types and Subtypes below the mainDocument (see field above).
+     */
     public subtypes: Array<FieldDocument> = [];
+
+    /**
+     * The 'regular' (meaning non-Type-) documents, which are linked
+     * to all subtypes (see field above).
+     */
+    public linkedDocuments: Array<FieldDocument> = [];
+
     public images: { [resourceId: string]: Array<SafeResourceUrl> } = {};
     public contextMenu: ContextMenu = new ContextMenu();
     public ready: boolean = false;

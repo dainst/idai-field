@@ -12,9 +12,9 @@ import {IndexItem} from './index-item';
 export interface FulltextIndex {
 
     [category: string]: {
-        [term: string]: {
-            [resourceId: string]: IndexItem
-        }
+        [term: string]:
+            // TODO replace with Array<Resource.Id>, get rid of dependency to IndexItem altogether in FulltextIndex
+            { [resourceId: string]: IndexItem }
     }
 }
 

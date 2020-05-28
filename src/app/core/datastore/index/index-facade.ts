@@ -39,7 +39,7 @@ export class IndexFacade {
     public find(query: Query): Array<ResourceId> {
 
         return getSortedIds(
-            performQuery(query, this.constraintIndex, this.fulltextIndex),
+            performQuery(query, this.constraintIndex, this.fulltextIndex, this.indexItems),
             query);
     }
 
@@ -111,7 +111,7 @@ export class IndexFacade {
             IndexFacade.createAssociatedTypeItem(this.indexItems, document, );
         }
 
-        ConstraintIndex.put(this.constraintIndex, document, item, skipRemoval);
+        ConstraintIndex.put(this.constraintIndex, document, skipRemoval);
         FulltextIndex.put(this.fulltextIndex, document, item, this.categoriesMap, skipRemoval);
 
         if (notify) ObserverUtil.notify(this.observers, document);
@@ -151,7 +151,7 @@ export class IndexFacade {
             filter(on(INSTANCES, isDefined)),
             forEach((item: TypeResourceIndexItem) => {
                 delete item[INSTANCES][document.resource.id];
-            }));
+            }) as any /* TODO review as any */) ;
     }
 
 

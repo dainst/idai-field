@@ -1,4 +1,5 @@
-import {keys} from 'tsfun';
+import {keys, flatMap} from 'tsfun';
+import {lookup} from 'tsfun/associative';
 import {ConstraintIndex} from './constraint-index';
 import {FulltextIndex} from './fulltext-index';
 import {ResultSets} from './result-sets';
@@ -13,16 +14,17 @@ import {Constraint} from '../model/constraint';
 
 /**
  * Runtime info: Skips the fulltime query if query is empty and constraint search delivered results
- *
- * @param query
- * @param constraintIndex
- * @param fulltextIndex
  */
 export function performQuery(query: Query,
                              constraintIndex: ConstraintIndex,
-                             fulltextIndex: FulltextIndex): Array<IndexItem> {
+                             fulltextIndex: FulltextIndex,
+                             indexItemsMap: { [resourceId: string]: IndexItem })
+    : Array<IndexItem> {
 
-    let resultSets = performConstraints(constraintIndex, query.constraints ? query.constraints : {});
+    let resultSets = performConstraints(
+        constraintIndex,
+        query.constraints ? query.constraints : {},
+        indexItemsMap);
 
     resultSets = ResultSets.containsOnlyEmptyAddSets(resultSets)
         || (Query.isEmpty(query) && !ResultSets.isEmpty(resultSets))
@@ -46,7 +48,9 @@ function performFulltext(fulltextIndex: FulltextIndex,
 
 
 function performConstraints(constraintIndex: ConstraintIndex,
-                            constraints: { [name: string]: Constraint|string|string[] }): ResultSets {
+                            constraints: { [name: string]: Constraint|string|string[] },
+                            indexItemsMap: { [resourceId: string]: IndexItem })
+    : ResultSets {
 
     return keys(constraints)
         .reduce((resultSets, name: string) => {
@@ -57,7 +61,11 @@ function performConstraints(constraintIndex: ConstraintIndex,
                 ? ConstraintIndex.get
                 : ConstraintIndex.getWithDescendants;
 
-            ResultSets.combine(resultSets, get(constraintIndex, name, value), subtract);
+            const indexItemIds = get(constraintIndex, name, value);
+            // TODO review if deduplication necessary here
+            const indexItems = flatMap(lookup(indexItemsMap) as any /* TODO review as any */)(indexItemIds) as any /* TODO review as any */;
+
+            ResultSets.combine(resultSets, indexItems as any /* TODO review */, subtract);
             return resultSets;
         }, ResultSets.make());
 }

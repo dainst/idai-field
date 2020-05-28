@@ -32,14 +32,24 @@ describe('performQuery', () => {
     function put(document: Document) {
 
         const indexItem = IndexItem.from(document);
-        ConstraintIndex.put(constraintIndex, document, indexItem);
+        ConstraintIndex.put(constraintIndex, document);
         FulltextIndex.put(fulltextIndex, document, indexItem, categoriesMap);
     }
 
 
-    function performQuery(query: Query) {
+    function performQuery(query: Query, indexItemsMap: any) {
 
-        return performQuery_(query, constraintIndex, fulltextIndex);
+        return performQuery_(query, constraintIndex, fulltextIndex, indexItemsMap);
+    }
+
+
+    function indexItems(...documents: Array<Document>) {
+
+        const ii = {};
+        for (let document of documents) {
+            ii[document.resource.id] = [IndexItem.from(document)];
+        }
+        return ii;
     }
 
 
@@ -48,7 +58,7 @@ describe('performQuery', () => {
         const doc1 = Static.doc('sd1', 'identifier1', 'Find', 'id1');
         put(doc1);
 
-        const result = performQuery({ q: 'identifier' }).map(to('id'));
+        const result = performQuery({ q: 'identifier' }, indexItems(doc1)).map(to('id'));
         expect(result[0]).toBe('id1');
     });
 
@@ -58,7 +68,7 @@ describe('performQuery', () => {
         const doc1 = Static.doc('sd1', 'identifier1', 'Find', 'id1');
         put(doc1);
 
-        const result = performQuery({ q: undefined }).map(to('id'));
+        const result = performQuery({ q: undefined }, indexItems(doc1)).map(to('id'));
         expect(result[0]).toBe('id1');
     });
 
@@ -68,7 +78,7 @@ describe('performQuery', () => {
         const doc1 = Static.doc('sd1', 'identifier1', 'Find', 'id1');
         put(doc1);
 
-        const result = performQuery({}).map(to('id'));
+        const result = performQuery({}, indexItems(doc1)).map(to('id'));
         expect(result[0]).toBe('id1');
     });
 
@@ -78,7 +88,7 @@ describe('performQuery', () => {
         const doc1 = Static.doc('sd1', 'identifier1', 'Find', 'id1');
         put(doc1);
 
-        const result = performQuery({}).map(to('id'));
+        const result = performQuery({}, indexItems(doc1)).map(to('id'));
         expect(result[0]).toBe('id1');
     });
 
@@ -90,7 +100,7 @@ describe('performQuery', () => {
         put(doc1);
         put(doc2);
 
-        const result = performQuery({ q: 'bla' }).map(to('id'));
+        const result = performQuery({ q: 'bla' }, indexItems(doc1, doc2)).map(to('id'));
         expect(result.length).toBe(2);
     });
 
@@ -104,7 +114,8 @@ describe('performQuery', () => {
         put(doc2);
         put(doc3);
 
-        const result = performQuery({ q: 'blub', categories: ['category3'] }).map(to('id'));
+        const result = performQuery(
+            { q: 'blub', categories: ['category3'] }, indexItems(doc1, doc2, doc3)).map(to('id'));
         expect(result.length).toBe(1);
         expect(result[0]).toBe('id3');
     });
@@ -132,7 +143,7 @@ describe('performQuery', () => {
         put(doc3);
         put(doc4);
 
-        const result = performQuery(q).map(to('id'));
+        const result = performQuery(q, indexItems(doc1, doc2, doc3, doc4)).map(to('id'));
         expect(result).toContain('id2');
         expect(result).toContain('id3');
         expect(result.length).toBe(2);
@@ -151,7 +162,7 @@ describe('performQuery', () => {
         const result = performQuery({
             q: 'blub',
             categories: ['category2']
-        }).map(to('id'));
+        }, indexItems(doc1, doc2, doc3)).map(to('id'));
 
         expect(result.length).toBe(2);
         expect(result[0]).not.toBe('id1');
@@ -180,7 +191,7 @@ describe('performQuery', () => {
         put(doc2);
         put(doc3);
 
-        const result = performQuery(q).map(to('id'));
+        const result = performQuery(q, indexItems(doc1, doc2, doc3)).map(to('id'));
         expect(result[0]).toBe('id3');
         expect(result.length).toBe(1);
     });
@@ -207,7 +218,7 @@ describe('performQuery', () => {
         put(doc3);
         put(doc4);
 
-        const result = performQuery(q).map(to('id'));
+        const result = performQuery(q, indexItems(doc1, doc2, doc3, doc4)).map(to('id'));
         expect(result.length).toBe(3);
         expect(result).toEqual(['id1', 'id2', 'id3']);
     });
@@ -232,7 +243,7 @@ describe('performQuery', () => {
         put(doc2);
         put(doc3);
 
-        const result = performQuery(q).map(to('id'));
+        const result = performQuery(q, indexItems(doc1, doc2, doc3)).map(to('id'));
         expect(result.length).toBe(2);
         expect(result).toEqual(['id2', 'id3']);
     });

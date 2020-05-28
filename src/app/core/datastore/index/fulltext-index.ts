@@ -43,14 +43,14 @@ export module FulltextIndex {
         index[document.resource.category]['*'][document.resource.id] = indexItem;
 
         flow(
-            getFieldsToIndex(categoriesMap, document.resource.category),
+            getFieldsToIndex(categoriesMap as any /* TODO review as any */, document.resource.category),
             filter(lookup(document.resource)),
             filter((field: any) => document.resource[field] !== ''),
             map(lookup(document.resource)),
             flatMap(split(tokenizationPattern)),
             map(toLowerCase),
             map(toArray),
-            forEach(indexToken(index, document, indexItem)));
+            forEach(indexToken(index, document, indexItem)) as any /* TODO review as any*/);
     }
 
 

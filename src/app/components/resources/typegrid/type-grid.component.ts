@@ -44,7 +44,7 @@ export class TypeGridComponent extends BaseList implements OnChanges {
      * Undefined if we are on the top level.
      * If defined, this is the document also represented
      * by the current selected segment of the navigation path,
-     * which is either a Type Catalogue, a Type, or a Subtype of a Type.
+     * which is either a Type Catalogue, a Type (or a subtype of a Type, which is always also a Type).
      */
     public mainDocument: FieldDocument|undefined;
 
@@ -258,7 +258,7 @@ export class TypeGridComponent extends BaseList implements OnChanges {
     }
 
 
-    private isCatalogOrTypeOrSubtype(document: FieldDocument): boolean {
+    private isCatalogOrType(document: FieldDocument): boolean {
 
         return this.projectCategories.getTypeCategoryNames().includes(document.resource.category);
     }
@@ -268,10 +268,10 @@ export class TypeGridComponent extends BaseList implements OnChanges {
 
         if (Document.hasRelations(document, 'isDepictedIn')) {
             return [await this.getMainImage(document)];
-        } else if (this.isCatalogOrTypeOrSubtype(document)) {
+        } else if (this.isCatalogOrType(document)) {
             return await this.getImagesOfLinkedResources(document);
         } else {
-            return []; // TODO review, why should this ever happen?
+            return [];
         }
     }
 

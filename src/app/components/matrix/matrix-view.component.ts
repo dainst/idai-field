@@ -54,6 +54,7 @@ export class MatrixViewComponent implements OnInit {
     private featureDocuments: Array<FeatureDocument> = [];
     private totalFeatureDocuments: Array<FeatureDocument> = [];
     private trenchesLoaded: boolean = false;
+    private modalOpened: boolean = false;
 
 
     constructor(
@@ -98,15 +99,19 @@ export class MatrixViewComponent implements OnInit {
 
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape') await this.tabManager.openActiveTab();
+        if (event.key === 'Escape' && !this.modalOpened) await this.tabManager.openActiveTab();
     }
 
 
     public async edit(resourceId: string) {
 
+        this.modalOpened = true;
+
         await this.openEditorModal(
             this.featureDocuments.find(on('resource.id', is(resourceId))) as FeatureDocument
         );
+
+        this.modalOpened = false;
     }
 
 

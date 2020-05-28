@@ -164,7 +164,7 @@ export class RoutingService {
 
         return this.projectCategories.getOverviewCategoryNames().includes(document.resource.category)
             ? 'project'
-            : this.projectCategories.getAbstractFieldCategoryNames().includes(document.resource.category)
+            : this.projectCategories.getTypeCategoryNames().includes(document.resource.category)
                 ? 'types'
                 : document.resource.relations['isRecordedIn'][0];
     }

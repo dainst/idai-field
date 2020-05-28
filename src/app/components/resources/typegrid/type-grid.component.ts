@@ -258,14 +258,20 @@ export class TypeGridComponent extends BaseList implements OnChanges {
     }
 
 
+    private isCatalogOrTypeOrSubtype(document: FieldDocument): boolean {
+
+        return this.projectCategories.getTypeCategoryNames().includes(document.resource.category);
+    }
+
+
     private async getLinkedImages(document: FieldDocument): Promise<Array<SafeResourceUrl>> {
 
         if (Document.hasRelations(document, 'isDepictedIn')) {
             return [await this.getMainImage(document)];
-        } else if (this.projectCategories.getAbstractFieldCategoryNames().includes(document.resource.category)) {
+        } else if (this.isCatalogOrTypeOrSubtype(document)) {
             return await this.getImagesOfLinkedResources(document);
         } else {
-            return [];
+            return []; // TODO review, why should this ever happen?
         }
     }
 

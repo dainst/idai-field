@@ -5,6 +5,10 @@ import {Category} from './model/category';
 
 const NAME = 'name';
 
+const TYPE_CATALOG = 'TypeCatalog';
+const TYPE = 'Type';
+const TYPE_CATALOG_AND_TYPE = [TYPE_CATALOG, TYPE];
+
 
 @Injectable()
 /**
@@ -38,16 +42,22 @@ export class ProjectCategories {
 
         return this.projectConfiguration.getCategoriesArray()
             .filter(category => !this.projectConfiguration.isSubcategory(category.name, 'Image'))
-            .filter(category => !this.projectConfiguration.isSubcategory(category.name, 'TypeCatalog'))
-            .filter(category => !this.projectConfiguration.isSubcategory(category.name, 'Type'))
+            .filter(category => !this.projectConfiguration.isSubcategory(category.name, TYPE_CATALOG))
+            .filter(category => !this.projectConfiguration.isSubcategory(category.name, TYPE))
             .filter(category => !ProjectCategories.isProjectCategory(category.name));
     }
 
 
-    public getAbstractFieldCategories(): Array<Category> {
+    public getTypeCategories(): Array<Category> {
 
         return this.projectConfiguration.getCategoriesArray()
-            .filter(category => category.name === 'TypeCatalog' || category.name === 'Type');
+            .filter(category => category.name === TYPE_CATALOG || category.name === TYPE);
+    }
+
+
+    public getTypeCategoryNames(): string[] {
+
+        return TYPE_CATALOG_AND_TYPE;
     }
 
 
@@ -66,12 +76,6 @@ export class ProjectCategories {
     public getConcreteFieldCategoryNames(): string[] {
 
         return this.getConcreteFieldCategories().map(to(NAME));
-    }
-
-
-    public getAbstractFieldCategoryNames(): string[] {
-
-        return this.getAbstractFieldCategories().map(to(NAME));
     }
 
 
@@ -167,13 +171,6 @@ export class ProjectCategories {
         return Object.keys(this.projectConfiguration.getCategoryAndSubcategories('Operation'))
             .concat(['Place'])
             .filter(el => el !== 'Operation');
-    }
-
-
-    public getTypeCategories(): string[] {
-
-        return Object.keys(this.projectConfiguration.getCategoryAndSubcategories('TypeCatalog'))
-            .concat(Object.keys(this.projectConfiguration.getCategoryAndSubcategories('Type')));
     }
 
 

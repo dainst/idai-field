@@ -208,7 +208,7 @@ export class PlusButtonComponent implements OnChanges {
         } else {
             if (!(this.viewFacade.isInOverview()
                     ? this.projectCategories.getOverviewCategories().includes(category.name)
-                    : this.projectCategories.getTypeCategories().includes(category.name))) {
+                    : this.projectCategories.getTypeCategoryNames().includes(category.name))) {
                 return false;
             }
         }

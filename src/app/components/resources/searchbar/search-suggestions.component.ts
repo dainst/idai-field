@@ -127,7 +127,7 @@ export class SearchSuggestionsComponent implements OnChanges {
         return this.viewFacade.getFilterCategories().length > 0
             ? this.viewFacade.getFilterCategories()
             : this.viewFacade.isInTypesManagement()
-                ? this.projectCategories.getAbstractFieldCategoryNames()
+                ? this.projectCategories.getTypeCategoryNames()
                 : this.projectCategories.getConcreteFieldCategoryNames();
     }
 

@@ -11,7 +11,6 @@ const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
  */
 export class ShapefileFileSystemReader implements Reader {
 
-    // TODO Use type File
     constructor(private file: any) {}
 
 

@@ -1,11 +1,10 @@
 import {intersection, union, subtract, flow, cond, isNot, empty} from 'tsfun';
-import {Resource} from 'idai-components-2';
 
 
 export interface ResultSets {
 
-    addSets: Array<Array<Resource.Id>>,
-    subtractSets: Array<Array<Resource.Id>>,
+    addSets: Array<Array<string>>,
+    subtractSets: Array<Array<string>>,
 }
 
 
@@ -37,7 +36,7 @@ export module ResultSets {
 
 
     export function combine(resultSets: ResultSets,
-                            ids: Array<Resource.Id>,
+                            ids: Array<string>,
                             subtract: undefined|true = undefined): void {
 
         (!subtract
@@ -47,7 +46,7 @@ export module ResultSets {
     }
 
 
-    export function collapse(resultSets: ResultSets): Array<Resource.Id> {
+    export function collapse(resultSets: ResultSets): Array<string> {
 
         return flow(
             intersection(resultSets.addSets),
@@ -57,7 +56,7 @@ export module ResultSets {
     }
 
 
-    export function unify(resultSets: ResultSets): Array<Resource.Id> { // TODO get rid of this function
+    export function unify(resultSets: ResultSets): Array<string> {
 
         return union(resultSets.addSets);
     }

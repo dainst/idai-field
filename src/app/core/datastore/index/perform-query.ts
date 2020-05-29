@@ -1,9 +1,8 @@
-import {keys, values, map} from 'tsfun';
-import {lookup} from 'tsfun/associative';
+import {keys} from 'tsfun';
 import {ConstraintIndex} from './constraint-index';
 import {FulltextIndex} from './fulltext-index';
 import {ResultSets} from './result-sets';
-import {IndexItem} from './index-item';
+import {Resource} from 'idai-components-2';
 import {Query} from '../model/query';
 import {Constraint} from '../model/constraint';
 
@@ -17,9 +16,8 @@ import {Constraint} from '../model/constraint';
  */
 export function performQuery(query: Query,
                              constraintIndex: ConstraintIndex,
-                             fulltextIndex: FulltextIndex,
-                             indexItemsMap: { [resourceId: string]: IndexItem })
-    : Array<IndexItem> {
+                             fulltextIndex: FulltextIndex)
+    : Array<Resource.Id> {
 
     let resultSets = performConstraints(
         constraintIndex,
@@ -30,8 +28,7 @@ export function performQuery(query: Query,
             ? resultSets
             : performFulltext(fulltextIndex, query, resultSets);
 
-    const result = values(map(lookup(indexItemsMap))(ResultSets.collapse(resultSets)));
-    return result;
+    return ResultSets.collapse(resultSets);
 }
 
 

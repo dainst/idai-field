@@ -1,5 +1,5 @@
 import {Observable, Observer} from 'rxjs';
-import {is, on, flow, forEach, isDefined, to, separate} from 'tsfun';
+import {is, on, flow, forEach, isDefined, to, separate, map} from 'tsfun';
 import {filter} from 'tsfun/collection';
 import {Document} from 'idai-components-2';
 import {ConstraintIndex} from './constraint-index';
@@ -11,6 +11,7 @@ import {performQuery} from './perform-query';
 import {ResourceId} from '../../constants';
 import {getSortedIds} from './get-sorted-ids';
 import {Query} from '../model/query';
+import {lookup} from 'tsfun/associative';
 
 const TYPE = 'Type';
 const INSTANCES = 'instances';
@@ -38,9 +39,10 @@ export class IndexFacade {
 
     public find(query: Query): Array<ResourceId> {
 
-        return getSortedIds(
-            performQuery(query, this.constraintIndex, this.fulltextIndex, this.indexItems),
-            query);
+        const queryResult = performQuery(query, this.constraintIndex, this.fulltextIndex);
+        const indexItems = map(lookup(this.indexItems))(queryResult);
+
+        return getSortedIds(indexItems, query);
     }
 
 

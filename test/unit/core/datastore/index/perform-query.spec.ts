@@ -1,4 +1,3 @@
-import {to} from 'tsfun';
 import {Document} from 'idai-components-2';
 import {IndexerConfiguration} from '../../../../../src/app/indexer-configuration';
 import {createMockProjectConfiguration} from './helpers';
@@ -37,9 +36,9 @@ describe('performQuery', () => {
     }
 
 
-    function performQuery(query: Query, indexItemsMap: any) {
+    function performQuery(query: Query) {
 
-        return performQuery_(query, constraintIndex, fulltextIndex, indexItemsMap);
+        return performQuery_(query, constraintIndex, fulltextIndex);
     }
 
 
@@ -58,7 +57,7 @@ describe('performQuery', () => {
         const doc1 = Static.doc('sd1', 'identifier1', 'Find', 'id1');
         put(doc1);
 
-        const result = performQuery({ q: 'identifier' }, indexItems(doc1)).map(to('id'));
+        const result = performQuery({ q: 'identifier' });
         expect(result[0]).toBe('id1');
     });
 
@@ -68,7 +67,7 @@ describe('performQuery', () => {
         const doc1 = Static.doc('sd1', 'identifier1', 'Find', 'id1');
         put(doc1);
 
-        const result = performQuery({ q: undefined }, indexItems(doc1)).map(to('id'));
+        const result = performQuery({ q: undefined });
         expect(result[0]).toBe('id1');
     });
 
@@ -78,7 +77,7 @@ describe('performQuery', () => {
         const doc1 = Static.doc('sd1', 'identifier1', 'Find', 'id1');
         put(doc1);
 
-        const result = performQuery({}, indexItems(doc1)).map(to('id'));
+        const result = performQuery({});
         expect(result[0]).toBe('id1');
     });
 
@@ -88,7 +87,7 @@ describe('performQuery', () => {
         const doc1 = Static.doc('sd1', 'identifier1', 'Find', 'id1');
         put(doc1);
 
-        const result = performQuery({}, indexItems(doc1)).map(to('id'));
+        const result = performQuery({});
         expect(result[0]).toBe('id1');
     });
 
@@ -100,7 +99,7 @@ describe('performQuery', () => {
         put(doc1);
         put(doc2);
 
-        const result = performQuery({ q: 'bla' }, indexItems(doc1, doc2)).map(to('id'));
+        const result = performQuery({ q: 'bla' });
         expect(result.length).toBe(2);
     });
 
@@ -115,7 +114,7 @@ describe('performQuery', () => {
         put(doc3);
 
         const result = performQuery(
-            { q: 'blub', categories: ['category3'] }, indexItems(doc1, doc2, doc3)).map(to('id'));
+            { q: 'blub', categories: ['category3'] });
         expect(result.length).toBe(1);
         expect(result[0]).toBe('id3');
     });
@@ -143,7 +142,7 @@ describe('performQuery', () => {
         put(doc3);
         put(doc4);
 
-        const result = performQuery(q, indexItems(doc1, doc2, doc3, doc4)).map(to('id'));
+        const result = performQuery(q);
         expect(result).toContain('id2');
         expect(result).toContain('id3');
         expect(result.length).toBe(2);
@@ -162,7 +161,7 @@ describe('performQuery', () => {
         const result = performQuery({
             q: 'blub',
             categories: ['category2']
-        }, indexItems(doc1, doc2, doc3)).map(to('id'));
+        });
 
         expect(result.length).toBe(2);
         expect(result[0]).not.toBe('id1');
@@ -191,7 +190,7 @@ describe('performQuery', () => {
         put(doc2);
         put(doc3);
 
-        const result = performQuery(q, indexItems(doc1, doc2, doc3)).map(to('id'));
+        const result = performQuery(q);
         expect(result[0]).toBe('id3');
         expect(result.length).toBe(1);
     });
@@ -218,7 +217,7 @@ describe('performQuery', () => {
         put(doc3);
         put(doc4);
 
-        const result = performQuery(q, indexItems(doc1, doc2, doc3, doc4)).map(to('id'));
+        const result = performQuery(q);
         expect(result.length).toBe(3);
         expect(result).toEqual(['id1', 'id2', 'id3']);
     });
@@ -243,7 +242,7 @@ describe('performQuery', () => {
         put(doc2);
         put(doc3);
 
-        const result = performQuery(q, indexItems(doc1, doc2, doc3)).map(to('id'));
+        const result = performQuery(q);
         expect(result.length).toBe(2);
         expect(result).toEqual(['id2', 'id3']);
     });

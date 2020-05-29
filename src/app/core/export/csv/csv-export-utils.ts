@@ -1,5 +1,5 @@
 import {dense, drop, flow, indices, is, on, reduce, first,
-    take, prepend, append, compose, cond, isEmpty} from 'tsfun';
+    take, prepend, append, compose, cond, isEmpty, Mapping} from 'tsfun';
 import {FieldDefinition} from '../../configuration/model/field-definition';
 import {FieldResource, Resource} from 'idai-components-2';
 import {clone} from '../../util/object-util';
@@ -52,7 +52,7 @@ export module CsvExportUtils {
      * 3
      */
     export function getMax(columnIndex: number)
-        : <A>(matrix: any) => number{
+        : <A>(matrix: any) => number {
 
         return reduce((max: number, row: any) =>
 
@@ -76,7 +76,7 @@ export module CsvExportUtils {
      */
     export function replaceItems<A>(where: number,
                                     nrOfNewItems: number,
-                                    replace: (_: Array<A>) => Array<A>) {
+                                    replace: Mapping<Array<A>>) {
 
         return (as: Array<A>): Array<A> => {
 
@@ -85,8 +85,8 @@ export module CsvExportUtils {
                 drop(where),
                 take(nrOfNewItems),
                 replace,
-                prepend(...take(where)(as)),
-                append(...drop(where + nrOfNewItems)(as)) as any /* TODO review any */);
+                prepend(...take(where, as)),
+                append(...drop(where + nrOfNewItems, as)));
         }
     }
 

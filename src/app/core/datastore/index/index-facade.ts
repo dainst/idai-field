@@ -60,8 +60,8 @@ export class IndexFacade {
 
         const [typeDocuments, nonTypeDocuments] = separate(on('resource.category', is(TYPE)), documents);
 
-        typeDocuments.forEach(_ => this._put(_, true, false));
-        nonTypeDocuments.forEach(_ => this._put(_, true, false));
+        typeDocuments.forEach(document => this._put(document, true, false));
+        nonTypeDocuments.forEach(document => this._put(document, true, false));
     }
 
 

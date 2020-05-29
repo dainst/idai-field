@@ -9,9 +9,7 @@ import {Constraint} from '../model/constraint';
 
 /**
  * @author Daniel de Oliveira
- */
-
-/**
+ *
  * Runtime info: Skips the fulltime query if query is empty and constraint search delivered results
  */
 export function performQuery(query: Query,
@@ -58,10 +56,8 @@ function performConstraints(constraintIndex: ConstraintIndex,
                 ? ConstraintIndex.get
                 : ConstraintIndex.getWithDescendants;
 
-            const indexItemIds = get(constraintIndex, name, value);
-            // TODO review if deduplication necessary here
-            // const indexItems = flatMap(lookup(indexItemsMap) as any /* TODO review as any */)(indexItemIds) as any /* TODO review as any */;
-            ResultSets.combine(resultSets, indexItemIds as any /* TODO review */, subtract);
+            const indexItemIds = get(constraintIndex, name, value); // TODO review if deduplication necessary here
+            ResultSets.combine(resultSets, indexItemIds, subtract);
             return resultSets;
         }, ResultSets.make());
 }

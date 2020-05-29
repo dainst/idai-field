@@ -1,10 +1,11 @@
 import {flatMap, flow, filter, split, toLowerCase, empty, isNot, isEmpty, keys,
-    Map, forEach, set} from 'tsfun';
+    Map, forEach} from 'tsfun';
 import {lookup, map} from 'tsfun/associative';
 import {Document, Resource} from 'idai-components-2';
 import {ResultSets} from './result-sets';
 import {Category} from '../../configuration/model/category';
 import {toArray} from '../../util/utils';
+import {addUniquely} from './index-helpers';
 
 
 export interface FulltextIndex {
@@ -36,7 +37,7 @@ export module FulltextIndex {
         if (!index[document.resource.category]) {
             index[document.resource.category] = { '*' : [] } ;
         }
-        index[document.resource.category]['*'] = set(index[document.resource.category]['*'].concat(document.resource.id)) /* TODO Review regarding performance */;
+        index[document.resource.category]['*'] = addUniquely(index[document.resource.category]['*'], document.resource.id);
 
         flow(
             getFieldsToIndex(categoriesMap, document.resource.category),
@@ -109,7 +110,7 @@ export module FulltextIndex {
             tokenAsCharArray.reduce((accumulator, letter) => {
                 accumulator += letter;
                 if (!categoryIndex[accumulator]) categoryIndex[accumulator] = [];
-                categoryIndex[accumulator] = set(categoryIndex[accumulator].concat(document.resource.id)); // TODO review regarding performance; also compare similar occurrences in constraint-index.ts
+                categoryIndex[accumulator] = addUniquely(categoryIndex[accumulator], document.resource.id);
                 return accumulator;
             }, '');
         }

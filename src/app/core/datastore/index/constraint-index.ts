@@ -1,10 +1,11 @@
-import {values, isArray, map, flatten, flatMap, flow, set,
+import {values, isArray, map, flatten, flatMap, flow,
     cond, not, to, isDefined, singleton, Map, filter} from 'tsfun';
 import {get as getOn} from 'tsfun/struct';
 import {Document, Resource} from 'idai-components-2';
 import {Category} from '../../configuration/model/category';
 import {FieldDefinition} from '../../configuration/model/field-definition';
 import {clone} from '../../util/object-util';
+import {addUniquely} from './index-helpers';
 
 
 export interface IndexDefinition {
@@ -380,7 +381,7 @@ export module ConstraintIndex {
     function addToIndex(index: any, doc: Document, path: string, target: string) {
 
         if (!index[path][target]) index[path][target] = [];
-        index[path][target] = set(index[path][target].concat(doc.resource.id));
+        index[path][target] = addUniquely(index[path][target], doc.resource.id);
     }
 
 

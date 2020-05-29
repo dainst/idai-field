@@ -12,7 +12,7 @@ export interface ResultSets {
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export module ResultSets { // TODO after getting rid of IndexItems dependency in FulltextIndex, pull this into perform-query.ts
+export module ResultSets {
 
     export function make(): ResultSets {
 

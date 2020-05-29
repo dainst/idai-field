@@ -51,7 +51,7 @@ describe('Validator', () => {
 
     it('should report nothing', async done => {
 
-        const find = () => Promise.resolve({totalCount: 0, documents: []});
+        const find = () => Promise.resolve({ documents: [], ids: [], totalCount: 0 });
 
         const doc = {
             resource: {

@@ -234,7 +234,7 @@ export class DocumentsManager {
 
         const isRecordedInTarget = this.makeIsRecordedInTarget();
         if (!isRecordedInTarget && !this.resourcesStateManager.isInSpecialView()) {
-            return { documents: [], totalCount: 0 };
+            return { documents: [], ids: [], totalCount: 0 };
         }
 
         const operationId: string|undefined = this.resourcesStateManager.isInSpecialView()
@@ -353,7 +353,7 @@ export class DocumentsManager {
 
         } catch (errWithParams) {
             DocumentsManager.handleFindErr(errWithParams, query);
-            return { documents: [], totalCount: 0 };
+            return { documents: [], ids: [], totalCount: 0 };
         }
     }
 

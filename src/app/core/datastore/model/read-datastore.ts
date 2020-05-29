@@ -46,6 +46,7 @@ export abstract class ReadDatastore {
 export interface FindResult {
 
     documents: Array<Document>;
+    ids: string[];
     totalCount: number;
     queryId?: string;
 }

@@ -105,10 +105,11 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
             clonedQuery.categories = this.categoryConverter.getCategoriesForClass(this.categoryClass);
         }
 
-        const orderedResults = await this.findIds(clonedQuery);
+        const orderedResults: string[] = await this.findIds(clonedQuery);
         if (query.skipDocuments) {
             return {
                 documents: [],
+                ids: orderedResults,
                 totalCount: orderedResults.length,
                 queryId: query.id
             };
@@ -119,6 +120,7 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
 
         return {
             documents: documents,
+            ids: orderedResults,
             totalCount: totalCount,
             queryId: query.id
         }

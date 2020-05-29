@@ -12,11 +12,7 @@ import {Query} from '../model/query';
 
 export interface IdaiFieldFindResult<T extends Document> extends FindResult {
 
-    documents: Array<T>,
-
-    // TODO Check why extending from FindResult doesn't work
-    totalCount: number,
-    queryId?: string
+    documents: Array<T>
 }
 
 

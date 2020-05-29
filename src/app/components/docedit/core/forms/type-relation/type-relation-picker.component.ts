@@ -159,7 +159,7 @@ export class TypeRelationPickerComponent {
     }
 
 
-    private pairWithLinkedImages: AsyncMapping<any>
+    private pairWithLinkedImages: AsyncMapping
         = ($: Array<FieldDocument>) => asyncMap(async (document: FieldDocument) => {
             return [
                 document,

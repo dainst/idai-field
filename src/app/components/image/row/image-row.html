@@ -18,9 +18,6 @@
                  [class.highlightOnHover]="highlightOnHover">
                 <category-icon [category]="image.document.resource.category" [size]="60"></category-icon>
             </div>
-            <div *ngIf="showResourceInfoOnHover" class="resource-info badge badge-light">
-                {{image.document.resource.identifier}}
-            </div>
         </div>
     </div>
     <div *ngIf="hasNextPage()" class="next-page-button" (click)="nextPage(); $event.stopPropagation()">

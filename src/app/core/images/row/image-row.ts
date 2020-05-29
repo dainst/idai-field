@@ -7,7 +7,7 @@ export type ImageRowUpdate = { newImageIds: string[], firstShownImageIndex: numb
 export type ImageRowItem = {
 
   imageId: string|'PLACEHOLDER';
-  document: Document;
+  document?: Document;
 }
 
 type PageInfo = 'same'|'previous'|'next';

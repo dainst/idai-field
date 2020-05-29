@@ -112,7 +112,7 @@ export class IndexFacade {
         }
 
         ConstraintIndex.put(this.constraintIndex, document, skipRemoval);
-        FulltextIndex.put(this.fulltextIndex, document, item, this.categoriesMap, skipRemoval);
+        FulltextIndex.put(this.fulltextIndex, document, this.categoriesMap, skipRemoval);
 
         if (notify) ObserverUtil.notify(this.observers, document);
     }

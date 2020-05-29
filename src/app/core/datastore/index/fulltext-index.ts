@@ -1,20 +1,17 @@
 import {flatMap, flow, filter, split, toLowerCase, empty, isNot, isEmpty, keys,
-    Map, forEach} from 'tsfun';
+    Map, forEach, set} from 'tsfun';
 import {lookup, map} from 'tsfun/associative';
 import {Document, Resource} from 'idai-components-2';
 import {ResultSets} from './result-sets';
-import {clone} from '../../util/object-util';
 import {Category} from '../../configuration/model/category';
 import {toArray} from '../../util/utils';
-import {IndexItem} from './index-item';
 
 
 export interface FulltextIndex {
 
     [category: string]: {
         [term: string]:
-            // TODO replace with Array<Resource.Id>, get rid of dependency to IndexItem altogether in FulltextIndex
-            { [resourceId: string]: IndexItem }
+            Array<Resource.Id /* TODO make type generic */>
     }
 }
 
@@ -32,34 +29,34 @@ export module FulltextIndex {
 
     export function put(index: FulltextIndex,
                         document: Document,
-                        indexItem: IndexItem,
                         categoriesMap: { [categoryName: string]: Category },
                         skipRemoval: boolean = false) {
 
         if (!skipRemoval) remove(index, document);
         if (!index[document.resource.category]) {
-            index[document.resource.category] = { '*' : { } };
+            index[document.resource.category] = { '*' : [] } ;
         }
-        index[document.resource.category]['*'][document.resource.id] = indexItem;
+        index[document.resource.category]['*'] = set(index[document.resource.category]['*'].concat(document.resource.id)) /* TODO Review regarding performance */;
 
         flow(
-            getFieldsToIndex(categoriesMap as any /* TODO review as any */, document.resource.category),
+            getFieldsToIndex(categoriesMap, document.resource.category),
             filter(lookup(document.resource)),
             filter((field: any) => document.resource[field] !== ''),
             map(lookup(document.resource)),
             flatMap(split(tokenizationPattern)),
             map(toLowerCase),
             map(toArray),
-            forEach(indexToken(index, document, indexItem)) as any /* TODO review as any*/);
+            forEach(indexToken(index, document)));
     }
 
 
-    export function remove(index: FulltextIndex, doc: any) {
+    export function remove(index: FulltextIndex, document: Document) {
 
         Object.keys(index).forEach(category =>
             Object.keys(index[category])
-                .filter(term => index[category][term][doc.resource.id])
-                .forEach(term => delete index[category][term][doc.resource.id]))
+                .forEach(term => {
+                    index[category][term] = index[category][term].filter(_ => _ !== document.resource.id);
+                }))
     }
 
 
@@ -103,7 +100,7 @@ export module FulltextIndex {
     }
 
 
-    function indexToken(index: FulltextIndex, document: Document, item: IndexItem) {
+    function indexToken(index: FulltextIndex, document: Document,) {
 
         return (tokenAsCharArray: string[]) => {
 
@@ -111,8 +108,8 @@ export module FulltextIndex {
 
             tokenAsCharArray.reduce((accumulator, letter) => {
                 accumulator += letter;
-                if (!categoryIndex[accumulator]) categoryIndex[accumulator] = {};
-                categoryIndex[accumulator][document.resource.id] = item;
+                if (!categoryIndex[accumulator]) categoryIndex[accumulator] = [];
+                categoryIndex[accumulator] = set(categoryIndex[accumulator].concat(document.resource.id)); // TODO review regarding performance; also compare similar occurrences in constraint-index.ts
                 return accumulator;
             }, '');
         }
@@ -156,7 +153,10 @@ export module FulltextIndex {
     }
 
 
-    function getWithPlaceholder(index: FulltextIndex, resultSets: ResultSets, s: string, category: string,
+    function getWithPlaceholder(index: FulltextIndex,
+                                resultSets: ResultSets,
+                                s: string,
+                                category: string,
                                 tokens: string): ResultSets {
 
         return tokens.split('').reduce((_resultSets, nextChar: string) =>
@@ -167,13 +167,14 @@ export module FulltextIndex {
     }
 
 
-    function addKeyToResultSets(index: FulltextIndex, resultSets: ResultSets, category: string,
+    function addKeyToResultSets(index: FulltextIndex,
+                                resultSets: ResultSets,
+                                category: string,
                                 s: string): ResultSets {
 
         if (!index[category] || !index[category][s]) return resultSets;
 
-        const ks = keys(index[category][s]).map(id => clone(index[category][s][id])).map(_ => _.id); // TODO review
-        ResultSets.combine(resultSets, ks);
+        ResultSets.combine(resultSets, index[category][s]);
         return resultSets;
     }
 }

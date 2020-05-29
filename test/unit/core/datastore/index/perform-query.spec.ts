@@ -30,25 +30,14 @@ describe('performQuery', () => {
 
     function put(document: Document) {
 
-        const indexItem = IndexItem.from(document);
         ConstraintIndex.put(constraintIndex, document);
-        FulltextIndex.put(fulltextIndex, document, indexItem, categoriesMap);
+        FulltextIndex.put(fulltextIndex, document, categoriesMap);
     }
 
 
     function performQuery(query: Query) {
 
         return performQuery_(query, constraintIndex, fulltextIndex);
-    }
-
-
-    function indexItems(...documents: Array<Document>) {
-
-        const ii = {};
-        for (let document of documents) {
-            ii[document.resource.id] = IndexItem.from(document);
-        }
-        return ii;
     }
 
 

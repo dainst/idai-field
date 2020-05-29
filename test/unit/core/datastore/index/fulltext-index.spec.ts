@@ -54,9 +54,8 @@ describe('FulltextIndex', () => {
     it('match one with different search terms', () => {
 
         const d = doc('1', 'identifier1', 'category');
-        const ie = IndexItem.from(d);
 
-        FulltextIndex.put(fi, d, ie, categoriesMap);
+        FulltextIndex.put(fi, d, categoriesMap);
         expect(FulltextIndex.get(fi, 'identifier1', ['category'])).toEqual(['1']);
         expect(FulltextIndex.get(fi,'ide', ['category'])).toEqual(['1']);
     });
@@ -65,12 +64,10 @@ describe('FulltextIndex', () => {
     it('match two with the same search term', () => {
 
         const d1 = doc('1', 'identifier1', 'category');
-        const ie1 = IndexItem.from(d1);
         const d2 = doc('2', 'identifier2', 'category');
-        const ie2 = IndexItem.from(d2);
 
-        FulltextIndex.put(fi, d1, ie1, categoriesMap);
-        FulltextIndex.put(fi, d2, ie2, categoriesMap);
+        FulltextIndex.put(fi, d1, categoriesMap);
+        FulltextIndex.put(fi, d2, categoriesMap);
         expect(FulltextIndex.get(fi, 'identifier', ['category'])).toEqual(['1', '2']);
     });
 
@@ -78,9 +75,8 @@ describe('FulltextIndex', () => {
     it('match in all categories', () => {
 
         const d = doc('1', 'identifier1', 'category');
-        const ie = IndexItem.from(d);
 
-        FulltextIndex.put(fi, d, ie, categoriesMap);
+        FulltextIndex.put(fi, d, categoriesMap);
         expect(FulltextIndex.get(fi, 'identifier', undefined)).toEqual(['1']);
     });
 
@@ -88,9 +84,8 @@ describe('FulltextIndex', () => {
     it('index short description', () => {
 
         const d = doc('1', 'identifier1', 'category', 'short');
-        const ie = IndexItem.from(d);
 
-        FulltextIndex.put(fi, d, ie, categoriesMap);
+        FulltextIndex.put(fi, d, categoriesMap);
         expect(FulltextIndex.get(fi, 'short', undefined)).toEqual(['1']);
     });
 
@@ -98,15 +93,12 @@ describe('FulltextIndex', () => {
     it('match in multiple selected categories', () => {
 
         const d1 = doc('1', 'identifier1', 'category1');
-        const ie1 = IndexItem.from(d1);
         const d2 = doc('2', 'identifier2', 'category2');
-        const ie2 = IndexItem.from(d2);
         const d3 = doc('3', 'identifier3', 'category3');
-        const ie3 = IndexItem.from(d3);
 
-        FulltextIndex.put(fi, d1, ie1, categoriesMap);
-        FulltextIndex.put(fi, d2, ie2, categoriesMap);
-        FulltextIndex.put(fi, d3, ie3, categoriesMap);
+        FulltextIndex.put(fi, d1, categoriesMap);
+        FulltextIndex.put(fi, d2, categoriesMap);
+        FulltextIndex.put(fi, d3, categoriesMap);
         expect(FulltextIndex.get(fi, 'identifier', ['category1', 'category2'])).toEqual(['1', '2']);
     });
 
@@ -114,9 +106,8 @@ describe('FulltextIndex', () => {
     it('do not match search term', () => {
 
         const d = doc('1', 'iden', 'category');
-        const ie = IndexItem.from(d);
 
-        FulltextIndex.put(fi, d, ie, categoriesMap);
+        FulltextIndex.put(fi, d, categoriesMap);
         expect(FulltextIndex.get(fi, 'identifier', ['category'])).toEqual([]);
     });
 
@@ -124,9 +115,8 @@ describe('FulltextIndex', () => {
     it('do not match search in category', () => {
 
         const d = doc('1', 'iden', 'category1');
-        const ie = IndexItem.from(d);
 
-        FulltextIndex.put(fi, d, ie, categoriesMap);
+        FulltextIndex.put(fi, d, categoriesMap);
         expect(FulltextIndex.get(fi, 'identifier', ['category2'])).toEqual([]);
     });
 
@@ -134,9 +124,8 @@ describe('FulltextIndex', () => {
     it('match one with two search terms', () => {
 
         const d = doc('1', 'identifier1', 'category', 'a short description');
-        const ie = IndexItem.from(d);
 
-        FulltextIndex.put(fi, d, ie, categoriesMap);
+        FulltextIndex.put(fi, d, categoriesMap);
         expect(FulltextIndex.get(fi,'short description', ['category'])).toEqual(['1']);
         expect(FulltextIndex.get(fi, 'a description', ['category'])).toEqual(['1']);
     });
@@ -145,9 +134,8 @@ describe('FulltextIndex', () => {
     it('ignore additional spaces and hyphens', () => {
 
         const d = doc('1', 'identifier1', 'category', 'a short description');
-        const ie = IndexItem.from(d);
 
-        FulltextIndex.put(fi, d, ie, categoriesMap);
+        FulltextIndex.put(fi, d, categoriesMap);
         expect(FulltextIndex.get(fi, ' a    short  description  ', ['category'])).toEqual(['1']);
         expect(FulltextIndex.get(fi,'-a----short--description--', ['category'])).toEqual(['1']);
     });
@@ -162,9 +150,8 @@ describe('FulltextIndex', () => {
     it('remove', () => {
 
         const d = doc('1', 'identifier1', 'category');
-        const ie = IndexItem.from(d);
 
-        FulltextIndex.put(fi, d, ie, categoriesMap);
+        FulltextIndex.put(fi, d, categoriesMap);
         FulltextIndex.remove(fi, d);
         expect(FulltextIndex.get(fi, 'identifier', ['category'])).toEqual([]);
     });
@@ -173,9 +160,8 @@ describe('FulltextIndex', () => {
     it('search *', () => {
 
         const d = doc('1', 'identifier1', 'category');
-        const ie = IndexItem.from(d);
 
-        FulltextIndex.put(fi, d, ie, categoriesMap);
+        FulltextIndex.put(fi, d, categoriesMap);
         expect(FulltextIndex.get(fi, '*', ['category'])).toEqual(['1']);
     });
 
@@ -183,9 +169,8 @@ describe('FulltextIndex', () => {
     it('index other field', () => {
 
         const d = doc('1', 'identifier1', 'category');
-        const ie = IndexItem.from(d);
 
-        FulltextIndex.put(fi, d, ie, categoriesMap);
+        FulltextIndex.put(fi, d, categoriesMap);
         expect(FulltextIndex.get(fi, 'short', ['category'])).toEqual(['1']);
     });
 
@@ -193,12 +178,10 @@ describe('FulltextIndex', () => {
     it('tokenize fields', () => {
 
         const d1 = doc('1', 'hello token', 'category');
-        const ie1 = IndexItem.from(d1);
         const d2 = doc('2', 'another-one', 'category');
-        const ie2 = IndexItem.from(d2);
 
-        FulltextIndex.put(fi, d1, ie1, categoriesMap);
-        FulltextIndex.put(fi, d2, ie2, categoriesMap);
+        FulltextIndex.put(fi, d1, categoriesMap);
+        FulltextIndex.put(fi, d2, categoriesMap);
         expect(FulltextIndex.get(fi, 'hello', ['category'])).toEqual(['1']);
         expect(FulltextIndex.get(fi, 'token', ['category'])).toEqual(['1']);
         expect(FulltextIndex.get(fi,'another', ['category'])).toEqual(['2']);
@@ -209,12 +192,10 @@ describe('FulltextIndex', () => {
     it('find case insensitive', () => {
 
         const d1 = doc('1', 'Hello', 'category');
-        const ie1 = IndexItem.from(d1);
         const d2 = doc('2', 'something', 'category');
-        const ie2 = IndexItem.from(d2);
 
-        FulltextIndex.put(fi, d1, ie1, categoriesMap);
-        FulltextIndex.put(fi, d2, ie2, categoriesMap);
+        FulltextIndex.put(fi, d1, categoriesMap);
+        FulltextIndex.put(fi, d2, categoriesMap);
         expect(FulltextIndex.get(fi, 'hello', ['category'])).toEqual(['1']);
         expect(FulltextIndex.get(fi,'Something', ['category'])).toEqual(['2']);
     });
@@ -223,13 +204,11 @@ describe('FulltextIndex', () => {
     it('put overwrite', () => {
 
         const d = doc('1', 'identifier1', 'category');
-        const ie1 = IndexItem.from(d);
 
-        FulltextIndex.put(fi, d, ie1, categoriesMap);
+        FulltextIndex.put(fi, d, categoriesMap);
         d['resource']['identifier'] = 'identifier2';
-        const ie2 = IndexItem.from(d);
 
-        FulltextIndex.put(fi, d, ie2, categoriesMap);
+        FulltextIndex.put(fi, d, categoriesMap);
         expect(FulltextIndex.get(fi, 'identifier1', ['category'])).toEqual([]);
         expect(FulltextIndex.get(fi, 'identifier2', ['category'])).toEqual(['1']);
     });
@@ -239,16 +218,13 @@ describe('FulltextIndex', () => {
 
         const d = doc('1', 'identifier1', 'category');
         d['resource']['shortDescription'] = '';
-        const ie1 = IndexItem.from(d);
         expect(FulltextIndex.get(fi, 'short', ['category'])).toEqual([]);
-        FulltextIndex.put(fi, d, ie1, categoriesMap);
+        FulltextIndex.put(fi, d, categoriesMap);
         d['resource']['shortDescription'] = undefined;
-        const ie2 = IndexItem.from(d);
-        FulltextIndex.put(fi, d, ie2, categoriesMap);
+        FulltextIndex.put(fi, d, categoriesMap);
         expect(FulltextIndex.get(fi, 'short', ['category'])).toEqual([]);
         delete d['resource']['shortDescription'];
-        const ie3 = IndexItem.from(d);
-        FulltextIndex.put(fi, d, ie3, categoriesMap);
+        FulltextIndex.put(fi, d, categoriesMap);
         expect(FulltextIndex.get(fi, 'short', ['category'])).toEqual([]);
     });
 
@@ -256,15 +232,12 @@ describe('FulltextIndex', () => {
     it('do a placeholder search', () => {
 
         const d1 = doc('1', 'Hello-A-0033', 'category');
-        const ie1 = IndexItem.from(d1);
         const d2 = doc('2', 'Hello-A-0021', 'category');
-        const ie2 = IndexItem.from(d2);
         const d3 = doc('3', 'Hello-A-0059', 'category');
-        const ie3 = IndexItem.from(d3);
 
-        FulltextIndex.put(fi, d1, ie1, categoriesMap);
-        FulltextIndex.put(fi, d2, ie2, categoriesMap);
-        FulltextIndex.put(fi, d3, ie3, categoriesMap);
+        FulltextIndex.put(fi, d1, categoriesMap);
+        FulltextIndex.put(fi, d2, categoriesMap);
+        FulltextIndex.put(fi, d3, categoriesMap);
 
         const results = FulltextIndex.get(fi, 'Hello-A-00[23]', ['category'])
         expect(results.length).toBe(2);
@@ -289,7 +262,7 @@ describe('FulltextIndex', () => {
         const document = doc('1', 'identifier1', 'category');
         document.resource.customField = 'testValue';
         const ie = IndexItem.from(document);
-        FulltextIndex.put(fi, document, ie, categoriesMap);
+        FulltextIndex.put(fi, document, categoriesMap);
 
         const results = FulltextIndex.get(fi, 'testValue', ['category']);
         expect(results.length).toBe(1);

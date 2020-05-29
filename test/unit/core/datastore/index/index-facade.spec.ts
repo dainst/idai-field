@@ -213,7 +213,7 @@ describe('IndexFacade', () => {
     });
 
 
-    it('get descendantIds', () => {
+    it('get descendant ids', () => {
 
         const doc1 = Static.doc('sd0', 'identifier0', 'Type', 'id0');
         const doc2 = Static.doc('sd1', 'identifier1', 'Type', 'id1');

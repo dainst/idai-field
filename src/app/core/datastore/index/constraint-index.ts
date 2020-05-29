@@ -61,7 +61,7 @@ export module ConstraintIndex {
         };
 
         constraintIndex.indexDefinitions = getIndexDefinitions(
-            defaultIndexDefinitions as any /* TODO review as any*/,
+            defaultIndexDefinitions,
             Object.values(categoriesMap)
         );
 
@@ -117,7 +117,7 @@ export module ConstraintIndex {
             matchTerm,
             cond(not(isArray), singleton),
             map(getDescendants(index, definition)),
-            (flatten as any /* TODO review as any */)());
+            flatten());
     }
 
 
@@ -255,9 +255,9 @@ export module ConstraintIndex {
 
         return flow(categories,
             map(Category.getFields),
-            (flatten as any /* TODO review as any */)(),
+            flatten(),
             getUniqueFields,
-            filter(to(FieldDefinition.CONSTRAINTINDEXED)) as any /* TODO review */
+            filter(to(FieldDefinition.CONSTRAINTINDEXED))
         );
     }
 
@@ -297,7 +297,7 @@ export module ConstraintIndex {
                     flow(
                         indexItems,
                         map(getDescendants(index, definition)),
-                        (flatten as any  /* TODO review as any */)())) as any;
+                        flatten()));
         }
     }
 

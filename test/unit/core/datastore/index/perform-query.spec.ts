@@ -47,7 +47,7 @@ describe('performQuery', () => {
 
         const ii = {};
         for (let document of documents) {
-            ii[document.resource.id] = [IndexItem.from(document)];
+            ii[document.resource.id] = IndexItem.from(document);
         }
         return ii;
     }

@@ -57,8 +57,8 @@ describe('FulltextIndex', () => {
         const ie = IndexItem.from(d);
 
         FulltextIndex.put(fi, d, ie, categoriesMap);
-        expect(FulltextIndex.get(fi, 'identifier1', ['category'])).toEqual([indexItem('1')]);
-        expect(FulltextIndex.get(fi,'ide', ['category'])).toEqual([indexItem('1')]);
+        expect(FulltextIndex.get(fi, 'identifier1', ['category'])).toEqual(['1']);
+        expect(FulltextIndex.get(fi,'ide', ['category'])).toEqual(['1']);
     });
 
 
@@ -71,7 +71,7 @@ describe('FulltextIndex', () => {
 
         FulltextIndex.put(fi, d1, ie1, categoriesMap);
         FulltextIndex.put(fi, d2, ie2, categoriesMap);
-        expect(FulltextIndex.get(fi, 'identifier', ['category'])).toEqual([indexItem('1'), indexItem('2')]);
+        expect(FulltextIndex.get(fi, 'identifier', ['category'])).toEqual(['1', '2']);
     });
 
 
@@ -81,7 +81,7 @@ describe('FulltextIndex', () => {
         const ie = IndexItem.from(d);
 
         FulltextIndex.put(fi, d, ie, categoriesMap);
-        expect(FulltextIndex.get(fi, 'identifier', undefined)).toEqual([indexItem('1')]);
+        expect(FulltextIndex.get(fi, 'identifier', undefined)).toEqual(['1']);
     });
 
 
@@ -91,7 +91,7 @@ describe('FulltextIndex', () => {
         const ie = IndexItem.from(d);
 
         FulltextIndex.put(fi, d, ie, categoriesMap);
-        expect(FulltextIndex.get(fi, 'short', undefined)).toEqual([indexItem('1')]);
+        expect(FulltextIndex.get(fi, 'short', undefined)).toEqual(['1']);
     });
 
 
@@ -107,7 +107,7 @@ describe('FulltextIndex', () => {
         FulltextIndex.put(fi, d1, ie1, categoriesMap);
         FulltextIndex.put(fi, d2, ie2, categoriesMap);
         FulltextIndex.put(fi, d3, ie3, categoriesMap);
-        expect(FulltextIndex.get(fi, 'identifier', ['category1', 'category2'])).toEqual([indexItem('1'), indexItem('2')]);
+        expect(FulltextIndex.get(fi, 'identifier', ['category1', 'category2'])).toEqual(['1', '2']);
     });
 
 
@@ -137,8 +137,8 @@ describe('FulltextIndex', () => {
         const ie = IndexItem.from(d);
 
         FulltextIndex.put(fi, d, ie, categoriesMap);
-        expect(FulltextIndex.get(fi,'short description', ['category'])).toEqual([indexItem('1')]);
-        expect(FulltextIndex.get(fi, 'a description', ['category'])).toEqual([indexItem('1')]);
+        expect(FulltextIndex.get(fi,'short description', ['category'])).toEqual(['1']);
+        expect(FulltextIndex.get(fi, 'a description', ['category'])).toEqual(['1']);
     });
 
 
@@ -148,8 +148,8 @@ describe('FulltextIndex', () => {
         const ie = IndexItem.from(d);
 
         FulltextIndex.put(fi, d, ie, categoriesMap);
-        expect(FulltextIndex.get(fi, ' a    short  description  ', ['category'])).toEqual([indexItem('1')]);
-        expect(FulltextIndex.get(fi,'-a----short--description--', ['category'])).toEqual([indexItem('1')]);
+        expect(FulltextIndex.get(fi, ' a    short  description  ', ['category'])).toEqual(['1']);
+        expect(FulltextIndex.get(fi,'-a----short--description--', ['category'])).toEqual(['1']);
     });
 
 
@@ -176,7 +176,7 @@ describe('FulltextIndex', () => {
         const ie = IndexItem.from(d);
 
         FulltextIndex.put(fi, d, ie, categoriesMap);
-        expect(FulltextIndex.get(fi, '*', ['category'])).toEqual([indexItem('1')]);
+        expect(FulltextIndex.get(fi, '*', ['category'])).toEqual(['1']);
     });
 
 
@@ -186,7 +186,7 @@ describe('FulltextIndex', () => {
         const ie = IndexItem.from(d);
 
         FulltextIndex.put(fi, d, ie, categoriesMap);
-        expect(FulltextIndex.get(fi, 'short', ['category'])).toEqual([indexItem('1')]);
+        expect(FulltextIndex.get(fi, 'short', ['category'])).toEqual(['1']);
     });
 
 
@@ -199,10 +199,10 @@ describe('FulltextIndex', () => {
 
         FulltextIndex.put(fi, d1, ie1, categoriesMap);
         FulltextIndex.put(fi, d2, ie2, categoriesMap);
-        expect(FulltextIndex.get(fi, 'hello', ['category'])).toEqual([indexItem('1','hello token')]);
-        expect(FulltextIndex.get(fi, 'token', ['category'])).toEqual([indexItem('1','hello token')]);
-        expect(FulltextIndex.get(fi,'another', ['category'])).toEqual([indexItem('2','another-one')]);
-        expect(FulltextIndex.get(fi,'one', ['category'])).toEqual([indexItem('2','another-one')]);
+        expect(FulltextIndex.get(fi, 'hello', ['category'])).toEqual(['1']);
+        expect(FulltextIndex.get(fi, 'token', ['category'])).toEqual(['1']);
+        expect(FulltextIndex.get(fi,'another', ['category'])).toEqual(['2']);
+        expect(FulltextIndex.get(fi,'one', ['category'])).toEqual(['2']);
     });
 
 
@@ -215,8 +215,8 @@ describe('FulltextIndex', () => {
 
         FulltextIndex.put(fi, d1, ie1, categoriesMap);
         FulltextIndex.put(fi, d2, ie2, categoriesMap);
-        expect(FulltextIndex.get(fi, 'hello', ['category'])).toEqual([indexItem('1','Hello')]);
-        expect(FulltextIndex.get(fi,'Something', ['category'])).toEqual([indexItem('2','something')]);
+        expect(FulltextIndex.get(fi, 'hello', ['category'])).toEqual(['1']);
+        expect(FulltextIndex.get(fi,'Something', ['category'])).toEqual(['2']);
     });
 
 
@@ -231,7 +231,7 @@ describe('FulltextIndex', () => {
 
         FulltextIndex.put(fi, d, ie2, categoriesMap);
         expect(FulltextIndex.get(fi, 'identifier1', ['category'])).toEqual([]);
-        expect(FulltextIndex.get(fi, 'identifier2', ['category'])).toEqual([indexItem('1','identifier2')]);
+        expect(FulltextIndex.get(fi, 'identifier2', ['category'])).toEqual(['1']);
     });
 
 
@@ -266,11 +266,11 @@ describe('FulltextIndex', () => {
         FulltextIndex.put(fi, d2, ie2, categoriesMap);
         FulltextIndex.put(fi, d3, ie3, categoriesMap);
 
-        const results = FulltextIndex.get(fi, 'Hello-A-00[23]', ['category']).map(result => result.identifier);
+        const results = FulltextIndex.get(fi, 'Hello-A-00[23]', ['category'])
         expect(results.length).toBe(2);
 
-        expect(results).toContain('Hello-A-0033');
-        expect(results).toContain('Hello-A-0021');
+        expect(results).toContain('1');
+        expect(results).toContain('2');
     });
 
 
@@ -291,8 +291,8 @@ describe('FulltextIndex', () => {
         const ie = IndexItem.from(document);
         FulltextIndex.put(fi, document, ie, categoriesMap);
 
-        const results = FulltextIndex.get(fi, 'testValue', ['category']).map(result => result.identifier);
+        const results = FulltextIndex.get(fi, 'testValue', ['category']);
         expect(results.length).toBe(1);
-        expect(results[0]).toEqual('identifier1');
+        expect(results[0]).toEqual('1');
     });
 });

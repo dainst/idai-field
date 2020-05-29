@@ -1,4 +1,4 @@
-import {keys, flatMap} from 'tsfun';
+import {keys, values, map} from 'tsfun';
 import {lookup} from 'tsfun/associative';
 import {ConstraintIndex} from './constraint-index';
 import {FulltextIndex} from './fulltext-index';
@@ -23,15 +23,15 @@ export function performQuery(query: Query,
 
     let resultSets = performConstraints(
         constraintIndex,
-        query.constraints ? query.constraints : {},
-        indexItemsMap);
+        query.constraints ? query.constraints : {});
 
     resultSets = ResultSets.containsOnlyEmptyAddSets(resultSets)
         || (Query.isEmpty(query) && !ResultSets.isEmpty(resultSets))
             ? resultSets
             : performFulltext(fulltextIndex, query, resultSets);
 
-    return ResultSets.collapse(resultSets);
+    const result = values(map(lookup(indexItemsMap))(ResultSets.collapse(resultSets)));
+    return result;
 }
 
 
@@ -41,15 +41,15 @@ function performFulltext(fulltextIndex: FulltextIndex,
     : ResultSets {
 
     const q = !query.q || query.q.trim() === '' ? '*' : query.q;
-    ResultSets.combine(resultSets, FulltextIndex.get(fulltextIndex, q, query.categories));
 
+    const queryResult = FulltextIndex.get(fulltextIndex, q, query.categories);
+    ResultSets.combine(resultSets, queryResult);
     return resultSets;
 }
 
 
 function performConstraints(constraintIndex: ConstraintIndex,
-                            constraints: { [name: string]: Constraint|string|string[] },
-                            indexItemsMap: { [resourceId: string]: IndexItem })
+                            constraints: { [name: string]: Constraint|string|string[] })
     : ResultSets {
 
     return keys(constraints)
@@ -63,9 +63,8 @@ function performConstraints(constraintIndex: ConstraintIndex,
 
             const indexItemIds = get(constraintIndex, name, value);
             // TODO review if deduplication necessary here
-            const indexItems = flatMap(lookup(indexItemsMap) as any /* TODO review as any */)(indexItemIds) as any /* TODO review as any */;
-
-            ResultSets.combine(resultSets, indexItems as any /* TODO review */, subtract);
+            // const indexItems = flatMap(lookup(indexItemsMap) as any /* TODO review as any */)(indexItemIds) as any /* TODO review as any */;
+            ResultSets.combine(resultSets, indexItemIds as any /* TODO review */, subtract);
             return resultSets;
         }, ResultSets.make());
 }

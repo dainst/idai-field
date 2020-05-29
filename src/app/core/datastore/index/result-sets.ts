@@ -1,16 +1,11 @@
-import {intersection, union, subtract, flow, map, cond, isNot, empty} from 'tsfun';
-import {lookup} from 'tsfun/associative';
-import {IndexItem} from './index-item';
-
-type ResourceId = string;
-type IndexItemMap = { [id: string]: IndexItem };
+import {intersection, union, subtract, flow, cond, isNot, empty} from 'tsfun';
+import {Resource} from 'idai-components-2';
 
 
 export interface ResultSets {
 
-    addSets: Array<Array<ResourceId>>,
-    subtractSets: Array<Array<ResourceId>>,
-    map: IndexItemMap
+    addSets: Array<Array<Resource.Id>>,
+    subtractSets: Array<Array<Resource.Id>>,
 }
 
 
@@ -20,10 +15,9 @@ export interface ResultSets {
  */
 export module ResultSets {
 
-
     export function make(): ResultSets {
 
-        return { addSets: [], subtractSets: [], map: {} };
+        return { addSets: [], subtractSets: [] } ;
     }
 
 
@@ -43,40 +37,28 @@ export module ResultSets {
 
 
     export function combine(resultSets: ResultSets,
-                            indexItems: Array<IndexItem>,
+                            ids: Array<Resource.Id>,
                             subtract: undefined|true = undefined): void {
-
-        const keys = [];
-        for (let item of indexItems) {
-            resultSets.map[item.id] = item;
-            keys.push(item.id)
-        }
 
         (!subtract
             ? resultSets.addSets
             : resultSets.subtractSets)
-            .push(keys);
+            .push(ids);
     }
 
 
-    export function collapse(resultSets: ResultSets): Array<IndexItem> {
+    export function collapse(resultSets: ResultSets): Array<Resource.Id> {
 
         return flow(
             intersection(resultSets.addSets),
             cond(
                 isNot(empty)(resultSets.subtractSets),
-                subtract(union(resultSets.subtractSets))),
-            pickFrom(resultSets) as any /* TODO review any */);
+                subtract(union(resultSets.subtractSets))));
     }
 
 
-    export function unify(resultSets: ResultSets): Array<IndexItem> {
+    export function unify(resultSets: ResultSets): Array<Resource.Id> { // TODO get rid of this function
 
-        return flow(
-            union(resultSets.addSets),
-            pickFrom(resultSets) as any /* TODO review any */);
+        return union(resultSets.addSets);
     }
-
-
-    const pickFrom = (resultSets: ResultSets) => map(lookup(resultSets.map));
 }

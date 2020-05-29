@@ -1,7 +1,7 @@
 import {flatMap, flow, filter, split, toLowerCase, empty, isNot, isEmpty, keys,
     Map, forEach} from 'tsfun';
 import {lookup, map} from 'tsfun/associative';
-import {Document} from 'idai-components-2';
+import {Document, Resource} from 'idai-components-2';
 import {ResultSets} from './result-sets';
 import {clone} from '../../util/object-util';
 import {Category} from '../../configuration/model/category';
@@ -74,7 +74,7 @@ export module FulltextIndex {
      */
     export function get(index: FulltextIndex,
                         s: string,
-                        categories: string[]|undefined): Array<IndexItem> {
+                        categories: string[]|undefined): Array<Resource.Id> {
 
         if (isEmpty(index)) return [];
 
@@ -83,23 +83,21 @@ export module FulltextIndex {
             .filter(isNot(empty))
             .reduce(getFromIndex(index, categories), ResultSets.make());
 
-        return ResultSets.collapse(resultSets) as Array<IndexItem>;
+        return ResultSets.collapse(resultSets) as Array<Resource.Id>;
     }
 
 
     function getFromIndex(index: FulltextIndex, categories: string[]|undefined) {
 
         return (resultSets: ResultSets, token: string) => {
-
-            ResultSets.combine(resultSets,
-                getForToken(
-                    index,
-                    token,
-                    categories
-                        ? categories
-                        : keys(index)
-                )
+            const ids = getForToken(
+                index,
+                token,
+                categories
+                    ? categories
+                    : keys(index)
             );
+            ResultSets.combine(resultSets, ids);
             return resultSets;
         }
     }
@@ -174,7 +172,8 @@ export module FulltextIndex {
 
         if (!index[category] || !index[category][s]) return resultSets;
 
-        ResultSets.combine(resultSets, keys(index[category][s]).map(id => clone(index[category][s][id])));
+        const ks = keys(index[category][s]).map(id => clone(index[category][s][id])).map(_ => _.id); // TODO review
+        ResultSets.combine(resultSets, ks);
         return resultSets;
     }
 }

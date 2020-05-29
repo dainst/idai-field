@@ -10,11 +10,11 @@ describe('ResultSets', () => {
 
         const r: ResultSets = ResultSets.make();
 
-        ResultSets.combine(r, [{id:'1'},{id:'2'}] as any);
-        ResultSets.combine(r,[{id:'2'},{id:'2'}] as any);
-        ResultSets.combine(r,[{id:'2'},{id:'3'}] as any);
+        ResultSets.combine(r, ['1', '2'] as any);
+        ResultSets.combine(r,['2', '2'] as any);
+        ResultSets.combine(r,['2','3'] as any);
 
-        expect(ResultSets.collapse(r)).toEqual([{id:'2'}] as any);
+        expect(ResultSets.collapse(r)).toEqual(['2']);
     });
 
 
@@ -22,8 +22,8 @@ describe('ResultSets', () => {
 
         const r: ResultSets = ResultSets.make();
 
-        ResultSets.combine(r,[{id:'1'},{id:'2'}] as any);
-        ResultSets.combine(r,[{id:'3'},{id:'4'}] as any);
+        ResultSets.combine(r,['1','2'] as any);
+        ResultSets.combine(r,['3','4'] as any);
 
         expect(ResultSets.collapse(r)).toEqual([]);
     });
@@ -33,9 +33,9 @@ describe('ResultSets', () => {
 
         const r: ResultSets = ResultSets.make();
 
-        ResultSets.combine(r,[{id:'1'},{id:'2'}] as any);
-        ResultSets.combine(r,[{id:'2'},{id:'3'}] as any);
-        ResultSets.combine(r,[{id:'4'},{id:'5'}] as any);
+        ResultSets.combine(r,['1','2'] as any);
+        ResultSets.combine(r,['2','3'] as any);
+        ResultSets.combine(r,['4','5'] as any);
 
         expect(ResultSets.collapse(r)).toEqual([]);
     });
@@ -45,10 +45,10 @@ describe('ResultSets', () => {
 
         const r: ResultSets = ResultSets.make();
 
-        ResultSets.combine(r,[{ id: '1' }, { id: '2' }, { id: '3' }, { id: '4' }] as any);
-        ResultSets.combine(r,[{ id: '3' }, { id: '4' }] as any, true);
+        ResultSets.combine(r,['1', '2', '3', '4'] as any);
+        ResultSets.combine(r,['3', '4'] as any, true);
 
-        expect(ResultSets.collapse(r)).toEqual([{ id: '1' }, { id: '2' }] as any);
+        expect(ResultSets.collapse(r)).toEqual(['1', '2']);
     });
 
 
@@ -56,11 +56,11 @@ describe('ResultSets', () => {
 
         const r: ResultSets = ResultSets.make();
 
-        ResultSets.combine(r,[{ id: '1' }, { id: '2' }, { id: '3' }, { id: '4' }] as any);
-        ResultSets.combine(r,[{ id: '2' }, { id: '3' }, { id: '4' }, { id: '5' }] as any);
-        ResultSets.combine(r,[{ id: '3' }] as any, true);
-        ResultSets.combine(r,[{ id: '4' }] as any, true);
+        ResultSets.combine(r,['1', '2', '3', '4'] as any);
+        ResultSets.combine(r,['2', '3', '4', '5'] as any);
+        ResultSets.combine(r,['3'] as any, true);
+        ResultSets.combine(r,['4'] as any, true);
 
-        expect(ResultSets.collapse(r)).toEqual([{ id: '2' }] as any);
+        expect(ResultSets.collapse(r)).toEqual(['2']);
     });
 });

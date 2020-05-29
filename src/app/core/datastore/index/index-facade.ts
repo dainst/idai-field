@@ -1,5 +1,5 @@
 import {Observable, Observer} from 'rxjs';
-import {is, on, flow, forEach, isDefined, separate, map} from 'tsfun';
+import {is, on, flow, forEach, isDefined, separate} from 'tsfun';
 import {filter} from 'tsfun/collection';
 import {Document} from 'idai-components-2';
 import {ConstraintIndex} from './constraint-index';
@@ -40,8 +40,7 @@ export class IndexFacade {
     public find(query: Query): Array<ResourceId> {
 
         const queryResult = performQuery(query, this.constraintIndex, this.fulltextIndex);
-        const indexItems = map(lookup(this.indexItems))(queryResult);
-
+        const indexItems = queryResult.map(lookup(this.indexItems));
         return getSortedIds(indexItems, query);
     }
 

@@ -1,5 +1,5 @@
-import {equal, is, isNot, on, Pair, to, sort, count, flow, map, tuplify, flatten, compose,
-    undefinedOrEmpty, size, isUndefinedOrEmpty, cond, pairWith, left} from 'tsfun';
+import {equal, is, isNot, on, Pair, to, sort, count, flow, map, tuplify, flatten, compose, undefinedOrEmpty, size,
+    isUndefinedOrEmpty, cond, pairWith, left} from 'tsfun';
 import {separate} from 'tsfun/collection';
 import {Resource} from 'idai-components-2';
 import {IndexItem, TypeResourceIndexItem} from './index-item';
@@ -37,6 +37,8 @@ type Percentage = number;
  */
 export function getSortedIds(indexItems: Array<IndexItem>, query: Query): Array<ResourceId> {
 
+    if (query.sort && query.sort.mode === 'none') return indexItems.map(to(Resource.ID));
+
     const rankEntries = shouldRankCategories(query)
         ? rankTypeResourceIndexItems((query.sort as any).matchCategory)
         : rankRegularIndexItems;
@@ -44,13 +46,15 @@ export function getSortedIds(indexItems: Array<IndexItem>, query: Query): Array<
     const handleExactMatchIfQuerySaysSo =
         cond(
             shouldHandleExactMatch(query),
-            handleExactMatch(query.q as string));
+            handleExactMatch(query.q as string)
+        );
 
     return flow(
         indexItems,
         rankEntries,
         handleExactMatchIfQuerySaysSo,
-        map(to(Resource.ID)) as any /* TODO review any */);
+        map(to(Resource.ID)) as any /* TODO review any */
+    );
 }
 
 

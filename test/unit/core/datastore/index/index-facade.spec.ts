@@ -174,6 +174,31 @@ describe('IndexFacade', () => {
     });
 
 
+    it('should not sort', () => {
+
+        const doc1 = Static.doc('1', '1', 'category1','id1');
+        const doc2 = Static.doc('2', '2', 'category2','id2');
+        const doc3 = Static.doc('3', '3', 'category2','id3');
+        doc1.resource.relations['isDepictedIn'] = ['id3', 'id2'];
+
+        const q: Query = {
+            constraints: {
+                'isDepictedIn:links': 'id1'
+            },
+            sort: {
+                mode: 'none'
+            }
+        };
+
+        indexFacade.put(doc1);
+        indexFacade.put(doc2);
+        indexFacade.put(doc3);
+
+        const result = indexFacade.find(q);
+        expect(result).toEqual(['id3', 'id2']);
+    });
+
+
     it('do not index if no identifier', () => {
 
         const doc1 = Static.doc('sd0', 'identifier0', 'Type', 'id0');

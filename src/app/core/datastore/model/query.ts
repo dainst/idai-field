@@ -30,7 +30,7 @@ export interface Query {
     limit?: number;
     offset?: number;
     sort?: {
-        mode?: 'default'|'exactMatchFirst',
+        mode?: 'default'|'exactMatchFirst'|'none',
         matchCategory?: string
     };
     id?: string;

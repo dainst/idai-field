@@ -11,7 +11,7 @@ export interface FulltextIndex {
 
     [category: string]: {
         [term: string]:
-            Array<Resource.Id /* TODO make type generic */>
+            Array<Resource.Id>
     }
 }
 

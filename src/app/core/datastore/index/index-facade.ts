@@ -151,7 +151,7 @@ export class IndexFacade {
             filter(on(INSTANCES, isDefined)),
             forEach((item: TypeResourceIndexItem) => {
                 delete item[INSTANCES][document.resource.id];
-            }) as any /* TODO review as any */) ;
+            })) ;
     }
 
 

@@ -211,4 +211,18 @@ describe('IndexFacade', () => {
         const result = indexFacade.find({});
         expect(result).toEqual(['id1']);
     });
+
+
+    it('get descendantIds', () => {
+
+        const doc1 = Static.doc('sd0', 'identifier0', 'Type', 'id0');
+        const doc2 = Static.doc('sd1', 'identifier1', 'Type', 'id1');
+        doc2.resource.relations['liesWithin'] = ['id0'];
+
+        indexFacade.put(doc1);
+        indexFacade.put(doc2);
+
+        const result = indexFacade.getDescendantIds('liesWithin:contain', 'id0');
+        expect(result).toEqual(['id1']);
+    });
 });

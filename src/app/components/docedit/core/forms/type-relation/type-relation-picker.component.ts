@@ -137,7 +137,7 @@ export class TypeRelationPickerComponent {
         this.availableCatalogs = flow(
             await this.fieldDatastore.find(query),
             to(FindResult.DOCUMENTS),
-            map(to(Document.RESOURCE)) as any /* TODO review any */
+            map(to(Document.RESOURCE))
         );
     }
 

@@ -70,8 +70,8 @@ export module FulltextIndex {
      *   indexed under the specified categories will be included in the results.
      */
     export function get(index: FulltextIndex,
-                        s: string,
-                        categories: string[]|undefined): Array<Resource.Id> {
+                           s: string,
+                           categories: string[]|undefined): Array<Resource.Id> {
 
         if (isEmpty(index)) return [];
 
@@ -86,7 +86,7 @@ export module FulltextIndex {
 
     function getFromIndex(index: FulltextIndex, categories: string[]|undefined) {
 
-        return (resultSets: ResultSets, token: string) => {
+        return (resultSets: ResultSets<Resource.Id>, token: string) => {
             const ids = getForToken(
                 index,
                 token,
@@ -141,7 +141,7 @@ export module FulltextIndex {
 
         const s = token.toLowerCase();
 
-        function get(resultSets: ResultSets, category: string): ResultSets {
+        function get(resultSets: ResultSets<Resource.Id>, category: string): ResultSets<Resource.Id> {
 
             const {hasPlaceholder, tokens} = extractReplacementTokens(s);
             return hasPlaceholder
@@ -149,15 +149,15 @@ export module FulltextIndex {
                 : addKeyToResultSets(index, resultSets, category, s);
         }
 
-        return ResultSets.unify(categories.reduce(get, ResultSets.make()));
+        return ResultSets.unifyAddSets(categories.reduce(get, ResultSets.make()));
     }
 
 
     function getWithPlaceholder(index: FulltextIndex,
-                                resultSets: ResultSets,
+                                resultSets: ResultSets<Resource.Id>,
                                 s: string,
                                 category: string,
-                                tokens: string): ResultSets {
+                                tokens: string): ResultSets<Resource.Id> {
 
         return tokens.split('').reduce((_resultSets, nextChar: string) =>
                 addKeyToResultSets(
@@ -168,9 +168,9 @@ export module FulltextIndex {
 
 
     function addKeyToResultSets(index: FulltextIndex,
-                                resultSets: ResultSets,
+                                resultSets: ResultSets<Resource.Id>,
                                 category: string,
-                                s: string): ResultSets {
+                                s: string): ResultSets<Resource.Id> {
 
         if (!index[category] || !index[category][s]) return resultSets;
 

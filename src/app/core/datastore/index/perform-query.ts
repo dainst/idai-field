@@ -32,8 +32,8 @@ export function performQuery(query: Query,
 
 function performFulltext(fulltextIndex: FulltextIndex,
                          query: Query,
-                         resultSets: ResultSets)
-    : ResultSets {
+                         resultSets: ResultSets<Resource.Id>)
+    : ResultSets<Resource.Id> {
 
     const q = !query.q || query.q.trim() === '' ? '*' : query.q;
 
@@ -45,7 +45,7 @@ function performFulltext(fulltextIndex: FulltextIndex,
 
 function performConstraints(constraintIndex: ConstraintIndex,
                             constraints: { [name: string]: Constraint|string|string[] })
-    : ResultSets {
+    : ResultSets<Resource.Id> {
 
     return keys(constraints)
         .reduce((resultSets, name: string) => {
@@ -59,5 +59,5 @@ function performConstraints(constraintIndex: ConstraintIndex,
             const indexItemIds = get(constraintIndex, name, value); // TODO review if deduplication necessary here
             ResultSets.combine(resultSets, indexItemIds, subtract);
             return resultSets;
-        }, ResultSets.make());
+        }, ResultSets.make<Resource.Id>());
 }

@@ -8,11 +8,11 @@ describe('ResultSets', () => {
 
     it('basic stuff', () => {
 
-        const r: ResultSets = ResultSets.make();
+        const r = ResultSets.make<string>();
 
-        ResultSets.combine(r, ['1', '2'] as any);
-        ResultSets.combine(r,['2', '2'] as any);
-        ResultSets.combine(r,['2','3'] as any);
+        ResultSets.combine(r, ['1', '2']);
+        ResultSets.combine(r, ['2', '2']);
+        ResultSets.combine(r, ['2','3']);
 
         expect(ResultSets.collapse(r)).toEqual(['2']);
     });
@@ -20,10 +20,10 @@ describe('ResultSets', () => {
 
     it('no intersection', () => {
 
-        const r: ResultSets = ResultSets.make();
+        const r = ResultSets.make<string>();
 
-        ResultSets.combine(r,['1','2'] as any);
-        ResultSets.combine(r,['3','4'] as any);
+        ResultSets.combine(r, ['1','2']);
+        ResultSets.combine(r, ['3','4']);
 
         expect(ResultSets.collapse(r)).toEqual([]);
     });
@@ -31,11 +31,11 @@ describe('ResultSets', () => {
 
     it('no intersection with more results', () => {
 
-        const r: ResultSets = ResultSets.make();
+        const r = ResultSets.make<string>();
 
-        ResultSets.combine(r,['1','2'] as any);
-        ResultSets.combine(r,['2','3'] as any);
-        ResultSets.combine(r,['4','5'] as any);
+        ResultSets.combine(r, ['1','2']);
+        ResultSets.combine(r, ['2','3']);
+        ResultSets.combine(r, ['4','5']);
 
         expect(ResultSets.collapse(r)).toEqual([]);
     });
@@ -43,10 +43,10 @@ describe('ResultSets', () => {
 
     it('subtract', () => {
 
-        const r: ResultSets = ResultSets.make();
+        const r = ResultSets.make<string>();
 
-        ResultSets.combine(r,['1', '2', '3', '4'] as any);
-        ResultSets.combine(r,['3', '4'] as any, true);
+        ResultSets.combine(r, ['1', '2', '3', '4']);
+        ResultSets.combine(r, ['3', '4'], true);
 
         expect(ResultSets.collapse(r)).toEqual(['1', '2']);
     });
@@ -54,12 +54,12 @@ describe('ResultSets', () => {
 
     it('subtract and add multiple', () => {
 
-        const r: ResultSets = ResultSets.make();
+        const r = ResultSets.make<string>();
 
-        ResultSets.combine(r,['1', '2', '3', '4'] as any);
-        ResultSets.combine(r,['2', '3', '4', '5'] as any);
-        ResultSets.combine(r,['3'] as any, true);
-        ResultSets.combine(r,['4'] as any, true);
+        ResultSets.combine(r, ['1', '2', '3', '4']);
+        ResultSets.combine(r, ['2', '3', '4', '5']);
+        ResultSets.combine(r, ['3'], true);
+        ResultSets.combine(r, ['4'], true);
 
         expect(ResultSets.collapse(r)).toEqual(['2']);
     });

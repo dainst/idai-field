@@ -1,10 +1,10 @@
 import {intersection, union, subtract, flow, cond, isNot, empty} from 'tsfun';
 
 
-export interface ResultSets {
+export interface ResultSets<T> {
 
-    addSets: Array<Array<string>>,
-    subtractSets: Array<Array<string>>,
+    addSets: Array<Array<T>>,
+    subtractSets: Array<Array<T>>,
 }
 
 
@@ -14,20 +14,20 @@ export interface ResultSets {
  */
 export module ResultSets {
 
-    export function make(): ResultSets {
+    export function make<T>(): ResultSets<T> {
 
-        return { addSets: [], subtractSets: [] } ;
+        return { addSets: [], subtractSets: [] } as ResultSets<T>;
     }
 
 
-    export function isEmpty(resultSets: ResultSets): boolean {
+    export function isEmpty<T>(resultSets: ResultSets<T>): boolean {
 
         return resultSets.addSets.length === 0 &&
             resultSets.subtractSets.length === 0;
     }
 
 
-    export function containsOnlyEmptyAddSets(resultSets: ResultSets): boolean {
+    export function containsOnlyEmptyAddSets<T>(resultSets: ResultSets<T>): boolean {
 
         if (resultSets.addSets.length === 0) return false;
         return !resultSets.addSets
@@ -35,18 +35,19 @@ export module ResultSets {
     }
 
 
-    export function combine(resultSets: ResultSets,
-                            ids: Array<string>,
-                            subtract: undefined|true = undefined): void {
+    // TODO make function pure
+    export function combine<T>(resultSets: ResultSets<T>,
+                               items: Array<T>,
+                               subtract: undefined|true = undefined): void {
 
         (!subtract
             ? resultSets.addSets
             : resultSets.subtractSets)
-            .push(ids);
+            .push(items);
     }
 
 
-    export function collapse(resultSets: ResultSets): Array<string> {
+    export function collapse<T>(resultSets: ResultSets<T>): Array<T> {
 
         return flow(
             intersection(resultSets.addSets),
@@ -56,7 +57,7 @@ export module ResultSets {
     }
 
 
-    export function unify(resultSets: ResultSets): Array<string> {
+    export function unifyAddSets<T>(resultSets: ResultSets<T>): Array<T> {
 
         return union(resultSets.addSets);
     }

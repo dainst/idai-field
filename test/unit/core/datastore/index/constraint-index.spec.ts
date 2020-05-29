@@ -100,7 +100,7 @@ describe('ConstraintIndex', () => {
     }
 
 
-    it('works for multiple constrains', () => {
+    it('works for multiple constraints', () => {
 
         docWithMultipleConstraints();
 
@@ -264,6 +264,35 @@ describe('ConstraintIndex', () => {
 
         expect(ConstraintIndex.get(ci, 'depicts:exist', 'KNOWN')).toEqual(['2']);
         expect(ConstraintIndex.get(ci, 'depicts:exist', 'UNKNOWN')).toEqual(['1']);
+    });
+
+
+    it('update links index', () => {
+
+        const docs = [
+            doc('1'),
+            doc('2'),
+            doc('3')
+        ];
+        docs[0].resource.relations['isDepictedIn'] = ['2'];
+        docs[1].resource.relations['depicts'] = ['1'];
+
+        ci = ConstraintIndex.make({
+            'isDepictedIn:links': { path: 'resource.relations.isDepictedIn', type: 'links' }
+        }, categoriesMap);
+
+        ConstraintIndex.put(ci, docs[0]);
+        ConstraintIndex.put(ci, docs[1]);
+        ConstraintIndex.put(ci, docs[2]);
+
+        expect(ConstraintIndex.get(ci, 'isDepictedIn:links', '1')).toEqual(['2']);
+
+        docs[0].resource.relations['isDepictedIn'] = ['2', '3'];
+        docs[2].resource.relations['depicts'] = ['1'];
+        ConstraintIndex.put(ci, docs[0]);
+        ConstraintIndex.put(ci, docs[2]);
+
+        expect(ConstraintIndex.get(ci, 'isDepictedIn:links', '1')).toEqual(['2', '3']);
     });
 
 

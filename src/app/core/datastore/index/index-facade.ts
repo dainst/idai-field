@@ -95,9 +95,7 @@ export class IndexFacade {
     }
 
 
-    private _put(document: Document,
-                 skipRemoval: boolean,
-                 notify: boolean) {
+    private _put(document: Document, skipRemoval: boolean, notify: boolean) {
 
         const item = this.getIndexItem(document);
         if (!item) return;

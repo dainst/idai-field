@@ -17,6 +17,7 @@ export module IndexerConfiguration {
             'depicts:contain': { path: 'resource.relations.depicts', type: 'contain' },
             'depicts:exist': { path: 'resource.relations.depicts', type: 'exist' },
             'isDepictedIn:exist': { path: 'resource.relations.isDepictedIn', type: 'exist' },
+            'isDepictedIn:links': { path: 'resource.relations.isDepictedIn', type: 'links' },
             'isInstanceOf:contain': { path: 'resource.relations.isInstanceOf', type: 'contain' },
             'identifier:match': { path: 'resource.identifier', type: 'match' },
             'id:match': { path: 'resource.id', type: 'match' },

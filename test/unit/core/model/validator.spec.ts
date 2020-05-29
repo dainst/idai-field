@@ -89,7 +89,9 @@ describe('Validator', () => {
     it('should report duplicate identifier', async done => {
 
         const find = () =>
-            Promise.resolve({totalCount: 1, documents: [{resource: {id: '2', identifier: 'eins' } }]} as unknown as FindResult);
+            Promise.resolve(
+                { totalCount: 1, documents: [{ resource: { id: '2', identifier: 'eins' } }] } as unknown as FindResult
+            );
 
         const doc = {
             resource: {
@@ -98,7 +100,8 @@ describe('Validator', () => {
         };
 
         try {
-            await new Validator(projectConfiguration, find, new ProjectCategories(projectConfiguration)).assertIdentifierIsUnique(doc);
+            await new Validator(projectConfiguration, find, new ProjectCategories(projectConfiguration))
+                .assertIdentifierIsUnique(doc);
             fail();
         } catch (expected) {
             expect(expected).toEqual([ValidationErrors.IDENTIFIER_ALREADY_EXISTS, 'eins']);

@@ -159,8 +159,8 @@ export class TypeRelationPickerComponent {
     }
 
 
-    private pairWithLinkedImages: AsyncMapping
-        = async ($: Array<FieldDocument>) => asyncMap(async (document: FieldDocument) => {
+    private pairWithLinkedImages: AsyncMapping<any>
+        = ($: Array<FieldDocument>) => asyncMap(async (document: FieldDocument) => {
             return [
                 document,
                 (await getLinkedImages(document, this.fieldDatastore, this.imageDatastore))

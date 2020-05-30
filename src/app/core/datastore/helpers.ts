@@ -32,7 +32,7 @@ export function replaceLastPair<A>(as: Array<A>, replacement: A): Array<A> {
 
 function replaceRight<A>(as: Array<A>, itemsToReplace: number, replacement: A): Array<A> {
 
-    return flow(as, dropRight(itemsToReplace), append(replacement)) as any /* TODO review any */;
+    return flow(as, dropRight(itemsToReplace), append(replacement));
 }
 
 

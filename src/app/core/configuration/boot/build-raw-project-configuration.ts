@@ -247,7 +247,7 @@ function eraseUnusedCategories(selectedCategoriesNames: string[])
             keysOfUnselectedCategories,
             reduce(withDissoc, categories),
             getDefinedParents
-        ) as any /* TODO review any */;
+        );
 
         const categoriesToErase = subtract(parentNamesOfSelectedCategories)(keysOfUnselectedCategories as any /* TODO review any */);
         return categoriesToErase.reduce(withDissoc, categories) as Map<TransientCategoryDefinition>;

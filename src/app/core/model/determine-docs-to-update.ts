@@ -113,7 +113,7 @@ function setInverseRelation(target: Resource, resource: Resource) {
                     target.relations,
                     get(inverse, []),
                     filter(isnt(resource.id)),
-                    append(resource.id)) as any /* TODO review any */;
+                    append(resource.id));
         }
     }
 }

@@ -51,6 +51,6 @@ export module CsvParser {
             map(assoc('category', category.name)),
             map(insertRelations),
             map(convertFieldTypes(category)),
-            map(toDocument)) as any /* TODO review any */;
+            map(toDocument));
     }
 }

@@ -65,9 +65,8 @@ export function dissocIndices<A>(indices: Array<number>) {
                 (
                   take(index)(as)
                   .concat(
-                    (drop(index + 1)(as)) as any /* TODO review any */
-                  ) as any /* TODO review any */
-
+                      drop(index + 1, as)
+                  )
                 ) as Array<A>;
     }
 }

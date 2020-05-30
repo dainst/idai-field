@@ -288,7 +288,7 @@ function toCategoriesByFamilyNames(transientCategories: Map<TransientCategoryDef
         transientCategories,
         keysAndValues,
         reduce(
-            (acc: any, [transientCategoryName, transientCategory]) => {
+            (acc: any, [transientCategoryName, transientCategory]) => { // TODO use k param of reduce instead of keysAndValues
                 acc[transientCategory.categoryName
                     ? transientCategory.categoryName
                     : transientCategoryName] = transientCategory;

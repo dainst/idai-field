@@ -78,7 +78,10 @@ function unifyCampaignAndStaffFields(latestRevision: Resource) {
         if (conflictedRevisions.length === 0) return latestRevision;
 
         const unifyFields = (fieldName: string) => {
-            return flow(conflictedRevisions, append(latestRevision), map(to(fieldName)) as any /* TODO review any */, union);
+            return flow(conflictedRevisions,
+                append(latestRevision),
+                map(to(fieldName)),
+                union);
         };
 
         return flow(latestRevision,
@@ -114,7 +117,7 @@ function collapse(revisions: Array<Resource>, indicesOfUsedRevisions: Array<Arra
         : [Array<Resource>, Array<ArrayIndex>] {
 
     if (revisions.length < 2) return [revisions, indicesOfUsedRevisions];
-    const lastPair: Pair<Resource, Resource> = last2(revisions as any /* TODO review any */);
+    const lastPair: Pair<Resource, Resource> = last2(revisions);
 
     const resolved = solveConflictBetweenTwoRevisions(left(lastPair), right(lastPair));
     return resolved !== undefined

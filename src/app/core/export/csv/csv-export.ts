@@ -1,6 +1,6 @@
 import {flow, includedIn, isDefined, isNot, isnt, to, map, cond, join,
     dense, compose, remove} from 'tsfun';
-import {prepend, append} from 'tsfun/list';
+import {prepend, append} from 'tsfun/string';
 import {FieldResource, Resource} from 'idai-components-2';
 import {HierarchicalRelations} from '../../model/relation-constants';
 import {FieldDefinition} from '../../configuration/model/field-definition';
@@ -20,7 +20,7 @@ export module CSVExport {
     const SEPARATOR = ',';
 
     const getUsableFieldNames =
-        remove(includedIn(['id', 'category', 'geometry', 'georeference', 'originalFilename', 'filename'])) as any /* TODO review any */;
+        remove(includedIn(['id', 'category', 'geometry', 'georeference', 'originalFilename', 'filename']));
 
 
     /**
@@ -61,7 +61,7 @@ export module CSVExport {
             .concat(
                 relations
                     .filter(isNot(includedIn(HierarchicalRelations.ALL)))
-                    .map(prepend(Resource.RELATIONS + OBJECT_SEPARATOR)) as any /* TODO review any */)
+                    .map(prepend(Resource.RELATIONS + OBJECT_SEPARATOR)))
             .concat(relations.find(includedIn(HierarchicalRelations.ALL)) ? [RELATIONS_IS_CHILD_OF] : []);
     }
 

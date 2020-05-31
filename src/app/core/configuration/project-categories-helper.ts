@@ -71,6 +71,32 @@ export /* package-private */ module ProjectCategoriesHelper {
     }
 
 
+    export function getOverviewCategories(categoriesMap: Map<Category>): string[] {
+
+        return Object.keys(getCategoryAndSubcategories('Operation', categoriesMap))
+            .concat(['Place'])
+            .filter(el => el !== 'Operation');
+    }
+
+
+    export function getOverviewTopLevelCategories(categoriesArray: Array<Category>): Array<Category> {
+
+        return categoriesArray.filter(category => category.name === 'Operation' || category.name === 'Place');
+    }
+
+
+    export function getTypeCategories(categoriesArray: Array<Category>): Array<Category> {
+
+        return categoriesArray.filter(category => category.name === TYPE_CATALOG || category.name === TYPE);
+    }
+
+
+    export function getTypeCategoryNames(): string[] {
+
+        return TYPE_CATALOG_AND_TYPE;
+    }
+
+
     export function isSubcategory(categoriesMap: Map<Category>,
                                   categoryName: string,
                                   superCategoryName: string): boolean {

@@ -18,13 +18,13 @@ export class ProjectCategories {
 
     public static UNKNOWN_TYPE_ERROR = 'projectCategories.Errors.UnknownType';
 
+
     constructor(private projectConfiguration: ProjectConfiguration) {}
 
 
     public getOverviewTopLevelCategories(): Array<Category> {
 
-        return this.projectConfiguration.getCategoriesArray()
-            .filter(category => category.name === 'Operation' || category.name === 'Place');
+        return ProjectCategoriesHelper.getOverviewTopLevelCategories(this.projectConfiguration.getCategoriesArray());
     }
 
 
@@ -42,14 +42,13 @@ export class ProjectCategories {
 
     public getTypeCategories(): Array<Category> {
 
-        return this.projectConfiguration.getCategoriesArray()
-            .filter(category => category.name === TYPE_CATALOG || category.name === TYPE);
+        return ProjectCategoriesHelper.getTypeCategories(this.projectConfiguration.getCategoriesArray());
     }
 
 
     public getTypeCategoryNames(): string[] {
 
-        return TYPE_CATALOG_AND_TYPE;
+        return ProjectCategoriesHelper.getTypeCategoryNames();
     }
 
 
@@ -101,6 +100,18 @@ export class ProjectCategories {
     }
 
 
+    public isGeometryCategory(categoryName: string): boolean {
+
+        return ProjectCategoriesHelper.isGeometryCategory(this.projectConfiguration.getCategoriesMap(), categoryName);
+    }
+
+
+    public getOverviewCategories(): string[] {
+
+        return ProjectCategoriesHelper.getOverviewCategories(this.projectConfiguration.getCategoriesMap());
+    }
+
+
     public getAllowedRelationDomainCategories(relationName: string,
                                               rangeCategoryName: string): Array<Category> {
 
@@ -133,20 +144,6 @@ export class ProjectCategories {
 
         return this.getAllowedRelationRangeCategories('isRecordedIn', categoryName)
             .concat(this.getAllowedRelationRangeCategories('liesWithin', categoryName));
-    }
-
-
-    public isGeometryCategory(categoryName: string): boolean {
-
-        return ProjectCategoriesHelper.isGeometryCategory(this.projectConfiguration.getCategoriesMap(), categoryName);
-    }
-
-
-    public getOverviewCategories(): string[] {
-
-        return Object.keys(this.projectConfiguration.getCategoryAndSubcategories('Operation'))
-            .concat(['Place'])
-            .filter(el => el !== 'Operation');
     }
 
 

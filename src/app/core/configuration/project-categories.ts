@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {to} from 'tsfun';
 import {ProjectConfiguration} from './project-configuration';
 import {Category} from './model/category';
-import {ProjectCategoriesHelper, TYPE, TYPE_CATALOG, TYPE_CATALOG_AND_TYPE} from './project-categories-helper';
+import {ProjectCategoriesHelper} from './project-categories-helper';
 
 const NAME = 'name';
 

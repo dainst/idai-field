@@ -3,9 +3,9 @@ import {Category} from './model/category';
 import {Named} from '../util/named';
 import NAME = Named.NAME;
 
-export const TYPE_CATALOG = 'TypeCatalog';
-export const TYPE = 'Type';
-export const TYPE_CATALOG_AND_TYPE = [TYPE_CATALOG, TYPE];
+const TYPE_CATALOG = 'TypeCatalog';
+const TYPE = 'Type';
+const TYPE_CATALOG_AND_TYPE = [TYPE_CATALOG, TYPE];
 
 
 /**

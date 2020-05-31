@@ -23,7 +23,7 @@ const TEMP_FIELDS = 'fields';
 export function makeCategoriesMap(categories: any): Map<Category> {
 
     const [parentDefs, childDefs] =
-        separate(on(CategoryDefinition.PARENT, isNot(defined)))(categories);
+        separate(on(CategoryDefinition.PARENT, isNot(defined)), categories);
 
     const parentCategories = flow(
         parentDefs,

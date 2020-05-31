@@ -6,6 +6,7 @@ import {FieldDefinition} from './model/field-definition';
 import {RelationDefinition} from './model/relation-definition';
 import {Named, namedArrayToNamedMap} from '../util/named';
 import {RelationsUtil} from './relations-utils';
+import {ProjectCategoriesHelper} from './project-categories-helper';
 
 
 export type RawProjectConfiguration = Pair<Array<Category>, Array<RelationDefinition>>;
@@ -25,8 +26,6 @@ export type RawProjectConfiguration = Pair<Array<Category>, Array<RelationDefini
  */
 export class ProjectConfiguration {
 
-    public static UNKNOWN_CATEGORY_ERROR = 'ProjectConfiguration.Errors.UnknownCategory';
-
     private categoriesArray: Array<Category>;
 
     private categoriesMap: Map<Category>;
@@ -45,17 +44,6 @@ export class ProjectConfiguration {
     public getAllRelationDefinitions(): Array<RelationDefinition> {
 
         return this.relations;
-    }
-
-
-    public isSubcategory(categoryName: string, superCategoryName: string): boolean {
-
-        const category: Category = this.getCategoriesMap()[categoryName];
-        if (!category) throw [ProjectConfiguration.UNKNOWN_CATEGORY_ERROR, categoryName];
-
-        return category.name === superCategoryName
-            || (category.parentCategory?.name !== undefined
-                && category.parentCategory.name === superCategoryName);
     }
 
 
@@ -79,7 +67,7 @@ export class ProjectConfiguration {
 
     public getCategoryAndSubcategories(supercategoryName: string): Map<Category> {
 
-        return ProjectConfiguration.getCategoryAndSubcategories_(supercategoryName, this.getCategoriesMap());
+        return ProjectCategoriesHelper.getCategoryAndSubcategories(supercategoryName, this.getCategoriesMap());
     }
 
 
@@ -115,6 +103,11 @@ export class ProjectConfiguration {
         return false;
     }
 
+
+    public isSubcategory(categoryName: string, superCategoryName: string): boolean {
+
+        return ProjectCategoriesHelper.isSubcategory(this.getCategoriesMap(), categoryName, superCategoryName);
+    }
 
     /**
      * @param categoryName
@@ -199,23 +192,5 @@ export class ProjectConfiguration {
             filter(on(Named.NAME, is(fieldName))),
             filter(on(propertyName, is(true))),
             isNot(empty));
-    }
-
-
-    private static getCategoryAndSubcategories_(supercategoryName: string, projectCategoriesMap: Map<Category>)
-        : Map<Category> {
-
-        if (!projectCategoriesMap[supercategoryName]) return {};
-
-        const subcategories: Map<Category> = {};
-        subcategories[supercategoryName] = projectCategoriesMap[supercategoryName];
-
-        if (projectCategoriesMap[supercategoryName].children) {
-            for (let i = projectCategoriesMap[supercategoryName].children.length - 1; i >= 0; i--) {
-                subcategories[projectCategoriesMap[supercategoryName].children[i].name]
-                    = projectCategoriesMap[supercategoryName].children[i];
-            }
-        }
-        return subcategories;
     }
 }

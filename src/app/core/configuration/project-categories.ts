@@ -1,13 +1,11 @@
 import {Injectable} from '@angular/core';
-import {to, isnt} from 'tsfun';
+import {to} from 'tsfun';
 import {ProjectConfiguration} from './project-configuration';
 import {Category} from './model/category';
+import {ProjectCategoriesHelper, TYPE, TYPE_CATALOG, TYPE_CATALOG_AND_TYPE} from './project-categories-helper';
 
 const NAME = 'name';
 
-const TYPE_CATALOG = 'TypeCatalog';
-const TYPE = 'Type';
-const TYPE_CATALOG_AND_TYPE = [TYPE_CATALOG, TYPE];
 
 
 @Injectable()
@@ -32,19 +30,13 @@ export class ProjectCategories {
 
     public getFieldCategories(): Array<Category> {
 
-        return this.projectConfiguration.getCategoriesArray()
-            .filter(category => !this.projectConfiguration.isSubcategory(category.name, 'Image'))
-            .filter(category => !ProjectCategories.isProjectCategory(category.name));
+        return ProjectCategoriesHelper.getFieldCategories(this.projectConfiguration.getCategoriesMap());
     }
 
 
     public getConcreteFieldCategories(): Array<Category> {
 
-        return this.projectConfiguration.getCategoriesArray()
-            .filter(category => !this.projectConfiguration.isSubcategory(category.name, 'Image'))
-            .filter(category => !this.projectConfiguration.isSubcategory(category.name, TYPE_CATALOG))
-            .filter(category => !this.projectConfiguration.isSubcategory(category.name, TYPE))
-            .filter(category => !ProjectCategories.isProjectCategory(category.name));
+        return ProjectCategoriesHelper.getConcreteFieldCategories(this.projectConfiguration.getCategoriesMap());
     }
 
 
@@ -58,12 +50,6 @@ export class ProjectCategories {
     public getTypeCategoryNames(): string[] {
 
         return TYPE_CATALOG_AND_TYPE;
-    }
-
-
-    public getNamesOfCategoriesAndSubcategories(supercategoryName: string): string[] {
-
-        return Object.keys(this.projectConfiguration.getCategoryAndSubcategories(supercategoryName));
     }
 
 
@@ -81,43 +67,37 @@ export class ProjectCategories {
 
     public getImageCategoryNames(): string[] {
 
-        return Object.keys(this.projectConfiguration.getCategoryAndSubcategories('Image'));
+        return ProjectCategoriesHelper.getImageCategoryNames(this.projectConfiguration.getCategoriesMap());
     }
 
 
     public getFeatureCategoryNames(): string[] {
 
-        return Object.keys(this.projectConfiguration.getCategoryAndSubcategories('Feature'));
+        return this.getSuperCategoryNames('Feature');
     }
 
 
     public getOperationCategoryNames(): string[] {
 
-        return Object.keys(this.projectConfiguration.getCategoryAndSubcategories('Operation'));
+        return this.getSuperCategoryNames('Operation');
+    }
+
+
+    public getNamesOfCategoriesAndSubcategories(supercategoryName: string): string[] {
+
+        return this.getSuperCategoryNames(supercategoryName);
     }
 
 
     public getRegularCategoryNames(): string[] {
 
-        return this.projectConfiguration
-            .getCategoriesArray()
-            .map(to(NAME))
-            .filter(isnt('Place'))
-            .filter(isnt('Project'))
-            .filter(categoryName => !this.projectConfiguration.isSubcategory(categoryName, 'Operation'))
-            .filter(categoryName => !this.projectConfiguration.isSubcategory(categoryName, 'Image'))
-            .filter(categoryName => !this.projectConfiguration.isSubcategory(categoryName, 'TypeCatalog'))
-            .filter(categoryName => !this.projectConfiguration.isSubcategory(categoryName, 'Type'));
+        return ProjectCategoriesHelper.getRegularCategoryNames(this.projectConfiguration.getCategoriesMap());
     }
 
 
     public getOverviewCategoryNames(): string[] {
 
-        return this.projectConfiguration
-            .getCategoriesArray()
-            .map(to(NAME))
-            .filter(categoryName => this.projectConfiguration.isSubcategory(categoryName, 'Operation'))
-            .concat('Place');
+        return ProjectCategoriesHelper.getOverviewCategoryNames(this.projectConfiguration.getCategoriesMap());
     }
 
 
@@ -158,11 +138,7 @@ export class ProjectCategories {
 
     public isGeometryCategory(categoryName: string): boolean {
 
-        return !this.getImageCategoryNames().includes(categoryName)
-            && !this.projectConfiguration.isSubcategory(categoryName, 'Inscription')
-            && !this.projectConfiguration.isSubcategory(categoryName, 'Type')
-            && !this.projectConfiguration.isSubcategory(categoryName, 'TypeCatalog')
-            && !ProjectCategories.isProjectCategory(categoryName);
+        return ProjectCategoriesHelper.isGeometryCategory(this.projectConfiguration.getCategoriesMap(), categoryName);
     }
 
 
@@ -174,8 +150,12 @@ export class ProjectCategories {
     }
 
 
-    private static isProjectCategory(categoryName: string): boolean {
+    private getSuperCategoryNames(superCategoryName: string) {
 
-        return categoryName === 'Project';
+        return Object.keys(
+            ProjectCategoriesHelper.getCategoryAndSubcategories(
+                superCategoryName, this.projectConfiguration.getCategoriesMap()
+            )
+        );
     }
 }

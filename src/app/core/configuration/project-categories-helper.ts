@@ -1,0 +1,121 @@
+import {isnt, Map, to} from 'tsfun';
+import {Category} from './model/category';
+import {Named} from '../util/named';
+import NAME = Named.NAME;
+
+export const TYPE_CATALOG = 'TypeCatalog';
+export const TYPE = 'Type';
+export const TYPE_CATALOG_AND_TYPE = [TYPE_CATALOG, TYPE];
+
+
+/**
+ * Outside of the configuration package, this module should not be accessed directly,
+ * but instead via ProjectCategories (project-categories.ts) or ProjectConfiguration (project-configuration.ts).
+ *
+ * @author Thomas Kleinke
+ * @author Daniel de Oliveira
+ */
+export /* package-private */ module ProjectCategoriesHelper {
+
+    export const UNKNOWN_CATEGORY_ERROR = 'ProjectCategories.Errors.UnknownCategory';
+
+
+    export function isGeometryCategory(categoriesMap: Map<Category>,
+                                       categoryName: string): boolean {
+
+        return !getImageCategoryNames(categoriesMap).includes(categoryName)
+            && !isSubcategory(categoriesMap, categoryName, 'Inscription')
+            && !isSubcategory(categoriesMap, categoryName, 'Type')
+            && !isSubcategory(categoriesMap, categoryName, 'TypeCatalog')
+            && !isProjectCategory(categoryName);
+    }
+
+
+    export function getRegularCategoryNames(categoriesMap: Map<Category>): string[] {
+
+        return Object.values(categoriesMap)
+            .map(to(NAME))
+            .filter(isnt('Place'))
+            .filter(isnt('Project'))
+            .filter(categoryName => !isSubcategory(categoriesMap, categoryName, 'Operation'))
+            .filter(categoryName => !isSubcategory(categoriesMap, categoryName, 'Image'))
+            .filter(categoryName => !isSubcategory(categoriesMap, categoryName, 'TypeCatalog'))
+            .filter(categoryName => !isSubcategory(categoriesMap, categoryName, 'Type'));
+    }
+
+
+    export function getConcreteFieldCategories(categoriesMap: Map<Category>): Array<Category> {
+
+        return Object.values(categoriesMap)
+            .filter(category => !isSubcategory(categoriesMap, category.name, 'Image'))
+            .filter(category => !isSubcategory(categoriesMap, category.name, TYPE_CATALOG))
+            .filter(category => !isSubcategory(categoriesMap, category.name, TYPE))
+            .filter(category => !ProjectCategoriesHelper.isProjectCategory(category.name));
+    }
+
+
+    export function getFieldCategories(categoriesMap: Map<Category>): Array<Category> {
+
+        return Object.values(categoriesMap)
+            .filter(category => !isSubcategory(categoriesMap, category.name, 'Image'))
+            .filter(category => !ProjectCategoriesHelper.isProjectCategory(category.name));
+    }
+
+
+    export function getOverviewCategoryNames(categoriesMap: Map<Category>): string[] {
+
+        return Object.values(categoriesMap)
+            .map(to(NAME))
+            .filter(categoryName => isSubcategory(categoriesMap, categoryName, 'Operation'))
+            .concat('Place');
+    }
+
+
+    export function isSubcategory(categoriesMap: Map<Category>,
+                                  categoryName: string,
+                                  superCategoryName: string): boolean {
+
+        const category: Category = categoriesMap[categoryName];
+        if (!category) throw [UNKNOWN_CATEGORY_ERROR, categoryName];
+
+        return category.name === superCategoryName
+            || (category.parentCategory?.name !== undefined
+                && category.parentCategory.name === superCategoryName);
+    }
+
+
+    export function getCategoryAndSubcategories(supercategoryName: string, categoriesMap: Map<Category>): Map<Category> {
+
+        return getCategoryAndSubcategories_(supercategoryName, categoriesMap);
+    }
+
+
+    export function getImageCategoryNames(projectCategoriesMap: Map<Category>): string[] {
+
+        return Object.keys(getCategoryAndSubcategories('Image', projectCategoriesMap));
+    }
+
+
+    export function isProjectCategory(categoryName: string): boolean {
+
+        return categoryName === 'Project';
+    }
+
+
+    export function getCategoryAndSubcategories_(supercategoryName: string, projectCategoriesMap: Map<Category>)
+        : Map<Category> {
+
+            if (!projectCategoriesMap[supercategoryName]) return {};
+
+        const subcategories: Map<Category> = {};
+        subcategories[supercategoryName] = projectCategoriesMap[supercategoryName];
+
+        if (projectCategoriesMap[supercategoryName].children) {
+            for (let i = projectCategoriesMap[supercategoryName].children.length - 1; i >= 0; i--) {
+                subcategories[projectCategoriesMap[supercategoryName].children[i].name]
+                    = projectCategoriesMap[supercategoryName].children[i];
+            }
+        }
+        return subcategories;
+    }
+}

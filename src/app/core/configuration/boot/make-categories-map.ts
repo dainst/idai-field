@@ -1,6 +1,6 @@
 import {cond, defined, flatten, flow, isNot, Map, Mapping, on,
-    reduce, throws, to, values, isUndefined, copy, separate} from 'tsfun';
-import {assoc, dissoc, update, lookup, map} from 'tsfun/associative';
+    reduce, throws, to, values, isUndefined, copy, separate, dissoc} from 'tsfun';
+import {assoc, update, lookup, map} from 'tsfun/associative';
 import {dissoc as dissocOn} from 'tsfun/struct';
 import {Category} from '../model/category';
 import {CategoryDefinition} from '../model/category-definition';
@@ -37,7 +37,7 @@ export function makeCategoriesMap(categories: any): Map<Category> {
         reduce(addChildCategory, parentCategories),
         flattenCategoriesTreeMapToCategoriesMap,
         fillGroups,
-        map(dissoc(TEMP_FIELDS)) as any /* TODO review any */,
+        map(dissoc(TEMP_FIELDS)),
         map(dissocOn([Category.PARENT_CATEGORY, TEMP_FIELDS])) as any /* TODO review any */
     );
 }

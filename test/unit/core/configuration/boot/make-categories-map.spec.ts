@@ -48,7 +48,7 @@ describe('makeCategoriesMap', () => {
     });
 
 
-    it('Set all children in parent category', () => {
+    it('set all children in parent category', () => {
 
         const A = 'A';
         const B = 'B';

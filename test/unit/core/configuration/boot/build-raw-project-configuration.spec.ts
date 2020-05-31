@@ -1296,6 +1296,25 @@ describe('buildRawProjectConfiguration', () => {
         expect(result.relations[0].name).toEqual('isAbove');
     });
 
+
+    it('put geometry into groups', () => {
+
+        const builtInCategories: Map<BuiltinCategoryDefinition> = {
+            C: { fields: {} },
+        };
+
+        const customCategories: Map<CustomCategoryDefinition> = {
+            C: { fields: {} }
+        };
+
+        const result = namedArrayToNamedMap(categories(buildRawProjectConfiguration(
+            builtInCategories, {}, customCategories, {}, {}, {}, [], { other: { geometry: 'Geometry' }}
+        )))['C'].groups[0];
+
+        expect(result.fields[0].name).toEqual('geometry');
+        expect(result.fields[0].label).toEqual('Geometry');
+    });
+
     // err cases
 
     /*xit('critical change of input type', () => {

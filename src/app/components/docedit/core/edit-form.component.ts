@@ -86,10 +86,6 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
             this.groups.push(group as any);
         }
         this.groups = this.groups.concat(this.extraGroups);
-
-        if (this.projectCategories.isGeometryCategory(this.document.resource.category)) {
-            this.addGeometryField();
-        }
     }
 
 
@@ -98,17 +94,5 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
         const inputElements: Array<HTMLElement> = this.elementRef.nativeElement
             .getElementsByTagName('input');
         if (inputElements.length > 0) inputElements[0].focus();
-    }
-
-
-    private addGeometryField() {
-
-        (this.groups.find(group => group.name === 'position') as Group).fields.unshift({
-            name: 'geometry',
-            label: this.i18n({ id: 'docedit.geometry', value: 'Geometrie' }),
-            group: 'position',
-            inputType: 'geometry',
-            editable: true
-        });
     }
 }

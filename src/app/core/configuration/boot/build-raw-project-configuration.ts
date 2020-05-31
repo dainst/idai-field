@@ -30,6 +30,7 @@ import {Group, Groups} from '../model/group';
 import {Labelled, mapToNamedArray, sortNamedArray} from '../../util/named';
 import {RelationsUtil} from '../relations-utils';
 import {CategoryDefinition} from '../model/category-definition';
+import {ProjectCategoriesHelper} from '../project-categories-helper';
 
 
 const CATEGORIES = 'categories';
@@ -96,12 +97,40 @@ function processCategories(orderConfiguration: any,
         validateFields,
         makeCategoriesMap,
         map(putRelationsIntoGroups(relations)),
+        setGeometriesInGroups(languageConfiguration),
         map(sortCategoryGroups),
-        map(update(Category.CHILDREN, map(sortCategoryGroups))),
+        map(update(Category.CHILDREN, map(sortCategoryGroups))), // TODO sort category groups once and not separately for parents and children
         setGroupLabels(languageConfiguration.groups || {}),
-        map(update(Category.CHILDREN, setGroupLabels(languageConfiguration.groups || {}))),
+        map(update(Category.CHILDREN, setGroupLabels(languageConfiguration.groups || {}))), // TODO set group labels once and not separately for parents and children
         mapToNamedArray,
         orderCategories(orderConfiguration?.categories));
+}
+
+
+function setGeometriesInGroups(languageConfiguration: any) {
+
+    return(categoriesMap: Map<Category>) => {
+
+        for (let category of Object.values(categoriesMap)) {
+            if (ProjectCategoriesHelper.isGeometryCategory(categoriesMap, category.name)) {
+
+                if (!category.groups[Groups.POSITION]) {
+                    category.groups[Groups.POSITION] = Group.create(Groups.POSITION);
+                }
+                const geometryField = {
+                    name: 'geometry',
+                    group: 'position',
+                    inputType: 'geometry',
+                    editable: true
+                }
+                if (languageConfiguration && languageConfiguration.other && languageConfiguration.other['geometry']) {
+                    geometryField['label'] = languageConfiguration.other['geometry'];
+                }
+                category.groups[Groups.POSITION].fields.unshift(geometryField);
+            }
+        }
+        return categoriesMap;
+    }
 }
 
 

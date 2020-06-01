@@ -27,13 +27,7 @@ import {makeCategoriesMap} from './make-categories-map';
 import {RawProjectConfiguration} from '../project-configuration';
 import {Category} from '../model/category';
 import {Group, Groups} from '../model/group';
-import {
-    Labelled,
-    mapToNamedArray,
-    Named,
-    namedArrayToNamedMap,
-    sortNamedArray
-} from '../../util/named';
+import {Labelled, mapToNamedArray, sortNamedArray} from '../../util/named';
 import {RelationsUtil} from '../relations-utils';
 import {CategoryDefinition} from '../model/category-definition';
 import {ProjectCategoriesHelper} from '../project-categories-helper';

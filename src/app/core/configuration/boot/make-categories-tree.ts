@@ -1,15 +1,15 @@
-import {cond, defined, flatten, flow, isNot, Map, Mapping, on,
-    reduce, throws, to, isUndefined, copy, separate, dissoc} from 'tsfun';
+import {cond, defined, flow, isNot, Map, Mapping, on,
+    reduce, throws, isUndefined, copy, separate, dissoc} from 'tsfun';
 import {assoc, update, lookup, map} from 'tsfun/associative';
-import {dissoc as dissocOn} from 'tsfun/struct';
 import {Category} from '../model/category';
 import {CategoryDefinition} from '../model/category-definition';
 import {Group, Groups} from '../model/group';
 import {makeLookup} from '../../util/transformers';
 import {FieldDefinition} from '../model/field-definition';
 import {clone} from '../../util/object-util';
-import {Named, namedArrayToNamedMap} from '../../util/named';
+import {mapToNamedArray, Named} from '../../util/named';
 import {MDInternal} from '../../../components/messages/md-internal';
+import {mapCategoriesTree} from './map-categories-tree';
 
 
 const TEMP_FIELDS = 'fields';
@@ -20,7 +20,7 @@ const TEMP_FIELDS = 'fields';
  * @author Daniel de Oliveira
  * @author Sebastian Cuy
  */
-export function makeCategoriesMap(categories: any): Map<Category> {
+export function makeCategoriesTree(categories: any): Array<Category> {
 
     const [parentDefs, childDefs] =
         separate(on(CategoryDefinition.PARENT, isNot(defined)), categories);
@@ -35,10 +35,9 @@ export function makeCategoriesMap(categories: any): Map<Category> {
     return flow(
         childDefs,
         reduce(addChildCategory, parentCategories),
-        flattenCategoriesTreeMapToCategoriesMap,
-        fillGroups,
-        map(dissoc(TEMP_FIELDS)),
-        map(dissocOn([Category.PARENT_CATEGORY, TEMP_FIELDS])) as any /* TODO review any */
+        mapToNamedArray,
+        mapCategoriesTree(fillGroups),
+        mapCategoriesTree(dissoc(TEMP_FIELDS)),
     );
 }
 
@@ -46,16 +45,16 @@ export function makeCategoriesMap(categories: any): Map<Category> {
 /**
  * Creates the groups array for each category.
  */
-const fillGroups = map((category: Category) => {
+function fillGroups(category: Category) {
 
-        category.groups = flow(
-            (category as any)[TEMP_FIELDS],
-            makeGroupsMap,
-            map(sortGroupFields) as any /* TODO review any */
-        );
+    category.groups = flow(
+        (category as any)[TEMP_FIELDS],
+        makeGroupsMap,
+        map(sortGroupFields) as any /* TODO review any */
+    );
 
-        return category;
-    });
+    return category;
+}
 
 
 function makeGroupsMap(fields: Array<FieldDefinition>): Map<Group> {
@@ -67,15 +66,6 @@ function makeGroupsMap(fields: Array<FieldDefinition>): Map<Group> {
     }
 
     return groups;
-}
-
-
-function flattenCategoriesTreeMapToCategoriesMap(categoriesMap: Map<Category>): Map<Category> {
-
-    const topLevelCategories: Array<Category> = Object.values(categoriesMap);
-    const children: Array<Category> = flatten(topLevelCategories.map(to(Category.CHILDREN)));
-
-    return namedArrayToNamedMap(topLevelCategories.concat(children));
 }
 
 

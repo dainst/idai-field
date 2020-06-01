@@ -280,9 +280,9 @@ describe('ConfigLoader', () => {
             done();
         }
 
-        expect(pconf.getCategoriesArray()[1].label).toEqual('A_');
-        expect(pconf.getCategoriesArray()[2].label).toEqual('B__');
-        expect(pconf.getCategoriesArray()[3].label).toEqual('C'); // took name as label
+        expect(pconf.getCategoriesMap()['A'].label).toEqual('A_');
+        expect(pconf.getCategoriesMap()['B'].label).toEqual('B__');
+        expect(pconf.getCategoriesMap()['C'].label).toEqual('C'); // took name as label
 
         expect(pconf.getRelationDefinitions('A')[1].label).toEqual('r1_');
         expect(pconf.getRelationDefinitions('A')[0].label).toBeFalsy();

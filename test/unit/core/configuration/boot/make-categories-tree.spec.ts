@@ -2,8 +2,8 @@ import {FieldResource} from 'idai-components-2';
 import {Groups} from '../../../../../src/app/core/configuration/model/group';
 import {FieldDefinition} from '../../../../../src/app/core/configuration/model/field-definition';
 import {Category} from '../../../../../src/app/core/configuration/model/category';
-import {makeCategoriesMap} from '../../../../../src/app/core/configuration/boot/make-categories-map';
-import {byName} from '../../../../../src/app/core/util/named';
+import {makeCategoriesTree} from '../../../../../src/app/core/configuration/boot/make-categories-tree';
+import {byName, namedArrayToNamedMap} from '../../../../../src/app/core/util/named';
 import InputType = FieldDefinition.InputType;
 import {MDInternal} from '../../../../../src/app/components/messages/md-internal';
 
@@ -11,9 +11,9 @@ import {MDInternal} from '../../../../../src/app/components/messages/md-internal
 /**
  * @author Daniel de Oliveira
  */
-describe('makeCategoriesMap', () => {
+describe('makeCategoriesTree', () => {
 
-    it('makeCategoriesMap', () => {
+    it('makeCategoriesTree', () => {
 
         const A = 'A';
         const P = 'P';
@@ -31,16 +31,19 @@ describe('makeCategoriesMap', () => {
             }
         };
 
-        const categoriesMap = makeCategoriesMap(confDef);
+        const categoriesMap = namedArrayToNamedMap(makeCategoriesTree(confDef));
 
         expect(categoriesMap[P].name).toEqual(P);
         expect(categoriesMap[P].children[0].name).toEqual(A);
         expect(Category.getFields(categoriesMap[P].children[0]).length).toBe(2);
-        expect(categoriesMap[P].children[0].parentCategory.name).toBe(categoriesMap[P].name);
-        expect(categoriesMap[A].name).toEqual(A);
-        expect(categoriesMap[A].parentCategory.name).toBe(categoriesMap[P].name);
 
-        const sortedFields = Category.getFields(categoriesMap[A]).sort(byName);
+        const categoryA = categoriesMap[P].children[0];
+
+        expect(categoryA.parentCategory.name).toBe(categoriesMap[P].name);
+        expect(categoryA.name).toEqual(A);
+        expect(categoryA.parentCategory.name).toBe(categoriesMap[P].name);
+
+        const sortedFields = Category.getFields(categoryA).sort(byName);
 
         expect(sortedFields[0].group).toBe(Groups.CHILD);
         expect(sortedFields[1].group).toBe(Groups.PARENT);
@@ -72,14 +75,16 @@ describe('makeCategoriesMap', () => {
             }
         };
 
-        const categoriesMap = makeCategoriesMap(confDef);
+        const categoriesMap = namedArrayToNamedMap(makeCategoriesTree(confDef));
+        const categoryA = categoriesMap[P].children.find(category => category.name === A)!;
+        const categoryB = categoriesMap[P].children.find(category => category.name === B)!;
 
-        expect(categoriesMap[A].parentCategory.children.length).toBe(2);
-        expect(categoriesMap[A].parentCategory.children[0].name).toEqual(A);
-        expect(categoriesMap[A].parentCategory.children[1].name).toEqual(B);
-        expect(categoriesMap[B].parentCategory.children.length).toBe(2);
-        expect(categoriesMap[B].parentCategory.children[0].name).toEqual(A);
-        expect(categoriesMap[B].parentCategory.children[1].name).toEqual(B);
+        expect(categoryA.parentCategory.children.length).toBe(2);
+        expect(categoryB.parentCategory.children[0].name).toEqual(A);
+        expect(categoryA.parentCategory.children[1].name).toEqual(B);
+        expect(categoryB.parentCategory.children.length).toBe(2);
+        expect(categoryB.parentCategory.children[0].name).toEqual(A);
+        expect(categoryB.parentCategory.children[1].name).toEqual(B);
     });
 
 
@@ -106,7 +111,7 @@ describe('makeCategoriesMap', () => {
             }
         };
 
-        const categoriesMap = makeCategoriesMap(confDef);
+        const categoriesMap = namedArrayToNamedMap(makeCategoriesTree(confDef));
 
         expect(categoriesMap[T].groups[Groups.STEM].fields[0].name).toEqual(FieldResource.IDENTIFIER);
         expect(categoriesMap[T].groups[Groups.STEM].fields[1].name).toEqual(FieldResource.SHORTDESCRIPTION);
@@ -140,7 +145,7 @@ describe('makeCategoriesMap', () => {
         };
 
         expect(
-            () => makeCategoriesMap(
+            () => makeCategoriesTree(
                 {
                     FirstLevelCategory: firstLevelCategory,
                     SecondLevelCategory: secondLevelCategory
@@ -169,7 +174,7 @@ describe('makeCategoriesMap', () => {
         };
 
         expect(() =>
-            makeCategoriesMap({ SecondLevelCategory: secondLevelCategory } as any)
+            makeCategoriesTree({ SecondLevelCategory: secondLevelCategory } as any)
         ).toThrow(MDInternal.PROJECT_CONFIGURATION_ERROR_GENERIC);
     });
 });

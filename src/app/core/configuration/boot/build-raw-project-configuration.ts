@@ -1,13 +1,15 @@
-import {cond, flow, includedIn, isDefined, isNot, keys, Mapping, Map, on,
-    subtract, undefinedOrEmpty, identity, compose, Pair, dissoc, Associative,
-  pairWith, prune, filter, reduce, values, update as updateObject} from 'tsfun';
+import {
+    cond, flow, includedIn, isDefined, isNot, keys, Mapping, Map, on,
+    subtract, undefinedOrEmpty, identity, compose, Pair, dissoc,
+    pairWith, prune, filter, reduce, values, update as updateObject, flatten, to
+} from 'tsfun';
 import {assoc, update, lookup, map} from 'tsfun/associative';
 import {clone} from 'tsfun/struct';
 import {LibraryCategoryDefinition} from '../model/library-category-definition';
 import {CustomCategoryDefinition} from '../model/custom-category-definition';
 import {ConfigurationErrors} from './configuration-errors';
 import {ValuelistDefinition} from '../model/valuelist-definition';
-import {toMap, withDissoc} from '../../util/utils';
+import {withDissoc} from '../../util/utils';
 import {TransientFieldDefinition, TransientCategoryDefinition} from '../model/transient-category-definition';
 import {BuiltinCategoryDefinition} from '../model/builtin-category-definition';
 import {mergeBuiltInWithLibraryCategories} from './merge-builtin-with-library-categories';
@@ -23,14 +25,19 @@ import {addRelations} from './add-relations';
 import {applyLanguage} from './apply-language';
 import {applySearchConfiguration} from './apply-search-configuration';
 import {orderFields} from './order-fields';
-import {makeCategoriesMap} from './make-categories-map';
+import {makeCategoriesTree} from './make-categories-tree';
 import {RawProjectConfiguration} from '../project-configuration';
 import {Category} from '../model/category';
 import {Group, Groups} from '../model/group';
-import {Labelled, mapToNamedArray, sortNamedArray} from '../../util/named';
+import {Labelled, namedArrayToNamedMap, sortNamedArray} from '../../util/named';
 import {RelationsUtil} from '../relations-utils';
 import {CategoryDefinition} from '../model/category-definition';
 import {ProjectCategoriesHelper} from '../project-categories-helper';
+import {mapCategoriesTree} from './mapCategoriesTree';
+import {Name} from '../../constants';
+import {ModelUtil} from '../../model/model-util';
+import Label = ModelUtil.Label;
+import {FieldDefinition} from '../model/field-definition';
 
 
 const CATEGORIES = 'categories';
@@ -90,51 +97,87 @@ function processCategories(orderConfiguration: any,
 
     const sortCategoryGroups = updateObject(Category.GROUPS, sortGroups(Groups.DEFAULT_ORDER));
 
-    const adjustCategoryAndChildren = <T>(f: Mapping<T>) => compose(f, map(update(Category.CHILDREN, f)));
+    const isGeometryCategory = (categoriesTree: Map<Category>, category: Name) => ProjectCategoriesHelper
+        .isGeometryCategory(categoriesTreeToCategoriesMap(categoriesTree), category);
 
-    const adjustCategoriesMap = compose(
-        map(putRelationsIntoGroups(relations)),
-        setGeometriesInGroups(languageConfiguration),
-        adjustCategoryAndChildren(map(sortCategoryGroups)),
-        adjustCategoryAndChildren(setGroupLabels(languageConfiguration.groups || {})));
+    const adjustCategoriesTree = compose(
+        mapCategoriesTree(putRelationsIntoGroups(relations)),
+        mapCategoriesTree(sortCategoryGroups),
+        mapCategoriesTree(setGroupLabels(languageConfiguration.groups || {})),
+        setGeometriesInGroups(languageConfiguration, isGeometryCategory));
 
     return compose(
         applySearchConfiguration(searchConfiguration),
         addExtraFieldsOrder(orderConfiguration),
         orderFields(orderConfiguration),
         validateFields,
-        makeCategoriesMap,
-        adjustCategoriesMap,
-        mapToNamedArray,
+        makeCategoriesTree,
+        adjustCategoriesTree,
+        categoriesTreeToCategoriesArray,
         orderCategories(orderConfiguration?.categories));
 }
 
 
-function setGeometriesInGroups(languageConfiguration: any) {
+function categoriesTreeToCategoriesArray(categoriesTree: Map<Category>): Array<Category> {
 
-    return (categories: Map<Category>) => {
-
-        for (let category of values(categories)) {
-
-            if (ProjectCategoriesHelper.isGeometryCategory(categories, category.name)) {
-
-                if (!category.groups[Groups.POSITION]) {
-                    category.groups[Groups.POSITION] = Group.create(Groups.POSITION);
-                }
-                const geometryField = {
-                    name: 'geometry',
-                    group: 'position',
-                    inputType: 'geometry',
-                    editable: true
-                }
-                if (languageConfiguration && languageConfiguration.other && languageConfiguration.other['geometry']) {
-                    geometryField['label'] = languageConfiguration.other['geometry'];
-                }
-                category.groups[Groups.POSITION].fields.unshift(geometryField);
-            }
+    const categories = [];
+    for (let parent of Object.values(categoriesTree)) {
+        for (let child of parent.children) {
+            categories.push(child);
         }
-        return categories;
+        categories.push(parent);
     }
+    return categories;
+}
+
+
+
+function categoriesTreeToCategoriesMap(categoriesMap: Map<Category>): Map<Category> {
+
+    const topLevelCategories: Array<Category> = values(categoriesMap);
+    const children: Array<Category> = flatten(topLevelCategories.map(to(Category.CHILDREN)));
+
+    return namedArrayToNamedMap(topLevelCategories.concat(children));
+}
+
+
+function setGeometriesInGroups(languageConfiguration: any,
+                               isGeometryCategory: (categoriesTree: Map<Category>, categoryName: string) => boolean) {
+
+    return (categoriesTree: Map<Category>) => {
+
+        return mapCategoriesTree(category => {
+
+            if (isGeometryCategory(categoriesTreeToCategoriesMap(categoriesTree), category.name)) {
+                adjustGeometryCategory(
+                    category,
+                    languageConfiguration && languageConfiguration.other && languageConfiguration.other['geometry']
+                        ? languageConfiguration.other['geometry']
+                        : undefined);
+            }
+            return category;
+        })(categoriesTree);
+    }
+}
+
+
+function adjustGeometryCategory(category: Category, label?: Label) {
+
+    let geometryGroup = category.groups.find(group => group.name === Groups.POSITION);
+    if (!geometryGroup) {
+        geometryGroup = Group.create(Groups.POSITION);
+        category.groups.push(geometryGroup);
+    }
+
+    const geometryField: FieldDefinition = {
+        name: 'geometry',
+        group: 'position',
+        inputType: 'geometry',
+        editable: true,
+        label: 'geometry'
+    }
+    if (label) geometryField['label'] = label;
+    geometryGroup.fields.unshift(geometryField);
 }
 
 
@@ -185,7 +228,7 @@ function orderCategories(categoriesOrder: string[] = []) {
 
 function setGroupLabels(groupLabels: Map<string>) {
 
-    return map((category: Category) => {
+    return (category: Category) => {
 
         const groupLabel = ({ name: name }: Group) => {
 
@@ -199,7 +242,7 @@ function setGroupLabels(groupLabels: Map<string>) {
             compose(
                 map(pairWith(groupLabel)),
                 map(([group, label]: Pair<Group, string>) => assoc(Labelled.LABEL, label)(group as any))) as any)(category);
-    });
+    };
 }
 
 

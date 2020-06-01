@@ -10,6 +10,7 @@ import {FieldDefinition} from '../model/field-definition';
 import {clone} from '../../util/object-util';
 import {Named, namedArrayToNamedMap} from '../../util/named';
 import {MDInternal} from '../../../components/messages/md-internal';
+import {mapCategoriesTree} from './mapCategoriesTree';
 
 
 const TEMP_FIELDS = 'fields';
@@ -20,7 +21,7 @@ const TEMP_FIELDS = 'fields';
  * @author Daniel de Oliveira
  * @author Sebastian Cuy
  */
-export function makeCategoriesMap(categories: any): Map<Category> {
+export function makeCategoriesTree(categories: any): Map<Category> {
 
     const [parentDefs, childDefs] =
         separate(on(CategoryDefinition.PARENT, isNot(defined)), categories);
@@ -35,10 +36,8 @@ export function makeCategoriesMap(categories: any): Map<Category> {
     return flow(
         childDefs,
         reduce(addChildCategory, parentCategories),
-        flattenCategoriesTreeMapToCategoriesMap,
-        fillGroups,
-        map(dissoc(TEMP_FIELDS)),
-        map(dissocOn([Category.PARENT_CATEGORY, TEMP_FIELDS])) as any /* TODO review any */
+        mapCategoriesTree(fillGroups),
+        mapCategoriesTree(dissoc(TEMP_FIELDS)),
     );
 }
 
@@ -46,16 +45,16 @@ export function makeCategoriesMap(categories: any): Map<Category> {
 /**
  * Creates the groups array for each category.
  */
-const fillGroups = map((category: Category) => {
+function fillGroups(category: Category) {
 
-        category.groups = flow(
-            (category as any)[TEMP_FIELDS],
-            makeGroupsMap,
-            map(sortGroupFields) as any /* TODO review any */
-        );
+    category.groups = flow(
+        (category as any)[TEMP_FIELDS],
+        makeGroupsMap,
+        map(sortGroupFields) as any /* TODO review any */
+    );
 
-        return category;
-    });
+    return category;
+}
 
 
 function makeGroupsMap(fields: Array<FieldDefinition>): Map<Group> {
@@ -67,15 +66,6 @@ function makeGroupsMap(fields: Array<FieldDefinition>): Map<Group> {
     }
 
     return groups;
-}
-
-
-function flattenCategoriesTreeMapToCategoriesMap(categoriesMap: Map<Category>): Map<Category> {
-
-    const topLevelCategories: Array<Category> = values(categoriesMap);
-    const children: Array<Category> = flatten(topLevelCategories.map(to(Category.CHILDREN)));
-
-    return namedArrayToNamedMap(topLevelCategories.concat(children));
 }
 
 

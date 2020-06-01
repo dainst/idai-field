@@ -288,7 +288,7 @@ function eraseUnusedCategories(selectedCategoriesNames: string[])
             getDefinedParents
         );
 
-        const categoriesToErase = subtract(parentNamesOfSelectedCategories)(keysOfUnselectedCategories);
+        const categoriesToErase = subtract(parentNamesOfSelectedCategories)(keysOfUnselectedCategories); // TODO add version with single param list
         return categoriesToErase.reduce(withDissoc, categories) as Map<TransientCategoryDefinition>;
     }
 }

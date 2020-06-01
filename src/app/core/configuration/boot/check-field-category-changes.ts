@@ -1,5 +1,5 @@
-import {flow, forEach, isDefined, Map, on, to} from 'tsfun';
-import {lookup, update, map} from 'tsfun/associative';
+import {flow, isDefined, Map, on, to} from 'tsfun';
+import {lookup, update, map, forEach} from 'tsfun/associative';
 import {filter} from 'tsfun/collection';
 import {CustomFieldDefinition} from '../model/custom-category-definition';
 import {TransientFieldDefinition} from '../model/transient-category-definition';

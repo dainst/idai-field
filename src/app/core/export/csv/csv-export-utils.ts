@@ -1,5 +1,6 @@
-import {dense, drop, flow, indices, is, on, reduce, first,
+import {dense, drop, flow, indices, is, on, first,
     take, prepend, append, compose, cond, isEmpty, Mapping} from 'tsfun';
+import {reduce} from 'tsfun/associative';
 import {FieldDefinition} from '../../configuration/model/field-definition';
 import {FieldResource, Resource} from 'idai-components-2';
 import {clone} from '../../util/object-util';

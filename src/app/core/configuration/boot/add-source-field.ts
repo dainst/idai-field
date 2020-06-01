@@ -1,4 +1,4 @@
-import {forEach, Map} from 'tsfun';
+import {Map} from 'tsfun';
 import {BuiltinCategoryDefinition} from '../model/builtin-category-definition';
 import {LibraryCategoryDefinition} from '../model/library-category-definition';
 import {CustomCategoryDefinition} from '../model/custom-category-definition';
@@ -20,12 +20,12 @@ export function addSourceField(builtInCategories: Map<BuiltinCategoryDefinition>
 
 function setFieldSourceOnCategories(categories: any, value: any) {
 
-    forEach((category: TransientCategoryDefinition) =>
-        setFieldSourceOnFields(category.fields, value))(categories);
+    Object.values(categories).forEach((category: TransientCategoryDefinition) =>
+        setFieldSourceOnFields(category.fields, value));
 }
 
 
 function setFieldSourceOnFields(fields: any, value: any) {
 
-    forEach((field: TransientFieldDefinition) => field.source = value)(fields);
+    Object.values(fields).forEach((field: TransientFieldDefinition) => field.source = value);
 }

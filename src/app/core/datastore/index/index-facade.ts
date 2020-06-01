@@ -1,6 +1,7 @@
 import {Observable, Observer} from 'rxjs';
-import {is, on, flow, forEach, isDefined, separate} from 'tsfun';
+import {is, on, flow, isDefined, separate} from 'tsfun';
 import {filter} from 'tsfun/collection';
+import {forEach, lookup} from 'tsfun/associative';
 import {Document} from 'idai-components-2';
 import {ConstraintIndex} from './constraint-index';
 import {FulltextIndex} from './fulltext-index';
@@ -11,7 +12,6 @@ import {performQuery} from './perform-query';
 import {ResourceId} from '../../constants';
 import {getSortedIds} from './get-sorted-ids';
 import {Query} from '../model/query';
-import {lookup} from 'tsfun/associative';
 
 const TYPE = 'Type';
 const INSTANCES = 'instances';

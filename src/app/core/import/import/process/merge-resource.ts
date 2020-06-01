@@ -1,6 +1,6 @@
 import {dropRightWhile, includedIn, is, isArray, isNot, isObject, isAssociative, Map,
-    Associative, isEmpty, isnt, flow, cond, reduce, forEach, dissoc} from 'tsfun';
-import {assoc} from 'tsfun/associative';
+    Associative, isEmpty, isnt, flow, cond, dissoc} from 'tsfun';
+import {assoc, reduce, forEach} from 'tsfun/associative';
 import {NewResource, Resource} from 'idai-components-2';
 import {clone} from '../../../util/object-util';
 import {HierarchicalRelations} from '../../../model/relation-constants';

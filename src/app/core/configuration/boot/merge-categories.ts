@@ -1,6 +1,6 @@
-import {reduce, includedIn, isNot, isnt, keysAndValues, Map, pairWith, union,
-    Pair, flow, filter, forEach} from 'tsfun';
-import {lookup, assoc, map} from 'tsfun/associative';
+import {includedIn, isNot, isnt, keysAndValues, Map, pairWith, union,
+    Pair, flow, filter} from 'tsfun';
+import {lookup, assoc, map, reduce, forEach} from 'tsfun/associative';
 import {clone} from 'tsfun/struct';
 import {CustomCategoryDefinition} from '../model/custom-category-definition';
 import {TransientCategoryDefinition} from '../model/transient-category-definition';

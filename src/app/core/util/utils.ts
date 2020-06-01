@@ -1,5 +1,5 @@
-import {copy, Pair, Map, to, identity, isDefined, isString, reduce, Associative, isArray} from 'tsfun';
-import {dissoc} from 'tsfun/associative';
+import {copy, Pair, Map, to, identity, isDefined, isString, Associative, isArray} from 'tsfun';
+import {dissoc, reduce} from 'tsfun/associative';
 import {path, get} from 'tsfun/struct';
 import {Named, namedArrayToNamedMap} from './named';
 

@@ -1,4 +1,5 @@
-import {flow, forEach, is, keysAndValues, Map} from 'tsfun';
+import {flow, is, keysAndValues, Map} from 'tsfun';
+import {forEach} from 'tsfun/associative';
 import {BuiltinCategoryDefinition} from '../model/builtin-category-definition';
 import {LibraryCategoryDefinition} from '../model/library-category-definition';
 import {CustomCategoryDefinition} from '../model/custom-category-definition';

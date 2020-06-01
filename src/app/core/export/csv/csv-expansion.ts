@@ -1,4 +1,5 @@
-import {compose, cond, flatMap, identity, isDefined, reduce} from 'tsfun';
+import {compose, cond, flatMap, identity, isDefined} from 'tsfun';
+import {reduce} from 'tsfun/associative';
 import {CsvExportUtils} from './csv-export-utils';
 import {HeadingsAndMatrix} from './csv-export-consts';
 

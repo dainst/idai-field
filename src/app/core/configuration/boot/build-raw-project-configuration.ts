@@ -118,11 +118,11 @@ function processCategories(orderConfiguration: any,
 
 function setGeometriesInGroups(languageConfiguration: any) {
 
-    return(categories: Associative<Category>) => {
+    return (categories: Map<Category>) => {
 
         for (let category of values(categories)) {
 
-            if (ProjectCategoriesHelper.isGeometryCategory(toMap(categories), category.name)) {
+            if (ProjectCategoriesHelper.isGeometryCategory(categories, category.name)) {
 
                 if (!category.groups[Groups.POSITION]) {
                     category.groups[Groups.POSITION] = Group.create(Groups.POSITION);
@@ -204,7 +204,7 @@ function setGroupLabels(groupLabels: Map<string>) {
             Category.GROUPS,
             compose(
                 map(pairWith(groupLabel)),
-                map(([group, label]: Pair<Group, string>) => assoc(Labelled.LABEL, label)(group as any))) as any /* TODO review any */)(category);
+                map(([group, label]: Pair<Group, string>) => assoc(Labelled.LABEL, label)(group as any))) as any)(category);
     });
 }
 
@@ -288,7 +288,7 @@ function eraseUnusedCategories(selectedCategoriesNames: string[])
             getDefinedParents
         );
 
-        const categoriesToErase = subtract(parentNamesOfSelectedCategories)(keysOfUnselectedCategories); // TODO add version with single param list
+        const categoriesToErase = subtract(parentNamesOfSelectedCategories)(keysOfUnselectedCategories);
         return categoriesToErase.reduce(withDissoc, categories) as Map<TransientCategoryDefinition>;
     }
 }

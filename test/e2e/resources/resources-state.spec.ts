@@ -25,7 +25,7 @@ const common = require('../common');
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-fdescribe('resources/state --', function() {
+describe('resources/state --', function() {
 
     const appDataPath = browser.params.appDataPath;
 
@@ -258,7 +258,7 @@ fdescribe('resources/state --', function() {
     });
 
 
-    fit('search -- show suggestion for extended search query', done => {
+    it('search -- show suggestion for extended search query', done => {
 
         ResourcesPage.clickSwitchHierarchyMode();
 

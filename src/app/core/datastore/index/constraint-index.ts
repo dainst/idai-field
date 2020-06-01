@@ -291,7 +291,7 @@ export module ConstraintIndex {
 
             const indexItems = flow(
                 getMatchesForTerm(index, definition, matchTerm),
-                cond(isDefined, values, []));
+                cond(isDefined, Object.values, []));
 
             return indexItems
                 .concat(

@@ -7,7 +7,7 @@ import {LibraryCategoryDefinition} from '../model/library-category-definition';
 import {CustomCategoryDefinition} from '../model/custom-category-definition';
 import {ConfigurationErrors} from './configuration-errors';
 import {ValuelistDefinition} from '../model/valuelist-definition';
-import {logWithMessage, withDissoc} from '../../util/utils';
+import {toMap, withDissoc} from '../../util/utils';
 import {TransientFieldDefinition, TransientCategoryDefinition} from '../model/transient-category-definition';
 import {BuiltinCategoryDefinition} from '../model/builtin-category-definition';
 import {mergeBuiltInWithLibraryCategories} from './merge-builtin-with-library-categories';
@@ -113,14 +113,6 @@ function processCategories(orderConfiguration: any,
         adjustCategoriesMap,
         mapToNamedArray,
         orderCategories(orderConfiguration?.categories));
-}
-
-
-function toMap<T extends Named>(categories: Associative<T>) { // TODO move
-
-    return isArray(categories)
-        ? namedArrayToNamedMap(categories as Array<T>)
-        : categories as Map<T>;
 }
 
 

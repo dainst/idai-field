@@ -1,6 +1,7 @@
-import {copy, Pair, Map, to, identity, isDefined, isString, reduce} from 'tsfun';
+import {copy, Pair, Map, to, identity, isDefined, isString, reduce, Associative, isArray} from 'tsfun';
 import {dissoc} from 'tsfun/associative';
 import {path, get} from 'tsfun/struct';
+import {Named, namedArrayToNamedMap} from './named';
 
 
 /**
@@ -23,6 +24,14 @@ export function logWithMessage<T>(message: string) {
         console.log(message, v);
         return v;
     }
+}
+
+
+export function toMap<T extends Named>(categories: Associative<T>) {
+
+    return isArray(categories)
+        ? namedArrayToNamedMap(categories as Array<T>)
+        : categories as Map<T>;
 }
 
 

@@ -1272,11 +1272,18 @@ describe('buildRawProjectConfiguration', () => {
     it('put relations into groups', () => {
 
         const builtInCategories: Map<BuiltinCategoryDefinition> = {
-            C: { fields: {} },
+            P: {
+                supercategory: true,
+                userDefinedSubcategoriesAllowed: true,
+                fields: {}
+            },
         };
 
         const customCategories: Map<CustomCategoryDefinition> = {
-            C: { fields: {} }
+            C: {
+                fields: {},
+                parent: 'P'
+            }
         };
 
         const result = namedArrayToNamedMap(categories(buildRawProjectConfiguration(
@@ -1285,34 +1292,50 @@ describe('buildRawProjectConfiguration', () => {
                     name: 'isAbove',
                     inverse: 'isBelow',
                     label: 'relationLabel',
-                    domain: ['C:inherit'],
-                    range: ['C:inherit'],
+                    domain: ['P:inherit'],
+                    range: ['P:inherit'],
                     sameMainCategoryResource: true
                 },
             ]
-        )))['C'].groups[0];
+        )));
 
-        expect(result.name).toEqual('position');
-        expect(result.relations[0].name).toEqual('isAbove');
+        const parentGroup = result['P'].groups[0];
+        const childGroup = result['P'].children[0].groups[0];
+
+        expect(parentGroup.name).toEqual('position');
+        expect(parentGroup.relations[0].name).toEqual('isAbove');
+        expect(childGroup.name).toEqual('position');
+        expect(childGroup.relations[0].name).toEqual('isAbove');
     });
 
 
     it('put geometry into groups', () => {
 
         const builtInCategories: Map<BuiltinCategoryDefinition> = {
-            C: { fields: {} },
+            P: {
+                supercategory: true,
+                userDefinedSubcategoriesAllowed: true,
+                fields: {}
+            },
         };
 
         const customCategories: Map<CustomCategoryDefinition> = {
-            C: { fields: {} }
+            C: {
+                fields: {},
+                parent: 'P'
+            }
         };
 
         const result = namedArrayToNamedMap(categories(buildRawProjectConfiguration(
             builtInCategories, {}, customCategories, {}, {}, {}, [], { other: { geometry: 'Geometry' }}
-        )))['C'].groups[0];
+        )));
+        const parentGroup = result['P'].groups[0];
+        const childGroup = result['P'].children[0].groups[0];
 
-        expect(result.fields[0].name).toEqual('geometry');
-        expect(result.fields[0].label).toEqual('Geometry');
+        expect(parentGroup.fields[0].name).toEqual('geometry');
+        expect(parentGroup.fields[0].label).toEqual('Geometry');
+        expect(childGroup.fields[0].name).toEqual('geometry');
+        expect(childGroup.fields[0].label).toEqual('Geometry');
     });
 
     // err cases

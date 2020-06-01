@@ -1,13 +1,13 @@
 import {cond, flow, includedIn, isDefined, isNot, keys, Mapping, Map, on,
-    subtract, undefinedOrEmpty, identity, compose, Pair, dissoc,
-  pairWith, prune, filter, keysAndValues, reduce} from 'tsfun';
+    subtract, undefinedOrEmpty, identity, compose, Pair, dissoc, Associative,
+  pairWith, prune, filter, keysAndValues, reduce, values, isArray, update as updateObject} from 'tsfun';
 import {assoc, update, lookup, map} from 'tsfun/associative';
 import {clone} from 'tsfun/struct';
 import {LibraryCategoryDefinition} from '../model/library-category-definition';
 import {CustomCategoryDefinition} from '../model/custom-category-definition';
 import {ConfigurationErrors} from './configuration-errors';
 import {ValuelistDefinition} from '../model/valuelist-definition';
-import {withDissoc} from '../../util/utils';
+import {logWithMessage, withDissoc} from '../../util/utils';
 import {TransientFieldDefinition, TransientCategoryDefinition} from '../model/transient-category-definition';
 import {BuiltinCategoryDefinition} from '../model/builtin-category-definition';
 import {mergeBuiltInWithLibraryCategories} from './merge-builtin-with-library-categories';
@@ -27,7 +27,13 @@ import {makeCategoriesMap} from './make-categories-map';
 import {RawProjectConfiguration} from '../project-configuration';
 import {Category} from '../model/category';
 import {Group, Groups} from '../model/group';
-import {Labelled, mapToNamedArray, sortNamedArray} from '../../util/named';
+import {
+    Labelled,
+    mapToNamedArray,
+    Named,
+    namedArrayToNamedMap,
+    sortNamedArray
+} from '../../util/named';
 import {RelationsUtil} from '../relations-utils';
 import {CategoryDefinition} from '../model/category-definition';
 import {ProjectCategoriesHelper} from '../project-categories-helper';
@@ -73,7 +79,7 @@ export function buildRawProjectConfiguration(builtInCategories: Map<BuiltinCateg
         addRelations(relations),
         applyLanguage(languageConfiguration),
         applyLanguage(customLanguageConfiguration),
-        update<any>(CATEGORIES, processCategories(
+        updateObject(CATEGORIES, processCategories(
             orderConfiguration, validateFields, languageConfiguration, searchConfiguration, relations)),
         asRawProjectConfiguration);
 }
@@ -88,7 +94,15 @@ function processCategories(orderConfiguration: any,
                            searchConfiguration: any,
                            relations: Array<RelationDefinition>): Mapping<Map<CategoryDefinition>, Array<Category>> {
 
-    const sortCategoryGroups = update(Category.GROUPS, sortGroups(Groups.DEFAULT_ORDER) as any /* TODO review any */);
+    const sortCategoryGroups = updateObject(Category.GROUPS, sortGroups(Groups.DEFAULT_ORDER));
+
+    const adjustCategoryAndChildren = <T>(f: Mapping<T>) => compose(f, map(update(Category.CHILDREN, f)));
+
+    const adjustCategoriesMap = compose(
+        adjustCategoryAndChildren(map(putRelationsIntoGroups(relations))),
+        adjustCategoryAndChildren(setGeometriesInGroups(languageConfiguration)),
+        adjustCategoryAndChildren(map(sortCategoryGroups)),
+        adjustCategoryAndChildren(setGroupLabels(languageConfiguration.groups || {})));
 
     return compose(
         applySearchConfiguration(searchConfiguration),
@@ -96,23 +110,36 @@ function processCategories(orderConfiguration: any,
         orderFields(orderConfiguration),
         validateFields,
         makeCategoriesMap,
-        map(putRelationsIntoGroups(relations)),
-        setGeometriesInGroups(languageConfiguration),
-        map(sortCategoryGroups),
-        map(update(Category.CHILDREN, map(sortCategoryGroups))), // TODO sort category groups once and not separately for parents and children
-        setGroupLabels(languageConfiguration.groups || {}),
-        map(update(Category.CHILDREN, setGroupLabels(languageConfiguration.groups || {}))), // TODO set group labels once and not separately for parents and children
+        adjustCategoriesMap,
         mapToNamedArray,
         orderCategories(orderConfiguration?.categories));
+}
+
+export function values1<A>(as: Array<A>): Array<A>;
+export function values1<T>(o: Map<T>): Array<T>;
+export function values1<T>(o: Associative<T>): Associative<T>; // TODO adjust in tsfun
+export function values1<T>(t: any): Array<T> {
+
+    return isArray(t)
+        ? t as Array<T>
+        : Object.values(t)
+}
+
+function toMap<T extends Named>(categories: Associative<T>) { // TODO move
+
+    return isArray(categories)
+        ? namedArrayToNamedMap(categories as Array<T>)
+        : categories as Map<T>;
 }
 
 
 function setGeometriesInGroups(languageConfiguration: any) {
 
-    return(categoriesMap: Map<Category>) => {
+    return(categories: Associative<Category>) => {
 
-        for (let category of Object.values(categoriesMap)) {
-            if (ProjectCategoriesHelper.isGeometryCategory(categoriesMap, category.name)) {
+        for (let category of values1(categories)) {
+
+            if (ProjectCategoriesHelper.isGeometryCategory(toMap(categories), category.name)) {
 
                 if (!category.groups[Groups.POSITION]) {
                     category.groups[Groups.POSITION] = Group.create(Groups.POSITION);
@@ -129,7 +156,7 @@ function setGeometriesInGroups(languageConfiguration: any) {
                 category.groups[Groups.POSITION].fields.unshift(geometryField);
             }
         }
-        return categoriesMap;
+        return categories;
     }
 }
 

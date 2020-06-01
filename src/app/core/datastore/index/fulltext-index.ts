@@ -1,4 +1,4 @@
-import {flatMap, flow, filter, split, toLowerCase, empty, isNot, isEmpty, keys,
+import {flatMap, flow, filter, split, toLowerCase, empty, isNot, isEmpty,
     Map, forEach} from 'tsfun';
 import {lookup, map} from 'tsfun/associative';
 import {Document, Resource} from 'idai-components-2';
@@ -93,7 +93,7 @@ export module FulltextIndex {
                 token,
                 categories
                     ? categories
-                    : keys(index)
+                    : Object.keys(index)
             );
             ResultSets.combine(resultSets, ids);
             return resultSets;

@@ -1,5 +1,5 @@
 import {dropRightWhile, includedIn, is, isArray, isNot, isObject, isAssociative, Map,
-    Associative, keys, isEmpty, values, isnt, flow, cond, reduce, forEach, dissoc} from 'tsfun';
+    Associative, isEmpty, isnt, flow, cond, reduce, forEach, dissoc} from 'tsfun';
 import {assoc} from 'tsfun/associative';
 import {NewResource, Resource} from 'idai-components-2';
 import {clone} from '../../../util/object-util';
@@ -150,7 +150,7 @@ function overwriteOrDeleteProperties(target: Map<any>|undefined,
                                      source: Map<any>,
                                      exclusions: string[]) {
 
-    return keys(source)
+    return Object.keys(source)
         .filter(isNot(includedIn(exclusions)))
         .reduce((target: any, property: string|number) => {
 
@@ -169,7 +169,7 @@ function overwriteOrDeleteProperties(target: Map<any>|undefined,
 
             } else if (isObject(source[property]) && target[property] === undefined) {
 
-                if (values(source[property]).filter(isnt(null)).length > 0) {
+                if (Object.values(source[property]).filter(isnt(null)).length > 0) {
                     target[property] = source[property];
                 }
 
@@ -182,7 +182,7 @@ function overwriteOrDeleteProperties(target: Map<any>|undefined,
 
 function expandObjectArray(target: Array<any>, source: Array<any>) {
 
-    keys(source).forEach(index => {
+    Object.keys(source).forEach(index => {
 
         // This can happen if deletions are not permitted and
         // null values got collapsed via preprocessFields
@@ -203,7 +203,7 @@ function expandObjectArray(target: Array<any>, source: Array<any>) {
             target[index] = source[index];
         }
 
-        if (isObject(target[index]) && keys(target[index]).length === 0) target[index] = null;
+        if (isObject(target[index]) && Object.keys(target[index]).length === 0) target[index] = null;
     });
 
     const result = dropRightWhile(is(null))(target);

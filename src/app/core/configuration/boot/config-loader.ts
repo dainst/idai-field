@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
-import {Map, values} from 'tsfun';
+import {Map} from 'tsfun';
 import {ProjectConfiguration} from '../project-configuration';
 import {ConfigurationValidation} from './configuration-validation';
 import {ConfigReader} from './config-reader';
@@ -146,7 +146,8 @@ export class ConfigLoader {
                     searchConfiguration,
                     orderConfiguration,
                     (categories: any) => {
-                        const fieldValidationErrors = ConfigurationValidation.validateFieldDefinitions(values(categories));
+                        const fieldValidationErrors =
+                            ConfigurationValidation.validateFieldDefinitions(Object.values(categories));
                         if (fieldValidationErrors.length > 0) throw fieldValidationErrors;
                         return categories;
                     }));

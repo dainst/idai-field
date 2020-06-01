@@ -1,4 +1,4 @@
-import {keys, isNot, includedIn, Map, pairWith, val, swap, throws} from 'tsfun';
+import {isNot, includedIn, Map, pairWith, val, swap, throws} from 'tsfun';
 import {assertFieldsAreValid} from '../boot/assert-fields-are-valid';
 import {ConfigurationErrors} from '../boot/configuration-errors';
 import {BaseFieldDefinition, BaseCategoryDefinition} from './base-category-definition';
@@ -47,7 +47,7 @@ export module CustomCategoryDefinition {
 
         return function assertIsValid([typeName, category]: [string, CustomCategoryDefinition]) {
 
-            keys(category)
+            Object.keys(category)
                 .filter(isNot(includedIn(VALID_CATEGORY_PROPERTIES)))
                 .map(pairWith(val(ConfigurationErrors.ILLEGAL_CATEGORY_PROPERTY)))
                 .map(swap)

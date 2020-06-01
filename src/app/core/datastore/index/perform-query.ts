@@ -1,4 +1,3 @@
-import {keys} from 'tsfun';
 import {ConstraintIndex} from './constraint-index';
 import {FulltextIndex} from './fulltext-index';
 import {ResultSets} from './result-sets';
@@ -47,7 +46,7 @@ function performConstraints(constraintIndex: ConstraintIndex,
                             constraints: { [name: string]: Constraint|string|string[] })
     : ResultSets<Resource.Id> {
 
-    return keys(constraints)
+    return Object.keys(constraints)
         .reduce((resultSets, name: string) => {
 
             const { subtract, value, searchRecursively } = Constraint.convert(constraints[name]);

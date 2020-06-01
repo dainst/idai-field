@@ -1,4 +1,4 @@
-import {values, isArray, map, flatten, flatMap, flow,
+import {isArray, map, flatten, flatMap, flow,
     cond, not, to, isDefined, singleton, Map, filter} from 'tsfun';
 import {get as getOn} from 'tsfun/struct';
 import {Document, Resource} from 'idai-components-2';
@@ -82,7 +82,7 @@ export module ConstraintIndex {
                         skipRemoval: boolean = false) {
 
         if (!skipRemoval) remove(index, doc);
-        for (let indexDefinition of values(index.indexDefinitions)) {
+        for (let indexDefinition of Object.values(index.indexDefinitions)) {
             putFor(index, indexDefinition, doc);
         }
     }

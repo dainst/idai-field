@@ -1,4 +1,4 @@
-import {values, isArray, isnt, set, sort, split, flow, filter, isNot, dense, throws,
+import {isArray, isnt, set, sort, split, flow, filter, isNot, dense, throws,
     first, startsWith, longerThan, reduce, forEach} from 'tsfun';
 import {map} from 'tsfun/associative';
 import {ParserErrors} from './parser-errors';
@@ -76,7 +76,7 @@ function assertHeadingsDoNotContainIncompleteArrays(headings: string[]) {
     flow(
         headings,
         groupByFirstSegment,
-        values,
+        Object.values,
         filter(isArray),
         map(filter(isnt(''))),
         forEach(assertHeadingsDoNotContainIncompleteArrays));

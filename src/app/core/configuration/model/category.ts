@@ -1,4 +1,4 @@
-import {flatten, flow, map, to, values} from 'tsfun';
+import {flatten, flow, map, to} from 'tsfun';
 import {FieldDefinition} from './field-definition';
 import {Group} from './group';
 import {Named} from '../../util/named';
@@ -36,7 +36,7 @@ export module Category {
 
         return flow(
             category.groups,
-            values,
+            Object.values,
             map(to(Group.FIELDS)),
             flatten()
         );

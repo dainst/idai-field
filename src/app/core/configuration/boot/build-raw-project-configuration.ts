@@ -1,6 +1,6 @@
-import {cond, flow, includedIn, isDefined, isNot, keys, Mapping, Map, on,
-    subtract, undefinedOrEmpty, identity, compose, Pair, dissoc, Associative,
-  pairWith, prune, filter, reduce, values, update as updateObject} from 'tsfun';
+import {cond, flow, includedIn, isDefined, isNot, Mapping, Map, on,
+    subtract, undefinedOrEmpty, identity, compose, Pair, dissoc,
+  pairWith, prune, filter, reduce, update as updateObject} from 'tsfun';
 import {assoc, update, lookup, map} from 'tsfun/associative';
 import {clone} from 'tsfun/struct';
 import {LibraryCategoryDefinition} from '../model/library-category-definition';
@@ -61,7 +61,7 @@ export function buildRawProjectConfiguration(builtInCategories: Map<BuiltinCateg
         Assertions.assertInputTypesAreSet(Assertions.assertInputTypePresentIfNotCommonField(commonFields)),
         Assertions.assertNoDuplicationInSelection(customCategories),
         mergeCategories(customCategories, Assertions.assertInputTypePresentIfNotCommonField(commonFields)),
-        eraseUnusedCategories(keys(customCategories)),
+        eraseUnusedCategories(Object.keys(customCategories)),
         replaceCommonFields(commonFields),
         insertValuelistIds,
         Assertions.assertValuelistIdsProvided,
@@ -114,7 +114,7 @@ function setGeometriesInGroups(languageConfiguration: any) {
 
     return (categories: Map<Category>) => {
 
-        for (let category of values(categories)) {
+        for (let category of Object.values(categories)) {
 
             if (ProjectCategoriesHelper.isGeometryCategory(categories, category.name)) {
 
@@ -272,7 +272,7 @@ function eraseUnusedCategories(selectedCategoriesNames: string[])
         const keysOfUnselectedCategories =
             flow(
                 categories,
-                keys,
+                Object.keys,
                 filter(isNot(includedIn(selectedCategoriesNames)))
             );
 

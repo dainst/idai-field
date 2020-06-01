@@ -1,4 +1,4 @@
-import {compose, Map, values} from 'tsfun';
+import {compose, Map} from 'tsfun';
 import {map} from 'tsfun/associative';
 import {assoc} from 'tsfun/associative';
 import {get} from 'tsfun/struct';
@@ -30,5 +30,5 @@ export function addKeyAsProp<A extends Map>(prop: string): (m: Map<A>) => Map<A>
 
 export function mapToArray(prop: string) {
 
-    return compose(addKeyAsProp(prop), values);
+    return compose(addKeyAsProp(prop), Object.values);
 }

@@ -1,4 +1,4 @@
-import {isNot, includedIn, isObject, isArray, keys, pairWith} from 'tsfun';
+import {isNot, includedIn, isObject, isArray, pairWith} from 'tsfun';
 import {lookup} from "tsfun/associative";
 import {Resource} from 'idai-components-2';
 
@@ -19,7 +19,7 @@ function trim(object: any, ignoreDefaultFields: boolean) {
 
     const fieldsToIgnore: string[] = ignoreDefaultFields ? defaultFields : [];
 
-    (keys(object) as any)
+    (Object.keys(object) as any)
         .filter(isNot(includedIn(fieldsToIgnore)))
         .map(pairWith(lookup(object)))
         .forEach(([fieldName, value]: [string, any]) => {

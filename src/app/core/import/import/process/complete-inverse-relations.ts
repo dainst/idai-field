@@ -1,5 +1,5 @@
 import {compose, flatten, flow, forEach, intersect, isDefined, isNot, isUndefinedOrEmpty,
-    keys, values, empty, pairWith, subtract, to, undefinedOrEmpty, throws, remove} from 'tsfun';
+    empty, pairWith, subtract, to, undefinedOrEmpty, throws, remove} from 'tsfun';
 import {lookup, map} from 'tsfun/associative';
 import {filter} from 'tsfun/collection';
 import {Document, Relations} from 'idai-components-2';
@@ -100,7 +100,7 @@ function targetIdsReferingToDbResources(document: Document, documentsLookup: { [
 
     return flow(
         document.resource.relations,
-        values,
+        Object.values,
         flatten(),
         remove(compose(lookup(documentsLookup), isDefined)));
 }
@@ -114,7 +114,7 @@ function setInverseRelationsForImportResources(importDocuments: Array<Document>,
     for (let importDocument of importDocuments) {
 
         flow(importDocument.resource.relations,
-            keys,
+            Object.keys,
             map(pairWith(lookup(inverseRelationsMap))),
             forEach(assertNotBadlyInterrelated(importDocument)),
             forEach(setInverses(importDocument, documentsLookup, assertIsAllowedRelationDomainCategory)));

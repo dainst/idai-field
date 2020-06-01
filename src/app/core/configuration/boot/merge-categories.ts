@@ -1,4 +1,4 @@
-import {reduce, includedIn, isNot, isnt, keys, keysAndValues, Map, pairWith, union,
+import {reduce, includedIn, isNot, isnt, keysAndValues, Map, pairWith, union,
     Pair, flow, filter, forEach} from 'tsfun';
 import {lookup, assoc, map} from 'tsfun/associative';
 import {clone} from 'tsfun/struct';
@@ -80,9 +80,9 @@ function mergePropertiesOfCategory(target: { [_: string]: any }, source: { [_: s
 
     return flow(
         source,
-        keys,
+        Object.keys,
         filter(isnt(TransientCategoryDefinition.FIELDS)),
-        filter(isNot(includedIn(keys(target)))),
+        filter(isNot(includedIn(Object.keys(target)))),
         map(pairWith(lookup(source))),
         forEach(overwriteIn(target)));
 }

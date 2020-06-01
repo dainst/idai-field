@@ -1,4 +1,4 @@
-import {on, Predicate, flow, keys, isnt, append, isDefined, compose, isEmpty,
+import {on, Predicate, flow, isnt, append, isDefined, compose, isEmpty,
     pairWith, cond, zip, Pair, forEach} from 'tsfun';
 import {lookup, get, update, map} from 'tsfun/associative';
 import {remove, filter} from 'tsfun/collection';
@@ -71,7 +71,7 @@ function pruneInverseRelations(relations: Relations,
                                hasInverseRelation: Predicate<String>) {
 
     return flow(
-        keys(relations),
+        Object.keys(relations),
         filter(cond(setInverses, hasInverseRelation, true)),
         map(pairWith(lookup(relations))),
         map(update(1, filter(isnt(resourceId)))),
@@ -86,7 +86,7 @@ function setInverseRelations(target: Resource,
                              hasInverseRelation: Predicate<string>) {
 
     flow(
-        keys(resource.relations),
+        Object.keys(resource.relations),
         filter(hasInverseRelation),
         map(pairWith(getInverse)),
         forEach(setInverseRelation(target, resource)));

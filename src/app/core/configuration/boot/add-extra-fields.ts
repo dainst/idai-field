@@ -1,4 +1,4 @@
-import {keys, Map, reduce} from 'tsfun';
+import {Map} from 'tsfun';
 import {update} from 'tsfun/associative';
 import {clone} from 'tsfun/struct';
 import {FieldDefinition} from '../model/field-definition';
@@ -9,11 +9,12 @@ export function addExtraFields(extraFields: Map<FieldDefinition>) {
 
     return (configuration: Map<TransientCategoryDefinition>) => {
 
-        return reduce((configuration: Map<TransientCategoryDefinition>, categoryName: string) => {
+        return Object.keys(configuration)
+            .reduce((configuration: Map<TransientCategoryDefinition>, categoryName: string) => {
 
             return update(categoryName, addExtraFieldsToCategory(extraFields))(configuration);
 
-        }, configuration)(keys(configuration));
+        }, configuration);
     };
 }
 

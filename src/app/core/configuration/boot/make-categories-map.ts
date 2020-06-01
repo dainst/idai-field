@@ -1,5 +1,5 @@
 import {cond, defined, flatten, flow, isNot, Map, Mapping, on,
-    reduce, throws, to, values, isUndefined, copy, separate, dissoc} from 'tsfun';
+    reduce, throws, to, isUndefined, copy, separate, dissoc} from 'tsfun';
 import {assoc, update, lookup, map} from 'tsfun/associative';
 import {dissoc as dissocOn} from 'tsfun/struct';
 import {Category} from '../model/category';
@@ -72,7 +72,7 @@ function makeGroupsMap(fields: Array<FieldDefinition>): Map<Group> {
 
 function flattenCategoriesTreeMapToCategoriesMap(categoriesMap: Map<Category>): Map<Category> {
 
-    const topLevelCategories: Array<Category> = values(categoriesMap);
+    const topLevelCategories: Array<Category> = Object.values(categoriesMap);
     const children: Array<Category> = flatten(topLevelCategories.map(to(Category.CHILDREN)));
 
     return namedArrayToNamedMap(topLevelCategories.concat(children));

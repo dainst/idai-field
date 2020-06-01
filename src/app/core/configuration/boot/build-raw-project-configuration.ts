@@ -115,15 +115,6 @@ function processCategories(orderConfiguration: any,
         orderCategories(orderConfiguration?.categories));
 }
 
-export function values1<A>(as: Array<A>): Array<A>;
-export function values1<T>(o: Map<T>): Array<T>;
-export function values1<T>(o: Associative<T>): Associative<T>; // TODO adjust in tsfun
-export function values1<T>(t: any): Array<T> {
-
-    return isArray(t)
-        ? t as Array<T>
-        : Object.values(t)
-}
 
 function toMap<T extends Named>(categories: Associative<T>) { // TODO move
 
@@ -137,7 +128,7 @@ function setGeometriesInGroups(languageConfiguration: any) {
 
     return(categories: Associative<Category>) => {
 
-        for (let category of values1(categories)) {
+        for (let category of values(categories)) {
 
             if (ProjectCategoriesHelper.isGeometryCategory(toMap(categories), category.name)) {
 

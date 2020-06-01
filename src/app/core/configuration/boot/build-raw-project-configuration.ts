@@ -192,7 +192,7 @@ function orderCategories(categoriesOrder: string[] = []) {
             categories,
             sortNamedArray(categoriesOrder),
             map(update(Category.CHILDREN, orderCategories(categoriesOrder)))
-        ) as any /* TODO review any */;
+        ) as any;
     }
 }
 
@@ -324,7 +324,7 @@ function replaceCommonFields(commonFields: Map)
                 }
                 delete clonedMergedCategory.commons;
                 return clonedMergedCategory;
-            })) as any /* TODO review any */;
+            })) as any;
 }
 
 

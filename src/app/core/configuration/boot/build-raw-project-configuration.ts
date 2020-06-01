@@ -96,7 +96,6 @@ function processCategories(orderConfiguration: any,
 
     const sortCategoryGroups = updateObject(Category.GROUPS, sortGroups(Groups.DEFAULT_ORDER));
 
-    // TODO review if we still have to do this. aren't the children references now? then modifying the instances at the top level would be sufficient
     const adjustCategoryAndChildren = <T>(f: Mapping<T>) => compose(f, map(update(Category.CHILDREN, f)));
 
     const adjustCategoriesMap = compose(

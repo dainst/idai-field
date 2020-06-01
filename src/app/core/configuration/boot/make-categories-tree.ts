@@ -1,16 +1,15 @@
-import {cond, defined, flatten, flow, isNot, Map, Mapping, on,
-    reduce, throws, to, values, isUndefined, copy, separate, dissoc} from 'tsfun';
+import {cond, defined, flow, isNot, Map, Mapping, on,
+    reduce, throws, isUndefined, copy, separate, dissoc} from 'tsfun';
 import {assoc, update, lookup, map} from 'tsfun/associative';
-import {dissoc as dissocOn} from 'tsfun/struct';
 import {Category} from '../model/category';
 import {CategoryDefinition} from '../model/category-definition';
 import {Group, Groups} from '../model/group';
 import {makeLookup} from '../../util/transformers';
 import {FieldDefinition} from '../model/field-definition';
 import {clone} from '../../util/object-util';
-import {Named, namedArrayToNamedMap} from '../../util/named';
+import {mapToNamedArray, Named} from '../../util/named';
 import {MDInternal} from '../../../components/messages/md-internal';
-import {mapCategoriesTree} from './mapCategoriesTree';
+import {mapCategoriesTree} from './map-categories-tree';
 
 
 const TEMP_FIELDS = 'fields';
@@ -21,7 +20,7 @@ const TEMP_FIELDS = 'fields';
  * @author Daniel de Oliveira
  * @author Sebastian Cuy
  */
-export function makeCategoriesTree(categories: any): Map<Category> {
+export function makeCategoriesTree(categories: any): Array<Category> {
 
     const [parentDefs, childDefs] =
         separate(on(CategoryDefinition.PARENT, isNot(defined)), categories);
@@ -36,6 +35,7 @@ export function makeCategoriesTree(categories: any): Map<Category> {
     return flow(
         childDefs,
         reduce(addChildCategory, parentCategories),
+        mapToNamedArray,
         mapCategoriesTree(fillGroups),
         mapCategoriesTree(dissoc(TEMP_FIELDS)),
     );

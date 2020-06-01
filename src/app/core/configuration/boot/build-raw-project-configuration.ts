@@ -33,7 +33,7 @@ import {Labelled, namedArrayToNamedMap, sortNamedArray} from '../../util/named';
 import {RelationsUtil} from '../relations-utils';
 import {CategoryDefinition} from '../model/category-definition';
 import {ProjectCategoriesHelper} from '../project-categories-helper';
-import {mapCategoriesTree} from './mapCategoriesTree';
+import {mapCategoriesTree} from './map-categories-tree';
 import {Name} from '../../constants';
 import {ModelUtil} from '../../model/model-util';
 import Label = ModelUtil.Label;
@@ -97,7 +97,7 @@ function processCategories(orderConfiguration: any,
 
     const sortCategoryGroups = updateObject(Category.GROUPS, sortGroups(Groups.DEFAULT_ORDER));
 
-    const isGeometryCategory = (categoriesTree: Map<Category>, category: Name) => ProjectCategoriesHelper
+    const isGeometryCategory = (categoriesTree: Array<Category>, category: Name) => ProjectCategoriesHelper
         .isGeometryCategory(categoriesTreeToCategoriesMap(categoriesTree), category);
 
     const adjustCategoriesTree = compose(
@@ -118,10 +118,10 @@ function processCategories(orderConfiguration: any,
 }
 
 
-function categoriesTreeToCategoriesArray(categoriesTree: Map<Category>): Array<Category> {
+function categoriesTreeToCategoriesArray(categoriesTree: Array<Category>): Array<Category> {
 
     const categories = [];
-    for (let parent of Object.values(categoriesTree)) {
+    for (let parent of categoriesTree) {
         for (let child of parent.children) {
             categories.push(child);
         }
@@ -132,23 +132,21 @@ function categoriesTreeToCategoriesArray(categoriesTree: Map<Category>): Array<C
 
 
 
-function categoriesTreeToCategoriesMap(categoriesMap: Map<Category>): Map<Category> {
+function categoriesTreeToCategoriesMap(topLevelCategories: Array<Category>): Map<Category> {
 
-    const topLevelCategories: Array<Category> = values(categoriesMap);
     const children: Array<Category> = flatten(topLevelCategories.map(to(Category.CHILDREN)));
-
     return namedArrayToNamedMap(topLevelCategories.concat(children));
 }
 
 
 function setGeometriesInGroups(languageConfiguration: any,
-                               isGeometryCategory: (categoriesTree: Map<Category>, categoryName: string) => boolean) {
+                               isGeometryCategory: (categoriesTree: Array<Category>, categoryName: string) => boolean) {
 
-    return (categoriesTree: Map<Category>) => {
+    return (categoriesTree: Array<Category>) => {
 
         return mapCategoriesTree(category => {
 
-            if (isGeometryCategory(categoriesTreeToCategoriesMap(categoriesTree), category.name)) {
+            if (isGeometryCategory(categoriesTree, category.name)) {
                 adjustGeometryCategory(
                     category,
                     languageConfiguration && languageConfiguration.other && languageConfiguration.other['geometry']

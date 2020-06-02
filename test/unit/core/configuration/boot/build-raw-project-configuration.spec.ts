@@ -13,6 +13,13 @@ import {byName, Named, namedArrayToNamedMap,} from '../../../../../src/app/core/
 
 const categories = left;
 
+function buildRaw(a: any, b: any, ...rest: any[]) {
+
+    const raw = buildRawProjectConfiguration(a, b, ...rest);
+    return namedArrayToNamedMap(categories(raw));
+}
+
+
 describe('buildRawProjectConfiguration', () => {
 
     it('auto-select parent if child defined',  () => {
@@ -31,11 +38,11 @@ describe('buildRawProjectConfiguration', () => {
                 hidden: []
             }
         };
-        const result = namedArrayToNamedMap(categories(buildRawProjectConfiguration(
+        const result = buildRaw(
             builtInCategories,
             {},
             customCategories
-        )));
+        );
 
         expect(result['A']).toBeDefined();
         expect(result['B']).toBeDefined();
@@ -61,11 +68,11 @@ describe('buildRawProjectConfiguration', () => {
                 hidden: []
             }
         };
-        const result = namedArrayToNamedMap(categories(buildRawProjectConfiguration(
+        const result = buildRaw(
             builtInCategories,
             {},
             customCategories
-        )));
+        );
 
         expect(result['A']).toBeDefined();
         expect(result['B']).toBeDefined();
@@ -106,12 +113,12 @@ describe('buildRawProjectConfiguration', () => {
             bCommonField: { inputType: 'input' }
         };
 
-        const result = namedArrayToNamedMap(categories(buildRawProjectConfiguration(
+        const result = buildRaw(
             builtInCategories,
             libraryCategories,
             customCategories,
             commonFields
-        )));
+        );
 
         expect(result['A'].groups[0].fields[0].visible).toBe(false);
         expect(result['A'].groups[0].fields[1].visible).toBe(true);
@@ -135,7 +142,7 @@ describe('buildRawProjectConfiguration', () => {
             }
         };
 
-        const result = namedArrayToNamedMap(categories(buildRawProjectConfiguration(
+        const result = buildRaw(
             builtInCategories,
             libraryCategories,
             customCategories,
@@ -145,7 +152,7 @@ describe('buildRawProjectConfiguration', () => {
                     values: { a: {} }, description: {}, createdBy: '', creationDate: ''
                 }
             }
-        )));
+        );
 
         expect(result['A'].groups[0].fields[0]['valuelist']['values']).toEqual({ a: {} });
     });
@@ -170,7 +177,7 @@ describe('buildRawProjectConfiguration', () => {
             }
         };
 
-        const result = namedArrayToNamedMap(categories(buildRawProjectConfiguration(
+        const result = buildRaw(
             builtInCategories,
             libraryCategories,
             customCategories,
@@ -183,7 +190,7 @@ describe('buildRawProjectConfiguration', () => {
                     values: { b: {} }, description: {}, createdBy: '', creationDate: ''
                 }
             }
-        )));
+        );
 
         expect(result['A'].groups[0].fields[0]['valuelist']['values']).toEqual({ b: {} });
     });
@@ -209,7 +216,7 @@ describe('buildRawProjectConfiguration', () => {
             'A:default': { fields: {}}
         };
 
-        const result = namedArrayToNamedMap(categories(buildRawProjectConfiguration(
+        const result = buildRaw(
             builtInCategories,
             libraryCategories,
             customCategories,
@@ -219,7 +226,7 @@ describe('buildRawProjectConfiguration', () => {
                     values: { a: {}}, description: {}, creationDate: '', createdBy: ''
                 }
             }
-        )));
+        );
 
         expect(result['A'].groups[0].fields[0]['valuelist']['values']).toEqual({ a: {} });
     });
@@ -538,14 +545,14 @@ describe('buildRawProjectConfiguration', () => {
             }
         };
 
-        const result = namedArrayToNamedMap(categories(buildRawProjectConfiguration(
+        const result = buildRaw(
             builtInCategories,
             libraryCategories,
             { 'A:0': { fields: {} } },
             commonFields,
             {},
             {}
-        )));
+        );
 
         expect(result['A'].groups[0].fields[0]['group']).toBe('stem');
         expect(result['A'].groups[0].fields[0]['inputType']).toBe('input');
@@ -563,14 +570,14 @@ describe('buildRawProjectConfiguration', () => {
             }
         };
 
-        const result = namedArrayToNamedMap(categories(buildRawProjectConfiguration(
+        const result = buildRaw(
             builtInCategories,
             {},
             customCategories,
             commonFields,
             {},
             {}
-        )));
+        );
 
         expect(result['A'].groups['0'].fields[0]['group']).toBe('stem');
         expect(result['A'].groups['0'].fields[0]['inputType']).toBe('input');
@@ -602,14 +609,14 @@ describe('buildRawProjectConfiguration', () => {
             }
         };
 
-        const result = namedArrayToNamedMap(categories(buildRawProjectConfiguration(
+        const result = buildRaw(
             builtInCategories,
             libraryCategories,
             customCategories,
             commonFields,
             {},
             {}
-        )));
+        );
 
         expect(result['A'].groups[0].fields[0]['group']).toBe('stem');
         expect(result['A'].groups[0].fields[0]['inputType']).toBe('input');
@@ -636,14 +643,14 @@ describe('buildRawProjectConfiguration', () => {
             }
         };
 
-        const result = namedArrayToNamedMap(categories(buildRawProjectConfiguration(
+        const result = buildRaw(
             builtInCategories,
             libraryCategories,
             { 'A:0': { fields: {} } },
             commonFields,
             {},
             {}
-        )));
+        );
 
         expect(result['A'].groups[0].fields[0]['group']).toBe('stem');
         expect(result['A'].groups[0].fields[0]['inputType']).toBe('dropdown');
@@ -758,13 +765,13 @@ describe('buildRawProjectConfiguration', () => {
             },
         };
 
-        const result = namedArrayToNamedMap(categories(buildRawProjectConfiguration(
+        const result = buildRaw(
             builtInCategories,
             libraryCategories,
             { 'A:0': { hidden: [], fields: {} } },
             {}, {},
             {}
-        )));
+        );
 
         expect(result['A'].groups[0].fields[0].inputType).toBe('input');
     });
@@ -925,11 +932,11 @@ describe('buildRawProjectConfiguration', () => {
             }
         };
 
-        const result = namedArrayToNamedMap(categories(buildRawProjectConfiguration(
+        const result = buildRaw(
             builtInCategories,
             libraryCategories,
             { 'A:0': { fields: {} } }, {}, valuelistsConfiguration, {}
-        )));
+        );
 
         result['A'].groups['0'].fields.sort(byName);
 
@@ -1040,11 +1047,11 @@ describe('buildRawProjectConfiguration', () => {
             }
         };
 
-        const result = namedArrayToNamedMap(categories(buildRawProjectConfiguration(
+        const result = buildRaw(
             builtInCategories, libraryCategories,
             { 'A:1': { hidden: [], fields: {} } },
             {}, {}, {}
-        )));
+        );
 
         expect(result['A'].groups[0].fields[0].inputType).toBe(InputType.TEXT);
         expect(result['A'].groups[0].fields[0].group).toBe(Groups.STEM);
@@ -1071,10 +1078,10 @@ describe('buildRawProjectConfiguration', () => {
             }
         };
 
-        const result = namedArrayToNamedMap(categories(buildRawProjectConfiguration(
+        const result = buildRaw(
             builtInCategories, {}, customCategories,
             {}, {}, {}
-        )));
+        );
 
         expect(result['A'].groups[0].fields[0].inputType).toBe('text');
         expect(result['A'].groups[0].fields[0].group).toBe('stem');
@@ -1115,10 +1122,10 @@ describe('buildRawProjectConfiguration', () => {
             }
         };
 
-        const result = namedArrayToNamedMap(categories(buildRawProjectConfiguration(
+        const result = buildRaw(
             builtInCategories, libraryCategories, customCategories,
             {}, {}, {}
-        )));
+        );
 
         expect(result['A'].groups[0].fields[0].inputType).toBe(InputType.TEXT);
         expect(result['A'].groups[1].fields[0].inputType).toBe(InputType.TEXT);
@@ -1163,10 +1170,10 @@ describe('buildRawProjectConfiguration', () => {
             }
         };
 
-        const result = namedArrayToNamedMap(categories(buildRawProjectConfiguration(
+        const result = buildRaw(
             builtInCategories, libraryCategories, customCategories, commonFields,
             {}, {}
-        )));
+        );
 
         result['A'].groups[1].fields.sort(byName);
 
@@ -1206,9 +1213,9 @@ describe('buildRawProjectConfiguration', () => {
             }
         };
 
-        const result = namedArrayToNamedMap(categories(buildRawProjectConfiguration(
+        const result = buildRaw(
             builtInCategories, {}, customCategories, {}, {}, {}, [], languageConf
-        )));
+        );
 
         expect(result['A'].groups[0].label).toEqual('Stem');
         expect(result['A'].groups[1].label).toEqual('A_');
@@ -1261,9 +1268,9 @@ describe('buildRawProjectConfiguration', () => {
 
         const orderConf = { categories: ['C', 'A'] };
 
-        const result = namedArrayToNamedMap(categories(buildRawProjectConfiguration(
+        const result = buildRaw(
             builtInCategories, {}, customCategories, {}, {}, {}, [], {}, {}, {}, orderConf
-        )))['D'].children.map(to(Named.NAME));
+        )['D'].children.map(to(Named.NAME));
 
         expect(result).toEqual(['C', 'A', 'B']);
     });
@@ -1286,7 +1293,7 @@ describe('buildRawProjectConfiguration', () => {
             }
         };
 
-        const result = namedArrayToNamedMap(categories(buildRawProjectConfiguration(
+        const result = buildRaw(
             builtInCategories, {}, customCategories, {}, {}, {}, [
                 {
                     name: 'isAbove',
@@ -1297,7 +1304,7 @@ describe('buildRawProjectConfiguration', () => {
                     sameMainCategoryResource: true
                 },
             ]
-        )));
+        );
 
         const parentGroup = result['P'].groups[0];
         const childGroup = result['P'].children[0].groups[0];
@@ -1326,9 +1333,9 @@ describe('buildRawProjectConfiguration', () => {
             }
         };
 
-        const result = namedArrayToNamedMap(categories(buildRawProjectConfiguration(
+        const result = buildRaw(
             builtInCategories, {}, customCategories, {}, {}, {}, [], { other: { geometry: 'Geometry' }}
-        )));
+        );
         const parentGroup = result['P'].groups[0];
         const childGroup = result['P'].children[0].groups[0];
 

@@ -1,5 +1,6 @@
-import {update, Mapping, compose, map} from 'tsfun';
+import {update, Mapping, compose, map, Map, flatten, to} from 'tsfun';
 import {Category} from '../model/category';
+import {namedArrayToNamedMap} from '../../util/named';
 
 
 

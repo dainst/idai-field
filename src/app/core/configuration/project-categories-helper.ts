@@ -2,6 +2,8 @@ import {isnt, Map, to} from 'tsfun';
 import {Category} from './model/category';
 import {Named} from '../util/named';
 import NAME = Named.NAME;
+import {Tree} from './tree';
+import {Name} from '../constants';
 
 const TYPE_CATALOG = 'TypeCatalog';
 const TYPE = 'Type';
@@ -19,15 +21,50 @@ export /* package-private */ module ProjectCategoriesHelper {
 
     export const UNKNOWN_CATEGORY_ERROR = 'ProjectCategories.Errors.UnknownCategory';
 
+    // TODO deprecated
+    // export function isGeometryCategory(categoriesMap: Map<Category>,
+    //                                    categoryName: string): boolean {
+    //
+    //     return !getImageCategoryNames(categoriesMap).includes(categoryName)
+    //         && !isSubcategory(categoriesMap, categoryName, 'Inscription')
+    //         && !isSubcategory(categoriesMap, categoryName, 'Type')
+    //         && !isSubcategory(categoriesMap, categoryName, 'TypeCatalog')
+    //         && !isProjectCategory(categoryName);
+    // }
 
-    export function isGeometryCategory(categoriesMap: Map<Category>,
-                                       categoryName: string): boolean {
 
-        return !getImageCategoryNames(categoriesMap).includes(categoryName)
-            && !isSubcategory(categoriesMap, categoryName, 'Inscription')
-            && !isSubcategory(categoriesMap, categoryName, 'Type')
-            && !isSubcategory(categoriesMap, categoryName, 'TypeCatalog')
-            && !isProjectCategory(categoryName);
+    export function isGeometryCategory(categoryTree: Tree<Category>, // TODO make Tree<Named>
+                                       category: Name): boolean {
+
+        return !isCategoryOrSubcategory(categoryTree, category, 'Image')
+            && !isCategoryOrSubcategory(categoryTree, category, 'Inscription')
+            && !isCategoryOrSubcategory(categoryTree, category, 'Type')
+            && !isCategoryOrSubcategory(categoryTree, category, 'TypeCatalog')
+            && !isProjectCategory(category);
+    }
+
+
+    // TODO review
+    // this is a bit more general than for category tree. it works (and needs to work) for
+    // Tree<Named>, which we make use of in build-raw-project-configuration, before
+    // we have access to the final (we dont need it, but in principle) Tree<Category>
+    // a more general approach should find us matches on any level
+    export function isCategoryOrSubcategory(twoLevelTree: Tree<Named>,
+                                            name: Name,
+                                            firstLevelItem: Name): boolean {
+
+        const superCategoryNames = twoLevelTree.map(to([0,Named.NAME]));
+        if (name === firstLevelItem && superCategoryNames.includes(firstLevelItem)) return true;
+
+        // TODO make tree version of find; replace other usages of find on tree
+        const findResult = twoLevelTree.find(([superCat,_]) => superCat.name === firstLevelItem);
+        if (!findResult) return false;
+        const [_,superCatChildren] = findResult;
+
+        const superCatChildrenNames = superCatChildren.map(to([0,Named.NAME]));
+        if (superCatChildrenNames.includes(name)) return true;
+
+        return false;
     }
 
 

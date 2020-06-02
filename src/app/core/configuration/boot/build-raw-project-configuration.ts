@@ -38,7 +38,6 @@ import {ModelUtil} from '../../model/model-util';
 import Label = ModelUtil.Label;
 import {FieldDefinition} from '../model/field-definition';
 import {mapLeafs, mapTree, Tree} from '../tree';
-import {treeToCategoryMap} from '../category-tree';
 import {sortArray} from '../../util/sort-array';
 
 
@@ -99,36 +98,28 @@ function processCategories(orderConfiguration: any,
 
     const sortCategoryGroups = updateObject(Category.GROUPS, sortGroups(Groups.DEFAULT_ORDER));
 
-    // TODO make isGeometryCategory take Tree as param
-    const isGeometryCategory = (categoriesTree: Tree<Category>, category: Name) => ProjectCategoriesHelper
-        .isGeometryCategory(treeToCategoryMap(categoriesTree), category);
-
-    // TODO inline into composition below
-    const adjustCategoriesTree = compose(
-        mapTree(putRelationsIntoGroups(relations)),
-        mapTree(sortCategoryGroups),
-        mapTree(setGroupLabels(languageConfiguration.groups || {})),
-        setGeometriesInGroups(languageConfiguration, isGeometryCategory));
-
     return compose(
         applySearchConfiguration(searchConfiguration),
         addExtraFieldsOrder(orderConfiguration),
         orderFields(orderConfiguration),
         validateFields,
         makeCategoriesTree,
-        adjustCategoriesTree,
+        mapTree(putRelationsIntoGroups(relations)),
+        mapTree(sortCategoryGroups),
+        mapTree(setGroupLabels(languageConfiguration.groups || {})),
+        setGeometriesInGroups(languageConfiguration),
         orderCategories(orderConfiguration?.categories));
 }
 
 
-function setGeometriesInGroups(languageConfiguration: any,
-                               isGeometryCategory: (categoriesTree: Tree<Category>, categoryName: string) => boolean) {
+// TODO review function
+function setGeometriesInGroups(languageConfiguration: any) {
 
     return (categoriesTree: Tree<Category>) => {
 
         return mapTree((category: Category) => {
 
-            if (isGeometryCategory(categoriesTree, category.name)) {
+            if (ProjectCategoriesHelper.isGeometryCategory(categoriesTree, category.name)) {
                 adjustGeometryCategory(
                     category,
                     languageConfiguration && languageConfiguration.other && languageConfiguration.other['geometry']

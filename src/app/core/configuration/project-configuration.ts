@@ -32,6 +32,8 @@ export class ProjectConfiguration {
 
     private categoriesMap: Map<Category>;
 
+    private categoryTree: Tree<Category>;
+
     private relations: Array<RelationDefinition>;
 
 
@@ -39,6 +41,7 @@ export class ProjectConfiguration {
 
         // console.log('categories', categories); TODO if this is enabled, we see output in tests not enabled with fit, which means usually that we have code running outside describe blocks
 
+        this.categoryTree = categories;
         this.categoriesArray = treeToCategoryArray(categories) || [];
         this.relations = relations || [];
         this.categoriesMap = namedArrayToNamedMap(treeToCategoryArray(categories));
@@ -63,6 +66,13 @@ export class ProjectConfiguration {
     }
 
 
+    public getCategoryTree(): Tree<Category> {
+
+        return this.categoryTree;
+    }
+
+
+    // TODO deprecated, use function above
     public getCategoriesTree(): Map<Category> {
 
         return filter(on(Category.PARENT_CATEGORY, isUndefined), this.getCategoriesMap());

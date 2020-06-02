@@ -27,6 +27,7 @@ describe('buildRawProjectConfiguration', () => {
         return namedArrayToNamedMap(buildRawArray(a, b, ...rest));
     }
 
+
     it('auto-select parent if child defined',  () => {
 
         const builtInCategories: Map<BuiltinCategoryDefinition> = {

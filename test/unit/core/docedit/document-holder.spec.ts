@@ -21,23 +21,26 @@ describe('DocumentHolder', () => {
     beforeEach(() => {
 
         const pconf = new ProjectConfiguration([
-            {Trench: {
+            [
+                [{
                 name: 'Trench',
                 groups: [{ name: 'stem', fields: [
                     { name: 'id' },
                     { name: 'category' },
                     { name: 'emptyfield' }
                 ]}]
-            }, Find: {
-                name: 'Find',
-                groups: [{name: 'stem', fields: [
-                    { name: 'id' },
-                    { name: 'category' },
-                    { name: 'unsignedIntField', inputType: 'unsignedInt' },
-                    { name: 'unsignedFloatField', inputType: 'unsignedFloat' },
-                    { name: 'floatField', inputType: 'float' }
-                ]}]
-            }} as any
+                },[]],
+                [{
+                    name: 'Find',
+                    groups: [{name: 'stem', fields: [
+                        { name: 'id' },
+                        { name: 'category' },
+                        { name: 'unsignedIntField', inputType: 'unsignedInt' },
+                        { name: 'unsignedFloatField', inputType: 'unsignedFloat' },
+                        { name: 'floatField', inputType: 'float' }
+                    ]}]
+                },[]]
+            ] as any
             ,[
                 {
                     name: 'isFoundOn',

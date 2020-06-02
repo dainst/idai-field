@@ -40,7 +40,7 @@ export function makeCategoriesTree(categories: any): Tree<Category> {
 }
 
 
-function emptyList() {
+export function emptyList() { // TODO review see above, and other usages
 
     return [];
 }

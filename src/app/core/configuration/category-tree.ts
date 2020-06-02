@@ -1,7 +1,8 @@
-import {flatten, Map, to} from 'tsfun';
+import {flatten, Map, to, pairWith} from 'tsfun';
 import {Category} from './model/category';
 import {Tree} from './tree';
 import {namedArrayToNamedMap} from '../util/named';
+import {emptyList} from './boot/make-categories-tree';
 
 
 export function treeToCategoryArray(t: Tree<Category>): Array<Category> {

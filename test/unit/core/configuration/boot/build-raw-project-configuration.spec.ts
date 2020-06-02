@@ -9,18 +9,23 @@ import {ValuelistDefinition} from '../../../../../src/app/core/configuration/mod
 import {Groups} from '../../../../../src/app/core/configuration/model/group';
 import InputType = FieldDefinition.InputType;
 import {byName, Named, namedArrayToNamedMap,} from '../../../../../src/app/core/util/named';
-
-
-const categories = left;
-
-function buildRaw(a: any, b: any, ...rest: any[]) {
-
-    const raw = buildRawProjectConfiguration(a, b, ...rest);
-    return namedArrayToNamedMap(categories(raw));
-}
+import {treeToCategoryArray} from '../../../../../src/app/core/configuration/category-tree';
 
 
 describe('buildRawProjectConfiguration', () => {
+
+    const categories = left;
+
+    function buildRawArray(a: any, b: any, ...rest: any[]) {
+
+        const raw = buildRawProjectConfiguration(a, b, ...rest);
+        return treeToCategoryArray(categories(raw));
+    }
+
+    function buildRaw(a: any, b: any, ...rest: any[]) {
+
+        return namedArrayToNamedMap(buildRawArray(a, b, ...rest));
+    }
 
     it('auto-select parent if child defined',  () => {
 
@@ -1242,9 +1247,9 @@ describe('buildRawProjectConfiguration', () => {
 
         const orderConf = { categories: ['C', 'A'] };
 
-        const result = categories(buildRawProjectConfiguration(
+        const result = buildRawArray(
             builtInCategories, {}, customCategories, {}, {}, {}, [], {}, {}, {}, orderConf
-        )).map(to(Named.NAME));
+        ).map(to(Named.NAME));
 
         expect(result).toEqual(['C', 'A', 'B']);
     });

@@ -29,7 +29,7 @@ import {makeCategoriesTree} from './make-categories-tree';
 import {RawProjectConfiguration} from '../project-configuration';
 import {Category} from '../model/category';
 import {Group, Groups} from '../model/group';
-import {Labelled, Named, sortNamedArray} from '../../util/named';
+import {Labelled, Named} from '../../util/named';
 import {RelationsUtil} from '../relations-utils';
 import {CategoryDefinition} from '../model/category-definition';
 import {ProjectCategoriesHelper} from '../project-categories-helper';
@@ -38,7 +38,7 @@ import {ModelUtil} from '../../model/model-util';
 import Label = ModelUtil.Label;
 import {FieldDefinition} from '../model/field-definition';
 import {mapLeafs, mapTree, Tree} from '../tree';
-import {treeToCategoryArray, treeToCategoryMap} from '../category-tree';
+import {treeToCategoryMap} from '../category-tree';
 import {sortArray} from '../../util/sort-array';
 
 
@@ -95,13 +95,15 @@ function processCategories(orderConfiguration: any,
                            validateFields: any,
                            languageConfiguration: any,
                            searchConfiguration: any,
-                           relations: Array<RelationDefinition>): Mapping<Map<CategoryDefinition>, Array<Category>> {
+                           relations: Array<RelationDefinition>): Mapping<Map<CategoryDefinition>, Tree<Category>> {
 
     const sortCategoryGroups = updateObject(Category.GROUPS, sortGroups(Groups.DEFAULT_ORDER));
 
+    // TODO make isGeometryCategory take Tree as param
     const isGeometryCategory = (categoriesTree: Tree<Category>, category: Name) => ProjectCategoriesHelper
         .isGeometryCategory(treeToCategoryMap(categoriesTree), category);
 
+    // TODO inline into composition below
     const adjustCategoriesTree = compose(
         mapTree(putRelationsIntoGroups(relations)),
         mapTree(sortCategoryGroups),
@@ -115,8 +117,7 @@ function processCategories(orderConfiguration: any,
         validateFields,
         makeCategoriesTree,
         adjustCategoriesTree,
-        orderCategories(orderConfiguration?.categories),
-        treeToCategoryArray);
+        orderCategories(orderConfiguration?.categories));
 }
 
 

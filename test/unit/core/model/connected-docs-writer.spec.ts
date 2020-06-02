@@ -9,7 +9,7 @@ import {ProjectConfiguration} from '../../../../src/app/core/configuration/proje
 describe('ConnectedDocsWriter', () => {
 
     const projectConfiguration = new ProjectConfiguration(
-        [{} as any,
+        [[] as any,
          [
             {
                 name: 'BelongsTo',

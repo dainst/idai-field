@@ -7,9 +7,11 @@ import {RelationDefinition} from './model/relation-definition';
 import {Named, namedArrayToNamedMap} from '../util/named';
 import {RelationsUtil} from './relations-utils';
 import {ProjectCategoriesHelper} from './project-categories-helper';
+import {Tree} from './tree';
+import {treeToCategoryArray} from './category-tree';
 
 
-export type RawProjectConfiguration = Pair<Array<Category>, Array<RelationDefinition>>;
+export type RawProjectConfiguration = Pair<Tree<Category>, Array<RelationDefinition>>;
 
 
 /**
@@ -35,9 +37,11 @@ export class ProjectConfiguration {
 
     constructor([categories, relations]: RawProjectConfiguration) {
 
-        this.categoriesArray = categories || [];
+        // console.log('categories', categories); TODO if this is enabled, we see output in tests not enabled with fit, which means usually that we have code running outside describe blocks
+
+        this.categoriesArray = treeToCategoryArray(categories) || [];
         this.relations = relations || [];
-        this.categoriesMap = namedArrayToNamedMap(categories);
+        this.categoriesMap = namedArrayToNamedMap(treeToCategoryArray(categories));
     }
 
 

@@ -1,4 +1,7 @@
-import {treeToCategoryArray, treeToCategoryMap} from '../../../../src/app/core/configuration/category-tree';
+import {
+    treeToCategoryArray,
+    treeToCategoryMap
+} from '../../../../src/app/core/configuration/category-tree';
 
 
 describe('CategoryTree', () => {

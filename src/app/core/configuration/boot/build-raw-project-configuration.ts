@@ -1,7 +1,7 @@
 import {
     cond, flow, includedIn, isDefined, isNot, Mapping, Map, on,
     subtract, undefinedOrEmpty, identity, compose, Pair, dissoc,
-    pairWith, prune, filter, update as updateObject, flatten, to, separate, is
+    pairWith, prune, filter, update as updateObject
 } from 'tsfun';
 import {assoc, update, lookup, map, reduce} from 'tsfun/associative';
 import {clone} from 'tsfun/struct';
@@ -33,7 +33,6 @@ import {Labelled, Named} from '../../util/named';
 import {RelationsUtil} from '../relations-utils';
 import {CategoryDefinition} from '../model/category-definition';
 import {ProjectCategoriesHelper} from '../project-categories-helper';
-import {Name} from '../../constants';
 import {ModelUtil} from '../../model/model-util';
 import Label = ModelUtil.Label;
 import {FieldDefinition} from '../model/field-definition';

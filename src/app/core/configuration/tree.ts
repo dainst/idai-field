@@ -20,3 +20,12 @@ export function mapTree(...args: any[]): any {
         ? inner(args[0])(args[1])
         : inner(args[0])
 }
+
+
+export function mapLeafs<A>(f: Mapping<Tree<A>>) {
+
+    return (t: Tree<A>): Tree<A> => {
+
+        return f(t).map(([node,leafs]) => [node,mapLeafs(f)(leafs)]);
+    }
+}

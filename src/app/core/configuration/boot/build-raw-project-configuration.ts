@@ -29,15 +29,16 @@ import {makeCategoriesTree} from './make-categories-tree';
 import {RawProjectConfiguration} from '../project-configuration';
 import {Category} from '../model/category';
 import {Group, Groups} from '../model/group';
-import {Labelled, namedArrayToNamedMap, sortNamedArray} from '../../util/named';
+import {Labelled, sortNamedArray} from '../../util/named';
 import {RelationsUtil} from '../relations-utils';
 import {CategoryDefinition} from '../model/category-definition';
 import {ProjectCategoriesHelper} from '../project-categories-helper';
-import {mapCategoriesTree} from './map-categories-tree';
 import {Name} from '../../constants';
 import {ModelUtil} from '../../model/model-util';
 import Label = ModelUtil.Label;
 import {FieldDefinition} from '../model/field-definition';
+import {mapTree, Tree} from '../tree';
+import {treeToCategoryArray, treeToCategoryMap} from '../category-tree';
 
 
 const CATEGORIES = 'categories';
@@ -97,13 +98,13 @@ function processCategories(orderConfiguration: any,
 
     const sortCategoryGroups = updateObject(Category.GROUPS, sortGroups(Groups.DEFAULT_ORDER));
 
-    const isGeometryCategory = (categoriesTree: Array<Category>, category: Name) => ProjectCategoriesHelper
-        .isGeometryCategory(categoriesTreeToCategoriesMap(categoriesTree), category);
+    const isGeometryCategory = (categoriesTree: Tree<Category>, category: Name) => ProjectCategoriesHelper
+        .isGeometryCategory(treeToCategoryMap(categoriesTree), category);
 
     const adjustCategoriesTree = compose(
-        mapCategoriesTree(putRelationsIntoGroups(relations)),
-        mapCategoriesTree(sortCategoryGroups),
-        mapCategoriesTree(setGroupLabels(languageConfiguration.groups || {})),
+        mapTree(putRelationsIntoGroups(relations)),
+        mapTree(sortCategoryGroups),
+        mapTree(setGroupLabels(languageConfiguration.groups || {})),
         setGeometriesInGroups(languageConfiguration, isGeometryCategory));
 
     return compose(
@@ -113,38 +114,17 @@ function processCategories(orderConfiguration: any,
         validateFields,
         makeCategoriesTree,
         adjustCategoriesTree,
-        categoriesTreeToCategoriesArray,
+        treeToCategoryArray,
         orderCategories(orderConfiguration?.categories));
 }
 
 
-function categoriesTreeToCategoriesArray(categoriesTree: Array<Category>): Array<Category> {
-
-    const categories = [];
-    for (let parent of categoriesTree) {
-        for (let child of parent.children) {
-            categories.push(child);
-        }
-        categories.push(parent);
-    }
-    return categories;
-}
-
-
-
-function categoriesTreeToCategoriesMap(topLevelCategories: Array<Category>): Map<Category> {
-
-    const children: Array<Category> = flatten(topLevelCategories.map(to(Category.CHILDREN)));
-    return namedArrayToNamedMap(topLevelCategories.concat(children));
-}
-
-
 function setGeometriesInGroups(languageConfiguration: any,
-                               isGeometryCategory: (categoriesTree: Array<Category>, categoryName: string) => boolean) {
+                               isGeometryCategory: (categoriesTree: Tree<Category>, categoryName: string) => boolean) {
 
-    return (categoriesTree: Array<Category>) => {
+    return (categoriesTree: Tree<Category>) => {
 
-        return mapCategoriesTree(category => {
+        return mapTree((category: Category) => {
 
             if (isGeometryCategory(categoriesTree, category.name)) {
                 adjustGeometryCategory(

@@ -10,7 +10,7 @@ export function treeToCategoryArray(t: Tree<Category>): Array<Category> {
 
         const m = [];
         for (let [node,tree] of t) {
-            node.children = treeToCategoryArray(tree);
+            node.children = go(tree);
             m.push(node);
         }
         return m;

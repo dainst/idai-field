@@ -3,9 +3,10 @@ import {Groups} from '../../../../../src/app/core/configuration/model/group';
 import {FieldDefinition} from '../../../../../src/app/core/configuration/model/field-definition';
 import {Category} from '../../../../../src/app/core/configuration/model/category';
 import {makeCategoriesTree} from '../../../../../src/app/core/configuration/boot/make-categories-tree';
-import {byName, namedArrayToNamedMap} from '../../../../../src/app/core/util/named';
+import {byName} from '../../../../../src/app/core/util/named';
 import InputType = FieldDefinition.InputType;
 import {MDInternal} from '../../../../../src/app/components/messages/md-internal';
+import {treeToCategoryMap} from '../../../../../src/app/core/configuration/category-tree';
 
 
 /**
@@ -31,7 +32,7 @@ describe('makeCategoriesTree', () => {
             }
         };
 
-        const categoriesMap = namedArrayToNamedMap(makeCategoriesTree(confDef));
+        const categoriesMap = treeToCategoryMap(makeCategoriesTree(confDef));
 
         expect(categoriesMap[P].name).toEqual(P);
         expect(categoriesMap[P].children[0].name).toEqual(A);
@@ -75,7 +76,7 @@ describe('makeCategoriesTree', () => {
             }
         };
 
-        const categoriesMap = namedArrayToNamedMap(makeCategoriesTree(confDef));
+        const categoriesMap = treeToCategoryMap(makeCategoriesTree(confDef));
         const categoryA = categoriesMap[P].children.find(category => category.name === A)!;
         const categoryB = categoriesMap[P].children.find(category => category.name === B)!;
 
@@ -111,7 +112,7 @@ describe('makeCategoriesTree', () => {
             }
         };
 
-        const categoriesMap = namedArrayToNamedMap(makeCategoriesTree(confDef));
+        const categoriesMap = treeToCategoryMap(makeCategoriesTree(confDef));
 
         expect(categoriesMap[T].groups[Groups.STEM].fields[0].name).toEqual(FieldResource.IDENTIFIER);
         expect(categoriesMap[T].groups[Groups.STEM].fields[1].name).toEqual(FieldResource.SHORTDESCRIPTION);

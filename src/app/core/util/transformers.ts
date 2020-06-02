@@ -2,7 +2,7 @@ import {compose, Map} from 'tsfun';
 import {map} from 'tsfun/associative';
 import {assoc} from 'tsfun/associative';
 import {get} from 'tsfun/struct';
-import {assocReduce} from './utils';
+import {assocReduce} from './assoc-reduce';
 
 
 // @author Daniel de Oliveira

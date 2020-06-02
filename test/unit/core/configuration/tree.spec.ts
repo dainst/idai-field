@@ -54,7 +54,7 @@ describe('Tree', () => {
                 ]]
             ];
 
-        const result = mapLeafs(reverse)(t);
+        const result = mapLeafs(reverse, t);
         expect(equal(result, exp)).toBeTruthy();
     });
 });

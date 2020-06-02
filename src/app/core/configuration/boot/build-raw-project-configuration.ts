@@ -1,7 +1,7 @@
 import {
     cond, flow, includedIn, isDefined, isNot, Mapping, Map, on,
     subtract, undefinedOrEmpty, identity, compose, Pair, dissoc,
-    pairWith, prune, filter, update as updateObject, flatten, to
+    pairWith, prune, filter, update as updateObject, flatten, to, separate, is
 } from 'tsfun';
 import {assoc, update, lookup, map, reduce} from 'tsfun/associative';
 import {clone} from 'tsfun/struct';
@@ -29,7 +29,7 @@ import {makeCategoriesTree} from './make-categories-tree';
 import {RawProjectConfiguration} from '../project-configuration';
 import {Category} from '../model/category';
 import {Group, Groups} from '../model/group';
-import {Labelled, sortNamedArray} from '../../util/named';
+import {Labelled, Named, sortNamedArray} from '../../util/named';
 import {RelationsUtil} from '../relations-utils';
 import {CategoryDefinition} from '../model/category-definition';
 import {ProjectCategoriesHelper} from '../project-categories-helper';
@@ -37,8 +37,9 @@ import {Name} from '../../constants';
 import {ModelUtil} from '../../model/model-util';
 import Label = ModelUtil.Label;
 import {FieldDefinition} from '../model/field-definition';
-import {mapTree, Tree} from '../tree';
+import {mapLeafs, mapTree, Tree} from '../tree';
 import {treeToCategoryArray, treeToCategoryMap} from '../category-tree';
+import {sortArray} from '../../util/sort-array';
 
 
 const CATEGORIES = 'categories';
@@ -114,8 +115,8 @@ function processCategories(orderConfiguration: any,
         validateFields,
         makeCategoriesTree,
         adjustCategoriesTree,
-        treeToCategoryArray,
-        orderCategories(orderConfiguration?.categories));
+        orderCategories(orderConfiguration?.categories),
+        treeToCategoryArray);
 }
 
 
@@ -193,13 +194,9 @@ function sortGroups(defaultOrder: string[]) {
 
 function orderCategories(categoriesOrder: string[] = []) {
 
-    return (categories: Array<Category>): Array<Category> => {
+    return (categories: Tree<Category>): Tree<Category> => {
 
-        return flow(
-            categories,
-            sortNamedArray(categoriesOrder),
-            map(update(Category.CHILDREN, orderCategories(categoriesOrder)))
-        ) as any;
+        return mapLeafs(sortArray(categoriesOrder, [0,Named.NAME]), categories) as Tree<Category>;
     }
 }
 

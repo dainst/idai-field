@@ -22,10 +22,7 @@ export function mapTree(...args: any[]): any {
 }
 
 
-export function mapLeafs<A>(f: Mapping<Tree<A>>) {
+export function mapLeafs<A>(f: Mapping<Tree<A>>, t: Tree<A>): Tree<A> {
 
-    return (t: Tree<A>): Tree<A> => {
-
-        return f(t).map(([node,leafs]) => [node,mapLeafs(f)(leafs)]);
-    }
+    return f(t).map(([node,leafs]) => [node,mapLeafs(f, leafs)]);
 }

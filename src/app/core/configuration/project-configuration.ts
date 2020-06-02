@@ -66,13 +66,15 @@ export class ProjectConfiguration {
     }
 
 
+    // TODO use in project-configuration.component instead of building a treeList there
     public getCategoryTree(): Tree<Category> {
 
         return this.categoryTree;
     }
 
 
-    // TODO deprecated, use function above
+    // TODO deprecated, use functions above
+    // this here it seems we use only to access 'Image', which can be done via getCategoriesMap
     public getCategoriesTree(): Map<Category> {
 
         return filter(on(Category.PARENT_CATEGORY, isUndefined), this.getCategoriesMap());

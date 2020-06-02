@@ -21,17 +21,6 @@ export /* package-private */ module ProjectCategoriesHelper {
 
     export const UNKNOWN_CATEGORY_ERROR = 'ProjectCategories.Errors.UnknownCategory';
 
-    // TODO deprecated
-    // export function isGeometryCategory(categoriesMap: Map<Category>,
-    //                                    categoryName: string): boolean {
-    //
-    //     return !getImageCategoryNames(categoriesMap).includes(categoryName)
-    //         && !isSubcategory(categoriesMap, categoryName, 'Inscription')
-    //         && !isSubcategory(categoriesMap, categoryName, 'Type')
-    //         && !isSubcategory(categoriesMap, categoryName, 'TypeCatalog')
-    //         && !isProjectCategory(categoryName);
-    // }
-
 
     export function isGeometryCategory(categoryTree: Tree<Category>, // TODO make Tree<Named>
                                        category: Name): boolean {

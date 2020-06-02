@@ -22,26 +22,26 @@ export interface ConstraintIndex {
 
     containIndex: {
         [path: string]: {
-            [resourceId: string]: Array<Resource.Id>
+            [resourceId: string]: { [id: string]: true };
         }
     };
 
     matchIndex: {
         [path: string]: {
-            [searchTerm: string]: Array<Resource.Id>
+            [searchTerm: string]: { [id: string]: true };
         }
     };
 
     existIndex: {
         [path: string]: {
             [existence: string]:  // KNOWN | UNKNOWN
-                Array<Resource.Id>
+                { [id: string]: true }
         }
     };
 
     linksIndex: {
         [path: string]: {
-            [resourceId: string]: Array<Resource.Id>
+            [resourceId: string]: { [id: string]: true }
         }
     };
 }
@@ -226,7 +226,9 @@ export module ConstraintIndex {
     function getMatchesForTerm(index: ConstraintIndex, definition: IndexDefinition,
                                matchTerm: string): Array<Resource.Id>|undefined {
 
-        return getIndex(index, definition)[definition.path][matchTerm];
+        const result = getIndex(index, definition)[definition.path][matchTerm];
+        if (!result) return undefined;
+        return Object.keys(result);
     }
 
 
@@ -380,14 +382,16 @@ export module ConstraintIndex {
 
     function addToIndex(index: any, doc: Document, path: string, target: string) {
 
-        if (!index[path][target]) index[path][target] = [];
-        index[path][target] = addUniquely(index[path][target], doc.resource.id);
+        if (!index[path][target]) index[path][target] = {};
+        index[path][target][doc.resource.id] = true;
     }
 
 
     function addToLinksIndex(index: any, doc: Document, path: string, targets: Array<Resource.Id>) {
 
-        index[path][doc.resource.id] = targets.slice();
+        const ts = {};
+        for (let t of targets) ts[t] = true;
+        index[path][doc.resource.id] = ts;
     }
 
 
@@ -399,7 +403,7 @@ export module ConstraintIndex {
             delete path[document.resource.id];
         } else {
             Object.keys(path).forEach(key => {
-                path[key] = path[key].filter(id => id !== document.resource.id);
+                delete path[key][document.resource.id];
             });
         }
     }

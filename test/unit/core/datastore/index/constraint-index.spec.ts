@@ -77,7 +77,7 @@ describe('ConstraintIndex', () => {
         docWithMultipleConstraintTargets();
 
         expect(ConstraintIndex.get(ci, 'isRecordedIn:contain', '2')).toEqual(['1']);
-        expect(ConstraintIndex.get(ci,'isRecordedIn:contain', '3')).toEqual(['1']);
+        expect(ConstraintIndex.get(ci, 'isRecordedIn:contain', '3')).toEqual(['1']);
     });
 
 

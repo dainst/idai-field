@@ -1,26 +1,24 @@
 import {cond, defined, flow, isNot, Map, Mapping, on,
-    throws, isUndefined, copy, separate, dissoc} from 'tsfun';
-import {assoc, update, lookup, map, reduce} from 'tsfun/associative';
+    isUndefined, copy, separate, dissoc, pairWith, val} from 'tsfun';
+import {assoc, update, map, reduce} from 'tsfun/associative';
 import {Category} from '../model/category';
 import {CategoryDefinition} from '../model/category-definition';
 import {Group, Groups} from '../model/group';
-import {makeLookup} from '../../util/transformers';
 import {FieldDefinition} from '../model/field-definition';
 import {clone} from '../../util/object-util';
-import {mapToNamedArray, Named} from '../../util/named';
+import {mapToNamedArray} from '../../util/named';
 import {MDInternal} from '../../../components/messages/md-internal';
-import {mapCategoriesTree} from './map-categories-tree';
+import {mapTree, Tree} from '../tree';
 
 
 const TEMP_FIELDS = 'fields';
-
 
 /**
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  * @author Sebastian Cuy
  */
-export function makeCategoriesTree(categories: any): Array<Category> {
+export function makeCategoriesTree(categories: any): Tree<Category> {
 
     const [parentDefs, childDefs] =
         separate(on(CategoryDefinition.PARENT, isNot(defined)), categories);
@@ -29,16 +27,22 @@ export function makeCategoriesTree(categories: any): Array<Category> {
         parentDefs,
         map(buildCategoryFromDefinition),
         map(update(TEMP_FIELDS, ifUndefinedSetGroupTo(Groups.PARENT))),
-        makeLookup(Named.NAME)
+        mapToNamedArray,
+        map(pairWith(emptyList /* TODO review */))
     );
 
     return flow(
         childDefs,
         reduce(addChildCategory, parentCategories),
-        mapToNamedArray,
-        mapCategoriesTree(fillGroups),
-        mapCategoriesTree(dissoc(TEMP_FIELDS)),
+        mapTree(fillGroups),
+        mapTree(dissoc(TEMP_FIELDS)),
     );
+}
+
+
+function emptyList() {
+
+    return [];
 }
 
 
@@ -69,16 +73,21 @@ function makeGroupsMap(fields: Array<FieldDefinition>): Map<Group> {
 }
 
 
-function addChildCategory(categoriesMap: Map<Category>, childDefinition: CategoryDefinition): Map<Category> {
+function addChildCategory(categoryTree: Tree<Category>,
+                          childDefinition: CategoryDefinition): Tree<Category> {
 
-    return flow(childDefinition.parent,
-        lookup(categoriesMap),
-        cond(
-            isUndefined,
-            throws(MDInternal.PROJECT_CONFIGURATION_ERROR_GENERIC)
-        ),
-        addChildCategoryToParent(categoriesMap, childDefinition)
-    );
+    const found = categoryTree
+        .find(([category,_]) => category.name === childDefinition.parent);
+    if (!found) throw MDInternal.PROJECT_CONFIGURATION_ERROR_GENERIC;
+    const [category,tree] = found;
+
+    const childCategory = buildCategoryFromDefinition(childDefinition);
+    (childCategory as any)[TEMP_FIELDS] = makeChildFields(category, childCategory);
+
+    tree.push([childCategory,[]])
+    category.children.push(childCategory);    // TODO redundant, this is done in treeToCategoriesArray
+    childCategory.parentCategory = category;  // TODO this we also could do there
+    return categoryTree;
 }
 
 
@@ -90,20 +99,6 @@ function sortGroupFields(group: Group): Group {
     return clonedGroup;
 }
 
-
-function addChildCategoryToParent(categoriesMap: Map<Category>, childDefinition: CategoryDefinition) {
-
-    return (parentCategory: Category): Map<Category> => {
-
-        const childCategory = buildCategoryFromDefinition(childDefinition);
-        (childCategory as any)[TEMP_FIELDS] = makeChildFields(parentCategory, childCategory);
-
-        parentCategory.children = parentCategory.children.concat(childCategory);
-        childCategory.parentCategory = parentCategory;
-
-        return categoriesMap;
-    }
-}
 
 
 function buildCategoryFromDefinition(definition: CategoryDefinition): Category {

@@ -69,3 +69,6 @@ declare global {
     require: any;
   }
 }
+
+// This is necessary to make syncing resources with attachments work in development/test environment
+if (typeof window !== 'undefined') process['browser'] = true;

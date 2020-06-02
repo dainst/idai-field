@@ -112,7 +112,6 @@ function processCategories(orderConfiguration: any,
 }
 
 
-// TODO review function
 function setGeometriesInGroups(languageConfiguration: any) {
 
     return (categoriesTree: Tree<Category>) => {
@@ -122,12 +121,12 @@ function setGeometriesInGroups(languageConfiguration: any) {
             if (ProjectCategoriesHelper.isGeometryCategory(categoriesTree, category.name)) {
                 adjustGeometryCategory(
                     category,
-                    languageConfiguration && languageConfiguration.other && languageConfiguration.other['geometry']
+                    languageConfiguration.other?.['geometry']
                         ? languageConfiguration.other['geometry']
                         : undefined);
             }
             return category;
-        })(categoriesTree);
+        }, categoriesTree);
     }
 }
 

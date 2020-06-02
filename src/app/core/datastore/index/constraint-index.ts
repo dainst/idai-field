@@ -5,7 +5,6 @@ import {Document, Resource} from 'idai-components-2';
 import {Category} from '../../configuration/model/category';
 import {FieldDefinition} from '../../configuration/model/field-definition';
 import {clone} from '../../util/object-util';
-import {addUniquely} from './index-helpers';
 
 
 export interface IndexDefinition {

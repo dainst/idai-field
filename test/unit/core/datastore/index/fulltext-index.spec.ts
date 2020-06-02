@@ -21,16 +21,6 @@ describe('FulltextIndex', () => {
     }
 
 
-    function indexItem(id, identifier?): IndexItem {
-
-        if (!identifier) identifier = 'identifier' + id;
-        return {
-            id: id,
-            identifier: identifier
-        };
-    }
-
-
     beforeEach(() => {
 
         fi = {};

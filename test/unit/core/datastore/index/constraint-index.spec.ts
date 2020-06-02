@@ -27,14 +27,6 @@ describe('ConstraintIndex', () => {
     });
 
 
-    // @deprecated, use IndexItem.from directly
-    function indexItem(id, identifier?): IndexItem {
-
-        if (!identifier) identifier = 'identifier' + id;
-        return { id: id, identifier: identifier };
-    }
-
-
     it('multiple docs are recorded in another', () => {
 
         const docs = [

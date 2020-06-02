@@ -5,14 +5,13 @@ import {Document, Resource} from 'idai-components-2';
 import {ResultSets} from './result-sets';
 import {Category} from '../../configuration/model/category';
 import {toArray} from '../../util/utils';
-import {addUniquely} from './index-helpers';
 
 
 export interface FulltextIndex {
 
     [category: string]: {
         [term: string]:
-            Array<Resource.Id>
+            { [id: string]: true }
     }
 }
 
@@ -35,9 +34,9 @@ export module FulltextIndex {
 
         if (!skipRemoval) remove(index, document);
         if (!index[document.resource.category]) {
-            index[document.resource.category] = { '*' : [] } ;
+            index[document.resource.category] = { '*' : {} } ;
         }
-        index[document.resource.category]['*'] = addUniquely(index[document.resource.category]['*'], document.resource.id);
+        index[document.resource.category]['*'][document.resource.id] = true;
 
         flow(
             getFieldsToIndex(categoriesMap, document.resource.category),
@@ -56,7 +55,7 @@ export module FulltextIndex {
         Object.keys(index).forEach(category =>
             Object.keys(index[category])
                 .forEach(term => {
-                    index[category][term] = index[category][term].filter(_ => _ !== document.resource.id);
+                    delete index[category][term][document.resource.id];
                 }))
     }
 
@@ -109,8 +108,8 @@ export module FulltextIndex {
 
             tokenAsCharArray.reduce((accumulator, letter) => {
                 accumulator += letter;
-                if (!categoryIndex[accumulator]) categoryIndex[accumulator] = [];
-                categoryIndex[accumulator] = addUniquely(categoryIndex[accumulator], document.resource.id);
+                if (!categoryIndex[accumulator]) categoryIndex[accumulator] = {};
+                categoryIndex[accumulator][document.resource.id] = true;
                 return accumulator;
             }, '');
         }
@@ -175,7 +174,7 @@ export module FulltextIndex {
 
         if (!index[category] || !index[category][s]) return resultSets;
 
-        ResultSets.combine(resultSets, index[category][s]);
+        ResultSets.combine(resultSets, Object.keys(index[category][s]));
         return resultSets;
     }
 }

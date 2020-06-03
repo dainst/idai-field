@@ -82,7 +82,7 @@ export class ImageUploader {
         if (wldFiles.length) {
             uploadResult.messages = uploadResult.messages.concat(await this.uploadWldFiles(wldFiles));
         }
-        
+
         return uploadResult;
     }
 
@@ -104,8 +104,8 @@ export class ImageUploader {
 
     private async chooseCategory(fileCount: number, depictsRelationTarget?: Document): Promise<Category> {
 
-        const imageCategory: Category = this.projectConfiguration.getCategoriesTree()['Image'];
-        if ((imageCategory.children && imageCategory.children.length > 0)
+        const imageCategory = this.projectConfiguration.getCategory('Image');
+        if ((imageCategory.children.length > 0)
                 || fileCount >= 100 || depictsRelationTarget) {
             const modal: NgbModalRef = this.modalService.open(
                 ImageCategoryPickerModalComponent, { backdrop: 'static', keyboard: false }
@@ -180,10 +180,10 @@ export class ImageUploader {
             }
             unmatchedWldFiles.push(file.name);
         }
-        
+
         (unmatchedWldFiles.length > 0)
             && messages.push([M.IMAGES_ERROR_UNMATCHED_WLD_FILES, unmatchedWldFiles.join(', ')]);
-        
+
         const matchedFiles = files.length - unmatchedWldFiles.length;
         (matchedFiles == 1) && messages.push([M.IMAGES_SUCCESS_WLD_FILE_UPLOADED, matchedFiles.toString()]);
         (matchedFiles > 1) && messages.push([M.IMAGES_SUCCESS_WLD_FILES_UPLOADED, matchedFiles.toString()]);

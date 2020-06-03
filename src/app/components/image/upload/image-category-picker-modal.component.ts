@@ -25,7 +25,7 @@ export class ImageCategoryPickerModalComponent {
     constructor(public activeModal: NgbActiveModal,
                 projectConfiguration: ProjectConfiguration) {
 
-        this.imageCategory = projectConfiguration.getCategoriesTree()['Image'];
+        this.imageCategory = projectConfiguration.getCategory('Image');
     }
 
 

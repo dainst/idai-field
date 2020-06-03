@@ -94,7 +94,7 @@ export class ImageOverviewComponent implements OnInit {
     ngOnInit() {
 
         this.imageGrid.nrOfColumns = this.imageOverviewFacade.getNrImagesPerRow();
-        this.filterOptions = [this.projectConfiguration.getCategoriesTree()['Image']];
+        this.filterOptions = [this.projectConfiguration.getCategory('Image')];
     }
 
 

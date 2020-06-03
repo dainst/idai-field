@@ -1,4 +1,4 @@
-import {flow, to, on, isNot, empty, is, isUndefined, Pair, Map} from 'tsfun';
+import {flow, to, on, isNot, empty, is, isUndefined, Pair, Map, dissoc} from 'tsfun';
 import {map} from 'tsfun/associative';
 import {filter} from 'tsfun/collection';
 import {Category} from './model/category';
@@ -9,6 +9,7 @@ import {RelationsUtil} from './relations-utils';
 import {ProjectCategoriesHelper} from './project-categories-helper';
 import {Tree} from './tree';
 import {treeToCategoryArray} from './category-tree';
+import {Name} from '../constants';
 
 
 export type RawProjectConfiguration = Pair<Tree<Category>, Array<RelationDefinition>>;
@@ -61,24 +62,28 @@ export class ProjectConfiguration {
 
 
     // TODO introduce getCategory(name: Name) instead of accessing it by key after calling getCategoriesMap
+    // TODO make sure, here all items have children, because getCategory depends on it
     public getCategoriesMap(): Map<Category> {
 
         return this.categoriesMap;
     }
 
 
-    // TODO use in project-configuration.component instead of building a treeList there
-    public getCategoryTree(): Tree<Category> {
+    /**
+     * @return Category, including children field
+     */
+    public getCategory(category: Name): Category {
 
-        return this.categoryTree;
+        return this.getCategoriesMap()[category];
     }
 
 
-    // TODO deprecated, use functions above
-    // this here it seems we use only to access 'Image', which can be done via getCategoriesMap
-    public getCategoriesTree(): Map<Category> {
+    // TODO use in project-configuration.component instead of building a treeList there
+    public getCategoryTree(category?: Name): Tree<Category> {
 
-        return filter(on(Category.PARENT_CATEGORY, isUndefined), this.getCategoriesMap());
+        return category
+            ? this.categoryTree.filter(on([0,Named.NAME], is(category)))
+            : this.categoryTree;
     }
 
 

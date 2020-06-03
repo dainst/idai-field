@@ -43,7 +43,7 @@ export class PlusButtonComponent implements OnChanges {
     @ViewChild('popover', { static: false }) private popover: any;
 
     public selectedCategory: string|undefined;
-    public selectableCategories: Array<Category>;
+    public categoriesTreeList: Array<Category>;
 
 
     constructor(
@@ -96,17 +96,17 @@ export class PlusButtonComponent implements OnChanges {
     public reset() {
 
         this.selectedCategory = this.getButtonType() === 'singleCategory'
-            ? this.selectableCategories[0].name
+            ? this.categoriesTreeList[0].name
             : this.selectedCategory = undefined;
     }
 
 
     public getButtonType(): 'singleCategory'|'multipleCategories'|'none' {
 
-        if (this.selectableCategories.length === 0) return 'none';
+        if (this.categoriesTreeList.length === 0) return 'none';
 
-        if (this.selectableCategories.length === 1
-                && (!this.selectableCategories[0].children || this.selectableCategories[0].children.length === 0)) {
+        if (this.categoriesTreeList.length === 1
+                && (!this.categoriesTreeList[0].children || this.categoriesTreeList[0].children.length === 0)) {
             return 'singleCategory';
         }
 
@@ -163,22 +163,22 @@ export class PlusButtonComponent implements OnChanges {
 
     private initializeCategoriesTreeList(projectConfiguration: ProjectConfiguration) {
 
+        this.categoriesTreeList = [];
+
         if (this.preselectedCategory) {
             const category: Category = projectConfiguration.getCategory(this.preselectedCategory);
             if (category) {
-                this.selectableCategories = [category];
+                this.categoriesTreeList.push(category);
             } else {
                 this.messages.add([M.RESOURCES_ERROR_CATEGORY_NOT_FOUND, this.preselectedCategory]);
             }
-            return;
-        }
-
-        this.selectableCategories = [];
-        for (let category of projectConfiguration.getCategoriesArray()) {
-            if (this.isAllowedCategory(category, projectConfiguration)
-                    && (!category.parentCategory
-                        || !this.isAllowedCategory(category.parentCategory, projectConfiguration))) {
-                this.selectableCategories.push(category);
+        } else {
+            for (let category of projectConfiguration.getCategoriesArray()) {
+                if (this.isAllowedCategory(category, projectConfiguration)
+                        && (!category.parentCategory
+                            || !this.isAllowedCategory(category.parentCategory, projectConfiguration))) {
+                    this.categoriesTreeList.push(category);
+                }
             }
         }
     }

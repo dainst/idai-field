@@ -1,4 +1,4 @@
-<div *ngIf="selectableCategories && status === 'enabled'">
+<div *ngIf="categoriesTreeList && status === 'enabled'">
     <div *ngIf="getButtonType() === 'multipleCategories'"
              class="circular-button green-button"
              [ngbPopover]="newObjectMenu" #popover="ngbPopover"
@@ -13,15 +13,15 @@
              [ngbPopover]="newObjectMenu" #popover="ngbPopover"
              triggers="manual" [autoClose]="false" (click)="reset(); popover.toggle();"
              [placement]="placement">
-        <category-icon [category]="selectableCategories[0].name" size="41"></category-icon>
+        <category-icon [category]="categoriesTreeList[0].name" size="41"></category-icon>
         <div class="plus-sign-circle">
             <span class="mdi mdi-plus mdi-18px"></span>
         </div>
     </div>
 
-    <div *ngIf="getButtonType() === 'singleCategory' && (preselectedGeometryType === 'none' || !isGeometryCategory(this.selectableCategories[0].name))"
-            class="circular-button category-button" (click)="chooseCategory(selectableCategories[0])">
-        <category-icon [category]="selectableCategories[0].name" size="41"></category-icon>
+    <div *ngIf="getButtonType() === 'singleCategory' && (preselectedGeometryType === 'none' || !isGeometryCategory(this.categoriesTreeList[0].name))"
+            class="circular-button category-button" (click)="chooseCategory(categoriesTreeList[0])">
+        <category-icon [category]="categoriesTreeList[0].name" size="41"></category-icon>
         <div class="plus-sign-circle">
             <span class="mdi mdi-plus mdi-18px"></span>
         </div>
@@ -39,7 +39,7 @@
             <div class="popover-custom-title">
                 <span i18n="@@resources.plusButton.selectCategory">Bitte wählen Sie eine Kategorie aus.</span>
             </div>
-            <category-picker [categoriesTreeList]="selectableCategories"
+            <category-picker [categoriesTreeList]="categoriesTreeList"
                              (onCategoryPicked)="chooseCategory($event)"></category-picker>
         </div>
 

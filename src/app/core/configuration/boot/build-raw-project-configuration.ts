@@ -111,48 +111,43 @@ function processCategories(orderConfiguration: any,
 }
 
 
-function setGeometriesInGroups(languageConfiguration: any) {
+const setGeometriesInGroups = (languageConfiguration: any) => (categoriesTree: Tree<Category>) =>
+    mapTree(adjustCategoryGeometry(languageConfiguration, categoriesTree), categoriesTree);
 
-    return (categoriesTree: Tree<Category>) => {
 
-        return mapTree((category: Category) => {
+function adjustCategoryGeometry(languageConfiguration: any, categoriesTree: Tree<Category>) {
 
-            if (ProjectCategoriesHelper.isGeometryCategory(categoriesTree, category.name)) {
-                adjustGeometryCategory(
-                    category,
-                    languageConfiguration.other?.['geometry']
-                        ? languageConfiguration.other['geometry']
-                        : undefined);
-            }
-            return category;
-        }, categoriesTree);
+    return (category: Category /* modified in place */): Category => {
+
+        if (!ProjectCategoriesHelper.isGeometryCategory(categoriesTree, category.name)) return category;
+
+        let geometryGroup = category.groups.find(group => group.name === Groups.POSITION);
+        if (!geometryGroup) {
+            geometryGroup = Group.create(Groups.POSITION);
+            geometryGroup.label = languageConfiguration?.groups?.['position'];
+            category.groups.push(geometryGroup);
+        }
+        const geometryField: FieldDefinition = {
+            name: 'geometry',
+            group: 'position',
+            inputType: 'geometry',
+            editable: true,
+            label: 'geometry'
+        }
+        const label = languageConfiguration.other?.['geometry']
+            ? languageConfiguration.other['geometry']
+            : undefined;
+        if (label) geometryField['label'] = label;
+        geometryGroup.fields.unshift(geometryField);
+
+        return category;
     }
-}
-
-
-function adjustGeometryCategory(category: Category, label?: Label) {
-
-    let geometryGroup = category.groups.find(group => group.name === Groups.POSITION);
-    if (!geometryGroup) {
-        geometryGroup = Group.create(Groups.POSITION);
-        category.groups.push(geometryGroup);
-    }
-
-    const geometryField: FieldDefinition = {
-        name: 'geometry',
-        group: 'position',
-        inputType: 'geometry',
-        editable: true,
-        label: 'geometry'
-    }
-    if (label) geometryField['label'] = label;
-    geometryGroup.fields.unshift(geometryField);
 }
 
 
 function putRelationsIntoGroups(relations: Array<RelationDefinition>) {
 
-    return (category: Category): /* ! modified in place */ Category => {
+    return (category: Category /* modified in place */): Category => {
 
         const relDefs = RelationsUtil.getRelationDefinitions(relations, category.name);
 

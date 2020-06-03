@@ -86,6 +86,8 @@ export function buildRawProjectConfiguration(builtInCategories: Map<BuiltinCateg
 }
 
 
+const wrapCategoriesInObject = (configuration: Map<TransientCategoryDefinition>) => ({ categories: configuration, relations: [] });
+
 const asRawProjectConfiguration = ({categories, relations}: any) => ([categories, relations]);
 
 
@@ -177,13 +179,8 @@ function sortGroups(defaultOrder: string[]) {
 }
 
 
-function orderCategories(categoriesOrder: string[] = []) {
-
-    return (categories: Tree<Category>): Tree<Category> => {
-
-        return mapLeafs(sortArray(categoriesOrder, [0,Named.NAME]), categories) as Tree<Category>;
-    }
-}
+const orderCategories = (categoriesOrder: string[] = []) => (categories: Tree<Category>): Tree<Category> =>
+    mapLeafs(sortArray(categoriesOrder, [0,Named.NAME]), categories) as Tree<Category>;
 
 
 function setGroupLabels(groupLabels: Map<string>) {
@@ -220,12 +217,6 @@ function addExtraFieldsOrder(orderConfiguration: any) {
 
         return categories;
     }
-}
-
-
-function wrapCategoriesInObject(configuration: Map<TransientCategoryDefinition>) {
-
-    return { categories: configuration, relations: [] }
 }
 
 

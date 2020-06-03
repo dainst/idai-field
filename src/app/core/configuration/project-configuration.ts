@@ -74,15 +74,11 @@ export class ProjectConfiguration {
     }
 
 
-    public getCategoryTree(categoryOrCategories?: Name|Array<Name>): Tree<Category> {
+    public getCategoryTree(...selectedTopLevelCategories: Array<Name>): Tree<Category> {
 
-        return !categoryOrCategories
+        return selectedTopLevelCategories.length === 0
             ? this.categoryTree
-            : this.categoryTree
-                .filter(on([0,Named.NAME],
-                    isArray(categoryOrCategories)
-                        ? includedIn(categoryOrCategories as Array<Name>)
-                        : is(categoryOrCategories)));
+            : this.categoryTree.filter(on([0,Named.NAME], includedIn(selectedTopLevelCategories)));
     }
 
 

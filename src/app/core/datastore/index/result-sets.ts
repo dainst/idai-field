@@ -35,7 +35,6 @@ export module ResultSets {
     }
 
 
-    // TODO make function pure
     export function combine<T>(resultSets: ResultSets<T>,
                                items: Array<T>,
                                subtract: undefined|true = undefined): void {

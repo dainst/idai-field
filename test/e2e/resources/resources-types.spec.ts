@@ -87,14 +87,16 @@ describe('resources/types --', () => {
         createTypeCatalogAndType();
 
         ResourcesTypeGridPage.clickGridElement('T1');
-        browser.wait(EC.stalenessOf(ResourcesTypeGridPage.getLinkedDocumentsGrid()));
+        browser.wait(EC.stalenessOf(ResourcesTypeGridPage.getLinkedDocumentsGrid()), delays.ECWaitTime);
 
         linkWithFind();
-        browser.wait(EC.presenceOf(ResourcesTypeGridPage.getLinkedDocumentGridElement('testf1')));
+        browser.wait(EC.presenceOf(ResourcesTypeGridPage.getLinkedDocumentGridElement('testf1')),
+            delays.ECWaitTime);
 
         ResourcesPage.clickNavigationButton('TC1');
         browser.sleep(delays.shortRest);
-        browser.wait(EC.presenceOf(ResourcesTypeGridPage.getLinkedDocumentGridElement('testf1')));
+        browser.wait(EC.presenceOf(ResourcesTypeGridPage.getLinkedDocumentGridElement('testf1')),
+            delays.ECWaitTime);
 
         ResourcesTypeGridPage.getTypeBadgeText('testf1').then(text => {
             expect(text).toBe('T1');

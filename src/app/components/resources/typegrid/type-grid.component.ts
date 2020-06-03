@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, Input, OnChanges} from '@angular/core';
+import {ChangeDetectorRef, Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {SafeResourceUrl} from '@angular/platform-browser';
 import {take, flatten, set, flow, filter, map} from 'tsfun';
 import {reduce as asyncReduce} from 'tsfun/async';
@@ -18,7 +18,7 @@ import {NavigationPath} from '../../../core/resources/view/state/navigation-path
 import {RoutingService} from '../../routing-service';
 import {ProjectCategories} from '../../../core/configuration/project-categories';
 import {TabManager} from '../../../core/tabs/tab-manager';
-import {ImageRowItem, PLACEHOLDER} from '../../../core/images/row/image-row';
+import {PLACEHOLDER} from '../../../core/images/row/image-row';
 
 
 @Component({
@@ -64,7 +64,6 @@ export class TypeGridComponent extends BaseList implements OnChanges {
     public ready: boolean = false;
 
     private expandAllGroups: boolean = false;
-    private timeout: any = undefined;
 
 
     constructor(private fieldDatastore: FieldReadDatastore,
@@ -94,17 +93,17 @@ export class TypeGridComponent extends BaseList implements OnChanges {
 
         this.ready = false;
 
-        if (this.timeout) clearTimeout(this.timeout);
-
-        this.timeout = setTimeout(async () => {
-            this.mainDocument = this.getMainDocument();
+        const newMainDocument = this.getMainDocument();
+        if (newMainDocument !== this.mainDocument) {
+            this.mainDocument = newMainDocument;
             this.subtypes = await this.getSubtypes();
             this.linkedDocuments = await this.getLinkedDocuments();
-            this.images = await this.getImages();
-            this.timeout = undefined;
-            this.ready = true;
-            this.changeDetectorRef.detectChanges();
-        }, 10);
+            await this.loadImages(this.linkedDocuments);
+        }
+
+        await this.loadImages(this.documents);
+
+        this.ready = true;
     }
 
 
@@ -167,13 +166,13 @@ export class TypeGridComponent extends BaseList implements OnChanges {
     }
 
 
-    public async openResourceViewModal(document: Document) {
+    public async openResourceViewModal(document: FieldDocument) {
 
         const edited: boolean = await this.viewModalLauncher.openResourceViewModal(
             document, this.resourcesComponent
         );
 
-        if (edited) this.images = await this.getImages();
+        if (edited) this.loadImages([document], true);
     }
 
 
@@ -246,15 +245,14 @@ export class TypeGridComponent extends BaseList implements OnChanges {
     }
 
 
-    private async getImages(): Promise<{ [resourceId: string]: Array<SafeResourceUrl> }> {
+    private async loadImages(documents: Array<FieldDocument>, reload: boolean = false) {
 
-        return await asyncReduce(
-            this.documents.concat(this.linkedDocuments),
-            async (images: { [resourceId: string]: Array<SafeResourceUrl> }, document: FieldDocument) => {
-                images[document.resource.id] = await this.getLinkedImages(document);
-                return images;
-            },
-            {});
+        if (!this.images) this.images = {};
+
+        for (let document of documents) {
+            if (!reload && this.images[document.resource.id]) continue;
+            this.images[document.resource.id] = await this.getLinkedImages(document);
+        }
     }
 
 

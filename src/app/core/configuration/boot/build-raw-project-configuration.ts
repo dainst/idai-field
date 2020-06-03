@@ -33,8 +33,6 @@ import {Labelled, Named} from '../../util/named';
 import {RelationsUtil} from '../relations-utils';
 import {CategoryDefinition} from '../model/category-definition';
 import {ProjectCategoriesHelper} from '../project-categories-helper';
-import {ModelUtil} from '../../model/model-util';
-import Label = ModelUtil.Label;
 import {FieldDefinition} from '../model/field-definition';
 import {mapLeafs, mapTree, Tree} from '../tree';
 import {sortArray} from '../../util/sort-array';

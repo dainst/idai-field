@@ -2,7 +2,7 @@ import {Map, on} from 'tsfun';
 import {Comparator} from 'tsfun/by';
 import {SortUtil} from './sort-util';
 import {makeLookup, mapToArray} from './transformers';
-import {sortArray} from './sort-array';
+import {sortStructArray} from './sort-struct-array';
 
 
 // @author Daniel de Oliveira
@@ -48,7 +48,7 @@ export function sortNamedArray(order: string[]) {
 
     return <A extends (Named | Map)>(items: Array<A>): Array<A> => {
 
-        return sortArray(order, Named.NAME)(items);
+        return sortStructArray(order, Named.NAME)(items);
     }
 }
 

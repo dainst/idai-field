@@ -8,7 +8,7 @@ import {FieldDefinition} from '../model/field-definition';
 import {clone} from '../../util/object-util';
 import {mapToNamedArray} from '../../util/named';
 import {MDInternal} from '../../../components/messages/md-internal';
-import {mapTree, Tree} from '../tree';
+import {Tree} from '../tree';
 
 
 const TEMP_FIELDS = 'fields';
@@ -34,8 +34,8 @@ export function makeCategoriesTree(categories: any): Tree<Category> {
     return flow(
         childDefs,
         reduce(addChildCategory, parentCategories),
-        mapTree(fillGroups),
-        mapTree(dissoc(TEMP_FIELDS)),
+        Tree.map(fillGroups),
+        Tree.map(dissoc(TEMP_FIELDS)),
     );
 }
 

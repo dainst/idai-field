@@ -3,9 +3,9 @@ import {copy} from 'tsfun/src/collection';
 import {Category} from '../configuration/model/category';
 
 
-export function sortArray(order: string[], path: Path) {
+export function sortStructArray(order: string[], path: Path) {
 
-    return <A /* TODO should extend tsfun|struct, to support finding comparable string on path */>(items: Array<A>): Array<A> => {
+    return <S /* a struct on which we can use path */>(items: Array<S>): Array<S> => {
 
         let source = copy(items);
         let sortedCategories: Array<Category> = [];

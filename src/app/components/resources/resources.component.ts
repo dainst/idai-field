@@ -158,7 +158,8 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
     }
 
 
-    public async editDocument(document: Document|undefined, activeGroup?: string) {
+    public async editDocument(document: Document|undefined,
+                              activeGroup?: string): Promise<FieldDocument|undefined> {
 
         if (!document) throw 'Called edit document with undefined document';
 
@@ -169,6 +170,8 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
             = await this.doceditLauncher.editDocument(document, activeGroup);
         if (editedDocument) this.scrollTarget = editedDocument;
         this.isModalOpened = false;
+
+        return editedDocument;
     }
 
 

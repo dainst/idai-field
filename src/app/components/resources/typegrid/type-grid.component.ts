@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, Input, OnChanges} from '@angular/core';
+import {ChangeDetectorRef, Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {SafeResourceUrl} from '@angular/platform-browser';
 import {take, flatten, set, flow, filter, map} from 'tsfun';
 import {reduce as asyncReduce} from 'tsfun/async';
@@ -89,7 +89,7 @@ export class TypeGridComponent extends BaseList implements OnChanges {
     public setExpandAllGroups = (expand: boolean) => this.expandAllGroups = expand;
 
 
-    async ngOnChanges() {
+    async ngOnChanges(changes: SimpleChanges) {
 
         this.ready = false;
         await this.update();
@@ -119,7 +119,8 @@ export class TypeGridComponent extends BaseList implements OnChanges {
 
     public async edit(document: FieldDocument) {
 
-        await this.resourcesComponent.editDocument(document);
+        const editedDocument: FieldDocument|undefined = await this.resourcesComponent.editDocument(document);
+        if (editedDocument) await this.updateLinkedDocuments();
     }
 
 
@@ -138,7 +139,7 @@ export class TypeGridComponent extends BaseList implements OnChanges {
 
         switch (action) {
             case 'edit':
-                await this.resourcesComponent.editDocument(document);
+                await this.edit(document);
                 break;
             case 'move':
                 await this.resourcesComponent.moveDocument(document);
@@ -199,15 +200,19 @@ export class TypeGridComponent extends BaseList implements OnChanges {
     private async update() {
 
         const newMainDocument: FieldDocument|undefined = this.getMainDocument();
-
         if (newMainDocument !== this.mainDocument) {
             this.mainDocument = newMainDocument;
-            this.subtypes = await this.getSubtypes();
-            this.linkedDocuments = await this.getLinkedDocuments();
-            await this.loadImages(this.linkedDocuments);
+            await this.updateLinkedDocuments();
         }
-
         await this.loadImages(this.documents);
+    }
+
+
+    private async updateLinkedDocuments() {
+
+        this.subtypes = await this.getSubtypes();
+        this.linkedDocuments = await this.getLinkedDocuments();
+        await this.loadImages(this.linkedDocuments);
     }
 
 

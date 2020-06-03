@@ -1,9 +1,9 @@
-import {is, on, separate} from 'tsfun';
+import {is, on, separate, Path} from 'tsfun';
 import {copy} from 'tsfun/src/collection';
 import {Category} from '../configuration/model/category';
 
 
-export function sortArray(order: string[], path: Array<number|string>|string /* TODO add Path type? */) {
+export function sortArray(order: string[], path: Path) {
 
     return <A /* TODO should extend tsfun|struct, to support finding comparable string on path */>(items: Array<A>): Array<A> => {
 

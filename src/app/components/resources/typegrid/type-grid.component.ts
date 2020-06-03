@@ -248,7 +248,7 @@ export class TypeGridComponent extends BaseList implements OnChanges {
             filter(document => Document.hasRelations(document, 'hasInstance')),
             map(document => document.resource.relations['hasInstance']),
             flatten(),
-            set as any /* TODO review */
+            set as any
         );
 
         return await this.fieldDatastore.getMultiple(linkedResourceIds);

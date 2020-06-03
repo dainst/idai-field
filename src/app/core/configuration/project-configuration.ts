@@ -61,7 +61,6 @@ export class ProjectConfiguration {
     }
 
 
-    // TODO introduce getCategory(name: Name) instead of accessing it by key after calling getCategoriesMap
     public getCategoriesMap(): Map<Category> {
 
         return this.categoriesMap;

@@ -1,5 +1,5 @@
 import {cond, defined, flow, isNot, Map, Mapping, on,
-    isUndefined, copy, separate, dissoc, pairWith, val} from 'tsfun';
+    isUndefined, copy, separate, dissoc, pairWith} from 'tsfun';
 import {assoc, update, map, reduce} from 'tsfun/associative';
 import {Category} from '../model/category';
 import {CategoryDefinition} from '../model/category-definition';
@@ -28,7 +28,7 @@ export function makeCategoriesTree(categories: any): Tree<Category> {
         map(buildCategoryFromDefinition),
         map(update(TEMP_FIELDS, ifUndefinedSetGroupTo(Groups.PARENT))),
         mapToNamedArray,
-        map(pairWith(emptyList /* TODO review */))
+        map(pairWith(generateEmptyList))
     );
 
     return flow(
@@ -40,10 +40,7 @@ export function makeCategoriesTree(categories: any): Tree<Category> {
 }
 
 
-export function emptyList() { // TODO review see above, and other usages
-
-    return [];
-}
+export const generateEmptyList = () => []; // to make sure getting a new instance every time this is called
 
 
 /**
@@ -54,7 +51,7 @@ function fillGroups(category: Category) {
     category.groups = flow(
         (category as any)[TEMP_FIELDS],
         makeGroupsMap,
-        map(sortGroupFields) as any /* TODO review any */
+        map(sortGroupFields) as any
     );
 
     return category;
@@ -85,8 +82,8 @@ function addChildCategory(categoryTree: Tree<Category>,
     (childCategory as any)[TEMP_FIELDS] = makeChildFields(category, childCategory);
 
     tree.push([childCategory,[]])
-    category.children.push(childCategory);    // TODO redundant, this is done in treeToCategoriesArray
-    childCategory.parentCategory = category;  // TODO this we also could do there
+    category.children.push(childCategory);
+    childCategory.parentCategory = category;
     return categoryTree;
 }
 

@@ -78,7 +78,6 @@ export class ProjectConfiguration {
     }
 
 
-    // TODO use in project-configuration.component instead of building a treeList there
     public getCategoryTree(category?: Name): Tree<Category> {
 
         return category

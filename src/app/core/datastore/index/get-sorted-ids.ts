@@ -37,8 +37,6 @@ type Percentage = number;
  */
 export function getSortedIds(indexItems: Array<IndexItem>, query: Query): Array<ResourceId> {
 
-    if (query.sort && query.sort.mode === 'none') return indexItems.map(to(Resource.ID));
-
     const rankEntries = shouldRankCategories(query)
         ? rankTypeResourceIndexItems((query.sort as any).matchCategory)
         : rankRegularIndexItems;

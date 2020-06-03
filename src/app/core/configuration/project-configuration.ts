@@ -1,4 +1,4 @@
-import {flow, to, on, isNot, empty, is, isUndefined, Pair, Map, dissoc} from 'tsfun';
+import {flow, to, on, isNot, empty, is, Pair, Map} from 'tsfun';
 import {map} from 'tsfun/associative';
 import {filter} from 'tsfun/collection';
 import {Category} from './model/category';
@@ -39,8 +39,6 @@ export class ProjectConfiguration {
 
 
     constructor([categories, relations]: RawProjectConfiguration) {
-
-        // console.log('categories', categories); TODO if this is enabled, we see output in tests not enabled with fit, which means usually that we have code running outside describe blocks
 
         this.categoryTree = categories;
         this.categoriesArray = treeToCategoryArray(categories) || [];

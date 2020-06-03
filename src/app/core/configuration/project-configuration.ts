@@ -1,4 +1,4 @@
-import {flow, to, on, isNot, empty, is, Pair, Map} from 'tsfun';
+import {flow, to, on, isNot, empty, is, Pair, Map, isArray, includedIn} from 'tsfun';
 import {map} from 'tsfun/associative';
 import {filter} from 'tsfun/collection';
 import {Category} from './model/category';
@@ -74,11 +74,15 @@ export class ProjectConfiguration {
     }
 
 
-    public getCategoryTree(category?: Name): Tree<Category> {
+    public getCategoryTree(categoryOrCategories?: Name|Array<Name>): Tree<Category> {
 
-        return category
-            ? this.categoryTree.filter(on([0,Named.NAME], is(category)))
-            : this.categoryTree;
+        return !categoryOrCategories
+            ? this.categoryTree
+            : this.categoryTree
+                .filter(on([0,Named.NAME],
+                    isArray(categoryOrCategories)
+                        ? includedIn(categoryOrCategories as Array<Name>)
+                        : is(categoryOrCategories)));
     }
 
 

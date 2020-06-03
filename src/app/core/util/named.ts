@@ -1,8 +1,7 @@
-import {is, Map, on, separate} from 'tsfun';
+import {Map, on} from 'tsfun';
+import {Comparator} from 'tsfun/by';
 import {SortUtil} from './sort-util';
 import {makeLookup, mapToArray} from './transformers';
-import {copy} from 'tsfun/src/collection';
-import {Category} from '../configuration/model/category';
 import {sortArray} from './sort-array';
 
 
@@ -59,3 +58,5 @@ export function byName(a: Named, b: Named) { // to be used with sort
     return SortUtil.alnumCompare(a.name, b.name);
 }
 
+
+export const onName = (f: Comparator) => on([Named.NAME], f);

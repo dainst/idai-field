@@ -2,7 +2,7 @@ import {Observable, Observer} from 'rxjs';
 import {is, on, flow, isDefined, separate} from 'tsfun';
 import {filter} from 'tsfun/collection';
 import {forEach, lookup} from 'tsfun/associative';
-import {Document} from 'idai-components-2';
+import {Document, Resource} from 'idai-components-2';
 import {ConstraintIndex} from './constraint-index';
 import {FulltextIndex} from './fulltext-index';
 import {IndexItem, TypeResourceIndexItem} from './index-item';
@@ -39,9 +39,8 @@ export class IndexFacade {
 
     public find(query: Query): Array<ResourceId> {
 
-        const queryResult = performQuery(query, this.constraintIndex, this.fulltextIndex);
-        const indexItems = queryResult.map(lookup(this.indexItems));
-        return getSortedIds(indexItems, query);
+        const queryResult: Array<Resource.Id> = performQuery(query, this.constraintIndex, this.fulltextIndex);
+        return this.getSortedResult(query, queryResult);
     }
 
 
@@ -93,6 +92,17 @@ export class IndexFacade {
     public getDescendantIds(constraintIndexName: string, matchTerm: string): string[] {
 
         return ConstraintIndex.getWithDescendants(this.constraintIndex, constraintIndexName, matchTerm);
+    }
+
+
+    private getSortedResult(query: Query, queryResult: Array<Resource.Id>): Array<Resource.Id> {
+
+        if (query.sort && query.sort.mode === 'none') {
+            return queryResult;
+        } else {
+            const indexItems = queryResult.map(lookup(this.indexItems));
+            return getSortedIds(indexItems, query);
+        }
     }
 
 

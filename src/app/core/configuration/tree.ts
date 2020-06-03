@@ -1,6 +1,8 @@
 import {Pair, Mapping} from 'tsfun';
 
-export type Tree<T> = Array<Pair<T,Tree<T>>>;
+export type Node<T> = Pair<T,Tree<T>>;
+
+export type Tree<T> = Array<Node<T>>;
 
 
 export function mapTree<A,B>(f: Mapping<A,B>, t: Tree<A>): Tree<B>;

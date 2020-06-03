@@ -21,5 +21,5 @@ export function makeInverseRelationsMap(relationDefinitions: Array<RelationDefin
         relationDefinitions,
         assocReduce(
             toPair<string>('name', 'inverse'),
-            {}) as any /* TODO review any */) as InverseRelationsMap;
+            {}) as any) as InverseRelationsMap;
 }

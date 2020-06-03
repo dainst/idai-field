@@ -86,7 +86,7 @@ function unifyCampaignAndStaffFields(latestRevision: Resource) {
 
         return flow(latestRevision,
             assoc(STAFF, unifyFields(STAFF)),
-            assoc(CAMPAIGNS, unifyFields(CAMPAIGNS)) as any /* TODO review any */);
+            assoc(CAMPAIGNS, unifyFields(CAMPAIGNS)) as any);
     }
 }
 
@@ -136,10 +136,10 @@ function solveConflictBetweenTwoRevisions(l: Resource, r: Resource): Resource|un
     if (isEmpty(l_) && l[CRS] === r[CRS]) return r;
     else if (isEmpty(r_) && l[CRS] === r[CRS]) return l;
 
-    if (equal(withoutStaffAndCampaigns(l as any))(withoutStaffAndCampaigns(r as any))) { // TODO review any
+    if (equal(withoutStaffAndCampaigns(l as any), withoutStaffAndCampaigns(r as any))) {
         return flow(r,
             assoc(STAFF, union([l[STAFF], r[STAFF]])),
-            assoc(CAMPAIGNS, union([l[CAMPAIGNS], r[CAMPAIGNS]])) as any /* TODO review any */);
+            assoc(CAMPAIGNS, union([l[CAMPAIGNS], r[CAMPAIGNS]])) as any);
     }
 
     return undefined;

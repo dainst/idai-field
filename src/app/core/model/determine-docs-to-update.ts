@@ -44,7 +44,7 @@ export function determineDocsToUpdate(document: Document,
                 targetDocument.resource.relations,
                 document.resource.id,
                 setInverses,
-                hasInverseRelation) as any /* TODO review */;
+                hasInverseRelation) as any
 
         if (setInverses) {
             setInverseRelations(

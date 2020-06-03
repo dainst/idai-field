@@ -96,7 +96,7 @@ function extractLeadingIndices(paths: string[]): number[] {
         map(first),
         map((s: string) => parseInt(s)), // deliberate use of explicit form to avoid cases where '0' was parsed to NaN
         filter(isNot(isNaN)),
-        sort as any /* TODO review any */);
+        sort as any);
 }
 
 

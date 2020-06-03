@@ -6,7 +6,7 @@ import {Named} from '../../util/named';
 
 export interface Category extends Named {
 
-    children: Array<Category>;
+    children: Array<Category>; // TODO remove
     parentCategory: Category|undefined; //  = undefined;
     isAbstract: boolean;
     label: string;

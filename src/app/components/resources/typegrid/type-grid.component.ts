@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {ChangeDetectorRef, Component, Input, OnChanges} from '@angular/core';
 import {SafeResourceUrl} from '@angular/platform-browser';
 import {take, flatten, set, flow, filter, map} from 'tsfun';
 import {reduce as asyncReduce} from 'tsfun/async';
@@ -92,17 +92,7 @@ export class TypeGridComponent extends BaseList implements OnChanges {
     async ngOnChanges() {
 
         this.ready = false;
-
-        const newMainDocument = this.getMainDocument();
-        if (newMainDocument !== this.mainDocument) {
-            this.mainDocument = newMainDocument;
-            this.subtypes = await this.getSubtypes();
-            this.linkedDocuments = await this.getLinkedDocuments();
-            await this.loadImages(this.linkedDocuments);
-        }
-
-        await this.loadImages(this.documents);
-
+        await this.update();
         this.ready = true;
     }
 
@@ -203,6 +193,21 @@ export class TypeGridComponent extends BaseList implements OnChanges {
         } while (target);
 
         if (!inside) this.contextMenu.close();
+    }
+
+
+    private async update() {
+
+        const newMainDocument: FieldDocument|undefined = this.getMainDocument();
+
+        if (newMainDocument !== this.mainDocument) {
+            this.mainDocument = newMainDocument;
+            this.subtypes = await this.getSubtypes();
+            this.linkedDocuments = await this.getLinkedDocuments();
+            await this.loadImages(this.linkedDocuments);
+        }
+
+        await this.loadImages(this.documents);
     }
 
 

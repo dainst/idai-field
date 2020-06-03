@@ -140,7 +140,7 @@ export class AppConfigurator {
         }
     };
 
-    // TODO Importing Map from tsfun doesn't work, the typing should be Map<BuiltinCategoryDefinition>
+
     private builtinCategories: any = {
         Project: {
             label: this.i18n({ id: 'configuration.project', value: 'Projekt' }),

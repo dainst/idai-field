@@ -1,4 +1,4 @@
-import {Map, on} from 'tsfun';
+import {Map, on, Predicate} from 'tsfun';
 import {Comparator} from 'tsfun/by';
 import {SortUtil} from './sort-util';
 import {makeLookup, mapToArray} from './transformers';
@@ -59,4 +59,4 @@ export function byName(a: Named, b: Named) { // to be used with sort
 }
 
 
-export const onName = (f: Comparator) => on([Named.NAME], f);
+export const onName = (p: Predicate) => on([Named.NAME], p);

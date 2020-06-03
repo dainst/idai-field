@@ -17,6 +17,7 @@ import {FindResult} from '../../../../../core/datastore/model/read-datastore';
 import {Query} from '../../../../../core/datastore/model/query';
 import {Constraint} from '../../../../../core/datastore/model/constraint';
 import {ImageReadDatastore} from '../../../../../core/datastore/field/image-read-datastore';
+import {onName} from '../../../../../core/util/named';
 
 
 const CRITERION = 'criterion';
@@ -198,10 +199,10 @@ export class TypeRelationPickerComponent {
     private static getConfiguredCriteria(typeCatalogCategory: Category): Array<Criterion> {
 
         const identificationGroup: Group = typeCatalogCategory.groups
-            .find(on('name', is('identification'))) as Group;
+            .find(onName(is('identification'))) as Group;
 
         const criterionField: FieldDefinition = identificationGroup.fields
-            .find(on('name', is('criterion'))) as FieldDefinition;
+            .find(onName(is('criterion'))) as FieldDefinition;
 
         const valuelist: ValuelistDefinition = (criterionField.valuelist as ValuelistDefinition);
 

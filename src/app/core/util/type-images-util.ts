@@ -15,7 +15,6 @@ export module TypeImagesUtil {
 
     /**
      * @param document: A document of category Type or TypeCatalog
-     * @param datastore
      *
      * Returns images of linked categories (for type catalogs) or finds (for categories). If the categories linked to a
      * type catalog are not directly linked to an image, the images of finds linked to the categories are returned.
@@ -37,11 +36,11 @@ export module TypeImagesUtil {
     function getLinkedImagesForTypeCatalog(resourceId: ResourceId, fieldDatastore: FieldReadDatastore,
                                                  imageDatastore: ImageReadDatastore): string[] {
 
-        const resourceIds: string[] = (fieldDatastore.findIds(
-            {
-                constraints: { 'liesWithin:contain': resourceId }
-            }
-        )).ids;
+        const query: Query = {
+            constraints: { 'liesWithin:contain': resourceId }
+        };
+
+        const resourceIds: string[] = fieldDatastore.findIds(query, true).ids;
 
         return flow(
             resourceIds,
@@ -76,7 +75,7 @@ export module TypeImagesUtil {
             constraints: { 'isInstanceOf:contain': resourceId }
         };
 
-        const ids: string[] = fieldDatastore.findIds(query).ids;
+        const ids: string[] = fieldDatastore.findIds(query, true).ids;
         const result: string[] = [];
 
         for (let id of ids) {
@@ -95,7 +94,7 @@ export module TypeImagesUtil {
             sort: { mode: 'none' }
         };
 
-        const ids: string[] = imageDatastore.findIds(query).ids;
+        const ids: string[] = imageDatastore.findIds(query, true).ids;
 
         return ids.length > 0 ? ids[0] : undefined;
     }

@@ -158,7 +158,7 @@ export class TypeRelationPickerComponent {
 
 
     private pairWithLinkedImages: Mapping
-        = (documents: Array<FieldDocument>) => map(async (document: FieldDocument) => {
+        = (documents: Array<FieldDocument>) => map((document: FieldDocument) => {
             return [
                 document,
                 TypeImagesUtil.getLinkedImageIds(document, this.fieldDatastore, this.imageDatastore)

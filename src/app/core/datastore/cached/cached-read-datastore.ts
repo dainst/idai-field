@@ -6,7 +6,7 @@ import {CategoryConverter} from './category-converter';
 import {IndexFacade} from '../index/index-facade';
 import {ProjectCategories} from '../../configuration/project-categories';
 import {DatastoreErrors} from '../model/datastore-errors';
-import {FindResult, ReadDatastore} from '../model/read-datastore';
+import {FindIdsResult, FindResult, ReadDatastore} from '../model/read-datastore';
 import {Query} from '../model/query';
 
 
@@ -95,6 +95,20 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
 
         if (!this.suppressWait) await this.datastore.ready();
 
+        const { ids } = this.findIds(query, ignoreCategories);
+        const { documents, totalCount } = await this.getDocumentsForIds(ids, query.limit, query.offset);
+
+        return {
+            documents: documents,
+            ids: ids,
+            totalCount: totalCount,
+            queryId: query.id
+        }
+    }
+
+
+    public findIds(query: Query, ignoreCategories: boolean = false): FindIdsResult {
+
         const clonedQuery: Query = jsonClone(query);
 
         if (clonedQuery.categories) {
@@ -105,25 +119,13 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
             clonedQuery.categories = this.categoryConverter.getCategoriesForClass(this.categoryClass);
         }
 
-        const orderedResults: string[] = await this.findIds(clonedQuery);
-        if (query.skipDocuments) {
-            return {
-                documents: [],
-                ids: orderedResults,
-                totalCount: orderedResults.length,
-                queryId: query.id
-            };
-        }
-
-        const { documents, totalCount } =
-            await this.getDocumentsForIds(orderedResults, clonedQuery.limit, clonedQuery.offset);
+        const orderedResults: string[] = this.getIds(clonedQuery);
 
         return {
-            documents: documents,
             ids: orderedResults,
-            totalCount: totalCount,
+            totalCount: orderedResults.length,
             queryId: query.id
-        }
+        };
     }
 
 
@@ -143,21 +145,18 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
     /**
      * @param query
      * @return an array of the resource ids of the documents the query matches.
-     *   the sort order of the ids is determinded in that way that ids of documents with newer modified
-     *   dates come first. they are sorted by last modfied descending, so to speak.
-     *   if two or more documents have the same last modifed date, their sort order is unspecified.
-     *   the modified date is taken from document.modified[document.modified.length-1].date
+     *   The sort order of the ids is determined in that way that ids of documents with newer modified
+     *   dates come first. They are sorted by last modified descending, so to speak.
+     *   If two or more documents have the same last modified date, their sort order is unspecified.
+     *   The modified date is taken from document.modified[document.modified.length-1].date
      */
-    private async findIds(query: Query): Promise<string[]> {
+    private getIds(query: Query): string[] {
 
-        // Wrap asynchronously in order to make the app more responsive
-        return new Promise<string[]>((resolve: any, reject: any) => {
-            try {
-                resolve(this.indexFacade.find(query));
-            } catch (err) {
-                reject([DatastoreErrors.GENERIC_ERROR, err]);
-            }
-        });
+        try {
+            return this.indexFacade.find(query);
+        } catch (err) {
+            throw [DatastoreErrors.GENERIC_ERROR, err];
+        }
     }
 
 

@@ -1,5 +1,4 @@
-import {isDefined, filter} from 'tsfun';
-import {map as asyncMap, flow as asyncFlow} from 'tsfun/async';
+import {isDefined, filter, map, flow} from 'tsfun';
 import {FieldDocument} from 'idai-components-2';
 import {FieldReadDatastore} from '../datastore/field/field-read-datastore';
 import {ResourceId} from '../constants';
@@ -23,7 +22,7 @@ export module TypeImagesUtil {
      */
     export function getLinkedImageIds(document: FieldDocument,
                                       fieldDatastore: FieldReadDatastore,
-                                      imageDatastore: ImageReadDatastore): Promise<string[]> {
+                                      imageDatastore: ImageReadDatastore): string[] {
 
         if (document.resource.category !== 'Type' && document.resource.category !== 'TypeCatalog') {
             throw 'Illegal argument: Document must be of category Type or TypeCatalog.';
@@ -35,33 +34,32 @@ export module TypeImagesUtil {
     }
 
 
-    async function getLinkedImagesForTypeCatalog(resourceId: ResourceId, fieldDatastore: FieldReadDatastore,
-                                                 imageDatastore: ImageReadDatastore): Promise<string[]> {
+    function getLinkedImagesForTypeCatalog(resourceId: ResourceId, fieldDatastore: FieldReadDatastore,
+                                                 imageDatastore: ImageReadDatastore): string[] {
 
-        const resourceIds: string[] = (await fieldDatastore.find(
+        const resourceIds: string[] = (fieldDatastore.findIds(
             {
-                constraints: { 'liesWithin:contain': resourceId },
-                skipDocuments: true
+                constraints: { 'liesWithin:contain': resourceId }
             }
         )).ids;
 
-        return asyncFlow(
+        return flow(
             resourceIds,
-            asyncMap(getTypeImage(fieldDatastore, imageDatastore)),
+            map(getTypeImage(fieldDatastore, imageDatastore)),
             filter(isDefined));
     }
 
 
     function getTypeImage(fieldDatastore: FieldReadDatastore, imageDatastore: ImageReadDatastore) {
 
-        return async (resourceId: string): Promise<string|undefined> => {
+        return (resourceId: string): string|undefined => {
 
-            let imageId: string|undefined = await getMainImageId(resourceId, imageDatastore);
+            let imageId: string|undefined = getMainImageId(resourceId, imageDatastore);
 
             if (imageId) {
                 return imageId;
             } else {
-                const linkedImageIds: string[] = await getLinkedImagesForType(resourceId, fieldDatastore, imageDatastore);
+                const linkedImageIds: string[] = getLinkedImagesForType(resourceId, fieldDatastore, imageDatastore);
 
                 return linkedImageIds.length > 0
                     ? linkedImageIds[0]
@@ -71,20 +69,18 @@ export module TypeImagesUtil {
     }
 
 
-    async function getLinkedImagesForType(resourceId: ResourceId, fieldDatastore: FieldReadDatastore,
-                                          imageDatastore: ImageReadDatastore): Promise<string[]> {
+    function getLinkedImagesForType(resourceId: ResourceId, fieldDatastore: FieldReadDatastore,
+                                          imageDatastore: ImageReadDatastore): string[] {
 
         const query: Query = {
-            constraints: { 'isInstanceOf:contain': resourceId },
-            skipDocuments: true
+            constraints: { 'isInstanceOf:contain': resourceId }
         };
 
-        const ids: string[] = (await fieldDatastore.find(query)).ids;
-
+        const ids: string[] = fieldDatastore.findIds(query).ids;
         const result: string[] = [];
 
         for (let id of ids) {
-            const imageId: string|undefined = await getMainImageId(id, imageDatastore);
+            const imageId: string|undefined = getMainImageId(id, imageDatastore);
             result.push(imageId ? imageId : PLACEHOLDER);
         }
 
@@ -92,15 +88,14 @@ export module TypeImagesUtil {
     }
 
 
-    async function getMainImageId(resourceId: string, imageDatastore: ImageReadDatastore): Promise<string|undefined> {
+    function getMainImageId(resourceId: string, imageDatastore: ImageReadDatastore): string|undefined {
 
         const query: Query = {
             constraints: { 'isDepictedIn:links': resourceId },
-            sort: { mode: 'none' },
-            skipDocuments: true
+            sort: { mode: 'none' }
         };
 
-        const ids: string[] = (await imageDatastore.find(query)).ids;
+        const ids: string[] = imageDatastore.findIds(query).ids;
 
         return ids.length > 0 ? ids[0] : undefined;
     }

@@ -1,7 +1,7 @@
+import {Resource} from 'idai-components-2';
 import {ConstraintIndex} from './constraint-index';
 import {FulltextIndex} from './fulltext-index';
 import {ResultSets} from './result-sets';
-import {Resource} from 'idai-components-2';
 import {Query} from '../model/query';
 import {Constraint} from '../model/constraint';
 
@@ -18,7 +18,8 @@ export function performQuery(query: Query,
 
     let resultSets = performConstraints(
         constraintIndex,
-        query.constraints ? query.constraints : {});
+        query.constraints ? query.constraints : {}
+    );
 
     resultSets = ResultSets.containsOnlyEmptyAddSets(resultSets)
         || (Query.isEmpty(query) && !ResultSets.isEmpty(resultSets))

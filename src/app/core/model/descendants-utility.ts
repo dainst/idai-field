@@ -2,7 +2,8 @@ import {Document} from 'idai-components-2';
 import {DocumentReadDatastore} from '../datastore/document-read-datastore';
 import {ProjectConfiguration} from '../configuration/project-configuration';
 import {ProjectCategories} from '../configuration/project-categories';
-import {FindResult} from '../datastore/model/read-datastore';
+import {FindIdsResult, FindResult} from '../datastore/model/read-datastore';
+import {Query} from '../datastore/model/query';
 
 
 /**
@@ -18,15 +19,10 @@ export class DescendantsUtility {
 
     public async fetchChildren(document: Document): Promise<Array<Document>> {
 
-        return (await this.findDescendants(document)).documents;
+        return (await this.findDescendants(document) as FindResult).documents;
     }
 
-    /**
-     * Works faster than calling fetchChildren().count, because
-     * datastore is queried with skipDocuments.
-     *
-     * @param document
-     */
+
     public async fetchChildrenCount(document: Document): Promise<number> {
 
         return !document.resource.id
@@ -35,7 +31,7 @@ export class DescendantsUtility {
     }
 
 
-    private async findDescendants(document: Document, skipDocuments = false): Promise<FindResult> {
+    private async findDescendants(document: Document, skipDocuments = false): Promise<FindIdsResult> {
 
         return this.projectConfiguration.isSubcategory(document.resource.category, 'Operation')
             ? await this.findRecordedInDocs(document.resource.id, skipDocuments)
@@ -43,26 +39,32 @@ export class DescendantsUtility {
     }
 
 
-    public async findRecordedInDocs(resourceId: string, skipDocuments: boolean): Promise<FindResult> {
+    public async findRecordedInDocs(resourceId: string, skipDocuments: boolean): Promise<FindIdsResult> {
 
-        return this.datastore.find({
-            constraints: { 'isRecordedIn:contain': resourceId },
-            skipDocuments: skipDocuments
-        });
+        const query: Query = {
+            constraints: { 'isRecordedIn:contain': resourceId }
+        };
+
+        return skipDocuments
+            ? this.datastore.findIds(query)
+            : await this.datastore.find(query);
     }
 
 
-    private async findLiesWithinDocs(resourceId: string, skipDocuments: boolean): Promise<FindResult> {
+    private async findLiesWithinDocs(resourceId: string, skipDocuments: boolean): Promise<FindIdsResult> {
 
-        return this.datastore.find({
+        const query: Query = {
             constraints: {
                 'liesWithin:contain': {
                     value: resourceId,
                     searchRecursively: true
                 }
-            },
-            skipDocuments: skipDocuments
-        });
+            }
+        };
+
+        return skipDocuments
+            ? this.datastore.findIds(query)
+            : await this.datastore.find(query);
     }
 }
 

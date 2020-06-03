@@ -40,15 +40,23 @@ export abstract class ReadDatastore {
      * @throws [GENERIC_ERROR (, cause: any)] - in case of error, optionally including a cause
      */
     abstract find(query: Query): Promise<FindResult>;
+
+
+    abstract findIds(query: Query): FindIdsResult;
 }
 
 
-export interface FindResult {
+export interface FindIdsResult {
 
-    documents: Array<Document>;
     ids: string[];
     totalCount: number;
     queryId?: string;
+}
+
+
+export interface FindResult extends FindIdsResult {
+
+    documents: Array<Document>;
 }
 
 

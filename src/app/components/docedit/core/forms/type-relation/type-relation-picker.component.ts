@@ -1,12 +1,10 @@
 import {Component} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import {Pair, to, isNot, undefinedOrEmpty, left, on, includedIn, right, map, flow, empty, prune,
+import {Pair, Mapping, to, isNot, undefinedOrEmpty, left, on, includedIn, right, map, flow, empty, prune,
     is} from 'tsfun';
-import {AsyncMapping, map as asyncMap} from 'tsfun/async';
 import {FieldDocument, FieldResource, Resource, Document} from 'idai-components-2';
 import {FieldReadDatastore} from '../../../../../core/datastore/field/field-read-datastore';
 import {TypeImagesUtil} from '../../../../../core/util/type-images-util';
-import getLinkedImages = TypeImagesUtil.getLinkedImageIds;
 import {TypeRelations} from '../../../../../core/model/relation-constants';
 import {ProjectConfiguration} from '../../../../../core/configuration/project-configuration';
 import {Category} from '../../../../../core/configuration/model/category';
@@ -155,18 +153,18 @@ export class TypeRelationPickerComponent {
         );
 
         const documents = (await this.fieldDatastore.find(query)).documents;
-        this.typeDocumentsWithLinkedImages = await this.pairWithLinkedImages(documents);
+        this.typeDocumentsWithLinkedImages = this.pairWithLinkedImages(documents);
     }
 
 
-    private pairWithLinkedImages: AsyncMapping
-        = ($: Array<FieldDocument>) => asyncMap(async (document: FieldDocument) => {
+    private pairWithLinkedImages: Mapping
+        = (documents: Array<FieldDocument>) => map(async (document: FieldDocument) => {
             return [
                 document,
-                (await getLinkedImages(document, this.fieldDatastore, this.imageDatastore))
+                TypeImagesUtil.getLinkedImageIds(document, this.fieldDatastore, this.imageDatastore)
                     .map(id => ({ imageId: id }))
             ] as Pair<FieldDocument, Array<ImageRowItem>>;
-        }, $);
+        })(documents);
 
 
     private static constructQuery(resource: Resource, q: string, selectedCatalogs: Array<FieldResource>) {

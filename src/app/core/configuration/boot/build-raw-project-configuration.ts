@@ -167,14 +167,8 @@ function putRelationsIntoGroups(relations: Array<RelationDefinition>) {
 }
 
 
-function sortGroups(defaultOrder: string[]) {
-
-    return (groups: Map<Group>) => flow(
-        defaultOrder,
-        map(lookup(groups)),
-        prune
-    );
-}
+const sortGroups = (defaultOrder: string[]) => (groups: Map<Group>) =>
+    flow(defaultOrder, map(lookup(groups)), prune);
 
 
 const orderCategories = (categoriesOrder: string[] = []) => (categories: Tree<Category>): Tree<Category> =>

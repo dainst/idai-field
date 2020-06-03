@@ -119,7 +119,7 @@ export class TypeRelationPickerComponent {
             to(FindResult.DOCUMENTS),
             map(to(Document.RESOURCE)),
             map(to(CRITERION)),
-            prune as any /* TODO review any */
+            prune as any
         );
     }
 

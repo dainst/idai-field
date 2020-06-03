@@ -166,7 +166,7 @@ export class PlusButtonComponent implements OnChanges {
         this.categoriesTreeList = [];
 
         if (this.preselectedCategory) {
-            const category: Category = projectConfiguration.getCategoriesMap()[this.preselectedCategory];
+            const category: Category = projectConfiguration.getCategory(this.preselectedCategory);
             if (category) {
                 this.categoriesTreeList.push(category);
             } else {

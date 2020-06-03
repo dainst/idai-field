@@ -75,7 +75,7 @@ export class CategorySwitcherButtonComponent implements OnChanges{
 
     private initializeCategories() {
 
-        const categoryObject: Category = this.projectConfiguration.getCategoriesMap()[this.category];
+        const categoryObject: Category = this.projectConfiguration.getCategory(this.category);
         if (categoryObject.parentCategory && !categoryObject.parentCategory.isAbstract) {
             this.categoriesTreeList = [categoryObject.parentCategory];
         } else {

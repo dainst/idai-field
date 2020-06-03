@@ -403,7 +403,7 @@ export abstract class SearchConstraintsComponent implements OnChanges {
         if (fieldName.includes('.')) {
 
             const baseField = Category
-                .getFields((this.projectConfiguration.getCategoriesMap())[this.category])
+                .getFields(this.projectConfiguration.getCategory(this.category))
                 .find((field: FieldDefinition) => {
                     return field.name === fieldName.substring(0, fieldName.indexOf('.'));
                 });
@@ -414,7 +414,7 @@ export abstract class SearchConstraintsComponent implements OnChanges {
                         : ''
         }
 
-        const field = Category.getFields(this.projectConfiguration.getCategoriesMap()[this.category])
+        const field = Category.getFields(this.projectConfiguration.getCategory(this.category))
             .find(on(FieldDefinition.NAME, is(fieldName)));
 
         if (!field) throw 'illegal state - field does not exist';

@@ -18,7 +18,7 @@ describe('NavigationService', () => {
 
         projectConfiguration = jasmine.createSpyObj(
             'pc',
-            ['getRelationDefinitions', 'getCategoriesMap']
+            ['getRelationDefinitions', 'getCategory']
         );
 
         navigationService = new NavigationService(projectConfiguration, undefined, viewFacade);
@@ -31,8 +31,8 @@ describe('NavigationService', () => {
     it('show jump to view buttons in overview for operation subcategories ', () => {
 
         viewFacade.isInOverview.and.returnValue(true);
-        projectConfiguration.getCategoriesMap.and.returnValue({
-            Operation: { children: [ { name: 'operationSubcategory' } ] }
+        projectConfiguration.getCategory.and.returnValue({
+            children: [ { name: 'operationSubcategory' } ]
         });
 
         expect(navigationService.showJumpToViewOption(
@@ -82,7 +82,7 @@ describe('NavigationService', () => {
         viewFacade.isInOverview.and.returnValue(true);
         viewFacade.isInExtendedSearchMode.and.returnValue(true);
 
-        projectConfiguration.getCategoriesMap.and.returnValue({
+        projectConfiguration.getCategory.and.returnValue({
             Operation: { children: [ { name: 'operationSubcategory' } ] }
         });
 

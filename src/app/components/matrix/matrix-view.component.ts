@@ -165,7 +165,7 @@ export class MatrixViewComponent implements OnInit {
 
     private async populateTrenches(): Promise<void> {
 
-        if (!this.projectConfiguration.getCategoriesMap()['Trench']) return;
+        if (!this.projectConfiguration.getCategory('Trench')) return;
 
         this.trenches = (await this.datastore.find({ categories: ['Trench'] })).documents;
         if (this.trenches.length === 0) return;

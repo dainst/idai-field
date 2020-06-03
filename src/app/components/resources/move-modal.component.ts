@@ -64,7 +64,7 @@ export class MoveModalComponent {
 
         this.filterOptions = set(this.isRecordedInTargetCategories.concat(this.liesWithinTargetCategories));
         if (this.showProjectOption) {
-            this.filterOptions = [this.projectConfiguration.getCategoriesMap()['Project']]
+            this.filterOptions = [this.projectConfiguration.getCategory('Project')]
                 .concat(this.filterOptions);
         }
     }

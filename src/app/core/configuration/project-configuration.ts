@@ -62,7 +62,6 @@ export class ProjectConfiguration {
 
 
     // TODO introduce getCategory(name: Name) instead of accessing it by key after calling getCategoriesMap
-    // TODO make sure, here all items have children, because getCategory depends on it
     public getCategoriesMap(): Map<Category> {
 
         return this.categoriesMap;
@@ -136,15 +135,15 @@ export class ProjectConfiguration {
      */
     public getFieldDefinitions(categoryName: string): FieldDefinition[] {
 
-        if (!this.getCategoriesMap()[categoryName]) return [];
-        return Category.getFields(this.getCategoriesMap()[categoryName]);
+        if (!this.getCategory(categoryName)) return [];
+        return Category.getFields(this.getCategory(categoryName));
     }
 
 
     public getLabelForCategory(categoryName: string): string {
 
-        if (!this.getCategoriesMap()[categoryName]) return '';
-        return this.getCategoriesMap()[categoryName].label;
+        if (!this.getCategory(categoryName)) return '';
+        return this.getCategory(categoryName).label;
     }
 
 
@@ -206,10 +205,10 @@ export class ProjectConfiguration {
 
     private hasProperty(categoryName: string, fieldName: string, propertyName: string) {
 
-        if (!this.getCategoriesMap()[categoryName]) return false;
+        if (!this.getCategory(categoryName)) return false;
 
         return flow(
-            Category.getFields(this.getCategoriesMap()[categoryName]),
+            Category.getFields(this.getCategory(categoryName)),
             filter(on(Named.NAME, is(fieldName))),
             filter(on(propertyName, is(true))),
             isNot(empty));

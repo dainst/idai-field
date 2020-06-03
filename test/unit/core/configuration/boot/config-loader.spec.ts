@@ -84,7 +84,7 @@ describe('ConfigLoader', () => {
             done();
         }
 
-        expect(pconf.getCategoriesMap()['B'].groups[0].fields[2]['name']).toBe('processor');
+        expect(pconf.getCategory('B').groups[0].fields[2]['name']).toBe('processor');
         done();
     });
 
@@ -131,8 +131,8 @@ describe('ConfigLoader', () => {
             done();
         }
 
-        expect(pconf.getCategoriesMap()['B'].groups[0].fields[2]['label']).toBe('Bearbeiter/Bearbeiterin');
-        expect(pconf.getCategoriesMap()['B'].groups[0].fields[2]['description']).toBe('abc');
+        expect(pconf.getCategory('B').groups[0].fields[2]['label']).toBe('Bearbeiter/Bearbeiterin');
+        expect(pconf.getCategory('B').groups[0].fields[2]['description']).toBe('abc');
         done();
     });
 
@@ -280,9 +280,9 @@ describe('ConfigLoader', () => {
             done();
         }
 
-        expect(pconf.getCategoriesMap()['A'].label).toEqual('A_');
-        expect(pconf.getCategoriesMap()['B'].label).toEqual('B__');
-        expect(pconf.getCategoriesMap()['C'].label).toEqual('C'); // took name as label
+        expect(pconf.getCategory('A').label).toEqual('A_');
+        expect(pconf.getCategory('B').label).toEqual('B__');
+        expect(pconf.getCategory('C').label).toEqual('C'); // took name as label
 
         expect(pconf.getRelationDefinitions('A')[1].label).toEqual('r1_');
         expect(pconf.getRelationDefinitions('A')[0].label).toBeFalsy();
@@ -337,11 +337,11 @@ describe('ConfigLoader', () => {
                 undefined, 'de'
             );
 
-            expect(pconf.getCategoriesMap()['A'].groups[1].fields.find(field => field.name == 'fieldA1')
+            expect(pconf.getCategory('A').groups[1].fields.find(field => field.name == 'fieldA1')
                 .inputType).toEqual('unsignedInt');
-            expect(pconf.getCategoriesMap()['B'].groups[1].fields.find(field => field.name == 'fieldB1')
+            expect(pconf.getCategory('B').groups[1].fields.find(field => field.name == 'fieldB1')
                 .inputType).toEqual('input');
-            expect(pconf.getCategoriesMap()['B'].groups[1].fields.find(field => field.name == 'fieldB2')
+            expect(pconf.getCategory('B').groups[1].fields.find(field => field.name == 'fieldB2')
                 .inputType).toEqual('boolean');
 
         } catch(err) {
@@ -576,10 +576,10 @@ describe('ConfigLoader', () => {
             );
 
             expect(pconf.getCategoriesArray().length).toBe(2);
-            expect(pconf.getCategoriesMap()['A'].groups[0].fields.length).toBe(2);  // id, category
-            expect(pconf.getCategoriesMap()['A'].groups[1].fields.length).toBe(2);  // fieldA1, fieldA2
-            expect(pconf.getCategoriesMap()['A'].groups[1].fields[0].name).toEqual('fieldA1');
-            expect(pconf.getCategoriesMap()['A'].groups[1].fields[1].name).toEqual('fieldA2');
+            expect(pconf.getCategory('A').groups[0].fields.length).toBe(2);  // id, category
+            expect(pconf.getCategory('A').groups[1].fields.length).toBe(2);  // fieldA1, fieldA2
+            expect(pconf.getCategory('A').groups[1].fields[0].name).toEqual('fieldA1');
+            expect(pconf.getCategory('A').groups[1].fields[1].name).toEqual('fieldA2');
 
             done();
         } catch(err) {
@@ -617,7 +617,7 @@ describe('ConfigLoader', () => {
             pconf = await configLoader.go('', {}, { A: { fields: {} }}, [], {},
                 undefined, 'de'
             );
-            const result = pconf.getCategoriesMap()['A'].groups[1];
+            const result = pconf.getCategory('A').groups[1];
 
             expect(result.fields[0].name).toEqual('fieldA1');
             expect(result.fields[0].visible).toBe(false);

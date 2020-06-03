@@ -186,7 +186,7 @@ export class DoceditComponent {
         this.fieldDefinitions = this.projectConfiguration.getFieldDefinitions(
             this.documentHolder.clonedDocument.resource.category
         );
-        this.groups = (this.projectConfiguration.getCategoriesMap()[this.documentHolder.clonedDocument.resource.category]).groups;
+        this.groups = (this.projectConfiguration.getCategory(this.documentHolder.clonedDocument.resource.category)).groups;
     }
 
 

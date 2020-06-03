@@ -149,7 +149,7 @@ export class DocumentHolder {
     private convertStringsToNumbers() {
 
         const category: Category = this.projectConfiguration
-            .getCategoriesMap()[this.clonedDocument.resource.category];
+            .getCategory(this.clonedDocument.resource.category);
 
         for (let fieldName in this.clonedDocument.resource) {
             const field: FieldDefinition|undefined

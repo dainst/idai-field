@@ -64,7 +64,7 @@ export class TypeRelationPickerComponent {
                 private imageDatastore: ImageReadDatastore,
                 projectConfiguration: ProjectConfiguration) {
 
-        this.initialize(projectConfiguration.getCategoriesMap()[TYPECATALOG]);
+        this.initialize(projectConfiguration.getCategory(TYPECATALOG));
     }
 
 

@@ -102,7 +102,7 @@ export class NavigationService {
         if (this.viewFacade.isInExtendedSearchMode()) return false;
 
         const operationCategory: Category|undefined
-            = this.projectConfiguration.getCategoriesMap()['Operation'];
+            = this.projectConfiguration.getCategory('Operation');
 
         return operationCategory !== undefined && operationCategory.children !== undefined
             && operationCategory.children

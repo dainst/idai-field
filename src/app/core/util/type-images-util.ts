@@ -40,7 +40,8 @@ export module TypeImagesUtil {
 
         const resourceIds: string[] = (await fieldDatastore.find(
             {
-                constraints: { 'liesWithin:contain': resourceId }
+                constraints: { 'liesWithin:contain': resourceId },
+                skipDocuments: true
             }
         )).ids;
 
@@ -74,10 +75,12 @@ export module TypeImagesUtil {
                                           imageDatastore: ImageReadDatastore): Promise<string[]> {
 
         const query: Query = {
-            constraints: { 'isInstanceOf:contain': resourceId }
+            constraints: { 'isInstanceOf:contain': resourceId },
+            skipDocuments: true
         };
 
         const ids: string[] = (await fieldDatastore.find(query)).ids;
+
         const result: string[] = [];
 
         for (let id of ids) {
@@ -93,7 +96,8 @@ export module TypeImagesUtil {
 
         const query: Query = {
             constraints: { 'isDepictedIn:links': resourceId },
-            sort: { mode: 'none' }
+            sort: { mode: 'none' },
+            skipDocuments: true
         };
 
         const ids: string[] = (await imageDatastore.find(query)).ids;

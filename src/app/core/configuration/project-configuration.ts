@@ -79,7 +79,7 @@ export class ProjectConfiguration {
 
         return selectedTopLevelCategories.length === 0
             ? this.categoryTree
-            : this.categoryTree.filter(on([0,Named.NAME], includedIn(selectedTopLevelCategories)));
+            : this.categoryTree.filter(on([Tree.Node.ITEM,Named.NAME], includedIn(selectedTopLevelCategories)));
     }
 
 

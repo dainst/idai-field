@@ -28,3 +28,12 @@ export function mapLeafs<A>(f: Mapping<Tree<A>>, t: Tree<A>): Tree<A> {
 
     return f(t).map(([node,leafs]) => [node,mapLeafs(f, leafs)]);
 }
+
+
+export module Tree {
+
+    export module Node {
+
+        export const ITEM = 0;
+    }
+}

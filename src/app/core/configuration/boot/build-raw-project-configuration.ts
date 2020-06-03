@@ -34,7 +34,7 @@ import {RelationsUtil} from '../relations-utils';
 import {CategoryDefinition} from '../model/category-definition';
 import {ProjectCategoriesHelper} from '../project-categories-helper';
 import {FieldDefinition} from '../model/field-definition';
-import {Tree} from '../tree';
+import {mapLeafs, mapTree, Tree} from '../tree';
 import {sortStructArray} from '../../util/sort-struct-array';
 
 
@@ -103,16 +103,16 @@ function processCategories(orderConfiguration: any,
         orderFields(orderConfiguration),
         validateFields,
         makeCategoriesTree,
-        Tree.map(putRelationsIntoGroups(relations)),
-        Tree.map(sortCategoryGroups),
-        Tree.map(setGroupLabels(languageConfiguration.groups || {})),
+        mapTree(putRelationsIntoGroups(relations)),
+        mapTree(sortCategoryGroups),
+        mapTree(setGroupLabels(languageConfiguration.groups || {})),
         setGeometriesInGroups(languageConfiguration),
         orderCategories(orderConfiguration?.categories));
 }
 
 
 const setGeometriesInGroups = (languageConfiguration: any) => (categoriesTree: Tree<Category>) =>
-    Tree.map(adjustCategoryGeometry(languageConfiguration, categoriesTree), categoriesTree);
+    mapTree(adjustCategoryGeometry(languageConfiguration, categoriesTree), categoriesTree);
 
 
 function adjustCategoryGeometry(languageConfiguration: any, categoriesTree: Tree<Category>) {
@@ -172,7 +172,7 @@ const sortGroups = (defaultOrder: string[]) => (groups: Map<Group>) =>
 
 
 const orderCategories = (categoriesOrder: string[] = []) => (categories: Tree<Category>): Tree<Category> =>
-    Tree.mapLeafs(sortStructArray(categoriesOrder, [0,Named.NAME]), categories) as Tree<Category>;
+    mapLeafs(sortStructArray(categoriesOrder, [0,Named.NAME]), categories) as Tree<Category>;
 
 
 function setGroupLabels(groupLabels: Map<string>) {

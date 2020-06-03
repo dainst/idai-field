@@ -1,5 +1,6 @@
 import {equal, reverse} from 'tsfun';
-import {Tree} from '../../../../src/app/core/configuration/tree';
+import {mapLeafs, mapTree, Tree} from '../../../../src/app/core/configuration/tree';
+
 
 describe('Tree', () => {
 
@@ -29,7 +30,7 @@ describe('Tree', () => {
                 [6,[]]
             ];
 
-        const result = Tree.map((_: number) => _ * 2, t);
+        const result = mapTree((_: number) => _ * 2, t);
         expect(equal(result, exp)).toBeTruthy();
     });
 
@@ -54,7 +55,7 @@ describe('Tree', () => {
                 ]]
             ];
 
-        const result = Tree.mapLeafs(reverse, t);
+        const result = mapLeafs(reverse, t);
         expect(equal(result, exp)).toBeTruthy();
     });
 });

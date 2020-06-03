@@ -68,7 +68,7 @@ export class PlusButtonComponent implements OnChanges {
 
     ngOnChanges() {
 
-        this.initializeCategoriesTreeList(this.projectConfiguration);
+        this.initializeSelectableCategories(this.projectConfiguration);
     }
 
 
@@ -161,7 +161,7 @@ export class PlusButtonComponent implements OnChanges {
     }
 
 
-    private initializeCategoriesTreeList(projectConfiguration: ProjectConfiguration) {
+    private initializeSelectableCategories(projectConfiguration: ProjectConfiguration) {
 
         if (this.preselectedCategory) {
             const category: Category = projectConfiguration.getCategory(this.preselectedCategory);

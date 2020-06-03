@@ -73,8 +73,6 @@ export class ProjectConfiguration {
         return this.getCategoriesMap()[category];
     }
 
-    // TODO remove children
-    // TODO use throughout the codebase, provide a function categoryTreeToTreeList to simplify gradual refactoring
     public getCategoryTree(...selectedTopLevelCategories: Array<Name>): Tree<Category> {
 
         return selectedTopLevelCategories.length === 0

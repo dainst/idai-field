@@ -109,17 +109,16 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
 
     public findIds(query: Query, ignoreCategories: boolean = false): FindIdsResult {
 
-        const clonedQuery: Query = jsonClone(query);
-
-        if (clonedQuery.categories) {
-            clonedQuery.categories.forEach(category => {
+        if (query.categories) {
+            query.categories.forEach(category => {
                 this.categoryConverter.assertCategoryToBeOfClass(category, this.categoryClass);
             });
         } else if (!ignoreCategories) {
-            clonedQuery.categories = this.categoryConverter.getCategoriesForClass(this.categoryClass);
+            query = jsonClone(query);
+            query.categories = this.categoryConverter.getCategoriesForClass(this.categoryClass);
         }
 
-        const orderedResults: string[] = this.getIds(clonedQuery);
+        const orderedResults: string[] = this.getIds(query);
 
         return {
             ids: orderedResults,

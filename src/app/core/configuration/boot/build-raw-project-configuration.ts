@@ -117,7 +117,7 @@ const setGeometriesInGroups = (languageConfiguration: any) => (categoriesTree: T
 
 function adjustCategoryGeometry(languageConfiguration: any, categoriesTree: Tree<Category>) {
 
-    return (category: Category) => {
+    return (category: Category /* modified in place */): Category => {
 
         if (!ProjectCategoriesHelper.isGeometryCategory(categoriesTree, category.name)) return category;
 
@@ -147,7 +147,7 @@ function adjustCategoryGeometry(languageConfiguration: any, categoriesTree: Tree
 
 function putRelationsIntoGroups(relations: Array<RelationDefinition>) {
 
-    return (category: Category): /* ! modified in place */ Category => {
+    return (category: Category /* modified in place */): Category => {
 
         const relDefs = RelationsUtil.getRelationDefinitions(relations, category.name);
 

@@ -8,11 +8,11 @@ import {Named, namedArrayToNamedMap} from '../util/named';
 import {RelationsUtil} from './relations-utils';
 import {ProjectCategoriesHelper} from './project-categories-helper';
 import {Tree} from './tree';
-import {treeToCategoryArray} from './category-tree';
+import {CategoryTree, treeToCategoryArray} from './category-tree';
 import {Name} from '../constants';
 
 
-export type RawProjectConfiguration = Pair<Tree<Category>, Array<RelationDefinition>>;
+export type RawProjectConfiguration = Pair<CategoryTree, Array<RelationDefinition>>;
 
 
 /**

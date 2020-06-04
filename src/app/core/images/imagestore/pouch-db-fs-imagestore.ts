@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {SafeResourceUrl} from '@angular/platform-browser';
+import {to} from 'tsfun';
 import {BlobMaker, BlobUrlSet} from './blob-maker';
 import {ImageConverter} from './image-converter';
 import {ImagestoreErrors} from './imagestore-errors';
@@ -126,6 +127,32 @@ export class PouchDbFsImagestore /*implements Imagestore */{
                 return Promise.reject([ImagestoreErrors.NOT_FOUND]); // both thumb and original
             });
         });
+    }
+
+
+    public async readThumbnails(imageIds: string[]): Promise<{ [imageId: string]: SafeResourceUrl|string }> {
+
+        const options = {
+            keys: imageIds,
+            include_docs: true,
+            attachments: true,
+            binary: true
+        };
+
+        const imageDocuments = (await this.db.allDocs(options)).rows.map(to('doc'));
+
+        const result: { [imageId: string]: SafeResourceUrl|string } = {};
+
+        for (let imageDocument of imageDocuments) {
+            if (!this.thumbBlobUrls[imageDocument.resource.id]) {
+                this.thumbBlobUrls[imageDocument.resource.id]
+                    = this.blobMaker.makeBlob(imageDocument._attachments.thumb.data);
+            }
+            result[imageDocument.resource.id]
+                = PouchDbFsImagestore.getUrl(this.thumbBlobUrls[imageDocument.resource.id], false);
+        }
+
+        return result;
     }
 
 

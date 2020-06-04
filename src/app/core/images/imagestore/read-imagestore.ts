@@ -30,6 +30,9 @@ export abstract class ReadImagestore {
     abstract read(key: string, sanitizeAfter?: boolean, thumb?: boolean): Promise<string|SafeResourceUrl>;
 
 
+    abstract readThumbnails(imageIds: string[]): Promise<{ [imageId: string]: SafeResourceUrl|string }>;
+
+
     /**
      * Revokes an image blob url which was previously created by calling read.
      * Should be called as soon as the image is no longer displayed to allow the garbage collector to remove

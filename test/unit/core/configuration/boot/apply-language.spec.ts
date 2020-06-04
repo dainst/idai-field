@@ -2,7 +2,7 @@ import {Map} from 'tsfun';
 import {LibraryCategoryDefinition} from '../../../../../src/app/core/configuration/model/library-category-definition';
 import {CategoryDefinition} from '../../../../../src/app/core/configuration/model/category-definition';
 import {applyLanguage} from '../../../../../src/app/core/configuration/boot/apply-language';
-import {Groups} from '../../../../../src/app/core/configuration/model/group';
+
 
 
 /**
@@ -41,14 +41,13 @@ describe('applyLanguage', () => {
 
     it('apply language', () => {
 
-        configuration = {
-            identifier: 'test',
-            categories: {
+        configuration = [
+            {
                 A: { fields: { a: {}, a1: {} } } as CategoryDefinition,
                 B: { fields: { b: {} } } as CategoryDefinition
             },
-            relations: [{ name: 'isRecordedIn' }, { name: 'isContemporaryWith' }]
-        };
+            [{ name: 'isRecordedIn' }, { name: 'isContemporaryWith' }]
+        ];
 
         const languageConfiguration = {
             categories: {
@@ -71,16 +70,16 @@ describe('applyLanguage', () => {
             }
         };
 
-        configuration = applyLanguage(languageConfiguration)(configuration);
+        const [categories,relations] = applyLanguage(languageConfiguration)(configuration);
 
-        expect(configuration.categories['A'].label).toEqual('A_');
-        expect(configuration.categories['B'].label).toBeUndefined();
-        expect(configuration.categories['A'].fields['a'].label).toEqual('a_');
-        expect(configuration.categories['A'].fields['a1'].label).toBeUndefined();
-        expect(configuration.categories['A'].fields['a'].description).toBeUndefined();
-        expect(configuration.categories['A'].fields['a1'].description).toEqual('a1_desc');
-        expect(configuration.relations[0].label).toEqual('isRecordedIn_');
-        expect(configuration.relations[1].label).toBeUndefined();
+        expect(categories['A'].label).toEqual('A_');
+        expect(categories['B'].label).toBeUndefined();
+        expect(categories['A'].fields['a'].label).toEqual('a_');
+        expect(categories['A'].fields['a1'].label).toBeUndefined();
+        expect(categories['A'].fields['a'].description).toBeUndefined();
+        expect(categories['A'].fields['a1'].description).toEqual('a1_desc');
+        expect(relations[0].label).toEqual('isRecordedIn_');
+        expect(relations[1].label).toBeUndefined();
     });
 });
 

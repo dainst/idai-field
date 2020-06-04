@@ -9,34 +9,36 @@ import {Named} from '../../util/named';
  */
 export function addRelations(extraRelations: Array<RelationDefinition>) {
 
-    return (configuration: any) => {
+    return (configuration: [any, any]) => {
 
-        if (!configuration.relations) return;
+        let [categories, relations] = configuration;
+
+        if (!relations) return;
 
         for (let extraRelation of extraRelations) {
-            expandInherits(configuration, extraRelation, RelationDefinition.DOMAIN);
+            expandInherits(categories, extraRelation, RelationDefinition.DOMAIN);
 
-            configuration.relations
+            relations
                 .filter(on(Named.NAME)(extraRelation))
                 .forEach((relation: any) => {
                     relation.domain = subtract(extraRelation.domain)(relation.domain)
                 });
-            configuration.relations = configuration.relations
+            relations = relations
                 .filter(isNot(on(RelationDefinition.DOMAIN, empty)));
 
-            configuration.relations.splice(0,0, extraRelation);
+            relations.splice(0,0, extraRelation);
 
-            expandInherits(configuration, extraRelation, RelationDefinition.RANGE);
-            expandOnEmpty(configuration, extraRelation, RelationDefinition.RANGE);
-            expandOnEmpty(configuration, extraRelation, RelationDefinition.DOMAIN);
+            expandInherits(categories, extraRelation, RelationDefinition.RANGE);
+            expandOnEmpty(categories, extraRelation, RelationDefinition.RANGE);
+            expandOnEmpty(categories, extraRelation, RelationDefinition.DOMAIN);
         }
 
-        return configuration;
+        return [categories, relations];
     }
 }
 
 
-function expandInherits(configuration: any,
+function expandInherits(categories: any,
                         extraRelation: RelationDefinition, itemSet: string) {
 
     if (!extraRelation) return;
@@ -46,8 +48,8 @@ function expandInherits(configuration: any,
     for (let item of (extraRelation as any)[itemSet]) {
 
         if (item.indexOf(':inherit') !== -1) {
-            for (let categoryName of Object.keys(configuration.categories)) {
-                const category = configuration.categories[categoryName];
+            for (let categoryName of Object.keys(categories)) {
+                const category = categories[categoryName];
 
                 if (category.parent === item.split(':')[0]) {
                     itemsNew.push(categoryName);
@@ -64,7 +66,7 @@ function expandInherits(configuration: any,
 }
 
 
-function expandOnEmpty(configuration: any,
+function expandOnEmpty(categories: any,
                        extraRelation_: RelationDefinition, itemSet: string) {
 
     const extraRelation: any = extraRelation_;
@@ -75,7 +77,7 @@ function expandOnEmpty(configuration: any,
     if (itemSet === RelationDefinition.RANGE) opposite = RelationDefinition.DOMAIN;
 
     extraRelation[itemSet] = [];
-    for (let categoryName of Object.keys(configuration.categories)) {
+    for (let categoryName of Object.keys(categories)) {
         if (extraRelation[opposite].indexOf(categoryName) === -1) {
             extraRelation[itemSet].push(categoryName);
         }

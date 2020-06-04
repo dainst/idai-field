@@ -29,12 +29,11 @@ describe('addRelations', () => {
             }
         } as LibraryCategoryDefinition;
 
-        configuration = {
-            identifier: 'test',
-            categories: {
+        configuration =
+            [{
                 'T1': t1
             } as Map<LibraryCategoryDefinition>
-        } as any;
+            ,[]];
     });
 
 
@@ -48,10 +47,10 @@ describe('addRelations', () => {
         };
         configuration.relations = [];
 
-        configuration = addRelations([extraRelation])(configuration);
+        const [, relations] = addRelations([extraRelation])(configuration);
 
-        expect(configuration.relations[0].name).toBe('R');
-        expect(configuration.relations[1]).toBe(undefined); // to prevent reintroducing bug
+        expect(relations[0].name).toBe('R');
+        expect(relations[1]).toBe(undefined); // to prevent reintroducing bug
     });
 
 
@@ -71,15 +70,15 @@ describe('addRelations', () => {
             range : ['rangeB']
         };
 
-        configuration = { identifier: 'test', categories: { T1: t1 }, relations: []};
+        configuration = [{ T1: t1 }, []];
 
-        configuration = addRelations([r1, r2])(configuration);
-        expect(configuration.relations[0].domain).toContain('domainB');
-        expect(configuration.relations[0].domain).toContain('domainC');
-        expect(configuration.relations[0].range).toContain('rangeB');
+        const [, relations] = addRelations([r1, r2])(configuration);
+        expect(relations[0].domain).toContain('domainB');
+        expect(relations[0].domain).toContain('domainC');
+        expect(relations[0].range).toContain('rangeB');
 
-        expect(configuration.relations[1].domain).toContain('domainA');
-        expect(configuration.relations[1].range).toContain('rangeA');
+        expect(relations[1].domain).toContain('domainA');
+        expect(relations[1].range).toContain('rangeA');
     });
 
 
@@ -99,14 +98,14 @@ describe('addRelations', () => {
             range : ['rangeA', 'rangeB', 'rangeC']
         };
 
-        configuration = { identifier: 'test', categories: { T1: t1 }, relations: []};
+        configuration = [{ T1: t1 }, []];
 
-        configuration = addRelations([r1, r2])(configuration);
+        const [, relations] = addRelations([r1, r2])(configuration);
 
-        expect(configuration.relations.length).toEqual(1); // to make sure the relation is collapsed into one
-        expect(configuration.relations[0].range).toContain('rangeA');
-        expect(configuration.relations[0].range).toContain('rangeB');
-        expect(configuration.relations[0].range).toContain('rangeC');
+        expect(relations.length).toEqual(1); // to make sure the relation is collapsed into one
+        expect(relations[0].range).toContain('rangeA');
+        expect(relations[0].range).toContain('rangeB');
+        expect(relations[0].range).toContain('rangeC');
     });
 
 
@@ -121,10 +120,10 @@ describe('addRelations', () => {
 
         configuration.relations = [];
 
-        configuration = addRelations([r])(configuration);
+        const [, relations] = addRelations([r])(configuration);
 
-        expect(configuration.relations[0].range[0]).toBe('T1');
-        expect(configuration.relations[0].range[1]).toBe(undefined);
+        expect(relations[0].range[0]).toBe('T1');
+        expect(relations[0].range[1]).toBe(undefined);
     });
 
 
@@ -139,10 +138,10 @@ describe('addRelations', () => {
 
         configuration.relations = [];
 
-        configuration = addRelations([r])(configuration);
+        const [, relations] = addRelations([r])(configuration);
 
-        expect(configuration.relations[0].domain[0]).toBe('T1');
-        expect(configuration.relations[0].domain[1]).toBe(undefined);
+        expect(relations[0].domain[0]).toBe('T1');
+        expect(relations[0].domain[1]).toBe(undefined);
     });
 
 
@@ -154,16 +153,16 @@ describe('addRelations', () => {
             range: [ 'T1:inherit' ]
         };
 
-        configuration.relations = [];
-        configuration.categories['T2'] = { fields: {}, parent: 'T1' };
-        configuration.categories['T3'] = { fields: {} };
+        configuration[1] = [];
+        configuration[0]['T2'] = { fields: {}, parent: 'T1' };
+        configuration[0]['T3'] = { fields: {} };
 
-        configuration = addRelations([r])(configuration);
+        const [, relations] = addRelations([r])(configuration);
 
-        expect(configuration.relations[0].range.indexOf('T1')).not.toBe(-1);
-        expect(configuration.relations[0].range.indexOf('T2')).not.toBe(-1);
-        expect(configuration.relations[0].range.indexOf('T1:inherit')).toBe(-1);
-        expect(configuration.relations[0].domain[0]).toBe('T3');
+        expect(relations[0].range.indexOf('T1')).not.toBe(-1);
+        expect(relations[0].range.indexOf('T2')).not.toBe(-1);
+        expect(relations[0].range.indexOf('T1:inherit')).toBe(-1);
+        expect(relations[0].domain[0]).toBe('T3');
     });
 
 
@@ -176,16 +175,16 @@ describe('addRelations', () => {
             range: [ 'T3' ]
         };
 
-        configuration.relations = [];
-        configuration.categories['T2'] = { fields: {}, parent: 'T1' };
-        configuration.categories['T3'] = { fields: {} };
+        configuration[1] = [];
+        configuration[0]['T2'] = { fields: {}, parent: 'T1' };
+        configuration[0]['T3'] = { fields: {} };
 
-        configuration = addRelations([r])(configuration);
+        const [, relations] = addRelations([r])(configuration);
 
-        expect(configuration.relations[0].domain.indexOf('T1')).not.toBe(-1);
-        expect(configuration.relations[0].domain.indexOf('T2')).not.toBe(-1);
-        expect(configuration.relations[0].domain.indexOf('T1:inherit')).toBe(-1);
-        expect(configuration.relations[0].range[0]).toBe('T3');
+        expect(relations[0].domain.indexOf('T1')).not.toBe(-1);
+        expect(relations[0].domain.indexOf('T2')).not.toBe(-1);
+        expect(relations[0].domain.indexOf('T1:inherit')).toBe(-1);
+        expect(relations[0].range[0]).toBe('T3');
     });
 
 
@@ -199,13 +198,13 @@ describe('addRelations', () => {
             range: []
         };
 
-        configuration.relations = [];
-        configuration.categories['T2'] = { fields: {}, parent: 'T1' };
-        configuration.categories['T3'] = { fields: {} };
-        configuration = addRelations([r])(configuration);
+        configuration[1] = [];
+        configuration[0]['T2'] = { fields: {}, parent: 'T1' };
+        configuration[0]['T3'] = { fields: {} };
+        const [, relations] = addRelations([r])(configuration);
 
-        expect(configuration.relations[0].range[0]).toBe('T3');
-        expect(configuration.relations[0].range.indexOf('T1')).toBe(-1);
-        expect(configuration.relations[0].range.indexOf('T2')).toBe(-1);
+        expect(relations[0].range[0]).toBe('T3');
+        expect(relations[0].range.indexOf('T1')).toBe(-1);
+        expect(relations[0].range.indexOf('T2')).toBe(-1);
     });
 });

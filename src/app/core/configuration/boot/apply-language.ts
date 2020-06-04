@@ -6,20 +6,22 @@
  */
 export function applyLanguage(language: any) {
 
-    return (configuration: any) => {
+    return (configuration: [any, any]) => {
 
-        if (configuration.categories) applyCategories(language, configuration);
-        if (language.relations) applyRelations(language, configuration);
+        const [categories, relations] = configuration;
 
-        return configuration;
+        if (categories) applyCategories(language, categories);
+        if (language.relations) applyRelations(language, relations);
+
+        return [categories, relations];
     }
 }
 
 
-function applyRelations(language: any, configuration: any) {
+function applyRelations(language: any, relations: any) {
 
     for (let languageConfigurationRelationKey of Object.keys(language.relations)) {
-        for (let configurationRelation of configuration.relations as any) {
+        for (let configurationRelation of relations as any) {
             if (configurationRelation.name !== languageConfigurationRelationKey) continue;
 
             const langConfRelation = language.relations[languageConfigurationRelationKey];
@@ -29,10 +31,10 @@ function applyRelations(language: any, configuration: any) {
 }
 
 
-function applyCategories(language: any, configuration: any) {
+function applyCategories(language: any, categories: any) {
 
-    for (let configurationCategoryName of Object.keys(configuration.categories)) {
-        const configurationCategory = configuration.categories[configurationCategoryName];
+    for (let configurationCategoryName of Object.keys(categories)) {
+        const configurationCategory = categories[configurationCategoryName];
 
         if (language.categories
             && language.categories[configurationCategoryName]

@@ -4,7 +4,7 @@ import {
     pairWith, prune, filter, update as updateObject
 } from 'tsfun';
 import {assoc, update, lookup, map, reduce} from 'tsfun/associative';
-import {clone} from 'tsfun/struct';
+import {clone, update as updateStruct} from 'tsfun/struct';
 import {LibraryCategoryDefinition} from '../model/library-category-definition';
 import {CustomCategoryDefinition} from '../model/custom-category-definition';
 import {ConfigurationErrors} from './configuration-errors';
@@ -38,7 +38,7 @@ import {mapLeafs, mapTree, Tree} from '../tree';
 import {sortStructArray} from '../../util/sort-struct-array';
 
 
-const CATEGORIES = 'categories';
+const CATEGORIES = [0];
 
 
 /**
@@ -74,19 +74,16 @@ export function buildRawProjectConfiguration(builtInCategories: Map<BuiltinCateg
         toCategoriesByFamilyNames,
         replaceValuelistIdsWithValuelists(valuelistsConfiguration),
         addExtraFields(extraFields),
-        wrapCategoriesInObject,
+        prepareRawProjectConfiguration,
         addRelations(relations),
         applyLanguage(languageConfiguration),
         applyLanguage(customLanguageConfiguration),
-        updateObject(CATEGORIES, processCategories(
-            orderConfiguration, validateFields, languageConfiguration, searchConfiguration, relations)),
-        asRawProjectConfiguration);
+        updateStruct(CATEGORIES, processCategories(
+            orderConfiguration, validateFields, languageConfiguration, searchConfiguration, relations)));
 }
 
 
-const wrapCategoriesInObject = (configuration: Map<TransientCategoryDefinition>) => ({ categories: configuration, relations: [] });
-
-const asRawProjectConfiguration = ({categories, relations}: any) => ([categories, relations]);
+const prepareRawProjectConfiguration = (configuration: Map<TransientCategoryDefinition>) => [configuration, [] /* relations */];
 
 
 function processCategories(orderConfiguration: any,

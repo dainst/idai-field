@@ -37,3 +37,18 @@ export function treeToCategoryMap(t: CategoryTree): Map<Category> {
 
     return namedArrayToNamedMap(treeToCategoryArray(t))
 }
+
+
+/**
+ * @param categories an at most two level deep Tree<Category>
+ * @returns a CategoryTree according to its specified properties
+ */
+export function linkParentAndChildInstances(categories: Tree<Category> /* modified in place */): CategoryTree {
+
+    for (let [category, children] of categories) {
+
+        category.children = children.map(to(CATEGORIES));
+        category.children.map(child => child.parentCategory = category);
+    }
+    return categories;
+}

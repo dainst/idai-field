@@ -9,6 +9,7 @@ import {clone} from '../../util/object-util';
 import {mapToNamedArray} from '../../util/named';
 import {MDInternal} from '../../../components/messages/md-internal';
 import {mapTree, Tree} from '../tree';
+import {CategoryTree, linkParentAndChildInstances} from '../category-tree';
 
 
 const TEMP_FIELDS = 'fields';
@@ -18,7 +19,7 @@ const TEMP_FIELDS = 'fields';
  * @author Daniel de Oliveira
  * @author Sebastian Cuy
  */
-export function makeCategoriesTree(categories: any): Tree<Category> {
+export function makeCategoryTree(categories: any): CategoryTree {
 
     const [parentDefs, childDefs] =
         separate(on(CategoryDefinition.PARENT, isNot(defined)), categories);
@@ -35,7 +36,8 @@ export function makeCategoriesTree(categories: any): Tree<Category> {
         childDefs,
         reduce(addChildCategory, parentCategories),
         mapTree(fillGroups),
-        mapTree(dissoc(TEMP_FIELDS))
+        mapTree(dissoc(TEMP_FIELDS)),
+        linkParentAndChildInstances
     );
 }
 
@@ -82,8 +84,6 @@ function addChildCategory(categoryTree: Tree<Category>,
     (childCategory as any)[TEMP_FIELDS] = makeChildFields(category, childCategory);
 
     tree.push([childCategory,[]])
-    childCategory.parentCategory = category;
-    category.children.push(childCategory);
     return categoryTree;
 }
 

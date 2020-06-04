@@ -25,7 +25,7 @@ import {addRelations} from './add-relations';
 import {applyLanguage} from './apply-language';
 import {applySearchConfiguration} from './apply-search-configuration';
 import {orderFields} from './order-fields';
-import {makeCategoriesTree} from './make-categories-tree';
+import {makeCategoryTree} from './make-category-tree';
 import {RawProjectConfiguration} from '../project-configuration';
 import {Category} from '../model/category';
 import {Group, Groups} from '../model/group';
@@ -36,7 +36,7 @@ import {ProjectCategoriesHelper} from '../project-categories-helper';
 import {FieldDefinition} from '../model/field-definition';
 import {mapLeafs, mapTree, Tree} from '../tree';
 import {sortStructArray} from '../../util/sort-struct-array';
-import {CategoryTree} from '../category-tree';
+import {CategoryTree, linkParentAndChildInstances} from '../category-tree';
 
 const CATEGORIES = [0];
 
@@ -101,7 +101,7 @@ function processCategories(orderConfiguration: any,
         addExtraFieldsOrder(orderConfiguration),
         orderFields(orderConfiguration),
         validateFields,
-        makeCategoriesTree,
+        makeCategoryTree,
         mapTree(putRelationsIntoGroups(relations)),
         mapTree(sortCategoryGroups),
         mapTree(setGroupLabels(languageConfiguration.groups || {})),
@@ -314,19 +314,3 @@ function toCategoriesByFamilyNames(transientCategories: Map<TransientCategoryDef
                 return acc;
             }, {}));
 }
-
-
-/**
- * @param categories
- * @returns a CategoryTree according to its specified properties
- */
-function linkParentAndChildInstances(categories: Tree<Category> /* modified in place */): CategoryTree {
-
-    for (let [category, children] of categories) {
-
-        category.children = children.map(to(CATEGORIES));
-        category.children.map(child => child.parentCategory = category);
-    }
-    return categories;
-}
-

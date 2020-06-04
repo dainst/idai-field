@@ -2,7 +2,7 @@ import {FieldResource} from 'idai-components-2';
 import {Groups} from '../../../../../src/app/core/configuration/model/group';
 import {FieldDefinition} from '../../../../../src/app/core/configuration/model/field-definition';
 import {Category} from '../../../../../src/app/core/configuration/model/category';
-import {makeCategoriesTree} from '../../../../../src/app/core/configuration/boot/make-categories-tree';
+import {makeCategoryTree} from '../../../../../src/app/core/configuration/boot/make-category-tree';
 import {byName} from '../../../../../src/app/core/util/named';
 import InputType = FieldDefinition.InputType;
 import {MDInternal} from '../../../../../src/app/components/messages/md-internal';
@@ -32,7 +32,7 @@ describe('makeCategoriesTree', () => {
             }
         };
 
-        const categoriesMap = treeToCategoryMap(makeCategoriesTree(confDef));
+        const categoriesMap = treeToCategoryMap(makeCategoryTree(confDef));
 
         expect(categoriesMap[P].name).toEqual(P);
         expect(categoriesMap[P].children[0].name).toEqual(A);
@@ -76,7 +76,7 @@ describe('makeCategoriesTree', () => {
             }
         };
 
-        const categoriesMap = treeToCategoryMap(makeCategoriesTree(confDef));
+        const categoriesMap = treeToCategoryMap(makeCategoryTree(confDef));
         const categoryA = categoriesMap[P].children.find(category => category.name === A)!;
         const categoryB = categoriesMap[P].children.find(category => category.name === B)!;
 
@@ -112,7 +112,7 @@ describe('makeCategoriesTree', () => {
             }
         };
 
-        const categoriesMap = treeToCategoryMap(makeCategoriesTree(confDef));
+        const categoriesMap = treeToCategoryMap(makeCategoryTree(confDef));
 
         expect(categoriesMap[T].groups[Groups.STEM].fields[0].name).toEqual(FieldResource.IDENTIFIER);
         expect(categoriesMap[T].groups[Groups.STEM].fields[1].name).toEqual(FieldResource.SHORTDESCRIPTION);
@@ -146,7 +146,7 @@ describe('makeCategoriesTree', () => {
         };
 
         expect(
-            () => makeCategoriesTree(
+            () => makeCategoryTree(
                 {
                     FirstLevelCategory: firstLevelCategory,
                     SecondLevelCategory: secondLevelCategory
@@ -175,7 +175,7 @@ describe('makeCategoriesTree', () => {
         };
 
         expect(() =>
-            makeCategoriesTree({ SecondLevelCategory: secondLevelCategory } as any)
+            makeCategoryTree({ SecondLevelCategory: secondLevelCategory } as any)
         ).toThrow(MDInternal.PROJECT_CONFIGURATION_ERROR_GENERIC);
     });
 });

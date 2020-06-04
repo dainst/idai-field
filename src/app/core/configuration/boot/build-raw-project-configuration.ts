@@ -36,6 +36,7 @@ import {ProjectCategoriesHelper} from '../project-categories-helper';
 import {FieldDefinition} from '../model/field-definition';
 import {mapLeafs, mapTree, Tree} from '../tree';
 import {sortStructArray} from '../../util/sort-struct-array';
+import {CategoryTree} from '../category-tree';
 
 const CATEGORIES = [0];
 
@@ -315,7 +316,11 @@ function toCategoriesByFamilyNames(transientCategories: Map<TransientCategoryDef
 }
 
 
-function linkParentAndChildInstances(categoriesTree: Tree<Category> /* modified in place */): Tree<Category> {
+/**
+ * @param categoriesTree
+ * @returns a CategoryTree according to its specified properties
+ */
+function linkParentAndChildInstances(categoriesTree: Tree<Category> /* modified in place */): CategoryTree {
 
     for (let [category, children] of categoriesTree) {
 

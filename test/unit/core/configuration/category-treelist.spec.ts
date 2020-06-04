@@ -1,6 +1,6 @@
 import {
     categoryTreelistToArray,
-    categoryTreelistToMap
+    categoryTreelistToMap, linkParentAndChildInstances
 } from '../../../../src/app/core/configuration/category-treelist';
 
 
@@ -151,5 +151,36 @@ describe('CategoryTreelist', () => {
         expect(result[4].children.length).toBe(0);
         expect(result[5].name).toBe('C4');
         expect(result[4].children.length).toBe(0);
+    });
+
+
+    it('linkParentAndChildInstances', () => {
+
+        const parent1 = { name: 'P1' }
+        const child1 = { name: 'C1' };
+        const child2 = { name: 'C1' };
+
+        const t = [
+            [
+                parent1,
+                [
+                    [
+                        child1,
+                        [
+                            [
+                                child2,
+                                []
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        ]
+
+        const result = linkParentAndChildInstances(t as any);
+        expect(result[0][0].children[0] === result[0][1][0][0]).toBeTruthy();
+        expect(result[0][1][0][0].children[0] === result[0][1][0][1][0][0]).toBeTruthy();
+        expect(result[0][1][0][1][0][0].parentCategory === result[0][1][0][0]).toBeTruthy();
+        expect(result[0][1][0][0].parentCategory === result[0][0]).toBeTruthy();
     });
 });

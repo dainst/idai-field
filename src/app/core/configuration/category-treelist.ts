@@ -34,7 +34,6 @@ export function categoryTreelistToMap(t: CategoryTreelist): Map<Category> {
 
 
 /**
- * @param categories an at most two level deep Tree<Category>
  * @returns a CategoryTree according to its specified properties
  */
 export function linkParentAndChildInstances(categories: Treelist<Category> /* modified in place */): CategoryTreelist {
@@ -43,6 +42,7 @@ export function linkParentAndChildInstances(categories: Treelist<Category> /* mo
 
         category.children = children.map(to(CATEGORIES));
         category.children.map(child => child.parentCategory = category);
+        linkParentAndChildInstances(children);
     }
     return categories;
 }

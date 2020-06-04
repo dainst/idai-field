@@ -12,10 +12,7 @@ export type CategoryTree = Tree<Category>; // technically the same, but we want 
 
 
 /**
- * @param t expects instance relationships to be set
- *   between parents and children via 'parentCategory' and 'children',
- *   assuming there are at most two levels
- *
+ * @param t expected to conform to the CategoryTree specification
  * @returns an Array containing the original und unmodified Category instances from the Tree
  */
 export function treeToCategoryArray(t: CategoryTree): Array<Category> {
@@ -27,10 +24,7 @@ export function treeToCategoryArray(t: CategoryTree): Array<Category> {
 
 
 /**
- * @param t expects instance relationships to be set
- *   between parents and children via 'parentCategory' and 'children',
- *   assuming there are at most two levels
- *
+ * @param t expected to conform to the CategoryTree specification
  * @returns a Map containing the original und unmodified Category instances from the Tree
  */
 export function treeToCategoryMap(t: CategoryTree): Map<Category> {

@@ -1,7 +1,7 @@
 import {
     cond, flow, includedIn, isDefined, isNot, Mapping, Map, on,
     subtract, undefinedOrEmpty, identity, compose, Pair, dissoc,
-    pairWith, prune, filter, update as updateObject
+    pairWith, prune, filter, update as updateObject, to
 } from 'tsfun';
 import {assoc, update, lookup, map, reduce} from 'tsfun/associative';
 import {clone, update as updateStruct} from 'tsfun/struct';
@@ -79,7 +79,9 @@ export function buildRawProjectConfiguration(builtInCategories: Map<BuiltinCateg
         applyLanguage(languageConfiguration),
         applyLanguage(customLanguageConfiguration),
         updateStruct(CATEGORIES, processCategories(
-            orderConfiguration, validateFields, languageConfiguration, searchConfiguration, relations)));
+            orderConfiguration, validateFields, languageConfiguration, searchConfiguration, relations)
+        )
+    );
 }
 
 
@@ -104,7 +106,8 @@ function processCategories(orderConfiguration: any,
         mapTree(sortCategoryGroups),
         mapTree(setGroupLabels(languageConfiguration.groups || {})),
         setGeometriesInGroups(languageConfiguration),
-        orderCategories(orderConfiguration?.categories));
+        orderCategories(orderConfiguration?.categories)
+    );
 }
 
 

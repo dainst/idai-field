@@ -9,7 +9,7 @@ import {ValuelistDefinition} from '../../../../../src/app/core/configuration/mod
 import {Groups} from '../../../../../src/app/core/configuration/model/group';
 import InputType = FieldDefinition.InputType;
 import {byName, Named, namedArrayToNamedMap,} from '../../../../../src/app/core/util/named';
-import {treeToCategoryArray} from '../../../../../src/app/core/configuration/category-tree';
+import {treeToCategoryArray, treeToCategoryMap} from '../../../../../src/app/core/configuration/category-tree';
 
 
 describe('buildRawProjectConfiguration', () => {
@@ -1350,6 +1350,7 @@ describe('buildRawProjectConfiguration', () => {
         expect(childGroup.fields[0].name).toEqual('geometry');
         expect(childGroup.fields[0].label).toEqual('Geometry');
     });
+
 
     // err cases
 

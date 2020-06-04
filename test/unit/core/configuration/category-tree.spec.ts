@@ -24,7 +24,11 @@ describe('CategoryTree', () => {
 
         const result = treeToCategoryArray(t as any);
 
-        expect(result.length).toBe(2);
+        expect(result[0].children[0] === t[0][1][0][0]).toBeTruthy();
+        expect(result[1].parentCategory === t[0][0]).toBeTruthy();
+        expect(result[1].parentCategory === result[0]).toBeTruthy();
+        expect(result[0].children[0].name === 'C1').toBeTruthy();
+        expect(result[1].parentCategory.name === 'P1').toBeTruthy();
 
         expect(result[0].name).toBe('P1');
         expect(result[0].children.length).toBe(1);
@@ -55,6 +59,12 @@ describe('CategoryTree', () => {
         ]
 
         const result = treeToCategoryMap(t as any);
+
+        expect(result['P1'].children[0] === t[0][1][0][0]).toBeTruthy();
+        expect(result['C1'].parentCategory === t[0][0]).toBeTruthy();
+        expect(result['C1'].parentCategory === result['P1']).toBeTruthy();
+        expect(result['P1'].children[0].name === 'C1').toBeTruthy();
+        expect(result['C1'].parentCategory.name === 'P1').toBeTruthy();
 
         expect(result['P1'].name).toBe('P1');
         expect(result['P1'].children.length).toBe(1);

@@ -1,4 +1,4 @@
-import {flow, to, on, isNot, empty, is, Pair, Map, isArray, includedIn} from 'tsfun';
+import {flow, to, on, isNot, empty, is, Pair, Map, includedIn} from 'tsfun';
 import {map} from 'tsfun/associative';
 import {filter} from 'tsfun/collection';
 import {Category} from './model/category';

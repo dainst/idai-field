@@ -82,7 +82,6 @@ function addChildCategory(categoryTree: Tree<Category>,
     (childCategory as any)[TEMP_FIELDS] = makeChildFields(category, childCategory);
 
     tree.push([childCategory,[]])
-    category.children.push(childCategory);
     childCategory.parentCategory = category;
     return categoryTree;
 }

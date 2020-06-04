@@ -36,7 +36,7 @@ import {ProjectCategoriesHelper} from '../project-categories-helper';
 import {FieldDefinition} from '../model/field-definition';
 import {mapLeafs, mapTree, Tree} from '../tree';
 import {sortStructArray} from '../../util/sort-struct-array';
-import {CategoryTree, linkParentAndChildInstances} from '../category-tree';
+import {linkParentAndChildInstances} from '../category-tree';
 
 const CATEGORIES = [0];
 

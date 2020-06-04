@@ -108,6 +108,7 @@ export class ProjectConfiguration {
         return RelationsUtil.getRelationDefinitions(this.relations, categoryName, isRangeCategory, property);
     }
 
+
     /**
      * @returns {boolean} True if the given domain category is a valid domain name for a relation definition
      * which has the given range category & name
@@ -130,6 +131,7 @@ export class ProjectConfiguration {
 
         return ProjectCategoriesHelper.isSubcategory(this.getCategoriesMap(), categoryName, superCategoryName);
     }
+
 
     /**
      * @param categoryName

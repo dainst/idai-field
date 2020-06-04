@@ -34,6 +34,9 @@ export class ListComponent extends BaseList {
     }
 
 
+    public trackDocument = (index: number, item: FieldDocument) => item.resource.id;
+
+
     public async createNewDocument(doc: FieldDocument) {
 
         this.documents = this.documents

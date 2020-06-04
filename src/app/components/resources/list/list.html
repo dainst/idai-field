@@ -8,11 +8,11 @@
             <div id="header-placeholder"></div>
         </div>
         <div id="list-body">
-            <div class="row-grid">
-                <div *ngFor="let document of documents">
+            <cdk-virtual-scroll-viewport itemSize="41">
+                <div class="list-row" *cdkVirtualFor="let document of documents; trackBy: trackDocument" >
                     <row [document]="document" [categoriesMap]="categoriesMap"></row>
                 </div>
-            </div>
+            </cdk-virtual-scroll-viewport>
         </div>
     </div>
 </div>

@@ -285,6 +285,24 @@ describe('CachedDatastore', () => {
     });
 
 
+    // find ids
+
+    it('should return only ids', async done => {
+
+        await ds.create({ resource: { id: '1', relations: {}} } as any, 'u');
+        await ds.create({ resource: { id: '2', relations: {}} } as any, 'u');
+
+        mockIndexFacade.find.and.returnValues(['1', '2']);
+
+        const result = ds.findIds({});
+        expect(result.ids.length).toBe(2);
+        expect(result.totalCount).toBe(2);
+        expect(result['documents']).toBe(undefined);
+
+        done();
+    });
+
+
     // update
 
     it('should add missing fields on update', async done => {

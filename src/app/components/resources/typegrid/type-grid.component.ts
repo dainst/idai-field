@@ -60,7 +60,6 @@ export class TypeGridComponent extends BaseList implements OnChanges {
 
     public images: { [resourceId: string]: Array<SafeResourceUrl> } = {};
     public contextMenu: ContextMenu = new ContextMenu();
-    public ready: boolean = false;
 
     private expandAllGroups: boolean = false;
 
@@ -83,6 +82,8 @@ export class TypeGridComponent extends BaseList implements OnChanges {
     }
 
 
+    public isLoading = () => this.loading.isLoading();
+
     public getExpandAllGroups = () => this.expandAllGroups;
 
     public setExpandAllGroups = (expand: boolean) => this.expandAllGroups = expand;
@@ -90,9 +91,9 @@ export class TypeGridComponent extends BaseList implements OnChanges {
 
     async ngOnChanges(changes: SimpleChanges) {
 
-        this.ready = false;
+        this.loading.start();
         await this.update();
-        this.ready = true;
+        this.loading.stop();
     }
 
 

@@ -1,5 +1,5 @@
 import {Component, Input, Output, EventEmitter, OnChanges} from '@angular/core';
-import {on, any, is, flow, compose, map, to} from 'tsfun';
+import {on, any, is, compose, map, to} from 'tsfun';
 import {Category} from '../../core/configuration/model/category';
 import {Named} from '../../core/util/named';
 import {FieldDefinition} from '../../core/configuration/model/field-definition';
@@ -14,7 +14,7 @@ import {FieldDefinition} from '../../core/configuration/model/field-definition';
  */
 export class CategoryPickerComponent implements OnChanges {
 
-    @Input() selectableCategoriesArray: Array<Category>;
+    @Input() toplevelCategoriesArray: Array<Category>;
     @Input() selectedCategories: string[];
     @Input() allCategoriesOptionVisible: boolean = false;
     @Input() allowPickingAbstractCategories: boolean = false;
@@ -30,7 +30,7 @@ export class CategoryPickerComponent implements OnChanges {
 
         this.categories = [];
 
-        this.selectableCategoriesArray.forEach(category => {
+        this.toplevelCategoriesArray.forEach(category => { // TODO review, we could use getCategoriesMap()
             this.categories.push(category);
             if (category.children) this.categories = this.categories.concat(category.children);
         });

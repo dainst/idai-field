@@ -43,7 +43,7 @@ export class PlusButtonComponent implements OnChanges {
     @ViewChild('popover', { static: false }) private popover: any;
 
     public selectedCategory: string|undefined;
-    public selectableCategoriesArray: Array<Category>;
+    public toplevelCategoriesArray: Array<Category>;
 
 
     constructor(
@@ -96,17 +96,17 @@ export class PlusButtonComponent implements OnChanges {
     public reset() {
 
         this.selectedCategory = this.getButtonType() === 'singleCategory'
-            ? this.selectableCategoriesArray[0].name
+            ? this.toplevelCategoriesArray[0].name
             : this.selectedCategory = undefined;
     }
 
 
     public getButtonType(): 'singleCategory'|'multipleCategories'|'none' {
 
-        if (this.selectableCategoriesArray.length === 0) return 'none';
+        if (this.toplevelCategoriesArray.length === 0) return 'none';
 
-        if (this.selectableCategoriesArray.length === 1
-                && (!this.selectableCategoriesArray[0].children || this.selectableCategoriesArray[0].children.length === 0)) {
+        if (this.toplevelCategoriesArray.length === 1
+                && (!this.toplevelCategoriesArray[0].children || this.toplevelCategoriesArray[0].children.length === 0)) {
             return 'singleCategory';
         }
 
@@ -163,12 +163,12 @@ export class PlusButtonComponent implements OnChanges {
 
     private initializeSelectableCategoriesArray(projectConfiguration: ProjectConfiguration) {
 
-        this.selectableCategoriesArray = [];
+        this.toplevelCategoriesArray = [];
 
         if (this.preselectedCategory) {
             const category: Category = projectConfiguration.getCategory(this.preselectedCategory);
             if (category) {
-                this.selectableCategoriesArray.push(category);
+                this.toplevelCategoriesArray.push(category);
             } else {
                 this.messages.add([M.RESOURCES_ERROR_CATEGORY_NOT_FOUND, this.preselectedCategory]);
             }
@@ -177,7 +177,7 @@ export class PlusButtonComponent implements OnChanges {
                 if (this.isAllowedCategory(category, projectConfiguration)
                         && (!category.parentCategory
                             || !this.isAllowedCategory(category.parentCategory, projectConfiguration))) {
-                    this.selectableCategoriesArray.push(category);
+                    this.toplevelCategoriesArray.push(category);
                 }
             }
         }

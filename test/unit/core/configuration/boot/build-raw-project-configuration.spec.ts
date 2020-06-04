@@ -9,7 +9,7 @@ import {ValuelistDefinition} from '../../../../../src/app/core/configuration/mod
 import {Groups} from '../../../../../src/app/core/configuration/model/group';
 import InputType = FieldDefinition.InputType;
 import {byName, Named, namedArrayToNamedMap,} from '../../../../../src/app/core/util/named';
-import {treeToCategoryArray} from '../../../../../src/app/core/configuration/category-tree';
+import {categoryTreeToCategoryArray} from '../../../../../src/app/core/configuration/category-tree';
 
 
 describe('buildRawProjectConfiguration', () => {
@@ -19,7 +19,7 @@ describe('buildRawProjectConfiguration', () => {
     function buildRawArray(a: any, b: any, ...rest: any[]) {
 
         const raw = buildRawProjectConfiguration(a, b, ...rest);
-        return treeToCategoryArray(categories(raw));
+        return categoryTreeToCategoryArray(categories(raw));
     }
 
     function buildRaw(a: any, b: any, ...rest: any[]) {

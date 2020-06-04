@@ -15,7 +15,7 @@ export type CategoryTree = Tree<Category>; // technically the same, but we want 
  * @param t expected to conform to the CategoryTree specification
  * @returns an Array containing the original und unmodified Category instances from the Tree
  */
-export function treeToCategoryArray(t: CategoryTree): Array<Category> {
+export function categoryTreeToCategoryArray(t: CategoryTree): Array<Category> {
 
     const parents = t.map(to(CATEGORIES));
     const children: Array<Category> = flatten(parents.map(to(Category.CHILDREN)));
@@ -27,9 +27,9 @@ export function treeToCategoryArray(t: CategoryTree): Array<Category> {
  * @param t expected to conform to the CategoryTree specification
  * @returns a Map containing the original und unmodified Category instances from the Tree
  */
-export function treeToCategoryMap(t: CategoryTree): Map<Category> {
+export function categoryTreeToCategoryMap(t: CategoryTree): Map<Category> {
 
-    return namedArrayToNamedMap(treeToCategoryArray(t))
+    return namedArrayToNamedMap(categoryTreeToCategoryArray(t))
 }
 
 

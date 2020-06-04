@@ -1,6 +1,6 @@
 import {
-    treeToCategoryArray,
-    treeToCategoryMap
+    categoryTreeToCategoryArray,
+    categoryTreeToCategoryMap
 } from '../../../../src/app/core/configuration/category-tree';
 
 
@@ -24,7 +24,7 @@ describe('CategoryTree', () => {
             ]
         ]
 
-        const result = treeToCategoryArray(t as any);
+        const result = categoryTreeToCategoryArray(t as any);
 
         expect(result[0].name).toBe('P1');
         expect(result[0].children.length).toBe(1);
@@ -63,7 +63,7 @@ describe('CategoryTree', () => {
             ]
         ]
 
-        const result = treeToCategoryMap(t as any);
+        const result = categoryTreeToCategoryMap(t as any);
 
         expect(result['P1'].name).toBe('P1');
         expect(result['P1'].children.length).toBe(1);
@@ -125,7 +125,7 @@ describe('CategoryTree', () => {
             ]
         ]
 
-        const result = treeToCategoryArray(t as any);
+        const result = categoryTreeToCategoryArray(t as any);
 
         expect(result.length).toBe(6);
 

@@ -8,7 +8,7 @@ import {Named, namedArrayToNamedMap} from '../util/named';
 import {RelationsUtil} from './relations-utils';
 import {ProjectCategoriesHelper} from './project-categories-helper';
 import {Tree} from './tree';
-import {CategoryTree, treeToCategoryArray} from './category-tree';
+import {CategoryTree, categoryTreeToCategoryArray} from './category-tree';
 import {Name} from '../constants';
 
 
@@ -41,9 +41,9 @@ export class ProjectConfiguration {
     constructor([categories, relations]: RawProjectConfiguration) {
 
         this.categoryTree = categories;
-        this.categoriesArray = treeToCategoryArray(categories) || [];
+        this.categoriesArray = categoryTreeToCategoryArray(categories) || [];
         this.relations = relations || [];
-        this.categoriesMap = namedArrayToNamedMap(treeToCategoryArray(categories));
+        this.categoriesMap = namedArrayToNamedMap(categoryTreeToCategoryArray(categories));
     }
 
 

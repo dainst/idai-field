@@ -1,3 +1,14 @@
+## Introduction
+
+iDAI.field is an application which offers an interface to generate information and store it in a database. The application 
+and the database have been developed to face the difficulties of data managment during archaeological field work. At the time of writing the app is capable of hosting 
+all basic data gathered during an archaeological excavation or survey. Archaeological entities are represented digitally and can be 
+described with images, geographical coordinates, text and numbers. Relations among entities can model the 
+connections observed in the archaeological record. One of the key advantages when using this application 
+for archaeological documentation is, that by the end of the mission, all information is stored in a structured way 
+and retrievable via one access point. During the mission the entire team can work on the same synchronized database via 
+Local Area Network.
+
 ## First steps
 
 After starting the client for the first time, the project "test" will be active, allowing you to experiment
@@ -15,7 +26,7 @@ recommended to fill in this field, especially if data is going to be synchronize
 
 2. In the submenu **Settings** you can also change the path to the image directory. This may be necessary if
 you want to access an image directory located on a network device (NAS) used by several users simultaneously.
-Please note that in each case images must be imported via the client. Image files that are manually placed in
+Please note that images must be imported via the client. Image files that are manually placed in
 the image directory can **not** be used by the application. 
 
 3. Click on the project name "test" in order to open the **Project management**. In this menu, you can create
@@ -32,31 +43,102 @@ your project data regularly.
 
 <hr>
 
+## Settings
+
+In the top-right you can go to "File" > **Settings** to change settings which will be applied for you entire app.
+Non of these settings will directly touch your database, but they change it's environment. For example if you change 
+**Language** this will not affect any values in your database, although it translates how name of resources and fields 
+are displayed in the app. Please fill in **Editor name** to make identification of changes in the database possible.
+**Synchronization** settings regulate with whom your project will be connected. The **Adress** field takes an IP or 
+domain Adress of a computer which you want to work with on the same project. To actually synchronize, this computer
+must be reachable in your local network or via internet. For your comfort, your own IP-Adress and password are shown
+below to make it more easy to setup your system with your colleagues. In the field when you set up your network with 
+the team, it is best to choose one computer as the "master" and have all other team members connect to the master.
+All team members must be within the same project, identified by the exact same project name, to synchronize.
+
+The German Archaeological Institute hosts the official iDAI.field project-server. You can sync your project with this 
+server using the Adress 'field.dainst.org/sync' however you must sign up your project before, contact idai.field@dainst.de
+to get your project hosted centrally.
+
+Regarding **Images**, the app uses an explicit folder to store all image files which are imported with the app -
+this **Path** can be specified here. For Windows-users the app will automatically make and use a directory:
+'C:\Users\YourUserName\AppData\Roaming\idai-field-client\imagestore' (in most systems the directory 'AppData\' is a 
+hidden directory, you can view it anyways when youn enter the Path directly in your file browser) . 
+Each project receives its own subfolder in the imagestore.
+Mind that you cannot 'import' images by moving original images into that directory. Images must receive a unique 
+identification from the app to work as a resource in the database. All images must be imported with the app see 
+**Image management** for more information.
+
+The Synchronization-function does not, at the moment, support synchronization of original image files, although it will 
+synchronize Thumbnails (downscaled resolution) of the images. However, you can still share to original images if you 
+and your team use the same imagestore in your local network or online.
+
 ## Resources
 
-The resource management facilities are at the core of iDAI.field.
+The entities stored in the database, such as "trench", "images", "finds", "types", "stratigraphical units" etc. are called 
+"resources". The resource management facilities are at the core of iDAI.field. Resources can be realated to each 
+other, in that way the information entered into iDAI.field becomes structured. For example: images can be linked to finds and finds can be 
+set within stratigraphical units etc. The various resources in iDAI.field fulfill specific functionalities to cover
+the general needs of archaeological documentation. Each resource is configured with a set of attributes called 
+"fields" which must be filled in with "values" by the user to produce valuable data.
 
-### Operations
 
-After creating a project or opening an existing one, you begin in the tab **Overview** (recognizable by the
-home symbol) where all of the project's operations and places are managed.
 
-Use the green plus button at the bottom of the resources list to create a new operation.
+### Project
+
+The "project" is the highest level resource of iDAI.field - all other resources must be within a "project". With your 
+installation of iDAI.field you can work on multiple projects. In the app, click on the top-right name of the project to
+create, modify or delete projects. 
+
+<p align="center"><img src="images/en/resources/manage_projects.png" alt="Manage projects"/></p>
+
+
+
+### Creating, modifying and deleting resources
+
+All resources are created in more or less the same way. Wherever you find a green plus button you are able to 
+create a new resource of a specific category. After creating a project or opening 
+an existing one, you begin in the tab **Overview** (recognizable by the home symbol) where all of the project's operations 
+and places are managed. Use the green plus button at the bottom of the resources list to create a new operation.
 
 <p align="center"><img src="images/en/resources/create_operation.png" alt="Create operation resource"/></p>
 
 In the process, you firstly choose the category of the operation, before you may optionally create a geometry
-for the new resource. Afterwards the editor is opened, where all data of the operation can be filled in.
+for the new resource. This geometry shall define the geographical context of the resource.  Afterwards the editor is opened, where all data of the operation can be filled in.
 Depending on the chosen operation category, different fields are available, which are arranged in multiple
-groups. You can switch between field groups by clicking the buttons on the left side.
+groups. You can switch between field groups by clicking the tabs on the left side.
 
 Before the resource can be saved via the green save button, at the very least the **identifier** field in the
 core section has to be filled in.
 
 <p align="center"><img src="images/en/resources/save_operation.png" alt="Save operation resource"/></p>
 
-The new operation is now displayed in the resources list. Use the button "Switch to operation" (Symbol: Arrow
-up right) in order to open a new tab for the operation.
+The process of creating resources works in this way no matter which category of resource is being created. 
+Always the **identifier** is the very least information which needs to be entered. It is not possible to
+create a resource if the identifier is already existing in the current project. After saving the new operation is 
+displayed in the resources list with a circular icon including the initial letter of the resource category.
+
+You can come back to a resource after you have saved it and modify it by double clicking it on the resource list on the left window or
+by right clicking a resource in the list. Right-click will open a context menu providing the following options:
+
+* *Edit*: Opens the editor (also available by doubleclicking the resource entry in the list)
+* *Move*: Allows removing the resource from its current context and assigning it to another parent resource
+* *Delete*: Removes the resource after a security check
+
+Furthermore, the context menu contains options for creating and editing geometries.
+
+<p align="center"><img src="images/en/resources/context_menu.png" alt="Kontextmenü"/></p>
+
+Deleting resources is so dangerous to the database, that answering the security check is mandatory. In cases where 
+mass manipulation becomes necessary refer to the respective chapter in this manual. 
+
+
+### Operations 
+
+Within the **Overview** tab it is not possible to create finds or features. Before entering actual archaeological entities 
+it is required to create **Operations**, meaning research operations like "excavation" (trench), "survey" (survey area) and "building research" (building).
+ Use the button "Switch to operation" (Symbol: Arrow
+up right) in order to enter this operation.
 
 <p align="center"><img src="images/en/resources/goto_operation.png" alt="Open operation resource"/></p>
 
@@ -64,6 +146,8 @@ Depending on the category of the operation, resources of different categories ca
 operation tab via the plus button (e. g. stratigraphical units within a trench or rooms within a building).
 
 <p align="center"><img src="images/en/resources/create_more.png" alt="Create resource"/></p>
+
+
 
 ### Hierarchical ordering
 
@@ -84,15 +168,7 @@ switch to another level by clicking one of the buttons of the navigation path.
 
 ### Management
 
-Right clicking a resource in the list opens a context menu providing the following options:
 
-* *Edit*: Opens the editor (also available by doubleclicking the resource entry in the list)
-* *Move*: Allows removing the resource from its current context and assigning it to another parent resource
-* *Delete*: Removes the resource after a security check
-
-Furthermore, the context menu contains options for creating and editing geometries.
-
-<p align="center"><img src="images/en/resources/context_menu.png" alt="Kontextmenü"/></p>
 
 
 <hr>

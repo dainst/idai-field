@@ -43,7 +43,7 @@ export function mapLeafs<A>(f: Mapping<Treelist<A>>, t: Treelist<A>): Treelist<A
 
 export function flattenTreelist<A>(t: Treelist<A>): Array<A> {
 
-    return t.reduce((tree, [a, children]) =>
-         tree.concat([a]).concat(flattenTreelist(children)), []);
+    return t.reduce((as, [a, children]) =>
+         as.concat([a]).concat(flattenTreelist(children)), []);
 }
 

@@ -19,6 +19,16 @@ type-grid {
     margin-right: -15px;
     border-top: 1px solid #e9ecef;
 
+    loading-icon {
+      position: absolute;
+      top: calc(50% - 45px);
+      left: calc(50% - 23px);
+
+      &.with-main-document {
+        left: calc(50% + 110px);
+      }
+    }
+
     #grid-elements-container {
       height: 100%;
       overflow-y: auto;
@@ -93,7 +103,7 @@ type-grid {
           float: left;
 
           #create-document-button .circular-button {
-            left: calc(50% - 20px);
+            left: calc(50% - 7px);
             margin: auto auto auto auto;
           }
 

@@ -158,7 +158,7 @@ export class ProjectConfiguration {
 
     public getCategoryColors() {
 
-        return map(to(Category.COLOR))(this.getCategoriesMap()) as Map<string>;
+        return map(to(Category.COLOR), this.getCategoriesMap()) as Map<string>;
     }
 
 

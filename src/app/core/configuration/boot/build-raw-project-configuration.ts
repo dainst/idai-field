@@ -1,7 +1,7 @@
 import {
     cond, flow, includedIn, isDefined, isNot, Mapping, Map, on,
     subtract, undefinedOrEmpty, identity, compose, Pair, dissoc,
-    pairWith, prune, filter, update as updateObject
+    pairWith, prune, filter, update as updateObject, to
 } from 'tsfun';
 import {assoc, update, lookup, map, reduce} from 'tsfun/associative';
 import {clone, update as updateStruct} from 'tsfun/struct';
@@ -36,7 +36,6 @@ import {ProjectCategoriesHelper} from '../project-categories-helper';
 import {FieldDefinition} from '../model/field-definition';
 import {mapLeafs, mapTree, Tree} from '../tree';
 import {sortStructArray} from '../../util/sort-struct-array';
-
 
 const CATEGORIES = [0];
 
@@ -106,7 +105,8 @@ function processCategories(orderConfiguration: any,
         mapTree(sortCategoryGroups),
         mapTree(setGroupLabels(languageConfiguration.groups || {})),
         setGeometriesInGroups(languageConfiguration),
-        orderCategories(orderConfiguration?.categories)
+        orderCategories(orderConfiguration?.categories),
+        linkParentAndChildInstances
     );
 }
 
@@ -313,3 +313,15 @@ function toCategoriesByFamilyNames(transientCategories: Map<TransientCategoryDef
                 return acc;
             }, {}));
 }
+
+
+function linkParentAndChildInstances(categoriesTree: Tree<Category> /* modified in place */): Tree<Category> {
+
+    for (let [category, children] of categoriesTree) {
+
+        category.children = children.map(to(CATEGORIES));
+        category.children.map(child => child.parentCategory = category);
+    }
+    return categoriesTree;
+}
+

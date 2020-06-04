@@ -83,6 +83,7 @@ function addChildCategory(categoryTree: Tree<Category>,
 
     tree.push([childCategory,[]])
     childCategory.parentCategory = category;
+    category.children.push(childCategory);
     return categoryTree;
 }
 

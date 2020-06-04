@@ -8,14 +8,16 @@ describe('CategoryTree', () => {
 
     it('treeToCategoryArray', () => {
 
+        const parent = { name: 'P1', children: [] }
+        const child = { name: 'C1', parentCategory: parent, children: [] };
+        parent.children = [child];
+
         const t = [
             [
-                { name: 'P1' },
+                parent,
                 [
                     [
-                        {
-                            name: 'C1'
-                        },
+                        child,
                         []
                     ]
                 ]
@@ -23,12 +25,6 @@ describe('CategoryTree', () => {
         ]
 
         const result = treeToCategoryArray(t as any);
-
-        expect(result[0].children[0] === t[0][1][0][0]).toBeTruthy();
-        expect(result[1].parentCategory === t[0][0]).toBeTruthy();
-        expect(result[1].parentCategory === result[0]).toBeTruthy();
-        expect(result[0].children[0].name === 'C1').toBeTruthy();
-        expect(result[1].parentCategory.name === 'P1').toBeTruthy();
 
         expect(result[0].name).toBe('P1');
         expect(result[0].children.length).toBe(1);
@@ -39,19 +35,28 @@ describe('CategoryTree', () => {
         expect(result[1].name).toBe('C1');
         expect(result[1].children.length).toBe(0);
         expect(result[1].children).toEqual([]);
+
+        // retain configured instance relationships
+        expect(result[0].children[0] === t[0][1][0][0]).toBeTruthy();
+        expect(result[1].parentCategory === t[0][0]).toBeTruthy();
+        expect(result[1].parentCategory === result[0]).toBeTruthy();
+        expect(result[0].children[0].name === 'C1').toBeTruthy();
+        expect(result[1].parentCategory.name === 'P1').toBeTruthy();
     });
 
 
     it('treeToCategoryMap', () => {
 
+        const parent = { name: 'P1', children: [] }
+        const child = { name: 'C1', parentCategory: parent, children: [] };
+        parent.children = [child];
+
         const t = [
             [
-                { name: 'P1' },
+                parent,
                 [
                     [
-                        {
-                            name: 'C1'
-                        },
+                        child,
                         []
                     ]
                 ]
@@ -59,12 +64,6 @@ describe('CategoryTree', () => {
         ]
 
         const result = treeToCategoryMap(t as any);
-
-        expect(result['P1'].children[0] === t[0][1][0][0]).toBeTruthy();
-        expect(result['C1'].parentCategory === t[0][0]).toBeTruthy();
-        expect(result['C1'].parentCategory === result['P1']).toBeTruthy();
-        expect(result['P1'].children[0].name === 'C1').toBeTruthy();
-        expect(result['C1'].parentCategory.name === 'P1').toBeTruthy();
 
         expect(result['P1'].name).toBe('P1');
         expect(result['P1'].children.length).toBe(1);
@@ -75,42 +74,51 @@ describe('CategoryTree', () => {
         expect(result['C1'].name).toBe('C1');
         expect(result['C1'].children.length).toBe(0);
         expect(result['C1'].children).toEqual([]);
+
+        // retain configured instance relationships
+        expect(result['P1'].children[0] === t[0][1][0][0]).toBeTruthy();
+        expect(result['C1'].parentCategory === t[0][0]).toBeTruthy();
+        expect(result['C1'].parentCategory === result['P1']).toBeTruthy();
+        expect(result['P1'].children[0].name === 'C1').toBeTruthy();
+        expect(result['C1'].parentCategory.name === 'P1').toBeTruthy();
     });
 
 
     it('multiple parent items', () => {
 
+        const parent1 = { name: 'P1', children: [] }
+        const child1 = { name: 'C1', parentCategory: parent1, children: [] };
+        const child2 = { name: 'C2', parentCategory: parent1, children: [] };
+        parent1.children = [child1,child2];
+
+        const parent2 = { name: 'P2', children: [] }
+        const child3 = { name: 'C3', parentCategory: parent2, children: [] };
+        const child4 = { name: 'C4', parentCategory: parent2, children: [] };
+        parent2.children = [child3,child4];
+
         const t = [
             [
-                { name: 'P1' },
+                parent1,
                 [
                     [
-                        {
-                            name: 'C1'
-                        },
+                        child1,
                         []
                     ],
                     [
-                        {
-                            name: 'C2'
-                        },
+                        child2,
                         []
                     ]
                 ]
             ],
             [
-                { name: 'P2' },
+                parent2,
                 [
                     [
-                        {
-                            name: 'C3'
-                        },
+                        child3,
                         []
                     ],
                     [
-                        {
-                            name: 'C4'
-                        },
+                        child4,
                         []
                     ]
                 ]

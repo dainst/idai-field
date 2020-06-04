@@ -1352,6 +1352,37 @@ describe('buildRawProjectConfiguration', () => {
     });
 
 
+    it('link parent and child instances', () => {
+
+        const builtInCategories: Map<BuiltinCategoryDefinition> = {
+            P: {
+                supercategory: true,
+                userDefinedSubcategoriesAllowed: true,
+                fields: {}
+            },
+        };
+
+        const customCategories: Map<CustomCategoryDefinition> = {
+            C: {
+                fields: {},
+                parent: 'P'
+            }
+        };
+
+        const categoriesTree = buildRawProjectConfiguration(
+            builtInCategories, {}, customCategories, {}, {}, {}, [], { other: { geometry: 'Geometry' }}
+        )[0];
+
+        expect(categoriesTree[0][0].children[0].name).toBe('C');
+        expect(categoriesTree[0][1][0][0].name).toBe('C');
+        expect(categoriesTree[0][0].children[0] === categoriesTree[0][1][0][0]).toBeTruthy();
+
+        expect(categoriesTree[0][0].name).toBe('P');
+        expect(categoriesTree[0][1][0][0].parentCategory.name).toBe('P');
+        expect(categoriesTree[0][1][0][0].parentCategory === categoriesTree[0][0]).toBeTruthy();
+    });
+
+
     // err cases
 
     /*xit('critical change of input type', () => {

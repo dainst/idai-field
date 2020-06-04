@@ -1,6 +1,7 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {FormsModule} from '@angular/forms';
+import {ScrollingModule} from '@angular/cdk/scrolling';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {ResourcesComponent} from './resources.component';
 import {GeometryViewComponent} from './map/list/geometry-view.component';
@@ -63,7 +64,8 @@ const remote = typeof window !== 'undefined'
         WidgetsModule,
         ImageGridModule,
         DoceditModule,
-        ImageViewerModule
+        ImageViewerModule,
+        ScrollingModule
     ],
     declarations: [
         ResourcesComponent,

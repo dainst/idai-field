@@ -2,10 +2,13 @@ $teaser-width: $resources-listing-item-slim-width;
 
 sidebar-list {
 
-  #sidebar {
+  #sidebar-viewport {
     height: calc(100vh - 100px);
     overflow-y: auto;
     overflow-x: hidden;
+  }
+
+  #sidebar {
     padding: 0;
     margin: 0;
     background-color: $sidebar-bg-color;

@@ -317,16 +317,16 @@ function toCategoriesByFamilyNames(transientCategories: Map<TransientCategoryDef
 
 
 /**
- * @param categoriesTree
+ * @param categories
  * @returns a CategoryTree according to its specified properties
  */
-function linkParentAndChildInstances(categoriesTree: Tree<Category> /* modified in place */): CategoryTree {
+function linkParentAndChildInstances(categories: Tree<Category> /* modified in place */): CategoryTree {
 
-    for (let [category, children] of categoriesTree) {
+    for (let [category, children] of categories) {
 
         category.children = children.map(to(CATEGORIES));
         category.children.map(child => child.parentCategory = category);
     }
-    return categoriesTree;
+    return categories;
 }
 

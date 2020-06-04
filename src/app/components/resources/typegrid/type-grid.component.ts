@@ -296,6 +296,6 @@ export class TypeGridComponent extends BaseList implements OnChanges {
         const imageIds: string[] = TypeImagesUtil.getLinkedImageIds(document, this.fieldDatastore, this.imageDatastore)
             .filter(imageId => imageId !== PLACEHOLDER);
 
-        return take(4)(imageIds);
+        return take(4, imageIds);
     }
 }

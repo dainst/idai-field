@@ -28,7 +28,7 @@ const locale: string = typeof window !== 'undefined'
  */
 export class ProjectConfigurationComponent {
 
-    public categoriesTreeList: Array<Category>;
+    public toplevelCategoriesArray: Array<Category>;
     public selectedCategory: Category;
     public selectedGroup: string;
 
@@ -38,9 +38,9 @@ export class ProjectConfigurationComponent {
     constructor(private projectConfiguration: ProjectConfiguration,
                 private tabManager: TabManager) {
 
-        this.categoriesTreeList = projectConfiguration.getCategoriesArray()
+        this.toplevelCategoriesArray = projectConfiguration.getCategoriesArray()
             .filter(category => !category.parentCategory);
-        this.selectCategory(this.categoriesTreeList[0]);
+        this.selectCategory(this.toplevelCategoriesArray[0]);
     }
 
 

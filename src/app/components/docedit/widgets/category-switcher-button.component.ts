@@ -22,7 +22,7 @@ export class CategorySwitcherButtonComponent implements OnChanges{
 
     @ViewChild('popover', { static: false }) private popover: any;
 
-    public categoriesTreeList: Array<Category>;
+    public selectableCategoriesArray: Array<Category>;
 
 
     constructor(private projectConfiguration: ProjectConfiguration,
@@ -37,10 +37,10 @@ export class CategorySwitcherButtonComponent implements OnChanges{
 
     public isCategorySwitchingPossible(): boolean {
 
-        return this.categoriesTreeList
-            && this.categoriesTreeList.length > 0
-            && this.categoriesTreeList[0].children
-            && this.categoriesTreeList[0].children.length > 0
+        return this.selectableCategoriesArray
+            && this.selectableCategoriesArray.length > 0
+            && this.selectableCategoriesArray[0].children
+            && this.selectableCategoriesArray[0].children.length > 0
             && !this.loading.isLoading();
     }
 
@@ -77,9 +77,9 @@ export class CategorySwitcherButtonComponent implements OnChanges{
 
         const categoryObject: Category = this.projectConfiguration.getCategory(this.category);
         if (categoryObject.parentCategory && !categoryObject.parentCategory.isAbstract) {
-            this.categoriesTreeList = [categoryObject.parentCategory];
+            this.selectableCategoriesArray = [categoryObject.parentCategory];
         } else {
-            this.categoriesTreeList = [categoryObject];
+            this.selectableCategoriesArray = [categoryObject];
         }
     }
 }

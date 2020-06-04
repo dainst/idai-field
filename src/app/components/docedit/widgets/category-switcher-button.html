@@ -10,7 +10,8 @@
         <div id="category-changer-menu">
             <div class="popover-custom-title"
                  i18n="@@docedit.categorySwitcherButton.changeCategory">Kategorie ändern</div>
-            <category-picker *ngIf="categoriesTreeList" [categoriesTreeList]="categoriesTreeList"
+            <category-picker *ngIf="selectableCategoriesArray"
+                             [selectableCategoriesArray]="selectableCategoriesArray"
                              [selectedCategories]="[category]"
                              (onCategoryPicked)="chooseCategory($event); popover.close();"></category-picker>
         </div>

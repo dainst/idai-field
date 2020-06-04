@@ -3,8 +3,8 @@
 
         <div class="row">
             <div class="col-lg-3 sidebar">
-                <category-picker *ngIf="categoriesTreeList"
-                                 [categoriesTreeList]="categoriesTreeList"
+                <category-picker *ngIf="toplevelCategoriesArray"
+                                 [selectableCategoriesArray]="toplevelCategoriesArray"
                                  [selectedCategories]="[selectedCategory.name]"
                                  [allowPickingAbstractCategories]="true"
                                  [highlightCustomCategories]="true"
@@ -60,7 +60,7 @@
                     </div>
 
                     <div class="col content">
-                        
+
                         <div *ngFor="let field of getVisibleFields(selectedCategory)"
                                 class="card"
                                 [class.bg-warning]="field.source === 'custom'">

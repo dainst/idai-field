@@ -14,7 +14,7 @@ import {FieldDefinition} from '../../core/configuration/model/field-definition';
  */
 export class CategoryPickerComponent implements OnChanges {
 
-    @Input() categoriesTreeList: Array<Category>;
+    @Input() selectableCategoriesArray: Array<Category>;
     @Input() selectedCategories: string[];
     @Input() allCategoriesOptionVisible: boolean = false;
     @Input() allowPickingAbstractCategories: boolean = false;
@@ -30,7 +30,7 @@ export class CategoryPickerComponent implements OnChanges {
 
         this.categories = [];
 
-        this.categoriesTreeList.forEach(category => {
+        this.selectableCategoriesArray.forEach(category => {
             this.categories.push(category);
             if (category.children) this.categories = this.categories.concat(category.children);
         });

@@ -1,7 +1,6 @@
 import {ChangeDetectorRef, Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {SafeResourceUrl} from '@angular/platform-browser';
 import {take, flatten, set, flow, filter, map} from 'tsfun';
-import {reduce as asyncReduce} from 'tsfun/async';
 import {Document, FieldDocument} from 'idai-components-2';
 import {ViewFacade} from '../../../core/resources/view/view-facade';
 import {Loading} from '../../widgets/loading';
@@ -259,10 +258,33 @@ export class TypeGridComponent extends BaseList implements OnChanges {
 
         if (!this.images) this.images = {};
 
+        const imageLinks: Array<{ resourceId: string, imageIds: string[] }> = [];
+
         for (let document of documents) {
             if (!reload && this.images[document.resource.id]) continue;
-            this.images[document.resource.id] = await this.getLinkedImages(document);
+            imageLinks.push({ resourceId: document.resource.id, imageIds: this.getLinkedImageIds(document) });
         }
+
+        const promises: Array<Promise<void>> = [];
+        for (let link of imageLinks) {
+            this.images[link.resourceId] = [];
+            for (let imageId of link.imageIds) {
+                promises.push(new Promise<void>(resolve => {
+                    try {
+                        this.imagestore.read(imageId, false, true)
+                            .then((url: SafeResourceUrl) => {
+                                this.images[link.resourceId].push(url);
+                                resolve();
+                            });
+                    } catch (err) {
+                        console.warn('Failed to load image: ' + imageId);
+                        resolve();
+                    }
+                }));
+            }
+        }
+
+        await Promise.all(promises);
     }
 
 
@@ -272,47 +294,23 @@ export class TypeGridComponent extends BaseList implements OnChanges {
     }
 
 
-    private async getLinkedImages(document: FieldDocument): Promise<Array<SafeResourceUrl>> {
+    private getLinkedImageIds(document: FieldDocument): string[] {
 
         if (Document.hasRelations(document, 'isDepictedIn')) {
-            return [await this.getMainImage(document)];
+            return [document.resource.relations['isDepictedIn'][0]];
         } else if (this.isCatalogOrType(document)) {
-            return await this.getImagesOfLinkedResources(document);
+            return this.getImageIdsOfLinkedResources(document);
         } else {
             return [];
         }
     }
 
 
-    private async getMainImage(document: FieldDocument): Promise<SafeResourceUrl> {
+    private getImageIdsOfLinkedResources(document: FieldDocument): string[] {
 
-        try {
-            return await this.imagestore.read(
-                document.resource.relations['isDepictedIn'][0], false, true
-            );
-        } catch (error) {
-            console.warn('did not find image in type-grid-component.ts#getMainImage', document.resource.relations['isDepictedIn'][0]);
-            return [];
-        }
-    }
+        const imageIds: string[] = TypeImagesUtil.getLinkedImageIds(document, this.fieldDatastore, this.imageDatastore)
+            .filter(imageId => imageId !== PLACEHOLDER);
 
-
-    private async getImagesOfLinkedResources(document: FieldDocument): Promise<Array<SafeResourceUrl>> {
-
-        const linkedImages: string[]
-            = TypeImagesUtil.getLinkedImageIds(document, this.fieldDatastore, this.imageDatastore)
-                .filter(imageId => imageId !== PLACEHOLDER);
-
-        return asyncReduce(
-            take(4, linkedImages), // TODO get rid of take; check in reducer if we have reached 4 images instead
-            async (images: any, imageId: string) => {
-                try {
-                    return images.concat(await this.imagestore.read(imageId, false, true));
-                } catch (error) {
-                    console.warn('did not find image in type-grid-component#getImagesOfLinkedResources', imageId);
-                    return images;
-                }
-            },
-            []);
+        return take(4)(imageIds);
     }
 }

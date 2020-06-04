@@ -1,4 +1,4 @@
-import {Pair, Mapping, reduce} from 'tsfun';
+import {Pair, Mapping} from 'tsfun';
 
 
 export type Tree<T> = Pair<T /* ITEM */, Treelist<T> /* CHILDREN */>;

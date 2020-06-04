@@ -1,18 +1,18 @@
 import {equal, reverse} from 'tsfun';
-import {mapLeafs, mapTree, Tree} from '../../../../src/app/core/configuration/tree';
+import {mapLeafs, mapTreelist, Treelist} from '../../../../src/app/core/configuration/treelist';
 
 
-describe('Tree', () => {
+describe('Treelist', () => {
 
-    it('Tree', () => {
+    it('Treelist', () => {
 
-        const t: Tree<number> = [[1,[]]];
+        const t: Treelist<number> = [[1,[]]];
     });
 
 
-    it('mapTree', () => {
+    it('mapTreelist', () => {
 
-        const t: Tree<number> =
+        const t: Treelist<number> =
             [
                 [1,[
                     [13,[]],
@@ -21,7 +21,7 @@ describe('Tree', () => {
                 [3,[]]
             ];
 
-        const exp: Tree<number> =
+        const exp: Treelist<number> =
             [
                 [2,[
                     [26,[]],
@@ -30,14 +30,14 @@ describe('Tree', () => {
                 [6,[]]
             ];
 
-        const result = mapTree((_: number) => _ * 2, t);
+        const result = mapTreelist((_: number) => _ * 2, t);
         expect(equal(result, exp)).toBeTruthy();
     });
 
 
     it('mapLeafs', () => {
 
-        const t: Tree<number> =
+        const t: Treelist<number> =
             [
                 [1,[
                     [13,[]],
@@ -46,7 +46,7 @@ describe('Tree', () => {
                 [3,[]]
             ];
 
-        const exp: Tree<number> =
+        const exp: Treelist<number> =
             [
                 [3,[]],
                 [1,[

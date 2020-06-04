@@ -25,7 +25,7 @@ import {addRelations} from './add-relations';
 import {applyLanguage} from './apply-language';
 import {applySearchConfiguration} from './apply-search-configuration';
 import {orderFields} from './order-fields';
-import {makeCategoryTree} from './make-category-tree';
+import {makeCategoryTreelist} from './make-category-treelist';
 import {RawProjectConfiguration} from '../project-configuration';
 import {Category} from '../model/category';
 import {Group, Groups} from '../model/group';
@@ -34,9 +34,9 @@ import {RelationsUtil} from '../relations-utils';
 import {CategoryDefinition} from '../model/category-definition';
 import {ProjectCategoriesHelper} from '../project-categories-helper';
 import {FieldDefinition} from '../model/field-definition';
-import {mapLeafs, mapTree, Tree} from '../tree';
+import {mapLeafs, mapTreelist, Treelist} from '../treelist';
 import {sortStructArray} from '../../util/sort-struct-array';
-import {linkParentAndChildInstances} from '../category-tree';
+import {linkParentAndChildInstances} from '../category-treelist';
 
 const CATEGORIES = [0];
 
@@ -92,7 +92,7 @@ function processCategories(orderConfiguration: any,
                            validateFields: any,
                            languageConfiguration: any,
                            searchConfiguration: any,
-                           relations: Array<RelationDefinition>): Mapping<Map<CategoryDefinition>, Tree<Category>> {
+                           relations: Array<RelationDefinition>): Mapping<Map<CategoryDefinition>, Treelist<Category>> {
 
     const sortCategoryGroups = updateObject(Category.GROUPS, sortGroups(Groups.DEFAULT_ORDER));
 
@@ -101,10 +101,10 @@ function processCategories(orderConfiguration: any,
         addExtraFieldsOrder(orderConfiguration),
         orderFields(orderConfiguration),
         validateFields,
-        makeCategoryTree,
-        mapTree(putRelationsIntoGroups(relations)),
-        mapTree(sortCategoryGroups),
-        mapTree(setGroupLabels(languageConfiguration.groups || {})),
+        makeCategoryTreelist,
+        mapTreelist(putRelationsIntoGroups(relations)),
+        mapTreelist(sortCategoryGroups),
+        mapTreelist(setGroupLabels(languageConfiguration.groups || {})),
         setGeometriesInGroups(languageConfiguration),
         orderCategories(orderConfiguration?.categories),
         linkParentAndChildInstances
@@ -112,11 +112,11 @@ function processCategories(orderConfiguration: any,
 }
 
 
-const setGeometriesInGroups = (languageConfiguration: any) => (categoriesTree: Tree<Category>) =>
-    mapTree(adjustCategoryGeometry(languageConfiguration, categoriesTree), categoriesTree);
+const setGeometriesInGroups = (languageConfiguration: any) => (categoriesTree: Treelist<Category>) =>
+    mapTreelist(adjustCategoryGeometry(languageConfiguration, categoriesTree), categoriesTree);
 
 
-function adjustCategoryGeometry(languageConfiguration: any, categoriesTree: Tree<Category>) {
+function adjustCategoryGeometry(languageConfiguration: any, categoriesTree: Treelist<Category>) {
 
     return (category: Category /* modified in place */): Category => {
 
@@ -172,8 +172,8 @@ const sortGroups = (defaultOrder: string[]) => (groups: Map<Group>) =>
     flow(defaultOrder, map(lookup(groups)), prune);
 
 
-const orderCategories = (categoriesOrder: string[] = []) => (categories: Tree<Category>): Tree<Category> =>
-    mapLeafs(sortStructArray(categoriesOrder, [0,Named.NAME]), categories) as Tree<Category>;
+const orderCategories = (categoriesOrder: string[] = []) => (categories: Treelist<Category>): Treelist<Category> =>
+    mapLeafs(sortStructArray(categoriesOrder, [0,Named.NAME]), categories) as Treelist<Category>;
 
 
 function setGroupLabels(groupLabels: Map<string>) {

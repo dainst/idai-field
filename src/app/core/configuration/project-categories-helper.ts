@@ -2,7 +2,7 @@ import {isnt, Map, to} from 'tsfun';
 import {Category} from './model/category';
 import {Named} from '../util/named';
 import NAME = Named.NAME;
-import {Tree} from './tree';
+import {Treelist} from './treelist';
 import {Name} from '../constants';
 
 const TYPE_CATALOG = 'TypeCatalog';
@@ -22,7 +22,7 @@ export /* package-private */ module ProjectCategoriesHelper {
     export const UNKNOWN_CATEGORY_ERROR = 'ProjectCategories.Errors.UnknownCategory';
 
 
-    export function isGeometryCategory(categoryTree: Tree<Category>, // TODO make Tree<Named>
+    export function isGeometryCategory(categoryTree: Treelist<Category>, // TODO make Tree<Named>
                                        category: Name): boolean {
 
         return !isCategoryOrSubcategory(categoryTree, category, 'Image')
@@ -38,7 +38,7 @@ export /* package-private */ module ProjectCategoriesHelper {
     // Tree<Named>, which we make use of in build-raw-project-configuration, before
     // we have access to the final (we dont need it, but in principle) Tree<Category>
     // a more general approach should find us matches on any level
-    export function isCategoryOrSubcategory(twoLevelTree: Tree<Named>,
+    export function isCategoryOrSubcategory(twoLevelTree: Treelist<Named>,
                                             name: Name,
                                             firstLevelItem: Name): boolean {
 

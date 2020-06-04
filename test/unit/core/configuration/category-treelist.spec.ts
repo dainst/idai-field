@@ -1,12 +1,12 @@
 import {
-    categoryTreeToCategoryArray,
-    categoryTreeToCategoryMap
-} from '../../../../src/app/core/configuration/category-tree';
+    categoryTreelistToArray,
+    categoryTreelistToMap
+} from '../../../../src/app/core/configuration/category-treelist';
 
 
-describe('CategoryTree', () => {
+describe('CategoryTreelist', () => {
 
-    it('treeToCategoryArray', () => {
+    it('categoryTreelistToArray', () => {
 
         const parent = { name: 'P1', children: [] }
         const child = { name: 'C1', parentCategory: parent, children: [] };
@@ -24,7 +24,7 @@ describe('CategoryTree', () => {
             ]
         ]
 
-        const result = categoryTreeToCategoryArray(t as any);
+        const result = categoryTreelistToArray(t as any);
 
         expect(result[0].name).toBe('P1');
         expect(result[0].children.length).toBe(1);
@@ -45,7 +45,7 @@ describe('CategoryTree', () => {
     });
 
 
-    it('treeToCategoryMap', () => {
+    it('categoryTreelistToMap', () => {
 
         const parent = { name: 'P1', children: [] }
         const child = { name: 'C1', parentCategory: parent, children: [] };
@@ -63,7 +63,7 @@ describe('CategoryTree', () => {
             ]
         ]
 
-        const result = categoryTreeToCategoryMap(t as any);
+        const result = categoryTreelistToMap(t as any);
 
         expect(result['P1'].name).toBe('P1');
         expect(result['P1'].children.length).toBe(1);
@@ -125,7 +125,7 @@ describe('CategoryTree', () => {
             ]
         ]
 
-        const result = categoryTreeToCategoryArray(t as any);
+        const result = categoryTreelistToArray(t as any);
 
         expect(result.length).toBe(6);
 

@@ -7,12 +7,12 @@ import {RelationDefinition} from './model/relation-definition';
 import {Named, namedArrayToNamedMap} from '../util/named';
 import {RelationsUtil} from './relations-utils';
 import {ProjectCategoriesHelper} from './project-categories-helper';
-import {Tree} from './tree';
-import {CategoryTree, categoryTreeToCategoryArray} from './category-tree';
+import {Treelist} from './treelist';
+import {CategoryTreelist, categoryTreelistToArray} from './category-treelist';
 import {Name} from '../constants';
 
 
-export type RawProjectConfiguration = Pair<CategoryTree, Array<RelationDefinition>>;
+export type RawProjectConfiguration = Pair<CategoryTreelist, Array<RelationDefinition>>;
 
 
 /**
@@ -33,7 +33,7 @@ export class ProjectConfiguration {
 
     private categoriesMap: Map<Category>;
 
-    private categoryTree: Tree<Category>;
+    private categoryTree: CategoryTreelist;
 
     private relations: Array<RelationDefinition>;
 
@@ -41,9 +41,9 @@ export class ProjectConfiguration {
     constructor([categories, relations]: RawProjectConfiguration) {
 
         this.categoryTree = categories;
-        this.categoriesArray = categoryTreeToCategoryArray(categories) || [];
+        this.categoriesArray = categoryTreelistToArray(categories) || [];
         this.relations = relations || [];
-        this.categoriesMap = namedArrayToNamedMap(categoryTreeToCategoryArray(categories));
+        this.categoriesMap = namedArrayToNamedMap(categoryTreelistToArray(categories));
     }
 
 
@@ -74,11 +74,12 @@ export class ProjectConfiguration {
     }
 
 
-    public getCategoryTree(...selectedTopLevelCategories: Array<Name>): Tree<Category> {
+    public getCategoryTreelist(...selectedTopLevelCategories: Array<Name>): CategoryTreelist {
 
         return selectedTopLevelCategories.length === 0
             ? this.categoryTree
-            : this.categoryTree.filter(on([Tree.Node.ITEM,Named.NAME], includedIn(selectedTopLevelCategories)));
+            : this.categoryTree.filter(
+                on([Treelist.Tree.ITEM,Named.NAME], includedIn(selectedTopLevelCategories)));
     }
 
 

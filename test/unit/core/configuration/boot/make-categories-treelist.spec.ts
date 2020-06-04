@@ -2,19 +2,19 @@ import {FieldResource} from 'idai-components-2';
 import {Groups} from '../../../../../src/app/core/configuration/model/group';
 import {FieldDefinition} from '../../../../../src/app/core/configuration/model/field-definition';
 import {Category} from '../../../../../src/app/core/configuration/model/category';
-import {makeCategoryTree} from '../../../../../src/app/core/configuration/boot/make-category-tree';
+import {makeCategoryTreelist} from '../../../../../src/app/core/configuration/boot/make-category-treelist';
 import {byName} from '../../../../../src/app/core/util/named';
 import InputType = FieldDefinition.InputType;
 import {MDInternal} from '../../../../../src/app/components/messages/md-internal';
-import {categoryTreeToCategoryMap} from '../../../../../src/app/core/configuration/category-tree';
+import {categoryTreelistToMap} from '../../../../../src/app/core/configuration/category-treelist';
 
 
 /**
  * @author Daniel de Oliveira
  */
-describe('makeCategoriesTree', () => {
+describe('makeCategoriesTreelist', () => {
 
-    it('makeCategoriesTree', () => {
+    it('makeCategoriesTreelist', () => {
 
         const A = 'A';
         const P = 'P';
@@ -32,7 +32,7 @@ describe('makeCategoriesTree', () => {
             }
         };
 
-        const categoriesMap = categoryTreeToCategoryMap(makeCategoryTree(confDef));
+        const categoriesMap = categoryTreelistToMap(makeCategoryTreelist(confDef));
 
         expect(categoriesMap[P].name).toEqual(P);
         expect(categoriesMap[P].children[0].name).toEqual(A);
@@ -76,7 +76,7 @@ describe('makeCategoriesTree', () => {
             }
         };
 
-        const categoriesMap = categoryTreeToCategoryMap(makeCategoryTree(confDef));
+        const categoriesMap = categoryTreelistToMap(makeCategoryTreelist(confDef));
         const categoryA = categoriesMap[P].children.find(category => category.name === A)!;
         const categoryB = categoriesMap[P].children.find(category => category.name === B)!;
 
@@ -112,7 +112,7 @@ describe('makeCategoriesTree', () => {
             }
         };
 
-        const categoriesMap = categoryTreeToCategoryMap(makeCategoryTree(confDef));
+        const categoriesMap = categoryTreelistToMap(makeCategoryTreelist(confDef));
 
         expect(categoriesMap[T].groups[Groups.STEM].fields[0].name).toEqual(FieldResource.IDENTIFIER);
         expect(categoriesMap[T].groups[Groups.STEM].fields[1].name).toEqual(FieldResource.SHORTDESCRIPTION);
@@ -146,7 +146,7 @@ describe('makeCategoriesTree', () => {
         };
 
         expect(
-            () => makeCategoryTree(
+            () => makeCategoryTreelist(
                 {
                     FirstLevelCategory: firstLevelCategory,
                     SecondLevelCategory: secondLevelCategory
@@ -175,7 +175,7 @@ describe('makeCategoriesTree', () => {
         };
 
         expect(() =>
-            makeCategoryTree({ SecondLevelCategory: secondLevelCategory } as any)
+            makeCategoryTreelist({ SecondLevelCategory: secondLevelCategory } as any)
         ).toThrow(MDInternal.PROJECT_CONFIGURATION_ERROR_GENERIC);
     });
 });

@@ -103,7 +103,7 @@ export class ProjectCategories {
     public isGeometryCategory(categoryName: string): boolean {
 
         return ProjectCategoriesHelper.isGeometryCategory(
-            this.projectConfiguration.getCategoryTree(),
+            this.projectConfiguration.getCategoryTreelist(),
             categoryName
         );
     }

@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, Input, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, Input, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {FieldDocument} from 'idai-components-2';
 import {ResourcesComponent} from '../resources.component';
 import {PersistenceManager} from '../../../core/model/persistence-manager';
@@ -17,7 +17,8 @@ import {Messages} from '../../messages/messages';
 
 @Component({
     selector: 'row',
-    templateUrl: './row.html'
+    templateUrl: './row.html',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 /**
  * @author Fabian Z.

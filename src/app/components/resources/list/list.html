@@ -9,7 +9,7 @@
         </div>
         <div id="list-body">
             <div class="row-grid">
-                <div *ngFor="let document of documents">
+                <div *ngFor="let document of documents; trackBy: trackDocument" >
                     <row [document]="document" [categoriesMap]="categoriesMap"></row>
                 </div>
             </div>

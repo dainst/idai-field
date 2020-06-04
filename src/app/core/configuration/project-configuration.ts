@@ -33,14 +33,14 @@ export class ProjectConfiguration {
 
     private categoriesMap: Map<Category>;
 
-    private categoryTree: CategoryTreelist;
+    private categoryTreelist: CategoryTreelist;
 
     private relations: Array<RelationDefinition>;
 
 
     constructor([categories, relations]: RawProjectConfiguration) {
 
-        this.categoryTree = categories;
+        this.categoryTreelist = categories;
         this.categoriesArray = categoryTreelistToArray(categories) || [];
         this.relations = relations || [];
         this.categoriesMap = namedArrayToNamedMap(categoryTreelistToArray(categories));
@@ -77,8 +77,8 @@ export class ProjectConfiguration {
     public getCategoryTreelist(...selectedTopLevelCategories: Array<Name>): CategoryTreelist {
 
         return selectedTopLevelCategories.length === 0
-            ? this.categoryTree
-            : this.categoryTree.filter(
+            ? this.categoryTreelist
+            : this.categoryTreelist.filter(
                 on([Treelist.Tree.ITEM,Named.NAME], includedIn(selectedTopLevelCategories)));
     }
 

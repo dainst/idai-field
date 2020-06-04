@@ -8,7 +8,10 @@ const CATEGORIES = [0];
 
 
 /**
- * @param t expects instance relationships to be set between parents and children via 'parentCategory' and 'children'
+ * @param t expects instance relationships to be set
+ *   between parents and children via 'parentCategory' and 'children'
+ *
+ * @returns an Array containing the original und unmodified Category instances from the Tree
  */
 export function treeToCategoryArray(t: Tree<Category>): Array<Category> {
 
@@ -19,7 +22,10 @@ export function treeToCategoryArray(t: Tree<Category>): Array<Category> {
 
 
 /**
- * @param t expects instance relationships to be set between parents and children via 'parentCategory' and 'children'
+ * @param t expects instance relationships to be set
+ *   between parents and children via 'parentCategory' and 'children'.
+ *
+ * @returns a Map containing the original und unmodified Category instances from the Tree
  */
 export function treeToCategoryMap(t: Tree<Category>): Map<Category> {
 

@@ -1,5 +1,10 @@
 import {equal, reverse} from 'tsfun';
-import {mapLeafs, mapTreelist, Treelist} from '../../../../src/app/core/configuration/treelist';
+import {
+    flattenTreelist,
+    mapLeafs,
+    mapTreelist,
+    Treelist
+} from '../../../../src/app/core/configuration/treelist';
 
 
 describe('Treelist', () => {
@@ -57,5 +62,32 @@ describe('Treelist', () => {
 
         const result = mapLeafs(reverse, t);
         expect(equal(result, exp)).toBeTruthy();
+    });
+
+
+    it('flatten', () => {
+
+        const a = { a: 1 };
+
+        const t: Treelist<any> =
+            [
+                [1,[
+                    [13,[[a,[]]]],
+                    [16,[]],
+                ]],
+                [3,[]]
+            ];
+
+        const exp: Array<any> =
+            [
+                1,
+                13,
+                a,
+                16,
+                3
+            ];
+
+        expect(equal(flattenTreelist(t), exp)).toBeTruthy();
+        expect(exp[2]).toBe(a); // retains original instancesf
     });
 });

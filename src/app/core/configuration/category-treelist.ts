@@ -1,14 +1,13 @@
-import {flatten, Map, to} from 'tsfun';
+import {Map, to} from 'tsfun';
 import {Category} from './model/category';
-import {Treelist} from './treelist';
+import {flattenTreelist, Treelist} from './treelist';
 import {namedArrayToNamedMap} from '../util/named';
 
 const CATEGORIES = [0];
 
 
 // This tree's category instances are connected via 'parentCategory' and 'children' properties of Category
-// and it is assumed that the tree is at most two levels deep
-export type CategoryTreelist = Treelist<Category>; // technically the same, but we want to make the distinction as to indicate the above-mentioned properties
+export type CategoryTreelist = Treelist<Category>; // technically the same, but we want to make the distinction as to indicate the above-mentioned property
 
 
 /**
@@ -17,9 +16,7 @@ export type CategoryTreelist = Treelist<Category>; // technically the same, but 
  */
 export function categoryTreelistToArray(t: CategoryTreelist): Array<Category> {
 
-    const parents = t.map(to(CATEGORIES));
-    const children: Array<Category> = flatten(parents.map(to(Category.CHILDREN)));
-    return parents.concat(children);
+    return flattenTreelist(t);
 }
 
 

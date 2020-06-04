@@ -1,4 +1,4 @@
-import {Pair, Mapping} from 'tsfun';
+import {Pair, Mapping, reduce} from 'tsfun';
 
 
 export type Tree<T> = Pair<T /* ITEM */, Treelist<T> /* CHILDREN */>;
@@ -11,6 +11,7 @@ export module Treelist {
     export module Tree {
 
         export const ITEM = 0;
+        export const CHILDREN = 1;
     }
 }
 
@@ -38,3 +39,11 @@ export function mapLeafs<A>(f: Mapping<Treelist<A>>, t: Treelist<A>): Treelist<A
 
     return f(t).map(([node,leafs]) => [node,mapLeafs(f, leafs)]);
 }
+
+
+export function flattenTreelist<A>(t: Treelist<A>): Array<A> {
+
+    return t.reduce((tree, [a, children]) =>
+         tree.concat([a]).concat(flattenTreelist(children)), []);
+}
+

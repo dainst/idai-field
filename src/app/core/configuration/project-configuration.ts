@@ -59,6 +59,10 @@ export class ProjectConfiguration {
     }
 
 
+    /**
+     * @deprecated
+     * use getCategory, getCategoriesArray, getCategoryTreelist instead
+     */
     public getCategoriesMap(): Map<Category> {
 
         return this.categoriesMap;
@@ -70,7 +74,7 @@ export class ProjectConfiguration {
      */
     public getCategory(category: Name): Category {
 
-        return this.getCategoriesMap()[category];
+        return this.categoriesMap[category];
     }
 
 

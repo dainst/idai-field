@@ -4,28 +4,30 @@
 
 <popover-menu [document]="selectedDocument"></popover-menu>
 
-<ul #sidebar id="sidebar" class="resources-listing"
-    tabindex="0" (scroll)="contextMenu.close()" (keydown)="onKeyDown($event)">
-    <li *ngFor="let document of viewFacade.getDocuments(); trackBy: trackDocument"
-        class="resources-listing-item resources-listing-item-wide"
-        (contextmenu)="contextMenu.open($event, document)"
-        [class.new-from-remote]="viewFacade.isNewDocumentFromRemote(document)"
-        [class.conflicted]="document['_conflicts']"
-        [class.selected]="selectedDocument?.resource.id === document.resource.id"
-        [id]="'resource-' + document.resource.identifier">
+<cdk-virtual-scroll-viewport itemSize="58" id="sidebar-viewport">
+    <ul #sidebar id="sidebar" class="resources-listing"
+        tabindex="0" (scroll)="contextMenu.close()" (keydown)="onKeyDown($event)">
+        <li *cdkVirtualFor="let document of viewFacade.getDocuments(); trackBy: trackDocument"
+            class="resources-listing-item resources-listing-item-wide"
+            (contextmenu)="contextMenu.open($event, document)"
+            [class.new-from-remote]="viewFacade.isNewDocumentFromRemote(document)"
+            [class.conflicted]="document['_conflicts']"
+            [class.selected]="selectedDocument?.resource.id === document.resource.id"
+            [id]="'resource-' + document.resource.identifier">
 
-        <document-teaser (click)="select(document)"
-                         (dblclick)="editDocument(document)"
-                         [document]="document"></document-teaser>
+            <document-teaser (click)="select(document)"
+                             (dblclick)="editDocument(document)"
+                             [document]="document"></document-teaser>
 
-        <list-button-group [document]="document"
-                        [activePopoverMenu]="resourcesComponent.activePopoverMenu"
-                        [isDocumentSelected]="selectedDocument?.resource.id === document.resource.id"
-                        (popoverMenuToggled)="resourcesComponent.togglePopoverMenu($event, document)">
-        </list-button-group>
+            <list-button-group [document]="document"
+                            [activePopoverMenu]="resourcesComponent.activePopoverMenu"
+                            [isDocumentSelected]="selectedDocument?.resource.id === document.resource.id"
+                            (popoverMenuToggled)="resourcesComponent.togglePopoverMenu($event, document)">
+            </list-button-group>
 
-    </li>
-</ul>
+        </li>
+    </ul>
+</cdk-virtual-scroll-viewport>
 
 <plus-button *ngIf="isPlusButtonShown()" id="create-document-button" [placement]="'top'"
              [preselectedCategory]="getCurrentFilterCategory()"

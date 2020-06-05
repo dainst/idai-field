@@ -40,7 +40,7 @@ export /* package-private */ module ProjectCategoriesHelper {
 
         const found = t.find(on([0, Named.NAME], is(firstLevelItem)));
         return found ?
-            (findInNamedTreelist(name, [found as any]) !== undefined)
+            findInNamedTreelist(name, [found as any]) !== undefined
             : false;
     }
 

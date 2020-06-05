@@ -90,13 +90,15 @@ export class ProjectCategories {
 
     public getRegularCategoryNames(): string[] {
 
-        return ProjectCategoriesHelper.getRegularCategoryNames(this.projectConfiguration.getCategoryTreelist());
+        return ProjectCategoriesHelper.getRegularCategoryNames(
+            this.projectConfiguration.getCategoryTreelist());
     }
 
 
     public getOverviewCategoryNames(): string[] {
 
-        return ProjectCategoriesHelper.getOverviewCategoryNames(this.projectConfiguration.getCategoriesMap());
+        return ProjectCategoriesHelper.getOverviewCategoryNames(
+            this.projectConfiguration.getCategoryTreelist());
     }
 
 

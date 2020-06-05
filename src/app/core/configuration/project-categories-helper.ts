@@ -5,6 +5,7 @@ import NAME = Named.NAME;
 import {flattenTreelist, Treelist} from './treelist';
 import {Name} from '../constants';
 import {filterTrees, isTopLevelItemOrChildThereof, removeTrees} from './named-treelist';
+import {logWithMessage} from '../util/utils';
 
 const TYPE_CATALOG = 'TypeCatalog';
 const TYPE = 'Type';
@@ -49,12 +50,12 @@ export /* package-private */ module ProjectCategoriesHelper {
     }
 
 
-    export function getOverviewCategoryNames(categoriesMap: Map<Category>): string[] {
+    export function getOverviewCategoryNames(t: Treelist<Category>): string[] {
 
-        return Object.values(categoriesMap)
-            .map(to(NAME))
-            .filter(categoryName => isSubcategory(categoriesMap, categoryName, 'Operation'))
-            .concat('Place');
+        return flow(t,
+            filterTrees('Operation', 'Place'),
+            flattenTreelist,
+            map(to([Named.NAME])));
     }
 
 
@@ -86,6 +87,9 @@ export /* package-private */ module ProjectCategoriesHelper {
     }
 
 
+    /**
+     * @deprecated
+     */
     export function isSubcategory(categoriesMap: Map<Category>,
                                   categoryName: string,
                                   superCategoryName: string): boolean {

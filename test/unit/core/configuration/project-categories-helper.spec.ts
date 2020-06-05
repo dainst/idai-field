@@ -11,6 +11,7 @@ import getImageCategoryNames = ProjectCategoriesHelper.getImageCategoryNames;
 import getTypeCategories = ProjectCategoriesHelper.getTypeCategories;
 import getOverviewTopLevelCategories = ProjectCategoriesHelper.getOverviewToplevelCategories;
 import {categoryTreelistToArray, categoryTreelistToMap} from '../../../../src/app/core/configuration/category-treelist';
+import getOverviewCategoryNames = ProjectCategoriesHelper.getOverviewCategoryNames;
 
 
 describe('ProjectCategoriesHelper', () => {
@@ -27,7 +28,12 @@ describe('ProjectCategoriesHelper', () => {
         ],
         [
             { name: 'Operation' },
-            []
+            [
+                [
+                    { name: 'Trench' },
+                    []
+                ]
+            ]
         ],
         [
             { name: 'Place' },
@@ -74,7 +80,7 @@ describe('ProjectCategoriesHelper', () => {
         expect(
             sameset(
                 getFieldCategories(categoryTreelist as Treelist<Category>).map(to(Named.NAME)),
-                ['Operation', 'Inscription', 'Type', 'TypeCatalog', 'Find', 'Place'])
+                ['Operation', 'Trench', 'Inscription', 'Type', 'TypeCatalog', 'Find', 'Place'])
         ).toBeTruthy();
     });
 
@@ -84,7 +90,7 @@ describe('ProjectCategoriesHelper', () => {
         expect(
             sameset(
                 getConcreteFieldCategories(categoryTreelist as Treelist<Category>).map(to(Named.NAME)),
-                ['Operation', 'Inscription', 'Find', 'Place'])
+                ['Operation', 'Trench', 'Inscription', 'Find', 'Place'])
         ).toBeTruthy();
     });
 
@@ -125,6 +131,16 @@ describe('ProjectCategoriesHelper', () => {
             sameset(
                 getOverviewTopLevelCategories(categoryTreelistToArray(categoryTreelist as Treelist<Category>)).map(to([Named.NAME])),
                 ['Operation', 'Place'])
+        ).toBeTruthy();
+    });
+
+
+    it('getOverviewCategoryNames', () => {
+
+        expect(
+            sameset(
+                getOverviewCategoryNames(categoryTreelist as Treelist<Category>),
+                ['Operation', 'Trench', 'Place'])
         ).toBeTruthy();
     });
 });

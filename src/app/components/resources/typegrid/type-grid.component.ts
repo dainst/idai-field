@@ -1,6 +1,9 @@
 import {ChangeDetectorRef, Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {SafeResourceUrl} from '@angular/platform-browser';
+import {VIRTUAL_SCROLL_STRATEGY, VirtualScrollStrategy, CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
 import {take, flatten, set, flow, filter, map, to, Map} from 'tsfun';
+import {Subject} from 'rxjs';
+import {distinctUntilChanged} from 'rxjs/operators';
 import {Document, FieldDocument} from 'idai-components-2';
 import {ViewFacade} from '../../../core/resources/view/view-facade';
 import {Loading} from '../../widgets/loading';
@@ -18,7 +21,132 @@ import {RoutingService} from '../../routing-service';
 import {ProjectCategories} from '../../../core/configuration/project-categories';
 import {TabManager} from '../../../core/tabs/tab-manager';
 import {PLACEHOLDER} from '../../../core/images/row/image-row';
-import { makeLookup } from 'src/app/core/util/transformers';
+import {makeLookup} from 'src/app/core/util/transformers';
+
+
+const BUFFER = 208;
+
+
+class CustomVirtualScrollStrategy implements VirtualScrollStrategy {
+
+    private index = new Subject<number>();
+
+    private viewport: CdkVirtualScrollViewport | null = null;
+
+    private numColumns = 3;
+
+    private rowHeight = 208;
+
+    scrolledIndexChange = this.index.pipe(distinctUntilChanged());
+
+    attach(viewport: CdkVirtualScrollViewport): void {
+
+        this.viewport = viewport;
+        this.updateTotalContentSize();
+    }
+
+
+    detach(): void {
+
+        this.index.complete();
+        this.viewport = null;
+    }
+
+
+    onContentScrolled(): void {
+
+        if (this.viewport) {
+            this.updateRenderedRange(this.viewport);
+        }
+    }
+
+
+    onDataLengthChanged(): void {
+
+        this.updateTotalContentSize();
+    }
+
+
+    onContentRendered(): void {
+
+        console.log("onContentRendered not implemented.");
+    }
+
+
+    onRenderedOffsetChanged(): void {
+
+        console.log("onRenderedOffsetChanged not implemented.");
+    }
+
+
+    scrollToIndex(index: number, behavior: ScrollBehavior): void {
+
+        if (this.viewport) {
+            this.viewport.scrollToOffset(this.getOffsetForIndex(index), behavior);
+        }
+    }
+
+
+    private updateTotalContentSize() {
+
+        if (this.viewport) {
+            const numRows = Math.ceil(this.viewport.getDataLength() / this.numColumns);
+            console.log('setTotalContentSize', numRows * this.rowHeight);
+            this.viewport.setTotalContentSize(numRows * this.rowHeight);
+        }
+    }
+
+
+    private getOffsetForIndex(index: number) {
+
+        const rowIndex = Math.floor(index / this.numColumns);
+        return rowIndex * this.rowHeight;
+    }
+
+
+    private getIndexForOffset(offset: number) {
+
+        const rowIndex = Math.floor(offset / this.rowHeight);
+        return rowIndex * this.numColumns;
+    }
+
+
+    private updateRenderedRange(viewport: CdkVirtualScrollViewport) {
+
+        const viewportSize = viewport.getViewportSize();
+        const offset = viewport.measureScrollOffset();
+        const {start, end} = viewport.getRenderedRange();
+        const dataLength = viewport.getDataLength();
+        const newRange = {start, end};
+        const firstVisibleIndex = this.getIndexForOffset(offset);
+        const startBuffer = offset - this.getOffsetForIndex(start);
+
+        if (startBuffer < BUFFER && start !== 0) {
+            newRange.start = Math.max(0, this.getIndexForOffset(offset - BUFFER * 2));
+            newRange.end = Math.min(
+                dataLength,
+                this.getIndexForOffset(offset + viewportSize + BUFFER),
+            );
+        } else {
+            const endBuffer = this.getOffsetForIndex(end) - offset - viewportSize;
+
+            if (endBuffer < BUFFER && end !== dataLength) {
+                newRange.start = Math.max(0, this.getIndexForOffset(offset - BUFFER));
+                newRange.end = Math.min(
+                    dataLength,
+                    this.getIndexForOffset(offset + viewportSize + BUFFER * 2),
+                );
+            }
+        }
+
+        console.log('newRange', newRange);
+        viewport.setRenderedRange(newRange);
+        console.log('newOffset', this.getOffsetForIndex(newRange.start));
+        viewport.setRenderedContentOffset(this.getOffsetForIndex(newRange.start));
+        this.index.next(firstVisibleIndex);
+     }
+
+}
 
 
 @Component({
@@ -27,7 +155,8 @@ import { makeLookup } from 'src/app/core/util/transformers';
     host: {
         '(window:contextmenu)': 'handleClick($event, true)',
         '(window:keydown)': 'onKeyDown($event)'
-    }
+    },
+    providers: [{provide: VIRTUAL_SCROLL_STRATEGY, useClass: CustomVirtualScrollStrategy}]
 })
 /**
  * @author Thomas Kleinke

@@ -179,6 +179,7 @@ $link-hover-color: lighten($navbar-default-bg, 30%);
   }
 
   &.closable-tab {
+    max-width: 500px;
 
     &:before {
       position: absolute;
@@ -193,20 +194,24 @@ $link-hover-color: lighten($navbar-default-bg, 30%);
       padding-right: 9px !important;
 
       .closable-tab-label {
-        position: relative;
-        top: -2px;
+        display: inline-block;
         margin-left: 5px;
         margin-right: 5px;
+        max-width: 426px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
       }
 
       .mdi-close {
         position: relative;
-        top: -2px;
+        top: -7px;
       }
 
       category-icon {
         position: relative;
         left: -4px;
+        top: -5px;
       }
     }
   }

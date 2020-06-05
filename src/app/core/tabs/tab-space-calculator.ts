@@ -12,6 +12,7 @@ export class TabSpaceCalculator {
     private static OVERVIEW_TAB_WIDTH: number = 100;
     private static TABS_DROPDOWN_WIDTH: number = 42;
     private static BASIC_TAB_WIDTH: number = 73;
+    private static MAX_TAB_WIDTH: number = 500;
     private static FONT: string = '16px Roboto';
 
 
@@ -39,6 +40,9 @@ export class TabSpaceCalculator {
 
         context.font = TabSpaceCalculator.FONT;
 
-        return Math.ceil(context.measureText(tab.label).width + TabSpaceCalculator.BASIC_TAB_WIDTH);
+        return Math.min(
+            Math.ceil(context.measureText(tab.label).width + TabSpaceCalculator.BASIC_TAB_WIDTH),
+            TabSpaceCalculator.MAX_TAB_WIDTH
+        );
     }
 }

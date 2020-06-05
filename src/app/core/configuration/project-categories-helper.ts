@@ -1,10 +1,10 @@
-import {is, isnt, Map, on, to} from 'tsfun';
+import {isnt, Map, to} from 'tsfun';
 import {Category} from './model/category';
 import {Named} from '../util/named';
 import NAME = Named.NAME;
 import {Treelist} from './treelist';
 import {Name} from '../constants';
-import {findInNamedTreelist} from './named-treelist';
+import {isTopLevelItemOrChildThereof} from './named-treelist';
 
 const TYPE_CATALOG = 'TypeCatalog';
 const TYPE = 'Type';
@@ -31,17 +31,6 @@ export /* package-private */ module ProjectCategoriesHelper {
             && !isTopLevelItemOrChildThereof(t, category, 'Type')
             && !isTopLevelItemOrChildThereof(t, category, 'TypeCatalog')
             && !isProjectCategory(category);
-    }
-
-
-    export function isTopLevelItemOrChildThereof(t: Treelist<Named>,
-                                                 name: Name, // TODO switch with 3rd arg and add varargs to simplify calls such as in isGeometryCategory
-                                                 firstLevelItem: Name): boolean {
-
-        const found = t.find(on([0, Named.NAME], is(firstLevelItem)));
-        return found ?
-            findInNamedTreelist(name, [found as any]) !== undefined
-            : false;
     }
 
 

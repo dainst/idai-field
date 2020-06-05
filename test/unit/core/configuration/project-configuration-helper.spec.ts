@@ -1,5 +1,4 @@
 import {ProjectCategoriesHelper} from '../../../../src/app/core/configuration/project-categories-helper';
-import isTopLevelItemOrChildThereof = ProjectCategoriesHelper.isTopLevelItemOrChildThereof;
 import isGeometryCategory = ProjectCategoriesHelper.isGeometryCategory;
 
 
@@ -32,16 +31,6 @@ describe('ProjectConfigurationHelper', () => {
             []
         ],
     ];
-
-    it('isTopLevelItemOrChildThereof', () => {
-
-        expect(isTopLevelItemOrChildThereof(categoryTree as any, 'Image', 'Image')).toBeTruthy();
-        expect(isTopLevelItemOrChildThereof(categoryTree as any, 'Drawing', 'Image')).toBeTruthy();
-
-        expect(isTopLevelItemOrChildThereof(categoryTree as any, 'Image', 'Operation')).toBeFalsy();
-
-        expect(isTopLevelItemOrChildThereof(categoryTree as any, 'Drawing', 'Imag')).toBeFalsy();
-    });
 
 
     it('isGeometryCategory', () => {

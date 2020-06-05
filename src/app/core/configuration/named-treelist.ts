@@ -21,9 +21,13 @@ export function filterTrees<N extends Named>(a: any, ...bs: any[]): any {
 }
 
 
-export function removeTrees<N extends Named>(t: Treelist<N>, match: Name, ...moreMatches: Name[]): Treelist<N> {
+export function removeTrees<N extends Named>(t: Treelist<N>, match: Name, ...moreMatches: Name[]): Treelist<N>;
+export function removeTrees<N extends Named>(match: Name, ...moreMatches: Name[]): (t: Treelist<N>) => Treelist<N>;
+export function removeTrees<N extends Named>(a: any, ...bs: any[]): any {
 
-    return _filterTrees(t, match, moreMatches, true);
+    return isArray(a)
+        ? _filterTrees(a, take(1, bs)[0], drop(1, bs), true)
+        : (t: any) => _filterTrees(t, a, bs, true);
 }
 
 

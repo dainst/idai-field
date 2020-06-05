@@ -1,10 +1,8 @@
 import {Injectable} from '@angular/core';
-import {to} from 'tsfun';
 import {ProjectConfiguration} from './project-configuration';
 import {Category} from './model/category';
 import {ProjectCategoriesHelper} from './project-categories-helper';
-
-const NAME = 'name';
+import {toName} from '../util/named';
 
 
 
@@ -24,7 +22,7 @@ export class ProjectCategories {
 
     public getOverviewTopLevelCategories(): Array<Category> {
 
-        return ProjectCategoriesHelper.getOverviewToplevelCategories(this.projectConfiguration.getCategoriesArray());
+        return ProjectCategoriesHelper.getOverviewToplevelCategories(this.projectConfiguration.getCategoryTreelist());
     }
 
 
@@ -54,13 +52,13 @@ export class ProjectCategories {
 
     public getFieldCategoryNames(): string[] {
 
-        return this.getFieldCategories().map(to(NAME));
+        return this.getFieldCategories().map(toName);
     }
 
 
     public getConcreteFieldCategoryNames(): string[] {
 
-        return this.getConcreteFieldCategories().map(to(NAME));
+        return this.getConcreteFieldCategories().map(toName);
     }
 
 
@@ -113,7 +111,7 @@ export class ProjectCategories {
 
     public getOverviewCategories(): string[] {
 
-        return ProjectCategoriesHelper.getOverviewCategories(this.projectConfiguration.getCategoriesMap());
+        return ProjectCategoriesHelper.getOverviewCategories(this.projectConfiguration.getCategoryTreelist());
     }
 
 

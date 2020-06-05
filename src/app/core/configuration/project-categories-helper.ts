@@ -1,15 +1,14 @@
-import {flow, map, Map, to} from 'tsfun';
+import {filter, flow, includedIn, is, map, Map, remove, to} from 'tsfun';
 import {Category} from './model/category';
-import {Named} from '../util/named';
-import NAME = Named.NAME;
+import {Named, onName, toName} from '../util/named';
 import {flattenTreelist, Treelist} from './treelist';
 import {Name} from '../constants';
 import {filterTrees, isTopLevelItemOrChildThereof, removeTrees} from './named-treelist';
-import {logWithMessage} from '../util/utils';
 
 const TYPE_CATALOG = 'TypeCatalog';
 const TYPE = 'Type';
 const TYPE_CATALOG_AND_TYPE = [TYPE_CATALOG, TYPE];
+// TODO add more consts
 
 
 /**
@@ -33,43 +32,60 @@ export /* package-private */ module ProjectCategoriesHelper {
 
     export function getRegularCategoryNames(t: Treelist<Category>): Array<Name> {
 
-        return flattenTreelist(removeTrees(t,
-            'Place', 'Project', TYPE_CATALOG, TYPE, 'Image', 'Operation')).map(to([Named.NAME]));
+        return flow(t,
+            removeTrees('Place', 'Project', TYPE_CATALOG, TYPE, 'Image', 'Operation'),
+            flattenTreelist,
+            map(toName)
+        );
     }
 
 
     export function getConcreteFieldCategories(t: Treelist<Category>): Array<Category> {
 
-        return flattenTreelist(removeTrees(t, 'Image', 'Project', TYPE_CATALOG, TYPE));
+        return flow(t,
+            removeTrees('Image', 'Project', TYPE_CATALOG, TYPE),
+            flattenTreelist
+        );
     }
 
 
     export function getFieldCategories(t: Treelist<Category>): Array<Category> {
 
-        return flattenTreelist(removeTrees(t, 'Image', 'Project'));
+        return flow(t,
+            removeTrees('Image', 'Project'),
+            flattenTreelist
+        );
     }
 
 
-    export function getOverviewCategoryNames(t: Treelist<Category>): string[] {
+    export function getOverviewCategoryNames(t: Treelist<Category>): Array<Name> {
 
         return flow(t,
             filterTrees('Operation', 'Place'),
             flattenTreelist,
-            map(to([Named.NAME])));
+            map(toName)
+        );
     }
 
 
-    export function getOverviewCategories(categoriesMap: Map<Category>): string[] {
+    export function getOverviewCategories(t: Treelist<Category>): Array<Name> {
 
-        return Object.keys(getCategoryAndSubcategories('Operation', categoriesMap))
-            .concat(['Place'])
-            .filter(el => el !== 'Operation');
+        return flow(t,
+            filterTrees('Operation', 'Place'),
+            flattenTreelist,
+            remove(onName(is('Operation'))), // TODO review why we do remove this here but not in getOverviewCategoryNames, compare also getOverviewToplevelCategories
+            map(toName)
+        );
     }
 
 
-    export function getOverviewToplevelCategories(categoriesArray: Array<Category>): Array<Category> {
+    export function getOverviewToplevelCategories(t: Treelist<Category>): Array<Category> {
 
-        return categoriesArray.filter(category => category.name === 'Operation' || category.name === 'Place');
+        return flow(t,
+            filterTrees('Operation', 'Place'),
+            flattenTreelist,
+            filter(onName(includedIn(['Operation', 'Place'])))
+        );
     }
 
 
@@ -81,7 +97,7 @@ export /* package-private */ module ProjectCategoriesHelper {
     }
 
 
-    export function getTypeCategoryNames(): string[] {
+    export function getTypeCategoryNames(): Array<Name> {
 
         return TYPE_CATALOG_AND_TYPE;
     }
@@ -103,9 +119,23 @@ export /* package-private */ module ProjectCategoriesHelper {
     }
 
 
-    export function getCategoryAndSubcategories(supercategoryName: string, categoriesMap: Map<Category>): Map<Category> {
+    /**
+     * @deprecated
+     */
+    export function getCategoryAndSubcategories(supercategory: Name, categoriesMap: Map<Category>): Map<Category> {
 
-        return getCategoryAndSubcategories_(supercategoryName, categoriesMap);
+        if (!categoriesMap[supercategory]) return {};
+
+        const subcategories: Map<Category> = {};
+        subcategories[supercategory] = categoriesMap[supercategory];
+
+        if (categoriesMap[supercategory].children) {
+            for (let i = categoriesMap[supercategory].children.length - 1; i >= 0; i--) {
+                subcategories[categoriesMap[supercategory].children[i].name]
+                    = categoriesMap[supercategory].children[i];
+            }
+        }
+        return subcategories;
     }
 
 
@@ -118,26 +148,8 @@ export /* package-private */ module ProjectCategoriesHelper {
     }
 
 
-    export function isProjectCategory(categoryName: string): boolean {
+    export function isProjectCategory(category: Name): boolean {
 
-        return categoryName === 'Project';
-    }
-
-
-    export function getCategoryAndSubcategories_(supercategoryName: string, projectCategoriesMap: Map<Category>)
-        : Map<Category> {
-
-            if (!projectCategoriesMap[supercategoryName]) return {};
-
-        const subcategories: Map<Category> = {};
-        subcategories[supercategoryName] = projectCategoriesMap[supercategoryName];
-
-        if (projectCategoriesMap[supercategoryName].children) {
-            for (let i = projectCategoriesMap[supercategoryName].children.length - 1; i >= 0; i--) {
-                subcategories[projectCategoriesMap[supercategoryName].children[i].name]
-                    = projectCategoriesMap[supercategoryName].children[i];
-            }
-        }
-        return subcategories;
+        return category === 'Project';
     }
 }

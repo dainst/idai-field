@@ -1,8 +1,8 @@
 import {ProjectCategoriesHelper} from '../../../../src/app/core/configuration/project-categories-helper';
 import isGeometryCategory = ProjectCategoriesHelper.isGeometryCategory;
 import getFieldCategories = ProjectCategoriesHelper.getFieldCategories;
-import {sameset, to} from 'tsfun';
-import {Named} from '../../../../src/app/core/util/named';
+import {sameset} from 'tsfun';
+import {Named, toName} from '../../../../src/app/core/util/named';
 import {Treelist} from '../../../../src/app/core/configuration/treelist';
 import {Category} from '../../../../src/app/core/configuration/model/category';
 import getConcreteFieldCategories = ProjectCategoriesHelper.getConcreteFieldCategories;
@@ -10,8 +10,8 @@ import getRegularCategoryNames = ProjectCategoriesHelper.getRegularCategoryNames
 import getImageCategoryNames = ProjectCategoriesHelper.getImageCategoryNames;
 import getTypeCategories = ProjectCategoriesHelper.getTypeCategories;
 import getOverviewTopLevelCategories = ProjectCategoriesHelper.getOverviewToplevelCategories;
-import {categoryTreelistToArray, categoryTreelistToMap} from '../../../../src/app/core/configuration/category-treelist';
 import getOverviewCategoryNames = ProjectCategoriesHelper.getOverviewCategoryNames;
+import getOverviewCategories = ProjectCategoriesHelper.getOverviewCategories;
 
 
 describe('ProjectCategoriesHelper', () => {
@@ -79,7 +79,7 @@ describe('ProjectCategoriesHelper', () => {
 
         expect(
             sameset(
-                getFieldCategories(categoryTreelist as Treelist<Category>).map(to(Named.NAME)),
+                getFieldCategories(categoryTreelist as Treelist<Category>).map(toName),
                 ['Operation', 'Trench', 'Inscription', 'Type', 'TypeCatalog', 'Find', 'Place'])
         ).toBeTruthy();
     });
@@ -89,7 +89,7 @@ describe('ProjectCategoriesHelper', () => {
 
         expect(
             sameset(
-                getConcreteFieldCategories(categoryTreelist as Treelist<Category>).map(to(Named.NAME)),
+                getConcreteFieldCategories(categoryTreelist as Treelist<Category>).map(toName),
                 ['Operation', 'Trench', 'Inscription', 'Find', 'Place'])
         ).toBeTruthy();
     });
@@ -119,7 +119,7 @@ describe('ProjectCategoriesHelper', () => {
 
         expect(
             sameset(
-                getTypeCategories(categoryTreelist as Treelist<Category>).map(to([Named.NAME])),
+                getTypeCategories(categoryTreelist as Treelist<Category>).map(toName),
                 ['TypeCatalog', 'Type'])
         ).toBeTruthy();
     });
@@ -129,8 +129,18 @@ describe('ProjectCategoriesHelper', () => {
 
         expect(
             sameset(
-                getOverviewTopLevelCategories(categoryTreelistToArray(categoryTreelist as Treelist<Category>)).map(to([Named.NAME])),
+                getOverviewTopLevelCategories(categoryTreelist as Treelist<Category>).map(toName),
                 ['Operation', 'Place'])
+        ).toBeTruthy();
+    });
+
+
+    it('getOverviewCategories', () => {
+
+        expect(
+            sameset(
+                getOverviewCategories(categoryTreelist as Treelist<Category>),
+                ['Trench', 'Place'])
         ).toBeTruthy();
     });
 

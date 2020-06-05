@@ -1,4 +1,4 @@
-import {findInNamedTreelist} from '../../../../src/app/core/configuration/named-treelist';
+import {findInNamedTreelist, isTopLevelItemOrChildThereof} from '../../../../src/app/core/configuration/named-treelist';
 
 
 describe('CategoryTreelist', () => {
@@ -33,5 +33,44 @@ describe('CategoryTreelist', () => {
         const result = findInNamedTreelist('C1', t);
 
         expect(result.name).toBe('C1');
+    });
+
+
+    it('isTopLevelItemOrChildThereof', () => {
+
+        const categoryTree = [
+            [
+                { name: 'Image'},
+                [
+                    [
+                        { name: 'Drawing'},
+                        []
+                    ]
+                ]
+            ],
+            [
+                { name: 'Operation' },
+                []
+            ],
+            [
+                { name: 'Inscription' },
+                []
+            ],
+            [
+                { name: 'Type' },
+                []
+            ],
+            [
+                { name: 'TypeCatalog' },
+                []
+            ],
+        ];
+
+        expect(isTopLevelItemOrChildThereof(categoryTree as any, 'Image', 'Image')).toBeTruthy();
+        expect(isTopLevelItemOrChildThereof(categoryTree as any, 'Drawing', 'Image')).toBeTruthy();
+
+        expect(isTopLevelItemOrChildThereof(categoryTree as any, 'Image', 'Operation')).toBeFalsy();
+
+        expect(isTopLevelItemOrChildThereof(categoryTree as any, 'Drawing', 'Imag')).toBeFalsy();
     });
 });

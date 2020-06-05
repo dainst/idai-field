@@ -1,5 +1,9 @@
 import {ProjectCategoriesHelper} from '../../../../src/app/core/configuration/project-categories-helper';
 import isGeometryCategory = ProjectCategoriesHelper.isGeometryCategory;
+import getFieldCategories = ProjectCategoriesHelper.getFieldCategories;
+import {categoryTreelistToMap} from '../../../../src/app/core/configuration/category-treelist';
+import {to} from 'tsfun';
+import {Named} from '../../../../src/app/core/util/named';
 
 
 describe('ProjectConfigurationHelper', () => {
@@ -30,6 +34,10 @@ describe('ProjectConfigurationHelper', () => {
             { name: 'TypeCatalog' },
             []
         ],
+        [
+            { name: 'Project' },
+            []
+        ]
     ];
 
 
@@ -42,5 +50,14 @@ describe('ProjectConfigurationHelper', () => {
         expect(isGeometryCategory(categoryTree as any, 'Inscription')).toBeFalsy();
         expect(isGeometryCategory(categoryTree as any, 'Project')).toBeFalsy();
         expect(isGeometryCategory(categoryTree as any, 'Operation')).toBeTruthy();
+        expect(isGeometryCategory(categoryTree as any, 'Project')).toBeFalsy();
+    });
+
+
+    it('getFieldCategories', () => {
+
+        expect(
+            getFieldCategories(categoryTreelistToMap(categoryTree as any)).map(to(Named.NAME))
+        ).toEqual(['Drawing', 'Operation', 'Inscription', 'Type', 'TypeCatalog']);
     });
 });

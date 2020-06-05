@@ -83,6 +83,10 @@ type-grid {
             top: 5px;
             left: 50%;
             transform: translateX(-50%);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100%;
+            cursor: default;
           }
 
           &:hover {

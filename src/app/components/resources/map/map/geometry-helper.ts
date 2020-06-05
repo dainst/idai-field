@@ -59,7 +59,7 @@ export class GeometryHelper {
     }
 
 
-    public static getCoordinatesFromMarkers(markers: Array<L.Marker>): number[][] {
+    public static getCoordinatesFromMarkers(markers: Array<L.CircleMarker>): number[][] {
 
         const coordinates: number[][] = [];
 
@@ -71,7 +71,7 @@ export class GeometryHelper {
     }
 
 
-    public static getCoordinatesFromMarker(marker: L.Marker): number[] {
+    public static getCoordinatesFromMarker(marker: L.CircleMarker): number[] {
 
         const latLng = marker.getLatLng();
         return [latLng.lng, latLng.lat];

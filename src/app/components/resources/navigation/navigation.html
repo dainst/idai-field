@@ -18,8 +18,16 @@
         <div *ngIf="!viewFacade.isInSpecialView() && viewFacade.getCurrentOperation()"
              id="selected-operation" type="button" class="btn btn-outline-primary navigation-button"
              [class.root-document]="!navigationPath.selectedSegmentId"
-             (click)="moveInto(undefined)">
-            <span>{{getNavigationButtonLabel(viewFacade.getCurrentOperation().resource.id).text}}</span>
+             (click)="moveInto(undefined)"
+             ngbTooltip="{{getNavigationButtonLabel(viewFacade.getCurrentOperation().resource.id).fullText}}"
+             placement="bottom"
+             container="body"
+             triggers="manual"
+             #tooltip="ngbTooltip"
+             (mouseover)="getNavigationButtonLabel(viewFacade.getCurrentOperation().resource.id).shortened && tooltip.open()"
+             (mouseleave)="tooltip.close()"
+             (mousedown)="tooltip.close()">
+            {{getNavigationButtonLabel(viewFacade.getCurrentOperation().resource.id).text}}
         </div>
 
         <div *ngIf="viewFacade.isInOverview()"

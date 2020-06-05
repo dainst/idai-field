@@ -73,6 +73,9 @@ type-grid {
             top: 195px;
             left: 50%;
             transform: translateX(-50%);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
           }
 
           .badge {

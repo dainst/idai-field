@@ -17,6 +17,7 @@ $link-hover-color: lighten($navbar-default-bg, 30%);
   }
 
   .dropdown-menu {
+    top: -7px !important;
     z-index: 1050;
   }
 }

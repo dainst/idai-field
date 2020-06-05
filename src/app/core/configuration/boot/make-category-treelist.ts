@@ -8,7 +8,7 @@ import {FieldDefinition} from '../model/field-definition';
 import {clone} from '../../util/object-util';
 import {mapToNamedArray} from '../../util/named';
 import {MDInternal} from '../../../components/messages/md-internal';
-import {mapTreelist, Treelist} from '../treelist';
+import {mapTreelist, Treelist} from '../../util/treelist';
 import {CategoryTreelist, linkParentAndChildInstances} from '../category-treelist';
 
 

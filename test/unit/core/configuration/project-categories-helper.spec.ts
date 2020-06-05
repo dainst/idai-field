@@ -3,7 +3,7 @@ import isGeometryCategory = ProjectCategoriesHelper.isGeometryCategory;
 import getFieldCategories = ProjectCategoriesHelper.getFieldCategories;
 import {sameset} from 'tsfun';
 import {Named, toName} from '../../../../src/app/core/util/named';
-import {Treelist} from '../../../../src/app/core/configuration/treelist';
+import {Treelist} from '../../../../src/app/core/util/treelist';
 import {Category} from '../../../../src/app/core/configuration/model/category';
 import getConcreteFieldCategories = ProjectCategoriesHelper.getConcreteFieldCategories;
 import getRegularCategoryNames = ProjectCategoriesHelper.getRegularCategoryNames;

@@ -1,9 +1,9 @@
 import {filter, flow, includedIn, is, map, Map, remove, to} from 'tsfun';
 import {Category} from './model/category';
 import {Named, onName, toName} from '../util/named';
-import {flattenTreelist, Treelist} from './treelist';
+import {flattenTreelist, Treelist} from '../util/treelist';
 import {Name} from '../constants';
-import {filterTrees, isTopLevelItemOrChildThereof, removeTrees} from './named-treelist';
+import {filterTrees, isTopLevelItemOrChildThereof, removeTrees} from '../util/named-treelist';
 
 const TYPE_CATALOG = 'TypeCatalog';
 const TYPE = 'Type';

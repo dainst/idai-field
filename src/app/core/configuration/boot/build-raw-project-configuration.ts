@@ -34,7 +34,7 @@ import {RelationsUtil} from '../relations-utils';
 import {CategoryDefinition} from '../model/category-definition';
 import {ProjectCategoriesHelper} from '../project-categories-helper';
 import {FieldDefinition} from '../model/field-definition';
-import {mapLeafs, mapTreelist, Treelist} from '../treelist';
+import {mapLeafs, mapTreelist, Treelist} from '../../util/treelist';
 import {sortStructArray} from '../../util/sort-struct-array';
 import {linkParentAndChildInstances} from '../category-treelist';
 

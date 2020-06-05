@@ -7,7 +7,7 @@ import {RelationDefinition} from './model/relation-definition';
 import {Named, namedArrayToNamedMap} from '../util/named';
 import {RelationsUtil} from './relations-utils';
 import {ProjectCategoriesHelper} from './project-categories-helper';
-import {Treelist} from './treelist';
+import {Treelist} from '../util/treelist';
 import {CategoryTreelist, categoryTreelistToArray} from './category-treelist';
 import {Name} from '../constants';
 

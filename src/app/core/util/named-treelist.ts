@@ -1,6 +1,6 @@
 import {drop, identity, includedIn, is, isArray, isNot, on, take} from 'tsfun';
 import {findInTreelist, Treelist} from './treelist';
-import {Named} from '../util/named';
+import {Named} from './named';
 import {Name} from '../constants';
 
 

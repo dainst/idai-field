@@ -3,9 +3,9 @@ import {
     findInNamedTreelist,
     isTopLevelItemOrChildThereof,
     removeTrees
-} from '../../../../src/app/core/configuration/named-treelist';
-import {Named} from '../../../../src/app/core/util/named';
-import {Treelist} from '../../../../src/app/core/configuration/treelist';
+} from '../../../src/app/core/util/named-treelist';
+import {Named} from '../../../src/app/core/util/named';
+import {Treelist} from '../../../src/app/core/util/treelist';
 
 
 describe('CategoryTreelist', () => {

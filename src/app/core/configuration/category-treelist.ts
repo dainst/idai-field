@@ -1,6 +1,6 @@
 import {Map, to} from 'tsfun';
 import {Category} from './model/category';
-import {flattenTreelist, Treelist} from './treelist';
+import {flattenTreelist, Treelist} from '../util/treelist';
 import {namedArrayToNamedMap} from '../util/named';
 
 const CATEGORIES = [0];

@@ -5,8 +5,7 @@ import {
     mapLeafs,
     mapTreelist, Tree,
     Treelist
-} from '../../../../src/app/core/configuration/treelist';
-import {equalBy} from 'tsfun/by';
+} from '../../../src/app/core/util/treelist';
 
 
 describe('Treelist', () => {

@@ -177,6 +177,7 @@ category-switcher-button {
 .dropdown-item {
   cursor: default;
   user-select: none;
+  color: #000 !important;
 
   &:focus {
     background-color: #fff;
@@ -188,7 +189,6 @@ category-switcher-button {
 
   &:active {
     background-color: darken($list-item-hover-color, 5%);
-    color: #000;
     outline: 0;
   }
 }

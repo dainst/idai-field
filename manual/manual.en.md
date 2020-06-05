@@ -82,8 +82,6 @@ set within stratigraphical units etc. The various resources in iDAI.field fulfil
 the general needs of archaeological documentation. Each resource is configured with a set of attributes called 
 "fields" which must be filled in with "values" by the user to produce valuable data.
 
-
-
 ### Project
 
 The "project" is the highest level resource of iDAI.field - all other resources must be within a "project". With your 
@@ -91,8 +89,6 @@ installation of iDAI.field you can work on multiple projects. In the app, click 
 create, modify or delete projects. 
 
 <p align="center"><img src="images/en/resources/manage_projects.png" alt="Manage projects"/></p>
-
-
 
 ### Creating, modifying and deleting resources
 
@@ -132,13 +128,66 @@ Furthermore, the context menu contains options for creating and editing geometri
 Deleting resources is so dangerous to the database, that answering the security check is mandatory. In cases where 
 mass manipulation becomes necessary refer to the respective chapter in this manual. 
 
+### Geometries of resources
+
+For any resource in iDAI.field a geometry can be supplied. It represents the geographical extend or location of the respective resource.
+Whenever you create a new resource you will be asked if you want to create a geometry as well. You can, i.e. vectorize
+stratigraphical units pictured on a hand-drawn, scanned and georeferenced plan or digital orthoimage. Go to **Image management** to 
+read more about georefenced images in iDAI.field.
+
+The mapping functionalities in iDAI.field are basic and include import, export, storing, vectorizing and viewing 
+2D-geometries (points, lines, polygons) attached to resources.
+
+The ability of iDAI.field to handle geometries on a map is essential for an archaeological information system because all archaeological data should be localized explicitly.
+The Geographical Information System (GIS) functionalities in iDAI.field allow for basic vectorizing, however it is not planned to replace a full-fledged GIS like QGIS or ArcGIS. 
+At the moment (Version 2.15.3) the app does not support reprojections, thus, it cannot project geometries of different cooridate systems on the same map.  
+Length, and area measurements and more elaborate spatial analysis must be preformed with other software (QGIS, R etc.). 
+
+Geometries in iDAI.field are compatible with GIS. All resources with geometries can be exported as a geojson file which can easily be imported in GIS.
+In iDAI.field, click on **Export** within the "File"-tab, select "Format" : "GeoJSON" and filter by "Operation" if needed.
+Save all resources with geometries in your database to one file. Mind that only resources with geometry and
+that only the fields "identifier", "category" and "shortDescription" are being exported together with the geometries.
+
+<p align="center"><img src="images/en/resources/export_geojson.png" alt="Export Geojson"/></p>
+
+In QGis open the "Data Source Manager" and go to the "Vector"-tab select "Source Type" : "File" and search for 
+the GeoJSON-file exported from iDAI.field. Open and add it to your QGis-Project. If you have different "Geometry types" in your 
+GeoJSON, QGis will have to split the Geometries into homogene layers and thus seperate points, lines and polygons.
+Your data is now represented as layers with features, each feature corresponds to one resource in your iDAI.field database.
+Check the layers properties to make sure the correct coordinate reference system is selected.
+
+<p align="center"><img src="images/en/resources/import_geojson_qgis.png" alt="Import Geojson to QGIS"/></p>
+
+
+
+
+
+#### Image management
+
+
+
+
+
+
+
+
+However  For 
+
+In iDAI
+
+### Places
+
+The **Place** resource shall represent the research site generally and can simply be documented with a single central point and the name of the site.
+Best practice is to give the GazetteerID used for this site on https://gazetteer.dainst.org.
 
 ### Operations 
 
-Within the **Overview** tab it is not possible to create finds or features. Before entering actual archaeological entities 
+Within the **Overview** tab it is not possible to create finds or features. Before creating actual archaeological entities 
 it is required to create **Operations**, meaning research operations like "excavation" (trench), "survey" (survey area) and "building research" (building).
- Use the button "Switch to operation" (Symbol: Arrow
-up right) in order to enter this operation.
+The geometries which ought to be created for the operations shall represent the actual research area or object.
+The fields in the respective operation category ask for specific organisational and methodological information.
+
+Use the button "Switch to operation" (Symbol: Arrowup right) in order to enter this operation.
 
 <p align="center"><img src="images/en/resources/goto_operation.png" alt="Open operation resource"/></p>
 
@@ -147,6 +196,7 @@ operation tab via the plus button (e. g. stratigraphical units within a trench o
 
 <p align="center"><img src="images/en/resources/create_more.png" alt="Create resource"/></p>
 
+### 
 
 
 ### Hierarchical ordering

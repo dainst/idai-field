@@ -87,6 +87,12 @@ type-grid {
             text-overflow: ellipsis;
             max-width: 100%;
             cursor: default;
+
+            &:hover {
+              overflow-wrap: break-word;
+              white-space: normal;
+              z-index: 5;
+            }
           }
 
           &:hover {

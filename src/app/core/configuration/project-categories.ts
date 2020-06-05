@@ -24,25 +24,25 @@ export class ProjectCategories {
 
     public getOverviewTopLevelCategories(): Array<Category> {
 
-        return ProjectCategoriesHelper.getOverviewTopLevelCategories(this.projectConfiguration.getCategoriesArray());
+        return ProjectCategoriesHelper.getOverviewToplevelCategories(this.projectConfiguration.getCategoriesArray());
     }
 
 
     public getFieldCategories(): Array<Category> {
 
-        return ProjectCategoriesHelper.getFieldCategories(this.projectConfiguration.getCategoriesMap());
+        return ProjectCategoriesHelper.getFieldCategories(this.projectConfiguration.getCategoryTreelist());
     }
 
 
     public getConcreteFieldCategories(): Array<Category> {
 
-        return ProjectCategoriesHelper.getConcreteFieldCategories(this.projectConfiguration.getCategoriesMap());
+        return ProjectCategoriesHelper.getConcreteFieldCategories(this.projectConfiguration.getCategoryTreelist());
     }
 
 
     public getTypeCategories(): Array<Category> {
 
-        return ProjectCategoriesHelper.getTypeCategories(this.projectConfiguration.getCategoriesArray());
+        return ProjectCategoriesHelper.getTypeCategories(this.projectConfiguration.getCategoryTreelist());
     }
 
 
@@ -66,7 +66,7 @@ export class ProjectCategories {
 
     public getImageCategoryNames(): string[] {
 
-        return ProjectCategoriesHelper.getImageCategoryNames(this.projectConfiguration.getCategoriesMap());
+        return ProjectCategoriesHelper.getImageCategoryNames(this.projectConfiguration.getCategoryTreelist());
     }
 
 
@@ -90,7 +90,7 @@ export class ProjectCategories {
 
     public getRegularCategoryNames(): string[] {
 
-        return ProjectCategoriesHelper.getRegularCategoryNames(this.projectConfiguration.getCategoriesMap());
+        return ProjectCategoriesHelper.getRegularCategoryNames(this.projectConfiguration.getCategoryTreelist());
     }
 
 
@@ -150,6 +150,7 @@ export class ProjectCategories {
     }
 
 
+    // TODO implement via flattenTreelist and filterToplevelCategories (or something similar)
     private getSuperCategoryNames(superCategoryName: string) {
 
         return Object.keys(

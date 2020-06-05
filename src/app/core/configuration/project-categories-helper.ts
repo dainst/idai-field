@@ -1,10 +1,10 @@
-import {isnt, Map, to} from 'tsfun';
+import {flow, map, Map, to} from 'tsfun';
 import {Category} from './model/category';
 import {Named} from '../util/named';
 import NAME = Named.NAME;
-import {Treelist} from './treelist';
+import {flattenTreelist, Treelist} from './treelist';
 import {Name} from '../constants';
-import {isTopLevelItemOrChildThereof} from './named-treelist';
+import {filterTrees, isTopLevelItemOrChildThereof, removeTrees} from './named-treelist';
 
 const TYPE_CATALOG = 'TypeCatalog';
 const TYPE = 'Type';
@@ -30,34 +30,22 @@ export /* package-private */ module ProjectCategoriesHelper {
     }
 
 
-    export function getRegularCategoryNames(categoriesMap: Map<Category>): string[] {
+    export function getRegularCategoryNames(t: Treelist<Category>): Array<Name> {
 
-        return Object.values(categoriesMap)
-            .map(to(NAME))
-            .filter(isnt('Place'))
-            .filter(isnt('Project'))
-            .filter(categoryName => !isSubcategory(categoriesMap, categoryName, 'Operation'))
-            .filter(categoryName => !isSubcategory(categoriesMap, categoryName, 'Image'))
-            .filter(categoryName => !isSubcategory(categoriesMap, categoryName, 'TypeCatalog'))
-            .filter(categoryName => !isSubcategory(categoriesMap, categoryName, 'Type'));
+        return flattenTreelist(removeTrees(t,
+            'Place', 'Project', TYPE_CATALOG, TYPE, 'Image', 'Operation')).map(to([Named.NAME]));
     }
 
 
-    export function getConcreteFieldCategories(categoriesMap: Map<Category>): Array<Category> {
+    export function getConcreteFieldCategories(t: Treelist<Category>): Array<Category> {
 
-        return Object.values(categoriesMap)
-            .filter(category => !isSubcategory(categoriesMap, category.name, 'Image'))
-            .filter(category => !isSubcategory(categoriesMap, category.name, TYPE_CATALOG))
-            .filter(category => !isSubcategory(categoriesMap, category.name, TYPE))
-            .filter(category => !ProjectCategoriesHelper.isProjectCategory(category.name));
+        return flattenTreelist(removeTrees(t, 'Image', 'Project', TYPE_CATALOG, TYPE));
     }
 
 
-    export function getFieldCategories(categoriesMap: Map<Category>): Array<Category> {
+    export function getFieldCategories(t: Treelist<Category>): Array<Category> {
 
-        return Object.values(categoriesMap)
-            .filter(category => !isSubcategory(categoriesMap, category.name, 'Image'))
-            .filter(category => !ProjectCategoriesHelper.isProjectCategory(category.name));
+        return flattenTreelist(removeTrees(t, 'Image', 'Project'));
     }
 
 
@@ -78,15 +66,17 @@ export /* package-private */ module ProjectCategoriesHelper {
     }
 
 
-    export function getOverviewTopLevelCategories(categoriesArray: Array<Category>): Array<Category> {
+    export function getOverviewToplevelCategories(categoriesArray: Array<Category>): Array<Category> {
 
         return categoriesArray.filter(category => category.name === 'Operation' || category.name === 'Place');
     }
 
 
-    export function getTypeCategories(categoriesArray: Array<Category>): Array<Category> {
+    export function getTypeCategories(t: Treelist<Category>): Array<Category> {
 
-        return categoriesArray.filter(category => category.name === TYPE_CATALOG || category.name === TYPE);
+        return flow(t,
+            filterTrees('Type', 'TypeCatalog'),
+            flattenTreelist);
     }
 
 
@@ -115,9 +105,12 @@ export /* package-private */ module ProjectCategoriesHelper {
     }
 
 
-    export function getImageCategoryNames(projectCategoriesMap: Map<Category>): string[] {
+    export function getImageCategoryNames(t: Treelist<Category>): Array<Name> {
 
-        return Object.keys(getCategoryAndSubcategories('Image', projectCategoriesMap));
+        return flow(t,
+            filterTrees('Image'),
+            flattenTreelist,
+            map(to([Named.NAME])));
     }
 
 

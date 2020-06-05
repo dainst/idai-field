@@ -1,5 +1,7 @@
-import {Pair, Mapping, Predicate, isFunction} from 'tsfun';
+import {Pair, Mapping, Predicate, isFunction, on, isNot, identity, includedIn} from 'tsfun';
 import {Comparator} from 'tsfun/by';
+import {Named} from '../util/named';
+import {Name} from '../constants';
 
 
 export type Node<ITEM, CHILDREN> = Pair<ITEM, CHILDREN>;
@@ -68,5 +70,3 @@ export function findInTreelist<T>(match: T|Predicate<T>, t: Treelist<T>, compara
     }
     return undefined;
 }
-
-

@@ -93,7 +93,8 @@ export /* package-private */ module ProjectCategoriesHelper {
 
         return flow(t,
             filterTrees('Type', 'TypeCatalog'),
-            flattenTreelist);
+            flattenTreelist
+        );
     }
 
 
@@ -144,12 +145,7 @@ export /* package-private */ module ProjectCategoriesHelper {
         return flow(t,
             filterTrees('Image'),
             flattenTreelist,
-            map(to([Named.NAME])));
-    }
-
-
-    export function isProjectCategory(category: Name): boolean {
-
-        return category === 'Project';
+            map(to([Named.NAME]))
+        );
     }
 }

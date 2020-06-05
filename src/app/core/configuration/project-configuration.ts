@@ -87,12 +87,6 @@ export class ProjectConfiguration {
     }
 
 
-    public getCategoryAndSubcategories(supercategoryName: string): Map<Category> {
-
-        return ProjectCategoriesHelper.getCategoryAndSubcategories(supercategoryName, this.getCategoriesMap());
-    }
-
-
     /**
      * Gets the relation definitions available.
      *

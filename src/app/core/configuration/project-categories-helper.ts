@@ -25,8 +25,8 @@ export /* package-private */ module ProjectCategoriesHelper {
 
     export function isGeometryCategory(t: Treelist<Named>, category: Name): boolean {
 
-        return !isTopLevelItemOrChildThereof(t, category, 'Image', 'Inscription', 'Type', 'TypeCatalog')
-            && !isProjectCategory(category);
+        return !isTopLevelItemOrChildThereof(t, category,
+            'Image', 'Inscription', 'Type', 'TypeCatalog', 'Project');
     }
 
 

@@ -1,12 +1,14 @@
 <div id="matrix-view" class="row bg-light">
 
-    <div class="col">
+    <div class="col col-md-6">
         <div class="row">
             <div *ngIf="showTrenchSelector()" class="btn-group dropdown"
                  ngbDropdown placement="bottom-left" role="group">
                 <button class="btn btn-outline-primary dropdown-toggle-split" ngbDropdownToggle></button>
                 <div class="dropdown-menu" ngbDropdownMenu>
-                    <button *ngFor="let trench of trenches" class="dropdown-item" (click)="selectTrench(trench)">
+                    <button *ngFor="let trench of trenches"
+                            class="dropdown-item trench-selection-button"
+                            (click)="selectTrench(trench)">
                         {{getDocumentLabel(trench)}}
                     </button>
                 </div>
@@ -18,7 +20,7 @@
         </div>
     </div>
 
-    <div class="col text-right toolbar">
+    <div class="col col-md-6 text-right toolbar">
         <div class="btn-group">
             <div id="edit-mode-button"
                  class="btn btn-primary"

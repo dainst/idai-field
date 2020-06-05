@@ -31,6 +31,19 @@
     top: 4px;
     padding-left: 8px;
     margin-bottom: 4px;
+    max-width: 100%;
+  }
+
+  .trench-selection-button {
+    max-width: 50vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  #selected-trench-label {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
 

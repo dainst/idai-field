@@ -33,9 +33,9 @@ class CustomVirtualScrollStrategy implements VirtualScrollStrategy {
 
     private viewport: CdkVirtualScrollViewport | null = null;
 
-    private numColumns = 3;
+    private numColumns = 3; // TODO: Calculate number of colums
 
-    private rowHeight = 208;
+    private rowHeight = 208; // TODO: Make parameter
 
     scrolledIndexChange = this.index.pipe(distinctUntilChanged());
 

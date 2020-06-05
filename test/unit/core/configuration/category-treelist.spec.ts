@@ -155,7 +155,7 @@ describe('CategoryTreelist', () => {
     });
 
 
-    function threeLevels() {
+    function threeLevels(): any {
 
         const parent1 = { name: 'P1' }
         const child1 = { name: 'C1' };
@@ -183,7 +183,7 @@ describe('CategoryTreelist', () => {
     it('linkParentAndChildInstances', () => {
 
         const t = threeLevels();
-        const result = linkParentAndChildInstances(t as any);
+        const result = linkParentAndChildInstances(t);
 
         expect(result[0][0].children[0] === result[0][1][0][0]).toBeTruthy();
         expect(result[0][1][0][0].children[0] === result[0][1][0][1][0][0]).toBeTruthy();
@@ -195,7 +195,7 @@ describe('CategoryTreelist', () => {
     it('categoryTreelistToArray - recursive', () => {
 
         const t = threeLevels();
-        const result = categoryTreelistToArray(linkParentAndChildInstances(t as any));
+        const result = categoryTreelistToArray(linkParentAndChildInstances(t));
 
         expect(result[0].name).toBe('P1');
         expect(result[1].name).toBe('C1');
@@ -215,7 +215,7 @@ describe('CategoryTreelist', () => {
     it('categoryTreelistToMap - recursive', () => {
 
         const t = threeLevels();
-        const result = categoryTreelistToMap(linkParentAndChildInstances(t as any));
+        const result = categoryTreelistToMap(linkParentAndChildInstances(t));
 
         expect(result['P1'].name).toBe('P1');
         expect(result['C1'].name).toBe('C1');
@@ -235,7 +235,7 @@ describe('CategoryTreelist', () => {
     it('findInCategoryTreelist', () => {
 
         const t = threeLevels();
-        const result = findInCategoryTreelist('C1', linkParentAndChildInstances(t as any));
+        const result = findInCategoryTreelist('C1', t);
 
         expect(result.name).toBe('C1');
     });

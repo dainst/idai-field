@@ -2,7 +2,9 @@ import {Pair, Mapping, Predicate, isFunction} from 'tsfun';
 import {Comparator} from 'tsfun/by';
 
 
-export type Tree<T> = Pair<T /* ITEM */, Treelist<T> /* CHILDREN */>;
+export type Node<ITEM, CHILDREN> = Pair<ITEM, CHILDREN>;
+
+export type Tree<T> = Node<T, Treelist<T>>;
 
 export type Treelist<T> = Array<Tree<T>>;
 

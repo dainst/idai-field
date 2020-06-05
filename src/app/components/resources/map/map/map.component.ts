@@ -6,8 +6,6 @@ import {FieldMarker} from './field-marker';
 import {CoordinatesUtility} from './coordinates-utility';
 import {ProjectConfiguration} from '../../../../core/configuration/project-configuration';
 
-const {VectorMarkers} = require('Leaflet.vector-markers');
-
 
 @Component({
     selector: 'map',
@@ -90,6 +88,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
 
         this.clearMap();
         this.addGeometriesToMap();
+        this.bringSelectedMarkersToFront();
         this.updateCoordinateReferenceSystem();
 
         return this.setView();
@@ -237,17 +236,18 @@ export class MapComponent implements AfterViewInit, OnChanges {
         const latLng = L.latLng([coordinates[1], coordinates[0]]);
 
         const color = this.categoryColors[document.resource.category];
-        const extraClasses = (this.selectedDocument && this.selectedDocument.resource.id == document.resource.id) ?
-            'active' : '';
-        const icon = MapComponent.generateMarkerIcon(color, extraClasses);
-        const marker: FieldMarker = L.marker(latLng, {
-            icon: icon,
-            zIndexOffset: this.selectedDocument === document ? 1000 : 0
+
+        const marker: FieldMarker = L.circleMarker(latLng, {
+            fillColor: color,
+            fillOpacity: 1,
+            radius: 7,
+            stroke: document === this.selectedDocument,
+            color: '#fff',
+            weight: 2
         });
         marker.document = document;
 
         marker.bindTooltip(MapComponent.getShortDescription(document.resource), {
-            offset: L.point(0, -40),
             direction: 'top',
             opacity: 1.0
         });
@@ -341,7 +341,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
     }
 
 
-    private focusMarkers(markers: Array<L.Marker>) {
+    private focusMarkers(markers: Array<L.CircleMarker>) {
 
         if (markers.length === 1) {
             this.map.panTo(markers[0].getLatLng(), { animate: true, easeLinearity: 0.3 });
@@ -372,6 +372,14 @@ export class MapComponent implements AfterViewInit, OnChanges {
             bounds.push(polygon.getLatLngs());
         }
         this.map.fitBounds(bounds);
+    }
+
+
+    private bringSelectedMarkersToFront() {
+
+        if (this.selectedDocument && this.markers[this.selectedDocument.resource.id]) {
+            this.markers[this.selectedDocument.resource.id].forEach(marker => marker.bringToFront());
+        }
     }
 
 
@@ -456,17 +464,5 @@ export class MapComponent implements AfterViewInit, OnChanges {
         }
 
         return shortDescription;
-    }
-
-
-    protected static generateMarkerIcon(color: string, extraClasses: string = ''): L.Icon {
-
-        return VectorMarkers.icon({
-            prefix: 'mdi',
-            icon: 'checkbox-blank-circle',
-            markerColor: color,
-            extraClasses: extraClasses,
-            tooltipAnchor: L.point(0, 0)
-        });
     }
 }

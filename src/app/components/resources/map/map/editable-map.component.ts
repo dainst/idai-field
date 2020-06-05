@@ -37,8 +37,8 @@ export class EditableMapComponent extends LayerMapComponent {
 
     public mousePositionCoordinates: string[]|undefined;
 
-    private editableMarkers: Array<L.Marker>;
-    public selectedMarker: L.Marker;
+    private editableMarkers: Array<L.CircleMarker>;
+    public selectedMarker: L.CircleMarker;
 
     private editablePolylines: Array<L.Polyline>;
     public selectedPolyline: L.Polyline;
@@ -136,7 +136,7 @@ export class EditableMapComponent extends LayerMapComponent {
     public addMarker() {
 
         this.zone.runOutsideAngular(() => {
-            const marker: L.Marker = this.createEditableMarker(this.map.getCenter());
+            const marker: L.CircleMarker = this.createEditableMarker(this.map.getCenter());
             this.setSelectedMarker(marker);
         });
     }
@@ -208,13 +208,18 @@ export class EditableMapComponent extends LayerMapComponent {
     }
 
 
-    private createEditableMarker(position: L.LatLng): L.Marker {
+    private createEditableMarker(position: L.LatLng): L.CircleMarker {
 
         const color: string = this.categoryColors[this.selectedDocument.resource.category];
-        const editableMarker: L.Marker = L.marker(position, {
-            icon: EditableMapComponent.generateMarkerIcon(color, 'active'),
-            draggable: true,
-            zIndexOffset: 1000
+
+        // TODO Make draggable
+        const editableMarker: L.CircleMarker = L.circleMarker(position, {
+            fillColor: color,
+            fillOpacity: 1,
+            radius: 7,
+            stroke: false,
+            color: '#fff',
+            weight: 2
         });
         this.setupMarkerEvents(editableMarker);
         editableMarker.addTo(this.map);
@@ -296,7 +301,7 @@ export class EditableMapComponent extends LayerMapComponent {
         });
 
         this.callForUnselected(this.markers, (marker: FieldMarker) => {
-            marker.setOpacity(0.5);
+            marker.setStyle({ fillOpacity: 0.5 });
             EditableMapComponent.removeClass(marker, 'leaflet-interactive');
         });
     }
@@ -313,7 +318,7 @@ export class EditableMapComponent extends LayerMapComponent {
         });
 
         this.callForUnselected(this.markers, (marker: FieldMarker) => {
-            marker.setOpacity(1);
+            marker.setStyle({ fillOpacity: 1 });
             EditableMapComponent.addClass(marker, 'leaflet-interactive');
         });
     }
@@ -484,7 +489,7 @@ export class EditableMapComponent extends LayerMapComponent {
             this.selectedPolygon.pm.disable();
         }
 
-        polygon.pm.enable({draggable: true, snappable: true, snapDistance: 30 });
+        polygon.pm.enable({ draggable: true, snappable: true, snapDistance: 30 });
         this.selectedPolygon = polygon;
     }
 
@@ -576,13 +581,9 @@ export class EditableMapComponent extends LayerMapComponent {
     private startPointEditing() {
 
         this.editableMarkers = this.markers[this.selectedDocument.resource.id];
-        const color: string = this.categoryColors[this.selectedDocument.resource.category];
 
         for (let editableMarker of this.editableMarkers) {
-            editableMarker.setIcon(EditableMapComponent.generateMarkerIcon(color, ''));
             editableMarker.unbindTooltip();
-            (editableMarker.dragging as any).enable();
-            editableMarker.setZIndexOffset(1000);
             this.setupMarkerEvents(editableMarker);
         }
 
@@ -592,23 +593,19 @@ export class EditableMapComponent extends LayerMapComponent {
     }
 
 
-    private setupMarkerEvents(editableMarker: L.Marker) {
+    private setupMarkerEvents(editableMarker: L.CircleMarker) {
 
         editableMarker.on('mouseup', event => this.setSelectedMarker(event.target));
         editableMarker.on('dragend', event => this.setSelectedMarker(event.target));
     }
 
 
-    private setSelectedMarker(marker: L.Marker) {
+    private setSelectedMarker(marker: L.CircleMarker) {
 
-        const color: string = this.categoryColors[this.selectedDocument.resource.category];
+        if (this.selectedMarker) this.selectedMarker.setStyle({ stroke: false });
+        marker.setStyle({ color: '#5572a1', stroke: true });
 
-        if (this.selectedMarker) {
-            this.selectedMarker.setIcon(EditableMapComponent.generateMarkerIcon(color, ''));
-        }
-
-        marker.setIcon(EditableMapComponent.generateMarkerIcon(color, 'active'));
-        this.selectedMarker = marker;
+        this.selectedMarker = marker
     }
 
 
@@ -618,7 +615,7 @@ export class EditableMapComponent extends LayerMapComponent {
     }
 
 
-    private removeMarker(marker: L.Marker) {
+    private removeMarker(marker: L.CircleMarker) {
 
         this.map.removeLayer(marker);
         EditableMapComponent.removeElement(marker, this.editableMarkers);

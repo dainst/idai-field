@@ -35,6 +35,8 @@ export class NavigationComponent {
 
         this.viewFacade.navigationPathNotifications().subscribe(path => {
             this.navigationPath = path;
+            NavigationComponent.maxTotalLabelCharacters
+                = !this.viewFacade.isInOverview() && !this.viewFacade.isInTypesManagement() ? 50 : 40;
             this.labels = NavigationComponent.getLabels(this.navigationPath, this.viewFacade.getCurrentOperation());
         });
     }

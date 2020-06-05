@@ -2,78 +2,93 @@
  * @author Thomas Kleinke
  */
 
-#navigation {
-  position: relative;
-  top: 3px;
-  padding-left: 8px;
-  color: rgba(85, 114, 161, 1);
+navigation {
+  width: 100%;
 
-  .dropdown-menu {
-    max-height: calc(100vh - 350px);
-    overflow-y: scroll;
-    padding-left: 7px;
-  }
+  #navigation {
+    position: relative;
+    top: 3px;
+    padding-left: 8px;
+    color: rgba(85, 114, 161, 1);
+    width: 100%;
 
-  .root-document {
-    @extend .btn-outline-primary:active;
-  }
+    .dropdown-menu {
+      max-height: calc(100vh - 350px);
+      overflow-y: scroll;
+      padding-left: 7px;
+    }
 
-  .navigation-button {
-    padding-top: 7px;
-  }
+    .root-document {
+      @extend .btn-outline-primary:active;
+    }
 
-  .root-document ~ .navigation-button,
-  .root-document ~ .navigation-button:active {
-    color: lighten(#5572A1, 30%);
-    border-color: lighten(#5572A1, 30%);
-  }
+    .navigation-button {
+      padding-top: 7px;
+    }
 
-  .root-document ~ .navigation-button:hover {
-    color: lighten(#5572A1, 35%);
-    border-color: lighten(#5572A1, 35%);
-  }
+    .root-document ~ .navigation-button,
+    .root-document ~ .navigation-button:active {
+      color: lighten(#5572A1, 30%);
+      border-color: lighten(#5572A1, 30%);
+    }
 
-  .root-document + .navigation-button,
-  .root-document + .navigation-button:hover {
-    border-left-color: #5572A1;
-  }
+    .root-document ~ .navigation-button:hover {
+      color: lighten(#5572A1, 35%);
+      border-color: lighten(#5572A1, 35%);
+    }
 
-  .navigation-button:not(:last-child):before, .navigation-button:not(:last-child):after {
-    position: absolute;
-    top: 50%;
-    left: 100%;
-    width: 0;
-    height: 0;
-    border: solid transparent;
-    content: '';
-    pointer-events: none;
-    z-index: 2;
-  }
+    .root-document + .navigation-button,
+    .root-document + .navigation-button:hover {
+      border-left-color: #5572A1;
+    }
 
-  .navigation-button:not(:last-child):before {
-    border-left-color: darken(#5572A1, 5%);
-    border-width: 6px;
-    margin-top: -6px;
-  }
+    #navigation-button-group {
+      max-width: calc(100% - 50px);
+    }
 
-  .navigation-button:not(:last-child):after {
-    border-left-color: #fff;
-    border-width: 5px;
-    margin-top: -5px;
-  }
+    .navigation-button:not(:last-child):before, .navigation-button:not(:last-child):after {
+      position: absolute;
+      top: 50%;
+      left: 100%;
+      width: 0;
+      height: 0;
+      border: solid transparent;
+      content: '';
+      pointer-events: none;
+      z-index: 2;
+    }
 
-  .root-document ~ .navigation-button:not(:last-child):before {
-    border-left-color: lighten(#5572A1, 30%);
-  }
+    .navigation-button:not(:last-child):before {
+      border-left-color: darken(#5572A1, 5%);
+      border-width: 6px;
+      margin-top: -6px;
+    }
 
-  #hierarchy-mode-switch {
-    padding: 0;
-    width: 42px;
-    height: 39px;
+    .navigation-button:not(:last-child):after {
+      border-left-color: #fff;
+      border-width: 5px;
+      margin-top: -5px;
+    }
 
-    .mdi {
-      position: relative;
-      top: 7px;
+    .root-document ~ .navigation-button:not(:last-child):before {
+      border-left-color: lighten(#5572A1, 30%);
+    }
+
+    #selected-operation {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    #hierarchy-mode-switch {
+      padding: 0;
+      width: 42px;
+      height: 39px;
+
+      .mdi {
+        position: relative;
+        top: 7px;
+      }
     }
   }
 }

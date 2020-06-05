@@ -14,7 +14,7 @@
             <span *ngIf="isInExtendedSearchMode()" class="mdi mdi-magnify"></span>
     </div>
 
-    <div *ngIf="!isInExtendedSearchMode()" class="btn-group">
+    <div *ngIf="!isInExtendedSearchMode()" id="navigation-button-group" class="btn-group">
         <div *ngIf="!viewFacade.isInSpecialView() && viewFacade.getCurrentOperation()"
              id="selected-operation" type="button" class="btn btn-outline-primary navigation-button"
              [class.root-document]="!navigationPath.selectedSegmentId"

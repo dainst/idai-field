@@ -83,9 +83,9 @@ $deactivated-button-color: lightgray;
   @extend .alert;
   @extend .alert-secondary;
 
-  position: relative;
+  position: absolute;
   top: -2px;
-  left: 15px;
+  left: 59px;
   width: 235px;
   max-height: 39px;
   padding: 8px;

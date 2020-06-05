@@ -24,7 +24,7 @@ export class NavigationComponent {
     public navigationPath: NavigationPath = NavigationPath.empty();
     public labels: NavigationButtonLabelMap = {};
 
-    private static maxTotalLabelCharacters: number = 40;
+    private static maxTotalLabelCharacters: number = 50;
 
 
     constructor(public viewFacade: ViewFacade,
@@ -35,7 +35,7 @@ export class NavigationComponent {
 
         this.viewFacade.navigationPathNotifications().subscribe(path => {
             this.navigationPath = path;
-            this.labels = NavigationComponent.getLabels(this.navigationPath);
+            this.labels = NavigationComponent.getLabels(this.navigationPath, this.viewFacade.getCurrentOperation());
         });
     }
 
@@ -79,9 +79,18 @@ export class NavigationComponent {
     }
 
 
-    private static getLabels(navigationPath: NavigationPath): NavigationButtonLabelMap {
+    private static getLabels(navigationPath: NavigationPath,
+                             currentOperation: FieldDocument|undefined): NavigationButtonLabelMap {
 
         const labels: NavigationButtonLabelMap = {};
+
+        if (currentOperation) {
+            labels[currentOperation.resource.id] = {
+                text: currentOperation.resource.identifier,
+                fullText: currentOperation.resource.identifier,
+                shortened: false
+            };
+        }
 
         navigationPath.segments.forEach(segment => {
             labels[segment.document.resource.id] = {
@@ -91,14 +100,18 @@ export class NavigationComponent {
             };
         });
 
-        NavigationComponent.shortenLabelsIfNecessary(labels, navigationPath.selectedSegmentId);
+        NavigationComponent.shortenLabelsIfNecessary(
+            labels,
+            navigationPath.selectedSegmentId
+                ?? (currentOperation ? currentOperation.resource.id : undefined)
+        );
 
         return labels;
     }
 
 
     private static shortenLabelsIfNecessary(labels: NavigationButtonLabelMap,
-                                            selectedSegmentId: string|undefined) {
+                                            selectedSegmentId: string) {
 
         const totalCharacters: number = this.getTotalLabelCharacterCount(labels);
 
@@ -107,10 +120,11 @@ export class NavigationComponent {
                 = this.computeMaxSingleLabelCharacters(labels, selectedSegmentId);
 
             Object.keys(labels).forEach(id => {
-                if (labels[id].text.length > maxSingleLabelCharacters && id !== selectedSegmentId) {
-                    labels[id].text = labels[id].text.substring(
-                        0, Math.max(0, maxSingleLabelCharacters - 3)
-                    ) + '...';
+                if (labels[id].text.length > this.maxTotalLabelCharacters && id === selectedSegmentId) {
+                    labels[id].text = this.getShortenedLabel(labels[id].text, this.maxTotalLabelCharacters);
+                    labels[id].shortened = true;
+                } else if (labels[id].text.length > maxSingleLabelCharacters && id !== selectedSegmentId) {
+                    labels[id].text = this.getShortenedLabel(labels[id].text, maxSingleLabelCharacters);
                     labels[id].shortened = true;
                 }
             })
@@ -137,5 +151,13 @@ export class NavigationComponent {
         if (labelCount > 1) maxSingleLabelCharacters /= selectedSegmentId ? labelCount - 1 : labelCount;
 
         return maxSingleLabelCharacters;
+    }
+
+
+    private static getShortenedLabel(labelText: string, maxCharacters: number): string {
+
+        return labelText.substring(
+            0, Math.max(0, maxCharacters - 3)
+        ) + '...';
     }
 }

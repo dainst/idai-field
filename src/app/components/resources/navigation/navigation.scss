@@ -26,6 +26,10 @@ navigation {
       padding-top: 7px;
     }
 
+    #selected-operation {
+      white-space: nowrap;
+    }
+
     .root-document ~ .navigation-button,
     .root-document ~ .navigation-button:active {
       color: lighten(#5572A1, 30%);
@@ -72,12 +76,6 @@ navigation {
 
     .root-document ~ .navigation-button:not(:last-child):before {
       border-left-color: lighten(#5572A1, 30%);
-    }
-
-    #selected-operation {
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
     }
 
     #hierarchy-mode-switch {

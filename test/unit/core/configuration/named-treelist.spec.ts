@@ -73,4 +73,39 @@ describe('CategoryTreelist', () => {
 
         expect(isTopLevelItemOrChildThereof(categoryTree as any, 'Drawing', 'Imag')).toBeFalsy();
     });
+
+
+    it('isTopLevelItemOrChildThereof - more firstLevelItems to match', () => {
+
+        const categoryTree = [
+            [
+                { name: 'Image'},
+                [
+                    [
+                        { name: 'Drawing'},
+                        []
+                    ]
+                ]
+            ],
+            [
+                { name: 'Operation' },
+                []
+            ],
+            [
+                { name: 'Inscription' },
+                []
+            ],
+            [
+                { name: 'Type' },
+                []
+            ],
+            [
+                { name: 'TypeCatalog' },
+                []
+            ],
+        ];
+
+        expect(isTopLevelItemOrChildThereof(categoryTree as any, 'Operation', 'Image', 'Type')).toBeFalsy();
+        expect(isTopLevelItemOrChildThereof(categoryTree as any, 'Drawing', 'Type', 'Image')).toBeTruthy();
+    });
 });

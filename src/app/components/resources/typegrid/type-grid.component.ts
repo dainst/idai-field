@@ -1,6 +1,6 @@
 import {ChangeDetectorRef, Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {SafeResourceUrl} from '@angular/platform-browser';
-import {take, flatten, set, flow, filter, map, to} from 'tsfun';
+import {take, flatten, set, flow, filter, map, to, Map} from 'tsfun';
 import {Document, FieldDocument} from 'idai-components-2';
 import {ViewFacade} from '../../../core/resources/view/view-facade';
 import {Loading} from '../../widgets/loading';
@@ -18,6 +18,7 @@ import {RoutingService} from '../../routing-service';
 import {ProjectCategories} from '../../../core/configuration/project-categories';
 import {TabManager} from '../../../core/tabs/tab-manager';
 import {PLACEHOLDER} from '../../../core/images/row/image-row';
+import { makeLookup } from 'src/app/core/util/transformers';
 
 
 @Component({
@@ -50,7 +51,7 @@ export class TypeGridComponent extends BaseList implements OnChanges {
     /**
      * All Types and Subtypes below the mainDocument (see field above).
      */
-    public subtypes: Array<FieldDocument> = [];
+    private subtypes: Map<FieldDocument> = {};
 
     /**
      * The 'regular' (meaning non-Type-) documents, which are linked
@@ -171,9 +172,11 @@ export class TypeGridComponent extends BaseList implements OnChanges {
 
         if (!Document.hasRelations(document, 'isInstanceOf')) return undefined;
 
-        return this.subtypes.find(subtype => {
-            return document.resource.relations['isInstanceOf'].includes(subtype.resource.id);
-        });
+        for (const typeId of document.resource.relations.isInstanceOf) {
+            const type = this.subtypes[typeId];
+            if (type) return type;
+        }
+        return undefined;
     }
 
 
@@ -224,11 +227,11 @@ export class TypeGridComponent extends BaseList implements OnChanges {
     }
 
 
-    private async getSubtypes(): Promise<Array<FieldDocument>> {
+    private async getSubtypes(): Promise<Map<FieldDocument>> {
 
-        if (!this.mainDocument) return [];
+        if (!this.mainDocument) return {};
 
-        return (await this.fieldDatastore.find({
+        const subtypesArray = (await this.fieldDatastore.find({
             constraints: {
                 'liesWithin:contain': {
                     value: this.mainDocument.resource.id,
@@ -236,6 +239,8 @@ export class TypeGridComponent extends BaseList implements OnChanges {
                 }
             }
         })).documents;
+
+        return makeLookup('resource.id')(subtypesArray);
     }
 
 
@@ -244,7 +249,7 @@ export class TypeGridComponent extends BaseList implements OnChanges {
         if (!this.mainDocument) return [];
 
         const linkedResourceIds: string[] = flow(
-            [this.mainDocument].concat(this.subtypes),
+            [this.mainDocument].concat(Object.values(this.subtypes)),
             filter(document => Document.hasRelations(document, 'hasInstance')),
             map(document => document.resource.relations['hasInstance']),
             flatten(),

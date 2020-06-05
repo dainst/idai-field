@@ -23,14 +23,10 @@ export /* package-private */ module ProjectCategoriesHelper {
     export const UNKNOWN_CATEGORY_ERROR = 'ProjectCategories.Errors.UnknownCategory';
 
 
-    export function isGeometryCategory(t: Treelist<Named>,
-                                       category: Name): boolean {
+    export function isGeometryCategory(t: Treelist<Named>, category: Name): boolean {
 
-        return !isTopLevelItemOrChildThereof(t, category, 'Image')
-            && !isTopLevelItemOrChildThereof(t, category, 'Inscription')
-            && !isTopLevelItemOrChildThereof(t, category, 'Type')
-            && !isTopLevelItemOrChildThereof(t, category, 'TypeCatalog')
-            && !isProjectCategory(category);
+        return !isTopLevelItemOrChildThereof(t, category,
+            'Image', 'Inscription', 'Type', 'TypeCatalog', 'Project');
     }
 
 

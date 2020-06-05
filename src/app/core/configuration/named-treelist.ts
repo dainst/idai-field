@@ -1,4 +1,4 @@
-import {is, on} from 'tsfun';
+import {includedIn, is, on} from 'tsfun';
 import {findInTreelist, Treelist} from './treelist';
 import {Named} from '../util/named';
 import {Name} from '../constants';
@@ -12,11 +12,10 @@ export function findInNamedTreelist<N extends Named>(match: Name, t: Treelist<N>
 
 
 export function isTopLevelItemOrChildThereof(t: Treelist<Named>,
-                                             name: Name, // TODO switch with 3rd arg and add varargs to simplify calls such as in isGeometryCategory
-                                             firstLevelItem: Name): boolean {
+                                             match: Name,
+                                             firstLevelItem: Name,
+                                             ...moreFirstLevelItems: Name[]): boolean {
 
-    const found = t.find(on([0, Named.NAME], is(firstLevelItem)));
-    return found ?
-        findInNamedTreelist(name, [found as any]) !== undefined
-        : false;
+    const filtered = t.filter(on([0, Named.NAME], includedIn([firstLevelItem].concat(moreFirstLevelItems))));
+    return findInNamedTreelist(match, filtered) !== undefined;
 }

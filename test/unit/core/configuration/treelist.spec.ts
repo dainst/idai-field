@@ -1,10 +1,12 @@
-import {equal, reverse} from 'tsfun';
+import {equal, is, on, reverse} from 'tsfun';
 import {
+    findInTreelist,
     flattenTreelist,
     mapLeafs,
-    mapTreelist,
+    mapTreelist, Tree,
     Treelist
 } from '../../../../src/app/core/configuration/treelist';
+import {equalBy} from 'tsfun/by';
 
 
 describe('Treelist', () => {
@@ -89,5 +91,59 @@ describe('Treelist', () => {
 
         expect(equal(flattenTreelist(t), exp)).toBeTruthy();
         expect(exp[2]).toBe(a); // retains original instancesf
+    });
+
+
+    it('findInTreelist', () => {
+
+        const t: Treelist<any> =
+            [
+                [1,[
+                    [13,[[17,[]]]],
+                    [16,[]],
+                ]],
+                [3,[]]
+            ];
+
+        const exp1: Tree<any> = findInTreelist(13, t);
+        expect(equal(exp1,[13,[[17,[]]]])).toBeTruthy();
+
+        const exp2: Tree<any> = findInTreelist(19, t);
+        expect(equal(exp2,undefined)).toBeTruthy();
+    });
+
+
+    it('findInTreelist with Preciate', () => {
+
+        const a = { a: 3 };
+
+        const t: Treelist<any> =
+            [
+                [1,[
+                    [a,[[17,[]]]],
+                    [16,[]],
+                ]],
+                [3,[]]
+            ];
+
+        const exp1: Tree<any> = findInTreelist(on('a', is(3)), t);
+        expect(equal(exp1,[{a: 3},[[17,[]]]])).toBeTruthy();
+    });
+
+
+    it('findInTreelist with Comparator', () => {
+
+        const a = { a: 3 };
+        const t: Treelist<any> =
+            [
+                [1,[
+                    [a,[[17,[]]]],
+                    [16,[]],
+                ]],
+                [3,[]]
+            ];
+
+        const exp1: Tree<any> = findInTreelist({ a: 3 }, t, on('a'));
+        expect(equal(exp1,[{a: 3},[[17,[]]]])).toBeTruthy();
     });
 });

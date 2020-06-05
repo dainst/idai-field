@@ -1,7 +1,8 @@
-import {Map, to} from 'tsfun';
+import {is, Map, on, to} from 'tsfun';
 import {Category} from './model/category';
-import {flattenTreelist, Treelist} from './treelist';
-import {namedArrayToNamedMap} from '../util/named';
+import {findInTreelist, flattenTreelist, Tree, Treelist} from './treelist';
+import {Named, namedArrayToNamedMap} from '../util/named';
+import {Name} from '../constants';
 
 const CATEGORIES = [0];
 
@@ -42,4 +43,11 @@ export function linkParentAndChildInstances(categories: Treelist<Category> /* mo
         linkParentAndChildInstances(children);
     }
     return categories;
+}
+
+
+export function findInCategoryTreelist(category: Name, t: CategoryTreelist): Category|undefined {
+
+    const result = findInTreelist(on(Named.NAME, is(category)), t);
+    return result ? result[0] : undefined;
 }

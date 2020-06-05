@@ -1,7 +1,8 @@
 import {
     categoryTreelistToArray,
-    categoryTreelistToMap, linkParentAndChildInstances
+    categoryTreelistToMap, findInCategoryTreelist, linkParentAndChildInstances
 } from '../../../../src/app/core/configuration/category-treelist';
+import {findInTreelist} from '../../../../src/app/core/configuration/treelist';
 
 
 describe('CategoryTreelist', () => {
@@ -228,5 +229,14 @@ describe('CategoryTreelist', () => {
         expect(result['P1'].children[0].parentCategory === result['P1']).toBeTruthy();
         expect(result['P1'].children[0] === result['C1']).toBeTruthy();
         expect(result['P1'].children[0].children[0] === result['C2']).toBeTruthy();
+    });
+
+
+    it('findInCategoryTreelist', () => {
+
+        const t = threeLevels();
+        const result = findInCategoryTreelist('C1', linkParentAndChildInstances(t as any));
+
+        expect(result.name).toBe('C1');
     });
 });

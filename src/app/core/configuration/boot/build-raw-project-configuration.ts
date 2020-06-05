@@ -1,9 +1,9 @@
 import {
     cond, flow, includedIn, isDefined, isNot, Mapping, Map, on,
     subtract, undefinedOrEmpty, identity, compose, Pair, dissoc,
-    pairWith, prune, filter, update as updateObject, to
+    pairWith, prune, filter, update
 } from 'tsfun';
-import {assoc, update, lookup, map, reduce} from 'tsfun/associative';
+import {assoc, lookup, map, reduce} from 'tsfun/associative';
 import {clone, update as updateStruct} from 'tsfun/struct';
 import {LibraryCategoryDefinition} from '../model/library-category-definition';
 import {CustomCategoryDefinition} from '../model/custom-category-definition';
@@ -94,7 +94,7 @@ function processCategories(orderConfiguration: any,
                            searchConfiguration: any,
                            relations: Array<RelationDefinition>): Mapping<Map<CategoryDefinition>, Treelist<Category>> {
 
-    const sortCategoryGroups = updateObject(Category.GROUPS, sortGroups(Groups.DEFAULT_ORDER));
+    const sortCategoryGroups = update(Category.GROUPS, sortGroups(Groups.DEFAULT_ORDER));
 
     return compose(
         applySearchConfiguration(searchConfiguration),
@@ -191,7 +191,7 @@ function setGroupLabels(groupLabels: Map<string>) {
             Category.GROUPS,
             compose(
                 map(pairWith(groupLabel)),
-                map(([group, label]: Pair<Group, string>) => assoc(Labelled.LABEL, label)(group as any))) as any)(category);
+                map(([group, label]: Pair<Group, string>) => assoc(Labelled.LABEL, label)(group as any))))(category);
     };
 }
 

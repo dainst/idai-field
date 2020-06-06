@@ -30,6 +30,7 @@ import {TabManager} from '../../core/tabs/tab-manager';
 import getCategoriesWithoutExcludedCategories = ExportRunner.getCategoriesWithoutExcludedCategories;
 import {ViewFacade} from '../../core/resources/view/view-facade';
 import {Messages} from '../messages/messages';
+import {ProjectCategories} from '../../core/configuration/project-categories';
 
 
 @Component({
@@ -231,7 +232,7 @@ export class ImportComponent implements OnInit {
 
         return this.importState.mergeMode
             ? BASE_EXCLUSION
-            : BASE_EXCLUSION.concat(this.projectCategories.getImageCategoryNames());
+            : BASE_EXCLUSION.concat(ProjectCategories.getImageCategoryNames(this.projectConfiguration.getCategoryTreelist()));
     }
 
 

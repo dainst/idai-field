@@ -8,6 +8,8 @@ import {M} from '../../messages/m';
 import {clone} from '../../../core/util/object-util';
 import {Messages} from '../../messages/messages';
 import {Query} from '../../../core/datastore/model/query';
+import {ProjectCategories} from '../../../core/configuration/project-categories';
+import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
 
 
 @Component({
@@ -40,7 +42,7 @@ export class ImagePickerComponent implements OnInit {
         private messages: Messages,
         private datastore: ImageReadDatastore,
         private el: ElementRef,
-        private projectCategories: ProjectCategoriesUtility
+        private projectConfiguration: ProjectConfiguration
     ) {}
 
 
@@ -114,7 +116,7 @@ export class ImagePickerComponent implements OnInit {
         this.query = query;
         if (!this.query) this.query = {};
 
-        this.query.categories = this.projectCategories.getImageCategoryNames();
+        this.query.categories = ProjectCategories.getImageCategoryNames(this.projectConfiguration.getCategoryTreelist());
         this.query.constraints = {
             'depicts:contain': { value: this.document.resource.id, subtract: true }
         };

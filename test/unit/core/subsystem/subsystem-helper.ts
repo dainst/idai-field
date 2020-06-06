@@ -170,9 +170,9 @@ export async function createApp(projectName = 'testdb', startSync = false) {
         documentDatastore
     );
 
-    const imagesState = new ImagesState(projectCategories);
+    const imagesState = new ImagesState(projectConfiguration);
     const imageDocumentsManager = new ImageDocumentsManager(imagesState, imageDatastore);
-    const imageOverviewFacade = new ImageOverviewFacade(imageDocumentsManager, imagesState, projectCategories);
+    const imageOverviewFacade = new ImageOverviewFacade(imageDocumentsManager, imagesState, projectConfiguration);
 
     return {
         remoteChangesStream,

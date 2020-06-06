@@ -19,6 +19,7 @@ import {ProjectCategoriesUtility} from '../../../core/configuration/project-cate
 import {TabManager} from '../../../core/tabs/tab-manager';
 import {PLACEHOLDER} from '../../../core/images/row/image-row';
 import { makeLookup } from 'src/app/core/util/transformers';
+import {ProjectCategories} from '../../../core/configuration/project-categories';
 
 
 @Component({
@@ -281,7 +282,7 @@ export class TypeGridComponent extends BaseList implements OnChanges {
 
     private isCatalogOrType(document: FieldDocument): boolean {
 
-        return this.projectCategories.getTypeCategoryNames().includes(document.resource.category);
+        return ProjectCategories.getTypeCategoryNames().includes(document.resource.category);
     }
 
 

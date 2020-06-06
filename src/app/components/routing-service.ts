@@ -11,6 +11,7 @@ import {MenuService} from './menu-service';
 import {ProjectsModalComponent} from './navbar/projects-modal.component';
 import {SettingsService} from '../core/settings/settings-service';
 import {DatastoreErrors} from '../core/datastore/model/datastore-errors';
+import {ProjectCategories} from '../core/configuration/project-categories';
 
 
 @Injectable()
@@ -164,7 +165,7 @@ export class RoutingService {
 
         return this.projectCategories.getOverviewCategoryNames().includes(document.resource.category)
             ? 'project'
-            : this.projectCategories.getTypeCategoryNames().includes(document.resource.category)
+            : ProjectCategories.getTypeCategoryNames().includes(document.resource.category)
                 ? 'types'
                 : document.resource.relations['isRecordedIn'][0];
     }

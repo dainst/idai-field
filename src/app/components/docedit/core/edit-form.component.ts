@@ -9,6 +9,7 @@ import {ProjectConfiguration} from '../../../core/configuration/project-configur
 import {Group} from '../../../core/configuration/model/group';
 import {TypeRelations} from '../../../core/model/relation-constants';
 import {clone} from '../../../core/util/object-util';
+import {ProjectCategories} from '../../../core/configuration/project-categories';
 
 
 @Component({
@@ -50,7 +51,7 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
     public shouldShow(groupName: string) {
 
         return (groupName === 'images'
-                && !this.projectCategories.getImageCategoryNames().includes(this.document.resource.category))
+                && !ProjectCategories.getImageCategoryNames(this.projectConfiguration.getCategoryTreelist()).includes(this.document.resource.category))
             || (groupName === 'conflicts' && this.document._conflicts)
             || this.getFieldDefinitions(groupName).filter(field => field.editable).length > 0
             || this.getRelationDefinitions(groupName).length > 0;

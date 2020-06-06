@@ -20,30 +20,6 @@ export class ProjectCategoriesUtility {
     constructor(private projectConfiguration: ProjectConfiguration) {}
 
 
-    public getConcreteFieldCategories(): Array<Category> {
-
-        return ProjectCategories.getConcreteFieldCategories(this.projectConfiguration.getCategoryTreelist());
-    }
-
-
-    public getTypeCategories(): Array<Category> {
-
-        return ProjectCategories.getTypeCategories(this.projectConfiguration.getCategoryTreelist());
-    }
-
-
-    public getTypeCategoryNames(): string[] {
-
-        return ProjectCategories.getTypeCategoryNames();
-    }
-
-
-    public getImageCategoryNames(): string[] {
-
-        return ProjectCategories.getImageCategoryNames(this.projectConfiguration.getCategoryTreelist());
-    }
-
-
     public getFeatureCategoryNames(): string[] {
 
         return this.getSuperCategoryNames('Feature');

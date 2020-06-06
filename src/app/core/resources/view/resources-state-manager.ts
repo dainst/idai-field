@@ -72,7 +72,7 @@ export class ResourcesStateManager {
 
     public getConcreteCategoryNames = (): string[] => ProjectCategories.getConcreteFieldCategoryNames(this.projectConfiguration.getCategoryTreelist());
 
-    public getAbstractCategoryNames = (): string[] => this.projectCategories.getTypeCategoryNames();
+    public getAbstractCategoryNames = (): string[] => ProjectCategories.getTypeCategoryNames();
 
     public isInExtendedSearchMode = (): boolean => ResourcesState.isInExtendedSearchMode(this.resourcesState);
 

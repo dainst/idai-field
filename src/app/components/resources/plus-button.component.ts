@@ -9,6 +9,7 @@ import {ProjectConfiguration} from '../../core/configuration/project-configurati
 import {ViewFacade} from '../../core/resources/view/view-facade';
 import {FieldReadDatastore} from '../../core/datastore/field/field-read-datastore';
 import {Messages} from '../messages/messages';
+import {ProjectCategories} from '../../core/configuration/project-categories';
 
 
 export type PlusButtonStatus = 'enabled'|'disabled-hierarchy';
@@ -208,7 +209,7 @@ export class PlusButtonComponent implements OnChanges {
         } else {
             if (!(this.viewFacade.isInOverview()
                     ? this.projectCategories.getOverviewCategories().includes(category.name)
-                    : this.projectCategories.getTypeCategoryNames().includes(category.name))) {
+                    : ProjectCategories.getTypeCategoryNames().includes(category.name))) {
                 return false;
             }
         }

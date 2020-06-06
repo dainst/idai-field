@@ -38,13 +38,6 @@ export class ProjectCategoriesUtility {
     }
 
 
-    public getRegularCategoryNames(): string[] {
-
-        return ProjectCategories.getRegularCategoryNames(
-            this.projectConfiguration.getCategoryTreelist());
-    }
-
-
     public getOverviewCategoryNames(): string[] {
 
         return ProjectCategories.getOverviewCategoryNames(
@@ -52,21 +45,7 @@ export class ProjectCategoriesUtility {
     }
 
 
-    public isGeometryCategory(categoryName: string): boolean {
-
-        return ProjectCategories.isGeometryCategory(
-            this.projectConfiguration.getCategoryTreelist(),
-            categoryName
-        );
-    }
-
-
-    public getOverviewCategories(): string[] {
-
-        return ProjectCategories.getOverviewCategories(this.projectConfiguration.getCategoryTreelist());
-    }
-
-
+    // move to project-configuration
     public getAllowedRelationDomainCategories(relationName: string,
                                               rangeCategoryName: string): Array<Category> {
 
@@ -81,6 +60,7 @@ export class ProjectCategoriesUtility {
     }
 
 
+    // TODO move to project-configuration
     public getAllowedRelationRangeCategories(relationName: string,
                                              domainCategoryName: string): Array<Category> {
 

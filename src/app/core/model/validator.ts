@@ -8,6 +8,7 @@ import RECORDED_IN = HierarchicalRelations.RECORDEDIN;
 import {ProjectCategoriesUtility} from '../configuration/project-categories-utility';
 import {Query} from '../datastore/model/query';
 import {FindResult} from '../datastore/model/read-datastore';
+import {ProjectCategories} from '../configuration/project-categories';
 
 
 /**
@@ -94,8 +95,8 @@ export class Validator {
 
     protected isExpectedToHaveIsRecordedInRelation(document: Document|NewDocument): boolean {
 
-        return this.projectCategories
-            .getRegularCategoryNames()
+        return ProjectCategories
+            .getRegularCategoryNames(this.projectConfiguration.getCategoryTreelist())
             .includes(document.resource.category);
     }
 

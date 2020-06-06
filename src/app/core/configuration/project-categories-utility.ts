@@ -22,12 +22,6 @@ export class ProjectCategoriesUtility {
     constructor(private projectConfiguration: ProjectConfiguration) {}
 
 
-    public getOverviewTopLevelCategories(): Array<Category> {
-
-        return ProjectCategories.getOverviewToplevelCategories(this.projectConfiguration.getCategoryTreelist());
-    }
-
-
     public getFieldCategories(): Array<Category> {
 
         return ProjectCategories.getFieldCategories(this.projectConfiguration.getCategoryTreelist());

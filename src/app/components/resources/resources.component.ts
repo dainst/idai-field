@@ -17,6 +17,8 @@ import {ResourcesViewMode, ViewFacade} from '../../core/resources/view/view-faca
 import {NavigationService} from '../../core/resources/navigation/navigation-service';
 import {MenuService} from '../menu-service';
 import {Messages} from '../messages/messages';
+import {ProjectCategories} from '../../core/configuration/project-categories';
+import {ProjectConfiguration} from '../../core/configuration/project-configuration';
 
 
 export type PopoverMenu = 'none'|'info'|'children';
@@ -59,7 +61,8 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
                 private modalService: NgbModal,
                 private resourceDeletion: ResourceDeletion,
                 private tabManager: TabManager,
-                private navigationService: NavigationService
+                private navigationService: NavigationService,
+                private projectConfiguration: ProjectConfiguration
     ) {
         routingService.routeParams(route).subscribe(async (params: any) => {
             this.isEditingGeometry = false;
@@ -132,7 +135,7 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
         if (this.viewFacade.isInOverview()) {
             this.filterOptions = this.viewFacade.isInExtendedSearchMode()
                 ? this.projectCategories.getFieldCategories().filter(category => !category.parentCategory)
-                : this.projectCategories.getOverviewTopLevelCategories();
+                : ProjectCategories.getOverviewToplevelCategories(this.projectConfiguration.getCategoryTreelist());
         } else if (this.viewFacade.isInTypesManagement()) {
             this.filterOptions = this.projectCategories.getTypeCategories();
         } else {

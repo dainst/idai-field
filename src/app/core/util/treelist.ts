@@ -72,9 +72,9 @@ export function accessTreelist<T>(t: Treelist<T>, ...path: number[] /* TODO make
 }
 
 
-export function mapLeafs<T>(f: Mapping<Treelist<T>>, t: Treelist<T>): Treelist<T> {
+export function mapTreelists<T>(f: Mapping<Treelist<T>>, t: Treelist<T>): Treelist<T> {
 
-    return f(t).map(([node,leafs]) => [node,mapLeafs(f, leafs)]);
+    return f(t).map(([node,leafs]) => [node,mapTreelists(f, leafs)]);
 }
 
 

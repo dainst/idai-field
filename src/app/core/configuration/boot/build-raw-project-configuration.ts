@@ -32,7 +32,7 @@ import {Group, Groups} from '../model/group';
 import {Labelled, Named} from '../../util/named';
 import {RelationsUtil} from '../relations-utils';
 import {CategoryDefinition} from '../model/category-definition';
-import {ProjectCategoriesHelper} from '../project-categories-helper';
+import {ProjectCategories} from '../project-categories';
 import {FieldDefinition} from '../model/field-definition';
 import {mapLeafs, mapTreelist, Treelist} from '../../util/treelist';
 import {sortStructArray} from '../../util/sort-struct-array';
@@ -120,7 +120,7 @@ function adjustCategoryGeometry(languageConfiguration: any, categoriesTree: Tree
 
     return (category: Category /* modified in place */): Category => {
 
-        if (!ProjectCategoriesHelper.isGeometryCategory(categoriesTree, category.name)) return category;
+        if (!ProjectCategories.isGeometryCategory(categoriesTree, category.name)) return category;
 
         let geometryGroup = category.groups.find(group => group.name === Groups.POSITION);
         if (!geometryGroup) {

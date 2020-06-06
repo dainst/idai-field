@@ -6,7 +6,7 @@ import {FieldDefinition} from './model/field-definition';
 import {RelationDefinition} from './model/relation-definition';
 import {Named, namedArrayToNamedMap} from '../util/named';
 import {RelationsUtil} from './relations-utils';
-import {ProjectCategoriesHelper} from './project-categories-helper';
+import {ProjectCategories} from './project-categories';
 import {Treelist} from '../util/treelist';
 import {CategoryTreelist, categoryTreelistToArray} from './category-treelist';
 import {Name} from '../constants';
@@ -123,7 +123,7 @@ export class ProjectConfiguration {
 
     public isSubcategory(categoryName: string, superCategoryName: string): boolean {
 
-        return ProjectCategoriesHelper.isSubcategory(this.getCategoriesMap(), categoryName, superCategoryName);
+        return ProjectCategories.isSubcategory(this.getCategoriesMap(), categoryName, superCategoryName);
     }
 
 

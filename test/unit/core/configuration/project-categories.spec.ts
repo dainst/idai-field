@@ -1,20 +1,20 @@
-import {ProjectCategoriesHelper} from '../../../../src/app/core/configuration/project-categories-helper';
-import isGeometryCategory = ProjectCategoriesHelper.isGeometryCategory;
-import getFieldCategories = ProjectCategoriesHelper.getFieldCategories;
+import {ProjectCategories} from '../../../../src/app/core/configuration/project-categories';
+import isGeometryCategory = ProjectCategories.isGeometryCategory;
+import getFieldCategories = ProjectCategories.getFieldCategories;
 import {sameset} from 'tsfun';
 import {Named, toName} from '../../../../src/app/core/util/named';
 import {Treelist} from '../../../../src/app/core/util/treelist';
 import {Category} from '../../../../src/app/core/configuration/model/category';
-import getConcreteFieldCategories = ProjectCategoriesHelper.getConcreteFieldCategories;
-import getRegularCategoryNames = ProjectCategoriesHelper.getRegularCategoryNames;
-import getImageCategoryNames = ProjectCategoriesHelper.getImageCategoryNames;
-import getTypeCategories = ProjectCategoriesHelper.getTypeCategories;
-import getOverviewTopLevelCategories = ProjectCategoriesHelper.getOverviewToplevelCategories;
-import getOverviewCategoryNames = ProjectCategoriesHelper.getOverviewCategoryNames;
-import getOverviewCategories = ProjectCategoriesHelper.getOverviewCategories;
+import getConcreteFieldCategories = ProjectCategories.getConcreteFieldCategories;
+import getRegularCategoryNames = ProjectCategories.getRegularCategoryNames;
+import getImageCategoryNames = ProjectCategories.getImageCategoryNames;
+import getTypeCategories = ProjectCategories.getTypeCategories;
+import getOverviewTopLevelCategories = ProjectCategories.getOverviewToplevelCategories;
+import getOverviewCategoryNames = ProjectCategories.getOverviewCategoryNames;
+import getOverviewCategories = ProjectCategories.getOverviewCategories;
 
 
-describe('ProjectCategoriesHelper', () => {
+describe('ProjectCategories', () => {
 
     const categoryTreelist: Treelist<Named> = [
         [

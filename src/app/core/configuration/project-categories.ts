@@ -18,7 +18,7 @@ const TYPE_CATALOG_AND_TYPE = [TYPE_CATALOG, TYPE];
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-export /* package-private */ module ProjectCategoriesHelper {
+export /* package-private */ module ProjectCategories {
 
     export const UNKNOWN_CATEGORY_ERROR = 'ProjectCategories.Errors.UnknownCategory';
 

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {ProjectConfiguration} from './project-configuration';
 import {Category} from './model/category';
-import {ProjectCategoriesHelper} from './project-categories-helper';
+import {ProjectCategories} from './project-categories';
 import {toName} from '../util/named';
 
 
@@ -11,6 +11,8 @@ import {toName} from '../util/named';
  * @author Thomas Kleinke
  * @author F.Z.
  * @author Daniel de Oliveira
+ *
+ * TODO try get rid completely of this class, since clients can now ask ProjectConfiguration for the categoryTreelist and pass it to ProjectCategories' functions
  */
 export class ProjectCategoriesUtility {
 
@@ -22,31 +24,31 @@ export class ProjectCategoriesUtility {
 
     public getOverviewTopLevelCategories(): Array<Category> {
 
-        return ProjectCategoriesHelper.getOverviewToplevelCategories(this.projectConfiguration.getCategoryTreelist());
+        return ProjectCategories.getOverviewToplevelCategories(this.projectConfiguration.getCategoryTreelist());
     }
 
 
     public getFieldCategories(): Array<Category> {
 
-        return ProjectCategoriesHelper.getFieldCategories(this.projectConfiguration.getCategoryTreelist());
+        return ProjectCategories.getFieldCategories(this.projectConfiguration.getCategoryTreelist());
     }
 
 
     public getConcreteFieldCategories(): Array<Category> {
 
-        return ProjectCategoriesHelper.getConcreteFieldCategories(this.projectConfiguration.getCategoryTreelist());
+        return ProjectCategories.getConcreteFieldCategories(this.projectConfiguration.getCategoryTreelist());
     }
 
 
     public getTypeCategories(): Array<Category> {
 
-        return ProjectCategoriesHelper.getTypeCategories(this.projectConfiguration.getCategoryTreelist());
+        return ProjectCategories.getTypeCategories(this.projectConfiguration.getCategoryTreelist());
     }
 
 
     public getTypeCategoryNames(): string[] {
 
-        return ProjectCategoriesHelper.getTypeCategoryNames();
+        return ProjectCategories.getTypeCategoryNames();
     }
 
 
@@ -64,7 +66,7 @@ export class ProjectCategoriesUtility {
 
     public getImageCategoryNames(): string[] {
 
-        return ProjectCategoriesHelper.getImageCategoryNames(this.projectConfiguration.getCategoryTreelist());
+        return ProjectCategories.getImageCategoryNames(this.projectConfiguration.getCategoryTreelist());
     }
 
 
@@ -88,21 +90,21 @@ export class ProjectCategoriesUtility {
 
     public getRegularCategoryNames(): string[] {
 
-        return ProjectCategoriesHelper.getRegularCategoryNames(
+        return ProjectCategories.getRegularCategoryNames(
             this.projectConfiguration.getCategoryTreelist());
     }
 
 
     public getOverviewCategoryNames(): string[] {
 
-        return ProjectCategoriesHelper.getOverviewCategoryNames(
+        return ProjectCategories.getOverviewCategoryNames(
             this.projectConfiguration.getCategoryTreelist());
     }
 
 
     public isGeometryCategory(categoryName: string): boolean {
 
-        return ProjectCategoriesHelper.isGeometryCategory(
+        return ProjectCategories.isGeometryCategory(
             this.projectConfiguration.getCategoryTreelist(),
             categoryName
         );
@@ -111,7 +113,7 @@ export class ProjectCategoriesUtility {
 
     public getOverviewCategories(): string[] {
 
-        return ProjectCategoriesHelper.getOverviewCategories(this.projectConfiguration.getCategoryTreelist());
+        return ProjectCategories.getOverviewCategories(this.projectConfiguration.getCategoryTreelist());
     }
 
 
@@ -154,7 +156,7 @@ export class ProjectCategoriesUtility {
     private getSuperCategoryNames(superCategoryName: string) {
 
         return Object.keys(
-            ProjectCategoriesHelper.getCategoryAndSubcategories(
+            ProjectCategories.getCategoryAndSubcategories(
                 superCategoryName, this.projectConfiguration.getCategoriesMap()
             )
         );

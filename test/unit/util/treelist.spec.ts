@@ -1,5 +1,6 @@
 import {equal, is, on, reverse} from 'tsfun';
 import {
+    accessTreelist,
     findInTreelist,
     flattenTreelist,
     mapLeafs,
@@ -144,5 +145,38 @@ describe('Treelist', () => {
 
         const exp1: Tree<any> = findInTreelist({ a: 3 }, t, on('a'));
         expect(equal(exp1,[{a: 3},[[17,[]]]])).toBeTruthy();
+    });
+
+
+    it('accessTreelist - first level', () => {
+
+        expect(accessTreelist(
+            [
+                [
+                    7,
+                    []
+                ]
+            ],
+            [0,'node']
+        )).toEqual(7);
+    });
+
+
+    it('accessTreelist - second level', () => {
+
+        expect(accessTreelist(
+            [
+                [
+                    7,
+                    [
+                        [
+                            8,
+                            []
+                        ]
+                    ]
+                ]
+            ],
+            [0,0,'node']
+        )).toEqual(8);
     });
 });

@@ -1,4 +1,4 @@
-import {Pair, Mapping, Predicate, isFunction} from 'tsfun';
+import {Pair, Mapping, Predicate, isFunction, first, isNumber, rest} from 'tsfun';
 import {Comparator} from 'tsfun/by';
 
 
@@ -45,6 +45,27 @@ export function mapTreelist(...args: any[]): any {
     return args.length === 2
         ? $(args[0])(args[1])
         : $(args[0])
+}
+
+
+export function accessTreelist<T>(t: Treelist<T>, path: Array<'node'|number>): T {
+
+    function _accessTree<T>(t: Tree<T>, path: Array<'node'|number>, lastSegmentIsNumber: boolean): T {
+
+        const segment = first(path);
+        if (segment === 'node') return t[0];
+        else if (isNumber(segment) && lastSegmentIsNumber) return _accessTree(t[1][segment], rest(path), true);
+        return _accessTreelist(t[1], rest(path), true);
+    }
+
+    function _accessTreelist<T>(t: Treelist<T>, path: Array<'node'|number>, lastSegmentIsNumber: boolean) {
+
+        const segment = first(path);
+        if (!isNumber(segment)) return t[0] as any;
+        return _accessTree(t[segment], rest(path), true);
+    }
+
+    return _accessTreelist(t, path, false);
 }
 
 

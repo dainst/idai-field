@@ -4,6 +4,16 @@ import {Comparator} from 'tsfun/by';
 
 export type Node<ITEM, CHILDREN> = Pair<ITEM, CHILDREN>;
 
+// TODO if we convert it like this:
+// export type Tree<T> = { node: T, children: Treelist<T>> }
+// then we can test unambiguously if we have a tree or a treelist,
+// which means we could provide a unified map function for both
+// to refactor, we first could provide accessors for tree elements
+// which we then use in tests etc and behind which we encapsulate
+// our tree implementation completely.
+// afterward, we can change the structure and refactor the functions
+// here to work both for tree and treelist
+// note: the tree structure we use is a general tree
 export type Tree<T> = Node<T, Treelist<T>>;
 
 export type Treelist<T> = Array<Tree<T>>;

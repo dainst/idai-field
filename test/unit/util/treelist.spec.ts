@@ -157,7 +157,7 @@ describe('Treelist', () => {
                     []
                 ]
             ],
-            [0,'node']
+            0
         )).toEqual(7);
     });
 
@@ -176,7 +176,7 @@ describe('Treelist', () => {
                     ]
                 ]
             ],
-            [0,0,'node']
+            0, 0
         )).toEqual(8);
     });
 });

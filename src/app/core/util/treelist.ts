@@ -48,17 +48,17 @@ export function mapTreelist(...args: any[]): any {
 }
 
 
-export function accessTreelist<T>(t: Treelist<T>, path: Array<'node'|number>): T {
+export function accessTreelist<T>(t: Treelist<T>, ...path: number[] /* TODO make 1 elem minimum */): T {
 
-    function _accessTree<T>(t: Tree<T>, path: Array<'node'|number>, lastSegmentIsNumber: boolean): T {
+    function _accessTree<T>(t: Tree<T>, path: number[], lastSegmentIsNumber: boolean): T {
 
         const segment = first(path);
-        if (segment === 'node') return t[0];
+        if (segment === undefined) return t[0];
         else if (isNumber(segment) && lastSegmentIsNumber) return _accessTree(t[1][segment], rest(path), true);
         return _accessTreelist(t[1], rest(path), true);
     }
 
-    function _accessTreelist<T>(t: Treelist<T>, path: Array<'node'|number>, lastSegmentIsNumber: boolean) {
+    function _accessTreelist<T>(t: Treelist<T>, path: number[], lastSegmentIsNumber: boolean) {
 
         const segment = first(path);
         if (!isNumber(segment)) return t[0] as any;

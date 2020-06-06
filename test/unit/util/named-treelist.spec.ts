@@ -5,10 +5,10 @@ import {
     removeTrees
 } from '../../../src/app/core/util/named-treelist';
 import {Named} from '../../../src/app/core/util/named';
-import {Treelist} from '../../../src/app/core/util/treelist';
+import {accessTreelist, Treelist} from '../../../src/app/core/util/treelist';
 
 
-describe('CategoryTreelist', () => {
+describe('NamedTreelist', () => {
 
     function threeLevels(): any {
 
@@ -142,8 +142,8 @@ describe('CategoryTreelist', () => {
         const result = removeTrees(categoryTreelist, 'Operation', 'Inscription');
 
         expect(result.length).toBe(1);
-        expect(result[0][0].name).toBe('Image');
-        expect(result[0][1][0][0].name).toBe('Drawing');
+        expect(accessTreelist(result, 0).name).toBe('Image');
+        expect(accessTreelist(result, 0, 0).name).toBe('Drawing');
     });
 
 
@@ -172,24 +172,24 @@ describe('CategoryTreelist', () => {
         const result0 = filterTrees(categoryTreelist, 'Operation');
 
         expect(result0.length).toBe(1);
-        expect(result0[0][0].name).toBe('Operation');
+        expect(accessTreelist(result0, 0).name).toBe('Operation');
 
         const result1 = filterTrees(categoryTreelist, 'Operation', 'Inscription');
 
         expect(result1.length).toBe(2);
-        expect(result1[0][0].name).toBe('Operation');
-        expect(result1[1][0].name).toBe('Inscription');
+        expect(accessTreelist(result1, 0).name).toBe('Operation');
+        expect(accessTreelist(result1, 1).name).toBe('Inscription');
 
         const result2 = filterTrees('Operation', 'Inscription')(categoryTreelist);
 
         expect(result2.length).toBe(2);
-        expect(result2[0][0].name).toBe('Operation');
-        expect(result2[1][0].name).toBe('Inscription');
+        expect(accessTreelist(result2, 0).name).toBe('Operation');
+        expect(accessTreelist(result2, 1).name).toBe('Inscription');
 
         const result3 = filterTrees('Operation')(categoryTreelist);
 
         expect(result3.length).toBe(1);
-        expect(result3[0][0].name).toBe('Operation');
+        expect(accessTreelist(result3, 0).name).toBe('Operation');
 
 
         // typing

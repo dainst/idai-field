@@ -8,7 +8,7 @@ import {accessTreelist, Treelist} from '../../../../src/app/core/util/treelist';
 
 describe('CategoryTreelist', () => {
 
-    type T = { name: string, children: Array<T>, parentCategory: T};
+    type T = { name: string, children: Array<T>, parentCategory?: T};
 
     it('categoryTreelistToArray', () => {
 

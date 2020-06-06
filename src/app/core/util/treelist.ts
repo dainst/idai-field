@@ -33,7 +33,7 @@ export function mapTreelist<A,B>(f: Mapping<A,B>, t: Treelist<A>): Treelist<B>;
 export function mapTreelist<A,B>(f: Mapping<A,B>): Mapping<Treelist<A>,Treelist<B>>;
 export function mapTreelist(...args: any[]): any {
 
-    const inner = (f: any) => (t: any) => {
+    const $ = (f: any) => (t: any) => {
 
         const replacement = [];
         for (let [node,tree] of t) {
@@ -43,8 +43,8 @@ export function mapTreelist(...args: any[]): any {
     }
 
     return args.length === 2
-        ? inner(args[0])(args[1])
-        : inner(args[0])
+        ? $(args[0])(args[1])
+        : $(args[0])
 }
 
 

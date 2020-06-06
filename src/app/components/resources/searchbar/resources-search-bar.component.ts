@@ -1,6 +1,7 @@
 import {Component, ElementRef, Input} from '@angular/core';
 import {SearchBarComponent} from '../../widgets/search-bar.component';
-import {ProjectCategoriesUtility} from '../../../core/configuration/project-categories-utility';
+import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
+
 
 @Component({
     selector: 'resources-search-bar',
@@ -19,10 +20,9 @@ export class ResourcesSearchBarComponent extends SearchBarComponent {
     public suggestionsVisible: boolean = false;
 
 
-    constructor(private elementRef: ElementRef,
-                projectCategories: ProjectCategoriesUtility) {
+    constructor(private elementRef: ElementRef, projectConfiguration: ProjectConfiguration) {
 
-        super(projectCategories);
+        super(projectConfiguration);
     }
 
 

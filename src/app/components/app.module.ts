@@ -27,7 +27,6 @@ import {MatrixModule} from './matrix/matrix.module';
 import {PouchdbManager} from '../core/datastore/pouchdb/pouchdb-manager';
 import {PouchdbServer} from '../core/datastore/pouchdb/pouchdb-server';
 import {TaskbarConflictsComponent} from './navbar/taskbar-conflicts.component';
-import {ProjectCategoriesUtility} from '../core/configuration/project-categories-utility';
 import {UsernameProvider} from '../core/settings/username-provider';
 import {IndexFacade} from '../core/datastore/index/index-facade';
 import {FulltextIndex} from '../core/datastore/index/fulltext-index';
@@ -159,14 +158,9 @@ registerLocaleData(localeDe, 'de');
             deps: [PouchdbManager, ImageConverter, BlobMaker]
         },
         {
-            provide: ProjectCategoriesUtility,
-            useClass: ProjectCategoriesUtility,
-            deps: [ProjectConfiguration]
-        },
-        {
             provide: DescendantsUtility,
             useClass: DescendantsUtility,
-            deps: [ProjectCategoriesUtility, ProjectConfiguration, DocumentReadDatastore]
+            deps: [ProjectConfiguration, DocumentReadDatastore]
         },
         { provide: ReadImagestore, useExisting: Imagestore },
         { provide: LocationStrategy, useClass: HashLocationStrategy },
@@ -222,16 +216,14 @@ registerLocaleData(localeDe, 'de');
             provide: Validator,
             useFactory: (
                 documentReadDatastore: DocumentReadDatastore,
-                projectConfiguration: ProjectConfiguration,
-                projectTypes: ProjectCategoriesUtility) => {
+                projectConfiguration: ProjectConfiguration) => {
 
                 return new Validator(
                     projectConfiguration,
                     (q: Query) => documentReadDatastore.find(q),
-                    projectTypes
                 )
             },
-            deps: [DocumentReadDatastore, ProjectConfiguration, ProjectCategoriesUtility]
+            deps: [DocumentReadDatastore, ProjectConfiguration]
         },
         ImportValidator,
         { provide: MD, useClass: M},

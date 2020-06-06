@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Document} from 'idai-components-2';
 import {CategoryConverter} from '../cached/category-converter';
-import {ProjectCategoriesUtility} from '../../configuration/project-categories-utility';
 import {Migrator} from './migrator';
 import {takeOrMake} from '../../util/utils';
 import {ProjectConfiguration} from '../../configuration/project-configuration';
@@ -14,8 +13,7 @@ import {ProjectCategories} from '../../configuration/project-categories';
  */
 export class FieldCategoryConverter extends CategoryConverter<Document> {
 
-    constructor(private projectCategories: ProjectCategoriesUtility,
-                private projectConfiguration: ProjectConfiguration) {
+    constructor(private projectConfiguration: ProjectConfiguration) {
 
         super();
     }
@@ -39,7 +37,7 @@ export class FieldCategoryConverter extends CategoryConverter<Document> {
         if (categoryClass === 'ImageDocument') {
             return ProjectCategories.getImageCategoryNames(this.projectConfiguration.getCategoryTreelist());
         } else if (categoryClass === 'FeatureDocument') {
-            return this.projectCategories.getFeatureCategoryNames();
+            return ProjectCategories.getFeatureCategoryNames(this.projectConfiguration.getCategoriesMap());
         } else if (categoryClass === 'FieldDocument') {
             return ProjectCategories.getFieldCategoryNames(this.projectConfiguration.getCategoryTreelist());
         } else {

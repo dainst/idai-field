@@ -40,7 +40,6 @@ describe('ResourcesStateManager', () => {
             mockDatastore,
             mockIndexFacade,
             mockSerializer,
-            undefined,
             mockTabManager,
             mockProjectConfiguration,
             undefined

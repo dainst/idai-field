@@ -1,7 +1,8 @@
 import {Component} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import {ProjectCategoriesUtility} from '../../../core/configuration/project-categories-utility';
 import {Category} from '../../../core/configuration/model/category';
+import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
+import {ProjectCategories} from '../../../core/configuration/project-categories';
 
 
 @Component({
@@ -17,7 +18,7 @@ export class LinkModalComponent {
 
 
     constructor(public activeModal: NgbActiveModal,
-                private projectCategories: ProjectCategoriesUtility) {}
+                private projectConfiguration: ProjectConfiguration) {}
 
 
     public onKeyDown(event: KeyboardEvent) {
@@ -28,7 +29,7 @@ export class LinkModalComponent {
 
     public initializeFilterOptions() {
 
-        this.filterOptions = this.projectCategories.getAllowedRelationDomainCategories(
+        this.filterOptions = this.projectConfiguration.getAllowedRelationDomainCategories(
             'isDepictedIn', 'Image'
         );
     }

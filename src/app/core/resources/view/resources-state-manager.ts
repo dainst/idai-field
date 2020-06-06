@@ -9,7 +9,6 @@ import {FieldReadDatastore} from '../../datastore/field/field-read-datastore';
 import {clone} from '../../util/object-util';
 import {IndexFacade} from '../../datastore/index/index-facade';
 import {TabManager} from '../../tabs/tab-manager';
-import {ProjectCategoriesUtility} from '../../configuration/project-categories-utility';
 import {ResourcesViewMode} from './view-facade';
 import {ProjectCategories} from '../../configuration/project-categories';
 import {ProjectConfiguration} from '../../configuration/project-configuration';
@@ -49,7 +48,6 @@ export class ResourcesStateManager {
         private datastore: FieldReadDatastore,
         private indexFacade: IndexFacade,
         private serializer: StateSerializer,
-        private projectCategories: ProjectCategoriesUtility,
         private tabManager: TabManager,
         private project: string,
         private projectConfiguration: ProjectConfiguration,

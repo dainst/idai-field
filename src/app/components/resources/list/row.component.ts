@@ -9,7 +9,6 @@ import {M} from '../../messages/m';
 import {MessagesConversion} from '../../docedit/messages-conversion';
 import {Category} from '../../../core/configuration/model/category';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
-import {ProjectCategoriesUtility} from '../../../core/configuration/project-categories-utility';
 import {ViewFacade} from '../../../core/resources/view/view-facade';
 import {NavigationService} from '../../../core/resources/navigation/navigation-service';
 import {Messages} from '../../messages/messages';
@@ -44,8 +43,7 @@ export class RowComponent implements AfterViewInit {
         private validator: Validator,
         private datastore: FieldReadDatastore,
         private navigationService: NavigationService,
-        private projectConfiguration: ProjectConfiguration,
-        private projectCategories: ProjectCategoriesUtility
+        private projectConfiguration: ProjectConfiguration
     ) {}
 
 
@@ -106,7 +104,7 @@ export class RowComponent implements AfterViewInit {
 
     public isMoveOptionAvailable(): boolean {
 
-        return this.projectCategories.getHierarchyParentCategories(this.document.resource.category).length > 0;
+        return this.projectConfiguration.getHierarchyParentCategories(this.document.resource.category).length > 0;
     }
 
 

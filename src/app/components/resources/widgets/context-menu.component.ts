@@ -1,6 +1,5 @@
 import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import {ResourcesComponent} from '../resources.component';
-import {ProjectCategoriesUtility} from '../../../core/configuration/project-categories-utility';
 import {ViewFacade} from '../../../core/resources/view/view-facade';
 import {ContextMenu} from './context-menu';
 import {ProjectCategories} from '../../../core/configuration/project-categories';
@@ -32,7 +31,6 @@ export class ContextMenuComponent implements OnChanges {
 
     constructor(private resourcesComponent: ResourcesComponent,
                 private viewFacade: ViewFacade,
-                private projectCategories: ProjectCategoriesUtility,
                 private projectConfiguration: ProjectConfiguration) {}
 
 
@@ -76,7 +74,7 @@ export class ContextMenuComponent implements OnChanges {
 
         if (!this.contextMenu.document) return false;
 
-        return this.projectCategories
+        return this.projectConfiguration
             .getHierarchyParentCategories(this.contextMenu.document.resource.category).length > 0;
     }
 

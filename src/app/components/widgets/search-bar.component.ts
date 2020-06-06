@@ -1,7 +1,8 @@
 import {Component, EventEmitter, Input, Output, ViewChild, ElementRef, OnChanges} from '@angular/core';
 import {sameset} from 'tsfun';
-import {ProjectCategoriesUtility} from '../../core/configuration/project-categories-utility';
 import {Category} from '../../core/configuration/model/category';
+import {ProjectConfiguration} from '../../core/configuration/project-configuration';
+import {ProjectCategories} from '../../core/configuration/project-categories';
 
 
 @Component({
@@ -36,7 +37,7 @@ export class SearchBarComponent implements OnChanges {
     private emitQueryTimeout: any = undefined;
 
 
-    constructor(private projectCategories: ProjectCategoriesUtility) {}
+    constructor(private projectConfiguration: ProjectConfiguration) {}
 
 
     ngOnChanges() {
@@ -68,7 +69,7 @@ export class SearchBarComponent implements OnChanges {
     public chooseCategoryFilter(category: Category) {
 
         let newCategories: string[]|undefined = category
-            ? this.projectCategories.getNamesOfCategoriesAndSubcategories(category.name)
+            ? ProjectCategories.getNamesOfCategoriesAndSubcategories(this.projectConfiguration.getCategoriesMap(), category.name)
             : undefined;
 
         if (newCategories && newCategories.length > 1 && this.categories

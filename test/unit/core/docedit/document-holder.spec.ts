@@ -103,7 +103,6 @@ describe('DocumentHolder', () => {
             pconf,
             persistenceManager,
             validator,
-            projectCategories,
             usernameProvider,
             datastore
         );

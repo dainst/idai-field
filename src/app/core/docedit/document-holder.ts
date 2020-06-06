@@ -6,7 +6,6 @@ import {Validator} from '../model/validator';
 import {PersistenceManager} from '../model/persistence-manager';
 import {DocumentDatastore} from '../datastore/document-datastore';
 import {Validations} from '../model/validations';
-import {ProjectCategoriesUtility} from '../configuration/project-categories-utility';
 import {UsernameProvider} from '../settings/username-provider';
 import {DuplicationUtil} from './duplication-util';
 import {ProjectConfiguration} from '../configuration/project-configuration';
@@ -42,7 +41,6 @@ export class DocumentHolder {
         private projectConfiguration: ProjectConfiguration,
         private persistenceManager: PersistenceManager,
         private validator: Validator,
-        private projectCategories: ProjectCategoriesUtility,
         private usernameProvider: UsernameProvider,
         private datastore: DocumentDatastore) {
     }

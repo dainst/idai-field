@@ -4,6 +4,7 @@ import {Named, onName, toName} from '../util/named';
 import {flattenTreelist, Treelist} from '../util/treelist';
 import {Name} from '../constants';
 import {filterTrees, isTopLevelItemOrChildThereof, removeTrees} from '../util/named-treelist';
+import {ProjectConfiguration} from './project-configuration';
 
 const TYPE_CATALOG = 'TypeCatalog';
 const TYPE = 'Type';
@@ -140,5 +141,30 @@ export /* package-private */ module ProjectCategories {
             flattenTreelist,
             map(to([Named.NAME]))
         );
+    }
+
+
+    export function getFeatureCategoryNames(categoriesMap: Map<Category>): string[] {
+
+        return getSuperCategoryNames(categoriesMap, 'Feature');
+    }
+
+
+    export function getOperationCategoryNames(categoriesMap: Map<Category>): string[] {
+
+        return getSuperCategoryNames(categoriesMap, 'Operation');
+    }
+
+
+    export function getNamesOfCategoriesAndSubcategories(categoriesMap: Map<Category>, supercategoryName: string): string[] {
+
+        return getSuperCategoryNames(categoriesMap, supercategoryName);
+    }
+
+
+    // TODO implement via flattenTreelist and filterToplevelCategories (or something similar)
+    export function getSuperCategoryNames(categoriesMap: Map<Category>, superCategoryName: string) {
+
+        return Object.keys(getCategoryAndSubcategories(superCategoryName, categoriesMap));
     }
 }

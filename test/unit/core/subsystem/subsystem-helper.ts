@@ -3,7 +3,6 @@ import {Document, FieldDocument, ImageDocument} from 'idai-components-2';
 import {ImageDatastore} from '../../../../src/app/core/datastore/field/image-datastore';
 import {FieldDatastore} from '../../../../src/app/core/datastore/field/field-datastore';
 import {DocumentDatastore} from '../../../../src/app/core/datastore/document-datastore';
-import {ProjectCategoriesUtility} from '../../../../src/app/core/configuration/project-categories-utility';
 import {FieldCategoryConverter} from '../../../../src/app/core/datastore/field/field-category-converter';
 import {IndexerConfiguration} from '../../../../src/app/indexer-configuration';
 import {PouchdbDatastore} from '../../../../src/app/core/datastore/pouchdb/pouchdb-datastore';
@@ -97,8 +96,7 @@ export async function createApp(projectName = 'testdb', startSync = false) {
         true);
 
     const documentCache = new DocumentCache<Document>();
-    const projectCategories = new ProjectCategoriesUtility(projectConfiguration);
-    const categoryConverter = new FieldCategoryConverter(projectCategories, projectConfiguration);
+    const categoryConverter = new FieldCategoryConverter(projectConfiguration);
 
     const fieldDocumentDatastore = new FieldDatastore(
         datastore, createdIndexFacade, documentCache as any, categoryConverter as CategoryConverter<FieldDocument>);
@@ -132,7 +130,6 @@ export async function createApp(projectName = 'testdb', startSync = false) {
         fieldDocumentDatastore,
         createdIndexFacade,
         stateSerializer,
-        projectCategories,
         tabManager,
         projectName,
         projectConfiguration,
@@ -152,7 +149,7 @@ export async function createApp(projectName = 'testdb', startSync = false) {
     );
 
     const descendantsUtility = new DescendantsUtility(
-        projectCategories, projectConfiguration, documentDatastore
+        projectConfiguration, documentDatastore
     );
 
     const persistenceManager = new PersistenceManager(
@@ -164,8 +161,7 @@ export async function createApp(projectName = 'testdb', startSync = false) {
     const documentHolder = new DocumentHolder(
         projectConfiguration,
         persistenceManager,
-        new Validator(projectConfiguration, (q: Query) => fieldDocumentDatastore.find(q), projectCategories),
-        projectCategories,
+        new Validator(projectConfiguration, (q: Query) => fieldDocumentDatastore.find(q)),
         { getUsername: () => 'fakeuser' },
         documentDatastore
     );

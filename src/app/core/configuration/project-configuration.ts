@@ -26,11 +26,13 @@ export type RawProjectConfiguration = Pair<CategoryTreelist, Array<RelationDefin
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  * @author Sebastian Cuy
+ * @author F.Z.
  */
 export class ProjectConfiguration {
 
     public static UNKNOWN_CATEGORY_ERROR = 'ProjectConfiguration.Errors.UnknownCategory';
 
+    public static UNKNOWN_TYPE_ERROR = 'projectCategories.Errors.UnknownType';
 
     private categoriesArray: Array<Category>;
 

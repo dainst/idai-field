@@ -6,7 +6,6 @@ import {NativeJsonlParser} from './parser/native-jsonl-parser';
 import {ShapefileParser} from './parser/shapefile-parser';
 import {GazGeojsonParserAddOn} from './parser/gaz-geojson-parser-add-on';
 import {ImportValidator} from './import/process/import-validator';
-import {ProjectCategoriesUtility} from '../configuration/project-categories-utility';
 import {DocumentDatastore} from '../datastore/document-datastore';
 import {CsvParser} from './parser/csv-parser';
 import {ProjectConfiguration} from '../configuration/project-configuration';
@@ -58,7 +57,6 @@ export module Importer {
      *   importReport.warnings
      */
     export async function doImport(format: ImportFormat,
-                                   projectCategories: ProjectCategoriesUtility,
                                    datastore: DocumentDatastore,
                                    usernameProvider: UsernameProvider,
                                    projectConfiguration: ProjectConfiguration,
@@ -82,7 +80,7 @@ export module Importer {
         }
 
         const operationCategoryNames = ProjectCategories.getOverviewCategoryNames(projectConfiguration.getCategoryTreelist()).filter(isnt('Place'));
-        const importValidator =  new ImportValidator(projectConfiguration, datastore, projectCategories);
+        const importValidator =  new ImportValidator(projectConfiguration, datastore);
 
         const inverseRelationsMap = makeInverseRelationsMap(projectConfiguration.getAllRelationDefinitions());
 

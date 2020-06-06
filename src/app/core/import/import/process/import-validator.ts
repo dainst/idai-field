@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {includedIn, is, isNot, isnt, on} from 'tsfun';
 import {Document, NewDocument, NewResource, Resource} from 'idai-components-2';
-import {ProjectCategoriesUtility} from '../../../configuration/project-categories-utility';
 import {Validator} from '../../../model/validator';
 import {Validations} from '../../../model/validations';
 import {ImportErrors as E} from '../import-errors';
@@ -29,10 +28,10 @@ import {ProjectCategories} from '../../../configuration/project-categories';
  */
 export class ImportValidator extends Validator {
 
-    constructor(projectConfiguration: ProjectConfiguration, private datastore: DocumentDatastore,
-                projectCategories: ProjectCategoriesUtility) {
+    constructor(projectConfiguration: ProjectConfiguration,
+                private datastore: DocumentDatastore) {
 
-        super(projectConfiguration, (q: Query) => datastore.find(q), projectCategories);
+        super(projectConfiguration, (q: Query) => datastore.find(q));
     }
 
 

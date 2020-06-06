@@ -2,7 +2,7 @@ import {AfterViewInit, Component, ElementRef, Input, OnChanges, ViewChild} from 
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {isUndefinedOrEmpty} from 'tsfun';
 import {Document} from 'idai-components-2';
-import {ProjectCategories} from '../../../core/configuration/project-categories';
+import {ProjectCategoriesUtility} from '../../../core/configuration/project-categories-utility';
 import {FieldDefinition} from '../../../core/configuration/model/field-definition';
 import {RelationDefinition} from '../../../core/configuration/model/relation-definition';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
@@ -41,7 +41,7 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
     constructor(private elementRef: ElementRef,
                 private i18n: I18n,
                 private projectConfiguration: ProjectConfiguration,
-                private projectCategories: ProjectCategories) {}
+                private projectCategories: ProjectCategoriesUtility) {}
 
 
     public activateGroup = (name: string) => this.activeGroup = name;

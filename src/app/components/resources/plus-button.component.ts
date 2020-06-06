@@ -2,7 +2,7 @@ import {Component, Input, ElementRef, ViewChild, OnChanges, EventEmitter, Output
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {Relations, FieldDocument} from 'idai-components-2';
 import {ResourcesComponent} from './resources.component';
-import {ProjectCategories} from '../../core/configuration/project-categories';
+import {ProjectCategoriesUtility} from '../../core/configuration/project-categories-utility';
 import {M} from '../messages/m';
 import {Category} from '../../core/configuration/model/category';
 import {ProjectConfiguration} from '../../core/configuration/project-configuration';
@@ -51,7 +51,7 @@ export class PlusButtonComponent implements OnChanges {
         private resourcesComponent: ResourcesComponent,
         private projectConfiguration: ProjectConfiguration,
         private messages: Messages,
-        private projectCategories: ProjectCategories,
+        private projectCategories: ProjectCategoriesUtility,
         private viewFacade: ViewFacade,
         private datastore: FieldReadDatastore,
         private i18n: I18n) {

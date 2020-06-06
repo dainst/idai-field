@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import {ResourcesComponent} from '../resources.component';
-import {ProjectCategories} from '../../../core/configuration/project-categories';
+import {ProjectCategoriesUtility} from '../../../core/configuration/project-categories-utility';
 import {ViewFacade} from '../../../core/resources/view/view-facade';
 import {ContextMenu} from './context-menu';
 
@@ -30,7 +30,7 @@ export class ContextMenuComponent implements OnChanges {
 
     constructor(private resourcesComponent: ResourcesComponent,
                 private viewFacade: ViewFacade,
-                private projectCategories: ProjectCategories) {}
+                private projectCategories: ProjectCategoriesUtility) {}
 
 
     ngOnChanges() {

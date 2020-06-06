@@ -11,7 +11,7 @@ import {JavaToolExecutor} from '../../core/java/java-tool-executor';
 import {FieldReadDatastore} from '../../core/datastore/field/field-read-datastore';
 import {GeoJsonExporter} from '../../core/export/geojson-exporter';
 import {ShapefileExporter} from '../../core/export/shapefile-exporter';
-import {ProjectCategories} from '../../core/configuration/project-categories';
+import {ProjectCategoriesUtility} from '../../core/configuration/project-categories-utility';
 import {CsvExporter} from '../../core/export/csv/csv-exporter';
 import {CategoryCount} from '../../core/export/export-helper';
 import {ExportRunner} from '../../core/export/export-runner';
@@ -61,7 +61,7 @@ export class ExportComponent implements OnInit {
                 private viewFacade: ViewFacade,
                 private fieldDatastore: FieldReadDatastore,
                 private documentDatastore: DocumentReadDatastore,
-                private projectCategories: ProjectCategories,
+                private projectCategories: ProjectCategoriesUtility,
                 private tabManager: TabManager,
                 private projectConfiguration: ProjectConfiguration) {}
 

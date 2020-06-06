@@ -3,7 +3,7 @@ import {Document, FieldDocument, ImageDocument} from 'idai-components-2';
 import {ImageDatastore} from '../../../../src/app/core/datastore/field/image-datastore';
 import {FieldDatastore} from '../../../../src/app/core/datastore/field/field-datastore';
 import {DocumentDatastore} from '../../../../src/app/core/datastore/document-datastore';
-import {ProjectCategories} from '../../../../src/app/core/configuration/project-categories';
+import {ProjectCategoriesUtility} from '../../../../src/app/core/configuration/project-categories-utility';
 import {FieldCategoryConverter} from '../../../../src/app/core/datastore/field/field-category-converter';
 import {IndexerConfiguration} from '../../../../src/app/indexer-configuration';
 import {PouchdbDatastore} from '../../../../src/app/core/datastore/pouchdb/pouchdb-datastore';
@@ -97,7 +97,7 @@ export async function createApp(projectName = 'testdb', startSync = false) {
         true);
 
     const documentCache = new DocumentCache<Document>();
-    const projectCategories = new ProjectCategories(projectConfiguration);
+    const projectCategories = new ProjectCategoriesUtility(projectConfiguration);
     const categoryConverter = new FieldCategoryConverter(projectCategories, projectConfiguration);
 
     const fieldDocumentDatastore = new FieldDatastore(

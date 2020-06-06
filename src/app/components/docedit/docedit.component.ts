@@ -7,7 +7,7 @@ import {ConflictDeletedModalComponent} from './dialog/conflict-deleted-modal.com
 import {clone} from '../../core/util/object-util';
 import {EditSaveDialogComponent} from './dialog/edit-save-dialog.component';
 import {DocumentDatastore} from '../../core/datastore/document-datastore';
-import {ProjectCategories} from '../../core/configuration/project-categories';
+import {ProjectCategoriesUtility} from '../../core/configuration/project-categories-utility';
 import {M} from '../messages/m';
 import {MessagesConversion} from './messages-conversion';
 import {Loading} from '../widgets/loading';
@@ -57,7 +57,7 @@ export class DoceditComponent {
         private messages: Messages,
         private modalService: NgbModal,
         private datastore: DocumentDatastore,
-        private projectCategories: ProjectCategories,
+        private projectCategories: ProjectCategoriesUtility,
         public projectConfiguration: ProjectConfiguration,
         private loading: Loading,
         private i18n: I18n) {

@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, Output, ViewChild, ElementRef, OnChanges} from '@angular/core';
 import {sameset} from 'tsfun';
-import {ProjectCategories} from '../../core/configuration/project-categories';
+import {ProjectCategoriesUtility} from '../../core/configuration/project-categories-utility';
 import {Category} from '../../core/configuration/model/category';
 
 
@@ -36,7 +36,7 @@ export class SearchBarComponent implements OnChanges {
     private emitQueryTimeout: any = undefined;
 
 
-    constructor(private projectCategories: ProjectCategories) {}
+    constructor(private projectCategories: ProjectCategoriesUtility) {}
 
 
     ngOnChanges() {

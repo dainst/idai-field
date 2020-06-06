@@ -1,6 +1,6 @@
 import {Component, Input, Output, ElementRef, ViewChild, EventEmitter, DoCheck} from '@angular/core';
 import {Document, FieldDocument} from 'idai-components-2';
-import {ProjectCategories} from '../../../core/configuration/project-categories';
+import {ProjectCategoriesUtility} from '../../../core/configuration/project-categories-utility';
 import {Groups} from '../../../core/configuration/model/group';
 
 
@@ -27,7 +27,7 @@ export class DocumentInfoComponent implements DoCheck {
     public openSection: string|undefined = Groups.STEM;
 
 
-    constructor(private projectCategories: ProjectCategories) {}
+    constructor(private projectCategories: ProjectCategoriesUtility) {}
 
 
     public startEdit = () => this.onStartEdit.emit();

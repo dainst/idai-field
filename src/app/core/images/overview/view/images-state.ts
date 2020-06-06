@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Query} from '../../../datastore/model/query';
-import {ProjectCategories} from '../../../configuration/project-categories';
+import {ProjectCategoriesUtility} from '../../../configuration/project-categories-utility';
 
 
 @Injectable()
@@ -15,7 +15,7 @@ export class ImagesState {
     private expandAllGroups: boolean = false;
 
 
-    constructor(private projectCategories: ProjectCategories) {}
+    constructor(private projectCategories: ProjectCategoriesUtility) {}
 
 
     public getQuery(): Query {

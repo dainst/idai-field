@@ -9,7 +9,7 @@ import {M} from '../../messages/m';
 import {MessagesConversion} from '../../docedit/messages-conversion';
 import {Category} from '../../../core/configuration/model/category';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
-import {ProjectCategories} from '../../../core/configuration/project-categories';
+import {ProjectCategoriesUtility} from '../../../core/configuration/project-categories-utility';
 import {ViewFacade} from '../../../core/resources/view/view-facade';
 import {NavigationService} from '../../../core/resources/navigation/navigation-service';
 import {Messages} from '../../messages/messages';
@@ -45,7 +45,7 @@ export class RowComponent implements AfterViewInit {
         private datastore: FieldReadDatastore,
         private navigationService: NavigationService,
         private projectConfiguration: ProjectConfiguration,
-        private projectCategories: ProjectCategories
+        private projectCategories: ProjectCategoriesUtility
     ) {}
 
 

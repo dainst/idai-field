@@ -9,7 +9,7 @@ import {ImageDocumentsManager} from '../../core/images/overview/view/image-docum
 import {ImageOverviewFacade} from '../../core/images/overview/view/imageoverview-facade';
 import {ImagesState} from '../../core/images/overview/view/images-state';
 import {ImageReadDatastore} from '../../core/datastore/field/image-read-datastore';
-import {ProjectCategories} from '../../core/configuration/project-categories';
+import {ProjectCategoriesUtility} from '../../core/configuration/project-categories-utility';
 import {PersistenceHelper} from '../../core/images/overview/service/persistence-helper';
 import {PersistenceManager} from '../../core/model/persistence-manager';
 import {UsernameProvider} from '../../core/settings/username-provider';
@@ -40,7 +40,7 @@ import {ImageViewerModule} from '../image/viewer/image-viewer.module';
         {
             provide: ImageOverviewFacade,
             useClass: ImageOverviewFacade,
-            deps: [ImageDocumentsManager, ImagesState, ProjectCategories]
+            deps: [ImageDocumentsManager, ImagesState, ProjectCategoriesUtility]
         },
         {
             provide: PersistenceHelper,

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Document} from 'idai-components-2';
 import {CategoryConverter} from '../cached/category-converter';
-import {ProjectCategories} from '../../configuration/project-categories';
+import {ProjectCategoriesUtility} from '../../configuration/project-categories-utility';
 import {Migrator} from './migrator';
 import {takeOrMake} from '../../util/utils';
 import {ProjectConfiguration} from '../../configuration/project-configuration';
@@ -13,7 +13,7 @@ import {ProjectConfiguration} from '../../configuration/project-configuration';
  */
 export class FieldCategoryConverter extends CategoryConverter<Document> {
 
-    constructor(private projectCategories: ProjectCategories,
+    constructor(private projectCategories: ProjectCategoriesUtility,
                 private projectConfiguration: ProjectConfiguration) {
 
         super();

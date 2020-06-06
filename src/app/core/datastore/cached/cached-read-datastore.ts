@@ -4,7 +4,7 @@ import {PouchdbDatastore} from '../pouchdb/pouchdb-datastore';
 import {DocumentCache} from './document-cache';
 import {CategoryConverter} from './category-converter';
 import {IndexFacade} from '../index/index-facade';
-import {ProjectCategories} from '../../configuration/project-categories';
+import {ProjectCategoriesUtility} from '../../configuration/project-categories-utility';
 import {DatastoreErrors} from '../model/datastore-errors';
 import {FindIdsResult, FindResult, ReadDatastore} from '../model/read-datastore';
 import {Query} from '../model/query';
@@ -229,7 +229,7 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
                 );
                 documents.push(this.documentCache.set(convertedDocument));
             } catch (errWithParams) {
-                if (errWithParams[0] !== ProjectCategories.UNKNOWN_TYPE_ERROR) throw errWithParams;
+                if (errWithParams[0] !== ProjectCategoriesUtility.UNKNOWN_TYPE_ERROR) throw errWithParams;
             }
         });
 

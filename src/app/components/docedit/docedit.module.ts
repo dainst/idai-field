@@ -38,7 +38,7 @@ import {DocumentHolder} from '../../core/docedit/document-holder';
 import {ProjectConfiguration} from '../../core/configuration/project-configuration';
 import {PersistenceManager} from '../../core/model/persistence-manager';
 import {Validator} from '../../core/model/validator';
-import {ProjectCategories} from '../../core/configuration/project-categories';
+import {ProjectCategoriesUtility} from '../../core/configuration/project-categories-utility';
 import {UsernameProvider} from '../../core/settings/username-provider';
 import {DocumentDatastore} from '../../core/datastore/document-datastore';
 import {ImageRowModule} from '../image/row/image-row.module';
@@ -56,7 +56,7 @@ import {IdaiMessagesModule} from '../messages/idai-messages.module';
             useFactory: (projectConfiguration: ProjectConfiguration,
                          persistenceManager: PersistenceManager,
                          validator: Validator,
-                         projectTypes: ProjectCategories,
+                         projectTypes: ProjectCategoriesUtility,
                          usernameProvider: UsernameProvider,
                          datastore: DocumentDatastore) => {
 
@@ -64,7 +64,7 @@ import {IdaiMessagesModule} from '../messages/idai-messages.module';
                     validator, projectTypes, usernameProvider, datastore);
             },
             deps: [ProjectConfiguration, PersistenceManager, Validator,
-                ProjectCategories, UsernameProvider, DocumentDatastore]
+                ProjectCategoriesUtility, UsernameProvider, DocumentDatastore]
         },
         { provide: NgbDateParserFormatter, useClass: NgbDateDEParserFormatter }
     ],

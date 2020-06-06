@@ -4,7 +4,7 @@ import {Location} from '@angular/common';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {Observable, Observer} from 'rxjs';
 import {Document} from 'idai-components-2';
-import {ProjectCategories} from '../core/configuration/project-categories';
+import {ProjectCategoriesUtility} from '../core/configuration/project-categories-utility';
 import {ViewFacade} from '../core/resources/view/view-facade';
 import {ProjectConfiguration} from '../core/configuration/project-configuration';
 import {MenuService} from './menu-service';
@@ -31,7 +31,7 @@ export class RoutingService {
     constructor(private router: Router,
                 private viewFacade: ViewFacade,
                 private location: Location,
-                private projectCategories: ProjectCategories,
+                private projectCategories: ProjectCategoriesUtility,
                 private projectConfiguration: ProjectConfiguration,
                 private modalService: NgbModal,
                 private settingsService: SettingsService) {}

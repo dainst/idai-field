@@ -15,7 +15,7 @@ import {ContextMenuAction} from '../widgets/context-menu.component';
 import {ViewModalLauncher} from '../service/view-modal-launcher';
 import {NavigationPath} from '../../../core/resources/view/state/navigation-path';
 import {RoutingService} from '../../routing-service';
-import {ProjectCategories} from '../../../core/configuration/project-categories';
+import {ProjectCategoriesUtility} from '../../../core/configuration/project-categories-utility';
 import {TabManager} from '../../../core/tabs/tab-manager';
 import {PLACEHOLDER} from '../../../core/images/row/image-row';
 import { makeLookup } from 'src/app/core/util/transformers';
@@ -70,7 +70,7 @@ export class TypeGridComponent extends BaseList implements OnChanges {
                 private imagestore: ReadImagestore,
                 private viewModalLauncher: ViewModalLauncher,
                 private routingService: RoutingService,
-                private projectCategories: ProjectCategories,
+                private projectCategories: ProjectCategoriesUtility,
                 private tabManager: TabManager,
                 private changeDetectorRef: ChangeDetectorRef,
                 resourcesComponent: ResourcesComponent,

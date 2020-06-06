@@ -1,7 +1,7 @@
 import {Document} from 'idai-components-2';
 import {DocumentReadDatastore} from '../datastore/document-read-datastore';
 import {ProjectConfiguration} from '../configuration/project-configuration';
-import {ProjectCategories} from '../configuration/project-categories';
+import {ProjectCategoriesUtility} from '../configuration/project-categories-utility';
 import {FindIdsResult, FindResult} from '../datastore/model/read-datastore';
 import {Query} from '../datastore/model/query';
 
@@ -12,7 +12,7 @@ import {Query} from '../datastore/model/query';
  */
 export class DescendantsUtility {
 
-    constructor(private projectCategories: ProjectCategories,
+    constructor(private projectCategories: ProjectCategoriesUtility,
                 private projectConfiguration: ProjectConfiguration,
                 private datastore: DocumentReadDatastore) {}
 

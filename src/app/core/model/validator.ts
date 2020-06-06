@@ -5,7 +5,7 @@ import {Validations} from './validations';
 import {ProjectConfiguration} from '../configuration/project-configuration';
 import {HierarchicalRelations} from './relation-constants';
 import RECORDED_IN = HierarchicalRelations.RECORDEDIN;
-import {ProjectCategories} from '../configuration/project-categories';
+import {ProjectCategoriesUtility} from '../configuration/project-categories-utility';
 import {Query} from '../datastore/model/query';
 import {FindResult} from '../datastore/model/read-datastore';
 
@@ -20,7 +20,7 @@ export class Validator {
 
     constructor(protected projectConfiguration: ProjectConfiguration,
                 protected find: (query: Query) => Promise<FindResult>,
-                protected projectCategories: ProjectCategories) {}
+                protected projectCategories: ProjectCategoriesUtility) {}
 
 
     /**

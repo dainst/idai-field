@@ -19,7 +19,7 @@ import {ShapefileFileSystemReader} from '../../core/import/reader/shapefile-file
 import {JavaToolExecutor} from '../../core/java/java-tool-executor';
 import {ImportValidator} from '../../core/import/import/process/import-validator';
 import {IdGenerator} from '../../core/datastore/pouchdb/id-generator';
-import {ProjectCategories} from '../../core/configuration/project-categories';
+import {ProjectCategoriesUtility} from '../../core/configuration/project-categories-utility';
 import {DocumentDatastore} from '../../core/datastore/document-datastore';
 import {ExportRunner} from '../../core/export/export-runner';
 import {ImportState} from './import-state';
@@ -67,7 +67,7 @@ export class ImportComponent implements OnInit {
         private modalService: NgbModal,
         private synchronizationService: SyncService,
         private idGenerator: IdGenerator,
-        private projectCategories: ProjectCategories,
+        private projectCategories: ProjectCategoriesUtility,
         private tabManager: TabManager,
         public importState: ImportState) {
 

@@ -12,7 +12,7 @@ import {toName} from '../util/named';
  * @author F.Z.
  * @author Daniel de Oliveira
  */
-export class ProjectCategories {
+export class ProjectCategoriesUtility {
 
     public static UNKNOWN_TYPE_ERROR = 'projectCategories.Errors.UnknownType';
 

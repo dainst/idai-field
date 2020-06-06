@@ -8,7 +8,7 @@ import {filterTrees, isTopLevelItemOrChildThereof, removeTrees} from '../util/na
 const TYPE_CATALOG = 'TypeCatalog';
 const TYPE = 'Type';
 const TYPE_CATALOG_AND_TYPE = [TYPE_CATALOG, TYPE];
-// TODO add more consts
+// TODO add more consts, move constants to central place, shared with app-configurator
 
 
 /**

@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import {ProjectCategories} from '../../../core/configuration/project-categories';
+import {ProjectCategoriesUtility} from '../../../core/configuration/project-categories-utility';
 import {Category} from '../../../core/configuration/model/category';
 
 
@@ -17,7 +17,7 @@ export class LinkModalComponent {
 
 
     constructor(public activeModal: NgbActiveModal,
-                private projectCategories: ProjectCategories) {}
+                private projectCategories: ProjectCategoriesUtility) {}
 
 
     public onKeyDown(event: KeyboardEvent) {

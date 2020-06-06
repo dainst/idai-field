@@ -5,6 +5,7 @@ import {ProjectCategoriesUtility} from '../../configuration/project-categories-u
 import {Migrator} from './migrator';
 import {takeOrMake} from '../../util/utils';
 import {ProjectConfiguration} from '../../configuration/project-configuration';
+import {ProjectCategories} from '../../configuration/project-categories';
 
 
 @Injectable()
@@ -40,7 +41,7 @@ export class FieldCategoryConverter extends CategoryConverter<Document> {
         } else if (categoryClass === 'FeatureDocument') {
             return this.projectCategories.getFeatureCategoryNames();
         } else if (categoryClass === 'FieldDocument') {
-            return this.projectCategories.getFieldCategoryNames();
+            return ProjectCategories.getFieldCategoryNames(this.projectConfiguration.getCategoryTreelist());
         } else {
             return undefined;
         }

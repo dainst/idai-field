@@ -22,12 +22,6 @@ export class ProjectCategoriesUtility {
     constructor(private projectConfiguration: ProjectConfiguration) {}
 
 
-    public getFieldCategories(): Array<Category> {
-
-        return ProjectCategories.getFieldCategories(this.projectConfiguration.getCategoryTreelist());
-    }
-
-
     public getConcreteFieldCategories(): Array<Category> {
 
         return ProjectCategories.getConcreteFieldCategories(this.projectConfiguration.getCategoryTreelist());
@@ -43,12 +37,6 @@ export class ProjectCategoriesUtility {
     public getTypeCategoryNames(): string[] {
 
         return ProjectCategories.getTypeCategoryNames();
-    }
-
-
-    public getFieldCategoryNames(): string[] {
-
-        return this.getFieldCategories().map(toName);
     }
 
 

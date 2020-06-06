@@ -55,6 +55,12 @@ export /* package-private */ module ProjectCategories {
     }
 
 
+    export function getFieldCategoryNames(t: Treelist<Category>): Array<Name> {
+
+        return getFieldCategories(t).map(toName);
+    }
+
+
     export function getOverviewCategoryNames(t: Treelist<Category>): Array<Name> {
 
         return flow(t,

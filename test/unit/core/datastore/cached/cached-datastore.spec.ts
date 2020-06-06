@@ -19,9 +19,17 @@ describe('CachedDatastore', () => {
     function createMockedDatastore(mockdb: any) {
 
         const mockProjectCategories = jasmine.createSpyObj('mockProjectCategories', ['getFieldCategoryNames']);
-        const mockProjectConfiguration = jasmine.createSpyObj('mockProjectConfiguration', ['isSubcategory']);
+        const mockProjectConfiguration = jasmine.createSpyObj('mockProjectConfiguration', ['isSubcategory', 'getCategoryTreelist']);
         mockProjectConfiguration.isSubcategory.and.returnValue(false);
         mockProjectCategories.getFieldCategoryNames.and.returnValue(['Find']);
+        mockProjectConfiguration.getCategoryTreelist.and.returnValue(
+            [
+                [
+                    {name: 'Find'},
+                    []
+                ]
+            ]
+        );
 
         const documentCache = new DocumentCache<FieldDocument>();
         const docDatastore = new FieldDatastore(

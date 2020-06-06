@@ -163,7 +163,7 @@ export class RoutingService {
 
     private getViewName(document: Document): 'project'|'types'|string {
 
-        return this.projectCategories.getOverviewCategoryNames().includes(document.resource.category)
+        return ProjectCategories.getOverviewCategoryNames(this.projectConfiguration.getCategoryTreelist()).includes(document.resource.category)
             ? 'project'
             : ProjectCategories.getTypeCategoryNames().includes(document.resource.category)
                 ? 'types'

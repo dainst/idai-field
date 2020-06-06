@@ -14,6 +14,7 @@ import {Category} from '../configuration/model/category';
 import {InverseRelationsMap, makeInverseRelationsMap} from '../configuration/inverse-relations-map';
 import {buildImportFunction} from './import/import-documents';
 import {FieldConverter} from './field-converter';
+import {ProjectCategories} from '../configuration/project-categories';
 
 export type ImportFormat = 'native' | 'geojson' | 'geojson-gazetteer' | 'shapefile' | 'csv';
 
@@ -80,7 +81,7 @@ export module Importer {
             return { errors: [msgWithParams], successfulImports: 0 };
         }
 
-        const operationCategoryNames = projectCategories.getOverviewCategoryNames().filter(isnt('Place'));
+        const operationCategoryNames = ProjectCategories.getOverviewCategoryNames(projectConfiguration.getCategoryTreelist()).filter(isnt('Place'));
         const importValidator =  new ImportValidator(projectConfiguration, datastore, projectCategories);
 
         const inverseRelationsMap = makeInverseRelationsMap(projectConfiguration.getAllRelationDefinitions());

@@ -13,6 +13,7 @@ import RECORDED_IN = HierarchicalRelations.RECORDEDIN;
 import LIES_WITHIN = HierarchicalRelations.LIESWITHIN;
 import {ProjectConfiguration} from '../../../configuration/project-configuration';
 import {Query} from '../../../datastore/model/query';
+import {ProjectCategories} from '../../../configuration/project-categories';
 
 
 @Injectable()
@@ -104,7 +105,7 @@ export class ImportValidator extends Validator {
 
     public async assertIsNotOverviewCategory(document: Document|NewDocument) {
 
-        if (this.projectCategories.getOverviewCategoryNames().includes(document.resource.category)) {
+        if (ProjectCategories.getOverviewCategoryNames(this.projectConfiguration.getCategoryTreelist()).includes(document.resource.category)) {
 
             throw [E.OPERATIONS_NOT_ALLOWED];
         }

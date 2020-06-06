@@ -68,7 +68,8 @@ export class ResourcesStateManager {
     public getCurrentOperation = (): FieldDocument|undefined =>
         ResourcesState.getCurrentOperation(this.resourcesState);
 
-    public getOverviewCategoryNames = (): string[] => this.projectCategories.getOverviewCategoryNames();
+    public getOverviewCategoryNames = (): string[] => ProjectCategories
+        .getOverviewCategoryNames(this.projectConfiguration.getCategoryTreelist());
 
     public getConcreteCategoryNames = (): string[] => ProjectCategories.getConcreteFieldCategoryNames(this.projectConfiguration.getCategoryTreelist());
 

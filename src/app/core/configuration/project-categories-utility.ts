@@ -38,13 +38,6 @@ export class ProjectCategoriesUtility {
     }
 
 
-    public getOverviewCategoryNames(): string[] {
-
-        return ProjectCategories.getOverviewCategoryNames(
-            this.projectConfiguration.getCategoryTreelist());
-    }
-
-
     // move to project-configuration
     public getAllowedRelationDomainCategories(relationName: string,
                                               rangeCategoryName: string): Array<Category> {

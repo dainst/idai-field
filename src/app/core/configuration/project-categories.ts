@@ -20,9 +20,6 @@ const TYPE_CATALOG_AND_TYPE = [TYPE_CATALOG, TYPE];
  */
 export /* package-private */ module ProjectCategories {
 
-    export const UNKNOWN_CATEGORY_ERROR = 'ProjectCategories.Errors.UnknownCategory';
-
-
     export function isGeometryCategory(t: Treelist<Named>, category: Name): boolean {
 
         return !isTopLevelItemOrChildThereof(t, category,
@@ -101,22 +98,6 @@ export /* package-private */ module ProjectCategories {
     export function getTypeCategoryNames(): Array<Name> {
 
         return TYPE_CATALOG_AND_TYPE;
-    }
-
-
-    /**
-     * @deprecated
-     */
-    export function isSubcategory(categoriesMap: Map<Category>,
-                                  categoryName: string,
-                                  superCategoryName: string): boolean {
-
-        const category: Category = categoriesMap[categoryName];
-        if (!category) throw [UNKNOWN_CATEGORY_ERROR, categoryName];
-
-        return category.name === superCategoryName
-            || (category.parentCategory?.name !== undefined
-                && category.parentCategory.name === superCategoryName);
     }
 
 

@@ -6,10 +6,10 @@ import {FieldDefinition} from './model/field-definition';
 import {RelationDefinition} from './model/relation-definition';
 import {Named, namedArrayToNamedMap} from '../util/named';
 import {RelationsUtil} from './relations-utils';
-import {ProjectCategories} from './project-categories';
 import {Treelist} from '../util/treelist';
 import {CategoryTreelist, categoryTreelistToArray} from './category-treelist';
 import {Name} from '../constants';
+import {isTopLevelItemOrChildThereof} from '../util/named-treelist';
 
 
 export type RawProjectConfiguration = Pair<CategoryTreelist, Array<RelationDefinition>>;
@@ -28,6 +28,9 @@ export type RawProjectConfiguration = Pair<CategoryTreelist, Array<RelationDefin
  * @author Sebastian Cuy
  */
 export class ProjectConfiguration {
+
+    public static UNKNOWN_CATEGORY_ERROR = 'ProjectConfiguration.Errors.UnknownCategory';
+
 
     private categoriesArray: Array<Category>;
 
@@ -72,7 +75,7 @@ export class ProjectConfiguration {
     /**
      * @return Category, including children field
      */
-    public getCategory(category: Name): Category {
+    public getCategory(category: Name): Category|undefined {
 
         return this.categoriesMap[category];
     }
@@ -121,9 +124,10 @@ export class ProjectConfiguration {
     }
 
 
-    public isSubcategory(categoryName: string, superCategoryName: string): boolean {
+    public isSubcategory(category: Name, superCategoryName: string): boolean {
 
-        return ProjectCategories.isSubcategory(this.getCategoriesMap(), categoryName, superCategoryName);
+        if (!this.getCategory(category)) throw [ProjectConfiguration.UNKNOWN_CATEGORY_ERROR, category];
+        return isTopLevelItemOrChildThereof(this.categoryTreelist, category, superCategoryName);
     }
 
 

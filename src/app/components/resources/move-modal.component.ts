@@ -103,7 +103,7 @@ export class MoveModalComponent {
 
     private getIsRecordedInTargetCategories(): Array<Category> {
 
-        return this.projectCategories.getAllowedRelationRangeCategories(
+        return this.projectConfiguration.getAllowedRelationRangeCategories(
             'isRecordedIn', this.document.resource.category
         );
     }
@@ -111,7 +111,7 @@ export class MoveModalComponent {
 
     private getLiesWithinTargetCategories(): Array<Category> {
 
-        return this.projectCategories.getAllowedRelationRangeCategories(
+        return this.projectConfiguration.getAllowedRelationRangeCategories(
             'liesWithin', this.document.resource.category
         );
     }

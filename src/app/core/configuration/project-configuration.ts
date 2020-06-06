@@ -124,6 +124,41 @@ export class ProjectConfiguration {
     }
 
 
+    public getAllowedRelationDomainCategories(relationName: string,
+                                              rangeCategoryName: string): Array<Category> {
+
+        return this.getCategoriesArray()
+            .filter(category => {
+                return this.isAllowedRelationDomainCategory(
+                    category.name, rangeCategoryName, relationName
+                ) && (!category.parentCategory || !this.isAllowedRelationDomainCategory(
+                    category.parentCategory.name, rangeCategoryName, relationName
+                ));
+            });
+    }
+
+
+    public getAllowedRelationRangeCategories(relationName: string,
+                                             domainCategoryName: string): Array<Category> {
+
+        return this.getCategoriesArray()
+            .filter(category => {
+                return this.isAllowedRelationDomainCategory(
+                    domainCategoryName, category.name, relationName
+                ) && (!category.parentCategory || !this.isAllowedRelationDomainCategory(
+                    domainCategoryName, category.parentCategory.name, relationName
+                ));
+            });
+    }
+
+
+    public getHierarchyParentCategories(categoryName: string): Array<Category> {
+
+        return this.getAllowedRelationRangeCategories('isRecordedIn', categoryName)
+            .concat(this.getAllowedRelationRangeCategories('liesWithin', categoryName));
+    }
+
+
     public isSubcategory(category: Name, superCategoryName: string): boolean {
 
         if (!this.getCategory(category)) throw [ProjectConfiguration.UNKNOWN_CATEGORY_ERROR, category];

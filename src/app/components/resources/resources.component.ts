@@ -139,7 +139,7 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
         } else if (this.viewFacade.isInTypesManagement()) {
             this.filterOptions = ProjectCategories.getTypeCategories(this.projectConfiguration.getCategoryTreelist());
         } else {
-            this.filterOptions = this.projectCategories.getAllowedRelationDomainCategories(
+            this.filterOptions = this.projectConfiguration.getAllowedRelationDomainCategories(
                 'isRecordedIn',
                 (this.viewFacade.getCurrentOperation() as FieldDocument).resource.category
             );

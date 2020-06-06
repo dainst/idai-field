@@ -2,8 +2,6 @@ import {Injectable} from '@angular/core';
 import {ProjectConfiguration} from './project-configuration';
 import {Category} from './model/category';
 import {ProjectCategories} from './project-categories';
-import {toName} from '../util/named';
-
 
 
 @Injectable()
@@ -37,12 +35,6 @@ export class ProjectCategoriesUtility {
     public getTypeCategoryNames(): string[] {
 
         return ProjectCategories.getTypeCategoryNames();
-    }
-
-
-    public getConcreteFieldCategoryNames(): string[] {
-
-        return this.getConcreteFieldCategories().map(toName);
     }
 
 

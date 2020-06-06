@@ -46,6 +46,12 @@ export /* package-private */ module ProjectCategories {
     }
 
 
+    export function getConcreteFieldCategoryNames(t: Treelist<Category>): Array<Name> {
+
+        return getConcreteFieldCategories(t).map(toName);
+    }
+
+
     export function getFieldCategories(t: Treelist<Category>): Array<Category> {
 
         return flow(t,

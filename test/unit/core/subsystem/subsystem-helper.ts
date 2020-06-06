@@ -135,6 +135,7 @@ export async function createApp(projectName = 'testdb', startSync = false) {
         projectCategories,
         tabManager,
         projectName,
+        projectConfiguration,
         true
     );
 

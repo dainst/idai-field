@@ -130,6 +130,7 @@ const remote = typeof window !== 'undefined'
                     projectTypes,
                     tabManager,
                     projectName,
+                    projectConfiguration,
                     remote.getGlobal('switches').suppress_map_load_for_test
                 );
             },

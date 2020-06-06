@@ -11,6 +11,8 @@ import {IndexFacade} from '../../datastore/index/index-facade';
 import {TabManager} from '../../tabs/tab-manager';
 import {ProjectCategoriesUtility} from '../../configuration/project-categories-utility';
 import {ResourcesViewMode} from './view-facade';
+import {ProjectCategories} from '../../configuration/project-categories';
+import {ProjectConfiguration} from '../../configuration/project-configuration';
 
 
 /**
@@ -50,7 +52,8 @@ export class ResourcesStateManager {
         private projectCategories: ProjectCategoriesUtility,
         private tabManager: TabManager,
         private project: string,
-        private suppressLoadMapInTestProject: boolean = false,
+        private projectConfiguration: ProjectConfiguration,
+        private suppressLoadMapInTestProject: boolean = false
     ) {}
 
 
@@ -67,7 +70,7 @@ export class ResourcesStateManager {
 
     public getOverviewCategoryNames = (): string[] => this.projectCategories.getOverviewCategoryNames();
 
-    public getConcreteCategoryNames = (): string[] => this.projectCategories.getConcreteFieldCategoryNames();
+    public getConcreteCategoryNames = (): string[] => ProjectCategories.getConcreteFieldCategoryNames(this.projectConfiguration.getCategoryTreelist());
 
     public getAbstractCategoryNames = (): string[] => this.projectCategories.getTypeCategoryNames();
 

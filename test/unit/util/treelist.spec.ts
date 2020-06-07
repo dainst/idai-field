@@ -21,19 +21,7 @@ describe('Treelist|Tree', () => {
 
         expect(
             equal(
-                buildTreelist(
-                    [
-                        [
-                            3,
-                            [
-                                [
-                                    17,
-                                    []
-                                ]
-                            ]
-                        ]
-                    ]
-                ),
+                buildTreelist([[3, [[17, []]]]]),
                 [
                     {
                         t: 3,

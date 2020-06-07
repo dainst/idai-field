@@ -19,13 +19,13 @@ describe('NamedTreelist', () => {
         return [
             {
                 node: parent1,
-                children: [
+                trees: [
                     {
                         node: child1,
-                        children: [
+                        trees: [
                             {
                                 node: child2,
-                                children: []
+                                trees: []
                             }
                         ]
                     }
@@ -48,28 +48,28 @@ describe('NamedTreelist', () => {
         const categoryTreelist: Treelist<Named> = [
             {
                 node: {name: 'Image'},
-                children: [
+                trees: [
                     {
                         node: {name: 'Drawing'},
-                        children: []
+                        trees: []
                     }
                 ]
             },
             {
                 node: {name: 'Operation'},
-                children: []
+                trees: []
             },
             {
                 node: {name: 'Inscription'},
-                children: []
+                trees: []
             },
             {
                 node: { name: 'Type' },
-                children: []
+                trees: []
             },
             {
                 node: {name: 'TypeCatalog'},
-                children: []
+                trees: []
             }
         ];
 
@@ -87,28 +87,28 @@ describe('NamedTreelist', () => {
         const categoryTreelist: Treelist<Named> = [
             {
                 node: {name: 'Image'},
-                children: [
+                trees: [
                     {
                         node: {name: 'Drawing'},
-                        children: []
+                        trees: []
                     }
                 ]
             },
             {
                 node: {name: 'Operation'},
-                children: []
+                trees: []
             },
             {
                 node: {name: 'Inscription'},
-                children: []
+                trees: []
             },
             {
                 node: {name: 'Type'},
-                children: []
+                trees: []
             },
             {
                 node: {name: 'TypeCatalog'},
-                children: []
+                trees: []
             },
         ];
 
@@ -122,20 +122,20 @@ describe('NamedTreelist', () => {
         const categoryTreelist: Treelist<Named> = [
             {
                 node: {name: 'Image'},
-                children: [
+                trees: [
                     {
                         node: {name: 'Drawing'},
-                        children: []
+                        trees: []
                     }
                 ]
             },
             {
                 node: {name: 'Operation'},
-                children: []
+                trees: []
             },
             {
                 node: {name: 'Inscription'},
-                children: []
+                trees: []
             }
         ];
 
@@ -152,20 +152,20 @@ describe('NamedTreelist', () => {
         const categoryTreelist: Treelist<Named> = [
             {
                 node: {name: 'Image'},
-                children: [
+                trees: [
                     {
                         node: {name: 'Drawing'},
-                        children: []
+                        trees: []
                     }
                 ]
             },
             {
                 node: {name: 'Operation'},
-                children: []
+                trees: []
             },
             {
                 node: {name: 'Inscription'},
-                children: []
+                trees: []
             }
         ];
 

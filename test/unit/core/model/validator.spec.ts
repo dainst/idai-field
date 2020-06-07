@@ -29,7 +29,7 @@ describe('Validator', () => {
                             ]
                         }
                     ]
-                }, children: []},
+                }, trees: []},
                 { node: {
                     name: 'T2',
                     groups: [
@@ -41,7 +41,7 @@ describe('Validator', () => {
                             ]
                         }
                     ]
-                }, children: []}
+                }, trees: []}
             ],
             []
         ] as any

@@ -44,14 +44,14 @@ describe('Validations', () => {
                      {name: 'endDate', label: 'endDate', inputType: 'date'}
                  ]
              }]
-         }, children: []},
+         }, trees: []},
         { node: {
             name: 'T2',
             groups: [{ name: 'stem', fields: [
                 { name: 'id' },
                 { name: 'category' }
             ]}]
-        }, children: []},
+        }, trees: []},
             { node: {
                     name: 'T3',
                     groups: [{ name: 'stem', fields: [
@@ -60,7 +60,7 @@ describe('Validations', () => {
                         { name: 'dating' },
                         { name: 'period', inputType: 'dropdownRange' }
                     ]}]
-                }, children: []}
+                }, trees: []}
             ] as any, [
 
                 { name: 'isRelatedTo', label: '', domain: ['T'], range: ['T'], inverse: 'NO-INVERSE' },

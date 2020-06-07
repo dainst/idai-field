@@ -30,7 +30,7 @@ describe('DocumentHolder', () => {
                     { name: 'category' },
                     { name: 'emptyfield' }
                 ]}]
-                }, children: []},
+                }, trees: []},
                 { node: {
                     name: 'Find',
                     groups: [{name: 'stem', fields: [
@@ -40,7 +40,7 @@ describe('DocumentHolder', () => {
                         { name: 'unsignedFloatField', inputType: 'unsignedFloat' },
                         { name: 'floatField', inputType: 'float' }
                     ]}]
-                }, children: []}
+                }, trees: []}
             ] as any
             ,[
                 {

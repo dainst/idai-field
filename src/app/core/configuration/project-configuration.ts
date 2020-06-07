@@ -88,7 +88,7 @@ export class ProjectConfiguration {
         return selectedTopLevelCategories.length === 0
             ? this.categoryTreelist
             : this.categoryTreelist.filter(
-                on([Treelist.Tree.ITEM,Named.NAME], includedIn(selectedTopLevelCategories)));
+                on([Treelist.Tree.NODE,Named.NAME], includedIn(selectedTopLevelCategories)));
     }
 
 

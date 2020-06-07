@@ -27,18 +27,18 @@ describe('ImportValidator', () => {
                     { name: 'ddr', label: 'DropdownRange', inputType: INPUT_TYPES.DROPDOWN_RANGE },
                     { name: 'ddr2', label: 'DropdownRange2', inputType: INPUT_TYPES.DROPDOWN_RANGE }
                 ]}]
-            }, children: []},
+            }, trees: []},
           { node: {
                 name: 'T2',
                 groups: [{ name: 'stem', fields: [
                     { name: 'id' },
                     { name: 'category' }
                 ]}]
-            }, children: []},
+            }, trees: []},
               { node: {
                 name: 'T3',
                 mustLieWithin: true
-            }, children: []}
+            }, trees: []}
         ] as any,
             [
                 { name: 'isRelatedTo', label: '', domain: ['T'], range: ['T'], inverse: 'NO-INVERSE' },

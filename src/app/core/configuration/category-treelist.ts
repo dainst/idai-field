@@ -35,7 +35,7 @@ export function categoryTreelistToMap(t: CategoryTreelist): Map<Category> {
  */
 export function linkParentAndChildInstances(categories: Treelist<Category> /* modified in place */): CategoryTreelist {
 
-    for (let { node: category, children: children } of categories) {
+    for (let { node: category, trees: children } of categories) {
 
         category.children = children.map(to(CATEGORIES));
         category.children.map(child => child.parentCategory = category);

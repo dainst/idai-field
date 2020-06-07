@@ -26,7 +26,7 @@ describe('CachedDatastore', () => {
             [
                 {
                     node: { name: 'Find' },
-                    children: []
+                    trees: []
                 }
             ]
         );

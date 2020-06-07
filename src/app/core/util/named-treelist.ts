@@ -7,7 +7,7 @@ import {Name} from '../constants';
 export function findInNamedTreelist<N extends Named>(match: Name, t: Treelist<N>): N|undefined {
 
     const result = findInTreelist(on(Named.NAME, is(match)), t);
-    return result ? result[0] : undefined;
+    return result ? result.node : undefined;
 }
 
 
@@ -44,7 +44,7 @@ export function isTopLevelItemOrChildThereof(t: Treelist<Named>,
 function _filterTrees<N extends Named>(t: Treelist<N>, match: Name, moreMatches: Name[], invert = false): Treelist<N> {
 
     return t.filter(
-        on([0, Named.NAME],
+        on(['node', Named.NAME],
             ((invert ? isNot : identity)(includedIn([match].concat(moreMatches))))
         ));
 }

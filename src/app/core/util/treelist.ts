@@ -1,23 +1,10 @@
 import {Pair, Mapping, Predicate, isFunction, first, isNumber, rest} from 'tsfun';
 import {Comparator} from 'tsfun/by';
 
+// TODO make constructor with which the refactoring of the tests could have been easier, for example a convert method between the different literal variants of defining the tree
 
-export type Node<ITEM, CHILDREN> = Pair<ITEM, CHILDREN>;
 
-// TODO if we convert it like this:
-// export type Tree<T> = { node: T, children: Treelist<T>> }
-// then we can test unambiguously if we have a tree or a treelist,
-// which means we could provide a unified map function for both
-//
-// DONE
-// to refactor, we first could provide accessors for tree elements
-// which we then use in tests etc and behind which we encapsulate
-// our tree implementation completely.
-// afterward, we can change the structure and refactor the functions
-// here to work both for tree and treelist
-//
-// note: the tree structure we use is a general tree
-export type Tree<T> = Node<T, Treelist<T>>;
+export type Tree<T> = { node: T, /* TODO rename to trees */ children: Treelist<T> }
 
 export type Treelist<T> = Array<Tree<T>>;
 
@@ -32,6 +19,7 @@ export module Treelist {
 }
 
 
+// TODO rename to mapTree and make it work for both Tree and Treelist
 export function mapTreelist<A,B>(f: Mapping<A,B>, t: Treelist<A>): Treelist<B>;
 export function mapTreelist<A,B>(f: Mapping<A,B>): Mapping<Treelist<A>,Treelist<B>>;
 export function mapTreelist(...args: any[]): any {
@@ -39,8 +27,8 @@ export function mapTreelist(...args: any[]): any {
     const $ = (f: any) => (t: any) => {
 
         const replacement = [];
-        for (let [node,tree] of t) {
-            replacement.push([f(node),mapTreelist(f,tree)]);
+        for (let { node: node, children: tree} of t) {
+            replacement.push({ node: f(node), children: mapTreelist(f,tree)});
         }
         return replacement;
     }
@@ -56,9 +44,9 @@ export function accessTreelist<T>(t: Treelist<T>, ...path: number[] /* TODO make
     function _accessTree<T>(t: Tree<T>, path: number[], lastSegmentIsNumber: boolean): T {
 
         const segment = first(path);
-        if (segment === undefined) return t[0];
-        else if (isNumber(segment) && lastSegmentIsNumber) return _accessTree(t[1][segment], rest(path), true);
-        return _accessTreelist(t[1], rest(path), true);
+        if (segment === undefined) return t.node;
+        else if (isNumber(segment) && lastSegmentIsNumber) return _accessTree(t.children[segment], rest(path), true);
+        return _accessTreelist(t.children, rest(path), true);
     }
 
     function _accessTreelist<T>(t: Treelist<T>, path: number[], lastSegmentIsNumber: boolean) {
@@ -74,13 +62,13 @@ export function accessTreelist<T>(t: Treelist<T>, ...path: number[] /* TODO make
 
 export function mapTreelists<T>(f: Mapping<Treelist<T>>, t: Treelist<T>): Treelist<T> {
 
-    return f(t).map(([node,leafs]) => [node,mapTreelists(f, leafs)]);
+    return f(t).map(({ node: node, children: children }) => ({ node: node, children: mapTreelists(f, children)}));
 }
 
 
 export function flattenTreelist<A>(t: Treelist<A>): Array<A> {
 
-    return t.reduce((as, [a, children]) =>
+    return t.reduce((as, { node: a, children: children }) =>
          as.concat([a]).concat(flattenTreelist(children)), []);
 }
 
@@ -89,7 +77,7 @@ export function findInTreelist<T>(match: T|Predicate<T>, t: Treelist<T>, compara
 
     for (let node of t) {
 
-        const [item, children] = node;
+        const { node: item, children: children } = node;
 
         if (comparator !== undefined
             ? comparator(match)(item)

@@ -24,10 +24,10 @@ describe('CachedDatastore', () => {
         mockProjectCategories.getFieldCategoryNames.and.returnValue(['Find']);
         mockProjectConfiguration.getCategoryTreelist.and.returnValue(
             [
-                [
-                    {name: 'Find'},
-                    []
-                ]
+                {
+                    node: { name: 'Find' },
+                    children: []
+                }
             ]
         );
 

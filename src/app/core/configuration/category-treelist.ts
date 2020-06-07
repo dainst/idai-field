@@ -3,7 +3,7 @@ import {Category} from './model/category';
 import {flattenTreelist, Treelist} from '../util/treelist';
 import {namedArrayToNamedMap} from '../util/named';
 
-const CATEGORIES = [0];
+const CATEGORIES = ['node'];
 
 
 // This tree's category instances are connected via 'parentCategory' and 'children' properties of Category
@@ -35,7 +35,7 @@ export function categoryTreelistToMap(t: CategoryTreelist): Map<Category> {
  */
 export function linkParentAndChildInstances(categories: Treelist<Category> /* modified in place */): CategoryTreelist {
 
-    for (let [category, children] of categories) {
+    for (let { node: category, children: children } of categories) {
 
         category.children = children.map(to(CATEGORIES));
         category.children.map(child => child.parentCategory = category);

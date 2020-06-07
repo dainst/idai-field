@@ -4,6 +4,7 @@ import {M} from '../../../../src/app/components/messages/m';
 import {ProjectConfiguration} from '../../../../src/app/core/configuration/project-configuration';
 import {DocumentHolder} from '../../../../src/app/core/docedit/document-holder';
 
+
 /**
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
@@ -22,15 +23,15 @@ describe('DocumentHolder', () => {
 
         const pconf = new ProjectConfiguration([
             [
-                [{
+                { node: {
                 name: 'Trench',
                 groups: [{ name: 'stem', fields: [
                     { name: 'id' },
                     { name: 'category' },
                     { name: 'emptyfield' }
                 ]}]
-                },[]],
-                [{
+                }, children: []},
+                { node: {
                     name: 'Find',
                     groups: [{name: 'stem', fields: [
                         { name: 'id' },
@@ -39,7 +40,7 @@ describe('DocumentHolder', () => {
                         { name: 'unsignedFloatField', inputType: 'unsignedFloat' },
                         { name: 'floatField', inputType: 'float' }
                     ]}]
-                },[]]
+                }, children: []}
             ] as any
             ,[
                 {

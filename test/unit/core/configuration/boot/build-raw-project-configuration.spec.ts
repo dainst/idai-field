@@ -8,7 +8,7 @@ import {LibraryCategoryDefinition} from '../../../../../src/app/core/configurati
 import {ValuelistDefinition} from '../../../../../src/app/core/configuration/model/valuelist-definition';
 import {Groups} from '../../../../../src/app/core/configuration/model/group';
 import InputType = FieldDefinition.InputType;
-import {byName, Named, namedArrayToNamedMap,} from '../../../../../src/app/core/util/named';
+import {byName, Named, namedArrayToNamedMap, toName,} from '../../../../../src/app/core/util/named';
 import {categoryTreelistToArray} from '../../../../../src/app/core/configuration/category-treelist';
 import {accessTreelist} from '../../../../../src/app/core/util/treelist';
 
@@ -1229,7 +1229,7 @@ describe('buildRawProjectConfiguration', () => {
 
         expect(result['B'].groups[0].label).toEqual('Stem');
         expect(result['B'].groups[1].label).toEqual('A_');
-        expect(result['B'].groups[2].label).toEqual('B_');
+        expect(resultB'].groups[2].label).toEqual('B_');
     });
 
 
@@ -1251,7 +1251,7 @@ describe('buildRawProjectConfiguration', () => {
 
         const result = buildRawArray(
             builtInCategories, {}, customCategories, {}, {}, {}, [], {}, {}, {}, orderConf
-        ).map(to(Named.NAME));
+        ).map(toName);
 
         expect(result).toEqual(['C', 'A', 'B']);
     });

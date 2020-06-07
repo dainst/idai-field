@@ -17,20 +17,20 @@ describe('NamedTreelist', () => {
         const child2 = { name: 'C2' };
 
         return [
-            [
-                parent1,
-                [
-                    [
-                        child1,
-                        [
-                            [
-                                child2,
-                                []
-                            ]
+            {
+                node: parent1,
+                children: [
+                    {
+                        node: child1,
+                        children: [
+                            {
+                                node: child2,
+                                children: []
+                            }
                         ]
-                    ]
+                    }
                 ]
-            ]
+            }
         ]
     }
 
@@ -46,31 +46,31 @@ describe('NamedTreelist', () => {
     it('isTopLevelItemOrChildThereof', () => {
 
         const categoryTreelist: Treelist<Named> = [
-            [
-                { name: 'Image'},
-                [
-                    [
-                        { name: 'Drawing'},
-                        []
-                    ]
+            {
+                node: {name: 'Image'},
+                children: [
+                    {
+                        node: {name: 'Drawing'},
+                        children: []
+                    }
                 ]
-            ],
-            [
-                { name: 'Operation' },
-                []
-            ],
-            [
-                { name: 'Inscription' },
-                []
-            ],
-            [
-                { name: 'Type' },
-                []
-            ],
-            [
-                { name: 'TypeCatalog' },
-                []
-            ],
+            },
+            {
+                node: {name: 'Operation'},
+                children: []
+            },
+            {
+                node: {name: 'Inscription'},
+                children: []
+            },
+            {
+                node: { name: 'Type' },
+                children: []
+            },
+            {
+                node: {name: 'TypeCatalog'},
+                children: []
+            }
         ];
 
         expect(isTopLevelItemOrChildThereof(categoryTreelist, 'Image', 'Image')).toBeTruthy();
@@ -85,31 +85,31 @@ describe('NamedTreelist', () => {
     it('isTopLevelItemOrChildThereof - more firstLevelItems to match', () => {
 
         const categoryTreelist: Treelist<Named> = [
-            [
-                { name: 'Image'},
-                [
-                    [
-                        { name: 'Drawing'},
-                        []
-                    ]
+            {
+                node: {name: 'Image'},
+                children: [
+                    {
+                        node: {name: 'Drawing'},
+                        children: []
+                    }
                 ]
-            ],
-            [
-                { name: 'Operation' },
-                []
-            ],
-            [
-                { name: 'Inscription' },
-                []
-            ],
-            [
-                { name: 'Type' },
-                []
-            ],
-            [
-                { name: 'TypeCatalog' },
-                []
-            ],
+            },
+            {
+                node: {name: 'Operation'},
+                children: []
+            },
+            {
+                node: {name: 'Inscription'},
+                children: []
+            },
+            {
+                node: {name: 'Type'},
+                children: []
+            },
+            {
+                node: {name: 'TypeCatalog'},
+                children: []
+            },
         ];
 
         expect(isTopLevelItemOrChildThereof(categoryTreelist, 'Operation', 'Image', 'Type')).toBeFalsy();
@@ -120,23 +120,23 @@ describe('NamedTreelist', () => {
     it('removeTrees', () => {
 
         const categoryTreelist: Treelist<Named> = [
-            [
-                { name: 'Image'},
-                [
-                    [
-                        { name: 'Drawing'},
-                        []
-                    ]
+            {
+                node: {name: 'Image'},
+                children: [
+                    {
+                        node: {name: 'Drawing'},
+                        children: []
+                    }
                 ]
-            ],
-            [
-                { name: 'Operation' },
-                []
-            ],
-            [
-                { name: 'Inscription' },
-                []
-            ]
+            },
+            {
+                node: {name: 'Operation'},
+                children: []
+            },
+            {
+                node: {name: 'Inscription'},
+                children: []
+            }
         ];
 
         const result = removeTrees(categoryTreelist, 'Operation', 'Inscription');
@@ -150,23 +150,23 @@ describe('NamedTreelist', () => {
     it('filterTrees', () => {
 
         const categoryTreelist: Treelist<Named> = [
-            [
-                { name: 'Image'},
-                [
-                    [
-                        { name: 'Drawing'},
-                        []
-                    ]
+            {
+                node: {name: 'Image'},
+                children: [
+                    {
+                        node: {name: 'Drawing'},
+                        children: []
+                    }
                 ]
-            ],
-            [
-                { name: 'Operation' },
-                []
-            ],
-            [
-                { name: 'Inscription' },
-                []
-            ]
+            },
+            {
+                node: {name: 'Operation'},
+                children: []
+            },
+            {
+                node: {name: 'Inscription'},
+                children: []
+            }
         ];
 
         const result0 = filterTrees(categoryTreelist, 'Operation');

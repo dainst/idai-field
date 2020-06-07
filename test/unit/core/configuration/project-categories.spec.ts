@@ -17,48 +17,48 @@ import getOverviewCategories = ProjectCategories.getOverviewCategories;
 describe('ProjectCategories', () => {
 
     const categoryTreelist: Treelist<Named> = [
-        [
-            { name: 'Image'},
-            [
-                [
-                    { name: 'Drawing'},
-                    []
-                ]
+        {
+            node: {name: 'Image'},
+            children: [
+                {
+                    node: {name: 'Drawing'},
+                    children: []
+                }
             ]
-        ],
-        [
-            { name: 'Operation' },
-            [
-                [
-                    { name: 'Trench' },
-                    []
-                ]
+        },
+        {
+            node: { name: 'Operation' },
+            children: [
+                {
+                    node: {name: 'Trench'},
+                    children: []
+                }
             ]
-        ],
-        [
-            { name: 'Place' },
-            []
-        ],
-        [
-            { name: 'Inscription' },
-            []
-        ],
-        [
-            { name: 'Type' },
-            []
-        ],
-        [
-            { name: 'TypeCatalog' },
-            []
-        ],
-        [
-            { name: 'Project' },
-            []
-        ],
-        [
-            { name: 'Find' },
-            []
-        ]
+        },
+        {
+            node: { name: 'Place' },
+            children: []
+        },
+        {
+            node: {name: 'Inscription'},
+            children: []
+        },
+        {
+            node: {name: 'Type'},
+            children: []
+        },
+        {
+            node: {name: 'TypeCatalog'},
+            children: []
+        },
+        {
+            node: {name: 'Project'},
+            children: []
+        },
+        {
+            node: {name: 'Find'},
+            children: []
+        }
     ];
 
 

@@ -11,7 +11,7 @@ describe('Validations', () => {
 
     const projectConfiguration = new ProjectConfiguration(
         [[
-         [{
+            { node: {
              name: 'T',
              groups: [{
                  name: 'stem', fields: [
@@ -44,15 +44,15 @@ describe('Validations', () => {
                      {name: 'endDate', label: 'endDate', inputType: 'date'}
                  ]
              }]
-         },[]],
-        [{
+         }, children: []},
+        { node: {
             name: 'T2',
             groups: [{ name: 'stem', fields: [
                 { name: 'id' },
                 { name: 'category' }
             ]}]
-        },[]],
-                [{
+        }, children: []},
+            { node: {
                     name: 'T3',
                     groups: [{ name: 'stem', fields: [
                         { name: 'id' },
@@ -60,7 +60,7 @@ describe('Validations', () => {
                         { name: 'dating' },
                         { name: 'period', inputType: 'dropdownRange' }
                     ]}]
-                },[]]
+                }, children: []}
             ] as any, [
 
                 { name: 'isRelatedTo', label: '', domain: ['T'], range: ['T'], inverse: 'NO-INVERSE' },

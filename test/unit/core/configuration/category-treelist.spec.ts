@@ -17,15 +17,15 @@ describe('CategoryTreelist', () => {
         parent.children = [child];
 
         const t: Treelist<{ name: string, children: Array<T>}> = [
-            [
-                parent,
-                [
-                    [
-                        child,
-                        []
+            {
+                node: parent,
+                children: [
+                    {
+                        node: child,
+                        children: []
+                    }
                     ]
-                ]
-            ]
+            }
         ]
 
         const result = categoryTreelistToArray(t as any);
@@ -56,15 +56,15 @@ describe('CategoryTreelist', () => {
         parent.children = [child];
 
         const t: Treelist<T> = [
-            [
-                parent,
-                [
-                    [
-                        child,
-                        []
-                    ]
+            {
+                node: parent,
+                children: [
+                    {
+                        node: child,
+                        children: []
+                    }
                 ]
-            ]
+            }
         ]
 
         const result = categoryTreelistToMap(t as any);
@@ -101,32 +101,32 @@ describe('CategoryTreelist', () => {
         parent2.children = [child3,child4];
 
         const t = [
-            [
-                parent1,
-                [
-                    [
-                        child1,
-                        []
-                    ],
-                    [
-                        child2,
-                        []
-                    ]
+            {
+                node: parent1,
+                children: [
+                    {
+                        node: child1,
+                        children: []
+                    },
+                    {
+                        node: child2,
+                        children: []
+                    }
                 ]
-            ],
-            [
-                parent2,
-                [
-                    [
-                        child3,
-                        []
-                    ],
-                    [
-                        child4,
-                        []
-                    ]
+            },
+            {
+                node: parent2,
+                children: [
+                    {
+                        node: child3,
+                        children: []
+                    },
+                    {
+                        node: child4,
+                        children: []
+                    }
                 ]
-            ]
+            }
         ]
 
         const result = categoryTreelistToArray(t as any);
@@ -165,20 +165,20 @@ describe('CategoryTreelist', () => {
         const child2 = { name: 'C2' };
 
         return [
-            [
-                parent1,
-                [
-                    [
-                        child1,
-                        [
-                            [
-                                child2,
-                                []
-                            ]
+            {
+                node: parent1,
+                children: [
+                    {
+                        node: child1,
+                        children: [
+                            {
+                                node: child2,
+                                children: []
+                            }
                         ]
-                    ]
+                    }
                 ]
-            ]
+            }
         ]
     }
 

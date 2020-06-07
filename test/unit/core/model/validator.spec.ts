@@ -13,7 +13,7 @@ describe('Validator', () => {
     const projectConfiguration = new ProjectConfiguration(
         [
             [
-                [{
+                { node: {
                     name: 'T',
                     groups: [
                         {
@@ -29,8 +29,8 @@ describe('Validator', () => {
                             ]
                         }
                     ]
-                },[]],
-                [{
+                }, children: []},
+                { node: {
                     name: 'T2',
                     groups: [
                         {
@@ -41,7 +41,7 @@ describe('Validator', () => {
                             ]
                         }
                     ]
-                },[]]
+                }, children: []}
             ],
             []
         ] as any

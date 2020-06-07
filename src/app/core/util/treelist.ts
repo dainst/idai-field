@@ -37,7 +37,7 @@ export module Treelist {
 }
 
 
-export const toTreeItem = <T>(node: Tree<T>) => to([Treelist.Tree.ITEM])(node);
+export const toTreeItem = to([Treelist.Tree.ITEM]);
 
 
 
@@ -100,10 +100,10 @@ export function accessT<T>(t: Treelist<T>|Tree<T>, ...path: number[]): T {
         const segment = first(path);
         if (segment === undefined) return t.item;
         else if (isNumber(segment) && lastSegmentIsNumber) return _accessTree(t.trees[segment], rest(path), true);
-        return _accessTreelist(t.trees, path, true);
+        return _accessTreelist(t.trees, path);
     }
 
-    function _accessTreelist<T>(t: Treelist<T>, path: number[], lastSegmentIsNumber: boolean) {
+    function _accessTreelist<T>(t: Treelist<T>, path: number[]) {
 
         const segment = first(path);
         if (!isNumber(segment)) return t[0] as any;
@@ -112,7 +112,7 @@ export function accessT<T>(t: Treelist<T>|Tree<T>, ...path: number[]): T {
 
     return isObject(t)
         ? _accessTree(t as Tree<T>, path, false)
-        : _accessTreelist(t as Treelist<T>, path, false);
+        : _accessTreelist(t as Treelist<T>, path);
 }
 
 

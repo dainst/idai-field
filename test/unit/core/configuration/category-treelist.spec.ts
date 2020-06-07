@@ -3,7 +3,7 @@ import {
     categoryTreelistToMap,
     linkParentAndChildInstances
 } from '../../../../src/app/core/configuration/category-treelist';
-import {accessT, Treelist} from '../../../../src/app/core/util/treelist';
+import {accessT, buildTreelist, Treelist} from '../../../../src/app/core/util/treelist';
 
 
 describe('CategoryTreelist', () => {
@@ -16,17 +16,17 @@ describe('CategoryTreelist', () => {
         const child = { name: 'C1', parentCategory: parent, children: [] };
         parent.children = [child];
 
-        const t: Treelist<{ name: string, children: Array<T>}> = [
-            {
-                t: parent,
-                trees: [
-                        {
-                            t: child,
-                            trees: []
-                        }
+        const t: Treelist<{ name: string, children: Array<T>}> = buildTreelist([
+            [
+                parent,
+                [
+                    [
+                        child,
+                        []
                     ]
-            }
-        ]
+                ]
+            ]
+        ])
 
         const result = categoryTreelistToArray(t as any);
 
@@ -55,17 +55,17 @@ describe('CategoryTreelist', () => {
         const child = { name: 'C1', parentCategory: parent, children: [] };
         parent.children = [child];
 
-        const t: Treelist<T> = [
-            {
-                t: parent,
-                trees: [
-                    {
-                        t: child,
-                        trees: []
-                    }
+        const t: Treelist<T> = buildTreelist([
+            [
+                parent,
+                [
+                    [
+                        child,
+                        []
+                    ]
                 ]
-            }
-        ]
+            ]
+        ]);
 
         const result = categoryTreelistToMap(t as any);
 
@@ -100,34 +100,34 @@ describe('CategoryTreelist', () => {
         const child4 = { name: 'C4', parentCategory: parent2, children: [] };
         parent2.children = [child3,child4];
 
-        const t = [
-            {
-                t: parent1,
-                trees: [
-                    {
-                        t: child1,
-                        trees: []
-                    },
-                    {
-                        t: child2,
-                        trees: []
-                    }
+        const t = buildTreelist([
+            [
+                parent1,
+                [
+                    [
+                        child1,
+                        []
+                    ],
+                    [
+                        child2,
+                        []
+                    ]
                 ]
-            },
-            {
-                t: parent2,
-                trees: [
-                    {
-                        t: child3,
-                        trees: []
-                    },
-                    {
-                        t: child4,
-                        trees: []
-                    }
+            ],
+            [
+                parent2,
+                [
+                    [
+                        child3,
+                        []
+                    ],
+                    [
+                        child4,
+                        []
+                    ]
                 ]
-            }
-        ]
+            ]
+        ]);
 
         const result = categoryTreelistToArray(t as any);
 
@@ -164,22 +164,22 @@ describe('CategoryTreelist', () => {
         const child1 = { name: 'C1' };
         const child2 = { name: 'C2' };
 
-        return [
-            {
-                t: parent1,
-                trees: [
-                    {
-                        t: child1,
-                        trees: [
-                            {
-                                t: child2,
-                                trees: []
-                            }
+        return buildTreelist([
+            [
+                parent1,
+                [
+                    [
+                        child1,
+                        [
+                            [
+                                child2,
+                                []
+                            ]
                         ]
-                    }
+                    ]
                 ]
-            }
-        ]
+            ]
+        ]);
     }
 
 

@@ -5,7 +5,7 @@ import {
     flattenTree,
     mapTrees,
     mapTreelist, Tree,
-    Treelist, mapTree, buildTreelist
+    Treelist, mapTree, buildTreelist, buildTree
 } from '../../../src/app/core/util/treelist';
 
 
@@ -13,7 +13,7 @@ describe('Treelist|Tree', () => {
 
     it('Treelist', () => {
 
-        const t: Treelist<number> = [{ t: 1, trees: []}];
+        const t: Treelist<number> = [{ item: 1, trees: []}];
     });
 
 
@@ -24,10 +24,10 @@ describe('Treelist|Tree', () => {
                 buildTreelist([[3, [[17, []]]]]),
                 [
                     {
-                        t: 3,
+                        item: 3,
                         trees: [
                             {
-                                t: 17,
+                                item: 17,
                                 trees: []
                             }
                         ]
@@ -40,27 +40,31 @@ describe('Treelist|Tree', () => {
 
     it('mapTree', () => {
 
-        const t: Tree<number> = {
-            t: 17,
-            trees: [
-                { t: 1, trees: [
-                        { t: 13, trees: []},
-                        { t: 14, trees: []},
-                    ]},
-                { t: 3, trees: []}
+        const t: Tree<number> = buildTree(
+            [
+                17,
+                [
+                    [1,
+                        [
+                            [13, []],
+                            [14, []],
+                        ]
+                    ],
+                    [3, []]
+                ]
             ]
-        };
+        );
 
-        const exp: Tree<number> = {
-            t: 34,
-            trees: [
-                { t: 2, trees: [
-                        { t: 26, trees: []},
-                        { t: 28, trees: []},
-                    ]},
-                { t: 6, trees: []}
+        const exp: Tree<number> = buildTree([
+            34,
+            [
+                [2, [
+                        [26, []],
+                        [28, []],
+                    ]],
+                [6, []]
             ]
-        };
+        ]);
 
         const result = mapTree((_: number) => _ * 2, t);
         expect(equal(result, exp)).toBeTruthy();
@@ -69,23 +73,23 @@ describe('Treelist|Tree', () => {
 
     it('mapTreelist', () => {
 
-        const t: Treelist<number> =
+        const t: Treelist<number> = buildTreelist(
             [
-                { t: 1, trees: [
-                        { t: 13, trees: []},
-                        { t: 14, trees: []},
-                ]},
-                { t: 3, trees: []}
-            ];
+                [1, [
+                        [13, []],
+                        [14, []],
+                ]],
+                [3, []]
+            ]);
 
-        const exp: Treelist<number> =
+        const exp: Treelist<number> = buildTreelist(
             [
-                { t: 2, trees: [
-                        { t: 26, trees: []},
-                        { t: 28, trees: []},
-                ]},
-                { t: 6, trees: []}
-            ];
+                [2, [
+                        [26, []],
+                        [28, []],
+                ]],
+                [6, []]
+            ]);
 
         const result = mapTreelist((_: number) => _ * 2, t);
         expect(equal(result, exp)).toBeTruthy();
@@ -94,23 +98,23 @@ describe('Treelist|Tree', () => {
 
     it('mapTreelists', () => {
 
-        const t: Treelist<number> =
+        const t: Treelist<number> = buildTreelist(
             [
-                { t: 1, trees: [
-                        { t: 13, trees: []},
-                        { t: 14, trees: []},
-                ]},
-                { t: 3, trees: []}
-            ];
+                [1, [
+                        [13, []],
+                        [14, []],
+                ]],
+                [3, []]
+            ]);
 
-        const exp: Treelist<number> =
+        const exp: Treelist<number> = buildTreelist(
             [
-                { t: 3, trees: []},
-                { t: 1, trees: [
-                        { t: 14, trees: []},
-                        { t: 13, trees: []},
-                ]}
-            ];
+                [3, []],
+                [1, [
+                        [14, []],
+                        [13, []],
+                ]]
+            ]);
 
         const result = mapTrees(reverse, t);
         expect(equal(result, exp)).toBeTruthy();
@@ -121,14 +125,14 @@ describe('Treelist|Tree', () => {
 
         const a = { a: 1 };
 
-        const t: Treelist<any> =
+        const t: Treelist<any> = buildTreelist<any>(
             [
-                { t: 1, trees: [
-                        { t: 13, trees: [{ t: a, trees: []}]},
-                        { t: 16, trees: []},
-                ]},
-                { t: 3, trees: []}
-            ];
+                [1, [
+                        [13, [[a, []]]],
+                        [16, []],
+                ]],
+                [3, []]
+            ]);
 
         const exp: Array<any> =
             [
@@ -148,16 +152,16 @@ describe('Treelist|Tree', () => {
 
         const a = { a: 1 };
 
-        const t: Tree<any> = {
-            t: 17,
-            trees: [
-                { t: 1, trees: [
-                        { t: 13, trees: [{ t: a, trees: []}]},
-                        { t: 16, trees: []},
-                    ]},
-                { t: 3, trees: []}
+        const t: Tree<any> = buildTree<any>([
+            17,
+            [
+                [1, [
+                        [13, [[a, []]]],
+                        [16, []],
+                    ]],
+                [3, []]
             ]
-        };
+        ]);
 
         const exp: Array<any> =
             [
@@ -176,17 +180,17 @@ describe('Treelist|Tree', () => {
 
     it('findInTreelist', () => {
 
-        const t: Treelist<any> =
+        const t: Treelist<any> = buildTreelist<any>(
             [
-                { t: 1, trees: [
-                        { t: 13, trees: [{ t: 17, trees: []}]},
-                        { t: 16, trees: []},
-                ]},
-                { t: 3, trees: []}
-            ];
+                [1, [
+                        [13, [[17, []]]],
+                        [16, []],
+                ]],
+                [3, []]
+            ]);
 
         const exp1: Tree<any> = findInTree(13, t);
-        expect(equal(exp1,{ t: 13, trees: [{ t: 17, trees: []}]})).toBeTruthy();
+        expect(equal(exp1,buildTree([13, [[17, []]]]))).toBeTruthy();
 
         const exp2: Tree<any> = findInTree(19, t);
         expect(equal(exp2,undefined)).toBeTruthy();
@@ -195,15 +199,15 @@ describe('Treelist|Tree', () => {
 
     it('findInTreelist - tree', () => {
 
-        const t: Tree<any> = {
-            t: 17,
-            trees: [
-                { t: 4, trees: []}
+        const t: Tree<any> = buildTree([
+            17,
+            [
+                [4, []]
             ]
-        };
+        ]);
 
         const exp1: Tree<any> = findInTree(17, t);
-        expect(equal(exp1,{ t: 17, trees: [{ t: 4, trees: []}]})).toBeTruthy();
+        expect(equal(exp1,buildTree([17, [[4, []]]]))).toBeTruthy();
 
         const exp2: Tree<any> = findInTree(15, t);
         expect(equal(exp2,undefined)).toBeTruthy();
@@ -214,46 +218,53 @@ describe('Treelist|Tree', () => {
 
         const a = { a: 3 };
 
-        const t: Treelist<any> =
+        const t: Treelist<any> = buildTreelist<any>(
             [
-                { t: 1, trees: [
-                        { t: a, trees: [{ t: 17, trees: []}]},
-                        { t: 16, trees: []},
-                ]},
-                { t: 3, trees: []}
-            ];
+                [1, [
+                        [a, [[17, []]]],
+                        [16, []],
+                ]],
+                [3, []]
+            ]);
 
         const exp1: Tree<any> = findInTree(on('a', is(3)), t);
-        expect(equal(exp1,{ t: {a: 3}, trees: [{ t: 17, trees: []}]})).toBeTruthy();
+        expect(equal(exp1,buildTree<any>([{a: 3}, [[17, []]]]))).toBeTruthy();
     });
 
 
     it('findInTreelist with Comparator', () => {
 
         const a = { a: 3 };
-        const t: Treelist<any> =
+        const t: Treelist<any> = buildTreelist<any>(
             [
-                { t: 1, trees: [
-                        { t: a, trees: [{ t: 17, trees: []}]},
-                        { t: 16, trees: []},
-                ]},
-                { t: 3, trees: []}
-            ];
+                [1, [
+                        [a, [[17, []]]],
+                        [16, []],
+                ]],
+                [3, []]
+            ]);
 
         const exp1: Tree<any> = findInTree({ a: 3 }, t, on('a'));
-        expect(equal(exp1,{ t: {a: 3}, trees: [{ t: 17, trees: []}]})).toBeTruthy();
+        expect(equal(exp1, buildTree<any>(
+                [
+                    {a: 3},
+                    [
+                        [ 17, [] ]
+                    ]
+                ]
+        ))).toBeTruthy();
     });
 
 
     it('accessTreelist - first level', () => {
 
-        expect(accessT(
+        expect(accessT(buildTreelist(
             [
-                {
-                    t: 7,
-                    trees: []
-                }
-            ],
+                [
+                    7,
+                    []
+                ]
+            ]),
             0
         )).toEqual(7);
     });
@@ -261,18 +272,18 @@ describe('Treelist|Tree', () => {
 
     it('accessTreelist - second level', () => {
 
-        expect(accessT(
+        expect(accessT(buildTreelist(
             [
-                {
-                    t: 7,
-                    trees: [
-                        {
-                            t: 8,
-                            trees: []
-                        }
+                [
+                    7,
+                    [
+                        [
+                            8,
+                            []
+                        ]
                     ]
-                }
-            ],
+                ]
+            ]),
             0, 0
         )).toEqual(8);
     });
@@ -280,18 +291,18 @@ describe('Treelist|Tree', () => {
 
     it('accessTreelist - tree', () => {
 
-        expect(accessT(
+        expect(accessT(buildTree(
 
-            {
-                t: 7,
-                trees: [
-                    {
-                        t: 8,
-                        trees: []
-                    }
+            [
+                7,
+                [
+                    [
+                        8,
+                        []
+                    ]
                 ]
-            }
-        ,
+            ]
+            ),
             0
         )).toEqual(8);
     });
@@ -299,26 +310,26 @@ describe('Treelist|Tree', () => {
 
     it('accessTreelist - tree - deeper and wider', () => {
 
-        expect(accessT(
+        expect(accessT(buildTree(
 
-            {
-                t: 7,
-                trees: [
-                    {
-                        t: 8,
-                        trees: [
-                            {
-                                t: 9,
-                                trees: []
-                            },
-                            {
-                                t: 11,
-                                trees: []
-                            }
+            [
+                7,
+                [
+                    [
+                        8,
+                        [
+                            [
+                                9,
+                                []
+                            ],
+                            [
+                                11,
+                                []
+                            ]
                         ]
-                    }
+                    ]
                 ]
-            }
+            ])
             ,
             0, 1
         )).toEqual(11);
@@ -327,17 +338,17 @@ describe('Treelist|Tree', () => {
 
     it('accessTreelist - tree - root', () => {
 
-        expect(accessT(
+        expect(accessT(buildTree(
 
-            {
-                t: 7,
-                trees: [
-                    {
-                        t: 8,
-                        trees: []
-                    }
+            [
+                7,
+                [
+                    [
+                        8,
+                        []
+                    ]
                 ]
-            }
-        )).toEqual(7);
+            ]
+        ))).toEqual(7);
     });
 });

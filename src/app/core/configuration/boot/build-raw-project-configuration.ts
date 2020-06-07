@@ -173,7 +173,7 @@ const sortGroups = (defaultOrder: string[]) => (groups: Map<Group>) =>
 
 
 const orderCategories = (categoriesOrder: string[] = []) => (categories: Treelist<Category>): Treelist<Category> =>
-    mapTrees(sortStructArray(categoriesOrder, [Treelist.Tree.T,Named.NAME]), categories) as Treelist<Category>;
+    mapTrees(sortStructArray(categoriesOrder, [Treelist.Tree.ITEM,Named.NAME]), categories) as Treelist<Category>;
 
 
 function setGroupLabels(groupLabels: Map<string>) {

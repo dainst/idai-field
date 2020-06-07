@@ -1,31 +1,59 @@
-import {Mapping, Predicate, isFunction, first, isNumber, rest, isObject, isArray} from 'tsfun';
+import {
+    Mapping,
+    Predicate,
+    isFunction,
+    first,
+    isNumber,
+    rest,
+    isObject,
+    isArray,
+    Pair, to
+} from 'tsfun';
 import {Comparator} from 'tsfun/by';
 
 
 export type Tree<T> = {
-    t: T,
+    item: T,
     trees: Treelist<T>
 }
 
 export type Treelist<T> = Array<Tree<T>>;
 
 
+export type Node<ITEM,TREES> = Pair<ITEM,TREES>;
+
+export type ArrayTree<T> = Node<T, ArrayTreelist<T>>;
+
+export type ArrayTreelist<T> = Array<ArrayTree<T>>;
+
+
 export module Treelist {
 
     export module Tree {
 
-        export const T = 't';
+        export const ITEM = 'item';
         export const TREES = 'trees';
     }
 }
 
 
-// TODO use it in tests
-export function buildTreelist<T>(t: any): Treelist<T> {
+export const toTreeItem = <T>(node: Tree<T>) => to([Treelist.Tree.ITEM])(node);
 
-    return t.map(([t,trees]) => ({ t: t, trees: buildTreelist(trees)}))
+
+
+export function buildTreelist<T>(t: ArrayTreelist<T>): Treelist<T> {
+
+    return t.map(([t,trees]) => ({ item: t, trees: buildTreelist(trees)}))
 }
 
+
+export function buildTree<T>([item, children]: ArrayTree<T>): Tree<T> {
+
+    return {
+        item: item,
+        trees: children.map(([t,trees]) => ({ item: t, trees: buildTreelist(trees)}))
+    }
+}
 
 
 export function mapTreelist<A,B>(f: Mapping<A,B>, t: Treelist<A>): Treelist<B>;
@@ -35,8 +63,8 @@ export function mapTreelist(...args: any[]): any {
     const $ = (f: any) => (treelist: any) => {
 
         const replacement = [];
-        for (let { t: t, trees: tree} of treelist) {
-            replacement.push({ t: f(t), trees: mapTreelist(f, tree)});
+        for (let { item: t, trees: tree} of treelist) {
+            replacement.push({ item: f(t), trees: mapTreelist(f, tree)});
         }
         return replacement;
     }
@@ -54,7 +82,7 @@ export function mapTree(...args: any[]): any {
     const $ = (f: any) => (tree: any) => {
 
         return {
-            t: f(tree.t),
+            item: f(tree.item),
             trees: mapTreelist(f, tree.trees)
         };
     }
@@ -70,7 +98,7 @@ export function accessT<T>(t: Treelist<T>|Tree<T>, ...path: number[]): T {
     function _accessTree<T>(t: Tree<T>, path: number[], lastSegmentIsNumber: boolean): T {
 
         const segment = first(path);
-        if (segment === undefined) return t.t;
+        if (segment === undefined) return t.item;
         else if (isNumber(segment) && lastSegmentIsNumber) return _accessTree(t.trees[segment], rest(path), true);
         return _accessTreelist(t.trees, path, true);
     }
@@ -90,16 +118,16 @@ export function accessT<T>(t: Treelist<T>|Tree<T>, ...path: number[]): T {
 
 export function mapTrees<T>(f: Mapping<Treelist<T>>, t: Treelist<T>): Treelist<T> {
 
-    return f(t).map(({ t: t, trees: children }) => ({ t: t, trees: mapTrees(f, children)}));
+    return f(t).map(({ item: t, trees: children }) => ({ item: t, trees: mapTrees(f, children)}));
 }
 
 
 export function flattenTree<A>(t: Tree<A>|Treelist<A>): Array<A> {
 
     const reduced = ((isArray(t) ? t : (t as Tree<A>).trees) as Treelist<A>)
-        .reduce((as, { t: a, trees: children }) => as.concat([a]).concat(flattenTree(children)), []);
+        .reduce((as, { item: a, trees: children }) => as.concat([a]).concat(flattenTree(children)), []);
 
-    return (isArray(t) ? [] : [(t as Tree<A>).t]).concat(reduced);
+    return (isArray(t) ? [] : [(t as Tree<A>).item]).concat(reduced);
 }
 
 
@@ -109,7 +137,7 @@ export function findInTree<T>(match: T|Predicate<T>, t: Treelist<T>|Tree<T>, com
 
     for (let node of t) {
 
-        const { t: t, trees: trees } = node;
+        const { item: t, trees: trees } = node;
 
         if (comparator !== undefined
             ? comparator(match)(t)

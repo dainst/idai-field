@@ -3,7 +3,7 @@ import isGeometryCategory = ProjectCategories.isGeometryCategory;
 import getFieldCategories = ProjectCategories.getFieldCategories;
 import {sameset} from 'tsfun';
 import {Named, toName} from '../../../../src/app/core/util/named';
-import {Treelist} from '../../../../src/app/core/util/treelist';
+import {buildTreelist, Treelist} from '../../../../src/app/core/util/treelist';
 import {Category} from '../../../../src/app/core/configuration/model/category';
 import getConcreteFieldCategories = ProjectCategories.getConcreteFieldCategories;
 import getRegularCategoryNames = ProjectCategories.getRegularCategoryNames;
@@ -16,50 +16,50 @@ import getOverviewCategories = ProjectCategories.getOverviewCategories;
 
 describe('ProjectCategories', () => {
 
-    const categoryTreelist: Treelist<Named> = [
-        {
-            t: { name: 'Image' },
-            trees: [
-                {
-                    t: {name: 'Drawing'},
-                    trees: []
-                }
+    const categoryTreelist: Treelist<Named> = buildTreelist([
+        [
+            { name: 'Image' },
+            [
+                [
+                    {name: 'Drawing'},
+                    []
+                ]
             ]
-        },
-        {
-            t: { name: 'Operation' },
-            trees: [
-                {
-                    t: {name: 'Trench'},
-                    trees: []
-                }
+        ],
+        [
+            { name: 'Operation' },
+            [
+                [
+                    {name: 'Trench'},
+                    []
+                ]
             ]
-        },
-        {
-            t: { name: 'Place' },
-            trees: []
-        },
-        {
-            t: {name: 'Inscription'},
-            trees: []
-        },
-        {
-            t: {name: 'Type'},
-            trees: []
-        },
-        {
-            t: {name: 'TypeCatalog'},
-            trees: []
-        },
-        {
-            t: {name: 'Project'},
-            trees: []
-        },
-        {
-            t: {name: 'Find'},
-            trees: []
-        }
-    ];
+        ],
+        [
+            { name: 'Place' },
+            []
+        ],
+        [
+            {name: 'Inscription'},
+            []
+        ],
+        [
+            {name: 'Type'},
+            []
+        ],
+        [
+            {name: 'TypeCatalog'},
+            []
+        ],
+        [
+            {name: 'Project'},
+            []
+        ],
+        [
+            {name: 'Find'},
+            []
+        ]
+    ]);
 
 
     it('isGeometryCategory', () => {

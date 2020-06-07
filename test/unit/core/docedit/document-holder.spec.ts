@@ -3,6 +3,7 @@ import {clone} from '../../../../src/app/core/util/object-util';
 import {M} from '../../../../src/app/components/messages/m';
 import {ProjectConfiguration} from '../../../../src/app/core/configuration/project-configuration';
 import {DocumentHolder} from '../../../../src/app/core/docedit/document-holder';
+import {buildTreelist} from '../../../../src/app/core/util/treelist';
 
 
 /**
@@ -21,27 +22,29 @@ describe('DocumentHolder', () => {
 
     beforeEach(() => {
 
-        const pconf = new ProjectConfiguration([
+        const pconf = new ProjectConfiguration([buildTreelist(
             [
-                { t: {
-                name: 'Trench',
-                groups: [{ name: 'stem', fields: [
-                    { name: 'id' },
-                    { name: 'category' },
-                    { name: 'emptyfield' }
-                ]}]
-                }, trees: []},
-                { t: {
-                    name: 'Find',
-                    groups: [{name: 'stem', fields: [
+                [{
+                    name: 'Trench',
+                    groups: [{ name: 'stem', fields: [
                         { name: 'id' },
                         { name: 'category' },
-                        { name: 'unsignedIntField', inputType: 'unsignedInt' },
-                        { name: 'unsignedFloatField', inputType: 'unsignedFloat' },
-                        { name: 'floatField', inputType: 'float' }
-                    ]}]
-                }, trees: []}
-            ] as any
+                        { name: 'emptyfield' }
+                    ]}]}
+                , []],
+                [{
+                    name: 'Find',
+                    groups: [{
+                        name: 'stem', fields: [
+                            {name: 'id'},
+                            {name: 'category'},
+                            {name: 'unsignedIntField', inputType: 'unsignedInt'},
+                            {name: 'unsignedFloatField', inputType: 'unsignedFloat'},
+                            {name: 'floatField', inputType: 'float'}
+                        ]
+                    }]
+                }, []]
+            ] as any)
             ,[
                 {
                     name: 'isFoundOn',

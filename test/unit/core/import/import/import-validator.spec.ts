@@ -3,6 +3,7 @@ import {ValidationErrors} from '../../../../../src/app/core/model/validation-err
 import {ImportErrors} from '../../../../../src/app/core/import/import/import-errors';
 import {INPUT_TYPES} from '../../../../../src/app/core/constants';
 import {ProjectConfiguration} from '../../../../../src/app/core/configuration/project-configuration';
+import {buildTreelist} from '../../../../../src/app/core/util/treelist';
 
 
 /**
@@ -13,8 +14,8 @@ describe('ImportValidator', () => {
 
     const projectConfiguration = new ProjectConfiguration(
         [
-          [
-            { t: {
+          buildTreelist([
+            [ {
                 name: 'T',
                 groups: [{ name: 'stem', fields: [
                     { name: 'id' },
@@ -27,19 +28,19 @@ describe('ImportValidator', () => {
                     { name: 'ddr', label: 'DropdownRange', inputType: INPUT_TYPES.DROPDOWN_RANGE },
                     { name: 'ddr2', label: 'DropdownRange2', inputType: INPUT_TYPES.DROPDOWN_RANGE }
                 ]}]
-            }, trees: []},
-          { t: {
+            }, []],
+          [ {
                 name: 'T2',
                 groups: [{ name: 'stem', fields: [
                     { name: 'id' },
                     { name: 'category' }
                 ]}]
-            }, trees: []},
-              { t: {
+            }, []],
+              [ {
                 name: 'T3',
                 mustLieWithin: true
-            }, trees: []}
-        ] as any,
+            }, []]
+        ] as any),
             [
                 { name: 'isRelatedTo', label: '', domain: ['T'], range: ['T'], inverse: 'NO-INVERSE' },
                 { name: 'isDepictedIn', label: '', domain: ['T'], range: ['T2'], inverse: 'NO-INVERSE' },

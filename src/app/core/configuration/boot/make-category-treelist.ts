@@ -29,7 +29,7 @@ export function makeCategoryTreelist(categories: any): CategoryTreelist {
         map(buildCategoryFromDefinition),
         map(update(TEMP_FIELDS, ifUndefinedSetGroupTo(Groups.PARENT))),
         mapToNamedArray,
-        map(category => ({ t: category, trees: []}))
+        map(category => ({ item: category, trees: []}))
     );
 
     return flow(
@@ -76,14 +76,14 @@ function addChildCategory(categoryTree: Treelist<Category>,
                           childDefinition: CategoryDefinition): Treelist<Category> {
 
     const found = categoryTree
-        .find(({ t: category }) => category.name === childDefinition.parent);
+        .find(({ item: category }) => category.name === childDefinition.parent);
     if (!found) throw MDInternal.PROJECT_CONFIGURATION_ERROR_GENERIC;
-    const { t: category, trees: trees } = found;
+    const { item: category, trees: trees } = found;
 
     const childCategory = buildCategoryFromDefinition(childDefinition);
     (childCategory as any)[TEMP_FIELDS] = makeChildFields(category, childCategory);
 
-    trees.push({ t: childCategory, trees: []});
+    trees.push({ item: childCategory, trees: []});
     return categoryTree;
 }
 

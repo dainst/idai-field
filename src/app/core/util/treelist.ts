@@ -1,6 +1,7 @@
 import {Mapping, Predicate, isFunction, first, isNumber, rest, isObject, isArray} from 'tsfun';
 import {Comparator} from 'tsfun/by';
 
+// TODO add 'build' function which converts tree structure consisting only of arrays to the structure here, use it in tests
 
 export type Tree<T> = {
     t: T,

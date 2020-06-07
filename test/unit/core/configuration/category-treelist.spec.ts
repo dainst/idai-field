@@ -3,7 +3,7 @@ import {
     categoryTreelistToMap,
     linkParentAndChildInstances
 } from '../../../../src/app/core/configuration/category-treelist';
-import {accessTreelist, Treelist} from '../../../../src/app/core/util/treelist';
+import {accessT, Treelist} from '../../../../src/app/core/util/treelist';
 
 
 describe('CategoryTreelist', () => {
@@ -41,8 +41,8 @@ describe('CategoryTreelist', () => {
         expect(result[1].children).toEqual([]);
 
         // retain configured instance relationships
-        expect(result[0].children[0] === accessTreelist(t, 0, 0)).toBeTruthy();
-        expect(result[1].parentCategory === accessTreelist(t, 0)).toBeTruthy();
+        expect(result[0].children[0] === accessT(t, 0, 0)).toBeTruthy();
+        expect(result[1].parentCategory === accessT(t, 0)).toBeTruthy();
         expect(result[1].parentCategory === result[0]).toBeTruthy();
         expect(result[0].children[0].name === 'C1').toBeTruthy();
         expect(result[1].parentCategory.name === 'P1').toBeTruthy();
@@ -80,8 +80,8 @@ describe('CategoryTreelist', () => {
         expect(result['C1'].children).toEqual([]);
 
         // retain configured instance relationships
-        expect(result['P1'].children[0] === accessTreelist(t, 0, 0)).toBeTruthy();
-        expect(result['C1'].parentCategory === accessTreelist(t, 0)).toBeTruthy();
+        expect(result['P1'].children[0] === accessT(t, 0, 0)).toBeTruthy();
+        expect(result['C1'].parentCategory === accessT(t, 0)).toBeTruthy();
         expect(result['C1'].parentCategory === result['P1']).toBeTruthy();
         expect(result['P1'].children[0].name === 'C1').toBeTruthy();
         expect(result['C1'].parentCategory.name === 'P1').toBeTruthy();
@@ -188,10 +188,10 @@ describe('CategoryTreelist', () => {
         const t = threeLevels();
         const result = linkParentAndChildInstances(t);
 
-        expect(accessTreelist(result, 0).children[0] === accessTreelist(result, 0, 0)).toBeTruthy();
-        expect(accessTreelist(result, 0, 0).children[0] === accessTreelist(result, 0, 0, 0)).toBeTruthy();
-        expect(accessTreelist(result, 0, 0, 0).parentCategory === accessTreelist(result, 0, 0)).toBeTruthy();
-        expect(accessTreelist(result, 0, 0).parentCategory === accessTreelist(result, 0)).toBeTruthy();
+        expect(accessT(result, 0).children[0] === accessT(result, 0, 0)).toBeTruthy();
+        expect(accessT(result, 0, 0).children[0] === accessT(result, 0, 0, 0)).toBeTruthy();
+        expect(accessT(result, 0, 0, 0).parentCategory === accessT(result, 0, 0)).toBeTruthy();
+        expect(accessT(result, 0, 0).parentCategory === accessT(result, 0)).toBeTruthy();
     });
 
 

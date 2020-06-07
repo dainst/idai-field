@@ -1,6 +1,6 @@
 import {equal, is, on, reverse} from 'tsfun';
 import {
-    accessTreelist,
+    accessT,
     findInTreelist,
     flattenTreelist,
     mapTreelists,
@@ -150,7 +150,7 @@ describe('Treelist', () => {
 
     it('accessTreelist - first level', () => {
 
-        expect(accessTreelist(
+        expect(accessT(
             [
                 {
                     t: 7,
@@ -164,7 +164,7 @@ describe('Treelist', () => {
 
     it('accessTreelist - second level', () => {
 
-        expect(accessTreelist(
+        expect(accessT(
             [
                 {
                     t: 7,
@@ -178,5 +178,69 @@ describe('Treelist', () => {
             ],
             0, 0
         )).toEqual(8);
+    });
+
+
+    it('accessTreelist - tree', () => {
+
+        expect(accessT(
+
+            {
+                t: 7,
+                trees: [
+                    {
+                        t: 8,
+                        trees: []
+                    }
+                ]
+            }
+        ,
+            0
+        )).toEqual(8);
+    });
+
+
+    it('accessTreelist - tree - deeper and wider', () => {
+
+        expect(accessT(
+
+            {
+                t: 7,
+                trees: [
+                    {
+                        t: 8,
+                        trees: [
+                            {
+                                t: 9,
+                                trees: []
+                            },
+                            {
+                                t: 11,
+                                trees: []
+                            }
+                        ]
+                    }
+                ]
+            }
+            ,
+            0, 1
+        )).toEqual(11);
+    });
+
+
+    it('accessTreelist - tree - root', () => {
+
+        expect(accessT(
+
+            {
+                t: 7,
+                trees: [
+                    {
+                        t: 8,
+                        trees: []
+                    }
+                ]
+            }
+        )).toEqual(7);
     });
 });

@@ -1,4 +1,4 @@
-import {Mapping, Predicate, isFunction, first, isNumber, rest} from 'tsfun';
+import {Mapping, Predicate, isFunction, first, isNumber, rest, isObject} from 'tsfun';
 import {Comparator} from 'tsfun/by';
 
 
@@ -40,14 +40,14 @@ export function mapTreelist(...args: any[]): any {
 }
 
 
-export function accessTreelist<T>(t: Treelist<T>, ...path: number[] /* TODO make 1 elem minimum */): T {
+export function accessT<T>(t: Treelist<T>|Tree<T>, ...path: number[] /* TODO make 1 elem minimum */): T {
 
     function _accessTree<T>(t: Tree<T>, path: number[], lastSegmentIsNumber: boolean): T {
 
         const segment = first(path);
         if (segment === undefined) return t.t;
         else if (isNumber(segment) && lastSegmentIsNumber) return _accessTree(t.trees[segment], rest(path), true);
-        return _accessTreelist(t.trees, rest(path), true);
+        return _accessTreelist(t.trees, path, true);
     }
 
     function _accessTreelist<T>(t: Treelist<T>, path: number[], lastSegmentIsNumber: boolean) {
@@ -57,7 +57,9 @@ export function accessTreelist<T>(t: Treelist<T>, ...path: number[] /* TODO make
         return _accessTree(t[segment], rest(path), true);
     }
 
-    return _accessTreelist(t, path, false);
+    return isObject(t)
+        ? _accessTree(t as Tree<T>, path, false)
+        : _accessTreelist(t as Treelist<T>, path, false);
 }
 
 

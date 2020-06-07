@@ -13,7 +13,7 @@ describe('Validator', () => {
     const projectConfiguration = new ProjectConfiguration(
         [
             [
-                { node: {
+                { t: {
                     name: 'T',
                     groups: [
                         {
@@ -30,7 +30,7 @@ describe('Validator', () => {
                         }
                     ]
                 }, trees: []},
-                { node: {
+                { t: {
                     name: 'T2',
                     groups: [
                         {

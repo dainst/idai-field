@@ -14,7 +14,7 @@ describe('ImportValidator', () => {
     const projectConfiguration = new ProjectConfiguration(
         [
           [
-            { node: {
+            { t: {
                 name: 'T',
                 groups: [{ name: 'stem', fields: [
                     { name: 'id' },
@@ -28,14 +28,14 @@ describe('ImportValidator', () => {
                     { name: 'ddr2', label: 'DropdownRange2', inputType: INPUT_TYPES.DROPDOWN_RANGE }
                 ]}]
             }, trees: []},
-          { node: {
+          { t: {
                 name: 'T2',
                 groups: [{ name: 'stem', fields: [
                     { name: 'id' },
                     { name: 'category' }
                 ]}]
             }, trees: []},
-              { node: {
+              { t: {
                 name: 'T3',
                 mustLieWithin: true
             }, trees: []}

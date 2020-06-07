@@ -18,45 +18,45 @@ describe('ProjectCategories', () => {
 
     const categoryTreelist: Treelist<Named> = [
         {
-            node: { name: 'Image' },
+            t: { name: 'Image' },
             trees: [
                 {
-                    node: {name: 'Drawing'},
+                    t: {name: 'Drawing'},
                     trees: []
                 }
             ]
         },
         {
-            node: { name: 'Operation' },
+            t: { name: 'Operation' },
             trees: [
                 {
-                    node: {name: 'Trench'},
+                    t: {name: 'Trench'},
                     trees: []
                 }
             ]
         },
         {
-            node: { name: 'Place' },
+            t: { name: 'Place' },
             trees: []
         },
         {
-            node: {name: 'Inscription'},
+            t: {name: 'Inscription'},
             trees: []
         },
         {
-            node: {name: 'Type'},
+            t: {name: 'Type'},
             trees: []
         },
         {
-            node: {name: 'TypeCatalog'},
+            t: {name: 'TypeCatalog'},
             trees: []
         },
         {
-            node: {name: 'Project'},
+            t: {name: 'Project'},
             trees: []
         },
         {
-            node: {name: 'Find'},
+            t: {name: 'Find'},
             trees: []
         }
     ];

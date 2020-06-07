@@ -23,7 +23,7 @@ describe('DocumentHolder', () => {
 
         const pconf = new ProjectConfiguration([
             [
-                { node: {
+                { t: {
                 name: 'Trench',
                 groups: [{ name: 'stem', fields: [
                     { name: 'id' },
@@ -31,7 +31,7 @@ describe('DocumentHolder', () => {
                     { name: 'emptyfield' }
                 ]}]
                 }, trees: []},
-                { node: {
+                { t: {
                     name: 'Find',
                     groups: [{name: 'stem', fields: [
                         { name: 'id' },

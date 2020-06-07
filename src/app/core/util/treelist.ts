@@ -1,11 +1,11 @@
 import {Mapping, Predicate, isFunction, first, isNumber, rest} from 'tsfun';
 import {Comparator} from 'tsfun/by';
 
-// TODO make constructor with which the refactoring of the tests could have been easier, for example a convert method between the different literal variants of defining the tree
 
-
-export type Tree<T> = { /* TODO improve refactorability: rename and see what can be improved; rename to item, or just t */ node: T,
-    trees: Treelist<T> }
+export type Tree<T> = {
+    t: T,
+    trees: Treelist<T>
+}
 
 export type Treelist<T> = Array<Tree<T>>;
 
@@ -14,7 +14,7 @@ export module Treelist { // TODO review structure
 
     export module Tree {
 
-        export const NODE = 'node'; // TODO see todo above, search for usages in the codebase, for example in context of on and to
+        export const T = 't';
         export const TREES = 'trees';
     }
 }
@@ -25,11 +25,11 @@ export function mapTreelist<A,B>(f: Mapping<A,B>, t: Treelist<A>): Treelist<B>;
 export function mapTreelist<A,B>(f: Mapping<A,B>): Mapping<Treelist<A>,Treelist<B>>;
 export function mapTreelist(...args: any[]): any {
 
-    const $ = (f: any) => (t: any) => {
+    const $ = (f: any) => (treelist: any) => {
 
         const replacement = [];
-        for (let { node: node, trees: tree} of t) {
-            replacement.push({ node: f(node), trees: mapTreelist(f,tree)});
+        for (let { t: t, trees: tree} of treelist) {
+            replacement.push({ t: f(t), trees: mapTreelist(f, tree)});
         }
         return replacement;
     }
@@ -45,7 +45,7 @@ export function accessTreelist<T>(t: Treelist<T>, ...path: number[] /* TODO make
     function _accessTree<T>(t: Tree<T>, path: number[], lastSegmentIsNumber: boolean): T {
 
         const segment = first(path);
-        if (segment === undefined) return t.node;
+        if (segment === undefined) return t.t;
         else if (isNumber(segment) && lastSegmentIsNumber) return _accessTree(t.trees[segment], rest(path), true);
         return _accessTreelist(t.trees, rest(path), true);
     }
@@ -63,13 +63,13 @@ export function accessTreelist<T>(t: Treelist<T>, ...path: number[] /* TODO make
 
 export function mapTreelists<T>(f: Mapping<Treelist<T>>, t: Treelist<T>): Treelist<T> {
 
-    return f(t).map(({ node: node, trees: children }) => ({ node: node, trees: mapTreelists(f, children)}));
+    return f(t).map(({ t: t, trees: children }) => ({ t: t, trees: mapTreelists(f, children)}));
 }
 
 
 export function flattenTreelist<A>(t: Treelist<A>): Array<A> {
 
-    return t.reduce((as, { node: a, trees: children }) =>
+    return t.reduce((as, { t: a, trees: children }) =>
          as.concat([a]).concat(flattenTreelist(children)), []);
 }
 
@@ -78,15 +78,15 @@ export function findInTreelist<T>(match: T|Predicate<T>, t: Treelist<T>, compara
 
     for (let node of t) {
 
-        const { node: item, trees: children } = node;
+        const { t: t, trees: trees } = node;
 
         if (comparator !== undefined
-            ? comparator(match)(item)
+            ? comparator(match)(t)
             : isFunction(match)
-                ? (match as Predicate<T>)(item)
-                : match === item) return node;
+                ? (match as Predicate<T>)(t)
+                : match === t) return node;
 
-        const findResult = findInTreelist(match, children, comparator);
+        const findResult = findInTreelist(match, trees, comparator);
         if (findResult) return findResult;
     }
     return undefined;

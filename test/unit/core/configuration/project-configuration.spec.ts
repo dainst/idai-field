@@ -49,7 +49,7 @@ describe('ProjectConfiguration', () => {
             }]
         } as any;
 
-        const configuration: ProjectConfiguration = new ProjectConfiguration([[{ node: category, trees: []}], []]);
+        const configuration: ProjectConfiguration = new ProjectConfiguration([[{ t: category, trees: []}], []]);
 
         expect(configuration.getFieldDefinitionLabel('T','aField')).toBe('A Field');
     });
@@ -66,7 +66,7 @@ describe('ProjectConfiguration', () => {
             }]
         } as any;
 
-        const configuration: ProjectConfiguration = new ProjectConfiguration([[{ node: category, trees: []}], []]);
+        const configuration: ProjectConfiguration = new ProjectConfiguration([[{ t: category, trees: []}], []]);
 
         expect(configuration.getFieldDefinitionLabel('T','aField')).toBe('aField');
     });
@@ -85,7 +85,7 @@ describe('ProjectConfiguration', () => {
     it('should let categories inherit fields from parent categories', () => {
 
         const configuration: ProjectConfiguration
-            = new ProjectConfiguration([[{ node: firstLevelCategory, trees: []}, { node: secondLevelCategory, trees: []} ] as any, []]);
+            = new ProjectConfiguration([[{ t: firstLevelCategory, trees: []}, { t: secondLevelCategory, trees: []} ] as any, []]);
         const fields = configuration.getFieldDefinitions('SecondLevelCategory');
 
         expect(fields[0].name).toEqual('fieldA');
@@ -96,7 +96,7 @@ describe('ProjectConfiguration', () => {
     it('list parent category fields first', () => {
 
         const configuration: ProjectConfiguration
-            = new ProjectConfiguration([[{ node: secondLevelCategory, trees: []}, { node: firstLevelCategory, trees: []}] as any, []]);
+            = new ProjectConfiguration([[{ t: secondLevelCategory, trees: []}, { t: firstLevelCategory, trees: []}] as any, []]);
         const fields = configuration.getFieldDefinitions('SecondLevelCategory');
 
         expect(fields[0].name).toEqual('fieldA');

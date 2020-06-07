@@ -13,7 +13,7 @@ describe('Treelist', () => {
 
     it('Treelist', () => {
 
-        const t: Treelist<number> = [{ node: 1, trees: []}];
+        const t: Treelist<number> = [{ t: 1, trees: []}];
     });
 
 
@@ -21,20 +21,20 @@ describe('Treelist', () => {
 
         const t: Treelist<number> =
             [
-                { node: 1, trees: [
-                        { node: 13, trees: []},
-                        { node: 14, trees: []},
+                { t: 1, trees: [
+                        { t: 13, trees: []},
+                        { t: 14, trees: []},
                 ]},
-                { node: 3, trees: []}
+                { t: 3, trees: []}
             ];
 
         const exp: Treelist<number> =
             [
-                { node: 2, trees: [
-                        { node: 26, trees: []},
-                        { node: 28, trees: []},
+                { t: 2, trees: [
+                        { t: 26, trees: []},
+                        { t: 28, trees: []},
                 ]},
-                { node: 6, trees: []}
+                { t: 6, trees: []}
             ];
 
         const result = mapTreelist((_: number) => _ * 2, t);
@@ -46,19 +46,19 @@ describe('Treelist', () => {
 
         const t: Treelist<number> =
             [
-                { node: 1, trees: [
-                        { node: 13, trees: []},
-                        { node: 14, trees: []},
+                { t: 1, trees: [
+                        { t: 13, trees: []},
+                        { t: 14, trees: []},
                 ]},
-                { node: 3, trees: []}
+                { t: 3, trees: []}
             ];
 
         const exp: Treelist<number> =
             [
-                { node: 3, trees: []},
-                { node: 1, trees: [
-                        { node: 14, trees: []},
-                        { node: 13, trees: []},
+                { t: 3, trees: []},
+                { t: 1, trees: [
+                        { t: 14, trees: []},
+                        { t: 13, trees: []},
                 ]}
             ];
 
@@ -73,11 +73,11 @@ describe('Treelist', () => {
 
         const t: Treelist<any> =
             [
-                { node: 1, trees: [
-                        { node: 13, trees: [{ node: a, trees: []}]},
-                        { node: 16, trees: []},
+                { t: 1, trees: [
+                        { t: 13, trees: [{ t: a, trees: []}]},
+                        { t: 16, trees: []},
                 ]},
-                { node: 3, trees: []}
+                { t: 3, trees: []}
             ];
 
         const exp: Array<any> =
@@ -98,15 +98,15 @@ describe('Treelist', () => {
 
         const t: Treelist<any> =
             [
-                { node: 1, trees: [
-                        { node: 13, trees: [{ node: 17, trees: []}]},
-                        { node: 16, trees: []},
+                { t: 1, trees: [
+                        { t: 13, trees: [{ t: 17, trees: []}]},
+                        { t: 16, trees: []},
                 ]},
-                { node: 3, trees: []}
+                { t: 3, trees: []}
             ];
 
         const exp1: Tree<any> = findInTreelist(13, t);
-        expect(equal(exp1,{ node: 13, trees: [{ node: 17, trees: []}]})).toBeTruthy();
+        expect(equal(exp1,{ t: 13, trees: [{ t: 17, trees: []}]})).toBeTruthy();
 
         const exp2: Tree<any> = findInTreelist(19, t);
         expect(equal(exp2,undefined)).toBeTruthy();
@@ -119,15 +119,15 @@ describe('Treelist', () => {
 
         const t: Treelist<any> =
             [
-                { node: 1, trees: [
-                        { node: a, trees: [{ node: 17, trees: []}]},
-                        { node: 16, trees: []},
+                { t: 1, trees: [
+                        { t: a, trees: [{ t: 17, trees: []}]},
+                        { t: 16, trees: []},
                 ]},
-                { node: 3, trees: []}
+                { t: 3, trees: []}
             ];
 
         const exp1: Tree<any> = findInTreelist(on('a', is(3)), t);
-        expect(equal(exp1,{ node: {a: 3}, trees: [{ node: 17, trees: []}]})).toBeTruthy();
+        expect(equal(exp1,{ t: {a: 3}, trees: [{ t: 17, trees: []}]})).toBeTruthy();
     });
 
 
@@ -136,15 +136,15 @@ describe('Treelist', () => {
         const a = { a: 3 };
         const t: Treelist<any> =
             [
-                { node: 1, trees: [
-                        { node: a, trees: [{ node: 17, trees: []}]},
-                        { node: 16, trees: []},
+                { t: 1, trees: [
+                        { t: a, trees: [{ t: 17, trees: []}]},
+                        { t: 16, trees: []},
                 ]},
-                { node: 3, trees: []}
+                { t: 3, trees: []}
             ];
 
         const exp1: Tree<any> = findInTreelist({ a: 3 }, t, on('a'));
-        expect(equal(exp1,{ node: {a: 3}, trees: [{ node: 17, trees: []}]})).toBeTruthy();
+        expect(equal(exp1,{ t: {a: 3}, trees: [{ t: 17, trees: []}]})).toBeTruthy();
     });
 
 
@@ -153,7 +153,7 @@ describe('Treelist', () => {
         expect(accessTreelist(
             [
                 {
-                    node: 7,
+                    t: 7,
                     trees: []
                 }
             ],
@@ -162,15 +162,15 @@ describe('Treelist', () => {
     });
 
 
-    fit('accessTreelist - second level', () => {
+    it('accessTreelist - second level', () => {
 
         expect(accessTreelist(
             [
                 {
-                    node: 7,
+                    t: 7,
                     trees: [
                         {
-                            node: 8,
+                            t: 8,
                             trees: []
                         }
                     ]

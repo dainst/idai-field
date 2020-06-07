@@ -18,12 +18,12 @@ describe('CategoryTreelist', () => {
 
         const t: Treelist<{ name: string, children: Array<T>}> = [
             {
-                node: parent,
+                t: parent,
                 trees: [
-                    {
-                        node: child,
-                        trees: []
-                    }
+                        {
+                            t: child,
+                            trees: []
+                        }
                     ]
             }
         ]
@@ -57,10 +57,10 @@ describe('CategoryTreelist', () => {
 
         const t: Treelist<T> = [
             {
-                node: parent,
+                t: parent,
                 trees: [
                     {
-                        node: child,
+                        t: child,
                         trees: []
                     }
                 ]
@@ -102,27 +102,27 @@ describe('CategoryTreelist', () => {
 
         const t = [
             {
-                node: parent1,
+                t: parent1,
                 trees: [
                     {
-                        node: child1,
+                        t: child1,
                         trees: []
                     },
                     {
-                        node: child2,
+                        t: child2,
                         trees: []
                     }
                 ]
             },
             {
-                node: parent2,
+                t: parent2,
                 trees: [
                     {
-                        node: child3,
+                        t: child3,
                         trees: []
                     },
                     {
-                        node: child4,
+                        t: child4,
                         trees: []
                     }
                 ]
@@ -166,13 +166,13 @@ describe('CategoryTreelist', () => {
 
         return [
             {
-                node: parent1,
+                t: parent1,
                 trees: [
                     {
-                        node: child1,
+                        t: child1,
                         trees: [
                             {
-                                node: child2,
+                                t: child2,
                                 trees: []
                             }
                         ]

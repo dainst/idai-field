@@ -11,7 +11,7 @@ describe('Validations', () => {
 
     const projectConfiguration = new ProjectConfiguration(
         [[
-            { node: {
+            { t: {
              name: 'T',
              groups: [{
                  name: 'stem', fields: [
@@ -45,14 +45,14 @@ describe('Validations', () => {
                  ]
              }]
          }, trees: []},
-        { node: {
+        { t: {
             name: 'T2',
             groups: [{ name: 'stem', fields: [
                 { name: 'id' },
                 { name: 'category' }
             ]}]
         }, trees: []},
-            { node: {
+            { t: {
                     name: 'T3',
                     groups: [{ name: 'stem', fields: [
                         { name: 'id' },

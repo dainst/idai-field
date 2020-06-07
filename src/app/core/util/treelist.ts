@@ -1,7 +1,6 @@
 import {Mapping, Predicate, isFunction, first, isNumber, rest, isObject, isArray} from 'tsfun';
 import {Comparator} from 'tsfun/by';
 
-// TODO add 'build' function which converts tree structure consisting only of arrays to the structure here, use it in tests
 
 export type Tree<T> = {
     t: T,
@@ -19,6 +18,14 @@ export module Treelist {
         export const TREES = 'trees';
     }
 }
+
+
+// use it in tests
+export function buildTreelist<T>(t: any): Treelist<T> {
+
+    return t.map(([t,trees]) => ({ t: t, trees: buildTreelist(trees)}))
+}
+
 
 
 export function mapTreelist<A,B>(f: Mapping<A,B>, t: Treelist<A>): Treelist<B>;

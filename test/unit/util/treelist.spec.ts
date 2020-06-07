@@ -3,7 +3,7 @@ import {
     accessT,
     findInTreelist,
     flattenTree,
-    mapTreelists,
+    mapTrees,
     mapTreelist, Tree,
     Treelist
 } from '../../../src/app/core/util/treelist';
@@ -62,7 +62,7 @@ describe('Treelist', () => {
                 ]}
             ];
 
-        const result = mapTreelists(reverse, t);
+        const result = mapTrees(reverse, t);
         expect(equal(result, exp)).toBeTruthy();
     });
 

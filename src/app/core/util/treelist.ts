@@ -20,7 +20,7 @@ export module Treelist {
 }
 
 
-// use it in tests
+// TODO use it in tests
 export function buildTreelist<T>(t: any): Treelist<T> {
 
     return t.map(([t,trees]) => ({ t: t, trees: buildTreelist(trees)}))

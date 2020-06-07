@@ -62,9 +62,9 @@ export function accessT<T>(t: Treelist<T>|Tree<T>, ...path: number[]): T {
 }
 
 
-export function mapTreelists<T>(f: Mapping<Treelist<T>>, t: Treelist<T>): Treelist<T> {
+export function mapTrees<T>(f: Mapping<Treelist<T>>, t: Treelist<T>): Treelist<T> {
 
-    return f(t).map(({ t: t, trees: children }) => ({ t: t, trees: mapTreelists(f, children)}));
+    return f(t).map(({ t: t, trees: children }) => ({ t: t, trees: mapTrees(f, children)}));
 }
 
 

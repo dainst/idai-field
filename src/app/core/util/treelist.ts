@@ -20,7 +20,7 @@ export module Treelist { // TODO review structure
 }
 
 
-// TODO rename to mapTree and make it work for both Tree and Treelist
+// TODO rename to mapTree and make it work for both Tree and Treelist (which is now possible since tree and treelist are distinguishable by type (javascript type))
 export function mapTreelist<A,B>(f: Mapping<A,B>, t: Treelist<A>): Treelist<B>;
 export function mapTreelist<A,B>(f: Mapping<A,B>): Mapping<Treelist<A>,Treelist<B>>;
 export function mapTreelist(...args: any[]): any {

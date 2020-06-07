@@ -39,6 +39,24 @@ export function mapTreelist(...args: any[]): any {
 }
 
 
+export function mapTree<A,B>(f: Mapping<A,B>, t: Tree<A>): Tree<B>;
+export function mapTree<A,B>(f: Mapping<A,B>): Mapping<Tree<A>,Tree<B>>;
+export function mapTree(...args: any[]): any {
+
+    const $ = (f: any) => (tree: any) => {
+
+        return {
+            t: f(tree.t),
+            trees: mapTreelist(f, tree.trees)
+        };
+    }
+
+    return args.length === 2
+        ? $(args[0])(args[1])
+        : $(args[0])
+}
+
+
 export function accessT<T>(t: Treelist<T>|Tree<T>, ...path: number[]): T {
 
     function _accessTree<T>(t: Tree<T>, path: number[], lastSegmentIsNumber: boolean): T {

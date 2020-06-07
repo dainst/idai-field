@@ -5,15 +5,44 @@ import {
     flattenTree,
     mapTrees,
     mapTreelist, Tree,
-    Treelist
+    Treelist, mapTree
 } from '../../../src/app/core/util/treelist';
 
 
-describe('Treelist', () => {
+describe('Treelist|Tree', () => {
 
     it('Treelist', () => {
 
         const t: Treelist<number> = [{ t: 1, trees: []}];
+    });
+
+
+    it('mapTree', () => {
+
+        const t: Tree<number> = {
+            t: 17,
+            trees: [
+                { t: 1, trees: [
+                        { t: 13, trees: []},
+                        { t: 14, trees: []},
+                    ]},
+                { t: 3, trees: []}
+            ]
+        };
+
+        const exp: Tree<number> = {
+            t: 34,
+            trees: [
+                { t: 2, trees: [
+                        { t: 26, trees: []},
+                        { t: 28, trees: []},
+                    ]},
+                { t: 6, trees: []}
+            ]
+        };
+
+        const result = mapTree((_: number) => _ * 2, t);
+        expect(equal(result, exp)).toBeTruthy();
     });
 
 

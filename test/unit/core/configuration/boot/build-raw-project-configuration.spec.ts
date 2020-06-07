@@ -1229,7 +1229,7 @@ describe('buildRawProjectConfiguration', () => {
 
         expect(result['B'].groups[0].label).toEqual('Stem');
         expect(result['B'].groups[1].label).toEqual('A_');
-        expect(resultB'].groups[2].label).toEqual('B_');
+        expect(result['B'].groups[2].label).toEqual('B_');
     });
 
 

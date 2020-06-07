@@ -1,4 +1,4 @@
-import {Mapping, Predicate, isFunction, first, isNumber, rest, isObject} from 'tsfun';
+import {Mapping, Predicate, isFunction, first, isNumber, rest, isObject, isArray} from 'tsfun';
 import {Comparator} from 'tsfun/by';
 
 
@@ -69,10 +69,12 @@ export function mapTreelists<T>(f: Mapping<Treelist<T>>, t: Treelist<T>): Treeli
 }
 
 
-export function flattenTreelist<A>(t: Treelist<A>): Array<A> {
+export function flattenTree<A>(t: Tree<A>|Treelist<A>): Array<A> {
 
-    return t.reduce((as, { t: a, trees: children }) =>
-         as.concat([a]).concat(flattenTreelist(children)), []);
+    const reduced = ((isArray(t) ? t : (t as Tree<A>).trees) as Treelist<A>)
+        .reduce((as, { t: a, trees: children }) => as.concat([a]).concat(flattenTree(children)), []);
+
+    return (isArray(t) ? [] : [(t as Tree<A>).t]).concat(reduced);
 }
 
 

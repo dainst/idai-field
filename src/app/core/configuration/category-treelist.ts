@@ -1,6 +1,6 @@
 import {Map, to} from 'tsfun';
 import {Category} from './model/category';
-import {flattenTreelist, Treelist} from '../util/treelist';
+import {flattenTree, Treelist} from '../util/treelist';
 import {namedArrayToNamedMap} from '../util/named';
 
 const CATEGORIES = ['t'];
@@ -16,7 +16,7 @@ export type CategoryTreelist = Treelist<Category>; // technically the same, but 
  */
 export function categoryTreelistToArray(t: CategoryTreelist): Array<Category> {
 
-    return flattenTreelist(t);
+    return flattenTree(t);
 }
 
 

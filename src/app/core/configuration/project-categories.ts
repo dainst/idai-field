@@ -1,7 +1,7 @@
 import {filter, flow, includedIn, is, map, Map, remove, to} from 'tsfun';
 import {Category} from './model/category';
 import {Named, onName, toName} from '../util/named';
-import {flattenTreelist, Treelist} from '../util/treelist';
+import {flattenTree, Treelist} from '../util/treelist';
 import {Name} from '../constants';
 import {filterTrees, isTopLevelItemOrChildThereof, removeTrees} from '../util/named-treelist';
 import {ProjectConfiguration} from './project-configuration';
@@ -32,7 +32,7 @@ export /* package-private */ module ProjectCategories {
 
         return flow(t,
             removeTrees('Place', 'Project', TYPE_CATALOG, TYPE, 'Image', 'Operation'),
-            flattenTreelist,
+            flattenTree,
             map(toName)
         );
     }
@@ -42,7 +42,7 @@ export /* package-private */ module ProjectCategories {
 
         return flow(t,
             removeTrees('Image', 'Project', TYPE_CATALOG, TYPE),
-            flattenTreelist
+            flattenTree
         );
     }
 
@@ -57,7 +57,7 @@ export /* package-private */ module ProjectCategories {
 
         return flow(t,
             removeTrees('Image', 'Project'),
-            flattenTreelist
+            flattenTree
         );
     }
 
@@ -72,7 +72,7 @@ export /* package-private */ module ProjectCategories {
 
         return flow(t,
             filterTrees('Operation', 'Place'),
-            flattenTreelist,
+            flattenTree,
             map(toName)
         );
     }
@@ -82,7 +82,7 @@ export /* package-private */ module ProjectCategories {
 
         return flow(t,
             filterTrees('Operation', 'Place'),
-            flattenTreelist,
+            flattenTree,
             remove(onName(is('Operation'))), // TODO review why we do remove this here but not in getOverviewCategoryNames, compare also getOverviewToplevelCategories
             map(toName)
         );
@@ -93,7 +93,7 @@ export /* package-private */ module ProjectCategories {
 
         return flow(t,
             filterTrees('Operation', 'Place'),
-            flattenTreelist,
+            flattenTree,
             filter(onName(includedIn(['Operation', 'Place'])))
         );
     }
@@ -103,7 +103,7 @@ export /* package-private */ module ProjectCategories {
 
         return flow(t,
             filterTrees('Type', 'TypeCatalog'),
-            flattenTreelist
+            flattenTree
         );
     }
 
@@ -138,7 +138,7 @@ export /* package-private */ module ProjectCategories {
 
         return flow(t,
             filterTrees('Image'),
-            flattenTreelist,
+            flattenTree,
             map(to([Named.NAME]))
         );
     }

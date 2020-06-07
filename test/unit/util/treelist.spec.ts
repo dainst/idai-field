@@ -2,7 +2,7 @@ import {equal, is, on, reverse} from 'tsfun';
 import {
     accessT,
     findInTreelist,
-    flattenTreelist,
+    flattenTree,
     mapTreelists,
     mapTreelist, Tree,
     Treelist
@@ -89,8 +89,38 @@ describe('Treelist', () => {
                 3
             ];
 
-        expect(equal(flattenTreelist(t), exp)).toBeTruthy();
+        expect(equal(flattenTree(t), exp)).toBeTruthy();
         expect(exp[2]).toBe(a); // retains original instancesf
+    });
+
+
+    it('flatten - tree', () => {
+
+        const a = { a: 1 };
+
+        const t: Tree<any> = {
+            t: 17,
+            trees: [
+                { t: 1, trees: [
+                        { t: 13, trees: [{ t: a, trees: []}]},
+                        { t: 16, trees: []},
+                    ]},
+                { t: 3, trees: []}
+            ]
+        };
+
+        const exp: Array<any> =
+            [
+                17,
+                1,
+                13,
+                a,
+                16,
+                3
+            ];
+
+        expect(equal(flattenTree(t), exp)).toBeTruthy();
+        expect(exp[3]).toBe(a); // retains original instancesf
     });
 
 

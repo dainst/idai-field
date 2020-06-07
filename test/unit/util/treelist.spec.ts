@@ -162,7 +162,7 @@ describe('Treelist', () => {
     });
 
 
-    it('accessTreelist - second level', () => {
+    fit('accessTreelist - second level', () => {
 
         expect(accessTreelist(
             [

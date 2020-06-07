@@ -4,7 +4,7 @@ import {Comparator} from 'tsfun/by';
 // TODO make constructor with which the refactoring of the tests could have been easier, for example a convert method between the different literal variants of defining the tree
 
 
-export type Tree<T> = { /* TODO improve refactorability: rename and see what can be improved; rename to item */ node: T,
+export type Tree<T> = { /* TODO improve refactorability: rename and see what can be improved; rename to item, or just t */ node: T,
     trees: Treelist<T> }
 
 export type Treelist<T> = Array<Tree<T>>;

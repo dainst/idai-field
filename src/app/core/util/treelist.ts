@@ -95,7 +95,9 @@ export function flattenTree<A>(t: Tree<A>|Treelist<A>): Array<A> {
 }
 
 
-export function findInTreelist<T>(match: T|Predicate<T>, t: Treelist<T>, comparator?: Comparator): Tree<T>|undefined {
+export function findInTree<T>(match: T|Predicate<T>, t: Treelist<T>|Tree<T>, comparator?: Comparator): Tree<T>|undefined {
+
+    if (isObject(t)) return findInTree(match, [t as any], comparator);
 
     for (let node of t) {
 
@@ -107,7 +109,7 @@ export function findInTreelist<T>(match: T|Predicate<T>, t: Treelist<T>, compara
                 ? (match as Predicate<T>)(t)
                 : match === t) return node;
 
-        const findResult = findInTreelist(match, trees, comparator);
+        const findResult = findInTree(match, trees, comparator);
         if (findResult) return findResult;
     }
     return undefined;

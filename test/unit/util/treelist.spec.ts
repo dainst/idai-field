@@ -1,7 +1,7 @@
 import {equal, is, on, reverse} from 'tsfun';
 import {
     accessT,
-    findInTreelist,
+    findInTree,
     flattenTree,
     mapTrees,
     mapTreelist, Tree,
@@ -164,15 +164,32 @@ describe('Treelist|Tree', () => {
                 { t: 3, trees: []}
             ];
 
-        const exp1: Tree<any> = findInTreelist(13, t);
+        const exp1: Tree<any> = findInTree(13, t);
         expect(equal(exp1,{ t: 13, trees: [{ t: 17, trees: []}]})).toBeTruthy();
 
-        const exp2: Tree<any> = findInTreelist(19, t);
+        const exp2: Tree<any> = findInTree(19, t);
         expect(equal(exp2,undefined)).toBeTruthy();
     });
 
 
-    it('findInTreelist with Preciate', () => {
+    it('findInTreelist - tree', () => {
+
+        const t: Tree<any> = {
+            t: 17,
+            trees: [
+                { t: 4, trees: []}
+            ]
+        };
+
+        const exp1: Tree<any> = findInTree(17, t);
+        expect(equal(exp1,{ t: 17, trees: [{ t: 4, trees: []}]})).toBeTruthy();
+
+        const exp2: Tree<any> = findInTree(15, t);
+        expect(equal(exp2,undefined)).toBeTruthy();
+    });
+
+
+    it('findInTreelist with Predicate', () => {
 
         const a = { a: 3 };
 
@@ -185,7 +202,7 @@ describe('Treelist|Tree', () => {
                 { t: 3, trees: []}
             ];
 
-        const exp1: Tree<any> = findInTreelist(on('a', is(3)), t);
+        const exp1: Tree<any> = findInTree(on('a', is(3)), t);
         expect(equal(exp1,{ t: {a: 3}, trees: [{ t: 17, trees: []}]})).toBeTruthy();
     });
 
@@ -202,7 +219,7 @@ describe('Treelist|Tree', () => {
                 { t: 3, trees: []}
             ];
 
-        const exp1: Tree<any> = findInTreelist({ a: 3 }, t, on('a'));
+        const exp1: Tree<any> = findInTree({ a: 3 }, t, on('a'));
         expect(equal(exp1,{ t: {a: 3}, trees: [{ t: 17, trees: []}]})).toBeTruthy();
     });
 

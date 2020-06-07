@@ -1,12 +1,12 @@
 import {drop, identity, includedIn, is, isArray, isNot, on, take} from 'tsfun';
-import {findInTreelist, Treelist} from './treelist';
+import {findInTree, Treelist} from './treelist';
 import {Named} from './named';
 import {Name} from '../constants';
 
 
 export function findInNamedTreelist<N extends Named>(match: Name, t: Treelist<N>): N|undefined {
 
-    const result = findInTreelist(on(Named.NAME, is(match)), t);
+    const result = findInTree(on(Named.NAME, is(match)), t);
     return result ? result.t : undefined;
 }
 

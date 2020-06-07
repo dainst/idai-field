@@ -10,7 +10,7 @@ export type Tree<T> = {
 export type Treelist<T> = Array<Tree<T>>;
 
 
-export module Treelist { // TODO review structure
+export module Treelist {
 
     export module Tree {
 
@@ -20,7 +20,6 @@ export module Treelist { // TODO review structure
 }
 
 
-// TODO rename to mapTree and make it work for both Tree and Treelist (which is now possible since tree and treelist are distinguishable by type (javascript type))
 export function mapTreelist<A,B>(f: Mapping<A,B>, t: Treelist<A>): Treelist<B>;
 export function mapTreelist<A,B>(f: Mapping<A,B>): Mapping<Treelist<A>,Treelist<B>>;
 export function mapTreelist(...args: any[]): any {
@@ -40,7 +39,7 @@ export function mapTreelist(...args: any[]): any {
 }
 
 
-export function accessT<T>(t: Treelist<T>|Tree<T>, ...path: number[] /* TODO make 1 elem minimum */): T {
+export function accessT<T>(t: Treelist<T>|Tree<T>, ...path: number[]): T {
 
     function _accessTree<T>(t: Tree<T>, path: number[], lastSegmentIsNumber: boolean): T {
 

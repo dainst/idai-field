@@ -1,6 +1,6 @@
 import {ChangeDetectorRef, Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {SafeResourceUrl} from '@angular/platform-browser';
-import {take, flatten, set, flow, filter, map, to, Map} from 'tsfun';
+import {take, flatten, set, flow, filter, map, to, Map, isnt} from 'tsfun';
 import {Document, FieldDocument} from 'idai-components-2';
 import {ViewFacade} from '../../../core/resources/view/view-facade';
 import {Loading} from '../../widgets/loading';
@@ -299,7 +299,7 @@ export class TypeGridComponent extends BaseList implements OnChanges {
     private getImageIdsOfLinkedResources(document: FieldDocument): string[] {
 
         const imageIds: string[] = TypeImagesUtil.getLinkedImageIds(document, this.fieldDatastore, this.imageDatastore)
-            .filter(imageId => imageId !== PLACEHOLDER);
+            .filter(isnt(PLACEHOLDER));
 
         return take(4, imageIds);
     }

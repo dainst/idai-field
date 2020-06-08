@@ -59,6 +59,16 @@ export function buildTree<T>([item, children]: ArrayTree<T>): Tree<T> {
 
 
 
+// Tree and Treelist functions //////////////////////
+
+// Implementation note:
+// Technically it would be no problem to have only a function mapTree
+// (making mapTreelist superfluous) which maps both Tree and Treelist.
+// But the two argument list version would then return Mapping<Tree|Treelist>
+// which would then lead to the problem that we needed to disambiguate typewise
+// in flows, which we want to avoid  (same consideration which in tsfun led
+// to having various packages containing various functions versions).
+
 export function mapTreelist<A,B>(f: Mapping<A,B>, t: Treelist<A>): Treelist<B>;
 export function mapTreelist<A,B>(f: Mapping<A,B>): Mapping<Treelist<A>,Treelist<B>>;
 export function mapTreelist(...args: any[]): any {

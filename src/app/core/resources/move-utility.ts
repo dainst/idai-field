@@ -66,10 +66,10 @@ export module MoveUtility {
 
     function getParentId(document: FieldDocument): string|undefined {
 
-        if (Document.hasRelations(document, 'liesWithin')) {
-            return document.resource.relations['liesWithin'][0];
-        } else if (Document.hasRelations(document, 'isRecordedIn')) {
-            return document.resource.relations.isRecordedIn[0];
-        }
+        return Document.hasRelations(document, 'liesWithin')
+            ? document.resource.relations['liesWithin'][0]
+            : Document.hasRelations(document, 'isRecordedIn')
+                ? document.resource.relations.isRecordedIn[0]
+                : undefined;
     }
 }

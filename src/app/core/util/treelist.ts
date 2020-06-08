@@ -1,4 +1,4 @@
-import {Mapping, Predicate, isFunction, first, isNumber, rest, isObject, isArray, Pair, to, Path} from 'tsfun';
+import {Mapping, Predicate, isFunction, first, isNumber, rest, isObject, isArray, Pair, to, Path, is} from 'tsfun';
 import {Comparator} from 'tsfun/by';
 import {Named} from './named';
 
@@ -104,25 +104,31 @@ export function flattenTree<A>(t: Tree<A>|Treelist<A>): Array<A> {
     return (isArray(t) ? [] : [(t as Tree<A>).item]).concat(reduced);
 }
 
-
+// TODO exchange positions of first and second param
 export function findInTree<T>(match: T|Predicate<T>, t: Treelist<T>|Tree<T>, comparator?: Comparator): Tree<T>|undefined {
 
     if (isObject(t)) return findInTree(match, [t as any], comparator);
 
     for (let node of t) {
-
         const { item: t, trees: trees } = node;
 
-        if (comparator !== undefined
-            ? comparator(match)(t)
-            : isFunction(match)
-                ? (match as Predicate<T>)(t)
-                : match === t) return node;
+        const matches: Predicate<T> = buildMatches(match, comparator);
+        if (matches(t)) return node;
 
         const findResult = findInTree(match, trees, comparator);
         if (findResult) return findResult;
     }
     return undefined;
+}
+
+
+function buildMatches<T>(match: T|Predicate<T>, comparator?: Comparator): Predicate<T> {
+
+    return comparator !== undefined
+        ? comparator(match)
+        : isFunction(match)
+            ? (match as Predicate<T>)
+            : is(match);
 }
 
 

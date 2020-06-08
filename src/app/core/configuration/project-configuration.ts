@@ -6,7 +6,7 @@ import {FieldDefinition} from './model/field-definition';
 import {RelationDefinition} from './model/relation-definition';
 import {Named, namedArrayToNamedMap} from '../util/named';
 import {RelationsUtil} from './relations-utils';
-import {ITEMNAMEPATH, Treelist} from '../util/treelist';
+import {ITEMNAMEPATH} from '../util/treelist';
 import {CategoryTreelist, categoryTreelistToArray} from './category-treelist';
 import {Name} from '../constants';
 import {isTopLevelItemOrChildThereof} from '../util/named-treelist';

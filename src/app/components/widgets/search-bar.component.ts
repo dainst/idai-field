@@ -2,7 +2,6 @@ import {Component, EventEmitter, Input, Output, ViewChild, ElementRef, OnChanges
 import {sameset} from 'tsfun';
 import {Category} from '../../core/configuration/model/category';
 import {ProjectConfiguration} from '../../core/configuration/project-configuration';
-import {ProjectCategories} from '../../core/configuration/project-categories';
 
 
 @Component({

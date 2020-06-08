@@ -139,11 +139,35 @@ describe('NamedTreelist', () => {
             ]
         ]);
 
-        const result = removeTrees(categoryTreelist, 'Operation', 'Inscription');
+        const result0 = removeTrees(categoryTreelist, 'Operation', 'Inscription');
 
-        expect(result.length).toBe(1);
-        expect(accessTree(result, 0).name).toBe('Image');
-        expect(accessTree(result, 0, 0).name).toBe('Drawing');
+        expect(result0.length).toBe(1);
+        expect(accessTree(result0, 0).name).toBe('Image');
+        expect(accessTree(result0, 0, 0).name).toBe('Drawing');
+
+        const result1 = removeTrees('Operation', 'Inscription')(categoryTreelist);
+
+        expect(result1.length).toBe(1);
+        expect(accessTree(result1, 0).name).toBe('Image');
+        expect(accessTree(result1, 0, 0).name).toBe('Drawing');
+
+        const result2 = removeTrees('Image')(categoryTreelist);
+
+        expect(result2.length).toBe(2);
+        expect(accessTree(result2, 0).name).toBe('Operation');
+        expect(accessTree(result2, 1).name).toBe('Inscription');
+
+        const result3 = removeTrees(categoryTreelist, 'Image');
+
+        expect(result3.length).toBe(2);
+        expect(accessTree(result3, 0).name).toBe('Operation');
+        expect(accessTree(result3, 1).name).toBe('Inscription');
+
+
+        // typing
+        // const result = removeTrees(categoryTreelist);
+        // const result = removeTrees()(categoryTreelist);
+        // const result: Treelist<Named> = removeTrees('Operation');
     });
 
 

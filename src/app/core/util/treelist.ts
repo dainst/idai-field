@@ -104,7 +104,7 @@ export function flattenTree<A>(t: Tree<A>|Treelist<A>): Array<A> {
     return (isArray(t) ? [] : [(t as Tree<A>).item]).concat(reduced);
 }
 
-
+// TODO exchange positions of first and second param
 export function findInTree<T>(match: T|Predicate<T>, t: Treelist<T>|Tree<T>, comparator?: Comparator): Tree<T>|undefined {
 
     if (isObject(t)) return findInTree(match, [t as any], comparator);

@@ -34,6 +34,7 @@ import {TypeGridVirtualScrollStrategy} from './type-grid-virtual-scroll-strategy
 })
 /**
  * @author Thomas Kleinke
+ * @author Sebastian Cuy
  */
 export class TypeGridComponent extends BaseList implements OnChanges {
 

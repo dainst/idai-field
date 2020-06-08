@@ -1,14 +1,3 @@
-<ng-template #gridElement let-document="document">
-    <span *ngIf="getLinkedSubtype(document)" class="badge badge-primary">
-        {{getLinkedSubtype(document).resource.identifier}}
-    </span>
-    <type-icon [category]="document.resource.category"
-               [imageUrls]="getImageUrls(document)"></type-icon>
-    <div class="type-grid-resource-info">
-        {{document.resource.identifier}}
-    </div>
-</ng-template>
-
 <context-menu *ngIf="contextMenu.isOpen()"
               [contextMenu]="contextMenu"
               [showViewOption]="true"
@@ -37,12 +26,13 @@
 
             <cdk-virtual-scroll-viewport>
                 <div *cdkVirtualFor="let document of documents"
-                    id="type-grid-element-{{document.resource.identifier}}"
-                    class="type-grid-element"
-                    (click)="open(document)"
-                    (contextmenu)="contextMenu.open($event, document)">
-                    <ng-container [ngTemplateOutlet]="gridElement"
-                                [ngTemplateOutletContext]="{ document: document }"></ng-container>
+                        id="type-grid-element-{{document.resource.identifier}}"
+                        class="type-grid-element"
+                        (click)="open(document)"
+                        (contextmenu)="contextMenu.open($event, document)">
+                    <type-grid-element [document]="document"
+                        [subtype]="getLinkedSubtype(document)"
+                        [imageUrls]="getImageUrls(document)"></type-grid-element>
                 </div>
             </cdk-virtual-scroll-viewport>
 
@@ -64,11 +54,13 @@
 
             <cdk-virtual-scroll-viewport>
                 <div *cdkVirtualFor="let document of linkedDocuments"
-                    id="type-grid-element-linked-document-{{document.resource.identifier}}"
-                    class="type-grid-element"
-                    (click)="openResourceViewModal(document)">
-                    <ng-container [ngTemplateOutlet]="gridElement"
-                                [ngTemplateOutletContext]="{ document: document }"></ng-container>
+                        id="type-grid-element-linked-document-{{document.resource.identifier}}"
+                        class="type-grid-element"
+                        (click)="openResourceViewModal(document)">
+                    <type-grid-element
+                        [document]="document"
+                        [subtype]="getLinkedSubtype(document)"
+                        [imageUrls]="getImageUrls(document)"></type-grid-element>
                 </div>
             </cdk-virtual-scroll-viewport>
         </div>

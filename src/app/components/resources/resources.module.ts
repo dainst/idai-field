@@ -51,6 +51,7 @@ import {ImageViewerModule} from '../image/viewer/image-viewer.module';
 import {TypeGridComponent} from './typegrid/type-grid.component';
 import {TypeIconComponent} from './typegrid/type-icon.component';
 import {Messages} from '../messages/messages';
+import { TypeGridElementComponent } from './typegrid/type-grid-element.component';
 
 const remote = typeof window !== 'undefined'
   ? window.require('electron').remote
@@ -75,6 +76,7 @@ const remote = typeof window !== 'undefined'
         EditableMapComponent,
         ResourcesMapComponent,
         TypeGridComponent,
+        TypeGridElementComponent,
         TypeIconComponent,
         LayerMenuComponent,
         ListComponent,

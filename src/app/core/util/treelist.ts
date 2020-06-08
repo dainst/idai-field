@@ -110,7 +110,6 @@ export function findInTree<T>(match: T|Predicate<T>, t: Treelist<T>|Tree<T>, com
     if (isObject(t)) return findInTree(match, [t as any], comparator);
 
     for (let node of t) {
-
         const { item: t, trees: trees } = node;
 
         const isMatching: Predicate =

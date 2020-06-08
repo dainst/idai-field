@@ -52,6 +52,7 @@ import {TypeGridComponent} from './typegrid/type-grid.component';
 import {TypeIconComponent} from './typegrid/type-icon.component';
 import {Messages} from '../messages/messages';
 import { TypeGridElementComponent } from './typegrid/type-grid-element.component';
+import { TypeGridGridComponent } from './typegrid/type-grid-grid.component';
 
 const remote = typeof window !== 'undefined'
   ? window.require('electron').remote
@@ -76,6 +77,7 @@ const remote = typeof window !== 'undefined'
         EditableMapComponent,
         ResourcesMapComponent,
         TypeGridComponent,
+        TypeGridGridComponent,
         TypeGridElementComponent,
         TypeIconComponent,
         LayerMenuComponent,

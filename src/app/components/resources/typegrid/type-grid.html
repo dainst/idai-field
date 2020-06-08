@@ -24,17 +24,9 @@
                  class="grid-section-label first-grid-section-label"
                  i18n="@@resources.typeGrid.subtypes">Untertypen</div>
 
-            <cdk-virtual-scroll-viewport>
-                <div *cdkVirtualFor="let document of documents"
-                        id="type-grid-element-{{document.resource.identifier}}"
-                        class="type-grid-element"
-                        (click)="open(document)"
-                        (contextmenu)="contextMenu.open($event, document)">
-                    <type-grid-element [document]="document"
-                        [subtype]="getLinkedSubtype(document)"
-                        [imageUrls]="getImageUrls(document)"></type-grid-element>
-                </div>
-            </cdk-virtual-scroll-viewport>
+            <type-grid-grid [documents]="documents"
+                            (clickDocument)="open($event)"
+                            (contextmenuDocument)="contextMenu.open($event.mouseEvent, $event.document)"></type-grid-grid>
 
             <div id="plus-button-container">
                 <plus-button *ngIf="isPlusButtonShown()"
@@ -52,17 +44,8 @@
             <div class="grid-section-label"
                  i18n="@@resources.typeGrid.linkedFinds">Zugeordnete Funde</div>
 
-            <cdk-virtual-scroll-viewport>
-                <div *cdkVirtualFor="let document of linkedDocuments"
-                        id="type-grid-element-linked-document-{{document.resource.identifier}}"
-                        class="type-grid-element"
-                        (click)="openResourceViewModal(document)">
-                    <type-grid-element
-                        [document]="document"
-                        [subtype]="getLinkedSubtype(document)"
-                        [imageUrls]="getImageUrls(document)"></type-grid-element>
-                </div>
-            </cdk-virtual-scroll-viewport>
+            <type-grid-grid [documents]="linkedDocuments"
+                 (clickDocument)="open($event)"></type-grid-grid>
         </div>
     </div>
 </div>

@@ -1,6 +1,5 @@
 import {ChangeDetectorRef, Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {SafeResourceUrl} from '@angular/platform-browser';
-import {VIRTUAL_SCROLL_STRATEGY} from '@angular/cdk/scrolling';
 import {take, flatten, set, flow, filter, map, to, Map} from 'tsfun';
 import {Document, FieldDocument} from 'idai-components-2';
 import {ViewFacade} from '../../../core/resources/view/view-facade';
@@ -20,7 +19,6 @@ import {ProjectCategories} from '../../../core/configuration/project-categories'
 import {TabManager} from '../../../core/tabs/tab-manager';
 import {PLACEHOLDER} from '../../../core/images/row/image-row';
 import {makeLookup} from 'src/app/core/util/transformers';
-import {TypeGridVirtualScrollStrategy} from './type-grid-virtual-scroll-strategy';
 
 
 @Component({
@@ -29,8 +27,7 @@ import {TypeGridVirtualScrollStrategy} from './type-grid-virtual-scroll-strategy
     host: {
         '(window:contextmenu)': 'handleClick($event, true)',
         '(window:keydown)': 'onKeyDown($event)'
-    },
-    providers: [{provide: VIRTUAL_SCROLL_STRATEGY, useClass: TypeGridVirtualScrollStrategy}]
+    }
 })
 /**
  * @author Thomas Kleinke
@@ -117,7 +114,7 @@ export class TypeGridComponent extends BaseList implements OnChanges {
 
 
     public async open(document: FieldDocument) {
-
+console.log('open', document);
         await this.viewFacade.moveInto(document, false, true);
     }
 

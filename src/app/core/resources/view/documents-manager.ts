@@ -159,7 +159,9 @@ export class DocumentsManager {
 
     public removeNewDocument() {
 
-        this.documents = this.documents.filter(hasId);
+        if (this.documents.find(document => !hasId(document))) {
+            this.documents = this.documents.filter(hasId);
+        }
     }
 
 

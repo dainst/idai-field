@@ -287,7 +287,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
         const marker: FieldMarker = L.circleMarker(latLng, {
             fillColor: color,
             fillOpacity: 1,
-            radius: 7,
+            radius: 5,
             stroke: document === this.selectedDocument,
             color: '#fff',
             weight: 2

@@ -30,7 +30,7 @@ export class RowComponent implements AfterViewInit {
     @Input() document: FieldDocument;
     @Input() categoriesMap: { [category: string]: Category };
 
-    @ViewChild('identifierInput', {static: false}) identifierInput: ElementRef;
+    @ViewChild('identifierInput', { static: false }) identifierInput: ElementRef;
 
     private initialValueOfCurrentlyEditedField: string|undefined;
 

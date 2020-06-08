@@ -1,16 +1,8 @@
-import {
-    Mapping,
-    Predicate,
-    isFunction,
-    first,
-    isNumber,
-    rest,
-    isObject,
-    isArray,
-    Pair, to
-} from 'tsfun';
+import {Mapping, Predicate, isFunction, first, isNumber, rest, isObject, isArray, Pair, to} from 'tsfun';
 import {Comparator} from 'tsfun/by';
 
+
+// Tree and Treelist data structures ////////////////
 
 export type Tree<T> = {
     item: T,
@@ -18,14 +10,6 @@ export type Tree<T> = {
 }
 
 export type Treelist<T> = Array<Tree<T>>;
-
-
-export type Node<ITEM,TREES> = Pair<ITEM,TREES>;
-
-export type ArrayTree<T> = Node<T, ArrayTreelist<T>>;
-
-export type ArrayTreelist<T> = Array<ArrayTree<T>>;
-
 
 export module Treelist {
 
@@ -36,24 +20,43 @@ export module Treelist {
     }
 }
 
-
 export const toTreeItem = to([Treelist.Tree.ITEM]);
 
+// Tree and Treelist - END //////////////////////////
 
+
+
+// ArrayTree and ArrayTreelist data structures //////
+// Contrary to our Tree and Treelist data structures,
+// this structure does not allow for distinguishing trees and
+// treelists on the javascript level by virtue of them being either
+// objects or arrays.
+// However, this version reads much nicer and we use it to instantiate
+// our trees in all tests. The builder functions also provides an indirection
+// which protects the test code from possible changes to the tree data structure.
+
+export type Node<ITEM,TREES> = Pair<ITEM,TREES>;
+
+export type ArrayTree<T> = Node<T, ArrayTreelist<T>>;
+
+export type ArrayTreelist<T> = Array<ArrayTree<T>>;
 
 export function buildTreelist<T>(t: ArrayTreelist<T>): Treelist<T> {
 
-    return t.map(([t,trees]) => ({ item: t, trees: buildTreelist(trees)}))
+    return t.map(([t,trees]) => ({ item: t, trees: buildTreelist(trees)}));
 }
-
 
 export function buildTree<T>([item, children]: ArrayTree<T>): Tree<T> {
 
     return {
         item: item,
         trees: children.map(([t,trees]) => ({ item: t, trees: buildTreelist(trees)}))
-    }
+    };
 }
+
+// ArrayTree and ArrayTreelist - END ////////////////
+
+
 
 
 export function mapTreelist<A,B>(f: Mapping<A,B>, t: Treelist<A>): Treelist<B>;

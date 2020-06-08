@@ -216,7 +216,7 @@ export class EditableMapComponent extends LayerMapComponent {
         const editableMarker: L.CircleMarker = L.circleMarker(position, {
             fillColor: color,
             fillOpacity: 1,
-            radius: 7,
+            radius: 5,
             stroke: false,
             color: '#fff',
             weight: 2

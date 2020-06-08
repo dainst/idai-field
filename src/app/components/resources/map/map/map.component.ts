@@ -294,7 +294,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
         });
         marker.document = document;
 
-        marker.bindTooltip(MapComponent.getShortDescription(document.resource), {
+        marker.bindTooltip(MapComponent.getTooltipText(document.resource), {
             direction: 'top',
             opacity: 1.0
         });
@@ -362,7 +362,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
 
         path.setStyle(style);
 
-        path.bindTooltip(MapComponent.getShortDescription(document.resource), {
+        path.bindTooltip(MapComponent.getTooltipText(document.resource), {
             direction: 'center',
             opacity: 1.0
         });
@@ -503,7 +503,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
     }
 
 
-    private static getShortDescription(resource: FieldResource) {
+    private static getTooltipText(resource: FieldResource) {
 
         let shortDescription = resource.identifier;
         if (resource.shortDescription && resource.shortDescription.length > 0) {

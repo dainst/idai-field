@@ -29,8 +29,8 @@ export class SearchBarComponent implements OnChanges {
     @Output() onCategoriesChanged = new EventEmitter<string[]>();
     @Output() onQueryStringChanged = new EventEmitter<string>();
 
-    @ViewChild('p', {static: false}) protected popover: any;
-    @ViewChild('searchInput', {static: false}) fulltextSearchInput: ElementRef;
+    @ViewChild('p', { static: false }) protected popover: any;
+    @ViewChild('searchInput', { static: false }) fulltextSearchInput: ElementRef;
 
     public focused: boolean = false;
 

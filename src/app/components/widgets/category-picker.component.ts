@@ -30,7 +30,7 @@ export class CategoryPickerComponent implements OnChanges {
 
         this.categories = [];
 
-        this.toplevelCategoriesArray.forEach(category => { // TODO review, we could use getCategoriesMap()
+        this.toplevelCategoriesArray.forEach(category => {
             this.categories.push(category);
             if (category.children) this.categories = this.categories.concat(category.children);
         });

@@ -155,15 +155,7 @@ export /* package-private */ module ProjectCategories {
     }
 
 
-    export function getNamesOfCategoryAndSubcategories(category: Category): string[] {
-
-        return [category.name].concat(category.children.map(to('name')));
-    }
-
-
     function getSuperCategoryNames(categories: Treelist<Category>, superCategoryName: string) {
-
-        console.log('categories:', categories);
 
         return flow(
             categories,

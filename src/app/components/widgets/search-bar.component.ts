@@ -69,7 +69,7 @@ export class SearchBarComponent implements OnChanges {
     public chooseCategoryFilter(category: Category) {
 
         let newCategories: string[]|undefined = category
-            ? ProjectCategories.getNamesOfCategoryAndSubcategories(category)
+            ? Category.getNamesOfCategoryAndSubcategories(category)
             : undefined;
 
         if (newCategories && newCategories.length > 1 && this.categories

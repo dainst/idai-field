@@ -56,6 +56,12 @@ export module Category {
     }
 
 
+    export function getNamesOfCategoryAndSubcategories(category: Category): string[] {
+
+        return [category.name].concat(category.children.map(to('name')));
+    }
+
+
     export function isBrightColor(color: string): boolean {
 
         color = color.substring(1); // strip #

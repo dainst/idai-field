@@ -2,8 +2,6 @@ import {Mapping, Predicate, isFunction, first, isNumber, rest, isObject, isArray
 import {Comparator} from 'tsfun/by';
 
 
-// Tree and Treelist data structures ////////////////
-
 export type Tree<T> = {
     item: T,
     trees: Treelist<T>
@@ -21,45 +19,6 @@ export module Treelist {
 }
 
 export const toTreeItem = to([Treelist.Tree.ITEM]);
-
-// Tree and Treelist - END //////////////////////////
-
-
-
-// ArrayTree and ArrayTreelist data structures //////
-// In contrast to our Tree and Treelist data structures
-// this structure does not allow for distinguishing trees and
-// treelists on the javascript level by virtue of them being either
-// objects or arrays.
-// However, this version reads much nicer and we use it to instantiate
-// our trees in all tests. The builder functions also provides an indirection
-// which protects the test code from possible changes to the tree data structure.
-
-export type Node<ITEM,TREES> = Pair<ITEM,TREES>;
-
-export type ArrayTree<T> = Node<T, ArrayTreelist<T>>;
-
-export type ArrayTreelist<T> = Array<ArrayTree<T>>;
-
-export function buildTreelist<T>(t: ArrayTreelist<T>): Treelist<T> {
-
-    return t.map(([t,trees]) => ({ item: t, trees: buildTreelist(trees)}));
-}
-
-export function buildTree<T>([item, children]: ArrayTree<T>): Tree<T> {
-
-    return {
-        item: item,
-        trees: children.map(([t,trees]) => ({ item: t, trees: buildTreelist(trees)}))
-    };
-}
-
-// ArrayTree and ArrayTreelist - END ////////////////
-
-
-
-
-// Tree and Treelist functions //////////////////////
 
 // Implementation note:
 // Technically it would be no problem to have only a function mapTree
@@ -162,4 +121,34 @@ export function findInTree<T>(match: T|Predicate<T>, t: Treelist<T>|Tree<T>, com
         if (findResult) return findResult;
     }
     return undefined;
+}
+
+
+// ArrayTree and ArrayTreelist data structures //////
+//
+// In contrast to our Tree and Treelist data structures
+// this structure does not allow for distinguishing trees and
+// treelists on the javascript level by virtue of them being either
+// objects or arrays.
+// However, this version reads much nicer and we use it to instantiate
+// our trees in all tests. The builder functions also provides an indirection
+// which protects the test code from possible changes to the tree data structure.
+
+export type Node<ITEM,TREES> = Pair<ITEM,TREES>;
+
+export type ArrayTree<T> = Node<T, ArrayTreelist<T>>;
+
+export type ArrayTreelist<T> = Array<ArrayTree<T>>;
+
+export function buildTreelist<T>(t: ArrayTreelist<T>): Treelist<T> {
+
+    return t.map(([t,trees]) => ({ item: t, trees: buildTreelist(trees)}));
+}
+
+export function buildTree<T>([item, children]: ArrayTree<T>): Tree<T> {
+
+    return {
+        item: item,
+        trees: children.map(([t,trees]) => ({ item: t, trees: buildTreelist(trees)}))
+    };
 }

@@ -22,8 +22,8 @@ import {makeLookup} from 'src/app/core/util/transformers';
 
 
 @Component({
-    selector: 'type-grid',
-    templateUrl: './type-grid.html',
+    selector: 'types',
+    templateUrl: './types.html',
     host: {
         '(window:contextmenu)': 'handleClick($event, true)',
         '(window:keydown)': 'onKeyDown($event)'
@@ -33,7 +33,7 @@ import {makeLookup} from 'src/app/core/util/transformers';
  * @author Thomas Kleinke
  * @author Sebastian Cuy
  */
-export class TypeGridComponent extends BaseList implements OnChanges {
+export class TypesComponent extends BaseList implements OnChanges {
 
     /**
      * These are the Type documents found at the current level,
@@ -114,7 +114,7 @@ export class TypeGridComponent extends BaseList implements OnChanges {
 
 
     public async open(document: FieldDocument) {
-console.log('open', document);
+
         await this.viewFacade.moveInto(document, false, true);
     }
 

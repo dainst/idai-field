@@ -326,7 +326,7 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
 
     private async selectDocumentFromParams(id: string, menu: string, group: string|undefined) {
 
-        if (this.viewFacade.getMode() === 'type-grid') {
+        if (this.viewFacade.getMode() === 'types') {
             return await this.viewFacade.moveInto(id, false, true);
         }
 

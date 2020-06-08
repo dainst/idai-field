@@ -48,11 +48,11 @@ import {NavigationService} from '../../core/resources/navigation/navigation-serv
 import {PopoverMenuComponent} from './widgets/popovermenu/popover-menu.component';
 import {ViewModalLauncher} from './service/view-modal-launcher';
 import {ImageViewerModule} from '../image/viewer/image-viewer.module';
-import {TypeGridComponent} from './typegrid/type-grid.component';
-import {TypeIconComponent} from './typegrid/type-icon.component';
+import {TypeGridElementComponent } from './types/type-grid-element.component';
+import {TypesComponent} from './types/types.component';
+import {TypeGridComponent} from './types/type-grid.component';
+import {TypeIconComponent} from './types/type-icon.component';
 import {Messages} from '../messages/messages';
-import { TypeGridElementComponent } from './typegrid/type-grid-element.component';
-import { TypeGridGridComponent } from './typegrid/type-grid-grid.component';
 
 const remote = typeof window !== 'undefined'
   ? window.require('electron').remote
@@ -76,8 +76,8 @@ const remote = typeof window !== 'undefined'
         LayerMapComponent,
         EditableMapComponent,
         ResourcesMapComponent,
+        TypesComponent,
         TypeGridComponent,
-        TypeGridGridComponent,
         TypeGridElementComponent,
         TypeIconComponent,
         LayerMenuComponent,

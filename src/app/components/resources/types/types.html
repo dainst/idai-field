@@ -24,9 +24,9 @@
                  class="grid-section-label first-grid-section-label"
                  i18n="@@resources.typeGrid.subtypes">Untertypen</div>
 
-            <type-grid-grid [documents]="documents"
-                            (clickDocument)="open($event)"
-                            (contextmenuDocument)="contextMenu.open($event.mouseEvent, $event.document)"></type-grid-grid>
+            <type-grid [documents]="documents"
+                       (clickDocument)="open($event)"
+                       (contextmenuDocument)="contextMenu.open($event.mouseEvent, $event.document)"></type-grid>
 
             <div id="plus-button-container">
                 <plus-button *ngIf="isPlusButtonShown()"
@@ -44,8 +44,8 @@
             <div class="grid-section-label"
                  i18n="@@resources.typeGrid.linkedFinds">Zugeordnete Funde</div>
 
-            <type-grid-grid [documents]="linkedDocuments"
-                 (clickDocument)="open($event)"></type-grid-grid>
+            <type-grid [documents]="linkedDocuments"
+                       (clickDocument)="open($event)"></type-grid>
         </div>
     </div>
 </div>

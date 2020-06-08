@@ -4,7 +4,6 @@ import {Named, onName, toName} from '../util/named';
 import {flattenTree, Treelist} from '../util/treelist';
 import {Name} from '../constants';
 import {filterTrees, isTopLevelItemOrChildThereof, removeTrees} from '../util/named-treelist';
-import {ProjectConfiguration} from './project-configuration';
 
 const TYPE_CATALOG = 'TypeCatalog';
 const TYPE = 'Type';

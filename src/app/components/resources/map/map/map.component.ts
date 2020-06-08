@@ -86,12 +86,59 @@ export class MapComponent implements AfterViewInit, OnChanges {
 
         if (!this.update) return Promise.resolve();
 
+        if (changes['selectedDocument'] && (!changes['documents']) && !changes['parentDocument']
+                && !changes['coordinateReferenceSystem']) {
+            this.updateSelectedGeometry(changes['selectedDocument'].previousValue);
+        } else {
+            this.resetMap();
+        }
+
+        return this.setView();
+    }
+
+
+    private resetMap() {
+
         this.clearMap();
         this.addGeometriesToMap();
         this.bringSelectedMarkersToFront();
         this.updateCoordinateReferenceSystem();
+    }
 
-        return this.setView();
+
+    private updateSelectedGeometry(previousSelectedDocument: FieldDocument|undefined) {
+
+        if (previousSelectedDocument) this.setSelectionStyle(previousSelectedDocument, false);
+        if (this.selectedDocument) this.setSelectionStyle(this.selectedDocument, true);
+    }
+
+
+    private setSelectionStyle(document: FieldDocument, selected: boolean) {
+
+        switch(document.resource.geometry.type) {
+            case 'Point':
+            case 'MultiPoint':
+                if (!this.markers[document.resource.id]) return;
+                this.markers[document.resource.id].forEach(marker => {
+                   marker.setStyle({ stroke: selected });
+                });
+                this.bringSelectedMarkersToFront();
+                break;
+            case 'LineString':
+            case 'MultiLineString':
+                if (!this.polylines[document.resource.id]) return;
+                this.polylines[document.resource.id].forEach(polyline => {
+                    MapComponent.updateActiveClass(polyline, selected);
+                });
+                break;
+            case 'Polygon':
+            case 'MultiPolygon':
+                if (!this.polygons[document.resource.id]) return;
+                this.polygons[document.resource.id].forEach(polygon => {
+                    MapComponent.updateActiveClass(polygon, selected);
+                });
+                break;
+        }
     }
 
 
@@ -464,5 +511,17 @@ export class MapComponent implements AfterViewInit, OnChanges {
         }
 
         return shortDescription;
+    }
+
+
+    private static updateActiveClass(geometry: L.Layer, selected: boolean) {
+
+        const active: boolean = geometry['_path'].classList.contains('active');
+
+        if (active && !selected) {
+            geometry['_path'].classList.remove('active');
+        } else if (!active && selected) {
+            geometry['_path'].classList.add('active');
+        }
     }
 }

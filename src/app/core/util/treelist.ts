@@ -1,4 +1,4 @@
-import {Mapping, Predicate, isFunction, first, isNumber, rest, isObject, isArray, Pair, to, Path} from 'tsfun';
+import {Mapping, Predicate, isFunction, first, isNumber, rest, isObject, isArray, Pair, to, Path, is} from 'tsfun';
 import {Comparator} from 'tsfun/by';
 import {Named} from './named';
 
@@ -113,11 +113,14 @@ export function findInTree<T>(match: T|Predicate<T>, t: Treelist<T>|Tree<T>, com
 
         const { item: t, trees: trees } = node;
 
-        if (comparator !== undefined
-            ? comparator(match)(t)
-            : isFunction(match)
-                ? (match as Predicate<T>)(t)
-                : match === t) return node;
+        const isMatching =
+            comparator !== undefined
+                ? comparator(match)
+                : isFunction(match)
+                    ? (match as Predicate<T>)
+                    : is(match);
+
+        if (isMatching(t)) return node;
 
         const findResult = findInTree(match, trees, comparator);
         if (findResult) return findResult;

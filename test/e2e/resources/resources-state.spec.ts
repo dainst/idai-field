@@ -306,6 +306,7 @@ describe('resources/state --', function() {
         // map - goto other tab and into navpath
         ResourcesPage.clickMapModeButton();
         ResourcesPage.clickSwitchHierarchyMode();
+        SearchBarPage.clickChooseCategoryFilter('find');
         ResourcesPage.clickHierarchyButton('testf1');
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('testf1')));
         ResourcesPage.getSelectedListItemIdentifierText().then(text => expect(text).toBe('testf1'));

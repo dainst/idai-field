@@ -115,6 +115,8 @@ export class MapComponent implements AfterViewInit, OnChanges {
 
     private setSelectionStyle(document: FieldDocument, selected: boolean) {
 
+        if (!document.resource.geometry) return;
+
         switch(document.resource.geometry.type) {
             case 'Point':
             case 'MultiPoint':

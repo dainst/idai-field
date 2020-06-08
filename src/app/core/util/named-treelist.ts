@@ -15,9 +15,7 @@ export function filterTrees<N extends Named>(t: Treelist<N>, match: Name, ...mor
 export function filterTrees<N extends Named>(match: Name, ...moreMatches: Name[]): (t: Treelist<N>) => Treelist<N>;
 export function filterTrees<N extends Named>(a: any, ...bs: any[]): any {
 
-    return isArray(a)
-        ? _filterTrees(a, take(1, bs)[0], drop(1, bs))
-        : (t: any) => _filterTrees(t, a, bs);
+    return _filterTrees(false, a, bs);
 }
 
 
@@ -25,9 +23,7 @@ export function removeTrees<N extends Named>(t: Treelist<N>, match: Name, ...mor
 export function removeTrees<N extends Named>(match: Name, ...moreMatches: Name[]): (t: Treelist<N>) => Treelist<N>;
 export function removeTrees<N extends Named>(a: any, ...bs: any[]): any {
 
-    return isArray(a)
-        ? _filterTrees(a, take(1, bs)[0], drop(1, bs), true)
-        : (t: any) => _filterTrees(t, a, bs, true);
+    return _filterTrees(true, a, bs);
 }
 
 
@@ -36,15 +32,19 @@ export function isTopLevelItemOrChildThereof(t: Treelist<Named>,
                                              firstLevelItem: Name,
                                              ...moreFirstLevelItems: Name[]): boolean {
 
-    const filtered = _filterTrees(t, firstLevelItem, moreFirstLevelItems);
+    const filtered = filterTrees(t, firstLevelItem, ...moreFirstLevelItems);
     return findInNamedTreelist(match, filtered) !== undefined;
 }
 
 
-function _filterTrees<N extends Named>(t: Treelist<N>, match: Name, moreMatches: Name[], invert = false): Treelist<N> {
+function _filterTrees<N extends Named>(invert: boolean, a: any, bs: any[]): Treelist<N> {
 
-    return t.filter(
+    const $ = (t: any, match: any, moreMatches: any) => t.filter(
         on(ITEMNAMEPATH,
             ((invert ? isNot : identity)(includedIn([match].concat(moreMatches))))
         ));
+
+    return isArray(a)
+        ? $(a, take(1, bs)[0], drop(1, bs))
+        : (t: any) => $(t, a, bs);
 }

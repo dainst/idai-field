@@ -144,27 +144,30 @@ export /* package-private */ module ProjectCategories {
     }
 
 
-    export function getFeatureCategoryNames(categoriesMap: Map<Category>): string[] {
+    export function getFeatureCategoryNames(categories: Treelist<Category>): string[] {
 
-        return getSuperCategoryNames(categoriesMap, 'Feature');
+        return getSuperCategoryNames(categories, 'Feature');
     }
 
 
-    export function getOperationCategoryNames(categoriesMap: Map<Category>): string[] {
+    export function getOperationCategoryNames(categories: Treelist<Category>): string[] {
 
-        return getSuperCategoryNames(categoriesMap, 'Operation');
+        return getSuperCategoryNames(categories, 'Operation');
     }
 
 
-    export function getNamesOfCategoriesAndSubcategories(categoriesMap: Map<Category>, supercategoryName: string): string[] {
+    export function getNamesOfCategoriesAndSubcategories(categories: Treelist<Category>, supercategoryName: string): string[] {
 
-        return getSuperCategoryNames(categoriesMap, supercategoryName);
+        return getSuperCategoryNames(categories, supercategoryName);
     }
 
 
-    // TODO implement via flattenTreelist and filterToplevelCategories (or something similar)
-    export function getSuperCategoryNames(categoriesMap: Map<Category>, superCategoryName: string) {
+    function getSuperCategoryNames(categories: Treelist<Category>, superCategoryName: string) {
 
-        return Object.keys(getCategoryAndSubcategories(superCategoryName, categoriesMap));
+        return flow(
+            categories,
+            filterTrees(superCategoryName),
+            flattenTree,
+            map(toName));
     }
 }

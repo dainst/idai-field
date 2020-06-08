@@ -37,7 +37,7 @@ export class FieldCategoryConverter extends CategoryConverter<Document> {
         if (categoryClass === 'ImageDocument') {
             return ProjectCategories.getImageCategoryNames(this.projectConfiguration.getCategoryTreelist());
         } else if (categoryClass === 'FeatureDocument') {
-            return ProjectCategories.getFeatureCategoryNames(this.projectConfiguration.getCategoriesMap());
+            return ProjectCategories.getFeatureCategoryNames(this.projectConfiguration.getCategoryTreelist());
         } else if (categoryClass === 'FieldDocument') {
             return ProjectCategories.getFieldCategoryNames(this.projectConfiguration.getCategoryTreelist());
         } else {

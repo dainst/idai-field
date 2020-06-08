@@ -289,7 +289,7 @@ export class ImportComponent implements OnInit {
 
         try {
             return (await this.datastore.find({
-                categories: ProjectCategories.getOperationCategoryNames(this.projectConfiguration.getCategoriesMap())
+                categories: ProjectCategories.getOperationCategoryNames(this.projectConfiguration.getCategoryTreelist())
             })).documents;
         } catch (msgWithParams) {
             this.messages.add(msgWithParams);

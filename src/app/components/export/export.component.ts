@@ -250,7 +250,7 @@ export class ExportComponent implements OnInit {
 
         try {
             return (await this.fieldDatastore.find({
-                categories: ProjectCategories.getOperationCategoryNames(this.projectConfiguration.getCategoriesMap())
+                categories: ProjectCategories.getOperationCategoryNames(this.projectConfiguration.getCategoryTreelist())
             })).documents;
         } catch (msgWithParams) {
             this.messages.add(msgWithParams);

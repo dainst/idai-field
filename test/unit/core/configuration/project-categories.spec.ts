@@ -12,6 +12,7 @@ import getTypeCategories = ProjectCategories.getTypeCategories;
 import getOverviewTopLevelCategories = ProjectCategories.getOverviewToplevelCategories;
 import getOverviewCategoryNames = ProjectCategories.getOverviewCategoryNames;
 import getOverviewCategories = ProjectCategories.getOverviewCategories;
+import getFeatureCategoryNames = ProjectCategories.getFeatureCategoryNames;
 
 
 describe('ProjectCategories', () => {
@@ -58,6 +59,15 @@ describe('ProjectCategories', () => {
         [
             {name: 'Find'},
             []
+        ],
+        [
+            {name: 'Feature'},
+            [
+                [
+                    {name: 'Architecture'},
+                    []
+                ]
+            ]
         ]
     ]);
 
@@ -80,7 +90,7 @@ describe('ProjectCategories', () => {
         expect(
             sameset(
                 getFieldCategories(categoryTreelist as Treelist<Category>).map(toName),
-                ['Operation', 'Trench', 'Inscription', 'Type', 'TypeCatalog', 'Find', 'Place'])
+                ['Operation', 'Trench', 'Inscription', 'Type', 'TypeCatalog', 'Find', 'Place', 'Feature', 'Architecture'])
         ).toBeTruthy();
     });
 
@@ -90,7 +100,7 @@ describe('ProjectCategories', () => {
         expect(
             sameset(
                 getConcreteFieldCategories(categoryTreelist as Treelist<Category>).map(toName),
-                ['Operation', 'Trench', 'Inscription', 'Find', 'Place'])
+                ['Operation', 'Trench', 'Inscription', 'Find', 'Place', 'Feature', 'Architecture'])
         ).toBeTruthy();
     });
 
@@ -100,7 +110,7 @@ describe('ProjectCategories', () => {
         expect(
             sameset(
                 getRegularCategoryNames(categoryTreelist as Treelist<Category>),
-                ['Inscription', 'Find'])
+                ['Inscription', 'Find', 'Feature', 'Architecture'])
         ).toBeTruthy();
     });
 
@@ -151,6 +161,16 @@ describe('ProjectCategories', () => {
             sameset(
                 getOverviewCategoryNames(categoryTreelist as Treelist<Category>),
                 ['Operation', 'Trench', 'Place'])
+        ).toBeTruthy();
+    });
+
+
+    it('getFeatureCategoryNames', () => {
+
+        expect(
+            sameset(
+                getFeatureCategoryNames(categoryTreelist as Treelist<Category>),
+                ['Feature', 'Architecture'])
         ).toBeTruthy();
     });
 });

@@ -3,24 +3,23 @@ import { distinctUntilChanged } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
 
-const BUFFER = 208;
+const BUFFER = 233;
 
 
 export class TypeGridVirtualScrollStrategy implements VirtualScrollStrategy {
 
     private index = new Subject<number>();
-
     private viewport: CdkVirtualScrollViewport | null = null;
-
-    private numColumns = 3; // TODO: Calculate number of colums
-
-    private rowHeight = 208; // TODO: Make parameter
+    private numColumns = 3;
+    private rowHeight = 233; // TODO: Make parameter
+    private elementWidth = 208; // TODO: Make parameter
 
     scrolledIndexChange = this.index.pipe(distinctUntilChanged());
 
     attach(viewport: CdkVirtualScrollViewport): void {
 
         this.viewport = viewport;
+        console.log('onDataLengthChanged');
         this.updateTotalContentSize();
     }
 
@@ -46,16 +45,10 @@ export class TypeGridVirtualScrollStrategy implements VirtualScrollStrategy {
     }
 
 
-    onContentRendered(): void {
-
-        console.log('onContentRendered not implemented.');
-    }
+    onContentRendered(): void { }
 
 
-    onRenderedOffsetChanged(): void {
-
-        console.log('onRenderedOffsetChanged not implemented.');
-    }
+    onRenderedOffsetChanged(): void { }
 
 
     scrollToIndex(index: number, behavior: ScrollBehavior): void {
@@ -69,10 +62,16 @@ export class TypeGridVirtualScrollStrategy implements VirtualScrollStrategy {
     private updateTotalContentSize() {
 
         if (this.viewport) {
+            this.calculateNumColumns();
             const numRows = Math.ceil(this.viewport.getDataLength() / this.numColumns);
-            console.log('setTotalContentSize', numRows * this.rowHeight);
             this.viewport.setTotalContentSize(numRows * this.rowHeight);
         }
+    }
+
+
+    private calculateNumColumns() {
+
+        this.numColumns = Math.ceil(this.viewport.elementRef.nativeElement.offsetWidth / this.elementWidth);
     }
 
 
@@ -118,9 +117,7 @@ export class TypeGridVirtualScrollStrategy implements VirtualScrollStrategy {
             }
         }
 
-        console.log('newRange', newRange);
         viewport.setRenderedRange(newRange);
-        console.log('newOffset', this.getOffsetForIndex(newRange.start));
         viewport.setRenderedContentOffset(this.getOffsetForIndex(newRange.start));
         this.index.next(firstVisibleIndex);
      }

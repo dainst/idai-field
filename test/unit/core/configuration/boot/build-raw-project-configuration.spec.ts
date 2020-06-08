@@ -10,7 +10,7 @@ import {Groups} from '../../../../../src/app/core/configuration/model/group';
 import InputType = FieldDefinition.InputType;
 import {byName, Named, namedArrayToNamedMap, toName,} from '../../../../../src/app/core/util/named';
 import {categoryTreelistToArray} from '../../../../../src/app/core/configuration/category-treelist';
-import {accessT} from '../../../../../src/app/core/util/treelist';
+import {accessTree} from '../../../../../src/app/core/util/treelist';
 
 
 describe('buildRawProjectConfiguration', () => {
@@ -1374,13 +1374,13 @@ describe('buildRawProjectConfiguration', () => {
             builtInCategories, {}, customCategories, {}, {}, {}, [], { other: { geometry: 'Geometry' }}
         )[0];
 
-        expect(accessT(categoriesTree, 0).children[0].name).toBe('C');
-        expect(accessT(categoriesTree, 0, 0).name).toBe('C');
-        expect(accessT(categoriesTree, 0).children[0] === accessT(categoriesTree, 0, 0)).toBeTruthy();
+        expect(accessTree(categoriesTree, 0).children[0].name).toBe('C');
+        expect(accessTree(categoriesTree, 0, 0).name).toBe('C');
+        expect(accessTree(categoriesTree, 0).children[0] === accessTree(categoriesTree, 0, 0)).toBeTruthy();
 
-        expect(accessT(categoriesTree, 0).name).toBe('P');
-        expect(accessT(categoriesTree, 0, 0).parentCategory.name).toBe('P');
-        expect(accessT(categoriesTree, 0, 0).parentCategory === accessT(categoriesTree, 0)).toBeTruthy();
+        expect(accessTree(categoriesTree, 0).name).toBe('P');
+        expect(accessTree(categoriesTree, 0, 0).parentCategory.name).toBe('P');
+        expect(accessTree(categoriesTree, 0, 0).parentCategory === accessTree(categoriesTree, 0)).toBeTruthy();
     });
 
 

@@ -27,7 +27,7 @@ export const toTreeItem = to([Treelist.Tree.ITEM]);
 
 
 // ArrayTree and ArrayTreelist data structures //////
-// Contrary to our Tree and Treelist data structures,
+// In contrast to our Tree and Treelist data structures
 // this structure does not allow for distinguishing trees and
 // treelists on the javascript level by virtue of them being either
 // objects or arrays.
@@ -96,13 +96,13 @@ export function mapTree(...args: any[]): any {
 }
 
 
-export function accessT<T>(t: Treelist<T>|Tree<T>, ...path: number[]): T {
+export function accessTree<T>(t: Treelist<T>|Tree<T>, ...path: number[]): T {
 
-    function _accessTree<T>(t: Tree<T>, path: number[], lastSegmentIsNumber: boolean): T {
+    function _accessTree<T>(t: Tree<T>, path: number[]): T {
 
         const segment = first(path);
         if (segment === undefined) return t.item;
-        else if (isNumber(segment) && lastSegmentIsNumber) return _accessTree(t.trees[segment], rest(path), true);
+        else if (isNumber(segment)) return _accessTree(t.trees[segment], rest(path));
         return _accessTreelist(t.trees, path);
     }
 
@@ -110,12 +110,12 @@ export function accessT<T>(t: Treelist<T>|Tree<T>, ...path: number[]): T {
 
         const segment = first(path);
         if (!isNumber(segment)) return t[0] as any;
-        return _accessTree(t[segment], rest(path), true);
+        return _accessTree(t[segment], rest(path));
     }
 
-    return isObject(t)
-        ? _accessTree(t as Tree<T>, path, false)
-        : _accessTreelist(t as Treelist<T>, path);
+    return (isObject(t)
+        ? _accessTree
+        : _accessTreelist as any)(t as Tree<T>, path);
 }
 
 

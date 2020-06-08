@@ -29,12 +29,12 @@ import {makeCategoryTreelist} from './make-category-treelist';
 import {RawProjectConfiguration} from '../project-configuration';
 import {Category} from '../model/category';
 import {Group, Groups} from '../model/group';
-import {Labelled, Named} from '../../util/named';
+import {Labelled} from '../../util/named';
 import {RelationsUtil} from '../relations-utils';
 import {CategoryDefinition} from '../model/category-definition';
 import {ProjectCategories} from '../project-categories';
 import {FieldDefinition} from '../model/field-definition';
-import {mapTrees, mapTreelist, Treelist} from '../../util/treelist';
+import {mapTrees, mapTreelist, Treelist, Tree, ITEMNAMEPATH} from '../../util/treelist';
 import {sortStructArray} from '../../util/sort-struct-array';
 import {linkParentAndChildInstances} from '../category-treelist';
 
@@ -173,7 +173,7 @@ const sortGroups = (defaultOrder: string[]) => (groups: Map<Group>) =>
 
 
 const orderCategories = (categoriesOrder: string[] = []) => (categories: Treelist<Category>): Treelist<Category> =>
-    mapTrees(sortStructArray(categoriesOrder, [Treelist.Tree.ITEM,Named.NAME]), categories) as Treelist<Category>;
+    mapTrees(sortStructArray(categoriesOrder, ITEMNAMEPATH), categories) as Treelist<Category>;
 
 
 function setGroupLabels(groupLabels: Map<string>) {

@@ -1,5 +1,5 @@
 import {drop, identity, includedIn, is, isArray, isNot, on, take} from 'tsfun';
-import {findInTree, Treelist} from './treelist';
+import {findInTree, ITEMNAMEPATH, Treelist} from './treelist';
 import {Named, onName} from './named';
 import {Name} from '../constants';
 
@@ -44,7 +44,7 @@ export function isTopLevelItemOrChildThereof(t: Treelist<Named>,
 function _filterTrees<N extends Named>(t: Treelist<N>, match: Name, moreMatches: Name[], invert = false): Treelist<N> {
 
     return t.filter(
-        on([Treelist.Tree.ITEM, Named.NAME],
+        on(ITEMNAMEPATH,
             ((invert ? isNot : identity)(includedIn([match].concat(moreMatches))))
         ));
 }

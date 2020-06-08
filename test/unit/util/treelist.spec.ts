@@ -1,10 +1,5 @@
 import {equal, is, on, reverse} from 'tsfun';
-import {
-    accessT,
-    findInTree,
-    flattenTree,
-    mapTrees,
-    mapTreelist, Tree,
+import {accessTree, findInTree, flattenTree, mapTrees, mapTreelist, Tree,
     Treelist, mapTree, buildTreelist, buildTree
 } from '../../../src/app/core/util/treelist';
 
@@ -258,7 +253,7 @@ describe('Treelist|Tree', () => {
 
     it('accessTreelist - first level', () => {
 
-        expect(accessT(buildTreelist(
+        expect(accessTree(buildTreelist(
             [
                 [
                     7,
@@ -272,7 +267,7 @@ describe('Treelist|Tree', () => {
 
     it('accessTreelist - second level', () => {
 
-        expect(accessT(buildTreelist(
+        expect(accessTree(buildTreelist(
             [
                 [
                     7,
@@ -291,7 +286,7 @@ describe('Treelist|Tree', () => {
 
     it('accessTreelist - tree', () => {
 
-        expect(accessT(buildTree(
+        expect(accessTree(buildTree(
 
             [
                 7,
@@ -310,7 +305,7 @@ describe('Treelist|Tree', () => {
 
     it('accessTreelist - tree - deeper and wider', () => {
 
-        expect(accessT(buildTree(
+        expect(accessTree(buildTree(
 
             [
                 7,
@@ -338,7 +333,7 @@ describe('Treelist|Tree', () => {
 
     it('accessTreelist - tree - root', () => {
 
-        expect(accessT(buildTree(
+        expect(accessTree(buildTree(
 
             [
                 7,

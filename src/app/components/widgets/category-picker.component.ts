@@ -70,7 +70,7 @@ export class CategoryPickerComponent implements OnChanges {
     }
 
 
-    public isCustomCategory: Predicate<Category> = (category: Category) => !category.libraryId;
+    public isCustomCategory: Predicate<Category> = category => !category.libraryId;
 
 
     public hasCustomFields: Predicate<Category> = compose(

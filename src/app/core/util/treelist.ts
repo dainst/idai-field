@@ -1,5 +1,6 @@
-import {Mapping, Predicate, isFunction, first, isNumber, rest, isObject, isArray, Pair, to} from 'tsfun';
+import {Mapping, Predicate, isFunction, first, isNumber, rest, isObject, isArray, Pair, to, Path} from 'tsfun';
 import {Comparator} from 'tsfun/by';
+import {Named} from './named';
 
 
 export type Tree<T> = {
@@ -9,16 +10,17 @@ export type Tree<T> = {
 
 export type Treelist<T> = Array<Tree<T>>;
 
-export module Treelist {
+export module Tree {
 
-    export module Tree {
-
-        export const ITEM = 'item';
-        export const TREES = 'trees';
-    }
+    export const ITEM = 'item';
+    export const TREES = 'trees';
 }
 
-export const toTreeItem = to([Treelist.Tree.ITEM]);
+export const ITEMPATH: Path = [Tree.ITEM];
+
+export const ITEMNAMEPATH: Path = [Tree.ITEM, Named.NAME];
+
+export const toTreeItem = to(ITEMPATH);
 
 // Implementation note:
 // Technically it would be no problem to have only a function mapTree

@@ -6,7 +6,7 @@ import {FieldDefinition} from './model/field-definition';
 import {RelationDefinition} from './model/relation-definition';
 import {Named, namedArrayToNamedMap} from '../util/named';
 import {RelationsUtil} from './relations-utils';
-import {Treelist} from '../util/treelist';
+import {ITEMNAMEPATH, Treelist} from '../util/treelist';
 import {CategoryTreelist, categoryTreelistToArray} from './category-treelist';
 import {Name} from '../constants';
 import {isTopLevelItemOrChildThereof} from '../util/named-treelist';
@@ -88,7 +88,7 @@ export class ProjectConfiguration {
         return selectedTopLevelCategories.length === 0
             ? this.categoryTreelist
             : this.categoryTreelist.filter(
-                on([Treelist.Tree.ITEM, Named.NAME], includedIn(selectedTopLevelCategories)));
+                on(ITEMNAMEPATH, includedIn(selectedTopLevelCategories)));
     }
 
 

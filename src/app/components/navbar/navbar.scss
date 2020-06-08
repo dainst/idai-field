@@ -192,6 +192,7 @@ $link-hover-color: lighten($navbar-default-bg, 30%);
     }
 
     a.nav-link {
+      height: 48px;
       padding-right: 9px !important;
 
       .closable-tab-label {
@@ -207,6 +208,7 @@ $link-hover-color: lighten($navbar-default-bg, 30%);
       .mdi-close {
         position: relative;
         top: -7px;
+        padding-left: 1px;
       }
 
       category-icon {

@@ -31,16 +31,12 @@ export type RawProjectConfiguration = Pair<CategoryTreelist, Array<RelationDefin
 export class ProjectConfiguration {
 
     public static UNKNOWN_CATEGORY_ERROR = 'ProjectConfiguration.Errors.UnknownCategory';
-
     public static UNKNOWN_TYPE_ERROR = 'projectCategories.Errors.UnknownType';
 
-    private categoriesArray: Array<Category>;
-
-    private categoriesMap: Map<Category>;
-
-    private categoryTreelist: CategoryTreelist;
-
-    private relations: Array<RelationDefinition>;
+    private readonly categoriesArray: Array<Category>;
+    private readonly categoriesMap: Map<Category>;
+    private readonly categoryTreelist: CategoryTreelist;
+    private readonly relations: Array<RelationDefinition>;
 
 
     constructor([categories, relations]: RawProjectConfiguration) {

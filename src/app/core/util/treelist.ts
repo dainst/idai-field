@@ -3,12 +3,12 @@ import {Comparator} from 'tsfun/by';
 import {Named} from './named';
 
 
-export type Tree<T> = {
+export type Tree<T = any> = {
     item: T,
     trees: Treelist<T>
 }
 
-export type Treelist<T> = Array<Tree<T>>;
+export type Treelist<T = any> = Array<Tree<T>>;
 
 export module Tree {
 
@@ -104,10 +104,12 @@ export function flattenTree<A>(t: Tree<A>|Treelist<A>): Array<A> {
     return (isArray(t) ? [] : [(t as Tree<A>).item]).concat(reduced);
 }
 
-// TODO exchange positions of first and second param
-export function findInTree<T>(match: T|Predicate<T>, t: Treelist<T>|Tree<T>, comparator?: Comparator): Tree<T>|undefined {
 
-    if (isObject(t)) return findInTree(match, [t as any], comparator);
+export function findInTree<T>(t: Treelist<T>|Tree<T>,
+                              match: T|Predicate<T>,
+                              comparator?: Comparator): Tree<T>|undefined {
+
+    if (isObject(t)) return findInTree([t as any], match, comparator);
 
     for (let node of t) {
         const { item: t, trees: trees } = node;
@@ -115,7 +117,7 @@ export function findInTree<T>(match: T|Predicate<T>, t: Treelist<T>|Tree<T>, com
         const matches: Predicate<T> = buildMatches(match, comparator);
         if (matches(t)) return node;
 
-        const findResult = findInTree(match, trees, comparator);
+        const findResult = findInTree(trees, match, comparator);
         if (findResult) return findResult;
     }
     return undefined;
@@ -144,9 +146,9 @@ function buildMatches<T>(match: T|Predicate<T>, comparator?: Comparator): Predic
 
 export type Node<ITEM,TREES> = Pair<ITEM,TREES>;
 
-export type ArrayTree<T> = Node<T, ArrayTreelist<T>>;
+export type ArrayTree<T = any> = Node<T, ArrayTreelist<T>>;
 
-export type ArrayTreelist<T> = Array<ArrayTree<T>>;
+export type ArrayTreelist<T = any> = Array<ArrayTree<T>>;
 
 export function buildTreelist<T>(t: ArrayTreelist<T>): Treelist<T> {
 

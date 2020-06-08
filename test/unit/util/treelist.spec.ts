@@ -184,27 +184,27 @@ describe('Treelist|Tree', () => {
                 [3, []]
             ]);
 
-        const exp1: Tree<any> = findInTree(13, t);
+        const exp1: Tree = findInTree(t, 13);
         expect(equal(exp1,buildTree([13, [[17, []]]]))).toBeTruthy();
 
-        const exp2: Tree<any> = findInTree(19, t);
+        const exp2: Tree = findInTree(t, 19);
         expect(equal(exp2,undefined)).toBeTruthy();
     });
 
 
     it('findInTreelist - tree', () => {
 
-        const t: Tree<any> = buildTree([
+        const t: Tree = buildTree([
             17,
             [
                 [4, []]
             ]
         ]);
 
-        const exp1: Tree<any> = findInTree(17, t);
+        const exp1: Tree = findInTree(t, 17);
         expect(equal(exp1,buildTree([17, [[4, []]]]))).toBeTruthy();
 
-        const exp2: Tree<any> = findInTree(15, t);
+        const exp2: Tree = findInTree(t, 15);
         expect(equal(exp2,undefined)).toBeTruthy();
     });
 
@@ -213,7 +213,7 @@ describe('Treelist|Tree', () => {
 
         const a = { a: 3 };
 
-        const t: Treelist<any> = buildTreelist<any>(
+        const t: Treelist = buildTreelist<any>(
             [
                 [1, [
                         [a, [[17, []]]],
@@ -222,7 +222,7 @@ describe('Treelist|Tree', () => {
                 [3, []]
             ]);
 
-        const exp1: Tree<any> = findInTree(on('a', is(3)), t);
+        const exp1: Tree = findInTree(t, on('a', is(3)));
         expect(equal(exp1,buildTree<any>([{a: 3}, [[17, []]]]))).toBeTruthy();
     });
 
@@ -230,7 +230,7 @@ describe('Treelist|Tree', () => {
     it('findInTreelist with Comparator', () => {
 
         const a = { a: 3 };
-        const t: Treelist<any> = buildTreelist<any>(
+        const t: Treelist = buildTreelist<any>(
             [
                 [1, [
                         [a, [[17, []]]],
@@ -239,7 +239,7 @@ describe('Treelist|Tree', () => {
                 [3, []]
             ]);
 
-        const exp1: Tree<any> = findInTree({ a: 3 }, t, on('a'));
+        const exp1: Tree = findInTree(t, { a: 3 }, on('a'));
         expect(equal(exp1, buildTree<any>(
                 [
                     {a: 3},

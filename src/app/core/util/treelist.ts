@@ -112,13 +112,13 @@ export function findInTree<T>(match: T|Predicate<T>, t: Treelist<T>|Tree<T>, com
     for (let node of t) {
         const { item: t, trees: trees } = node;
 
-        const isMatching: Predicate =
+        const matches: Predicate<T> =
             comparator !== undefined
                 ? comparator(match)
                 : isFunction(match)
                     ? (match as Predicate<T>)
                     : is(match);
-        if (isMatching(t)) return node;
+        if (matches(t)) return node;
 
         const findResult = findInTree(match, trees, comparator);
         if (findResult) return findResult;

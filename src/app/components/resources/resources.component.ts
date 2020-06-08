@@ -145,13 +145,12 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
     }
 
 
-    public startEditNewDocument(newDocument: FieldDocument, geometryType: string) {
+    public async startEditNewDocument(newDocument: FieldDocument, geometryType: string) {
 
-        if (geometryType == 'none') {
-            this.editDocument(newDocument);
+        if (geometryType === 'none') {
+            await this.editDocument(newDocument);
         } else {
             newDocument.resource['geometry'] = <FieldGeometry> { type: geometryType };
-
             this.viewFacade.addNewDocument(newDocument);
             this.startGeometryEditing();
             this.viewFacade.setMode('map');

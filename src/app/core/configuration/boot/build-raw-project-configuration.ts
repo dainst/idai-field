@@ -29,7 +29,7 @@ import {makeCategoryTreelist} from './make-category-treelist';
 import {RawProjectConfiguration} from '../project-configuration';
 import {Category} from '../model/category';
 import {Group, Groups} from '../model/group';
-import {Labelled, Named} from '../../util/named';
+import {Labelled} from '../../util/named';
 import {RelationsUtil} from '../relations-utils';
 import {CategoryDefinition} from '../model/category-definition';
 import {ProjectCategories} from '../project-categories';

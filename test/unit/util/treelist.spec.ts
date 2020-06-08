@@ -1,10 +1,5 @@
 import {equal, is, on, reverse} from 'tsfun';
-import {
-    accessTree,
-    findInTree,
-    flattenTree,
-    mapTrees,
-    mapTreelist, Tree,
+import {accessTree, findInTree, flattenTree, mapTrees, mapTreelist, Tree,
     Treelist, mapTree, buildTreelist, buildTree
 } from '../../../src/app/core/util/treelist';
 

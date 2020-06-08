@@ -53,6 +53,7 @@ $link-hover-color: lighten($navbar-default-bg, 30%);
 
   button {
     -webkit-app-region: no-drag;
+    z-index: 1;
   }
 
   .nav-link {

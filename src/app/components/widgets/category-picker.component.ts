@@ -61,10 +61,11 @@ export class CategoryPickerComponent implements OnChanges {
 
     public isParentSelected(category: Category): boolean {
 
-        if (!category.parentCategory || !this.selectedCategories) return false;
+        if (!category.parentCategory
+            || !this.selectedCategories) return false;
 
-        const parentName: string = category.parentCategory.name;
-        return this.selectedCategories.find(is(parentName)) !== undefined;
+        return this.selectedCategories
+            .find(is(category.parentCategory.name)) !== undefined;
     }
 
 

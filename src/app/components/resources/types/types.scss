@@ -34,28 +34,29 @@ types {
       display: flex;
       flex-direction: column;
 
+      .grid-section-label {
+        height: 40px;
+        padding: 5px;
+        color: black;
+        background-color: white;
+        text-align: center;
+        line-height: 30px;
+        font-size: 14px;
+        user-select: none;
+        border-bottom: 1px solid #e9ecef;
+        border-top: 1px solid #e9ecef;
+        cursor: pointer;
+
+        &.first-grid-section-label {
+          border-top: none;
+        }
+      }
+
       .grid-section {
         flex-grow: 1;
         display: flex;
         flex-direction: column;
         position: relative;
-
-        .grid-section-label {
-          height: 40px;
-          padding: 5px;
-          color: black;
-          background-color: white;
-          text-align: center;
-          line-height: 30px;
-          font-size: 14px;
-          user-select: none;
-          border-bottom: 1px solid #e9ecef;
-          border-top: 1px solid #e9ecef;
-
-          &.first-grid-section-label {
-            border-top: none;
-          }
-        }
 
         type-grid {
           flex-grow: 1;

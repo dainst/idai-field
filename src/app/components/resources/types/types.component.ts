@@ -64,6 +64,7 @@ export class TypesComponent extends BaseList implements OnChanges {
     public contextMenu: ContextMenu = new ContextMenu();
 
     private expandAllGroups: boolean = false;
+    private visibleSections = ['types'];
 
 
     constructor(private fieldDatastore: FieldReadDatastore,
@@ -198,6 +199,19 @@ export class TypesComponent extends BaseList implements OnChanges {
 
         if (!inside) this.contextMenu.close();
     }
+
+
+    public toggleSection(section: string) {
+
+        if (!this.visibleSections.includes(section)) {
+            this.visibleSections.push(section);
+        } else if (this.visibleSections.length > 1) {
+            this.visibleSections.splice(this.visibleSections.indexOf(section), 1);
+        }
+    }
+
+
+    public isSectionVisible = (section: string) => this.visibleSections.includes(section);
 
 
     private async update() {

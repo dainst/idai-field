@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
 import {Document} from 'idai-components-2';
 import {CategoryConverter} from '../cached/category-converter';
-import {ProjectCategories} from '../../configuration/project-categories';
 import {Migrator} from './migrator';
 import {takeOrMake} from '../../util/utils';
 import {ProjectConfiguration} from '../../configuration/project-configuration';
+import {ProjectCategories} from '../../configuration/project-categories';
 
 
 @Injectable()
@@ -13,8 +13,7 @@ import {ProjectConfiguration} from '../../configuration/project-configuration';
  */
 export class FieldCategoryConverter extends CategoryConverter<Document> {
 
-    constructor(private projectCategories: ProjectCategories,
-                private projectConfiguration: ProjectConfiguration) {
+    constructor(private projectConfiguration: ProjectConfiguration) {
 
         super();
     }
@@ -36,11 +35,11 @@ export class FieldCategoryConverter extends CategoryConverter<Document> {
     public getCategoriesForClass(categoryClass: string): string[]|undefined {
 
         if (categoryClass === 'ImageDocument') {
-            return this.projectCategories.getImageCategoryNames();
+            return ProjectCategories.getImageCategoryNames(this.projectConfiguration.getCategoryTreelist());
         } else if (categoryClass === 'FeatureDocument') {
-            return this.projectCategories.getFeatureCategoryNames();
+            return ProjectCategories.getFeatureCategoryNames(this.projectConfiguration.getCategoryTreelist());
         } else if (categoryClass === 'FieldDocument') {
-            return this.projectCategories.getFieldCategoryNames();
+            return ProjectCategories.getFieldCategoryNames(this.projectConfiguration.getCategoryTreelist());
         } else {
             return undefined;
         }

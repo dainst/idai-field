@@ -2,7 +2,6 @@ import {Component} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {set} from 'tsfun';
 import {Document, FieldDocument} from 'idai-components-2';
-import {ProjectCategories} from '../../core/configuration/project-categories';
 import {PersistenceManager} from '../../core/model/persistence-manager';
 import {SettingsService} from '../../core/settings/settings-service';
 import {MoveUtility} from '../../core/resources/move-utility';
@@ -36,7 +35,6 @@ export class MoveModalComponent {
 
 
     constructor(public activeModal: NgbActiveModal,
-                private projectCategories: ProjectCategories,
                 private persistenceManager: PersistenceManager,
                 private settingsService: SettingsService,
                 private indexFacade: IndexFacade,
@@ -103,7 +101,7 @@ export class MoveModalComponent {
 
     private getIsRecordedInTargetCategories(): Array<Category> {
 
-        return this.projectCategories.getAllowedRelationRangeCategories(
+        return this.projectConfiguration.getAllowedRelationRangeCategories(
             'isRecordedIn', this.document.resource.category
         );
     }
@@ -111,7 +109,7 @@ export class MoveModalComponent {
 
     private getLiesWithinTargetCategories(): Array<Category> {
 
-        return this.projectCategories.getAllowedRelationRangeCategories(
+        return this.projectConfiguration.getAllowedRelationRangeCategories(
             'liesWithin', this.document.resource.category
         );
     }

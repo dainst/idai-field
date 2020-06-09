@@ -11,7 +11,6 @@ import {JavaToolExecutor} from '../../core/java/java-tool-executor';
 import {FieldReadDatastore} from '../../core/datastore/field/field-read-datastore';
 import {GeoJsonExporter} from '../../core/export/geojson-exporter';
 import {ShapefileExporter} from '../../core/export/shapefile-exporter';
-import {ProjectCategories} from '../../core/configuration/project-categories';
 import {CsvExporter} from '../../core/export/csv/csv-exporter';
 import {CategoryCount} from '../../core/export/export-helper';
 import {ExportRunner} from '../../core/export/export-runner';
@@ -22,6 +21,7 @@ import {TabManager} from '../../core/tabs/tab-manager';
 import {ViewFacade} from '../../core/resources/view/view-facade';
 import {Messages} from '../messages/messages';
 import {Query} from '../../core/datastore/model/query';
+import {ProjectCategories} from '../../core/configuration/project-categories';
 
 const remote = typeof window !== 'undefined' ? window.require('electron').remote : require('electron').remote;
 
@@ -61,7 +61,6 @@ export class ExportComponent implements OnInit {
                 private viewFacade: ViewFacade,
                 private fieldDatastore: FieldReadDatastore,
                 private documentDatastore: DocumentReadDatastore,
-                private projectCategories: ProjectCategories,
                 private tabManager: TabManager,
                 private projectConfiguration: ProjectConfiguration) {}
 
@@ -251,7 +250,7 @@ export class ExportComponent implements OnInit {
 
         try {
             return (await this.fieldDatastore.find({
-                categories: this.projectCategories.getOperationCategoryNames()
+                categories: ProjectCategories.getOperationCategoryNames(this.projectConfiguration.getCategoryTreelist())
             })).documents;
         } catch (msgWithParams) {
             this.messages.add(msgWithParams);

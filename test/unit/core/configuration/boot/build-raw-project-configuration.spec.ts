@@ -8,8 +8,9 @@ import {LibraryCategoryDefinition} from '../../../../../src/app/core/configurati
 import {ValuelistDefinition} from '../../../../../src/app/core/configuration/model/valuelist-definition';
 import {Groups} from '../../../../../src/app/core/configuration/model/group';
 import InputType = FieldDefinition.InputType;
-import {byName, Named, namedArrayToNamedMap,} from '../../../../../src/app/core/util/named';
+import {byName, Named, namedArrayToNamedMap, toName,} from '../../../../../src/app/core/util/named';
 import {categoryTreelistToArray} from '../../../../../src/app/core/configuration/category-treelist';
+import {accessTree} from '../../../../../src/app/core/util/treelist';
 
 
 describe('buildRawProjectConfiguration', () => {
@@ -1250,7 +1251,7 @@ describe('buildRawProjectConfiguration', () => {
 
         const result = buildRawArray(
             builtInCategories, {}, customCategories, {}, {}, {}, [], {}, {}, {}, orderConf
-        ).map(to(Named.NAME));
+        ).map(toName);
 
         expect(result).toEqual(['C', 'A', 'B']);
     });
@@ -1373,13 +1374,13 @@ describe('buildRawProjectConfiguration', () => {
             builtInCategories, {}, customCategories, {}, {}, {}, [], { other: { geometry: 'Geometry' }}
         )[0];
 
-        expect(categoriesTree[0][0].children[0].name).toBe('C');
-        expect(categoriesTree[0][1][0][0].name).toBe('C');
-        expect(categoriesTree[0][0].children[0] === categoriesTree[0][1][0][0]).toBeTruthy();
+        expect(accessTree(categoriesTree, 0).children[0].name).toBe('C');
+        expect(accessTree(categoriesTree, 0, 0).name).toBe('C');
+        expect(accessTree(categoriesTree, 0).children[0] === accessTree(categoriesTree, 0, 0)).toBeTruthy();
 
-        expect(categoriesTree[0][0].name).toBe('P');
-        expect(categoriesTree[0][1][0][0].parentCategory.name).toBe('P');
-        expect(categoriesTree[0][1][0][0].parentCategory === categoriesTree[0][0]).toBeTruthy();
+        expect(accessTree(categoriesTree, 0).name).toBe('P');
+        expect(accessTree(categoriesTree, 0, 0).parentCategory.name).toBe('P');
+        expect(accessTree(categoriesTree, 0, 0).parentCategory === accessTree(categoriesTree, 0)).toBeTruthy();
     });
 
 

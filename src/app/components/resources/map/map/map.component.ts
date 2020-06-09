@@ -5,8 +5,7 @@ import {FieldPolygon} from './field-polygon';
 import {FieldMarker} from './field-marker';
 import {CoordinatesUtility} from './coordinates-utility';
 import {ProjectConfiguration} from '../../../../core/configuration/project-configuration';
-
-const {VectorMarkers} = require('Leaflet.vector-markers');
+import {Category} from '../../../../core/configuration/model/category';
 
 
 @Component({
@@ -88,11 +87,61 @@ export class MapComponent implements AfterViewInit, OnChanges {
 
         if (!this.update) return Promise.resolve();
 
-        this.clearMap();
-        this.addGeometriesToMap();
-        this.updateCoordinateReferenceSystem();
+        if (changes['selectedDocument'] && (!changes['documents']) && !changes['parentDocument']
+                && !changes['coordinateReferenceSystem']) {
+            this.updateSelectedGeometry(changes['selectedDocument'].previousValue);
+        } else {
+            this.resetMap();
+        }
 
         return this.setView();
+    }
+
+
+    private resetMap() {
+
+        this.clearMap();
+        this.addGeometriesToMap();
+        this.bringSelectedMarkersToFront();
+        this.updateCoordinateReferenceSystem();
+    }
+
+
+    private updateSelectedGeometry(previousSelectedDocument: FieldDocument|undefined) {
+
+        if (previousSelectedDocument) this.setSelectionStyle(previousSelectedDocument, false);
+        if (this.selectedDocument) this.setSelectionStyle(this.selectedDocument, true);
+    }
+
+
+    private setSelectionStyle(document: FieldDocument, selected: boolean) {
+
+        if (!document.resource.geometry) return;
+
+        switch(document.resource.geometry.type) {
+            case 'Point':
+            case 'MultiPoint':
+                if (!this.markers[document.resource.id]) return;
+                this.markers[document.resource.id].forEach(marker => {
+                   marker.setStyle({ stroke: selected });
+                });
+                this.bringSelectedMarkersToFront();
+                break;
+            case 'LineString':
+            case 'MultiLineString':
+                if (!this.polylines[document.resource.id]) return;
+                this.polylines[document.resource.id].forEach(polyline => {
+                    MapComponent.updateActiveClass(polyline, selected);
+                });
+                break;
+            case 'Polygon':
+            case 'MultiPolygon':
+                if (!this.polygons[document.resource.id]) return;
+                this.polygons[document.resource.id].forEach(polygon => {
+                    MapComponent.updateActiveClass(polygon, selected);
+                });
+                break;
+        }
     }
 
 
@@ -236,18 +285,10 @@ export class MapComponent implements AfterViewInit, OnChanges {
 
         const latLng = L.latLng([coordinates[1], coordinates[0]]);
 
-        const color = this.categoryColors[document.resource.category];
-        const extraClasses = (this.selectedDocument && this.selectedDocument.resource.id == document.resource.id) ?
-            'active' : '';
-        const icon = MapComponent.generateMarkerIcon(color, extraClasses);
-        const marker: FieldMarker = L.marker(latLng, {
-            icon: icon,
-            zIndexOffset: this.selectedDocument === document ? 1000 : 0
-        });
+        const marker: FieldMarker = L.circleMarker(latLng, this.getMarkerOptions(document));
         marker.document = document;
 
-        marker.bindTooltip(MapComponent.getShortDescription(document.resource), {
-            offset: L.point(0, -40),
+        marker.bindTooltip(MapComponent.getTooltipText(document.resource), {
             direction: 'top',
             opacity: 1.0
         });
@@ -315,7 +356,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
 
         path.setStyle(style);
 
-        path.bindTooltip(MapComponent.getShortDescription(document.resource), {
+        path.bindTooltip(MapComponent.getTooltipText(document.resource), {
             direction: 'center',
             opacity: 1.0
         });
@@ -341,7 +382,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
     }
 
 
-    private focusMarkers(markers: Array<L.Marker>) {
+    private focusMarkers(markers: Array<L.CircleMarker>) {
 
         if (markers.length === 1) {
             this.map.panTo(markers[0].getLatLng(), { animate: true, easeLinearity: 0.3 });
@@ -372,6 +413,14 @@ export class MapComponent implements AfterViewInit, OnChanges {
             bounds.push(polygon.getLatLngs());
         }
         this.map.fitBounds(bounds);
+    }
+
+
+    private bringSelectedMarkersToFront() {
+
+        if (this.selectedDocument && this.markers[this.selectedDocument.resource.id]) {
+            this.markers[this.selectedDocument.resource.id].forEach(marker => marker.bringToFront());
+        }
     }
 
 
@@ -426,6 +475,21 @@ export class MapComponent implements AfterViewInit, OnChanges {
     }
 
 
+    protected getMarkerOptions(document: FieldDocument): L.CircleMarkerOptions {
+
+        const color: string = this.categoryColors[document.resource.category];
+
+        return {
+            fillColor: color,
+            fillOpacity: 1,
+            radius: 5,
+            stroke: document === this.selectedDocument,
+            color: Category.isBrightColor(color) ? '#000' : '#fff',
+            weight: 2
+        };
+    }
+
+
     private static getPolylineFromCoordinates(coordinates: Array<any>): L.Polyline {
 
         return L.polyline(<any> CoordinatesUtility.convertPolylineCoordinatesFromLngLatToLatLng(coordinates));
@@ -448,7 +512,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
     }
 
 
-    private static getShortDescription(resource: FieldResource) {
+    private static getTooltipText(resource: FieldResource) {
 
         let shortDescription = resource.identifier;
         if (resource.shortDescription && resource.shortDescription.length > 0) {
@@ -459,14 +523,14 @@ export class MapComponent implements AfterViewInit, OnChanges {
     }
 
 
-    protected static generateMarkerIcon(color: string, extraClasses: string = ''): L.Icon {
+    private static updateActiveClass(geometry: L.Layer, selected: boolean) {
 
-        return VectorMarkers.icon({
-            prefix: 'mdi',
-            icon: 'checkbox-blank-circle',
-            markerColor: color,
-            extraClasses: extraClasses,
-            tooltipAnchor: L.point(0, 0)
-        });
+        const active: boolean = geometry['_path'].classList.contains('active');
+
+        if (active && !selected) {
+            geometry['_path'].classList.remove('active');
+        } else if (!active && selected) {
+            geometry['_path'].classList.add('active');
+        }
     }
 }

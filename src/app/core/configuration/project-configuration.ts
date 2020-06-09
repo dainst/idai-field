@@ -6,10 +6,10 @@ import {FieldDefinition} from './model/field-definition';
 import {RelationDefinition} from './model/relation-definition';
 import {Named, namedArrayToNamedMap} from '../util/named';
 import {RelationsUtil} from './relations-utils';
-import {ProjectCategoriesHelper} from './project-categories-helper';
-import {Treelist} from './treelist';
+import {ITEMNAMEPATH} from '../util/treelist';
 import {CategoryTreelist, categoryTreelistToArray} from './category-treelist';
 import {Name} from '../constants';
+import {isTopLevelItemOrChildThereof} from '../util/named-treelist';
 
 
 export type RawProjectConfiguration = Pair<CategoryTreelist, Array<RelationDefinition>>;
@@ -26,16 +26,17 @@ export type RawProjectConfiguration = Pair<CategoryTreelist, Array<RelationDefin
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  * @author Sebastian Cuy
+ * @author F.Z.
  */
 export class ProjectConfiguration {
 
-    private categoriesArray: Array<Category>;
+    public static UNKNOWN_CATEGORY_ERROR = 'ProjectConfiguration.Errors.UnknownCategory';
+    public static UNKNOWN_TYPE_ERROR = 'projectCategories.Errors.UnknownType';
 
-    private categoriesMap: Map<Category>;
-
-    private categoryTreelist: CategoryTreelist;
-
-    private relations: Array<RelationDefinition>;
+    private readonly categoriesArray: Array<Category>;
+    private readonly categoriesMap: Map<Category>;
+    private readonly categoryTreelist: CategoryTreelist;
+    private readonly relations: Array<RelationDefinition>;
 
 
     constructor([categories, relations]: RawProjectConfiguration) {
@@ -72,7 +73,7 @@ export class ProjectConfiguration {
     /**
      * @return Category, including children field
      */
-    public getCategory(category: Name): Category {
+    public getCategory(category: Name): Category|undefined {
 
         return this.categoriesMap[category];
     }
@@ -83,13 +84,7 @@ export class ProjectConfiguration {
         return selectedTopLevelCategories.length === 0
             ? this.categoryTreelist
             : this.categoryTreelist.filter(
-                on([Treelist.Tree.ITEM,Named.NAME], includedIn(selectedTopLevelCategories)));
-    }
-
-
-    public getCategoryAndSubcategories(supercategoryName: string): Map<Category> {
-
-        return ProjectCategoriesHelper.getCategoryAndSubcategories(supercategoryName, this.getCategoriesMap());
+                on(ITEMNAMEPATH, includedIn(selectedTopLevelCategories)));
     }
 
 
@@ -127,9 +122,45 @@ export class ProjectConfiguration {
     }
 
 
-    public isSubcategory(categoryName: string, superCategoryName: string): boolean {
+    public getAllowedRelationDomainCategories(relationName: string,
+                                              rangeCategoryName: string): Array<Category> {
 
-        return ProjectCategoriesHelper.isSubcategory(this.getCategoriesMap(), categoryName, superCategoryName);
+        return this.getCategoriesArray()
+            .filter(category => {
+                return this.isAllowedRelationDomainCategory(
+                    category.name, rangeCategoryName, relationName
+                ) && (!category.parentCategory || !this.isAllowedRelationDomainCategory(
+                    category.parentCategory.name, rangeCategoryName, relationName
+                ));
+            });
+    }
+
+
+    public getAllowedRelationRangeCategories(relationName: string,
+                                             domainCategoryName: string): Array<Category> {
+
+        return this.getCategoriesArray()
+            .filter(category => {
+                return this.isAllowedRelationDomainCategory(
+                    domainCategoryName, category.name, relationName
+                ) && (!category.parentCategory || !this.isAllowedRelationDomainCategory(
+                    domainCategoryName, category.parentCategory.name, relationName
+                ));
+            });
+    }
+
+
+    public getHierarchyParentCategories(categoryName: string): Array<Category> {
+
+        return this.getAllowedRelationRangeCategories('isRecordedIn', categoryName)
+            .concat(this.getAllowedRelationRangeCategories('liesWithin', categoryName));
+    }
+
+
+    public isSubcategory(category: Name, superCategoryName: string): boolean {
+
+        if (!this.getCategory(category)) throw [ProjectConfiguration.UNKNOWN_CATEGORY_ERROR, category];
+        return isTopLevelItemOrChildThereof(this.categoryTreelist, category, superCategoryName);
     }
 
 

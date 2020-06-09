@@ -4,9 +4,10 @@ import {FieldReadDatastore} from '../../../core/datastore/field/field-read-datas
 import {RoutingService} from '../../routing-service';
 import {ResourcesComponent} from '../resources.component';
 import {ResourcesSearchBarComponent} from './resources-search-bar.component';
-import {ProjectCategories} from '../../../core/configuration/project-categories';
 import {ViewFacade} from '../../../core/resources/view/view-facade';
 import {Query} from '../../../core/datastore/model/query';
+import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
+import {ProjectCategories} from '../../../core/configuration/project-categories';
 
 @Component({
     selector: 'search-suggestions',
@@ -34,7 +35,7 @@ export class SearchSuggestionsComponent implements OnChanges {
                 private resourcesSearchBarComponent: ResourcesSearchBarComponent,
                 private resourcesComponent: ResourcesComponent,
                 private renderer: Renderer2,
-                private projectCategories: ProjectCategories) {
+                private projectConfiguration: ProjectConfiguration) {
 
         this.viewFacade.populateDocumentsNotifications().subscribe(async documents => {
             this.documentsFound = documents.length > 0;
@@ -127,8 +128,8 @@ export class SearchSuggestionsComponent implements OnChanges {
         return this.viewFacade.getFilterCategories().length > 0
             ? this.viewFacade.getFilterCategories()
             : this.viewFacade.isInTypesManagement()
-                ? this.projectCategories.getTypeCategoryNames()
-                : this.projectCategories.getConcreteFieldCategoryNames();
+                ? ProjectCategories.getTypeCategoryNames()
+                : ProjectCategories.getConcreteFieldCategoryNames(this.projectConfiguration.getCategoryTreelist());
     }
 
 

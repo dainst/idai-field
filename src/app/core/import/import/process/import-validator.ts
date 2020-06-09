@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {includedIn, is, isNot, isnt, on} from 'tsfun';
 import {Document, NewDocument, NewResource, Resource} from 'idai-components-2';
-import {ProjectCategories} from '../../../configuration/project-categories';
 import {Validator} from '../../../model/validator';
 import {Validations} from '../../../model/validations';
 import {ImportErrors as E} from '../import-errors';
@@ -13,6 +12,7 @@ import RECORDED_IN = HierarchicalRelations.RECORDEDIN;
 import LIES_WITHIN = HierarchicalRelations.LIESWITHIN;
 import {ProjectConfiguration} from '../../../configuration/project-configuration';
 import {Query} from '../../../datastore/model/query';
+import {ProjectCategories} from '../../../configuration/project-categories';
 
 
 @Injectable()
@@ -28,10 +28,10 @@ import {Query} from '../../../datastore/model/query';
  */
 export class ImportValidator extends Validator {
 
-    constructor(projectConfiguration: ProjectConfiguration, private datastore: DocumentDatastore,
-                projectCategories: ProjectCategories) {
+    constructor(projectConfiguration: ProjectConfiguration,
+                private datastore: DocumentDatastore) {
 
-        super(projectConfiguration, (q: Query) => datastore.find(q), projectCategories);
+        super(projectConfiguration, (q: Query) => datastore.find(q));
     }
 
 
@@ -104,7 +104,7 @@ export class ImportValidator extends Validator {
 
     public async assertIsNotOverviewCategory(document: Document|NewDocument) {
 
-        if (this.projectCategories.getOverviewCategoryNames().includes(document.resource.category)) {
+        if (ProjectCategories.getOverviewCategoryNames(this.projectConfiguration.getCategoryTreelist()).includes(document.resource.category)) {
 
             throw [E.OPERATIONS_NOT_ALLOWED];
         }

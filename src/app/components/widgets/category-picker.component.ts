@@ -1,5 +1,5 @@
 import {Component, Input, Output, EventEmitter, OnChanges} from '@angular/core';
-import {on, any, is, compose, map, to} from 'tsfun';
+import {on, any, is, compose, map, to, Predicate} from 'tsfun';
 import {Category} from '../../core/configuration/model/category';
 import {Named} from '../../core/util/named';
 import {FieldDefinition} from '../../core/configuration/model/field-definition';
@@ -30,7 +30,7 @@ export class CategoryPickerComponent implements OnChanges {
 
         this.categories = [];
 
-        this.toplevelCategoriesArray.forEach(category => { // TODO review, we could use getCategoriesMap()
+        this.toplevelCategoriesArray.forEach(category => {
             this.categories.push(category);
             if (category.children) this.categories = this.categories.concat(category.children);
         });
@@ -61,19 +61,18 @@ export class CategoryPickerComponent implements OnChanges {
 
     public isParentSelected(category: Category): boolean {
 
-        if (!category.parentCategory || !this.selectedCategories) return false;
+        if (!category.parentCategory
+            || !this.selectedCategories) return false;
 
-        const parentName: string = category.parentCategory.name;
-        return this.selectedCategories.find(categoryName => {
-            return categoryName === parentName;
-        }) !== undefined;
+        return this.selectedCategories
+            .find(is(category.parentCategory.name)) !== undefined;
     }
 
 
-    public isCustomCategory = (category: Category): boolean => !category.libraryId;
+    public isCustomCategory: Predicate<Category> = category => !category.libraryId;
 
 
-    public hasCustomFields: (category: Category) => boolean = compose(
+    public hasCustomFields: Predicate<Category> = compose(
         Category.getFields,
         map(to(FieldDefinition.SOURCE)),
         any(is(FieldDefinition.Source.CUSTOM))

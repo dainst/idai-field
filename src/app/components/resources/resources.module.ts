@@ -33,7 +33,6 @@ import {LayerMapComponent} from './map/map/layer-map.component';
 import {ResourcesSearchConstraintsComponent} from './searchbar/resources-search-constraints.component';
 import {IndexFacade} from '../../core/datastore/index/index-facade';
 import {MoveModalComponent} from './move-modal.component';
-import {ProjectCategories} from '../../core/configuration/project-categories';
 import {ContextMenuComponent} from './widgets/context-menu.component';
 import {ResourceDeletion} from './deletion/resource-deletion';
 import {DeletionInProgressModalComponent} from './deletion/deletion-in-progress-modal.component';
@@ -121,7 +120,6 @@ const remote = typeof window !== 'undefined'
                          stateSerializer: StateSerializer,
                          projectConfiguration: ProjectConfiguration,
                          settingsService: SettingsService,
-                         projectTypes: ProjectCategories,
                          tabManager: TabManager) => {
 
                 const projectName = settingsService.getSelectedProject();
@@ -131,15 +129,15 @@ const remote = typeof window !== 'undefined'
                     datastore,
                     indexFacade,
                     stateSerializer,
-                    projectTypes,
                     tabManager,
                     projectName,
+                    projectConfiguration,
                     remote.getGlobal('switches').suppress_map_load_for_test
                 );
             },
             deps: [
                 FieldReadDatastore, IndexFacade, StateSerializer, ProjectConfiguration, SettingsService,
-                ProjectCategories, TabManager
+                TabManager
             ]
         },
         {

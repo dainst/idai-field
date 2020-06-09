@@ -1,8 +1,9 @@
 import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import {ResourcesComponent} from '../resources.component';
-import {ProjectCategories} from '../../../core/configuration/project-categories';
 import {ViewFacade} from '../../../core/resources/view/view-facade';
 import {ContextMenu} from './context-menu';
+import {ProjectCategories} from '../../../core/configuration/project-categories';
+import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
 
 
 export type ContextMenuAction = 'edit'|'move'|'delete'|'create-polygon'|'create-line-string'
@@ -30,7 +31,7 @@ export class ContextMenuComponent implements OnChanges {
 
     constructor(private resourcesComponent: ResourcesComponent,
                 private viewFacade: ViewFacade,
-                private projectCategories: ProjectCategories) {}
+                private projectConfiguration: ProjectConfiguration) {}
 
 
     ngOnChanges() {
@@ -54,7 +55,8 @@ export class ContextMenuComponent implements OnChanges {
     public isCreateGeometryOptionAvailable(): boolean {
 
         return this.contextMenu.document !== undefined
-            && this.projectCategories.isGeometryCategory(this.contextMenu.document.resource.category)
+            && ProjectCategories.isGeometryCategory(
+                this.projectConfiguration.getCategoryTreelist(), this.contextMenu.document.resource.category)
             && !this.contextMenu.document.resource.geometry;
     }
 
@@ -62,7 +64,8 @@ export class ContextMenuComponent implements OnChanges {
     public isEditGeometryOptionAvailable(): boolean {
 
         return this.contextMenu.document !== undefined
-            && this.projectCategories.isGeometryCategory(this.contextMenu.document.resource.category)
+            && ProjectCategories.isGeometryCategory(
+                this.projectConfiguration.getCategoryTreelist(), this.contextMenu.document.resource.category)
             && this.contextMenu.document.resource.geometry !== undefined;
     }
 
@@ -71,7 +74,7 @@ export class ContextMenuComponent implements OnChanges {
 
         if (!this.contextMenu.document) return false;
 
-        return this.projectCategories
+        return this.projectConfiguration
             .getHierarchyParentCategories(this.contextMenu.document.resource.category).length > 0;
     }
 

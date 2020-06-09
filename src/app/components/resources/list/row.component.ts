@@ -1,4 +1,5 @@
-import {AfterViewInit, Component, ElementRef, Input, ViewChild, ChangeDetectionStrategy} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, Input, ViewChild, ChangeDetectionStrategy,
+    ChangeDetectorRef} from '@angular/core';
 import {FieldDocument} from 'idai-components-2';
 import {ResourcesComponent} from '../resources.component';
 import {PersistenceManager} from '../../../core/model/persistence-manager';
@@ -9,7 +10,6 @@ import {M} from '../../messages/m';
 import {MessagesConversion} from '../../docedit/messages-conversion';
 import {Category} from '../../../core/configuration/model/category';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
-import {ProjectCategories} from '../../../core/configuration/project-categories';
 import {ViewFacade} from '../../../core/resources/view/view-facade';
 import {NavigationService} from '../../../core/resources/navigation/navigation-service';
 import {Messages} from '../../messages/messages';
@@ -30,26 +30,22 @@ export class RowComponent implements AfterViewInit {
     @Input() document: FieldDocument;
     @Input() categoriesMap: { [category: string]: Category };
 
-    @ViewChild('identifierInput', {static: false}) identifierInput: ElementRef;
+    @ViewChild('identifierInput', { static: false }) identifierInput: ElementRef;
 
     private initialValueOfCurrentlyEditedField: string|undefined;
 
 
-    constructor(
-        public resourcesComponent: ResourcesComponent,
-        public viewFacade: ViewFacade,
-        private messages: Messages,
-        private persistenceManager: PersistenceManager,
-        private usernameProvider: UsernameProvider,
-        private validator: Validator,
-        private datastore: FieldReadDatastore,
-        private navigationService: NavigationService,
-        private projectConfiguration: ProjectConfiguration,
-        private projectCategories: ProjectCategories
-    ) {}
+    constructor(public resourcesComponent: ResourcesComponent,
+                public viewFacade: ViewFacade,
+                private messages: Messages,
+                private persistenceManager: PersistenceManager,
+                private usernameProvider: UsernameProvider,
+                private validator: Validator,
+                private datastore: FieldReadDatastore,
+                private navigationService: NavigationService,
+                private projectConfiguration: ProjectConfiguration,
+                private changeDetectorRef: ChangeDetectorRef) {}
 
-
-    public editDocument = () => this.resourcesComponent.editDocument(this.document);
 
     public moveDocument = () => this.resourcesComponent.moveDocument(this.document);
 
@@ -90,6 +86,13 @@ export class RowComponent implements AfterViewInit {
     }
 
 
+    public async editDocument() {
+
+        await this.resourcesComponent.editDocument(this.document);
+        this.changeDetectorRef.detectChanges();
+    }
+
+
     public async jumpToResourceFromOverviewToOperation() {
 
         await this.navigationService.jumpToResourceFromOverviewToOperation(this.document);
@@ -106,7 +109,7 @@ export class RowComponent implements AfterViewInit {
 
     public isMoveOptionAvailable(): boolean {
 
-        return this.projectCategories.getHierarchyParentCategories(this.document.resource.category).length > 0;
+        return this.projectConfiguration.getHierarchyParentCategories(this.document.resource.category).length > 0;
     }
 
 
@@ -120,6 +123,7 @@ export class RowComponent implements AfterViewInit {
         } catch(msgWithParams) {
             this.messages.add(MessagesConversion.convertMessage(msgWithParams, this.projectConfiguration));
             await this.restoreIdentifier(this.document);
+            this.changeDetectorRef.detectChanges();
             return;
         }
 
@@ -131,6 +135,8 @@ export class RowComponent implements AfterViewInit {
         } catch(msgWithParams) {
             this.messages.add(msgWithParams);
         }
+
+        this.changeDetectorRef.detectChanges();
     }
 
 

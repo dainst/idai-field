@@ -18,6 +18,9 @@ import {ImageOverviewFacade} from '../../../core/images/overview/view/imageoverv
 import {PersistenceManager} from '../../../core/model/persistence-manager';
 import {UsernameProvider} from '../../../core/settings/username-provider';
 import {Imagestore} from '../../../core/images/imagestore/imagestore';
+import {ImageDocumentsManager} from '../../../core/images/overview/view/image-documents-manager';
+import {ImageReadDatastore} from '../../../core/datastore/field/image-read-datastore';
+import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
 
 
 @NgModule({
@@ -49,6 +52,16 @@ import {Imagestore} from '../../../core/images/imagestore/imagestore';
             provide: PersistenceHelper,
             useClass: PersistenceHelper,
             deps: [ImageOverviewFacade, PersistenceManager, UsernameProvider, Imagestore]
+        },
+        {
+            provide: ImageDocumentsManager,
+            useClass: ImageDocumentsManager,
+            deps: [ImagesState, ImageReadDatastore]
+        },
+        {
+            provide: ImageOverviewFacade,
+            useClass: ImageOverviewFacade,
+            deps: [ImageDocumentsManager, ImagesState, ProjectConfiguration]
         }
     ]
 })

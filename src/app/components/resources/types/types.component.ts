@@ -1,6 +1,6 @@
 import {ChangeDetectorRef, Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {SafeResourceUrl} from '@angular/platform-browser';
-import {take, flatten, set, flow, filter, map, to, Map} from 'tsfun';
+import {take, flatten, set, flow, filter, map, to, Map, isnt} from 'tsfun';
 import {Document, FieldDocument} from 'idai-components-2';
 import {ViewFacade} from '../../../core/resources/view/view-facade';
 import {Loading} from '../../widgets/loading';
@@ -15,10 +15,10 @@ import {ContextMenuAction} from '../widgets/context-menu.component';
 import {ViewModalLauncher} from '../service/view-modal-launcher';
 import {NavigationPath} from '../../../core/resources/view/state/navigation-path';
 import {RoutingService} from '../../routing-service';
-import {ProjectCategories} from '../../../core/configuration/project-categories';
 import {TabManager} from '../../../core/tabs/tab-manager';
 import {PLACEHOLDER} from '../../../core/images/row/image-row';
-import {makeLookup} from 'src/app/core/util/transformers';
+import { makeLookup } from 'src/app/core/util/transformers';
+import {ProjectCategories} from '../../../core/configuration/project-categories';
 
 
 @Component({
@@ -71,7 +71,6 @@ export class TypesComponent extends BaseList implements OnChanges {
                 private imagestore: ReadImagestore,
                 private viewModalLauncher: ViewModalLauncher,
                 private routingService: RoutingService,
-                private projectCategories: ProjectCategories,
                 private tabManager: TabManager,
                 private changeDetectorRef: ChangeDetectorRef,
                 resourcesComponent: ResourcesComponent,
@@ -282,7 +281,7 @@ export class TypesComponent extends BaseList implements OnChanges {
 
     private isCatalogOrType(document: FieldDocument): boolean {
 
-        return this.projectCategories.getTypeCategoryNames().includes(document.resource.category);
+        return ProjectCategories.getTypeCategoryNames().includes(document.resource.category);
     }
 
 
@@ -301,7 +300,7 @@ export class TypesComponent extends BaseList implements OnChanges {
     private getImageIdsOfLinkedResources(document: FieldDocument): string[] {
 
         const imageIds: string[] = TypeImagesUtil.getLinkedImageIds(document, this.fieldDatastore, this.imageDatastore)
-            .filter(imageId => imageId !== PLACEHOLDER);
+            .filter(isnt(PLACEHOLDER));
 
         return take(4, imageIds);
     }

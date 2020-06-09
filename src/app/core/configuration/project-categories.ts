@@ -1,161 +1,165 @@
-import {Injectable} from '@angular/core';
-import {to} from 'tsfun';
-import {ProjectConfiguration} from './project-configuration';
+import {filter, flow, includedIn, is, map, Map, remove, to} from 'tsfun';
 import {Category} from './model/category';
-import {ProjectCategoriesHelper} from './project-categories-helper';
+import {Named, onName, toName} from '../util/named';
+import {flattenTree, Treelist} from '../util/treelist';
+import {Name} from '../constants';
+import {filterTrees, isTopLevelItemOrChildThereof, removeTrees} from '../util/named-treelist';
 
-const NAME = 'name';
+const TYPE_CATALOG = 'TypeCatalog';
+const TYPE = 'Type';
+const TYPE_CATALOG_AND_TYPE = [TYPE_CATALOG, TYPE];
 
 
-
-@Injectable()
 /**
+ * Outside of the configuration package, this module should not be accessed directly,
+ * but instead via ProjectCategories (project-categories.ts) or ProjectConfiguration (project-configuration.ts).
+ *
  * @author Thomas Kleinke
- * @author F.Z.
  * @author Daniel de Oliveira
  */
-export class ProjectCategories {
+export /* package-private */ module ProjectCategories {
 
-    public static UNKNOWN_TYPE_ERROR = 'projectCategories.Errors.UnknownType';
+    export function isGeometryCategory(t: Treelist<Named>, category: Name): boolean {
 
-
-    constructor(private projectConfiguration: ProjectConfiguration) {}
-
-
-    public getOverviewTopLevelCategories(): Array<Category> {
-
-        return ProjectCategoriesHelper.getOverviewTopLevelCategories(this.projectConfiguration.getCategoriesArray());
+        return !isTopLevelItemOrChildThereof(t, category,
+            'Image', 'Inscription', 'Type', 'TypeCatalog', 'Project');
     }
 
 
-    public getFieldCategories(): Array<Category> {
+    export function getRegularCategoryNames(t: Treelist<Category>): Array<Name> {
 
-        return ProjectCategoriesHelper.getFieldCategories(this.projectConfiguration.getCategoriesMap());
-    }
-
-
-    public getConcreteFieldCategories(): Array<Category> {
-
-        return ProjectCategoriesHelper.getConcreteFieldCategories(this.projectConfiguration.getCategoriesMap());
-    }
-
-
-    public getTypeCategories(): Array<Category> {
-
-        return ProjectCategoriesHelper.getTypeCategories(this.projectConfiguration.getCategoriesArray());
-    }
-
-
-    public getTypeCategoryNames(): string[] {
-
-        return ProjectCategoriesHelper.getTypeCategoryNames();
-    }
-
-
-    public getFieldCategoryNames(): string[] {
-
-        return this.getFieldCategories().map(to(NAME));
-    }
-
-
-    public getConcreteFieldCategoryNames(): string[] {
-
-        return this.getConcreteFieldCategories().map(to(NAME));
-    }
-
-
-    public getImageCategoryNames(): string[] {
-
-        return ProjectCategoriesHelper.getImageCategoryNames(this.projectConfiguration.getCategoriesMap());
-    }
-
-
-    public getFeatureCategoryNames(): string[] {
-
-        return this.getSuperCategoryNames('Feature');
-    }
-
-
-    public getOperationCategoryNames(): string[] {
-
-        return this.getSuperCategoryNames('Operation');
-    }
-
-
-    public getNamesOfCategoriesAndSubcategories(supercategoryName: string): string[] {
-
-        return this.getSuperCategoryNames(supercategoryName);
-    }
-
-
-    public getRegularCategoryNames(): string[] {
-
-        return ProjectCategoriesHelper.getRegularCategoryNames(this.projectConfiguration.getCategoriesMap());
-    }
-
-
-    public getOverviewCategoryNames(): string[] {
-
-        return ProjectCategoriesHelper.getOverviewCategoryNames(this.projectConfiguration.getCategoriesMap());
-    }
-
-
-    public isGeometryCategory(categoryName: string): boolean {
-
-        return ProjectCategoriesHelper.isGeometryCategory(
-            this.projectConfiguration.getCategoryTreelist(),
-            categoryName
+        return flow(t,
+            removeTrees('Place', 'Project', TYPE_CATALOG, TYPE, 'Image', 'Operation'),
+            flattenTree,
+            map(toName)
         );
     }
 
 
-    public getOverviewCategories(): string[] {
+    export function getConcreteFieldCategories(t: Treelist<Category>): Array<Category> {
 
-        return ProjectCategoriesHelper.getOverviewCategories(this.projectConfiguration.getCategoriesMap());
-    }
-
-
-    public getAllowedRelationDomainCategories(relationName: string,
-                                              rangeCategoryName: string): Array<Category> {
-
-        return this.projectConfiguration.getCategoriesArray()
-            .filter(category => {
-                return this.projectConfiguration.isAllowedRelationDomainCategory(
-                    category.name, rangeCategoryName, relationName
-                ) && (!category.parentCategory || !this.projectConfiguration.isAllowedRelationDomainCategory(
-                    category.parentCategory.name, rangeCategoryName, relationName
-                ));
-            });
-    }
-
-
-    public getAllowedRelationRangeCategories(relationName: string,
-                                             domainCategoryName: string): Array<Category> {
-
-        return this.projectConfiguration.getCategoriesArray()
-            .filter(category => {
-                return this.projectConfiguration.isAllowedRelationDomainCategory(
-                    domainCategoryName, category.name, relationName
-                ) && (!category.parentCategory || !this.projectConfiguration.isAllowedRelationDomainCategory(
-                    domainCategoryName, category.parentCategory.name, relationName
-                ));
-            });
-    }
-
-
-    public getHierarchyParentCategories(categoryName: string): Array<Category> {
-
-        return this.getAllowedRelationRangeCategories('isRecordedIn', categoryName)
-            .concat(this.getAllowedRelationRangeCategories('liesWithin', categoryName));
-    }
-
-
-    private getSuperCategoryNames(superCategoryName: string) {
-
-        return Object.keys(
-            ProjectCategoriesHelper.getCategoryAndSubcategories(
-                superCategoryName, this.projectConfiguration.getCategoriesMap()
-            )
+        return flow(t,
+            removeTrees('Image', 'Project', TYPE_CATALOG, TYPE),
+            flattenTree
         );
+    }
+
+
+    export function getConcreteFieldCategoryNames(t: Treelist<Category>): Array<Name> {
+
+        return getConcreteFieldCategories(t).map(toName);
+    }
+
+
+    export function getFieldCategories(t: Treelist<Category>): Array<Category> {
+
+        return flow(t,
+            removeTrees('Image', 'Project'),
+            flattenTree
+        );
+    }
+
+
+    export function getFieldCategoryNames(t: Treelist<Category>): Array<Name> {
+
+        return getFieldCategories(t).map(toName);
+    }
+
+
+    export function getOverviewCategoryNames(t: Treelist<Category>): Array<Name> {
+
+        return flow(t,
+            filterTrees('Operation', 'Place'),
+            flattenTree,
+            map(toName)
+        );
+    }
+
+
+    export function getOverviewCategories(t: Treelist<Category>): Array<Name> {
+
+        return flow(t,
+            filterTrees('Operation', 'Place'),
+            flattenTree,
+            remove(onName(is('Operation'))), // TODO review why we do remove this here but not in getOverviewCategoryNames, compare also getOverviewToplevelCategories
+            map(toName)
+        );
+    }
+
+
+    export function getOverviewToplevelCategories(t: Treelist<Category>): Array<Category> {
+
+        return flow(t,
+            filterTrees('Operation', 'Place'),
+            flattenTree,
+            filter(onName(includedIn(['Operation', 'Place'])))
+        );
+    }
+
+
+    export function getTypeCategories(t: Treelist<Category>): Array<Category> {
+
+        return flow(t,
+            filterTrees('Type', 'TypeCatalog'),
+            flattenTree
+        );
+    }
+
+
+    export function getTypeCategoryNames(): Array<Name> {
+
+        return TYPE_CATALOG_AND_TYPE;
+    }
+
+
+    /**
+     * @deprecated
+     */
+    export function getCategoryAndSubcategories(supercategory: Name, categoriesMap: Map<Category>): Map<Category> {
+
+        if (!categoriesMap[supercategory]) return {};
+
+        const subcategories: Map<Category> = {};
+        subcategories[supercategory] = categoriesMap[supercategory];
+
+        if (categoriesMap[supercategory].children) {
+            for (let i = categoriesMap[supercategory].children.length - 1; i >= 0; i--) {
+                subcategories[categoriesMap[supercategory].children[i].name]
+                    = categoriesMap[supercategory].children[i];
+            }
+        }
+        return subcategories;
+    }
+
+
+    export function getImageCategoryNames(t: Treelist<Category>): Array<Name> {
+
+        return flow(t,
+            filterTrees('Image'),
+            flattenTree,
+            map(to([Named.NAME]))
+        );
+    }
+
+
+    export function getFeatureCategoryNames(categories: Treelist<Category>): string[] {
+
+        return getSuperCategoryNames(categories, 'Feature');
+    }
+
+
+    export function getOperationCategoryNames(categories: Treelist<Category>): string[] {
+
+        return getSuperCategoryNames(categories, 'Operation');
+    }
+
+
+    function getSuperCategoryNames(categories: Treelist<Category>, superCategoryName: string) {
+
+        return flow(
+            categories,
+            filterTrees(superCategoryName),
+            flattenTree,
+            map(toName));
     }
 }

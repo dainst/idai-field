@@ -2,7 +2,6 @@ import * as PouchDB from 'pouchdb-node';
 import {createApp, setupSyncTestDb} from '../subsystem-helper';
 import {Static} from '../../../static';
 import {ProjectConfiguration} from '../../../../../src/app/core/configuration/project-configuration';
-import {ProjectCategoriesHelper} from '../../../../../src/app/core/configuration/project-categories-helper';
 
 
 /**
@@ -26,7 +25,7 @@ describe('subsystem/datastore/convert', () => {
     function expectErr(err) {
 
         if (!err) fail('Wrong Err - undefined');
-        if (err.indexOf(ProjectCategoriesHelper.UNKNOWN_CATEGORY_ERROR) === -1) fail('Wrong Err' + err);
+        if (err.indexOf(ProjectConfiguration.UNKNOWN_CATEGORY_ERROR) === -1) fail('Wrong Err' + err);
     }
 
 

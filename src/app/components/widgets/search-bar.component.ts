@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, Output, ViewChild, ElementRef, OnChanges} from '@angular/core';
 import {sameset} from 'tsfun';
-import {ProjectCategories} from '../../core/configuration/project-categories';
 import {Category} from '../../core/configuration/model/category';
+import {ProjectConfiguration} from '../../core/configuration/project-configuration';
 
 
 @Component({
@@ -28,15 +28,15 @@ export class SearchBarComponent implements OnChanges {
     @Output() onCategoriesChanged = new EventEmitter<string[]>();
     @Output() onQueryStringChanged = new EventEmitter<string>();
 
-    @ViewChild('p', {static: false}) protected popover: any;
-    @ViewChild('searchInput', {static: false}) fulltextSearchInput: ElementRef;
+    @ViewChild('p', { static: false }) protected popover: any;
+    @ViewChild('searchInput', { static: false }) fulltextSearchInput: ElementRef;
 
     public focused: boolean = false;
 
     private emitQueryTimeout: any = undefined;
 
 
-    constructor(private projectCategories: ProjectCategories) {}
+    constructor(private projectConfiguration: ProjectConfiguration) {}
 
 
     ngOnChanges() {
@@ -68,7 +68,7 @@ export class SearchBarComponent implements OnChanges {
     public chooseCategoryFilter(category: Category) {
 
         let newCategories: string[]|undefined = category
-            ? this.projectCategories.getNamesOfCategoriesAndSubcategories(category.name)
+            ? Category.getNamesOfCategoryAndSubcategories(category)
             : undefined;
 
         if (newCategories && newCategories.length > 1 && this.categories

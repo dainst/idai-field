@@ -2,9 +2,10 @@ import {equal} from 'tsfun';
 import {ImageDocument} from 'idai-components-2';
 import {ImagesState} from './images-state';
 import {ImageDocumentsManager} from './image-documents-manager';
-import {ProjectCategories} from '../../../configuration/project-categories';
 import {clone} from '../../../util/object-util';
 import {Query} from '../../../datastore/model/query';
+import {ProjectCategories} from '../../../configuration/project-categories';
+import {ProjectConfiguration} from '../../../configuration/project-configuration';
 
 
 /**
@@ -22,7 +23,7 @@ export class ImageOverviewFacade {
 
     constructor(private imageDocumentsManager: ImageDocumentsManager,
                 private imagesState: ImagesState,
-                private projectCategories: ProjectCategories) {}
+                private projectConfiguration: ProjectConfiguration) {}
 
 
     public getMaxNrImagesPerRow = () => this.maxNrImagesPerRow;
@@ -188,7 +189,7 @@ export class ImageOverviewFacade {
 
         return {
             q: '',
-            categories: this.projectCategories.getImageCategoryNames()
+            categories: ProjectCategories.getImageCategoryNames(this.projectConfiguration.getCategoryTreelist())
         };
     }
 

@@ -10,6 +10,7 @@ describe('ResourcesStateManager', () => {
 
     let mockDatastore: any;
     let mockIndexFacade: any;
+    let mockProjectConfiguration: any;
 
     const getCount = (constraintIndexName: string, matchTerm: string) => {
         return documents.map(document => document.resource.id)
@@ -26,6 +27,7 @@ describe('ResourcesStateManager', () => {
 
         mockDatastore = jasmine.createSpyObj('datastore', ['get']);
         mockDatastore.get.and.returnValue({ resource: { identifier: 'test' }});
+        mockProjectConfiguration = jasmine.createSpyObj('projectConfiguration', ['getCategoryTreelist'])
 
         mockIndexFacade = jasmine.createSpyObj('indexFacade', ['getCount']);
         mockIndexFacade.getCount.and.callFake(getCount);
@@ -38,8 +40,8 @@ describe('ResourcesStateManager', () => {
             mockDatastore,
             mockIndexFacade,
             mockSerializer,
-            undefined,
             mockTabManager,
+            mockProjectConfiguration,
             undefined
         );
 

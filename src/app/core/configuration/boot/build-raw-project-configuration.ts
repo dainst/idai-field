@@ -29,12 +29,12 @@ import {makeCategoryTreelist} from './make-category-treelist';
 import {RawProjectConfiguration} from '../project-configuration';
 import {Category} from '../model/category';
 import {Group, Groups} from '../model/group';
-import {Labelled, Named} from '../../util/named';
+import {Labelled} from '../../util/named';
 import {RelationsUtil} from '../relations-utils';
 import {CategoryDefinition} from '../model/category-definition';
-import {ProjectCategoriesHelper} from '../project-categories-helper';
+import {ProjectCategories} from '../project-categories';
 import {FieldDefinition} from '../model/field-definition';
-import {mapLeafs, mapTreelist, Treelist} from '../treelist';
+import {mapTrees, mapTreelist, Treelist, Tree, ITEMNAMEPATH} from '../../util/treelist';
 import {sortStructArray} from '../../util/sort-struct-array';
 import {linkParentAndChildInstances} from '../category-treelist';
 
@@ -120,7 +120,7 @@ function adjustCategoryGeometry(languageConfiguration: any, categoriesTree: Tree
 
     return (category: Category /* modified in place */): Category => {
 
-        if (!ProjectCategoriesHelper.isGeometryCategory(categoriesTree, category.name)) return category;
+        if (!ProjectCategories.isGeometryCategory(categoriesTree, category.name)) return category;
 
         let geometryGroup = category.groups.find(group => group.name === Groups.POSITION);
         if (!geometryGroup) {
@@ -173,7 +173,7 @@ const sortGroups = (defaultOrder: string[]) => (groups: Map<Group>) =>
 
 
 const orderCategories = (categoriesOrder: string[] = []) => (categories: Treelist<Category>): Treelist<Category> =>
-    mapLeafs(sortStructArray(categoriesOrder, [0,Named.NAME]), categories) as Treelist<Category>;
+    mapTrees(sortStructArray(categoriesOrder, ITEMNAMEPATH), categories) as Treelist<Category>;
 
 
 function setGroupLabels(groupLabels: Map<string>) {

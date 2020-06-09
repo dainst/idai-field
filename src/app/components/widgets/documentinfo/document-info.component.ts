@@ -1,7 +1,8 @@
 import {Component, Input, Output, ElementRef, ViewChild, EventEmitter, DoCheck} from '@angular/core';
 import {Document, FieldDocument} from 'idai-components-2';
-import {ProjectCategories} from '../../../core/configuration/project-categories';
 import {Groups} from '../../../core/configuration/model/group';
+import {ProjectCategories} from '../../../core/configuration/project-categories';
+import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
 
 
 @Component({   selector: 'document-info',
@@ -27,7 +28,7 @@ export class DocumentInfoComponent implements DoCheck {
     public openSection: string|undefined = Groups.STEM;
 
 
-    constructor(private projectCategories: ProjectCategories) {}
+    constructor(private projectConfiguration: ProjectConfiguration) {}
 
 
     public startEdit = () => this.onStartEdit.emit();
@@ -58,7 +59,7 @@ export class DocumentInfoComponent implements DoCheck {
 
     public isImageDocument() {
 
-        return this.projectCategories.getImageCategoryNames().includes(this.document.resource.category);
+        return ProjectCategories.getImageCategoryNames(this.projectConfiguration.getCategoryTreelist()).includes(this.document.resource.category);
     }
 
 

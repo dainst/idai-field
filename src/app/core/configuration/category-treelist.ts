@@ -1,9 +1,9 @@
 import {Map, to} from 'tsfun';
 import {Category} from './model/category';
-import {flattenTreelist, Treelist} from './treelist';
+import {flattenTree, toTreeItem, Treelist} from '../util/treelist';
 import {namedArrayToNamedMap} from '../util/named';
 
-const CATEGORIES = [0];
+const CATEGORIES = ['item'];
 
 
 // This tree's category instances are connected via 'parentCategory' and 'children' properties of Category
@@ -16,7 +16,7 @@ export type CategoryTreelist = Treelist<Category>; // technically the same, but 
  */
 export function categoryTreelistToArray(t: CategoryTreelist): Array<Category> {
 
-    return flattenTreelist(t);
+    return flattenTree(t);
 }
 
 
@@ -35,9 +35,9 @@ export function categoryTreelistToMap(t: CategoryTreelist): Map<Category> {
  */
 export function linkParentAndChildInstances(categories: Treelist<Category> /* modified in place */): CategoryTreelist {
 
-    for (let [category, children] of categories) {
+    for (let { item: category, trees: children } of categories) {
 
-        category.children = children.map(to(CATEGORIES));
+        category.children = children.map(toTreeItem);
         category.children.map(child => child.parentCategory = category);
         linkParentAndChildInstances(children);
     }

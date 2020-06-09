@@ -4,13 +4,13 @@ import {Location} from '@angular/common';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {Observable, Observer} from 'rxjs';
 import {Document} from 'idai-components-2';
-import {ProjectCategories} from '../core/configuration/project-categories';
 import {ViewFacade} from '../core/resources/view/view-facade';
 import {ProjectConfiguration} from '../core/configuration/project-configuration';
 import {MenuService} from './menu-service';
 import {ProjectsModalComponent} from './navbar/projects-modal.component';
 import {SettingsService} from '../core/settings/settings-service';
 import {DatastoreErrors} from '../core/datastore/model/datastore-errors';
+import {ProjectCategories} from '../core/configuration/project-categories';
 
 
 @Injectable()
@@ -31,7 +31,6 @@ export class RoutingService {
     constructor(private router: Router,
                 private viewFacade: ViewFacade,
                 private location: Location,
-                private projectCategories: ProjectCategories,
                 private projectConfiguration: ProjectConfiguration,
                 private modalService: NgbModal,
                 private settingsService: SettingsService) {}
@@ -162,9 +161,9 @@ export class RoutingService {
 
     private getViewName(document: Document): 'project'|'types'|string {
 
-        return this.projectCategories.getOverviewCategoryNames().includes(document.resource.category)
+        return ProjectCategories.getOverviewCategoryNames(this.projectConfiguration.getCategoryTreelist()).includes(document.resource.category)
             ? 'project'
-            : this.projectCategories.getTypeCategoryNames().includes(document.resource.category)
+            : ProjectCategories.getTypeCategoryNames().includes(document.resource.category)
                 ? 'types'
                 : document.resource.relations['isRecordedIn'][0];
     }

@@ -1,6 +1,5 @@
 import {Component, Input, ChangeDetectionStrategy, EventEmitter, Output} from '@angular/core';
 import {FieldDocument} from 'idai-components-2';
-import {ProjectCategories} from '../../../core/configuration/project-categories';
 import {ViewFacade} from '../../../core/resources/view/view-facade';
 import {NavigationService} from '../../../core/resources/navigation/navigation-service';
 import { PopoverMenu, ResourcesComponent } from '../resources.component';
@@ -24,7 +23,6 @@ export class ListButtonGroupComponent {
 
     constructor(public resourcesComponent: ResourcesComponent,
                 public viewFacade: ViewFacade,
-                public projectCategories: ProjectCategories,
                 private navigationService: NavigationService) {
     }
 

@@ -2,13 +2,14 @@ import {Component, Input, ElementRef, ViewChild, OnChanges, EventEmitter, Output
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {Relations, FieldDocument} from 'idai-components-2';
 import {ResourcesComponent} from './resources.component';
-import {ProjectCategories} from '../../core/configuration/project-categories';
 import {M} from '../messages/m';
 import {Category} from '../../core/configuration/model/category';
 import {ProjectConfiguration} from '../../core/configuration/project-configuration';
 import {ViewFacade} from '../../core/resources/view/view-facade';
 import {FieldReadDatastore} from '../../core/datastore/field/field-read-datastore';
 import {Messages} from '../messages/messages';
+import {ProjectCategories} from '../../core/configuration/project-categories';
+import {Name} from '../../core/constants';
 
 
 export type PlusButtonStatus = 'enabled'|'disabled-hierarchy';
@@ -51,7 +52,6 @@ export class PlusButtonComponent implements OnChanges {
         private resourcesComponent: ResourcesComponent,
         private projectConfiguration: ProjectConfiguration,
         private messages: Messages,
-        private projectCategories: ProjectCategories,
         private viewFacade: ViewFacade,
         private datastore: FieldReadDatastore,
         private i18n: I18n) {
@@ -62,8 +62,8 @@ export class PlusButtonComponent implements OnChanges {
     }
 
 
-    public isGeometryCategory = (categoryName: string) =>
-        this.projectCategories.isGeometryCategory(categoryName);
+    public isGeometryCategory = (category: Name) =>
+        ProjectCategories.isGeometryCategory(this.projectConfiguration.getCategoryTreelist(), category);
 
 
     ngOnChanges() {
@@ -207,8 +207,8 @@ export class PlusButtonComponent implements OnChanges {
             }
         } else {
             if (!(this.viewFacade.isInOverview()
-                    ? this.projectCategories.getOverviewCategories().includes(category.name)
-                    : this.projectCategories.getTypeCategoryNames().includes(category.name))) {
+                    ? ProjectCategories.getOverviewCategories(this.projectConfiguration.getCategoryTreelist()).includes(category.name)
+                    : ProjectCategories.getTypeCategoryNames().includes(category.name))) {
                 return false;
             }
         }

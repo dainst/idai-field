@@ -7,7 +7,6 @@ import {Loading} from '../widgets/loading';
 import {RoutingService} from '../routing-service';
 import {DoceditLauncher} from './service/docedit-launcher';
 import {M} from '../messages/m';
-import {ProjectCategories} from '../../core/configuration/project-categories';
 import {MoveModalComponent} from './move-modal.component';
 import {AngularUtility} from '../../angular/angular-utility';
 import {ResourceDeletion} from './deletion/resource-deletion';
@@ -17,6 +16,8 @@ import {ResourcesViewMode, ViewFacade} from '../../core/resources/view/view-faca
 import {NavigationService} from '../../core/resources/navigation/navigation-service';
 import {MenuService} from '../menu-service';
 import {Messages} from '../messages/messages';
+import {ProjectCategories} from '../../core/configuration/project-categories';
+import {ProjectConfiguration} from '../../core/configuration/project-configuration';
 
 
 export type PopoverMenu = 'none'|'info'|'children';
@@ -55,11 +56,11 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
                 private messages: Messages,
                 private loading: Loading,
                 private changeDetectorRef: ChangeDetectorRef,
-                private projectCategories: ProjectCategories,
                 private modalService: NgbModal,
                 private resourceDeletion: ResourceDeletion,
                 private tabManager: TabManager,
-                private navigationService: NavigationService
+                private navigationService: NavigationService,
+                private projectConfiguration: ProjectConfiguration
     ) {
         routingService.routeParams(route).subscribe(async (params: any) => {
             this.isEditingGeometry = false;
@@ -131,12 +132,12 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
 
         if (this.viewFacade.isInOverview()) {
             this.filterOptions = this.viewFacade.isInExtendedSearchMode()
-                ? this.projectCategories.getFieldCategories().filter(category => !category.parentCategory)
-                : this.projectCategories.getOverviewTopLevelCategories();
+                ? ProjectCategories.getFieldCategories(this.projectConfiguration.getCategoryTreelist()).filter(category => !category.parentCategory)
+                : ProjectCategories.getOverviewToplevelCategories(this.projectConfiguration.getCategoryTreelist());
         } else if (this.viewFacade.isInTypesManagement()) {
-            this.filterOptions = this.projectCategories.getTypeCategories();
+            this.filterOptions = ProjectCategories.getTypeCategories(this.projectConfiguration.getCategoryTreelist());
         } else {
-            this.filterOptions = this.projectCategories.getAllowedRelationDomainCategories(
+            this.filterOptions = this.projectConfiguration.getAllowedRelationDomainCategories(
                 'isRecordedIn',
                 (this.viewFacade.getCurrentOperation() as FieldDocument).resource.category
             );
@@ -144,13 +145,12 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
     }
 
 
-    public startEditNewDocument(newDocument: FieldDocument, geometryType: string) {
+    public async startEditNewDocument(newDocument: FieldDocument, geometryType: string) {
 
-        if (geometryType == 'none') {
-            this.editDocument(newDocument);
+        if (geometryType === 'none') {
+            await this.editDocument(newDocument);
         } else {
             newDocument.resource['geometry'] = <FieldGeometry> { type: geometryType };
-
             this.viewFacade.addNewDocument(newDocument);
             this.startGeometryEditing();
             this.viewFacade.setMode('map');

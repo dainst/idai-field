@@ -78,7 +78,6 @@
     "@mdi/font": "3.5.95",
     "@ng-bootstrap/ng-bootstrap": "6.1.0",
     "@ngx-translate/i18n-polyfill": "1.0.0",
-    "Leaflet.vector-markers": "0.0.6",
     "address": "1.1.2",
     "angular2-uuid": "1.1.1",
     "bootstrap": "4.4.1",

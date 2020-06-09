@@ -1,5 +1,4 @@
 import {Validator} from '../../../../src/app/core/model/validator';
-import {ProjectCategories} from '../../../../src/app/core/configuration/project-categories';
 import {ValidationErrors} from '../../../../src/app/core/model/validation-errors';
 import {ProjectConfiguration} from '../../../../src/app/core/configuration/project-configuration';
 import {FindResult} from '../../../../src/app/core/datastore/model/read-datastore';
@@ -14,7 +13,7 @@ describe('Validator', () => {
     const projectConfiguration = new ProjectConfiguration(
         [
             [
-                [{
+                { t: {
                     name: 'T',
                     groups: [
                         {
@@ -30,8 +29,8 @@ describe('Validator', () => {
                             ]
                         }
                     ]
-                },[]],
-                [{
+                }, trees: []},
+                { t: {
                     name: 'T2',
                     groups: [
                         {
@@ -42,7 +41,7 @@ describe('Validator', () => {
                             ]
                         }
                     ]
-                },[]]
+                }, trees: []}
             ],
             []
         ] as any
@@ -63,7 +62,7 @@ describe('Validator', () => {
                 },
             }
         };
-        await new Validator(projectConfiguration, find, new ProjectCategories(projectConfiguration))
+        await new Validator(projectConfiguration, find)
             .assertIsRecordedInTargetsExist(doc).then(() => done(), msgWithParams => fail(msgWithParams));
         done();
     });
@@ -76,7 +75,7 @@ describe('Validator', () => {
         const doc = { resource: { id: '1', category: 'T', mandatory: 'm', relations: { 'isRecordedIn': ['notexisting'] } } };
 
         try {
-            await new Validator(projectConfiguration, find, new ProjectCategories(projectConfiguration))
+            await new Validator(projectConfiguration, find)
                 .assertIsRecordedInTargetsExist(doc);
             fail();
         } catch (expected) {
@@ -100,7 +99,7 @@ describe('Validator', () => {
         };
 
         try {
-            await new Validator(projectConfiguration, find, new ProjectCategories(projectConfiguration))
+            await new Validator(projectConfiguration, find)
                 .assertIdentifierIsUnique(doc);
             fail();
         } catch (expected) {

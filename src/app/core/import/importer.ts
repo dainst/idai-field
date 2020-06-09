@@ -6,7 +6,6 @@ import {NativeJsonlParser} from './parser/native-jsonl-parser';
 import {ShapefileParser} from './parser/shapefile-parser';
 import {GazGeojsonParserAddOn} from './parser/gaz-geojson-parser-add-on';
 import {ImportValidator} from './import/process/import-validator';
-import {ProjectCategories} from '../configuration/project-categories';
 import {DocumentDatastore} from '../datastore/document-datastore';
 import {CsvParser} from './parser/csv-parser';
 import {ProjectConfiguration} from '../configuration/project-configuration';
@@ -14,6 +13,7 @@ import {Category} from '../configuration/model/category';
 import {InverseRelationsMap, makeInverseRelationsMap} from '../configuration/inverse-relations-map';
 import {buildImportFunction} from './import/import-documents';
 import {FieldConverter} from './field-converter';
+import {ProjectCategories} from '../configuration/project-categories';
 
 export type ImportFormat = 'native' | 'geojson' | 'geojson-gazetteer' | 'shapefile' | 'csv';
 
@@ -57,7 +57,6 @@ export module Importer {
      *   importReport.warnings
      */
     export async function doImport(format: ImportFormat,
-                                   projectCategories: ProjectCategories,
                                    datastore: DocumentDatastore,
                                    usernameProvider: UsernameProvider,
                                    projectConfiguration: ProjectConfiguration,
@@ -80,8 +79,8 @@ export module Importer {
             return { errors: [msgWithParams], successfulImports: 0 };
         }
 
-        const operationCategoryNames = projectCategories.getOverviewCategoryNames().filter(isnt('Place'));
-        const importValidator =  new ImportValidator(projectConfiguration, datastore, projectCategories);
+        const operationCategoryNames = ProjectCategories.getOverviewCategoryNames(projectConfiguration.getCategoryTreelist()).filter(isnt('Place'));
+        const importValidator =  new ImportValidator(projectConfiguration, datastore);
 
         const inverseRelationsMap = makeInverseRelationsMap(projectConfiguration.getAllRelationDefinitions());
 

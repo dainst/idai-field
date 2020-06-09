@@ -29,7 +29,7 @@ const UNKNOWN = 'UNKNOWN';
  */
 export class DocumentsManager {
 
-    private documents: Array<Document>;
+    private documents: Array<FieldDocument>;
     private newDocumentsFromRemote: Array<string /* resourceId */> = [];
 
     private totalDocumentCount: number;
@@ -152,14 +152,16 @@ export class DocumentsManager {
 
     public addNewDocument(document: FieldDocument) {
 
-        this.documents.unshift(document);
+        this.documents = [document].concat(this.documents);
         this.selectAndNotify(document);
     }
 
 
     public removeNewDocument() {
 
-        this.documents = this.documents.filter(hasId);
+        if (this.documents.find(document => !hasId(document))) {
+            this.documents = this.documents.filter(hasId);
+        }
     }
 
 

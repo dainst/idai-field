@@ -14,10 +14,8 @@ import {ViewFacade} from '../../../core/resources/view/view-facade';
  */
 export class DoceditLauncher {
 
-    constructor(
-            private modalService: NgbModal,
-            private viewFacade: ViewFacade
-    ) {}
+    constructor(private modalService: NgbModal,
+                private viewFacade: ViewFacade) {}
 
 
     public async editDocument(document: Document|NewDocument,

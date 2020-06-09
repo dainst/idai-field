@@ -1,6 +1,7 @@
 import {ValidationErrors} from '../../../../src/app/core/model/validation-errors';
 import {Validations} from '../../../../src/app/core/model/validations';
 import {ProjectConfiguration} from '../../../../src/app/core/configuration/project-configuration';
+import {buildTreelist} from '../../../../src/app/core/util/treelist';
 
 
 /**
@@ -10,49 +11,49 @@ import {ProjectConfiguration} from '../../../../src/app/core/configuration/proje
 describe('Validations', () => {
 
     const projectConfiguration = new ProjectConfiguration(
-        [[
-         [{
-             name: 'T',
-             groups: [{
-                 name: 'stem', fields: [
-                     {name: 'id'},
-                     {name: 'identifier'},
-                     {name: 'category'},
-                     {name: 'optional'},
-                     {name: 'mandatory', mandatory: true},
-                     {name: 'number1', label: 'number1', inputType: 'float'},
-                     {name: 'number2', label: 'number2', inputType: 'float'},
-                     {name: 'dating1', label: 'dating1', inputType: 'dating'},
-                     {name: 'dating2', label: 'dating2', inputType: 'dating'},
-                     {name: 'dating3', label: 'dating3', inputType: 'dating'},
-                     {name: 'dating4', label: 'dating4', inputType: 'dating'},
-                     {name: 'dating5', label: 'dating5', inputType: 'dating'},
-                     {name: 'dating6', label: 'dating6', inputType: 'dating'},
-                     {name: 'dating7', label: 'dating7', inputType: 'dating'},
-                     {name: 'dimension1', label: 'dimension1', inputType: 'dimension'},
-                     {name: 'dimension2', label: 'dimension2', inputType: 'dimension'},
-                     {name: 'dimension3', label: 'dimension3', inputType: 'dimension'},
-                     {name: 'dimension4', label: 'dimension4', inputType: 'dimension'},
-                     {name: 'dimension5', label: 'dimension5', inputType: 'dimension'},
-                     {name: 'dimension6', label: 'dimension6', inputType: 'dimension'},
-                     {name: 'dimension7', label: 'dimension7', inputType: 'dimension'},
-                     {name: 'literature1', label: 'literature1', inputType: 'literature'},
-                     {name: 'literature2', label: 'literature2', inputType: 'literature'},
-                     {name: 'literature3', label: 'literature3', inputType: 'literature'},
-                     {name: 'literature4', label: 'literature4', inputType: 'literature'},
-                     {name: 'beginningDate', label: 'beginningDate', inputType: 'date'},
-                     {name: 'endDate', label: 'endDate', inputType: 'date'}
-                 ]
-             }]
-         },[]],
-        [{
-            name: 'T2',
-            groups: [{ name: 'stem', fields: [
-                { name: 'id' },
-                { name: 'category' }
-            ]}]
-        },[]],
-                [{
+        [buildTreelist(
+            [[{
+                name: 'T',
+                groups: [{
+                    name: 'stem', fields: [
+                        {name: 'id'},
+                        {name: 'identifier'},
+                        {name: 'category'},
+                        {name: 'optional'},
+                        {name: 'mandatory', mandatory: true},
+                        {name: 'number1', label: 'number1', inputType: 'float'},
+                        {name: 'number2', label: 'number2', inputType: 'float'},
+                        {name: 'dating1', label: 'dating1', inputType: 'dating'},
+                        {name: 'dating2', label: 'dating2', inputType: 'dating'},
+                        {name: 'dating3', label: 'dating3', inputType: 'dating'},
+                        {name: 'dating4', label: 'dating4', inputType: 'dating'},
+                        {name: 'dating5', label: 'dating5', inputType: 'dating'},
+                        {name: 'dating6', label: 'dating6', inputType: 'dating'},
+                        {name: 'dating7', label: 'dating7', inputType: 'dating'},
+                        {name: 'dimension1', label: 'dimension1', inputType: 'dimension'},
+                        {name: 'dimension2', label: 'dimension2', inputType: 'dimension'},
+                        {name: 'dimension3', label: 'dimension3', inputType: 'dimension'},
+                        {name: 'dimension4', label: 'dimension4', inputType: 'dimension'},
+                        {name: 'dimension5', label: 'dimension5', inputType: 'dimension'},
+                        {name: 'dimension6', label: 'dimension6', inputType: 'dimension'},
+                        {name: 'dimension7', label: 'dimension7', inputType: 'dimension'},
+                        {name: 'literature1', label: 'literature1', inputType: 'literature'},
+                        {name: 'literature2', label: 'literature2', inputType: 'literature'},
+                        {name: 'literature3', label: 'literature3', inputType: 'literature'},
+                        {name: 'literature4', label: 'literature4', inputType: 'literature'},
+                        {name: 'beginningDate', label: 'beginningDate', inputType: 'date'},
+                        {name: 'endDate', label: 'endDate', inputType: 'date'}
+                    ]
+
+            }]}, []],
+            [{
+                name: 'T2',
+                groups: [{ name: 'stem', fields: [
+                    { name: 'id' },
+                    { name: 'category' }
+                ]}]
+            }, []],
+            [{
                     name: 'T3',
                     groups: [{ name: 'stem', fields: [
                         { name: 'id' },
@@ -60,8 +61,8 @@ describe('Validations', () => {
                         { name: 'dating' },
                         { name: 'period', inputType: 'dropdownRange' }
                     ]}]
-                },[]]
-            ] as any, [
+                }, []]
+            ] as any), [
 
                 { name: 'isRelatedTo', label: '', domain: ['T'], range: ['T'], inverse: 'NO-INVERSE' },
                 { name: 'isDepictedIn', label: '', domain: ['T'], range: ['T2'], inverse: 'NO-INVERSE' },

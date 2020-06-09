@@ -8,7 +8,7 @@ import {FieldDefinition} from '../model/field-definition';
 import {clone} from '../../util/object-util';
 import {mapToNamedArray} from '../../util/named';
 import {MDInternal} from '../../../components/messages/md-internal';
-import {mapTreelist, Treelist} from '../treelist';
+import {mapTreelist, Treelist} from '../../util/treelist';
 import {CategoryTreelist, linkParentAndChildInstances} from '../category-treelist';
 
 
@@ -29,7 +29,7 @@ export function makeCategoryTreelist(categories: any): CategoryTreelist {
         map(buildCategoryFromDefinition),
         map(update(TEMP_FIELDS, ifUndefinedSetGroupTo(Groups.PARENT))),
         mapToNamedArray,
-        map(pairWith(generateEmptyList))
+        map(category => ({ item: category, trees: []}))
     );
 
     return flow(
@@ -76,14 +76,14 @@ function addChildCategory(categoryTree: Treelist<Category>,
                           childDefinition: CategoryDefinition): Treelist<Category> {
 
     const found = categoryTree
-        .find(([category,_]) => category.name === childDefinition.parent);
+        .find(({ item: category }) => category.name === childDefinition.parent);
     if (!found) throw MDInternal.PROJECT_CONFIGURATION_ERROR_GENERIC;
-    const [category,tree] = found;
+    const { item: category, trees: trees } = found;
 
     const childCategory = buildCategoryFromDefinition(childDefinition);
     (childCategory as any)[TEMP_FIELDS] = makeChildFields(category, childCategory);
 
-    tree.push([childCategory,[]])
+    trees.push({ item: childCategory, trees: []});
     return categoryTree;
 }
 

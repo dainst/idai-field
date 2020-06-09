@@ -9,8 +9,9 @@ import {FieldReadDatastore} from '../../datastore/field/field-read-datastore';
 import {clone} from '../../util/object-util';
 import {IndexFacade} from '../../datastore/index/index-facade';
 import {TabManager} from '../../tabs/tab-manager';
-import {ProjectCategories} from '../../configuration/project-categories';
 import {ResourcesViewMode} from './view-facade';
+import {ProjectCategories} from '../../configuration/project-categories';
+import {ProjectConfiguration} from '../../configuration/project-configuration';
 
 
 /**
@@ -47,10 +48,10 @@ export class ResourcesStateManager {
         private datastore: FieldReadDatastore,
         private indexFacade: IndexFacade,
         private serializer: StateSerializer,
-        private projectCategories: ProjectCategories,
         private tabManager: TabManager,
         private project: string,
-        private suppressLoadMapInTestProject: boolean = false,
+        private projectConfiguration: ProjectConfiguration,
+        private suppressLoadMapInTestProject: boolean = false
     ) {}
 
 
@@ -65,11 +66,12 @@ export class ResourcesStateManager {
     public getCurrentOperation = (): FieldDocument|undefined =>
         ResourcesState.getCurrentOperation(this.resourcesState);
 
-    public getOverviewCategoryNames = (): string[] => this.projectCategories.getOverviewCategoryNames();
+    public getOverviewCategoryNames = (): string[] => ProjectCategories
+        .getOverviewCategoryNames(this.projectConfiguration.getCategoryTreelist());
 
-    public getConcreteCategoryNames = (): string[] => this.projectCategories.getConcreteFieldCategoryNames();
+    public getConcreteCategoryNames = (): string[] => ProjectCategories.getConcreteFieldCategoryNames(this.projectConfiguration.getCategoryTreelist());
 
-    public getAbstractCategoryNames = (): string[] => this.projectCategories.getTypeCategoryNames();
+    public getAbstractCategoryNames = (): string[] => ProjectCategories.getTypeCategoryNames();
 
     public isInExtendedSearchMode = (): boolean => ResourcesState.isInExtendedSearchMode(this.resourcesState);
 

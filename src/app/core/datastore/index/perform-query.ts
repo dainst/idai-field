@@ -56,7 +56,7 @@ function performConstraints(constraintIndex: ConstraintIndex,
                 ? ConstraintIndex.get
                 : ConstraintIndex.getWithDescendants;
 
-            const indexItemIds = get(constraintIndex, name, value); // TODO review if deduplication necessary here
+            const indexItemIds = get(constraintIndex, name, value);
             ResultSets.combine(resultSets, indexItemIds, subtract);
             return resultSets;
         }, ResultSets.make<Resource.Id>());

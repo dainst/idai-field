@@ -3,6 +3,7 @@ import {ValidationErrors} from '../../../../../src/app/core/model/validation-err
 import {ImportErrors} from '../../../../../src/app/core/import/import/import-errors';
 import {INPUT_TYPES} from '../../../../../src/app/core/constants';
 import {ProjectConfiguration} from '../../../../../src/app/core/configuration/project-configuration';
+import {buildTreelist} from '../../../../../src/app/core/util/treelist';
 
 
 /**
@@ -13,8 +14,8 @@ describe('ImportValidator', () => {
 
     const projectConfiguration = new ProjectConfiguration(
         [
-          [
-            [{
+          buildTreelist([
+            [ {
                 name: 'T',
                 groups: [{ name: 'stem', fields: [
                     { name: 'id' },
@@ -27,19 +28,19 @@ describe('ImportValidator', () => {
                     { name: 'ddr', label: 'DropdownRange', inputType: INPUT_TYPES.DROPDOWN_RANGE },
                     { name: 'ddr2', label: 'DropdownRange2', inputType: INPUT_TYPES.DROPDOWN_RANGE }
                 ]}]
-            },[]],
-            [{
+            }, []],
+          [ {
                 name: 'T2',
                 groups: [{ name: 'stem', fields: [
                     { name: 'id' },
                     { name: 'category' }
                 ]}]
-            },[]],
-            [{
+            }, []],
+              [ {
                 name: 'T3',
                 mustLieWithin: true
-            },[]]
-        ] as any,
+            }, []]
+        ] as any),
             [
                 { name: 'isRelatedTo', label: '', domain: ['T'], range: ['T'], inverse: 'NO-INVERSE' },
                 { name: 'isDepictedIn', label: '', domain: ['T'], range: ['T2'], inverse: 'NO-INVERSE' },
@@ -62,7 +63,7 @@ describe('ImportValidator', () => {
         };
 
         try {
-            new ImportValidator(projectConfiguration, undefined, undefined).assertIsWellformed(doc as any);
+            new ImportValidator(projectConfiguration, undefined).assertIsWellformed(doc as any);
             fail();
         } catch (errWithParams) {
             expect(errWithParams).toEqual([ValidationErrors.MISSING_PROPERTY, 'T', 'mandatory']);
@@ -82,7 +83,7 @@ describe('ImportValidator', () => {
         };
 
         try {
-            new ImportValidator(projectConfiguration, undefined, undefined).assertIsWellformed(doc as any);
+            new ImportValidator(projectConfiguration, undefined).assertIsWellformed(doc as any);
             fail();
         } catch (errWithParams) {
             expect(errWithParams).toEqual([ValidationErrors.MISSING_PROPERTY, 'T', 'mandatory']);
@@ -103,7 +104,7 @@ describe('ImportValidator', () => {
         };
 
         try {
-            new ImportValidator(projectConfiguration, undefined, undefined).assertFieldsDefined(doc as any);
+            new ImportValidator(projectConfiguration, undefined).assertFieldsDefined(doc as any);
             fail();
         } catch (errWithParams) {
 
@@ -126,7 +127,7 @@ describe('ImportValidator', () => {
         };
 
         try {
-            new ImportValidator(projectConfiguration, undefined, undefined).assertFieldsDefined(doc as any);
+            new ImportValidator(projectConfiguration, undefined).assertFieldsDefined(doc as any);
             fail();
         } catch (errWithParams) {
 
@@ -148,7 +149,7 @@ describe('ImportValidator', () => {
         };
 
         try {
-            new ImportValidator(projectConfiguration, undefined, undefined).assertRelationsWellformedness([doc as any]);
+            new ImportValidator(projectConfiguration, undefined).assertRelationsWellformedness([doc as any]);
             fail();
         } catch (errWithParams) {
 
@@ -172,7 +173,7 @@ describe('ImportValidator', () => {
         };
 
         try {
-            new ImportValidator(projectConfiguration, undefined, undefined).assertRelationsWellformedness([doc as any]);
+            new ImportValidator(projectConfiguration, undefined).assertRelationsWellformedness([doc as any]);
             fail();
         } catch (errWithParams) {
 
@@ -199,8 +200,8 @@ describe('ImportValidator', () => {
         try {
             await new ImportValidator(
                 projectConfiguration,
-                {find: (q: any) => Promise.resolve({documents: []})} as any,
-                undefined).assertLiesWithinCorrectness([doc.resource as any]);
+                {find: (q: any) => Promise.resolve({documents: []})} as any)
+                .assertLiesWithinCorrectness([doc.resource as any]);
             fail();
         } catch (errWithParams) {
 
@@ -223,7 +224,7 @@ describe('ImportValidator', () => {
         };
 
         try {
-            new ImportValidator(projectConfiguration, undefined, undefined).assertIsWellformed(doc as any);
+            new ImportValidator(projectConfiguration, undefined).assertIsWellformed(doc as any);
             fail();
         } catch (errWithParams) {
             expect(errWithParams).toEqual([ValidationErrors.INVALID_NUMERICAL_VALUES, 'T', 'number1'])
@@ -246,7 +247,7 @@ describe('ImportValidator', () => {
         };
 
         try {
-            new ImportValidator(projectConfiguration, undefined, undefined).assertIsWellformed(doc as any);
+            new ImportValidator(projectConfiguration, undefined).assertIsWellformed(doc as any);
             fail();
         } catch (errWithParams) {
             expect(errWithParams).toEqual([ValidationErrors.INVALID_NUMERICAL_VALUES, 'T', 'number1, number2'])
@@ -270,7 +271,7 @@ describe('ImportValidator', () => {
         };
 
         try {
-            new ImportValidator(projectConfiguration, undefined, undefined).assertDropdownRangeComplete(doc.resource as any);
+            new ImportValidator(projectConfiguration, undefined).assertDropdownRangeComplete(doc.resource as any);
         } catch (errWithParams) {
             fail(errWithParams);
         }
@@ -291,7 +292,7 @@ describe('ImportValidator', () => {
         };
 
         try {
-            new ImportValidator(projectConfiguration, undefined, undefined).assertDropdownRangeComplete(doc.resource as any);
+            new ImportValidator(projectConfiguration, undefined).assertDropdownRangeComplete(doc.resource as any);
             fail();
         } catch (errWithParams) {
             expect(errWithParams).toEqual([ImportErrors.INVALID_DROPDOWN_RANGE_VALUES, 'ddr'])
@@ -313,7 +314,7 @@ describe('ImportValidator', () => {
         };
 
         try {
-            new ImportValidator(projectConfiguration, undefined, undefined).assertDropdownRangeComplete(doc.resource as any);
+            new ImportValidator(projectConfiguration, undefined).assertDropdownRangeComplete(doc.resource as any);
             fail();
         } catch (errWithParams) {
             expect(errWithParams).toEqual([ImportErrors.INVALID_DROPDOWN_RANGE_VALUES, 'ddr'])

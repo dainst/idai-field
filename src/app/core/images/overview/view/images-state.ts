@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Query} from '../../../datastore/model/query';
 import {ProjectCategories} from '../../../configuration/project-categories';
+import {ProjectConfiguration} from '../../../configuration/project-configuration';
 
 
 @Injectable()
@@ -15,7 +16,7 @@ export class ImagesState {
     private expandAllGroups: boolean = false;
 
 
-    constructor(private projectCategories: ProjectCategories) {}
+    constructor(private projectConfiguration: ProjectConfiguration) {}
 
 
     public getQuery(): Query {
@@ -70,7 +71,7 @@ export class ImagesState {
 
         if (this.query) {
             this.query.q = '';
-            this.query.categories = this.projectCategories.getImageCategoryNames();
+            this.query.categories = ProjectCategories.getImageCategoryNames(this.projectConfiguration.getCategoryTreelist());
         }
 
         this.customConstraints = {};

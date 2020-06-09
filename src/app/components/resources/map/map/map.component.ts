@@ -5,6 +5,7 @@ import {FieldPolygon} from './field-polygon';
 import {FieldMarker} from './field-marker';
 import {CoordinatesUtility} from './coordinates-utility';
 import {ProjectConfiguration} from '../../../../core/configuration/project-configuration';
+import {Category} from '../../../../core/configuration/model/category';
 
 
 @Component({
@@ -291,7 +292,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
             fillOpacity: 1,
             radius: 5,
             stroke: document === this.selectedDocument,
-            color: '#fff',
+            color: Category.isBrightColor(color) ? '#000' : '#fff',
             weight: 2
         });
         marker.document = document;

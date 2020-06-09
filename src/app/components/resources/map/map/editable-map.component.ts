@@ -12,6 +12,7 @@ import {LayerManager} from './layer-manager';
 import {LayerImageProvider} from './layer-image-provider';
 import {Messages} from '../../../messages/messages';
 import {SettingsService} from '../../../../core/settings/settings-service';
+import {Category} from '../../../../core/configuration/model/category';
 
 const remote = typeof window !== 'undefined'
   ? window.require('electron').remote
@@ -221,7 +222,7 @@ export class EditableMapComponent extends LayerMapComponent {
             fillOpacity: 1,
             radius: 5,
             stroke: false,
-            color: '#fff',
+            color: Category.isBrightColor(color) ? '#000' : '#fff',
             weight: 2
         });
         this.setupMarkerEvents(editableMarker);

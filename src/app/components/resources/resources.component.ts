@@ -1,4 +1,4 @@
-import {AfterViewChecked, ChangeDetectorRef, Component, OnDestroy, Renderer2} from '@angular/core';
+import {ChangeDetectorRef, Component, OnDestroy, Renderer2} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {Observable, Subscription} from 'rxjs';
@@ -32,7 +32,7 @@ export type PopoverMenu = 'none'|'info'|'children';
  * @author Jan G. Wieners
  * @author Thomas Kleinke
  */
-export class ResourcesComponent implements AfterViewChecked, OnDestroy {
+export class ResourcesComponent implements OnDestroy {
 
     public isEditingGeometry: boolean = false;
     public isModalOpened: boolean = false;
@@ -40,7 +40,6 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
     public activePopoverMenu: PopoverMenu = 'none';
 
     public filterOptions: Array<Category> = [];
-    private scrollTarget: FieldDocument|undefined;
     private clickEventObservers: Array<any> = [];
 
     private deselectionSubscription: Subscription;
@@ -89,8 +88,6 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
 
     public getCategoryFilters = () => this.viewFacade.getFilterCategories();
 
-    public setScrollTarget = (doc: FieldDocument|undefined) => this.scrollTarget = doc;
-
     public setCategoryFilters = (categories: string[]|undefined) => this.viewFacade.setFilterCategories(categories ? categories : []);
 
     public isInExtendedSearchMode = () => this.viewFacade.isInExtendedSearchMode();
@@ -98,16 +95,6 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
     public isReady = () => this.viewFacade.isReady();
 
     public isInTypesManagement = () => this.viewFacade.isInTypesManagement();
-
-
-    ngAfterViewChecked() {
-
-        if (this.scrollTarget) {
-            if (ResourcesComponent.scrollToDocument(this.scrollTarget)) {
-                this.scrollTarget = undefined;
-            }
-        }
-    }
 
 
     ngOnDestroy() {
@@ -168,7 +155,6 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
 
         const editedDocument: FieldDocument|undefined
             = await this.doceditLauncher.editDocument(document, activeGroup);
-        if (editedDocument) this.scrollTarget = editedDocument;
         this.isModalOpened = false;
 
         return editedDocument;
@@ -262,7 +248,7 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
     }
 
 
-    public async select(document: FieldDocument, autoScroll: boolean = false) {
+    public async select(document: FieldDocument) {
 
         this.isEditingGeometry = false;
 
@@ -271,8 +257,6 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
         } else {
             await this.viewFacade.setSelectedDocument(document.resource.id, false);
         }
-
-        if (autoScroll) this.setScrollTarget(document);
     }
 
 
@@ -331,7 +315,6 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
         }
 
         await this.viewFacade.setSelectedDocument(id);
-        this.setScrollTarget(this.viewFacade.getSelectedDocument());
 
         try {
             if (menu === 'edit') {
@@ -406,16 +389,5 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
 
         this.isEditingGeometry = false;
         MenuService.setContext('default');
-    }
-
-
-    private static scrollToDocument(doc: FieldDocument): boolean {
-
-        const element = document.getElementById('resource-' + doc.resource.identifier);
-        if (element) {
-            element.scrollIntoView({ block: 'nearest' });
-            return true;
-        }
-        return false;
     }
 }

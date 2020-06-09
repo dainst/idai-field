@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, ViewChild, Input} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, ViewChild, Input, OnChanges} from '@angular/core';
 import {to} from 'tsfun';
 import {FieldDocument} from 'idai-components-2';
 import {ResourcesComponent} from '../../resources.component';
@@ -22,7 +22,7 @@ import {MenuService} from '../../../menu-service';
  * @author Thomas Kleinke
  * @author Sebastian Cuy
  */
-export class SidebarListComponent extends BaseList implements AfterViewInit {
+export class SidebarListComponent extends BaseList implements AfterViewInit, OnChanges {
 
     public contextMenu: ContextMenu = new ContextMenu();
 
@@ -61,12 +61,17 @@ export class SidebarListComponent extends BaseList implements AfterViewInit {
     }
 
 
+    ngOnChanges(): void {
+
+        this.scrollTo(this.selectedDocument);
+    }
+
+
     public async onKeyDown(event: KeyboardEvent) {
 
         if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
             await this.viewFacade.navigateDocumentList(event.key === 'ArrowUp' ? 'previous' : 'next');
             event.preventDefault();
-            this.resourcesComponent.setScrollTarget(this.selectedDocument);
         }
 
         if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {

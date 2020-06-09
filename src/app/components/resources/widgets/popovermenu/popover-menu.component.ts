@@ -42,7 +42,6 @@ export class PopoverMenuComponent {
     public async jumpToResource(document: FieldDocument) {
 
         await this.routingService.jumpToResource(document);
-        this.resourcesComponent.setScrollTarget(document);
     }
 
 

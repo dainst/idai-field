@@ -74,8 +74,6 @@ export class ResourcesMapComponent {
 
     public async select(document: FieldDocument|undefined) {
 
-        this.resourcesComponent.setScrollTarget(document);
-
         if (document) {
             await this.viewFacade.setSelectedDocument(document.resource.id, false);
         } else {
@@ -125,7 +123,9 @@ export class ResourcesMapComponent {
 
         try {
             await this.viewFacade.setSelectedDocument(
-                (await this.persistenceManager.persist(selectedDocument, this.usernameProvider.getUsername())).resource.id
+                (await this.persistenceManager.persist(
+                    selectedDocument, this.usernameProvider.getUsername())
+                ).resource.id
             );
         } catch (msgWithParams) {
             this.messages.add(msgWithParams);

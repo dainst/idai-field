@@ -76,7 +76,6 @@ export class SearchSuggestionsComponent implements OnChanges {
 
         await this.viewFacade.setSearchString('', false);
         await this.routingService.jumpToResource(document);
-        this.resourcesComponent.setScrollTarget(document);
     }
 
 

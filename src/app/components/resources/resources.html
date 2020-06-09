@@ -78,7 +78,9 @@
 <div class="row resources-container">
     <div class="col-lg-12 col-md-12 col-sm-12 bg-light">
         <resources-map *ngIf="viewFacade.getMode() === 'map'"></resources-map>
-        <list *ngIf="viewFacade.getMode() === 'list'" [documents]="viewFacade.getDocuments()"></list>
+        <list *ngIf="viewFacade.getMode() === 'list'"
+              [documents]="viewFacade.getDocuments()"
+              [selectedDocument]="viewFacade.getSelectedDocument()"></list>
         <type-grid *ngIf="viewFacade.getMode() === 'type-grid'"
                    [documents]="viewFacade.getDocuments()"></type-grid>
     </div>

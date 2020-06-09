@@ -96,7 +96,6 @@ export class RowComponent implements AfterViewInit {
     public async jumpToResourceFromOverviewToOperation() {
 
         await this.navigationService.jumpToResourceFromOverviewToOperation(this.document);
-        this.resourcesComponent.setScrollTarget(this.document);
     }
 
 

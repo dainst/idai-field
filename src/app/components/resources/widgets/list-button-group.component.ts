@@ -46,6 +46,5 @@ export class ListButtonGroupComponent {
 
         this.resourcesComponent.closePopover();
         await this.navigationService.jumpToResourceFromOverviewToOperation(this.document);
-        this.resourcesComponent.setScrollTarget(this.document);
     }
 }

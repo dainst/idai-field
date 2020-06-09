@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {FieldDocument} from 'idai-components-2';
 import {ResourcesComponent} from '../resources.component';
 import {Loading} from '../../widgets/loading';
@@ -17,9 +17,10 @@ import {ViewFacade} from '../../../core/resources/view/view-facade';
  * @author Thomas Kleinke
  * @author Philipp Gerth
  */
-export class ListComponent extends BaseList {
+export class ListComponent extends BaseList implements OnChanges {
 
     @Input() documents: Array<FieldDocument>;
+    @Input() selectedDocument: FieldDocument;
 
     public categoriesMap: { [category: string]: Category };
 
@@ -31,6 +32,12 @@ export class ListComponent extends BaseList {
 
         super(resourcesComponent, viewFacade, loading);
         this.categoriesMap = projectConfiguration.getCategoriesMap()
+    }
+
+
+    public ngOnChanges(changes: SimpleChanges) {
+
+        if (changes['selectedDocument']) this.scrollTo(this.selectedDocument);
     }
 
 

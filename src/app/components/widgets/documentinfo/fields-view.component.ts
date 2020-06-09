@@ -14,7 +14,7 @@ import {FieldDefinition} from '../../../core/configuration/model/field-definitio
 import {Group, Groups} from '../../../core/configuration/model/group';
 import {FieldsViewField, FieldsViewGroup, FieldsViewUtil} from '../../../core/util/fields-view-util';
 import {RelationDefinition} from '../../../core/configuration/model/relation-definition';
-import {Named} from '../../../core/util/named';
+import {Named, namedArrayToNamedMap} from '../../../core/util/named';
 import INPUTTYPE = FieldDefinition.INPUTTYPE;
 import isDefaultField = FieldsViewUtil.isDefaultField;
 import DROPDOWNRANGE = FieldDefinition.InputType.DROPDOWNRANGE;
@@ -62,7 +62,7 @@ export class FieldsViewComponent implements OnChanges {
         if (!this.resource) return;
 
         this.groups = await asyncFlow(
-            FieldsViewUtil.getGroups(this.resource.category, this.projectConfiguration.getCategoriesMap()),
+            FieldsViewUtil.getGroups(this.resource.category, namedArrayToNamedMap(this.projectConfiguration.getCategoriesArray())),
             await this.putActualResourceRelationsIntoGroups(this.resource),
             this.putActualResourceFieldsIntoGroups(this.resource),
             filter(shouldBeDisplayed)

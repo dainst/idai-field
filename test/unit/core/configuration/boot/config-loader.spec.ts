@@ -3,6 +3,8 @@ import {ConfigurationDefinition} from '../../../../../src/app/core/configuration
 import {ConfigLoader} from '../../../../../src/app/core/configuration/boot/config-loader';
 import {ConfigurationErrors} from '../../../../../src/app/core/configuration/boot/configuration-errors';
 import {CustomCategoryDefinition} from '../../../../../src/app/core/configuration/model/custom-category-definition';
+import {namedArrayToNamedMap} from '../../../../../src/app/core/util/named';
+import {Category} from '../../../../../src/app/core/configuration/model/category';
 
 
 /**
@@ -387,7 +389,7 @@ describe('ConfigLoader', () => {
                 undefined, 'de'
             );
 
-            expect(pconf.getCategoriesMap()['B:0'].groups[2].fields.find(field => field.name == 'fieldC1')
+            expect(namedArrayToNamedMap<Category>(pconf.getCategoriesArray())['B:0'].groups[2].fields.find(field => field.name == 'fieldC1')
                 .inputType).toEqual('boolean');
 
         } catch(err) {
@@ -522,7 +524,7 @@ describe('ConfigLoader', () => {
                  undefined, 'de'
             );
 
-            const result = pconf.getCategoriesMap();
+            const result = namedArrayToNamedMap<Category>(pconf.getCategoriesArray());
 
             expect(result['A'].name).toEqual('A');
             expect(result['A'].groups[1].fields[0].name).toEqual('fieldA1');

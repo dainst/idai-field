@@ -1,5 +1,5 @@
 import {Observable, Observer} from 'rxjs';
-import {is, on, flow, isDefined, separate} from 'tsfun';
+import {is, on, flow, isDefined, separate, Map} from 'tsfun';
 import {filter} from 'tsfun/collection';
 import {forEach, lookup} from 'tsfun/associative';
 import {Document, Resource} from 'idai-components-2';
@@ -12,6 +12,7 @@ import {performQuery} from './perform-query';
 import {ResourceId} from '../../constants';
 import {getSortedIds} from './get-sorted-ids';
 import {Query} from '../model/query';
+import {namedArrayToNamedMap} from '../../util/named';
 
 const TYPE = 'Type';
 const INSTANCES = 'instances';
@@ -26,12 +27,16 @@ export class IndexFacade {
 
     private indexItems: { [resourceId: string]: IndexItem } = {};
 
+    private categoriesMap: Map<Category>;
+
     constructor(
         private constraintIndex: ConstraintIndex,
         private fulltextIndex: FulltextIndex,
-        private categoriesMap: { [categoryName: string]: Category },
+        private categories: Array<Category>,
         private showWarnings: boolean
-    ) {}
+    ) {
+        this.categoriesMap = namedArrayToNamedMap(categories);
+    }
 
 
     public changesNotifications = (): Observable<Document> => ObserverUtil.register(this.observers);

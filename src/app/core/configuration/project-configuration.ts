@@ -34,9 +34,12 @@ export class ProjectConfiguration {
     public static UNKNOWN_TYPE_ERROR = 'projectCategories.Errors.UnknownType';
 
     private readonly categoriesArray: Array<Category>;
-    private readonly categoriesMap: Map<Category>;
     private readonly categoryTreelist: CategoryTreelist;
     private readonly relations: Array<RelationDefinition>;
+
+    // internal use only, we deliberately don't provide accessor for this any longer
+    // use getCategory, getCategoryTreelist, getCategoriesArray instead
+    private readonly categoriesMap: Map<Category>;
 
 
     constructor([categories, relations]: RawProjectConfiguration) {
@@ -57,16 +60,6 @@ export class ProjectConfiguration {
     public getCategoriesArray(): Array<Category> {
 
         return this.categoriesArray;
-    }
-
-
-    /**
-     * @deprecated
-     * use getCategory, getCategoriesArray, getCategoryTreelist instead
-     */
-    public getCategoriesMap(): Map<Category> {
-
-        return this.categoriesMap;
     }
 
 
@@ -196,7 +189,7 @@ export class ProjectConfiguration {
 
     public getCategoryColors() {
 
-        return map(to(Category.COLOR), this.getCategoriesMap()) as Map<string>;
+        return map(to(Category.COLOR), this.categoriesMap) as Map<string>;
     }
 
 

@@ -5,8 +5,8 @@ import {Static} from '../../../static';
 import {performQuery as performQuery_} from '../../../../../src/app/core/datastore/index/perform-query';
 import {FulltextIndex} from '../../../../../src/app/core/datastore/index/fulltext-index';
 import {ConstraintIndex} from '../../../../../src/app/core/datastore/index/constraint-index';
-import {IndexItem} from '../../../../../src/app/core/datastore/index/index-item';
 import {Query} from '../../../../../src/app/core/datastore/model/query';
+import {namedArrayToNamedMap} from '../../../../../src/app/core/util/named';
 
 /**
  * @author Daniel de Oliveira
@@ -24,7 +24,7 @@ describe('performQuery', () => {
             IndexerConfiguration.configureIndexers(projectConfiguration);
         constraintIndex = createdConstraintIndex;
         fulltextIndex = createdFulltextIndex;
-        categoriesMap = projectConfiguration.getCategoriesMap();
+        categoriesMap = namedArrayToNamedMap(projectConfiguration.getCategoriesArray());
     });
 
 

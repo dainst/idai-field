@@ -11,19 +11,20 @@ import {FieldDefinition} from '../../../../../src/app/core/configuration/model/f
 describe('ConstraintIndex', () => {
 
     let ci;
-    let categoriesMap;
+    let categories;
 
 
     beforeEach(() => {
 
-        categoriesMap = {
-            category: {
+        categories = [
+            {
+                name: 'category',
                 groups: [{ fields: [
                     { name: 'identifier' },
                     { name: 'shortDescription' }
                 ]}]
             }
-        };
+        ];
     });
 
 
@@ -38,7 +39,7 @@ describe('ConstraintIndex', () => {
 
         ci = ConstraintIndex.make({
             'isRecordedIn:contain': { path: 'resource.relations.isRecordedIn', type: 'contain' }
-        }, categoriesMap);
+        }, categories);
 
         ConstraintIndex.put(ci, docs[0]);
         ConstraintIndex.put(ci, docs[1]);
@@ -57,7 +58,7 @@ describe('ConstraintIndex', () => {
 
         ci = ConstraintIndex.make({
             'isRecordedIn:contain': { path: 'resource.relations.isRecordedIn', type: 'contain' }
-        }, categoriesMap);
+        }, categories);
 
         ConstraintIndex.put(ci, docs[0]);
         return docs;
@@ -85,7 +86,7 @@ describe('ConstraintIndex', () => {
             'liesWithin:contain': { path: 'resource.relations.liesWithin', type: 'contain' },
             'isRecordedIn:contain': { path: 'resource.relations.isRecordedIn', type: 'contain' },
             'identifier:match': { path: 'resource.identifier', type: 'match' }
-        }, categoriesMap);
+        }, categories);
 
         ConstraintIndex.put(ci, docs[0]);
         return docs;
@@ -109,7 +110,7 @@ describe('ConstraintIndex', () => {
 
         ci = ConstraintIndex.make({
             'liesWithin:contain': { path: 'resource.relations.liesWithin', type: 'contain' }
-        }, categoriesMap);
+        }, categories);
 
         ConstraintIndex.put(ci, docs[0]);
 
@@ -121,7 +122,7 @@ describe('ConstraintIndex', () => {
 
         ci = ConstraintIndex.make({
             'identifier:match': { path: 'resource.identifier', type: 'match' }
-        }, categoriesMap);
+        }, categories);
         const d = doc('1');
         ConstraintIndex.put(ci, d);
         expect(ConstraintIndex.get(ci, 'identifier:match', 'identifier1')).toEqual(['1']);
@@ -132,7 +133,7 @@ describe('ConstraintIndex', () => {
 
         ci = ConstraintIndex.make({
             'identifier:match': { path: 'resource.identifier', type: 'match' }
-        }, categoriesMap);
+        }, categories);
         const doc0 = doc('1');
         delete doc0.resource.identifier;
         ConstraintIndex.put(ci, doc0);
@@ -144,7 +145,7 @@ describe('ConstraintIndex', () => {
 
         ci = ConstraintIndex.make({
             'identifier:match': { path: 'resource.identifier', type: 'match' }
-        }, categoriesMap);
+        }, categories);
         const d = doc('1');
         const ie = IndexItem.from(d);
         ConstraintIndex.put(ci, d);
@@ -157,7 +158,7 @@ describe('ConstraintIndex', () => {
 
         ci = ConstraintIndex.make({
             'identifier:contain': { path: 'resource.identifier', type: 'contain' }
-        }, categoriesMap);
+        }, categories);
 
         expect(ConstraintIndex.get(ci, 'identifier:contain', 'identifier1')).toEqual([]);
     });
@@ -218,7 +219,7 @@ describe('ConstraintIndex', () => {
 
         ci = ConstraintIndex.make({
             'conflicts:exist': { path: '_conflicts', type: 'exist' }
-        }, categoriesMap);
+        }, categories);
 
         ConstraintIndex.put(ci, docs[0]);
         ConstraintIndex.put(ci, docs[1]);
@@ -233,7 +234,7 @@ describe('ConstraintIndex', () => {
         expect(() => {
             ConstraintIndex.make({
                 'name': { path: 'testpath', type: 'unknown' }
-            }, categoriesMap)
+            }, categories)
         }).toThrow();
     });
 
@@ -249,7 +250,7 @@ describe('ConstraintIndex', () => {
 
         ci = ConstraintIndex.make({
             'depicts:exist': { path: 'resource.relations.depicts', type: 'exist' }
-        }, categoriesMap);
+        }, categories);
 
         ConstraintIndex.put(ci, docs[0]);
         ConstraintIndex.put(ci, docs[1]);
@@ -271,7 +272,7 @@ describe('ConstraintIndex', () => {
 
         ci = ConstraintIndex.make({
             'isDepictedIn:links': { path: 'resource.relations.isDepictedIn', type: 'links' }
-        }, categoriesMap);
+        }, categories);
 
         ConstraintIndex.put(ci, docs[0]);
         ConstraintIndex.put(ci, docs[1]);
@@ -304,7 +305,7 @@ describe('ConstraintIndex', () => {
         ci = ConstraintIndex.make({
             'depicts:exist': { path: 'resource.relations.depicts', type: 'exist' },
             'depicts:contain': { path: 'resource.relations.depicts', type: 'contain' }
-        }, categoriesMap);
+        }, categories);
 
         const ie1 = IndexItem.from(docs[0]);
         const ie2 = IndexItem.from(docs[1]);
@@ -338,7 +339,7 @@ describe('ConstraintIndex', () => {
 
         ci = ConstraintIndex.make({
             'depicts:contain': { path: 'resource.relations.depicts', type: 'contain' }
-        }, categoriesMap);
+        }, categories);
 
         ConstraintIndex.put(ci, docs[0]);
         ConstraintIndex.put(ci, docs[1]);
@@ -352,8 +353,9 @@ describe('ConstraintIndex', () => {
 
     it('index fields specified in search configuration', () => {
 
-        categoriesMap = {
-            category: {
+        categories = [
+            {
+                name: 'category',
                 groups: [{ fields: [
                     { name: 'identifier' },
                     { name: 'shortDescription' },
@@ -362,14 +364,14 @@ describe('ConstraintIndex', () => {
                     { name: 'customField3', inputType: 'checkboxes', constraintIndexed: true }
                 ]}]
             }
-        };
+        ];
 
         const docs = [doc('1')];
         docs[0].resource.customField1 = 'testValue';
         docs[0].resource.customField2 = false;
         docs[0].resource.customField3 = ['testValue1', 'testValue2'];
 
-        ci = ConstraintIndex.make({}, categoriesMap);
+        ci = ConstraintIndex.make({}, categories);
 
         ConstraintIndex.put(ci, docs[0]);
 
@@ -384,24 +386,26 @@ describe('ConstraintIndex', () => {
 
     it('index a single value field and an array field of the same name', () => {
 
-        categoriesMap = {
-            category1: {
+        categories = [
+            {
+                name: 'category1',
                 groups: [{ fields: [
                     { name: 'field', inputType: 'input', constraintIndexed: true }
                 ]}]
             },
-            category2: {
+            {
+                name: 'category2',
                 groups: [{ fields: [
                     { name: 'field', inputType: 'checkboxes', constraintIndexed: true }
                 ]}]
             },
-        };
+        ];
 
         const docs = [doc('1', 'category1'), doc('2', 'category2')];
         docs[0].resource.field = 'value';
         docs[1].resource.field = ['value'];
 
-        ci = ConstraintIndex.make({}, categoriesMap);
+        ci = ConstraintIndex.make({}, categories);
 
         ConstraintIndex.put(ci, docs[0]);
         ConstraintIndex.put(ci, docs[1]);
@@ -424,7 +428,7 @@ describe('ConstraintIndex', () => {
 
         ci = ConstraintIndex.make({
             'liesWithin:contain': { path: 'resource.relations.liesWithin', type: 'contain' }
-        }, categoriesMap);
+        }, categories);
 
         ConstraintIndex.put(ci, docs[0]);
         ConstraintIndex.put(ci, docs[1]);
@@ -455,7 +459,7 @@ describe('ConstraintIndex', () => {
                 type: 'contain',
                 recursivelySearchable: true
             }
-        }, categoriesMap);
+        }, categories);
 
         ConstraintIndex.put(ci, docs[0]);
         ConstraintIndex.put(ci, docs[1]);
@@ -494,7 +498,7 @@ describe('ConstraintIndex', () => {
                 type: 'contain',
                 recursivelySearchable: true
             }
-        }, categoriesMap);
+        }, categories);
 
         const ie1 = IndexItem.from(docs[0]);
         const ie2 = IndexItem.from(docs[1]);
@@ -517,9 +521,9 @@ describe('ConstraintIndex', () => {
 
     it('index valOptionalEndVal field', () => {
 
-        categoriesMap = {
-            category: {
-                groups: [
+        categories = [{
+            name: 'category',
+            groups: [
                     {
                         fields: [
                             {
@@ -527,12 +531,12 @@ describe('ConstraintIndex', () => {
                                 inputType: FieldDefinition.InputType.DROPDOWNRANGE,
                                 constraintIndexed: true
                             }]
-                    }]
-            }
-        };
+                    }
+                ]
+        }];
         const docs = [doc('1'),doc('2')];
         docs[0].resource.period = { value: 'a1' };
-        ci = ConstraintIndex.make({}, categoriesMap);
+        ci = ConstraintIndex.make({}, categories);
         ConstraintIndex.put(ci, docs[0]);
 
         const result = ConstraintIndex.get(ci, 'period.value:match', 'a1');
@@ -546,7 +550,7 @@ describe('ConstraintIndex', () => {
 
         ci = ConstraintIndex.make({
             'liesWithin:contain': { path: 'resource.relations.liesWithin', type: 'contain' }
-        }, categoriesMap);
+        }, categories);
 
         ConstraintIndex.put(ci, doc('1'));
 

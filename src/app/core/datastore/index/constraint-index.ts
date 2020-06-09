@@ -54,7 +54,7 @@ export interface ConstraintIndex {
 export module ConstraintIndex {
 
     export function make(defaultIndexDefinitions: { [name: string]: IndexDefinition },
-                         categoriesMap: { [categoryName: string]: Category }) {
+                         categories: Array<Category>) {
 
         const constraintIndex: ConstraintIndex = {
             indexDefinitions: {}, containIndex: {}, existIndex: {}, matchIndex: {}, linksIndex: {}
@@ -62,7 +62,7 @@ export module ConstraintIndex {
 
         constraintIndex.indexDefinitions = getIndexDefinitions(
             defaultIndexDefinitions,
-            Object.values(categoriesMap)
+            categories
         );
 
         const validationError = validateIndexDefinitions(Object.values(constraintIndex.indexDefinitions));

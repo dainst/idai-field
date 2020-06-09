@@ -359,7 +359,7 @@
         <target state="final">Source</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">33</context>
+          <context context-type="linenumber">20</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.file" datatype="html">
@@ -367,7 +367,7 @@
         <target state="final">File</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">37</context>
+          <context context-type="linenumber">24</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.http" datatype="html">
@@ -375,7 +375,7 @@
         <target state="final">HTTP</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">39</context>
+          <context context-type="linenumber">26</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.path" datatype="html">
@@ -383,7 +383,7 @@
         <target state="final">Path</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">44</context>
+          <context context-type="linenumber">31</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.chooseFile" datatype="html">
@@ -391,7 +391,7 @@
         <target state="final">Choose file...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">48</context>
+          <context context-type="linenumber">35</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.url" datatype="html">
@@ -399,47 +399,7 @@
         <target state="final">URL</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">61</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="import.format" datatype="html">
-        <source>Format</source>
-        <target state="final">Format</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">21</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="import.formats.native" datatype="html">
-        <source>JSONL</source>
-        <target state="final">JSONL</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">24</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="import.formats.csv" datatype="html">
-        <source>CSV</source>
-        <target state="final">CSV</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">25</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="import.formats.geoJson" datatype="html">
-        <source>GeoJSON</source>
-        <target state="final">GeoJSON</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">26</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="import.formats.shapefile" datatype="html">
-        <source>Shapefile</source>
-        <target state="final">Shapefile</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">27</context>
+          <context context-type="linenumber">48</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.mergeOption.label" datatype="html">
@@ -451,7 +411,7 @@
                         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">70</context>
+          <context context-type="linenumber">58</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.mergeOption.native.info" datatype="html">
@@ -474,7 +434,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">76</context>
+          <context context-type="linenumber">64</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.mergeOption.csv.info" datatype="html">
@@ -495,7 +455,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">87</context>
+          <context context-type="linenumber">75</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.mergeOption.permitDeletions" datatype="html">
@@ -507,7 +467,7 @@
         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">99</context>
+          <context context-type="linenumber">87</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.mergeOption.deletionsInfo.jsonl" datatype="html">
@@ -525,7 +485,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">105</context>
+          <context context-type="linenumber">93</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.mergeOption.deletionsInfo.csv" datatype="html">
@@ -544,7 +504,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">113</context>
+          <context context-type="linenumber">101</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.format.importCategorySelect" datatype="html">
@@ -552,7 +512,7 @@
         <target state="final">Category</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">124</context>
+          <context context-type="linenumber">112</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.assignToOperation.label" datatype="html">
@@ -560,7 +520,7 @@
         <target state="final">Assign data to an operation</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">138</context>
+          <context context-type="linenumber">126</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.assignToOperation.noAssignment" datatype="html">
@@ -568,7 +528,7 @@
         <target state="final">No assignment</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">141</context>
+          <context context-type="linenumber">129</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.csv.separator" datatype="html">
@@ -576,7 +536,7 @@
         <target state="final">Field separator</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">150</context>
+          <context context-type="linenumber">138</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.geojson.info" datatype="html">
@@ -595,7 +555,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">156</context>
+          <context context-type="linenumber">144</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.shapefile.javaWarning" datatype="html">
@@ -609,7 +569,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">164</context>
+          <context context-type="linenumber">152</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.shapefile.info" datatype="html">
@@ -628,7 +588,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">169</context>
+          <context context-type="linenumber">157</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.modal.info" datatype="html">
@@ -1946,24 +1906,30 @@
         <source>Typen</source>
         <target state="final">Types</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/resources/typegrid/type-grid.html</context>
-          <context context-type="linenumber">31</context>
+          <context context-type="sourcefile">src/app/components/resources/types/types.html</context>
+          <context context-type="linenumber">25</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.typeGrid.subtypes" datatype="html">
         <source>Untertypen</source>
         <target state="final">Subtypes</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/resources/typegrid/type-grid.html</context>
-          <context context-type="linenumber">34</context>
+          <context context-type="sourcefile">src/app/components/resources/types/types.html</context>
+          <context context-type="linenumber">27</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.typeGrid.linkedFinds" datatype="html">
-        <source>Zugeordnete Funde</source>
-        <target state="final">Associated finds</target>
+        <source>
+             <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/>
+             Zugeordnete Funde
+        </source>
+        <target state="final">
+            <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/>
+            Associated finds
+        </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/resources/typegrid/type-grid.html</context>
-          <context context-type="linenumber">59</context>
+          <context context-type="sourcefile">src/app/components/resources/types/types.html</context>
+          <context context-type="linenumber">49</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.list.headers.category" datatype="html">
@@ -2079,7 +2045,7 @@
         <target state="final">Project</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/navigation/navigation.html</context>
-          <context context-type="linenumber">29</context>
+          <context context-type="linenumber">37</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.navigation.typeCatalogs" datatype="html">
@@ -2087,7 +2053,7 @@
         <target state="final">Type catalogs</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/navigation/navigation.html</context>
-          <context context-type="linenumber">36</context>
+          <context context-type="linenumber">44</context>
         </context-group>
       </trans-unit>
       <trans-unit id="widgets.searchBar.placeholder" datatype="html">
@@ -3274,7 +3240,7 @@
           </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.html</context>
-          <context context-type="linenumber">122</context>
+          <context context-type="linenumber">124</context>
         </context-group>
       </trans-unit>
       <trans-unit id="matrix.view.tooltips.editMode" datatype="html">
@@ -3282,7 +3248,7 @@
         <target state="final">Edit mode</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.html</context>
-          <context context-type="linenumber">26</context>
+          <context context-type="linenumber">28</context>
         </context-group>
       </trans-unit>
       <trans-unit id="matrix.view.tooltips.singleSelectionMode" datatype="html">
@@ -3290,7 +3256,7 @@
         <target state="final">Single selection mode</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.html</context>
-          <context context-type="linenumber">40</context>
+          <context context-type="linenumber">42</context>
         </context-group>
       </trans-unit>
       <trans-unit id="matrix.view.tooltips.groupSelectionMode" datatype="html">
@@ -3298,7 +3264,7 @@
         <target state="final">Group selection mode</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.html</context>
-          <context context-type="linenumber">54</context>
+          <context context-type="linenumber">56</context>
         </context-group>
       </trans-unit>
       <trans-unit id="matrix.view.tooltips.deselect" datatype="html">
@@ -3306,7 +3272,7 @@
         <target state="final">Deselect</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.html</context>
-          <context context-type="linenumber">71</context>
+          <context context-type="linenumber">73</context>
         </context-group>
       </trans-unit>
       <trans-unit id="matrix.view.tooltips.createMatrixFromSelection" datatype="html">
@@ -3314,7 +3280,7 @@
         <target state="final">Create matrix from selection</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.html</context>
-          <context context-type="linenumber">86</context>
+          <context context-type="linenumber">88</context>
         </context-group>
       </trans-unit>
       <trans-unit id="matrix.view.tooltips.reloadMatrix" datatype="html">
@@ -3322,7 +3288,7 @@
         <target state="final">Reload matrix</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.html</context>
-          <context context-type="linenumber">101</context>
+          <context context-type="linenumber">103</context>
         </context-group>
       </trans-unit>
       <trans-unit id="matrix.view.noResourcesWarning" datatype="html">
@@ -3336,7 +3302,7 @@
         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/matrix/matrix-view.html</context>
-          <context context-type="linenumber">130</context>
+          <context context-type="linenumber">132</context>
         </context-group>
       </trans-unit>
       <trans-unit id="matrix.optionsMenu.relations.label" datatype="html">
@@ -4274,6 +4240,14 @@
       <trans-unit id="messages.import.error.mustNotBeEmptyString" datatype="html">
         <source>Leere Strings sind nicht als Werte in Importdatensätzen erlaubt.</source>
         <target state="final">Empty strings are not allowed as values.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.import.error.invalidFileFormat" datatype="html">
+        <source>Die ausgewählte Datei kann nicht importiert werden. Gültige Dateiendungen sind: [0]</source>
+        <target state="final">The selected file cannot be imported. The following file extensions are valid: [0]</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>

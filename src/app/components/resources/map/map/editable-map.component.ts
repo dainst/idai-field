@@ -214,17 +214,10 @@ export class EditableMapComponent extends LayerMapComponent {
 
     private createEditableMarker(position: L.LatLng): L.CircleMarker {
 
-        const color: string = this.categoryColors[this.selectedDocument.resource.category];
-
         // TODO Make draggable
-        const editableMarker: L.CircleMarker = L.circleMarker(position, {
-            fillColor: color,
-            fillOpacity: 1,
-            radius: 5,
-            stroke: false,
-            color: Category.isBrightColor(color) ? '#000' : '#fff',
-            weight: 2
-        });
+        const editableMarker: L.CircleMarker = L.circleMarker(
+            position, this.getMarkerOptions(this.selectedDocument)
+        );
         this.setupMarkerEvents(editableMarker);
         editableMarker.addTo(this.map);
         this.editableMarkers.push(editableMarker);

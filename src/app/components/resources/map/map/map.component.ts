@@ -285,16 +285,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
 
         const latLng = L.latLng([coordinates[1], coordinates[0]]);
 
-        const color = this.categoryColors[document.resource.category];
-
-        const marker: FieldMarker = L.circleMarker(latLng, {
-            fillColor: color,
-            fillOpacity: 1,
-            radius: 5,
-            stroke: document === this.selectedDocument,
-            color: Category.isBrightColor(color) ? '#000' : '#fff',
-            weight: 2
-        });
+        const marker: FieldMarker = L.circleMarker(latLng, this.getMarkerOptions(document));
         marker.document = document;
 
         marker.bindTooltip(MapComponent.getTooltipText(document.resource), {
@@ -481,6 +472,21 @@ export class MapComponent implements AfterViewInit, OnChanges {
             default:
                 return L.CRS.Simple;
         }
+    }
+
+
+    protected getMarkerOptions(document: FieldDocument): L.CircleMarkerOptions {
+
+        const color: string = this.categoryColors[document.resource.category];
+
+        return {
+            fillColor: color,
+            fillOpacity: 1,
+            radius: 5,
+            stroke: document === this.selectedDocument,
+            color: Category.isBrightColor(color) ? '#000' : '#fff',
+            weight: 2
+        };
     }
 
 

@@ -17,7 +17,8 @@
 
     <div *ngIf="!isLoading()" id="grid-elements-container">
 
-        <div class="grid-section-label first-grid-section-label"
+        <div *ngIf="linkedDocuments.length > 0"
+             class="grid-section-label first-grid-section-label"
              (click)="toggleSection('types')">
             <span [ngClass]="isSectionVisible('types') ? 'mdi mdi-chevron-down' : 'mdi mdi-chevron-right'"></span>
             <span *ngIf="mainDocument?.resource.category === 'TypeCatalog'"

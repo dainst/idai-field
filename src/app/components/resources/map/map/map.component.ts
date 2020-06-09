@@ -102,7 +102,6 @@ export class MapComponent implements AfterViewInit, OnChanges {
 
         this.clearMap();
         this.addGeometriesToMap();
-        this.bringSelectedMarkersToFront();
         this.updateCoordinateReferenceSystem();
     }
 
@@ -125,7 +124,6 @@ export class MapComponent implements AfterViewInit, OnChanges {
                 this.markers[document.resource.id].forEach(marker => {
                    marker.setStyle({ stroke: selected });
                 });
-                this.bringSelectedMarkersToFront();
                 break;
             case 'LineString':
             case 'MultiLineString':
@@ -164,6 +162,8 @@ export class MapComponent implements AfterViewInit, OnChanges {
         } else {
             this.map.setView([0, 0], 15);
         }
+
+        this.bringSelectedMarkersToFront();
 
         return Promise.resolve();
     }

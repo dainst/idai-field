@@ -11,8 +11,8 @@ export class TypeGridVirtualScrollStrategy implements VirtualScrollStrategy {
     private index = new Subject<number>();
     private viewport: CdkVirtualScrollViewport | null = null;
     private numColumns: number;
-    private rowHeight: number;
-    private elementWidth: number;
+    private rowHeight = 1;
+    private elementWidth = 1;
 
     scrolledIndexChange = this.index.pipe(distinctUntilChanged());
 

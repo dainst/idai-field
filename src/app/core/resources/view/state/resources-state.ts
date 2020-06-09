@@ -175,7 +175,7 @@ export module ResourcesState {
             typesManagementState: {
                 operation: undefined,
                 layerIds: [],
-                mode: 'type-grid',
+                mode: 'types',
                 bypassHierarchy: false,
                 expandAllGroups: false,
                 navigationPath: NavigationPath.empty(),
@@ -204,7 +204,7 @@ export module ResourcesState {
 
         return {
             overviewState: ViewState.build(),
-            typesManagementState: ViewState.build('type-grid'),
+            typesManagementState: ViewState.build('types'),
             operationViewStates: {},
             view: 'project',
             activeDocumentViewTab: undefined
@@ -256,4 +256,3 @@ export module ResourcesState {
                 : state.operationViewStates[state.view];
     }
 }
-

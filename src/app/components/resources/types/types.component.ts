@@ -22,8 +22,8 @@ import {ProjectCategories} from '../../../core/configuration/project-categories'
 
 
 @Component({
-    selector: 'type-grid',
-    templateUrl: './type-grid.html',
+    selector: 'types',
+    templateUrl: './types.html',
     host: {
         '(window:contextmenu)': 'handleClick($event, true)',
         '(window:keydown)': 'onKeyDown($event)'
@@ -31,8 +31,9 @@ import {ProjectCategories} from '../../../core/configuration/project-categories'
 })
 /**
  * @author Thomas Kleinke
+ * @author Sebastian Cuy
  */
-export class TypeGridComponent extends BaseList implements OnChanges {
+export class TypesComponent extends BaseList implements OnChanges {
 
     /**
      * These are the Type documents found at the current level,
@@ -63,6 +64,7 @@ export class TypeGridComponent extends BaseList implements OnChanges {
     public contextMenu: ContextMenu = new ContextMenu();
 
     private expandAllGroups: boolean = false;
+    private visibleSections = ['types'];
 
 
     constructor(private fieldDatastore: FieldReadDatastore,
@@ -197,6 +199,19 @@ export class TypeGridComponent extends BaseList implements OnChanges {
 
         if (!inside) this.contextMenu.close();
     }
+
+
+    public toggleSection(section: string) {
+
+        if (!this.visibleSections.includes(section)) {
+            this.visibleSections.push(section);
+        } else if (this.visibleSections.length > 1) {
+            this.visibleSections.splice(this.visibleSections.indexOf(section), 1);
+        }
+    }
+
+
+    public isSectionVisible = (section: string) => this.linkedDocuments.length === 0 || this.visibleSections.includes(section);
 
 
     private async update() {

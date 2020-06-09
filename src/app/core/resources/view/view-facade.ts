@@ -11,7 +11,7 @@ import {M} from '../../../components/messages/m';
 import {Messages} from '../../../components/messages/messages';
 
 
-export type ResourcesViewMode = 'map'|'list'|'type-grid';
+export type ResourcesViewMode = 'map'|'list'|'types';
 
 
 /**

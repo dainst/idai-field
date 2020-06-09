@@ -36,16 +36,16 @@ export class ExtensionUtil {
         if (!ext) return undefined;
         if (supportedFileTypes.indexOf(ext.toLowerCase()) == -1) return ext;
     }
-    
-    
+
+
     public static replaceExtension = (fileName: string, extension: string): string =>
         (fileName.indexOf('.') === -1)
             ? fileName + '.' + extension.toLowerCase()
             : fileName.substr(0, fileName.lastIndexOf('.')) + '.' + extension.toLowerCase();
 
 
-    public static getExtension = (file: File): string =>
-        (/(?:\.([^.]+))?$/.exec(file.name)?.[1] ?? '').toLowerCase();
+    public static getExtension = (fileName: string): string =>
+        (/(?:\.([^.]+))?$/.exec(fileName)?.[1] ?? '').toLowerCase();
 
 
     private static getUnsupportedExts(files: Array<File>, supportedFileTypes: Array<string>) {

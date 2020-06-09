@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Category} from '../../core/configuration/model/category';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {empty, filter, flow, includedIn, isNot, map, take, forEach} from 'tsfun';
 import {Document} from 'idai-components-2';
-import {Importer, ImportReport} from '../../core/import/importer';
+import {Importer, ImportFormat, ImportReport} from '../../core/import/importer';
+import {Category} from '../../core/configuration/model/category';
 import {Reader} from '../../core/import/reader/reader';
 import {FileSystemReader} from '../../core/import/reader/file-system-reader';
 import {HttpReader} from '../../core/import/reader/http-reader';
@@ -30,6 +30,7 @@ import getCategoriesWithoutExcludedCategories = ExportRunner.getCategoriesWithou
 import {ViewFacade} from '../../core/resources/view/view-facade';
 import {Messages} from '../messages/messages';
 import {ProjectCategories} from '../../core/configuration/project-categories';
+import {ExtensionUtil} from '../../core/util/extension-util';
 
 
 @Component({
@@ -53,6 +54,8 @@ export class ImportComponent implements OnInit {
     public operations: Array<Document> = [];
     public javaInstalled: boolean = true;
     public running: boolean = false;
+
+    public readonly fileInputExtensions: string = '.csv,.jsonl,.geojson,.json,.shp';
 
 
     constructor(
@@ -103,12 +106,6 @@ export class ImportComponent implements OnInit {
     }
 
 
-    public onFormatChange() {
-
-        if (this.importState.format === 'shapefile' && this.importState.sourceType === 'http') this.importState.sourceType = 'file';
-    }
-
-
     public async onImportButtonClick() {
 
         if (!this.isReady()) return;
@@ -126,10 +123,11 @@ export class ImportComponent implements OnInit {
     public isReady(): boolean|undefined {
 
         return !this.running
+            && this.importState.format !== undefined
             && (this.importState.format !== 'shapefile' || !this.isJavaInstallationMissing())
-            && this.importState.sourceType === 'file'
+            && (this.importState.sourceType === 'file'
                 ? this.importState.file !== undefined
-                : this.url !== undefined;
+                : this.url !== undefined);
     }
 
 
@@ -137,6 +135,7 @@ export class ImportComponent implements OnInit {
 
         this.messages.removeAllMessages();
         this.importState.file = undefined;
+        this.importState.format = undefined;
         this.url = undefined;
     }
 
@@ -157,22 +156,7 @@ export class ImportComponent implements OnInit {
             } else {
                 this.selectFirstCategory();
             }
-        }
-    }
-
-
-    public getFileInputExtensions(): string {
-
-        switch (this.importState.format) {
-            case 'native':
-                return '.jsonl';
-            case 'geojson-gazetteer':
-            case 'geojson':
-                return '.geojson,.json';
-            case 'shapefile':
-                return '.shp';
-            case 'csv':
-                return '.csv';
+            this.updateFormat();
         }
     }
 
@@ -223,6 +207,18 @@ export class ImportComponent implements OnInit {
         if (!this.importState.selectedCategory || !this.importState.categories.includes(this.importState.selectedCategory)) {
             this.selectFirstCategory();
         }
+    }
+
+
+    public updateFormat() {
+
+        if (!this.importState.file && !this.url) return;
+
+        this.importState.format = ImportComponent.getImportFormat(
+            this.importState.file
+                ? this.importState.file.name
+                : this.url
+        );
     }
 
 
@@ -324,5 +320,23 @@ export class ImportComponent implements OnInit {
                 ? new ShapefileFileSystemReader(file)
                 : new FileSystemReader(file)
             : new HttpReader(url, http);
+    }
+
+
+    private static getImportFormat(fileName: string): ImportFormat|undefined {
+
+        switch(ExtensionUtil.getExtension(fileName)) {
+            case 'jsonl':
+                return 'native';
+            case 'geojson':
+            case 'json':
+                return 'geojson';
+            case 'shp':
+                return 'shapefile';
+            case 'csv':
+                return 'csv';
+            default:
+                return undefined;
+        }
     }
 }

@@ -65,7 +65,7 @@ export class ImageUploader {
         if (message) uploadResult.messages.push(message);
 
         const imageFiles = files.filter(file =>
-            ImageUploader.supportedImageFileTypes.includes(ExtensionUtil.getExtension(file)));
+            ImageUploader.supportedImageFileTypes.includes(ExtensionUtil.getExtension(file.name)));
         if (imageFiles.length) {
             const category: Category = await this.chooseCategory(imageFiles.length, depictsRelationTarget);
             const uploadModalRef = this.modalService.open(
@@ -78,7 +78,7 @@ export class ImageUploader {
         }
 
         const wldFiles = files.filter(file =>
-            ImageUploader.supportedWorldFileTypes.includes(ExtensionUtil.getExtension(file)));
+            ImageUploader.supportedWorldFileTypes.includes(ExtensionUtil.getExtension(file.name)));
         if (wldFiles.length) {
             uploadResult.messages = uploadResult.messages.concat(await this.uploadWldFiles(wldFiles));
         }

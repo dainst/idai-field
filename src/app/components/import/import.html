@@ -15,19 +15,6 @@
         <div class="row">
             <div class="form-group col default-container">
                 <div class="col-lg-6 mx-lg-auto py-4">
-
-                    <div class="form-group">
-                        <label class="control-label col-form-label"
-                               for="importFormatSelect" i18n="@@import.format">Format</label>
-                        <select id="importFormatSelect" class="form-control"
-                                [(ngModel)]="importState.format" (change)="onFormatChange()">
-                            <option value="native" i18n="@@import.formats.native">JSONL</option>
-                            <option value="csv" i18n="@@import.formats.csv">CSV</option>
-                            <option value="geojson" i18n="@@import.formats.geoJson">GeoJSON</option>
-                            <option value="shapefile" i18n="@@import.formats.shapefile">Shapefile</option>
-                        </select>
-                    </div>
-
                     <div class="form-group">
                         <label class="control-label col-form-label" for="importSourceSelect"
                                i18n="@@import.source">Quelle</label>
@@ -49,7 +36,7 @@
                                    i18n-placeholder="@@import.chooseFile"
                                    disabled>
                             <input id="import-file-input" class="file-input" type="file"
-                                   accept="{{getFileInputExtensions()}}"
+                                   accept="{{fileInputExtensions}}"
                                    (change)="selectFile($event)">
                             <label for="import-file-input" class="btn btn-secondary file-input-label">
                                 <span class="mdi mdi-folder"></span>
@@ -61,7 +48,8 @@
                         <label class="control-label col-form-label" i18n="@@import.url">URL</label>
                         <input class="form-control" id="importUrlInput"
                                type="text"
-                               [(ngModel)]="url">
+                               [(ngModel)]="url"
+                               (keyup)="updateFormat()">
                     </div>
 
                     <div *ngIf="showMergeOption()" class="form-group form-check-inline">

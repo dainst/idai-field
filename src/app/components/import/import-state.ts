@@ -8,7 +8,7 @@ import {Category} from '../../core/configuration/model/category';
 export class ImportState {
 
     public sourceType: string = 'file';
-    public format: ImportFormat = 'native';
+    public format: ImportFormat|undefined;
     public file: any|undefined;
     public selectedOperationId: string = '';
     public mergeMode = false;

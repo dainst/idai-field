@@ -1,4 +1,5 @@
-import {Component, SimpleChanges, Input, Output, EventEmitter, HostListener, NgZone} from '@angular/core';
+import {Component, SimpleChanges, Input, Output, EventEmitter, HostListener, NgZone,
+    ChangeDetectorRef} from '@angular/core';
 import {FieldDocument, FieldGeometry} from 'idai-components-2';
 import {LayerMapComponent} from './layer-map.component';
 import {GeometryHelper} from './geometry-helper';
@@ -54,9 +55,11 @@ export class EditableMapComponent extends LayerMapComponent {
                 layerImageProvider: LayerImageProvider,
                 messages: Messages,
                 settingsService: SettingsService,
-                protected zone: NgZone) {
+                protected zone: NgZone,
+                protected changeDetectorRef: ChangeDetectorRef) {
 
-        super(projectConfiguration, layerManager, layerImageProvider, messages, settingsService, zone);
+        super(projectConfiguration, layerManager, layerImageProvider, messages, settingsService, zone,
+            changeDetectorRef);
     }
 
 

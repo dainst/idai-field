@@ -1,4 +1,4 @@
-import {Component, Input, NgZone, SimpleChanges} from '@angular/core';
+import {ChangeDetectorRef, Component, Input, NgZone, SimpleChanges} from '@angular/core';
 import {ImageDocument, ImageGeoreference} from 'idai-components-2';
 import {LayerManager, ListDiffResult} from './layer-manager';
 import {LayerImageProvider} from './layer-image-provider';
@@ -41,7 +41,8 @@ export class LayerMapComponent extends MapComponent {
                 private layerImageProvider: LayerImageProvider,
                 protected messages: Messages,
                 private settingsService: SettingsService,
-                protected zone: NgZone) {
+                protected zone: NgZone,
+                protected changeDetectorRef: ChangeDetectorRef) {
 
         super(projectConfiguration, zone);
 
@@ -106,7 +107,7 @@ export class LayerMapComponent extends MapComponent {
     }
 
 
-    private async updateLayers(): Promise<any> {
+    private async updateLayers(): Promise<void> {
 
         this.layerImageProvider.reset();
 
@@ -115,6 +116,8 @@ export class LayerMapComponent extends MapComponent {
         this.layers = layers;
         this.initializePanes();
         this.handleActiveLayersChange(activeLayersChange);
+
+        this.changeDetectorRef.detectChanges();
     }
 
 

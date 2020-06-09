@@ -211,7 +211,7 @@ export class TypesComponent extends BaseList implements OnChanges {
     }
 
 
-    public isSectionVisible = (section: string) => this.visibleSections.includes(section);
+    public isSectionVisible = (section: string) => this.linkedDocuments.length === 0 || this.visibleSections.includes(section);
 
 
     private async update() {

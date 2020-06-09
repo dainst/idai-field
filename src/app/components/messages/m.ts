@@ -120,6 +120,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_ERROR_CATEGORY_CANNOT_BE_CHANGED = 'M.Import.ImportErrors.categoryCannotBeChanged';
     public static IMPORT_ERROR_EMPTY_SLOTS_IN_ARRAYS_FORBIDDEN = 'M.Import.ImportErrors.emptySlotsInArraysForbidden';
     public static IMPORT_ERROR_ARRAY_OF_HETEROGENEOUS_TYPES = 'M.Import.ImportErrors.arrayOfHeterogeneousType';
+    public static IMPORT_ERROR_INVALID_FILE_FORMAT = 'M.Import.ImportErrors.invalidFileFormat';
 
     // Export Package
     public static EXPORT_SUCCESS = 'export.success';
@@ -978,6 +979,15 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             }),
             level: 'danger',
             params: ['?', '?'],
+            hidden: false
+        };
+        this.msgs[M.IMPORT_ERROR_INVALID_FILE_FORMAT] = {
+            content: i18n({
+                id: 'messages.import.error.invalidFileFormat',
+                value: 'Die ausgewählte Datei kann nicht importiert werden. Gültige Dateiendungen sind: [0]'
+            }),
+            level: 'danger',
+            params: [''],
             hidden: false
         };
         this.msgs[M.IMPORT_VALIDATION_ERROR_NO_RECORDEDIN] = {

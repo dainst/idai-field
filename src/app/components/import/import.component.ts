@@ -54,7 +54,7 @@ export class ImportComponent implements OnInit {
     public javaInstalled: boolean = true;
     public running: boolean = false;
 
-    public readonly fileInputExtensions: string = '.csv,.jsonl,.geojson,.json,.shp';
+    public readonly allowedFileExtensions: string = '.csv, .jsonl, .geojson, .json, .shp';
 
 
     constructor(
@@ -149,14 +149,29 @@ export class ImportComponent implements OnInit {
             : files[0];
 
         if (this.importState.file) {
+            this.updateFormat();
+            if (!this.importState.format) {
+                this.messages.add([M.IMPORT_ERROR_INVALID_FILE_FORMAT, this.allowedFileExtensions]);
+                return;
+            }
+
             this.importState.selectedCategory = this.getCategoryFromFileName(this.importState.file.name);
             if (this.importState.selectedCategory) {
                 this.importState.typeFromFileName = true;
             } else {
                 this.selectFirstCategory();
             }
-            this.updateFormat();
         }
+    }
+
+
+    public updateFormat() {
+
+        this.importState.format = ImportComponent.getImportFormat(
+            this.importState.file
+                ? this.importState.file.name
+                : this.importState.url
+        );
     }
 
 
@@ -206,18 +221,6 @@ export class ImportComponent implements OnInit {
         if (!this.importState.selectedCategory || !this.importState.categories.includes(this.importState.selectedCategory)) {
             this.selectFirstCategory();
         }
-    }
-
-
-    public updateFormat() {
-
-        if (!this.importState.file && !this.importState.url) return;
-
-        this.importState.format = ImportComponent.getImportFormat(
-            this.importState.file
-                ? this.importState.file.name
-                : this.importState.url
-        );
     }
 
 

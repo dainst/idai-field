@@ -192,7 +192,9 @@ export class DocumentsManager {
         if (!selectedDocument) {
             await this.setSelected(this.documents[0].resource.id);
         } else {
-            let index: number = this.documents.indexOf(selectedDocument) + (direction === 'next' ? 1 : -1);
+            let index: number = this.documents.findIndex(document => {
+                return document.resource.id === selectedDocument.resource.id;
+            }) + (direction === 'next' ? 1 : -1);
             if (index < 0) index = this.documents.length - 1;
             if (index === this.documents.length) index = 0;
             await this.setSelected(this.documents[index].resource.id);

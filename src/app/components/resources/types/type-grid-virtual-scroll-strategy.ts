@@ -10,16 +10,15 @@ export class TypeGridVirtualScrollStrategy implements VirtualScrollStrategy {
 
     private index = new Subject<number>();
     private viewport: CdkVirtualScrollViewport | null = null;
-    private numColumns = 3;
-    private rowHeight = 233; // TODO: Make parameter
-    private elementWidth = 208; // TODO: Make parameter
+    private numColumns: number;
+    private rowHeight: number;
+    private elementWidth: number;
 
     scrolledIndexChange = this.index.pipe(distinctUntilChanged());
 
     attach(viewport: CdkVirtualScrollViewport): void {
 
         this.viewport = viewport;
-        console.log('onDataLengthChanged');
         this.updateTotalContentSize();
     }
 
@@ -62,16 +61,22 @@ export class TypeGridVirtualScrollStrategy implements VirtualScrollStrategy {
     private updateTotalContentSize() {
 
         if (this.viewport) {
-            this.calculateNumColumns();
+            this.recalculate();
             const numRows = Math.ceil(this.viewport.getDataLength() / this.numColumns);
             this.viewport.setTotalContentSize(numRows * this.rowHeight);
         }
     }
 
 
-    private calculateNumColumns() {
+    private recalculate() {
 
-        this.numColumns = Math.floor(this.viewport.elementRef.nativeElement.offsetWidth / this.elementWidth);
+        const viewportElement = this.viewport.elementRef.nativeElement;
+        this.numColumns = Math.floor(viewportElement.offsetWidth / this.elementWidth);
+        const listElement = viewportElement.getElementsByClassName('type-grid-element')[0] as HTMLElement;
+        if (listElement) {
+            this.rowHeight = getTotalHeight(listElement);
+            this.elementWidth = getTotalWidth(listElement);
+        }
     }
 
 
@@ -122,4 +127,18 @@ export class TypeGridVirtualScrollStrategy implements VirtualScrollStrategy {
         this.index.next(firstVisibleIndex);
      }
 
+}
+
+function getTotalHeight(el: HTMLElement) {
+
+    const styles = window.getComputedStyle(el);
+    const margin = parseFloat(styles.marginTop) + parseFloat(styles.marginBottom);
+    return Math.ceil(el.offsetHeight + margin);
+}
+
+function getTotalWidth(el: HTMLElement) {
+
+    const styles = window.getComputedStyle(el);
+    const margin = parseFloat(styles.marginRight) + parseFloat(styles.marginLeft);
+    return Math.ceil(el.offsetWidth + margin);
 }

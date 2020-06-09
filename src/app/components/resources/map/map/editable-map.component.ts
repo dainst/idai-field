@@ -12,7 +12,7 @@ import {LayerManager} from './layer-manager';
 import {LayerImageProvider} from './layer-image-provider';
 import {Messages} from '../../../messages/messages';
 import {SettingsService} from '../../../../core/settings/settings-service';
-import {Category} from '../../../../core/configuration/model/category';
+
 
 const remote = typeof window !== 'undefined'
   ? window.require('electron').remote
@@ -214,11 +214,10 @@ export class EditableMapComponent extends LayerMapComponent {
 
     private createEditableMarker(position: L.LatLng): L.CircleMarker {
 
-        // TODO Make draggable
         const editableMarker: L.CircleMarker = L.circleMarker(
             position, this.getMarkerOptions(this.selectedDocument)
         );
-        this.setupMarkerEvents(editableMarker);
+        this.setupMouseDownEvent(editableMarker);
         editableMarker.addTo(this.map);
         this.editableMarkers.push(editableMarker);
 
@@ -582,34 +581,50 @@ export class EditableMapComponent extends LayerMapComponent {
         for (let editableMarker of this.editableMarkers) {
             editableMarker.setStyle({ stroke: false });
             editableMarker.unbindTooltip();
-            this.setupMarkerEvents(editableMarker);
+            this.setupMouseDownEvent(editableMarker);
         }
 
         if (this.editableMarkers.length > 0) {
             this.setSelectedMarker(this.editableMarkers[0]);
         }
+
+        this.setupMapMouseUpEvent();
     }
 
 
-    private setupMarkerEvents(editableMarker: L.CircleMarker) {
+    private setupMouseDownEvent(editableMarker: L.CircleMarker) {
 
-        editableMarker.on('mouseup', event => this.setSelectedMarker(event.target));
-        editableMarker.on('dragend', event => this.setSelectedMarker(event.target));
+        editableMarker.on('mousedown', event => {
+            this.setSelectedMarker(event.target);
+            this.map.dragging.disable();
+            this.map.on('mousemove', (e: L.MouseEvent) => editableMarker.setLatLng(e.latlng));
+        });
+    }
+
+
+    private setupMapMouseUpEvent() {
+
+        this.map.on('mouseup',() => {
+            this.map.dragging.enable();
+            this.map.removeEventListener('mousemove' as any);
+        });
     }
 
 
     private setSelectedMarker(marker: L.CircleMarker) {
 
         if (this.selectedMarker) this.selectedMarker.setStyle({ stroke: false });
+
         marker.setStyle({ stroke: true });
 
-        this.selectedMarker = marker
+        this.selectedMarker = marker;
     }
 
 
     private startPointCreation() {
 
         this.addMarker();
+        this.setupMapMouseUpEvent();
     }
 
 

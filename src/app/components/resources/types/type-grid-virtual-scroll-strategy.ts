@@ -71,7 +71,7 @@ export class TypeGridVirtualScrollStrategy implements VirtualScrollStrategy {
 
     private calculateNumColumns() {
 
-        this.numColumns = Math.ceil(this.viewport.elementRef.nativeElement.offsetWidth / this.elementWidth);
+        this.numColumns = Math.floor(this.viewport.elementRef.nativeElement.offsetWidth / this.elementWidth);
     }
 
 

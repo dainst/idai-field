@@ -50,7 +50,6 @@ import {ExtensionUtil} from '../../core/util/extension-util';
  */
 export class ImportComponent implements OnInit {
 
-    public url: string|undefined;
     public operations: Array<Document> = [];
     public javaInstalled: boolean = true;
     public running: boolean = false;
@@ -127,7 +126,7 @@ export class ImportComponent implements OnInit {
             && (this.importState.format !== 'shapefile' || !this.isJavaInstallationMissing())
             && (this.importState.sourceType === 'file'
                 ? this.importState.file !== undefined
-                : this.url !== undefined);
+                : this.importState.url !== undefined);
     }
 
 
@@ -136,7 +135,7 @@ export class ImportComponent implements OnInit {
         this.messages.removeAllMessages();
         this.importState.file = undefined;
         this.importState.format = undefined;
-        this.url = undefined;
+        this.importState.url = undefined;
     }
 
 
@@ -178,7 +177,7 @@ export class ImportComponent implements OnInit {
         this.messages.removeAllMessages();
 
         const reader: Reader|undefined = ImportComponent.createReader(this.importState.sourceType, this.importState.format,
-            this.importState.file as any, this.url as any, this.http);
+            this.importState.file as any, this.importState.url as any, this.http);
         if (!reader) return this.messages.add([M.IMPORT_READER_GENERIC_START_ERROR]);
 
         let uploadModalRef: any = undefined;
@@ -212,12 +211,12 @@ export class ImportComponent implements OnInit {
 
     public updateFormat() {
 
-        if (!this.importState.file && !this.url) return;
+        if (!this.importState.file && !this.importState.url) return;
 
         this.importState.format = ImportComponent.getImportFormat(
             this.importState.file
                 ? this.importState.file.name
-                : this.url
+                : this.importState.url
         );
     }
 

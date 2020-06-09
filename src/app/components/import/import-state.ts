@@ -10,6 +10,7 @@ export class ImportState {
     public sourceType: string = 'file';
     public format: ImportFormat|undefined;
     public file: any|undefined;
+    public url: string|undefined;
     public selectedOperationId: string = '';
     public mergeMode = false;
     public permitDeletions = false;

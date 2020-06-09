@@ -202,9 +202,9 @@ export class EditableMapComponent extends LayerMapComponent {
 
     private finishDrawing() {
 
-        if (this.drawMode == 'Line' && (this.map.pm.Draw).Line._layer.getLatLngs().length >= 2) {
+        if (this.drawMode === 'Line' && (this.map.pm.Draw).Line._layer.getLatLngs().length >= 2) {
             ((this.map.pm.Draw).Line)._finishShape();
-        } else if (this.drawMode != 'None') {
+        } else if (this.drawMode !== 'None') {
             this.map.pm.disableDraw(this.drawMode);
         }
 
@@ -234,9 +234,9 @@ export class EditableMapComponent extends LayerMapComponent {
 
     private addPolyLayer(drawMode: string) {
 
-        if (this.drawMode != 'None') this.finishDrawing();
+        if (this.drawMode !== 'None') this.finishDrawing();
 
-        let className = drawMode == 'Poly' ? 'polygon' : 'polyline';
+        let className = drawMode === 'Poly' ? 'polygon' : 'polyline';
         className += ' active';
 
         const drawOptions = {
@@ -277,7 +277,7 @@ export class EditableMapComponent extends LayerMapComponent {
         this.editablePolylines = [];
         this.editableMarkers = [];
 
-        if (this.drawMode != 'None') this.map.pm.disableDraw(this.drawMode);
+        if (this.drawMode !== 'None') this.map.pm.disableDraw(this.drawMode);
         this.drawMode = 'None';
 
         this.map.off('pm:create');
@@ -580,6 +580,7 @@ export class EditableMapComponent extends LayerMapComponent {
         this.editableMarkers = this.markers[this.selectedDocument.resource.id];
 
         for (let editableMarker of this.editableMarkers) {
+            editableMarker.setStyle({ stroke: false });
             editableMarker.unbindTooltip();
             this.setupMarkerEvents(editableMarker);
         }
@@ -600,7 +601,7 @@ export class EditableMapComponent extends LayerMapComponent {
     private setSelectedMarker(marker: L.CircleMarker) {
 
         if (this.selectedMarker) this.selectedMarker.setStyle({ stroke: false });
-        marker.setStyle({ color: '#5572a1', stroke: true });
+        marker.setStyle({ stroke: true });
 
         this.selectedMarker = marker
     }

@@ -649,13 +649,21 @@ export class EditableMapComponent extends LayerMapComponent {
 
         this.map.off('mousemove');
         this.map.off('mouseout');
-        this.mousePositionCoordinates = undefined;
+
+        this.zone.run(() => {
+            this.mousePositionCoordinates = undefined;
+        });
     }
 
 
     private updateMousePositionCoordinates(latLng: L.LatLng) {
 
-        this.mousePositionCoordinates = [latLng.lng.toFixed(7), latLng.lat.toFixed(7)];
+        this.zone.run(() => {
+            this.mousePositionCoordinates = [
+                latLng.lng.toFixed(7),
+                latLng.lat.toFixed(7)
+            ];
+        });
     }
 
 

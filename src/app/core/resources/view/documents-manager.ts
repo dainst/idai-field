@@ -1,7 +1,7 @@
 import {Observer, Observable} from 'rxjs';
 import {subtract, set} from 'tsfun';
 import {jsonClone} from 'tsfun/struct';
-import {Document, FieldDocument} from 'idai-components-2';
+import {Document, FieldDocument, Resource} from 'idai-components-2';
 import {FieldReadDatastore} from '../../datastore/field/field-read-datastore';
 import {ChangesStream} from '../../datastore/changes/changes-stream';
 import {ObserverUtil} from '../../util/observer-util';
@@ -33,7 +33,7 @@ export const DOCUMENTS_LIMIT: number = 5000;
 export class DocumentsManager {
 
     private documents: Array<FieldDocument>;
-    private newDocumentsFromRemote: Array<string /* resourceId */> = [];
+    private newDocumentsFromRemote: Array<Resource.Id> = [];
 
     private totalDocumentCount: number;
 

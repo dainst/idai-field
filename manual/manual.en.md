@@ -34,54 +34,14 @@ your project data regularly.
 
 ## Resources
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-The entities stored in the database, such as "trench", "images", "finds", "types", "stratigraphical units" etc. are called 
-"resources". The resource management facilities are at the core of iDAI.field. Resources can be realated to each 
-other, in that way the information entered into iDAI.field becomes structured. For example: images can be linked to finds and finds can be 
-set within stratigraphical units etc. The various resources in iDAI.field fulfill specific functionalities to cover
-the general needs of archaeological documentation. Each resource is configured with a set of attributes called 
-"fields" which must be filled in with "values" by the user to produce valuable data.
-
-### Project
-
-The "project" is the highest level resource of iDAI.field - all other resources must be within a "project". With your 
-installation of iDAI.field you can work on multiple projects. In the app, click on the top-right name of the project to
-create, modify or delete projects. 
-
-<p align="center"><img src="images/en/resources/manage_projects.png" alt="Manage projects"/></p>
-
-### Creating, modifying and deleting resources
-
-All resources are created in more or less the same way. Wherever you find a green plus button you are able to 
-create a new resource of a specific category. After creating a project or opening 
-an existing one, you begin in the tab **Overview** (recognizable by the home symbol) where all of the project's operations 
-and places are managed. Use the green plus button at the bottom of the resources list to create a new operation.
-=======
 The resource management facilities are at the core of iDAI.field.
 
-=======
-The resource management facilities are at the core of iDAI.field.
-
->>>>>>> parent of 17455b04f... Update manual.en.md
-=======
-The resource management facilities are at the core of iDAI.field.
-
->>>>>>> parent of 17455b04f... Update manual.en.md
 ### Operations
 
 After creating a project or opening an existing one, you begin in the tab **Overview** (recognizable by the
 home symbol) where all of the project's operations and places are managed.
 
 Use the green plus button at the bottom of the resources list to create a new operation.
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> parent of 17455b04f... Update manual.en.md
-=======
->>>>>>> parent of 17455b04f... Update manual.en.md
-=======
->>>>>>> parent of 17455b04f... Update manual.en.md
 
 <p align="center"><img src="images/en/resources/create_operation.png" alt="Create operation resource"/></p>
 
@@ -95,100 +55,8 @@ core section has to be filled in.
 
 <p align="center"><img src="images/en/resources/save_operation.png" alt="Save operation resource"/></p>
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-The process of creating resources works in this way no matter which category of resource is being created. 
-Always the **identifier** is the very least information which needs to be entered. It is not possible to
-create a resource if the identifier is already existing in the current project. After saving the new operation is 
-displayed in the resources list with a circular icon including the initial letter of the resource category.
-
-You can come back to a resource after you have saved it and modify it by double clicking it on the resource list on the left window or
-by right clicking a resource in the list. Right-click will open a context menu providing the following options:
-
-* *Edit*: Opens the editor (also available by doubleclicking the resource entry in the list)
-* *Move*: Allows removing the resource from its current context and assigning it to another parent resource
-* *Delete*: Removes the resource after a security check
-
-Furthermore, the context menu contains options for creating and editing geometries.
-
-<p align="center"><img src="images/en/resources/context_menu.png" alt="Kontextmenü"/></p>
-
-Deleting resources is so dangerous to the database, that answering the security check is mandatory. In cases where 
-mass manipulation becomes necessary refer to the respective chapter in this manual. 
-
-### Geometries of resources
-
-For any resource in iDAI.field a geometry can be supplied. It represents the geographical extend or location of the respective resource.
-Whenever you create a new resource you will be asked if you want to create a geometry as well. You can, i.e. vectorize
-stratigraphical units pictured on a hand-drawn, scanned and georeferenced plan or digital orthoimage. Go to **Image management** to 
-read more about georefenced images in iDAI.field.
-
-The mapping functionalities in iDAI.field are basic and include import, export, storing, vectorizing and viewing 
-2D-geometries (points, lines, polygons) attached to resources.
-
-The ability of iDAI.field to handle geometries on a map is essential for an archaeological information system because all archaeological data should be localized explicitly.
-The Geographical Information System (GIS) functionalities in iDAI.field allow for basic vectorizing, however it is not planned to replace a full-fledged GIS like QGIS or ArcGIS. 
-At the moment (Version 2.15.3) the app does not support reprojections, thus, it cannot project geometries of different cooridate systems on the same map.  
-Length, and area measurements and more elaborate spatial analysis must be preformed with other software (QGIS, R etc.). 
-
-Geometries in iDAI.field are compatible with GIS. All resources with geometries can be exported as a geojson file which can easily be imported in GIS.
-In iDAI.field, click on **Export** within the "File"-tab, select "Format" : "GeoJSON" and filter by "Operation" if needed.
-Save all resources with geometries in your database to one file. Mind that only resources with geometry and
-that only the fields "identifier", "category" and "shortDescription" are being exported together with the geometries.
-
-<p align="center"><img src="images/en/resources/export_geojson.png" alt="Export Geojson"/></p>
-
-In QGis open the "Data Source Manager" and go to the "Vector"-tab select "Source Type" : "File" and search for 
-the GeoJSON-file exported from iDAI.field. Open and add it to your QGis-Project. If you have different "Geometry types" in your 
-GeoJSON, QGis will have to split the Geometries into homogene layers and thus seperate points, lines and polygons.
-Your data is now represented as layers with features, each feature corresponds to one resource in your iDAI.field database.
-Check the layers properties to make sure the correct coordinate reference system is selected.
-
-<p align="center"><img src="images/en/resources/import_geojson_qgis.png" alt="Import Geojson to QGIS"/></p>
-
-
-
-
-
-#### Image management
-
-
-
-
-
-
-
-
-However  For 
-
-In iDAI
-
-### Places
-
-The **Place** resource shall represent the research site generally and can simply be documented with a single central point and the name of the site.
-Best practice is to give the GazetteerID used for this site on https://gazetteer.dainst.org.
-
-### Operations 
-
-Within the **Overview** tab it is not possible to create finds or features. Before creating actual archaeological entities 
-it is required to create **Operations**, meaning research operations like "excavation" (trench), "survey" (survey area) and "building research" (building).
-The geometries which ought to be created for the operations shall represent the actual research area or object.
-The fields in the respective operation category ask for specific organisational and methodological information.
-
-Use the button "Switch to operation" (Symbol: Arrowup right) in order to enter this operation.
-=======
 The new operation is now displayed in the resources list. Use the button "Switch to operation" (Symbol: Arrow
 up right) in order to open a new tab for the operation.
->>>>>>> parent of 17455b04f... Update manual.en.md
-=======
-The new operation is now displayed in the resources list. Use the button "Switch to operation" (Symbol: Arrow
-up right) in order to open a new tab for the operation.
->>>>>>> parent of 17455b04f... Update manual.en.md
-=======
-The new operation is now displayed in the resources list. Use the button "Switch to operation" (Symbol: Arrow
-up right) in order to open a new tab for the operation.
->>>>>>> parent of 17455b04f... Update manual.en.md
 
 <p align="center"><img src="images/en/resources/goto_operation.png" alt="Open operation resource"/></p>
 
@@ -197,18 +65,6 @@ operation tab via the plus button (e. g. stratigraphical units within a trench o
 
 <p align="center"><img src="images/en/resources/create_more.png" alt="Create resource"/></p>
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-### 
-
-
-=======
->>>>>>> parent of 17455b04f... Update manual.en.md
-=======
->>>>>>> parent of 17455b04f... Update manual.en.md
-=======
->>>>>>> parent of 17455b04f... Update manual.en.md
 ### Hierarchical ordering
 
 Resources can be arranged in hierarchical structures, for example to assign finds to a stratigraphical unit.
@@ -229,8 +85,6 @@ switch to another level by clicking one of the buttons of the navigation path.
 ### Management
 
 Right clicking a resource in the list opens a context menu providing the following options:
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 * *Edit*: Opens the editor (also available by doubleclicking the resource entry in the list)
 * *Move*: Allows removing the resource from its current context and assigning it to another parent resource
@@ -238,24 +92,6 @@ Right clicking a resource in the list opens a context menu providing the followi
 
 Furthermore, the context menu contains options for creating and editing geometries.
 
-=======
-
-* *Edit*: Opens the editor (also available by doubleclicking the resource entry in the list)
-* *Move*: Allows removing the resource from its current context and assigning it to another parent resource
-* *Delete*: Removes the resource after a security check
-
-Furthermore, the context menu contains options for creating and editing geometries.
-
->>>>>>> parent of 17455b04f... Update manual.en.md
-=======
-
-* *Edit*: Opens the editor (also available by doubleclicking the resource entry in the list)
-* *Move*: Allows removing the resource from its current context and assigning it to another parent resource
-* *Delete*: Removes the resource after a security check
-
-Furthermore, the context menu contains options for creating and editing geometries.
-
->>>>>>> parent of 17455b04f... Update manual.en.md
 <p align="center"><img src="images/en/resources/context_menu.png" alt="Kontextmenü"/></p>
 
 

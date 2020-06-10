@@ -82,6 +82,7 @@ export class EditableMapComponent extends LayerMapComponent {
         });
     }
 
+
     public addPolyline() {
 
         this.zone.runOutsideAngular(() => {
@@ -245,7 +246,8 @@ export class EditableMapComponent extends LayerMapComponent {
             pathOptions: {
                 className: className,
                 color: this.categoryColors[this.selectedDocument.resource.category]
-            }
+            },
+            tooltips: false
         };
 
         this.map.pm.enableDraw(drawMode, drawOptions);

@@ -2072,24 +2072,26 @@
       </trans-unit>
       <trans-unit id="resources.searchResultsInfo.documentLimitExceeded" datatype="html">
         <source>
-                    <x id="INTERPOLATION" equiv-text="{{viewFacade.getDocuments().length}}"/> angezeigt
+                    Limitiert auf <x id="INTERPOLATION" equiv-text="{{viewFacade.getDocuments().length}}"/> Ressourcen
                 </source>
         <target state="final">
-                    <x id="INTERPOLATION" equiv-text="{{viewFacade.getDocuments().length}}"/> angezeigt
+                    Limitiert auf <x id="INTERPOLATION" equiv-text="{{viewFacade.getDocuments().length}}"/> Ressourcen
                 </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/resources.html</context>
-          <context context-type="linenumber">20</context>
+          <context context-type="linenumber">15</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="resources.searchResultsInfo.documentLimitExceeded.tooltip" datatype="html">
-        <source>Schränken Sie die Suche weiter ein oder verlassen Sie den erweiterten
-                    Suchmodus, um auf die übrigen Ressourcen zuzugreifen.</source>
-        <target state="final">Schränken Sie die Suche weiter ein oder verlassen Sie den erweiterten
-                    Suchmodus, um auf die übrigen Ressourcen zuzugreifen.</target>
+      <trans-unit id="resources.searchResultsInfo.removeDocumentLimit" datatype="html">
+        <source>
+                    Alle Ressourcen anzeigen
+                </source>
+        <target state="final">
+                    Alle Ressourcen anzeigen
+                </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/resources.html</context>
-          <context context-type="linenumber">15</context>
+          <context context-type="linenumber">23</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.tooltips.mode.map" datatype="html">
@@ -2097,7 +2099,7 @@
         <target state="final">Kartendarstellung</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/resources.html</context>
-          <context context-type="linenumber">46</context>
+          <context context-type="linenumber">47</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.tooltips.mode.list" datatype="html">
@@ -2105,7 +2107,7 @@
         <target state="final">Listendarstellung</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/resources.html</context>
-          <context context-type="linenumber">61</context>
+          <context context-type="linenumber">62</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.plusButton.selectCategory" datatype="html">

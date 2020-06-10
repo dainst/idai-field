@@ -6,6 +6,8 @@ import {ImagesState} from './images/overview/view/images-state';
 import {IndexFacade} from './datastore/index/index-facade';
 import {TabManager} from './tabs/tab-manager';
 import {ResourcesStateManager} from './resources/view/resources-state-manager';
+import {ProjectConfiguration} from './configuration/project-configuration';
+import {FieldCategoryConverter} from './datastore/field/field-category-converter';
 
 const remote = typeof window !== 'undefined' ? window.require('electron').remote : require('electron').remote;
 const express = typeof window !== 'undefined' ? window.require('express') : require('express');
@@ -22,7 +24,8 @@ export class AppController {
                 private documentCache: DocumentCache<Document>,
                 private imagesState: ImagesState,
                 private indexFacade: IndexFacade,
-                private tabManager: TabManager) {}
+                private tabManager: TabManager,
+                private projectConfiguration: ProjectConfiguration) {}
 
 
     public setupServer(): Promise<any> {
@@ -54,6 +57,8 @@ export class AppController {
         this.tabManager.resetForE2E();
         this.documentCache.resetForE2E();
         await this.pouchdbManager.resetForE2E();
-        await this.pouchdbManager.reindex(this.indexFacade);
+        await this.pouchdbManager.reindex(
+            this.indexFacade, this.documentCache, new FieldCategoryConverter(this.projectConfiguration)
+        );
     }
 }

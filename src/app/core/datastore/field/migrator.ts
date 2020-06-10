@@ -14,7 +14,8 @@ export module Migrator {
             document,
             migrateFieldNames,
             migratePeriodFields,
-            migrateSingleToMultipleValues);
+            migrateSingleToMultipleValues
+        );
     }
 
 

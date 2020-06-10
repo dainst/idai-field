@@ -6,6 +6,7 @@ import localeDe from '@angular/common/locales/de';
 import {FormsModule} from '@angular/forms';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {Document} from 'idai-components-2';
 import {routing} from './app.routing';
 import {AppComponent} from './app.component';
 import {ResourcesModule} from './resources/resources.module';
@@ -65,6 +66,8 @@ import {IdaiMessagesModule} from './messages/idai-messages.module';
 import {MD} from './messages/md';
 import {Messages} from './messages/messages';
 import {Query} from '../core/datastore/model/query';
+import {DocumentCache} from '../core/datastore/cached/document-cache';
+import {FieldCategoryConverter} from '../core/datastore/field/field-category-converter';
 
 const remote = typeof window !== 'undefined' ? window.require('electron').remote : require('electron').remote;
 
@@ -121,8 +124,8 @@ registerLocaleData(localeDe, 'de');
         {
             provide: APP_INITIALIZER,
             multi: true,
-            deps: [SettingsService, PouchdbManager, PouchdbServer],
-            useFactory: (settingsService: SettingsService, pouchdbManager: PouchdbManager, pouchdbServer: PouchdbServer) => () =>
+            deps: [SettingsService, PouchdbManager, PouchdbServer, DocumentCache],
+            useFactory: (settingsService: SettingsService, pouchdbManager: PouchdbManager, pouchdbServer: PouchdbServer, documentCache: DocumentCache<Document>) => () =>
                 pouchdbServer.setupServer()
                     .then(() => (new SettingsSerializer).load())
                     .then(settings =>
@@ -138,7 +141,9 @@ registerLocaleData(localeDe, 'de');
                         return createdIndexFacade;
                      }).then(facade => {
                          indexFacade = facade;
-                         return pouchdbManager.reindex(indexFacade);
+                         return pouchdbManager.reindex(
+                             indexFacade, documentCache, new FieldCategoryConverter(projectConfiguration)
+                         );
                     })
         },
         SettingsService,

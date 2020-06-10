@@ -1,11 +1,13 @@
 import {Injectable} from '@angular/core';
 import {Observable, Observer} from 'rxjs';
+import {Document} from 'idai-components-2';
 import {IndexFacade} from '../index/index-facade';
-import {Migrator} from '../field/migrator';
 import {Name} from '../../constants';
 import {PouchdbProxy} from './pouchdb-proxy';
 import {SampleDataLoader} from './sample-data-loader';
 import {SyncProcess, SyncStatus} from '../../sync/sync-process';
+import {DocumentCache} from '../cached/document-cache';
+import {FieldCategoryConverter} from '../field/field-category-converter';
 
 
 let PouchDB;
@@ -158,10 +160,15 @@ export class PouchdbManager {
     }
 
 
-    public async reindex(indexFacade: IndexFacade) {
+    public async reindex(indexFacade: IndexFacade, documentCache: DocumentCache<Document>,
+                         converter: FieldCategoryConverter) {
 
         await indexFacade.clear();
-        await this.fetchAll((docs: Array<any>) => indexFacade.putMultiple(docs));
+        await this.fetchAll((docs: Array<any>) => {
+            docs = docs.map(doc => converter.convert(doc));
+            docs.forEach(doc => documentCache.set(doc));
+            indexFacade.putMultiple(docs);
+        });
     }
 
 
@@ -177,7 +184,6 @@ export class PouchdbManager {
                     callback((resultDocs.rows as Array<any>)
                         .filter(row => !PouchdbManager.isDesignDoc(row))
                         .map(row => row.doc)
-                        .map(Migrator.migrate)
                     )
             );
     }

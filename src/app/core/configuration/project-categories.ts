@@ -1,4 +1,4 @@
-import {filter, flow, includedIn, is, map, Map, remove, to} from 'tsfun';
+import {filter, flow, includedIn, is, map, remove, to} from 'tsfun';
 import {Category} from './model/category';
 import {Named, onName, toName} from '../util/named';
 import {flattenTree, Treelist} from '../util/treelist';
@@ -109,26 +109,6 @@ export /* package-private */ module ProjectCategories {
     export function getTypeCategoryNames(): Array<Name> {
 
         return TYPE_CATALOG_AND_TYPE;
-    }
-
-
-    /**
-     * @deprecated
-     */
-    export function getCategoryAndSubcategories(supercategory: Name, categoriesMap: Map<Category>): Map<Category> {
-
-        if (!categoriesMap[supercategory]) return {};
-
-        const subcategories: Map<Category> = {};
-        subcategories[supercategory] = categoriesMap[supercategory];
-
-        if (categoriesMap[supercategory].children) {
-            for (let i = categoriesMap[supercategory].children.length - 1; i >= 0; i--) {
-                subcategories[categoriesMap[supercategory].children[i].name]
-                    = categoriesMap[supercategory].children[i];
-            }
-        }
-        return subcategories;
     }
 
 

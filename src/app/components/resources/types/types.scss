@@ -51,6 +51,10 @@ types {
           color: black;
         }
 
+        &:active {
+          box-shadow: inset 1px 1px 2px 1px rgba(0, 0, 0, 0.2) !important;
+        }
+
         &.first-grid-section-label {
           border-top: none;
         }

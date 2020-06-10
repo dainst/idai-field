@@ -69,8 +69,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
             attributionControl: false,
             preferCanvas: true,
             minZoom: -20,
-            maxZoom: 30,
-            maxBoundsViscosity: 0.7
+            maxZoom: 30
         };
 
         const map: L.Map = L.map('map-container', mapOptions);

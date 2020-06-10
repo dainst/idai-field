@@ -35,6 +35,7 @@ your project data regularly.
 ## Resources
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 The entities stored in the database, such as "trench", "images", "finds", "types", "stratigraphical units" etc. are called 
 "resources". The resource management facilities are at the core of iDAI.field. Resources can be realated to each 
 other, in that way the information entered into iDAI.field becomes structured. For example: images can be linked to finds and finds can be 
@@ -59,12 +60,19 @@ and places are managed. Use the green plus button at the bottom of the resources
 =======
 The resource management facilities are at the core of iDAI.field.
 
+=======
+The resource management facilities are at the core of iDAI.field.
+
+>>>>>>> parent of 17455b04f... Update manual.en.md
 ### Operations
 
 After creating a project or opening an existing one, you begin in the tab **Overview** (recognizable by the
 home symbol) where all of the project's operations and places are managed.
 
 Use the green plus button at the bottom of the resources list to create a new operation.
+<<<<<<< HEAD
+>>>>>>> parent of 17455b04f... Update manual.en.md
+=======
 >>>>>>> parent of 17455b04f... Update manual.en.md
 
 <p align="center"><img src="images/en/resources/create_operation.png" alt="Create operation resource"/></p>
@@ -79,6 +87,7 @@ core section has to be filled in.
 
 <p align="center"><img src="images/en/resources/save_operation.png" alt="Save operation resource"/></p>
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 The process of creating resources works in this way no matter which category of resource is being created. 
 Always the **identifier** is the very least information which needs to be entered. It is not possible to
@@ -163,6 +172,10 @@ Use the button "Switch to operation" (Symbol: Arrowup right) in order to enter t
 The new operation is now displayed in the resources list. Use the button "Switch to operation" (Symbol: Arrow
 up right) in order to open a new tab for the operation.
 >>>>>>> parent of 17455b04f... Update manual.en.md
+=======
+The new operation is now displayed in the resources list. Use the button "Switch to operation" (Symbol: Arrow
+up right) in order to open a new tab for the operation.
+>>>>>>> parent of 17455b04f... Update manual.en.md
 
 <p align="center"><img src="images/en/resources/goto_operation.png" alt="Open operation resource"/></p>
 
@@ -172,9 +185,12 @@ operation tab via the plus button (e. g. stratigraphical units within a trench o
 <p align="center"><img src="images/en/resources/create_more.png" alt="Create resource"/></p>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 ### 
 
 
+=======
+>>>>>>> parent of 17455b04f... Update manual.en.md
 =======
 >>>>>>> parent of 17455b04f... Update manual.en.md
 ### Hierarchical ordering
@@ -197,6 +213,7 @@ switch to another level by clicking one of the buttons of the navigation path.
 ### Management
 
 Right clicking a resource in the list opens a context menu providing the following options:
+<<<<<<< HEAD
 
 * *Edit*: Opens the editor (also available by doubleclicking the resource entry in the list)
 * *Move*: Allows removing the resource from its current context and assigning it to another parent resource
@@ -204,6 +221,15 @@ Right clicking a resource in the list opens a context menu providing the followi
 
 Furthermore, the context menu contains options for creating and editing geometries.
 
+=======
+
+* *Edit*: Opens the editor (also available by doubleclicking the resource entry in the list)
+* *Move*: Allows removing the resource from its current context and assigning it to another parent resource
+* *Delete*: Removes the resource after a security check
+
+Furthermore, the context menu contains options for creating and editing geometries.
+
+>>>>>>> parent of 17455b04f... Update manual.en.md
 <p align="center"><img src="images/en/resources/context_menu.png" alt="Kontextmenü"/></p>
 
 

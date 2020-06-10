@@ -90,12 +90,14 @@ describe('resources/types --', () => {
         browser.wait(EC.stalenessOf(ResourcesTypeGridPage.getLinkedDocumentsGrid()), delays.ECWaitTime);
 
         linkWithFind();
-        browser.wait(EC.presenceOf(ResourcesTypeGridPage.getLinkedDocumentGridElement('testf1')),
+
+        ResourcesTypeGridPage.clickToggleFindsSectionButton();
+        browser.wait(EC.presenceOf(ResourcesTypeGridPage.getGridElement('testf1')),
             delays.ECWaitTime);
 
         ResourcesPage.clickNavigationButton('TC1');
         browser.sleep(delays.shortRest);
-        browser.wait(EC.presenceOf(ResourcesTypeGridPage.getLinkedDocumentGridElement('testf1')),
+        browser.wait(EC.presenceOf(ResourcesTypeGridPage.getGridElement('testf1')),
             delays.ECWaitTime);
 
         ResourcesTypeGridPage.getTypeBadgeText('testf1').then(text => {
@@ -111,7 +113,7 @@ describe('resources/types --', () => {
         linkWithFind();
 
         ResourcesPage.clickSwitchHierarchyMode();
-        ResourcesTypeGridPage.getTypeGridElements().then(elements => {
+        ResourcesTypeGridPage.getGridElements().then(elements => {
             expect(elements.length).toBe(2);
         });
 
@@ -135,7 +137,7 @@ describe('resources/types --', () => {
         browser.wait(EC.stalenessOf(ResourcesPage.getMoveModal()), delays.ECWaitTime);
 
         browser.sleep(delays.shortRest);
-        browser.wait(EC.presenceOf(ResourcesTypeGridPage.getTypeGridElement('T1')),
+        browser.wait(EC.presenceOf(ResourcesTypeGridPage.getGridElement('T1')),
             delays.ECWaitTime);
 
         ResourcesTypeGridPage.getActiveNavigationButtonText().then(text => {
@@ -152,14 +154,18 @@ describe('resources/types --', () => {
 
         ResourcesPage.clickNavigationButton('TC1');
 
+        ResourcesTypeGridPage.clickToggleFindsSectionButton();
+        browser.wait(EC.presenceOf(ResourcesTypeGridPage.getGridElement('testf1')),
+            delays.ECWaitTime);
+
         ResourcesTypeGridPage.clickOpenContextMenu('T1');
         ResourcesPage.clickContextMenuDeleteButton();
         ResourcesPage.typeInIdentifierInConfirmDeletionInputField('T1');
         ResourcesPage.clickConfirmDeleteInModal();
 
-        browser.wait(EC.stalenessOf(ResourcesTypeGridPage.getTypeGridElement('T1')),
+        browser.wait(EC.stalenessOf(ResourcesTypeGridPage.getGridElement('T1')),
             delays.ECWaitTime);
-        browser.wait(EC.stalenessOf(ResourcesTypeGridPage.getLinkedDocumentGridElement('testf1')),
+        browser.wait(EC.stalenessOf(ResourcesTypeGridPage.getGridElement('testf1')),
             delays.ECWaitTime);
     });
 
@@ -186,7 +192,8 @@ describe('resources/types --', () => {
         });
 
         MenuPage.navigateToTypes();
-        browser.wait(EC.presenceOf(ResourcesTypeGridPage.getLinkedDocumentGridElement('testf1')),
+        ResourcesTypeGridPage.clickToggleFindsSectionButton();
+        browser.wait(EC.presenceOf(ResourcesTypeGridPage.getGridElement('testf1')),
             delays.ECWaitTime);
     });
 

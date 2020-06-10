@@ -12,7 +12,7 @@ export class ResourcesTypeGridPage {
 
     public static clickGridElement(identifier: string) {
 
-        return common.click(this.getTypeGridElement(identifier));
+        return common.click(this.getGridElement(identifier));
     }
 
 
@@ -30,7 +30,13 @@ export class ResourcesTypeGridPage {
 
     public static clickOpenContextMenu(identifier: string) {
 
-        common.rightClick(this.getTypeGridElement(identifier));
+        common.rightClick(this.getGridElement(identifier));
+    }
+
+
+    public static clickToggleFindsSectionButton() {
+
+        common.click(element(by.id('toggle-finds-section-button')));
     }
 
 
@@ -42,21 +48,15 @@ export class ResourcesTypeGridPage {
     }
 
 
-    public static getTypeGridElements() {
+    public static getGridElements() {
 
         return element.all(by.css('.type-grid-element'));
     }
 
 
-    public static getTypeGridElement(identifier: string) {
+    public static getGridElement(identifier: string) {
 
         return element(by.id('type-grid-element-' + identifier));
-    }
-
-
-    public static getLinkedDocumentGridElement(identifier: string) {
-
-        return element(by.id('type-grid-element-linked-document-' + identifier));
     }
 
 
@@ -64,7 +64,7 @@ export class ResourcesTypeGridPage {
 
     public static getTypeBadgeText(identifier: string) {
 
-        return element(by.css('#type-grid-element-linked-document-' + identifier + ' .badge'))
+        return element(by.css('#type-grid-element-' + identifier + ' .badge'))
             .getText();
     }
 

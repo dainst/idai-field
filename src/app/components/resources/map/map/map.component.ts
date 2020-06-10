@@ -67,6 +67,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
         const mapOptions: L.MapOptions = {
             crs: this.getCoordinateReferenceSystem(),
             attributionControl: false,
+            preferCanvas: true,
             minZoom: -20,
             maxZoom: 30,
             maxBoundsViscosity: 0.7
@@ -129,14 +130,17 @@ export class MapComponent implements AfterViewInit, OnChanges {
             case 'MultiLineString':
                 if (!this.polylines[document.resource.id]) return;
                 this.polylines[document.resource.id].forEach(polyline => {
-                    MapComponent.updateActiveClass(polyline, selected);
+                    polyline.setStyle({ opacity: selected ? 1 : 0.5 });
                 });
                 break;
             case 'Polygon':
             case 'MultiPolygon':
                 if (!this.polygons[document.resource.id]) return;
                 this.polygons[document.resource.id].forEach(polygon => {
-                    MapComponent.updateActiveClass(polygon, selected);
+                    polygon.setStyle({
+                        opacity: selected ? 1 : 0.5,
+                        fillOpacity: selected ? 0.5 : 0.2
+                    });
                 });
                 break;
         }
@@ -346,13 +350,17 @@ export class MapComponent implements AfterViewInit, OnChanges {
     }
 
 
-    private setPathOptions(path: L.Path, document: FieldDocument, className: string) {
+    private setPathOptions(path: L.Path, document: FieldDocument, type: 'polyline'|'polygon') {
 
-        if (this.selectedDocument && this.selectedDocument.resource.id == document.resource.id) {
-            className = className + ' active';
+        const style: L.PathOptions = {
+            color: this.categoryColors[document.resource.category],
+            weight: type === 'polyline' ? 2 : 1,
+            opacity: document === this.selectedDocument ? 1 : 0.5
+        };
+
+        if (type === 'polygon') {
+            style.fillOpacity = document === this.selectedDocument ? 0.5 : 0.2;
         }
-
-        const style = { color: this.categoryColors[document.resource.category], className: className };
 
         path.setStyle(style);
 
@@ -374,7 +382,10 @@ export class MapComponent implements AfterViewInit, OnChanges {
 
         path.setStyle({
             color: this.categoryColors[document.resource.category],
-            className: 'parent',
+            weight: 2,
+            dashArray: '5, 5, 1, 5',
+            opacity: 0.2,
+            fill: false,
             interactive: false
         });
 
@@ -520,17 +531,5 @@ export class MapComponent implements AfterViewInit, OnChanges {
         }
 
         return shortDescription;
-    }
-
-
-    private static updateActiveClass(geometry: L.Layer, selected: boolean) {
-
-        const active: boolean = geometry['_path'].classList.contains('active');
-
-        if (active && !selected) {
-            geometry['_path'].classList.remove('active');
-        } else if (!active && selected) {
-            geometry['_path'].classList.add('active');
-        }
     }
 }

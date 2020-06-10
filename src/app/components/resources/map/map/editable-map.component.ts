@@ -237,14 +237,10 @@ export class EditableMapComponent extends LayerMapComponent {
 
         if (this.drawMode !== 'None') this.finishDrawing();
 
-        let className = drawMode === 'Poly' ? 'polygon' : 'polyline';
-        className += ' active';
-
         const drawOptions = {
-            templineStyle: { className: 'templine' },
-            hintlineStyle: { className: 'hintline' },
+            templineStyle: { color: 'blue', weight: 1 },
+            hintlineStyle: { color: 'blue', weight: 1, dashArray: '5' },
             pathOptions: {
-                className: className,
                 color: this.categoryColors[this.selectedDocument.resource.category]
             },
             tooltips: false
@@ -292,16 +288,15 @@ export class EditableMapComponent extends LayerMapComponent {
         if (!this.selectedDocument) return;
 
         this.callForUnselected(this.polygons, (polygon: FieldPolygon) => {
-            EditableMapComponent.addClass(polygon, 'faded-out');
+            polygon.setStyle({ opacity: 0.25, fillOpacity: 0.1, interactive: false });
         });
 
         this.callForUnselected(this.polylines, (polyline: FieldPolyline) => {
-            EditableMapComponent.addClass(polyline, 'faded-out');
+            polyline.setStyle({ opacity: 0.25, interactive: false });
         });
 
         this.callForUnselected(this.markers, (marker: FieldMarker) => {
-            marker.setStyle({ fillOpacity: 0.5 });
-            EditableMapComponent.removeClass(marker, 'leaflet-interactive');
+            marker.setStyle({ fillOpacity: 0.5, interactive: false });
         });
     }
 
@@ -309,16 +304,15 @@ export class EditableMapComponent extends LayerMapComponent {
     private fadeInMapElements() {
 
         this.callForUnselected(this.polygons, (polygon: FieldPolygon) => {
-            EditableMapComponent.removeClass(polygon, 'faded-out');
+            polygon.setStyle({ opacity: 0.5, fillOpacity: 0.2, interactive: true });
         });
 
         this.callForUnselected(this.polylines, (polyline: FieldPolyline) => {
-            EditableMapComponent.removeClass(polyline, 'faded-out');
+            polyline.setStyle({ opacity: 0.5, interactive: true });
         });
 
         this.callForUnselected(this.markers, (marker: FieldMarker) => {
-            marker.setStyle({ fillOpacity: 1 });
-            EditableMapComponent.addClass(marker, 'leaflet-interactive');
+            marker.setStyle({ fillOpacity: 1, interactive: true });
         });
     }
 
@@ -681,23 +675,5 @@ export class EditableMapComponent extends LayerMapComponent {
 
         return document !== undefined && document.resource.geometry !== undefined
             && document.resource.geometry.coordinates !== undefined;
-    }
-
-
-    private static addClass(element: any, classToAdd: string) {
-
-        this.getClassList(element).add(classToAdd);
-    }
-
-
-    private static removeClass(element: any, classToRemove: string) {
-
-        this.getClassList(element).remove(classToRemove);
-    }
-
-
-    private static getClassList(element: any): DOMTokenList {
-
-        return element._path ? element._path.classList : element._icon.classList;
     }
 }

@@ -10,69 +10,6 @@
   height: calc(100vh - 100px);
   user-select: none;
 
-  .vector-marker {
-    filter: saturate(50%);
-
-    path {
-      stroke: white;
-    }
-
-    i.active {
-      color: black;
-    }
-  }
-
-  .leaflet-overlay-pane path {
-
-    &.polygon {
-      stroke-width: 1px;
-      stroke-opacity: 0.5;
-
-      &.active {
-        fill-opacity: 0.5;
-        stroke-opacity: 1.0;
-      }
-    }
-
-    &.polyline {
-      stroke-width: 2px;
-      stroke-opacity: 0.5;
-
-      &.active {
-        stroke-opacity: 1.0;
-      }
-    }
-
-    &.parent {
-      stroke-width: 2px;
-      stroke-dasharray: 5, 5, 1, 5;
-      stroke-opacity: 0.2;
-      fill: none;
-    }
-
-    &.templine {
-      stroke: blue;
-      stroke-width: 1px;
-    }
-
-    &.hintline {
-      stroke: blue;
-      stroke-width: 1px;
-      stroke-dasharray: 5;
-    }
-
-    &.polygon.faded-out {
-      fill-opacity: 0.1;
-      stroke-opacity: 0.25;
-      cursor: inherit;
-    }
-
-    &.polyline.faded-out {
-      stroke-opacity: 0.25;
-      cursor: inherit;
-    }
-  }
-
   .leaflet-control-zoom {
     z-index: 1008;
     border: 1px solid rgba(0, 0, 0, 0.35) !important;

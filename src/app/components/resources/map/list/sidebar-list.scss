@@ -34,7 +34,13 @@ sidebar-list {
       padding: 10px;
       font-style: italic;
       user-select: none;
-      cursor: default;
+      margin-bottom: 41px;
+      text-align: center;
+      background-color: $sidebar-bg-color;
+
+      &:hover {
+        background-color: darken($list-item-hover-color, 5%);
+      }
     }
   }
 

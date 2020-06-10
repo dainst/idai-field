@@ -26,6 +26,14 @@
             </list-button-group>
 
         </li>
+        <li *ngIf="resourcesComponent.isDocumentLimitExceeded()">
+            <div id="document-limit-info" (click)="resourcesComponent.removeLimit()"
+                 ngbTooltip="Die Darstellung von sehr großen Suchergebnissen kann je nach Gerät und Anzahl der Treffer sehr lange dauern. Daher wurde die aktuelle Darstellung zunächst auf {{viewFacade.getDocuments().length}} Ressourcen begrenzt. Klicken Sie hier, um das gesamte Ergebnis zu laden."
+                 i18n-ngbTooltip="@@resources.searchResultsInfo.documentLimitRemoveTooltip">
+                <span class="mdi mdi-24px mdi-reload-alert"></span>
+                <span i18n="@@resources.searchResultsInfo.documentLimitRemove"></span>
+            </div>
+        </li>
     </ul>
 </cdk-virtual-scroll-viewport>
 

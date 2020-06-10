@@ -47,7 +47,7 @@
             "styles": [
               "src/app/components/app.scss",
               "node_modules/leaflet/dist/leaflet.css",
-              "node_modules/leaflet.pm/dist/leaflet.pm.css"
+              "node_modules/@geoman-io/leaflet-geoman-free/dist/leaflet-geoman.css"
             ],
             "stylePreprocessorOptions": {
               "includePaths": [

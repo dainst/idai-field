@@ -1,12 +1,13 @@
 import {Component, SimpleChanges, Input, Output, EventEmitter, HostListener, NgZone,
     ChangeDetectorRef} from '@angular/core';
+import L from 'leaflet';
+import '@geoman-io/leaflet-geoman-free';
 import {FieldDocument, FieldGeometry} from 'idai-components-2';
 import {LayerMapComponent} from './layer-map.component';
 import {GeometryHelper} from './geometry-helper';
 import {FieldPolygon} from './field-polygon';
 import {FieldPolyline} from './field-polyline';
 import {FieldMarker} from './field-marker';
-import L from 'leaflet';
 import {ProjectConfiguration} from '../../../../core/configuration/project-configuration';
 import {LayerManager} from './layer-manager';
 import {LayerImageProvider} from './layer-image-provider';
@@ -255,14 +256,14 @@ export class EditableMapComponent extends LayerMapComponent {
     private resetEditing() {
 
         if (this.editablePolygons) {
-            this.editablePolygons.forEach(polygon => {
+            this.editablePolygons.forEach((polygon: any) => {
                 polygon.pm.disable();
                 this.map.removeLayer(polygon);
             });
         }
 
         if (this.editablePolylines) {
-            this.editablePolylines.forEach(polyline => {
+            this.editablePolylines.forEach((polyline: any) => {
                 polyline.pm.disable();
                 this.map.removeLayer(polyline);
             });
@@ -479,10 +480,10 @@ export class EditableMapComponent extends LayerMapComponent {
     }
 
 
-    private setSelectedPolygon(polygon: L.Polygon) {
+    private setSelectedPolygon(polygon: any) {
 
         if (this.selectedPolygon) {
-            this.selectedPolygon.pm.disable();
+            (this.selectedPolygon as any).pm.disable();
         }
 
         polygon.pm.enable({ draggable: true, snappable: true, snapDistance: 30 });
@@ -490,7 +491,7 @@ export class EditableMapComponent extends LayerMapComponent {
     }
 
 
-    private removePolygon(polygon: L.Polygon) {
+    private removePolygon(polygon: any) {
 
         polygon.pm.disable();
         this.map.removeLayer(polygon);
@@ -550,10 +551,10 @@ export class EditableMapComponent extends LayerMapComponent {
     }
 
 
-    private setSelectedPolyline(polyline: L.Polyline) {
+    private setSelectedPolyline(polyline: any) {
 
         if (this.selectedPolyline) {
-            this.selectedPolyline.pm.disable();
+            (this.selectedPolyline as any).pm.disable();
         }
 
         polyline.pm.enable({ draggable: true, snappable: true, snapDistance: 30 });
@@ -566,7 +567,7 @@ export class EditableMapComponent extends LayerMapComponent {
     }
 
 
-    private removePolyline(polyline: L.Polyline) {
+    private removePolyline(polyline: any) {
 
         polyline.pm.disable();
         this.map.removeLayer(polyline);

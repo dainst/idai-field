@@ -27,7 +27,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
     @Output() onSelectDocument: EventEmitter<FieldDocument|undefined>
         = new EventEmitter<FieldDocument|undefined>();
 
-    protected map: L.Map;
+    protected map: any;
     protected polygons: { [resourceId: string]: Array<FieldPolygon> } = {};
     protected polylines: { [resourceId: string]: Array<FieldPolyline> } = {};
     protected markers: { [resourceId: string]: Array<FieldMarker> } = {};

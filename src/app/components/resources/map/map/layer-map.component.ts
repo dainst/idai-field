@@ -8,7 +8,6 @@ import {MapComponent} from './map.component';
 import {ImageContainer} from '../../../../core/images/imagestore/image-container';
 import {Messages} from '../../../messages/messages';
 import L from 'leaflet';
-import 'leaflet.pm'
 
 const fs = typeof window !== 'undefined'
   ? window.require('fs')

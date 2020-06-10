@@ -205,8 +205,11 @@ export class TypesComponent extends BaseList implements OnChanges {
 
         if (!this.visibleSections.includes(section)) {
             this.visibleSections.push(section);
-        } else if (this.visibleSections.length > 1) {
+        } else {
             this.visibleSections.splice(this.visibleSections.indexOf(section), 1);
+            if (this.visibleSections.length < 1) {
+                (section === 'types') ? this.toggleSection('finds') : this.toggleSection('types');
+            }
         }
     }
 

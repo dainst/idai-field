@@ -22,7 +22,7 @@ const RECORDED_IN_CONTAIN = 'isRecordedIn:contain';
 const UNKNOWN = 'UNKNOWN';
 
 
-export const DOCUMENTS_LIMIT: number = 5000;
+export const DOCUMENTS_LIMIT: number = 20000;
 
 
 /**

@@ -75,6 +75,7 @@ export class ResourcesSearchConstraintsComponent extends SearchConstraintsCompon
 
     protected async setCustomConstraints(constraints: { [name: string]: string }): Promise<void> {
 
+        this.viewFacade.setLimitSearchResults(true);
         return this.viewFacade.setCustomConstraints(constraints);
     }
 }

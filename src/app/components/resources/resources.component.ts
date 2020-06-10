@@ -82,13 +82,9 @@ export class ResourcesComponent implements OnDestroy {
 
     public isCurrentMode = (mode: string) => (this.viewFacade.getMode() === mode);
 
-    public setQueryString = (q: string) => this.viewFacade.setSearchString(q);
-
     public getQueryString = () => this.viewFacade.getSearchString();
 
     public getCategoryFilters = () => this.viewFacade.getFilterCategories();
-
-    public setCategoryFilters = (categories: string[]|undefined) => this.viewFacade.setFilterCategories(categories ? categories : []);
 
     public isInExtendedSearchMode = () => this.viewFacade.isInExtendedSearchMode();
 
@@ -113,6 +109,20 @@ export class ResourcesComponent implements OnDestroy {
             this.clickEventObservers.push(observer);
         });
     }
+
+
+    public async setQueryString(q: string) {
+
+        this.viewFacade.setLimitSearchResults(true);
+        await this.viewFacade.setSearchString(q);
+    };
+
+
+    public async setCategoryFilters(categories: string[]|undefined) {
+
+        this.viewFacade.setLimitSearchResults(true);
+        await this.viewFacade.setFilterCategories(categories ? categories : []);
+    };
 
 
     private updateFilterOptions() {

@@ -219,10 +219,16 @@ export abstract class SearchConstraintsComponent implements OnChanges {
 
         const customConstraints: { [name: string]: string } = clone(this.getCustomConstraints());
 
-        (await asyncFilter(Object.keys(customConstraints), this.isInvalidConstraint.bind(this)))
-            .forEach((constraintName: string) => delete customConstraints[constraintName]);
+        const invalidConstraintsNames: string[] = (await asyncFilter(
+            Object.keys(customConstraints), this.isInvalidConstraint.bind(this))
+        );
 
-        await this.setCustomConstraints(customConstraints);
+        if (invalidConstraintsNames.length > 0) {
+            invalidConstraintsNames.forEach((constraintName: string) => {
+                delete customConstraints[constraintName];
+            });
+            await this.setCustomConstraints(customConstraints);
+        }
     }
 
 

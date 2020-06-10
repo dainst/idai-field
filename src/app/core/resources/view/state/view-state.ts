@@ -4,9 +4,6 @@ import {ViewContext} from './view-context';
 import {ResourcesViewMode} from '../view-facade';
 
 
-export const DEFAULT_LIMIT: number = 1000;
-
-
 /**
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
@@ -22,9 +19,7 @@ export interface ViewState {
     // config.json files.
     bypassHierarchy: boolean;
 
-    // Used in extended search mode
-    limit: number;
-
+    limitSearchResults: boolean;
     expandAllGroups: boolean;
     searchContext: ViewContext;
     customConstraints: { [name: string]: string }
@@ -41,7 +36,7 @@ export module ViewState {
             expandAllGroups: false,
             navigationPath: NavigationPath.empty(),
             mode: mode,
-            limit: DEFAULT_LIMIT,
+            limitSearchResults: true,
             layerIds: [],
             searchContext: ViewContext.empty(),
             customConstraints: {}
@@ -57,7 +52,7 @@ export module ViewState {
 
         if (!viewState.mode) viewState.mode = 'map';
         if (viewState.expandAllGroups === undefined) viewState.expandAllGroups = false;
-        if (viewState.limit === undefined) viewState.limit = DEFAULT_LIMIT;
+        if (viewState.limitSearchResults === undefined) viewState.limitSearchResults = true;
         viewState.bypassHierarchy = false;
         viewState.searchContext = ViewContext.empty();
         viewState.navigationPath = NavigationPath.empty();

@@ -107,6 +107,14 @@ $deactivated-button-color: lightgray;
   margin-top: -2px;
 }
 
+#remove-document-limit {
+  position: absolute;
+  top: 3px;
+  left: 299px;
+  height: 39px;
+  white-space: nowrap;
+}
+
 .resources-listing {
   .resources-listing-item {
     position: relative;

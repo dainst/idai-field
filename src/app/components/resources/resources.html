@@ -11,17 +11,18 @@
                   i18n="@@resources.searchResultsInfo.resourcesFound.multiple">
                 {{viewFacade.getTotalDocumentCount()}} Ressourcen gefunden
             </span>
-            <div *ngIf="isDocumentLimitExceeded()" id="document-limit-info"
-                 ngbTooltip="Schränken Sie die Suche weiter ein oder verlassen Sie den erweiterten
-                    Suchmodus, um auf die übrigen Ressourcen zuzugreifen."
-                 i18n-ngbTooltip="@@resources.searchResultsInfo.documentLimitExceeded.tooltip"
-                 placement="bottom"
-                 container="body">
+            <div *ngIf="isDocumentLimitExceeded()" id="document-limit-info">
                 <span i18n="@@resources.searchResultsInfo.documentLimitExceeded">
-                    {{viewFacade.getDocuments().length}} angezeigt
+                    Limitiert auf {{viewFacade.getDocuments().length}} Ressourcen
                 </span>
                 <span class="mdi mdi-information-outline"></span>
             </div>
+        </div>
+        <div *ngIf="isDocumentLimitExceeded()" id="remove-document-limit"
+             class="btn btn-primary" (click)="removeLimit()">
+                <span i18n="@@resources.searchResultsInfo.removeDocumentLimit">
+                    Alle Ressourcen anzeigen
+                </span>
         </div>
     </div>
 

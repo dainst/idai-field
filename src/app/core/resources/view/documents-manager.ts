@@ -22,6 +22,9 @@ const RECORDED_IN_CONTAIN = 'isRecordedIn:contain';
 const UNKNOWN = 'UNKNOWN';
 
 
+export const DOCUMENTS_LIMIT: number = 5000;
+
+
 /**
  * @author Thomas Kleinke
  * @author Sebastian Cuy
@@ -379,7 +382,9 @@ export class DocumentsManager {
             categories: (categoryFilters.length > 0)
                 ? categoryFilters
                 : allowedCategoryNames,
-            limit: extendedSearchMode ? ResourcesState.getLimit(state) : undefined,
+            limit: extendedSearchMode && ResourcesState.isLimitSearchResults(state)
+                ? DOCUMENTS_LIMIT
+                : undefined,
             id: queryId
         };
     }

@@ -1,7 +1,7 @@
 import {flow} from 'tsfun';
 import {lookup, map, forEach} from 'tsfun/associative';
 import {FieldDocument} from 'idai-components-2';
-import {DEFAULT_LIMIT, ViewState} from './view-state';
+import {ViewState} from './view-state';
 import {NavigationPath} from './navigation-path';
 import {ViewContext} from './view-context';
 import {ResourcesViewMode} from '../view-facade';
@@ -94,9 +94,9 @@ export module ResourcesState {
     }
 
 
-    export function getLimit(state: ResourcesState) {
+    export function isLimitSearchResults(state: ResourcesState): boolean {
 
-        return viewState(state).limit;
+        return viewState(state).limitSearchResults;
     }
 
 
@@ -159,9 +159,9 @@ export module ResourcesState {
     }
 
 
-    export function setLimit(state: ResourcesState, limit: number) {
+    export function setLimitSearchResults(state: ResourcesState, limitSearchResults: boolean) {
 
-        viewState(state).limit = limit;
+        viewState(state).limitSearchResults = limitSearchResults;
     }
 
 
@@ -180,7 +180,7 @@ export module ResourcesState {
                 mode: 'map',
                 bypassHierarchy: false,
                 expandAllGroups: false,
-                limit: DEFAULT_LIMIT,
+                limitSearchResults: true,
                 navigationPath: NavigationPath.empty(),
                 searchContext: ViewContext.empty(),
                 customConstraints: {}
@@ -191,7 +191,7 @@ export module ResourcesState {
                 mode: 'types',
                 bypassHierarchy: false,
                 expandAllGroups: false,
-                limit: DEFAULT_LIMIT,
+                limitSearchResults: true,
                 navigationPath: NavigationPath.empty(),
                 searchContext: ViewContext.empty(),
                 customConstraints: {}
@@ -203,7 +203,7 @@ export module ResourcesState {
                     mode: 'map',
                     bypassHierarchy: false,
                     expandAllGroups: false,
-                    limit: DEFAULT_LIMIT,
+                    limitSearchResults: true,
                     navigationPath: NavigationPath.empty(),
                     searchContext: ViewContext.empty(),
                     customConstraints: {}

@@ -171,6 +171,13 @@ export class ResourcesStateManager {
     }
 
 
+    public setLimitSearchResults(limitSearchResults: boolean) {
+
+        ResourcesState.setLimitSearchResults(this.resourcesState, limitSearchResults);
+        this.serialize();
+    }
+
+
     public setExtendedSearchMode(extendedSearchMode: boolean) {
 
         ResourcesState.setExtendedSearchMode(this.resourcesState, extendedSearchMode);

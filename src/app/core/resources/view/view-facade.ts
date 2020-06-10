@@ -80,6 +80,8 @@ export class ViewFacade {
 
     public setMode = (mode: ResourcesViewMode) => this.resourcesStateManager.setMode(mode);
 
+    public setLimitSearchResults = (limitSearchResults: boolean) => this.resourcesStateManager.setLimitSearchResults(limitSearchResults);
+
     public isNewDocumentFromRemote = (document: Document) => this.documentsManager.isNewDocumentFromRemote(document);
 
     public getSearchString = () => ResourcesState.getQueryString(this.resourcesStateManager.get());

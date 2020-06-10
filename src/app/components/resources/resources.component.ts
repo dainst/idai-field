@@ -308,6 +308,13 @@ export class ResourcesComponent implements OnDestroy {
     }
 
 
+    public async removeLimit() {
+
+        this.viewFacade.setLimitSearchResults(false);
+        await this.viewFacade.populateDocumentList();
+    }
+
+
     private async selectDocumentFromParams(id: string, menu: string, group: string|undefined) {
 
         if (this.viewFacade.getMode() === 'types') {

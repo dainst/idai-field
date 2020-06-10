@@ -26,24 +26,6 @@ export class ImportPage {
     };
 
 
-    public static getFormatOptions() {
-
-        return element(by.id('importFormatSelect')).all(by.css('select option'));
-    };
-
-
-    public static clickFormatOption (index) {
-
-        return this.getFormatOptions().get(index).click();
-    };
-
-
-    public static getFormatOptionValue(index) {
-
-        return this.getFormatOptions().get(index).getAttribute("value");
-    };
-
-
     public static getOperationOptions() {
 
         browser.wait(EC.presenceOf(element(by.id('operationSelect'))), delays.ECWaitTime);

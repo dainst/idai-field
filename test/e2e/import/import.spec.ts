@@ -30,10 +30,8 @@ describe('import --', () => {
 
         expect(ImportPage.getSourceOptionValue(1)).toEqual('http');
         ImportPage.clickSourceOption(1);
-        expect(ImportPage.getFormatOptionValue(0)).toEqual('native');
-        ImportPage.clickFormatOption(0);
-        ImportPage.clickOperationOption(operationOption);
         common.typeIn(ImportPage.getImportURLInput(), url);
+        ImportPage.clickOperationOption(operationOption);
         ImportPage.clickStartImportButton();
         browser.wait(EC.stalenessOf(ImportPage.getImportModal()), delays.ECWaitTime);
     };

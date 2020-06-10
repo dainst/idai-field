@@ -42,8 +42,6 @@ export class DocumentsManager {
     private currentQueryId: string;
     private populateInProgress: boolean = false;
 
-    private static documentLimit: number = 5000;
-
 
     constructor(
         private datastore: FieldReadDatastore,
@@ -381,7 +379,7 @@ export class DocumentsManager {
             categories: (categoryFilters.length > 0)
                 ? categoryFilters
                 : allowedCategoryNames,
-            limit: extendedSearchMode ? DocumentsManager.documentLimit : undefined,
+            limit: extendedSearchMode ? ResourcesState.getLimit(state) : undefined,
             id: queryId
         };
     }

@@ -4,6 +4,9 @@ import {ViewContext} from './view-context';
 import {ResourcesViewMode} from '../view-facade';
 
 
+export const DEFAULT_LIMIT: number = 1000;
+
+
 /**
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
@@ -18,6 +21,9 @@ export interface ViewState {
     // Extended search mode. The name bypassHierarchy is legacy and is kept to prevent issues with existing
     // config.json files.
     bypassHierarchy: boolean;
+
+    // Used in extended search mode
+    limit: number;
 
     expandAllGroups: boolean;
     searchContext: ViewContext;
@@ -35,6 +41,7 @@ export module ViewState {
             expandAllGroups: false,
             navigationPath: NavigationPath.empty(),
             mode: mode,
+            limit: DEFAULT_LIMIT,
             layerIds: [],
             searchContext: ViewContext.empty(),
             customConstraints: {}
@@ -50,6 +57,7 @@ export module ViewState {
 
         if (!viewState.mode) viewState.mode = 'map';
         if (viewState.expandAllGroups === undefined) viewState.expandAllGroups = false;
+        if (viewState.limit === undefined) viewState.limit = DEFAULT_LIMIT;
         viewState.bypassHierarchy = false;
         viewState.searchContext = ViewContext.empty();
         viewState.navigationPath = NavigationPath.empty();

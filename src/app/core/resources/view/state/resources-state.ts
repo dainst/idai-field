@@ -1,7 +1,7 @@
 import {flow} from 'tsfun';
 import {lookup, map, forEach} from 'tsfun/associative';
 import {FieldDocument} from 'idai-components-2';
-import {ViewState} from './view-state';
+import {DEFAULT_LIMIT, ViewState} from './view-state';
 import {NavigationPath} from './navigation-path';
 import {ViewContext} from './view-context';
 import {ResourcesViewMode} from '../view-facade';
@@ -94,6 +94,12 @@ export module ResourcesState {
     }
 
 
+    export function getLimit(state: ResourcesState) {
+
+        return viewState(state).limit;
+    }
+
+
     export function setActiveDocumentViewTab(state: ResourcesState, activeDocumentViewTab: string|undefined) {
 
         state.activeDocumentViewTab = activeDocumentViewTab;
@@ -153,6 +159,12 @@ export module ResourcesState {
     }
 
 
+    export function setLimit(state: ResourcesState, limit: number) {
+
+        viewState(state).limit = limit;
+    }
+
+
     export function updateNavigationPath(state: ResourcesState, navPath: NavigationPath) {
 
         viewState(state).navigationPath = navPath;
@@ -168,6 +180,7 @@ export module ResourcesState {
                 mode: 'map',
                 bypassHierarchy: false,
                 expandAllGroups: false,
+                limit: DEFAULT_LIMIT,
                 navigationPath: NavigationPath.empty(),
                 searchContext: ViewContext.empty(),
                 customConstraints: {}
@@ -178,6 +191,7 @@ export module ResourcesState {
                 mode: 'types',
                 bypassHierarchy: false,
                 expandAllGroups: false,
+                limit: DEFAULT_LIMIT,
                 navigationPath: NavigationPath.empty(),
                 searchContext: ViewContext.empty(),
                 customConstraints: {}
@@ -189,6 +203,7 @@ export module ResourcesState {
                     mode: 'map',
                     bypassHierarchy: false,
                     expandAllGroups: false,
+                    limit: DEFAULT_LIMIT,
                     navigationPath: NavigationPath.empty(),
                     searchContext: ViewContext.empty(),
                     customConstraints: {}

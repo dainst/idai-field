@@ -9,7 +9,7 @@ import {clone} from '../../util/object-util';
 import {mapToNamedArray} from '../../util/named';
 import {MDInternal} from '../../../components/messages/md-internal';
 import {mapTreelist, Treelist} from '../../util/treelist';
-import {CategoryTreelist, linkParentAndChildInstances} from '../category-treelist';
+import {linkParentAndChildInstances} from '../category-treelist';
 
 
 const TEMP_FIELDS = 'fields';
@@ -19,7 +19,7 @@ const TEMP_FIELDS = 'fields';
  * @author Daniel de Oliveira
  * @author Sebastian Cuy
  */
-export function makeCategoryTreelist(categories: any): CategoryTreelist {
+export function makeCategoryTreelist(categories: any): Treelist<Category> {
 
     const [parentDefs, childDefs] =
         separate(on(CategoryDefinition.PARENT, isNot(defined)), categories);

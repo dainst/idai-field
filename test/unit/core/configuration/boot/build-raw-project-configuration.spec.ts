@@ -9,8 +9,8 @@ import {ValuelistDefinition} from '../../../../../src/app/core/configuration/mod
 import {Groups} from '../../../../../src/app/core/configuration/model/group';
 import InputType = FieldDefinition.InputType;
 import {byName, Named, namedArrayToNamedMap, toName,} from '../../../../../src/app/core/util/named';
-import {categoryTreelistToArray} from '../../../../../src/app/core/configuration/category-treelist';
-import {accessTree} from '../../../../../src/app/core/util/treelist';
+import {accessTree, flattenTree} from '../../../../../src/app/core/util/treelist';
+import {Category} from '../../../../../src/app/core/configuration/model/category';
 
 
 describe('buildRawProjectConfiguration', () => {
@@ -20,7 +20,7 @@ describe('buildRawProjectConfiguration', () => {
     function buildRawArray(a: any, b: any, ...rest: any[]) {
 
         const raw = buildRawProjectConfiguration(a, b, ...rest);
-        return categoryTreelistToArray(categories(raw));
+        return flattenTree<Category>(categories(raw));
     }
 
     function buildRaw(a: any, b: any, ...rest: any[]) {

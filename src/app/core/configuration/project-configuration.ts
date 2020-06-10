@@ -6,13 +6,12 @@ import {FieldDefinition} from './model/field-definition';
 import {RelationDefinition} from './model/relation-definition';
 import {Named, namedArrayToNamedMap} from '../util/named';
 import {RelationsUtil} from './relations-utils';
-import {ITEMNAMEPATH} from '../util/treelist';
-import {CategoryTreelist, categoryTreelistToArray} from './category-treelist';
+import {flattenTree, ITEMNAMEPATH, Treelist} from '../util/treelist';
 import {Name} from '../constants';
 import {isTopLevelItemOrChildThereof} from '../util/named-treelist';
 
 
-export type RawProjectConfiguration = Pair<CategoryTreelist, Array<RelationDefinition>>;
+export type RawProjectConfiguration = Pair<Treelist<Category>, Array<RelationDefinition>>;
 
 
 /**
@@ -34,7 +33,7 @@ export class ProjectConfiguration {
     public static UNKNOWN_TYPE_ERROR = 'projectCategories.Errors.UnknownType';
 
     private readonly categoriesArray: Array<Category>;
-    private readonly categoryTreelist: CategoryTreelist;
+    private readonly categoryTreelist: Treelist<Category>;
     private readonly relations: Array<RelationDefinition>;
 
     // internal use only, we deliberately don't provide accessor for this any longer
@@ -45,9 +44,9 @@ export class ProjectConfiguration {
     constructor([categories, relations]: RawProjectConfiguration) {
 
         this.categoryTreelist = categories;
-        this.categoriesArray = categoryTreelistToArray(categories) || [];
+        this.categoriesArray = flattenTree<Category>(categories) || [];
         this.relations = relations || [];
-        this.categoriesMap = namedArrayToNamedMap(categoryTreelistToArray(categories));
+        this.categoriesMap = namedArrayToNamedMap(this.categoriesArray);
     }
 
 
@@ -72,7 +71,7 @@ export class ProjectConfiguration {
     }
 
 
-    public getCategoryTreelist(...selectedTopLevelCategories: Array<Name>): CategoryTreelist {
+    public getCategoryTreelist(...selectedTopLevelCategories: Array<Name>): Treelist<Category> {
 
         return selectedTopLevelCategories.length === 0
             ? this.categoryTreelist

@@ -15,14 +15,13 @@
                 <span i18n="@@resources.searchResultsInfo.documentLimitExceeded">
                     Limitiert auf {{viewFacade.getDocuments().length}} Ressourcen
                 </span>
-                <span class="mdi mdi-information-outline"></span>
             </div>
         </div>
         <div *ngIf="isDocumentLimitExceeded()" id="remove-document-limit"
-             class="btn btn-primary" (click)="removeLimit()">
-                <span i18n="@@resources.searchResultsInfo.removeDocumentLimit">
-                    Alle Ressourcen anzeigen
-                </span>
+             class="btn btn-warning" (click)="removeLimit()"
+             ngbTooltip="Die Darstellung von sehr großen Suchergebnissen kann je nach Gerät länger dauern. Daher wurde die aktuelle Darstellung zunächst auf {{viewFacade.getDocuments().length}} Ressourcen begrenzt. Klicken Sie hier, um das gesamte Ergebnis zu laden."
+             i18n-ngbTooltip="@@resources.searchResultsInfo.documentLimitRemove">
+            <span class="mdi mdi-reload"></span>
         </div>
     </div>
 

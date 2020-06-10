@@ -4,7 +4,9 @@ import {makeLookup, mapToArray} from './transformers';
 import {sortStructArray} from './sort-struct-array';
 
 
-// @author Daniel de Oliveira
+/**
+ * @author Daniel de Oliveira
+ */
 
 type Name = string;
 

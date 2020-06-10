@@ -146,12 +146,11 @@ types {
         }
 
         #plus-button-container {
-          width: 100%;
           height: 63px;
           padding-top: 10px;
           position: absolute;
           bottom: 0;
-          float: left;
+          left: 48%;
 
           #create-document-button .circular-button {
             left: calc(50% - 7px);

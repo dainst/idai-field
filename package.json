@@ -90,7 +90,7 @@
     "express-pouchdb": "4.2.0",
     "geojson-rewind": "0.3.1",
     "idai-components-2": "1.47.3",
-    "leaflet": "1.5.1",
+    "leaflet": "1.6.0",
     "leaflet-imageoverlay-rotated": "0.1.1",
     "moment": "2.22.2",
     "pouchdb-adapter-idb": "7.2.1",

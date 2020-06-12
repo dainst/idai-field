@@ -258,14 +258,17 @@ export class EditableMapComponent extends LayerMapComponent {
 
         if (this.drawMode !== 'None') this.finishDrawing();
 
-        const drawOptions = {
+        const drawOptions: any = {
             templineStyle: { color: 'blue', weight: 1 },
             hintlineStyle: { color: 'blue', weight: 1, dashArray: '5' },
             pathOptions: {
-                color: this.categoryColors[this.selectedDocument.resource.category]
+                color: this.categoryColors[this.selectedDocument.resource.category],
+                weight: drawMode === 'Line' ? 2 : 1
             },
             tooltips: false
         };
+
+        if (drawMode === 'Poly') drawOptions.pathOptions.fillOpacity = 0.5;
 
         this.map.pm.enableDraw(drawMode, drawOptions);
         this.drawMode = drawMode;

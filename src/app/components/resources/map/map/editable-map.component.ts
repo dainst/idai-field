@@ -67,6 +67,8 @@ export class EditableMapComponent extends LayerMapComponent {
 
     public getLocale = () => remote.getGlobal('config').locale;
 
+    public isInDragMode = () => this.map.pm.globalDragModeEnabled();
+
 
     @HostListener('document:keyup', ['$event'])
     public handleKeyEvent(event: KeyboardEvent) {

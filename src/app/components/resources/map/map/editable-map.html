@@ -29,6 +29,10 @@
          class="btn btn-success" (click)="addMarker()">
         <span class="mdi mdi-map-marker-plus mdi-24px"></span>
     </div>
+    <div *ngIf="getEditorType() === 'polygon' || getEditorType() === 'polyline'" id="map-editor-button-drag"
+         class="btn btn-primary" (click)="toggleDragMode()">
+        <span class="mdi mdi-cursor-move mdi-24px"></span>
+    </div>
     <div id="map-editor-button-ok"
          class="btn btn-primary" [class.near-to-right]="getLocale() === 'en'"
          (click)="finishEditing()">

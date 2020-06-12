@@ -92,29 +92,29 @@
   }
 
   #map-editor-button-delete,
-  #map-editor-button-delete-disabled {
-    left: 10px;
+  #map-editor-button-delete-disabled,
+  #map-editor-button-add-polygon,
+  #map-editor-button-add-polyline,
+  #map-editor-button-add-point,
+  #map-editor-button-drag {
     bottom: 8px;
     height: 38px;
     width: 38px;
     padding: 3px;
+  }
+
+  #map-editor-button-delete,
+  #map-editor-button-delete-disabled {
+    left: 10px;
   }
 
   #map-editor-button-add-polygon,
   #map-editor-button-add-polyline,
   #map-editor-button-add-point {
     left: 56px;
-    bottom: 8px;
-    height: 38px;
-    width: 38px;
-    padding: 3px;
   }
 
   #map-editor-button-drag {
     left: 102px;
-    bottom: 8px;
-    height: 38px;
-    width: 38px;
-    padding: 3px;
   }
 }

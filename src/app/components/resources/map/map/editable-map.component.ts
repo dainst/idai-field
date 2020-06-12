@@ -24,6 +24,9 @@ declare global { namespace L { namespace PM { namespace Draw { interface Line { 
      interface Draw { Line: L.PM.Draw.Line } } }
 }
 
+type DrawMode = 'None'|'Line'|'Poly';
+
+
 @Component({
     selector: 'editable-map',
     templateUrl: './editable-map.html'
@@ -49,7 +52,7 @@ export class EditableMapComponent extends LayerMapComponent {
     private editablePolygons: Array<L.Polygon>;
     public selectedPolygon: L.Polygon;
 
-    private drawMode: string = 'None';
+    private drawMode: DrawMode = 'None';
 
 
     constructor(projectConfiguration: ProjectConfiguration,
@@ -254,7 +257,7 @@ export class EditableMapComponent extends LayerMapComponent {
     }
 
 
-    private addPolyLayer(drawMode: string) {
+    private addPolyLayer(drawMode: DrawMode) {
 
         if (this.drawMode !== 'None') this.finishDrawing();
 

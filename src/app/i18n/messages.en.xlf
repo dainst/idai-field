@@ -1343,16 +1343,12 @@
           <context context-type="linenumber">15</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="resources.searchResultsInfo.removeDocumentLimit" datatype="html">
-        <source>
-                    Alle Ressourcen anzeigen
-                </source>
-        <target state="final">
-                    Show all resources
-                </target>
+      <trans-unit id="resources.searchResultsInfo.documentLimitRemove" datatype="html">
+        <source>Die Darstellung von sehr großen Suchergebnissen kann je nach Gerät und Anzahl der Treffer sehr lange dauern. Daher wurde die aktuelle Darstellung zunächst auf <x id="INTERPOLATION" equiv-text="{{viewFacade.getDocuments().length}}"/> Ressourcen begrenzt. Klicken Sie hier, um das gesamte Ergebnis zu laden.</source>
+        <target state="final">The display of very large search results can take a long time depending on the device and number of hits. Therefore, the current display was initially limited to <x id="INTERPOLATION" equiv-text="{{viewFacade.getDocuments().length}}"/> resources. Click here to load the entire result.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/resources.html</context>
-          <context context-type="linenumber">23</context>
+          <context context-type="linenumber">22</context>
         </context-group>
       </trans-unit>
       <trans-unit id="buttons.delete" datatype="html">
@@ -1413,7 +1409,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/editable-map.html</context>
-          <context context-type="linenumber">38</context>
+          <context context-type="linenumber">57</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dating.html</context>
@@ -1837,7 +1833,7 @@
         <target state="final">Map view</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/resources.html</context>
-          <context context-type="linenumber">47</context>
+          <context context-type="linenumber">46</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.tooltips.mode.list" datatype="html">
@@ -1845,7 +1841,47 @@
         <target state="final">List view</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/resources.html</context>
-          <context context-type="linenumber">62</context>
+          <context context-type="linenumber">61</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.map.delete" datatype="html">
+        <source>Löschen</source>
+        <target state="final">Delete</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/map/map/editable-map.html</context>
+          <context context-type="linenumber">14</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.map.addPolygon" datatype="html">
+        <source>Polygon hinzufügen</source>
+        <target state="final">Add polygon</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/map/map/editable-map.html</context>
+          <context context-type="linenumber">25</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.map.addPolyline" datatype="html">
+        <source>Polyline hinzufügen</source>
+        <target state="final">Add polyline</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/map/map/editable-map.html</context>
+          <context context-type="linenumber">32</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.map.addPoint" datatype="html">
+        <source>Punkt hinzufügen</source>
+        <target state="final">Add point</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/map/map/editable-map.html</context>
+          <context context-type="linenumber">39</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.map.drag" datatype="html">
+        <source>Verschieben</source>
+        <target state="final">Drag</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/map/map/editable-map.html</context>
+          <context context-type="linenumber">46</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.plusButton.selectCategory" datatype="html">
@@ -1931,7 +1967,7 @@
         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/types/types.html</context>
-          <context context-type="linenumber">49</context>
+          <context context-type="linenumber">50</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.list.headers.category" datatype="html">
@@ -2024,6 +2060,14 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/list/row.html</context>
           <context context-type="linenumber">101</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.searchResultsInfo.documentLimitRemoveTooltip" datatype="html">
+        <source>Die Darstellung von sehr großen Suchergebnissen kann je nach Gerät und Anzahl der Treffer sehr lange dauern. Daher wurde die aktuelle Darstellung zunächst auf <x id="INTERPOLATION" equiv-text="{{viewFacade.getDocuments().length}}"/> Ressourcen begrenzt. Klicken Sie hier, um das gesamte Ergebnis zu laden.</source>
+        <target state="new">Die Darstellung von sehr großen Suchergebnissen kann je nach Gerät und Anzahl der Treffer sehr lange dauern. Daher wurde die aktuelle Darstellung zunächst auf <x id="INTERPOLATION" equiv-text="{{viewFacade.getDocuments().length}}"/> Ressourcen begrenzt. Klicken Sie hier, um das gesamte Ergebnis zu laden.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/map/list/sidebar-list.html</context>
+          <context context-type="linenumber">31</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.showResourceData.tooltip" datatype="html">
@@ -2869,7 +2913,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/editable-map.html</context>
-          <context context-type="linenumber">35</context>
+          <context context-type="linenumber">54</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dating.html</context>

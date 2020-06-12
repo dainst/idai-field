@@ -494,7 +494,7 @@ export class EditableMapComponent extends LayerMapComponent {
 
         const mapComponent = this;
         polygon.on('click', function() {
-            if (!this.map.pm.globalDragModeEnabled()) mapComponent.setSelectedPolygon(this);
+            if (!mapComponent.map.pm.globalDragModeEnabled()) mapComponent.setSelectedPolygon(this);
         });
     }
 
@@ -565,7 +565,7 @@ export class EditableMapComponent extends LayerMapComponent {
 
         const mapComponent = this;
         polyline.on('click', function() {
-            if (!this.map.pm.globalDragModeEnabled()) mapComponent.setSelectedPolyline(this);
+            if (!mapComponent.map.pm.globalDragModeEnabled()) mapComponent.setSelectedPolyline(this);
         });
     }
 

@@ -81,8 +81,8 @@ export module ConstraintIndex {
                         skipRemoval: boolean = false) {
 
         if (!skipRemoval) remove(index, doc);
-        for (let indexDefinition of Object.values(index.indexDefinitions)) {
-            putFor(index, indexDefinition, doc);
+        for (let key in index.indexDefinitions) {
+            putFor(index, index.indexDefinitions[key], doc);
         }
     }
 

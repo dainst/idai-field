@@ -46,7 +46,7 @@ export class ChangesStream {
 
         datastore.changesNotifications().subscribe(async document => {
 
-            if (document.resource.category === 'Project') {
+            if (isProjectDocument(document)) {
                 ObserverUtil.notify(this.projectDocumentObservers, this.categoryConverter.convert(document));
             }
 

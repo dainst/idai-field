@@ -9,6 +9,7 @@ import {clone} from '../../util/object-util';
 export interface IndexDefinition {
 
     path: string;
+    pathArray: string[];
     type: string;
     recursivelySearchable?: boolean;
 }
@@ -141,7 +142,7 @@ export module ConstraintIndex {
 
     function putFor(index: ConstraintIndex, definition: IndexDefinition, doc: Document) {
 
-        const elForPath = getOn(definition.path, undefined)(doc);
+        const elForPath = getOn(definition.pathArray, undefined)(doc);
 
         switch(definition.type) {
             case 'exist':
@@ -346,6 +347,7 @@ export module ConstraintIndex {
                     name: field.name + '.value'+ ':' + indexType,
                     indexDefinition: {
                         path: 'resource.' + field.name + '.value',
+                        pathArray: ['resource', field.name, 'value'],
                         type: indexType
                     }
                 },
@@ -353,6 +355,7 @@ export module ConstraintIndex {
                     name: field.name + '.endValue' + ':' + indexType,
                     indexDefinition: {
                         path: 'resource.' + field.name + '.endValue',
+                        pathArray: ['resource', field.name, 'endValue'],
                         type: indexType
                     }
                 }];
@@ -362,6 +365,7 @@ export module ConstraintIndex {
             name: field.name + ':' + indexType,
             indexDefinition: {
                 path: 'resource.' + field.name,
+                pathArray: ['resource', field.name],
                 type: indexType
             }
         }];

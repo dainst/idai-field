@@ -74,11 +74,11 @@ export class SettingsService {
     public isAutoUpdateActive = () => this.settings.isAutoUpdateActive;
 
 
-    public async bootProjectDb(settings: Settings, progress: InitializationProgress): Promise<void> {
+    public async bootProjectDb(settings: Settings, progress?: InitializationProgress): Promise<void> {
 
         await this.updateSettings(settings);
 
-        await progress.setPhase('settingUpDatabase');
+        if (progress) await progress.setPhase('settingUpDatabase');
 
         await this.pouchdbManager.loadProjectDb(
             this.getSelectedProject(),
@@ -92,9 +92,10 @@ export class SettingsService {
     }
 
 
-    public async loadConfiguration(configurationDirPath: string, progress: InitializationProgress): Promise<ProjectConfiguration> {
+    public async loadConfiguration(configurationDirPath: string,
+                                   progress?: InitializationProgress): Promise<ProjectConfiguration> {
 
-        await progress.setPhase('loadingConfiguration');
+        if (progress) await progress.setPhase('loadingConfiguration');
 
         let customProjectName = undefined;
         if (this.getSelectedProject().startsWith('meninx-project')) customProjectName = 'Meninx';

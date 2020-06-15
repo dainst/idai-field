@@ -17,7 +17,7 @@ export class FieldSampleDataLoader implements SampleDataLoader {
     constructor(private imageConverter: ImageConverter,
                 private imagestorePath: string,
                 private locale: string,
-                private progress: InitializationProgress) {}
+                private progress?: InitializationProgress) {}
 
 
     public go(db: any, project: string): Promise<any> {
@@ -28,7 +28,7 @@ export class FieldSampleDataLoader implements SampleDataLoader {
 
     private async loadSampleObjects(db: any): Promise<any> {
 
-        await this.progress.setPhase('loadingSampleObjects');
+        if (this.progress) await this.progress.setPhase('loadingSampleObjects');
 
         let promises = [] as any;
         for (let doc of getSampleDocuments(this.locale)) {

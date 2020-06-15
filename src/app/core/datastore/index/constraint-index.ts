@@ -1,5 +1,4 @@
-import {isArray, map, flatten, flatMap, flow,
-    cond, not, to, isDefined, singleton, Map, filter} from 'tsfun';
+import {isArray, map, flatten, flatMap, flow, cond, not, to, isDefined, singleton, Map, filter} from 'tsfun';
 import {get as getOn} from 'tsfun/struct';
 import {Document, Resource} from 'idai-components-2';
 import {Category} from '../../configuration/model/category';
@@ -32,10 +31,7 @@ export interface ConstraintIndex {
     };
 
     existIndex: {
-        [path: string]: {
-            [existence: string]:  // KNOWN | UNKNOWN
-                { [id: string]: true }
-        }
+        [path: string]: { [id: string]: true }
     };
 
     linksIndex: {
@@ -43,6 +39,8 @@ export interface ConstraintIndex {
             [resourceId: string]: { [id: string]: true }
         }
     };
+
+    allIndex: { [resourceId: string]: { [id: string]: true } };
 }
 
 
@@ -57,7 +55,12 @@ export module ConstraintIndex {
                          categories: Array<Category>) {
 
         const constraintIndex: ConstraintIndex = {
-            indexDefinitions: {}, containIndex: {}, existIndex: {}, matchIndex: {}, linksIndex: {}
+            indexDefinitions: {},
+            containIndex: {},
+            existIndex: {},
+            matchIndex: {},
+            linksIndex: {},
+            allIndex: {}
         };
 
         constraintIndex.indexDefinitions = getIndexDefinitions(
@@ -84,6 +87,7 @@ export module ConstraintIndex {
         for (let indexDefinition of Object.values(index.indexDefinitions)) {
             putFor(index, indexDefinition, doc);
         }
+        addToAllIndex(index.allIndex, doc);
     }
 
 
@@ -141,11 +145,7 @@ export module ConstraintIndex {
 
         switch(definition.type) {
             case 'exist':
-                addToIndex(
-                    index.existIndex,
-                    doc,
-                    definition.path,
-                    isMissing(elForPath) ? 'UNKNOWN' : 'KNOWN');
+                addToExistIndex(index.existIndex, doc, definition.path, !isMissing(elForPath));
                 break;
 
             case 'match':
@@ -225,9 +225,24 @@ export module ConstraintIndex {
     function getMatchesForTerm(index: ConstraintIndex, definition: IndexDefinition,
                                matchTerm: string): Array<Resource.Id>|undefined {
 
+        if (definition.type === 'exist') return getMatchesFromExistIndex(index, definition, matchTerm);
+
         const result = getIndex(index, definition)[definition.path][matchTerm];
         if (!result) return undefined;
         return Object.keys(result);
+    }
+
+
+    function getMatchesFromExistIndex(index: ConstraintIndex, definition: IndexDefinition,
+                                      matchTerm: string): Array<Resource.Id> {
+
+        const knownResourceIds: Array<Resource.Id> = Object.keys(
+            getIndex(index, definition)[definition.path] ?? {}
+        );
+
+        return matchTerm === 'KNOWN'
+            ? knownResourceIds
+            : Object.keys(index.allIndex).filter(id => !knownResourceIds.includes(id));
     }
 
 
@@ -386,11 +401,28 @@ export module ConstraintIndex {
     }
 
 
+    function addToExistIndex(index: any, doc: Document, path: string, exists: boolean) {
+
+        if (exists) {
+            if (!index[path]) index[path] = {};
+            index[path][doc.resource.id] = true;
+        } else {
+            delete index[path][doc.resource.id];
+        }
+    }
+
+
     function addToLinksIndex(index: any, doc: Document, path: string, targets: Array<Resource.Id>) {
 
         const ts = {};
         for (let t of targets) ts[t] = true;
         index[path][doc.resource.id] = ts;
+    }
+
+
+    function addToAllIndex(index: any, doc: Document) {
+
+        index[doc.resource.id] = true;
     }
 
 

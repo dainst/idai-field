@@ -38,7 +38,7 @@ describe('ConstraintIndex', () => {
         docs[1].resource.relations['isRecordedIn'] = ['1'];
 
         ci = ConstraintIndex.make({
-            'isRecordedIn:contain': { path: 'resource.relations.isRecordedIn', type: 'contain' }
+            'isRecordedIn:contain': { path: 'resource.relations.isRecordedIn', pathArray: ['resource', 'relations', 'isRecordedIn'], type: 'contain' }
         }, categories);
 
         ConstraintIndex.put(ci, docs[0]);
@@ -57,7 +57,7 @@ describe('ConstraintIndex', () => {
         docs[0].resource.relations['isRecordedIn'] = ['2', '3'];
 
         ci = ConstraintIndex.make({
-            'isRecordedIn:contain': { path: 'resource.relations.isRecordedIn', type: 'contain' }
+            'isRecordedIn:contain': { path: 'resource.relations.isRecordedIn', pathArray: ['resource', 'relations', 'isRecordedIn'], type: 'contain' }
         }, categories);
 
         ConstraintIndex.put(ci, docs[0]);
@@ -83,9 +83,9 @@ describe('ConstraintIndex', () => {
         docs[0].resource.relations['liesWithin'] = ['3'];
 
         ci = ConstraintIndex.make({
-            'liesWithin:contain': { path: 'resource.relations.liesWithin', type: 'contain' },
-            'isRecordedIn:contain': { path: 'resource.relations.isRecordedIn', type: 'contain' },
-            'identifier:match': { path: 'resource.identifier', type: 'match' }
+            'liesWithin:contain': { path: 'resource.relations.liesWithin', pathArray: ['resource', 'relations', 'liesWithin'], type: 'contain' },
+            'isRecordedIn:contain': { path: 'resource.relations.isRecordedIn', pathArray: ['resource', 'relations', 'isRecordedIn'], type: 'contain' },
+            'identifier:match': { path: 'resource.identifier', pathArray: ['resource', 'identifier'], type: 'match' }
         }, categories);
 
         ConstraintIndex.put(ci, docs[0]);
@@ -109,7 +109,7 @@ describe('ConstraintIndex', () => {
         ];
 
         ci = ConstraintIndex.make({
-            'liesWithin:contain': { path: 'resource.relations.liesWithin', type: 'contain' }
+            'liesWithin:contain': { path: 'resource.relations.liesWithin', pathArray: ['resource', 'relations', 'liesWithin'], type: 'contain' }
         }, categories);
 
         ConstraintIndex.put(ci, docs[0]);
@@ -121,7 +121,7 @@ describe('ConstraintIndex', () => {
     it('work with non arrays', () => {
 
         ci = ConstraintIndex.make({
-            'identifier:match': { path: 'resource.identifier', type: 'match' }
+            'identifier:match': { path: 'resource.identifier', pathArray: ['resource', 'identifier'], type: 'match' }
         }, categories);
         const d = doc('1');
         ConstraintIndex.put(ci, d);
@@ -132,7 +132,7 @@ describe('ConstraintIndex', () => {
     it('do not index if no identifier', () => { // tests interaction with IndexItem
 
         ci = ConstraintIndex.make({
-            'identifier:match': { path: 'resource.identifier', type: 'match' }
+            'identifier:match': { path: 'resource.identifier', pathArray: ['resource', 'identifier'], type: 'match' }
         }, categories);
         const doc0 = doc('1');
         delete doc0.resource.identifier;
@@ -144,7 +144,7 @@ describe('ConstraintIndex', () => {
     it('clear index', () => {
 
         ci = ConstraintIndex.make({
-            'identifier:match': { path: 'resource.identifier', type: 'match' }
+            'identifier:match': { path: 'resource.identifier', pathArray: ['resource', 'identifier'], type: 'match' }
         }, categories);
         const d = doc('1');
         const ie = IndexItem.from(d);
@@ -157,7 +157,7 @@ describe('ConstraintIndex', () => {
     it('ask for one existing index and one nonexisting index', () => {
 
         ci = ConstraintIndex.make({
-            'identifier:contain': { path: 'resource.identifier', type: 'contain' }
+            'identifier:contain': { path: 'resource.identifier', pathArray: ['resource', 'identifier'], type: 'contain' }
         }, categories);
 
         expect(ConstraintIndex.get(ci, 'identifier:contain', 'identifier1')).toEqual([]);
@@ -196,7 +196,7 @@ describe('ConstraintIndex', () => {
         doc.resource.identifier = 'identifier2';
         ConstraintIndex.put(ci, doc);
 
-        expect(ConstraintIndex.get(ci,'identifier:match', 'identifier1')).toEqual([]);
+        expect(ConstraintIndex.get(ci, 'identifier:match', 'identifier1')).toEqual([]);
         expect(ConstraintIndex.get(ci, 'isRecordedIn:contain', '2')).toEqual([]);
         expect(ConstraintIndex.get(ci, 'liesWithin:contain', '3')).toEqual([]);
 
@@ -218,7 +218,7 @@ describe('ConstraintIndex', () => {
         docs[0]['_conflicts'] = ['1-other'];
 
         ci = ConstraintIndex.make({
-            'conflicts:exist': { path: '_conflicts', type: 'exist' }
+            'conflicts:exist': { path: '_conflicts', pathArray: ['_conflicts'], type: 'exist' }
         }, categories);
 
         ConstraintIndex.put(ci, docs[0]);
@@ -233,7 +233,7 @@ describe('ConstraintIndex', () => {
 
         expect(() => {
             ConstraintIndex.make({
-                'name': { path: 'testpath', type: 'unknown' }
+                'name': { path: 'testpath', pathArray: ['testpath'], type: 'unknown' }
             }, categories)
         }).toThrow();
     });
@@ -249,7 +249,7 @@ describe('ConstraintIndex', () => {
         docs[1].resource.relations['depicts'] = ['1'];
 
         ci = ConstraintIndex.make({
-            'depicts:exist': { path: 'resource.relations.depicts', type: 'exist' }
+            'depicts:exist': { path: 'resource.relations.depicts', pathArray: ['resource', 'relations', 'depicts'], type: 'exist' }
         }, categories);
 
         ConstraintIndex.put(ci, docs[0]);
@@ -271,7 +271,7 @@ describe('ConstraintIndex', () => {
         docs[1].resource.relations['depicts'] = ['1'];
 
         ci = ConstraintIndex.make({
-            'isDepictedIn:links': { path: 'resource.relations.isDepictedIn', type: 'links' }
+            'isDepictedIn:links': { path: 'resource.relations.isDepictedIn', pathArray: ['resource', 'relations', 'depicts'], type: 'links' }
         }, categories);
 
         ConstraintIndex.put(ci, docs[0]);
@@ -303,8 +303,8 @@ describe('ConstraintIndex', () => {
         docs[3].resource.relations['depicts'] = ['2'];
 
         ci = ConstraintIndex.make({
-            'depicts:exist': { path: 'resource.relations.depicts', type: 'exist' },
-            'depicts:contain': { path: 'resource.relations.depicts', type: 'contain' }
+            'depicts:exist': { path: 'resource.relations.depicts', pathArray: ['resource', 'relations', 'depicts'], type: 'exist' },
+            'depicts:contain': { path: 'resource.relations.depicts', pathArray: ['resource', 'relations', 'depicts'], type: 'contain' }
         }, categories);
 
         const ie1 = IndexItem.from(docs[0]);
@@ -338,7 +338,7 @@ describe('ConstraintIndex', () => {
         docs[3].resource.relations['depicts'] = ['2'];
 
         ci = ConstraintIndex.make({
-            'depicts:contain': { path: 'resource.relations.depicts', type: 'contain' }
+            'depicts:contain': { path: 'resource.relations.depicts', pathArray: ['resource', 'relations', 'depicts'], type: 'contain' }
         }, categories);
 
         ConstraintIndex.put(ci, docs[0]);
@@ -427,7 +427,7 @@ describe('ConstraintIndex', () => {
         docs[1].resource.relations['liesWithin'] = ['1'];
 
         ci = ConstraintIndex.make({
-            'liesWithin:contain': { path: 'resource.relations.liesWithin', type: 'contain' }
+            'liesWithin:contain': { path: 'resource.relations.liesWithin', pathArray: ['resource', 'relations', 'liesWithin'], type: 'contain' }
         }, categories);
 
         ConstraintIndex.put(ci, docs[0]);
@@ -456,6 +456,7 @@ describe('ConstraintIndex', () => {
         ci = ConstraintIndex.make({
             'liesWithin:contain': {
                 path: 'resource.relations.liesWithin',
+                pathArray: ['resource', 'relations', 'liesWithin'],
                 type: 'contain',
                 recursivelySearchable: true
             }
@@ -495,6 +496,7 @@ describe('ConstraintIndex', () => {
         ci = ConstraintIndex.make({
             'liesWithin:contain': {
                 path: 'resource.relations.liesWithin',
+                pathArray: ['resource', 'relations', 'liesWithin'],
                 type: 'contain',
                 recursivelySearchable: true
             }
@@ -549,7 +551,7 @@ describe('ConstraintIndex', () => {
     it('get with descendants - not a recursively searchable index', () => {
 
         ci = ConstraintIndex.make({
-            'liesWithin:contain': { path: 'resource.relations.liesWithin', type: 'contain' }
+            'liesWithin:contain': { path: 'resource.relations.liesWithin', pathArray: ['resource', 'relations', 'liesWithin'], type: 'contain' }
         }, categories);
 
         ConstraintIndex.put(ci, doc('1'));

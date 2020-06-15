@@ -8,7 +8,7 @@ import {clone} from '../../util/object-util';
 
 export interface IndexDefinition {
 
-    path: string;
+    path: string[];
     type: string;
     recursivelySearchable?: boolean;
 }
@@ -345,14 +345,14 @@ export module ConstraintIndex {
                 {
                     name: field.name + '.value'+ ':' + indexType,
                     indexDefinition: {
-                        path: 'resource.' + field.name + '.value',
+                        path: ['resource', field.name, 'value'],
                         type: indexType
                     }
                 },
                 {
                     name: field.name + '.endValue' + ':' + indexType,
                     indexDefinition: {
-                        path: 'resource.' + field.name + '.endValue',
+                        path: ['resource', field.name, 'endValue'],
                         type: indexType
                     }
                 }];
@@ -361,7 +361,7 @@ export module ConstraintIndex {
         return [{
             name: field.name + ':' + indexType,
             indexDefinition: {
-                path: 'resource.' + field.name,
+                path: ['resource', field.name],
                 type: indexType
             }
         }];

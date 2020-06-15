@@ -1,6 +1,7 @@
 import {SampleDataLoader} from '../pouchdb/sample-data-loader';
 import {getSampleDocuments} from './field-sample-objects';
 import {ImageConverter} from '../../images/imagestore/image-converter';
+import {InitializationProgress} from '../../initialization-progress';
 
 const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
 const remote = typeof window !== 'undefined' ? window.require('electron').remote : require('electron').remote;
@@ -15,7 +16,8 @@ export class FieldSampleDataLoader implements SampleDataLoader {
 
     constructor(private imageConverter: ImageConverter,
                 private imagestorePath: string,
-                private locale: string) { }
+                private locale: string,
+                private progress: InitializationProgress) {}
 
 
     public go(db: any, project: string): Promise<any> {
@@ -24,7 +26,9 @@ export class FieldSampleDataLoader implements SampleDataLoader {
     }
 
 
-    private loadSampleObjects(db: any): Promise<any> {
+    private async loadSampleObjects(db: any): Promise<any> {
+
+        await this.progress.setPhase('loadingSampleObjects');
 
         let promises = [] as any;
         for (let doc of getSampleDocuments(this.locale)) {
@@ -52,7 +56,7 @@ export class FieldSampleDataLoader implements SampleDataLoader {
     private loadSampleImages(db: any, project: string): Promise<any> {
 
         let path = remote.getGlobal('samplesPath');
-        console.log("path:", path)
+        console.log("path:", path);
         return this.loadDirectory(db, path, this.imagestorePath + project);
     }
 

@@ -68,6 +68,8 @@ import {Messages} from './messages/messages';
 import {Query} from '../core/datastore/model/query';
 import {DocumentCache} from '../core/datastore/cached/document-cache';
 import {FieldCategoryConverter} from '../core/datastore/field/field-category-converter';
+import {InitializationProgress} from '../core/initialization-progress';
+import {AngularUtility} from '../angular/angular-utility';
 
 const remote = typeof window !== 'undefined' ? window.require('electron').remote : require('electron').remote;
 
@@ -124,13 +126,14 @@ registerLocaleData(localeDe, 'de');
         {
             provide: APP_INITIALIZER,
             multi: true,
-            deps: [SettingsService, PouchdbManager, PouchdbServer, DocumentCache],
-            useFactory: (settingsService: SettingsService, pouchdbManager: PouchdbManager, pouchdbServer: PouchdbServer, documentCache: DocumentCache<Document>) => () =>
+            deps: [SettingsService, PouchdbManager, PouchdbServer, DocumentCache, InitializationProgress],
+            useFactory: (settingsService: SettingsService, pouchdbManager: PouchdbManager, pouchdbServer: PouchdbServer, documentCache: DocumentCache<Document>, progress: InitializationProgress) => () =>
                 pouchdbServer.setupServer()
+                    .then(() => progress.setPhase('loadingSettings'))
                     .then(() => (new SettingsSerializer).load())
                     .then(settings =>
-                        settingsService.bootProjectDb(settings).then(() =>
-                            settingsService.loadConfiguration(remote.getGlobal('configurationDirPath'))))
+                        settingsService.bootProjectDb(settings, progress).then(() =>
+                            settingsService.loadConfiguration(remote.getGlobal('configurationDirPath'), progress)))
                     .then(configuration => {
                         projectConfiguration = configuration;
 
@@ -142,12 +145,13 @@ registerLocaleData(localeDe, 'de');
                      }).then(facade => {
                          indexFacade = facade;
                          return pouchdbManager.reindex(
-                             indexFacade, documentCache, new FieldCategoryConverter(projectConfiguration)
+                             indexFacade, documentCache, new FieldCategoryConverter(projectConfiguration), progress
                          );
-                    })
+                    }).then(() => AngularUtility.refresh(500))
         },
         SettingsService,
         { provide: UsernameProvider, useExisting: SettingsService },
+        InitializationProgress,
         {
             provide: Messages,
             useFactory: function(md: MD) {

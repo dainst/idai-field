@@ -8,6 +8,7 @@ import {SampleDataLoader} from './sample-data-loader';
 import {SyncProcess, SyncStatus} from '../../sync/sync-process';
 import {DocumentCache} from '../cached/document-cache';
 import {FieldCategoryConverter} from '../field/field-category-converter';
+import {InitializationProgress} from '../../initialization-progress';
 
 
 let PouchDB;
@@ -161,17 +162,28 @@ export class PouchdbManager {
 
 
     public async reindex(indexFacade: IndexFacade, documentCache: DocumentCache<Document>,
-                         converter: FieldCategoryConverter) {
+                         converter: FieldCategoryConverter, progress?: InitializationProgress) {
+
+        if (progress) {
+            progress.setDocumentsToIndex((await this.dbHandle.info()).doc_count);
+            await progress.setPhase('loadingDocuments');
+        }
 
         await indexFacade.clear();
-        await this.fetchAll((docs: Array<any>) => {
-            docs = docs.map(doc => converter.convert(doc));
-            docs.forEach(doc => documentCache.set(doc));
-            indexFacade.putMultiple(docs);
-        });
+
+        let documents = [];
+        await this.fetchAll((docs: Array<any>) => documents = docs);
+
+        if (progress) await progress.setPhase('indexingDocuments');
+
+        documents = documents.map(doc => converter.convert(doc));
+        documents.forEach(doc => documentCache.set(doc));
+
+        await indexFacade.putMultiple(documents, progress);
     }
 
 
+    // TODO Do this without the callback
     private async fetchAll(callback: Function) {
 
         await this.dbHandle

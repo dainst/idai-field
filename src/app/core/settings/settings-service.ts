@@ -14,6 +14,7 @@ import {Imagestore} from '../images/imagestore/imagestore';
 import {ImageConverter} from '../images/imagestore/image-converter';
 import {ImagestoreErrors} from '../images/imagestore/imagestore-errors';
 import {Messages} from '../../components/messages/messages';
+import {InitializationProgress} from '../initialization-progress';
 
 const {remote, ipcRenderer} = typeof window !== 'undefined' ? window.require('electron') : require('electron');
 
@@ -73,19 +74,27 @@ export class SettingsService {
     public isAutoUpdateActive = () => this.settings.isAutoUpdateActive;
 
 
-    public async bootProjectDb(settings: Settings): Promise<void> {
+    public async bootProjectDb(settings: Settings, progress: InitializationProgress): Promise<void> {
 
         await this.updateSettings(settings);
+
+        await progress.setPhase('settingUpDatabase');
+
         await this.pouchdbManager.loadProjectDb(
             this.getSelectedProject(),
-            new FieldSampleDataLoader(this.imageConverter, this.settings.imagestorePath, this.settings.locale));
+            new FieldSampleDataLoader(
+                this.imageConverter, this.settings.imagestorePath, this.settings.locale, progress
+            )
+        );
 
         if (this.settings.isSyncActive) await this.setupSync();
         await this.createProjectDocumentIfMissing();
     }
 
 
-    public async loadConfiguration(configurationDirPath: string): Promise<ProjectConfiguration> {
+    public async loadConfiguration(configurationDirPath: string, progress: InitializationProgress): Promise<ProjectConfiguration> {
+
+        await progress.setPhase('loadingConfiguration');
 
         let customProjectName = undefined;
         if (this.getSelectedProject().startsWith('meninx-project')) customProjectName = 'Meninx';

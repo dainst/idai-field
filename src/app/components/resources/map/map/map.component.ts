@@ -219,6 +219,8 @@ export class MapComponent implements AfterViewInit, OnChanges {
 
     protected addGeometriesToMap() {
 
+        console.log('addGeometriesToMap!');
+
         this.bounds = [];
 
         this.addParentDocumentGeometryToMap();

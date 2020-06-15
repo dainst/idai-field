@@ -13,10 +13,12 @@ import {ResourceId} from '../../constants';
 import {getSortedIds} from './get-sorted-ids';
 import {Query} from '../model/query';
 import {namedArrayToNamedMap} from '../../util/named';
+import {InitializationProgress} from '../../initialization-progress';
 
 const TYPE = 'Type';
 const INSTANCES = 'instances';
 const INSTANCE_OF = 'isInstanceOf';
+
 
 /**
  * @author Daniel de Oliveira
@@ -59,12 +61,27 @@ export class IndexFacade {
     }
 
 
-    public putMultiple(documents: Array<Document>) {
+    public async putMultiple(documents: Array<Document>, progress?: InitializationProgress) {
 
         const [typeDocuments, nonTypeDocuments] = separate(on('resource.category', is(TYPE)), documents);
 
-        typeDocuments.forEach(document => this._put(document, true, false));
-        nonTypeDocuments.forEach(document => this._put(document, true, false));
+        let count: number = 0;
+
+        // TODO Extract function
+        for (let document of typeDocuments) {
+            this._put(document, true, false);
+            count++;
+            if (progress && (count % 250 === 0 || count === documents.length)) {
+                await progress.setIndexedDocuments(count);
+            }
+        }
+        for (let document of nonTypeDocuments) {
+            this._put(document, true, false);
+            count++;
+            if (progress && (count % 250 === 0 || count === documents.length)) {
+                await progress.setIndexedDocuments(count);
+            }
+        }
     }
 
 

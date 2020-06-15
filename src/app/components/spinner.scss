@@ -11,6 +11,12 @@
   }
 }
 
+.progress {
+  width: 500px;
+  position: absolute;
+  left: calc(50vw - 250px);
+}
+
 @-webkit-keyframes sk-rotateplane {
   0% { -webkit-transform: perspective(120px) }
   50% { -webkit-transform: perspective(120px) rotateY(180deg) }

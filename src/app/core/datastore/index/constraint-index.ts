@@ -1,5 +1,4 @@
 import {isArray, map, flatten, flatMap, flow, cond, not, to, isDefined, singleton, Map, filter} from 'tsfun';
-import {get as getOn} from 'tsfun/struct';
 import {Document, Resource} from 'idai-components-2';
 import {Category} from '../../configuration/model/category';
 import {FieldDefinition} from '../../configuration/model/field-definition';
@@ -143,7 +142,7 @@ export module ConstraintIndex {
 
     function putFor(index: ConstraintIndex, definition: IndexDefinition, doc: Document) {
 
-        const elForPath = getOn(definition.pathArray, undefined)(doc);
+        const elForPath = getOn(definition.pathArray, doc);
 
         switch(definition.type) {
             case 'exist':
@@ -167,6 +166,16 @@ export module ConstraintIndex {
                 addToLinksIndex(index.linksIndex, doc, definition.path, elForPath);
                 break;
         }
+    }
+
+
+    function getOn(path: string[], object: any, index: number = 0) {
+
+        if (!object) return undefined;
+
+        return (path.length === index + 1)
+            ? object[path[index]]
+            : getOn(path, object[path[index]], index + 1);
     }
 
 

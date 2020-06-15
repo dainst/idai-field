@@ -42,8 +42,12 @@ export class InitializationProgress {
 
     private async updateProgressBar() {
 
-        document.getElementById('initialization-progress-bar').style.width = this.getProgress() + '%';
-        await AngularUtility.refresh();
+        const element: HTMLElement = document.getElementById('initialization-progress-bar');
+
+        if (element) {
+            element.style.width = this.getProgress() + '%';
+            await AngularUtility.refresh();
+        }
     }
 
 

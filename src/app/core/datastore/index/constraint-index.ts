@@ -94,6 +94,7 @@ export module ConstraintIndex {
     export function remove(index: ConstraintIndex, doc: Document) {
 
         Object.values(index.indexDefinitions).forEach(definition => removeFromIndex(index, definition, doc));
+        if (index.allIndex[doc.resource.id]) delete index.allIndex[doc.resource.id];
     }
 
 
@@ -145,7 +146,7 @@ export module ConstraintIndex {
 
         switch(definition.type) {
             case 'exist':
-                addToExistIndex(index.existIndex, doc, definition.path, !isMissing(elForPath));
+                if (!isMissing(elForPath)) addToExistIndex(index.existIndex, doc, definition.path);
                 break;
 
             case 'match':
@@ -401,14 +402,10 @@ export module ConstraintIndex {
     }
 
 
-    function addToExistIndex(index: any, doc: Document, path: string, exists: boolean) {
+    function addToExistIndex(index: any, doc: Document, path: string) {
 
-        if (exists) {
-            if (!index[path]) index[path] = {};
-            index[path][doc.resource.id] = true;
-        } else {
-            delete index[path][doc.resource.id];
-        }
+        if (!index[path]) index[path] = {};
+        index[path][doc.resource.id] = true;
     }
 
 
@@ -430,7 +427,7 @@ export module ConstraintIndex {
 
         const path = (getIndex(index, indexDefinition))[indexDefinition.path];
 
-        if (indexDefinition.type === 'links') {
+        if (indexDefinition.type === 'links' || indexDefinition.type === 'exist') {
             delete path[document.resource.id];
         } else {
             Object.keys(path).forEach(key => {

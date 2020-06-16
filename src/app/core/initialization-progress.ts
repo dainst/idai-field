@@ -1,5 +1,6 @@
 import {AngularUtility} from '../angular/angular-utility';
 import {INITIALIZATION_MESSAGES} from './initialization-messages';
+import {reload} from './common/reload';
 
 
 type InitializationPhase =
@@ -67,6 +68,8 @@ export class InitializationProgress {
         InitializationProgress.setElementText('initialization-info-project-name', '');
         InitializationProgress.setElementText('initialization-info-message-2', '');
 
+        this.showReloadButton();
+
         await this.updateProgressBar();
     }
 
@@ -101,6 +104,18 @@ export class InitializationProgress {
 
         await AngularUtility.refresh();
     }
+
+
+    private showReloadButton() {
+
+        const element: HTMLElement = document.getElementById('reload-button');
+        if (element) {
+            element.style.display = 'block';
+            element.innerText = INITIALIZATION_MESSAGES[this.locale]['loadTestProject'];
+            element.onclick = () => reload();
+        }
+    }
+
 
     private getProgress(): number {
 

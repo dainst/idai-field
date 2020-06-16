@@ -1,4 +1,5 @@
 import {ChangeDetectorRef, Component, Input, NgZone, SimpleChanges} from '@angular/core';
+import L from 'leaflet';
 import {ImageDocument, ImageGeoreference} from 'idai-components-2';
 import {LayerManager, ListDiffResult} from './layer-manager';
 import {LayerImageProvider} from './layer-image-provider';
@@ -7,7 +8,6 @@ import {ProjectConfiguration} from '../../../../core/configuration/project-confi
 import {MapComponent} from './map.component';
 import {ImageContainer} from '../../../../core/images/imagestore/image-container';
 import {Messages} from '../../../messages/messages';
-import L from 'leaflet';
 
 const fs = typeof window !== 'undefined'
   ? window.require('fs')

@@ -1,4 +1,4 @@
-import {Input, Output, EventEmitter, Renderer2, Component} from '@angular/core';
+import {Input, Output, EventEmitter, Renderer2, Component, ChangeDetectorRef} from '@angular/core';
 import {ImageDocument} from 'idai-components-2';
 import {LayerManager} from './layer-manager';
 import {MenuComponent} from '../../../widgets/menu.component';
@@ -20,6 +20,7 @@ export class LayerMenuComponent extends MenuComponent {
 
 
     constructor(private layerManager: LayerManager,
+                private changeDetectorRef: ChangeDetectorRef,
                 renderer: Renderer2) {
 
         super(renderer, 'layer-button', 'layer-menu');
@@ -29,6 +30,13 @@ export class LayerMenuComponent extends MenuComponent {
     public isActiveLayer = (layer: ImageDocument) => this.layerManager.isActiveLayer(layer.resource.id as any);
     public toggleLayer = (layer: ImageDocument) => this.onToggleLayer.emit(layer);
     public focusLayer = (layer: ImageDocument) => this.onFocusLayer.emit(layer);
+
+
+    public close() {
+
+        super.close();
+        this.changeDetectorRef.detectChanges();
+    }
 
 
     public getLayerLabel(layer: ImageDocument): string {

@@ -1,5 +1,4 @@
-import {flatMap, flow, filter, split, toLowerCase, empty, isNot, isEmpty,
-    Map} from 'tsfun';
+import {flatMap, flow, filter, split, toLowerCase, empty, isNot, isEmpty, Map} from 'tsfun';
 import {lookup, map, forEach} from 'tsfun/associative';
 import {Document, Resource} from 'idai-components-2';
 import {ResultSets} from './result-sets';
@@ -24,7 +23,7 @@ export module FulltextIndex {
 
     const defaultFieldsToIndex = ['identifier', 'shortDescription'];
 
-    const tokenizationPattern: RegExp = /[ -]/;
+    const tokenizationPattern: RegExp = /[ \-_]/;
 
 
     export function put(index: FulltextIndex,

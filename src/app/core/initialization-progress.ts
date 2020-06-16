@@ -48,7 +48,7 @@ export class InitializationProgress {
     public async setEnvironment(projectName: string, locale: string) {
 
         this.locale = locale;
-        this.updateInititalizationInfo(projectName);
+        this.updateInitializationInfo(projectName);
     }
 
 
@@ -85,7 +85,7 @@ export class InitializationProgress {
     }
 
 
-    private async updateInititalizationInfo(projectName: string) {
+    private async updateInitializationInfo(projectName: string) {
 
         InitializationProgress.setElementText(
             'initialization-info-message-1',

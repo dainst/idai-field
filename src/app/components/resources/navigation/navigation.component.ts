@@ -24,7 +24,7 @@ export class NavigationComponent {
     public navigationPath: NavigationPath = NavigationPath.empty();
     public labels: NavigationButtonLabelMap = {};
 
-    private static maxTotalLabelCharacters: number = 50;
+    private static maxTotalLabelCharacters: number;
 
 
     constructor(public viewFacade: ViewFacade,
@@ -35,9 +35,8 @@ export class NavigationComponent {
 
         this.viewFacade.navigationPathNotifications().subscribe(path => {
             this.navigationPath = path;
-            NavigationComponent.maxTotalLabelCharacters
-                = !this.viewFacade.isInOverview() && !this.viewFacade.isInTypesManagement() ? 50 : 40;
             this.labels = NavigationComponent.getLabels(this.navigationPath, this.viewFacade.getCurrentOperation());
+            NavigationComponent.maxTotalLabelCharacters = this.getMaxTotalLabelCharacters();
         });
     }
 
@@ -78,6 +77,16 @@ export class NavigationComponent {
         return !this.viewFacade.isInExtendedSearchMode()
             ? this.navigationPath.segments.map(_ => _.document)
             : [];
+    }
+
+
+    private getMaxTotalLabelCharacters(): number {
+
+        return this.viewFacade.isInTypesManagement()
+            ? 100
+            : this.viewFacade.isInOverview()
+                ? 40
+                : 50;
     }
 
 

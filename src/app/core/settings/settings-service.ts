@@ -92,7 +92,7 @@ export class SettingsService {
             await this.createProjectDocumentIfMissing();
         } catch (msgWithParams) {
             console.error(msgWithParams);
-            progress.setError('databaseError');
+            await progress.setError('databaseError');
             throw msgWithParams;
         }
     }
@@ -138,7 +138,7 @@ export class SettingsService {
             if (msgsWithParams.length > 1) {
                 console.error('num errors in project configuration', msgsWithParams.length);
             }
-            progress.setError('configurationError');
+            await progress.setError('configurationError');
             await this.selectProject('test');
             throw 'Could not boot project';
         }

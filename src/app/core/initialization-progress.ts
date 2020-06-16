@@ -21,6 +21,7 @@ export class InitializationProgress {
     private documentsToIndex: number;
     private indexedDocuments: number = 0;
     private locale: string = 'en';
+    private error: boolean = false;
 
 
     public async setPhase(phase: InitializationPhase) {
@@ -50,7 +51,14 @@ export class InitializationProgress {
     }
 
 
-    public setError(errorMsgKey: string) {
+    public async setError(errorMsgKey: string) {
+
+        this.error = true;
+
+        InitializationProgress.setElementClasses(
+            'initialization-progress-bar',
+            ['bg-danger', 'progress-bar-striped', 'progress-bar-animated']
+        );
 
         InitializationProgress.setElementText(
             'initialization-info-message-1',
@@ -58,6 +66,8 @@ export class InitializationProgress {
         );
         InitializationProgress.setElementText('initialization-info-project-name', '');
         InitializationProgress.setElementText('initialization-info-message-2', '');
+
+        await this.updateProgressBar();
     }
 
 
@@ -94,6 +104,8 @@ export class InitializationProgress {
 
     private getProgress(): number {
 
+        if (this.error) return 100;
+
         switch(this.phase) {
             case 'settingUpServer':
                 return 0;
@@ -125,5 +137,14 @@ export class InitializationProgress {
 
         const element: HTMLElement = document.getElementById(elementId);
         if (element) element.innerText = text;
+    }
+
+
+    private static setElementClasses(elementId: string, classNames: string[]) {
+
+        const element: HTMLElement = document.getElementById(elementId);
+        if (element) {
+            classNames.forEach((className: string) => element.classList.add(className));
+        }
     }
 }

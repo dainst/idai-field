@@ -176,7 +176,7 @@ export class PouchdbManager {
             await this.fetchAll((docs: Array<any>) => documents = docs);
         } catch (err) {
             console.error(err);
-            progress.setError('fetchDocumentsError');
+            await progress.setError('fetchDocumentsError');
             throw err;
         }
 
@@ -188,7 +188,7 @@ export class PouchdbManager {
             await indexFacade.putMultiple(documents, progress);
         } catch (err) {
             console.error(err);
-            progress.setError('indexingError');
+            await progress.setError('indexingError');
             throw err;
         }
     }

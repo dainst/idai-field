@@ -22,7 +22,8 @@ const RECORDED_IN_CONTAIN = 'isRecordedIn:contain';
 const UNKNOWN = 'UNKNOWN';
 
 
-export const DOCUMENTS_LIMIT: number = 20000;
+export const DEFAULT_DOCUMENTS_LIMIT: number = 20000;
+export const TYPES_MANAGEMENT_DOCUMENTS_LIMIT: number = 1000;
 
 
 /**
@@ -383,7 +384,7 @@ export class DocumentsManager {
                 ? categoryFilters
                 : allowedCategoryNames,
             limit: extendedSearchMode && ResourcesState.isLimitSearchResults(state)
-                ? DOCUMENTS_LIMIT
+                ? this.getDocumentsLimit(resourcesStateManager)
                 : undefined,
             id: queryId
         };
@@ -416,4 +417,13 @@ export class DocumentsManager {
         console.error('Error with find. Query:', query);
         if (errWithParams.length === 2) console.error('Error with find. Cause:', errWithParams[1]);
     }
+
+
+    private static getDocumentsLimit(resourcesStateManager: ResourcesStateManager): number {
+
+        return resourcesStateManager.isInTypesManagement()
+            ? TYPES_MANAGEMENT_DOCUMENTS_LIMIT
+            : DEFAULT_DOCUMENTS_LIMIT;
+    }
+
 }

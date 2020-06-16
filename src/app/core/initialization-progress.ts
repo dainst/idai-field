@@ -1,6 +1,8 @@
+import {Injectable} from '@angular/core';
 import {AngularUtility} from '../angular/angular-utility';
 import {INITIALIZATION_MESSAGES} from './initialization-messages';
 import {reload} from './common/reload';
+import {SettingsService} from './settings/settings-service';
 
 
 type InitializationPhase =
@@ -13,6 +15,7 @@ type InitializationPhase =
     |'indexingDocuments';
 
 
+@Injectable()
 /**
  * @author Thomas Kleinke
  */
@@ -23,6 +26,9 @@ export class InitializationProgress {
     private indexedDocuments: number = 0;
     private locale: string = 'en';
     private error: boolean = false;
+
+
+    constructor(private settingsService: SettingsService) {}
 
 
     public async setPhase(phase: InitializationPhase) {
@@ -112,7 +118,10 @@ export class InitializationProgress {
         if (element) {
             element.style.display = 'block';
             element.innerText = INITIALIZATION_MESSAGES[this.locale]['loadTestProject'];
-            element.onclick = () => reload();
+            element.onclick = async () => {
+                await this.settingsService.selectProject('test');
+                reload();
+            }
         }
     }
 

@@ -139,7 +139,6 @@ export class SettingsService {
                 console.error('num errors in project configuration', msgsWithParams.length);
             }
             await progress.setError('configurationError');
-            await this.selectProject('test');
             throw 'Could not boot project';
         }
     }

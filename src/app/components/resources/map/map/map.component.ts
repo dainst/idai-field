@@ -32,6 +32,14 @@ export class MapComponent implements AfterViewInit, OnChanges {
     protected polylines: { [resourceId: string]: Array<FieldPolyline> } = {};
     protected markers: { [resourceId: string]: Array<FieldMarker> } = {};
 
+    protected polygonsArray: Array<FieldPolygon> = [];
+    protected polylinesArray: Array<FieldPolyline> = [];
+    protected markersArray: Array<FieldMarker> = [];
+
+    protected polygonsLayerGroup: L.LayerGroup;
+    protected polylinesLayerGroup: L.LayerGroup;
+    protected markersLayerGroup: L.LayerGroup;
+
     protected bounds: any[] = []; // in fact L.LatLng[], but leaflet typings are incomplete
     protected categoryColors: { [categoryName: string]: string } = {};
 
@@ -174,27 +182,21 @@ export class MapComponent implements AfterViewInit, OnChanges {
 
     protected clearMap() {
 
-        for (let i in this.polygons) {
-            for (let polygon of this.polygons[i]) {
-                this.map.removeLayer(polygon);
-            }
-        }
+        if (this.polygonsLayerGroup) this.map.removeLayer(this.polygonsLayerGroup);
+        if (this.polylinesLayerGroup) this.map.removeLayer(this.polylinesLayerGroup);
+        if (this.markersLayerGroup) this.map.removeLayer(this.markersLayerGroup);
 
-        for (let i in this.polylines) {
-            for (let polyline of this.polylines[i]) {
-                this.map.removeLayer(polyline);
-            }
-        }
-
-        for (let i in this.markers) {
-            for (let marker of this.markers[i]) {
-                this.map.removeLayer(marker);
-            }
-        }
+        this.polygonsLayerGroup = undefined;
+        this.polylinesLayerGroup = undefined;
+        this.markersLayerGroup = undefined;
 
         this.polygons = {};
         this.polylines = {};
         this.markers = {};
+
+        this.polygonsArray = [];
+        this.polylinesArray = [];
+        this.markersArray = [];
     }
 
 
@@ -219,8 +221,6 @@ export class MapComponent implements AfterViewInit, OnChanges {
 
     protected addGeometriesToMap() {
 
-        console.log('addGeometriesToMap!');
-
         this.bounds = [];
 
         this.addParentDocumentGeometryToMap();
@@ -230,6 +230,10 @@ export class MapComponent implements AfterViewInit, OnChanges {
                 if (document.resource.geometry) this.addGeometryToMap(document);
             }
         }
+
+        this.polygonsLayerGroup = L.layerGroup(this.polygonsArray).addTo(this.map);
+        this.polylinesLayerGroup = L.layerGroup(this.polylinesArray).addTo(this.map);
+        this.markersLayerGroup = L.layerGroup(this.markersArray).addTo(this.map);
     }
 
 
@@ -303,9 +307,9 @@ export class MapComponent implements AfterViewInit, OnChanges {
             mapComponent.select(this.document);
         });
 
-        marker.addTo(this.map);
         if (!this.markers[document.resource.id]) this.markers[document.resource.id] = [];
         this.markers[document.resource.id].push(marker);
+        this.markersArray.push(marker);
 
         return marker;
     }
@@ -322,10 +326,10 @@ export class MapComponent implements AfterViewInit, OnChanges {
             this.setPathOptions(polyline, document, 'polyline');
         }
 
-        const polylines: Array<FieldPolyline>
-            = this.polylines[document.resource.id as any] ? this.polylines[document.resource.id as any] : [];
+        const polylines: Array<FieldPolyline> = this.polylines[document.resource.id as any] ?? [];
         polylines.push(polyline);
         this.polylines[document.resource.id as any] = polylines;
+        this.polylinesArray.push(polyline);
 
         return polyline;
     }
@@ -342,10 +346,10 @@ export class MapComponent implements AfterViewInit, OnChanges {
             this.setPathOptions(polygon, document, 'polygon');
         }
 
-        const polygons: Array<FieldPolygon>
-            = this.polygons[document.resource.id as any] ? this.polygons[document.resource.id as any] : [];
+        const polygons: Array<FieldPolygon> = this.polygons[document.resource.id as any] ?? [];
         polygons.push(polygon);
         this.polygons[document.resource.id as any] = polygons;
+        this.polygonsArray.push(polygon);
 
         return polygon;
     }
@@ -374,8 +378,6 @@ export class MapComponent implements AfterViewInit, OnChanges {
         path.on('click', function (event: L.Event) {
             if (mapComponent.select(this.document)) L.DomEvent.stop(event);
         });
-
-        path.addTo(this.map);
     }
 
 
@@ -389,8 +391,6 @@ export class MapComponent implements AfterViewInit, OnChanges {
             fill: false,
             interactive: false
         });
-
-        path.addTo(this.map);
     }
 
 

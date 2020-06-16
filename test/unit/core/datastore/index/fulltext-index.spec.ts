@@ -169,13 +169,16 @@ describe('FulltextIndex', () => {
 
         const d1 = doc('1', 'hello token', 'category');
         const d2 = doc('2', 'another-one', 'category');
+        const d3 = doc('3', 'last_one', 'category');
 
         FulltextIndex.put(fi, d1, categoriesMap);
         FulltextIndex.put(fi, d2, categoriesMap);
+        FulltextIndex.put(fi, d3, categoriesMap);
         expect(FulltextIndex.get(fi, 'hello', ['category'])).toEqual(['1']);
         expect(FulltextIndex.get(fi, 'token', ['category'])).toEqual(['1']);
         expect(FulltextIndex.get(fi,'another', ['category'])).toEqual(['2']);
-        expect(FulltextIndex.get(fi,'one', ['category'])).toEqual(['2']);
+        expect(FulltextIndex.get(fi,'one', ['category'])).toEqual(['2', '3']);
+        expect(FulltextIndex.get(fi,'last', ['category'])).toEqual(['3']);
     });
 
 
@@ -229,7 +232,7 @@ describe('FulltextIndex', () => {
         FulltextIndex.put(fi, d2, categoriesMap);
         FulltextIndex.put(fi, d3, categoriesMap);
 
-        const results = FulltextIndex.get(fi, 'Hello-A-00[23]', ['category'])
+        const results = FulltextIndex.get(fi, 'Hello-A-00[23]', ['category']);
         expect(results.length).toBe(2);
 
         expect(results).toContain('1');

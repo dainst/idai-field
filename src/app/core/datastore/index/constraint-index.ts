@@ -40,7 +40,7 @@ export interface ConstraintIndex {
         }
     };
 
-    allIndex: { [resourceId: string]: { [id: string]: true } };
+    allIndex: { [resourceId: string]: true };
 }
 
 

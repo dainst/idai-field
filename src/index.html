@@ -14,6 +14,48 @@
 
     <link rel="icon" href="favicon.png" type="image/png">
 
+    <style>
+        body {
+            margin: 0;
+        }
+
+        #initialization {
+            position: absolute;
+            top: calc(50vh - 175px);
+            width: 100%;
+        }
+
+        .icon {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .icon img {
+            width: 90px;
+            height: 90px;
+        }
+
+        #initialization-progress {
+            width: 500px;
+            position: absolute;
+            left: calc(50vw - 250px);
+        }
+
+        #initialization-info {
+            width: 100%;
+            position: absolute;
+            left: 0;
+            margin-top: 50px;
+            text-align: center;
+            font-family: Roboto, sans-serif;
+            user-select: none;
+        }
+
+        #initialization-info-project-name {
+            font-weight: bold;
+        }
+    </style>
+
     <script>
         window.__Zone_disable_requestAnimationFrame = true; // disable patch requestAnimationFrame
         window.__Zone_disable_on_property = true; // disable patch onProperty such as onclick
@@ -24,7 +66,9 @@
 <body>
     <idai-field-app>
         <div id="initialization">
-            <div class="spinner fullscreen"></div>
+            <div class="icon">
+                <img src="img/idai-field-icon.png">
+            </div>
             <div id="initialization-progress" class="progress">
                 <div id="initialization-progress-bar" class="progress-bar"></div>
             </div>

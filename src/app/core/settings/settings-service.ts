@@ -76,19 +76,25 @@ export class SettingsService {
 
     public async bootProjectDb(settings: Settings, progress?: InitializationProgress): Promise<void> {
 
-        await this.updateSettings(settings);
+        try {
+            await this.updateSettings(settings);
 
-        if (progress) await progress.setPhase('settingUpDatabase');
+            if (progress) await progress.setPhase('settingUpDatabase');
 
-        await this.pouchdbManager.loadProjectDb(
-            this.getSelectedProject(),
-            new FieldSampleDataLoader(
-                this.imageConverter, this.settings.imagestorePath, this.settings.locale, progress
-            )
-        );
+            await this.pouchdbManager.loadProjectDb(
+                this.getSelectedProject(),
+                new FieldSampleDataLoader(
+                    this.imageConverter, this.settings.imagestorePath, this.settings.locale, progress
+                )
+            );
 
-        if (this.settings.isSyncActive) await this.setupSync();
-        await this.createProjectDocumentIfMissing();
+            if (this.settings.isSyncActive) await this.setupSync();
+            await this.createProjectDocumentIfMissing();
+        } catch (msgWithParams) {
+            console.error(msgWithParams);
+            progress.setError('databaseError');
+            throw msgWithParams;
+        }
     }
 
 

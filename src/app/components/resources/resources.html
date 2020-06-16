@@ -1,5 +1,7 @@
 <div class="resources-nav row bg-light">
-    <div class="col-md-6 d-flex">
+    <div class="d-flex"
+         [class.col-md-6]="!isInTypesManagement() || isInExtendedSearchMode()"
+         [class.col-md-12]="isInTypesManagement() && !isInExtendedSearchMode()">
         <navigation></navigation>
         <div *ngIf="isSearchResultsInfoVisible()" id="search-results-info"
              [class.document-limit-exceeded]="isDocumentLimitExceeded()">
@@ -25,7 +27,7 @@
         </div>
     </div>
 
-    <div class="col-md-6 mr-md-auto">
+    <div *ngIf="!isInTypesManagement() || isInExtendedSearchMode()" class="col-md-6 mr-md-auto">
         <div class="row">
             <div id="search-bar-container"
                  [class.col-md-9]="!isInTypesManagement()"

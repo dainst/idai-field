@@ -1,4 +1,5 @@
-import {isArray, map, flatten, flatMap, flow, cond, not, to, isDefined, singleton, Map, filter} from 'tsfun';
+import {isArray, map, flatten, flatMap, flow, cond, not, to, isDefined, singleton, Map, filter,
+    subtract} from 'tsfun';
 import {Document, Resource} from 'idai-components-2';
 import {Category} from '../../configuration/model/category';
 import {FieldDefinition} from '../../configuration/model/field-definition';
@@ -253,7 +254,7 @@ export module ConstraintIndex {
 
         return matchTerm === 'KNOWN'
             ? knownResourceIds
-            : Object.keys(index.allIndex).filter(id => !knownResourceIds.includes(id));
+            : subtract(knownResourceIds)(Object.keys(index.allIndex));
     }
 
 

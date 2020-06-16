@@ -172,14 +172,25 @@ export class PouchdbManager {
         await indexFacade.clear();
 
         let documents = [];
-        await this.fetchAll((docs: Array<any>) => documents = docs);
+        try {
+            await this.fetchAll((docs: Array<any>) => documents = docs);
+        } catch (err) {
+            console.error(err);
+            progress.setError('fetchDocumentsError');
+            throw err;
+        }
 
         if (progress) await progress.setPhase('indexingDocuments');
 
-        documents = documents.map(doc => converter.convert(doc));
-        documents.forEach(doc => documentCache.set(doc));
-
-        await indexFacade.putMultiple(documents, progress);
+        try {
+            documents = documents.map(doc => converter.convert(doc));
+            documents.forEach(doc => documentCache.set(doc));
+            await indexFacade.putMultiple(documents, progress);
+        } catch (err) {
+            console.error(err);
+            progress.setError('indexingError');
+            throw err;
+        }
     }
 
 

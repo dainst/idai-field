@@ -1,4 +1,6 @@
 import {AngularUtility} from '../angular/angular-utility';
+import {INITIALIZATION_MESSAGES} from './initialization-messages';
+
 
 type InitializationPhase =
      'settingUpServer'
@@ -18,6 +20,7 @@ export class InitializationProgress {
     private phase: InitializationPhase = 'settingUpServer';
     private documentsToIndex: number;
     private indexedDocuments: number = 0;
+    private locale: string = 'en';
 
 
     public async setPhase(phase: InitializationPhase) {
@@ -40,9 +43,21 @@ export class InitializationProgress {
     }
 
 
-    public async setProjectName(projectName: string, locale: string) {
+    public async setEnvironment(projectName: string, locale: string) {
 
-        this.updateInititalizationInfo(projectName, locale);
+        this.locale = locale;
+        this.updateInititalizationInfo(projectName);
+    }
+
+
+    public setError(errorMsgKey: string) {
+
+        InitializationProgress.setElementText(
+            'initialization-info-message-1',
+            INITIALIZATION_MESSAGES[this.locale][errorMsgKey]
+        );
+        InitializationProgress.setElementText('initialization-info-project-name', '');
+        InitializationProgress.setElementText('initialization-info-message-2', '');
     }
 
 
@@ -57,11 +72,11 @@ export class InitializationProgress {
     }
 
 
-    private async updateInititalizationInfo(projectName: string, locale: string) {
+    private async updateInititalizationInfo(projectName: string) {
 
         InitializationProgress.setElementText(
             'initialization-info-message-1',
-            locale === 'de' ? 'Projekt' : 'Loading project'
+            INITIALIZATION_MESSAGES[this.locale]['loading1']
         );
 
         InitializationProgress.setElementText(
@@ -71,7 +86,7 @@ export class InitializationProgress {
 
         InitializationProgress.setElementText(
             'initialization-info-message-2',
-            locale === 'de' ? ' wird geladen...' : '...'
+            INITIALIZATION_MESSAGES[this.locale]['loading2']
         );
 
         await AngularUtility.refresh();

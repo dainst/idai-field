@@ -1,19 +1,25 @@
-#initialization-progress {
-  width: 500px;
+#initialization {
   position: absolute;
-  left: calc(50vw - 250px);
-}
-
-#initialization-info {
+  top: calc(50vh - 356px);
   width: 100%;
-  position: absolute;
-  left: 0;
-  margin-top: 50px;
-  text-align: center;
-  font-family: Roboto, sans-serif;
-  user-select: none;
 
-  #initialization-info-project-name {
-    font-weight: bold;
+  #initialization-progress {
+    width: 500px;
+    position: absolute;
+    left: calc(50vw - 250px);
+  }
+
+  #initialization-info {
+    width: 100%;
+    position: absolute;
+    left: 0;
+    margin-top: 50px;
+    text-align: center;
+    font-family: Roboto, sans-serif;
+    user-select: none;
+
+    #initialization-info-project-name {
+      font-weight: bold;
+    }
   }
 }

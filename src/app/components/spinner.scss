@@ -11,10 +11,23 @@
   }
 }
 
-.progress {
+#initialization-progress {
   width: 500px;
   position: absolute;
   left: calc(50vw - 250px);
+}
+
+#initialization-info {
+  width: 100%;
+  position: absolute;
+  left: 0;
+  margin-top: 50px;
+  text-align: center;
+  font-family: Roboto, sans-serif;
+
+  #initialization-info-project-name {
+    font-weight: bold;
+  }
 }
 
 @-webkit-keyframes sk-rotateplane {

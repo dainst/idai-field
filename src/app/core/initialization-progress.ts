@@ -40,6 +40,12 @@ export class InitializationProgress {
     }
 
 
+    public async setProjectName(projectName: string, locale: string) {
+
+        this.updateInititalizationInfo(projectName, locale);
+    }
+
+
     private async updateProgressBar() {
 
         const element: HTMLElement = document.getElementById('initialization-progress-bar');
@@ -50,6 +56,26 @@ export class InitializationProgress {
         }
     }
 
+
+    private async updateInititalizationInfo(projectName: string, locale: string) {
+
+        InitializationProgress.setElementText(
+            'initialization-info-message-1',
+            locale === 'de' ? 'Projekt ' : 'Loading project '
+        );
+
+        InitializationProgress.setElementText(
+            'initialization-info-project-name',
+            projectName
+        );
+
+        InitializationProgress.setElementText(
+            'initialization-info-message-2',
+            locale === 'de' ? ' wird geladen... ' : '...'
+        );
+
+        await AngularUtility.refresh();
+    }
 
     private getProgress(): number {
 
@@ -77,5 +103,12 @@ export class InitializationProgress {
         return this.indexedDocuments > 0
             ? Math.round(50 * (this.indexedDocuments / this.documentsToIndex))
             : 0;
+    }
+
+
+    private static setElementText(elementId: string, text: string) {
+
+        const element: HTMLElement = document.getElementById(elementId);
+        if (element) element.innerText = text;
     }
 }

@@ -131,9 +131,9 @@ registerLocaleData(localeDe, 'de');
                 pouchdbServer.setupServer()
                     .then(() => progress.setPhase('loadingSettings'))
                     .then(() => (new SettingsSerializer).load())
-                    .then(settings =>
+                    .then(settings => progress.setProjectName(settings.dbs[0], settings.locale).then(() =>
                         settingsService.bootProjectDb(settings, progress).then(() =>
-                            settingsService.loadConfiguration(remote.getGlobal('configurationDirPath'), progress)))
+                            settingsService.loadConfiguration(remote.getGlobal('configurationDirPath'), progress))))
                     .then(configuration => {
                         projectConfiguration = configuration;
 

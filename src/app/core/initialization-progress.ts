@@ -61,7 +61,7 @@ export class InitializationProgress {
 
         InitializationProgress.setElementText(
             'initialization-info-message-1',
-            locale === 'de' ? 'Projekt ' : 'Loading project '
+            locale === 'de' ? 'Projekt' : 'Loading project'
         );
 
         InitializationProgress.setElementText(
@@ -71,7 +71,7 @@ export class InitializationProgress {
 
         InitializationProgress.setElementText(
             'initialization-info-message-2',
-            locale === 'de' ? ' wird geladen... ' : '...'
+            locale === 'de' ? ' wird geladen...' : '...'
         );
 
         await AngularUtility.refresh();

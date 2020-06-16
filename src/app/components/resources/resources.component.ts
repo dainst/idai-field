@@ -129,7 +129,8 @@ export class ResourcesComponent implements OnDestroy {
 
         if (this.viewFacade.isInOverview()) {
             this.filterOptions = this.viewFacade.isInExtendedSearchMode()
-                ? ProjectCategories.getFieldCategories(this.projectConfiguration.getCategoryTreelist()).filter(category => !category.parentCategory)
+                ? ProjectCategories.getConcreteFieldCategories(this.projectConfiguration.getCategoryTreelist())
+                    .filter(category => !category.parentCategory)
                 : ProjectCategories.getOverviewToplevelCategories(this.projectConfiguration.getCategoryTreelist());
         } else if (this.viewFacade.isInTypesManagement()) {
             this.filterOptions = ProjectCategories.getTypeCategories(this.projectConfiguration.getCategoryTreelist());

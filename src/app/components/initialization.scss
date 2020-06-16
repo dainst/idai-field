@@ -1,7 +1,17 @@
 #initialization {
   position: absolute;
-  top: calc(50vh - 356px);
+  top: calc(50vh - 175px);
   width: 100%;
+
+  .icon {
+      text-align: center;
+      margin-bottom: 50px;
+
+      img {
+          width: 100px;
+          height: 100px;
+      }
+  }
 
   #initialization-progress {
     width: 500px;

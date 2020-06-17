@@ -34,7 +34,7 @@
     },
     "mac": {
       "category": "public.app-category.productivity",
-      "icon": "img/logo.icns",
+      "icon": "img/logo.png",
       "artifactName": "iDAI.field-${version}-MacOS.${ext}",
       "publish": "github",
       "hardenedRuntime": true,
@@ -44,7 +44,7 @@
     },
     "win": {
       "target": "zip",
-      "icon": "img/logo.ico",
+      "icon": "img/logo.png",
       "artifactName": "iDAI.field-${version}-Windows.${ext}",
       "publish": "github"
     },

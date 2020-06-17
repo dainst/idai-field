@@ -31,7 +31,7 @@ $ npm install
 $ npm start
 ```
 
-`npm install` fetches the necessary dependencies, while `npm start` compiles and starts the Electron app.
+`npm install` fetches the necessary dependencies, while `npm start` compiles the Angular app and starts it via Electron.
  
 Shapefile import/export is handled by a Java command line tool which is called by the Electron app. If Java 8 or higher and [Maven](https://maven.apache.org/) are installed, the Java tool can be built via the command:
 ```

@@ -5,9 +5,10 @@
     </head>
     <body>
         <div class="info-window">
-            <img src="info-window.png">
+            <img src="../img/logo.png">
+            <p id="brand">iDAI.field</p>
             <p id="about-version"></p>
-            <p class="centered">
+            <p>
                 <button id="close-button"></button>
             </p>
         </div>
@@ -15,7 +16,7 @@
             const electron = window.require('electron');
             const remote = electron.remote;
 
-            document.getElementById('about-version').textContent = 'Version: ' + remote.app.getVersion();
+            document.getElementById('about-version').textContent = 'Version ' + remote.app.getVersion();
 
             document.getElementById('close-button').textContent = remote.getGlobal('config')['locale'] === 'de'
                 ? 'Schließen'

@@ -28,18 +28,15 @@ Then clone this repository locally and run the following commands:
 
 ```
 $ npm install
-$ npm run build
 $ npm start
 ```
 
-`npm install` fetches the necessary dependencies. `npm run build` compiles the typescript files, creates [configuration](config/README.md) files, gathers the necessary fonts and converts scss files. `npm start` starts the Electron app. To have the TypeScript compilation run continuously while running the app, start the app with `npm start:watch`. In this case, a subprocess for watching gets started. To properly shut it down,
-make sure to close the app via `ctrl-c` in your terminal. Alternatively, you can also start the watch process separately, by entering `npm run watch` in one, and then `npm start` in another terminal window. Changes take effect after the watcher reports success and the window is reloaded manually. Scss files are not monitored, so any changes would take effect only after calling `npm run build:sass`.
+`npm install` fetches the necessary dependencies, while `npm start` compiles and starts the Electron app.
  
 Shapefile import/export is handled by a Java command line tool which is called by the Electron app. If Java 8 or higher and [Maven](https://maven.apache.org/) are installed, the Java tool can be built via the command:
 ```
 $ npm run build:java
 ```
-You can also call `npm run build:all` to build everything in one step (including tests).
 
 See also [idai-components-2](https://github.com/dainst/idai-components-2).
 
@@ -53,8 +50,8 @@ To execute the **unit tests**, run
 $ npm test   
 ```
 
-The project is set up to have the compilation of the sources (test as well as regular sources) independently from angular. This is due to the fact that we perform node-based tests, since our code runs in an electron context. This done on the 
-basis of `test/tsconfig.json`, and `jasmine`. To rebuild the sources for tests continually, you can `npm run build:test+watch` in one terminal window, and `npm test` in another.
+The project is set up to manage the compilation of the sources (test as well as regular sources) independently from Angular. This is due to the fact that we perform Node based tests, since our code runs in an Electron context. This is done on the 
+basis of `test/tsconfig.json` and `jasmine`. To rebuild the sources for tests continually, you can run `npm run build:test+watch` in one terminal window, and `npm test` in another.
 
 For troubleshooting information see [here](docs/unit-test-troubleshooting.md).
 
@@ -71,6 +68,7 @@ The optional fail fast parameter specifies if test execution stops on the first 
 To create binaries run:
 
 ```
+$ npm run build
 $ npm run package[:mac|:win]
 ```
 

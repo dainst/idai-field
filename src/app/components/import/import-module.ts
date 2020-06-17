@@ -1,7 +1,8 @@
 import {NgModule} from '@angular/core';
-import {ImportComponent} from './import.component';
+import {RouterModule} from '@angular/router';
 import {BrowserModule} from '@angular/platform-browser';
 import {FormsModule} from '@angular/forms';
+import {ImportComponent} from './import.component';
 import {UploadModalComponent} from './upload-modal.component';
 import {ImportState} from './import-state';
 
@@ -9,6 +10,7 @@ import {ImportState} from './import-state';
     imports: [
         BrowserModule,
         FormsModule,
+        RouterModule,
     ],
     declarations: [
         ImportComponent,

@@ -42,6 +42,7 @@
                                 <span class="mdi mdi-folder"></span>
                             </label>
                         </div>
+
                     </div>
 
                     <div *ngIf="importState.sourceType === 'http'" class="form-group">
@@ -50,6 +51,11 @@
                                type="text"
                                [(ngModel)]="importState.url"
                                (keyup)="updateFormat()">
+                    </div>
+
+                    <div *ngIf="!importState.format" class="import-info" i18n="@@import.format.info">
+                        Unterstützte Formate: {{allowedFileExtensions}}<br>
+                        Bildformate können in der <a href="#" routerLink="../images">Bildverwaltung</a> importiert werden.
                     </div>
 
                     <div *ngIf="showMergeOption()" class="form-group form-check-inline">

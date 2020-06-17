@@ -29,6 +29,7 @@
 
         <div *ngIf="isSectionVisible('types')" class="grid-section">
             <type-grid [documents]="documents"
+                       [images]="images"
                        (clickDocument)="open($event)"
                        (contextmenuDocument)="contextMenu.open($event.mouseEvent, $event.document)"></type-grid>
             <div id="plus-button-container" *ngIf="isSectionVisible('types')">
@@ -57,6 +58,7 @@
              class="grid-section">
             <type-grid
                        [documents]="linkedDocuments"
+                       [images]="images"
                        (clickDocument)="open($event)"></type-grid>
         </div>
     </div>

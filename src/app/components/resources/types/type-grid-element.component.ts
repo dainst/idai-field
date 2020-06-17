@@ -1,6 +1,10 @@
-import {Input, Component, ChangeDetectionStrategy} from '@angular/core';
+import {Input, Component, ChangeDetectionStrategy, OnChanges, SimpleChanges} from '@angular/core';
 import {FieldDocument} from 'idai-components-2';
-import { SafeResourceUrl } from '@angular/platform-browser';
+import {SafeResourceUrl} from '@angular/platform-browser';
+import {ReadImagestore} from '../../../core/images/imagestore/read-imagestore';
+import {FieldReadDatastore} from '../../../core/datastore/field/field-read-datastore';
+import {ImageReadDatastore} from '../../../core/datastore/field/image-read-datastore';
+import {BlobMaker} from '../../../core/images/imagestore/blob-maker';
 
 @Component({
     selector: 'type-grid-element',
@@ -11,10 +15,34 @@ import { SafeResourceUrl } from '@angular/platform-browser';
  * @author Thomas Kleinke
  * @author Sebastian Cuy
  */
-export class TypeGridElementComponent {
+export class TypeGridElementComponent implements OnChanges {
 
     @Input() document: FieldDocument;
     @Input() subtype?: FieldDocument;
-    @Input() imageUrls: Array<SafeResourceUrl>;
+    @Input() images: Array<Blob>;
 
+    public imageUrls: Array<SafeResourceUrl> = [];
+
+
+    constructor(private imagestore: ReadImagestore,
+                private fieldDatastore: FieldReadDatastore,
+                private imageDatastore: ImageReadDatastore,
+                private blobMaker: BlobMaker) {}
+
+
+    async ngOnChanges(changes: SimpleChanges) {
+
+        if (changes['document'] || changes['images']) await this.loadImages();
+    }
+
+
+    private async loadImages() {
+
+        this.imageUrls = [];
+
+        for (let blob of this.images) {
+            const url = this.blobMaker.makeBlob(blob);
+            this.imageUrls.push(url.safeResourceUrl);
+        }
+    }
 }

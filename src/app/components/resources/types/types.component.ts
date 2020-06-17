@@ -60,7 +60,7 @@ export class TypesComponent extends BaseList implements OnChanges {
      */
     public linkedDocuments: Array<FieldDocument> = [];
 
-    public images: { [resourceId: string]: Array<SafeResourceUrl> } = {};
+    public images: { [resourceId: string]: Array<Blob> } = {};
     public contextMenu: ContextMenu = new ContextMenu();
 
     private expandAllGroups: boolean = false;
@@ -290,7 +290,7 @@ export class TypesComponent extends BaseList implements OnChanges {
 
         const imageIds: string[] = flatten(imageLinks.map(to('imageIds')));
 
-        const urls: { [imageId: string]: SafeResourceUrl|string } = await this.imagestore.readThumbnails(imageIds);
+        const urls: { [imageId: string]: Blob } = await this.imagestore.readThumbnails(imageIds);
 
         imageLinks.forEach(imageLink => this.images[imageLink.resourceId] = imageLink.imageIds.map(id => urls[id]));
     }

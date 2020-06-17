@@ -5,7 +5,8 @@
             (click)="clickDocument.emit(document)"
             (contextmenu)="contextmenuDocument.emit({mouseEvent: $event, document: document})">
         <type-grid-element [document]="document"
-            [subtype]="typesComponent.getLinkedSubtype(document)"
-            [imageUrls]="typesComponent.getImageUrls(document)"></type-grid-element>
+                           [subtype]="typesComponent.getLinkedSubtype(document)"
+                           [images]="images[document.resource.id]"
+        ></type-grid-element>
     </div>
 </cdk-virtual-scroll-viewport>

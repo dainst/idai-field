@@ -130,7 +130,7 @@ export class PouchDbFsImagestore /*implements Imagestore */{
     }
 
 
-    public async readThumbnails(imageIds: string[]): Promise<{ [imageId: string]: SafeResourceUrl|string }> {
+    public async readThumbnails(imageIds: string[]): Promise<{ [imageId: string]: Blob }> {
 
         const options = {
             keys: imageIds,
@@ -141,15 +141,10 @@ export class PouchDbFsImagestore /*implements Imagestore */{
 
         const imageDocuments = (await this.db.allDocs(options)).rows.map(to('doc'));
 
-        const result: { [imageId: string]: SafeResourceUrl|string } = {};
+        const result: { [imageId: string]: Blob } = {};
 
         for (let imageDocument of imageDocuments) {
-            if (!this.thumbBlobUrls[imageDocument.resource.id]) {
-                this.thumbBlobUrls[imageDocument.resource.id]
-                    = this.blobMaker.makeBlob(imageDocument._attachments.thumb.data);
-            }
-            result[imageDocument.resource.id]
-                = PouchDbFsImagestore.getUrl(this.thumbBlobUrls[imageDocument.resource.id], false);
+            result[imageDocument.resource.id] = imageDocument._attachments.thumb.data;
         }
 
         return result;

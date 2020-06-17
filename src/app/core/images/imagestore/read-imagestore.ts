@@ -30,7 +30,7 @@ export abstract class ReadImagestore {
     abstract read(key: string, sanitizeAfter?: boolean, thumb?: boolean): Promise<string|SafeResourceUrl>;
 
 
-    abstract readThumbnails(imageIds: string[]): Promise<{ [imageId: string]: SafeResourceUrl|string }>;
+    abstract readThumbnails(imageIds: string[]): Promise<{ [imageId: string]: Blob }>;
 
 
     /**

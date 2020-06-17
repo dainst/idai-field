@@ -14,6 +14,7 @@ let initialized = false;
 const setUp = async (mainWindow) => {
 
     if (initialized) return;
+    initialized = true;
 
     autoUpdater.on('update-available', async updateInfo => {
         updateVersion = updateInfo.version;
@@ -61,7 +62,6 @@ const setUp = async (mainWindow) => {
     });
 
     await autoUpdater.checkForUpdates();
-    initialized = true;
 };
 
 autoUpdater.autoDownload = false;

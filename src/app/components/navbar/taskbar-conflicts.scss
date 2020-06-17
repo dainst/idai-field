@@ -5,13 +5,15 @@
   #taskbar-conflicts-container {
     margin-left: 18px;
   }
+}
 
-  .popover-header {
-    width: 350px;
-    position: absolute;
-    right: 0;
-  }
+.popover-header {
+  width: 350px;
+  position: absolute;
+  right: 0;
+}
 
+.conflicts-popover {
   .popover-body {
     position: absolute;
     width: 350px;
@@ -21,7 +23,7 @@
     background-color: rgb(238, 238, 238);
 
     .list-group {
-        max-height: calc(100vh - 337px);
+      max-height: calc(100vh - 337px);
 
       .list-group-item {
         display: block;

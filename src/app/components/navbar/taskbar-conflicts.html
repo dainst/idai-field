@@ -9,10 +9,11 @@
         </ul>
     </ng-template>
 
-    <a [ngbPopover]="popContent" [autoClose]="false"
+    <a id="taskbar-conflicts-button"
+       [ngbPopover]="popContent" [autoClose]="false"
        popoverTitle="Konflikte" i18n-popoverTitle="@@navbar.taskbar.conflicts"
-       #popover="ngbPopover" placement="bottom" id="taskbar-conflicts-button"
-       triggers="manual" (click)="togglePopover()" placement="bottom">
+       #popover="ngbPopover" placement="bottom" container="body" popoverClass="conflicts-popover"
+       triggers="manual" (click)="togglePopover()">
         <span class="mdi mdi-alert-outline"></span>
         <span class="badge-pill badge-danger taskbar-badge">
             {{conflicts.length}}

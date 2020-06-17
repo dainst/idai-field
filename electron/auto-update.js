@@ -8,13 +8,13 @@ const messages = require('./messages');
 autoUpdater.logger = log;
 
 let updateVersion;
-let initialized = false;
+let started = false;
 
 
 const setUp = async (mainWindow) => {
 
-    if (initialized) return;
-    initialized = true;
+    if (started) return;
+    started = true;
 
     autoUpdater.on('update-available', async updateInfo => {
         updateVersion = updateInfo.version;

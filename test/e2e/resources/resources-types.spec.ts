@@ -117,6 +117,7 @@ describe('resources/types --', () => {
             expect(elements.length).toBe(2);
         });
 
+        browser.wait(EC.stalenessOf(ResourcesTypeGridPage.getToggleFindsSectionButton()));
         browser.wait(EC.stalenessOf(ResourcesTypeGridPage.getLinkedDocumentsGrid()));
     });
 

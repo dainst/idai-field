@@ -60,6 +60,12 @@ export class ResourcesTypeGridPage {
     }
 
 
+    public static getToggleFindsSectionButton() {
+
+        return element(by.id('toggle-finds-section-button'));
+    }
+
+
     // text
 
     public static getTypeBadgeText(identifier: string) {

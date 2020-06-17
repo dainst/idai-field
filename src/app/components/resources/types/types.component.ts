@@ -107,12 +107,6 @@ export class TypesComponent extends BaseList implements OnChanges {
     }
 
 
-    public getImageUrls(document: FieldDocument): Array<SafeResourceUrl> {
-
-        return this.images[document.resource.id] ?? [];
-    }
-
-
     public async open(document: FieldDocument) {
 
         await this.viewFacade.moveInto(document, false, true);

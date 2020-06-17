@@ -1,5 +1,4 @@
-import {cond, defined, flow, isNot, Map, Mapping, on,
-    isUndefined, copy, separate, dissoc, pairWith} from 'tsfun';
+import {cond, defined, flow, isNot, Map, Mapping, on, isUndefined, copy, separate, dissoc} from 'tsfun';
 import {assoc, update, map, reduce} from 'tsfun/associative';
 import {Category} from '../model/category';
 import {CategoryDefinition} from '../model/category-definition';

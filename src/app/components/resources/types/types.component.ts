@@ -1,5 +1,4 @@
 import {ChangeDetectorRef, Component, Input, OnChanges, SimpleChanges} from '@angular/core';
-import {SafeResourceUrl} from '@angular/platform-browser';
 import {take, flatten, set, flow, filter, map, to, Map, isnt} from 'tsfun';
 import {Document, FieldDocument} from 'idai-components-2';
 import {ViewFacade} from '../../../core/resources/view/view-facade';
@@ -17,7 +16,7 @@ import {NavigationPath} from '../../../core/resources/view/state/navigation-path
 import {RoutingService} from '../../routing-service';
 import {TabManager} from '../../../core/tabs/tab-manager';
 import {PLACEHOLDER} from '../../../core/images/row/image-row';
-import { makeLookup } from 'src/app/core/util/transformers';
+import {makeLookup} from 'src/app/core/util/transformers';
 import {ProjectCategories} from '../../../core/configuration/project-categories';
 
 
@@ -290,17 +289,11 @@ export class TypesComponent extends BaseList implements OnChanges {
     }
 
 
-    private isCatalogOrType(document: FieldDocument): boolean {
-
-        return ProjectCategories.getTypeCategoryNames().includes(document.resource.category);
-    }
-
-
     private getLinkedImageIds(document: FieldDocument): string[] {
 
         if (Document.hasRelations(document, 'isDepictedIn')) {
             return [document.resource.relations['isDepictedIn'][0]];
-        } else if (this.isCatalogOrType(document)) {
+        } else if (TypesComponent.isCatalogOrType(document)) {
             return this.getImageIdsOfLinkedResources(document);
         } else {
             return [];
@@ -314,5 +307,11 @@ export class TypesComponent extends BaseList implements OnChanges {
             .filter(isnt(PLACEHOLDER));
 
         return take(4, imageIds);
+    }
+
+
+    private static isCatalogOrType(document: FieldDocument): boolean {
+
+        return ProjectCategories.getTypeCategoryNames().includes(document.resource.category);
     }
 }

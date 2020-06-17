@@ -32,8 +32,10 @@
     }
 
     .subheader {
+        height: 56px;
         padding: 1rem;
         background-color: #eee;
+        overflow-y: auto;
     }
 
     .custom-category .header {
@@ -67,6 +69,10 @@
         overflow-y: auto;
         overflow-x: hidden;
         padding: 15px;
+
+        &.shortened {
+            height: calc(100vh - 160px);
+        }
 
         .card {
             margin-bottom: 10px;

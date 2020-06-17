@@ -57,7 +57,7 @@
                         </ul>
                     </div>
 
-                    <div class="col content">
+                    <div class="col content" [class.shortened]="getCategoryDescription(selectedCategory)">
 
                         <div *ngFor="let field of getVisibleFields(selectedCategory)"
                                 class="card"

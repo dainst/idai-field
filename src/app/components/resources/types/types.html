@@ -56,10 +56,9 @@
         <div *ngIf="linkedDocuments.length > 0 && isSectionVisible('finds')"
              id="linked-documents-grid"
              class="grid-section">
-            <type-grid
-                       [documents]="linkedDocuments"
+            <type-grid [documents]="linkedDocuments"
                        [images]="images"
-                       (clickDocument)="open($event)"></type-grid>
+                       (clickDocument)="openResourceViewModal($event)"></type-grid>
         </div>
     </div>
 </div>

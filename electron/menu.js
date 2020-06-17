@@ -196,6 +196,7 @@ const getTemplate = (mainWindow, context) => {
     if (process.platform === 'darwin') {
         // Remove 'Settings' option from 'File' menu
         template[1].submenu.splice(3, 1);
+        template[6].submenu.splice(0, 1);
     } else {
         // Remove 'iDAI.field' menu
         template.splice(0, 1);

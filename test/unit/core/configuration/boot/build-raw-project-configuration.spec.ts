@@ -9,7 +9,7 @@ import {ValuelistDefinition} from '../../../../../src/app/core/configuration/mod
 import {Groups} from '../../../../../src/app/core/configuration/model/group';
 import InputType = FieldDefinition.InputType;
 import {byName, Named, namedArrayToNamedMap, toName,} from '../../../../../src/app/core/util/named';
-import {accessTree, flattenTree} from '../../../../../src/app/core/util/treelist';
+import {accessTree, flattenTree} from '../../../../../src/app/core/util/tree-list';
 import {Category} from '../../../../../src/app/core/configuration/model/category';
 
 

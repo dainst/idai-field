@@ -5,10 +5,10 @@ import {Named} from './named';
 
 export type Tree<T = any> = {
     item: T,
-    trees: Treelist<T>
+    trees: TreeList<T>
 }
 
-export type Treelist<T = any> = Array<Tree<T>>;
+export type TreeList<T = any> = Array<Tree<T>>;
 
 export module Tree {
 
@@ -24,28 +24,28 @@ export const toTreeItem = to(ITEMPATH);
 
 // Implementation note:
 // Technically it would be no problem to have only a function mapTree
-// (making mapTreelist superfluous) which maps both Tree and Treelist.
-// But the two argument list version would then return Mapping<Tree|Treelist>
+// (making mapTreeList superfluous) which maps both Tree and TreeList.
+// But the two argument list version would then return Mapping<Tree|TreeList>
 // which would then lead to the problem that we needed to disambiguate typewise
 // in flows, which we want to avoid  (same consideration which in tsfun led
 // to having various packages containing various functions versions).
 
-export function mapTreelist<A,B>(f: Mapping<A,B>, t: Treelist<A>): Treelist<B>;
-export function mapTreelist<A,B>(f: Mapping<A,B>): Mapping<Treelist<A>,Treelist<B>>;
-export function mapTreelist(...args: any[]): any {
+export function mapTreeList<A,B>(f: Mapping<A,B>, t: TreeList<A>): TreeList<B>;
+export function mapTreeList<A,B>(f: Mapping<A,B>): Mapping<TreeList<A>,TreeList<B>>;
+export function mapTreeList(...args: any[]): any {
 
-    const $ = (f: any) => (treelist: any) => {
+    const $ = (f: any) => (treeList: any) => {
 
         const replacement = [];
-        for (let { item: t, trees: tree} of treelist) {
-            replacement.push({ item: f(t), trees: mapTreelist(f, tree)});
+        for (let { item: t, trees: tree} of treeList) {
+            replacement.push({ item: f(t), trees: mapTreeList(f, tree)});
         }
         return replacement;
-    }
+    };
 
     return args.length === 2
         ? $(args[0])(args[1])
-        : $(args[0])
+        : $(args[0]);
 }
 
 
@@ -57,17 +57,17 @@ export function mapTree(...args: any[]): any {
 
         return {
             item: f(tree.item),
-            trees: mapTreelist(f, tree.trees)
+            trees: mapTreeList(f, tree.trees)
         };
-    }
+    };
 
     return args.length === 2
         ? $(args[0])(args[1])
-        : $(args[0])
+        : $(args[0]);
 }
 
 
-export function accessTree<T>(t: Treelist<T>|Tree<T>, ...path: number[]): T {
+export function accessTree<T>(t: TreeList<T>|Tree<T>, ...path: number[]): T {
 
     function _accessTree<T>(t: Tree<T>, path: number[]): T {
 
@@ -77,7 +77,7 @@ export function accessTree<T>(t: Treelist<T>|Tree<T>, ...path: number[]): T {
         return _accessTreelist(t.trees, path);
     }
 
-    function _accessTreelist<T>(t: Treelist<T>, path: number[]) {
+    function _accessTreelist<T>(t: TreeList<T>, path: number[]) {
 
         const segment = first(path);
         if (!isNumber(segment)) return t[0] as any;
@@ -90,22 +90,22 @@ export function accessTree<T>(t: Treelist<T>|Tree<T>, ...path: number[]): T {
 }
 
 
-export function mapTrees<T>(f: Mapping<Treelist<T>>, t: Treelist<T>): Treelist<T> {
+export function mapTrees<T>(f: Mapping<TreeList<T>>, t: TreeList<T>): TreeList<T> {
 
     return f(t).map(({ item: t, trees: children }) => ({ item: t, trees: mapTrees(f, children)}));
 }
 
 
-export function flattenTree<A>(t: Tree<A>|Treelist<A>): Array<A> {
+export function flattenTree<A>(t: Tree<A>|TreeList<A>): Array<A> {
 
-    const reduced = ((isArray(t) ? t : (t as Tree<A>).trees) as Treelist<A>)
+    const reduced = ((isArray(t) ? t : (t as Tree<A>).trees) as TreeList<A>)
         .reduce((as, { item: a, trees: children }) => as.concat([a]).concat(flattenTree(children)), []);
 
     return (isArray(t) ? [] : [(t as Tree<A>).item]).concat(reduced);
 }
 
 
-export function findInTree<T>(t: Treelist<T>|Tree<T>,
+export function findInTree<T>(t: TreeList<T>|Tree<T>,
                               match: T|Predicate<T>,
                               comparator?: Comparator): Tree<T>|undefined {
 
@@ -134,11 +134,11 @@ function buildMatches<T>(match: T|Predicate<T>, comparator?: Comparator): Predic
 }
 
 
-// ArrayTree and ArrayTreelist data structures //////
+// ArrayTree and ArrayTreeList data structures //////
 //
-// In contrast to our Tree and Treelist data structures
+// In contrast to our Tree and TreeList data structures
 // this structure does not allow for distinguishing trees and
-// treelists on the javascript level by virtue of them being either
+// tree lists on the javascript level by virtue of them being either
 // objects or arrays.
 // However, this version reads much nicer and we use it to instantiate
 // our trees in all tests. The builder functions also provides an indirection
@@ -146,19 +146,19 @@ function buildMatches<T>(match: T|Predicate<T>, comparator?: Comparator): Predic
 
 export type Node<ITEM,TREES> = Pair<ITEM,TREES>;
 
-export type ArrayTree<T = any> = Node<T, ArrayTreelist<T>>;
+export type ArrayTree<T = any> = Node<T, ArrayTreeList<T>>;
 
-export type ArrayTreelist<T = any> = Array<ArrayTree<T>>;
+export type ArrayTreeList<T = any> = Array<ArrayTree<T>>;
 
-export function buildTreelist<T>(t: ArrayTreelist<T>): Treelist<T> {
+export function buildTreeList<T>(t: ArrayTreeList<T>): TreeList<T> {
 
-    return t.map(([t,trees]) => ({ item: t, trees: buildTreelist(trees)}));
+    return t.map(([t,trees]) => ({ item: t, trees: buildTreeList(trees)}));
 }
 
 export function buildTree<T>([item, children]: ArrayTree<T>): Tree<T> {
 
     return {
         item: item,
-        trees: children.map(([t,trees]) => ({ item: t, trees: buildTreelist(trees)}))
+        trees: children.map(([t,trees]) => ({ item: t, trees: buildTreeList(trees)}))
     };
 }

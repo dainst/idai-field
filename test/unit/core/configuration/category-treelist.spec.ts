@@ -1,21 +1,19 @@
-import {
-    linkParentAndChildInstances
-} from '../../../../src/app/core/configuration/category-treelist';
-import {accessTree, buildTreelist, flattenTree, Treelist} from '../../../../src/app/core/util/treelist';
+import {linkParentAndChildInstances} from '../../../../src/app/core/configuration/category-tree-list';
+import {accessTree, buildTreeList, flattenTree, TreeList} from '../../../../src/app/core/util/tree-list';
 import {Category} from '../../../../src/app/core/configuration/model/category';
 
 
-describe('CategoryTreelist', () => {
+describe('CategoryTreeList', () => {
 
     type T = { name: string, children: Array<T>, parentCategory?: T};
 
-    it('categoryTreelistToArray', () => {
+    it('categoryTreeListToArray', () => {
 
-        const parent = { name: 'P1', children: [] }
+        const parent = { name: 'P1', children: [] };
         const child = { name: 'C1', parentCategory: parent, children: [] };
         parent.children = [child];
 
-        const t: Treelist<{ name: string, children: Array<T>}> = buildTreelist([
+        const t: TreeList<{ name: string, children: Array<T>}> = buildTreeList([
             [
                 parent,
                 [
@@ -25,7 +23,7 @@ describe('CategoryTreelist', () => {
                     ]
                 ]
             ]
-        ])
+        ]);
 
         const result = flattenTree<Category>(t as any);
 
@@ -50,17 +48,17 @@ describe('CategoryTreelist', () => {
 
     it('multiple parent items', () => {
 
-        const parent1 = { name: 'P1', children: [] }
+        const parent1 = { name: 'P1', children: [] };
         const child1 = { name: 'C1', parentCategory: parent1, children: [] };
         const child2 = { name: 'C2', parentCategory: parent1, children: [] };
         parent1.children = [child1,child2];
 
-        const parent2 = { name: 'P2', children: [] }
+        const parent2 = { name: 'P2', children: [] };
         const child3 = { name: 'C3', parentCategory: parent2, children: [] };
         const child4 = { name: 'C4', parentCategory: parent2, children: [] };
         parent2.children = [child3,child4];
 
-        const t = buildTreelist([
+        const t = buildTreeList([
             [
                 parent1,
                 [
@@ -120,11 +118,11 @@ describe('CategoryTreelist', () => {
 
     function threeLevels(): any {
 
-        const parent1 = { name: 'P1' }
+        const parent1 = { name: 'P1' };
         const child1 = { name: 'C1' };
         const child2 = { name: 'C2' };
 
-        return buildTreelist([
+        return buildTreeList([
             [
                 parent1,
                 [
@@ -155,7 +153,7 @@ describe('CategoryTreelist', () => {
     });
 
 
-    it('categoryTreelistToArray - recursive', () => {
+    it('categoryTreeListToArray - recursive', () => {
 
         const t = threeLevels();
         const result = flattenTree<Category>(linkParentAndChildInstances(t));

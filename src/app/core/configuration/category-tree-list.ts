@@ -1,12 +1,12 @@
 import {Category} from './model/category';
-import {toTreeItem, Treelist} from '../util/treelist';
+import {toTreeItem, TreeList} from '../util/tree-list';
 
 
 /**
  *
  * @returns a CategoryTree - This tree's category instances are connected via 'parentCategory' and 'children' properties of Category
  */
-export function linkParentAndChildInstances(categories: Treelist<Category> /* modified in place */): Treelist<Category> {
+export function linkParentAndChildInstances(categories: TreeList<Category> /* modified in place */): TreeList<Category> {
 
     for (let { item: category, trees: children } of categories) {
 

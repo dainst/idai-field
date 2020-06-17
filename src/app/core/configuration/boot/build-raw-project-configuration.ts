@@ -25,7 +25,7 @@ import {addRelations} from './add-relations';
 import {applyLanguage} from './apply-language';
 import {applySearchConfiguration} from './apply-search-configuration';
 import {orderFields} from './order-fields';
-import {makeCategoryTreelist} from './make-category-treelist';
+import {makeCategoryTreeList} from './make-category-tree-list';
 import {RawProjectConfiguration} from '../project-configuration';
 import {Category} from '../model/category';
 import {Group, Groups} from '../model/group';
@@ -34,9 +34,9 @@ import {RelationsUtil} from '../relations-utils';
 import {CategoryDefinition} from '../model/category-definition';
 import {ProjectCategories} from '../project-categories';
 import {FieldDefinition} from '../model/field-definition';
-import {mapTrees, mapTreelist, Treelist, Tree, ITEMNAMEPATH} from '../../util/treelist';
+import {mapTrees, mapTreeList, TreeList, ITEMNAMEPATH} from '../../util/tree-list';
 import {sortStructArray} from '../../util/sort-struct-array';
-import {linkParentAndChildInstances} from '../category-treelist';
+import {linkParentAndChildInstances} from '../category-tree-list';
 
 const CATEGORIES = [0];
 
@@ -92,7 +92,7 @@ function processCategories(orderConfiguration: any,
                            validateFields: any,
                            languageConfiguration: any,
                            searchConfiguration: any,
-                           relations: Array<RelationDefinition>): Mapping<Map<CategoryDefinition>, Treelist<Category>> {
+                           relations: Array<RelationDefinition>): Mapping<Map<CategoryDefinition>, TreeList<Category>> {
 
     const sortCategoryGroups = update(Category.GROUPS, sortGroups(Groups.DEFAULT_ORDER));
 
@@ -101,10 +101,10 @@ function processCategories(orderConfiguration: any,
         addExtraFieldsOrder(orderConfiguration),
         orderFields(orderConfiguration),
         validateFields,
-        makeCategoryTreelist,
-        mapTreelist(putRelationsIntoGroups(relations)),
-        mapTreelist(sortCategoryGroups),
-        mapTreelist(setGroupLabels(languageConfiguration.groups || {})),
+        makeCategoryTreeList,
+        mapTreeList(putRelationsIntoGroups(relations)),
+        mapTreeList(sortCategoryGroups),
+        mapTreeList(setGroupLabels(languageConfiguration.groups || {})),
         setGeometriesInGroups(languageConfiguration),
         orderCategories(orderConfiguration?.categories),
         linkParentAndChildInstances
@@ -112,11 +112,11 @@ function processCategories(orderConfiguration: any,
 }
 
 
-const setGeometriesInGroups = (languageConfiguration: any) => (categoriesTree: Treelist<Category>) =>
-    mapTreelist(adjustCategoryGeometry(languageConfiguration, categoriesTree), categoriesTree);
+const setGeometriesInGroups = (languageConfiguration: any) => (categoriesTree: TreeList<Category>) =>
+    mapTreeList(adjustCategoryGeometry(languageConfiguration, categoriesTree), categoriesTree);
 
 
-function adjustCategoryGeometry(languageConfiguration: any, categoriesTree: Treelist<Category>) {
+function adjustCategoryGeometry(languageConfiguration: any, categoriesTree: TreeList<Category>) {
 
     return (category: Category /* modified in place */): Category => {
 
@@ -134,7 +134,7 @@ function adjustCategoryGeometry(languageConfiguration: any, categoriesTree: Tree
             inputType: 'geometry',
             editable: true,
             label: 'geometry'
-        }
+        };
         const label = languageConfiguration.other?.['geometry']
             ? languageConfiguration.other['geometry']
             : undefined;
@@ -172,8 +172,8 @@ const sortGroups = (defaultOrder: string[]) => (groups: Map<Group>) =>
     flow(defaultOrder, map(lookup(groups)), prune);
 
 
-const orderCategories = (categoriesOrder: string[] = []) => (categories: Treelist<Category>): Treelist<Category> =>
-    mapTrees(sortStructArray(categoriesOrder, ITEMNAMEPATH), categories) as Treelist<Category>;
+const orderCategories = (categoriesOrder: string[] = []) => (categories: TreeList<Category>): TreeList<Category> =>
+    mapTrees(sortStructArray(categoriesOrder, ITEMNAMEPATH), categories) as TreeList<Category>;
 
 
 function setGroupLabels(groupLabels: Map<string>) {

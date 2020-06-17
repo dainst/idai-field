@@ -1,14 +1,14 @@
 import {equal, is, on, reverse} from 'tsfun';
-import {accessTree, findInTree, flattenTree, mapTrees, mapTreelist, Tree,
-    Treelist, mapTree, buildTreelist, buildTree
-} from '../../../src/app/core/util/treelist';
+import {accessTree, findInTree, flattenTree, mapTrees, mapTreeList, Tree,
+    TreeList, mapTree, buildTreeList, buildTree
+} from '../../../src/app/core/util/tree-list';
 
 
-describe('Treelist|Tree', () => {
+describe('TreeList|Tree', () => {
 
     it('Treelist', () => {
 
-        const t: Treelist<number> = [{ item: 1, trees: []}];
+        const t: TreeList<number> = [{ item: 1, trees: []}];
     });
 
 
@@ -16,7 +16,7 @@ describe('Treelist|Tree', () => {
 
         expect(
             equal(
-                buildTreelist([[3, [[17, []]]]]),
+                buildTreeList([[3, [[17, []]]]]),
                 [
                     {
                         item: 3,
@@ -68,7 +68,7 @@ describe('Treelist|Tree', () => {
 
     it('mapTreelist', () => {
 
-        const t: Treelist<number> = buildTreelist(
+        const t: TreeList<number> = buildTreeList(
             [
                 [1, [
                         [13, []],
@@ -77,7 +77,7 @@ describe('Treelist|Tree', () => {
                 [3, []]
             ]);
 
-        const exp: Treelist<number> = buildTreelist(
+        const exp: TreeList<number> = buildTreeList(
             [
                 [2, [
                         [26, []],
@@ -86,14 +86,14 @@ describe('Treelist|Tree', () => {
                 [6, []]
             ]);
 
-        const result = mapTreelist((_: number) => _ * 2, t);
+        const result = mapTreeList((_: number) => _ * 2, t);
         expect(equal(result, exp)).toBeTruthy();
     });
 
 
     it('mapTreelists', () => {
 
-        const t: Treelist<number> = buildTreelist(
+        const t: TreeList<number> = buildTreeList(
             [
                 [1, [
                         [13, []],
@@ -102,7 +102,7 @@ describe('Treelist|Tree', () => {
                 [3, []]
             ]);
 
-        const exp: Treelist<number> = buildTreelist(
+        const exp: TreeList<number> = buildTreeList(
             [
                 [3, []],
                 [1, [
@@ -120,7 +120,7 @@ describe('Treelist|Tree', () => {
 
         const a = { a: 1 };
 
-        const t: Treelist<any> = buildTreelist<any>(
+        const t: TreeList<any> = buildTreeList<any>(
             [
                 [1, [
                         [13, [[a, []]]],
@@ -175,7 +175,7 @@ describe('Treelist|Tree', () => {
 
     it('findInTreelist', () => {
 
-        const t: Treelist<any> = buildTreelist<any>(
+        const t: TreeList<any> = buildTreeList<any>(
             [
                 [1, [
                         [13, [[17, []]]],
@@ -213,7 +213,7 @@ describe('Treelist|Tree', () => {
 
         const a = { a: 3 };
 
-        const t: Treelist = buildTreelist<any>(
+        const t: TreeList = buildTreeList<any>(
             [
                 [1, [
                         [a, [[17, []]]],
@@ -230,7 +230,7 @@ describe('Treelist|Tree', () => {
     it('findInTreelist with Comparator', () => {
 
         const a = { a: 3 };
-        const t: Treelist = buildTreelist<any>(
+        const t: TreeList = buildTreeList<any>(
             [
                 [1, [
                         [a, [[17, []]]],
@@ -253,7 +253,7 @@ describe('Treelist|Tree', () => {
 
     it('accessTreelist - first level', () => {
 
-        expect(accessTree(buildTreelist(
+        expect(accessTree(buildTreeList(
             [
                 [
                     7,
@@ -267,7 +267,7 @@ describe('Treelist|Tree', () => {
 
     it('accessTreelist - second level', () => {
 
-        expect(accessTree(buildTreelist(
+        expect(accessTree(buildTreeList(
             [
                 [
                     7,

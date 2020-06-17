@@ -2,11 +2,11 @@ import {FieldResource} from 'idai-components-2';
 import {Groups} from '../../../../../src/app/core/configuration/model/group';
 import {FieldDefinition} from '../../../../../src/app/core/configuration/model/field-definition';
 import {Category} from '../../../../../src/app/core/configuration/model/category';
-import {makeCategoryTreelist} from '../../../../../src/app/core/configuration/boot/make-category-treelist';
+import {makeCategoryTreeList} from '../../../../../src/app/core/configuration/boot/make-category-tree-list';
 import {byName, namedArrayToNamedMap} from '../../../../../src/app/core/util/named';
 import InputType = FieldDefinition.InputType;
 import {MDInternal} from '../../../../../src/app/components/messages/md-internal';
-import {flattenTree} from '../../../../../src/app/core/util/treelist';
+import {flattenTree} from '../../../../../src/app/core/util/tree-list';
 
 
 /**
@@ -32,7 +32,7 @@ describe('makeCategoriesTreelist', () => {
             }
         };
 
-        const categoriesMap = namedArrayToNamedMap(flattenTree<Category>(makeCategoryTreelist(confDef)));
+        const categoriesMap = namedArrayToNamedMap(flattenTree<Category>(makeCategoryTreeList(confDef)));
 
         expect(categoriesMap[P].name).toEqual(P);
         expect(categoriesMap[P].children[0].name).toEqual(A);
@@ -76,7 +76,7 @@ describe('makeCategoriesTreelist', () => {
             }
         };
 
-        const categoriesMap = namedArrayToNamedMap(flattenTree<Category>(makeCategoryTreelist(confDef)));
+        const categoriesMap = namedArrayToNamedMap(flattenTree<Category>(makeCategoryTreeList(confDef)));
         const categoryA = categoriesMap[P].children.find(category => category.name === A)!;
         const categoryB = categoriesMap[P].children.find(category => category.name === B)!;
 
@@ -112,7 +112,7 @@ describe('makeCategoriesTreelist', () => {
             }
         };
 
-        const categoriesMap = namedArrayToNamedMap(flattenTree<Category>(makeCategoryTreelist(confDef)));
+        const categoriesMap = namedArrayToNamedMap(flattenTree<Category>(makeCategoryTreeList(confDef)));
 
         expect(categoriesMap[T].groups[Groups.STEM].fields[0].name).toEqual(FieldResource.IDENTIFIER);
         expect(categoriesMap[T].groups[Groups.STEM].fields[1].name).toEqual(FieldResource.SHORTDESCRIPTION);
@@ -146,7 +146,7 @@ describe('makeCategoriesTreelist', () => {
         };
 
         expect(
-            () => makeCategoryTreelist(
+            () => makeCategoryTreeList(
                 {
                     FirstLevelCategory: firstLevelCategory,
                     SecondLevelCategory: secondLevelCategory
@@ -175,7 +175,7 @@ describe('makeCategoriesTreelist', () => {
         };
 
         expect(() =>
-            makeCategoryTreelist({ SecondLevelCategory: secondLevelCategory } as any)
+            makeCategoryTreeList({ SecondLevelCategory: secondLevelCategory } as any)
         ).toThrow(MDInternal.PROJECT_CONFIGURATION_ERROR_GENERIC);
     });
 });

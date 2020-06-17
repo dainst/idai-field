@@ -1,7 +1,7 @@
 import {ValidationErrors} from '../../../../src/app/core/model/validation-errors';
 import {Validations} from '../../../../src/app/core/model/validations';
 import {ProjectConfiguration} from '../../../../src/app/core/configuration/project-configuration';
-import {buildTreelist} from '../../../../src/app/core/util/treelist';
+import {buildTreeList} from '../../../../src/app/core/util/tree-list';
 
 
 /**
@@ -11,7 +11,7 @@ import {buildTreelist} from '../../../../src/app/core/util/treelist';
 describe('Validations', () => {
 
     const projectConfiguration = new ProjectConfiguration(
-        [buildTreelist(
+        [buildTreeList(
             [[{
                 name: 'T',
                 groups: [{

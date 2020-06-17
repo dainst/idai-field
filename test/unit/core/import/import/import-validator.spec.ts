@@ -3,7 +3,7 @@ import {ValidationErrors} from '../../../../../src/app/core/model/validation-err
 import {ImportErrors} from '../../../../../src/app/core/import/import/import-errors';
 import {INPUT_TYPES} from '../../../../../src/app/core/constants';
 import {ProjectConfiguration} from '../../../../../src/app/core/configuration/project-configuration';
-import {buildTreelist} from '../../../../../src/app/core/util/treelist';
+import {buildTreeList} from '../../../../../src/app/core/util/tree-list';
 
 
 /**
@@ -14,7 +14,7 @@ describe('ImportValidator', () => {
 
     const projectConfiguration = new ProjectConfiguration(
         [
-          buildTreelist([
+          buildTreeList([
             [ {
                 name: 'T',
                 groups: [{ name: 'stem', fields: [

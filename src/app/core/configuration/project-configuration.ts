@@ -6,12 +6,12 @@ import {FieldDefinition} from './model/field-definition';
 import {RelationDefinition} from './model/relation-definition';
 import {Named, namedArrayToNamedMap} from '../util/named';
 import {RelationsUtil} from './relations-utils';
-import {flattenTree, ITEMNAMEPATH, Treelist} from '../util/treelist';
+import {flattenTree, ITEMNAMEPATH, TreeList} from '../util/tree-list';
 import {Name} from '../constants';
-import {isTopLevelItemOrChildThereof} from '../util/named-treelist';
+import {isTopLevelItemOrChildThereof} from '../util/named-tree-list';
 
 
-export type RawProjectConfiguration = Pair<Treelist<Category>, Array<RelationDefinition>>;
+export type RawProjectConfiguration = Pair<TreeList<Category>, Array<RelationDefinition>>;
 
 
 /**
@@ -33,7 +33,7 @@ export class ProjectConfiguration {
     public static UNKNOWN_TYPE_ERROR = 'projectCategories.Errors.UnknownType';
 
     private readonly categoriesArray: Array<Category>;
-    private readonly categoryTreelist: Treelist<Category>;
+    private readonly categoryTreelist: TreeList<Category>;
     private readonly relations: Array<RelationDefinition>;
 
     // internal use only, we deliberately don't provide accessor for this any longer
@@ -71,7 +71,7 @@ export class ProjectConfiguration {
     }
 
 
-    public getCategoryTreelist(...selectedTopLevelCategories: Array<Name>): Treelist<Category> {
+    public getCategoryTreelist(...selectedTopLevelCategories: Array<Name>): TreeList<Category> {
 
         return selectedTopLevelCategories.length === 0
             ? this.categoryTreelist

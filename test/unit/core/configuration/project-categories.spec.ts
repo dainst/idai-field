@@ -3,7 +3,7 @@ import isGeometryCategory = ProjectCategories.isGeometryCategory;
 import getFieldCategories = ProjectCategories.getFieldCategories;
 import {sameset} from 'tsfun';
 import {Named, toName} from '../../../../src/app/core/util/named';
-import {buildTreelist, Treelist} from '../../../../src/app/core/util/treelist';
+import {buildTreeList, TreeList} from '../../../../src/app/core/util/tree-list';
 import {Category} from '../../../../src/app/core/configuration/model/category';
 import getConcreteFieldCategories = ProjectCategories.getConcreteFieldCategories;
 import getRegularCategoryNames = ProjectCategories.getRegularCategoryNames;
@@ -17,7 +17,7 @@ import getFeatureCategoryNames = ProjectCategories.getFeatureCategoryNames;
 
 describe('ProjectCategories', () => {
 
-    const categoryTreelist: Treelist<Named> = buildTreelist([
+    const categoryTreelist: TreeList<Named> = buildTreeList([
         [
             { name: 'Image' },
             [
@@ -89,7 +89,7 @@ describe('ProjectCategories', () => {
 
         expect(
             sameset(
-                getFieldCategories(categoryTreelist as Treelist<Category>).map(toName),
+                getFieldCategories(categoryTreelist as TreeList<Category>).map(toName),
                 ['Operation', 'Trench', 'Inscription', 'Type', 'TypeCatalog', 'Find', 'Place', 'Feature', 'Architecture'])
         ).toBeTruthy();
     });
@@ -99,7 +99,7 @@ describe('ProjectCategories', () => {
 
         expect(
             sameset(
-                getConcreteFieldCategories(categoryTreelist as Treelist<Category>).map(toName),
+                getConcreteFieldCategories(categoryTreelist as TreeList<Category>).map(toName),
                 ['Operation', 'Trench', 'Inscription', 'Find', 'Place', 'Feature', 'Architecture'])
         ).toBeTruthy();
     });
@@ -109,7 +109,7 @@ describe('ProjectCategories', () => {
 
         expect(
             sameset(
-                getRegularCategoryNames(categoryTreelist as Treelist<Category>),
+                getRegularCategoryNames(categoryTreelist as TreeList<Category>),
                 ['Inscription', 'Find', 'Feature', 'Architecture'])
         ).toBeTruthy();
     });
@@ -119,7 +119,7 @@ describe('ProjectCategories', () => {
 
         expect(
             sameset(
-                getImageCategoryNames(categoryTreelist as Treelist<Category>),
+                getImageCategoryNames(categoryTreelist as TreeList<Category>),
                 ['Image', 'Drawing'])
         ).toBeTruthy();
     });
@@ -129,7 +129,7 @@ describe('ProjectCategories', () => {
 
         expect(
             sameset(
-                getTypeCategories(categoryTreelist as Treelist<Category>).map(toName),
+                getTypeCategories(categoryTreelist as TreeList<Category>).map(toName),
                 ['TypeCatalog', 'Type'])
         ).toBeTruthy();
     });
@@ -139,7 +139,7 @@ describe('ProjectCategories', () => {
 
         expect(
             sameset(
-                getOverviewTopLevelCategories(categoryTreelist as Treelist<Category>).map(toName),
+                getOverviewTopLevelCategories(categoryTreelist as TreeList<Category>).map(toName),
                 ['Operation', 'Place'])
         ).toBeTruthy();
     });
@@ -149,7 +149,7 @@ describe('ProjectCategories', () => {
 
         expect(
             sameset(
-                getOverviewCategories(categoryTreelist as Treelist<Category>),
+                getOverviewCategories(categoryTreelist as TreeList<Category>),
                 ['Trench', 'Place'])
         ).toBeTruthy();
     });
@@ -159,7 +159,7 @@ describe('ProjectCategories', () => {
 
         expect(
             sameset(
-                getOverviewCategoryNames(categoryTreelist as Treelist<Category>),
+                getOverviewCategoryNames(categoryTreelist as TreeList<Category>),
                 ['Operation', 'Trench', 'Place'])
         ).toBeTruthy();
     });
@@ -169,7 +169,7 @@ describe('ProjectCategories', () => {
 
         expect(
             sameset(
-                getFeatureCategoryNames(categoryTreelist as Treelist<Category>),
+                getFeatureCategoryNames(categoryTreelist as TreeList<Category>),
                 ['Feature', 'Architecture'])
         ).toBeTruthy();
     });

@@ -1,5 +1,5 @@
 import {ProjectConfiguration} from '../../../../src/app/core/configuration/project-configuration';
-import {buildTreelist} from '../../../../src/app/core/util/treelist';
+import {buildTreeList} from '../../../../src/app/core/util/tree-list';
 
 
 /**
@@ -50,7 +50,7 @@ describe('ProjectConfiguration', () => {
             }]
         } as any;
 
-        const configuration: ProjectConfiguration = new ProjectConfiguration([buildTreelist([[category, []]]), []]);
+        const configuration: ProjectConfiguration = new ProjectConfiguration([buildTreeList([[category, []]]), []]);
 
         expect(configuration.getFieldDefinitionLabel('T','aField')).toBe('A Field');
     });
@@ -67,7 +67,7 @@ describe('ProjectConfiguration', () => {
             }]
         } as any;
 
-        const configuration: ProjectConfiguration = new ProjectConfiguration([buildTreelist([[ category, []]]), []]);
+        const configuration: ProjectConfiguration = new ProjectConfiguration([buildTreeList([[ category, []]]), []]);
 
         expect(configuration.getFieldDefinitionLabel('T','aField')).toBe('aField');
     });
@@ -86,7 +86,7 @@ describe('ProjectConfiguration', () => {
     it('should let categories inherit fields from parent categories', () => {
 
         const configuration: ProjectConfiguration
-            = new ProjectConfiguration([buildTreelist([[firstLevelCategory, []], [secondLevelCategory, []] ] as any), []]);
+            = new ProjectConfiguration([buildTreeList([[firstLevelCategory, []], [secondLevelCategory, []] ] as any), []]);
         const fields = configuration.getFieldDefinitions('SecondLevelCategory');
 
         expect(fields[0].name).toEqual('fieldA');
@@ -97,7 +97,7 @@ describe('ProjectConfiguration', () => {
     it('list parent category fields first', () => {
 
         const configuration: ProjectConfiguration
-            = new ProjectConfiguration([buildTreelist([[secondLevelCategory, []], [firstLevelCategory, []]] as any), []]);
+            = new ProjectConfiguration([buildTreeList([[secondLevelCategory, []], [firstLevelCategory, []]] as any), []]);
         const fields = configuration.getFieldDefinitions('SecondLevelCategory');
 
         expect(fields[0].name).toEqual('fieldA');

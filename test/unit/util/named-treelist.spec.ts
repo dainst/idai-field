@@ -1,22 +1,18 @@
-import {
-    filterTrees,
-    findInNamedTreelist,
-    isTopLevelItemOrChildThereof,
-    removeTrees
-} from '../../../src/app/core/util/named-treelist';
+import {filterTrees, findInNamedTreeList, isTopLevelItemOrChildThereof,
+    removeTrees} from '../../../src/app/core/util/named-tree-list';
 import {Named} from '../../../src/app/core/util/named';
-import {accessTree, buildTreelist, Treelist} from '../../../src/app/core/util/treelist';
+import {accessTree, buildTreeList, TreeList} from '../../../src/app/core/util/tree-list';
 
 
 describe('NamedTreelist', () => {
 
     function threeLevels(): any {
 
-        const parent1 = { name: 'P1' }
+        const parent1 = { name: 'P1' };
         const child1 = { name: 'C1' };
         const child2 = { name: 'C2' };
 
-        return buildTreelist([
+        return buildTreeList([
             [
                 parent1,
                 [
@@ -37,7 +33,7 @@ describe('NamedTreelist', () => {
     it('findInNamedTreelist', () => {
 
         const t = threeLevels();
-        const result = findInNamedTreelist('C1', t);
+        const result = findInNamedTreeList('C1', t);
 
         expect(result.name).toBe('C1');
     });
@@ -45,7 +41,7 @@ describe('NamedTreelist', () => {
 
     it('isTopLevelItemOrChildThereof', () => {
 
-        const categoryTreelist: Treelist<Named> = buildTreelist([
+        const categoryTreelist: TreeList<Named> = buildTreeList([
             [
                 {name: 'Image'},
                 [
@@ -84,7 +80,7 @@ describe('NamedTreelist', () => {
 
     it('isTopLevelItemOrChildThereof - more firstLevelItems to match', () => {
 
-        const categoryTreelist: Treelist<Named> = buildTreelist([
+        const categoryTreelist: TreeList<Named> = buildTreeList([
             [
                 {name: 'Image'},
                 [
@@ -119,7 +115,7 @@ describe('NamedTreelist', () => {
 
     it('removeTrees', () => {
 
-        const categoryTreelist: Treelist<Named> = buildTreelist([
+        const categoryTreelist: TreeList<Named> = buildTreeList([
             [
                 {name: 'Image'},
                 [
@@ -167,13 +163,13 @@ describe('NamedTreelist', () => {
         // typing
         // const result = removeTrees(categoryTreelist);
         // const result = removeTrees()(categoryTreelist);
-        // const result: Treelist<Named> = removeTrees('Operation');
+        // const result: TreeList<Named> = removeTrees('Operation');
     });
 
 
     it('filterTrees', () => {
 
-        const categoryTreelist: Treelist<Named> = buildTreelist([
+        const categoryTreelist: TreeList<Named> = buildTreeList([
             [
                 {name: 'Image'},
                 [
@@ -219,6 +215,6 @@ describe('NamedTreelist', () => {
         // typing
         // const result = filterTrees(categoryTreelist);
         // const result = filterTrees()(categoryTreelist);
-        // const result: Treelist<Named> = filterTrees('Operation');
+        // const result: TreeList<Named> = filterTrees('Operation');
     });
 });

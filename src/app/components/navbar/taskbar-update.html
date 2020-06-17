@@ -1,5 +1,5 @@
 <div id="taskbar-update">
-    <a *ngIf="progressPercent === 0 && !downloadComplete && !downloadInterrupted  && !downloadError"
+    <span *ngIf="progressPercent === 0 && !downloadComplete && !downloadInterrupted  && !downloadError"
        ngbTooltip="Version {{version}} wird heruntergeladen..."
        i18n-ngbTooltip="@@navbar.taskbar.update.tooltips.downloading"
        placement="bottom" container="body">
@@ -7,9 +7,9 @@
         <span class="badge-pill badge-info taskbar-badge">
             ...
         </span>
-    </a>
+    </span>
 
-    <a *ngIf="progressPercent > 0 && !downloadComplete && !downloadInterrupted  && !downloadError"
+    <span *ngIf="progressPercent > 0 && !downloadComplete && !downloadInterrupted  && !downloadError"
        ngbTooltip="Version {{version}} wird heruntergeladen..."
        i18n-ngbTooltip="@@navbar.taskbar.update.tooltips.downloading"
        placement="bottom" container="body">
@@ -17,9 +17,9 @@
         <span class="badge-pill badge-info taskbar-badge">
             {{progressPercent}}%
         </span>
-    </a>
+    </span>
 
-    <a *ngIf="downloadComplete"
+    <span *ngIf="downloadComplete"
        ngbTooltip="Version {{version}} wurde heruntergeladen und wird beim Neustart installiert"
        i18n-ngbTooltip="@@navbar.taskbar.update.tooltips.downloadComplete"
        placement="bottom" container="body">
@@ -27,9 +27,9 @@
         <span class="badge-pill badge-success taskbar-badge">
             ✓
         </span>
-    </a>
+    </span>
 
-    <a *ngIf="downloadInterrupted && !downloadComplete"
+    <span *ngIf="downloadInterrupted && !downloadComplete"
        ngbTooltip="Der Download von Version {{version}} wurde unterbrochen. Bitte starten Sie die Anwendung neu, um es erneut zu versuchen."
        i18n-ngbTooltip="@@navbar.taskbar.update.tooltips.downloadInterrupted"
        placement="bottom" container="body">
@@ -37,9 +37,9 @@
         <span class="badge-pill badge-danger taskbar-badge">
             X
         </span>
-    </a>
+    </span>
 
-    <a *ngIf="downloadError && !downloadInterrupted && !downloadComplete"
+    <span *ngIf="downloadError && !downloadInterrupted && !downloadComplete"
        ngbTooltip="Beim Download von Version {{version}} ist ein Fehler aufgetreten. Bitte laden Sie die aktuelle Version von http://field.dainst.org herunter."
        i18n-ngbTooltip="@@navbar.taskbar.update.tooltips.downloadError"
        placement="bottom" container="body">
@@ -47,9 +47,9 @@
         <span class="badge-pill badge-danger taskbar-badge">
             X
         </span>
-    </a>
+    </span>
 
-    <a *ngIf="!isAutoUpdateActive() && !downloadComplete && progressPercent === -1"
+    <span *ngIf="!isAutoUpdateActive() && !downloadComplete && progressPercent === -1"
        ngbTooltip="Die automatische Prüfung auf Updates wurde deaktiviert. Sie verwenden möglicherweise nicht die neueste Version von iDAI.field."
        i18n-ngbTooltip="@@navbar.taskbar.update.tooltips.deactivated"
        placement="bottom" container="body">
@@ -57,5 +57,5 @@
         <span class="badge-pill badge-warning taskbar-badge">
             ?
         </span>
-    </a>
+    </span>
 </div>

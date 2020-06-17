@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component} from '@angular/core';
+import {Component, NgZone} from '@angular/core';
 import {SettingsService} from '../../core/settings/settings-service';
 
 const ipcRenderer = typeof window !== 'undefined'
@@ -24,27 +24,30 @@ export class TaskbarUpdateComponent {
     private errorTimeout: any = undefined;
 
 
-    constructor(private settingsService: SettingsService, changeDetectorRef: ChangeDetectorRef) {
+    constructor(private settingsService: SettingsService, zone: NgZone) {
 
         ipcRenderer.on('downloadProgress', (event: any, downloadInfo: any) => {
-            this.progressPercent = Math.round(downloadInfo.progressPercent);
-            this.version = downloadInfo.version;
-            if (this.progressPercent === 100) this.waitForError(changeDetectorRef);
-            changeDetectorRef.detectChanges();
+            zone.run(() => {
+                this.progressPercent = Math.round(downloadInfo.progressPercent);
+                this.version = downloadInfo.version;
+                if (this.progressPercent === 100) this.waitForError(zone);
+            });
         });
 
         ipcRenderer.on('updateDownloaded', () => {
-            this.stopWaitingForError();
-            this.downloadComplete = true;
-            changeDetectorRef.detectChanges();
+            zone.run(() => {
+                this.stopWaitingForError();
+                this.downloadComplete = true;
+            });
         });
 
         ipcRenderer.on('downloadInterrupted', () => {
-            if (this.progressPercent > -1) {
-                this.stopWaitingForError();
-                this.downloadInterrupted = true;
-                changeDetectorRef.detectChanges();
-            }
+            zone.run(() => {
+                if (this.progressPercent > -1) {
+                    this.stopWaitingForError();
+                    this.downloadInterrupted = true;
+                }
+            });
         });
     }
 
@@ -52,11 +55,12 @@ export class TaskbarUpdateComponent {
     public isAutoUpdateActive = () => this.settingsService.isAutoUpdateActive();
 
 
-    public waitForError(changeDetectorRef: ChangeDetectorRef) {
+    public waitForError(zone: NgZone) {
 
         this.errorTimeout = setTimeout(() => {
-            this.downloadError = true;
-            changeDetectorRef.detectChanges();
+            zone.run(() => {
+                this.downloadError = true;
+            });
         }, 10000);
     }
 

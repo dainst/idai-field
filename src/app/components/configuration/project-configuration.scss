@@ -1,108 +1,108 @@
 .project-configuration {
 
-    .sidebar {
-        height: calc(100vh - 50px);
-        overflow-y: auto;
-        overflow-x: hidden;
-        padding: 0;
-        margin: 0;
-        background-color: $sidebar-bg-color;
-        max-width: 300px;
+  .sidebar {
+    height: calc(100vh - 50px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 0;
+    margin: 0;
+    background-color: $sidebar-bg-color;
+    max-width: 300px;
+  }
+
+  .header {
+    border-bottom: 1px solid #ccc;
+    background-color: #e7e7e7;
+
+    &.header-left {
+      padding: 7px;
     }
 
-    .header {
-        border-bottom: 1px solid #ccc;
-        background-color: #e7e7e7;
-
-        &.header-left {
-            padding: 7px;
-        }
-
-        &.header-right {
-            padding: 1rem;
-        }
-
-        h5 {
-            max-width: 450px;
-            margin: 8px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
+    &.header-right {
+      padding: 1rem;
     }
 
-    .subheader {
-        height: 56px;
-        padding: 1rem;
-        background-color: #eee;
-        overflow-y: auto;
+    h5 {
+      max-width: 450px;
+      margin: 8px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
+  }
 
-    .custom-category .header {
-        background-color: $custom-highlight-color;
-    }
+  .subheader {
+    height: 56px;
+    padding: 1rem;
+    background-color: #eee;
+    overflow-y: auto;
+  }
 
-    .groups {
-        padding-top: 1rem;
-        padding-left: 15px;
-        width: 240px;
+  .custom-category .header {
+    background-color: $custom-highlight-color;
+  }
 
-        ul {
-            width: 100%;
+  .groups {
+    padding-top: 1rem;
+    padding-left: 15px;
+    width: 240px;
 
-            .nav {
-                width: 100%;
+    ul {
+      width: 100%;
 
-                .group-button {
-                    width: 100%;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                    white-space: nowrap;
-                }
-            }
+      .nav {
+        width: 100%;
+
+        .group-button {
+          width: 100%;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
         }
+      }
+    }
+  }
+
+  .content {
+    padding-top: 1rem;
+    height: calc(100vh - 104px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 15px;
+
+    &.shortened {
+      height: calc(100vh - 160px);
     }
 
-    .content {
-        padding-top: 1rem;
-        height: calc(100vh - 104px);
-        overflow-y: auto;
-        overflow-x: hidden;
-        padding: 15px;
+    .card {
+      margin-bottom: 10px;
 
-        &.shortened {
-            height: calc(100vh - 160px);
+      .value-col {
+          height: 1.69rem;
+      }
+
+      .valuelist-description {
+          margin: 0 0.2rem 0.7rem;
+          font-size: 0.8rem;
+      }
+
+      .valuelist .value-badge {
+        overflow: hidden;
+        max-width: 100%;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        cursor: default;
+        border: 1px solid white;
+
+        &:hover {
+          position: relative;
+          max-width: none;
+          z-index: 50;
+          border: 1px solid grey;
+          white-space: normal;
+          text-align: left;
         }
-
-        .card {
-            margin-bottom: 10px;
-
-            .value-col {
-                height: 1.69rem;
-            }
-
-            .valuelist-description {
-                margin: 0 0.2rem 0.7rem;
-                font-size: 0.8rem;
-            }
-
-            .valuelist .value-badge {
-                overflow: hidden;
-                max-width: 100%;
-                text-overflow: ellipsis;
-                white-space: nowrap;
-                cursor: default;
-                border: 1px solid white;
-
-                &:hover {
-                    position: relative;
-                    max-width: none;
-                    z-index: 50;
-                    border: 1px solid grey;
-                    white-space: normal;
-                    text-align: left;
-                }
-            }
-        }
+      }
     }
+  }
 }

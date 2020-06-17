@@ -57,6 +57,10 @@ const setUp = async (mainWindow) => {
         });
     });
 
+    autoUpdater.on('error', () => {
+        mainWindow.webContents.send('downloadInterrupted');
+    });
+
     process.on('uncaughtException', () => {
        mainWindow.webContents.send('downloadInterrupted');
     });

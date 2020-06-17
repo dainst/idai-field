@@ -1,9 +1,11 @@
-import { VirtualScrollStrategy, CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
-import { distinctUntilChanged } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import {VirtualScrollStrategy, CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
+import {distinctUntilChanged} from 'rxjs/operators';
+import {Subject} from 'rxjs';
 
 
-const BUFFER = 233;
+const ROW_HEIGHT: number = 233;
+const ELEMENT_WIDTH: number = 208;
+const BUFFER: number = ROW_HEIGHT * 2;
 
 
 export class TypeGridVirtualScrollStrategy implements VirtualScrollStrategy {
@@ -11,8 +13,8 @@ export class TypeGridVirtualScrollStrategy implements VirtualScrollStrategy {
     private index = new Subject<number>();
     private viewport: CdkVirtualScrollViewport | null = null;
     private numColumns: number;
-    private rowHeight = 1;
-    private elementWidth = 1;
+    private rowHeight = ROW_HEIGHT;
+    private elementWidth = ELEMENT_WIDTH;
 
     scrolledIndexChange = this.index.pipe(distinctUntilChanged());
 
@@ -72,11 +74,6 @@ export class TypeGridVirtualScrollStrategy implements VirtualScrollStrategy {
 
         const viewportElement = this.viewport.elementRef.nativeElement;
         this.numColumns = Math.floor(viewportElement.offsetWidth / this.elementWidth);
-        const listElement = viewportElement.getElementsByClassName('type-grid-element')[0] as HTMLElement;
-        if (listElement) {
-            this.rowHeight = getTotalHeight(listElement);
-            this.elementWidth = getTotalWidth(listElement);
-        }
     }
 
 
@@ -127,18 +124,4 @@ export class TypeGridVirtualScrollStrategy implements VirtualScrollStrategy {
         this.index.next(firstVisibleIndex);
      }
 
-}
-
-function getTotalHeight(el: HTMLElement) {
-
-    const styles = window.getComputedStyle(el);
-    const margin = parseFloat(styles.marginTop) + parseFloat(styles.marginBottom);
-    return Math.ceil(el.offsetHeight + margin);
-}
-
-function getTotalWidth(el: HTMLElement) {
-
-    const styles = window.getComputedStyle(el);
-    const margin = parseFloat(styles.marginRight) + parseFloat(styles.marginLeft);
-    return Math.ceil(el.offsetWidth + margin);
 }

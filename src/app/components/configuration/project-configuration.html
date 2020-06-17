@@ -26,19 +26,19 @@
                     </div>
                     <div class="col header header-right text-right">
                         <span *ngIf="selectedCategory.name">
-                            <strong i18n="@@configuration.defaultFields.category" class="">Kategorie</strong>:
+                            <strong i18n="@@configuration.defaultFields.category">Kategorie</strong>:
                             <code>{{selectedCategory.name}}</code>
                         </span>
                         &nbsp;
                         <span *ngIf="selectedCategory.libraryId">
-                            <strong i18n="@@config.libraryId" class="">Formular</strong>:
+                            <strong i18n="@@config.libraryId">Formular</strong>:
                             <code>{{selectedCategory.libraryId}}</code>
                         </span>
                     </div>
                 </div>
                 <div *ngIf="getCategoryDescription(selectedCategory)" class="row subheader">
                     <div class="col">
-                        {{ getCategoryDescription(selectedCategory) }}
+                        {{getCategoryDescription(selectedCategory)}}
                     </div>
                 </div>
 
@@ -68,13 +68,13 @@
                                     i18n-ngbTooltip="@@config.source.custom"
                                     placement="right">
                                 </span>
-                                <b *ngIf="field.label"> {{ field.label }}</b>
-                                <code> {{field.name}}</code></div>
+                                <b *ngIf="field.label"> {{field.label}}</b>
+                                <code> {{field.name}}</code>
+                            </div>
 
                             <div class="card-body">
                                 <p *ngIf="field.description" class="card-text">{{field.description}}</p>
                                 <ul class="list-group list-group-flush">
-
                                     <li class="list-group-item">
                                         <b i18n="@@configuration.field.inputType">Eingabetyp</b>:
                                         <span *ngIf="field.inputType === 'input'" i18n="@@config.inputType.input">Einzeiliger Text</span>
@@ -106,7 +106,7 @@
                                                     class="col-2 value-col">
                                                 <span class="badge badge-light value-badge">
                                                     {{getValueLabel(field.valuelist, item.key)}}
-                                                    <code>{{ item.key }}</code>
+                                                    <code>{{item.key}}</code>
                                                 </span>
                                             </div>
                                         </div>
@@ -118,7 +118,8 @@
                         <div *ngFor="let relation of getRelations(selectedCategory)" class="card">
                             <div class="card-header">
                                 <b *ngIf="relation.label">{{relation.label}}</b>
-                                <code> {{relation.name}}</code></div>
+                                <code> {{relation.name}}</code>
+                            </div>
 
                             <div class="card-body">
                                 <ul class="list-group list-group-flush">

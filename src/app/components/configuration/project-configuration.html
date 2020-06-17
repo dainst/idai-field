@@ -21,18 +21,18 @@
                                 i18n-ngbTooltip="@@config.form.custom"
                                 placement="right">
                             </span>
-                            {{ selectedCategory.label }}
+                            {{selectedCategory.label}}
                         </h5>
                     </div>
                     <div class="col header header-right text-right">
                         <span *ngIf="selectedCategory.name">
                             <strong i18n="@@configuration.defaultFields.category" class="">Kategorie</strong>:
-                            <code>{{ selectedCategory.name }}</code>
+                            <code>{{selectedCategory.name}}</code>
                         </span>
                         &nbsp;
                         <span *ngIf="selectedCategory.libraryId">
                             <strong i18n="@@config.libraryId" class="">Formular</strong>:
-                            <code>{{ selectedCategory.libraryId }}</code>
+                            <code>{{selectedCategory.libraryId}}</code>
                         </span>
                     </div>
                 </div>
@@ -43,7 +43,6 @@
                 </div>
 
                 <div class="row">
-
                     <div class="groups">
                         <ul class="nav nav-pills flex-column">
                             <li *ngFor="let group of getGroups(selectedCategory)" class="nav flex-column">
@@ -58,7 +57,6 @@
                     </div>
 
                     <div class="col content" [class.shortened]="getCategoryDescription(selectedCategory)">
-
                         <div *ngFor="let field of getVisibleFields(selectedCategory)"
                                 class="card"
                                 [class.bg-warning]="field.source === 'custom'">
@@ -71,10 +69,10 @@
                                     placement="right">
                                 </span>
                                 <b *ngIf="field.label"> {{ field.label }}</b>
-                                <code> {{ field.name }}</code></div>
+                                <code> {{field.name}}</code></div>
 
                             <div class="card-body">
-                                <p *ngIf="field.description" class="card-text">{{ field.description }}</p>
+                                <p *ngIf="field.description" class="card-text">{{field.description}}</p>
                                 <ul class="list-group list-group-flush">
 
                                     <li class="list-group-item">
@@ -101,22 +99,20 @@
                                     <li *ngIf="field.valuelist" class="list-group-item">
                                         <div *ngIf="getValuelistDescription(field.valuelist)"
                                                 class="valuelist-description">
-                                            {{ getValuelistDescription(field.valuelist) }}
+                                            {{getValuelistDescription(field.valuelist)}}
                                         </div>
                                         <div class="row valuelist">
                                             <div *ngFor="let item of field.valuelist.values | keyvalue"
                                                     class="col-2 value-col">
                                                 <span class="badge badge-light value-badge">
-                                                    {{ getValueLabel(field.valuelist, item.key) }}
+                                                    {{getValueLabel(field.valuelist, item.key)}}
                                                     <code>{{ item.key }}</code>
                                                 </span>
                                             </div>
                                         </div>
                                     </li>
-
                                 </ul>
                             </div>
-
                         </div>
 
                         <div *ngFor="let relation of getRelations(selectedCategory)" class="card">

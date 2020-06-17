@@ -7,20 +7,22 @@
   }
 }
 
-.popover-header {
-  width: 350px;
-  position: absolute;
-  right: 0;
-}
-
 .conflicts-popover {
+  .popover-header {
+    width: 350px;
+    position: absolute;
+    right: 0;
+    box-shadow: 3px 3px 5px 1px rgba(0, 0, 0, 0.3);
+  }
+
   .popover-body {
     position: absolute;
-    width: 350px;
     overflow: hidden;
+    width: 350px;
     right: 0;
     top: 33px;
     background-color: rgb(238, 238, 238);
+    box-shadow: 3px 3px 5px 1px rgba(0, 0, 0, 0.3);
 
     .list-group {
       max-height: calc(100vh - 337px);

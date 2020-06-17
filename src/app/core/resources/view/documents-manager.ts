@@ -23,7 +23,7 @@ const UNKNOWN = 'UNKNOWN';
 
 
 export const DEFAULT_DOCUMENTS_LIMIT: number = 20000;
-export const TYPES_MANAGEMENT_DOCUMENTS_LIMIT: number = 1000;
+export const TYPES_MANAGEMENT_DOCUMENTS_LIMIT: number = 5000;
 
 
 /**

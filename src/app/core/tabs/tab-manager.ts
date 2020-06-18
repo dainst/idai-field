@@ -14,8 +14,9 @@ export class TabManager {
 
     private tabs: Array<Tab> = [];
     private activeTab: Tab|undefined;
-
     private url: string = '';
+
+    private readonly initialized: Promise<any>;
 
 
     constructor(indexFacade: IndexFacade,
@@ -25,7 +26,7 @@ export class TabManager {
                 private navigate: (path: string[]) => Promise<void>) {
 
         indexFacade.changesNotifications().subscribe(document => this.updateTabLabels(document));
-        this.initialize();
+        this.initialized = this.initialize();
     }
 
 
@@ -78,6 +79,8 @@ export class TabManager {
 
     public async openTab(routeName: string, operationId: string, operationIdentifier: string,
                          operationCategory: string) {
+
+        await this.initialized;
 
         if (this.getTab(routeName, operationId)) return;
 

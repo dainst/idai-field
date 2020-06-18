@@ -97,7 +97,7 @@ export class DoceditPage {
                 )
             }).then(() => {
                 if (waitForModalToClose) {
-                    browser.wait(EC.stalenessOf(element(by.id('document-edit-wrapper'))));
+                    browser.wait(EC.stalenessOf(element(by.id('document-edit-wrapper'))), delays.ECWaitTime);
                 }
             });
     };

@@ -120,7 +120,7 @@ function makeChildFields(category: Category, child: Category): Array<FieldDefini
 
     try {
         const childFields = ifUndefinedSetGroupTo(Groups.CHILD)((child as any)['fields']);
-        return getCombinedFields((category as any)['fields'], childFields, category, child);
+        return getCombinedFields((category as any)['fields'], childFields);
     } catch (e) {
         e.push(category.name);
         e.push(child.name);
@@ -129,8 +129,8 @@ function makeChildFields(category: Category, child: Category): Array<FieldDefini
 }
 
 
-function getCombinedFields(parentFields: Array<FieldDefinition>, childFields: Array<FieldDefinition>,
-                           parentCategory: Category, childCategory: Category): Array<FieldDefinition> {
+function getCombinedFields(parentFields: Array<FieldDefinition>,
+                           childFields: Array<FieldDefinition>): Array<FieldDefinition> {
 
     const fields: Array<FieldDefinition> = clone(parentFields);
 
@@ -142,9 +142,7 @@ function getCombinedFields(parentFields: Array<FieldDefinition>, childFields: Ar
             if (field.name !== 'campaign') {
                 throw [
                     ConfigurationErrors.TRIED_TO_OVERWRITE_PARENT_FIELD,
-                    field.name,
-                    parentCategory.name,
-                    childCategory.name
+                    field.name
                 ];
             }
         } else {

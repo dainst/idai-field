@@ -7,6 +7,7 @@ import {byName, namedArrayToNamedMap} from '../../../../../src/app/core/util/nam
 import InputType = FieldDefinition.InputType;
 import {MDInternal} from '../../../../../src/app/components/messages/md-internal';
 import {flattenTree} from '../../../../../src/app/core/util/tree-list';
+import {ConfigurationErrors} from '../../../../../src/app/core/configuration/boot/configuration-errors';
 
 
 /**
@@ -152,7 +153,7 @@ describe('makeCategoriesTreelist', () => {
                     SecondLevelCategory: secondLevelCategory
                 } as any)
         ).toThrow([[
-            'tried to overwrite field of parent category', 'fieldA', 'FirstLevelCategory', 'SecondLevelCategory'
+            ConfigurationErrors.TRIED_TO_OVERWRITE_PARENT_FIELD, 'fieldA', 'FirstLevelCategory', 'SecondLevelCategory'
         ]]);
     });
 

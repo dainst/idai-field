@@ -136,7 +136,6 @@ registerLocaleData(localeDe, 'de');
                             settingsService.loadConfiguration(remote.getGlobal('configurationDirPath'), progress))))
                     .then(configuration => {
                         projectConfiguration = configuration;
-
                         const { createdConstraintIndex, createdFulltextIndex, createdIndexFacade } =
                             IndexerConfiguration.configureIndexers(projectConfiguration);
                         constraintIndex = createdConstraintIndex;

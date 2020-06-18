@@ -129,16 +129,9 @@ export class SettingsService {
                 customProjectName,
                 this.getSettings().locale
             );
-        } catch (msgsWithParams) {
-            if (msgsWithParams.length > 0) {
-                msgsWithParams.forEach((msg: any) => console.error('err in project configuration', msg));
-            } else { // should not happen normally
-                console.error(msgsWithParams);
-            }
-            if (msgsWithParams.length > 1) {
-                console.error('num errors in project configuration', msgsWithParams.length);
-            }
-            await progress.setError('configurationError');
+        } catch (msgWithParams) {
+            console.error('Error in project configuration', msgWithParams);
+            if (progress) await progress.setError('configurationError');
             throw 'Could not boot project';
         }
     }

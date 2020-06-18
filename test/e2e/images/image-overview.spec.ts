@@ -5,6 +5,7 @@ import {SearchBarPage} from '../widgets/search-bar.page';
 import {DoceditPage} from '../docedit/docedit.page';
 import {SearchConstraintsPage} from '../widgets/search-constraints.page';
 import {ImageViewPage} from './image-view.page';
+import {NavbarPage} from '../navbar.page';
 
 const EC = protractor.ExpectedConditions;
 const delays = require('../delays');
@@ -224,5 +225,26 @@ describe('images --', function() {
             delays.ECWaitTime);
         browser.wait(EC.presenceOf(ImageOverviewPage.getCellByIdentifier('mapLayerTest2.png')),
             delays.ECWaitTime);
+    });
+
+
+    it('do not allow setting the same identifier for two images', () => {
+
+        ImageOverviewPage.doubleClickCell(0);
+        ImageViewPage.editDocument();
+        DoceditPage.typeInInputField('identifier', 'I1');
+        DoceditPage.clickSaveDocument();
+        ImageViewPage.clickCloseButton();
+
+        ImageOverviewPage.doubleClickCell(1);
+        ImageViewPage.editDocument();
+        DoceditPage.typeInInputField('identifier', 'I1');
+        DoceditPage.clickSaveDocument(false, false);
+
+        NavbarPage.awaitAlert('existiert bereits', false);
+        NavbarPage.clickCloseAllMessages();
+
+        DoceditPage.clickCloseEdit('discard');
+        ImageViewPage.clickCloseButton();
     });
 });

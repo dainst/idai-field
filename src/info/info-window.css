@@ -3,6 +3,8 @@ img {
   height: 120px;
   -webkit-user-drag: none;
   margin-top: 40px;
+  border: 1px solid #b8c3ca;
+  border-radius: 15px;
 }
 
 body {
@@ -14,9 +16,9 @@ body {
 }
 
 p#brand {
-    text-align: center;
-    margin-top: 10px;
-    font-weight: bold;
+  text-align: center;
+  margin-top: 10px;
+  font-weight: bold;
 }
 
 p#about-version {

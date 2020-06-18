@@ -136,6 +136,7 @@ const createWindow = () => {
         minHeight: 600,
         webPreferences: {
             nodeIntegration: true,
+            enableRemoteModule: true,
             webSecurity: global.mode === 'production'
         },
         titleBarStyle: 'hiddenInset'

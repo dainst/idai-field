@@ -9,7 +9,7 @@
 					<h3 class="field-label">{{field.label}}</h3>
 					<ul>
 						<li *ngFor="let item of field.value" class="field-value">
-						    {{item.label ? item.label : getArrayItemLabel(item)}}
+						    {{item.label ? item.label : getArrayItemLabel(item, field)}}
 						</li>
 					</ul>
 				</div>

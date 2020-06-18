@@ -30,6 +30,7 @@ export interface FieldsViewField extends Labelled {
 
     value: string;
     isArray: boolean;
+    positionValues?: ValuelistDefinition
 }
 
 

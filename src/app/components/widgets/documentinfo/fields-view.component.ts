@@ -20,6 +20,7 @@ import isDefaultField = FieldsViewUtil.isDefaultField;
 import DROPDOWNRANGE = FieldDefinition.InputType.DROPDOWNRANGE;
 import shouldBeDisplayed = FieldsViewUtil.shouldBeDisplayed;
 import {ReadDatastore} from '../../../core/datastore/model/read-datastore';
+import {ValuelistUtil} from '../../../core/util/valuelist-util';
 
 
 type FieldContent = any;
@@ -92,7 +93,7 @@ export class FieldsViewComponent implements OnChanges {
     }
 
 
-    public getArrayItemLabel(arrayItem: any): string {
+    public getArrayItemLabel(arrayItem: any, field: FieldsViewField): string {
 
         if (arrayItem.begin || arrayItem.end) {
             return Dating.generateLabel(
@@ -103,7 +104,10 @@ export class FieldsViewComponent implements OnChanges {
             return Dimension.generateLabel(
                 arrayItem,
                 (value: any) => this.decimalPipe.transform(value),
-                (key: string) => this.utilTranslations.getTranslation(key)
+                (key: string) => this.utilTranslations.getTranslation(key),
+                arrayItem.measurementPosition
+                    ? ValuelistUtil.getValueLabel(field.positionValues, arrayItem.measurementPosition)
+                    : undefined
             );
         } else if (arrayItem.quotation) {
             return Literature.generateLabel(
@@ -160,7 +164,8 @@ export class FieldsViewComponent implements OnChanges {
                 : FieldsViewUtil.getValue(
                     fieldContent, field.name, this.projectConfiguration, field.valuelist
                 ),
-            isArray: isArray(fieldContent)
+            isArray: isArray(fieldContent),
+            positionValues: field.positionValues
         };
     }
 

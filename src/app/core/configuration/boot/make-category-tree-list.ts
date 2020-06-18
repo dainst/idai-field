@@ -9,6 +9,7 @@ import {mapToNamedArray} from '../../util/named';
 import {MDInternal} from '../../../components/messages/md-internal';
 import {mapTreeList, TreeList} from '../../util/tree-list';
 import {linkParentAndChildInstances} from '../category-tree-list';
+import {ConfigurationErrors} from './configuration-errors';
 
 
 const TEMP_FIELDS = 'fields';
@@ -119,7 +120,7 @@ function makeChildFields(category: Category, child: Category): Array<FieldDefini
 
     try {
         const childFields = ifUndefinedSetGroupTo(Groups.CHILD)((child as any)['fields']);
-        return getCombinedFields((category as any)['fields'], childFields);
+        return getCombinedFields((category as any)['fields'], childFields, category, child);
     } catch (e) {
         e.push(category.name);
         e.push(child.name);
@@ -128,8 +129,8 @@ function makeChildFields(category: Category, child: Category): Array<FieldDefini
 }
 
 
-function getCombinedFields(parentFields: Array<FieldDefinition>,
-                           childFields: Array<FieldDefinition>): Array<FieldDefinition> {
+function getCombinedFields(parentFields: Array<FieldDefinition>, childFields: Array<FieldDefinition>,
+                           parentCategory: Category, childCategory: Category): Array<FieldDefinition> {
 
     const fields: Array<FieldDefinition> = clone(parentFields);
 
@@ -139,7 +140,12 @@ function getCombinedFields(parentFields: Array<FieldDefinition>,
 
         if (field) {
             if (field.name !== 'campaign') {
-                throw ['tried to overwrite field of parent category', field.name];
+                throw [
+                    ConfigurationErrors.TRIED_TO_OVERWRITE_PARENT_FIELD,
+                    field.name,
+                    parentCategory.name,
+                    childCategory.name
+                ];
             }
         } else {
             fields.push(childField);

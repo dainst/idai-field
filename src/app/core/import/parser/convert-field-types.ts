@@ -87,6 +87,8 @@ function convertDimension(resource: Resource, fieldName: string) {
         if (dimension === undefined) throw 'Undefined dimension found';
         if (dimension === null) continue;
 
+        if (dimension.inputUnit) (dimension.inputUnit as string) = dimension.inputUnit.toLowerCase();
+
         try {
             convertFloat(dimension, 'value');
             convertFloat(dimension, Dimension.RANGEMIN);

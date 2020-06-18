@@ -1,7 +1,7 @@
 version: b{build}
 
 environment:
-  nodejs_version: LTS
+  nodejs_version: 12
   GH_TOKEN:
     secure: febq/MqfzS/3JfchQVtlarZApEi80xRea6Z5qvUTYeb1vH8ByxIXqavTh6DIo53/
 

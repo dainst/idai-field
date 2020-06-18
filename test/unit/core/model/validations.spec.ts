@@ -7,6 +7,7 @@ import {buildTreeList} from '../../../../src/app/core/util/tree-list';
 /**
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
+ * @author Sebastian Cuy
  */
 describe('Validations', () => {
 
@@ -30,6 +31,8 @@ describe('Validations', () => {
                         {name: 'dating5', label: 'dating5', inputType: 'dating'},
                         {name: 'dating6', label: 'dating6', inputType: 'dating'},
                         {name: 'dating7', label: 'dating7', inputType: 'dating'},
+                        {name: 'dating8', label: 'dating8', inputType: 'dating'},
+                        {name: 'dating9', label: 'dating9', inputType: 'dating'},
                         {name: 'dimension1', label: 'dimension1', inputType: 'dimension'},
                         {name: 'dimension2', label: 'dimension2', inputType: 'dimension'},
                         {name: 'dimension3', label: 'dimension3', inputType: 'dimension'},
@@ -37,10 +40,12 @@ describe('Validations', () => {
                         {name: 'dimension5', label: 'dimension5', inputType: 'dimension'},
                         {name: 'dimension6', label: 'dimension6', inputType: 'dimension'},
                         {name: 'dimension7', label: 'dimension7', inputType: 'dimension'},
+                        {name: 'dimension8', label: 'dimension8', inputType: 'dimension'},
                         {name: 'literature1', label: 'literature1', inputType: 'literature'},
                         {name: 'literature2', label: 'literature2', inputType: 'literature'},
                         {name: 'literature3', label: 'literature3', inputType: 'literature'},
                         {name: 'literature4', label: 'literature4', inputType: 'literature'},
+                        {name: 'literature5', label: 'literature5', inputType: 'literature'},
                         {name: 'beginningDate', label: 'beginningDate', inputType: 'date'},
                         {name: 'endDate', label: 'endDate', inputType: 'date'}
                     ]
@@ -242,6 +247,12 @@ describe('Validations', () => {
                 dating6: [{ type: 'exact', end: { inputYear: -10, inputType: 'ce'} }],
                 // No array
                 dating7: 'Dating',
+                // Invalid field
+                dating8: [{ type: 'range', begin: { inputYear: 30, inputType: 'bce' },
+                end: { inputYear: 20, inputType: 'ce'}, invalidField: 'asdf' }],
+                // Invalid nested field
+                dating9: [{ type: 'range', begin: { inputYear: 30, inputType: 'bce' },
+                    end: { inputYear: 20, inputType: 'ce', invalidField: 'asdf' } }],
                 relations: { isRecordedIn: ['0'] }
             }
         };
@@ -254,7 +265,7 @@ describe('Validations', () => {
                 [
                     ValidationErrors.INVALID_DATING_VALUES,
                     'T',
-                    'dating3, dating4, dating5, dating6, dating7'
+                    'dating3, dating4, dating5, dating6, dating7, dating8, dating9'
                 ]
             );
         }
@@ -283,6 +294,8 @@ describe('Validations', () => {
                 dimension6: [{ inputValue: 15, inputRangeEndValue: '25', inputUnit: 'mm' }],
                 // No array
                 dimension7: 'Dimension',
+                // Invalid field
+                dimension8: [{ inputValue: 50.25, inputUnit: 'mm', invalidField: 'asdf' }],
                 relations: { isRecordedIn: ['0'] }
             }
         };
@@ -295,7 +308,7 @@ describe('Validations', () => {
                 [
                     ValidationErrors.INVALID_DIMENSION_VALUES,
                     'T',
-                    'dimension3, dimension4, dimension5, dimension6, dimension7'
+                    'dimension3, dimension4, dimension5, dimension6, dimension7, dimension8'
                 ]
             );
         }
@@ -318,6 +331,8 @@ describe('Validations', () => {
                 literature3: [{ zenonId: '1234567' }],
                 // No array
                 literature4: 'Literature',
+                // Invalid field
+                literature5: [{ quotation: 'Quotation', zenonId: '1234567', invalidField: 'asdf' }],
                 relations: { isRecordedIn: ['0'] }
             }
         };
@@ -327,7 +342,7 @@ describe('Validations', () => {
             fail();
         } catch (errWithParams) {
             expect(errWithParams).toEqual(
-                [ValidationErrors.INVALID_LITERATURE_VALUES, 'T', 'literature3, literature4']
+                [ValidationErrors.INVALID_LITERATURE_VALUES, 'T', 'literature3, literature4, literature5']
             );
         }
         done();

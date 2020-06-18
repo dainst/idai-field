@@ -16,7 +16,7 @@ export module ConfigurationValidation {
     export function findMissingRelationType(relations: Array<RelationDefinition>,
                                             categoryNames: string[]): Array<Array<string>> {
 
-        let msgs = [] as any;
+        let msgs: string[][] = [];
 
         function addMissingRelationCategories(rangeOrDomain: string[]|undefined) {
             if (!rangeOrDomain) return;
@@ -27,7 +27,7 @@ export module ConfigurationValidation {
                         : undefined
                 );
                 if (categoryNames.indexOf(categoryWithoutInheritanceSuffix) === -1 && category !== 'Project') {
-                    msgs.push([ConfigurationErrors.INVALID_CONFIG_MISSINGRELATIONCATEGORY as never, category] as never);
+                    msgs.push([ConfigurationErrors.INVALID_CONFIG_MISSINGRELATIONCATEGORY, category]);
                 }
             }
         }
@@ -69,8 +69,8 @@ export module ConfigurationValidation {
             if (!fieldDef.hasOwnProperty('inputType'))
                 fieldDef.inputType = 'input';
             if (VALUELIST_INPUT_TYPES.indexOf(fieldDef.inputType) !== -1
-                    && !fieldDef.hasOwnProperty('valuelistFromProjectField')
-                    && (!fieldDef.hasOwnProperty('valuelist')
+                    && !fieldDef.valuelistFromProjectField
+                    && (!fieldDef.valuelist
                         || !fieldDef.valuelist.values
                         || Object.keys(fieldDef.valuelist.values).length === 0
                 )

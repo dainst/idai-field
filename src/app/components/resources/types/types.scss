@@ -22,10 +22,10 @@ types {
     loading-icon {
       position: absolute;
       top: calc(50% - 45px);
-      left: calc(50% - 23px);
+      left: calc(50% - 20px);
 
       &.with-main-document {
-        left: calc(50% + 110px);
+        left: calc(50% + 109px);
       }
     }
 
@@ -150,10 +150,9 @@ types {
           padding-top: 10px;
           position: absolute;
           bottom: 0;
-          left: 48%;
+          left: calc(50% - 21px);
 
           #create-document-button .circular-button {
-            left: calc(50% - 7px);
             margin: auto auto auto auto;
           }
 

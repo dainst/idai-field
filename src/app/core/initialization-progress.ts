@@ -1,4 +1,5 @@
 import {Injectable} from '@angular/core';
+import {isUndefinedOrEmpty, not, rest} from 'tsfun';
 import {AngularUtility} from '../angular/angular-utility';
 import {getMessage} from './initialization-messages';
 import {reload} from './common/reload';
@@ -58,7 +59,7 @@ export class InitializationProgress {
     }
 
 
-    public async setError(errorMsgKey: string, msgWithParams?: string[]) {
+    public async setError(errorMsgKey: string, msgsWithParams?: any[]) {
 
         this.error = true;
 
@@ -74,9 +75,35 @@ export class InitializationProgress {
         InitializationProgress.setElementText('initialization-info-project-name', '');
         InitializationProgress.setElementText('initialization-info-message-2', '');
 
-        this.showReloadButton();
+        const errorMessages: string[] = this.getErrorMessages(msgsWithParams);
+
+        if (errorMessages.length > 0) {
+            const containerElement: HTMLElement = document.getElementById('error-messages-container');
+            containerElement.style.display = 'block';
+
+            const headerElement: HTMLElement = document.getElementById('error-messages-header');
+            headerElement.innerText = getMessage(
+                errorMessages.length === 1 ? 'oneConfigurationError' : 'multipleConfigurationErrors',
+                this.locale
+            );
+
+            const bodyElement: HTMLElement = document.getElementById('error-messages-body');
+            bodyElement.innerText = errorMessages.join('\n');
+        }
+
+        this.showReloadButton(errorMessages.length > 0);
 
         await this.updateProgressBar();
+    }
+
+
+    private getErrorMessages(msgsWithParams: any[]|undefined): string[] {
+
+        if (!msgsWithParams) return [];
+
+        return msgsWithParams.map((msgWithParams: string[]) => {
+            return getMessage(msgWithParams[0], this.locale, rest(msgWithParams));
+        }).filter(not(isUndefinedOrEmpty));
     }
 
 
@@ -112,7 +139,7 @@ export class InitializationProgress {
     }
 
 
-    private showReloadButton() {
+    private showReloadButton(withErrorMessages: boolean) {
 
         const element: HTMLElement = document.getElementById('reload-button');
         if (element) {
@@ -121,7 +148,8 @@ export class InitializationProgress {
             element.onclick = async () => {
                 await this.settingsService.selectProject('test');
                 reload();
-            }
+            };
+            if (withErrorMessages) element.classList.add('with-error-messages');
         }
     }
 

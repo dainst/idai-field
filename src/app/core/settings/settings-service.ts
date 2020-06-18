@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {set} from 'tsfun';
+import {isString, set} from 'tsfun';
 import {Settings} from './settings';
 import {SettingsSerializer} from './settings-serializer';
 import {PouchdbManager} from '../datastore/pouchdb/pouchdb-manager';
@@ -130,15 +130,18 @@ export class SettingsService {
                 this.getSettings().locale
             );
         } catch (msgsWithParams) {
-            if (msgsWithParams.length > 0) {
-                msgsWithParams.forEach((msg: any) => console.error('err in project configuration', msg));
-            } else { // should not happen normally
-                console.error(msgsWithParams);
+            if (isString(msgsWithParams)) {
+                msgsWithParams = [[msgsWithParams]];
+            } else if (msgsWithParams.length > 0 && isString(msgsWithParams[0])) {
+                msgsWithParams = [msgsWithParams];
             }
+
+            msgsWithParams.forEach((msg: any) => console.error('Error in project configuration', msg));
             if (msgsWithParams.length > 1) {
-                console.error('num errors in project configuration', msgsWithParams.length);
+                console.error('Number of errors in project configuration:', msgsWithParams.length);
             }
-            await progress.setError('configurationError');
+
+            await progress.setError('configurationError', msgsWithParams);
             throw 'Could not boot project';
         }
     }

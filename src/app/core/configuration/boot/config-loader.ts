@@ -84,7 +84,7 @@ export class ConfigLoader {
         try {
             return addKeyAsProp('libraryId')(await this.configReader.read(appConfigurationPath));
         } catch (msgWithParams) {
-            throw [[msgWithParams]];
+            throw [msgWithParams];
         }
     }
 
@@ -124,7 +124,7 @@ export class ConfigLoader {
             valuelistsConfiguration = await this.configReader.read(valuelistsConfigurationPath);
             orderConfiguration = await this.configReader.read(orderConfigurationPath);
         } catch (msgWithParams) {
-            throw [[msgWithParams]];
+            throw [msgWithParams];
         }
 
         // unused: Preprocessing.prepareSameMainCategoryResource(appConfiguration);
@@ -153,7 +153,7 @@ export class ConfigLoader {
                     }));
 
         } catch (msgWithParams) {
-            throw [msgWithParams];
+            throw msgWithParams;
         }
     }
 }

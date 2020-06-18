@@ -56,12 +56,36 @@
             font-weight: bold;
         }
 
+        #error-messages-container {
+            position: relative;
+            top: 102px;
+            width: 500px;
+            max-height: 138px;
+            margin: auto;
+            border: 1px solid rgba(0, 0, 0, 0.125) !important;
+            border-radius: 0.25rem !important;
+            display: none;
+        }
+
+        #error-messages-header {
+            user-select: none;
+        }
+
+        #error-messages-body {
+            max-height: 88px;
+            overflow-y: auto;
+        }
+
         #reload-button {
             position: relative;
             top: 102px;
             width: fit-content;
             margin: auto;
             display: none;
+        }
+
+        #reload-button.with-error-messages {
+            top: 140px;
         }
     </style>
 
@@ -85,6 +109,10 @@
                 <span id="initialization-info-message-1"></span>
                 <span id="initialization-info-project-name"></span>
                 <span id="initialization-info-message-2"></span>
+            </div>
+            <div id="error-messages-container" class="card bg-light">
+                <div id="error-messages-header" class="card-header"></div>
+                <div id="error-messages-body" class="card-body"></div>
             </div>
             <div id="reload-button" class="btn btn-primary"></div>
         </div>

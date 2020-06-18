@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {AngularUtility} from '../angular/angular-utility';
-import {INITIALIZATION_MESSAGES} from './initialization-messages';
+import {getMessage} from './initialization-messages';
 import {reload} from './common/reload';
 import {SettingsService} from './settings/settings-service';
 
@@ -58,7 +58,7 @@ export class InitializationProgress {
     }
 
 
-    public async setError(errorMsgKey: string) {
+    public async setError(errorMsgKey: string, msgWithParams?: string[]) {
 
         this.error = true;
 
@@ -69,7 +69,7 @@ export class InitializationProgress {
 
         InitializationProgress.setElementText(
             'initialization-info-message-1',
-            INITIALIZATION_MESSAGES[this.locale][errorMsgKey]
+            getMessage(errorMsgKey, this.locale)
         );
         InitializationProgress.setElementText('initialization-info-project-name', '');
         InitializationProgress.setElementText('initialization-info-message-2', '');
@@ -95,7 +95,7 @@ export class InitializationProgress {
 
         InitializationProgress.setElementText(
             'initialization-info-message-1',
-            INITIALIZATION_MESSAGES[this.locale]['loading1']
+            getMessage('loading1', this.locale)
         );
 
         InitializationProgress.setElementText(
@@ -105,7 +105,7 @@ export class InitializationProgress {
 
         InitializationProgress.setElementText(
             'initialization-info-message-2',
-            INITIALIZATION_MESSAGES[this.locale]['loading2']
+            getMessage('loading2', this.locale)
         );
 
         await AngularUtility.refresh();
@@ -117,7 +117,7 @@ export class InitializationProgress {
         const element: HTMLElement = document.getElementById('reload-button');
         if (element) {
             element.style.display = 'block';
-            element.innerText = INITIALIZATION_MESSAGES[this.locale]['loadTestProject'];
+            element.innerText = getMessage('loadTestProject', this.locale);
             element.onclick = async () => {
                 await this.settingsService.selectProject('test');
                 reload();

@@ -1,4 +1,4 @@
-export const INITIALIZATION_MESSAGES = {
+const INITIALIZATION_MESSAGES = {
     'de': {
         'loading1': 'Projekt',
         'loading2': 'wird geladen...',
@@ -18,3 +18,6 @@ export const INITIALIZATION_MESSAGES = {
         'indexingError': 'An error has occurred: The indexing of the project resources has failed.',
     }
 };
+
+
+export const getMessage = (key: string, locale: string) => INITIALIZATION_MESSAGES[locale][key];

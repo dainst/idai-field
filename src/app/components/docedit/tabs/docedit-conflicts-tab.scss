@@ -4,8 +4,13 @@ docedit-conflicts-tab {
     overflow-x: hidden;
     overflow-y: auto;
 
+    h3 {
+      user-select: none;
+    }
+
     .conflict-resolver-field {
       padding: 10px 5px;
+      user-select: none;
     }
 
     .radio-button-field {

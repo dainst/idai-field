@@ -112,40 +112,48 @@ export class ConfigLoader {
         let valuelistsConfiguration: any;
         let orderConfiguration: any;
 
-        customCategories = await this.configReader.read(customConfigPath);
-        languageConfiguration = await this.configReader.read(languageConfigurationPath);
-        customLanguageConfiguration = await this.configReader.read(configDirPath + '/Language-'
-            + (customConfigurationName
-                ? customConfigurationName
-                : 'Custom')
-            + '.' + locale + '.json');
-        searchConfiguration = await this.configReader.read(searchConfigurationPath);
-        valuelistsConfiguration = await this.configReader.read(valuelistsConfigurationPath);
-        orderConfiguration = await this.configReader.read(orderConfigurationPath);
+        try {
+            customCategories = await this.configReader.read(customConfigPath);
+            languageConfiguration = await this.configReader.read(languageConfigurationPath);
+            customLanguageConfiguration = await this.configReader.read(configDirPath + '/Language-'
+                + (customConfigurationName
+                    ? customConfigurationName
+                    : 'Custom')
+                + '.' + locale + '.json');
+            searchConfiguration = await this.configReader.read(searchConfigurationPath);
+            valuelistsConfiguration = await this.configReader.read(valuelistsConfigurationPath);
+            orderConfiguration = await this.configReader.read(orderConfigurationPath);
+        } catch (msgWithParams) {
+            throw [[msgWithParams]];
+        }
 
         // unused: Preprocessing.prepareSameMainCategoryResource(appConfiguration);
         // unused: Preprocessing.setIsRecordedInVisibilities(appConfiguration); See #8992
 
-        return new ProjectConfiguration(
-            buildRawProjectConfiguration(
-                builtinCategories,
-                libraryCategories,
-                customCategories,
-                commonFields,
-                valuelistsConfiguration,
-                {...this.defaultFields, ...extraFields},
-                relations,
-                languageConfiguration,
-                customLanguageConfiguration,
-                searchConfiguration,
-                orderConfiguration,
-                (categories: any) => {
-                    const fieldValidationErrors =
-                        ConfigurationValidation.validateFieldDefinitions(Object.values(categories));
-                    if (fieldValidationErrors.length > 0) throw fieldValidationErrors;
-                    return categories;
-                }
-            )
-        );
+        try {
+
+            return new ProjectConfiguration(
+                buildRawProjectConfiguration(
+                    builtinCategories,
+                    libraryCategories,
+                    customCategories,
+                    commonFields,
+                    valuelistsConfiguration,
+                    {...this.defaultFields, ...extraFields},
+                    relations,
+                    languageConfiguration,
+                    customLanguageConfiguration,
+                    searchConfiguration,
+                    orderConfiguration,
+                    (categories: any) => {
+                        const fieldValidationErrors =
+                            ConfigurationValidation.validateFieldDefinitions(Object.values(categories));
+                        if (fieldValidationErrors.length > 0) throw fieldValidationErrors;
+                        return categories;
+                    }));
+
+        } catch (msgWithParams) {
+            throw [msgWithParams];
+        }
     }
 }

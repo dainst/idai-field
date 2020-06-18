@@ -1,0 +1,18 @@
+#move-modal {
+  #move-modal-loading-icon-container {
+    height: 200px;
+
+    loading-icon {
+      position: relative;
+      top: 80px;
+    }
+
+    #moving-info {
+      position: relative;
+      top: 109px;
+      width: 100%;
+      text-align: center;
+      user-select: none;
+    }
+  }
+}

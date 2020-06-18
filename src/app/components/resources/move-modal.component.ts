@@ -11,6 +11,7 @@ import {ProjectConfiguration} from '../../core/configuration/project-configurati
 import {ViewFacade} from '../../core/resources/view/view-facade';
 import {Messages} from '../messages/messages';
 import {Constraint} from '../../core/datastore/model/constraint';
+import {Loading} from '../widgets/loading';
 
 
 @Component({
@@ -40,7 +41,11 @@ export class MoveModalComponent {
                 private indexFacade: IndexFacade,
                 private messages: Messages,
                 private viewFacade: ViewFacade,
-                private projectConfiguration: ProjectConfiguration) {}
+                private projectConfiguration: ProjectConfiguration,
+                private loading: Loading) {}
+
+
+    public isLoading = () => this.loading.isLoading('moveModal');
 
 
     public getConstraints = () => {
@@ -70,11 +75,14 @@ export class MoveModalComponent {
 
     public onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape') this.activeModal.dismiss('cancel');
+        if (event.key === 'Escape' && !this.isLoading()) this.activeModal.dismiss('cancel');
     }
 
 
     public async moveDocument(newParent: FieldDocument) {
+
+        if (this.isLoading()) return;
+        this.loading.start('moveModal');
 
         try {
             await MoveUtility.moveDocument(
@@ -88,6 +96,7 @@ export class MoveModalComponent {
             this.messages.add(msgWithParams);
         }
 
+        this.loading.stop();
         this.activeModal.close();
     }
 

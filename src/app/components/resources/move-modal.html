@@ -1,15 +1,21 @@
-<div class="modal-body" id="move-modal">
-    <p i18n="@@resources.moveModal.chooseParentResource">
-        Bitte wählen Sie die neue übergeordnete Ressource aus, der die Ressource
-        <b>{{document.resource.identifier}}</b> zugewiesen werden soll:
-    </p>
-    <document-picker [filterOptions]="filterOptions"
-                     [getConstraints]="getConstraints"
-                     [showProjectOption]="showProjectOption"
-                     (documentSelected)="moveDocument($event)"></document-picker>
+<div id="move-modal" class="modal-body">
+    <div *ngIf="!isLoading()">
+        <p i18n="@@resources.moveModal.chooseParentResource">
+            Bitte wählen Sie die neue übergeordnete Ressource aus, der die Ressource
+            <b>{{document.resource.identifier}}</b> zugewiesen werden soll:
+        </p>
+        <document-picker [filterOptions]="filterOptions"
+                         [getConstraints]="getConstraints"
+                         [showProjectOption]="showProjectOption"
+                         (documentSelected)="moveDocument($event)"></document-picker>
+    </div>
+    <div *ngIf="isLoading()" id="move-modal-loading-icon-container">
+        <loading-icon [context]="'moveModal'"></loading-icon>
+        <div id="moving-info" i18n="@@resources.moveModal.moving">Ressource wird verschoben...</div>
+    </div>
 </div>
 
-<div class="modal-footer">
+<div *ngIf="!isLoading()" class="modal-footer">
     <button type="button" id="move-modal-cancel-button" class="btn btn-secondary"
             (click)="activeModal.dismiss('cancel')">
         <span i18n="@@buttons.cancel">Abbrechen</span>

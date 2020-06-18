@@ -235,7 +235,7 @@ function replaceValuelistIdsWithValuelists(valuelistDefinitionsMap: Map<Valuelis
                     cond(
                         or(
                             on(TransientFieldDefinition.VALUELISTID, isDefined),
-                            on(TransientFieldDefinition.POSITION_VALUES, isDefined)
+                            on(TransientFieldDefinition.POSITION_VALUELIST_ID, isDefined)
                         ),
                         replaceValuelistIdWithActualValuelist(valuelistDefinitionsMap)))))) as any;
 }
@@ -246,8 +246,9 @@ function replaceValuelistIdWithActualValuelist(valuelistDefinitionMap: Map<Value
     return (fd: TransientFieldDefinition) =>
         flow(fd,
             assoc(TransientFieldDefinition.VALUELIST, valuelistDefinitionMap[fd.valuelistId!]),
-            assoc(TransientFieldDefinition.POSITION_VALUES, valuelistDefinitionMap[fd.positionValues!]),
-            dissoc(TransientFieldDefinition.VALUELISTID)
+            assoc(TransientFieldDefinition.POSITION_VALUES, valuelistDefinitionMap[fd.positionValuelistId!]),
+            dissoc(TransientFieldDefinition.VALUELISTID),
+            dissoc(TransientFieldDefinition.POSITION_VALUELIST_ID)
         );
 }
 

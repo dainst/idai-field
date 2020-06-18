@@ -14,6 +14,7 @@ export interface FieldDefinition {
     description?: string;
     valuelist?: ValuelistDefinition;
     valuelistFromProjectField?: string;
+    positionValues?: ValuelistDefinition;
     editable?: boolean;                 // defaults to true
     visible?: boolean;                  // defaults to true
     mandatory?: true;

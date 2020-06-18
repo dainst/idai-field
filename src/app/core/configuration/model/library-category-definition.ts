@@ -28,7 +28,7 @@ export interface LibraryCategoryDefinition extends BaseCategoryDefinition {
 export interface LibraryFieldDefinition extends BaseFieldDefinition {
 
     inputType?: string;
-    positionValues?: string;
+    positionValuelistId?: string;
 }
 
 

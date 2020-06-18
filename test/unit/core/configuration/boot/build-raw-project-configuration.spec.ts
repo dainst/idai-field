@@ -260,7 +260,7 @@ describe('buildRawProjectConfiguration', () => {
             fail();
         } catch (expected) {
             expect(expected).toEqual([
-                ConfigurationErrors.MISSING_FIELD_PROPERTY, 'valuelistId', 'A', 'aField'
+                ConfigurationErrors.NO_VALUELIST_PROVIDED, 'A', 'aField'
             ]);
         }
     });
@@ -298,7 +298,7 @@ describe('buildRawProjectConfiguration', () => {
             fail();
         } catch (expected) {
             expect(expected).toEqual([
-                ConfigurationErrors.MISSING_FIELD_PROPERTY, 'valuelistId', 'A:0', 'aField'
+                ConfigurationErrors.NO_VALUELIST_PROVIDED, 'A:0', 'aField'
             ]);
         }
     });

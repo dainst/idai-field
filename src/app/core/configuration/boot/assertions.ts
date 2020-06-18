@@ -88,7 +88,7 @@ export module Assertions {
             if (['dropdown', 'checkboxes', 'radio'].includes(field.inputType ? field.inputType : '')) {
 
                 if (!field.valuelistId && !field.valuelistFromProjectField) {
-                    throw [ConfigurationErrors.MISSING_FIELD_PROPERTY, 'valuelistId', categoryName, fieldName];
+                    throw [ConfigurationErrors.NO_VALUELIST_PROVIDED, categoryName, fieldName];
                 }
             }
         });

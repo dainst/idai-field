@@ -22,7 +22,8 @@ const INITIALIZATION_MESSAGES = {
         'configuration/buildProjectCategories/missingFieldProperty': 'Die Eigenschaft "[0]" muss für das Feld "[2]" der Kategorie "[1]" gesetzt werden.',
         'configuration/buildProjectCategories/mustNotSetInputType': 'Die Eigenschaft "inputType" darf für das Feld "[1]" der Kategorie "[0]" nicht geändert werden.',
         'configuration/buildProjectCategories/illegalFieldInputType': 'Der als Eigenschaft "inputType" des Feldes "[1]" gesetzte Wert "[0]" ist ungültig.',
-        'configuration/buildProjectCategories/illegalFieldProperty': 'Die Eigenschaft "[1]" ist ungültig.'
+        'configuration/buildProjectCategories/illegalFieldProperty': 'Die Eigenschaft "[1]" ist ungültig.',
+        'configuration/buildProjectCategories/noValuelistProvided': 'Für das Feld "[1]" der Kategorie "[0]" wurde keine Werteliste angegeben.'
     },
     'en': {
         'loading1': 'Loading project',
@@ -47,7 +48,8 @@ const INITIALIZATION_MESSAGES = {
         'configuration/buildProjectCategories/missingFieldProperty': 'The property "[0]" must be set for field "[2]" of category "[1]".',
         'configuration/buildProjectCategories/mustNotSetInputType': 'The property "inputType" must not be changed for field "[1]" of category "[0]".',
         'configuration/buildProjectCategories/illegalFieldInputType': 'The value "[0]" set as property "inputType" of field "[1]" is invalid.',
-        'configuration/buildProjectCategories/illegalFieldProperty': 'The property "[1]" is invalid.'
+        'configuration/buildProjectCategories/illegalFieldProperty': 'The property "[1]" is invalid.',
+        'configuration/buildProjectCategories/noValuelistProvided': 'No value list has been specified for field "[1]" of category "[0]".'
     }
 };
 

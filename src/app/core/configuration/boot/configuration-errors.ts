@@ -23,4 +23,5 @@ export module ConfigurationErrors {
     export const MUST_NOT_SET_INPUT_TYPE = 'configuration/buildProjectCategories/mustNotSetInputType';
     export const ILLEGAL_FIELD_INPUT_TYPE = 'configuration/buildProjectCategories/illegalFieldInputType';
     export const ILLEGAL_FIELD_PROPERTY = 'configuration/buildProjectCategories/illegalFieldProperty';
+    export const NO_VALUELIST_PROVIDED = 'configuration/buildProjectCategories/noValuelistProvided';
 }

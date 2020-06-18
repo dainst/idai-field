@@ -18,6 +18,7 @@ import {MenuService} from '../menu-service';
 import {Messages} from '../messages/messages';
 import {ProjectCategories} from '../../core/configuration/project-categories';
 import {ProjectConfiguration} from '../../core/configuration/project-configuration';
+import {NavigationPath} from '../../core/resources/view/state/navigation-path';
 
 
 export type PopoverMenu = 'none'|'info'|'children';
@@ -329,14 +330,19 @@ export class ResourcesComponent implements OnDestroy {
     private async selectDocumentFromParams(id: string, menu: string, group: string|undefined) {
 
         if (this.viewFacade.getMode() === 'types') {
-            return await this.viewFacade.moveInto(id, false, true);
+            await this.viewFacade.moveInto(id, false, true);
+        } else {
+            await this.viewFacade.setSelectedDocument(id);
         }
-
-        await this.viewFacade.setSelectedDocument(id);
 
         try {
             if (menu === 'edit') {
-                await this.editDocument(this.viewFacade.getSelectedDocument(), group);
+                await this.editDocument(
+                    this.viewFacade.getMode() === 'types'
+                        ? NavigationPath.getSelectedSegment(this.viewFacade.getNavigationPath())?.document
+                        : this.viewFacade.getSelectedDocument(),
+                    group
+                );
             } else {
                 await this.viewFacade.setActiveDocumentViewTab(group)
             }

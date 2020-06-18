@@ -35,58 +35,42 @@ export class AppConfigurator {
         dimensionLength: {
             inputType: FieldDefinition.InputType.DIMENSION,
             group: Groups.DIMENSION,
-            positionValues: [
-                'Maximale Ausdehnung',
-                'Minimale Ausdehnung']
+            positionValues: 'position-values-expansion-default'
         },
         dimensionWidth: {
             inputType: FieldDefinition.InputType.DIMENSION,
             group: Groups.DIMENSION,
-            positionValues: [
-                'Maximale Ausdehnung',
-                'Minimale Ausdehnung']
+            positionValues: 'position-values-expansion-default'
         },
         dimensionHeight: {
             inputType: FieldDefinition.InputType.DIMENSION,
             group: Groups.DIMENSION,
-            positionValues: [
-                'Maximale Ausdehnung',
-                'Minimale Ausdehnung']
+            positionValues: 'position-values-expansion-default'
         },
         dimensionDiameter: {
             inputType: FieldDefinition.InputType.DIMENSION,
             group: Groups.DIMENSION,
-            positionValues: [
-                'Maximale Ausdehnung',
-                'Minimale Ausdehnung']
+            positionValues: 'position-values-expansion-default'
         },
         dimensionPerimeter: {
             inputType: FieldDefinition.InputType.DIMENSION,
             group: Groups.DIMENSION,
-            positionValues: [
-                'Maximale Ausdehnung',
-                'Minimale Ausdehnung']
+            positionValues: 'position-values-expansion-default'
         },
         dimensionThickness: {
             inputType: FieldDefinition.InputType.DIMENSION,
             group: Groups.DIMENSION,
-            positionValues: [
-                'Maximale Ausdehnung',
-                'Minimale Ausdehnung']
+            positionValues: 'position-values-expansion-default'
         },
         dimensionVerticalExtent: {
             inputType: FieldDefinition.InputType.DIMENSION,
             group: Groups.POSITION,
-            positionValues: [
-                'Oberkante',
-                'Unterkante']
+            positionValues: 'position-values-edge-default'
         },
         dimensionOther: {
             inputType: FieldDefinition.InputType.DIMENSION,
             group: Groups.DIMENSION,
-            positionValues: [
-                'Maximale Ausdehnung',
-                'Minimale Ausdehnung']
+            positionValues: 'position-values-expansion-default'
         },
         beginningDate: {
             inputType: FieldDefinition.InputType.DATE,

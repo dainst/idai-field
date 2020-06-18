@@ -3,6 +3,7 @@ import {DecimalPipe} from '@angular/common';
 import {Resource, Dimension} from 'idai-components-2';
 import {UtilTranslations} from '../../../../core/util/util-translations';
 import {FieldDefinition} from '../../../../core/configuration/model/field-definition';
+import {ValuelistUtil} from '../../../../core/util/valuelist-util';
 
 
 @Component({
@@ -49,7 +50,23 @@ export class DimensionComponent {
             : Dimension.generateLabel(
                 dimension,
                 (value: any) => this.decimalPipe.transform(value),
-                (key: string) => this.utilTranslations.getTranslation(key));
+                (key: string) => this.utilTranslations.getTranslation(key),
+                dimension.measurementPosition
+                    ? this.getPositionValueLabel(dimension.measurementPosition)
+                    : undefined
+                );
+    }
+
+
+    public getPositionValues(): string[] {
+
+        return Object.keys(this.field['positionValues'].values);
+    }
+
+
+    public getPositionValueLabel(valueId: string): string {
+
+        return ValuelistUtil.getValueLabel(this.field['positionValues'], valueId);
     }
 
 

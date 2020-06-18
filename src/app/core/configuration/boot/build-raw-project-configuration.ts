@@ -1,5 +1,5 @@
 import {cond, flow, includedIn, isDefined, isNot, Mapping, Map, on, subtract, undefinedOrEmpty, identity,
-    compose, Pair, dissoc, pairWith, prune, filter, update} from 'tsfun';
+    compose, Pair, dissoc, pairWith, prune, filter, update, or} from 'tsfun';
 import {assoc, lookup, map, reduce} from 'tsfun/associative';
 import {clone, update as updateStruct} from 'tsfun/struct';
 import {LibraryCategoryDefinition} from '../model/library-category-definition';
@@ -233,7 +233,10 @@ function replaceValuelistIdsWithValuelists(valuelistDefinitionsMap: Map<Valuelis
             update(TransientCategoryDefinition.FIELDS,
                 map(
                     cond(
-                        on(TransientFieldDefinition.VALUELISTID, isDefined),
+                        or(
+                            on(TransientFieldDefinition.VALUELISTID, isDefined),
+                            on(TransientFieldDefinition.POSITION_VALUES, isDefined)
+                        ),
                         replaceValuelistIdWithActualValuelist(valuelistDefinitionsMap)))))) as any;
 }
 
@@ -243,6 +246,7 @@ function replaceValuelistIdWithActualValuelist(valuelistDefinitionMap: Map<Value
     return (fd: TransientFieldDefinition) =>
         flow(fd,
             assoc(TransientFieldDefinition.VALUELIST, valuelistDefinitionMap[fd.valuelistId!]),
+            assoc(TransientFieldDefinition.POSITION_VALUES, valuelistDefinitionMap[fd.positionValues!]),
             dissoc(TransientFieldDefinition.VALUELISTID)
         );
 }

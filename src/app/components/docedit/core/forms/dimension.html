@@ -61,7 +61,9 @@
 					<select *ngIf="this.field['positionValues']" [(ngModel)]="dimension.measurementPosition"
 							class="ml-2 form-control" name="measurementPositionSelect">
 						<option value=""></option>
-						<option *ngFor="let item of field['positionValues']" value="{{item}}">{{item}}</option>
+						<option *ngFor="let value of getPositionValues()" value="{{value}}">
+                            {{getPositionValueLabel(value)}}
+                        </option>
 					</select>
 					<input *ngIf="!this.field['positionValues']" [(ngModel)]="dimension.measurementPosition"
 						   class="form-control" name="measurementPositionInput">

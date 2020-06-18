@@ -9,6 +9,44 @@
       "EPSG3857 (WGS 84 Web Mercator)": {}
     }
   },
+  "position-values-expansion-default": {
+    "createdBy": "",
+    "creationDate": "",
+    "description": {},
+    "values": {
+      "Maximale Ausdehnung": {
+        "labels": {
+          "de": "Maximale Ausdehnung",
+          "en": "Maximum expansion"
+        }
+      },
+      "Minimale Ausdehnung": {
+        "labels": {
+          "de": "Minimale Ausdehnung",
+          "en": "Minimum expansion"
+        }
+      }
+    }
+  },
+  "position-values-edge-default": {
+    "createdBy": "",
+    "creationDate": "",
+    "description": {},
+    "values": {
+      "Oberkante": {
+        "labels": {
+          "de": "Oberkante",
+          "en": "Top edge"
+        }
+      },
+      "Unterkante": {
+        "labels": {
+          "de": "Unterkante",
+          "en": "Lower edge"
+        }
+      }
+    }
+  },
   "orientation-default-1": {
     "createdBy": "",
     "description": {},

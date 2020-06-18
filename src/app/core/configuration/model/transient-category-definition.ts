@@ -33,4 +33,5 @@ export module TransientFieldDefinition {
 
     export const VALUELIST = 'valuelist';
     export const VALUELISTID = 'valuelistId';
+    export const POSITION_VALUES = 'positionValues';
 }

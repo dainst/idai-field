@@ -45,7 +45,7 @@ export module CustomCategoryDefinition {
 
     export function makeAssertIsValid(builtinCategories: string[], libraryCategories: string[]) {
 
-        return function assertIsValid([typeName, category]: [string, CustomCategoryDefinition]) {
+        return function assertIsValid([categoryName, category]: [string, CustomCategoryDefinition]) {
 
             Object.keys(category)
                 .filter(isNot(includedIn(VALID_CATEGORY_PROPERTIES)))
@@ -53,21 +53,23 @@ export module CustomCategoryDefinition {
                 .map(swap)
                 .forEach(throws());
 
-            if (!builtinCategories.includes(typeName) && !libraryCategories.includes(typeName)) {
+            if (!builtinCategories.includes(categoryName) && !libraryCategories.includes(categoryName)) {
                 if (!category.parent) {
                     throw [
                         ConfigurationErrors.MISSING_CATEGORY_PROPERTY,
                         CustomCategoryDefinition.PARENT,
-                        typeName,
-                        'must be set for new categories'];
+                        categoryName,
+                        'must be set for new categories'
+                    ];
                 }
             } else {
                 if (category.parent) {
                     throw [
                         ConfigurationErrors.ILLEGAL_CATEGORY_PROPERTY,
                         CustomCategoryDefinition.PARENT,
-                        typeName,
-                        'must not be set if not a new category']
+                        categoryName,
+                        'must not be set if not a new category'
+                    ];
                 }
             }
 

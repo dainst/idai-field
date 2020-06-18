@@ -35,12 +35,12 @@ export module Assertions {
         const categories = mapToNamedArray(libraryCategories).concat(mapToNamedArray(customCategories)) as Array<Named>;
         for (let category of categories) {
             if (!(category as any)['valuelists']) return;
-            for (let valuelist of Object.keys((category as any)['valuelists'])) {
-                if (commonFields[valuelist] && commonFields[valuelist].valuelistFromProjectField) {
+            for (let fieldName of Object.keys((category as any)['valuelists'])) {
+                if (commonFields[fieldName] && commonFields[fieldName].valuelistFromProjectField) {
                     throw [
                         ConfigurationErrors.COMMON_FIELD_VALUELIST_FROM_PROJECTDOC_NOT_TO_BE_OVERWRITTEN,
                         category.name,
-                        valuelist
+                        fieldName
                     ];
                 }
             }
@@ -142,7 +142,7 @@ export module Assertions {
     function assertCategoryNamesConsistent(libraryCategories: Map<LibraryCategoryDefinition>) {
 
         type InputType = string;
-        const collected: { [categoryName: string]: { [fieldName: string]: InputType }} = {};
+        const collected: { [categoryName: string]: { [fieldName: string]: InputType } } = {};
 
         Object.values(libraryCategories).forEach((libraryCategory: any) => {
 

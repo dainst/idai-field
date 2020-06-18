@@ -47,8 +47,8 @@ export class AppConfigurator {
                 'Minimale Ausdehnung']
         },
         dimensionHeight: {
-            inputType: 'dimension',
-            group: 'dimension',
+            inputType: FieldDefinition.InputType.DIMENSION,
+            group: Groups.DIMENSION,
             positionValues: [
                 'Maximale Ausdehnung',
                 'Minimale Ausdehnung']

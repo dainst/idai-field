@@ -123,7 +123,7 @@ function groupByFirstSegment(paths: string[]) {
 function assertRowsAndHeadingLengthsMatch(headings: string[], rows: string[][]) {
 
     let i = 1;
-    for (let row of rows) {
+    for (const row of rows) {
         if (row.length !== headings.length) throw [ParserErrors.CSV_ROW_LENGTH_MISMATCH, i];
         i++;
     }
@@ -158,7 +158,7 @@ function insertFieldIntoDocument(headings: string[]) {
             struct[headings[i]] = toNullIfEmptyString(fieldOfRow);
         }
         return struct;
-    }
+    };
 }
 
 

@@ -75,7 +75,7 @@ export async function process(documents: Array<Document>,
                               operationCategoryNames: string[],
                               get: Get,
                               inverseRelationsMap: InverseRelationsMap,
-                              importOptions : ImportOptions = {})
+                              importOptions: ImportOptions = {})
         : Promise<[Array<Document>, Array<Document>, string[]|undefined]> {
 
     assertLegalCombination(importOptions.mergeMode, importOptions.operationId);
@@ -153,5 +153,3 @@ function mergeOrUseAsIs(document: NewDocument|Document): Document {
 
 
 export const MERGE_TARGET = 'mergeTarget';
-
-

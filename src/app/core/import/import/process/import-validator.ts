@@ -53,7 +53,7 @@ export class ImportValidator extends Validator {
 
     public async assertLiesWithinCorrectness(resources: Array<Resource>) {
 
-        for (let resource of resources) {
+        for (const resource of resources) {
 
             const category = this.projectConfiguration.getCategoriesArray().find(
                 on('name', is(resource.category))
@@ -104,7 +104,8 @@ export class ImportValidator extends Validator {
 
     public async assertIsNotOverviewCategory(document: Document|NewDocument) {
 
-        if (ProjectCategories.getOverviewCategoryNames(this.projectConfiguration.getCategoryTreelist()).includes(document.resource.category)) {
+        if (ProjectCategories.getOverviewCategoryNames(this.projectConfiguration.getCategoryTreelist())
+                .includes(document.resource.category)) {
 
             throw [E.OPERATIONS_NOT_ALLOWED];
         }
@@ -113,11 +114,12 @@ export class ImportValidator extends Validator {
 
     public assertRelationsWellformedness(documents: Array<Document|NewDocument>) {
 
-        for (let document of documents) {
+        for (const document of documents) {
 
             const invalidRelationFields = Validations
                 .validateDefinedRelations(document.resource, this.projectConfiguration)
-                // operations have empty RECORDED_IN which however is not defined. image categories must not be imported. regular categories all have RECORDED_IN
+                // operations have empty RECORDED_IN which however is not defined
+                // image categories must not be imported. regular categories all have RECORDED_IN
                 .filter(isnt(RECORDED_IN));
 
             if (invalidRelationFields.length > 0) {
@@ -132,7 +134,6 @@ export class ImportValidator extends Validator {
 
 
     /**
-     * @param document
      * @throws [E.INVALID_FIELDS]
      */
     public assertFieldsDefined(document: Document|NewDocument): void {
@@ -215,7 +216,7 @@ export class ImportValidator extends Validator {
 
         const fieldDefinitions = this.projectConfiguration.getFieldDefinitions(resource.category);
 
-        for (let fieldName of Object.keys(resource).filter(isNot(includedIn(['relations', 'geometry'])))) {
+        for (const fieldName of Object.keys(resource).filter(isNot(includedIn(['relations', 'geometry'])))) {
 
             let fieldDefinition = fieldDefinitions.find(on('name', is(fieldName)));
             const dropdownRangeFieldName = fieldName.replace('End', '');

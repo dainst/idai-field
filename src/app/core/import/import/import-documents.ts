@@ -39,14 +39,12 @@ export function buildImportFunction(validator: ImportValidator,
     assertLegalCombination(importOptions.mergeMode, importOptions.operationId);
 
     /**
-     * @param datastore
-     * @param username
      * @param documents documents with the field resource.identifier set to a non empty string.
      *   If resource.id is set, it will be taken as document.id on creation.
      *   The relations map is assumed to be at least existent, but can be empty.
      *   The resource.category field may be empty.
-     * @param importReport
-     *   .errors of ImportError or Validation Error
+     * @param datastore
+     * @param username
      */
     return async function importDocuments(documents: Array<Document>,
                                           datastore: DocumentDatastore,
@@ -115,4 +113,3 @@ async function preprocessDocuments(documents: Array<Document>,
         }
     }
 }
-

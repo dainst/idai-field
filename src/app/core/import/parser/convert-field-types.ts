@@ -33,7 +33,7 @@ export function convertFieldTypes(category: Category) {
 
     return (resource: Resource) => {
 
-        for (let fieldName of fields(resource)) {
+        for (const fieldName of fields(resource)) {
 
             const fieldDefinition = Category.getFields(category).find(on(FieldDefinition.NAME, is(fieldName)));
             if (!fieldDefinition) continue;
@@ -42,7 +42,7 @@ export function convertFieldTypes(category: Category) {
             if (resource[fieldName] !== null) convertTypeDependent(resource, fieldName, inputType);
         }
 
-        for (let relationName of Object.keys(resource.relations).filter(isnt(PARENT))) {
+        for (const relationName of Object.keys(resource.relations).filter(isnt(PARENT))) {
             if (resource.relations[relationName] === null) continue;
             resource.relations[relationName] = (resource.relations[relationName] as unknown as string).split(ARRAY_SEPARATOR)
         }
@@ -82,7 +82,7 @@ function convertCheckboxes(resource: Resource, fieldName: string) {
 function convertDimension(resource: Resource, fieldName: string) {
 
     let i = 0;
-    for (let dimension of resource[fieldName] as Array<Dimension>) {
+    for (const dimension of resource[fieldName] as Array<Dimension>) {
 
         if (dimension === undefined) throw 'Undefined dimension found';
         if (dimension === null) continue;

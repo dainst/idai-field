@@ -869,7 +869,7 @@
         <target state="final">Project-specific form</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/project-configuration.html</context>
-          <context context-type="linenumber">22</context>
+          <context context-type="linenumber">20</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.field.inputType" datatype="html">
@@ -877,11 +877,11 @@
         <target state="final">Input type</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/project-configuration.html</context>
-          <context context-type="linenumber">83</context>
+          <context context-type="linenumber">79</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/project-configuration.html</context>
-          <context context-type="linenumber">132</context>
+          <context context-type="linenumber">127</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.input" datatype="html">
@@ -889,7 +889,7 @@
         <target state="final">Single line text</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/project-configuration.html</context>
-          <context context-type="linenumber">84</context>
+          <context context-type="linenumber">80</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.unsignedInt" datatype="html">
@@ -897,7 +897,7 @@
         <target state="final">Positive whole number</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/project-configuration.html</context>
-          <context context-type="linenumber">85</context>
+          <context context-type="linenumber">81</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.float" datatype="html">
@@ -905,11 +905,11 @@
         <target state="final">Decimal number</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/project-configuration.html</context>
-          <context context-type="linenumber">86</context>
+          <context context-type="linenumber">82</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/project-configuration.html</context>
-          <context context-type="linenumber">95</context>
+          <context context-type="linenumber">91</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.unsignedFloat" datatype="html">
@@ -917,7 +917,7 @@
         <target state="final">Positive decimal number</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/project-configuration.html</context>
-          <context context-type="linenumber">87</context>
+          <context context-type="linenumber">83</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.multiInput" datatype="html">
@@ -925,7 +925,7 @@
         <target state="final">Single line text with multiple selection</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/project-configuration.html</context>
-          <context context-type="linenumber">88</context>
+          <context context-type="linenumber">84</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.text" datatype="html">
@@ -933,7 +933,7 @@
         <target state="final">Multiline text</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/project-configuration.html</context>
-          <context context-type="linenumber">89</context>
+          <context context-type="linenumber">85</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.dropdown" datatype="html">
@@ -941,7 +941,7 @@
         <target state="final">Dropdown list</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/project-configuration.html</context>
-          <context context-type="linenumber">90</context>
+          <context context-type="linenumber">86</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.dropdownRange" datatype="html">
@@ -949,7 +949,7 @@
         <target state="final">Dropdown list (range)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/project-configuration.html</context>
-          <context context-type="linenumber">91</context>
+          <context context-type="linenumber">87</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.radio" datatype="html">
@@ -957,7 +957,7 @@
         <target state="final">Radiobutton</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/project-configuration.html</context>
-          <context context-type="linenumber">92</context>
+          <context context-type="linenumber">88</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.boolean" datatype="html">
@@ -965,7 +965,7 @@
         <target state="final">Yes / No</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/project-configuration.html</context>
-          <context context-type="linenumber">93</context>
+          <context context-type="linenumber">89</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.checkboxes" datatype="html">
@@ -973,7 +973,7 @@
         <target state="final">Checkboxes</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/project-configuration.html</context>
-          <context context-type="linenumber">94</context>
+          <context context-type="linenumber">90</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.date" datatype="html">
@@ -981,7 +981,7 @@
         <target state="final">Date</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/project-configuration.html</context>
-          <context context-type="linenumber">96</context>
+          <context context-type="linenumber">92</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.dimension" datatype="html">
@@ -989,7 +989,7 @@
         <target state="final">Dimension</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/project-configuration.html</context>
-          <context context-type="linenumber">97</context>
+          <context context-type="linenumber">93</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.literature" datatype="html">
@@ -997,7 +997,7 @@
         <target state="final">Bibliographic reference</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/project-configuration.html</context>
-          <context context-type="linenumber">98</context>
+          <context context-type="linenumber">94</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.geometry" datatype="html">
@@ -1005,7 +1005,7 @@
         <target state="final">Geometry</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/project-configuration.html</context>
-          <context context-type="linenumber">99</context>
+          <context context-type="linenumber">95</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.instanceOf" datatype="html">
@@ -1013,7 +1013,7 @@
         <target state="final">Type selection</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/project-configuration.html</context>
-          <context context-type="linenumber">100</context>
+          <context context-type="linenumber">96</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.inputType.relation" datatype="html">
@@ -1021,7 +1021,7 @@
         <target state="final">Relation</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/project-configuration.html</context>
-          <context context-type="linenumber">133</context>
+          <context context-type="linenumber">128</context>
         </context-group>
       </trans-unit>
       <trans-unit id="widgets.fieldsView.range.from" datatype="html">
@@ -1061,7 +1061,7 @@
         <target state="final">Conflicts</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/taskbar-conflicts.html</context>
-          <context context-type="linenumber">13</context>
+          <context context-type="linenumber">14</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.synchronization.uploading" datatype="html">
@@ -1415,7 +1415,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/move-modal.html</context>
-          <context context-type="linenumber">15</context>
+          <context context-type="linenumber">21</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
@@ -1830,16 +1830,24 @@
       </trans-unit>
       <trans-unit id="resources.moveModal.chooseParentResource" datatype="html">
         <source>
-        Bitte wählen Sie die neue übergeordnete Ressource aus, der die Ressource
-        <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{document.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> zugewiesen werden soll:
-    </source>
-        <target state="final">
+            Bitte wählen Sie die neue übergeordnete Ressource aus, der die Ressource
+            <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{document.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> zugewiesen werden soll:
+        </source>
+        <target state="translated">
         Please select the new parent resource to which the resource
         <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{document.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> is to be assigned:
     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/move-modal.html</context>
-          <context context-type="linenumber">2</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.moveModal.moving" datatype="html">
+        <source>Ressource wird verschoben...</source>
+        <target state="final">Moving resource...</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/move-modal.html</context>
+          <context context-type="linenumber">14</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.tooltips.mode.map" datatype="html">
@@ -2078,7 +2086,7 @@
       </trans-unit>
       <trans-unit id="resources.searchResultsInfo.documentLimitRemoveTooltip" datatype="html">
         <source>Die Darstellung von sehr großen Suchergebnissen kann je nach Gerät und Anzahl der Treffer sehr lange dauern. Daher wurde die aktuelle Darstellung zunächst auf <x id="INTERPOLATION" equiv-text="{{viewFacade.getDocuments().length}}"/> Ressourcen begrenzt. Klicken Sie hier, um das gesamte Ergebnis zu laden.</source>
-        <target state="translated">Depending on your device and the number of hits, the rendering of large search results may take a while. Therefore, the current listing was limited to <x id="INTERPOLATION" equiv-text="{{viewFacade.getDocuments().length}}"/> resources. Click here to load the complete result.</target>
+        <target state="final">Depending on your device and the number of hits, the rendering of large search results may take a while. Therefore, the current listing was limited to <x id="INTERPOLATION" equiv-text="{{viewFacade.getDocuments().length}}"/> resources. Click here to load the complete result.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/list/sidebar-list.html</context>
           <context context-type="linenumber">31</context>
@@ -3502,7 +3510,7 @@
         <target state="final">Project-specific field</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/project-configuration.html</context>
-          <context context-type="linenumber">71</context>
+          <context context-type="linenumber">67</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.group.images" datatype="html">
@@ -5146,7 +5154,7 @@
         <target state="final">Category</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/project-configuration.html</context>
-          <context context-type="linenumber">31</context>
+          <context context-type="linenumber">29</context>
         </context-group>
       </trans-unit>
       <trans-unit id="config.libraryId" datatype="html">
@@ -5154,7 +5162,7 @@
         <target state="final">Form</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/project-configuration.html</context>
-          <context context-type="linenumber">36</context>
+          <context context-type="linenumber">34</context>
         </context-group>
       </trans-unit>
       <trans-unit id="configuration.relations.liesWithin" datatype="html">

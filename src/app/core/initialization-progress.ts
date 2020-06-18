@@ -80,6 +80,7 @@ export class InitializationProgress {
         if (errorMessages.length > 0) {
             const containerElement: HTMLElement = document.getElementById('error-messages-container');
             containerElement.style.display = 'block';
+            containerElement.style.opacity = '1';
 
             const headerElement: HTMLElement = document.getElementById('error-messages-header');
             headerElement.innerText = getMessage(
@@ -89,6 +90,11 @@ export class InitializationProgress {
 
             const bodyElement: HTMLElement = document.getElementById('error-messages-body');
             bodyElement.innerText = errorMessages.join('\n');
+
+            InitializationProgress.setElementClasses(
+                'initialization',
+                ['with-error-messages']
+            );
         }
 
         this.showReloadButton(errorMessages.length > 0);
@@ -143,7 +149,7 @@ export class InitializationProgress {
 
         const element: HTMLElement = document.getElementById('reload-button');
         if (element) {
-            element.style.display = 'block';
+            element.style.opacity = '1';
             element.innerText = getMessage('loadTestProject', this.locale);
             element.onclick = async () => {
                 await this.settingsService.selectProject('test');

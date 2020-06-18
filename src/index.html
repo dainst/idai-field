@@ -21,8 +21,13 @@
 
         #initialization {
             position: absolute;
-            top: calc(50vh - 123px);
+            top: calc(50vh - 120px);
             width: 100%;
+            transition: top 1s;
+        }
+
+        #initialization.with-error-messages {
+            top: calc(50vh - 238px);
         }
 
         .icon {
@@ -46,7 +51,7 @@
             width: 100%;
             position: absolute;
             left: 0;
-            margin-top: 50px;
+            margin-top: 42px;
             text-align: center;
             font-family: Roboto, sans-serif;
             user-select: none;
@@ -58,13 +63,14 @@
 
         #error-messages-container {
             position: relative;
-            top: 102px;
+            top: 92px;
             width: 500px;
             max-height: 138px;
             margin: auto;
             border: 1px solid rgba(0, 0, 0, 0.125) !important;
             border-radius: 0.25rem !important;
-            display: none;
+            opacity: 0;
+            transition: opacity 1s;
         }
 
         #error-messages-header {
@@ -78,14 +84,16 @@
 
         #reload-button {
             position: relative;
-            top: 102px;
+            top: 25px;
             width: fit-content;
             margin: auto;
-            display: none;
+            display: block;
+            opacity: 0;
+            transition: opacity 1s;
         }
 
         #reload-button.with-error-messages {
-            top: 140px;
+            top: 123px;
         }
     </style>
 

@@ -9,7 +9,7 @@
     },
     "array-type": false,
     "arrow-return-shorthand": true,
-    "curly": true,
+    "curly": [true, "ignore-same-line"],
     "deprecation": {
       "severity": "warning"
     },
@@ -68,6 +68,7 @@
       true,
       "ignore-params"
     ],
+    "no-namespace": false,
     "no-non-null-assertion": true,
     "no-redundant-jsdoc": true,
     "no-switch-case-fall-through": true,

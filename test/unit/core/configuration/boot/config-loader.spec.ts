@@ -427,7 +427,7 @@ describe('ConfigLoader', () => {
 
             fail();
         } catch(err) {
-            expect(err).toEqual([[ConfigurationErrors.INVALID_CONFIG_PARENT_NOT_DEFINED, 'Find']]);
+            expect(err).toEqual([ConfigurationErrors.INVALID_CONFIG_PARENT_NOT_DEFINED, 'Find']);
         } finally {
             done();
         }
@@ -455,7 +455,7 @@ describe('ConfigLoader', () => {
             fail();
 
         } catch(err) {
-            expect(err).toEqual([[ConfigurationErrors.TRYING_TO_SUBTYPE_A_NON_EXTENDABLE_CATEGORY, 'Place']]);
+            expect(err).toEqual([ConfigurationErrors.TRYING_TO_SUBTYPE_A_NON_EXTENDABLE_CATEGORY, 'Place']);
         } finally {
             done();
         }

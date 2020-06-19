@@ -19,7 +19,7 @@ describe('CustomCategoryDefinition', () => {
             assertIsValid(['A', customCategory]);
             fail();
         } catch (expected) {
-            expect(expected).toEqual([ConfigurationErrors.ILLEGAL_CATEGORY_PROPERTY, 'categoryName']);
+            expect(expected).toEqual([ConfigurationErrors.ILLEGAL_CATEGORY_PROPERTY, 'categoryName', 'A']);
         }
     });
 

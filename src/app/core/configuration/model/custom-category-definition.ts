@@ -49,8 +49,7 @@ export module CustomCategoryDefinition {
 
             Object.keys(category)
                 .filter(isNot(includedIn(VALID_CATEGORY_PROPERTIES)))
-                .map(pairWith(val(ConfigurationErrors.ILLEGAL_CATEGORY_PROPERTY)))
-                .map(swap)
+                .map(fieldName => [ConfigurationErrors.ILLEGAL_CATEGORY_PROPERTY, fieldName, categoryName])
                 .forEach(throws());
 
             if (!builtinCategories.includes(categoryName) && !libraryCategories.includes(categoryName)) {

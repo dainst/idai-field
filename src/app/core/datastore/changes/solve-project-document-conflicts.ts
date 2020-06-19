@@ -1,5 +1,5 @@
-import {to, flow, map, filter, isDefined, union as tsfunUnion, equal, isEmpty,
-    compose, append, Pair, left, right} from 'tsfun';
+import {to, flow, map, filter, isDefined, union as tsfunUnion, equal, isEmpty, compose, append, Pair,
+    left, right} from 'tsfun';
 import {assoc, dissoc, lookup} from 'tsfun/associative';
 import {assoc as assocOn} from 'tsfun/struct';
 import {Document, Resource} from 'idai-components-2';
@@ -36,7 +36,8 @@ export function solveProjectDocumentConflict(latestRevision: Document,
     const [resource, revisionIds] = resolve(
         conflictedSortedRevisions.map(to(Document.RESOURCE)),
         clonedLatestRevision.resource,
-        conflictedSortedRevisions.map(to(Document._REV)));
+        conflictedSortedRevisions.map(to(Document._REV))
+    );
 
     if (resource[STAFF] && resource[STAFF].length === 0) delete resource[STAFF];
     if (resource[CAMPAIGNS] && resource[CAMPAIGNS].length === 0) delete resource[CAMPAIGNS];

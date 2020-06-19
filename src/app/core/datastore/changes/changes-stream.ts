@@ -147,7 +147,8 @@ export class ChangesStream {
             return await this.datastore.update(
                 document,
                 this.settingsService.getUsername(),
-                conflicts);
+                conflicts
+            );
         } catch (errWithParams) {
             // If tho clients have auto-resolved the conflict are exactly the same time,
             // the document is already updated and its revisions already removed. Since

@@ -7,8 +7,7 @@ import { PopoverMenu, ResourcesComponent } from '../resources.component';
 
 @Component({
     selector: 'list-button-group',
-    templateUrl: './list-button-group.html',
-    changeDetection: ChangeDetectionStrategy.OnPush
+    templateUrl: './list-button-group.html'
 })
 /**
  * @author Daniel de Oliveira

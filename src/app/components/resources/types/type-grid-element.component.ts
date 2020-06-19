@@ -8,8 +8,7 @@ import {BlobMaker} from '../../../core/images/imagestore/blob-maker';
 
 @Component({
     selector: 'type-grid-element',
-    templateUrl: './type-grid-element.html',
-    changeDetection: ChangeDetectionStrategy.OnPush
+    templateUrl: './type-grid-element.html'
 })
 /**
  * @author Thomas Kleinke

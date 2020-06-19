@@ -34,4 +34,5 @@ p#about-version {
   font-size: 16px;
   padding: 6px 12px;
   height: 38px;
+  outline: none;
 }

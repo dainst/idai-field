@@ -3,7 +3,7 @@ img {
   height: 120px;
   -webkit-user-drag: none;
   margin-top: 40px;
-  border: 1px solid #b8c3ca;
+  box-shadow: 3px 3px 5px 1px rgba(0, 0, 0, 0.3);
   border-radius: 15px;
 }
 

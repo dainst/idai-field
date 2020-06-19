@@ -111,7 +111,7 @@ global.samplesPath = global.mode === 'production'
 
 global.manualPath = global.mode === 'production'
     ? __dirname + '/../../manual'
-    : 'file://' + __dirname + '/../manual';
+    : './manual';
 
 process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = true;
 process.env['NODE_OPTIONS'] = '--no-deprecation';

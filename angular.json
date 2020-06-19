@@ -42,7 +42,8 @@
               "src/img",
               "src/info",
               "src/config",
-              "src/test-data"
+              "src/test-data",
+              "src/manual"
             ],
             "styles": [
               "src/app/components/app.scss",

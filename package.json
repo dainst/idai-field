@@ -54,8 +54,11 @@
         "from": "src/config",
         "to": "config"
       },
+      {
+        "from": "src/manual",
+        "to": "manual"
+      },
       "tools",
-      "manual",
       "samples"
     ]
   },

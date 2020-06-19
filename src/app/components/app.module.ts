@@ -147,7 +147,7 @@ registerLocaleData(localeDe, 'de');
                          return pouchdbManager.reindex(
                              indexFacade, documentCache, new FieldCategoryConverter(projectConfiguration), progress
                          );
-                    }).then(() => AngularUtility.refresh(500))
+                    }).then(() => AngularUtility.refresh(700))
         },
         SettingsService,
         { provide: UsernameProvider, useExisting: SettingsService },

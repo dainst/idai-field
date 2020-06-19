@@ -1,6 +1,9 @@
 import {Injectable} from '@angular/core';
+import {Observable, Observer} from 'rxjs';
+import {Document} from 'idai-components-2';
 import {SyncStatus} from './sync-process';
 import {PouchdbManager} from '../datastore/pouchdb/pouchdb-manager';
+import {ObserverUtil} from '../util/observer-util';
 
 
 @Injectable()
@@ -16,23 +19,17 @@ export class SyncService {
     private password: string = '';
     private currentSyncTimeout: any;
 
+    private statusObservers: Array<Observer<SyncStatus>> = [];
+
 
     public constructor(private pouchdbManager: PouchdbManager) {}
 
 
     public getStatus = (): SyncStatus => this.status;
-
-
-    public setStatus = (status: SyncStatus) => this.status = status;
-
-
     public setSyncTarget = (syncTarget: string) => this.syncTarget = syncTarget;
-
-    
     public setProject = (project: string) => this.project = project;
-
-    
     public setPassword = (password: string) => this.password = password;
+    public statusNotifications = (): Observable<Document> => ObserverUtil.register(this.statusObservers);
 
 
     public async startSync() {
@@ -59,6 +56,13 @@ export class SyncService {
         if (this.currentSyncTimeout) clearTimeout(this.currentSyncTimeout);
         this.pouchdbManager.stopSync();
         this.setStatus(SyncStatus.Offline);
+    }
+
+
+    public setStatus(status: SyncStatus) {
+
+        this.status = status;
+        ObserverUtil.notify(this.statusObservers, this.status);
     }
 
 

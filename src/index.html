@@ -21,18 +21,20 @@
 
         #initialization {
             position: absolute;
-            top: calc(50vh - 120px);
+            top: calc(50vh - 170px);
             width: 100%;
         }
 
         #initialization.with-error-messages {
             transition: top 1s;
-            top: calc(50vh - 238px);
+            top: calc(50vh - 268px);
         }
 
-        .icon {
+        #application-logo {
             text-align: center;
-            margin-bottom: 50px;
+            margin-bottom: 15px;
+            opacity: 0;
+            transition: opacity 0.5s;
         }
 
         .icon img {
@@ -43,10 +45,26 @@
             box-shadow: 3px 3px 5px 1px rgba(0, 0, 0, 0.3);
         }
 
+        #version-info {
+            width: 100%;
+            text-align: center;
+            margin-bottom: 40px;
+            font-family: Roboto, sans-serif;
+            user-select: none;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        #version-info-idai-field {
+            font-weight: bold;
+        }
+
         #initialization-progress {
             width: 500px;
             position: absolute;
             left: calc(50vw - 250px);
+            opacity: 0;
+            transition: opacity 0.5s;
         }
 
         #initialization-info {
@@ -103,14 +121,24 @@
         window.__Zone_disable_requestAnimationFrame = true; // disable patch requestAnimationFrame
         window.__Zone_disable_on_property = true; // disable patch onProperty such as onclick
         window.__zone_symbol__UNPATCHED_EVENTS = ['scroll', 'mousemove', 'pointermove', 'wheel', 'mouseout', 'pointerout']; // disable patch specified eventNames
+
+        setTimeout(() => {
+            document.getElementById('application-logo').style.opacity = '1';
+            document.getElementById('version-info').style.opacity = '1';
+            document.getElementById('initialization-progress').style.opacity = '1';
+        }, 200);
     </script>
 </head>
 
 <body>
     <idai-field-app>
         <div id="initialization">
-            <div class="icon">
+            <div id="application-logo" class="icon">
                 <img src="img/logo.png">
+            </div>
+            <div id="version-info">
+                <span id="version-info-idai-field">iDAI.field</span>
+                <span id="version-info-number">2.16.0</span>
             </div>
             <div id="initialization-progress" class="progress">
                 <div id="initialization-progress-bar" class="progress-bar"></div>

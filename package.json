@@ -17,13 +17,15 @@
     "build:test+watch": "rimraf test/dist && tsc -watch -p test/tsconfig.json",
     "build:java": "mvn -f java/pom.xml clean package && gulp copy-shapefile-tool",
     "build:all": "npm run build && npm run build:test && npm run build:java",
+    "postinstall": "npm run update-version-info",
     "lint": "ng lint",
     "test": "jasmine JASMINE_CONFIG_PATH=test/unit/config/jasmine.json",
     "e2e": "npm-run-all -p -r ng:serve e2e:run",
     "e2e:run": "wait-on http-get://localhost:4200/dist/ && node test/dist/test/e2e/spectron.js",
     "package:mac": "electron-builder -m",
     "package:win": "electron-builder -w nsis --x64 --ia32",
-    "i18n": "ng xi18n idai-field && ngx-extractor -i \"./src/app/**/*.ts\" -o ./messages.xlf -l de && xliffmerge --profile xliff-merge.json && rimraf ./messages.xlf"
+    "i18n": "ng xi18n idai-field && ngx-extractor -i \"./src/app/**/*.ts\" -o ./messages.xlf -l de && xliffmerge --profile xliff-merge.json && rimraf ./messages.xlf",
+    "update-version-info": "replace-in-file \"/<span id=\\\"version-info-number\\\">.*</span>/\" \"<span id=\\\"version-info-number\\\">$npm_package_version</span>\" src/index.html --isRegex"
   },
   "build": {
     "appId": "org.dainst.field",
@@ -152,6 +154,7 @@
     "protractor": "~5.4.3",
     "protractor-console-plugin": "0.1.1",
     "protractor-fail-fast": "3.1.0",
+    "replace-in-file": "^6.1.0",
     "rimraf": "2.6.2",
     "spectron": "11.0.0",
     "ts-node": "~8.3.0",

@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {MDInternal} from '../../../components/messages/md-internal';
+import {ConfigurationErrors} from './configuration-errors';
+
 
 @Injectable()
 /**
@@ -20,7 +21,7 @@ export class ConfigReader {
                 (data: any) => resolve(data),
                 (error: any) => {
                     console.error(error);
-                    reject([MDInternal.CONFIG_READER_ERROR_INVALID_JSON, path]);
+                    reject([ConfigurationErrors.INVALID_JSON, path]);
                 }
             );
         });

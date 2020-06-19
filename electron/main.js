@@ -176,6 +176,9 @@ const createMenu = () => {
 
 
 electron.app.allowRendererProcessReuse = false;
+if (global.mode !== 'production') {
+    electron.app.commandLine.appendSwitch('disable-features', 'OutOfBlinkCors');
+}
 
 
 // This method will be called when Electron has finished

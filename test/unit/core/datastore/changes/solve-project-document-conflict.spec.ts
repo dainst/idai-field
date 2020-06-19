@@ -303,7 +303,7 @@ describe('solveProjectDocumentConflict', () => {
     });
 
 
-    it('crush after unsuccesful resolution', () => {
+    it('crush after unsuccessful resolution', () => {
 
         const current: Document = {
             _id: '1',

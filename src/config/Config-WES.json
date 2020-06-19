@@ -139,80 +139,8 @@
     "fields": {}
   },
   "Pottery:wes": {
-    "parent": "Find",
-    "fields": {
-      "vesselpart": {
-        "inputType": "checkboxes"
-      },
-      "Firing": {
-        "inputType": "checkboxes"
-      },
-      "clayColorInside": {
-        "inputType": "checkboxes"
-      },
-      "clayColorOutside": {
-        "inputType": "checkboxes"
-      },
-      "decorationTechnique": {
-        "inputType": "dropdown"
-      },
-      "manufacturingMethod": {
-        "inputType": "checkboxes"
-      },
-      "temper": {
-        "inputType": "checkboxes"
-      },
-      "temperAmount": {
-        "inputType": "radio"
-      },
-      "temperParticles": {
-        "inputType": "radio"
-      },
-      "coatOutsideType": {
-        "inputType": "checkboxes"
-      },
-      "FormComparisonCompendia": {
-        "inputType": "dropdown"
-      },
-      "FormComparisonCompendiadetail": {
-        "inputType": "input"
-      },
-      "DecorationComparisonCompendia": {
-        "inputType": "dropdown"
-      },
-      "DecorationComparisonCompendiadetail": {
-        "inputType": "input"
-      },
-      "ApplicationComparisonCompendia": {
-        "inputType": "dropdown"
-      },
-      "ApplicationComparisonCompendiadetail": {
-        "inputType": "input"
-      },
-      "Drawing": {
-        "inputType": "boolean"
-      },
-      "vesselForm": {
-        "inputType": "dropdown"
-      }
-    },
-    "valuelists": {
-      "vesselpart": "Pottery-vesselpart-WES",
-      "Firing": "Pottery-Firing-WES",
-      "condition": "Pottery-condition-WES",
-      "clayColorInside": "Pottery-clayColorInside-WES",
-      "clayColorOutside": "Pottery-clayColorInside-WES",
-      "decorationTechnique": "Pottery-decorationTechnique-WES",
-      "manufacturingMethod": "Pottery-manufacturingMethod-WES",
-      "temper": "Pottery-temper-WES",
-      "temperAmount": "Pottery-temperAmount-WES",
-      "temperParticles": "Pottery-temperParticles-WES",
-      "coatOutsideType": "Pottery-coatOutsideType-WES",
-      "FormComparisonCompendia": "Pottery-FormComparisonCompendia-WES",
-      "DecorationComparisonCompendia": "Pottery-FormComparisonCompendia-WES",
-      "ApplicationComparisonCompendia": "Pottery-FormComparisonCompendia-WES",
-      "vesselForm": "Pottery-vesselForm-WES"
-    }
+    "hidden": [],
+    "fields": {}
   },
   "Terracotta:default": {
     "color": "#FF6600",

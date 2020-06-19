@@ -15,6 +15,7 @@ import org.geotools.data.simple.SimpleFeatureSource;
 import org.geotools.data.simple.SimpleFeatureStore;
 import org.geotools.feature.simple.SimpleFeatureBuilder;
 import org.geotools.geometry.jts.JTSFactoryFinder;
+import org.geotools.util.URLs;
 import org.locationtech.jts.geom.*;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
@@ -177,7 +178,7 @@ class ShapefileWriter {
         SimpleFeatureType featureType = featureSource.getSchema();
 
         Map<String, Serializable> creationParams = new HashMap<>();
-        creationParams.put("url", DataUtilities.fileToURL(outputFile));
+        creationParams.put("url", URLs.fileToUrl(outputFile));
 
         ShapefileDataStoreFactory factory = (ShapefileDataStoreFactory) FileDataStoreFinder.getDataStoreFactory("shp");
         ShapefileDataStore dataStore = (ShapefileDataStore) factory.createNewDataStore(creationParams);

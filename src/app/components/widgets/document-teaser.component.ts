@@ -3,8 +3,7 @@ import {Document} from 'idai-components-2';
 
 @Component({
     selector: 'document-teaser',
-    templateUrl: './document-teaser.html',
-    changeDetection: ChangeDetectionStrategy.OnPush
+    templateUrl: './document-teaser.html'
 })
 export class DocumentTeaserComponent {
 

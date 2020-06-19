@@ -17,8 +17,7 @@ import {Messages} from '../../messages/messages';
 
 @Component({
     selector: 'row',
-    templateUrl: './row.html',
-    changeDetection: ChangeDetectionStrategy.OnPush
+    templateUrl: './row.html'
 })
 /**
  * @author Fabian Z.

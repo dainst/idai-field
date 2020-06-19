@@ -16,21 +16,13 @@ export class ConfigReader {
 
         return new Promise((resolve, reject) => {
 
-            this.http.get(path).subscribe((data_: any) => {
-
-                let data;
-                try {
-                    data = data_;
-                } catch(e) {
+            this.http.get(path).subscribe(
+                (data: any) => resolve(data),
+                (error: any) => {
+                    console.error(error);
                     reject([MDInternal.CONFIG_READER_ERROR_INVALID_JSON, path]);
                 }
-
-                try {
-                    resolve(data);
-                } catch(e) {
-                    console.error(e);
-                }
-            });
+            );
         });
     }
 }

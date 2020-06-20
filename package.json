@@ -25,7 +25,7 @@
     "package:mac": "electron-builder -m",
     "package:win": "electron-builder -w nsis --x64 --ia32",
     "i18n": "ng xi18n idai-field && ngx-extractor -i \"./src/app/**/*.ts\" -o ./messages.xlf -l de && xliffmerge --profile xliff-merge.json && rimraf ./messages.xlf",
-    "update-version-info": "replace-in-file \"/<span id=\\\"version-info-number\\\">.*</span>/\" \"<span id=\\\"version-info-number\\\">$npm_package_version</span>\" src/index.html --isRegex"
+    "update-version-info": "cross-var replace-in-file \"/<span id=\\\"version-info-number\\\">.*</span>/\" \"<span id=\\\"version-info-number\\\">$npm_package_version</span>\" src/index.html --isRegex"
   },
   "build": {
     "appId": "org.dainst.field",
@@ -128,6 +128,7 @@
     "@types/pouchdb": "6.3.2",
     "@types/showdown": "1.7.5",
     "codelyzer": "^5.1.2",
+    "cross-var": "^1.1.0",
     "electron": "9.0.4",
     "electron-builder": "22.7.0",
     "electron-chromedriver": "9.0.0",

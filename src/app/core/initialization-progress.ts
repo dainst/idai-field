@@ -76,26 +76,7 @@ export class InitializationProgress {
         InitializationProgress.setElementText('initialization-info-message-2', '');
 
         const errorMessages: string[] = this.getErrorMessages(msgsWithParams);
-
-        if (errorMessages.length > 0) {
-            const containerElement: HTMLElement = document.getElementById('error-messages-container');
-            containerElement.style.display = 'block';
-            containerElement.style.opacity = '1';
-
-            const headerElement: HTMLElement = document.getElementById('error-messages-header');
-            headerElement.innerText = getMessage(
-                errorMessages.length === 1 ? 'oneConfigurationError' : 'multipleConfigurationErrors',
-                this.locale
-            );
-
-            const bodyElement: HTMLElement = document.getElementById('error-messages-body');
-            bodyElement.innerText = errorMessages.join('\n');
-
-            InitializationProgress.setElementClasses(
-                'initialization',
-                ['with-error-messages']
-            );
-        }
+        if (errorMessages.length > 0) this.showErrorMessages(errorMessages);
 
         this.showReloadButton(errorMessages.length > 0);
 
@@ -110,6 +91,28 @@ export class InitializationProgress {
         return msgsWithParams.map((msgWithParams: string[]) => {
             return getMessage(msgWithParams[0], this.locale, rest(msgWithParams));
         }).filter(not(isUndefinedOrEmpty));
+    }
+
+
+    private showErrorMessages(errorMessages: string[]) {
+
+        const containerElement: HTMLElement = document.getElementById('error-messages-container');
+        containerElement.style.display = 'block';
+        containerElement.style.opacity = '1';
+
+        const headerElement: HTMLElement = document.getElementById('error-messages-header');
+        headerElement.innerText = getMessage(
+            errorMessages.length === 1 ? 'oneConfigurationError' : 'multipleConfigurationErrors',
+            this.locale
+        );
+
+        const bodyElement: HTMLElement = document.getElementById('error-messages-body');
+        bodyElement.innerText = errorMessages.join('\n');
+
+        InitializationProgress.setElementClasses(
+            'initialization',
+            ['with-error-messages']
+        );
     }
 
 

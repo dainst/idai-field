@@ -16,11 +16,14 @@ electron.app.setAppUserModelId('org.dainst.field');
 const copyConfigFile = (destPath, appDataPath) => {
 
     if (!fs.existsSync(appDataPath)) fs.mkdirSync(appDataPath);
+    if (!fs.existsSync(destPath)) writeConfigFile(destPath);
+};
 
-    if (!fs.existsSync(destPath)) {
-        console.log('Create config.json at ' + destPath);
-        fs.writeFileSync(destPath, JSON.stringify({ 'dbs': ['test'] }));
-    }
+
+const writeConfigFile = (path) => {
+
+    console.log('Create config.json at ' + path);
+    fs.writeFileSync(path, JSON.stringify({ 'dbs': ['test'] }));
 };
 
 
@@ -162,9 +165,15 @@ const createWindow = () => {
 
 const loadConfig = () => {
 
-    global.config = global.setConfigDefaults(
-        JSON.parse(fs.readFileSync(global.configPath, 'utf-8'))
-    );
+    try {
+        global.config = global.setConfigDefaults(
+            JSON.parse(fs.readFileSync(global.configPath, 'utf-8'))
+        );
+    } catch (err) {
+        console.warn('Failed to parse config.json:', err);
+        writeConfigFile(global.configPath);
+        loadConfig();
+    }
 };
 
 

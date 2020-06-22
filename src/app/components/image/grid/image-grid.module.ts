@@ -6,8 +6,8 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {ImageGridComponent} from './image-grid.component';
 import {DropAreaComponent} from './drop-area.component';
 import {ImageUploadModule} from '../upload/image-upload.module';
-import {ImageGridCellComponent} from "./image-grid-cell.component";
-import {IdaiMessagesModule} from '../../messages/idai-messages.module';
+import {ImageGridCellComponent} from './image-grid-cell.component';
+import {ImageGridPagerComponent} from './image-grid-pager.component';
 
 
 @NgModule({
@@ -16,16 +16,17 @@ import {IdaiMessagesModule} from '../../messages/idai-messages.module';
         NgbModule,
         FormsModule,
         RouterModule,
-        //IdaiMessagesModule,
         ImageUploadModule
     ],
     declarations: [
         ImageGridComponent,
         ImageGridCellComponent,
+        ImageGridPagerComponent,
         DropAreaComponent
     ],
     exports: [
-        ImageGridComponent, // export necessary?
+        ImageGridComponent,
+        ImageGridPagerComponent
     ]
 })
 

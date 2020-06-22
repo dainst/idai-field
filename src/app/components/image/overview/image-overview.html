@@ -12,18 +12,15 @@
                 </image-overview-search-bar>
             </div>
 
-            <div *ngIf="!hasSelectedImages()" class="col-sm-2 image-overview-nav-content">
-                <div class="btn-group" id="image-pager" *ngIf="getDocuments() && getTotalDocumentCount()">
-                    <button class="btn btn-primary" (click)="turnPageBack()" [ngClass]="{'disabled': !canTurnPageBack()}">
-                        <span class="mdi mdi-chevron-left"></span>
-                    </button>
-                    <button class="btn btn-outline-primary disabled">
-                        {{getCurrentPage()}} / {{getPageCount()}}
-                    </button>
-                    <button class="btn btn-primary" (click)="turnPage()" [ngClass]="{'disabled': !canTurnPage()}">
-                        <span class="mdi mdi-chevron-right"></span>
-                    </button>
-                </div>
+            <div *ngIf="!hasSelectedImages() && getDocuments() && getTotalDocumentCount()"
+                    class="col-sm-2 image-overview-nav-content">
+                <image-grid-pager
+                    [currentPage]="getCurrentPage()"
+                    [pageCount]="getPageCount()"
+                    [canTurnPage]="canTurnPage()"
+                    [canTurnPageBack]="canTurnPageBack()"
+                    (turnPage)="turnPage()"
+                    (turnPageBack)="turnPageBack()"></image-grid-pager>
             </div>
 
             <div *ngIf="hasSelectedImages()" id="taskbar-container" class="col-sm-10">

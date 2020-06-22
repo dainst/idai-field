@@ -116,7 +116,9 @@ export class ImageGridComponent implements OnChanges {
                     || !cell.document.resource.id
                     || cell.document.resource.id === 'droparea') continue;
 
-                cell.imgSrc = this.blobMaker.makeBlob(imageData[cell.document.resource.id]).safeResourceUrl;
+                if (imageData[cell.document.resource.id] ) {
+                    cell.imgSrc = this.blobMaker.makeBlob(imageData[cell.document.resource.id]).safeResourceUrl;
+                }
             }
         }
     }

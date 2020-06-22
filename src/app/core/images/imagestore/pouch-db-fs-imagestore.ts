@@ -144,6 +144,10 @@ export class PouchDbFsImagestore /*implements Imagestore */{
         const result: { [imageId: string]: Blob } = {};
 
         for (let imageDocument of imageDocuments) {
+            if (!imageDocument._attachments?.thumb?.data) {
+                console.error('No thumbnail found for image: ' + imageDocument.resource.id);
+                continue;
+            }
             result[imageDocument.resource.id] = imageDocument._attachments.thumb.data;
         }
 

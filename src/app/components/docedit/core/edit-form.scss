@@ -47,6 +47,11 @@
               height: 33px;
             }
 
+            input[type="checkbox"] {
+              position: relative;
+              top: 1px;
+            }
+
             .card-title {
               cursor: default;
               user-select: none;

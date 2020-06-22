@@ -47,12 +47,10 @@ export class ImageGridComponent implements OnChanges {
     private calcGridTimeoutRef: any = undefined;
 
 
-    constructor(
-        private el: ElementRef,
-        private messages: Messages,
-        private imagestore: Imagestore,
-        private datastore: FieldReadDatastore
-    ) {}
+    constructor(private element: ElementRef,
+                private messages: Messages,
+                private imagestore: Imagestore,
+                private datastore: FieldReadDatastore) {}
 
 
     ngOnChanges(changes: SimpleChanges) {
@@ -87,7 +85,7 @@ export class ImageGridComponent implements OnChanges {
             this.calcGridRunning = true;
             await this._calcGrid();
             this.calcGridRunning = false;
-        }, 500);
+        }, 10);
     }
 
 
@@ -96,7 +94,7 @@ export class ImageGridComponent implements OnChanges {
         if (!this.documents) return;
 
         const rows = constructGrid(
-            this.documents, this.nrOfColumns, this.el.nativeElement.children[0].clientWidth,
+            this.documents, this.nrOfColumns, this.element.nativeElement.children[0].clientWidth,
             this.paddingRight
         );
 

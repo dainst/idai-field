@@ -117,15 +117,10 @@ export class PouchDbFsImagestore /*implements Imagestore */{
 
             // temporary fix
             // if thumb and original present then recreate thumb
-            return (this.readOriginal(key) as any).then((data: any) => {
-
-                console.debug('recreate thumb');
-                return this.putAttachment(data, key, true)
-                    .then(() => this.read(key, sanitizeAfter));
-
-            }).catch((err: any) => {
-                return Promise.reject([ImagestoreErrors.NOT_FOUND]); // both thumb and original
-            });
+            return this.createThumbnail(key).then(() => this.read(key, sanitizeAfter))
+                .catch(() => {
+                    return Promise.reject([ImagestoreErrors.NOT_FOUND]); // both thumb and original
+                });
         });
     }
 
@@ -144,11 +139,16 @@ export class PouchDbFsImagestore /*implements Imagestore */{
         const result: { [imageId: string]: Blob } = {};
 
         for (let imageDocument of imageDocuments) {
-            if (!imageDocument._attachments?.thumb?.data) {
-                console.error('No thumbnail found for image: ' + imageDocument.resource.id);
-                continue;
+            if (imageDocument._attachments?.thumb?.data) {
+                result[imageDocument.resource.id] = imageDocument._attachments.thumb.data;
+            } else {
+                try {
+                    await this.createThumbnail(imageDocument.resource.id);
+                    result[imageDocument.resource.id] = await this.readThumb(imageDocument.resource.id);
+                } catch(err) {
+                    console.error('Failed to recreate thumbnail for image: ' + imageDocument.resource.id, err);
+                }
             }
-            result[imageDocument.resource.id] = imageDocument._attachments.thumb.data;
         }
 
         return result;
@@ -274,9 +274,18 @@ export class PouchDbFsImagestore /*implements Imagestore */{
     }
 
 
-    private readThumb(key: string): Promise<ArrayBuffer> {
+    private readThumb(key: string): Promise<Blob> {
 
         return this.db.getAttachment(key, 'thumb');
+    }
+
+
+    private async createThumbnail(key: string): Promise<any> {
+
+        console.debug('Recreating thumbnail for image:', key);
+
+        const originalImageData = await this.readOriginal(key);
+        return this.putAttachment(originalImageData, key, true);
     }
 
 

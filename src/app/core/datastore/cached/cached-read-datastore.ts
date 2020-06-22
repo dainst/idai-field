@@ -7,7 +7,7 @@ import {IndexFacade} from '../index/index-facade';
 import {DatastoreErrors} from '../model/datastore-errors';
 import {FindIdsResult, FindResult, ReadDatastore} from '../model/read-datastore';
 import {Query} from '../model/query';
-import {ProjectConfiguration} from '../../configuration/project-configuration';
+import {ConfigurationErrors} from '../../configuration/boot/configuration-errors';
 
 
 export interface IdaiFieldFindResult<T extends Document> extends FindResult {
@@ -229,7 +229,7 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
                 );
                 documents.push(this.documentCache.set(convertedDocument));
             } catch (errWithParams) {
-                if (errWithParams[0] !== ProjectConfiguration.UNKNOWN_CATEGORY_ERROR) throw errWithParams;
+                if (errWithParams[0] !== ConfigurationErrors.UNKNOWN_CATEGORY_ERROR) throw errWithParams;
             }
         });
 

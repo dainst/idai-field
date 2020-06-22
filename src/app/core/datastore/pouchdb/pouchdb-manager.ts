@@ -9,7 +9,7 @@ import {SyncProcess, SyncStatus} from '../../sync/sync-process';
 import {DocumentCache} from '../cached/document-cache';
 import {FieldCategoryConverter} from '../field/field-category-converter';
 import {InitializationProgress} from '../../initialization-progress';
-import {ProjectConfiguration} from '../../configuration/project-configuration';
+import {ConfigurationErrors} from '../../configuration/boot/configuration-errors';
 
 
 let PouchDB;
@@ -188,7 +188,7 @@ export class PouchdbManager {
             documents.forEach(doc => documentCache.set(doc));
             await indexFacade.putMultiple(documents, progress);
         } catch (err) {
-            if (err.length > 0 && err[0] === ProjectConfiguration.UNKNOWN_CATEGORY_ERROR) {
+            if (err.length > 0 && err[0] === ConfigurationErrors.UNKNOWN_CATEGORY_ERROR) {
                 console.warn('Unknown category: ' + err[1]);
             } else {
                 console.error(err);

@@ -9,6 +9,7 @@ import {RelationsUtil} from './relations-utils';
 import {flattenTree, ITEMNAMEPATH, TreeList} from '../util/tree-list';
 import {Name} from '../constants';
 import {isTopLevelItemOrChildThereof} from '../util/named-tree-list';
+import {ConfigurationErrors} from './boot/configuration-errors';
 
 
 export type RawProjectConfiguration = Pair<TreeList<Category>, Array<RelationDefinition>>;
@@ -28,8 +29,6 @@ export type RawProjectConfiguration = Pair<TreeList<Category>, Array<RelationDef
  * @author F.Z.
  */
 export class ProjectConfiguration {
-
-    public static UNKNOWN_CATEGORY_ERROR = 'ProjectConfiguration.Errors.UnknownCategory';
 
     private readonly categoriesArray: Array<Category>;
     private readonly categoryTreelist: TreeList<Category>;
@@ -150,7 +149,7 @@ export class ProjectConfiguration {
 
     public isSubcategory(category: Name, superCategoryName: string): boolean {
 
-        if (!this.getCategory(category)) throw [ProjectConfiguration.UNKNOWN_CATEGORY_ERROR, category];
+        if (!this.getCategory(category)) throw [ConfigurationErrors.UNKNOWN_CATEGORY_ERROR, category];
         return isTopLevelItemOrChildThereof(this.categoryTreelist, category, superCategoryName);
     }
 

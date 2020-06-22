@@ -56,7 +56,7 @@ export class FieldSampleDataLoader implements SampleDataLoader {
     private loadSampleImages(db: any, project: string): Promise<any> {
 
         let path = remote.getGlobal('samplesPath');
-        console.log("path:", path);
+        console.log('path:', path);
         return this.loadDirectory(db, path, this.imagestorePath + project);
     }
 
@@ -74,11 +74,22 @@ export class FieldSampleDataLoader implements SampleDataLoader {
                         files.forEach(file => {
                             if (!fs.statSync(path + file).isDirectory()) {
 
-                                // write original
-                                fs.createReadStream(path + file).pipe(fs.createWriteStream(dest + '/' + file));
+                                console.log('Copy file:', path + file);
 
+                                // write original
+                                try {
+                                    fs.createReadStream(path + file).pipe(fs.createWriteStream(dest + '/' + file));
+                                } catch(err) {
+                                    console.error('Error while trying to copy files: ', err);
+                                }
+
+                                let buffer: Buffer;
                                 // write thumb
-                                const buffer: Buffer = this.imageConverter.convert(fs.readFileSync(path + file)) as Buffer;
+                                try {
+                                    buffer = this.imageConverter.convert(fs.readFileSync(path + file)) as Buffer;
+                                } catch(err) {
+                                    console.error('Error while trying to create thumbnail:', err);
+                                }
                                 promises.push(
                                     db.get(file)
                                         .then((doc: any) =>
@@ -91,8 +102,8 @@ export class FieldSampleDataLoader implements SampleDataLoader {
                         });
                     }
 
-                    Promise.all(promises).then(()=>{
-                        console.debug('Successfully put samples from ' + path + ' to ' + dest );
+                    Promise.all(promises).then(() => {
+                        console.debug('Successfully put samples from ' + path + ' to ' + dest);
                         resolve();
                     }).catch(err => {
                         console.error('Problem when storing sample images', err);

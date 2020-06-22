@@ -3,7 +3,6 @@ import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {Document, ImageDocument} from 'idai-components-2';
 import {ImageGridComponent} from '../grid/image-grid.component';
 import {ImageOverviewFacade} from '../../../core/images/overview/view/imageoverview-facade';
-import {RoutingService} from '../../routing-service';
 import {ImageUploadResult} from '../upload/image-uploader';
 import {ImageViewModalComponent} from '../../viewmodal/image/image-view-modal.component';
 import {MenuService} from '../../menu-service';
@@ -37,7 +36,6 @@ export class ImageOverviewComponent implements OnInit {
 
     constructor(public viewFacade: ViewFacade,
                 private imageOverviewFacade: ImageOverviewFacade,
-                private routingService: RoutingService,
                 private messages: Messages,
                 private projectConfiguration: ProjectConfiguration,
                 private tabManager: TabManager,

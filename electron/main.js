@@ -101,7 +101,7 @@ if (global.mode === 'test') {
 }
 
 global.toolsPath = global.mode === 'production' ?
-    electron.app.getAppPath().replace('app.asar', '') + 'tools'
+    electron.app.getAppPath().replace('app.asar', 'tools')
     : 'tools';
 
 global.configurationDirPath = global.mode === 'production'
@@ -109,11 +109,11 @@ global.configurationDirPath = global.mode === 'production'
     : './config';
 
 global.samplesPath = global.mode === 'production'
-    ? __dirname + '/../../samples/'
-    : __dirname + '/../samples/';
+    ? electron.app.getAppPath().replace('app.asar', 'samples/')
+    : './samples/';
 
 global.manualPath = global.mode === 'production'
-    ? __dirname + '/../../manual'
+    ? electron.app.getAppPath().replace('app.asar', 'manual')
     : './manual';
 
 process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = true;

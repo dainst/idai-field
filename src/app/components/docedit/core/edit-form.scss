@@ -57,6 +57,10 @@
               margin-right: 8px;
             }
 
+            .form-check-label {
+              user-select: none;
+            }
+
             .card-title {
               cursor: default;
               user-select: none;

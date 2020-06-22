@@ -60,5 +60,9 @@
       position: relative;
       top: 34px;
     }
+
+    span {
+      user-select: none;
+    }
   }
 }

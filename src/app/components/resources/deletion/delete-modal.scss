@@ -2,6 +2,11 @@
   margin-bottom: 10px;
 }
 
+#confirm-delete-info,
+.text-center {
+  user-select: none;
+}
+
 #delete-resource-confirm.disabled {
   cursor: not-allowed !important;
 }

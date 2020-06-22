@@ -280,6 +280,7 @@ select.form-control:not([size]):not([multiple]) {
   background-image: url(../../img/chevron-down.png);
   padding-right: 1.5em;
   height: auto;
+  user-select: none;
 }
 
 .form-check .form-check-label {
@@ -322,6 +323,16 @@ relations-view .fieldvalue:hover {
 /* wider modals */
 .modal-lg {
   min-width: 86%;
+}
+
+.modal-header {
+  user-select: none;
+}
+
+.modal-body {
+  p {
+    user-select: none;
+  }
 }
 
 ::-webkit-scrollbar {

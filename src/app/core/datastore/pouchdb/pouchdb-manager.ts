@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Observable, Observer} from 'rxjs';
+import {isUndefined, not} from 'tsfun';
 import {Document} from 'idai-components-2';
 import {IndexFacade} from '../index/index-facade';
 import {Name} from '../../constants';
@@ -184,17 +185,13 @@ export class PouchdbManager {
         if (progress) await progress.setPhase('indexingDocuments');
 
         try {
-            documents = documents.map(doc => converter.convert(doc));
+            documents = this.convertDocuments(documents, converter);
             documents.forEach(doc => documentCache.set(doc));
             await indexFacade.putMultiple(documents, progress);
         } catch (err) {
-            if (err.length > 0 && err[0] === ConfigurationErrors.UNKNOWN_CATEGORY_ERROR) {
-                console.warn('Unknown category: ' + err[1]);
-            } else {
-                console.error(err);
-                await progress.setError('indexingError');
-                throw err;
-            }
+            console.error(err);
+            await progress.setError('indexingError');
+            throw err;
         }
     }
 
@@ -214,6 +211,21 @@ export class PouchdbManager {
                         .map(row => row.doc)
                     )
             );
+    }
+
+
+    private convertDocuments(documents: Array<Document>, converter: FieldCategoryConverter): Array<Document> {
+
+        return documents.map(doc => {
+            try {
+                return converter.convert(doc);
+            } catch (err) {
+                if (err.length > 0 && err[0] === ConfigurationErrors.UNKNOWN_CATEGORY_ERROR) {
+                    console.warn('Unknown category: ' + err[1]);
+                    return undefined;
+                }
+            }
+        }).filter(not(isUndefined));
     }
 
 

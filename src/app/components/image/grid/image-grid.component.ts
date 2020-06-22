@@ -1,11 +1,12 @@
 import {Component, EventEmitter, Input, OnChanges, SimpleChanges, Output, ElementRef} from '@angular/core';
+import {flatten} from 'tsfun';
 import {Document, ImageDocument} from 'idai-components-2';
 import {FieldReadDatastore} from '../../../core/datastore/field/field-read-datastore';
 import {ImageUploadResult} from '../upload/image-uploader';
-import {showMissingImageMessageOnConsole} from '../log-messages';
 import {Imagestore} from '../../../core/images/imagestore/imagestore';
 import {constructGrid} from '../../../core/images/grid/construct-grid';
 import {Messages} from '../../messages/messages';
+import {BlobMaker} from '../../../core/images/imagestore/blob-maker';
 
 
 @Component({
@@ -50,7 +51,8 @@ export class ImageGridComponent implements OnChanges {
     constructor(private element: ElementRef,
                 private messages: Messages,
                 private imagestore: Imagestore,
-                private datastore: FieldReadDatastore) {}
+                private datastore: FieldReadDatastore,
+                private blobMaker: BlobMaker) {}
 
 
     ngOnChanges(changes: SimpleChanges) {
@@ -105,21 +107,27 @@ export class ImageGridComponent implements OnChanges {
 
     private async loadImages(rows: any) {
 
+        const imageData: { [imageId: string]: Blob } = await this.getImageData(rows);
+
         for (let row of rows) {
             for (let cell of row) {
-
                 if (!cell.document
                     || !cell.document.resource
                     || !cell.document.resource.id
                     || cell.document.resource.id === 'droparea') continue;
 
-                try {
-                    cell.imgSrc = await this.imagestore.read(cell.document.resource.id)
-                } catch(e) {
-                    showMissingImageMessageOnConsole(cell.document.resource.id);
-                }
+                cell.imgSrc = this.blobMaker.makeBlob(imageData[cell.document.resource.id]).safeResourceUrl;
             }
         }
+    }
+
+
+    private getImageData(rows: any): Promise<{ [imageId: string]: Blob }> {
+
+        const imageIds: string[] = (flatten(rows.map(row => row.map(cell => cell.document.resource.id))) as any)
+            .filter(id => id !== 'droparea');
+
+        return this.imagestore.readThumbnails(imageIds);
     }
 
 

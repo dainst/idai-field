@@ -70,6 +70,13 @@ export class FieldSampleDataLoader implements SampleDataLoader {
                 const promises: any[] = [];
                 fs.readdir(path, (err, files) => {
 
+                    console.log('Found sample files:', files);
+
+                    if (err) {
+                        console.error('Problem when storing sample images', err);
+                        reject(err);
+                    }
+
                     if (files) {
                         files.forEach(file => {
                             if (!fs.statSync(path + file).isDirectory()) {

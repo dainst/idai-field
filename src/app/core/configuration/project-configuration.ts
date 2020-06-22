@@ -30,7 +30,6 @@ export type RawProjectConfiguration = Pair<TreeList<Category>, Array<RelationDef
 export class ProjectConfiguration {
 
     public static UNKNOWN_CATEGORY_ERROR = 'ProjectConfiguration.Errors.UnknownCategory';
-    public static UNKNOWN_TYPE_ERROR = 'projectCategories.Errors.UnknownType';
 
     private readonly categoriesArray: Array<Category>;
     private readonly categoryTreelist: TreeList<Category>;

@@ -229,7 +229,7 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
                 );
                 documents.push(this.documentCache.set(convertedDocument));
             } catch (errWithParams) {
-                if (errWithParams[0] !== ProjectConfiguration.UNKNOWN_TYPE_ERROR) throw errWithParams;
+                if (errWithParams[0] !== ProjectConfiguration.UNKNOWN_CATEGORY_ERROR) throw errWithParams;
             }
         });
 

@@ -185,7 +185,6 @@ export class EditableMapComponent extends LayerMapComponent {
                     this.setSelectedPolygon(this.editablePolygons[0]);
                 } else {
                     this.selectedPolygon = undefined as any;
-                    this.addPolygon();
                 }
             } else if (this.getEditorType() === 'polyline' && this.selectedPolyline) {
                 this.removePolyline(this.selectedPolyline);
@@ -193,7 +192,6 @@ export class EditableMapComponent extends LayerMapComponent {
                     this.setSelectedPolyline(this.editablePolylines[0]);
                 } else {
                     this.selectedPolyline = undefined as any;
-                    this.addPolyline();
                 }
             } else if (this.getEditorType() === 'point' && this.selectedMarker) {
                 this.removeMarker(this.selectedMarker);

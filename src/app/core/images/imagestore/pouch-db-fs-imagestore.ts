@@ -139,8 +139,12 @@ export class PouchDbFsImagestore /*implements Imagestore */{
         const result: { [imageId: string]: Blob } = {};
 
         for (let imageDocument of imageDocuments) {
-            if (imageDocument._attachments?.thumb?.data) {
+            if (imageDocument._attachments?.thumb
+                && imageDocument._attachments.thumb.data
+                && imageDocument._attachments.thumb.length > 0 /* necessary to detect broken thumbs after restoring backup */) {
+
                 result[imageDocument.resource.id] = imageDocument._attachments.thumb.data;
+
             } else {
                 try {
                     await this.createThumbnail(imageDocument.resource.id);

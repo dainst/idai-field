@@ -16,11 +16,21 @@
                 <span class="button-label"
                       i18n="@@docedit.imagePicker.linkImages">{{selectedDocuments.length}} Bilder verknüpfen</span>
             </button>
-            <search-bar class="col-md-9"
+            <search-bar class="col-md-7"
                         *ngIf="!selectedDocuments.length"
                         [showFiltersMenu]="false"
                         (onQueryStringChanged)="setQueryString($event)">
             </search-bar>
+
+            <div class="col-md-2">
+                <image-grid-pager
+                    [currentPage]="getCurrentPage()"
+                    [pageCount]="getPageCount()"
+                    [canTurnPage]="canTurnPage()"
+                    [canTurnPageBack]="canTurnPageBack()"
+                    (turnPage)="turnPage()"
+                    (turnPageBack)="turnPageBack()"></image-grid-pager>
+            </div>
         </div>
 
         <button type="button" class="btn btn-secondary"

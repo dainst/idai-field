@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 
 const express = typeof window !== 'undefined' ? window.require('express') : require('express');
+const remote = typeof window !== 'undefined' ? window.require('electron').remote : require('electron').remote;
 
 let PouchDB;
 if (typeof window !== 'undefined') {
@@ -45,6 +46,7 @@ export class PouchdbServer {
             res.status(401).send( { status: 401 }));
 
         app.use('/', expressPouchDB(PouchDB, {
+            logPath: remote.getGlobal('appDataPath') + '/pouchdb-server.log',
             mode: 'fullCouchDB',
             overrideMode: {
                 include: ['routes/fauxton'],

@@ -19,6 +19,10 @@ types {
     margin-right: -15px;
     border-top: 1px solid #e9ecef;
 
+    .cdk-virtual-scroll-content-wrapper {
+      padding-bottom: 61px;
+    }
+
     loading-icon {
       position: absolute;
       top: calc(50% - 45px);

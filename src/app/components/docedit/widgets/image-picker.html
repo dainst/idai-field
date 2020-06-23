@@ -39,7 +39,7 @@
         </button>
     </div>
 
-    <div class="modal-body" id="image-picker-modal">
+    <div class="modal-body" id="image-picker-modal" #modalBody>
         <div class="image-grid" (window:resize)="onResize()">
             <image-grid #imageGrid
                     [nrOfColumns]="3"

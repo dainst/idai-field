@@ -26,6 +26,7 @@ export class ImagePickerComponent implements OnInit {
     private static documentLimit = 24;
 
     @ViewChild('imageGrid', {static: false}) public imageGrid: ImageGridComponent;
+    @ViewChild('modalBody') public modalBody: ElementRef;
 
     public documents: Array<ImageDocument>;
     public document: FieldDocument;
@@ -142,6 +143,8 @@ export class ImagePickerComponent implements OnInit {
      * the datastore which match a <code>query</code>
      */
     private async fetchDocuments() {
+
+        if (this.modalBody) this.modalBody.nativeElement.scrollTop = 0;
 
         this.currentQueryId = new Date().toISOString();
 

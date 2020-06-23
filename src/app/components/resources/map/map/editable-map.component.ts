@@ -84,6 +84,7 @@ export class EditableMapComponent extends LayerMapComponent {
 
         this.zone.runOutsideAngular(() => {
             this.addPolyLayer('Poly');
+            this.redrawGeometries();
         });
     }
 
@@ -92,6 +93,17 @@ export class EditableMapComponent extends LayerMapComponent {
 
         this.zone.runOutsideAngular(() => {
             this.addPolyLayer('Line');
+            this.redrawGeometries();
+        });
+    }
+
+
+    public addMarker() {
+
+        this.zone.runOutsideAngular(() => {
+            const marker: L.CircleMarker = this.createEditableMarker(this.map.getCenter());
+            this.setSelectedMarker(marker);
+            this.redrawGeometries();
         });
     }
 
@@ -141,15 +153,6 @@ export class EditableMapComponent extends LayerMapComponent {
         });
 
         this.onQuitEditing.emit(geometry as any);
-    }
-
-
-    public addMarker() {
-
-        this.zone.runOutsideAngular(() => {
-            const marker: L.CircleMarker = this.createEditableMarker(this.map.getCenter());
-            this.setSelectedMarker(marker);
-        });
     }
 
 

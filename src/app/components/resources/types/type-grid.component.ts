@@ -1,13 +1,13 @@
 import {VIRTUAL_SCROLL_STRATEGY} from '@angular/cdk/scrolling';
 import {Component, Input, Output, EventEmitter} from '@angular/core';
+import {FieldDocument} from 'idai-components-2';
 import {TypeGridVirtualScrollStrategy} from './type-grid-virtual-scroll-strategy';
-import { FieldDocument } from 'idai-components-2';
-import { TypesComponent } from './types.component';
+import {TypesComponent} from './types.component';
 
 @Component({
     selector: 'type-grid',
     templateUrl: './type-grid.html',
-    providers: [{provide: VIRTUAL_SCROLL_STRATEGY, useClass: TypeGridVirtualScrollStrategy}]
+    providers: [{ provide: VIRTUAL_SCROLL_STRATEGY, useClass: TypeGridVirtualScrollStrategy }]
 })
 /**
  * @author Thomas Kleinke
@@ -19,8 +19,7 @@ export class TypeGridComponent {
     @Input() images: { [resourceId: string]: Array<Blob> } = {};
 
     @Output() clickDocument = new EventEmitter<FieldDocument>();
-    @Output() contextmenuDocument = new EventEmitter<{mouseEvent: MouseEvent, document: FieldDocument}>();
+    @Output() contextmenuDocument = new EventEmitter<{ mouseEvent: MouseEvent, document: FieldDocument }>();
 
     constructor(public typesComponent: TypesComponent) {}
-
 }

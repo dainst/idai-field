@@ -1,4 +1,4 @@
-import {Input, Component, ChangeDetectionStrategy, OnChanges, SimpleChanges} from '@angular/core';
+import {Input, Component, OnChanges, SimpleChanges} from '@angular/core';
 import {FieldDocument} from 'idai-components-2';
 import {SafeResourceUrl} from '@angular/platform-browser';
 import {ReadImagestore} from '../../../core/images/imagestore/read-imagestore';

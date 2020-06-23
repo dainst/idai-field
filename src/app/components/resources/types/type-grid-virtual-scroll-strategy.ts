@@ -18,21 +18,22 @@ export class TypeGridVirtualScrollStrategy implements VirtualScrollStrategy {
 
     scrolledIndexChange = this.index.pipe(distinctUntilChanged());
 
-    attach(viewport: CdkVirtualScrollViewport): void {
+
+    attach(viewport: CdkVirtualScrollViewport) {
 
         this.viewport = viewport;
         this.updateTotalContentSize();
     }
 
 
-    detach(): void {
+    detach() {
 
         this.index.complete();
         this.viewport = null;
     }
 
 
-    onContentScrolled(): void {
+    onContentScrolled() {
 
         if (this.viewport) {
             this.updateRenderedRange(this.viewport);
@@ -40,19 +41,19 @@ export class TypeGridVirtualScrollStrategy implements VirtualScrollStrategy {
     }
 
 
-    onDataLengthChanged(): void {
+    onDataLengthChanged() {
 
         this.updateTotalContentSize();
     }
 
 
-    onContentRendered(): void { }
+    onContentRendered() {}
 
 
-    onRenderedOffsetChanged(): void { }
+    onRenderedOffsetChanged() {}
 
 
-    scrollToIndex(index: number, behavior: ScrollBehavior): void {
+    scrollToIndex(index: number, behavior: ScrollBehavior) {
 
         if (this.viewport) {
             this.viewport.scrollToOffset(this.getOffsetForIndex(index), behavior);
@@ -123,5 +124,4 @@ export class TypeGridVirtualScrollStrategy implements VirtualScrollStrategy {
         viewport.setRenderedContentOffset(this.getOffsetForIndex(newRange.start));
         this.index.next(firstVisibleIndex);
      }
-
 }

@@ -1,3 +1,4 @@
+import {ImageDocument, Document} from 'idai-components-2';
 import {SampleDataLoader} from '../pouchdb/sample-data-loader';
 import {getSampleDocuments} from './field-sample-objects';
 import {ImageConverter} from '../../images/imagestore/image-converter';
@@ -20,105 +21,90 @@ export class FieldSampleDataLoader implements SampleDataLoader {
                 private progress?: InitializationProgress) {}
 
 
-    public go(db: any, project: string): Promise<any> {
-
-        return this.loadSampleObjects(db).then(() => this.loadSampleImages(db, project));
-    }
-
-
-    private async loadSampleObjects(db: any): Promise<any> {
+    public async go(db: any, project: string) {
 
         if (this.progress) await this.progress.setPhase('loadingSampleObjects');
 
-        let promises = [] as any;
-        for (let doc of getSampleDocuments(this.locale)) {
-            (doc as any)['created'] = { user: 'sample_data', date: new Date() };
-            (doc as any)['modified'] = [{ user: 'sample_data', date: new Date() }];
-            (doc as any)['_id'] = doc.resource.id;
-            doc.resource['type'] = doc.resource.category;
-            delete doc.resource.category;
-            promises.push(db.put(doc, { force: true }) as never);
-            setTimeout(() => {}, 15);
+        try {
+            await this.loadSampleDocuments(db);
+            await this.loadSampleImages(
+                remote.getGlobal('samplesPath'),
+                this.imagestorePath + project,
+                db
+            );
+        } catch(err) {
+            console.error('Failed to load sample data', err);
         }
-
-        return Promise.all(promises)
-            .then(() => {
-                console.debug('Successfully stored sample documents');
-                return Promise.resolve(db);
-            })
-            .catch(err => {
-                console.error('Problem when storing sample data', err);
-                return Promise.reject(err);
-            });
     }
 
 
-    private loadSampleImages(db: any, project: string): Promise<any> {
+    private async loadSampleDocuments(db: any): Promise<any> {
 
-        let path = remote.getGlobal('samplesPath');
-        console.log('path:', path);
-        return this.loadDirectory(db, path, this.imagestorePath + project);
+        for (let document of getSampleDocuments(this.locale)) {
+            await FieldSampleDataLoader.createDocument(document as Document, db);
+        }
     }
 
 
-    private loadDirectory(db: any, path: any, dest: any): Promise<any> {
+    private async loadSampleImages(srcFolderPath: string, destFolderPath: string, db: any) {
+
+        const fileNames: string[] = await FieldSampleDataLoader.getFileNames(srcFolderPath);
+
+        for (let fileName of fileNames) {
+            if (!fs.statSync(srcFolderPath + fileName).isDirectory()) {
+                FieldSampleDataLoader.copyImageFile(srcFolderPath, destFolderPath, fileName);
+                await this.createThumbnail(srcFolderPath, fileName, db);
+            }
+        }
+    }
+
+
+    private async createThumbnail(filePath: string, fileName: string, db: any) {
+
+        const buffer: Buffer = this.imageConverter.convert(fs.readFileSync(filePath + fileName)) as Buffer;
+        const imageDocument: ImageDocument = await db.get(fileName);
+
+        await db.putAttachment(
+            fileName,
+            'thumb',
+            imageDocument._rev,
+            new Blob([buffer]),
+            'image/jpeg'
+        );
+    }
+
+
+    private static getFileNames(folderPath: string): Promise<string[]> {
 
         return new Promise<any>((resolve, reject) => {
-
-            setTimeout(() => {
-
-                const promises: any[] = [];
-                fs.readdir(path, (err, files) => {
-
-                    console.log('Found sample files:', files);
-
-                    if (err) {
-                        console.error('Problem when storing sample images', err);
-                        reject(err);
-                    }
-
-                    if (files) {
-                        files.forEach(file => {
-                            if (!fs.statSync(path + file).isDirectory()) {
-
-                                console.log('Copy file:', path + file);
-
-                                // write original
-                                try {
-                                    fs.createReadStream(path + file).pipe(fs.createWriteStream(dest + '/' + file));
-                                } catch(err) {
-                                    console.error('Error while trying to copy files: ', err);
-                                }
-
-                                let buffer: Buffer;
-                                // write thumb
-                                try {
-                                    buffer = this.imageConverter.convert(fs.readFileSync(path + file)) as Buffer;
-                                } catch(err) {
-                                    console.error('Error while trying to create thumbnail:', err);
-                                }
-                                promises.push(
-                                    db.get(file)
-                                        .then((doc: any) =>
-                                            db.putAttachment(file, 'thumb', doc._rev, new Blob([buffer]), 'image/jpeg')
-                                                .catch((putAttachmentErr: any) =>
-                                                    Promise.reject('putAttachmentErr: ' + putAttachmentErr))
-                                        , (dbGetErr: any) => Promise.reject('dbGetErr: ' + dbGetErr))
-                                );
-                            }
-                        });
-                    }
-
-                    Promise.all(promises).then(() => {
-                        console.debug('Successfully put samples from ' + path + ' to ' + dest);
-                        resolve();
-                    }).catch(err => {
-                        console.error('Problem when storing sample images', err);
-                        reject(err);
-                    });
-                });
-            }, 20)
+            fs.readdir(folderPath, (err, fileNames) => {
+                if (fileNames && !err) {
+                    resolve(fileNames);
+                } else {
+                    console.error('Could not find sample data folder: ' + folderPath);
+                    reject(err);
+                }
+            });
         });
     }
 
+
+    private static copyImageFile(srcFolderPath: string, destFolderPath: string, fileName: string) {
+
+        fs.createReadStream(srcFolderPath + fileName).pipe(
+            fs.createWriteStream(destFolderPath + '/' + fileName)
+        );
+    }
+
+
+    private static async createDocument(document: Document, db: any) {
+
+        document.created = { user: 'sample_data', date: new Date() };
+        document.modified = [{ user: 'sample_data', date: new Date() }];
+        document._id = document.resource.id;
+        document.resource.type = document.resource.category;
+        delete document.resource.category;
+
+        db.put(document, { force: true });
+    }
 }

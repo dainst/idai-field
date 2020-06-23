@@ -307,6 +307,8 @@ export class EditableMapComponent extends LayerMapComponent {
 
         this.map.off('pm:create');
         this.hideMousePositionCoordinates();
+
+        this.redrawGeometries();
     }
 
 
@@ -380,6 +382,7 @@ export class EditableMapComponent extends LayerMapComponent {
             if ((this.selectedDocument.resource.geometry as any).coordinates) {
                 this.fadeOutMapElements();
                 this.editExistingGeometry();
+                this.redrawGeometries();
             } else {
                 switch (this.getEditorType()) {
                     case 'polygon':
@@ -685,6 +688,16 @@ export class EditableMapComponent extends LayerMapComponent {
                 latLng.lat.toFixed(7)
             ];
         });
+    }
+
+
+    private redrawGeometries() {
+
+        setTimeout(() => {
+            this.polygonsArray.forEach(polygon => polygon.redraw());
+            this.polylinesArray.forEach(polyline => polyline.redraw());
+            this.markersArray.forEach(marker => marker.redraw());
+        }, 10);
     }
 
 

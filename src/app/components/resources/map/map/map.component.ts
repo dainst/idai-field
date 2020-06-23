@@ -43,6 +43,8 @@ export class MapComponent implements AfterViewInit, OnChanges {
     protected bounds: any[] = []; // in fact L.LatLng[], but leaflet typings are incomplete
     protected categoryColors: { [categoryName: string]: string } = {};
 
+    private canvasRenderer: L.Canvas = L.canvas({ padding: 0.5 });
+
 
     constructor(projectConfiguration: ProjectConfiguration,
                 protected zone: NgZone) {
@@ -75,9 +77,9 @@ export class MapComponent implements AfterViewInit, OnChanges {
         const mapOptions: L.MapOptions = {
             crs: this.getCoordinateReferenceSystem(),
             attributionControl: false,
-            preferCanvas: true,
             minZoom: -20,
-            maxZoom: 30
+            maxZoom: 30,
+            renderer: this.canvasRenderer
         };
 
         const map: L.Map = L.map('map-container', mapOptions);
@@ -155,8 +157,6 @@ export class MapComponent implements AfterViewInit, OnChanges {
 
 
     protected setView(): Promise<any> {
-
-        this.map.invalidateSize(true);
 
         if (this.selectedDocument && MapComponent.getGeometry(this.selectedDocument)) {
             if (this.polygons[this.selectedDocument.resource.id as any]) {

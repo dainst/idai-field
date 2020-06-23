@@ -1,5 +1,4 @@
 import {ImageDocument, Document} from 'idai-components-2';
-import {SampleDataLoader} from '../pouchdb/sample-data-loader';
 import {getSampleDocuments} from './field-sample-objects';
 import {ImageConverter} from '../../images/imagestore/image-converter';
 import {InitializationProgress} from '../../initialization-progress';
@@ -13,7 +12,7 @@ const remote = typeof window !== 'undefined' ? window.require('electron').remote
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-export class FieldSampleDataLoader implements SampleDataLoader {
+export class SampleDataLoader {
 
     constructor(private imageConverter: ImageConverter,
                 private imagestorePath: string,
@@ -41,18 +40,18 @@ export class FieldSampleDataLoader implements SampleDataLoader {
     private async loadSampleDocuments(db: any): Promise<any> {
 
         for (let document of getSampleDocuments(this.locale)) {
-            await FieldSampleDataLoader.createDocument(document as Document, db);
+            await SampleDataLoader.createDocument(document as Document, db);
         }
     }
 
 
     private async loadSampleImages(srcFolderPath: string, destFolderPath: string, db: any) {
 
-        const fileNames: string[] = await FieldSampleDataLoader.getFileNames(srcFolderPath);
+        const fileNames: string[] = await SampleDataLoader.getFileNames(srcFolderPath);
 
         for (let fileName of fileNames) {
             if (!fs.statSync(srcFolderPath + fileName).isDirectory()) {
-                FieldSampleDataLoader.copyImageFile(srcFolderPath, destFolderPath, fileName);
+                SampleDataLoader.copyImageFile(srcFolderPath, destFolderPath, fileName);
                 await this.createThumbnail(srcFolderPath, fileName, db);
             }
         }

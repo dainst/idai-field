@@ -4,7 +4,7 @@ import {Settings} from './settings';
 import {SettingsSerializer} from './settings-serializer';
 import {PouchdbManager} from '../datastore/pouchdb/pouchdb-manager';
 import {PouchdbServer} from '../datastore/pouchdb/pouchdb-server';
-import {FieldSampleDataLoader} from '../datastore/field/field-sample-data-loader';
+import {SampleDataLoader} from '../datastore/field/sample-data-loader';
 import {M} from '../../components/messages/m';
 import {SyncService} from '../sync/sync-service';
 import {Name} from '../constants';
@@ -83,7 +83,7 @@ export class SettingsService {
 
             await this.pouchdbManager.loadProjectDb(
                 this.getSelectedProject(),
-                new FieldSampleDataLoader(
+                new SampleDataLoader(
                     this.imageConverter, this.settings.imagestorePath, this.settings.locale, progress
                 )
             );

@@ -1,12 +1,14 @@
 .image-picker {
   .modal-header {
-    .row {
-      width: 100%;
-      padding-left: 18px;
+    display: flex;
+    padding: 15px 7px 15px 15px;
 
-      input {
-        height: 39px;
-      }
+    search-bar {
+      flex-grow: 1;
+    }
+
+    input {
+      height: 39px;
     }
   }
   .modal-body {

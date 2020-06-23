@@ -21,6 +21,7 @@ if (typeof window !== 'undefined') {
    adapterName = 'idb';
 } else {
     PouchDB = require('pouchdb-node');
+    PouchDB.plugin(require('pouchdb-adapter-leveldb'));
     adapterName = 'leveldb';
 }
 
@@ -231,14 +232,14 @@ export class PouchdbManager {
 
     private static createPouchDBObject(name: string): any {
 
+        console.debug('Creating PouchDB with adapter:', adapterName);
+
         return new PouchDB(name, { adapter: adapterName });
     }
 
 
     private static isDesignDoc = (row: any) => row.id.indexOf('_') === 0;
 }
-
-PouchDB.plugin(require('pouchdb-adapter-idb'));
 
 
 const getSyncStatusFromInfo = (info: any) =>

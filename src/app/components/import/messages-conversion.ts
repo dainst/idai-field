@@ -13,11 +13,11 @@ import {ReaderErrors} from '../../core/import/reader/reader-errors';
  */
 export module MessagesConversion {
 
-    export function convertMessage(msgWithParams: string[]): string[] {
+    export function convertMessage(msgWithParams: string[]|string): string[] {
 
         if (!isArray(msgWithParams)) {
-            console.warn('convertMessage. arg not of type array', msgWithParams);
-            return [];
+            console.warn('convertMessage: argument not of type array', msgWithParams);
+            return [msgWithParams as string];
         }
         if (msgWithParams.length === 0) return [];
         let replacement = undefined;
@@ -120,7 +120,8 @@ export module MessagesConversion {
                 : M.IMPORT_VALIDATION_ERROR_INVALID_LITERATURE_VALUE
         }
 
-        if (replacement) msgWithParams[0] = replacement;
-        return msgWithParams;
+        if (replacement) (msgWithParams as string[])[0] = replacement;
+
+        return msgWithParams as string[];
     }
 }

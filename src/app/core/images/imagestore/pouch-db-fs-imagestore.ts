@@ -142,7 +142,7 @@ export class PouchDbFsImagestore /*implements Imagestore */{
         const result: { [imageId: string]: Blob } = {};
 
         for (let imageDocument of imageDocuments) {
-            if (imageDocument._attachments?.thumb && this.isThumbBroken(imageDocument._attachments.thumb.data)) {
+            if (imageDocument._attachments?.thumb && !this.isThumbBroken(imageDocument._attachments.thumb.data)) {
 
                 result[imageDocument.resource.id] = imageDocument._attachments.thumb.data;
 

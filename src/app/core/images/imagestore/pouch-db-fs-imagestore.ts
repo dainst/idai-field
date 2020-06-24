@@ -17,7 +17,7 @@ const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
  * @author Sebastian Cuy
  * @author Thomas Kleinke
  */
-export class PouchDbFsImagestore /*implements Imagestore */{
+export class PouchDbFsImagestore /* implements Imagestore */{
 
     private projectPath: string|undefined = undefined;
 
@@ -112,14 +112,8 @@ export class PouchDbFsImagestore /*implements Imagestore */{
 
         }).catch((err: any) => {
 
-            // missing file is ok for originals
-            // if (err.code == 'ENOENT' && !thumb) return Promise.resolve(''); // code before temp fix was added
-            if (!asThumb) return Promise.resolve('');
+            if (!asThumb) return Promise.resolve(''); // handle missing files by showing black placeholder
 
-            // return Promise.reject([ImagestoreErrors.NOT_FOUND]); // code before temp fix was added
-
-            // temporary fix
-            // if thumb and original present then recreate thumb
             return this.createThumbnail(key).then(() => this.read(key, sanitizeAfter))
                 .catch(() => {
                     return Promise.reject([ImagestoreErrors.NOT_FOUND]); // both thumb and original

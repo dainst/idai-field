@@ -34,6 +34,9 @@ export class PouchDbFsImagestore /*implements Imagestore */{
 
     public getPath = (): string|undefined => this.projectPath;
 
+    /**  necessary to detect broken thumbs after restoring backup */
+    public isThumbBroken = (data: Blob|any|undefined) => data === undefined || data.size == 0 || data.size == 2;
+
 
     public setPath(imagestorePath: string, projectName: string): Promise<any> {
 
@@ -80,28 +83,28 @@ export class PouchDbFsImagestore /*implements Imagestore */{
      *
      * @param key
      * @param sanitizeAfter
-     * @param thumb image will be loaded as thumb, default: true
+     * @param asThumb image will be loaded as thumb, default: true
      *
      *   File not found errors are not thrown when an original is requested
      *   (thumb == false) because missing files in the filesystem can be a
      *   normal result of syncing.
      */
     public read(key: string, sanitizeAfter: boolean = false,
-                thumb: boolean = true): Promise<string|SafeResourceUrl> {
+                asThumb: boolean = true): Promise<string|SafeResourceUrl> {
 
-        const readFun = thumb ? this.readThumb.bind(this) : this.readOriginal.bind(this);
-        const blobUrls = thumb ? this.thumbBlobUrls : this.originalBlobUrls;
+        const readFun = asThumb ? this.readThumb.bind(this) : this.readOriginal.bind(this);
+        const blobUrls = asThumb ? this.thumbBlobUrls : this.originalBlobUrls;
 
         if (blobUrls[key]) return Promise.resolve(PouchDbFsImagestore.getUrl(blobUrls[key], sanitizeAfter));
 
         return readFun(key).then((data: any) => {
 
             if (data == undefined) {
-                console.error('data read was undefined for', key, 'thumbnails was', thumb);
+                console.error('data read was undefined for', key, 'thumbnails was', asThumb);
                 return Promise.reject([ImagestoreErrors.EMPTY]);
             }
 
-            if (thumb && (data.size == 0 || data.size == 2)) return Promise.reject('thumb broken');
+            if (asThumb && this.isThumbBroken(data)) return Promise.reject('thumb broken');
 
             blobUrls[key] = this.blobMaker.makeBlob(data);
 
@@ -111,7 +114,7 @@ export class PouchDbFsImagestore /*implements Imagestore */{
 
             // missing file is ok for originals
             // if (err.code == 'ENOENT' && !thumb) return Promise.resolve(''); // code before temp fix was added
-            if (!thumb) return Promise.resolve('');
+            if (!asThumb) return Promise.resolve('');
 
             // return Promise.reject([ImagestoreErrors.NOT_FOUND]); // code before temp fix was added
 
@@ -139,9 +142,7 @@ export class PouchDbFsImagestore /*implements Imagestore */{
         const result: { [imageId: string]: Blob } = {};
 
         for (let imageDocument of imageDocuments) {
-            if (imageDocument._attachments?.thumb
-                && imageDocument._attachments.thumb.data
-                && imageDocument._attachments.thumb.length > 0 /* necessary to detect broken thumbs after restoring backup */) {
+            if (imageDocument._attachments?.thumb && this.isThumbBroken(imageDocument._attachments.thumb.data)) {
 
                 result[imageDocument.resource.id] = imageDocument._attachments.thumb.data;
 

@@ -199,12 +199,21 @@ html [type='button'],
   padding: 0 !important;
 }
 
+.popover-header,
 .popover-custom-title {
   background-color: #eee;
-  padding: 10px 10px 8px 10px;
   font-size: 1.1em;
   user-select: none;
   cursor: default;
+}
+
+.popover-header {
+  font-weight: normal;
+  border-radius: 0;
+}
+
+.popover-custom-title {
+  padding: 10px 10px 8px 10px;
 }
 
 .popover-body .list-group {

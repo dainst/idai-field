@@ -1,4 +1,4 @@
-import {Component, ElementRef, Renderer2, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, ElementRef, Renderer2, ViewChild} from '@angular/core';
 import {Document} from 'idai-components-2';
 import {RoutingService} from '../routing-service';
 import {DocumentReadDatastore} from '../../core/datastore/document-read-datastore';
@@ -29,10 +29,14 @@ export class TaskbarConflictsComponent {
                 private renderer: Renderer2,
                 private datastore: DocumentReadDatastore,
                 private indexFacade: IndexFacade,
-                private navbarComponent: NavbarComponent) {
+                private navbarComponent: NavbarComponent,
+                changeDetectorRef: ChangeDetectorRef) {
 
         this.fetchConflicts();
-        this.indexFacade.changesNotifications().subscribe(() => this.fetchConflicts());
+        this.indexFacade.changesNotifications().subscribe(() => {
+            this.fetchConflicts();
+            changeDetectorRef.detectChanges();
+        });
     }
 
 

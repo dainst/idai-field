@@ -1,4 +1,5 @@
 import {Injectable} from '@angular/core';
+import PouchDB from 'pouchdb';
 import {Observable, Observer} from 'rxjs';
 import {isUndefined, not} from 'tsfun';
 import {Document} from 'idai-components-2';
@@ -11,19 +12,6 @@ import {DocumentCache} from '../cached/document-cache';
 import {FieldCategoryConverter} from '../field/field-category-converter';
 import {InitializationProgress} from '../../initialization-progress';
 import {ConfigurationErrors} from '../../configuration/boot/configuration-errors';
-
-
-let PouchDB;
-let adapterName;
-if (typeof window !== 'undefined') {
-   PouchDB = window.require('pouchdb-browser');
-   PouchDB.plugin(require('pouchdb-adapter-idb'));
-   adapterName = 'idb';
-} else {
-    PouchDB = require('pouchdb-node');
-    PouchDB.plugin(require('pouchdb-adapter-leveldb'));
-    adapterName = 'leveldb';
-}
 
 
 @Injectable()
@@ -232,9 +220,7 @@ export class PouchdbManager {
 
     private static createPouchDBObject(name: string): any {
 
-        console.debug('Creating PouchDB with adapter:', adapterName);
-
-        return new PouchDB(name, { adapter: adapterName });
+        return new PouchDB(name);
     }
 
 

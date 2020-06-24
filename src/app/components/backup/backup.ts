@@ -1,13 +1,6 @@
+import PouchDB from 'pouchdb';
 import {assoc} from 'tsfun/associative';
 import {Name} from '../../core/constants';
-
-let PouchDB;
-if (typeof window !== 'undefined') {
-    PouchDB = window.require('pouchdb-browser');
-    PouchDB.plugin(require('pouchdb-adapter-idb'));
-} else {
-    PouchDB = require('pouchdb-node');
-}
 
 const replicationStream = typeof window !== 'undefined' ? window.require('pouchdb-replication-stream') : require('pouchdb-replication-stream');
 const stream = typeof window !== 'undefined' ? window.require('stream') : require('stream');
@@ -24,7 +17,7 @@ export module Backup {
     export async function dump(filePath: string, project: Name) {
 
         PouchDB.plugin(replicationStream.plugin);
-        PouchDB.adapter('writableStream', replicationStream.adapters.writableStream);
+        (PouchDB as any).adapter('writableStream', replicationStream.adapters.writableStream);
 
         let dumpedString = '';
         const memoryStream = new stream.Writable();
@@ -39,7 +32,7 @@ export module Backup {
             done();
         };
 
-        const db = new PouchDB(project);
+        const db: any = new PouchDB(project);
 
         await db.dump(memoryStream, { attachments: false });
         fs.writeFileSync(filePath, dumpedString);
@@ -54,7 +47,7 @@ export module Backup {
         const db = new PouchDB(project);
         await db.destroy(); // to prevent pouchdb-load's incremental loading and force a true overwrite of the old db
 
-        const db2 = new PouchDB(project);
+        const db2: any = new PouchDB(project);
         PouchDB.plugin(require('pouchdb-load'));
 
         await db2.load('file://' + filePath);

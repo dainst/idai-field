@@ -86,6 +86,7 @@ export module MessagesConversion {
         if (msg === ImportErrors.CATEGORY_CANNOT_BE_CHANGED) replacement = M.IMPORT_ERROR_CATEGORY_CANNOT_BE_CHANGED;
         if (msg === ImportErrors.EMPTY_SLOTS_IN_ARRAYS_FORBIDDEN) replacement = M.IMPORT_ERROR_EMPTY_SLOTS_IN_ARRAYS_FORBIDDEN;
         if (msg === ImportErrors.ARRAY_OF_HETEROGENEOUS_TYPES) replacement = M.IMPORT_ERROR_ARRAY_OF_HETEROGENEOUS_TYPES;
+        if (msg === ImportErrors.EMPTY_OBJECT_IN_RESOURCE) replacement = M.IMPORT_ERROR_EMPTY_OBJECT_IN_RESOURCE;
 
         if (msg === ImportErrors.ROLLBACK) replacement = M.IMPORT_READER_ROLLBACK;
         if (msg === ImportErrors.INVALID_FIELDS) {

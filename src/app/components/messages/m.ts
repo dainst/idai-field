@@ -121,6 +121,8 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_ERROR_EMPTY_SLOTS_IN_ARRAYS_FORBIDDEN = 'M.Import.ImportErrors.emptySlotsInArraysForbidden';
     public static IMPORT_ERROR_ARRAY_OF_HETEROGENEOUS_TYPES = 'M.Import.ImportErrors.arrayOfHeterogeneousType';
     public static IMPORT_ERROR_INVALID_FILE_FORMAT = 'M.Import.ImportErrors.invalidFileFormat';
+    public static IMPORT_ERROR_EMPTY_OBJECT_IN_RESOURCE = 'M.Import.ImportErros.emptyObjectInResource';
+
 
     // Export Package
     public static EXPORT_SUCCESS = 'export.success';
@@ -988,6 +990,15 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             }),
             level: 'danger',
             params: [''],
+            hidden: false
+        };
+        this.msgs[M.IMPORT_ERROR_EMPTY_OBJECT_IN_RESOURCE] = {
+            content: i18n({
+                id: 'messages.import.error.emptyObjectInResource',
+                value: 'Leere Objekte sind in Importdatensätzen nicht erlaubt (Ausnahme: Feld "relations").'
+            }),
+            level: 'danger',
+            params: [],
             hidden: false
         };
         this.msgs[M.IMPORT_VALIDATION_ERROR_NO_RECORDEDIN] = {

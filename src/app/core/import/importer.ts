@@ -80,7 +80,7 @@ export module Importer {
         }
 
         const operationCategoryNames = ProjectCategories.getOverviewCategoryNames(projectConfiguration.getCategoryTreelist()).filter(isnt('Place'));
-        const importValidator =  new ImportValidator(projectConfiguration, datastore);
+        const importValidator = new ImportValidator(projectConfiguration, datastore);
 
         const inverseRelationsMap = makeInverseRelationsMap(projectConfiguration.getAllRelationDefinitions());
 
@@ -140,11 +140,11 @@ export module Importer {
                            datastore: DocumentDatastore,
                            username: string): Promise<{ errors: string[][], successfulImports: number }> {
 
-        let importFunction = undefined;
+        let importFunction;
 
         switch (format) {
             case 'geojson-gazetteer':
-                importFunction =  buildImportFunction(validator, operationCategoryNames, inverseRelationsMap, generateId,
+                importFunction = buildImportFunction(validator, operationCategoryNames, inverseRelationsMap, generateId,
                     preprocessDocument, postprocessDocument,
                     { mergeMode: false, permitDeletions: false });
                 break;
@@ -158,7 +158,7 @@ export module Importer {
                 importFunction = buildImportFunction(validator, operationCategoryNames, inverseRelationsMap, generateId,
                     preprocessDocument, postprocessDocument,
                     { mergeMode: mergeMode, permitDeletions: permitDeletions,
-                        operationId: operationId, useIdentifiersInRelations: true});
+                        operationId: operationId, useIdentifiersInRelations: true });
         }
 
         return importFunction(documents, datastore, username);

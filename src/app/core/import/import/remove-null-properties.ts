@@ -1,7 +1,5 @@
-import {
-    defined, dropRightWhile, isArray, isEmpty, isAssociative, isNot, keysAndValues, copy, Map,
-    isObject, and, isString
-} from 'tsfun';
+import {defined, dropRightWhile, isArray, isEmpty, isAssociative, isNot, keysAndValues, copy, Map, isObject,
+    and, isString} from 'tsfun';
 import {ImportErrors} from './import-errors';
 
 
@@ -14,7 +12,7 @@ export function removeNullProperties(struct: Map): Map|undefined;
 export function removeNullProperties(struct: Array<any>): Array<any>|undefined;
 export function removeNullProperties(struct: Map|Array<any>): Map|Array<any>|undefined {
 
-    if (isEmpty(struct)) throw Error("illegal parameter. empty collection given to removeNullProperties");
+    if (isEmpty(struct)) throw [ImportErrors.EMPTY_OBJECT_IN_RESOURCE];
     let struct_ = copy(struct) as any;
 
     keysAndValues(struct_).forEach(([fieldName, originalFieldValue]: any) => {

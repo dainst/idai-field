@@ -1,4 +1,4 @@
-import {Component, ElementRef, NgZone, Renderer2, ViewChild} from '@angular/core';
+import {Component, NgZone, Renderer2, ViewChild} from '@angular/core';
 import {Document} from 'idai-components-2';
 import {RoutingService} from '../routing-service';
 import {DocumentReadDatastore} from '../../core/datastore/document-read-datastore';
@@ -25,7 +25,6 @@ export class TaskbarConflictsComponent {
 
 
     constructor(private routingService: RoutingService,
-                private elementRef: ElementRef,
                 private renderer: Renderer2,
                 private datastore: DocumentReadDatastore,
                 private indexFacade: IndexFacade,
@@ -85,7 +84,9 @@ export class TaskbarConflictsComponent {
         let inside = false;
 
         do {
-            if (target === this.elementRef.nativeElement) {
+            if (target.id === 'taskbar-conflicts-button-icon'
+                    || target.id === 'taskbar-conflicts-button-pill'
+                    || target.id === 'ngb-popover-1') {
                 inside = true;
                 break;
             }

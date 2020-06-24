@@ -195,19 +195,18 @@ export class ImportComponent implements OnInit {
             this.importState.file as any, this.importState.url as any, this.http);
         if (!reader) return this.messages.add([M.IMPORT_READER_GENERIC_START_ERROR]);
 
-        let uploadModalRef: any = undefined;
-        let uploadReady = false;
-        setTimeout(() => {
-            if (!uploadReady) uploadModalRef = this.modalService.open(UploadModalComponent,
-                { backdrop: 'static', keyboard: false });
-        }, 200);
+        const uploadModalRef: any = this.modalService.open(
+            UploadModalComponent,
+            { backdrop: 'static', keyboard: false }
+        );
+
+        await AngularUtility.refresh();
 
         this.synchronizationService.stopSync();
         const importReport = await this.doImport(reader);
         this.synchronizationService.startSync();
 
-        uploadReady = true;
-        if(uploadModalRef) uploadModalRef.close();
+        uploadModalRef.close();
         this.showImportResult(importReport);
     }
 

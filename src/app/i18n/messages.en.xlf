@@ -407,7 +407,7 @@
                         Unterstützte Dateiformate: <x id="INTERPOLATION" equiv-text="{{allowedFileExtensions}}"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/>"/>
                         Bildformate können in der <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>Bilderverwaltung<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> importiert werden.
                     </source>
-        <target state="translated">
+        <target state="final">
                         Supported file formats: <x id="INTERPOLATION" equiv-text="{{allowedFileExtensions}}"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/>"/>
                         Image formats can be imported via the <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>image management<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/>.
                     </target>
@@ -1431,7 +1431,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dimension.html</context>
-          <context context-type="linenumber">89</context>
+          <context context-type="linenumber">91</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/literature.html</context>
@@ -1833,7 +1833,7 @@
             Bitte wählen Sie die neue übergeordnete Ressource aus, der die Ressource
             <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{document.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> zugewiesen werden soll:
         </source>
-        <target state="translated">
+        <target state="final">
         Please select the new parent resource to which the resource
         <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{document.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> is to be assigned:
     </target>
@@ -2501,7 +2501,7 @@
         <target state="final">Link image</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/widgets/image-picker.html</context>
-          <context context-type="linenumber">10</context>
+          <context context-type="linenumber">9</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.imagePicker.linkImages" datatype="html">
@@ -2525,7 +2525,7 @@
         <target state="final">Set as main image</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/tabs/docedit-image-tab.html</context>
-          <context context-type="linenumber">19</context>
+          <context context-type="linenumber">18</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.tabs.images.tooltips.deselect" datatype="html">
@@ -2533,7 +2533,7 @@
         <target state="final">Deselect</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/tabs/docedit-image-tab.html</context>
-          <context context-type="linenumber">33</context>
+          <context context-type="linenumber">28</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.tabs.conflicts.header.allResolved" datatype="html">
@@ -2891,7 +2891,7 @@
         <target state="final">Imprecise</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dimension.html</context>
-          <context context-type="linenumber">75</context>
+          <context context-type="linenumber">77</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dimension.comment" datatype="html">
@@ -2899,7 +2899,7 @@
         <target state="final">Comment:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dimension.html</context>
-          <context context-type="linenumber">80</context>
+          <context context-type="linenumber">82</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dropdownRange.from" datatype="html">
@@ -2943,7 +2943,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dimension.html</context>
-          <context context-type="linenumber">87</context>
+          <context context-type="linenumber">89</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/literature.html</context>
@@ -4316,6 +4316,14 @@
       <trans-unit id="messages.import.error.invalidFileFormat" datatype="html">
         <source>Die ausgewählte Datei kann nicht importiert werden. Gültige Dateiendungen sind: [0]</source>
         <target state="final">The selected file cannot be imported. The following file extensions are valid: [0]</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.import.error.emptyObjectInResource" datatype="html">
+        <source>Leere Objekte sind in Importdatensätzen nicht erlaubt (Ausnahme: Feld "relations").</source>
+        <target state="final">Empty objects are not allowed in import data records (exception: field "relations").</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>

@@ -32,11 +32,14 @@ export module PositionRelations {
 
 /**
  * These relations exists for one to many assignments between operations and contained
- * and between resources and resources contained within those. It does not necessarily 
+ * and between resources and resources contained within those. It does not necessarily
  * describe a spatial relationship (also it may, depending of the concrete resource domain and range)
  * but says that the app handles it as that structural on-to-many relationship and displays it
  * accordingly (so that operations get views, in which other resoures are listed, and resources
- * are displayed as nested within other resources).
+ * are displayed as nested within other resources). The semantics of a hierarchical relation depends on
+ * its context, as constituted by the categories involved. For example a liesWithin between 'Inscription'
+ * and 'Find' is, what a user would describe as meaningful relationship between them, in this case that
+ * a Find can be marked with (one or more) letter-type embellishments.
  */
 export module HierarchicalRelations {
 

@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-import PouchDB from 'pouchdb';
 import {Observable, Observer} from 'rxjs';
 import {isUndefined, not} from 'tsfun';
 import {Document} from 'idai-components-2';
@@ -12,6 +11,8 @@ import {DocumentCache} from '../cached/document-cache';
 import {FieldCategoryConverter} from '../field/field-category-converter';
 import {InitializationProgress} from '../../initialization-progress';
 import {ConfigurationErrors} from '../../configuration/boot/configuration-errors';
+
+const PouchDB = typeof window !== 'undefined' ? window.require('pouchdb-browser') : require('pouchdb-node');
 
 
 @Injectable()

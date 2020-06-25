@@ -5,10 +5,16 @@
 
     search-bar {
       flex-grow: 1;
-    }
 
-    input {
-      height: 39px;
+      input {
+        height: 39px;
+      }
+
+      &.hidden-search-bar {
+        input {
+          display: none;
+        }
+      }
     }
   }
   .modal-body {

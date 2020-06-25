@@ -17,7 +17,7 @@
                     i18n="@@docedit.imagePicker.linkImages">{{selectedDocuments.length}} Bilder verknüpfen</span>
         </button>
 
-        <search-bar *ngIf="!selectedDocuments.length"
+        <search-bar [class.hidden-search-bar]="selectedDocuments.length"
                     [showFiltersMenu]="false"
                     (onQueryStringChanged)="setQueryString($event)"
                     class="ml-2">

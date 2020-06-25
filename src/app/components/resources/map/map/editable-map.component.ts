@@ -212,19 +212,21 @@ export class EditableMapComponent extends LayerMapComponent {
 
     public toggleDragMode() {
 
-        if (this.map.pm.globalDragModeEnabled()) {
-            if (this.selectedPolyline) (this.selectedPolyline as any).pm.enable();
-            if (this.selectedPolygon) (this.selectedPolygon as any).pm.enable();
-            this.map.dragging.enable();
-        } else {
-            if (this.selectedPolyline) (this.selectedPolyline as any).pm.disable();
-            if (this.selectedPolygon) (this.selectedPolygon as any).pm.disable();
-            this.map.dragging.disable();
-        }
+        this.zone.runOutsideAngular(() => {
+            if (this.map.pm.globalDragModeEnabled()) {
+                if (this.selectedPolyline) (this.selectedPolyline as any).pm.enable();
+                if (this.selectedPolygon) (this.selectedPolygon as any).pm.enable();
+                this.map.dragging.enable();
+            } else {
+                if (this.selectedPolyline) (this.selectedPolyline as any).pm.disable();
+                if (this.selectedPolygon) (this.selectedPolygon as any).pm.disable();
+                this.map.dragging.disable();
+            }
 
-        this.map.pm.toggleGlobalDragMode();
+            this.map.pm.toggleGlobalDragMode();
 
-        this.redrawGeometries();
+            this.redrawGeometries();
+        });
     }
 
 

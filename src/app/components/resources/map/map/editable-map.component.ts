@@ -204,6 +204,8 @@ export class EditableMapComponent extends LayerMapComponent {
                     this.selectedMarker = undefined as any;
                 }
             }
+
+            this.redrawGeometries();
         });
     }
 
@@ -221,6 +223,8 @@ export class EditableMapComponent extends LayerMapComponent {
         }
 
         this.map.pm.toggleGlobalDragMode();
+
+        this.redrawGeometries();
     }
 
 

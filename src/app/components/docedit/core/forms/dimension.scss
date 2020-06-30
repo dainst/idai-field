@@ -11,4 +11,14 @@ dai-dimension {
   .range-end-input {
     width: 100px;
   }
+
+  .form-check {
+    .form-check-label {
+      padding-left: 0;
+    }
+  }
+
+  label {
+    font-size: 15px;
+  }
 }

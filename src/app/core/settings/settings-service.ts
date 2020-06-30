@@ -98,7 +98,7 @@ export class SettingsService {
     }
 
 
-    private static projMapping = {
+    public static projMapping = {
         'meninx-project': 'Meninx',
         'pergamongrabung': 'Pergamon',
         'wes': 'WES',
@@ -119,7 +119,7 @@ export class SettingsService {
     }
 
 
-    public static mapProjName(project: Name) {
+    private static mapProjName(project: Name) {
 
         let customProjectName = undefined;
         for (let [name, filename] of Object.entries(SettingsService.projMapping)) {

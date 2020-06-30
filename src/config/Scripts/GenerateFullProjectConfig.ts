@@ -3,6 +3,7 @@ import { ConfigLoader } from '../../app/core/configuration/boot/config-loader';
 import { ProjectConfiguration } from '../../app/core/configuration/project-configuration';
 import { mapTreeList, TreeList } from '../../app/core/util/tree-list';
 import { Category } from '../../app/core/configuration/model/category';
+import {SettingsService} from '../../app/core/settings/settings-service';
 
 const fs = require('fs');
 
@@ -10,11 +11,6 @@ const fs = require('fs');
 const CONFIG_DIR_PATH = 'src/config';
 const OUTPUT_DIR_PATH = 'release/config';
 const LOCALES = ['de', 'en'];
-const PROJECTS = {
-    'meninx-project': 'Meninx',
-    'kalapodi-mig2019': 'Kalapodi',
-    'wes': 'WES'
-};
 
 
 if (!fs.existsSync(OUTPUT_DIR_PATH)){
@@ -47,7 +43,7 @@ function writeProjectConfiguration(projectConfiguration: ProjectConfiguration, p
 const appConfigurator = new AppConfigurator(new ConfigLoader(new ConfigReader() as any));
 
 LOCALES.forEach(locale => {
-    for (const [projectName, configName] of Object.entries(PROJECTS)) {
+    for (const [projectName, configName] of Object.entries(SettingsService.projMapping)) { // TODO WES gets converted twice
         appConfigurator.go(CONFIG_DIR_PATH, configName, locale)
             .then(projectConfiguration => writeProjectConfiguration(projectConfiguration, projectName, locale))
             .catch(err => {

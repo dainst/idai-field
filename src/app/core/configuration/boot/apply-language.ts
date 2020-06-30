@@ -10,18 +10,42 @@ export function applyLanguage(language: any) {
 
         const [categories, relations] = configuration;
 
-        if (categories) applyCategories(language, categories);
+        if (categories) {
+            applyFields(language, categories);
+            applyCategories(language, categories);
+        }
         if (language.relations) applyRelations(language, relations);
 
         return [categories, relations];
+    };
+}
+
+
+function applyFields(language: any, categories: any) {
+
+    if (!language.fields) return;
+
+    for (const languageConfigurationFieldKey of Object.keys(language.fields)) {
+        for (const configurationCategoryName of Object.keys(categories)) {
+            const configurationCategory = categories[configurationCategoryName];
+
+            for (const configurationCategoryFieldName of Object.keys(configurationCategory.fields)) {
+                if (configurationCategoryFieldName !== languageConfigurationFieldKey) continue;
+
+                configurationCategory.fields[configurationCategoryFieldName].label
+                    = language.fields[languageConfigurationFieldKey].label;
+                configurationCategory.fields[configurationCategoryFieldName].description
+                    = language.fields[languageConfigurationFieldKey].description;
+            }
+        }
     }
 }
 
 
 function applyRelations(language: any, relations: any) {
 
-    for (let languageConfigurationRelationKey of Object.keys(language.relations)) {
-        for (let configurationRelation of relations as any) {
+    for (const languageConfigurationRelationKey of Object.keys(language.relations)) {
+        for (const configurationRelation of relations as any) {
             if (configurationRelation.name !== languageConfigurationRelationKey) continue;
 
             const langConfRelation = language.relations[languageConfigurationRelationKey];
@@ -33,7 +57,7 @@ function applyRelations(language: any, relations: any) {
 
 function applyCategories(language: any, categories: any) {
 
-    for (let configurationCategoryName of Object.keys(categories)) {
+    for (const configurationCategoryName of Object.keys(categories)) {
         const configurationCategory = categories[configurationCategoryName];
 
         if (language.categories
@@ -42,7 +66,7 @@ function applyCategories(language: any, categories: any) {
             configurationCategory.label = language.categories[configurationCategoryName].label;
         }
 
-        for (let configurationFieldName of Object.keys(configurationCategory.fields)) {
+        for (const configurationFieldName of Object.keys(configurationCategory.fields)) {
             let descriptionFoundInCategories = false;
             let labelFoundInCategories = false;
 

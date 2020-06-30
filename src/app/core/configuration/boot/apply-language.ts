@@ -3,6 +3,7 @@
 /**
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
+ * @author Sebastian Cuy
  */
 export function applyLanguage(language: any) {
 

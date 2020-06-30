@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-import {I18n} from '@ngx-translate/i18n-polyfill';
 import {Map} from 'tsfun';
 import {ProjectConfiguration} from '../project-configuration';
 import {ConfigurationValidation} from './configuration-validation';
@@ -10,7 +9,6 @@ import {buildRawProjectConfiguration} from './build-raw-project-configuration';
 import {BuiltinCategoryDefinition} from '../model/builtin-category-definition';
 import {LibraryCategoryDefinition} from '../model/library-category-definition';
 import {addKeyAsProp} from '../../util/transformers';
-import {Groups} from '../model/group';
 
 
 @Injectable()
@@ -29,8 +27,7 @@ import {Groups} from '../model/group';
  */
 export class ConfigLoader {
 
-    constructor(private configReader: ConfigReader,
-                private i18n: I18n) {}
+    constructor(private configReader: ConfigReader) {}
 
 
     public async go(configDirPath: string, commonFields: { [fieldName: string]: any },
@@ -117,7 +114,6 @@ export class ConfigLoader {
         // unused: Preprocessing.setIsRecordedInVisibilities(appConfiguration); See #8992
 
         try {
-
             return new ProjectConfiguration(
                 buildRawProjectConfiguration(
                     builtinCategories,

@@ -98,30 +98,43 @@ export class SettingsService {
     }
 
 
+    private static projMapping = {
+        'meninx-project': 'Meninx',
+        'pergamongrabung': 'Pergamon',
+        'wes': 'WES',
+        'wes-': 'WES',
+        'bogazkoy-hattusa': 'Boha',
+        'campidoglio': 'Campidoglio',
+        'castiglione': 'Castiglione',
+        'kephissostal': 'Kephissostal',
+        'monte-turcisi': 'MonTur',
+        'al-ula': 'AlUla',
+        'kalapodi': 'Kalapodi',
+        'gadara_bm': 'Gadara',
+        'sudan-heritage': 'SudanHeritage',
+        'ayamonte': 'Ayamonte',
+        'abbircella': 'AbbirCella',
+        'karthagocircus': 'KarthagoCircus',
+        'selinunt': 'Selinunt'
+    }
+
+
+    public static mapProjName(project: Name) {
+
+        let customProjectName = undefined;
+        for (let [name, filename] of Object.entries(SettingsService.projMapping)) {
+            if (project.startsWith(name)) customProjectName = filename;
+        }
+        return customProjectName;
+    }
+
+
     public async loadConfiguration(configurationDirPath: string,
                                    progress?: InitializationProgress): Promise<ProjectConfiguration> {
 
         if (progress) await progress.setPhase('loadingConfiguration');
 
-        let customProjectName = undefined;
-        if (this.getSelectedProject().startsWith('meninx-project')) customProjectName = 'Meninx';
-        if (this.getSelectedProject().startsWith('pergamongrabung')) customProjectName = 'Pergamon';
-        if (this.getSelectedProject() === 'wes' || this.getSelectedProject().startsWith('wes-')) {
-            customProjectName = 'WES';
-        }
-        if (this.getSelectedProject().startsWith('bogazkoy-hattusa')) customProjectName = 'Boha';
-        if (this.getSelectedProject().startsWith('campidoglio')) customProjectName = 'Campidoglio';
-        if (this.getSelectedProject().startsWith('castiglione')) customProjectName = 'Castiglione';
-        if (this.getSelectedProject().startsWith('kephissostal')) customProjectName = 'Kephissostal';
-        if (this.getSelectedProject().startsWith('monte-turcisi')) customProjectName = 'MonTur';
-        if (this.getSelectedProject().startsWith('al-ula')) customProjectName = 'AlUla';
-        if (this.getSelectedProject().startsWith('kalapodi')) customProjectName = 'Kalapodi';
-        if (this.getSelectedProject().startsWith('gadara_bm')) customProjectName = 'Gadara';
-        if (this.getSelectedProject().startsWith('sudan-heritage')) customProjectName = 'SudanHeritage';
-        if (this.getSelectedProject().startsWith('ayamonte')) customProjectName = 'Ayamonte';
-        if (this.getSelectedProject().startsWith('abbircella')) customProjectName = 'AbbirCella';
-        if (this.getSelectedProject().startsWith('karthagocircus')) customProjectName = 'KarthagoCircus';
-        if (this.getSelectedProject().startsWith('selinunt')) customProjectName = 'Selinunt';
+        let customProjectName = SettingsService.mapProjName(this.getSelectedProject());
 
         try {
             return await this.appConfigurator.go(

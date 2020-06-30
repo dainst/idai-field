@@ -119,7 +119,7 @@ export class SettingsService {
     }
 
 
-    private static mapProjName(project: Name) {
+    private static mapProjName(project: Name): Name|undefined {
 
         let customProjectName = undefined;
         for (let [name, filename] of Object.entries(SettingsService.projMapping)) {
@@ -134,12 +134,10 @@ export class SettingsService {
 
         if (progress) await progress.setPhase('loadingConfiguration');
 
-        let customProjectName = SettingsService.mapProjName(this.getSelectedProject());
-
         try {
             return await this.appConfigurator.go(
                 configurationDirPath,
-                customProjectName,
+                SettingsService.mapProjName(this.getSelectedProject()),
                 this.getSettings().locale
             );
         } catch (msgsWithParams) {

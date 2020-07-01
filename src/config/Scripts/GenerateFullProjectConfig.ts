@@ -1,9 +1,9 @@
-import { AppConfigurator } from '../../app/core/configuration/app-configurator';
-import { ConfigLoader } from '../../app/core/configuration/boot/config-loader';
-import { ProjectConfiguration } from '../../app/core/configuration/project-configuration';
-import { mapTreeList, TreeList } from '../../app/core/util/tree-list';
-import { Category } from '../../app/core/configuration/model/category';
-import {SettingsService} from '../../app/core/settings/settings-service';
+import {AppConfigurator} from '../../app/core/configuration/app-configurator';
+import {ConfigLoader} from '../../app/core/configuration/boot/config-loader';
+import {ProjectConfiguration} from '../../app/core/configuration/project-configuration';
+import {mapTreeList, TreeList} from '../../app/core/util/tree-list';
+import {Category} from '../../app/core/configuration/model/category';
+import {PROJECT_MAPPING} from '../../app/core/settings/settings-service';
 
 const fs = require('fs');
 
@@ -38,14 +38,24 @@ function writeProjectConfiguration(projectConfiguration: ProjectConfiguration, p
 }
 
 
-const appConfigurator = new AppConfigurator(new ConfigLoader(new ConfigReader() as any));
+async function start() {
 
-LOCALES.forEach(locale => {
-    for (const [projectName, configName] of Object.entries(SettingsService.projMapping)) { // TODO WES gets converted twice
-        appConfigurator.go(CONFIG_DIR_PATH, configName, locale)
-            .then(projectConfiguration => writeProjectConfiguration(projectConfiguration, projectName, locale))
-            .catch(err => {
-                console.error(err);
-            });
+    for (const locale of LOCALES) {
+        console.log(`\nGenerating configuration files for locale: ${locale}`);
+        for (const [projectName, configName] of Object.entries(PROJECT_MAPPING)) {
+            const appConfigurator = new AppConfigurator(new ConfigLoader(new ConfigReader() as any));
+            console.log('');
+            try {
+                const projectConfiguration = await appConfigurator.go(CONFIG_DIR_PATH, configName, locale);
+                writeProjectConfiguration(projectConfiguration, projectName, locale);
+            } catch (err) {
+                console.error(`Error while trying to generate full configuration for project ${projectName}:`, err);
+            }
+        }
     }
+}
+
+
+start().then(() => {
+    console.log('\nFinished generating configuration files.');
 });

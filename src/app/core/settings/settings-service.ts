@@ -19,6 +19,26 @@ import {InitializationProgress} from '../initialization-progress';
 const {remote, ipcRenderer} = typeof window !== 'undefined' ? window.require('electron') : require('electron');
 
 
+export const PROJECT_MAPPING = {
+    'meninx-project': 'Meninx',
+    'pergamongrabung': 'Pergamon',
+    'wes': 'WES',
+    'bogazkoy-hattusa': 'Boha',
+    'campidoglio': 'Campidoglio',
+    'castiglione': 'Castiglione',
+    'kephissostal': 'Kephissostal',
+    'monte-turcisi': 'MonTur',
+    'al-ula': 'AlUla',
+    'kalapodi': 'Kalapodi',
+    'gadara_bm': 'Gadara',
+    'sudan-heritage': 'SudanHeritage',
+    'ayamonte': 'Ayamonte',
+    'abbircella': 'AbbirCella',
+    'karthagocircus': 'KarthagoCircus',
+    'selinunt': 'Selinunt'
+};
+
+
 @Injectable()
 /**
  * The settings service provides access to the
@@ -98,34 +118,13 @@ export class SettingsService {
     }
 
 
-    public static projMapping = {
-        'meninx-project': 'Meninx',
-        'pergamongrabung': 'Pergamon',
-        'wes': 'WES',
-        'wes-': 'WES',
-        'bogazkoy-hattusa': 'Boha',
-        'campidoglio': 'Campidoglio',
-        'castiglione': 'Castiglione',
-        'kephissostal': 'Kephissostal',
-        'monte-turcisi': 'MonTur',
-        'al-ula': 'AlUla',
-        'kalapodi': 'Kalapodi',
-        'gadara_bm': 'Gadara',
-        'sudan-heritage': 'SudanHeritage',
-        'ayamonte': 'Ayamonte',
-        'abbircella': 'AbbirCella',
-        'karthagocircus': 'KarthagoCircus',
-        'selinunt': 'Selinunt'
-    }
+    private static getConfigurationName(project: Name): Name|undefined {
 
-
-    private static mapProjName(project: Name): Name|undefined {
-
-        let customProjectName = undefined;
-        for (let [name, filename] of Object.entries(SettingsService.projMapping)) {
-            if (project.startsWith(name)) customProjectName = filename;
+        for (let [name, filenamePrefix] of Object.entries(PROJECT_MAPPING)) {
+            if (project === name || project.startsWith(name + '-')) return filenamePrefix;
         }
-        return customProjectName;
+
+        return undefined;
     }
 
 
@@ -137,7 +136,7 @@ export class SettingsService {
         try {
             return await this.appConfigurator.go(
                 configurationDirPath,
-                SettingsService.mapProjName(this.getSelectedProject()),
+                SettingsService.getConfigurationName(this.getSelectedProject()),
                 this.getSettings().locale
             );
         } catch (msgsWithParams) {

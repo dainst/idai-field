@@ -9,13 +9,11 @@ const fs = require('fs');
 
 
 const CONFIG_DIR_PATH = 'src/config';
-const OUTPUT_DIR_PATH = 'release/config';
+const OUTPUT_DIR_PATH = 'release';
 const LOCALES = ['de', 'en'];
 
-
-if (!fs.existsSync(OUTPUT_DIR_PATH)){
-    fs.mkdirSync(OUTPUT_DIR_PATH);
-}
+if (!fs.existsSync(OUTPUT_DIR_PATH)) fs.mkdirSync(OUTPUT_DIR_PATH);
+if (!fs.existsSync(OUTPUT_DIR_PATH + '/config')) fs.mkdirSync(OUTPUT_DIR_PATH + '/config');
 
 
 class ConfigReader {
@@ -36,7 +34,7 @@ function writeProjectConfiguration(projectConfiguration: ProjectConfiguration, p
         return category;
     }, tree);
 
-    fs.writeFileSync(`${OUTPUT_DIR_PATH}/${project}.${locale}.json`, JSON.stringify(tree, null, 2));
+    fs.writeFileSync(`${OUTPUT_DIR_PATH}/config/${project}.${locale}.json`, JSON.stringify(tree, null, 2));
 }
 
 

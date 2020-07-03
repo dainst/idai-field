@@ -50,7 +50,7 @@ function getTreeList(projectConfiguration: ProjectConfiguration) {
 
 function mergeLayer(merge: any, locales: string[], localizedItems: Array<any>) {
 
-    return ((zip as any)(...localizedItems)).map(merge(locales));
+    return zip(...localizedItems).map(merge(locales));
 }
 
 

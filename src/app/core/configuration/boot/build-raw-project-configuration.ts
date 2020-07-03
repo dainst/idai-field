@@ -218,6 +218,9 @@ function insertValuelistIds(mergedCategories: Map<TransientCategoryDefinition>) 
         if (category.valuelists && category.valuelists[fieldName]) {
             field.valuelistId = category.valuelists[fieldName];
         }
+        if (category.positionValuelists && category.positionValuelists[fieldName]) {
+            field.positionValuelistId = category.positionValuelists[fieldName];
+        }
     });
 
     return mergedCategories;

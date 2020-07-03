@@ -33,9 +33,9 @@ export module CustomFieldDefinition {
 }
 
 
-const VALID_CATEGORY_PROPERTIES = ['valuelists', 'commons', 'color', 'hidden', 'parent', 'fields'];
+const VALID_CATEGORY_PROPERTIES = ['valuelists', 'positionValuelists', 'commons', 'color', 'hidden', 'parent', 'fields'];
 
-const VALID_FIELD_PROPERTIES = ['inputType', 'positionValues'];
+const VALID_FIELD_PROPERTIES = ['inputType'];
 
 
 export module CustomCategoryDefinition {

@@ -59,27 +59,15 @@ const mergeCategories = (locales: string[]) => (categories: Array<Category>) => 
         if (categories[i].description) result.description[locales[i]] = categories[i].description;
     }
 
-    result.groups = mergeGroups(locales, categories.map(to('groups')));
-
+    result.groups = mergeLayer(mergeGroup, locales, categories.map(to('groups')));
     return result as Category;
 };
 
 
-function mergeGroups(locales: string[], localizedGroups: Array<Array<Group>>) {
+function mergeLayer(merge: any, locales: string[], localizedItems: Array<any>) {
 
-    // TODO Rewrite zip to work with arrays of arbitrary size
-    const result = zip(localizedGroups[0])(localizedGroups[1]);
-
-    return result.map(group => mergeGroup(locales, group));
-}
-
-
-function mergeFields(locales: string[], localizedFields: Array<Array<any>>) {
-
-    // TODO Rewrite zip to work with arrays of arbitrary size
-    const result = zip(localizedFields[0])(localizedFields[1]);
-
-    return result.map(field => mergeField(locales, field));
+    // TODO Generalize
+    return zip(localizedItems[0])(localizedItems[1]).map(item => merge(locales, item));
 }
 
 
@@ -92,8 +80,8 @@ function mergeGroup(locales: string[], localizedGroups: Array<Group>) {
         result.label[locales[i]] = localizedGroups[i].label;
     }
 
-    result.fields = mergeFields(locales, localizedGroups.map(to('fields')));
-    result.relations = mergeFields(locales, localizedGroups.map(to('relations')));
+    result.fields = mergeLayer(mergeField, locales, localizedGroups.map(to('fields')));
+    result.relations = mergeLayer(mergeField, locales, localizedGroups.map(to('relations')));
 
     return result as Group;
 }

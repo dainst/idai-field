@@ -58,15 +58,13 @@
 				</div>
 				<div class="form-inline form-group">
 					<label i18n="@@docedit.forms.dimension.asMeasuredBy">Gemessen an</label>
-					<select *ngIf="this.field['positionValues']" [(ngModel)]="dimension.measurementPosition"
+					<select [(ngModel)]="dimension.measurementPosition"
 							class="ml-2 form-control" name="measurementPositionSelect">
 						<option value=""></option>
 						<option *ngFor="let value of getPositionValues()" value="{{value}}">
                             {{getPositionValueLabel(value)}}
                         </option>
 					</select>
-					<input *ngIf="!this.field['positionValues']" [(ngModel)]="dimension.measurementPosition"
-						   class="form-control" name="measurementPositionInput">
 				</div>
 
 				<div class="form-group">

@@ -14,6 +14,7 @@ export interface LibraryCategoryDefinition extends BaseCategoryDefinition {
 
     color?: string,
     valuelists: Valuelists;
+    positionValuelists?: Valuelists;
     commons: string[];
     parent?: string,
     categoryName: string;

@@ -1,6 +1,7 @@
 import {equal, is, on, reverse} from 'tsfun';
-import {accessTree, findInTree, flattenTree, mapTrees, mapTreeList, Tree,
-    TreeList, mapTree, buildTreeList, buildTree
+import {
+    accessTree, findInTree, flattenTree, mapTrees, mapTreeList, Tree,
+    TreeList, mapTree, buildTreeList, buildTree, zipTreeList
 } from '../../../src/app/core/util/tree-list';
 
 
@@ -346,4 +347,51 @@ describe('TreeList|Tree', () => {
             ]
         ))).toEqual(7);
     });
+
+
+    it('zipTree', () => {
+
+        const tl1 = [
+            {
+                item: 3,
+                trees: []
+            }
+        ];
+        const tl2 = [
+            {
+                item: 76,
+                trees: []
+            }
+        ];
+
+        const result = zipTreeList((item1: any, item2: any) => {
+            return item1 + item2;
+        }, tl1, tl2);
+
+        expect(equal(result, [{ item: 79, trees: [] }])).toBeTruthy();
+    });
+
+
+
+    it('zipTree - recursive', () => {
+
+        const tl1 = [
+            {
+                item: 3,
+                trees: [{ item: 5, trees: []}]
+            }
+        ];
+        const tl2 = [
+            {
+                item: 76,
+                trees: [{ item: 7, trees: []}]
+            }
+        ];
+
+        const result = zipTreeList((item1: any, item2: any) => {
+            return item1 + item2;
+        }, tl1, tl2);
+
+        expect(equal(result, [{ item: 79, trees: [{ item: 12, trees: []}] }])).toBeTruthy();
+    })
 });

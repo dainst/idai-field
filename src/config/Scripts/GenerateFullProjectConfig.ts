@@ -48,6 +48,13 @@ function getTreeList(projectConfiguration: ProjectConfiguration) {
 }
 
 
+function mergeLayer(merge: any, locales: string[], localizedItems: Array<any>) {
+
+    // TODO Generalize
+    return zip(localizedItems[0])(localizedItems[1]).map(item => merge(locales, item));
+}
+
+
 const mergeCategories = (locales: string[]) => (categories: Array<Category>) => {
 
     const result: any = clone(categories[0]);
@@ -62,13 +69,6 @@ const mergeCategories = (locales: string[]) => (categories: Array<Category>) => 
     result.groups = mergeLayer(mergeGroup, locales, categories.map(to('groups')));
     return result as Category;
 };
-
-
-function mergeLayer(merge: any, locales: string[], localizedItems: Array<any>) {
-
-    // TODO Generalize
-    return zip(localizedItems[0])(localizedItems[1]).map(item => merge(locales, item));
-}
 
 
 function mergeGroup(locales: string[], localizedGroups: Array<Group>) {

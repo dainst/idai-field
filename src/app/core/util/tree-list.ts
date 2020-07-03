@@ -1,6 +1,20 @@
-import {Mapping, Predicate, isFunction, first, isNumber, rest, isObject, isArray, Pair, to, Path, is} from 'tsfun';
+import {
+    Mapping,
+    Predicate,
+    isFunction,
+    first,
+    isNumber,
+    rest,
+    isObject,
+    isArray,
+    Pair,
+    to,
+    Path,
+    is,
+    zip,
+    flow, prepend, take, drop
+} from 'tsfun';
 import {Comparator} from 'tsfun/by';
-import {zip} from 'tsfun/list';
 import {Named} from './named';
 
 
@@ -50,13 +64,16 @@ export function mapTreeList(...args: any[]): any {
 }
 
 
-export function zipTreeList<T>(zip2Items: ([item1, item2]: [T, T]) => T, [t1, t2]: [TreeList<T>, TreeList<T>]) {
+export function zipTreeListWith<T>(zipItems: (items: Array<T>) => T, t1: TreeList<T>, ...ts: Array<TreeList<T>>): TreeList<T>;
+export function zipTreeListWith<T>(zipItems: (items: Array<T>) => T, ...ts: Array<TreeList<T>>): TreeList<T>;
+export function zipTreeListWith<T>(zipItems: (items: Array<T>) => T, ...ts: Array<TreeList<T>>) {
 
-    const zipped = zip(t1)(t2);
-    return zipped.map(([n1, n2]: any) => {
-
-        return { item: zip2Items([n1.item, n2.item]), trees: zipTreeList(zip2Items, [n1.trees, n2.trees]) }
-    });
+    return (zip as any)(...ts).map((ns: any[]) =>
+        ({
+            item: zipItems(ns.map(to(Tree.ITEM))),
+            trees: zipTreeListWith(zipItems, ...ns.map(to(Tree.TREES)))
+        })
+    );
 }
 
 

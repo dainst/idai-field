@@ -51,7 +51,7 @@ function getTreeList(projectConfiguration: ProjectConfiguration) {
 function mergeLayer(merge: any, locales: string[], localizedItems: Array<any>) {
 
     // TODO Generalize
-    return zip(localizedItems[0])(localizedItems[1]).map(item => merge(locales, item));
+    return zip(localizedItems[0])(localizedItems[1]).map(merge(locales));
 }
 
 
@@ -71,7 +71,7 @@ const mergeCategories = (locales: string[]) => (categories: Array<Category>) => 
 };
 
 
-function mergeGroup(locales: string[], localizedGroups: Array<Group>) {
+const mergeGroup = (locales: string[]) => (localizedGroups: Array<Group>) => {
 
     const result: any = clone(localizedGroups[0]);
 
@@ -87,7 +87,7 @@ function mergeGroup(locales: string[], localizedGroups: Array<Group>) {
 }
 
 
-function mergeField(locales: string[], localizedFields: Array<any>) {
+const mergeField = (locales: string[]) => (localizedFields: Array<any>) => {
 
     const result: any = clone(localizedFields[0]);
 

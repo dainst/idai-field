@@ -372,5 +372,16 @@ describe('TreeList|Tree', () => {
         }, [tl1, tl2]);
 
         expect(equal(result, buildTreeList([[79,[[12,[]]]]]))).toBeTruthy();
+    });
+
+
+    it('zipTreeListWith - no zipper, recursive', () => {
+
+        const tl1 = buildTreeList([[3, [[5, []]]]]);
+        const tl2 = buildTreeList([[76, [[7, []]]]]);
+
+        const result = zipTreeList([tl1, tl2]);
+
+        expect(equal(result, buildTreeList([[[3,76],[[[5,7],[]]]]]))).toBeTruthy();
     })
 });

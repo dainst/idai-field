@@ -1,9 +1,13 @@
+import {to, zip} from 'tsfun';
+import {clone} from 'tsfun/struct';
 import {AppConfigurator} from '../../app/core/configuration/app-configurator';
 import {ConfigLoader} from '../../app/core/configuration/boot/config-loader';
 import {ProjectConfiguration} from '../../app/core/configuration/project-configuration';
-import {mapTreeList, TreeList} from '../../app/core/util/tree-list';
+import {mapTreeList, TreeList, zipTreeList} from '../../app/core/util/tree-list';
 import {Category} from '../../app/core/configuration/model/category';
 import {PROJECT_MAPPING} from '../../app/core/settings/settings-service';
+import {Group} from '../../app/core/configuration/model/group';
+import {FieldDefinition} from '../../app/core/configuration/model/field-definition';
 
 const fs = require('fs');
 
@@ -24,34 +28,108 @@ class ConfigReader {
 }
 
 
-function writeProjectConfiguration(projectConfiguration: ProjectConfiguration, project: string, locale: string) {
+function writeProjectConfiguration(fullProjectConfiguration: any, project: string) {
 
-    let tree: TreeList<Category> = projectConfiguration.getCategoryTreelist();
-    tree = mapTreeList((category: Category) => {
+    fs.writeFileSync(
+        `${OUTPUT_DIR_PATH}/config/${project}.json`,
+        JSON.stringify(fullProjectConfiguration,null, 2)
+    );
+}
+
+
+function getTreeList(projectConfiguration: ProjectConfiguration) {
+
+    return mapTreeList((category: Category) => {
 
         delete category.children;
         delete category.parentCategory;
         return category;
-    }, tree);
+    }, projectConfiguration.getCategoryTreelist());
+}
 
-    fs.writeFileSync(`${OUTPUT_DIR_PATH}/config/${project}.${locale}.json`, JSON.stringify(tree, null, 2));
+
+const mergeCategories = (locales: string[]) => (categories: Array<Category>) => {
+
+    const result: any = clone(categories[0]);
+
+    result.label = {};
+    result.description = {};
+    for (let i = 0; i < locales.length; i++) {
+        result.label[locales[i]] = categories[i].label;
+        if (categories[i].description) result.description[locales[i]] = categories[i].description;
+    }
+
+    result.groups = mergeGroups(locales, categories.map(to('groups')));
+
+    return result as Category;
+};
+
+
+function mergeGroups(locales: string[], localizedGroups: Array<Array<Group>>) {
+
+    // TODO Rewrite zip to work with arrays of arbitrary size
+    const result = zip(localizedGroups[0])(localizedGroups[1]);
+
+    return result.map(group => mergeGroup(locales, group));
+}
+
+
+function mergeFields(locales: string[], localizedFields: Array<Array<any>>) {
+
+    // TODO Rewrite zip to work with arrays of arbitrary size
+    const result = zip(localizedFields[0])(localizedFields[1]);
+
+    return result.map(field => mergeField(locales, field));
+}
+
+
+function mergeGroup(locales: string[], localizedGroups: Array<Group>) {
+
+    const result: any = clone(localizedGroups[0]);
+
+    result.label = {};
+    for (let i = 0; i < locales.length; i++) {
+        result.label[locales[i]] = localizedGroups[i].label;
+    }
+
+    result.fields = mergeFields(locales, localizedGroups.map(to('fields')));
+    result.relations = mergeFields(locales, localizedGroups.map(to('relations')));
+
+    return result as Group;
+}
+
+
+function mergeField(locales: string[], localizedFields: Array<any>) {
+
+    const result: any = clone(localizedFields[0]);
+
+    result.label = {};
+    result.description = {};
+    for (let i = 0; i < locales.length; i++) {
+        result.label[locales[i]] = localizedFields[i].label;
+        if (localizedFields[i].description) result.description[locales[i]] = localizedFields[i].description;
+    }
+
+    return result as FieldDefinition;
 }
 
 
 async function start() {
 
-    for (const locale of LOCALES) {
-        console.log(`\nGenerating configuration files for locale: ${locale}`);
-        for (const [projectName, configName] of Object.entries(PROJECT_MAPPING)) {
+    for (const [projectName, configName] of Object.entries(PROJECT_MAPPING)) {
+        console.log('');
+        const localizedTreeLists: { [locale: string]: TreeList<Category>} = {};
+        for (const locale of LOCALES) {
             const appConfigurator = new AppConfigurator(new ConfigLoader(new ConfigReader() as any));
-            console.log('');
             try {
-                const projectConfiguration = await appConfigurator.go(CONFIG_DIR_PATH, configName, locale);
-                writeProjectConfiguration(projectConfiguration, projectName, locale);
+                localizedTreeLists[locale] = getTreeList(await appConfigurator.go(CONFIG_DIR_PATH, configName, locale));
             } catch (err) {
-                console.error(`Error while trying to generate full configuration for project ${projectName}:`, err);
+                console.error(`Error while trying to generate full configuration for project ${projectName} and locale ${locale}:`, err);
             }
         }
+
+        const fullConfiguration = zipTreeList(mergeCategories(LOCALES), Object.values(localizedTreeLists) as any);
+        writeProjectConfiguration(fullConfiguration, projectName);
     }
 }
 

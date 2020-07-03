@@ -364,9 +364,9 @@ describe('TreeList|Tree', () => {
             }
         ];
 
-        const result = zipTreeList((item1: any, item2: any) => {
+        const result = zipTreeList(([item1, item2]: [any, any]) => {
             return item1 + item2;
-        }, tl1, tl2);
+        }, [tl1, tl2]);
 
         expect(equal(result, [{ item: 79, trees: [] }])).toBeTruthy();
     });
@@ -388,9 +388,9 @@ describe('TreeList|Tree', () => {
             }
         ];
 
-        const result = zipTreeList((item1: any, item2: any) => {
+        const result = zipTreeList(([item1, item2]: [any, any]) => {
             return item1 + item2;
-        }, tl1, tl2);
+        }, [tl1, tl2]);
 
         expect(equal(result, [{ item: 79, trees: [{ item: 12, trees: []}] }])).toBeTruthy();
     })

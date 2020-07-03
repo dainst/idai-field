@@ -26,5 +26,6 @@ export module ConfigurationErrors {
     export const ILLEGAL_FIELD_INPUT_TYPE = 'configuration/buildProjectCategories/illegalFieldInputType';
     export const ILLEGAL_FIELD_PROPERTY = 'configuration/buildProjectCategories/illegalFieldProperty';
     export const NO_VALUELIST_PROVIDED = 'configuration/buildProjectCategories/noValuelistProvided';
+    export const NO_POSITION_VALUELIST_PROVIDED = 'configuration/buildProjectCategories/noPositionValuelistProvided';
     export const TRIED_TO_OVERWRITE_PARENT_FIELD = 'configuration/buildProjectCategories/triedToOverwriteParentField';
 }

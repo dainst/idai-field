@@ -115,7 +115,7 @@ async function start() {
             }
         }
 
-        const fullConfiguration = zipTreeList(mergeCategories(LOCALES), ...Object.values(localizedTreeLists) as any);
+        const fullConfiguration = zipTreeList(mergeCategories(LOCALES), Object.values(localizedTreeLists) as any);
         writeProjectConfiguration(fullConfiguration, projectName);
     }
 }

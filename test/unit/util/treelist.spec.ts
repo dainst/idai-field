@@ -356,7 +356,7 @@ describe('TreeList|Tree', () => {
 
         const result = zipTreeList(([item1, item2]: [any, any]) => {
             return item1 + item2;
-        }, tl1, tl2);
+        }, [tl1, tl2]);
 
         expect(equal(result, buildTreeList([[79,[]]]))).toBeTruthy();
     });
@@ -369,7 +369,7 @@ describe('TreeList|Tree', () => {
 
         const result = zipTreeList(([item1, item2]: [any, any]) => {
             return item1 + item2;
-        }, tl1, tl2);
+        }, [tl1, tl2]);
 
         expect(equal(result, buildTreeList([[79,[[12,[]]]]]))).toBeTruthy();
     })

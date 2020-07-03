@@ -63,14 +63,13 @@ export function mapTreeList(...args: any[]): any {
 }
 
 
-export function zipTreeList<T>(zipItems: (items: Array<T>) => T, t1: TreeList<T>, ...ts: Array<TreeList<T>>): TreeList<T>;
-export function zipTreeList<T>(zipItems: (items: Array<T>) => T, ...ts: Array<TreeList<T>>): TreeList<T>;
-export function zipTreeList<T>(zipItems: (items: Array<T>) => T, ...ts: Array<TreeList<T>>) {
+export function zipTreeList<T>(zipItems: (items: Array<T>) => T, ts: Array<TreeList<T>>): TreeList<T>;
+export function zipTreeList<T>(zipItems: (items: Array<T>) => T, ts: Array<TreeList<T>>) {
 
     return zip(ts).map((ns: any[]) =>
         ({
             item: zipItems(ns.map(to(Tree.ITEM))),
-            trees: zipTreeList(zipItems, ...ns.map(to(Tree.TREES)))
+            trees: zipTreeList(zipItems, ns.map(to(Tree.TREES)))
         })
     );
 }

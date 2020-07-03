@@ -25,6 +25,7 @@ const INITIALIZATION_MESSAGES = {
         'configuration/buildProjectCategories/illegalFieldInputType': 'Der als Eigenschaft "inputType" des Feldes "[1]" gesetzte Wert "[0]" ist ungültig.',
         'configuration/buildProjectCategories/illegalFieldProperty': 'Die Eigenschaft "[1]" ist ungültig.',
         'configuration/buildProjectCategories/noValuelistProvided': 'Für das Feld "[1]" der Kategorie "[0]" wurde keine Werteliste angegeben.',
+        'configuration/buildProjectCategories/noPositionValuelistProvided': 'Für das Feld "[1]" der Kategorie "[0]" wurde keine Werteliste für das Unterfeld "Position" angegeben.',
         'configuration/buildProjectCategories/triedToOverwriteParentField': 'Das in der Kategorie "[1]" definierte Feld "[0]" darf in der Subkategorie "[2]" nicht neu definiert werden.'
     },
     'en': {
@@ -53,6 +54,7 @@ const INITIALIZATION_MESSAGES = {
         'configuration/buildProjectCategories/illegalFieldInputType': 'The value "[0]" set as property "inputType" of field "[1]" is invalid.',
         'configuration/buildProjectCategories/illegalFieldProperty': 'The property "[1]" is invalid.',
         'configuration/buildProjectCategories/noValuelistProvided': 'No value list has been specified for field "[1]" of category "[0]".',
+        'configuration/buildProjectCategories/noPositionValuelistProvided': 'For field "[1]" of category "[0]" no value list has been specified for the subfield "position".',
         'configuration/buildProjectCategories/triedToOverwriteParentField': 'The field "[0]" defined in category "[1]" must not be redefined in subcategory "[2]".'
     }
 };

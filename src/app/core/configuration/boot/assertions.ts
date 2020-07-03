@@ -86,9 +86,14 @@ export module Assertions {
 
         iterateOverFieldsOfCategories(mergedCategories, (categoryName, category, fieldName, field) => {
             if (['dropdown', 'checkboxes', 'radio'].includes(field.inputType ? field.inputType : '')) {
-
                 if (!field.valuelistId && !field.valuelistFromProjectField) {
                     throw [ConfigurationErrors.NO_VALUELIST_PROVIDED, categoryName, fieldName];
+                }
+            }
+
+            if (['dimension'].includes(field.inputType ? field.inputType : '')) {
+                if (!field.positionValuelistId) {
+                    throw [ConfigurationErrors.NO_POSITION_VALUELIST_PROVIDED, categoryName, fieldName];
                 }
             }
         });

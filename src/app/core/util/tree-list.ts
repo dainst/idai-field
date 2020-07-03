@@ -11,8 +11,7 @@ import {
     to,
     Path,
     is,
-    zip,
-    flow, prepend, take, drop
+    zip
 } from 'tsfun';
 import {Comparator} from 'tsfun/by';
 import {Named} from './named';
@@ -64,14 +63,14 @@ export function mapTreeList(...args: any[]): any {
 }
 
 
-export function zipTreeListWith<T>(zipItems: (items: Array<T>) => T, t1: TreeList<T>, ...ts: Array<TreeList<T>>): TreeList<T>;
-export function zipTreeListWith<T>(zipItems: (items: Array<T>) => T, ...ts: Array<TreeList<T>>): TreeList<T>;
-export function zipTreeListWith<T>(zipItems: (items: Array<T>) => T, ...ts: Array<TreeList<T>>) {
+export function zipTreeList<T>(zipItems: (items: Array<T>) => T, t1: TreeList<T>, ...ts: Array<TreeList<T>>): TreeList<T>;
+export function zipTreeList<T>(zipItems: (items: Array<T>) => T, ...ts: Array<TreeList<T>>): TreeList<T>;
+export function zipTreeList<T>(zipItems: (items: Array<T>) => T, ...ts: Array<TreeList<T>>) {
 
-    return zip(...ts).map((ns: any[]) =>
+    return zip(ts).map((ns: any[]) =>
         ({
             item: zipItems(ns.map(to(Tree.ITEM))),
-            trees: zipTreeListWith(zipItems, ...ns.map(to(Tree.TREES)))
+            trees: zipTreeList(zipItems, ...ns.map(to(Tree.TREES)))
         })
     );
 }

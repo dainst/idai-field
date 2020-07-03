@@ -3,7 +3,7 @@ import {clone} from 'tsfun/struct';
 import {AppConfigurator} from '../../app/core/configuration/app-configurator';
 import {ConfigLoader} from '../../app/core/configuration/boot/config-loader';
 import {ProjectConfiguration} from '../../app/core/configuration/project-configuration';
-import {mapTreeList, TreeList, zipTreeListWith} from '../../app/core/util/tree-list';
+import {mapTreeList, TreeList, zipTreeList} from '../../app/core/util/tree-list';
 import {Category} from '../../app/core/configuration/model/category';
 import {PROJECT_MAPPING} from '../../app/core/settings/settings-service';
 import {Group} from '../../app/core/configuration/model/group';
@@ -50,7 +50,7 @@ function getTreeList(projectConfiguration: ProjectConfiguration) {
 
 function mergeLayer(merge: any, locales: string[], localizedItems: Array<any>) {
 
-    return zip(...localizedItems).map(merge(locales));
+    return zip(localizedItems).map(merge(locales));
 }
 
 
@@ -115,7 +115,7 @@ async function start() {
             }
         }
 
-        const fullConfiguration = zipTreeListWith(mergeCategories(LOCALES), ...Object.values(localizedTreeLists) as any);
+        const fullConfiguration = zipTreeList(mergeCategories(LOCALES), ...Object.values(localizedTreeLists) as any);
         writeProjectConfiguration(fullConfiguration, projectName);
     }
 }

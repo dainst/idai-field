@@ -1,7 +1,7 @@
 import {equal, is, on, reverse} from 'tsfun';
 import {
     accessTree, findInTree, flattenTree, mapTrees, mapTreeList, Tree,
-    TreeList, mapTree, buildTreeList, buildTree, zipTreeListWith
+    TreeList, mapTree, buildTreeList, buildTree, zipTreeList
 } from '../../../src/app/core/util/tree-list';
 
 
@@ -354,7 +354,7 @@ describe('TreeList|Tree', () => {
         const tl1 = buildTreeList([[3, []]]);
         const tl2 = buildTreeList([[76, []]]);
 
-        const result = zipTreeListWith(([item1, item2]: [any, any]) => {
+        const result = zipTreeList(([item1, item2]: [any, any]) => {
             return item1 + item2;
         }, tl1, tl2);
 
@@ -367,7 +367,7 @@ describe('TreeList|Tree', () => {
         const tl1 = buildTreeList([[3, [[5, []]]]]);
         const tl2 = buildTreeList([[76, [[7, []]]]]);
 
-        const result = zipTreeListWith(([item1, item2]: [any, any]) => {
+        const result = zipTreeList(([item1, item2]: [any, any]) => {
             return item1 + item2;
         }, tl1, tl2);
 

@@ -245,18 +245,10 @@
         "inputType": "checkboxes"
       },
       "dimensionLengthOfDebitageSurfaces": {
-        "inputType": "dimension",
-        "positionValues": [
-          "Maximale Ausdehnung",
-          "Minimale Ausdehnung"
-        ]
+        "inputType": "dimension"
       },
       "dimensionWidthOfDebitageSurfaces": {
-        "inputType": "dimension",
-        "positionValues": [
-          "Maximale Ausdehnung",
-          "Minimale Ausdehnung"
-        ]
+        "inputType": "dimension"
       },
       "AmountOfDebitageSurfaces": {
         "inputType": "unsignedInt"
@@ -280,6 +272,10 @@
       "TechnicalMarks": "KnappedCore-TechnicalMarks-WES",
       "TypicalCoreForms": "KnappedCore-TypicalCoreForms-WES",
       "color": "KnappingWasteProduct-color-WES"
+    },
+    "positionValuelists": {
+      "dimensionLengthOfDebitageSurfaces": "position-values-expansion-default",
+      "dimensionWidthOfDebitageSurfaces": "position-values-expansion-default"
     }
   },
   "FragmentOfDrill": {
@@ -296,17 +292,10 @@
         "inputType": "checkboxes"
       },
       "dimensionPreservedLengthOfDrillingaxis": {
-        "inputType": "dimension",
-        "positionValues": [
-          "from the bit to the back"
-        ]
+        "inputType": "dimension"
       },
       "dimensionWidthOfDrillfragment": {
-        "inputType": "dimension",
-        "positionValues": [
-          "At the drilling-bit",
-          "At the back/shaft"
-        ]
+        "inputType": "dimension"
       },
       "AmountOfDrillinbitsOntheTool": {
         "inputType": "unsignedInt"
@@ -324,6 +313,10 @@
       "ProductionMethod": "FragmentOfDrill-ProductionMethod-WES",
       "TracesOfUse": "FragmentOfDrill-TracesOfUse-WES",
       "color": "KnappingWasteProduct-color-WES"
+    },
+    "positionValuelists": {
+      "dimensionPreservedLengthOfDrillingaxis": "position-values-preserved-length-of-drilling-axis-wes",
+      "dimensionWidthOfDrillfragment": "position-values-dimension-width-of-drill-fragment-wes"
     }
   },
   "FragmentOfCuttingtool": {

@@ -9307,5 +9307,22 @@
       "Erde": {},
       "gebrannter Ton": {}
     }
+  },
+  "position-values-preserved-length-of-drilling-axis-wes": {
+    "createdBy": "",
+    "creationDate": "",
+    "description": {},
+    "values": {
+      "from the bit to the back": {}
+    }
+  },
+  "position-values-dimension-width-of-drill-fragment-wes": {
+    "createdBy": "",
+    "creationDate": "",
+    "description": {},
+    "values": {
+      "At the drilling-bit": {},
+      "At the back/shaft": {}
+    }
   }
 }

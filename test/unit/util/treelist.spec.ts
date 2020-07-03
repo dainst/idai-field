@@ -358,7 +358,7 @@ describe('TreeList|Tree', () => {
             return item1 + item2;
         }, tl1, tl2);
 
-        expect(equal(result, [{ item: 79, trees: [] }])).toBeTruthy();
+        expect(equal(result, buildTreeList([[79,[]]]))).toBeTruthy();
     });
 
 
@@ -371,6 +371,6 @@ describe('TreeList|Tree', () => {
             return item1 + item2;
         }, tl1, tl2);
 
-        expect(equal(result, [{ item: 79, trees: [{ item: 12, trees: []}] }])).toBeTruthy();
+        expect(equal(result, buildTreeList([[79,[[12,[]]]]]))).toBeTruthy();
     })
 });

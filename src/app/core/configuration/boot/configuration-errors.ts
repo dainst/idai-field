@@ -6,6 +6,7 @@ export module ConfigurationErrors {
     export const INVALID_JSON = 'configuration/error/invalidJson';
 
     export const INVALID_CONFIG_MISSINGVALUELIST = 'configuration/error/missingValuelist';
+    export const INVALID_CONFIG_MISSINGPOSITIONVALUELIST = 'configuration/error/missingPositionValuelist';
     export const INVALID_CONFIG_MISSINGFIELDNAME = 'configuration/error/missingFieldName';
     export const INVALID_CONFIG_MISSINGRELATIONCATEGORY = 'configuration/error/missingRelationCategory';
     export const INVALID_CONFIG_PARENT_NOT_DEFINED = 'configuration/fields/custom/parentNotDefined';

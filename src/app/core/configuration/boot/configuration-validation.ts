@@ -1,7 +1,8 @@
-import {ConfigurationDefinition} from './configuration-definition';
 import {CategoryDefinition} from '../model/category-definition';
 import {RelationDefinition} from '../model/relation-definition';
 import {ConfigurationErrors} from './configuration-errors';
+import {ValuelistDefinition} from '../model/valuelist-definition';
+
 
 /**
  * @author F.Z.
@@ -11,6 +12,7 @@ import {ConfigurationErrors} from './configuration-errors';
 export module ConfigurationValidation {
 
     const VALUELIST_INPUT_TYPES = ['dropdown', 'radio', 'checkboxes'];
+    const POSITION_VALUELIST_INPUT_TYPES = ['dimension'];
 
 
     export function findMissingRelationType(relations: Array<RelationDefinition>,
@@ -61,24 +63,40 @@ export module ConfigurationValidation {
 
         let msgs = [] as any;
 
-        const fieldDefs: any = [].concat(...categories.map(category => category.fields));
-
-        for (let fieldDef of fieldDefs) {
-            if (!fieldDef.hasOwnProperty('name'))
-                msgs.push([ConfigurationErrors.INVALID_CONFIG_MISSINGFIELDNAME, JSON.stringify(fieldDef)]);
-            if (!fieldDef.hasOwnProperty('inputType'))
-                fieldDef.inputType = 'input';
-            if (VALUELIST_INPUT_TYPES.indexOf(fieldDef.inputType) !== -1
+        for (let category of categories) {
+            for (let fieldDef of category.fields) {
+                if (!fieldDef.hasOwnProperty('name'))
+                    msgs.push([ConfigurationErrors.INVALID_CONFIG_MISSINGFIELDNAME, JSON.stringify(fieldDef)]);
+                if (!fieldDef.hasOwnProperty('inputType'))
+                    fieldDef.inputType = 'input';
+                if (VALUELIST_INPUT_TYPES.indexOf(fieldDef.inputType) !== -1
                     && !fieldDef.valuelistFromProjectField
-                    && (!fieldDef.valuelist
-                        || !fieldDef.valuelist.values
-                        || Object.keys(fieldDef.valuelist.values).length === 0
-                )
-            ) {
-                msgs.push([ConfigurationErrors.INVALID_CONFIG_MISSINGVALUELIST, fieldDef.name]);
+                    && !isValidValuelist(fieldDef.valuelist)) {
+                    msgs.push([
+                        ConfigurationErrors.INVALID_CONFIG_MISSINGVALUELIST,
+                        fieldDef.name,
+                        category.name
+                    ]);
+                }
+                if (POSITION_VALUELIST_INPUT_TYPES.indexOf(fieldDef.inputType) !== -1
+                    && !isValidValuelist(fieldDef.positionValues)) {
+                    msgs.push([
+                        ConfigurationErrors.INVALID_CONFIG_MISSINGPOSITIONVALUELIST,
+                        fieldDef.name,
+                        category.name
+                    ]);
+                }
             }
         }
 
         return msgs;
+    }
+
+
+    function isValidValuelist(valuelist: ValuelistDefinition|undefined): boolean {
+
+        return valuelist
+            && valuelist.values
+            && Object.keys(valuelist.values).length > 0;
     }
 }

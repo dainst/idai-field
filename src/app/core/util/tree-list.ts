@@ -67,7 +67,8 @@ export function zipTreeList<T>(ts: Array<TreeList<T>>): TreeList<Array<T>>;
 export function zipTreeList<T>(zipItems: (items: Array<T>) => T, ts: Array<TreeList<T>>): TreeList<T>;
 export function zipTreeList<T>(...args: any): any {
 
-    const $ = (zipItems: any) => (ts: Array<TreeList<T>>) => zip(ts).map((ns: any[]) =>
+    const $ = (zipItems: any) =>
+        (ts: Array<TreeList<T>>) => zip(ts).map((ns: any[]) =>
         ({
             item: zipItems(ns.map(to(Tree.ITEM))),
             trees: zipTreeList(zipItems, ns.map(to(Tree.TREES)))

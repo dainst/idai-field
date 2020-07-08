@@ -49,4 +49,13 @@ describe('completeWithTemplate', () => {
         const result = completeWithTemplate({ a: { b: 2 } }, { a: { b: 1 } });
         expect(result['a']['b']).toBe(2);
     });
+
+
+    it('can also be used to merge templates first - then apply ', () => {
+
+        const template = completeWithTemplate({ a: { b: 3 } }, { a: { c: 4 } });
+        const result = completeWithTemplate({}, template );
+        expect(result['a']['b']).toBe(3);
+        expect(result['a']['c']).toBe(4);
+    });
 });

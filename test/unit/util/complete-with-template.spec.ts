@@ -51,6 +51,9 @@ describe('completeWithTemplate', () => {
     });
 
 
+    // TODO use this in field-category-converter
+    // first make a template for identifier, then, depending on case, for corresponding relation
+    // with this, apply to struct. see if takeOrMake is still necessary then
     it('can also be used to merge templates first - then apply ', () => {
 
         const template = completeWithTemplate({ a: { b: 3 } }, { a: { c: 4 } });

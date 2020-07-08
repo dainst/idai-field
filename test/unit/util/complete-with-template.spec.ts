@@ -23,6 +23,13 @@ describe('completeWithTemplate', () => {
     });
 
 
+    it('do not overwrite false', () => {
+
+        const result = completeWithTemplate({ a: false }, { a: 3 });
+        expect(result['a']).toBe(false);
+    });
+
+
     it('recursive case 1', () => {
 
         const result = completeWithTemplate({}, { a: { b: 1 } });

@@ -9,7 +9,10 @@
   },
   "Survey:default": {
     "hidden": [],
-    "fields": {}
+    "fields": {},
+    "valuelists": {
+      "researchMethod": "Survey-researchMethod-Abbircella"
+      }
   },
   "SurveyUnit:default": {
     "hidden": [],
@@ -25,11 +28,20 @@
   },
   "Trench:default": {
     "hidden": [],
-    "fields": {}
+    "fields": {},
+    "valuelists": {
+      "orientation": "orientation-Abbircella"
+    }
   },
   "Building:default": {
     "hidden": [],
-    "fields": {}
+    "fields": {},
+    "valuelists":{
+      "buildingCategory": "Building-buildingCategory-Abbircella",
+      "condition": "Architecture-condition-Abbircella",
+      "conditionAmount": "Architecture-conditionAmount-Abbircella",
+      "period":"periods-Abbircella-1"
+    }
   },
   "BuildingPart:default": {
     "hidden": [],
@@ -37,11 +49,76 @@
   },
   "Find:default": {
     "hidden": [],
-    "fields": {}
+    "commons": [
+      "dating"
+    ],
+  "valuelists": {
+    "period": "periods-Abbircella-1",
+    "drawn": "Feature-drawn-Abbircella",
+    "photographed": "Feature-drawn-Abbircella",
+    "conditionAmount": "Architecture-conditionAmount-Abbircella",
+    "storagePlace": "Find-storagePlace-Abbircella",
+    "condition":"Architecture-condition-Abbircella"
+  },
+    "fields": {
+      "drawn": {
+        "inputType": "radio"
+      },
+      "photographed": {
+        "inputType": "radio"
+    }
+  }
   },
   "Feature:default": {
     "hidden": [],
-    "fields": {}
+    "commons":[],
+    "valuelists": {
+      "period": "periods-Abbircella-1",
+      "stratigraphicReliability": "Feature-stratigraphicReliability-Abbircella",
+      "photogrammetry": "Feature-drawn-Abbircella",
+      "photographed": "Feature-drawn-Abbircella",
+      "heights": "Feature-drawn-Abbircella",
+      "sample": "Feature-drawn-Abbircella",
+      "distinctionCriteria": "Floor-distinguishingCriteria-Abbircella",
+      "color": "colors-Abbircella-1",
+      "featureForm": "Feature-featureForm-Abbircella",
+      "featureBorders": "Feature-featureBorders-Abbircella"
+    },
+    "fields": {
+      "differentFromOne": {
+        "inputType": "input"
+      },
+      "differentFromTwo": {
+        "inputType": "input"
+      },
+      "justificationOne": {
+        "inputType": "input"
+      },
+      "justificationTwo": {
+        "inputType": "input"
+      },
+      "stratigraphicReliability": {
+        "inputType": "radio"
+      },
+      "photogrammetry": {
+        "inputType": "radio"
+      },
+      "photographed": {
+        "inputType": "radio"
+      },
+      "heights": {
+        "inputType": "radio"
+      },
+      "sample": {
+        "inputType": "radio"
+      },
+      "distinctionCriteria": {
+        "inputType": "checkboxes"
+      },
+      "natural": {
+        "inputType": "boolean"
+      }
+  }
   },
   "Room:default": {
     "hidden": [],
@@ -61,7 +138,13 @@
   },
   "Inscription:default": {
     "hidden": [],
-    "fields": {}
+    "fields": {},
+    "valuelists":{
+      "condition":"Architecture-condition-Abbircella",
+      "conditionAmount":"Architecture-conditionAmount-Abbircella",
+      "period":"periods-Abbircella-1",
+      "objectType": "Inscription-objectType-Abbircella"
+    }
   },
   "Image:default": {
     "hidden": [],
@@ -79,35 +162,123 @@
     "hidden": [],
     "fields": {}
   },
-  "Burial:default": {
-    "hidden": [],
-    "fields": {}
-  },
   "Wood:default": {
     "hidden": [],
     "fields": {}
   },
   "Architecture:default": {
     "hidden": [],
-    "fields": {}
+    "commons": [],
+    "fields": {
+      "decoration": {
+        "inputType":"input"
+      },
+      "conjoinedWith": {
+        "inputType":"input"
+      },
+      "interpretation": {
+        "inputType": "text"
+      },
+      "buildingTechnique": {
+        "inputType": "checkboxes"
+      },
+      "walling": {
+        "inputType": "dropdown"
+      }  
+    },
+    "valuelists":{
+      "wallClassification": "Architecture-wallClassification-Abbircella",
+      "wallType": "Architecture-wallType-Abbircella",
+      "construction": "Architecture-construction-Abbircella",
+      "brickwork": "Architecture-brickwork-Abbircella",
+      "blockTreatment": "Architecture-blockTreatment-Abbircella",
+      "blockProcessing": "Architecture-blockProcessing-Abbircella",
+      "mortarBinder": "Architecture-mortarBinder-Abbircella",
+      "mortarColor": "colors-Abbircella-2",
+      "mortarConsistency": "Architecture-mortarConsistency-Abbircella",
+      "condition": "Architecture-condition-Abbircella",
+      "conditionAmount": "Architecture-conditionAmount-Abbircella",
+      "buildingTechnique": "Architecture-buildingTechnique-Abbircella",
+      "walling": "Architecture-walling-Abbircella"
+    }
   },
   "Layer:default": {
-    "hidden": [],
-    "fields": {}
+    "hidden": [
+      "distinguishingCriteria",
+      "isNatural"
+    ],
+    "commons": [
+      "orientation",
+      "spatialLocation"
+    ],
+    "fields": {
+      "interpretation": {
+        "inputType": "text"
+      },
+      "complete": {
+        "inputType":"boolean"
+      },
+      "geologicalComponents": {
+        "inputType": "text"
+      },
+      "organicComponents": {
+        "inputType": "text"
+      },
+      "artificialComponents": {
+        "inputType": "text"
+      },
+      "specialFinds": {
+        "inputType": "text"
+      }
+    },
+    "valuelists":{
+      "orientation": "orientation-Abbircella",
+      "consistency": "Layer-consistency-Abbircella",
+      "soilType": "Layer-soilType-Abbircella",
+      "layerClassification": "Layer-layerClassification-Abbircella"
+    }
   },
   "Floor:default": {
-    "hidden": [],
-    "fields": {}
+    "hidden": [
+      "distinguishingCriteria"
+    ],
+    "commons":[
+      "orientation",
+      "dimensionHeight",
+      "dimensionThickness",
+      "spatialLocation"
+    ],
+    "fields": {
+      "interpretation": {
+        "inputType": "text"
+      },
+      "mortarColor": {
+        "inputType": "dropdown"
+      },
+      "mortarConsistency": {
+        "inputType": "radio"
+      }
+    },
+    "valuelists":{
+      "orientation": "orientation-Abbircella",
+      "mortarColor": "colors-Abbircella-2",
+      "mortarConsistency": "Architecture-mortarConsistency-Abbircella",
+      "floorClassification": "Floor-floorClassification-Abbircella",
+      "layerClassification": "Layer-layerClassification-Abbircella",
+      "consistency": "Layer-consistency-Abbircella",
+      "mortarBinder":"Architecture-mortarBinder-Abbircella",
+      "condition":"Architecture-condition-Abbircella",
+      "conditionAmount":"Architecture-conditionAmount-Abbircella"
+    }
   },
   "Pottery:default": {
     "hidden": [],
-    "fields": {}
+    "fields": {},
+    "valuelists": {
+      "specificType": "Pottery-potteryTypeSpecific-Meninx"
+    }
   },
   "Metal:default": {
-    "hidden": [],
-    "fields": {}
-  },
-  "Grave:default": {
     "hidden": [],
     "fields": {}
   },
@@ -137,11 +308,173 @@
   },
   "PlasterFragment:default": {
     "hidden": [],
-    "fields": {}
+    "fields": {
+      "mortarBinder": {
+        "inputType": "radio"
+      },
+      "mortarConsistency": {
+        "inputType": "radio"
+      },
+      "mortarColor": {
+        "inputType": "checkboxes"
+      }
+    },
+    "valuelists":{
+      "mortarBinder": "Architecture-mortarBinder-Abbircella",
+      "mortarColor": "colors-Abbircella-2",
+      "mortarConsistency":"Architecture-mortarConsistency-Abbircella",
+      "color": "colors-Abbircella-1",
+      "plasterComponents": "PlasterFragment-plasterComponents-Abbircella"
+    }
   },
   "Excavation:default": {
     "hidden": [],
     "fields": {}
+  },
+  "Sample:default": {
+    "hidden": [],
+    "commons" :[
+      "dating"
+    ],
+    "fields": {
+      "isotopicSignature": {
+        "inputType": "input"
+      },
+      "calibration-1": {
+        "inputType": "input"
+      },
+      "calibration-2": {
+        "inputType": "input"
+      },
+      "carbonLevel": {
+        "inputType": "unsignedFloat"
+      },
+      "sampleMaterial": {
+        "inputType": "dropdown"
+      }
+    },
+    "valuelists":{
+      "sampleMaterial": "Sample-sampleMaterial-Abbircella",
+      "sampleType": "Sample-sampleType-Abbircella"
+    }
+  },
+  "Negative": {
+    "hidden": [
+      "featureForm"
+    ],
+    "commons":[
+      "orientation",
+      "dimensionHeight",
+      "spatialLocation"
+        ],
+    "fields": {
+      "modeOfFormation": {
+        "inputType": "input"
+      },
+      "otherClassification": {
+        "inputType": "dropdown"
+      },
+      "interpretation": {
+        "inputType": "text"
+      }
+    },
+    "parent": "Feature",
+    "valuelists": {
+      "orientation": "orientation-Abbircella",
+      "otherClassification": "Negative-negativeClassification-Abbircella"
+    }
+  },
+  "WallCladding": {
+    "hidden":[
+      "jointsCondition",
+      "jointsType",
+      "dimensionWidth"
+    ],
+    "commons":[
+      "orientation",
+      "dimensionHeight",
+      "dimensionThickness",
+      "spatialLocation"   
+        ],
+    "fields": {
+      "conditionComment": {
+        "inputType": "input"
+      },
+      "constructionDetailsDescription": {
+        "inputType": "input"
+      },
+      "markDescription": {
+        "inputType": "input"
+      },
+      "hasPlasterDecoration": {
+        "inputType": "boolean"
+      },
+      "plasterOlder": {
+        "inputType": "input"
+      },
+      "surfaceDecoration": {
+        "inputType": "input"
+      },
+      "wallConstructionTechnique": {
+        "inputType": "input"
+      },
+      "blockTreatment": {
+        "inputType": "radio"
+      },
+      "buildingTechnique": {
+        "inputType": "dropdown"
+      },
+      "condition": {
+        "inputType": "dropdown"
+      },
+      "conditionAmount": {
+        "inputType": "dropdown"
+      },
+      "constructionDetails": {
+        "inputType": "dropdown"
+      },
+      "jointsCondition": {
+        "inputType": "radio"
+      },
+      "jointsType": {
+        "inputType": "radio"
+      },
+      "mark": {
+        "inputType": "dropdown"
+      },
+      "plasterComponents": {
+        "inputType": "radio"
+      },
+      "wallOrientation": {
+        "inputType": "checkboxes"
+      },
+      "roomSide": {
+        "inputType": "checkboxes"
+      },
+      "wallSide": {
+        "inputType": "radio"
+      },
+      "interpretation": {
+        "inputType": "text"
+      }
+    },
+    "parent": "Feature",
+    "valuelists": {
+      "orientation": "orientation-Abbircella",
+      "period": "periods-Abbircella-1",
+      "blockTreatment": "Architecture-blockTreatment-Abbircella",
+      "buildingTechnique": "Architecture-buildingTechnique-Abbircella",
+      "condition":"Architecture-condition-Abbircella",
+      "conditionAmount": "Architecture-conditionAmount-Abbircella",
+      "constructionDetails": "Wall_surface-constructionDetails-Abbircella",
+      "jointsCondition": "Wall_surface-jointsCondition-Meninx",
+      "jointsType": "Wall_surface-jointsType-Meninx",
+      "mark": "Architecture-mark-default",
+      "plasterComponents": "PlasterFragment-plasterComponents-Abbircella",
+      "wallOrientation": "Wall_surface-wallOrientation-Abbircella",
+      "roomSide": "Wall_surface-wallOrientation-Abbircella",
+      "wallSide": "Wall_surface-wallOrientation-Abbircella"
+    }
   },
   "TypeCatalog:default": {
     "hidden": [],

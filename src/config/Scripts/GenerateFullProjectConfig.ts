@@ -83,7 +83,7 @@ const mergeGroup = (locales: string[]) => (localizedGroups: Array<Group>) => {
     result.relations = mergeLayer(mergeField, locales, localizedGroups.map(to('relations')));
 
     return result as Group;
-}
+};
 
 
 const mergeField = (locales: string[]) => (localizedFields: Array<any>) => {
@@ -97,7 +97,23 @@ const mergeField = (locales: string[]) => (localizedFields: Array<any>) => {
         if (localizedFields[i].description) result.description[locales[i]] = localizedFields[i].description;
     }
 
-    return result as FieldDefinition;
+    return cleanField(result);
+};
+
+
+function cleanField(field: any): FieldDefinition {
+
+    delete field.group;
+    delete field.visible;
+    delete field.editable;
+    delete field.allowOnlyValuesOfParent;
+    delete field.constraintIndexed;
+    delete field.domain;
+    delete field.range;
+    delete field.inverse;
+    delete field.sameMainCategoryResource;
+
+    return field;
 }
 
 

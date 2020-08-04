@@ -143,7 +143,6 @@ function setInverses(importDocument: Document, documentsLookup: { [_: string]: D
             forEach(assertIsAllowedRelationDomainCategory_));
 
         if (!inverseRelationName) return;
-        if (inverseRelationName === HierarchicalRelations.INCLUDES) return;
 
         flow(tmp,
             forEach(assertInSameOperationWith(importDocument)),

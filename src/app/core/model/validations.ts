@@ -281,7 +281,7 @@ export module Validations {
                                              projectConfiguration: ProjectConfiguration): string[] {
 
         const fields: Array<RelationDefinition> = projectConfiguration
-            .getRelationDefinitions(resource.category);
+            .getRelationDefinitionsForDomainCategory(resource.category);
         const invalidFields: Array<any> = [];
 
         for (let relationField in resource.relations) {

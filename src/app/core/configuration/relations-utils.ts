@@ -10,21 +10,15 @@ export module RelationsUtil {
 
     export function getRelationDefinitions(relations: Array<RelationDefinition>,
                                            categoryName: string,
-                                           isRangeCategory: boolean = false,
-                                           property?: string) {
+                                           isRangeCategory: boolean = false) {
 
         const availableRelationFields: Array<RelationDefinition> = [];
-        for (let relationField of relations) {
 
+        for (let relationField of relations) {
             const categories: string[] = isRangeCategory ? relationField.range : relationField.domain;
-            if (categories.indexOf(categoryName) > -1) {
-                if (!property ||
-                    (relationField as any)[property] == undefined ||
-                    (relationField as any)[property] == true) {
-                    availableRelationFields.push(relationField);
-                }
-            }
+            if (categories.indexOf(categoryName) > -1) availableRelationFields.push(relationField);
         }
+
         return availableRelationFields;
     }
 }

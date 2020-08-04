@@ -197,10 +197,10 @@ describe('ConfigLoader', () => {
             done();
         }
 
-        expect((pconf.getRelationDefinitions('A') as any)[0].range).toContain('B1');
-        expect((pconf.getRelationDefinitions('A1') as any)[0].range).toContain('B');
-        expect((pconf.getRelationDefinitions('A2') as any)[0].range).toContain('B2');
-        expect((pconf.getRelationDefinitions('C') as any)[0].range).toContain('D');
+        expect((pconf.getRelationDefinitionsForDomainCategory('A') as any)[0].range).toContain('B1');
+        expect((pconf.getRelationDefinitionsForDomainCategory('A1') as any)[0].range).toContain('B');
+        expect((pconf.getRelationDefinitionsForDomainCategory('A2') as any)[0].range).toContain('B2');
+        expect((pconf.getRelationDefinitionsForDomainCategory('C') as any)[0].range).toContain('D');
         done();
     });
 
@@ -230,7 +230,7 @@ describe('ConfigLoader', () => {
             done();
         }
 
-        expect(pconf.getRelationDefinitions('A')[0].sameMainCategoryResource).toBe(false);
+        expect(pconf.getRelationDefinitionsForDomainCategory('A')[0].sameMainCategoryResource).toBe(false);
         done();
     });
 
@@ -287,8 +287,8 @@ describe('ConfigLoader', () => {
         expect(pconf.getCategory('B').label).toEqual('B__');
         expect(pconf.getCategory('C').label).toEqual('C'); // took name as label
 
-        expect(pconf.getRelationDefinitions('A')[1].label).toEqual('r1_');
-        expect(pconf.getRelationDefinitions('A')[0].label).toBeFalsy();
+        expect(pconf.getRelationDefinitionsForDomainCategory('A')[1].label).toEqual('r1_');
+        expect(pconf.getRelationDefinitionsForDomainCategory('A')[0].label).toBeFalsy();
         done();
     });
 

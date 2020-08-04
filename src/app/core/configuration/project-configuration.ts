@@ -78,19 +78,27 @@ export class ProjectConfiguration {
     }
 
 
-    /**
-     * Gets the relation definitions available.
-     *
-     * @param categoryName the name of the category to get the relation definitions for.
-     * @param isRangeCategory If true, get relation definitions where the given category is part of the relation's
-     * range (instead of domain)
-     * @param property to give only the definitions with a certain boolean property not set or set to true
-     * @returns {Array<RelationDefinition>} the definitions for the category.
-     */
-    public getRelationDefinitions(categoryName: string, isRangeCategory: boolean = false,
-                                  property?: string): Array<RelationDefinition> {
+    public getRelationDefinitionsForDomainCategory(categoryName: string): Array<RelationDefinition> {
 
-        return RelationsUtil.getRelationDefinitions(this.relations, categoryName, isRangeCategory, property);
+        return RelationsUtil.getRelationDefinitions(this.relations, categoryName, false);
+    }
+
+
+    public getRelationDefinitionsForRangeCategory(categoryName: string): Array<RelationDefinition> {
+
+        return RelationsUtil.getRelationDefinitions(this.relations, categoryName, true);
+    }
+
+
+    /**
+     * Should be used only from within components.
+     *
+     * @param relationName
+     * @returns {string}
+     */
+    public getRelationDefinitionLabel(relationName: string): string {
+
+        return Category.getLabel(relationName, this.relations);
     }
 
 
@@ -101,7 +109,7 @@ export class ProjectConfiguration {
     public isAllowedRelationDomainCategory(domainCategoryName: string, rangeCategoryName: string,
                                            relationName: string): boolean {
 
-        const relationDefinitions = this.getRelationDefinitions(rangeCategoryName, true);
+        const relationDefinitions = this.getRelationDefinitionsForRangeCategory(rangeCategoryName);
 
         for (let relationDefinition of relationDefinitions) {
             if (relationName === relationDefinition.name
@@ -193,18 +201,6 @@ export class ProjectConfiguration {
     public isMandatory(categoryName: string, fieldName: string): boolean {
 
         return this.hasProperty(categoryName, fieldName, FieldDefinition.MANDATORY);
-    }
-
-
-    /**
-     * Should be used only from within components.
-     *
-     * @param relationName
-     * @returns {string}
-     */
-    public getRelationDefinitionLabel(relationName: string): string {
-
-        return Category.getLabel(relationName, this.relations);
     }
 
 

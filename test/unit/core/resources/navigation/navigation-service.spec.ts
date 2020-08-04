@@ -18,7 +18,7 @@ describe('NavigationService', () => {
 
         projectConfiguration = jasmine.createSpyObj(
             'pc',
-            ['getRelationDefinitions', 'getCategory']
+            ['getRelationDefinitionsForRangeCategory', 'getCategory']
         );
 
         navigationService = new NavigationService(projectConfiguration, undefined, viewFacade);
@@ -43,7 +43,7 @@ describe('NavigationService', () => {
 
     it('show move into buttons for resources that can be a liesWithin target', () => {
 
-        projectConfiguration.getRelationDefinitions.and.returnValue(
+        projectConfiguration.getRelationDefinitionsForRangeCategory.and.returnValue(
             [{ name: 'liesWithin' }]
         );
 
@@ -55,7 +55,7 @@ describe('NavigationService', () => {
 
     it('do not show move into buttons for resources that cannot be a liesWithin target', () => {
 
-        projectConfiguration.getRelationDefinitions.and.returnValue(
+        projectConfiguration.getRelationDefinitionsForRangeCategory.and.returnValue(
             [{ name: 'abc' }]
         );
 
@@ -67,7 +67,7 @@ describe('NavigationService', () => {
 
     it('do not show move into buttons for newly created resources without id', () => {
 
-        projectConfiguration.getRelationDefinitions.and.returnValue(
+        projectConfiguration.getRelationDefinitionsForRangeCategory.and.returnValue(
             [{ name: 'liesWithin' }]
         );
 

@@ -68,8 +68,8 @@ export class NavigationService {
         if (!document.resource.id) return false; // do not show as long as it is not saved
         if (this.viewFacade.isInExtendedSearchMode()) return false;
 
-        return ((this.projectConfiguration
-            .getRelationDefinitions(document.resource.category, true))
+        return (this.projectConfiguration
+            .getRelationDefinitionsForRangeCategory(document.resource.category)
             .map((_: RelationDefinition) => _.name)
             .indexOf('liesWithin') !== -1);
     }

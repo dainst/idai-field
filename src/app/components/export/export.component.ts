@@ -177,7 +177,8 @@ export class ExportComponent implements OnInit {
                 this.find,
                 this.getOperationIdForMode(),
                 this.selectedCategory,
-                this.projectConfiguration.getRelationDefinitions(this.selectedCategory.name).map(to('name')),
+                this.projectConfiguration.getRelationDefinitionsForDomainCategory(this.selectedCategory.name)
+                    .map(to('name')),
                 (async resourceId => (await this.documentDatastore.get(resourceId)).resource.identifier),
                 CsvExporter.performExport(filePath)
             );

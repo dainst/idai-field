@@ -211,14 +211,14 @@ describe('importDocuments', () => {
     });
 
 
-    it('forbidden relation', async done => {
+    it('forbidden hierarchical relation', async done => {
 
         const {errors} = await importFunction([
-            { resource: { category: 'Feature', identifier: '1a', relations: { includes: ['a'] } } } as any
+            { resource: { category: 'Feature', identifier: '1a', relations: { isRecordedIn: ['a'] } } } as any
         ], mockDatastore, 'user1');
 
         expect(errors[0][0]).toEqual(E.INVALID_RELATIONS);
-        expect(errors[0][2]).toEqual('includes');
+        expect(errors[0][2]).toEqual('isRecordedIn');
         done();
     });
 });

@@ -1,6 +1,7 @@
 import {Static} from '../../../static';
 import {FieldDefinition} from '../../../../../src/app/core/configuration/model/field-definition';
 import {CSVExport} from '../../../../../src/app/core/export/csv/csv-export';
+import {HierarchicalRelations} from '../../../../../src/app/core/model/relation-constants';
 
 
 export function makeFieldDefinitions(fieldNames: string[]) {
@@ -67,7 +68,7 @@ describe('CSVExport', () => {
 
     function expectCorrectChildOfTarget(resource, t, expectation) {
 
-        const result = CSVExport.createExportable([resource], t, ['isRecordedIn', 'liesWithin', 'includes']);
+        const result = CSVExport.createExportable([resource], t, HierarchicalRelations.ALL);
         expect(result[0]).toBe('"identifier","shortDescription","relations.isChildOf"');
         expect(result[1]).toBe('"identifier1","shortDescription1",' + expectation);
     }

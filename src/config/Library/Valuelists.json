@@ -47,6 +47,23 @@
       }
     }
   },
+  "position-values-preserved-length-of-drilling-axis-wes": {
+    "createdBy": "",
+    "creationDate": "",
+    "description": {},
+    "values": {
+      "from the bit to the back": {}
+    }
+  },
+  "position-values-dimension-width-of-drill-fragment-wes": {
+    "createdBy": "",
+    "creationDate": "",
+    "description": {},
+    "values": {
+      "At the drilling-bit": {},
+      "At the back/shaft": {}
+    }
+  },
   "orientation-default-1": {
     "createdBy": "",
     "description": {},
@@ -10658,7 +10675,7 @@
           "de": "Autre"
         }
       }
-    } 
+    }
   },
   "Architecture-blockTreatment-Abbircella": {
     "createdBy": "",
@@ -10845,7 +10862,7 @@
     }
   },
   "Architecture-condition-Abbircella": {
-    "createdBy": "", 
+    "createdBy": "",
     "creationDate": "",
     "description": {
       "de": "",
@@ -11210,7 +11227,7 @@
       "Opus signinum (cocciopesto)": {},
       "Opus africanum": {},
       "Opus vittatum/listatum (Ziegel und kleine Tuffsteine)": {
-        "labels": { 
+        "labels": {
         "en": "Opus vittatum/listatum (bricks and small tuff stones)",
         "de": "Opus vittatum/listatum (briques et petits tuffeaux)"
       }

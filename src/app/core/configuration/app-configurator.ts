@@ -311,17 +311,14 @@ export class AppConfigurator {
             domain: ['Image:inherit'],
             range: [],
             inverse: 'isDepictedIn',
-            label: '',
-            editable: true
+            label: ''
         },
         {
             name: 'isDepictedIn',
             domain: [],
             range: ['Image:inherit'],
             inverse: 'depicts',
-            label: '',
-            visible: false,
-            editable: false
+            label: ''
         },
         {
             name: 'isAfter',
@@ -407,157 +404,136 @@ export class AppConfigurator {
             name: 'isRecordedIn',
             label: '',
             domain: ['Inscription'],
-            range: ['Trench'],
-            editable: false
+            range: ['Trench']
         },
         {
             name: 'isRecordedIn',
             label: '',
             domain: ['Room'],
-            range: ['Building'],
-            editable: false
+            range: ['Building']
         },
         {
             name: 'isRecordedIn',
             label: '',
             domain: ['RoomFloor'],
-            range: ['Building'],
-            editable: false
+            range: ['Building']
         },
         {
             name: 'isRecordedIn',
             label: '',
             domain: ['RoomWall'],
-            range: ['Building'],
-            editable: false
+            range: ['Building']
         },
         {
             name: 'isRecordedIn',
             label: '',
             domain: ['RoomCeiling'],
-            range: ['Building'],
-            editable: false
+            range: ['Building']
         },
         {
             name: 'isRecordedIn',
             label: '',
             domain: ['Area:inherit'],
-            range: ['Survey'],
-            editable: false
+            range: ['Survey']
         },
         {
             name: 'isRecordedIn',
             label: '',
             domain: ['BuildingPart:inherit'],
-            range: ['Building', 'Survey'],
-            editable: false
+            range: ['Building', 'Survey']
         },
         {
             name: 'isRecordedIn',
             label: '',
             domain: ['Find:inherit'],
-            range: ['Trench', 'Survey'],
-            editable: false
+            range: ['Trench', 'Survey']
         },
         {
             name: 'isRecordedIn',
             label: '',
             domain: ['Feature:inherit'],
-            range: ['Trench'],
-            editable: false
+            range: ['Trench']
         },
         {
             name: 'isRecordedIn',
             label: '',
             domain: ['Sample'],
-            range: ['Trench', 'Survey'],
-            editable: false
+            range: ['Trench', 'Survey']
         },
         {
             name: 'liesWithin',
             label: '',
             domain: ['Operation:inherit', 'Place'],
-            range: ['Place'],
-            editable: false
+            range: ['Place']
         },
         {
             name: 'liesWithin',
             label: '',
             domain: ['Find:inherit'],
             range: ['Feature:inherit', 'Area:inherit'],
-            sameMainCategoryResource: true,
-            editable: false
+            sameMainCategoryResource: true
         },
         {
             name: 'liesWithin',
             label: '',
             domain: ['Inscription'],
             range: ['Find:inherit'],
-            sameMainCategoryResource: true,
-            editable: false
+            sameMainCategoryResource: true
         },
         {
             name: 'liesWithin',
             label: '',
             domain: ['Feature:inherit'],
             range: ['Feature:inherit'],
-            sameMainCategoryResource: true,
-            editable: false
+            sameMainCategoryResource: true
         },
         {
             name: 'liesWithin',
             label: '',
             domain: ['Sample'],
             range: ['Feature:inherit', 'Find:inherit'],
-            sameMainCategoryResource: true,
-            editable: false
+            sameMainCategoryResource: true
         },
         {
             name: 'liesWithin',
             label: '',
             domain: ['BuildingPart:inherit'],
             range: ['BuildingPart:inherit', 'Area:inherit'],
-            sameMainCategoryResource: true,
-            editable: false
+            sameMainCategoryResource: true
         },
         {
             name: 'liesWithin',
             label: '',
             domain: ['Area:inherit'],
             range: ['Area:inherit'],
-            sameMainCategoryResource: true,
-            editable: false
+            sameMainCategoryResource: true
         },
         {
             name: 'liesWithin',
             label: '',
             domain: ['RoomFloor'],
             range: ['Room'],
-            sameMainCategoryResource: true,
-            editable: false
+            sameMainCategoryResource: true
         },
         {
             name: 'liesWithin',
             label: '',
             domain: ['RoomWall'],
             range: ['Room'],
-            sameMainCategoryResource: true,
-            editable: false
+            sameMainCategoryResource: true
         },
         {
             name: 'liesWithin',
             label: '',
             domain: ['RoomCeiling'],
             range: ['Room'],
-            sameMainCategoryResource: true,
-            editable: false
+            sameMainCategoryResource: true
         },
         {
             name: 'liesWithin',
             label: '',
             domain: ['Type:inherit'],
-            range: ['Type:inherit', 'TypeCatalog:inherit'],
-            editable: false
+            range: ['Type:inherit', 'TypeCatalog:inherit']
         },
         {
             name: 'isInstanceOf',
@@ -606,15 +582,13 @@ export class AppConfigurator {
                 name: 'isRecordedIn',
                 label: '',
                 domain: ['Wall_surface'],
-                range: ['Trench'],
-                editable: false
+                range: ['Trench']
             });
             this.defaultRelations.push({
                 name: 'isRecordedIn',
                 label: '',
                 domain: ['Drilling'],
-                range: ['Survey'],
-                editable: false
+                range: ['Survey']
             });
         }
 
@@ -646,24 +620,21 @@ export class AppConfigurator {
                 name: 'isRecordedIn',
                 label: '',
                 domain: ['ProcessUnit'],
-                range: ['Trench'],
-                editable: false
+                range: ['Trench']
             });
 
             this.defaultRelations.push({
                 name: 'isRecordedIn',
                 label: '',
                 domain: ['BuildingFloor'],
-                range: ['Building'],
-                editable: false
+                range: ['Building']
             });
 
             this.defaultRelations.push({
                 name: 'isRecordedIn',
                 label: '',
                 domain: ['SurveyBurial'],
-                range: ['Survey'],
-                editable: false
+                range: ['Survey']
             });
 
             this.defaultRelations.push({
@@ -671,8 +642,7 @@ export class AppConfigurator {
                 label: '',
                 domain: ['SurveyBurial'],
                 range: ['Area:inherit'],
-                sameMainCategoryResource: true,
-                editable: false
+                sameMainCategoryResource: true
             });
 
             this.defaultRelations.push({

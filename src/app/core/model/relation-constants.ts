@@ -45,8 +45,7 @@ export module HierarchicalRelations {
 
     export const RECORDEDIN = 'isRecordedIn';
     export const LIESWITHIN = 'liesWithin';
-    export const INCLUDES = 'includes';
-    export const ALL = [LIESWITHIN, RECORDEDIN, INCLUDES];
+    export const ALL = [LIESWITHIN, RECORDEDIN];
 }
 
 export const PARENT = 'isChildOf'; // This is a hierarchical relation, but only used in import and export

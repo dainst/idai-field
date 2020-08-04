@@ -666,18 +666,8 @@ export class AppConfigurator {
                 editable: false
             });
 
-            this.defaultRelations.push({ // override existing definition
-                name: 'includes',
-                inverse: 'liesWithin',
-                label: '',
-                domain: ['Area:inherit'],
-                range: ['Area:inherit', 'BuildingPart:inherit', 'Find:inherit', 'SurveyBurial'],
-                sameMainCategoryResource: true
-            });
-
             this.defaultRelations.push({
                 name: 'liesWithin',
-                inverse: 'includes',
                 label: '',
                 domain: ['SurveyBurial'],
                 range: ['Area:inherit'],

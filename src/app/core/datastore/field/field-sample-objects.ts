@@ -312,8 +312,7 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
             'identifier': locale === 'de' ? 'SE0' : 'SU0',
             'shortDescription': locale === 'de' ? 'Stratigraphische Einheit' : 'Stratigraphical unit',
                 'relations': {
-                'isRecordedIn': ['t1'],
-                'includes': ['tf1']
+                'isRecordedIn': ['t1']
             },
             'geometry': {
                 'type': 'Polygon',

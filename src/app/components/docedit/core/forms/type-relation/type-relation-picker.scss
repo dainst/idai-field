@@ -38,5 +38,9 @@
     height: calc(100vh - 135px);
     padding: 0;
     overflow: auto;
+
+    dai-type-row:first-child .type-row{
+      margin-top: 0;
+    }
   }
 }

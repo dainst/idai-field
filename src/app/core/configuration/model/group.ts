@@ -1,7 +1,7 @@
 import {FieldDefinition} from './field-definition';
 import {Labelled, Named} from '../../util/named';
 import {RelationDefinition} from './relation-definition';
-import {PositionRelations, TimeRelations, TypeRelations} from '../../model/relation-constants';
+import {HierarchicalRelations, ImageRelations, PositionRelations, TimeRelations, TypeRelations} from '../../model/relation-constants';
 
 
 export module Groups {
@@ -27,7 +27,10 @@ export module Groups {
 
     export function getGroupNameForRelation(relationName: string): string|undefined {
 
-        if (TimeRelations.ALL.includes(relationName)) {
+        if (HierarchicalRelations.ALL.includes(relationName)
+                || ImageRelations.ALL.includes(relationName)) {
+            return STEM;
+        } else if (TimeRelations.ALL.includes(relationName)) {
             return TIME;
         } else if (PositionRelations.ALL.includes(relationName)) {
             return POSITION;

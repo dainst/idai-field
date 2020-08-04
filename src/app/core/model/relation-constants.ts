@@ -65,3 +65,11 @@ export module TypeRelations {
     export const HASINSTANCE = 'hasInstance';
     export const ALL = [INSTANCEOF, HASINSTANCE];
 }
+
+
+export module ImageRelations {
+
+    export const DEPICTS = 'depicts';
+    export const ISDEPICTEDIN = 'isDepictedIn';
+    export const ALL = [DEPICTS, ISDEPICTEDIN];
+}

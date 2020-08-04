@@ -20,6 +20,14 @@
                         (onQueryStringChanged)="setQueryString($event)">
             </search-bar>
         </div>
+        <paging-buttons *ngIf="totalDocumentCount > 0"
+            [currentPage]="getCurrentPage()"
+            [pageCount]="getPageCount()"
+            [canTurnPage]="canTurnPage()"
+            [canTurnPageBack]="canTurnPageBack()"
+            (onTurnPage)="turnPage()"
+            (onTurnPageBack)="turnPageBack()">
+        </paging-buttons>
         <button id="close-button" type="button" class="btn btn-primary"
                 (click)="activeModal.dismiss('cancel')">
             <span class="mdi mdi-close"></span>

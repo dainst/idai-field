@@ -7,7 +7,6 @@ import {ImageGridComponent} from './image-grid.component';
 import {DropAreaComponent} from './drop-area.component';
 import {ImageUploadModule} from '../upload/image-upload.module';
 import {ImageGridCellComponent} from './image-grid-cell.component';
-import {ImageGridPagerComponent} from './image-grid-pager.component';
 
 
 @NgModule({
@@ -16,18 +15,16 @@ import {ImageGridPagerComponent} from './image-grid-pager.component';
         NgbModule,
         FormsModule,
         RouterModule,
-        ImageUploadModule
+        ImageUploadModule,
     ],
     declarations: [
         ImageGridComponent,
         ImageGridCellComponent,
-        ImageGridPagerComponent,
         DropAreaComponent
     ],
     exports: [
-        ImageGridComponent,
-        ImageGridPagerComponent
+        ImageGridComponent
     ]
 })
 
-export class ImageGridModule { }
+export class ImageGridModule {}

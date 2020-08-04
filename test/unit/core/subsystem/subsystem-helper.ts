@@ -51,8 +51,7 @@ export async function setupSettingsService(pouchdbmanager, pouchdbserver, projec
         pouchdbserver,
         undefined,
         new AppConfigurator(
-            new ConfigLoader(new FsConfigReader() as ConfigReader, () => ''),
-            () => ''
+            new ConfigLoader(new FsConfigReader() as ConfigReader)
         ),
         undefined,
         undefined

@@ -23,13 +23,14 @@
                     class="ml-2">
         </search-bar>
 
-        <image-grid-pager class="ml-2"
+        <paging-buttons class="ml-2"
             [currentPage]="getCurrentPage()"
             [pageCount]="getPageCount()"
             [canTurnPage]="canTurnPage()"
             [canTurnPageBack]="canTurnPageBack()"
-            (turnPage)="turnPage()"
-            (turnPageBack)="turnPageBack()"></image-grid-pager>
+            (onTurnPage)="turnPage()"
+            (onTurnPageBack)="turnPageBack()">
+        </paging-buttons>
 
         <button type="button" class="btn btn-secondary ml-2"
                 (click)="activeModal.dismiss('cancel')">

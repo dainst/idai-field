@@ -49,6 +49,7 @@ export function buildRawProjectConfiguration(builtInCategories: Map<BuiltinCateg
                                              valuelistsConfiguration: Map<ValuelistDefinition> = {},
                                              extraFields: Map = {},
                                              relations: Array<RelationDefinition> = [],
+                                             languageCoreConfiguration: any = {},
                                              languageConfiguration: any = {},
                                              customLanguageConfiguration: any = {},
                                              searchConfiguration: any = {},
@@ -73,6 +74,7 @@ export function buildRawProjectConfiguration(builtInCategories: Map<BuiltinCateg
         addExtraFields(extraFields),
         prepareRawProjectConfiguration,
         addRelations(relations),
+        applyLanguage(languageCoreConfiguration),
         applyLanguage(languageConfiguration),
         applyLanguage(customLanguageConfiguration),
         updateStruct(CATEGORIES, processCategories(

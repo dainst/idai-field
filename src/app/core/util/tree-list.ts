@@ -1,4 +1,18 @@
-import {Mapping, Predicate, isFunction, first, isNumber, rest, isObject, isArray, Pair, to, Path, is} from 'tsfun';
+import {
+    Mapping,
+    Predicate,
+    isFunction,
+    first,
+    isNumber,
+    rest,
+    isObject,
+    isArray,
+    Pair,
+    to,
+    Path,
+    is,
+    zip, tuplify, identity
+} from 'tsfun';
 import {Comparator} from 'tsfun/by';
 import {Named} from './named';
 
@@ -46,6 +60,24 @@ export function mapTreeList(...args: any[]): any {
     return args.length === 2
         ? $(args[0])(args[1])
         : $(args[0]);
+}
+
+
+export function zipTreeList<T>(ts: Array<TreeList<T>>): TreeList<Array<T>>;
+export function zipTreeList<T>(zipItems: (items: Array<T>) => T, ts: Array<TreeList<T>>): TreeList<T>;
+export function zipTreeList<T>(...args: any): any {
+
+    const $ = (zipItems: any) =>
+        (ts: Array<TreeList<T>>) => zip(ts).map((ns: any[]) =>
+        ({
+            item: zipItems(ns.map(to(Tree.ITEM))),
+            trees: zipTreeList(zipItems, ns.map(to(Tree.TREES)))
+        })
+    );
+
+    return args.length > 1 && isFunction(args[0])
+        ? $(args[0])(args[1])
+        : $(identity)(args[0])
 }
 
 
@@ -162,3 +194,5 @@ export function buildTree<T>([item, children]: ArrayTree<T>): Tree<T> {
         trees: children.map(([t,trees]) => ({ item: t, trees: buildTreeList(trees)}))
     };
 }
+
+

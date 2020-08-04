@@ -14,13 +14,14 @@
 
             <div *ngIf="!hasSelectedImages() && getDocuments() && getTotalDocumentCount()"
                     class="col-sm-2 image-overview-nav-content">
-                <image-grid-pager
+                <paging-buttons
                     [currentPage]="getCurrentPage()"
                     [pageCount]="getPageCount()"
                     [canTurnPage]="canTurnPage()"
                     [canTurnPageBack]="canTurnPageBack()"
-                    (turnPage)="turnPage()"
-                    (turnPageBack)="turnPageBack()"></image-grid-pager>
+                    (onTurnPage)="turnPage()"
+                    (onTurnPageBack)="turnPageBack()">
+                </paging-buttons>
             </div>
 
             <div *ngIf="hasSelectedImages()" id="taskbar-container" class="col-sm-10">

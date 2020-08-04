@@ -1,0 +1,15 @@
+<div class="btn-group" id="paging-buttons">
+    <button class="btn btn-primary"
+            (click)="onTurnPageBack.emit()"
+            [ngClass]="{ disabled: !canTurnPageBack }">
+        <span class="mdi mdi-chevron-left"></span>
+    </button>
+    <button class="btn btn-outline-primary disabled">
+        {{currentPage}} / {{pageCount}}
+    </button>
+    <button class="btn btn-primary"
+            (click)="onTurnPage.emit()"
+            [ngClass]="{ disabled: !canTurnPage }">
+        <span class="mdi mdi-chevron-right"></span>
+    </button>
+</div>

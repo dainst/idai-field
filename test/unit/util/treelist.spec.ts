@@ -1,6 +1,7 @@
 import {equal, is, on, reverse} from 'tsfun';
-import {accessTree, findInTree, flattenTree, mapTrees, mapTreeList, Tree,
-    TreeList, mapTree, buildTreeList, buildTree
+import {
+    accessTree, findInTree, flattenTree, mapTrees, mapTreeList, Tree,
+    TreeList, mapTree, buildTreeList, buildTree, zipTreeList
 } from '../../../src/app/core/util/tree-list';
 
 
@@ -346,4 +347,41 @@ describe('TreeList|Tree', () => {
             ]
         ))).toEqual(7);
     });
+
+
+    it('zipTreeListWith', () => {
+
+        const tl1 = buildTreeList([[3, []]]);
+        const tl2 = buildTreeList([[76, []]]);
+
+        const result = zipTreeList(([item1, item2]: [any, any]) => {
+            return item1 + item2;
+        }, [tl1, tl2]);
+
+        expect(equal(result, buildTreeList([[79,[]]]))).toBeTruthy();
+    });
+
+
+    it('zipTreeListWith - recursive', () => {
+
+        const tl1 = buildTreeList([[3, [[5, []]]]]);
+        const tl2 = buildTreeList([[76, [[7, []]]]]);
+
+        const result = zipTreeList(([item1, item2]: [any, any]) => {
+            return item1 + item2;
+        }, [tl1, tl2]);
+
+        expect(equal(result, buildTreeList([[79,[[12,[]]]]]))).toBeTruthy();
+    });
+
+
+    it('zipTreeListWith - no zipper, recursive', () => {
+
+        const tl1 = buildTreeList([[3, [[5, []]]]]);
+        const tl2 = buildTreeList([[76, [[7, []]]]]);
+
+        const result = zipTreeList([tl1, tl2]);
+
+        expect(equal(result, buildTreeList([[[3,76],[[[5,7],[]]]]]))).toBeTruthy();
+    })
 });

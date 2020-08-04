@@ -19,6 +19,26 @@ import {InitializationProgress} from '../initialization-progress';
 const {remote, ipcRenderer} = typeof window !== 'undefined' ? window.require('electron') : require('electron');
 
 
+export const PROJECT_MAPPING = {
+    'meninx-project': 'Meninx',
+    'pergamongrabung': 'Pergamon',
+    'wes': 'WES',
+    'bogazkoy-hattusa': 'Boha',
+    'campidoglio': 'Campidoglio',
+    'castiglione': 'Castiglione',
+    'kephissostal': 'Kephissostal',
+    'monte-turcisi': 'MonTur',
+    'al-ula': 'AlUla',
+    'kalapodi': 'Kalapodi',
+    'gadara_bm': 'Gadara',
+    'sudan-heritage': 'SudanHeritage',
+    'ayamonte': 'Ayamonte',
+    'abbircella': 'AbbirCella',
+    'karthagocircus': 'KarthagoCircus',
+    'selinunt': 'Selinunt'
+};
+
+
 @Injectable()
 /**
  * The settings service provides access to the
@@ -98,35 +118,25 @@ export class SettingsService {
     }
 
 
+    private static getConfigurationName(project: Name): Name|undefined {
+
+        for (let [name, filenamePrefix] of Object.entries(PROJECT_MAPPING)) {
+            if (project === name || project.startsWith(name + '-')) return filenamePrefix;
+        }
+
+        return undefined;
+    }
+
+
     public async loadConfiguration(configurationDirPath: string,
                                    progress?: InitializationProgress): Promise<ProjectConfiguration> {
 
         if (progress) await progress.setPhase('loadingConfiguration');
 
-        let customProjectName = undefined;
-        if (this.getSelectedProject().startsWith('meninx-project')) customProjectName = 'Meninx';
-        if (this.getSelectedProject().startsWith('pergamongrabung')) customProjectName = 'Pergamon';
-        if (this.getSelectedProject() === 'wes' || this.getSelectedProject().startsWith('wes-')) {
-            customProjectName = 'WES';
-        }
-        if (this.getSelectedProject().startsWith('bogazkoy-hattusa')) customProjectName = 'Boha';
-        if (this.getSelectedProject().startsWith('campidoglio')) customProjectName = 'Campidoglio';
-        if (this.getSelectedProject().startsWith('castiglione')) customProjectName = 'Castiglione';
-        if (this.getSelectedProject().startsWith('kephissostal')) customProjectName = 'Kephissostal';
-        if (this.getSelectedProject().startsWith('monte-turcisi')) customProjectName = 'MonTur';
-        if (this.getSelectedProject().startsWith('al-ula')) customProjectName = 'AlUla';
-        if (this.getSelectedProject().startsWith('kalapodi')) customProjectName = 'Kalapodi';
-        if (this.getSelectedProject().startsWith('gadara_bm')) customProjectName = 'Gadara';
-        if (this.getSelectedProject().startsWith('sudan-heritage')) customProjectName = 'SudanHeritage';
-        if (this.getSelectedProject().startsWith('ayamonte')) customProjectName = 'Ayamonte';
-        if (this.getSelectedProject().startsWith('abbircella')) customProjectName = 'AbbirCella';
-        if (this.getSelectedProject().startsWith('karthagocircus')) customProjectName = 'KarthagoCircus';
-        if (this.getSelectedProject().startsWith('selinunt')) customProjectName = 'Selinunt';
-
         try {
             return await this.appConfigurator.go(
                 configurationDirPath,
-                customProjectName,
+                SettingsService.getConfigurationName(this.getSelectedProject()),
                 this.getSettings().locale
             );
         } catch (msgsWithParams) {

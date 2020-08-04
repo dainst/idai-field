@@ -17,6 +17,8 @@ import {GeoreferenceViewComponent} from './documentinfo/georeference-view.compon
 import {DepictsRelationsViewComponent} from './documentinfo/depicts-relations-view.component';
 import {ThumbnailComponent} from './documentinfo/thumbnail.component';
 import {IdaiMessagesModule} from '../messages/idai-messages.module';
+import {PagingButtonsComponent} from './paging-buttons.component';
+
 
 @NgModule({
     imports: [
@@ -38,7 +40,8 @@ import {IdaiMessagesModule} from '../messages/idai-messages.module';
         SearchBarComponent,
         CategoryPickerComponent,
         ZoomButtonsComponent,
-        CategoryIconComponent
+        CategoryIconComponent,
+        PagingButtonsComponent
     ],
     providers: [
         Loading
@@ -53,7 +56,8 @@ import {IdaiMessagesModule} from '../messages/idai-messages.module';
         SearchBarComponent,
         CategoryPickerComponent,
         ZoomButtonsComponent,
-        CategoryIconComponent
+        CategoryIconComponent,
+        PagingButtonsComponent
     ],
     entryComponents: []
 })

@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "outDir": "dist",
     "target": "ES5",
     "module": "commonjs",
     "moduleResolution": "node",
@@ -9,10 +10,13 @@
     "experimentalDecorators": true,
     "removeComments": false,
     "noImplicitAny": false,
-    "strictNullChecks": true,
-    "lib": [
-      "es2017",
-      "dom"
-    ]
-  }
+    "strictNullChecks": false,
+    "lib": ["es2017", "dom"],
+    "baseUrl": "./",
+  },
+  "exclude": [
+    "../node_modules",
+    "../dist",
+    "../release"
+  ]
 }

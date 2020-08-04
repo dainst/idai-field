@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-import {I18n} from '@ngx-translate/i18n-polyfill';
 import {Map} from 'tsfun';
 import {ProjectConfiguration} from '../project-configuration';
 import {ConfigurationValidation} from './configuration-validation';
@@ -10,7 +9,6 @@ import {buildRawProjectConfiguration} from './build-raw-project-configuration';
 import {BuiltinCategoryDefinition} from '../model/builtin-category-definition';
 import {LibraryCategoryDefinition} from '../model/library-category-definition';
 import {addKeyAsProp} from '../../util/transformers';
-import {Groups} from '../model/group';
 
 
 @Injectable()
@@ -29,25 +27,7 @@ import {Groups} from '../model/group';
  */
 export class ConfigLoader {
 
-    private defaultFields = {
-        id: {
-            editable: false,
-            visible: false,
-            group: Groups.STEM,
-            source: 'builtin'
-        } as FieldDefinition,
-        category: {
-            label: this.i18n({ id: 'configuration.defaultFields.category', value: 'Kategorie' }),
-            visible: false,
-            editable: false,
-            group: Groups.STEM,
-            source: 'builtin'
-        } as FieldDefinition
-    };
-
-
-    constructor(private configReader: ConfigReader,
-                private i18n: I18n) {}
+    constructor(private configReader: ConfigReader) {}
 
 
     public async go(configDirPath: string, commonFields: { [fieldName: string]: any },
@@ -98,6 +78,7 @@ export class ConfigLoader {
                              customConfigurationName: string|undefined,
                              locale: string): Promise<ProjectConfiguration> {
 
+        const languageCoreConfigurationPath = configDirPath + '/Core/Language.' + locale + '.json';
         const languageConfigurationPath = configDirPath + '/Library/Language.' + locale + '.json';
         const orderConfigurationPath = configDirPath + '/Order.json';
         const searchConfigurationPath = configDirPath + '/Search.json';
@@ -106,6 +87,7 @@ export class ConfigLoader {
             + '/Config-' + (customConfigurationName ? customConfigurationName : 'Default') + '.json';
 
         let customCategories;
+        let languageCoreConfiguration: any;
         let languageConfiguration: any;
         let customLanguageConfiguration: any;
         let searchConfiguration: any;
@@ -114,6 +96,7 @@ export class ConfigLoader {
 
         try {
             customCategories = await this.configReader.read(customConfigPath);
+            languageCoreConfiguration = await this.configReader.read(languageCoreConfigurationPath);
             languageConfiguration = await this.configReader.read(languageConfigurationPath);
             customLanguageConfiguration = await this.configReader.read(configDirPath + '/Language-'
                 + (customConfigurationName
@@ -131,7 +114,6 @@ export class ConfigLoader {
         // unused: Preprocessing.setIsRecordedInVisibilities(appConfiguration); See #8992
 
         try {
-
             return new ProjectConfiguration(
                 buildRawProjectConfiguration(
                     builtinCategories,
@@ -139,8 +121,9 @@ export class ConfigLoader {
                     customCategories,
                     commonFields,
                     valuelistsConfiguration,
-                    {...this.defaultFields, ...extraFields},
+                    extraFields,
                     relations,
+                    languageCoreConfiguration,
                     languageConfiguration,
                     customLanguageConfiguration,
                     searchConfiguration,

@@ -5,7 +5,7 @@ import {Document} from 'idai-components-2';
 import {FieldDefinition} from '../../../core/configuration/model/field-definition';
 import {RelationDefinition} from '../../../core/configuration/model/relation-definition';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
-import {Group} from '../../../core/configuration/model/group';
+import {Group, Groups} from '../../../core/configuration/model/group';
 import {TypeRelations} from '../../../core/model/relation-constants';
 import {clone} from '../../../core/util/object-util';
 import {ProjectCategories} from '../../../core/configuration/project-categories';
@@ -21,7 +21,7 @@ import {ProjectCategories} from '../../../core/configuration/project-categories'
  */
 export class EditFormComponent implements AfterViewInit, OnChanges {
 
-    @ViewChild('editor', {static: false}) rootElement: ElementRef;
+    @ViewChild('editor', { static: false }) rootElement: ElementRef;
 
     @Input() document: any;
     @Input() fieldDefinitions: Array<FieldDefinition>;
@@ -63,6 +63,8 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
 
 
     public getRelationDefinitions(groupName: string): Array<RelationDefinition> {
+
+        if (groupName === Groups.STEM) return [];
 
         return (this.groups.find((group: Group) => group.name === groupName) as any).relations
             .filter((relation: RelationDefinition) => relation.name !== TypeRelations.INSTANCEOF);

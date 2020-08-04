@@ -17,6 +17,6 @@ export class PagingButtonsComponent {
     @Input() canTurnPage: boolean;
     @Input() canTurnPageBack: boolean;
 
-    @Output() turnPage: EventEmitter<void> = new EventEmitter<void>();
-    @Output() turnPageBack: EventEmitter<void> = new EventEmitter<void>();
+    @Output() onTurnPage: EventEmitter<void> = new EventEmitter<void>();
+    @Output() onTurnPageBack: EventEmitter<void> = new EventEmitter<void>();
 }

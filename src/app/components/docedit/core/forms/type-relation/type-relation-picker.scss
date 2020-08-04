@@ -1,6 +1,7 @@
 #type-relation-modal {
   .modal-header {
     padding: 15px 7px;
+    display: flex;
 
     input {
       height: 39px;
@@ -13,7 +14,7 @@
     }
 
     .type-search-bar {
-      width: 100%;
+      flex-grow: 1;
       margin-right: 7px;
 
       .search-bar-input {
@@ -23,6 +24,7 @@
 
     #close-button {
       width: 40px;
+      margin-left: 7px;
 
       span {
         position: relative;

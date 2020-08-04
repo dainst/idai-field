@@ -47,6 +47,15 @@ export class ImagePickerComponent implements OnInit {
     ) {}
 
 
+    public getCurrentPage = () => this.currentOffset / ImagePickerComponent.documentLimit + 1;
+
+    public getPageCount = () => Math.ceil(this.totalDocumentCount / ImagePickerComponent.documentLimit);
+
+    public canTurnPage = () => (this.currentOffset + ImagePickerComponent.documentLimit) < this.totalDocumentCount;
+
+    public canTurnPageBack = () => this.currentOffset > 0;
+
+
     public ngOnInit() {
 
         // Listen for transformation of modal to capture finished
@@ -106,18 +115,6 @@ export class ImagePickerComponent implements OnInit {
 
         if (this.selectedDocuments.length > 0) this.activeModal.close(this.selectedDocuments);
     }
-
-
-    public getCurrentPage = () => this.currentOffset / ImagePickerComponent.documentLimit + 1;
-
-
-    public getPageCount = () => Math.ceil(this.totalDocumentCount / ImagePickerComponent.documentLimit);
-
-
-    public canTurnPage = () => (this.currentOffset + ImagePickerComponent.documentLimit) < this.totalDocumentCount;
-
-
-    public canTurnPageBack = () => this.currentOffset > 0;
 
 
     public turnPage() {

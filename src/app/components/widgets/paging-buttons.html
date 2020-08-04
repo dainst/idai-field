@@ -1,6 +1,6 @@
 <div class="btn-group" id="paging-buttons">
     <button class="btn btn-primary"
-            (click)="turnPageBack.emit()"
+            (click)="onTurnPageBack.emit()"
             [ngClass]="{ disabled: !canTurnPageBack }">
         <span class="mdi mdi-chevron-left"></span>
     </button>
@@ -8,7 +8,7 @@
         {{currentPage}} / {{pageCount}}
     </button>
     <button class="btn btn-primary"
-            (click)="turnPage.emit()"
+            (click)="onTurnPage.emit()"
             [ngClass]="{ disabled: !canTurnPage }">
         <span class="mdi mdi-chevron-right"></span>
     </button>

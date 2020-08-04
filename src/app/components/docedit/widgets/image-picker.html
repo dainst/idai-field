@@ -28,8 +28,9 @@
             [pageCount]="getPageCount()"
             [canTurnPage]="canTurnPage()"
             [canTurnPageBack]="canTurnPageBack()"
-            (turnPage)="turnPage()"
-            (turnPageBack)="turnPageBack()"></paging-buttons>
+            (onTurnPage)="turnPage()"
+            (onTurnPageBack)="turnPageBack()">
+        </paging-buttons>
 
         <button type="button" class="btn btn-secondary ml-2"
                 (click)="activeModal.dismiss('cancel')">

@@ -24,6 +24,8 @@ const CRITERION = 'criterion';
 const TYPECATALOG = 'TypeCatalog';
 const TYPE = 'Type';
 
+const DOCUMENT_LIMIT: number = 5;
+
 
 type Criterion = {
     name: string;
@@ -53,6 +55,9 @@ export class TypeRelationPickerComponent {
     public typeDocument = left;
     public images = right;
 
+    public currentOffset: number = 0;
+    public totalDocumentCount: number = 0;
+
     private resource: Resource|undefined = undefined;
     private q: string = '';
     private timeoutRef: any;
@@ -67,6 +72,15 @@ export class TypeRelationPickerComponent {
     }
 
 
+    public getCurrentPage = () => this.currentOffset ? (this.currentOffset / DOCUMENT_LIMIT) + 1 : 1;
+
+    public getPageCount = () => this.totalDocumentCount ? Math.ceil(this.totalDocumentCount / DOCUMENT_LIMIT) : 1;
+
+    public canTurnPage = () => (this.currentOffset + DOCUMENT_LIMIT) < this.totalDocumentCount;
+
+    public canTurnPageBack = () => this.currentOffset > 0;
+
+
     public onKeyDown(event: KeyboardEvent) {
 
         if (event.key === 'Escape') this.activeModal.close();
@@ -76,12 +90,14 @@ export class TypeRelationPickerComponent {
     public async setResource(resource: Resource) {
 
         this.resource = resource;
+        this.currentOffset = 0;
         await this.fetchTypes();
     }
 
 
     public async onSelectCatalog() {
 
+        this.currentOffset = 0;
         await this.fetchTypes();
     }
 
@@ -90,6 +106,7 @@ export class TypeRelationPickerComponent {
 
         await this.fetchCatalogs();
         this.selectedCatalog = undefined;
+        this.currentOffset = 0;
         await this.fetchTypes();
     }
 
@@ -98,7 +115,28 @@ export class TypeRelationPickerComponent {
 
         this.q = q;
         if (this.timeoutRef) clearTimeout(this.timeoutRef);
-        this.timeoutRef = setTimeout(() => this.fetchTypes(), 200);
+        this.timeoutRef = setTimeout(() => {
+            this.currentOffset = 0;
+            this.fetchTypes();
+        }, 200);
+    }
+
+
+    public async turnPage() {
+
+        if (!this.canTurnPage()) return;
+
+        this.currentOffset += DOCUMENT_LIMIT;
+        await this.fetchTypes();
+    }
+
+
+    public async turnPageBack() {
+
+        if (!this.canTurnPageBack()) return;
+
+        this.currentOffset -= DOCUMENT_LIMIT;
+        await this.fetchTypes();
     }
 
 
@@ -150,11 +188,13 @@ export class TypeRelationPickerComponent {
             this.q,
             this.selectedCatalog
                 ? [this.selectedCatalog]
-                : this.availableCatalogs
+                : this.availableCatalogs,
+            this.currentOffset
         );
 
-        const documents = (await this.fieldDatastore.find(query)).documents;
-        this.typeDocumentsWithLinkedImages = this.pairWithLinkedImages(documents);
+        const result: FindResult = await this.fieldDatastore.find(query);
+        this.totalDocumentCount = result.totalCount;
+        this.typeDocumentsWithLinkedImages = this.pairWithLinkedImages(result.documents);
     }
 
 
@@ -168,12 +208,14 @@ export class TypeRelationPickerComponent {
         })(documents);
 
 
-    private static constructQuery(resource: Resource, q: string, selectedCatalogs: Array<FieldResource>) {
+    private static constructQuery(resource: Resource, q: string, selectedCatalogs: Array<FieldResource>,
+                                  offset: number) {
 
         const query: Query = {
             q: q,
             categories: [TYPE],
-            limit: 5,
+            limit: DOCUMENT_LIMIT,
+            offset: offset,
             sort: {
                 matchCategory: resource.category,
                 mode: Query.SORT_MODE_EXACTMATCHFIRST,
@@ -192,6 +234,7 @@ export class TypeRelationPickerComponent {
                 searchRecursively: true
             } as Constraint;
         }
+
         return query;
     }
 

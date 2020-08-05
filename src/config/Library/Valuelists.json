@@ -7,7 +7,12 @@
       "Eigenes Koordinatenbezugssystem": {},
       "EPSG4326 (WGS 84)": {},
       "EPSG3857 (WGS 84 Web Mercator)": {}
-    }
+    },
+    "order": [
+      "Eigenes Koordinatenbezugssystem",
+      "EPSG4326 (WGS 84)",
+      "EPSG3857 (WGS 84 Web Mercator)"
+    ]
   },
   "position-values-expansion-default": {
     "createdBy": "",
@@ -62,7 +67,11 @@
     "values": {
       "At the drilling-bit": {},
       "At the back/shaft": {}
-    }
+    },
+    "order": [
+      "At the drilling-bit",
+      "At the back/shaft"
+    ]
   },
   "orientation-default-1": {
     "createdBy": "",
@@ -225,7 +234,20 @@
       "Republican / Repubblicano": {},
       "Imperial / Età imperiale": {},
       "Late antique / Tardo antico": {}
-    }
+    },
+    "order": [
+      "Bronze Age / Età del bronzo",
+      "Iron Age / Età del ferro",
+      "Villanova / Villanoviano",
+      "Orientalizing / Orientalizzante",
+      "Archaic / Arcaico",
+      "Classic / Classico",
+      "Late classic / Tardo-classico",
+      "Hellenistic / Ellenistico",
+      "Republican / Repubblicano",
+      "Imperial / Età imperiale",
+      "Late antique / Tardo antico"
+    ]
   },
   "periods-meninx-1": {
     "creationDate": "",
@@ -248,7 +270,22 @@
       "Phase III": {},
       "Phase IV": {},
       "Phase V": {}
-    }
+    },
+    "order": [
+      "Vorrömisch I. ca. 500 - 146 v. Chr. (punisch)",
+      "Vorrömisch II. 146 - 31 v. Chr. (neopunisch)",
+      "Frühe Kaiserzeit. 31 v. Chr. - 69 n. Chr. (augusteisch / iulisch-claudisch)",
+      "Mittlere Kaiserzeit I. ca. 69 - 117 n. Chr. (flavisch - trajanisch)",
+      "Mittlere Kaiserzeit II. 117 - 235 n. Chr. (hadrianisch - severisch)",
+      "Späte Kaiserzeit. 235 - 306 n. Chr. (Soldatenkaiser - tetrarchisch)",
+      "Spätantike I.  306 - 530 n. Chr. (konstantinisch - vandalisch)",
+      "Spätantike II. 530 - 698 n. Chr. (byzantinisch)",
+      "Phase I",
+      "Phase II",
+      "Phase III",
+      "Phase IV",
+      "Phase V"
+    ]
   },
   "periods-pergamon-1": {
     "creationDate": "",
@@ -293,7 +330,44 @@
       "Osmanisch": {},
       "Neuzeitlich": {},
       "Rezent": {}
-    }
+    },
+    "order": [
+      "Bronzezeitlich",
+      "Frühbronzezeitlich",
+      "Mittelbronzezeitlich",
+      "Spätbronzezeitlich",
+      "Eisenzeitlich",
+      "Geometrisch",
+      "Frühgeometrisch",
+      "Mittelgeometrisch",
+      "Spätgeometrisch",
+      "Archaisch",
+      "Früharchaisch",
+      "Mittelarchaisch",
+      "Spätarchaisch",
+      "Klassisch",
+      "Frühklassisch",
+      "Hochklassisch",
+      "Spätklassisch",
+      "Hellenistisch",
+      "Frühhellenistisch",
+      "Hochhellenistisch",
+      "Späthellenistisch",
+      "Römisch",
+      "Römisch/republikanisch",
+      "Kaiserzeitlich",
+      "Frühkaiserzeitlich",
+      "Mittelkaiserzeitlich",
+      "Spätkaiserzeitlich",
+      "Spätantik",
+      "Byzantinisch",
+      "Frühbyzantinisch",
+      "Spätbyzantinisch",
+      "Islamisch",
+      "Osmanisch",
+      "Neuzeitlich",
+      "Rezent"
+    ]
   },
   "periods-gadara": {
     "creationDate": "24-12-2019",
@@ -315,7 +389,21 @@
       "Mamlukisch": {},
       "Osmanisch": {},
       "Modern": {}
-    }
+    },
+    "order": [
+      "Eisenzeitlich",
+      "Hellenistisch",
+      "Hellenistisch/Römisch",
+      "Römisch",
+      "Römisch/Byzantinisch",
+      "Byzantinisch",
+      "Byzantinisch/Umayyadisch",
+      "Umayyadisch",
+      "Ayyubidisch",
+      "Mamlukisch",
+      "Osmanisch",
+      "Modern"
+    ]
   },
   "periods-wes-1": {
     "creationDate": "",
@@ -349,7 +437,33 @@
       "Sassanian": {},
       "Islamic": {},
       "Recent": {}
-    }
+    },
+    "order": [
+      "Ubaid 0",
+      "Ubaid 1",
+      "Ubaid 2",
+      "Ubaid 3",
+      "Ubaid 4",
+      "Early Uruk",
+      "Middle Uruk",
+      "Late Uruk",
+      "Jemdet Nasr",
+      "Early Dynastic I",
+      "Early Dynastic II",
+      "Early Dynastic III",
+      "Akkadian",
+      "Ur III",
+      "Isin-Larsa",
+      "Old Babylonian",
+      "Middle Babylonian",
+      "Isin II",
+      "New Babylonian",
+      "Late Babylonian",
+      "Seleucid-Parthian",
+      "Sassanian",
+      "Islamic",
+      "Recent"
+    ]
   },
   "period-SudanHeritage": {
     "creationDate": "14-11-2019",
@@ -371,7 +485,21 @@
       "Christian": {},
       "Islamic": {},
       "Modern History": {}
-    }
+    },
+    "order": [
+      "Paleolithic",
+      "Mesolithic",
+      "Neolithic",
+      "Pre-Kerma",
+      "Kerma",
+      "New Egyptian Kingdom",
+      "Napata",
+      "Meroe",
+      "Post-Meroitic",
+      "Christian",
+      "Islamic",
+      "Modern History"
+    ]
   },
   "colors-default-1": {
     "creationDate": "",
@@ -466,7 +594,13 @@
       "Stadtgrabung": {},
       "künstliche Schichten": {},
       "natürliche Schichten": {}
-    }
+    },
+    "order": [
+      "Feldgrabung",
+      "Stadtgrabung",
+      "künstliche Schichten",
+      "natürliche Schichten"
+    ]
   },
   "glass-decorationTechnique-default": {
     "creationDate": "",
@@ -1000,7 +1134,38 @@
       "römisches Theater": {},
       "vierschiffig": {},
       "zweischiffig": {}
-    }
+    },
+    "order": [
+      "Aediculabau",
+      "Atriumhaus",
+      "Bogen",
+      "Dipteros",
+      "Ehrenbogen",
+      "Ehrensäule",
+      "Hoftempel",
+      "Palast",
+      "Palästra",
+      "Peripteros",
+      "Peripteros sine portico",
+      "Peristylhaus",
+      "Pseudo-Dipteros",
+      "Pseudo-Peripteros",
+      "Rednertribüne",
+      "Rundbau",
+      "Schatzhaus",
+      "Terassenheiligtum",
+      "Tholos",
+      "Torbogen",
+      "Triumphbogen",
+      "Tumulus",
+      "Villa",
+      "dreischiffig",
+      "fünfschiffig",
+      "griechisches Theater",
+      "römisches Theater",
+      "vierschiffig",
+      "zweischiffig"
+    ]
   },
   "Building-buildingTechnique-default": {
     "creationDate": "",
@@ -1059,7 +1224,14 @@
       "mittel": {},
       "schlecht": {},
       "sehr schlecht": {}
-    }
+    },
+    "order": [
+      "sehr gut",
+      "gut",
+      "mittel",
+      "schlecht",
+      "sehr schlecht"
+    ]
   },
   "Building-conditionAmount-default": {
     "creationDate": "",
@@ -1072,7 +1244,12 @@
       "Fragmentarisch": {},
       "Vollständig": {},
       "Vollständig zerstört": {}
-    }
+    },
+    "order": [
+      "Fragmentarisch",
+      "Vollständig",
+      "Vollständig zerstört"
+    ]
   },
   "Building-context-default": {
     "creationDate": "",
@@ -1769,7 +1946,13 @@
       "GK": {},
       "TK": {},
       "KK": {}
-    }
+    },
+    "order": [
+      "FK",
+      "GK",
+      "TK",
+      "KK"
+    ]
   },
   "Pottery-objectType-default": {
     "creationDate": "",
@@ -1864,7 +2047,22 @@
       "T": {},
       "P": {},
       "Ks": {}
-    }
+    },
+    "order": [
+      "B",
+      "Bö",
+      "H",
+      "Ka",
+      "Kr",
+      "Sa",
+      "Sü",
+      "U",
+      "A",
+      "D",
+      "T",
+      "P",
+      "Ks"
+    ]
   },
   "Pottery-temperAmount-default": {
     "creationDate": "",
@@ -2025,7 +2223,16 @@
       "bruchsteingemauertes Grab": {},
       "quadergemauertes Grab": {},
       "ziegelgemauertes Grab": {}
-    }
+    },
+    "order": [
+      "Amphorenbestattung",
+      "In Dinos",
+      "In Krug",
+      "a cappuccina",
+      "bruchsteingemauertes Grab",
+      "quadergemauertes Grab",
+      "ziegelgemauertes Grab"
+    ]
   },
   "Grave-tombBuilding-default": {
     "createdBy": "",
@@ -2055,7 +2262,16 @@
       "Juvenil (13-18/20)": {},
       "Matur (40-60)": {},
       "Senil (60 <)": {}
-    }
+    },
+    "order": [
+      "Adult (18/20-40)",
+      "Fetus/Neonatus",
+      "Infans I (0-7)",
+      "Infans II (7-13)",
+      "Juvenil (13-18/20)",
+      "Matur (40-60)",
+      "Senil (60 <)"
+    ]
   },
   "Bone-boneClassification-default": {
     "creationDate": "",
@@ -2116,7 +2332,14 @@
       "III - um 550°C - Verfärbung etwa grau/blaugrau-milchig hellgrau": {},
       "IV - 650°-750°C - Verfärbung etwa milchig weiß-mattweiß/kreideartig": {},
       "V - ab 800°C - Verfärbung etwa altweiß/schmutzigweiß": {}
-    }
+    },
+    "order": [
+      "I - 200°-300°C - Verfärbung etwa gelblichweiß-elfenbein glasig",
+      "II - 300°-400°C - Verfärbung etwa braun-dunkelbraun/schwarz",
+      "III - um 550°C - Verfärbung etwa grau/blaugrau-milchig hellgrau",
+      "IV - 650°-750°C - Verfärbung etwa milchig weiß-mattweiß/kreideartig",
+      "V - ab 800°C - Verfärbung etwa altweiß/schmutzigweiß"
+    ]
   },
   "Bone-sex-default": {
     "creationDate": "",
@@ -2345,7 +2568,18 @@
       "1:50": {},
       "1:500": {},
       "1:5000": {}
-    }
+    },
+    "order": [
+      "1:1",
+      "1:10",
+      "1:100",
+      "1:1000",
+      "1:10000",
+      "1:20",
+      "1:50",
+      "1:500",
+      "1:5000"
+    ]
   },
   "Survey-researchMethod-default": {
     "creationDate": "",
@@ -2909,7 +3143,21 @@
       "- 10 Uhr": {},
       "- 11 Uhr": {},
       "- 12 Uhr": {}
-    }
+    },
+    "order": [
+      "- 1 Uhr",
+      "- 2 Uhr",
+      "- 3 Uhr",
+      "- 4 Uhr",
+      "- 5 Uhr",
+      "- 6 Uhr",
+      "- 7 Uhr",
+      "- 8 Uhr",
+      "- 9 Uhr",
+      "- 10 Uhr",
+      "- 11 Uhr",
+      "- 12 Uhr"
+    ]
   },
   "Find-storagePlace-default": {
     "createdBy": "",
@@ -3380,7 +3628,12 @@
       "Ja": {},
       "Nein": {},
       "Nicht notwendig": {}
-    }
+    },
+    "order": [
+      "Ja",
+      "Nein",
+      "Nicht notwendig"
+    ]
   },
   "Find-storagePlace-Boha": {
     "createdBy": "",
@@ -4108,7 +4361,13 @@
       "medium": {},
       "bad": {},
       "unknown": {}
-    }
+    },
+    "order": [
+      "good",
+      "medium",
+      "bad",
+      "unknown"
+    ]
   },
   "Feature-featureCondition-Campidoglio": {
     "createdBy": "",
@@ -4135,7 +4394,12 @@
       "Yes": {},
       "No": {},
       "Not necessary": {}
-    }
+    },
+    "order": [
+      "Yes",
+      "No",
+      "Not necessary"
+    ]
   },
   "Feature-featureBorders-Campidoglio": {
     "createdBy": "",
@@ -4274,7 +4538,14 @@
       "Medium / medie": {},
       "Bad / cattive": {},
       "Very bad / molto cattive": {}
-    }
+    },
+    "order": [
+      "Very good / molto buone",
+      "Good / buone",
+      "Medium / medie",
+      "Bad / cattive",
+      "Very bad / molto cattive"
+    ]
   },
   "Architecture-conditionAmount-Campidoglio": {
     "createdBy": "",
@@ -4308,7 +4579,18 @@
       "Very soft / molto morbido": {},
       "Friable / friabile": {},
       "Plastic / plastico": {}
-    }
+    },
+    "order": [
+      "Strongly cemented / fortemente consolidato",
+      "Weakly cemented / poco consolidato",
+      "Compact / compatto",
+      "Loose / sciolto",
+      "Hard / duro",
+      "Soft / morbido",
+      "Very soft / molto morbido",
+      "Friable / friabile",
+      "Plastic / plastico"
+    ]
   },
   "Floor-distinguishingCriteria-Campidoglio": {
     "createdBy": "",
@@ -4394,7 +4676,27 @@
       "Clayely loam / medio impasto argilloso": {},
       "Loam / medio impasto / Lehm": {},
       "Marl / marna / Mergel": {}
-    }
+    },
+    "order": [
+      "Sand / sabbia / Sand",
+      "Very fine sand / sabbia molto fine",
+      "Fine sand / sabbia fine",
+      "Medium sand / sabbia di dimensioni medie",
+      "Coarse sand / sabbia grossolana",
+      "Sandy silt / limo sabbioso",
+      "Sandy clay / argilla sabbiosa",
+      "Sandy loam / medio impasto sabbioso",
+      "Silt / limo / Schluff",
+      "Silty sand / sabbia limosa",
+      "Silty clay / argilla limosa",
+      "Silty loam / medio impasto limoso",
+      "Clay / argilla / Ton",
+      "Clayely sand / sabbia argillosa",
+      "Clayely silt / limo argilloso",
+      "Clayely loam / medio impasto argilloso",
+      "Loam / medio impasto / Lehm",
+      "Marl / marna / Mergel"
+    ]
   },
   "Layer-layerFinds-Campidoglio": {
     "createdBy": "",
@@ -5220,7 +5522,13 @@
       "sehr vereinzelte Funde": {},
       "durchschnittliche Menge": {},
       "sehr hohe Fundmenge": {}
-    }
+    },
+    "order": [
+      "keine Funde",
+      "sehr vereinzelte Funde",
+      "durchschnittliche Menge",
+      "sehr hohe Fundmenge"
+    ]
   },
   "SurveyUnit-modernIntervention-Kephissostal": {
     "createdBy": "",
@@ -5369,7 +5677,39 @@
       "T28": {},
       "T29": {},
       "T30": {}
-    }
+    },
+    "order": [
+      "T1",
+      "T2",
+      "T3",
+      "T4",
+      "T5",
+      "T6",
+      "T7",
+      "T8",
+      "T9",
+      "T10",
+      "T11",
+      "T12",
+      "T13",
+      "T14",
+      "T15",
+      "T16",
+      "T17",
+      "T18",
+      "T19",
+      "T20",
+      "T21",
+      "T22",
+      "T23",
+      "T24",
+      "T25",
+      "T26",
+      "T27",
+      "T28",
+      "T29",
+      "T30"
+    ]
   },
   "Pottery-potteryTypeSpecific-Meninx": {
     "createdBy": "",
@@ -5427,7 +5767,6 @@
       "en": ""
     },
     "values": {
-
       "70 A - Import": {},
       "47 A - Almagro 50 brown": {},
       "67 A - Ephesos (?)": {},
@@ -5488,7 +5827,69 @@
       "54 RB": {},
       "9  REDQ": {},
       "49 REDQ calc.": {}
-    }
+    },
+    "order": [
+      "70 A - Import",
+      "47 A - Almagro 50 brown",
+      "67 A - Ephesos (?)",
+      "46 A - Kapitän II coarse",
+      "45 A - Kapitän II fine",
+      "32 A - Rhodos",
+      "36 ähnl. BP",
+      "43 ähnl. HBUFF",
+      "53 BB",
+      "52 BB semi fine",
+      "8  BP",
+      "44 BP mit ÜZ",
+      "50 BROWNQ",
+      "65 BSP",
+      "16 BSWP",
+      "20 CBUFF",
+      "64 CBUFF Red",
+      "22 CSTRAW",
+      "84 FK - ARS",
+      "14 FK - LRC",
+      "1  FK - TS",
+      "56 FK 1",
+      "57 FK 2",
+      "58 FK 4",
+      "59 FK 5",
+      "85 FK 6",
+      "3  FK Import",
+      "19 FK3 - ESA",
+      "77 GB",
+      "68 GK Import",
+      "12 Glasierte Ware",
+      "30 GroW 1",
+      "31 Grow 2",
+      "62 GroW 3",
+      "63 GroW 4",
+      "24 GroW VAR",
+      "17 Handbade Painted Ware",
+      "18 HBUFF",
+      "81 HBUFF/BP",
+      "13 HRED",
+      "51 HREDcalc",
+      "4  KK - Jerash?",
+      "78 KK 1",
+      "83 KK Import",
+      "76 MA 1",
+      "75 MA 2",
+      "74 MA 3",
+      "73 MA 4",
+      "72 MA 5",
+      "71 MA 6",
+      "61 Neuzeitlich",
+      "66 OG",
+      "55 PINK mit ÜZ",
+      "23 PK PTD",
+      "79 Pompeian redware 1",
+      "82 Pompeian Redware 2",
+      "40 Porzellan",
+      "54 RB",
+      "9  REDQ",
+      "49 REDQ calc."
+    ]
   },
   "Bone-sex-Meninx": {
     "createdBy": "",
@@ -5605,7 +6006,13 @@
       "schlecht": {},
       "sehr gut": {},
       "sehr schlecht": {}
-    }
+    },
+    "order": [
+      "gut",
+      "schlecht",
+      "sehr gut",
+      "sehr schlecht"
+    ]
   },
   "Wall_surface-constructionDetails-Meninx": {
     "createdBy": "",
@@ -5746,7 +6153,12 @@
       "Ja": {},
       "Nein": {},
       "Nicht vorgesehen": {}
-    }
+    },
+    "order": [
+      "Ja",
+      "Nein",
+      "Nicht vorgesehen"
+    ]
   },
   "Find-conditionAmount-Pergamon": {
     "createdBy": "",
@@ -5904,7 +6316,13 @@
       "Weniger dicht": {},
       "Porös": {},
       "Sehr porös": {}
-    }
+    },
+    "order": [
+      "Dicht",
+      "Weniger dicht",
+      "Porös",
+      "Sehr porös"
+    ]
   },
   "Pottery-clayHardness-Pergamon": {
     "createdBy": "",
@@ -5918,7 +6336,13 @@
       "hart (mit Stahlklinge schwierig ritzbar, mit Fingernagel nicht ritzbar)": {},
       "mittel (mit Stahlklinge leicht ritzbar, mit Fingernagel schwer ritzbar)": {},
       "weich (mit Fingernagel leicht ritzbar)": {}
-    }
+    },
+    "order": [
+      "Klingend hart (mit Stahlklinge nicht ritzbar)",
+      "hart (mit Stahlklinge schwierig ritzbar, mit Fingernagel nicht ritzbar)",
+      "mittel (mit Stahlklinge leicht ritzbar, mit Fingernagel schwer ritzbar)",
+      "weich (mit Fingernagel leicht ritzbar)"
+    ]
   },
   "Pottery-fragmentSize-Pergamon": {
     "createdBy": "",
@@ -5931,7 +6355,12 @@
       "klein (bis 1 cm Kantenlänge)": {},
       "mittel (bis 5 cm Kantenlänge)": {},
       "groß (ab 5 cm Kantenlänge)": {}
-    }
+    },
+    "order": [
+      "klein (bis 1 cm Kantenlänge)",
+      "mittel (bis 5 cm Kantenlänge)",
+      "groß (ab 5 cm Kantenlänge)"
+    ]
   },
   "Pottery-breakStructure-Pergamon": {
     "createdBy": "",
@@ -5957,7 +6386,13 @@
       "Wenig abgerollt": {},
       "Abgerollt": {},
       "Stark abgerollt": {}
-    }
+    },
+    "order": [
+      "Scharfkantig",
+      "Wenig abgerollt",
+      "Abgerollt",
+      "Stark abgerollt"
+    ]
   },
   "Pottery-surfaceCondition-Pergamon": {
     "createdBy": "",
@@ -6111,7 +6546,41 @@
       "Tropfen": {},
       "Schlacke": {},
       "Unbestimmt": {}
-    }
+    },
+    "order": [
+      "--Gefäße--",
+      "Trinkgefäß",
+      "Schüssel",
+      "Teller",
+      "Platte",
+      "Krug",
+      "Kanne",
+      "Amphora",
+      "Deckel/Verschluss",
+      "Siebgefäß",
+      "Unguentarium",
+      "Pyxis",
+      "Thymiaterion",
+      "Askos",
+      "Guttus",
+      "--Geräte--",
+      "Lampe",
+      "Löffel",
+      "Rührstab",
+      "Weinheber",
+      "--Schmuck--",
+      "Anhänger",
+      "Armreif",
+      "Gemme",
+      "Perle",
+      "Ring",
+      "--Plastik--",
+      "Einlage",
+      "--Produktionsreste--",
+      "Tropfen",
+      "Schlacke",
+      "Unbestimmt"
+    ]
   },
   "Glass-manufacturingMethod-Pergamon": {
     "createdBy": "",
@@ -6616,7 +7085,13 @@
       "weiblich": {},
       "Hermaphrodit": {},
       "Unbekannt": {}
-    }
+    },
+    "order": [
+      "männlich",
+      "weiblich",
+      "Hermaphrodit",
+      "Unbekannt"
+    ]
   },
   "Terracotta-depictedBeingAge-Pergamon": {
     "createdBy": "",
@@ -6631,7 +7106,14 @@
       "jugendlich (12-18 Jahre)": {},
       "erwachsen (18-44 Jahre)": {},
       "alt (ab 45 Jahre)": {}
-    }
+    },
+    "order": [
+      "kleinkindlich (bis 3 Jahre)",
+      "kindlich (4-12 Jahre)",
+      "jugendlich (12-18 Jahre)",
+      "erwachsen (18-44 Jahre)",
+      "alt (ab 45 Jahre)"
+    ]
   },
   "Terracotta-depictedBeingFormat-Pergamon": {
     "createdBy": "",
@@ -6873,7 +7355,14 @@
       "lebensgroß (bis 180 cm)": {},
       "unterlebensgroß (bis 130 cm)": {},
       "miniatur (bis 80 cm)": {}
-    }
+    },
+    "order": [
+      "kolossal (über 300m)",
+      "überlebensgroß (über 180 cm)",
+      "lebensgroß (bis 180 cm)",
+      "unterlebensgroß (bis 130 cm)",
+      "miniatur (bis 80 cm)"
+    ]
   },
   "Mollusk-classification-Pergamon": {
     "createdBy": "",
@@ -6903,7 +7392,12 @@
       "Ja": {},
       "Nein": {},
       "Unsicher bzw. unbestimmbar": {}
-    }
+    },
+    "order": [
+      "Ja",
+      "Nein",
+      "Unsicher bzw. unbestimmbar"
+    ]
   },
   "Mollusk-objectType-Pergamon": {
     "createdBy": "",
@@ -7042,7 +7536,12 @@
       "Ja": {},
       "Nein": {},
       "Unsicher": {}
-    }
+    },
+    "order": [
+      "Ja",
+      "Nein",
+      "Unsicher"
+    ]
   },
   "Stone-material-Pergamon": {
     "createdBy": "",
@@ -7313,7 +7812,17 @@
       "D": {},
       "VAR": {},
       "KOMP": {}
-    }
+    },
+    "order": [
+      "RF",
+      "BF",
+      "WF",
+      "H",
+      "RF mit H",
+      "D",
+      "VAR",
+      "KOMP"
+    ]
   },
   "Pottery-vesselpart-WES": {
     "createdBy": "Max Haibt",
@@ -7359,7 +7868,21 @@
       "high": {},
       "very high": {},
       "unbaked": {}
-    }
+    },
+    "order": [
+      "normal",
+      "over fired",
+      "semi melted",
+      "waste",
+      "oxidating atmosphere",
+      "reducing atmosphere",
+      "bonfire (non-uniform colors)",
+      "low",
+      "medium",
+      "high",
+      "very high",
+      "unbaked"
+    ]
   },
   "Pottery-condition-WES": {
     "createdBy": "Max Haibt",
@@ -8080,7 +8603,19 @@
       "smith hammered": {},
       "retouched on the shaft": {},
       "glued on the shaft": {}
-    }
+    },
+    "order": [
+      "knapped",
+      "on flake",
+      "on blade",
+      "shaped by knapping",
+      "retouched cutting edge",
+      "grinded cutting edge",
+      "metal casted",
+      "smith hammered",
+      "retouched on the shaft",
+      "glued on the shaft"
+    ]
   },
   "FragmentOfCuttingtool-TracesOfUse-WES": {
     "createdBy": "Max Haibt",
@@ -8131,7 +8666,21 @@
       "smith hammered": {},
       "retouched on the shaft": {},
       "glued on the shaft": {}
-    }
+    },
+    "order": [
+      "knapped",
+      "on flake",
+      "on blade",
+      "shaped by knapping",
+      "retouched chopping edge",
+      "retouched",
+      "retouched on sides",
+      "grinded cutting edge",
+      "metal casted",
+      "smith hammered",
+      "retouched on the shaft",
+      "glued on the shaft"
+    ]
   },
   "FragmentofCoating-material-WES": {
     "createdBy": "Max Haibt",
@@ -8328,7 +8877,14 @@
       "on blade": {},
       "on preform": {},
       "retouched": {}
-    }
+    },
+    "order": [
+      "knapped",
+      "on flake",
+      "on blade",
+      "on preform",
+      "retouched"
+    ]
   },
   "FragmentOfBead-TracesofPerforationProductionMethodSideA-WES": {
     "createdBy": "Max Haibt",
@@ -9363,29 +9919,35 @@
     "values": {
       "Gut": {
         "labels": {
-        "en": "Good",
-        "de": "Bonne"
-      }
+          "en": "Good",
+          "de": "Bonne"
+        }
       },
       "Mittel": {
         "labels": {
-        "en": "Medium",
-        "de": "Moyenne"
-      }
+          "en": "Medium",
+          "de": "Moyenne"
+        }
       },
       "Schlecht": {
         "labels": {
-        "en": "Bad",
-        "de": "Mauvaise"
-      }
+          "en": "Bad",
+          "de": "Mauvaise"
+        }
       },
       "Unbekannt": {
         "labels": {
-        "en": "Unknown",
-        "de": "Inconnue"
+          "en": "Unknown",
+          "de": "Inconnue"
+        }
       }
-      }
-    }
+    },
+    "order": [
+      "Gut",
+      "Mittel",
+      "Schlecht",
+      "Unbekannt"
+    ]
   },
   "colors-Abbircella-1": {
     "creationDate": "",
@@ -9857,23 +10419,28 @@
     "values": {
       "Ja": {
         "labels": {
-        "en": "Yes",
-        "de": "Oui"
-      }
+          "en": "Yes",
+          "de": "Oui"
+        }
       },
       "Nein": {
         "labels": {
-        "en": "No",
-        "de": "Non"
-      }
+          "en": "No",
+          "de": "Non"
+        }
       },
       "Nicht notwendig": {
         "labels": {
-        "en": "Not necessary",
-        "de": "Pas nécessaire"
+          "en": "Not necessary",
+          "de": "Pas nécessaire"
+        }
       }
-      }
-    }
+    },
+    "order": [
+      "Ja",
+      "Nein",
+      "Nicht notwendig"
+    ]
   },
   "periods-Abbircella-1": {
     "creationDate": "",
@@ -9885,51 +10452,51 @@
     "values": {
       "Vorrömisch I. ca. 500-146 v. Chr. (punisch)": {
         "labels": {
-        "en": "Pre-Roman I. ca. 500-146 BC (Punic)",
-        "de": "Préromain I. env. 500–146 av. J.-C. (punique)"
-      }
+          "en": "Pre-Roman I. ca. 500-146 BC (Punic)",
+          "de": "Préromain I. env. 500–146 av. J.-C. (punique)"
+        }
       },
       "Vorrömisch II. 146-31 v. Chr. (neopunisch)": {
         "labels": {
-        "en": "Pre-Roman II. 146-31 BC (neo-Punic)",
-        "de": "Préromain II. 146–31 av. J.-C. (néo-punique)"
-      }
+          "en": "Pre-Roman II. 146-31 BC (neo-Punic)",
+          "de": "Préromain II. 146–31 av. J.-C. (néo-punique)"
+        }
       },
       "Frühe Kaiserzeit. 31 v. Chr. - 69 n. Chr. (augusteisch / iulisch-claudisch)": {
         "labels": {
-        "en": "Early Empire. 31 BC – 69 AD (Augustan / Julio-Claudian)",
-        "de": "Haut-Empire. 31 av. J.-C. – 69 ap. J.-C. (augustéen / julio-claudien)"
-      }
+          "en": "Early Empire. 31 BC – 69 AD (Augustan / Julio-Claudian)",
+          "de": "Haut-Empire. 31 av. J.-C. – 69 ap. J.-C. (augustéen / julio-claudien)"
+        }
       },
       "Mittlere Kaiserzeit I. ca. 69-117 n. Chr. (flavisch - trajanisch)": {
         "labels": {
-        "en": "Middle Empire I. ca. 69-117 AD (Flavian – Trajanic)",
-        "de": "Moyen-Empire I. environ 69–117 ap. J.-C. (flavien – trajanien)"
-      }
+          "en": "Middle Empire I. ca. 69-117 AD (Flavian – Trajanic)",
+          "de": "Moyen-Empire I. environ 69–117 ap. J.-C. (flavien – trajanien)"
+        }
       },
       "Mittlere Kaiserzeit II. 117-235 n. Chr. (hadrianisch - severisch)": {
         "labels": {
-        "en": "Middle Empire II. 117–235 AD (Hadrianic – Severan)",
-        "de": "Moyen-Empire II. 117–235 ap. J.-C. (hadrien – sévèrien)"
-      }
+          "en": "Middle Empire II. 117–235 AD (Hadrianic – Severan)",
+          "de": "Moyen-Empire II. 117–235 ap. J.-C. (hadrien – sévèrien)"
+        }
       },
       "Späte Kaiserzeit. 235-306 n. Chr. (Soldatenkaiser - tetrarchisch)": {
         "labels": {
-        "en": "Late Empire. 235-306 AD (Military Anarchy – Tetrarchic)",
-        "de": "Bas-Empire. 235–306 ap. J.-C. (anarchie militaire – tétrarchien)"
-      }
+          "en": "Late Empire. 235-306 AD (Military Anarchy – Tetrarchic)",
+          "de": "Bas-Empire. 235–306 ap. J.-C. (anarchie militaire – tétrarchien)"
+        }
       },
       "Spätantike I.  306-530 n. Chr. (konstantinisch - vandalisch)": {
         "labels": {
-        "en": "Late Antiquity I.  306-530 AD (Constantinian – Vandalic)",
-        "de": "Antiquité tardive I. 306–530 ap. J.-C. (constantinien – vandale)"
-      }
+          "en": "Late Antiquity I.  306-530 AD (Constantinian – Vandalic)",
+          "de": "Antiquité tardive I. 306–530 ap. J.-C. (constantinien – vandale)"
+        }
       },
       "Spätantike II. 530-698 n. Chr. (byzantinisch)": {
         "labels": {
-        "en": "Late Antiquity II. 530-698 AD (Byzantine)",
-        "de": "Antiquité tardive II. 530–698 n. Chr. (byzantin)"
-      }
+          "en": "Late Antiquity II. 530-698 AD (Byzantine)",
+          "de": "Antiquité tardive II. 530–698 n. Chr. (byzantin)"
+        }
       },
       "Phase I": {},
       "Phase II": {},
@@ -9941,7 +10508,27 @@
       "Phase VIII": {},
       "Phase IX": {},
       "Phase X": {}
-    }
+    },
+    "order": [
+      "Vorrömisch I. ca. 500-146 v. Chr. (punisch)",
+      "Vorrömisch II. 146-31 v. Chr. (neopunisch)",
+      "Frühe Kaiserzeit. 31 v. Chr. - 69 n. Chr. (augusteisch / iulisch-claudisch)",
+      "Mittlere Kaiserzeit I. ca. 69-117 n. Chr. (flavisch - trajanisch)",
+      "Mittlere Kaiserzeit II. 117-235 n. Chr. (hadrianisch - severisch)",
+      "Späte Kaiserzeit. 235-306 n. Chr. (Soldatenkaiser - tetrarchisch)",
+      "Spätantike I.  306-530 n. Chr. (konstantinisch - vandalisch)",
+      "Spätantike II. 530-698 n. Chr. (byzantinisch)",
+      "Phase I",
+      "Phase II",
+      "Phase III",
+      "Phase IV",
+      "Phase V",
+      "Phase VI",
+      "Phase VII",
+      "Phase VIII",
+      "Phase IX",
+      "Phase X"
+    ]
   },
   "Layer-consistency-Abbircella": {
     "creationDate": "",
@@ -10871,35 +11458,42 @@
     "values": {
       "Sehr gut": {
         "labels": {
-        "en": "Very good",
-        "de": "Très bonne"
-      }
+          "en": "Very good",
+          "de": "Très bonne"
+        }
       },
       "Gut": {
         "labels": {
-        "en": "Good",
-        "de": "Bonne"
-      }
+          "en": "Good",
+          "de": "Bonne"
+        }
       },
       "Mittel": {
         "labels": {
-        "en": "Medium",
-        "de": "Moyenne"
-      }
+          "en": "Medium",
+          "de": "Moyenne"
+        }
       },
       "Schlecht": {
         "labels": {
-        "en": "Bad",
-        "de": "Mauvaise"
-      }
+          "en": "Bad",
+          "de": "Mauvaise"
+        }
       },
       "Sehr schlecht": {
         "labels": {
-        "en": "Very bad",
-        "de": "Très mauvaise"
+          "en": "Very bad",
+          "de": "Très mauvaise"
+        }
       }
-      }
-    }
+    },
+    "order": [
+      "Sehr gut",
+      "Gut",
+      "Mittel",
+      "Schlecht",
+      "Sehr schlecht"
+    ]
   },
   "Architecture-conditionAmount-Abbircella": {
     "createdBy": "",

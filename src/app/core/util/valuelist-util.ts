@@ -4,6 +4,7 @@ import {Document, Resource} from 'idai-components-2';
 import {FieldDefinition} from '../configuration/model/field-definition';
 import {ValueDefinition, ValuelistDefinition} from '../configuration/model/valuelist-definition';
 import {clone} from './object-util';
+import {SortUtil} from './sort-util';
 
 const locale: string = typeof window !== 'undefined'
   ? window.require('electron').remote.getGlobal('config').locale
@@ -78,7 +79,7 @@ export module ValuelistUtil {
         return Object.keys(valuelist.values).sort(
             valuelist.order
                 ? sortByCustomOrder(valuelist.order)
-                : sortAlphabetically(valuelist)
+                : sortAlphanumerically(valuelist)
         );
     }
 
@@ -89,10 +90,12 @@ export module ValuelistUtil {
     };
 
 
-    const sortAlphabetically = (valuelist: ValuelistDefinition) => (valueA: string, valueB: string): number => {
+    const sortAlphanumerically = (valuelist: ValuelistDefinition) => (valueA: string, valueB: string): number => {
 
-        return getValueLabel(valuelist, valueA).toLowerCase()
-            .localeCompare(getValueLabel(valuelist, valueB).toLowerCase());
+        return SortUtil.alnumCompare(
+            getValueLabel(valuelist, valueA).toLowerCase(),
+            getValueLabel(valuelist, valueB).toLowerCase()
+        );
     };
 
 

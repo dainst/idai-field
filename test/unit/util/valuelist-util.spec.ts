@@ -8,14 +8,14 @@ import {ValuelistDefinition} from '../../../src/app/core/configuration/model/val
 
 describe('ValuelistUtil', () => {
 
-    it('sort values alphabetically', () => {
+    it('sort values alphanumerically', () => {
 
         const valuelist: ValuelistDefinition = {
             values: {
-                '1': { labels: { de: 'D' } },
-                '2': { labels: { de: 'A' } },
-                '3': { labels: { de: 'C' } },
-                '4': { labels: { de: 'B' } },
+                '1': { labels: { de: 'B300' } },
+                '2': { labels: { de: 'A3' } },
+                '3': { labels: { de: 'B3' } },
+                '4': { labels: { de: 'A300' } },
             }
         };
 

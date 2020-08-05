@@ -7,7 +7,7 @@ import {clone} from './object-util';
 
 const locale: string = typeof window !== 'undefined'
   ? window.require('electron').remote.getGlobal('config').locale
-  : require('electron').remote.getGlobal('config').locale;
+  : require('electron').remote ? require('electron').remote.getGlobal('config').locale : 'de';
 
 
 /**

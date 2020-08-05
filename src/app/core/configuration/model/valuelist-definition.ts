@@ -33,8 +33,6 @@ export module ValuelistDefinition {
         if (valuelistDefinition.description === undefined) throw [ConfigurationErrors.MISSING_CATEGORY_PROPERTY, 'description', valuelistId];
         if (valuelistDefinition.createdBy === undefined) throw [ConfigurationErrors.MISSING_CATEGORY_PROPERTY, 'createdBy', valuelistId];
         if (valuelistDefinition.creationDate === undefined) throw [ConfigurationErrors.MISSING_CATEGORY_PROPERTY, 'creationDate', valuelistId];
-
-        // TODO Validate order
     }
 }
 

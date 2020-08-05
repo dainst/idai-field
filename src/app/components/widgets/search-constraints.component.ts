@@ -60,7 +60,7 @@ export abstract class SearchConstraintsComponent implements OnChanges {
     }
 
 
-    public getValues = (valuelist: ValuelistDefinition) => Object.keys(valuelist.values);
+    public getValues = (valuelist: ValuelistDefinition) => ValuelistUtil.getOrderedValues(valuelist);
 
     public getValueLabel = (valuelist: ValuelistDefinition, valueId: string) =>
         ValuelistUtil.getValueLabel(valuelist, valueId);

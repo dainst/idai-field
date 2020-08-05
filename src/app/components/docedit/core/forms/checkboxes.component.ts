@@ -36,7 +36,7 @@ export class CheckboxesComponent implements OnChanges {
     }
 
 
-    public getValues = () => this.valuelist ? Object.keys(this.valuelist.values) : [];
+    public getValues = () => this.valuelist ? ValuelistUtil.getOrderedValues(this.valuelist) : [];
 
     public getLabel = (valueId: string) => ValuelistUtil.getValueLabel(this.valuelist, valueId);
 

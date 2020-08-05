@@ -17,13 +17,12 @@ export interface ValuelistDefinition {
     createdBy?: string;
     creationDate?: string;
 
+    // Valuelists are shown in alphabetical order per default.
+    // For cases in which another order is required, it can be specified in this property.
+    order?: string[];
+
     extends?: string; // to be implemented
     constraints?: any; // to be implemented
-
-    // In the default case it is assumed that the order
-    // in which the valuelist's entries are displayed does not matter.
-    // For cases in which it does matter, one can specify the display order.
-    order?: string[]; // to be implemented
 }
 
 
@@ -34,6 +33,8 @@ export module ValuelistDefinition {
         if (valuelistDefinition.description === undefined) throw [ConfigurationErrors.MISSING_CATEGORY_PROPERTY, 'description', valuelistId];
         if (valuelistDefinition.createdBy === undefined) throw [ConfigurationErrors.MISSING_CATEGORY_PROPERTY, 'createdBy', valuelistId];
         if (valuelistDefinition.creationDate === undefined) throw [ConfigurationErrors.MISSING_CATEGORY_PROPERTY, 'creationDate', valuelistId];
+
+        // TODO Validate order
     }
 }
 

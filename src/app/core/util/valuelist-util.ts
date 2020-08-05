@@ -73,6 +73,29 @@ export module ValuelistUtil {
     }
 
 
+    export function getOrderedValues(valuelist: ValuelistDefinition): string[] {
+
+        return Object.keys(valuelist.values).sort(
+            valuelist.order
+                ? sortByCustomOrder(valuelist.order)
+                : sortAlphabetically(valuelist)
+        );
+    }
+
+
+    const sortByCustomOrder = (order: string[]) => (valueA: string, valueB: string): number => {
+
+        return order.indexOf(valueA) - order.indexOf(valueB);
+    };
+
+
+    const sortAlphabetically = (valuelist: ValuelistDefinition) => (valueA: string, valueB: string): number => {
+
+        return getValueLabel(valuelist, valueA).toLowerCase()
+            .localeCompare(getValueLabel(valuelist, valueB).toLowerCase());
+    };
+
+
     function getValuesOfParentField(valuelist: ValuelistDefinition, fieldName: string,
                                     parentResource: Resource): ValuelistDefinition {
 

@@ -102,11 +102,11 @@
                                             {{getValuelistDescription(field.valuelist)}}
                                         </div>
                                         <div class="row valuelist">
-                                            <div *ngFor="let item of field.valuelist.values | keyvalue"
+                                            <div *ngFor="let value of getValues(field.valuelist)"
                                                     class="col-2 value-col">
                                                 <span class="badge badge-light value-badge">
-                                                    {{getValueLabel(field.valuelist, item.key)}}
-                                                    <code>{{item.key}}</code>
+                                                    {{getValueLabel(field.valuelist, value)}}
+                                                    <code>{{value}}</code>
                                                 </span>
                                             </div>
                                         </div>

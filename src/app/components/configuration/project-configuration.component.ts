@@ -44,7 +44,10 @@ export class ProjectConfigurationComponent {
     }
 
 
-    public getValueLabel = ValuelistUtil.getValueLabel;
+    public getValueLabel = (valuelist: ValuelistDefinition, valueId: string) =>
+        ValuelistUtil.getValueLabel(valuelist, valueId);
+
+    public getValues = (valuelist: ValuelistDefinition) => ValuelistUtil.getOrderedValues(valuelist);
 
     public getValuelistDescription = (valuelist: ValuelistDefinition) => valuelist.description?.[locale];
 

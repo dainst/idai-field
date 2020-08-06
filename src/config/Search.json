@@ -27,7 +27,7 @@
     "constraint": ["area", "processor", "supervisor", "campaign"]
   },
   "Place": {
-    "constraint": ["gazId", "placeName", "ancient", "findspotClassification", "siteClassification"]
+    "constraint": ["gazId", "placeName", "findspotClassification", "siteClassification"]
   },
   "Layer": {
     "constraint": ["isNatural", "consistency", "distinguishingCriteria", "layerClassification", "soilType"]

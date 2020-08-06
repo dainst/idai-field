@@ -6,7 +6,7 @@
     "Trench": ["researchQuestion", "trenchComment", "excavationType", "spatialLocation"],
     "Building": ["material", "context", "condition", "conditionAmount", "conditionComment", "hasRestoration", "buildingType", "buildingTechnique", "buildingCategory", "buildingCategorySpecific", "architecturalOrders", "buildingHistory", "buildingResearchHistory", "excavationHistory", "history"],
     "Survey": ["researchMethod"],
-    "Place": ["gazId", "placeName", "ancient", "siteClassification", "findspotClassification", "modernIntervention", "excavationHistory", "buildingResearchHistory", "buildingHistory", "findSituation"],
+    "Place": ["gazId", "placeName", "siteClassification", "findspotClassification", "modernIntervention", "excavationHistory", "buildingResearchHistory", "buildingHistory", "findSituation"],
     "Feature": ["stratigraphicReliability", "color", "hasDisturbance", "featureForm", "featureBorders", "comparison", "featureAmount"],
     "Layer": ["distinguishingCriteria", "layerClassification", "isNatural", "soilType", "appearance", "consistency"],
     "Grave": ["spatialLocation", "soilType", "condition", "conditionAmount", "conditionComment", "distinguishingCriteria", "graveType", "specificType", "tombBuilding", "findingPlace", "bibliography", "publicationDatingFinds", "publicationDatingStratigraphy", "publicationDatingScientific", "publicationRemark"],

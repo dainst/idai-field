@@ -116,7 +116,7 @@ const getTemplate = (mainWindow, context) => {
                 if (focusedWindow) {
                   focusedWindow.reload();
                   if (global.mode === 'production') {
-                    focusedWindow.loadURL('file://' + __dirname + '/../dist/' + global.config.locale + '/index.html');
+                    focusedWindow.loadURL('file://' + __dirname + '/../dist/' + global.getLocale() + '/index.html');
                   }
                 }
             }

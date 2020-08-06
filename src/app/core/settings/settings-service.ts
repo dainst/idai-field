@@ -104,7 +104,7 @@ export class SettingsService {
             await this.pouchdbManager.loadProjectDb(
                 this.getSelectedProject(),
                 new SampleDataLoader(
-                    this.imageConverter, this.settings.imagestorePath, this.settings.locale, progress
+                    this.imageConverter, this.settings.imagestorePath, Settings.getLocale(), progress
                 )
             );
 
@@ -137,7 +137,7 @@ export class SettingsService {
             return await this.appConfigurator.go(
                 configurationDirPath,
                 SettingsService.getConfigurationName(this.getSelectedProject()),
-                this.getSettings().locale
+                Settings.getLocale()
             );
         } catch (msgsWithParams) {
             if (isString(msgsWithParams)) {

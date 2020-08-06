@@ -4,6 +4,7 @@ import {HttpClient} from '@angular/common/http';
 import {Chapter, HelpLoader} from './help-loader';
 import {SettingsService} from '../../core/settings/settings-service';
 import {TabManager} from '../../core/tabs/tab-manager';
+import {Settings} from '../../core/settings/settings';
 
 const remote = typeof window !== 'undefined' ? window.require('electron').remote : require('electron').remote;
 
@@ -42,7 +43,7 @@ export class HelpComponent implements OnInit {
         const folderPath: string = remote.getGlobal('manualPath');
 
         const {html, chapters} = await HelpLoader.load(
-            HelpComponent.getFilePath(this.settingsService.getSettings().locale, folderPath),
+            HelpComponent.getFilePath(Settings.getLocale(), folderPath),
             folderPath,
             this.http,
             this.domSanitizer

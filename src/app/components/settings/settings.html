@@ -19,17 +19,10 @@
 
                     <div class="form-group" style="margin-bottom: 0;">
                         <label class="control-label col-form-label"
-                               for="language-select"
                                i18n="@@settings.general.language">
                             Sprache
                         </label>
-                        <select id="language-select"
-                               [ngModel]="settings.locale"
-                               (ngModelChange)="settings.locale = $event"
-                               class="form-control">
-                            <option value="de">Deutsch</option>
-                            <option value="en">English</option>
-                        </select>
+                        <language-settings [languages]="settings.languages"></language-settings>
                     </div>
 
                     <div class="form-group" style="margin-bottom: 0;">

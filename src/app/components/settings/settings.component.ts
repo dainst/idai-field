@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {equal} from 'tsfun';
 import {SettingsService} from '../../core/settings/settings-service';
 import {Settings} from '../../core/settings/settings';
 import {M} from '../messages/m';
@@ -61,7 +62,8 @@ export class SettingsComponent implements OnInit {
     public async save() {
 
         this.saving = true;
-        const localeChanged: boolean = this.settings.locale !== this.settingsService.getSettings().locale;
+        const languagesChanged: boolean
+            = !equal(this.settings.languages)(this.settingsService.getSettings().languages);
 
         try {
             await this.settingsService.updateSettings(this.settings);
@@ -71,7 +73,7 @@ export class SettingsComponent implements OnInit {
             return;
         }
 
-        await this.handleSaveSuccess(localeChanged);
+        await this.handleSaveSuccess(languagesChanged);
     }
 
 
@@ -92,11 +94,11 @@ export class SettingsComponent implements OnInit {
     }
 
 
-    private async handleSaveSuccess(localeChanged: boolean) {
+    private async handleSaveSuccess(languagesChanged: boolean) {
 
         remote.getGlobal('updateConfig')(this.settings);
 
-        if (localeChanged) {
+        if (languagesChanged) {
             reload();
         } else {
             try {

@@ -8,6 +8,8 @@ const autoUpdate = require('./auto-update.js');
 
 let menuContext = 'loading';
 
+const mainLanguages = ['de', 'en'];
+
 // needed to fix notifications in win 10
 // see https://github.com/electron/electron/issues/10864
 electron.app.setAppUserModelId('org.dainst.field');
@@ -32,18 +34,34 @@ global.setConfigDefaults = config => {
     if (!config.syncTarget) config.syncTarget = {};
     if (!config.remoteSites) config.remoteSites = [];
     if (config.isAutoUpdateActive === undefined) config.isAutoUpdateActive = true;
-    if (!config.locale) config.locale = electron.app.getLocale().includes('de') || global.mode === 'test' ? 'de' : 'en';
+    setLanguages(config);
     if (os.type() === 'Linux') config.isAutoUpdateActive = false;
 
     return config;
 };
 
 
+const setLanguages = config => {
+
+    if (!config.languages || config.languages.length === 0) {
+        config.languages = config.locale    // Use value from deprecated locale setting if existing
+            ? [config.locale]
+            : electron.app.getLocale().includes('de') || global.mode === 'test' ? ['de'] : ['en'];
+    }
+
+    config.languages = config.languages
+        .concat(mainLanguages.filter(language => !config.languages.includes(language)));
+};
+
+
+global.getLocale = () => global.config.languages.find(language => mainLanguages.includes(language));
+
+
 global.updateConfig = config => {
 
-    const oldLocale = global.config.locale;
+    const oldLocale = global.getLocale();
     global.config = config;
-    if (global.config.locale !== oldLocale) createMenu();
+    if (global.getLocale() !== oldLocale) createMenu();
 };
 
 
@@ -196,7 +214,7 @@ electron.app.on('ready', () => {
     loadConfig();
 
     global.distUrl = global.mode === 'production'
-        ? 'file://' + __dirname + '/../dist/' + global.config.locale + '/'
+        ? 'file://' + __dirname + '/../dist/' + global.getLocale() + '/'
         : 'http://localhost:4200/dist/';
 
     createWindow();
@@ -232,7 +250,7 @@ electron.ipcMain.on('reload', (event, route) => {
         url.format(
             global.mode === 'production'
             ? {
-                pathname: require('path').join(__dirname, '/../dist/' + global.config.locale + '/index.html'),
+                pathname: require('path').join(__dirname, '/../dist/' + global.getLocale() + '/index.html'),
                 protocol: 'file:',
                 slahes: true,
                 hash: route

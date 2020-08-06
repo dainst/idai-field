@@ -78,7 +78,7 @@ const messageDictionary = {
 };
 
 
-const get = (identifier) => messageDictionary[global.config.locale][identifier];
+const get = (identifier) => messageDictionary[global.getLocale()][identifier];
 
 
 module.exports = {

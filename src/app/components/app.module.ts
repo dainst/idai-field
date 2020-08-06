@@ -70,6 +70,7 @@ import {DocumentCache} from '../core/datastore/cached/document-cache';
 import {FieldCategoryConverter} from '../core/datastore/field/field-category-converter';
 import {InitializationProgress} from '../core/initialization-progress';
 import {AngularUtility} from '../angular/angular-utility';
+import {Settings} from '../core/settings/settings';
 
 const remote = typeof window !== 'undefined' ? window.require('electron').remote : require('electron').remote;
 
@@ -131,7 +132,7 @@ registerLocaleData(localeDe, 'de');
                 pouchdbServer.setupServer()
                     .then(() => progress.setPhase('loadingSettings'))
                     .then(() => (new SettingsSerializer).load())
-                    .then(settings => progress.setEnvironment(settings.dbs[0], settings.locale).then(() =>
+                    .then(settings => progress.setEnvironment(settings.dbs[0], Settings.getLocale()).then(() =>
                         settingsService.bootProjectDb(settings, progress).then(() =>
                             settingsService.loadConfiguration(remote.getGlobal('configurationDirPath'), progress))))
                     .then(configuration => {

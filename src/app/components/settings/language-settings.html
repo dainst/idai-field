@@ -1,0 +1,9 @@
+<ul class="list-group list-group-flush"
+    cdkDropList [cdkDropListData]="languages"
+    (cdkDropListDropped)="onDrop($event)">
+    <li *ngFor="let language of languages"
+        class="list-group-item"
+        cdkDrag [cdkDragData]="language">
+        {{getLabel(language)}}
+    </li>
+</ul>

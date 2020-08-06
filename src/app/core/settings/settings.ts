@@ -1,3 +1,6 @@
+const remote = typeof window !== 'undefined' ? window.require('electron').remote : require('electron').remote;
+
+
 export interface SyncTarget {
 
     address: string;
@@ -7,7 +10,7 @@ export interface SyncTarget {
 
 export interface Settings {
 
-    locale: string;
+    languages: string[];
     isAutoUpdateActive: boolean;
     isSyncActive: boolean;
     remoteSites: Array<string>;
@@ -16,4 +19,13 @@ export interface Settings {
     username: string;
     dbs: Array<string>;
     imagestorePath: string;
+}
+
+
+export module Settings {
+
+    export function getLocale(): string {
+
+        return remote.getGlobal('getLocale')();
+    }
 }

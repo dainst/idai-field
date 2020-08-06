@@ -2,10 +2,25 @@
  * @author Thomas Kleinke
  */
 
+language-settings {
+  .list-group {
+    border: 1px solid rgba(0, 0, 0, 0.125);
+  }
+
+  .list-group-item {
+    border-bottom: none !important;
+  }
+}
+
 .cdk-drag-placeholder {
   color: white;
 }
 
-.list-group {
-  border: 1px solid rgba(0, 0, 0, 0.125);
+.cdk-drag {
+  cursor: move;
+}
+
+.cdk-drag-preview {
+  border: 1px solid rgba(0, 0, 0, 0.125) !important;
+  border-radius: 0 !important;
 }

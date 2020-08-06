@@ -44,9 +44,16 @@ global.setConfigDefaults = config => {
 const setLanguages = config => {
 
     if (!config.languages || config.languages.length === 0) {
-        config.languages = config.locale    // Use value from deprecated locale setting if existing
-            ? [config.locale]
-            : electron.app.getLocale().includes('de') || global.mode === 'test' ? ['de'] : ['en'];
+        if (global.mode === 'test') {
+            config.languages = ['de'];
+        } else if (config.locale) {
+            // Use value from deprecated locale setting if existing
+            config.languages = [config.locale];
+        } else {
+            config.languages = mainLanguages.includes(electron.app.getLocale())
+                ? electron.app.getLocale()
+                : ['de'];
+        }
     }
 
     config.languages = config.languages

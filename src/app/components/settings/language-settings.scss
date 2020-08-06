@@ -23,4 +23,8 @@ language-settings {
 .cdk-drag-preview {
   border: 1px solid rgba(0, 0, 0, 0.125) !important;
   border-radius: 0 !important;
+
+  .priority {
+    display: none;
+  }
 }

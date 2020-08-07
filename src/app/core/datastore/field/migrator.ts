@@ -1,6 +1,13 @@
 import {isObject, flow} from 'tsfun';
 import {Document, ValOptionalEndVal} from 'idai-components-2';
-import {migrationMap, singleToMultipleValuesFieldNames} from './migration-map';
+
+
+export const singleToMultipleValuesFieldNames: string[] = [
+    'processor',
+    'supervisor',
+    'draughtsmen',
+    'campaign'
+];
 
 
 /**
@@ -12,7 +19,7 @@ export module Migrator {
 
         return flow(
             document,
-            migrateFieldNames,
+            migrateGeneralFieldsAndRelations,
             migratePeriodFields,
             migrateSingleToMultipleValues
         );
@@ -42,21 +49,14 @@ export module Migrator {
     }
 
 
-    function migrateFieldNames(document: Document): Document {
-
-        const resource: any = {};
+    function migrateGeneralFieldsAndRelations(document: Document): Document {
 
         if (document.resource.relations) delete document.resource.relations['includes'];
 
-        Object.keys(document.resource).forEach((fieldName: string) => {
-           const newFieldName: string = migrationMap[fieldName] ? migrationMap[fieldName] : fieldName;
-
-           resource[newFieldName] = document.resource[fieldName];
-           // TODO no deletion of original field?
-        });
-
-        document.resource = resource;
-
+        if (document.resource.type) {
+            document.resource.category = document.resource['type'];
+            delete document.resource['type'];
+        }
         return document;
     }
 

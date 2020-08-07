@@ -2,7 +2,9 @@
  * @author Thomas Kleinke
  */
 
-ul {
-  max-height: 400px;
-  overflow-y: auto;
+.language-picker-modal-body {
+  ul {
+    max-height: 400px;
+    overflow-y: auto;
+  }
 }

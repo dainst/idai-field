@@ -1,6 +1,6 @@
 import {Document} from 'idai-components-2';
 import {ImportErrors as E} from '../../../../../src/app/core/import/import/import-errors';
-import {process} from '../../../../../src/app/core/import/import/process/process';
+import {MERGE_TARGET, process} from '../../../../../src/app/core/import/import/process/process';
 import {createMockValidator, d} from './helper';
 import {HierarchicalRelations} from '../../../../../src/app/core/model/relation-constants';
 import RECORDED_IN = HierarchicalRelations.RECORDEDIN;
@@ -381,8 +381,8 @@ describe('process()', () => {
                 relations: {}
             }
         };
-        (document1 as any)['mergeTarget'] = existingFeature;
-        (document2 as any)['mergeTarget'] = existingFeature;
+        (document1 as any)[MERGE_TARGET] = existingFeature;
+        // (document2 as any)['mergeTarget'] = existingFeature; <- the second merge target gets ignored
 
         const result = await process([document1, document2], validator, operationCategoryNames, get, relationInverses, { mergeMode: true });
 

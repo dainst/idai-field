@@ -1,6 +1,6 @@
 import {duplicates, to} from 'tsfun';
 import {assoc} from 'tsfun/associative';
-import {Document, NewDocument} from 'idai-components-2';
+import {Document} from 'idai-components-2';
 import {ImportValidator} from './import-validator';
 import {ImportErrors as E} from '../import-errors';
 import {RESOURCE_IDENTIFIER} from '../../../constants';
@@ -10,7 +10,6 @@ import {assertLegalCombination} from '../utils';
 import {ImportOptions} from '../import-documents';
 import {mergeResource} from './merge-resource';
 import {InverseRelationsMap} from '../../../configuration/inverse-relations-map';
-import {clone} from '../../../util/object-util';
 
 
 /**
@@ -118,7 +117,7 @@ function processDocuments(documents: Array<Document>, validator: ImportValidator
 
     // TODO test manually: it seems it hangs on corrupt json instead of displaying error
 
-    const finalDocuments = {}; // TODO review that we do not have multiple find, but fetch merge target only once before this function is called
+    const finalDocuments = {};
 
     for (const document of documents) {
 
@@ -129,6 +128,7 @@ function processDocuments(documents: Array<Document>, validator: ImportValidator
         let finalDocument;
         if (mergeMode) {
             const mergeTarget = finalDocuments[document.resource.id] ?? document[MERGE_TARGET];
+            if (!mergeTarget) throw 'FATAL - in process.: no merge target';
             const mergedResource = mergeResource(mergeTarget.resource, document.resource);
             finalDocument = assoc(Document.RESOURCE, mergedResource)(mergeTarget);
         } else {

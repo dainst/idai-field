@@ -24,9 +24,9 @@ describe('ConfigLoader', () => {
 
         configReader.read.and.returnValues(
             libraryCategories,
-            {},
-            languageConfiguration,
             customLanguageConfiguration,
+            languageConfiguration,
+            {},
             customFieldsConfiguration,
             {},
             {},

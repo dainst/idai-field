@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Map} from 'tsfun';
+import {isUndefinedOrEmpty, Map, not} from 'tsfun';
 import {ProjectConfiguration} from '../project-configuration';
 import {ConfigurationValidation} from './configuration-validation';
 import {ConfigReader} from './config-reader';
@@ -84,38 +84,21 @@ export class ConfigLoader {
             + '/Config-' + (customConfigurationName ? customConfigurationName : 'Default') + '.json';
 
         let customCategories;
-        let languageCoreConfigurations: any[];
         let languageConfigurations: any[];
-        let customLanguageConfigurations: any[];
         let searchConfiguration: any;
         let valuelistsConfiguration: any;
         let orderConfiguration: any;
 
         try {
-            languageCoreConfigurations = this.readLanguageConfigurations(
-                configDirPath + '/Core/Language.',
-                languages
-            );
             languageConfigurations = this.readLanguageConfigurations(
-                configDirPath + '/Library/Language.',
-                languages
+                configDirPath, languages, customConfigurationName
             );
-            customLanguageConfigurations = this.readLanguageConfigurations(
-                configDirPath + '/Language-' + (customConfigurationName
-                    ? customConfigurationName
-                    : 'Custom')
-                + '.',
-                languages
-            );
-
             customCategories = this.configReader.read(customConfigPath);
             searchConfiguration = this.configReader.read(searchConfigurationPath);
             valuelistsConfiguration = this.configReader.read(valuelistsConfigurationPath);
             orderConfiguration = this.configReader.read(orderConfigurationPath);
 
-            //console.log('languageCoreConfigurations', languageCoreConfigurations);
             //console.log('languageConfigurations', languageConfigurations);
-            //console.log('customLanguageConfigurations', customLanguageConfigurations);
         } catch (msgWithParams) {
             throw [msgWithParams];
         }
@@ -133,9 +116,7 @@ export class ConfigLoader {
                     valuelistsConfiguration,
                     extraFields,
                     relations,
-                    languageCoreConfigurations[0],
-                    languageConfigurations[0],
-                    customLanguageConfigurations[0],
+                    languageConfigurations,
                     searchConfiguration,
                     orderConfiguration,
                     (categories: any) => {
@@ -151,16 +132,34 @@ export class ConfigLoader {
     }
 
 
-    private readLanguageConfigurations(basePath: string, languages: string[]): any[] {
+    private readLanguageConfigurations(configDirPath: string, languages: string[],
+                                       customConfigurationName: string): any[] {
 
-        const configurations: any[] = [];
+        const configurations = [];
 
         for (const language of languages) {
-            const path: string = basePath + language + '.json';
-            if (!this.configReader.exists(path)) continue;
-            configurations.push(this.configReader.read(path));
+            configurations.push(
+                this.readLanguageConfiguration(configDirPath + '/Language-' +
+                    (customConfigurationName
+                        ? customConfigurationName
+                        : 'Custom')
+                    + '.' + language + '.json')
+            );
+            configurations.push(
+                this.readLanguageConfiguration(configDirPath + '/Library/Language.' + language + '.json')
+            );
+            configurations.push(
+                this.readLanguageConfiguration(configDirPath + '/Core/Language.' + language + '.json')
+            );
         }
 
-        return configurations;
+        return configurations.filter(not(isUndefinedOrEmpty));
+    }
+
+
+    private readLanguageConfiguration(path: string): any|undefined {
+
+        if (!this.configReader.exists(path)) return undefined;
+        return this.configReader.read(path);
     }
 }

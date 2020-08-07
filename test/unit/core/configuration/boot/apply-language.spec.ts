@@ -1,7 +1,7 @@
 import {Map} from 'tsfun';
 import {LibraryCategoryDefinition} from '../../../../../src/app/core/configuration/model/library-category-definition';
 import {CategoryDefinition} from '../../../../../src/app/core/configuration/model/category-definition';
-import {applyLanguage} from '../../../../../src/app/core/configuration/boot/apply-language';
+import {applyLanguageConfigurations} from '../../../../../src/app/core/configuration/boot/apply-language-configurations';
 
 
 
@@ -49,7 +49,7 @@ describe('applyLanguage', () => {
             [{ name: 'isRecordedIn' }, { name: 'isContemporaryWith' }]
         ];
 
-        const languageConfiguration = {
+        const languageConfigurations = [{
             categories: {
                 A: {
                     label: 'A_',
@@ -68,9 +68,9 @@ describe('applyLanguage', () => {
                     label: 'isRecordedIn_'
                 }
             }
-        };
+        }];
 
-        const [categories,relations] = applyLanguage(languageConfiguration)(configuration);
+        const [categories,relations] = applyLanguageConfigurations(languageConfigurations)(configuration);
 
         expect(categories['A'].label).toEqual('A_');
         expect(categories['B'].label).toBeUndefined();

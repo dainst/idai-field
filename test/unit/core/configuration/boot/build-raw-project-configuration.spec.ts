@@ -1209,7 +1209,7 @@ describe('buildRawProjectConfiguration', () => {
             B: { parent: 'A', fields: { field4: { inputType: FieldDefinition.InputType.TEXT }} }
         };
 
-        const languageConf = {
+        const languageConfigurations = [{
             groups: {
                 'stem': 'Stem',
                 'parent': 'Parent'
@@ -1218,10 +1218,10 @@ describe('buildRawProjectConfiguration', () => {
                 'A': { label: 'A_' },
                 'B': { label: 'B_' }
             }
-        };
+        }];
 
         const result = buildRaw(
-            builtInCategories, {}, customCategories, {}, {}, {}, [], {}, languageConf
+            builtInCategories, {}, customCategories, {}, {}, {}, [], languageConfigurations
         );
 
         expect(result['A'].groups[0].label).toEqual('Stem');
@@ -1250,7 +1250,7 @@ describe('buildRawProjectConfiguration', () => {
         const orderConf = { categories: ['C', 'A'] };
 
         const result = buildRawArray(
-            builtInCategories, {}, customCategories, {}, {}, {}, [], {}, {}, {}, {}, orderConf
+            builtInCategories, {}, customCategories, {}, {}, {}, [], [], {}, orderConf
         ).map(toName);
 
         expect(result).toEqual(['C', 'A', 'B']);
@@ -1276,7 +1276,7 @@ describe('buildRawProjectConfiguration', () => {
         const orderConf = { categories: ['C', 'A'] };
 
         const result = buildRaw(
-            builtInCategories, {}, customCategories, {}, {}, {}, [], {}, {}, {}, {}, orderConf
+            builtInCategories, {}, customCategories, {}, {}, {}, [], [], {}, orderConf
         )['D'].children.map(to(Named.NAME));
 
         expect(result).toEqual(['C', 'A', 'B']);
@@ -1341,7 +1341,7 @@ describe('buildRawProjectConfiguration', () => {
         };
 
         const result = buildRaw(
-            builtInCategories, {}, customCategories, {}, {}, {}, [], {}, { other: { geometry: 'Geometry' }}
+            builtInCategories, {}, customCategories, {}, {}, {}, [], [{ other: { geometry: 'Geometry' } }]
         );
         const parentGroup = result['P'].groups[0];
         const childGroup = result['P'].children[0].groups[0];
@@ -1371,7 +1371,7 @@ describe('buildRawProjectConfiguration', () => {
         };
 
         const categoriesTree = buildRawProjectConfiguration(
-            builtInCategories, {}, customCategories, {}, {}, {}, [], { other: { geometry: 'Geometry' }}
+            builtInCategories, {}, customCategories, {}, {}, {}, [], [{ other: { geometry: 'Geometry' } }]
         )[0];
 
         expect(accessTree(categoriesTree, 0).children[0].name).toBe('C');

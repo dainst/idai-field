@@ -117,7 +117,7 @@ registerLocaleData(localeDe, 'de');
     ],
     providers: [
         DecimalPipe,
-        { provide: LOCALE_ID, useValue: remote.getGlobal('config').locale },
+        { provide: LOCALE_ID, useValue: remote.getGlobal('getLocale')() },
         { provide: TRANSLATIONS, useValue: Translations.getTranslations() },
         { provide: TRANSLATIONS_FORMAT, useValue: 'xlf' },
         I18n,

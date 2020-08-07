@@ -1,6 +1,6 @@
 import {Document} from 'idai-components-2';
 import {ImportErrors as E} from '../../../../../src/app/core/import/import/import-errors';
-import {process} from '../../../../../src/app/core/import/import/process/process';
+import {MERGE_TARGET, process} from '../../../../../src/app/core/import/import/process/process';
 import {createMockValidator, d} from './helper';
 import {HierarchicalRelations} from '../../../../../src/app/core/model/relation-constants';
 import RECORDED_IN = HierarchicalRelations.RECORDEDIN;
@@ -349,6 +349,48 @@ describe('process()', () => {
 
         expect(result[0].length).toBe(0);
         expect(result[2]).not.toBeUndefined();
+        done();
+    });
+
+
+    it('merge, multiple times', async done => {
+
+        const document1: Document = {
+            _id: '1',
+            created: { user: '', date: new Date() },
+            modified: [],
+            resource: {
+                category: 'Feature',
+                identifier: 'existingFeature',
+                field1: 'new1',
+                shortDescription: 'sd1',
+                id: 'ef1',
+                relations: {}
+            }
+        };
+        const document2: Document = {
+            _id: '1',
+            created: { user: '', date: new Date() },
+            modified: [],
+            resource: {
+                category: 'Feature',
+                identifier: 'existingFeature',
+                field2: 'new2',
+                shortDescription: 'sd2',
+                id: 'ef1',
+                relations: {}
+            }
+        };
+        (document1 as any)[MERGE_TARGET] = existingFeature;
+        // (document2 as any)['mergeTarget'] = existingFeature; <- the second merge target gets ignored
+
+        const result = await process([document1, document2], validator, operationCategoryNames, get, relationInverses, { mergeMode: true });
+
+        const resource = result[0][0].resource;
+        expect(resource.id).toBe('ef1');
+        expect(resource['field1']).toEqual('new1');
+        expect(resource['field2']).toEqual('new2');
+        expect(resource['shortDescription']).toEqual('sd2');
         done();
     });
 

@@ -128,14 +128,12 @@ function processDocuments(documents: Array<Document>,
         validator.assertDropdownRangeComplete(document.resource); // we want dropdown fields to be complete before merge
         if (!mergeMode) validator.assertIsKnownCategory(document);
 
-        let finalDocument;
+        let finalDocument = document;
         if (mergeMode) {
             const mergeTarget = finalDocuments[document.resource.id] ?? mergeDocs[document.resource.id];
             if (!mergeTarget) throw 'FATAL - in process.ts: no merge target';
             const mergedResource = mergeResource(mergeTarget.resource, document.resource);
-            finalDocument = assoc(Document.RESOURCE, mergedResource)(mergeTarget);
-        } else {
-            finalDocument = document;
+            finalDocument = assoc(Document.RESOURCE, mergedResource)(mergeTarget) as any;
         }
         finalDocuments[finalDocument.resource.id] = finalDocument;
 

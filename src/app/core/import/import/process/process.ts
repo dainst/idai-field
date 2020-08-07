@@ -112,7 +112,6 @@ function assertNoDuplicates(documents: Array<Document>) {
 /**
  * @returns clones of the documents with their properties validated and adjusted
  */
-// TODO test manually: it seems it hangs on corrupt json instead of displaying error
 function processDocuments(documents: Array<Document>,
                           mergeDocs: { [resourceId: string]: Document },
                           validator: ImportValidator): Array<Document> {

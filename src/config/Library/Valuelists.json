@@ -12354,5 +12354,2426 @@
         }
       }
     }
+  },
+  "Survey-researchMethod-Selinunt": {
+    "creationDate": "13-4-2020",
+    "createdBy": "Melanie Jonasch / Fabian Riebschläger",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "Befliegung": {
+        "labels": {
+          "en": "Volo"
+        }
+      },
+      "Begehung": {
+        "labels": {
+          "en": "Ricognizione sul territorio"
+        }
+      },
+      "Geoelektrik": {
+        "labels": {
+          "en": "Geoelettrica"
+        }
+      },
+      "Geomagnetik": {
+        "labels": {
+          "en": "Geomagnetica"
+        }
+      },
+      "Georadar": {},
+      "LIDAR": {},
+      "Seismik": {
+        "labels": {
+          "en": "Sismica"
+        }
+      },
+      "Rammkernsondagen": {
+        "labels": {
+          "en": "Carotaggio"
+        }
+      }
+    }
+  },
+  "Place-siteClassification-Selinunt": {
+    "creationDate": "13-4-2020",
+    "createdBy": "Melanie Jonasch / Fabian Riebschläger",
+    "description": {
+      "de": "Ortsklassifikation",
+      "en": ""
+    },
+    "values": {
+      "Siedlung": {
+        "labels": {
+          "en": "Insediamento"
+        }
+      },
+      "Baukomplex ": {
+        "labels": {
+          "en": "Complesso edilizio"
+        }
+      },
+      "Einzelnes Bauwerk": {
+        "labels": {
+          "en": "Edificio"
+        }
+      },
+      "Bestattungsplatz": {
+        "labels": {
+          "en": "Necropoli"
+        }
+      },
+      "Produktionsplatz": {
+        "labels": {
+          "en": "Sito di produzione"
+        }
+      },
+      "Kultstätte": {
+        "labels": {
+          "en": "Area sacra"
+        }
+      },
+      "Landwirtschaftliche Nutzfläche": {
+        "labels": {
+          "en": "Terreno coltivabile"
+        }
+      },
+      "Naturraum": {
+        "labels": {
+          "en": "Spazio naturale"
+        }
+      }
+    }
+  },
+  "Layer-layerClassification-Selinunt": {
+    "creationDate": "14-4-2020",
+    "createdBy": "Melanie Jonasch / Fabian Riebschläger",
+    "description": {
+      "de": "Ansprache des Erdbefunds",
+      "en": ""
+    },
+    "values": {
+      "Ackerkrume": {
+        "labels": {
+          "en": "Strato arabile"
+        }
+      },
+      "Auffüllung": {
+        "labels": {
+          "en": "Riempimento"
+        }
+      },
+      "Ablagerung": {
+        "labels": {
+          "en": "Accumulo"
+        }
+      },
+      "Alluvialboden": {
+        "labels": {
+          "en": "Alluvialboden"
+        }
+      },
+      "Nutzungshorizont": {
+        "labels": {
+          "en": "Piano funzionale"
+        }
+      },
+      "Deponierung": {
+        "labels": {
+          "en": "Deposizione"
+        }
+      },
+      "Laufhorizont": {
+        "labels": {
+          "en": "Piano di calpestio"
+        }
+      },
+      "Versturz": {
+        "labels": {
+          "en": "Crollo"
+        }
+      },
+      "Brandschicht": {
+        "labels": {
+          "en": "Strato bruciato"
+        }
+      },
+      "Grube": {
+        "labels": {
+          "en": "Fossa"
+        }
+      },
+      "Fundamentgraben": {
+        "labels": {
+          "en": "Fossa di fondazione"
+        }
+      },
+      "Raubgraben": {
+        "labels": {
+          "en": "Fossa di spoliazione"
+        }
+      },
+      "Pfostenloch": {
+        "labels": {
+          "en": "FoBuco di palo"
+        }
+      },
+      "Geologisch gewachsener Boden": {
+        "labels": {
+          "en": "Terra vergine"
+        }
+      }
+    }
+  },
+  "Layer-colors-Selinunt-1": {
+    "creationDate": "16-4-2020",
+    "createdBy": "Melanie Jonasch / Fabian Riebschläger",
+    "description": {
+      "de": "Selinunt Farbset 1, Erdbefunde",
+      "en": ""
+    },
+    "values": {
+      "braun": {
+        "labels": {
+          "en": "marrone"
+        }
+      },
+      "gelbbraun": {
+        "labels": {
+          "en": "giallo-marrone"
+        }
+      },
+      "graubraun": {
+        "labels": {
+          "en": "grigio-marrone"
+        }
+      },
+      "rotbraun": {
+        "labels": {
+          "en": "marrone-rossastro"
+        }
+      },
+      "schwarzbraun": {
+        "labels": {
+          "en": "nero-marrone"
+        }
+      },
+      "beige": {
+        "labels": {
+          "en": "beige"
+        }
+      },
+      "ocker": {
+        "labels": {
+          "en": "ocra"
+        }
+      },
+      "gelb": {
+        "labels": {
+          "en": "giallo"
+        }
+      },
+      "grau": {
+        "labels": {
+          "en": "griglio"
+        }
+      },
+      "blaugrau": {
+        "labels": {
+          "en": "griglio-blu"
+        }
+      },
+      "rot": {
+        "labels": {
+          "en": "rosso"
+        }
+      },
+      "orange": {
+        "labels": {
+          "en": "arrancione"
+        }
+      },
+      "rosa": {
+        "labels": {
+          "en": "rosa"
+        }
+      },
+      "violett": {
+        "labels": {
+          "en": "viola"
+        }
+      },
+      "blau": {
+        "labels": {
+          "en": "blu"
+        }
+      },
+      "grün": {
+        "labels": {
+          "en": "verde"
+        }
+      },
+      "schwarz": {
+        "labels": {
+          "en": "nero"
+        }
+      },
+      "weiß": {
+        "labels": {
+          "en": "bianco"
+        }
+      }
+    }
+  },
+  "colorsLightness-Selinunt-1": {
+    "creationDate": "16-4-2020",
+    "createdBy": "Melanie Jonasch / Fabian Riebschläger",
+    "description": {
+      "de": "Selinunt Farbhelligkeit 1, Verschiedener Nutzen",
+      "en": ""
+    },
+    "values": {
+      "hell": {
+        "labels": {
+          "en": "chiaro"
+        }
+      },
+      "mittel": {
+        "labels": {
+          "en": "medio"
+        }
+      },
+      "dunkel": {
+        "labels": {
+          "en": "scuro"
+        }
+      }
+    }
+  },
+  "Layer-soilType-Selinunt-1": {
+    "creationDate": "16-4-2020",
+    "createdBy": "Melanie Jonasch / Fabian Riebschläger",
+    "description": {
+      "de": "Zusammensetzung des Bodens",
+      "en": ""
+    },
+    "values": {
+      "Sand": {
+        "labels": {
+          "en": "Sabbia"
+        }
+      },
+      "Schluff": {
+        "labels": {
+          "en": "Limo"
+        }
+      },
+      "Lehm": {
+        "labels": {
+          "en": "Argilla"
+        }
+      },
+      "Humus": {
+        "labels": {
+          "en": "Humus"
+        }
+      },
+      "Kalk": {
+        "labels": {
+          "en": "Calce"
+        }
+      },
+      "Kalkstein": {
+        "labels": {
+          "en": "Calcare"
+        }
+      },
+      "Sandstein": {
+        "labels": {
+          "en": "Arenaria"
+        }
+      },
+      "Mergel": {
+        "labels": {
+          "en": "Marna"
+        }
+      },
+      "Vulkangestein": {
+        "labels": {
+          "en": "Pietra lavica"
+        }
+      },
+      "Kiesel": {
+        "labels": {
+          "en": "Ciottoli"
+        }
+      },
+      "Schlick": {
+        "labels": {
+          "en": "Ciottoli"
+        }
+      },
+      "Organisches": {
+        "labels": {
+          "en": "Ciottoli"
+        }
+      }
+    }
+  },
+  "Layer-findComposition-Selinunt": {
+    "creationDate": "16-4-2020",
+    "createdBy": "Melanie Jonasch / Fabian Riebschläger",
+    "description": {
+      "de": "Zusammensetzung des Bodens",
+      "en": ""
+    },
+    "values": {
+      "Ziegel": {
+        "labels": {
+          "en": "Mattone"
+        }
+      },
+      "Keramik": {
+        "labels": {
+          "en": "Ceramica"
+        }
+      },
+      "Metall": {
+        "labels": {
+          "en": "Metallo"
+        }
+      },
+      "Münzen": {
+        "labels": {
+          "en": "Moneta"
+        }
+      },
+      "Glas": {
+        "labels": {
+          "en": "Vetro"
+        }
+      },
+      "Knochen": {
+        "labels": {
+          "en": "Osso"
+        }
+      },
+      "Holzkohle": {
+        "labels": {
+          "en": "Carbone"
+        }
+      },
+      "Schlacke": {
+        "labels": {
+          "en": "Scoria"
+        }
+      },
+      "Muscheln": {
+        "labels": {
+          "en": "Conchiglia"
+        }
+      },
+      "Verputz": {
+        "labels": {
+          "en": "Intonaco"
+        }
+      }
+    }
+  },
+  "Layer-consistency-Selinunt-1": {
+    "creationDate": "16-4-2020",
+    "createdBy": "Melanie Jonasch / Fabian Riebschläger",
+    "description": {
+      "de": "Konsistenz des Erdbefundes",
+      "en": ""
+    },
+    "values": {
+      "locker": {
+        "labels": {
+          "en": "sciolta"
+        }
+      },
+      "porös": {
+        "labels": {
+          "en": "friabile"
+        }
+      },
+      "fest": {
+        "labels": {
+          "en": "solida"
+        }
+      },
+      "kompakt": {
+        "labels": {
+          "en": "compatta"
+        }
+      },
+      "zäh": {
+        "labels": {
+          "en": "tenace plastica"
+        }
+      },
+      "hart": {
+        "labels": {
+          "en": "dura"
+        }
+      }
+    }
+  },
+  "Feature-featureBorders-Selinunt": {
+    "creationDate": "16-4-2020",
+    "createdBy": "Melanie Jonasch / Fabian Riebschläger",
+    "description": {
+      "de": "Befundgrenzen Selinunt",
+      "en": ""
+    },
+    "values": {
+      "Nach oben: deutlich": {
+        "labels": {
+          "en": "Superiore: distinto"
+        }
+      },
+      "Nach oben: diffus": {
+        "labels": {
+          "en": "Superiore: graduale"
+        }
+      },
+      "Nach oben: willkürlich": {
+        "labels": {
+          "en": "Superiore: arbitrario"
+        }
+      },
+      "Nach unten: deutlich": {
+        "labels": {
+          "en": "Inferiore: distinto"
+        }
+      },
+      "Nach unten: diffus": {
+        "labels": {
+          "en": "Inferiore: graduale"
+        }
+      },
+      "Nach unten: willkürlich": {
+        "labels": {
+          "en": "Inferiore: arbitrario"
+        }
+      },
+      "In der Fläche: deutlich": {
+        "labels": {
+          "en": "Laterale: distinto"
+        }
+      },
+      "In der Fläche: diffus": {
+        "labels": {
+          "en": "Laterale: graduale"
+        }
+      },
+      "In der Fläche: willkürlich": {
+        "labels": {
+          "en": "Laterale: arbitrario"
+        }
+      }
+    }
+  },
+  "Feature-featureForm-Selinunt": {
+    "creationDate": "16-4-2020",
+    "createdBy": "Melanie Jonasch / Fabian Riebschläger",
+    "description": {
+      "de": "Form der SE, Selinunt",
+      "en": ""
+    },
+    "values": {
+      "eckig": {
+        "labels": {
+          "en": "anguloso"
+        }
+      },
+      "rund": {
+        "labels": {
+          "en": "tondo"
+        }
+      },
+      "formlos": {
+        "labels": {
+          "en": "informe"
+        }
+      }
+    }
+  },
+  "Layer-distinguishingCriteria-Selinunt": {
+    "creationDate": "17-4-2020",
+    "createdBy": "Melanie Jonasch / Fabian Riebschläger",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "Farbe": {
+        "labels": {
+          "en": "Colore"
+        }
+      },
+      "Form": {
+        "labels": {
+          "en": "Forma"
+        }
+      },
+      "Konsistenz": {
+        "labels": {
+          "en": "Consistenza"
+        }
+      },
+      "Zusammensetzung": {
+        "labels": {
+          "en": "Composizione"
+        }
+      }
+    }
+  },
+  "periods-Selinunt-1": {
+    "createdBy": "Melanie Jonasch / Fabian Riebschläger",
+    "creationDate": "26-6-2020",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "Frühbronzezeitlich ": {
+        "labels": {
+          "de": "Frühbronzezeit",
+          "en": "Bronzo antico"
+        }
+      },
+      "Bronzezeitlich": {
+        "labels": {
+          "de": "Bronzezeit",
+          "en": "Età del bronzo"
+        }
+      },
+      "Eisenzeitlich": {
+        "labels": {
+          "de": "Eisenzeit",
+          "en": "Età del ferro"
+        }
+      },
+      "Archaisch": {
+        "labels": {
+          "de": "Archaik",
+          "en": "Età arcaica"
+        }
+      },
+      "Spätarchaisch": {
+        "labels": {
+          "de": "Spätarchaik",
+          "en": "Tardo arcaico"
+        }
+      },
+      "Klassisch": {
+        "labels": {
+          "de": "Klassik",
+          "en": "Età classica"
+        }
+      },
+      "Spätklassisch": {
+        "labels": {
+          "de": "Spätklassik",
+          "en": "Tardo classico"
+        }
+      },
+      "Frühhellenistisch": {
+        "labels": {
+          "de": "Frühhellenismus",
+          "en": "Alto ellenismo"
+        }
+      },
+      "Hellenistisch": {
+        "labels": {
+          "de": "Hellenismus",
+          "en": "Ellenismo"
+        }
+      },
+      "Frühkorinthisch": {
+        "labels": {
+          "de": "Frühkorinthisch",
+          "en": "Frühkorinthisch"
+        }
+      },
+      "Mittelkorinthisch": {
+        "labels": {
+          "de": "Mittelkorinthisch",
+          "en": "Mittelkorinthisch"
+        }
+      },
+      "Spätkorinthisch": {
+        "labels": {
+          "de": "Spätkorinthisch",
+          "en": "Spätkorinthisch"
+        }
+      },
+      "Republikanisch": {
+        "labels": {
+          "de": "Römische Republik",
+          "en": "Repubblica Romana"
+        }
+      },
+      "Kaiserzeitlich": {
+        "labels": {
+          "de": "Römische Kaiserzeit",
+          "en": "Età imperiale"
+        }
+      },
+      "Spätkaiserzeitlich": {
+        "labels": {
+          "de": "Späte Kaiserzeit",
+          "en": "Basso impero"
+        }
+      },
+      "Byzantinisch": {
+        "labels": {
+          "de": "Byzantinisches Reich",
+          "en": "Impero bizantino"
+        }
+      },
+      "Arabisch": {
+        "labels": {
+          "de": "Arabische Vorherrschaft",
+          "en": "Periodo islamico"
+        }
+      },
+      "Normannisch": {
+        "labels": {
+          "de": "Normannisches Königreich",
+          "en": "Epoca normanna"
+        }
+      },
+      "Staufisch": {
+        "labels": {
+          "de": "Dynastie der Staufer",
+          "en": "Epoca sveva"
+        }
+      },
+      "Rezent": {
+        "labels": {
+          "de": "Rezent",
+          "en": "Recente"
+        }
+      }
+    }
+  },
+  "Architecture-architectureClassification-Selinunt": {
+    "creationDate": "17-4-2020",
+    "createdBy": "Melanie Jonasch / Fabian Riebschläger",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "Mauer": {
+        "labels": {
+          "en": "Muro"
+        }
+      },
+      "Fundament": {
+        "labels": {
+          "en": "Fondazione"
+        }
+      },
+      "Schwelle": {
+        "labels": {
+          "en": "Soglia"
+        }
+      },
+      "Steinsetzung": {
+        "labels": {
+          "en": "Allineamento di pietre"
+        }
+      },
+      "Fußboden": {
+        "labels": {
+          "en": "Pavimento"
+        }
+      },
+      "Podium, Bank": {
+        "labels": {
+          "en": "podio, panchina"
+        }
+      },
+      "Treppe": {
+        "labels": {
+          "en": "Scala"
+        }
+      },
+      "Ofen, Herdstelle": {
+        "labels": {
+          "en": "Forno, Focolare"
+        }
+      },
+      "Becken": {
+        "labels": {
+          "en": "Vasca"
+        }
+      },
+      "Kanal, Leitung": {
+        "labels": {
+          "en": "Canale, Conduttura"
+        }
+      },
+      "Latrine": {
+        "labels": {
+          "en": "Latrina"
+        }
+      },
+      "Brunnen": {
+        "labels": {
+          "en": "Pozzo"
+        }
+      },
+      "Zisterne": {
+        "labels": {
+          "en": "Cisterna"
+        }
+      },
+      "Straße": {
+        "labels": {
+          "en": "Strada"
+        }
+      },
+      "Säule": {
+        "labels": {
+          "en": "Colonna"
+        }
+      },
+      "Pfeiler": {
+        "labels": {
+          "en": "Pilastro"
+        }
+      }
+    }
+  },
+  "Architecture-architectureMaterial-Selinunt": {
+    "creationDate": "23-4-2020",
+    "createdBy": "Melanie Jonasch / Fabian Riebschläger",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "Kalkstein": {
+        "labels": {
+          "en": "Calcare"
+        }
+      },
+      "Marmor": {
+        "labels": {
+          "en": "Marmo"
+        }
+      },
+      "Vulkangestein": {
+        "labels": {
+          "en": "Pietra lavica"
+        }
+      },
+      "Sandstein": {
+        "labels": {
+          "en": "Arenaria"
+        }
+      },
+      "Granit": {
+        "labels": {
+          "en": "Granito"
+        }
+      },
+      "Kiesel": {
+        "labels": {
+          "en": "Ciottoli"
+        }
+      },
+      "Anstehender Fels": {
+        "labels": {
+          "en": "Roccia affiorante"
+        }
+      },
+      "Anderer Stein": {
+        "labels": {
+          "en": "Altra pietra"
+        }
+      },
+      "Spolien": {},
+      "Gebrannte Ziegel": {},
+      "Ungebrannte Ziegel": {},
+      "Dachziegel": {},
+      "Lehm": {},
+      "Holz": {},
+      "Keramik": {},
+      "Zement": {}
+    }
+  },
+  "Architecture-brickwork-Selinunt": {
+    "creationDate": "23-4-2020",
+    "createdBy": "Melanie Jonasch / Fabian Riebschläger",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "Regelloser Verband": {
+        "labels": {
+          "en": "Tessitura irregolare"
+        }
+      },
+      "Reiner Läuferverband": {
+        "labels": {
+          "en": "Blocchi messi in senso della lunghezza"
+        }
+      },
+      "Reiner Binderverband": {
+        "labels": {
+          "en": "Blocchi messi di testa"
+        }
+      },
+      "Läufer-Binder Verband": {},
+      "Opus africanum": {
+        "labels": {
+          "en": "Opera a telaio"
+        }
+      }
+    }
+  },
+  "Architecture-construction-Selinunt": {
+    "creationDate": "23-4-2020",
+    "createdBy": "Melanie Jonasch / Fabian Riebschläger",
+    "description": {
+      "de": "Konstruktion, Selinunt Grabung",
+      "en": ""
+    },
+    "values": {
+      "einschalig freistehend": {
+        "labels": {
+          "en": "Singolo paramento"
+        }
+      },
+      "einschalig vor Hang": {
+        "labels": {
+          "en": "Muro di contentimento"
+        }
+      },
+      "zweischalig": {
+        "labels": {
+          "en": "Doppio paramento"
+        }
+      },
+      "zweischalig mit Kern": {
+        "labels": {
+          "en": "Muro a sacco"
+        }
+      },
+      "zweischalig mit Binderlagen": {
+        "labels": {
+          "en": "Con ammorsamento trasversale"
+        }
+      }
+    }
+  },
+  "Architecture-masonry-Selinunt": {
+    "creationDate": "24-4-2020",
+    "createdBy": "Melanie Jonasch / Fabian Riebschläger",
+    "description": {
+      "de": "Mauerwerk, Selinunt Grabung",
+      "en": ""
+    },
+    "values": {
+      "Bruchsteinmauerwerk": {
+        "labels": {
+          "en": "In pietra grezza"
+        }
+      },
+      "Polygonalmauerwerk": {
+        "labels": {
+          "en": "Muro polygonale"
+        }
+      },
+      "Quadermauerwerk": {
+        "labels": {
+          "en": "Opera quadrata"
+        }
+      },
+      "Trapezoidalmauerwerk": {
+        "labels": {
+          "en": "Muro trapezoidale"
+        }
+      },
+      "Ziegelmauerwerk gebrannt": {
+        "labels": {
+          "en": "Muro di mattoni cotti"
+        }
+      },
+      "Ziegelmauerwerk getrocknet": {
+        "labels": {
+          "en": "Muro di mattoni crudi"
+        }
+      },
+      "Stampflehm": {
+        "labels": {
+          "en": "Muro di terra cruda"
+        }
+      },
+      "Gussmauerwerk": {
+        "labels": {
+          "en": "Opera cementizia"
+        }
+      },
+      "Mischform": {
+        "labels": {
+          "en": "Tecnica mista"
+        }
+      },
+      "Anderes": {
+        "labels": {
+          "en": "Altro"
+        }
+      }
+    }
+  },
+  "Architecture-masonryJoint-Selinunt": {
+    "creationDate": "24-4-2020",
+    "createdBy": "Melanie Jonasch / Fabian Riebschläger",
+    "description": {
+      "de": "Mauerwerksverband, Selinunt Grabung",
+      "en": ""
+    },
+    "values": {
+      "Trocken": {
+        "labels": {
+          "en": "A secco"
+        }
+      },
+      "Klammern": {
+        "labels": {
+          "en": "Grappe"
+        }
+      },
+      "Erdmörtel": {
+        "labels": {
+          "en": "Malta"
+        }
+      },
+      "Kalkmörtel": {},
+      "Ziegelmauerwerk": {
+        "labels": {
+          "en": "Muro di mattoni"
+        }
+      },
+      "Zement": {
+        "labels": {
+          "en": "Cemento"
+        }
+      },
+      "Lehm": {
+        "labels": {
+          "en": "Argilla"
+        }
+      },
+      "Mischtechnik": {
+        "labels": {
+          "en": "Tecnica mista"
+        }
+      }
+    }
+  },
+  "Architecture-masonryLayerType-Selinunt": {
+    "creationDate": "24-4-2020",
+    "createdBy": "Melanie Jonasch / Fabian Riebschläger",
+    "description": {
+      "de": "Mauerlage, Selinunt Grabung",
+      "en": ""
+    },
+    "values": {
+      "Isodom": {
+        "labels": {
+          "en": "Isodomo"
+        }
+      },
+      "Pseudoisodom": {
+        "labels": {
+          "en": "Pseudoisodomo"
+        }
+      },
+      "Unregelmäßig": {
+        "labels": {
+          "en": "Irregolare"
+        }
+      }
+    }
+  },
+  "Architecture-masonryCoating-Selinunt": {
+    "creationDate": "24-4-2020",
+    "createdBy": "Melanie Jonasch / Fabian Riebschläger",
+    "description": {
+      "de": "Mauerwerksverkleidung, Selinunt Grabung",
+      "en": ""
+    },
+    "values": {
+      "Verputz": {
+        "labels": {
+          "en": "Intonaco"
+        }
+      },
+      "Bemalung": {
+        "labels": {
+          "en": "Pittura"
+        }
+      }
+    }
+  },
+  "Pottery-vesselForm-Selinunt": {
+    "creationDate": "24-6-2020",
+    "createdBy": "Melanie Jonasch / Fabian Riebschläger",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "Alabastron": {},
+      "Amphora": {},
+      "Aryballos": {},
+      "Askos": {},
+      "Becher": {},
+      "Becken": {},
+      "Chytra": {},
+      "Deckel": {},
+      "Dinos": {},
+      "Exaleiptron": {},
+      "Flasche": {},
+      "Hydria": {},
+      "Kanne": {},
+      "Kantharos": {},
+      "Kasserolle": {},
+      "Kochtopf": {},
+      "Kotyle": {},
+      "Krater": {},
+      "Krateriskos": {},
+      "Krug": {},
+      "Kylix": {},
+      "Lekythos": {},
+      "Lekanis": {},
+      "Louterion": {},
+      "Loutrophore": {},
+      "Lopas": {},
+      "Lydion": {},
+      "Napf": {},
+      "Oinochoe": {},
+      "Olpe": {},
+      "Pfanne": {},
+      "Phiale": {},
+      "Pithos": {},
+      "Pyxis": {},
+      "Rython": {},
+      "Schale": {},
+      "Schalenskyphos": {},
+      "Schüssel": {},
+      "Sieb": {},
+      "Skyphos": {},
+      "Stamnos": {},
+      "Tasse": {},
+      "Teller": {},
+      "Unguentarium": {},
+      "Offenes Gefäß": {},
+      "Geschlossenes Gefäß": {},
+      "Sonstiges": {},
+      "Unbestimmt": {}
+    }
+  },
+  "Layer-contentPotteryOrigin-Selinunt": {
+    "creationDate": "24-6-2020",
+    "createdBy": "Melanie Jonasch / Fabian Riebschläger",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "Lokal": {
+        "labels": {
+          "en": "Locale"
+        }
+      },
+      "Indigen": {
+        "labels": {
+          "en": "Indigena"
+        }
+      },
+      "Regional": {
+        "labels": {
+          "en": "Regionale"
+        }
+      },
+      "Unteritalisch": {
+        "labels": {
+          "en": "Magnogreca"
+        }
+      },
+      "Attisch": {
+        "labels": {
+          "en": "Attica"
+        }
+      },
+      "Etruskisch": {
+        "labels": {
+          "en": "Etrusca"
+        }
+      },
+      "Korinthisch": {
+        "labels": {
+          "en": "Corinzia"
+        }
+      },
+      "Lakonisch": {
+        "labels": {
+          "en": "Laconica"
+        }
+      },
+      "Ostgriechisch": {
+        "labels": {
+          "en": "Greco-orientale"
+        }
+      },
+      "Phönizisch/Punisch": {
+        "labels": {
+          "en": "Fenicia/Punica"
+        }
+      },
+      "Anderes": {
+        "labels": {
+          "en": "Altro"
+        }
+      }
+    }
+  },
+  "Layer-contentPotteryShape-Selinunt": {
+    "creationDate": "24-6-2020",
+    "createdBy": "Melanie Jonasch / Fabian Riebschläger",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "Alabastron": {},
+      "Amphora": {},
+      "Aryballos": {},
+      "Askos": {},
+      "Exaleiptron": {},
+      "Hydria": {},
+      "Kanne": {},
+      "Kantharos": {},
+      "Kotyle": {},
+      "Krater": {},
+      "Kylix": {},
+      "Lekythos": {},
+      "Lekanis": {},
+      "Pithos": {},
+      "Pyxis": {},
+      "Schale": {},
+      "Schüssel": {},
+      "Skyphos": {},
+      "Stamnos": {},
+      "Tasse": {},
+      "Teller": {},
+      "Topf": {},
+      "Unguentarium": {},
+      "Miniatur Keramik": {
+        "labels": {
+          "en": "Ceramica miniaturistica"
+        }
+      },     
+      "Anderes": {
+        "labels": {
+          "en": "Altro"
+        }
+      }
+    }
+  },
+  "Pottery-coat-Selinunt": {
+    "creationDate": "24-6-2020",
+    "createdBy": "Melanie Jonasch / Fabian Riebschläger",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "Schwarzfirnis": {
+        "labels": {
+          "en": "Vernice Nera"
+        }
+      },
+      "Red slip": {},
+      "Relief": {
+        "labels": {
+          "en": "A relieve"
+        }
+      },
+      "Glasur": {
+        "labels": {
+          "en": "Invetriata"
+        }
+      },
+      "Tongrundig": {},      
+      "Anderes": {
+        "labels": {
+          "en": "Altro"
+        }
+      }
+    }
+  },  
+  "Layer-contentPotteryDecoration-Selinunt": {
+    "creationDate": "24-6-2020",
+    "createdBy": "Melanie Jonasch / Fabian Riebschläger",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "Stempeldekor": {
+        "labels": {
+          "en": "A stampa"
+        }
+      },
+      "Figürlich": {
+        "labels": {
+          "en": "Figurata"
+        }
+      },
+      "Unfigürlich": {
+        "labels": {
+          "en": "Geometrica"
+        }
+      },
+      "Banddekor": {
+        "labels": {
+          "en": "A bande"
+        }
+      },
+      "Pflanzendekor": {
+        "labels": {
+          "en": "Vegetale"
+        }
+      },
+      "Ritzlinien": {
+        "labels": {
+          "en": "Incisa"
+        }
+      },
+      "Eingetaucht": {
+        "labels": {
+          "en": "Per immersione"
+        }
+      },
+      "Bemalt": {
+        "labels": {
+          "en": "Dipinta"
+        }
+      },
+      "Graffito": {
+        "labels": {
+          "en": "Graffito"
+        }
+      },
+      "Aufschrift ": {
+        "labels": {
+          "en": "Scritta "
+        }
+      },
+      "Stempel": {
+        "labels": {
+          "en": "Stempel"
+        }
+      },            
+      "Anderes": {
+        "labels": {
+          "en": "Altro"
+        }
+      }
+    }
+  },
+  "Layer-contentTerracotta-Selinunt": {
+    "creationDate": "24-6-2020",
+    "createdBy": "Melanie Jonasch / Fabian Riebschläger",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "Figuren": {
+        "labels": {
+          "en": "Statuine"
+        }
+      },
+      "Lampen": {
+        "labels": {
+          "en": "Lucerne"
+        }
+      },
+      "Webgewichte": {
+        "labels": {
+          "en": "Pesi da telaio"
+        }
+      },
+      "Spielstein": {
+        "labels": {
+          "en": "Pedine"
+        }
+      },       
+      "Anderes": {
+        "labels": {
+          "en": "Altro"
+        }
+      }
+    }
+  },
+  "Layer-contentInorganic-Selinunt": {
+    "creationDate": "24-6-2020",
+    "createdBy": "Melanie Jonasch / Fabian Riebschläger",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "Bronze": {
+        "labels": {
+          "en": "Bronzo"
+        }
+      },
+      "Eisen": {
+        "labels": {
+          "en": "Ferro"
+        }
+      },
+      "Blei": {
+        "labels": {
+          "en": "Piombo"
+        }
+      },
+      "Schlacke": {
+        "labels": {
+          "en": "Scorie"
+        }
+      },
+      "Gold": {
+        "labels": {
+          "en": "Oro"
+        }
+      },
+      "Silber": {
+        "labels": {
+          "en": "Argento"
+        }
+      },
+      "Münzen": {
+        "labels": {
+          "en": "Monete"
+        }
+      },
+      "Stein bearbeitet": {
+        "labels": {
+          "en": "Pietra lavorate"
+        }
+      },
+      "Stein figürlich": {
+        "labels": {
+          "en": "Pietra figurate"
+        }
+      },
+      "Reibsteine": {
+        "labels": {
+          "en": "Macine"
+        }
+      },
+      "Kiesel": {
+        "labels": {
+          "en": "Ciottoli"
+        }
+      },
+      "Glas": {
+        "labels": {
+          "en": "Vetro"
+        }
+      },
+      "Spielstein": {
+        "labels": {
+          "en": "Pedine"
+        }
+      },      
+      "Anderes": {
+        "labels": {
+          "en": "Altro"
+        }
+      }
+    }
+  },
+  "Layer-contentOrganic-Selinunt": {
+    "creationDate": "24-6-2020",
+    "createdBy": "Melanie Jonasch / Fabian Riebschläger",
+    "description": {
+      "de": "Organisches Material",
+      "en": ""
+    },
+    "values": {
+      "Knochen Tier": {
+        "labels": {
+          "en": "Ossa animale"
+        }
+      },
+      "Knochen Mensch": {
+        "labels": {
+          "en": "Ossa umano"
+        }
+      },
+      "Knochen bearbeitet": {
+        "labels": {
+          "en": "Ossa lavorate"
+        }
+      },
+      "Astragal": {
+        "labels": {
+          "en": "Astragalo"
+        }
+      },       
+      "Muscheln": {
+        "labels": {
+          "en": "Molluschi"
+        }
+      },    
+      "Holz": {
+        "labels": {
+          "en": "Legno"
+        }
+      },
+      "Holzkohle": {
+        "labels": {
+          "en": "Carbone"
+        }
+      },
+      "Samen": {
+        "labels": {
+          "en": "Semi"
+        }
+      },
+      "Elfenbein": {
+        "labels": {
+          "en": "Avorio"
+        }
+      },
+      "Perlen": {
+        "labels": {
+          "en": "Perle"
+        }
+      },
+      "Spielstein": {
+        "labels": {
+          "en": "Pedine"
+        }
+      },        
+      "Anderes": {
+        "labels": {
+          "en": "Altro"
+        }
+      }
+    }
+  },
+  "Layer-contentBuildingMaterial-Selinunt": {
+    "creationDate": "24-6-2020",
+    "createdBy": "Melanie Jonasch / Fabian Riebschläger",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "Mörtel": {
+        "labels": {
+          "en": "Malta"
+        }
+      },
+      "Verputz": {
+        "labels": {
+          "en": "Intonaco"
+        }
+      },
+      "Architekturdekor": {
+        "labels": {
+          "en": "Decorazione fittile"
+        }
+      },
+      "Mosaiksteine": {
+        "labels": {
+          "en": "Tessere (mosaico)"
+        }
+      },
+      "Dachziegel": {
+        "labels": {
+          "en": "Tegole"
+        }
+      },
+      "Lehmziegel gebrannt": {
+        "labels": {
+          "en": "Mattone cotto"
+        }
+      },
+      "Lehmziegel ungebrannt": {
+        "labels": {
+          "en": "Mattone crudo"
+        }
+      },      
+      "Anderes": {
+        "labels": {
+          "en": "Altro"
+        }
+      }
+    }
+  },
+  "Layer-workflowOptions-Selinunt": {
+    "creationDate": "30-6-2020",
+    "createdBy": "Melanie Jonasch / Fabian Riebschläger",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "Gesiebt": {
+        "labels": {
+          "en": "Gesiebt"
+        }
+      },
+      "Geschlämmt": {
+        "labels": {
+          "en": "Geschlämmt"
+        }
+      },
+      "Beprobt": {
+        "labels": {
+          "en": "Beprobt"
+        }
+      },
+      "Nicht gegraben": {
+        "labels": {
+          "en": "Nicht gegraben"
+        }
+      }
+    }
+  },
+  "Pottery-miniatureVesselForm-Selinunt": {
+    "creationDate": "25-6-2020",
+    "createdBy": "Melanie Jonasch / Fabian Riebschläger",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "Kotyle": {},
+      "Krateriskos": {},
+      "Pyxis": {},
+      "Lampe": {},      
+      "Anderes": {
+        "labels": {
+          "en": "Altro"
+        }
+      }
+    }
+  },
+  "Pottery-clayHardness-Selinunt": {
+    "creationDate": "",
+    "createdBy": "",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "weich": {
+        "labels": {
+          "en": "tenero"
+        }
+      },
+      "hart": {
+        "labels": {
+          "en": "duro"
+        }
+      },
+      "sehr hart": {
+        "labels": {
+          "en": "molto duro"
+        }
+      }
+    }
+  },
+  "Pottery-clayDensity-Selinunt": {
+    "creationDate": "",
+    "createdBy": "",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "hoch": {},
+      "niedrig": {}
+    }
+  },
+  "Pottery-manufacturingMethod-Selinunt": {
+    "createdBy": "",
+    "creationDate": "",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "gedreht (auf Drehscheibe)": {
+        "labels": {
+          "de": "Scheibengedrecht",
+          "en": "Al tornio"
+        }
+      },
+      "handgeformt": {
+        "labels": {
+          "de": "Handgeformt",
+          "en": "Al mano"
+        }
+      },
+      "in Form gepresst": {
+        "label": {
+          "de": "in Form gepresst",
+          "en": "in Form gepresst"
+        }
+      }
+    }
+  },
+  "Floor-floorClassification-Selinunt": {
+    "creationDate": "",
+    "createdBy": "",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "Estricht": {},
+      "Cocciopesto": {},
+      "Mosaik": {},
+      "Opus sectile": {},
+      "Opus signinum": {},
+      "Steinboden": {},
+      "Stampflehm": {},
+      "Terrazzo": {},
+      "Plattenboden": {},
+      "Ziegelboden": {},
+      "vergängliches Material": {},
+      "Anderes": {}
+    }
+  },
+  "Find-storagePlace-Selinunt": {
+    "createdBy": "",
+    "creationDate": "",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "Depot": {},
+      "Museum": {},
+      "In situ": {}
+    }
+  },
+  "Pottery-coatQuality-Selinunt": {
+    "createdBy": "",
+    "creationDate": "",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "glänzend": {},
+      "matt": {},
+      "dicht": {},
+      "dünn": {},
+      "streifig": {},
+      "abgerieben": {}
+    }
+  },
+  "Brick-brickForm-Selinunt": {
+    "creationDate": "27-6-2020",
+    "createdBy": "Melanie Jonasch / Fabian Riebschläger",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "Bodenziegel": {
+        "labels": {
+          "en": "Piastrella"
+        }
+      },
+      "Deckziegel": {
+        "labels": {
+          "en": "Coppo"
+        }
+      },
+      "Flachziegel": {
+        "labels": {
+          "en": "Tegola"
+        }
+      },
+      "Firstziegel": {
+        "labels": {
+          "en": "Coppo di Colmo"
+        }
+      },
+      "Hypokaustziegel": {},
+      "Hohlziegel": {},
+      "Kanalziegel": {},
+      "Wandziegel": {
+        "labels": {
+          "de": "Wandverkleidungsziegel",
+          "en": "Rivestimento di parete"
+        }
+      },
+      "Mauerziegel": {
+        "labels": {
+          "en": "Mattone"
+        }
+      },
+      "Dachziegel unbestimmt": {
+        "labels": {
+          "en": "Tegola non specificata"
+        }
+      },
+      "Sonstiges": {
+        "labels": {
+          "de": "Anderes",
+          "en": "Altro"
+        }
+      }
+    }
+  },
+  "Brick-brickUsage-Selinunt": {
+    "creationDate": "",
+    "createdBy": "",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "Becken":{},
+      "Brunnenverkleidung":{},
+      "Dach": {},
+      "Fussboden": {},
+      "Grab": {},
+      "Kanal": {},
+      "Mauer": {},
+      "Ofen": {},
+      "Wandverkleidung": {}
+    }
+  },
+  "Brick-decorationTechnique-Selinunt": {
+    "creationDate": "",
+    "createdBy": "",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "Bemalung": {},
+      "Fingerabdruck": {},
+      "Graffito": {},
+      "Inschrift": {},
+      "Kammritzung": {},
+      "Pfotenabdruck": {},
+      "Pinselspuren": {},
+      "Sonstige Abdrücke": {},
+      "Stempel": {}
+    }
+  },
+  "Brick-roofingSystem-Selinunt": {
+    "creationDate": "28-6-2020",
+    "createdBy": "Melanie Jonasch",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "Korinthisch": {},
+      "Lakonisch": {},
+      "Hybrid-sizilisch": {},
+      "Hellenistisch-römisch": {},
+      "Hohlziegeldach (Mönch + Nonne)": {},
+      "Hohlziegel-Einfachdeckung (Nonnendeckung)": {},
+      "unklar": {}
+    }
+  },
+  "Metal-metalMaterial-Selinunt": {
+    "createdBy": "Melanie Jonasch",
+    "creationDate": "28-6-2020",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "Blei": {},
+      "Bronze": {},
+      "Eisen": {},
+      "Silber": {},
+      "Gold": {},
+      "Unbestimmt": {}
+    }
+  },
+  "Metal-metalWeaponsArmor-Selinunt": {
+    "createdBy": "Melanie Jonasch",
+    "creationDate": "28-6-2020",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "Helm": {},
+      "Panzer": {},
+      "Beinschiene": {},
+      "Schild": {},
+      "Pfeilspitze": {},
+      "Lanzenspitze": {},
+      "Speerspitze": {},
+      "Lanzenschuh": {},
+      "Schwert": {},
+      "Unbestimmt": {}
+    }
+  },
+  "Metal-metalSchmuckTrachtbestandteile-Selinunt": {
+    "createdBy": "Melanie Jonasch",
+    "creationDate": "28-6-2020",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "Gürtel": {},
+      "Halsring": {},
+      "Armring / Beinring": {},
+      "Ohrring": {},
+      "Fingerring": {},
+      "Anhänger": {},
+      "Perle": {},
+      "Kette": {},
+      "Knopf": {},
+      "Fibel": {},
+      "Nadel": {},
+      "Unbestimmt": {}
+    }
+  },
+  "Metal-metalVesselParts-Selinunt": {
+    "createdBy": "Melanie Jonasch",
+    "creationDate": "28-6-2020",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "Dreifuß": {},
+      "Situla": {},
+      "Kessel": {},
+      "Perlrandbecken": {},
+      "Henkel / Griff": {},
+      "Attasche": {},
+      "Standring": {},
+      "Anderes": {},
+      "Unbestimmt": {}
+    }
+  },
+  "Metal-metalToolsEquipment-Selinunt": {
+    "createdBy": "Melanie Jonasch",
+    "creationDate": "28-6-2020",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "Beil": {},
+      "Klinge": {},
+      "Meißel": {},
+      "Säge": {},
+      "Hammer": {},
+      "Punze": {},
+      "Pfrieme": {},
+      "Nadel": {},
+      "Stichel": {},
+      "Spaten": {},
+      "Hacke": {},
+      "Haken": {},
+      "Bratspieß": {},
+      "Toilettengerät": {},
+      "Pinzette": {},
+      "Sonde": {},
+      "Kandelaber": {},
+      "Lampe": {},
+      "Gewicht": {},
+      "Beschlag": {},
+      "Nagel": {},
+      "sog. Käsereibe": {},
+      "Anderes": {},
+      "Unbestimmt": {}
+    }
+  },
+  "Metal-metalMiscellaneous-Selinunt": {
+    "createdBy": "Melanie Jonasch",
+    "creationDate": "28-6-2020",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "Kugel": {},
+      "Blech": {},
+      "Spirale / Spiralrolle": {},
+      "Tülle": {},
+      "Barren": {},
+      "Stab": {},
+      "Guss- Werkstattabfall": {},
+      "Schlacke": {},
+      "Anderes": {},
+      "Unbestimmt": {}
+    }
+  },
+  "Grave-graveType-Selinunt": {
+    "creationDate": "",
+    "createdBy": "",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "Steinkistengrab": {},
+      "Kammergrab": {},
+      "A cappuccina": {},
+      "Felsnischengrab": {},
+      "Gefäßbestattung": {},
+      "Gemauertes Grab": {},
+      "Sarkophag": {},
+      "Urnengrab": {},
+      "Ziegelplattengrab": {
+        "labels": {
+          "de": "Ziegelgrab"
+        }
+      }
+    }
+  },
+  "ProcessUnit-operationClassification-Selinunt": {
+    "createdBy": "",
+    "creationDate": "",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "Archäologisches Profil": {},
+      "Geologisches Profil": {},
+      "Bohrung": {},
+      "Rammkernsondage": {}
+    }
+  },
+  "ProcessUnit-operationOrientation-Selinunt": {
+    "createdBy": "",
+    "creationDate": "",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "Nord-Süd": {},
+      "NNO-SSW": {},
+      "Nordost-Südwest": {},
+      "ONO-WSW": {},
+      "West-Ost": {},
+      "WNW-OSO": {},
+      "Nordwest-Südost": {},
+      "NNW-SSO": {}
+    }
+  },
+  "ProcessUnit-operationHorizontalDescription-Selinunt": {
+    "createdBy": "",
+    "creationDate": "",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "gerade": {},
+      "geknickt": {},
+      "gekrümmt": {},
+      "Vor-/Rücksprünge": {}
+    }
+  },
+  "ProcessUnit-operationVerticalDescription-Selinunt": {
+    "createdBy": "",
+    "creationDate": "",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "senkrecht": {},
+      "unregelmäßig": {},
+      "gekstark geneigt": {},
+      "ein/mehrere Versprünge": {}
+    }
+  },
+  "ProcessUnit-operationIdentifiability-Selinunt": {
+    "createdBy": "",
+    "creationDate": "",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "sehr gut": {},
+      "gut": {},
+      "mittel": {},
+      "schwierig": {},
+      "sehr schwierig": {}
+    }
+  },
+  "Terracotta-decorationTechnique-Selinunt": {
+    "createdBy": "",
+    "creationDate": "",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "Bemalung": {},
+      "Relief": {},
+      "Ritzung / Graffito": {},
+      "Stempel": {}
+    }
+  },
+  "Terracotta-architecturalDecorationType-Selinunt": {
+    "createdBy": "",
+    "creationDate": "",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "Antifex": {},
+      "Metope": {},
+      "Kapitell": {},
+      "Firstakroter": {},
+      "Eckakroter": {},
+      "Giebelskulptur": {},
+      "Sima": {},
+      "Fries": {},
+      "Kassette": {},
+      "Miniatursäule": {},
+      "Wasserspeier": {},
+      "Firstkalypter": {},
+      "Wandverkleidung": {},
+      "Traufziegel": {},
+      "Anderes": {},
+      "unbestimmt": {}
+    }
+  },
+  "Terracotta-toolType-Selinunt": {
+    "createdBy": "",
+    "creationDate": "",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "Platte": {},
+      "Arula": {},
+      "Gewicht": {},
+      "Webgewicht": {},
+      "Abstandhalter": {},
+      "Stempel": {},
+      "Lampe": {},
+      "Louterion": {},
+      "Louterionständer": {},
+      "Pinax": {},
+      "Sarkophag": {},
+      "Spielstein": {},
+      "Spinnwirtel": {},
+      "Anderes": {},
+      "unbestimmt": {}
+    }
+  },
+  "Terracotta-architecturalScupltureType-Selinunt": {
+    "createdBy": "",
+    "creationDate": "",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "Figur/Statuette": {},
+      "Matrize": {},
+      "Miniaturmodell": {},
+      "großformatige Skulptur": {},
+      "Anderes": {},
+      "unbestimmt": {}
+    }
+  },
+  "Stone-color-Selinunt": {
+    "creationDate": "25-6-2020",
+    "createdBy": "Melanie Jonasch / Fabian Riebschläger",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "gelb": {},
+      "grau": {},
+      "ocker": {},
+      "rot": {},      
+      "schwarz": {},
+      "weiß": {}
+    }
+  },
+  "Stone-objectType-Selinunt": {
+    "creationDate": "",
+    "createdBy": "",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "Abschlag": {},
+      "Altar": {},
+      "Architekturdekor": {},
+      "Basis": {},
+      "Bauteil": {},
+      "Becken": {},
+      "Gefäß": {},
+      "Gerät": {},
+      "Gewicht": {},
+      "Grabplatte": {},
+      "Mobiliar": {},
+      "Mörser": {},
+      "Plastik/Skulptur": {},
+      "Reibstein": {},
+      "Sarkophag": {},
+      "Schmuck": {},
+      "Spielstein": {},
+      "Stele": {},
+      "Tessera": {},
+      "Unsicher bzw. unbestimmbar": {},
+      "Waffe": {},
+      "Webgewicht": {},
+      "Werkzeug": {}
+    }
+  },
+  "Stone-architectureElement-Selinunt": {
+    "creationDate": "",
+    "createdBy": "",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "Quaderblock": {},
+      "Basis": {},
+      "Säule": {},
+      "Säulentrommel": {},
+      "Kapitell": {},
+      "Architrav": {},
+      "Soffitte": {},
+      "Fries": {},
+      "Metope": {},
+      "Triglyphon": {},
+      "Konsole": {},
+      "Gesims": {},
+      "Sima": {},
+      "Akroter": {},
+      "Pfeiler": {},
+      "Pilaster": {},
+      "Ante": {},
+      "Türgewände": {},
+      "Fensterlaibung": {},
+      "Tür-/Fenstersturz": {},
+      "Schwelle": {},
+      "Bogenstein": {},
+      "Schranke": {},
+      "Bodenbelag": {},
+      "Wandverkleidung": {},
+      "Profilstück": {}
+    }
+  },
+  "Stone-material-Selinunt": {
+    "creationDate": "",
+    "createdBy": "",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "Andesit": {},
+      "Basalt": {},
+      "Feldspat": {},
+      "Flint": {},
+      "Glimmer": {},
+      "Granit": {},
+      "Kalk": {},
+      "Kalkmörtel": {},
+      "Kalkstein": {},
+      "Kalzit": {},
+      "Kieselstein": {},
+      "Kreide": {},
+      "Marmor": {},
+      "Pophyr": {},
+      "Quarz": {},
+      "Sandstein": {},
+      "Sinter": {},
+      "Silex/Flint": {},
+      "Trachyt": {},
+      "Tuff": {}
+    }
+  },
+  "Stone-decoration-Selinunt": {
+    "creationDate": "",
+    "createdBy": "",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "Relief": {},
+      "Graffito": {},
+      "Inschrift": {},
+      "Steinmetzzeichen": {},
+      "Anderes": {}
+    }
+  },
+  "Coin-provenance-Selinunt": {
+    "createdBy": "",
+    "description": {},
+    "creationDate": "",
+    "values": {
+      "Athen": {},
+      "Griechenland": {},
+      "Kleinasien": {},
+      "Italien": {},
+      "Sizilien": {},
+      "Karthago": {},
+      "Kampanien": {},
+      "Apulien": {},
+      "Lukanien": {},
+      "Bruttium": {},
+      "Kalabrien": {},
+      "Nordafrika": {},
+      "Anderes": {}
+    }
+  },
+  "Coin-mint-Selinunt": {
+    "createdBy": "",
+    "creationDate": "",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "Abakainon": {},
+      "Adranon": {},
+      "Aetna": {},
+      "Agyrion": {},
+      "Akragas": {},
+      "Akrai": {},
+      "Alaisa": {},
+      "Alontion": {},
+      "Ameselon": {},
+      "Assorus": {},
+      "Cossura": {},
+      "Enna": {},
+      "Entella": {},
+      "Eryx": {},
+      "Gela": {},
+      "Herbessos": {},
+      "Himera": {},
+      "Halikarnassos": {},
+      "Harran": {},
+      "Hipana": {},
+      "Iaetia": {},
+      "Kalacte": {},
+      "Kamarina": {},
+      "Katane": {},
+      "Kentoripai": {},
+      "Kephaloidion": {},
+      "Leontini": {},
+      "Lilybaion": {},
+      "Lipara": {},
+      "Longane": {},
+      "Melita": {},
+      "Messana": {},
+      "Messana – Mamertini": {},
+      "Morgantina": {},
+      "Motya": {},
+      "Nakona": {},
+      "Naxos": {},
+      "Panormos": {},
+      "Piakos": {},
+      "Punisch unspezifisch": {},
+      "Segesta": {},
+      "Selinus": {},
+      "Solus": {},
+      "Syrakus": {},
+      "Tauromenion": {},
+      "Thermae Himerenses": {},
+      "Tyndaris": {},
+      "Anderes": {}
+    }
+  },
+  "Coin-denomination-Selinunt": {
+    "creationDate": "",
+    "createdBy": "",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "Drachme": {},
+      "Didrachme": {},
+      "Tetradrachme": {},
+      "Dekadrachme": {},
+      "Hemidrachme": {},
+      "Stater": {},
+      "Hemistater": {},
+      "Tetarte": {},
+      "Obol": {},
+      "Hemiobol": {},
+      "Aes grave": {},
+      "Unbestimmbar": {}
+    }
+  },
+  "Coin-mintingRuler-Selinunt": {
+    "createdBy": "",
+    "creationDate": "",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "Deinomeniden": {},
+      "Gelon II": {},
+      "1. Demokratie": {},
+      "2. Demokratie": {},
+      "3. Demokratie": {},
+      "4. Demokratie": {},
+      "5. Demokratie": {},
+      "Dionysios I": {},
+      "Dionysios II": {},
+      "Timoleon": {},
+      "Agathokles": {},
+      "Dion": {},
+      "Hiketas": {},
+      "Hieron II": {},
+      "Pyhrrus": {},
+      "Hieronymos": {},
+      "Philistis": {},
+      "Sikeliotes": {},
+      "Mamertini": {},
+      "Tyrrhenoi": {},
+      "Unklar": {}
+    }
   }
 }

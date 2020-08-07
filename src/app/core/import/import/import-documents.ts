@@ -5,7 +5,7 @@ import {DocumentDatastore} from '../../datastore/document-datastore';
 import {Updater} from './updater';
 import {ImportFunction} from './types';
 import {assertLegalCombination, findByIdentifier} from './utils';
-import {MERGE_TARGET, process} from './process/process';
+import {process} from './process/process';
 import {preprocessRelations} from './preprocess-relations';
 import {preprocessFields} from './preprocess-fields';
 import {ImportErrors as E} from './import-errors';
@@ -52,9 +52,10 @@ export function buildImportFunction(validator: ImportValidator,
 
         const get = (resourceId: string) => datastore.get(resourceId);
 
+        let mergeDocs = {};
         try {
             preprocessFields(documents, importOptions.permitDeletions === true);
-            await preprocessDocuments(documents,
+            mergeDocs = await preprocessDocuments(documents,
                 findByIdentifier(datastore), preprocessDocument as Function, importOptions.mergeMode === true);
             await preprocessRelations(documents,
                 generateId, findByIdentifier(datastore), get, importOptions);
@@ -64,7 +65,7 @@ export function buildImportFunction(validator: ImportValidator,
 
         const [importDocuments, targetDocuments, msgWithParams] = await process(
             documents,
-            {},
+            mergeDocs,
             validator,
             operationCategoryNames,
             get,
@@ -99,17 +100,25 @@ export function buildImportFunction(validator: ImportValidator,
 async function preprocessDocuments(documents: Array<Document>,
                                    find: Function,
                                    preprocess: Function,
-                                   mergeMode: boolean) {
+                                   mergeMode: boolean): Promise<{ [resourceId: string]: Document }> {
+
+    const mergeDocs = {};
 
     for (let document of documents) {
         const existingDocument = await find(document.resource.identifier);
         if (mergeMode) {
             if (!existingDocument) throw [E.UPDATE_TARGET_NOT_FOUND, document.resource.identifier];
+
+            // TODO do this in processDocuments
             document._id = existingDocument._id;
             document.resource.id = existingDocument.resource.id;
-            (document as any)[MERGE_TARGET] = preprocess(existingDocument);
+            //
+
+            mergeDocs[existingDocument.resource.id] = preprocess(existingDocument);
         } else if (existingDocument) {
             throw [E.RESOURCE_EXISTS, existingDocument.resource.identifier];
         }
     }
+
+    return mergeDocs;
 }

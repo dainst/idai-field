@@ -1,6 +1,6 @@
 import {Document} from 'idai-components-2';
 import {ImportErrors as E} from '../../../../../src/app/core/import/import/import-errors';
-import {MERGE_TARGET, process} from '../../../../../src/app/core/import/import/process/process';
+import {process} from '../../../../../src/app/core/import/import/process/process';
 import {createMockValidator, d} from './helper';
 import {HierarchicalRelations} from '../../../../../src/app/core/model/relation-constants';
 import RECORDED_IN = HierarchicalRelations.RECORDEDIN;
@@ -301,9 +301,11 @@ describe('process()', () => {
                 geometry: { type: 'Point',  coordinates: [ 27.189335972070694, 39.14122423529625]}
             }
         };
-        (document as any)['mergeTarget'] = existingFeature;
 
-        const result = await process([document], {}, validator, operationCategoryNames, get, relationInverses, { mergeMode: true });
+        const result = await process(
+            [document],
+            { '1': existingFeature } as any,
+            validator, operationCategoryNames, get, relationInverses, { mergeMode: true });
 
         const resource = result[0][0].resource;
         expect(resource.id).toBe('ef1');
@@ -317,9 +319,9 @@ describe('process()', () => {
     it('merge, overwrite relations', async done => {
 
         const document = d('nf1', 'Feature', 'existingFeature', { liesWithin: ['et2'], isAfter: ['ef2']});
-        (document as any)['mergeTarget'] = existingFeature;
 
-        const result = await process([document], {},
+        const result = await process([document],
+            { 'nf1': existingFeature } as any,
             validator, operationCategoryNames, get, relationInverses, { mergeMode: true });
 
         expect(result[0][0].resource.relations['isAfter'][0]).toEqual('ef2');
@@ -332,9 +334,10 @@ describe('process()', () => {
     it('merge, overwrite relations, reassign parent', async done => {
 
         const document = d('nf1', 'Feature', 'existingFeature2', { liesWithin: ['ef1'] });
-        (document as any)['mergeTarget'] = existingFeature2;
 
-        const result = await process([document], {},
+        const result = await process(
+            [document],
+            { 'nf1': existingFeature } as any,
             validator, operationCategoryNames, get, relationInverses, { mergeMode: true });
 
         const resource = result[0][0].resource;
@@ -347,9 +350,10 @@ describe('process()', () => {
     it('merge, return error in case of an invalid relation', async done => {
 
         const document = d('nf1', 'Feature', 'existingFeature', { isAfter: 'unknown' });
-        (document as any)['mergeTarget'] = existingFeature;
 
-        const result = await process([document], {},
+        const result = await process(
+            [document],
+            { 'nf1': existingFeature} as any,
             validator, operationCategoryNames, get, relationInverses, { mergeMode: true });
 
         expect(result[0].length).toBe(0);
@@ -386,10 +390,11 @@ describe('process()', () => {
                 relations: {}
             }
         };
-        (document1 as any)[MERGE_TARGET] = existingFeature;
-        // (document2 as any)['mergeTarget'] = existingFeature; <- the second merge target gets ignored
 
-        const result = await process([document1, document2], {}, validator, operationCategoryNames, get, relationInverses, { mergeMode: true });
+        const result = await process(
+            [document1, document2],
+            { 'ef1': existingFeature } as any,
+            validator, operationCategoryNames, get, relationInverses, { mergeMode: true });
 
         const resource = result[0][0].resource;
         expect(resource.id).toBe('ef1');

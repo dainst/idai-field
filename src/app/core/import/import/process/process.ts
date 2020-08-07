@@ -115,7 +115,6 @@ function assertNoDuplicates(documents: Array<Document>) {
  * @returns clones of the documents with their properties validated and adjusted
  */
 //
-// TODO instead of using MERGE_TARGET, pass a map of mergeDocs
 // TODO do not pass mergeMode option, but look if mergeDocs map not empty
 function processDocuments(documents: Array<Document>,
                           mergeDocs: { [resourceId: string]: Document },
@@ -134,7 +133,7 @@ function processDocuments(documents: Array<Document>,
 
         let finalDocument;
         if (mergeMode) {
-            const mergeTarget = finalDocuments[document.resource.id] ?? document[MERGE_TARGET];
+            const mergeTarget = finalDocuments[document.resource.id] ?? mergeDocs[document.resource.id];
             if (!mergeTarget) throw 'FATAL - in process.ts: no merge target';
             const mergedResource = mergeResource(mergeTarget.resource, document.resource);
             finalDocument = assoc(Document.RESOURCE, mergedResource)(mergeTarget);
@@ -155,6 +154,3 @@ function processDocuments(documents: Array<Document>,
 
     return Object.values(finalDocuments);
 }
-
-
-export const MERGE_TARGET = 'mergeTarget';

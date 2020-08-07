@@ -82,8 +82,6 @@ export async function process(documents: Array<Document>,
     assertLegalCombination(importOptions.mergeMode, importOptions.operationId);
 
     try {
-        if (!importOptions.mergeMode) assertNoDuplicates(documents);
-
         const processedDocuments = processDocuments(documents, mergeDocs, validator);
 
         const relatedDocuments = await processRelations(
@@ -120,6 +118,8 @@ function processDocuments(documents: Array<Document>,
                           validator: ImportValidator): Array<Document> {
 
     const mergeMode = Object.keys(mergeDocs).length > 0;
+    if (!mergeMode) assertNoDuplicates(documents);
+
     const finalDocuments = {};
 
     for (const document of documents) {

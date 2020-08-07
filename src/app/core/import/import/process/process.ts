@@ -113,6 +113,9 @@ function assertNoDuplicates(documents: Array<Document>) {
 /**
  * @returns clones of the documents with their properties validated and adjusted
  */
+//
+// TODO instead of using MERGE_TARGET, pass a map of mergeDocs
+// TODO do not pass mergeMode option, but look if mergeDocs map not empty
 function processDocuments(documents: Array<Document>, validator: ImportValidator, mergeMode: boolean): Array<Document> {
 
     // TODO test manually: it seems it hangs on corrupt json instead of displaying error

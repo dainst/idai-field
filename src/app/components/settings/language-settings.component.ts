@@ -3,7 +3,7 @@ import {CdkDragDrop} from '@angular/cdk/drag-drop';
 import {clone} from 'tsfun/struct';
 import {Settings} from '../../core/settings/settings';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {AddLanguageModalComponent} from './add-language-modal.component';
+import {LanguagePickerModalComponent} from './language-picker-modal.component';
 
 const cldr = typeof window !== 'undefined' ? window.require('cldr') : require('cldr');
 
@@ -47,7 +47,7 @@ export class LanguageSettingsComponent {
     public async addLanguage() {
 
         const modalReference: NgbModalRef
-            = this.modalService.open(AddLanguageModalComponent, { keyboard: false });
+            = this.modalService.open(LanguagePickerModalComponent, { keyboard: false });
         modalReference.componentInstance.languages = this.getUnselectedLanguages();
 
         try {

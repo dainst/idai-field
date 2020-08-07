@@ -3,12 +3,12 @@ import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 
 
 @Component({
-    templateUrl: './add-language-modal.html'
+    templateUrl: './language-picker-modal.html'
 })
 /**
  * @author Thomas Kleinke
  */
-export class AddLanguageModalComponent {
+export class LanguagePickerModalComponent {
 
     public languages: { [languageCode: string]: string };
 

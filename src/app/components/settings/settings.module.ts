@@ -6,7 +6,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {WidgetsModule} from '../widgets/widgets.module';
 import {SettingsComponent} from './settings.component';
 import {LanguageSettingsComponent} from './language-settings.component';
-import {AddLanguageModalComponent} from './add-language-modal.component';
+import {LanguagePickerModalComponent} from './language-picker-modal.component';
 
 
 @NgModule({
@@ -20,11 +20,11 @@ import {AddLanguageModalComponent} from './add-language-modal.component';
     declarations: [
         SettingsComponent,
         LanguageSettingsComponent,
-        AddLanguageModalComponent
+        LanguagePickerModalComponent
     ],
     providers: [],
     entryComponents: [
-        AddLanguageModalComponent
+        LanguagePickerModalComponent
     ],
 })
 

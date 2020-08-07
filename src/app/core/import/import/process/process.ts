@@ -84,7 +84,7 @@ export async function process(documents: Array<Document>,
     try {
         if (!importOptions.mergeMode) assertNoDuplicates(documents);
 
-        const processedDocuments = processDocuments(documents, mergeDocs, validator, importOptions.mergeMode === true);
+        const processedDocuments = processDocuments(documents, mergeDocs, validator);
 
         const relatedDocuments = await processRelations(
             processedDocuments,
@@ -114,15 +114,12 @@ function assertNoDuplicates(documents: Array<Document>) {
 /**
  * @returns clones of the documents with their properties validated and adjusted
  */
-//
-// TODO do not pass mergeMode option, but look if mergeDocs map not empty
+// TODO test manually: it seems it hangs on corrupt json instead of displaying error
 function processDocuments(documents: Array<Document>,
                           mergeDocs: { [resourceId: string]: Document },
-                          validator: ImportValidator,
-                          mergeMode: boolean): Array<Document> {
+                          validator: ImportValidator): Array<Document> {
 
-    // TODO test manually: it seems it hangs on corrupt json instead of displaying error
-
+    const mergeMode = Object.keys(mergeDocs).length > 0;
     const finalDocuments = {};
 
     for (const document of documents) {

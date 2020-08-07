@@ -8,24 +8,17 @@ import {Category} from '../../app/core/configuration/model/category';
 import {PROJECT_MAPPING} from '../../app/core/settings/settings-service';
 import {Group} from '../../app/core/configuration/model/group';
 import {FieldDefinition} from '../../app/core/configuration/model/field-definition';
+import {ConfigReader} from '../../app/core/configuration/boot/config-reader';
 
 const fs = require('fs');
 
 
 const CONFIG_DIR_PATH = 'src/config';
 const OUTPUT_DIR_PATH = 'release';
-const LOCALES = ['de', 'en'];
+const LANGUAGES = ['de', 'en'];
 
 if (!fs.existsSync(OUTPUT_DIR_PATH)) fs.mkdirSync(OUTPUT_DIR_PATH);
 if (!fs.existsSync(OUTPUT_DIR_PATH + '/config')) fs.mkdirSync(OUTPUT_DIR_PATH + '/config');
-
-
-class ConfigReader {
-
-    public async read(path: string): Promise<any> {
-        return Promise.resolve(JSON.parse(fs.readFileSync(path)));
-    }
-}
 
 
 function writeProjectConfiguration(fullProjectConfiguration: any, project: string) {
@@ -122,16 +115,16 @@ async function start() {
     for (const [projectName, configName] of Object.entries(PROJECT_MAPPING)) {
         console.log('');
         const localizedTreeLists: { [locale: string]: TreeList<Category>} = {};
-        for (const locale of LOCALES) {
-            const appConfigurator = new AppConfigurator(new ConfigLoader(new ConfigReader() as any));
+        for (const language of LANGUAGES) {
+            const appConfigurator = new AppConfigurator(new ConfigLoader(new ConfigReader()));
             try {
-                localizedTreeLists[locale] = getTreeList(await appConfigurator.go(CONFIG_DIR_PATH, configName, locale));
+                localizedTreeLists[language] = getTreeList(await appConfigurator.go(CONFIG_DIR_PATH, configName, [language]));
             } catch (err) {
-                console.error(`Error while trying to generate full configuration for project ${projectName} and locale ${locale}:`, err);
+                console.error(`Error while trying to generate full configuration for project ${projectName} and language ${language}:`, err);
             }
         }
 
-        const fullConfiguration = zipTreeList(mergeCategories(LOCALES), Object.values(localizedTreeLists) as any);
+        const fullConfiguration = zipTreeList(mergeCategories(LANGUAGES), Object.values(localizedTreeLists) as any);
         writeProjectConfiguration(fullConfiguration, projectName);
     }
 }

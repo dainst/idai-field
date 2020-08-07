@@ -1,3 +1,143 @@
 {
-  "categories": {}
+  "categories": {
+    "Place": {
+      "fields": {
+        "placeName": {
+          "label": "Nome del luogo"
+        },
+        "siteClassification": {
+          "label": "Classificazione"
+        },
+        "buildingResearchHistory": {
+          "label": "Storia della ricerca"
+        },
+        "placeCondition": {
+          "label": "Stato di conservazione"
+        },
+        "description": {
+          "label": "Descrizione"
+        }
+      }
+    },
+    "Architecture": {
+      "label": "Costruzione",
+      "fields": {
+        "architectureClassification": {
+          "label": "Designazione"
+        },
+        "architectureMaterial": {
+          "label": "Materiale"
+        },
+        "brickwork": {
+          "label": "Tessitura"
+        },
+        "construction": {
+          "label": "Muro: Construzione"
+        },
+        "architectureMasonry": {
+          "label": "Muro: Opera"
+        },
+        "masonryJoint": {
+          "label": "Muro: Adesione"
+        },
+        "architectureLayerType": {
+          "label": "Muro: Tipo dei filari"
+        },
+        "architectureMasonryCoating": {
+          "label": "Muro: Rivestimento"
+        },
+        "floorClassification": {
+          "label": "Pavimento"
+        }
+      }
+    },
+    "Bedrock": {
+      "label": "Naturale"
+    },
+    "Feature": {
+      "fields": {
+        "featureForm": {
+          "label": "Forma"
+        },
+        "featureBorders": {
+          "label": "Distinzione"
+        },
+        "period": {
+          "label": "Epoca"
+        }
+      }
+    },
+    "Layer": {
+      "label": "Strato di terra",
+      "fields": {
+        "layerClassification": {
+          "label": "Strato di terra: Designazione"
+        },
+        "layerColorLightness": {
+          "label": "Strato di terra: Tono"
+        },
+        "layerColor": {
+          "label": "Strato di terra: Colore"
+        },
+        "consistency": {
+          "label": "Strato di terra: Consistenza"
+        },
+        "soilType": {
+          "label": "Strato di terra: Composizione"
+        },
+        "distinguishingCriteria": {
+          "label": "Strato di terra: Criterio discriminante "
+        },
+        "layerContentPotteryOrigin": {
+          "label": "Contenuto: Ceramica provenienza"
+        },
+        "layerContentPotteryShape": {
+          "label": "Contenuto: Ceramica forma"
+        },
+        "layerContentPotteryDecoration": {
+          "label": "Contenuto: Ceramica decorazione"
+        },
+        "layerContentTerracotta": {
+          "label": "Contenuto: Ogetti di terracotta"
+        },
+        "layerContentInorganic": {
+          "label": "Contenuto: Materiale anorganico"
+        },
+        "layerContentOrganic": {
+          "label": "Contenuto: Materiale organico"
+        },
+        "layerContentBuildingMaterial": {
+          "label": "Contenuto: Materiale da costruzione"
+        },
+        "layerForm": {
+          "label": "Strato di terra: Forma"
+        },
+        "layerBorders": {
+          "label": "Strato di terra: Limiti"
+        }
+      }
+    },
+    "Burial": {
+      "label": "Sepoltura"
+    },
+    "Grave": {
+      "label": "Tomba"
+    },
+    "Pottery": {
+      "fields": {
+        "vesselForm": {
+          "label": "Forma"
+        },
+        "miniatureVesselForm": {
+          "label": "Forma ceramica miniaturistica"
+        },
+        "potteryProvenance": {
+          "label": "Provenienza"
+        },
+        "vesselDecoration": {
+          "label": "Decorazione"
+        }
+      }
+    }
+  }
 }

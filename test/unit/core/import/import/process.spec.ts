@@ -353,6 +353,48 @@ describe('process()', () => {
     });
 
 
+    it('merge, multiple times', async done => {
+
+        const document1: Document = {
+            _id: '1',
+            created: { user: '', date: new Date() },
+            modified: [],
+            resource: {
+                category: 'Feature',
+                identifier: 'existingFeature',
+                field1: 'new1',
+                shortDescription: 'sd1',
+                id: 'ef1',
+                relations: {}
+            }
+        };
+        const document2: Document = {
+            _id: '1',
+            created: { user: '', date: new Date() },
+            modified: [],
+            resource: {
+                category: 'Feature',
+                identifier: 'existingFeature',
+                field2: 'new2',
+                shortDescription: 'sd2',
+                id: 'ef1',
+                relations: {}
+            }
+        };
+        (document1 as any)['mergeTarget'] = existingFeature;
+        (document2 as any)['mergeTarget'] = existingFeature;
+
+        const result = await process([document1, document2], validator, operationCategoryNames, get, relationInverses, { mergeMode: true });
+
+        const resource = result[0][0].resource;
+        expect(resource.id).toBe('ef1');
+        expect(resource['field1']).toEqual('new1');
+        expect(resource['field2']).toEqual('new2');
+        expect(resource['shortDescription']).toEqual('sd2');
+        done();
+    });
+
+
     // err cases /////////////////////////////////////////////////////////////////////////////////////////////
 
     it('field is not defined', async done => {

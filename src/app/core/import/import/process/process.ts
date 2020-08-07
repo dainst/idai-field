@@ -10,6 +10,7 @@ import {assertLegalCombination} from '../utils';
 import {ImportOptions} from '../import-documents';
 import {mergeResource} from './merge-resource';
 import {InverseRelationsMap} from '../../../configuration/inverse-relations-map';
+import {clone} from '../../../util/object-util';
 
 
 /**
@@ -81,7 +82,7 @@ export async function process(documents: Array<Document>,
     assertLegalCombination(importOptions.mergeMode, importOptions.operationId);
 
     try {
-        assertNoDuplicates(documents);
+        if (!importOptions.mergeMode) assertNoDuplicates(documents);
 
         const processedDocuments = processDocuments(documents, validator, importOptions.mergeMode === true);
 
@@ -115,13 +116,25 @@ function assertNoDuplicates(documents: Array<Document>) {
  */
 function processDocuments(documents: Array<Document>, validator: ImportValidator, mergeMode: boolean): Array<Document> {
 
-    return documents.map((document: Document) => {
+    // TODO test manually: it seems it hangs on corrupt json instead of displaying error
 
+    const finalDocuments = {}; // TODO review that we do not have multiple find, but fetch merge target only once before this function is called
+
+    for (const document of documents) {
+
+        // TODO review dropdown fields
         validator.assertDropdownRangeComplete(document.resource); // we want dropdown fields to be complete before merge
-
         if (!mergeMode) validator.assertIsKnownCategory(document);
 
-        const finalDocument = mergeOrUseAsIs(document);
+        let finalDocument;
+        if (mergeMode) {
+            const mergeTarget = finalDocuments[document.resource.id] ?? document[MERGE_TARGET];
+            const mergedResource = mergeResource(mergeTarget.resource, document.resource);
+            finalDocument = assoc(Document.RESOURCE, mergedResource)(mergeTarget);
+        } else {
+            finalDocument = document;
+        }
+        finalDocuments[finalDocument.resource.id] = finalDocument;
 
         // While we want to leave existing documents' fields as they come from the database,
         // we do test for fields of import document if they are defined.
@@ -131,24 +144,9 @@ function processDocuments(documents: Array<Document>, validator: ImportValidator
 
         if (!mergeMode) validator.assertIsAllowedCategory(finalDocument);
         validator.assertIsWellformed(finalDocument);
+    }
 
-        return finalDocument;
-    });
-}
-
-
-function mergeOrUseAsIs(document: NewDocument|Document): Document {
-
-    const mergeTarget = (document as any)[MERGE_TARGET];
-
-    return (
-
-        mergeTarget
-            ? assoc('resource', mergeResource(mergeTarget.resource, document.resource))(mergeTarget)
-            : document
-
-    ) as Document;
-
+    return Object.values(finalDocuments);
 }
 
 

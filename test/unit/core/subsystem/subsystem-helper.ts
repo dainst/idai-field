@@ -12,13 +12,11 @@ import {ChangesStream} from '../../../../src/app/core/datastore/changes/changes-
 import {PersistenceManager} from '../../../../src/app/core/model/persistence-manager';
 import {Validator} from '../../../../src/app/core/model/validator';
 import {SyncTarget} from '../../../../src/app/core/settings/settings';
-import {FsConfigReader} from '../../../../src/app/core/util/fs-config-reader';
 import {SettingsService} from '../../../../src/app/core/settings/settings-service';
 import {ImageOverviewFacade} from '../../../../src/app/core/images/overview/view/imageoverview-facade';
 import {ImageDocumentsManager} from '../../../../src/app/core/images/overview/view/image-documents-manager';
 import {ImagesState} from '../../../../src/app/core/images/overview/view/images-state';
 import {ConfigLoader} from '../../../../src/app/core/configuration/boot/config-loader';
-import {ConfigReader} from '../../../../src/app/core/configuration/boot/config-reader';
 import {AppConfigurator} from '../../../../src/app/core/configuration/app-configurator';
 import {TabManager} from '../../../../src/app/core/tabs/tab-manager';
 import {PouchDbFsImagestore} from '../../../../src/app/core/images/imagestore/pouch-db-fs-imagestore';
@@ -30,6 +28,7 @@ import { PouchdbServer } from '../../../../src/app/core/datastore/pouchdb/pouchd
 import {DescendantsUtility} from '../../../../src/app/core/model/descendants-utility';
 import {Query} from '../../../../src/app/core/datastore/model/query';
 import {CategoryConverter} from '../../../../src/app/core/datastore/cached/category-converter';
+import {ConfigReader} from '../../../../src/app/core/configuration/boot/config-reader';
 
 
 class IdGenerator {
@@ -50,9 +49,7 @@ export async function setupSettingsService(pouchdbmanager, pouchdbserver, projec
         pouchdbmanager,
         pouchdbserver,
         undefined,
-        new AppConfigurator(
-            new ConfigLoader(new FsConfigReader() as ConfigReader)
-        ),
+        new AppConfigurator(new ConfigLoader(new ConfigReader())),
         undefined,
         undefined
     );

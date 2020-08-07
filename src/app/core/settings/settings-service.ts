@@ -134,10 +134,10 @@ export class SettingsService {
         if (progress) await progress.setPhase('loadingConfiguration');
 
         try {
-            return await this.appConfigurator.go(
+            return this.appConfigurator.go(
                 configurationDirPath,
                 SettingsService.getConfigurationName(this.getSelectedProject()),
-                Settings.getLocale()
+                this.settings.languages
             );
         } catch (msgsWithParams) {
             if (isString(msgsWithParams)) {

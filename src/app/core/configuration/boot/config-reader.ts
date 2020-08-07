@@ -1,29 +1,27 @@
-import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
 import {ConfigurationErrors} from './configuration-errors';
 
+const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
 
-@Injectable()
+
 /**
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
 export class ConfigReader {
 
-    constructor(private http: HttpClient) {}
+    public exists(path: string): boolean {
 
+        return fs.existsSync(path);
+    }
 
-    public read(path: string): Promise<any> {
+    public read(path: string): any {
 
-        return new Promise((resolve, reject) => {
+        const fileContent: any = fs.readFileSync(path, 'utf-8');
 
-            this.http.get(path).subscribe(
-                (data: any) => resolve(data),
-                (error: any) => {
-                    console.error(error);
-                    reject([ConfigurationErrors.INVALID_JSON, path]);
-                }
-            );
-        });
+        try {
+            return JSON.parse(fileContent);
+        } catch (err) {
+            throw [ConfigurationErrors.INVALID_JSON, path];
+        }
     }
 }

@@ -556,7 +556,7 @@ export class AppConfigurator {
 
 
     public go(configDirPath: string, customConfigurationName: string|undefined,
-              locale: string): Promise<ProjectConfiguration> {
+              languages: string[]): ProjectConfiguration {
 
         if (customConfigurationName === 'Meninx' || customConfigurationName === 'Pergamon') {
 
@@ -672,7 +672,7 @@ export class AppConfigurator {
             this.defaultRelations,
             this.defaultFields,
             customConfigurationName,
-            locale
+            languages
         );
     }
 }

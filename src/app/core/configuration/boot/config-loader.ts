@@ -29,23 +29,22 @@ export class ConfigLoader {
 
     constructor(private configReader: ConfigReader) {}
 
-
-    public async go(configDirPath: string, commonFields: { [fieldName: string]: any },
-                    builtinCategories: Map<BuiltinCategoryDefinition>, relations: Array<RelationDefinition>,
-                    extraFields: {[fieldName: string]: FieldDefinition },
-                    customConfigurationName: string|undefined,
-                    locale: string): Promise<ProjectConfiguration> {
+    public go(configDirPath: string, commonFields: { [fieldName: string]: any },
+              builtinCategories: Map<BuiltinCategoryDefinition>, relations: Array<RelationDefinition>,
+              extraFields: {[fieldName: string]: FieldDefinition },
+              customConfigurationName: string|undefined,
+              languages: string[]): ProjectConfiguration {
 
         if (customConfigurationName) console.log('Load custom configuration', customConfigurationName);
 
-        const libraryCategories: Map<LibraryCategoryDefinition> = await this.readLibraryCategories(configDirPath);
+        const libraryCategories: Map<LibraryCategoryDefinition> = this.readLibraryCategories(configDirPath);
 
         const missingRelationCategoryErrors = ConfigurationValidation.findMissingRelationType(
             relations, Object.keys(builtinCategories as any)
         );
         if (missingRelationCategoryErrors.length > 0) throw missingRelationCategoryErrors;
 
-        return await this.preprocess(
+        return this.preprocess(
             configDirPath,
             libraryCategories,
             commonFields,
@@ -53,33 +52,31 @@ export class ConfigLoader {
             relations,
             extraFields,
             customConfigurationName,
-            locale);
+            languages);
     }
 
 
-    private async readLibraryCategories(configDirPath: string): Promise<any> {
+    private readLibraryCategories(configDirPath: string): any {
 
         const appConfigurationPath = configDirPath + '/Library/Categories.json';
 
         try {
-            return addKeyAsProp('libraryId')(await this.configReader.read(appConfigurationPath));
+            return addKeyAsProp('libraryId')(this.configReader.read(appConfigurationPath));
         } catch (msgWithParams) {
             throw [msgWithParams];
         }
     }
 
 
-    private async preprocess(configDirPath: string,
-                             libraryCategories: Map<LibraryCategoryDefinition>,
-                             commonFields: any,
-                             builtinCategories: Map<BuiltinCategoryDefinition>,
-                             relations: Array<RelationDefinition>,
-                             extraFields: { [fieldName: string]: FieldDefinition },
-                             customConfigurationName: string|undefined,
-                             locale: string): Promise<ProjectConfiguration> {
+    private preprocess(configDirPath: string,
+                       libraryCategories: Map<LibraryCategoryDefinition>,
+                       commonFields: any,
+                       builtinCategories: Map<BuiltinCategoryDefinition>,
+                       relations: Array<RelationDefinition>,
+                       extraFields: { [fieldName: string]: FieldDefinition },
+                       customConfigurationName: string|undefined,
+                       languages: string[]): ProjectConfiguration {
 
-        const languageCoreConfigurationPath = configDirPath + '/Core/Language.' + locale + '.json';
-        const languageConfigurationPath = configDirPath + '/Library/Language.' + locale + '.json';
         const orderConfigurationPath = configDirPath + '/Order.json';
         const searchConfigurationPath = configDirPath + '/Search.json';
         const valuelistsConfigurationPath = configDirPath + '/Library/Valuelists.json';
@@ -87,25 +84,38 @@ export class ConfigLoader {
             + '/Config-' + (customConfigurationName ? customConfigurationName : 'Default') + '.json';
 
         let customCategories;
-        let languageCoreConfiguration: any;
-        let languageConfiguration: any;
-        let customLanguageConfiguration: any;
+        let languageCoreConfigurations: any[];
+        let languageConfigurations: any[];
+        let customLanguageConfigurations: any[];
         let searchConfiguration: any;
         let valuelistsConfiguration: any;
         let orderConfiguration: any;
 
         try {
-            customCategories = await this.configReader.read(customConfigPath);
-            languageCoreConfiguration = await this.configReader.read(languageCoreConfigurationPath);
-            languageConfiguration = await this.configReader.read(languageConfigurationPath);
-            customLanguageConfiguration = await this.configReader.read(configDirPath + '/Language-'
-                + (customConfigurationName
+            languageCoreConfigurations = this.readLanguageConfigurations(
+                configDirPath + '/Core/Language.',
+                languages
+            );
+            languageConfigurations = this.readLanguageConfigurations(
+                configDirPath + '/Library/Language.',
+                languages
+            );
+            customLanguageConfigurations = this.readLanguageConfigurations(
+                configDirPath + '/Language-' + (customConfigurationName
                     ? customConfigurationName
                     : 'Custom')
-                + '.' + locale + '.json');
-            searchConfiguration = await this.configReader.read(searchConfigurationPath);
-            valuelistsConfiguration = await this.configReader.read(valuelistsConfigurationPath);
-            orderConfiguration = await this.configReader.read(orderConfigurationPath);
+                + '.',
+                languages
+            );
+
+            customCategories = this.configReader.read(customConfigPath);
+            searchConfiguration = this.configReader.read(searchConfigurationPath);
+            valuelistsConfiguration = this.configReader.read(valuelistsConfigurationPath);
+            orderConfiguration = this.configReader.read(orderConfigurationPath);
+
+            //console.log('languageCoreConfigurations', languageCoreConfigurations);
+            //console.log('languageConfigurations', languageConfigurations);
+            //console.log('customLanguageConfigurations', customLanguageConfigurations);
         } catch (msgWithParams) {
             throw [msgWithParams];
         }
@@ -123,9 +133,9 @@ export class ConfigLoader {
                     valuelistsConfiguration,
                     extraFields,
                     relations,
-                    languageCoreConfiguration,
-                    languageConfiguration,
-                    customLanguageConfiguration,
+                    languageCoreConfigurations[0],
+                    languageConfigurations[0],
+                    customLanguageConfigurations[0],
                     searchConfiguration,
                     orderConfiguration,
                     (categories: any) => {
@@ -138,5 +148,19 @@ export class ConfigLoader {
         } catch (msgWithParams) {
             throw msgWithParams;
         }
+    }
+
+
+    private readLanguageConfigurations(basePath: string, languages: string[]): any[] {
+
+        const configurations: any[] = [];
+
+        for (const language of languages) {
+            const path: string = basePath + language + '.json';
+            if (!this.configReader.exists(path)) continue;
+            configurations.push(this.configReader.read(path));
+        }
+
+        return configurations;
     }
 }

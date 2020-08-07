@@ -1,9 +1,12 @@
 <ul class="list-group list-group-flush"
-    cdkDropList [cdkDropListData]="languages"
+    cdkDropList [cdkDropListData]="selectedLanguages"
     (cdkDropListDropped)="onDrop($event)">
-    <li *ngFor="let language of languages; let i = index"
+    <li *ngFor="let language of selectedLanguages; let i = index"
         class="list-group-item"
         cdkDrag [cdkDragData]="language">
         <span class="priority">{{i + 1}}.</span> {{getLabel(language)}}
     </li>
+    <div class="btn btn-block btn-secondary"
+         i18n="@@settings.addLanguage"
+         (click)="addLanguage()">Sprache hinzufügen</div>
 </ul>

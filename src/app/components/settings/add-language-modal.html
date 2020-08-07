@@ -1,0 +1,20 @@
+<div class="modal-header">
+    <h5 class="modal-title" i18n="@@settings.addLanguage">Sprache hinzufügen</h5>
+</div>
+
+<div class="modal-body">
+    <ul class="list-group">
+        <li *ngFor="let language of getLanguages()"
+            class="list-group-item" (click)="select(language)">
+            {{getLabel(language)}} ({{language}})
+        </li>
+    </ul>
+</div>
+
+<div class="modal-footer">
+    <div id="close-projects-modal-button"
+         class="btn btn-secondary"
+         (click)="activeModal.dismiss('cancel')">
+        <span i18n="@@buttons.close">Schließen</span>
+    </div>
+</div>

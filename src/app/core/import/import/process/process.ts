@@ -71,6 +71,7 @@ import {InverseRelationsMap} from '../../../configuration/inverse-relations-map'
  *  @author Thomas Kleinke
  */
 export async function process(documents: Array<Document>,
+                              mergeDocs: { [resourceId: string]: Document },
                               validator: ImportValidator,
                               operationCategoryNames: string[],
                               get: Get,
@@ -83,7 +84,7 @@ export async function process(documents: Array<Document>,
     try {
         if (!importOptions.mergeMode) assertNoDuplicates(documents);
 
-        const processedDocuments = processDocuments(documents, validator, importOptions.mergeMode === true);
+        const processedDocuments = processDocuments(documents, mergeDocs, validator, importOptions.mergeMode === true);
 
         const relatedDocuments = await processRelations(
             processedDocuments,
@@ -116,7 +117,10 @@ function assertNoDuplicates(documents: Array<Document>) {
 //
 // TODO instead of using MERGE_TARGET, pass a map of mergeDocs
 // TODO do not pass mergeMode option, but look if mergeDocs map not empty
-function processDocuments(documents: Array<Document>, validator: ImportValidator, mergeMode: boolean): Array<Document> {
+function processDocuments(documents: Array<Document>,
+                          mergeDocs: { [resourceId: string]: Document },
+                          validator: ImportValidator,
+                          mergeMode: boolean): Array<Document> {
 
     // TODO test manually: it seems it hangs on corrupt json instead of displaying error
 

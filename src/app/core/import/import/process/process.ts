@@ -1,4 +1,4 @@
-import {duplicates, to} from 'tsfun';
+import {duplicates, to, size} from 'tsfun';
 import {assoc} from 'tsfun/associative';
 import {Document} from 'idai-components-2';
 import {ImportValidator} from './import-validator';
@@ -116,7 +116,7 @@ function processDocuments(documents: Array<Document>,
                           mergeDocs: { [resourceId: string]: Document },
                           validator: ImportValidator): Array<Document> {
 
-    const mergeMode = Object.keys(mergeDocs).length > 0;
+    const mergeMode = size(mergeDocs) > 0;
     if (!mergeMode) assertNoDuplicates(documents);
 
     const finalDocuments = {};

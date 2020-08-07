@@ -131,7 +131,7 @@ function processDocuments(documents: Array<Document>, validator: ImportValidator
         let finalDocument;
         if (mergeMode) {
             const mergeTarget = finalDocuments[document.resource.id] ?? document[MERGE_TARGET];
-            if (!mergeTarget) throw 'FATAL - in process.: no merge target';
+            if (!mergeTarget) throw 'FATAL - in process.ts: no merge target';
             const mergedResource = mergeResource(mergeTarget.resource, document.resource);
             finalDocument = assoc(Document.RESOURCE, mergedResource)(mergeTarget);
         } else {

@@ -97,8 +97,6 @@ export class ConfigLoader {
             searchConfiguration = this.configReader.read(searchConfigurationPath);
             valuelistsConfiguration = this.configReader.read(valuelistsConfigurationPath);
             orderConfiguration = this.configReader.read(orderConfigurationPath);
-
-            //console.log('languageConfigurations', languageConfigurations);
         } catch (msgWithParams) {
             throw [msgWithParams];
         }

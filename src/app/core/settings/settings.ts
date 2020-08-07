@@ -26,6 +26,8 @@ export module Settings {
 
     export function getLocale(): string {
 
-        return remote.getGlobal('getLocale')();
+        return remote
+            ? remote.getGlobal('getLocale')()
+            : 'de'; // Return default locale if remote is not accessible (in unit tests)
     }
 }

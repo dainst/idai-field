@@ -6,7 +6,16 @@ import {ImportOptions} from '../import-documents';
 import {InverseRelationsMap} from '../../../configuration/inverse-relations-map';
 
 
-export async function process(processedDocuments: Array<Document>, // TODO get rid of this function
+/**
+ * @deprecated
+ * @param processedDocuments
+ * @param validator
+ * @param operationCategoryNames
+ * @param get
+ * @param inverseRelationsMap
+ * @param importOptions
+ */
+export async function process(processedDocuments: Array<Document>, // TODO get rid of this function, move all tests to process-relations.spec
                               validator: ImportValidator,
                               operationCategoryNames: string[],
                               get: Get,

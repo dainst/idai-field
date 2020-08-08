@@ -1,4 +1,4 @@
-import {includedIn, is, isNot, on} from 'tsfun';
+import {includedIn, is, isNot, on, Predicate} from 'tsfun';
 import {Dating, Dimension, Literature, Document, FieldGeometry, NewDocument, NewResource,
     Resource} from 'idai-components-2';
 import {validateFloat, validateUnsignedFloat, validateUnsignedInt} from '../util/number-util';
@@ -56,61 +56,56 @@ export module Validations {
         }
     }
 
-    // TODO deduplicate the following three functions
 
-    /**
-     * @throws [INVALID_DATING_VALUES]
-     */
     export function assertCorrectnessOfDatingValues(document: Document|NewDocument,
                                                     projectConfiguration: ProjectConfiguration) {
 
-        const invalidFields: string[] = Validations.validateObjectArrays(
-            document.resource, projectConfiguration, INPUT_TYPES.DATING, Dating.isValid
-        );
-
-        if (invalidFields.length > 0) {
-            throw [
-                ValidationErrors.INVALID_DATING_VALUES,
-                document.resource.category,
-                invalidFields.join(', ')
-            ];
-        }
+        assertValidityOfObjectArrays(
+            document,
+            projectConfiguration,
+            INPUT_TYPES.DATING,
+            ValidationErrors.INVALID_DATING_VALUES,
+            Dating.isValid);
     }
 
 
-    /**
-     * @throws [INVALID_DIMENSION_VALUES]
-     */
     export function assertCorrectnessOfDimensionValues(document: Document|NewDocument,
                                                        projectConfiguration: ProjectConfiguration) {
 
-        const invalidFields: string[] = Validations.validateObjectArrays(
-            document.resource, projectConfiguration, INPUT_TYPES.DIMENSION, Dimension.isValid
-        );
-
-        if (invalidFields.length > 0) {
-            throw [
-                ValidationErrors.INVALID_DIMENSION_VALUES,
-                document.resource.category,
-                invalidFields.join(', ')
-            ];
-        }
+        assertValidityOfObjectArrays(
+            document,
+            projectConfiguration,
+            INPUT_TYPES.DIMENSION,
+            ValidationErrors.INVALID_DIMENSION_VALUES,
+            Dimension.isValid);
     }
 
 
-    /**
-     * @throws [INVALID_LITERATURE_VALUES]
-     */
     export function assertCorrectnessOfLiteratureValues(document: Document|NewDocument,
                                                         projectConfiguration: ProjectConfiguration) {
 
+        assertValidityOfObjectArrays(
+            document,
+            projectConfiguration,
+            INPUT_TYPES.LITERATURE,
+            ValidationErrors.INVALID_LITERATURE_VALUES,
+            Literature.isValid);
+    }
+
+
+    function assertValidityOfObjectArrays(document: Document|NewDocument,
+                                          projectConfiguration: ProjectConfiguration,
+                                          inputType: 'dating'|'dimension'|'literature',
+                                          error: string,
+                                          isValid: Predicate) {
+
         const invalidFields: string[] = Validations.validateObjectArrays(
-            document.resource, projectConfiguration, INPUT_TYPES.LITERATURE, Literature.isValid
+            document.resource, projectConfiguration, inputType, isValid
         );
 
         if (invalidFields.length > 0) {
             throw [
-                ValidationErrors.INVALID_LITERATURE_VALUES,
+                error,
                 document.resource.category,
                 invalidFields.join(', ')
             ];

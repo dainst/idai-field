@@ -19,8 +19,8 @@ export async function process(processedDocuments: Array<Document>, // TODO get r
             processedDocuments,
             validator,
             operationCategoryNames,
-            inverseRelationsMap,
             get,
+            inverseRelationsMap,
             importOptions
         );
 

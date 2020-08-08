@@ -99,7 +99,8 @@ import {InverseRelationsMap} from '../../../configuration/inverse-relations-map'
  */
 export async function processRelations(documents: Array<Document>, validator: ImportValidator,
                                        operationCategoryNames: string[],
-                                       inverseRelationsMap: InverseRelationsMap, get: Get,
+                                       get: Get,
+                                       inverseRelationsMap: InverseRelationsMap,
                                        { mergeMode, permitDeletions, operationId }: ImportOptions) {
 
     const assertIsAllowedRelationDomainCategory_ = (_: any, __: any, ___: any, ____: any) =>

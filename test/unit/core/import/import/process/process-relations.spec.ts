@@ -34,7 +34,7 @@ describe('processRelations', () => {
         await processRelations(
             documents,
             validator,
-            ['Trench'], relationInverses, get, {});
+            ['Trench'], get, relationInverses, {});
 
         expect(documents[0].resource.relations[LIES_WITHIN]).toBeUndefined();
         expect(documents[0].resource.relations[RECORDED_IN]).toEqual(['et1']);
@@ -52,7 +52,7 @@ describe('processRelations', () => {
         await processRelations(
             documents,
             validator,
-            ['Trench'], relationInverses, get, {});
+            ['Trench'], get, relationInverses, {});
 
         expect(documents[1].resource.identifier).toBe('NewFeature1');
         expect(documents[1].resource.relations[LIES_WITHIN]).toBeUndefined();
@@ -71,7 +71,7 @@ describe('processRelations', () => {
         await processRelations(
             documents,
             validator,
-            ['Trench'], relationInverses, get, {});
+            ['Trench'], get, relationInverses, {});
 
         expect(documents[1].resource.identifier).toBe('NewTrench1');
         expect(documents[1].resource.relations[RECORDED_IN]).toBeUndefined();

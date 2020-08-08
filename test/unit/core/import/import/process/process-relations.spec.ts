@@ -3,6 +3,8 @@ import {HierarchicalRelations} from '../../../../../../src/app/core/model/relati
 import LIES_WITHIN = HierarchicalRelations.LIESWITHIN;
 import RECORDED_IN = HierarchicalRelations.RECORDEDIN;
 import {createMockValidator, d} from '../helper';
+import {ImportErrors as E} from '../../../../../../src/app/core/import/import/import-errors';
+import {process} from '../../../../../../src/app/core/import/import/process/process';
 
 
 describe('processRelations', () => {
@@ -21,6 +23,7 @@ describe('processRelations', () => {
     let get = async (resourceId): Promise<any> => {
 
         if (resourceId === 'et1') return d('et1', 'Trench', 'ExistingTrench1');
+        if (resourceId === 'et2') return d('et2', 'Trench', 'ExistingTrench2');
         if (resourceId === 'ef1') return existingFeature;
         if (resourceId === 'ef2') return existingFeature2;
         throw 'missing';
@@ -353,6 +356,126 @@ describe('processRelations', () => {
         expect(resource.id).toBe('nf1');
         expect(resource.relations[RECORDED_IN][0]).toBe('et1');
         expect(resource.relations[LIES_WITHIN][0]).toBe('ef1');
+        done();
+    });
+
+
+    // merge mode //////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    it('merge, overwrite relations, reassign parent', async done => {
+
+        const document = d('ef2', 'Feature', 'existingFeature2', { liesWithin: ['ef1'] });
+
+        await processRelations(
+            [document],
+            validator, operationCategoryNames, get, relationInverses, { mergeMode: true });
+
+        const resource = document.resource;
+        expect(resource.relations[RECORDED_IN][0]).toBe('et1');
+        expect(resource.relations[LIES_WITHIN][0]).toBe('ef1');
+        done();
+    });
+
+
+    it('merge, overwrite relations', async done => {
+
+        const document = d('ef1', 'Feature', 'existingFeature', { liesWithin: ['et2'], isAfter: ['ef2']});
+
+        const result = await processRelations([document],
+            validator, operationCategoryNames, get, relationInverses, { mergeMode: true });
+
+        expect(document.resource.relations['isAfter'][0]).toEqual('ef2');
+        expect(result[0].resource.id).toEqual('ef2');
+        expect(result[0].resource.relations['isBefore'][0]).toEqual('ef1');
+        done();
+    });
+
+
+    // err cases /////////////////////////////////////////////////////////////////////////////////////////////
+
+    it('merge, return error in case of an invalid relation', async done => {
+
+        const document = d('ef1', 'Feature', 'existingFeature', { isAfter: 'unknown' });
+
+        try {
+
+            await processRelations(
+                [document],
+                validator, operationCategoryNames, get, relationInverses, { mergeMode: true });
+            fail();
+
+        } catch (err) {
+            expect(err).not.toBeUndefined(); // TODO review err, seems not to be user-displayable
+        }
+        done();
+    });
+
+
+    it('assert lies within correctness', async done => {
+
+        validator.assertLiesWithinCorrectness.and.callFake(() => { throw [E.MUST_LIE_WITHIN_OTHER_NON_OPERATON_RESOURCE]});
+
+        try {
+
+            const documents = [
+                d('nfi1', 'Find', 'one', { isChildOf: 'et1'})
+            ];
+            await processRelations(documents,
+                validator, operationCategoryNames, get, relationInverses, {});
+            fail();
+        } catch (err) {
+            expect(err[0]).toEqual(E.MUST_LIE_WITHIN_OTHER_NON_OPERATON_RESOURCE);
+        }
+        done();
+    });
+
+
+    it('assignment to existing feature, via mismatch with operation assignment parameter', async done => {
+
+        try {
+
+            const documents = [
+                d('nf1', 'Feature', 'one', { liesWithin: ['ef2']})
+            ];
+
+            await processRelations(
+                documents, validator, operationCategoryNames, get, relationInverses, { operationId: 'et1' });
+            fail();
+        } catch (err) {
+            expect(err[0]).toEqual(E.LIES_WITHIN_TARGET_NOT_MATCHES_ON_IS_RECORDED_IN);
+            expect(err[1]).toEqual('one');
+        }
+        done();
+    });
+
+
+    it('clash of assigned operation id with use of parent', async done => {
+
+        try {
+            await processRelations([
+                d('nf1', 'Feature', 'one', {liesWithin: ['et1']})
+            ], validator, operationCategoryNames, get, relationInverses, {operationId: 'et1'});
+            fail();
+        } catch (err) {
+            expect(err[0]).toEqual(E.PARENT_ASSIGNMENT_TO_OPERATIONS_NOT_ALLOWED);
+        }
+        done();
+    });
+
+
+    it('missing liesWithin and no operation assigned', async done => {
+
+        validator.assertHasLiesWithin.and.callFake(() => { throw [E.NO_PARENT_ASSIGNED]});
+
+        try {
+            await processRelations([
+                    d('nf1', 'Feature', 'one')
+                ],
+                validator, operationCategoryNames, get, relationInverses, {});
+            fail();
+        } catch (err) {
+            expect(err[0]).toEqual(E.NO_PARENT_ASSIGNED);
+        }
         done();
     });
 });

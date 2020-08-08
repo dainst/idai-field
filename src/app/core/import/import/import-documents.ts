@@ -13,6 +13,7 @@ import {HierarchicalRelations, PARENT} from '../../model/relation-constants';
 import LIES_WITHIN = HierarchicalRelations.LIESWITHIN;
 import RECORDED_IN = HierarchicalRelations.RECORDEDIN;
 import {InverseRelationsMap} from '../../configuration/inverse-relations-map';
+import {processDocuments} from './process/process-documents';
 
 
 export interface ImportOptions {
@@ -52,20 +53,28 @@ export function buildImportFunction(validator: ImportValidator,
 
         const get = (resourceId: string) => datastore.get(resourceId);
 
-        let mergeDocs = {};
         try {
             preprocessFields(documents, importOptions.permitDeletions === true);
-            mergeDocs = await preprocessDocuments(documents,
-                findByIdentifier(datastore), preprocessDocument as Function, importOptions.mergeMode === true);
             await preprocessRelations(documents,
                 generateId, findByIdentifier(datastore), get, importOptions);
         } catch (errWithParams) {
             return { errors: [errWithParams], successfulImports: 0 };
         }
 
+        let processedDocuments: any = undefined;
+        try {
+            const mergeDocs = await preprocessDocuments(
+                documents,
+                findByIdentifier(datastore),
+                preprocessDocument as Function,
+                importOptions.mergeMode === true);
+            processedDocuments = processDocuments(documents, mergeDocs, validator);
+        } catch (err) {
+            return {errors: [err], successfulImports: 0};
+        }
+
         const [importDocuments, targetDocuments, msgWithParams] = await process(
-            documents,
-            mergeDocs,
+            processedDocuments,
             validator,
             operationCategoryNames,
             get,

@@ -15,6 +15,9 @@ export const INPUT_TYPE = 'inputType';
 export module INPUT_TYPES {
 
     export const DROPDOWN_RANGE = 'dropdownRange';
+    export const DATING = 'dating';
+    export const DIMENSION = 'dimension';
+    export const LITERATURE = 'literature';
 }
 
 

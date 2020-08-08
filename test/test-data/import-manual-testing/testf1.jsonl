@@ -1,1 +1,1 @@
-{ "identifier" : "testf1", "shortDescription": "3", "period": { "value": "Archaisch", "endValue": null } }
+{ "identifier" : "testf1", "shortDescription": "3", "period": "abc" }

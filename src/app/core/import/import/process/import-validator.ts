@@ -172,6 +172,11 @@ export class ImportValidator extends Validator {
      * @throws [ValidationErrors.UNSUPPORTED_GEOMETRY_TYPE]
      * @throws [ValidationErrors.INVALID_COORDINATES]
      * @throws [ValidationErrors.INVALID_NUMERICAL_VALUE]
+     * @throws [ValidationErrors.INVALID_DATING_VALUES]
+     * @throws [ValidationErrors.INVALID_DIMENSION_VALUES]
+     * @throws [ValidationErrors.INVALID_LITERATURE_VALUES]
+     *
+     * TODO ValidationErrors.INVALID_DROPDOWN_RANGE_VALUES
      */
     public assertIsWellformed(document: Document|NewDocument): void {
 
@@ -205,33 +210,6 @@ export class ImportValidator extends Validator {
             operation.resource.category, RECORDED_IN)) {
 
             throw [E.INVALID_OPERATION, document.resource.category, operation.resource.category];
-        }
-    }
-
-
-    /**
-     * @throws [E.INVALID_DROPDOWN_RANGE_VALUES, fieldName]
-     */
-    public assertDropdownRangeComplete(resource: NewResource): void {
-
-        const fieldDefinitions = this.projectConfiguration.getFieldDefinitions(resource.category);
-
-        for (const fieldName of Object.keys(resource).filter(isNot(includedIn(['relations', 'geometry'])))) {
-
-            let fieldDefinition = fieldDefinitions.find(on('name', is(fieldName)));
-            const dropdownRangeFieldName = fieldName.replace('End', '');
-
-            if (!fieldDefinition) {
-                if (fieldName.endsWith('End')) {
-                    fieldDefinition = fieldDefinitions.find(on('name', is(dropdownRangeFieldName)))
-                }
-                if (!fieldDefinition) continue;
-            }
-            if (fieldDefinition.inputType !== INPUT_TYPES.DROPDOWN_RANGE) continue;
-
-            if (resource[dropdownRangeFieldName + 'End'] && !(resource[dropdownRangeFieldName])) {
-                throw [E.INVALID_DROPDOWN_RANGE_VALUES, dropdownRangeFieldName];
-            }
         }
     }
 }

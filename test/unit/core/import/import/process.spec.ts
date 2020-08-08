@@ -495,18 +495,4 @@ describe('process()', () => {
         expect(result[2][1]).toEqual('invalidField');
         done();
     });
-
-
-    it('validation error - dropdown not complete', async done => {
-
-        validator.assertDropdownRangeComplete.and.callFake(() => { throw [E.INVALID_DROPDOWN_RANGE_VALUES, 'abc'] });
-
-        const result = await process([
-            d('nf1', 'Feature', 'one')
-        ], {}, validator, operationCategoryNames, get, relationInverses, { operationId: 'et1' });
-
-        expect(result[2][0]).toEqual(E.INVALID_DROPDOWN_RANGE_VALUES);
-        expect(result[2][1]).toEqual('abc');
-        done();
-    })
 });

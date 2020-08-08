@@ -3,7 +3,7 @@ import {Dating, Dimension, Literature, Document, FieldGeometry, NewDocument, New
     Resource} from 'idai-components-2';
 import {validateFloat, validateUnsignedFloat, validateUnsignedInt} from '../util/number-util';
 import {ValidationErrors} from './validation-errors';
-import {INPUT_TYPE} from '../constants';
+import {INPUT_TYPE, INPUT_TYPES} from '../constants';
 import {ProjectConfiguration} from '../configuration/project-configuration';
 import {FieldDefinition} from '../configuration/model/field-definition';
 import {RelationDefinition} from '../configuration/model/relation-definition';
@@ -56,6 +56,7 @@ export module Validations {
         }
     }
 
+    // TODO deduplicate the following three functions
 
     /**
      * @throws [INVALID_DATING_VALUES]
@@ -64,7 +65,7 @@ export module Validations {
                                                     projectConfiguration: ProjectConfiguration) {
 
         const invalidFields: string[] = Validations.validateObjectArrays(
-            document.resource, projectConfiguration, 'dating', Dating.isValid
+            document.resource, projectConfiguration, INPUT_TYPES.DATING, Dating.isValid
         );
 
         if (invalidFields.length > 0) {
@@ -84,7 +85,7 @@ export module Validations {
                                                        projectConfiguration: ProjectConfiguration) {
 
         const invalidFields: string[] = Validations.validateObjectArrays(
-            document.resource, projectConfiguration, 'dimension', Dimension.isValid
+            document.resource, projectConfiguration, INPUT_TYPES.DIMENSION, Dimension.isValid
         );
 
         if (invalidFields.length > 0) {
@@ -104,7 +105,7 @@ export module Validations {
                                                         projectConfiguration: ProjectConfiguration) {
 
         const invalidFields: string[] = Validations.validateObjectArrays(
-            document.resource, projectConfiguration, 'literature', Literature.isValid
+            document.resource, projectConfiguration, INPUT_TYPES.LITERATURE, Literature.isValid
         );
 
         if (invalidFields.length > 0) {

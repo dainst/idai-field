@@ -123,8 +123,6 @@ function processDocuments(documents: Array<Document>,
 
     for (const document of documents) {
 
-        // TODO review dropdown fields
-        validator.assertDropdownRangeComplete(document.resource); // we want dropdown fields to be complete before merge
         if (!mergeMode) validator.assertIsKnownCategory(document);
 
         let finalDocument = document;
@@ -143,6 +141,7 @@ function processDocuments(documents: Array<Document>,
         validator.assertFieldsDefined(document);
 
         if (!mergeMode) validator.assertIsAllowedCategory(finalDocument);
+        // TODO implement validation of period fields
         validator.assertIsWellformed(finalDocument);
     }
 

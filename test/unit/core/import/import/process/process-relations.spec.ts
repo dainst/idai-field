@@ -4,7 +4,6 @@ import LIES_WITHIN = HierarchicalRelations.LIESWITHIN;
 import RECORDED_IN = HierarchicalRelations.RECORDEDIN;
 import {createMockValidator, d} from '../helper';
 import {ImportErrors as E} from '../../../../../../src/app/core/import/import/import-errors';
-import {process} from '../../../../../../src/app/core/import/import/process/process';
 
 
 describe('processRelations', () => {

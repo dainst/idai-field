@@ -5,7 +5,6 @@ import {DocumentDatastore} from '../../datastore/document-datastore';
 import {Updater} from './updater';
 import {ImportFunction} from './types';
 import {assertLegalCombination, findByIdentifier} from './utils';
-import {process} from './process/process';
 import {preprocessRelations} from './preprocess-relations';
 import {preprocessFields} from './preprocess-fields';
 import {ImportErrors as E} from './import-errors';
@@ -14,6 +13,7 @@ import LIES_WITHIN = HierarchicalRelations.LIESWITHIN;
 import RECORDED_IN = HierarchicalRelations.RECORDEDIN;
 import {InverseRelationsMap} from '../../configuration/inverse-relations-map';
 import {processDocuments} from './process/process-documents';
+import {processRelations} from './process/process-relations';
 
 
 export interface ImportOptions {
@@ -69,26 +69,27 @@ export function buildImportFunction(validator: ImportValidator,
                 preprocessDocument as Function,
                 importOptions.mergeMode === true);
             processedDocuments = processDocuments(documents, mergeDocs, validator);
-        } catch (err) {
-            return {errors: [err], successfulImports: 0};
+        } catch (msgWithParams) {
+            return { errors: [msgWithParams], successfulImports: 0};
         }
 
-        const [importDocuments, targetDocuments, msgWithParams] = await process(
-            processedDocuments,
-            validator,
-            operationCategoryNames,
-            get,
-            inverseRelationsMap,
-            importOptions
-        );
-
-        if (msgWithParams) {
+        let targetDocuments;
+        try {
+            targetDocuments = await processRelations(
+                processedDocuments,
+                validator,
+                operationCategoryNames,
+                get,
+                inverseRelationsMap,
+                importOptions
+            );
+        } catch (msgWithParams) {
             if (msgWithParams[0] === E.TARGET_CATEGORY_RANGE_MISMATCH
                 && ([LIES_WITHIN, RECORDED_IN].includes(msgWithParams[2]))) msgWithParams[2] = PARENT;
             return { errors: [msgWithParams], successfulImports: 0 };
         }
 
-        const documentsForImport = importDocuments.map(postprocessDocument);
+        const documentsForImport = processedDocuments.map(postprocessDocument);
 
         const updateErrors = [];
         try {

@@ -1,4 +1,4 @@
-import {assoc} from 'tsfun/associative';
+import {update} from 'tsfun/associative';
 import {Name} from '../../core/constants';
 
 const replicationStream = typeof window !== 'undefined' ? window.require('pouchdb-replication-stream') : require('pouchdb-replication-stream');
@@ -52,7 +52,7 @@ export module Backup {
 
         await db2.load('file://' + filePath);
 
-        const setIdentifier = assoc('resource.identifier', project);
+        const setIdentifier = update('resource.identifier', project);
         const projectDocument = await db2.get('project');
         await db2.put(setIdentifier(projectDocument), { force: true });
     }

@@ -1,4 +1,4 @@
-import {assoc} from 'tsfun';
+import {update} from 'tsfun';
 
 export function createMockProjectConfiguration(): any {
 
@@ -14,11 +14,11 @@ export function createMockProjectConfiguration(): any {
     };
 
     projectConfiguration.getCategoriesArray.and.returnValue([
-        assoc('name', 'category1', defaultFieldConfiguration),
-        assoc('name', 'category2', defaultFieldConfiguration),
-        assoc('name', 'category3', defaultFieldConfiguration),
-        assoc('name', 'Find', defaultFieldConfiguration),
-        assoc('name', 'Type', defaultFieldConfiguration),
+        update('name', 'category1', defaultFieldConfiguration),
+        update('name', 'category2', defaultFieldConfiguration),
+        update('name', 'category3', defaultFieldConfiguration),
+        update('name', 'Find', defaultFieldConfiguration),
+        update('name', 'Type', defaultFieldConfiguration),
     ]);
 
     return projectConfiguration;

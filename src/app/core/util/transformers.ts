@@ -1,6 +1,6 @@
 import {compose, Map} from 'tsfun';
 import {map} from 'tsfun/associative';
-import {assoc} from 'tsfun/associative';
+import {update} from 'tsfun/associative';
 import {get} from 'tsfun/struct';
 import {assocReduce} from './assoc-reduce';
 
@@ -24,7 +24,7 @@ export function makeLookup(path: string) {
 
 export function addKeyAsProp<A extends Map>(prop: string): (m: Map<A>) => Map<A> {
 
-    return map<any>((a: A, key: string) => assoc(prop, key)(a));
+    return map<any>((a: A, key: string) => update(prop, key)(a));
 }
 
 

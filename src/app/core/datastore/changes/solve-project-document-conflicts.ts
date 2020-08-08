@@ -1,7 +1,8 @@
-import {to, flow, map, filter, isDefined, union as tsfunUnion, equal, isEmpty, compose, append, Pair,
+import {to, flow, map, filter, isDefined, union as tsfunUnion,
+    equal, isEmpty, compose, append, Pair,
     left, right} from 'tsfun';
-import {assoc, dissoc, lookup} from 'tsfun/associative';
-import {assoc as assocOn} from 'tsfun/struct';
+import {update as updateAsc, dissoc, lookup} from 'tsfun/associative';
+import {update as updateOn} from 'tsfun/struct';
 import {Document, Resource} from 'idai-components-2';
 import {RevisionId} from '../../constants';
 import {dissocIndices, last2, replaceLastPair, sortRevisionsByLastModified} from '../helpers';
@@ -43,7 +44,7 @@ export function solveProjectDocumentConflict(latestRevision: Document,
     if (resource[CAMPAIGNS] && resource[CAMPAIGNS].length === 0) delete resource[CAMPAIGNS];
 
     // this is to work with the latest changes history
-    const latestRevisionDocumentWithInsertedResultResource = assocOn(RESOURCE, resource)(clonedLatestRevision);
+    const latestRevisionDocumentWithInsertedResultResource = updateOn(RESOURCE, resource)(clonedLatestRevision);
 
     return [latestRevisionDocumentWithInsertedResultResource, revisionIds];
 }
@@ -86,8 +87,8 @@ function unifyCampaignAndStaffFields(latestRevision: Resource) {
         };
 
         return flow(latestRevision,
-            assoc(STAFF, unifyFields(STAFF)),
-            assoc(CAMPAIGNS, unifyFields(CAMPAIGNS)) as any);
+            updateAsc(STAFF, unifyFields(STAFF)),
+            updateAsc(CAMPAIGNS, unifyFields(CAMPAIGNS)) as any);
     }
 }
 
@@ -139,8 +140,8 @@ function solveConflictBetweenTwoRevisions(l: Resource, r: Resource): Resource|un
 
     if (equal(withoutStaffAndCampaigns(l as any), withoutStaffAndCampaigns(r as any))) {
         return flow(r,
-            assoc(STAFF, union([l[STAFF], r[STAFF]])),
-            assoc(CAMPAIGNS, union([l[CAMPAIGNS], r[CAMPAIGNS]])) as any);
+            updateAsc(STAFF, union([l[STAFF], r[STAFF]])),
+            updateAsc(CAMPAIGNS, union([l[CAMPAIGNS], r[CAMPAIGNS]])) as any);
     }
 
     return undefined;

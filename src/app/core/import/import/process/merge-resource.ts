@@ -1,6 +1,6 @@
 import {dropRightWhile, includedIn, is, isArray, isNot, isObject, isAssociative, Map,
     Associative, isEmpty, isnt, flow, cond, dissoc} from 'tsfun';
-import {assoc, reduce, forEach} from 'tsfun/associative';
+import {update, reduce, forEach} from 'tsfun/associative';
 import {NewResource, Resource} from 'idai-components-2';
 import {clone} from '../../../util/object-util';
 import {HierarchicalRelations} from '../../../model/relation-constants';
@@ -47,7 +47,7 @@ export function mergeResource(into: Resource, additional: NewResource): Resource
 
         return !additional.relations
             ? target
-            : assoc(
+            : update(
                 RELATIONS,
                 overwriteOrDeleteProperties(
                     target.relations,

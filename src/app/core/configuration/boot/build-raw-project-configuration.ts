@@ -1,6 +1,6 @@
 import {cond, flow, includedIn, isDefined, isNot, Mapping, Map, on, subtract, undefinedOrEmpty, identity,
     compose, Pair, dissoc, pairWith, prune, filter, update, or} from 'tsfun';
-import {assoc, lookup, map, reduce} from 'tsfun/associative';
+import {update as updateAsc, lookup, map, reduce} from 'tsfun/associative';
 import {clone, update as updateStruct} from 'tsfun/struct';
 import {LibraryCategoryDefinition} from '../model/library-category-definition';
 import {CustomCategoryDefinition} from '../model/custom-category-definition';
@@ -204,7 +204,7 @@ function setGroupLabels(languageConfigurations: any[]) {
             Category.GROUPS,
             compose(
                 map(pairWith(groupLabel)),
-                map(([group, label]: Pair<Group, string>) => assoc(Labelled.LABEL, label)(group as any))))(category);
+                map(([group, label]: Pair<Group, string>) => updateAsc(Labelled.LABEL, label)(group as any))))(category);
     };
 }
 
@@ -264,8 +264,8 @@ function replaceValuelistIdWithActualValuelist(valuelistDefinitionMap: Map<Value
 
     return (fd: TransientFieldDefinition) =>
         flow(fd,
-            assoc(TransientFieldDefinition.VALUELIST, valuelistDefinitionMap[fd.valuelistId!]),
-            assoc(TransientFieldDefinition.POSITION_VALUES, valuelistDefinitionMap[fd.positionValuelistId!]),
+            updateAsc(TransientFieldDefinition.VALUELIST, valuelistDefinitionMap[fd.valuelistId!]),
+            updateAsc(TransientFieldDefinition.POSITION_VALUES, valuelistDefinitionMap[fd.positionValuelistId!]),
             dissoc(TransientFieldDefinition.VALUELISTID),
             dissoc(TransientFieldDefinition.POSITION_VALUELIST_ID)
         );

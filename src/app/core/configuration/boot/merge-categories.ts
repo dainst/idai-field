@@ -1,6 +1,6 @@
 import {includedIn, isNot, isnt, keysAndValues, Map, pairWith, union,
     Pair, flow, filter} from 'tsfun';
-import {lookup, assoc, map, reduce, forEach} from 'tsfun/associative';
+import {lookup, update, map, reduce, forEach} from 'tsfun/associative';
 import {clone} from 'tsfun/struct';
 import {CustomCategoryDefinition} from '../model/custom-category-definition';
 import {TransientCategoryDefinition} from '../model/transient-category-definition';
@@ -21,7 +21,7 @@ export function mergeCategories(customCategories: Map<CustomCategoryDefinition>,
         return reduce((mergedCategories: Map<TransientCategoryDefinition>,
                        [customCategoryName, customCategory]: Pair<string, CustomCategoryDefinition>) => {
 
-            return assoc(customCategoryName,
+            return update(customCategoryName,
                 mergedCategories[customCategoryName]
                     ? handleDirectCategoryExtension(customCategoryName, customCategory, mergedCategories[customCategoryName])
                     : handleChildCategoryExtension(customCategoryName, customCategory, assertInputTypePresentIfNotCommonField))

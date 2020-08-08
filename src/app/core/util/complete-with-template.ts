@@ -1,5 +1,5 @@
 import {reduce} from 'tsfun/associative';
-import {assoc, isObject} from 'tsfun';
+import {update, isObject} from 'tsfun';
 
 
 // TODO move to idai-components-2
@@ -9,7 +9,7 @@ export function completeWithTemplate(struct: any, template: any) {
 
         return acc[key] !== undefined && !isObject(acc[key])
             ? acc
-            : assoc(
+            : update(
                 key,
                 acc[key] !== undefined
                     ? completeWithTemplate(acc[key], val)

@@ -1,5 +1,5 @@
 import {Document} from 'idai-components-2';
-import {assoc, duplicates, size, to} from 'tsfun';
+import {update, duplicates, size, to} from 'tsfun';
 import {RESOURCE_IDENTIFIER} from '../../../constants';
 import {ImportErrors as E} from '../import-errors';
 import {ImportValidator} from './import-validator';
@@ -27,7 +27,7 @@ export function processDocuments(documents: Array<Document>,
             const mergeTarget = finalDocuments[document.resource.id] ?? mergeDocs[document.resource.id];
             if (!mergeTarget) throw 'FATAL - in process.ts: no merge target';
             const mergedResource = mergeResource(mergeTarget.resource, document.resource);
-            finalDocument = assoc(Document.RESOURCE, mergedResource, mergeTarget);
+            finalDocument = update(Document.RESOURCE, mergedResource, mergeTarget);
         }
         finalDocuments[finalDocument.resource.id] = finalDocument;
 

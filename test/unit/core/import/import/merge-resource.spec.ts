@@ -85,6 +85,40 @@ describe('mergeResource', () => {
     });
 
 
+    it('merge object field - delete item in target object', () => {
+
+        target['object'] = { aField: 'aOriginalValue', bField: 'bOriginalValue' };
+        source['object'] = { bField: null };
+
+        const result = mergeResource(target, source);
+
+        expect(result['object']['aField']).toBe('aOriginalValue');
+        expect(result['object']['bField']).toBeUndefined();
+    });
+
+
+    it('merge object field - delete target object after deleting item in target object', () => {
+
+        target['object'] = { aField: 'aOriginalValue' };
+        source['object'] = { aField: null };
+
+        const result = mergeResource(target, source);
+
+        expect(result['object']).toBeUndefined();
+    });
+
+
+    it('merge object field - delete object field', () => {
+
+        target['object'] = { aField: 'aOriginalValue' };
+        source['object'] = null;
+
+        const result = mergeResource(target, source);
+
+        expect(result['object']).toBeUndefined();
+    });
+
+
     it('merge objectArray field', () => {
 
         target['objectArray'] = [{ aField: 'aOriginalValue', cField: 'cOriginalValue' }];

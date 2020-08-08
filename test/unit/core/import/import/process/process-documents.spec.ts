@@ -116,7 +116,7 @@ describe('processDocuments', () => {
         validator.assertIsWellformed.and.callFake(() => { throw [E.INVALID_FIELDS, 'invalidField'] });
 
         try {
-            const result = await processDocuments([
+            await processDocuments([
                 d('nf1', 'Feature', 'one')
             ], {}, validator);
             fail();
@@ -135,6 +135,7 @@ describe('processDocuments', () => {
                 d('nf1', 'Feature', 'dup', {liesWithin: ['etc1']}),
                 d('nf2', 'Feature', 'dup', {liesWithin: ['etc1']}),
             ], {}, validator);
+            fail();
         } catch (err) {
 
             expect(err[0]).toEqual(E.DUPLICATE_IDENTIFIER);
@@ -153,6 +154,7 @@ describe('processDocuments', () => {
                     d('nfi1', 'Find', 'one', { isChildOf: 'et1'})
                 ], {},
                 validator);
+            fail();
         } catch (err) {
 
             expect(err[0]).toEqual(E.INVALID_FIELDS);

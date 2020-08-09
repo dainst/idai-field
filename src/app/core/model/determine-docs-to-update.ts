@@ -1,6 +1,5 @@
 import {on, Predicate, flow, isnt, append, isDefined, compose, isEmpty,
-    pairWith, cond, Pair} from 'tsfun';
-import {zip} from 'tsfun/list';
+    pairWith, cond, Pair, zip} from 'tsfun';
 import {lookup, get, update, map, forEach} from 'tsfun/associative';
 import {remove, filter} from 'tsfun/collection';
 import {Document, Resource, relationsEquivalent, Relations} from 'idai-components-2';
@@ -123,7 +122,7 @@ function setInverseRelation(target: Resource, resource: Resource) {
 function determineChangedDocs(targetDocuments: Array<Document>,
                               cloneOfTargetDocuments: Array<Document>): Array<Document> {
 
-    return zip(targetDocuments)(cloneOfTargetDocuments).reduce(changedDocsReducer, []);
+    return zip(targetDocuments, cloneOfTargetDocuments).reduce(changedDocsReducer, []);
 }
 
 

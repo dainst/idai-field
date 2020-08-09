@@ -1,5 +1,5 @@
 import {to, on} from 'tsfun';
-import {differentFromBy} from 'tsfun/by';
+import {differentFrom as differentFromBy} from 'tsfun';
 import {Document, FieldDocument} from 'idai-components-2';
 import {ViewContext} from './view-context';
 
@@ -43,4 +43,4 @@ export module NavigationPathSegment {
 export const toResourceId = to('document.resource.id');
 
 
-export const differentFrom = differentFromBy(on('document.resource.id'));
+export const differentFrom = (what: any) => differentFromBy(on('document.resource.id'), what);

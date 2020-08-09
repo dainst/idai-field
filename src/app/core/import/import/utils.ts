@@ -1,6 +1,5 @@
-import {arrayEqual, isNot, on, undefinedOrEmpty} from 'tsfun';
+import {arrayEqual, isNot, on, undefinedOrEmpty, union} from 'tsfun';
 import {get} from 'tsfun/struct';
-import {unionBy} from 'tsfun/by';
 import {forEach as asyncForEach} from 'tsfun/async';
 import {Document, Relations} from 'idai-components-2';
 import {ImportErrors as E} from './import-errors';
@@ -11,7 +10,7 @@ import {DocumentDatastore} from '../../datastore/document-datastore';
 import {makeLookup} from '../../util/transformers';
 
 
-export const unionOfDocuments = unionBy(on('resource.id'));
+export const unionOfDocuments = (docs: Array<Array<Document>>) => union(on('resource.id'), docs);
 
 
 export const makeDocumentsLookup = makeLookup('resource.id');

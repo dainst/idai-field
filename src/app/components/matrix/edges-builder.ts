@@ -1,5 +1,4 @@
-import {set, to, on, is} from 'tsfun';
-import {unionBy} from 'tsfun/by';
+import {set, to, on, is, union} from 'tsfun';
 import {Document, Relations} from 'idai-components-2';
 import {intoObj} from '../../core/util/utils';
 
@@ -196,7 +195,7 @@ export module EdgesBuilder {
 
     function mergeTargetIdResults(targetIdSets: Array<TargetsAndPathTypes>): Array<any> {
 
-        return unionBy(on('targetId'))(targetIdSets);
+        return union(on('targetId'), targetIdSets);
     }
 
 

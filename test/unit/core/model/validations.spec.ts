@@ -180,7 +180,7 @@ describe('Validations', () => {
     });
 
 
-    it('should report invalid numeric field', async done => {
+    it('should report invalid numeric field', () => {
 
         const doc = {
             resource: {
@@ -198,11 +198,10 @@ describe('Validations', () => {
         } catch (errWithParams) {
             expect(errWithParams).toEqual([ValidationErrors.INVALID_NUMERICAL_VALUES, 'T', 'number1']);
         }
-        done();
     });
 
 
-    it('should report invalid numeric fields', async done => {
+    it('should report invalid numeric fields', () => {
 
         const doc = {
             resource: {
@@ -221,11 +220,10 @@ describe('Validations', () => {
         } catch (errWithParams) {
             expect(errWithParams).toEqual([ValidationErrors.INVALID_NUMERICAL_VALUES, 'T', 'number1, number2']);
         }
-        done();
     });
 
 
-    it('should report invalid dating fields', async done => {
+    it('should report invalid dating fields', () => {
 
         const doc = {
             resource: {
@@ -270,7 +268,6 @@ describe('Validations', () => {
                 ]
             );
         }
-        done();
     });
 
 

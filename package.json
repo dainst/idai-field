@@ -95,7 +95,7 @@
     "express-basic-auth": "1.2.0",
     "express-pouchdb": "4.2.0",
     "geojson-rewind": "0.3.1",
-    "idai-components-2": "1.47.16",
+    "idai-components-2": "1.47.18",
     "leaflet": "1.6.0",
     "leaflet-imageoverlay-rotated": "0.1.1",
     "moment": "2.22.2",

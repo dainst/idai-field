@@ -41,7 +41,7 @@ export module CSVExport {
             .map(toRowsArrangedBy(headings));
 
         return flow([headings, matrix],
-            CSVMatrixExpansion.expandValOptionalEndVal(fieldDefinitions),
+            CSVMatrixExpansion.expandOptionalRangeVal(fieldDefinitions),
             CSVMatrixExpansion.expandDating,
             CSVMatrixExpansion.expandDimension(fieldDefinitions),
             CSVMatrixExpansion.expandLiterature,

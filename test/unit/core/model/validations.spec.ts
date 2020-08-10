@@ -2,6 +2,8 @@ import {ValidationErrors} from '../../../../src/app/core/model/validation-errors
 import {Validations} from '../../../../src/app/core/model/validations';
 import {ProjectConfiguration} from '../../../../src/app/core/configuration/project-configuration';
 import {buildTreeList} from '../../../../src/app/core/util/tree-list';
+import {FieldDefinition} from '../../../../src/app/core/configuration/model/field-definition';
+import InputType = FieldDefinition.InputType;
 
 
 /**
@@ -47,6 +49,10 @@ describe('Validations', () => {
                         { name: 'literature3', label: 'literature3', inputType: 'literature' },
                         { name: 'literature4', label: 'literature4', inputType: 'literature' },
                         { name: 'literature5', label: 'literature5', inputType: 'literature' },
+                        { name: 'period1', label: 'period1', inputType: InputType.DROPDOWNRANGE },
+                        { name: 'period2', label: 'period2', inputType: InputType.DROPDOWNRANGE },
+                        { name: 'period3', label: 'period3', inputType: InputType.DROPDOWNRANGE },
+                        { name: 'period4', label: 'period4', inputType: InputType.DROPDOWNRANGE },
                         { name: 'beginningDate', label: 'beginningDate', inputType: 'date' },
                         { name: 'endDate', label: 'endDate', inputType: 'date' }
                     ]
@@ -180,7 +186,7 @@ describe('Validations', () => {
     });
 
 
-    it('should report invalid numeric field', async done => {
+    it('should report invalid numeric field', () => {
 
         const doc = {
             resource: {
@@ -198,11 +204,10 @@ describe('Validations', () => {
         } catch (errWithParams) {
             expect(errWithParams).toEqual([ValidationErrors.INVALID_NUMERICAL_VALUES, 'T', 'number1']);
         }
-        done();
     });
 
 
-    it('should report invalid numeric fields', async done => {
+    it('should report invalid numeric fields', () => {
 
         const doc = {
             resource: {
@@ -221,11 +226,10 @@ describe('Validations', () => {
         } catch (errWithParams) {
             expect(errWithParams).toEqual([ValidationErrors.INVALID_NUMERICAL_VALUES, 'T', 'number1, number2']);
         }
-        done();
     });
 
 
-    it('should report invalid dating fields', async done => {
+    it('should report invalid dating fields', () => {
 
         const doc = {
             resource: {
@@ -270,7 +274,6 @@ describe('Validations', () => {
                 ]
             );
         }
-        done();
     });
 
 
@@ -316,6 +319,39 @@ describe('Validations', () => {
             );
         }
         done();
+    });
+
+
+    it('should report invalid dropdownRagne fields', () => {
+
+        const doc = {
+            resource: {
+                id: '1',
+                category: 'T',
+                // Accept dimensions with label (deprecated)
+                period1: { value: 'name' },
+                period2: { value: '13', endValue: '18' },
+
+                // Wrong
+                period3: '3',
+                period4: { value: 13, endValue: 14 },
+
+                relations: { isRecordedIn: ['0'] }
+            }
+        };
+
+        try {
+            Validations.assertCorrectnessOfOptionalRangeValues(doc as any, projectConfiguration);
+            fail();
+        } catch (errWithParams) {
+            expect(errWithParams).toEqual(
+                [
+                    ValidationErrors.INVALID_OPTIONALRANGE_VALUES,
+                    'T',
+                    'period3, period4'
+                ]
+            );
+        }
     });
 
 

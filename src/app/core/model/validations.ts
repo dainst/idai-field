@@ -1,4 +1,4 @@
-import {includedIn, is, isNot, on, Predicate} from 'tsfun';
+import {includedIn, is, isNot, isObject, isString, on, Predicate} from 'tsfun';
 import {Dating, Dimension, Literature, Document, FieldGeometry, NewDocument, NewResource,
     Resource} from 'idai-components-2';
 import {validateFloat, validateUnsignedFloat, validateUnsignedInt} from '../util/number-util';
@@ -8,6 +8,7 @@ import {ProjectConfiguration} from '../configuration/project-configuration';
 import {FieldDefinition} from '../configuration/model/field-definition';
 import {RelationDefinition} from '../configuration/model/relation-definition';
 import {Named} from '../util/named';
+import {OptionalRange} from 'idai-components-2/src/model/optional-range';
 
 
 export module Validations {
@@ -50,6 +51,26 @@ export module Validations {
         if (invalidFields.length > 0) {
             throw [
                 ValidationErrors.INVALID_DECIMAL_SEPARATORS,
+                document.resource.category,
+                invalidFields.join(', ')
+            ];
+        }
+    }
+
+
+    export function assertCorrectnessOfOptionalRangeValues(document: Document|NewDocument,
+                                                           projectConfiguration: ProjectConfiguration) {
+
+        // TODO projectConfguration?
+
+
+        const invalidFields: string[] = Validations.validateObjects(
+            document.resource, projectConfiguration, 'dropdownRange', OptionalRange.isValid
+        );
+
+        if (invalidFields.length > 0) {
+            throw [
+                ValidationErrors.INVALID_OPTIONALRANGE_VALUES,
                 document.resource.category,
                 invalidFields.join(', ')
             ];
@@ -402,6 +423,26 @@ export module Validations {
     }
 
 
+    // TODO remove duplication with the following function
+    export function validateObjects(resource: Resource|NewResource,
+                                    projectConfiguration: ProjectConfiguration,
+                                    inputType: 'dropdownRange',
+                                    validate: (object: any) => boolean): string[] {
+
+        return projectConfiguration.getFieldDefinitions(resource.category)
+            .filter(field => field.inputType === inputType)
+            .filter(field => {
+
+                return resource[field.name] !== undefined &&
+
+                    (!isObject(resource[field.name])
+                        || !validate(resource[field.name])
+                        || !isString(resource[field.name].value));
+
+            }).map(field => field.name);
+    }
+
+
     export function validateObjectArrays(resource: Resource|NewResource,
                                          projectConfiguration: ProjectConfiguration,
                                          inputType: 'dating'|'dimension'|'literature',
@@ -417,6 +458,7 @@ export module Validations {
     }
 
 
+    // TODO remove unused function
     function reduceForFieldsOfCategory<A>(resource: Resource|NewResource,
                                       fieldDefinitions: Array<FieldDefinition>,
                                       fieldType: string,

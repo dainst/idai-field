@@ -13,6 +13,7 @@ export module ValidationErrors {
     export const INVALID_DATING_VALUES = 'validationerror/invaliddatingvalues';
     export const INVALID_DIMENSION_VALUES = 'validationerror/invaliddimensionvalues';
     export const INVALID_LITERATURE_VALUES = 'validationerror/invalidliteraturevalues';
+    export const INVALID_OPTIONALRANGE_VALUES = 'validationerror/invalidoptionalrange';
     export const END_DATE_BEFORE_BEGINNING_DATE = 'validationerror/enddatebeforebeginningdate';
     export const GENERIC_DATASTORE = 'importerrors/exec/genericdatastore';
 }

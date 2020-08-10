@@ -64,7 +64,7 @@ export module Validations {
         // TODO projectConfguration?
 
 
-        const invalidFields: string[] = Validations.validateObjects(
+        const invalidFields: string[] = Validations.validateDropdownRangeFields(
             document.resource, projectConfiguration, 'dropdownRange', OptionalRange.isValid
         );
 
@@ -120,7 +120,7 @@ export module Validations {
                                           error: string,
                                           isValid: Predicate) {
 
-        const invalidFields: string[] = Validations.validateObjectArrays(
+        const invalidFields: string[] = Validations.validateObjectArrayFields(
             document.resource, projectConfiguration, inputType, isValid
         );
 
@@ -423,37 +423,41 @@ export module Validations {
     }
 
 
-    // TODO remove duplication with the following function
-    export function validateObjects(resource: Resource|NewResource,
-                                    projectConfiguration: ProjectConfiguration,
-                                    inputType: 'dropdownRange',
-                                    validate: (object: any) => boolean): string[] {
+    export function validateDropdownRangeFields(resource: Resource|NewResource,
+                                                projectConfiguration: ProjectConfiguration,
+                                                inputType: 'dropdownRange',
+                                                isValid: (object: any) => boolean): string[] {
 
-        return projectConfiguration.getFieldDefinitions(resource.category)
-            .filter(field => field.inputType === inputType)
-            .filter(field => {
-
-                return resource[field.name] !== undefined &&
-
-                    (!isObject(resource[field.name])
-                        || !validate(resource[field.name])
-                        || !isString(resource[field.name].value));
-
-            }).map(field => field.name);
+        return validateFields(resource, projectConfiguration, inputType, (fieldContent: any) => {
+            return (!isObject(fieldContent)
+                || !isValid(fieldContent)
+                || !isString(fieldContent.value));
+        });
     }
 
 
-    export function validateObjectArrays(resource: Resource|NewResource,
-                                         projectConfiguration: ProjectConfiguration,
-                                         inputType: 'dating'|'dimension'|'literature',
-                                         validate: (object: any) => boolean): string[] {
+    export function validateObjectArrayFields(resource: Resource|NewResource,
+                                              projectConfiguration: ProjectConfiguration,
+                                              inputType: 'dating'|'dimension'|'literature',
+                                              isValid: (object: any) => boolean): string[] {
+
+        return validateFields(resource, projectConfiguration, inputType, (fieldContent: any) => {
+            return (!Array.isArray(fieldContent)
+                || fieldContent.filter((object: any) => !isValid(object)).length > 0);
+        });
+    }
+
+
+    export function validateFields(resource: Resource|NewResource,
+                                   projectConfiguration: ProjectConfiguration,
+                                   inputType: string,
+                                   isInvalid: (object: any) => boolean): string[] {
 
         return projectConfiguration.getFieldDefinitions(resource.category)
             .filter(field => field.inputType === inputType)
             .filter(field => {
-                return resource[field.name] !== undefined &&
-                    (!Array.isArray(resource[field.name])
-                        || resource[field.name].filter((object: any) => !validate(object)).length > 0);
+                return resource[field.name] !== undefined // TODO review
+                    && isInvalid(resource[field.name]);
             }).map(field => field.name);
     }
 }

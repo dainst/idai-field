@@ -9,13 +9,15 @@ import {PROJECT_MAPPING} from '../../app/core/settings/settings-service';
 import {Group} from '../../app/core/configuration/model/group';
 import {FieldDefinition} from '../../app/core/configuration/model/field-definition';
 import {ConfigReader} from '../../app/core/configuration/boot/config-reader';
+import {Settings} from '../../app/core/settings/settings';
 
 const fs = require('fs');
+const cldr = require('cldr');
 
 
 const CONFIG_DIR_PATH = 'src/config';
 const OUTPUT_DIR_PATH = 'release';
-const LANGUAGES = ['de', 'en'];
+const LANGUAGES = getLanguages();
 
 if (!fs.existsSync(OUTPUT_DIR_PATH)) fs.mkdirSync(OUTPUT_DIR_PATH);
 if (!fs.existsSync(OUTPUT_DIR_PATH + '/config')) fs.mkdirSync(OUTPUT_DIR_PATH + '/config');
@@ -54,8 +56,12 @@ const mergeCategories = (locales: string[]) => (categories: Array<Category>) => 
     result.label = {};
     result.description = {};
     for (let i = 0; i < locales.length; i++) {
-        result.label[locales[i]] = categories[i].label;
-        if (categories[i].description) result.description[locales[i]] = categories[i].description;
+        if (categories[i].label) result.label[locales[i]] = categories[i].label;
+        if (categories[i].description) {
+            Object.keys(categories[i].description).forEach(languageCode => {
+                result.description[languageCode] = categories[i].description[languageCode];
+            });
+        }
     }
 
     result.groups = mergeLayer(mergeGroup, locales, categories.map(to('groups')));
@@ -86,7 +92,7 @@ const mergeField = (locales: string[]) => (localizedFields: Array<any>) => {
     result.label = {};
     result.description = {};
     for (let i = 0; i < locales.length; i++) {
-        result.label[locales[i]] = localizedFields[i].label;
+        if (localizedFields[i].label) result.label[locales[i]] = localizedFields[i].label;
         if (localizedFields[i].description) result.description[locales[i]] = localizedFields[i].description;
     }
 
@@ -110,12 +116,20 @@ function cleanField(field: any): FieldDefinition {
 }
 
 
+function getLanguages(): string[] {
+
+    return Object.keys(cldr.extractLanguageDisplayNames(Settings.getLocale()))
+        .filter(language => language.length === 2);
+}
+
+
 async function start() {
 
     for (const [projectName, configName] of Object.entries(PROJECT_MAPPING)) {
         console.log('');
         const localizedTreeLists: { [locale: string]: TreeList<Category>} = {};
         for (const language of LANGUAGES) {
+            console.log('Loading configuration for language: ' + language);
             const appConfigurator = new AppConfigurator(new ConfigLoader(new ConfigReader()));
             try {
                 localizedTreeLists[language] = getTreeList(await appConfigurator.go(CONFIG_DIR_PATH, configName, [language]));

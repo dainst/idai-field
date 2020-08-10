@@ -456,26 +456,4 @@ export module Validations {
                         || resource[field.name].filter((object: any) => !validate(object)).length > 0);
             }).map(field => field.name);
     }
-
-
-    // TODO remove unused function
-    function reduceForFieldsOfCategory<A>(resource: Resource|NewResource,
-                                      fieldDefinitions: Array<FieldDefinition>,
-                                      fieldType: string,
-                                      doForField: (acc: A, matchedFieldName: string) => A,
-                                      acc: A): A {
-
-        return fieldDefinitions
-            .filter(on(INPUT_TYPE, is(fieldType)))
-            .reduce((acc: A, dropdownRangeFieldDefinition) => {
-
-                const matchedFieldName = Object.keys(resource)
-                    .filter(isNot(includedIn(['relations', 'geometry'])))
-                    .find(is(dropdownRangeFieldDefinition.name));
-
-                if (!matchedFieldName) return acc;
-                return doForField(acc, matchedFieldName);
-
-            }, acc);
-    }
 }

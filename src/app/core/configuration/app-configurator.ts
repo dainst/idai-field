@@ -297,10 +297,6 @@ export class AppConfigurator {
             editable: true,
             mandatory: true,
             group: Groups.STEM
-        } as FieldDefinition,
-        geometry: {
-            visible: false,
-            editable: false
         } as FieldDefinition
     };
 

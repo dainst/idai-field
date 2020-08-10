@@ -133,8 +133,7 @@ function adjustCategoryGeometry(languageConfigurations: any[], categoriesTree: T
             name: 'geometry',
             group: 'position',
             inputType: 'geometry',
-            editable: true,
-            label: 'geometry'
+            editable: true
         };
         for (let languageConfiguration of languageConfigurations) {
             if (languageConfiguration.other?.geometry) {

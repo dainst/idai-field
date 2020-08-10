@@ -63,6 +63,7 @@ const setLanguages = config => {
 
 global.getLocale = () => global.config.languages.find(language => mainLanguages.includes(language));
 
+global.getMainLanguages = () => mainLanguages;
 
 global.updateConfig = config => {
 

@@ -8,7 +8,16 @@ language-settings {
   }
 
   .list-group-item {
+    height: 40px;
+    line-height: 40px;
+    padding: 0 0 0 10px;
     border-bottom: none !important;
+  }
+
+  .remove-language {
+    float: right;
+    height: 40px;
+    margin: 0;
   }
 }
 
@@ -23,8 +32,11 @@ language-settings {
 .cdk-drag-preview {
   border: 1px solid rgba(0, 0, 0, 0.125) !important;
   border-radius: 0 !important;
+  height: initial;
+  line-height: initial;
 
-  .priority {
+  .priority,
+  .remove-language {
     display: none;
   }
 }

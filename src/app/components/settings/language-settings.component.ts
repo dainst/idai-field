@@ -1,11 +1,12 @@
 import {Component, Input} from '@angular/core';
 import {CdkDragDrop} from '@angular/cdk/drag-drop';
+import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {clone} from 'tsfun/struct';
 import {Settings} from '../../core/settings/settings';
-import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {LanguagePickerModalComponent} from './language-picker-modal.component';
 
 const cldr = typeof window !== 'undefined' ? window.require('cldr') : require('cldr');
+const remote = typeof window !== 'undefined' ? window.require('electron').remote : require('electron').remote;
 
 
 @Component({
@@ -20,17 +21,28 @@ export class LanguageSettingsComponent {
     @Input() selectedLanguages: string[];
 
     private readonly languages: { [languageCode: string]: string };
+    private readonly mainLanguages: string[];
 
 
     constructor(private modalService: NgbModal) {
 
         this.languages = LanguageSettingsComponent.getAvailableLanguages();
+        this.mainLanguages = remote.getGlobal('getMainLanguages')();
     }
+
+
+    public isMainLanguage = (language: string) => this.mainLanguages.includes(language);
 
 
     public getLabel(language: string): string {
 
         return cldr.extractLanguageDisplayNames(Settings.getLocale())[language];
+    }
+
+
+    public removeLanguage(language: string) {
+
+        this.selectedLanguages.splice(this.selectedLanguages.indexOf(language), 1);
     }
 
 

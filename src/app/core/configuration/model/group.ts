@@ -64,6 +64,6 @@ export module Group {
 
     export function create(name: string) {
 
-        return { name: name, fields: [], relations: [], label: '' };
+        return { name: name, fields: [], relations: [] };
     }
 }

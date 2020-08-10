@@ -175,8 +175,10 @@ export class ProjectConfiguration {
 
     public getLabelForCategory(categoryName: string): string {
 
-        if (!this.getCategory(categoryName)) return '';
-        return this.getCategory(categoryName).label;
+        const category: Category|undefined = this.getCategory(categoryName);
+        if (!category) return '';
+
+        return category.label ?? category.name;
     }
 
 

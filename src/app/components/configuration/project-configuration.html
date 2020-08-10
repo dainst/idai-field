@@ -21,7 +21,7 @@
                                 i18n-ngbTooltip="@@config.form.custom"
                                 placement="right">
                             </span>
-                            {{selectedCategory.label}}
+                            {{selectedCategory.label ? selectedCategory.label : selectedCategory.name}}
                         </h5>
                     </div>
                     <div class="col header header-right text-right">

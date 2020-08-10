@@ -59,7 +59,6 @@ export module MessagesConversion {
         if (msg === ValidationErrors.UNSUPPORTED_GEOMETRY_TYPE) replacement = M.MODEL_VALIDATION_UNSUPPORTED_GEOMETRY_TYPE;
         if (msg === ValidationErrors.GENERIC_DATASTORE) replacement = M.IMPORT_READER_GENERIC_DATASTORE;
 
-        if (msg === ImportErrors.INVALID_DROPDOWN_RANGE_VALUES) replacement = M.IMPORT_VALIDATION_ERROR_INVALID_DROPDOWN_RANGE_VALUES;
         if (msg === ImportErrors.INVALID_CATEGORY) replacement = M.IMPORT_VALIDATION_INVALID_CATEGORY;
         if (msg === ImportErrors.EMPTY_RELATION) replacement = M.IMPORT_EXEC_EMPTY_RELATION;
         if (msg === ImportErrors.BAD_INTERRELATION) replacement = M.IMPORT_EXEC_NOT_INTERRELATED;
@@ -118,6 +117,9 @@ export module MessagesConversion {
             replacement = msgWithParams.length > 2 && msgWithParams[2].indexOf(',') !== -1
                 ? M.IMPORT_VALIDATION_ERROR_INVALID_LITERATURE_VALUES
                 : M.IMPORT_VALIDATION_ERROR_INVALID_LITERATURE_VALUE
+        }
+        if (msg === ValidationErrors.INVALID_OPTIONALRANGE_VALUES) {
+            replacement = M.IMPORT_VALIDATION_ERROR_INVALID_DROPDOWN_RANGE_VALUES;
         }
 
         if (replacement) (msgWithParams as string[])[0] = replacement;

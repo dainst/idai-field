@@ -5,7 +5,7 @@ import {isUndefinedOrEmpty, isBoolean, isArray, filter, Pair, compose, Mapping, 
     map, flatten, to, pairWith, conds, singleton, otherwise, LEFT, RIGHT} from 'tsfun';
 import {update, lookup} from 'tsfun/associative';
 import {AsyncMapping, flow as asyncFlow, map as asyncMap} from 'tsfun/async';
-import {FieldDocument,  Resource, Dating, Dimension, Literature, ValOptionalEndVal} from 'idai-components-2';
+import {FieldDocument,  Resource, Dating, Dimension, Literature, OptionalRange} from 'idai-components-2';
 import {RoutingService} from '../../routing-service';
 import {Name} from '../../../core/constants';
 import {UtilTranslations} from '../../../core/util/util-translations';
@@ -141,7 +141,7 @@ export class FieldsViewComponent implements OnChanges {
         = conds(
             [
                 on([LEFT, INPUTTYPE], is(DROPDOWNRANGE)),
-                this.makeValOptionalEndValField.bind(this)
+                this.makeOptionalRangeField.bind(this)
             ],
             [
                 on([LEFT], isDefaultField),
@@ -170,19 +170,19 @@ export class FieldsViewComponent implements OnChanges {
     }
 
 
-    private makeValOptionalEndValField([field, fieldContent]: [FieldDefinition, FieldContent]): Array<FieldsViewField> {
+    private makeOptionalRangeField([field, fieldContent]: [FieldDefinition, FieldContent]): Array<FieldsViewField> {
 
         const val = {
-            label: field.label + (!isUndefinedOrEmpty(fieldContent[ValOptionalEndVal.ENDVALUE])
+            label: field.label + (!isUndefinedOrEmpty(fieldContent[OptionalRange.ENDVALUE])
                 ? ' ' + this.i18n({
                     id: 'widgets.fieldsView.range.from',
                     value: '(von)'
                 }) : ''),
-            value: fieldContent[ValOptionalEndVal.VALUE],
+            value: fieldContent[OptionalRange.VALUE],
             isArray: false
         };
 
-        if (isUndefinedOrEmpty(fieldContent[ValOptionalEndVal.ENDVALUE])) {
+        if (isUndefinedOrEmpty(fieldContent[OptionalRange.ENDVALUE])) {
             return [
                 val
             ];
@@ -194,7 +194,7 @@ export class FieldsViewComponent implements OnChanges {
                         id: 'widgets.fieldsView.range.to',
                         value: '(bis)'
                     }),
-                    value: fieldContent[ValOptionalEndVal.ENDVALUE],
+                    value: fieldContent[OptionalRange.ENDVALUE],
                     isArray: false
                 }
             ];

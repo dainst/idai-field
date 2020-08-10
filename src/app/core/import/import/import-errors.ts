@@ -4,7 +4,9 @@
  */
 export module ImportErrors {
 
+    // TODO review
     export const INVALID_DROPDOWN_RANGE_VALUES = 'ImportErrors.invalidDropdownRangeValues';
+
     export const INVALID_CATEGORY = 'ImportErrors.invalidCategory';
     export const OPERATIONS_NOT_ALLOWED = 'ImportErrors.operationsNotAllowed';
     export const NO_PARENT_ASSIGNED = 'ImportErrors.noParentAssigned';

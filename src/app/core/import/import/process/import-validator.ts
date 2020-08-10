@@ -175,8 +175,7 @@ export class ImportValidator extends Validator {
      * @throws [ValidationErrors.INVALID_DATING_VALUES]
      * @throws [ValidationErrors.INVALID_DIMENSION_VALUES]
      * @throws [ValidationErrors.INVALID_LITERATURE_VALUES]
-     *
-     * TODO ValidationErrors.INVALID_DROPDOWN_RANGE_VALUES
+     * @throws [ValidationErrors.INVALID_OPTIONALRANGE_VALUES]
      */
     public assertIsWellformed(document: Document|NewDocument): void {
 
@@ -185,6 +184,7 @@ export class ImportValidator extends Validator {
         Validations.assertCorrectnessOfDatingValues(document, this.projectConfiguration);
         Validations.assertCorrectnessOfDimensionValues(document, this.projectConfiguration);
         Validations.assertCorrectnessOfLiteratureValues(document, this.projectConfiguration);
+        Validations.assertCorrectnessOfOptionalRangeValues(document, this.projectConfiguration);
         Validations.assertCorrectnessOfBeginningAndEndDates(document);
 
         const errWithParams = Validations.validateStructureOfGeometries(document.resource.geometry as any);

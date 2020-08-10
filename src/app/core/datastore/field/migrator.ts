@@ -1,5 +1,5 @@
 import {isObject, flow} from 'tsfun';
-import {Document, ValOptionalEndVal} from 'idai-components-2';
+import {Document, OptionalRange} from 'idai-components-2';
 
 
 export const singleToMultipleValuesFieldNames: string[] = [
@@ -41,7 +41,7 @@ export module Migrator {
                 value: document.resource[PERIOD]
             };
             if (document.resource[PERIODEND]) {
-                document.resource[PERIOD][ValOptionalEndVal.ENDVALUE] = document.resource[PERIODEND];
+                document.resource[PERIOD][OptionalRange.ENDVALUE] = document.resource[PERIODEND];
                 delete document.resource[PERIODEND];
             }
         }

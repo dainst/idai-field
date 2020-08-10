@@ -1,5 +1,5 @@
 import {flow, left, reverse} from 'tsfun';
-import {Dating, Dimension, Literature, ValOptionalEndVal} from 'idai-components-2';
+import {Dating, Dimension, Literature, OptionalRange} from 'idai-components-2';
 import {CSVExpansion} from './csv-expansion';
 import {FieldDefinition} from '../../configuration/model/field-definition';
 import {H, HeadingsAndMatrix} from './csv-export-consts';
@@ -16,14 +16,14 @@ export module CSVMatrixExpansion {
 
     const expandDimensionItems = CSVExpansion.expandHomogeneousItems(rowsWithDimensionElementsExpanded, 6);
 
-    const expandValOptionalEndValItems = CSVExpansion.expandHomogeneousItems(rowsWitValOptionalEndValElementsExpanded, 2);
+    const expandOptionalRangeItems = CSVExpansion.expandHomogeneousItems(rowsWithOptionalRangeElementsExpanded, 2);
 
     const expandDatingItems = CSVExpansion.expandHomogeneousItems(rowsWithDatingElementsExpanded, 9);
 
     const expandLiteratureItems = CSVExpansion.expandHomogeneousItems(rowsWithLiteratureElementsExpanded, 2);
 
 
-    export function expandValOptionalEndVal(fieldDefinitions: Array<FieldDefinition>) {
+    export function expandOptionalRangeVal(fieldDefinitions: Array<FieldDefinition>) {
 
         return (headingsAndMatrix: HeadingsAndMatrix) => {
 
@@ -34,8 +34,8 @@ export module CSVMatrixExpansion {
                 reverse,
                 CSVExpansion.objectExpand(
                     headingsAndMatrix,
-                    CSVHeadingsExpansion.expandValOptionalEndValHeadings,
-                    expandValOptionalEndValItems
+                    CSVHeadingsExpansion.expandOptionalRangeHeadings,
+                    expandOptionalRangeItems
                 )
             );
         }
@@ -108,7 +108,7 @@ export module CSVMatrixExpansion {
     }
 
 
-    function rowsWitValOptionalEndValElementsExpanded(valOptionalEndVal: ValOptionalEndVal<string>): string[] {
+    function rowsWithOptionalRangeElementsExpanded(valOptionalEndVal: OptionalRange<string>): string[] {
 
         const { value, endValue } = valOptionalEndVal;
         return [value, endValue ? endValue : ''];

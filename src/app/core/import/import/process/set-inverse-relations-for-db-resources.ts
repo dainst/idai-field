@@ -1,5 +1,6 @@
-import {is, on, union, isNot, includedIn, keysAndValues} from 'tsfun';
+import {is, on, union, isNot, includedIn} from 'tsfun';
 import {map as asyncMap, reduce as asyncReduce} from 'tsfun/async';
+import {forEach} from 'tsfun/associative';
 import {Document} from 'idai-components-2';
 import {ImportErrors as E} from '../import-errors';
 import {clone} from '../../../util/object-util';
@@ -110,16 +111,15 @@ function makeIdCategoryMap(targetIds: ResourceId[], documentTargetDocuments: Arr
 function assertCategoryIsInRange(document: Document, idCategoryMap: any,
                                  assertIsAllowedRelationDomainCategory: AssertIsAllowedRelationDomainType) {
 
-    keysAndValues(document.resource.relations)
-        .forEach(([relationName, relationTargets]: [any, any[]]) => {
-            for (let relationTarget of relationTargets) {
-                const targetCategory = idCategoryMap[relationTarget];
-                if (!targetCategory) continue;
-                assertIsAllowedRelationDomainCategory(
-                    document.resource.category, targetCategory, relationName, document.resource.identifier
-                );
-            }
-        })
+    forEach(document.resource.relations, (relationTargets: any[], relationName: string) => {
+        for (let relationTarget of relationTargets) {
+            const targetCategory = idCategoryMap[relationTarget];
+            if (!targetCategory) continue;
+            assertIsAllowedRelationDomainCategory(
+                document.resource.category, targetCategory, relationName, document.resource.identifier
+            );
+        }
+    })
 }
 
 

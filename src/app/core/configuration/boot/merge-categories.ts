@@ -1,4 +1,4 @@
-import {includedIn, isNot, isnt, keysAndValues, Map, pairWith, union,
+import {includedIn, isNot, isnt, Map, pairWith, union,
     Pair, flow, filter} from 'tsfun';
 import {lookup, update, map, reduce, forEach} from 'tsfun/associative';
 import {clone} from 'tsfun/struct';
@@ -18,8 +18,8 @@ export function mergeCategories(customCategories: Map<CustomCategoryDefinition>,
 
     return (selectableCategories: Map<TransientCategoryDefinition>) => {
 
-        return reduce((mergedCategories: Map<TransientCategoryDefinition>,
-                       [customCategoryName, customCategory]: Pair<string, CustomCategoryDefinition>) => {
+        return reduce(customCategories, (mergedCategories: Map<TransientCategoryDefinition>,
+                       customCategory: CustomCategoryDefinition, customCategoryName: string) => {
 
             return update(customCategoryName,
                 mergedCategories[customCategoryName]
@@ -27,7 +27,7 @@ export function mergeCategories(customCategories: Map<CustomCategoryDefinition>,
                     : handleChildCategoryExtension(customCategoryName, customCategory, assertInputTypePresentIfNotCommonField))
             (mergedCategories);
 
-        }, clone(selectableCategories))(keysAndValues(customCategories));
+        }, clone(selectableCategories));
     }
 }
 
@@ -37,7 +37,7 @@ function handleChildCategoryExtension(customCategoryName: string, customCategory
 
     if (!customCategory.parent) throw [ConfigurationErrors.MUST_HAVE_PARENT, customCategoryName];
 
-    keysAndValues(customCategory.fields).forEach(([fieldName, field]: any) => {
+    forEach(customCategory.fields, (field, fieldName) => {
         assertInputTypePresentIfNotCommonField(customCategoryName, fieldName, field);
     });
 
@@ -73,7 +73,7 @@ function mergePropertiesOfCategory(target: { [_: string]: any }, source: { [_: s
 
     if (source[CustomCategoryDefinition.VALUELISTS]) {
         if (!target[CustomCategoryDefinition.VALUELISTS]) target[CustomCategoryDefinition.VALUELISTS] = {};
-        keysAndValues(source[CustomCategoryDefinition.VALUELISTS]).forEach(([k, v]: any) => {
+        forEach(source[CustomCategoryDefinition.VALUELISTS], (v: any, k: any) => {
             target[CustomCategoryDefinition.VALUELISTS][k] = v;
         });
     }

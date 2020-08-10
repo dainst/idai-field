@@ -45,7 +45,7 @@ export module CustomCategoryDefinition {
 
     export function makeAssertIsValid(builtinCategories: string[], libraryCategories: string[]) {
 
-        return function assertIsValid([categoryName, category]: [string, CustomCategoryDefinition]) {
+        return function assertIsValid(category: CustomCategoryDefinition, categoryName: string) {
 
             Object.keys(category)
                 .filter(isNot(includedIn(VALID_CATEGORY_PROPERTIES)))

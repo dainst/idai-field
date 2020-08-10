@@ -1,7 +1,6 @@
 'use strict';
 
-import {keysAndValues} from 'tsfun';
-
+import {forEach} from 'tsfun/associative';
 
 const fs = require('fs');
 
@@ -14,8 +13,8 @@ const selection = JSON.parse(fs.readFileSync('Selection-' + projectName + '.json
 
 
 
-keysAndValues(selection).forEach(([selTypeName, selType]: any) => {
-    keysAndValues(custom).forEach(([cusTypeName, cusType]: any) => {
+forEach(selection, (selType, selTypeName) => {
+    forEach(custom, (cusType, cusTypeName) => {
 
         if (selTypeName === cusTypeName) {
             selType['fields'] = cusType['fields'];

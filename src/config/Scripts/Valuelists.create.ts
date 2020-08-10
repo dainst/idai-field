@@ -1,7 +1,7 @@
 'use strict';
 
 import {sameset, keysAndValues} from 'tsfun';
-
+import {forEach} from 'tsfun/associative';
 
 
 const fs = require('fs');
@@ -52,11 +52,11 @@ function generateName(typeName: string, fieldName: string, projectName: string) 
 }
 
 
-keysAndValues(fieldsKalapodi).forEach(([typeName, type]: any) => {
+forEach(fieldsKalapodi, (type, typeName: string) => {
 
     if (!type['fields']) type['fields'] = {};
 
-    keysAndValues(type['fields']).forEach(([fieldName, field]: any) => {
+    forEach(type['fields'], (field: any, fieldName: string) => {
 
         if (field['valuelist']) {
             const newValuelistName = generateName(typeName, fieldName, projectName);

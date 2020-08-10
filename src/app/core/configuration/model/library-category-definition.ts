@@ -3,6 +3,7 @@ import {assertFieldsAreValid} from '../boot/assert-fields-are-valid';
 import {ConfigurationErrors} from '../boot/configuration-errors';
 import {BaseFieldDefinition, BaseCategoryDefinition} from './base-category-definition';
 import {Valuelists} from './valuelist-definition';
+import {Name} from '../../constants';
 
 
 /**
@@ -43,7 +44,7 @@ export module LibraryCategoryDefinition {
 
     export function makeAssertIsValid(builtinCategories: string[]) {
 
-        return function assertIsValid([categoryName, category]: [string, LibraryCategoryDefinition]) {
+        return function assertIsValid(category: LibraryCategoryDefinition, categoryName: Name) {
 
             if (category.description === undefined) throw [ConfigurationErrors.MISSING_CATEGORY_PROPERTY, 'description', categoryName];
             if (category.creationDate === undefined) throw [ConfigurationErrors.MISSING_CATEGORY_PROPERTY, 'creationDate', categoryName];

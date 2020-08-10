@@ -9,7 +9,7 @@ import {applyLanguageConfigurations} from '../../../../../src/app/core/configura
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-describe('applyLanguage', () => {
+describe('applyLanguageConfigurations', () => {
 
     let configuration;
     let t1: LibraryCategoryDefinition;

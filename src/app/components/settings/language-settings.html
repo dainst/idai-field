@@ -6,11 +6,13 @@
         cdkDrag cdkDragLockAxis="y"
         cdkDragBoundary=".list-group"
         [cdkDragData]="language">
-        <span class="priority">{{i + 1}}.</span>
+        <span class="priority">{{i + 1}}. </span>
         <span class="language-label">{{getLabel(language)}}</span>
         <div *ngIf="!isMainLanguage(language)"
               class="btn btn-light remove-language"
-             (click)="removeLanguage(language)">
+             (click)="removeLanguage(language)"
+             ngbTooltip="Sprache entfernen"
+             i18n-ngbTooltip="@@settings.removeLanguage">
             <span class="mdi mdi-delete"></span>
         </div>
         <div class="drag-placeholder" *cdkDragPlaceholder></div>

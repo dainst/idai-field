@@ -25,14 +25,14 @@ const remote = typeof window !== 'undefined' ? window.require('electron').remote
 export class SettingsComponent implements OnInit {
 
     public settings: Settings;
-    public saving: boolean = false;
     public ipAddress: string = address.ip();
+    public saving: boolean = false;
+    public modalOpened: boolean = false;
 
 
     constructor(private settingsService: SettingsService,
                 private messages: Messages,
-                private tabManager: TabManager) {
-    }
+                private tabManager: TabManager) {}
 
 
     ngOnInit() {
@@ -43,7 +43,7 @@ export class SettingsComponent implements OnInit {
 
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape') await this.tabManager.openActiveTab();
+        if (event.key === 'Escape' && !this.modalOpened) await this.tabManager.openActiveTab();
     }
 
 

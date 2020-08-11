@@ -4,6 +4,7 @@ import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {clone} from 'tsfun/struct';
 import {Settings} from '../../core/settings/settings';
 import {LanguagePickerModalComponent} from './language-picker-modal.component';
+import {SettingsComponent} from './settings.component';
 
 const cldr = typeof window !== 'undefined' ? window.require('cldr') : require('cldr');
 const remote = typeof window !== 'undefined' ? window.require('electron').remote : require('electron').remote;
@@ -24,7 +25,8 @@ export class LanguageSettingsComponent {
     private readonly mainLanguages: string[];
 
 
-    constructor(private modalService: NgbModal) {
+    constructor(private modalService: NgbModal,
+                private settingsComponent: SettingsComponent) {
 
         this.languages = LanguageSettingsComponent.getAvailableLanguages();
         this.mainLanguages = remote.getGlobal('getMainLanguages')();
@@ -58,14 +60,18 @@ export class LanguageSettingsComponent {
 
     public async addLanguage() {
 
+        this.settingsComponent.modalOpened = true;
+
         const modalReference: NgbModalRef
-            = this.modalService.open(LanguagePickerModalComponent, { keyboard: false });
+            = this.modalService.open(LanguagePickerModalComponent);
         modalReference.componentInstance.languages = this.getUnselectedLanguages();
 
         try {
             this.selectedLanguages.push(await modalReference.result);
         } catch (err) {
             // Modal has been canceled
+        } finally {
+            this.settingsComponent.modalOpened = false;
         }
     }
 

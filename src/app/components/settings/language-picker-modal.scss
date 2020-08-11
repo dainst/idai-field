@@ -3,8 +3,17 @@
  */
 
 .language-picker-modal-body {
-  ul {
+  .list-group {
     max-height: 400px;
     overflow-y: auto;
+
+    .list-group-item {
+      padding: 10px;
+      user-select: none;
+
+      &:hover {
+        background-color: $list-item-hover-color;
+      }
+    }
   }
 }

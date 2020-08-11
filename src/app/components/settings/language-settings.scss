@@ -5,6 +5,9 @@
 language-settings {
   .list-group {
     border: 1px solid rgba(0, 0, 0, 0.125);
+    max-height: 210px;
+    overflow-y: auto;
+    overflow-x: hidden;
   }
 
   .list-group-item {

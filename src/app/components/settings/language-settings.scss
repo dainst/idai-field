@@ -5,7 +5,6 @@
 language-settings {
   .list-group {
     border: 1px solid rgba(0, 0, 0, 0.125);
-    cursor: move;
   }
 
   .list-group-item {
@@ -13,6 +12,22 @@ language-settings {
     line-height: 40px;
     padding: 0 0 0 10px;
     border: none !important;
+  }
+
+  .cdk-drag-handle {
+    display: inline-block;
+    width: calc(100% - 40px);
+    cursor: move;
+
+    &.large-drag-handle {
+      width: 100%;
+    }
+  }
+
+  .drag-placeholder {
+    height: 40px;
+    border: none !important;
+    cursor: move;
   }
 
   .remove-language {
@@ -28,11 +43,6 @@ language-settings {
       top: 2px;
     }
   }
-}
-
-.drag-placeholder {
-  height: 40px;
-  border: none !important;
 }
 
 .cdk-drag-preview {

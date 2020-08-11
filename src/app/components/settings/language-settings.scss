@@ -19,6 +19,14 @@ language-settings {
     float: right;
     height: 40px;
     margin: 0;
+    color: #dc3545 !important;
+    border: none !important;
+    background-color: white;
+
+    .mdi {
+      position: relative;
+      top: 2px;
+    }
   }
 }
 

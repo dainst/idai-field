@@ -9,7 +9,7 @@
         <span class="priority">{{i + 1}}.</span>
         <span class="language-label">{{getLabel(language)}}</span>
         <div *ngIf="!isMainLanguage(language)"
-              class="btn btn-danger remove-language"
+              class="btn btn-light remove-language"
              (click)="removeLanguage(language)">
             <span class="mdi mdi-delete"></span>
         </div>

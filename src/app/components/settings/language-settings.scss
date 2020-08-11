@@ -11,7 +11,7 @@ language-settings {
     height: 40px;
     line-height: 40px;
     padding: 0 0 0 10px;
-    border-bottom: none !important;
+    border: none !important;
   }
 
   .remove-language {
@@ -21,8 +21,9 @@ language-settings {
   }
 }
 
-.cdk-drag-placeholder {
-  color: white;
+.drag-placeholder {
+  height: 40px;
+  border: none !important;
 }
 
 .cdk-drag {

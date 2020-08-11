@@ -5,6 +5,7 @@
 language-settings {
   .list-group {
     border: 1px solid rgba(0, 0, 0, 0.125);
+    cursor: move;
   }
 
   .list-group-item {
@@ -26,10 +27,6 @@ language-settings {
   border: none !important;
 }
 
-.cdk-drag {
-  cursor: move;
-}
-
 .cdk-drag-preview {
   border-top: 1px solid rgba(0, 0, 0, 0.125) !important;
   border-bottom: 1px solid rgba(0, 0, 0, 0.125) !important;
@@ -38,6 +35,11 @@ language-settings {
   border-radius: 0 !important;
   height: initial;
   line-height: initial;
+
+  .language-label {
+    position: relative;
+    bottom: 2px;
+  }
 
   .priority,
   .remove-language {

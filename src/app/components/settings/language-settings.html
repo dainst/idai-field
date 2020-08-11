@@ -3,12 +3,13 @@
     (cdkDropListDropped)="onDrop($event)">
     <li *ngFor="let language of selectedLanguages; let i = index"
         class="list-group-item"
+        [class.list-group-item-primary]="isMainLanguage(language)"
         cdkDrag cdkDragLockAxis="y"
         cdkDragBoundary=".list-group"
         [cdkDragData]="language">
         <div cdkDragHandle [class.large-drag-handle]="isMainLanguage(language)">
             <span class="priority">{{i + 1}}. </span>
-            <span class="language-label">{{getLabel(language)}}</span>
+            <span class="language-label">{{getLabel(language)}} ({{language}})</span>
         </div>
         <div *ngIf="!isMainLanguage(language)"
              class="btn btn-light remove-language"

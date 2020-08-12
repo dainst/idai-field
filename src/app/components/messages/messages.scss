@@ -2,34 +2,32 @@
  * @author: Jan G. Wieners
  * @author: Thomas Kleinke
  */
-.alert {
-  text-align: center;
+messages {
+  position: fixed;
+  top: 10px;
+  right: 0;
+  left: 0;
+  z-index: 1060;
+  pointer-events: none;
 
-  .close {
-    cursor: default !important;
-    user-select: none;
+  .alert-container {
+    text-align: center;
+
+    .alert {
+      text-align: center;
+      padding-top: 5px;
+      padding-bottom: 5px;
+      pointer-events: all;
+
+      .close {
+        padding-left: 16px;
+        cursor: default !important;
+        user-select: none;
+      }
+
+      .close:focus {
+        outline: none;
+      }
+    }
   }
-
-  .close:focus {
-    outline: none;
-  }
-}
-
-@-webkit-keyframes fadeIn { from { opacity:0; opacity: 1\9; /* IE9 only */ } to { opacity:1; } }
-@-moz-keyframes fadeIn { from { opacity:0; opacity: 1\9; /* IE9 only */ } to { opacity:1; } }
-@keyframes fadeIn { from { opacity:0; opacity: 1\9; /* IE9 only */ } to { opacity:1; } }
-
-.fade-in {
-  opacity:0;
-  -webkit-animation: fadeIn ease-in .5s;
-  -moz-animation: fadeIn ease-in .5s;
-  animation: fadeIn ease-in .5s;
-
-  -webkit-animation-fill-mode: forwards;
-  -moz-animation-fill-mode: forwards;
-  animation-fill-mode: forwards;
-
-  -webkit-animation-duration: .5s;
-  -moz-animation-duration: .5s;
-  animation-duration: .5s;
 }

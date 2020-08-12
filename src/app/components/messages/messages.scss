@@ -20,6 +20,7 @@ messages {
       padding-bottom: 5px;
       max-width: calc(100vw - 150px);
       pointer-events: all;
+      -webkit-app-region: no-drag;
 
       .close {
         padding-left: 16px;

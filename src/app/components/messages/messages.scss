@@ -17,6 +17,7 @@ messages {
       text-align: center;
       padding-top: 5px;
       padding-bottom: 5px;
+      max-width: calc(100vw - 150px);
       pointer-events: all;
 
       .close {

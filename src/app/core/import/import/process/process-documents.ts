@@ -38,7 +38,7 @@ export function processDocuments(documents: Array<Document>,
         validator.assertFieldsDefined(document);
 
         if (!mergeMode) validator.assertIsAllowedCategory(finalDocument);
-        // TODO implement validation of period fields
+
         validator.assertIsWellformed(finalDocument);
     }
 

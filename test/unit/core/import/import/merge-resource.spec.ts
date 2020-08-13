@@ -108,10 +108,45 @@ describe('mergeResource', () => {
     });
 
 
+    it('merge object field - delete one field and add another', () => {
+
+        target['object'] = { aField: 'aOriginalValue' };
+        source['object'] = { aField: null, bField: 'bValue' };
+
+        const result = mergeResource(target, source);
+
+        expect(result['object']['aField']).toBeUndefined();
+        expect(result['object']['bField']).toBe('bValue');
+    });
+
+
     it('merge object field - delete object field', () => {
 
         target['object'] = { aField: 'aOriginalValue' };
         source['object'] = null;
+
+        const result = mergeResource(target, source);
+
+        expect(result['object']).toBeUndefined();
+    });
+
+
+    it('merge object field - create field - remove null', () => {
+
+        target['object'] = undefined;
+        source['object'] = { value: 1, endValue: null };
+
+        const result = mergeResource(target, source);
+
+        expect(result['object']['value']).toBe(1);
+        expect(result['object']['endValue']).toBeUndefined();
+    });
+
+
+    it('merge object field - create field - create not if all null', () => {
+
+        target['object'] = undefined;
+        source['object'] = { value: null };
 
         const result = mergeResource(target, source);
 
@@ -135,11 +170,34 @@ describe('mergeResource', () => {
     it('merge objectArray field - create target object', () => {
 
         target['objectArray'] = undefined;
-        source['objectArray'] = [{aField: 'aNewValue'}];
+        source['objectArray'] = [{ aField: 'aNewValue' }];
 
         const result = mergeResource(target, source);
 
         expect(result['objectArray'][0]['aField']).toEqual('aNewValue');
+    });
+
+
+    it('merge objectArray field - create target object - remove null', () => {
+
+        target['objectArray'] = undefined;
+        source['objectArray'] = [{ aField: 1, bField: null }];
+
+        const result = mergeResource(target, source);
+
+        expect(result['objectArray'][0]['aField']).toEqual(1);
+        expect(result['objectArray'][0]['bField']).toBeUndefined();
+    });
+
+
+    it('merge objectArray field - create target object - create not if all null', () => {
+
+        target['objectArray'] = undefined;
+        source['objectArray'] = [{ aField: null }];
+
+        const result = mergeResource(target, source);
+
+        expect(result['objectArray']).toBeUndefined();
     });
 
 

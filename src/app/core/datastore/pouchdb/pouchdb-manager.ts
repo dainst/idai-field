@@ -165,7 +165,7 @@ export class PouchdbManager {
 
         let documents = [];
         try {
-            await this.fetchAll((docs: Array<any>) => documents = docs);
+            documents = await this.fetchAll();
         } catch (err) {
             console.error(err);
             await progress.setError('fetchDocumentsError');
@@ -186,21 +186,15 @@ export class PouchdbManager {
     }
 
 
-    // TODO Do this without the callback
-    private async fetchAll(callback: Function) {
+    private async fetchAll() {
 
-        await this.dbHandle
-            .allDocs(
-                {
-                    include_docs: true,
-                    conflicts: true
-                },
-                (err: any, resultDocs: any) =>
-                    callback((resultDocs.rows as Array<any>)
-                        .filter(row => !PouchdbManager.isDesignDoc(row))
-                        .map(row => row.doc)
-                    )
-            );
+        return (await this.dbHandle
+            .allDocs({
+                include_docs: true,
+                conflicts: true
+            })).rows
+            .filter(row => !PouchdbManager.isDesignDoc(row))
+            .map(row => row.doc);
     }
 
 

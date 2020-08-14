@@ -3,6 +3,9 @@
  */
 
 language-settings {
+  display: block;
+  margin-bottom: 30px;
+
   .list-group {
     border: 1px solid rgba(0, 0, 0, 0.125);
     max-height: 210px;
@@ -31,6 +34,11 @@ language-settings {
     min-height: 40px;
     border: none !important;
     cursor: move;
+  }
+
+  #add-language {
+    left: 50%;
+    transform: translate(-20px, -21px);
   }
 
   .remove-language {

@@ -1,8 +1,10 @@
-import {compose, flatten, flow, intersect, isDefined, isNot, isUndefinedOrEmpty,
-    empty, pairWith, subtract, to, undefinedOrEmpty, throws, remove} from 'tsfun';
+import {
+    compose, flatten, flow, intersect, isDefined, isNot, isUndefinedOrEmpty,
+    empty, pairWith, subtract, to, undefinedOrEmpty, throws, remove, union, Pair
+} from 'tsfun';
 import {lookup, map, forEach} from 'tsfun/associative';
 import {filter} from 'tsfun/collection';
-import {reduce as asyncReduce} from 'tsfun/async';
+import {reduce as asyncReduce, forEach as asyncForEach} from 'tsfun/async';
 import {Document, Relations} from 'idai-components-2';
 import {ImportErrors as E} from '../import-errors';
 import {HierarchicalRelations, PositionRelations, TimeRelations} from '../../../model/relation-constants';
@@ -19,6 +21,7 @@ import IS_EQUIVALENT_TO = PositionRelations.EQUIVALENT;
 import {ResourceId} from '../../../constants';
 import LIES_WITHIN = HierarchicalRelations.LIESWITHIN;
 import {InverseRelationsMap} from '../../../configuration/inverse-relations-map';
+import {clone} from '../../../util/object-util';
 
 
 /**
@@ -61,16 +64,40 @@ export async function completeInverseRelations(importDocuments: Array<Document>,
         inverseRelationsMap,
         assertIsAllowedRelationDomainCategory);
 
-    const targetIdsMap = await asyncReduce(
+    const targetIdsLookup = await asyncReduce(
         getTargetIds(mergeMode, get, documentsLookup), {}, importDocuments);
 
-    return await setInverseRelationsForDbResources(
+    const targetDocumentsLookup = await asyncReduce(
+        getTargetDocuments(get), {}, targetIdsLookup
+    )
+    return setInverseRelationsForDbResources(
         importDocuments,
-        targetIdsMap,
-        get,
+        targetIdsLookup,
+        targetDocumentsLookup,
         inverseRelationsMap,
         assertIsAllowedRelationDomainCategory,
-        [LIES_WITHIN, RECORDED_IN]);
+        [LIES_WITHIN, RECORDED_IN]); // TODO review
+}
+
+
+function getTargetDocuments(get: (_: string) => Promise<Document>) {
+
+    return async (targetDocumentsMap: { [_: string]: Document },
+                  targetDocIdsPair: Pair<ResourceId[]>) => {
+
+        const targetDocIds = union(targetDocIdsPair);
+
+        await asyncForEach(
+            async (targetId: ResourceId) => {
+
+            if (!targetDocumentsMap[targetId]) try {
+                targetDocumentsMap[targetId] = clone(await get(targetId));
+            } catch {
+                throw [E.EXEC_MISSING_RELATION_TARGET, targetId];
+            }
+        })(targetDocIds); // TODO allow call variants for forEach
+        return targetDocumentsMap;
+    }
 }
 
 

@@ -1,9 +1,6 @@
 import {is, on, union, isNot, includedIn} from 'tsfun';
-import {map as asyncMap, reduce as asyncReduce} from 'tsfun/async';
-import {forEach} from 'tsfun/associative';
+import {forEach, lookup} from 'tsfun/associative';
 import {Document} from 'idai-components-2';
-import {ImportErrors as E} from '../import-errors';
-import {clone} from '../../../util/object-util';
 import {ResourceId} from '../../../constants';
 import {assertInSameOperationWith, unionOfDocuments} from '../utils';
 import {AssertIsAllowedRelationDomainType} from '../types';
@@ -16,8 +13,8 @@ import {InverseRelationsMap} from '../../../configuration/inverse-relations-map'
  *   are of resources already in the db and referenced by the current version of the importDocument,
  *   and the second list's ids are resources already in the db and referenced by the version
  *   to be updated of importDocument, where only ids that are not in the first list are listed.
- * @param targetIdsMap
- * @param get
+ * @param targetIdsLookup
+ * @param targetDocumentsLookup
  * @param inverseRelationsMap
  * @param assertIsAllowedRelationDomainCategory
  * @param unidirectionalRelations names of relations for which not inverses get set in the db.
@@ -27,22 +24,19 @@ import {InverseRelationsMap} from '../../../configuration/inverse-relations-map'
  */
 export async function setInverseRelationsForDbResources(
         importDocuments: Array<Document>,
-        targetIdsMap: { [_: string]: [ResourceId[], ResourceId[]] },
-        get: (_: string) => Promise<Document>,
+        targetIdsLookup: { [_: string]: [ResourceId[], ResourceId[]] },
+        targetDocumentsLookup: { [_: string]: Document },
         inverseRelationsMap: InverseRelationsMap,
         assertIsAllowedRelationDomainCategory: AssertIsAllowedRelationDomainType,
         unidirectionalRelations: string[]): Promise<Array<Document>> {
 
-    let allFetchedDocuments: Array<Document> = []; // store already fetched documents
+    function getDocumentTargetDocsToUpdate(document: Document) {
 
-    async function getDocumentTargetDocsToUpdate(document: Document) {
-
-        const allTargetIds = await targetIdsMap[document.resource.id];
+        const allTargetIds = targetIdsLookup[document.resource.id];
         const currentAndOldTargetIds = union(allTargetIds);
         const [currentTargetIds, _] = allTargetIds;
 
-        const targetDocuments = await asyncMap(getTargetDocument(allFetchedDocuments, get), currentAndOldTargetIds);
-        allFetchedDocuments = unionOfDocuments([allFetchedDocuments, targetDocuments]);
+        const targetDocuments = currentAndOldTargetIds.map(lookup(targetDocumentsLookup));
 
         assertCategoryIsInRange(document, makeIdCategoryMap(currentTargetIds, targetDocuments), assertIsAllowedRelationDomainCategory);
         const copyOfTargetDocuments = getRidOfUnnecessaryTargetDocs(document, targetDocuments, unidirectionalRelations);
@@ -53,20 +47,19 @@ export async function setInverseRelationsForDbResources(
         return copyOfTargetDocuments;
     }
 
-    return await reduceToDBDocumentsToBeUpdated(getDocumentTargetDocsToUpdate)(importDocuments);
+    return reduceToDBDocumentsToBeUpdated(getDocumentTargetDocsToUpdate)(importDocuments);
 }
 
 
 function reduceToDBDocumentsToBeUpdated(
-        getDocumentTargetDocsToUpdate: (document: Document) => Promise<Array<Document>>) {
+        getDocumentTargetDocsToUpdate: (document: Document) => Array<Document>) {
 
-    return (documents: Array<Document>) => asyncReduce(
-        documents,
-        async (totalDocsToUpdate: Array<Document>, document: Document) => {
+    return (documents: Array<Document>) => documents.reduce(
+        (totalDocsToUpdate: Array<Document>, document: Document) => {
 
             return unionOfDocuments([
                 totalDocsToUpdate,
-                await getDocumentTargetDocsToUpdate(document)]);
+                getDocumentTargetDocsToUpdate(document)]);
 
         },
         []);
@@ -120,20 +113,4 @@ function assertCategoryIsInRange(document: Document, idCategoryMap: any,
             );
         }
     })
-}
-
-
-function getTargetDocument(documents: Array<Document>, get: Function) {
-
-    return async (targetId: string): Promise<Document> => {
-
-        let targetDocument = documents
-            .find(on('resource.id', is(targetId)));
-        if (!targetDocument) try {
-            targetDocument = clone(await get(targetId));
-        } catch {
-            throw [E.EXEC_MISSING_RELATION_TARGET, targetId];
-        }
-        return targetDocument as Document;
-    }
 }

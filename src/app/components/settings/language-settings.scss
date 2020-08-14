@@ -11,6 +11,11 @@ language-settings {
     max-height: 210px;
     overflow-y: auto;
     overflow-x: hidden;
+    cursor: grab;
+
+    &.dragging {
+      cursor: grabbing;
+    }
   }
 
   .list-group-item {
@@ -23,7 +28,6 @@ language-settings {
   .cdk-drag-handle {
     display: inline-block;
     width: calc(100% - 40px);
-    cursor: move;
 
     &.large-drag-handle {
       width: 100%;
@@ -33,7 +37,7 @@ language-settings {
   .drag-placeholder {
     min-height: 40px;
     border: none !important;
-    cursor: move;
+    cursor: grabbing;
   }
 
   #add-language {

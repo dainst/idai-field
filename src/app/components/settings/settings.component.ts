@@ -79,7 +79,6 @@ export class SettingsComponent implements OnInit {
 
     public async chooseImagestoreDirectory() {
 
-      // TODO Use type Electron.OpenDialogReturnValue
         const result: any = await remote.dialog.showOpenDialog(
             remote.getCurrentWindow(),
             {

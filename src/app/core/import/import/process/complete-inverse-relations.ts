@@ -67,16 +67,16 @@ export async function completeInverseRelations(importDocuments: Array<Document>,
     // TODO pull out this code to make completeInverseRelations synchronous
     const targetIdsLookup = await asyncReduce(
         getTargetIds(mergeMode, get, documentsLookup), {}, importDocuments);
-
     const targetDocumentsLookup = await asyncReduce(
-        getTargetDocuments(get), {}, targetIdsLookup
-    )
+        getTargetDocuments(get), {}, targetIdsLookup);
+    const targetsLookup = map(targetIdsLookup, (ids) => {
+        return [ids[0], union(ids).map(lookup(targetDocumentsLookup))]
+    });
     //
 
     return setInverseRelationsForDbResources(
         importDocuments,
-        targetIdsLookup,
-        targetDocumentsLookup,
+        targetsLookup as any,
         inverseRelationsMap,
         assertIsAllowedRelationDomainCategory,
         [LIES_WITHIN, RECORDED_IN]); // TODO review

@@ -133,8 +133,7 @@ function adjustCategoryGeometry(languageConfigurations: any[], categoriesTree: T
             name: 'geometry',
             group: 'position',
             inputType: 'geometry',
-            editable: true,
-            label: 'geometry'
+            editable: true
         };
         for (let languageConfiguration of languageConfigurations) {
             if (languageConfiguration.other?.geometry) {
@@ -187,10 +186,12 @@ function setGroupLabels(languageConfigurations: any[]) {
         const groupLabel = ({ name: name }: Group) => {
 
             if (name === Groups.PARENT) {
-                return category.parentCategory?.label ?? category.label;
+                return category.parentCategory
+                    ? category.parentCategory.label ?? category.parentCategory.name
+                    : category.label ?? category.name;
             }
             else if (name === Groups.CHILD) {
-                return category.label;
+                return category.label ?? category.name;
             } else {
                 for (let languageConfiguration of languageConfigurations) {
                     if (languageConfiguration.groups?.[name]) {

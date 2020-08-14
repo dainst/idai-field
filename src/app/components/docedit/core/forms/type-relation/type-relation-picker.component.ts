@@ -249,7 +249,7 @@ export class TypeRelationPickerComponent {
 
         const valuelist: ValuelistDefinition = (criterionField.valuelist as ValuelistDefinition);
 
-        return Object.keys(valuelist.values).map((valueName: string) => {
+        return ValuelistUtil.getOrderedValues(valuelist).map((valueName: string) => {
             return {
                 name: valueName,
                 label: ValuelistUtil.getValueLabel(valuelist, valueName)

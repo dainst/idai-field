@@ -15,7 +15,7 @@ type Label = string;
 
 export interface Named { name: Name }
 
-export interface Labelled { label: Label }
+export interface Labelled { label?: Label }
 
 
 export module Named {

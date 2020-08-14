@@ -103,7 +103,7 @@ function buildCategoryFromDefinition(definition: CategoryDefinition): Category {
     const category: any = {};
     category.mustLieWithin = definition.mustLieWithin;
     category.name = definition.name;
-    category.label = definition.label || category.name;
+    category.label = definition.label;
     category.description = definition.description;
     category.groups = [];
     category.isAbstract = definition.abstract || false;

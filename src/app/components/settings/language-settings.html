@@ -3,10 +3,29 @@
     (cdkDropListDropped)="onDrop($event)">
     <li *ngFor="let language of selectedLanguages; let i = index"
         class="list-group-item"
-        cdkDrag [cdkDragData]="language">
-        <span class="priority">{{i + 1}}.</span> {{getLabel(language)}}
+        [class.main-language]="languages[language].isMainLanguage"
+        cdkDrag cdkDragLockAxis="y"
+        cdkDragBoundary=".list-group"
+        [cdkDragData]="language">
+        <div cdkDragHandle [class.large-drag-handle]="languages[language].isMainLanguage">
+            <span class="priority">{{i + 1}}. </span>
+            <span class="language-label">{{languages[language].label}} ({{language}})</span>
+        </div>
+        <div *ngIf="!languages[language].isMainLanguage"
+             class="btn btn-light remove-language"
+             (click)="removeLanguage(language)"
+             ngbTooltip="Sprache entfernen"
+             i18n-ngbTooltip="@@settings.removeLanguage"
+             container="body">
+            <span class="mdi mdi-delete"></span>
+        </div>
+        <div class="drag-placeholder" *cdkDragPlaceholder></div>
     </li>
-    <div class="btn btn-block btn-secondary"
-         i18n="@@settings.addLanguage"
-         (click)="addLanguage()">Sprache hinzufügen</div>
 </ul>
+
+<div id="add-language" class="circular-button green-button"
+     (click)="addLanguage()"
+     ngbTooltip="Sprache hinzufügen"
+     i18n-ngbTooltip="@@settings.addLanguag">
+    <span class="mdi mdi-plus"></span>
+</div>

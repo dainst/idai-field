@@ -16,7 +16,7 @@ describe('CustomCategoryDefinition', () => {
         };
         const assertIsValid = CustomCategoryDefinition.makeAssertIsValid(builtInCategories, libraryCategories);
         try {
-            assertIsValid(['A', customCategory]);
+            assertIsValid(customCategory, 'A');
             fail();
         } catch (expected) {
             expect(expected).toEqual([ConfigurationErrors.ILLEGAL_CATEGORY_PROPERTY, 'categoryName', 'A']);
@@ -35,7 +35,7 @@ describe('CustomCategoryDefinition', () => {
         };
         const assertIsValid = CustomCategoryDefinition.makeAssertIsValid(builtInCategories, libraryCategories);
         try {
-            assertIsValid(['A', customCategory]);
+            assertIsValid(customCategory, 'A');
             fail();
         } catch (expected) {
             expect(expected).toEqual(
@@ -57,7 +57,7 @@ describe('CustomCategoryDefinition', () => {
         };
         const assertIsValid = CustomCategoryDefinition.makeAssertIsValid(builtInCategories, libraryCategories);
         try {
-            assertIsValid(['A:libraryCategory', customCategory]);
+            assertIsValid(customCategory, 'A:libraryCategory');
             fail();
         } catch (expected) {
             expect(expected).toEqual(
@@ -79,7 +79,7 @@ describe('CustomCategoryDefinition', () => {
         };
         const assertIsValid = CustomCategoryDefinition.makeAssertIsValid(builtInCategories, libraryCategories);
         try {
-            assertIsValid(['A', customCategory]);
+            assertIsValid(customCategory, 'A');
             fail();
         } catch (expected) {
             expect(expected).toEqual(

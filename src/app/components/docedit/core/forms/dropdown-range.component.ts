@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {isUndefinedOrEmpty} from 'tsfun';
-import {Resource, ValOptionalEndVal} from 'idai-components-2';
+import {Resource, OptionalRange} from 'idai-components-2';
 import {ValuelistUtil} from '../../../../core/util/valuelist-util';
 import {HierarchyUtil} from '../../../../core/util/hierarchy-util';
 import {DocumentReadDatastore} from '../../../../core/datastore/document-read-datastore';
@@ -50,7 +50,7 @@ export class DropdownRangeComponent {
 
         return this.endActivated
             || (this.resource[this.field.name]
-                && !isUndefinedOrEmpty(this.resource[this.field.name][ValOptionalEndVal.ENDVALUE]));
+                && !isUndefinedOrEmpty(this.resource[this.field.name][OptionalRange.ENDVALUE]));
     }
 
 
@@ -61,7 +61,7 @@ export class DropdownRangeComponent {
             delete this.resource[this.field.name];
         } else {
             if (!this.resource[this.field.name]) this.resource[this.field.name] = {};
-            this.resource[this.field.name][ValOptionalEndVal.VALUE] = value;
+            this.resource[this.field.name][OptionalRange.VALUE] = value;
         }
     }
 
@@ -70,9 +70,9 @@ export class DropdownRangeComponent {
 
         if (isUndefinedOrEmpty(value)) {
             this.endActivated = false;
-            delete this.resource[this.field.name][ValOptionalEndVal.ENDVALUE]
+            delete this.resource[this.field.name][OptionalRange.ENDVALUE]
         } else {
-            this.resource[this.field.name][ValOptionalEndVal.ENDVALUE] = value;
+            this.resource[this.field.name][OptionalRange.ENDVALUE] = value;
         }
     }
 }

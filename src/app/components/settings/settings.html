@@ -19,13 +19,19 @@
 
                     <div class="form-group" style="margin-bottom: 0;">
                         <label class="control-label col-form-label"
-                               i18n="@@settings.general.language">
-                            Sprache
+                               i18n="@@settings.languages">
+                            Sprachen
                         </label>
                         <language-settings [selectedLanguages]="settings.languages"></language-settings>
+                        <div class="settings-info" i18n="@@settings.languages.info">
+                            Sprachen können nach Priorität sortiert werden. Für fett gedruckte Sprachen ist eine
+                            übersetzte Benutzeroberfläche verfügbar. Darüber hinaus können für weitere Sprachen
+                            Übersetzungen von Kategorie- und Feldbezeichnungen sowie Wertelisten in der
+                            Projektkonfiguration hinterlegt sein.
+                        </div>
                     </div>
 
-                    <div class="form-group" style="margin-bottom: 0;">
+                    <div class="form-group" style="margin-bottom: 0; margin-top: 15px;">
 
                         <label class="control-label col-form-label"
                                for="username-input"

@@ -276,7 +276,7 @@ describe('ConfigLoader', () => {
 
         expect(pconf.getCategory('A').label).toEqual('A_');
         expect(pconf.getCategory('B').label).toEqual('B__');
-        expect(pconf.getCategory('C').label).toEqual('C'); // took name as label
+        expect(pconf.getCategory('C').label).toBeUndefined();
 
         expect(pconf.getRelationDefinitionsForDomainCategory('A')[1].label).toEqual('r1_');
         expect(pconf.getRelationDefinitionsForDomainCategory('A')[0].label).toBeFalsy();

@@ -1,7 +1,7 @@
 'use strict';
 
-import {sameset, keysAndValues} from 'tsfun';
-
+import {sameset} from 'tsfun';
+import {forEach, map} from 'tsfun/associative';
 
 
 const fs = require('fs');
@@ -23,10 +23,8 @@ const fieldsKalapodi = JSON.parse(fs.readFileSync(projectName === '' ? 'Fields.j
  */
 function insert(valuelists:any, field:any, newValuelistName:string, newValuelistValues:any) {
 
-
     const conflictedLists =
-        keysAndValues(valuelists)
-            .map(([_, vl]: any) => [_, Object.keys(vl['values'])])
+        map(valuelists, (vl: any, name: string) => [name, Object.keys(vl['values'])])
             .filter(([_, values]) => sameset(values)(newValuelistValues))
             .map(([name, _]) => name);
 
@@ -52,11 +50,11 @@ function generateName(typeName: string, fieldName: string, projectName: string) 
 }
 
 
-keysAndValues(fieldsKalapodi).forEach(([typeName, type]: any) => {
+forEach(fieldsKalapodi, (type, typeName: string) => {
 
     if (!type['fields']) type['fields'] = {};
 
-    keysAndValues(type['fields']).forEach(([fieldName, field]: any) => {
+    forEach(type['fields'], (field: any, fieldName: string) => {
 
         if (field['valuelist']) {
             const newValuelistName = generateName(typeName, fieldName, projectName);

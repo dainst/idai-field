@@ -1,4 +1,4 @@
-import {includedIn, is, isNot, on, Predicate} from 'tsfun';
+import {includedIn, is, isNot, isObject, isString, on, Predicate} from 'tsfun';
 import {Dating, Dimension, Literature, Document, FieldGeometry, NewDocument, NewResource,
     Resource} from 'idai-components-2';
 import {validateFloat, validateUnsignedFloat, validateUnsignedInt} from '../util/number-util';
@@ -8,6 +8,7 @@ import {ProjectConfiguration} from '../configuration/project-configuration';
 import {FieldDefinition} from '../configuration/model/field-definition';
 import {RelationDefinition} from '../configuration/model/relation-definition';
 import {Named} from '../util/named';
+import {OptionalRange} from 'idai-components-2/src/model/optional-range';
 
 
 export module Validations {
@@ -57,6 +58,26 @@ export module Validations {
     }
 
 
+    export function assertCorrectnessOfOptionalRangeValues(document: Document|NewDocument,
+                                                           projectConfiguration: ProjectConfiguration) {
+
+        // TODO projectConfguration?
+
+
+        const invalidFields: string[] = Validations.validateDropdownRangeFields(
+            document.resource, projectConfiguration, 'dropdownRange', OptionalRange.isValid
+        );
+
+        if (invalidFields.length > 0) {
+            throw [
+                ValidationErrors.INVALID_OPTIONALRANGE_VALUES,
+                document.resource.category,
+                invalidFields.join(', ')
+            ];
+        }
+    }
+
+
     export function assertCorrectnessOfDatingValues(document: Document|NewDocument,
                                                     projectConfiguration: ProjectConfiguration) {
 
@@ -99,7 +120,7 @@ export module Validations {
                                           error: string,
                                           isValid: Predicate) {
 
-        const invalidFields: string[] = Validations.validateObjectArrays(
+        const invalidFields: string[] = Validations.validateObjectArrayFields(
             document.resource, projectConfiguration, inputType, isValid
         );
 
@@ -402,38 +423,41 @@ export module Validations {
     }
 
 
-    export function validateObjectArrays(resource: Resource|NewResource,
-                                         projectConfiguration: ProjectConfiguration,
-                                         inputType: 'dating'|'dimension'|'literature',
-                                         validate: (object: any) => boolean): string[] {
+    export function validateDropdownRangeFields(resource: Resource|NewResource,
+                                                projectConfiguration: ProjectConfiguration,
+                                                inputType: 'dropdownRange',
+                                                isValid: (object: any) => boolean): string[] {
+
+        return validateFields(resource, projectConfiguration, inputType, (fieldContent: any) => {
+            return (!isObject(fieldContent)
+                || !isValid(fieldContent)
+                || !isString(fieldContent.value));
+        });
+    }
+
+
+    export function validateObjectArrayFields(resource: Resource|NewResource,
+                                              projectConfiguration: ProjectConfiguration,
+                                              inputType: 'dating'|'dimension'|'literature',
+                                              isValid: (object: any) => boolean): string[] {
+
+        return validateFields(resource, projectConfiguration, inputType, (fieldContent: any) => {
+            return (!Array.isArray(fieldContent)
+                || fieldContent.filter((object: any) => !isValid(object)).length > 0);
+        });
+    }
+
+
+    export function validateFields(resource: Resource|NewResource,
+                                   projectConfiguration: ProjectConfiguration,
+                                   inputType: string,
+                                   isInvalid: (object: any) => boolean): string[] {
 
         return projectConfiguration.getFieldDefinitions(resource.category)
             .filter(field => field.inputType === inputType)
             .filter(field => {
-                return resource[field.name] !== undefined &&
-                    (!Array.isArray(resource[field.name])
-                        || resource[field.name].filter((object: any) => !validate(object)).length > 0);
+                return resource[field.name] !== undefined
+                    && isInvalid(resource[field.name]);
             }).map(field => field.name);
-    }
-
-
-    function reduceForFieldsOfCategory<A>(resource: Resource|NewResource,
-                                      fieldDefinitions: Array<FieldDefinition>,
-                                      fieldType: string,
-                                      doForField: (acc: A, matchedFieldName: string) => A,
-                                      acc: A): A {
-
-        return fieldDefinitions
-            .filter(on(INPUT_TYPE, is(fieldType)))
-            .reduce((acc: A, dropdownRangeFieldDefinition) => {
-
-                const matchedFieldName = Object.keys(resource)
-                    .filter(isNot(includedIn(['relations', 'geometry'])))
-                    .find(is(dropdownRangeFieldDefinition.name));
-
-                if (!matchedFieldName) return acc;
-                return doForField(acc, matchedFieldName);
-
-            }, acc);
     }
 }

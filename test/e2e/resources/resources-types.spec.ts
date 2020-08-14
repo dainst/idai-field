@@ -217,7 +217,7 @@ describe('resources/types --', () => {
         DoceditPage.clickGotoIdentificationTab();
         DoceditTypeRelationsTabPage.clickAddTypeRelationButton('instanceOf');
 
-        checkCriterionOptions(['Kein Kriterium', 'Form', 'Material']);
+        checkCriterionOptions(['Kein Kriterium', 'Dekoration', 'Form']);
         checkCatalogOptions(['Alle Kataloge', 'TC1', 'TC2']);
         browser.wait(EC.presenceOf(DoceditTypeRelationsTabPage.getTypeRow('T1')), delays.ECWaitTime);
         browser.wait(EC.presenceOf(DoceditTypeRelationsTabPage.getTypeRow('T2')), delays.ECWaitTime);

@@ -155,29 +155,6 @@ body {
   margin-bottom: 0 !important;
 }
 
-messages {
-  position: fixed;
-  top: 10px;
-  right: 0;
-  left: 0;
-  z-index: 1060;
-  pointer-events: none;
-
-  .alert-container {
-    text-align: center;
-
-    .alert {
-      padding-top: 5px;
-      padding-bottom: 5px;
-      pointer-events: all;
-
-      button {
-        padding-left: 16px;
-      }
-    }
-  }
-}
-
 /* override needed for buttons to look good in chrome with bootstrap 4 */
 button,
 html [type='button'],

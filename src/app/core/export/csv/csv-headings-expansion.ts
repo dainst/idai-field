@@ -1,5 +1,5 @@
 import {flatMap, range} from 'tsfun';
-import {ValOptionalEndVal} from 'idai-components-2';
+import {OptionalRange} from 'idai-components-2';
 import {CsvExportConsts} from './csv-export-consts';
 
 
@@ -10,11 +10,11 @@ export module CSVHeadingsExpansion {
 
     import OBJECT_SEPARATOR = CsvExportConsts.OBJECT_SEPARATOR;
 
-    export function expandValOptionalEndValHeadings(fieldName: string) {
+    export function expandOptionalRangeHeadings(fieldName: string) {
 
         return [
-            fieldName + OBJECT_SEPARATOR + ValOptionalEndVal.VALUE,
-            fieldName + OBJECT_SEPARATOR + ValOptionalEndVal.ENDVALUE
+            fieldName + OBJECT_SEPARATOR + OptionalRange.VALUE,
+            fieldName + OBJECT_SEPARATOR + OptionalRange.ENDVALUE
         ];
     }
 

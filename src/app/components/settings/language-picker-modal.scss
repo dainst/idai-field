@@ -3,8 +3,26 @@
  */
 
 .language-picker-modal-body {
-  ul {
+  .list-group {
     max-height: 400px;
+    border: 1px solid rgba(0, 0, 0, 0.125);
     overflow-y: auto;
+
+    .list-group-item {
+      padding: 10px;
+      user-select: none;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+      border-top: none;
+      border-left: none;
+      border-right: none;
+
+      &:hover {
+        background-color: $list-item-hover-color;
+      }
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
   }
 }

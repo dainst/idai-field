@@ -6,9 +6,9 @@ import {ValueDefinition, ValuelistDefinition} from '../configuration/model/value
 import {clone} from './object-util';
 import {SortUtil} from './sort-util';
 
-const locale: string = typeof window !== 'undefined'
-  ? window.require('electron').remote.getGlobal('config').locale
-  : require('electron').remote ? require('electron').remote.getGlobal('config').locale : 'de';
+const languages: string[] = typeof window !== 'undefined'
+  ? window.require('electron').remote.getGlobal('config').languages
+  : require('electron').remote ? require('electron').remote.getGlobal('config').languages : ['de'];
 
 
 /**
@@ -37,10 +37,12 @@ export module ValuelistUtil {
         const value: ValueDefinition|undefined = valuelist.values[valueId];
         if (!value) return valueId;
 
-        const label: { [locale: string]: string }|undefined = valuelist.values[valueId].labels;
+        const language: string = languages.find(languageCode => {
+            return valuelist.values[valueId].labels?.[languageCode] !== undefined;
+        });
 
-        return label
-            ? label[locale] ?? valueId
+        return language
+            ? valuelist.values[valueId].labels[language]
             : valueId;
     }
 

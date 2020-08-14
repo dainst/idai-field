@@ -1,11 +1,20 @@
 import {Component, Input} from '@angular/core';
 import {CdkDragDrop} from '@angular/cdk/drag-drop';
-import {clone} from 'tsfun/struct';
-import {Settings} from '../../core/settings/settings';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
+import {clone} from 'tsfun/struct';
+import {map} from 'tsfun/associative';
+import {Settings} from '../../core/settings/settings';
 import {LanguagePickerModalComponent} from './language-picker-modal.component';
+import {SettingsComponent} from './settings.component';
 
 const cldr = typeof window !== 'undefined' ? window.require('cldr') : require('cldr');
+const remote = typeof window !== 'undefined' ? window.require('electron').remote : require('electron').remote;
+
+
+type Language = {
+    label: string;
+    isMainLanguage: boolean;
+}
 
 
 @Component({
@@ -19,18 +28,19 @@ export class LanguageSettingsComponent {
 
     @Input() selectedLanguages: string[];
 
-    private readonly languages: { [languageCode: string]: string };
+    public readonly languages: { [languageCode: string]: Language };
 
 
-    constructor(private modalService: NgbModal) {
+    constructor(private modalService: NgbModal,
+                private settingsComponent: SettingsComponent) {
 
         this.languages = LanguageSettingsComponent.getAvailableLanguages();
     }
 
 
-    public getLabel(language: string): string {
+    public removeLanguage(language: string) {
 
-        return cldr.extractLanguageDisplayNames(Settings.getLocale())[language];
+        this.selectedLanguages.splice(this.selectedLanguages.indexOf(language), 1);
     }
 
 
@@ -46,38 +56,47 @@ export class LanguageSettingsComponent {
 
     public async addLanguage() {
 
+        this.settingsComponent.modalOpened = true;
+
         const modalReference: NgbModalRef
-            = this.modalService.open(LanguagePickerModalComponent, { keyboard: false });
+            = this.modalService.open(LanguagePickerModalComponent);
         modalReference.componentInstance.languages = this.getUnselectedLanguages();
 
         try {
             this.selectedLanguages.push(await modalReference.result);
         } catch (err) {
             // Modal has been canceled
+        } finally {
+            this.settingsComponent.modalOpened = false;
         }
     }
 
 
     private getUnselectedLanguages(): { [languageCode: string]: string } {
 
-        const result = clone(this.languages);
+        const result = map(language => language.label)(clone(this.languages));
 
         Object.keys(this.languages).forEach(languageCode => {
             if (this.selectedLanguages.includes(languageCode)) delete result[languageCode];
         });
 
-        return result;
+        return result as { [languageCode: string]: string };
     }
 
 
-    private static getAvailableLanguages(): { [languageCode: string]: string } {
+    private static getAvailableLanguages(): { [languageCode: string]: Language } {
 
         const languages = cldr.extractLanguageDisplayNames(Settings.getLocale());
+        const mainLanguages: string[] = remote.getGlobal('getMainLanguages')();
 
-        Object.keys(languages).forEach(languageCode => {
-            if (languageCode.length !== 2 ) delete languages[languageCode];
-        });
-
-        return languages;
+        return Object.keys(languages).reduce((result, languageCode) => {
+            if (languageCode.length === 2 ) {
+                result[languageCode] = {
+                    label: languages[languageCode],
+                    isMainLanguage: mainLanguages.includes(languageCode)
+                };
+            }
+            return result;
+        }, {});
     }
 }

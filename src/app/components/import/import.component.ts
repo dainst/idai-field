@@ -203,11 +203,17 @@ export class ImportComponent implements OnInit {
         await AngularUtility.refresh();
 
         this.synchronizationService.stopSync();
-        const importReport = await this.doImport(reader);
-        this.synchronizationService.startSync();
+
+        let importReport: ImportReport;
+        try {
+             importReport = await this.doImport(reader);
+        } catch (errWithParams) {
+            this.messages.add(MessagesConversion.convertMessage(errWithParams));
+        }
+        await this.synchronizationService.startSync();
 
         uploadModalRef.close();
-        this.showImportResult(importReport);
+        if (importReport) this.showImportResult(importReport);
     }
 
 

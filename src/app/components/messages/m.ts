@@ -896,7 +896,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_DROPDOWN_RANGE_VALUES] = {
             content: i18n({
                 id: 'messages.import.validation.error.invalidDropdownValues',
-                value: 'Ungültige Werte für DropdownRange-Feld (\'[0]\'). Ein \'-End\'-Wert kann nicht allein vorkommen.'
+                value: 'Ungültiger Bereich im Feld \'[1]\' einer Ressource der Kategorie \'[0]\'.'
             }),
             level: 'danger',
             params: [],

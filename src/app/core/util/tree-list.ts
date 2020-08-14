@@ -11,9 +11,9 @@ import {
     to,
     Path,
     is,
-    zip, tuplify, identity
+    zip, identity
 } from 'tsfun';
-import {Comparator} from 'tsfun/by';
+import {Comparator} from 'tsfun';
 import {Named} from './named';
 
 

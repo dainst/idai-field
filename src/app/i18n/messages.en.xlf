@@ -2891,7 +2891,7 @@
         <target state="final">Imprecise</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dimension.html</context>
-          <context context-type="linenumber">77</context>
+          <context context-type="linenumber">76</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dimension.comment" datatype="html">
@@ -2968,6 +2968,10 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/navbar/projects-modal.html</context>
           <context context-type="linenumber">74</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/settings/language-picker-modal.html</context>
+          <context context-type="linenumber">18</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageUpload.uploadModal.info.single" datatype="html">
@@ -3132,16 +3136,33 @@
           <context context-type="linenumber">18</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="settings.general.language" datatype="html">
+      <trans-unit id="settings.languages" datatype="html">
         <source>
-                            Sprache
+                            Sprachen
                         </source>
         <target state="final">
-                            Language
+                            Languages
                         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
-          <context context-type="linenumber">23</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="settings.languages.info" datatype="html">
+        <source>
+                            Sprachen können nach Priorität sortiert werden. Für fett gedruckte Sprachen ist eine
+                            übersetzte Benutzeroberfläche verfügbar. Darüber hinaus können für weitere Sprachen
+                            Übersetzungen von Kategorie- und Feldbezeichnungen sowie Wertelisten in der
+                            Projektkonfiguration hinterlegt sein.
+                        </source>
+        <target state="final">
+                            Languages can be sorted by priority. A translated user interface is available for
+                            languages in bold. In addition, translations of category and field names as well as
+                            value lists may be available in the project configuration for other languages.
+                        </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/settings/settings.html</context>
+          <context context-type="linenumber">26</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.userName" datatype="html">
@@ -3153,7 +3174,7 @@
                         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
-          <context context-type="linenumber">39</context>
+          <context context-type="linenumber">38</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.userName.info" datatype="html">
@@ -3175,7 +3196,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
-          <context context-type="linenumber">48</context>
+          <context context-type="linenumber">47</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.synchronization" datatype="html">
@@ -3183,7 +3204,7 @@
         <target state="final">Synchronization</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
-          <context context-type="linenumber">61</context>
+          <context context-type="linenumber">60</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.synchronization.activate" datatype="html">
@@ -3191,7 +3212,7 @@
         <target state="final">Activate synchronization</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
-          <context context-type="linenumber">65</context>
+          <context context-type="linenumber">64</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.synchronization.address" datatype="html">
@@ -3199,7 +3220,7 @@
         <target state="final">Address</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
-          <context context-type="linenumber">80</context>
+          <context context-type="linenumber">79</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.synchronization.password" datatype="html">
@@ -3207,7 +3228,7 @@
         <target state="final">Password</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
-          <context context-type="linenumber">87</context>
+          <context context-type="linenumber">86</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.synchronization.ownAddress" datatype="html">
@@ -3215,7 +3236,7 @@
         <target state="final">Your address</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
-          <context context-type="linenumber">97</context>
+          <context context-type="linenumber">96</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.synchronization.hostPassword" datatype="html">
@@ -3223,7 +3244,7 @@
         <target state="final">Your password</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
-          <context context-type="linenumber">102</context>
+          <context context-type="linenumber">101</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.synchronization.info" datatype="html">
@@ -3235,7 +3256,7 @@
         <target state="final">This address and password need to be set in other iDAI.field clients in order to be able to synchronize data to this computer.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
-          <context context-type="linenumber">107</context>
+          <context context-type="linenumber">106</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.images" datatype="html">
@@ -3243,7 +3264,7 @@
         <target state="final">Images</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
-          <context context-type="linenumber">117</context>
+          <context context-type="linenumber">116</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.images.path" datatype="html">
@@ -3255,7 +3276,7 @@
                         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
-          <context context-type="linenumber">123</context>
+          <context context-type="linenumber">122</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.images.path.info" datatype="html">
@@ -3278,7 +3299,7 @@
                         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
-          <context context-type="linenumber">137</context>
+          <context context-type="linenumber">136</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.update" datatype="html">
@@ -3286,7 +3307,7 @@
         <target state="final">Update</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
-          <context context-type="linenumber">151</context>
+          <context context-type="linenumber">150</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.update.activate" datatype="html">
@@ -3294,7 +3315,31 @@
         <target state="final">Activate automatic check for updates</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
-          <context context-type="linenumber">155</context>
+          <context context-type="linenumber">154</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="settings.addLanguage" datatype="html">
+        <source>Sprache hinzufügen</source>
+        <target state="final">Add language</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/settings/language-picker-modal.html</context>
+          <context context-type="linenumber">2</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="settings.removeLanguage" datatype="html">
+        <source>Sprache entfernen</source>
+        <target state="final">Remove language</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/settings/language-settings.html</context>
+          <context context-type="linenumber">17</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="settings.addLanguag" datatype="html">
+        <source>Sprache hinzufügen</source>
+        <target state="final">Add language</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/settings/language-settings.html</context>
+          <context context-type="linenumber">28</context>
         </context-group>
       </trans-unit>
       <trans-unit id="matrix.view.noTrenchesWarning" datatype="html">
@@ -4234,8 +4279,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidDropdownValues" datatype="html">
-        <source>Ungültige Werte für DropdownRange-Feld ('[0]'). Ein '-End'-Wert kann nicht allein vorkommen.</source>
-        <target state="final">Invalid values for dropdown range field ('[0]'). An '-End' value cannot exist alone.</target>
+        <source>Ungültiger Bereich im Feld '[1]' einer Ressource der Kategorie '[0]'.</source>
+        <target state="final">Invalid range in the following fields of a resource of category '[0]': [1].</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -4929,234 +4974,6 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.image.height" datatype="html">
-        <source>Höhe</source>
-        <target state="final">Height</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/core/configuration/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="configuration.image.width" datatype="html">
-        <source>Breite</source>
-        <target state="final">Width</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/core/configuration/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="configuration.project" datatype="html">
-        <source>Projekt</source>
-        <target state="final">Project</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/core/configuration/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="configuration.project.crs" datatype="html">
-        <source>Koordinatenbezugssystem</source>
-        <target state="final">Coordinate reference system</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/core/configuration/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="configuration.defaultFields.shortDescription" datatype="html">
-        <source>Kurzbeschreibung</source>
-        <target state="final">Short description</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/core/configuration/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="configuration.defaultFields.identifier.description" datatype="html">
-        <source>Eindeutiger Bezeichner dieser Ressource</source>
-        <target state="final">Unique identifier of this resource</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/core/configuration/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="configuration.defaultFields.identifier" datatype="html">
-        <source>Bezeichner</source>
-        <target state="final">Identifier</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/core/configuration/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="configuration.relations.depicts" datatype="html">
-        <source>Zeigt</source>
-        <target state="final">Depicts</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/core/configuration/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="configuration.relations.isDepictedIn" datatype="html">
-        <source>Wird gezeigt in</source>
-        <target state="final">Depicted in</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/core/configuration/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="configuration.relations.isAfter" datatype="html">
-        <source>Zeitlich nach</source>
-        <target state="final">After</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/core/configuration/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="configuration.relations.isBefore" datatype="html">
-        <source>Zeitlich vor</source>
-        <target state="final">Before</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/core/configuration/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="configuration.relations.isEquivalentTo" datatype="html">
-        <source>Gleich wie</source>
-        <target state="final">Equivalent to</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/core/configuration/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="configuration.relations.isContemporaryWith" datatype="html">
-        <source>Zeitgleich mit</source>
-        <target state="final">Contemporary with</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/core/configuration/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="configuration.relations.isAbove" datatype="html">
-        <source>Liegt über</source>
-        <target state="final">Above</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/core/configuration/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="configuration.relations.isBelow" datatype="html">
-        <source>Liegt unter</source>
-        <target state="final">Below</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/core/configuration/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="configuration.relations.cuts" datatype="html">
-        <source>Schneidet</source>
-        <target state="final">Cuts</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/core/configuration/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="configuration.relations.isCutBy" datatype="html">
-        <source>Wird geschnitten von</source>
-        <target state="final">Cut by</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/core/configuration/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="configuration.relations.borders" datatype="html">
-        <source>Grenzt an</source>
-        <target state="final">Borders</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/core/configuration/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/core/configuration/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/core/configuration/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/core/configuration/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="configuration.relations.isRecordedIn" datatype="html">
-        <source>Aufgenommen in Maßnahme</source>
-        <target state="final">Recorded in operation</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/core/configuration/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/core/configuration/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/core/configuration/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/core/configuration/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/core/configuration/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/core/configuration/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/core/configuration/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/core/configuration/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/core/configuration/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/core/configuration/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/core/configuration/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/core/configuration/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/core/configuration/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/core/configuration/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/core/configuration/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="configuration.relations.includes" datatype="html">
-        <source>Beinhaltet</source>
-        <target state="final">Includes</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/core/configuration/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="configuration.defaultFields.category" datatype="html">
         <source>Kategorie</source>
         <target state="final">Category</target>
@@ -5171,74 +4988,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/configuration/project-configuration.html</context>
           <context context-type="linenumber">34</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="configuration.relations.liesWithin" datatype="html">
-        <source>Liegt in</source>
-        <target state="final">Lies within</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/core/configuration/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/core/configuration/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/core/configuration/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/core/configuration/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/core/configuration/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/core/configuration/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/core/configuration/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/core/configuration/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/core/configuration/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/core/configuration/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/core/configuration/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/core/configuration/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="configuration.relations.isInstanceOf" datatype="html">
-        <source>Typologische Einordnung</source>
-        <target state="final">Typological classification</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/core/configuration/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="configuration.relations.hasInstance" datatype="html">
-        <source>Zugeordnete Funde</source>
-        <target state="final">Associated finds</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/core/configuration/app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
     </body>

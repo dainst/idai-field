@@ -18,7 +18,7 @@ const CRS = 'coordinateReferenceSystem';
 
 const constantProjectFields = [CRS].concat(Resource.CONSTANT_FIELDS);
 
-const union = compose(filter(isDefined), tsfunUnion);
+const union = compose(filter(isDefined) as any, tsfunUnion as any);
 const withoutConstantProjectFields = (resource: Resource) => constantProjectFields.reduce(withDissoc, resource);
 const withoutStaffAndCampaigns = compose(dissoc(STAFF), dissoc(CAMPAIGNS));
 

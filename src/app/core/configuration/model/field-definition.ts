@@ -8,7 +8,7 @@ export interface FieldDefinition {
 
     name: string;
     inputType: FieldDefinition.InputType,
-    label: string;
+    label?: string;
 
     group: string;
     description?: string;

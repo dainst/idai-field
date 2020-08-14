@@ -2,6 +2,7 @@ import {compose, flatten, flow, intersect, isDefined, isNot, isUndefinedOrEmpty,
     empty, pairWith, subtract, to, undefinedOrEmpty, throws, remove} from 'tsfun';
 import {lookup, map, forEach} from 'tsfun/associative';
 import {filter} from 'tsfun/collection';
+import {reduce as asyncReduce} from 'tsfun/async';
 import {Document, Relations} from 'idai-components-2';
 import {ImportErrors as E} from '../import-errors';
 import {HierarchicalRelations, PositionRelations, TimeRelations} from '../../../model/relation-constants';
@@ -60,9 +61,12 @@ export async function completeInverseRelations(importDocuments: Array<Document>,
         inverseRelationsMap,
         assertIsAllowedRelationDomainCategory);
 
+    const targetIdsMap = await asyncReduce(
+        getTargetIds(mergeMode, get, documentsLookup), {}, importDocuments);
+
     return await setInverseRelationsForDbResources(
         importDocuments,
-        getTargetIds(mergeMode, get, documentsLookup),
+        targetIdsMap,
         get,
         inverseRelationsMap,
         assertIsAllowedRelationDomainCategory,
@@ -70,10 +74,12 @@ export async function completeInverseRelations(importDocuments: Array<Document>,
 }
 
 
-function getTargetIds(mergeMode: boolean, get: (_: string) => Promise<Document>,
-                      documentsLookup: { [_: string]: Document },) {
+function getTargetIds(mergeMode: boolean,
+                      get: (_: string) => Promise<Document>,
+                      documentsLookup: { [_: string]: Document }) {
 
-    return async (document: Document): Promise<[ResourceId[], ResourceId[]]>  => {
+    return async (targetIdsMap: { [_: string]: [ResourceId[], ResourceId[]] },
+                  document: Document) => {
 
         let targetIds = targetIdsReferingToDbResources(document, documentsLookup);
         if (mergeMode) {
@@ -83,15 +89,17 @@ function getTargetIds(mergeMode: boolean, get: (_: string) => Promise<Document>,
             } catch {
                 throw 'FATAL: Existing version of document not found';
             }
-
-            return [
+            targetIdsMap[document.resource.id] = [
                 targetIds,
                 subtract<ResourceId>(targetIds)(
                     targetIdsReferingToDbResources(oldVersion, documentsLookup)
                 )
             ];
+        } else {
+            targetIdsMap[document.resource.id] =  [targetIds, []];
         }
-        return [targetIds, []];
+
+        return targetIdsMap;
     }
 }
 

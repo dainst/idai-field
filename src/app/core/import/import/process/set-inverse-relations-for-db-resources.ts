@@ -13,10 +13,10 @@ import {InverseRelationsMap} from '../../../configuration/inverse-relations-map'
 
 /**
  * @param importDocuments
- * @param getTargetIds a pair of id lists, where the first list's ids
  *   are of resources already in the db and referenced by the current version of the importDocument,
  *   and the second list's ids are resources already in the db and referenced by the version
  *   to be updated of importDocument, where only ids that are not in the first list are listed.
+ * @param targetIdsMap
  * @param get
  * @param inverseRelationsMap
  * @param assertIsAllowedRelationDomainCategory
@@ -27,7 +27,7 @@ import {InverseRelationsMap} from '../../../configuration/inverse-relations-map'
  */
 export async function setInverseRelationsForDbResources(
         importDocuments: Array<Document>,
-        getTargetIds: (document: Document) => Promise<[ResourceId[], ResourceId[]]>,
+        targetIdsMap: { [_: string]: [ResourceId[], ResourceId[]] },
         get: (_: string) => Promise<Document>,
         inverseRelationsMap: InverseRelationsMap,
         assertIsAllowedRelationDomainCategory: AssertIsAllowedRelationDomainType,
@@ -37,7 +37,7 @@ export async function setInverseRelationsForDbResources(
 
     async function getDocumentTargetDocsToUpdate(document: Document) {
 
-        const allTargetIds = await getTargetIds(document);
+        const allTargetIds = await targetIdsMap[document.resource.id];
         const currentAndOldTargetIds = union(allTargetIds);
         const [currentTargetIds, _] = allTargetIds;
 

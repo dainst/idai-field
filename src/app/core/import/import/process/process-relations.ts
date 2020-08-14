@@ -1,5 +1,22 @@
-import {and, Either, empty, isDefined, isNot, isUndefinedOrEmpty, on, sameset, to,
-    undefinedOrEmpty} from 'tsfun';
+import {
+    and, compose,
+    Either,
+    empty,
+    flatten,
+    flow,
+    isDefined,
+    isNot,
+    isUndefinedOrEmpty,
+    on,
+    Pair, remove,
+    sameset,
+    subtract,
+    to,
+    undefinedOrEmpty,
+    union
+} from 'tsfun';
+import {map} from 'tsfun/associative';
+import {reduce as asyncReduce, forEach as asyncForEach} from 'tsfun/async';
 import {Document, NewDocument, Relations} from 'idai-components-2';
 import {ImportValidator} from './import-validator';
 import {ImportErrors as E} from '../import-errors';
@@ -10,6 +27,10 @@ import {Get, Id, IdMap} from '../types';
 import {completeInverseRelations} from './complete-inverse-relations';
 import {ImportOptions} from '../import-documents';
 import {InverseRelationsMap} from '../../../configuration/inverse-relations-map';
+import {ResourceId} from '../../../constants';
+import {clone} from '../../../util/object-util';
+import {lookup} from 'tsfun/associative';
+import {makeDocumentsLookup} from '../utils';
 
 
 /**
@@ -111,9 +132,21 @@ export async function processRelations(documents: Array<Document>, validator: Im
 
     await validator.assertRelationsWellformedness(documents);
     await validator.assertLiesWithinCorrectness(documents.map(to('resource')));
+
+
+    const documentsLookup = makeDocumentsLookup(documents);
+
+    const targetIdsLookup = await asyncReduce(
+        getTargetIds(mergeMode, get, documentsLookup), {}, documents);
+    const targetDocumentsLookup = await asyncReduce(
+        getTargetDocuments(get), {}, targetIdsLookup);
+    const targetsLookup = map(targetIdsLookup, (ids) => {
+        return [ids[0], union(ids).map(lookup(targetDocumentsLookup))]
+    });
+
     return await completeInverseRelations(
             documents,
-            get,
+            targetsLookup as any,
             inverseRelationsMap,
             assertIsAllowedRelationDomainCategory_,
             mergeMode);
@@ -156,6 +189,9 @@ function prepareIsRecordedInRelation(documentsForUpdate: Array<NewDocument>, ope
 
 
 /**
+ * TODO review; perhaps move to its own function file
+ *
+ *
  * Sets RECORDED_IN relations in documents, as inferred from LIES_WITHIN.
  * Where a document is situated at the top level, i.e. directly below an operation,
  * the LIES_WITHIN entry gets deleted.
@@ -292,4 +328,65 @@ function initRecordedIn(document: NewDocument, operationId: Id) {
     if (!relations[RECORDED_IN].includes(operationId)) {
         relations[RECORDED_IN].push(operationId);
     }
+}
+
+
+function getTargetDocuments(get: (_: string) => Promise<Document>) {
+
+    return async (targetDocumentsMap: { [_: string]: Document },
+                  targetDocIdsPair: Pair<ResourceId[]>) => {
+
+        const targetDocIds = union(targetDocIdsPair);
+
+        await asyncForEach(
+            async (targetId: ResourceId) => {
+
+                if (!targetDocumentsMap[targetId]) try {
+                    targetDocumentsMap[targetId] = clone(await get(targetId));
+                } catch {
+                    throw [E.EXEC_MISSING_RELATION_TARGET, targetId];
+                }
+            })(targetDocIds); // TODO allow call variants for forEach
+        return targetDocumentsMap;
+    }
+}
+
+
+function getTargetIds(mergeMode: boolean,
+                      get: (_: string) => Promise<Document>,
+                      importDocumentsLookup: { [_: string]: Document }) {
+
+    return async (targetIdsMap: { [_: string]: [ResourceId[], ResourceId[]] },
+                  document: Document) => {
+
+        let targetIds = targetIdsReferingToDbResources(document, importDocumentsLookup);
+        if (mergeMode) {
+            let oldVersion;
+            try {
+                oldVersion = await get(document.resource.id);
+            } catch {
+                throw 'FATAL: Existing version of document not found';
+            }
+            targetIdsMap[document.resource.id] = [
+                targetIds,
+                subtract<ResourceId>(targetIds)(
+                    targetIdsReferingToDbResources(oldVersion, importDocumentsLookup)
+                )
+            ];
+        } else {
+            targetIdsMap[document.resource.id] =  [targetIds, []];
+        }
+
+        return targetIdsMap;
+    }
+}
+
+
+function targetIdsReferingToDbResources(document: Document, documentsLookup: { [_: string]: Document }) {
+
+    return flow(
+        document.resource.relations,
+        Object.values,
+        flatten(),
+        remove(compose(lookup(documentsLookup), isDefined)));
 }

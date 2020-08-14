@@ -21,12 +21,12 @@ import {InverseRelationsMap} from '../../../configuration/inverse-relations-map'
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export async function setInverseRelationsForDbResources(
+export function setInverseRelationsForDbResources(
         importDocuments: Array<Document>,
         targetsLookup: { [_: string]: [ResourceId[], Array<Document>] },
         inverseRelationsMap: InverseRelationsMap,
         assertIsAllowedRelationDomainCategory: AssertIsAllowedRelationDomainType,
-        unidirectionalRelations: string[]): Promise<Array<Document>> {
+        unidirectionalRelations: string[]): Array<Document> {
 
     function getDocumentTargetDocsToUpdate(document: Document) {
 

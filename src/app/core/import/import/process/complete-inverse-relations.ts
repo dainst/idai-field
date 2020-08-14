@@ -66,7 +66,7 @@ export function completeInverseRelations(importDocuments: Array<Document>,
                                          assertIsAllowedRelationDomainCategory: AssertIsAllowedRelationDomainType = () => {},
                                          mergeMode: boolean = false): Array<Document> {
 
-    const documentsLookup = makeDocumentsLookup(importDocuments); // TODO pass as param
+    const documentsLookup = makeDocumentsLookup(importDocuments); // TODO pass as param (instead importDocuments), then calculate importDocuments from that
 
     setInverseRelationsForImportResources(
         importDocuments,

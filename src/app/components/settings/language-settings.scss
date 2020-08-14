@@ -43,6 +43,11 @@ language-settings {
   #add-language {
     left: 50%;
     transform: translate(-20px, -21px);
+    z-index: 1001;
+
+    &.dragging {
+      pointer-events: none;
+    }
   }
 
   .remove-language {

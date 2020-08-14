@@ -3150,12 +3150,15 @@
       </trans-unit>
       <trans-unit id="settings.languages.info" datatype="html">
         <source>
-                            Sprachen können nach Priorität sortiert werden. Für blau unterlegte Sprachen ist eine
-                            übersetzte Benutzeroberfläche verfügbar.
+                            Sprachen können nach Priorität sortiert werden. Für fett gedruckte Sprachen ist eine
+                            übersetzte Benutzeroberfläche verfügbar. Darüber hinaus können für weitere Sprachen
+                            Übersetzungen von Kategorie- und Feldbezeichnungen sowie Wertelisten in der
+                            Projektkonfiguration hinterlegt sein.
                         </source>
         <target state="final">
-                            Languages can be sorted by priority. A translated user interface is available for languages
-                            highlighted in blue.
+                            Languages can be sorted by priority. A translated user interface is available for
+                            languages in bold. In addition, translations of category and field names as well as
+                            value lists may be available in the project configuration for other languages.
                         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
@@ -3171,7 +3174,7 @@
                         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
-          <context context-type="linenumber">36</context>
+          <context context-type="linenumber">38</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.userName.info" datatype="html">
@@ -3193,7 +3196,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
-          <context context-type="linenumber">45</context>
+          <context context-type="linenumber">47</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.synchronization" datatype="html">
@@ -3201,7 +3204,7 @@
         <target state="final">Synchronization</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
-          <context context-type="linenumber">58</context>
+          <context context-type="linenumber">60</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.synchronization.activate" datatype="html">
@@ -3209,7 +3212,7 @@
         <target state="final">Activate synchronization</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
-          <context context-type="linenumber">62</context>
+          <context context-type="linenumber">64</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.synchronization.address" datatype="html">
@@ -3217,7 +3220,7 @@
         <target state="final">Address</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
-          <context context-type="linenumber">77</context>
+          <context context-type="linenumber">79</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.synchronization.password" datatype="html">
@@ -3225,7 +3228,7 @@
         <target state="final">Password</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
-          <context context-type="linenumber">84</context>
+          <context context-type="linenumber">86</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.synchronization.ownAddress" datatype="html">
@@ -3233,7 +3236,7 @@
         <target state="final">Your address</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
-          <context context-type="linenumber">94</context>
+          <context context-type="linenumber">96</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.synchronization.hostPassword" datatype="html">
@@ -3241,7 +3244,7 @@
         <target state="final">Your password</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
-          <context context-type="linenumber">99</context>
+          <context context-type="linenumber">101</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.synchronization.info" datatype="html">
@@ -3253,7 +3256,7 @@
         <target state="final">This address and password need to be set in other iDAI.field clients in order to be able to synchronize data to this computer.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
-          <context context-type="linenumber">104</context>
+          <context context-type="linenumber">106</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.images" datatype="html">
@@ -3261,7 +3264,7 @@
         <target state="final">Images</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
-          <context context-type="linenumber">114</context>
+          <context context-type="linenumber">116</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.images.path" datatype="html">
@@ -3273,7 +3276,7 @@
                         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
-          <context context-type="linenumber">120</context>
+          <context context-type="linenumber">122</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.images.path.info" datatype="html">
@@ -3296,7 +3299,7 @@
                         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
-          <context context-type="linenumber">134</context>
+          <context context-type="linenumber">136</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.update" datatype="html">
@@ -3304,7 +3307,7 @@
         <target state="final">Update</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
-          <context context-type="linenumber">148</context>
+          <context context-type="linenumber">150</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.update.activate" datatype="html">
@@ -3312,7 +3315,7 @@
         <target state="final">Activate automatic check for updates</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
-          <context context-type="linenumber">152</context>
+          <context context-type="linenumber">154</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.addLanguage" datatype="html">
@@ -3322,10 +3325,6 @@
           <context context-type="sourcefile">src/app/components/settings/language-picker-modal.html</context>
           <context context-type="linenumber">2</context>
         </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/settings/language-settings.html</context>
-          <context context-type="linenumber">28</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="settings.removeLanguage" datatype="html">
         <source>Sprache entfernen</source>
@@ -3333,6 +3332,14 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/language-settings.html</context>
           <context context-type="linenumber">17</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="settings.addLanguag" datatype="html">
+        <source>Sprache hinzufügen</source>
+        <target state="final">Add language</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/settings/language-settings.html</context>
+          <context context-type="linenumber">28</context>
         </context-group>
       </trans-unit>
       <trans-unit id="matrix.view.noTrenchesWarning" datatype="html">

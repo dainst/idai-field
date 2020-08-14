@@ -119,10 +119,8 @@ async function preprocessDocuments(documents: Array<Document>,
         if (mergeMode) {
             if (!existingDocument) throw [E.UPDATE_TARGET_NOT_FOUND, document.resource.identifier];
 
-            // TODO do this in processDocuments
-            document._id = existingDocument._id;
+            document._id = existingDocument._id; // TODO remove
             document.resource.id = existingDocument.resource.id;
-            //
 
             mergeDocs[existingDocument.resource.id] = preprocess(existingDocument);
         } else if (existingDocument) {

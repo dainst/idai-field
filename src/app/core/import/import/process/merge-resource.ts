@@ -1,6 +1,7 @@
 import {dropRightWhile, includedIn, is, isArray, isNot, isObject, isAssociative, Map,
     Associative, isEmpty, isnt, flow, cond, dissoc} from 'tsfun';
 import {update, reduce, forEach} from 'tsfun/associative';
+import {filter} from 'tsfun/collection';
 import {NewResource, Resource} from 'idai-components-2';
 import {clone} from '../../../util/object-util';
 import {HierarchicalRelations} from '../../../model/relation-constants';
@@ -170,7 +171,7 @@ function overwriteOrDeleteProperties(target: Map<any>|undefined,
             } else if (isObject(source[property]) && target[property] === undefined) {
 
                 if (Object.values(source[property]).filter(isnt(null)).length > 0) {
-                    target[property] = source[property];
+                    target[property] = filter(source[property], isnt(null));
                 }
 
             } else target[property] = source[property];

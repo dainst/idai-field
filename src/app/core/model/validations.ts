@@ -456,7 +456,7 @@ export module Validations {
         return projectConfiguration.getFieldDefinitions(resource.category)
             .filter(field => field.inputType === inputType)
             .filter(field => {
-                return resource[field.name] !== undefined // TODO review
+                return resource[field.name] !== undefined
                     && isInvalid(resource[field.name]);
             }).map(field => field.name);
     }

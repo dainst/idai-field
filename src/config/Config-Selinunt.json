@@ -374,6 +374,17 @@
       "coatQuality": "Pottery-coatQuality-Selinunt",
       "period": "periods-Selinunt-1"
     },
+    "positionValuelists": {
+      "potteryDiameterExternal": "position-values-expansion-default",
+      "potteryDiameterInternal": "position-values-expansion-default",
+      "potteryThickness": "position-values-expansion-default",
+      "pottyDiameterHandle": "position-values-expansion-default",
+      "potteryDiameterFoot": "position-values-expansion-default",
+      "potteryDiameterBase": "position-values-expansion-default",
+      "potteryDiameterLid": "position-values-expansion-default",
+      "potteryHeight": "position-values-expansion-default",
+      "potteryWidth": "position-values-expansion-default"
+    },
     "fields": {
       "potteryProvenance": {
         "inputType": "radio"

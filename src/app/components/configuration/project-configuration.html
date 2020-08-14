@@ -1,7 +1,7 @@
 <div class="project-configuration row">
     <div class="col">
         <div class="row">
-            <div class="col-lg-3 sidebar">
+            <div class="col-2 sidebar">
                 <category-picker *ngIf="toplevelCategoriesArray"
                                  [toplevelCategoriesArray]="toplevelCategoriesArray"
                                  [selectedCategories]="[selectedCategory.name]"
@@ -10,7 +10,7 @@
                                  (onCategoryPicked)="selectCategory($event)"></category-picker>
             </div>
 
-            <div class="col">
+            <div class="col-10">
                 <div class="row" [class.custom-category]="!selectedCategory.libraryId">
                     <div class="col header header-left d-flex">
                         <category-icon size="41" category="{{selectedCategory.name}}"></category-icon>
@@ -43,7 +43,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="groups">
+                    <div class="col-2 groups">
                         <ul class="nav nav-pills flex-column">
                             <li *ngFor="let group of getGroups(selectedCategory)" class="nav flex-column">
                                 <a class="nav-link group-button"
@@ -56,7 +56,7 @@
                         </ul>
                     </div>
 
-                    <div class="col content" [class.shortened]="getCategoryDescription(selectedCategory)">
+                    <div class="col-10 content" [class.shortened]="getCategoryDescription(selectedCategory)">
                         <div *ngFor="let field of getVisibleFields(selectedCategory)"
                                 class="card"
                                 [class.bg-warning]="field.source === 'custom'">

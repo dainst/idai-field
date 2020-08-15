@@ -32,6 +32,7 @@ import {clone} from '../../../util/object-util';
 import {lookup} from 'tsfun/associative';
 import {makeDocumentsLookup} from '../utils';
 import {Lookup} from '../../../util/utils';
+import {makeLookups} from './make-lookups';
 
 
 /**
@@ -142,25 +143,6 @@ export async function processRelations(documents: Array<Document>, validator: Im
             inverseRelationsMap,
             assertIsAllowedRelationDomainCategory_,
             mergeMode);
-}
-
-
-async function makeLookups(documents: Array<Document>,
-                           get: (resourceId) => Promise<Document>,
-                           mergeMode: boolean)
-    : Promise<[Lookup<Document>, Lookup<[ResourceId[], Array<Document>]>]> {
-
-    const documentsLookup = makeDocumentsLookup(documents);
-
-    const targetIdsLookup = await asyncReduce(
-        getTargetIds(mergeMode, get, documentsLookup), {}, documentsLookup);
-    const targetDocumentsLookup = await asyncReduce(
-        getTargetDocuments(get), {}, targetIdsLookup);
-    const targetsLookup: Lookup<[ResourceId[], Array<Document>]> = map(targetIdsLookup, (ids) => {
-        return [ids[0], union(ids).map(lookup(targetDocumentsLookup))]
-    });
-
-    return [documentsLookup, targetsLookup];
 }
 
 
@@ -339,65 +321,4 @@ function initRecordedIn(document: NewDocument, operationId: Id) {
     if (!relations[RECORDED_IN].includes(operationId)) {
         relations[RECORDED_IN].push(operationId);
     }
-}
-
-
-function getTargetDocuments(get: (_: string) => Promise<Document>) {
-
-    return async (targetDocumentsMap: { [_: string]: Document },
-                  targetDocIdsPair: Pair<ResourceId[]>) => {
-
-        const targetDocIds = union(targetDocIdsPair);
-
-        await asyncForEach(
-            async (targetId: ResourceId) => {
-
-                if (!targetDocumentsMap[targetId]) try {
-                    targetDocumentsMap[targetId] = clone(await get(targetId));
-                } catch {
-                    throw [E.EXEC_MISSING_RELATION_TARGET, targetId];
-                }
-            })(targetDocIds); // TODO allow call variants for forEach
-        return targetDocumentsMap;
-    }
-}
-
-
-function getTargetIds(mergeMode: boolean,
-                      get: (_: string) => Promise<Document>,
-                      importDocumentsLookup: { [_: string]: Document }) {
-
-    return async (targetIdsMap: { [_: string]: [ResourceId[], ResourceId[]] },
-                  document: Document) => {
-
-        let targetIds = targetIdsReferingToDbResources(document, importDocumentsLookup);
-        if (mergeMode) {
-            let oldVersion;
-            try {
-                oldVersion = await get(document.resource.id);
-            } catch {
-                throw 'FATAL: Existing version of document not found';
-            }
-            targetIdsMap[document.resource.id] = [
-                targetIds,
-                subtract<ResourceId>(targetIds)(
-                    targetIdsReferingToDbResources(oldVersion, importDocumentsLookup)
-                )
-            ];
-        } else {
-            targetIdsMap[document.resource.id] =  [targetIds, []];
-        }
-
-        return targetIdsMap;
-    }
-}
-
-
-function targetIdsReferingToDbResources(document: Document, documentsLookup: { [_: string]: Document }) {
-
-    return flow(
-        document.resource.relations,
-        Object.values,
-        flatten(),
-        remove(compose(lookup(documentsLookup), isDefined)));
 }

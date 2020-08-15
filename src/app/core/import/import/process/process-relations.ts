@@ -114,7 +114,7 @@ export async function processRelations(documents: Array<Document>, validator: Im
                                        inverseRelationsMap: InverseRelationsMap,
                                        { mergeMode, permitDeletions, operationId }: ImportOptions) {
 
-    const assertIsAllowedRelationDomainCategory_ = (_: any, __: any, ___: any, ____: any) =>
+    const assertIsAllowedRelationDomainCategory_ = (_: any, __: any, ___: any, ____: any) => // TODO review
         validator.assertIsAllowedRelationDomainCategory(_, __, ___, ____);
 
     const [documentsLookup, targetsLookup] = await makeLookups(documents, get, mergeMode);
@@ -127,11 +127,11 @@ export async function processRelations(documents: Array<Document>, validator: Im
     validator.assertLiesWithinCorrectness(documents.map(to('resource')));
 
     return completeInverseRelations(
-            documentsLookup,
-            targetsLookup as any,
-            inverseRelationsMap,
-            assertIsAllowedRelationDomainCategory_,
-            mergeMode);
+        documentsLookup,
+        targetsLookup as any,
+        inverseRelationsMap,
+        assertIsAllowedRelationDomainCategory_,
+        mergeMode);
 }
 
 

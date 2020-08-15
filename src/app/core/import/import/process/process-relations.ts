@@ -52,7 +52,7 @@ import RECORDED_IN = HierarchicalRelations.RECORDEDIN;
  */
 export async function processRelations(documents: Array<Document>, validator: ImportValidator,
                                        operationCategoryNames: string[],
-                                       get: Get, // TODO make function synchronous
+                                       get: Get,
                                        inverseRelationsMap: InverseRelationsMap,
                                        { mergeMode, operationId }: ImportOptions) {
 
@@ -61,7 +61,6 @@ export async function processRelations(documents: Array<Document>, validator: Im
 
     const [documentsLookup, targetsLookup] = await makeLookups(documents, get, mergeMode);
 
-    // TODO make synchronous
     await prepareIsRecordedIns(documents, validator, operationCategoryNames, get,
         mergeMode === true, operationId ? operationId : '');
 

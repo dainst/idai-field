@@ -132,12 +132,12 @@ export async function processRelations(documents: Array<Document>, validator: Im
     await prepareIsRecordedIns(documents, validator, operationCategoryNames, get,
         mergeMode === true, operationId ? operationId : '');
 
-    await validator.assertRelationsWellformedness(documents);
-    await validator.assertLiesWithinCorrectness(documents.map(to('resource')));
+    validator.assertRelationsWellformedness(documents);
+    validator.assertLiesWithinCorrectness(documents.map(to('resource')));
 
     const [documentsLookup, targetsLookup] = await makeLookups(documents, get, mergeMode);
 
-    return await completeInverseRelations(
+    return completeInverseRelations(
             documentsLookup,
             targetsLookup as any,
             inverseRelationsMap,

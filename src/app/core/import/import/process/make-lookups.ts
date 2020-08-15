@@ -11,8 +11,8 @@ import {ImportErrors as E} from '../import-errors';
 
 
 export async function makeLookups(documents: Array<Document>,
-                           get: (resourceId) => Promise<Document>,
-                           mergeMode: boolean)
+                                  get: (resourceId) => Promise<Document>,
+                                  mergeMode: boolean)
     : Promise<[Lookup<Document>, Lookup<[ResourceId[], Array<Document>]>]> {
 
     const documentsLookup = makeDocumentsLookup(documents);

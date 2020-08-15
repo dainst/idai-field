@@ -6,6 +6,7 @@ import {assertInSameOperationWith, unionOfDocuments} from '../utils';
 import {AssertIsAllowedRelationDomainType} from '../types';
 import {determineDocsToUpdate} from '../../../model/determine-docs-to-update';
 import {InverseRelationsMap} from '../../../configuration/inverse-relations-map';
+import {Lookup} from '../../../util/utils';
 
 
 /**
@@ -23,7 +24,7 @@ import {InverseRelationsMap} from '../../../configuration/inverse-relations-map'
  */
 export function setInverseRelationsForDbResources(
         importDocuments: Array<Document>,
-        targetsLookup: { [_: string]: [ResourceId[], Array<Document>] },
+        targetsLookup: Lookup<[ResourceId[], Array<Document>]>,
         inverseRelationsMap: InverseRelationsMap,
         assertIsAllowedRelationDomainCategory: AssertIsAllowedRelationDomainType,
         unidirectionalRelations: string[]): Array<Document> {

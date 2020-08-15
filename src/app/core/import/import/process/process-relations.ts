@@ -31,6 +31,7 @@ import {ResourceId} from '../../../constants';
 import {clone} from '../../../util/object-util';
 import {lookup} from 'tsfun/associative';
 import {makeDocumentsLookup} from '../utils';
+import {Lookup} from '../../../util/utils';
 
 
 /**
@@ -120,7 +121,7 @@ import {makeDocumentsLookup} from '../utils';
  */
 export async function processRelations(documents: Array<Document>, validator: ImportValidator,
                                        operationCategoryNames: string[],
-                                       get: Get,
+                                       get: Get, // TODO make function synchronous
                                        inverseRelationsMap: InverseRelationsMap,
                                        { mergeMode, permitDeletions, operationId }: ImportOptions) {
 
@@ -133,23 +134,33 @@ export async function processRelations(documents: Array<Document>, validator: Im
     await validator.assertRelationsWellformedness(documents);
     await validator.assertLiesWithinCorrectness(documents.map(to('resource')));
 
-
-    const documentsLookup = makeDocumentsLookup(documents);
-
-    const targetIdsLookup = await asyncReduce(
-        getTargetIds(mergeMode, get, documentsLookup), {}, documents);
-    const targetDocumentsLookup = await asyncReduce(
-        getTargetDocuments(get), {}, targetIdsLookup);
-    const targetsLookup = map(targetIdsLookup, (ids) => {
-        return [ids[0], union(ids).map(lookup(targetDocumentsLookup))]
-    });
+    const [documentsLookup, targetsLookup] = await makeLookups(documents, get, mergeMode);
 
     return await completeInverseRelations(
-            documents,
+            documentsLookup,
             targetsLookup as any,
             inverseRelationsMap,
             assertIsAllowedRelationDomainCategory_,
             mergeMode);
+}
+
+
+async function makeLookups(documents: Array<Document>,
+                           get: (resourceId) => Promise<Document>,
+                           mergeMode: boolean)
+    : Promise<[Lookup<Document>, Lookup<[ResourceId[], Array<Document>]>]> {
+
+    const documentsLookup = makeDocumentsLookup(documents);
+
+    const targetIdsLookup = await asyncReduce(
+        getTargetIds(mergeMode, get, documentsLookup), {}, documentsLookup);
+    const targetDocumentsLookup = await asyncReduce(
+        getTargetDocuments(get), {}, targetIdsLookup);
+    const targetsLookup: Lookup<[ResourceId[], Array<Document>]> = map(targetIdsLookup, (ids) => {
+        return [ids[0], union(ids).map(lookup(targetDocumentsLookup))]
+    });
+
+    return [documentsLookup, targetsLookup];
 }
 
 

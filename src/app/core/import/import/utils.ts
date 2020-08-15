@@ -8,12 +8,13 @@ import RECORDED_IN = HierarchicalRelations.RECORDEDIN;
 import {Id, Identifier} from './types';
 import {DocumentDatastore} from '../../datastore/document-datastore';
 import {makeLookup} from '../../util/transformers';
+import {Lookup} from '../../util/utils';
 
 
 export const unionOfDocuments = (docs: Array<Array<Document>>) => union(on('resource.id'), docs);
 
 
-export const makeDocumentsLookup = makeLookup('resource.id');
+export const makeDocumentsLookup: (ds: Array<Document>) => Lookup<Document> = makeLookup('resource.id');
 
 
 export function assertLegalCombination(mergeMode: boolean|undefined, operationId: string|undefined) {

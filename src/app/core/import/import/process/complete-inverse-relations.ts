@@ -32,6 +32,7 @@ import IS_AFTER = TimeRelations.AFTER;
 import IS_BEFORE = TimeRelations.BEFORE;
 import IS_EQUIVALENT_TO = PositionRelations.EQUIVALENT;
 import LIES_WITHIN = HierarchicalRelations.LIESWITHIN;
+import {Lookup} from '../../../util/utils';
 
 
 /**
@@ -39,12 +40,12 @@ import LIES_WITHIN = HierarchicalRelations.LIESWITHIN;
  * Between import resources, it validates the relations.
  * Between import resources and db resources, it adds the inverses.
  *
+ * @param documentsLookup
  * @param targetsLookup
  * @param inverseRelationsMap
  * @param assertIsAllowedRelationDomainCategory
  * @param mergeMode
  *
- * @param importDocuments If one of these references another from the import file, the validity of the relations gets checked
  *   for contradictory relations and missing inverses are added.
  *
  * @param mergeMode
@@ -60,13 +61,13 @@ import LIES_WITHIN = HierarchicalRelations.LIESWITHIN;
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-export function completeInverseRelations(importDocuments: Array<Document>,
-                                         targetsLookup: { [_: string]: [ResourceId[], Array<Document>] },
+export function completeInverseRelations(documentsLookup: Lookup<Document>,
+                                         targetsLookup: Lookup<[ResourceId[], Array<Document>]>,
                                          inverseRelationsMap: InverseRelationsMap,
                                          assertIsAllowedRelationDomainCategory: AssertIsAllowedRelationDomainType = () => {},
                                          mergeMode: boolean = false): Array<Document> {
 
-    const documentsLookup = makeDocumentsLookup(importDocuments); // TODO pass as param (instead importDocuments), then calculate importDocuments from that
+    const importDocuments = Object.values(documentsLookup);
 
     setInverseRelationsForImportResources(
         importDocuments,

@@ -1,38 +1,26 @@
 import {
-    and, compose,
+    and,
     Either,
     empty,
-    flatten,
-    flow,
     isDefined,
     isNot,
     isUndefinedOrEmpty,
     on,
-    Pair, remove,
     sameset,
-    subtract,
     to,
-    undefinedOrEmpty,
-    union
+    undefinedOrEmpty
 } from 'tsfun';
-import {map} from 'tsfun/associative';
-import {reduce as asyncReduce, forEach as asyncForEach} from 'tsfun/async';
 import {Document, NewDocument, Relations} from 'idai-components-2';
 import {ImportValidator} from './import-validator';
 import {ImportErrors as E} from '../import-errors';
 import {HierarchicalRelations} from '../../../model/relation-constants';
-import LIES_WITHIN = HierarchicalRelations.LIESWITHIN;
-import RECORDED_IN = HierarchicalRelations.RECORDEDIN;
 import {Get, Id, IdMap} from '../types';
 import {completeInverseRelations} from './complete-inverse-relations';
 import {ImportOptions} from '../import-documents';
 import {InverseRelationsMap} from '../../../configuration/inverse-relations-map';
-import {ResourceId} from '../../../constants';
-import {clone} from '../../../util/object-util';
-import {lookup} from 'tsfun/associative';
-import {makeDocumentsLookup} from '../utils';
-import {Lookup} from '../../../util/utils';
 import {makeLookups} from './make-lookups';
+import LIES_WITHIN = HierarchicalRelations.LIESWITHIN;
+import RECORDED_IN = HierarchicalRelations.RECORDEDIN;
 
 
 /**

@@ -15,23 +15,20 @@ import {filter} from 'tsfun/collection';
 import {Document, Relations} from 'idai-components-2';
 import {ImportErrors as E} from '../import-errors';
 import {
-    HierarchicalRelations,
     PositionRelations,
-    TimeRelations
+    TimeRelations, UNIDIRECTIONAL_RELATIONS
 } from '../../../model/relation-constants';
 import {setInverseRelationsForDbResources} from './set-inverse-relations-for-db-resources';
-import {assertInSameOperationWith, makeDocumentsLookup} from '../utils';
+import {assertInSameOperationWith} from '../utils';
 import {AssertIsAllowedRelationDomainType} from '../types';
 import {ResourceId} from '../../../constants';
 import {InverseRelationsMap} from '../../../configuration/inverse-relations-map';
 import IS_BELOW = PositionRelations.BELOW;
 import IS_ABOVE = PositionRelations.ABOVE;
 import IS_CONTEMPORARY_WITH = TimeRelations.CONTEMPORARY;
-import RECORDED_IN = HierarchicalRelations.RECORDEDIN;
 import IS_AFTER = TimeRelations.AFTER;
 import IS_BEFORE = TimeRelations.BEFORE;
 import IS_EQUIVALENT_TO = PositionRelations.EQUIVALENT;
-import LIES_WITHIN = HierarchicalRelations.LIESWITHIN;
 import {Lookup} from '../../../util/utils';
 
 
@@ -82,7 +79,7 @@ export function completeInverseRelations(documentsLookup: Lookup<Document>,
         targetsLookup as any,
         inverseRelationsMap,
         assertIsAllowedRelationDomainCategory,
-        [LIES_WITHIN, RECORDED_IN]); // TODO review
+        UNIDIRECTIONAL_RELATIONS);
 }
 
 

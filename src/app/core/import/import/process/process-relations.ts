@@ -129,13 +129,14 @@ export async function processRelations(documents: Array<Document>, validator: Im
     const assertIsAllowedRelationDomainCategory_ = (_: any, __: any, ___: any, ____: any) =>
         validator.assertIsAllowedRelationDomainCategory(_, __, ___, ____);
 
+    const [documentsLookup, targetsLookup] = await makeLookups(documents, get, mergeMode);
+
+    // TODO make synchronous
     await prepareIsRecordedIns(documents, validator, operationCategoryNames, get,
         mergeMode === true, operationId ? operationId : '');
 
     validator.assertRelationsWellformedness(documents);
     validator.assertLiesWithinCorrectness(documents.map(to('resource')));
-
-    const [documentsLookup, targetsLookup] = await makeLookups(documents, get, mergeMode);
 
     return completeInverseRelations(
             documentsLookup,

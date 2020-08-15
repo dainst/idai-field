@@ -37,8 +37,8 @@ import {Lookup} from '../../../util/utils';
 
 /**
  * Iterates over all relations (including obsolete relations) of the given resources.
- * Between import resources, it validates the relations.
- * Between import resources and db resources, it adds the inverses.
+ * Between import resources, it only validates the relations while
+ * between import resources and db resources it also adds the inverses.
  *
  * @param documentsLookup
  * @param targetsLookup
@@ -50,10 +50,12 @@ import {Lookup} from '../../../util/utils';
  *
  * @param mergeMode
  *
- * @SIDE_EFFECTS: if an inverse of one of importDocuments is not set, it gets completed automatically.
+ * @SIDE_EFFECTS: if an inverse of one of importDocuments is not set,
+ *   it gets completed automatically.
  *   The document from importDocuments then gets modified in place.
  *
- * @returns the target importDocuments which should be updated. Only those fetched from the db are included. If a target document comes from
+ * @returns the target importDocuments which should be updated.
+ *   Only those fetched from the db are included. If a target document comes from
  *   the import file itself, <code>importDocuments</code> gets modified in place accordingly.
  *
  * @throws ImportErrors.* (see ./process.ts)

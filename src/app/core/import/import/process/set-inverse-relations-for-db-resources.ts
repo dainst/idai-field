@@ -1,11 +1,12 @@
-import {is, on, union, isNot, includedIn} from 'tsfun';
-import {forEach, lookup} from 'tsfun/associative';
+import {is, on, isNot, includedIn} from 'tsfun';
+import {forEach} from 'tsfun/associative';
 import {Document} from 'idai-components-2';
 import {ResourceId} from '../../../constants';
 import {assertInSameOperationWith, unionOfDocuments} from '../utils';
 import {AssertIsAllowedRelationDomainType} from '../types';
 import {determineDocsToUpdate} from '../../../model/determine-docs-to-update';
 import {InverseRelationsMap} from '../../../configuration/inverse-relations-map';
+import {Lookup} from '../../../util/utils';
 
 
 /**
@@ -13,8 +14,7 @@ import {InverseRelationsMap} from '../../../configuration/inverse-relations-map'
  *   are of resources already in the db and referenced by the current version of the importDocument,
  *   and the second list's ids are resources already in the db and referenced by the version
  *   to be updated of importDocument, where only ids that are not in the first list are listed.
- * @param targetIdsLookup
- * @param targetDocumentsLookup
+ * @param targetsLookup
  * @param inverseRelationsMap
  * @param assertIsAllowedRelationDomainCategory
  * @param unidirectionalRelations names of relations for which not inverses get set in the db.
@@ -22,21 +22,16 @@ import {InverseRelationsMap} from '../../../configuration/inverse-relations-map'
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export async function setInverseRelationsForDbResources(
+export function setInverseRelationsForDbResources(
         importDocuments: Array<Document>,
-        targetIdsLookup: { [_: string]: [ResourceId[], ResourceId[]] },
-        targetDocumentsLookup: { [_: string]: Document },
+        targetsLookup: Lookup<[ResourceId[], Array<Document>]>,
         inverseRelationsMap: InverseRelationsMap,
         assertIsAllowedRelationDomainCategory: AssertIsAllowedRelationDomainType,
-        unidirectionalRelations: string[]): Promise<Array<Document>> {
+        unidirectionalRelations: string[]): Array<Document> {
 
     function getDocumentTargetDocsToUpdate(document: Document) {
 
-        const allTargetIds = targetIdsLookup[document.resource.id];
-        const currentAndOldTargetIds = union(allTargetIds);
-        const [currentTargetIds, _] = allTargetIds;
-
-        const targetDocuments = currentAndOldTargetIds.map(lookup(targetDocumentsLookup));
+        const [currentTargetIds, targetDocuments] = targetsLookup[document.resource.id];
 
         assertCategoryIsInRange(document, makeIdCategoryMap(currentTargetIds, targetDocuments), assertIsAllowedRelationDomainCategory);
         const copyOfTargetDocuments = getRidOfUnnecessaryTargetDocs(document, targetDocuments, unidirectionalRelations);

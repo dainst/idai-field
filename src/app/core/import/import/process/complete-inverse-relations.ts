@@ -1,48 +1,58 @@
 import {
-    compose, flatten, flow, intersect, isDefined, isNot, isUndefinedOrEmpty,
-    empty, pairWith, subtract, to, undefinedOrEmpty, throws, remove, union, Pair
+    empty,
+    flow,
+    intersect,
+    isDefined,
+    isNot,
+    isUndefinedOrEmpty,
+    pairWith,
+    throws,
+    to,
+    undefinedOrEmpty
 } from 'tsfun';
-import {lookup, map, forEach} from 'tsfun/associative';
+import {forEach, lookup, map} from 'tsfun/associative';
 import {filter} from 'tsfun/collection';
-import {reduce as asyncReduce, forEach as asyncForEach} from 'tsfun/async';
 import {Document, Relations} from 'idai-components-2';
 import {ImportErrors as E} from '../import-errors';
-import {HierarchicalRelations, PositionRelations, TimeRelations} from '../../../model/relation-constants';
+import {
+    PositionRelations,
+    TimeRelations, UNIDIRECTIONAL_RELATIONS
+} from '../../../model/relation-constants';
 import {setInverseRelationsForDbResources} from './set-inverse-relations-for-db-resources';
-import {assertInSameOperationWith, makeDocumentsLookup} from '../utils';
+import {assertInSameOperationWith} from '../utils';
+import {AssertIsAllowedRelationDomainType} from '../types';
+import {ResourceId} from '../../../constants';
+import {InverseRelationsMap} from '../../../configuration/inverse-relations-map';
 import IS_BELOW = PositionRelations.BELOW;
 import IS_ABOVE = PositionRelations.ABOVE;
 import IS_CONTEMPORARY_WITH = TimeRelations.CONTEMPORARY;
-import RECORDED_IN = HierarchicalRelations.RECORDEDIN;
-import {AssertIsAllowedRelationDomainType} from '../types';
 import IS_AFTER = TimeRelations.AFTER;
 import IS_BEFORE = TimeRelations.BEFORE;
 import IS_EQUIVALENT_TO = PositionRelations.EQUIVALENT;
-import {ResourceId} from '../../../constants';
-import LIES_WITHIN = HierarchicalRelations.LIESWITHIN;
-import {InverseRelationsMap} from '../../../configuration/inverse-relations-map';
-import {clone} from '../../../util/object-util';
+import {Lookup} from '../../../util/utils';
 
 
 /**
  * Iterates over all relations (including obsolete relations) of the given resources.
- * Between import resources, it validates the relations.
- * Between import resources and db resources, it adds the inverses.
+ * Between import resources, it only validates the relations while
+ * between import resources and db resources it also adds the inverses.
  *
- * @param get
+ * @param documentsLookup
+ * @param targetsLookup
  * @param inverseRelationsMap
  * @param assertIsAllowedRelationDomainCategory
  * @param mergeMode
  *
- * @param importDocuments If one of these references another from the import file, the validity of the relations gets checked
  *   for contradictory relations and missing inverses are added.
  *
  * @param mergeMode
  *
- * @SIDE_EFFECTS: if an inverse of one of importDocuments is not set, it gets completed automatically.
+ * @SIDE_EFFECTS: if an inverse of one of importDocuments is not set,
+ *   it gets completed automatically.
  *   The document from importDocuments then gets modified in place.
  *
- * @returns the target importDocuments which should be updated. Only those fetched from the db are included. If a target document comes from
+ * @returns the target importDocuments which should be updated.
+ *   Only those fetched from the db are included. If a target document comes from
  *   the import file itself, <code>importDocuments</code> gets modified in place accordingly.
  *
  * @throws ImportErrors.* (see ./process.ts)
@@ -50,13 +60,13 @@ import {clone} from '../../../util/object-util';
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-export async function completeInverseRelations(importDocuments: Array<Document>,
-                                               get: (_: string) => Promise<Document>,
-                                               inverseRelationsMap: InverseRelationsMap,
-                                               assertIsAllowedRelationDomainCategory: AssertIsAllowedRelationDomainType = () => {},
-                                               mergeMode: boolean = false): Promise<Array<Document>> {
+export function completeInverseRelations(documentsLookup: Lookup<Document>,
+                                         targetsLookup: Lookup<[ResourceId[], Array<Document>]>,
+                                         inverseRelationsMap: InverseRelationsMap,
+                                         assertIsAllowedRelationDomainCategory: AssertIsAllowedRelationDomainType = () => {},
+                                         mergeMode: boolean = false): Array<Document> {
 
-    const documentsLookup = makeDocumentsLookup(importDocuments);
+    const importDocuments = Object.values(documentsLookup);
 
     setInverseRelationsForImportResources(
         importDocuments,
@@ -64,83 +74,12 @@ export async function completeInverseRelations(importDocuments: Array<Document>,
         inverseRelationsMap,
         assertIsAllowedRelationDomainCategory);
 
-    // TODO pull out this code to make completeInverseRelations synchronous
-    const targetIdsLookup = await asyncReduce(
-        getTargetIds(mergeMode, get, documentsLookup), {}, importDocuments);
-
-    const targetDocumentsLookup = await asyncReduce(
-        getTargetDocuments(get), {}, targetIdsLookup
-    )
-    //
-
     return setInverseRelationsForDbResources(
         importDocuments,
-        targetIdsLookup,
-        targetDocumentsLookup,
+        targetsLookup as any,
         inverseRelationsMap,
         assertIsAllowedRelationDomainCategory,
-        [LIES_WITHIN, RECORDED_IN]); // TODO review
-}
-
-
-function getTargetDocuments(get: (_: string) => Promise<Document>) {
-
-    return async (targetDocumentsMap: { [_: string]: Document },
-                  targetDocIdsPair: Pair<ResourceId[]>) => {
-
-        const targetDocIds = union(targetDocIdsPair);
-
-        await asyncForEach(
-            async (targetId: ResourceId) => {
-
-            if (!targetDocumentsMap[targetId]) try {
-                targetDocumentsMap[targetId] = clone(await get(targetId));
-            } catch {
-                throw [E.EXEC_MISSING_RELATION_TARGET, targetId];
-            }
-        })(targetDocIds); // TODO allow call variants for forEach
-        return targetDocumentsMap;
-    }
-}
-
-
-function getTargetIds(mergeMode: boolean,
-                      get: (_: string) => Promise<Document>,
-                      documentsLookup: { [_: string]: Document }) {
-
-    return async (targetIdsMap: { [_: string]: [ResourceId[], ResourceId[]] },
-                  document: Document) => {
-
-        let targetIds = targetIdsReferingToDbResources(document, documentsLookup);
-        if (mergeMode) {
-            let oldVersion;
-            try {
-                oldVersion = await get(document.resource.id);
-            } catch {
-                throw 'FATAL: Existing version of document not found';
-            }
-            targetIdsMap[document.resource.id] = [
-                targetIds,
-                subtract<ResourceId>(targetIds)(
-                    targetIdsReferingToDbResources(oldVersion, documentsLookup)
-                )
-            ];
-        } else {
-            targetIdsMap[document.resource.id] =  [targetIds, []];
-        }
-
-        return targetIdsMap;
-    }
-}
-
-
-function targetIdsReferingToDbResources(document: Document, documentsLookup: { [_: string]: Document }) {
-
-    return flow(
-        document.resource.relations,
-        Object.values,
-        flatten(),
-        remove(compose(lookup(documentsLookup), isDefined)));
+        UNIDIRECTIONAL_RELATIONS);
 }
 
 

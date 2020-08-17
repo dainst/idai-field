@@ -9,6 +9,9 @@ import {assocReduce} from './assoc-reduce';
  * @author Daniel de Oliveira
  */
 
+export type Lookup<T> = { [_: string]: T};
+
+
 export function typeOf(v: any) { return typeof v }
 
 

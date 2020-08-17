@@ -51,7 +51,7 @@ export class ImportValidator extends Validator {
     }
 
 
-    public async assertLiesWithinCorrectness(resources: Array<Resource>) {
+    public assertLiesWithinCorrectness(resources: Array<Resource>) {
 
         for (const resource of resources) {
 

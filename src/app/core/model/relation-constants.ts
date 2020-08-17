@@ -72,3 +72,6 @@ export module ImageRelations {
     export const ISDEPICTEDIN = 'isDepictedIn';
     export const ALL = [DEPICTS, ISDEPICTEDIN];
 }
+
+
+export const UNIDIRECTIONAL_RELATIONS = HierarchicalRelations.ALL;

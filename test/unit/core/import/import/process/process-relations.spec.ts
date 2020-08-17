@@ -3,7 +3,10 @@ import {HierarchicalRelations} from '../../../../../../src/app/core/model/relati
 import LIES_WITHIN = HierarchicalRelations.LIESWITHIN;
 import RECORDED_IN = HierarchicalRelations.RECORDEDIN;
 import {createMockValidator, d} from '../helper';
-import {ImportErrors as E} from '../../../../../../src/app/core/import/import/import-errors';
+import {
+    ImportErrors,
+    ImportErrors as E
+} from '../../../../../../src/app/core/import/import/import-errors';
 
 
 describe('processRelations', () => {
@@ -149,7 +152,7 @@ describe('processRelations', () => {
             d('nf1', 'Feature', 'newFeature', { liesWithin: ['ef1']})
         ]
 
-        const result = await processRelations(documents,
+        await processRelations(documents,
             validator, operationCategoryNames, get, relationInverses,
             {});
 
@@ -240,7 +243,7 @@ describe('processRelations', () => {
             d('nt1', 'Trench', 'one')
         ];
 
-        const result = await processRelations(documents, validator, operationCategoryNames, get, relationInverses, {});
+        await processRelations(documents, validator, operationCategoryNames, get, relationInverses, {});
 
         const resource = documents[0].resource;
         expect(resource.identifier).toBe('three');
@@ -269,7 +272,7 @@ describe('processRelations', () => {
         const documents = [
             d('nf1', 'Feature', 'one')
         ];
-        const result = await processRelations(documents, validator, operationCategoryNames, get, relationInverses, { operationId: 'et1' });
+        await processRelations(documents, validator, operationCategoryNames, get, relationInverses, { operationId: 'et1' });
 
         const resource = documents[0].resource;
         expect(resource.relations[RECORDED_IN][0]).toBe('et1');
@@ -404,7 +407,7 @@ describe('processRelations', () => {
             fail();
 
         } catch (err) {
-            expect(err).not.toBeUndefined(); // TODO review err, seems not to be user-displayable
+            expect(err[0]).toBe(ImportErrors.MISSING_RELATION_TARGET);
         }
         done();
     });

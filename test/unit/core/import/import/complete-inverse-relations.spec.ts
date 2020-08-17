@@ -160,14 +160,6 @@ describe('completeInverseRelations', () => {
         expect(documents.length).toBe(1);
         expect(documents[0].resource.id).toBe('2');
         expect(documents[0].resource.relations[IS_ABOVE][0]).toBe('1');
-
-
-
-
-        // TODO review; i think this can be thrown away, the protection against modification was done supposedly by the code which is about to be pulled up now
-        // expect(doc2.resource.relations[IS_ABOVE]).toBeUndefined(); // dont touch original (cached instance in production setting
-
-
     });
 
 

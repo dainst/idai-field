@@ -1,5 +1,8 @@
 import {processRelations} from '../../../../../../src/app/core/import/import/process/process-relations';
-import {HierarchicalRelations} from '../../../../../../src/app/core/model/relation-constants';
+import {
+    HierarchicalRelations,
+    PositionRelations
+} from '../../../../../../src/app/core/model/relation-constants';
 import LIES_WITHIN = HierarchicalRelations.LIESWITHIN;
 import RECORDED_IN = HierarchicalRelations.RECORDEDIN;
 import {createMockValidator, d} from '../helper';
@@ -477,6 +480,21 @@ describe('processRelations', () => {
             fail();
         } catch (err) {
             expect(err[0]).toEqual(E.NO_PARENT_ASSIGNED);
+        }
+        done();
+    });
+
+
+    it('inverse relation not found', async done => {
+
+        const doc = d('nf1', 'Feature', 'one');
+        doc.resource.relations[PositionRelations.BELOW] = ['17'];
+
+        try {
+            await processRelations([doc], validator, operationCategoryNames, get, relationInverses, {});
+            fail();
+        } catch (errWithParams) {
+            expect(errWithParams[0]).toEqual(E.MISSING_RELATION_TARGET)
         }
         done();
     });

@@ -571,23 +571,6 @@ describe('completeInverseRelations', () => {
     });
 
 
-    // TODO review this is supposedly done by the code about to get pulled up
-    xit('inverse relation not found', () => {
-
-        const targetsLookup: any = {
-            '1': [[], []],
-        };
-
-        doc1.resource.relations[IS_BELOW] = ['17'];
-        try {
-            completeInverseRelations(makeDocumentsLookup([doc1 as any]), targetsLookup, inverseRelations);
-            fail();
-        } catch (errWithParams) {
-            expect(errWithParams[0]).toEqual(E.MISSING_RELATION_TARGET)
-        }
-    });
-
-
     async function expectBadInterrelation(docs, err2, targetsLookup) { // TODO review all usages
 
         try {

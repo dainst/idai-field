@@ -36,6 +36,6 @@ export class MenuService {
 
     public static setContext(context: MenuContext) {
 
-        remote.getGlobal('setMenuContext')(context);
+        if (remote) remote.getGlobal('setMenuContext')(context);
     }
 }

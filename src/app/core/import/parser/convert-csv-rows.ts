@@ -226,6 +226,12 @@ function getRows(content: string, separator: string): Field[][] {
                     lastCharacter = 'linebreak';
                 }
                 break;
+            case '\u200B':
+            case '\u200C':
+            case '\u200D':
+            case '\uFEFF':
+                // Ignore zero-width characters
+                break;
             default:
                 if (lastCharacter === 'quote') inQuotes = !inQuotes;
                 lastCharacter = 'other';

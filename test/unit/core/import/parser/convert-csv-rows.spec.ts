@@ -274,4 +274,19 @@ describe('convertCsvRows', () => {
             expect(expected).toEqual([ParserErrors.CSV_HEADING_EMPTY_ENTRY]);
         }
     });
+
+
+    it('ignore zero-width characters', () => {
+
+        const struct = convertCsvRows(',')(
+            '\uFEFFa\n' +
+            '\u200BValue 1\n' +
+            '\u200CValue 2\n' +
+            '\u200DValue 3');
+
+        expect(struct.length).toBe(3);
+        expect(struct[0]['a']).toBe('Value 1');
+        expect(struct[1]['a']).toBe('Value 2');
+        expect(struct[2]['a']).toBe('Value 3');
+    });
 });

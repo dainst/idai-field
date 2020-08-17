@@ -54,7 +54,7 @@ export async function processRelations(documents: Array<Document>, validator: Im
                                        inverseRelationsMap: InverseRelationsMap,
                                        { mergeMode, operationId }: ImportOptions) {
 
-    const assertIsAllowedRelationDomainCategory_ = (_: any, __: any, ___: any, ____: any) => // TODO review
+    const assertIsAllowedRelationDomainCategory_ = (_: any, __: any, ___: any, ____: any) =>
         validator.assertIsAllowedRelationDomainCategory(_, __, ___, ____);
 
     const [documentsLookup, targetsLookup] = await makeLookups(documents, get, mergeMode);

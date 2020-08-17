@@ -9,6 +9,7 @@ import {ProjectNameValidator} from '../../core/model/project-name-validator';
 import {TabManager} from '../../core/tabs/tab-manager';
 import {ProjectNameValidatorMsgConversion} from '../messages/project-name-validator-msg-conversion';
 import {Messages} from '../messages/messages';
+import {MenuService} from '../menu-service';
 
 
 @Component({
@@ -55,11 +56,13 @@ export class BackupLoadingComponent {
         if (errorMessage) return this.messages.add(errorMessage);
 
         this.running = true;
+        MenuService.setContext('modal');
         this.openModal();
 
         await this.readBackupFile();
 
         this.running = false;
+        MenuService.setContext('default');
         this.closeModal();
     }
 

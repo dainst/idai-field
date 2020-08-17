@@ -176,6 +176,7 @@ export class ResourcesComponent implements OnDestroy {
     public async moveDocument(document: FieldDocument) {
 
         this.quitGeometryEditing();
+        MenuService.setContext('modal');
         this.isModalOpened = true;
 
         const modalRef: NgbModalRef = this.modalService.open(MoveModalComponent, { keyboard: false });
@@ -192,12 +193,14 @@ export class ResourcesComponent implements OnDestroy {
         }
 
         this.isModalOpened = false;
+        MenuService.setContext('default');
     }
 
 
     public async deleteDocument(document: FieldDocument) {
 
         this.quitGeometryEditing();
+        MenuService.setContext('modal');
         this.isModalOpened = true;
 
         try {
@@ -213,6 +216,7 @@ export class ResourcesComponent implements OnDestroy {
         }
 
         this.isModalOpened = false;
+        MenuService.setContext('default');
     }
 
 

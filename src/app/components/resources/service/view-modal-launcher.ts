@@ -20,7 +20,7 @@ export class ViewModalLauncher {
 
     public async openImageViewModal(document: Document, resourcesComponent: ResourcesComponent) {
 
-        MenuService.setContext('view-modal');
+        MenuService.setContext('modal');
         resourcesComponent.isModalOpened = true;
 
         const images: Array<ImageDocument> = await this.getImageDocuments(
@@ -49,7 +49,7 @@ export class ViewModalLauncher {
     public async openResourceViewModal(document: Document,
                                        resourcesComponent: ResourcesComponent): Promise<boolean> {
 
-        MenuService.setContext('view-modal');
+        MenuService.setContext('modal');
         resourcesComponent.isModalOpened = true;
 
         const modalRef: NgbModalRef = this.modalService.open(

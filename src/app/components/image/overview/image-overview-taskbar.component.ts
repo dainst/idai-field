@@ -11,6 +11,7 @@ import {ViewFacade} from '../../../core/resources/view/view-facade';
 import {PersistenceHelperErrors} from '../../../core/images/overview/service/persistence-helper-errors';
 import {M} from '../../messages/m';
 import {Messages} from '../../messages/messages';
+import {MenuService} from '../../menu-service';
 
 
 @Component({
@@ -49,6 +50,7 @@ export class ImageOverviewTaskbarComponent {
 
     public async openLinkModal() {
 
+        MenuService.setContext('modal');
         this.imageOverviewComponent.modalOpened = true;
 
         try {
@@ -70,12 +72,14 @@ export class ImageOverviewTaskbarComponent {
             // LinkModal has been canceled
         } finally {
             this.imageOverviewComponent.modalOpened = false;
+            MenuService.setContext('default');
         }
     }
 
 
     public async openDeleteModal() {
 
+        MenuService.setContext('modal');
         this.imageOverviewComponent.modalOpened = true;
 
         const modalRef: NgbModalRef = this.modalService.open(
@@ -89,12 +93,14 @@ export class ImageOverviewTaskbarComponent {
             // DeleteModal has been canceled
         } finally {
             this.imageOverviewComponent.modalOpened = false;
+            MenuService.setContext('default');
         }
     }
 
 
     public async openRemoveLinkModal() {
 
+        MenuService.setContext('modal');
         this.imageOverviewComponent.modalOpened = true;
 
         try {
@@ -107,6 +113,7 @@ export class ImageOverviewTaskbarComponent {
             // RemoveLinkModal has been canceled
         } finally {
             this.imageOverviewComponent.modalOpened = false;
+            MenuService.setContext('default');
         }
     }
 

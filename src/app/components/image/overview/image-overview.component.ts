@@ -117,7 +117,7 @@ export class ImageOverviewComponent implements OnInit {
     public async showImage(document: ImageDocument) {
 
         this.modalOpened = true;
-        MenuService.setContext('view-modal');
+        MenuService.setContext('modal');
 
         this.imageOverviewFacade.select(document);
 

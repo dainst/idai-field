@@ -15,6 +15,7 @@ import {ProjectConfiguration} from '../../../core/configuration/project-configur
 import {Imagestore} from '../../../core/images/imagestore/imagestore';
 import {IdaiFieldFindResult} from '../../../core/datastore/cached/cached-read-datastore';
 import {readWldFile} from '../../../core/images/wld/wld-import';
+import {MenuService} from '../../menu-service';
 
 export interface ImageUploadResult {
 
@@ -68,6 +69,7 @@ export class ImageUploader {
             ImageUploader.supportedImageFileTypes.includes(ExtensionUtil.getExtension(file.name)));
         if (imageFiles.length) {
             const category: Category = await this.chooseCategory(imageFiles.length, depictsRelationTarget);
+            MenuService.setContext('modal');
             const uploadModalRef = this.modalService.open(
                 UploadModalComponent, { backdrop: 'static', keyboard: false }
                 );
@@ -75,6 +77,7 @@ export class ImageUploader {
                 imageFiles, category, uploadResult, depictsRelationTarget
             );
             uploadModalRef.close();
+            MenuService.setContext('default');
         }
 
         const wldFiles = files.filter(file =>
@@ -107,6 +110,7 @@ export class ImageUploader {
         const imageCategory = this.projectConfiguration.getCategory('Image');
         if ((imageCategory.children.length > 0)
                 || fileCount >= 100 || depictsRelationTarget) {
+            MenuService.setContext('modal');
             const modal: NgbModalRef = this.modalService.open(
                 ImageCategoryPickerModalComponent, { backdrop: 'static', keyboard: false }
             );
@@ -114,7 +118,10 @@ export class ImageUploader {
             modal.componentInstance.fileCount = fileCount;
             modal.componentInstance.depictsRelationTarget = depictsRelationTarget;
 
-            return await modal.result;
+            const result: Category = await modal.result;
+            MenuService.setContext('default');
+
+            return result;
         } else {
             return imageCategory;
         }

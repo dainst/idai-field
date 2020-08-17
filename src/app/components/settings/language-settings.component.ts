@@ -29,7 +29,7 @@ export class LanguageSettingsComponent {
     @Input() selectedLanguages: string[];
 
     public readonly languages: { [languageCode: string]: Language };
-    private dragging: boolean = false;
+    public dragging: boolean = false;
 
 
     constructor(private modalService: NgbModal,

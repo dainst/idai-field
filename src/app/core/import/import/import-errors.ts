@@ -8,8 +8,8 @@ export module ImportErrors {
     export const OPERATIONS_NOT_ALLOWED = 'ImportErrors.operationsNotAllowed';
     export const NO_PARENT_ASSIGNED = 'ImportErrors.noParentAssigned';
     export const DUPLICATE_IDENTIFIER = 'ImportErrors.duplicateIdentifier';
-    export const MISSING_RELATION_TARGET = 'ImportErrors.missingRelationTarget'; // by identifier
-    export const EXEC_MISSING_RELATION_TARGET = 'ImportErrors.missingRelationTarget';
+    export const PREVALIDATION_MISSING_RELATION_TARGET = 'ImportErrors.prevalidationMissingRelationTarget'; // by identifier
+    export const MISSING_RELATION_TARGET = 'ImportErrors.missingRelationTarget';
     export const CATEGORY_NOT_ALLOWED = 'ImportErrors.categoryNotAllowed';
     export const CATEGORY_ONLY_ALLOWED_ON_UPDATE = 'ImportErrors.categoryOnlyAllowedOnUpdate';
     export const UPDATE_TARGET_NOT_FOUND = 'ImportErrors.updateTargetNotFound';

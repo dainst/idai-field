@@ -58,7 +58,7 @@ async function rewriteIdentifiersInRelations(relations: Relations,
             relations[relation][i] = identifierMap[identifier];
         } else {
             const _ = await find(identifier);
-            if (!_) throw [E.MISSING_RELATION_TARGET, identifier];
+            if (!_) throw [E.PREVALIDATION_MISSING_RELATION_TARGET, identifier];
             relations[relation][i] = _.resource.id;
         }
     });
@@ -71,7 +71,7 @@ async function assertNoMissingRelationTargets(relations: Relations, get: Get) {
         (_: never) => async (id: Id, _: never) => {
 
             try { await get(id) }
-            catch { throw [E.MISSING_RELATION_TARGET, id] }
+            catch { throw [E.PREVALIDATION_MISSING_RELATION_TARGET, id] }
         });
 }
 

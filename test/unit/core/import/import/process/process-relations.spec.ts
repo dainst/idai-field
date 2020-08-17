@@ -3,7 +3,10 @@ import {HierarchicalRelations} from '../../../../../../src/app/core/model/relati
 import LIES_WITHIN = HierarchicalRelations.LIESWITHIN;
 import RECORDED_IN = HierarchicalRelations.RECORDEDIN;
 import {createMockValidator, d} from '../helper';
-import {ImportErrors as E} from '../../../../../../src/app/core/import/import/import-errors';
+import {
+    ImportErrors,
+    ImportErrors as E
+} from '../../../../../../src/app/core/import/import/import-errors';
 
 
 describe('processRelations', () => {
@@ -404,7 +407,7 @@ describe('processRelations', () => {
             fail();
 
         } catch (err) {
-            expect(err).not.toBeUndefined(); // TODO review err, seems not to be user-displayable
+            expect(err[0]).toBe(ImportErrors.MISSING_RELATION_TARGET);
         }
         done();
     });

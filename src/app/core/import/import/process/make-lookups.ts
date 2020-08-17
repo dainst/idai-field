@@ -42,7 +42,7 @@ function getTargetDocuments(get: (_: string) => Promise<Document>) {
                 if (!targetDocumentsMap[targetId]) try {
                     targetDocumentsMap[targetId] = clone(await get(targetId));
                 } catch {
-                    throw [E.EXEC_MISSING_RELATION_TARGET, targetId];
+                    throw [E.MISSING_RELATION_TARGET, targetId];
                 }
             })(targetDocIds); // TODO allow call variants for forEach
         return targetDocumentsMap;

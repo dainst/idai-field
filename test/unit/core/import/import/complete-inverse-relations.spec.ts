@@ -583,7 +583,7 @@ describe('completeInverseRelations', () => {
             completeInverseRelations(makeDocumentsLookup([doc1 as any]), targetsLookup, inverseRelations);
             fail();
         } catch (errWithParams) {
-            expect(errWithParams[0]).toEqual(E.EXEC_MISSING_RELATION_TARGET)
+            expect(errWithParams[0]).toEqual(E.MISSING_RELATION_TARGET)
         }
     });
 

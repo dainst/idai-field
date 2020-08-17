@@ -158,7 +158,7 @@ describe('importDocuments', () => {
             { resource: { category: 'Feature', identifier: '1a', relations: { isChildOf: 'notfound' } } } as any
         ], mockDatastore, 'user1');
 
-        expect(errors[0][0]).toEqual(E.MISSING_RELATION_TARGET);
+        expect(errors[0][0]).toEqual(E.PREVALIDATION_MISSING_RELATION_TARGET);
         expect(errors[0][1]).toEqual('notfound');
         done();
     });
@@ -181,7 +181,7 @@ describe('importDocuments', () => {
             { resource: { category: 'Feature', identifier: '1a', relations: { isChildOf: 'notfound' } } } as any
         ], mockDatastore, 'user1');
 
-        expect(errors[0][0]).toEqual(E.MISSING_RELATION_TARGET);
+        expect(errors[0][0]).toEqual(E.PREVALIDATION_MISSING_RELATION_TARGET);
         expect(errors[0][1]).toEqual('notfound');
         done();
     });

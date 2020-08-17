@@ -7,6 +7,7 @@ import {BackupProvider} from './backup-provider';
 import {M} from '../messages/m';
 import {TabManager} from '../../core/tabs/tab-manager';
 import {Messages} from '../messages/messages';
+import {MenuService} from '../menu-service';
 
 
 @Component({
@@ -52,11 +53,13 @@ export class BackupCreationComponent {
         if (!filePath) return;
 
         this.running = true;
+        MenuService.setContext('modal');
         this.openModal();
 
         await this.writeBackupFile(filePath);
 
         this.running = false;
+        MenuService.setContext('default');
         this.closeModal();
     }
 

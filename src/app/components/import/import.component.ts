@@ -31,6 +31,7 @@ import {ViewFacade} from '../../core/resources/view/view-facade';
 import {Messages} from '../messages/messages';
 import {ProjectCategories} from '../../core/configuration/project-categories';
 import {ExtensionUtil} from '../../core/util/extension-util';
+import {MenuService} from '../menu-service';
 
 
 @Component({
@@ -195,6 +196,7 @@ export class ImportComponent implements OnInit {
             this.importState.file as any, this.importState.url as any, this.http);
         if (!reader) return this.messages.add([M.IMPORT_READER_GENERIC_START_ERROR]);
 
+        MenuService.setContext('modal');
         const uploadModalRef: any = this.modalService.open(
             UploadModalComponent,
             { backdrop: 'static', keyboard: false }
@@ -213,6 +215,8 @@ export class ImportComponent implements OnInit {
         await this.synchronizationService.startSync();
 
         uploadModalRef.close();
+        MenuService.setContext('default');
+
         if (importReport) this.showImportResult(importReport);
     }
 

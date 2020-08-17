@@ -67,7 +67,7 @@ export abstract class ViewModalComponent {
         }
 
         this.subModalOpened = false;
-        MenuService.setContext('view-modal');
+        MenuService.setContext('modal');
     }
 
 

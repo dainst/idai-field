@@ -6,6 +6,7 @@ import {M} from '../messages/m';
 import {TabManager} from '../../core/tabs/tab-manager';
 import {Messages} from '../messages/messages';
 import {reload} from '../../core/common/reload';
+import {MenuService} from '../menu-service';
 
 const address = typeof window !== 'undefined' ? window.require('address') : require('address');
 const remote = typeof window !== 'undefined' ? window.require('electron').remote : require('electron').remote;
@@ -27,12 +28,12 @@ export class SettingsComponent implements OnInit {
     public settings: Settings;
     public ipAddress: string = address.ip();
     public saving: boolean = false;
-    public modalOpened: boolean = false;
 
 
     constructor(private settingsService: SettingsService,
                 private messages: Messages,
-                private tabManager: TabManager) {}
+                private tabManager: TabManager,
+                private menuService: MenuService) {}
 
 
     ngOnInit() {
@@ -43,7 +44,9 @@ export class SettingsComponent implements OnInit {
 
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape' && !this.modalOpened) await this.tabManager.openActiveTab();
+        if (event.key === 'Escape' && this.menuService.getContext() === 'default') {
+            await this.tabManager.openActiveTab();
+        }
     }
 
 

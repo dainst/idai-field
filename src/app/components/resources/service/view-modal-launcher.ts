@@ -15,13 +15,13 @@ import {ResourcesComponent} from '../resources.component';
 export class ViewModalLauncher {
 
     constructor(private modalService: NgbModal,
-                private datastore: ImageReadDatastore) {}
+                private datastore: ImageReadDatastore,
+                private menuService: MenuService) {}
 
 
     public async openImageViewModal(document: Document, resourcesComponent: ResourcesComponent) {
 
-        MenuService.setContext('modal');
-        resourcesComponent.isModalOpened = true;
+        this.menuService.setContext('modal');
 
         const images: Array<ImageDocument> = await this.getImageDocuments(
             document.resource.relations.isDepictedIn
@@ -38,8 +38,7 @@ export class ViewModalLauncher {
         );
         await modalRef.result;
 
-        MenuService.setContext('default');
-        resourcesComponent.isModalOpened = false;
+        this.menuService.setContext('default');
     }
 
 
@@ -49,8 +48,7 @@ export class ViewModalLauncher {
     public async openResourceViewModal(document: Document,
                                        resourcesComponent: ResourcesComponent): Promise<boolean> {
 
-        MenuService.setContext('modal');
-        resourcesComponent.isModalOpened = true;
+        this.menuService.setContext('modal');
 
         const modalRef: NgbModalRef = this.modalService.open(
             ResourceViewModalComponent,
@@ -59,8 +57,7 @@ export class ViewModalLauncher {
         await modalRef.componentInstance.initialize(document);
         const edited: boolean = await modalRef.result;
 
-        MenuService.setContext('default');
-        resourcesComponent.isModalOpened = false;
+        this.menuService.setContext('default');
 
         return edited;
     }

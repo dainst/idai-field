@@ -15,15 +15,14 @@ export abstract class ViewModalComponent {
     public images: Array<ImageRowItem> = [];
     public selectedImage: ImageRowItem|undefined;
 
-    private subModalOpened: boolean = false;
-
 
     constructor(protected activeModal: NgbActiveModal,
                 private messages: Messages,
                 private modalService: NgbModal,
-                private routingService: RoutingService) {}
+                private routingService: RoutingService,
+                private menuService: MenuService) {}
 
-
+i;
     protected abstract getDocument(isImageDocument?: boolean): Document;
 
     protected abstract setDocument(document: Document, isImageDocument?: boolean): void;
@@ -31,7 +30,7 @@ export abstract class ViewModalComponent {
 
     public onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape' && !this.subModalOpened) this.close();
+        if (event.key === 'Escape' && this.menuService.getContext() === 'modal') this.close();
     }
 
 
@@ -49,8 +48,7 @@ export abstract class ViewModalComponent {
 
     public async startEdit(isImageDocument?: boolean) {
 
-        this.subModalOpened = true;
-        MenuService.setContext('docedit');
+        this.menuService.setContext('docedit');
 
         const doceditModalRef = this.modalService.open(
             DoceditComponent,
@@ -66,8 +64,7 @@ export abstract class ViewModalComponent {
             // Cancelled
         }
 
-        this.subModalOpened = false;
-        MenuService.setContext('modal');
+        this.menuService.setContext('modal');
     }
 
 

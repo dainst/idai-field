@@ -11,16 +11,17 @@ describe('ProjectsModalComponent', () => {
     let projectsModalComponent: ProjectsModalComponent;
     let settingsService;
     let messages;
+    let menuService;
 
 
     beforeEach(() => {
-        settingsService = jasmine.createSpyObj(
-            'settingsService',['deleteProject', 'getDbs']
-        );
+        settingsService = jasmine.createSpyObj('settingsService',['deleteProject', 'getDbs']);
         messages = jasmine.createSpyObj('messages', ['add']);
+        menuService = jasmine.createSpyObj('menuService', ['setContext']);
+
         projectsModalComponent = new ProjectsModalComponent(
             undefined, settingsService, undefined, messages, new StateSerializer(),
-            undefined
+            undefined, menuService
         );
     });
 

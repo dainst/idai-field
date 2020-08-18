@@ -63,7 +63,8 @@ export class ExportComponent implements OnInit {
                 private fieldDatastore: FieldReadDatastore,
                 private documentDatastore: DocumentReadDatastore,
                 private tabManager: TabManager,
-                private projectConfiguration: ProjectConfiguration) {}
+                private projectConfiguration: ProjectConfiguration,
+                private menuService: MenuService) {}
 
 
     public getOperationLabel = (operation: FieldDocument) => ModelUtil.getDocumentLabel(operation);
@@ -130,7 +131,7 @@ export class ExportComponent implements OnInit {
         if (!filePath) return;
 
         this.running = true;
-        MenuService.setContext('modal');
+        this.menuService.setContext('modal');
         this.openModal();
 
         try {
@@ -144,7 +145,7 @@ export class ExportComponent implements OnInit {
         }
 
         this.running = false;
-        MenuService.setContext('default');
+        this.menuService.setContext('default');
         this.closeModal();
     }
 

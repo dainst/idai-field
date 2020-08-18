@@ -35,7 +35,8 @@ export class BackupCreationComponent {
         private messages: Messages,
         private settingsService: SettingsService,
         private backupProvider: BackupProvider,
-        private tabManager: TabManager
+        private tabManager: TabManager,
+        private menuService: MenuService
     ) {}
 
 
@@ -53,13 +54,13 @@ export class BackupCreationComponent {
         if (!filePath) return;
 
         this.running = true;
-        MenuService.setContext('modal');
+        this.menuService.setContext('modal');
         this.openModal();
 
         await this.writeBackupFile(filePath);
 
         this.running = false;
-        MenuService.setContext('default');
+        this.menuService.setContext('default');
         this.closeModal();
     }
 

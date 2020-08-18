@@ -18,6 +18,7 @@ import {TabManager} from '../../../core/tabs/tab-manager';
 import {PLACEHOLDER} from '../../../core/images/row/image-row';
 import {makeLookup} from 'src/app/core/util/transformers';
 import {ProjectCategories} from '../../../core/configuration/project-categories';
+import {MenuService} from '../../menu-service';
 
 
 @Component({
@@ -75,9 +76,10 @@ export class TypesComponent extends BaseList implements OnChanges {
                 private changeDetectorRef: ChangeDetectorRef,
                 resourcesComponent: ResourcesComponent,
                 viewFacade: ViewFacade,
-                loading: Loading) {
+                loading: Loading,
+                menuService: MenuService) {
 
-        super(resourcesComponent, viewFacade, loading);
+        super(resourcesComponent, viewFacade, loading, menuService);
 
         resourcesComponent.listenToClickEvents().subscribe(event => this.handleClick(event));
     }
@@ -100,7 +102,7 @@ export class TypesComponent extends BaseList implements OnChanges {
 
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape' && !this.resourcesComponent.isModalOpened) {
+        if (event.key === 'Escape' && this.menuService.getContext() === 'default') {
             await this.tabManager.openActiveTab();
         }
     }

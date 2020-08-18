@@ -33,7 +33,8 @@ export class RoutingService {
                 private location: Location,
                 private projectConfiguration: ProjectConfiguration,
                 private modalService: NgbModal,
-                private settingsService: SettingsService) {}
+                private settingsService: SettingsService,
+                private menuService: MenuService) {}
 
 
     // For ResourcesComponent
@@ -85,7 +86,7 @@ export class RoutingService {
 
     public async openProjectsModal(openConflictResolver: boolean = false) {
 
-        MenuService.setContext('projects');
+        this.menuService.setContext('projects');
 
         const ref: NgbModalRef = this.modalService.open(ProjectsModalComponent, { keyboard: false });
         ref.componentInstance.selectedProject = this.settingsService.getSelectedProject();
@@ -96,7 +97,7 @@ export class RoutingService {
         } catch(err) {
             // Projects modal has been canceled
         } finally {
-            MenuService.setContext('default');
+            this.menuService.setContext('default');
         }
     }
 

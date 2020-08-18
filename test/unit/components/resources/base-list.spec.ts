@@ -8,7 +8,8 @@ describe('BaseList', () => {
     let viewFacade;
     let resourcesComponent;
     let loading;
-    let bl;
+    let menuService;
+    let baseList;
 
 
     beforeEach(() => {
@@ -22,8 +23,9 @@ describe('BaseList', () => {
 
         resourcesComponent = jasmine.createSpyObj('resourcesComponent', ['getViewType']);
         loading = jasmine.createSpyObj('loading', ['isLoading', 'getContext']);
+        menuService = jasmine.createSpyObj('menuService', ['setContext', 'getContext']);
 
-        bl = new BaseList(resourcesComponent, viewFacade, loading);
+        baseList = new BaseList(resourcesComponent, viewFacade, loading, menuService);
 
         // partial requirements to show plus button
         loading.isLoading.and.returnValue(false);
@@ -36,15 +38,15 @@ describe('BaseList', () => {
     it('plus button status', () => {
 
         viewFacade.isInExtendedSearchMode.and.returnValue(true);
-        expect(bl.getPlusButtonStatus()).toEqual('disabled-hierarchy');
+        expect(baseList.getPlusButtonStatus()).toEqual('disabled-hierarchy');
         viewFacade.isInExtendedSearchMode.and.returnValue(false);
-        expect(bl.getPlusButtonStatus()).toEqual('enabled');
+        expect(baseList.getPlusButtonStatus()).toEqual('enabled');
     });
 
 
     it('plus button shown in overview', () => {
 
-        expect(bl.isPlusButtonShown()).toBeTruthy();
+        expect(baseList.isPlusButtonShown()).toBeTruthy();
     });
 
 
@@ -52,27 +54,27 @@ describe('BaseList', () => {
 
         viewFacade.isInOverview.and.returnValue(false);
         viewFacade.getSelectedOperations.and.returnValue([1]);
-        expect(bl.isPlusButtonShown()).toBeTruthy();
+        expect(baseList.isPlusButtonShown()).toBeTruthy();
     });
 
 
     it('plus button not shown if isEditingGeometry', () => {
 
-        resourcesComponent.isEditingGeometry = false;
-        expect(bl.isPlusButtonShown()).toBeTruthy();
+        menuService.getContext.and.returnValue('geometryedit');
+        expect(baseList.isPlusButtonShown()).toBeFalsy();
     });
 
 
     it('plus button not shown if is loading', () => {
 
         loading.isLoading.and.returnValue(true);
-        expect(bl.isPlusButtonShown()).toBeFalsy();
+        expect(baseList.isPlusButtonShown()).toBeFalsy();
     });
 
 
     it('plus button not shown not ready', () => {
 
         viewFacade.isReady.and.returnValue(false);
-        expect(bl.isPlusButtonShown()).toBeFalsy();
+        expect(baseList.isPlusButtonShown()).toBeFalsy();
     });
 });

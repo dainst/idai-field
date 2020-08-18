@@ -37,7 +37,8 @@ export class ResourcesMapComponent {
                 public resourcesComponent: ResourcesComponent,
                 private persistenceManager: PersistenceManager,
                 private usernameProvider: UsernameProvider,
-                private messages: Messages) {
+                private messages: Messages,
+                private menuService: MenuService) {
 
         this.parentDocument = this.getParentDocument(this.viewFacade.getNavigationPath());
 
@@ -57,11 +58,16 @@ export class ResourcesMapComponent {
 
     public isPopoverMenuOpened = () => this.resourcesComponent.isPopoverMenuOpened();
 
+    public isEditingGeometry = () => this.menuService.getContext() === 'geometryedit';
+
+    public isModalOpened = () => this.menuService.getContext() === 'modal'
+        || this.menuService.getContext() === 'docedit';
+
 
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape' && !this.resourcesComponent.isModalOpened) {
-            if (this.resourcesComponent.isEditingGeometry) {
+        if (event.key === 'Escape' && !this.isModalOpened()) {
+            if (this.isEditingGeometry()) {
                 await this.quitEditing(undefined);
             } else {
                 this.viewFacade.deselect();
@@ -104,13 +110,12 @@ export class ResourcesMapComponent {
                 if (selectedDocument) await this.resourcesComponent.editDocument(selectedDocument);
             } else {
                 this.viewFacade.deselect();
-                this.resourcesComponent.isEditingGeometry = false;
+                this.resourcesComponent.quitGeometryEditing();
             }
         } else {
             if (geometry !== undefined) await this.save();
-            this.resourcesComponent.isEditingGeometry = false;
+            this.resourcesComponent.quitGeometryEditing();
         }
-        MenuService.setContext('default');
     }
 
 

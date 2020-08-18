@@ -31,12 +31,13 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
     @ViewChild('sidebar', { static: false }) sidebarElement: ElementRef;
 
 
-    constructor(resourcesComponent: ResourcesComponent,
+    constructor(private navigationService: NavigationService,
+                resourcesComponent: ResourcesComponent,
                 loading: Loading,
-                public viewFacade: ViewFacade,
-                private navigationService: NavigationService) {
+                viewFacade: ViewFacade,
+                menuService: MenuService) {
 
-        super(resourcesComponent, viewFacade, loading);
+        super(resourcesComponent, viewFacade, loading, menuService);
 
         this.navigationService.moveIntoNotifications().subscribe(async () => {
             await this.viewFacade.deselect();
@@ -124,8 +125,7 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
                 break;
             case 'edit-geometry':
                 await this.viewFacade.setSelectedDocument(document.resource.id);
-                MenuService.setContext('geometryedit');
-                this.resourcesComponent.isEditingGeometry = true;
+                this.menuService.setContext('geometryedit');
                 break;
             case 'create-polygon':
                 await this.viewFacade.setSelectedDocument(document.resource.id);

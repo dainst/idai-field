@@ -58,20 +58,20 @@ export class ImportComponent implements OnInit {
     public readonly allowedFileExtensions: string = '.csv, .jsonl, .geojson, .json, .shp';
 
 
-    constructor(
-        private messages: Messages,
-        private datastore: DocumentDatastore,
-        private remoteChangesStream: ChangesStream,
-        private importValidator: ImportValidator,
-        private http: HttpClient,
-        private usernameProvider: UsernameProvider,
-        private projectConfiguration: ProjectConfiguration,
-        private viewFacade: ViewFacade,
-        private modalService: NgbModal,
-        private synchronizationService: SyncService,
-        private idGenerator: IdGenerator,
-        private tabManager: TabManager,
-        public importState: ImportState) {
+    constructor(public importState: ImportState,
+                private messages: Messages,
+                private datastore: DocumentDatastore,
+                private remoteChangesStream: ChangesStream,
+                private importValidator: ImportValidator,
+                private http: HttpClient,
+                private usernameProvider: UsernameProvider,
+                private projectConfiguration: ProjectConfiguration,
+                private viewFacade: ViewFacade,
+                private modalService: NgbModal,
+                private synchronizationService: SyncService,
+                private idGenerator: IdGenerator,
+                private tabManager: TabManager,
+                private menuService: MenuService) {
 
         this.resetOperationIfNecessary();
     }
@@ -196,7 +196,7 @@ export class ImportComponent implements OnInit {
             this.importState.file as any, this.importState.url as any, this.http);
         if (!reader) return this.messages.add([M.IMPORT_READER_GENERIC_START_ERROR]);
 
-        MenuService.setContext('modal');
+        this.menuService.setContext('modal');
         const uploadModalRef: any = this.modalService.open(
             UploadModalComponent,
             { backdrop: 'static', keyboard: false }
@@ -215,7 +215,7 @@ export class ImportComponent implements OnInit {
         await this.synchronizationService.startSync();
 
         uploadModalRef.close();
-        MenuService.setContext('default');
+        this.menuService.setContext('default');
 
         if (importReport) this.showImportResult(importReport);
     }

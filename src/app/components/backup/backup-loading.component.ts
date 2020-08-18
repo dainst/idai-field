@@ -38,13 +38,16 @@ export class BackupLoadingComponent {
         private messages: Messages,
         private settingsService: SettingsService,
         private backupProvider: BackupProvider,
-        private tabManager: TabManager
+        private tabManager: TabManager,
+        private menuService: MenuService
     ) {}
 
 
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape') await this.tabManager.openActiveTab();
+        if (event.key === 'Escape' && this.menuService.getContext() === 'default') {
+            await this.tabManager.openActiveTab();
+        }
     }
 
 
@@ -56,13 +59,13 @@ export class BackupLoadingComponent {
         if (errorMessage) return this.messages.add(errorMessage);
 
         this.running = true;
-        MenuService.setContext('modal');
+        this.menuService.setContext('modal');
         this.openModal();
 
         await this.readBackupFile();
 
         this.running = false;
-        MenuService.setContext('default');
+        this.menuService.setContext('default');
         this.closeModal();
     }
 

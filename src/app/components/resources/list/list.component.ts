@@ -7,6 +7,7 @@ import {ProjectConfiguration} from '../../../core/configuration/project-configur
 import {Category} from '../../../core/configuration/model/category';
 import {ViewFacade} from '../../../core/resources/view/view-facade';
 import {namedArrayToNamedMap} from 'src/app/core/util/named';
+import {MenuService} from '../../menu-service';
 
 
 @Component({
@@ -29,9 +30,10 @@ export class ListComponent extends BaseList implements OnChanges {
     constructor(resourcesComponent: ResourcesComponent,
                 viewFacade: ViewFacade,
                 loading: Loading,
-                projectConfiguration: ProjectConfiguration) {
+                projectConfiguration: ProjectConfiguration,
+                menuService: MenuService) {
 
-        super(resourcesComponent, viewFacade, loading);
+        super(resourcesComponent, viewFacade, loading, menuService);
         this.categoriesMap = namedArrayToNamedMap(projectConfiguration.getCategoriesArray());
     }
 

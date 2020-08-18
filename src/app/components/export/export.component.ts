@@ -63,7 +63,8 @@ export class ExportComponent implements OnInit {
                 private fieldDatastore: FieldReadDatastore,
                 private documentDatastore: DocumentReadDatastore,
                 private tabManager: TabManager,
-                private projectConfiguration: ProjectConfiguration) {}
+                private projectConfiguration: ProjectConfiguration,
+                private menuService: MenuService) {}
 
 
     public getOperationLabel = (operation: FieldDocument) => ModelUtil.getDocumentLabel(operation);
@@ -103,7 +104,9 @@ export class ExportComponent implements OnInit {
 
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape') await this.tabManager.openActiveTab();
+        if (event.key === 'Escape' && this.menuService.getContext() === 'default') {
+            await this.tabManager.openActiveTab();
+        }
     }
 
 
@@ -130,7 +133,7 @@ export class ExportComponent implements OnInit {
         if (!filePath) return;
 
         this.running = true;
-        MenuService.setContext('modal');
+        this.menuService.setContext('modal');
         this.openModal();
 
         try {
@@ -144,7 +147,7 @@ export class ExportComponent implements OnInit {
         }
 
         this.running = false;
-        MenuService.setContext('default');
+        this.menuService.setContext('default');
         this.closeModal();
     }
 

@@ -39,19 +39,21 @@ export class ImageOverviewTaskbarComponent {
                 private messages: Messages,
                 private imageOverviewFacade: ImageOverviewFacade,
                 private persistenceHelper: PersistenceHelper,
-                private imageOverviewComponent: ImageOverviewComponent) {}
+                private imageOverviewComponent: ImageOverviewComponent,
+                private menuService: MenuService) {}
 
 
     public onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape' && !this.imageOverviewComponent.modalOpened) this.clearSelection();
+        if (event.key === 'Escape' && this.menuService.getContext() === 'default') {
+            this.clearSelection();
+        }
     }
 
 
     public async openLinkModal() {
 
-        MenuService.setContext('modal');
-        this.imageOverviewComponent.modalOpened = true;
+        this.menuService.setContext('modal');
 
         try {
             const modalRef: NgbModalRef = this.modalService.open(
@@ -71,16 +73,14 @@ export class ImageOverviewTaskbarComponent {
         } catch(err) {
             // LinkModal has been canceled
         } finally {
-            this.imageOverviewComponent.modalOpened = false;
-            MenuService.setContext('default');
+            this.menuService.setContext('default');
         }
     }
 
 
     public async openDeleteModal() {
 
-        MenuService.setContext('modal');
-        this.imageOverviewComponent.modalOpened = true;
+        this.menuService.setContext('modal');
 
         const modalRef: NgbModalRef = this.modalService.open(
             DeleteModalComponent, { keyboard: false }
@@ -92,16 +92,14 @@ export class ImageOverviewTaskbarComponent {
         } catch(err) {
             // DeleteModal has been canceled
         } finally {
-            this.imageOverviewComponent.modalOpened = false;
-            MenuService.setContext('default');
+            this.menuService.setContext('default');
         }
     }
 
 
     public async openRemoveLinkModal() {
 
-        MenuService.setContext('modal');
-        this.imageOverviewComponent.modalOpened = true;
+        this.menuService.setContext('modal');
 
         try {
             await this.modalService.open(RemoveLinkModalComponent, { keyboard: false }).result;
@@ -112,8 +110,7 @@ export class ImageOverviewTaskbarComponent {
         } catch(err) {
             // RemoveLinkModal has been canceled
         } finally {
-            this.imageOverviewComponent.modalOpened = false;
-            MenuService.setContext('default');
+            this.menuService.setContext('default');
         }
     }
 

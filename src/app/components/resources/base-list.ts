@@ -6,6 +6,7 @@ import {Loading} from '../widgets/loading';
 import {PlusButtonStatus} from './plus-button.component';
 import {NavigationPath} from '../../core/resources/view/state/navigation-path';
 import {ViewFacade} from '../../core/resources/view/view-facade';
+import {MenuService} from '../menu-service';
 
 
 /**
@@ -21,7 +22,8 @@ export class BaseList {
 
     constructor(public resourcesComponent: ResourcesComponent,
                 public viewFacade: ViewFacade,
-                protected loading: Loading) {
+                protected loading: Loading,
+                protected menuService: MenuService) {
 
         this.navigationPath = this.viewFacade.getNavigationPath();
         this.viewFacade.navigationPathNotifications().subscribe(path => this.navigationPath = path);
@@ -44,7 +46,7 @@ export class BaseList {
 
     public isPlusButtonShown(): boolean {
 
-        return !this.resourcesComponent.isEditingGeometry
+        return this.menuService.getContext() !== 'geometryedit'
             && this.viewFacade.isReady()
             && (!this.loading.isLoading() || this.loading.getContext() !== undefined);
     }

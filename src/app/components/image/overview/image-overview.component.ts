@@ -31,7 +31,6 @@ export class ImageOverviewComponent implements OnInit {
     @ViewChild('imageGrid', { static: true }) public imageGrid: ImageGridComponent;
 
     public filterOptions: Array<Category> = [];
-    public modalOpened: boolean = false;
 
 
     constructor(public viewFacade: ViewFacade,
@@ -39,7 +38,8 @@ export class ImageOverviewComponent implements OnInit {
                 private messages: Messages,
                 private projectConfiguration: ProjectConfiguration,
                 private tabManager: TabManager,
-                private modalService: NgbModal) {
+                private modalService: NgbModal,
+                private menuService: MenuService) {
 
         this.imageOverviewFacade.initialize();
     }
@@ -108,7 +108,7 @@ export class ImageOverviewComponent implements OnInit {
 
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape' && !this.modalOpened && !this.hasSelectedImages()) {
+        if (event.key === 'Escape' && this.menuService.getContext() === 'default' && !this.hasSelectedImages()) {
             await this.tabManager.openActiveTab();
         }
     }
@@ -116,8 +116,7 @@ export class ImageOverviewComponent implements OnInit {
 
     public async showImage(document: ImageDocument) {
 
-        this.modalOpened = true;
-        MenuService.setContext('modal');
+        this.menuService.setContext('modal');
 
         this.imageOverviewFacade.select(document);
 
@@ -131,8 +130,7 @@ export class ImageOverviewComponent implements OnInit {
         );
         await modalRef.result;
 
-        this.modalOpened = false;
-        MenuService.setContext('default');
+        this.menuService.setContext('default');
     }
 
 

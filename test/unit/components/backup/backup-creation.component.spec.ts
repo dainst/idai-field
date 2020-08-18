@@ -14,6 +14,7 @@ describe('BackupCreationComponent', () => {
     let settingsService: any;
     let backupProvider: any;
     let tabManager: any;
+    let menuService: any;
 
 
     afterEach(done => new PouchDB(unittestdb).destroy().then(done));
@@ -29,6 +30,7 @@ describe('BackupCreationComponent', () => {
         settingsService = jasmine.createSpyObj('settingsService', ['getSelectedProject', 'addProject']);
         backupProvider = jasmine.createSpyObj('backupProvider', ['dump', 'readDump']);
         tabManager = jasmine.createSpyObj('tabManager', ['openActiveTab']);
+        menuService = jasmine.createSpyObj('menuService', ['setContext']);
 
         c = new BackupCreationComponent(
             dialogProvider,
@@ -36,7 +38,8 @@ describe('BackupCreationComponent', () => {
             messages,
             settingsService,
             backupProvider,
-            tabManager
+            tabManager,
+            menuService
         );
 
         settingsService.getSelectedProject.and.returnValue('selectedproject');

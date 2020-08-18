@@ -28,7 +28,8 @@ export class TypeRelationComponent implements OnChanges {
 
     constructor(private datastore: FieldReadDatastore,
                 private modalService: NgbModal,
-                private doceditComponent: DoceditComponent) {}
+                private doceditComponent: DoceditComponent,
+                private menuService: MenuService) {}
 
 
     ngOnChanges() {
@@ -39,7 +40,7 @@ export class TypeRelationComponent implements OnChanges {
 
     public async openInstanceOfModal() {
 
-        MenuService.setContext('modal');
+        this.menuService.setContext('modal');
         this.doceditComponent.subModalOpened = true;
 
         const typeRelationPicker: NgbModalRef = this.modalService.open(
@@ -53,7 +54,7 @@ export class TypeRelationComponent implements OnChanges {
         } catch { // cancelled
         } finally {
             this.doceditComponent.subModalOpened = false;
-            MenuService.setContext('default');
+            this.menuService.setContext('default');
         }
     }
 

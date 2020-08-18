@@ -5,7 +5,6 @@ import {clone} from 'tsfun/struct';
 import {map} from 'tsfun/associative';
 import {Settings} from '../../core/settings/settings';
 import {LanguagePickerModalComponent} from './language-picker-modal.component';
-import {SettingsComponent} from './settings.component';
 import {MenuService} from '../menu-service';
 
 const cldr = typeof window !== 'undefined' ? window.require('cldr') : require('cldr');
@@ -34,7 +33,7 @@ export class LanguageSettingsComponent {
 
 
     constructor(private modalService: NgbModal,
-                private settingsComponent: SettingsComponent) {
+                private menuService: MenuService) {
 
         this.languages = LanguageSettingsComponent.getAvailableLanguages();
     }
@@ -58,8 +57,7 @@ export class LanguageSettingsComponent {
 
     public async addLanguage() {
 
-        MenuService.setContext('modal');
-        this.settingsComponent.modalOpened = true;
+        this.menuService.setContext('modal');
 
         const modalReference: NgbModalRef
             = this.modalService.open(LanguagePickerModalComponent);
@@ -70,8 +68,7 @@ export class LanguageSettingsComponent {
         } catch (err) {
             // Modal has been canceled
         } finally {
-            this.settingsComponent.modalOpened = false;
-            MenuService.setContext('default');
+            this.menuService.setContext('default');
         }
     }
 

@@ -35,7 +35,6 @@ export class ProjectsModalComponent implements AfterViewInit, AfterViewChecked {
     public openConflictResolver: boolean = false;
 
     private focusInput: boolean = false;
-    private subModalOpened: boolean = false;
 
     @ViewChild('createPopover', { static: false }) private createPopover: NgbPopover;
     @ViewChild('deletePopover', { static: false }) private deletePopover: NgbPopover;
@@ -48,7 +47,8 @@ export class ProjectsModalComponent implements AfterViewInit, AfterViewChecked {
                 private modalService: NgbModal,
                 private messages: Messages,
                 private stateSerializer: StateSerializer,
-                private datastore: DocumentReadDatastore) {
+                private datastore: DocumentReadDatastore,
+                private menuService: MenuService) {
     }
 
 
@@ -73,7 +73,7 @@ export class ProjectsModalComponent implements AfterViewInit, AfterViewChecked {
 
     public onKeyDown(event: KeyboardEvent) {
 
-        if (!this.subModalOpened && event.key === 'Escape') {
+        if (this.menuService.getContext() === 'projects' && event.key === 'Escape') {
             if (this.createPopover.isOpen()) {
                 this.createPopover.close();
             } else if (this.deletePopover.isOpen()) {
@@ -145,8 +145,7 @@ export class ProjectsModalComponent implements AfterViewInit, AfterViewChecked {
 
     public async editProject(activeGroup: string = 'stem') {
 
-        MenuService.setContext('docedit');
-        this.subModalOpened = true;
+        this.menuService.setContext('docedit');
 
         const projectDocument: Document = await this.datastore.get('project');
 
@@ -162,8 +161,7 @@ export class ProjectsModalComponent implements AfterViewInit, AfterViewChecked {
             // Docedit modal has been canceled
         }
 
-        this.subModalOpened = false;
-        MenuService.setContext('projects');
+        this.menuService.setContext('projects');
     }
 
 

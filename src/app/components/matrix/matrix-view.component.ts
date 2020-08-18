@@ -22,6 +22,7 @@ import IS_BELOW = PositionRelations.BELOW;
 import IS_CUT_BY = PositionRelations.CUTBY;
 import CUTS = PositionRelations.CUTS;
 import {TabManager} from '../../core/tabs/tab-manager';
+import {MenuService} from '../menu-service';
 
 const Viz = require('viz.js');
 
@@ -54,18 +55,16 @@ export class MatrixViewComponent implements OnInit {
     private featureDocuments: Array<FeatureDocument> = [];
     private totalFeatureDocuments: Array<FeatureDocument> = [];
     private trenchesLoaded: boolean = false;
-    private modalOpened: boolean = false;
 
 
-    constructor(
-        private datastore: FieldReadDatastore,
-        private projectConfiguration: ProjectConfiguration,
-        private featureDatastore: FeatureReadDatastore,
-        private modalService: NgbModal,
-        private matrixState: MatrixState,
-        private loading: Loading,
-        private tabManager: TabManager
-    ) {}
+    constructor(private datastore: FieldReadDatastore,
+                private projectConfiguration: ProjectConfiguration,
+                private featureDatastore: FeatureReadDatastore,
+                private modalService: NgbModal,
+                private matrixState: MatrixState,
+                private loading: Loading,
+                private tabManager: TabManager,
+                private menuService: MenuService) {}
 
 
     public getDocumentLabel = (document: any) => ModelUtil.getDocumentLabel(document);
@@ -99,19 +98,17 @@ export class MatrixViewComponent implements OnInit {
 
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape' && !this.modalOpened) await this.tabManager.openActiveTab();
+        if (event.key === 'Escape' && this.menuService.getContext() === 'default') {
+            await this.tabManager.openActiveTab();
+        }
     }
 
 
     public async edit(resourceId: string) {
 
-        this.modalOpened = true;
-
         await this.openEditorModal(
             this.featureDocuments.find(on('resource.id', is(resourceId))) as FeatureDocument
         );
-
-        this.modalOpened = false;
     }
 
 
@@ -209,6 +206,8 @@ export class MatrixViewComponent implements OnInit {
 
     private async openEditorModal(docToEdit: FeatureDocument) {
 
+        this.menuService.setContext('docedit');
+
         const doceditRef = this.modalService.open(DoceditComponent,
             { size: 'lg', backdrop: 'static', keyboard: false });
         doceditRef.componentInstance.setDocument(docToEdit);
@@ -220,7 +219,10 @@ export class MatrixViewComponent implements OnInit {
         };
 
         await doceditRef.result
-            .then(reset, reason => { if (reason === 'deleted') return reset(); });
+            .then(reset, reason => {
+                this.menuService.setContext('default');
+                if (reason === 'deleted') return reset();
+            });
     }
 
 

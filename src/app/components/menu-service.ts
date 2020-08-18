@@ -5,7 +5,7 @@ const ipcRenderer = typeof window !== 'undefined' ? window.require('electron').i
 const remote = typeof window !== 'undefined' ? window.require('electron').remote : require('electron').remote;
 
 
-type MenuContext = 'loading'|'default'|'docedit'|'modal'|'projects'|'geometryedit';
+type MenuContext = 'default'|'docedit'|'modal'|'projects'|'geometryedit';
 
 
 @Injectable()
@@ -14,8 +14,21 @@ type MenuContext = 'loading'|'default'|'docedit'|'modal'|'projects'|'geometryedi
  */
 export class MenuService {
 
+    private context: MenuContext;
+
+
     constructor(private router: Router,
                 private zone: NgZone) {}
+
+
+    public getContext = () => this.context;
+
+
+    public setContext(context: MenuContext) {
+
+        this.context = context;
+        if (remote) remote.getGlobal('setMenuContext')(context);
+    }
 
 
     public initialize() {
@@ -24,18 +37,12 @@ export class MenuService {
             await this.onMenuItemClicked(menuItem);
         });
 
-        MenuService.setContext('default');
+        this.setContext('default');
     }
 
 
     public async onMenuItemClicked(menuItem: string) {
 
         await this.zone.run(async () => await this.router.navigate([menuItem]));
-    }
-
-
-    public static setContext(context: MenuContext) {
-
-        if (remote) remote.getGlobal('setMenuContext')(context);
     }
 }

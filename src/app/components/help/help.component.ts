@@ -5,6 +5,7 @@ import {Chapter, HelpLoader} from './help-loader';
 import {SettingsService} from '../../core/settings/settings-service';
 import {TabManager} from '../../core/tabs/tab-manager';
 import {Settings} from '../../core/settings/settings';
+import {MenuService} from '../menu-service';
 
 const remote = typeof window !== 'undefined' ? window.require('electron').remote : require('electron').remote;
 
@@ -35,7 +36,8 @@ export class HelpComponent implements OnInit {
                 private http: HttpClient,
                 private settingsService: SettingsService,
                 private tabManager: TabManager,
-                private changeDetectorRef: ChangeDetectorRef) {}
+                private changeDetectorRef: ChangeDetectorRef,
+                private menuService: MenuService) {}
 
 
     async ngOnInit() {
@@ -57,7 +59,9 @@ export class HelpComponent implements OnInit {
 
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape') await this.tabManager.openActiveTab();
+        if (event.key === 'Escape' && this.menuService.getContext() === 'default') {
+            await this.tabManager.openActiveTab();
+        }
     }
 
 

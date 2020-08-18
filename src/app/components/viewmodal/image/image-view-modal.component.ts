@@ -8,6 +8,7 @@ import {ImagesState} from '../../../core/images/overview/view/images-state';
 import {ViewModalComponent} from '../view-modal.component';
 import {Messages} from '../../messages/messages';
 import {ImageRowItem} from '../../../core/images/row/image-row';
+import {MenuService} from '../../menu-service';
 
 
 @Component({
@@ -30,9 +31,10 @@ export class ImageViewModalComponent extends ViewModalComponent {
                 activeModal: NgbActiveModal,
                 messages: Messages,
                 modalService: NgbModal,
-                routingService: RoutingService) {
+                routingService: RoutingService,
+                menuService: MenuService) {
 
-        super(activeModal, messages, modalService, routingService);
+        super(activeModal, messages, modalService, routingService, menuService);
     }
 
 

@@ -35,9 +35,6 @@ export type PopoverMenu = 'none'|'info'|'children';
  */
 export class ResourcesComponent implements OnDestroy {
 
-    public isEditingGeometry: boolean = false;
-    public isModalOpened: boolean = false;
-
     public activePopoverMenu: PopoverMenu = 'none';
 
     public filterOptions: Array<Category> = [];
@@ -60,10 +57,11 @@ export class ResourcesComponent implements OnDestroy {
                 private resourceDeletion: ResourceDeletion,
                 private tabManager: TabManager,
                 private navigationService: NavigationService,
-                private projectConfiguration: ProjectConfiguration
-    ) {
+                private projectConfiguration: ProjectConfiguration,
+                private menuService: MenuService) {
+
         routingService.routeParams(route).subscribe(async (params: any) => {
-            this.isEditingGeometry = false;
+            this.quitGeometryEditing();
 
             if (params['id']) {
                 await this.selectDocumentFromParams(params['id'], params['menu'], params['group']);
@@ -74,7 +72,7 @@ export class ResourcesComponent implements OnDestroy {
         this.initializeSubscriptions();
 
         this.viewFacade.navigationPathNotifications().subscribe((_: any) => {
-            this.isEditingGeometry = false;
+            this.quitGeometryEditing();
         });
 
         this.viewFacade.rebuildNavigationPath();
@@ -157,27 +155,21 @@ export class ResourcesComponent implements OnDestroy {
     }
 
 
-    public async editDocument(document: Document|undefined,
+    public editDocument(document: Document|undefined,
                               activeGroup?: string): Promise<FieldDocument|undefined> {
 
         if (!document) throw 'Called edit document with undefined document';
 
         this.quitGeometryEditing(document);
-        this.isModalOpened = true;
 
-        const editedDocument: FieldDocument|undefined
-            = await this.doceditLauncher.editDocument(document, activeGroup);
-        this.isModalOpened = false;
-
-        return editedDocument;
+        return this.doceditLauncher.editDocument(document, activeGroup);
     }
 
 
     public async moveDocument(document: FieldDocument) {
 
         this.quitGeometryEditing();
-        MenuService.setContext('modal');
-        this.isModalOpened = true;
+        this.menuService.setContext('modal');
 
         const modalRef: NgbModalRef = this.modalService.open(MoveModalComponent, { keyboard: false });
         modalRef.componentInstance.initialize(document);
@@ -192,16 +184,14 @@ export class ResourcesComponent implements OnDestroy {
             // Otherwise, the move modal has been canceled
         }
 
-        this.isModalOpened = false;
-        MenuService.setContext('default');
+        this.menuService.setContext('default');
     }
 
 
     public async deleteDocument(document: FieldDocument) {
 
         this.quitGeometryEditing();
-        MenuService.setContext('modal');
-        this.isModalOpened = true;
+        this.menuService.setContext('modal');
 
         try {
             await this.resourceDeletion.delete(document);
@@ -215,8 +205,7 @@ export class ResourcesComponent implements OnDestroy {
             // Otherwise, the delete modal has been canceled.
         }
 
-        this.isModalOpened = false;
-        MenuService.setContext('default');
+        this.menuService.setContext('default');
     }
 
 
@@ -266,7 +255,7 @@ export class ResourcesComponent implements OnDestroy {
 
     public async select(document: FieldDocument) {
 
-        this.isEditingGeometry = false;
+        this.quitGeometryEditing();
 
         if (!document) {
             this.viewFacade.deselect();
@@ -356,6 +345,18 @@ export class ResourcesComponent implements OnDestroy {
     }
 
 
+    public quitGeometryEditing(document: Document|undefined = this.viewFacade.getSelectedDocument()) {
+
+        if (this.menuService.getContext() !== 'geometryedit') return;
+
+        if (document && document.resource.geometry && !document.resource.geometry.coordinates) {
+            delete document.resource.geometry;
+        }
+
+        this.menuService.setContext('default');
+    }
+
+
     private initializeClickEventListener() {
 
         this.renderer.listen('document', 'click', (event: any) =>
@@ -404,18 +405,6 @@ export class ResourcesComponent implements OnDestroy {
 
     private startGeometryEditing() {
 
-        MenuService.setContext('geometryedit');
-        this.isEditingGeometry = true;
-    }
-
-
-    private quitGeometryEditing(document: Document|undefined = this.viewFacade.getSelectedDocument()) {
-
-        if (document && document.resource.geometry && !document.resource.geometry.coordinates) {
-            delete document.resource.geometry;
-        }
-
-        this.isEditingGeometry = false;
-        MenuService.setContext('default');
+        this.menuService.setContext('geometryedit');
     }
 }

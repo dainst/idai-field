@@ -15,13 +15,14 @@ import {ViewFacade} from '../../../core/resources/view/view-facade';
 export class DoceditLauncher {
 
     constructor(private modalService: NgbModal,
-                private viewFacade: ViewFacade) {}
+                private viewFacade: ViewFacade,
+                private menuService: MenuService) {}
 
 
     public async editDocument(document: Document|NewDocument,
                               activeGroup?: string): Promise<FieldDocument|undefined> {
 
-        MenuService.setContext('docedit');
+        this.menuService.setContext('docedit');
 
         const doceditRef = this.modalService.open(DoceditComponent,
             { size: 'lg', backdrop: 'static', keyboard: false });
@@ -37,7 +38,7 @@ export class DoceditLauncher {
             if (closeReason === 'cancel') this.viewFacade.removeNewDocument();
         }
 
-        MenuService.setContext('default');
+        this.menuService.setContext('default');
 
         return result;
     }

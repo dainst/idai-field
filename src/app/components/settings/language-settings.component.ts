@@ -5,7 +5,7 @@ import {clone} from 'tsfun/struct';
 import {map} from 'tsfun/associative';
 import {Settings} from '../../core/settings/settings';
 import {LanguagePickerModalComponent} from './language-picker-modal.component';
-import {MenuService} from '../menu-service';
+import {MenuContext, MenuService} from '../menu-service';
 
 const cldr = typeof window !== 'undefined' ? window.require('cldr') : require('cldr');
 const remote = typeof window !== 'undefined' ? window.require('electron').remote : require('electron').remote;
@@ -57,7 +57,7 @@ export class LanguageSettingsComponent {
 
     public async addLanguage() {
 
-        this.menuService.setContext('modal');
+        this.menuService.setContext(MenuContext.MODAL);
 
         const modalReference: NgbModalRef
             = this.modalService.open(LanguagePickerModalComponent);
@@ -68,7 +68,7 @@ export class LanguageSettingsComponent {
         } catch (err) {
             // Modal has been canceled
         } finally {
-            this.menuService.setContext('default');
+            this.menuService.setContext(MenuContext.DEFAULT);
         }
     }
 

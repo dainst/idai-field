@@ -31,7 +31,7 @@ import {ViewFacade} from '../../core/resources/view/view-facade';
 import {Messages} from '../messages/messages';
 import {ProjectCategories} from '../../core/configuration/project-categories';
 import {ExtensionUtil} from '../../core/util/extension-util';
-import {MenuService} from '../menu-service';
+import {MenuContext, MenuService} from '../menu-service';
 
 
 @Component({
@@ -102,7 +102,7 @@ export class ImportComponent implements OnInit {
 
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape' && this.menuService.getContext() === 'default') {
+        if (event.key === 'Escape' && this.menuService.getContext() === MenuContext.DEFAULT) {
             await this.tabManager.openActiveTab();
         }
     }
@@ -198,7 +198,7 @@ export class ImportComponent implements OnInit {
             this.importState.file as any, this.importState.url as any, this.http);
         if (!reader) return this.messages.add([M.IMPORT_READER_GENERIC_START_ERROR]);
 
-        this.menuService.setContext('modal');
+        this.menuService.setContext(MenuContext.MODAL);
         const uploadModalRef: any = this.modalService.open(
             UploadModalComponent,
             { backdrop: 'static', keyboard: false }
@@ -217,7 +217,7 @@ export class ImportComponent implements OnInit {
         await this.synchronizationService.startSync();
 
         uploadModalRef.close();
-        this.menuService.setContext('default');
+        this.menuService.setContext(MenuContext.DEFAULT);
 
         if (importReport) this.showImportResult(importReport);
     }

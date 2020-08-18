@@ -5,7 +5,7 @@ import {Resource} from 'idai-components-2';
 import {DoceditComponent} from '../../../docedit.component';
 import {TypeRelationPickerComponent} from './type-relation-picker.component';
 import {FieldReadDatastore} from '../../../../../core/datastore/field/field-read-datastore';
-import {MenuService} from '../../../../menu-service';
+import {MenuContext, MenuService} from '../../../../menu-service';
 
 type ResourceIdentifier = string;
 const INSTANCE_OF = 'isInstanceOf';
@@ -40,7 +40,7 @@ export class TypeRelationComponent implements OnChanges {
 
     public async openInstanceOfModal() {
 
-        this.menuService.setContext('modal');
+        this.menuService.setContext(MenuContext.MODAL);
         this.doceditComponent.subModalOpened = true;
 
         const typeRelationPicker: NgbModalRef = this.modalService.open(
@@ -54,7 +54,7 @@ export class TypeRelationComponent implements OnChanges {
         } catch { // cancelled
         } finally {
             this.doceditComponent.subModalOpened = false;
-            this.menuService.setContext('default');
+            this.menuService.setContext(MenuContext.DEFAULT);
         }
     }
 

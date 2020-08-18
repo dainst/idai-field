@@ -18,7 +18,7 @@ import {TabManager} from '../../../core/tabs/tab-manager';
 import {PLACEHOLDER} from '../../../core/images/row/image-row';
 import {makeLookup} from 'src/app/core/util/transformers';
 import {ProjectCategories} from '../../../core/configuration/project-categories';
-import {MenuService} from '../../menu-service';
+import {MenuContext, MenuService} from '../../menu-service';
 
 
 @Component({
@@ -102,7 +102,7 @@ export class TypesComponent extends BaseList implements OnChanges {
 
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape' && this.menuService.getContext() === 'default') {
+        if (event.key === 'Escape' && this.menuService.getContext() === MenuContext.DEFAULT) {
             await this.tabManager.openActiveTab();
         }
     }

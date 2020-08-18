@@ -5,7 +5,7 @@ import {ImageGridComponent} from '../grid/image-grid.component';
 import {ImageOverviewFacade} from '../../../core/images/overview/view/imageoverview-facade';
 import {ImageUploadResult} from '../upload/image-uploader';
 import {ImageViewModalComponent} from '../../viewmodal/image/image-view-modal.component';
-import {MenuService} from '../../menu-service';
+import {MenuContext, MenuService} from '../../menu-service';
 import {M} from '../../messages/m';
 import {Category} from '../../../core/configuration/model/category';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
@@ -108,7 +108,7 @@ export class ImageOverviewComponent implements OnInit {
 
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape' && this.menuService.getContext() === 'default' && !this.hasSelectedImages()) {
+        if (event.key === 'Escape' && this.menuService.getContext() === MenuContext.DEFAULT && !this.hasSelectedImages()) {
             await this.tabManager.openActiveTab();
         }
     }
@@ -116,7 +116,7 @@ export class ImageOverviewComponent implements OnInit {
 
     public async showImage(document: ImageDocument) {
 
-        this.menuService.setContext('modal');
+        this.menuService.setContext(MenuContext.MODAL);
 
         this.imageOverviewFacade.select(document);
 
@@ -130,7 +130,7 @@ export class ImageOverviewComponent implements OnInit {
         );
         await modalRef.result;
 
-        this.menuService.setContext('default');
+        this.menuService.setContext(MenuContext.DEFAULT);
     }
 
 

@@ -9,7 +9,7 @@ import {ProjectNameValidator} from '../../core/model/project-name-validator';
 import {TabManager} from '../../core/tabs/tab-manager';
 import {ProjectNameValidatorMsgConversion} from '../messages/project-name-validator-msg-conversion';
 import {Messages} from '../messages/messages';
-import {MenuService} from '../menu-service';
+import {MenuContext, MenuService} from '../menu-service';
 
 
 @Component({
@@ -45,7 +45,7 @@ export class BackupLoadingComponent {
 
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape' && this.menuService.getContext() === 'default') {
+        if (event.key === 'Escape' && this.menuService.getContext() === MenuContext.DEFAULT) {
             await this.tabManager.openActiveTab();
         }
     }
@@ -59,13 +59,13 @@ export class BackupLoadingComponent {
         if (errorMessage) return this.messages.add(errorMessage);
 
         this.running = true;
-        this.menuService.setContext('modal');
+        this.menuService.setContext(MenuContext.MODAL);
         this.openModal();
 
         await this.readBackupFile();
 
         this.running = false;
-        this.menuService.setContext('default');
+        this.menuService.setContext(MenuContext.DEFAULT);
         this.closeModal();
     }
 

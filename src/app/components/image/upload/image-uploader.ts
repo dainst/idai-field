@@ -15,7 +15,7 @@ import {ProjectConfiguration} from '../../../core/configuration/project-configur
 import {Imagestore} from '../../../core/images/imagestore/imagestore';
 import {IdaiFieldFindResult} from '../../../core/datastore/cached/cached-read-datastore';
 import {readWldFile} from '../../../core/images/wld/wld-import';
-import {MenuService} from '../../menu-service';
+import {MenuContext, MenuService} from '../../menu-service';
 
 
 export interface ImageUploadResult {
@@ -72,7 +72,7 @@ export class ImageUploader {
             const category: Category|undefined = await this.chooseCategory(imageFiles.length, depictsRelationTarget);
             if (!category) return uploadResult;
 
-            this.menuService.setContext('modal');
+            this.menuService.setContext(MenuContext.MODAL);
             const uploadModalRef = this.modalService.open(
                 UploadModalComponent, { backdrop: 'static', keyboard: false }
             );
@@ -80,7 +80,7 @@ export class ImageUploader {
                 imageFiles, category, uploadResult, depictsRelationTarget
             );
             uploadModalRef.close();
-            this.menuService.setContext('default');
+            this.menuService.setContext(MenuContext.DEFAULT);
         }
 
         const wldFiles = files.filter(file =>
@@ -113,7 +113,7 @@ export class ImageUploader {
         const imageCategory = this.projectConfiguration.getCategory('Image');
         if ((imageCategory.children.length > 0)
                 || fileCount >= 100 || depictsRelationTarget) {
-            this.menuService.setContext('modal');
+            this.menuService.setContext(MenuContext.MODAL);
             const modal: NgbModalRef = this.modalService.open(
                 ImageCategoryPickerModalComponent, { backdrop: 'static', keyboard: false }
             );
@@ -127,7 +127,7 @@ export class ImageUploader {
                 // Modal has been cancelled
                 return undefined;
             } finally {
-                this.menuService.setContext('default');
+                this.menuService.setContext(MenuContext.DEFAULT);
             }
         } else {
             return imageCategory;

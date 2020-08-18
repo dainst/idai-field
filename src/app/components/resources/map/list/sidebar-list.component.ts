@@ -9,7 +9,7 @@ import {ViewFacade} from '../../../../core/resources/view/view-facade';
 import {NavigationPath} from '../../../../core/resources/view/state/navigation-path';
 import {NavigationService} from '../../../../core/resources/navigation/navigation-service';
 import {ContextMenu} from '../../widgets/context-menu';
-import {MenuService} from '../../../menu-service';
+import {MenuContext, MenuService} from '../../../menu-service';
 
 
 @Component({
@@ -125,7 +125,7 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
                 break;
             case 'edit-geometry':
                 await this.viewFacade.setSelectedDocument(document.resource.id);
-                this.menuService.setContext('geometryedit');
+                this.menuService.setContext(MenuContext.GEOMETRY_EDIT);
                 break;
             case 'create-polygon':
                 await this.viewFacade.setSelectedDocument(document.resource.id);

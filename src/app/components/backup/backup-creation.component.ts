@@ -7,7 +7,7 @@ import {BackupProvider} from './backup-provider';
 import {M} from '../messages/m';
 import {TabManager} from '../../core/tabs/tab-manager';
 import {Messages} from '../messages/messages';
-import {MenuService} from '../menu-service';
+import {MenuContext, MenuService} from '../menu-service';
 
 
 @Component({
@@ -42,7 +42,7 @@ export class BackupCreationComponent {
 
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape' && this.menuService.getContext() === 'default') {
+        if (event.key === 'Escape' && this.menuService.getContext() === MenuContext.DEFAULT) {
             await this.tabManager.openActiveTab();
         }
     }
@@ -56,13 +56,13 @@ export class BackupCreationComponent {
         if (!filePath) return;
 
         this.running = true;
-        this.menuService.setContext('modal');
+        this.menuService.setContext(MenuContext.MODAL);
         this.openModal();
 
         await this.writeBackupFile(filePath);
 
         this.running = false;
-        this.menuService.setContext('default');
+        this.menuService.setContext(MenuContext.DEFAULT);
         this.closeModal();
     }
 

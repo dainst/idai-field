@@ -22,7 +22,7 @@ import {ViewFacade} from '../../core/resources/view/view-facade';
 import {Messages} from '../messages/messages';
 import {Query} from '../../core/datastore/model/query';
 import {ProjectCategories} from '../../core/configuration/project-categories';
-import {MenuService} from '../menu-service';
+import {MenuContext, MenuService} from '../menu-service';
 
 const remote = typeof window !== 'undefined' ? window.require('electron').remote : require('electron').remote;
 
@@ -104,7 +104,7 @@ export class ExportComponent implements OnInit {
 
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape' && this.menuService.getContext() === 'default') {
+        if (event.key === 'Escape' && this.menuService.getContext() === MenuContext.DEFAULT) {
             await this.tabManager.openActiveTab();
         }
     }
@@ -133,7 +133,7 @@ export class ExportComponent implements OnInit {
         if (!filePath) return;
 
         this.running = true;
-        this.menuService.setContext('modal');
+        this.menuService.setContext(MenuContext.MODAL);
         this.openModal();
 
         try {
@@ -147,7 +147,7 @@ export class ExportComponent implements OnInit {
         }
 
         this.running = false;
-        this.menuService.setContext('default');
+        this.menuService.setContext(MenuContext.DEFAULT);
         this.closeModal();
     }
 

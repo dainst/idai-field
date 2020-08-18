@@ -14,7 +14,7 @@ import {Category} from '../../core/configuration/model/category';
 import {TabManager} from '../../core/tabs/tab-manager';
 import {ResourcesViewMode, ViewFacade} from '../../core/resources/view/view-facade';
 import {NavigationService} from '../../core/resources/navigation/navigation-service';
-import {MenuService} from '../menu-service';
+import {MenuContext, MenuService} from '../menu-service';
 import {Messages} from '../messages/messages';
 import {ProjectCategories} from '../../core/configuration/project-categories';
 import {ProjectConfiguration} from '../../core/configuration/project-configuration';
@@ -169,7 +169,7 @@ export class ResourcesComponent implements OnDestroy {
     public async moveDocument(document: FieldDocument) {
 
         this.quitGeometryEditing();
-        this.menuService.setContext('modal');
+        this.menuService.setContext(MenuContext.MODAL);
 
         const modalRef: NgbModalRef = this.modalService.open(MoveModalComponent, { keyboard: false });
         modalRef.componentInstance.initialize(document);
@@ -184,14 +184,14 @@ export class ResourcesComponent implements OnDestroy {
             // Otherwise, the move modal has been canceled
         }
 
-        this.menuService.setContext('default');
+        this.menuService.setContext(MenuContext.DEFAULT);
     }
 
 
     public async deleteDocument(document: FieldDocument) {
 
         this.quitGeometryEditing();
-        this.menuService.setContext('modal');
+        this.menuService.setContext(MenuContext.MODAL);
 
         try {
             await this.resourceDeletion.delete(document);
@@ -205,7 +205,7 @@ export class ResourcesComponent implements OnDestroy {
             // Otherwise, the delete modal has been canceled.
         }
 
-        this.menuService.setContext('default');
+        this.menuService.setContext(MenuContext.DEFAULT);
     }
 
 
@@ -347,13 +347,13 @@ export class ResourcesComponent implements OnDestroy {
 
     public quitGeometryEditing(document: Document|undefined = this.viewFacade.getSelectedDocument()) {
 
-        if (this.menuService.getContext() !== 'geometryedit') return;
+        if (this.menuService.getContext() !== MenuContext.GEOMETRY_EDIT) return;
 
         if (document && document.resource.geometry && !document.resource.geometry.coordinates) {
             delete document.resource.geometry;
         }
 
-        this.menuService.setContext('default');
+        this.menuService.setContext(MenuContext.DEFAULT);
     }
 
 
@@ -405,6 +405,6 @@ export class ResourcesComponent implements OnDestroy {
 
     private startGeometryEditing() {
 
-        this.menuService.setContext('geometryedit');
+        this.menuService.setContext(MenuContext.GEOMETRY_EDIT);
     }
 }

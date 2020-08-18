@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {Document, NewDocument, FieldDocument} from 'idai-components-2';
 import {DoceditComponent} from '../../docedit/docedit.component';
-import {MenuService} from '../../menu-service';
+import {MenuContext, MenuService} from '../../menu-service';
 import {ViewFacade} from '../../../core/resources/view/view-facade';
 
 
@@ -22,7 +22,7 @@ export class DoceditLauncher {
     public async editDocument(document: Document|NewDocument,
                               activeGroup?: string): Promise<FieldDocument|undefined> {
 
-        this.menuService.setContext('docedit');
+        this.menuService.setContext(MenuContext.DOCEDIT);
 
         const doceditRef = this.modalService.open(DoceditComponent,
             { size: 'lg', backdrop: 'static', keyboard: false });
@@ -38,7 +38,7 @@ export class DoceditLauncher {
             if (closeReason === 'cancel') this.viewFacade.removeNewDocument();
         }
 
-        this.menuService.setContext('default');
+        this.menuService.setContext(MenuContext.DEFAULT);
 
         return result;
     }

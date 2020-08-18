@@ -2,7 +2,7 @@ import {NgbActiveModal, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {Document, FieldDocument} from 'idai-components-2';
 import {DoceditComponent} from '../docedit/docedit.component';
 import {RoutingService} from '../routing-service';
-import {MenuService} from '../menu-service';
+import {MenuContext, MenuService} from '../menu-service';
 import {Messages} from '../messages/messages';
 import {ImageRowItem} from '../../core/images/row/image-row';
 
@@ -30,7 +30,7 @@ i;
 
     public onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape' && this.menuService.getContext() === 'modal') this.close();
+        if (event.key === 'Escape' && this.menuService.getContext() === MenuContext.MODAL) this.close();
     }
 
 
@@ -48,7 +48,7 @@ i;
 
     public async startEdit(isImageDocument?: boolean) {
 
-        this.menuService.setContext('docedit');
+        this.menuService.setContext(MenuContext.DOCEDIT);
 
         const doceditModalRef = this.modalService.open(
             DoceditComponent,
@@ -64,7 +64,7 @@ i;
             // Cancelled
         }
 
-        this.menuService.setContext('modal');
+        this.menuService.setContext(MenuContext.MODAL);
     }
 
 

@@ -8,7 +8,7 @@ import {DocumentReadDatastore} from '../../../core/datastore/document-read-datas
 import {ChangesStream} from '../../../core/datastore/changes/changes-stream';
 import {ViewFacade} from '../../../core/resources/view/view-facade';
 import {NavigationPath} from '../../../core/resources/view/state/navigation-path';
-import {MenuService} from '../../menu-service';
+import {MenuContext, MenuService} from '../../menu-service';
 import {Messages} from '../../messages/messages';
 
 
@@ -58,10 +58,10 @@ export class ResourcesMapComponent {
 
     public isPopoverMenuOpened = () => this.resourcesComponent.isPopoverMenuOpened();
 
-    public isEditingGeometry = () => this.menuService.getContext() === 'geometryedit';
+    public isEditingGeometry = () => this.menuService.getContext() === MenuContext.GEOMETRY_EDIT;
 
-    public isModalOpened = () => this.menuService.getContext() === 'modal'
-        || this.menuService.getContext() === 'docedit';
+    public isModalOpened = () => this.menuService.getContext() === MenuContext.MODAL
+        || this.menuService.getContext() === MenuContext.DOCEDIT;
 
 
     public async onKeyDown(event: KeyboardEvent) {

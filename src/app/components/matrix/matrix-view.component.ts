@@ -22,7 +22,7 @@ import IS_BELOW = PositionRelations.BELOW;
 import IS_CUT_BY = PositionRelations.CUTBY;
 import CUTS = PositionRelations.CUTS;
 import {TabManager} from '../../core/tabs/tab-manager';
-import {MenuService} from '../menu-service';
+import {MenuContext, MenuService} from '../menu-service';
 
 const Viz = require('viz.js');
 
@@ -98,7 +98,7 @@ export class MatrixViewComponent implements OnInit {
 
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape' && this.menuService.getContext() === 'default') {
+        if (event.key === 'Escape' && this.menuService.getContext() === MenuContext.DEFAULT) {
             await this.tabManager.openActiveTab();
         }
     }
@@ -206,7 +206,7 @@ export class MatrixViewComponent implements OnInit {
 
     private async openEditorModal(docToEdit: FeatureDocument) {
 
-        this.menuService.setContext('docedit');
+        this.menuService.setContext(MenuContext.DOCEDIT);
 
         const doceditRef = this.modalService.open(DoceditComponent,
             { size: 'lg', backdrop: 'static', keyboard: false });
@@ -220,7 +220,7 @@ export class MatrixViewComponent implements OnInit {
 
         await doceditRef.result
             .then(reset, reason => {
-                this.menuService.setContext('default');
+                this.menuService.setContext(MenuContext.DEFAULT);
                 if (reason === 'deleted') return reset();
             });
     }

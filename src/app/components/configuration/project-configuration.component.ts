@@ -11,7 +11,7 @@ import {TabManager} from '../../core/tabs/tab-manager';
 import {Named} from '../../core/util/named';
 import {RelationDefinition} from '../../core/configuration/model/relation-definition';
 import {TypeRelations} from '../../core/model/relation-constants';
-import {MenuService} from '../menu-service';
+import {MenuContext, MenuService} from '../menu-service';
 
 const locale: string = typeof window !== 'undefined'
   ? window.require('electron').remote.getGlobal('config').locale
@@ -58,7 +58,7 @@ export class ProjectConfigurationComponent {
 
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape' && this.menuService.getContext() === 'default') {
+        if (event.key === 'Escape' && this.menuService.getContext() === MenuContext.DEFAULT) {
             await this.tabManager.openActiveTab();
         }
     }

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {Document, ImageDocument} from 'idai-components-2';
-import {MenuService} from '../../menu-service';
+import {MenuContext, MenuService} from '../../menu-service';
 import {ImageReadDatastore} from '../../../core/datastore/field/image-read-datastore';
 import {ImageViewModalComponent} from '../../viewmodal/image/image-view-modal.component';
 import {ResourceViewModalComponent} from '../../viewmodal/resource/resource-view-modal.component';
@@ -21,7 +21,7 @@ export class ViewModalLauncher {
 
     public async openImageViewModal(document: Document, resourcesComponent: ResourcesComponent) {
 
-        this.menuService.setContext('modal');
+        this.menuService.setContext(MenuContext.MODAL);
 
         const images: Array<ImageDocument> = await this.getImageDocuments(
             document.resource.relations.isDepictedIn
@@ -38,7 +38,7 @@ export class ViewModalLauncher {
         );
         await modalRef.result;
 
-        this.menuService.setContext('default');
+        this.menuService.setContext(MenuContext.DEFAULT);
     }
 
 
@@ -48,7 +48,7 @@ export class ViewModalLauncher {
     public async openResourceViewModal(document: Document,
                                        resourcesComponent: ResourcesComponent): Promise<boolean> {
 
-        this.menuService.setContext('modal');
+        this.menuService.setContext(MenuContext.MODAL);
 
         const modalRef: NgbModalRef = this.modalService.open(
             ResourceViewModalComponent,
@@ -57,7 +57,7 @@ export class ViewModalLauncher {
         await modalRef.componentInstance.initialize(document);
         const edited: boolean = await modalRef.result;
 
-        this.menuService.setContext('default');
+        this.menuService.setContext(MenuContext.DEFAULT);
 
         return edited;
     }

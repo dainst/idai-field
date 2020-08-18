@@ -6,7 +6,7 @@ import {M} from '../messages/m';
 import {TabManager} from '../../core/tabs/tab-manager';
 import {Messages} from '../messages/messages';
 import {reload} from '../../core/common/reload';
-import {MenuService} from '../menu-service';
+import {MenuContext, MenuService} from '../menu-service';
 
 const address = typeof window !== 'undefined' ? window.require('address') : require('address');
 const remote = typeof window !== 'undefined' ? window.require('electron').remote : require('electron').remote;
@@ -44,7 +44,7 @@ export class SettingsComponent implements OnInit {
 
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape' && this.menuService.getContext() === 'default') {
+        if (event.key === 'Escape' && this.menuService.getContext() === MenuContext.DEFAULT) {
             await this.tabManager.openActiveTab();
         }
     }

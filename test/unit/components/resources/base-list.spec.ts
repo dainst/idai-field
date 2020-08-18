@@ -1,4 +1,6 @@
 import {BaseList} from '../../../../src/app/components/resources/base-list';
+import {MenuContext} from '../../../../src/app/components/menu-service';
+
 
 /**
  * @author Daniel de Oliveira
@@ -60,7 +62,7 @@ describe('BaseList', () => {
 
     it('plus button not shown if isEditingGeometry', () => {
 
-        menuService.getContext.and.returnValue('geometryedit');
+        menuService.getContext.and.returnValue(MenuContext.GEOMETRY_EDIT);
         expect(baseList.isPlusButtonShown()).toBeFalsy();
     });
 

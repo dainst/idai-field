@@ -6,7 +6,7 @@ import {Observable, Observer} from 'rxjs';
 import {Document} from 'idai-components-2';
 import {ViewFacade} from '../core/resources/view/view-facade';
 import {ProjectConfiguration} from '../core/configuration/project-configuration';
-import {MenuService} from './menu-service';
+import {MenuContext, MenuService} from './menu-service';
 import {ProjectsModalComponent} from './navbar/projects-modal.component';
 import {SettingsService} from '../core/settings/settings-service';
 import {DatastoreErrors} from '../core/datastore/model/datastore-errors';
@@ -86,7 +86,7 @@ export class RoutingService {
 
     public async openProjectsModal(openConflictResolver: boolean = false) {
 
-        this.menuService.setContext('projects');
+        this.menuService.setContext(MenuContext.PROJECTS);
 
         const ref: NgbModalRef = this.modalService.open(ProjectsModalComponent, { keyboard: false });
         ref.componentInstance.selectedProject = this.settingsService.getSelectedProject();
@@ -97,7 +97,7 @@ export class RoutingService {
         } catch(err) {
             // Projects modal has been canceled
         } finally {
-            this.menuService.setContext('default');
+            this.menuService.setContext(MenuContext.DEFAULT);
         }
     }
 

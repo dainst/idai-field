@@ -5,7 +5,17 @@ const ipcRenderer = typeof window !== 'undefined' ? window.require('electron').i
 const remote = typeof window !== 'undefined' ? window.require('electron').remote : require('electron').remote;
 
 
-type MenuContext = 'default'|'docedit'|'modal'|'projects'|'geometryedit';
+type MenuContext = 'default'|'docedit'|'modal'|'projects'|'geometryEdit';
+
+
+export module MenuContext {
+
+    export const DEFAULT = 'default';
+    export const DOCEDIT = 'docedit';
+    export const MODAL = 'modal';
+    export const PROJECTS = 'projects';
+    export const GEOMETRY_EDIT = 'geometryEdit';
+}
 
 
 @Injectable()

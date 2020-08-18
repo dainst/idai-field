@@ -6,7 +6,7 @@ import {Loading} from '../widgets/loading';
 import {PlusButtonStatus} from './plus-button.component';
 import {NavigationPath} from '../../core/resources/view/state/navigation-path';
 import {ViewFacade} from '../../core/resources/view/view-facade';
-import {MenuService} from '../menu-service';
+import {MenuContext, MenuService} from '../menu-service';
 
 
 /**
@@ -46,7 +46,7 @@ export class BaseList {
 
     public isPlusButtonShown(): boolean {
 
-        return this.menuService.getContext() !== 'geometryedit'
+        return this.menuService.getContext() !== MenuContext.GEOMETRY_EDIT
             && this.viewFacade.isReady()
             && (!this.loading.isLoading() || this.loading.getContext() !== undefined);
     }

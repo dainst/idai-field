@@ -5,7 +5,7 @@ import {Chapter, HelpLoader} from './help-loader';
 import {SettingsService} from '../../core/settings/settings-service';
 import {TabManager} from '../../core/tabs/tab-manager';
 import {Settings} from '../../core/settings/settings';
-import {MenuService} from '../menu-service';
+import {MenuContext, MenuService} from '../menu-service';
 
 const remote = typeof window !== 'undefined' ? window.require('electron').remote : require('electron').remote;
 
@@ -59,7 +59,7 @@ export class HelpComponent implements OnInit {
 
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape' && this.menuService.getContext() === 'default') {
+        if (event.key === 'Escape' && this.menuService.getContext() === MenuContext.DEFAULT) {
             await this.tabManager.openActiveTab();
         }
     }

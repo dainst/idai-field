@@ -5,7 +5,7 @@ import {SettingsService} from '../../core/settings/settings-service';
 import {DoceditComponent} from '../docedit/docedit.component';
 import {M} from '../messages/m';
 import {ProjectNameValidator} from '../../core/model/project-name-validator';
-import {MenuService} from '../menu-service';
+import {MenuContext, MenuService} from '../menu-service';
 import {StateSerializer} from '../../core/common/state-serializer';
 import {DocumentReadDatastore} from '../../core/datastore/document-read-datastore';
 import {ProjectNameValidatorMsgConversion} from '../messages/project-name-validator-msg-conversion';
@@ -73,7 +73,7 @@ export class ProjectsModalComponent implements AfterViewInit, AfterViewChecked {
 
     public onKeyDown(event: KeyboardEvent) {
 
-        if (this.menuService.getContext() === 'projects' && event.key === 'Escape') {
+        if (this.menuService.getContext() === MenuContext.PROJECTS && event.key === 'Escape') {
             if (this.createPopover.isOpen()) {
                 this.createPopover.close();
             } else if (this.deletePopover.isOpen()) {
@@ -145,7 +145,7 @@ export class ProjectsModalComponent implements AfterViewInit, AfterViewChecked {
 
     public async editProject(activeGroup: string = 'stem') {
 
-        this.menuService.setContext('docedit');
+        this.menuService.setContext(MenuContext.DOCEDIT);
 
         const projectDocument: Document = await this.datastore.get('project');
 
@@ -161,7 +161,7 @@ export class ProjectsModalComponent implements AfterViewInit, AfterViewChecked {
             // Docedit modal has been canceled
         }
 
-        this.menuService.setContext('projects');
+        this.menuService.setContext(MenuContext.PROJECTS);
     }
 
 

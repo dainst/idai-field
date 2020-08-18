@@ -7,7 +7,7 @@ import {ValuelistDefinition} from './valuelist-definition';
 export interface FieldDefinition {
 
     name: string;
-    inputType: FieldDefinition.InputType;
+    inputType: FieldDefinition.InputType,
     label?: string;
 
     group: string;
@@ -61,13 +61,12 @@ export module FieldDefinition {
         |'dating'
         |'date'
         |'dimension'
-        |'dimensionVerticalExtent'
         |'literature'
         |'geometry'
         |'instanceOf'
         |'default';
 
-    export module InputType { // TODO use constants.ts instead
+    export module InputType {
 
         export const INPUT = 'input';
         export const UNSIGNEDINT = 'unsignedInt';
@@ -83,7 +82,6 @@ export module FieldDefinition {
         export const DATING = 'dating';
         export const DATE = 'date';
         export const DIMENSION = 'dimension';
-        export const DIMENSION_VERTICAL_EXTENT = 'dimensionVerticalExtent';
         export const LITERATURE = 'literature';
         export const GEOMETRY = 'geometry';
         export const DEFAULT = 'default';

@@ -1,9 +1,9 @@
-import {is, isObject, isString, on, Predicate} from 'tsfun';
-import {Dating, Dimension, DimensionVerticalExtent, Literature, Document, FieldGeometry, NewDocument, NewResource,
+import {includedIn, is, isNot, isObject, isString, on, Predicate} from 'tsfun';
+import {Dating, Dimension, Literature, Document, FieldGeometry, NewDocument, NewResource,
     Resource} from 'idai-components-2';
 import {validateFloat, validateUnsignedFloat, validateUnsignedInt} from '../util/number-util';
 import {ValidationErrors} from './validation-errors';
-import {INPUT_TYPES} from '../constants';
+import {INPUT_TYPE, INPUT_TYPES} from '../constants';
 import {ProjectConfiguration} from '../configuration/project-configuration';
 import {FieldDefinition} from '../configuration/model/field-definition';
 import {RelationDefinition} from '../configuration/model/relation-definition';
@@ -90,17 +90,6 @@ export module Validations {
     }
 
 
-    export function assertCorrectnessOfDimensionVerticalExtentValues(document: Document|NewDocument, projectConfiguration: ProjectConfiguration) {
-
-        assertValidityOfObjectArrays(
-            document,
-            projectConfiguration,
-            INPUT_TYPES.DIMENSION_VERTICAL_EXTENT,
-            ValidationErrors.INVALID_DIMENSION_VALUES, // TODO review
-            DimensionVerticalExtent.isValid);
-    }
-
-
     export function assertCorrectnessOfDimensionValues(document: Document|NewDocument,
                                                        projectConfiguration: ProjectConfiguration) {
 
@@ -127,7 +116,7 @@ export module Validations {
 
     function assertValidityOfObjectArrays(document: Document|NewDocument,
                                           projectConfiguration: ProjectConfiguration,
-                                          inputType: 'dating'|'dimension'|'dimensionVerticalExtent'|'literature',
+                                          inputType: 'dating'|'dimension'|'literature',
                                           error: string,
                                           isValid: Predicate) {
 
@@ -449,7 +438,7 @@ export module Validations {
 
     export function validateObjectArrayFields(resource: Resource|NewResource,
                                               projectConfiguration: ProjectConfiguration,
-                                              inputType: 'dating'|'dimension'|'dimensionVerticalExtent'|'literature',
+                                              inputType: 'dating'|'dimension'|'literature',
                                               isValid: (object: any) => boolean): string[] {
 
         return validateFields(resource, projectConfiguration, inputType, (fieldContent: any) => {

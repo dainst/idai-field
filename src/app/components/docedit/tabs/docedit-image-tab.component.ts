@@ -6,7 +6,7 @@ import {ImagePickerComponent} from '../widgets/image-picker.component';
 import {ImageGridComponent} from '../../image/grid/image-grid.component';
 import {ImageReadDatastore} from '../../../core/datastore/field/image-read-datastore';
 import {SortUtil} from '../../../core/util/sort-util';
-import {DoceditComponent} from '../docedit.component';
+import {MenuContext, MenuService} from '../../menu-service';
 
 @Component({
     selector: 'docedit-image-tab',
@@ -28,7 +28,7 @@ export class DoceditImageTabComponent {
 
     constructor(private datastore: ImageReadDatastore,
                 private modalService: NgbModal,
-                private doceditComponent: DoceditComponent,
+                private menuService: MenuService,
                 private i18n: I18n) {}
 
 
@@ -164,7 +164,7 @@ export class DoceditImageTabComponent {
 
     public async openImagePicker() {
 
-        this.doceditComponent.subModalOpened = true;
+        this.menuService.setContext(MenuContext.MODAL);
 
         if (document.activeElement) (document.activeElement as HTMLElement).blur();
 
@@ -179,7 +179,7 @@ export class DoceditImageTabComponent {
         } catch(err) {
             // Image picker modal has been canceled
         } finally {
-            this.doceditComponent.subModalOpened = false;
+            this.menuService.setContext(MenuContext.DOCEDIT);
         }
     }
 }

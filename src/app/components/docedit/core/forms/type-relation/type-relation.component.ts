@@ -41,7 +41,6 @@ export class TypeRelationComponent implements OnChanges {
     public async openInstanceOfModal() {
 
         this.menuService.setContext(MenuContext.MODAL);
-        this.doceditComponent.subModalOpened = true;
 
         const typeRelationPicker: NgbModalRef = this.modalService.open(
             TypeRelationPickerComponent, { size: 'lg', keyboard: false }
@@ -53,8 +52,7 @@ export class TypeRelationComponent implements OnChanges {
             this.addRelation(result.resource.id);
         } catch { // cancelled
         } finally {
-            this.doceditComponent.subModalOpened = false;
-            this.menuService.setContext(MenuContext.DEFAULT);
+            this.menuService.setContext(MenuContext.DOCEDIT);
         }
     }
 

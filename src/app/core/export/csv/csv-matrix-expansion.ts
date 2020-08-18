@@ -96,7 +96,7 @@ export module CSVMatrixExpansion {
             begin && begin.inputType ? begin.inputType : '',
             begin && begin.inputYear ? begin.inputYear.toString() : '',
             end && end.inputType ? end.inputType : '',
-            end && end.inputYear ? end.inputYear.toString() : '',
+            end && end.inputYear ? end.inputYear.toString() : '', // TODO improve condition, should not only be truthy, but defined
             margin ? margin.toString() : '',
             source ? source : ''
         ];

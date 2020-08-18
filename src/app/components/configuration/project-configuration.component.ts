@@ -11,6 +11,7 @@ import {TabManager} from '../../core/tabs/tab-manager';
 import {Named} from '../../core/util/named';
 import {RelationDefinition} from '../../core/configuration/model/relation-definition';
 import {TypeRelations} from '../../core/model/relation-constants';
+import {MenuService} from '../menu-service';
 
 const locale: string = typeof window !== 'undefined'
   ? window.require('electron').remote.getGlobal('config').locale
@@ -36,7 +37,8 @@ export class ProjectConfigurationComponent {
 
 
     constructor(private projectConfiguration: ProjectConfiguration,
-                private tabManager: TabManager) {
+                private tabManager: TabManager,
+                private menuService: MenuService) {
 
         this.toplevelCategoriesArray = projectConfiguration.getCategoriesArray()
             .filter(category => !category.parentCategory);
@@ -56,7 +58,9 @@ export class ProjectConfigurationComponent {
 
     public async onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape') await this.tabManager.openActiveTab();
+        if (event.key === 'Escape' && this.menuService.getContext() === 'default') {
+            await this.tabManager.openActiveTab();
+        }
     }
 
 

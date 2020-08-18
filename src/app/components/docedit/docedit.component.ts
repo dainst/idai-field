@@ -18,6 +18,7 @@ import {DoceditErrors} from '../../core/docedit/docedit-errors';
 import {Group, Groups} from '../../core/configuration/model/group';
 import {Messages} from '../messages/messages';
 import {DatastoreErrors} from '../../core/datastore/model/datastore-errors';
+import {MenuContext, MenuService} from '../menu-service';
 
 
 @Component({
@@ -40,7 +41,6 @@ import {DatastoreErrors} from '../../core/datastore/model/datastore-errors';
 export class DoceditComponent {
 
     public activeGroup: string = Groups.STEM;
-    public subModalOpened: boolean = false;
     public fieldDefinitions: Array<FieldDefinition>|undefined;
     public groups: Array<Group>|undefined;
 
@@ -50,16 +50,15 @@ export class DoceditComponent {
     private escapeKeyPressed: boolean = false;
 
 
-    constructor(
-        public activeModal: NgbActiveModal,
-        public documentHolder: DocumentHolder,
-        private messages: Messages,
-        private modalService: NgbModal,
-        private datastore: DocumentDatastore,
-        public projectConfiguration: ProjectConfiguration,
-        private loading: Loading,
-        private i18n: I18n) {
-    }
+    constructor(public activeModal: NgbActiveModal,
+                public documentHolder: DocumentHolder,
+                private messages: Messages,
+                private modalService: NgbModal,
+                private datastore: DocumentDatastore,
+                public projectConfiguration: ProjectConfiguration,
+                private loading: Loading,
+                private menuService: MenuService,
+                private i18n: I18n) {}
 
     public isChanged = () => this.documentHolder.isChanged();
 
@@ -136,7 +135,7 @@ export class DoceditComponent {
 
     public async openDuplicateModal() {
 
-        this.subModalOpened = true;
+        this.menuService.setContext(MenuContext.MODAL);
         let numberOfDuplicates: number|undefined;
 
         try {
@@ -148,7 +147,7 @@ export class DoceditComponent {
         } catch(err) {
             // DuplicateModal has been canceled
         } finally {
-            this.subModalOpened = false;
+            this.menuService.setContext(MenuContext.DOCEDIT);
         }
 
         if (numberOfDuplicates !== undefined) await this.save(numberOfDuplicates);
@@ -219,19 +218,18 @@ export class DoceditComponent {
 
     private async onEscapeKeyDown(event: KeyboardEvent) {
 
-        if (!this.subModalOpened && !this.escapeKeyPressed) {
-            this.escapeKeyPressed = true;
+        if (this.menuService.getContext() === MenuContext.DOCEDIT && !this.escapeKeyPressed) {
             if (event.srcElement) (event.srcElement as HTMLElement).blur();
             await this.cancel();
-        } else {
-            this.escapeKeyPressed = true;
         }
+
+        this.escapeKeyPressed = true;
     }
 
 
     private async performQuickSave() {
 
-        if (this.isChanged() && !this.isLoading() && !this.subModalOpened) {
+        if (this.isChanged() && !this.isLoading() && this.menuService.getContext() === MenuContext.DOCEDIT) {
             await this.save();
         }
     }
@@ -255,7 +253,7 @@ export class DoceditComponent {
 
     private async openEditSaveDialogModal() {
 
-        this.subModalOpened = true;
+        this.menuService.setContext(MenuContext.MODAL);
 
         try {
             const modalRef: NgbModalRef = this.modalService.open(
@@ -273,7 +271,7 @@ export class DoceditComponent {
         } catch(err) {
             // EditSaveDialogModal has been canceled
         } finally {
-            this.subModalOpened = false;
+            this.menuService.setContext(MenuContext.MODAL);
         }
     }
 
@@ -322,7 +320,7 @@ export class DoceditComponent {
 
     private async handleDeletedConflict() {
 
-        this.subModalOpened = true;
+        this.menuService.setContext(MenuContext.MODAL);
 
         try {
             await this.modalService.open(
@@ -333,7 +331,7 @@ export class DoceditComponent {
             // ConflictDeletedModal has been canceled
         } finally {
             this.documentHolder.makeClonedDocAppearNew();
-            this.subModalOpened = false;
+            this.menuService.setContext(MenuContext.DOCEDIT);
         }
     }
 

@@ -26,7 +26,7 @@ export class DoceditLauncher {
 
         const doceditRef = this.modalService.open(DoceditComponent,
             { size: 'lg', backdrop: 'static', keyboard: false });
-        doceditRef.componentInstance.setDocument(document);
+        await doceditRef.componentInstance.setDocument(document);
         if (activeGroup) doceditRef.componentInstance.activeGroup = activeGroup;
 
         let result: FieldDocument|undefined;

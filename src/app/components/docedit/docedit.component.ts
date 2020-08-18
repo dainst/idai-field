@@ -271,7 +271,7 @@ export class DoceditComponent {
         } catch(err) {
             // EditSaveDialogModal has been canceled
         } finally {
-            this.menuService.setContext(MenuContext.MODAL);
+            this.menuService.setContext(MenuContext.DOCEDIT);
         }
     }
 

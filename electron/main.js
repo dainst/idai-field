@@ -51,7 +51,7 @@ const setLanguages = config => {
             config.languages = [config.locale];
         } else {
             config.languages = mainLanguages.includes(electron.app.getLocale())
-                ? electron.app.getLocale()
+                ? [electron.app.getLocale()]
                 : ['de'];
         }
     }

@@ -61,15 +61,15 @@ export class AppConfigurator {
             group: Groups.DIMENSION,
             positionValuelistId: 'position-values-expansion-default'
         },
-        dimensionVerticalExtent: {
-            inputType: FieldDefinition.InputType.DIMENSION,
-            group: Groups.POSITION,
-            positionValuelistId: 'position-values-edge-default'
-        },
         dimensionOther: {
             inputType: FieldDefinition.InputType.DIMENSION,
             group: Groups.DIMENSION,
             positionValuelistId: 'position-values-expansion-default'
+        },
+        dimensionVerticalExtent: {
+            inputType: FieldDefinition.InputType.DIMENSION_VERTICAL_EXTENT,
+            group: Groups.POSITION,
+            positionValuelistId: 'position-values-edge-default'
         },
         beginningDate: {
             inputType: FieldDefinition.InputType.DATE,

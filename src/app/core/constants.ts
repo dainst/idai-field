@@ -17,6 +17,7 @@ export module INPUT_TYPES {
     export const DROPDOWN_RANGE = 'dropdownRange';
     export const DATING = 'dating';
     export const DIMENSION = 'dimension';
+    export const DIMENSION_VERTICAL_EXTENT = 'dimensionVerticalExtent';
     export const LITERATURE = 'literature';
 }
 

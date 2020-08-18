@@ -61,7 +61,7 @@ export class DocumentHolder {
         return {
             invalidFields: this.validateFields(),
             invalidRelations: this.validateRelationFields()
-        }
+        };
     }
 
 
@@ -70,7 +70,7 @@ export class DocumentHolder {
         this.oldVersion = clone(document);
         this.clonedDocument = clone(document);
         this.inspectedRevisions = [];
-    };
+    }
 
 
     /**
@@ -138,6 +138,8 @@ export class DocumentHolder {
         Validations.assertUsageOfDotAsDecimalSeparator(this.clonedDocument, this.projectConfiguration);
         Validations.assertCorrectnessOfDatingValues(this.clonedDocument, this.projectConfiguration);
         Validations.assertCorrectnessOfDimensionValues(this.clonedDocument, this.projectConfiguration);
+        // TODO import validation
+        Validations.assertCorrectnessOfDimensionVerticalExtentValues(this.clonedDocument, this.projectConfiguration);
         Validations.assertCorrectnessOfBeginningAndEndDates(this.clonedDocument);
         await this.validator.assertIsRecordedInTargetsExist(this.clonedDocument);
         await this.validator.assertGeometryIsValid(this.clonedDocument);

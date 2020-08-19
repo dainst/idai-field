@@ -7,7 +7,8 @@ import {ValuelistDefinition} from './valuelist-definition';
 export interface FieldDefinition {
 
     name: string;
-    inputType: FieldDefinition.InputType,
+    inputType: FieldDefinition.InputType;
+    inputTypeOptions?: { validation?: { allowNegativeValues?: true }};
     label?: string;
 
     group: string;

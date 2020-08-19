@@ -8,18 +8,6 @@ export const RESOURCE_ID = 'resource.id';
 
 export const ISRECORDEDIN_CONTAIN = 'isRecordedIn:contain';
 
-// --
-
-export const INPUT_TYPE = 'inputType';
-
-export module INPUT_TYPES {
-
-    export const DROPDOWN_RANGE = 'dropdownRange';
-    export const DATING = 'dating';
-    export const DIMENSION = 'dimension';
-    export const LITERATURE = 'literature';
-}
-
 
 // Types
 

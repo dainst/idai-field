@@ -1,9 +1,8 @@
-import {includedIn, is, isNot, isObject, isString, on, Predicate} from 'tsfun';
+import {is, isArray, isObject, isString, on, Predicate} from 'tsfun';
 import {Dating, Dimension, Literature, Document, FieldGeometry, NewDocument, NewResource,
     Resource} from 'idai-components-2';
 import {validateFloat, validateUnsignedFloat, validateUnsignedInt} from '../util/number-util';
 import {ValidationErrors} from './validation-errors';
-import {INPUT_TYPE, INPUT_TYPES} from '../constants';
 import {ProjectConfiguration} from '../configuration/project-configuration';
 import {FieldDefinition} from '../configuration/model/field-definition';
 import {RelationDefinition} from '../configuration/model/relation-definition';
@@ -84,7 +83,7 @@ export module Validations {
         assertValidityOfObjectArrays(
             document,
             projectConfiguration,
-            INPUT_TYPES.DATING,
+            FieldDefinition.InputType.DATING,
             ValidationErrors.INVALID_DATING_VALUES,
             Dating.isValid);
     }
@@ -96,7 +95,7 @@ export module Validations {
         assertValidityOfObjectArrays(
             document,
             projectConfiguration,
-            INPUT_TYPES.DIMENSION,
+            FieldDefinition.InputType.DIMENSION,
             ValidationErrors.INVALID_DIMENSION_VALUES,
             Dimension.isValid);
     }
@@ -108,7 +107,7 @@ export module Validations {
         assertValidityOfObjectArrays(
             document,
             projectConfiguration,
-            INPUT_TYPES.LITERATURE,
+            FieldDefinition.InputType.LITERATURE,
             ValidationErrors.INVALID_LITERATURE_VALUES,
             Literature.isValid);
     }
@@ -439,11 +438,14 @@ export module Validations {
     export function validateObjectArrayFields(resource: Resource|NewResource,
                                               projectConfiguration: ProjectConfiguration,
                                               inputType: 'dating'|'dimension'|'literature',
-                                              isValid: (object: any) => boolean): string[] {
+                                              isValid: (object: any, options?: any) => boolean): string[] {
 
-        return validateFields(resource, projectConfiguration, inputType, (fieldContent: any) => {
-            return (!Array.isArray(fieldContent)
-                || fieldContent.filter((object: any) => !isValid(object)).length > 0);
+        return validateFields(resource, projectConfiguration, inputType,
+            (fieldContent: any, options?: any) => {
+
+            if (!isArray(fieldContent)) return true;
+
+            return fieldContent.filter((object: any) => !isValid(object, options)).length > 0;
         });
     }
 
@@ -451,13 +453,12 @@ export module Validations {
     export function validateFields(resource: Resource|NewResource,
                                    projectConfiguration: ProjectConfiguration,
                                    inputType: string,
-                                   isInvalid: (object: any) => boolean): string[] {
+                                   isInvalid: (object: any, options?: any) => boolean): string[] {
 
         return projectConfiguration.getFieldDefinitions(resource.category)
             .filter(field => field.inputType === inputType)
-            .filter(field => {
-                return resource[field.name] !== undefined
-                    && isInvalid(resource[field.name]);
-            }).map(field => field.name);
+            .filter(field => resource[field.name] !== undefined)
+            .filter(field => isInvalid(resource[field.name], field.inputTypeOptions?.validation))
+            .map(field => field.name);
     }
 }

@@ -42,8 +42,20 @@
   }
 
   #trench-selection-menu {
-    max-height: calc(100vh - 350px);
-    overflow-y: auto;
+    padding: 0;
+
+    #trench-selection-buttons {
+      max-height: calc(100vh - 350px);
+      overflow-y: auto;
+
+      button:first-child {
+        margin-top: 7px;
+      }
+
+      button:last-child {
+        margin-bottom: 7px;
+      }
+    }
   }
 
   #selected-trench-label {

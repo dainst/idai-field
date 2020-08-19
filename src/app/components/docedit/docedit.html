@@ -62,13 +62,12 @@
             </div>
         </header>
         <main>
-            <edit-form
-                    *ngIf="projectConfiguration && documentHolder.clonedDocument && !isLoading()"
-                    [(document)]="documentHolder.clonedDocument"
-                    [(inspectedRevisions)]="documentHolder.inspectedRevisions"
-                    [fieldDefinitions]="fieldDefinitions"
-                    [originalGroups]="groups"
-                    [activeGroup]="activeGroup">
+            <edit-form *ngIf="projectConfiguration && documentHolder.clonedDocument && !isLoading()"
+                       [document]="documentHolder.clonedDocument"
+                       [inspectedRevisions]="documentHolder.inspectedRevisions"
+                       [fieldDefinitions]="fieldDefinitions"
+                       [originalGroups]="groups"
+                       [activeGroup]="activeGroup">
             </edit-form>
 
             <div *ngIf="isLoading()" id="loading-icon-container">

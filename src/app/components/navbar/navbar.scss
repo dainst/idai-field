@@ -253,7 +253,6 @@ $link-hover-color: lighten($navbar-default-bg, 30%);
   #tabs-dropdown-list {
     max-height: calc(100vh - 350px);
     overflow-y: auto;
-    will-change: unset !important;
 
     a:first-child {
       margin-top: 7px;

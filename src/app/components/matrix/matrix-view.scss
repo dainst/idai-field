@@ -41,6 +41,11 @@
     cursor: default;
   }
 
+  #trench-selection-menu {
+    max-height: calc(100vh - 350px);
+    overflow-y: auto;
+  }
+
   #selected-trench-label {
     white-space: nowrap;
     overflow: hidden;

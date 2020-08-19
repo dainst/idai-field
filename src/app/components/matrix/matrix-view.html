@@ -5,7 +5,7 @@
             <div *ngIf="showTrenchSelector()" class="btn-group dropdown"
                  ngbDropdown placement="bottom-left" role="group">
                 <button class="btn btn-outline-primary dropdown-toggle-split" ngbDropdownToggle></button>
-                <div class="dropdown-menu" ngbDropdownMenu>
+                <div id="trench-selection-menu" class="dropdown-menu" ngbDropdownMenu>
                     <button *ngFor="let trench of trenches"
                             class="dropdown-item trench-selection-button"
                             (click)="selectTrench(trench)">

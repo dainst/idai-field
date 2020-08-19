@@ -159,12 +159,12 @@ $link-hover-color: lighten($navbar-default-bg, 30%);
     }
 
     .mdi-home {
-        font-size: 23px;
-        line-height: 23px;
+      font-size: 23px;
+      line-height: 23px;
 
-        &:hover {
-          color: inherit;
-        }
+      &:hover {
+        color: inherit;
+      }
     }
 
     .mdi-close {
@@ -246,3 +246,22 @@ $link-hover-color: lighten($navbar-default-bg, 30%);
     margin-left: 7px;
   }
 }
+
+#tabs-dropdown-menu {
+  padding: 0;
+
+  #tabs-dropdown-list {
+    max-height: calc(100vh - 350px);
+    overflow-y: auto;
+    will-change: unset !important;
+
+    a:first-child {
+      margin-top: 7px;
+    }
+
+    a:last-child {
+      margin-bottom: 7px;
+    }
+  }
+}
+

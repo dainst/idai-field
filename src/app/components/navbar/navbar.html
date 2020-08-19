@@ -21,13 +21,15 @@
             <li *ngIf="getHiddenTabs().length > 0" ngbDropdown placement="bottom-right" display="dynamic"
                 class="nav-item">
                 <a id="tabs-dropdown" ngbDropdownToggle class="nav-link"></a>
-                <div ngbDropdownMenu>
-                    <a *ngFor="let tab of getHiddenTabs()"
-                       class="dropdown-item hidden-tab"
-                       (click)="router.navigate(getTabRouteArray(tab))">
-                        <category-icon [size]="19" [category]="tab.operationCategory"></category-icon>
-                        <span class="hidden-tab-label">{{tab.label}}</span>
-                    </a>
+                <div id="tabs-dropdown-menu" ngbDropdownMenu>
+                    <div id="tabs-dropdown-list">
+                        <a *ngFor="let tab of getHiddenTabs()"
+                           class="dropdown-item hidden-tab"
+                           (click)="router.navigate(getTabRouteArray(tab))">
+                            <category-icon [size]="19" [category]="tab.operationCategory"></category-icon>
+                            <span class="hidden-tab-label">{{tab.label}}</span>
+                        </a>
+                    </div>
                 </div>
             </li>
         </ul>

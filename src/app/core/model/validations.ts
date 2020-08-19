@@ -1,9 +1,8 @@
-import {includedIn, is, isArray, isNot, isObject, isString, on, Predicate} from 'tsfun';
+import {is, isArray, isObject, isString, on, Predicate} from 'tsfun';
 import {Dating, Dimension, Literature, Document, FieldGeometry, NewDocument, NewResource,
     Resource} from 'idai-components-2';
 import {validateFloat, validateUnsignedFloat, validateUnsignedInt} from '../util/number-util';
 import {ValidationErrors} from './validation-errors';
-import {INPUT_TYPE, INPUT_TYPES} from '../constants';
 import {ProjectConfiguration} from '../configuration/project-configuration';
 import {FieldDefinition} from '../configuration/model/field-definition';
 import {RelationDefinition} from '../configuration/model/relation-definition';
@@ -84,7 +83,7 @@ export module Validations {
         assertValidityOfObjectArrays(
             document,
             projectConfiguration,
-            INPUT_TYPES.DATING,
+            FieldDefinition.InputType.DATING,
             ValidationErrors.INVALID_DATING_VALUES,
             Dating.isValid);
     }
@@ -96,7 +95,7 @@ export module Validations {
         assertValidityOfObjectArrays(
             document,
             projectConfiguration,
-            INPUT_TYPES.DIMENSION,
+            FieldDefinition.InputType.DIMENSION,
             ValidationErrors.INVALID_DIMENSION_VALUES,
             Dimension.isValid);
     }
@@ -108,7 +107,7 @@ export module Validations {
         assertValidityOfObjectArrays(
             document,
             projectConfiguration,
-            INPUT_TYPES.LITERATURE,
+            FieldDefinition.InputType.LITERATURE,
             ValidationErrors.INVALID_LITERATURE_VALUES,
             Literature.isValid);
     }

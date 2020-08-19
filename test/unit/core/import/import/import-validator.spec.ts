@@ -1,9 +1,9 @@
 import {ImportValidator} from '../../../../../src/app/core/import/import/process/import-validator';
 import {ValidationErrors} from '../../../../../src/app/core/model/validation-errors';
 import {ImportErrors} from '../../../../../src/app/core/import/import/import-errors';
-import {INPUT_TYPES} from '../../../../../src/app/core/constants';
 import {ProjectConfiguration} from '../../../../../src/app/core/configuration/project-configuration';
 import {buildTreeList} from '../../../../../src/app/core/util/tree-list';
+import {FieldDefinition} from '../../../../../src/app/core/configuration/model/field-definition';
 
 
 /**
@@ -25,8 +25,8 @@ describe('ImportValidator', () => {
                     { name: 'mandatory', mandatory: true },
                     { name: 'number1', label: 'number1', inputType: 'float' },
                     { name: 'number2', label: 'number2', inputType: 'float' },
-                    { name: 'ddr', label: 'DropdownRange', inputType: INPUT_TYPES.DROPDOWN_RANGE },
-                    { name: 'ddr2', label: 'DropdownRange2', inputType: INPUT_TYPES.DROPDOWN_RANGE }
+                    { name: 'ddr', label: 'DropdownRange', inputType: FieldDefinition.InputType.DROPDOWNRANGE },
+                    { name: 'ddr2', label: 'DropdownRange2', inputType: FieldDefinition.InputType.DROPDOWNRANGE }
                 ]}]
             }, []],
           [ {

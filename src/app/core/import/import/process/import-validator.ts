@@ -1,18 +1,18 @@
 import {Injectable} from '@angular/core';
-import {includedIn, is, isNot, isnt, on} from 'tsfun';
-import {Document, NewDocument, NewResource, Resource} from 'idai-components-2';
+import {is, isnt, on} from 'tsfun';
+import {Document, NewDocument, Resource} from 'idai-components-2';
 import {Validator} from '../../../model/validator';
 import {Validations} from '../../../model/validations';
 import {ImportErrors as E} from '../import-errors';
 import {ValidationErrors} from '../../../model/validation-errors';
 import {DocumentDatastore} from '../../../datastore/document-datastore';
-import {INPUT_TYPES, ResourceId} from '../../../constants';
+import {ResourceId} from '../../../constants';
 import {HierarchicalRelations} from '../../../model/relation-constants';
-import RECORDED_IN = HierarchicalRelations.RECORDEDIN;
-import LIES_WITHIN = HierarchicalRelations.LIESWITHIN;
 import {ProjectConfiguration} from '../../../configuration/project-configuration';
 import {Query} from '../../../datastore/model/query';
 import {ProjectCategories} from '../../../configuration/project-categories';
+import RECORDED_IN = HierarchicalRelations.RECORDEDIN;
+import LIES_WITHIN = HierarchicalRelations.LIESWITHIN;
 
 
 @Injectable()

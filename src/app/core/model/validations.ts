@@ -1,4 +1,4 @@
-import {includedIn, is, isNot, isObject, isString, on, Predicate} from 'tsfun';
+import {includedIn, is, isArray, isNot, isObject, isString, on, Predicate} from 'tsfun';
 import {Dating, Dimension, Literature, Document, FieldGeometry, NewDocument, NewResource,
     Resource} from 'idai-components-2';
 import {validateFloat, validateUnsignedFloat, validateUnsignedInt} from '../util/number-util';
@@ -439,11 +439,14 @@ export module Validations {
     export function validateObjectArrayFields(resource: Resource|NewResource,
                                               projectConfiguration: ProjectConfiguration,
                                               inputType: 'dating'|'dimension'|'literature',
-                                              isValid: (object: any) => boolean): string[] {
+                                              isValid: (object: any, options?: any) => boolean): string[] {
 
-        return validateFields(resource, projectConfiguration, inputType, (fieldContent: any) => {
-            return (!Array.isArray(fieldContent)
-                || fieldContent.filter((object: any) => !isValid(object)).length > 0);
+        return validateFields(resource, projectConfiguration, inputType,
+            (fieldContent: any, options?: any) => {
+
+            if (!isArray(fieldContent)) return true;
+
+            return fieldContent.filter((object: any) => !isValid(object, options)).length > 0;
         });
     }
 
@@ -451,13 +454,12 @@ export module Validations {
     export function validateFields(resource: Resource|NewResource,
                                    projectConfiguration: ProjectConfiguration,
                                    inputType: string,
-                                   isInvalid: (object: any) => boolean): string[] {
+                                   isInvalid: (object: any, options?: any) => boolean): string[] {
 
         return projectConfiguration.getFieldDefinitions(resource.category)
             .filter(field => field.inputType === inputType)
-            .filter(field => {
-                return resource[field.name] !== undefined
-                    && isInvalid(resource[field.name]);
-            }).map(field => field.name);
+            .filter(field => resource[field.name] !== undefined)
+            .filter(field => isInvalid(resource[field.name], field.inputTypeOptions?.validationOptions))
+            .map(field => field.name);
     }
 }

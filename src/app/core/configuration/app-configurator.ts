@@ -63,6 +63,7 @@ export class AppConfigurator {
         },
         dimensionVerticalExtent: {
             inputType: FieldDefinition.InputType.DIMENSION,
+            inputTypeOptions: { validationOptions: { allowNegativeValues: true }},
             group: Groups.POSITION,
             positionValuelistId: 'position-values-edge-default'
         },

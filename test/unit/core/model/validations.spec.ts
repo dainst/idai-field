@@ -44,6 +44,8 @@ describe('Validations', () => {
                         { name: 'dimension7', label: 'dimension7', inputType: 'dimension' },
                         { name: 'dimension8', label: 'dimension8', inputType: 'dimension' },
                         { name: 'dimension9', label: 'dimension9', inputType: 'dimension' },
+                        { name: 'dimension10', label: 'dimension10', inputType: 'dimension'},
+                        { name: 'dimension11', label: 'dimension11', inputType: 'dimension', inputTypeOptions: { validationOptions: { allowNegativeValues: true }} },
                         { name: 'literature1', label: 'literature1', inputType: 'literature' },
                         { name: 'literature2', label: 'literature2', inputType: 'literature' },
                         { name: 'literature3', label: 'literature3', inputType: 'literature' },
@@ -302,6 +304,10 @@ describe('Validations', () => {
                 dimension8: [{ inputValue: 15, inputUnit: 'invalid' }],
                 // Invalid field
                 dimension9: [{ inputValue: 50.25, inputUnit: 'mm', invalidField: 'asdf' }],
+                // Negative values
+                dimension10: [{ inputValue: -50.25, inputUnit: 'mm' }],
+                // Negative values allowed
+                dimension11: [{ inputValue: -50.25, inputUnit: 'mm' }],
                 relations: { isRecordedIn: ['0'] }
             }
         };
@@ -314,7 +320,7 @@ describe('Validations', () => {
                 [
                     ValidationErrors.INVALID_DIMENSION_VALUES,
                     'T',
-                    'dimension3, dimension4, dimension5, dimension6, dimension7, dimension8, dimension9'
+                    'dimension3, dimension4, dimension5, dimension6, dimension7, dimension8, dimension9, dimension10'
                 ]
             );
         }

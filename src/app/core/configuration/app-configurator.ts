@@ -63,7 +63,7 @@ export class AppConfigurator {
         },
         dimensionVerticalExtent: {
             inputType: FieldDefinition.InputType.DIMENSION,
-            inputTypeOptions: { validationOptions: { permissive: true }},
+            inputTypeOptions: { validation: { permissive: true }},
             group: Groups.POSITION,
             positionValuelistId: 'position-values-edge-default'
         },

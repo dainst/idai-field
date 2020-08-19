@@ -458,7 +458,7 @@ export module Validations {
         return projectConfiguration.getFieldDefinitions(resource.category)
             .filter(field => field.inputType === inputType)
             .filter(field => resource[field.name] !== undefined)
-            .filter(field => isInvalid(resource[field.name], field.inputTypeOptions?.validationOptions))
+            .filter(field => isInvalid(resource[field.name], field.inputTypeOptions?.validation))
             .map(field => field.name);
     }
 }

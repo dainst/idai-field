@@ -8,7 +8,7 @@ export interface FieldDefinition {
 
     name: string;
     inputType: FieldDefinition.InputType;
-    inputTypeOptions?: { validationOptions?: { allowNegativeValues?: true }};
+    inputTypeOptions?: { validation?: { allowNegativeValues?: true }};
     label?: string;
 
     group: string;

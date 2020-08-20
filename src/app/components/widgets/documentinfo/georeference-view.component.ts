@@ -6,6 +6,7 @@ import {M} from '../../messages/m';
 import {readWldFile, Errors} from '../../../core/images/wld/wld-import';
 import {downloadWldFile} from '../../../core/images/wld/wld-export';
 import {Messages} from '../../messages/messages';
+import {MenuContext, MenuService} from '../../menu-service';
 
 
 @Component({
@@ -23,16 +24,16 @@ export class GeoreferenceViewComponent {
 
     @Output() onSectionToggled: EventEmitter<string|undefined> = new EventEmitter<string|undefined>();
 
-    @ViewChild('worldfileInput', {static: false}) worldfileInput: ElementRef;
+    @ViewChild('worldfileInput', { static: false }) worldfileInput: ElementRef;
 
     public shown: boolean = false;
 
-    constructor(
-        private persistenceManager: PersistenceManager,
-        private messages: Messages,
-        private modalService: NgbModal,
-        private usernameProvider: UsernameProvider
-    ) {}
+
+    constructor(private persistenceManager: PersistenceManager,
+                private messages: Messages,
+                private modalService: NgbModal,
+                private usernameProvider: UsernameProvider,
+                private menuService: MenuService) {}
 
 
     public exportWldFile = () => downloadWldFile(this.document);
@@ -76,8 +77,16 @@ export class GeoreferenceViewComponent {
 
     public async openDeleteModal(modal: any) {
 
-        const result = await this.modalService.open(modal).result;
-        if (result == 'delete') await this.deleteGeoreference();
+        this.menuService.setContext(MenuContext.GEOREFERENCE_EDIT);
+
+        try {
+            const result = await this.modalService.open(modal).result;
+            if (result == 'delete') await this.deleteGeoreference();
+        } catch (err) {
+            // Modal has been canceled
+        } finally {
+            this.menuService.setContext(MenuContext.MODAL);
+        }
     }
 
 

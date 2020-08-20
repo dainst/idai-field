@@ -28,6 +28,7 @@ language-settings {
   .cdk-drag-handle {
     display: inline-block;
     width: calc(100% - 40px);
+    height: 40px;
 
     &.large-drag-handle {
       width: 100%;

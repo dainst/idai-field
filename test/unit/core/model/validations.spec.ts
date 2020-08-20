@@ -47,7 +47,6 @@ describe('Validations', () => {
                         { name: 'dimension10', label: 'dimension10', inputType: 'dimension'},
                         { name: 'dimension11', label: 'dimension11', inputType: 'dimension', inputTypeOptions: { validation: { permissive: true }} },
                         { name: 'dimension12', label: 'dimension12', inputType: 'dimension' },
-                        { name: 'dimension13', label: 'dimension13', inputType: 'dimension', inputTypeOptions: { validation: { permissive: true }} },
                         { name: 'literature1', label: 'literature1', inputType: 'literature' },
                         { name: 'literature2', label: 'literature2', inputType: 'literature' },
                         { name: 'literature3', label: 'literature3', inputType: 'literature' },
@@ -312,8 +311,6 @@ describe('Validations', () => {
                 dimension11: [{ inputValue: -50.25, inputUnit: 'mm' }],
                 // Range order
                 dimension12: [{ inputValue: 2, inputRangeEndValue: 1, inputUnit: 'mm' }],
-                // Range order - permissive
-                dimension13: [{ inputValue: 2, inputRangeEndValue: 1, inputUnit: 'mm' }],
                 relations: { isRecordedIn: ['0'] }
             }
         };
@@ -334,7 +331,7 @@ describe('Validations', () => {
     });
 
 
-    it('should report invalid dropdownRagne fields', () => {
+    it('should report invalid dropdownRange fields', () => {
 
         const doc = {
             resource: {

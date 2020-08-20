@@ -70,8 +70,7 @@ function applyCategories(languageConfigurations: any[], categories: any) {
         }
 
         for (const configurationFieldName of Object.keys(configurationCategory.fields)) {
-            let descriptionFoundInCategories = false;
-            let labelFoundInCategories = false;
+            let foundInCategories: boolean = false;
 
             const configurationField = configurationCategory.fields[configurationFieldName];
 
@@ -82,31 +81,19 @@ function applyCategories(languageConfigurations: any[], categories: any) {
                         const languageConfigurationField
                             = languageConfigurationCategory.fields[configurationFieldName];
                         if (languageConfigurationField) {
-                            if (languageConfigurationField.label) {
-                                labelFoundInCategories = true;
-                                configurationField.label = languageConfigurationField.label;
-                            }
-                            if (languageConfigurationField.description) {
-                                descriptionFoundInCategories = true;
-                                configurationField.description = languageConfigurationField.description;
-                            }
+                            foundInCategories = true;
+                            configurationField.label = languageConfigurationField.label;
+                            configurationField.description = languageConfigurationField.description;
                             break;
                         }
                     }
                 }
             }
 
-            if (!labelFoundInCategories) {
+            if (!foundInCategories) {
                  for (let languageConfiguration of languageConfigurations) {
-                    if (languageConfiguration.commons?.[configurationFieldName]?.label) {
+                    if (languageConfiguration.commons?.[configurationFieldName]) {
                         configurationField.label = languageConfiguration.commons[configurationFieldName].label;
-                        break;
-                    }
-                }
-            }
-            if (!descriptionFoundInCategories) {
-                for (let languageConfiguration of languageConfigurations) {
-                    if (languageConfiguration.commons?.[configurationFieldName]?.description) {
                         configurationField.description
                             = languageConfiguration.commons[configurationFieldName].description;
                         break;

@@ -116,6 +116,8 @@ export class ImageOverviewComponent implements OnInit {
 
     public async showImage(document: ImageDocument) {
 
+        console.log('images:', this.imageOverviewFacade.getDocuments());
+
         this.menuService.setContext(MenuContext.MODAL);
 
         this.imageOverviewFacade.select(document);

@@ -108,7 +108,7 @@ export module CSVMatrixExpansion {
     }
 
 
-    function rowsWithOptionalRangeElementsExpanded(valOptionalEndVal: OptionalRange<string>): string[] {
+    function rowsWithOptionalRangeElementsExpanded(valOptionalEndVal: OptionalRange): string[] {
 
         const { value, endValue } = valOptionalEndVal;
         return [value, endValue ? endValue : ''];

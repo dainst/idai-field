@@ -1,4 +1,4 @@
-import {FieldResource, Resource} from 'idai-components-2/index';
+import {FieldResource, Resource} from 'idai-components-2';
 import {ValuelistDefinition} from '../configuration/model/valuelist-definition';
 import {ValuelistUtil} from './valuelist-util';
 import {compose, flow, and, includedIn, isNot, filter, Filter, map, isString, Map, on, to, undefinedOrEmpty,

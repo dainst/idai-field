@@ -29,7 +29,7 @@ export interface FieldsViewRelation extends Labelled {
 export interface FieldsViewField extends Labelled {
 
     value: string;
-    isArray: boolean;
+    type: 'default'|'array'|'object';
     positionValues?: ValuelistDefinition
 }
 
@@ -77,7 +77,7 @@ export module FieldsViewUtil {
     }
 
 
-    export const isDefaultField: Predicate<FieldDefinition> = or(
+    export const isVisibleField: Predicate<FieldDefinition> = or(
         on(FieldDefinition.VISIBLE, is(true)),
         on(Named.NAME, is(Resource.CATEGORY)),
         on(Named.NAME, is(FieldResource.SHORTDESCRIPTION))

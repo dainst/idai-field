@@ -1,8 +1,8 @@
 import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import {DecimalPipe} from '@angular/common';
 import {I18n} from '@ngx-translate/i18n-polyfill';
-import {isUndefinedOrEmpty, isBoolean, isArray, filter, Pair, compose, Mapping, on, is, isDefined,
-    map, flatten, to, pairWith, conds, singleton, otherwise, LEFT, RIGHT} from 'tsfun';
+import {isBoolean, isArray, isObject, filter, compose, Mapping, on, isDefined, map, flatten, to, pairWith,
+    RIGHT, LEFT} from 'tsfun';
 import {update, lookup} from 'tsfun/associative';
 import {AsyncMapping, flow as asyncFlow, map as asyncMap} from 'tsfun/async';
 import {FieldDocument,  Resource, Dating, Dimension, Literature, OptionalRange} from 'idai-components-2';
@@ -15,9 +15,6 @@ import {Group, Groups} from '../../../core/configuration/model/group';
 import {FieldsViewField, FieldsViewGroup, FieldsViewUtil} from '../../../core/util/fields-view-util';
 import {RelationDefinition} from '../../../core/configuration/model/relation-definition';
 import {Named, namedArrayToNamedMap} from '../../../core/util/named';
-import INPUTTYPE = FieldDefinition.INPUTTYPE;
-import isDefaultField = FieldsViewUtil.isDefaultField;
-import DROPDOWNRANGE = FieldDefinition.InputType.DROPDOWNRANGE;
 import shouldBeDisplayed = FieldsViewUtil.shouldBeDisplayed;
 import {ReadDatastore} from '../../../core/datastore/model/read-datastore';
 import {ValuelistUtil} from '../../../core/util/valuelist-util';
@@ -93,28 +90,34 @@ export class FieldsViewComponent implements OnChanges {
     }
 
 
-    public getArrayItemLabel(arrayItem: any, field: FieldsViewField): string {
+    public getObjectLabel(object: any, field: FieldsViewField): string {
 
-        if (arrayItem.begin || arrayItem.end) {
+        if (object.label) {
+            return object.label;
+        } else if (object.begin || object.end) {
             return Dating.generateLabel(
-                arrayItem,
+                object,
                 (key: string) => this.utilTranslations.getTranslation(key)
             );
-        } else if (arrayItem.inputUnit) {
+        } else if (object.inputUnit) {
             return Dimension.generateLabel(
-                arrayItem,
+                object,
                 (value: any) => this.decimalPipe.transform(value),
                 (key: string) => this.utilTranslations.getTranslation(key),
-                arrayItem.measurementPosition
-                    ? ValuelistUtil.getValueLabel(field.positionValues, arrayItem.measurementPosition)
+                object.measurementPosition
+                    ? ValuelistUtil.getValueLabel(field.positionValues, object.measurementPosition)
                     : undefined
             );
-        } else if (arrayItem.quotation) {
+        } else if (object.quotation) {
             return Literature.generateLabel(
-                arrayItem, (key: string) => this.utilTranslations.getTranslation(key)
+                object, (key: string) => this.utilTranslations.getTranslation(key)
+            );
+        } else if (object.value) {
+            return OptionalRange.generateLabel(
+                object, (key: string) => this.utilTranslations.getTranslation(key)
             );
         } else {
-            return arrayItem;
+            return object;
         }
     }
 
@@ -129,7 +132,8 @@ export class FieldsViewComponent implements OnChanges {
                 compose(
                     map(pairWith(fieldContent)),
                     filter(on([RIGHT], isDefined)),
-                    map(this.convertToFieldsViewField.bind(this)),
+                    filter(on([LEFT], FieldsViewUtil.isVisibleField)),
+                    map(this.makeField.bind(this)),
                     flatten()
                 )
             )
@@ -137,21 +141,7 @@ export class FieldsViewComponent implements OnChanges {
     }
 
 
-    private convertToFieldsViewField: Mapping<Pair<FieldDefinition, FieldContent>, Array<FieldsViewField>>
-        = conds(
-            [
-                on([LEFT, INPUTTYPE], is(DROPDOWNRANGE)),
-                this.makeOptionalRangeField.bind(this)
-            ],
-            [
-                on([LEFT], isDefaultField),
-                compose(this.makeDefaultField.bind(this), singleton)
-            ],
-            [otherwise, []]
-        );
-
-
-    private makeDefaultField([field, fieldContent]: [FieldDefinition, FieldContent]): FieldsViewField {
+    private makeField([field, fieldContent]: [FieldDefinition, FieldContent]): FieldsViewField {
 
         return {
             label: field.label,
@@ -164,41 +154,9 @@ export class FieldsViewComponent implements OnChanges {
                 : FieldsViewUtil.getValue(
                     fieldContent, field.name, this.projectConfiguration, field.valuelist
                 ),
-            isArray: isArray(fieldContent),
+            type: isArray(fieldContent) ? 'array' : isObject(fieldContent) ? 'object' : 'default',
             positionValues: field.positionValues
         };
-    }
-
-
-    private makeOptionalRangeField([field, fieldContent]: [FieldDefinition, FieldContent]): Array<FieldsViewField> {
-
-        const val = {
-            label: field.label + (!isUndefinedOrEmpty(fieldContent[OptionalRange.ENDVALUE])
-                ? ' ' + this.i18n({
-                    id: 'widgets.fieldsView.range.from',
-                    value: '(von)'
-                }) : ''),
-            value: fieldContent[OptionalRange.VALUE],
-            isArray: false
-        };
-
-        if (isUndefinedOrEmpty(fieldContent[OptionalRange.ENDVALUE])) {
-            return [
-                val
-            ];
-        } else {
-            return [
-                val,
-                {
-                    label: field.label + ' ' + this.i18n({
-                        id: 'widgets.fieldsView.range.to',
-                        value: '(bis)'
-                    }),
-                    value: fieldContent[OptionalRange.ENDVALUE],
-                    isArray: false
-                }
-            ];
-        }
     }
 
 

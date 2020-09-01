@@ -1,6 +1,5 @@
 import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import {DecimalPipe} from '@angular/common';
-import {I18n} from '@ngx-translate/i18n-polyfill';
 import {isBoolean, isArray, isObject, filter, compose, Mapping, on, isDefined, map, flatten, to, pairWith,
     RIGHT, LEFT} from 'tsfun';
 import {update, lookup} from 'tsfun/associative';
@@ -51,8 +50,7 @@ export class FieldsViewComponent implements OnChanges {
                 private datastore: ReadDatastore,
                 private routingService: RoutingService,
                 private decimalPipe: DecimalPipe,
-                private utilTranslations: UtilTranslations,
-                private i18n: I18n) {}
+                private utilTranslations: UtilTranslations) {}
 
 
     async ngOnChanges() {

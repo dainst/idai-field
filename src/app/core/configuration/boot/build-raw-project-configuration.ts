@@ -186,11 +186,10 @@ function setGroupLabels(languageConfigurations: any[]) {
 
             if (name === Groups.PARENT) {
                 return category.parentCategory
-                    ? category.parentCategory.label ?? category.parentCategory.name
-                    : category.label ?? category.name;
-            }
-            else if (name === Groups.CHILD) {
-                return category.label ?? category.name;
+                    ? category.parentCategory.label
+                    : category.label;
+            } else if (name === Groups.CHILD) {
+                return category.label;
             } else {
                 for (let languageConfiguration of languageConfigurations) {
                     if (languageConfiguration.groups?.[name]) {

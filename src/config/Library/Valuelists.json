@@ -14781,5 +14781,47 @@
       "Tyrrhenoi": {},
       "Unklar": {}
     }
+  },
+  "Find-storagePlace-Olympia": {
+    "createdBy": "",
+    "creationDate": "10-9-2020",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "Olympia, Museum": {
+        "labels": {
+          "de": "Olympia, Museum"
+        }
+      },
+      "Olympia, Fundmagazin": {
+        "labels": {
+          "de": "Olympia, Fundmagazin"
+        }
+      },
+      "Athen, Nationalmuseum": {
+        "labels": {
+          "de": "Athen, Nationalmuseum"
+        }
+      },
+      "Berlin, Staatliche Museen": {
+        "labels": {
+          "de": "Berlin, Staatliche Museen"
+        }
+      },
+      "Fund verloren": {
+        "labels": {
+          "de": "Fund verloren"
+        }
+      }
+    },
+    "order": [
+      "Olympia, Museum",
+      "Olympia, Fundmagazin",
+      "Athen, Nationalmuseum",
+      "Berlin, Staatliche Museen",
+      "Fund verloren"
+    ]
   }
 }

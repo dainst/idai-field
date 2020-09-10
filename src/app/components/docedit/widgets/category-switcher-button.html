@@ -1,6 +1,6 @@
 <div *ngIf="isCategorySwitchingPossible()" id="category-switcher-button" class="circular-button category-button"
      [ngbPopover]="categoryChangerMenu" [autoClose]="false" #popover="ngbPopover"
-     triggers="manual" (click)="popover.toggle();" placement="bottom">
+     triggers="manual" (click)="popover.toggle();" placement="bottom-left">
     <category-icon [category]="category" size="41"></category-icon>
     <div class="menu-down-sign-circle">
         <span class="mdi mdi-menu-down mdi-18px"></span>

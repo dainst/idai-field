@@ -1024,22 +1024,6 @@
           <context context-type="linenumber">128</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="widgets.fieldsView.range.from" datatype="html">
-        <source>(von)</source>
-        <target state="final">(from)</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/widgets/documentinfo/fields-view.component.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="widgets.fieldsView.range.to" datatype="html">
-        <source>(bis)</source>
-        <target state="final">(to)</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/widgets/documentinfo/fields-view.component.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="widgets.documentInfo.thumbnail.oneLinkedImage" datatype="html">
         <source>Ein verknüpftes Bild</source>
         <target state="final">One linked image</target>
@@ -2437,7 +2421,7 @@
         <target state="final">Yes</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/documentinfo/fields-view.html</context>
-          <context context-type="linenumber">20</context>
+          <context context-type="linenumber">25</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/search-constraints.html</context>
@@ -2465,7 +2449,7 @@
         <target state="final">No</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/documentinfo/fields-view.html</context>
-          <context context-type="linenumber">21</context>
+          <context context-type="linenumber">26</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/search-constraints.html</context>
@@ -3545,6 +3529,22 @@
       <trans-unit id="util.literature.zenonId" datatype="html">
         <source>Zenon-ID</source>
         <target state="final">Zenon ID</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/app.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="util.optionalRange.from" datatype="html">
+        <source>Von: </source>
+        <target state="final">From: </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/app.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="util.optionalRange.to" datatype="html">
+        <source>, bis: </source>
+        <target state="final">, to: </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
           <context context-type="linenumber">1</context>

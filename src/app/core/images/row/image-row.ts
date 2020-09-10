@@ -10,7 +10,7 @@ export type ImageRowItem = {
   document?: Document;
 }
 
-type PageInfo = 'same'|'previous'|'next';
+type PageInfo = 'same'|'previous'|'next'|'notFound';
 
 export const PLACEHOLDER = 'PLACEHOLDER';
 
@@ -195,7 +195,9 @@ export class ImageRow {
             this.images.find(image => image.resource.id === imageRowItem.imageId) as ImageDocument
         );
 
-        if (this.firstShownImageIndex > index) {
+        if (index === -1) {
+            return 'notFound';
+        } else if (this.firstShownImageIndex > index) {
             return 'previous';
         } else if (this.lastShownImageIndex < index
                 || (this.lastShownImageIndex === index && !this.lastImageFullyVisible)) {

@@ -115,12 +115,6 @@ export class ImageRowComponent implements OnChanges {
     }
 
 
-    public isPlaceholder(image: ImageRowItem): boolean {
-
-        return image.imageId === PLACEHOLDER;
-    }
-
-
     public async select(image: ImageRowItem) {
 
         this.selectedImage = image;

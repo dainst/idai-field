@@ -1,10 +1,11 @@
-import {FieldResource, Resource} from 'idai-components-2/index';
+import {FieldResource, Resource} from 'idai-components-2';
 import {ValuelistDefinition} from '../configuration/model/valuelist-definition';
 import {ValuelistUtil} from './valuelist-util';
-import {compose, flow, and, includedIn, isNot, filter, Filter, map, isString, Map, on, to, undefinedOrEmpty, Predicate, or, is, empty} from 'tsfun';
+import {compose, flow, and, includedIn, isNot, filter, Filter, map, isString, Map, on, to, undefinedOrEmpty,
+    Predicate, or, is, empty, equalTo} from 'tsfun';
 import {update, lookup} from 'tsfun/associative';
 import {RelationDefinition} from '../configuration/model/relation-definition';
-import {HierarchicalRelations} from '../model/relation-constants';
+import {HierarchicalRelations, ImageRelations} from '../model/relation-constants';
 import {Labelled, Named} from './named';
 import {Category} from '../configuration/model/category';
 import {BaseGroup, Groups} from '../configuration/model/group';
@@ -29,7 +30,7 @@ export interface FieldsViewRelation extends Labelled {
 export interface FieldsViewField extends Labelled {
 
     value: string;
-    isArray: boolean;
+    type: 'default'|'array'|'object';
     positionValues?: ValuelistDefinition
 }
 
@@ -70,6 +71,7 @@ export module FieldsViewUtil {
             on(Named.NAME,
                 and(
                     isNot(includedIn(HierarchicalRelations.ALL)),
+                    isNot(equalTo(ImageRelations.ISDEPICTEDIN)),
                     compose(lookup(resource.relations), isNot(undefinedOrEmpty))
                 )
             )
@@ -77,7 +79,7 @@ export module FieldsViewUtil {
     }
 
 
-    export const isDefaultField: Predicate<FieldDefinition> = or(
+    export const isVisibleField: Predicate<FieldDefinition> = or(
         on(FieldDefinition.VISIBLE, is(true)),
         on(Named.NAME, is(Resource.CATEGORY)),
         on(Named.NAME, is(FieldResource.SHORTDESCRIPTION))

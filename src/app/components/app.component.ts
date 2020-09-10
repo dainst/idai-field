@@ -118,5 +118,11 @@ export class AppComponent {
         this.utilTranslations.addTranslation(
             'zenonId', this.i18n({ id: 'util.literature.zenonId', value: 'Zenon-ID' })
         );
+        this.utilTranslations.addTranslation(
+            'from', this.i18n({ id: 'util.optionalRange.from', value: 'Von: ' })
+        );
+        this.utilTranslations.addTranslation(
+            'to', this.i18n({ id: 'util.optionalRange.to', value: ', bis: ' })
+        );
     }
 }

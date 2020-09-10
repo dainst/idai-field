@@ -35,7 +35,8 @@ export const PROJECT_MAPPING = {
     'ayamonte': 'Ayamonte',
     'abbircella': 'AbbirCella',
     'karthagocircus': 'KarthagoCircus',
-    'selinunt': 'Selinunt'
+    'selinunt': 'Selinunt',
+    'olympia_sht': 'Olympia'
 };
 
 

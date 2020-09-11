@@ -20,16 +20,19 @@ image-row {
 
       .image-container {
         position: relative;
-        background-color: #37588e;
+
+        &.selected-image {
+          background-color: #37588e;
+
+          img {
+            opacity: 0.5;
+          }
+        }
 
         img {
           max-width: 600px;
           user-select: none;
           -webkit-user-drag: none;
-
-          &.selected-image {
-            opacity: 0.5;
-          }
         }
 
         .image-placeholder {

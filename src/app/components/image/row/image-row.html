@@ -7,11 +7,11 @@
          [class.animated]="!initializing">
         <div *ngFor="let image of images"
              class="image-container"
+             [class.selected-image]="image === selectedImage"
              (click)="onThumbnailClicked(image)">
             <img *ngIf="hasImageUrl(image)"
                  [src]="thumbnailUrls[image.imageId]"
                  [class.highlightOnHover]="highlightOnHover"
-                 [class.selected-image]="image === selectedImage"
                  [style.width]="getImageWidth(image) + 'px'">
             <div *ngIf="!hasImageUrl(image) && !initializing"
                  class="image-placeholder"

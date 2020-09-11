@@ -61,7 +61,7 @@ export class TaskbarUpdateComponent {
             zone.run(() => {
                 this.downloadError = true;
             });
-        }, 10000);
+        }, 30000);
     }
 
 

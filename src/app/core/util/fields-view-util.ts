@@ -31,7 +31,8 @@ export interface FieldsViewField extends Labelled {
 
     value: string;
     type: 'default'|'array'|'object';
-    positionValues?: ValuelistDefinition
+    valuelist?: ValuelistDefinition;
+    positionValues?: ValuelistDefinition;
 }
 
 

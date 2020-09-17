@@ -112,7 +112,9 @@ export class FieldsViewComponent implements OnChanges {
             );
         } else if (object.value) {
             return OptionalRange.generateLabel(
-                object, (key: string) => this.utilTranslations.getTranslation(key)
+                object,
+                (key: string) => this.utilTranslations.getTranslation(key),
+                (value: string) => ValuelistUtil.getValueLabel(field.valuelist, value)
             );
         } else {
             return object;
@@ -153,6 +155,7 @@ export class FieldsViewComponent implements OnChanges {
                     fieldContent, field.name, this.projectConfiguration, field.valuelist
                 ),
             type: isArray(fieldContent) ? 'array' : isObject(fieldContent) ? 'object' : 'default',
+            valuelist: field.valuelist,
             positionValues: field.positionValues
         };
     }

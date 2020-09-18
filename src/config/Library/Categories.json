@@ -1651,7 +1651,7 @@
     "createdBy": "",
     "creationDate": "",
     "categoryName": "Type",
-    "commons": ["literature"],
+    "commons": ["literature","description"],
     "valuelists": {},
     "fields": {}
   }

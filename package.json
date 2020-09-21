@@ -54,8 +54,7 @@
     "linux": {
       "target": "AppImage",
       "publish": "github",
-      "icon": "img/logo256x256.png",
-      "category": "Science"
+      "icon": "img/logo256x256.png"
     },
     "npmRebuild": false,
     "afterSign": "notarize.js",

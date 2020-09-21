@@ -15,8 +15,9 @@ describe('ValuelistUtil', () => {
                 '1': { labels: { de: 'B300' } },
                 '2': { labels: { de: 'A3' } },
                 '3': { labels: { de: 'B3' } },
-                '4': { labels: { de: 'A300' } },
-            }
+                '4': { labels: { de: 'A300' } }
+            },
+            id: '1'
         };
 
         expect(ValuelistUtil.getOrderedValues(valuelist)).toEqual(['2', '4', '3', '1'])
@@ -32,7 +33,8 @@ describe('ValuelistUtil', () => {
                 '3': { labels: { de: 'C' } },
                 '4': { labels: { de: 'D' } },
             },
-            order: ['2', '4', '3', '1']
+            order: ['2', '4', '3', '1'],
+            id: '1'
         };
 
         expect(ValuelistUtil.getOrderedValues(valuelist)).toEqual(['2', '4', '3', '1'])

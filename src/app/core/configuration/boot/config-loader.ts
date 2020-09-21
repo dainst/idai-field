@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {isUndefinedOrEmpty, Map, not} from 'tsfun';
+import {map} from 'tsfun/associative';
 import {ProjectConfiguration} from '../project-configuration';
 import {ConfigurationValidation} from './configuration-validation';
 import {ConfigReader} from './config-reader';
@@ -9,6 +10,7 @@ import {buildRawProjectConfiguration} from './build-raw-project-configuration';
 import {BuiltinCategoryDefinition} from '../model/builtin-category-definition';
 import {LibraryCategoryDefinition} from '../model/library-category-definition';
 import {addKeyAsProp} from '../../util/transformers';
+import {ValuelistDefinition} from '../model/valuelist-definition';
 
 
 @Injectable()
@@ -95,7 +97,7 @@ export class ConfigLoader {
             );
             customCategories = this.configReader.read(customConfigPath);
             searchConfiguration = this.configReader.read(searchConfigurationPath);
-            valuelistsConfiguration = this.configReader.read(valuelistsConfigurationPath);
+            valuelistsConfiguration = this.readValuelistsConfiguration(valuelistsConfigurationPath);
             orderConfiguration = this.configReader.read(orderConfigurationPath);
         } catch (msgWithParams) {
             throw [msgWithParams];
@@ -159,5 +161,14 @@ export class ConfigLoader {
 
         if (!this.configReader.exists(path)) return undefined;
         return this.configReader.read(path);
+    }
+
+
+    private readValuelistsConfiguration(path: string): Map<ValuelistDefinition> {
+
+        const valuelistsConfiguration = this.configReader.read(path);
+        map((definition: ValuelistDefinition, id: string) => definition.id = id, valuelistsConfiguration);
+
+        return valuelistsConfiguration;
     }
 }

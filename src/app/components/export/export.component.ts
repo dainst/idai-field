@@ -203,6 +203,12 @@ export class ExportComponent implements OnInit {
             if (this.selectedCategory) {
                 options.defaultPath = this.i18n({ id: 'export.dialog.untitled', value: 'Ohne Titel' });
                 if (this.format === 'csv') options.defaultPath += '.' + this.selectedCategory.name.toLowerCase();
+                if (remote.process.platform === 'linux') { // under linux giving the extensions entries in fileFilter will not automatically add the extensions
+                    let ext = 'csv';
+                    if (this.format === 'shapefile') ext = 'zip';
+                    if (this.format === 'geojson') ext = 'geojson';
+                    options.defaultPath += '.' + ext;
+                }
             }
 
             const saveDialogReturnValue = await remote.dialog.showSaveDialog(options);

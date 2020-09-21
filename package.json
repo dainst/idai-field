@@ -54,6 +54,7 @@
     "linux": {
       "target": "AppImage",
       "publish": "github",
+      "artifactName": "iDAI.field-${version}-Linux.${ext}",
       "icon": "img/logo256x256.png",
       "category": "Science"
     },

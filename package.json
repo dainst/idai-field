@@ -51,6 +51,10 @@
       "artifactName": "iDAI.field-${version}-Windows.${ext}",
       "publish": "github"
     },
+    "linux": {
+      "publish": "github",
+      "icon": "img/logo.png"
+    },
     "npmRebuild": false,
     "afterSign": "notarize.js",
     "extraResources": [

@@ -14,6 +14,8 @@ import {Settings} from '../../app/core/settings/settings';
 const fs = require('fs');
 const cldr = require('cldr');
 
+PROJECT_MAPPING['default'] = 'Default';
+
 
 const CONFIG_DIR_PATH = 'src/config';
 const OUTPUT_DIR_PATH = 'release';
@@ -132,7 +134,13 @@ async function start() {
             console.log('Loading configuration for language: ' + language);
             const appConfigurator = new AppConfigurator(new ConfigLoader(new ConfigReader()));
             try {
-                localizedTreeLists[language] = getTreeList(await appConfigurator.go(CONFIG_DIR_PATH, configName, [language]));
+                localizedTreeLists[language] = getTreeList(
+                    await appConfigurator.go(
+                        CONFIG_DIR_PATH,
+                        configName !== 'default' ? configName : undefined,
+                        [language]
+                    )
+                );
             } catch (err) {
                 console.error(`Error while trying to generate full configuration for project ${projectName} and language ${language}:`, err);
             }

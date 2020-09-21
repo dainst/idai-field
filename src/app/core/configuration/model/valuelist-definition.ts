@@ -11,6 +11,7 @@ export type Valuelists = { [fieldName: string]: ValuelistId }
  */
 export interface ValuelistDefinition {
 
+    id: string;
     values: { [key: string]: ValueDefinition }
 
     description?: { [language: string]: string }

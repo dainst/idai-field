@@ -64,15 +64,17 @@ export module ValuelistUtil {
     export function getValuelistFromProjectField(fieldName: string,
                                                  projectDocument: Document): ValuelistDefinition {
 
+        const id = 'project-' + fieldName;
         const field: string[]|undefined = projectDocument.resource[fieldName];
+
         return field && isArray(field)
             ? {
                 values: field.reduce((values: { [fieldId: string]: ValueDefinition }, fieldName: string) => {
                     values[fieldName] = {};
                     return values;
-                }, {})
+                }, {}), id: id
             }
-        : { values: {} };
+        : { values: {}, id: id };
     }
 
 

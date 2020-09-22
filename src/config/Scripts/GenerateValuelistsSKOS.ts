@@ -20,13 +20,30 @@ type Concept = {
     id: string;
     label: { [languageCode: string]: string };
     description: { [languageCode: string]: string };
-    parent: Concept;
+    parent?: Concept;
 }
+
+
+const ROOT_CONCEPT: Concept = {
+    id: 'idai-field',
+    label: {
+        de: 'iDAI.field Wertelisten',
+        en: 'iDAI.field value lists'
+    },
+    description: {},
+    parent: {
+        id: '_5b453bab',
+        label: {},
+        description: {}
+    }
+};
 
 
 function getConcepts(): Array<Concept> {
 
-    const concepts: { [id: string]: Concept } = {};
+    const concepts: { [id: string]: Concept } = {
+        'idai-field': ROOT_CONCEPT
+    };
 
     getProjectNames().forEach(projectName => addConceptsForProject(projectName, concepts));
 
@@ -50,7 +67,7 @@ function addCategoryConcept(categoryTree: Tree, concepts: { [id: string]: Concep
         id: 'idai-field_' + parameterize(category.name),
         label: category.label,
         description: category.description,
-        parent: parent
+        parent: parent ?? ROOT_CONCEPT
     };
 
     if (!concepts[concept.id]) concepts[concept.id] = concept;

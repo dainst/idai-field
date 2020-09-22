@@ -100,7 +100,7 @@ function addValuelistConcept(valuelist: ValuelistDefinition, concepts: { [id: st
                              projectName: string, parent: Concept) {
 
     const concept = {
-        id: parent.id + '_' + parameterize(projectName),
+        id: valuelist.id,
         label: {
             de: 'Werteliste ' + PROJECT_MAPPING[projectName],
             en: 'Value list ' + PROJECT_MAPPING[projectName]

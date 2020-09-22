@@ -7,6 +7,7 @@ const fs = require('fs');
 const parameterize = require('parameterize');
 
 const CONFIG_PATH = 'release/config/';
+const ROOT_CONCEPT_ID = '_5b453bab';
 
 const PREFIX_THESAURUS = 'http://thesauri.dainst.org/';
 const PREFIX_SKOS = 'http://www.w3.org/2004/02/skos/core#';
@@ -24,7 +25,7 @@ type Concept = {
 }
 
 
-const ROOT_CONCEPT: Concept = {
+const IDAI_FIELD_CONCEPT: Concept = {
     id: 'idai-field',
     label: {
         de: 'iDAI.field Wertelisten',
@@ -32,7 +33,7 @@ const ROOT_CONCEPT: Concept = {
     },
     description: {},
     parent: {
-        id: '_5b453bab',
+        id: ROOT_CONCEPT_ID,
         label: {},
         description: {}
     }
@@ -42,7 +43,7 @@ const ROOT_CONCEPT: Concept = {
 function getConcepts(): Array<Concept> {
 
     const concepts: { [id: string]: Concept } = {
-        'idai-field': ROOT_CONCEPT
+        'idai-field': IDAI_FIELD_CONCEPT
     };
 
     getProjectNames().forEach(projectName => addConceptsForProject(projectName, concepts));
@@ -67,7 +68,7 @@ function addCategoryConcept(categoryTree: Tree, concepts: { [id: string]: Concep
         id: 'idai-field_' + parameterize(category.name),
         label: category.label,
         description: category.description,
-        parent: parent ?? ROOT_CONCEPT
+        parent: parent ?? IDAI_FIELD_CONCEPT
     };
 
     if (!concepts[concept.id]) concepts[concept.id] = concept;

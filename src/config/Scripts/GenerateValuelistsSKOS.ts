@@ -73,7 +73,7 @@ function addCategoryConcept(categoryTree: Tree, concepts: { [id: string]: Concep
 
     if (!concepts[concept.id]) concepts[concept.id] = concept;
 
-    (flatten(category.groups.map(group => group.fields)) as any)
+    getFields(category)
         .filter(field => field.valuelist)
         .forEach(field => addFieldConcept(field, concepts, projectName, concept));
     categoryTree.trees.forEach(subtree => addCategoryConcept(subtree, concepts, projectName, concept));
@@ -128,6 +128,16 @@ function addValueConcept(value: ValueDefinition, valueName: string, concepts: { 
     };
 
     if (!concepts[concept.id]) concepts[concept.id] = concept;
+}
+
+
+function getFields(category: any): Array<any> {
+
+    const groups = category.groups.find(group => group.name === 'child')
+        ? category.groups.filter(group => group.name !== 'parent')
+        : category.groups;
+
+    return (flatten(groups.map(group => group.fields)) as any);
 }
 
 

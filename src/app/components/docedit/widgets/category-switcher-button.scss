@@ -1,4 +1,10 @@
-#no-category-switching-icon {
-  position: absolute;
-  cursor: default;
+#category-switcher-button {
+  #no-category-switching-icon {
+    position: absolute;
+    cursor: default;
+  }
+
+  .bs-popover-bottom-left {
+    left: -7px !important;
+  }
 }

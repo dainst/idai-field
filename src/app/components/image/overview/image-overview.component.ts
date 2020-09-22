@@ -118,8 +118,6 @@ export class ImageOverviewComponent implements OnInit {
 
         this.menuService.setContext(MenuContext.MODAL);
 
-        this.imageOverviewFacade.select(document);
-
         const modalRef: NgbModalRef = this.modalService.open(
             ImageViewModalComponent,
             { size: 'lg', backdrop: 'static', keyboard: false }

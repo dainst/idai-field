@@ -82,3 +82,4 @@ to extract the package. In that case, please use a different archiver, for examp
 Note that creating **Linux** packages should be possible with Electron, but this is yet untested and not enabled.
 
 
+

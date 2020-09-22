@@ -933,6 +933,7 @@ describe('buildRawProjectConfiguration', () => {
                     'two': { references: { externalId: '1234567' } },
                     'three': {}
                 },
+                id: '123',
                 description: {},
                 createdBy: '',
                 creationDate: ''

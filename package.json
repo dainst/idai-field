@@ -1,7 +1,7 @@
 {
   "name": "idai-field-client",
   "description": "iDAI.field 2 Client",
-  "version": "2.17.1",
+  "version": "2.17.2",
   "main": "electron/main.js",
   "license": "Apache-2.0",
   "author": "German Archaeological Institute",
@@ -25,6 +25,7 @@
     "e2e:run": "wait-on http-get://localhost:4200/dist/ && node test/dist/test/e2e/spectron.js",
     "package:mac": "electron-builder -m",
     "package:win": "electron-builder -w nsis --x64 --ia32",
+    "package:lnx": "electron-builder -l --x64",
     "i18n": "ng xi18n idai-field && ngx-extractor -i \"./src/app/**/*.ts\" -o ./messages.xlf -l de && xliffmerge --profile xliff-merge.json && rimraf ./messages.xlf",
     "update-version-info": "cross-var replace-in-file \"/<span id=\\\"version-info-number\\\">.*</span>/\" \"<span id=\\\"version-info-number\\\">$npm_package_version</span>\" src/index.html --isRegex"
   },
@@ -49,6 +50,13 @@
       "icon": "img/logo.ico",
       "artifactName": "iDAI.field-${version}-Windows.${ext}",
       "publish": "github"
+    },
+    "linux": {
+      "target": "AppImage",
+      "publish": "github",
+      "artifactName": "iDAI.field-${version}-Linux.${ext}",
+      "icon": "img/logo256x256.png",
+      "category": "Science"
     },
     "npmRebuild": false,
     "afterSign": "notarize.js",
@@ -95,7 +103,7 @@
     "express-basic-auth": "1.2.0",
     "express-pouchdb": "4.2.0",
     "geojson-rewind": "0.3.1",
-    "idai-components-2": "1.47.27",
+    "idai-components-2": "1.47.30",
     "leaflet": "1.6.0",
     "leaflet-imageoverlay-rotated": "0.1.1",
     "moment": "2.22.2",

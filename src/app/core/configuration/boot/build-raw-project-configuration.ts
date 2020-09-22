@@ -1,5 +1,5 @@
 import {cond, flow, includedIn, isDefined, isNot, Mapping, Map, on, subtract, undefinedOrEmpty, identity,
-    compose, Pair, dissoc, pairWith, prune, filter, update, or} from 'tsfun';
+    compose, Pair, dissoc, pairWith, prune, filter, update, or, copy} from 'tsfun';
 import {update as updateAsc, lookup, map, reduce} from 'tsfun/associative';
 import {clone, update as updateStruct} from 'tsfun/struct';
 import {LibraryCategoryDefinition} from '../model/library-category-definition';
@@ -15,7 +15,6 @@ import {getDefinedParents, iterateOverFieldsOfCategories} from './helpers';
 import {addSourceField} from './add-source-field';
 import {mergeCategories} from './merge-categories';
 import {addExtraFields} from './add-extra-fields';
-import {copy} from 'tsfun/src/collection';
 import {hideFields} from './hide-fields';
 import {RelationDefinition} from '../model/relation-definition';
 import {addRelations} from './add-relations';
@@ -187,11 +186,10 @@ function setGroupLabels(languageConfigurations: any[]) {
 
             if (name === Groups.PARENT) {
                 return category.parentCategory
-                    ? category.parentCategory.label ?? category.parentCategory.name
-                    : category.label ?? category.name;
-            }
-            else if (name === Groups.CHILD) {
-                return category.label ?? category.name;
+                    ? category.parentCategory.label
+                    : category.label;
+            } else if (name === Groups.CHILD) {
+                return category.label;
             } else {
                 for (let languageConfiguration of languageConfigurations) {
                     if (languageConfiguration.groups?.[name]) {

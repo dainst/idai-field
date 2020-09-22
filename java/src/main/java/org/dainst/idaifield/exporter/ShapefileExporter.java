@@ -21,7 +21,10 @@ public class ShapefileExporter {
 
         String outputFolderPath = outputFilePath.substring(0, outputFilePath.lastIndexOf(File.separator));
         String outputFileName = outputFilePath.substring(
-                outputFilePath.lastIndexOf(File.separator), outputFilePath.lastIndexOf('.')
+                outputFilePath.lastIndexOf(File.separator),
+                outputFilePath.lastIndexOf('.') != -1
+                    ? outputFilePath.lastIndexOf('.')
+                    : outputFilePath.length()
         );
 
         File shapefileFolder = createShapefileFolder(tempFolderPath, outputFileName);

@@ -145,7 +145,7 @@ function getProjectNames(): string[] {
 
 function convertToSKOS(concepts: Array<Concept>): string {
 
-    return concepts.map(getSKOSConcept).join('\n');
+    return concepts.map(getSKOSConcept).join('');
 }
 
 
@@ -161,8 +161,13 @@ function getSKOSConcept(concept: Concept): string {
             + '<' + PREFIX_THESAURUS + concept.parent.id + '> .\n';
     }
 
-    result += Object.keys(concept.label).map(languageCode => getSKOSLabel(concept, languageCode));
-    result += Object.keys(concept.description).map(languageCode => getSKOSNote(concept, languageCode));
+    result += Object.keys(concept.label)
+        .map(languageCode => getSKOSLabel(concept, languageCode))
+        .join('');
+
+    result += Object.keys(concept.description)
+        .map(languageCode => getSKOSNote(concept, languageCode))
+        .join('');
 
     return result;
 }

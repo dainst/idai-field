@@ -189,7 +189,7 @@ function getSKOSLabel(concept: Concept, languageCode: string): string {
     if (label.length === 0) return '';
 
     return '<' + PREFIX_THESAURUS + concept.id + '> '
-        + '<' + PREFIX_SKOS + 'prefLabel>'
+        + '<' + PREFIX_SKOS + 'prefLabel> '
         + '"' + label + '"@' + languageCode + ' .\n'
         + '<' + PREFIX_THESAURUS + concept.id + '> '
         + '<' + PREFIX_SKOS_XL + 'prefLabel> '

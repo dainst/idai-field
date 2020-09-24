@@ -100,7 +100,7 @@ function addValuelistConcept(valuelist: ValuelistDefinition, concepts: { [id: st
                              projectName: string, parent: Concept) {
 
     const concept = {
-        id: valuelist.id,
+        id: 'idai-field-valuelist-' + valuelist.id,
         label: {
             de: 'Werteliste ' + PROJECT_MAPPING[projectName],
             en: 'Value list ' + PROJECT_MAPPING[projectName]

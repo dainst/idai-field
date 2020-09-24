@@ -193,11 +193,11 @@ function getSKOSLabel(concept: Concept, languageCode: string): string {
         + '"' + label + '"@' + languageCode + ' .\n'
         + '<' + PREFIX_THESAURUS + concept.id + '> '
         + '<' + PREFIX_SKOS_XL + 'prefLabel> '
-        + '<' + PREFIX_THESAURUS + concept.id + '_label_' + languageCode + ' .\n'
-        + '<' + PREFIX_THESAURUS + concept.id + '_label_' + languageCode + ' '
+        + '<' + PREFIX_THESAURUS + concept.id + '_label_' + languageCode + '> .\n'
+        + '<' + PREFIX_THESAURUS + concept.id + '_label_' + languageCode + '> '
         + '<' + PREFIX_RDF + 'type> '
         + '<' + PREFIX_SKOS_XL + 'Label> .\n'
-        + '<' + PREFIX_THESAURUS + concept.id + '_label_' + languageCode + ' '
+        + '<' + PREFIX_THESAURUS + concept.id + '_label_' + languageCode + '> '
         + '<' + PREFIX_SKOS_XL + 'literalForm> '
         + '"' + label + '"@' + languageCode + ' .\n';
 }

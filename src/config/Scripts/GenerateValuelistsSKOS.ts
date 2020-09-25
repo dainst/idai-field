@@ -21,7 +21,7 @@ type Concept = {
     id: string;
     label: { [languageCode: string]: string };
     description: { [languageCode: string]: string };
-    parent?: Concept;
+    parents: Array<Concept>;
 }
 
 
@@ -32,11 +32,14 @@ const IDAI_FIELD_CONCEPT: Concept = {
         en: 'iDAI.field value lists'
     },
     description: {},
-    parent: {
-        id: ROOT_CONCEPT_ID,
-        label: {},
-        description: {}
-    }
+    parents: [
+        {
+            id: ROOT_CONCEPT_ID,
+            label: {},
+            description: {},
+            parents: []
+        }
+    ]
 };
 
 
@@ -68,7 +71,7 @@ function addCategoryConcept(categoryTree: Tree, concepts: { [id: string]: Concep
         id: 'idai-field_' + parameterize(category.name),
         label: category.label,
         description: category.description,
-        parent: parent ?? IDAI_FIELD_CONCEPT
+        parents: [parent ?? IDAI_FIELD_CONCEPT]
     };
 
     if (!concepts[concept.id]) concepts[concept.id] = concept;
@@ -83,11 +86,11 @@ function addCategoryConcept(categoryTree: Tree, concepts: { [id: string]: Concep
 function addFieldConcept(field: any, concepts: { [id: string]: Concept }, projectName: string,
                          parent: Concept) {
 
-    const concept = {
+    const concept: Concept = {
         id: parent.id + '_' + parameterize(field.name),
         label: field.label,
         description: field.description,
-        parent: parent
+        parents: [parent]
     };
 
     if (!concepts[concept.id]) concepts[concept.id] = concept;
@@ -99,17 +102,21 @@ function addFieldConcept(field: any, concepts: { [id: string]: Concept }, projec
 function addValuelistConcept(valuelist: ValuelistDefinition, concepts: { [id: string]: Concept },
                              projectName: string, parent: Concept) {
 
-    const concept = {
+    const concept: Concept = {
         id: 'idai-field-valuelist-' + valuelist.id,
         label: {
             de: 'Werteliste ' + PROJECT_MAPPING[projectName],
             en: 'Value list ' + PROJECT_MAPPING[projectName]
         },
         description: {},
-        parent: parent
+        parents: [parent]
     };
 
-    if (!concepts[concept.id]) concepts[concept.id] = concept;
+    if (!concepts[concept.id]) {
+        concepts[concept.id] = concept;
+    } else {
+        concepts[concept.id].parents.push(parent);
+    }
 
     Object.entries(valuelist.values).forEach(([valueName, value]) => {
         addValueConcept(value, valueName, concepts, concept);
@@ -120,11 +127,11 @@ function addValuelistConcept(valuelist: ValuelistDefinition, concepts: { [id: st
 function addValueConcept(value: ValueDefinition, valueName: string, concepts: { [id: string]: Concept },
                          parent: Concept) {
 
-    const concept = {
+    const concept: Concept = {
         id: parent.id + '_' + parameterize(valueName),
         label: value.labels,
         description: {},
-        parent: parent
+        parents: [parent]
     };
 
     if (!concepts[concept.id]) concepts[concept.id] = concept;
@@ -165,11 +172,11 @@ function getSKOSConcept(concept: Concept): string {
         + '<' + PREFIX_RDF + 'type> '
         + '<' + PREFIX_SKOS + 'Concept> .\n';
 
-    if (concept.parent) {
-        result += '<' + PREFIX_THESAURUS + concept.id + '> '
-            + '<' + PREFIX_SKOS + 'broader> '
-            + '<' + PREFIX_THESAURUS + concept.parent.id + '> .\n';
-    }
+    result += concept.parents.map(parent =>
+        '<' + PREFIX_THESAURUS + concept.id + '> '
+        + '<' + PREFIX_SKOS + 'broader> '
+        + '<' + PREFIX_THESAURUS + parent.id + '> .\n'
+    ).join('');
 
     result += Object.keys(concept.label)
         .map(languageCode => getSKOSLabel(concept, languageCode))

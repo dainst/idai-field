@@ -69,7 +69,7 @@ function addCategoryConcept(categoryTree: Tree, concepts: { [id: string]: Concep
 
     const concept: Concept = {
         id: 'idai-field_' + parameterize(category.name),
-        label: getLabel(category),
+        label: getLabel(category.label, category.name),
         description: category.description,
         parents: [parent ?? IDAI_FIELD_CONCEPT]
     };
@@ -88,7 +88,7 @@ function addFieldConcept(field: any, concepts: { [id: string]: Concept }, projec
 
     const concept: Concept = {
         id: parent.id + '_' + parameterize(field.name),
-        label: getLabel(field),
+        label: getLabel(field.label, field.name),
         description: field.description,
         parents: [parent]
     };
@@ -129,7 +129,7 @@ function addValueConcept(value: ValueDefinition, valueName: string, concepts: { 
 
     const concept: Concept = {
         id: parent.id + '_' + parameterize(valueName),
-        label: value.labels,
+        label: getLabel(value.labels, valueName),
         description: {},
         parents: [parent]
     };
@@ -148,15 +148,12 @@ function getFields(category: any): Array<any> {
 }
 
 
-function getLabel(definition: any): { [languageCode: string]: string } {
+function getLabel(labels: any, name: string): { [languageCode: string]: string } {
 
-    if (Object.keys(definition.label).length === 0) {
-        console.log('No label found for: ' + definition.name + ' (using name as label)');
-    }
+    if (!labels['de']) labels['de'] = name;
+    if (!labels['en']) labels['en'] = name;
 
-    return Object.keys(definition.label).length > 0
-        ? definition.label
-        : { en: definition.name };
+    return labels;
 }
 
 

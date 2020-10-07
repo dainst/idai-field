@@ -20,23 +20,23 @@ const {remote, ipcRenderer} = typeof window !== 'undefined' ? window.require('el
 
 
 export const PROJECT_MAPPING = {
-    'meninx-project': 'Meninx',
-    'pergamongrabung': 'Pergamon',
-    'wes': 'WES',
-    'bogazkoy-hattusa': 'Boha',
-    'campidoglio': 'Campidoglio',
-    'castiglione': 'Castiglione',
-    'kephissostal': 'Kephissostal',
-    'monte-turcisi': 'MonTur',
-    'al-ula': 'AlUla',
-    'kalapodi': 'Kalapodi',
-    'gadara_bm': 'Gadara',
-    'sudan-heritage': 'SudanHeritage',
-    'ayamonte': 'Ayamonte',
-    'abbircella': 'AbbirCella',
-    'karthagocircus': 'KarthagoCircus',
-    'selinunt': 'Selinunt',
-    'olympia_sht': 'Olympia'
+    'meninx-project': { prefix: 'Meninx', label: 'Meninx' },
+    'pergamongrabung': { prefix: 'Pergamon', label: 'Pergamon' },
+    'wes': { prefix: 'WES', label: 'Warka Environs Survey' },
+    'bogazkoy-hattusa': { prefix: 'Boha', label: 'Boğazköy-Ḫattuša' },
+    'campidoglio': { prefix: 'Campidoglio', label: 'Campidoglio' },
+    'castiglione': { prefix: 'Castiglione', label: 'Castiglione' },
+    'kephissostal': { prefix: 'Kephissostal', label: 'Kephissostal' },
+    'monte-turcisi': { prefix: 'MonTur', label: 'Monte Turcisi' },
+    'al-ula': { prefix: 'AlUla', label: 'Al Ula' },
+    'kalapodi': { prefix: 'Kalapodi', label: 'Kalapodi' },
+    'gadara_bm': { prefix: 'Gadara', label: 'Gadara' },
+    'sudan-heritage': { prefix: 'SudanHeritage', label: 'Sudan Heritage' },
+    'ayamonte': { prefix: 'Ayamonte', label: 'Ayamonte' },
+    'abbircella': { prefix: 'AbbirCella', label: 'AbbirCella' },
+    'karthagocircus': { prefix: 'KarthagoCircus', label: 'Karthago Circus' },
+    'selinunt': { prefix: 'Selinunt', label: 'Selinunt' },
+    'olympia_sht': { prefix: 'Olympia', label: 'Olympia' }
 };
 
 
@@ -119,10 +119,10 @@ export class SettingsService {
     }
 
 
-    private static getConfigurationName(project: Name): Name|undefined {
+    private static getConfigurationName(projectName: Name): Name|undefined {
 
-        for (let [name, filenamePrefix] of Object.entries(PROJECT_MAPPING)) {
-            if (project === name || project.startsWith(name + '-')) return filenamePrefix;
+        for (let [name, project] of Object.entries(PROJECT_MAPPING)) {
+            if (projectName === name || projectName.startsWith(name + '-')) return project.prefix;
         }
 
         return undefined;

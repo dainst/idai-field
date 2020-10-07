@@ -14,7 +14,7 @@ const PREFIX_SKOS = 'http://www.w3.org/2004/02/skos/core#';
 const PREFIX_SKOS_XL = 'http://www.w3.org/2008/05/skos-xl#';
 const PREFIX_RDF = 'http://www.w3.org/1999/02/22-rdf-syntax-ns#';
 
-PROJECT_MAPPING['default'] = 'Default';
+PROJECT_MAPPING['default'] = {};
 
 
 type Concept = {
@@ -104,10 +104,7 @@ function addValuelistConcept(valuelist: ValuelistDefinition, concepts: { [id: st
 
     const concept: Concept = {
         id: 'idai-field-valuelist-' + valuelist.id,
-        label: {
-            de: 'Werteliste ' + PROJECT_MAPPING[projectName],
-            en: 'Value list ' + PROJECT_MAPPING[projectName]
-        },
+        label: getValuelistLabel(projectName),
         description: {},
         parents: [parent]
     };
@@ -121,6 +118,20 @@ function addValuelistConcept(valuelist: ValuelistDefinition, concepts: { [id: st
     Object.entries(valuelist.values).forEach(([valueName, value]) => {
         addValueConcept(value, valueName, concepts, concept);
     });
+}
+
+
+function getValuelistLabel(projectName: string) {
+
+    return projectName === 'default'
+        ? {
+            de: 'Basiswerteliste',
+            en: 'Basic value list'
+        }
+        : {
+            de: 'Werteliste ' + PROJECT_MAPPING[projectName].label,
+            en: 'Value list ' + PROJECT_MAPPING[projectName].label
+        };
 }
 
 

@@ -199,7 +199,6 @@ function getSKOSConcept(concept: Concept): string {
     ).join('');
 
     result += Object.keys(concept.label)
-        .sort((l1, l2) => l1 === 'de' ? -1 : 1)
         .map(languageCode => getSKOSLabel(concept, languageCode))
         .join('');
 

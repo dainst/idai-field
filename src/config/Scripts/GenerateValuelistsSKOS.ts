@@ -2,6 +2,7 @@ import {flatten} from 'tsfun';
 import {PROJECT_MAPPING} from '../../app/core/settings/settings-service';
 import {Tree, TreeList} from '../../app/core/util/tree-list';
 import {ValueDefinition, ValuelistDefinition} from '../../app/core/configuration/model/valuelist-definition';
+import {COMMON_FIELDS} from '../../app/core/configuration/app-configurator';
 
 const fs = require('fs');
 const parameterize = require('parameterize');
@@ -78,22 +79,27 @@ function addCategoryConcept(categoryTree: Tree, concepts: { [id: string]: Concep
 
     getFields(category)
         .filter(field => field.valuelist)
-        .forEach(field => addFieldConcept(field, concepts, projectName, concept));
+        .forEach(field => addFieldConcept(field, Object.keys(COMMON_FIELDS).includes(field.name),
+            concepts, projectName, concept));
     categoryTree.trees.forEach(subtree => addCategoryConcept(subtree, concepts, projectName, concept));
 }
 
 
-function addFieldConcept(field: any, concepts: { [id: string]: Concept }, projectName: string,
-                         parent: Concept) {
+function addFieldConcept(field: any, commonField: boolean, concepts: { [id: string]: Concept },
+                         projectName: string, parent: Concept) {
 
     const concept: Concept = {
-        id: parent.id + '_' + parameterize(field.name),
+        id: commonField ? 'idai-field_common_' + parameterize(field.name) : parent.id + '_' + parameterize(field.name),
         label: getLabel(field.label, field.name),
         description: field.description,
         parents: [parent]
     };
 
-    if (!concepts[concept.id]) concepts[concept.id] = concept;
+    if (!concepts[concept.id]) {
+        concepts[concept.id] = concept;
+    } else if (!concepts[concept.id].parents.find(p => p.id === parent.id)) {
+        concepts[concept.id].parents.push(parent);
+    }
 
     addValuelistConcept(field.valuelist, concepts, projectName, concept);
 }
@@ -111,7 +117,7 @@ function addValuelistConcept(valuelist: ValuelistDefinition, concepts: { [id: st
 
     if (!concepts[concept.id]) {
         concepts[concept.id] = concept;
-    } else {
+    } else if (!concepts[concept.id].parents.find(p => p.id === parent.id)) {
         concepts[concept.id].parents.push(parent);
     }
 

@@ -7,123 +7,123 @@ import {RelationDefinition} from './model/relation-definition';
 import {Groups} from './model/group';
 
 
+export const COMMON_FIELDS = {
+    period: {
+        inputType: FieldDefinition.InputType.DROPDOWNRANGE,
+        group: Groups.TIME
+    },
+    dating: {
+        inputType: FieldDefinition.InputType.DATING,
+        group: Groups.TIME
+    },
+    diary: {
+        inputType: FieldDefinition.InputType.INPUT,
+        group: Groups.STEM
+    },
+    area: {
+        inputType: FieldDefinition.InputType.UNSIGNEDFLOAT,
+        group: Groups.DIMENSION
+    },
+    dimensionLength: {
+        inputType: FieldDefinition.InputType.DIMENSION,
+        group: Groups.DIMENSION,
+        positionValuelistId: 'position-values-expansion-default'
+    },
+    dimensionWidth: {
+        inputType: FieldDefinition.InputType.DIMENSION,
+        group: Groups.DIMENSION,
+        positionValuelistId: 'position-values-expansion-default'
+    },
+    dimensionHeight: {
+        inputType: FieldDefinition.InputType.DIMENSION,
+        group: Groups.DIMENSION,
+        positionValuelistId: 'position-values-expansion-default'
+    },
+    dimensionDiameter: {
+        inputType: FieldDefinition.InputType.DIMENSION,
+        group: Groups.DIMENSION,
+        positionValuelistId: 'position-values-expansion-default'
+    },
+    dimensionPerimeter: {
+        inputType: FieldDefinition.InputType.DIMENSION,
+        group: Groups.DIMENSION,
+        positionValuelistId: 'position-values-expansion-default'
+    },
+    dimensionThickness: {
+        inputType: FieldDefinition.InputType.DIMENSION,
+        group: Groups.DIMENSION,
+        positionValuelistId: 'position-values-expansion-default'
+    },
+    dimensionVerticalExtent: {
+        inputType: FieldDefinition.InputType.DIMENSION,
+        inputTypeOptions: { validation: { permissive: true }},
+        group: Groups.POSITION,
+        positionValuelistId: 'position-values-edge-default'
+    },
+    dimensionOther: {
+        inputType: FieldDefinition.InputType.DIMENSION,
+        group: Groups.DIMENSION,
+        positionValuelistId: 'position-values-expansion-default'
+    },
+    beginningDate: {
+        inputType: FieldDefinition.InputType.DATE,
+        group: Groups.STEM
+    },
+    endDate: {
+        inputType: FieldDefinition.InputType.DATE,
+        group: Groups.STEM
+    },
+    supervisor: {
+        inputType: FieldDefinition.InputType.CHECKBOXES,
+        valuelistFromProjectField: 'staff',
+        group: Groups.STEM
+    },
+    processor: {
+        inputType: FieldDefinition.InputType.CHECKBOXES,
+        valuelistFromProjectField: 'staff',
+        group: Groups.STEM
+    },
+    campaign: {
+        inputType: FieldDefinition.InputType.CHECKBOXES,
+        valuelistFromProjectField: 'campaigns',
+        allowOnlyValuesOfParent: true,
+        group: Groups.STEM
+    },
+    draughtsmen: {
+        inputType: FieldDefinition.InputType.CHECKBOXES,
+        valuelistFromProjectField: 'staff',
+        group: Groups.STEM
+    },
+    description: {
+        inputType: FieldDefinition.InputType.TEXT
+    },
+    date: {
+        inputType: FieldDefinition.InputType.DATE,
+        group: Groups.STEM
+    },
+    spatialLocation: {
+        inputType: FieldDefinition.InputType.INPUT,
+        group: Groups.POSITION
+    },
+    provenance: {
+        inputType: FieldDefinition.InputType.DROPDOWN,
+    },
+    orientation: {
+        inputType: FieldDefinition.InputType.DROPDOWN,
+        group: Groups.POSITION
+    },
+    literature: {
+        inputType: FieldDefinition.InputType.LITERATURE
+    }
+};
+
+
 @Injectable()
 /**
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
 export class AppConfigurator {
-
-    private commonFields = {
-        period: {
-            inputType: FieldDefinition.InputType.DROPDOWNRANGE,
-            group: Groups.TIME
-        },
-        dating: {
-            inputType: FieldDefinition.InputType.DATING,
-            group: Groups.TIME
-        },
-        diary: {
-            inputType: FieldDefinition.InputType.INPUT,
-            group: Groups.STEM
-        },
-        area: {
-            inputType: FieldDefinition.InputType.UNSIGNEDFLOAT,
-            group: Groups.DIMENSION
-        },
-        dimensionLength: {
-            inputType: FieldDefinition.InputType.DIMENSION,
-            group: Groups.DIMENSION,
-            positionValuelistId: 'position-values-expansion-default'
-        },
-        dimensionWidth: {
-            inputType: FieldDefinition.InputType.DIMENSION,
-            group: Groups.DIMENSION,
-            positionValuelistId: 'position-values-expansion-default'
-        },
-        dimensionHeight: {
-            inputType: FieldDefinition.InputType.DIMENSION,
-            group: Groups.DIMENSION,
-            positionValuelistId: 'position-values-expansion-default'
-        },
-        dimensionDiameter: {
-            inputType: FieldDefinition.InputType.DIMENSION,
-            group: Groups.DIMENSION,
-            positionValuelistId: 'position-values-expansion-default'
-        },
-        dimensionPerimeter: {
-            inputType: FieldDefinition.InputType.DIMENSION,
-            group: Groups.DIMENSION,
-            positionValuelistId: 'position-values-expansion-default'
-        },
-        dimensionThickness: {
-            inputType: FieldDefinition.InputType.DIMENSION,
-            group: Groups.DIMENSION,
-            positionValuelistId: 'position-values-expansion-default'
-        },
-        dimensionVerticalExtent: {
-            inputType: FieldDefinition.InputType.DIMENSION,
-            inputTypeOptions: { validation: { permissive: true }},
-            group: Groups.POSITION,
-            positionValuelistId: 'position-values-edge-default'
-        },
-        dimensionOther: {
-            inputType: FieldDefinition.InputType.DIMENSION,
-            group: Groups.DIMENSION,
-            positionValuelistId: 'position-values-expansion-default'
-        },
-        beginningDate: {
-            inputType: FieldDefinition.InputType.DATE,
-            group: Groups.STEM
-        },
-        endDate: {
-            inputType: FieldDefinition.InputType.DATE,
-            group: Groups.STEM
-        },
-        supervisor: {
-            inputType: FieldDefinition.InputType.CHECKBOXES,
-            valuelistFromProjectField: 'staff',
-            group: Groups.STEM
-        },
-        processor: {
-            inputType: FieldDefinition.InputType.CHECKBOXES,
-            valuelistFromProjectField: 'staff',
-            group: Groups.STEM
-        },
-        campaign: {
-            inputType: FieldDefinition.InputType.CHECKBOXES,
-            valuelistFromProjectField: 'campaigns',
-            allowOnlyValuesOfParent: true,
-            group: Groups.STEM
-        },
-        draughtsmen: {
-            inputType: FieldDefinition.InputType.CHECKBOXES,
-            valuelistFromProjectField: 'staff',
-            group: Groups.STEM
-        },
-        description: {
-            inputType: FieldDefinition.InputType.TEXT
-        },
-        date: {
-            inputType: FieldDefinition.InputType.DATE,
-            group: Groups.STEM
-        },
-        spatialLocation: {
-            inputType: FieldDefinition.InputType.INPUT,
-            group: Groups.POSITION
-        },
-        provenance: {
-            inputType: FieldDefinition.InputType.DROPDOWN,
-        },
-        orientation: {
-            inputType: FieldDefinition.InputType.DROPDOWN,
-            group: Groups.POSITION
-        },
-        literature: {
-            inputType: FieldDefinition.InputType.LITERATURE
-        }
-    };
-
 
     private builtinCategories: any = {
         Project: {
@@ -664,7 +664,7 @@ export class AppConfigurator {
 
         return this.configLoader.go(
             configDirPath,
-            this.commonFields,
+            COMMON_FIELDS,
             this.builtinCategories,
             this.defaultRelations,
             this.defaultFields,

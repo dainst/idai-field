@@ -103,7 +103,7 @@ function addValuelistConcept(valuelist: ValuelistDefinition, concepts: { [id: st
                              projectName: string, parent: Concept) {
 
     const concept: Concept = {
-        id: 'idai-field-valuelist-' + valuelist.id,
+        id: 'idai-field-valuelist-' + parameterize(valuelist.id),
         label: getValuelistLabel(projectName),
         description: {},
         parents: [parent]
@@ -199,6 +199,7 @@ function getSKOSConcept(concept: Concept): string {
     ).join('');
 
     result += Object.keys(concept.label)
+        .sort((l1, l2) => l1 === 'de' ? -1 : 1)
         .map(languageCode => getSKOSLabel(concept, languageCode))
         .join('');
 

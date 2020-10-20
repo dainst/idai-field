@@ -127,7 +127,7 @@ function getLanguages(): string[] {
 
 async function start() {
 
-    for (const [projectName, configName] of Object.entries(PROJECT_MAPPING)) {
+    for (const [projectName, project] of Object.entries(PROJECT_MAPPING)) {
         console.log('');
         const localizedTreeLists: { [locale: string]: TreeList<Category>} = {};
         for (const language of LANGUAGES) {
@@ -137,7 +137,7 @@ async function start() {
                 localizedTreeLists[language] = getTreeList(
                     await appConfigurator.go(
                         CONFIG_DIR_PATH,
-                        configName !== 'default' ? configName : undefined,
+                        project.prefix !== 'default' ? project.prefix : undefined,
                         [language]
                     )
                 );

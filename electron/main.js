@@ -171,6 +171,14 @@ const createWindow = () => {
         titleBarStyle: 'hiddenInset'
     });
 
+    if (require('os').platform() === 'linux' && global.mode === 'production') {
+        const path = require('path').join(
+            electron.app.getAppPath().replace('app.asar', 'icons'),
+            'logo256x256.png'
+        );
+        mainWindow.setIcon(electron.nativeImage.createFromPath(path));
+    }
+
     // and load the index.html of the app.
     mainWindow.loadURL(global.distUrl + 'index.html');
 

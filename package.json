@@ -55,7 +55,6 @@
       "target": "AppImage",
       "publish": "github",
       "artifactName": "iDAI.field-${version}-Linux.${ext}",
-      "icon": "img/logo256x256.png",
       "category": "Science"
     },
     "npmRebuild": false,
@@ -68,6 +67,10 @@
       {
         "from": "src/manual",
         "to": "manual"
+      },
+      {
+        "from":  "img/linux",
+        "to": "icons"
       },
       "tools",
       "samples"

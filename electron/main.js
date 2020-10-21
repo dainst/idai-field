@@ -50,14 +50,23 @@ const setLanguages = config => {
             // Use value from deprecated locale setting if existing
             config.languages = [config.locale];
         } else {
-            config.languages = mainLanguages.includes(electron.app.getLocale())
-                ? [electron.app.getLocale()]
+            const locale = getLocale();
+            config.languages = mainLanguages.includes(locale)
+                ? [locale]
                 : ['de'];
         }
     }
 
     config.languages = config.languages
         .concat(mainLanguages.filter(language => !config.languages.includes(language)));
+};
+
+
+const getLocale = () => {
+
+    return electron.app.getLocale()
+        .replace('_', '-')
+        .split('-')[0];
 };
 
 

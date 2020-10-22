@@ -62,6 +62,14 @@ const setLanguages = config => {
 };
 
 
+const getLocale = () => {
+
+    return electron.app.getLocale()
+        .replace('_', '-')
+        .split('-')[0];
+};
+
+
 global.getLocale = () => global.config.languages.find(language => mainLanguages.includes(language));
 
 global.getMainLanguages = () => mainLanguages;

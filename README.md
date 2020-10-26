@@ -17,7 +17,7 @@ interested third party is free to reuse and adjust it to their needs.
 
 ## Installation
 
-You can install the latest version of iDAI.field by downloading it from the [github releases page](https://github.com/dainst/idai-field/releases/latest) or the [idai-field homepage](http://field.dainst.org). Choose the installer for your operating system (**MacOS** or **Windows**).
+You can install the latest version of iDAI.field by downloading it from the [github releases page](https://github.com/dainst/idai-field/releases/latest) or the [idai-field homepage](http://field.dainst.org). Choose the installer for your operating system (**MacOS**, **Windows** or **Linux**).
 
    
 ## Development
@@ -69,17 +69,11 @@ To create binaries run:
 
 ```
 $ npm run build
-$ npm run package[:mac|:win]
+$ npm run package:[mac|win|lnx]
 ```
 
-Without using one of the specified suffixes, this will create packages for both **MacOS** and **Windows** 32/64 bit.
 If used with one of the suffixes, only packages for the selected target platform get created. When the command has finished execution, you find packages of the application for different operating systems in the `release` directory.
 
 Please note that when using **Windows**, due to nested node_modules and the 
 windows default maximum path length you might be running into errors while attempting
 to extract the package. In that case, please use a different archiver, for example [7-Zip](http://www.7-zip.org/download.html).
-
-Note that creating **Linux** packages should be possible with Electron, but this is yet untested and not enabled.
-
-
-

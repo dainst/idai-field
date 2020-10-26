@@ -72,7 +72,7 @@ $ npm run build
 $ npm run package:[mac|win|lnx]
 ```
 
-If used with one of the suffixes, only packages for the selected target platform get created. When the command has finished execution, you find packages of the application for different operating systems in the `release` directory.
+Only packages for the selected target platform are created. When the command has finished execution, you find packages of the application in the `release` directory.
 
 Please note that when using **Windows**, due to nested node_modules and the 
 windows default maximum path length you might be running into errors while attempting

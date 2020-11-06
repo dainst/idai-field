@@ -1,26 +1,25 @@
 ## Erste Schritte
 
-Nach dem ersten Start des Desktop-Clients befinden Sie sich zunächst im Projekt "test", das es
+Nach dem ersten Start der iDAI.field-Desktopanwendung befinden Sie sich zunächst im Projekt "test", das es
 Ihnen ermöglicht, die Funktionen des Programms anhand einiger Testdaten auszuprobieren.
-Bitte beachten Sie, dass neu angelegte Datensätze nach einem Neustart des Clients
+Bitte beachten Sie, dass neu angelegte Datensätze nach einem Neustart der Anwendung
 gelöscht und alle Änderungen zurückgesetzt werden, solange das Testprojekt ausgewählt ist.
-Aus diesem Grund findet im Testprojekt grundsätzlich keine Synchronisation mit anderen Clients
+Aus diesem Grund findet im Testprojekt grundsätzlich keine Synchronisation mit anderen iDAI.field-Instanzen
 oder Datenbanken statt.
 
-Um mit dem Desktop-Client produktiv zu arbeiten, sollten Sie zunächst die folgenden Schritte
-durchführen:
+Um mit iDAI.field produktiv zu arbeiten, sollten Sie zunächst die folgenden Schritte durchführen:
 
 1. Im Untermenü **Einstellungen**, das Sie über das Menü "iDAI.field" (MacOS) bzw. "Datei" (Windows)
 erreichen, können Sie grundlegende Einstellungen vornehmen, die für sämtliche Projekte gelten. Legen Sie hier
 bitte zunächst Ihren Bearbeiternamen bzw. Bearbeiterinnennamen fest. Dieser Name wird bei allen von Ihnen
 vorgenommenen Änderungen in der Datenbank hinterlegt und sollte unbedingt gesetzt werden, insbesondere wenn
-Daten mit anderen Clients synchronisiert werden sollen.
+Daten synchronisiert werden sollen.
 
 2. Darüber hinaus können Sie im Untermenü **Einstellungen** den Pfad des Bilderverzeichnisses
 ändern. Dies ist erforderlich, wenn Sie auf ein Bilderverzeichnis zugreifen möchten,
 das auf einem Netzwerk-Gerät (NAS) liegt und das von mehreren Nutzern bzw. Nutzerinnen
-gleichzeitig verwendet wird. Bitte beachten Sie, dass Bilder in jedem Fall über den
-Client importiert werden müssen. Bilddateien, die manuell in das Bilderverzeichnis
+gleichzeitig verwendet wird. Bitte beachten Sie, dass Bilder in jedem Fall über die
+iDAI.field-Anwendung importiert werden müssen. Bilddateien, die manuell in das Bilderverzeichnis
 eingefügt werden, können von der Anwendung **nicht** verwendet werden.
 
 3. Klicken Sie auf den Projektnamen "test", um die **Projektverwaltung** aufzurufen. Hier

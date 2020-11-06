@@ -1,13 +1,13 @@
 ## Erste Schritte
 
-Nach dem ersten Start des Clients befinden Sie sich zunächst im Projekt "test", das es
+Nach dem ersten Start des Desktop-Clients befinden Sie sich zunächst im Projekt "test", das es
 Ihnen ermöglicht, die Funktionen des Programms anhand einiger Testdaten auszuprobieren.
 Bitte beachten Sie, dass neu angelegte Datensätze nach einem Neustart des Clients
 gelöscht und alle Änderungen zurückgesetzt werden, solange das Testprojekt ausgewählt ist.
 Aus diesem Grund findet im Testprojekt grundsätzlich keine Synchronisation mit anderen Clients
 oder Datenbanken statt.
 
-Um mit dem Client produktiv zu arbeiten, sollten Sie zunächst die folgenden Schritte
+Um mit dem Desktop-Client produktiv zu arbeiten, sollten Sie zunächst die folgenden Schritte
 durchführen:
 
 1. Im Untermenü **Einstellungen**, das Sie über das Menü "iDAI.field" (MacOS) bzw. "Datei" (Windows)

@@ -1,22 +1,22 @@
 ## First steps
 
-After starting the client for the first time, the project "test" will be active, allowing you to experiment
-with the application's functionality using a set of test data. Please note that as long as the test project is
-selected, any newly created data sets will be deleted and all changes will be reset when restarting the
-client. For this reason, synchronization with other clients or databases is not performed for the test
-project.  
+After starting the iDAI.field desktop application for the first time, the project "test" will be active, allowing
+you to experiment with the application's functionality using a set of test data. Please note that as long as the
+test project is selected, any newly created data sets will be deleted and all changes will be reset when restarting
+the application. For this reason, synchronization with other iDAI.field instances or databases is not performed for
+the test project.  
 
-In order to work with the client productively, you should first follow these steps:
+In order to work with iDAI.field productively, you should first follow these steps:
 
 1. The submenu **Settings**, which is accessible via the menu "iDAI.field" (MacOS) respectively "File"
 (Windows), allows you to change some basic settings applied to all projects. As a first step, please enter
 your editor name. This name will be stored in the database along with every change you make. It is strongly
-recommended to fill in this field, especially if data is going to be synchronized with other clients.  
+recommended to fill in this field, especially if data is going to be synchronized.  
 
 2. In the submenu **Settings** you can also change the path to the image directory. This may be necessary if
 you want to access an image directory located on a network device (NAS) used by several users simultaneously.
-Please note that in each case images must be imported via the client. Image files that are manually placed in
-the image directory can **not** be used by the application. 
+Please note that in each case images must be imported via the iDAI.field application. Image files that are
+manually placed in the image directory can **not** be used by the application. 
 
 3. Click on the project name "test" in order to open the **Project management**. In this menu, you can create
 a new project by clicking the plus button. Allowed characters for the project name are letters, numbers and

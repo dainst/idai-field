@@ -23,6 +23,7 @@ import {Messages} from '../messages/messages';
 import {Query} from '../../core/datastore/model/query';
 import {ProjectCategories} from '../../core/configuration/project-categories';
 import {MenuContext, MenuService} from '../menu-service';
+import {CatalogExporter} from '../../core/export/catalog-exporter';
 
 const remote = typeof window !== 'undefined' ? window.require('electron').remote : require('electron').remote;
 
@@ -39,15 +40,17 @@ const remote = typeof window !== 'undefined' ? window.require('electron').remote
  */
 export class ExportComponent implements OnInit {
 
-    public format: 'geojson' | 'shapefile' | 'csv' = 'csv';
+    public format: 'geojson' | 'shapefile' | 'csv' | 'catalog'  = 'csv';
     public initializing: boolean = false;
     public running: boolean = false;
     public javaInstalled: boolean = true;
     public operations: Array<FieldDocument> = [];
+    public catalogs: Array<FieldDocument> = [];
 
     public categoryCounts: Array<CategoryCount> = [];
     public selectedCategory: Category|undefined = undefined;
     public selectedOperationId: string = 'project';
+    public selectedCatalogId: string|undefined = undefined;
     public csvExportMode: 'schema' | 'complete' = 'complete';
 
     private modalRef: NgbModalRef|undefined;
@@ -67,15 +70,19 @@ export class ExportComponent implements OnInit {
                 private menuService: MenuService) {}
 
 
-    public getOperationLabel = (operation: FieldDocument) => ModelUtil.getDocumentLabel(operation);
+    public getDocumentLabel = (operation: FieldDocument) => ModelUtil.getDocumentLabel(operation);
 
     public isJavaInstallationMissing = () => this.format === 'shapefile' && !this.javaInstalled;
 
     public noResourcesFound = () => this.categoryCounts.length === 0 && !this.initializing;
 
+    public noCatalogsFound = () => this.catalogs.length === 0 && !this.initializing;
+
     public find = (query: Query) => this.documentDatastore.find(query);
 
-    public showOperations = () => this.format !== 'csv' || this.csvExportMode === 'complete';
+    public showOperations = () => this.format === 'csv' ? this.csvExportMode === 'complete' : this.format !== 'catalog';
+
+    public showCatalogs = () => this.format === 'catalog';
 
 
     async ngOnInit() {
@@ -83,12 +90,13 @@ export class ExportComponent implements OnInit {
         this.initializing = true;
 
         this.operations = await this.fetchOperations();
+        this.catalogs = await this.fetchCatalogs();
+        if (this.catalogs.length > 0) this.selectedCatalogId = this.catalogs[0].resource.id;
         await this.setCategoryCounts();
         this.javaInstalled = await JavaToolExecutor.isJavaInstalled();
 
         this.initializing = false;
     }
-
 
     public async setCategoryCounts() {
 
@@ -140,6 +148,7 @@ export class ExportComponent implements OnInit {
             if (this.format === 'geojson') await this.startGeojsonExport(filePath);
             else if (this.format === 'shapefile') await this.startShapeFileExport(filePath);
             else if (this.format === 'csv') await this.startCsvExport(filePath);
+            else if (this.format === 'catalog') await this.startCatalogExport(filePath);
 
             this.messages.add([M.EXPORT_SUCCESS]);
         } catch (msgWithParams) {
@@ -149,6 +158,15 @@ export class ExportComponent implements OnInit {
         this.running = false;
         this.menuService.setContext(MenuContext.DEFAULT);
         this.closeModal();
+    }
+
+    private async startCatalogExport(filePath: string) {
+
+        await CatalogExporter.performExport(
+            this.fieldDatastore,
+            filePath,
+            this.selectedCatalogId
+        );
     }
 
 
@@ -207,6 +225,7 @@ export class ExportComponent implements OnInit {
                     let ext = 'csv';
                     if (this.format === 'shapefile') ext = 'zip';
                     if (this.format === 'geojson') ext = 'geojson';
+                    if (this.format === 'catalog') ext = 'json';
                     options.defaultPath += '.' + ext;
                 }
             }
@@ -220,6 +239,11 @@ export class ExportComponent implements OnInit {
     private getFileFilter(): any {
 
         switch (this.format) {
+            case 'catalog':
+                return {
+                    name: this.i18n({ id: 'export.dialog.filter.catalog', value: 'Katalog' }),
+                    extensions: ['json']
+                };
             case 'geojson':
                 return {
                     name: this.i18n({ id: 'export.dialog.filter.geojson', value: 'GeoJSON-Datei' }),
@@ -256,6 +280,19 @@ export class ExportComponent implements OnInit {
 
         if (this.modalRef) this.modalRef.close();
         this.modalRef = undefined;
+    }
+
+
+    private async fetchCatalogs(): Promise<Array<FieldDocument>> {
+
+        try {
+            return (await this.fieldDatastore.find({
+                categories: ['TypeCatalog']
+            })).documents;
+        } catch (msgWithParams) {
+            this.messages.add(msgWithParams);
+            return [];
+        }
     }
 
 

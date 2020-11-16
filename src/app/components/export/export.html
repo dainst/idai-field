@@ -22,6 +22,7 @@
                             <option value="csv" i18n="@@export.formats.csv">CSV</option>
                             <option value="geojson" i18n="@@export.formats.geojson">GeoJSON</option>
                             <option value="shapefile" i18n="@@export.formats.shapefile">Shapefile</option>
+                            <option value="catalog" i18n="@@export.formats.catalog">Katalog</option>
                         </select>
                     </div>
 
@@ -52,7 +53,19 @@
                             <option value="project"
                                     i18n="@@export.operationSelect.all">Keine Einschränkung</option>
                             <option *ngFor="let operation of operations" value="{{operation.resource.id}}">
-                                {{getOperationLabel(operation)}}
+                                {{getDocumentLabel(operation)}}
+                            </option>
+                        </select>
+                    </div>
+
+
+                    <div *ngIf="showCatalogs() && this.catalogs.length > 0" class="form-group">
+                        <label class="control-label col-form-label"
+                               for="catalogSelect"
+                               i18n="@@export.catalogSelect.label">Katalog</label>
+                        <select id="catalogSelect" class="form-control" [(ngModel)]="selectedCatalogId">
+                            <option *ngFor="let catalog of catalogs" value="{{catalog.resource.id}}">
+                                {{getDocumentLabel(catalog)}}
                             </option>
                         </select>
                     </div>
@@ -71,10 +84,16 @@
                         </select>
                     </div>
 
-                    <div *ngIf="noResourcesFound()"
+                    <div *ngIf="format !== 'catalog' && noResourcesFound()"
                          class="export-info text-danger"
                          i18n="@@export.csv.noResources">
                         Keine Ressourcen gefunden.
+                    </div>
+
+                    <div *ngIf="format === 'catalog' && noCatalogsFound()"
+                         class="export-info text-danger"
+                         i18n="@@export.csv.noCatalogs">
+                        Keine Kataloge gefunden.
                     </div>
 
                     <div *ngIf="format === 'geojson' && !noResourcesFound()" class="export-info"

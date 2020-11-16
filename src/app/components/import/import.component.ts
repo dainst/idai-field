@@ -55,7 +55,7 @@ export class ImportComponent implements OnInit {
     public javaInstalled: boolean = true;
     public running: boolean = false;
 
-    public readonly allowedFileExtensions: string = '.csv, .jsonl, .geojson, .json, .shp';
+    public readonly allowedFileExtensions: string = '.csv, .jsonl, .geojson, .json, .shp, .catalog';
 
 
     constructor(public importState: ImportState,
@@ -339,6 +339,8 @@ export class ImportComponent implements OnInit {
     private static getImportFormat(fileName: string): ImportFormat|undefined {
 
         switch(ExtensionUtil.getExtension(fileName)) {
+            case 'catalog':
+                return 'catalog';
             case 'jsonl':
                 return 'native';
             case 'geojson':

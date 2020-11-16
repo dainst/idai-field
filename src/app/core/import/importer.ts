@@ -14,8 +14,10 @@ import {InverseRelationsMap, makeInverseRelationsMap} from '../configuration/inv
 import {buildImportFunction} from './import/import-documents';
 import {FieldConverter} from './field-converter';
 import {ProjectCategories} from '../configuration/project-categories';
+import {CatalogJsonlParser} from './parser/catalog-jsonl-parser';
+import {importCatalog} from './import/import-catalog';
 
-export type ImportFormat = 'native' | 'geojson' | 'geojson-gazetteer' | 'shapefile' | 'csv';
+export type ImportFormat = 'native' | 'geojson' | 'geojson-gazetteer' | 'shapefile' | 'csv' | 'catalog';
 
 export type ImportReport = { errors: any[], successfulImports: number };
 
@@ -122,6 +124,8 @@ export module Importer {
                 return ShapefileParser.parse;
             case 'native':
                 return NativeJsonlParser.parse;
+            case 'catalog':
+                return CatalogJsonlParser.parse;
         }
     }
 
@@ -143,6 +147,9 @@ export module Importer {
         let importFunction;
 
         switch (format) {
+            case 'catalog':
+                importFunction = importCatalog;
+                break;
             case 'geojson-gazetteer':
                 importFunction = buildImportFunction(validator, operationCategoryNames, inverseRelationsMap, generateId,
                     preprocessDocument, postprocessDocument,

@@ -38,7 +38,6 @@ export module CatalogJsonlParser {
                 reject([ParserErrors.FILE_INVALID_JSONL, i + 1]);
                 break;
             }
-            assertIsValid(document);
             docs.push(document);
         }
 
@@ -46,17 +45,8 @@ export module CatalogJsonlParser {
     }
 
 
-    function assertIsValid(document: NewDocument) {
-
-        if (document.resource.id) throw [ParserErrors.ID_MUST_NOT_BE_SET];
-    }
-
-
     function makeDoc(line: string): NewDocument {
 
-        const resource = JSON.parse(line);
-        if (!resource.relations) resource.relations = {};
-
-        return { resource: resource };
+        return JSON.parse(line);
     }
 }

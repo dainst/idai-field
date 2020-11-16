@@ -225,7 +225,7 @@ export class ExportComponent implements OnInit {
                     let ext = 'csv';
                     if (this.format === 'shapefile') ext = 'zip';
                     if (this.format === 'geojson') ext = 'geojson';
-                    if (this.format === 'catalog') ext = 'json';
+                    if (this.format === 'catalog') ext = 'jsonl';
                     options.defaultPath += '.' + ext;
                 }
             }
@@ -242,7 +242,7 @@ export class ExportComponent implements OnInit {
             case 'catalog':
                 return {
                     name: this.i18n({ id: 'export.dialog.filter.catalog', value: 'Katalog' }),
-                    extensions: ['json']
+                    extensions: ['jsonl']
                 };
             case 'geojson':
                 return {

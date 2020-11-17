@@ -2,42 +2,58 @@ import {Document} from 'idai-components-2';
 import {DocumentDatastore} from '../../datastore/document-datastore';
 import {update} from 'tsfun';
 import {DatastoreErrors} from '../../datastore/model/datastore-errors';
+import {DocumentReadDatastore} from '../../datastore/document-read-datastore';
+import {clone} from '../../util/object-util';
 
 
 // TODO batch import for speed
 /**
- * @param documents
+ * @param importDocuments
  * @param datastore
  * @param username
  *
  * @author Daniel de Oliveira
  */
-export async function importCatalog(documents: Array<Document>,
+export async function importCatalog(importDocuments: Array<Document>,
                                     datastore: DocumentDatastore,
                                     username: string): Promise<{ errors: string[][], successfulImports: number }> {
 
-    let successfulImports = 0;
-    for (let document of documents) {
-        delete document[Document._REV];
-        delete document['modified'];
-        delete document['created'];
+    try {
+        let successfulImports = 0;
+        for (let importDocument of importDocuments) {
+            delete importDocument[Document._REV];
+            delete importDocument['modified'];
+            delete importDocument['created'];
 
-        try {
-            const existingDocument: Document = await datastore.get(document.resource.id);
-            const updateDocument = update(Document.RESOURCE, document.resource, existingDocument);
-            await datastore.update(updateDocument, username);
-        } catch ([err]) {
-            if (err === DatastoreErrors.DOCUMENT_NOT_FOUND) {
-                document['readonly'] = true; // TODO let app react to that, for example by prohibiting editing
-                await datastore.create(document, username);
+            const existingDocument: Document|undefined = await getDocument(datastore, importDocument.resource.id);
+            const updateDocument = clone(existingDocument ?? importDocument);
+            updateDocument['readonly'] = true;
+            if (importDocument['readonly'] === false) delete updateDocument['readonly'];
+
+            if (existingDocument) {
+                await datastore.update(updateDocument, username);
             } else {
-                // TODO what about the already imported ones?
-                return { errors: [[DatastoreErrors.DOCUMENT_NOT_FOUND]], successfulImports: successfulImports }
+                await datastore.create(updateDocument, username);
             }
+            successfulImports++;
         }
+        return { errors: [], successfulImports: successfulImports };
 
-        successfulImports++;
+    } catch (errWithParams) {
+        return { errors: [errWithParams], successfulImports: 0 };
     }
+}
 
-    return { errors: [], successfulImports: successfulImports };
+
+
+// TODO make reusable
+async function getDocument(datastore: DocumentReadDatastore, resourceId: string): Promise<Document> {
+
+    try {
+        return await datastore.get(resourceId)
+    } catch (errWithParams) {
+        if (errWithParams.length === 1
+            && errWithParams[0] === DatastoreErrors.DOCUMENT_NOT_FOUND) return undefined;
+        else throw errWithParams;
+    }
 }

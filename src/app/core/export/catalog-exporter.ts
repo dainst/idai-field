@@ -1,5 +1,6 @@
 import {FieldReadDatastore} from '../datastore/field/field-read-datastore';
 import {Query} from '../datastore/model/query';
+import {flatten, isDefined} from 'tsfun';
 const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
 
 
@@ -20,9 +21,34 @@ export module CatalogExporter {
         };
         const types = (await datastore.find(typesQuery)).documents;
         const documents = [typeCatalog].concat(types)
-            .map(jsonObject => JSON.stringify(jsonObject))
-            .join('\n'); // TODO operating system?
+             // TODO operating system?
 
-        fs.writeFileSync(outputFilePath, documents);
+        const idsOfRelatedDocuments = flatten(
+            documents
+                .map(document => document.resource.relations['isDepictedIn'])
+                .filter(isDefined));
+
+        const relatedImageDocuments = [];
+        for (let id of idsOfRelatedDocuments) {
+            const document = await datastore.get(id); // TODO handle possible errors
+            relatedImageDocuments.push(document);
+        }
+        // TODO prune relations from image documents to other documents than the types to be exported
+        // TODO make sure the imported images cannot be deleted or edited directly
+        // TODO implement deletion of imported catalogs, together with all types and images
+
+        fs.writeFileSync(
+            outputFilePath,
+            documents
+                .concat(relatedImageDocuments)
+                .map(document => {
+                    delete document['_attachments'];
+                    delete document['_rev'];
+                    delete document['created'];
+                    delete document['modified'];
+                    return document;
+                })
+                .map(jsonObject => JSON.stringify(jsonObject))
+                .join('\n'));
     }
 }

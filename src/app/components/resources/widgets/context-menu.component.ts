@@ -52,8 +52,31 @@ export class ContextMenuComponent implements OnChanges {
     }
 
 
+    public areAnyOptionsAvailable(): boolean {
+
+        return this.isDeleteOptionAvailable()
+            || this.isEditOptionAvailable()
+            || this.isCreateGeometryOptionAvailable()
+            || this.isEditGeometryOptionAvailable()
+            || this.isMoveOptionAvailable()
+    }
+
+
+    public isEditOptionAvailable(): boolean {
+
+        return !this.isReadonly();
+    }
+
+
+    public isDeleteOptionAvailable(): boolean {
+
+        return !this.isReadonly();
+    }
+
+
     public isCreateGeometryOptionAvailable(): boolean {
 
+        if (this.isReadonly()) return false;
         return this.contextMenu.document !== undefined
             && ProjectCategories.isGeometryCategory(
                 this.projectConfiguration.getCategoryTreelist(), this.contextMenu.document.resource.category)
@@ -63,6 +86,7 @@ export class ContextMenuComponent implements OnChanges {
 
     public isEditGeometryOptionAvailable(): boolean {
 
+        if (this.isReadonly()) return false;
         return this.contextMenu.document !== undefined
             && ProjectCategories.isGeometryCategory(
                 this.projectConfiguration.getCategoryTreelist(), this.contextMenu.document.resource.category)
@@ -72,10 +96,17 @@ export class ContextMenuComponent implements OnChanges {
 
     public isMoveOptionAvailable(): boolean {
 
+        if (this.isReadonly()) return false;
         if (!this.contextMenu.document) return false;
 
         return this.projectConfiguration
             .getHierarchyParentCategories(this.contextMenu.document.resource.category).length > 0;
+    }
+
+
+    private isReadonly() {
+
+        return this.contextMenu.document['readonly'] === true; // TODO add readonly const to document
     }
 
 

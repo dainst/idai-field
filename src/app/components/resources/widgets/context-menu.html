@@ -1,4 +1,4 @@
-<div *ngIf="contextMenu"
+<div *ngIf="contextMenu && areAnyOptionsAvailable()"
      id="context-menu"
      class="dropdown-menu show"
      [class.orientation-top]="orientation === 'top'"
@@ -6,7 +6,8 @@
      [style.left]="contextMenu.position.x + 'px'"
      [style.top]="contextMenu.position.y + 'px'"
      [style.bottom]="getBottomPosition(contextMenu.position.y) + 'px'">
-    <div id="context-menu-edit-button" class="dropdown-item" (click)="selectAction('edit')">
+    <div *ngIf="isEditOptionAvailable()"
+        id="context-menu-edit-button" class="dropdown-item" (click)="selectAction('edit')">
         <span class="mdi mdi-pencil"></span>
         <span class="dropdown-entry-label" i18n="@@resources.contextMenu.edit">Bearbeiten</span>
     </div>
@@ -15,7 +16,8 @@
         <span class="mdi mdi-file-tree"></span>
         <span class="dropdown-entry-label" i18n="@@resources.contextMenu.move">Verschieben</span>
     </div>
-    <div id="context-menu-delete-button" class="dropdown-item" (click)="selectAction('delete')">
+    <div *ngIf="isDeleteOptionAvailable()"
+            id="context-menu-delete-button" class="dropdown-item" (click)="selectAction('delete')">
         <span class="mdi mdi-delete"></span>
         <span class="dropdown-entry-label" i18n="@@resources.contextMenu.delete">Löschen</span>
     </div>

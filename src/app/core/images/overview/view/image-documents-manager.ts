@@ -77,14 +77,13 @@ export class ImageDocumentsManager {
      */
     public async fetchDocuments(limit: number, offset?: number) {
 
-        // console.log("limit: " + limit + ' offset ' + offset)
-
         this.currentQueryId = new Date().toISOString();
 
         const query: Query = JSON.parse(JSON.stringify(this.imagesState.getQuery()));
         if (offset) query.offset = offset;
         query.limit = limit;
         query.id = this.currentQueryId;
+        query.constraints['readonly:exist'] = 'UNKNOWN';
 
         try {
             const {documents, totalCount, queryId} = await this.imageDatastore.find(query);

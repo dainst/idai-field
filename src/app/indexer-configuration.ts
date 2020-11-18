@@ -24,6 +24,7 @@ export module IndexerConfiguration {
             'geometry:exist': { path: 'resource.geometry', pathArray: ['resource', 'geometry'], type: 'exist' },
             'georeference:exist': { path: 'resource.georeference', pathArray: ['resource', 'georeference'], type: 'exist' },
             'conflicts:exist': { path: '_conflicts', pathArray: ['_conflicts'], type: 'exist' },
+            'readonly:exist': { path: 'readonly', pathArray: ['readonly'], type: 'exist' }
         }, projectConfiguration.getCategoriesArray());
 
         const createdFulltextIndex = {};

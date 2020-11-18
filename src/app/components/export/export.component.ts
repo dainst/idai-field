@@ -163,7 +163,7 @@ export class ExportComponent implements OnInit {
     private async startCatalogExport(filePath: string) {
 
         await CatalogExporter.performExport(
-            this.fieldDatastore,
+            this.documentDatastore,
             filePath,
             this.selectedCatalogId
         );

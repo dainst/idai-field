@@ -21,13 +21,11 @@ function cleanImageDocuments(images: Array<Document>, idsOfCatalogResources: Arr
 
     const relatedImageDocuments = [];
     for (let image of images) {
-        image.resource.relations = {
-            'depicts': image.resource.relations['depicts']
-        } as any;
 
-        image.resource.relations['depicts'] =
-            image.resource.relations['depicts']
-                .filter(includedIn(idsOfCatalogResources));
+        image.resource.relations = {
+            depicts: image.resource.relations['depicts']
+                .filter(includedIn(idsOfCatalogResources))
+        } as any;
 
         if (image.resource.relations['depicts'].length > 0) {
             relatedImageDocuments.push(image);

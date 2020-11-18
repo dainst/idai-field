@@ -5,6 +5,7 @@ import {flatten, includedIn, isDefined} from 'tsfun';
 import {map as asyncMap} from 'tsfun/async';
 import {clone} from 'tsfun/struct';
 import {Query} from '../../datastore/model/query';
+import {ImageRelations} from '../../model/relation-constants';
 
 
 export async function getExportDocuments(datastore: DocumentReadDatastore,
@@ -29,11 +30,11 @@ function cleanImageDocuments(images: Array<Document>, idsOfCatalogResources: Arr
     for (let image of images) {
 
         image.resource.relations = {
-            depicts: image.resource.relations['depicts']
+            depicts: image.resource.relations[ImageRelations.DEPICTS]
                 .filter(includedIn(idsOfCatalogResources))
         } as any;
 
-        if (image.resource.relations['depicts'].length > 0) {
+        if (image.resource.relations[ImageRelations.DEPICTS].length > 0) {
             relatedImageDocuments.push(image);
         }
     }
@@ -46,7 +47,7 @@ async function getImages(datastore: DocumentReadDatastore,
 
     const idsOfRelatedDocuments = flatten(
         catalogAndTypes
-            .map(document => document.resource.relations['isDepictedIn'])
+            .map(document => document.resource.relations[ImageRelations.ISDEPICTEDIN])
             .filter(isDefined));
 
     return cleanImageDocuments(await asyncMap(idsOfRelatedDocuments, async id => {

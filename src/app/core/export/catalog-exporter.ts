@@ -1,5 +1,6 @@
 import {DocumentReadDatastore} from '../datastore/document-read-datastore';
 import {getExportDocuments} from './catalog/get-export-documents';
+import {Name} from '../constants';
 const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
 
 // TODO in the user interface: make sure the imported images cannot be deleted or edited directly
@@ -9,11 +10,12 @@ export module CatalogExporter {
 
     export async function performExport(datastore: DocumentReadDatastore,
                                         outputFilePath: string,
-                                        catalogId: string): Promise<void> {
+                                        catalogId: string,
+                                        project: Name): Promise<void> {
 
         fs.writeFileSync(
             outputFilePath,
-            (await getExportDocuments(datastore, catalogId))
+            (await getExportDocuments(datastore, catalogId, project))
                 .map(stringify)
                 .join('\n') // TODO operating system?
         );

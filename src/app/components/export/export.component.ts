@@ -165,7 +165,8 @@ export class ExportComponent implements OnInit {
         await CatalogExporter.performExport(
             this.documentDatastore,
             filePath,
-            this.selectedCatalogId
+            this.selectedCatalogId,
+            this.settingsService.getSelectedProject()
         );
     }
 

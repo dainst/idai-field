@@ -1,19 +1,25 @@
 import {DocumentReadDatastore} from '../../datastore/document-read-datastore';
 import {Document, toResourceId} from 'idai-components-2';
-import {ResourceId} from '../../constants';
+import {Name, ResourceId} from '../../constants';
 import {flatten, includedIn, isDefined} from 'tsfun';
 import {map as asyncMap} from 'tsfun/async';
 import {clone} from 'tsfun/struct';
 import {Query} from '../../datastore/model/query';
 
 
-export async function getExportDocuments(datastore: DocumentReadDatastore, catalogId) {
+export async function getExportDocuments(datastore: DocumentReadDatastore,
+                                         catalogId: ResourceId,
+                                         project: Name) {
 
     const catalogAndTypes = await getCatalogAndTypes(datastore, catalogId);
     const relatedImages = await getImages(datastore, catalogAndTypes);
     return catalogAndTypes
         .concat(relatedImages)
-        .map(cleanDocument);
+        .map(cleanDocument)
+        .map(document => {
+            document['project'] = project;
+            return document;
+        });
 }
 
 

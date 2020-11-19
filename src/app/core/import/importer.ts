@@ -17,6 +17,7 @@ import {ProjectCategories} from '../configuration/project-categories';
 import {CatalogJsonlParser} from './parser/catalog-jsonl-parser';
 import {importCatalog} from './import/import-catalog';
 import {SettingsService} from '../settings/settings-service';
+import {Settings} from '../settings/settings';
 
 export type ImportFormat = 'native' | 'geojson' | 'geojson-gazetteer' | 'shapefile' | 'csv' | 'catalog';
 
@@ -86,6 +87,8 @@ export module Importer {
 
         const inverseRelationsMap = makeInverseRelationsMap(projectConfiguration.getAllRelationDefinitions());
 
+        const settings = settingsService.getSettings()
+
         const { errors, successfulImports } = await performImport(
             documents,
             format,
@@ -99,8 +102,7 @@ export module Importer {
             FieldConverter.preprocessDocument(projectConfiguration),
             FieldConverter.postprocessDocument(projectConfiguration),
             datastore,
-            settingsService.getUsername(),
-            settingsService.getSelectedProject());
+            settings);
 
         return { errors: errors, warnings: [], successfulImports: successfulImports };
     }
@@ -143,9 +145,9 @@ export module Importer {
                            preprocessDocument: (document: Document) => Document,
                            postprocessDocument: (document: Document) => Document,
                            datastore: DocumentDatastore,
-                           username: string,
-                           selectedProject: string): Promise<{ errors: string[][], successfulImports: number }> {
+                           settings: Settings): Promise<{ errors: string[][], successfulImports: number }> {
 
+        const selectedProject = Settings.getSelectedProject(settings);
         let importFunction;
 
         switch (format) {
@@ -170,6 +172,6 @@ export module Importer {
                         operationId: operationId, useIdentifiersInRelations: true });
         }
 
-        return importFunction(documents, datastore, username, selectedProject);
+        return importFunction(documents, datastore, settings.username, selectedProject);
     }
 }

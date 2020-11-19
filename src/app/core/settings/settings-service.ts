@@ -80,21 +80,6 @@ export class SettingsService {
 
     public getUsername = () => this.settings.username;
 
-    public getDbs = () => this.settings.dbs;
-
-    public getHostPassword = (): string => this.settings.hostPassword;
-
-
-    /**
-     * @deprecated Use Settings.getSelectedProject instead
-     */
-    public getSelectedProject(): string {
-
-        return Settings.getSelectedProject(this.settings);
-    }
-
-    public isAutoUpdateActive = () => this.settings.isAutoUpdateActive;
-
 
     public async bootProjectDb(settings: Settings, progress?: InitializationProgress): Promise<void> {
 
@@ -104,7 +89,7 @@ export class SettingsService {
             if (progress) await progress.setPhase('settingUpDatabase');
 
             await this.pouchdbManager.loadProjectDb(
-                this.getSelectedProject(),
+                Settings.getSelectedProject(settings),
                 new SampleDataLoader(
                     this.imageConverter, this.settings.imagestorePath, Settings.getLocale(), progress
                 )
@@ -138,7 +123,7 @@ export class SettingsService {
         try {
             return this.appConfigurator.go(
                 configurationDirPath,
-                SettingsService.getConfigurationName(this.getSelectedProject()),
+                SettingsService.getConfigurationName(Settings.getSelectedProject(this.settings)),
                 this.settings.languages
             );
         } catch (msgsWithParams) {
@@ -167,10 +152,10 @@ export class SettingsService {
                 || !(this.settings.dbs.length > 0))
             return;
 
-        if (!SettingsService.isSynchronizationAllowed(this.getSelectedProject())) return;
+        if (!SettingsService.isSynchronizationAllowed(Settings.getSelectedProject(this.settings))) return;
 
         this.synchronizationService.setSyncTarget(this.settings.syncTarget.address);
-        this.synchronizationService.setProject(this.getSelectedProject());
+        this.synchronizationService.setProject(Settings.getSelectedProject(this.settings));
         this.synchronizationService.setPassword(this.settings.syncTarget.password);
         return this.synchronizationService.startSync();
     }
@@ -235,7 +220,7 @@ export class SettingsService {
 
         this.pouchdbServer.setPassword(this.settings.hostPassword);
 
-        return this.imagestore.setPath(settings.imagestorePath, this.getSelectedProject() as any)
+        return this.imagestore.setPath(settings.imagestorePath, Settings.getSelectedProject(this.settings) as any)
             .catch((errWithParams: any) => {
                 if (errWithParams.length > 0 && errWithParams[0] === ImagestoreErrors.INVALID_PATH) {
                     this.messages.add([M.IMAGESTORE_ERROR_INVALID_PATH, settings.imagestorePath]);
@@ -249,12 +234,15 @@ export class SettingsService {
 
     private async createProjectDocumentIfMissing() {
 
+        const settings = this.getSettings();
+        const selectedProject = Settings.getSelectedProject(settings);
+
         try {
             await this.pouchdbManager.getDbProxy().get('project');
         } catch (_) {
             console.warn('Didn\'t find project document, creating new one');
             await this.pouchdbManager.getDbProxy().put(
-                SettingsService.createProjectDocument(this.getSelectedProject(), this.getUsername())
+                SettingsService.createProjectDocument(selectedProject, settings.username)
             );
         }
     }

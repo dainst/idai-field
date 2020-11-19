@@ -68,7 +68,7 @@ export class ProjectsModalComponent implements AfterViewInit, AfterViewChecked {
     }
 
 
-    public getProjects = () => this.settingsService.getDbs();
+    public getProjects = () => this.settingsService.getSettings().dbs;
 
 
     public onKeyDown(event: KeyboardEvent) {

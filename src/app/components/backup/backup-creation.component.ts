@@ -8,6 +8,7 @@ import {M} from '../messages/m';
 import {TabManager} from '../../core/tabs/tab-manager';
 import {Messages} from '../messages/messages';
 import {MenuContext, MenuService} from '../menu-service';
+import {Settings} from '../../core/settings/settings';
 
 
 @Component({
@@ -70,7 +71,7 @@ export class BackupCreationComponent {
     private async writeBackupFile(filePath: string) {
 
         try {
-            await this.backupProvider.dump(filePath, this.settingsService.getSelectedProject());
+            await this.backupProvider.dump(filePath, Settings.getSelectedProject(this.settingsService.getSettings()));
             this.messages.add([M.BACKUP_WRITE_SUCCESS]);
         } catch (err) {
             this.messages.add([M.BACKUP_WRITE_ERROR_GENERIC]);

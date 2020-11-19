@@ -52,6 +52,7 @@ import {TypesComponent} from './types/types.component';
 import {TypeGridComponent} from './types/type-grid.component';
 import {TypeIconComponent} from './types/type-icon.component';
 import {Messages} from '../messages/messages';
+import {Settings} from '../../core/settings/settings';
 
 const remote = typeof window !== 'undefined'
   ? window.require('electron').remote
@@ -122,7 +123,7 @@ const remote = typeof window !== 'undefined'
                          settingsService: SettingsService,
                          tabManager: TabManager) => {
 
-                const projectName = settingsService.getSelectedProject();
+                const projectName = Settings.getSelectedProject(settingsService.getSettings());
                 if (!projectName) throw 'project not set';
 
                 return new ResourcesStateManager(

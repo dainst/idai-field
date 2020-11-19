@@ -24,6 +24,7 @@ import {Query} from '../../core/datastore/model/query';
 import {ProjectCategories} from '../../core/configuration/project-categories';
 import {MenuContext, MenuService} from '../menu-service';
 import {CatalogExporter} from '../../core/export/catalog-exporter';
+import {Settings} from '../../core/settings/settings';
 
 const remote = typeof window !== 'undefined' ? window.require('electron').remote : require('electron').remote;
 
@@ -183,9 +184,11 @@ export class ExportComponent implements OnInit {
 
     private async startShapeFileExport(filePath: string) {
 
+        const settings = this.settingsService.getSettings();
+
         await ShapefileExporter.performExport(
-            this.settingsService.getSelectedProject(),
-            this.settingsService.getHostPassword(),
+            Settings.getSelectedProject(settings),
+            settings.hostPassword,
             await this.documentDatastore.get('project'),
             filePath,
             this.selectedOperationId

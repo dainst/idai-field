@@ -10,6 +10,7 @@ import {TabManager} from '../../core/tabs/tab-manager';
 import {ProjectNameValidatorMsgConversion} from '../messages/project-name-validator-msg-conversion';
 import {Messages} from '../messages/messages';
 import {MenuContext, MenuService} from '../menu-service';
+import {Settings} from '../../core/settings/settings';
 
 
 @Component({
@@ -74,7 +75,7 @@ export class BackupLoadingComponent {
 
         if (!this.path) return [M.BACKUP_READ_ERROR_FILE_NOT_FOUND];
         if (!this.projectName) return [M.BACKUP_READ_ERROR_NO_PROJECT_NAME];
-        if (this.projectName === this.settingsService.getSelectedProject()) {
+        if (this.projectName === Settings.getSelectedProject(this.settingsService.getSettings())) {
             return [M.BACKUP_READ_ERROR_SAME_PROJECT_NAME];
         }
 

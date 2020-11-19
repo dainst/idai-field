@@ -8,6 +8,7 @@ import {ProjectConfiguration} from '../../../../core/configuration/project-confi
 import {MapComponent} from './map.component';
 import {ImageContainer} from '../../../../core/images/imagestore/image-container';
 import {Messages} from '../../../messages/messages';
+import {Settings} from '../../../../core/settings/settings';
 
 const fs = typeof window !== 'undefined'
   ? window.require('fs')
@@ -95,7 +96,10 @@ export class LayerMapComponent extends MapComponent {
 
         await super.updateMap(changes);
 
-        if (this.settingsService.getSelectedProject().toLowerCase().startsWith('sudan-heritage')) {
+        if (Settings.getSelectedProject(this.settingsService.getSettings())
+            .toLowerCase()
+            .startsWith('sudan-heritage')) {
+
             this.updateSudanTileLayer();
         }
 
@@ -178,7 +182,7 @@ export class LayerMapComponent extends MapComponent {
 
         if (!this.tileLayer) {
             const tilesPath: string = this.settingsService.getSettings().imagestorePath + ''
-                + this.settingsService.getSelectedProject() + '/tiles/Sudan';
+                + Settings.getSelectedProject(this.settingsService.getSettings()) + '/tiles/Sudan';
             if (!fs.existsSync(tilesPath)) return;
 
             const southWest = L.latLng(3.2, 21.7);

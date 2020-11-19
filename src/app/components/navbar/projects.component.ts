@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {SettingsService} from '../../core/settings/settings-service';
 import {NavbarComponent} from './navbar.component';
+import {Settings} from '../../core/settings/settings';
 
 
 @Component({
@@ -25,6 +26,6 @@ export class ProjectsComponent implements OnInit {
 
     ngOnInit() {
 
-        this.selectedProject = this.settingsService.getSelectedProject();
+        this.selectedProject = Settings.getSelectedProject(this.settingsService.getSettings());
     }
 }

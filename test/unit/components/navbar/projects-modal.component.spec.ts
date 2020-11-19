@@ -15,7 +15,7 @@ describe('ProjectsModalComponent', () => {
 
 
     beforeEach(() => {
-        settingsService = jasmine.createSpyObj('settingsService',['deleteProject', 'getDbs']);
+        settingsService = jasmine.createSpyObj('settingsService',['deleteProject', 'getSettings']);
         messages = jasmine.createSpyObj('messages', ['add']);
         menuService = jasmine.createSpyObj('menuService', ['setContext']);
 
@@ -28,7 +28,7 @@ describe('ProjectsModalComponent', () => {
 
     it('cannot delete last project', async done => {
 
-        settingsService.getDbs.and.returnValue(['current']);
+        settingsService.getSettings.and.returnValue({ dbs: ['current']});
 
         projectsModalComponent.selectedProject = 'current';
         projectsModalComponent.projectToDelete = 'current';
@@ -41,7 +41,7 @@ describe('ProjectsModalComponent', () => {
 
     it('do not create with existing name', async done => {
 
-        settingsService.getDbs.and.returnValue(['existing']);
+        settingsService.getSettings.and.returnValue({ dbs: ['existing'] });
 
         projectsModalComponent.newProject = 'existing';
 

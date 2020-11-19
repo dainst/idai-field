@@ -14,7 +14,7 @@ describe('Import/Subsystem', () => {
 
     let datastore;
     let _projectConfiguration;
-    const settingsService: any = { getUsername: () => 'testuser', getSelectedProject: () => '' };
+    const settingsService: any = { getUsername: () => 'testuser', getSettings: () => ({ selectedProject: '' }) };
 
     beforeEach(async done => {
 

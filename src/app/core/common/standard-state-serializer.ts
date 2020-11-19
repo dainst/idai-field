@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {StateSerializer} from './state-serializer';
 import {SettingsService} from '../settings/settings-service';
+import {Settings} from '../settings/settings';
 
 const remote = typeof window !== 'undefined' ? window.require('electron').remote : require('electron').remote;
 const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
@@ -44,7 +45,7 @@ export class StandardStateSerializer extends StateSerializer {
 
         return new Promise((resolve, reject) => {
 
-            if (this.settingsService.getSelectedProject() === 'test') return resolve();
+            if (Settings.getSelectedProject(this.settingsService.getSettings()) === 'test') return resolve();
 
             fs.writeFile(this.getFilePath(stateType),
                     JSON.stringify(stateObject), (err: any) => {
@@ -79,6 +80,6 @@ export class StandardStateSerializer extends StateSerializer {
     private getFilePath(stateType: StateType): string {
 
         return remote.getGlobal('appDataPath') + '/' +  stateType + '-'
-            + this.settingsService.getSelectedProject() + '.json';
+            + Settings.getSelectedProject(this.settingsService.getSettings()) + '.json';
     }
 }

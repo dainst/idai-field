@@ -52,7 +52,7 @@ export class TaskbarUpdateComponent {
     }
 
 
-    public isAutoUpdateActive = () => this.settingsService.isAutoUpdateActive();
+    public isAutoUpdateActive = () => this.settingsService.getSettings().isAutoUpdateActive;
 
 
     public waitForError(zone: NgZone) {

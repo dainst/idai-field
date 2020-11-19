@@ -10,17 +10,20 @@ import {ImageRelations} from '../../model/relation-constants';
 
 export async function getExportDocuments(datastore: DocumentReadDatastore,
                                          catalogId: ResourceId,
-                                         project: Name) {
+                                         project: Name): Promise<[Array<Document>, Array<ResourceId>]> {
 
     const catalogAndTypes = await getCatalogAndTypes(datastore, catalogId);
     const relatedImages = await getImages(datastore, catalogAndTypes);
-    return catalogAndTypes
-        .concat(relatedImages)
-        .map(cleanDocument)
-        .map(document => {
-            document['project'] = project;
-            return document;
-        });
+    return [
+        catalogAndTypes
+            .concat(relatedImages)
+            .map(cleanDocument)
+            .map(document => {
+                document['project'] = project;
+                return document;
+            }),
+        relatedImages.map(toResourceId)
+    ];
 }
 
 
@@ -69,7 +72,7 @@ async function getCatalogAndTypes(datastore: DocumentReadDatastore,
             }
         }
     };
-    const types = (await datastore.find(typesQuery)).documents;
+    const types = (await datastore.find(typesQuery)).documents; // TODO handle errors
     return [typeCatalog].concat(types);
 }
 

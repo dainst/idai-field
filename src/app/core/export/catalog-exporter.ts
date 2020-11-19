@@ -3,9 +3,8 @@ import {getExportDocuments} from './catalog/get-export-documents';
 import {Name} from '../constants';
 const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
 
-// TODO in the user interface: make sure the imported images cannot be deleted or edited directly
-// TODO implement deletion of imported catalogs, together with all types and images
 
+// TODO implement deletion of imported catalogs, together with all types and images
 export module CatalogExporter {
 
     export async function performExport(datastore: DocumentReadDatastore,
@@ -13,12 +12,18 @@ export module CatalogExporter {
                                         catalogId: string,
                                         project: Name): Promise<void> {
 
+        const [exportDocuments, _imageResourceIds] = await getExportDocuments(datastore, catalogId, project);
+
+        // TODO save images to folder
+
         fs.writeFileSync(
             outputFilePath,
-            (await getExportDocuments(datastore, catalogId, project))
+            exportDocuments
                 .map(stringify)
-                .join('\n') // TODO operating system?
+                .join('\n') // TODO different operating systems?
         );
+
+        // TODO zip images and jsonl
     }
 }
 

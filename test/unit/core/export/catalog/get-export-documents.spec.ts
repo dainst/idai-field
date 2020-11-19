@@ -10,7 +10,18 @@ describe('getExportDocuments', () => {
 
         datastore = jasmine.createSpyObj('datastore', ['get', 'find']);
 
-        const documents = [
+        const images: Array<any> = [
+            {
+                resource: {
+                    id: 'I1',
+                    category: 'Image',
+                    relations: {
+                        depicts: ['T1']
+                    }
+                }
+            }
+        ];
+        const documents: Array<any> = [
             {
                 resource: {
                     id: 'C1',
@@ -22,28 +33,32 @@ describe('getExportDocuments', () => {
                 resource: {
                     id: 'T1',
                     category: 'Type',
-                    relations: {}
+                    relations: {
+                        isDepictedIn: ['I1']
+                    }
                 }
             }
         ];
-        const documentsLookup = makeDocumentsLookup(documents as any);
+        const documentsLookup = makeDocumentsLookup(documents.concat(images));
 
         datastore.get.and.callFake(id => {
             return documentsLookup[id];
         });
         datastore.find.and.callFake(_query => {
-           return { documents: documents };
+           return { documents: [documentsLookup['T1']] };
         });
     });
 
 
     it('basic', async done => {
 
-        const exportDocumentsLookup = makeDocumentsLookup(await getExportDocuments(datastore, 'C1', 'testproject'));
-        expect(exportDocumentsLookup['C1'].resource.id).toBe('C1');
-        expect(exportDocumentsLookup['C1']['project']).toBe('testproject');
-        expect(exportDocumentsLookup['T1'].resource.id).toBe('T1');
-        expect(exportDocumentsLookup['T1']['project']).toBe('testproject');
+        const [exportDocuments, imageResourceIds] = await getExportDocuments(datastore, 'C1', 'test-project');
+        const exportDocumentsLookup = makeDocumentsLookup(exportDocuments);
+        expect(exportDocuments.length).toBe(3);
+        expect(exportDocumentsLookup['C1']['project']).toBe('test-project');
+        expect(exportDocumentsLookup['T1']['project']).toBe('test-project');
+        expect(exportDocumentsLookup['I1']['project']).toBe('test-project');
+        expect(imageResourceIds).toEqual(['I1']);
         done();
     });
 });

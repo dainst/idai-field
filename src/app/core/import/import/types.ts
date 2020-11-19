@@ -10,7 +10,8 @@ export type AssertIsAllowedRelationDomainType = (domainCategoryName: string,
 export type ImportFunction =
     (documents: Array<Document>,
      datastore: DocumentDatastore,
-     username: string) =>
+     username: string,
+     selectedProject: string) =>
         Promise<{ errors: string[][], successfulImports: number }>;
 
 export type Find = (identifier: string) => Promise<Document|undefined>;

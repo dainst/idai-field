@@ -1,6 +1,5 @@
 import {Document} from 'idai-components-2';
 import {DocumentDatastore} from '../../datastore/document-datastore';
-import {update} from 'tsfun';
 import {DatastoreErrors} from '../../datastore/model/datastore-errors';
 import {DocumentReadDatastore} from '../../datastore/document-read-datastore';
 import {clone} from '../../util/object-util';
@@ -12,11 +11,13 @@ import {clone} from '../../util/object-util';
  * @param datastore
  * @param username
  *
+ * @param selectedProject
  * @author Daniel de Oliveira
  */
 export async function importCatalog(importDocuments: Array<Document>,
                                     datastore: DocumentDatastore,
-                                    username: string): Promise<{ errors: string[][], successfulImports: number }> {
+                                    username: string,
+                                    selectedProject: string): Promise<{ errors: string[][], successfulImports: number }> {
 
     try {
         let successfulImports = 0;
@@ -27,8 +28,8 @@ export async function importCatalog(importDocuments: Array<Document>,
 
             const existingDocument: Document|undefined = await getDocument(datastore, importDocument.resource.id);
             const updateDocument = clone(existingDocument ?? importDocument);
-            updateDocument['readonly'] = true;
-            if (importDocument['readonly'] === false) delete updateDocument['readonly'];
+
+            if (importDocument['project'] === selectedProject) delete updateDocument['project'];
 
             if (existingDocument) {
                 await datastore.update(updateDocument, username);

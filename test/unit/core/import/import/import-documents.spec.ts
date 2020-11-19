@@ -92,7 +92,7 @@ describe('importDocuments', () => {
             { mergeMode: true }))(
             [{ resource: { id: '1', relations: {} } } as any],
             mockDatastore,
-            'user1');
+            'user1', '');
 
         expect(mockDatastore.bulkCreate).not.toHaveBeenCalled();
         expect(mockDatastore.bulkUpdate).toHaveBeenCalled();
@@ -108,7 +108,7 @@ describe('importDocuments', () => {
             () => '101', undefined, undefined,
             { mergeMode: false }))([
                 { resource: { category: 'Find', identifier: 'one', relations: { isChildOf: '0' } } } as any],
-                mockDatastore, 'user1');
+                mockDatastore, 'user1', '');
 
         expect(mockDatastore.bulkCreate).toHaveBeenCalled();
         expect(mockDatastore.bulkUpdate).not.toHaveBeenCalled();

@@ -83,7 +83,7 @@ export class ImageDocumentsManager {
         if (offset) query.offset = offset;
         query.limit = limit;
         query.id = this.currentQueryId;
-        query.constraints['readonly:exist'] = 'UNKNOWN';
+        query.constraints['project:exist'] = 'UNKNOWN';
 
         try {
             const {documents, totalCount, queryId} = await this.imageDatastore.find(query);

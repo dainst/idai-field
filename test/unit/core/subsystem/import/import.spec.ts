@@ -14,6 +14,7 @@ describe('Import/Subsystem', () => {
 
     let datastore;
     let _projectConfiguration;
+    const settingsService: any = { getUsername: () => 'testuser', getSelectedProject: () => '' };
 
     beforeEach(async done => {
 
@@ -34,7 +35,7 @@ describe('Import/Subsystem', () => {
         await Importer.doImport(
             'geojson',
             datastore,
-            { getUsername: () => 'testuser'},
+            settingsService,
             _projectConfiguration,
             undefined,
             false, // merge mode gets set automatically
@@ -91,7 +92,7 @@ describe('Import/Subsystem', () => {
         await Importer.doImport(
             'csv',
             datastore,
-            { getUsername: () => 'testuser'},
+            settingsService,
             _projectConfiguration,
             stored.resource.id,
             false,
@@ -150,7 +151,7 @@ describe('Import/Subsystem', () => {
         await Importer.doImport(
             'csv',
             datastore,
-            { getUsername: () => 'testuser'},
+            settingsService,
             _projectConfiguration,
             undefined,
             true,
@@ -178,7 +179,7 @@ describe('Import/Subsystem', () => {
        await Importer.doImport(
            'native',
            datastore,
-           { getUsername: () => 'testuser'},
+           settingsService,
            _projectConfiguration,
            undefined,
            false,
@@ -199,7 +200,7 @@ describe('Import/Subsystem', () => {
         const report = await Importer.doImport(
             'native',
             datastore,
-            { getUsername: () => 'testuser'},
+            settingsService,
             _projectConfiguration,
             trench.resource.id,
             false, false,
@@ -216,7 +217,7 @@ describe('Import/Subsystem', () => {
         const report = await Importer.doImport(
             'native',
             datastore,
-            { getUsername: () => 'testuser'},
+            settingsService,
             _projectConfiguration,
             '',
             false, false,
@@ -233,7 +234,7 @@ describe('Import/Subsystem', () => {
         const report = await Importer.doImport(
             'native',
             datastore,
-            { getUsername: () => 'testuser'},
+            settingsService,
             _projectConfiguration,
             '',
             false, false,
@@ -252,7 +253,7 @@ describe('Import/Subsystem', () => {
         await Importer.doImport(
             'native',
             datastore,
-            { getUsername: () => 'testuser'},
+            settingsService,
             _projectConfiguration,
             stored.resource.id,
             false, false,
@@ -276,7 +277,7 @@ describe('Import/Subsystem', () => {
         const importReport = await Importer.doImport(
             'native',
             datastore,
-            { getUsername: () => 'testuser' },
+            settingsService,
             _projectConfiguration,
             resourceId,
             false, false,
@@ -299,7 +300,7 @@ describe('Import/Subsystem', () => {
         await Importer.doImport(
             'native',
             datastore,
-            { getUsername: () => 'testuser' },
+            settingsService,
             _projectConfiguration,
             undefined,
             true, false,
@@ -324,7 +325,7 @@ describe('Import/Subsystem', () => {
         await Importer.doImport(
             'native',
             datastore,
-            { getUsername: () => 'testuser' },
+            settingsService,
             _projectConfiguration,
             undefined,
             true, true,
@@ -356,7 +357,7 @@ describe('Import/Subsystem', () => {
         await Importer.doImport(
             'native',
             datastore,
-            { getUsername: () => 'testuser' },
+            settingsService,
             _projectConfiguration,
             undefined,
             true, true,
@@ -383,7 +384,7 @@ describe('Import/Subsystem', () => {
         await Importer.doImport(
             'native',
             datastore,
-            { getUsername: () => 'testuser' },
+            settingsService,
             _projectConfiguration,
             undefined,
             true, false,
@@ -415,7 +416,7 @@ describe('Import/Subsystem', () => {
         await Importer.doImport(
             'native',
             datastore,
-            { getUsername: () => 'testuser' },
+            settingsService,
             _projectConfiguration,
             undefined,
             true, false,
@@ -436,7 +437,7 @@ describe('Import/Subsystem', () => {
         const importReport = await Importer.doImport(
             'native',
             datastore,
-            { getUsername: () => 'testuser' },
+            settingsService,
             _projectConfiguration,
             undefined,
             true, false,
@@ -460,7 +461,7 @@ describe('Import/Subsystem', () => {
         const importReport = await Importer.doImport(
             'native',
             datastore,
-            { getUsername: () => 'testuser'},
+            settingsService,
             _projectConfiguration,
             'f1',
             false, false,
@@ -482,7 +483,7 @@ describe('Import/Subsystem', () => {
         await Importer.doImport(
             'native',
             datastore,
-            { getUsername: () => 'testuser'},
+            settingsService,
             _projectConfiguration,
             'tr1',
             false, false,

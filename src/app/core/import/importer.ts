@@ -16,6 +16,7 @@ import {FieldConverter} from './field-converter';
 import {ProjectCategories} from '../configuration/project-categories';
 import {CatalogJsonlParser} from './parser/catalog-jsonl-parser';
 import {importCatalog} from './import/import-catalog';
+import {SettingsService} from '../settings/settings-service';
 
 export type ImportFormat = 'native' | 'geojson' | 'geojson-gazetteer' | 'shapefile' | 'csv' | 'catalog';
 
@@ -42,9 +43,8 @@ export module Importer {
      * if any.
      *
      * @param format
-     * @param projectCategories
      * @param datastore
-     * @param usernameProvider
+     * @param settingsService
      * @param projectConfiguration
      * @param operationId
      * @param mergeMode
@@ -60,7 +60,7 @@ export module Importer {
      */
     export async function doImport(format: ImportFormat,
                                    datastore: DocumentDatastore,
-                                   usernameProvider: UsernameProvider,
+                                   settingsService: SettingsService,
                                    projectConfiguration: ProjectConfiguration,
                                    operationId: string,
                                    mergeMode: boolean,
@@ -99,7 +99,8 @@ export module Importer {
             FieldConverter.preprocessDocument(projectConfiguration),
             FieldConverter.postprocessDocument(projectConfiguration),
             datastore,
-            usernameProvider.getUsername());
+            settingsService.getUsername(),
+            settingsService.getSelectedProject());
 
         return { errors: errors, warnings: [], successfulImports: successfulImports };
     }
@@ -142,7 +143,8 @@ export module Importer {
                            preprocessDocument: (document: Document) => Document,
                            postprocessDocument: (document: Document) => Document,
                            datastore: DocumentDatastore,
-                           username: string): Promise<{ errors: string[][], successfulImports: number }> {
+                           username: string,
+                           selectedProject: string): Promise<{ errors: string[][], successfulImports: number }> {
 
         let importFunction;
 
@@ -168,6 +170,6 @@ export module Importer {
                         operationId: operationId, useIdentifiersInRelations: true });
         }
 
-        return importFunction(documents, datastore, username);
+        return importFunction(documents, datastore, username, selectedProject);
     }
 }

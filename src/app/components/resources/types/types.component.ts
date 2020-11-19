@@ -91,6 +91,11 @@ export class TypesComponent extends BaseList implements OnChanges {
 
     public setExpandAllGroups = (expand: boolean) => this.expandAllGroups = expand;
 
+    public isPlusButtonShown(): boolean {
+
+        return super.isPlusButtonShown()
+            && (!this.mainDocument || this.mainDocument['project'] === undefined); // TODO REVIEW
+    }
 
     async ngOnChanges(changes: SimpleChanges) {
 

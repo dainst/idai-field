@@ -37,6 +37,8 @@ export class DocumentInfoComponent implements DoCheck {
 
     public clickThumbnail = () => this.onThumbnailClicked.emit();
 
+    public isReadonly = () => this.document['project'] !== undefined; // TODO REVIEW
+
 
     ngDoCheck() {
 

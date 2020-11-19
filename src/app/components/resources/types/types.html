@@ -33,7 +33,7 @@
                        (clickDocument)="open($event)"
                        (contextmenuDocument)="contextMenu.open($event.mouseEvent, $event.document)"></type-grid>
             <div id="plus-button-container" *ngIf="isSectionVisible('types')">
-                <plus-button *ngIf="isPlusButtonShown() && (!mainDocument || mainDocument['readonly'] !== true)"
+                <plus-button *ngIf="isPlusButtonShown()"
                              id="create-document-button"
                              [placement]="documents.length > 0 ? 'top' : 'bottom'"
                              [preselectedGeometryType]="'none'"

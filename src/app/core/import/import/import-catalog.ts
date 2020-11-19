@@ -23,13 +23,13 @@ export async function importCatalog(importDocuments: Array<Document>,
         let successfulImports = 0;
         for (let importDocument of importDocuments) {
             delete importDocument[Document._REV];
-            delete importDocument['modified'];
-            delete importDocument['created'];
+            delete importDocument[Document.MODIFIED];
+            delete importDocument[Document.CREATED];
 
             const existingDocument: Document|undefined = await getDocument(datastore, importDocument.resource.id);
             const updateDocument = clone(existingDocument ?? importDocument);
 
-            if (importDocument['project'] === selectedProject) delete updateDocument['project'];
+            if (importDocument.project === selectedProject) delete updateDocument.project;
 
             if (existingDocument) {
                 await datastore.update(updateDocument, username);

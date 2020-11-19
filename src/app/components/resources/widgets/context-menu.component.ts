@@ -106,7 +106,7 @@ export class ContextMenuComponent implements OnChanges {
 
     private isReadonly() {
 
-        return this.contextMenu.document['project'] !== undefined; // TODO REVIEW; add project const to document
+        return this.contextMenu.document.project !== undefined; // TODO REVIEW
     }
 
 

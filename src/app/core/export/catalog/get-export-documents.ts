@@ -19,7 +19,7 @@ export async function getExportDocuments(datastore: DocumentReadDatastore,
             .concat(relatedImages)
             .map(cleanDocument)
             .map(document => {
-                document['project'] = project;
+                document.project = project;
                 return document;
             }),
         relatedImages.map(toResourceId)
@@ -80,9 +80,9 @@ async function getCatalogAndTypes(datastore: DocumentReadDatastore,
 function cleanDocument(document: Document) {
 
     delete document['_attachments'];
-    delete document['_rev'];
-    delete document['created'];
-    delete document['modified'];
+    delete document[Document._REV];
+    delete document[Document.CREATED];
+    delete document[Document.MODIFIED];
     // TODO delete all relations execpt isDepictedIn and depicts
     return document;
 }

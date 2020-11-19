@@ -85,11 +85,12 @@ export class SettingsService {
     public getHostPassword = (): string => this.settings.hostPassword;
 
 
+    /**
+     * @deprecated Use Settings.getSelectedProject instead
+     */
     public getSelectedProject(): string {
 
-        return this.settings.dbs && this.settings.dbs.length > 0
-            ? this.settings.dbs[0]
-            : 'test';
+        return Settings.getSelectedProject(this.settings);
     }
 
     public isAutoUpdateActive = () => this.settings.isAutoUpdateActive;

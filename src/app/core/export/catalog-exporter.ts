@@ -1,6 +1,6 @@
 import {DocumentReadDatastore} from '../datastore/document-read-datastore';
 import {getExportDocuments} from './catalog/get-export-documents';
-import {Name} from '../constants';
+import {Settings} from '../settings/settings';
 const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
 
 
@@ -10,11 +10,13 @@ export module CatalogExporter {
     export async function performExport(datastore: DocumentReadDatastore,
                                         outputFilePath: string,
                                         catalogId: string,
-                                        project: Name): Promise<void> {
+                                        settings: Settings): Promise<void> {
 
-        const [exportDocuments, _imageResourceIds] = await getExportDocuments(datastore, catalogId, project);
+        const [exportDocuments, _imageResourceIds] =
+            await getExportDocuments(datastore, catalogId, Settings.getSelectedProject(settings));
 
         // TODO save images to folder
+        // const imagestorePath = settings.imagestorePath;
 
         fs.writeFileSync(
             outputFilePath,

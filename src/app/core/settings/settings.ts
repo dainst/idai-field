@@ -24,6 +24,14 @@ export interface Settings {
 
 export module Settings {
 
+    export function getSelectedProject(settings: Settings): string {
+
+        return settings.dbs && settings.dbs.length > 0
+            ? settings.dbs[0]
+            : 'test';
+    }
+
+
     export function getLocale(): string {
 
         return remote

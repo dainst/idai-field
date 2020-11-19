@@ -166,7 +166,7 @@ export class ExportComponent implements OnInit {
             this.documentDatastore,
             filePath,
             this.selectedCatalogId,
-            this.settingsService.getSelectedProject()
+            this.settingsService.getSettings()
         );
     }
 

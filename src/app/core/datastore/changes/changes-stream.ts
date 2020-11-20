@@ -52,7 +52,7 @@ export class ChangesStream {
 
             if (await ChangesStream.isRemoteChange(
                     document,
-                    this.settingsService.getUsername())
+                    this.settingsService.getSettings().username)
                 || document._conflicts !== undefined) {
 
                 if (this.documentsScheduledToWelcome[document.resource.id]) {
@@ -146,7 +146,7 @@ export class ChangesStream {
         try {
             return await this.datastore.update(
                 document,
-                this.settingsService.getUsername(),
+                this.settingsService.getSettings().username,
                 conflicts
             );
         } catch (errWithParams) {

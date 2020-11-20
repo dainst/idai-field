@@ -77,7 +77,7 @@ export class SettingsService {
      * object from being changed without explicitly saving the settings.
      * @returns {Settings} the current settings
      */
-    public getSettings = (): Settings => {
+    public getSettings(): Settings {
 
         const settings = jsonClone(this.settings);
         settings.selectedProject =
@@ -86,8 +86,6 @@ export class SettingsService {
                 : 'test';
         return settings;
     }
-
-    public getUsername = () => this.settings.username; // TODO get rid of this; query getSettings instead
 
 
     public async bootProjectDb(settings: Settings, progress?: InitializationProgress): Promise<void> {

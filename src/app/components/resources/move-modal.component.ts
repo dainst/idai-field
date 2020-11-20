@@ -88,7 +88,7 @@ export class MoveModalComponent {
             await MoveUtility.moveDocument(
                 this.document,
                 newParent,
-                this.settingsService.getUsername(),
+                this.settingsService.getSettings().username,
                 this.persistenceManager,
                 this.isRecordedInTargetCategories
             );

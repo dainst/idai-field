@@ -41,9 +41,9 @@ describe('RemoteChangesStream', () => {
         indexFacade = jasmine.createSpyObj('MockIndexFacade', ['put', 'get', 'remove']);
         categoryConverter = jasmine.createSpyObj('MockCategoryConverter', ['convert']);
         documentCache = jasmine.createSpyObj('MockDocumentCache', ['get', 'reassign']);
-        settingsService = jasmine.createSpyObj('MockSettingsService', ['getUsername']);
+        settingsService = jasmine.createSpyObj('MockSettingsService', ['getSettings']);
 
-        settingsService.getUsername.and.returnValue('localuser');
+        settingsService.getSettings.and.returnValue({ username: 'localuser' });
         categoryConverter.convert.and.returnValue(doc);
         indexFacade.put.and.returnValue(doc);
         documentCache.get.and.returnValue(1); // just to trigger reassignment

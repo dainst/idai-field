@@ -4,6 +4,7 @@ import {Document} from 'idai-components-2';
 import {SyncStatus} from './sync-process';
 import {PouchdbManager} from '../datastore/pouchdb/pouchdb-manager';
 import {ObserverUtil} from '../util/observer-util';
+import {Settings} from '../settings/settings';
 
 
 @Injectable()
@@ -26,9 +27,16 @@ export class SyncService {
 
 
     public getStatus = (): SyncStatus => this.status;
-    public setSyncTarget = (syncTarget: string) => this.syncTarget = syncTarget;
-    public setProject = (project: string) => this.project = project;
-    public setPassword = (password: string) => this.password = password;
+
+
+    public init(settings: Settings) {
+
+        this.syncTarget = settings.syncTarget.address;
+        this.project = settings.selectedProject;
+        this.password = settings.syncTarget.password;
+    }
+
+
     public statusNotifications = (): Observable<Document> => ObserverUtil.register(this.statusObservers);
 
 

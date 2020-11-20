@@ -26,6 +26,6 @@ export class ProjectsComponent implements OnInit {
 
     ngOnInit() {
 
-        this.selectedProject = Settings.getSelectedProject(this.settingsService.getSettings());
+        this.selectedProject = this.settingsService.getSettings().selectedProject;
     }
 }

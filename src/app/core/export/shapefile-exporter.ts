@@ -1,6 +1,7 @@
 import {Document} from 'idai-components-2';
 import {JavaToolExecutor} from '../java/java-tool-executor';
 import {M} from '../../components/messages/m';
+import {Settings} from '../settings/settings';
 
 const remote = typeof window !== 'undefined' ? window.require('electron').remote : require('electron').remote;
 
@@ -10,13 +11,17 @@ const remote = typeof window !== 'undefined' ? window.require('electron').remote
  */
 export module ShapefileExporter {
 
-    export async function performExport(projectName: string, password: string, projectDocument: Document,
-                                        outputFilePath: string, operationId: string): Promise<any> {
+    export async function performExport(settings: Settings,
+                                        projectDocument: Document,
+                                        outputFilePath: string,
+                                        operationId: string): Promise<any> {
 
         try {
             await JavaToolExecutor.executeJavaTool(
                 'shapefile-tool.jar',
-                getArguments(projectName, password, projectDocument, outputFilePath, operationId)
+                getArguments(
+                    settings.selectedProject, settings.hostPassword,
+                    projectDocument, outputFilePath, operationId)
             );
         } catch (err) {
             return Promise.reject(getErrorMsgWithParams(err));

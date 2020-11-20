@@ -96,7 +96,7 @@ export class LayerMapComponent extends MapComponent {
 
         await super.updateMap(changes);
 
-        if (Settings.getSelectedProject(this.settingsService.getSettings())
+        if (this.settingsService.getSettings().selectedProject
             .toLowerCase()
             .startsWith('sudan-heritage')) {
 
@@ -182,7 +182,7 @@ export class LayerMapComponent extends MapComponent {
 
         if (!this.tileLayer) {
             const tilesPath: string = this.settingsService.getSettings().imagestorePath + ''
-                + Settings.getSelectedProject(this.settingsService.getSettings()) + '/tiles/Sudan';
+                + this.settingsService.getSettings().selectedProject + '/tiles/Sudan';
             if (!fs.existsSync(tilesPath)) return;
 
             const southWest = L.latLng(3.2, 21.7);

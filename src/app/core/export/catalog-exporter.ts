@@ -13,7 +13,7 @@ export module CatalogExporter {
                                         settings: Settings): Promise<void> {
 
         const [exportDocuments, _imageResourceIds] =
-            await getExportDocuments(datastore, catalogId, Settings.getSelectedProject(settings));
+            await getExportDocuments(datastore, catalogId, settings.selectedProject);
 
         // TODO save images to folder
         // const imagestorePath = settings.imagestorePath;

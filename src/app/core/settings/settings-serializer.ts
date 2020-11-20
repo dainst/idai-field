@@ -18,6 +18,7 @@ export class SettingsSerializer {
                     reject(err);
                 } else {
                     const settings = JSON.parse(content);
+                    settings.selectedProject = '';
                     resolve(remote.getGlobal('setConfigDefaults')(settings));
                 }
             });

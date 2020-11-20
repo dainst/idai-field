@@ -147,7 +147,7 @@ export module Importer {
                            datastore: DocumentDatastore,
                            settings: Settings): Promise<{ errors: string[][], successfulImports: number }> {
 
-        const selectedProject = Settings.getSelectedProject(settings);
+        const selectedProject = settings.selectedProject;
         let importFunction;
 
         switch (format) {

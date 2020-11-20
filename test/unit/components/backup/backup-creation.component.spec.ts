@@ -42,7 +42,7 @@ describe('BackupCreationComponent', () => {
             menuService
         );
 
-        settingsService.getSettings.and.returnValue({ dbs: ['selectedproject'] } as any);
+        settingsService.getSettings.and.returnValue({ selectedProject: 'selectedproject' } as any);
         dialogProvider.chooseFilepath.and.returnValue(Promise.resolve(backupFilePath));
     });
 

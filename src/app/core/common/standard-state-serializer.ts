@@ -45,7 +45,7 @@ export class StandardStateSerializer extends StateSerializer {
 
         return new Promise((resolve, reject) => {
 
-            if (Settings.getSelectedProject(this.settingsService.getSettings()) === 'test') return resolve();
+            if (this.settingsService.getSettings().selectedProject === 'test') return resolve();
 
             fs.writeFile(this.getFilePath(stateType),
                     JSON.stringify(stateObject), (err: any) => {
@@ -80,6 +80,6 @@ export class StandardStateSerializer extends StateSerializer {
     private getFilePath(stateType: StateType): string {
 
         return remote.getGlobal('appDataPath') + '/' +  stateType + '-'
-            + Settings.getSelectedProject(this.settingsService.getSettings()) + '.json';
+            + this.settingsService.getSettings().selectedProject + '.json';
     }
 }

@@ -90,7 +90,7 @@ export class RoutingService {
         this.menuService.setContext(MenuContext.PROJECTS);
 
         const ref: NgbModalRef = this.modalService.open(ProjectsModalComponent, { keyboard: false });
-        ref.componentInstance.selectedProject = Settings.getSelectedProject(this.settingsService.getSettings());
+        ref.componentInstance.selectedProject = this.settingsService.getSettings().selectedProject;
         ref.componentInstance.openConflictResolver = openConflictResolver;
 
         try {

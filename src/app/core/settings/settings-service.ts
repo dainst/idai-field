@@ -15,6 +15,7 @@ import {ImageConverter} from '../images/imagestore/image-converter';
 import {ImagestoreErrors} from '../images/imagestore/imagestore-errors';
 import {Messages} from '../../components/messages/messages';
 import {InitializationProgress} from '../initialization-progress';
+import {jsonClone} from 'tsfun/struct';
 
 const {remote, ipcRenderer} = typeof window !== 'undefined' ? window.require('electron') : require('electron');
 
@@ -76,7 +77,15 @@ export class SettingsService {
      * object from being changed without explicitly saving the settings.
      * @returns {Settings} the current settings
      */
-    public getSettings = (): Settings => JSON.parse(JSON.stringify(this.settings)); // deep copy
+    public getSettings = (): Settings => {
+
+        const settings = jsonClone(this.settings);
+        settings.selectedProject =
+            settings.dbs && settings.dbs.length > 0
+                ? settings.dbs[0]
+                : 'test';
+        return settings;
+    }
 
     public getUsername = () => this.settings.username; // TODO get rid of this; query getSettings instead
 
@@ -89,7 +98,7 @@ export class SettingsService {
             if (progress) await progress.setPhase('settingUpDatabase');
 
             await this.pouchdbManager.loadProjectDb(
-                Settings.getSelectedProject(settings),
+                this.getSettings().selectedProject,
                 new SampleDataLoader(
                     this.imageConverter, this.settings.imagestorePath, Settings.getLocale(), progress
                 )
@@ -123,7 +132,7 @@ export class SettingsService {
         try {
             return this.appConfigurator.go(
                 configurationDirPath,
-                SettingsService.getConfigurationName(Settings.getSelectedProject(this.settings)),
+                SettingsService.getConfigurationName(this.getSettings().selectedProject),
                 this.settings.languages
             );
         } catch (msgsWithParams) {
@@ -152,11 +161,9 @@ export class SettingsService {
                 || !(this.settings.dbs.length > 0))
             return;
 
-        if (!SettingsService.isSynchronizationAllowed(Settings.getSelectedProject(this.settings))) return;
+        if (!SettingsService.isSynchronizationAllowed(this.getSettings().selectedProject)) return;
 
-        this.synchronizationService.setSyncTarget(this.settings.syncTarget.address);
-        this.synchronizationService.setProject(Settings.getSelectedProject(this.settings));
-        this.synchronizationService.setPassword(this.settings.syncTarget.password);
+        this.synchronizationService.init(this.settings);
         return this.synchronizationService.startSync();
     }
 
@@ -195,7 +202,7 @@ export class SettingsService {
 
         await this.pouchdbManager.createDb(
             project,
-            SettingsService.createProjectDocument(project, this.getUsername()),
+            SettingsService.createProjectDocument(this.getSettings()),
             destroyBeforeCreate
         );
     }
@@ -207,7 +214,7 @@ export class SettingsService {
      */
     public async updateSettings(settings: Settings) {
 
-        settings = JSON.parse(JSON.stringify(settings)); // deep copy
+        settings = jsonClone(settings);
         this.settings = SettingsService.initSettings(settings);
 
         if (this.settings.syncTarget.address) {
@@ -220,7 +227,7 @@ export class SettingsService {
 
         this.pouchdbServer.setPassword(this.settings.hostPassword);
 
-        return this.imagestore.setPath(settings.imagestorePath, Settings.getSelectedProject(this.settings) as any)
+        return this.imagestore.setPath(settings.imagestorePath, this.getSettings().selectedProject as any)
             .catch((errWithParams: any) => {
                 if (errWithParams.length > 0 && errWithParams[0] === ImagestoreErrors.INVALID_PATH) {
                     this.messages.add([M.IMAGESTORE_ERROR_INVALID_PATH, settings.imagestorePath]);
@@ -234,15 +241,12 @@ export class SettingsService {
 
     private async createProjectDocumentIfMissing() {
 
-        const settings = this.getSettings();
-        const selectedProject = Settings.getSelectedProject(settings);
-
         try {
             await this.pouchdbManager.getDbProxy().get('project');
-        } catch (_) {
+        } catch {
             console.warn('Didn\'t find project document, creating new one');
             await this.pouchdbManager.getDbProxy().put(
-                SettingsService.createProjectDocument(selectedProject, settings.username)
+                SettingsService.createProjectDocument(this.getSettings())
             );
         }
     }
@@ -288,19 +292,19 @@ export class SettingsService {
     }
 
 
-    private static createProjectDocument(name: string, username: string): any {
+    private static createProjectDocument(settings: Settings): any {
 
         return {
             _id: 'project',
             resource: {
                 category: 'Project',
-                identifier: name,
+                identifier: settings.selectedProject,
                 id: 'project',
                 coordinateReferenceSystem: 'Eigenes Koordinatenbezugssystem',
                 relations: {}
             },
-            created: { user: username, date: new Date() },
-            modified: [{ user: username, date: new Date() }]
+            created: { user: settings.username, date: new Date() },
+            modified: [{ user: settings.username, date: new Date() }]
         };
     }
 

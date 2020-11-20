@@ -184,11 +184,8 @@ export class ExportComponent implements OnInit {
 
     private async startShapeFileExport(filePath: string) {
 
-        const settings = this.settingsService.getSettings();
-
         await ShapefileExporter.performExport(
-            Settings.getSelectedProject(settings),
-            settings.hostPassword,
+            this.settingsService.getSettings(),
             await this.documentDatastore.get('project'),
             filePath,
             this.selectedOperationId

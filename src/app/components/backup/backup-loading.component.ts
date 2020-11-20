@@ -75,7 +75,7 @@ export class BackupLoadingComponent {
 
         if (!this.path) return [M.BACKUP_READ_ERROR_FILE_NOT_FOUND];
         if (!this.projectName) return [M.BACKUP_READ_ERROR_NO_PROJECT_NAME];
-        if (this.projectName === Settings.getSelectedProject(this.settingsService.getSettings())) {
+        if (this.projectName === this.settingsService.getSettings().selectedProject) {
             return [M.BACKUP_READ_ERROR_SAME_PROJECT_NAME];
         }
 

@@ -71,7 +71,7 @@ export class BackupCreationComponent {
     private async writeBackupFile(filePath: string) {
 
         try {
-            await this.backupProvider.dump(filePath, Settings.getSelectedProject(this.settingsService.getSettings()));
+            await this.backupProvider.dump(filePath, this.settingsService.getSettings().selectedProject);
             this.messages.add([M.BACKUP_WRITE_SUCCESS]);
         } catch (err) {
             this.messages.add([M.BACKUP_WRITE_ERROR_GENERIC]);

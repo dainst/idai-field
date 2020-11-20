@@ -18,20 +18,12 @@ export interface Settings {
     syncTarget: SyncTarget;
     username: string;
     dbs: Array<string>;
+    selectedProject: string;
     imagestorePath: string;
 }
 
 
 export module Settings {
-
-    // TODO get rid of this. instead let getSettings return a version of settings where selectedProject is set.
-    export function getSelectedProject(settings: Settings): string {
-
-        return settings.dbs && settings.dbs.length > 0
-            ? settings.dbs[0]
-            : 'test';
-    }
-
 
     export function getLocale(): string {
 

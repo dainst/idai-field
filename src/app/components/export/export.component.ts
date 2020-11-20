@@ -23,7 +23,7 @@ import {Messages} from '../messages/messages';
 import {Query} from '../../core/datastore/model/query';
 import {ProjectCategories} from '../../core/configuration/project-categories';
 import {MenuContext, MenuService} from '../menu-service';
-import {CatalogExporter} from '../../core/export/catalog-exporter';
+import {CatalogExporter} from '../../core/export/catalog/catalog-exporter';
 import {SettingsProvider} from '../../core/settings/settings-provider';
 
 const remote = typeof window !== 'undefined' ? window.require('electron').remote : require('electron').remote;

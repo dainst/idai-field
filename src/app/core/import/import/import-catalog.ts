@@ -3,21 +3,21 @@ import {DocumentDatastore} from '../../datastore/document-datastore';
 import {DatastoreErrors} from '../../datastore/model/datastore-errors';
 import {DocumentReadDatastore} from '../../datastore/document-read-datastore';
 import {clone} from '../../util/object-util';
+import {isNot, undefinedOrEmpty} from 'tsfun';
 
+const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
 
-// TODO batch import for speed
 /**
  * @param importDocuments
  * @param datastore
- * @param username
+ * @param settings
  *
- * @param selectedProject
  * @author Daniel de Oliveira
  */
 export async function importCatalog(importDocuments: Array<Document>,
                                     datastore: DocumentDatastore,
-                                    username: string,
-                                    selectedProject: string): Promise<{ errors: string[][], successfulImports: number }> {
+                                    {username, selectedProject, imagestorePath})
+    : Promise<{ errors: string[][], successfulImports: number }> {
 
     try {
         let successfulImports = 0;
@@ -36,6 +36,22 @@ export async function importCatalog(importDocuments: Array<Document>,
             } else {
                 await datastore.create(updateDocument, username);
             }
+
+            // TODO extract function
+            if (isImageDocument(updateDocument)) {
+                const source =
+                    '' // TODO how to get the import path?
+                    + updateDocument.resource.id;
+
+                const target = imagestorePath
+                    + selectedProject // TODO or should we take document.project?
+                    + '/' // TODO operating system
+                    + updateDocument.resource.id;
+
+                // console.log("copy image", source, target);
+                // fs.copyFileSync(source, target);
+            }
+
             successfulImports++;
         }
         return { errors: [], successfulImports: successfulImports };
@@ -58,3 +74,7 @@ async function getDocument(datastore: DocumentReadDatastore, resourceId: string)
         else throw errWithParams;
     }
 }
+
+
+const isImageDocument = (updateDocument: Document) =>
+    isNot(undefinedOrEmpty)(updateDocument.resource.relations['depicts'])

@@ -49,7 +49,7 @@ export function buildImportFunction(validator: ImportValidator,
      */
     return async function importDocuments(documents: Array<Document>,
                                           datastore: DocumentDatastore,
-                                          username: string): Promise<{ errors: string[][], successfulImports: number }> {
+                                          {username}): Promise<{ errors: string[][], successfulImports: number }> {
 
         const get = (resourceId: string) => datastore.get(resourceId);
 

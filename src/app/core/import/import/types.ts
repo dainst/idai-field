@@ -1,5 +1,6 @@
 import {Document} from 'idai-components-2';
 import {DocumentDatastore} from '../../datastore/document-datastore';
+import {Settings} from '../../settings/settings';
 
 
 export type AssertIsAllowedRelationDomainType = (domainCategoryName: string,
@@ -10,8 +11,7 @@ export type AssertIsAllowedRelationDomainType = (domainCategoryName: string,
 export type ImportFunction =
     (documents: Array<Document>,
      datastore: DocumentDatastore,
-     username: string,
-     selectedProject: string) =>
+     settings: Settings) =>
         Promise<{ errors: string[][], successfulImports: number }>;
 
 export type Find = (identifier: string) => Promise<Document|undefined>;

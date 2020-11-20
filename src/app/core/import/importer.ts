@@ -109,7 +109,9 @@ export module Importer {
     }
 
 
-    function createParser(format: ImportFormat, operationId: string, selectedCategory?: Category,
+    function createParser(format: ImportFormat,
+                          operationId: string,
+                          selectedCategory?: Category,
                           separator?: string): any {
 
         switch (format) {
@@ -148,7 +150,6 @@ export module Importer {
                            datastore: DocumentDatastore,
                            settings: Settings): Promise<{ errors: string[][], successfulImports: number }> {
 
-        const selectedProject = settings.selectedProject;
         let importFunction;
 
         switch (format) {
@@ -173,6 +174,6 @@ export module Importer {
                         operationId: operationId, useIdentifiersInRelations: true });
         }
 
-        return importFunction(documents, datastore, settings.username, selectedProject);
+        return importFunction(documents, datastore, settings);
     }
 }

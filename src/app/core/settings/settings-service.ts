@@ -78,7 +78,7 @@ export class SettingsService {
      */
     public getSettings = (): Settings => JSON.parse(JSON.stringify(this.settings)); // deep copy
 
-    public getUsername = () => this.settings.username;
+    public getUsername = () => this.settings.username; // TODO get rid of this; query getSettings instead
 
 
     public async bootProjectDb(settings: Settings, progress?: InitializationProgress): Promise<void> {

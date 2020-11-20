@@ -13,6 +13,7 @@ describe('BackupLoadingComponent', () => {
 
     let c: BackupLoadingComponent;
     let messages: any;
+    let settingsProvider: any;
     let settingsService: any;
     let backupProvider: any;
     let tabManager: any;
@@ -29,7 +30,8 @@ describe('BackupLoadingComponent', () => {
         const dialogProvider = jasmine.createSpyObj('dialogProvider', ['chooseFilepath']);
         const modalService = jasmine.createSpyObj('modalService', ['open']);
         messages = jasmine.createSpyObj('messages', ['add']);
-        settingsService = jasmine.createSpyObj('settingsService', ['getSettings', 'addProject']);
+        settingsProvider = jasmine.createSpyObj('settingsProvider', ['getSettings']);
+        settingsService = jasmine.createSpyObj('settingsService', ['addProject']);
         backupProvider = jasmine.createSpyObj('backupProvider', ['dump', 'readDump']);
         tabManager = jasmine.createSpyObj('tabManager', ['openActiveTab']);
         menuService = jasmine.createSpyObj('menuService', ['setContext']);
@@ -37,13 +39,14 @@ describe('BackupLoadingComponent', () => {
         c = new BackupLoadingComponent(
             modalService,
             messages,
+            settingsProvider,
             settingsService,
             backupProvider,
             tabManager,
             menuService
         );
 
-        settingsService.getSettings.and.returnValue({ dbs: ['selectedproject'] } as any);
+        settingsProvider.getSettings.and.returnValue({ dbs: ['selectedproject'] } as any);
         dialogProvider.chooseFilepath.and.returnValue(Promise.resolve(backupFilePath));
     });
 

@@ -11,6 +11,7 @@ import {ProjectNameValidatorMsgConversion} from '../messages/project-name-valida
 import {Messages} from '../messages/messages';
 import {MenuContext, MenuService} from '../menu-service';
 import {Settings} from '../../core/settings/settings';
+import {SettingsProvider} from '../../core/settings/settings-provider';
 
 
 @Component({
@@ -37,6 +38,7 @@ export class BackupLoadingComponent {
     constructor(
         private modalService: NgbModal,
         private messages: Messages,
+        private settingsProvider: SettingsProvider,
         private settingsService: SettingsService,
         private backupProvider: BackupProvider,
         private tabManager: TabManager,
@@ -75,7 +77,7 @@ export class BackupLoadingComponent {
 
         if (!this.path) return [M.BACKUP_READ_ERROR_FILE_NOT_FOUND];
         if (!this.projectName) return [M.BACKUP_READ_ERROR_NO_PROJECT_NAME];
-        if (this.projectName === this.settingsService.getSettings().selectedProject) {
+        if (this.projectName === this.settingsProvider.getSettings().selectedProject) {
             return [M.BACKUP_READ_ERROR_SAME_PROJECT_NAME];
         }
 

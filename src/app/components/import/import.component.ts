@@ -33,6 +33,7 @@ import {ProjectCategories} from '../../core/configuration/project-categories';
 import {ExtensionUtil} from '../../core/util/extension-util';
 import {MenuContext, MenuService} from '../menu-service';
 import {SettingsService} from '../../core/settings/settings-service';
+import {SettingsProvider} from '../../core/settings/settings-provider';
 
 
 @Component({
@@ -65,7 +66,7 @@ export class ImportComponent implements OnInit {
                 private remoteChangesStream: ChangesStream,
                 private importValidator: ImportValidator,
                 private http: HttpClient,
-                private settingsService: SettingsService,
+                private settingsProvider: SettingsProvider,
                 private projectConfiguration: ProjectConfiguration,
                 private viewFacade: ViewFacade,
                 private modalService: NgbModal,
@@ -249,7 +250,7 @@ export class ImportComponent implements OnInit {
         return Importer.doImport(
             this.importState.format,
             this.datastore,
-            this.settingsService,
+            this.settingsProvider,
             this.projectConfiguration,
             this.importState.selectedOperationId,
             this.importState.mergeMode,

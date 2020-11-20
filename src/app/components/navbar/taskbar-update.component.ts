@@ -1,5 +1,6 @@
 import {Component, NgZone} from '@angular/core';
 import {SettingsService} from '../../core/settings/settings-service';
+import {SettingsProvider} from '../../core/settings/settings-provider';
 
 const ipcRenderer = typeof window !== 'undefined'
   ? window.require('electron').ipcRenderer
@@ -24,7 +25,7 @@ export class TaskbarUpdateComponent {
     private errorTimeout: any = undefined;
 
 
-    constructor(private settingsService: SettingsService, zone: NgZone) {
+    constructor(private settingsProvider: SettingsProvider, zone: NgZone) {
 
         ipcRenderer.on('downloadProgress', (event: any, downloadInfo: any) => {
             zone.run(() => {
@@ -52,7 +53,7 @@ export class TaskbarUpdateComponent {
     }
 
 
-    public isAutoUpdateActive = () => this.settingsService.getSettings().isAutoUpdateActive;
+    public isAutoUpdateActive = () => this.settingsProvider.getSettings().isAutoUpdateActive;
 
 
     public waitForError(zone: NgZone) {

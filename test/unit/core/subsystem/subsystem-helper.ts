@@ -29,6 +29,7 @@ import {DescendantsUtility} from '../../../../src/app/core/model/descendants-uti
 import {Query} from '../../../../src/app/core/datastore/model/query';
 import {CategoryConverter} from '../../../../src/app/core/datastore/cached/category-converter';
 import {ConfigReader} from '../../../../src/app/core/configuration/boot/config-reader';
+import {SettingsProvider} from '../../../../src/app/core/settings/settings-provider';
 
 
 class IdGenerator {
@@ -43,6 +44,8 @@ class IdGenerator {
  */
 export async function setupSettingsService(pouchdbmanager, pouchdbserver, projectName = 'testdb', startSync = false) {
 
+    const settingsProvider = new SettingsProvider();
+
     const settingsService = new SettingsService(
         new PouchDbFsImagestore(
             undefined, undefined, pouchdbmanager.getDbProxy()) as Imagestore,
@@ -51,7 +54,8 @@ export async function setupSettingsService(pouchdbmanager, pouchdbserver, projec
         undefined,
         new AppConfigurator(new ConfigLoader(new ConfigReader())),
         undefined,
-        undefined
+        undefined,
+        settingsProvider
     );
 
     await settingsService.bootProjectDb({
@@ -72,7 +76,7 @@ export async function setupSettingsService(pouchdbmanager, pouchdbserver, projec
     });
 
     const projectConfiguration = await settingsService.loadConfiguration('src/config/');
-    return {settingsService, projectConfiguration};
+    return {settingsService, projectConfiguration, settingsProvider};
 }
 
 
@@ -82,7 +86,7 @@ export async function createApp(projectName = 'testdb', startSync = false) {
 
     const pouchdbserver = new PouchdbServer();
 
-    const {settingsService, projectConfiguration} = await setupSettingsService(
+    const {settingsService, projectConfiguration, settingsProvider} = await setupSettingsService(
         pouchdbmanager, pouchdbserver, projectName, startSync);
 
     const {createdIndexFacade} = IndexerConfiguration.configureIndexers(projectConfiguration);
@@ -107,7 +111,7 @@ export async function createApp(projectName = 'testdb', startSync = false) {
         createdIndexFacade,
         documentCache,
         categoryConverter,
-        settingsService);
+        settingsProvider);
 
     const stateSerializer = jasmine.createSpyObj('stateSerializer', ['load', 'store']);
     stateSerializer.load.and.returnValue(Promise.resolve({}));

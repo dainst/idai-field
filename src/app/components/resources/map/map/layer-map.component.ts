@@ -9,6 +9,7 @@ import {MapComponent} from './map.component';
 import {ImageContainer} from '../../../../core/images/imagestore/image-container';
 import {Messages} from '../../../messages/messages';
 import {Settings} from '../../../../core/settings/settings';
+import {SettingsProvider} from '../../../../core/settings/settings-provider';
 
 const fs = typeof window !== 'undefined'
   ? window.require('fs')
@@ -40,7 +41,7 @@ export class LayerMapComponent extends MapComponent {
                 private layerManager: LayerManager,
                 private layerImageProvider: LayerImageProvider,
                 protected messages: Messages,
-                private settingsService: SettingsService,
+                private settingsProvider: SettingsProvider,
                 protected zone: NgZone,
                 protected changeDetectorRef: ChangeDetectorRef) {
 
@@ -96,7 +97,7 @@ export class LayerMapComponent extends MapComponent {
 
         await super.updateMap(changes);
 
-        if (this.settingsService.getSettings().selectedProject
+        if (this.settingsProvider.getSettings().selectedProject
             .toLowerCase()
             .startsWith('sudan-heritage')) {
 
@@ -181,8 +182,8 @@ export class LayerMapComponent extends MapComponent {
     private updateSudanTileLayer() {
 
         if (!this.tileLayer) {
-            const tilesPath: string = this.settingsService.getSettings().imagestorePath + ''
-                + this.settingsService.getSettings().selectedProject + '/tiles/Sudan';
+            const tilesPath: string = this.settingsProvider.getSettings().imagestorePath + ''
+                + this.settingsProvider.getSettings().selectedProject + '/tiles/Sudan';
             if (!fs.existsSync(tilesPath)) return;
 
             const southWest = L.latLng(3.2, 21.7);

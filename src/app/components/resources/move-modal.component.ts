@@ -12,6 +12,7 @@ import {ViewFacade} from '../../core/resources/view/view-facade';
 import {Messages} from '../messages/messages';
 import {Constraint} from '../../core/datastore/model/constraint';
 import {Loading} from '../widgets/loading';
+import {SettingsProvider} from '../../core/settings/settings-provider';
 
 
 @Component({
@@ -37,7 +38,7 @@ export class MoveModalComponent {
 
     constructor(public activeModal: NgbActiveModal,
                 private persistenceManager: PersistenceManager,
-                private settingsService: SettingsService,
+                private settingsProvider: SettingsProvider,
                 private indexFacade: IndexFacade,
                 private messages: Messages,
                 private viewFacade: ViewFacade,
@@ -88,7 +89,7 @@ export class MoveModalComponent {
             await MoveUtility.moveDocument(
                 this.document,
                 newParent,
-                this.settingsService.getSettings().username,
+                this.settingsProvider.getSettings().username,
                 this.persistenceManager,
                 this.isRecordedInTargetCategories
             );

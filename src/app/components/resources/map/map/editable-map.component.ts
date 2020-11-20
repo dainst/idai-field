@@ -13,6 +13,7 @@ import {LayerManager} from './layer-manager';
 import {LayerImageProvider} from './layer-image-provider';
 import {Messages} from '../../../messages/messages';
 import {SettingsService} from '../../../../core/settings/settings-service';
+import {SettingsProvider} from '../../../../core/settings/settings-provider';
 
 
 const remote = typeof window !== 'undefined'
@@ -59,11 +60,11 @@ export class EditableMapComponent extends LayerMapComponent {
                 layerManager: LayerManager,
                 layerImageProvider: LayerImageProvider,
                 messages: Messages,
-                settingsService: SettingsService,
+                settingsProvider: SettingsProvider,
                 protected zone: NgZone,
                 protected changeDetectorRef: ChangeDetectorRef) {
 
-        super(projectConfiguration, layerManager, layerImageProvider, messages, settingsService, zone,
+        super(projectConfiguration, layerManager, layerImageProvider, messages, settingsProvider, zone,
             changeDetectorRef);
     }
 

@@ -9,26 +9,34 @@ import {StateSerializer} from '../../../../src/app/core/common/state-serializer'
 describe('ProjectsModalComponent', () => {
 
     let projectsModalComponent: ProjectsModalComponent;
+    let settingsProvider;
     let settingsService;
     let messages;
     let menuService;
 
 
     beforeEach(() => {
-        settingsService = jasmine.createSpyObj('settingsService',['deleteProject', 'getSettings']);
+        settingsProvider = jasmine.createSpyObj('settingsProvider', ['getSettings'])
+        settingsService = jasmine.createSpyObj('settingsService', ['deleteProject']);
         messages = jasmine.createSpyObj('messages', ['add']);
         menuService = jasmine.createSpyObj('menuService', ['setContext']);
 
         projectsModalComponent = new ProjectsModalComponent(
-            undefined, settingsService, undefined, messages, new StateSerializer(),
-            undefined, menuService
+            undefined,
+            settingsProvider,
+            settingsService,
+            undefined,
+            messages,
+            new StateSerializer(),
+            undefined,
+            menuService
         );
     });
 
 
     it('cannot delete last project', async done => {
 
-        settingsService.getSettings.and.returnValue({ dbs: ['current']});
+        settingsProvider.getSettings.and.returnValue({ dbs: ['current']});
 
         projectsModalComponent.selectedProject = 'current';
         projectsModalComponent.projectToDelete = 'current';
@@ -41,7 +49,7 @@ describe('ProjectsModalComponent', () => {
 
     it('do not create with existing name', async done => {
 
-        settingsService.getSettings.and.returnValue({ dbs: ['existing'] });
+        settingsProvider.getSettings.and.returnValue({ dbs: ['existing'] });
 
         projectsModalComponent.newProject = 'existing';
 

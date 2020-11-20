@@ -11,6 +11,7 @@ import {DocumentReadDatastore} from '../../core/datastore/document-read-datastor
 import {ProjectNameValidatorMsgConversion} from '../messages/project-name-validator-msg-conversion';
 import {Messages} from '../messages/messages';
 import {reload} from '../../core/common/reload';
+import {SettingsProvider} from '../../core/settings/settings-provider';
 
 const remote = typeof window !== 'undefined' ? window.require('electron').remote : require('electron').remote;
 
@@ -43,6 +44,7 @@ export class ProjectsModalComponent implements AfterViewInit, AfterViewChecked {
 
 
     constructor(public activeModal: NgbActiveModal,
+                private settingsProvider: SettingsProvider,
                 private settingsService: SettingsService,
                 private modalService: NgbModal,
                 private messages: Messages,
@@ -68,7 +70,7 @@ export class ProjectsModalComponent implements AfterViewInit, AfterViewChecked {
     }
 
 
-    public getProjects = () => this.settingsService.getSettings().dbs;
+    public getProjects = () => this.settingsProvider.getSettings().dbs;
 
 
     public onKeyDown(event: KeyboardEvent) {

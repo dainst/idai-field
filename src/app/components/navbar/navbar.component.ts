@@ -8,6 +8,7 @@ import {Tab} from '../../core/tabs/tab';
 import {TabUtil} from '../../core/tabs/tab-util';
 import {ViewFacade} from '../../core/resources/view/view-facade';
 import {RoutingService} from '../routing-service';
+import {SettingsProvider} from '../../core/settings/settings-provider';
 
 
 @Component({
@@ -34,7 +35,7 @@ export class NavbarComponent implements DoCheck {
                 private viewFacade: ViewFacade,
                 private tabManager: TabManager,
                 private modalService: NgbModal,
-                private settingsService: SettingsService,
+                private settingsProvider: SettingsProvider,
                 private routingService: RoutingService,
                 private i18n: I18n) {
 

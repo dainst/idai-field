@@ -7,6 +7,7 @@ import {TabManager} from '../../core/tabs/tab-manager';
 import {Messages} from '../messages/messages';
 import {reload} from '../../core/common/reload';
 import {MenuContext, MenuService} from '../menu-service';
+import {SettingsProvider} from '../../core/settings/settings-provider';
 
 const address = typeof window !== 'undefined' ? window.require('address') : require('address');
 const remote = typeof window !== 'undefined' ? window.require('electron').remote : require('electron').remote;
@@ -30,7 +31,8 @@ export class SettingsComponent implements OnInit {
     public saving: boolean = false;
 
 
-    constructor(private settingsService: SettingsService,
+    constructor(private settingsProvider: SettingsProvider,
+                private settingsService: SettingsService,
                 private messages: Messages,
                 private tabManager: TabManager,
                 private menuService: MenuService) {}
@@ -38,7 +40,7 @@ export class SettingsComponent implements OnInit {
 
     ngOnInit() {
 
-        this.settings = this.settingsService.getSettings();
+        this.settings = this.settingsProvider.getSettings();
     }
 
 
@@ -66,7 +68,7 @@ export class SettingsComponent implements OnInit {
 
         this.saving = true;
         const languagesChanged: boolean
-            = !equal(this.settings.languages)(this.settingsService.getSettings().languages);
+            = !equal(this.settings.languages)(this.settingsProvider.getSettings().languages);
 
         try {
             await this.settingsService.updateSettings(this.settings);

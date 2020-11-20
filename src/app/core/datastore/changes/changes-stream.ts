@@ -9,9 +9,9 @@ import {IndexFacade} from '../index/index-facade';
 import {ObserverUtil} from '../../util/observer-util';
 import {CAMPAIGNS, solveProjectDocumentConflict, STAFF} from './solve-project-document-conflicts';
 import {ResourceId, RevisionId} from '../../constants';
-import {SettingsService} from '../../settings/settings-service';
 import {isProjectDocument} from '../helpers';
 import {DatastoreErrors} from '../model/datastore-errors';
+import {SettingsProvider} from '../../settings/settings-provider';
 
 
 @Injectable()
@@ -36,7 +36,7 @@ export class ChangesStream {
                 private indexFacade: IndexFacade,
                 private documentCache: DocumentCache<Document>,
                 private categoryConverter: CategoryConverter<Document>,
-                private settingsService: SettingsService) {
+                private settingsProvider: SettingsProvider) {
 
         datastore.deletedNotifications().subscribe(document => {
 
@@ -52,7 +52,7 @@ export class ChangesStream {
 
             if (await ChangesStream.isRemoteChange(
                     document,
-                    this.settingsService.getSettings().username)
+                    this.settingsProvider.getSettings().username)
                 || document._conflicts !== undefined) {
 
                 if (this.documentsScheduledToWelcome[document.resource.id]) {
@@ -146,7 +146,7 @@ export class ChangesStream {
         try {
             return await this.datastore.update(
                 document,
-                this.settingsService.getSettings().username,
+                this.settingsProvider.getSettings().username,
                 conflicts
             );
         } catch (errWithParams) {

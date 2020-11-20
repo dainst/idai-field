@@ -18,6 +18,7 @@ import {CatalogJsonlParser} from './parser/catalog-jsonl-parser';
 import {importCatalog} from './import/import-catalog';
 import {SettingsService} from '../settings/settings-service';
 import {Settings} from '../settings/settings';
+import {SettingsProvider} from '../settings/settings-provider';
 
 export type ImportFormat = 'native' | 'geojson' | 'geojson-gazetteer' | 'shapefile' | 'csv' | 'catalog';
 
@@ -45,7 +46,7 @@ export module Importer {
      *
      * @param format
      * @param datastore
-     * @param settingsService
+     * @param settingsProvider
      * @param projectConfiguration
      * @param operationId
      * @param mergeMode
@@ -61,7 +62,7 @@ export module Importer {
      */
     export async function doImport(format: ImportFormat,
                                    datastore: DocumentDatastore,
-                                   settingsService: SettingsService,
+                                   settingsProvider: SettingsProvider,
                                    projectConfiguration: ProjectConfiguration,
                                    operationId: string,
                                    mergeMode: boolean,
@@ -87,7 +88,7 @@ export module Importer {
 
         const inverseRelationsMap = makeInverseRelationsMap(projectConfiguration.getAllRelationDefinitions());
 
-        const settings = settingsService.getSettings()
+        const settings = settingsProvider.getSettings()
 
         const { errors, successfulImports } = await performImport(
             documents,

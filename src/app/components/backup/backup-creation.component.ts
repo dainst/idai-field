@@ -9,6 +9,7 @@ import {TabManager} from '../../core/tabs/tab-manager';
 import {Messages} from '../messages/messages';
 import {MenuContext, MenuService} from '../menu-service';
 import {Settings} from '../../core/settings/settings';
+import {SettingsProvider} from '../../core/settings/settings-provider';
 
 
 @Component({
@@ -34,7 +35,7 @@ export class BackupCreationComponent {
         private dialogProvider: DialogProvider,
         private modalService: NgbModal,
         private messages: Messages,
-        private settingsService: SettingsService,
+        private settingsProvider: SettingsProvider,
         private backupProvider: BackupProvider,
         private tabManager: TabManager,
         private menuService: MenuService
@@ -71,7 +72,7 @@ export class BackupCreationComponent {
     private async writeBackupFile(filePath: string) {
 
         try {
-            await this.backupProvider.dump(filePath, this.settingsService.getSettings().selectedProject);
+            await this.backupProvider.dump(filePath, this.settingsProvider.getSettings().selectedProject);
             this.messages.add([M.BACKUP_WRITE_SUCCESS]);
         } catch (err) {
             this.messages.add([M.BACKUP_WRITE_ERROR_GENERIC]);

@@ -24,7 +24,7 @@ import {Query} from '../../core/datastore/model/query';
 import {ProjectCategories} from '../../core/configuration/project-categories';
 import {MenuContext, MenuService} from '../menu-service';
 import {CatalogExporter} from '../../core/export/catalog-exporter';
-import {Settings} from '../../core/settings/settings';
+import {SettingsProvider} from '../../core/settings/settings-provider';
 
 const remote = typeof window !== 'undefined' ? window.require('electron').remote : require('electron').remote;
 
@@ -59,7 +59,7 @@ export class ExportComponent implements OnInit {
     private static TIMEOUT: number = 200;
 
 
-    constructor(private settingsService: SettingsService,
+    constructor(private settingsProvider: SettingsProvider,
                 private modalService: NgbModal,
                 private messages: Messages,
                 private i18n: I18n,
@@ -167,7 +167,7 @@ export class ExportComponent implements OnInit {
             this.documentDatastore,
             filePath,
             this.selectedCatalogId,
-            this.settingsService.getSettings()
+            this.settingsProvider.getSettings()
         );
     }
 
@@ -185,7 +185,7 @@ export class ExportComponent implements OnInit {
     private async startShapeFileExport(filePath: string) {
 
         await ShapefileExporter.performExport(
-            this.settingsService.getSettings(),
+            this.settingsProvider.getSettings(),
             await this.documentDatastore.get('project'),
             filePath,
             this.selectedOperationId

@@ -71,6 +71,7 @@ import {FieldCategoryConverter} from '../core/datastore/field/field-category-con
 import {InitializationProgress} from '../core/initialization-progress';
 import {AngularUtility} from '../angular/angular-utility';
 import {Settings} from '../core/settings/settings';
+import {SettingsProvider} from '../core/settings/settings-provider';
 
 const remote = typeof window !== 'undefined' ? window.require('electron').remote : require('electron').remote;
 
@@ -124,11 +125,14 @@ registerLocaleData(localeDe, 'de');
         ConfigReader,
         ConfigLoader,
         AppConfigurator,
+        SettingsProvider,
+        SettingsService,
         {
             provide: APP_INITIALIZER,
             multi: true,
             deps: [SettingsService, PouchdbManager, PouchdbServer, DocumentCache, InitializationProgress],
             useFactory: (settingsService: SettingsService, pouchdbManager: PouchdbManager, pouchdbServer: PouchdbServer, documentCache: DocumentCache<Document>, progress: InitializationProgress) => () =>
+
                 pouchdbServer.setupServer()
                     .then(() => progress.setPhase('loadingSettings'))
                     .then(() => (new SettingsSerializer).load())
@@ -150,8 +154,7 @@ registerLocaleData(localeDe, 'de');
                          );
                     }).then(() => AngularUtility.refresh(700))
         },
-        SettingsService,
-        { provide: UsernameProvider, useExisting: SettingsService },
+        { provide: UsernameProvider, useExisting: SettingsProvider }, // TODO get rid of UsernameProvider
         InitializationProgress,
         {
             provide: Messages,

@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
-import {isString, set} from 'tsfun';
+import {isString} from 'tsfun';
 import {Settings} from './settings';
-import {SettingsSerializer} from './settings-serializer';
 import {PouchdbManager} from '../datastore/pouchdb/pouchdb-manager';
 import {PouchdbServer} from '../datastore/pouchdb/pouchdb-server';
 import {SampleDataLoader} from '../datastore/field/sample-data-loader';
@@ -15,7 +14,7 @@ import {ImageConverter} from '../images/imagestore/image-converter';
 import {ImagestoreErrors} from '../images/imagestore/imagestore-errors';
 import {Messages} from '../../components/messages/messages';
 import {InitializationProgress} from '../initialization-progress';
-import {jsonClone} from 'tsfun/struct';
+import {SettingsProvider} from './settings-provider';
 
 const {remote, ipcRenderer} = typeof window !== 'undefined' ? window.require('electron') : require('electron');
 
@@ -57,52 +56,33 @@ export const PROJECT_MAPPING = {
  */
 export class SettingsService {
 
-    private settings: Settings;
-    private settingsSerializer: SettingsSerializer = new SettingsSerializer();
-
-
     constructor(private imagestore: Imagestore,
                 private pouchdbManager: PouchdbManager,
                 private pouchdbServer: PouchdbServer,
                 private messages: Messages,
                 private appConfigurator: AppConfigurator,
                 private imageConverter: ImageConverter,
-                private synchronizationService: SyncService) {
+                private synchronizationService: SyncService,
+                private settingsProvider: SettingsProvider) {
     }
 
 
-    /**
-     * Retrieve the current settings.
-     * Returns a clone of the settings object in order to prevent the settings
-     * object from being changed without explicitly saving the settings.
-     * @returns {Settings} the current settings
-     */
-    public getSettings(): Settings {
-
-        const settings = jsonClone(this.settings);
-        settings.selectedProject =
-            settings.dbs && settings.dbs.length > 0
-                ? settings.dbs[0]
-                : 'test';
-        return settings;
-    }
-
-
-    public async bootProjectDb(settings: Settings, progress?: InitializationProgress): Promise<void> {
+    public async bootProjectDb(settings_: Settings, progress?: InitializationProgress): Promise<void> {
 
         try {
-            await this.updateSettings(settings);
+            await this.updateSettings(settings_);
+            const settings = this.settingsProvider.getSettings();
 
             if (progress) await progress.setPhase('settingUpDatabase');
 
             await this.pouchdbManager.loadProjectDb(
-                this.getSettings().selectedProject,
+                settings.selectedProject,
                 new SampleDataLoader(
-                    this.imageConverter, this.settings.imagestorePath, Settings.getLocale(), progress
+                    this.imageConverter, settings.imagestorePath, Settings.getLocale(), progress
                 )
             );
 
-            if (this.settings.isSyncActive) await this.setupSync();
+            if (settings.isSyncActive) await this.setupSync();
             await this.createProjectDocumentIfMissing();
         } catch (msgWithParams) {
             console.error(msgWithParams);
@@ -122,6 +102,36 @@ export class SettingsService {
     }
 
 
+    /**
+     * Sets, validates and persists the settings state.
+     * Project settings have to be set separately.
+     */
+    public async updateSettings(settings_: Settings) {
+
+        const settings = SettingsProvider.completeSettings(settings_);
+
+        if (settings.syncTarget.address) {
+            settings.syncTarget.address = settings.syncTarget.address.trim();
+            if (!SettingsService.validateAddress(settings.syncTarget.address))
+                throw 'malformed_address';
+        }
+
+        if (ipcRenderer) ipcRenderer.send('settingsChanged', settings);
+
+        this.pouchdbServer.setPassword(settings.hostPassword);
+
+        return this.imagestore.setPath(settings.imagestorePath, settings.selectedProject as any)
+            .catch((errWithParams: any) => {
+                if (errWithParams.length > 0 && errWithParams[0] === ImagestoreErrors.INVALID_PATH) {
+                    this.messages.add([M.IMAGESTORE_ERROR_INVALID_PATH, settings.imagestorePath]);
+                } else {
+                    console.error('Something went wrong with imagestore.setPath', errWithParams);
+                }
+            })
+            .then(() => this.settingsProvider.setSettingsAndSerialize(settings));
+    }
+
+
     public async loadConfiguration(configurationDirPath: string,
                                    progress?: InitializationProgress): Promise<ProjectConfiguration> {
 
@@ -130,8 +140,8 @@ export class SettingsService {
         try {
             return this.appConfigurator.go(
                 configurationDirPath,
-                SettingsService.getConfigurationName(this.getSettings().selectedProject),
-                this.settings.languages
+                SettingsService.getConfigurationName(this.settingsProvider.getSettings().selectedProject),
+                this.settingsProvider.getSettings().languages
             );
         } catch (msgsWithParams) {
             if (isString(msgsWithParams)) {
@@ -154,31 +164,26 @@ export class SettingsService {
 
         this.synchronizationService.stopSync();
 
-        if (!this.settings.isSyncActive
-                || !this.settings.dbs
-                || !(this.settings.dbs.length > 0))
-            return;
+        const settings = this.settingsProvider.getSettings();
 
-        if (!SettingsService.isSynchronizationAllowed(this.getSettings().selectedProject)) return;
+        if (!settings.isSyncActive || !settings.dbs || !(settings.dbs.length > 0)) return;
+        if (!SettingsService.isSynchronizationAllowed(this.settingsProvider.getSettings().selectedProject)) return;
 
-        this.synchronizationService.init(this.settings);
+        this.synchronizationService.init(this.settingsProvider.getSettings());
         return this.synchronizationService.startSync();
     }
 
 
     public async addProject(project: Name) {
 
-        this.settings.dbs = set(this.settings.dbs.concat([project]));
-        await this.settingsSerializer.store(this.settings);
+        await this.settingsProvider.addProjectAndSerialize(project);
     }
 
 
     public async selectProject(project: Name) {
 
         this.synchronizationService.stopSync();
-
-        this.settings.dbs = set([project].concat(this.settings.dbs));
-        await this.settingsSerializer.store(this.settings);
+        await this.settingsProvider.selectProjectAndSerialize(project);
     }
 
 
@@ -187,8 +192,7 @@ export class SettingsService {
         this.synchronizationService.stopSync();
 
         await this.pouchdbManager.destroyDb(project);
-        this.settings.dbs.splice(this.settings.dbs.indexOf(project), 1);
-        await this.settingsSerializer.store(this.settings);
+        await this.settingsProvider.deleteProjectAndSerialize(project);
     }
 
 
@@ -200,40 +204,9 @@ export class SettingsService {
 
         await this.pouchdbManager.createDb(
             project,
-            SettingsService.createProjectDocument(this.getSettings()),
+            SettingsService.createProjectDocument(this.settingsProvider.getSettings()),
             destroyBeforeCreate
         );
-    }
-
-
-    /**
-     * Sets, validates and persists the settings state.
-     * Project settings have to be set separately.
-     */
-    public async updateSettings(settings: Settings) {
-
-        settings = jsonClone(settings);
-        this.settings = SettingsService.initSettings(settings);
-
-        if (this.settings.syncTarget.address) {
-            this.settings.syncTarget.address = this.settings.syncTarget.address.trim();
-            if (!SettingsService.validateAddress(this.settings.syncTarget.address))
-                throw 'malformed_address';
-        }
-
-        if (ipcRenderer) ipcRenderer.send('settingsChanged', this.settings);
-
-        this.pouchdbServer.setPassword(this.settings.hostPassword);
-
-        return this.imagestore.setPath(settings.imagestorePath, this.getSettings().selectedProject as any)
-            .catch((errWithParams: any) => {
-                if (errWithParams.length > 0 && errWithParams[0] === ImagestoreErrors.INVALID_PATH) {
-                    this.messages.add([M.IMAGESTORE_ERROR_INVALID_PATH, settings.imagestorePath]);
-                } else {
-                    console.error('Something went wrong with imagestore.setPath', errWithParams);
-                }
-            })
-            .then(() => this.settingsSerializer.store(this.settings));
     }
 
 
@@ -244,7 +217,7 @@ export class SettingsService {
         } catch {
             console.warn('Didn\'t find project document, creating new one');
             await this.pouchdbManager.getDbProxy().put(
-                SettingsService.createProjectDocument(this.getSettings())
+                SettingsService.createProjectDocument(this.settingsProvider.getSettings())
             );
         }
     }
@@ -264,32 +237,6 @@ export class SettingsService {
     }
 
 
-    /**
-     * initializes settings to default values
-     * @param settings provided settings
-     * @returns {Settings} settings with added default settings
-     */
-    private static initSettings(settings: Settings): Settings {
-
-        if (!settings.username) settings.username = 'anonymous';
-        if (!settings.dbs || settings.dbs.length === 0) settings.dbs = ['test'];
-        if (!settings.isSyncActive) settings.isSyncActive = false;
-        if (settings.hostPassword === undefined) settings.hostPassword = this.generatePassword();
-
-        if (settings.imagestorePath) {
-            let path: string = settings.imagestorePath;
-            if (path.substr(-1) != '/') path += '/';
-            settings.imagestorePath = path;
-        } else {
-            if (remote.app){ // jasmine unit tests
-                settings.imagestorePath = remote.app.getPath('appData') + '/'
-                    + remote.app.getName() + '/imagestore/';
-            }
-        }
-        return settings;
-    }
-
-
     private static createProjectDocument(settings: Settings): any {
 
         return {
@@ -304,19 +251,5 @@ export class SettingsService {
             created: { user: settings.username, date: new Date() },
             modified: [{ user: settings.username, date: new Date() }]
         };
-    }
-
-
-    private static generatePassword(): string {
-
-        const length: number = 8;
-        const charset: string = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-
-        let password: string = '';
-        for (let i = 0, n = charset.length; i < length; ++i) {
-            password += charset.charAt(Math.floor(Math.random() * n));
-        }
-
-        return password;
     }
 }

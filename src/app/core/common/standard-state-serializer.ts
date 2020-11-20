@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {StateSerializer} from './state-serializer';
-import {SettingsService} from '../settings/settings-service';
-import {Settings} from '../settings/settings';
+import {SettingsProvider} from '../settings/settings-provider';
 
 const remote = typeof window !== 'undefined' ? window.require('electron').remote : require('electron').remote;
 const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
@@ -16,7 +15,7 @@ export type StateType = 'resources-state'|'matrix-state'|'tabs-state';
  */
 export class StandardStateSerializer extends StateSerializer {
 
-    constructor(private settingsService: SettingsService) {
+    constructor(private settingsProvider: SettingsProvider) {
 
         super();
     }
@@ -45,7 +44,7 @@ export class StandardStateSerializer extends StateSerializer {
 
         return new Promise((resolve, reject) => {
 
-            if (this.settingsService.getSettings().selectedProject === 'test') return resolve();
+            if (this.settingsProvider.getSettings().selectedProject === 'test') return resolve();
 
             fs.writeFile(this.getFilePath(stateType),
                     JSON.stringify(stateObject), (err: any) => {
@@ -80,6 +79,6 @@ export class StandardStateSerializer extends StateSerializer {
     private getFilePath(stateType: StateType): string {
 
         return remote.getGlobal('appDataPath') + '/' +  stateType + '-'
-            + this.settingsService.getSettings().selectedProject + '.json';
+            + this.settingsProvider.getSettings().selectedProject + '.json';
     }
 }

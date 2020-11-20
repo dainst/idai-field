@@ -11,7 +11,7 @@ import {ProjectsModalComponent} from './navbar/projects-modal.component';
 import {SettingsService} from '../core/settings/settings-service';
 import {DatastoreErrors} from '../core/datastore/model/datastore-errors';
 import {ProjectCategories} from '../core/configuration/project-categories';
-import {Settings} from '../core/settings/settings';
+import {SettingsProvider} from '../core/settings/settings-provider';
 
 
 @Injectable()
@@ -34,7 +34,7 @@ export class RoutingService {
                 private location: Location,
                 private projectConfiguration: ProjectConfiguration,
                 private modalService: NgbModal,
-                private settingsService: SettingsService,
+                private settingsProvider: SettingsProvider,
                 private menuService: MenuService) {}
 
 
@@ -90,7 +90,7 @@ export class RoutingService {
         this.menuService.setContext(MenuContext.PROJECTS);
 
         const ref: NgbModalRef = this.modalService.open(ProjectsModalComponent, { keyboard: false });
-        ref.componentInstance.selectedProject = this.settingsService.getSettings().selectedProject;
+        ref.componentInstance.selectedProject = this.settingsProvider.getSettings().selectedProject;
         ref.componentInstance.openConflictResolver = openConflictResolver;
 
         try {

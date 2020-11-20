@@ -52,6 +52,7 @@ import {TypesComponent} from './types/types.component';
 import {TypeGridComponent} from './types/type-grid.component';
 import {TypeIconComponent} from './types/type-icon.component';
 import {Messages} from '../messages/messages';
+import {SettingsProvider} from '../../core/settings/settings-provider';
 
 
 const remote = typeof window !== 'undefined'
@@ -120,10 +121,10 @@ const remote = typeof window !== 'undefined'
                          indexFacade: IndexFacade,
                          stateSerializer: StateSerializer,
                          projectConfiguration: ProjectConfiguration,
-                         settingsService: SettingsService,
+                         settingsProvider: SettingsProvider,
                          tabManager: TabManager) => {
 
-                const projectName = settingsService.getSettings().selectedProject;
+                const projectName = settingsProvider.getSettings().selectedProject;
                 if (!projectName) throw 'project not set';
 
                 return new ResourcesStateManager(
@@ -137,7 +138,7 @@ const remote = typeof window !== 'undefined'
                 );
             },
             deps: [
-                FieldReadDatastore, IndexFacade, StateSerializer, ProjectConfiguration, SettingsService,
+                FieldReadDatastore, IndexFacade, StateSerializer, ProjectConfiguration, SettingsProvider,
                 TabManager
             ]
         },

@@ -4,7 +4,6 @@ import {Settings} from '../settings/settings';
 const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
 
 
-// TODO implement deletion of imported catalogs, together with all types and images
 export module CatalogExporter {
 
     export async function performExport(datastore: DocumentReadDatastore,
@@ -12,11 +11,18 @@ export module CatalogExporter {
                                         catalogId: string,
                                         settings: Settings): Promise<void> {
 
-        const [exportDocuments, _imageResourceIds] =
+        const [exportDocuments, imageResourceIds] =
             await getExportDocuments(datastore, catalogId, settings.selectedProject);
 
-        // TODO save images to folder
-        // const imagestorePath = settings.imagestorePath;
+        const basePath = outputFilePath
+            .slice(0, outputFilePath.lastIndexOf('.')) + '/'; // TODO operating systems
+        if (!fs.existsSync(basePath)) fs.mkdirSync(basePath);
+
+        for (let image of imageResourceIds) {
+            const source = settings.imagestorePath + settings.selectedProject + '/' + image;
+            const target = basePath + image;
+            fs.copyFileSync(source, target);
+        }
 
         fs.writeFileSync(
             outputFilePath,

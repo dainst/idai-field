@@ -70,7 +70,7 @@ export class SettingsService {
     public async bootProjectDb(settings_: Settings, progress?: InitializationProgress): Promise<void> {
 
         try {
-            await this.updateSettings(settings_);
+            await this.updateSettings(settings_); // TODO pull this out of the function; pass the result as settings
             const settings = this.settingsProvider.getSettings();
 
             if (progress) await progress.setPhase('settingUpDatabase');

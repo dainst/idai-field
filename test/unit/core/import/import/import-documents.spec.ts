@@ -1,21 +1,22 @@
 import {ImportErrors as E, ImportErrors} from '../../../../../src/app/core/import/import/import-errors';
 import {buildImportFunction} from '../../../../../src/app/core/import/import/import-documents';
+import {Settings} from '../../../../../src/app/core/settings/settings';
 
 /**
  * @author Daniel de Oliveira
  */
 describe('importDocuments', () => {
 
-    let mockDatastore;
-    let mockValidator;
+    let datastore;
+    let validator;
     let importFunction;
     let operationCategoryNames = ['Trench'];
 
 
     beforeEach(() => {
-        mockDatastore = jasmine.createSpyObj('datastore',
+        datastore = jasmine.createSpyObj('datastore',
             ['bulkCreate', 'bulkUpdate', 'get', 'find']);
-        mockValidator = jasmine.createSpyObj('validator', [
+        validator = jasmine.createSpyObj('validator', [
             'assertIsRecordedInTargetsExist',
             'assertRelationsWellformedness',
             'assertIsAllowedRelationDomainCategory',
@@ -29,14 +30,14 @@ describe('importDocuments', () => {
             'assertSettingIsRecordedInIsPermissibleForCategory',
             'assertNoForbiddenRelations']);
 
-        mockValidator.assertHasLiesWithin.and.returnValue();
+        validator.assertHasLiesWithin.and.returnValue();
 
-        mockValidator.assertIsRecordedInTargetsExist.and.returnValue(Promise.resolve());
-        mockDatastore.bulkCreate.and.callFake((a) => Promise.resolve(a));
-        mockDatastore.bulkUpdate.and.callFake((a) => Promise.resolve(a));
-        mockDatastore.find.and.returnValue(Promise.resolve({ totalCount: 0 }));
+        validator.assertIsRecordedInTargetsExist.and.returnValue(Promise.resolve());
+        datastore.bulkCreate.and.callFake((a) => Promise.resolve(a));
+        datastore.bulkUpdate.and.callFake((a) => Promise.resolve(a));
+        datastore.find.and.returnValue(Promise.resolve({ totalCount: 0 }));
 
-        mockDatastore.get.and.callFake(async resourceId => {
+        datastore.get.and.callFake(async resourceId => {
 
             if (resourceId === '0') return {
                 resource: {
@@ -50,12 +51,13 @@ describe('importDocuments', () => {
         });
 
         importFunction = buildImportFunction(
-            mockValidator,
-            operationCategoryNames,
-            {},
-            () => '101',
-            undefined,
-            undefined,
+            { datastore, validator },
+            { operationCategoryNames: operationCategoryNames, inverseRelationsMap: {}, settings: { username: 'user1'} as Settings },
+            {
+                generateId: () => '101',
+                preprocessDocument: undefined,
+                postprocessDocument: undefined
+            },
             { mergeMode: false, permitDeletions: false });
     });
 
@@ -64,38 +66,37 @@ describe('importDocuments', () => {
 
         await importFunction([
             { resource: { category: 'Find', identifier: 'one', relations: { isChildOf: '0'} } } as any],
-            mockDatastore, 'user1');
+            'user1');
 
-        expect(mockDatastore.bulkCreate).toHaveBeenCalled();
+        expect(datastore.bulkCreate).toHaveBeenCalled();
         done();
     });
 
 
     it('merge if exists', async done => {
 
-        mockValidator.assertIsRecordedInTargetsExist.and.returnValue(Promise.resolve(undefined));
-        mockDatastore.find.and.returnValue(Promise.resolve({
+        validator.assertIsRecordedInTargetsExist.and.returnValue(Promise.resolve(undefined));
+        datastore.find.and.returnValue(Promise.resolve({
             totalCount: 1,
             documents: [{ resource: { identifier: '123', id: '1', relations: {} } }]
         }));
-        mockDatastore.get.and.returnValue(Promise.resolve(
+        datastore.get.and.returnValue(Promise.resolve(
             { resource: { identifier: '123', id: '1', relations: {} } }
         ));
 
         await (buildImportFunction(
-            mockValidator,
-            operationCategoryNames,
-            {},
-            () => '101',
-            undefined,
-            undefined,
+            { datastore, validator },
+            { operationCategoryNames: operationCategoryNames, inverseRelationsMap: {}, settings: { username: 'user1'} as Settings },
+            {
+                generateId: () => '101',
+                preprocessDocument: undefined,
+                postprocessDocument: undefined
+            },
             { mergeMode: true }))(
-            [{ resource: { id: '1', relations: {} } } as any],
-            mockDatastore,
-            {username: 'user1'} as any);
+            [{ resource: { id: '1', relations: {} } } as any]);
 
-        expect(mockDatastore.bulkCreate).not.toHaveBeenCalled();
-        expect(mockDatastore.bulkUpdate).toHaveBeenCalled();
+        expect(datastore.bulkCreate).not.toHaveBeenCalled();
+        expect(datastore.bulkUpdate).toHaveBeenCalled();
         done();
     });
 
@@ -103,26 +104,34 @@ describe('importDocuments', () => {
     it('does not overwrite if exists', async done => {
 
         await (buildImportFunction(
-            mockValidator, operationCategoryNames,
-            {},
-            () => '101', undefined, undefined,
-            { mergeMode: false }))([
-                { resource: { category: 'Find', identifier: 'one', relations: { isChildOf: '0' } } } as any],
-                mockDatastore, {username: 'user1'} as any);
+            { datastore, validator },
+            {
+                operationCategoryNames: operationCategoryNames,
+                inverseRelationsMap: {},
+                settings: { username: 'user1'} as Settings
+            },
+            {
+                generateId: () => '101',
+                preprocessDocument: undefined,
+                postprocessDocument: undefined
+            },
+            { mergeMode: false }))
 
-        expect(mockDatastore.bulkCreate).toHaveBeenCalled();
-        expect(mockDatastore.bulkUpdate).not.toHaveBeenCalled();
+        ([{ resource: { category: 'Find', identifier: 'one', relations: { isChildOf: '0' } } } as any]);
+
+        expect(datastore.bulkCreate).toHaveBeenCalled();
+        expect(datastore.bulkUpdate).not.toHaveBeenCalled();
         done();
     });
 
 
     it('should reject on err in datastore', async done => {
 
-        mockDatastore.bulkCreate.and.returnValue(Promise.reject(['abc']));
+        datastore.bulkCreate.and.returnValue(Promise.reject(['abc']));
 
         const {errors} = await importFunction(
             [{ resource: { category: 'Find', identifier: 'one', relations: { isChildOf: '0' } } } as any],
-            mockDatastore, 'user1');
+            datastore, 'user1');
 
         expect(errors[0][0]).toBe('abc');
         done();
@@ -131,11 +140,11 @@ describe('importDocuments', () => {
 
     it('not well formed', async done => { // shows that err from default-import-calc gets propagated
 
-        mockValidator.assertIsWellformed.and.callFake(() => { throw [ImportErrors.INVALID_CATEGORY]});
+        validator.assertIsWellformed.and.callFake(() => { throw [ImportErrors.INVALID_CATEGORY]});
 
         const {errors} = await importFunction([
             { resource: { category: 'Nonexisting', identifier: '1a', relations: { isChildOf: '0' } } } as any
-        ], mockDatastore, 'user1');
+        ], datastore, 'user1');
 
         expect(errors.length).toBe(1);
         expect(errors[0][0]).toEqual(ImportErrors.INVALID_CATEGORY);
@@ -146,17 +155,24 @@ describe('importDocuments', () => {
     it('parent not found', async done => {
 
         importFunction = buildImportFunction(
-            mockValidator,
-            operationCategoryNames,
-            {},
-            () => '101', undefined, undefined,
+            { datastore, validator },
+            {
+                operationCategoryNames: operationCategoryNames,
+                inverseRelationsMap: {},
+                settings: { username: 'user1'} as Settings
+            },
+            {
+                generateId: () => '101',
+                preprocessDocument: undefined,
+                postprocessDocument: undefined
+            },
             { mergeMode: false, useIdentifiersInRelations: true }); // !
 
-        mockDatastore.find.and.returnValue(Promise.resolve({ totalCount: 0 }));
+        datastore.find.and.returnValue(Promise.resolve({ totalCount: 0 }));
 
         const {errors} = await importFunction([
             { resource: { category: 'Feature', identifier: '1a', relations: { isChildOf: 'notfound' } } } as any
-        ], mockDatastore, 'user1');
+        ]);
 
         expect(errors[0][0]).toEqual(E.PREVALIDATION_MISSING_RELATION_TARGET);
         expect(errors[0][1]).toEqual('notfound');
@@ -167,19 +183,24 @@ describe('importDocuments', () => {
     it('parent not found, when using plain ids', async done => {
 
         importFunction = buildImportFunction(
-            mockValidator,
-            operationCategoryNames,
-            {},
-            () => '101',
-            undefined,
-            undefined,
+            { datastore, validator },
+            {
+                operationCategoryNames: operationCategoryNames,
+                inverseRelationsMap: {},
+                settings: { username: 'user1'} as Settings
+            },
+            {
+                generateId: () => '101',
+                preprocessDocument: undefined,
+                postprocessDocument: undefined
+            },
             { mergeMode: false, useIdentifiersInRelations: false}); // !
 
-        mockDatastore.find.and.returnValue(Promise.resolve({ totalCount: 0 }));
+        datastore.find.and.returnValue(Promise.resolve({ totalCount: 0 }));
 
         const {errors} = await importFunction([
             { resource: { category: 'Feature', identifier: '1a', relations: { isChildOf: 'notfound' } } } as any
-        ], mockDatastore, 'user1');
+        ]);
 
         expect(errors[0][0]).toEqual(E.PREVALIDATION_MISSING_RELATION_TARGET);
         expect(errors[0][1]).toEqual('notfound');
@@ -191,7 +212,7 @@ describe('importDocuments', () => {
 
         const {errors} = await importFunction([
             { resource: { category: 'Feature', identifier: '1a', relations: { isChildOf: ['a'] } } } as any
-        ], mockDatastore, 'user1');
+        ]);
 
         expect(errors[0][0]).toEqual(E.PARENT_MUST_NOT_BE_ARRAY);
         expect(errors[0][1]).toEqual('1a');
@@ -203,7 +224,7 @@ describe('importDocuments', () => {
 
         const {errors} = await importFunction([
             { resource: { category: 'Feature', identifier: '1a', relations: { isAbove: 'b' } } } as any
-        ], mockDatastore, 'user1');
+        ]);
 
         expect(errors[0][0]).toEqual(E.MUST_BE_ARRAY);
         expect(errors[0][1]).toEqual('1a');
@@ -215,7 +236,7 @@ describe('importDocuments', () => {
 
         const {errors} = await importFunction([
             { resource: { category: 'Feature', identifier: '1a', relations: { isRecordedIn: ['a'] } } } as any
-        ], mockDatastore, 'user1');
+        ]);
 
         expect(errors[0][0]).toEqual(E.INVALID_RELATIONS);
         expect(errors[0][2]).toEqual('isRecordedIn');

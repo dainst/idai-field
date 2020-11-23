@@ -14,6 +14,7 @@ import RECORDED_IN = HierarchicalRelations.RECORDEDIN;
 import {InverseRelationsMap} from '../../configuration/inverse-relations-map';
 import {processDocuments} from './process/process-documents';
 import {processRelations} from './process/process-relations';
+import {Settings} from '../../settings/settings';
 
 
 export interface ImportOptions {
@@ -25,19 +26,39 @@ export interface ImportOptions {
 }
 
 
+export interface ImportHelpers {
+
+    generateId: () => string;
+    preprocessDocument: (_: Document) => Document;
+    postprocessDocument: (_: Document) => Document;
+}
+
+
+export interface ImportServices {
+
+    validator: ImportValidator,
+    datastore: DocumentDatastore
+}
+
+
+export interface ImportContext {
+
+    operationCategoryNames: string[];
+    inverseRelationsMap: InverseRelationsMap;
+    settings: Settings;
+}
+
+
 /**
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export function buildImportFunction(validator: ImportValidator,
-                                    operationCategoryNames: string[],
-                                    inverseRelationsMap: InverseRelationsMap,
-                                    generateId: () => string,
-                                    preprocessDocument: (_: Document) => Document = identity,
-                                    postprocessDocument: (_: Document) => Document = identity,
-                                    importOptions: ImportOptions = {}): ImportFunction {
+export function buildImportFunction(services: ImportServices,
+                                    context: ImportContext,
+                                    helpers: ImportHelpers,
+                                    options: ImportOptions = {}): ImportFunction {
 
-    assertLegalCombination(importOptions.mergeMode, importOptions.operationId);
+    assertLegalCombination(options.mergeMode, options.operationId);
 
     /**
      * @param documents documents with the field resource.identifier set to a non empty string.
@@ -47,16 +68,14 @@ export function buildImportFunction(validator: ImportValidator,
      * @param datastore
      * @param username
      */
-    return async function importDocuments(documents: Array<Document>,
-                                          datastore: DocumentDatastore,
-                                          {username}): Promise<{ errors: string[][], successfulImports: number }> {
+    return async function importDocuments(documents: Array<Document>): Promise<{ errors: string[][], successfulImports: number }> {
 
-        const get = (resourceId: string) => datastore.get(resourceId);
+        const get = (resourceId: string) => services.datastore.get(resourceId);
 
         try {
-            preprocessFields(documents, importOptions.permitDeletions === true);
+            preprocessFields(documents, options.permitDeletions === true);
             await preprocessRelations(documents,
-                generateId, findByIdentifier(datastore), get, importOptions);
+                helpers.generateId, findByIdentifier(services.datastore), get, options);
         } catch (errWithParams) {
             return { errors: [errWithParams], successfulImports: 0 };
         }
@@ -65,10 +84,10 @@ export function buildImportFunction(validator: ImportValidator,
         try {
             const mergeDocs = await preprocessDocuments(
                 documents,
-                findByIdentifier(datastore),
-                preprocessDocument as Function,
-                importOptions.mergeMode === true);
-            processedDocuments = processDocuments(documents, mergeDocs, validator);
+                findByIdentifier(services.datastore),
+                helpers.preprocessDocument ?? identity,
+                options.mergeMode === true);
+            processedDocuments = processDocuments(documents, mergeDocs, services.validator);
         } catch (msgWithParams) {
             return { errors: [msgWithParams], successfulImports: 0};
         }
@@ -77,11 +96,11 @@ export function buildImportFunction(validator: ImportValidator,
         try {
             targetDocuments = await processRelations(
                 processedDocuments,
-                validator,
-                operationCategoryNames,
+                services.validator,
+                context.operationCategoryNames,
                 get,
-                inverseRelationsMap,
-                importOptions
+                context.inverseRelationsMap,
+                options
             );
         } catch (msgWithParams) {
             if (msgWithParams[0] === E.TARGET_CATEGORY_RANGE_MISMATCH
@@ -89,16 +108,16 @@ export function buildImportFunction(validator: ImportValidator,
             return { errors: [msgWithParams], successfulImports: 0 };
         }
 
-        const documentsForImport = processedDocuments.map(postprocessDocument);
+        const documentsForImport = processedDocuments.map(helpers.postprocessDocument ?? identity);
 
         const updateErrors = [];
         try {
             await Updater.go(
                 documentsForImport,
                 targetDocuments,
-                datastore,
-                username,
-                importOptions.mergeMode === true);
+                services.datastore,
+                context.settings.username,
+                options.mergeMode === true);
         } catch (errWithParams) {
             updateErrors.push(errWithParams)
         }

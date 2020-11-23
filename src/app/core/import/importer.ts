@@ -14,8 +14,8 @@ import {buildImportFunction} from './import/import-documents';
 import {FieldConverter} from './field-converter';
 import {ProjectCategories} from '../configuration/project-categories';
 import {CatalogJsonlParser} from './parser/catalog-jsonl-parser';
-import {importCatalog} from './import/import-catalog';
 import {SettingsProvider} from '../settings/settings-provider';
+import {makeImportCatalog} from './import/import-catalog';
 
 export type ImportFormat = 'native' | 'geojson' | 'geojson-gazetteer' | 'shapefile' | 'csv' | 'catalog';
 
@@ -59,7 +59,7 @@ export module Importer {
      */
     export async function doImport(format: ImportFormat,
                                    datastore: DocumentDatastore,
-                                   settingsProvider: SettingsProvider,
+                                   settingsProvider: SettingsProvider, // TODO pass settings
                                    projectConfiguration: ProjectConfiguration,
                                    operationId: string,
                                    mergeMode: boolean,
@@ -89,27 +89,33 @@ export module Importer {
         let importFunction;
         switch (format) {
             case 'catalog':
-                importFunction = importCatalog;
+                importFunction = makeImportCatalog(datastore, settings);
                 break;
             case 'geojson-gazetteer':
-                importFunction = buildImportFunction(validator, operationCategoryNames, inverseRelationsMap, generateId,
-                    preprocessDocument, postprocessDocument,
+                importFunction = buildImportFunction(
+                    { datastore, validator },
+                    { operationCategoryNames, inverseRelationsMap, settings },
+                    {generateId, preprocessDocument, postprocessDocument},
                     { mergeMode: false, permitDeletions: false });
                 break;
             case 'shapefile':
             case 'geojson':
-                importFunction = buildImportFunction(validator, operationCategoryNames, inverseRelationsMap, generateId,
-                    preprocessDocument, postprocessDocument,
+                importFunction = buildImportFunction(
+                    { datastore, validator },
+                    { operationCategoryNames, inverseRelationsMap, settings },
+                    {generateId, preprocessDocument, postprocessDocument},
                     { mergeMode: true, permitDeletions: false });
                 break;
             default: // native | csv
-                importFunction = buildImportFunction(validator, operationCategoryNames, inverseRelationsMap, generateId,
-                    preprocessDocument, postprocessDocument,
+                importFunction = buildImportFunction(
+                    { datastore, validator },
+                    { operationCategoryNames, inverseRelationsMap, settings },
+                    {generateId, preprocessDocument, postprocessDocument},
                     { mergeMode: mergeMode, permitDeletions: permitDeletions,
                         operationId: operationId, useIdentifiersInRelations: true });
         }
 
-        const { errors, successfulImports } = await importFunction(documents, datastore, settings);
+        const { errors, successfulImports } = await importFunction(documents);
         return { errors: errors, warnings: [], successfulImports: successfulImports };
     }
 

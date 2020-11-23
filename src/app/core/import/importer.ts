@@ -81,7 +81,7 @@ export module Importer {
                 importFunction = buildImportFunction(
                     { datastore, validator },
                     { operationCategoryNames, inverseRelationsMap, settings: context.settings },
-                    {generateId, preprocessDocument, postprocessDocument},
+                    { generateId, preprocessDocument, postprocessDocument },
                     { mergeMode: false, permitDeletions: false });
                 break;
             case 'shapefile':
@@ -89,14 +89,14 @@ export module Importer {
                 importFunction = buildImportFunction(
                     { datastore, validator },
                     { operationCategoryNames, inverseRelationsMap, settings: context.settings },
-                    {generateId, preprocessDocument, postprocessDocument},
+                    { generateId, preprocessDocument, postprocessDocument },
                     { mergeMode: true, permitDeletions: false });
                 break;
             default: // native | csv
                 importFunction = buildImportFunction(
                     { datastore, validator },
                     { operationCategoryNames, inverseRelationsMap, settings: context.settings },
-                    {generateId, preprocessDocument, postprocessDocument},
+                    { generateId, preprocessDocument, postprocessDocument },
                     { mergeMode: options.mergeMode, permitDeletions: options.permitDeletions,
                         operationId: options.operationId, useIdentifiersInRelations: true });
         }

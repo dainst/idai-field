@@ -82,8 +82,6 @@ export module Importer {
             case 'geojson':
                 importFunction = buildImportFunction(
                     { datastore, validator },
-
-
                     { operationCategoryNames, inverseRelationsMap, settings },
                     {generateId, preprocessDocument, postprocessDocument},
                     { mergeMode: true, permitDeletions: false });

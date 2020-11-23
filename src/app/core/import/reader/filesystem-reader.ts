@@ -12,7 +12,7 @@ const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
  * @author Jan G. Wieners
  * @author Thomas Kleinke
  */
-export class FileSystemReader implements Reader {
+export class FilesystemReader implements Reader {
 
     constructor(private file: any) {}
 

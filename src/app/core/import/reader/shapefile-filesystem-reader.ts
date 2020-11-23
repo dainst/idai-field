@@ -9,7 +9,7 @@ const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
 /**
  * @author Thomas Kleinke
  */
-export class ShapefileFileSystemReader implements Reader {
+export class ShapefileFilesystemReader implements Reader {
 
     constructor(private file: any) {}
 
@@ -18,16 +18,16 @@ export class ShapefileFileSystemReader implements Reader {
 
         return new Promise(async (resolve, reject) => {
 
-            ShapefileFileSystemReader.removeTempFileIfExisting();
+            ShapefileFilesystemReader.removeTempFileIfExisting();
 
             try {
                 await JavaToolExecutor.executeJavaTool('shapefile-tool.jar', this.getArguments());
             } catch (err) {
-                reject(ShapefileFileSystemReader.getImportErrorMsgWithParams(err));
+                reject(ShapefileFilesystemReader.getImportErrorMsgWithParams(err));
             }
 
-            fs.readFile(ShapefileFileSystemReader.getTempFilePath(), 'utf-8', (err, data) => {
-                fs.unlinkSync(ShapefileFileSystemReader.getTempFilePath());
+            fs.readFile(ShapefileFilesystemReader.getTempFilePath(), 'utf-8', (err, data) => {
+                fs.unlinkSync(ShapefileFilesystemReader.getTempFilePath());
 
                 if (err) {
                     reject([ReaderErrors.SHAPEFILE_GENERIC]);
@@ -41,13 +41,13 @@ export class ShapefileFileSystemReader implements Reader {
 
     private getArguments(): string {
 
-        return '"convert" "' + this.file.path + '" "' + ShapefileFileSystemReader.getTempFilePath() + '"';
+        return '"convert" "' + this.file.path + '" "' + ShapefileFilesystemReader.getTempFilePath() + '"';
     }
 
 
     private static removeTempFileIfExisting() {
 
-        const tempFilePath: string = ShapefileFileSystemReader.getTempFilePath();
+        const tempFilePath: string = ShapefileFilesystemReader.getTempFilePath();
         if (fs.existsSync(tempFilePath)) fs.unlinkSync(tempFilePath);
     }
 

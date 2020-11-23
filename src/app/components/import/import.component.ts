@@ -6,7 +6,7 @@ import {Document} from 'idai-components-2';
 import {Importer, ImporterOptions, ImportFormat, ImportReport} from '../../core/import/importer';
 import {Category} from '../../core/configuration/model/category';
 import {Reader} from '../../core/import/reader/reader';
-import {FileSystemReader} from '../../core/import/reader/file-system-reader';
+import {FilesystemReader} from '../../core/import/reader/filesystem-reader';
 import {HttpReader} from '../../core/import/reader/http-reader';
 import {UploadModalComponent} from './upload-modal.component';
 import {ModelUtil} from '../../core/model/model-util';
@@ -15,7 +15,7 @@ import {UsernameProvider} from '../../core/settings/username-provider';
 import {SyncService} from '../../core/sync/sync-service';
 import {MessagesConversion} from './messages-conversion';
 import {M} from '../messages/m';
-import {ShapefileFileSystemReader} from '../../core/import/reader/shapefile-filesystem-reader';
+import {ShapefileFilesystemReader} from '../../core/import/reader/shapefile-filesystem-reader';
 import {JavaToolExecutor} from '../../core/java/java-tool-executor';
 import {ImportValidator} from '../../core/import/import/process/import-validator';
 import {IdGenerator} from '../../core/datastore/pouchdb/id-generator';
@@ -341,8 +341,8 @@ export class ImportComponent implements OnInit {
 
         return sourceType === 'file'
             ? format === 'shapefile'
-                ? new ShapefileFileSystemReader(file)
-                : new FileSystemReader(file)
+                ? new ShapefileFilesystemReader(file)
+                : new FilesystemReader(file)
             : new HttpReader(url, http);
     }
 

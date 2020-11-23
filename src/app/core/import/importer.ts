@@ -15,7 +15,7 @@ import {FieldConverter} from './field-converter';
 import {ProjectCategories} from '../configuration/project-categories';
 import {CatalogJsonlParser} from './parser/catalog-jsonl-parser';
 import {SettingsProvider} from '../settings/settings-provider';
-import {makeImportCatalog} from './import/import-catalog';
+import {buildImportCatalogFunction} from './import/import-catalog';
 import {Settings} from '../settings/settings';
 
 export type ImportFormat = 'native' | 'geojson' | 'geojson-gazetteer' | 'shapefile' | 'csv' | 'catalog';
@@ -89,7 +89,7 @@ export module Importer {
         let importFunction;
         switch (format) {
             case 'catalog':
-                importFunction = makeImportCatalog(datastore, settings);
+                importFunction = buildImportCatalogFunction(datastore, settings);
                 break;
             case 'geojson-gazetteer':
                 importFunction = buildImportFunction(

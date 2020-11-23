@@ -8,7 +8,7 @@ import {isNot, undefinedOrEmpty} from 'tsfun';
 const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
 
 
-export function makeImportCatalog(datastore: DocumentDatastore, {username, selectedProject, imagestorePath}) {
+export function buildImportCatalogFunction(datastore: DocumentDatastore, {username, selectedProject, imagestorePath}) {
 
     /**
      * @param importDocuments

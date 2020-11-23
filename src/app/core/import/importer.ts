@@ -21,6 +21,14 @@ export type ImportFormat = 'native' | 'geojson' | 'geojson-gazetteer' | 'shapefi
 
 export type ImportReport = { errors: any[], successfulImports: number };
 
+export interface ImporterContext {
+
+    format: ImportFormat,
+    mergeMode: boolean,
+    permitDeletions: boolean;
+    operationId: string,
+}
+
 
 
 /**
@@ -45,13 +53,10 @@ export module Importer {
      *   importReport.errors: Any error of module ImportErrors or ValidationErrors
      *   importReport.warnings
      */
-    export async function doImport(format: ImportFormat,
+    export async function doImport(context: ImporterContext,
                                    datastore: DocumentDatastore,
                                    settings: Settings,
                                    projectConfiguration: ProjectConfiguration,
-                                   operationId: string,
-                                   mergeMode: boolean,
-                                   permitDeletions: boolean,
                                    documents: Array<Document>,
                                    generateId: () => string) {
 
@@ -62,7 +67,7 @@ export module Importer {
         const postprocessDocument = FieldConverter.postprocessDocument(projectConfiguration);
 
         let importFunction;
-        switch (format) {
+        switch (context.format) {
             case 'catalog':
                 importFunction = buildImportCatalogFunction(datastore, settings);
                 break;
@@ -88,8 +93,8 @@ export module Importer {
                     { datastore, validator },
                     { operationCategoryNames, inverseRelationsMap, settings },
                     {generateId, preprocessDocument, postprocessDocument},
-                    { mergeMode: mergeMode, permitDeletions: permitDeletions,
-                        operationId: operationId, useIdentifiersInRelations: true });
+                    { mergeMode: context.mergeMode, permitDeletions: context.permitDeletions,
+                        operationId: context.operationId, useIdentifiersInRelations: true });
         }
 
         const { errors, successfulImports } = await importFunction(documents);
@@ -98,15 +103,13 @@ export module Importer {
 
 
     // TODO handle parser error
-    export async function doParse(format: ImportFormat,
-                                  mergeMode: boolean,
-                                  operationId: string,
-                                  selectedCategory: Category,
-                                  fileContent: string,
-                                  separator?: string) {
+    export async function doParse(context: ImporterContext,
+                                      selectedCategory: Category,
+                                      fileContent: string,
+                                      separator?: string) {
 
-        const operationId_ = mergeMode ? '' : operationId;
-        const parse = createParser(format, operationId_, selectedCategory, separator);
+        const operationId_ = context.mergeMode ? '' : context.operationId;
+        const parse = createParser(context.format, operationId_, selectedCategory, separator);
         const documents: Document[] = [];
 
         (await parse(fileContent)).forEach((resultDocument: Document) => documents.push(resultDocument));

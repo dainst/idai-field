@@ -2,7 +2,7 @@ import {to} from 'tsfun';
 import {createApp, setupSettingsService, setupSyncTestDb} from '../subsystem-helper';
 import {PouchdbManager} from '../../../../../src/app/core/datastore/pouchdb/pouchdb-manager';
 import {PouchdbServer} from '../../../../../src/app/core/datastore/pouchdb/pouchdb-server';
-import {Importer} from '../../../../../src/app/core/import/importer';
+import {Importer, ImporterContext} from '../../../../../src/app/core/import/importer';
 import {ValidationErrors} from '../../../../../src/app/core/model/validation-errors';
 import {ImportErrors} from '../../../../../src/app/core/import/import/import-errors';
 import {Category} from '../../../../../src/app/core/configuration/model/category';
@@ -32,10 +32,15 @@ describe('Import/Subsystem', () => {
         await datastore.create(
             { resource: { identifier: 't1', category: 'Trench', relations: {} } });
 
+        const context: ImporterContext = {
+            format: 'geojson',
+            mergeMode: false, // merge mode gets set automatically,
+            permitDeletions: false,
+            operationId: undefined
+        };
+
         const documents = await Importer.doParse(
-            'geojson',
-            false, // merge mode gets set automatically,
-            undefined,
+            context,
             undefined,
             '{\n' +
             '  "type": "FeatureCollection",\n' +
@@ -52,13 +57,10 @@ describe('Import/Subsystem', () => {
         );
 
         await Importer.doImport(
-            'geojson',
+            context,
             datastore,
             settingsService,
             _projectConfiguration,
-            undefined,
-            false, // merge mode gets set automatically
-            false,
             documents,
             () => '101');
 
@@ -99,10 +101,15 @@ describe('Import/Subsystem', () => {
             ]
         }] as any;
 
+        const context: ImporterContext = {
+            format: 'csv',
+            mergeMode: false,
+            permitDeletions: false,
+            operationId: stored.resource.id
+        };
+
         const documents = await Importer.doParse(
-            'csv',
-            false,
-            stored.resource.id,
+            context,
             t,
             '"identifier","shortDescription","dating.0.type","dating.0.begin.inputType","dating.0.begin.inputYear","dating.0.end.inputType","dating.0.end.inputYear"\n' +
             '"f1","SD","exact","","","bce","5000"',
@@ -110,13 +117,10 @@ describe('Import/Subsystem', () => {
         );
 
         await Importer.doImport(
-            'csv',
+            context,
             datastore,
             settingsService,
             _projectConfiguration,
-            stored.resource.id,
-            false,
-            false,
             documents,
             () => '101');
 
@@ -165,10 +169,15 @@ describe('Import/Subsystem', () => {
             ]
         }] as any;
 
+        const context: ImporterContext = {
+            format: 'csv',
+            mergeMode: true,
+            permitDeletions: true,
+            operationId: undefined
+        };
+
         const documents = await Importer.doParse(
-            'csv',
-            true,
-            undefined,
+            context,
             t,
             '"identifier","shortDescription","dating.0.type","dating.0.begin.inputType","dating.0.begin.inputYear","dating.0.end.inputType","dating.0.end.inputYear","dating.0.margin","dating.0.source","dating.0.isImprecise","dating.0.isUncertain","dating.1.type","dating.1.begin.inputType","dating.1.begin.inputYear","dating.1.end.inputType","dating.1.end.inputYear","dating.1.margin","dating.1.source","dating.1.isImprecise","dating.1.isUncertain"\n' +
             '"f1","newSD","exact","","","bce","5000","","","","","","","","","","","","",""',
@@ -176,13 +185,10 @@ describe('Import/Subsystem', () => {
         );
 
         await Importer.doImport(
-            'csv',
+            context,
             datastore,
             settingsService,
             _projectConfiguration,
-            undefined,
-            true,
-            true,
             documents,
             () => '101');
 
@@ -200,25 +206,27 @@ describe('Import/Subsystem', () => {
 
     it('create one operation', async done => {
 
+        const context: ImporterContext = {
+            format: 'native',
+            mergeMode: false,
+            permitDeletions: false,
+            operationId: undefined
+        };
+
         const documents = await Importer.doParse(
-            'native',
-            false,
-            undefined,
+            context,
             undefined,
             '{ "category": "Trench", "identifier" : "t1", "shortDescription" : "Our Trench 1"}',
             undefined
         );
 
         await Importer.doImport(
-           'native',
-           datastore,
-           settingsService,
+            context,
+            datastore,
+            settingsService,
            _projectConfiguration,
-           undefined,
-           false,
-           false,
-          documents,
-          () => '101');
+            documents,
+            () => '101');
 
         const result = await datastore.find({});
         expect(result.documents.length).toBe(1);
@@ -231,23 +239,25 @@ describe('Import/Subsystem', () => {
 
         const trench = await datastore.create({ resource: { identifier: 't1', category: 'Trench', shortDescription: 'Our Trench 1', relations: {}}});
 
+        const context: ImporterContext = {
+            format: 'native',
+            mergeMode: false,
+            permitDeletions: false,
+            operationId: trench.resource.id
+        };
+
         const documents = await Importer.doParse(
-            'native',
-            false,
-            trench.resource.id,
+            context,
             undefined,
             '{ "category": "Find", "identifier" : "obob1", "shortDescription" : "O.B. One", "geometry": { "type": "UnsupportedGeometryType", "coordinates": [1, 2] } }',
             undefined
         );
 
         const report = await Importer.doImport(
-            'native',
+            context,
             datastore,
             settingsService,
             _projectConfiguration,
-            trench.resource.id,
-            false,
-            false,
             documents,
             () => '101');
 
@@ -258,21 +268,24 @@ describe('Import/Subsystem', () => {
 
     it('liesWithin not set', async done => {
 
+        const context: ImporterContext = {
+            format: 'native',
+            mergeMode: false,
+            permitDeletions: false,
+            operationId: undefined
+        };
+
         const documents = await Importer.doParse(
-            'native',
-            false,
-            '',
+            context,
             undefined,
             '{ "category": "Find", "identifier" : "obob1", "shortDescription" : "O.B. One" }',
         );
 
         const report = await Importer.doImport(
-            'native',
+            context,
             datastore,
             settingsService,
             _projectConfiguration,
-            '',
-            false, false,
             documents,
             () => '101');
 
@@ -283,23 +296,25 @@ describe('Import/Subsystem', () => {
 
     it('liesWithin not set (but does not matter)', async done => {
 
+        const context: ImporterContext = {
+            format: 'native',
+            mergeMode: false,
+            permitDeletions: false,
+            operationId: undefined
+        };
+
         const documents = await Importer.doParse(
-            'native',
-            false,
-            '',
+            context,
             undefined,
             '{ "category": "Trench", "identifier" : "obob1", "shortDescription" : "O.B. One" }',
             undefined
         );
 
         const report = await Importer.doImport(
-            'native',
+            context,
             datastore,
             settingsService,
             _projectConfiguration,
-            '',
-            false,
-            false,
             documents,
             () => '101');
 
@@ -312,23 +327,25 @@ describe('Import/Subsystem', () => {
 
         const stored = await datastore.create({ resource: { identifier: 't1', category: 'Trench', shortDescription: 'Our Trench 1', relations: {}}});
 
+        const context: ImporterContext = {
+            format: 'native',
+            mergeMode: false,
+            permitDeletions: false,
+            operationId: stored.resource.id
+        };
+
         const documents = await Importer.doParse(
-            'native',
-            false,
-            stored.resource.id,
+            context,
             undefined,
             '{ "category": "Find", "identifier" : "f1", "shortDescription" : "Our Find 1"}',
             undefined
         );
 
         await Importer.doImport(
-            'native',
+            context,
             datastore,
             settingsService,
             _projectConfiguration,
-            stored.resource.id,
-            false,
-            false,
             documents,
             () => '101');
 
@@ -346,10 +363,15 @@ describe('Import/Subsystem', () => {
             { resource: { identifier: 't1', category: 'Trench', shortDescription: 'Our Trench 1', relations: {} } }
             )).resource.id;
 
+        const context: ImporterContext = {
+            format: 'native',
+            mergeMode: false,
+            permitDeletions: false,
+            operationId: resourceId
+        };
+
         const documents = await Importer.doParse(
-            'native',
-            false,
-            resourceId,
+            context,
             undefined,
             '{ "category": "Feature", "identifier" : "f1", "shortDescription" : "feature1" }'+ "\n"
                 + '{ "category": "InvalidCategory", "identifier" : "f2", "shortDescription" : "feature2" }',
@@ -357,12 +379,10 @@ describe('Import/Subsystem', () => {
         );
 
         const importReport = await Importer.doImport(
-            'native',
+            context,
             datastore,
             settingsService,
             _projectConfiguration,
-            resourceId,
-            false, false,
             documents,
             () => '101');
 
@@ -378,22 +398,25 @@ describe('Import/Subsystem', () => {
         await datastore.create({ resource: { id: 'a', identifier: 'a', category: 'Trench', relations: {} } });
         await datastore.create({ resource: { identifier: 'f1', category: 'Feature', shortDescription: 'feature1', relations: { isRecordedIn: ['a']}}});
 
+        const context: ImporterContext = {
+            format: 'native',
+            mergeMode: true,
+            permitDeletions: false,
+            operationId: undefined
+        };
+
         const documents = await Importer.doParse(
-            'native',
-            true,
-            undefined,
+            context,
             undefined,
             '{ "category": "Feature", "identifier" : "f1", "shortDescription" : "feature_1" }',
             undefined
         );
 
         await Importer.doImport(
-            'native',
+            context,
             datastore,
             settingsService,
             _projectConfiguration,
-            undefined,
-            true, false,
             documents,
             () => '101');
 
@@ -412,22 +435,25 @@ describe('Import/Subsystem', () => {
                 relations: { isRecordedIn: ['a'] }
         } });
 
+        const context: ImporterContext = {
+            format: 'native',
+            mergeMode: true,
+            permitDeletions: true,
+            operationId: undefined
+        };
+
         const documents = await Importer.doParse(
-            'native',
-            true,
-            undefined,
+            context,
             undefined,
             '{ "category": "Feature", "identifier" : "f1", "shortDescription": null }',
             undefined,
         );
 
         await Importer.doImport(
-            'native',
+            context,
             datastore,
             settingsService,
             _projectConfiguration,
-            undefined,
-            true, true,
             documents,
             () => '101');
 
@@ -453,22 +479,25 @@ describe('Import/Subsystem', () => {
                 relations: { isRecordedIn: ['a'], isBefore: ['f1'] }
             } });
 
+        const context: ImporterContext = {
+            format: 'native',
+            mergeMode: true,
+            permitDeletions: true,
+            operationId: undefined
+        };
+
         const documents = await Importer.doParse(
-            'native',
-            true,
-            undefined,
+            context,
             undefined,
             '{ "category": "Feature", "identifier" : "f1", "relations": { "isAfter": null } }',
             undefined
         );
 
         await Importer.doImport(
-            'native',
+            context,
             datastore,
             settingsService,
             _projectConfiguration,
-            undefined,
-            true, true,
             documents,
             () => '101');
 
@@ -489,22 +518,25 @@ describe('Import/Subsystem', () => {
                 relations: { isRecordedIn: ['a'] }
             } });
 
+        const context: ImporterContext = {
+            format: 'native',
+            mergeMode: true,
+            permitDeletions: false,
+            operationId: undefined
+        };
+
         const documents = await Importer.doParse(
-            'native',
-            true,
-            undefined,
+            context,
             undefined,
             '{ "category": "Feature", "identifier" : "f1", "shortDescription": null }',
             undefined
         );
 
         await Importer.doImport(
-            'native',
+            context,
             datastore,
             settingsService,
             _projectConfiguration,
-            undefined,
-            true, false,
             documents,
             () => '101');
 
@@ -530,22 +562,25 @@ describe('Import/Subsystem', () => {
                 relations: { isRecordedIn: ['a'], isBefore: ['f1'] }
             } });
 
+        const context: ImporterContext = {
+            format: 'native',
+            mergeMode: true,
+            permitDeletions: false,
+            operationId: undefined
+        };
+
         const documents = await Importer.doParse(
-            'native',
-            true,
-            undefined,
+            context,
             undefined,
             '{ "category": "Feature", "identifier" : "f1", "relations": { "isAfter": null } }',
             undefined
         );
 
         await Importer.doImport(
-            'native',
+            context,
             datastore,
             settingsService,
             _projectConfiguration,
-            undefined,
-            true, false,
             documents,
             () => '101');
 
@@ -560,10 +595,15 @@ describe('Import/Subsystem', () => {
 
         await datastore.create({ resource: { identifier: 'f1', category: 'Feature', shortDescription: 'feature1', relations: { isRecordedIn: ['a'] } } });
 
+        const context: ImporterContext = {
+            format: 'native',
+            mergeMode: true,
+            permitDeletions: false,
+            operationId: undefined
+        };
+
         const documents = await Importer.doParse(
-            'native',
-            true,
-            undefined,
+            context,
             undefined,
             '{ "category": "Feature", "identifier" : "f1", "shortDescription" : "feature_1" }' + "\n"
                 + '{ "category": "Feature", "identifier" : "notexisting", "shortDescription" : "feature_2" }',
@@ -571,12 +611,10 @@ describe('Import/Subsystem', () => {
         );
 
         const importReport = await Importer.doImport(
-            'native',
+            context,
             datastore,
             settingsService,
             _projectConfiguration,
-            undefined,
-            true, false,
             documents,
             () => '101');
 
@@ -593,22 +631,25 @@ describe('Import/Subsystem', () => {
 
         await datastore.create({ resource: { identifier: 't1', category: 'Trench', shortDescription: 'Our trench 1', relations: {} } });
 
+        const context: ImporterContext = {
+            format: 'native',
+            mergeMode: false,
+            permitDeletions: false,
+            operationId: 'f1'
+        };
+
         const documents = await Importer.doParse(
-            'native',
-            false,
-            'f1',
+            context,
             undefined,
             '{ "category": "Trench", "identifier" : "t2", "shortDescription" : "Our Trench 2" }',
             undefined
         );
 
         const importReport = await Importer.doImport(
-            'native',
+            context,
             datastore,
             settingsService,
             _projectConfiguration,
-            'f1',
-            false, false,
             documents,
             () => '101');
 
@@ -624,22 +665,25 @@ describe('Import/Subsystem', () => {
 
         await datastore.create({ resource: { id: 'tr1', identifier: 'trench1', category: 'Trench', shortDescription: 'Our trench 1', relations: {} } });
 
+        const context: ImporterContext = {
+            format: 'native',
+            mergeMode: false,
+            permitDeletions: false,
+            operationId: 'tr1'
+        };
+
         const documents = await Importer.doParse(
-            'native',
-            true,
-            'tr1',
+            context,
             undefined,
             '{ "category": "Feature", "identifier": "abc", "dating" : [{ "type": "after", "begin": { "inputYear": 100, "inputType": "bce" } }] }',
             undefined
         );
 
         await Importer.doImport(
-            'native',
+            context,
             datastore,
             settingsService,
             _projectConfiguration,
-            'tr1',
-            false, false,
             documents,
             () => '101');
 

@@ -3,7 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {empty, filter, flow, includedIn, isNot, map, take, forEach} from 'tsfun';
 import {Document} from 'idai-components-2';
-import {Importer, ImportFormat, ImportReport} from '../../core/import/importer';
+import {Importer, ImporterContext, ImportFormat, ImportReport} from '../../core/import/importer';
 import {Category} from '../../core/configuration/model/category';
 import {Reader} from '../../core/import/reader/reader';
 import {FileSystemReader} from '../../core/import/reader/file-system-reader';
@@ -247,23 +247,25 @@ export class ImportComponent implements OnInit {
 
     private async doImport(reader: Reader) {
 
+        const context: ImporterContext = { // TODO unify importState and importerContext
+            format: this.importState.format,
+            mergeMode: this.importState.mergeMode,
+            permitDeletions: this.importState.permitDeletions,
+            operationId: this.importState.selectedOperationId
+        };
+
         const documents = await Importer.doParse(
-            this.importState.format,
-            this.importState.mergeMode,
-            this.importState.selectedOperationId,
+            context,
             this.importState.format === 'csv' ? this.importState.selectedCategory : undefined,
             await reader.go(),
             this.importState.format === 'csv' ? this.getSeparator() : undefined
-        )
+        );
 
         return Importer.doImport(
-            this.importState.format,
+            context,
             this.datastore,
             this.settingsProvider.getSettings(),
             this.projectConfiguration,
-            this.importState.selectedOperationId,
-            this.importState.mergeMode,
-            this.importState.permitDeletions,
             documents,
             () => this.idGenerator.generateId());
     }

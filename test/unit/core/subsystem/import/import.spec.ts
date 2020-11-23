@@ -59,8 +59,7 @@ describe('Import/Subsystem', () => {
         await Importer.doImport(
             options,
             datastore,
-            settingsService,
-            _projectConfiguration,
+            { settings: settingsService,  projectConfiguration: _projectConfiguration },
             documents,
             () => '101');
 
@@ -119,8 +118,7 @@ describe('Import/Subsystem', () => {
         await Importer.doImport(
             options,
             datastore,
-            settingsService,
-            _projectConfiguration,
+            { settings: settingsService, projectConfiguration: _projectConfiguration },
             documents,
             () => '101');
 
@@ -187,8 +185,7 @@ describe('Import/Subsystem', () => {
         await Importer.doImport(
             options,
             datastore,
-            settingsService,
-            _projectConfiguration,
+            { settings: settingsService, projectConfiguration: _projectConfiguration },
             documents,
             () => '101');
 
@@ -223,8 +220,7 @@ describe('Import/Subsystem', () => {
         await Importer.doImport(
             options,
             datastore,
-            settingsService,
-           _projectConfiguration,
+            { settings: settingsService, projectConfiguration: _projectConfiguration },
             documents,
             () => '101');
 
@@ -256,8 +252,7 @@ describe('Import/Subsystem', () => {
         const report = await Importer.doImport(
             options,
             datastore,
-            settingsService,
-            _projectConfiguration,
+            { settings: settingsService, projectConfiguration: _projectConfiguration },
             documents,
             () => '101');
 
@@ -284,8 +279,7 @@ describe('Import/Subsystem', () => {
         const report = await Importer.doImport(
             options,
             datastore,
-            settingsService,
-            _projectConfiguration,
+            { settings: settingsService, projectConfiguration: _projectConfiguration },
             documents,
             () => '101');
 
@@ -313,8 +307,7 @@ describe('Import/Subsystem', () => {
         const report = await Importer.doImport(
             options,
             datastore,
-            settingsService,
-            _projectConfiguration,
+            { settings: settingsService, projectConfiguration: _projectConfiguration },
             documents,
             () => '101');
 
@@ -344,8 +337,7 @@ describe('Import/Subsystem', () => {
         await Importer.doImport(
             options,
             datastore,
-            settingsService,
-            _projectConfiguration,
+            { settings: settingsService, projectConfiguration: _projectConfiguration },
             documents,
             () => '101');
 
@@ -381,8 +373,7 @@ describe('Import/Subsystem', () => {
         const importReport = await Importer.doImport(
             options,
             datastore,
-            settingsService,
-            _projectConfiguration,
+            { settings: settingsService, projectConfiguration: _projectConfiguration },
             documents,
             () => '101');
 
@@ -415,8 +406,7 @@ describe('Import/Subsystem', () => {
         await Importer.doImport(
             options,
             datastore,
-            settingsService,
-            _projectConfiguration,
+            { settings: settingsService, projectConfiguration: _projectConfiguration },
             documents,
             () => '101');
 
@@ -452,8 +442,7 @@ describe('Import/Subsystem', () => {
         await Importer.doImport(
             options,
             datastore,
-            settingsService,
-            _projectConfiguration,
+            { settings: settingsService, projectConfiguration: _projectConfiguration },
             documents,
             () => '101');
 
@@ -496,8 +485,7 @@ describe('Import/Subsystem', () => {
         await Importer.doImport(
             options,
             datastore,
-            settingsService,
-            _projectConfiguration,
+            { settings: settingsService, projectConfiguration: _projectConfiguration },
             documents,
             () => '101');
 
@@ -535,8 +523,7 @@ describe('Import/Subsystem', () => {
         await Importer.doImport(
             options,
             datastore,
-            settingsService,
-            _projectConfiguration,
+            { settings: settingsService, projectConfiguration: _projectConfiguration },
             documents,
             () => '101');
 
@@ -579,8 +566,7 @@ describe('Import/Subsystem', () => {
         await Importer.doImport(
             options,
             datastore,
-            settingsService,
-            _projectConfiguration,
+            { settings: settingsService, projectConfiguration: _projectConfiguration },
             documents,
             () => '101');
 
@@ -613,8 +599,7 @@ describe('Import/Subsystem', () => {
         const importReport = await Importer.doImport(
             options,
             datastore,
-            settingsService,
-            _projectConfiguration,
+            { settings: settingsService, projectConfiguration: _projectConfiguration },
             documents,
             () => '101');
 
@@ -648,8 +633,7 @@ describe('Import/Subsystem', () => {
         const importReport = await Importer.doImport(
             options,
             datastore,
-            settingsService,
-            _projectConfiguration,
+            { settings: settingsService, projectConfiguration: _projectConfiguration },
             documents,
             () => '101');
 
@@ -682,8 +666,7 @@ describe('Import/Subsystem', () => {
         await Importer.doImport(
             options,
             datastore,
-            settingsService,
-            _projectConfiguration,
+            { settings: settingsService, projectConfiguration: _projectConfiguration },
             documents,
             () => '101');
 

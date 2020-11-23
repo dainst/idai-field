@@ -30,6 +30,13 @@ export interface ImporterOptions {
 }
 
 
+export interface ImporterContext {
+
+    settings: Settings,
+    projectConfiguration: ProjectConfiguration
+}
+
+
 
 /**
  * Maintains contraints on how imports are validly composed
@@ -55,26 +62,25 @@ export module Importer {
      */
     export async function doImport(options: ImporterOptions,
                                    datastore: DocumentDatastore,
-                                   settings: Settings,
-                                   projectConfiguration: ProjectConfiguration,
+                                   context: ImporterContext,
                                    documents: Array<Document>,
                                    generateId: () => string) {
 
-        const operationCategoryNames = ProjectCategories.getOverviewCategoryNames(projectConfiguration.getCategoryTreelist()).filter(isnt('Place'));
-        const validator = new ImportValidator(projectConfiguration, datastore);
-        const inverseRelationsMap = makeInverseRelationsMap(projectConfiguration.getAllRelationDefinitions());
-        const preprocessDocument = FieldConverter.preprocessDocument(projectConfiguration);
-        const postprocessDocument = FieldConverter.postprocessDocument(projectConfiguration);
+        const operationCategoryNames = ProjectCategories.getOverviewCategoryNames(context.projectConfiguration.getCategoryTreelist()).filter(isnt('Place'));
+        const validator = new ImportValidator(context.projectConfiguration, datastore);
+        const inverseRelationsMap = makeInverseRelationsMap(context.projectConfiguration.getAllRelationDefinitions());
+        const preprocessDocument = FieldConverter.preprocessDocument(context.projectConfiguration);
+        const postprocessDocument = FieldConverter.postprocessDocument(context.projectConfiguration);
 
         let importFunction;
         switch (options.format) {
             case 'catalog':
-                importFunction = buildImportCatalogFunction(datastore, settings);
+                importFunction = buildImportCatalogFunction(datastore, context.settings);
                 break;
             case 'geojson-gazetteer':
                 importFunction = buildImportFunction(
                     { datastore, validator },
-                    { operationCategoryNames, inverseRelationsMap, settings },
+                    { operationCategoryNames, inverseRelationsMap, settings: context.settings },
                     {generateId, preprocessDocument, postprocessDocument},
                     { mergeMode: false, permitDeletions: false });
                 break;
@@ -82,14 +88,14 @@ export module Importer {
             case 'geojson':
                 importFunction = buildImportFunction(
                     { datastore, validator },
-                    { operationCategoryNames, inverseRelationsMap, settings },
+                    { operationCategoryNames, inverseRelationsMap, settings: context.settings },
                     {generateId, preprocessDocument, postprocessDocument},
                     { mergeMode: true, permitDeletions: false });
                 break;
             default: // native | csv
                 importFunction = buildImportFunction(
                     { datastore, validator },
-                    { operationCategoryNames, inverseRelationsMap, settings },
+                    { operationCategoryNames, inverseRelationsMap, settings: context.settings },
                     {generateId, preprocessDocument, postprocessDocument},
                     { mergeMode: options.mergeMode, permitDeletions: options.permitDeletions,
                         operationId: options.operationId, useIdentifiersInRelations: true });

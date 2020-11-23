@@ -247,7 +247,7 @@ export class ImportComponent implements OnInit {
 
     private async doImport(reader: Reader) {
 
-        const context: ImporterOptions = { // TODO unify importState and importerContext
+        const options: ImporterOptions = { // TODO unify importState and importerContext
             format: this.importState.format,
             mergeMode: this.importState.mergeMode,
             permitDeletions: this.importState.permitDeletions,
@@ -255,17 +255,16 @@ export class ImportComponent implements OnInit {
         };
 
         const documents = await Importer.doParse(
-            context,
+            options,
             this.importState.format === 'csv' ? this.importState.selectedCategory : undefined,
             await reader.go(),
             this.importState.format === 'csv' ? this.getSeparator() : undefined
         );
 
         return Importer.doImport(
-            context,
+            options,
             this.datastore,
-            this.settingsProvider.getSettings(),
-            this.projectConfiguration,
+            { settings: this.settingsProvider.getSettings(), projectConfiguration: this.projectConfiguration },
             documents,
             () => this.idGenerator.generateId());
     }

@@ -264,8 +264,8 @@ export class ImportComponent implements OnInit {
         return Importer.doImport(
             this.datastore,
             { settings: this.settingsProvider.getSettings(), projectConfiguration: this.projectConfiguration },
-            options,
             () => this.idGenerator.generateId(),
+            options,
             documents);
     }
 

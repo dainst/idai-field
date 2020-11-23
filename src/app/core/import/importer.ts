@@ -16,6 +16,7 @@ import {ProjectCategories} from '../configuration/project-categories';
 import {CatalogJsonlParser} from './parser/catalog-jsonl-parser';
 import {SettingsProvider} from '../settings/settings-provider';
 import {makeImportCatalog} from './import/import-catalog';
+import {Settings} from '../settings/settings';
 
 export type ImportFormat = 'native' | 'geojson' | 'geojson-gazetteer' | 'shapefile' | 'csv' | 'catalog';
 
@@ -43,7 +44,7 @@ export module Importer {
      *
      * @param format
      * @param datastore
-     * @param settingsProvider
+     * @param settings
      * @param projectConfiguration
      * @param operationId
      * @param mergeMode
@@ -59,7 +60,7 @@ export module Importer {
      */
     export async function doImport(format: ImportFormat,
                                    datastore: DocumentDatastore,
-                                   settingsProvider: SettingsProvider, // TODO pass settings
+                                   settings: Settings,
                                    projectConfiguration: ProjectConfiguration,
                                    operationId: string,
                                    mergeMode: boolean,
@@ -82,7 +83,6 @@ export module Importer {
         const operationCategoryNames = ProjectCategories.getOverviewCategoryNames(projectConfiguration.getCategoryTreelist()).filter(isnt('Place'));
         const validator = new ImportValidator(projectConfiguration, datastore);
         const inverseRelationsMap = makeInverseRelationsMap(projectConfiguration.getAllRelationDefinitions());
-        const settings = settingsProvider.getSettings()
         const preprocessDocument = FieldConverter.preprocessDocument(projectConfiguration);
         const postprocessDocument = FieldConverter.postprocessDocument(projectConfiguration);
 

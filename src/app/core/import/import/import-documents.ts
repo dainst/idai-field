@@ -65,8 +65,6 @@ export function buildImportFunction(services: ImportServices,
      *   If resource.id is set, it will be taken as document.id on creation.
      *   The relations map is assumed to be at least existent, but can be empty.
      *   The resource.category field may be empty.
-     * @param datastore
-     * @param username
      */
     return async function importDocuments(documents: Array<Document>): Promise<{ errors: string[][], successfulImports: number }> {
 

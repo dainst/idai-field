@@ -250,7 +250,7 @@ export class ImportComponent implements OnInit {
         return Importer.doImport(
             this.importState.format,
             this.datastore,
-            this.settingsProvider,
+            this.settingsProvider.getSettings(),
             this.projectConfiguration,
             this.importState.selectedOperationId,
             this.importState.mergeMode,

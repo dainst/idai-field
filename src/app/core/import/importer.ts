@@ -60,11 +60,11 @@ export module Importer {
      *   importReport.errors: Any error of module ImportErrors or ValidationErrors
      *   importReport.warnings
      */
-    export async function doImport(options: ImporterOptions,
-                                   datastore: DocumentDatastore,
+    export async function doImport(datastore: DocumentDatastore,
                                    context: ImporterContext,
-                                   documents: Array<Document>,
-                                   generateId: () => string) {
+                                   generateId: () => string,
+                                   options: ImporterOptions,
+                                   documents: Array<Document>) {
 
         const operationCategoryNames = ProjectCategories.getOverviewCategoryNames(context.projectConfiguration.getCategoryTreelist()).filter(isnt('Place'));
         const validator = new ImportValidator(context.projectConfiguration, datastore);

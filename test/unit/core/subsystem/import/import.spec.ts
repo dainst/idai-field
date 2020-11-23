@@ -57,11 +57,11 @@ describe('Import/Subsystem', () => {
         );
 
         await Importer.doImport(
-            options,
             datastore,
             { settings: settingsService,  projectConfiguration: _projectConfiguration },
-            documents,
-            () => '101');
+            () => '101',
+            options,
+            documents);
 
         const result = await datastore.find({});
         expect(result.documents.length).toBe(1);
@@ -116,11 +116,11 @@ describe('Import/Subsystem', () => {
         );
 
         await Importer.doImport(
-            options,
             datastore,
             { settings: settingsService, projectConfiguration: _projectConfiguration },
-            documents,
-            () => '101');
+            () => '101',
+            options,
+            documents);
 
         const result = await datastore.find({});
         expect(result.documents.length).toBe(2);
@@ -183,11 +183,11 @@ describe('Import/Subsystem', () => {
         );
 
         await Importer.doImport(
-            options,
             datastore,
             { settings: settingsService, projectConfiguration: _projectConfiguration },
-            documents,
-            () => '101');
+            () => '101',
+            options,
+            documents);
 
         const result = await datastore.find({});
         expect(result.documents.length).toBe(1);
@@ -218,11 +218,11 @@ describe('Import/Subsystem', () => {
         );
 
         await Importer.doImport(
-            options,
             datastore,
             { settings: settingsService, projectConfiguration: _projectConfiguration },
-            documents,
-            () => '101');
+            () => '101',
+            options,
+            documents);
 
         const result = await datastore.find({});
         expect(result.documents.length).toBe(1);
@@ -250,11 +250,11 @@ describe('Import/Subsystem', () => {
         );
 
         const report = await Importer.doImport(
-            options,
             datastore,
             { settings: settingsService, projectConfiguration: _projectConfiguration },
-            documents,
-            () => '101');
+            () => '101',
+            options,
+            documents);
 
         expect(report.errors[0]).toEqual([ValidationErrors.UNSUPPORTED_GEOMETRY_TYPE, "UnsupportedGeometryType"]);
         done();
@@ -277,11 +277,11 @@ describe('Import/Subsystem', () => {
         );
 
         const report = await Importer.doImport(
-            options,
             datastore,
             { settings: settingsService, projectConfiguration: _projectConfiguration },
-            documents,
-            () => '101');
+            () => '101',
+            options,
+            documents);
 
         expect(report.errors[0]).toEqual([ImportErrors.NO_PARENT_ASSIGNED]);
         done();
@@ -305,11 +305,11 @@ describe('Import/Subsystem', () => {
         );
 
         const report = await Importer.doImport(
-            options,
             datastore,
             { settings: settingsService, projectConfiguration: _projectConfiguration },
-            documents,
-            () => '101');
+            () => '101',
+            options,
+            documents);
 
         expect(report.errors.length).toBe(0);
         done();
@@ -335,11 +335,11 @@ describe('Import/Subsystem', () => {
         );
 
         await Importer.doImport(
-            options,
             datastore,
             { settings: settingsService, projectConfiguration: _projectConfiguration },
-            documents,
-            () => '101');
+            () => '101',
+            options,
+            documents);
 
         const result = await datastore.find({});
         expect(result.documents.length).toBe(2);
@@ -371,11 +371,11 @@ describe('Import/Subsystem', () => {
         );
 
         const importReport = await Importer.doImport(
-            options,
             datastore,
             { settings: settingsService, projectConfiguration: _projectConfiguration },
-            documents,
-            () => '101');
+            () => '101',
+            options,
+            documents);
 
         expect(importReport.errors[0]).toEqual([ImportErrors.INVALID_CATEGORY, 'InvalidCategory']);
         const result = await datastore.find({});
@@ -404,11 +404,11 @@ describe('Import/Subsystem', () => {
         );
 
         await Importer.doImport(
-            options,
             datastore,
             { settings: settingsService, projectConfiguration: _projectConfiguration },
-            documents,
-            () => '101');
+            () => '101',
+            options,
+            documents);
 
         const result = await datastore.find({});
         expect(result.documents[1].resource.shortDescription).toBe('feature_1');
@@ -440,11 +440,11 @@ describe('Import/Subsystem', () => {
         );
 
         await Importer.doImport(
-            options,
             datastore,
             { settings: settingsService, projectConfiguration: _projectConfiguration },
-            documents,
-            () => '101');
+            () => '101',
+            options,
+            documents);
 
         const result = await datastore.find({});
         expect(result.documents[1].resource.shortDescription).toBeUndefined();
@@ -483,11 +483,11 @@ describe('Import/Subsystem', () => {
         );
 
         await Importer.doImport(
-            options,
             datastore,
             { settings: settingsService, projectConfiguration: _projectConfiguration },
-            documents,
-            () => '101');
+            () => '101',
+            options,
+            documents);
 
         const result = await datastore.find({});
         expect(result.documents[1].resource.relations.isAfter).toBeUndefined();
@@ -521,11 +521,11 @@ describe('Import/Subsystem', () => {
         );
 
         await Importer.doImport(
-            options,
             datastore,
             { settings: settingsService, projectConfiguration: _projectConfiguration },
-            documents,
-            () => '101');
+            () => '101',
+            options,
+            documents);
 
         const result = await datastore.find({});
         expect(result.documents[1].resource.shortDescription).toEqual('feature1');
@@ -564,11 +564,11 @@ describe('Import/Subsystem', () => {
         );
 
         await Importer.doImport(
-            options,
             datastore,
             { settings: settingsService, projectConfiguration: _projectConfiguration },
-            documents,
-            () => '101');
+            () => '101',
+            options,
+            documents);
 
         const result = await datastore.find({});
         expect(result.documents[1].resource.relations.isAfter).toEqual(['f2']);
@@ -597,11 +597,11 @@ describe('Import/Subsystem', () => {
         );
 
         const importReport = await Importer.doImport(
-            options,
             datastore,
             { settings: settingsService, projectConfiguration: _projectConfiguration },
-            documents,
-            () => '101');
+            () => '101',
+            options,
+            documents);
 
         expect(importReport.errors.length).toBe(1);
         expect(importReport.errors[0][0]).toEqual(ImportErrors.UPDATE_TARGET_NOT_FOUND);
@@ -631,11 +631,11 @@ describe('Import/Subsystem', () => {
         );
 
         const importReport = await Importer.doImport(
-            options,
             datastore,
             { settings: settingsService, projectConfiguration: _projectConfiguration },
-            documents,
-            () => '101');
+            () => '101',
+            options,
+            documents);
 
         expect(importReport.errors[0][0]).toEqual(ImportErrors.OPERATIONS_NOT_ALLOWED);
 
@@ -664,11 +664,11 @@ describe('Import/Subsystem', () => {
         );
 
         await Importer.doImport(
-            options,
             datastore,
             { settings: settingsService, projectConfiguration: _projectConfiguration },
-            documents,
-            () => '101');
+            () => '101',
+            options,
+            documents);
 
         const result = await datastore.find({});
         expect(result.documents[0].resource['dating'][0]['begin']['year']).toBe(-100);

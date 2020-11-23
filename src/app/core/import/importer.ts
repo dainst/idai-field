@@ -14,7 +14,6 @@ import {buildImportFunction} from './import/import-documents';
 import {FieldConverter} from './field-converter';
 import {ProjectCategories} from '../configuration/project-categories';
 import {CatalogJsonlParser} from './parser/catalog-jsonl-parser';
-import {SettingsProvider} from '../settings/settings-provider';
 import {buildImportCatalogFunction} from './import/import-catalog';
 import {Settings} from '../settings/settings';
 
@@ -42,18 +41,6 @@ export module Importer {
      * containing the number of resources imported successfully as well as information on errors that occurred,
      * if any.
      *
-     * @param format
-     * @param datastore
-     * @param settings
-     * @param projectConfiguration
-     * @param operationId
-     * @param mergeMode
-     * @param permitDeletions
-     * @param fileContent
-     * @param generateId
-     * @param selectedCategory should be defined in case format === csv
-     * @param separator
-     *
      * @returns ImportReport
      *   importReport.errors: Any error of module ImportErrors or ValidationErrors
      *   importReport.warnings
@@ -65,20 +52,8 @@ export module Importer {
                                    operationId: string,
                                    mergeMode: boolean,
                                    permitDeletions: boolean,
-                                   fileContent: string,
-                                   generateId: () => string,
-                                   selectedCategory?: Category,
-                                   separator?: string) {
-
-        const operationId_ = mergeMode ? '' : operationId;
-        const parse = createParser(format, operationId_, selectedCategory, separator);
-        const documents: Document[] = [];
-
-        try {
-            (await parse(fileContent)).forEach((resultDocument: Document) => documents.push(resultDocument));
-        } catch (msgWithParams) {
-            return { errors: [msgWithParams], successfulImports: 0 };
-        }
+                                   documents: Array<Document>,
+                                   generateId: () => string) {
 
         const operationCategoryNames = ProjectCategories.getOverviewCategoryNames(projectConfiguration.getCategoryTreelist()).filter(isnt('Place'));
         const validator = new ImportValidator(projectConfiguration, datastore);
@@ -102,6 +77,8 @@ export module Importer {
             case 'geojson':
                 importFunction = buildImportFunction(
                     { datastore, validator },
+
+
                     { operationCategoryNames, inverseRelationsMap, settings },
                     {generateId, preprocessDocument, postprocessDocument},
                     { mergeMode: true, permitDeletions: false });
@@ -117,6 +94,23 @@ export module Importer {
 
         const { errors, successfulImports } = await importFunction(documents);
         return { errors: errors, warnings: [], successfulImports: successfulImports };
+    }
+
+
+    // TODO handle parser error
+    export async function doParse(format: ImportFormat,
+                                  mergeMode: boolean,
+                                  operationId: string,
+                                  selectedCategory: Category,
+                                  fileContent: string,
+                                  separator?: string) {
+
+        const operationId_ = mergeMode ? '' : operationId;
+        const parse = createParser(format, operationId_, selectedCategory, separator);
+        const documents: Document[] = [];
+
+        (await parse(fileContent)).forEach((resultDocument: Document) => documents.push(resultDocument));
+        return documents;
     }
 
 

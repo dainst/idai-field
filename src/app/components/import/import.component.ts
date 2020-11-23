@@ -247,6 +247,15 @@ export class ImportComponent implements OnInit {
 
     private async doImport(reader: Reader) {
 
+        const documents = await Importer.doParse(
+            this.importState.format,
+            this.importState.mergeMode,
+            this.importState.selectedOperationId,
+            this.importState.format === 'csv' ? this.importState.selectedCategory : undefined,
+            await reader.go(),
+            this.importState.format === 'csv' ? this.getSeparator() : undefined
+        )
+
         return Importer.doImport(
             this.importState.format,
             this.datastore,
@@ -255,10 +264,8 @@ export class ImportComponent implements OnInit {
             this.importState.selectedOperationId,
             this.importState.mergeMode,
             this.importState.permitDeletions,
-            await reader.go(),
-            () => this.idGenerator.generateId(),
-            this.importState.format === 'csv' ? this.importState.selectedCategory : undefined,
-            this.importState.format === 'csv' ? this.getSeparator() : undefined);
+            documents,
+            () => this.idGenerator.generateId());
     }
 
 

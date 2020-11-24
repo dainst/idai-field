@@ -1,4 +1,4 @@
-import {includedIn, isnt} from 'tsfun';
+import {isnt} from 'tsfun';
 import {Document} from 'idai-components-2';
 import {GeojsonParser} from './parser/geojson-parser';
 import {NativeJsonlParser} from './parser/native-jsonl-parser';
@@ -70,7 +70,7 @@ export module Importer {
 
     export function permitDeletionsOptionAvailable(options: ImporterOptions) {
 
-        return includedIn(['native', 'csv'])(options.format) && options.mergeMode;
+        return ['native', 'csv'].includes(options.format) && options.mergeMode;
     }
 
 

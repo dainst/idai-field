@@ -1,4 +1,4 @@
-import {ImporterOptions, ImportFormat} from '../../core/import/importer';
+import {ImporterOptions, ImporterFormat} from '../../core/import/importer';
 import {Category} from '../../core/configuration/model/category';
 
 
@@ -9,7 +9,7 @@ import {Category} from '../../core/configuration/model/category';
 export class ImportState implements ImporterOptions {
 
     public sourceType: string = 'file';
-    public format: ImportFormat|undefined;
+    public format: ImporterFormat|undefined;
     public file: any|undefined;
     public url: string|undefined;
     public selectedOperationId: string = '';

@@ -24,13 +24,14 @@ import {CatalogFilesystemReader} from './reader/catalog-filesystem-reader';
 import {FilesystemReader} from './reader/filesystem-reader';
 import {M} from '../../components/messages/m';
 
-export type ImportFormat = 'native' | 'geojson' | 'geojson-gazetteer' | 'shapefile' | 'csv' | 'catalog';
+export type ImporterFormat = 'native' | 'geojson' | 'geojson-gazetteer' | 'shapefile' | 'csv' | 'catalog';
 
-export type ImportReport = { errors: any[], successfulImports: number };
+export type ImporterReport = { errors: any[], successfulImports: number };
+
 
 export interface ImporterOptions {
 
-    format: ImportFormat,
+    format: ImporterFormat,
     mergeMode: boolean,
     permitDeletions: boolean;
     selectedOperationId: string;
@@ -87,7 +88,7 @@ export module Importer {
      * containing the number of resources imported successfully as well as information on errors that occurred,
      * if any.
      *
-     * @returns ImportReport
+     * @returns ImporterReport
      *   importReport.errors: Any error of module ImportErrors or ValidationErrors
      *   importReport.warnings
      */
@@ -177,7 +178,7 @@ export module Importer {
     }
 
 
-    function createParser(format: ImportFormat,
+    function createParser(format: ImporterFormat,
                           operationId: string,
                           selectedCategory?: Category,
                           separator?: string): any {

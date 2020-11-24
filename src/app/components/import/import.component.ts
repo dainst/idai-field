@@ -3,7 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {empty, filter, flow, forEach, isNot, map, take} from 'tsfun';
 import {Document} from 'idai-components-2';
-import {Importer, ImportFormat, ImportReport} from '../../core/import/importer';
+import {Importer, ImporterFormat, ImporterReport} from '../../core/import/importer';
 import {Category} from '../../core/configuration/model/category';
 import {UploadModalComponent} from './upload-modal.component';
 import {ModelUtil} from '../../core/model/model-util';
@@ -200,7 +200,7 @@ export class ImportComponent implements OnInit {
 
         this.synchronizationService.stopSync();
 
-        let importReport: ImportReport;
+        let importReport: ImporterReport;
         try {
              importReport = await this.doImport();
         } catch (errWithParams) {
@@ -258,7 +258,7 @@ export class ImportComponent implements OnInit {
     }
 
 
-    private showImportResult(importReport: ImportReport) {
+    private showImportResult(importReport: ImporterReport) {
 
         if (importReport.errors.length > 0) return this.showMessages(importReport.errors);
         if (importReport.successfulImports === 0) return this.showEmptyImportWarning();
@@ -323,7 +323,7 @@ export class ImportComponent implements OnInit {
     }
 
 
-    private static getImportFormat(fileName: string): ImportFormat|undefined {
+    private static getImportFormat(fileName: string): ImporterFormat|undefined {
 
         switch(ExtensionUtil.getExtension(fileName)) {
             case 'catalog':

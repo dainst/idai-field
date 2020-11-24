@@ -3,13 +3,14 @@ import {FieldDocument, FieldGeometry} from 'idai-components-2';
 import {ResourcesComponent} from '../resources.component';
 import {Loading} from '../../widgets/loading';
 import {PersistenceManager} from '../../../core/model/persistence-manager';
-import {UsernameProvider} from '../../../core/settings/username-provider';
 import {DocumentReadDatastore} from '../../../core/datastore/document-read-datastore';
 import {ChangesStream} from '../../../core/datastore/changes/changes-stream';
 import {ViewFacade} from '../../../core/resources/view/view-facade';
 import {NavigationPath} from '../../../core/resources/view/state/navigation-path';
 import {MenuContext, MenuService} from '../../menu-service';
 import {Messages} from '../../messages/messages';
+import {UsernameProvider} from '../../../core/settings/username-provider';
+import {SettingsProvider} from '../../../core/settings/settings-provider';
 
 
 @Component({
@@ -36,7 +37,7 @@ export class ResourcesMapComponent {
                 public viewFacade: ViewFacade,
                 public resourcesComponent: ResourcesComponent,
                 private persistenceManager: PersistenceManager,
-                private usernameProvider: UsernameProvider,
+                private settingsProvider: SettingsProvider,
                 private messages: Messages,
                 private menuService: MenuService) {
 
@@ -127,7 +128,7 @@ export class ResourcesMapComponent {
         try {
             await this.viewFacade.setSelectedDocument(
                 (await this.persistenceManager.persist(
-                    selectedDocument, this.usernameProvider.getUsername())
+                    selectedDocument, this.settingsProvider.getSettings().username)
                 ).resource.id
             );
         } catch (msgWithParams) {

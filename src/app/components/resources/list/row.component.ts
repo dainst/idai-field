@@ -5,7 +5,6 @@ import {ResourcesComponent} from '../resources.component';
 import {PersistenceManager} from '../../../core/model/persistence-manager';
 import {FieldReadDatastore} from '../../../core/datastore/field/field-read-datastore';
 import {Validator} from '../../../core/model/validator';
-import {UsernameProvider} from '../../../core/settings/username-provider';
 import {M} from '../../messages/m';
 import {MessagesConversion} from '../../docedit/messages-conversion';
 import {Category} from '../../../core/configuration/model/category';
@@ -13,6 +12,7 @@ import {ProjectConfiguration} from '../../../core/configuration/project-configur
 import {ViewFacade} from '../../../core/resources/view/view-facade';
 import {NavigationService} from '../../../core/resources/navigation/navigation-service';
 import {Messages} from '../../messages/messages';
+import {SettingsProvider} from '../../../core/settings/settings-provider';
 
 
 @Component({
@@ -38,7 +38,7 @@ export class RowComponent implements AfterViewInit {
                 public viewFacade: ViewFacade,
                 private messages: Messages,
                 private persistenceManager: PersistenceManager,
-                private usernameProvider: UsernameProvider,
+                private settingsProvider: SettingsProvider,
                 private validator: Validator,
                 private datastore: FieldReadDatastore,
                 private navigationService: NavigationService,
@@ -128,7 +128,7 @@ export class RowComponent implements AfterViewInit {
         try {
             Object.assign(
                 this.document,
-                await this.persistenceManager.persist(this.document, this.usernameProvider.getUsername())
+                await this.persistenceManager.persist(this.document, this.settingsProvider.getSettings().username)
             );
         } catch(msgWithParams) {
             this.messages.add(msgWithParams);

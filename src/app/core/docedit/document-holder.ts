@@ -6,13 +6,13 @@ import {Validator} from '../model/validator';
 import {PersistenceManager} from '../model/persistence-manager';
 import {DocumentDatastore} from '../datastore/document-datastore';
 import {Validations} from '../model/validations';
-import {UsernameProvider} from '../settings/username-provider';
 import {DuplicationUtil} from './duplication-util';
 import {ProjectConfiguration} from '../configuration/project-configuration';
 import {FieldDefinition} from '../configuration/model/field-definition';
 import {Category} from '../configuration/model/category';
 import {trimFields} from '../util/trim-fields';
 import {DoceditErrors} from './docedit-errors';
+import {SettingsProvider} from '../settings/settings-provider';
 
 
 /**
@@ -41,7 +41,7 @@ export class DocumentHolder {
         private projectConfiguration: ProjectConfiguration,
         private persistenceManager: PersistenceManager,
         private validator: Validator,
-        private usernameProvider: UsernameProvider,
+        private settingsProvider: SettingsProvider,
         private datastore: DocumentDatastore) {
     }
 
@@ -83,7 +83,7 @@ export class DocumentHolder {
 
         const savedDocument: Document = await this.persistenceManager.persist(
             this.cleanup(this.clonedDocument),
-            this.usernameProvider.getUsername(),
+            this.settingsProvider.getSettings().username,
             this.oldVersion,
             this.inspectedRevisions
         );
@@ -110,7 +110,7 @@ export class DocumentHolder {
 
             await this.persistenceManager.persist(
                 template,
-                this.usernameProvider.getUsername(),
+                this.settingsProvider.getSettings().username,
                 this.oldVersion,
                 []
             );

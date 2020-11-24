@@ -46,6 +46,7 @@ import {TypeRowComponent} from './core/forms/type-relation/type-row.component';
 import {TypeRelationPickerComponent} from './core/forms/type-relation/type-relation-picker.component';
 import {LiteratureComponent} from './core/forms/literature.component';
 import {IdaiMessagesModule} from '../messages/idai-messages.module';
+import {SettingsProvider} from '../../core/settings/settings-provider';
 
 
 @NgModule({
@@ -55,14 +56,14 @@ import {IdaiMessagesModule} from '../messages/idai-messages.module';
             useFactory: (projectConfiguration: ProjectConfiguration,
                          persistenceManager: PersistenceManager,
                          validator: Validator,
-                         usernameProvider: UsernameProvider,
+                         settingsProvider: UsernameProvider,
                          datastore: DocumentDatastore) => {
 
                 return new DocumentHolder(projectConfiguration, persistenceManager,
-                    validator, usernameProvider, datastore);
+                    validator, settingsProvider, datastore);
             },
             deps: [ProjectConfiguration, PersistenceManager, Validator,
-                UsernameProvider, DocumentDatastore]
+                SettingsProvider, DocumentDatastore]
         },
         { provide: NgbDateParserFormatter, useClass: NgbDateDEParserFormatter }
     ],

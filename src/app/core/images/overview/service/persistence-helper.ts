@@ -1,10 +1,10 @@
 import {FieldDocument, ImageDocument} from 'idai-components-2';
 import {ImageOverviewFacade} from '../view/imageoverview-facade';
 import {PersistenceManager} from '../../../model/persistence-manager';
-import {UsernameProvider} from '../../../settings/username-provider';
 import {clone} from '../../../util/object-util';
 import {Imagestore} from '../../imagestore/imagestore';
 import {PersistenceHelperErrors} from './persistence-helper-errors';
+import {SettingsProvider} from '../../../settings/settings-provider';
 
 
 /**
@@ -17,7 +17,7 @@ export class PersistenceHelper {
     constructor(
         private imageOverviewFacade: ImageOverviewFacade,
         private persistenceManager: PersistenceManager,
-        private usernameProvider: UsernameProvider,
+        private settingsProvider: SettingsProvider,
         private imagestore: Imagestore
     ) {}
 
@@ -40,7 +40,7 @@ export class PersistenceHelper {
                 throw [PersistenceHelperErrors.IMAGESTORE_ERROR_DELETE, document.resource.identifier];
             }
 
-            await this.persistenceManager.remove(document, this.usernameProvider.getUsername());
+            await this.persistenceManager.remove(document, this.settingsProvider.getSettings().username);
             this.imageOverviewFacade.remove(document);
         }
     }
@@ -57,7 +57,7 @@ export class PersistenceHelper {
             }
 
             await this.persistenceManager.persist(
-                imageDocument, this.usernameProvider.getUsername(), oldVersion
+                imageDocument, this.settingsProvider.getSettings().username, oldVersion
             );
         }
     }
@@ -70,7 +70,7 @@ export class PersistenceHelper {
             document.resource.relations.depicts = [];
 
             await this.persistenceManager.persist(
-                document, this.usernameProvider.getUsername(), oldVersion
+                document, this.settingsProvider.getSettings().username, oldVersion
             );
         }
     }

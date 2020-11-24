@@ -1,12 +1,12 @@
 import {Component, ElementRef, EventEmitter, Input, Output, ViewChild} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {PersistenceManager} from '../../../core/model/persistence-manager';
-import {UsernameProvider} from '../../../core/settings/username-provider';
 import {M} from '../../messages/m';
 import {readWldFile, Errors} from '../../../core/images/wld/wld-import';
 import {downloadWldFile} from '../../../core/images/wld/wld-export';
 import {Messages} from '../../messages/messages';
 import {MenuContext, MenuService} from '../../menu-service';
+import {SettingsProvider} from '../../../core/settings/settings-provider';
 
 
 @Component({
@@ -32,7 +32,7 @@ export class GeoreferenceViewComponent {
     constructor(private persistenceManager: PersistenceManager,
                 private messages: Messages,
                 private modalService: NgbModal,
-                private usernameProvider: UsernameProvider,
+                private settingsProvider: SettingsProvider,
                 private menuService: MenuService) {}
 
 
@@ -107,7 +107,7 @@ export class GeoreferenceViewComponent {
         try {
             Object.assign(
                 this.document,
-                await this.persistenceManager.persist(this.document, this.usernameProvider.getUsername())
+                await this.persistenceManager.persist(this.document, this.settingsProvider.getSettings().username)
             );
         } catch (err) {
             console.error(err);

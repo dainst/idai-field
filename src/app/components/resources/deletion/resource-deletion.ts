@@ -3,13 +3,13 @@ import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {FieldDocument} from 'idai-components-2';
 import {DeleteModalComponent} from './delete-modal.component';
 import {PersistenceManager} from '../../../core/model/persistence-manager';
-import {UsernameProvider} from '../../../core/settings/username-provider';
 import {M} from '../../messages/m';
 import {DeletionInProgressModalComponent} from './deletion-in-progress-modal.component';
 import {Imagestore} from '../../../core/images/imagestore/imagestore';
 import {DescendantsUtility} from '../../../core/model/descendants-utility';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
 import {DatastoreErrors} from '../../../core/datastore/model/datastore-errors';
+import {SettingsProvider} from '../../../core/settings/settings-provider';
 
 
 /**
@@ -23,7 +23,7 @@ export class ResourceDeletion {
                 private persistenceManager: PersistenceManager,
                 private imagestore: Imagestore,
                 private projectConfiguration: ProjectConfiguration,
-                private usernameProvider: UsernameProvider,
+                private settingsProvider: SettingsProvider,
                 private descendantsUtility: DescendantsUtility) {}
 
 
@@ -72,7 +72,7 @@ export class ResourceDeletion {
     private async deleteWithPersistenceManager(document: FieldDocument) {
 
         try {
-            await this.persistenceManager.remove(document, this.usernameProvider.getUsername())
+            await this.persistenceManager.remove(document, this.settingsProvider.getSettings().username)
         } catch (removeError) {
             console.error('removeWithPersistenceManager', removeError);
             if (removeError !== DatastoreErrors.DOCUMENT_NOT_FOUND) throw [M.DOCEDIT_ERROR_DELETE];

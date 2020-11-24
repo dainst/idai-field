@@ -99,7 +99,8 @@ describe('DocumentHolder', () => {
         const projectCategories = jasmine.createSpyObj('ProjectCategories', ['getRegularCategoryNames']);
         projectCategories.getRegularCategoryNames.and.returnValue(['Find']);
 
-        const usernameProvider = jasmine.createSpyObj('UsernameProvider', ['getUsername']);
+        const settingsProvider = jasmine.createSpyObj('UsernameProvider', ['getSettings']);
+        settingsProvider.getSettings.and.returnValue({username:''});
         datastore = jasmine.createSpyObj('Datastore', ['get']);
         datastore.get.and.callFake((a, b) => changedDocument);
 
@@ -107,7 +108,7 @@ describe('DocumentHolder', () => {
             pconf,
             persistenceManager,
             validator,
-            usernameProvider,
+            settingsProvider,
             datastore
         );
     });

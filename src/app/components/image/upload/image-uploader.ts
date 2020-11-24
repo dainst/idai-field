@@ -16,6 +16,7 @@ import {Imagestore} from '../../../core/images/imagestore/imagestore';
 import {IdaiFieldFindResult} from '../../../core/datastore/cached/cached-read-datastore';
 import {readWldFile} from '../../../core/images/wld/wld-import';
 import {MenuContext, MenuService} from '../../menu-service';
+import {SettingsProvider} from '../../../core/settings/settings-provider';
 
 
 export interface ImageUploadResult {
@@ -42,7 +43,7 @@ export class ImageUploader {
                        private modalService: NgbModal,
                        private persistenceManager: PersistenceManager,
                        private projectConfiguration: ProjectConfiguration,
-                       private usernameProvider: UsernameProvider,
+                       private settingsProvider: SettingsProvider,
                        private uploadStatus: UploadStatus,
                        private imageDocumentDatastore: ImageReadDatastore,
                        private menuService: MenuService) {}
@@ -209,7 +210,7 @@ export class ImageUploader {
     private async saveWldFile(file: File, document: Document) {
 
         document.resource.georeference = await readWldFile(file, document);
-        await this.persistenceManager.persist(document, this.usernameProvider.getUsername());
+        await this.persistenceManager.persist(document, this.settingsProvider.getSettings().username);
     }
 
 
@@ -285,7 +286,7 @@ export class ImageUploader {
                     doc.resource.relations['depicts'] = [depictsRelationTarget.resource.id];
                 }
 
-                this.persistenceManager.persist(doc, this.usernameProvider.getUsername())
+                this.persistenceManager.persist(doc, this.settingsProvider.getSettings().username)
                     .then((result: any) => resolve(result))
                     .catch((error: any) => reject(error));
             };

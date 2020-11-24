@@ -154,7 +154,6 @@ registerLocaleData(localeDe, 'de');
                          );
                     }).then(() => AngularUtility.refresh(700))
         },
-        { provide: UsernameProvider, useExisting: SettingsProvider }, // TODO get rid of UsernameProvider
         InitializationProgress,
         {
             provide: Messages,

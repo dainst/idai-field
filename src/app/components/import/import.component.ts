@@ -32,8 +32,9 @@ import {Messages} from '../messages/messages';
 import {ProjectCategories} from '../../core/configuration/project-categories';
 import {ExtensionUtil} from '../../core/util/extension-util';
 import {MenuContext, MenuService} from '../menu-service';
-import {SettingsService} from '../../core/settings/settings-service';
 import {SettingsProvider} from '../../core/settings/settings-provider';
+import {CatalogFilesystemReader} from '../../core/import/reader/catalog-filesystem-reader';
+import {Settings} from '../../core/settings/settings';
 
 
 @Component({
@@ -196,8 +197,14 @@ export class ImportComponent implements OnInit {
 
         this.messages.removeAllMessages();
 
-        const reader: Reader|undefined = ImportComponent.createReader(this.importState.sourceType, this.importState.format,
-            this.importState.file as any, this.importState.url as any, this.http);
+        const reader: Reader|undefined =
+            ImportComponent.createReader(
+                this.importState.sourceType,
+                this.importState.format,
+                this.importState.file as any,
+                this.importState.url as any,
+                this.http,
+                this.settingsProvider.getSettings());
         if (!reader) return this.messages.add([M.IMPORT_READER_GENERIC_START_ERROR]);
 
         this.menuService.setContext(MenuContext.MODAL);
@@ -335,14 +342,18 @@ export class ImportComponent implements OnInit {
     }
 
 
-    private static createReader(sourceType: string, format: string, file: File, url: string,
-                                http: HttpClient): Reader|undefined {
+    private static createReader(sourceType: string,
+                                format: string,
+                                file: File,
+                                url: string,
+                                http: HttpClient,
+                                settings: Settings): Reader|undefined {
 
-        return sourceType === 'file'
-            ? format === 'shapefile'
-                ? new ShapefileFilesystemReader(file)
-                : new FilesystemReader(file)
-            : new HttpReader(url, http);
+        if (sourceType !== 'file') return new HttpReader(url, http);
+
+        if (format === 'shapefile') return new ShapefileFilesystemReader(file);
+        if (format === 'catalog') return new CatalogFilesystemReader(file, settings);
+        return new FilesystemReader(file);
     }
 
 

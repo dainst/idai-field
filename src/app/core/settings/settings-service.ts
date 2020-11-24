@@ -108,7 +108,8 @@ export class SettingsService {
      */
     public async updateSettings(settings_: Settings) {
 
-        const settings = SettingsProvider.completeSettings(settings_);
+        this.settingsProvider.setSettings(settings_);
+        const settings = this.settingsProvider.getSettings();
 
         if (settings.syncTarget.address) {
             settings.syncTarget.address = settings.syncTarget.address.trim();

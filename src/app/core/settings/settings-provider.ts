@@ -71,7 +71,7 @@ export class SettingsProvider {
      * @param settings_ provided settings
      * @returns {Settings} settings with added default settings
      */
-    public static completeSettings(settings_: Settings) {
+    public setSettings(settings_: Settings) {
 
         const settings = jsonClone(settings_);
 
@@ -90,7 +90,7 @@ export class SettingsProvider {
                     + remote.app.getName() + '/imagestore/';
             }
         }
-        return settings;
+        this.settings = settings;
     }
 
 

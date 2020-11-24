@@ -42,7 +42,7 @@ export function buildImportCatalogFunction(datastore: DocumentDatastore, {userna
                 // TODO extract function
                 if (isImageDocument(updateDocument)) {
                     const source =
-                        '' // TODO how to get the import path?
+                        '' // TODO from tmpdir under images project path
                         + updateDocument.resource.id;
 
                     const target = imagestorePath

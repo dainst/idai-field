@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {empty, filter, flow, forEach, includedIn, isNot, map, take} from 'tsfun';
+import {empty, filter, flow, forEach, isNot, map, take} from 'tsfun';
 import {Document} from 'idai-components-2';
 import {Importer, ImportFormat, ImportReport} from '../../core/import/importer';
 import {Category} from '../../core/configuration/model/category';

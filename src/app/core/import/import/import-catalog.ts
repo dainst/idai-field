@@ -5,10 +5,8 @@ import {DocumentReadDatastore} from '../../datastore/document-read-datastore';
 import {clone} from '../../util/object-util';
 import {isNot, undefinedOrEmpty} from 'tsfun';
 
-const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
 
-
-export function buildImportCatalogFunction(datastore: DocumentDatastore, {username, selectedProject, imagestorePath}) {
+export function buildImportCatalogFunction(datastore: DocumentDatastore, {username, selectedProject}) {
 
     /**
      * @param importDocuments
@@ -17,8 +15,7 @@ export function buildImportCatalogFunction(datastore: DocumentDatastore, {userna
      *
      * @author Daniel de Oliveira
      */
-    return async function importCatalog(importDocuments: Array<Document>,
-                                        )
+    return async function importCatalog(importDocuments: Array<Document>)
         : Promise<{ errors: string[][], successfulImports: number }> {
 
         try {
@@ -38,22 +35,6 @@ export function buildImportCatalogFunction(datastore: DocumentDatastore, {userna
                 } else {
                     await datastore.create(updateDocument, username);
                 }
-
-                // TODO extract function
-                if (isImageDocument(updateDocument)) {
-                    const source =
-                        '' // TODO from tmpdir under images project path
-                        + updateDocument.resource.id;
-
-                    const target = imagestorePath
-                        + selectedProject // TODO or should we take document.project?
-                        + '/' // TODO operating system
-                        + updateDocument.resource.id;
-
-                    // console.log("copy image", source, target);
-                    // fs.copyFileSync(source, target);
-                }
-
                 successfulImports++;
             }
             return {errors: [], successfulImports: successfulImports};
@@ -76,7 +57,3 @@ async function getDocument(datastore: DocumentReadDatastore, resourceId: string)
         else throw errWithParams;
     }
 }
-
-
-const isImageDocument = (updateDocument: Document) =>
-    isNot(undefinedOrEmpty)(updateDocument.resource.relations['depicts'])

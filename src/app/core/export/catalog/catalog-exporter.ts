@@ -24,8 +24,6 @@ export module CatalogExporter {
                 .map(stringify)
                 .join('\n') // TODO different operating systems?
         );
-
-        // TODO zip images and jsonl
     }
 
 

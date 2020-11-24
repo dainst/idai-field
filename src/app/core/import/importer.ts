@@ -1,4 +1,4 @@
-import {isnt} from 'tsfun';
+import {includedIn, isnt} from 'tsfun';
 import {Document} from 'idai-components-2';
 import {GeojsonParser} from './parser/geojson-parser';
 import {NativeJsonlParser} from './parser/native-jsonl-parser';
@@ -16,6 +16,13 @@ import {ProjectCategories} from '../configuration/project-categories';
 import {CatalogJsonlParser} from './parser/catalog-jsonl-parser';
 import {buildImportCatalogFunction} from './import/import-catalog';
 import {Settings} from '../settings/settings';
+import {HttpClient} from '@angular/common/http';
+import {Reader} from './reader/reader';
+import {HttpReader} from './reader/http-reader';
+import {ShapefileFilesystemReader} from './reader/shapefile-filesystem-reader';
+import {CatalogFilesystemReader} from './reader/catalog-filesystem-reader';
+import {FilesystemReader} from './reader/filesystem-reader';
+import {M} from '../../components/messages/m';
 
 export type ImportFormat = 'native' | 'geojson' | 'geojson-gazetteer' | 'shapefile' | 'csv' | 'catalog';
 
@@ -26,7 +33,12 @@ export interface ImporterOptions {
     format: ImportFormat,
     mergeMode: boolean,
     permitDeletions: boolean;
-    operationId: string,
+    selectedOperationId: string;
+    selectedCategory?: Category|undefined;
+    separator: string;
+    sourceType: string;
+    file?: any|undefined;
+    url?: string|undefined;
 }
 
 
@@ -47,6 +59,25 @@ export interface ImporterContext {
  * @author Jan G. Wieners
  */
 export module Importer {
+
+
+    export function mergeOptionAvailable(options: ImporterOptions) {
+
+        return options.format === 'native' || options.format === 'csv';
+    }
+
+
+    export function permitDeletionsOptionAvailable(options: ImporterOptions) {
+
+        return includedIn(['native', 'csv'])(options.format) && options.mergeMode;
+    }
+
+
+    export function importIntoOperationAvailable(options: ImporterOptions) {
+
+        return (options.format === 'native' || options.format === 'csv') && !options.mergeMode;
+    }
+
 
     /**
      * The importer uses the reader and parser, to get documents, which
@@ -98,7 +129,7 @@ export module Importer {
                     { operationCategoryNames, inverseRelationsMap, settings: context.settings },
                     { generateId, preprocessDocument, postprocessDocument },
                     { mergeMode: options.mergeMode, permitDeletions: options.permitDeletions,
-                        operationId: options.operationId, useIdentifiersInRelations: true });
+                        operationId: options.selectedOperationId, useIdentifiersInRelations: true });
         }
 
         const { errors, successfulImports } = await importFunction(documents);
@@ -106,18 +137,43 @@ export module Importer {
     }
 
 
-    // TODO handle parser error
     export async function doParse(options: ImporterOptions,
-                                  selectedCategory: Category,
-                                  fileContent: string,
-                                  separator?: string) {
+                                  fileContent: string) {
 
-        const operationId_ = options.mergeMode ? '' : options.operationId;
+        const selectedCategory = options.format === 'csv' ? options.selectedCategory : undefined;
+        const separator = options.format === 'csv' ? options.separator : undefined;
+        const operationId_ = options.mergeMode ? '' : options.selectedOperationId;
+
         const parse = createParser(options.format, operationId_, selectedCategory, separator);
         const documents: Document[] = [];
 
         (await parse(fileContent)).forEach((resultDocument: Document) => documents.push(resultDocument));
         return documents;
+    }
+
+
+    export async function doRead(http: HttpClient,
+                                 settings: Settings,
+                                 options: ImporterOptions) {
+
+        const reader: Reader|undefined =
+            createReader(
+                http,
+                settings,
+                options);
+        if (!reader) throw [M.IMPORT_READER_GENERIC_START_ERROR];
+        return reader.go();
+    }
+
+
+    function createReader(http: HttpClient,
+                          settings: Settings,
+                          options: ImporterOptions): Reader|undefined {
+
+        if (options.sourceType !== 'file') return new HttpReader(options.url, http);
+        if (options.format === 'shapefile') return new ShapefileFilesystemReader(options.file);
+        if (options.format === 'catalog') return new CatalogFilesystemReader(options.file, settings);
+        return new FilesystemReader(options.file);
     }
 
 

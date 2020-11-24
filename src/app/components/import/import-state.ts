@@ -1,11 +1,12 @@
-import {ImportFormat} from '../../core/import/importer';
+import {ImporterOptions, ImportFormat} from '../../core/import/importer';
 import {Category} from '../../core/configuration/model/category';
+
 
 /**
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-export class ImportState {
+export class ImportState implements ImporterOptions {
 
     public sourceType: string = 'file';
     public format: ImportFormat|undefined;
@@ -21,15 +22,7 @@ export class ImportState {
     public selectedCategory: Category|undefined = undefined;
     public typeFromFileName: boolean = false;
 
-    private separator: string = ',';
-    //
-
-
-    public getSeparator(): string {
-
-        return this.separator;
-    }
-
+    public separator: string|undefined = ',';
 
     public setSeparator(separator: string) {
 

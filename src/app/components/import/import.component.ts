@@ -1,21 +1,16 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {empty, filter, flow, includedIn, isNot, map, take, forEach} from 'tsfun';
+import {empty, filter, flow, forEach, includedIn, isNot, map, take} from 'tsfun';
 import {Document} from 'idai-components-2';
-import {Importer, ImporterOptions, ImportFormat, ImportReport} from '../../core/import/importer';
+import {Importer, ImportFormat, ImportReport} from '../../core/import/importer';
 import {Category} from '../../core/configuration/model/category';
-import {Reader} from '../../core/import/reader/reader';
-import {FilesystemReader} from '../../core/import/reader/filesystem-reader';
-import {HttpReader} from '../../core/import/reader/http-reader';
 import {UploadModalComponent} from './upload-modal.component';
 import {ModelUtil} from '../../core/model/model-util';
 import {ChangesStream} from '../../core/datastore/changes/changes-stream';
-import {UsernameProvider} from '../../core/settings/username-provider';
 import {SyncService} from '../../core/sync/sync-service';
 import {MessagesConversion} from './messages-conversion';
 import {M} from '../messages/m';
-import {ShapefileFilesystemReader} from '../../core/import/reader/shapefile-filesystem-reader';
 import {JavaToolExecutor} from '../../core/java/java-tool-executor';
 import {ImportValidator} from '../../core/import/import/process/import-validator';
 import {IdGenerator} from '../../core/datastore/pouchdb/id-generator';
@@ -24,17 +19,15 @@ import {ExportRunner} from '../../core/export/export-runner';
 import {ImportState} from './import-state';
 import {ProjectConfiguration} from '../../core/configuration/project-configuration';
 import {AngularUtility} from '../../angular/angular-utility';
-import BASE_EXCLUSION = ExportRunner.BASE_EXCLUSION;
 import {TabManager} from '../../core/tabs/tab-manager';
-import getCategoriesWithoutExcludedCategories = ExportRunner.getCategoriesWithoutExcludedCategories;
 import {ViewFacade} from '../../core/resources/view/view-facade';
 import {Messages} from '../messages/messages';
 import {ProjectCategories} from '../../core/configuration/project-categories';
 import {ExtensionUtil} from '../../core/util/extension-util';
 import {MenuContext, MenuService} from '../menu-service';
 import {SettingsProvider} from '../../core/settings/settings-provider';
-import {CatalogFilesystemReader} from '../../core/import/reader/catalog-filesystem-reader';
-import {Settings} from '../../core/settings/settings';
+import BASE_EXCLUSION = ExportRunner.BASE_EXCLUSION;
+import getCategoriesWithoutExcludedCategories = ExportRunner.getCategoriesWithoutExcludedCategories;
 
 
 @Component({
@@ -84,13 +77,13 @@ export class ImportComponent implements OnInit {
 
     public isJavaInstallationMissing = () => this.importState.format === 'shapefile' && !this.javaInstalled;
 
-    public showMergeOption = () => this.importState.format === 'native' || this.importState.format === 'csv';
+    public showMergeOption = () => Importer.mergeOptionAvailable(this.importState);
 
-    public showPermitDeletionsOption = () => includedIn(['native', 'csv'])(this.importState.format) && this.importState.mergeMode;
+    public showPermitDeletionsOption = () => Importer.permitDeletionsOptionAvailable(this.importState);
 
-    public showImportIntoOperation = () => (this.importState.format === 'native' || this.importState.format === 'csv') && !this.importState.mergeMode;
+    public showImportIntoOperation = () => Importer.importIntoOperationAvailable(this.importState);
 
-    public getSeparator = () => this.importState.getSeparator();
+    public getSeparator = () => this.importState.separator;
 
     public setSeparator = (separator: string) => this.importState.setSeparator(separator);
 
@@ -197,16 +190,6 @@ export class ImportComponent implements OnInit {
 
         this.messages.removeAllMessages();
 
-        const reader: Reader|undefined =
-            ImportComponent.createReader(
-                this.importState.sourceType,
-                this.importState.format,
-                this.importState.file as any,
-                this.importState.url as any,
-                this.http,
-                this.settingsProvider.getSettings());
-        if (!reader) return this.messages.add([M.IMPORT_READER_GENERIC_START_ERROR]);
-
         this.menuService.setContext(MenuContext.MODAL);
         const uploadModalRef: any = this.modalService.open(
             UploadModalComponent,
@@ -219,7 +202,7 @@ export class ImportComponent implements OnInit {
 
         let importReport: ImportReport;
         try {
-             importReport = await this.doImport(reader);
+             importReport = await this.doImport();
         } catch (errWithParams) {
             this.messages.add(MessagesConversion.convertMessage(errWithParams));
         }
@@ -252,27 +235,25 @@ export class ImportComponent implements OnInit {
     }
 
 
-    private async doImport(reader: Reader) {
+    private async doImport() {
 
-        const options: ImporterOptions = { // TODO unify importState and importerContext
-            format: this.importState.format,
-            mergeMode: this.importState.mergeMode,
-            permitDeletions: this.importState.permitDeletions,
-            operationId: this.importState.selectedOperationId
-        };
-
+        const fileContents = await Importer.doRead(
+            this.http,
+            this.settingsProvider.getSettings(),
+            this.importState
+        )
         const documents = await Importer.doParse(
-            options,
-            this.importState.format === 'csv' ? this.importState.selectedCategory : undefined,
-            await reader.go(),
-            this.importState.format === 'csv' ? this.getSeparator() : undefined
-        );
+            this.importState,
+            fileContents);
 
         return Importer.doImport(
             this.datastore,
-            { settings: this.settingsProvider.getSettings(), projectConfiguration: this.projectConfiguration },
+            {
+                settings: this.settingsProvider.getSettings(),
+                projectConfiguration: this.projectConfiguration
+            },
             () => this.idGenerator.generateId(),
-            options,
+            this.importState,
             documents);
     }
 
@@ -339,21 +320,6 @@ export class ImportComponent implements OnInit {
     private selectFirstCategory() {
 
         if (this.importState.categories.length > 0) this.importState.selectedCategory = this.importState.categories[0];
-    }
-
-
-    private static createReader(sourceType: string,
-                                format: string,
-                                file: File,
-                                url: string,
-                                http: HttpClient,
-                                settings: Settings): Reader|undefined {
-
-        if (sourceType !== 'file') return new HttpReader(url, http);
-
-        if (format === 'shapefile') return new ShapefileFilesystemReader(file);
-        if (format === 'catalog') return new CatalogFilesystemReader(file, settings);
-        return new FilesystemReader(file);
     }
 
 

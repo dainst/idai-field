@@ -59,9 +59,6 @@ export module Validations {
     export function assertCorrectnessOfOptionalRangeValues(document: Document|NewDocument,
                                                            projectConfiguration: ProjectConfiguration) {
 
-        // TODO projectConfguration?
-
-
         const invalidFields: string[] = Validations.validateDropdownRangeFields(
             document.resource, projectConfiguration, 'dropdownRange', OptionalRange.isValid
         );

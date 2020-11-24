@@ -9,8 +9,6 @@ import {makeLines, Parser} from './parser';
  */
 export module CatalogJsonlParser {
 
-    // TODO rewrite
-
     /**
      * @throws [FILE_INVALID_JSONL]
      * @throws [ID_MUST_NOT_BE_SET]

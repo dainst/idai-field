@@ -67,7 +67,6 @@ export class IndexFacade {
 
         let count: number = 0;
 
-        // TODO Extract function
         for (let document of typeDocuments) {
             this._put(document, true, false);
             count++;

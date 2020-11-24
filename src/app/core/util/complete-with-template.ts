@@ -2,7 +2,6 @@ import {reduce} from 'tsfun/associative';
 import {update, isObject} from 'tsfun';
 
 
-// TODO move to idai-components-2
 export function completeWithTemplate(struct: any, template: any) {
 
     return reduce((acc: any, val: any, key: any) => {

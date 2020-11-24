@@ -94,7 +94,7 @@ export class TypesComponent extends BaseList implements OnChanges {
     public isPlusButtonShown(): boolean {
 
         return super.isPlusButtonShown()
-            && (!this.mainDocument || this.mainDocument.project === undefined); // TODO REVIEW
+            && (!this.mainDocument || this.mainDocument.project === undefined);
     }
 
     async ngOnChanges(changes: SimpleChanges) {

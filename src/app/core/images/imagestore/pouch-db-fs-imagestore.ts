@@ -38,6 +38,7 @@ export class PouchDbFsImagestore /* implements Imagestore */{
     public isThumbBroken = (data: Blob|any|undefined) => data === undefined || data.size == 0 || data.size == 2;
 
 
+    // TODO pass settings as single parameter and rename to init
     public setPath(imagestorePath: string, projectName: string): Promise<any> {
 
         return new Promise<any>((resolve, reject) => {

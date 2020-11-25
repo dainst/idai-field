@@ -83,7 +83,6 @@ export async function setupSettingsService(pouchdbmanager, pouchdbserver, projec
 export async function createApp(projectName = 'testdb', startSync = false) {
 
     const pouchdbmanager = new PouchdbManager();
-
     const pouchdbserver = new PouchdbServer();
 
     const {settingsService, projectConfiguration, settingsProvider} = await setupSettingsService(
@@ -166,7 +165,7 @@ export async function createApp(projectName = 'testdb', startSync = false) {
         projectConfiguration,
         persistenceManager,
         new Validator(projectConfiguration, (q: Query) => fieldDocumentDatastore.find(q)),
-        { getSettings: () => { username: 'fakeuser' }} as any,
+        settingsProvider,
         documentDatastore
     );
 

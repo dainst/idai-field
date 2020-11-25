@@ -53,10 +53,13 @@ export module CatalogUtil {
                                                   document: FieldDocument // TODO pass id instead document
     ) {
 
+
         const catalogAndTypes =
             await getCatalogAndTypes(datastore, document.resource.id);
 
-        await persistenceManager.remove(document, username);
+        for (let doc of catalogAndTypes) {
+            await datastore.remove(doc);
+        }
 
         const catalogImages =
             await getCatalogImages(datastore, catalogAndTypes);

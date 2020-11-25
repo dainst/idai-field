@@ -96,6 +96,9 @@ export async function createApp(projectName = 'testdb', startSync = false) {
         new IdGenerator(),
         true);
 
+    const imagestore = new PouchDbFsImagestore(undefined, undefined, pouchdbmanager.getDbProxy());
+    imagestore.setPath(settingsProvider.getSettings().imagestorePath, projectName);
+
     const documentCache = new DocumentCache<Document>();
     const categoryConverter = new FieldCategoryConverter(projectConfiguration);
 
@@ -179,11 +182,13 @@ export async function createApp(projectName = 'testdb', startSync = false) {
         fieldDocumentDatastore,
         imageDatastore,
         settingsService,
+        settingsProvider,
         resourcesStateManager,
         stateSerializer,
         tabManager,
         imageOverviewFacade,
-        persistenceManager
+        persistenceManager,
+        imagestore
     }
 }
 

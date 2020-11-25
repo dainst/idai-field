@@ -34,7 +34,7 @@ export class DeleteModalComponent {
 
     public showImportedCatalogAssociationsMsg = () =>
         this.document.resource.category === 'TypeCatalog'
-        && this.document.project !== undefined; // TODO write apidoc for document.project
+        && this.document.project !== undefined;
 
     public showOwnedCatalogAssociationsMsg = () =>
         this.document.resource.category === 'TypeCatalog'
@@ -57,11 +57,6 @@ export class DeleteModalComponent {
     public confirmDeletion() {
 
         if (this.confirmDeletionIdentifier !== this.document.resource.identifier) return;
-        this.activeModal.close(
-            this.document.resource.category === 'TypeCatalog'
-            && this.deleteCatalogImages
-                ? 'deleteCatalogWithImages'
-                : 'delete'
-        );
+        this.activeModal.close(this.deleteCatalogImages);
     }
 }

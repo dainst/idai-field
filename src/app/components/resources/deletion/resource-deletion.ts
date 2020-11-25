@@ -30,12 +30,7 @@ export class ResourceDeletion {
                 private documentDatastore: DocumentDatastore) {}
 
 
-    /**
-     * @param document
-     * @param importedCatalogDeletion TypeCatalogs imported from other projects are deleted
-     *   together with their image resources. This is not the case for local TypeCatalogs.
-     */
-    public async delete(document: FieldDocument, importedCatalogDeletion: boolean) {
+    public async delete(document: FieldDocument) {
 
         const modalRef: NgbModalRef = this.modalService.open(
             DeleteModalComponent, { keyboard: false }
@@ -44,36 +39,40 @@ export class ResourceDeletion {
         modalRef.componentInstance.setCount(await this.descendantsUtility.fetchChildrenCount(document));
 
         const deleteModalResult = await modalRef.result;
-
         const deletionInProgressModalRef: NgbModalRef = this.modalService.open(
             DeletionInProgressModalComponent, { backdrop: 'static', keyboard: false }
         );
-
-        if (deleteModalResult === 'delete') {
-            await this.performDeletion(document, importedCatalogDeletion);
-        }
-        if (deleteModalResult === 'deleteCatalogWithImages') {
-            console.log("deleteCatalogWithImages"); // TODO implement
-        }
-
+        await this.performDeletion(document, deleteModalResult);
         deletionInProgressModalRef.close();
     }
 
 
+    // TODO review deletion of Type resources with children
+
+
     // TODO maybe use document.project instead importedCatalogDeletion
     private async performDeletion(document: FieldDocument,
-                                  importedCatalogDeletion: boolean) {
+                                  deleteCatalogImages: boolean) {
 
-        if (!importedCatalogDeletion) {
+        if (document.resource.category === 'TypeCatalog') {
+            if (document.project !== undefined) { // TODO write apidoc for document.project
+                await CatalogUtil.deleteImportedCatalog(
+                    this.persistenceManager,
+                    this.documentDatastore,
+                    this.imagestore,
+                    this.settingsProvider.getSettings().username,
+                    document);
+            } else {
+                if (deleteCatalogImages) {
+                    // TODO implement
+                } else {
+                    await this.deleteImageWithImageStore(document);
+                    await this.deleteWithPersistenceManager(document);
+                }
+            }
+        } else {
             await this.deleteImageWithImageStore(document);
             await this.deleteWithPersistenceManager(document);
-        } else {
-            await CatalogUtil.deleteImportedCatalog(
-                this.persistenceManager,
-                this.documentDatastore,
-                this.imagestore,
-                this.settingsProvider.getSettings().username,
-                document);
         }
     }
 

@@ -8,7 +8,6 @@ import {UploadStatus} from './upload-status';
 import {PersistenceManager} from '../../../core/model/persistence-manager';
 import {DocumentReadDatastore} from '../../../core/datastore/document-read-datastore';
 import {ImageReadDatastore} from '../../../core/datastore/field/image-read-datastore';
-import {UsernameProvider} from '../../../core/settings/username-provider';
 import {M} from '../../messages/m';
 import {Category} from '../../../core/configuration/model/category';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';

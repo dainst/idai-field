@@ -28,7 +28,6 @@ import {MatrixModule} from './matrix/matrix.module';
 import {PouchdbManager} from '../core/datastore/pouchdb/pouchdb-manager';
 import {PouchdbServer} from '../core/datastore/pouchdb/pouchdb-server';
 import {TaskbarConflictsComponent} from './navbar/taskbar-conflicts.component';
-import {UsernameProvider} from '../core/settings/username-provider';
 import {IndexFacade} from '../core/datastore/index/index-facade';
 import {FulltextIndex} from '../core/datastore/index/fulltext-index';
 import {ConstraintIndex} from '../core/datastore/index/constraint-index';

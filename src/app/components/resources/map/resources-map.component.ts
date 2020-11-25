@@ -9,7 +9,6 @@ import {ViewFacade} from '../../../core/resources/view/view-facade';
 import {NavigationPath} from '../../../core/resources/view/state/navigation-path';
 import {MenuContext, MenuService} from '../../menu-service';
 import {Messages} from '../../messages/messages';
-import {UsernameProvider} from '../../../core/settings/username-provider';
 import {SettingsProvider} from '../../../core/settings/settings-provider';
 
 

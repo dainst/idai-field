@@ -66,7 +66,6 @@ export class ResourceDeletion {
                 if (deleteCatalogImages) {
                     // TODO implement
                 } else {
-                    await this.deleteImageWithImageStore(document);
                     await this.deleteWithPersistenceManager(document);
                 }
             }

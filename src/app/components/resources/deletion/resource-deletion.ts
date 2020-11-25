@@ -10,9 +10,7 @@ import {DescendantsUtility} from '../../../core/model/descendants-utility';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
 import {DatastoreErrors} from '../../../core/datastore/model/datastore-errors';
 import {SettingsProvider} from '../../../core/settings/settings-provider';
-import {FieldDatastore} from '../../../core/datastore/field/field-datastore';
 import {CatalogUtil} from '../../../core/model/catalog-util';
-import {Datastore} from '../../../core/datastore/model/datastore';
 import {DocumentDatastore} from '../../../core/datastore/document-datastore';
 
 
@@ -45,18 +43,26 @@ export class ResourceDeletion {
         modalRef.componentInstance.setDocument(document);
         modalRef.componentInstance.setCount(await this.descendantsUtility.fetchChildrenCount(document));
 
-        if ((await modalRef.result) === 'delete') {
+        const deleteModalResult = await modalRef.result;
+
+        const deletionInProgressModalRef: NgbModalRef = this.modalService.open(
+            DeletionInProgressModalComponent, { backdrop: 'static', keyboard: false }
+        );
+
+        if (deleteModalResult === 'delete') {
             await this.performDeletion(document, importedCatalogDeletion);
         }
+        if (deleteModalResult === 'deleteCatalogWithImages') {
+            console.log("deleteCatalogWithImages"); // TODO implement
+        }
+
+        deletionInProgressModalRef.close();
     }
 
 
     // TODO maybe use document.project instead importedCatalogDeletion
-    private async performDeletion(document: FieldDocument, importedCatalogDeletion: boolean) {
-
-        const modalRef: NgbModalRef = this.modalService.open(
-            DeletionInProgressModalComponent, { backdrop: 'static', keyboard: false }
-        );
+    private async performDeletion(document: FieldDocument,
+                                  importedCatalogDeletion: boolean) {
 
         if (!importedCatalogDeletion) {
             await this.deleteImageWithImageStore(document);
@@ -69,8 +75,6 @@ export class ResourceDeletion {
                 this.settingsProvider.getSettings().username,
                 document);
         }
-
-        modalRef.close();
     }
 
 

@@ -17,10 +17,18 @@
         Zu dieser Ressource gehören insgesamt {{isRecordedInResourcesCount}} Ressourcen, die beim Löschen
         ebenfalls entfernt werden.
     </div>
-    <div *ngIf="showImportedCatalogMsg()" class="text-center alert alert-warning"
+    <div *ngIf="showImportedCatalogAssociationsMsg()"
+         class="text-center alert alert-warning"
          i18n="@@resources.deleteModel.warning.importedCatalog">
         Dies ist ein importierter Katalog. Bitte beachten Sie,
         dass beim Löschen auch Zuordnungen von Funden zu Typen des Katalogs entfernt werden.
+    </div>
+    <div *ngIf="showOwnedCatalogAssociationsMsg()"
+         class="text-center alert alert-warning"
+         i18n="@@resources.deleteModel.warning.ownedCatalog">
+        Bitte beachten Sie,
+        dass beim Löschen von Katalogen sämtliche enthaltenen Typen sowie
+        Zuordnungen von Funden zu Typen des Katalogs entfernt werden.
     </div>
     <div class="input-group">
         <input id="delete-resource-input"
@@ -28,6 +36,23 @@
                class="form-control"
                [(ngModel)]="confirmDeletionIdentifier"
                (keydown)="$event.key !== 'Enter' || confirmDeletion()" />
+    </div>
+    <br>
+    <div *ngIf="showDeleteCatalogImagesOption()"
+         class="form-group text-left"
+         i18n="@@resources.deleteModel.deleteCatalogImagesOption">
+        <div class="form-check form-check-inline">
+            <input id="delete-catalog-images-checkbox"
+                   type="checkbox"
+                   [(ngModel)]="deleteCatalogImages"
+                   class="form-check-input">
+            <label for="delete-catalog-images-checkbox"
+                   class="form-check-label" >
+                Haken Sie diese Option an, um mit dem Katalog sämtliche Bilder zu löschen, welche
+                direkt mit Typen des Katalogs verknüpft sind (Bilder, welche gleichzeitig mit anderen
+                Ressourcen verknüpft sind, werden behalten).
+            </label>
+        </div>
     </div>
 </div>
 

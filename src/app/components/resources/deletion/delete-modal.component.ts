@@ -16,20 +16,33 @@ import {Document} from 'idai-components-2';
  */
 export class DeleteModalComponent {
 
-    public document: any;
+    public document: Document;
     public isRecordedInResourcesCount: number;
     public confirmDeletionIdentifier: string;
 
+    public deleteCatalogImages: boolean;
 
     constructor(public activeModal: NgbActiveModal) {}
 
     public showDeleteMultipleResourcesWarningSingle = () =>
-        this.isRecordedInResourcesCount === 1 && !this.isImportedCatalog();
+        this.isRecordedInResourcesCount === 1
+        && this.document.resource.category !== 'TypeCatalog';
 
     public showDeleteMultipleResourcesWarningMultiple = () =>
-        this.isRecordedInResourcesCount > 1 && !this.isImportedCatalog();
+        this.isRecordedInResourcesCount > 1
+        && this.document.resource.category !== 'TypeCatalog';
 
-    public showImportedCatalogMsg = () => this.isImportedCatalog();
+    public showImportedCatalogAssociationsMsg = () =>
+        this.document.resource.category === 'TypeCatalog'
+        && this.document.project !== undefined; // TODO write apidoc for document.project
+
+    public showOwnedCatalogAssociationsMsg = () =>
+        this.document.resource.category === 'TypeCatalog'
+        && this.document.project === undefined;
+
+    public showDeleteCatalogImagesOption = () =>
+        this.document.resource.category === 'TypeCatalog'
+        && this.document.project === undefined;
 
     public setDocument = (document: Document) => this.document = document;
 
@@ -44,13 +57,11 @@ export class DeleteModalComponent {
     public confirmDeletion() {
 
         if (this.confirmDeletionIdentifier !== this.document.resource.identifier) return;
-        this.activeModal.close('delete');
-    }
-
-
-    private isImportedCatalog() {
-
-        // TODO write apidoc for document.project
-        return this.document.project !== undefined;
+        this.activeModal.close(
+            this.document.resource.category === 'TypeCatalog'
+            && this.deleteCatalogImages
+                ? 'deleteCatalogWithImages'
+                : 'delete'
+        );
     }
 }

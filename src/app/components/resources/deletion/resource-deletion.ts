@@ -56,7 +56,7 @@ export class ResourceDeletion {
 
         if (document.resource.category === 'TypeCatalog') {
             if (document.project !== undefined) { // TODO write apidoc for document.project
-                await CatalogUtil.deleteImportedCatalog(
+                await CatalogUtil.deleteImportedCatalog( // TODO get rid of the branching here and let deleteImportedCatalog handle everything; add param for deleteCatalogImages; write test
                     this.persistenceManager,
                     this.documentDatastore,
                     this.imagestore,

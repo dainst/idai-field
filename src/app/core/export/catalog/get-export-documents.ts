@@ -1,19 +1,20 @@
 import {DocumentReadDatastore} from '../../datastore/document-read-datastore';
 import {Document, toResourceId} from 'idai-components-2';
 import {Name, ResourceId} from '../../constants';
-import {flatten, includedIn, isDefined} from 'tsfun';
-import {map as asyncMap} from 'tsfun/async';
-import {clone} from 'tsfun/struct';
-import {Query} from '../../datastore/model/query';
+import {includedIn} from 'tsfun';
 import {ImageRelations} from '../../model/relation-constants';
+import {CatalogUtil} from '../../model/catalog-util';
 
 
 export async function getExportDocuments(datastore: DocumentReadDatastore,
                                          catalogId: ResourceId,
                                          project: Name): Promise<[Array<Document>, Array<ResourceId>]> {
 
-    const catalogAndTypes = await getCatalogAndTypes(datastore, catalogId);
-    const relatedImages = await getImages(datastore, catalogAndTypes);
+    const catalogAndTypes = await CatalogUtil.getCatalogAndTypes(datastore, catalogId);
+    const relatedImages = cleanImageDocuments(
+        await CatalogUtil.getCatalogImages(datastore, catalogAndTypes),
+        catalogAndTypes.map(toResourceId)
+        );
     return [
         catalogAndTypes
             .concat(relatedImages)
@@ -27,7 +28,9 @@ export async function getExportDocuments(datastore: DocumentReadDatastore,
 }
 
 
-function cleanImageDocuments(images: Array<Document>, idsOfCatalogResources: Array<ResourceId>) {
+// TODO maybe move to CatalogUtil; then maybe pass catalogResources instead ids
+function cleanImageDocuments(images: Array<Document>,
+                             idsOfCatalogResources: Array<ResourceId>) {
 
     const relatedImageDocuments = [];
     for (let image of images) {
@@ -42,38 +45,6 @@ function cleanImageDocuments(images: Array<Document>, idsOfCatalogResources: Arr
         }
     }
     return relatedImageDocuments;
-}
-
-
-async function getImages(datastore: DocumentReadDatastore,
-                         catalogAndTypes: Array<Document>): Promise<Array<Document>> {
-
-    const idsOfRelatedDocuments = flatten(
-        catalogAndTypes
-            .map(document => document.resource.relations[ImageRelations.ISDEPICTEDIN])
-            .filter(isDefined));
-
-    return cleanImageDocuments(await asyncMap(idsOfRelatedDocuments, async id => {
-        // TODO handle error
-        return clone(await datastore.get(id));
-    }), catalogAndTypes.map(toResourceId));
-}
-
-
-async function getCatalogAndTypes(datastore: DocumentReadDatastore,
-                                  catalogId: ResourceId): Promise<Array<Document>> {
-
-    const typeCatalog = await datastore.get(catalogId);
-    const typesQuery: Query = {
-        constraints: {
-            'liesWithin:contain': {
-                value: catalogId,
-                searchRecursively: true
-            }
-        }
-    };
-    const types = (await datastore.find(typesQuery)).documents; // TODO handle errors
-    return [typeCatalog].concat(types);
 }
 
 

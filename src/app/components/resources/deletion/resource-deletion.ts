@@ -10,6 +10,10 @@ import {DescendantsUtility} from '../../../core/model/descendants-utility';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
 import {DatastoreErrors} from '../../../core/datastore/model/datastore-errors';
 import {SettingsProvider} from '../../../core/settings/settings-provider';
+import {FieldDatastore} from '../../../core/datastore/field/field-datastore';
+import {CatalogUtil} from '../../../core/model/catalog-util';
+import {Datastore} from '../../../core/datastore/model/datastore';
+import {DocumentDatastore} from '../../../core/datastore/document-datastore';
 
 
 /**
@@ -24,10 +28,16 @@ export class ResourceDeletion {
                 private imagestore: Imagestore,
                 private projectConfiguration: ProjectConfiguration,
                 private settingsProvider: SettingsProvider,
-                private descendantsUtility: DescendantsUtility) {}
+                private descendantsUtility: DescendantsUtility,
+                private documentDatastore: DocumentDatastore) {}
 
 
-    public async delete(document: FieldDocument) {
+    /**
+     * @param document
+     * @param importedCatalogDeletion TypeCatalogs imported from other projects are deleted
+     *   together with their image resources. This is not the case for local TypeCatalogs.
+     */
+    public async delete(document: FieldDocument, importedCatalogDeletion: boolean) {
 
         const modalRef: NgbModalRef = this.modalService.open(
             DeleteModalComponent, { keyboard: false }
@@ -36,19 +46,26 @@ export class ResourceDeletion {
         modalRef.componentInstance.setCount(await this.descendantsUtility.fetchChildrenCount(document));
 
         if ((await modalRef.result) === 'delete') {
-            await this.performDeletion(document);
+            await this.performDeletion(document, importedCatalogDeletion);
         }
     }
 
 
-    private async performDeletion(document: FieldDocument) {
+    // TODO maybe use document.project instead importedCatalogDeletion
+    private async performDeletion(document: FieldDocument, importedCatalogDeletion: boolean) {
 
         const modalRef: NgbModalRef = this.modalService.open(
             DeletionInProgressModalComponent, { backdrop: 'static', keyboard: false }
         );
 
-        await this.deleteImageWithImageStore(document);
-        await this.deleteWithPersistenceManager(document);
+        if (!importedCatalogDeletion) {
+            await this.deleteImageWithImageStore(document);
+            await this.deleteWithPersistenceManager(document);
+        } else {
+            // TODO we could double check that all documents have document.project
+            await CatalogUtil.deleteImportedCatalog(
+                this.documentDatastore, this.imagestore, document);
+        }
 
         modalRef.close();
     }

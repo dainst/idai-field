@@ -70,7 +70,7 @@ export class ContextMenuComponent implements OnChanges {
 
     public isDeleteOptionAvailable(): boolean {
 
-        return !this.isReadonly();
+        return !this.isReadonly() || this.contextMenu.document.resource.category !== 'Type';
     }
 
 

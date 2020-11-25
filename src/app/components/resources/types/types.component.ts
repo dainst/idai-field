@@ -148,7 +148,7 @@ export class TypesComponent extends BaseList implements OnChanges {
                 await this.resourcesComponent.moveDocument(document);
                 break;
             case 'delete':
-                await this.resourcesComponent.deleteDocument(document);
+                await this.resourcesComponent.deleteDocument(document, true);
                 break;
         }
     }

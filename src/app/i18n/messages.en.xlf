@@ -1313,6 +1313,20 @@
           <context context-type="linenumber">16</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="resources.deleteModel.warning.importedCatalog" datatype="html">
+        <source>
+        Dies ist ein importierter Katalog. Bitte beachten Sie,
+        dass beim Löschen auch Zuordnungen von Funden zu Typen des Katalogs entfernt werden.
+    </source>
+        <target state="final">
+        This is an imported catalog.
+        Please note that associations between types of this catalog and finds will be removed too.
+    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="resources.deleteModal.confirmDeleteInfo" datatype="html">
         <source>
         Bitte geben Sie den Bezeichner dieser Ressource ein, um den Löschvorgang zu bestätigen.
@@ -1390,7 +1404,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
-          <context context-type="linenumber">33</context>
+          <context context-type="linenumber">38</context>
         </context-group>
       </trans-unit>
       <trans-unit id="buttons.cancel" datatype="html">
@@ -1431,7 +1445,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
-          <context context-type="linenumber">37</context>
+          <context context-type="linenumber">42</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/editable-map.html</context>
@@ -1931,7 +1945,7 @@
         <target state="final">Edit</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/widgets/context-menu.html</context>
-          <context context-type="linenumber">11</context>
+          <context context-type="linenumber">12</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.plusButton.selectGeometryType" datatype="html">
@@ -2213,7 +2227,7 @@
         <target state="final">Move</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/widgets/context-menu.html</context>
-          <context context-type="linenumber">16</context>
+          <context context-type="linenumber">17</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.contextMenu.delete" datatype="html">
@@ -2221,7 +2235,7 @@
         <target state="final">Delete</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/widgets/context-menu.html</context>
-          <context context-type="linenumber">20</context>
+          <context context-type="linenumber">22</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.contextMenu.createGeometry.polygon" datatype="html">
@@ -2229,7 +2243,7 @@
         <target state="final">Create polygon</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/widgets/context-menu.html</context>
-          <context context-type="linenumber">28</context>
+          <context context-type="linenumber">30</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.contextMenu.createGeometry.polyline" datatype="html">
@@ -2237,7 +2251,7 @@
         <target state="final">Create polyline</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/widgets/context-menu.html</context>
-          <context context-type="linenumber">33</context>
+          <context context-type="linenumber">35</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.contextMenu.createGeometry.point" datatype="html">
@@ -2245,7 +2259,7 @@
         <target state="final">Create point</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/widgets/context-menu.html</context>
-          <context context-type="linenumber">38</context>
+          <context context-type="linenumber">40</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.contextMenu.editGeometry.polygon" datatype="html">
@@ -2253,7 +2267,7 @@
         <target state="final">Edit polygon</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/widgets/context-menu.html</context>
-          <context context-type="linenumber">47</context>
+          <context context-type="linenumber">49</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.contextMenu.editGeometry.multipolygon" datatype="html">
@@ -2261,7 +2275,7 @@
         <target state="final">Edit multipolygon</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/widgets/context-menu.html</context>
-          <context context-type="linenumber">50</context>
+          <context context-type="linenumber">52</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.contextMenu.editGeometry.polyline" datatype="html">
@@ -2269,7 +2283,7 @@
         <target state="final">Edit polyline</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/widgets/context-menu.html</context>
-          <context context-type="linenumber">53</context>
+          <context context-type="linenumber">55</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.contextMenu.editGeometry.multipolyline" datatype="html">
@@ -2277,7 +2291,7 @@
         <target state="final">Edit multipolyline</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/widgets/context-menu.html</context>
-          <context context-type="linenumber">56</context>
+          <context context-type="linenumber">58</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.contextMenu.editGeometry.point" datatype="html">
@@ -2285,7 +2299,7 @@
         <target state="final">Edit point</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/widgets/context-menu.html</context>
-          <context context-type="linenumber">59</context>
+          <context context-type="linenumber">61</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.contextMenu.editGeometry.multipoint" datatype="html">
@@ -2293,7 +2307,7 @@
         <target state="final">Edit multipoint</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/widgets/context-menu.html</context>
-          <context context-type="linenumber">62</context>
+          <context context-type="linenumber">64</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.sidebarList.expandAllGroups" datatype="html">

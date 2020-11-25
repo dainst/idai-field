@@ -8,14 +8,19 @@
     <div id="confirm-delete-info" i18n="@@resources.deleteModal.confirmDeleteInfo">
         Bitte geben Sie den Bezeichner dieser Ressource ein, um den Löschvorgang zu bestätigen.
     </div>
-    <div *ngIf="isRecordedInResourcesCount === 1" class="text-center alert alert-warning"
+    <div *ngIf="showDeleteMultipleResourcesWarningSingle()" class="text-center alert alert-warning"
          i18n="@@resources.deleteModal.warning.single">
         Zu dieser Ressource gehört eine weitere Ressource, die beim Löschen ebenfalls entfernt wird.
     </div>
-    <div *ngIf="isRecordedInResourcesCount > 1" class="text-center alert alert-warning"
+    <div *ngIf="showDeleteMultipleResourcesWarningMultiple()" class="text-center alert alert-warning"
          i18n="@@resources.deleteModal.warning.multiple">
         Zu dieser Ressource gehören insgesamt {{isRecordedInResourcesCount}} Ressourcen, die beim Löschen
         ebenfalls entfernt werden.
+    </div>
+    <div *ngIf="showImportedCatalogMsg()" class="text-center alert alert-warning"
+         i18n="@@resources.deleteModel.warning.importedCatalog">
+        Dies ist ein importierter Katalog. Bitte beachten Sie,
+        dass beim Löschen auch Zuordnungen von Funden zu Typen des Katalogs entfernt werden.
     </div>
     <div class="input-group">
         <input id="delete-resource-input"

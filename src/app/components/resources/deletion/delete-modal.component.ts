@@ -23,11 +23,17 @@ export class DeleteModalComponent {
 
     constructor(public activeModal: NgbActiveModal) {}
 
+    public showDeleteMultipleResourcesWarningSingle = () =>
+        this.isRecordedInResourcesCount === 1 && !this.isImportedCatalog();
+
+    public showDeleteMultipleResourcesWarningMultiple = () =>
+        this.isRecordedInResourcesCount > 1 && !this.isImportedCatalog();
+
+    public showImportedCatalogMsg = () => this.isImportedCatalog();
 
     public setDocument = (document: Document) => this.document = document;
 
     public setCount = (count: number) => this.isRecordedInResourcesCount = count;
-
 
     public async onKeyDown(event: KeyboardEvent) {
 
@@ -38,7 +44,13 @@ export class DeleteModalComponent {
     public confirmDeletion() {
 
         if (this.confirmDeletionIdentifier !== this.document.resource.identifier) return;
-
         this.activeModal.close('delete');
+    }
+
+
+    private isImportedCatalog() {
+
+        // TODO write apidoc for document.project
+        return this.document.project !== undefined;
     }
 }

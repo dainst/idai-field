@@ -62,9 +62,12 @@ export class ResourceDeletion {
             await this.deleteImageWithImageStore(document);
             await this.deleteWithPersistenceManager(document);
         } else {
-            // TODO we could double check that all documents have document.project
             await CatalogUtil.deleteImportedCatalog(
-                this.documentDatastore, this.imagestore, document);
+                this.persistenceManager,
+                this.documentDatastore,
+                this.imagestore,
+                this.settingsProvider.getSettings().username,
+                document);
         }
 
         modalRef.close();

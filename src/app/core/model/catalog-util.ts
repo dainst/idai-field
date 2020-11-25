@@ -8,6 +8,7 @@ import {map as asyncMap} from 'tsfun/async';
 import {clone} from 'tsfun/struct';
 import {DocumentDatastore} from '../datastore/document-datastore';
 import {Imagestore} from '../images/imagestore/imagestore';
+import {PersistenceManager} from './persistence-manager';
 
 
 export module CatalogUtil {
@@ -44,20 +45,17 @@ export module CatalogUtil {
     }
 
 
-    export async function deleteImportedCatalog(datastore: DocumentDatastore,
+    // TODO we could double check that all documents have document.project
+    export async function deleteImportedCatalog(persistenceManager: PersistenceManager,
+                                                datastore: DocumentDatastore,
                                                 imagestore: Imagestore,
+                                                username: string,
                                                 document: FieldDocument) {
 
         const catalogAndTypes =
             await getCatalogAndTypes(datastore, document.resource.id);
 
-        for (let catalogOrType of catalogAndTypes) {
-            try {
-                await datastore.remove(catalogOrType);
-            } catch (err) {
-                console.error("could not delete", err);
-            }
-        }
+        await persistenceManager.remove(document, username);
 
         const catalogImages =
             await getCatalogImages(datastore, catalogAndTypes);

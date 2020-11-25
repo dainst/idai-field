@@ -1,4 +1,5 @@
 import {ReadImagestore} from './read-imagestore';
+import {Settings} from '../../settings/settings';
 
 /**
  * The interface for general media stores supporting
@@ -12,12 +13,11 @@ export abstract class Imagestore extends ReadImagestore {
 
 
     /**
-     * @param imagestorePath
-     * @param projectName
-     *   Rejects with
-     *     [INVALID_PATH] - in case of invalid path
+     * @param settings
+     * Rejects with
+     *   [INVALID_PATH] - in case of invalid path
      */
-    abstract setPath(imagestorePath: string, projectName: string): Promise<any>;
+    abstract init(settings: Settings): Promise<any>;
 
 
     /**

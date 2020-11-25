@@ -121,7 +121,7 @@ export class SettingsService {
 
         this.pouchdbServer.setPassword(settings.hostPassword);
 
-        return this.imagestore.setPath(settings.imagestorePath, settings.selectedProject as any)
+        return this.imagestore.init(settings)
             .catch((errWithParams: any) => {
                 if (errWithParams.length > 0 && errWithParams[0] === ImagestoreErrors.INVALID_PATH) {
                     this.messages.add([M.IMAGESTORE_ERROR_INVALID_PATH, settings.imagestorePath]);

@@ -30,6 +30,7 @@ import {Query} from '../../../../src/app/core/datastore/model/query';
 import {CategoryConverter} from '../../../../src/app/core/datastore/cached/category-converter';
 import {ConfigReader} from '../../../../src/app/core/configuration/boot/config-reader';
 import {SettingsProvider} from '../../../../src/app/core/settings/settings-provider';
+import {settings} from 'cluster';
 
 
 class IdGenerator {
@@ -96,7 +97,7 @@ export async function createApp(projectName = 'testdb', startSync = false) {
         true);
 
     const imagestore = new PouchDbFsImagestore(undefined, undefined, pouchdbmanager.getDbProxy());
-    imagestore.setPath(settingsProvider.getSettings().imagestorePath, projectName);
+    imagestore.init(settingsProvider.getSettings());
 
     const documentCache = new DocumentCache<Document>();
     const categoryConverter = new FieldCategoryConverter(projectConfiguration);

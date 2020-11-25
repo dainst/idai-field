@@ -5,6 +5,7 @@ import {BlobMaker, BlobUrlSet} from './blob-maker';
 import {ImageConverter} from './image-converter';
 import {ImagestoreErrors} from './imagestore-errors';
 import {PouchdbProxy} from '../../datastore/pouchdb/pouchdb-proxy';
+import {Settings} from '../../settings/settings';
 
 const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
 
@@ -38,21 +39,20 @@ export class PouchDbFsImagestore /* implements Imagestore */{
     public isThumbBroken = (data: Blob|any|undefined) => data === undefined || data.size == 0 || data.size == 2;
 
 
-    // TODO pass settings as single parameter and rename to init
-    public setPath(imagestorePath: string, projectName: string): Promise<any> {
+    public init(settings: Settings): Promise<any> {
 
         return new Promise<any>((resolve, reject) => {
 
-            if (!fs.existsSync(imagestorePath)) {
+            if (!fs.existsSync(settings.imagestorePath)) {
                 try {
-                    fs.mkdirSync(imagestorePath);
+                    fs.mkdirSync(settings.imagestorePath);
                 } catch(error) {
                     this.projectPath = undefined;
                     return reject([ImagestoreErrors.INVALID_PATH]);
                 }
             }
 
-            this.projectPath = imagestorePath + projectName + '/';
+            this.projectPath = settings.imagestorePath + settings.selectedProject + '/';
 
             if (!fs.existsSync(this.projectPath)) {
                 try {

@@ -19,6 +19,7 @@ import {PLACEHOLDER} from '../../../core/images/row/image-row';
 import {makeLookup} from 'src/app/core/util/transformers';
 import {ProjectCategories} from '../../../core/configuration/project-categories';
 import {MenuContext, MenuService} from '../../menu-service';
+import {ImageRelations, TypeRelations} from '../../../core/model/relation-constants';
 
 
 @Component({
@@ -171,7 +172,7 @@ export class TypesComponent extends BaseList implements OnChanges {
 
     public getLinkedSubtype(document: FieldDocument): FieldDocument|undefined {
 
-        if (!Document.hasRelations(document, 'isInstanceOf')) return undefined;
+        if (!Document.hasRelations(document, TypeRelations.INSTANCEOF)) return undefined;
 
         for (const typeId of document.resource.relations.isInstanceOf) {
             const type = this.subtypes[typeId];
@@ -267,8 +268,8 @@ export class TypesComponent extends BaseList implements OnChanges {
 
         const linkedResourceIds: string[] = flow(
             [this.mainDocument].concat(Object.values(this.subtypes)),
-            filter(document => Document.hasRelations(document, 'hasInstance')),
-            map(document => document.resource.relations['hasInstance']),
+            filter(document => Document.hasRelations(document, TypeRelations.HASINSTANCE)),
+            map(document => document.resource.relations[TypeRelations.HASINSTANCE]),
             flatten(),
             set as any
         );
@@ -298,8 +299,8 @@ export class TypesComponent extends BaseList implements OnChanges {
 
     private getLinkedImageIds(document: FieldDocument): string[] {
 
-        if (Document.hasRelations(document, 'isDepictedIn')) {
-            return [document.resource.relations['isDepictedIn'][0]];
+        if (Document.hasRelations(document, ImageRelations.ISDEPICTEDIN)) {
+            return [document.resource.relations[ImageRelations.ISDEPICTEDIN][0]];
         } else if (TypesComponent.isCatalogOrType(document)) {
             return this.getImageIdsOfLinkedResources(document);
         } else {

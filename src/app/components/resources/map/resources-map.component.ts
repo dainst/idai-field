@@ -126,9 +126,7 @@ export class ResourcesMapComponent {
 
         try {
             await this.viewFacade.setSelectedDocument(
-                (await this.persistenceManager.persist(
-                    selectedDocument, this.settingsProvider.getSettings().username)
-                ).resource.id
+                (await this.persistenceManager.persist(selectedDocument)).resource.id
             );
         } catch (msgWithParams) {
             this.messages.add(msgWithParams);

@@ -107,7 +107,7 @@ export class GeoreferenceViewComponent {
         try {
             Object.assign(
                 this.document,
-                await this.persistenceManager.persist(this.document, this.settingsProvider.getSettings().username)
+                await this.persistenceManager.persist(this.document)
             );
         } catch (err) {
             console.error(err);

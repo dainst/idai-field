@@ -38,7 +38,6 @@ export class RowComponent implements AfterViewInit {
                 public viewFacade: ViewFacade,
                 private messages: Messages,
                 private persistenceManager: PersistenceManager,
-                private settingsProvider: SettingsProvider,
                 private validator: Validator,
                 private datastore: FieldReadDatastore,
                 private navigationService: NavigationService,
@@ -128,7 +127,7 @@ export class RowComponent implements AfterViewInit {
         try {
             Object.assign(
                 this.document,
-                await this.persistenceManager.persist(this.document, this.settingsProvider.getSettings().username)
+                await this.persistenceManager.persist(this.document)
             );
         } catch(msgWithParams) {
             this.messages.add(msgWithParams);

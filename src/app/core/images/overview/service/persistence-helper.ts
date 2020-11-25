@@ -17,7 +17,6 @@ export class PersistenceHelper {
     constructor(
         private imageOverviewFacade: ImageOverviewFacade,
         private persistenceManager: PersistenceManager,
-        private settingsProvider: SettingsProvider,
         private imagestore: Imagestore
     ) {}
 
@@ -40,7 +39,7 @@ export class PersistenceHelper {
                 throw [PersistenceHelperErrors.IMAGESTORE_ERROR_DELETE, document.resource.identifier];
             }
 
-            await this.persistenceManager.remove(document, this.settingsProvider.getSettings().username);
+            await this.persistenceManager.remove(document);
             this.imageOverviewFacade.remove(document);
         }
     }
@@ -57,7 +56,7 @@ export class PersistenceHelper {
             }
 
             await this.persistenceManager.persist(
-                imageDocument, this.settingsProvider.getSettings().username, oldVersion
+                imageDocument, oldVersion
             );
         }
     }
@@ -70,7 +69,7 @@ export class PersistenceHelper {
             document.resource.relations.depicts = [];
 
             await this.persistenceManager.persist(
-                document, this.settingsProvider.getSettings().username, oldVersion
+                document, oldVersion
             );
         }
     }

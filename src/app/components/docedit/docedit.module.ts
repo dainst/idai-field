@@ -59,7 +59,7 @@ import {SettingsProvider} from '../../core/settings/settings-provider';
                          datastore: DocumentDatastore) => {
 
                 return new DocumentHolder(projectConfiguration, persistenceManager,
-                    validator, settingsProvider, datastore);
+                    validator, datastore);
             },
             deps: [ProjectConfiguration, PersistenceManager, Validator,
                 SettingsProvider, DocumentDatastore]

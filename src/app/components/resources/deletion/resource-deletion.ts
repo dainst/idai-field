@@ -55,20 +55,19 @@ export class ResourceDeletion {
                                   deleteCatalogImages: boolean) {
 
         if (document.resource.category === 'TypeCatalog') {
-            if (document.project !== undefined) { // TODO write apidoc for document.project
-                await CatalogUtil.deleteImportedCatalog( // TODO get rid of the branching here and let deleteImportedCatalog handle everything; add param for deleteCatalogImages; write test
-                    this.persistenceManager,
-                    this.documentDatastore,
-                    this.imagestore,
-                    this.settingsProvider.getSettings().username,
-                    document);
-            } else {
-                if (deleteCatalogImages) {
-                    // TODO implement
-                } else {
-                    await this.deleteWithPersistenceManager(document);
-                }
+            if (document.project === undefined // TODO write apidoc for document.project
+                && !deleteCatalogImages) {
+                return await this.deleteWithPersistenceManager(document);
             }
+
+            // TODO in case it is is an owned catalog, make sure to retain images which are linked to other resources as well; write a test for the function
+            await CatalogUtil.deleteCatalogWithImages(
+                this.persistenceManager,
+                this.documentDatastore,
+                this.imagestore,
+                this.settingsProvider.getSettings().username,
+                document);
+
         } else {
             await this.deleteImageWithImageStore(document);
             await this.deleteWithPersistenceManager(document);

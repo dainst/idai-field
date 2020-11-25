@@ -46,11 +46,11 @@ export module CatalogUtil {
 
 
     // TODO we could double check that all documents have document.project
-    export async function deleteImportedCatalog(persistenceManager: PersistenceManager,
-                                                datastore: DocumentDatastore,
-                                                imagestore: Imagestore,
-                                                username: string,
-                                                document: FieldDocument) {
+    export async function deleteCatalogWithImages(persistenceManager: PersistenceManager,
+                                                  datastore: DocumentDatastore,
+                                                  imagestore: Imagestore,
+                                                  username: string,
+                                                  document: FieldDocument) {
 
         const catalogAndTypes =
             await getCatalogAndTypes(datastore, document.resource.id);

@@ -1,6 +1,6 @@
 import {CatalogUtil} from '../../../../src/app/core/model/catalog-util';
 
-describe('CatalogUtil', () => {
+describe('CatalogUtil', () => { // TODO convert to subsystem test
 
     let persistenceManager;
     let datastore;

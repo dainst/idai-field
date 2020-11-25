@@ -93,7 +93,7 @@ export class ResourceDeletion {
     private async deleteWithPersistenceManager(document: FieldDocument) {
 
         try {
-            await this.persistenceManager.remove(document, this.settingsProvider.getSettings().username)
+            await this.persistenceManager.remove(document);
         } catch (removeError) {
             console.error('removeWithPersistenceManager', removeError);
             if (removeError !== DatastoreErrors.DOCUMENT_NOT_FOUND) throw [M.DOCEDIT_ERROR_DELETE];

@@ -159,14 +159,14 @@ export async function createApp(projectName = 'testdb', startSync = false) {
     const persistenceManager = new PersistenceManager(
         fieldDocumentDatastore,
         projectConfiguration,
-        descendantsUtility
+        descendantsUtility,
+        settingsProvider
     );
 
     const documentHolder = new DocumentHolder(
         projectConfiguration,
         persistenceManager,
         new Validator(projectConfiguration, (q: Query) => fieldDocumentDatastore.find(q)),
-        settingsProvider,
         documentDatastore
     );
 

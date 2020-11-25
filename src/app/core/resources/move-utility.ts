@@ -11,13 +11,13 @@ import {Constraint} from '../datastore/model/constraint';
  */
 export module MoveUtility {
 
-    export async function moveDocument(document: FieldDocument, newParent: FieldDocument, username: string,
+    export async function moveDocument(document: FieldDocument, newParent: FieldDocument,
                                        persistenceManager: PersistenceManager,
                                        isRecordedInTargetCategories: Array<Category>) {
 
         const oldVersion: FieldDocument = clone(document);
         updateRelations(document, newParent, isRecordedInTargetCategories);
-        await persistenceManager.persist(document, username, oldVersion);
+        await persistenceManager.persist(document, oldVersion);
     }
 
 

@@ -8,6 +8,7 @@ import {ProjectConfiguration} from '../configuration/project-configuration';
 import {HierarchicalRelations} from './relation-constants';
 import RECORDED_IN = HierarchicalRelations.RECORDEDIN;
 import {DescendantsUtility} from './descendants-utility';
+import {SettingsProvider} from '../settings/settings-provider';
 
 
 @Injectable()
@@ -25,8 +26,8 @@ export class PersistenceManager {
     constructor(
         private datastore: DocumentDatastore,
         private projectConfiguration: ProjectConfiguration,
-        private descendantsUtility: DescendantsUtility
-        // TODO pass settingsProvider to access username
+        private descendantsUtility: DescendantsUtility,
+        private settingsProvider: SettingsProvider
     ) {
         this.connectedDocsWriter = new ConnectedDocsWriter(this.datastore, this.projectConfiguration);
     }
@@ -44,20 +45,19 @@ export class PersistenceManager {
      * These are compared with document to determine which relations have been removed.
      *
      * @param document an existing or a new document
-     * @param username
      * @param oldVersion to be used only if document is an existing document.
      * @param revisionsToSquash these revisions get deleted while updating document
      * @returns a copy of the updated document
      * @throws msgWithParams
      */
-    public async persist(document: NewDocument|Document, username: string,
+    public async persist(document: NewDocument|Document,
                          oldVersion: Document = document as Document,
                          revisionsToSquash: Document[] = []): Promise<Document> {
 
         const persistedDocument = await this.updateWithConnections(
-            document as Document, oldVersion, revisionsToSquash, username);
+            document as Document, oldVersion, revisionsToSquash);
 
-        await this.fixIsRecordedInInLiesWithinDocs(persistedDocument, username);
+        await this.fixIsRecordedInInLiesWithinDocs(persistedDocument, this.settingsProvider.getSettings().username);
         return persistedDocument;
     }
 
@@ -74,30 +74,31 @@ export class PersistenceManager {
      *   [DatastoreErrors.DOCUMENT_DOES_NOT_EXIST_ERROR] - if document has a resource id, but does not exist in the db
      *   [DatastoreErrors.GENERIC_DELETE_ERROR] - if cannot delete for another reason
      */
-    public async remove(document: Document, username: string) {
+    public async remove(document: Document) {
 
         for (let descendant of (await this.descendantsUtility.fetchChildren(document))) {
-            await this.removeWithConnectedDocuments(descendant, username);
+            await this.removeWithConnectedDocuments(descendant);
         }
-        await this.removeWithConnectedDocuments(document, username);
+        await this.removeWithConnectedDocuments(document);
     }
 
 
     private async updateWithConnections(document: Document, oldVersion: Document,
-                                        revisionsToSquash: Array<Document>, username: string) {
+                                        revisionsToSquash: Array<Document>) {
 
         const revs = revisionsToSquash.map(to('_rev')).filter(isDefined);
-        const updated = await this.persistIt(document, username, revs);
+        const updated = await this.persistIt(document, revs);
 
         await this.connectedDocsWriter.updateConnectedDocumentsForDocumentUpdate(
-            updated, [oldVersion].concat(revisionsToSquash), username);
+            updated, [oldVersion].concat(revisionsToSquash), this.settingsProvider.getSettings().username);
         return updated as Document;
     }
 
 
-    private async removeWithConnectedDocuments(document: Document, username: string) {
+    private async removeWithConnectedDocuments(document: Document) {
 
-        await this.connectedDocsWriter.updateConnectedDocumentsForDocumentRemove(document, username);
+        await this.connectedDocsWriter.updateConnectedDocumentsForDocumentRemove(
+            document, this.settingsProvider.getSettings().username);
         await this.datastore.remove(document);
     }
 
@@ -126,14 +127,14 @@ export class PersistenceManager {
     }
 
 
-    private persistIt(document: Document|NewDocument, username: string,
+    private persistIt(document: Document|NewDocument,
                       squashRevisionIds: string[]): Promise<Document> {
 
         return document.resource.id
             ? this.datastore.update(
                 document as Document,
-                username,
+                this.settingsProvider.getSettings().username,
                 squashRevisionIds.length === 0 ? undefined : squashRevisionIds)
-            : this.datastore.create(document, username);
+            : this.datastore.create(document, this.settingsProvider.getSettings().username);
     }
 }

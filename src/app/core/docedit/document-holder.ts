@@ -41,7 +41,6 @@ export class DocumentHolder {
         private projectConfiguration: ProjectConfiguration,
         private persistenceManager: PersistenceManager,
         private validator: Validator,
-        private settingsProvider: SettingsProvider,
         private datastore: DocumentDatastore) {
     }
 
@@ -83,7 +82,6 @@ export class DocumentHolder {
 
         const savedDocument: Document = await this.persistenceManager.persist(
             this.cleanup(this.clonedDocument),
-            this.settingsProvider.getSettings().username,
             this.oldVersion,
             this.inspectedRevisions
         );
@@ -110,7 +108,6 @@ export class DocumentHolder {
 
             await this.persistenceManager.persist(
                 template,
-                this.settingsProvider.getSettings().username,
                 this.oldVersion,
                 []
             );

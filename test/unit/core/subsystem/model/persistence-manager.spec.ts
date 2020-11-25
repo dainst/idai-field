@@ -59,7 +59,7 @@ describe('subsystem/persistence-manager',() => {
         const [_, d2] = await create4TestResourcesForRemoveTests();
 
        expect((await fieldDocumentDatastore.find({})).totalCount).toBe(4);
-       await persistenceManager.remove(d2, 'test');
+       await persistenceManager.remove(d2);
        const result = (await fieldDocumentDatastore.find({})).documents.map(to('resource.id'));
        expect(result).toEqual(['id1']);
        done();
@@ -71,7 +71,7 @@ describe('subsystem/persistence-manager',() => {
         const [d1, _] = await create4TestResourcesForRemoveTests();
 
         expect((await fieldDocumentDatastore.find({})).totalCount).toBe(4);
-        await persistenceManager.remove(d1, 'test');
+        await persistenceManager.remove(d1);
         const result = (await fieldDocumentDatastore.find({})).documents.map(to('resource.id'));
         expect(result).toEqual([]);
         done();

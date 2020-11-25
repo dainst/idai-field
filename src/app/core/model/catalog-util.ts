@@ -50,7 +50,8 @@ export module CatalogUtil {
                                                   datastore: DocumentDatastore,
                                                   imagestore: Imagestore,
                                                   username: string,
-                                                  document: FieldDocument) {
+                                                  document: FieldDocument // TODO pass id instead document
+    ) {
 
         const catalogAndTypes =
             await getCatalogAndTypes(datastore, document.resource.id);

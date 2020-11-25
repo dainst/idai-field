@@ -26,6 +26,7 @@ export class PersistenceManager {
         private datastore: DocumentDatastore,
         private projectConfiguration: ProjectConfiguration,
         private descendantsUtility: DescendantsUtility
+        // TODO pass settingsProvider to access username
     ) {
         this.connectedDocsWriter = new ConnectedDocsWriter(this.datastore, this.projectConfiguration);
     }

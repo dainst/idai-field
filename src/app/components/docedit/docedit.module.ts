@@ -55,7 +55,7 @@ import {SettingsProvider} from '../../core/settings/settings-provider';
             useFactory: (projectConfiguration: ProjectConfiguration,
                          persistenceManager: PersistenceManager,
                          validator: Validator,
-                         settingsProvider: UsernameProvider,
+                         settingsProvider: SettingsProvider,
                          datastore: DocumentDatastore) => {
 
                 return new DocumentHolder(projectConfiguration, persistenceManager,

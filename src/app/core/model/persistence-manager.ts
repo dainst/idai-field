@@ -1,14 +1,16 @@
 import {Injectable} from '@angular/core';
-import {sameset, isArray, isNot, isUndefinedOrEmpty, on, isDefined, to} from 'tsfun';
-import {Document, NewDocument} from 'idai-components-2';
+import {sameset, isArray, isNot, isUndefinedOrEmpty, on, isDefined, to, flatten, identity, includedIn} from 'tsfun';
+import {Document, NewDocument, toResourceId} from 'idai-components-2';
 import {DocumentDatastore} from '../datastore/document-datastore';
 import {ConnectedDocsWriter} from './connected-docs-writer';
 import {clone} from '../util/object-util';
 import {ProjectConfiguration} from '../configuration/project-configuration';
-import {HierarchicalRelations} from './relation-constants';
+import {HierarchicalRelations, ImageRelations} from './relation-constants';
 import RECORDED_IN = HierarchicalRelations.RECORDEDIN;
 import {DescendantsUtility} from './descendants-utility';
 import {SettingsProvider} from '../settings/settings-provider';
+import {map as asyncMap} from 'tsfun/async';
+import {map, reduce} from 'tsfun/associative';
 
 
 @Injectable()
@@ -69,6 +71,9 @@ export class PersistenceManager {
      * this document.
      * Deletes all corresponding inverse relations.
      *
+     * @returns leftovers. Leftovers are documents which are connected to one of the documents of the hierarchy of
+     *   the deleted documents, which are not connected to any other documents except those to be deleted.
+     *
      * @throws
      *   [DatastoreErrors.DOCUMENT_NO_RESOURCE_ID] - if document has no resource id
      *   [DatastoreErrors.DOCUMENT_DOES_NOT_EXIST_ERROR] - if document has a resource id, but does not exist in the db
@@ -76,10 +81,43 @@ export class PersistenceManager {
      */
     public async remove(document: Document) {
 
-        for (let descendant of (await this.descendantsUtility.fetchChildren(document))) {
-            await this.removeWithConnectedDocuments(descendant);
+        const documentsToBeDeleted = (await this.descendantsUtility.fetchChildren(document)).concat([document]);
+        const idsOfDocumentsToBeDeleted = documentsToBeDeleted.map(toResourceId);
+
+        const documentsConnectedExclusivelyToThoseToBeDeleted = [];
+        for (let targetDocument of (await this.getRelatedDocuments(documentsToBeDeleted))) {
+
+            // TODO handle isRecordedIn ?
+
+            let exclusivelyConnectedToDocumentsToBeDeleted = true;
+            const allTargetIds = flatten(map(targetDocument.resource.relations, identity) as any) as any; // TODO extract function
+            for (let targetId of allTargetIds) {
+                if (!idsOfDocumentsToBeDeleted.includes(targetId)) exclusivelyConnectedToDocumentsToBeDeleted = false;
+            }
+            if (exclusivelyConnectedToDocumentsToBeDeleted) documentsConnectedExclusivelyToThoseToBeDeleted.push(targetDocument);
         }
-        await this.removeWithConnectedDocuments(document);
+
+        for (let document of documentsToBeDeleted) await this.removeWithConnectedDocuments(document);
+
+        return documentsConnectedExclusivelyToThoseToBeDeleted;
+    }
+
+
+    // TODO remove duplication with catalog util get related images
+    private async getRelatedDocuments(documents: Array<Document>): Promise<Array<Document>> {
+
+        const documentsIds = documents.map(toResourceId);
+        const idsOfRelatedDocuments = flatten(
+            documents
+                .map(document => {
+                    return flatten(map(document.resource.relations, identity) as any) as any;
+                })
+                .filter(isDefined)) // TODO review
+            .filter(isNot(includedIn(documentsIds)));
+
+        return await asyncMap(idsOfRelatedDocuments, async id => {
+            return await this.datastore.get(id as any);
+        });
     }
 
 

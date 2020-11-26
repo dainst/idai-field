@@ -51,6 +51,7 @@ export module CatalogUtil {
     }
 
 
+    // TODO generalize to other document types
     export async function remove(persistenceManager: PersistenceManager,
                                  datastore: DocumentDatastore,
                                  imagestore: Imagestore,
@@ -62,28 +63,14 @@ export module CatalogUtil {
             && typeOrTypeCatalogDocument.resource.category !== TYPE) {
             throw 'illegal argument - document must be either Type or TypeCatalog';
         }
-
         if (skipImageDeletion) {
             await persistenceManager.remove(typeOrTypeCatalogDocument);
             return;
         }
 
-        const catalogDocuments = await getCatalogDocuments(datastore, typeOrTypeCatalogDocument.resource.id);
-
-        const catalogAndTypesIds = catalogDocuments.map(toResourceId);
-        const catalogImages =
-            (await getCatalogImages(datastore, catalogDocuments))
-                .filter(catalogImage => {
-                    for (let depictsTargetId of catalogImage.resource.relations.depicts) {
-                        if (!catalogAndTypesIds.includes(depictsTargetId)) return false;
-                    }
-                    return true;
-                });
+        const catalogImages = (await persistenceManager.remove(typeOrTypeCatalogDocument) as any);
         if (catalogImages.length > 0
             && imagestore.getPath() === undefined) throw 'illegal state - imagestore.getPath() must not return undefined';
-
-
-        for (let doc of catalogDocuments) await datastore.remove(doc);
 
         for (let catalogImage of catalogImages) {
             await imagestore.remove(catalogImage.resource.id);

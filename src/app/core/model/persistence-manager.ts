@@ -86,7 +86,7 @@ export class PersistenceManager {
     private async updateWithConnections(document: Document, oldVersion: Document,
                                         revisionsToSquash: Array<Document>) {
 
-        const revs = revisionsToSquash.map(to('_rev')).filter(isDefined);
+        const revs = revisionsToSquash.map(to(Document._REV)).filter(isDefined);
         const updated = await this.persistIt(document, revs);
 
         await this.connectedDocsWriter.updateConnectedDocumentsForDocumentUpdate(
@@ -130,11 +130,13 @@ export class PersistenceManager {
     private persistIt(document: Document|NewDocument,
                       squashRevisionIds: string[]): Promise<Document> {
 
+        const username = this.settingsProvider.getSettings().username;
+
         return document.resource.id
             ? this.datastore.update(
                 document as Document,
-                this.settingsProvider.getSettings().username,
+                username,
                 squashRevisionIds.length === 0 ? undefined : squashRevisionIds)
-            : this.datastore.create(document, this.settingsProvider.getSettings().username);
+            : this.datastore.create(document, username);
     }
 }

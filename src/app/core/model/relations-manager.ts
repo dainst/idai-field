@@ -23,7 +23,7 @@ import {Query} from '../datastore/model/query';
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export class PersistenceManager {
+export class RelationsManager {
 
     private connectedDocsWriter: ConnectedDocsWriter;
 

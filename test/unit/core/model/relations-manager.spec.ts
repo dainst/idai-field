@@ -1,5 +1,5 @@
 import {Document} from 'idai-components-2';
-import {PersistenceManager} from '../../../../src/app/core/model/persistence-manager';
+import {RelationsManager} from '../../../../src/app/core/model/relations-manager';
 import {clone} from '../../../../src/app/core/util/object-util';
 import {ProjectConfiguration} from '../../../../src/app/core/configuration/project-configuration';
 
@@ -8,7 +8,7 @@ import {ProjectConfiguration} from '../../../../src/app/core/configuration/proje
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-describe('PersistenceManager', () => {
+describe('RelationsManager', () => {
 
     const projectConfiguration = new ProjectConfiguration([
         [{ item: { name: 'Operation' }, trees: []}, { item: { name: 'object'}, trees: []}] as any,
@@ -68,7 +68,7 @@ describe('PersistenceManager', () => {
         const mockSettingsProvider = jasmine.createSpyObj('settingsProvider', ['getSettings']);
         mockSettingsProvider.getSettings.and.returnValue({ username: 'u' });
 
-        persistenceManager = new PersistenceManager(
+        persistenceManager = new RelationsManager(
             mockDatastore, projectConfiguration, mockSettingsProvider
         );
 

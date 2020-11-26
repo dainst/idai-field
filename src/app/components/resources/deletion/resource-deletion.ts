@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {FieldDocument} from 'idai-components-2';
 import {DeleteModalComponent} from './delete-modal.component';
-import {PersistenceManager} from '../../../core/model/persistence-manager';
+import {RelationsManager} from '../../../core/model/relations-manager';
 import {M} from '../../messages/m';
 import {DeletionInProgressModalComponent} from './deletion-in-progress-modal.component';
 import {Imagestore} from '../../../core/images/imagestore/imagestore';
@@ -21,7 +21,7 @@ import {DocumentDatastore} from '../../../core/datastore/document-datastore';
 export class ResourceDeletion {
 
     constructor(private modalService: NgbModal,
-                private persistenceManager: PersistenceManager,
+                private relationsManager: RelationsManager,
                 private imagestore: Imagestore,
                 private projectConfiguration: ProjectConfiguration,
                 private settingsProvider: SettingsProvider,
@@ -34,7 +34,7 @@ export class ResourceDeletion {
             DeleteModalComponent, { keyboard: false }
         );
         modalRef.componentInstance.setDocument(document);
-        modalRef.componentInstance.setCount(await this.persistenceManager.fetchChildrenCount(document));
+        modalRef.componentInstance.setCount(await this.relationsManager.fetchChildrenCount(document));
 
         const deleteModalResult = await modalRef.result;
         const deletionInProgressModalRef: NgbModalRef = this.modalService.open(
@@ -53,7 +53,7 @@ export class ResourceDeletion {
 
         if (document.resource.category === 'TypeCatalog') {
             await CatalogUtil.remove(
-                this.persistenceManager,
+                this.relationsManager,
                 this.documentDatastore,
                 this.imagestore,
                 this.settingsProvider.getSettings().username,
@@ -84,7 +84,7 @@ export class ResourceDeletion {
     private async deleteWithPersistenceManager(document: FieldDocument) {
 
         try {
-            await this.persistenceManager.remove(document);
+            await this.relationsManager.remove(document);
         } catch (removeError) {
             console.error('removeWithPersistenceManager', removeError);
             if (removeError !== DatastoreErrors.DOCUMENT_NOT_FOUND) throw [M.DOCEDIT_ERROR_DELETE];

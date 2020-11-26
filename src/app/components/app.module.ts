@@ -21,7 +21,7 @@ import {BackupModule} from './backup/backup.module';
 import {AppController} from '../core/app-controller';
 import {DatastoreModule} from '../core/datastore/datastore.module';
 import {ImageOverviewModule} from './image/overview/image-overview.module';
-import {PersistenceManager} from '../core/model/persistence-manager';
+import {RelationsManager} from '../core/model/relations-manager';
 import {Validator} from '../core/model/validator';
 import {ImportValidator} from '../core/import/import/process/import-validator';
 import {MatrixModule} from './matrix/matrix.module';
@@ -216,7 +216,7 @@ registerLocaleData(localeDe, 'de');
             },
             deps: []
         },
-        PersistenceManager,
+        RelationsManager,
         {
             provide: Validator,
             useFactory: (

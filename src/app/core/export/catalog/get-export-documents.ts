@@ -3,18 +3,18 @@ import {Document, toResourceId} from 'idai-components-2';
 import {Name, ResourceId} from '../../constants';
 import {includedIn} from 'tsfun';
 import {ImageRelations} from '../../model/relation-constants';
-import {PersistenceManager} from '../../model/persistence-manager';
+import {RelationsManager} from '../../model/relations-manager';
 
 
 export async function getExportDocuments(datastore: DocumentReadDatastore,
-                                         persistenceManager: PersistenceManager,
+                                         relationsManager: RelationsManager,
                                          catalogId: ResourceId,
                                          project: Name): Promise<[Array<Document>, Array<ResourceId>]> {
 
     const catalog = await datastore.get(catalogId);
-    const catalogAndTypes = (await persistenceManager.fetchChildren(catalog)).concat(catalog);
+    const catalogAndTypes = (await relationsManager.fetchChildren(catalog)).concat(catalog);
     const relatedImages = cleanImageDocuments(
-        await persistenceManager.getRelatedImageDocuments(catalogAndTypes),
+        await relationsManager.getRelatedImageDocuments(catalogAndTypes),
         catalogAndTypes.map(toResourceId)
         );
     return [

@@ -1,4 +1,4 @@
-import {PersistenceManager} from '../../../../../src/app/core/model/persistence-manager';
+import {RelationsManager} from '../../../../../src/app/core/model/relations-manager';
 import {createApp, setupSyncTestDb} from '../subsystem-helper';
 import {DocumentDatastore} from '../../../../../src/app/core/datastore/document-datastore';
 import {Imagestore} from '../../../../../src/app/core/images/imagestore/imagestore';
@@ -14,7 +14,7 @@ const fs = require('fs');
 describe('subsystem/catalog-util', () => {
 
     let documentDatastore: DocumentDatastore;
-    let persistenceManager: PersistenceManager;
+    let persistenceManager: RelationsManager;
     let imagestore: Imagestore;
     let settingsProvider: SettingsProvider;
     let projectImageDir: string;

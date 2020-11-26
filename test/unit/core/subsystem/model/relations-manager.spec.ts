@@ -2,17 +2,17 @@ import {sameset} from 'tsfun';
 import {FieldDocument, toResourceId} from 'idai-components-2';
 import {createApp, setupSyncTestDb} from '../subsystem-helper';
 import {doc} from '../../../test-helpers';
-import {PersistenceManager} from '../../../../../src/app/core/model/persistence-manager';
+import {RelationsManager} from '../../../../../src/app/core/model/relations-manager';
 import {SettingsProvider} from '../../../../../src/app/core/settings/settings-provider';
 import {DocumentDatastore} from '../../../../../src/app/core/datastore/document-datastore';
 
 /**
  * @author Daniel de Oliveira
  */
-describe('subsystem/persistence-manager',() => {
+describe('subsystem/relations-manager',() => {
 
     let documentDatastore: DocumentDatastore;
-    let persistenceManager: PersistenceManager;
+    let persistenceManager: RelationsManager;
     let settingsProvider: SettingsProvider;
 
 

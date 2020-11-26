@@ -9,7 +9,7 @@ import {PouchdbDatastore} from '../../../../src/app/core/datastore/pouchdb/pouch
 import {DocumentCache} from '../../../../src/app/core/datastore/cached/document-cache';
 import {PouchdbManager} from '../../../../src/app/core/datastore/pouchdb/pouchdb-manager';
 import {ChangesStream} from '../../../../src/app/core/datastore/changes/changes-stream';
-import {PersistenceManager} from '../../../../src/app/core/model/persistence-manager';
+import {RelationsManager} from '../../../../src/app/core/model/relations-manager';
 import {Validator} from '../../../../src/app/core/model/validator';
 import {SyncTarget} from '../../../../src/app/core/settings/settings';
 import {SettingsService} from '../../../../src/app/core/settings/settings-service';
@@ -151,7 +151,7 @@ export async function createApp(projectName = 'testdb', startSync = false) {
         messages
     );
 
-    const persistenceManager = new PersistenceManager(
+    const persistenceManager = new RelationsManager(
         documentDatastore,
         projectConfiguration,
         settingsProvider

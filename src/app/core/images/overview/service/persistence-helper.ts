@@ -1,6 +1,6 @@
 import {FieldDocument, ImageDocument} from 'idai-components-2';
 import {ImageOverviewFacade} from '../view/imageoverview-facade';
-import {PersistenceManager} from '../../../model/persistence-manager';
+import {RelationsManager} from '../../../model/relations-manager';
 import {clone} from '../../../util/object-util';
 import {Imagestore} from '../../imagestore/imagestore';
 import {PersistenceHelperErrors} from './persistence-helper-errors';
@@ -16,7 +16,7 @@ export class PersistenceHelper {
 
     constructor(
         private imageOverviewFacade: ImageOverviewFacade,
-        private persistenceManager: PersistenceManager,
+        private relationsManager: RelationsManager,
         private imagestore: Imagestore
     ) {}
 
@@ -39,7 +39,7 @@ export class PersistenceHelper {
                 throw [PersistenceHelperErrors.IMAGESTORE_ERROR_DELETE, document.resource.identifier];
             }
 
-            await this.persistenceManager.remove(document);
+            await this.relationsManager.remove(document);
             this.imageOverviewFacade.remove(document);
         }
     }
@@ -55,7 +55,7 @@ export class PersistenceHelper {
                 depictsRelations.push(targetDocument.resource.id);
             }
 
-            await this.persistenceManager.persist(
+            await this.relationsManager.persist(
                 imageDocument, oldVersion
             );
         }
@@ -68,7 +68,7 @@ export class PersistenceHelper {
             const oldVersion: ImageDocument = clone(document);
             document.resource.relations.depicts = [];
 
-            await this.persistenceManager.persist(
+            await this.relationsManager.persist(
                 document, oldVersion
             );
         }

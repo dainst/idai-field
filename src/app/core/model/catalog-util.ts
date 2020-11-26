@@ -1,7 +1,7 @@
 import {Document} from 'idai-components-2';
 import {DocumentDatastore} from '../datastore/document-datastore';
 import {Imagestore} from '../images/imagestore/imagestore';
-import {PersistenceManager} from './persistence-manager';
+import {RelationsManager} from './relations-manager';
 import {CategoryConstants} from './category-constants';
 
 
@@ -13,7 +13,7 @@ export module CatalogUtil {
 
 
     // TODO generalize to other document types
-    export async function remove(persistenceManager: PersistenceManager,
+    export async function remove(relationsManager: RelationsManager,
                                  datastore: DocumentDatastore,
                                  imagestore: Imagestore,
                                  username: string,
@@ -25,11 +25,11 @@ export module CatalogUtil {
             throw 'illegal argument - document must be either Type or TypeCatalog';
         }
         if (skipImageDeletion) {
-            await persistenceManager.remove(typeOrTypeCatalogDocument);
+            await relationsManager.remove(typeOrTypeCatalogDocument);
             return;
         }
 
-        const catalogImages = (await persistenceManager.remove(typeOrTypeCatalogDocument) as any);
+        const catalogImages = (await relationsManager.remove(typeOrTypeCatalogDocument) as any);
         if (catalogImages.length > 0
             && imagestore.getPath() === undefined) throw 'illegal state - imagestore.getPath() must not return undefined';
 

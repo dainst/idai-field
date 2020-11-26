@@ -10,7 +10,7 @@ export async function getExportDocuments(datastore: DocumentReadDatastore,
                                          catalogId: ResourceId,
                                          project: Name): Promise<[Array<Document>, Array<ResourceId>]> {
 
-    const catalogAndTypes = await CatalogUtil.getCatalogAndTypes(datastore, catalogId);
+    const catalogAndTypes = await CatalogUtil.getCatalogDocuments(datastore, catalogId);
     const relatedImages = cleanImageDocuments(
         await CatalogUtil.getCatalogImages(datastore, catalogAndTypes),
         catalogAndTypes.map(toResourceId)

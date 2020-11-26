@@ -18,14 +18,16 @@ export module CatalogUtil {
     import TYPE_CATALOG = CategoryConstants.TYPE_CATALOG;
     import TYPE = CategoryConstants.TYPE;
 
-    export async function getCatalogAndTypes(datastore: DocumentReadDatastore,
-                                             catalogId: ResourceId): Promise<Array<Document>> {
 
-        const typeCatalog = await datastore.get(catalogId);
+    // TODO review if this can be done via or replaced with call to descantants-utility
+    export async function getCatalogDocuments(datastore: DocumentReadDatastore,
+                                              catalogOrTypeId: ResourceId): Promise<Array<Document>> {
+
+        const typeCatalog = await datastore.get(catalogOrTypeId);
         const typesQuery: Query = {
             constraints: {
                 'liesWithin:contain': {
-                    value: catalogId,
+                    value: catalogOrTypeId,
                     searchRecursively: true
                 }
             }
@@ -49,12 +51,12 @@ export module CatalogUtil {
     }
 
 
-    export async function deleteCatalogWithImages(persistenceManager: PersistenceManager,
-                                                  datastore: DocumentDatastore,
-                                                  imagestore: Imagestore,
-                                                  username: string,
-                                                  document: Document,
-                                                  skipImageDeletion = false) {
+    export async function remove(persistenceManager: PersistenceManager,
+                                 datastore: DocumentDatastore,
+                                 imagestore: Imagestore,
+                                 username: string,
+                                 document: Document,
+                                 skipImageDeletion = false) {
 
         if (document.resource.category !== TYPE_CATALOG
             && document.resource.category !== TYPE) throw 'illegal argument - document must be either Type or TypeCatalog';
@@ -64,12 +66,11 @@ export module CatalogUtil {
             return;
         }
 
-        const catalogAndTypes =
-            await getCatalogAndTypes(datastore, document.resource.id);
+        const catalogDocuments = await getCatalogDocuments(datastore, document.resource.id);
 
-        const catalogAndTypesIds = catalogAndTypes.map(toResourceId);
+        const catalogAndTypesIds = catalogDocuments.map(toResourceId);
         const catalogImages =
-            (await getCatalogImages(datastore, catalogAndTypes))
+            (await getCatalogImages(datastore, catalogDocuments))
                 .filter(catalogImage => {
                     for (let depictsTargetId of catalogImage.resource.relations.depicts) {
                         if (!catalogAndTypesIds.includes(depictsTargetId)) return false;
@@ -80,7 +81,7 @@ export module CatalogUtil {
             && imagestore.getPath() === undefined) throw 'illegal state - imagestore.getPath() must not return undefined';
 
 
-        for (let doc of catalogAndTypes) await datastore.remove(doc);
+        for (let doc of catalogDocuments) await datastore.remove(doc);
 
         for (let catalogImage of catalogImages) {
             await imagestore.remove(catalogImage.resource.id);

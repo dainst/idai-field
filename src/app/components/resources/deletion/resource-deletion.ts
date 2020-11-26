@@ -54,7 +54,7 @@ export class ResourceDeletion {
                                   deleteCatalogImages: boolean) {
 
         if (document.resource.category === 'TypeCatalog') {
-            await CatalogUtil.deleteCatalogWithImages(
+            await CatalogUtil.remove(
                 this.persistenceManager,
                 this.documentDatastore,
                 this.imagestore,

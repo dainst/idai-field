@@ -1,17 +1,18 @@
 import {Injectable} from '@angular/core';
-import {sameset, isArray, isNot, isUndefinedOrEmpty, on, isDefined, to, flatten, identity, includedIn} from 'tsfun';
+import {sameset, isArray, isNot, isUndefinedOrEmpty, on, isDefined, to, flatten, includedIn} from 'tsfun';
 import {Document, NewDocument, toResourceId} from 'idai-components-2';
 import {DocumentDatastore} from '../datastore/document-datastore';
 import {ConnectedDocsWriter} from './connected-docs-writer';
 import {clone} from '../util/object-util';
 import {ProjectConfiguration} from '../configuration/project-configuration';
 import {HierarchicalRelations, ImageRelations} from './relation-constants';
-import {DescendantsUtility} from './descendants-utility';
 import {SettingsProvider} from '../settings/settings-provider';
 import {map as asyncMap} from 'tsfun/async';
 import RECORDED_IN = HierarchicalRelations.RECORDEDIN;
 import DEPICTS = ImageRelations.DEPICTS;
 import ISDEPICTEDIN = ImageRelations.ISDEPICTEDIN;
+import {FindIdsResult, FindResult} from '../datastore/model/read-datastore';
+import {Query} from '../datastore/model/query';
 
 
 @Injectable()
@@ -29,7 +30,6 @@ export class PersistenceManager {
     constructor(
         private datastore: DocumentDatastore,
         private projectConfiguration: ProjectConfiguration,
-        private descendantsUtility: DescendantsUtility,
         private settingsProvider: SettingsProvider
     ) {
         this.connectedDocsWriter = new ConnectedDocsWriter(this.datastore, this.projectConfiguration);
@@ -82,9 +82,38 @@ export class PersistenceManager {
      */
     public async remove(document: Document) {
 
-        const documentsToBeDeleted = (await this.descendantsUtility.fetchChildren(document)).concat([document]);
+        const documentsToBeDeleted = (await this.fetchChildren(document)).concat([document]);
         for (let document of documentsToBeDeleted) await this.removeWithConnectedDocuments(document);
         return this.getLeftovers(documentsToBeDeleted);
+    }
+
+
+    public async fetchChildren(document: Document): Promise<Array<Document>> {
+
+        return (await this.findDescendants(document) as FindResult).documents;
+    }
+
+
+    public async fetchChildrenCount(document: Document): Promise<number> {
+
+        return !document.resource.id
+            ? 0
+            : (await this.findDescendants(document, true)).totalCount;
+    }
+
+
+    public async getRelatedImageDocuments(documents: Array<Document>): Promise<Array<Document>> {
+
+        const documentsIds = documents.map(toResourceId);
+        const idsOfRelatedDocuments = flatten(
+            documents
+                .map(document => document.resource.relations[ISDEPICTEDIN])
+                .filter(isDefined))
+            .filter(isNot(includedIn(documentsIds)));
+
+        return await asyncMap(idsOfRelatedDocuments, async id => {
+            return await this.datastore.get(id as any);
+        });
     }
 
 
@@ -101,21 +130,6 @@ export class PersistenceManager {
             if (depictsOnlyDocumentsToBeDeleted) leftovers.push(imageDocument);
         }
         return leftovers;
-    }
-
-
-    public async getRelatedImageDocuments(documents: Array<Document>): Promise<Array<Document>> {
-
-        const documentsIds = documents.map(toResourceId);
-        const idsOfRelatedDocuments = flatten(
-            documents
-                .map(document => document.resource.relations[ISDEPICTEDIN])
-                .filter(isDefined))
-            .filter(isNot(includedIn(documentsIds)));
-
-        return await asyncMap(idsOfRelatedDocuments, async id => {
-            return await this.datastore.get(id as any);
-        });
     }
 
 
@@ -174,5 +188,43 @@ export class PersistenceManager {
                 username,
                 squashRevisionIds.length === 0 ? undefined : squashRevisionIds)
             : this.datastore.create(document, username);
+    }
+
+
+    private async findDescendants(document: Document, skipDocuments = false): Promise<FindIdsResult> {
+
+        return this.projectConfiguration.isSubcategory(document.resource.category, 'Operation')
+            ? await this.findRecordedInDocs2(document.resource.id, skipDocuments)
+            : await this.findLiesWithinDocs(document.resource.id, skipDocuments);
+    }
+
+
+    // TODO review name clash
+    public async findRecordedInDocs2(resourceId: string, skipDocuments: boolean): Promise<FindIdsResult> {
+
+        const query: Query = {
+            constraints: { 'isRecordedIn:contain': resourceId }
+        };
+
+        return skipDocuments
+            ? this.datastore.findIds(query)
+            : await this.datastore.find(query);
+    }
+
+
+    private async findLiesWithinDocs(resourceId: string, skipDocuments: boolean): Promise<FindIdsResult> {
+
+        const query: Query = {
+            constraints: {
+                'liesWithin:contain': {
+                    value: resourceId,
+                    searchRecursively: true
+                }
+            }
+        };
+
+        return skipDocuments
+            ? this.datastore.findIds(query)
+            : await this.datastore.find(query);
     }
 }

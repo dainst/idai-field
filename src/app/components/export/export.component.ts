@@ -24,7 +24,6 @@ import {ProjectCategories} from '../../core/configuration/project-categories';
 import {MenuContext, MenuService} from '../menu-service';
 import {CatalogExporter} from '../../core/export/catalog/catalog-exporter';
 import {SettingsProvider} from '../../core/settings/settings-provider';
-import {DescendantsUtility} from '../../core/model/descendants-utility';
 import {PersistenceManager} from '../../core/model/persistence-manager';
 
 const remote = typeof window !== 'undefined' ? window.require('electron').remote : require('electron').remote;
@@ -70,7 +69,6 @@ export class ExportComponent implements OnInit {
                 private tabManager: TabManager,
                 private projectConfiguration: ProjectConfiguration,
                 private menuService: MenuService,
-                private descendantsUtility: DescendantsUtility,
                 private persistenceManager: PersistenceManager) {}
 
 
@@ -168,7 +166,6 @@ export class ExportComponent implements OnInit {
 
         await CatalogExporter.performExport(
             this.documentDatastore,
-            this.descendantsUtility,
             this.persistenceManager,
             filePath,
             this.selectedCatalogId,

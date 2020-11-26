@@ -6,7 +6,6 @@ import {PersistenceManager} from '../../../core/model/persistence-manager';
 import {M} from '../../messages/m';
 import {DeletionInProgressModalComponent} from './deletion-in-progress-modal.component';
 import {Imagestore} from '../../../core/images/imagestore/imagestore';
-import {DescendantsUtility} from '../../../core/model/descendants-utility';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
 import {DatastoreErrors} from '../../../core/datastore/model/datastore-errors';
 import {SettingsProvider} from '../../../core/settings/settings-provider';
@@ -26,7 +25,6 @@ export class ResourceDeletion {
                 private imagestore: Imagestore,
                 private projectConfiguration: ProjectConfiguration,
                 private settingsProvider: SettingsProvider,
-                private descendantsUtility: DescendantsUtility,
                 private documentDatastore: DocumentDatastore) {}
 
 
@@ -36,7 +34,7 @@ export class ResourceDeletion {
             DeleteModalComponent, { keyboard: false }
         );
         modalRef.componentInstance.setDocument(document);
-        modalRef.componentInstance.setCount(await this.descendantsUtility.fetchChildrenCount(document));
+        modalRef.componentInstance.setCount(await this.persistenceManager.fetchChildrenCount(document));
 
         const deleteModalResult = await modalRef.result;
         const deletionInProgressModalRef: NgbModalRef = this.modalService.open(

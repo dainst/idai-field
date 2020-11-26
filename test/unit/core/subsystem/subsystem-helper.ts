@@ -25,7 +25,6 @@ import {ViewFacade} from '../../../../src/app/core/resources/view/view-facade';
 import {ResourcesStateManager} from '../../../../src/app/core/resources/view/resources-state-manager';
 import {DocumentHolder} from '../../../../src/app/core/docedit/document-holder';
 import { PouchdbServer } from '../../../../src/app/core/datastore/pouchdb/pouchdb-server';
-import {DescendantsUtility} from '../../../../src/app/core/model/descendants-utility';
 import {Query} from '../../../../src/app/core/datastore/model/query';
 import {CategoryConverter} from '../../../../src/app/core/datastore/cached/category-converter';
 import {ConfigReader} from '../../../../src/app/core/configuration/boot/config-reader';
@@ -152,14 +151,9 @@ export async function createApp(projectName = 'testdb', startSync = false) {
         messages
     );
 
-    const descendantsUtility = new DescendantsUtility(
-        projectConfiguration, documentDatastore
-    );
-
     const persistenceManager = new PersistenceManager(
         documentDatastore,
         projectConfiguration,
-        descendantsUtility,
         settingsProvider
     );
 

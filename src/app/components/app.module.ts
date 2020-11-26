@@ -58,7 +58,6 @@ import {BlobMaker} from '../core/images/imagestore/blob-maker';
 import {ReadImagestore} from '../core/images/imagestore/read-imagestore';
 import {DocumentReadDatastore} from '../core/datastore/document-read-datastore';
 import {TaskbarSyncStatusComponent} from './navbar/taskbar-sync-status.component';
-import {DescendantsUtility} from '../core/model/descendants-utility';
 import {ViewModalModule} from './viewmodal/view-modal.module';
 import {ConfigurationModule} from './configuration/configuration.module';
 import {IdaiMessagesModule} from './messages/idai-messages.module';
@@ -167,11 +166,6 @@ registerLocaleData(localeDe, 'de');
                 return new PouchDbFsImagestore(converter, blobMaker, pouchdbManager.getDbProxy());
             },
             deps: [PouchdbManager, ImageConverter, BlobMaker]
-        },
-        {
-            provide: DescendantsUtility,
-            useClass: DescendantsUtility,
-            deps: [ProjectConfiguration, DocumentReadDatastore]
         },
         { provide: ReadImagestore, useExisting: Imagestore },
         { provide: LocationStrategy, useClass: HashLocationStrategy },

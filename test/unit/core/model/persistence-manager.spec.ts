@@ -11,7 +11,7 @@ import {ProjectConfiguration} from '../../../../src/app/core/configuration/proje
 describe('PersistenceManager', () => {
 
     const projectConfiguration = new ProjectConfiguration([
-        [],
+        [{ item: { name: 'Operation' }, trees: []}, { item: { name: 'object'}, trees: []}] as any,
         [
             {
                 name: 'BelongsTo',
@@ -36,7 +36,6 @@ describe('PersistenceManager', () => {
         ]]);
 
     let mockDatastore;
-    let mockDescendantsUtility;
     let persistenceManager;
     const id = 'abc';
 
@@ -65,13 +64,12 @@ describe('PersistenceManager', () => {
 
         mockDatastore = jasmine.createSpyObj('mockDatastore',
             ['get', 'getMultiple', 'find', 'create', 'update', 'refresh', 'remove']);
-        mockDescendantsUtility = jasmine.createSpyObj('mockDescendantsUtility', ['fetchChildren']);
 
         const mockSettingsProvider = jasmine.createSpyObj('settingsProvider', ['getSettings']);
         mockSettingsProvider.getSettings.and.returnValue({ username: 'u' });
 
         persistenceManager = new PersistenceManager(
-            mockDatastore, projectConfiguration, mockDescendantsUtility, mockSettingsProvider
+            mockDatastore, projectConfiguration, mockSettingsProvider
         );
 
         mockDatastore.get.and.callFake(getFunction);
@@ -157,8 +155,6 @@ describe('PersistenceManager', () => {
 
     it('remove: should remove an operation, another related resource gets relation updated', async done => {
 
-        mockDescendantsUtility.fetchChildren.and.returnValue([relatedDoc]);
-
         relatedDoc.resource.relations['isRecordedIn'] = ['1'];
         relatedDoc.resource.relations['Contains'] = ['3'];
         anotherRelatedDoc.resource.relations['BelongsTo'] = ['2'];
@@ -175,8 +171,6 @@ describe('PersistenceManager', () => {
 
 
     it('remove: should remove an operation, with two dependent resources', async done => {
-
-        mockDescendantsUtility.fetchChildren.and.returnValue([relatedDoc, anotherRelatedDoc]);
 
         relatedDoc.resource.relations['isRecordedIn'] = ['1'];
         relatedDoc.resource.relations['Contains'] = ['3'];

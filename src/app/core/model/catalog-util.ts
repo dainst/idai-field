@@ -71,8 +71,8 @@ export module CatalogUtil {
         const catalogImages =
             (await getCatalogImages(datastore, catalogAndTypes))
                 .filter(catalogImage => {
-                    for (let c of catalogImage.resource.relations.depicts) {
-                        if (!catalogAndTypesIds.includes(c)) return false;
+                    for (let depictsTargetId of catalogImage.resource.relations.depicts) {
+                        if (!catalogAndTypesIds.includes(depictsTargetId)) return false;
                     }
                     return true;
                 });

@@ -22,10 +22,10 @@ export class ResourceDeletion {
 
     constructor(private modalService: NgbModal,
                 private relationsManager: RelationsManager,
+                private imageRelationsManager: ImageRelationsManager,
                 private imagestore: Imagestore,
                 private projectConfiguration: ProjectConfiguration,
-                private settingsProvider: SettingsProvider,
-                private documentDatastore: DocumentDatastore) {}
+                private settingsProvider: SettingsProvider) {}
 
 
     public async delete(document: FieldDocument) {
@@ -52,10 +52,7 @@ export class ResourceDeletion {
                                   deleteRelatedImages: boolean) {
 
         if (document.resource.category === 'TypeCatalog') {
-            await ImageRelationsManager.remove(
-                this.relationsManager,
-                this.documentDatastore,
-                this.imagestore,
+            await this.imageRelationsManager.remove(
                 this.settingsProvider.getSettings().username,
                 document,
                 document.project === undefined && deleteRelatedImages);

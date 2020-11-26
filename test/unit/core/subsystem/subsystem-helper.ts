@@ -30,6 +30,7 @@ import {CategoryConverter} from '../../../../src/app/core/datastore/cached/categ
 import {ConfigReader} from '../../../../src/app/core/configuration/boot/config-reader';
 import {SettingsProvider} from '../../../../src/app/core/settings/settings-provider';
 import {settings} from 'cluster';
+import {ImageRelationsManager} from '../../../../src/app/core/model/image-relations-manager';
 
 
 class IdGenerator {
@@ -157,6 +158,13 @@ export async function createApp(projectName = 'testdb', startSync = false) {
         settingsProvider
     );
 
+    const imageRelationsManager = new ImageRelationsManager(
+        documentDatastore,
+        relationsManager,
+        imagestore,
+        projectConfiguration
+    );
+
     const documentHolder = new DocumentHolder(
         projectConfiguration,
         relationsManager,
@@ -182,7 +190,8 @@ export async function createApp(projectName = 'testdb', startSync = false) {
         tabManager,
         imageOverviewFacade,
         relationsManager,
-        imagestore
+        imagestore,
+        imageRelationsManager
     }
 }
 

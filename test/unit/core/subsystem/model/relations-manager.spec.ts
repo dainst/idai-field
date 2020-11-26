@@ -5,6 +5,7 @@ import {doc} from '../../../test-helpers';
 import {RelationsManager} from '../../../../../src/app/core/model/relations-manager';
 import {SettingsProvider} from '../../../../../src/app/core/settings/settings-provider';
 import {DocumentDatastore} from '../../../../../src/app/core/datastore/document-datastore';
+import {ImageRelationsManager} from '../../../../../src/app/core/model/image-relations-manager';
 
 /**
  * @author Daniel de Oliveira

@@ -9,13 +9,14 @@ import {ImageRelationsManager} from '../../model/image-relations-manager';
 
 export async function getExportDocuments(datastore: DocumentReadDatastore,
                                          relationsManager: RelationsManager,
+                                         imageRelationsManager: ImageRelationsManager,
                                          catalogId: ResourceId,
                                          project: Name): Promise<[Array<Document>, Array<ResourceId>]> {
 
     const catalog = await datastore.get(catalogId);
     const catalogAndTypes = (await relationsManager.fetchChildren(catalog)).concat(catalog);
     const relatedImages = cleanImageDocuments(
-        await ImageRelationsManager.getRelatedImageDocuments(datastore, catalogAndTypes),
+        await imageRelationsManager.getRelatedImageDocuments(catalogAndTypes),
         catalogAndTypes.map(toResourceId)
         );
     return [

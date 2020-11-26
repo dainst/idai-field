@@ -25,6 +25,7 @@ import {MenuContext, MenuService} from '../menu-service';
 import {CatalogExporter} from '../../core/export/catalog/catalog-exporter';
 import {SettingsProvider} from '../../core/settings/settings-provider';
 import {RelationsManager} from '../../core/model/relations-manager';
+import {ImageRelationsManager} from '../../core/model/image-relations-manager';
 
 const remote = typeof window !== 'undefined' ? window.require('electron').remote : require('electron').remote;
 
@@ -69,7 +70,8 @@ export class ExportComponent implements OnInit {
                 private tabManager: TabManager,
                 private projectConfiguration: ProjectConfiguration,
                 private menuService: MenuService,
-                private relationsManager: RelationsManager) {}
+                private relationsManager: RelationsManager,
+                private imageRelationsManager: ImageRelationsManager) {}
 
 
     public getDocumentLabel = (operation: FieldDocument) => ModelUtil.getDocumentLabel(operation);
@@ -167,6 +169,7 @@ export class ExportComponent implements OnInit {
         await CatalogExporter.performExport(
             this.documentDatastore,
             this.relationsManager,
+            this.imageRelationsManager,
             filePath,
             this.selectedCatalogId,
             this.settingsProvider.getSettings()

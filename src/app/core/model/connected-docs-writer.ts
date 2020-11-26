@@ -19,7 +19,7 @@ const NAME = 'name';
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export class ConnectedDocsWriter { // TODO convert to module
+export class ConnectedDocsWriter {
 
     private inverseRelationsMap: InverseRelationsMap;
 

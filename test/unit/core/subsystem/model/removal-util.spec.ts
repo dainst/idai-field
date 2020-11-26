@@ -4,14 +4,14 @@ import {DocumentDatastore} from '../../../../../src/app/core/datastore/document-
 import {Imagestore} from '../../../../../src/app/core/images/imagestore/imagestore';
 import {doc} from '../../../test-helpers';
 import {FieldDocument, ImageDocument, toResourceId} from 'idai-components-2';
-import {CatalogUtil} from '../../../../../src/app/core/model/catalog-util';
+import {RemovalUtil} from '../../../../../src/app/core/model/removal-util';
 import {SettingsProvider} from '../../../../../src/app/core/settings/settings-provider';
 import {flatten, sameset} from 'tsfun';
 
 const fs = require('fs');
 
 
-describe('subsystem/catalog-util', () => {
+describe('subsystem/removal-util', () => {
 
     let documentDatastore: DocumentDatastore;
     let persistenceManager: RelationsManager;
@@ -79,7 +79,7 @@ describe('subsystem/catalog-util', () => {
         expect(fs.existsSync(projectImageDir + 'i1')).toBeTruthy();
         expect(fs.existsSync(projectImageDir + 'i2')).toBeTruthy();
 
-        await CatalogUtil.remove(
+        await RemovalUtil.remove(
             persistenceManager, documentDatastore, imagestore, username, tc1);
 
         expect((await documentDatastore.find({})).documents.length).toBe(0);
@@ -111,7 +111,7 @@ describe('subsystem/catalog-util', () => {
         expect(fs.existsSync(projectImageDir + 'i1')).toBeTruthy();
         expect(fs.existsSync(projectImageDir + 'i2')).toBeTruthy();
 
-        await CatalogUtil.remove(
+        await RemovalUtil.remove(
             persistenceManager, documentDatastore, imagestore, username, t1);
 
         const documents = (await documentDatastore.find({})).documents;
@@ -148,7 +148,7 @@ describe('subsystem/catalog-util', () => {
         expect(fs.existsSync(projectImageDir + 'i1')).toBeTruthy();
         expect(fs.existsSync(projectImageDir + 'i2')).toBeTruthy();
 
-        await CatalogUtil.remove(
+        await RemovalUtil.remove(
             persistenceManager, documentDatastore, imagestore, username, tc1);
 
         const documents = (await documentDatastore.find({})).documents;
@@ -182,7 +182,7 @@ describe('subsystem/catalog-util', () => {
         expect(fs.existsSync(projectImageDir + 'i1')).toBeTruthy();
         expect(fs.existsSync(projectImageDir + 'i2')).toBeTruthy();
 
-        await CatalogUtil.remove(
+        await RemovalUtil.remove(
             persistenceManager, documentDatastore, imagestore, username, tc1, true);
 
         const documents = (await documentDatastore.find({})).documents;

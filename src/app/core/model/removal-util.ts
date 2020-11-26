@@ -6,7 +6,7 @@ import {CategoryConstants} from './category-constants';
 
 
 // TODO handle errors
-export module CatalogUtil {
+export module RemovalUtil {
 
     import TYPE_CATALOG = CategoryConstants.TYPE_CATALOG;
     import TYPE = CategoryConstants.TYPE;
@@ -17,19 +17,20 @@ export module CatalogUtil {
                                  datastore: DocumentDatastore,
                                  imagestore: Imagestore,
                                  username: string,
-                                 typeOrTypeCatalogDocument: Document,
+                                 document: Document,
                                  skipImageDeletion = false) {
 
-        if (typeOrTypeCatalogDocument.resource.category !== TYPE_CATALOG
-            && typeOrTypeCatalogDocument.resource.category !== TYPE) {
+        // TODO replace this with checking for document not being an image category document
+        if (document.resource.category !== TYPE_CATALOG
+            && document.resource.category !== TYPE) {
             throw 'illegal argument - document must be either Type or TypeCatalog';
         }
         if (skipImageDeletion) {
-            await relationsManager.remove(typeOrTypeCatalogDocument);
+            await relationsManager.remove(document);
             return;
         }
 
-        const catalogImages = (await relationsManager.remove(typeOrTypeCatalogDocument) as any);
+        const catalogImages = (await relationsManager.remove(document) as any);
         if (catalogImages.length > 0
             && imagestore.getPath() === undefined) throw 'illegal state - imagestore.getPath() must not return undefined';
 

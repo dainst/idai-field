@@ -20,7 +20,7 @@ export class DeleteModalComponent {
     public isRecordedInResourcesCount: number;
     public confirmDeletionIdentifier: string;
 
-    public deleteCatalogImages: boolean;
+    public deleteRelatedImages: boolean;
 
     constructor(public activeModal: NgbActiveModal) {}
 
@@ -57,6 +57,6 @@ export class DeleteModalComponent {
     public confirmDeletion() {
 
         if (this.confirmDeletionIdentifier !== this.document.resource.identifier) return;
-        this.activeModal.close(this.deleteCatalogImages);
+        this.activeModal.close(this.deleteRelatedImages);
     }
 }

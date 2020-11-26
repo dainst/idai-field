@@ -9,7 +9,7 @@ import {Imagestore} from '../../../core/images/imagestore/imagestore';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
 import {DatastoreErrors} from '../../../core/datastore/model/datastore-errors';
 import {SettingsProvider} from '../../../core/settings/settings-provider';
-import {CatalogUtil} from '../../../core/model/catalog-util';
+import {RemovalUtil} from '../../../core/model/removal-util';
 import {DocumentDatastore} from '../../../core/datastore/document-datastore';
 
 
@@ -49,16 +49,16 @@ export class ResourceDeletion {
     // TODO review deletion of Type resources with children
     // TODO write apidoc for document.project
     private async performDeletion(document: FieldDocument,
-                                  deleteCatalogImages: boolean) {
+                                  deleteRelatedImages: boolean) {
 
         if (document.resource.category === 'TypeCatalog') {
-            await CatalogUtil.remove(
+            await RemovalUtil.remove(
                 this.relationsManager,
                 this.documentDatastore,
                 this.imagestore,
                 this.settingsProvider.getSettings().username,
                 document,
-                document.project === undefined && deleteCatalogImages);
+                document.project === undefined && deleteRelatedImages);
         } else {
             await this.deleteImageWithImageStore(document);
             await this.deleteWithPersistenceManager(document);

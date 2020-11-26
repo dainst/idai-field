@@ -15,6 +15,15 @@ describe('subsystem/catalog-util', () => {
     let persistenceManager: PersistenceManager;
     let imagestore: Imagestore;
     let settingsProvider: SettingsProvider;
+    let projectImageDir: string;
+    let username: string;
+
+
+    function createImageInProjectImageDir(id: string) {
+
+        fs.closeSync(fs.openSync(projectImageDir + id, 'w'));
+        expect(fs.existsSync(projectImageDir + id)).toBeTruthy();
+    }
 
 
     beforeEach(async done => {
@@ -33,37 +42,47 @@ describe('subsystem/catalog-util', () => {
         imagestore = i;
         settingsProvider = s;
 
+        username = settingsProvider.getSettings().username;
+
         spyOn(console, 'error');
         // spyOn(console, 'warn');
 
+        projectImageDir = settingsProvider.getSettings().imagestorePath
+            + settingsProvider.getSettings().selectedProject
+            + '/';
+        fs.mkdirSync(projectImageDir, { recursive: true });
         done();
     });
 
 
-    it('base', async done => {
+    it('delete catalog with images', async done => {
 
-        const dir = settingsProvider.getSettings().imagestorePath
-            + settingsProvider.getSettings().selectedProject
-            + '/'; // TODO OS's
-
-        fs.mkdirSync(dir, { recursive: true });
-        fs.closeSync(fs.openSync(dir + 'i1', 'w'));
-        expect(fs.existsSync(dir + 'i1')).toBeTruthy();
-
-        const t1 = doc('t1', 'TypeCatalog') as FieldDocument;
+        const tc1 = doc('tc1', 'TypeCatalog') as FieldDocument;
+        const t1 = doc('t1', 'Type') as FieldDocument;
         const i1 = doc('i1', 'Image') as ImageDocument;
-        i1.resource.relations = { depicts: ['t1'] };
-        t1.resource.relations = { isDepictedIn: ['i1'], isRecordedIn: [] }
+        const i2 = doc('i2', 'Image') as ImageDocument;
+        i1.resource.relations = { depicts: ['tc1'] };
+        i2.resource.relations = { depicts: ['t1'] };
+        tc1.resource.relations = { isDepictedIn: ['i1'], isRecordedIn: [] };
+        t1.resource.relations = { isDepictedIn: ['i2'], isRecordedIn: [], liesWithin: ['tc1'] };
 
-        await documentDatastore.create(t1, 'test');
-        await documentDatastore.create(i1, 'test')
-        expect((await documentDatastore.find({})).documents.length).toBe(2);
+        createImageInProjectImageDir('i1');
+        createImageInProjectImageDir('i2');
+        await documentDatastore.create(tc1, username);
+        await documentDatastore.create(t1, username);
+        await documentDatastore.create(i1, username)
+        await documentDatastore.create(i2, username)
+
+        expect((await documentDatastore.find({})).documents.length).toBe(4);
+        expect(fs.existsSync(projectImageDir + 'i1')).toBeTruthy();
+        expect(fs.existsSync(projectImageDir + 'i2')).toBeTruthy();
 
         await CatalogUtil.deleteCatalogWithImages(
-            persistenceManager, documentDatastore, imagestore, 'test', t1);
+            persistenceManager, documentDatastore, imagestore, username, tc1);
 
         expect((await documentDatastore.find({})).documents.length).toBe(0);
-        expect(fs.existsSync(dir + 'i1')).not.toBeTruthy();
+        expect(fs.existsSync(projectImageDir + 'i1')).not.toBeTruthy();
+        expect(fs.existsSync(projectImageDir + 'i2')).not.toBeTruthy();
         done();
     });
 

@@ -157,7 +157,7 @@ export async function createApp(projectName = 'testdb', startSync = false) {
     );
 
     const persistenceManager = new PersistenceManager(
-        fieldDocumentDatastore,
+        documentDatastore,
         projectConfiguration,
         descendantsUtility,
         settingsProvider

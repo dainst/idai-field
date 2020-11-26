@@ -1,8 +1,8 @@
 import {DocumentReadDatastore} from '../datastore/document-read-datastore';
 import {ResourceId} from '../constants';
-import {Document, FieldDocument, toResourceId} from 'idai-components-2';
+import {Document, toResourceId} from 'idai-components-2';
 import {Query} from '../datastore/model/query';
-import {flatten, includes, isDefined} from 'tsfun';
+import {flatten, isDefined} from 'tsfun';
 import {ImageRelations} from './relation-constants';
 import {map as asyncMap} from 'tsfun/async';
 import {clone} from 'tsfun/struct';
@@ -50,10 +50,24 @@ export module CatalogUtil {
                                                   datastore: DocumentDatastore,
                                                   imagestore: Imagestore,
                                                   username: string,
-                                                  resourceId: ResourceId) {
+                                                  document: Document,
+                                                  skipImageDeletion = false) {
+
+        if (document.resource.category !== 'TypeCatalog') { // TODO make constant for TypeCatalog
+            throw 'Illegal argument';
+        }
+
+        if (skipImageDeletion) {
+            try {
+                await persistenceManager.remove(document);
+            } catch (e) {
+                console.error("e", e)
+            }
+            return;
+        }
 
         const catalogAndTypes =
-            await getCatalogAndTypes(datastore, resourceId);
+            await getCatalogAndTypes(datastore, document.resource.id);
         const catalogAndTypesIds = catalogAndTypes.map(toResourceId);
 
         for (let doc of catalogAndTypes) {
@@ -71,7 +85,7 @@ export module CatalogUtil {
             return true;
         });
 
-        if (imagestore.getPath() === undefined) {
+        if (imagestore.getPath() === undefined) { // TODO move more to the top of the function
             console.error("imagestore path not set, cannot delete documents");
         } else {
             for (let catalogImage of catalogImages) {

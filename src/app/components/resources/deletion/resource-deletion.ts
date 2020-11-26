@@ -48,26 +48,20 @@ export class ResourceDeletion {
 
 
     // TODO review deletion of Type resources with children
-
-
     // TODO maybe convert catalog-util subsystem test into performDeletion subsystem test
-    // TODO maybe use document.project instead importedCatalogDeletion
+    // TODO write apidoc for document.project
+    // TODO review error handling on catalog deletion
     private async performDeletion(document: FieldDocument,
                                   deleteCatalogImages: boolean) {
 
         if (document.resource.category === 'TypeCatalog') {
-            if (document.project === undefined // TODO write apidoc for document.project
-                && !deleteCatalogImages) {
-                return await this.deleteWithPersistenceManager(document);
-            }
-
             await CatalogUtil.deleteCatalogWithImages(
                 this.persistenceManager,
                 this.documentDatastore,
                 this.imagestore,
                 this.settingsProvider.getSettings().username,
-                document.resource.id);
-
+                document,
+                document.project === undefined && deleteCatalogImages);
         } else {
             await this.deleteImageWithImageStore(document);
             await this.deleteWithPersistenceManager(document);

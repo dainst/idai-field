@@ -82,7 +82,7 @@ describe('subsystem/image-relations-manager', () => {
         expect(fs.existsSync(projectImageDir + 'i1')).toBeTruthy();
         expect(fs.existsSync(projectImageDir + 'i2')).toBeTruthy();
 
-        await imageRelationsManager.remove(username, tc1);
+        await imageRelationsManager.remove(tc1);
 
         expect((await documentDatastore.find({})).documents.length).toBe(0);
         expect(fs.existsSync(projectImageDir + 'i1')).not.toBeTruthy();
@@ -113,7 +113,7 @@ describe('subsystem/image-relations-manager', () => {
         expect(fs.existsSync(projectImageDir + 'i1')).toBeTruthy();
         expect(fs.existsSync(projectImageDir + 'i2')).toBeTruthy();
 
-        await imageRelationsManager.remove(username, t1);
+        await imageRelationsManager.remove(t1);
 
         const documents = (await documentDatastore.find({})).documents;
         expect(documents.length).toBe(2);
@@ -149,7 +149,7 @@ describe('subsystem/image-relations-manager', () => {
         expect(fs.existsSync(projectImageDir + 'i1')).toBeTruthy();
         expect(fs.existsSync(projectImageDir + 'i2')).toBeTruthy();
 
-        await imageRelationsManager.remove(username, tc1);
+        await imageRelationsManager.remove(tc1);
 
         const documents = (await documentDatastore.find({})).documents;
         expect(documents.length).toBe(2);
@@ -182,7 +182,7 @@ describe('subsystem/image-relations-manager', () => {
         expect(fs.existsSync(projectImageDir + 'i1')).toBeTruthy();
         expect(fs.existsSync(projectImageDir + 'i2')).toBeTruthy();
 
-        await imageRelationsManager.remove(username, tc1, true);
+        await imageRelationsManager.remove(tc1, true);
 
         const documents = (await documentDatastore.find({})).documents;
         expect(documents.length).toBe(2);

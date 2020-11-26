@@ -8,9 +8,7 @@ import {DeletionInProgressModalComponent} from './deletion-in-progress-modal.com
 import {Imagestore} from '../../../core/images/imagestore/imagestore';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
 import {DatastoreErrors} from '../../../core/datastore/model/datastore-errors';
-import {SettingsProvider} from '../../../core/settings/settings-provider';
 import {ImageRelationsManager} from '../../../core/model/image-relations-manager';
-import {DocumentDatastore} from '../../../core/datastore/document-datastore';
 
 
 /**
@@ -24,8 +22,7 @@ export class ResourceDeletion {
                 private relationsManager: RelationsManager,
                 private imageRelationsManager: ImageRelationsManager,
                 private imagestore: Imagestore,
-                private projectConfiguration: ProjectConfiguration,
-                private settingsProvider: SettingsProvider) {}
+                private projectConfiguration: ProjectConfiguration) {}
 
 
     public async delete(document: FieldDocument) {
@@ -48,12 +45,10 @@ export class ResourceDeletion {
     // TODO we could double check that all documents have document.project
     // TODO review deletion of Type resources with children
     // TODO write apidoc for document.project
-    private async performDeletion(document: FieldDocument,
-                                  deleteRelatedImages: boolean) {
+    private async performDeletion(document: FieldDocument, deleteRelatedImages: boolean) {
 
         if (document.resource.category === 'TypeCatalog') {
             await this.imageRelationsManager.remove(
-                this.settingsProvider.getSettings().username,
                 document,
                 document.project === undefined && deleteRelatedImages);
         } else {

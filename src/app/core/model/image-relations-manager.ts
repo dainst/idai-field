@@ -48,8 +48,7 @@ export class ImageRelationsManager {
 
 
     // TODO generalize to other document types
-    public async remove(username: string, // TODO get from settings
-                        document: Document,
+    public async remove(document: Document,
                         skipImageDeletion = false) {
 
         // TODO replace this with checking for document not being an image category document

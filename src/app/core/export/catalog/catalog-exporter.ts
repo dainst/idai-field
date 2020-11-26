@@ -2,6 +2,8 @@ import {DocumentReadDatastore} from '../../datastore/document-read-datastore';
 import {getExportDocuments} from './get-export-documents';
 import {Settings} from '../../settings/settings';
 import {ResourceId} from '../../constants';
+import {DescendantsUtility} from '../../model/descendants-utility';
+import {PersistenceManager} from '../../model/persistence-manager';
 
 const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
 
@@ -9,12 +11,14 @@ const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
 export module CatalogExporter {
 
     export async function performExport(datastore: DocumentReadDatastore,
+                                        descendantsUtility: DescendantsUtility,
+                                        persistenceManager: PersistenceManager,
                                         outputFilePath: string,
                                         catalogId: string,
                                         settings: Settings): Promise<void> {
 
         const [exportDocuments, imageResourceIds] =
-            await getExportDocuments(datastore, catalogId, settings.selectedProject);
+            await getExportDocuments(datastore, descendantsUtility, persistenceManager, catalogId, settings.selectedProject);
 
         copyImageFiles(outputFilePath, imageResourceIds, settings);
 

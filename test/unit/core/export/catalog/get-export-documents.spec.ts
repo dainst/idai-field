@@ -5,10 +5,14 @@ import {makeDocumentsLookup} from '../../../../../src/app/core/import/import/uti
 describe('getExportDocuments', () => {
 
     let datastore;
+    let descendantsUtility;
+    let persistenceManager;
 
     beforeEach(() => {
 
         datastore = jasmine.createSpyObj('datastore', ['get', 'find']);
+        descendantsUtility = jasmine.createSpyObj('descendantsUtility', ['fetchChildren']);
+        persistenceManager = jasmine.createSpyObj('persistenceManager', ['getRelatedImageDocuments']);
 
         const images: Array<any> = [
             {
@@ -44,15 +48,15 @@ describe('getExportDocuments', () => {
         datastore.get.and.callFake(id => {
             return documentsLookup[id];
         });
-        datastore.find.and.callFake(_query => {
-           return { documents: [documentsLookup['T1']] };
-        });
+        descendantsUtility.fetchChildren.and.returnValue([documents[1]]);
+        persistenceManager.getRelatedImageDocuments.and.returnValue(images);
     });
 
 
     it('basic', async done => {
 
-        const [exportDocuments, imageResourceIds] = await getExportDocuments(datastore, 'C1', 'test-project');
+        const [exportDocuments, imageResourceIds] = await getExportDocuments(
+            datastore, descendantsUtility, persistenceManager, 'C1', 'test-project');
         const exportDocumentsLookup = makeDocumentsLookup(exportDocuments);
         expect(exportDocuments.length).toBe(3);
         expect(exportDocumentsLookup['C1']['project']).toBe('test-project');

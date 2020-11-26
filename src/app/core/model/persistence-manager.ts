@@ -6,11 +6,10 @@ import {ConnectedDocsWriter} from './connected-docs-writer';
 import {clone} from '../util/object-util';
 import {ProjectConfiguration} from '../configuration/project-configuration';
 import {HierarchicalRelations, ImageRelations} from './relation-constants';
-import RECORDED_IN = HierarchicalRelations.RECORDEDIN;
 import {DescendantsUtility} from './descendants-utility';
 import {SettingsProvider} from '../settings/settings-provider';
 import {map as asyncMap} from 'tsfun/async';
-import {map, reduce} from 'tsfun/associative';
+import RECORDED_IN = HierarchicalRelations.RECORDEDIN;
 import DEPICTS = ImageRelations.DEPICTS;
 import ISDEPICTEDIN = ImageRelations.ISDEPICTEDIN;
 
@@ -105,8 +104,7 @@ export class PersistenceManager {
     }
 
 
-    // TODO remove duplication with catalog util get related images
-    private async getRelatedImageDocuments(documents: Array<Document>): Promise<Array<Document>> {
+    public async getRelatedImageDocuments(documents: Array<Document>): Promise<Array<Document>> {
 
         const documentsIds = documents.map(toResourceId);
         const idsOfRelatedDocuments = flatten(

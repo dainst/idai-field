@@ -55,18 +55,20 @@ export module CatalogUtil {
                                  datastore: DocumentDatastore,
                                  imagestore: Imagestore,
                                  username: string,
-                                 document: Document,
+                                 typeOrTypeCatalogDocument: Document,
                                  skipImageDeletion = false) {
 
-        if (document.resource.category !== TYPE_CATALOG
-            && document.resource.category !== TYPE) throw 'illegal argument - document must be either Type or TypeCatalog';
+        if (typeOrTypeCatalogDocument.resource.category !== TYPE_CATALOG
+            && typeOrTypeCatalogDocument.resource.category !== TYPE) {
+            throw 'illegal argument - document must be either Type or TypeCatalog';
+        }
 
         if (skipImageDeletion) {
-            await persistenceManager.remove(document);
+            await persistenceManager.remove(typeOrTypeCatalogDocument);
             return;
         }
 
-        const catalogDocuments = await getCatalogDocuments(datastore, document.resource.id);
+        const catalogDocuments = await getCatalogDocuments(datastore, typeOrTypeCatalogDocument.resource.id);
 
         const catalogAndTypesIds = catalogDocuments.map(toResourceId);
         const catalogImages =

@@ -11,6 +11,8 @@ import {DescendantsUtility} from './descendants-utility';
 import {SettingsProvider} from '../settings/settings-provider';
 import {map as asyncMap} from 'tsfun/async';
 import {map, reduce} from 'tsfun/associative';
+import DEPICTS = ImageRelations.DEPICTS;
+import ISDEPICTEDIN = ImageRelations.ISDEPICTEDIN;
 
 
 @Injectable()
@@ -71,7 +73,7 @@ export class PersistenceManager {
      * this document.
      * Deletes all corresponding inverse relations.
      *
-     * @returns leftovers. Leftovers are documents which are connected to one of the documents of the hierarchy of
+     * @returns leftovers. Leftovers are image documents which are connected to one of the documents of the hierarchy of
      *   the deleted documents, which are not connected to any other documents except those to be deleted.
      *
      * @throws
@@ -82,37 +84,35 @@ export class PersistenceManager {
     public async remove(document: Document) {
 
         const documentsToBeDeleted = (await this.descendantsUtility.fetchChildren(document)).concat([document]);
+        for (let document of documentsToBeDeleted) await this.removeWithConnectedDocuments(document);
+        return this.getLeftovers(documentsToBeDeleted);
+    }
+
+
+    private async getLeftovers(documentsToBeDeleted: Array<Document>) {
+
         const idsOfDocumentsToBeDeleted = documentsToBeDeleted.map(toResourceId);
 
-        const documentsConnectedExclusivelyToThoseToBeDeleted = [];
-        for (let targetDocument of (await this.getRelatedDocuments(documentsToBeDeleted))) {
-
-            // TODO handle isRecordedIn ?
-
-            let exclusivelyConnectedToDocumentsToBeDeleted = true;
-            const allTargetIds = flatten(map(targetDocument.resource.relations, identity) as any) as any; // TODO extract function
-            for (let targetId of allTargetIds) {
-                if (!idsOfDocumentsToBeDeleted.includes(targetId)) exclusivelyConnectedToDocumentsToBeDeleted = false;
+        const leftovers = [];
+        for (let imageDocument of (await this.getRelatedImageDocuments(documentsToBeDeleted))) {
+            let depictsOnlyDocumentsToBeDeleted = true;
+            for (let depictsTargetId of imageDocument.resource.relations[DEPICTS]) {
+                if (!idsOfDocumentsToBeDeleted.includes(depictsTargetId)) depictsOnlyDocumentsToBeDeleted = false;
             }
-            if (exclusivelyConnectedToDocumentsToBeDeleted) documentsConnectedExclusivelyToThoseToBeDeleted.push(targetDocument);
+            if (depictsOnlyDocumentsToBeDeleted) leftovers.push(imageDocument);
         }
-
-        for (let document of documentsToBeDeleted) await this.removeWithConnectedDocuments(document);
-
-        return documentsConnectedExclusivelyToThoseToBeDeleted;
+        return leftovers;
     }
 
 
     // TODO remove duplication with catalog util get related images
-    private async getRelatedDocuments(documents: Array<Document>): Promise<Array<Document>> {
+    private async getRelatedImageDocuments(documents: Array<Document>): Promise<Array<Document>> {
 
         const documentsIds = documents.map(toResourceId);
         const idsOfRelatedDocuments = flatten(
             documents
-                .map(document => {
-                    return flatten(map(document.resource.relations, identity) as any) as any;
-                })
-                .filter(isDefined)) // TODO review
+                .map(document => document.resource.relations[ISDEPICTEDIN])
+                .filter(isDefined))
             .filter(isNot(includedIn(documentsIds)));
 
         return await asyncMap(idsOfRelatedDocuments, async id => {

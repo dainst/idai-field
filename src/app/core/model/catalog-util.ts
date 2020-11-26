@@ -9,9 +9,14 @@ import {clone} from 'tsfun/struct';
 import {DocumentDatastore} from '../datastore/document-datastore';
 import {Imagestore} from '../images/imagestore/imagestore';
 import {PersistenceManager} from './persistence-manager';
+import {CategoryConstants} from './category-constants';
 
 
+// TODO handle errors in all functions
 export module CatalogUtil {
+
+    import TYPE_CATALOG = CategoryConstants.TYPE_CATALOG;
+    import TYPE = CategoryConstants.TYPE;
 
     export async function getCatalogAndTypes(datastore: DocumentReadDatastore,
                                              catalogId: ResourceId): Promise<Array<Document>> {
@@ -25,7 +30,7 @@ export module CatalogUtil {
                 }
             }
         };
-        const types = (await datastore.find(typesQuery)).documents; // TODO handle errors
+        const types = (await datastore.find(typesQuery)).documents;
         return [typeCatalog].concat(types);
     }
 
@@ -39,13 +44,11 @@ export module CatalogUtil {
                 .filter(isDefined));
 
         return await asyncMap(idsOfRelatedDocuments, async id => {
-            // TODO handle error
             return clone(await datastore.get(id));
         });
     }
 
 
-    // TODO we could double check that all documents have document.project
     export async function deleteCatalogWithImages(persistenceManager: PersistenceManager,
                                                   datastore: DocumentDatastore,
                                                   imagestore: Imagestore,
@@ -53,49 +56,35 @@ export module CatalogUtil {
                                                   document: Document,
                                                   skipImageDeletion = false) {
 
-        if (document.resource.category !== 'TypeCatalog') { // TODO make constant for TypeCatalog
-            throw 'Illegal argument';
-        }
+        if (document.resource.category !== TYPE_CATALOG
+            && document.resource.category !== TYPE) throw 'illegal argument - document must be either Type or TypeCatalog';
 
         if (skipImageDeletion) {
-            try {
-                await persistenceManager.remove(document);
-            } catch (e) {
-                console.error("e", e)
-            }
+            await persistenceManager.remove(document);
             return;
         }
 
         const catalogAndTypes =
             await getCatalogAndTypes(datastore, document.resource.id);
+
         const catalogAndTypesIds = catalogAndTypes.map(toResourceId);
+        const catalogImages =
+            (await getCatalogImages(datastore, catalogAndTypes))
+                .filter(catalogImage => {
+                    for (let c of catalogImage.resource.relations.depicts) {
+                        if (!catalogAndTypesIds.includes(c)) return false;
+                    }
+                    return true;
+                });
+        if (catalogImages.length > 0
+            && imagestore.getPath() === undefined) throw 'illegal state - imagestore.getPath() must not return undefined';
 
-        for (let doc of catalogAndTypes) {
-            await datastore.remove(doc);
-        }
 
-        let catalogImages =
-            await getCatalogImages(datastore, catalogAndTypes);
+        for (let doc of catalogAndTypes) await datastore.remove(doc);
 
-        // TODO filter out the images which are not only related to catalog resources
-        catalogImages = catalogImages.filter(catalogImage => {
-            for (let c of catalogImage.resource.relations.depicts) {
-                if (!catalogAndTypesIds.includes(c)) return false;
-            }
-            return true;
-        });
-
-        if (imagestore.getPath() === undefined) { // TODO move more to the top of the function
-            console.error("imagestore path not set, cannot delete documents");
-        } else {
-            for (let catalogImage of catalogImages) {
-                try {
-                    await imagestore.remove(catalogImage.resource.id);
-                    await datastore.remove(catalogImage);
-                } catch (err) {
-                    console.error("could not delete image", err);
-                }
-            }
+        for (let catalogImage of catalogImages) {
+            await imagestore.remove(catalogImage.resource.id);
+            await datastore.remove(catalogImage);
         }
     }
 }

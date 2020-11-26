@@ -47,6 +47,7 @@ export class ResourceDeletion {
     }
 
 
+    // TODO we could double check that all documents have document.project
     // TODO review deletion of Type resources with children
     // TODO maybe convert catalog-util subsystem test into performDeletion subsystem test
     // TODO write apidoc for document.project

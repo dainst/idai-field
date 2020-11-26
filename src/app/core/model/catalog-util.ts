@@ -1,8 +1,8 @@
 import {DocumentReadDatastore} from '../datastore/document-read-datastore';
 import {ResourceId} from '../constants';
-import {Document, FieldDocument} from 'idai-components-2';
+import {Document, FieldDocument, toResourceId} from 'idai-components-2';
 import {Query} from '../datastore/model/query';
-import {flatten, isDefined} from 'tsfun';
+import {flatten, includes, isDefined} from 'tsfun';
 import {ImageRelations} from './relation-constants';
 import {map as asyncMap} from 'tsfun/async';
 import {clone} from 'tsfun/struct';
@@ -54,13 +54,22 @@ export module CatalogUtil {
 
         const catalogAndTypes =
             await getCatalogAndTypes(datastore, resourceId);
+        const catalogAndTypesIds = catalogAndTypes.map(toResourceId);
 
         for (let doc of catalogAndTypes) {
             await datastore.remove(doc);
         }
 
-        const catalogImages =
+        let catalogImages =
             await getCatalogImages(datastore, catalogAndTypes);
+
+        // TODO filter out the images which are not only related to catalog resources
+        catalogImages = catalogImages.filter(catalogImage => {
+            for (let c of catalogImage.resource.relations.depicts) {
+                if (!catalogAndTypesIds.includes(c)) return false;
+            }
+            return true;
+        });
 
         if (imagestore.getPath() === undefined) {
             console.error("imagestore path not set, cannot delete documents");

@@ -50,6 +50,7 @@ export class ResourceDeletion {
     // TODO review deletion of Type resources with children
 
 
+    // TODO maybe convert catalog-util subsystem test into performDeletion subsystem test
     // TODO maybe use document.project instead importedCatalogDeletion
     private async performDeletion(document: FieldDocument,
                                   deleteCatalogImages: boolean) {
@@ -60,7 +61,6 @@ export class ResourceDeletion {
                 return await this.deleteWithPersistenceManager(document);
             }
 
-            // TODO in case it is is an owned catalog, make sure to retain images which are linked to other resources as well; write a test for the function
             await CatalogUtil.deleteCatalogWithImages(
                 this.persistenceManager,
                 this.documentDatastore,

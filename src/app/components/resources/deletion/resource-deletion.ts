@@ -9,7 +9,7 @@ import {Imagestore} from '../../../core/images/imagestore/imagestore';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
 import {DatastoreErrors} from '../../../core/datastore/model/datastore-errors';
 import {SettingsProvider} from '../../../core/settings/settings-provider';
-import {RemovalUtil} from '../../../core/model/removal-util';
+import {ImageRelationsManager} from '../../../core/model/image-relations-manager';
 import {DocumentDatastore} from '../../../core/datastore/document-datastore';
 
 
@@ -52,7 +52,7 @@ export class ResourceDeletion {
                                   deleteRelatedImages: boolean) {
 
         if (document.resource.category === 'TypeCatalog') {
-            await RemovalUtil.remove(
+            await ImageRelationsManager.remove(
                 this.relationsManager,
                 this.documentDatastore,
                 this.imagestore,

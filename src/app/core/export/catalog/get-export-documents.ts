@@ -4,6 +4,7 @@ import {Name, ResourceId} from '../../constants';
 import {includedIn} from 'tsfun';
 import {ImageRelations} from '../../model/relation-constants';
 import {RelationsManager} from '../../model/relations-manager';
+import {ImageRelationsManager} from '../../model/image-relations-manager';
 
 
 export async function getExportDocuments(datastore: DocumentReadDatastore,
@@ -14,7 +15,7 @@ export async function getExportDocuments(datastore: DocumentReadDatastore,
     const catalog = await datastore.get(catalogId);
     const catalogAndTypes = (await relationsManager.fetchChildren(catalog)).concat(catalog);
     const relatedImages = cleanImageDocuments(
-        await relationsManager.getRelatedImageDocuments(catalogAndTypes),
+        await ImageRelationsManager.getRelatedImageDocuments(datastore, catalogAndTypes),
         catalogAndTypes.map(toResourceId)
         );
     return [

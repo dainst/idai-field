@@ -1,18 +1,15 @@
 import {Injectable} from '@angular/core';
-import {sameset, isArray, isNot, isUndefinedOrEmpty, on, isDefined, to, flatten, includedIn} from 'tsfun';
-import {Document, NewDocument, toResourceId} from 'idai-components-2';
+import {isArray, isDefined, isNot, isUndefinedOrEmpty, on, sameset, to} from 'tsfun';
+import {Document, NewDocument} from 'idai-components-2';
 import {DocumentDatastore} from '../datastore/document-datastore';
 import {ConnectedDocsWriter} from './connected-docs-writer';
 import {clone} from '../util/object-util';
 import {ProjectConfiguration} from '../configuration/project-configuration';
 import {HierarchicalRelations, ImageRelations} from './relation-constants';
 import {SettingsProvider} from '../settings/settings-provider';
-import {map as asyncMap} from 'tsfun/async';
-import RECORDED_IN = HierarchicalRelations.RECORDEDIN;
-import DEPICTS = ImageRelations.DEPICTS;
-import ISDEPICTEDIN = ImageRelations.ISDEPICTEDIN;
 import {FindIdsResult, FindResult} from '../datastore/model/read-datastore';
 import {Query} from '../datastore/model/query';
+import RECORDED_IN = HierarchicalRelations.RECORDEDIN;
 
 
 @Injectable()
@@ -72,9 +69,6 @@ export class RelationsManager {
      * this document.
      * Deletes all corresponding inverse relations.
      *
-     * @returns leftovers. Leftovers are image documents which are connected to one of the documents of the hierarchy of
-     *   the deleted documents, which are not connected to any other documents except those to be deleted.
-     *
      * @throws
      *   [DatastoreErrors.DOCUMENT_NO_RESOURCE_ID] - if document has no resource id
      *   [DatastoreErrors.DOCUMENT_DOES_NOT_EXIST_ERROR] - if document has a resource id, but does not exist in the db
@@ -84,7 +78,6 @@ export class RelationsManager {
 
         const documentsToBeDeleted = (await this.fetchChildren(document)).concat([document]);
         for (let document of documentsToBeDeleted) await this.removeWithConnectedDocuments(document);
-        return this.getLeftovers(documentsToBeDeleted);
     }
 
 
@@ -99,37 +92,6 @@ export class RelationsManager {
         return !document.resource.id
             ? 0
             : (await this.findDescendants(document, true)).totalCount;
-    }
-
-
-    public async getRelatedImageDocuments(documents: Array<Document>): Promise<Array<Document>> {
-
-        const documentsIds = documents.map(toResourceId);
-        const idsOfRelatedDocuments = flatten(
-            documents
-                .map(document => document.resource.relations[ISDEPICTEDIN])
-                .filter(isDefined))
-            .filter(isNot(includedIn(documentsIds)));
-
-        return await asyncMap(idsOfRelatedDocuments, async id => {
-            return await this.datastore.get(id as any);
-        });
-    }
-
-
-    private async getLeftovers(documentsToBeDeleted: Array<Document>) {
-
-        const idsOfDocumentsToBeDeleted = documentsToBeDeleted.map(toResourceId);
-
-        const leftovers = [];
-        for (let imageDocument of (await this.getRelatedImageDocuments(documentsToBeDeleted))) {
-            let depictsOnlyDocumentsToBeDeleted = true;
-            for (let depictsTargetId of imageDocument.resource.relations[DEPICTS]) {
-                if (!idsOfDocumentsToBeDeleted.includes(depictsTargetId)) depictsOnlyDocumentsToBeDeleted = false;
-            }
-            if (depictsOnlyDocumentsToBeDeleted) leftovers.push(imageDocument);
-        }
-        return leftovers;
     }
 
 

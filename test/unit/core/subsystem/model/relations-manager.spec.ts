@@ -12,7 +12,7 @@ import {DocumentDatastore} from '../../../../../src/app/core/datastore/document-
 describe('subsystem/relations-manager',() => {
 
     let documentDatastore: DocumentDatastore;
-    let persistenceManager: RelationsManager;
+    let relationsManager: RelationsManager;
     let settingsProvider: SettingsProvider;
 
 
@@ -22,12 +22,12 @@ describe('subsystem/relations-manager',() => {
 
         const {
             documentDatastore: d,
-            persistenceManager: p,
+            relationsManager: r,
             settingsProvider: s
         } = await createApp();
 
         documentDatastore = d;
-        persistenceManager = p;
+        relationsManager = r;
         settingsProvider = s;
 
         spyOn(console, 'error');
@@ -77,7 +77,7 @@ describe('subsystem/relations-manager',() => {
         const [_, d2] = await createTestResourcesForRemoveTests();
 
         expect((await documentDatastore.find({})).totalCount).toBe(7);
-        await persistenceManager.remove(d2);
+        await relationsManager.remove(d2);
         const result = (await documentDatastore.find({})).documents.map(toResourceId);
         expect(sameset(result, ['id1', 'id5', 'id6', 'id7'])).toBeTruthy();
         done();
@@ -89,19 +89,9 @@ describe('subsystem/relations-manager',() => {
         const [d1, _] = await createTestResourcesForRemoveTests();
 
         expect((await documentDatastore.find({})).totalCount).toBe(7);
-        await persistenceManager.remove(d1);
+        await relationsManager.remove(d1);
         const result = (await documentDatastore.find({})).documents.map(toResourceId);
         expect(sameset(result, ['id5', 'id6', 'id7'])).toBeTruthy();
-        done();
-    });
-
-
-    it('return leftover resources', async done => {
-
-        const [d1, _] = await createTestResourcesForRemoveTests();
-        expect((await documentDatastore.find({})).totalCount).toBe(7);
-        const leftovers = (await persistenceManager.remove(d1)).map(toResourceId);
-        expect(leftovers).toEqual(['id5']); // id6 is connected to id4, but also to id7, which is the reason why it is not listed as a leftover
         done();
     });
 });

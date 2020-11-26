@@ -151,7 +151,7 @@ export async function createApp(projectName = 'testdb', startSync = false) {
         messages
     );
 
-    const persistenceManager = new RelationsManager(
+    const relationsManager = new RelationsManager(
         documentDatastore,
         projectConfiguration,
         settingsProvider
@@ -159,7 +159,7 @@ export async function createApp(projectName = 'testdb', startSync = false) {
 
     const documentHolder = new DocumentHolder(
         projectConfiguration,
-        persistenceManager,
+        relationsManager,
         new Validator(projectConfiguration, (q: Query) => fieldDocumentDatastore.find(q)),
         documentDatastore
     );
@@ -181,7 +181,7 @@ export async function createApp(projectName = 'testdb', startSync = false) {
         stateSerializer,
         tabManager,
         imageOverviewFacade,
-        persistenceManager,
+        relationsManager,
         imagestore
     }
 }

@@ -50,12 +50,10 @@ export module CatalogUtil {
                                                   datastore: DocumentDatastore,
                                                   imagestore: Imagestore,
                                                   username: string,
-                                                  document: FieldDocument // TODO pass id instead document
-    ) {
-
+                                                  resourceId: ResourceId) {
 
         const catalogAndTypes =
-            await getCatalogAndTypes(datastore, document.resource.id);
+            await getCatalogAndTypes(datastore, resourceId);
 
         for (let doc of catalogAndTypes) {
             await datastore.remove(doc);

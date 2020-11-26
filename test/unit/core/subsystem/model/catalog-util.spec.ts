@@ -78,7 +78,7 @@ describe('subsystem/catalog-util', () => {
         expect(fs.existsSync(projectImageDir + 'i2')).toBeTruthy();
 
         await CatalogUtil.deleteCatalogWithImages(
-            persistenceManager, documentDatastore, imagestore, username, tc1);
+            persistenceManager, documentDatastore, imagestore, username, tc1.resource.id);
 
         expect((await documentDatastore.find({})).documents.length).toBe(0);
         expect(fs.existsSync(projectImageDir + 'i1')).not.toBeTruthy();

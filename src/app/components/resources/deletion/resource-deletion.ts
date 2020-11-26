@@ -66,7 +66,7 @@ export class ResourceDeletion {
                 this.documentDatastore,
                 this.imagestore,
                 this.settingsProvider.getSettings().username,
-                document);
+                document.resource.id);
 
         } else {
             await this.deleteImageWithImageStore(document);

@@ -9,6 +9,8 @@ import {IndexFacade} from '../../datastore/index/index-facade';
 import {ProjectConfiguration} from '../../configuration/project-configuration';
 import {M} from '../../../components/messages/m';
 import {Messages} from '../../../components/messages/messages';
+import {SyncService} from '../../sync/sync-service';
+import {SyncStatus} from '../../sync/sync-process';
 
 
 export type ResourcesViewMode = 'map'|'list'|'types';
@@ -31,7 +33,8 @@ export class ViewFacade {
         private resourcesStateManager: ResourcesStateManager,
         private loading: Loading,
         private indexFacade: IndexFacade,
-        private messages: Messages
+        private messages: Messages,
+        private syncService: SyncService
     ) {
         this.documentsManager = new DocumentsManager(
             datastore,
@@ -139,7 +142,7 @@ export class ViewFacade {
         } catch (err) {
             await this.populateDocumentList();
             await this.rebuildNavigationPath();
-            this.messages.add([M.RESOURCES_ERROR_UNKNOWN_RESOURCE_DELETED]);
+            this.messages.add([this.getMissingResourceMessage()]);
         }
     }
 
@@ -155,7 +158,7 @@ export class ViewFacade {
             if (document && typeof(document) !== 'string') {
                 this.messages.add([M.RESOURCES_ERROR_RESOURCE_DELETED, document.resource.identifier]);
             } else {
-                this.messages.add([M.RESOURCES_ERROR_UNKNOWN_RESOURCE_DELETED]);
+                this.messages.add([this.getMissingResourceMessage()]);
             }
         }
     }
@@ -168,7 +171,15 @@ export class ViewFacade {
         } catch (err) {
             await this.populateDocumentList();
             await this.rebuildNavigationPath();
-            this.messages.add([M.RESOURCES_ERROR_UNKNOWN_RESOURCE_DELETED]);
+            this.messages.add([this.getMissingResourceMessage()]);
         }
+    }
+
+
+    private getMissingResourceMessage(): string {
+
+        return this.syncService.getStatus() === SyncStatus.Pulling
+            ? M.RESOURCES_ERROR_RESOURCE_MISSING_DURING_SYNCING
+            : M.RESOURCES_ERROR_UNKNOWN_RESOURCE_DELETED;
     }
 }

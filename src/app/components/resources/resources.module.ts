@@ -53,6 +53,7 @@ import {TypeGridComponent} from './types/type-grid.component';
 import {TypeIconComponent} from './types/type-icon.component';
 import {Messages} from '../messages/messages';
 import {SettingsProvider} from '../../core/settings/settings-provider';
+import {SyncService} from '../../core/sync/sync-service';
 
 
 const remote = typeof window !== 'undefined'
@@ -151,7 +152,8 @@ const remote = typeof window !== 'undefined'
                 resourcesStateManager: ResourcesStateManager,
                 loading: Loading,
                 indexFacade: IndexFacade,
-                messages: Messages
+                messages: Messages,
+                syncService: SyncService
             ) {
                 return new ViewFacade(
                     projectConfiguration,
@@ -160,7 +162,8 @@ const remote = typeof window !== 'undefined'
                     resourcesStateManager,
                     loading,
                     indexFacade,
-                    messages
+                    messages,
+                    syncService
                 );
             },
             deps: [
@@ -170,7 +173,8 @@ const remote = typeof window !== 'undefined'
                 ResourcesStateManager,
                 Loading,
                 IndexFacade,
-                Messages
+                Messages,
+                SyncService
             ]
         },
     ],

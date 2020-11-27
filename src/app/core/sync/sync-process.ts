@@ -1,5 +1,6 @@
 import {Observable} from 'rxjs';
 
+
 export interface SyncProcess {
 
     url: string;

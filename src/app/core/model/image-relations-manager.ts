@@ -48,17 +48,12 @@ export class ImageRelationsManager {
 
 
     // TODO generalize to other document types
-    public async remove(document: Document,
-                        skipImageDeletion = false) {
+    public async remove(document: Document) {
 
         // TODO replace this with checking for document not being an image category document
         if (document.resource.category !== TYPE_CATALOG
             && document.resource.category !== TYPE) {
             throw 'illegal argument - document must be either Type or TypeCatalog';
-        }
-        if (skipImageDeletion) {
-            await this.relationsManager.remove(document);
-            return;
         }
 
         // TODO deduplicate the following line with the first one in relationsManager.remove

@@ -158,38 +158,4 @@ describe('subsystem/image-relations-manager', () => {
         expect(fs.existsSync(projectImageDir + 'i2')).toBeTruthy();
         done();
     });
-
-
-    it('skip image deletion', async done => {
-
-        const tc1 = doc('tc1', 'TypeCatalog') as FieldDocument;
-        const t1 = doc('t1', 'Type') as FieldDocument;
-        const i1 = doc('i1', 'Image') as ImageDocument;
-        const i2 = doc('i2', 'Image') as ImageDocument;
-        i1.resource.relations = { depicts: ['tc1'] };
-        i2.resource.relations = { depicts: ['t1'] };
-        tc1.resource.relations = { isDepictedIn: ['i1'], isRecordedIn: [] };
-        t1.resource.relations = { isDepictedIn: ['i2'], isRecordedIn: [], liesWithin: ['tc1'] };
-
-        createImageInProjectImageDir('i1');
-        createImageInProjectImageDir('i2');
-        await documentDatastore.create(tc1, username);
-        await documentDatastore.create(t1, username);
-        await documentDatastore.create(i1, username);
-        await documentDatastore.create(i2, username);
-
-        expect((await documentDatastore.find({})).documents.length).toBe(4);
-        expect(fs.existsSync(projectImageDir + 'i1')).toBeTruthy();
-        expect(fs.existsSync(projectImageDir + 'i2')).toBeTruthy();
-
-        await imageRelationsManager.remove(tc1, true);
-
-        const documents = (await documentDatastore.find({})).documents;
-        expect(documents.length).toBe(2);
-        expect(sameset(documents.map(toResourceId), ['i2', 'i1'])).toBeTruthy();
-        expect(flatten(documents.map(_ => _.resource.relations.depicts))).toEqual([]);
-        expect(fs.existsSync(projectImageDir + 'i1')).toBeTruthy();
-        expect(fs.existsSync(projectImageDir + 'i2')).toBeTruthy();
-        done();
-    });
 });

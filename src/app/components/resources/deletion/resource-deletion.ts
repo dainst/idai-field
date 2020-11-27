@@ -48,9 +48,13 @@ export class ResourceDeletion {
     private async performDeletion(document: FieldDocument, deleteRelatedImages: boolean) {
 
         if (document.resource.category === 'TypeCatalog') {
-            await this.imageRelationsManager.remove(
-                document,
-                document.project === undefined && deleteRelatedImages);
+
+            if (document.resource.project !== undefined || deleteRelatedImages) {
+                await this.imageRelationsManager.remove(document);
+            } else {
+                await this.relationsManager.remove(document);
+            }
+
         } else {
             await this.deleteImageWithImageStore(document);
             await this.deleteWithPersistenceManager(document);

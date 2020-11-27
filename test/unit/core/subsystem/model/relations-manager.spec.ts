@@ -1,5 +1,5 @@
-import {sameset} from 'tsfun';
-import {FieldDocument, toResourceId} from 'idai-components-2';
+import {flatten, sameset} from 'tsfun';
+import {FieldDocument, ImageDocument, toResourceId} from 'idai-components-2';
 import {createApp, setupSyncTestDb} from '../subsystem-helper';
 import {doc} from '../../../test-helpers';
 import {RelationsManager} from '../../../../../src/app/core/model/relations-manager';
@@ -15,7 +15,6 @@ describe('subsystem/relations-manager',() => {
     let documentDatastore: DocumentDatastore;
     let relationsManager: RelationsManager;
     let settingsProvider: SettingsProvider;
-
 
     beforeEach(async done => {
 
@@ -93,6 +92,35 @@ describe('subsystem/relations-manager',() => {
         await relationsManager.remove(d1);
         const result = (await documentDatastore.find({})).documents.map(toResourceId);
         expect(sameset(result, ['id5', 'id6', 'id7'])).toBeTruthy();
+        done();
+    });
+
+
+    // TODO review: this was moved from image-relations-manager
+    it('skip image deletion', async done => {
+
+        const tc1 = doc('tc1', 'TypeCatalog') as FieldDocument;
+        const t1 = doc('t1', 'Type') as FieldDocument;
+        const i1 = doc('i1', 'Image') as ImageDocument;
+        const i2 = doc('i2', 'Image') as ImageDocument;
+        i1.resource.relations = { depicts: ['tc1'] };
+        i2.resource.relations = { depicts: ['t1'] };
+        tc1.resource.relations = { isDepictedIn: ['i1'], isRecordedIn: [] };
+        t1.resource.relations = { isDepictedIn: ['i2'], isRecordedIn: [], liesWithin: ['tc1'] };
+
+        await documentDatastore.create(tc1, 'test');
+        await documentDatastore.create(t1, 'test');
+        await documentDatastore.create(i1, 'test');
+        await documentDatastore.create(i2, 'test');
+
+        expect((await documentDatastore.find({})).documents.length).toBe(4);
+
+        await relationsManager.remove(tc1);
+
+        const documents = (await documentDatastore.find({})).documents;
+        expect(documents.length).toBe(2);
+        expect(sameset(documents.map(toResourceId), ['i2', 'i1'])).toBeTruthy();
+        expect(flatten(documents.map(_ => _.resource.relations.depicts))).toEqual([]);
         done();
     });
 });

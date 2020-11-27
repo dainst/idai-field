@@ -9,7 +9,7 @@ import {PouchdbDatastore} from '../../../../src/app/core/datastore/pouchdb/pouch
 import {DocumentCache} from '../../../../src/app/core/datastore/cached/document-cache';
 import {PouchdbManager} from '../../../../src/app/core/datastore/pouchdb/pouchdb-manager';
 import {ChangesStream} from '../../../../src/app/core/datastore/changes/changes-stream';
-import {PersistenceManager} from '../../../../src/app/core/model/persistence-manager';
+import {RelationsManager} from '../../../../src/app/core/model/relations-manager';
 import {Validator} from '../../../../src/app/core/model/validator';
 import {SyncTarget} from '../../../../src/app/core/settings/settings';
 import {SettingsService} from '../../../../src/app/core/settings/settings-service';
@@ -25,12 +25,12 @@ import {ViewFacade} from '../../../../src/app/core/resources/view/view-facade';
 import {ResourcesStateManager} from '../../../../src/app/core/resources/view/resources-state-manager';
 import {DocumentHolder} from '../../../../src/app/core/docedit/document-holder';
 import { PouchdbServer } from '../../../../src/app/core/datastore/pouchdb/pouchdb-server';
-import {DescendantsUtility} from '../../../../src/app/core/model/descendants-utility';
 import {Query} from '../../../../src/app/core/datastore/model/query';
 import {CategoryConverter} from '../../../../src/app/core/datastore/cached/category-converter';
 import {ConfigReader} from '../../../../src/app/core/configuration/boot/config-reader';
 import {SettingsProvider} from '../../../../src/app/core/settings/settings-provider';
 import {settings} from 'cluster';
+import {ImageRelationsManager} from '../../../../src/app/core/model/image-relations-manager';
 
 
 class IdGenerator {
@@ -152,20 +152,22 @@ export async function createApp(projectName = 'testdb', startSync = false) {
         messages
     );
 
-    const descendantsUtility = new DescendantsUtility(
-        projectConfiguration, documentDatastore
-    );
-
-    const persistenceManager = new PersistenceManager(
+    const relationsManager = new RelationsManager(
         documentDatastore,
         projectConfiguration,
-        descendantsUtility,
         settingsProvider
+    );
+
+    const imageRelationsManager = new ImageRelationsManager(
+        documentDatastore,
+        relationsManager,
+        imagestore,
+        projectConfiguration
     );
 
     const documentHolder = new DocumentHolder(
         projectConfiguration,
-        persistenceManager,
+        relationsManager,
         new Validator(projectConfiguration, (q: Query) => fieldDocumentDatastore.find(q)),
         documentDatastore
     );
@@ -187,8 +189,9 @@ export async function createApp(projectName = 'testdb', startSync = false) {
         stateSerializer,
         tabManager,
         imageOverviewFacade,
-        persistenceManager,
-        imagestore
+        relationsManager,
+        imagestore,
+        imageRelationsManager
     }
 }
 

@@ -1,6 +1,6 @@
 import {Component, ElementRef, EventEmitter, Input, Output, ViewChild} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {PersistenceManager} from '../../../core/model/persistence-manager';
+import {RelationsManager} from '../../../core/model/relations-manager';
 import {M} from '../../messages/m';
 import {readWldFile, Errors} from '../../../core/images/wld/wld-import';
 import {downloadWldFile} from '../../../core/images/wld/wld-export';
@@ -29,7 +29,7 @@ export class GeoreferenceViewComponent {
     public shown: boolean = false;
 
 
-    constructor(private persistenceManager: PersistenceManager,
+    constructor(private relationsManager: RelationsManager,
                 private messages: Messages,
                 private modalService: NgbModal,
                 private settingsProvider: SettingsProvider,
@@ -107,7 +107,7 @@ export class GeoreferenceViewComponent {
         try {
             Object.assign(
                 this.document,
-                await this.persistenceManager.persist(this.document)
+                await this.relationsManager.persist(this.document)
             );
         } catch (err) {
             console.error(err);

@@ -36,7 +36,7 @@ import {OutliersComponent} from './core/forms/widgets/outliers.component';
 import {EmptyValuelistInfoComponent} from './core/forms/widgets/empty-valuelist-info.component';
 import {DocumentHolder} from '../../core/docedit/document-holder';
 import {ProjectConfiguration} from '../../core/configuration/project-configuration';
-import {PersistenceManager} from '../../core/model/persistence-manager';
+import {RelationsManager} from '../../core/model/relations-manager';
 import {Validator} from '../../core/model/validator';
 import {DocumentDatastore} from '../../core/datastore/document-datastore';
 import {ImageRowModule} from '../image/row/image-row.module';
@@ -53,15 +53,15 @@ import {SettingsProvider} from '../../core/settings/settings-provider';
         {
             provide: DocumentHolder,
             useFactory: (projectConfiguration: ProjectConfiguration,
-                         persistenceManager: PersistenceManager,
+                         relationsManager: RelationsManager,
                          validator: Validator,
                          settingsProvider: SettingsProvider,
                          datastore: DocumentDatastore) => {
 
-                return new DocumentHolder(projectConfiguration, persistenceManager,
+                return new DocumentHolder(projectConfiguration, relationsManager,
                     validator, datastore);
             },
-            deps: [ProjectConfiguration, PersistenceManager, Validator,
+            deps: [ProjectConfiguration, RelationsManager, Validator,
                 SettingsProvider, DocumentDatastore]
         },
         { provide: NgbDateParserFormatter, useClass: NgbDateDEParserFormatter }

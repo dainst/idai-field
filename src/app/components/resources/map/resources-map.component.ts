@@ -2,7 +2,7 @@ import {Component, Input} from '@angular/core';
 import {FieldDocument, FieldGeometry} from 'idai-components-2';
 import {ResourcesComponent} from '../resources.component';
 import {Loading} from '../../widgets/loading';
-import {PersistenceManager} from '../../../core/model/persistence-manager';
+import {RelationsManager} from '../../../core/model/relations-manager';
 import {DocumentReadDatastore} from '../../../core/datastore/document-read-datastore';
 import {ChangesStream} from '../../../core/datastore/changes/changes-stream';
 import {ViewFacade} from '../../../core/resources/view/view-facade';
@@ -35,7 +35,7 @@ export class ResourcesMapComponent {
                 public loading: Loading,
                 public viewFacade: ViewFacade,
                 public resourcesComponent: ResourcesComponent,
-                private persistenceManager: PersistenceManager,
+                private relationsManager: RelationsManager,
                 private settingsProvider: SettingsProvider,
                 private messages: Messages,
                 private menuService: MenuService) {
@@ -126,7 +126,7 @@ export class ResourcesMapComponent {
 
         try {
             await this.viewFacade.setSelectedDocument(
-                (await this.persistenceManager.persist(selectedDocument)).resource.id
+                (await this.relationsManager.persist(selectedDocument)).resource.id
             );
         } catch (msgWithParams) {
             this.messages.add(msgWithParams);

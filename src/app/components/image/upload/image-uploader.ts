@@ -5,7 +5,7 @@ import {ImageCategoryPickerModalComponent} from './image-category-picker-modal.c
 import {UploadModalComponent} from './upload-modal.component';
 import {ExtensionUtil} from '../../../core/util/extension-util';
 import {UploadStatus} from './upload-status';
-import {PersistenceManager} from '../../../core/model/persistence-manager';
+import {RelationsManager} from '../../../core/model/relations-manager';
 import {DocumentReadDatastore} from '../../../core/datastore/document-read-datastore';
 import {ImageReadDatastore} from '../../../core/datastore/field/image-read-datastore';
 import {M} from '../../messages/m';
@@ -40,7 +40,7 @@ export class ImageUploader {
     public constructor(private imagestore: Imagestore,
                        private datastore: DocumentReadDatastore,
                        private modalService: NgbModal,
-                       private persistenceManager: PersistenceManager,
+                       private relationsManager: RelationsManager,
                        private projectConfiguration: ProjectConfiguration,
                        private uploadStatus: UploadStatus,
                        private imageDocumentDatastore: ImageReadDatastore,
@@ -208,7 +208,7 @@ export class ImageUploader {
     private async saveWldFile(file: File, document: Document) {
 
         document.resource.georeference = await readWldFile(file, document);
-        await this.persistenceManager.persist(document);
+        await this.relationsManager.persist(document);
     }
 
 
@@ -284,7 +284,7 @@ export class ImageUploader {
                     doc.resource.relations['depicts'] = [depictsRelationTarget.resource.id];
                 }
 
-                this.persistenceManager.persist(doc)
+                this.relationsManager.persist(doc)
                     .then((result: any) => resolve(result))
                     .catch((error: any) => reject(error));
             };

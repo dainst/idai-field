@@ -21,7 +21,7 @@ import {BackupModule} from './backup/backup.module';
 import {AppController} from '../core/app-controller';
 import {DatastoreModule} from '../core/datastore/datastore.module';
 import {ImageOverviewModule} from './image/overview/image-overview.module';
-import {PersistenceManager} from '../core/model/persistence-manager';
+import {RelationsManager} from '../core/model/relations-manager';
 import {Validator} from '../core/model/validator';
 import {ImportValidator} from '../core/import/import/process/import-validator';
 import {MatrixModule} from './matrix/matrix.module';
@@ -58,7 +58,6 @@ import {BlobMaker} from '../core/images/imagestore/blob-maker';
 import {ReadImagestore} from '../core/images/imagestore/read-imagestore';
 import {DocumentReadDatastore} from '../core/datastore/document-read-datastore';
 import {TaskbarSyncStatusComponent} from './navbar/taskbar-sync-status.component';
-import {DescendantsUtility} from '../core/model/descendants-utility';
 import {ViewModalModule} from './viewmodal/view-modal.module';
 import {ConfigurationModule} from './configuration/configuration.module';
 import {IdaiMessagesModule} from './messages/idai-messages.module';
@@ -71,6 +70,7 @@ import {InitializationProgress} from '../core/initialization-progress';
 import {AngularUtility} from '../angular/angular-utility';
 import {Settings} from '../core/settings/settings';
 import {SettingsProvider} from '../core/settings/settings-provider';
+import {ImageRelationsManager} from '../core/model/image-relations-manager';
 
 const remote = typeof window !== 'undefined' ? window.require('electron').remote : require('electron').remote;
 
@@ -168,11 +168,6 @@ registerLocaleData(localeDe, 'de');
             },
             deps: [PouchdbManager, ImageConverter, BlobMaker]
         },
-        {
-            provide: DescendantsUtility,
-            useClass: DescendantsUtility,
-            deps: [ProjectConfiguration, DocumentReadDatastore]
-        },
         { provide: ReadImagestore, useExisting: Imagestore },
         { provide: LocationStrategy, useClass: HashLocationStrategy },
         BlobMaker,
@@ -222,7 +217,8 @@ registerLocaleData(localeDe, 'de');
             },
             deps: []
         },
-        PersistenceManager,
+        RelationsManager,
+        ImageRelationsManager,
         {
             provide: Validator,
             useFactory: (

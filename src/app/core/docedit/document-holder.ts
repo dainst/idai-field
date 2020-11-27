@@ -3,7 +3,7 @@ import {filter} from 'tsfun/collection';
 import {Document, NewDocument, Resource} from 'idai-components-2';
 import {clone} from '../util/object-util';
 import {Validator} from '../model/validator';
-import {PersistenceManager} from '../model/persistence-manager';
+import {RelationsManager} from '../model/relations-manager';
 import {DocumentDatastore} from '../datastore/document-datastore';
 import {Validations} from '../model/validations';
 import {DuplicationUtil} from './duplication-util';
@@ -39,7 +39,7 @@ export class DocumentHolder {
 
     constructor(
         private projectConfiguration: ProjectConfiguration,
-        private persistenceManager: PersistenceManager,
+        private relationsManager: RelationsManager,
         private validator: Validator,
         private datastore: DocumentDatastore) {
     }
@@ -80,7 +80,7 @@ export class DocumentHolder {
         await this.performAssertions();
         this.convertStringsToNumbers();
 
-        const savedDocument: Document = await this.persistenceManager.persist(
+        const savedDocument: Document = await this.relationsManager.persist(
             this.cleanup(this.clonedDocument),
             this.oldVersion,
             this.inspectedRevisions
@@ -106,7 +106,7 @@ export class DocumentHolder {
                 template, baseIdentifier, identifierNumber, minDigits, this.validator
             );
 
-            await this.persistenceManager.persist(
+            await this.relationsManager.persist(
                 template,
                 this.oldVersion,
                 []
@@ -120,7 +120,7 @@ export class DocumentHolder {
     public makeClonedDocAppearNew() {
 
         // make the doc appear 'new' ...
-        delete this.clonedDocument.resource.id; // ... for persistenceManager
+        delete this.clonedDocument.resource.id; // ... for relationsManager
         delete this.clonedDocument._id;      // ... for pouchdbdatastore
         delete this.clonedDocument._rev;
     }

@@ -2,16 +2,13 @@ import {Injectable} from '@angular/core';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {FieldDocument} from 'idai-components-2';
 import {DeleteModalComponent} from './delete-modal.component';
-import {PersistenceManager} from '../../../core/model/persistence-manager';
+import {RelationsManager} from '../../../core/model/relations-manager';
 import {M} from '../../messages/m';
 import {DeletionInProgressModalComponent} from './deletion-in-progress-modal.component';
 import {Imagestore} from '../../../core/images/imagestore/imagestore';
-import {DescendantsUtility} from '../../../core/model/descendants-utility';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
 import {DatastoreErrors} from '../../../core/datastore/model/datastore-errors';
-import {SettingsProvider} from '../../../core/settings/settings-provider';
-import {CatalogUtil} from '../../../core/model/catalog-util';
-import {DocumentDatastore} from '../../../core/datastore/document-datastore';
+import {ImageRelationsManager} from '../../../core/model/image-relations-manager';
 
 
 /**
@@ -22,12 +19,10 @@ import {DocumentDatastore} from '../../../core/datastore/document-datastore';
 export class ResourceDeletion {
 
     constructor(private modalService: NgbModal,
-                private persistenceManager: PersistenceManager,
+                private relationsManager: RelationsManager,
+                private imageRelationsManager: ImageRelationsManager,
                 private imagestore: Imagestore,
-                private projectConfiguration: ProjectConfiguration,
-                private settingsProvider: SettingsProvider,
-                private descendantsUtility: DescendantsUtility,
-                private documentDatastore: DocumentDatastore) {}
+                private projectConfiguration: ProjectConfiguration) {}
 
 
     public async delete(document: FieldDocument) {
@@ -36,7 +31,7 @@ export class ResourceDeletion {
             DeleteModalComponent, { keyboard: false }
         );
         modalRef.componentInstance.setDocument(document);
-        modalRef.componentInstance.setCount(await this.descendantsUtility.fetchChildrenCount(document));
+        modalRef.componentInstance.setCount(await this.relationsManager.fetchChildrenCount(document));
 
         const deleteModalResult = await modalRef.result;
         const deletionInProgressModalRef: NgbModalRef = this.modalService.open(
@@ -50,17 +45,16 @@ export class ResourceDeletion {
     // TODO we could double check that all documents have document.project
     // TODO review deletion of Type resources with children
     // TODO write apidoc for document.project
-    private async performDeletion(document: FieldDocument,
-                                  deleteCatalogImages: boolean) {
+    private async performDeletion(document: FieldDocument, deleteRelatedImages: boolean) {
 
         if (document.resource.category === 'TypeCatalog') {
-            await CatalogUtil.remove(
-                this.persistenceManager,
-                this.documentDatastore,
-                this.imagestore,
-                this.settingsProvider.getSettings().username,
-                document,
-                document.project === undefined && deleteCatalogImages);
+
+            if (document.resource.project !== undefined || deleteRelatedImages) {
+                await this.imageRelationsManager.remove(document);
+            } else {
+                await this.relationsManager.remove(document);
+            }
+
         } else {
             await this.deleteImageWithImageStore(document);
             await this.deleteWithPersistenceManager(document);
@@ -86,7 +80,7 @@ export class ResourceDeletion {
     private async deleteWithPersistenceManager(document: FieldDocument) {
 
         try {
-            await this.persistenceManager.remove(document);
+            await this.relationsManager.remove(document);
         } catch (removeError) {
             console.error('removeWithPersistenceManager', removeError);
             if (removeError !== DatastoreErrors.DOCUMENT_NOT_FOUND) throw [M.DOCEDIT_ERROR_DELETE];

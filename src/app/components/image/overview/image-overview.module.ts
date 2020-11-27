@@ -15,7 +15,7 @@ import {ImageOverviewSearchConstraintsComponent} from './searchbar/image-overvie
 import {DeleteModalComponent} from './delete-modal.component';
 import {PersistenceHelper} from '../../../core/images/overview/service/persistence-helper';
 import {ImageOverviewFacade} from '../../../core/images/overview/view/imageoverview-facade';
-import {PersistenceManager} from '../../../core/model/persistence-manager';
+import {RelationsManager} from '../../../core/model/relations-manager';
 import {Imagestore} from '../../../core/images/imagestore/imagestore';
 import {ImageDocumentsManager} from '../../../core/images/overview/view/image-documents-manager';
 import {ImageReadDatastore} from '../../../core/datastore/field/image-read-datastore';
@@ -51,7 +51,7 @@ import {SettingsProvider} from '../../../core/settings/settings-provider';
         {
             provide: PersistenceHelper,
             useClass: PersistenceHelper,
-            deps: [ImageOverviewFacade, PersistenceManager, SettingsProvider, Imagestore]
+            deps: [ImageOverviewFacade, RelationsManager, SettingsProvider, Imagestore]
         },
         {
             provide: ImageDocumentsManager,

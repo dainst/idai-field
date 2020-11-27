@@ -1,14 +1,15 @@
 import {Injectable} from '@angular/core';
-import {sameset, isArray, isNot, isUndefinedOrEmpty, on, isDefined, to} from 'tsfun';
+import {isArray, isDefined, isNot, isUndefinedOrEmpty, on, sameset, to} from 'tsfun';
 import {Document, NewDocument} from 'idai-components-2';
 import {DocumentDatastore} from '../datastore/document-datastore';
 import {ConnectedDocsWriter} from './connected-docs-writer';
 import {clone} from '../util/object-util';
 import {ProjectConfiguration} from '../configuration/project-configuration';
-import {HierarchicalRelations} from './relation-constants';
-import RECORDED_IN = HierarchicalRelations.RECORDEDIN;
-import {DescendantsUtility} from './descendants-utility';
+import {HierarchicalRelations, ImageRelations} from './relation-constants';
 import {SettingsProvider} from '../settings/settings-provider';
+import {FindIdsResult, FindResult} from '../datastore/model/read-datastore';
+import {Query} from '../datastore/model/query';
+import RECORDED_IN = HierarchicalRelations.RECORDEDIN;
 
 
 @Injectable()
@@ -19,14 +20,13 @@ import {SettingsProvider} from '../settings/settings-provider';
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export class PersistenceManager {
+export class RelationsManager {
 
     private connectedDocsWriter: ConnectedDocsWriter;
 
     constructor(
         private datastore: DocumentDatastore,
         private projectConfiguration: ProjectConfiguration,
-        private descendantsUtility: DescendantsUtility,
         private settingsProvider: SettingsProvider
     ) {
         this.connectedDocsWriter = new ConnectedDocsWriter(this.datastore, this.projectConfiguration);
@@ -76,10 +76,22 @@ export class PersistenceManager {
      */
     public async remove(document: Document) {
 
-        for (let descendant of (await this.descendantsUtility.fetchChildren(document))) {
-            await this.removeWithConnectedDocuments(descendant);
-        }
-        await this.removeWithConnectedDocuments(document);
+        const documentsToBeDeleted = (await this.fetchChildren(document)).concat([document]);
+        for (let document of documentsToBeDeleted) await this.removeWithConnectedDocuments(document);
+    }
+
+
+    public async fetchChildren(document: Document): Promise<Array<Document>> {
+
+        return (await this.findDescendants(document) as FindResult).documents;
+    }
+
+
+    public async fetchChildrenCount(document: Document): Promise<number> {
+
+        return !document.resource.id
+            ? 0
+            : (await this.findDescendants(document, true)).totalCount;
     }
 
 
@@ -138,5 +150,43 @@ export class PersistenceManager {
                 username,
                 squashRevisionIds.length === 0 ? undefined : squashRevisionIds)
             : this.datastore.create(document, username);
+    }
+
+
+    private async findDescendants(document: Document, skipDocuments = false): Promise<FindIdsResult> {
+
+        return this.projectConfiguration.isSubcategory(document.resource.category, 'Operation')
+            ? await this.findRecordedInDocs2(document.resource.id, skipDocuments)
+            : await this.findLiesWithinDocs(document.resource.id, skipDocuments);
+    }
+
+
+    // TODO review name clash
+    public async findRecordedInDocs2(resourceId: string, skipDocuments: boolean): Promise<FindIdsResult> {
+
+        const query: Query = {
+            constraints: { 'isRecordedIn:contain': resourceId }
+        };
+
+        return skipDocuments
+            ? this.datastore.findIds(query)
+            : await this.datastore.find(query);
+    }
+
+
+    private async findLiesWithinDocs(resourceId: string, skipDocuments: boolean): Promise<FindIdsResult> {
+
+        const query: Query = {
+            constraints: {
+                'liesWithin:contain': {
+                    value: resourceId,
+                    searchRecursively: true
+                }
+            }
+        };
+
+        return skipDocuments
+            ? this.datastore.findIds(query)
+            : await this.datastore.find(query);
     }
 }

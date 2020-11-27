@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {set} from 'tsfun';
 import {Document, FieldDocument} from 'idai-components-2';
-import {PersistenceManager} from '../../core/model/persistence-manager';
+import {RelationsManager} from '../../core/model/relations-manager';
 import {SettingsService} from '../../core/settings/settings-service';
 import {MoveUtility} from '../../core/resources/move-utility';
 import {IndexFacade} from '../../core/datastore/index/index-facade';
@@ -37,7 +37,7 @@ export class MoveModalComponent {
 
 
     constructor(public activeModal: NgbActiveModal,
-                private persistenceManager: PersistenceManager,
+                private relationsManager: RelationsManager,
                 private settingsProvider: SettingsProvider,
                 private indexFacade: IndexFacade,
                 private messages: Messages,
@@ -89,7 +89,7 @@ export class MoveModalComponent {
             await MoveUtility.moveDocument(
                 this.document,
                 newParent,
-                this.persistenceManager,
+                this.relationsManager,
                 this.isRecordedInTargetCategories
             );
         } catch (msgWithParams) {

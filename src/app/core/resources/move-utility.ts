@@ -1,6 +1,6 @@
 import {FieldDocument, Document} from 'idai-components-2';
 import {clone} from '../util/object-util';
-import {PersistenceManager} from '../model/persistence-manager';
+import {RelationsManager} from '../model/relations-manager';
 import {IndexFacade} from '../datastore/index/index-facade';
 import {Category} from '../configuration/model/category';
 import {Constraint} from '../datastore/model/constraint';
@@ -12,12 +12,12 @@ import {Constraint} from '../datastore/model/constraint';
 export module MoveUtility {
 
     export async function moveDocument(document: FieldDocument, newParent: FieldDocument,
-                                       persistenceManager: PersistenceManager,
+                                       relationsManager: RelationsManager,
                                        isRecordedInTargetCategories: Array<Category>) {
 
         const oldVersion: FieldDocument = clone(document);
         updateRelations(document, newParent, isRecordedInTargetCategories);
-        await persistenceManager.persist(document, oldVersion);
+        await relationsManager.persist(document, oldVersion);
     }
 
 

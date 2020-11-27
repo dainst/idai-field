@@ -2,7 +2,7 @@ import {AfterViewInit, Component, ElementRef, Input, ViewChild, ChangeDetectionS
     ChangeDetectorRef} from '@angular/core';
 import {FieldDocument} from 'idai-components-2';
 import {ResourcesComponent} from '../resources.component';
-import {PersistenceManager} from '../../../core/model/persistence-manager';
+import {RelationsManager} from '../../../core/model/relations-manager';
 import {FieldReadDatastore} from '../../../core/datastore/field/field-read-datastore';
 import {Validator} from '../../../core/model/validator';
 import {M} from '../../messages/m';
@@ -37,7 +37,7 @@ export class RowComponent implements AfterViewInit {
     constructor(public resourcesComponent: ResourcesComponent,
                 public viewFacade: ViewFacade,
                 private messages: Messages,
-                private persistenceManager: PersistenceManager,
+                private relationsManager: RelationsManager,
                 private validator: Validator,
                 private datastore: FieldReadDatastore,
                 private navigationService: NavigationService,
@@ -127,7 +127,7 @@ export class RowComponent implements AfterViewInit {
         try {
             Object.assign(
                 this.document,
-                await this.persistenceManager.persist(this.document)
+                await this.relationsManager.persist(this.document)
             );
         } catch(msgWithParams) {
             this.messages.add(msgWithParams);

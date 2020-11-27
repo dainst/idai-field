@@ -29,8 +29,8 @@ import {Query} from '../../../../src/app/core/datastore/model/query';
 import {CategoryConverter} from '../../../../src/app/core/datastore/cached/category-converter';
 import {ConfigReader} from '../../../../src/app/core/configuration/boot/config-reader';
 import {SettingsProvider} from '../../../../src/app/core/settings/settings-provider';
-import {settings} from 'cluster';
 import {ImageRelationsManager} from '../../../../src/app/core/model/image-relations-manager';
+import {SyncService} from '../../../../src/app/core/sync/sync-service';
 
 
 class IdGenerator {
@@ -83,20 +83,20 @@ export async function setupSettingsService(pouchdbmanager, pouchdbserver, projec
 
 export async function createApp(projectName = 'testdb', startSync = false) {
 
-    const pouchdbmanager = new PouchdbManager();
-    const pouchdbserver = new PouchdbServer();
+    const pouchdbManager = new PouchdbManager();
+    const pouchdbServer = new PouchdbServer();
 
     const {settingsService, projectConfiguration, settingsProvider} = await setupSettingsService(
-        pouchdbmanager, pouchdbserver, projectName, startSync);
+        pouchdbManager, pouchdbServer, projectName, startSync);
 
     const {createdIndexFacade} = IndexerConfiguration.configureIndexers(projectConfiguration);
 
     const datastore = new PouchdbDatastore(
-        pouchdbmanager.getDbProxy(),
+        pouchdbManager.getDbProxy(),
         new IdGenerator(),
         true);
 
-    const imagestore = new PouchDbFsImagestore(undefined, undefined, pouchdbmanager.getDbProxy());
+    const imagestore = new PouchDbFsImagestore(undefined, undefined, pouchdbManager.getDbProxy());
     imagestore.init(settingsProvider.getSettings());
 
     const documentCache = new DocumentCache<Document>();
@@ -149,7 +149,8 @@ export async function createApp(projectName = 'testdb', startSync = false) {
         resourcesStateManager,
         undefined,
         createdIndexFacade,
-        messages
+        messages,
+        new SyncService(pouchdbManager)
     );
 
     const relationsManager = new RelationsManager(

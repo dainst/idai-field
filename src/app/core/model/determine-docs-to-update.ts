@@ -31,7 +31,7 @@ export function determineDocsToUpdate(document: Document, targetDocuments: Array
                                       inverseRelationsMap: InverseRelationsMap,
                                       setInverses: boolean = true): Array<Document> {
 
-    targetDocuments.forEach(document => removeEmptyRelations(document.resource.relations));
+    targetDocuments.forEach(document => Relations.removeEmpty(document.resource.relations));
 
     const cloneOfTargetDocuments = clone(targetDocuments);
 
@@ -59,14 +59,6 @@ export function determineDocsToUpdate(document: Document, targetDocuments: Array
     }
 
     return determineChangedDocs(targetDocuments, cloneOfTargetDocuments);
-}
-
-
-function removeEmptyRelations(relations: Relations) {
-
-    Object.keys(relations)
-        .filter(key => relations[key].length === 0)
-        .forEach(key => delete relations[key]);
 }
 
 

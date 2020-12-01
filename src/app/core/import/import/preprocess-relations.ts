@@ -39,7 +39,7 @@ export async function preprocessRelations(documents: Array<Document>,
         }
         adjustRelations(document, relations);
         removeSelfReferencingIdentifiers(relations, document.resource.identifier);
-        if (!permitDeletions) removeEmptyRelations(relations);
+        if (!permitDeletions) Relations.removeEmpty(relations);
         if (useIdentifiersInRelations) {
             await rewriteIdentifiersInRelations(relations, find, identifierMap);
         } else {
@@ -140,15 +140,5 @@ function removeSelfReferencingIdentifiers(relations: Relations, resourceIdentifi
 
         relations[relName] = relations[relName].filter(isnt(resourceIdentifier));
         if (isUndefinedOrEmpty(relations[relName])) delete relations[relName];
-    }
-}
-
-
-function removeEmptyRelations(relations: Relations) {
-
-    for (let relName of Object.keys(relations)) {
-        if (relations[relName] === null || relations[relName] === []) {
-            delete relations[relName];
-        }
     }
 }

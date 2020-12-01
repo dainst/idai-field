@@ -6,7 +6,7 @@ import {doc} from '../../../test-helpers';
 import {FieldDocument, ImageDocument, toResourceId} from 'idai-components-2';
 import {ImageRelationsManager} from '../../../../../src/app/core/model/image-relations-manager';
 import {SettingsProvider} from '../../../../../src/app/core/settings/settings-provider';
-import {flatten, sameset} from 'tsfun';
+import {sameset} from 'tsfun';
 
 const fs = require('fs');
 
@@ -124,6 +124,33 @@ describe('subsystem/image-relations-manager', () => {
     });
 
 
+    it('delete Type and Catalog with same image', async done => {
+
+        const tc1 = doc('tc1', 'TypeCatalog') as FieldDocument;
+        const t1 = doc('t1', 'Type') as FieldDocument;
+        const i1 = doc('i1', 'Image') as ImageDocument;
+        i1.resource.relations = { depicts: ['tc1', 't1'] };
+        tc1.resource.relations = { isDepictedIn: ['i1'], isRecordedIn: [] };
+        t1.resource.relations = { isDepictedIn: ['i1'], isRecordedIn: [], liesWithin: ['tc1'] };
+
+        createImageInProjectImageDir('i1');
+        await documentDatastore.create(tc1, username);
+        await documentDatastore.create(t1, username);
+        await documentDatastore.create(i1, username);
+
+        expect((await documentDatastore.find({})).documents.length).toBe(3);
+        expect(fs.existsSync(projectImageDir + 'i1')).toBeTruthy();
+
+        await imageRelationsManager.remove(tc1);
+
+        const documents = (await documentDatastore.find({})).documents;
+        expect(documents.length).toBe(0);
+        expect(sameset(documents.map(toResourceId), [])).toBeTruthy();
+        expect(fs.existsSync(projectImageDir + 'i1')).not.toBeTruthy();
+        done();
+    });
+
+
     it('do not delete images (with TypeCatalog) which are also connected to other resources', async done => {
 
         const tc1 = doc('tc1', 'TypeCatalog') as FieldDocument;
@@ -156,6 +183,34 @@ describe('subsystem/image-relations-manager', () => {
         expect(sameset(documents.map(toResourceId), ['i2', 'r1'])).toBeTruthy();
         expect(fs.existsSync(projectImageDir + 'i1')).not.toBeTruthy();
         expect(fs.existsSync(projectImageDir + 'i2')).toBeTruthy();
+        done();
+    });
+
+
+    it('do not delete images (with TypeCatalog) which are also connected to ancestor resources', async done => {
+
+        const tc1 = doc('tc1', 'TypeCatalog') as FieldDocument;
+        const t1 = doc('t1', 'Type') as FieldDocument;
+        const i1 = doc('i1', 'Image') as ImageDocument;
+        i1.resource.relations = { depicts: ['tc1', 't1'] };
+        tc1.resource.relations = { isDepictedIn: ['i1'], isRecordedIn: [] };
+        t1.resource.relations = { isDepictedIn: ['i1'], isRecordedIn: [], liesWithin: ['tc1'] };
+
+        createImageInProjectImageDir('i1');
+        createImageInProjectImageDir('i2');
+        await documentDatastore.create(tc1, username);
+        await documentDatastore.create(t1, username);
+        await documentDatastore.create(i1, username);
+
+        expect((await documentDatastore.find({})).documents.length).toBe(3);
+        expect(fs.existsSync(projectImageDir + 'i1')).toBeTruthy();
+
+        await imageRelationsManager.remove(t1);
+
+        const documents = (await documentDatastore.find({})).documents;
+        expect(documents.length).toBe(2);
+        expect(sameset(documents.map(toResourceId), ['tc1', 'i1'])).toBeTruthy();
+        expect(fs.existsSync(projectImageDir + 'i1')).toBeTruthy();
         done();
     });
 });

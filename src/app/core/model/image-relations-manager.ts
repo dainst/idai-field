@@ -1,9 +1,9 @@
-import {Document, toResourceId} from 'idai-components-2';
+import {Document, Resource, toResourceId} from 'idai-components-2';
 import {DocumentDatastore} from '../datastore/document-datastore';
 import {Imagestore} from '../images/imagestore/imagestore';
 import {RelationsManager} from './relations-manager';
 import {ImageRelations} from './relation-constants';
-import {flatten, includedIn, isDefined, isNot} from 'tsfun';
+import {flatten, includedIn, isDefined, isNot, on, sameset, set} from 'tsfun';
 import {map as asyncMap} from 'tsfun/async';
 import {ProjectConfiguration} from '../configuration/project-configuration';
 import {TreeList} from '../util/tree-list';
@@ -58,7 +58,8 @@ export class ImageRelationsManager {
             (await this.relationsManager.fetchChildren(document)).concat([document]);
         await this.relationsManager.remove(document);
 
-        const catalogImages = await this.getLeftovers(documentsToBeDeleted);
+        const catalogImages = set(on([Document.RESOURCE, Resource.ID]), await this.getLeftovers(documentsToBeDeleted));
+
         for (let catalogImage of catalogImages) {
             await this.imagestore.remove(catalogImage.resource.id);
             await this.datastore.remove(catalogImage);

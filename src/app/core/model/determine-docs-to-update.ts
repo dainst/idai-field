@@ -27,10 +27,11 @@ import {replaceIn} from '../util/utils';
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export function determineDocsToUpdate(document: Document,
-                                      targetDocuments: Array<Document>,
+export function determineDocsToUpdate(document: Document, targetDocuments: Array<Document>,
                                       inverseRelationsMap: InverseRelationsMap,
                                       setInverses: boolean = true): Array<Document> {
+
+    targetDocuments.forEach(document => removeEmptyRelations(document.resource.relations));
 
     const cloneOfTargetDocuments = clone(targetDocuments);
 
@@ -44,18 +45,28 @@ export function determineDocsToUpdate(document: Document,
                 targetDocument.resource.relations,
                 document.resource.id,
                 setInverses,
-                hasInverseRelation) as any
+                hasInverseRelation
+            ) as any;
 
         if (setInverses) {
             setInverseRelations(
                 targetDocument.resource,
                 document.resource,
                 getInverse,
-                hasInverseRelation);
+                hasInverseRelation
+            );
         }
     }
 
     return determineChangedDocs(targetDocuments, cloneOfTargetDocuments);
+}
+
+
+function removeEmptyRelations(relations: Relations) {
+
+    Object.keys(relations)
+        .filter(key => relations[key].length === 0)
+        .forEach(key => delete relations[key]);
 }
 
 
@@ -65,9 +76,7 @@ export function determineDocsToUpdate(document: Document,
  * ->
  * { b: ['7'] }
  */
-function pruneInverseRelations(relations: Relations,
-                               resourceId: string,
-                               setInverses: boolean,
+function pruneInverseRelations(relations: Relations, resourceId: string, setInverses: boolean,
                                hasInverseRelation: Predicate<String>) {
 
     return flow(
@@ -76,20 +85,20 @@ function pruneInverseRelations(relations: Relations,
         map(pairWith(lookup(relations))),
         map(update(1, filter(isnt(resourceId)))),
         replaceIn(relations),
-        remove(isEmpty));
+        remove(isEmpty)
+    );
 }
 
 
-function setInverseRelations(target: Resource,
-                             resource: Resource,
-                             getInverse: (_: string) => string|undefined,
+function setInverseRelations(target: Resource, resource: Resource, getInverse: (_: string) => string|undefined,
                              hasInverseRelation: Predicate<string>) {
 
     flow(
         Object.keys(resource.relations),
         filter(hasInverseRelation),
         map(pairWith(getInverse)),
-        forEach(setInverseRelation(target, resource)));
+        forEach(setInverseRelation(target, resource))
+    );
 }
 
 
@@ -113,7 +122,8 @@ function setInverseRelation(target: Resource, resource: Resource) {
                     target.relations,
                     get(inverse, []),
                     filter(isnt(resource.id)),
-                    append(resource.id));
+                    append(resource.id)
+                );
         }
     }
 }
@@ -131,7 +141,8 @@ function changedDocsReducer(changedDocs: Array<Document>, [targetDoc, cloneOfTar
     return changedDocs.concat(
         !documentsRelationsEquivalent(targetDoc)(cloneOfTargetDoc)
             ? targetDoc
-            : []);
+            : []
+    );
 }
 
 

@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {Document} from 'idai-components-2';
+import {ProjectCategories} from '../../../core/configuration/project-categories';
 
 
 @Component({
@@ -26,11 +27,11 @@ export class DeleteModalComponent {
 
     public showDeleteMultipleResourcesWarningSingle = () =>
         this.isRecordedInResourcesCount === 1
-        && this.document.resource.category !== 'TypeCatalog';
+        && !ProjectCategories.getTypeCategoryNames().includes(this.document.resource.category);
 
     public showDeleteMultipleResourcesWarningMultiple = () =>
         this.isRecordedInResourcesCount > 1
-        && this.document.resource.category !== 'TypeCatalog';
+        && !ProjectCategories.getTypeCategoryNames().includes(this.document.resource.category);
 
     public showImportedCatalogAssociationsMsg = () =>
         this.document.resource.category === 'TypeCatalog'
@@ -40,8 +41,16 @@ export class DeleteModalComponent {
         this.document.resource.category === 'TypeCatalog'
         && this.document.project === undefined;
 
+    public showOwnedTypeAssociationsMsg = () =>
+        this.document.resource.category === 'Type'
+        && this.document.project === undefined;
+
     public showDeleteCatalogImagesOption = () =>
         this.document.resource.category === 'TypeCatalog'
+        && this.document.project === undefined;
+
+    public showDeleteTypeImagesOption = () =>
+        this.document.resource.category === 'Type'
         && this.document.project === undefined;
 
     public setDocument = (document: Document) => this.document = document;

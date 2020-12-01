@@ -30,6 +30,13 @@
         dass beim Löschen von Katalogen sämtliche enthaltenen Typen sowie
         Zuordnungen von Funden zu Typen des Katalogs entfernt werden.
     </div>
+    <div *ngIf="showOwnedTypeAssociationsMsg()"
+         class="text-center alert alert-warning"
+         i18n="@@resources.deleteModel.warning.ownedType">
+        Bitte beachten Sie,
+        dass beim Löschen von Typen sämtliche Untertypen sowie
+        Zuordnungen von Funden zu Typen und Untertypen entfernt werden.
+    </div>
     <div class="input-group">
         <input id="delete-resource-input"
                type="text"
@@ -49,7 +56,23 @@
             <label for="delete-catalog-images-checkbox"
                    class="form-check-label" >
                 Haken Sie diese Option an, um mit dem Katalog sämtliche Bilder zu löschen, welche
-                direkt mit Typen des Katalogs verknüpft sind (Bilder, welche gleichzeitig mit anderen
+                direkt mit dem Katalog oder Typen des Katalogs verknüpft sind (Bilder, welche gleichzeitig mit anderen
+                Ressourcen verknüpft sind, werden behalten).
+            </label>
+        </div>
+    </div>
+    <div *ngIf="showDeleteTypeImagesOption()"
+         class="form-group text-left"
+         i18n="@@resources.deleteModel.deleteTypeImagesOption">
+        <div class="form-check form-check-inline">
+            <input id="delete-type-images-checkbox"
+                   type="checkbox"
+                   [(ngModel)]="deleteRelatedImages"
+                   class="form-check-input">
+            <label for="delete-type-images-checkbox"
+                   class="form-check-label" >
+                Haken Sie diese Option an, um mit dem Typ sämtliche Bilder zu löschen, welche
+                direkt mit dem Typ oder Untertypen verknüpft sind (Bilder, welche gleichzeitig mit anderen
                 Ressourcen verknüpft sind, werden behalten).
             </label>
         </div>

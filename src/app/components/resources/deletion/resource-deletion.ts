@@ -47,7 +47,7 @@ export class ResourceDeletion {
     // TODO write apidoc for document.project
     private async performDeletion(document: FieldDocument, deleteRelatedImages: boolean) {
 
-        if (document.resource.category === 'TypeCatalog') {
+        if (document.resource.category === 'TypeCatalog' || document.resource.category === 'Type') {
 
             if (document.resource.project !== undefined || deleteRelatedImages) {
                 await this.imageRelationsManager.remove(document);

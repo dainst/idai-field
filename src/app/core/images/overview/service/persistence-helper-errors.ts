@@ -1,3 +1,4 @@
+// TODO move
 export module PersistenceHelperErrors {
 
     export const IMAGESTORE_ERROR_INVALID_PATH_DELETE = 'persistenceHelper/errors/imagestoreInvalidPathDelete';

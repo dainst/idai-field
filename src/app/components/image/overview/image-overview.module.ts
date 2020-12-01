@@ -51,7 +51,7 @@ import {SettingsProvider} from '../../../core/settings/settings-provider';
         {
             provide: PersistenceHelper,
             useClass: PersistenceHelper,
-            deps: [ImageOverviewFacade, RelationsManager, SettingsProvider, Imagestore]
+            deps: [ImageOverviewFacade, RelationsManager, Imagestore]
         },
         {
             provide: ImageDocumentsManager,

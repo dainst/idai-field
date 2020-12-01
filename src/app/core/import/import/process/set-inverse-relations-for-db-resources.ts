@@ -4,7 +4,7 @@ import {Document} from 'idai-components-2';
 import {ResourceId} from '../../../constants';
 import {assertInSameOperationWith, unionOfDocuments} from '../utils';
 import {AssertIsAllowedRelationDomainType} from '../types';
-import {determineDocsToUpdate} from '../../../model/determine-docs-to-update';
+import {updateRelations} from '../../../model/update-relations';
 import {InverseRelationsMap} from '../../../configuration/inverse-relations-map';
 import {Lookup} from '../../../util/utils';
 
@@ -36,7 +36,7 @@ export function setInverseRelationsForDbResources(
         assertCategoryIsInRange(document, makeIdCategoryMap(currentTargetIds, targetDocuments), assertIsAllowedRelationDomainCategory);
         const copyOfTargetDocuments = getRidOfUnnecessaryTargetDocs(document, targetDocuments, unidirectionalRelations);
 
-        determineDocsToUpdate(document, copyOfTargetDocuments, inverseRelationsMap)
+        updateRelations(document, copyOfTargetDocuments, inverseRelationsMap)
             .forEach(assertInSameOperationWith(document));
 
         return copyOfTargetDocuments;

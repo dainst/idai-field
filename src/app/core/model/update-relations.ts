@@ -11,8 +11,8 @@ import {replaceIn} from '../util/utils';
 
 /**
  * Determines which targetDocuments need their relations updated, based
- * on the relations seen in <i>document</i> alone. Relations in targetDocuments,
- * which correspond to other documents, are left as they are.
+ * on the relations seen in <i>document</i> alone, and performs the updates.
+ * Relations in targetDocuments, which correspond to other documents, are left as they are.
  *
  * @param document expected that relations is an object consisting only of proper relation names
  * @param targetDocuments
@@ -20,16 +20,15 @@ import {replaceIn} from '../util/utils';
  * @param setInverses if false, relations of targetDocuments
  *   which point to document, get only removed, but not (re-)created
  *
- * @returns a selection with of the targetDocuments which
- *   got an update in their relations.
+ * @returns All targetDocuments that got an update in their relations.
  *   - Modified in place! -
  *
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export function determineDocsToUpdate(document: Document, targetDocuments: Array<Document>,
-                                      inverseRelationsMap: InverseRelationsMap,
-                                      setInverses: boolean = true): Array<Document> {
+export function updateRelations(document: Document, targetDocuments: Array<Document>,
+                                inverseRelationsMap: InverseRelationsMap,
+                                setInverses: boolean = true): Array<Document> {
 
     targetDocuments.forEach(document => Relations.removeEmpty(document.resource.relations));
 

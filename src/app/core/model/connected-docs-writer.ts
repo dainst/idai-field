@@ -3,7 +3,7 @@ import {Document, Relations, toResourceId} from 'idai-components-2';
 import {DocumentDatastore} from '../datastore/document-datastore';
 import {ProjectConfiguration} from '../configuration/project-configuration';
 import {InverseRelationsMap, makeInverseRelationsMap} from '../configuration/inverse-relations-map';
-import {determineDocsToUpdate} from './determine-docs-to-update';
+import {updateRelations} from './update-relations';
 import {Name} from '../constants';
 
 const NAME = 'name';
@@ -35,7 +35,7 @@ export class ConnectedDocsWriter {
 
         const connectedDocs = await this.getExistingConnectedDocs([document].concat(otherVersions));
 
-        const docsToUpdate = determineDocsToUpdate(
+        const docsToUpdate = updateRelations(
             document,
             connectedDocs,
             this.inverseRelationsMap,
@@ -50,7 +50,7 @@ export class ConnectedDocsWriter {
 
         const connectedDocs = await this.getExistingConnectedDocsForRemove(document);
 
-        const docsToUpdate = determineDocsToUpdate(
+        const docsToUpdate = updateRelations(
             document,
             connectedDocs,
             this.inverseRelationsMap,

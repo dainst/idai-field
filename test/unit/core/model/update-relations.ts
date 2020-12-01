@@ -1,11 +1,11 @@
-import {determineDocsToUpdate} from '../../../../src/app/core/model/determine-docs-to-update';
+import {updateRelations} from '../../../../src/app/core/model/update-relations';
 
 
 /**
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-describe('determineDocsToUpdate', () => {
+describe('updateRelations', () => {
 
     let doc;
     let relatedDoc;
@@ -41,7 +41,7 @@ describe('determineDocsToUpdate', () => {
 
         doc.resource.relations['Below'] = ['2'];
 
-        const docsToUpdate = determineDocsToUpdate(
+        const docsToUpdate = updateRelations(
             doc, [relatedDoc], relationInverses);
 
         expect(docsToUpdate).toEqual([relatedDoc]);
@@ -52,7 +52,7 @@ describe('determineDocsToUpdate', () => {
 
         relatedDoc.resource.relations['Above'] = ['1'];
 
-        const docsToUpdate = determineDocsToUpdate(
+        const docsToUpdate = updateRelations(
             doc, [relatedDoc], relationInverses);
 
         expect(docsToUpdate).toEqual([relatedDoc]);
@@ -66,7 +66,7 @@ describe('determineDocsToUpdate', () => {
         relatedDoc.resource.relations['Above'] = ['1'];
 
         const docsToUpdate
-            = determineDocsToUpdate(
+            = updateRelations(
                 doc, [relatedDoc, anotherRelatedDoc], relationInverses);
 
         expect(docsToUpdate).toEqual([relatedDoc, anotherRelatedDoc]);
@@ -80,7 +80,7 @@ describe('determineDocsToUpdate', () => {
         doc.resource.relations['Below'] = ['2'];
         relatedDoc.resource.relations['Above'] = ['4'];
 
-        const docsToUpdate = determineDocsToUpdate(
+        const docsToUpdate = updateRelations(
             doc, [relatedDoc], relationInverses);
 
         expect(docsToUpdate).toEqual([relatedDoc]);
@@ -94,7 +94,7 @@ describe('determineDocsToUpdate', () => {
 
         relatedDoc.resource.relations['Above'] = ['1','4'];
 
-        const docsToUpdate = determineDocsToUpdate(
+        const docsToUpdate = updateRelations(
             doc, [relatedDoc], relationInverses);
 
         expect(docsToUpdate).toEqual([relatedDoc]);
@@ -107,7 +107,7 @@ describe('determineDocsToUpdate', () => {
         doc.resource.relations['Below'] = ['2'];
         relatedDoc.resource.relations['Above'] = ['1','4'];
 
-        const docsToUpdate = determineDocsToUpdate(
+        const docsToUpdate = updateRelations(
             doc, [relatedDoc], relationInverses);
 
         expect(docsToUpdate).toEqual([]);
@@ -122,7 +122,7 @@ describe('determineDocsToUpdate', () => {
         doc.resource.relations['Below'] = ['2'];
         relatedDoc.resource.relations['Above'] = ['1'];
 
-        const docsToUpdate = determineDocsToUpdate(
+        const docsToUpdate = updateRelations(
             doc, [relatedDoc], relationInverses);
 
         expect(docsToUpdate).toEqual([]);
@@ -135,7 +135,7 @@ describe('determineDocsToUpdate', () => {
         doc.resource.relations['Above'] = ['2'];
         relatedDoc.resource.relations['Below'] = ['1'];
 
-        const docsToUpdate = determineDocsToUpdate(
+        const docsToUpdate = updateRelations(
             doc, [relatedDoc], relationInverses, false);
 
         expect(docsToUpdate).toEqual([relatedDoc]);
@@ -147,7 +147,7 @@ describe('determineDocsToUpdate', () => {
 
         doc.resource.relations['Above'] = ['2'];
 
-        const docsToUpdate = determineDocsToUpdate(
+        const docsToUpdate = updateRelations(
             doc, [relatedDoc], relationInverses, false);
 
         expect(docsToUpdate).toEqual([]);
@@ -159,7 +159,7 @@ describe('determineDocsToUpdate', () => {
 
         relatedDoc.resource.relations['Above'] = ['1', '4'];
 
-        const docsToUpdate = determineDocsToUpdate(
+        const docsToUpdate = updateRelations(
             doc, [relatedDoc], relationInverses, false);
 
         expect(docsToUpdate).toEqual([relatedDoc]);
@@ -181,7 +181,7 @@ describe('determineDocsToUpdate', () => {
 
         adjustDocsForUnidirectionalRelationsTests();
 
-        const docsToUpdate = determineDocsToUpdate(
+        const docsToUpdate = updateRelations(
             doc, [relatedDoc], relationInverses);
 
         // isBelow and isRecordedIn were both already set, so no update necessary
@@ -195,7 +195,7 @@ describe('determineDocsToUpdate', () => {
 
         adjustDocsForUnidirectionalRelationsTests();
 
-        const docsToUpdate = determineDocsToUpdate(
+        const docsToUpdate = updateRelations(
             doc, [relatedDoc], relationInverses, false);
 
         expect(docsToUpdate).toEqual([relatedDoc]);
@@ -209,7 +209,7 @@ describe('determineDocsToUpdate', () => {
         doc.resource.relations['isRecordedIn'] = ['2'];
         relatedDoc.resource.relations['isRecordedIn'] = [];
 
-        const docsToUpdate = determineDocsToUpdate(
+        const docsToUpdate = updateRelations(
             doc, [relatedDoc], relationInverses);
         expect(docsToUpdate).toEqual([]);
         expect(Object.keys(relatedDoc.resource.relations).length).toEqual(0);

@@ -21,6 +21,7 @@ import {ImageDocumentsManager} from '../../../core/images/overview/view/image-do
 import {ImageReadDatastore} from '../../../core/datastore/field/image-read-datastore';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
 import {SettingsProvider} from '../../../core/settings/settings-provider';
+import {ImageRelationsManager} from '../../../core/model/image-relations-manager';
 
 
 @NgModule({
@@ -51,7 +52,7 @@ import {SettingsProvider} from '../../../core/settings/settings-provider';
         {
             provide: PersistenceHelper,
             useClass: PersistenceHelper,
-            deps: [ImageOverviewFacade, RelationsManager, Imagestore]
+            deps: [ImageOverviewFacade, ImageRelationsManager]
         },
         {
             provide: ImageDocumentsManager,

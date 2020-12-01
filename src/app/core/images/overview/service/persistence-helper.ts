@@ -1,11 +1,10 @@
-import {FieldDocument, ImageDocument} from 'idai-components-2';
+import {FieldDocument} from 'idai-components-2';
 import {ImageOverviewFacade} from '../view/imageoverview-facade';
-import {RelationsManager} from '../../../model/relations-manager';
-import {clone} from '../../../util/object-util';
-import {Imagestore} from '../../imagestore/imagestore';
-import {PersistenceHelperErrors} from './persistence-helper-errors';
+import {ImageRelationsManager} from '../../../model/image-relations-manager';
 
 
+// TODO manually test once (via ui)
+// TODO inline into image-overview-taskbar.component
 /**
  * @author Daniel de Oliveira
  * @author Sebastian Cuy
@@ -15,30 +14,15 @@ export class PersistenceHelper {
 
     constructor(
         private imageOverviewFacade: ImageOverviewFacade,
-        private relationsManager: RelationsManager,
-        private imagestore: Imagestore
+        private imageRelationsManager: ImageRelationsManager
     ) {}
 
 
-    /**
-     * @throws [PersistenceHelperErrors.IMAGESTORE_ERROR_INVALID_PATH_DELETE]
-     * @throws [PersistenceHelperErrors.IMAGESTORE_ERROR_DELETE]
-     */
     public async deleteSelectedImageDocuments() {
 
-        if (!this.imagestore.getPath()) throw [PersistenceHelperErrors.IMAGESTORE_ERROR_INVALID_PATH_DELETE];
+        await this.imageRelationsManager.deleteSelectedImageDocuments(this.imageOverviewFacade.getSelected());
 
         for (let document of this.imageOverviewFacade.getSelected()) {
-            if (!document.resource.id) continue;
-            const resourceId: string = document.resource.id;
-
-            try {
-                await this.imagestore.remove(resourceId);
-            } catch (err) {
-                throw [PersistenceHelperErrors.IMAGESTORE_ERROR_DELETE, document.resource.identifier];
-            }
-
-            await this.relationsManager.remove(document);
             this.imageOverviewFacade.remove(document);
         }
     }
@@ -46,30 +30,14 @@ export class PersistenceHelper {
 
     public async addDepictsRelationsToSelectedDocuments(targetDocument: FieldDocument) {
 
-        for (let imageDocument of this.imageOverviewFacade.getSelected()) {
-            const oldVersion: ImageDocument = clone(imageDocument);
-            const depictsRelations: string[] = imageDocument.resource.relations.depicts;
-
-            if (depictsRelations.indexOf(targetDocument.resource.id) === -1) {
-                depictsRelations.push(targetDocument.resource.id);
-            }
-
-            await this.relationsManager.persist(
-                imageDocument, oldVersion
-            );
-        }
+        await this.imageRelationsManager
+            .addDepictsRelationsToSelectedDocuments(targetDocument, this.imageOverviewFacade.getSelected());
     }
 
 
     public async removeDepictsRelationsOnSelectedDocuments() {
 
-        for (let document of this.imageOverviewFacade.getSelected()) {
-            const oldVersion: ImageDocument = clone(document);
-            document.resource.relations.depicts = [];
-
-            await this.relationsManager.persist(
-                document, oldVersion
-            );
-        }
+        await this.imageRelationsManager
+            .removeDepictsRelationsOnSelectedDocuments(this.imageOverviewFacade.getSelected());
     }
 }

@@ -3,23 +3,25 @@ import {DocumentDatastore} from '../datastore/document-datastore';
 import {Imagestore} from '../images/imagestore/imagestore';
 import {RelationsManager} from './relations-manager';
 import {ImageRelations} from './relation-constants';
-import {flatten, includedIn, isDefined, isNot, on, sameset, set} from 'tsfun';
+import {flatten, includedIn, isDefined, isNot, on, set} from 'tsfun';
 import {map as asyncMap} from 'tsfun/async';
 import {ProjectConfiguration} from '../configuration/project-configuration';
 import {TreeList} from '../util/tree-list';
 import {Category} from '../configuration/model/category';
-
 import DEPICTS = ImageRelations.DEPICTS;
 import ISDEPICTEDIN = ImageRelations.ISDEPICTEDIN;
 import {Injectable} from '@angular/core';
 import {ProjectCategories} from '../configuration/project-categories';
 import {ResourceId} from '../constants';
 import {clone} from '../util/object-util';
-import {PersistenceHelperErrors} from '../images/overview/service/persistence-helper-errors';
 
 
 @Injectable()
 export class ImageRelationsManager {
+
+    // TODO review
+    public static IMAGESTORE_ERROR_INVALID_PATH_DELETE = 'persistenceHelper/errors/imagestoreInvalidPathDelete';
+    public static IMAGESTORE_ERROR_DELETE = 'persistenceHelper/errors/imagestoreErrorDelete';
 
     private categoryTreelist: TreeList<Category>
 
@@ -94,7 +96,7 @@ export class ImageRelationsManager {
      */
     public async deleteSelectedImageDocuments(selectedImages: Array<ImageDocument>) {
 
-        if (!this.imagestore.getPath()) throw [PersistenceHelperErrors.IMAGESTORE_ERROR_INVALID_PATH_DELETE];
+        if (!this.imagestore.getPath()) throw [ImageRelationsManager.IMAGESTORE_ERROR_INVALID_PATH_DELETE];
 
         for (let document of selectedImages) {
             if (!document.resource.id) continue;
@@ -103,7 +105,7 @@ export class ImageRelationsManager {
             try {
                 await this.imagestore.remove(resourceId);
             } catch (err) {
-                throw [PersistenceHelperErrors.IMAGESTORE_ERROR_DELETE, document.resource.identifier];
+                throw [ImageRelationsManager.IMAGESTORE_ERROR_DELETE, document.resource.identifier];
             }
 
             await this.relationsManager.remove(document);

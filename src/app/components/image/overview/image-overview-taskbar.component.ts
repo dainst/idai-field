@@ -7,7 +7,6 @@ import {ImageOverviewFacade} from '../../../core/images/overview/view/imageoverv
 import {DeleteModalComponent} from './delete-modal.component';
 import {ImageOverviewComponent} from './image-overview.component';
 import {ViewFacade} from '../../../core/resources/view/view-facade';
-import {PersistenceHelperErrors} from '../../../core/images/overview/service/persistence-helper-errors';
 import {M} from '../../messages/m';
 import {Messages} from '../../messages/messages';
 import {MenuContext, MenuService} from '../../menu-service';
@@ -124,10 +123,10 @@ export class ImageOverviewTaskbarComponent {
         } catch(msgWithParams) {
             let m = msgWithParams;
             if (msgWithParams.length > 0) {
-                if (msgWithParams[0] === PersistenceHelperErrors.IMAGESTORE_ERROR_DELETE) {
+                if (msgWithParams[0] === ImageRelationsManager.IMAGESTORE_ERROR_DELETE) {
                     m = [M.IMAGESTORE_ERROR_DELETE];
                 }
-                if (msgWithParams[0] === PersistenceHelperErrors.IMAGESTORE_ERROR_INVALID_PATH_DELETE) {
+                if (msgWithParams[0] === ImageRelationsManager.IMAGESTORE_ERROR_INVALID_PATH_DELETE) {
                     m = [M.IMAGESTORE_ERROR_INVALID_PATH_DELETE];
                 }
             }

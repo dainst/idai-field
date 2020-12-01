@@ -207,6 +207,7 @@ describe('determineDocsToUpdate', () => {
     it('do not add isRecordedInRelation', () => {
 
         doc.resource.relations['isRecordedIn'] = ['2'];
+        relatedDoc.resource.relations['isRecordedIn'] = [];
 
         const docsToUpdate = determineDocsToUpdate(
             doc, [relatedDoc], relationInverses);

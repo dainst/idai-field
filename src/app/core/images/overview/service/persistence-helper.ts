@@ -4,7 +4,6 @@ import {RelationsManager} from '../../../model/relations-manager';
 import {clone} from '../../../util/object-util';
 import {Imagestore} from '../../imagestore/imagestore';
 import {PersistenceHelperErrors} from './persistence-helper-errors';
-import {SettingsProvider} from '../../../settings/settings-provider';
 
 
 /**

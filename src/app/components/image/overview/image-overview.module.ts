@@ -13,14 +13,10 @@ import {ImageOverviewTaskbarComponent} from './image-overview-taskbar.component'
 import {ImageOverviewSearchBarComponent} from './searchbar/image-overview-search-bar.component';
 import {ImageOverviewSearchConstraintsComponent} from './searchbar/image-overview-search-constraints.component';
 import {DeleteModalComponent} from './delete-modal.component';
-import {PersistenceHelper} from '../../../core/images/overview/service/persistence-helper';
 import {ImageOverviewFacade} from '../../../core/images/overview/view/imageoverview-facade';
-import {RelationsManager} from '../../../core/model/relations-manager';
-import {Imagestore} from '../../../core/images/imagestore/imagestore';
 import {ImageDocumentsManager} from '../../../core/images/overview/view/image-documents-manager';
 import {ImageReadDatastore} from '../../../core/datastore/field/image-read-datastore';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
-import {SettingsProvider} from '../../../core/settings/settings-provider';
 
 
 @NgModule({
@@ -48,11 +44,6 @@ import {SettingsProvider} from '../../../core/settings/settings-provider';
     ],
     providers: [
         ImagesState,
-        {
-            provide: PersistenceHelper,
-            useClass: PersistenceHelper,
-            deps: [ImageOverviewFacade, RelationsManager, SettingsProvider, Imagestore]
-        },
         {
             provide: ImageDocumentsManager,
             useClass: ImageDocumentsManager,

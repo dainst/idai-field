@@ -47,13 +47,25 @@ export class DeleteModalComponent {
         this.document.resource.category === 'Type'
         && this.document.project === undefined;
 
-    public showDeleteImagesOptionForTypeCatalog = () =>
-        this.document.resource.category === 'TypeCatalog'
-        && this.document.project === undefined;
 
-    public showDeleteImagesOptionForType = () =>
-        this.document.resource.category === 'Type'
-        && this.document.project === undefined;
+    public showDeleteImagesOptionForTypeCatalog() {
+
+        if (this.document.resource.category !== 'TypeCatalog') return false;
+        if (this.document.project !== undefined) return false;
+
+        return isNot(undefinedOrEmpty)(this.document.resource.relations[ImageRelations.ISDEPICTEDIN])
+            || this.isRecordedInResourcesCount > 0; // TODO handle more cases, for example don't show it if the descendants have no image connections
+    }
+
+
+    public showDeleteImagesOptionForType() {
+
+        if (this.document.resource.category !== 'Type') return false;
+        if (this.document.project !== undefined) return false; // TODO this should rather should throw an error
+
+        return isNot(undefinedOrEmpty)(this.document.resource.relations[ImageRelations.ISDEPICTEDIN])
+            || this.isRecordedInResourcesCount > 0; // TODO handle more cases, for example don't show it if the descendants have no image connections
+    }
 
 
     public showDeleteImagesOptionForResources() {

@@ -45,13 +45,17 @@ export class DeleteModalComponent {
         this.document.resource.category === 'Type'
         && this.document.project === undefined;
 
-    public showDeleteCatalogImagesOption = () =>
+    public showDeleteImagesOptionForTypeCatalog = () =>
         this.document.resource.category === 'TypeCatalog'
         && this.document.project === undefined;
 
-    public showDeleteTypeImagesOption = () =>
+    public showDeleteImagesOptionForType = () =>
         this.document.resource.category === 'Type'
         && this.document.project === undefined;
+
+    public showDeleteImagesOptionForResources = () =>
+        this.document.resource.category !== 'Type'
+        && this.document.resource.category !== 'TypeCatalog';
 
     public setDocument = (document: Document) => this.document = document;
 

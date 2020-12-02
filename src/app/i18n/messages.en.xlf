@@ -1408,6 +1408,31 @@
           <context context-type="linenumber">66</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="resources.deleteModel.deleteResourceImagesOption" datatype="html">
+        <source>
+        <x id="START_TAG_DIV" ctype="x-div" equiv-text="&lt;div>"/>
+            <x id="TAG_INPUT" ctype="x-input" equiv-text="&lt;input/>"/>
+            <x id="START_TAG_LABEL" ctype="x-label" equiv-text="&lt;label>"/>
+                Haken Sie diese Option an, um mit der Ressource sämtliche Bilder zu löschen, welche
+                direkt mit der Ressource oder darunter liegenden Ressourcen verknüpft sind (Bilder, welche gleichzeitig mit anderen
+                Ressourcen verknüpft sind, werden behalten).
+            <x id="CLOSE_TAG_LABEL" ctype="x-label" equiv-text="&lt;/label>"/>
+        <x id="CLOSE_TAG_DIV" ctype="x-div" equiv-text="&lt;/div>"/>
+    </source>
+        <target state="final">
+        <x id="START_TAG_DIV" ctype="x-div" equiv-text="&lt;div>"/>
+            <x id="TAG_INPUT" ctype="x-input" equiv-text="&lt;input/>"/>
+            <x id="START_TAG_LABEL" ctype="x-label" equiv-text="&lt;label>"/>
+                Select this option to delete all images associated directly with the resource
+                or any of its descendants (images which are also associated with other resources will be kept).
+            <x id="CLOSE_TAG_LABEL" ctype="x-label" equiv-text="&lt;/label>"/>
+        <x id="CLOSE_TAG_DIV" ctype="x-div" equiv-text="&lt;/div>"/>
+    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
+          <context context-type="linenumber">82</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="resources.deleteModal.confirmDeleteInfo" datatype="html">
         <source>
         Bitte geben Sie den Bezeichner dieser Ressource ein, um den Löschvorgang zu bestätigen.
@@ -1485,7 +1510,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
-          <context context-type="linenumber">86</context>
+          <context context-type="linenumber">102</context>
         </context-group>
       </trans-unit>
       <trans-unit id="buttons.cancel" datatype="html">
@@ -1526,7 +1551,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
-          <context context-type="linenumber">90</context>
+          <context context-type="linenumber">106</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/editable-map.html</context>

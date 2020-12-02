@@ -61,6 +61,19 @@ describe('subsystem/image-relations-manager', () => {
     }
 
 
+    async function expectResources(resourceIds: string[]) {
+
+        const documents = (await documentDatastore.find({})).documents;
+
+        if (resourceIds.length === 0) {
+            expect(documents.length).toBe(0);
+        } else {
+            expect(documents.length).toBe(resourceIds.length);
+            expect(sameset(documents.map(toResourceId), resourceIds)).toBeTruthy();
+        }
+    }
+
+
     beforeEach(async done => {
 
         await setupSyncTestDb();
@@ -103,13 +116,13 @@ describe('subsystem/image-relations-manager', () => {
           ]
         );
 
-        expect((await documentDatastore.find({})).documents.length).toBe(4);
+        await expectResources(['tc1', 't1', 'i1', 'i2']);
         expect(fs.existsSync(projectImageDir + 'i1')).toBeTruthy();
         expect(fs.existsSync(projectImageDir + 'i2')).toBeTruthy();
 
         await imageRelationsManager.remove(documentsLookup['tc1']);
 
-        expect((await documentDatastore.find({})).documents.length).toBe(0);
+        await expectResources([]);
         expect(fs.existsSync(projectImageDir + 'i1')).not.toBeTruthy();
         expect(fs.existsSync(projectImageDir + 'i2')).not.toBeTruthy();
         done();
@@ -127,15 +140,13 @@ describe('subsystem/image-relations-manager', () => {
           ]
         );
 
-        expect((await documentDatastore.find({})).documents.length).toBe(4);
+        await expectResources(['tc1', 't1', 'i1', 'i2']);
         expect(fs.existsSync(projectImageDir + 'i1')).toBeTruthy();
         expect(fs.existsSync(projectImageDir + 'i2')).toBeTruthy();
 
         await imageRelationsManager.remove(documentsLookup['t1']);
 
-        const documents = (await documentDatastore.find({})).documents;
-        expect(documents.length).toBe(2);
-        expect(sameset(documents.map(toResourceId), ['i1', 'tc1'])).toBeTruthy();
+        await expectResources(['tc1', 'i1']);
         expect(fs.existsSync(projectImageDir + 'i1')).toBeTruthy();
         expect(fs.existsSync(projectImageDir + 'i2')).not.toBeTruthy();
         done();
@@ -152,14 +163,12 @@ describe('subsystem/image-relations-manager', () => {
           ]
         );
 
-        expect((await documentDatastore.find({})).documents.length).toBe(3);
+        await expectResources(['tc1', 't1', 'i1']);
         expect(fs.existsSync(projectImageDir + 'i1')).toBeTruthy();
 
         await imageRelationsManager.remove(documentsLookup['tc1']);
 
-        const documents = (await documentDatastore.find({})).documents;
-        expect(documents.length).toBe(0);
-        expect(sameset(documents.map(toResourceId), [])).toBeTruthy();
+        await expectResources([]);
         expect(fs.existsSync(projectImageDir + 'i1')).not.toBeTruthy();
         done();
     });
@@ -177,15 +186,13 @@ describe('subsystem/image-relations-manager', () => {
             ]
         );
 
-        expect((await documentDatastore.find({})).documents.length).toBe(5);
+        await expectResources(['tc1', 't1', 'r1', 'i1', 'i2']);
         expect(fs.existsSync(projectImageDir + 'i1')).toBeTruthy();
         expect(fs.existsSync(projectImageDir + 'i2')).toBeTruthy();
 
         await imageRelationsManager.remove(documentsLookup['tc1']);
 
-        const documents = (await documentDatastore.find({})).documents;
-        expect(documents.length).toBe(2);
-        expect(sameset(documents.map(toResourceId), ['i2', 'r1'])).toBeTruthy();
+        await expectResources(['i2', 'r1']);
         expect(fs.existsSync(projectImageDir + 'i1')).not.toBeTruthy();
         expect(fs.existsSync(projectImageDir + 'i2')).toBeTruthy();
         done();
@@ -207,9 +214,7 @@ describe('subsystem/image-relations-manager', () => {
 
         await imageRelationsManager.remove(documentsLookup['t1']);
 
-        const documents = (await documentDatastore.find({})).documents;
-        expect(documents.length).toBe(2);
-        expect(sameset(documents.map(toResourceId), ['tc1', 'i1'])).toBeTruthy();
+        await expectResources(['tc1', 'i1']);
         expect(fs.existsSync(projectImageDir + 'i1')).toBeTruthy();
         done();
     });

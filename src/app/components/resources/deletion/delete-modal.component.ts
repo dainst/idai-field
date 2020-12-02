@@ -53,8 +53,7 @@ export class DeleteModalComponent {
         if (this.document.resource.category !== 'TypeCatalog') return false;
         if (this.document.project !== undefined) return false;
 
-        return isNot(undefinedOrEmpty)(this.document.resource.relations[ImageRelations.ISDEPICTEDIN])
-            || this.isRecordedInResourcesCount > 0; // TODO handle more cases, for example don't show it if the descendants have no image connections
+        return this.showImageDeletionOption();
     }
 
 
@@ -63,8 +62,7 @@ export class DeleteModalComponent {
         if (this.document.resource.category !== 'Type') return false;
         if (this.document.project !== undefined) return false; // TODO this should rather should throw an error
 
-        return isNot(undefinedOrEmpty)(this.document.resource.relations[ImageRelations.ISDEPICTEDIN])
-            || this.isRecordedInResourcesCount > 0; // TODO handle more cases, for example don't show it if the descendants have no image connections
+        return this.showImageDeletionOption();
     }
 
 
@@ -72,8 +70,7 @@ export class DeleteModalComponent {
 
         if (ProjectCategories.getTypeCategoryNames().includes(this.document.resource.category)) return false;
 
-        return isNot(undefinedOrEmpty)(this.document.resource.relations[ImageRelations.ISDEPICTEDIN])
-            || this.isRecordedInResourcesCount > 0; // TODO handle more cases, for example don't show it if the descendants have no image connections
+        return this.showImageDeletionOption();
     }
 
 
@@ -91,5 +88,12 @@ export class DeleteModalComponent {
 
         if (this.confirmDeletionIdentifier !== this.document.resource.identifier) return;
         this.activeModal.close(this.deleteRelatedImages);
+    }
+
+
+    private showImageDeletionOption() {
+
+        return isNot(undefinedOrEmpty)(this.document.resource.relations[ImageRelations.ISDEPICTEDIN])
+            || this.isRecordedInResourcesCount > 0; // TODO handle more cases, for example don't show it if the descendants have no image connections
     }
 }

@@ -64,13 +64,7 @@ describe('subsystem/image-relations-manager', () => {
     async function expectResources(resourceIds: string[]) {
 
         const documents = (await documentDatastore.find({})).documents;
-
-        if (resourceIds.length === 0) {
-            expect(documents.length).toBe(0);
-        } else {
-            expect(documents.length).toBe(resourceIds.length);
-            expect(sameset(documents.map(toResourceId), resourceIds)).toBeTruthy();
-        }
+        expect(sameset(documents.map(toResourceId), resourceIds)).toBeTruthy();
     }
 
 

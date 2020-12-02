@@ -3,10 +3,12 @@ import {createApp, setupSyncTestDb} from '../subsystem-helper';
 import {DocumentDatastore} from '../../../../../src/app/core/datastore/document-datastore';
 import {Imagestore} from '../../../../../src/app/core/images/imagestore/imagestore';
 import {doc} from '../../../test-helpers';
-import {FieldDocument, ImageDocument, toResourceId} from 'idai-components-2';
+import {FieldDocument, toResourceId} from 'idai-components-2';
 import {ImageRelationsManager} from '../../../../../src/app/core/model/image-relations-manager';
 import {SettingsProvider} from '../../../../../src/app/core/settings/settings-provider';
 import {sameset} from 'tsfun';
+import {HierarchicalRelations, ImageRelations} from '../../../../../src/app/core/model/relation-constants';
+import {Lookup} from '../../../../../src/app/core/util/utils';
 
 const fs = require('fs');
 
@@ -26,6 +28,36 @@ describe('subsystem/image-relations-manager', () => {
 
         fs.closeSync(fs.openSync(projectImageDir + id, 'w'));
         expect(fs.existsSync(projectImageDir + id)).toBeTruthy();
+    }
+
+
+    async function create(documents: Array<[string, string, Array<string>]|[string, string]>) {
+
+        const documentsLookup: Lookup<FieldDocument> = {}
+        const relationsLookup = {};
+
+        for (const [id, type, _] of documents) {
+            const d = doc(id, type) as FieldDocument;
+            if (type !== 'Image') d.resource.relations = { isRecordedIn: [] };
+            relationsLookup[id] = d.resource.relations;
+            documentsLookup[id] = d;
+        }
+        for (const [id, type, targets] of documents) {
+            if (targets) {
+                if (type === 'Image') relationsLookup[id][ImageRelations.DEPICTS] = targets;
+
+                for (const target of targets) {
+                    relationsLookup[target][type === 'Image' ? ImageRelations.ISDEPICTEDIN : HierarchicalRelations.LIESWITHIN] = [id];
+                }
+            }
+        }
+        for (const document of Object.values(documentsLookup)) {
+            await documentDatastore.create(document, username);
+        }
+        for (const [id, type, _] of documents) {
+            if (type === 'Image') createImageInProjectImageDir(id);
+        }
+        return documentsLookup;
     }
 
 
@@ -62,27 +94,20 @@ describe('subsystem/image-relations-manager', () => {
 
     it('delete TypeCatalog with images', async done => {
 
-        const tc1 = doc('tc1', 'TypeCatalog') as FieldDocument;
-        const t1 = doc('t1', 'Type') as FieldDocument;
-        const i1 = doc('i1', 'Image') as ImageDocument;
-        const i2 = doc('i2', 'Image') as ImageDocument;
-        i1.resource.relations = { depicts: ['tc1'] };
-        i2.resource.relations = { depicts: ['t1'] };
-        tc1.resource.relations = { isDepictedIn: ['i1'], isRecordedIn: [] };
-        t1.resource.relations = { isDepictedIn: ['i2'], isRecordedIn: [], liesWithin: ['tc1'] };
-
-        createImageInProjectImageDir('i1');
-        createImageInProjectImageDir('i2');
-        await documentDatastore.create(tc1, username);
-        await documentDatastore.create(t1, username);
-        await documentDatastore.create(i1, username);
-        await documentDatastore.create(i2, username);
+        const documentsLookup = await create(
+          [
+              ['tc1', 'TypeCatalog', ['t1']],
+              ['t1', 'Type'],
+              ['i1', 'Image', ['tc1']],
+              ['i2', 'Image', ['t1']]
+          ]
+        );
 
         expect((await documentDatastore.find({})).documents.length).toBe(4);
         expect(fs.existsSync(projectImageDir + 'i1')).toBeTruthy();
         expect(fs.existsSync(projectImageDir + 'i2')).toBeTruthy();
 
-        await imageRelationsManager.remove(tc1);
+        await imageRelationsManager.remove(documentsLookup['tc1']);
 
         expect((await documentDatastore.find({})).documents.length).toBe(0);
         expect(fs.existsSync(projectImageDir + 'i1')).not.toBeTruthy();
@@ -93,27 +118,20 @@ describe('subsystem/image-relations-manager', () => {
 
     it('delete Type with images', async done => {
 
-        const tc1 = doc('tc1', 'TypeCatalog') as FieldDocument;
-        const t1 = doc('t1', 'Type') as FieldDocument;
-        const i1 = doc('i1', 'Image') as ImageDocument;
-        const i2 = doc('i2', 'Image') as ImageDocument;
-        i1.resource.relations = { depicts: ['tc1'] };
-        i2.resource.relations = { depicts: ['t1'] };
-        tc1.resource.relations = { isDepictedIn: ['i1'], isRecordedIn: [] };
-        t1.resource.relations = { isDepictedIn: ['i2'], isRecordedIn: [], liesWithin: ['tc1'] };
-
-        createImageInProjectImageDir('i1');
-        createImageInProjectImageDir('i2');
-        await documentDatastore.create(tc1, username);
-        await documentDatastore.create(t1, username);
-        await documentDatastore.create(i1, username);
-        await documentDatastore.create(i2, username);
+        const documentsLookup = await create(
+          [
+              ['tc1', 'TypeCatalog', ['t1']],
+              ['t1', 'Type'],
+              ['i1', 'Image', ['tc1']],
+              ['i2', 'Image', ['t1']]
+          ]
+        );
 
         expect((await documentDatastore.find({})).documents.length).toBe(4);
         expect(fs.existsSync(projectImageDir + 'i1')).toBeTruthy();
         expect(fs.existsSync(projectImageDir + 'i2')).toBeTruthy();
 
-        await imageRelationsManager.remove(t1);
+        await imageRelationsManager.remove(documentsLookup['t1']);
 
         const documents = (await documentDatastore.find({})).documents;
         expect(documents.length).toBe(2);
@@ -126,22 +144,18 @@ describe('subsystem/image-relations-manager', () => {
 
     it('delete Type and Catalog with same image', async done => {
 
-        const tc1 = doc('tc1', 'TypeCatalog') as FieldDocument;
-        const t1 = doc('t1', 'Type') as FieldDocument;
-        const i1 = doc('i1', 'Image') as ImageDocument;
-        i1.resource.relations = { depicts: ['tc1', 't1'] };
-        tc1.resource.relations = { isDepictedIn: ['i1'], isRecordedIn: [] };
-        t1.resource.relations = { isDepictedIn: ['i1'], isRecordedIn: [], liesWithin: ['tc1'] };
-
-        createImageInProjectImageDir('i1');
-        await documentDatastore.create(tc1, username);
-        await documentDatastore.create(t1, username);
-        await documentDatastore.create(i1, username);
+        const documentsLookup = await create(
+          [
+              ['tc1', 'TypeCatalog', ['t1']],
+              ['t1', 'Type'],
+              ['i1', 'Image', ['tc1', 't1']]
+          ]
+        );
 
         expect((await documentDatastore.find({})).documents.length).toBe(3);
         expect(fs.existsSync(projectImageDir + 'i1')).toBeTruthy();
 
-        await imageRelationsManager.remove(tc1);
+        await imageRelationsManager.remove(documentsLookup['tc1']);
 
         const documents = (await documentDatastore.find({})).documents;
         expect(documents.length).toBe(0);
@@ -153,30 +167,21 @@ describe('subsystem/image-relations-manager', () => {
 
     it('do not delete images (with TypeCatalog) which are also connected to other resources', async done => {
 
-        const tc1 = doc('tc1', 'TypeCatalog') as FieldDocument;
-        const t1 = doc('t1', 'Type') as FieldDocument;
-        const i1 = doc('i1', 'Image') as ImageDocument;
-        const i2 = doc('i2', 'Image') as ImageDocument;
-        const r1 = doc('r1', 'Find') as FieldDocument;
-        i1.resource.relations = { depicts: ['tc1'] };
-        i2.resource.relations = { depicts: ['t1', 'r1'] };
-        tc1.resource.relations = { isDepictedIn: ['i1'], isRecordedIn: [] };
-        t1.resource.relations = { isDepictedIn: ['i2'], isRecordedIn: [], liesWithin: ['tc1'] };
-        r1.resource.relations = { isDepictedIn: ['i2'], isRecordedIn: [] };
-
-        createImageInProjectImageDir('i1');
-        createImageInProjectImageDir('i2');
-        await documentDatastore.create(tc1, username);
-        await documentDatastore.create(t1, username);
-        await documentDatastore.create(i1, username);
-        await documentDatastore.create(i2, username);
-        await documentDatastore.create(r1, username);
+        const documentsLookup = await create(
+            [
+                ['tc1', 'TypeCatalog', ['t1']],
+                ['t1', 'Type'],
+                ['r1', 'Find'],
+                ['i1', 'Image', ['tc1']],
+                ['i2', 'Image', ['t1', 'r1']]
+            ]
+        );
 
         expect((await documentDatastore.find({})).documents.length).toBe(5);
         expect(fs.existsSync(projectImageDir + 'i1')).toBeTruthy();
         expect(fs.existsSync(projectImageDir + 'i2')).toBeTruthy();
 
-        await imageRelationsManager.remove(tc1);
+        await imageRelationsManager.remove(documentsLookup['tc1']);
 
         const documents = (await documentDatastore.find({})).documents;
         expect(documents.length).toBe(2);
@@ -189,23 +194,18 @@ describe('subsystem/image-relations-manager', () => {
 
     it('do not delete images (with TypeCatalog) which are also connected to ancestor resources', async done => {
 
-        const tc1 = doc('tc1', 'TypeCatalog') as FieldDocument;
-        const t1 = doc('t1', 'Type') as FieldDocument;
-        const i1 = doc('i1', 'Image') as ImageDocument;
-        i1.resource.relations = { depicts: ['tc1', 't1'] };
-        tc1.resource.relations = { isDepictedIn: ['i1'], isRecordedIn: [] };
-        t1.resource.relations = { isDepictedIn: ['i1'], isRecordedIn: [], liesWithin: ['tc1'] };
-
-        createImageInProjectImageDir('i1');
-        createImageInProjectImageDir('i2');
-        await documentDatastore.create(tc1, username);
-        await documentDatastore.create(t1, username);
-        await documentDatastore.create(i1, username);
+        const documentsLookup = await create(
+          [
+              ['tc1', 'TypeCatalog', ['t1']],
+              ['t1', 'Type'],
+              ['i1', 'Image', ['tc1', 't1']]
+          ]
+        );
 
         expect((await documentDatastore.find({})).documents.length).toBe(3);
         expect(fs.existsSync(projectImageDir + 'i1')).toBeTruthy();
 
-        await imageRelationsManager.remove(t1);
+        await imageRelationsManager.remove(documentsLookup['t1']);
 
         const documents = (await documentDatastore.find({})).documents;
         expect(documents.length).toBe(2);

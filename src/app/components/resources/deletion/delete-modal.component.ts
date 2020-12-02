@@ -1,7 +1,9 @@
 import {Component} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+import {isNot, undefinedOrEmpty} from 'tsfun';
 import {Document} from 'idai-components-2';
 import {ProjectCategories} from '../../../core/configuration/project-categories';
+import {ImageRelations} from '../../../core/model/relation-constants';
 
 
 @Component({
@@ -18,7 +20,7 @@ import {ProjectCategories} from '../../../core/configuration/project-categories'
 export class DeleteModalComponent {
 
     public document: Document;
-    public isRecordedInResourcesCount: number;
+    public isRecordedInResourcesCount: number; // TODO rename to descendantsCount
     public confirmDeletionIdentifier: string;
 
     public deleteRelatedImages: boolean;
@@ -53,9 +55,15 @@ export class DeleteModalComponent {
         this.document.resource.category === 'Type'
         && this.document.project === undefined;
 
-    public showDeleteImagesOptionForResources = () =>
-        this.document.resource.category !== 'Type'
-        && this.document.resource.category !== 'TypeCatalog';
+
+    public showDeleteImagesOptionForResources() {
+
+        if (ProjectCategories.getTypeCategoryNames().includes(this.document.resource.category)) return false;
+
+        return isNot(undefinedOrEmpty)(this.document.resource.relations[ImageRelations.ISDEPICTEDIN])
+            || this.isRecordedInResourcesCount > 0; // TODO handle more cases, for example don't show it if the descendants have no image connections
+    }
+
 
     public setDocument = (document: Document) => this.document = document;
 

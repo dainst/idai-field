@@ -25,6 +25,7 @@ export class ImageRelationsManager {
 
     private categoryTreelist: TreeList<Category>
 
+
     constructor(private datastore: DocumentDatastore,
                 private relationsManager: RelationsManager,
                 private imagestore: Imagestore,
@@ -32,6 +33,7 @@ export class ImageRelationsManager {
 
         this.categoryTreelist = projectConfiguration.getCategoryTreelist();
     }
+
 
     public async getRelatedImageDocuments(documents: Array<Document>): Promise<Array<Document>> {
 

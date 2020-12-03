@@ -23,6 +23,7 @@ export class DeleteModalComponent {
     public isRecordedInResourcesCount: number; // TODO rename to descendantsCount
     public confirmDeletionIdentifier: string;
 
+    public relatedImagesCount: number;
     public deleteRelatedImages: boolean;
 
     constructor(public activeModal: NgbActiveModal) {}
@@ -53,7 +54,7 @@ export class DeleteModalComponent {
         if (this.document.resource.category !== 'TypeCatalog') return false;
         if (this.document.project !== undefined) return false;
 
-        return this.showImageDeletionOption();
+        return this.relatedImagesCount > 0;
     }
 
 
@@ -62,7 +63,7 @@ export class DeleteModalComponent {
         if (this.document.resource.category !== 'Type') return false;
         if (this.document.project !== undefined) return false; // TODO this should rather should throw an error
 
-        return this.showImageDeletionOption();
+        return this.relatedImagesCount > 0;
     }
 
 
@@ -70,7 +71,7 @@ export class DeleteModalComponent {
 
         if (ProjectCategories.getTypeCategoryNames().includes(this.document.resource.category)) return false;
 
-        return this.showImageDeletionOption();
+        return this.relatedImagesCount > 0;
     }
 
 
@@ -88,12 +89,5 @@ export class DeleteModalComponent {
 
         if (this.confirmDeletionIdentifier !== this.document.resource.identifier) return;
         this.activeModal.close(this.deleteRelatedImages);
-    }
-
-
-    private showImageDeletionOption() {
-
-        return isNot(undefinedOrEmpty)(this.document.resource.relations[ImageRelations.ISDEPICTEDIN])
-            || this.isRecordedInResourcesCount > 0; // TODO handle more cases, for example don't show it if the descendants have no image connections
     }
 }

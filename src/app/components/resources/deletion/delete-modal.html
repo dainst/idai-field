@@ -45,6 +45,7 @@
                (keydown)="$event.key !== 'Enter' || confirmDeletion()" />
     </div>
     <br>
+    <div *ngIf="relatedImagesCount > 0 && document.project === undefined">Verbundene Bilder: {{relatedImagesCount}}</div>
     <div *ngIf="showDeleteImagesOptionForTypeCatalog()"
          class="form-group text-left"
          i18n="@@resources.deleteModel.deleteCatalogImagesOption">

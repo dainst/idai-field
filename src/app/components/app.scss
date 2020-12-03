@@ -38,14 +38,11 @@ $roboto-font-path: '../../fonts/';
   animation-duration: 1s; /* Adjust this duration */
   }
 
-
-
-@Keyframes delayedFadeIn {
-  0% {opacity: 0;}
-  75% {opacity: 0;} /* Set this to 99% for no fade-in. */
-  100% {opacity: 1;}
+@keyframes delayedFadeIn {
+  0% { opacity: 0; }
+  75% { opacity: 0; } /* Set this to 99% for no fade-in. */
+  100% { opacity: 1; }
 }
-
 
 html {
   position: relative;

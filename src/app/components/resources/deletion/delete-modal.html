@@ -8,6 +8,14 @@
     <div id="confirm-delete-info" i18n="@@resources.deleteModal.confirmDeleteInfo">
         Bitte geben Sie den Bezeichner dieser Ressource ein, um den Löschvorgang zu bestätigen.
     </div>
+    <div class="input-group">
+        <input id="delete-resource-input"
+               type="text"
+               class="form-control"
+               [(ngModel)]="confirmDeletionIdentifier"
+               (keydown)="$event.key !== 'Enter' || confirmDeletion()" />
+    </div>
+    <br>
     <div *ngIf="showDeleteMultipleResourcesWarningSingle()" class="text-center alert alert-warning"
          i18n="@@resources.deleteModal.warning.single">
         Zu dieser Ressource gehört eine weitere Ressource, die beim Löschen ebenfalls entfernt wird.
@@ -37,34 +45,42 @@
         dass beim Löschen von Typen sämtliche Untertypen sowie
         Zuordnungen von Funden zu Typen und Untertypen entfernt werden.
     </div>
-    <div class="input-group">
-        <input id="delete-resource-input"
-               type="text"
-               class="form-control"
-               [(ngModel)]="confirmDeletionIdentifier"
-               (keydown)="$event.key !== 'Enter' || confirmDeletion()" />
+
+    <div *ngIf="showDeleteImagesOptionForTypeCatalog()"
+          class="text-center alert alert-warning"
+          i18n="@@resources.deleteModal.deleteCatalogImagesOption">
+        Mit dem Katalog (und den darin enthaltenen Katalogtypen) sind {{relatedImagesCount}} Bilder direkt verbunden.
+        Direkt verbundene Bilder haben keine Verbindungen zu anderen Ressourcen.
     </div>
-    <br>
-    <div *ngIf="relatedImagesCount > 0 && document.project === undefined">Verbundene Bilder: {{relatedImagesCount}}</div>
+    <div *ngIf="showDeleteImagesOptionForType()"
+          class="text-center alert alert-warning"
+          i18n="@@resources.deleteModal.deleteTypeImagesOption">
+        Mit dem Typ (und enthaltenen Untertypen) sind {{relatedImagesCount}} Bilder direkt verbunden.
+        Direkt verbundene Bilder haben keine Verbindungen zu anderen Ressourcen.
+    </div>
+    <div *ngIf="showDeleteImagesOptionForResources()"
+          class="text-center alert alert-warning"
+          i18n="@@resources.deleteModal.deleteResourceImagesOption">
+        Mit der Ressource (und darunterliegenden Ressourcen) sind {{relatedImagesCount}} Bilder direkt verbunden.
+        Direkt verbundene Bilder haben keine Verbindungen zu anderen Ressourcen.
+    </div>
+
     <div *ngIf="showDeleteImagesOptionForTypeCatalog()"
          class="form-group text-left"
-         i18n="@@resources.deleteModel.deleteCatalogImagesOption">
+        i18n="@@resources.deleteModal.deleteImages">
         <div class="form-check form-check-inline">
             <input id="delete-catalog-images-checkbox"
                    type="checkbox"
                    [(ngModel)]="deleteRelatedImages"
                    class="form-check-input">
-            <label for="delete-catalog-images-checkbox"
-                   class="form-check-label" >
-                Haken Sie diese Option an, um mit dem Katalog sämtliche Bilder zu löschen, welche
-                direkt mit dem Katalog oder Typen des Katalogs verknüpft sind (Bilder, welche gleichzeitig mit anderen
-                Ressourcen verknüpft sind, werden behalten).
+            <label for="delete-catalog-images-checkbox" class="form-check-label">
+                Verbundene Bilder Löschen
             </label>
         </div>
     </div>
     <div *ngIf="showDeleteImagesOptionForType()"
          class="form-group text-left"
-         i18n="@@resources.deleteModel.deleteTypeImagesOption">
+         i18n="@@resources.deleteModal.deleteImages">
         <div class="form-check form-check-inline">
             <input id="delete-type-images-checkbox"
                    type="checkbox"
@@ -72,15 +88,13 @@
                    class="form-check-input">
             <label for="delete-type-images-checkbox"
                    class="form-check-label" >
-                Haken Sie diese Option an, um mit dem Typ sämtliche Bilder zu löschen, welche
-                direkt mit dem Typ oder Untertypen verknüpft sind (Bilder, welche gleichzeitig mit anderen
-                Ressourcen verknüpft sind, werden behalten).
+                Verbundene Bilder Löschen
             </label>
         </div>
     </div>
     <div *ngIf="showDeleteImagesOptionForResources()"
          class="form-group text-left"
-         i18n="@@resources.deleteModel.deleteResourceImagesOption">
+         i18n="@@resources.deleteModal.deleteImages">
         <div class="form-check form-check-inline">
             <input id="delete-resources-images-checkbox"
                    type="checkbox"
@@ -88,9 +102,7 @@
                    class="form-check-input">
             <label for="delete-resources-images-checkbox"
                    class="form-check-label" >
-                Haken Sie diese Option an, um mit der Ressource sämtliche Bilder zu löschen, welche
-                direkt mit der Ressource oder darunter liegenden Ressourcen verknüpft sind (Bilder, welche gleichzeitig mit anderen
-                Ressourcen verknüpft sind, werden behalten).
+                Verbundene Bilder Löschen
             </label>
         </div>
     </div>

@@ -1449,7 +1449,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
-          <context context-type="linenumber">102</context>
+          <context context-type="linenumber">115</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageOverview.taskbar.tooltips.delete" datatype="html">
@@ -1747,7 +1747,7 @@
     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
-          <context context-type="linenumber">12</context>
+          <context context-type="linenumber">20</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.deleteModal.warning.multiple" datatype="html">
@@ -1761,7 +1761,7 @@
     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
-          <context context-type="linenumber">16</context>
+          <context context-type="linenumber">24</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.deleteModel.warning.importedCatalog" datatype="html">
@@ -1775,7 +1775,7 @@
     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
-          <context context-type="linenumber">22</context>
+          <context context-type="linenumber">30</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.deleteModel.warning.ownedCatalog" datatype="html">
@@ -1791,7 +1791,7 @@
     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
-          <context context-type="linenumber">28</context>
+          <context context-type="linenumber">36</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.deleteModel.warning.ownedType" datatype="html">
@@ -1807,17 +1807,57 @@
     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
-          <context context-type="linenumber">35</context>
+          <context context-type="linenumber">43</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="resources.deleteModel.deleteCatalogImagesOption" datatype="html">
+      <trans-unit id="resources.deleteModal.deleteCatalogImagesOption" datatype="html">
+        <source>
+        Mit dem Katalog (und den darin enthaltenen Katalogtypen) sind <x id="INTERPOLATION" equiv-text="{{relatedImagesCount}}"/> Bilder direkt verbunden.
+        Direkt verbundene Bilder haben keine Verbindungen zu anderen Ressourcen.
+    </source>
+        <target state="final">
+        Mit dem Katalog (und den darin enthaltenen Katalogtypen) sind <x id="INTERPOLATION" equiv-text="{{relatedImagesCount}}"/> Bilder direkt verbunden.
+        Direkt verbundene Bilder haben keine Verbindungen zu anderen Ressourcen.
+    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
+          <context context-type="linenumber">51</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.deleteModal.deleteTypeImagesOption" datatype="html">
+        <source>
+        Mit dem Typ (und enthaltenen Untertypen) sind <x id="INTERPOLATION" equiv-text="{{relatedImagesCount}}"/> Bilder direkt verbunden.
+        Direkt verbundene Bilder haben keine Verbindungen zu anderen Ressourcen.
+    </source>
+        <target state="final">
+        Mit dem Typ (und enthaltenen Untertypen) sind <x id="INTERPOLATION" equiv-text="{{relatedImagesCount}}"/> Bilder direkt verbunden.
+        Direkt verbundene Bilder haben keine Verbindungen zu anderen Ressourcen.
+    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
+          <context context-type="linenumber">57</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.deleteModal.deleteResourceImagesOption" datatype="html">
+        <source>
+        Mit der Ressource (und darunterliegenden Ressourcen) sind <x id="INTERPOLATION" equiv-text="{{relatedImagesCount}}"/> Bilder direkt verbunden.
+        Direkt verbundene Bilder haben keine Verbindungen zu anderen Ressourcen.
+    </source>
+        <target state="final">
+        Mit der Ressource (und darunterliegenden Ressourcen) sind <x id="INTERPOLATION" equiv-text="{{relatedImagesCount}}"/> Bilder direkt verbunden.
+        Direkt verbundene Bilder haben keine Verbindungen zu anderen Ressourcen.
+    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
+          <context context-type="linenumber">63</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.deleteModal.deleteImages" datatype="html">
         <source>
         <x id="START_TAG_DIV" ctype="x-div" equiv-text="&lt;div>"/>
             <x id="TAG_INPUT" ctype="x-input" equiv-text="&lt;input/>"/>
             <x id="START_TAG_LABEL" ctype="x-label" equiv-text="&lt;label>"/>
-                Haken Sie diese Option an, um mit dem Katalog sämtliche Bilder zu löschen, welche
-                direkt mit dem Katalog oder Typen des Katalogs verknüpft sind (Bilder, welche gleichzeitig mit anderen
-                Ressourcen verknüpft sind, werden behalten).
+                Verbundene Bilder Löschen
             <x id="CLOSE_TAG_LABEL" ctype="x-label" equiv-text="&lt;/label>"/>
         <x id="CLOSE_TAG_DIV" ctype="x-div" equiv-text="&lt;/div>"/>
     </source>
@@ -1825,67 +1865,21 @@
         <x id="START_TAG_DIV" ctype="x-div" equiv-text="&lt;div>"/>
             <x id="TAG_INPUT" ctype="x-input" equiv-text="&lt;input/>"/>
             <x id="START_TAG_LABEL" ctype="x-label" equiv-text="&lt;label>"/>
-                Haken Sie diese Option an, um mit dem Katalog sämtliche Bilder zu löschen, welche
-                direkt mit dem Katalog oder Typen des Katalogs verknüpft sind (Bilder, welche gleichzeitig mit anderen
-                Ressourcen verknüpft sind, werden behalten).
+                Verbundene Bilder Löschen
             <x id="CLOSE_TAG_LABEL" ctype="x-label" equiv-text="&lt;/label>"/>
         <x id="CLOSE_TAG_DIV" ctype="x-div" equiv-text="&lt;/div>"/>
     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
-          <context context-type="linenumber">50</context>
+          <context context-type="linenumber">70</context>
         </context-group>
-      </trans-unit>
-      <trans-unit id="resources.deleteModel.deleteTypeImagesOption" datatype="html">
-        <source>
-        <x id="START_TAG_DIV" ctype="x-div" equiv-text="&lt;div>"/>
-            <x id="TAG_INPUT" ctype="x-input" equiv-text="&lt;input/>"/>
-            <x id="START_TAG_LABEL" ctype="x-label" equiv-text="&lt;label>"/>
-                Haken Sie diese Option an, um mit dem Typ sämtliche Bilder zu löschen, welche
-                direkt mit dem Typ oder Untertypen verknüpft sind (Bilder, welche gleichzeitig mit anderen
-                Ressourcen verknüpft sind, werden behalten).
-            <x id="CLOSE_TAG_LABEL" ctype="x-label" equiv-text="&lt;/label>"/>
-        <x id="CLOSE_TAG_DIV" ctype="x-div" equiv-text="&lt;/div>"/>
-    </source>
-        <target state="final">
-        <x id="START_TAG_DIV" ctype="x-div" equiv-text="&lt;div>"/>
-            <x id="TAG_INPUT" ctype="x-input" equiv-text="&lt;input/>"/>
-            <x id="START_TAG_LABEL" ctype="x-label" equiv-text="&lt;label>"/>
-                Haken Sie diese Option an, um mit dem Typ sämtliche Bilder zu löschen, welche
-                direkt mit dem Typ oder Untertypen verknüpft sind (Bilder, welche gleichzeitig mit anderen
-                Ressourcen verknüpft sind, werden behalten).
-            <x id="CLOSE_TAG_LABEL" ctype="x-label" equiv-text="&lt;/label>"/>
-        <x id="CLOSE_TAG_DIV" ctype="x-div" equiv-text="&lt;/div>"/>
-    </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
-          <context context-type="linenumber">66</context>
+          <context context-type="linenumber">83</context>
         </context-group>
-      </trans-unit>
-      <trans-unit id="resources.deleteModel.deleteResourceImagesOption" datatype="html">
-        <source>
-        <x id="START_TAG_DIV" ctype="x-div" equiv-text="&lt;div>"/>
-            <x id="TAG_INPUT" ctype="x-input" equiv-text="&lt;input/>"/>
-            <x id="START_TAG_LABEL" ctype="x-label" equiv-text="&lt;label>"/>
-                Haken Sie diese Option an, um mit der Ressource sämtliche Bilder zu löschen, welche
-                direkt mit der Ressource oder darunter liegenden Ressourcen verknüpft sind (Bilder, welche gleichzeitig mit anderen
-                Ressourcen verknüpft sind, werden behalten).
-            <x id="CLOSE_TAG_LABEL" ctype="x-label" equiv-text="&lt;/label>"/>
-        <x id="CLOSE_TAG_DIV" ctype="x-div" equiv-text="&lt;/div>"/>
-    </source>
-        <target state="final">
-        <x id="START_TAG_DIV" ctype="x-div" equiv-text="&lt;div>"/>
-            <x id="TAG_INPUT" ctype="x-input" equiv-text="&lt;input/>"/>
-            <x id="START_TAG_LABEL" ctype="x-label" equiv-text="&lt;label>"/>
-                Haken Sie diese Option an, um mit der Ressource sämtliche Bilder zu löschen, welche
-                direkt mit der Ressource oder darunter liegenden Ressourcen verknüpft sind (Bilder, welche gleichzeitig mit anderen
-                Ressourcen verknüpft sind, werden behalten).
-            <x id="CLOSE_TAG_LABEL" ctype="x-label" equiv-text="&lt;/label>"/>
-        <x id="CLOSE_TAG_DIV" ctype="x-div" equiv-text="&lt;/div>"/>
-    </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
-          <context context-type="linenumber">82</context>
+          <context context-type="linenumber">97</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.deleteModal.confirmDeleteInfo" datatype="html">
@@ -4792,7 +4786,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
-          <context context-type="linenumber">106</context>
+          <context context-type="linenumber">119</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/editable-map.html</context>

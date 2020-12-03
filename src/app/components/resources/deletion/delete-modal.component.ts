@@ -75,10 +75,6 @@ export class DeleteModalComponent {
     }
 
 
-    public setDocument = (document: Document) => this.document = document;
-
-    public setCount = (count: number) => this.isRecordedInResourcesCount = count;
-
     public async onKeyDown(event: KeyboardEvent) {
 
         if (event.key === 'Escape') this.activeModal.dismiss('cancel');

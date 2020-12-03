@@ -19,7 +19,8 @@ navigation {
     }
 
     .root-document {
-      @extend .btn-outline-primary:active;
+      @extend .btn-outline-primary, :active;
+      z-index: auto !important;
     }
 
     .navigation-button {

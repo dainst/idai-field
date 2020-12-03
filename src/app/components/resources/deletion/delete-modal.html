@@ -46,26 +46,32 @@
         Zuordnungen von Funden zu Typen und Untertypen entfernt werden.
     </div>
 
-    <div *ngIf="showDeleteImagesOptionForTypeCatalog()"
+    <div *ngIf="showDeleteImagesOptionForResourceSingular()"
           class="text-center alert alert-warning"
-          i18n="@@resources.deleteModal.deleteCatalogImagesOption">
-        Mit dem Katalog (und den darin enthaltenen Katalogtypen) sind {{relatedImagesCount}} Bilder direkt verbunden.
+          i18n="@@resources.deleteModal.deleteResourceImagesOptionSingular">
+        Mit der Ressource ist {{relatedImagesCount}} Bild direkt verbunden.
         Direkt verbundene Bilder haben keine Verbindungen zu anderen Ressourcen.
     </div>
-    <div *ngIf="showDeleteImagesOptionForType()"
-          class="text-center alert alert-warning"
-          i18n="@@resources.deleteModal.deleteTypeImagesOption">
-        Mit dem Typ (und enthaltenen Untertypen) sind {{relatedImagesCount}} Bilder direkt verbunden.
+    <div *ngIf="showDeleteImagesOptionForResourcePlural()"
+         class="text-center alert alert-warning"
+         i18n="@@resources.deleteModal.deleteResourceImagesOptionPlural">
+        Mit der Ressource sind {{relatedImagesCount}} Bilder direkt verbunden.
         Direkt verbundene Bilder haben keine Verbindungen zu anderen Ressourcen.
     </div>
-    <div *ngIf="showDeleteImagesOptionForResources()"
-          class="text-center alert alert-warning"
-          i18n="@@resources.deleteModal.deleteResourceImagesOption">
-        Mit der Ressource (und darunterliegenden Ressourcen) sind {{relatedImagesCount}} Bilder direkt verbunden.
+    <div *ngIf="showDeleteImagesOptionForResourceWithDescendantsSingular()"
+         class="text-center alert alert-warning"
+         i18n="@@resources.deleteModal.deleteResourceWithDescendantsImagesOptionSingular">
+        Mit der Ressource oder einer darunterliegenden Ressource ist {{relatedImagesCount}} Bild direkt verbunden.
+        Direkt verbundene Bilder haben keine Verbindungen zu anderen Ressourcen.
+    </div>
+    <div *ngIf="showDeleteImagesOptionForResourceWithDescendantsPlural()"
+         class="text-center alert alert-warning"
+         i18n="@@resources.deleteModal.deleteResourceWithDescendantsImagesOptionPlural">
+        Mit der Ressource und darunterliegenden Ressourcen sind insgesamt {{relatedImagesCount}} Bilder direkt verbunden.
         Direkt verbundene Bilder haben keine Verbindungen zu anderen Ressourcen.
     </div>
 
-    <div *ngIf="showDeleteImagesOptionForTypeCatalog()"
+    <div *ngIf="showDeleteImagesOption()"
          class="form-group text-left"
         i18n="@@resources.deleteModal.deleteImages">
         <div class="form-check form-check-inline">
@@ -74,34 +80,6 @@
                    [(ngModel)]="deleteRelatedImages"
                    class="form-check-input">
             <label for="delete-catalog-images-checkbox" class="form-check-label">
-                Verbundene Bilder Löschen
-            </label>
-        </div>
-    </div>
-    <div *ngIf="showDeleteImagesOptionForType()"
-         class="form-group text-left"
-         i18n="@@resources.deleteModal.deleteImages">
-        <div class="form-check form-check-inline">
-            <input id="delete-type-images-checkbox"
-                   type="checkbox"
-                   [(ngModel)]="deleteRelatedImages"
-                   class="form-check-input">
-            <label for="delete-type-images-checkbox"
-                   class="form-check-label" >
-                Verbundene Bilder Löschen
-            </label>
-        </div>
-    </div>
-    <div *ngIf="showDeleteImagesOptionForResources()"
-         class="form-group text-left"
-         i18n="@@resources.deleteModal.deleteImages">
-        <div class="form-check form-check-inline">
-            <input id="delete-resources-images-checkbox"
-                   type="checkbox"
-                   [(ngModel)]="deleteRelatedImages"
-                   class="form-check-input">
-            <label for="delete-resources-images-checkbox"
-                   class="form-check-label" >
                 Verbundene Bilder Löschen
             </label>
         </div>

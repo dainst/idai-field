@@ -49,29 +49,27 @@ export class DeleteModalComponent {
         && this.document.project === undefined;
 
 
-    public showDeleteImagesOptionForTypeCatalog() {
-
-        if (this.document.resource.category !== 'TypeCatalog') return false;
-        if (this.document.project !== undefined) return false;
+    public showDeleteImagesOption() {
 
         return this.relatedImagesCount > 0;
     }
 
+    // TODO handle imported catalogs
+    public showDeleteImagesOptionForResourceSingular() {
 
-    public showDeleteImagesOptionForType() {
-
-        if (this.document.resource.category !== 'Type') return false;
-        if (this.document.project !== undefined) return false; // TODO this should rather should throw an error
-
-        return this.relatedImagesCount > 0;
+        return this.isRecordedInResourcesCount === 0 && this.relatedImagesCount === 1;
     }
+    public showDeleteImagesOptionForResourcePlural() {
 
+        return this.isRecordedInResourcesCount === 0 && this.relatedImagesCount > 1;
+    }
+    public showDeleteImagesOptionForResourceWithDescendantsSingular() {
 
-    public showDeleteImagesOptionForResources() {
+        return this.isRecordedInResourcesCount > 0 && this.relatedImagesCount === 1;
+    }
+    public showDeleteImagesOptionForResourceWithDescendantsPlural() {
 
-        if (ProjectCategories.getTypeCategoryNames().includes(this.document.resource.category)) return false;
-
-        return this.relatedImagesCount > 0;
+        return this.isRecordedInResourcesCount > 0 && this.relatedImagesCount > 1;
     }
 
 

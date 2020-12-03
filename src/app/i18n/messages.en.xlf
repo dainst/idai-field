@@ -1358,46 +1358,60 @@
           <context context-type="linenumber">43</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="resources.deleteModal.deleteCatalogImagesOption" datatype="html">
+      <trans-unit id="resources.deleteModal.deleteResourceImagesOptionSingular" datatype="html">
         <source>
-        Mit dem Katalog (und den darin enthaltenen Katalogtypen) sind <x id="INTERPOLATION" equiv-text="{{relatedImagesCount}}"/> Bilder direkt verbunden.
+        Mit der Ressource ist <x id="INTERPOLATION" equiv-text="{{relatedImagesCount}}"/> Bild direkt verbunden.
         Direkt verbundene Bilder haben keine Verbindungen zu anderen Ressourcen.
     </source>
         <target state="final">
-        <x id="INTERPOLATION" equiv-text="{{relatedImagesCount}}"/> images are directly connected to the catalog (and its types).
-        Directly connected images have no connections to other resources.
+        <x id="INTERPOLATION" equiv-text="{{relatedImagesCount}}"/> image is directly connected to this resource.
+        Directly connected images have no relations to other resources.
     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
           <context context-type="linenumber">51</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="resources.deleteModal.deleteTypeImagesOption" datatype="html">
+      <trans-unit id="resources.deleteModal.deleteResourceImagesOptionPlural" datatype="html">
         <source>
-        Mit dem Typ (und enthaltenen Untertypen) sind <x id="INTERPOLATION" equiv-text="{{relatedImagesCount}}"/> Bilder direkt verbunden.
+        Mit der Ressource sind <x id="INTERPOLATION" equiv-text="{{relatedImagesCount}}"/> Bilder direkt verbunden.
         Direkt verbundene Bilder haben keine Verbindungen zu anderen Ressourcen.
     </source>
         <target state="final">
-        <x id="INTERPOLATION" equiv-text="{{relatedImagesCount}}"/> images are directly connected to the type (and its subtypes).
-        Directly connected images have no connections to other resources.
+        <x id="INTERPOLATION" equiv-text="{{relatedImagesCount}}"/> images are directly connected to the resource.
+        Directly connected images have no relations to other resources.
     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
           <context context-type="linenumber">57</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="resources.deleteModal.deleteResourceImagesOption" datatype="html">
+      <trans-unit id="resources.deleteModal.deleteResourceWithDescendantsImagesOptionSingular" datatype="html">
         <source>
-        Mit der Ressource (und darunterliegenden Ressourcen) sind <x id="INTERPOLATION" equiv-text="{{relatedImagesCount}}"/> Bilder direkt verbunden.
+        Mit der Ressource oder einer darunterliegenden Ressource ist <x id="INTERPOLATION" equiv-text="{{relatedImagesCount}}"/> Bild direkt verbunden.
         Direkt verbundene Bilder haben keine Verbindungen zu anderen Ressourcen.
     </source>
         <target state="final">
-        <x id="INTERPOLATION" equiv-text="{{relatedImagesCount}}"/> images are directly connected to the resource (and its descendants).
-                Directly connected images have no connections to other resources.
+        <x id="INTERPOLATION" equiv-text="{{relatedImagesCount}}"/> image is directly connected to either this resource or a descendant.
+        Directly connected images have no relations to other resources.
     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
           <context context-type="linenumber">63</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.deleteModal.deleteResourceWithDescendantsImagesOptionPlural" datatype="html">
+        <source>
+        Mit der Ressource und darunterliegenden Ressourcen sind insgesamt <x id="INTERPOLATION" equiv-text="{{relatedImagesCount}}"/> Bilder direkt verbunden.
+        Direkt verbundene Bilder haben keine Verbindungen zu anderen Ressourcen.
+    </source>
+        <target state="final">
+        In total there are <x id="INTERPOLATION" equiv-text="{{relatedImagesCount}}"/> images related to the resource and its descendants.
+        Directly connected images have no relations to other resources.
+    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
+          <context context-type="linenumber">69</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.deleteModal.deleteImages" datatype="html">
@@ -1419,15 +1433,7 @@
     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
-          <context context-type="linenumber">70</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
-          <context context-type="linenumber">83</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
-          <context context-type="linenumber">97</context>
+          <context context-type="linenumber">76</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.deleteModal.confirmDeleteInfo" datatype="html">
@@ -1507,7 +1513,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
-          <context context-type="linenumber">115</context>
+          <context context-type="linenumber">93</context>
         </context-group>
       </trans-unit>
       <trans-unit id="buttons.cancel" datatype="html">
@@ -1548,7 +1554,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
-          <context context-type="linenumber">119</context>
+          <context context-type="linenumber">97</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/editable-map.html</context>

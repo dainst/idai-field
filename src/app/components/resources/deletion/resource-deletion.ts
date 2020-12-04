@@ -28,7 +28,7 @@ export class ResourceDeletion {
             DeleteModalComponent, { keyboard: false }
         );
         modalRef.componentInstance.document = document;
-        modalRef.componentInstance.isRecordedInResourcesCount = await this.relationsManager.fetchChildrenCount(document);
+        modalRef.componentInstance.descendantsCount = await this.relationsManager.fetchChildrenCount(document);
 
         const documentAndDescendants: Array<FieldDocument>
             = [document].concat(await this.relationsManager.fetchChildren(document as any) as any);

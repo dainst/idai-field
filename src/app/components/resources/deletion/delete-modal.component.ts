@@ -20,7 +20,7 @@ import {ImageRelations} from '../../../core/model/relation-constants';
 export class DeleteModalComponent {
 
     public document: Document;
-    public isRecordedInResourcesCount: number; // TODO rename to descendantsCount
+    public descendantsCount: number;
     public confirmDeletionIdentifier: string;
 
     public relatedImagesCount: number;
@@ -29,11 +29,11 @@ export class DeleteModalComponent {
     constructor(public activeModal: NgbActiveModal) {}
 
     public showDeleteMultipleResourcesWarningSingle = () =>
-        this.isRecordedInResourcesCount === 1
+        this.descendantsCount === 1
         && !ProjectCategories.getTypeCategoryNames().includes(this.document.resource.category);
 
     public showDeleteMultipleResourcesWarningMultiple = () =>
-        this.isRecordedInResourcesCount > 1
+        this.descendantsCount > 1
         && !ProjectCategories.getTypeCategoryNames().includes(this.document.resource.category);
 
     public showImportedCatalogAssociationsMsg = () =>
@@ -57,19 +57,19 @@ export class DeleteModalComponent {
     // TODO handle imported catalogs
     public showDeleteImagesOptionForResourceSingular() {
 
-        return this.isRecordedInResourcesCount === 0 && this.relatedImagesCount === 1;
+        return this.descendantsCount === 0 && this.relatedImagesCount === 1;
     }
     public showDeleteImagesOptionForResourcePlural() {
 
-        return this.isRecordedInResourcesCount === 0 && this.relatedImagesCount > 1;
+        return this.descendantsCount === 0 && this.relatedImagesCount > 1;
     }
     public showDeleteImagesOptionForResourceWithDescendantsSingular() {
 
-        return this.isRecordedInResourcesCount > 0 && this.relatedImagesCount === 1;
+        return this.descendantsCount > 0 && this.relatedImagesCount === 1;
     }
     public showDeleteImagesOptionForResourceWithDescendantsPlural() {
 
-        return this.isRecordedInResourcesCount > 0 && this.relatedImagesCount > 1;
+        return this.descendantsCount > 0 && this.relatedImagesCount > 1;
     }
 
 

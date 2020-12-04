@@ -22,7 +22,7 @@
     </div>
     <div *ngIf="showDeleteMultipleResourcesWarningMultiple()" class="text-center alert alert-warning"
          i18n="@@resources.deleteModal.warning.multiple">
-        Zu dieser Ressource gehören insgesamt {{isRecordedInResourcesCount}} Ressourcen, die beim Löschen
+        Zu dieser Ressource gehören insgesamt {{descendantsCount}} Ressourcen, die beim Löschen
         ebenfalls entfernt werden.
     </div>
     <div *ngIf="showImportedCatalogAssociationsMsg()"

@@ -46,7 +46,9 @@ export class DeleteModalComponent {
         this.document.resource.category === 'Type'
         && this.document.project === undefined;
 
-    public showDeleteImagesOption = () => this.relatedImagesCount > 0;
+    public showDeleteImagesOption = () =>
+        this.document.project === undefined
+        && this.relatedImagesCount > 0;
 
     public showDeleteImagesOptionForResourceSingular = () =>
         this.document.project === undefined

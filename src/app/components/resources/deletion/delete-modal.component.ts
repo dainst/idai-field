@@ -1,9 +1,7 @@
 import {Component} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import {isNot, undefinedOrEmpty} from 'tsfun';
 import {Document} from 'idai-components-2';
 import {ProjectCategories} from '../../../core/configuration/project-categories';
-import {ImageRelations} from '../../../core/model/relation-constants';
 
 
 @Component({
@@ -48,29 +46,27 @@ export class DeleteModalComponent {
         this.document.resource.category === 'Type'
         && this.document.project === undefined;
 
+    public showDeleteImagesOption = () => this.relatedImagesCount > 0;
 
-    public showDeleteImagesOption() {
+    public showDeleteImagesOptionForResourceSingular = () =>
+        this.document.project === undefined
+        && this.descendantsCount === 0
+        && this.relatedImagesCount === 1;
 
-        return this.relatedImagesCount > 0;
-    }
+    public showDeleteImagesOptionForResourcePlural = () =>
+        this.document.project === undefined
+        && this.descendantsCount === 0
+        && this.relatedImagesCount > 1;
 
-    // TODO handle imported catalogs
-    public showDeleteImagesOptionForResourceSingular() {
+    public showDeleteImagesOptionForResourceWithDescendantsSingular = () =>
+        this.document.project === undefined
+        && this.descendantsCount > 0
+        && this.relatedImagesCount === 1;
 
-        return this.descendantsCount === 0 && this.relatedImagesCount === 1;
-    }
-    public showDeleteImagesOptionForResourcePlural() {
-
-        return this.descendantsCount === 0 && this.relatedImagesCount > 1;
-    }
-    public showDeleteImagesOptionForResourceWithDescendantsSingular() {
-
-        return this.descendantsCount > 0 && this.relatedImagesCount === 1;
-    }
-    public showDeleteImagesOptionForResourceWithDescendantsPlural() {
-
-        return this.descendantsCount > 0 && this.relatedImagesCount > 1;
-    }
+    public showDeleteImagesOptionForResourceWithDescendantsPlural = () =>
+        this.document.project === undefined
+        && this.descendantsCount > 0
+        && this.relatedImagesCount > 1;
 
 
     public async onKeyDown(event: KeyboardEvent) {

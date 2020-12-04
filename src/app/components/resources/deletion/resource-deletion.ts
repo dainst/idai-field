@@ -48,7 +48,7 @@ export class ResourceDeletion {
     // TODO write apidoc for document.project
     private async performDeletion(document: FieldDocument, deleteRelatedImages: boolean) {
 
-         if (this.isImportedCatalog(document) || deleteRelatedImages) {
+         if (ResourceDeletion.isImportedCatalog(document) || deleteRelatedImages) {
 
              await this.imageRelationsManager.remove(document);
         } else {
@@ -57,7 +57,7 @@ export class ResourceDeletion {
     }
 
 
-    private isImportedCatalog(document: FieldDocument) {
+    private static isImportedCatalog(document: FieldDocument) {
 
         return ProjectCategories.getTypeCategoryNames().includes(document.resource.category)
             && document.resource.project !== undefined;

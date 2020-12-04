@@ -3,7 +3,7 @@ import {DocumentDatastore} from '../../datastore/document-datastore';
 import {DatastoreErrors} from '../../datastore/model/datastore-errors';
 import {DocumentReadDatastore} from '../../datastore/document-read-datastore';
 import {clone} from '../../util/object-util';
-import {isNot, undefinedOrEmpty} from 'tsfun';
+import {isArray, isNot, undefinedOrEmpty} from 'tsfun';
 
 
 export function buildImportCatalogFunction(datastore: DocumentDatastore, {username, selectedProject}) {

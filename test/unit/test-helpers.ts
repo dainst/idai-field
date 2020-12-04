@@ -1,4 +1,7 @@
-import {Document} from 'idai-components-2';
+import {Document, FieldDocument} from 'idai-components-2';
+import {Lookup} from '../../src/app/core/util/utils';
+import {HierarchicalRelations, ImageRelations} from '../../src/app/core/model/relation-constants';
+import {DocumentDatastore} from '../../src/app/core/datastore/document-datastore';
 
 
 export function doc(id: string, category: string = 'category'): Document {
@@ -23,4 +26,29 @@ export function doc(id: string, category: string = 'category'): Document {
             }
         ]
     };
+}
+
+
+export function createLookup(documents: Array<[string, string, Array<string>]|[string, string]>) {
+
+    const documentsLookup: Lookup<FieldDocument> = {}
+    const relationsLookup = {};
+
+    for (const [id, type, _] of documents) {
+        const d = doc(id, type) as FieldDocument;
+        if (type !== 'Image') d.resource.relations = { isRecordedIn: [] };
+        relationsLookup[id] = d.resource.relations;
+        documentsLookup[id] = d;
+    }
+    for (const [id, type, targets] of documents) {
+        if (targets) {
+            if (type === 'Image') relationsLookup[id][ImageRelations.DEPICTS] = targets;
+
+            for (const target of targets) {
+                relationsLookup[target][type === 'Image' ? ImageRelations.ISDEPICTEDIN : HierarchicalRelations.LIESWITHIN] = [id];
+            }
+        }
+    }
+
+    return documentsLookup;
 }

@@ -2,7 +2,7 @@ import {RelationsManager} from '../../../../../src/app/core/model/relations-mana
 import {createApp, setupSyncTestDb} from '../subsystem-helper';
 import {DocumentDatastore} from '../../../../../src/app/core/datastore/document-datastore';
 import {Imagestore} from '../../../../../src/app/core/images/imagestore/imagestore';
-import {doc} from '../../../test-helpers';
+import {createLookup, doc} from '../../../test-helpers';
 import {FieldDocument, toResourceId} from 'idai-components-2';
 import {ImageRelationsManager} from '../../../../../src/app/core/model/image-relations-manager';
 import {SettingsProvider} from '../../../../../src/app/core/settings/settings-provider';
@@ -33,24 +33,7 @@ describe('subsystem/image-relations-manager', () => {
 
     async function create(documents: Array<[string, string, Array<string>]|[string, string]>) {
 
-        const documentsLookup: Lookup<FieldDocument> = {}
-        const relationsLookup = {};
-
-        for (const [id, type, _] of documents) {
-            const d = doc(id, type) as FieldDocument;
-            if (type !== 'Image') d.resource.relations = { isRecordedIn: [] };
-            relationsLookup[id] = d.resource.relations;
-            documentsLookup[id] = d;
-        }
-        for (const [id, type, targets] of documents) {
-            if (targets) {
-                if (type === 'Image') relationsLookup[id][ImageRelations.DEPICTS] = targets;
-
-                for (const target of targets) {
-                    relationsLookup[target][type === 'Image' ? ImageRelations.ISDEPICTEDIN : HierarchicalRelations.LIESWITHIN] = [id];
-                }
-            }
-        }
+        const documentsLookup = createLookup(documents);
         for (const document of Object.values(documentsLookup)) {
             await documentDatastore.create(document, username);
         }

@@ -49,7 +49,7 @@
     <div *ngIf="showDeleteImagesOptionForResourceSingular()"
           class="text-center alert alert-warning"
           i18n="@@resources.deleteModal.deleteResourceImagesOptionSingular">
-        Mit der Ressource ist {{relatedImagesCount}} Bild direkt verbunden.
+        Mit der Ressource ist ein Bild direkt verbunden.
         Direkt verbundene Bilder haben keine Verbindungen zu anderen Ressourcen.
     </div>
     <div *ngIf="showDeleteImagesOptionForResourcePlural()"
@@ -61,7 +61,7 @@
     <div *ngIf="showDeleteImagesOptionForResourceWithDescendantsSingular()"
          class="text-center alert alert-warning"
          i18n="@@resources.deleteModal.deleteResourceWithDescendantsImagesOptionSingular">
-        Mit der Ressource oder einer darunterliegenden Ressource ist {{relatedImagesCount}} Bild direkt verbunden.
+        Mit der Ressource oder einer darunterliegenden Ressource ist ein Bild direkt verbunden.
         Direkt verbundene Bilder haben keine Verbindungen zu anderen Ressourcen.
     </div>
     <div *ngIf="showDeleteImagesOptionForResourceWithDescendantsPlural()"

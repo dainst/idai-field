@@ -3,7 +3,6 @@ import {DocumentDatastore} from '../../datastore/document-datastore';
 import {DatastoreErrors} from '../../datastore/model/datastore-errors';
 import {DocumentReadDatastore} from '../../datastore/document-read-datastore';
 import {clone} from '../../util/object-util';
-import {isArray, isNot, undefinedOrEmpty} from 'tsfun';
 
 
 export function buildImportCatalogFunction(datastore: DocumentDatastore, {username, selectedProject}) {
@@ -31,6 +30,9 @@ export function buildImportCatalogFunction(datastore: DocumentDatastore, {userna
                 if (importDocument.project === selectedProject) delete updateDocument.project;
 
                 if (existingDocument) {
+                    const oldRelations = clone(existingDocument.resource.relations);
+                    updateDocument.resource = clone(importDocument.resource);
+                    updateDocument.resource.relations = oldRelations;
                     await datastore.update(updateDocument, username);
                 } else {
                     await datastore.create(updateDocument, username);

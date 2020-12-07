@@ -50,6 +50,12 @@ export class ImageRelationsManager {
     }
 
 
+    // TODO implement; analogous to relationsManager.get(), but this time, it also returns all connected image documents
+    // public async get(id: ResourceId): Promise<Array<Document>> {
+    //
+    // }
+
+
     public async remove(document: Document) {
 
         if (ProjectCategories.getImageCategoryNames(this.categoryTreelist)

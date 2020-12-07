@@ -1,16 +1,16 @@
 import {buildImportCatalogFunction} from '../../../../../src/app/core/import/import/import-catalog';
 import {createLookup} from '../../../test-helpers';
-import {DatastoreErrors} from '../../../../../src/app/core/datastore/model/datastore-errors';
 import {clone} from 'tsfun/struct';
 import {TypeRelations} from '../../../../../src/app/core/model/relation-constants';
+
 
 describe('importCatalog', () => {
 
     it('base case', async done => {
 
-        const datastore = jasmine.createSpyObj('datastore', ['create', 'update', 'get']);
+        const datastore = jasmine.createSpyObj('datastore', ['create', 'update', 'getMultiple']);
         let called = false;
-        datastore.get.and.callFake(() => { throw [DatastoreErrors.DOCUMENT_NOT_FOUND] });
+        datastore.getMultiple.and.returnValue([]);
         datastore.create.and.callFake(document => {
             expect(document.resource.id).toBe('tc1');
             called = true;
@@ -33,9 +33,9 @@ describe('importCatalog', () => {
         const oldDocument = clone(documentsLookup['tc1']);
         oldDocument.resource.relations[TypeRelations.HASINSTANCE] = ['F1'];
 
-        const datastore = jasmine.createSpyObj('datastore', ['create', 'update', 'get']);
+        const datastore = jasmine.createSpyObj('datastore', ['create', 'update', 'getMultiple']);
         let called = false;
-        datastore.get.and.callFake(() => (oldDocument));
+        datastore.getMultiple.and.returnValue({ 'tc1': oldDocument });
         datastore.update.and.callFake(document => {
             expect(document.resource.id).toBe('tc1');
             expect(document.resource.relations['hasInstance']).toEqual(['F1']);

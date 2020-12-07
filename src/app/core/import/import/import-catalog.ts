@@ -49,6 +49,7 @@ export function buildImportCatalogFunction(services: ImportCatalogServices,
                     }
                 }
             }
+            // TODO delete difference, including images, if not connected
 
             let successfulImports = 0;
             for (let importDocument of importDocuments) {

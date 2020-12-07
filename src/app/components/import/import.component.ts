@@ -28,6 +28,7 @@ import {MenuContext, MenuService} from '../menu-service';
 import {SettingsProvider} from '../../core/settings/settings-provider';
 import BASE_EXCLUSION = ExportRunner.BASE_EXCLUSION;
 import getCategoriesWithoutExcludedCategories = ExportRunner.getCategoriesWithoutExcludedCategories;
+import {RelationsManager} from '../../core/model/relations-manager';
 
 
 @Component({
@@ -57,6 +58,7 @@ export class ImportComponent implements OnInit {
     constructor(public importState: ImportState,
                 private messages: Messages,
                 private datastore: DocumentDatastore,
+                private relationsManager: RelationsManager,
                 private remoteChangesStream: ChangesStream,
                 private importValidator: ImportValidator,
                 private http: HttpClient,
@@ -247,7 +249,10 @@ export class ImportComponent implements OnInit {
             fileContents);
 
         return Importer.doImport(
-            this.datastore,
+            {
+                datastore: this.datastore,
+                relationsManager: this.relationsManager
+            },
             {
                 settings: this.settingsProvider.getSettings(),
                 projectConfiguration: this.projectConfiguration

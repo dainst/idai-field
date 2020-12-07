@@ -7,6 +7,7 @@ import {TypeRelations} from '../../../../../src/app/core/model/relation-constant
 describe('importCatalog', () => {
 
     let datastore;
+    let relationsManager;
     let importCatalog;
 
     beforeEach(() => {
@@ -14,7 +15,7 @@ describe('importCatalog', () => {
         datastore = jasmine.createSpyObj('datastore', ['create', 'update', 'getMultiple']);
         const username = 'testuser';
         const selectedProject = 'test';
-        importCatalog = buildImportCatalogFunction({datastore}, {username, selectedProject});
+        importCatalog = buildImportCatalogFunction({datastore, relationsManager}, {username, selectedProject});
     });
 
 

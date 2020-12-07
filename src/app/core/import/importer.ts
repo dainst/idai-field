@@ -23,6 +23,7 @@ import {ShapefileFilesystemReader} from './reader/shapefile-filesystem-reader';
 import {CatalogFilesystemReader} from './reader/catalog-filesystem-reader';
 import {FilesystemReader} from './reader/filesystem-reader';
 import {M} from '../../components/messages/m';
+import {RelationsManager} from '../model/relations-manager';
 
 export type ImporterFormat = 'native' | 'geojson' | 'geojson-gazetteer' | 'shapefile' | 'csv' | 'catalog';
 
@@ -47,6 +48,13 @@ export interface ImporterContext {
 
     settings: Settings,
     projectConfiguration: ProjectConfiguration
+}
+
+
+export interface ImporterServices {
+
+    datastore: DocumentDatastore,
+    relationsManager: RelationsManager
 }
 
 
@@ -92,14 +100,14 @@ export module Importer {
      *   importReport.errors: Any error of module ImportErrors or ValidationErrors
      *   importReport.warnings
      */
-    export async function doImport(datastore: DocumentDatastore,
+    export async function doImport(services: ImporterServices,
                                    context: ImporterContext,
                                    generateId: () => string,
                                    options: ImporterOptions,
                                    documents: Array<Document>) {
 
         const operationCategoryNames = ProjectCategories.getOverviewCategoryNames(context.projectConfiguration.getCategoryTreelist()).filter(isnt('Place'));
-        const validator = new ImportValidator(context.projectConfiguration, datastore);
+        const validator = new ImportValidator(context.projectConfiguration, services.datastore);
         const inverseRelationsMap = makeInverseRelationsMap(context.projectConfiguration.getAllRelationDefinitions());
         const preprocessDocument = FieldConverter.preprocessDocument(context.projectConfiguration);
         const postprocessDocument = FieldConverter.postprocessDocument(context.projectConfiguration);
@@ -107,11 +115,11 @@ export module Importer {
         let importFunction;
         switch (options.format) {
             case 'catalog':
-                importFunction = buildImportCatalogFunction({datastore}, context.settings);
+                importFunction = buildImportCatalogFunction(services, context.settings);
                 break;
             case 'geojson-gazetteer':
                 importFunction = buildImportFunction(
-                    { datastore, validator },
+                    { datastore: services.datastore, validator },
                     { operationCategoryNames, inverseRelationsMap, settings: context.settings },
                     { generateId, preprocessDocument, postprocessDocument },
                     { mergeMode: false, permitDeletions: false });
@@ -119,14 +127,14 @@ export module Importer {
             case 'shapefile':
             case 'geojson':
                 importFunction = buildImportFunction(
-                    { datastore, validator },
+                    { datastore: services.datastore, validator },
                     { operationCategoryNames, inverseRelationsMap, settings: context.settings },
                     { generateId, preprocessDocument, postprocessDocument },
                     { mergeMode: true, permitDeletions: false });
                 break;
             default: // native | csv
                 importFunction = buildImportFunction(
-                    { datastore, validator },
+                    { datastore: services.datastore, validator },
                     { operationCategoryNames, inverseRelationsMap, settings: context.settings },
                     { generateId, preprocessDocument, postprocessDocument },
                     { mergeMode: options.mergeMode, permitDeletions: options.permitDeletions,

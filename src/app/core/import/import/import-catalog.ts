@@ -3,15 +3,25 @@ import {DocumentDatastore} from '../../datastore/document-datastore';
 import {clone} from '../../util/object-util';
 import {ImportFunction} from './types';
 import {makeDocumentsLookup} from './utils';
+import {RelationsManager} from '../../model/relations-manager';
 
 
 export interface ImportCatalogServices {
 
-    datastore: DocumentDatastore
+    datastore: DocumentDatastore,
+    relationsManager: RelationsManager
 }
 
 
-export function buildImportCatalogFunction(services: ImportCatalogServices, {username, selectedProject}): ImportFunction {
+export interface ImportCatalogContext {
+
+    username: string;
+    selectedProject: string;
+}
+
+
+export function buildImportCatalogFunction(services: ImportCatalogServices,
+                                           context: ImportCatalogContext): ImportFunction {
 
     /**
      * @param importDocuments
@@ -36,15 +46,15 @@ export function buildImportCatalogFunction(services: ImportCatalogServices, {use
                 const existingDocument: Document | undefined = await existingDocuments[importDocument.resource.id];
                 const updateDocument = clone(existingDocument ?? importDocument);
 
-                if (importDocument.project === selectedProject) delete updateDocument.project;
+                if (importDocument.project === context.selectedProject) delete updateDocument.project;
 
                 if (existingDocument) {
                     const oldRelations = clone(existingDocument.resource.relations);
                     updateDocument.resource = clone(importDocument.resource);
                     updateDocument.resource.relations = oldRelations;
-                    await services.datastore.update(updateDocument, username);
+                    await services.datastore.update(updateDocument, context.username);
                 } else {
-                    await services.datastore.create(updateDocument, username);
+                    await services.datastore.create(updateDocument, context.username);
                 }
                 successfulImports++;
             }

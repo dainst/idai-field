@@ -34,8 +34,10 @@ export function buildImportCatalogFunction(services: ImportCatalogServices,
         : Promise<{ errors: string[][], successfulImports: number }> {
 
         try {
+            const typeCatalogDocument = importDocuments.filter(_ => _.resource.category === 'TypeCatalog')[0]; // TODO handle errors
+
             const existingDocuments = makeDocumentsLookup(
-                await services.datastore.getMultiple(importDocuments.map(toResourceId)));
+                await services.relationsManager.get(typeCatalogDocument.resource.id));
 
             let successfulImports = 0;
             for (let importDocument of importDocuments) {

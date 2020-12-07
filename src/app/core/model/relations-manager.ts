@@ -10,6 +10,7 @@ import {SettingsProvider} from '../settings/settings-provider';
 import {FindIdsResult, FindResult} from '../datastore/model/read-datastore';
 import {Query} from '../datastore/model/query';
 import RECORDED_IN = HierarchicalRelations.RECORDEDIN;
+import {ResourceId} from '../constants';
 
 
 @Injectable()
@@ -63,6 +64,36 @@ export class RelationsManager {
 
 
     /**
+     * Gets a document including all of its descendants
+     * @param id
+     */
+    public async get(id: ResourceId): Promise<Array<Document>> {
+
+        try {
+            const document = await this.datastore.get(id);
+            return [document].concat(await this.fetchDescendants(document));
+        } catch {
+            return [];
+        }
+    }
+
+
+    public async fetchDescendants(document: Document): Promise<Array<Document>> { // TODO rename to getDescendants
+
+        return (await this.findDescendants(document) as FindResult).documents;
+    }
+
+
+    public async fetchDescendantsCount(document: Document): Promise<number> { // TODO remove; use getDescendants().length instead
+
+        return !document.resource.id
+            ? 0
+            : (await this.findDescendants(document, true)).totalCount;
+    }
+
+
+
+    /**
      * Removes the document from the datastore.
      *
      * Also removes all descendant documents (documents with an 'isRecordedIn' or 'liesWithin' relation pointing to
@@ -78,20 +109,6 @@ export class RelationsManager {
 
         const documentsToBeDeleted = (await this.fetchDescendants(document)).concat([document]);
         for (let document of documentsToBeDeleted) await this.removeWithConnectedDocuments(document);
-    }
-
-
-    public async fetchDescendants(document: Document): Promise<Array<Document>> {
-
-        return (await this.findDescendants(document) as FindResult).documents;
-    }
-
-
-    public async fetchDescendantsCount(document: Document): Promise<number> {
-
-        return !document.resource.id
-            ? 0
-            : (await this.findDescendants(document, true)).totalCount;
     }
 
 
@@ -161,7 +178,7 @@ export class RelationsManager {
     }
 
 
-    // TODO review name clash
+    // TODO review name clash; btw. why is this public?
     public async findRecordedInDocs2(resourceId: string, skipDocuments: boolean): Promise<FindIdsResult> {
 
         const query: Query = {

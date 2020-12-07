@@ -12,7 +12,8 @@ describe('importCatalog', () => {
 
     beforeEach(() => {
 
-        datastore = jasmine.createSpyObj('datastore', ['create', 'update', 'getMultiple']);
+        datastore = jasmine.createSpyObj('datastore', ['create', 'update']);
+        relationsManager = jasmine.createSpyObj('relationsManager', ['get'])
         const username = 'testuser';
         const selectedProject = 'test';
         importCatalog = buildImportCatalogFunction({datastore, relationsManager}, {username, selectedProject});
@@ -22,7 +23,7 @@ describe('importCatalog', () => {
     it('base case', async done => {
 
         let called = false;
-        datastore.getMultiple.and.returnValue([]);
+        relationsManager.get.and.returnValue([]);
         datastore.create.and.callFake(document => {
             expect(document.resource.id).toBe('tc1');
             called = true;
@@ -43,7 +44,7 @@ describe('importCatalog', () => {
         oldDocument.resource.relations[TypeRelations.HASINSTANCE] = ['F1'];
 
         let called = false;
-        datastore.getMultiple.and.returnValue([oldDocument]);
+        relationsManager.get.and.returnValue([oldDocument]);
         datastore.update.and.callFake(document => {
             expect(document.resource.id).toBe('tc1');
             expect(document.resource.relations['hasInstance']).toEqual(['F1']);
@@ -57,7 +58,7 @@ describe('importCatalog', () => {
     });
 
 
-    xit('type resource deleted on reimport - type resource was connected to other resource previously', async done => {
+    it('type resource deleted on reimport - type resource was connected to other resource previously', async done => {
 
         const documentsLookup = createLookup(
             [
@@ -68,7 +69,7 @@ describe('importCatalog', () => {
         const oldCatalog = clone(documentsLookup['tc1']);
         const oldType = clone(documentsLookup['t1']);
         oldType.resource.relations[TypeRelations.HASINSTANCE] = ['F1'];
-        datastore.getMultiple.and.returnValue([oldCatalog, oldType]);
+        relationsManager.get.and.returnValue([oldCatalog, oldType]);
 
         // let called = false;
         // datastore.create.and.callFake(document => {

@@ -8,6 +8,7 @@ import {RESOURCE_ID_PATH} from '../../constants';
 import {isNot, on, subtract, undefinedOrEmpty} from 'tsfun';
 import {TypeRelations} from '../../model/relation-constants';
 import {ImageRelationsManager} from '../../model/image-relations-manager';
+import {Lookup} from '../../util/utils';
 
 
 export interface ImportCatalogServices {
@@ -55,23 +56,7 @@ export function buildImportCatalogFunction(services: ImportCatalogServices,
 
             let successfulImports = 0;
             for (let importDocument of importDocuments) {
-                delete importDocument[Document._REV];
-                delete importDocument[Document.MODIFIED];
-                delete importDocument[Document.CREATED];
-
-                const existingDocument: Document | undefined = await existingDocuments[importDocument.resource.id];
-                const updateDocument = clone(existingDocument ?? importDocument);
-
-                if (importDocument.project === context.selectedProject) delete updateDocument.project;
-
-                if (existingDocument) {
-                    const oldRelations = clone(existingDocument.resource.relations);
-                    updateDocument.resource = clone(importDocument.resource);
-                    updateDocument.resource.relations = oldRelations;
-                    await services.datastore.update(updateDocument, context.username);
-                } else {
-                    await services.datastore.create(updateDocument, context.username);
-                }
+                await importOneDocument(services.datastore, context, existingDocuments, importDocument);
                 successfulImports++;
             }
             return {errors: [], successfulImports: successfulImports};
@@ -79,5 +64,30 @@ export function buildImportCatalogFunction(services: ImportCatalogServices,
         } catch (errWithParams) {
             return {errors: [errWithParams], successfulImports: 0};
         }
+    }
+}
+
+
+async function importOneDocument(datastore: DocumentDatastore,
+                                 context: ImportCatalogContext,
+                                 existingDocuments: Lookup<Document>,
+                                 importDocument: Document) {
+
+    delete importDocument[Document._REV];
+    delete importDocument[Document.MODIFIED];
+    delete importDocument[Document.CREATED];
+
+    const existingDocument: Document | undefined = await existingDocuments[importDocument.resource.id];
+    const updateDocument = clone(existingDocument ?? importDocument);
+
+    if (importDocument.project === context.selectedProject) delete updateDocument.project;
+
+    if (existingDocument) {
+        const oldRelations = clone(existingDocument.resource.relations);
+        updateDocument.resource = clone(importDocument.resource);
+        updateDocument.resource.relations = oldRelations;
+        await datastore.update(updateDocument, context.username);
+    } else {
+        await datastore.create(updateDocument, context.username);
     }
 }

@@ -17,7 +17,7 @@ export module MoveUtility {
 
         const oldVersion: FieldDocument = clone(document);
         updateRelations(document, newParent, isRecordedInTargetCategories);
-        await relationsManager.persist(document, oldVersion);
+        await relationsManager.update(document, oldVersion);
     }
 
 

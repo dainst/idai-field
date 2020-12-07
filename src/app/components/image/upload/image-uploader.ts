@@ -208,7 +208,7 @@ export class ImageUploader {
     private async saveWldFile(file: File, document: Document) {
 
         document.resource.georeference = await readWldFile(file, document);
-        await this.relationsManager.persist(document);
+        await this.relationsManager.update(document);
     }
 
 
@@ -284,7 +284,7 @@ export class ImageUploader {
                     doc.resource.relations['depicts'] = [depictsRelationTarget.resource.id];
                 }
 
-                this.relationsManager.persist(doc)
+                this.relationsManager.update(doc)
                     .then((result: any) => resolve(result))
                     .catch((error: any) => reject(error));
             };

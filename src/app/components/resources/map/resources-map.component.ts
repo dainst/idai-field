@@ -126,7 +126,7 @@ export class ResourcesMapComponent {
 
         try {
             await this.viewFacade.setSelectedDocument(
-                (await this.relationsManager.persist(selectedDocument)).resource.id
+                (await this.relationsManager.update(selectedDocument)).resource.id
             );
         } catch (msgWithParams) {
             this.messages.add(msgWithParams);

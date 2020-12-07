@@ -80,7 +80,7 @@ export class DocumentHolder {
         await this.performAssertions();
         this.convertStringsToNumbers();
 
-        const savedDocument: Document = await this.relationsManager.persist(
+        const savedDocument: Document = await this.relationsManager.update(
             this.cleanup(this.clonedDocument),
             this.oldVersion,
             this.inspectedRevisions
@@ -106,7 +106,7 @@ export class DocumentHolder {
                 template, baseIdentifier, identifierNumber, minDigits, this.validator
             );
 
-            await this.relationsManager.persist(
+            await this.relationsManager.update(
                 template,
                 this.oldVersion,
                 []

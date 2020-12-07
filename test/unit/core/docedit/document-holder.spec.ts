@@ -90,8 +90,8 @@ describe('DocumentHolder', () => {
             'assertHasIsRecordedIn', 'assertNoFieldsMissing',
             'assertCorrectnessOfNumericalValues', 'assertGeometryIsValid']);
 
-        const persistenceManager = jasmine.createSpyObj('PersistenceManager', ['persist']);
-        persistenceManager.persist.and.callFake((doc, b, c, d) => {
+        const persistenceManager = jasmine.createSpyObj('PersistenceManager', ['update']);
+        persistenceManager.update.and.callFake((doc, b, c, d) => {
             changedDocument = doc;
             return Promise.resolve(changedDocument);
         });

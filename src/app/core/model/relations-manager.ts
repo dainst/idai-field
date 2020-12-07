@@ -50,9 +50,9 @@ export class RelationsManager {
      * @returns a copy of the updated document
      * @throws msgWithParams
      */
-    public async persist(document: NewDocument|Document, // TODO rename to update
-                         oldVersion: Document = document as Document,
-                         revisionsToSquash: Document[] = []): Promise<Document> {
+    public async update(document: NewDocument|Document,
+                        oldVersion: Document = document as Document,
+                        revisionsToSquash: Document[] = []): Promise<Document> {
 
         const persistedDocument = await this.updateWithConnections(
             document as Document, oldVersion, revisionsToSquash);

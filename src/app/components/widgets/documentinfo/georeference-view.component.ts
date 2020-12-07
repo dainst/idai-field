@@ -107,7 +107,7 @@ export class GeoreferenceViewComponent {
         try {
             Object.assign(
                 this.document,
-                await this.relationsManager.persist(this.document)
+                await this.relationsManager.update(this.document)
             );
         } catch (err) {
             console.error(err);

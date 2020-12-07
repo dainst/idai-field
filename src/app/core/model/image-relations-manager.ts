@@ -84,7 +84,7 @@ export class ImageRelationsManager {
                 depictsRelations.push(targetDocument.resource.id);
             }
 
-            await this.relationsManager.persist(
+            await this.relationsManager.update(
                 imageDocument, oldVersion
             );
         }
@@ -122,7 +122,7 @@ export class ImageRelationsManager {
             const oldVersion: ImageDocument = clone(document);
             document.resource.relations.depicts = [];
 
-            await this.relationsManager.persist(
+            await this.relationsManager.update(
                 document, oldVersion
             );
         }

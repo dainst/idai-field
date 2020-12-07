@@ -127,7 +127,7 @@ export class RowComponent implements AfterViewInit {
         try {
             Object.assign(
                 this.document,
-                await this.relationsManager.persist(this.document)
+                await this.relationsManager.update(this.document)
             );
         } catch(msgWithParams) {
             this.messages.add(msgWithParams);

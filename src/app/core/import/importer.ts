@@ -107,7 +107,7 @@ export module Importer {
         let importFunction;
         switch (options.format) {
             case 'catalog':
-                importFunction = buildImportCatalogFunction(datastore, context.settings);
+                importFunction = buildImportCatalogFunction({datastore}, context.settings);
                 break;
             case 'geojson-gazetteer':
                 importFunction = buildImportFunction(

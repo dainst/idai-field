@@ -5,7 +5,7 @@ import {DocumentDatastore} from '../datastore/document-datastore';
 import {ConnectedDocsWriter} from './connected-docs-writer';
 import {clone} from '../util/object-util';
 import {ProjectConfiguration} from '../configuration/project-configuration';
-import {HierarchicalRelations, ImageRelations} from './relation-constants';
+import {HierarchicalRelations} from './relation-constants';
 import {SettingsProvider} from '../settings/settings-provider';
 import {FindIdsResult, FindResult} from '../datastore/model/read-datastore';
 import {Query} from '../datastore/model/query';

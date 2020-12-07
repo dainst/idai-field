@@ -5,7 +5,13 @@ import {ImportFunction} from './types';
 import {makeDocumentsLookup} from './utils';
 
 
-export function buildImportCatalogFunction(datastore: DocumentDatastore, {username, selectedProject}): ImportFunction {
+export interface ImportCatalogServices {
+
+    datastore: DocumentDatastore
+}
+
+
+export function buildImportCatalogFunction(services: ImportCatalogServices, {username, selectedProject}): ImportFunction {
 
     /**
      * @param importDocuments
@@ -19,7 +25,7 @@ export function buildImportCatalogFunction(datastore: DocumentDatastore, {userna
 
         try {
             const existingDocuments = makeDocumentsLookup(
-                await datastore.getMultiple(importDocuments.map(toResourceId)));
+                await services.datastore.getMultiple(importDocuments.map(toResourceId)));
 
             let successfulImports = 0;
             for (let importDocument of importDocuments) {
@@ -36,9 +42,9 @@ export function buildImportCatalogFunction(datastore: DocumentDatastore, {userna
                     const oldRelations = clone(existingDocument.resource.relations);
                     updateDocument.resource = clone(importDocument.resource);
                     updateDocument.resource.relations = oldRelations;
-                    await datastore.update(updateDocument, username);
+                    await services.datastore.update(updateDocument, username);
                 } else {
-                    await datastore.create(updateDocument, username);
+                    await services.datastore.create(updateDocument, username);
                 }
                 successfulImports++;
             }

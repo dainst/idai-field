@@ -14,6 +14,7 @@ describe('Import/Subsystem', () => {
 
     let datastore;
     let relationsManager;
+    let imageRelationsManager;
     let _projectConfiguration;
     const settingsService: any = { getUsername: () => 'testuser', getSettings: () => ({ selectedProject: '' }) };
 
@@ -61,7 +62,7 @@ describe('Import/Subsystem', () => {
         );
 
         await Importer.doImport(
-            {datastore, relationsManager},
+            {datastore, relationsManager, imageRelationsManager},
             { settings: settingsService,  projectConfiguration: _projectConfiguration },
             () => '101',
             options,
@@ -121,7 +122,7 @@ describe('Import/Subsystem', () => {
         );
 
         await Importer.doImport(
-            {datastore, relationsManager},
+            {datastore, relationsManager, imageRelationsManager},
             { settings: settingsService, projectConfiguration: _projectConfiguration },
             () => '101',
             options,
@@ -191,7 +192,7 @@ describe('Import/Subsystem', () => {
         );
 
         await Importer.doImport(
-            {datastore, relationsManager},
+            {datastore, relationsManager, imageRelationsManager},
             { settings: settingsService, projectConfiguration: _projectConfiguration },
             () => '101',
             options,
@@ -229,7 +230,7 @@ describe('Import/Subsystem', () => {
         );
 
         await Importer.doImport(
-            {datastore, relationsManager},
+            {datastore, relationsManager, imageRelationsManager},
             { settings: settingsService, projectConfiguration: _projectConfiguration },
             () => '101',
             options,
@@ -261,7 +262,7 @@ describe('Import/Subsystem', () => {
         );
 
         const report = await Importer.doImport(
-            {datastore, relationsManager},
+            {datastore, relationsManager, imageRelationsManager},
             { settings: settingsService, projectConfiguration: _projectConfiguration },
             () => '101',
             options,
@@ -289,7 +290,7 @@ describe('Import/Subsystem', () => {
         );
 
         const report = await Importer.doImport(
-            {datastore, relationsManager},
+            {datastore, relationsManager, imageRelationsManager},
             { settings: settingsService, projectConfiguration: _projectConfiguration },
             () => '101',
             options,
@@ -317,7 +318,7 @@ describe('Import/Subsystem', () => {
         );
 
         const report = await Importer.doImport(
-            {datastore, relationsManager},
+            {datastore, relationsManager, imageRelationsManager},
             { settings: settingsService, projectConfiguration: _projectConfiguration },
             () => '101',
             options,
@@ -346,7 +347,7 @@ describe('Import/Subsystem', () => {
         );
 
         await Importer.doImport(
-            {datastore, relationsManager},
+            {datastore, relationsManager, imageRelationsManager},
             { settings: settingsService, projectConfiguration: _projectConfiguration },
             () => '101',
             options,
@@ -382,7 +383,7 @@ describe('Import/Subsystem', () => {
         );
 
         const importReport = await Importer.doImport(
-            {datastore, relationsManager},
+            {datastore, relationsManager, imageRelationsManager},
             { settings: settingsService, projectConfiguration: _projectConfiguration },
             () => '101',
             options,
@@ -415,7 +416,7 @@ describe('Import/Subsystem', () => {
         );
 
         await Importer.doImport(
-            {datastore, relationsManager},
+            {datastore, relationsManager, imageRelationsManager},
             { settings: settingsService, projectConfiguration: _projectConfiguration },
             () => '101',
             options,
@@ -451,7 +452,7 @@ describe('Import/Subsystem', () => {
         );
 
         await Importer.doImport(
-            {datastore, relationsManager},
+            {datastore, relationsManager, imageRelationsManager},
             { settings: settingsService, projectConfiguration: _projectConfiguration },
             () => '101',
             options,
@@ -494,7 +495,7 @@ describe('Import/Subsystem', () => {
         );
 
         await Importer.doImport(
-            {datastore, relationsManager},
+            {datastore, relationsManager, imageRelationsManager},
             { settings: settingsService, projectConfiguration: _projectConfiguration },
             () => '101',
             options,
@@ -532,7 +533,7 @@ describe('Import/Subsystem', () => {
         );
 
         await Importer.doImport(
-            {datastore, relationsManager},
+            {datastore, relationsManager, imageRelationsManager},
             { settings: settingsService, projectConfiguration: _projectConfiguration },
             () => '101',
             options,
@@ -575,7 +576,7 @@ describe('Import/Subsystem', () => {
         );
 
         await Importer.doImport(
-            {datastore, relationsManager},
+            {datastore, relationsManager, imageRelationsManager},
             { settings: settingsService, projectConfiguration: _projectConfiguration },
             () => '101',
             options,
@@ -608,7 +609,7 @@ describe('Import/Subsystem', () => {
         );
 
         const importReport = await Importer.doImport(
-            {datastore, relationsManager},
+            {datastore, relationsManager, imageRelationsManager},
             { settings: settingsService, projectConfiguration: _projectConfiguration },
             () => '101',
             options,
@@ -642,7 +643,7 @@ describe('Import/Subsystem', () => {
         );
 
         const importReport = await Importer.doImport(
-            {datastore, relationsManager},
+            {datastore, relationsManager, imageRelationsManager},
             { settings: settingsService, projectConfiguration: _projectConfiguration },
             () => '101',
             options,
@@ -675,7 +676,7 @@ describe('Import/Subsystem', () => {
         );
 
         await Importer.doImport(
-            {datastore, relationsManager},
+            {datastore, relationsManager, imageRelationsManager},
             { settings: settingsService, projectConfiguration: _projectConfiguration },
             () => '101',
             options,

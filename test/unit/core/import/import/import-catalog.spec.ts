@@ -8,15 +8,18 @@ describe('importCatalog', () => {
 
     let datastore;
     let relationsManager;
+    let imageRelationsManager;
     let importCatalog;
 
     beforeEach(() => {
 
         datastore = jasmine.createSpyObj('datastore', ['create', 'update']);
         relationsManager = jasmine.createSpyObj('relationsManager', ['get'])
+        imageRelationsManager = jasmine.createSpyObj('imageRelationsManager', ['remove']);
         const username = 'testuser';
         const selectedProject = 'test';
-        importCatalog = buildImportCatalogFunction({datastore, relationsManager}, {username, selectedProject});
+        importCatalog = buildImportCatalogFunction(
+            {datastore, relationsManager, imageRelationsManager}, {username, selectedProject});
     });
 
 

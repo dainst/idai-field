@@ -24,6 +24,7 @@ import {CatalogFilesystemReader} from './reader/catalog-filesystem-reader';
 import {FilesystemReader} from './reader/filesystem-reader';
 import {M} from '../../components/messages/m';
 import {RelationsManager} from '../model/relations-manager';
+import {ImageRelationsManager} from '../model/image-relations-manager';
 
 export type ImporterFormat = 'native' | 'geojson' | 'geojson-gazetteer' | 'shapefile' | 'csv' | 'catalog';
 
@@ -46,15 +47,16 @@ export interface ImporterOptions {
 
 export interface ImporterContext {
 
-    settings: Settings,
-    projectConfiguration: ProjectConfiguration
+    settings: Settings;
+    projectConfiguration: ProjectConfiguration;
 }
 
 
 export interface ImporterServices {
 
-    datastore: DocumentDatastore,
-    relationsManager: RelationsManager
+    datastore: DocumentDatastore;
+    relationsManager: RelationsManager;
+    imageRelationsManager: ImageRelationsManager;
 }
 
 

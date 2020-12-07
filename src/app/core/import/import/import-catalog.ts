@@ -7,12 +7,14 @@ import {RelationsManager} from '../../model/relations-manager';
 import {RESOURCE_ID_PATH} from '../../constants';
 import {isNot, on, subtract, undefinedOrEmpty} from 'tsfun';
 import {TypeRelations} from '../../model/relation-constants';
+import {ImageRelationsManager} from '../../model/image-relations-manager';
 
 
 export interface ImportCatalogServices {
 
-    datastore: DocumentDatastore,
-    relationsManager: RelationsManager
+    datastore: DocumentDatastore;
+    relationsManager: RelationsManager;
+    imageRelationsManager: ImageRelationsManager;
 }
 
 

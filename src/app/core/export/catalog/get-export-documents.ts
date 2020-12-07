@@ -1,7 +1,7 @@
-import {DocumentReadDatastore} from '../../datastore/document-read-datastore';
-import {Document, toResourceId} from 'idai-components-2';
-import {Name, ResourceId} from '../../constants';
 import {includedIn} from 'tsfun';
+import {Document, toResourceId} from 'idai-components-2';
+import {DocumentReadDatastore} from '../../datastore/document-read-datastore';
+import {Name, ResourceId} from '../../constants';
 import {ImageRelations} from '../../model/relation-constants';
 import {RelationsManager} from '../../model/relations-manager';
 import {ImageRelationsManager} from '../../model/image-relations-manager';
@@ -14,7 +14,7 @@ export async function getExportDocuments(datastore: DocumentReadDatastore,
                                          project: Name): Promise<[Array<Document>, Array<ResourceId>]> {
 
     const catalog = await datastore.get(catalogId);
-    const catalogAndTypes = (await relationsManager.fetchChildren(catalog)).concat(catalog);
+    const catalogAndTypes = (await relationsManager.fetchDescendants(catalog)).concat(catalog);
     const relatedImages = cleanImageDocuments(
         await imageRelationsManager.getRelatedImageDocuments(catalogAndTypes),
         catalogAndTypes.map(toResourceId)

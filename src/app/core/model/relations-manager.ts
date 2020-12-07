@@ -65,7 +65,7 @@ export class RelationsManager {
     /**
      * Removes the document from the datastore.
      *
-     * Also removes all child documents (documents with an 'isRecordedIn' or 'liesWithin' relation pointing to
+     * Also removes all descendant documents (documents with an 'isRecordedIn' or 'liesWithin' relation pointing to
      * this document.
      * Deletes all corresponding inverse relations.
      *
@@ -76,18 +76,18 @@ export class RelationsManager {
      */
     public async remove(document: Document) {
 
-        const documentsToBeDeleted = (await this.fetchChildren(document)).concat([document]);
+        const documentsToBeDeleted = (await this.fetchDescendants(document)).concat([document]);
         for (let document of documentsToBeDeleted) await this.removeWithConnectedDocuments(document);
     }
 
 
-    public async fetchChildren(document: Document): Promise<Array<Document>> {
+    public async fetchDescendants(document: Document): Promise<Array<Document>> {
 
         return (await this.findDescendants(document) as FindResult).documents;
     }
 
 
-    public async fetchChildrenCount(document: Document): Promise<number> {
+    public async fetchDescendantsCount(document: Document): Promise<number> {
 
         return !document.resource.id
             ? 0

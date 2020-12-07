@@ -3,9 +3,10 @@ import {DocumentDatastore} from '../../datastore/document-datastore';
 import {DatastoreErrors} from '../../datastore/model/datastore-errors';
 import {DocumentReadDatastore} from '../../datastore/document-read-datastore';
 import {clone} from '../../util/object-util';
+import {ImportFunction} from './types';
 
 
-export function buildImportCatalogFunction(datastore: DocumentDatastore, {username, selectedProject}) {
+export function buildImportCatalogFunction(datastore: DocumentDatastore, {username, selectedProject}): ImportFunction {
 
     /**
      * @param importDocuments

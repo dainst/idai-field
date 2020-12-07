@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {flatten, includedIn, isDefined, isNot, on, set} from 'tsfun';
 import {map as asyncMap} from 'tsfun/async';
-import {Document, FieldDocument, ImageDocument, Resource, toResourceId} from 'idai-components-2';
+import {Document, FieldDocument, ImageDocument, toResourceId} from 'idai-components-2';
 import {DocumentDatastore} from '../datastore/document-datastore';
 import {Imagestore} from '../images/imagestore/imagestore';
 import {RelationsManager} from './relations-manager';
@@ -12,7 +12,7 @@ import {Category} from '../configuration/model/category';
 import DEPICTS = ImageRelations.DEPICTS;
 import ISDEPICTEDIN = ImageRelations.ISDEPICTEDIN;
 import {ProjectCategories} from '../configuration/project-categories';
-import {ResourceId} from '../constants';
+import {RESOURCE_ID_PATH, ResourceId} from '../constants';
 import {clone} from '../util/object-util';
 
 
@@ -64,7 +64,7 @@ export class ImageRelationsManager {
             (await this.relationsManager.fetchDescendants(document)).concat([document]);
         await this.relationsManager.remove(document);
 
-        const catalogImages = set(on([Document.RESOURCE, Resource.ID]), await this.getLeftovers(documentsToBeDeleted));
+        const catalogImages = set(on(RESOURCE_ID_PATH), await this.getLeftovers(documentsToBeDeleted));
 
         for (let catalogImage of catalogImages) {
             await this.imagestore.remove(catalogImage.resource.id);

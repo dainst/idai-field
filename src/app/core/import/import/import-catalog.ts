@@ -1,9 +1,12 @@
-import {Document, toResourceId} from 'idai-components-2';
+import {Document} from 'idai-components-2';
 import {DocumentDatastore} from '../../datastore/document-datastore';
 import {clone} from '../../util/object-util';
 import {ImportFunction} from './types';
 import {makeDocumentsLookup} from './utils';
 import {RelationsManager} from '../../model/relations-manager';
+import {RESOURCE_ID_PATH} from '../../constants';
+import {isNot, on, subtract, undefinedOrEmpty} from 'tsfun';
+import {TypeRelations} from '../../model/relation-constants';
 
 
 export interface ImportCatalogServices {
@@ -35,9 +38,17 @@ export function buildImportCatalogFunction(services: ImportCatalogServices,
 
         try {
             const typeCatalogDocument = importDocuments.filter(_ => _.resource.category === 'TypeCatalog')[0]; // TODO handle errors
-
             const existingDocuments = makeDocumentsLookup(
                 await services.relationsManager.get(typeCatalogDocument.resource.id));
+            const removedDocuments = subtract(on(RESOURCE_ID_PATH), importDocuments)(Object.values(existingDocuments)); // TODO review subtract, params, object.values
+            for (const removedDocument of removedDocuments) {
+                if (isNot(undefinedOrEmpty)(removedDocument.resource.relations[TypeRelations.HASINSTANCE])) {
+                    return {
+                        errors: [['connected-type-deleted']], // TODO use constant
+                        successfulImports: 0
+                    }
+                }
+            }
 
             let successfulImports = 0;
             for (let importDocument of importDocuments) {

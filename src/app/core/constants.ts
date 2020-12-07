@@ -1,7 +1,11 @@
+import {Document, Resource} from 'idai-components-2';
+
 // Constants
 
-export const RESOURCE_IDENTIFIER = 'resource.identifier';
-export const RESOURCE_ID = 'resource.id';
+export const RESOURCE_DOT_IDENTIFIER = 'resource.identifier';
+export const RESOURCE_DOT_ID = 'resource.id';
+
+export const RESOURCE_ID_PATH = [Document.RESOURCE, Resource.ID];
 
 
 // Indexing

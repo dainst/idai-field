@@ -71,16 +71,30 @@ describe('importCatalog', () => {
         oldType.resource.relations[TypeRelations.HASINSTANCE] = ['F1'];
         relationsManager.get.and.returnValue([oldCatalog, oldType]);
 
-        // let called = false;
-        // datastore.create.and.callFake(document => {
-        //     expect(document.resource.id).toBe('tc1');
-        //     called = true;
-        // });
+        const result = await importCatalog([documentsLookup['tc1']]);
+        expect(result.successfulImports).toBe(0);
+        expect(result.errors[0][0]).toEqual('connected-type-deleted');
+        done();
+    });
+
+
+    it('type resource deleted on reimport - type resource was unconnected', async done => {
+
+        const documentsLookup = createLookup(
+            [
+                ['tc1', 'TypeCatalog', ['t1']],
+                ['t1', 'Type']
+            ]
+        );
+        const oldCatalog = clone(documentsLookup['tc1']);
+        const oldType = clone(documentsLookup['t1']);
+        relationsManager.get.and.returnValue([oldCatalog, oldType]);
 
         const result = await importCatalog([documentsLookup['tc1']]);
-        // expect(result.succesfulImports).toBe(0); TODO
-        // expect(result.errors).toEqual(...); TODO
+        expect(result.successfulImports).toBe(1);
+        expect(result.errors).toEqual([]);
 
+        // TODO other expectations?
         done();
     });
 });

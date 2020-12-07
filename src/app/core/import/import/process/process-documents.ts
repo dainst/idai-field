@@ -1,6 +1,6 @@
 import {Document} from 'idai-components-2';
 import {update, duplicates, size, to} from 'tsfun';
-import {RESOURCE_IDENTIFIER} from '../../../constants';
+import {RESOURCE_DOT_IDENTIFIER} from '../../../constants';
 import {ImportErrors as E} from '../import-errors';
 import {ImportValidator} from './import-validator';
 import {mergeResource} from './merge-resource';
@@ -48,6 +48,6 @@ export function processDocuments(documents: Array<Document>,
 
 function assertNoDuplicates(documents: Array<Document>) {
 
-    const dups = duplicates(documents.map(to(RESOURCE_IDENTIFIER)));
+    const dups = duplicates(documents.map(to(RESOURCE_DOT_IDENTIFIER)));
     if (dups.length > 0) throw [E.DUPLICATE_IDENTIFIER, dups[0]];
 }

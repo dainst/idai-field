@@ -3,7 +3,7 @@ import {Document, Relations} from 'idai-components-2';
 import {Find, Get, Id, Identifier, IdentifierMap} from './types';
 import {iterateRelationsInImport} from './utils';
 import {ImportErrors as E} from './import-errors';
-import {RESOURCE_ID} from '../../constants';
+import {RESOURCE_DOT_ID} from '../../constants';
 import {HierarchicalRelations, PARENT} from '../../model/relation-constants';
 import LIES_WITHIN = HierarchicalRelations.LIESWITHIN;
 import {ImportOptions} from './import-documents';
@@ -79,7 +79,7 @@ async function assertNoMissingRelationTargets(relations: Relations, get: Get) {
 function assignIds(documents: Array<Document>, generateId: Function): IdentifierMap {
 
     return documents
-        .filter(hasnt(RESOURCE_ID))
+        .filter(hasnt(RESOURCE_DOT_ID))
         .reduce((identifierMap, document)  => {
             identifierMap[document.resource.identifier] = document.resource.id = generateId();
             return identifierMap;

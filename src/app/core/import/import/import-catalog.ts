@@ -26,6 +26,12 @@ export interface ImportCatalogContext {
 }
 
 
+export module ImportCatalogErrors {
+
+    export const CONNECTED_TYPE_DELETED = 'importCatalogErrors/connectedTypeDeleted'; // TODO convert later for UI
+}
+
+
 export function buildImportCatalogFunction(services: ImportCatalogServices,
                                            context: ImportCatalogContext): ImportFunction {
 
@@ -47,7 +53,7 @@ export function buildImportCatalogFunction(services: ImportCatalogServices,
             for (const removedDocument of removedDocuments) {
                 if (isNot(undefinedOrEmpty)(removedDocument.resource.relations[TypeRelations.HASINSTANCE])) {
                     return {
-                        errors: [['connected-type-deleted']], // TODO use constant
+                        errors: [[ImportCatalogErrors.CONNECTED_TYPE_DELETED]], // TODO add ids of documents
                         successfulImports: 0
                     }
                 }

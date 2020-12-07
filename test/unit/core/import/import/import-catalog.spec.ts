@@ -1,4 +1,7 @@
-import {buildImportCatalogFunction} from '../../../../../src/app/core/import/import/import-catalog';
+import {
+    buildImportCatalogFunction,
+    ImportCatalogErrors
+} from '../../../../../src/app/core/import/import/import-catalog';
 import {createLookup} from '../../../test-helpers';
 import {clone} from 'tsfun/struct';
 import {TypeRelations} from '../../../../../src/app/core/model/relation-constants';
@@ -76,7 +79,7 @@ describe('importCatalog', () => {
 
         const result = await importCatalog([documentsLookup['tc1']]);
         expect(result.successfulImports).toBe(0);
-        expect(result.errors[0][0]).toEqual('connected-type-deleted');
+        expect(result.errors[0][0]).toEqual(ImportCatalogErrors.CONNECTED_TYPE_DELETED);
         done();
     });
 

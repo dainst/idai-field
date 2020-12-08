@@ -52,23 +52,28 @@ describe('subsystem/import/importCatalog', () => {
     });
 
 
-    it('do not overwrite existing relations to find', async done => {
+    it('reimport', async done => {
 
-        await app.createDocuments([['tc1', 'TypeCatalog']]);
-        await app.updateDocument('tc1', document => {
+        const documents: NiceDocs = [
+            ['tc1', 'TypeCatalog', ['t1']],
+            ['t1', 'Type']
+        ];
+
+        await app.createDocuments(documents);
+        await app.updateDocument('t1', document => {
             document.resource.relations[TypeRelations.HASINSTANCE] = ['F1'];
         });
 
-        const documentsLookup = createLookup([['tc1', 'TypeCatalog']]);
+        const documentsLookup = createLookup(documents);
         await importCatalog([documentsLookup['tc1']]);
 
-        const newDocument = await app.documentDatastore.get('tc1');
+        const newDocument = await app.documentDatastore.get('t1');
         expect(newDocument.resource.relations['hasInstance']).toEqual(['F1'])
         done();
     });
 
 
-    it('type resource deleted on reimport - type resource was connected to other resource previously', async done => {
+    it('reimport deletion - type resource was connected to other resource previously', async done => {
 
         const documents: NiceDocs = [
             ['tc1', 'TypeCatalog', ['t1']],
@@ -88,7 +93,7 @@ describe('subsystem/import/importCatalog', () => {
     });
 
 
-    it('type resource deleted on reimport - type resource was unconnected', async done => {
+    it('reimport deletion - type resource was unconnected', async done => {
 
         const documents: NiceDocs = [
             ['tc1', 'TypeCatalog', ['t1']],

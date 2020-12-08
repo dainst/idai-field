@@ -1,3 +1,5 @@
+import {isNot, on, subtract, undefinedOrEmpty} from 'tsfun';
+import {map as asyncMap} from 'tsfun/async';
 import {Document} from 'idai-components-2';
 import {DocumentDatastore} from '../../datastore/document-datastore';
 import {clone} from '../../util/object-util';
@@ -5,7 +7,6 @@ import {ImportFunction} from './types';
 import {makeDocumentsLookup} from './utils';
 import {RelationsManager} from '../../model/relations-manager';
 import {RESOURCE_ID_PATH} from '../../constants';
-import {isNot, on, subtract, undefinedOrEmpty} from 'tsfun';
 import {TypeRelations} from '../../model/relation-constants';
 import {ImageRelationsManager} from '../../model/image-relations-manager';
 import {Lookup} from '../../util/utils';
@@ -55,28 +56,30 @@ export function buildImportCatalogFunction(services: ImportCatalogServices,
 
             // TODO delete difference, including images, if not connected
 
-            let successfulImports = 0;
-            const updateDocuments = [];
-            for (let importDocument of importDocuments) {
-                const updateDocument =
-                    await importOneDocument(services.datastore, context, existingDocuments, importDocument);
-                updateDocuments.push(updateDocument);
-                successfulImports++;
-            }
+            const updateDocuments = await asyncMap(importDocuments,
+                importOneDocument(services.datastore, context, existingDocuments));
 
-            const updateDocumentRelatedImages =
-                await services.imageRelationsManager.getRelatedImageDocuments(updateDocuments);
-            const diffImages = subtract(on(RESOURCE_ID_PATH), updateDocumentRelatedImages)(existingDocumentsRelatedImages);
-            for (const diff of diffImages) {
-                // TODO make sure it was connected to only this catalog, and not maybe to some other catalog from the same original user, for example
-                await services.imagestore.remove(diff.resource.id);
-            }
+            await removeRelatedImages(services, updateDocuments, existingDocumentsRelatedImages);
 
-            return { errors: [], successfulImports: successfulImports };
+            return { errors: [], successfulImports: updateDocuments.length };
 
         } catch (errWithParams) {
             return { errors: [errWithParams], successfulImports: 0 };
         }
+    }
+}
+
+
+async function removeRelatedImages(services: ImportCatalogServices,
+                                   updateDocuments: Array<Document>,
+                                   existingDocumentsRelatedImages: Array<Document>) {
+
+    const updateDocumentRelatedImages =
+        await services.imageRelationsManager.getRelatedImageDocuments(updateDocuments);
+    const diffImages = subtract(on(RESOURCE_ID_PATH), updateDocumentRelatedImages)(existingDocumentsRelatedImages);
+    for (const diff of diffImages) {
+        // TODO make sure it was connected to only this catalog, and not maybe to some other catalog from the same original user, for example
+        await services.imagestore.remove(diff.resource.id);
     }
 }
 
@@ -106,28 +109,31 @@ async function getExistingCatalogDocuments(services: ImportCatalogServices,
 }
 
 
-async function importOneDocument(datastore: DocumentDatastore,
-                                 context: ImportCatalogContext,
-                                 existingDocuments: Lookup<Document>,
-                                 importDocument: Document) {
+function importOneDocument(datastore: DocumentDatastore,
+                           context: ImportCatalogContext,
+                           existingDocuments: Lookup<Document>) {
 
-    delete importDocument[Document._REV];
-    delete importDocument[Document.MODIFIED];
-    delete importDocument[Document.CREATED];
+    return async function(document: Document) {
 
-    const existingDocument: Document | undefined = await existingDocuments[importDocument.resource.id];
-    const updateDocument = clone(existingDocument ?? importDocument);
+        delete document[Document._REV];
+        delete document[Document.MODIFIED];
+        delete document[Document.CREATED];
 
-    if (importDocument.project === context.selectedProject) delete updateDocument.project;
+        const existingDocument: Document | undefined = await existingDocuments[document.resource.id];
+        const updateDocument = clone(existingDocument ?? document);
 
-    if (existingDocument) {
-        const oldRelations = clone(existingDocument.resource.relations[TypeRelations.HASINSTANCE]);
-        updateDocument.resource = clone(importDocument.resource);
-        updateDocument.resource.relations[TypeRelations.HASINSTANCE] = oldRelations;
-        await datastore.update(updateDocument, context.username);
-    } else {
-        await datastore.create(updateDocument, context.username);
+        if (document.project === context.selectedProject) delete updateDocument.project;
+
+        if (existingDocument) {
+            const oldRelations = clone(existingDocument.resource.relations[TypeRelations.HASINSTANCE]);
+            updateDocument.resource = clone(document.resource);
+            updateDocument.resource.relations[TypeRelations.HASINSTANCE] = oldRelations;
+            await datastore.update(updateDocument, context.username);
+        } else {
+            await datastore.create(updateDocument, context.username);
+        }
+
+        return updateDocument;
     }
 
-    return updateDocument;
 }

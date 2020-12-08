@@ -66,7 +66,7 @@ export class ResourceDeletion {
         let result: number = 0;
 
         for (let document of documents) {
-            result += await this.relationsManager.fetchDescendantsCount(document);
+            result += await this.relationsManager.getDescendantsCount(document);
         }
 
         return result;
@@ -79,7 +79,7 @@ export class ResourceDeletion {
 
         for (let document of documents) {
             descendants = descendants.concat(
-                await this.relationsManager.fetchDescendants(document) as Array<FieldDocument>
+                await this.relationsManager.getDescendants(document) as Array<FieldDocument>
             );
         }
 

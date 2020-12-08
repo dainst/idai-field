@@ -35,6 +35,7 @@ import {createLookup, NiceDocs} from '../../test-helpers';
 import {sameset} from 'tsfun';
 import {TypeRelations} from '../../../../src/app/core/model/relation-constants';
 import {ResourceId} from '../../../../src/app/core/constants';
+import {helper} from 'showdown';
 
 const fs = require('fs');
 
@@ -184,15 +185,6 @@ export async function createApp(projectName = 'testdb', startSync = false) {
     const imageDocumentsManager = new ImageDocumentsManager(imagesState, imageDatastore);
     const imageOverviewFacade = new ImageOverviewFacade(imageDocumentsManager, imagesState, projectConfiguration);
 
-    const projectImageDir = settingsProvider.getSettings().imagestorePath
-        + settingsProvider.getSettings().selectedProject
-        + '/';
-    const createDocuments = makeCreateDocuments(
-        documentDatastore, projectImageDir, settingsProvider.getSettings().username);
-    const updateDocument = makeUpdateDocument(
-        documentDatastore, settingsProvider.getSettings().username);
-    const expectResources = makeExpectResources(documentDatastore);
-
     return {
         remoteChangesStream,
         viewFacade,
@@ -208,11 +200,73 @@ export async function createApp(projectName = 'testdb', startSync = false) {
         imageOverviewFacade,
         relationsManager,
         imagestore,
-        imageRelationsManager,
-        projectImageDir,
+        imageRelationsManager
+    }
+}
+
+
+export function createHelpers(app) {
+
+    const projectImageDir = app.settingsProvider.getSettings().imagestorePath
+        + app.settingsProvider.getSettings().selectedProject
+        + '/';
+    const createDocuments = makeCreateDocuments(
+        app.documentDatastore, projectImageDir, app.settingsProvider.getSettings().username);
+    const updateDocument = makeUpdateDocument(
+        app.documentDatastore, app.settingsProvider.getSettings().username);
+    const expectResources = makeExpectResources(app.documentDatastore);
+    const expectImagesExist = makeExpectImagesExist(projectImageDir);
+    const expectImagesDontExist = makeExpectImagesDontExist(projectImageDir);
+    const createProjectDir = makeCreateProjectDir(projectImageDir);
+
+    return {
+        // projectImageDir, // TODO dont export, instead provide all the necessary functions
         createDocuments,
         updateDocument,
-        expectResources
+        expectResources,
+        expectImagesExist,
+        expectImagesDontExist,
+        createProjectDir
+    }
+}
+
+
+function makeCreateProjectDir(projectImageDir) {
+
+    return function createProjectDir() {
+        try {
+            // node 12 supports fs.rmdirSync(path, {recursive: true})
+            const files = fs.readdirSync(projectImageDir);
+            for (const file of files) {
+                fs.unlinkSync(projectImageDir + file);
+            }
+            if (fs.existsSync(projectImageDir)) fs.rmdirSync(projectImageDir);
+        } catch (e) {
+            console.log("error deleting tmp project dir", e)
+        }
+        fs.mkdirSync(projectImageDir, { recursive: true }); // TODO do in createApp() ?
+    }
+}
+
+
+function makeExpectImagesExist(projectImageDir) {
+
+    return function expectImagesExist(...ids) {
+
+        for (const id of ids) {
+            expect(fs.existsSync(projectImageDir + id)).toBeTruthy();
+        }
+    }
+}
+
+
+function makeExpectImagesDontExist(projectImageDir) {
+
+    return function expectImagesDontExist(...ids) {
+
+        for (const id of ids) {
+            expect(fs.existsSync(projectImageDir + id)).not.toBeTruthy();
+        }
     }
 }
 

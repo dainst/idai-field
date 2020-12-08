@@ -11,7 +11,7 @@ describe('getExportDocuments', () => {
     beforeEach(() => {
 
         datastore = jasmine.createSpyObj('datastore', ['get', 'find']);
-        relationsManager = jasmine.createSpyObj('relationsManager', ['fetchDescendants']);
+        relationsManager = jasmine.createSpyObj('relationsManager', ['getDescendants']);
         imageRelationsManager = jasmine.createSpyObj('imageRelationsManager', ['getRelatedImageDocuments']);
 
         const images: Array<any> = [
@@ -48,7 +48,7 @@ describe('getExportDocuments', () => {
         datastore.get.and.callFake(id => {
             return documentsLookup[id];
         });
-        relationsManager.fetchDescendants.and.returnValue([documents[1]]);
+        relationsManager.getDescendants.and.returnValue([documents[1]]);
         imageRelationsManager.getRelatedImageDocuments.and.returnValue(images);
     });
 

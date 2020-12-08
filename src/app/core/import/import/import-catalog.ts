@@ -89,7 +89,10 @@ function assertNoDeletionOfRelatedTypes(existingDocuments: Array<Document>, impo
     const removedDocuments = subtract(on(RESOURCE_ID_PATH), importDocuments)(existingDocuments); // TODO review subtract, params, object.values
     for (const removedDocument of removedDocuments) {
         if (isNot(undefinedOrEmpty)(removedDocument.resource.relations[TypeRelations.HASINSTANCE])) {
-            throw [ImportCatalogErrors.CONNECTED_TYPE_DELETED]; // TODO add ids of documents
+            throw [
+                ImportCatalogErrors.CONNECTED_TYPE_DELETED,
+                removedDocument.resource.relations[TypeRelations.HASINSTANCE].join('')
+            ];
         }
     }
 }

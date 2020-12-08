@@ -1,5 +1,5 @@
 import {
-    createApp,
+    createApp, createHelpers,
     setupSyncTestDb
 } from '../subsystem-helper';
 
@@ -9,24 +9,25 @@ const fs = require('fs');
 describe('subsystem/image-relations-manager', () => {
 
     let app;
+    let helpers;
 
 
     beforeEach(async done => {
 
         await setupSyncTestDb();
         app = await createApp();
+        helpers = createHelpers(app);
+        helpers.createProjectDir();
 
         spyOn(console, 'error');
         // spyOn(console, 'warn');
-
-        fs.mkdirSync(app.projectImageDir, { recursive: true }); // TODO remove
         done();
     });
 
 
     it('delete TypeCatalog with images', async done => {
 
-        const documentsLookup = await app.createDocuments(
+        const documentsLookup = await helpers.createDocuments(
           [
               ['tc1', 'TypeCatalog', ['t1']],
               ['t1', 'Type'],
@@ -35,23 +36,20 @@ describe('subsystem/image-relations-manager', () => {
           ]
         );
 
-        await app.expectResources(['tc1', 't1', 'i1', 'i2']);
-        // TODO add app.existsInProjectImageDir
-        expect(fs.existsSync(app.projectImageDir + 'i1')).toBeTruthy();
-        expect(fs.existsSync(app.projectImageDir + 'i2')).toBeTruthy();
+        await helpers.expectResources(['tc1', 't1', 'i1', 'i2']);
+        helpers.expectImagesExist('i1', 'i2');
 
         await app.imageRelationsManager.remove(documentsLookup['tc1']);
 
-        await app.expectResources([]);
-        expect(fs.existsSync(app.projectImageDir + 'i1')).not.toBeTruthy();
-        expect(fs.existsSync(app.projectImageDir + 'i2')).not.toBeTruthy();
+        await helpers.expectResources([]);
+        helpers.expectImagesDontExist('i1', 'i2')
         done();
     });
 
 
     it('delete Type with images', async done => {
 
-        const documentsLookup = await app.createDocuments(
+        const documentsLookup = await helpers.createDocuments(
           [
               ['tc1', 'TypeCatalog', ['t1']],
               ['t1', 'Type'],
@@ -60,22 +58,21 @@ describe('subsystem/image-relations-manager', () => {
           ]
         );
 
-        await app.expectResources(['tc1', 't1', 'i1', 'i2']);
-        expect(fs.existsSync(app.projectImageDir + 'i1')).toBeTruthy();
-        expect(fs.existsSync(app.projectImageDir + 'i2')).toBeTruthy();
+        await helpers.expectResources(['tc1', 't1', 'i1', 'i2']);
+        helpers.expectImagesExist('i1', 'i2');
 
         await app.imageRelationsManager.remove(documentsLookup['t1']);
 
-        await app.expectResources(['tc1', 'i1']);
-        expect(fs.existsSync(app.projectImageDir + 'i1')).toBeTruthy();
-        expect(fs.existsSync(app.projectImageDir + 'i2')).not.toBeTruthy();
+        await helpers.expectResources(['tc1', 'i1']);
+        helpers.expectImagesExist('i1');
+        helpers.expectImagesDontExist('i2');
         done();
     });
 
 
     it('delete Type and Catalog with same image', async done => {
 
-        const documentsLookup = await app.createDocuments(
+        const documentsLookup = await helpers.createDocuments(
           [
               ['tc1', 'TypeCatalog', ['t1']],
               ['t1', 'Type'],
@@ -83,20 +80,20 @@ describe('subsystem/image-relations-manager', () => {
           ]
         );
 
-        await app.expectResources(['tc1', 't1', 'i1']);
-        expect(fs.existsSync(app.projectImageDir + 'i1')).toBeTruthy();
+        await helpers.expectResources(['tc1', 't1', 'i1']);
+        helpers.expectImagesExist('i1');
 
         await app.imageRelationsManager.remove(documentsLookup['tc1']);
 
-        await app.expectResources([]);
-        expect(fs.existsSync(app.projectImageDir + 'i1')).not.toBeTruthy();
+        await helpers.expectResources([]);
+        helpers.expectImagesDontExist('i1');
         done();
     });
 
 
     it('do not delete images (with TypeCatalog) which are also connected to other resources', async done => {
 
-        const documentsLookup = await app.createDocuments(
+        const documentsLookup = await helpers.createDocuments(
             [
                 ['tc1', 'TypeCatalog', ['t1']],
                 ['t1', 'Type'],
@@ -106,22 +103,21 @@ describe('subsystem/image-relations-manager', () => {
             ]
         );
 
-        await app.expectResources(['tc1', 't1', 'r1', 'i1', 'i2']);
-        expect(fs.existsSync(app.projectImageDir + 'i1')).toBeTruthy();
-        expect(fs.existsSync(app.projectImageDir + 'i2')).toBeTruthy();
+        await helpers.expectResources(['tc1', 't1', 'r1', 'i1', 'i2']); // TODO make varargs
+        helpers.expectImagesExist('i1', 'i2');
 
         await app.imageRelationsManager.remove(documentsLookup['tc1']);
 
-        await app.expectResources(['i2', 'r1']);
-        expect(fs.existsSync(app.projectImageDir + 'i1')).not.toBeTruthy();
-        expect(fs.existsSync(app.projectImageDir + 'i2')).toBeTruthy();
+        await helpers.expectResources(['i2', 'r1']);
+        helpers.expectImagesDontExist('i1');
+        helpers.expectImagesExist('i2');
         done();
     });
 
 
     it('delete 2 type with shared images', async done => {
 
-        const documentsLookup = await app.createDocuments(
+        const documentsLookup = await helpers.createDocuments(
             [
                 ['tc1', 'TypeCatalog', ['t1', 't2']],
                 ['t1', 'Type'],
@@ -130,20 +126,20 @@ describe('subsystem/image-relations-manager', () => {
             ]
         );
 
-        await app.expectResources(['tc1', 't1', 't2', 'i1']);
-        expect(fs.existsSync(app.projectImageDir + 'i1')).toBeTruthy();
+        await helpers.expectResources(['tc1', 't1', 't2', 'i1']);
+        helpers.expectImagesExist('i1');
 
         await app.imageRelationsManager.remove(documentsLookup['t1'], documentsLookup['t2']);
 
-        await app.expectResources(['tc1']);
-        expect(fs.existsSync(app.projectImageDir + 'i1')).not.toBeTruthy();
+        await helpers.expectResources(['tc1']);
+        helpers.expectImagesDontExist('i1');
         done();
     });
 
 
     it('delete 2 type with shared images, but image is also connected to other resources', async done => {
 
-        const documentsLookup = await app.createDocuments(
+        const documentsLookup = await helpers.createDocuments(
             [
                 ['tc1', 'TypeCatalog', ['t1', 't2']],
                 ['t1', 'Type'],
@@ -153,20 +149,20 @@ describe('subsystem/image-relations-manager', () => {
             ]
         );
 
-        await app.expectResources(['tc1', 't1', 't2', 'i1', 'r1']);
-        expect(fs.existsSync(app.projectImageDir + 'i1')).toBeTruthy();
+        await helpers.expectResources(['tc1', 't1', 't2', 'i1', 'r1']);
+        helpers.expectImagesExist('i1');
 
         await app.imageRelationsManager.remove(documentsLookup['t1'], documentsLookup['t2']);
 
-        await app.expectResources(['tc1', 'r1', 'i1']);
-        expect(fs.existsSync(app.projectImageDir + 'i1')).toBeTruthy();
+        await helpers.expectResources(['tc1', 'r1', 'i1']);
+        helpers.expectImagesExist('i1');
         done();
     });
 
 
     it('do not delete images (with TypeCatalog) which are also connected to ancestor resources', async done => {
 
-        const documentsLookup = await app.createDocuments(
+        const documentsLookup = await helpers.createDocuments(
           [
               ['tc1', 'TypeCatalog', ['t1']],
               ['t1', 'Type'],
@@ -175,12 +171,12 @@ describe('subsystem/image-relations-manager', () => {
         );
 
         expect((await app.documentDatastore.find({})).documents.length).toBe(3);
-        expect(fs.existsSync(app.projectImageDir + 'i1')).toBeTruthy();
+        helpers.expectImagesExist('i1');
 
         await app.imageRelationsManager.remove(documentsLookup['t1']);
 
-        await app.expectResources(['tc1', 'i1']);
-        expect(fs.existsSync(app.projectImageDir + 'i1')).toBeTruthy();
+        await helpers.expectResources(['tc1', 'i1']);
+        helpers.expectImagesExist('i1');
         done();
     });
 });

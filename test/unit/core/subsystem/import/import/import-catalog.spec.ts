@@ -6,7 +6,7 @@ import {
     buildImportCatalogFunction,
     ImportCatalogErrors
 } from '../../../../../../src/app/core/import/import/import-catalog';
-import {TypeRelations} from '../../../../../../src/app/core/model/relation-constants';
+import {ImageRelations, TypeRelations} from '../../../../../../src/app/core/model/relation-constants';
 import {createLookup, NiceDocs} from '../../../../test-helpers';
 
 const fs = require('fs');
@@ -18,6 +18,22 @@ describe('subsystem/import/importCatalog', () => {
     let app;
 
 
+    function remakeProjectDir(app) {
+
+        try {
+            // node 12 supports fs.rmdirSync(path, {recursive: true})
+            const files = fs.readdirSync(app.projectImageDir);
+            for (const file of files) {
+                fs.unlinkSync(app.projectImageDir + file);
+            }
+            if (fs.existsSync(app.projectImageDir)) fs.rmdirSync(app.projectImageDir);
+        } catch (e) {
+            console.log("error deleting tmp project dir", e)
+        }
+        fs.mkdirSync(app.projectImageDir, { recursive: true }); // TODO do in createApp() ?
+    }
+
+
     beforeEach(async done => {
 
         await setupSyncTestDb();
@@ -26,7 +42,7 @@ describe('subsystem/import/importCatalog', () => {
         spyOn(console, 'error');
         // spyOn(console, 'warn');
 
-        fs.mkdirSync(app.projectImageDir, { recursive: true }); // TODO do in createApp() ?
+        remakeProjectDir(app)
 
         importCatalog = buildImportCatalogFunction(
             {
@@ -69,6 +85,27 @@ describe('subsystem/import/importCatalog', () => {
 
         const newDocument = await app.documentDatastore.get('t1');
         expect(newDocument.resource.relations['hasInstance']).toEqual(['F1'])
+        done();
+    });
+
+
+    xit('reimport - image removed', async done => { // TODO enable
+
+        const documents: NiceDocs = [
+            ['tc1', 'TypeCatalog', ['t1']],
+            ['t1', 'Type'],
+            ['i1', 'Image', ['t1']]
+        ];
+
+        await app.createDocuments(documents);
+        expect(fs.existsSync(app.projectImageDir + 'i1')).toBeTruthy();
+
+        const documentsLookup = createLookup(documents);
+        await importCatalog([documentsLookup['tc1'], documentsLookup['t1']]);
+
+        expect(fs.existsSync(app.projectImageDir + 'i1')).not.toBeTruthy();
+        const newDocument = await app.documentDatastore.get('t1');
+        expect(newDocument.resource.relations[ImageRelations.ISDEPICTEDIN]).toBeUndefined();
         done();
     });
 

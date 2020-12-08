@@ -105,4 +105,16 @@ describe('subsystem/import/importCatalog', () => {
         // TODO other expectations?
         done();
     });
+
+
+    it('type resource deleted on reimport - images are removed properly', async done => {
+        // TODO
+        done();
+    });
+
+
+    it('on reimport - type resource was connected to more images previously', async done => {
+        // TODO
+        done();
+    });
 });

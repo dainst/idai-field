@@ -92,7 +92,6 @@ export class RelationsManager {
     }
 
 
-    // TODO suggestion: remove; use getDescendants().length instead; or use get().length and subtract number of top level elements; maybe also we want to have the total number of elements (get().length) anyway, not only the number of descendants
     public async getDescendantsCount(document: Document): Promise<number> {
 
         return !document.resource.id

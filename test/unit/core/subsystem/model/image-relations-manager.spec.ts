@@ -38,15 +38,12 @@ describe('subsystem/image-relations-manager', () => {
         );
 
         await helpers.expectResources(['tc1', 't1', 'i1', 'i2']);
-        // TODO add app.existsInProjectImageDir
-        expect(fs.existsSync(helpers.projectImageDir + 'i1')).toBeTruthy();
-        expect(fs.existsSync(helpers.projectImageDir + 'i2')).toBeTruthy();
+        helpers.expectImagesExist('i1', 'i2');
 
         await app.imageRelationsManager.remove(documentsLookup['tc1']);
 
         await helpers.expectResources([]);
-        expect(fs.existsSync(helpers.projectImageDir + 'i1')).not.toBeTruthy();
-        expect(fs.existsSync(helpers.projectImageDir + 'i2')).not.toBeTruthy();
+        helpers.expectImagesDontExist('i1', 'i2')
         done();
     });
 
@@ -63,14 +60,13 @@ describe('subsystem/image-relations-manager', () => {
         );
 
         await helpers.expectResources(['tc1', 't1', 'i1', 'i2']);
-        expect(fs.existsSync(helpers.projectImageDir + 'i1')).toBeTruthy();
-        expect(fs.existsSync(helpers.projectImageDir + 'i2')).toBeTruthy();
+        helpers.expectImagesExist('i1', 'i2');
 
         await app.imageRelationsManager.remove(documentsLookup['t1']);
 
         await helpers.expectResources(['tc1', 'i1']);
-        expect(fs.existsSync(helpers.projectImageDir + 'i1')).toBeTruthy();
-        expect(fs.existsSync(helpers.projectImageDir + 'i2')).not.toBeTruthy();
+        helpers.expectImagesExist('i1');
+        helpers.expectImagesDontExist('i2');
         done();
     });
 
@@ -86,12 +82,12 @@ describe('subsystem/image-relations-manager', () => {
         );
 
         await helpers.expectResources(['tc1', 't1', 'i1']);
-        expect(fs.existsSync(helpers.projectImageDir + 'i1')).toBeTruthy();
+        helpers.expectImagesExist('i1');
 
         await app.imageRelationsManager.remove(documentsLookup['tc1']);
 
         await helpers.expectResources([]);
-        expect(fs.existsSync(helpers.projectImageDir + 'i1')).not.toBeTruthy();
+        helpers.expectImagesDontExist('i1');
         done();
     });
 
@@ -108,15 +104,14 @@ describe('subsystem/image-relations-manager', () => {
             ]
         );
 
-        await helpers.expectResources(['tc1', 't1', 'r1', 'i1', 'i2']);
-        expect(fs.existsSync(helpers.projectImageDir + 'i1')).toBeTruthy();
-        expect(fs.existsSync(helpers.projectImageDir + 'i2')).toBeTruthy();
+        await helpers.expectResources(['tc1', 't1', 'r1', 'i1', 'i2']); // TODO make varargs
+        helpers.expectImagesExist('i1', 'i2');
 
         await app.imageRelationsManager.remove(documentsLookup['tc1']);
 
         await helpers.expectResources(['i2', 'r1']);
-        expect(fs.existsSync(helpers.projectImageDir + 'i1')).not.toBeTruthy();
-        expect(fs.existsSync(helpers.projectImageDir + 'i2')).toBeTruthy();
+        helpers.expectImagesDontExist('i1');
+        helpers.expectImagesExist('i2');
         done();
     });
 
@@ -133,12 +128,12 @@ describe('subsystem/image-relations-manager', () => {
         );
 
         await helpers.expectResources(['tc1', 't1', 't2', 'i1']);
-        expect(fs.existsSync(helpers.projectImageDir + 'i1')).toBeTruthy();
+        helpers.expectImagesExist('i1');
 
         await app.imageRelationsManager.remove(documentsLookup['t1'], documentsLookup['t2']);
 
         await helpers.expectResources(['tc1']);
-        expect(fs.existsSync(helpers.projectImageDir + 'i1')).not.toBeTruthy();
+        helpers.expectImagesDontExist('i1');
         done();
     });
 
@@ -156,12 +151,12 @@ describe('subsystem/image-relations-manager', () => {
         );
 
         await helpers.expectResources(['tc1', 't1', 't2', 'i1', 'r1']);
-        expect(fs.existsSync(helpers.projectImageDir + 'i1')).toBeTruthy();
+        helpers.expectImagesExist('i1');
 
         await app.imageRelationsManager.remove(documentsLookup['t1'], documentsLookup['t2']);
 
         await helpers.expectResources(['tc1', 'r1', 'i1']);
-        expect(fs.existsSync(helpers.projectImageDir + 'i1')).toBeTruthy();
+        helpers.expectImagesExist('i1');
         done();
     });
 
@@ -177,12 +172,12 @@ describe('subsystem/image-relations-manager', () => {
         );
 
         expect((await app.documentDatastore.find({})).documents.length).toBe(3);
-        expect(fs.existsSync(helpers.projectImageDir + 'i1')).toBeTruthy();
+        helpers.expectImagesExist('i1');
 
         await app.imageRelationsManager.remove(documentsLookup['t1']);
 
         await helpers.expectResources(['tc1', 'i1']);
-        expect(fs.existsSync(helpers.projectImageDir + 'i1')).toBeTruthy();
+        helpers.expectImagesExist('i1');
         done();
     });
 });

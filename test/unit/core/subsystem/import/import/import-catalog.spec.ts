@@ -99,7 +99,7 @@ describe('subsystem/import/importCatalog', () => {
             ['t1', 'Type'],
             ['i1', 'Image', ['t1']]
         ]);
-        expect(fs.existsSync(helpers.projectImageDir + 'i1')).toBeTruthy();
+        helpers.expectImagesExist('i1');
 
         const documentsLookup = createLookup([
             ['tc1', 'TypeCatalog', ['t1']],
@@ -107,7 +107,7 @@ describe('subsystem/import/importCatalog', () => {
         ]);
         await importCatalog([documentsLookup['tc1'], documentsLookup['t1']]);
 
-        expect(fs.existsSync(app.projectImageDir + 'i1')).not.toBeTruthy();
+        helpers.expectImagesDontExist('i1');
         const newDocument = await app.documentDatastore.get('t1');
         expect(newDocument.resource.relations[ImageRelations.ISDEPICTEDIN]).toBeUndefined();
         done();

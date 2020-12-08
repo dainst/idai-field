@@ -35,6 +35,7 @@ import {createLookup, NiceDocs} from '../../test-helpers';
 import {sameset} from 'tsfun';
 import {TypeRelations} from '../../../../src/app/core/model/relation-constants';
 import {ResourceId} from '../../../../src/app/core/constants';
+import {helper} from 'showdown';
 
 const fs = require('fs');
 
@@ -214,12 +215,38 @@ export function createHelpers(app) {
     const updateDocument = makeUpdateDocument(
         app.documentDatastore, app.settingsProvider.getSettings().username);
     const expectResources = makeExpectResources(app.documentDatastore);
+    const expectImagesExist = makeExpectImagesExist(projectImageDir);
+    const expectImagesDontExist = makeExpectImagesDontExist(projectImageDir);
 
     return {
-        projectImageDir,
+        projectImageDir, // TODO dont export, instead provide all the necessary functions
         createDocuments,
         updateDocument,
-        expectResources
+        expectResources,
+        expectImagesExist,
+        expectImagesDontExist
+    }
+}
+
+
+function makeExpectImagesExist(projectImageDir) {
+
+    return function expectImagesExist(...ids) {
+
+        for (const id of ids) {
+            expect(fs.existsSync(projectImageDir + id)).toBeTruthy();
+        }
+    }
+}
+
+
+function makeExpectImagesDontExist(projectImageDir) {
+
+    return function expectImagesDontExist(...ids) {
+
+        for (const id of ids) {
+            expect(fs.existsSync(projectImageDir + id)).not.toBeTruthy();
+        }
     }
 }
 

@@ -28,10 +28,10 @@ export class ResourceDeletion {
             DeleteModalComponent, { keyboard: false }
         );
         modalRef.componentInstance.document = document;
-        modalRef.componentInstance.descendantsCount = await this.relationsManager.fetchDescendantsCount(document);
+        modalRef.componentInstance.descendantsCount = await this.relationsManager.getDescendantsCount(document);
 
         const documentAndDescendants: Array<FieldDocument>
-            = [document].concat(await this.relationsManager.fetchDescendants(document as any) as any);
+            = [document].concat(await this.relationsManager.getDescendants(document as any) as any);
         modalRef.componentInstance.relatedImagesCount =
             (await this.imageRelationsManager.getRelatedImageDocuments(documentAndDescendants)).length;
 

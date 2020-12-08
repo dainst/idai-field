@@ -64,27 +64,32 @@ export class RelationsManager {
 
 
     /**
-     * Gets a document including all of its descendants
-     * @param id
+     * Gets documents including all of their descendants
+     * @param ids
      */
-    public async get(id: ResourceId): Promise<Array<Document>> {
+    public async get(...ids: Array<ResourceId>): Promise<Array<Document>> {
 
         try {
-            const document = await this.datastore.get(id);
-            return [document].concat(await this.fetchDescendants(document));
+            const documents = [];
+            for (const id of ids) {
+                const document = await this.datastore.get(id);
+                documents.push(...([document].concat(await this.getDescendants(document))));
+            }
+            return documents;
         } catch {
             return [];
         }
     }
 
 
-    public async fetchDescendants(document: Document): Promise<Array<Document>> { // TODO rename to getDescendants
+    public async getDescendants(document: Document): Promise<Array<Document>> {
 
         return (await this.findDescendants(document) as FindResult).documents;
     }
 
 
-    public async fetchDescendantsCount(document: Document): Promise<number> { // TODO remove; use getDescendants().length instead
+    // TODO suggestion: remove; use getDescendants().length instead; or use get().length and subtract number of top level elements; maybe also we want to have the total number of elements (get().length) anyway, not only the number of descendants
+    public async getDescendantsCount(document: Document): Promise<number> {
 
         return !document.resource.id
             ? 0
@@ -107,7 +112,7 @@ export class RelationsManager {
      */
     public async remove(document: Document) {
 
-        const documentsToBeDeleted = (await this.fetchDescendants(document)).concat([document]);
+        const documentsToBeDeleted = (await this.getDescendants(document)).concat([document]);
         for (let document of documentsToBeDeleted) await this.removeWithConnectedDocuments(document);
     }
 

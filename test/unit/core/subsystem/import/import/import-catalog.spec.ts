@@ -1,5 +1,5 @@
 import {
-    createApp,
+    createApp, createHelpers,
     setupSyncTestDb
 } from '../../subsystem-helper';
 import {
@@ -16,21 +16,22 @@ describe('subsystem/import/importCatalog', () => {
 
     let importCatalog;
     let app;
+    let helpers;
 
 
-    function remakeProjectDir(app) {
+    function remakeProjectDir(helpers) {
 
         try {
             // node 12 supports fs.rmdirSync(path, {recursive: true})
-            const files = fs.readdirSync(app.projectImageDir);
+            const files = fs.readdirSync(helpers.projectImageDir);
             for (const file of files) {
-                fs.unlinkSync(app.projectImageDir + file);
+                fs.unlinkSync(helpers.projectImageDir + file);
             }
-            if (fs.existsSync(app.projectImageDir)) fs.rmdirSync(app.projectImageDir);
+            if (fs.existsSync(helpers.projectImageDir)) fs.rmdirSync(helpers.projectImageDir);
         } catch (e) {
             console.log("error deleting tmp project dir", e)
         }
-        fs.mkdirSync(app.projectImageDir, { recursive: true }); // TODO do in createApp() ?
+        fs.mkdirSync(helpers.projectImageDir, { recursive: true }); // TODO do in createApp() ?
     }
 
 
@@ -38,11 +39,12 @@ describe('subsystem/import/importCatalog', () => {
 
         await setupSyncTestDb();
         app = await createApp();
+        helpers = createHelpers(app);
 
         spyOn(console, 'error');
         // spyOn(console, 'warn');
 
-        remakeProjectDir(app)
+        remakeProjectDir(helpers)
 
         importCatalog = buildImportCatalogFunction(
             {
@@ -64,7 +66,7 @@ describe('subsystem/import/importCatalog', () => {
         const documentsLookup = await createLookup([['tc1', 'TypeCatalog']]);
         await importCatalog([documentsLookup['tc1']]);
 
-        await app.expectResources(['tc1']);
+        await helpers.expectResources(['tc1']);
         done();
     });
 
@@ -76,8 +78,8 @@ describe('subsystem/import/importCatalog', () => {
             ['t1', 'Type']
         ];
 
-        await app.createDocuments(documents);
-        await app.updateDocument('t1', document => {
+        await helpers.createDocuments(documents);
+        await helpers.updateDocument('t1', document => {
             document.resource.relations[TypeRelations.HASINSTANCE] = ['F1'];
         });
 
@@ -92,12 +94,12 @@ describe('subsystem/import/importCatalog', () => {
 
     it('reimport - image removed', async done => {
 
-        await app.createDocuments([
+        await helpers.createDocuments([
             ['tc1', 'TypeCatalog', ['t1']],
             ['t1', 'Type'],
             ['i1', 'Image', ['t1']]
         ]);
-        expect(fs.existsSync(app.projectImageDir + 'i1')).toBeTruthy();
+        expect(fs.existsSync(helpers.projectImageDir + 'i1')).toBeTruthy();
 
         const documentsLookup = createLookup([
             ['tc1', 'TypeCatalog', ['t1']],
@@ -119,8 +121,8 @@ describe('subsystem/import/importCatalog', () => {
             ['t1', 'Type']
         ];
 
-        await app.createDocuments(documents);
-        await app.updateDocument('t1', document => {
+        await helpers.createDocuments(documents);
+        await helpers.updateDocument('t1', document => {
             document.resource.relations[TypeRelations.HASINSTANCE] = ['F1'];
         });
 
@@ -139,7 +141,7 @@ describe('subsystem/import/importCatalog', () => {
             ['t1', 'Type']
         ];
 
-        await app.createDocuments(documents);
+        await helpers.createDocuments(documents);
 
         const documentsLookup = createLookup(documents);
         const result = await importCatalog([documentsLookup['tc1']]);

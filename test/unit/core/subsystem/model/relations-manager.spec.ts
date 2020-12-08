@@ -1,10 +1,7 @@
 import {flatten, sameset} from 'tsfun';
 import {FieldDocument, ImageDocument, toResourceId} from 'idai-components-2';
-import {createApp, setupSyncTestDb} from '../subsystem-helper';
+import {createApp, createHelpers, setupSyncTestDb} from '../subsystem-helper';
 import {doc} from '../../../test-helpers';
-import {RelationsManager} from '../../../../../src/app/core/model/relations-manager';
-import {SettingsProvider} from '../../../../../src/app/core/settings/settings-provider';
-import {DocumentDatastore} from '../../../../../src/app/core/datastore/document-datastore';
 
 /**
  * @author Daniel de Oliveira
@@ -12,11 +9,13 @@ import {DocumentDatastore} from '../../../../../src/app/core/datastore/document-
 describe('subsystem/relations-manager',() => {
 
     let app;
+    let helpers;
 
     beforeEach(async done => {
 
         await setupSyncTestDb();
         app = await createApp();
+        helpers = createHelpers(app);
 
         spyOn(console, 'error');
         // spyOn(console, 'warn');

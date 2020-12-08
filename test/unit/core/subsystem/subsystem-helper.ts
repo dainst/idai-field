@@ -184,15 +184,6 @@ export async function createApp(projectName = 'testdb', startSync = false) {
     const imageDocumentsManager = new ImageDocumentsManager(imagesState, imageDatastore);
     const imageOverviewFacade = new ImageOverviewFacade(imageDocumentsManager, imagesState, projectConfiguration);
 
-    const projectImageDir = settingsProvider.getSettings().imagestorePath
-        + settingsProvider.getSettings().selectedProject
-        + '/';
-    const createDocuments = makeCreateDocuments(
-        documentDatastore, projectImageDir, settingsProvider.getSettings().username);
-    const updateDocument = makeUpdateDocument(
-        documentDatastore, settingsProvider.getSettings().username);
-    const expectResources = makeExpectResources(documentDatastore);
-
     return {
         remoteChangesStream,
         viewFacade,
@@ -208,7 +199,23 @@ export async function createApp(projectName = 'testdb', startSync = false) {
         imageOverviewFacade,
         relationsManager,
         imagestore,
-        imageRelationsManager,
+        imageRelationsManager
+    }
+}
+
+
+export function createHelpers(app) {
+
+    const projectImageDir = app.settingsProvider.getSettings().imagestorePath
+        + app.settingsProvider.getSettings().selectedProject
+        + '/';
+    const createDocuments = makeCreateDocuments(
+        app.documentDatastore, projectImageDir, app.settingsProvider.getSettings().username);
+    const updateDocument = makeUpdateDocument(
+        app.documentDatastore, app.settingsProvider.getSettings().username);
+    const expectResources = makeExpectResources(app.documentDatastore);
+
+    return {
         projectImageDir,
         createDocuments,
         updateDocument,

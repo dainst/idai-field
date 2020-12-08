@@ -56,6 +56,15 @@ export class ImageRelationsManager {
     // }
 
 
+    /**
+     * Removes non image documents, together with their descendants, and
+     * all their (and their descendants) connected images.
+     *
+     * Images which are not only connected to the documents to be deleted, but
+     * also to other documents, are not deleted.
+     *
+     * @param documents
+     */
     public async remove(...documents: Array<Document>) {
 
         for (const document of documents) {

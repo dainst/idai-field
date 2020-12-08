@@ -31,7 +31,7 @@ import {ConfigReader} from '../../../../src/app/core/configuration/boot/config-r
 import {SettingsProvider} from '../../../../src/app/core/settings/settings-provider';
 import {ImageRelationsManager} from '../../../../src/app/core/model/image-relations-manager';
 import {SyncService} from '../../../../src/app/core/sync/sync-service';
-import {createLookup, NiceDocs} from '../../test-helpers';
+import {createDocuments, NiceDocs} from '../../test-helpers';
 import {sameset} from 'tsfun';
 import {TypeRelations} from '../../../../src/app/core/model/relation-constants';
 import {ResourceId} from '../../../../src/app/core/constants';
@@ -297,7 +297,7 @@ function makeCreateDocuments(documentDatastore: DocumentDatastore,
 
     return async function create(documents: NiceDocs) {
 
-        const documentsLookup = createLookup(documents);
+        const documentsLookup = createDocuments(documents);
         for (const document of Object.values(documentsLookup)) {
             await documentDatastore.create(document, username);
         }

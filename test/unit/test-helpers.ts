@@ -34,7 +34,7 @@ export function doc(id: string, category: string = 'category'): Document {
 export type NiceDocs = Array<[ResourceId, string, Array<string>]|[ResourceId, string]>;
 
 
-export function createLookup(documents: NiceDocs) {
+export function createDocuments(documents: NiceDocs) {
 
     const documentsLookup: Lookup<FieldDocument> = {}
     const relationsLookup = {};

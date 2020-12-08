@@ -7,7 +7,7 @@ import {
     ImportCatalogErrors
 } from '../../../../../../src/app/core/import/import/import-catalog';
 import {ImageRelations, TypeRelations} from '../../../../../../src/app/core/model/relation-constants';
-import {createLookup, NiceDocs} from '../../../../test-helpers';
+import {createDocuments, NiceDocs} from '../../../../test-helpers';
 
 const fs = require('fs');
 
@@ -46,7 +46,7 @@ describe('subsystem/import/importCatalog', () => {
 
     it('import a TypeCatalog resource', async done => {
 
-        const documentsLookup = await createLookup([['tc1', 'TypeCatalog']]);
+        const documentsLookup = await createDocuments([['tc1', 'TypeCatalog']]);
         await importCatalog([documentsLookup['tc1']]);
 
         await helpers.expectResources(['tc1']);
@@ -66,7 +66,7 @@ describe('subsystem/import/importCatalog', () => {
             document.resource.relations[TypeRelations.HASINSTANCE] = ['F1'];
         });
 
-        const documentsLookup = createLookup(documents);
+        const documentsLookup = createDocuments(documents);
         await importCatalog([documentsLookup['tc1']]);
 
         const newDocument = await app.documentDatastore.get('t1');
@@ -84,7 +84,7 @@ describe('subsystem/import/importCatalog', () => {
         ]);
         helpers.expectImagesExist('i1');
 
-        const documentsLookup = createLookup([
+        const documentsLookup = createDocuments([
             ['tc1', 'TypeCatalog', ['t1']],
             ['t1', 'Type']
         ]);
@@ -109,7 +109,7 @@ describe('subsystem/import/importCatalog', () => {
             document.resource.relations[TypeRelations.HASINSTANCE] = ['F1'];
         });
 
-        const documentsLookup = createLookup(documents);
+        const documentsLookup = createDocuments(documents);
         const result = await importCatalog([documentsLookup['tc1']]);
         expect(result.successfulImports).toBe(0);
         expect(result.errors[0][0]).toEqual(ImportCatalogErrors.CONNECTED_TYPE_DELETED);
@@ -120,31 +120,36 @@ describe('subsystem/import/importCatalog', () => {
 
     it('reimport deletion - type resource was unconnected', async done => {
 
-        const documents: NiceDocs = [
+        await helpers.createDocuments([
             ['tc1', 'TypeCatalog', ['t1']],
             ['t1', 'Type']
-        ];
-
-        await helpers.createDocuments(documents);
-
-        const documentsLookup = createLookup(documents);
-        const result = await importCatalog([documentsLookup['tc1']]);
+        ]);
+        const catalog = Object.values(createDocuments([
+            ['tc1', 'TypeCatalog'],
+        ]));
+        const result = await importCatalog(catalog);
         expect(result.successfulImports).toBe(1);
         expect(result.errors).toEqual([]);
 
-        // TODO other expectations?
+        // await helpers.expectResources(['tc1', 't1']); // TODO wrong
         done();
     });
 
 
-    it('type resource deleted on reimport - images are removed properly', async done => {
-        // TODO
-        done();
-    });
+    it('reimport deletion - liesWithin is correctly empty', async done => {
 
-
-    it('on reimport - type resource was connected to more images previously', async done => {
-        // TODO
+        await helpers.createDocuments([
+            ['tc1', 'TypeCatalog', ['t1']],
+            ['t1', 'Type', ['t2']],
+            ['t2', 'Type']
+        ]);
+        const catalog = Object.values(createDocuments([
+            ['tc1', 'TypeCatalog', ['t1']],
+            ['t1', 'Type']
+        ]));
+        await importCatalog(catalog);
+        // await helpers.expectResources(['tc1', 't1']); // TODO wrong
+        // TODO expectation
         done();
     });
 });

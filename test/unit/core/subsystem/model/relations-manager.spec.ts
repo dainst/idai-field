@@ -5,30 +5,18 @@ import {doc} from '../../../test-helpers';
 import {RelationsManager} from '../../../../../src/app/core/model/relations-manager';
 import {SettingsProvider} from '../../../../../src/app/core/settings/settings-provider';
 import {DocumentDatastore} from '../../../../../src/app/core/datastore/document-datastore';
-import {ImageRelationsManager} from '../../../../../src/app/core/model/image-relations-manager';
 
 /**
  * @author Daniel de Oliveira
  */
 describe('subsystem/relations-manager',() => {
 
-    let documentDatastore: DocumentDatastore;
-    let relationsManager: RelationsManager;
-    let settingsProvider: SettingsProvider;
+    let app;
 
     beforeEach(async done => {
 
         await setupSyncTestDb();
-
-        const {
-            documentDatastore: d,
-            relationsManager: r,
-            settingsProvider: s
-        } = await createApp();
-
-        documentDatastore = d;
-        relationsManager = r;
-        settingsProvider = s;
+        app = await createApp();
 
         spyOn(console, 'error');
         // spyOn(console, 'warn');
@@ -39,7 +27,7 @@ describe('subsystem/relations-manager',() => {
 
     async function createTestResourcesForRemoveTests() {
 
-        const username = settingsProvider.getSettings().username;
+        const username = app.settingsProvider.getSettings().username;
 
         const d1 = doc('id1', 'Trench') as FieldDocument;
         const d2 = doc('id2', 'Feature') as FieldDocument;
@@ -60,13 +48,13 @@ describe('subsystem/relations-manager',() => {
         const d7 = doc('id7', 'Find');
         d7.resource.relations['isDepictedIn'] = ['d6'];
 
-        await documentDatastore.create(d1, username);
-        await documentDatastore.create(d2, username);
-        await documentDatastore.create(d3, username);
-        await documentDatastore.create(d4, username);
-        await documentDatastore.create(d5, username);
-        await documentDatastore.create(d6, username);
-        await documentDatastore.create(d7, username);
+        await app.documentDatastore.create(d1, username);
+        await app.documentDatastore.create(d2, username);
+        await app.documentDatastore.create(d3, username);
+        await app.documentDatastore.create(d4, username);
+        await app.documentDatastore.create(d5, username);
+        await app.documentDatastore.create(d6, username);
+        await app.documentDatastore.create(d7, username);
 
         return [d1, d2, d3, d4, d5];
     }
@@ -76,9 +64,9 @@ describe('subsystem/relations-manager',() => {
 
         const [_, d2] = await createTestResourcesForRemoveTests();
 
-        expect((await documentDatastore.find({})).totalCount).toBe(7);
-        await relationsManager.remove(d2);
-        const result = (await documentDatastore.find({})).documents.map(toResourceId);
+        expect((await app.documentDatastore.find({})).totalCount).toBe(7);
+        await app.relationsManager.remove(d2);
+        const result = (await app.documentDatastore.find({})).documents.map(toResourceId);
         expect(sameset(result, ['id1', 'id5', 'id6', 'id7'])).toBeTruthy();
         done();
     });
@@ -88,9 +76,9 @@ describe('subsystem/relations-manager',() => {
 
         const [d1, _] = await createTestResourcesForRemoveTests();
 
-        expect((await documentDatastore.find({})).totalCount).toBe(7);
-        await relationsManager.remove(d1);
-        const result = (await documentDatastore.find({})).documents.map(toResourceId);
+        expect((await app.documentDatastore.find({})).totalCount).toBe(7);
+        await app.relationsManager.remove(d1);
+        const result = (await app.documentDatastore.find({})).documents.map(toResourceId);
         expect(sameset(result, ['id5', 'id6', 'id7'])).toBeTruthy();
         done();
     });
@@ -108,16 +96,16 @@ describe('subsystem/relations-manager',() => {
         tc1.resource.relations = { isDepictedIn: ['i1'], isRecordedIn: [] };
         t1.resource.relations = { isDepictedIn: ['i2'], isRecordedIn: [], liesWithin: ['tc1'] };
 
-        await documentDatastore.create(tc1, 'test');
-        await documentDatastore.create(t1, 'test');
-        await documentDatastore.create(i1, 'test');
-        await documentDatastore.create(i2, 'test');
+        await app.documentDatastore.create(tc1, 'test');
+        await app.documentDatastore.create(t1, 'test');
+        await app.documentDatastore.create(i1, 'test');
+        await app.documentDatastore.create(i2, 'test');
 
-        expect((await documentDatastore.find({})).documents.length).toBe(4);
+        expect((await app.documentDatastore.find({})).documents.length).toBe(4);
 
-        await relationsManager.remove(tc1);
+        await app.relationsManager.remove(tc1);
 
-        const documents = (await documentDatastore.find({})).documents;
+        const documents = (await app.documentDatastore.find({})).documents;
         expect(documents.length).toBe(2);
         expect(sameset(documents.map(toResourceId), ['i2', 'i1'])).toBeTruthy();
         expect(flatten(documents.map(_ => _.resource.relations.depicts))).toEqual([]);

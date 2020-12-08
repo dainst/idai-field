@@ -1,5 +1,5 @@
 import * as PouchDB from 'pouchdb-node';
-import {Document, FieldDocument, ImageDocument} from 'idai-components-2';
+import {Document, FieldDocument, ImageDocument, toResourceId} from 'idai-components-2';
 import {ImageDatastore} from '../../../../src/app/core/datastore/field/image-datastore';
 import {FieldDatastore} from '../../../../src/app/core/datastore/field/field-datastore';
 import {DocumentDatastore} from '../../../../src/app/core/datastore/document-datastore';
@@ -31,6 +31,11 @@ import {ConfigReader} from '../../../../src/app/core/configuration/boot/config-r
 import {SettingsProvider} from '../../../../src/app/core/settings/settings-provider';
 import {ImageRelationsManager} from '../../../../src/app/core/model/image-relations-manager';
 import {SyncService} from '../../../../src/app/core/sync/sync-service';
+import {createLookup} from '../../test-helpers';
+import {sameset} from 'tsfun';
+
+const fs = require('fs');
+
 
 
 class IdGenerator {
@@ -177,6 +182,13 @@ export async function createApp(projectName = 'testdb', startSync = false) {
     const imageDocumentsManager = new ImageDocumentsManager(imagesState, imageDatastore);
     const imageOverviewFacade = new ImageOverviewFacade(imageDocumentsManager, imagesState, projectConfiguration);
 
+    const projectImageDir = settingsProvider.getSettings().imagestorePath
+        + settingsProvider.getSettings().selectedProject
+        + '/';
+    const createDocuments = makeCreateDocuments(
+        documentDatastore, projectImageDir, settingsProvider.getSettings().username);
+    const expectResources = makeExpectResources(documentDatastore);
+
     return {
         remoteChangesStream,
         viewFacade,
@@ -192,7 +204,10 @@ export async function createApp(projectName = 'testdb', startSync = false) {
         imageOverviewFacade,
         relationsManager,
         imagestore,
-        imageRelationsManager
+        imageRelationsManager,
+        projectImageDir,
+        createDocuments,
+        expectResources
     }
 }
 
@@ -214,4 +229,40 @@ export async function setupSyncTestDb(projectName = 'testdb') {
         }
     });
     await synctest.close();
+}
+
+
+function makeCreateDocuments(documentDatastore: DocumentDatastore,
+                             projectImageDir: string,
+                             username: string) {
+
+    return async function create(documents: Array<[string, string, Array<string>]|[string, string]>) {
+
+        const documentsLookup = createLookup(documents);
+        for (const document of Object.values(documentsLookup)) {
+            await documentDatastore.create(document, username);
+        }
+        for (const [id, type, _] of documents) {
+            if (type === 'Image') createImageInProjectImageDir(projectImageDir, id);
+        }
+        return documentsLookup;
+    }
+}
+
+
+function makeExpectResources(documentDatastore: DocumentDatastore) {
+
+    return async function expectResources(resourceIds: string[]) {
+
+        const documents = (await documentDatastore.find({})).documents;
+        expect(sameset(documents.map(toResourceId), resourceIds)).toBeTruthy();
+    }
+}
+
+
+
+function createImageInProjectImageDir(projectImageDir: string, id: string) {
+
+    fs.closeSync(fs.openSync(projectImageDir + id, 'w'));
+    expect(fs.existsSync(projectImageDir + id)).toBeTruthy();
 }

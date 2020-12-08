@@ -60,7 +60,7 @@ export class ImageRelationsManager {
      * Removes non image documents, together with their descendants, and
      * all their (and their descendants) connected images.
      *
-     * Images which are not only connected to the documents to be deleted, but
+     * Images which are not only related to the documents to be deleted, but
      * also to other documents, are not deleted.
      *
      * @param documents

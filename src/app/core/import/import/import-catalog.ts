@@ -51,15 +51,8 @@ export function buildImportCatalogFunction(services: ImportCatalogServices,
             const [existingDocuments, existingDocumentsRelatedImages] =
                 await getExistingCatalogDocuments(services, importDocuments);
 
-            const removedDocuments = subtract(on(RESOURCE_ID_PATH), importDocuments)(Object.values(existingDocuments)); // TODO review subtract, params, object.values
-            for (const removedDocument of removedDocuments) {
-                if (isNot(undefinedOrEmpty)(removedDocument.resource.relations[TypeRelations.HASINSTANCE])) {
-                    return {
-                        errors: [[ImportCatalogErrors.CONNECTED_TYPE_DELETED]], // TODO add ids of documents
-                        successfulImports: 0
-                    }
-                }
-            }
+            assertNoDeletionOfRelatedTypes(Object.values(existingDocuments), importDocuments);
+
             // TODO delete difference, including images, if not connected
 
             let successfulImports = 0;
@@ -83,6 +76,17 @@ export function buildImportCatalogFunction(services: ImportCatalogServices,
 
         } catch (errWithParams) {
             return { errors: [errWithParams], successfulImports: 0 };
+        }
+    }
+}
+
+
+function assertNoDeletionOfRelatedTypes(existingDocuments: Array<Document>, importDocuments: Array<Document>) {
+
+    const removedDocuments = subtract(on(RESOURCE_ID_PATH), importDocuments)(existingDocuments); // TODO review subtract, params, object.values
+    for (const removedDocument of removedDocuments) {
+        if (isNot(undefinedOrEmpty)(removedDocument.resource.relations[TypeRelations.HASINSTANCE])) {
+            throw [ImportCatalogErrors.CONNECTED_TYPE_DELETED]; // TODO add ids of documents
         }
     }
 }

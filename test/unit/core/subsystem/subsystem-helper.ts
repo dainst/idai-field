@@ -322,7 +322,7 @@ function makeUpdateDocument(documentDatastore: DocumentDatastore, username: stri
 
 function makeExpectResources(documentDatastore: DocumentDatastore) {
 
-    return async function expectResources(resourceIds: string[]) {
+    return async function expectResources(...resourceIds: string[]) {
 
         const documents = (await documentDatastore.find({})).documents;
         expect(sameset(documents.map(toResourceId), resourceIds)).toBeTruthy();

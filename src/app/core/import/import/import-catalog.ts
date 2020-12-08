@@ -38,6 +38,8 @@ export module ImportCatalogErrors {
 export function buildImportCatalogFunction(services: ImportCatalogServices,
                                            context: ImportCatalogContext): ImportFunction {
 
+    // TODO assert all importDocuments have the same document.project
+    // TODO assert all importDocuments form a valid hierarchy (see also images)
     /**
      * @param importDocuments
      * @param datastore

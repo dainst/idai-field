@@ -6,8 +6,13 @@ import {
     buildImportCatalogFunction,
     ImportCatalogErrors
 } from '../../../../../../src/app/core/import/import/import-catalog';
-import {ImageRelations, TypeRelations} from '../../../../../../src/app/core/model/relation-constants';
+import {
+    HierarchicalRelations,
+    ImageRelations,
+    TypeRelations
+} from '../../../../../../src/app/core/model/relation-constants';
 import {createDocuments, NiceDocs} from '../../../../test-helpers';
+import {isNot, isUndefinedOrEmpty, undefinedOrEmpty} from 'tsfun';
 
 const fs = require('fs');
 
@@ -131,25 +136,7 @@ describe('subsystem/import/importCatalog', () => {
         expect(result.successfulImports).toBe(1);
         expect(result.errors).toEqual([]);
 
-        // await helpers.expectResources(['tc1', 't1']); // TODO wrong
-        done();
-    });
-
-
-    it('reimport deletion - liesWithin is correctly empty', async done => {
-
-        await helpers.createDocuments([
-            ['tc1', 'TypeCatalog', ['t1']],
-            ['t1', 'Type', ['t2']],
-            ['t2', 'Type']
-        ]);
-        const catalog = Object.values(createDocuments([
-            ['tc1', 'TypeCatalog', ['t1']],
-            ['t1', 'Type']
-        ]));
-        await importCatalog(catalog);
-        // await helpers.expectResources(['tc1', 't1']); // TODO wrong
-        // TODO expectation
+        await helpers.expectResources(['tc1']);
         done();
     });
 });

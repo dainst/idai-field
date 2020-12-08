@@ -54,18 +54,29 @@ export function buildImportCatalogFunction(services: ImportCatalogServices,
 
             assertNoDeletionOfRelatedTypes(Object.values(existingDocuments), importDocuments);
 
-            // TODO delete difference, including images, if not connected
-
             const updateDocuments = await asyncMap(importDocuments,
                 importOneDocument(services.datastore, context, existingDocuments));
 
-            await removeRelatedImages(services, updateDocuments, existingDocumentsRelatedImages);
-
+            await removeRelatedImages(
+                services, updateDocuments, existingDocumentsRelatedImages);
+            await removeObsoleteCatalogDocuments(
+                services, Object.values(existingDocuments), updateDocuments);
             return { errors: [], successfulImports: updateDocuments.length };
 
         } catch (errWithParams) {
             return { errors: [errWithParams], successfulImports: 0 };
         }
+    }
+}
+
+
+async function removeObsoleteCatalogDocuments(services: ImportCatalogServices,
+                                              existingDocuments: Array<Document>,
+                                              updateDocuments: Array<Document>) {
+
+    const diff = subtract(on(RESOURCE_ID_PATH), updateDocuments)(existingDocuments); // TODO single param version
+    for (const d of diff) {
+        await services.datastore.remove(d);
     }
 }
 

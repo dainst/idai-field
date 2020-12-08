@@ -33,6 +33,8 @@ import {ImageRelationsManager} from '../../../../src/app/core/model/image-relati
 import {SyncService} from '../../../../src/app/core/sync/sync-service';
 import {createLookup} from '../../test-helpers';
 import {sameset} from 'tsfun';
+import {TypeRelations} from '../../../../src/app/core/model/relation-constants';
+import {ResourceId} from '../../../../src/app/core/constants';
 
 const fs = require('fs');
 
@@ -187,6 +189,8 @@ export async function createApp(projectName = 'testdb', startSync = false) {
         + '/';
     const createDocuments = makeCreateDocuments(
         documentDatastore, projectImageDir, settingsProvider.getSettings().username);
+    const updateDocument = makeUpdateDocument(
+        documentDatastore, settingsProvider.getSettings().username);
     const expectResources = makeExpectResources(documentDatastore);
 
     return {
@@ -207,6 +211,7 @@ export async function createApp(projectName = 'testdb', startSync = false) {
         imageRelationsManager,
         projectImageDir,
         createDocuments,
+        updateDocument,
         expectResources
     }
 }
@@ -249,6 +254,17 @@ function makeCreateDocuments(documentDatastore: DocumentDatastore,
     }
 }
 
+
+function makeUpdateDocument(documentDatastore: DocumentDatastore, username: string) {
+
+    return async function updateDocument(id: ResourceId,
+                                         callback: (document: Document) => void) {
+
+        const oldDocument = await documentDatastore.get(id);
+        callback(oldDocument);
+        await documentDatastore.update(oldDocument, username);
+    }
+}
 
 function makeExpectResources(documentDatastore: DocumentDatastore) {
 

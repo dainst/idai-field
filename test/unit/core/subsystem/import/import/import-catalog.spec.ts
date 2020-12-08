@@ -55,12 +55,9 @@ describe('subsystem/import/importCatalog', () => {
     it('do not overwrite existing relations to find', async done => {
 
         await app.createDocuments([['tc1', 'TypeCatalog']]);
-
-        // TODO make update function
-        const oldDocument = await app.documentDatastore.get('tc1');
-        oldDocument.resource.relations[TypeRelations.HASINSTANCE] = ['F1'];
-        await app.documentDatastore.update(
-            oldDocument, app.settingsProvider.getSettings().username);
+        await app.updateDocument('tc1', document => {
+            document.resource.relations[TypeRelations.HASINSTANCE] = ['F1'];
+        });
 
         const documentsLookup = createLookup([['tc1', 'TypeCatalog']]);
         await importCatalog([documentsLookup['tc1']]);
@@ -79,10 +76,9 @@ describe('subsystem/import/importCatalog', () => {
         ];
 
         await app.createDocuments(documents);
-        const oldType = await app.documentDatastore.get('t1');
-        oldType.resource.relations[TypeRelations.HASINSTANCE] = ['F1'];
-        await app.documentDatastore.update(
-            oldType, app.settingsProvider.getSettings().username);
+        await app.updateDocument('t1', document => {
+            document.resource.relations[TypeRelations.HASINSTANCE] = ['F1'];
+        });
 
         const documentsLookup = createLookup(documents);
         const result = await importCatalog([documentsLookup['tc1']]);

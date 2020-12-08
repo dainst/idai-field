@@ -81,8 +81,8 @@ export class ImageRelationsManager {
         for (const document of documents) {
             const docsInclDescendants =
                 (await this.relationsManager.fetchDescendants(document)).concat([document]);
-            await this.relationsManager.remove(document);
             documentsToBeDeleted.push(...docsInclDescendants);
+            await this.relationsManager.remove(document);
         }
 
         const imagesToBeDeleted = set(on(RESOURCE_ID_PATH), await this.getLeftovers(documentsToBeDeleted));

@@ -116,23 +116,19 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
     public async performContextMenuAction(action: ContextMenuAction) {
 
         if (this.resourcesComponent.isPopoverMenuOpened() &&
-            ['edit-geometry', 'create-polygon',
-                'create-line-string', 'create-point'].includes(action)) {
-
+                ['edit-geometry', 'create-polygon', 'create-line-string', 'create-point'].includes(action)) {
             this.resourcesComponent.closePopover();
         }
 
-        if (!this.contextMenu.document) return;
-        const document: FieldDocument = this.contextMenu.document;
-
+        if (!this.selectedDocument) return;
         this.contextMenu.close();
 
         switch (action) {
             case 'edit':
-                await this.resourcesComponent.editDocument(document);
+                await this.resourcesComponent.editDocument(this.selectedDocument);
                 break;
             case 'move':
-                await this.resourcesComponent.moveDocument(document);
+                await this.resourcesComponent.moveDocument(this.selectedDocument);
                 break;
             case 'delete':
                 await this.resourcesComponent.deleteDocument(
@@ -140,19 +136,19 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
                 );
                 break;
             case 'edit-geometry':
-                await this.viewFacade.setSelectedDocument(document.resource.id);
+                await this.viewFacade.setSelectedDocument(this.selectedDocument.resource.id);
                 this.menuService.setContext(MenuContext.GEOMETRY_EDIT);
                 break;
             case 'create-polygon':
-                await this.viewFacade.setSelectedDocument(document.resource.id);
+                await this.viewFacade.setSelectedDocument(this.selectedDocument.resource.id);
                 this.resourcesComponent.createGeometry('Polygon');
                 break;
             case 'create-line-string':
-                await this.viewFacade.setSelectedDocument(document.resource.id);
+                await this.viewFacade.setSelectedDocument(this.selectedDocument.resource.id);
                 this.resourcesComponent.createGeometry('LineString');
                 break;
             case 'create-point':
-                await this.viewFacade.setSelectedDocument(document.resource.id);
+                await this.viewFacade.setSelectedDocument(this.selectedDocument.resource.id);
                 this.resourcesComponent.createGeometry('Point');
                 break;
         }

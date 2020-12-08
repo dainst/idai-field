@@ -2,6 +2,7 @@ import {Document, FieldDocument} from 'idai-components-2';
 import {Lookup} from '../../src/app/core/util/utils';
 import {HierarchicalRelations, ImageRelations} from '../../src/app/core/model/relation-constants';
 import {DocumentDatastore} from '../../src/app/core/datastore/document-datastore';
+import {ResourceId} from '../../src/app/core/constants';
 
 
 export function doc(id: string, category: string = 'category'): Document {
@@ -29,7 +30,11 @@ export function doc(id: string, category: string = 'category'): Document {
 }
 
 
-export function createLookup(documents: Array<[string, string, Array<string>]|[string, string]>) {
+// TODO document structure
+export type NiceDocs = Array<[ResourceId, string, Array<string>]|[ResourceId, string]>;
+
+
+export function createLookup(documents: NiceDocs) {
 
     const documentsLookup: Lookup<FieldDocument> = {}
     const relationsLookup = {};

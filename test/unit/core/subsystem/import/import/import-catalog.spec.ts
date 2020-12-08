@@ -7,7 +7,7 @@ import {
     ImportCatalogErrors
 } from '../../../../../../src/app/core/import/import/import-catalog';
 import {TypeRelations} from '../../../../../../src/app/core/model/relation-constants';
-import {createLookup} from '../../../../test-helpers';
+import {createLookup, NiceDocs} from '../../../../test-helpers';
 
 const fs = require('fs');
 
@@ -70,7 +70,7 @@ describe('subsystem/import/importCatalog', () => {
 
     it('type resource deleted on reimport - type resource was connected to other resource previously', async done => {
 
-        const documents: any = [
+        const documents: NiceDocs = [
             ['tc1', 'TypeCatalog', ['t1']],
             ['t1', 'Type']
         ];
@@ -90,7 +90,7 @@ describe('subsystem/import/importCatalog', () => {
 
     it('type resource deleted on reimport - type resource was unconnected', async done => {
 
-        const documents: any = [
+        const documents: NiceDocs = [
             ['tc1', 'TypeCatalog', ['t1']],
             ['t1', 'Type']
         ];

@@ -79,6 +79,7 @@ export function buildImportCatalogFunction(services: ImportCatalogServices,
                 await services.imageRelationsManager.getRelatedImageDocuments(updateDocuments);
             const diffImages = subtract(on(RESOURCE_ID_PATH), updateDocumentRelatedImages)(existingDocumentsRelatedImages);
             for (const diff of diffImages) {
+                // TODO make sure it was connected to only this catalog, and not maybe to some other catalog from the same original user, for example
                 await services.imagestore.remove(diff.resource.id);
             }
 

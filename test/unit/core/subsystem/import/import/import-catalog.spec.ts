@@ -113,6 +113,7 @@ describe('subsystem/import/importCatalog', () => {
         const result = await importCatalog([documentsLookup['tc1']]);
         expect(result.successfulImports).toBe(0);
         expect(result.errors[0][0]).toEqual(ImportCatalogErrors.CONNECTED_TYPE_DELETED);
+        expect(result.errors[0][1]).toEqual('F1');
         done();
     });
 

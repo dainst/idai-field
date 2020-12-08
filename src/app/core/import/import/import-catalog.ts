@@ -48,12 +48,8 @@ export function buildImportCatalogFunction(services: ImportCatalogServices,
         : Promise<{ errors: string[][], successfulImports: number }> {
 
         try {
-            const typeCatalogDocument = importDocuments.filter(_ => _.resource.category === 'TypeCatalog')[0]; // TODO handle errors
-            const existingDocuments = makeDocumentsLookup(
-                await services.relationsManager.get(typeCatalogDocument.resource.id));
-
-            const existingDocumentsRelatedImages =
-                await services.imageRelationsManager.getRelatedImageDocuments(Object.values(existingDocuments));
+            const [existingDocuments, existingDocumentsRelatedImages] =
+                await getExistingCatalogDocuments(services, importDocuments);
 
             const removedDocuments = subtract(on(RESOURCE_ID_PATH), importDocuments)(Object.values(existingDocuments)); // TODO review subtract, params, object.values
             for (const removedDocument of removedDocuments) {
@@ -83,12 +79,26 @@ export function buildImportCatalogFunction(services: ImportCatalogServices,
                 await services.imagestore.remove(diff.resource.id);
             }
 
-            return {errors: [], successfulImports: successfulImports};
+            return { errors: [], successfulImports: successfulImports };
 
         } catch (errWithParams) {
-            return {errors: [errWithParams], successfulImports: 0};
+            return { errors: [errWithParams], successfulImports: 0 };
         }
     }
+}
+
+
+async function getExistingCatalogDocuments(services: ImportCatalogServices,
+                                           importDocuments: Array<Document>): Promise<[Lookup<Document>, Array<Document>]> {
+
+    const typeCatalogDocument =
+        importDocuments.filter(_ => _.resource.category === 'TypeCatalog')[0]; // TODO handle errors
+    const existingDocuments = makeDocumentsLookup(
+        await services.relationsManager.get(typeCatalogDocument.resource.id));
+    return [
+        existingDocuments,
+        await services.imageRelationsManager.getRelatedImageDocuments(Object.values(existingDocuments))
+    ];
 }
 
 

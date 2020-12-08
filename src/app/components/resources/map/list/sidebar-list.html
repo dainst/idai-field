@@ -13,9 +13,10 @@
             [class.new-from-remote]="viewFacade.isNewDocumentFromRemote(document)"
             [class.conflicted]="document['_conflicts']"
             [class.selected]="selectedDocument?.resource.id === document.resource.id"
+            [class.additional-selected]="additionalSelectedDocuments?.includes(document)"
             [id]="'resource-' + document.resource.identifier">
 
-            <document-teaser (click)="select(document)"
+            <document-teaser (click)="select(document, $event)"
                              (dblclick)="editDocument(document)"
                              [document]="document"></document-teaser>
 

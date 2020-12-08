@@ -30,6 +30,10 @@ sidebar-list {
       background-color: darken($list-item-hover-color, 5%);
     }
 
+    .additional-selected {
+      background-color: $list-item-hover-color;
+    }
+
     #document-limit-info {
       padding: 10px;
       font-style: italic;

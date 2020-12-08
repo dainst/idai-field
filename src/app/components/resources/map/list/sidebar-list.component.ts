@@ -15,7 +15,9 @@ import {MenuContext, MenuService} from '../../../menu-service';
 @Component({
     selector: 'sidebar-list',
     templateUrl: './sidebar-list.html',
-    host: { '(window:contextmenu)': 'handleClick($event, true)' }
+    host: {
+        '(window:contextmenu)': 'handleClick($event, true)'
+    }
 })
 /**
  * @author Daniel de Oliveira
@@ -24,11 +26,12 @@ import {MenuContext, MenuService} from '../../../menu-service';
  */
 export class SidebarListComponent extends BaseList implements AfterViewInit, OnChanges {
 
-    public contextMenu: ContextMenu = new ContextMenu();
-
     @Input() selectedDocument: FieldDocument;
 
     @ViewChild('sidebar', { static: false }) sidebarElement: ElementRef;
+
+    public contextMenu: ContextMenu = new ContextMenu();
+    public additionalSelectedDocuments: Array<FieldDocument> = [];
 
 
     constructor(private navigationService: NavigationService,
@@ -53,9 +56,6 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
     }
 
 
-    public select = (document: FieldDocument) => this.resourcesComponent.select(document);
-
-
     ngAfterViewInit() {
 
         this.sidebarElement.nativeElement.focus();
@@ -64,6 +64,7 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
 
     ngOnChanges(): void {
 
+        this.additionalSelectedDocuments = [];
         this.scrollTo(this.selectedDocument);
     }
 
@@ -89,6 +90,17 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
         if (event.key === 'Backspace') {
             await this.goToUpperHierarchyLevel();
             event.preventDefault();
+        }
+    }
+
+
+    public async select(document: FieldDocument, event: MouseEvent) {
+
+        if (event.metaKey || event.ctrlKey) {
+            if (this.selectedDocument && document !== this.selectedDocument) this.toggleAdditionalSelected(document);
+        } else {
+            this.additionalSelectedDocuments = [];
+            await this.resourcesComponent.select(document);
         }
     }
 
@@ -164,6 +176,16 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
 
 
     public trackDocument = (index: number, item: FieldDocument) => item.resource.id;
+
+
+    private toggleAdditionalSelected(document: FieldDocument) {
+
+        if (this.additionalSelectedDocuments.includes(document)) {
+            this.additionalSelectedDocuments = this.additionalSelectedDocuments.filter(doc => doc !== document);
+        } else {
+            this.additionalSelectedDocuments.push(document);
+        }
+    }
 
 
     private async openChildCollection() {

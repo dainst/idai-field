@@ -19,32 +19,15 @@ describe('subsystem/import/importCatalog', () => {
     let helpers;
 
 
-    function remakeProjectDir(helpers) {
-
-        try {
-            // node 12 supports fs.rmdirSync(path, {recursive: true})
-            const files = fs.readdirSync(helpers.projectImageDir);
-            for (const file of files) {
-                fs.unlinkSync(helpers.projectImageDir + file);
-            }
-            if (fs.existsSync(helpers.projectImageDir)) fs.rmdirSync(helpers.projectImageDir);
-        } catch (e) {
-            console.log("error deleting tmp project dir", e)
-        }
-        fs.mkdirSync(helpers.projectImageDir, { recursive: true }); // TODO do in createApp() ?
-    }
-
-
     beforeEach(async done => {
 
         await setupSyncTestDb();
         app = await createApp();
         helpers = createHelpers(app);
+        helpers.createProjectDir();
 
         spyOn(console, 'error');
         // spyOn(console, 'warn');
-
-        remakeProjectDir(helpers)
 
         importCatalog = buildImportCatalogFunction(
             {

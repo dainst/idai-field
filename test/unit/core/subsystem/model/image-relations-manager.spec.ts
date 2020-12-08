@@ -17,11 +17,10 @@ describe('subsystem/image-relations-manager', () => {
         await setupSyncTestDb();
         app = await createApp();
         helpers = createHelpers(app);
+        helpers.createProjectDir();
 
         spyOn(console, 'error');
         // spyOn(console, 'warn');
-
-        fs.mkdirSync(helpers.projectImageDir, { recursive: true }); // TODO remove
         done();
     });
 

@@ -217,14 +217,34 @@ export function createHelpers(app) {
     const expectResources = makeExpectResources(app.documentDatastore);
     const expectImagesExist = makeExpectImagesExist(projectImageDir);
     const expectImagesDontExist = makeExpectImagesDontExist(projectImageDir);
+    const createProjectDir = makeCreateProjectDir(projectImageDir);
 
     return {
-        projectImageDir, // TODO dont export, instead provide all the necessary functions
+        // projectImageDir, // TODO dont export, instead provide all the necessary functions
         createDocuments,
         updateDocument,
         expectResources,
         expectImagesExist,
-        expectImagesDontExist
+        expectImagesDontExist,
+        createProjectDir
+    }
+}
+
+
+function makeCreateProjectDir(projectImageDir) {
+
+    return function createProjectDir() {
+        try {
+            // node 12 supports fs.rmdirSync(path, {recursive: true})
+            const files = fs.readdirSync(projectImageDir);
+            for (const file of files) {
+                fs.unlinkSync(projectImageDir + file);
+            }
+            if (fs.existsSync(projectImageDir)) fs.rmdirSync(projectImageDir);
+        } catch (e) {
+            console.log("error deleting tmp project dir", e)
+        }
+        fs.mkdirSync(projectImageDir, { recursive: true }); // TODO do in createApp() ?
     }
 }
 

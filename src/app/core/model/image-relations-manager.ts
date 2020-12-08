@@ -56,25 +56,30 @@ export class ImageRelationsManager {
     // }
 
 
-    public async remove(document: Document) {
+    public async remove(...documents: Array<Document>) {
 
-        if (ProjectCategories.getImageCategoryNames(this.categoryTreelist)
-            .includes(document.resource.category)) {
-            throw 'illegal argument - document must not be of an Image category';
+        for (const document of documents) {
+            if (ProjectCategories.getImageCategoryNames(this.categoryTreelist)
+                .includes(document.resource.category)) {
+                throw 'illegal argument - document must not be of an Image category';
+            }
         }
         if (this.imagestore.getPath() === undefined) {
             throw 'illegal state - imagestore.getPath() must not return undefined';
         }
 
-        const documentsToBeDeleted =
-            (await this.relationsManager.fetchDescendants(document)).concat([document]);
-        await this.relationsManager.remove(document);
+        const documentsToBeDeleted = [];
+        for (const document of documents) {
+            const docsInclDescendants =
+                (await this.relationsManager.fetchDescendants(document)).concat([document]);
+            await this.relationsManager.remove(document);
+            documentsToBeDeleted.push(...docsInclDescendants);
+        }
 
-        const catalogImages = set(on(RESOURCE_ID_PATH), await this.getLeftovers(documentsToBeDeleted));
-
-        for (let catalogImage of catalogImages) {
-            await this.imagestore.remove(catalogImage.resource.id);
-            await this.datastore.remove(catalogImage);
+        const imagesToBeDeleted = set(on(RESOURCE_ID_PATH), await this.getLeftovers(documentsToBeDeleted));
+        for (let image of imagesToBeDeleted) {
+            await this.imagestore.remove(image.resource.id);
+            await this.datastore.remove(image);
         }
     }
 

@@ -17,7 +17,7 @@ import {ProjectCategories} from '../../../core/configuration/project-categories'
  */
 export class DeleteModalComponent {
 
-    public document: Document;
+    public documents: Array<Document>;
     public descendantsCount: number;
     public confirmDeletionIdentifier: string;
 
@@ -28,45 +28,45 @@ export class DeleteModalComponent {
 
     public showDeleteMultipleResourcesWarningSingle = () =>
         this.descendantsCount === 1
-        && !ProjectCategories.getTypeCategoryNames().includes(this.document.resource.category);
+        && !ProjectCategories.getTypeCategoryNames().includes(this.documents[0].resource.category);
 
     public showDeleteMultipleResourcesWarningMultiple = () =>
         this.descendantsCount > 1
-        && !ProjectCategories.getTypeCategoryNames().includes(this.document.resource.category);
+        && !ProjectCategories.getTypeCategoryNames().includes(this.documents[0].resource.category);
 
     public showImportedCatalogAssociationsMsg = () =>
-        this.document.resource.category === 'TypeCatalog'
-        && this.document.project !== undefined;
+        this.documents[0].resource.category === 'TypeCatalog'
+        && this.documents[0].project !== undefined;
 
     public showOwnedCatalogAssociationsMsg = () =>
-        this.document.resource.category === 'TypeCatalog'
-        && this.document.project === undefined;
+        this.documents[0].resource.category === 'TypeCatalog'
+        && this.documents[0].project === undefined;
 
     public showOwnedTypeAssociationsMsg = () =>
-        this.document.resource.category === 'Type'
-        && this.document.project === undefined;
+        this.documents[0].resource.category === 'Type'
+        && this.documents[0].project === undefined;
 
     public showDeleteImagesOption = () =>
-        this.document.project === undefined
+        this.documents[0].project === undefined
         && this.relatedImagesCount > 0;
 
     public showDeleteImagesOptionForResourceSingular = () =>
-        this.document.project === undefined
+        this.documents[0].project === undefined
         && this.descendantsCount === 0
         && this.relatedImagesCount === 1;
 
     public showDeleteImagesOptionForResourcePlural = () =>
-        this.document.project === undefined
+        this.documents[0].project === undefined
         && this.descendantsCount === 0
         && this.relatedImagesCount > 1;
 
     public showDeleteImagesOptionForResourceWithDescendantsSingular = () =>
-        this.document.project === undefined
+        this.documents[0].project === undefined
         && this.descendantsCount > 0
         && this.relatedImagesCount === 1;
 
     public showDeleteImagesOptionForResourceWithDescendantsPlural = () =>
-        this.document.project === undefined
+        this.documents[0].project === undefined
         && this.descendantsCount > 0
         && this.relatedImagesCount > 1;
 
@@ -79,7 +79,16 @@ export class DeleteModalComponent {
 
     public confirmDeletion() {
 
-        if (this.confirmDeletionIdentifier !== this.document.resource.identifier) return;
+        if (!this.checkConfirmDeletionIdentifier()) return;
+
         this.activeModal.close(this.deleteRelatedImages);
+    }
+
+
+    public checkConfirmDeletionIdentifier(): boolean {
+
+        return this.documents.find(
+            document => document.resource.identifier === this.confirmDeletionIdentifier
+        ) !== undefined;
     }
 }

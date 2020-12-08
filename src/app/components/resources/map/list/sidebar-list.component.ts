@@ -97,7 +97,9 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
     public async select(document: FieldDocument, event: MouseEvent) {
 
         if (event.metaKey || event.ctrlKey) {
-            if (this.selectedDocument && document !== this.selectedDocument) this.toggleAdditionalSelected(document);
+            if (this.selectedDocument && document !== this.selectedDocument) {
+                this.toggleAdditionalSelected(document);
+            }
         } else {
             this.additionalSelectedDocuments = [];
             await this.resourcesComponent.select(document);
@@ -133,7 +135,9 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
                 await this.resourcesComponent.moveDocument(document);
                 break;
             case 'delete':
-                await this.resourcesComponent.deleteDocument(document);
+                await this.resourcesComponent.deleteDocument(
+                    [this.selectedDocument].concat(this.additionalSelectedDocuments)
+                );
                 break;
             case 'edit-geometry':
                 await this.viewFacade.setSelectedDocument(document.resource.id);

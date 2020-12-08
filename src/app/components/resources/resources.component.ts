@@ -188,16 +188,18 @@ export class ResourcesComponent implements OnDestroy {
     }
 
 
-    public async deleteDocument(document: FieldDocument) {
+    public async deleteDocument(documents: Array<FieldDocument>) {
 
         this.quitGeometryEditing();
         this.menuService.setContext(MenuContext.MODAL);
 
         try {
-            await this.resourceDeletion.delete(document);
+            await this.resourceDeletion.delete(documents);
             await this.viewFacade.deselect();
-            await this.tabManager.closeTab('resources', document.resource.id);
-            this.viewFacade.removeView(document.resource.id);
+            for (let document of documents) {
+                await this.tabManager.closeTab('resources', document.resource.id);
+                this.viewFacade.removeView(document.resource.id);
+            }
             await this.viewFacade.rebuildNavigationPath();
             await this.viewFacade.populateDocumentList();
         } catch (msgWithParams) {

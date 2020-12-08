@@ -1,12 +1,21 @@
 <div class="modal-header">
-    <h5 class="modal-title" i18n="@@resources.deleteModal.header">
-        Ressource {{document.resource.identifier}} löschen?
+    <h5 *ngIf="documents.length === 1" class="modal-title" i18n="@@resources.deleteModal.header.single">
+        Ressource {{documents[0].resource.identifier}} löschen?
+    </h5>
+    <h5 *ngIf="documents.length > 1" class="modal-title" i18n="@@resources.deleteModal.header.multiple">
+        {{documents.length}} Ressourcen löschen?
     </h5>
 </div>
 
 <div class="modal-body">
-    <div id="confirm-delete-info" i18n="@@resources.deleteModal.confirmDeleteInfo">
-        Bitte geben Sie den Bezeichner dieser Ressource ein, um den Löschvorgang zu bestätigen.
+    <div id="confirm-delete-info" >
+        <span *ngIf="documents.length === 1" i18n="@@resources.deleteModal.confirmDeleteInfo.single">
+            Bitte geben Sie den Bezeichner der Ressource ein, um den Löschvorgang zu bestätigen.
+        </span>
+        <span *ngIf="documents.length > 1" i18n="@@resources.deleteModal.confirmDeleteInfo.multiple">
+            Bitte geben Sie den Bezeichner einer der zu löschenden Ressourcen ein, um den Löschvorgang
+            zu bestätigen.
+        </span>
     </div>
     <div class="input-group">
         <input id="delete-resource-input"
@@ -86,9 +95,9 @@
     </div>
 </div>
 
-<div class="modal-footer" *ngIf="document">
+<div class="modal-footer" *ngIf="documents">
     <button id="delete-resource-confirm" class="btn btn-danger" type="button"
-            [ngClass]="{ 'disabled': confirmDeletionIdentifier !== document.resource.identifier }"
+            [ngClass]="{ 'disabled': !this.checkConfirmDeletionIdentifier() }"
             (click)="confirmDeletion()">
         <span i18n="@@buttons.delete">Löschen</span>
     </button>

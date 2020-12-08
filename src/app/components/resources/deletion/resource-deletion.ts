@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
+import {set} from 'tsfun';
 import {FieldDocument} from 'idai-components-2';
 import {DeleteModalComponent} from './delete-modal.component';
 import {RelationsManager} from '../../../core/model/relations-manager';
@@ -22,24 +23,28 @@ export class ResourceDeletion {
                 private projectConfiguration: ProjectConfiguration) {}
 
 
-    public async delete(document: FieldDocument) {
+    public async delete(documents: Array<FieldDocument>) {
 
         const modalRef: NgbModalRef = this.modalService.open(
             DeleteModalComponent, { keyboard: false }
         );
-        modalRef.componentInstance.document = document;
-        modalRef.componentInstance.descendantsCount = await this.relationsManager.fetchDescendantsCount(document);
+        modalRef.componentInstance.documents = documents;
+        modalRef.componentInstance.descendantsCount = this.getDescendantsCount(documents);
 
-        const documentAndDescendants: Array<FieldDocument>
-            = [document].concat(await this.relationsManager.fetchDescendants(document as any) as any);
-        modalRef.componentInstance.relatedImagesCount =
-            (await this.imageRelationsManager.getRelatedImageDocuments(documentAndDescendants)).length;
+        const documentsAndDescendants: Array<FieldDocument>
+            = (await this.getDescendants(documents)).concat(documents);
+        modalRef.componentInstance.relatedImagesCount
+            = (await this.imageRelationsManager.getRelatedImageDocuments(documentsAndDescendants)).length;
 
-        const deleteModalResult = await modalRef.result;
+        const deleteRelatedImages: boolean = await modalRef.result;
         const deletionInProgressModalRef: NgbModalRef = this.modalService.open(
             DeletionInProgressModalComponent, { backdrop: 'static', keyboard: false }
         );
-        await this.performDeletion(document, deleteModalResult);
+
+        for (let document of documents) {
+            await this.performDeletion(document, deleteRelatedImages);
+        }
+
         deletionInProgressModalRef.close();
     }
 
@@ -53,6 +58,32 @@ export class ResourceDeletion {
         } else {
              await this.relationsManager.remove(document);
         }
+    }
+
+
+    private async getDescendantsCount(documents: Array<FieldDocument>): Promise<number> {
+
+        let result: number = 0;
+
+        for (let document of documents) {
+            result += await this.relationsManager.fetchDescendantsCount(document);
+        }
+
+        return result;
+    }
+
+
+    private async getDescendants(documents: Array<FieldDocument>): Promise<Array<FieldDocument>> {
+
+        let descendants: Array<FieldDocument> = [];
+
+        for (let document of documents) {
+            descendants = descendants.concat(
+                await this.relationsManager.fetchDescendants(document) as Array<FieldDocument>
+            );
+        }
+
+        return set(descendants);
     }
 
 

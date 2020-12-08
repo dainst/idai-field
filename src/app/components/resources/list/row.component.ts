@@ -47,7 +47,7 @@ export class RowComponent implements AfterViewInit {
 
     public moveDocument = () => this.resourcesComponent.moveDocument(this.document);
 
-    public deleteDocument = () => this.resourcesComponent.deleteDocument(this.document);
+    public deleteDocument = () => this.resourcesComponent.deleteDocument([this.document]);
 
     public startEditing = (fieldValue: string) => this.initialValueOfCurrentlyEditedField = fieldValue;
 

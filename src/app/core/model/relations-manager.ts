@@ -101,7 +101,6 @@ export class RelationsManager {
     }
 
 
-
     /**
      * Removes the document from the datastore.
      *

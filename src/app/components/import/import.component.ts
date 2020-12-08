@@ -30,6 +30,7 @@ import BASE_EXCLUSION = ExportRunner.BASE_EXCLUSION;
 import getCategoriesWithoutExcludedCategories = ExportRunner.getCategoriesWithoutExcludedCategories;
 import {RelationsManager} from '../../core/model/relations-manager';
 import {ImageRelationsManager} from '../../core/model/image-relations-manager';
+import {Imagestore} from '../../core/images/imagestore/imagestore';
 
 
 @Component({
@@ -61,6 +62,7 @@ export class ImportComponent implements OnInit {
                 private datastore: DocumentDatastore,
                 private relationsManager: RelationsManager,
                 private imageRelationsManager: ImageRelationsManager,
+                private imagestore: Imagestore,
                 private remoteChangesStream: ChangesStream,
                 private importValidator: ImportValidator,
                 private http: HttpClient,
@@ -254,7 +256,8 @@ export class ImportComponent implements OnInit {
             {
                 datastore: this.datastore,
                 relationsManager: this.relationsManager,
-                imageRelationsManager: this.imageRelationsManager
+                imageRelationsManager: this.imageRelationsManager,
+                imagestore: this.imagestore
             },
             {
                 settings: this.settingsProvider.getSettings(),

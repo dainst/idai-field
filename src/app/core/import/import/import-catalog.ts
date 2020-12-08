@@ -9,6 +9,7 @@ import {isNot, on, subtract, undefinedOrEmpty} from 'tsfun';
 import {TypeRelations} from '../../model/relation-constants';
 import {ImageRelationsManager} from '../../model/image-relations-manager';
 import {Lookup} from '../../util/utils';
+import {Imagestore} from '../../images/imagestore/imagestore';
 
 
 export interface ImportCatalogServices {
@@ -16,6 +17,7 @@ export interface ImportCatalogServices {
     datastore: DocumentDatastore;
     relationsManager: RelationsManager;
     imageRelationsManager: ImageRelationsManager;
+    imagestore: Imagestore
 }
 
 
@@ -49,6 +51,10 @@ export function buildImportCatalogFunction(services: ImportCatalogServices,
             const typeCatalogDocument = importDocuments.filter(_ => _.resource.category === 'TypeCatalog')[0]; // TODO handle errors
             const existingDocuments = makeDocumentsLookup(
                 await services.relationsManager.get(typeCatalogDocument.resource.id));
+
+            const existingDocumentsRelatedImages =
+                await services.imageRelationsManager.getRelatedImageDocuments(Object.values(existingDocuments));
+
             const removedDocuments = subtract(on(RESOURCE_ID_PATH), importDocuments)(Object.values(existingDocuments)); // TODO review subtract, params, object.values
             for (const removedDocument of removedDocuments) {
                 if (isNot(undefinedOrEmpty)(removedDocument.resource.relations[TypeRelations.HASINSTANCE])) {
@@ -61,10 +67,21 @@ export function buildImportCatalogFunction(services: ImportCatalogServices,
             // TODO delete difference, including images, if not connected
 
             let successfulImports = 0;
+            const updateDocuments = [];
             for (let importDocument of importDocuments) {
-                await importOneDocument(services.datastore, context, existingDocuments, importDocument);
+                const updateDocument =
+                    await importOneDocument(services.datastore, context, existingDocuments, importDocument);
+                updateDocuments.push(updateDocument);
                 successfulImports++;
             }
+
+            const updateDocumentRelatedImages =
+                await services.imageRelationsManager.getRelatedImageDocuments(updateDocuments);
+            const diffImages = subtract(on(RESOURCE_ID_PATH), updateDocumentRelatedImages)(existingDocumentsRelatedImages);
+            for (const diff of diffImages) {
+                await services.imagestore.remove(diff.resource.id);
+            }
+
             return {errors: [], successfulImports: successfulImports};
 
         } catch (errWithParams) {
@@ -89,11 +106,13 @@ async function importOneDocument(datastore: DocumentDatastore,
     if (importDocument.project === context.selectedProject) delete updateDocument.project;
 
     if (existingDocument) {
-        const oldRelations = clone(existingDocument.resource.relations);
+        const oldRelations = clone(existingDocument.resource.relations[TypeRelations.HASINSTANCE]);
         updateDocument.resource = clone(importDocument.resource);
-        updateDocument.resource.relations = oldRelations;
+        updateDocument.resource.relations[TypeRelations.HASINSTANCE] = oldRelations;
         await datastore.update(updateDocument, context.username);
     } else {
         await datastore.create(updateDocument, context.username);
     }
+
+    return updateDocument;
 }

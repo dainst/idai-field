@@ -48,7 +48,8 @@ describe('subsystem/import/importCatalog', () => {
             {
                 datastore: app.documentDatastore,
                 relationsManager: app.relationsManager,
-                imageRelationsManager: app.imageRelationsManager
+                imageRelationsManager: app.imageRelationsManager,
+                imagestore: app.imagestore
             },
             {
                 username: app.settingsProvider.getSettings().username,
@@ -89,18 +90,19 @@ describe('subsystem/import/importCatalog', () => {
     });
 
 
-    xit('reimport - image removed', async done => { // TODO enable
+    it('reimport - image removed', async done => {
 
-        const documents: NiceDocs = [
+        await app.createDocuments([
             ['tc1', 'TypeCatalog', ['t1']],
             ['t1', 'Type'],
             ['i1', 'Image', ['t1']]
-        ];
-
-        await app.createDocuments(documents);
+        ]);
         expect(fs.existsSync(app.projectImageDir + 'i1')).toBeTruthy();
 
-        const documentsLookup = createLookup(documents);
+        const documentsLookup = createLookup([
+            ['tc1', 'TypeCatalog', ['t1']],
+            ['t1', 'Type']
+        ]);
         await importCatalog([documentsLookup['tc1'], documentsLookup['t1']]);
 
         expect(fs.existsSync(app.projectImageDir + 'i1')).not.toBeTruthy();

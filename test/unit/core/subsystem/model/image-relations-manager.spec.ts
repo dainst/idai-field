@@ -36,6 +36,7 @@ describe('subsystem/image-relations-manager', () => {
         );
 
         await app.expectResources(['tc1', 't1', 'i1', 'i2']);
+        // TODO add app.existsInProjectImageDir
         expect(fs.existsSync(app.projectImageDir + 'i1')).toBeTruthy();
         expect(fs.existsSync(app.projectImageDir + 'i2')).toBeTruthy();
 

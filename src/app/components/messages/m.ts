@@ -123,6 +123,8 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_ERROR_INVALID_FILE_FORMAT = 'M.Import.ImportErrors.invalidFileFormat';
     public static IMPORT_ERROR_EMPTY_OBJECT_IN_RESOURCE = 'M.Import.ImportErros.emptyObjectInResource';
 
+    // Import Package - ImportCatalogErrors
+    public static IMPORT_CATALOG_ERROR_CONNECTED_TYPE_DELETED = 'M.Import.ImportCatalogErrors.connectedTypeDeleted';
 
     // Export Package
     public static EXPORT_SUCCESS = 'export.success';
@@ -997,6 +999,15 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             content: i18n({
                 id: 'messages.import.error.emptyObjectInResource',
                 value: 'Leere Objekte sind in Importdatensätzen nicht erlaubt (Ausnahme: Feld "relations").'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.IMPORT_CATALOG_ERROR_CONNECTED_TYPE_DELETED] = {
+            content: i18n({
+                id: 'messages.import.catalog.error.connected_type_deleted',
+                value: 'Katalogimport abgebrochen. Die bestehende Version enthält Typen, die nicht im Import vorhanden sind, jedoch noch mit Funden verknüpft sind. Betroffene Typen: [0]'
             }),
             level: 'danger',
             params: [],

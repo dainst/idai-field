@@ -31,7 +31,7 @@ export interface ImportCatalogContext {
 
 export module ImportCatalogErrors {
 
-    export const CONNECTED_TYPE_DELETED = 'importCatalogErrors/connectedTypeDeleted'; // TODO convert later for UI
+    export const CONNECTED_TYPE_DELETED = 'ImportCatalogErrors.connectedTypeDeleted';
 }
 
 
@@ -91,8 +91,7 @@ function assertNoDeletionOfRelatedTypes(existingDocuments: Array<Document>, impo
         if (isNot(undefinedOrEmpty)(removedDocument.resource.relations[TypeRelations.HASINSTANCE])) {
             throw [
                 ImportCatalogErrors.CONNECTED_TYPE_DELETED,
-                removedDocument.resource.relations[TypeRelations.HASINSTANCE].join('')
-            ];
+                removedDocument.resource.relations[TypeRelations.HASINSTANCE].join(',')]; // TODO this should be the identifier, not the id
         }
     }
 }
@@ -138,5 +137,4 @@ function importOneDocument(datastore: DocumentDatastore,
 
         return updateDocument;
     }
-
 }

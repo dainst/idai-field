@@ -82,9 +82,13 @@ export class RelationsManager {
     }
 
 
-    public async getDescendants(document: Document): Promise<Array<Document>> {
+    public async getDescendants(...documents: Array<Document>): Promise<Array<Document>> {
 
-        return (await this.findDescendants(document) as FindResult).documents;
+        const results = [];
+        for (const document of documents) {
+            results.push(...(await this.findDescendants(document) as FindResult).documents);
+        }
+        return results;
     }
 
 

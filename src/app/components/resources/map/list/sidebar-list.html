@@ -17,7 +17,7 @@
             [id]="'resource-' + document.resource.identifier">
 
             <document-teaser (click)="select(document, $event)"
-                             (contextmenu)="select(document, $event)"
+                             (contextmenu)="select(document, $event, false)"
                              (dblclick)="editDocument(document)"
                              [document]="document"></document-teaser>
 

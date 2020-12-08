@@ -96,10 +96,8 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
 
     public async select(document: FieldDocument, event: MouseEvent, allowDeselectionOfAdditional: boolean = true) {
 
-        if (event.metaKey || event.ctrlKey) {
-            if (this.selectedDocument && document !== this.selectedDocument) {
-                this.toggleAdditionalSelected(document, allowDeselectionOfAdditional);
-            }
+        if ((event.metaKey || event.ctrlKey) && this.selectedDocument && document !== this.selectedDocument) {
+            this.toggleAdditionalSelected(document, allowDeselectionOfAdditional);
         } else {
             this.additionalSelectedDocuments = [];
             await this.resourcesComponent.select(document);

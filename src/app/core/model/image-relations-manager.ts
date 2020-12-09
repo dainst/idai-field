@@ -94,24 +94,6 @@ export class ImageRelationsManager {
 
 
     // TODO test
-    public async addDepictsRelationsToSelectedDocuments(targetDocument: FieldDocument, selectedImages: Array<ImageDocument>) {
-
-        for (let imageDocument of selectedImages) {
-            const oldVersion: ImageDocument = clone(imageDocument);
-            const depictsRelations: string[] = imageDocument.resource.relations.depicts;
-
-            if (depictsRelations.indexOf(targetDocument.resource.id) === -1) {
-                depictsRelations.push(targetDocument.resource.id);
-            }
-
-            await this.relationsManager.update(
-                imageDocument, oldVersion
-            );
-        }
-    }
-
-
-    // TODO test
     /**
      * @throws [PersistenceHelperErrors.IMAGESTORE_ERROR_INVALID_PATH_DELETE]
      * @throws [PersistenceHelperErrors.IMAGESTORE_ERROR_DELETE]
@@ -136,7 +118,25 @@ export class ImageRelationsManager {
 
 
     // TODO test
-    public async removeDepictsRelationsOnSelectedDocuments(selectedImages: Array<ImageDocument>) {
+    public async addDepictsRelations(targetDocument: FieldDocument, selectedImages: Array<ImageDocument>) {
+
+        for (let imageDocument of selectedImages) {
+            const oldVersion: ImageDocument = clone(imageDocument);
+            const depictsRelations: string[] = imageDocument.resource.relations.depicts;
+
+            if (depictsRelations.indexOf(targetDocument.resource.id) === -1) {
+                depictsRelations.push(targetDocument.resource.id);
+            }
+
+            await this.relationsManager.update(
+                imageDocument, oldVersion
+            );
+        }
+    }
+
+
+    // TODO test
+    public async removeDepictsRelations(selectedImages: Array<ImageDocument>) {
 
         for (let document of selectedImages) {
             const oldVersion: ImageDocument = clone(document);

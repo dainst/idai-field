@@ -32,7 +32,7 @@ export class ResourceDeletion {
         const documentsAndDescendants: Array<FieldDocument>
             = (await this.getDescendants(documents)).concat(documents);
         modalRef.componentInstance.relatedImagesCount
-            = (await this.imageRelationsManager.getRelatedImageDocuments(documentsAndDescendants)).length;
+            = (await this.imageRelationsManager.getRelatedImageDocuments(documentsAndDescendants, true)).length;
 
         const deleteRelatedImages: boolean = await modalRef.result;
         const deletionInProgressModalRef: NgbModalRef = this.modalService.open(

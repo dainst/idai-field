@@ -26,12 +26,24 @@ export class DeleteModalComponent {
 
     constructor(public activeModal: NgbActiveModal) {}
 
-    public showDeleteMultipleResourcesWarningSingle = () =>
+    public showDeleteDescendantWarningSingle = () =>
         this.descendantsCount === 1
+        && this.documents.length === 1
         && !ProjectCategories.getTypeCategoryNames().includes(this.documents[0].resource.category);
 
-    public showDeleteMultipleResourcesWarningMultiple = () =>
+    public showDeleteDescendantsWarningSingle = () =>
         this.descendantsCount > 1
+        && this.documents.length === 1
+        && !ProjectCategories.getTypeCategoryNames().includes(this.documents[0].resource.category);
+
+    public showDeleteDescendantWarningMultiple = () =>
+        this.descendantsCount === 1
+        && this.documents.length > 1
+        && !ProjectCategories.getTypeCategoryNames().includes(this.documents[0].resource.category);
+
+    public showDeleteDescendantsWarningMultiple = () =>
+        this.descendantsCount > 1
+        && this.documents.length > 1
         && !ProjectCategories.getTypeCategoryNames().includes(this.documents[0].resource.category);
 
     public showImportedCatalogAssociationsMsg = () =>

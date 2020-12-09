@@ -25,13 +25,22 @@
                (keydown)="$event.key !== 'Enter' || confirmDeletion()" />
     </div>
     <br>
-    <div *ngIf="showDeleteMultipleResourcesWarningSingle()" class="text-center alert alert-warning"
-         i18n="@@resources.deleteModal.warning.single">
+    <div *ngIf="showDeleteDescendantWarningSingle()" class="text-center alert alert-warning"
+         i18n="@@resources.deleteModal.warning.descendant.single">
         Zu dieser Ressource gehört eine weitere Ressource, die beim Löschen ebenfalls entfernt wird.
     </div>
-    <div *ngIf="showDeleteMultipleResourcesWarningMultiple()" class="text-center alert alert-warning"
-         i18n="@@resources.deleteModal.warning.multiple">
-        Zu dieser Ressource gehören insgesamt {{descendantsCount}} Ressourcen, die beim Löschen
+    <div *ngIf="showDeleteDescendantsWarningSingle()" class="text-center alert alert-warning"
+         i18n="@@resources.deleteModal.warning.descendants.single">
+        Zu dieser Ressource gehören insgesamt {{descendantsCount}} weitere Ressourcen, die beim Löschen
+        ebenfalls entfernt werden.
+    </div>
+    <div *ngIf="showDeleteDescendantWarningMultiple()" class="text-center alert alert-warning"
+         i18n="@@resources.deleteModal.warning.descendant.multiple">
+        Zu diesen Ressourcen gehört eine weitere Ressource, die beim Löschen ebenfalls entfernt wird.
+    </div>
+    <div *ngIf="showDeleteDescendantsWarningMultiple()" class="text-center alert alert-warning"
+         i18n="@@resources.deleteModal.warning.descendants.multiple">
+        Zu diesen Ressourcen gehören insgesamt {{descendantsCount}} weitere Ressourcen, die beim Löschen
         ebenfalls entfernt werden.
     </div>
     <div *ngIf="showImportedCatalogAssociationsMsg()"

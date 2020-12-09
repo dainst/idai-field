@@ -1449,7 +1449,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
-          <context context-type="linenumber">102</context>
+          <context context-type="linenumber">111</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageOverview.taskbar.tooltips.delete" datatype="html">
@@ -1776,7 +1776,7 @@
           <context context-type="linenumber">15</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="resources.deleteModal.warning.single" datatype="html">
+      <trans-unit id="resources.deleteModal.warning.descendant.single" datatype="html">
         <source>
         Zu dieser Ressource gehört eine weitere Ressource, die beim Löschen ebenfalls entfernt wird.
     </source>
@@ -1788,18 +1788,44 @@
           <context context-type="linenumber">29</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="resources.deleteModal.warning.multiple" datatype="html">
+      <trans-unit id="resources.deleteModal.warning.descendants.single" datatype="html">
         <source>
-        Zu dieser Ressource gehören insgesamt <x id="INTERPOLATION" equiv-text="{{descendantsCount}}"/> Ressourcen, die beim Löschen
+        Zu dieser Ressource gehören insgesamt <x id="INTERPOLATION" equiv-text="{{descendantsCount}}"/> weitere Ressourcen, die beim Löschen
         ebenfalls entfernt werden.
     </source>
         <target state="final">
-        Zu dieser Ressource gehören insgesamt <x id="INTERPOLATION" equiv-text="{{descendantsCount}}"/> Ressourcen, die beim Löschen
+        Zu dieser Ressource gehören insgesamt <x id="INTERPOLATION" equiv-text="{{descendantsCount}}"/> weitere Ressourcen, die beim Löschen
         ebenfalls entfernt werden.
     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
           <context context-type="linenumber">33</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.deleteModal.warning.descendant.multiple" datatype="html">
+        <source>
+        Zu diesen Ressourcen gehört eine weitere Ressource, die beim Löschen ebenfalls entfernt wird.
+    </source>
+        <target state="final">
+        Zu diesen Ressourcen gehört eine weitere Ressource, die beim Löschen ebenfalls entfernt wird.
+    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
+          <context context-type="linenumber">38</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.deleteModal.warning.descendants.multiple" datatype="html">
+        <source>
+        Zu diesen Ressourcen gehören insgesamt <x id="INTERPOLATION" equiv-text="{{descendantsCount}}"/> weitere Ressourcen, die beim Löschen
+        ebenfalls entfernt werden.
+    </source>
+        <target state="final">
+        Zu diesen Ressourcen gehören insgesamt <x id="INTERPOLATION" equiv-text="{{descendantsCount}}"/> weitere Ressourcen, die beim Löschen
+        ebenfalls entfernt werden.
+    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
+          <context context-type="linenumber">42</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.deleteModel.warning.importedCatalog" datatype="html">
@@ -1813,7 +1839,7 @@
     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
-          <context context-type="linenumber">39</context>
+          <context context-type="linenumber">48</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.deleteModel.warning.ownedCatalog" datatype="html">
@@ -1829,7 +1855,7 @@
     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
-          <context context-type="linenumber">45</context>
+          <context context-type="linenumber">54</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.deleteModel.warning.ownedType" datatype="html">
@@ -1845,7 +1871,7 @@
     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
-          <context context-type="linenumber">52</context>
+          <context context-type="linenumber">61</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.deleteModal.deleteResourceImagesOptionSingular" datatype="html">
@@ -1859,7 +1885,7 @@
     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
-          <context context-type="linenumber">60</context>
+          <context context-type="linenumber">69</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.deleteModal.deleteResourceImagesOptionPlural" datatype="html">
@@ -1873,7 +1899,7 @@
     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
-          <context context-type="linenumber">66</context>
+          <context context-type="linenumber">75</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.deleteModal.deleteResourceWithDescendantsImagesOptionSingular" datatype="html">
@@ -1887,7 +1913,7 @@
     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
-          <context context-type="linenumber">72</context>
+          <context context-type="linenumber">81</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.deleteModal.deleteResourceWithDescendantsImagesOptionPlural" datatype="html">
@@ -1901,7 +1927,7 @@
     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
-          <context context-type="linenumber">78</context>
+          <context context-type="linenumber">87</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.deleteModal.deleteImages" datatype="html">
@@ -1923,7 +1949,7 @@
     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
-          <context context-type="linenumber">85</context>
+          <context context-type="linenumber">94</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.deletionInProgressModal.info" datatype="html">
@@ -4826,7 +4852,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
-          <context context-type="linenumber">106</context>
+          <context context-type="linenumber">115</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/editable-map.html</context>

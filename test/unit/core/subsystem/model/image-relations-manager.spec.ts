@@ -192,7 +192,7 @@ describe('subsystem/image-relations-manager', () => {
         expect(documentsLookup['tc1'].resource.relations[ImageRelations.ISDEPICTEDIN]).toBeUndefined()
         expect(documentsLookup['i1'].resource.relations[ImageRelations.DEPICTS]).toEqual([]);
 
-        await app.imageRelationsManager.addDepictsRelations(documentsLookup['tc1'], [documentsLookup['i1']]); // TODO make varargs
+        await app.imageRelationsManager.addDepictsRelations(documentsLookup['tc1'], documentsLookup['i1']);
 
         const tc1 = await app.documentDatastore.get('tc1');
         const i1 = await app.documentDatastore.get('i1');
@@ -214,7 +214,7 @@ describe('subsystem/image-relations-manager', () => {
         expect(documentsLookup['tc1'].resource.relations[ImageRelations.ISDEPICTEDIN]).toEqual(['i1'])
         expect(documentsLookup['i1'].resource.relations[ImageRelations.DEPICTS]).toEqual(['tc1']);
 
-        await app.imageRelationsManager.removeDepictsRelations([documentsLookup['i1']]); // TODO make varargs
+        await app.imageRelationsManager.removeDepictsRelations(documentsLookup['i1']);
 
         const tc1 = await app.documentDatastore.get('tc1');
         const i1 = await app.documentDatastore.get('i1');

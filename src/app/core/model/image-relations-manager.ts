@@ -121,7 +121,7 @@ export class ImageRelationsManager {
     }
 
 
-    public async addDepictsRelations(targetDocument: FieldDocument, selectedImages: Array<ImageDocument>) {
+    public async addDepictsRelations(targetDocument: FieldDocument, ...selectedImages: Array<ImageDocument>) {
 
         for (let imageDocument of selectedImages) {
             const oldVersion: ImageDocument = clone(imageDocument);
@@ -138,7 +138,7 @@ export class ImageRelationsManager {
     }
 
 
-    public async removeDepictsRelations(selectedImages: Array<ImageDocument>) {
+    public async removeDepictsRelations(...selectedImages: Array<ImageDocument>) {
 
         for (let document of selectedImages) {
             const oldVersion: ImageDocument = clone(document);

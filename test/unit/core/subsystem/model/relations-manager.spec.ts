@@ -101,6 +101,20 @@ describe('subsystem/relations-manager',() => {
     });
 
 
+    it('getDescendantsCount', async done => {
+
+        const documentsLookup = await helpers.createDocuments([
+            ['tc1', 'TypeCatalog', ['t1']],
+            ['t1', 'Type'],
+            ['tc2', 'TypeCatalog', ['t2']],
+            ['t2', 'Type']
+        ]);
+
+        expect(await app.relationsManager.getDescendantsCount(documentsLookup['tc1'], documentsLookup['tc2'])).toBe(2);
+        done();
+    });
+
+
     it('remove, beginning with Feature', async done => {
 
         const [_, d2] = await createTestResourcesForRemoveTests();

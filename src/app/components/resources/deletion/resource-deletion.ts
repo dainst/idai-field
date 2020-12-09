@@ -5,7 +5,6 @@ import {FieldDocument} from 'idai-components-2';
 import {DeleteModalComponent} from './delete-modal.component';
 import {RelationsManager} from '../../../core/model/relations-manager';
 import {DeletionInProgressModalComponent} from './deletion-in-progress-modal.component';
-import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
 import {ImageRelationsManager} from '../../../core/model/image-relations-manager';
 import {ProjectCategories} from '../../../core/configuration/project-categories';
 
@@ -19,8 +18,7 @@ export class ResourceDeletion {
 
     constructor(private modalService: NgbModal,
                 private relationsManager: RelationsManager,
-                private imageRelationsManager: ImageRelationsManager,
-                private projectConfiguration: ProjectConfiguration) {}
+                private imageRelationsManager: ImageRelationsManager) {}
 
 
     public async delete(documents: Array<FieldDocument>) {
@@ -29,7 +27,7 @@ export class ResourceDeletion {
             DeleteModalComponent, { keyboard: false }
         );
         modalRef.componentInstance.documents = documents;
-        modalRef.componentInstance.descendantsCount = await this.getDescendantsCount(documents);
+        modalRef.componentInstance.descendantsCount = await this.relationsManager.getDescendantsCount(...documents);
 
         const documentsAndDescendants: Array<FieldDocument>
             = (await this.getDescendants(documents)).concat(documents);
@@ -41,35 +39,20 @@ export class ResourceDeletion {
             DeletionInProgressModalComponent, { backdrop: 'static', keyboard: false }
         );
 
-        for (let document of documents) {
-            await this.performDeletion(document, deleteRelatedImages);
-        }
-
+        await this.performDeletion(documents, deleteRelatedImages);
         deletionInProgressModalRef.close();
     }
 
 
-    // TODO we could double check that all documents have document.project
-    // TODO write apidoc for document.project
-    private async performDeletion(document: FieldDocument, deleteRelatedImages: boolean) {
+    private async performDeletion(documents: Array<FieldDocument>, deleteRelatedImages: boolean) {
 
-        if (ResourceDeletion.isImportedCatalog(document) || deleteRelatedImages) {
-             await this.imageRelationsManager.remove(document);
-        } else {
-             await this.relationsManager.remove(document);
+        for (const document of documents) {
+            if (ResourceDeletion.isImportedCatalog(document) || deleteRelatedImages) {
+                 await this.imageRelationsManager.remove(document);
+            } else {
+                 await this.relationsManager.remove(document);
+            }
         }
-    }
-
-
-    private async getDescendantsCount(documents: Array<FieldDocument>): Promise<number> {
-
-        let result: number = 0;
-
-        for (let document of documents) {
-            result += await this.relationsManager.getDescendantsCount(document);
-        }
-
-        return result;
     }
 
 

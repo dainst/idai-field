@@ -33,6 +33,8 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
     public contextMenu: ContextMenu = new ContextMenu();
     public additionalSelectedDocuments: Array<FieldDocument> = [];
 
+    private lastSelectedDocument: FieldDocument|undefined;
+
 
     constructor(private navigationService: NavigationService,
                 resourcesComponent: ResourcesComponent,
@@ -65,6 +67,7 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
     ngOnChanges(): void {
 
         this.additionalSelectedDocuments = [];
+        this.lastSelectedDocument = undefined;
         this.scrollTo(this.selectedDocument);
     }
 
@@ -96,8 +99,14 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
 
     public async select(document: FieldDocument, event: MouseEvent, allowDeselection: boolean = true) {
 
-        if ((event.metaKey || event.ctrlKey) && this.selectedDocument && document !== this.selectedDocument) {
+        if (!this.lastSelectedDocument) this.lastSelectedDocument = this.selectedDocument;
+
+        if (event.shiftKey && this.lastSelectedDocument) {
+            this.selectBetween(this.lastSelectedDocument, document);
+            this.lastSelectedDocument = document;
+        } else if ((event.metaKey || event.ctrlKey) && this.selectedDocument && document !== this.selectedDocument) {
             this.toggleAdditionalSelected(document, allowDeselection);
+            this.lastSelectedDocument = document;
         } else if (allowDeselection || !this.isPartOfSelection(document)) {
             this.additionalSelectedDocuments = [];
             await this.resourcesComponent.select(document);
@@ -182,6 +191,21 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
 
 
     public trackDocument = (index: number, item: FieldDocument) => item.resource.id;
+
+
+    private selectBetween(document1: FieldDocument, document2: FieldDocument) {
+
+        const documents: Array<FieldDocument> = this.viewFacade.getDocuments();
+        const index1: number = documents.indexOf(document1);
+        const index2: number = documents.indexOf(document2);
+
+        for (let i = Math.min(index1, index2); i <= Math.max(index1, index2); i++) {
+            const document: FieldDocument = documents[i];
+            if (this.selectedDocument !== document && !this.additionalSelectedDocuments.includes(document)) {
+                this.additionalSelectedDocuments.push(document);
+            }
+        }
+    }
 
 
     private toggleAdditionalSelected(document: FieldDocument, allowDeselection: boolean) {

@@ -137,7 +137,7 @@ export class ImageOverviewTaskbarComponent {
 
     private async deleteSelectedImageDocuments() {
 
-        await this.imageRelationsManager.deleteSelectedImageDocuments(this.imageOverviewFacade.getSelected());
+        await this.imageRelationsManager.remove(...this.imageOverviewFacade.getSelected());
 
         for (let document of this.imageOverviewFacade.getSelected()) {
             this.imageOverviewFacade.remove(document);

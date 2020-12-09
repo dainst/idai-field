@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {flatten, includedIn, isDefined, isNot, on, set, subtract} from 'tsfun';
+import {flatten, includedIn, isDefined, isNot, on, separate, set, subtract} from 'tsfun';
 import {Document, FieldDocument, ImageDocument, toResourceId} from 'idai-components-2';
 import {DocumentDatastore} from '../datastore/document-datastore';
 import {Imagestore} from '../images/imagestore/imagestore';
@@ -61,25 +61,28 @@ export class ImageRelationsManager {
 
 
     /**
-     * Removes non image documents, together with their descendants, and
+     * Removes image and non image documents.
+     *
+     * Where it removes non image documents, it removes them together with their descendants, and
      * all their (and their descendants) connected images.
      *
      * Images which are not only related to the documents to be deleted, but
-     * also to other documents, are not deleted.
+     * also to other documents, are not deleted (except they are specifically amongst those given as a param).
      *
-     * @param documents
+     * // TODO review
+     * @throws [PersistenceHelperErrors.IMAGESTORE_ERROR_INVALID_PATH_DELETE]
+     * @throws [PersistenceHelperErrors.IMAGESTORE_ERROR_DELETE]
+     *
+     * @param documents_
      */
-    public async remove(...documents: Array<Document>) {
+    public async remove(...documents_: Array<Document|ImageDocument>) {
 
-        for (const document of documents) {
-            if (ProjectCategories.getImageCategoryNames(this.categoryTreelist)
-                .includes(document.resource.category)) {
-                throw 'illegal argument - document must not be of an Image category';
-            }
-        }
         if (this.imagestore.getPath() === undefined) {
             throw 'illegal state - imagestore.getPath() must not return undefined';
         }
+        const [imageDocuments, documents] = separate(documents_,
+                document => ProjectCategories.getImageCategoryNames(this.categoryTreelist).includes(document.resource.category));
+        await this.removeImages(imageDocuments as any);
 
         const documentsToBeDeleted = [];
         for (const document of documents) {
@@ -93,30 +96,6 @@ export class ImageRelationsManager {
         for (let image of imagesToBeDeleted) {
             await this.imagestore.remove(image.resource.id);
             await this.datastore.remove(image);
-        }
-    }
-
-
-    // TODO make this functionality part of the remove() functionality; images can be deleted, or resources, or both; one advantage is, that the externally connected images when deleting resources could also take other images to be deleted into account
-    /**
-     * @throws [PersistenceHelperErrors.IMAGESTORE_ERROR_INVALID_PATH_DELETE]
-     * @throws [PersistenceHelperErrors.IMAGESTORE_ERROR_DELETE]
-     */
-    public async deleteSelectedImageDocuments(selectedImages: Array<ImageDocument>) {
-
-        if (!this.imagestore.getPath()) throw [ImageRelationsManager.IMAGESTORE_ERROR_INVALID_PATH_DELETE];
-
-        for (let document of selectedImages) {
-            if (!document.resource.id) continue;
-            const resourceId: string = document.resource.id;
-
-            try {
-                await this.imagestore.remove(resourceId);
-            } catch (err) {
-                throw [ImageRelationsManager.IMAGESTORE_ERROR_DELETE, document.resource.identifier];
-            }
-
-            await this.relationsManager.remove(document);
         }
     }
 
@@ -164,5 +143,24 @@ export class ImageRelationsManager {
             if (depictsOnlyDocumentsToBeDeleted) leftovers.push(imageDocument);
         }
         return leftovers;
+    }
+
+
+    private async removeImages(imageDocuments: Array<ImageDocument>) {
+
+        if (!this.imagestore.getPath()) throw [ImageRelationsManager.IMAGESTORE_ERROR_INVALID_PATH_DELETE];
+
+        for (let imageDocument of imageDocuments) {
+            if (!imageDocument.resource.id) continue;
+            const resourceId: string = imageDocument.resource.id;
+
+            try {
+                await this.imagestore.remove(resourceId);
+            } catch (err) {
+                throw [ImageRelationsManager.IMAGESTORE_ERROR_DELETE, imageDocument.resource.identifier];
+            }
+
+            await this.relationsManager.remove(imageDocument);
+        }
     }
 }

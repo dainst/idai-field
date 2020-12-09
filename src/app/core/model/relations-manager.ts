@@ -11,6 +11,7 @@ import {FindIdsResult, FindResult} from '../datastore/model/read-datastore';
 import {Query} from '../datastore/model/query';
 import RECORDED_IN = HierarchicalRelations.RECORDEDIN;
 import {ResourceId} from '../constants';
+import {DatastoreErrors} from '../datastore/model/datastore-errors';
 
 
 @Injectable()
@@ -63,20 +64,25 @@ export class RelationsManager {
     }
 
 
-    /**
-     * Gets documents including all of their descendants
-     * @param ids
-     */
-    public async get(...ids: Array<ResourceId>): Promise<Array<Document>> {
+    public async get(id: ResourceId): Promise<Document>;
+    public async get(ids: Array<ResourceId>): Promise<Array<Document>>;
+    public async get(id: ResourceId, options: { descendants: true }): Promise<Array<Document>>
+    public async get(ids: Array<ResourceId>, options: { descendants: true }): Promise<Array<Document>>
+    public async get(ids_: any, options?: { descendants: true }): Promise<any> {
+
+        const ids = isArray(ids_) ? ids_ : [ids_];
+        const returnSingleItem = !isArray(ids_) && options?.descendants !== true;
 
         try {
             const documents = [];
             for (const id of ids) {
                 const document = await this.datastore.get(id);
-                documents.push(...([document].concat(await this.getDescendants(document))));
+                documents.push(document);
+                if (options?.descendants === true) documents.push(...(await this.getDescendants(document)));
             }
-            return documents;
+            return returnSingleItem ? documents [0] : documents;
         } catch {
+            if (returnSingleItem) throw DatastoreErrors.DOCUMENT_NOT_FOUND;
             return [];
         }
     }

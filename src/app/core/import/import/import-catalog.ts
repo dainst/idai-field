@@ -127,7 +127,7 @@ async function getExistingCatalogDocuments(services: ImportCatalogServices,
     const typeCatalogDocument =
         importDocuments.filter(_ => _.resource.category === 'TypeCatalog')[0]; // TODO handle errors
     const existingDocuments = makeDocumentsLookup(
-        await services.relationsManager.get(typeCatalogDocument.resource.id));
+        await services.relationsManager.get(typeCatalogDocument.resource.id, { descendants: true }));
     return [
         existingDocuments,
         await services.imageRelationsManager.getRelatedImageDocuments(Object.values(existingDocuments))

@@ -94,11 +94,11 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
     }
 
 
-    public async select(document: FieldDocument, event: MouseEvent, allowDeselectionOfAdditional: boolean = true) {
+    public async select(document: FieldDocument, event: MouseEvent, allowDeselection: boolean = true) {
 
         if ((event.metaKey || event.ctrlKey) && this.selectedDocument && document !== this.selectedDocument) {
-            this.toggleAdditionalSelected(document, allowDeselectionOfAdditional);
-        } else {
+            this.toggleAdditionalSelected(document, allowDeselection);
+        } else if (allowDeselection || !this.isPartOfSelection(document)) {
             this.additionalSelectedDocuments = [];
             await this.resourcesComponent.select(document);
         }
@@ -184,6 +184,12 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
         } else {
             this.additionalSelectedDocuments.push(document);
         }
+    }
+
+
+    private isPartOfSelection(document: FieldDocument): boolean {
+
+        return document === this.selectedDocument || this.additionalSelectedDocuments.includes(document);
     }
 
 

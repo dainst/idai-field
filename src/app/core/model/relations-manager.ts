@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {isArray, isDefined, isNot, isUndefinedOrEmpty, on, sameset, to} from 'tsfun';
+import {isArray, isDefined, isNot, isUndefinedOrEmpty, on, sameset, to, undefinedOrEmpty} from 'tsfun';
 import {Document, NewDocument} from 'idai-components-2';
 import {DocumentDatastore} from '../datastore/document-datastore';
 import {ConnectedDocsWriter} from './connected-docs-writer';
@@ -66,9 +66,9 @@ export class RelationsManager {
 
     public async get(id: ResourceId): Promise<Document>;
     public async get(ids: Array<ResourceId>): Promise<Array<Document>>;
-    public async get(id: ResourceId, options: { descendants: true }): Promise<Array<Document>>
-    public async get(ids: Array<ResourceId>, options: { descendants: true }): Promise<Array<Document>>
-    public async get(ids_: any, options?: { descendants: true }): Promise<any> {
+    public async get(id: ResourceId, options: { descendants: true, toplevel?: false }): Promise<Array<Document>>
+    public async get(ids: Array<ResourceId>, options: { descendants: true, toplevel?: false }): Promise<Array<Document>>
+    public async get(ids_: any, options?: { descendants: true, toplevel?: false }): Promise<any> {
 
         const ids = isArray(ids_) ? ids_ : [ids_];
         const returnSingleItem = !isArray(ids_) && options?.descendants !== true;
@@ -80,7 +80,11 @@ export class RelationsManager {
                 documents.push(document);
                 if (options?.descendants === true) documents.push(...(await this.getDescendants(document)));
             }
-            return returnSingleItem ? documents [0] : documents;
+            if (returnSingleItem) return documents [0];
+            if (options?.toplevel !== false) return documents;
+
+            return documents.filter(on(['resource', 'relations', HierarchicalRelations.LIESWITHIN], isNot(undefinedOrEmpty)));
+
         } catch {
             if (returnSingleItem) throw DatastoreErrors.DOCUMENT_NOT_FOUND;
             return [];
@@ -88,6 +92,7 @@ export class RelationsManager {
     }
 
 
+    // TODO replace with calls to get
     public async getDescendants(...documents: Array<Document>): Promise<Array<Document>> {
 
         const results = [];

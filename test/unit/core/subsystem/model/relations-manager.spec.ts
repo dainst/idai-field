@@ -1,7 +1,8 @@
 import {flatten, sameset} from 'tsfun';
 import {FieldDocument, ImageDocument, toResourceId} from 'idai-components-2';
 import {createApp, createHelpers, setupSyncTestDb} from '../subsystem-helper';
-import {doc} from '../../../test-helpers';
+import {createDocuments, doc} from '../../../test-helpers';
+import {makeDocumentsLookup} from '../../../../../src/app/core/import/import/utils';
 
 /**
  * @author Daniel de Oliveira
@@ -57,6 +58,47 @@ describe('subsystem/relations-manager',() => {
 
         return [d1, d2, d3, d4, d5];
     }
+
+
+    it('get - only document', async done => {
+
+        await helpers.createDocuments([
+            ['tc1', 'TypeCatalog', ['t1']],
+            ['t1', 'Type']
+        ]);
+
+        const result = await app.relationsManager.get('tc1');
+        expect(result.resource.id).toBe('tc1');
+        done();
+    });
+
+
+    it('get - include descendants', async done => {
+
+        await helpers.createDocuments([
+            ['tc1', 'TypeCatalog', ['t1']],
+            ['t1', 'Type']
+        ]);
+
+        const results = makeDocumentsLookup(await app.relationsManager.get('tc1', { descendants: true }));
+        expect(results['tc1'].resource.id).toBe('tc1');
+        expect(results['t1'].resource.id).toBe('t1');
+        done();
+    });
+
+
+    it('get - only descendants', async done => {
+
+        await helpers.createDocuments([
+            ['tc1', 'TypeCatalog', ['t1']],
+            ['t1', 'Type']
+        ]);
+
+        const results = await app.relationsManager.get('tc1', { descendants: true, toplevel: false });
+        expect(results.length).toBe(1);
+        expect(results[0].resource.id).toBe('t1');
+        done();
+    });
 
 
     it('remove, beginning with Feature', async done => {

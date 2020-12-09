@@ -88,6 +88,30 @@
         Mit der Ressource und darunterliegenden Ressourcen sind insgesamt {{relatedImagesCount}} Bilder direkt verbunden.
         Direkt verbundene Bilder haben keine Verbindungen zu anderen Ressourcen.
     </div>
+    <div *ngIf="showDeleteImagesOptionForResourcesSingular()"
+         class="text-center alert alert-warning"
+         i18n="@@resources.deleteModal.deleteResourcesImagesOptionSingular">
+        Mit den Ressourcen ist ein Bild direkt verbunden.
+        Direkt verbundene Bilder haben keine Verbindungen zu anderen Ressourcen.
+    </div>
+    <div *ngIf="showDeleteImagesOptionForResourcesPlural()"
+         class="text-center alert alert-warning"
+         i18n="@@resources.deleteModal.deleteResourcesImagesOptionPlural">
+        Mit den Ressourcen sind {{relatedImagesCount}} Bilder direkt verbunden.
+        Direkt verbundene Bilder haben keine Verbindungen zu anderen Ressourcen.
+    </div>
+    <div *ngIf="showDeleteImagesOptionForResourcesWithDescendantsSingular()"
+         class="text-center alert alert-warning"
+         i18n="@@resources.deleteModal.deleteResourcesWithDescendantsImagesOptionSingular">
+        Mit den Ressourcen oder darunterliegenden Ressourcen ist ein Bild direkt verbunden.
+        Direkt verbundene Bilder haben keine Verbindungen zu anderen Ressourcen.
+    </div>
+    <div *ngIf="showDeleteImagesOptionForResourcesWithDescendantsPlural()"
+         class="text-center alert alert-warning"
+         i18n="@@resources.deleteModal.deleteResourcesWithDescendantsImagesOptionPlural">
+        Mit den Ressourcen und darunterliegenden Ressourcen sind insgesamt {{relatedImagesCount}} Bilder direkt verbunden.
+        Direkt verbundene Bilder haben keine Verbindungen zu anderen Ressourcen.
+    </div>
 
     <div *ngIf="showDeleteImagesOption()"
          class="form-group text-left"

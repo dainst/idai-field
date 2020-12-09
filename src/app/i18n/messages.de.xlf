@@ -1449,7 +1449,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
-          <context context-type="linenumber">111</context>
+          <context context-type="linenumber">135</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageOverview.taskbar.tooltips.delete" datatype="html">
@@ -1930,6 +1930,62 @@
           <context context-type="linenumber">87</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="resources.deleteModal.deleteResourcesImagesOptionSingular" datatype="html">
+        <source>
+        Mit den Ressourcen ist ein Bild direkt verbunden.
+        Direkt verbundene Bilder haben keine Verbindungen zu anderen Ressourcen.
+    </source>
+        <target state="final">
+        Mit den Ressourcen ist ein Bild direkt verbunden.
+        Direkt verbundene Bilder haben keine Verbindungen zu anderen Ressourcen.
+    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
+          <context context-type="linenumber">93</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.deleteModal.deleteResourcesImagesOptionPlural" datatype="html">
+        <source>
+        Mit den Ressourcen sind <x id="INTERPOLATION" equiv-text="{{relatedImagesCount}}"/> Bilder direkt verbunden.
+        Direkt verbundene Bilder haben keine Verbindungen zu anderen Ressourcen.
+    </source>
+        <target state="final">
+        Mit den Ressourcen sind <x id="INTERPOLATION" equiv-text="{{relatedImagesCount}}"/> Bilder direkt verbunden.
+        Direkt verbundene Bilder haben keine Verbindungen zu anderen Ressourcen.
+    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
+          <context context-type="linenumber">99</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.deleteModal.deleteResourcesWithDescendantsImagesOptionSingular" datatype="html">
+        <source>
+        Mit den Ressourcen oder darunterliegenden Ressourcen ist ein Bild direkt verbunden.
+        Direkt verbundene Bilder haben keine Verbindungen zu anderen Ressourcen.
+    </source>
+        <target state="final">
+        Mit den Ressourcen oder darunterliegenden Ressourcen ist ein Bild direkt verbunden.
+        Direkt verbundene Bilder haben keine Verbindungen zu anderen Ressourcen.
+    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
+          <context context-type="linenumber">105</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.deleteModal.deleteResourcesWithDescendantsImagesOptionPlural" datatype="html">
+        <source>
+        Mit den Ressourcen und darunterliegenden Ressourcen sind insgesamt <x id="INTERPOLATION" equiv-text="{{relatedImagesCount}}"/> Bilder direkt verbunden.
+        Direkt verbundene Bilder haben keine Verbindungen zu anderen Ressourcen.
+    </source>
+        <target state="final">
+        Mit den Ressourcen und darunterliegenden Ressourcen sind insgesamt <x id="INTERPOLATION" equiv-text="{{relatedImagesCount}}"/> Bilder direkt verbunden.
+        Direkt verbundene Bilder haben keine Verbindungen zu anderen Ressourcen.
+    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
+          <context context-type="linenumber">111</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="resources.deleteModal.deleteImages" datatype="html">
         <source>
         <x id="START_TAG_DIV" ctype="x-div" equiv-text="&lt;div>"/>
@@ -1949,7 +2005,7 @@
     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
-          <context context-type="linenumber">94</context>
+          <context context-type="linenumber">118</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.deletionInProgressModal.info" datatype="html">
@@ -4852,7 +4908,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
-          <context context-type="linenumber">115</context>
+          <context context-type="linenumber">139</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/editable-map.html</context>

@@ -64,21 +64,49 @@ export class DeleteModalComponent {
 
     public showDeleteImagesOptionForResourceSingular = () =>
         this.documents[0].project === undefined
+        && this.documents.length === 1
         && this.descendantsCount === 0
         && this.relatedImagesCount === 1;
 
     public showDeleteImagesOptionForResourcePlural = () =>
         this.documents[0].project === undefined
+        && this.documents.length === 1
         && this.descendantsCount === 0
         && this.relatedImagesCount > 1;
 
     public showDeleteImagesOptionForResourceWithDescendantsSingular = () =>
         this.documents[0].project === undefined
+        && this.documents.length === 1
         && this.descendantsCount > 0
         && this.relatedImagesCount === 1;
 
     public showDeleteImagesOptionForResourceWithDescendantsPlural = () =>
         this.documents[0].project === undefined
+        && this.documents.length === 1
+        && this.descendantsCount > 0
+        && this.relatedImagesCount > 1;
+
+    public showDeleteImagesOptionForResourcesSingular = () =>
+        this.documents[0].project === undefined
+        && this.documents.length > 1
+        && this.descendantsCount === 0
+        && this.relatedImagesCount === 1;
+
+    public showDeleteImagesOptionForResourcesPlural = () =>
+        this.documents[0].project === undefined
+        && this.documents.length > 1
+        && this.descendantsCount === 0
+        && this.relatedImagesCount > 1;
+
+    public showDeleteImagesOptionForResourcesWithDescendantsSingular = () =>
+        this.documents[0].project === undefined
+        && this.documents.length > 1
+        && this.descendantsCount > 0
+        && this.relatedImagesCount === 1;
+
+    public showDeleteImagesOptionForResourcesWithDescendantsPlural = () =>
+        this.documents[0].project === undefined
+        && this.documents.length > 1
         && this.descendantsCount > 0
         && this.relatedImagesCount > 1;
 

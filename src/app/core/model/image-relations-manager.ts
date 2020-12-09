@@ -97,7 +97,7 @@ export class ImageRelationsManager {
     }
 
 
-    // TODO test
+    // TODO make this functionality part of the remove() functionality; images can be deleted, or resources, or both; one advantage is, that the externally connected images when deleting resources could also take other images to be deleted into account
     /**
      * @throws [PersistenceHelperErrors.IMAGESTORE_ERROR_INVALID_PATH_DELETE]
      * @throws [PersistenceHelperErrors.IMAGESTORE_ERROR_DELETE]

@@ -49,7 +49,6 @@ export class ResourceDeletion {
     }
 
 
-    // TODO we could double check that all documents have document.project
     // TODO write apidoc for document.project
     private async performDeletion(document: FieldDocument, deleteRelatedImages: boolean) {
 

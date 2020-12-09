@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
-import {flatten, includedIn, isDefined, isNot, on, set} from 'tsfun';
-import {map as asyncMap} from 'tsfun/async';
+import {flatten, includedIn, isDefined, isNot, on, set, subtract} from 'tsfun';
 import {Document, FieldDocument, ImageDocument, toResourceId} from 'idai-components-2';
 import {DocumentDatastore} from '../datastore/document-datastore';
 import {Imagestore} from '../images/imagestore/imagestore';
@@ -35,18 +34,23 @@ export class ImageRelationsManager {
     }
 
 
-    public async getRelatedImageDocuments(documents: Array<Document>): Promise<Array<Document>> {
+    public async getRelatedImageDocuments(documents: Array<Document>,
+                                          onlyExclusivelyRelated: boolean = false): Promise<Array<Document>> {
 
         const documentsIds = documents.map(toResourceId);
-        const idsOfRelatedDocuments: Array<ResourceId> = flatten(
+        const idsOfRelatedDocuments: Array<ResourceId> = set(flatten(
             documents
                 .map(_ => _.resource.relations[ISDEPICTEDIN])
                 .filter(isDefined))
-            .filter(isNot(includedIn(documentsIds)));
+            .filter(isNot(includedIn(documentsIds))));
 
-        return await asyncMap(idsOfRelatedDocuments, async id => {
-            return await this.datastore.get(id);
-        });
+        const result: Array<Document> = await this.datastore.getMultiple(idsOfRelatedDocuments);
+
+        return onlyExclusivelyRelated
+            ? result.filter(imageDocument => {
+                return subtract(documentsIds)(imageDocument.resource.relations[DEPICTS]).length === 0;
+            })
+            : result;
     }
 
 

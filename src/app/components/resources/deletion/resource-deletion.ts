@@ -39,21 +39,20 @@ export class ResourceDeletion {
             DeletionInProgressModalComponent, { backdrop: 'static', keyboard: false }
         );
 
-        for (let document of documents) {
-            await this.performDeletion(document, deleteRelatedImages);
-        }
-
+        await this.performDeletion(documents, deleteRelatedImages);
         deletionInProgressModalRef.close();
     }
 
 
     // TODO write apidoc for document.project
-    private async performDeletion(document: FieldDocument, deleteRelatedImages: boolean) {
+    private async performDeletion(documents: Array<FieldDocument>, deleteRelatedImages: boolean) {
 
-        if (ResourceDeletion.isImportedCatalog(document) || deleteRelatedImages) {
-             await this.imageRelationsManager.remove(document);
-        } else {
-             await this.relationsManager.remove(document);
+        for (const document of documents) {
+            if (ResourceDeletion.isImportedCatalog(document) || deleteRelatedImages) {
+                 await this.imageRelationsManager.remove(document);
+            } else {
+                 await this.relationsManager.remove(document);
+            }
         }
     }
 

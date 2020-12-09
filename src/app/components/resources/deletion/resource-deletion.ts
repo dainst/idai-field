@@ -5,7 +5,6 @@ import {FieldDocument} from 'idai-components-2';
 import {DeleteModalComponent} from './delete-modal.component';
 import {RelationsManager} from '../../../core/model/relations-manager';
 import {DeletionInProgressModalComponent} from './deletion-in-progress-modal.component';
-import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
 import {ImageRelationsManager} from '../../../core/model/image-relations-manager';
 import {ProjectCategories} from '../../../core/configuration/project-categories';
 
@@ -19,8 +18,7 @@ export class ResourceDeletion {
 
     constructor(private modalService: NgbModal,
                 private relationsManager: RelationsManager,
-                private imageRelationsManager: ImageRelationsManager,
-                private projectConfiguration: ProjectConfiguration) {}
+                private imageRelationsManager: ImageRelationsManager) {}
 
 
     public async delete(documents: Array<FieldDocument>) {

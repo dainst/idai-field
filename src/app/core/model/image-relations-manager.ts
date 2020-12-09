@@ -138,7 +138,6 @@ export class ImageRelationsManager {
     }
 
 
-    // TODO test
     public async removeDepictsRelations(selectedImages: Array<ImageDocument>) {
 
         for (let document of selectedImages) {

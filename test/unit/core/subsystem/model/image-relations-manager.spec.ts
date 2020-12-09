@@ -205,4 +205,31 @@ describe('subsystem/image-relations-manager', () => {
         expect(i1.resource.relations[ImageRelations.DEPICTS]).toEqual(['tc1']);
         done();
     });
+
+
+    it('remove depicts relation', async done => {
+
+        // TODO make that documentsLookup is the saved documents
+        const _documentsLookup = await helpers.createDocuments(
+            [
+                ['tc1', 'TypeCatalog'],
+                ['i1', 'Image', ['tc1']]
+            ]
+        );
+
+        // TODO then get rid of this here
+        const tc1_before = await app.documentDatastore.get('tc1');
+        const i1_before = await app.documentDatastore.get('i1');
+
+        expect(tc1_before.resource.relations[ImageRelations.ISDEPICTEDIN]).toEqual(['i1'])
+        expect(i1_before.resource.relations[ImageRelations.DEPICTS]).toEqual(['tc1']);
+
+        await app.imageRelationsManager.removeDepictsRelations([i1_before]); // TODO make varargs
+
+        const tc1 = await app.documentDatastore.get('tc1');
+        const i1 = await app.documentDatastore.get('i1');
+        expect(tc1.resource.relations[ImageRelations.ISDEPICTEDIN]).toBeUndefined();
+        expect(i1.resource.relations[ImageRelations.DEPICTS]).toEqual([]);
+        done();
+    });
 });

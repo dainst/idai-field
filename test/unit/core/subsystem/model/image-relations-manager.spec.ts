@@ -182,22 +182,17 @@ describe('subsystem/image-relations-manager', () => {
 
     it('add depicts relation', async done => {
 
-        // TODO make that documentsLookup is the saved documents
-        const _documentsLookup = await helpers.createDocuments(
+        const documentsLookup = await helpers.createDocuments(
             [
                 ['tc1', 'TypeCatalog'],
                 ['i1', 'Image']
             ]
         );
 
-        // TODO then get rid of this here
-        const tc1_before = await app.documentDatastore.get('tc1');
-        const i1_before = await app.documentDatastore.get('i1');
+        expect(documentsLookup['tc1'].resource.relations[ImageRelations.ISDEPICTEDIN]).toBeUndefined()
+        expect(documentsLookup['i1'].resource.relations[ImageRelations.DEPICTS]).toEqual([]);
 
-        expect(tc1_before.resource.relations[ImageRelations.ISDEPICTEDIN]).toBeUndefined()
-        expect(i1_before.resource.relations[ImageRelations.DEPICTS]).toEqual([]);
-
-        await app.imageRelationsManager.addDepictsRelations(tc1_before, [i1_before]); // TODO make varargs
+        await app.imageRelationsManager.addDepictsRelations(documentsLookup['tc1'], [documentsLookup['i1']]); // TODO make varargs
 
         const tc1 = await app.documentDatastore.get('tc1');
         const i1 = await app.documentDatastore.get('i1');
@@ -209,22 +204,17 @@ describe('subsystem/image-relations-manager', () => {
 
     it('remove depicts relation', async done => {
 
-        // TODO make that documentsLookup is the saved documents
-        const _documentsLookup = await helpers.createDocuments(
+        const documentsLookup = await helpers.createDocuments(
             [
                 ['tc1', 'TypeCatalog'],
                 ['i1', 'Image', ['tc1']]
             ]
         );
 
-        // TODO then get rid of this here
-        const tc1_before = await app.documentDatastore.get('tc1');
-        const i1_before = await app.documentDatastore.get('i1');
+        expect(documentsLookup['tc1'].resource.relations[ImageRelations.ISDEPICTEDIN]).toEqual(['i1'])
+        expect(documentsLookup['i1'].resource.relations[ImageRelations.DEPICTS]).toEqual(['tc1']);
 
-        expect(tc1_before.resource.relations[ImageRelations.ISDEPICTEDIN]).toEqual(['i1'])
-        expect(i1_before.resource.relations[ImageRelations.DEPICTS]).toEqual(['tc1']);
-
-        await app.imageRelationsManager.removeDepictsRelations([i1_before]); // TODO make varargs
+        await app.imageRelationsManager.removeDepictsRelations([documentsLookup['i1']]); // TODO make varargs
 
         const tc1 = await app.documentDatastore.get('tc1');
         const i1 = await app.documentDatastore.get('i1');

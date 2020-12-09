@@ -36,6 +36,7 @@ import {sameset} from 'tsfun';
 import {TypeRelations} from '../../../../src/app/core/model/relation-constants';
 import {ResourceId} from '../../../../src/app/core/constants';
 import {helper} from 'showdown';
+import {makeDocumentsLookup} from '../../../../src/app/core/import/import/utils';
 
 const fs = require('fs');
 
@@ -304,7 +305,12 @@ function makeCreateDocuments(documentDatastore: DocumentDatastore,
         for (const [id, type, _] of documents) {
             if (type === 'Image') createImageInProjectImageDir(projectImageDir, id);
         }
-        return documentsLookup;
+
+        const storedDocuments = [];
+        for (const doc of Object.values(documentsLookup)) {
+            storedDocuments.push(await documentDatastore.get(doc.resource.id));
+        }
+        return makeDocumentsLookup(storedDocuments);
     }
 }
 

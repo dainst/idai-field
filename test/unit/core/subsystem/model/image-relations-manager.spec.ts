@@ -4,8 +4,6 @@ import {
 } from '../subsystem-helper';
 import {ImageRelations} from '../../../../../src/app/core/model/relation-constants';
 
-const fs = require('fs');
-
 
 describe('subsystem/image-relations-manager', () => {
 

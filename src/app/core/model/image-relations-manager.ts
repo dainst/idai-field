@@ -121,7 +121,6 @@ export class ImageRelationsManager {
     }
 
 
-    // TODO test
     public async addDepictsRelations(targetDocument: FieldDocument, selectedImages: Array<ImageDocument>) {
 
         for (let imageDocument of selectedImages) {

@@ -2,6 +2,7 @@ import {
     createApp, createHelpers,
     setupSyncTestDb
 } from '../subsystem-helper';
+import {ImageRelations} from '../../../../../src/app/core/model/relation-constants';
 
 const fs = require('fs');
 
@@ -177,6 +178,33 @@ describe('subsystem/image-relations-manager', () => {
 
         await helpers.expectResources('tc1', 'i1');
         helpers.expectImagesExist('i1');
+        done();
+    });
+
+
+    it('add depicts relation', async done => {
+
+        // TODO make that documentsLookup is the saved documents
+        const _documentsLookup = await helpers.createDocuments(
+            [
+                ['tc1', 'TypeCatalog'],
+                ['i1', 'Image']
+            ]
+        );
+
+        // TODO then get rid of this here
+        const tc1_before = await app.documentDatastore.get('tc1');
+        const i1_before = await app.documentDatastore.get('i1');
+
+        expect(tc1_before.resource.relations[ImageRelations.ISDEPICTEDIN]).toBeUndefined()
+        expect(i1_before.resource.relations[ImageRelations.DEPICTS]).toEqual([]);
+
+        await app.imageRelationsManager.addDepictsRelations(tc1_before, [i1_before]); // TODO make varargs
+
+        const tc1 = await app.documentDatastore.get('tc1');
+        const i1 = await app.documentDatastore.get('i1');
+        expect(tc1.resource.relations[ImageRelations.ISDEPICTEDIN]).toEqual(['i1']);
+        expect(i1.resource.relations[ImageRelations.DEPICTS]).toEqual(['tc1']);
         done();
     });
 });

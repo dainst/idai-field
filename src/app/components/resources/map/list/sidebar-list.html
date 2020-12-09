@@ -9,7 +9,7 @@
         tabindex="0" (scroll)="contextMenu.close()" (keydown)="onKeyDown($event)">
         <li *cdkVirtualFor="let document of viewFacade.getDocuments(); trackBy: trackDocument"
             class="resources-listing-item resources-listing-item-wide"
-            (contextmenu)="contextMenu.open($event, document)"
+            (contextmenu)="contextMenu.open($event, getSelection())"
             [class.new-from-remote]="viewFacade.isNewDocumentFromRemote(document)"
             [class.conflicted]="document['_conflicts']"
             [class.selected]="selectedDocument?.resource.id === document.resource.id"

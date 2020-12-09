@@ -64,49 +64,49 @@ export class ContextMenuComponent implements OnChanges {
 
     public isEditOptionAvailable(): boolean {
 
-        return !this.isReadonly();
+        return this.contextMenu.documents.length === 1 && !this.isReadonly();
     }
 
 
     public isDeleteOptionAvailable(): boolean {
 
-        return !this.isReadonly() || this.contextMenu.document.resource.category !== 'Type';
+        return this.contextMenu.documents.length > 0 &&
+            (!this.isReadonly() || this.contextMenu.documents[0].resource.category !== 'Type');
     }
 
 
     public isCreateGeometryOptionAvailable(): boolean {
 
         if (this.isReadonly()) return false;
-        return this.contextMenu.document !== undefined
+        return this.contextMenu.documents.length === 1
             && ProjectCategories.isGeometryCategory(
-                this.projectConfiguration.getCategoryTreelist(), this.contextMenu.document.resource.category)
-            && !this.contextMenu.document.resource.geometry;
+                this.projectConfiguration.getCategoryTreelist(), this.contextMenu.documents[0].resource.category)
+            && !this.contextMenu.documents[0].resource.geometry;
     }
 
 
     public isEditGeometryOptionAvailable(): boolean {
 
         if (this.isReadonly()) return false;
-        return this.contextMenu.document !== undefined
+        return this.contextMenu.documents.length === 1
             && ProjectCategories.isGeometryCategory(
-                this.projectConfiguration.getCategoryTreelist(), this.contextMenu.document.resource.category)
-            && this.contextMenu.document.resource.geometry !== undefined;
+                this.projectConfiguration.getCategoryTreelist(), this.contextMenu.documents[0].resource.category)
+            && this.contextMenu.documents[0].resource.geometry !== undefined;
     }
 
 
     public isMoveOptionAvailable(): boolean {
 
-        if (this.isReadonly()) return false;
-        if (!this.contextMenu.document) return false;
+        if (this.isReadonly() || this.contextMenu.documents.length !== 1) return false;
 
         return this.projectConfiguration
-            .getHierarchyParentCategories(this.contextMenu.document.resource.category).length > 0;
+            .getHierarchyParentCategories(this.contextMenu.documents[0].resource.category).length > 0;
     }
 
 
-    private isReadonly() {
+    private isReadonly(): boolean {
 
-        return this.contextMenu.document.project !== undefined;
+        return this.contextMenu.documents.find(document => document.project !== undefined) !== undefined;
     }
 
 

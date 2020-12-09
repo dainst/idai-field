@@ -7,22 +7,22 @@ import {FieldDocument} from 'idai-components-2';
 export class ContextMenu {
 
     public position: { x: number, y: number }|undefined;
-    public document: FieldDocument|undefined;
+    public documents: Array<FieldDocument> = [];
 
 
-    public open(event: MouseEvent, document: FieldDocument) {
+    public open(event: MouseEvent, documents: Array<FieldDocument>) {
 
-        if (!document.resource.id) return this.close();
+        if (documents.find(document => !document.resource.id)) return this.close();
 
         this.position = { x: event.clientX, y: event.clientY };
-        this.document = document;
+        this.documents = documents;
     }
 
 
     public close() {
 
         this.position = undefined;
-        this.document = undefined;
+        this.documents = [];
     }
 
 

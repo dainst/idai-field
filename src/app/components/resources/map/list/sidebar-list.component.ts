@@ -105,6 +105,14 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
     }
 
 
+    public getSelection(): Array<FieldDocument> {
+
+        return this.selectedDocument
+            ? [this.selectedDocument].concat(this.additionalSelectedDocuments)
+            : [];
+    }
+
+
     public async editDocument(document: FieldDocument) {
 
         await this.resourcesComponent.editDocument(document);

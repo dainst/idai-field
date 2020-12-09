@@ -31,7 +31,7 @@
             <type-grid [documents]="documents"
                        [images]="images"
                        (clickDocument)="open($event)"
-                       (contextmenuDocument)="contextMenu.open($event.mouseEvent, $event.document)"></type-grid>
+                       (contextmenuDocument)="contextMenu.open($event.mouseEvent, [$event.document])"></type-grid>
             <div id="plus-button-container" *ngIf="isSectionVisible('types')">
                 <plus-button *ngIf="isPlusButtonShown()"
                              id="create-document-button"

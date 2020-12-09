@@ -29,7 +29,7 @@ export class ResourceDeletion {
             DeleteModalComponent, { keyboard: false }
         );
         modalRef.componentInstance.documents = documents;
-        modalRef.componentInstance.descendantsCount = this.getDescendantsCount(documents);
+        modalRef.componentInstance.descendantsCount = await this.getDescendantsCount(documents);
 
         const documentsAndDescendants: Array<FieldDocument>
             = (await this.getDescendants(documents)).concat(documents);

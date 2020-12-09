@@ -8,7 +8,7 @@ import {ProjectConfiguration} from '../../../../src/app/core/configuration/proje
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-describe('RelationsManager', () => {
+describe('RelationsManager', () => { // TODO convert all these tests into subsystem tests
 
     const projectConfiguration = new ProjectConfiguration([
         [{ item: { name: 'Operation' }, trees: []}, { item: { name: 'object'}, trees: []}] as any,

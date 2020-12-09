@@ -27,7 +27,7 @@ export class ResourceDeletion {
             DeleteModalComponent, { keyboard: false }
         );
         modalRef.componentInstance.documents = documents;
-        modalRef.componentInstance.descendantsCount = await this.getDescendantsCount(documents);
+        modalRef.componentInstance.descendantsCount = await this.relationsManager.getDescendantsCount(...documents);
 
         const documentsAndDescendants: Array<FieldDocument>
             = (await this.getDescendants(documents)).concat(documents);
@@ -53,18 +53,6 @@ export class ResourceDeletion {
                  await this.relationsManager.remove(document);
             }
         }
-    }
-
-
-    private async getDescendantsCount(documents: Array<FieldDocument>): Promise<number> {
-
-        let result: number = 0;
-
-        for (let document of documents) {
-            result += await this.relationsManager.getDescendantsCount(document);
-        }
-
-        return result;
     }
 
 

@@ -94,12 +94,15 @@ export class RelationsManager {
 
 
 
-    // TODO rename to getCounts; add options { descendants, toplevel }, like get()
-    public async getDescendantsCount(document: Document): Promise<number> {
+    public async getDescendantsCount(...documents: Array<Document>): Promise<number> {
 
-        return !document.resource.id
-            ? 0
-            : (await this.findDescendants(document, true)).totalCount;
+        let count = 0;
+        for (const document of documents) {
+            count += !document.resource.id
+                ? 0
+                : (await this.findDescendants(document, true)).totalCount;
+        }
+        return count;
     }
 
 

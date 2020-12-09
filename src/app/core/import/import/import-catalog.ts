@@ -1,4 +1,4 @@
-import {isNot, on, subtract, undefinedOrEmpty} from 'tsfun';
+import {isNot, on, set, subtract, to, undefinedOrEmpty} from 'tsfun';
 import {map as asyncMap} from 'tsfun/async';
 import {Document} from 'idai-components-2';
 import {DocumentDatastore} from '../../datastore/document-datastore';
@@ -32,13 +32,13 @@ export interface ImportCatalogContext {
 export module ImportCatalogErrors {
 
     export const CONNECTED_TYPE_DELETED = 'ImportCatalogErrors.connectedTypeDeleted';
+    export const DIFFERENT_PROJECT_ENTRIES = 'ImportCatalogErrors.differentProjectEntrires'; // TODO handle in UI
 }
 
 
 export function buildImportCatalogFunction(services: ImportCatalogServices,
                                            context: ImportCatalogContext): ImportFunction {
 
-    // TODO assert all importDocuments have the same document.project
     // TODO assert all importDocuments form a valid hierarchy (see also images)
     /**
      * @param importDocuments
@@ -51,6 +51,8 @@ export function buildImportCatalogFunction(services: ImportCatalogServices,
         : Promise<{ errors: string[][], successfulImports: number }> {
 
         try {
+            assertProjectAlwaysTheSame(importDocuments);
+
             const [existingDocuments, existingDocumentsRelatedImages] =
                 await getExistingCatalogDocuments(services, importDocuments);
 
@@ -72,11 +74,20 @@ export function buildImportCatalogFunction(services: ImportCatalogServices,
 }
 
 
+function assertProjectAlwaysTheSame(documents: Array<Document>) {
+
+    if (documents.length < 2) return;
+    if (set(documents.map(to(Document.PROJECT))).length > 1) {
+        throw [ImportCatalogErrors.DIFFERENT_PROJECT_ENTRIES];
+    }
+}
+
+
 async function removeObsoleteCatalogDocuments(services: ImportCatalogServices,
                                               existingDocuments: Array<Document>,
                                               updateDocuments: Array<Document>) {
 
-    const diff = subtract(on(RESOURCE_ID_PATH), updateDocuments)(existingDocuments); // TODO single param version
+    const diff = subtract(on(RESOURCE_ID_PATH), updateDocuments)(existingDocuments);
     for (const d of diff) {
         await services.datastore.remove(d);
     }

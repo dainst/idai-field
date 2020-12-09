@@ -139,4 +139,19 @@ describe('subsystem/import/importCatalog', () => {
         await helpers.expectResources('tc1');
         done();
     });
+
+
+    it('document.project differs between resources', async done => {
+
+        const catalog = createDocuments([
+            ['tc1', 'TypeCatalog', ['t1']],
+            ['t1', 'Type']
+        ]);
+        catalog['tc1'].project = 'a';
+        catalog['t1'].project = 'b';
+        const result = await importCatalog(Object.values(catalog));
+        expect(result.successfulImports).toBe(0);
+        expect(result.errors[0][0]).toBe(ImportCatalogErrors.DIFFERENT_PROJECT_ENTRIES);
+        done();
+    });
 });

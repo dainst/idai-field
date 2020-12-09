@@ -13,8 +13,7 @@ export async function getExportDocuments(datastore: DocumentReadDatastore,
                                          catalogId: ResourceId,
                                          project: Name): Promise<[Array<Document>, Array<ResourceId>]> {
 
-    const catalog = await datastore.get(catalogId);
-    const catalogAndTypes = (await relationsManager.getDescendants(catalog)).concat(catalog);
+    const catalogAndTypes = (await relationsManager.get(catalogId, { descendants: true }));
     const relatedImages = cleanImageDocuments(
         await imageRelationsManager.getRelatedImageDocuments(catalogAndTypes),
         catalogAndTypes.map(toResourceId)

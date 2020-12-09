@@ -64,6 +64,7 @@ export class RelationsManager {
     }
 
 
+    // TODO add options to return trees and treelists
     public async get(id: ResourceId): Promise<Document>;
     public async get(ids: Array<ResourceId>): Promise<Array<Document>>;
     public async get(id: ResourceId, options: { descendants: true, toplevel?: false }): Promise<Array<Document>>
@@ -92,17 +93,8 @@ export class RelationsManager {
     }
 
 
-    // TODO replace with calls to get
-    public async getDescendants(...documents: Array<Document>): Promise<Array<Document>> {
 
-        const results = [];
-        for (const document of documents) {
-            results.push(...(await this.findDescendants(document) as FindResult).documents);
-        }
-        return results;
-    }
-
-
+    // TODO rename to getCounts; add options { descendants, toplevel }, like get()
     public async getDescendantsCount(document: Document): Promise<number> {
 
         return !document.resource.id
@@ -223,5 +215,15 @@ export class RelationsManager {
         return skipDocuments
             ? this.datastore.findIds(query)
             : await this.datastore.find(query);
+    }
+
+
+    private async getDescendants(...documents: Array<Document>): Promise<Array<Document>> {
+
+        const results = [];
+        for (const document of documents) {
+            results.push(...(await this.findDescendants(document) as FindResult).documents);
+        }
+        return results;
     }
 }

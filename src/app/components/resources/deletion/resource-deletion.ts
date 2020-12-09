@@ -44,7 +44,6 @@ export class ResourceDeletion {
     }
 
 
-    // TODO write apidoc for document.project
     private async performDeletion(documents: Array<FieldDocument>, deleteRelatedImages: boolean) {
 
         for (const document of documents) {

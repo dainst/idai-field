@@ -24,7 +24,7 @@ describe('subsystem/image-relations-manager', () => {
     });
 
 
-    it('delete TypeCatalog with images', async done => {
+    it('remove TypeCatalog with images', async done => {
 
         const documentsLookup = await helpers.createDocuments(
           [
@@ -46,7 +46,7 @@ describe('subsystem/image-relations-manager', () => {
     });
 
 
-    it('delete Type with images', async done => {
+    it('remove Type with images', async done => {
 
         const documentsLookup = await helpers.createDocuments(
           [
@@ -69,7 +69,7 @@ describe('subsystem/image-relations-manager', () => {
     });
 
 
-    it('delete Type and Catalog with same image', async done => {
+    it('remove Type and Catalog with same image', async done => {
 
         const documentsLookup = await helpers.createDocuments(
           [
@@ -90,7 +90,7 @@ describe('subsystem/image-relations-manager', () => {
     });
 
 
-    it('do not delete images (with TypeCatalog) which are also connected to other resources', async done => {
+    it('do not remove images (with TypeCatalog) which are also connected to other resources', async done => {
 
         const documentsLookup = await helpers.createDocuments(
             [
@@ -114,7 +114,7 @@ describe('subsystem/image-relations-manager', () => {
     });
 
 
-    it('delete 2 type with shared images', async done => {
+    it('remove 2 type with shared images', async done => {
 
         const documentsLookup = await helpers.createDocuments(
             [
@@ -136,7 +136,7 @@ describe('subsystem/image-relations-manager', () => {
     });
 
 
-    it('delete 2 type with shared images, but image is also connected to other resources', async done => {
+    it('remove 2 type with shared images, but image is also connected to other resources', async done => {
 
         const documentsLookup = await helpers.createDocuments(
             [
@@ -159,7 +159,7 @@ describe('subsystem/image-relations-manager', () => {
     });
 
 
-    it('do not delete images (with TypeCatalog) which are also connected to ancestor resources', async done => {
+    it('do not remove images (with TypeCatalog) which are also connected to ancestor resources', async done => {
 
         const documentsLookup = await helpers.createDocuments(
           [
@@ -169,13 +169,51 @@ describe('subsystem/image-relations-manager', () => {
           ]
         );
 
-        expect((await app.documentDatastore.find({})).documents.length).toBe(3);
+        await helpers.expectResources('tc1', 't1', 'i1');
         helpers.expectImagesExist('i1');
 
         await app.imageRelationsManager.remove(documentsLookup['t1']);
 
         await helpers.expectResources('tc1', 'i1');
         helpers.expectImagesExist('i1');
+        done();
+    });
+
+
+    it('remove images', async done => {
+
+        const documentsLookup = await helpers.createDocuments(
+            [
+                ['tc1', 'TypeCatalog'],
+                ['i1', 'Image', ['tc1']]
+            ]
+        );
+        expect(documentsLookup['tc1'].resource.relations[ImageRelations.ISDEPICTEDIN]).toEqual(['i1']);
+        await app.imageRelationsManager.remove(documentsLookup['i1']);
+
+        await helpers.expectResources('tc1');
+        const tc1 = await app.documentDatastore.get('tc1');
+        expect(tc1.resource.relations[ImageRelations.ISDEPICTEDIN]).toBeUndefined();
+        done();
+    });
+
+
+    it('remove images  - where image is connected to another resource, but is nevertheless deleted because image is amongst resources to be deleted', async done => {
+
+        const documentsLookup = await helpers.createDocuments(
+            [
+                ['t1', 'Type'],
+                ['i1', 'Image', ['t1', 'r1']],
+                ['r1', 'Find']
+            ]
+        );
+
+        helpers.expectImagesExist('i1');
+
+        await app.imageRelationsManager.remove(documentsLookup['t1'], documentsLookup['i1']);
+
+        await helpers.expectResources('r1');
+        helpers.expectImagesDontExist('i1');
         done();
     });
 

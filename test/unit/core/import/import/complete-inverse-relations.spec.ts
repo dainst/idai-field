@@ -499,7 +499,7 @@ describe('completeInverseRelations', () => {
 
 
     xit('opposing directions targeting same resource' +
-        ' - import resource to db resource', async done => {
+        ' - import resource to db resource', () => {
 
         const targetsLookup: any = {
             '1': [[], []]
@@ -509,7 +509,6 @@ describe('completeInverseRelations', () => {
         doc1.resource.relations[IS_ABOVE] = ['7'];
 
         expectBadInterrelation([doc1], 'one', targetsLookup);
-        done();
     });
 
 
@@ -563,10 +562,10 @@ describe('completeInverseRelations', () => {
     });
 
 
-    async function expectBadInterrelation(docs, err2, targetsLookup) { // TODO review all usages
+    function expectBadInterrelation(docs, err2, targetsLookup) {
 
         try {
-            await completeInverseRelations(makeDocumentsLookup(docs), targetsLookup, inverseRelations);
+            completeInverseRelations(makeDocumentsLookup(docs), targetsLookup, inverseRelations);
             fail();
         } catch (errWithParams) {
             expect(errWithParams[0]).toEqual(E.BAD_INTERRELATION);

@@ -26,7 +26,7 @@ export module CatalogExporter {
             outputFilePath,
             exportDocuments
                 .map(stringify)
-                .join('\n') // TODO different operating systems?
+                .join('\n')
         );
     }
 

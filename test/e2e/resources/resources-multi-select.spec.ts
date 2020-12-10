@@ -53,4 +53,13 @@ describe('resources/multi-select --', () => {
         common.clickWithControlKey(ResourcesPage.getListItemEl('3'));
         testDeletingResources();
     });
+
+
+    it('delete multiple resources with shift key selection', () => {
+
+        createResources();
+        common.click(ResourcesPage.getListItemEl('1'));
+        common.clickWithShiftKey(ResourcesPage.getListItemEl('3'));
+        testDeletingResources();
+    });
 });

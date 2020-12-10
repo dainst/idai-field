@@ -42,12 +42,24 @@ function doubleClick(element) {
 
 function clickWithControlKey(element) {
 
+    clickWithKey(element, protractor.Key.CONTROL);
+}
+
+
+function clickWithShiftKey(element) {
+
+    clickWithKey(element, protractor.Key.SHIFT);
+}
+
+
+function clickWithKey(element, key) {
+
     browser.wait(EC.visibilityOf(element), delays.ECWaitTime);
     browser.actions()
         .mouseMove(element)
-        .keyDown(protractor.Key.CONTROL)
+        .keyDown(key)
         .click()
-        .keyUp(protractor.Key.CONTROL)
+        .keyUp(key)
         .perform();
 }
 
@@ -89,6 +101,7 @@ module.exports = {
     rightClick: rightClick,
     doubleClick: doubleClick,
     clickWithControlKey: clickWithControlKey,
+    clickWithShiftKey: clickWithShiftKey,
     hover: hover,
     resetConfigJson: resetConfigJson,
     resetApp: resetApp

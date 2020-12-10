@@ -166,19 +166,19 @@ export class ResourcesComponent implements OnDestroy {
     }
 
 
-    public async moveDocument(document: FieldDocument) {
+    public async moveDocuments(documents: Array<FieldDocument>) {
 
         this.quitGeometryEditing();
         this.menuService.setContext(MenuContext.MODAL);
 
         const modalRef: NgbModalRef = this.modalService.open(MoveModalComponent, { keyboard: false });
-        modalRef.componentInstance.initialize(document);
+        modalRef.componentInstance.initialize(documents);
 
         try {
             await modalRef.result;
             await this.viewFacade.deselect();
             await this.viewFacade.rebuildNavigationPath();
-            await this.routingService.jumpToResource(document);
+            await this.routingService.jumpToResource(documents[0]);
         } catch (msgWithParams) {
             if (Array.isArray(msgWithParams)) this.messages.add(msgWithParams);
             // Otherwise, the move modal has been canceled

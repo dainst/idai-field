@@ -148,7 +148,7 @@ export class TypesComponent extends BaseList implements OnChanges {
                 await this.edit(document);
                 break;
             case 'move':
-                await this.resourcesComponent.moveDocument(document);
+                await this.resourcesComponent.moveDocuments([document]);
                 break;
             case 'delete':
                 await this.resourcesComponent.deleteDocument([document]);

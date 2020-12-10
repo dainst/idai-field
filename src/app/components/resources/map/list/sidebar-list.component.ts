@@ -143,7 +143,7 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
                 await this.resourcesComponent.editDocument(this.selectedDocument);
                 break;
             case 'move':
-                await this.resourcesComponent.moveDocument(this.selectedDocument);
+                await this.resourcesComponent.moveDocuments([this.selectedDocument].concat(this.additionalSelectedDocuments));
                 break;
             case 'delete':
                 await this.resourcesComponent.deleteDocument(

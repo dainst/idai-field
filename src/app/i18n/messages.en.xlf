@@ -2669,7 +2669,7 @@
       <trans-unit id="resources.moveModal.chooseParentResource.multiple" datatype="html">
         <source>
             Bitte wählen Sie die neue übergeordnete Ressource aus, der die ausgewählten <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{documents.length}}"/>
-            Ressourcen<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> zugewiesen werden sollen.
+            Ressourcen<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> zugewiesen werden sollen:
         </source>
         <target state="final">
             Please select the new parent resource to which the selected <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{documents.length}}"/>

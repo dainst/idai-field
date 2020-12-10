@@ -6,7 +6,7 @@
         </p>
         <p *ngIf="documents.length > 1" i18n="@@resources.moveModal.chooseParentResource.multiple">
             Bitte wählen Sie die neue übergeordnete Ressource aus, der die ausgewählten <b>{{documents.length}}
-            Ressourcen</b> zugewiesen werden sollen.
+            Ressourcen</b> zugewiesen werden sollen:
         </p>
         <document-picker [filterOptions]="filterOptions"
                          [getConstraints]="getConstraints"

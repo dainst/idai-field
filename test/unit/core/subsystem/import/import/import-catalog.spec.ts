@@ -144,4 +144,16 @@ describe('subsystem/import/importCatalog', () => {
         expect(result.errors[0][0]).toBe(ImportCatalogErrors.DIFFERENT_PROJECT_ENTRIES);
         done();
     });
+
+
+    it('no type catalog resource', async done => {
+
+        const catalog = createDocuments([
+            ['t1', 'Type']
+        ]);
+        const result = await importCatalog(Object.values(catalog));
+        expect(result.successfulImports).toBe(0);
+        expect(result.errors[0][0]).toBe(ImportCatalogErrors.NO_OR_TOO_MANY_TYPE_CATALOG_DOCUMENTS);
+        done();
+    });
 });

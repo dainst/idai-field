@@ -33,6 +33,7 @@ export module ImportCatalogErrors {
 
     export const CONNECTED_TYPE_DELETED = 'ImportCatalogErrors.connectedTypeDeleted';
     export const DIFFERENT_PROJECT_ENTRIES = 'ImportCatalogErrors.differentProjectEntries';
+    export const NO_OR_TOO_MANY_TYPE_CATALOG_DOCUMENTS = 'ImportCatalogErrors.noOrTooManyTypeCatalogDocuments';
 }
 
 
@@ -127,8 +128,11 @@ function assertNoDeletionOfRelatedTypes(existingDocuments: Array<Document>,
 async function getExistingCatalogDocuments(services: ImportCatalogServices,
                                            importDocuments: Array<Document>): Promise<[Lookup<Document>, Array<Document>]> {
 
-    const typeCatalogDocument =
-        importDocuments.filter(_ => _.resource.category === 'TypeCatalog')[0]; // TODO handle errors
+    const typeCatalogDocuments =
+        importDocuments.filter(_ => _.resource.category === 'TypeCatalog');
+    if (typeCatalogDocuments.length !== 1) throw [ImportCatalogErrors.NO_OR_TOO_MANY_TYPE_CATALOG_DOCUMENTS];
+    const typeCatalogDocument = typeCatalogDocuments[0];
+
     const existingDocuments = makeDocumentsLookup(
         await services.relationsManager.get(typeCatalogDocument.resource.id, { descendants: true }));
     return [

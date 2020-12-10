@@ -126,6 +126,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     // Import Package - ImportCatalogErrors
     public static IMPORT_CATALOG_ERROR_CONNECTED_TYPE_DELETED = 'M.Import.ImportCatalogErrors.connectedTypeDeleted';
     public static IMPORT_CATALOG_ERROR_DIFFERENT_PROJECT_ENTRIES = 'M.Import.ImportCatalogErrors.differentProjectEntries';
+    public static IMPORT_CATALOG_ERROR_NO_OR_TOO_MANY_TYPE_CATALOG_DOCUMENTS = 'M.Import.ImportCatalogErrors.noOrTooManyTypeCatalogDocuments';
 
     // Export Package
     public static EXPORT_SUCCESS = 'export.success';
@@ -1018,6 +1019,15 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             content: i18n({
                 id: 'messages.import.catalog.error.differentProjectEntries',
                 value: 'Katalogimport abgebrochen. Alle zu importierenden Dokumente müssen den gleichen Projekt-Eintrag haben.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.IMPORT_CATALOG_ERROR_NO_OR_TOO_MANY_TYPE_CATALOG_DOCUMENTS] = {
+            content: i18n({
+                id: 'messages.import.catalog.error.noOrTooManyTypeCatalogDocuments',
+                value: 'Katalogimport abgebrochen. Keine oder zu viele TypeCatalog-Dokumente.'
             }),
             level: 'danger',
             params: [],

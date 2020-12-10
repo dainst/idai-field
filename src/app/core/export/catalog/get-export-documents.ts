@@ -2,7 +2,7 @@ import {includedIn} from 'tsfun';
 import {Document, toResourceId} from 'idai-components-2';
 import {DocumentReadDatastore} from '../../datastore/document-read-datastore';
 import {Name, ResourceId} from '../../constants';
-import {ImageRelations} from '../../model/relation-constants';
+import {ImageRelations, TypeRelations} from '../../model/relation-constants';
 import {RelationsManager} from '../../model/relations-manager';
 import {ImageRelationsManager} from '../../model/image-relations-manager';
 
@@ -57,6 +57,6 @@ function cleanDocument(document: Document) {
     delete document[Document._REV];
     delete document[Document.CREATED];
     delete document[Document.MODIFIED];
-    // TODO delete all relations execpt isDepictedIn and depicts
+    delete document.resource.relations[TypeRelations.HASINSTANCE];
     return document;
 }

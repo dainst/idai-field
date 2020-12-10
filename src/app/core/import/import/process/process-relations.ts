@@ -36,17 +36,17 @@ import LIESWITHIN = HierarchicalRelations.LIESWITHIN;
  *
  * LIES_WITHIN gets replaced by or joined by RECORDED_IN relations.
  *
- * @author Daniel de Oliveira
- * @author Thomas Kleinke
- *
- * TODO migrated doc, review:
- *
- *  * null values in resource fields get interpreted as commands to
- * delete the corresponding fields or relations in merge mode.
- *
  * This function takes relations in the form, that only liesWithin is defined and never isRecordedIn.
  * isRecordedIn gets inferred. This especially is true in cases where a top level item references
  * its operation with liesWithin, which gets resolved to an empty liesWithin and a isRecordedIn in its place.
+ *
+ * Also note:
+ *
+ * null values in resource fields get interpreted as commands to
+ * delete the corresponding fields or relations in merge mode.
+ *
+ * @author Daniel de Oliveira
+ * @author Thomas Kleinke
  */
 export async function processRelations(documents: Array<Document>, validator: ImportValidator,
                                        operationCategoryNames: string[],

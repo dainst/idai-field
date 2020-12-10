@@ -48,7 +48,7 @@ describe('resources/multi-select --', () => {
     it('delete multiple resources with control key selection', () => {
 
         createResources();
-        common.clickWithControlKey(ResourcesPage.getListItemEl('1'));
+        common.click(ResourcesPage.getListItemEl('1'));
         common.clickWithControlKey(ResourcesPage.getListItemEl('2'));
         common.clickWithControlKey(ResourcesPage.getListItemEl('3'));
         testDeletingResources();

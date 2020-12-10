@@ -1628,6 +1628,58 @@
           <context context-type="linenumber">86</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="resources.moveModal.chooseParentResource.single" datatype="html">
+        <source>
+            Bitte wählen Sie die neue übergeordnete Ressource aus, der die Ressource
+            <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{documents[0].resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> zugewiesen werden soll:
+        </source>
+        <target state="final">
+            Bitte wählen Sie die neue übergeordnete Ressource aus, der die Ressource
+            <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{documents[0].resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> zugewiesen werden soll:
+        </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/move-modal.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.moveModal.chooseParentResource.multiple" datatype="html">
+        <source>
+            Bitte wählen Sie die neue übergeordnete Ressource aus, der die ausgewählten <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{documents.length}}"/>
+            Ressourcen<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> zugewiesen werden sollen.
+        </source>
+        <target state="final">
+            Bitte wählen Sie die neue übergeordnete Ressource aus, der die ausgewählten <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{documents.length}}"/>
+            Ressourcen<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> zugewiesen werden sollen.
+        </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/move-modal.html</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.moveModal.moving.single" datatype="html">
+        <source>
+                Ressource wird verschoben...
+            </source>
+        <target state="final">
+                Ressource wird verschoben...
+            </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/move-modal.html</context>
+          <context context-type="linenumber">19</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.moveModal.moving.multiple" datatype="html">
+        <source>
+                <x id="INTERPOLATION" equiv-text="{{documents.length}}"/> Ressourcen werden verschoben...
+            </source>
+        <target state="final">
+                <x id="INTERPOLATION" equiv-text="{{documents.length}}"/> Ressourcen werden verschoben...
+            </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/move-modal.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="imageGrid.dropArea.tooltip" datatype="html">
         <source>Um Bilder hinzuzufügen, ziehen Sie sie in die markierte Fläche oder öffnen Sie per Klick ein Auswahlmenü</source>
         <target state="final">Um Bilder hinzuzufügen, ziehen Sie sie in die markierte Fläche oder öffnen Sie per Klick ein Auswahlmenü</target>
@@ -1702,28 +1754,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/widgets/documentinfo/depicts-relations-view.html</context>
           <context context-type="linenumber">5</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="resources.moveModal.chooseParentResource" datatype="html">
-        <source>
-            Bitte wählen Sie die neue übergeordnete Ressource aus, der die Ressource
-            <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{document.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> zugewiesen werden soll:
-        </source>
-        <target state="final">
-            Bitte wählen Sie die neue übergeordnete Ressource aus, der die Ressource
-            <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{document.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> zugewiesen werden soll:
-        </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/resources/move-modal.html</context>
-          <context context-type="linenumber">3</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="resources.moveModal.moving" datatype="html">
-        <source>Ressource wird verschoben...</source>
-        <target state="final">Ressource wird verschoben...</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/resources/move-modal.html</context>
-          <context context-type="linenumber">14</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.deleteModal.header.single" datatype="html">
@@ -4928,7 +4958,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/move-modal.html</context>
-          <context context-type="linenumber">21</context>
+          <context context-type="linenumber">32</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>

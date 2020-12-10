@@ -40,6 +40,18 @@ function doubleClick(element) {
 }
 
 
+function clickWithControlKey(element) {
+
+    browser.wait(EC.visibilityOf(element), delays.ECWaitTime);
+    browser.actions()
+        .mouseMove(element)
+        .keyDown(protractor.Key.CONTROL)
+        .click()
+        .keyUp(protractor.Key.CONTROL)
+        .perform();
+}
+
+
 function hover(element) {
 
     browser.wait(EC.visibilityOf(element), delays.ECWaitTime);
@@ -76,6 +88,7 @@ module.exports = {
     click: click,
     rightClick: rightClick,
     doubleClick: doubleClick,
+    clickWithControlKey: clickWithControlKey,
     hover: hover,
     resetConfigJson: resetConfigJson,
     resetApp: resetApp

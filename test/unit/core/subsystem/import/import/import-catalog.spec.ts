@@ -1,20 +1,10 @@
-import {
-    createApp, createHelpers,
-    setupSyncTestDb
-} from '../../subsystem-helper';
+import {createApp, createHelpers, setupSyncTestDb} from '../../subsystem-helper';
 import {
     buildImportCatalogFunction,
     ImportCatalogErrors
 } from '../../../../../../src/app/core/import/import/import-catalog';
-import {
-    HierarchicalRelations,
-    ImageRelations,
-    TypeRelations
-} from '../../../../../../src/app/core/model/relation-constants';
+import {ImageRelations, TypeRelations} from '../../../../../../src/app/core/model/relation-constants';
 import {createDocuments, NiceDocs} from '../../../../test-helpers';
-import {isNot, isUndefinedOrEmpty, undefinedOrEmpty} from 'tsfun';
-
-const fs = require('fs');
 
 
 describe('subsystem/import/importCatalog', () => {
@@ -118,7 +108,7 @@ describe('subsystem/import/importCatalog', () => {
         const result = await importCatalog([documentsLookup['tc1']]);
         expect(result.successfulImports).toBe(0);
         expect(result.errors[0][0]).toEqual(ImportCatalogErrors.CONNECTED_TYPE_DELETED);
-        expect(result.errors[0][1]).toEqual('F1');
+        expect(result.errors[0][1]).toEqual('identifiert1');
         done();
     });
 

@@ -36,7 +36,7 @@ export module CatalogExporter {
                             settings: Settings) {
 
         const basePath = outputFilePath
-            .slice(0, outputFilePath.lastIndexOf('.')) + '/'; // TODO operating systems
+            .slice(0, outputFilePath.lastIndexOf('.')) + '/';
         if (!fs.existsSync(basePath)) fs.mkdirSync(basePath);
 
         for (let image of imageResourceIds) {
@@ -49,4 +49,4 @@ export module CatalogExporter {
 }
 
 
-const stringify = jsonObject => JSON.stringify(jsonObject);
+const stringify = jsonObject => JSON.stringify(jsonObject); // TODO move to tsfun

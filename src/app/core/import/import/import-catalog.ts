@@ -77,7 +77,10 @@ export function buildImportCatalogFunction(services: ImportCatalogServices,
 
 function assertRelationsValid(documents: Array<Document>) {
 
+    const lookup = makeDocumentsLookup(documents);
+
     for (const document of documents) {
+        // TODO test depictedIn relations for type catalog and type
         if (document.resource.category === 'TypeCatalog') {
             if (isNot(undefinedOrEmpty)(document.resource.relations[HierarchicalRelations.LIESWITHIN])
                 || isNot(undefinedOrEmpty)(document.resource.relations[ImageRelations.DEPICTS])) {
@@ -89,9 +92,21 @@ function assertRelationsValid(documents: Array<Document>) {
                 || document.resource.relations[HierarchicalRelations.LIESWITHIN].length !== 1) {
                 throw [ImportCatalogErrors.INVALID_RELATIONS];
             }
+            const target = lookup[document.resource.relations[HierarchicalRelations.LIESWITHIN][0]];
+            if (target === undefined
+                || (target.resource.category !== 'Type' && target.resource.category !== 'TypeCatalog')) {
+                throw [ImportCatalogErrors.INVALID_RELATIONS]; // TODO write test
+            }
         } else if (document.resource.category !== 'TypeCatalog' && document.resource.category !== 'Type') {
             if (isUndefinedOrEmpty(document.resource.relations[ImageRelations.DEPICTS])) {
                 throw [ImportCatalogErrors.INVALID_RELATIONS];
+            }
+            for (const target_ of document.resource.relations[HierarchicalRelations.LIESWITHIN]) {
+                const target = lookup[target_];
+                if (target === undefined
+                    || (target.resource.category !== 'Type' && target.resource.category !== 'TypeCatalog')) {
+                    throw [ImportCatalogErrors.INVALID_RELATIONS]; // TODO write test
+                }
             }
         }
     }

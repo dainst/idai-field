@@ -97,7 +97,7 @@ export class ContextMenuComponent implements OnChanges {
 
     public isMoveOptionAvailable(): boolean {
 
-        if (this.isReadonly() || this.contextMenu.documents.length !== 1) return false;
+        if (this.isReadonly() || this.contextMenu.documents.length === 0) return false;
 
         return this.projectConfiguration
             .getHierarchyParentCategories(this.contextMenu.documents[0].resource.category).length > 0;

@@ -1,5 +1,4 @@
-import {AfterViewInit, Component, ElementRef, Input, ViewChild, ChangeDetectionStrategy,
-    ChangeDetectorRef} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, Input, ViewChild, ChangeDetectorRef} from '@angular/core';
 import {FieldDocument} from 'idai-components-2';
 import {ResourcesComponent} from '../resources.component';
 import {RelationsManager} from '../../../core/model/relations-manager';
@@ -12,7 +11,6 @@ import {ProjectConfiguration} from '../../../core/configuration/project-configur
 import {ViewFacade} from '../../../core/resources/view/view-facade';
 import {NavigationService} from '../../../core/resources/navigation/navigation-service';
 import {Messages} from '../../messages/messages';
-import {SettingsProvider} from '../../../core/settings/settings-provider';
 
 
 @Component({
@@ -45,7 +43,7 @@ export class RowComponent implements AfterViewInit {
                 private changeDetectorRef: ChangeDetectorRef) {}
 
 
-    public moveDocument = () => this.resourcesComponent.moveDocument(this.document);
+    public moveDocument = () => this.resourcesComponent.moveDocuments([this.document]);
 
     public deleteDocument = () => this.resourcesComponent.deleteDocument([this.document]);
 

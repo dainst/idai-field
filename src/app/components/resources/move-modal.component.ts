@@ -1,9 +1,8 @@
 import {Component} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import {set} from 'tsfun';
+import {intersection, set} from 'tsfun';
 import {Document, FieldDocument} from 'idai-components-2';
 import {RelationsManager} from '../../core/model/relations-manager';
-import {SettingsService} from '../../core/settings/settings-service';
 import {MoveUtility} from '../../core/resources/move-utility';
 import {IndexFacade} from '../../core/datastore/index/index-facade';
 import {Category} from '../../core/configuration/model/category';
@@ -27,7 +26,7 @@ import {SettingsProvider} from '../../core/settings/settings-provider';
  */
 export class MoveModalComponent {
 
-    public document: FieldDocument;
+    public documents: Array<FieldDocument>;
     public filterOptions: Array<Category> = [];
     public constraints: Promise<{ [name: string]: Constraint }>;
     public showProjectOption: boolean = false;
@@ -52,16 +51,16 @@ export class MoveModalComponent {
     public getConstraints = () => {
 
         if (!this.constraints) {
-            this.constraints = MoveUtility.createConstraints(this.document, this.indexFacade);
+            this.constraints = MoveUtility.createConstraints(this.documents, this.indexFacade);
         }
 
         return this.constraints;
     };
 
 
-    public initialize(document: FieldDocument) {
+    public initialize(documents: Array<FieldDocument>) {
 
-        this.document = document;
+        this.documents = documents;
         this.showProjectOption = this.isProjectOptionAllowed();
         this.isRecordedInTargetCategories = this.getIsRecordedInTargetCategories();
         this.liesWithinTargetCategories = this.getLiesWithinTargetCategories();
@@ -80,20 +79,22 @@ export class MoveModalComponent {
     }
 
 
-    public async moveDocument(newParent: FieldDocument) {
+    public async moveDocuments(newParent: FieldDocument) {
 
         if (this.isLoading()) return;
         this.loading.start('moveModal');
 
-        try {
-            await MoveUtility.moveDocument(
-                this.document,
-                newParent,
-                this.relationsManager,
-                this.isRecordedInTargetCategories
-            );
-        } catch (msgWithParams) {
-            this.messages.add(msgWithParams);
+        for (let document of this.documents) {
+            try {
+                await MoveUtility.moveDocument(
+                    document,
+                    newParent,
+                    this.relationsManager,
+                    this.isRecordedInTargetCategories
+                );
+            } catch (msgWithParams) {
+                this.messages.add(msgWithParams);
+            }
         }
 
         this.loading.stop();
@@ -104,22 +105,26 @@ export class MoveModalComponent {
     private isProjectOptionAllowed(): boolean {
 
         return this.viewFacade.isInOverview()
-            && Document.hasRelations(this.document,'liesWithin');
+            && Document.hasRelations(this.documents[0],'liesWithin');
     }
 
 
     private getIsRecordedInTargetCategories(): Array<Category> {
 
-        return this.projectConfiguration.getAllowedRelationRangeCategories(
-            'isRecordedIn', this.document.resource.category
+        return intersection(
+            this.documents.map(document => this.projectConfiguration.getAllowedRelationRangeCategories(
+                'isRecordedIn', document.resource.category
+            ))
         );
     }
 
 
     private getLiesWithinTargetCategories(): Array<Category> {
 
-        return this.projectConfiguration.getAllowedRelationRangeCategories(
-            'liesWithin', this.document.resource.category
+        return intersection(
+            this.documents.map(document => this.projectConfiguration.getAllowedRelationRangeCategories(
+                'liesWithin', document.resource.category
+            ))
         );
     }
 }

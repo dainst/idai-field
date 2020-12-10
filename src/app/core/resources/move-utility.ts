@@ -1,3 +1,4 @@
+import {flatten, set} from 'tsfun';
 import {FieldDocument, Document} from 'idai-components-2';
 import {clone} from '../util/object-util';
 import {RelationsManager} from '../model/relations-manager';
@@ -38,20 +39,19 @@ export module MoveUtility {
     }
 
 
-    export async function createConstraints(document: FieldDocument, indexFacade: IndexFacade)
+    export async function createConstraints(documents: Array<FieldDocument>, indexFacade: IndexFacade)
             : Promise<{ [name: string]: Constraint }> {
 
         return {
             'id:match': {
-                value: await getResourceIdsToSubtract(document, indexFacade),
+                value: set(flatten(documents.map(document => getResourceIdsToSubtract(document, indexFacade)))),
                 subtract: true
             }
         };
     }
 
 
-    async function getResourceIdsToSubtract(document: FieldDocument,
-                                            indexFacade: IndexFacade): Promise<string[]> {
+    function getResourceIdsToSubtract(document: FieldDocument, indexFacade: IndexFacade): string[] {
 
         const ids: string[] = [document.resource.id];
 

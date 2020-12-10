@@ -3,7 +3,11 @@ import {
     buildImportCatalogFunction,
     ImportCatalogErrors
 } from '../../../../../../src/app/core/import/import/import-catalog';
-import {ImageRelations, TypeRelations} from '../../../../../../src/app/core/model/relation-constants';
+import {
+    HierarchicalRelations,
+    ImageRelations,
+    TypeRelations
+} from '../../../../../../src/app/core/model/relation-constants';
 import {createDocuments, NiceDocs} from '../../../../test-helpers';
 
 
@@ -177,6 +181,43 @@ describe('subsystem/import/importCatalog', () => {
             ['tc1', 'TypeCatalog'],
             ['t1', 'Type']
         ]);
+        const result = await importCatalog(Object.values(catalog));
+        expect(result.successfulImports).toBe(0);
+        expect(result.errors[0][0]).toBe(ImportCatalogErrors.INVALID_RELATIONS);
+        done();
+    });
+
+
+    it('invalid relations - link between image and resources wrong', async done => {
+
+        const catalog = createDocuments([
+            ['tc1', 'TypeCatalog', ['t1']],
+            ['t1', 'Type'],
+            ['i1', 'Image'],
+            ['i2', 'Image']
+        ]);
+
+        catalog['i1'].resource.relations[ImageRelations.DEPICTS] = ['tc1'];
+        catalog['i2'].resource.relations[ImageRelations.DEPICTS] = ['t1'];
+        catalog['tc1'].resource.relations[ImageRelations.ISDEPICTEDIN] = ['i2'];
+        catalog['t1'].resource.relations[ImageRelations.ISDEPICTEDIN] = ['i1'];
+
+        const result = await importCatalog(Object.values(catalog));
+        expect(result.successfulImports).toBe(0);
+        expect(result.errors[0][0]).toBe(ImportCatalogErrors.INVALID_RELATIONS);
+        done();
+    });
+
+
+    it('invalid relations - relation points to non import resource', async done => {
+
+        const catalog = createDocuments([
+            ['tc1', 'TypeCatalog'],
+            ['t1', 'Type'],
+        ]);
+
+        catalog['t1'].resource.relations[HierarchicalRelations.LIESWITHIN] = ['c1'];
+
         const result = await importCatalog(Object.values(catalog));
         expect(result.successfulImports).toBe(0);
         expect(result.errors[0][0]).toBe(ImportCatalogErrors.INVALID_RELATIONS);

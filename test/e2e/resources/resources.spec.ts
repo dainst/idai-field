@@ -304,25 +304,6 @@ describe('resources --', () => {
     });
 
 
-    it('delete multiple resources with control key selection', () => {
-
-        ResourcesPage.performCreateResource('1');
-        ResourcesPage.performCreateResource('2');
-        ResourcesPage.performCreateResource('3');
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('3')), delays.ECWaitTime);
-        common.clickWithControlKey(ResourcesPage.getListItemEl('1'));
-        common.clickWithControlKey(ResourcesPage.getListItemEl('2'));
-        common.clickWithControlKey(ResourcesPage.getListItemEl('3'));
-        ResourcesPage.clickOpenContextMenu('1');
-        ResourcesPage.clickContextMenuDeleteButton();
-        ResourcesPage.typeInIdentifierInConfirmDeletionInputField('2');
-        ResourcesPage.clickConfirmDeleteInModal();
-        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
-        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('2')), delays.ECWaitTime);
-        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('3')), delays.ECWaitTime);
-    });
-
-
     it('do not reflect changes in list while editing resource', () => {
 
         ResourcesPage.performCreateResource('1a');

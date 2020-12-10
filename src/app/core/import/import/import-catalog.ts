@@ -32,7 +32,7 @@ export interface ImportCatalogContext {
 export module ImportCatalogErrors {
 
     export const CONNECTED_TYPE_DELETED = 'ImportCatalogErrors.connectedTypeDeleted';
-    export const DIFFERENT_PROJECT_ENTRIES = 'ImportCatalogErrors.differentProjectEntrires'; // TODO handle in UI
+    export const DIFFERENT_PROJECT_ENTRIES = 'ImportCatalogErrors.differentProjectEntries';
 }
 
 

@@ -89,6 +89,7 @@ export module MessagesConversion {
         if (msg === ImportErrors.EMPTY_OBJECT_IN_RESOURCE) replacement = M.IMPORT_ERROR_EMPTY_OBJECT_IN_RESOURCE;
 
         if (msg === ImportCatalogErrors.CONNECTED_TYPE_DELETED) replacement = M.IMPORT_CATALOG_ERROR_CONNECTED_TYPE_DELETED;
+        if (msg === ImportCatalogErrors.DIFFERENT_PROJECT_ENTRIES) replacement = M.IMPORT_CATALOG_ERROR_DIFFERENT_PROJECT_ENTRIES;
 
 
         if (msg === ImportErrors.ROLLBACK) replacement = M.IMPORT_READER_ROLLBACK;

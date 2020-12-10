@@ -4648,6 +4648,14 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="messages.import.catalog.error.differentProjectEntries" datatype="html">
+        <source>Katalogimport abgebrochen. Alle zu importierenden Dokumente müssen den gleichen Projekt-Eintrag haben.</source>
+        <target state="final">Import aborted. All documents in the import file must have the same project entry.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="messages.import.validation.error.noRecordedIn" datatype="html">
         <source>Fehlende Definition von 'Aufgenommen in Maßnahme'. Eine Zuordnung muss vorgenommen werden.</source>
         <target state="final">Missing definition for 'Recorded in operation'. This assignment is mandatory.</target>

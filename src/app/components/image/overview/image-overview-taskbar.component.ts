@@ -10,7 +10,7 @@ import {ViewFacade} from '../../../core/resources/view/view-facade';
 import {M} from '../../messages/m';
 import {Messages} from '../../messages/messages';
 import {MenuContext, MenuService} from '../../menu-service';
-import {ImageRelationsManager} from '../../../core/model/image-relations-manager';
+import {ImageRelationsManager, ImageRelationsManagerErrors} from '../../../core/model/image-relations-manager';
 
 
 @Component({
@@ -123,10 +123,10 @@ export class ImageOverviewTaskbarComponent {
         } catch(msgWithParams) {
             let m = msgWithParams;
             if (msgWithParams.length > 0) {
-                if (msgWithParams[0] === ImageRelationsManager.IMAGESTORE_ERROR_DELETE) {
+                if (msgWithParams[0] === ImageRelationsManagerErrors.IMAGESTORE_ERROR_DELETE) {
                     m = [M.IMAGESTORE_ERROR_DELETE];
                 }
-                if (msgWithParams[0] === ImageRelationsManager.IMAGESTORE_ERROR_INVALID_PATH_DELETE) {
+                if (msgWithParams[0] === ImageRelationsManagerErrors.IMAGESTORE_ERROR_INVALID_PATH_DELETE) {
                     m = [M.IMAGESTORE_ERROR_INVALID_PATH_DELETE];
                 }
             }

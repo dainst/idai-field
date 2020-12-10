@@ -125,6 +125,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
 
     // Import Package - ImportCatalogErrors
     public static IMPORT_CATALOG_ERROR_CONNECTED_TYPE_DELETED = 'M.Import.ImportCatalogErrors.connectedTypeDeleted';
+    public static IMPORT_CATALOG_ERROR_DIFFERENT_PROJECT_ENTRIES = 'M.Import.ImportCatalogErrors.differentProjectEntries';
 
     // Export Package
     public static EXPORT_SUCCESS = 'export.success';
@@ -1008,6 +1009,15 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             content: i18n({
                 id: 'messages.import.catalog.error.connected_type_deleted',
                 value: 'Katalogimport abgebrochen. Die bestehende Version enthält Typen, die nicht im Import vorhanden sind, jedoch noch mit Funden verknüpft sind. Betroffene Typen: [0]'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.IMPORT_CATALOG_ERROR_DIFFERENT_PROJECT_ENTRIES] = {
+            content: i18n({
+                id: 'messages.import.catalog.error.differentProjectEntries',
+                value: 'Katalogimport abgebrochen. Alle zu importierenden Dokumente müssen den gleichen Projekt-Eintrag haben.'
             }),
             level: 'danger',
             params: [],

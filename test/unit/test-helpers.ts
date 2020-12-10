@@ -30,8 +30,20 @@ export function doc(id: string, category: string = 'category'): Document {
 }
 
 
-// TODO document structure
-export type NiceDocs = Array<[ResourceId, string, Array<string>]|[ResourceId, string]>;
+/**
+ * Document templates.
+ *
+ * First entry is resourceId.
+ * Second entry is category. Either 'Image' or something else.
+ * Optional third entry is related documents.
+ *   For Image documents these are
+ *     the documents the image depicts.
+ *   For Non Image documents these are
+ *     the documents it contains (via lies within of the targets pointing to the current one as their parent).
+ */
+export type NiceDocs =
+    Array<[ResourceId, string, Array<string>]
+        |[ResourceId, string]>;
 
 
 export function createDocuments(documents: NiceDocs) {

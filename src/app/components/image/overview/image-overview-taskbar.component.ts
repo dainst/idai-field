@@ -148,13 +148,13 @@ export class ImageOverviewTaskbarComponent {
     private async addDepictsRelationsToSelectedDocuments(targetDocument: FieldDocument) {
 
         await this.imageRelationsManager
-            .addDepictsRelations(targetDocument, ...this.imageOverviewFacade.getSelected());
+            .link(targetDocument, ...this.imageOverviewFacade.getSelected());
     }
 
 
     private async removeDepictsRelationsOnSelectedDocuments() {
 
         await this.imageRelationsManager
-            .removeDepictsRelations(...this.imageOverviewFacade.getSelected());
+            .unlink(...this.imageOverviewFacade.getSelected());
     }
 }

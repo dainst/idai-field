@@ -15,15 +15,17 @@ import {RESOURCE_ID_PATH, ResourceId} from '../constants';
 import {clone} from '../util/object-util';
 
 
+export module ImageRelationsManagerErrors {
+
+    export const IMAGESTORE_ERROR_INVALID_PATH_DELETE = 'imageRelationsManagerErrors/imagestoreInvalidPathDelete';
+    export const IMAGESTORE_ERROR_DELETE = 'imageRelationsManagerErrors/imagestoreErrorDelete';
+}
+
+
 @Injectable()
 export class ImageRelationsManager {
 
-    // TODO review
-    public static IMAGESTORE_ERROR_INVALID_PATH_DELETE = 'persistenceHelper/errors/imagestoreInvalidPathDelete';
-    public static IMAGESTORE_ERROR_DELETE = 'persistenceHelper/errors/imagestoreErrorDelete';
-
     private categoryTreelist: TreeList<Category>;
-
 
     constructor(private datastore: DocumentDatastore,
                 private relationsManager: RelationsManager,
@@ -34,8 +36,8 @@ export class ImageRelationsManager {
     }
 
 
-    public async getRelatedImageDocuments(documents: Array<Document>,
-                                          onlyExclusivelyRelated: boolean = false): Promise<Array<Document>> {
+    public async getLinkedImages(documents: Array<Document>,
+                                 onlyExclusivelyRelated: boolean = false): Promise<Array<Document>> {
 
         const documentsIds = documents.map(toResourceId);
         const idsOfRelatedDocuments: Array<ResourceId> = set(flatten(
@@ -54,12 +56,6 @@ export class ImageRelationsManager {
     }
 
 
-    // TODO implement; analogous to relationsManager.get(), but this time, it also returns all connected image documents
-    // public async get(id: ResourceId): Promise<Array<Document>> {
-    //
-    // }
-
-
     /**
      * Removes image and non image documents.
      *
@@ -69,23 +65,22 @@ export class ImageRelationsManager {
      * Images which are not only related to the documents to be deleted, but
      * also to other documents, are not deleted (except they are specifically amongst those given as a param).
      *
-     * // TODO review
-     * @throws [PersistenceHelperErrors.IMAGESTORE_ERROR_INVALID_PATH_DELETE]
-     * @throws [PersistenceHelperErrors.IMAGESTORE_ERROR_DELETE]
+     * @throws [ImageRelationsManagerErrors.IMAGESTORE_ERROR_INVALID_PATH_DELETE]
+     * @throws [ImageRelationsManagerErrors.IMAGESTORE_ERROR_DELETE]
      *
-     * @param documents_
+     * @param documents
      */
-    public async remove(...documents_: Array<Document|ImageDocument>) {
+    public async remove(...documents: Array<Document|ImageDocument>) {
 
         if (this.imagestore.getPath() === undefined) {
             throw 'illegal state - imagestore.getPath() must not return undefined';
         }
-        const [imageDocuments, documents] = separate(documents_,
+        const [imageDocuments, nonImageDocuments] = separate(documents,
                 document => ProjectCategories.getImageCategoryNames(this.categoryTreelist).includes(document.resource.category));
         await this.removeImages(imageDocuments as any);
 
         const documentsToBeDeleted = [];
-        for (const document of documents) {
+        for (const document of nonImageDocuments) {
             const docsInclDescendants =
                 (await this.relationsManager.get(document.resource.id, { descendants: true, toplevel: false })).concat([document]);
             documentsToBeDeleted.push(...docsInclDescendants);
@@ -100,7 +95,7 @@ export class ImageRelationsManager {
     }
 
 
-    public async addDepictsRelations(targetDocument: FieldDocument, ...selectedImages: Array<ImageDocument>) {
+    public async link(targetDocument: FieldDocument, ...selectedImages: Array<ImageDocument>) {
 
         for (let imageDocument of selectedImages) {
             const oldVersion: ImageDocument = clone(imageDocument);
@@ -117,7 +112,7 @@ export class ImageRelationsManager {
     }
 
 
-    public async removeDepictsRelations(...selectedImages: Array<ImageDocument>) {
+    public async unlink(...selectedImages: Array<ImageDocument>) {
 
         for (let document of selectedImages) {
             const oldVersion: ImageDocument = clone(document);
@@ -135,7 +130,7 @@ export class ImageRelationsManager {
         const idsOfDocumentsToBeDeleted = documentsToBeDeleted.map(toResourceId);
 
         const leftovers = [];
-        for (let imageDocument of (await this.getRelatedImageDocuments(documentsToBeDeleted))) {
+        for (let imageDocument of (await this.getLinkedImages(documentsToBeDeleted))) {
             let depictsOnlyDocumentsToBeDeleted = true;
             for (let depictsTargetId of imageDocument.resource.relations[DEPICTS]) {
                 if (!idsOfDocumentsToBeDeleted.includes(depictsTargetId)) depictsOnlyDocumentsToBeDeleted = false;
@@ -148,7 +143,7 @@ export class ImageRelationsManager {
 
     private async removeImages(imageDocuments: Array<ImageDocument>) {
 
-        if (!this.imagestore.getPath()) throw [ImageRelationsManager.IMAGESTORE_ERROR_INVALID_PATH_DELETE];
+        if (!this.imagestore.getPath()) throw [ImageRelationsManagerErrors.IMAGESTORE_ERROR_INVALID_PATH_DELETE];
 
         for (let imageDocument of imageDocuments) {
             if (!imageDocument.resource.id) continue;
@@ -157,7 +152,7 @@ export class ImageRelationsManager {
             try {
                 await this.imagestore.remove(resourceId);
             } catch (err) {
-                throw [ImageRelationsManager.IMAGESTORE_ERROR_DELETE, imageDocument.resource.identifier];
+                throw [ImageRelationsManagerErrors.IMAGESTORE_ERROR_DELETE, imageDocument.resource.identifier];
             }
 
             await this.relationsManager.remove(imageDocument);

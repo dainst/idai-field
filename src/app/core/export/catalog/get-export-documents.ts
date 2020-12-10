@@ -15,7 +15,7 @@ export async function getExportDocuments(datastore: DocumentReadDatastore,
 
     const catalogAndTypes = (await relationsManager.get(catalogId, { descendants: true }));
     const relatedImages = cleanImageDocuments(
-        await imageRelationsManager.getRelatedImageDocuments(catalogAndTypes),
+        await imageRelationsManager.getLinkedImages(catalogAndTypes),
         catalogAndTypes.map(toResourceId)
         );
     return [

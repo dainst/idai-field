@@ -99,7 +99,7 @@ async function removeRelatedImages(services: ImportCatalogServices,
                                    existingDocumentsRelatedImages: Array<Document>) {
 
     const updateDocumentRelatedImages =
-        await services.imageRelationsManager.getRelatedImageDocuments(updateDocuments);
+        await services.imageRelationsManager.getLinkedImages(updateDocuments);
     const diffImages = subtract(on(RESOURCE_ID_PATH), updateDocumentRelatedImages)(existingDocumentsRelatedImages);
     for (const diff of diffImages) {
         // TODO make sure it was connected to only this catalog, and not maybe to some other catalog from the same original user, for example
@@ -130,7 +130,7 @@ async function getExistingCatalogDocuments(services: ImportCatalogServices,
         await services.relationsManager.get(typeCatalogDocument.resource.id, { descendants: true }));
     return [
         existingDocuments,
-        await services.imageRelationsManager.getRelatedImageDocuments(Object.values(existingDocuments))
+        await services.imageRelationsManager.getLinkedImages(Object.values(existingDocuments))
     ];
 }
 

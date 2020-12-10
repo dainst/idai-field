@@ -13,11 +13,10 @@ export async function getExportDocuments(datastore: DocumentReadDatastore,
                                          catalogId: ResourceId,
                                          project: Name): Promise<[Array<Document>, Array<ResourceId>]> {
 
-    const catalogAndTypes = (await relationsManager.get(catalogId, { descendants: true }));
+    const catalogAndTypes = await relationsManager.get(catalogId, { descendants: true });
     const relatedImages = cleanImageDocuments(
         await imageRelationsManager.getLinkedImages(catalogAndTypes),
-        catalogAndTypes.map(toResourceId)
-        );
+        catalogAndTypes.map(toResourceId));
     return [
         catalogAndTypes
             .concat(relatedImages)
@@ -31,7 +30,6 @@ export async function getExportDocuments(datastore: DocumentReadDatastore,
 }
 
 
-// TODO maybe move to CatalogUtil; then maybe pass catalogResources instead ids
 function cleanImageDocuments(images: Array<Document>,
                              idsOfCatalogResources: Array<ResourceId>) {
 

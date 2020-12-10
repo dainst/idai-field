@@ -111,7 +111,7 @@ async function removeRelatedImages(services: ImportCatalogServices,
 function assertNoDeletionOfRelatedTypes(existingDocuments: Array<Document>,
                                               importDocuments: Array<Document>) {
 
-    const removedDocuments = subtract(on(RESOURCE_ID_PATH), importDocuments)(existingDocuments); // TODO review subtract, params, object.values
+    const removedDocuments = subtract(on(RESOURCE_ID_PATH), importDocuments)(existingDocuments);
     const problems = [];
     for (const removedDocument of removedDocuments) {
         if (isNot(undefinedOrEmpty)(removedDocument.resource.relations[TypeRelations.HASINSTANCE])) {

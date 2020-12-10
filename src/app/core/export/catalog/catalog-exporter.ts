@@ -49,4 +49,4 @@ export module CatalogExporter {
 }
 
 
-const stringify = jsonObject => JSON.stringify(jsonObject); // TODO move to tsfun
+const stringify = jsonObject => JSON.stringify(jsonObject);

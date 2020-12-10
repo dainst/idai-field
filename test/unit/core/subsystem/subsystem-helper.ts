@@ -221,7 +221,6 @@ export function createHelpers(app) {
     const createProjectDir = makeCreateProjectDir(projectImageDir);
 
     return {
-        // projectImageDir, // TODO dont export, instead provide all the necessary functions
         createDocuments,
         updateDocument,
         expectResources,
@@ -245,7 +244,7 @@ function makeCreateProjectDir(projectImageDir) {
         } catch (e) {
             console.log("error deleting tmp project dir", e)
         }
-        fs.mkdirSync(projectImageDir, { recursive: true }); // TODO do in createApp() ?
+        fs.mkdirSync(projectImageDir, { recursive: true });
     }
 }
 

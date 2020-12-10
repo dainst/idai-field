@@ -23,7 +23,7 @@ export class CatalogFilesystemReader implements Reader {
         return new Promise(async (resolve, reject) => {
 
             const basePath = this.file.path
-                .slice(0, this.file.path.lastIndexOf('.')) + '/'; // TODO 1. OS's? 2. review code duplication with catalog exporter
+                .slice(0, this.file.path.lastIndexOf('.')) + '/'; // TODO review code duplication with catalog exporter
 
             try {
                 const folder = fs.readdirSync(basePath);
@@ -32,8 +32,8 @@ export class CatalogFilesystemReader implements Reader {
                 for (let file of folder) {
                     const source = basePath + file;
                     const target = this.settings.imagestorePath
-                        + this.settings.selectedProject // TODO or to document.project?
-                        + '/'; // TODO OS's
+                        + this.settings.selectedProject
+                        + '/';
                     if (!fs.existsSync(target)) fs.mkdirSync(target);
                     fs.copyFileSync(source, target + file);
                 }

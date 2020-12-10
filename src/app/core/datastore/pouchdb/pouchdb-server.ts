@@ -3,7 +3,7 @@ import {Injectable} from '@angular/core';
 const express = typeof window !== 'undefined' ? window.require('express') : require('express');
 const remote = typeof window !== 'undefined' ? window.require('electron').remote : require('electron').remote;
 const PouchDB = typeof window !== 'undefined' ? window.require('pouchdb-browser') : require('pouchdb-node');
-const expressPouchDB = (typeof window !== 'undefined' ? window.require : require)('express-pouchdb'); // TODO Get rid of warning
+const expressPouchDB = (typeof window !== 'undefined' ? window.require : require)('express-pouchdb'); // Get rid of warning
 const expressBasicAuth = typeof window !== 'undefined' ? window.require('express-basic-auth') : require('express-basic-auth');
 
 

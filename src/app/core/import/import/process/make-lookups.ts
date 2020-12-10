@@ -44,7 +44,7 @@ function getTargetDocuments(get: (_: string) => Promise<Document>) {
                 } catch {
                     throw [E.MISSING_RELATION_TARGET, targetId];
                 }
-            })(targetDocIds); // TODO allow call variants for forEach
+            })(targetDocIds);
         return targetDocumentsMap;
     }
 }

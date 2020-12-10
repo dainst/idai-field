@@ -1,7 +1,6 @@
 import {Document, FieldDocument} from 'idai-components-2';
 import {Lookup} from '../../src/app/core/util/utils';
 import {HierarchicalRelations, ImageRelations} from '../../src/app/core/model/relation-constants';
-import {DocumentDatastore} from '../../src/app/core/datastore/document-datastore';
 import {ResourceId} from '../../src/app/core/constants';
 
 

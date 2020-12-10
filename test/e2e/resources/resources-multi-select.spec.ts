@@ -45,31 +45,10 @@ describe('resources/multi-select --', () => {
     };
 
 
-    const testMovingResources = () => {
-
-        ResourcesPage.clickOpenContextMenu('1');
-        ResourcesPage.clickContextMenuMoveButton();
-        ResourcesPage.typeInMoveModalSearchBarInput('S2');
-        ResourcesPage.clickResourceListItemInMoveModal('S2');
-        browser.wait(EC.stalenessOf(ResourcesPage.getMoveModal()), delays.ECWaitTime);
-
-        NavbarPage.getActiveNavLinkLabel().then(label => expect(label).toContain('S2'));
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('2')), delays.ECWaitTime);
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('3')), delays.ECWaitTime);
-
-        NavbarPage.clickTab('project');
-        ResourcesPage.clickHierarchyButton('S1');
-        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
-        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('2')), delays.ECWaitTime);
-        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('3')), delays.ECWaitTime);
-    };
-
-
     it('delete multiple resources with control key selection', () => {
 
         createResources();
-        common.clickWithControlKey(ResourcesPage.getListItemEl('1'));
+        common.click(ResourcesPage.getListItemEl('1'));
         common.clickWithControlKey(ResourcesPage.getListItemEl('2'));
         common.clickWithControlKey(ResourcesPage.getListItemEl('3'));
         testDeletingResources();
@@ -82,24 +61,5 @@ describe('resources/multi-select --', () => {
         common.click(ResourcesPage.getListItemEl('1'));
         common.clickWithShiftKey(ResourcesPage.getListItemEl('3'));
         testDeletingResources();
-    });
-
-
-    it('move multiple resources with control key selection', () => {
-
-        createResources();
-        common.clickWithControlKey(ResourcesPage.getListItemEl('1'));
-        common.clickWithControlKey(ResourcesPage.getListItemEl('2'));
-        common.clickWithControlKey(ResourcesPage.getListItemEl('3'));
-        testMovingResources();
-    });
-
-
-    it('move multiple resources with shift key selection', () => {
-
-        createResources();
-        common.click(ResourcesPage.getListItemEl('1'));
-        common.clickWithShiftKey(ResourcesPage.getListItemEl('3'));
-        testMovingResources();
     });
 });

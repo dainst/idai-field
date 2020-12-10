@@ -91,7 +91,7 @@ export module MessagesConversion {
         if (msg === ImportCatalogErrors.CONNECTED_TYPE_DELETED) replacement = M.IMPORT_CATALOG_ERROR_CONNECTED_TYPE_DELETED;
         if (msg === ImportCatalogErrors.DIFFERENT_PROJECT_ENTRIES) replacement = M.IMPORT_CATALOG_ERROR_DIFFERENT_PROJECT_ENTRIES;
         if (msg === ImportCatalogErrors.NO_OR_TOO_MANY_TYPE_CATALOG_DOCUMENTS) replacement = M.IMPORT_CATALOG_ERROR_NO_OR_TOO_MANY_TYPE_CATALOG_DOCUMENTS;
-
+        if (msg === ImportCatalogErrors.INVALID_RELATIONS) replacement = M.IMPORT_CATALOG_ERROR_INVALID_RELATIONS;
 
         if (msg === ImportErrors.ROLLBACK) replacement = M.IMPORT_READER_ROLLBACK;
         if (msg === ImportErrors.INVALID_FIELDS) {

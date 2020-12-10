@@ -156,4 +156,30 @@ describe('subsystem/import/importCatalog', () => {
         expect(result.errors[0][0]).toBe(ImportCatalogErrors.NO_OR_TOO_MANY_TYPE_CATALOG_DOCUMENTS);
         done();
     });
+
+
+    it('invalid relations - image not connected', async done => {
+
+        const catalog = createDocuments([
+            ['tc1', 'TypeCatalog'],
+            ['i1', 'Image']
+        ]);
+        const result = await importCatalog(Object.values(catalog));
+        expect(result.successfulImports).toBe(0);
+        expect(result.errors[0][0]).toBe(ImportCatalogErrors.INVALID_RELATIONS);
+        done();
+    });
+
+
+    it('invalid relations - type resource not connected', async done => {
+
+        const catalog = createDocuments([
+            ['tc1', 'TypeCatalog'],
+            ['t1', 'Type']
+        ]);
+        const result = await importCatalog(Object.values(catalog));
+        expect(result.successfulImports).toBe(0);
+        expect(result.errors[0][0]).toBe(ImportCatalogErrors.INVALID_RELATIONS);
+        done();
+    });
 });

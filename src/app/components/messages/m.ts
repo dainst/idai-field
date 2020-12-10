@@ -127,6 +127,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_CATALOG_ERROR_CONNECTED_TYPE_DELETED = 'M.Import.ImportCatalogErrors.connectedTypeDeleted';
     public static IMPORT_CATALOG_ERROR_DIFFERENT_PROJECT_ENTRIES = 'M.Import.ImportCatalogErrors.differentProjectEntries';
     public static IMPORT_CATALOG_ERROR_NO_OR_TOO_MANY_TYPE_CATALOG_DOCUMENTS = 'M.Import.ImportCatalogErrors.noOrTooManyTypeCatalogDocuments';
+    public static IMPORT_CATALOG_ERROR_INVALID_RELATIONS = 'M.Import.ImportCatalogErrors.invalidRelations';
 
     // Export Package
     public static EXPORT_SUCCESS = 'export.success';
@@ -1028,6 +1029,15 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             content: i18n({
                 id: 'messages.import.catalog.error.noOrTooManyTypeCatalogDocuments',
                 value: 'Katalogimport abgebrochen. Keine oder zu viele TypeCatalog-Dokumente.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.IMPORT_CATALOG_ERROR_INVALID_RELATIONS] = {
+            content: i18n({
+                id: 'messages.import.catalog.error.invalidRelations',
+                value: 'Katalogimport abgebrochen. Ungültige Relationen.'
             }),
             level: 'danger',
             params: [],

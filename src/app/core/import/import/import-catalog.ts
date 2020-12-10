@@ -1,4 +1,4 @@
-import {isNot, on, set, subtract, to, undefinedOrEmpty} from 'tsfun';
+import {isNot, isUndefinedOrEmpty, on, set, subtract, to, undefinedOrEmpty} from 'tsfun';
 import {map as asyncMap} from 'tsfun/async';
 import {Document} from 'idai-components-2';
 import {DocumentDatastore} from '../../datastore/document-datastore';
@@ -7,7 +7,7 @@ import {ImportFunction} from './types';
 import {makeDocumentsLookup} from './utils';
 import {RelationsManager} from '../../model/relations-manager';
 import {RESOURCE_ID_PATH} from '../../constants';
-import {TypeRelations} from '../../model/relation-constants';
+import {HierarchicalRelations, ImageRelations, TypeRelations} from '../../model/relation-constants';
 import {ImageRelationsManager} from '../../model/image-relations-manager';
 import {Lookup} from '../../util/utils';
 import {Imagestore} from '../../images/imagestore/imagestore';
@@ -34,15 +34,15 @@ export module ImportCatalogErrors {
     export const CONNECTED_TYPE_DELETED = 'ImportCatalogErrors.connectedTypeDeleted';
     export const DIFFERENT_PROJECT_ENTRIES = 'ImportCatalogErrors.differentProjectEntries';
     export const NO_OR_TOO_MANY_TYPE_CATALOG_DOCUMENTS = 'ImportCatalogErrors.noOrTooManyTypeCatalogDocuments';
+    export const INVALID_RELATIONS = 'ImportCatalogErrors.invalidRelations'; // TODO pass to ui
 }
 
 
 export function buildImportCatalogFunction(services: ImportCatalogServices,
                                            context: ImportCatalogContext): ImportFunction {
 
-    // TODO assert all importDocuments form a valid hierarchy (see also images)
     /**
-     * @param importDocuments
+     * @param importDocumentsKatalogimport abgebrochen. Ungültige Relationen.
      * @param datastore
      * @param settings
      *
@@ -53,10 +53,10 @@ export function buildImportCatalogFunction(services: ImportCatalogServices,
 
         try {
             assertProjectAlwaysTheSame(importDocuments);
-
             const [existingDocuments, existingDocumentsRelatedImages] =
                 await getExistingCatalogDocuments(services, importDocuments);
 
+            assertRelationsValid(importDocuments);
             assertNoDeletionOfRelatedTypes(Object.values(existingDocuments), importDocuments);
 
             const updateDocuments = await asyncMap(importDocuments,
@@ -70,6 +70,18 @@ export function buildImportCatalogFunction(services: ImportCatalogServices,
 
         } catch (errWithParams) {
             return { errors: [errWithParams], successfulImports: 0 };
+        }
+    }
+}
+
+
+function assertRelationsValid(documents: Array<Document>) {
+
+    for (const document of documents) {
+        if (isNot(undefinedOrEmpty)(document.resource.relations[HierarchicalRelations.LIESWITHIN])) {
+            if (document.resource.relations[HierarchicalRelations.LIESWITHIN].length > 1) throw [ImportCatalogErrors.INVALID_RELATIONS];
+        } else if (document.resource.category !== 'TypeCatalog') {
+            if (isUndefinedOrEmpty(document.resource.relations[ImageRelations.DEPICTS])) throw [ImportCatalogErrors.INVALID_RELATIONS];
         }
     }
 }

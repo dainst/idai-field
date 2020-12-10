@@ -1,8 +1,12 @@
 <div id="move-modal" class="modal-body">
     <div *ngIf="!isLoading()">
-        <p i18n="@@resources.moveModal.chooseParentResource">
+        <p *ngIf="documents.length === 1" i18n="@@resources.moveModal.chooseParentResource.single">
             Bitte wählen Sie die neue übergeordnete Ressource aus, der die Ressource
             <b>{{documents[0].resource.identifier}}</b> zugewiesen werden soll:
+        </p>
+        <p *ngIf="documents.length > 1" i18n="@@resources.moveModal.chooseParentResource.multiple">
+            Bitte wählen Sie die neue übergeordnete Ressource aus, der die ausgewählten <b>{{documents.length}}
+            Ressourcen</b> zugewiesen werden sollen:
         </p>
         <document-picker [filterOptions]="filterOptions"
                          [getConstraints]="getConstraints"
@@ -11,7 +15,14 @@
     </div>
     <div *ngIf="isLoading()" id="move-modal-loading-icon-container">
         <loading-icon [context]="'moveModal'"></loading-icon>
-        <div id="moving-info" i18n="@@resources.moveModal.moving">Ressource wird verschoben...</div>
+        <div id="moving-info">
+            <span *ngIf="documents.length === 1" i18n="@@resources.moveModal.moving.single">
+                Ressource wird verschoben...
+            </span>
+            <span *ngIf="documents.length > 1" i18n="@@resources.moveModal.moving.multiple">
+                {{documents.length}} Ressourcen werden verschoben...
+            </span>
+        </div>
     </div>
 </div>
 

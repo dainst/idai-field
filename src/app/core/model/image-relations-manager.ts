@@ -73,7 +73,7 @@ export class ImageRelationsManager {
     public async remove(...documents: Array<Document|ImageDocument>) {
 
         if (this.imagestore.getPath() === undefined) {
-            throw 'illegal state - imagestore.getPath() must not return undefined';
+            throw [ImageRelationsManagerErrors.IMAGESTORE_ERROR_INVALID_PATH_DELETE];
         }
         const [imageDocuments, nonImageDocuments] = separate(documents,
                 document => ProjectCategories.getImageCategoryNames(this.categoryTreelist).includes(document.resource.category));
@@ -143,18 +143,14 @@ export class ImageRelationsManager {
 
     private async removeImages(imageDocuments: Array<ImageDocument>) {
 
-        if (!this.imagestore.getPath()) throw [ImageRelationsManagerErrors.IMAGESTORE_ERROR_INVALID_PATH_DELETE];
-
         for (let imageDocument of imageDocuments) {
             if (!imageDocument.resource.id) continue;
             const resourceId: string = imageDocument.resource.id;
-
             try {
                 await this.imagestore.remove(resourceId);
             } catch (err) {
                 throw [ImageRelationsManagerErrors.IMAGESTORE_ERROR_DELETE, imageDocument.resource.identifier];
             }
-
             await this.relationsManager.remove(imageDocument);
         }
     }

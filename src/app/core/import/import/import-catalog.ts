@@ -34,7 +34,7 @@ export module ImportCatalogErrors {
     export const CONNECTED_TYPE_DELETED = 'ImportCatalogErrors.connectedTypeDeleted';
     export const DIFFERENT_PROJECT_ENTRIES = 'ImportCatalogErrors.differentProjectEntries';
     export const NO_OR_TOO_MANY_TYPE_CATALOG_DOCUMENTS = 'ImportCatalogErrors.noOrTooManyTypeCatalogDocuments';
-    export const INVALID_RELATIONS = 'ImportCatalogErrors.invalidRelations'; // TODO pass to ui
+    export const INVALID_RELATIONS = 'ImportCatalogErrors.invalidRelations';
 }
 
 

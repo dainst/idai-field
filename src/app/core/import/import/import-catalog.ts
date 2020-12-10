@@ -1,4 +1,4 @@
-import {isArray, isEmpty, isNot, isUndefinedOrEmpty, on, set, subtract, to, undefinedOrEmpty} from 'tsfun';
+import {isArray, isNot, isUndefinedOrEmpty, on, set, subtract, to, undefinedOrEmpty} from 'tsfun';
 import {map as asyncMap} from 'tsfun/async';
 import {Document} from 'idai-components-2';
 import {DocumentDatastore} from '../../datastore/document-datastore';

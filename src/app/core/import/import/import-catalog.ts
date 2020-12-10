@@ -1,4 +1,4 @@
-import {isNot, isUndefinedOrEmpty, on, set, subtract, to, undefinedOrEmpty} from 'tsfun';
+import {isArray, isNot, isUndefinedOrEmpty, on, set, subtract, to, undefinedOrEmpty} from 'tsfun';
 import {map as asyncMap} from 'tsfun/async';
 import {Document} from 'idai-components-2';
 import {DocumentDatastore} from '../../datastore/document-datastore';
@@ -34,7 +34,7 @@ export module ImportCatalogErrors {
     export const CONNECTED_TYPE_DELETED = 'ImportCatalogErrors.connectedTypeDeleted';
     export const DIFFERENT_PROJECT_ENTRIES = 'ImportCatalogErrors.differentProjectEntries';
     export const NO_OR_TOO_MANY_TYPE_CATALOG_DOCUMENTS = 'ImportCatalogErrors.noOrTooManyTypeCatalogDocuments';
-    export const INVALID_RELATIONS = 'ImportCatalogErrors.invalidRelations'; // TODO pass to ui
+    export const INVALID_RELATIONS = 'ImportCatalogErrors.invalidRelations';
 }
 
 
@@ -78,10 +78,21 @@ export function buildImportCatalogFunction(services: ImportCatalogServices,
 function assertRelationsValid(documents: Array<Document>) {
 
     for (const document of documents) {
-        if (isNot(undefinedOrEmpty)(document.resource.relations[HierarchicalRelations.LIESWITHIN])) {
-            if (document.resource.relations[HierarchicalRelations.LIESWITHIN].length > 1) throw [ImportCatalogErrors.INVALID_RELATIONS];
-        } else if (document.resource.category !== 'TypeCatalog') {
-            if (isUndefinedOrEmpty(document.resource.relations[ImageRelations.DEPICTS])) throw [ImportCatalogErrors.INVALID_RELATIONS];
+        if (document.resource.category === 'TypeCatalog') {
+            if (isNot(undefinedOrEmpty)(document.resource.relations[HierarchicalRelations.LIESWITHIN])
+                || isNot(undefinedOrEmpty)(document.resource.relations[ImageRelations.DEPICTS])) {
+                throw [ImportCatalogErrors.INVALID_RELATIONS];
+            }
+        }
+        if (document.resource.category === 'Type' ) {
+            if (!isArray(document.resource.relations[HierarchicalRelations.LIESWITHIN])
+                || document.resource.relations[HierarchicalRelations.LIESWITHIN].length !== 1) {
+                throw [ImportCatalogErrors.INVALID_RELATIONS];
+            }
+        } else if (document.resource.category !== 'TypeCatalog' && document.resource.category !== 'Type') {
+            if (isUndefinedOrEmpty(document.resource.relations[ImageRelations.DEPICTS])) {
+                throw [ImportCatalogErrors.INVALID_RELATIONS];
+            }
         }
     }
 }

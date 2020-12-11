@@ -64,65 +64,23 @@
         Zuordnungen von Funden zu Typen und Untertypen entfernt werden.
     </div>
 
-    <div *ngIf="showDeleteImagesOptionForResourceSingular()"
-          class="text-center alert alert-warning"
-          i18n="@@resources.deleteModal.deleteResourceImagesOptionSingular">
-        Mit der Ressource ist ein Bild direkt verbunden.
-        Direkt verbundene Bilder haben keine Verbindungen zu anderen Ressourcen.
-    </div>
-    <div *ngIf="showDeleteImagesOptionForResourcePlural()"
-         class="text-center alert alert-warning"
-         i18n="@@resources.deleteModal.deleteResourceImagesOptionPlural">
-        Mit der Ressource sind {{relatedImagesCount}} Bilder direkt verbunden.
-        Direkt verbundene Bilder haben keine Verbindungen zu anderen Ressourcen.
-    </div>
-    <div *ngIf="showDeleteImagesOptionForResourceWithDescendantsSingular()"
-         class="text-center alert alert-warning"
-         i18n="@@resources.deleteModal.deleteResourceWithDescendantsImagesOptionSingular">
-        Mit der Ressource oder einer darunterliegenden Ressource ist ein Bild direkt verbunden.
-        Direkt verbundene Bilder haben keine Verbindungen zu anderen Ressourcen.
-    </div>
-    <div *ngIf="showDeleteImagesOptionForResourceWithDescendantsPlural()"
-         class="text-center alert alert-warning"
-         i18n="@@resources.deleteModal.deleteResourceWithDescendantsImagesOptionPlural">
-        Mit der Ressource und darunterliegenden Ressourcen sind insgesamt {{relatedImagesCount}} Bilder direkt verbunden.
-        Direkt verbundene Bilder haben keine Verbindungen zu anderen Ressourcen.
-    </div>
-    <div *ngIf="showDeleteImagesOptionForResourcesSingular()"
-         class="text-center alert alert-warning"
-         i18n="@@resources.deleteModal.deleteResourcesImagesOptionSingular">
-        Mit den Ressourcen ist ein Bild direkt verbunden.
-        Direkt verbundene Bilder haben keine Verbindungen zu anderen Ressourcen.
-    </div>
-    <div *ngIf="showDeleteImagesOptionForResourcesPlural()"
-         class="text-center alert alert-warning"
-         i18n="@@resources.deleteModal.deleteResourcesImagesOptionPlural">
-        Mit den Ressourcen sind {{relatedImagesCount}} Bilder direkt verbunden.
-        Direkt verbundene Bilder haben keine Verbindungen zu anderen Ressourcen.
-    </div>
-    <div *ngIf="showDeleteImagesOptionForResourcesWithDescendantsSingular()"
-         class="text-center alert alert-warning"
-         i18n="@@resources.deleteModal.deleteResourcesWithDescendantsImagesOptionSingular">
-        Mit den Ressourcen oder darunterliegenden Ressourcen ist ein Bild direkt verbunden.
-        Direkt verbundene Bilder haben keine Verbindungen zu anderen Ressourcen.
-    </div>
-    <div *ngIf="showDeleteImagesOptionForResourcesWithDescendantsPlural()"
-         class="text-center alert alert-warning"
-         i18n="@@resources.deleteModal.deleteResourcesWithDescendantsImagesOptionPlural">
-        Mit den Ressourcen und darunterliegenden Ressourcen sind insgesamt {{relatedImagesCount}} Bilder direkt verbunden.
-        Direkt verbundene Bilder haben keine Verbindungen zu anderen Ressourcen.
-    </div>
-
     <div *ngIf="showDeleteImagesOption()"
-         class="form-group text-left"
-        i18n="@@resources.deleteModal.deleteImages">
+         class="form-group text-left">
         <div class="form-check form-check-inline">
             <input id="delete-catalog-images-checkbox"
                    type="checkbox"
                    [(ngModel)]="deleteRelatedImages"
                    class="form-check-input">
             <label for="delete-catalog-images-checkbox" class="form-check-label">
-                Verbundene Bilder Löschen
+                <span i18n="@@resources.deleteModal.deleteImages.info">
+                    Verknüpfte Bilder löschen, bei denen keine Verknüpfungen zu anderen Ressourcen bestehen
+                </span>
+                <span *ngIf="relatedImagesCount === 1" i18n="@@resources.deleteModal.deleteImages.single">
+                    (Ein Bild)
+                </span>
+                <span *ngIf="relatedImagesCount > 1" i18n="@@resources.deleteModal.deleteImages.multiple">
+                    ({{relatedImagesCount}} Bilder)
+                </span>
             </label>
         </div>
     </div>

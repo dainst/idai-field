@@ -193,6 +193,7 @@ function assertRelationsValid(documents: Array<Document>) {
                 throw [ImportCatalogErrors.INVALID_RELATIONS];
             }
         }
+
         if (document.resource.category === 'Type' || document.resource.category === 'TypeCatalog') {
             if (!isUndefinedOrEmpty(document.resource.relations[ImageRelations.ISDEPICTEDIN])) {
                 for (const target_ of document.resource.relations[ImageRelations.ISDEPICTEDIN]) {
@@ -204,22 +205,14 @@ function assertRelationsValid(documents: Array<Document>) {
                 }
             }
         }
-        if (document.resource.category !== 'TypeCatalog' && document.resource.category !== 'Type') {
+        else {
             if (isUndefinedOrEmpty(document.resource.relations[ImageRelations.DEPICTS])) {
                 throw [ImportCatalogErrors.INVALID_RELATIONS];
-            } else {
-                for (const target_ of document.resource.relations[ImageRelations.DEPICTS]) {
-                    const target = lookup[target_];
-                    if (target === undefined
-                        || !target.resource.relations[ImageRelations.ISDEPICTEDIN].includes(document.resource.id)) {
-                        throw [ImportCatalogErrors.INVALID_RELATIONS];
-                    }
-                }
             }
-            for (const target_ of document.resource.relations[HierarchicalRelations.LIESWITHIN]) {
+            for (const target_ of document.resource.relations[ImageRelations.DEPICTS]) {
                 const target = lookup[target_];
                 if (target === undefined
-                    || (target.resource.category !== 'Type' && target.resource.category !== 'TypeCatalog')) {
+                    || !target.resource.relations[ImageRelations.ISDEPICTEDIN].includes(document.resource.id)) {
                     throw [ImportCatalogErrors.INVALID_RELATIONS];
                 }
             }

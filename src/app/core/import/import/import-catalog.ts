@@ -53,19 +53,22 @@ export function buildImportCatalogFunction(services: ImportCatalogServices,
 
         try {
             assertProjectAlwaysTheSame(importDocuments);
-            const [existingDocuments, existingDocumentsRelatedImages] =
-                await getExistingCatalogDocuments(services, importDocuments);
+            const [
+                existingCatalogDocuments,
+                existingDocumentsRelatedImages,
+                existingCatalogAndImageDocuments
+            ] = await getExistingCatalogDocuments(services, importDocuments);
 
             assertRelationsValid(importDocuments);
-            assertNoDeletionOfRelatedTypes(Object.values(existingDocuments), importDocuments);
+            assertNoDeletionOfRelatedTypes(Object.values(existingCatalogDocuments), importDocuments);
 
             const updateDocuments = await asyncMap(importDocuments,
-                importOneDocument(services.datastore, context, existingDocuments));
+                importOneDocument(services, context, existingCatalogAndImageDocuments));
 
             await removeRelatedImages(
                 services, updateDocuments, existingDocumentsRelatedImages);
             await removeObsoleteCatalogDocuments(
-                services, Object.values(existingDocuments), updateDocuments);
+                services, Object.values(existingCatalogDocuments), updateDocuments);
             return { errors: [], successfulImports: updateDocuments.length };
 
         } catch (errWithParams) {
@@ -99,9 +102,10 @@ async function removeRelatedImages(services: ImportCatalogServices,
                                    updateDocuments: Array<Document>,
                                    existingDocumentsRelatedImages: Array<Document>) {
 
-    const updateDocumentRelatedImages =
-        await services.imageRelationsManager.getLinkedImages(updateDocuments);
-    const diffImages = subtract(on(RESOURCE_ID_PATH), updateDocumentRelatedImages)(existingDocumentsRelatedImages);
+    const updateImages = updateDocuments
+        .filter(_ => _.resource.category !== 'Type' && _.resource.category !== 'TypeCatalog');
+
+    const diffImages = subtract(on(RESOURCE_ID_PATH), updateImages)(existingDocumentsRelatedImages);
     for (const diff of diffImages) {
         // TODO make sure it was connected to only this catalog, and not maybe to some other catalog from the same original user, for example
         await services.imagestore.remove(diff.resource.id);
@@ -126,23 +130,26 @@ function assertNoDeletionOfRelatedTypes(existingDocuments: Array<Document>,
 
 
 async function getExistingCatalogDocuments(services: ImportCatalogServices,
-                                           importDocuments: Array<Document>): Promise<[Lookup<Document>, Array<Document>]> {
+                                           importDocuments: Array<Document>)
+    : Promise<[Lookup<Document>, Array<Document>, Lookup<Document>]> {
 
     const typeCatalogDocuments =
         importDocuments.filter(_ => _.resource.category === 'TypeCatalog');
     if (typeCatalogDocuments.length !== 1) throw [ImportCatalogErrors.NO_OR_TOO_MANY_TYPE_CATALOG_DOCUMENTS];
     const typeCatalogDocument = typeCatalogDocuments[0];
 
-    const existingDocuments = makeDocumentsLookup(
-        await services.relationsManager.get(typeCatalogDocument.resource.id, { descendants: true }));
+    const catalogDocuments = await services.relationsManager.get(typeCatalogDocument.resource.id, { descendants: true });
+    const imageDocuments = await services.imageRelationsManager.getLinkedImages(catalogDocuments);
+
     return [
-        existingDocuments,
-        await services.imageRelationsManager.getLinkedImages(Object.values(existingDocuments))
+        makeDocumentsLookup(catalogDocuments),
+        imageDocuments,
+        makeDocumentsLookup(catalogDocuments.concat(imageDocuments)) // TODO write test
     ];
 }
 
 
-function importOneDocument(datastore: DocumentDatastore,
+function importOneDocument(services: ImportCatalogServices,
                            context: ImportCatalogContext,
                            existingDocuments: Lookup<Document>) {
 
@@ -158,12 +165,16 @@ function importOneDocument(datastore: DocumentDatastore,
         if (document.project === context.selectedProject) delete updateDocument.project;
 
         if (existingDocument) {
-            const oldRelations = clone(existingDocument.resource.relations[TypeRelations.HASINSTANCE]);
-            updateDocument.resource = clone(document.resource);
-            updateDocument.resource.relations[TypeRelations.HASINSTANCE] = oldRelations;
-            await datastore.update(updateDocument, context.username);
+            if (existingDocument.resource.category === 'Type' || existingDocument.resource.category === 'TypeCatalog') {
+                const oldRelations = clone(existingDocument.resource.relations[TypeRelations.HASINSTANCE]);
+                updateDocument.resource = clone(document.resource);
+                updateDocument.resource.relations[TypeRelations.HASINSTANCE] = oldRelations;
+            } else {
+                updateDocument.resource = clone(document.resource);
+            }
+            await services.datastore.update(updateDocument, context.username);
         } else {
-            await datastore.create(updateDocument, context.username);
+            await services.datastore.create(updateDocument, context.username);
         }
 
         return updateDocument;

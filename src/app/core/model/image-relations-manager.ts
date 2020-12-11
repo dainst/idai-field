@@ -36,7 +36,6 @@ export class ImageRelationsManager {
     }
 
 
-    // TODO review usages
     public async getLinkedImages(documents: Array<Document>,
                                  onlyExclusivelyRelated: boolean = false): Promise<Array<Document>> {
 

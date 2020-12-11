@@ -99,13 +99,10 @@ async function removeObsoleteCatalogDocuments(services: ImportCatalogServices,
 
 
 async function removeRelatedImages(services: ImportCatalogServices,
-                                   updateDocuments: Array<Document>,
+                                   updateDocuments: Array<Document>, // contains non image docs, but does not matter
                                    existingDocumentsRelatedImages: Array<Document>) {
 
-    const updateImages = updateDocuments
-        .filter(_ => _.resource.category !== 'Type' && _.resource.category !== 'TypeCatalog');
-
-    const diffImages = subtract(on(RESOURCE_ID_PATH), updateImages)(existingDocumentsRelatedImages);
+    const diffImages = subtract(on(RESOURCE_ID_PATH), updateDocuments)(existingDocumentsRelatedImages);
     for (const diff of diffImages) {
         // TODO make sure it was connected to only this catalog, and not maybe to some other catalog from the same original user, for example
         await services.imagestore.remove(diff.resource.id);

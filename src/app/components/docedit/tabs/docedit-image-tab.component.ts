@@ -7,6 +7,7 @@ import {ImageGridComponent} from '../../image/grid/image-grid.component';
 import {ImageReadDatastore} from '../../../core/datastore/field/image-read-datastore';
 import {SortUtil} from '../../../core/util/sort-util';
 import {MenuContext, MenuService} from '../../menu-service';
+import {ImageRelations} from '../../../core/model/relation-constants';
 
 @Component({
     selector: 'docedit-image-tab',
@@ -35,7 +36,7 @@ export class DoceditImageTabComponent {
     ngOnChanges() {
 
         if (!this.document) return;
-        if (this.document.resource.relations['isDepictedIn']) {
+        if (this.document.resource.relations[ImageRelations.ISDEPICTEDIN]) {
             this.loadImages();
         }
     }
@@ -59,7 +60,7 @@ export class DoceditImageTabComponent {
 
     public removeLinks() {
 
-        const isDepictedIn = this.document.resource.relations['isDepictedIn'];
+        const isDepictedIn = this.document.resource.relations[ImageRelations.ISDEPICTEDIN];
         const targetsToRemove = [] as any;
 
         for (let target of isDepictedIn) {
@@ -75,7 +76,7 @@ export class DoceditImageTabComponent {
         }
 
         if (isDepictedIn.length == 0) {
-            this.document.resource.relations['isDepictedIn'] = [];
+            this.document.resource.relations[ImageRelations.ISDEPICTEDIN] = [];
             this.documents = [];
             this.clearSelection();
         } else {
@@ -94,7 +95,7 @@ export class DoceditImageTabComponent {
 
     public isMainImage(imageDocument: ImageDocument): boolean {
 
-        return imageDocument.resource.id === this.document.resource.relations['isDepictedIn'][0];
+        return imageDocument.resource.id === this.document.resource.relations[ImageRelations.ISDEPICTEDIN][0];
     }
 
 
@@ -110,8 +111,8 @@ export class DoceditImageTabComponent {
 
         const mainImageId: string = this.selected[0].resource.id;
 
-        this.document.resource.relations['isDepictedIn'] = [mainImageId].concat(
-            this.document.resource.relations['isDepictedIn'].filter(targetId => {
+        this.document.resource.relations[ImageRelations.ISDEPICTEDIN] = [mainImageId].concat(
+            this.document.resource.relations[ImageRelations.ISDEPICTEDIN].filter(targetId => {
                 return targetId !== mainImageId;
             })
         );
@@ -124,7 +125,7 @@ export class DoceditImageTabComponent {
 
         const imageDocPromises: any[] = [];
         this.documents = [];
-        this.document.resource.relations['isDepictedIn'].forEach(id => {
+        this.document.resource.relations[ImageRelations.ISDEPICTEDIN].forEach(id => {
             imageDocPromises.push(this.datastore.get(id));
         });
 
@@ -140,8 +141,8 @@ export class DoceditImageTabComponent {
 
     private addIsDepictedInRelations(imageDocuments: ImageDocument[]) {
 
-        const relations = this.document.resource.relations['isDepictedIn']
-            ? this.document.resource.relations['isDepictedIn'].slice() : [];
+        const relations = this.document.resource.relations[ImageRelations.ISDEPICTEDIN]
+            ? this.document.resource.relations[ImageRelations.ISDEPICTEDIN].slice() : [];
 
         for (let i in imageDocuments) {
             if (relations.indexOf(imageDocuments[i].resource.id as any) == -1) {
@@ -149,7 +150,7 @@ export class DoceditImageTabComponent {
             }
         }
 
-        this.document.resource.relations['isDepictedIn'] = relations;
+        this.document.resource.relations[ImageRelations.ISDEPICTEDIN] = relations;
 
         this.loadImages();
     }

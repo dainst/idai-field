@@ -73,7 +73,7 @@ export class ResourceDeletion {
     private static isImportedCatalog(document: FieldDocument) {
 
         return ProjectCategories.getTypeCategoryNames().includes(document.resource.category)
-            && document.resource.project !== undefined;
+            && document.project !== undefined;
     }
 
 

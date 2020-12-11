@@ -151,7 +151,8 @@ export class ImagePickerComponent implements OnInit {
             offset: this.currentOffset,
             categories: ProjectCategories.getImageCategoryNames(this.projectConfiguration.getCategoryTreelist()),
             constraints: {
-                'depicts:contain': { value: this.document.resource.id, subtract: true }
+                'depicts:contain': { value: this.document.resource.id, subtract: true },
+                'project:exist': { value: 'KNOWN', subtract: true } // TODO review and or test
             },
             id: this.currentQueryId
         };

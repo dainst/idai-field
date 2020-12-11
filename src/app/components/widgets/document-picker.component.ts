@@ -110,7 +110,10 @@ export class DocumentPickerComponent implements OnChanges {
         try {
             if (this.getConstraints) this.query.constraints = await this.getConstraints();
             this.query.id = this.currentQueryId;
-            const result = await this.datastore.find(clone(this.query));
+            const clonedQuery = clone(this.query);
+            if (clonedQuery.constraints === undefined) clonedQuery.constraints = {};
+            clonedQuery.constraints['project:exist'] = { value: 'KNOWN', subtract: true}; // TODO review
+            const result = await this.datastore.find(clonedQuery);
             if (result.queryId === this.currentQueryId) this.documents = this.getDocuments(result);
         } catch (msgWithParams) {
             this.messages.add(msgWithParams);

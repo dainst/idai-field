@@ -84,13 +84,17 @@ switch to another level by clicking one of the buttons of the navigation path.
 
 ### Management
 
-Right clicking a resource in the list opens a context menu providing the following options:
+Resources in the list can be selected by clicking; by holding down the Ctrl/Cmd or Shift key, multiple resources
+can be selected simultaneously. Right clicking one or more selected resources in the list opens a context menu
+providing the following options:
 
 * *Edit*: Opens the editor (also available by doubleclicking the resource entry in the list)
-* *Move*: Allows removing the resource from its current context and assigning it to another parent resource
-* *Delete*: Removes the resource after a security check
+* *Move*: Allows removing resources from their current context and assigning them to another parent resource
+* *Delete*: Removes resources after a security check (optionally, you can also delete all images that are
+exclusively linked to the resources you want to delete)
 
-Furthermore, the context menu contains options for creating and editing geometries.
+Furthermore, the context menu contains options for creating and editing geometries. Please note that when
+multiple resources are selected, only the *Move* and *Delete* options are available.
 
 <p align="center"><img src="images/en/resources/context_menu.png" alt="Kontextmenü"/></p>
 

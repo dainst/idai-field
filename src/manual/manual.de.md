@@ -93,16 +93,19 @@ jederzeit per Klick auf einen der Buttons des Navigationspfades in eine andere E
 
 ### Verwaltung
 
-Bei Rechtsklick auf eine Ressource in der Liste öffnet sich ein Kontextmenü, das die folgenden Optionen
-bereitstellt:
+Ressourcen in der Liste können per Klick ausgewählt werden; bei gedrückter Strg/Cmd- oder Shift-Taste lassen
+sich mehrere Ressourcen gleichzeitig selektieren. Nach einem Rechtsklick auf eine oder mehrere ausgewählte
+Ressourcen öffnet sich ein Kontextmenü, das die folgenden Optionen bereitstellt:
 
 * *Bearbeiten*: Öffnet den Editor (alternativ auch per Doppelklick auf den Ressourceneintrag in der Liste
 erreichbar)
-* *Verschieben*: Erlaubt es, die Ressource aus ihrem aktuellen Kontext zu entfernen und einer anderen
+* *Verschieben*: Erlaubt es, Ressourcen aus ihrem aktuellen Kontext zu entfernen und einer anderen
 Ressource unterzuordnen
-* *Löschen*: Entfernt die Ressource nach einer Sicherheitsabfrage
+* *Löschen*: Entfernt Ressourcen nach einer Sicherheitsabfrage (optional können außerdem alle Bilder entfernt werden,
+die ausschließlich mit den zu löschenden Ressourcen verknüpft sind)
 
-Darüber hinaus stellt das Kontextmenü Funktionen zum Anlegen bzw. Bearbeiten von Geometrien bereit.
+Darüber hinaus stellt das Kontextmenü Funktionen zum Anlegen bzw. Bearbeiten von Geometrien bereit. Bitte beachten Sie,
+dass bei Auswahl mehrerer Ressourcen ausschließlich die Optionen *Verschieben* und *Löschen* verfügbar sind.
 
 <p align="center"><img src="images/de/resources/context_menu.png" alt="Kontextmenü"/></p>
 

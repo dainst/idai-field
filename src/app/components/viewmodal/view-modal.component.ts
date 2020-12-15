@@ -46,7 +46,7 @@ i;
     }
 
 
-    public async startEdit(isImageDocument?: boolean) {
+    public async startEdit(isImageDocument?: boolean, activeGroup?: string) {
 
         this.menuService.setContext(MenuContext.DOCEDIT);
 
@@ -56,6 +56,7 @@ i;
         );
         const doceditModalComponent = doceditModalRef.componentInstance;
         doceditModalComponent.setDocument(this.getDocument(isImageDocument), isImageDocument);
+        if (activeGroup) doceditModalComponent.activeGroup = activeGroup;
 
         try {
             const result = await doceditModalRef.result;

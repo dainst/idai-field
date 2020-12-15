@@ -1,4 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {Document, ImageDocument} from 'idai-components-2';
 import {ImageGridComponent} from '../grid/image-grid.component';
@@ -12,6 +13,7 @@ import {ProjectConfiguration} from '../../../core/configuration/project-configur
 import {TabManager} from '../../../core/tabs/tab-manager';
 import {ViewFacade} from '../../../core/resources/view/view-facade';
 import {Messages} from '../../messages/messages';
+import {ImageReadDatastore} from '../../../core/datastore/field/image-read-datastore';
 
 
 @Component({
@@ -33,16 +35,23 @@ export class ImageOverviewComponent implements OnInit {
     public filterOptions: Array<Category> = [];
 
 
-    constructor(public viewFacade: ViewFacade,
+    constructor(route: ActivatedRoute,
+                public viewFacade: ViewFacade,
                 private imageOverviewFacade: ImageOverviewFacade,
+                private imageDatastore: ImageReadDatastore,
                 private messages: Messages,
                 private projectConfiguration: ProjectConfiguration,
                 private tabManager: TabManager,
                 private modalService: NgbModal,
                 private menuService: MenuService) {
 
-        this.imageOverviewFacade.initialize();
+        this.imageOverviewFacade.initialize().then(() => {
+            route.params.subscribe(async (params) => {
+                if (params['id']) this.openConflictResolver(params['id']);
+            });
+        });
     }
+
 
     public increaseNrImagesPerRow = () => this.imageOverviewFacade.increaseNrImagesPerRow();
 
@@ -114,7 +123,7 @@ export class ImageOverviewComponent implements OnInit {
     }
 
 
-    public async showImage(document: ImageDocument) {
+    public async showImage(document: ImageDocument, openConflictResolver: boolean = false) {
 
         this.menuService.setContext(MenuContext.MODAL);
 
@@ -123,9 +132,14 @@ export class ImageOverviewComponent implements OnInit {
             { size: 'lg', backdrop: 'static', keyboard: false }
         );
         await modalRef.componentInstance.initialize(
-            this.getDocuments().filter(document => document.id !== 'droparea'),
+            openConflictResolver
+                ? [document]
+                : this.getDocuments().filter(document => document.id !== 'droparea'),
             document
         );
+        if (openConflictResolver) {
+            await modalRef.componentInstance.startEdit(true, 'conflicts');
+        }
         await modalRef.result;
 
         this.menuService.setContext(MenuContext.DEFAULT);
@@ -140,5 +154,12 @@ export class ImageOverviewComponent implements OnInit {
         }
 
         await this.refreshGrid();
+    }
+
+
+    private async openConflictResolver(id: string) {
+
+        const image: ImageDocument = await this.imageDatastore.get(id);
+        this.showImage(image, true);
     }
 }

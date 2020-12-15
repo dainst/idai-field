@@ -71,7 +71,7 @@ export class RoutingService {
     public async jumpToConflictResolver(document: Document) {
 
         if (this.projectConfiguration.isSubcategory(document.resource.category, 'Image')) {
-            return this.router.navigate(['images', document.resource.id, 'edit', 'conflicts']);
+            return this.router.navigate(['images', 'conflicts', document.resource.id]);
         } else {
             const viewName: 'project'|'types'|string = this.getViewName(document);
             if (this.router.url.includes('resources')) {

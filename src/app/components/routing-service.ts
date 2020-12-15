@@ -70,6 +70,10 @@ export class RoutingService {
     public async jumpToConflictResolver(document: Document) {
 
         if (this.projectConfiguration.isSubcategory(document.resource.category, 'Image')) {
+            if (this.router.url.includes('images')) {
+                // indirect away first to reload the images component, in case you are already there
+                await this.router.navigate(['images']);
+            }
             return this.router.navigate(['images', 'conflicts', document.resource.id]);
         } else {
             const viewName: 'project'|'types'|string = this.getViewName(document);

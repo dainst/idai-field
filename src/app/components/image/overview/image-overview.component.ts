@@ -1,5 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
+import {Location} from '@angular/common';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {Document, ImageDocument} from 'idai-components-2';
 import {ImageGridComponent} from '../grid/image-grid.component';
@@ -36,6 +37,7 @@ export class ImageOverviewComponent implements OnInit {
 
 
     constructor(route: ActivatedRoute,
+                location: Location,
                 public viewFacade: ViewFacade,
                 private imageOverviewFacade: ImageOverviewFacade,
                 private imageDatastore: ImageReadDatastore,
@@ -45,10 +47,12 @@ export class ImageOverviewComponent implements OnInit {
                 private modalService: NgbModal,
                 private menuService: MenuService) {
 
-        this.imageOverviewFacade.initialize().then(() => {
-            route.params.subscribe(async (params) => {
-                if (params['id']) this.openConflictResolver(params['id']);
-            });
+        this.imageOverviewFacade.initialize();
+        route.params.subscribe(async (params) => {
+            if (params['id']) {
+                location.replaceState('images/');
+                await this.openConflictResolver(params['id']);
+            }
         });
     }
 

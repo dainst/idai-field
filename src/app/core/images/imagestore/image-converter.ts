@@ -15,6 +15,10 @@ const TARGET_JPEG_QUALITY = 60;
  * @author F.Z.
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
+ *
+ * The Electron nativeImage module is used per default. If the conversion process fails (which may happen
+ * e. g. for CMYK images), Jimp is used. As Jimp is slower than nativeImage in most cases, it is only
+ * used as a fallback in case the nativeImage conversion doesn't work.
  */
 export class ImageConverter {
 

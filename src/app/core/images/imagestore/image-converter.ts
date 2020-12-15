@@ -6,6 +6,10 @@ const nativeImage = typeof window !== 'undefined'
 const Jimp = typeof window !== 'undefined' ? window.require('jimp') : require('jimp');
 
 
+const TARGET_HEIGHT = 320;
+const TARGET_JPEG_QUALITY = 60;
+
+
 @Injectable()
 /**
  * @author F.Z.
@@ -20,7 +24,7 @@ export class ImageConverter {
 
         const image = this.convertWithElectron(buffer);
         if (!image.isEmpty()) {
-            return image.toJPEG(60);
+            return image.toJPEG(TARGET_JPEG_QUALITY);
         } else {
             try {
                 return await this.convertWithJimp(buffer);
@@ -35,7 +39,7 @@ export class ImageConverter {
     private convertWithElectron(buffer: Buffer) {
 
         return nativeImage.createFromBuffer(buffer)
-            .resize({ height: 320 });
+            .resize({ height: TARGET_HEIGHT });
     }
 
 
@@ -43,8 +47,8 @@ export class ImageConverter {
 
         const image = await Jimp.read(buffer);
 
-        return image.resize(Jimp.AUTO, 320)
-            .quality(60)
+        return image.resize(Jimp.AUTO, TARGET_HEIGHT)
+            .quality(TARGET_JPEG_QUALITY)
             .getBufferAsync(Jimp.MIME_JPEG);
     }
 }

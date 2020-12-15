@@ -108,6 +108,7 @@
     "express-pouchdb": "4.2.0",
     "geojson-rewind": "0.3.1",
     "idai-components-2": "1.47.32",
+    "jimp": "0.9.8",
     "leaflet": "1.6.0",
     "leaflet-imageoverlay-rotated": "0.1.1",
     "moment": "2.22.2",
@@ -188,6 +189,7 @@
     "http": false,
     "fs": false,
     "crypto": false,
-    "child_process": false
+    "child_process": false,
+    "https": false
   }
 }

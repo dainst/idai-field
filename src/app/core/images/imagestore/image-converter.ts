@@ -1,7 +1,9 @@
 import {Injectable} from '@angular/core';
+
 const nativeImage = typeof window !== 'undefined'
-  ? window.require('electron').nativeImage
-  : require('electron').nativeImage;
+    ? window.require('electron').nativeImage
+    : require('electron').nativeImage;
+const Jimp = typeof window !== 'undefined' ? window.require('jimp') : require('jimp');
 
 
 @Injectable()
@@ -12,11 +14,37 @@ const nativeImage = typeof window !== 'undefined'
  */
 export class ImageConverter {
 
-    public convert(data: any): Buffer|undefined {
+    public async convert(data: any): Promise<Buffer> {
 
-        let img = nativeImage.createFromBuffer(Buffer.from(data));
-        img = img.resize({ height: 320 });
+        const buffer: Buffer = Buffer.from(data);
 
-        return img.isEmpty() ? undefined : img.toJPEG(60);
+        const image = this.convertWithElectron(buffer);
+        if (!image.isEmpty()) {
+            return image.toJPEG(60);
+        } else {
+            try {
+                return await this.convertWithJimp(buffer);
+            } catch (err) {
+                console.error('Failed to convert image using jimp:', err);
+                return undefined;
+            }
+        }
+    }
+
+
+    private convertWithElectron(buffer: Buffer) {
+
+        return nativeImage.createFromBuffer(buffer)
+            .resize({ height: 320 });
+    }
+
+
+    private async convertWithJimp(buffer: Buffer) {
+
+        const image = await Jimp.read(buffer);
+
+        return image.resize(Jimp.AUTO, 320)
+            .quality(60)
+            .getBufferAsync(Jimp.MIME_JPEG);
     }
 }

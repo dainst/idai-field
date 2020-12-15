@@ -60,7 +60,7 @@ export class SampleDataLoader {
 
     private async createThumbnail(filePath: string, fileName: string, db: any) {
 
-        const buffer: Buffer = this.imageConverter.convert(fs.readFileSync(filePath + fileName)) as Buffer;
+        const buffer: Buffer = await this.imageConverter.convert(fs.readFileSync(filePath + fileName)) as Buffer;
         const imageDocument: ImageDocument = await db.get(fileName);
 
         await db.putAttachment(

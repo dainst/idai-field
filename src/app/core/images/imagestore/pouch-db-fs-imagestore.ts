@@ -234,9 +234,9 @@ export class PouchDbFsImagestore /* implements Imagestore */{
     }
 
 
-    private putAttachment(data: any, key: any, documentExists: boolean) {
+    private async putAttachment(data: any, key: any, documentExists: boolean) {
 
-        const buffer: Buffer|undefined = this.converter.convert(data);
+        const buffer: Buffer|undefined = await this.converter.convert(data);
 
         if (!buffer) {
             return Promise.reject('Failed to create thumbnail for image document ' + key);
@@ -285,7 +285,7 @@ export class PouchDbFsImagestore /* implements Imagestore */{
         console.debug('Recreating thumbnail for image:', key);
 
         const originalImageData = await this.readOriginal(key);
-        return this.putAttachment(originalImageData, key, true);
+        return await this.putAttachment(originalImageData, key, true);
     }
 
 

@@ -8,7 +8,6 @@ import {ViewFacade} from '../core/resources/view/view-facade';
 import {ProjectConfiguration} from '../core/configuration/project-configuration';
 import {MenuContext, MenuService} from './menu-service';
 import {ProjectsModalComponent} from './navbar/projects-modal.component';
-import {SettingsService} from '../core/settings/settings-service';
 import {DatastoreErrors} from '../core/datastore/model/datastore-errors';
 import {ProjectCategories} from '../core/configuration/project-categories';
 import {SettingsProvider} from '../core/settings/settings-provider';

@@ -7,6 +7,8 @@ import {ImageRelationsManager} from '../../model/image-relations-manager';
 
 const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
 const archiver = typeof window !== 'undefined' ? window.require('archiver') : require('archiver');
+const remote = typeof window !== 'undefined' ? window.require('electron').remote : require('electron').remote;
+
 const archive = archiver('zip');
 
 export module CatalogExporter {
@@ -21,44 +23,51 @@ export module CatalogExporter {
         const [exportDocuments, imageResourceIds] =
             await getExportDocuments(datastore, relationsManager, imageRelationsManager, catalogId, settings.selectedProject);
 
-        const basePath = outputFilePath
-            .slice(0, outputFilePath.lastIndexOf('.')) + '-images/';
+        const tmpBaseDir = remote.app.getPath('appData') + '/' + remote.app.getName() + '/temp/';
+        const tmpDir = tmpBaseDir + 'catalog-export/';
 
-        copyImageFiles(basePath, imageResourceIds, settings);
+        try {
+            const imgDir = tmpDir + 'images/';
 
-        fs.writeFileSync(
-            outputFilePath,
-            exportDocuments
-                .map(stringify)
-                .join('\n')
-        );
+            fs.rmdirSync(tmpDir, { recursive: true });
+            fs.mkdirSync(imgDir, { recursive: true });
 
-        const outputZipPath = outputFilePath
-            .slice(0, outputFilePath.lastIndexOf('.'));
-        const output = fs.createWriteStream(outputZipPath + '.zip');
-        // output.on('close', function () {});
-        archive.on('error', function(err){
-            console.log("error from archiver", err);
-            throw err;
-        });
-        archive.pipe(output);
-        archive.file(outputFilePath, { name: 'catalog.jsonl' });
-        archive.directory(basePath, 'images');
-        archive.finalize();
+            copyImageFiles(imgDir, imageResourceIds, settings);
+
+            fs.writeFileSync(
+                tmpDir + 'catalog.jsonl',
+                exportDocuments
+                    .map(stringify)
+                    .join('\n')
+            );
+
+            const output = fs.createWriteStream(outputFilePath);
+            archive.on('error', function (err) {
+                throw err;
+            });
+            output.on('close', () => {
+                console.log("closed")
+                fs.rmdirSync(tmpDir, { recursive: true });
+            })
+            archive.pipe(output);
+            archive.file(tmpDir + 'catalog.jsonl', { name: 'catalog.jsonl' });
+            archive.directory(tmpDir + 'images', 'images');
+            archive.finalize();
+
+        } catch (error) {
+            throw ['catalog exporter error', error]; // TODO make error constant
+        }
     }
 
 
-    function copyImageFiles(basePath: string,
+    function copyImageFiles(imagesTargetPath: string,
                             imageResourceIds: Array<ResourceId>,
                             settings: Settings) {
-
-        if (!fs.existsSync(basePath)) fs.mkdirSync(basePath);
 
         for (let image of imageResourceIds) {
             const source = settings.imagestorePath
                 + settings.selectedProject + '/' + image;
-            const target = basePath + image;
-            fs.copyFileSync(source, target);
+            fs.copyFileSync(source, imagesTargetPath + image);
         }
     }
 }

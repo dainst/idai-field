@@ -18,12 +18,10 @@ export class CatalogFilesystemReader implements Reader {
      * maybe we put the files in a tmp folder under the project images dir
      * then we can check them later in import catalog
      */
-
     public go(): Promise<string> {
 
         return new Promise(async (resolve, reject) => {
 
-            // TODO review duplication
             const tmpBaseDir = remote.app.getPath('appData') + '/' + remote.app.getName() + '/temp/';
             const tmpDir = tmpBaseDir + 'catalog-import/';
             const imgDir = tmpDir + 'images/';
@@ -31,24 +29,22 @@ export class CatalogFilesystemReader implements Reader {
             fs.mkdirSync(imgDir, { recursive: true });
 
             try {
-
                 await extract(this.file.path, { dir: tmpDir });
 
-                const imagesFolder = fs.readdirSync(imgDir);
-                const data = fs.readFileSync(tmpDir + 'catalog.jsonl', 'utf-8');
+                const targetDir = this.settings.imagestorePath
+                    + this.settings.selectedProject
+                    + '/';
+                if (!fs.existsSync(targetDir)) fs.mkdirSync(targetDir);
 
-                for (let imageFile of imagesFolder) {
-                    const source = imgDir + imageFile;
-                    const target = this.settings.imagestorePath
-                        + this.settings.selectedProject
-                        + '/';
-                    if (!fs.existsSync(target)) fs.mkdirSync(target);
-                    fs.copyFileSync(source, target + imageFile);
+                for (let imageFile of fs.readdirSync(imgDir)) {
+                    fs.copyFileSync(
+                        imgDir + imageFile,
+                        targetDir + imageFile
+                    );
                 }
 
-                resolve(data);
+                resolve(fs.readFileSync(tmpDir + 'catalog.jsonl', 'utf-8'));
             } catch (err) {
-                console.log("err", err)
                 reject([ReaderErrors.SHAPEFILE_GENERIC]); // TODO use other error
             } finally {
                 fs.rmdirSync(tmpDir, { recursive: true });

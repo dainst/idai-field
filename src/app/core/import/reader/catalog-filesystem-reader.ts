@@ -3,6 +3,7 @@ import {ReaderErrors} from './reader-errors';
 import {Settings} from '../../settings/settings';
 
 const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
+const extract = typeof window !== 'undefined' ? window.require('extract-zip') : require('extract-zip');
 
 
 /**
@@ -26,11 +27,16 @@ export class CatalogFilesystemReader implements Reader {
                 .slice(0, this.file.path.lastIndexOf('.')) + '/'; // TODO review code duplication with catalog exporter
 
             try {
-                const folder = fs.readdirSync(basePath);
-                const data = fs.readFileSync(this.file.path, 'utf-8');
 
-                for (let file of folder) {
-                    const source = basePath + file;
+                const outputDir = this.file.path
+                    .slice(0, this.file.path.lastIndexOf('.'));
+                await extract(this.file.path, { dir: outputDir });
+
+                const imagesFolder = fs.readdirSync(basePath + 'images');
+                const data = fs.readFileSync(basePath + 'catalog.jsonl', 'utf-8');
+
+                for (let file of imagesFolder) {
+                    const source = basePath + 'images/' + file;
                     const target = this.settings.imagestorePath
                         + this.settings.selectedProject
                         + '/';
@@ -40,6 +46,7 @@ export class CatalogFilesystemReader implements Reader {
 
                 resolve(data);
             } catch (err) {
+                console.log("err", err)
                 reject([ReaderErrors.SHAPEFILE_GENERIC]); // TODO use other error
             }
         });

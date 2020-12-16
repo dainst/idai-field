@@ -107,6 +107,7 @@
     "express": "4.17.1",
     "express-basic-auth": "1.2.0",
     "express-pouchdb": "4.2.0",
+    "extract-zip": "2.0.1",
     "geojson-rewind": "0.3.1",
     "idai-components-2": "1.47.32",
     "jimp": "0.9.8",
@@ -191,6 +192,7 @@
     "fs": false,
     "fs-constants": false,
     "graceful-fs": false,
+    "extract-zip": false,
     "crypto": false,
     "child_process": false,
     "https": false

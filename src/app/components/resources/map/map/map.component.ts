@@ -396,9 +396,18 @@ export class MapComponent implements AfterViewInit, OnChanges {
 
     private focusSelection() {
 
-        const bounds: any[] = [];
-        this.getSelection().forEach(document => this.addToBounds(document, bounds));
-        this.map.fitBounds(bounds);
+        const selection: Array<FieldDocument> = this.getSelection();
+        const geometryDocuments: Array<FieldDocument> = selection.filter(MapComponent.getGeometry);
+        if (geometryDocuments.length === 1 && geometryDocuments[0].resource.geometry.type === 'Point') {
+            this.map.panTo(
+                this.markers[geometryDocuments[0].resource.id][0].getLatLng(),
+                { animate: true, easeLinearity: 0.3 }
+            );
+        } else {
+            const bounds: any[] = [];
+            selection.forEach(document => this.addToBounds(document, bounds));
+            this.map.fitBounds(bounds);
+        }
     }
 
 
@@ -418,10 +427,6 @@ export class MapComponent implements AfterViewInit, OnChanges {
 
     private addMarkersToBounds(markers: Array<L.CircleMarker>, bounds: any[]) {
 
-        // TODO Make this work again
-        //if (markers.length === 1) {
-        //    this.map.panTo(markers[0].getLatLng(), { animate: true, easeLinearity: 0.3 });
-        //} else {
         for (let marker of markers) {
             bounds.push(marker.getLatLng());
         }

@@ -36,8 +36,9 @@ export type PopoverMenu = 'none'|'info'|'children';
 export class ResourcesComponent implements OnDestroy {
 
     public activePopoverMenu: PopoverMenu = 'none';
-
     public filterOptions: Array<Category> = [];
+    public additionalSelectedDocuments: Array<FieldDocument> = [];
+
     private clickEventObservers: Array<any> = [];
 
     private deselectionSubscription: Subscription;
@@ -319,6 +320,18 @@ export class ResourcesComponent implements OnDestroy {
 
         this.viewFacade.setLimitSearchResults(false);
         await this.viewFacade.populateDocumentList();
+    }
+
+
+    public toggleAdditionalSelected(document: FieldDocument, allowDeselection: boolean) {
+
+        if (this.additionalSelectedDocuments.includes(document)) {
+            if (!allowDeselection) return;
+            this.additionalSelectedDocuments = this.additionalSelectedDocuments.filter(doc => doc !== document);
+        } else {
+            this.additionalSelectedDocuments.push(document);
+            this.additionalSelectedDocuments = this.additionalSelectedDocuments.slice();
+        }
     }
 
 

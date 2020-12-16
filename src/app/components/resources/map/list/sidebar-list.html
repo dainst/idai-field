@@ -13,7 +13,7 @@
             [class.new-from-remote]="viewFacade.isNewDocumentFromRemote(document)"
             [class.conflicted]="document['_conflicts']"
             [class.selected]="selectedDocument?.resource.id === document.resource.id"
-            [class.additional-selected]="additionalSelectedDocuments?.includes(document)"
+            [class.additional-selected]="resourcesComponent.additionalSelectedDocuments?.includes(document)"
             [id]="'resource-' + document.resource.identifier">
 
             <document-teaser (click)="select(document, $event)"

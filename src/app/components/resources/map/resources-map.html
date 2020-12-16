@@ -10,6 +10,7 @@
          [class.no-zoom-buttons]="isPopoverMenuOpened() && viewFacade.getSelectedDocument()">
         <editable-map [documents]="viewFacade.getDocuments()"
                       [selectedDocument]="viewFacade.getSelectedDocument()"
+                      [additionalSelectedDocuments]="resourcesComponent.additionalSelectedDocuments"
                       [parentDocument]="parentDocument"
                       [coordinateReferenceSystem]="coordinateReferenceSystem"
                       [viewName]="viewFacade.getView()"

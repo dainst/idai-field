@@ -31,7 +31,6 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
     @ViewChild('sidebar', { static: false }) sidebarElement: ElementRef;
 
     public contextMenu: ContextMenu = new ContextMenu();
-    public additionalSelectedDocuments: Array<FieldDocument> = [];
 
     private lastSelectedDocument: FieldDocument|undefined;
 
@@ -66,7 +65,7 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
 
     ngOnChanges(): void {
 
-        this.additionalSelectedDocuments = [];
+        this.resourcesComponent.additionalSelectedDocuments = [];
         this.lastSelectedDocument = undefined;
         this.scrollTo(this.selectedDocument);
     }
@@ -105,10 +104,10 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
             this.selectBetween(this.lastSelectedDocument, document);
             this.lastSelectedDocument = document;
         } else if ((event.metaKey || event.ctrlKey) && this.selectedDocument && document !== this.selectedDocument) {
-            this.toggleAdditionalSelected(document, allowDeselection);
+            this.resourcesComponent.toggleAdditionalSelected(document, allowDeselection);
             this.lastSelectedDocument = document;
         } else if (allowDeselection || !this.isPartOfSelection(document)) {
-            this.additionalSelectedDocuments = [];
+            this.resourcesComponent.additionalSelectedDocuments = [];
             await this.resourcesComponent.select(document);
         }
     }
@@ -117,7 +116,7 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
     public getSelection(): Array<FieldDocument> {
 
         return this.selectedDocument
-            ? [this.selectedDocument].concat(this.additionalSelectedDocuments)
+            ? [this.selectedDocument].concat(this.resourcesComponent.additionalSelectedDocuments)
             : [];
     }
 
@@ -199,27 +198,20 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
 
         for (let i = Math.min(index1, index2); i <= Math.max(index1, index2); i++) {
             const document: FieldDocument = documents[i];
-            if (this.selectedDocument !== document && !this.additionalSelectedDocuments.includes(document)) {
-                this.additionalSelectedDocuments.push(document);
+            if (this.selectedDocument !== document
+                    && !this.resourcesComponent.additionalSelectedDocuments.includes(document)) {
+                this.resourcesComponent.additionalSelectedDocuments.push(document);
             }
         }
-    }
-
-
-    private toggleAdditionalSelected(document: FieldDocument, allowDeselection: boolean) {
-
-        if (this.additionalSelectedDocuments.includes(document)) {
-            if (!allowDeselection) return;
-            this.additionalSelectedDocuments = this.additionalSelectedDocuments.filter(doc => doc !== document);
-        } else {
-            this.additionalSelectedDocuments.push(document);
-        }
+        this.resourcesComponent.additionalSelectedDocuments
+            = this.resourcesComponent.additionalSelectedDocuments.slice();
     }
 
 
     private isPartOfSelection(document: FieldDocument): boolean {
 
-        return document === this.selectedDocument || this.additionalSelectedDocuments.includes(document);
+        return document === this.selectedDocument
+            || this.resourcesComponent.additionalSelectedDocuments.includes(document);
     }
 
 

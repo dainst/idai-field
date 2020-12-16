@@ -30,9 +30,6 @@ export class CatalogFilesystemReader implements Reader {
             fs.rmdirSync(tmpDir, { recursive: true });
             fs.mkdirSync(imgDir, { recursive: true });
 
-            const basePath = this.file.path
-                .slice(0, this.file.path.lastIndexOf('.')) + '/'; // TODO review code duplication with catalog exporter
-
             try {
 
                 await extract(this.file.path, { dir: tmpDir });

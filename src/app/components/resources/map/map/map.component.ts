@@ -304,12 +304,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
 
         const mapComponent = this;
         marker.on('click', function(event: any) {
-            if (mapComponent.select(
-                this.document,
-                event.originalEvent.metaKey || event.originalEvent.ctrlKey
-            )) {
-                L.DomEvent.stop(event);
-            }
+            mapComponent.onGeometryClick(event, this.document);
         });
 
         if (!this.markers[document.resource.id]) this.markers[document.resource.id] = [];
@@ -381,12 +376,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
 
         const mapComponent = this;
         path.on('click', function (event: any) {
-            if (mapComponent.select(
-                this.document,
-                event.originalEvent.metaKey || event.originalEvent.ctrlKey
-            )) {
-                L.DomEvent.stop(event);
-            }
+            mapComponent.onGeometryClick(event, this.document);
         });
     }
 
@@ -460,6 +450,17 @@ export class MapComponent implements AfterViewInit, OnChanges {
     protected clickOnMap(clickPosition: L.LatLng) {
 
         this.deselect();
+    }
+
+
+    private onGeometryClick(event: any, document: FieldDocument) {
+
+        if (this.select(
+            document,
+            event.originalEvent.metaKey || event.originalEvent.ctrlKey
+        )) {
+            L.DomEvent.stop(event);
+        }
     }
 
 

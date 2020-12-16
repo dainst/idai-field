@@ -27,14 +27,13 @@ export class CatalogFilesystemReader implements Reader {
             const imgDir = tmpDir + 'images/';
             fs.rmdirSync(tmpDir, { recursive: true });
             fs.mkdirSync(imgDir, { recursive: true });
+            const targetDir = this.settings.imagestorePath
+                + this.settings.selectedProject
+                + '/';
+            if (!fs.existsSync(targetDir)) fs.mkdirSync(targetDir);
 
             try {
                 await extract(this.file.path, { dir: tmpDir });
-
-                const targetDir = this.settings.imagestorePath
-                    + this.settings.selectedProject
-                    + '/';
-                if (!fs.existsSync(targetDir)) fs.mkdirSync(targetDir);
 
                 for (let imageFile of fs.readdirSync(imgDir)) {
                     fs.copyFileSync(

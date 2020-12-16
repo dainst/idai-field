@@ -16,7 +16,7 @@
                       [viewName]="viewFacade.getView()"
                       [isEditing]="isEditingGeometry()"
                       [update]="viewFacade.isReady()"
-                      (onSelectDocument)="select($event)"
+                      (onSelectDocument)="select($event.document, $event.multiSelect)"
                       (onQuitEditing)="quitEditing($event)"></editable-map>
     </div>
 </div>

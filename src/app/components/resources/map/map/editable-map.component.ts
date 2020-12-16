@@ -431,11 +431,11 @@ export class EditableMapComponent extends LayerMapComponent {
     }
 
 
-    protected select(document: FieldDocument): boolean {
+    protected select(document: FieldDocument, multiSelect: boolean = false): boolean {
 
         return this.isEditing
             ? false
-            : super.select(document);
+            : super.select(document, multiSelect);
     }
 
 

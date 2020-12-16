@@ -76,12 +76,14 @@ export class ResourcesMapComponent {
     }
 
 
-    public async select(document: FieldDocument|undefined) {
+    public async select(document: FieldDocument|undefined, multiSelect: boolean) {
 
-        if (document) {
+        if (!document) return this.viewFacade.deselect();
+
+        if (!multiSelect || !this.viewFacade.getSelectedDocument()) {
             await this.viewFacade.setSelectedDocument(document.resource.id, false);
-        } else {
-            this.viewFacade.deselect();
+        } if (document !== this.viewFacade.getSelectedDocument()) {
+            this.resourcesComponent.toggleAdditionalSelected(document, true);
         }
     }
 

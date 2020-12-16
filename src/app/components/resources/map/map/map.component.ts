@@ -26,8 +26,8 @@ export class MapComponent implements AfterViewInit, OnChanges {
     @Input() coordinateReferenceSystem: string;
     @Input() update: boolean;
 
-    @Output() onSelectDocument: EventEmitter<FieldDocument|undefined>
-        = new EventEmitter<FieldDocument|undefined>();
+    @Output() onSelectDocument: EventEmitter<{ document: FieldDocument|undefined, multiSelect: boolean }>
+        = new EventEmitter<{ document: FieldDocument|undefined, multiSelect: boolean }>();
 
     protected map: any;
     protected polygons: { [resourceId: string]: Array<FieldPolygon> } = {};
@@ -303,8 +303,8 @@ export class MapComponent implements AfterViewInit, OnChanges {
         });
 
         const mapComponent = this;
-        marker.on('click', function() {
-            mapComponent.select(this.document);
+        marker.on('click', function(event: any) {
+            mapComponent.onGeometryClick(event, this.document);
         });
 
         if (!this.markers[document.resource.id]) this.markers[document.resource.id] = [];
@@ -375,8 +375,8 @@ export class MapComponent implements AfterViewInit, OnChanges {
         });
 
         const mapComponent = this;
-        path.on('click', function (event: L.Event) {
-            if (mapComponent.select(this.document)) L.DomEvent.stop(event);
+        path.on('click', function (event: any) {
+            mapComponent.onGeometryClick(event, this.document);
         });
     }
 
@@ -453,10 +453,21 @@ export class MapComponent implements AfterViewInit, OnChanges {
     }
 
 
-    protected select(document: FieldDocument): boolean {
+    private onGeometryClick(event: any, document: FieldDocument) {
+
+        if (this.select(
+            document,
+            event.originalEvent.metaKey || event.originalEvent.ctrlKey
+        )) {
+            L.DomEvent.stop(event);
+        }
+    }
+
+
+    protected select(document: FieldDocument, multiSelect: boolean): boolean {
 
         this.zone.run(() => {
-            this.onSelectDocument.emit(document);
+            this.onSelectDocument.emit({ document: document, multiSelect: multiSelect });
         });
 
         return true;
@@ -466,7 +477,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
     protected deselect() {
 
         this.zone.run(() => {
-            this.onSelectDocument.emit(undefined);
+            this.onSelectDocument.emit({ document: undefined, multiSelect: false } );
         });
     }
 

@@ -1,10 +1,13 @@
 import {Reader} from './reader';
 import {ReaderErrors} from './reader-errors';
 import {Settings} from '../../settings/settings';
+import {APP_DATA, CATALOG_IMAGES, CATALOG_JSONL, TEMP} from '../../export/catalog/catalog-exporter';
 
 const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
 const extract = typeof window !== 'undefined' ? window.require('extract-zip') : require('extract-zip');
 const remote = typeof window !== 'undefined' ? window.require('electron').remote : require('electron').remote;
+
+const UTF8 = 'utf-8';
 
 /**
  * @author Daniel de Oliveira
@@ -22,9 +25,9 @@ export class CatalogFilesystemReader implements Reader {
 
         return new Promise(async (resolve, reject) => {
 
-            const tmpBaseDir = remote.app.getPath('appData') + '/' + remote.app.getName() + '/temp/';
+            const tmpBaseDir = remote.app.getPath(APP_DATA) + '/' + remote.app.getName() + '/' + TEMP + '/';
             const tmpDir = tmpBaseDir + 'catalog-import/';
-            const imgDir = tmpDir + 'images/';
+            const imgDir = tmpDir + CATALOG_IMAGES + '/';
             fs.rmdirSync(tmpDir, { recursive: true });
             fs.mkdirSync(imgDir, { recursive: true });
             const targetDir = this.settings.imagestorePath
@@ -42,7 +45,7 @@ export class CatalogFilesystemReader implements Reader {
                     );
                 }
 
-                resolve(fs.readFileSync(tmpDir + 'catalog.jsonl', 'utf-8')); // TODO reuse const from catalog-exporter
+                resolve(fs.readFileSync(tmpDir + CATALOG_JSONL, UTF8));
             } catch (err) {
                 reject([ReaderErrors.SHAPEFILE_GENERIC]); // TODO use other error
             } finally {

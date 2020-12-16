@@ -11,7 +11,10 @@ const remote = typeof window !== 'undefined' ? window.require('electron').remote
 
 const archive = archiver('zip');
 
-const CATALOG_JSONL = 'catalog.jsonl'
+export const CATALOG_JSONL = 'catalog.jsonl'
+export const CATALOG_IMAGES = 'images';
+export const TEMP = 'temp';
+export const APP_DATA = 'appData';
 
 export module CatalogExporter {
 
@@ -25,9 +28,9 @@ export module CatalogExporter {
         const [exportDocuments, imageResourceIds] =
             await getExportDocuments(datastore, relationsManager, imageRelationsManager, catalogId, settings.selectedProject);
 
-        const tmpBaseDir = remote.app.getPath('appData') + '/' + remote.app.getName() + '/temp/';
+        const tmpBaseDir = remote.app.getPath(APP_DATA) + '/' + remote.app.getName() + '/' + TEMP + '/';
         const tmpDir = tmpBaseDir + 'catalog-export/';
-        const imgDir = tmpDir + 'images/';
+        const imgDir = tmpDir + CATALOG_IMAGES + '/';
 
         try {
 
@@ -65,7 +68,7 @@ export module CatalogExporter {
         output.on('close', onClose);
         archive.pipe(output);
         archive.file(tmpDir + CATALOG_JSONL, { name: CATALOG_JSONL });
-        archive.directory(imgDir, 'images');
+        archive.directory(imgDir, CATALOG_IMAGES);
         archive.finalize();
     }
 

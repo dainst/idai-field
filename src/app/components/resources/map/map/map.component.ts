@@ -1,4 +1,5 @@
 import {AfterViewInit, Component, EventEmitter, Input, NgZone, OnChanges, Output, SimpleChanges} from '@angular/core';
+import {subtract} from 'tsfun';
 import {FieldDocument, FieldResource, FieldGeometry} from 'idai-components-2';
 import {FieldPolyline} from './field-polyline';
 import {FieldPolygon} from './field-polygon';
@@ -20,6 +21,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
 
     @Input() documents: Array<FieldDocument>;
     @Input() selectedDocument: FieldDocument;
+    @Input() additionalSelectedDocuments: Array<FieldDocument>;
     @Input() parentDocument: FieldDocument;
     @Input() coordinateReferenceSystem: string;
     @Input() update: boolean;
@@ -97,9 +99,8 @@ export class MapComponent implements AfterViewInit, OnChanges {
 
         if (!this.update) return Promise.resolve();
 
-        if (changes['selectedDocument'] && (!changes['documents']) && !changes['parentDocument']
-                && !changes['coordinateReferenceSystem']) {
-            this.updateSelectedGeometry(changes['selectedDocument'].previousValue);
+        if (MapComponent.hasOnlySelectionChanged(changes)) {
+            this.updateSelectedGeometries(MapComponent.getPreviousSelection(changes));
         } else {
             this.resetMap();
         }
@@ -116,10 +117,15 @@ export class MapComponent implements AfterViewInit, OnChanges {
     }
 
 
-    private updateSelectedGeometry(previousSelectedDocument: FieldDocument|undefined) {
+    private updateSelectedGeometries(previousSelection: Array<FieldDocument>) {
 
-        if (previousSelectedDocument) this.setSelectionStyle(previousSelectedDocument, false);
-        if (this.selectedDocument) this.setSelectionStyle(this.selectedDocument, true);
+        const selectedDocuments: Array<FieldDocument> = this.getSelection();
+        const deselectedDocuments: Array<FieldDocument> = MapComponent.getDeselectedDocuments(
+            selectedDocuments, previousSelection
+        );
+
+        deselectedDocuments.forEach(deselected => this.setSelectionStyle(deselected, false));
+        selectedDocuments.forEach(selected => this.setSelectionStyle(selected, true));
     }
 
 
@@ -158,14 +164,8 @@ export class MapComponent implements AfterViewInit, OnChanges {
 
     protected setView(): Promise<any> {
 
-        if (this.selectedDocument && MapComponent.getGeometry(this.selectedDocument)) {
-            if (this.polygons[this.selectedDocument.resource.id as any]) {
-                this.focusPolygons(this.polygons[this.selectedDocument.resource.id as any]);
-            } else if (this.polylines[this.selectedDocument.resource.id as any]) {
-                this.focusPolylines(this.polylines[this.selectedDocument.resource.id as any]);
-            } else if (this.markers[this.selectedDocument.resource.id as any]) {
-                this.focusMarkers(this.markers[this.selectedDocument.resource.id as any]);
-            }
+        if (MapComponent.hasGeometries(this.getSelection())) {
+            this.focusSelection();
         } else if (this.bounds.length > 1) {
             this.map.fitBounds(L.latLngBounds(this.bounds));
         } else if (this.bounds.length == 1) {
@@ -360,11 +360,11 @@ export class MapComponent implements AfterViewInit, OnChanges {
         const style: L.PathOptions = {
             color: this.categoryColors[document.resource.category],
             weight: type === 'polyline' ? 2 : 1,
-            opacity: document === this.selectedDocument ? 1 : 0.5
+            opacity: this.getSelection().includes(document) ? 1 : 0.5
         };
 
         if (type === 'polygon') {
-            style.fillOpacity = document === this.selectedDocument ? 0.5 : 0.2;
+            style.fillOpacity = this.getSelection().includes(document) ? 0.5 : 0.2;
         }
 
         path.setStyle(style);
@@ -394,45 +394,63 @@ export class MapComponent implements AfterViewInit, OnChanges {
     }
 
 
-    private focusMarkers(markers: Array<L.CircleMarker>) {
+    private focusSelection() {
 
-        if (markers.length === 1) {
-            this.map.panTo(markers[0].getLatLng(), { animate: true, easeLinearity: 0.3 });
-        } else {
-            const bounds = [] as any;
-            for (let marker of markers) {
-                bounds.push(marker.getLatLng());
-            }
-            this.map.fitBounds(bounds);
+        const bounds: any[] = [];
+        this.getSelection().forEach(document => this.addToBounds(document, bounds));
+        this.map.fitBounds(bounds);
+    }
+
+
+    private addToBounds(document: FieldDocument, bounds: any[]) {
+
+        if (!MapComponent.getGeometry(document)) return;
+
+        if (this.polygons[document.resource.id as any]) {
+            this.addPolygonsToBounds(this.polygons[document.resource.id as any], bounds);
+        } else if (this.polylines[document.resource.id as any]) {
+            this.addPolylinesToBounds(this.polylines[document.resource.id as any], bounds);
+        } else if (this.markers[document.resource.id as any]) {
+            this.addMarkersToBounds(this.markers[document.resource.id as any], bounds);
         }
     }
 
 
-    private focusPolylines(polylines: Array<L.Polyline>) {
+    private addMarkersToBounds(markers: Array<L.CircleMarker>, bounds: any[]) {
 
-        const bounds = [] as any;
+        // TODO Make this work again
+        //if (markers.length === 1) {
+        //    this.map.panTo(markers[0].getLatLng(), { animate: true, easeLinearity: 0.3 });
+        //} else {
+        for (let marker of markers) {
+            bounds.push(marker.getLatLng());
+        }
+    }
+
+
+    private addPolylinesToBounds(polylines: Array<L.Polyline>, bounds: any[]) {
+
         for (let polyline of polylines) {
             bounds.push(polyline.getLatLngs());
         }
-        this.map.fitBounds(bounds);
     }
 
 
-    private focusPolygons(polygons: Array<L.Polygon>) {
+    private addPolygonsToBounds(polygons: Array<L.Polygon>, bounds: any[]) {
 
-        const bounds = [] as any;
         for (let polygon of polygons) {
             bounds.push(polygon.getLatLngs());
         }
-        this.map.fitBounds(bounds);
     }
 
 
     private bringSelectedMarkersToFront() {
 
-        if (this.selectedDocument && this.markers[this.selectedDocument.resource.id]) {
-            this.markers[this.selectedDocument.resource.id].forEach(marker => marker.bringToFront());
-        }
+        this.getSelection().forEach(document => {
+            if (this.markers[document.resource.id]) {
+                this.markers[document.resource.id].forEach(marker => marker.bringToFront());
+            }
+        });
     }
 
 
@@ -495,10 +513,20 @@ export class MapComponent implements AfterViewInit, OnChanges {
             fillColor: color,
             fillOpacity: 1,
             radius: 5,
-            stroke: document === this.selectedDocument,
+            stroke: this.getSelection().includes(document),
             color: Category.isBrightColor(color) ? '#000' : '#fff',
             weight: 2
         };
+    }
+
+
+    private getSelection(): Array<FieldDocument> {
+
+        let result = [];
+        if (this.selectedDocument) result.push(this.selectedDocument);
+        result = result.concat(this.additionalSelectedDocuments);
+
+        return result;
     }
 
 
@@ -524,6 +552,12 @@ export class MapComponent implements AfterViewInit, OnChanges {
     }
 
 
+    private static hasGeometries(documents: Array<FieldDocument>): boolean {
+
+        return documents.find(this.getGeometry) !== undefined;
+    }
+
+
     private static getTooltipText(resource: FieldResource) {
 
         let shortDescription = resource.identifier;
@@ -532,5 +566,32 @@ export class MapComponent implements AfterViewInit, OnChanges {
         }
 
         return shortDescription;
+    }
+
+
+    private static hasOnlySelectionChanged(changes: SimpleChanges): boolean {
+
+        return (changes['selectedDocument'] || changes['additionalSelectedDocuments'])
+            && !changes['documents'] && !changes['parentDocument']
+            && !changes['coordinateReferenceSystem'];
+    }
+
+
+    private static getPreviousSelection(changes: SimpleChanges): Array<FieldDocument> {
+
+        const result = changes['selectedDocument']?.previousValue
+            ? [changes['selectedDocument'].previousValue]
+            : [];
+
+        return changes['additionalSelectedDocuments'].previousValue
+            ? result.concat(changes['additionalSelectedDocuments'].previousValue)
+            : result;
+    }
+
+
+    private static getDeselectedDocuments(currentSelection: Array<FieldDocument>,
+                                          previousSelection: Array<FieldDocument>): Array<FieldDocument> {
+
+        return subtract(currentSelection)(previousSelection);
     }
 }

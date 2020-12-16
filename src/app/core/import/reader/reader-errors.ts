@@ -9,4 +9,5 @@ export module ReaderErrors {
     export const SHAPEFILE_UNSUPPORTED_GEOMETRY_TYPE = 'importerrors/shapefile/unsupportedgeometrytype';
     export const SHAPEFILE_JSONL_WRITE = 'importerrors/shapefile/jsonlwrite';
     export const SHAPEFILE_GENERIC = 'importerrors/shapefile/generic';
+    export const CATALOG_GENERIC = 'importerrors/catalog/generic';
 }

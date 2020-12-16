@@ -29,6 +29,7 @@ export module MessagesConversion {
         if (msg === ReaderErrors.SHAPEFILE_UNSUPPORTED_GEOMETRY_TYPE) replacement = M.IMPORT_READER_SHAPEFILE_UNSUPPORTED_GEOMETRY_TYPE;
         if (msg === ReaderErrors.SHAPEFILE_JSONL_WRITE) replacement = M.IMPORT_READER_SHAPEFILE_JSONL_WRITE;
         if (msg === ReaderErrors.SHAPEFILE_GENERIC) replacement = M.IMPORT_PARSER_SHAPEFILE_GENERIC;
+        if (msg === ReaderErrors.CATALOG_GENERIC) replacement = M.IMPORT_PARSER_CATALOG_GENERIC;
 
         if (msg === ParserErrors.SHAPEFILE_GENERIC) replacement = M.IMPORT_PARSER_SHAPEFILE_GENERIC;
         if (msg === ParserErrors.FILE_INVALID_JSON) replacement = M.IMPORT_PARSER_INVALID_JSON;

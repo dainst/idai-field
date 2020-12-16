@@ -47,7 +47,7 @@ export class CatalogFilesystemReader implements Reader {
 
                 resolve(fs.readFileSync(tmpDir + CATALOG_JSONL, UTF8));
             } catch (err) {
-                reject([ReaderErrors.SHAPEFILE_GENERIC]); // TODO use other error
+                reject([ReaderErrors.CATALOG_GENERIC]);
             } finally {
                 fs.rmdirSync(tmpDir, { recursive: true });
             }

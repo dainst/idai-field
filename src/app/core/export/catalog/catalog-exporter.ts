@@ -49,7 +49,6 @@ export module CatalogExporter {
             zipFiles(outputFilePath, tmpDir, imgDir, () => {
                 fs.rmdirSync(tmpDir, { recursive: true });
             });
-
         } catch (error) {
             throw ['catalog exporter error', error]; // TODO make error constant
         }

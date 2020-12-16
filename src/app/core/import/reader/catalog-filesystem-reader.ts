@@ -42,7 +42,7 @@ export class CatalogFilesystemReader implements Reader {
                     );
                 }
 
-                resolve(fs.readFileSync(tmpDir + 'catalog.jsonl', 'utf-8'));
+                resolve(fs.readFileSync(tmpDir + 'catalog.jsonl', 'utf-8')); // TODO reuse const from catalog-exporter
             } catch (err) {
                 reject([ReaderErrors.SHAPEFILE_GENERIC]); // TODO use other error
             } finally {

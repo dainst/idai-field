@@ -416,9 +416,9 @@ export class MapComponent implements AfterViewInit, OnChanges {
         if (!MapComponent.getGeometry(document)) return;
 
         if (this.polygons[document.resource.id as any]) {
-            this.addPolygonsToBounds(this.polygons[document.resource.id as any], bounds);
+            this.addPathToBounds(this.polygons[document.resource.id as any], bounds);
         } else if (this.polylines[document.resource.id as any]) {
-            this.addPolylinesToBounds(this.polylines[document.resource.id as any], bounds);
+            this.addPathToBounds(this.polylines[document.resource.id as any], bounds);
         } else if (this.markers[document.resource.id as any]) {
             this.addMarkersToBounds(this.markers[document.resource.id as any], bounds);
         }
@@ -427,25 +427,13 @@ export class MapComponent implements AfterViewInit, OnChanges {
 
     private addMarkersToBounds(markers: Array<L.CircleMarker>, bounds: any[]) {
 
-        for (let marker of markers) {
-            bounds.push(marker.getLatLng());
-        }
+        markers.forEach(marker => bounds.push(marker.getLatLng()));
     }
 
 
-    private addPolylinesToBounds(polylines: Array<L.Polyline>, bounds: any[]) {
+    private addPathToBounds(polylines: Array<L.Polyline|L.Polygon>, bounds: any[]) {
 
-        for (let polyline of polylines) {
-            bounds.push(polyline.getLatLngs());
-        }
-    }
-
-
-    private addPolygonsToBounds(polygons: Array<L.Polygon>, bounds: any[]) {
-
-        for (let polygon of polygons) {
-            bounds.push(polygon.getLatLngs());
-        }
+        polylines.forEach(polyline => bounds.push(polyline.getLatLngs()));
     }
 
 

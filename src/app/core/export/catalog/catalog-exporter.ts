@@ -11,6 +11,8 @@ const remote = typeof window !== 'undefined' ? window.require('electron').remote
 
 const archive = archiver('zip');
 
+const CATALOG_JSONL = 'catalog.jsonl'
+
 export module CatalogExporter {
 
     export async function performExport(datastore: DocumentReadDatastore,
@@ -25,9 +27,9 @@ export module CatalogExporter {
 
         const tmpBaseDir = remote.app.getPath('appData') + '/' + remote.app.getName() + '/temp/';
         const tmpDir = tmpBaseDir + 'catalog-export/';
+        const imgDir = tmpDir + 'images/';
 
         try {
-            const imgDir = tmpDir + 'images/';
 
             fs.rmdirSync(tmpDir, { recursive: true });
             fs.mkdirSync(imgDir, { recursive: true });
@@ -35,28 +37,36 @@ export module CatalogExporter {
             copyImageFiles(imgDir, imageResourceIds, settings);
 
             fs.writeFileSync(
-                tmpDir + 'catalog.jsonl',
+                tmpDir + CATALOG_JSONL,
                 exportDocuments
                     .map(stringify)
                     .join('\n')
             );
 
-            const output = fs.createWriteStream(outputFilePath);
-            archive.on('error', function (err) {
-                throw err;
-            });
-            output.on('close', () => {
-                console.log("closed")
+            zipFiles(outputFilePath, tmpDir, imgDir, () => {
                 fs.rmdirSync(tmpDir, { recursive: true });
-            })
-            archive.pipe(output);
-            archive.file(tmpDir + 'catalog.jsonl', { name: 'catalog.jsonl' });
-            archive.directory(tmpDir + 'images', 'images');
-            archive.finalize();
+            });
 
         } catch (error) {
             throw ['catalog exporter error', error]; // TODO make error constant
         }
+    }
+
+
+    function zipFiles(outputFilePath: string,
+                      tmpDir: string,
+                      imgDir: string,
+                      onClose: () => void) {
+
+        const output = fs.createWriteStream(outputFilePath);
+        archive.on('error', function (err) {
+            throw err;
+        });
+        output.on('close', onClose);
+        archive.pipe(output);
+        archive.file(tmpDir + CATALOG_JSONL, { name: CATALOG_JSONL });
+        archive.directory(imgDir, 'images');
+        archive.finalize();
     }
 
 

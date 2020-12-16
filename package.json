@@ -98,6 +98,7 @@
     "@ngx-translate/i18n-polyfill": "1.0.0",
     "address": "1.1.2",
     "angular2-uuid": "1.1.1",
+    "archiver": "5.1.0",
     "bootstrap": "4.4.1",
     "cldr": "^5.7.0",
     "electron-log": "4.2.2",
@@ -188,6 +189,8 @@
     "net": false,
     "http": false,
     "fs": false,
+    "fs-constants": false,
+    "graceful-fs": false,
     "crypto": false,
     "child_process": false,
     "https": false

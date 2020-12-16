@@ -6,7 +6,8 @@ import {RelationsManager} from '../../model/relations-manager';
 import {ImageRelationsManager} from '../../model/image-relations-manager';
 
 const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
-
+const archiver = typeof window !== 'undefined' ? window.require('archiver') : require('archiver');
+const archive = archiver('zip');
 
 export module CatalogExporter {
 
@@ -20,7 +21,10 @@ export module CatalogExporter {
         const [exportDocuments, imageResourceIds] =
             await getExportDocuments(datastore, relationsManager, imageRelationsManager, catalogId, settings.selectedProject);
 
-        copyImageFiles(outputFilePath, imageResourceIds, settings);
+        const basePath = outputFilePath
+            .slice(0, outputFilePath.lastIndexOf('.')) + '-images/';
+
+        copyImageFiles(basePath, imageResourceIds, settings);
 
         fs.writeFileSync(
             outputFilePath,
@@ -28,15 +32,26 @@ export module CatalogExporter {
                 .map(stringify)
                 .join('\n')
         );
+
+        const outputZipPath = outputFilePath
+            .slice(0, outputFilePath.lastIndexOf('.'));
+        const output = fs.createWriteStream(outputZipPath + '.zip');
+        // output.on('close', function () {});
+        archive.on('error', function(err){
+            console.log("error from archiver", err);
+            throw err;
+        });
+        archive.pipe(output);
+        archive.file(outputFilePath, { name: 'catalog.jsonl' });
+        archive.directory(basePath, 'images');
+        archive.finalize();
     }
 
 
-    function copyImageFiles(outputFilePath: string,
+    function copyImageFiles(basePath: string,
                             imageResourceIds: Array<ResourceId>,
                             settings: Settings) {
 
-        const basePath = outputFilePath
-            .slice(0, outputFilePath.lastIndexOf('.')) + '/';
         if (!fs.existsSync(basePath)) fs.mkdirSync(basePath);
 
         for (let image of imageResourceIds) {

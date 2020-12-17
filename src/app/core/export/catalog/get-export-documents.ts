@@ -53,6 +53,7 @@ function cleanDocument(document: Document) {
 
     delete document['_attachments'];
     delete document[Document._REV];
+    delete document['_id'];
     delete document[Document.CREATED];
     delete document[Document.MODIFIED];
     delete document.resource.relations[TypeRelations.HASINSTANCE];

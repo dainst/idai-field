@@ -1,7 +1,6 @@
 import {Component} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import {intersection, set} from 'tsfun';
-import {Document, FieldDocument} from 'idai-components-2';
+import {FieldDocument} from 'idai-components-2';
 import {RelationsManager} from '../../core/model/relations-manager';
 import {MoveUtility} from '../../core/resources/move-utility';
 import {IndexFacade} from '../../core/datastore/index/index-facade';
@@ -60,7 +59,7 @@ export class MoveModalComponent {
         this.documents = documents;
         this.showProjectOption = MoveUtility.isProjectOptionAllowed(documents, this.viewFacade.isInOverview());
         this.filterOptions = MoveUtility.getAllowedTargetCategories(documents, this.projectConfiguration,
-            this.viewFacade.isInOverview())
+            this.viewFacade.isInOverview());
     }
 
 

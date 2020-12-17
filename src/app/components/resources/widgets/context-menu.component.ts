@@ -4,6 +4,7 @@ import {ViewFacade} from '../../../core/resources/view/view-facade';
 import {ContextMenu} from './context-menu';
 import {ProjectCategories} from '../../../core/configuration/project-categories';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
+import {MoveUtility} from '../../../core/resources/move-utility';
 
 
 export type ContextMenuAction = 'edit'|'move'|'delete'|'create-polygon'|'create-line-string'
@@ -99,8 +100,9 @@ export class ContextMenuComponent implements OnChanges {
 
         if (this.isReadonly() || this.contextMenu.documents.length === 0) return false;
 
-        return this.projectConfiguration
-            .getHierarchyParentCategories(this.contextMenu.documents[0].resource.category).length > 0;
+        return MoveUtility.getAllowedTargetCategories(
+            this.contextMenu.documents, this.projectConfiguration, this.viewFacade.isInOverview()
+        ).length > 0;
     }
 
 

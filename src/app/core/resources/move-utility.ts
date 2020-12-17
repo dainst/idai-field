@@ -1,10 +1,11 @@
-import {flatten, set} from 'tsfun';
+import {flatten, intersection, set} from 'tsfun';
 import {FieldDocument, Document} from 'idai-components-2';
 import {clone} from '../util/object-util';
 import {RelationsManager} from '../model/relations-manager';
 import {IndexFacade} from '../datastore/index/index-facade';
 import {Category} from '../configuration/model/category';
 import {Constraint} from '../datastore/model/constraint';
+import {ProjectConfiguration} from '../configuration/project-configuration';
 
 
 /**
@@ -22,23 +23,6 @@ export module MoveUtility {
     }
 
 
-    function updateRelations(document: FieldDocument, newParent: FieldDocument,
-                             isRecordedInTargetCategories: Array<Category>) {
-
-        if (newParent.resource.category === 'Project') {
-            document.resource.relations['isRecordedIn'] = [];
-            document.resource.relations['liesWithin'] = [];
-        } else if (isRecordedInTargetCategories.map(category => category.name)
-                .includes(newParent.resource.category)) {
-            document.resource.relations['isRecordedIn'] = [newParent.resource.id];
-            document.resource.relations['liesWithin'] = [];
-        } else {
-            document.resource.relations['liesWithin'] = [newParent.resource.id];
-            document.resource.relations['isRecordedIn'] = newParent.resource.relations['isRecordedIn'];
-        }
-    }
-
-
     export async function createConstraints(documents: Array<FieldDocument>, indexFacade: IndexFacade)
             : Promise<{ [name: string]: Constraint }> {
 
@@ -48,6 +32,55 @@ export module MoveUtility {
                 subtract: true
             }
         };
+    }
+
+
+    export function getAllowedTargetCategories(documents: Array<FieldDocument>,
+                                               projectConfiguration: ProjectConfiguration,
+                                               isInOverview: boolean): Array<Category> {
+
+        const result: Array<Category> = set(getIsRecordedInTargetCategories(documents, projectConfiguration)
+            .concat(getLiesWithinTargetCategories(documents, projectConfiguration)));
+
+        return (isProjectOptionAllowed(documents, isInOverview))
+            ? [projectConfiguration.getCategory('Project')]
+                .concat(result)
+            : result;
+    }
+
+
+
+    export function isProjectOptionAllowed(documents: Array<FieldDocument>, isInOverview: boolean): boolean {
+
+        return isInOverview && Document.hasRelations(documents[0],'liesWithin');
+    }
+
+
+    export function getIsRecordedInTargetCategories(documents: Array<FieldDocument>,
+                                                    projectConfiguration: ProjectConfiguration): Array<Category> {
+
+        return intersection(
+            documents.map(document => projectConfiguration.getAllowedRelationRangeCategories(
+                'isRecordedIn', document.resource.category
+            ))
+        );
+    }
+
+
+    function updateRelations(document: FieldDocument, newParent: FieldDocument,
+                             isRecordedInTargetCategories: Array<Category>) {
+
+        if (newParent.resource.category === 'Project') {
+            document.resource.relations['isRecordedIn'] = [];
+            document.resource.relations['liesWithin'] = [];
+        } else if (isRecordedInTargetCategories.map(category => category.name)
+            .includes(newParent.resource.category)) {
+            document.resource.relations['isRecordedIn'] = [newParent.resource.id];
+            document.resource.relations['liesWithin'] = [];
+        } else {
+            document.resource.relations['liesWithin'] = [newParent.resource.id];
+            document.resource.relations['isRecordedIn'] = newParent.resource.relations['isRecordedIn'];
+        }
     }
 
 
@@ -71,5 +104,16 @@ export module MoveUtility {
             : Document.hasRelations(document, 'isRecordedIn')
                 ? document.resource.relations.isRecordedIn[0]
                 : undefined;
+    }
+
+
+    function getLiesWithinTargetCategories(documents: Array<FieldDocument>,
+                                           projectConfiguration: ProjectConfiguration): Array<Category> {
+
+        return intersection(
+            documents.map(document => projectConfiguration.getAllowedRelationRangeCategories(
+                'liesWithin', document.resource.category
+            ))
+        );
     }
 }

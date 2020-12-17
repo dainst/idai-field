@@ -31,9 +31,6 @@ export class MoveModalComponent {
     public constraints: Promise<{ [name: string]: Constraint }>;
     public showProjectOption: boolean = false;
 
-    private isRecordedInTargetCategories: Array<Category>;
-    private liesWithinTargetCategories: Array<Category>;
-
 
     constructor(public activeModal: NgbActiveModal,
                 private relationsManager: RelationsManager,
@@ -61,15 +58,9 @@ export class MoveModalComponent {
     public initialize(documents: Array<FieldDocument>) {
 
         this.documents = documents;
-        this.showProjectOption = this.isProjectOptionAllowed();
-        this.isRecordedInTargetCategories = this.getIsRecordedInTargetCategories();
-        this.liesWithinTargetCategories = this.getLiesWithinTargetCategories();
-
-        this.filterOptions = set(this.isRecordedInTargetCategories.concat(this.liesWithinTargetCategories));
-        if (this.showProjectOption) {
-            this.filterOptions = [this.projectConfiguration.getCategory('Project')]
-                .concat(this.filterOptions);
-        }
+        this.showProjectOption = MoveUtility.isProjectOptionAllowed(documents, this.viewFacade.isInOverview());
+        this.filterOptions = MoveUtility.getAllowedTargetCategories(documents, this.projectConfiguration,
+            this.viewFacade.isInOverview())
     }
 
 
@@ -90,41 +81,15 @@ export class MoveModalComponent {
                     document,
                     newParent,
                     this.relationsManager,
-                    this.isRecordedInTargetCategories
+                    MoveUtility.getIsRecordedInTargetCategories(this.documents, this.projectConfiguration)
                 );
             } catch (msgWithParams) {
+                console.error(msgWithParams);
                 this.messages.add(msgWithParams);
             }
         }
 
         this.loading.stop();
         this.activeModal.close();
-    }
-
-
-    private isProjectOptionAllowed(): boolean {
-
-        return this.viewFacade.isInOverview()
-            && Document.hasRelations(this.documents[0],'liesWithin');
-    }
-
-
-    private getIsRecordedInTargetCategories(): Array<Category> {
-
-        return intersection(
-            this.documents.map(document => this.projectConfiguration.getAllowedRelationRangeCategories(
-                'isRecordedIn', document.resource.category
-            ))
-        );
-    }
-
-
-    private getLiesWithinTargetCategories(): Array<Category> {
-
-        return intersection(
-            this.documents.map(document => this.projectConfiguration.getAllowedRelationRangeCategories(
-                'liesWithin', document.resource.category
-            ))
-        );
     }
 }

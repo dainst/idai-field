@@ -240,6 +240,30 @@ describe('subsystem/image-relations-manager', () => {
     });
 
 
+    it('add depicts relation - throw if trying to link image with resource if either is not owned', async done => {
+
+        const documentsLookup = await helpers.createDocuments(
+            [
+                ['tc1', 'TypeCatalog'],
+                ['i1', 'Image']
+            ]
+        );
+
+        documentsLookup['tc1'].project = 'other-project';
+        try {
+            await app.imageRelationsManager.link(documentsLookup['tc1'], documentsLookup['i1']);
+            fail();
+        } catch {}
+
+        documentsLookup['i1'].project = 'other-project';
+        try {
+            await app.imageRelationsManager.link(documentsLookup['tc1'], documentsLookup['i1']);
+            fail();
+        } catch {}
+        done();
+    });
+
+
     it('remove depicts relation', async done => {
 
         const documentsLookup = await helpers.createDocuments(

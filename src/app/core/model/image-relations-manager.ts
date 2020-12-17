@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {flatten, includedIn, isDefined, isNot, on, separate, set, subtract} from 'tsfun';
+import {flatten, includedIn, isDefined, isNot, on, separate, set, subtract, to} from 'tsfun';
 import {Document, FieldDocument, ImageDocument, toResourceId} from 'idai-components-2';
 import {DocumentDatastore} from '../datastore/document-datastore';
 import {Imagestore} from '../images/imagestore/imagestore';
@@ -96,6 +96,11 @@ export class ImageRelationsManager {
 
 
     public async link(targetDocument: FieldDocument, ...selectedImages: Array<ImageDocument>) {
+
+        const projects = set(on(Document.PROJECT), [targetDocument].concat(selectedImages as any))
+            .map(to(Document.PROJECT));
+        if (projects.length !== 1) throw 'illegal argument - link will only operate on owned documents';
+        if (projects[0] !== undefined) throw 'illegal argument - link will only operate on owned documents';
 
         for (let imageDocument of selectedImages) {
             const oldVersion: ImageDocument = clone(imageDocument);

@@ -39,10 +39,12 @@ export class CatalogFilesystemReader implements Reader {
                 await extract(this.file.path, { dir: tmpDir });
 
                 for (let imageFile of fs.readdirSync(imgDir)) {
-                    fs.copyFileSync(
-                        imgDir + imageFile,
-                        targetDir + imageFile
-                    );
+                    if (!fs.existsSync(targetDir + imageFile)) {
+                        fs.copyFileSync(
+                            imgDir + imageFile,
+                            targetDir + imageFile
+                        );
+                    }
                 }
 
                 resolve(fs.readFileSync(tmpDir + CATALOG_JSONL, UTF8));

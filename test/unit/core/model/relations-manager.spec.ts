@@ -161,7 +161,7 @@ describe('RelationsManager', () => {
 
         findResult /* for isRecordedIn "1" */ = [relatedDoc];
 
-        await persistenceManager.remove(doc);
+        await persistenceManager.remove(doc, { descendants: true });
         expect(mockDatastore.remove).toHaveBeenCalledWith(relatedDoc);
         expect(mockDatastore.update).toHaveBeenCalledWith(anotherRelatedDoc, 'u', undefined);
         expect(mockDatastore.remove).not.toHaveBeenCalledWith(anotherRelatedDoc);
@@ -186,7 +186,7 @@ describe('RelationsManager', () => {
             Promise.reject('not exists') // for relatedDoc already deleted, but still linked from anotherRelatedDoc
         );
 
-        await persistenceManager.remove(doc);
+        await persistenceManager.remove(doc, { descendants: true });
 
         // do not update for beeing related to relatedDoc
         expect(mockDatastore.update).not.toHaveBeenCalledWith(doc, 'u');

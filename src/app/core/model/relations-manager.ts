@@ -132,12 +132,17 @@ export class RelationsManager {
      *   [DatastoreErrors.GENERIC_DELETE_ERROR] - if cannot delete for another reason
      */
     public async remove(document: Document,
-                        descendantsToKeep: Array<Document> = []
-    ) {
+                        options?: { descendants?: true, descendantsToKeep?: Array<Document>}) {
+
+        if (options?.descendants !== true) {
+            if (options.descendantsToKeep !== undefined) throw 'illegal arguments - relationsManager.remove called with descendantsToKeep but descendants option not set';
+            await this.removeWithConnectedDocuments(document);
+        }
+
         const descendants = await this.getDescendants(document);
         const documentsToBeDeleted =
             flow(descendants,
-                subtract(on(RESOURCE_ID_PATH), descendantsToKeep),
+                subtract(on(RESOURCE_ID_PATH), options.descendantsToKeep ?? []),
                 append(document));
 
         for (let document of documentsToBeDeleted) await this.removeWithConnectedDocuments(document);

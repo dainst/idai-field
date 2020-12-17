@@ -84,7 +84,7 @@ export class ImageRelationsManager {
             const docsInclDescendants =
                 (await this.relationsManager.get(document.resource.id, { descendants: true, toplevel: false })).concat([document]);
             documentsToBeDeleted.push(...docsInclDescendants);
-            await this.relationsManager.remove(document);
+            await this.relationsManager.remove(document, { descendants: true });
         }
 
         const imagesToBeDeleted = set(on(RESOURCE_ID_PATH), await this.getLeftovers(documentsToBeDeleted));
@@ -156,7 +156,7 @@ export class ImageRelationsManager {
             } catch (err) {
                 throw [ImageRelationsManagerErrors.IMAGESTORE_ERROR_DELETE, imageDocument.resource.identifier];
             }
-            await this.relationsManager.remove(imageDocument);
+            await this.relationsManager.remove(imageDocument, { descendants: true /* TODO review! */ });
         }
     }
 }

@@ -53,7 +53,8 @@ export class ResourceDeletion {
             if (ResourceDeletion.isImportedCatalog(document) || deleteRelatedImages) {
                  await this.imageRelationsManager.remove(document);
             } else {
-                 await this.relationsManager.remove(document, documents.filter(doc => doc !== document));
+                 await this.relationsManager.remove(document,
+                     { descendants: true, descendantsToKeep: documents.filter(doc => doc !== document) });
             }
         }
     }

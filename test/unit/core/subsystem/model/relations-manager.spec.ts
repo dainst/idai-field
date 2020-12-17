@@ -1,7 +1,7 @@
 import {flatten, sameset} from 'tsfun';
 import {FieldDocument, ImageDocument, toResourceId} from 'idai-components-2';
 import {createApp, createHelpers, setupSyncTestDb} from '../subsystem-helper';
-import {createDocuments, doc} from '../../../test-helpers';
+import {doc} from '../../../test-helpers';
 import {makeDocumentsLookup} from '../../../../../src/app/core/import/import/utils';
 
 /**
@@ -120,7 +120,7 @@ describe('subsystem/relations-manager',() => {
         const [_, d2] = await createTestResourcesForRemoveTests();
 
         expect((await app.documentDatastore.find({})).totalCount).toBe(7);
-        await app.relationsManager.remove(d2);
+        await app.relationsManager.remove(d2, { descendants: true });
         const result = (await app.documentDatastore.find({})).documents.map(toResourceId);
         expect(sameset(result, ['id1', 'id5', 'id6', 'id7'])).toBeTruthy();
         done();
@@ -132,7 +132,7 @@ describe('subsystem/relations-manager',() => {
         const [d1, _] = await createTestResourcesForRemoveTests();
 
         expect((await app.documentDatastore.find({})).totalCount).toBe(7);
-        await app.relationsManager.remove(d1);
+        await app.relationsManager.remove(d1, { descendants: true });
         const result = (await app.documentDatastore.find({})).documents.map(toResourceId);
         expect(sameset(result, ['id5', 'id6', 'id7'])).toBeTruthy();
         done();
@@ -144,7 +144,7 @@ describe('subsystem/relations-manager',() => {
         const [d1, _, d3] = await createTestResourcesForRemoveTests();
 
         expect((await app.documentDatastore.find({})).totalCount).toBe(7);
-        await app.relationsManager.remove(d1, [d3]);
+        await app.relationsManager.remove(d1, { descendants: true, descendantsToKeep: [d3] });
 
         helpers.expectResources('id3', 'id5', 'id6', 'id7');
         done();
@@ -170,7 +170,7 @@ describe('subsystem/relations-manager',() => {
 
         expect((await app.documentDatastore.find({})).documents.length).toBe(4);
 
-        await app.relationsManager.remove(tc1);
+        await app.relationsManager.remove(tc1, { descendants: true });
 
         const documents = (await app.documentDatastore.find({})).documents;
         expect(documents.length).toBe(2);

@@ -198,7 +198,7 @@ describe('subsystem/image-relations-manager', () => {
     });
 
 
-    it('remove images  - where image is connected to another resource, but is nevertheless deleted because image is amongst resources to be deleted', async done => {
+    it('remove images - where image is connected to another resource, but is nevertheless deleted because image is amongst resources to be deleted', async done => {
 
         const documentsLookup = await helpers.createDocuments(
             [

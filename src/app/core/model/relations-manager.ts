@@ -135,8 +135,9 @@ export class RelationsManager {
                         options?: { descendants?: true, descendantsToKeep?: Array<Document>}) {
 
         if (options?.descendants !== true) {
-            if (options.descendantsToKeep !== undefined) throw 'illegal arguments - relationsManager.remove called with descendantsToKeep but descendants option not set';
+            if (options?.descendantsToKeep !== undefined) throw 'illegal arguments - relationsManager.remove called with descendantsToKeep but descendants option not set';
             await this.removeWithConnectedDocuments(document);
+            return;
         }
 
         const descendants = await this.getDescendants(document);

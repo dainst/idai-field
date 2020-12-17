@@ -156,7 +156,7 @@ export class ImageRelationsManager {
             } catch (err) {
                 throw [ImageRelationsManagerErrors.IMAGESTORE_ERROR_DELETE, imageDocument.resource.identifier];
             }
-            await this.relationsManager.remove(imageDocument, { descendants: true /* TODO review! */ });
+            await this.relationsManager.remove(imageDocument);
         }
     }
 }

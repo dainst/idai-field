@@ -23,6 +23,7 @@ describe('getExportDocuments', () => {
             {
                 resource: {
                     id: 'I1',
+                    identifier: 'identifierI1',
                     category: 'Image',
                     relations: {
                         depicts: ['T1']
@@ -78,6 +79,7 @@ describe('getExportDocuments', () => {
         const [error, _] = await getExportDocuments(
             datastore, relationsManager, imageRelationsManager, 'C1', 'test-project');
         expect(error[0]).toEqual(ERROR_NOT_ALl_IMAGES_EXCLUSIVELY_LINKED);
+        expect(error[1]).toEqual(images[0].resource.identifier);
         done();
     });
 });

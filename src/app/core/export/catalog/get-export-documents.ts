@@ -1,7 +1,7 @@
-import {Either, includedIn} from 'tsfun';
+import {Either, includedIn, on, subtract, to} from 'tsfun';
 import {Document, toResourceId} from 'idai-components-2';
 import {DocumentReadDatastore} from '../../datastore/document-read-datastore';
-import {Name, ResourceId} from '../../constants';
+import {Name, RESOURCE_DOT_IDENTIFIER, RESOURCE_ID_PATH, ResourceId} from '../../constants';
 import {ImageRelations, TypeRelations} from '../../model/relation-constants';
 import {RelationsManager} from '../../model/relations-manager';
 import {ImageRelationsManager} from '../../model/image-relations-manager';
@@ -23,8 +23,12 @@ export async function getExportDocuments(datastore: DocumentReadDatastore,
     const exclusivelyLinkedImages = await imageRelationsManager.getLinkedImages(catalogAndTypes, true);
 
     if (linkedImages.length !== exclusivelyLinkedImages.length) {
+
+        const diff = subtract(on(RESOURCE_ID_PATH), exclusivelyLinkedImages)(linkedImages);
+        const diffImageIds = diff.map(to(RESOURCE_DOT_IDENTIFIER));
+
         return [
-            [ERROR_NOT_ALl_IMAGES_EXCLUSIVELY_LINKED], // TODO add identifiers
+            [ERROR_NOT_ALl_IMAGES_EXCLUSIVELY_LINKED, diffImageIds.join(',')],
             undefined
         ];
     }

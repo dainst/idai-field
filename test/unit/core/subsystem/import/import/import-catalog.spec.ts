@@ -135,23 +135,21 @@ describe('subsystem/import/importCatalog', () => {
     });
 
 
-    xit('reimport in same project should only delete images if exclusively linked to catalog', async done => {
+    it('reimport - reject for project owner if catalog already exists', async done => {
 
         await helpers.createDocuments([
-            ['tc1', 'TypeCatalog', ['t1']],
-            ['t1', 'Type'],
-            ['r1', 'Find'],
-            ['i1', 'Image', ['t1', 'r1']]
+            ['tc1', 'TypeCatalog'],
         ]);
 
         const catalog = createDocuments([
-            ['tc1', 'TypeCatalog', ['t1']],
-            ['t1', 'Type'],
+            ['tc1', 'TypeCatalog']
         ]);
+        catalog['tc1'].project = app.settingsProvider.getSettings().selectedProject;
 
-        await importCatalog(Object.values(catalog));
-        await helpers.expectResources('tc1', 't1', 'r1', 'i1');
-        helpers.expectImagesExist('i1');
+        const results = await importCatalog(Object.values(catalog));
+        expect(results.successfulImports).toBe(0);
+        expect(results.errors[0][0]).toEqual(ImportCatalogErrors.CATALOG_OWNER_MUST_NOT_REIMPORT_CATALOG);
+        expect(results.errors[0][1]).toEqual('identifiertc1');
         done();
     });
 

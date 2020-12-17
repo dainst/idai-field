@@ -4596,6 +4596,14 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="messages.import.catalog.error.owner_must_not_reimport_catalog" datatype="html">
+        <source>Katalogimport abgebrochen. Löschen Sie den Katalog '[0]', bevor Sie ihn erneut importieren.</source>
+        <target state="translated">Import aborted. Delete the existing catalog '[0]' before importing it anew.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="messages.import.catalog.error.differentProjectEntries" datatype="html">
         <source>Katalogimport abgebrochen. Alle zu importierenden Dokumente müssen den gleichen Projekt-Eintrag haben.</source>
         <target state="final">Import aborted. All documents in the import file must have the same project entry.</target>
@@ -4655,6 +4663,14 @@
       <trans-unit id="messages.export.geojson.error.write" datatype="html">
         <source>Beim Export ist ein Fehler aufgetreten: Die GeoJSON-Datei konnte nicht geschrieben werden.</source>
         <target state="final">An error has occurred during export: Failed to write the GeoJSON file.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.export.error.catalog.images-not-exclusive-to-catalog" datatype="html">
+        <source>Beim Export ist ein Fehler aufgetreten: Bilder des Kataloges dürfen nicht gleichzeitig mit anderen Ressorcen verbunden sein.</source>
+        <target state="final">An error has occured during export: Images of the catalog must not be connected to other resources.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>

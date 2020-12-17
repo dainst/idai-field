@@ -129,10 +129,12 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_CATALOG_ERROR_DIFFERENT_PROJECT_ENTRIES = 'M.Import.ImportCatalogErrors.differentProjectEntries';
     public static IMPORT_CATALOG_ERROR_NO_OR_TOO_MANY_TYPE_CATALOG_DOCUMENTS = 'M.Import.ImportCatalogErrors.noOrTooManyTypeCatalogDocuments';
     public static IMPORT_CATALOG_ERROR_INVALID_RELATIONS = 'M.Import.ImportCatalogErrors.invalidRelations';
+    public static IMPORT_CATALOG_ERROR_OWNER_MUST_NOT_REIMPORT_CATALOG = 'M.Import.ImportCatalogErrors.ownerMustNotImportCatalog';
 
     // Export Package
     public static EXPORT_SUCCESS = 'export.success';
     public static EXPORT_ERROR_GENERIC = 'export.error.generic';
+    public static EXPORT_CATALOG_IMAGES_NOT_EXCLUSIVE_TO_CATALOG = 'export.error.catalog.imagesNotExclusiveToCatalog';
     public static EXPORT_GEOJSON_ERROR_WRITE = 'export.geojson.error.write';
     public static EXPORT_SHAPEFILE_ERROR_TEMP_FOLDER_CREATION = 'export.shapefile.error.tempFolderCreation';
     public static EXPORT_SHAPEFILE_ERROR_ZIP_FILE_CREATION = 'export.shapefile.error.zipFileCreation';
@@ -1026,6 +1028,15 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: [],
             hidden: false
         };
+        this.msgs[M.IMPORT_CATALOG_ERROR_OWNER_MUST_NOT_REIMPORT_CATALOG] = {
+            content: i18n({
+                id: 'messages.import.catalog.error.owner_must_not_reimport_catalog',
+                value: 'Katalogimport abgebrochen. Löschen Sie den Katalog \'[0]\', bevor Sie ihn erneut importieren.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
         this.msgs[M.IMPORT_CATALOG_ERROR_DIFFERENT_PROJECT_ENTRIES] = {
             content: i18n({
                 id: 'messages.import.catalog.error.differentProjectEntries',
@@ -1093,6 +1104,15 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             content: i18n({
                 id: 'messages.export.geojson.error.write',
                 value: 'Beim Export ist ein Fehler aufgetreten: Die GeoJSON-Datei konnte nicht geschrieben werden.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.EXPORT_CATALOG_IMAGES_NOT_EXCLUSIVE_TO_CATALOG] = {
+            content: i18n({
+                id: 'messages.export.error.catalog.images-not-exclusive-to-catalog',
+                value: 'Beim Export ist ein Fehler aufgetreten: Bilder des Kataloges dürfen nicht gleichzeitig mit anderen Ressorcen verbunden sein.'
             }),
             level: 'danger',
             params: [],

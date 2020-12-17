@@ -31,6 +31,7 @@ export interface ImportCatalogContext {
 
 export module ImportCatalogErrors {
 
+    export const CATALOG_OWNER_MUST_NOT_REIMPORT_CATALOG = 'ImportCatalogErrors.mustNotReimportCatalogAsOwner';
     export const CONNECTED_TYPE_DELETED = 'ImportCatalogErrors.connectedTypeDeleted';
     export const DIFFERENT_PROJECT_ENTRIES = 'ImportCatalogErrors.differentProjectEntries';
     export const NO_OR_TOO_MANY_TYPE_CATALOG_DOCUMENTS = 'ImportCatalogErrors.noOrTooManyTypeCatalogDocuments';
@@ -49,12 +50,14 @@ export function buildImportCatalogFunction(services: ImportCatalogServices,
 
         try {
             assertProjectAlwaysTheSame(importDocuments);
-            const catalogResourceId = getCatalogResourceId(importDocuments);
+            const importCatalog = getImportTypeCatalog(importDocuments);
+            await assertCatalogNotOwned(services, context, importCatalog);
+
             const [
                 existingCatalogDocuments,
                 existingDocumentsRelatedImages,
                 existingCatalogAndImageDocuments
-            ] = await getExistingDocuments(services, catalogResourceId);
+            ] = await getExistingDocuments(services, importCatalog.resource.id);
 
             assertRelationsValid(importDocuments);
             assertNoDeletionOfRelatedTypes(existingCatalogDocuments, importDocuments);
@@ -70,6 +73,28 @@ export function buildImportCatalogFunction(services: ImportCatalogServices,
 
         } catch (errWithParams) {
             return { errors: [errWithParams], successfulImports: 0 };
+        }
+    }
+}
+
+
+
+// This is here to us not having to handle certain edge cases with deletions and
+// images related to not only catalog but also other resources. For now, we oblige
+// the owner of the catalog to remove the catalog consciously so that he then can
+// re-import it afterwards.
+async function assertCatalogNotOwned(services: ImportCatalogServices,
+                                     context: ImportCatalogContext,
+                                     importCatalog: Document) {
+
+    if (importCatalog.project === context.selectedProject) {
+        let existingCatalogIdentifier = undefined;
+        try {
+            const existingCatalog = await services.datastore.get(importCatalog.resource.id);
+            existingCatalogIdentifier = existingCatalog.resource.identifier;
+        } catch {}
+        if (existingCatalogIdentifier !== undefined) {
+            throw [ImportCatalogErrors.CATALOG_OWNER_MUST_NOT_REIMPORT_CATALOG, existingCatalogIdentifier];
         }
     }
 }
@@ -123,12 +148,12 @@ function assertNoDeletionOfRelatedTypes(existingDocuments: Array<Document>,
 }
 
 
-function getCatalogResourceId(importDocuments: Array<Document>) {
+function getImportTypeCatalog(importDocuments: Array<Document>) {
 
     const typeCatalogDocuments =
         importDocuments.filter(_ => _.resource.category === 'TypeCatalog');
     if (typeCatalogDocuments.length !== 1) throw [ImportCatalogErrors.NO_OR_TOO_MANY_TYPE_CATALOG_DOCUMENTS];
-    return typeCatalogDocuments[0].resource.id;
+    return typeCatalogDocuments[0];
 }
 
 

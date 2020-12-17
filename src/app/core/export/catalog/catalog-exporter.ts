@@ -1,11 +1,10 @@
 import {DocumentReadDatastore} from '../../datastore/document-read-datastore';
-import {ERROR_NOT_ALl_IMAGES_EXCLUSIVELY_LINKED, getExportDocuments} from './get-export-documents';
+import {getExportDocuments} from './get-export-documents';
 import {Settings} from '../../settings/settings';
 import {ResourceId} from '../../constants';
 import {RelationsManager} from '../../model/relations-manager';
 import {ImageRelationsManager} from '../../model/image-relations-manager';
 import {stringify} from '../../util/utils';
-import {M} from '../../../components/messages/m';
 
 const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
 const archiver = typeof window !== 'undefined' ? window.require('archiver') : require('archiver');

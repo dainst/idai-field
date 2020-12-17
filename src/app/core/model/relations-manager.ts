@@ -121,11 +121,10 @@ export class RelationsManager {
      */
     public async remove(document: Document, descendantsToKeep?: Array<Document>) {
 
-        const descendants: Array<Document> = (await this.getDescendants(document)).filter(descendant => {
+        const documentsToBeDeleted = (await this.getDescendants(document)).filter(descendant => {
             return !descendantsToKeep.map(to('resource.id')).includes(descendant.resource.id);
-        });
+        }).concat([document]);
 
-        const documentsToBeDeleted = descendants.concat([document]);
         for (let document of documentsToBeDeleted) await this.removeWithConnectedDocuments(document);
     }
 

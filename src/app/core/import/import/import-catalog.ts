@@ -49,7 +49,7 @@ export function buildImportCatalogFunction(services: ImportCatalogServices,
 
         try {
             assertProjectAlwaysTheSame(importDocuments);
-            const catalogResourceId = getCatalogResourceid(importDocuments);
+            const catalogResourceId = getCatalogResourceId(importDocuments);
             const [
                 existingCatalogDocuments,
                 existingDocumentsRelatedImages,
@@ -123,7 +123,7 @@ function assertNoDeletionOfRelatedTypes(existingDocuments: Array<Document>,
 }
 
 
-function getCatalogResourceid(importDocuments: Array<Document>) {
+function getCatalogResourceId(importDocuments: Array<Document>) {
 
     const typeCatalogDocuments =
         importDocuments.filter(_ => _.resource.category === 'TypeCatalog');

@@ -190,8 +190,11 @@ export class PouchDbFsImagestore /* implements Imagestore */{
 
     /**
      * @param key the identifier for the data to be removed
+     * @param options
      */
-    public remove(key: string): Promise<any> {
+    public async remove(key: string, options?: { fs?: true } /* TODO review */): Promise<any> {
+
+        if (options?.fs === true) return fs.unlinkSync(this.projectPath + key);
 
         return new Promise((resolve, reject) => {
             fs.unlink(this.projectPath + key, () => {

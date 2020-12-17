@@ -262,4 +262,29 @@ describe('subsystem/import/importCatalog', () => {
         expect(result.errors[0][0]).toBe(ImportCatalogErrors.INVALID_RELATIONS);
         done();
     });
+
+
+    it('clean up leftover images placed by reader if import goes wrong', async done => {
+
+        await helpers.createImageInProjectDir('i1');
+
+        const catalog = createDocuments([
+            ['tc1', 'TypeCatalog', ['t1']],
+            ['t1', 'Type'],
+            ['i1', 'Image', ['tc1', 't1']]
+        ]);
+
+        // provoke an error which is thrown before anything else is done
+        catalog['tc1'].project = 'a';
+        catalog['t1'].project = 'b';
+
+        helpers.expectImagesExist('i1');
+
+        const result = await importCatalog(Object.values(catalog));
+        expect(result.successfulImports).toBe(0);
+        expect(result.errors.length > 0).toBeTruthy();
+
+        helpers.expectImagesDontExist('i1');
+        done();
+    });
 });

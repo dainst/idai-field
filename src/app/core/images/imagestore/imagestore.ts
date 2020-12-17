@@ -43,9 +43,10 @@ export abstract class Imagestore extends ReadImagestore {
 
     /**
      * @param key the identifier for the data to be removed
+     * @param options
      * @returns {Promise<any>} resolve -> (),
      *   Rejects with
      *     [GENERIC_ERROR] - in case of error
      */
-    abstract remove(key: string): Promise<any>;
+    abstract remove(key: string, options?: { fs?: true }): Promise<any>;
 }

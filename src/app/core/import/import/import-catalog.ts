@@ -79,7 +79,28 @@ export function buildImportCatalogFunction(services: ImportCatalogServices,
             return { errors: [], successfulImports: updateDocuments.length };
 
         } catch (errWithParams) {
+
+            await cleanUpLeftOverImagesFromReader(services, importDocuments);
             return { errors: [errWithParams], successfulImports: 0 };
+        }
+    }
+}
+
+
+async function cleanUpLeftOverImagesFromReader(services: ImportCatalogServices,
+                                               importDocuments: Array<Document>) {
+
+    for (const document of importDocuments) {
+        if (document.resource.category === 'Type') continue;
+        if (document.resource.category === 'TypeCatalog') continue;
+        try {
+            await services.datastore.get(document.resource.id);
+        } catch {
+            try {
+                await services.imagestore.remove(document.resource.id, { fs: true });
+            } catch (e) {
+                console.error('error during cleanup', e);
+            }
         }
     }
 }

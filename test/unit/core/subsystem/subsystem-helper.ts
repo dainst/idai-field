@@ -219,6 +219,7 @@ export function createHelpers(app) {
     const expectImagesExist = makeExpectImagesExist(projectImageDir);
     const expectImagesDontExist = makeExpectImagesDontExist(projectImageDir);
     const createProjectDir = makeCreateProjectDir(projectImageDir);
+    const createImageInProjectDir = makeCreateImageInProjectImageDir(projectImageDir);
 
     return {
         createDocuments,
@@ -226,7 +227,8 @@ export function createHelpers(app) {
         expectResources,
         expectImagesExist,
         expectImagesDontExist,
-        createProjectDir
+        createProjectDir,
+        createImageInProjectDir
     }
 }
 
@@ -302,7 +304,7 @@ function makeCreateDocuments(documentDatastore: DocumentDatastore,
             await documentDatastore.create(document, username);
         }
         for (const [id, type, _] of documents) {
-            if (type === 'Image') createImageInProjectImageDir(projectImageDir, id);
+            if (type === 'Image') makeCreateImageInProjectImageDir(projectImageDir)(id);
         }
 
         const storedDocuments = [];
@@ -334,10 +336,11 @@ function makeExpectResources(documentDatastore: DocumentDatastore) {
     }
 }
 
+function makeCreateImageInProjectImageDir(projectImageDir: string) {
 
+    return function createImageInProjectImageDir(id: string) {
 
-function createImageInProjectImageDir(projectImageDir: string, id: string) {
-
-    fs.closeSync(fs.openSync(projectImageDir + id, 'w'));
-    expect(fs.existsSync(projectImageDir + id)).toBeTruthy();
+        fs.closeSync(fs.openSync(projectImageDir + id, 'w'));
+        expect(fs.existsSync(projectImageDir + id)).toBeTruthy();
+    }
 }

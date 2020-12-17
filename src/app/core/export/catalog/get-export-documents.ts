@@ -1,8 +1,8 @@
-import {Either, includedIn, on, subtract, to} from 'tsfun';
+import {Either, on, subtract, to} from 'tsfun';
 import {Document, toResourceId} from 'idai-components-2';
 import {DocumentReadDatastore} from '../../datastore/document-read-datastore';
 import {Name, RESOURCE_DOT_IDENTIFIER, RESOURCE_ID_PATH, ResourceId} from '../../constants';
-import {ImageRelations, TypeRelations} from '../../model/relation-constants';
+import {HierarchicalRelations, ImageRelations, TypeRelations} from '../../model/relation-constants';
 import {RelationsManager} from '../../model/relations-manager';
 import {ImageRelationsManager} from '../../model/image-relations-manager';
 
@@ -33,9 +33,7 @@ export async function getExportDocuments(datastore: DocumentReadDatastore,
         ];
     }
 
-    const relatedImages = cleanImageDocuments(
-        linkedImages,
-        catalogAndTypes.map(toResourceId));
+    const relatedImages = cleanImageDocuments(linkedImages);
     return [
         undefined,
         [
@@ -52,20 +50,14 @@ export async function getExportDocuments(datastore: DocumentReadDatastore,
 }
 
 
-function cleanImageDocuments(images: Array<Document>,
-                             idsOfCatalogResources: Array<ResourceId>) {
+function cleanImageDocuments(images: Array<Document>) {
 
     const relatedImageDocuments = [];
     for (let image of images) {
-
         image.resource.relations = {
-            depicts: image.resource.relations[ImageRelations.DEPICTS]
-                .filter(includedIn(idsOfCatalogResources)) // TODO currently we don't need to filter since we prohibit that scenario
+            depicts: image.resource.relations[ImageRelations.DEPICTS] // we know it depicts only catalog exclusive resources
         } as any;
-
-        if (image.resource.relations[ImageRelations.DEPICTS].length > 0) {
-            relatedImageDocuments.push(image);
-        }
+        relatedImageDocuments.push(image);
     }
     return relatedImageDocuments;
 }
@@ -79,5 +71,6 @@ function cleanDocument(document: Document) {
     delete document[Document.CREATED];
     delete document[Document.MODIFIED];
     delete document.resource.relations[TypeRelations.HASINSTANCE];
+    delete document.resource.relations[HierarchicalRelations.RECORDEDIN];
     return document;
 }

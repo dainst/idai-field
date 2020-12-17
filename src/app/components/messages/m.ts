@@ -130,6 +130,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_CATALOG_ERROR_NO_OR_TOO_MANY_TYPE_CATALOG_DOCUMENTS = 'M.Import.ImportCatalogErrors.noOrTooManyTypeCatalogDocuments';
     public static IMPORT_CATALOG_ERROR_INVALID_RELATIONS = 'M.Import.ImportCatalogErrors.invalidRelations';
     public static IMPORT_CATALOG_ERROR_OWNER_MUST_NOT_REIMPORT_CATALOG = 'M.Import.ImportCatalogErrors.ownerMustNotImportCatalog';
+    public static IMPORT_CATALOG_ERROR_OWNER_MUST_NOT_OVERWRITE_EXISTING_IMAGES = 'M.Import.ImportCatalogErrors.ownerMustNotOverwriteExistingImages';
 
     // Export Package
     public static EXPORT_SUCCESS = 'export.success';
@@ -1032,6 +1033,15 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             content: i18n({
                 id: 'messages.import.catalog.error.owner_must_not_reimport_catalog',
                 value: 'Katalogimport abgebrochen. Löschen Sie den Katalog \'[0]\', bevor Sie ihn erneut importieren.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.IMPORT_CATALOG_ERROR_OWNER_MUST_NOT_OVERWRITE_EXISTING_IMAGES] = {
+            content: i18n({
+                id: 'messages.import.catalog.error.owner_must_not_overwrite_existing_images',
+                value: 'Katalogimport abgebrochen. Importdatei beinhaltet Bilder, die bereits in der Datenbank vorhanden sind.'
             }),
             level: 'danger',
             params: [],

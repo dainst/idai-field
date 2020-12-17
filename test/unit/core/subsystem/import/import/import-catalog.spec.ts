@@ -154,6 +154,26 @@ describe('subsystem/import/importCatalog', () => {
     });
 
 
+    it('reimport - reject for project owner if images would be overwritten', async done => {
+
+        await helpers.createDocuments([
+            ['i1', 'Image'],
+        ]);
+
+        const catalog = createDocuments([
+            ['tc1', 'TypeCatalog'],
+            ['i1', 'Image', ['tc1']]
+        ]);
+        catalog['tc1'].project = app.settingsProvider.getSettings().selectedProject;
+        catalog['i1'].project = app.settingsProvider.getSettings().selectedProject;
+
+        const results = await importCatalog(Object.values(catalog));
+        expect(results.successfulImports).toBe(0);
+        expect(results.errors[0][0]).toEqual(ImportCatalogErrors.CATALOG_OWNER_MUST_NOT_OVERWRITE_EXISTING_IMAGES);
+        done();
+    });
+
+
     it('document.project differs between resources', async done => {
 
         const catalog = createDocuments([

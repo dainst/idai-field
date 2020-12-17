@@ -31,6 +31,7 @@ export interface ImportCatalogContext {
 
 export module ImportCatalogErrors {
 
+    export const CATALOG_OWNER_MUST_NOT_OVERWRITE_EXISTING_IMAGES = 'ImportCatalogErrors.owenerMustNotOverwriteLocalImages';
     export const CATALOG_OWNER_MUST_NOT_REIMPORT_CATALOG = 'ImportCatalogErrors.mustNotReimportCatalogAsOwner';
     export const CONNECTED_TYPE_DELETED = 'ImportCatalogErrors.connectedTypeDeleted';
     export const DIFFERENT_PROJECT_ENTRIES = 'ImportCatalogErrors.differentProjectEntries';
@@ -51,7 +52,13 @@ export function buildImportCatalogFunction(services: ImportCatalogServices,
         try {
             assertProjectAlwaysTheSame(importDocuments);
             const importCatalog = getImportTypeCatalog(importDocuments);
-            await assertCatalogNotOwned(services, context, importCatalog);
+
+            if (importCatalog.project === context.selectedProject) { // owned catalog
+                // TODO One thing which should improved: The import of the image files has been done previously,
+                // which was unnecessary in this case. It is not a problem though except for the time wasted waiting.
+                await assertCatalogNotOwned(services, context, importCatalog);
+                await assertNoImagesOverwritten(services, context, importDocuments);
+            }
 
             const [
                 existingCatalogDocuments,
@@ -78,27 +85,39 @@ export function buildImportCatalogFunction(services: ImportCatalogServices,
 }
 
 
+async function assertNoImagesOverwritten(services: ImportCatalogServices,
+                                         context: ImportCatalogContext,
+                                         importDocuments: Array<Document>) {
+
+    for (const document of importDocuments) {
+        if (document.resource.category !== 'Type' && document.resource.category !== 'TypeCatalog') {
+            let found = false;
+            try {
+                await services.datastore.get(document.resource.id);
+                found = true;
+            } catch {}
+            if (found) throw [ImportCatalogErrors.CATALOG_OWNER_MUST_NOT_OVERWRITE_EXISTING_IMAGES];
+        }
+    }
+}
+
 
 // This is here to us not having to handle certain edge cases with deletions and
 // images related to not only catalog but also other resources. For now, we oblige
 // the owner of the catalog to remove the catalog consciously so that he then can
 // re-import it afterwards.
-//
-// TODO One thing which should improved: The import of the image files has been done previously,
-// which was unnecessary in this case. It is not a problem though except for the time wasted waiting.
 async function assertCatalogNotOwned(services: ImportCatalogServices,
                                      context: ImportCatalogContext,
                                      importCatalog: Document) {
 
-    if (importCatalog.project === context.selectedProject) {
-        let existingCatalogIdentifier = undefined;
-        try {
-            const existingCatalog = await services.datastore.get(importCatalog.resource.id);
-            existingCatalogIdentifier = existingCatalog.resource.identifier;
-        } catch {}
-        if (existingCatalogIdentifier !== undefined) {
-            throw [ImportCatalogErrors.CATALOG_OWNER_MUST_NOT_REIMPORT_CATALOG, existingCatalogIdentifier];
-        }
+
+    let existingCatalogIdentifier = undefined;
+    try {
+        const existingCatalog = await services.datastore.get(importCatalog.resource.id);
+        existingCatalogIdentifier = existingCatalog.resource.identifier;
+    } catch {}
+    if (existingCatalogIdentifier !== undefined) {
+        throw [ImportCatalogErrors.CATALOG_OWNER_MUST_NOT_REIMPORT_CATALOG, existingCatalogIdentifier];
     }
 }
 

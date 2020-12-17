@@ -102,7 +102,7 @@ export class ResourcesMapComponent {
         if (geometry) {
             selectedDocument.resource.geometry = geometry;
         } else if (geometry === null || !selectedDocument.resource.geometry.coordinates
-                || selectedDocument.resource.geometry.coordinates.length == 0) {
+                || selectedDocument.resource.geometry.coordinates.length === 0) {
             delete selectedDocument.resource.geometry;
         }
 

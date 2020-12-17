@@ -406,7 +406,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
         } else {
             const bounds: any[] = [];
             selection.forEach(document => this.addToBounds(document, bounds));
-            this.map.fitBounds(bounds);
+            if (bounds.length > 0) this.map.fitBounds(bounds);
         }
     }
 
@@ -431,9 +431,9 @@ export class MapComponent implements AfterViewInit, OnChanges {
     }
 
 
-    private addPathToBounds(polylines: Array<L.Polyline|L.Polygon>, bounds: any[]) {
+    private addPathToBounds(paths: Array<L.Polyline|L.Polygon>, bounds: any[]) {
 
-        polylines.forEach(polyline => bounds.push(polyline.getLatLngs()));
+        paths.forEach(path => bounds.push(path.getLatLngs()[0]));
     }
 
 

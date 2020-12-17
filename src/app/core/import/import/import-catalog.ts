@@ -38,16 +38,12 @@ export module ImportCatalogErrors {
 }
 
 
+/**
+ * @author Daniel de Oliveira
+ */
 export function buildImportCatalogFunction(services: ImportCatalogServices,
                                            context: ImportCatalogContext): ImportFunction {
 
-    /**
-     * @param importDocumentsKatalogimport abgebrochen. Ungültige Relationen.
-     * @param datastore
-     * @param settings
-     *
-     * @author Daniel de Oliveira
-     */
     return async function importCatalog(importDocuments: Array<Document>)
         : Promise<{ errors: string[][], successfulImports: number }> {
 

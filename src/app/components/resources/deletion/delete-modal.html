@@ -38,8 +38,11 @@
         Bitte beachten Sie,
         dass beim Löschen von Katalogen sämtliche enthaltenen Typen sowie
         Zuordnungen von Funden zu Typen des Katalogs entfernt werden.
-
-        Bitte beachten Sie insbesondere, dass, wenn ein Reimport des Katalogs aus einer Importdatei beabsichtigt ist,
+    </div>
+    <div *ngIf="showOwnedCatalogImagesMsg()"
+         class="text-center alert alert-warning"
+         i18n="@@resources.deleteModel.warning.ownedCatalogImages">
+        Bitte beachten Sie, dass, wenn ein Reimport des Katalogs aus einer Importdatei beabsichtigt ist,
         es empfohlen ist, die Bilder des Katalogs mitsamt des Kataloges zuerst zu entfernen (siehe Checkbox unten).
     </div>
     <div *ngIf="showOwnedTypeAssociationsMsg()"

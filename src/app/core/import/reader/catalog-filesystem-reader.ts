@@ -17,10 +17,6 @@ export class CatalogFilesystemReader implements Reader {
     constructor(private file: any, private settings: Settings) {}
 
 
-    /* TODO
-     * maybe we put the files in a tmp folder under the project images dir
-     * then we can check them later in import catalog
-     */
     public go(): Promise<string> {
 
         return new Promise(async (resolve, reject) => {

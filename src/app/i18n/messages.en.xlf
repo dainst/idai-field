@@ -1307,6 +1307,20 @@
           <context context-type="linenumber">37</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="resources.deleteModel.warning.ownedCatalogImages" datatype="html">
+        <source>
+        Bitte beachten Sie, dass, wenn ein Reimport des Katalogs aus einer Importdatei beabsichtigt ist,
+        es empfohlen ist, die Bilder des Katalogs mitsamt des Kataloges zuerst zu entfernen (siehe Checkbox unten).
+    </source>
+        <target state="final">
+        Please note especially: In case a later reimport of the catalog from an import file is intended,
+        it is recommended to delete the images of the catalog together with the catalog (see checkbox below)..
+    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
+          <context context-type="linenumber">44</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="resources.deleteModel.warning.ownedType" datatype="html">
         <source>
         Bitte beachten Sie,
@@ -1319,7 +1333,7 @@
     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
-          <context context-type="linenumber">44</context>
+          <context context-type="linenumber">50</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.deleteModal.deleteImages.info" datatype="html">
@@ -1331,7 +1345,7 @@
                 </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
-          <context context-type="linenumber">74</context>
+          <context context-type="linenumber">80</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.deleteModal.deleteImages.single" datatype="html">
@@ -1343,7 +1357,7 @@
                 </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
-          <context context-type="linenumber">77</context>
+          <context context-type="linenumber">83</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.deleteModal.deleteImages.multiple" datatype="html">
@@ -1355,7 +1369,7 @@
                 </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
-          <context context-type="linenumber">80</context>
+          <context context-type="linenumber">86</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.deletionInProgressModal.info.single" datatype="html">
@@ -1431,7 +1445,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
-          <context context-type="linenumber">92</context>
+          <context context-type="linenumber">98</context>
         </context-group>
       </trans-unit>
       <trans-unit id="buttons.cancel" datatype="html">
@@ -1472,7 +1486,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
-          <context context-type="linenumber">96</context>
+          <context context-type="linenumber">102</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/editable-map.html</context>
@@ -1912,7 +1926,7 @@
         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
-          <context context-type="linenumber">50</context>
+          <context context-type="linenumber">56</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.deleteModal.confirmDeleteInfo.multiple" datatype="html">
@@ -1925,7 +1939,7 @@
         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
-          <context context-type="linenumber">53</context>
+          <context context-type="linenumber">59</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.deleteModal.warning.descendant.single" datatype="html">
@@ -4599,6 +4613,14 @@
       <trans-unit id="messages.import.catalog.error.owner_must_not_reimport_catalog" datatype="html">
         <source>Katalogimport abgebrochen. Löschen Sie den Katalog '[0]', bevor Sie ihn erneut importieren.</source>
         <target state="translated">Import aborted. Delete the existing catalog '[0]' before importing it anew.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.import.catalog.error.owner_must_not_overwrite_existing_images" datatype="html">
+        <source>Katalogimport abgebrochen. Importdatei beinhaltet Bilder, die bereits in der Datenbank vorhanden sind.</source>
+        <target state="final">Import aborted. Import file contains images, which already exist in the database.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>

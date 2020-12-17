@@ -139,6 +139,18 @@ describe('subsystem/relations-manager',() => {
     });
 
 
+    it('remove, beginning with Trench - keep a descendant', async done => {
+
+        const [d1, _, d3] = await createTestResourcesForRemoveTests();
+
+        expect((await app.documentDatastore.find({})).totalCount).toBe(7);
+        await app.relationsManager.remove(d1, [d3]);
+
+        helpers.expectResources('id3', 'id5', 'id6', 'id7');
+        done();
+    });
+
+
     // TODO review: this was moved from image-relations-manager
     it('skip image deletion', async done => {
 

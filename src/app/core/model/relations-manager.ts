@@ -1,5 +1,17 @@
 import {Injectable} from '@angular/core';
-import {isArray, isDefined, isNot, isUndefinedOrEmpty, on, sameset, to, undefinedOrEmpty} from 'tsfun';
+import {
+    append,
+    flow,
+    isArray,
+    isDefined,
+    isNot,
+    isUndefinedOrEmpty,
+    on,
+    sameset,
+    subtract,
+    to,
+    undefinedOrEmpty
+} from 'tsfun';
 import {Document, NewDocument} from 'idai-components-2';
 import {DocumentDatastore} from '../datastore/document-datastore';
 import {ConnectedDocsWriter} from './connected-docs-writer';
@@ -10,7 +22,7 @@ import {SettingsProvider} from '../settings/settings-provider';
 import {FindIdsResult, FindResult} from '../datastore/model/read-datastore';
 import {Query} from '../datastore/model/query';
 import RECORDED_IN = HierarchicalRelations.RECORDEDIN;
-import {RESOURCE_DOT_ID, ResourceId} from '../constants';
+import {RESOURCE_DOT_ID, RESOURCE_ID_PATH, ResourceId} from '../constants';
 import {DatastoreErrors} from '../datastore/model/datastore-errors';
 
 
@@ -120,12 +132,13 @@ export class RelationsManager {
      *   [DatastoreErrors.GENERIC_DELETE_ERROR] - if cannot delete for another reason
      */
     public async remove(document: Document,
-                        descendantsToKeep: Array<Document> = [] // TODO add tests
+                        descendantsToKeep: Array<Document> = []
     ) {
-
-        const documentsToBeDeleted = (await this.getDescendants(document)).filter(descendant => {
-            return !descendantsToKeep.map(to(RESOURCE_DOT_ID)).includes(descendant.resource.id);
-        }).concat([document]);
+        const descendants = await this.getDescendants(document);
+        const documentsToBeDeleted =
+            flow(descendants,
+                subtract(on(RESOURCE_ID_PATH), descendantsToKeep),
+                append(document));
 
         for (let document of documentsToBeDeleted) await this.removeWithConnectedDocuments(document);
     }

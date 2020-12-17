@@ -4,6 +4,7 @@ import {Settings} from '../../settings/settings';
 import {ResourceId} from '../../constants';
 import {RelationsManager} from '../../model/relations-manager';
 import {ImageRelationsManager} from '../../model/image-relations-manager';
+import {stringify} from '../../util/utils';
 
 const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
 const archiver = typeof window !== 'undefined' ? window.require('archiver') : require('archiver');
@@ -16,8 +17,12 @@ export const CATALOG_IMAGES = 'images';
 export const TEMP = 'temp';
 export const APP_DATA = 'appData';
 
+
 export module CatalogExporter {
 
+    /**
+     * @throws an error if something goes wrong
+     */
     export async function performExport(datastore: DocumentReadDatastore,
                                         relationsManager: RelationsManager,
                                         imageRelationsManager: ImageRelationsManager,
@@ -32,26 +37,21 @@ export module CatalogExporter {
         const tmpDir = tmpBaseDir + 'catalog-export/';
         const imgDir = tmpDir + CATALOG_IMAGES + '/';
 
-        try {
+        fs.rmdirSync(tmpDir, { recursive: true });
+        fs.mkdirSync(imgDir, { recursive: true });
 
+        copyImageFiles(imgDir, imageResourceIds, settings);
+
+        fs.writeFileSync(
+            tmpDir + CATALOG_JSONL,
+            exportDocuments
+                .map(stringify)
+                .join('\n')
+        );
+
+        zipFiles(outputFilePath, tmpDir, imgDir, () => {
             fs.rmdirSync(tmpDir, { recursive: true });
-            fs.mkdirSync(imgDir, { recursive: true });
-
-            copyImageFiles(imgDir, imageResourceIds, settings);
-
-            fs.writeFileSync(
-                tmpDir + CATALOG_JSONL,
-                exportDocuments
-                    .map(stringify)
-                    .join('\n')
-            );
-
-            zipFiles(outputFilePath, tmpDir, imgDir, () => {
-                fs.rmdirSync(tmpDir, { recursive: true });
-            });
-        } catch (error) {
-            throw ['catalog exporter error', error]; // TODO make error constant
-        }
+        });
     }
 
 
@@ -83,6 +83,3 @@ export module CatalogExporter {
         }
     }
 }
-
-
-const stringify = jsonObject => JSON.stringify(jsonObject);

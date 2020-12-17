@@ -31,6 +31,9 @@ export function logWithMessage<T>(message: string) {
 }
 
 
+export const stringify = jsonObject => JSON.stringify(jsonObject);
+
+
 export function toMap<T extends Named>(categories: Associative<T>) {
 
     return isArray(categories)

@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {set} from 'tsfun';
+import {set, to} from 'tsfun';
 import {FieldDocument} from 'idai-components-2';
 import {DeleteModalComponent} from './delete-modal.component';
 import {RelationsManager} from '../../../core/model/relations-manager';
@@ -65,11 +65,14 @@ export class ResourceDeletion {
 
         for (let document of documents) {
             descendants = descendants.concat(
-                await this.relationsManager.get(document.resource.id, { descendants: true, toplevel: false }) as Array<FieldDocument>
+                await this.relationsManager.get(
+                    document.resource.id, { descendants: true, toplevel: false }
+                ) as Array<FieldDocument>
             );
         }
 
-        return set(descendants);
+        return (set(descendants))
+            .filter(document => !documents.map(to('resource.id')).includes(document.resource.id));
     }
 
 

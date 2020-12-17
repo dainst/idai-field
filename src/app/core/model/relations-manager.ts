@@ -93,14 +93,15 @@ export class RelationsManager {
     }
 
 
-
     public async getDescendantsCount(...documents: Array<Document>): Promise<number> {
+
+        const idsToSubtract: string[] = documents.map(to('resource.id'));
 
         let count = 0;
         for (const document of documents) {
             count += !document.resource.id
                 ? 0
-                : (await this.findDescendants(document, true)).totalCount;
+                : (await this.findDescendants(document, true, idsToSubtract)).totalCount;
         }
         return count;
     }
@@ -183,20 +184,29 @@ export class RelationsManager {
     }
 
 
-    private async findDescendants(document: Document, skipDocuments = false): Promise<FindIdsResult> {
+    private async findDescendants(document: Document, skipDocuments = false,
+                                  idsToSubtract?: string[]): Promise<FindIdsResult> {
 
         return this.projectConfiguration.isSubcategory(document.resource.category, 'Operation')
-            ? await this.findRecordedInDocs2(document.resource.id, skipDocuments)
-            : await this.findLiesWithinDocs(document.resource.id, skipDocuments);
+            ? await this.findRecordedInDocs2(document.resource.id, skipDocuments, idsToSubtract)
+            : await this.findLiesWithinDocs(document.resource.id, skipDocuments, idsToSubtract);
     }
 
 
     // TODO review name clash; btw. why is this public?
-    public async findRecordedInDocs2(resourceId: string, skipDocuments: boolean): Promise<FindIdsResult> {
+    public async findRecordedInDocs2(resourceId: string, skipDocuments: boolean,
+                                     idsToSubtract?: string[]): Promise<FindIdsResult> {
 
         const query: Query = {
             constraints: { 'isRecordedIn:contain': resourceId }
         };
+
+        if (idsToSubtract) {
+            query.constraints['id:match'] = {
+                value: idsToSubtract,
+                subtract: true
+            }
+        }
 
         return skipDocuments
             ? this.datastore.findIds(query)
@@ -204,7 +214,8 @@ export class RelationsManager {
     }
 
 
-    private async findLiesWithinDocs(resourceId: string, skipDocuments: boolean): Promise<FindIdsResult> {
+    private async findLiesWithinDocs(resourceId: string, skipDocuments: boolean,
+                                     idsToSubtract?: string[]): Promise<FindIdsResult> {
 
         const query: Query = {
             constraints: {
@@ -214,6 +225,13 @@ export class RelationsManager {
                 }
             }
         };
+
+        if (idsToSubtract) {
+            query.constraints['id:match'] = {
+                value: idsToSubtract,
+                subtract: true
+            }
+        }
 
         return skipDocuments
             ? this.datastore.findIds(query)

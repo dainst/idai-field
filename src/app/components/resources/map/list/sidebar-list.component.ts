@@ -106,7 +106,7 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
         } else if ((event.metaKey || event.ctrlKey) && this.selectedDocument && document !== this.selectedDocument) {
             this.resourcesComponent.toggleAdditionalSelected(document, allowDeselection);
             this.lastSelectedDocument = document;
-        } else if (allowDeselection || !this.isPartOfSelection(document)) {
+        } else if (!event.metaKey && !event.ctrlKey && (allowDeselection || !this.isPartOfSelection(document))) {
             this.resourcesComponent.additionalSelectedDocuments = [];
             await this.resourcesComponent.select(document);
         }

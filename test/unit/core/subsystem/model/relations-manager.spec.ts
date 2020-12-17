@@ -1,5 +1,5 @@
-import {flatten, sameset} from 'tsfun';
-import {FieldDocument, ImageDocument, toResourceId} from 'idai-components-2';
+import {flatten} from 'tsfun';
+import {FieldDocument, ImageDocument} from 'idai-components-2';
 import {createApp, createHelpers, setupSyncTestDb} from '../subsystem-helper';
 import {doc} from '../../../test-helpers';
 import {makeDocumentsLookup} from '../../../../../src/app/core/import/import/utils';
@@ -121,8 +121,8 @@ describe('subsystem/relations-manager',() => {
 
         expect((await app.documentDatastore.find({})).totalCount).toBe(7);
         await app.relationsManager.remove(d2, { descendants: true });
-        const result = (await app.documentDatastore.find({})).documents.map(toResourceId);
-        expect(sameset(result, ['id1', 'id5', 'id6', 'id7'])).toBeTruthy();
+
+        await helpers.expectResources('id1', 'id5', 'id6', 'id7');
         done();
     });
 
@@ -133,8 +133,8 @@ describe('subsystem/relations-manager',() => {
 
         expect((await app.documentDatastore.find({})).totalCount).toBe(7);
         await app.relationsManager.remove(d1, { descendants: true });
-        const result = (await app.documentDatastore.find({})).documents.map(toResourceId);
-        expect(sameset(result, ['id5', 'id6', 'id7'])).toBeTruthy();
+
+        await helpers.expectResources('id5', 'id6', 'id7');
         done();
     });
 
@@ -146,7 +146,7 @@ describe('subsystem/relations-manager',() => {
         expect((await app.documentDatastore.find({})).totalCount).toBe(7);
         await app.relationsManager.remove(d1, { descendants: true, descendantsToKeep: [d3] });
 
-        helpers.expectResources('id3', 'id5', 'id6', 'id7');
+        await helpers.expectResources('id3', 'id5', 'id6', 'id7');
         done();
     });
 
@@ -173,9 +173,8 @@ describe('subsystem/relations-manager',() => {
         await app.relationsManager.remove(tc1, { descendants: true });
 
         const documents = (await app.documentDatastore.find({})).documents;
-        expect(documents.length).toBe(2);
-        expect(sameset(documents.map(toResourceId), ['i2', 'i1'])).toBeTruthy();
         expect(flatten(documents.map(_ => _.resource.relations.depicts))).toEqual([]);
+        await helpers.expectResources('i1', 'i2');
         done();
     });
 });

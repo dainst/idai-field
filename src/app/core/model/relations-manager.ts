@@ -119,9 +119,13 @@ export class RelationsManager {
      *   [DatastoreErrors.DOCUMENT_DOES_NOT_EXIST_ERROR] - if document has a resource id, but does not exist in the db
      *   [DatastoreErrors.GENERIC_DELETE_ERROR] - if cannot delete for another reason
      */
-    public async remove(document: Document) {
+    public async remove(document: Document, descendantsToKeep?: Array<Document>) {
 
-        const documentsToBeDeleted = (await this.getDescendants(document)).concat([document]);
+        const descendants: Array<Document> = (await this.getDescendants(document)).filter(descendant => {
+            return !descendantsToKeep.map(to('resource.id')).includes(descendant.resource.id);
+        });
+
+        const documentsToBeDeleted = descendants.concat([document]);
         for (let document of documentsToBeDeleted) await this.removeWithConnectedDocuments(document);
     }
 

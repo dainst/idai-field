@@ -129,6 +129,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_CATALOG_ERROR_DIFFERENT_PROJECT_ENTRIES = 'M.Import.ImportCatalogErrors.differentProjectEntries';
     public static IMPORT_CATALOG_ERROR_NO_OR_TOO_MANY_TYPE_CATALOG_DOCUMENTS = 'M.Import.ImportCatalogErrors.noOrTooManyTypeCatalogDocuments';
     public static IMPORT_CATALOG_ERROR_INVALID_RELATIONS = 'M.Import.ImportCatalogErrors.invalidRelations';
+    public static IMPORT_CATALOG_ERROR_OWNER_MUST_NOT_REIMPORT_CATALOG = 'M.Import.ImportCatalogErrors.ownerMustNotImportCatalog';
 
     // Export Package
     public static EXPORT_SUCCESS = 'export.success';
@@ -1021,6 +1022,15 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             content: i18n({
                 id: 'messages.import.catalog.error.connected_type_deleted',
                 value: 'Katalogimport abgebrochen. Die bestehende Version enthält Typen, die nicht im Import vorhanden sind, jedoch noch mit Funden verknüpft sind. Betroffene Typen: [0]'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.IMPORT_CATALOG_ERROR_OWNER_MUST_NOT_REIMPORT_CATALOG] = {
+            content: i18n({
+                id: 'messages.import.catalog.error.owner_must_not_reimport_catalog',
+                value: 'Katalogimport abgebrochen. Löschen Sie den Katalog \'[0]\', bevor Sie ihn erneut importieren.'
             }),
             level: 'danger',
             params: [],

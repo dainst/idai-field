@@ -4596,6 +4596,14 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="messages.import.catalog.error.owner_must_not_reimport_catalog" datatype="html">
+        <source>Katalogimport abgebrochen. Löschen Sie den Katalog '[0]', bevor Sie ihn erneut importieren.</source>
+        <target state="translated">Import aborted. Delete the existing catalog '[0]' before importing it anew.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="messages.import.catalog.error.differentProjectEntries" datatype="html">
         <source>Katalogimport abgebrochen. Alle zu importierenden Dokumente müssen den gleichen Projekt-Eintrag haben.</source>
         <target state="final">Import aborted. All documents in the import file must have the same project entry.</target>

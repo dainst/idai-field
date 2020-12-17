@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 
+
 @Injectable()
 /**
  * @author Thomas Kleinke
@@ -7,46 +8,41 @@ import {Injectable} from '@angular/core';
  */
 export class Loading {
 
-    private loading: number = 0;
-    private context: string|undefined;
-    private loadingStart: Date|undefined = undefined;
+    private loadingStatus: { [context: string]: { loading: number; start: Date } } = {};
 
 
-    public start(context?: string) {
+    public start(context: string = 'DEFAULT') {
 
-        if (this.loading === 0) this.loadingStart = new Date();
+        if (!this.loadingStatus[context]) this.loadingStatus[context] = {
+            loading: 0,
+            start: new Date()
+        };
 
-        if (context && !this.context) this.context = context;
-        this.loading++;
+        this.loadingStatus[context].loading++;
     }
 
 
-    public stop() {
+    public stop(context: string = 'DEFAULT') {
 
-        this.loading--;
-        if (this.loading === 0) {
-            this.context = undefined;
-            this.loadingStart = undefined;
+        if (!this.loadingStatus[context]) return;
+
+        this.loadingStatus[context].loading--;
+        if (this.loadingStatus[context].loading === 0) {
+            delete this.loadingStatus[context];
         }
     }
 
 
-    public isLoading(context?: string): boolean {
+    public isLoading(context: string = 'DEFAULT'): boolean {
 
-        return this.loading > 0 && (!context || context === this.context);
+        return this.loadingStatus[context] !== undefined;
     }
 
 
-    public getContext(): string|undefined {
+    public getLoadingTimeInMilliseconds(context: string = 'DEFAULT'): number {
 
-        return this.context;
-    }
+        if (!this.loadingStatus[context]) return -1;
 
-
-    public getLoadingTimeInMilliseconds(): number {
-
-        if (!this.loadingStart) return -1;
-
-        return new Date().getTime() - this.loadingStart.getTime();
+        return new Date().getTime() - this.loadingStatus[context].start.getTime();
     }
 }

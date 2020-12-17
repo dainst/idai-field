@@ -48,7 +48,7 @@ export class BaseList {
 
         return this.menuService.getContext() !== MenuContext.GEOMETRY_EDIT
             && this.viewFacade.isReady()
-            && (!this.loading.isLoading() || this.loading.getContext() !== undefined);
+            && !this.loading.isLoading();
     }
 
 

@@ -67,7 +67,7 @@ export class ChildrenViewComponent implements OnChanges {
 
         this.children = await this.getChildren(document);
 
-        this.loading.stop();
+        this.loading.stop('sidebar-children');
     }
 
 

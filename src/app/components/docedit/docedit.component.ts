@@ -172,7 +172,7 @@ export class DoceditComponent {
                     ? M.DATASTORE_ERROR_NOT_FOUND
                     : errorWithParams);
         } finally {
-            this.loading.stop();
+            this.loading.stop('docedit');
             this.operationInProgress = 'none';
         }
     }

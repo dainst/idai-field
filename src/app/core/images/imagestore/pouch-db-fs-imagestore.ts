@@ -194,7 +194,12 @@ export class PouchDbFsImagestore /* implements Imagestore */{
      */
     public async remove(key: string, options?: { fs?: true } /* TODO review */): Promise<any> {
 
-        if (options?.fs === true) return fs.unlinkSync(this.projectPath + key);
+        if (options?.fs === true) {
+            if (fs.existsSync(this.projectPath + key)) {
+                fs.unlinkSync(this.projectPath + key);
+            }
+            return;
+        }
 
         return new Promise((resolve, reject) => {
             fs.unlink(this.projectPath + key, () => {

@@ -76,7 +76,6 @@ export class RelationsManager {
     }
 
 
-    // TODO add options to return trees and treelists
     public async get(id: ResourceId): Promise<Document>;
     public async get(ids: Array<ResourceId>): Promise<Array<Document>>;
     public async get(id: ResourceId, options: { descendants: true, toplevel?: false }): Promise<Array<Document>>
@@ -186,14 +185,6 @@ export class RelationsManager {
     }
 
 
-    private async findRecordedInDocs(resourceId: string): Promise<Array<Document>> {
-
-        return (await this.datastore.find({
-            constraints: { 'isRecordedIn:contain': resourceId },
-        })).documents;
-    }
-
-
     private persistIt(document: Document|NewDocument,
                       squashRevisionIds: string[]): Promise<Document> {
 
@@ -212,14 +203,22 @@ export class RelationsManager {
                                   idsToSubtract?: string[]): Promise<FindIdsResult> {
 
         return this.projectConfiguration.isSubcategory(document.resource.category, 'Operation')
-            ? await this.findRecordedInDocs2(document.resource.id, skipDocuments, idsToSubtract)
+            ? await this.findRecordedInDocsIds(document.resource.id, skipDocuments, idsToSubtract)
             : await this.findLiesWithinDocs(document.resource.id, skipDocuments, idsToSubtract);
     }
 
 
-    // TODO review name clash; btw. why is this public?
-    public async findRecordedInDocs2(resourceId: string, skipDocuments: boolean,
-                                     idsToSubtract?: string[]): Promise<FindIdsResult> {
+    private async findRecordedInDocs(resourceId: string): Promise<Array<Document>> {
+
+        return (await this.datastore.find({
+            constraints: { 'isRecordedIn:contain': resourceId },
+        })).documents;
+    }
+
+
+    private async findRecordedInDocsIds(resourceId: string,
+                                        skipDocuments: boolean,
+                                        idsToSubtract?: string[]): Promise<FindIdsResult> {
 
         const query: Query = {
             constraints: { 'isRecordedIn:contain': resourceId }

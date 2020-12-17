@@ -38,29 +38,26 @@ export module ImportCatalogErrors {
 }
 
 
+/**
+ * @author Daniel de Oliveira
+ */
 export function buildImportCatalogFunction(services: ImportCatalogServices,
                                            context: ImportCatalogContext): ImportFunction {
 
-    /**
-     * @param importDocumentsKatalogimport abgebrochen. Ungültige Relationen.
-     * @param datastore
-     * @param settings
-     *
-     * @author Daniel de Oliveira
-     */
     return async function importCatalog(importDocuments: Array<Document>)
         : Promise<{ errors: string[][], successfulImports: number }> {
 
         try {
             assertProjectAlwaysTheSame(importDocuments);
+            const catalogResourceId = getCatalogResourceId(importDocuments);
             const [
                 existingCatalogDocuments,
                 existingDocumentsRelatedImages,
                 existingCatalogAndImageDocuments
-            ] = await getExistingCatalogDocuments(services, importDocuments);
+            ] = await getExistingDocuments(services, catalogResourceId);
 
             assertRelationsValid(importDocuments);
-            assertNoDeletionOfRelatedTypes(Object.values(existingCatalogDocuments), importDocuments);
+            assertNoDeletionOfRelatedTypes(existingCatalogDocuments, importDocuments);
 
             const updateDocuments = await asyncMap(importDocuments,
                 importOneDocument(services, context, existingCatalogAndImageDocuments));
@@ -68,7 +65,7 @@ export function buildImportCatalogFunction(services: ImportCatalogServices,
             await removeRelatedImages(
                 services, updateDocuments, existingDocumentsRelatedImages);
             await removeObsoleteCatalogDocuments(
-                services, Object.values(existingCatalogDocuments), updateDocuments);
+                services, existingCatalogDocuments, updateDocuments);
             return { errors: [], successfulImports: updateDocuments.length };
 
         } catch (errWithParams) {
@@ -104,8 +101,8 @@ async function removeRelatedImages(services: ImportCatalogServices,
 
     const diffImages = subtract(on(RESOURCE_ID_PATH), updateDocuments)(existingDocumentsRelatedImages);
     for (const diff of diffImages) {
-        // TODO make sure it was connected to only this catalog, and not maybe to some other catalog from the same original user, for example
         await services.imagestore.remove(diff.resource.id);
+        await services.datastore.remove(diff);
     }
 }
 
@@ -126,22 +123,26 @@ function assertNoDeletionOfRelatedTypes(existingDocuments: Array<Document>,
 }
 
 
-async function getExistingCatalogDocuments(services: ImportCatalogServices,
-                                           importDocuments: Array<Document>)
-    : Promise<[Lookup<Document>, Array<Document>, Lookup<Document>]> {
+function getCatalogResourceId(importDocuments: Array<Document>) {
 
     const typeCatalogDocuments =
         importDocuments.filter(_ => _.resource.category === 'TypeCatalog');
     if (typeCatalogDocuments.length !== 1) throw [ImportCatalogErrors.NO_OR_TOO_MANY_TYPE_CATALOG_DOCUMENTS];
-    const typeCatalogDocument = typeCatalogDocuments[0];
+    return typeCatalogDocuments[0].resource.id;
+}
 
-    const catalogDocuments = await services.relationsManager.get(typeCatalogDocument.resource.id, { descendants: true });
+
+async function getExistingDocuments(services: ImportCatalogServices,
+                                    catalogResourceId: string)
+    : Promise<[Array<Document>, Array<Document>, Lookup<Document>]> {
+
+    const catalogDocuments = await services.relationsManager.get(catalogResourceId, { descendants: true });
     const imageDocuments = await services.imageRelationsManager.getLinkedImages(catalogDocuments);
 
     return [
-        makeDocumentsLookup(catalogDocuments),
+        catalogDocuments,
         imageDocuments,
-        makeDocumentsLookup(catalogDocuments.concat(imageDocuments)) // TODO write test
+        makeDocumentsLookup(catalogDocuments.concat(imageDocuments))
     ];
 }
 

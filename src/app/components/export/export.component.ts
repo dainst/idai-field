@@ -166,14 +166,19 @@ export class ExportComponent implements OnInit {
 
     private async startCatalogExport(filePath: string) {
 
-        await CatalogExporter.performExport(
-            this.documentDatastore,
-            this.relationsManager,
-            this.imageRelationsManager,
-            filePath,
-            this.selectedCatalogId,
-            this.settingsProvider.getSettings()
-        );
+        try {
+            await CatalogExporter.performExport(
+                this.documentDatastore,
+                this.relationsManager,
+                this.imageRelationsManager,
+                filePath,
+                this.selectedCatalogId,
+                this.settingsProvider.getSettings()
+            );
+        } catch (err) {
+            console.error(err);
+            throw [M.EXPORT_ERROR_GENERIC];
+        }
     }
 
 

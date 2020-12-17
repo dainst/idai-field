@@ -135,6 +135,27 @@ describe('subsystem/import/importCatalog', () => {
     });
 
 
+    xit('reimport in same project should only delete images if exclusively linked to catalog', async done => {
+
+        await helpers.createDocuments([
+            ['tc1', 'TypeCatalog', ['t1']],
+            ['t1', 'Type'],
+            ['r1', 'Find'],
+            ['i1', 'Image', ['t1', 'r1']]
+        ]);
+
+        const catalog = createDocuments([
+            ['tc1', 'TypeCatalog', ['t1']],
+            ['t1', 'Type'],
+        ]);
+
+        await importCatalog(Object.values(catalog));
+        await helpers.expectResources('tc1', 't1', 'r1', 'i1');
+        helpers.expectImagesExist('i1');
+        done();
+    });
+
+
     it('document.project differs between resources', async done => {
 
         const catalog = createDocuments([

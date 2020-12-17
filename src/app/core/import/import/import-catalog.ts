@@ -78,6 +78,11 @@ export function buildImportCatalogFunction(services: ImportCatalogServices,
 }
 
 
+
+// This is here to us not having to handle certain edge cases with deletions and
+// images related to not only catalog but also other resources. For now, we oblige
+// the owner of the catalog to remove the catalog consciously so that he then can
+// re-import it afterwards.
 async function assertCatalogNotOwned(services: ImportCatalogServices,
                                      context: ImportCatalogContext,
                                      importCatalog: Document) {

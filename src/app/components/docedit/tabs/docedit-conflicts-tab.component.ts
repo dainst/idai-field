@@ -9,6 +9,7 @@ import {Messages} from '../../messages/messages';
 
 const moment = require('moment');
 
+
 /**
  * @author Thomas Kleinke
  */
@@ -54,7 +55,7 @@ export class DoceditConflictsTabComponent implements OnChanges {
             this.differingFields = [];
         }
 
-        this.loading.stop();
+        this.loading.stop('docedit-conflicts-tab');
     }
 
 

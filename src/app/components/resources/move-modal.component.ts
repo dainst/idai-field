@@ -89,7 +89,7 @@ export class MoveModalComponent {
             }
         }
 
-        this.loading.stop();
+        this.loading.stop('moveModal');
         this.activeModal.close();
     }
 }

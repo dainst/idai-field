@@ -118,7 +118,7 @@ export class DocumentPickerComponent implements OnChanges {
         } catch (msgWithParams) {
             this.messages.add(msgWithParams);
         } finally {
-            this.loading.stop();
+            this.loading.stop('documentPicker');
         }
     }
 

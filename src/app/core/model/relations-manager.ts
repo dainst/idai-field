@@ -10,7 +10,7 @@ import {SettingsProvider} from '../settings/settings-provider';
 import {FindIdsResult, FindResult} from '../datastore/model/read-datastore';
 import {Query} from '../datastore/model/query';
 import RECORDED_IN = HierarchicalRelations.RECORDEDIN;
-import {ResourceId} from '../constants';
+import {RESOURCE_DOT_ID, ResourceId} from '../constants';
 import {DatastoreErrors} from '../datastore/model/datastore-errors';
 
 
@@ -95,7 +95,7 @@ export class RelationsManager {
 
     public async getDescendantsCount(...documents: Array<Document>): Promise<number> {
 
-        const idsToSubtract: string[] = documents.map(to('resource.id'));
+        const idsToSubtract: string[] = documents.map(to(RESOURCE_DOT_ID));
 
         let count = 0;
         for (const document of documents) {
@@ -119,10 +119,12 @@ export class RelationsManager {
      *   [DatastoreErrors.DOCUMENT_DOES_NOT_EXIST_ERROR] - if document has a resource id, but does not exist in the db
      *   [DatastoreErrors.GENERIC_DELETE_ERROR] - if cannot delete for another reason
      */
-    public async remove(document: Document, descendantsToKeep?: Array<Document>) {
+    public async remove(document: Document,
+                        descendantsToKeep: Array<Document> = [] // TODO add tests
+    ) {
 
         const documentsToBeDeleted = (await this.getDescendants(document)).filter(descendant => {
-            return !descendantsToKeep.map(to('resource.id')).includes(descendant.resource.id);
+            return !descendantsToKeep.map(to(RESOURCE_DOT_ID)).includes(descendant.resource.id);
         }).concat([document]);
 
         for (let document of documentsToBeDeleted) await this.removeWithConnectedDocuments(document);

@@ -28,8 +28,8 @@ import {DatastoreErrors} from '../datastore/model/datastore-errors';
 
 @Injectable()
 /**
- * When persisting or deleting, PersistenceManager maintains a consistent state of relations between the
- * documents by updating related documents relations.
+ * Maintains a consistent state of relations between the
+ * documents by updating related documents relations during update or delete operations.
  *
  * @author Daniel de Oliveira
  * @author Thomas Kleinke

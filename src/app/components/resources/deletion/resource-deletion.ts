@@ -23,11 +23,13 @@ export class ResourceDeletion {
 
     public async delete(documents: Array<FieldDocument>) {
 
+        const descendantsCount: number = await this.relationsManager.getDescendantsCount(...documents);
+
         const modalRef: NgbModalRef = this.modalService.open(
             DeleteModalComponent, { keyboard: false }
         );
         modalRef.componentInstance.documents = documents;
-        modalRef.componentInstance.descendantsCount = await this.relationsManager.getDescendantsCount(...documents);
+        modalRef.componentInstance.descendantsCount = descendantsCount;
 
         const documentsAndDescendants: Array<FieldDocument>
             = (await this.getDescendants(documents)).concat(documents);
@@ -38,6 +40,7 @@ export class ResourceDeletion {
         const deletionInProgressModalRef: NgbModalRef = this.modalService.open(
             DeletionInProgressModalComponent, { backdrop: 'static', keyboard: false }
         );
+        deletionInProgressModalRef.componentInstance.multiple = documents.length + descendantsCount > 1;
 
         await this.performDeletion(documents, deleteRelatedImages);
         deletionInProgressModalRef.close();

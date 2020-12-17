@@ -12,4 +12,6 @@ import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 export class DeletionInProgressModalComponent {
 
     constructor(public activeModal: NgbActiveModal) {}
+
+    public multiple: boolean;
 }

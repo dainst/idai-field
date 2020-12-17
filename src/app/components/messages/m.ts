@@ -134,6 +134,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     // Export Package
     public static EXPORT_SUCCESS = 'export.success';
     public static EXPORT_ERROR_GENERIC = 'export.error.generic';
+    public static EXPORT_CATALOG_IMAGES_NOT_EXCLUSIVE_TO_CATALOG = 'export.error.catalog.imagesNotExclusiveToCatalog';
     public static EXPORT_GEOJSON_ERROR_WRITE = 'export.geojson.error.write';
     public static EXPORT_SHAPEFILE_ERROR_TEMP_FOLDER_CREATION = 'export.shapefile.error.tempFolderCreation';
     public static EXPORT_SHAPEFILE_ERROR_ZIP_FILE_CREATION = 'export.shapefile.error.zipFileCreation';
@@ -1103,6 +1104,15 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             content: i18n({
                 id: 'messages.export.geojson.error.write',
                 value: 'Beim Export ist ein Fehler aufgetreten: Die GeoJSON-Datei konnte nicht geschrieben werden.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.EXPORT_CATALOG_IMAGES_NOT_EXCLUSIVE_TO_CATALOG] = {
+            content: i18n({
+                id: 'messages.export.error.catalog.images-not-exclusive-to-catalog',
+                value: 'Beim Export ist ein Fehler aufgetreten: Bilder des Kataloges dürfen nicht gleichzeitig mit anderen Ressorcen verbunden sein.'
             }),
             level: 'danger',
             params: [],

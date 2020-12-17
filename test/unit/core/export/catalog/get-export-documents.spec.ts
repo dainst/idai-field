@@ -1,4 +1,7 @@
-import {getExportDocuments} from '../../../../../src/app/core/export/catalog/get-export-documents';
+import {
+    ERROR_NOT_ALl_IMAGES_EXCLUSIVELY_LINKED,
+    getExportDocuments
+} from '../../../../../src/app/core/export/catalog/get-export-documents';
 import {makeDocumentsLookup} from '../../../../../src/app/core/import/import/utils';
 
 
@@ -8,13 +11,15 @@ describe('getExportDocuments', () => {
     let relationsManager;
     let imageRelationsManager;
 
+    let images;
+
     beforeEach(() => {
 
         datastore = jasmine.createSpyObj('datastore', ['find']);
         relationsManager = jasmine.createSpyObj('relationsManager', ['get']);
         imageRelationsManager = jasmine.createSpyObj('imageRelationsManager', ['getLinkedImages']);
 
-        const images: Array<any> = [
+        images = [
             {
                 resource: {
                     id: 'I1',
@@ -50,7 +55,7 @@ describe('getExportDocuments', () => {
 
     it('basic', async done => {
 
-        const [exportDocuments, imageResourceIds] = await getExportDocuments(
+        const [_, [exportDocuments, imageResourceIds]] = await getExportDocuments(
             datastore, relationsManager, imageRelationsManager, 'C1', 'test-project');
         const exportDocumentsLookup = makeDocumentsLookup(exportDocuments);
         expect(exportDocuments.length).toBe(3);
@@ -58,6 +63,21 @@ describe('getExportDocuments', () => {
         expect(exportDocumentsLookup['T1']['project']).toBe('test-project');
         expect(exportDocumentsLookup['I1']['project']).toBe('test-project');
         expect(imageResourceIds).toEqual(['I1']);
+        done();
+    });
+
+
+    it('not all images exlusively linked', async done => {
+
+        imageRelationsManager.getLinkedImages.and.callFake((_, option) => {
+            return option === true
+                ? []
+                : images;
+        })
+
+        const [error, _] = await getExportDocuments(
+            datastore, relationsManager, imageRelationsManager, 'C1', 'test-project');
+        expect(error[0]).toEqual(ERROR_NOT_ALl_IMAGES_EXCLUSIVELY_LINKED);
         done();
     });
 });

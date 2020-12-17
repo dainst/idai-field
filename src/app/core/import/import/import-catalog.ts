@@ -56,7 +56,7 @@ export function buildImportCatalogFunction(services: ImportCatalogServices,
             ] = await getExistingCatalogDocuments(services, importDocuments);
 
             assertRelationsValid(importDocuments);
-            assertNoDeletionOfRelatedTypes(Object.values(existingCatalogDocuments), importDocuments);
+            assertNoDeletionOfRelatedTypes(existingCatalogDocuments, importDocuments);
 
             const updateDocuments = await asyncMap(importDocuments,
                 importOneDocument(services, context, existingCatalogAndImageDocuments));
@@ -64,7 +64,7 @@ export function buildImportCatalogFunction(services: ImportCatalogServices,
             await removeRelatedImages(
                 services, updateDocuments, existingDocumentsRelatedImages);
             await removeObsoleteCatalogDocuments(
-                services, Object.values(existingCatalogDocuments), updateDocuments);
+                services, existingCatalogDocuments, updateDocuments);
             return { errors: [], successfulImports: updateDocuments.length };
 
         } catch (errWithParams) {
@@ -124,7 +124,7 @@ function assertNoDeletionOfRelatedTypes(existingDocuments: Array<Document>,
 
 async function getExistingCatalogDocuments(services: ImportCatalogServices,
                                            importDocuments: Array<Document>)
-    : Promise<[Lookup<Document>, Array<Document>, Lookup<Document>]> {
+    : Promise<[Array<Document>, Array<Document>, Lookup<Document>]> {
 
     const typeCatalogDocuments =
         importDocuments.filter(_ => _.resource.category === 'TypeCatalog');
@@ -135,9 +135,9 @@ async function getExistingCatalogDocuments(services: ImportCatalogServices,
     const imageDocuments = await services.imageRelationsManager.getLinkedImages(catalogDocuments);
 
     return [
-        makeDocumentsLookup(catalogDocuments),
+        catalogDocuments,
         imageDocuments,
-        makeDocumentsLookup(catalogDocuments.concat(imageDocuments)) // TODO write test
+        makeDocumentsLookup(catalogDocuments.concat(imageDocuments))
     ];
 }
 

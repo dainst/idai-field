@@ -49,11 +49,12 @@ export function buildImportCatalogFunction(services: ImportCatalogServices,
 
         try {
             assertProjectAlwaysTheSame(importDocuments);
+            const catalogResourceId = getCatalogResourceid(importDocuments);
             const [
                 existingCatalogDocuments,
                 existingDocumentsRelatedImages,
                 existingCatalogAndImageDocuments
-            ] = await getExistingCatalogDocuments(services, importDocuments);
+            ] = await getExistingDocuments(services, catalogResourceId);
 
             assertRelationsValid(importDocuments);
             assertNoDeletionOfRelatedTypes(existingCatalogDocuments, importDocuments);
@@ -122,16 +123,20 @@ function assertNoDeletionOfRelatedTypes(existingDocuments: Array<Document>,
 }
 
 
-async function getExistingCatalogDocuments(services: ImportCatalogServices,
-                                           importDocuments: Array<Document>)
-    : Promise<[Array<Document>, Array<Document>, Lookup<Document>]> {
+function getCatalogResourceid(importDocuments: Array<Document>) {
 
     const typeCatalogDocuments =
         importDocuments.filter(_ => _.resource.category === 'TypeCatalog');
     if (typeCatalogDocuments.length !== 1) throw [ImportCatalogErrors.NO_OR_TOO_MANY_TYPE_CATALOG_DOCUMENTS];
-    const typeCatalogDocument = typeCatalogDocuments[0];
+    return typeCatalogDocuments[0].resource.id;
+}
 
-    const catalogDocuments = await services.relationsManager.get(typeCatalogDocument.resource.id, { descendants: true });
+
+async function getExistingDocuments(services: ImportCatalogServices,
+                                    catalogResourceId: string)
+    : Promise<[Array<Document>, Array<Document>, Lookup<Document>]> {
+
+    const catalogDocuments = await services.relationsManager.get(catalogResourceId, { descendants: true });
     const imageDocuments = await services.imageRelationsManager.getLinkedImages(catalogDocuments);
 
     return [

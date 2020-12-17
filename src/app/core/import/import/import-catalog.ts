@@ -83,6 +83,9 @@ export function buildImportCatalogFunction(services: ImportCatalogServices,
 // images related to not only catalog but also other resources. For now, we oblige
 // the owner of the catalog to remove the catalog consciously so that he then can
 // re-import it afterwards.
+//
+// TODO One thing which should improved: The import of the image files has been done previously,
+// which was unnecessary in this case. It is not a problem though except for the time wasted waiting.
 async function assertCatalogNotOwned(services: ImportCatalogServices,
                                      context: ImportCatalogContext,
                                      importCatalog: Document) {

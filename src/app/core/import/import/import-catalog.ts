@@ -54,8 +54,6 @@ export function buildImportCatalogFunction(services: ImportCatalogServices,
             const importCatalog = getImportTypeCatalog(importDocuments);
 
             if (importCatalog.project === context.selectedProject) { // owned catalog
-                // TODO One thing which should improved: The import of the image files has been done previously,
-                // which was unnecessary in this case. It is not a problem though except for the time wasted waiting.
                 await assertCatalogNotOwned(services, context, importCatalog);
                 await assertNoImagesOverwritten(services, context, importDocuments);
             }

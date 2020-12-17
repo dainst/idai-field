@@ -399,14 +399,11 @@ export class MapComponent implements AfterViewInit, OnChanges {
         const selection: Array<FieldDocument> = this.getSelection();
         const geometryDocuments: Array<FieldDocument> = selection.filter(MapComponent.getGeometry);
         if (geometryDocuments.length === 1 && geometryDocuments[0].resource.geometry.type === 'Point') {
-            this.map.panTo(
-                this.markers[geometryDocuments[0].resource.id][0].getLatLng(),
-                { animate: true, easeLinearity: 0.3 }
-            );
+            this.panToMarker(geometryDocuments[0]);
         } else {
             const bounds: any[] = [];
             selection.forEach(document => this.addToBounds(document, bounds));
-            this.map.fitBounds(bounds);
+            if (bounds.length > 0) this.map.fitBounds(bounds);
         }
     }
 
@@ -431,9 +428,20 @@ export class MapComponent implements AfterViewInit, OnChanges {
     }
 
 
-    private addPathToBounds(polylines: Array<L.Polyline|L.Polygon>, bounds: any[]) {
+    private addPathToBounds(paths: Array<L.Polyline|L.Polygon>, bounds: any[]) {
 
-        polylines.forEach(polyline => bounds.push(polyline.getLatLngs()));
+        paths.forEach(path => bounds.push(path.getLatLngs()[0]));
+    }
+
+
+    private panToMarker(document: FieldDocument) {
+
+        if (!this.markers[document.resource.id]) return;
+
+        this.map.panTo(
+            this.markers[document.resource.id][0].getLatLng(),
+            { animate: true, easeLinearity: 0.3 }
+        );
     }
 
 

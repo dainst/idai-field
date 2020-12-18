@@ -103,7 +103,7 @@ export class TypesComponent extends BaseList implements OnChanges {
     async ngOnChanges(changes: SimpleChanges) {
 
         this.loading.start();
-        await this.update();
+        await this.update(changes['documents'].currentValue);
         this.loading.stop();
         this.changeDetectorRef.detectChanges();
     }
@@ -221,14 +221,14 @@ export class TypesComponent extends BaseList implements OnChanges {
     public isSectionVisible = (section: string) => this.linkedDocuments.length === 0 || this.visibleSections.includes(section);
 
 
-    private async update() {
+    private async update(documents: Array<FieldDocument>) {
 
         const newMainDocument: FieldDocument|undefined = this.getMainDocument();
         if (newMainDocument !== this.mainDocument) {
             this.mainDocument = newMainDocument;
             await this.updateLinkedDocuments();
         }
-        await this.loadImages(this.documents);
+        if (documents.length > 0) await this.loadImages(documents);
     }
 
 

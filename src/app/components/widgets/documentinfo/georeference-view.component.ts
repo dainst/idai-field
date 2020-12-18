@@ -21,6 +21,7 @@ export class GeoreferenceViewComponent {
     @Input() document: any;
     @Input() openSection: string|undefined;
     @Input() expandAllGroups: boolean;
+    @Input() readonly: boolean;
 
     @Output() onSectionToggled: EventEmitter<string|undefined> = new EventEmitter<string|undefined>();
 

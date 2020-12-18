@@ -10,8 +10,6 @@ const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
 const archiver = typeof window !== 'undefined' ? window.require('archiver') : require('archiver');
 const remote = typeof window !== 'undefined' ? window.require('electron').remote : require('electron').remote;
 
-const archive = archiver('zip');
-
 export const CATALOG_JSONL = 'catalog.jsonl'
 export const CATALOG_IMAGES = 'images';
 export const TEMP = 'temp';
@@ -62,10 +60,11 @@ export module CatalogExporter {
                       imgDir: string,
                       onClose: () => void) {
 
-        const output = fs.createWriteStream(outputFilePath);
+        const archive = archiver('zip');
         archive.on('error', function (err) {
             throw err;
         });
+        const output = fs.createWriteStream(outputFilePath);
         output.on('close', onClose);
         archive.pipe(output);
         archive.file(tmpDir + CATALOG_JSONL, { name: CATALOG_JSONL });

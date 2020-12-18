@@ -85,6 +85,28 @@ describe('resources/multi-select --', () => {
     });
 
 
+    it('delete multi resources on different hierarchy levels', () => {
+
+        NavbarPage.clickTab('project');
+        ResourcesPage.clickSwitchHierarchyMode();
+
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('PQ1')), delays.ECWaitTime);
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('PQ1-ST1')), delays.ECWaitTime);
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('PQ2')), delays.ECWaitTime);
+
+        common.click(ResourcesPage.getListItemEl('PQ2'));
+        common.clickWithShiftKey(ResourcesPage.getListItemEl('PQ1'));
+        ResourcesPage.clickOpenContextMenu('PQ2');
+        ResourcesPage.clickContextMenuDeleteButton();
+        ResourcesPage.typeInIdentifierInConfirmDeletionInputField('PQ1');
+        ResourcesPage.clickConfirmDeleteInModal();
+
+        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('PQ1')), delays.ECWaitTime);
+        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('PQ1-ST1')), delays.ECWaitTime);
+        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('PQ2')), delays.ECWaitTime);
+    });
+
+
     it('move multiple resources', () => {
 
         createResources();

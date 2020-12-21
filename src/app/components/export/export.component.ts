@@ -27,6 +27,7 @@ import {SettingsProvider} from '../../core/settings/settings-provider';
 import {RelationsManager} from '../../core/model/relations-manager';
 import {ImageRelationsManager} from '../../core/model/image-relations-manager';
 import {ERROR_NOT_ALl_IMAGES_EXCLUSIVELY_LINKED} from '../../core/export/catalog/get-export-documents';
+import {Named} from '../../core/util/named';
 
 const remote = typeof window !== 'undefined' ? window.require('electron').remote : require('electron').remote;
 
@@ -218,7 +219,7 @@ export class ExportComponent implements OnInit {
                 this.getOperationIdForMode(),
                 this.selectedCategory,
                 this.projectConfiguration.getRelationDefinitionsForDomainCategory(this.selectedCategory.name)
-                    .map(to('name')),
+                    .map(to(Named.NAME)),
                 (async resourceId => (await this.documentDatastore.get(resourceId)).resource.identifier),
                 CsvExporter.performExport(filePath)
             );

@@ -54,7 +54,7 @@ export class ExportComponent implements OnInit {
     public categoryCounts: Array<CategoryCount> = [];
     public selectedCategory: Category|undefined = undefined;
     public selectedOperationId: string = 'project';
-    public selectedCatalogId: string|undefined = undefined;
+    public selectedCatalog: FieldDocument|undefined = undefined;
     public csvExportMode: 'schema' | 'complete' = 'complete';
 
     private modalRef: NgbModalRef|undefined;
@@ -97,7 +97,7 @@ export class ExportComponent implements OnInit {
 
         this.operations = await this.fetchOperations();
         this.catalogs = await this.fetchCatalogs();
-        if (this.catalogs.length > 0) this.selectedCatalogId = this.catalogs[0].resource.id;
+        if (this.catalogs.length > 0) this.selectedCatalog = this.catalogs[0];
         await this.setCategoryCounts();
         this.javaInstalled = await JavaToolExecutor.isJavaInstalled();
 
@@ -174,7 +174,7 @@ export class ExportComponent implements OnInit {
                 this.relationsManager,
                 this.imageRelationsManager,
                 filePath,
-                this.selectedCatalogId,
+                this.selectedCatalog.resource.id,
                 this.settingsProvider.getSettings()
             );
         } catch (err) {
@@ -236,7 +236,12 @@ export class ExportComponent implements OnInit {
 
             const options: any = { filters: [this.getFileFilter()] };
             if (this.selectedCategory) {
-                options.defaultPath = this.i18n({ id: 'export.dialog.untitled', value: 'Ohne Titel' });
+                if (this.format === 'catalog') {
+                    options.defaultPath = this.selectedCatalog.resource.identifier;
+                } else {
+                    options.defaultPath = this.i18n({ id: 'export.dialog.untitled', value: 'Ohne Titel' });
+                }
+
                 if (this.format === 'csv') options.defaultPath += '.' + this.selectedCategory.name.toLowerCase();
                 if (remote.process.platform === 'linux') { // under linux giving the extensions entries in fileFilter will not automatically add the extensions
                     let ext = 'csv';

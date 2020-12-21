@@ -297,10 +297,11 @@ function makeCreateDocuments(documentDatastore: DocumentDatastore,
                              projectImageDir: string,
                              username: string) {
 
-    return async function create(documents: NiceDocs) {
+    return async function create(documents: NiceDocs, project?: string) {
 
         const documentsLookup = createDocuments(documents);
         for (const document of Object.values(documentsLookup)) {
+            if (project) document.project = project;
             await documentDatastore.create(document, username);
         }
         for (const [id, type, _] of documents) {

@@ -56,20 +56,24 @@ describe('subsystem/import/importCatalog', () => {
     it('reimport', async done => {
 
         const documents: NiceDocs = [
+            ['f1', 'Find'],
             ['tc1', 'TypeCatalog', ['t1']],
             ['t1', 'Type']
         ];
-
-        await helpers.createDocuments(documents);
+        await helpers.createDocuments(documents, 'imported');
         await helpers.updateDocument('t1', document => {
-            document.resource.relations[TypeRelations.HASINSTANCE] = ['F1'];
+            document.resource.relations[TypeRelations.HASINSTANCE] = ['f1'];
+        });
+        await helpers.updateDocument('f1', document => {
+            document.resource.relations[TypeRelations.INSTANCEOF] = ['t1'];
         });
 
         const documentsLookup = createDocuments(documents);
-        await importCatalog([documentsLookup['tc1']]);
+        const result = await importCatalog([documentsLookup['tc1'], documentsLookup['t1']]);
+        expect(result.successfulImports).toBe(2);
 
         const newDocument = await app.documentDatastore.get('t1');
-        expect(newDocument.resource.relations['hasInstance']).toEqual(['F1'])
+        expect(newDocument.resource.relations['hasInstance']).toEqual(['f1'])
         done();
     });
 
@@ -80,7 +84,7 @@ describe('subsystem/import/importCatalog', () => {
             ['tc1', 'TypeCatalog', ['t1']],
             ['t1', 'Type'],
             ['i1', 'Image', ['t1']]
-        ]);
+        ], 'imported');
         helpers.expectImagesExist('i1');
 
         const documentsLookup = createDocuments([
@@ -103,7 +107,7 @@ describe('subsystem/import/importCatalog', () => {
             ['t1', 'Type']
         ];
 
-        await helpers.createDocuments(documents);
+        await helpers.createDocuments(documents, 'imported');
         await helpers.updateDocument('t1', document => {
             document.resource.relations[TypeRelations.HASINSTANCE] = ['F1'];
         });
@@ -122,7 +126,7 @@ describe('subsystem/import/importCatalog', () => {
         await helpers.createDocuments([
             ['tc1', 'TypeCatalog', ['t1']],
             ['t1', 'Type']
-        ]);
+        ], 'imported');
         const catalog = Object.values(createDocuments([
             ['tc1', 'TypeCatalog'],
         ]));
@@ -285,6 +289,47 @@ describe('subsystem/import/importCatalog', () => {
         expect(result.errors.length > 0).toBeTruthy();
 
         helpers.expectImagesDontExist('i1');
+        done();
+    });
+
+
+    it('will not import on identifier clashes', async done => {
+
+        await helpers.createDocuments([
+            ['f1', 'Find']
+        ]);
+
+        const catalog = createDocuments([
+            ['tc1', 'TypeCatalog', ['t1']],
+            ['t1', 'Type']
+        ]);
+        // document has different id, but same identifier as the Find
+        catalog['t1'].resource.identifier = 'identifierf1';
+
+        const result = await importCatalog(Object.values(catalog));
+        expect(result.successfulImports).toBe(0);
+        expect(result.errors[0][0]).toBe(ImportCatalogErrors.CATALOG_DOCUMENTS_IDENTIFIER_CLASH);
+        expect(result.errors[0][1]).toBe('identifierf1');
+        done();
+    });
+
+
+    // see comment in assertNoIdentifierClashes
+    it('will not import on identifier clashes - especially not if target document is owned by user', async done => {
+
+        await helpers.createDocuments([
+            ['f1', 'Find']
+        ]);
+
+        const catalog = createDocuments([
+            ['tc1', 'TypeCatalog', ['f1']],
+            ['f1', 'Type']
+        ]);
+
+        const result = await importCatalog(Object.values(catalog));
+        expect(result.successfulImports).toBe(0);
+        expect(result.errors[0][0]).toBe(ImportCatalogErrors.CATALOG_DOCUMENTS_IDENTIFIER_CLASH);
+        expect(result.errors[0][1]).toBe('identifierf1');
         done();
     });
 });

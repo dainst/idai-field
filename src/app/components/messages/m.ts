@@ -125,6 +125,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_ERROR_EMPTY_OBJECT_IN_RESOURCE = 'M.Import.ImportErros.emptyObjectInResource';
 
     // Import Package - ImportCatalogErrors
+    public static IMPORT_CATALOG_ERROR_IDENTIFIER_CLASH = 'M.Import.ImportCatalogErrors.identifierClash';
     public static IMPORT_CATALOG_ERROR_CONNECTED_TYPE_DELETED = 'M.Import.ImportCatalogErrors.connectedTypeDeleted';
     public static IMPORT_CATALOG_ERROR_DIFFERENT_PROJECT_ENTRIES = 'M.Import.ImportCatalogErrors.differentProjectEntries';
     public static IMPORT_CATALOG_ERROR_NO_OR_TOO_MANY_TYPE_CATALOG_DOCUMENTS = 'M.Import.ImportCatalogErrors.noOrTooManyTypeCatalogDocuments';
@@ -1024,6 +1025,15 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             content: i18n({
                 id: 'messages.import.catalog.error.connected_type_deleted',
                 value: 'Katalogimport abgebrochen. Die bestehende Version enthält Typen, die nicht im Import vorhanden sind, jedoch noch mit Funden verknüpft sind. Betroffene Typen: [0]'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.IMPORT_CATALOG_ERROR_IDENTIFIER_CLASH] = {
+            content: i18n({
+                id: 'messages.import.catalog.error.identifier_clash',
+                value: 'Katalogimport abgebrochen. Identifier-Konflikte mit Dokumenten der Datenbank. Identifier: [0]'
             }),
             level: 'danger',
             params: [],

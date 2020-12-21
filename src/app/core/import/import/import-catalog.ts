@@ -1,4 +1,4 @@
-import {isArray, isNot, isUndefinedOrEmpty, on, set, subtract, to, undefinedOrEmpty} from 'tsfun';
+import {isArray, isNot, isUndefinedOrEmpty, set, subtract, to, undefinedOrEmpty} from 'tsfun';
 import {map as asyncMap} from 'tsfun/async';
 import {Document} from 'idai-components-2';
 import {DocumentDatastore} from '../../datastore/document-datastore';
@@ -6,7 +6,7 @@ import {clone} from '../../util/object-util';
 import {ImportFunction} from './types';
 import {makeDocumentsLookup} from './utils';
 import {RelationsManager} from '../../model/relations-manager';
-import {ON_RESOURCE_ID, RESOURCE_ID_PATH} from '../../constants';
+import {ON_RESOURCE_ID} from '../../constants';
 import {HierarchicalRelations, ImageRelations, TypeRelations} from '../../model/relation-constants';
 import {ImageRelationsManager} from '../../model/image-relations-manager';
 import {Lookup} from '../../util/utils';
@@ -31,7 +31,8 @@ export interface ImportCatalogContext {
 
 export module ImportCatalogErrors {
 
-    export const CATALOG_OWNER_MUST_NOT_OVERWRITE_EXISTING_IMAGES = 'ImportCatalogErrors.owenerMustNotOverwriteLocalImages';
+    export const CATALOG_DOCUMENTS_IDENTIFIER_CLASH = 'ImportCatalogErrors.identifierClashesDetected';
+    export const CATALOG_OWNER_MUST_NOT_OVERWRITE_EXISTING_IMAGES = 'ImportCatalogErrors.ownerMustNotOverwriteLocalImages';
     export const CATALOG_OWNER_MUST_NOT_REIMPORT_CATALOG = 'ImportCatalogErrors.mustNotReimportCatalogAsOwner';
     export const CONNECTED_TYPE_DELETED = 'ImportCatalogErrors.connectedTypeDeleted';
     export const DIFFERENT_PROJECT_ENTRIES = 'ImportCatalogErrors.differentProjectEntries';
@@ -57,6 +58,7 @@ export function buildImportCatalogFunction(services: ImportCatalogServices,
                 await assertCatalogNotOwned(services, context, importCatalog);
                 await assertNoImagesOverwritten(services, context, importDocuments);
             }
+            await assertNoIdentifierClashes(services, importDocuments);
 
             const [
                 existingCatalogDocuments,
@@ -81,6 +83,31 @@ export function buildImportCatalogFunction(services: ImportCatalogServices,
             await cleanUpLeftOverImagesFromReader(services, importDocuments);
             return { errors: [errWithParams], successfulImports: 0 };
         }
+    }
+}
+
+
+async function assertNoIdentifierClashes(services: ImportCatalogServices,
+                                         importDocuments: Array<Document>) {
+
+    const clashes = [];
+    for (const document of importDocuments) {
+        const found =
+            await services.datastore.find(
+                { constraints: { 'identifier:match': document.resource.identifier } });
+
+        if (found.totalCount > 0
+            && (document.resource.id !== found.documents[0].resource.id
+                // This is just to double check. Even if it has the same id and same identifier
+                // we won't import it if it is owned by the user.
+                // Currrently reimport of catalog as owner is forbidden, so this won't interfere there.
+                || found.documents[0].project === undefined)
+        ) {
+            clashes.push(document.resource.identifier);
+        }
+    }
+    if (clashes.length > 0) {
+        throw [ImportCatalogErrors.CATALOG_DOCUMENTS_IDENTIFIER_CLASH, clashes.join(',')];
     }
 }
 
@@ -174,7 +201,7 @@ async function removeRelatedImages(services: ImportCatalogServices,
 
 
 function assertNoDeletionOfRelatedTypes(existingDocuments: Array<Document>,
-                                              importDocuments: Array<Document>) {
+                                        importDocuments: Array<Document>) {
 
     const removedDocuments = subtract(ON_RESOURCE_ID, importDocuments)(existingDocuments);
     const problems = [];

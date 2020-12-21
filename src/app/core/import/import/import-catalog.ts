@@ -6,7 +6,7 @@ import {clone} from '../../util/object-util';
 import {ImportFunction} from './types';
 import {makeDocumentsLookup} from './utils';
 import {RelationsManager} from '../../model/relations-manager';
-import {RESOURCE_ID_PATH} from '../../constants';
+import {ON_RESOURCE_ID, RESOURCE_ID_PATH} from '../../constants';
 import {HierarchicalRelations, ImageRelations, TypeRelations} from '../../model/relation-constants';
 import {ImageRelationsManager} from '../../model/image-relations-manager';
 import {Lookup} from '../../util/utils';
@@ -154,7 +154,7 @@ async function removeObsoleteCatalogDocuments(services: ImportCatalogServices,
                                               existingDocuments: Array<Document>,
                                               updateDocuments: Array<Document>) {
 
-    const diff = subtract(on(RESOURCE_ID_PATH), updateDocuments)(existingDocuments);
+    const diff = subtract(ON_RESOURCE_ID, updateDocuments)(existingDocuments);
     for (const d of diff) {
         await services.datastore.remove(d);
     }
@@ -165,7 +165,7 @@ async function removeRelatedImages(services: ImportCatalogServices,
                                    updateDocuments: Array<Document>, // contains non image docs, but does not matter
                                    existingDocumentsRelatedImages: Array<Document>) {
 
-    const diffImages = subtract(on(RESOURCE_ID_PATH), updateDocuments)(existingDocumentsRelatedImages);
+    const diffImages = subtract(ON_RESOURCE_ID, updateDocuments)(existingDocumentsRelatedImages);
     for (const diff of diffImages) {
         await services.imagestore.remove(diff.resource.id);
         await services.datastore.remove(diff);
@@ -176,7 +176,7 @@ async function removeRelatedImages(services: ImportCatalogServices,
 function assertNoDeletionOfRelatedTypes(existingDocuments: Array<Document>,
                                               importDocuments: Array<Document>) {
 
-    const removedDocuments = subtract(on(RESOURCE_ID_PATH), importDocuments)(existingDocuments);
+    const removedDocuments = subtract(ON_RESOURCE_ID, importDocuments)(existingDocuments);
     const problems = [];
     for (const removedDocument of removedDocuments) {
         if (isNot(undefinedOrEmpty)(removedDocument.resource.relations[TypeRelations.HASINSTANCE])) {

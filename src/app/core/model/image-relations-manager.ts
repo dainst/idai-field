@@ -11,7 +11,7 @@ import {Category} from '../configuration/model/category';
 import DEPICTS = ImageRelations.DEPICTS;
 import ISDEPICTEDIN = ImageRelations.ISDEPICTEDIN;
 import {ProjectCategories} from '../configuration/project-categories';
-import {RESOURCE_ID_PATH, ResourceId} from '../constants';
+import {ON_RESOURCE_ID, RESOURCE_ID_PATH, ResourceId} from '../constants';
 import {clone} from '../util/object-util';
 
 
@@ -87,7 +87,7 @@ export class ImageRelationsManager {
             await this.relationsManager.remove(document, { descendants: true });
         }
 
-        const imagesToBeDeleted = set(on(RESOURCE_ID_PATH), await this.getLeftovers(documentsToBeDeleted));
+        const imagesToBeDeleted = set(ON_RESOURCE_ID, await this.getLeftovers(documentsToBeDeleted));
         for (let image of imagesToBeDeleted) {
             await this.imagestore.remove(image.resource.id);
             await this.datastore.remove(image);

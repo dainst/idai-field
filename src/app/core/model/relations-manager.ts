@@ -22,7 +22,7 @@ import {SettingsProvider} from '../settings/settings-provider';
 import {FindIdsResult, FindResult} from '../datastore/model/read-datastore';
 import {Query} from '../datastore/model/query';
 import RECORDED_IN = HierarchicalRelations.RECORDEDIN;
-import {RESOURCE_DOT_ID, RESOURCE_ID_PATH, ResourceId} from '../constants';
+import {ON_RESOURCE_ID, RESOURCE_DOT_ID, RESOURCE_ID_PATH, ResourceId} from '../constants';
 import {DatastoreErrors} from '../datastore/model/datastore-errors';
 
 
@@ -142,7 +142,7 @@ export class RelationsManager {
         const descendants = await this.getDescendants(document);
         const documentsToBeDeleted =
             flow(descendants,
-                subtract(on(RESOURCE_ID_PATH), options.descendantsToKeep ?? []),
+                subtract(ON_RESOURCE_ID, options.descendantsToKeep ?? []),
                 append(document));
 
         for (let document of documentsToBeDeleted) await this.removeWithConnectedDocuments(document);

@@ -304,7 +304,8 @@ export class ExportComponent implements OnInit {
 
         try {
             return (await this.fieldDatastore.find({
-                categories: ['TypeCatalog']
+                categories: ['TypeCatalog'],
+                constraints: { 'project:exist': 'UNKNOWN' }
             })).documents;
         } catch (msgWithParams) {
             this.messages.add(msgWithParams);

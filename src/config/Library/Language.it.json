@@ -1377,31 +1377,5 @@
         }
       }
     }
-  },
-  "relations": {
-    "isRecordedIn": {
-      "label": "Inserito nell'operazione"
-    },
-    "liesWithin": {
-      "label": "Dentro a"
-    },
-    "includes": {
-      "label": "Include"
-    },
-    "isAbove": {
-      "label": "Sopra a"
-    },
-    "isBelow": {
-      "label": "Sotto a"
-    },
-    "cuts": {
-      "label": "Taglia"
-    },
-    "isCutBy": {
-      "label": "Tagliato da"
-    },
-    "borders": {
-      "label": "Si appoggia a"
-    }
   }
 }

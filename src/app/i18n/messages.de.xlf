@@ -3172,6 +3172,10 @@
           <context context-type="sourcefile">src/app/components/settings/language-picker-modal.html</context>
           <context context-type="linenumber">2</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/settings/language-settings.html</context>
+          <context context-type="linenumber">34</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="settings.removeLanguage" datatype="html">
         <source>Sprache entfernen</source>
@@ -3179,14 +3183,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/language-settings.html</context>
           <context context-type="linenumber">22</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="settings.addLanguag" datatype="html">
-        <source>Sprache hinzufügen</source>
-        <target state="final">Sprache hinzufügen</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/settings/language-settings.html</context>
-          <context context-type="linenumber">34</context>
         </context-group>
       </trans-unit>
       <trans-unit id="matrix.view.noTrenchesWarning" datatype="html">

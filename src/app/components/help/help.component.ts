@@ -9,6 +9,9 @@ import {MenuContext, MenuService} from '../menu-service';
 
 const remote = typeof window !== 'undefined' ? window.require('electron').remote : require('electron').remote;
 
+const HELP_LANGUAGES = ['de', 'en'];
+const FALLBACK_LANGUAGE = 'en';
+
 
 @Component({
     selector: 'help',
@@ -45,7 +48,7 @@ export class HelpComponent implements OnInit {
         const folderPath: string = remote.getGlobal('manualPath');
 
         const {html, chapters} = await HelpLoader.load(
-            HelpComponent.getFilePath(Settings.getLocale(), folderPath),
+            HelpComponent.getFilePath(HelpComponent.getLocale(), folderPath),
             folderPath,
             this.http,
             this.domSanitizer
@@ -93,6 +96,13 @@ export class HelpComponent implements OnInit {
     private static getFilePath(locale: string, folderPath: string): string {
 
         return folderPath + '/manual.' + locale + '.md';
+    }
+
+
+    private static getLocale(): string {
+
+        const locale: string = Settings.getLocale();
+        return HELP_LANGUAGES.includes(locale) ? locale : FALLBACK_LANGUAGE;
     }
 
 

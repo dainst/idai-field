@@ -93,7 +93,7 @@ export class LanguageSettingsComponent {
         return Object.keys(languages).reduce((result, languageCode) => {
             if (languageCode.length === 2 ) {
                 result[languageCode] = {
-                    label: languages[languageCode],
+                    label: languages[languageCode][0].toUpperCase() + languages[languageCode].slice(1),
                     isMainLanguage: mainLanguages.includes(languageCode)
                 };
             }

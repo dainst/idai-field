@@ -1231,31 +1231,5 @@
         }
       }
     }
-  },
-  "relations": {
-    "isRecordedIn": {
-      "label": "Recorded in operation"
-    },
-    "liesWithin": {
-      "label": "Lies within"
-    },
-    "includes": {
-      "label": "Includes"
-    },
-    "isAbove": {
-      "label": "Above"
-    },
-    "isBelow": {
-      "label": "Below"
-    },
-    "cuts": {
-      "label": "Cuts"
-    },
-    "isCutBy": {
-      "label": "Cut by"
-    },
-    "borders": {
-      "label": "Borders"
-    }
   }
 }

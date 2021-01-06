@@ -3526,7 +3526,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/language-settings.html</context>
-          <context context-type="linenumber">34</context>
+          <context context-type="linenumber">37</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.removeLanguage" datatype="html">
@@ -3534,7 +3534,7 @@
         <target state="final">Remove language</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/language-settings.html</context>
-          <context context-type="linenumber">22</context>
+          <context context-type="linenumber">25</context>
         </context-group>
       </trans-unit>
       <trans-unit id="matrix.view.noTrenchesWarning" datatype="html">
@@ -4619,7 +4619,7 @@
       </trans-unit>
       <trans-unit id="messages.import.catalog.error.owner_must_not_reimport_catalog" datatype="html">
         <source>Katalogimport abgebrochen. Löschen Sie den Katalog '[0]', bevor Sie ihn erneut importieren.</source>
-        <target state="translated">Import aborted. Delete the existing catalog '[0]' before importing it anew.</target>
+        <target state="final">Import aborted. Delete the existing catalog '[0]' before importing it anew.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -5222,6 +5222,14 @@
         <target state="final">Linked images</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/searchbar/resources-search-constraints.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="settings.languageInfo.it" datatype="html">
+        <source>Die italienische Übersetzung wird bereitgestellt vom DAI Rom. Bei Fragen und Anmerkungen zur Übersetzung wenden Sie sich bitte an:</source>
+        <target state="final">The Italian translation is provided by DAI Rome. For questions and comments on the translation, please contact:</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/settings/language-settings.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>

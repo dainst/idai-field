@@ -1,4 +1,4 @@
-export const SAMPLE_OBJECTS_LABELS = {
+export const SAMPLE_DATA_LABELS = {
     'de': {
         'testProject': 'Testprojekt',
         'testCampaign': 'Testkampagne',

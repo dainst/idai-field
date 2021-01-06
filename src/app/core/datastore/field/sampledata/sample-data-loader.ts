@@ -1,7 +1,7 @@
 import {ImageDocument, Document} from 'idai-components-2';
-import {getSampleDocuments} from './field-sample-objects';
-import {ImageConverter} from '../../images/imagestore/image-converter';
-import {InitializationProgress} from '../../initialization-progress';
+import {getSampleDocuments} from './sample-data';
+import {ImageConverter} from '../../../images/imagestore/image-converter';
+import {InitializationProgress} from '../../../initialization-progress';
 
 const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
 const remote = typeof window !== 'undefined' ? window.require('electron').remote : require('electron').remote;

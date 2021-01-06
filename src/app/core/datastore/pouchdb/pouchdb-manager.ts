@@ -5,7 +5,7 @@ import {Document} from 'idai-components-2';
 import {IndexFacade} from '../index/index-facade';
 import {Name} from '../../constants';
 import {PouchdbProxy} from './pouchdb-proxy';
-import {SampleDataLoader} from '../field/sample-data-loader';
+import {SampleDataLoader} from '../field/sampledata/sample-data-loader';
 import {SyncProcess, SyncStatus} from '../../sync/sync-process';
 import {DocumentCache} from '../cached/document-cache';
 import {FieldCategoryConverter} from '../field/field-category-converter';

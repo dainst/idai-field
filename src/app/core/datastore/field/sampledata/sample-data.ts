@@ -1,5 +1,5 @@
 import {NewDocument} from 'idai-components-2';
-import {SAMPLE_OBJECTS_LABELS} from './sample-objects-labels';
+import {SAMPLE_DATA_LABELS} from './sample-data-labels';
 
 
 export const getSampleDocuments = (locale: string): NewDocument[] => [
@@ -7,14 +7,14 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
         'resource': {
             'id': 'project',
             'identifier': 'test',
-            'shortDescription': SAMPLE_OBJECTS_LABELS[locale]['testProject'],
+            'shortDescription': SAMPLE_DATA_LABELS[locale]['testProject'],
             'staff': [
-                SAMPLE_OBJECTS_LABELS[locale]['person'] + ' 1',
-                SAMPLE_OBJECTS_LABELS[locale]['person'] + ' 2'
+                SAMPLE_DATA_LABELS[locale]['person'] + ' 1',
+                SAMPLE_DATA_LABELS[locale]['person'] + ' 2'
             ],
             'campaigns': [
-                SAMPLE_OBJECTS_LABELS[locale]['testCampaign'] + ' 1',
-                SAMPLE_OBJECTS_LABELS[locale]['testCampaign'] + ' 2'
+                SAMPLE_DATA_LABELS[locale]['testCampaign'] + ' 1',
+                SAMPLE_DATA_LABELS[locale]['testCampaign'] + ' 2'
             ],
             'relations': {},
             'category': 'Project'
@@ -23,8 +23,8 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
     {
         'resource': {
             'id': 't1',
-            'identifier': SAMPLE_OBJECTS_LABELS[locale]['trenchShort'] + '1',
-            'shortDescription': SAMPLE_OBJECTS_LABELS[locale]['trench'] + ' 1',
+            'identifier': SAMPLE_DATA_LABELS[locale]['trenchShort'] + '1',
+            'shortDescription': SAMPLE_DATA_LABELS[locale]['trench'] + ' 1',
             'relations': {},
             'geometry': {
                 'type': 'Polygon',
@@ -41,8 +41,8 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
     {
         'resource': {
             'id': 't2',
-            'identifier': SAMPLE_OBJECTS_LABELS[locale]['trenchShort'] + '2',
-            'shortDescription': SAMPLE_OBJECTS_LABELS[locale]['trench'] + ' 2',
+            'identifier': SAMPLE_DATA_LABELS[locale]['trenchShort'] + '2',
+            'shortDescription': SAMPLE_DATA_LABELS[locale]['trench'] + ' 2',
             'relations': {},
             'geometry' : {
                 'type': 'Polygon',
@@ -59,8 +59,8 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
     {
         'resource': {
             'id': 'si1',
-            'identifier': SAMPLE_OBJECTS_LABELS[locale]['stratigraphicalUnitShort'] + '1',
-            'shortDescription': SAMPLE_OBJECTS_LABELS[locale]['stratigraphicalUnit'],
+            'identifier': SAMPLE_DATA_LABELS[locale]['stratigraphicalUnitShort'] + '1',
+            'shortDescription': SAMPLE_DATA_LABELS[locale]['stratigraphicalUnit'],
             'period': 'Kaiserzeitlich',
             'relations': {
                 'isRecordedIn': ['t2'],
@@ -95,8 +95,8 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
     {
         'resource': {
             'id': 'si2',
-            'identifier': SAMPLE_OBJECTS_LABELS[locale]['stratigraphicalUnitShort'] + '2',
-            'shortDescription': SAMPLE_OBJECTS_LABELS[locale]['layer'],
+            'identifier': SAMPLE_DATA_LABELS[locale]['stratigraphicalUnitShort'] + '2',
+            'shortDescription': SAMPLE_DATA_LABELS[locale]['layer'],
             'period': 'Kaiserzeitlich',
             'relations': {
                 'isRecordedIn': ['t2'],
@@ -132,9 +132,9 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
     {
         'resource': {
             'id': 'si3',
-            'identifier': SAMPLE_OBJECTS_LABELS[locale]['stratigraphicalUnitShort'] + '3',
+            'identifier': SAMPLE_DATA_LABELS[locale]['stratigraphicalUnitShort'] + '3',
             'period': 'Bronzezeitlich',
-            'shortDescription': SAMPLE_OBJECTS_LABELS[locale]['architecture'],
+            'shortDescription': SAMPLE_DATA_LABELS[locale]['architecture'],
             'relations': {
                 'isRecordedIn': ['t2'],
                 'isBefore': ['si2'],
@@ -182,9 +182,9 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
     {
         'resource': {
             'id': 'si4',
-            'identifier': SAMPLE_OBJECTS_LABELS[locale]['stratigraphicalUnitShort'] + '4',
+            'identifier': SAMPLE_DATA_LABELS[locale]['stratigraphicalUnitShort'] + '4',
             'period': 'Bronzezeitlich',
-            'shortDescription': SAMPLE_OBJECTS_LABELS[locale]['grave'],
+            'shortDescription': SAMPLE_DATA_LABELS[locale]['grave'],
             'relations': {
                 'isRecordedIn': ['t2'],
                 'isBefore': ['si3'],
@@ -218,9 +218,9 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
     {
         'resource': {
             'id': 'si4-f1',
-            'identifier': SAMPLE_OBJECTS_LABELS[locale]['stratigraphicalUnitShort'] + '4-'
-                + SAMPLE_OBJECTS_LABELS[locale]['findShort'] + '1',
-            'shortDescription': SAMPLE_OBJECTS_LABELS[locale]['coin'],
+            'identifier': SAMPLE_DATA_LABELS[locale]['stratigraphicalUnitShort'] + '4-'
+                + SAMPLE_DATA_LABELS[locale]['findShort'] + '1',
+            'shortDescription': SAMPLE_DATA_LABELS[locale]['coin'],
             'relations': {
                 'isRecordedIn': ['t2'],
                 'liesWithin': ['si4'],
@@ -231,9 +231,9 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
     {
         'resource': {
             'id': 'si4-f2',
-            'identifier': SAMPLE_OBJECTS_LABELS[locale]['stratigraphicalUnitShort'] + '4-'
-                + SAMPLE_OBJECTS_LABELS[locale]['findShort'] + '2',
-            'shortDescription': SAMPLE_OBJECTS_LABELS[locale]['coin'],
+            'identifier': SAMPLE_DATA_LABELS[locale]['stratigraphicalUnitShort'] + '4-'
+                + SAMPLE_DATA_LABELS[locale]['findShort'] + '2',
+            'shortDescription': SAMPLE_DATA_LABELS[locale]['coin'],
             'relations': {
                 'isRecordedIn': ['t2'],
                 'liesWithin': ['si4'],
@@ -244,9 +244,9 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
     {
         'resource': {
             'id': 'si5',
-            'identifier': SAMPLE_OBJECTS_LABELS[locale]['stratigraphicalUnitShort'] + '5',
+            'identifier': SAMPLE_DATA_LABELS[locale]['stratigraphicalUnitShort'] + '5',
             'period': 'Bronzezeitlich',
-            'shortDescription': SAMPLE_OBJECTS_LABELS[locale]['layer'],
+            'shortDescription': SAMPLE_DATA_LABELS[locale]['layer'],
             'relations': {
                 'isRecordedIn': ['t2'],
                 'isBefore': ['si1'],
@@ -305,9 +305,9 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
     {
         'resource': {
             'id': 'si6',
-            'identifier': SAMPLE_OBJECTS_LABELS[locale]['stratigraphicalUnitShort'] + '6',
+            'identifier': SAMPLE_DATA_LABELS[locale]['stratigraphicalUnitShort'] + '6',
             'period': 'Bronzezeitlich',
-            'shortDescription': SAMPLE_OBJECTS_LABELS[locale]['layer'],
+            'shortDescription': SAMPLE_DATA_LABELS[locale]['layer'],
             'relations': {
                 'isRecordedIn': ['t2'],
             },
@@ -317,8 +317,8 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
     {
         'resource': {
             'id': 'si0',
-            'identifier': SAMPLE_OBJECTS_LABELS[locale]['stratigraphicalUnitShort'] + '0',
-            'shortDescription': SAMPLE_OBJECTS_LABELS[locale]['stratigraphicalUnit'],
+            'identifier': SAMPLE_DATA_LABELS[locale]['stratigraphicalUnitShort'] + '0',
+            'shortDescription': SAMPLE_DATA_LABELS[locale]['stratigraphicalUnit'],
                 'relations': {
                 'isRecordedIn': ['t1']
             },
@@ -338,8 +338,8 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
     {
         'resource': {
             'id': 'tf1',
-            'identifier': SAMPLE_OBJECTS_LABELS[locale]['testFindShort'] + 1,
-            'shortDescription': SAMPLE_OBJECTS_LABELS[locale]['testFind'],
+            'identifier': SAMPLE_DATA_LABELS[locale]['testFindShort'] + 1,
+            'shortDescription': SAMPLE_DATA_LABELS[locale]['testFind'],
             'relations': {
                 'isRecordedIn': ['t1'],
                 'liesWithin': ['si0']
@@ -388,8 +388,8 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
     {
         'resource': {
             'id': 'sa1',
-            'identifier': SAMPLE_OBJECTS_LABELS[locale]['surveyAreaShort'] + '1',
-            'shortDescription': SAMPLE_OBJECTS_LABELS[locale]['surveyArea'],
+            'identifier': SAMPLE_DATA_LABELS[locale]['surveyAreaShort'] + '1',
+            'shortDescription': SAMPLE_DATA_LABELS[locale]['surveyArea'],
             'category': 'Survey',
             'relations': {},
             'geometry': {
@@ -432,8 +432,8 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
     {
         'resource': {
             'id': 'syu1',
-            'identifier': SAMPLE_OBJECTS_LABELS[locale]['surveyUnitShort'] + '1',
-            'shortDescription': SAMPLE_OBJECTS_LABELS[locale]['surveyUnit'] + ' 1',
+            'identifier': SAMPLE_DATA_LABELS[locale]['surveyUnitShort'] + '1',
+            'shortDescription': SAMPLE_DATA_LABELS[locale]['surveyUnit'] + ' 1',
             'category': 'SurveyUnit',
             'relations': {
                 'isRecordedIn': ['sa1']
@@ -466,8 +466,8 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
     {
         'resource': {
             'id': 'syu2',
-            'identifier': SAMPLE_OBJECTS_LABELS[locale]['surveyUnitShort'] + '2',
-            'shortDescription': SAMPLE_OBJECTS_LABELS[locale]['surveyUnit'] + ' 2',
+            'identifier': SAMPLE_DATA_LABELS[locale]['surveyUnitShort'] + '2',
+            'shortDescription': SAMPLE_DATA_LABELS[locale]['surveyUnit'] + ' 2',
             'category': 'SurveyUnit',
             'relations': {
                 'isRecordedIn': ['sa1']
@@ -500,9 +500,9 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
     {
         'resource': {
             'id': 'st1',
-            'identifier': SAMPLE_OBJECTS_LABELS[locale]['surveyUnitShort'] + '1-'
-                + SAMPLE_OBJECTS_LABELS[locale]['stoneShort'] + '1',
-            'shortDescription': SAMPLE_OBJECTS_LABELS[locale]['stone'],
+            'identifier': SAMPLE_DATA_LABELS[locale]['surveyUnitShort'] + '1-'
+                + SAMPLE_DATA_LABELS[locale]['stoneShort'] + '1',
+            'shortDescription': SAMPLE_DATA_LABELS[locale]['stone'],
             'category': 'SurveyUnit',
             'relations': {
                 'isRecordedIn': ['sa1'],
@@ -520,8 +520,8 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
     {
         'resource': {
             'id': 'bu1',
-            'identifier': SAMPLE_OBJECTS_LABELS[locale]['buildingShort'] + '1',
-            'shortDescription': SAMPLE_OBJECTS_LABELS[locale]['building'] + ' 1',
+            'identifier': SAMPLE_DATA_LABELS[locale]['buildingShort'] + '1',
+            'shortDescription': SAMPLE_DATA_LABELS[locale]['building'] + ' 1',
             'category': 'Building',
             'relations': {},
             'geometry': {
@@ -552,8 +552,8 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
     {
         'resource': {
             'id': 'r1',
-            'identifier': SAMPLE_OBJECTS_LABELS[locale]['roomShort'] + '1',
-            'shortDescription': SAMPLE_OBJECTS_LABELS[locale]['room'] + ' 1',
+            'identifier': SAMPLE_DATA_LABELS[locale]['roomShort'] + '1',
+            'shortDescription': SAMPLE_DATA_LABELS[locale]['room'] + ' 1',
             'category': 'Room',
             'relations': {
                 'isRecordedIn': ['bu1']

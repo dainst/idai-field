@@ -3,7 +3,7 @@ import {isString} from 'tsfun';
 import {Settings} from './settings';
 import {PouchdbManager} from '../datastore/pouchdb/pouchdb-manager';
 import {PouchdbServer} from '../datastore/pouchdb/pouchdb-server';
-import {SampleDataLoader} from '../datastore/field/sample-data-loader';
+import {SampleDataLoader} from '../datastore/field/sampledata/sample-data-loader';
 import {M} from '../../components/messages/m';
 import {SyncService} from '../sync/sync-service';
 import {Name} from '../constants';

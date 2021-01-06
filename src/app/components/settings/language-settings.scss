@@ -25,6 +25,15 @@ language-settings {
     border: none !important;
   }
 
+  .language-info {
+    margin-left: 3px;
+    cursor: default;
+
+    &:before {
+      line-height: initial;
+    }
+  }
+
   .cdk-drag-handle {
     display: inline-block;
     width: calc(100% - 40px);
@@ -78,6 +87,10 @@ language-settings {
   .language-label {
     position: relative;
     bottom: 2px;
+  }
+
+  .language-info {
+    margin-left: 3px;
   }
 
   .priority,

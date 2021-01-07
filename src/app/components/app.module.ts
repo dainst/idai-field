@@ -3,6 +3,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {HttpClientModule} from '@angular/common/http';
 import {DecimalPipe, HashLocationStrategy, LocationStrategy, registerLocaleData} from '@angular/common';
 import localeDe from '@angular/common/locales/de';
+import localeIt from '@angular/common/locales/it';
 import {FormsModule} from '@angular/forms';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
@@ -81,6 +82,7 @@ let indexFacade: IndexFacade|undefined = undefined;
 
 
 registerLocaleData(localeDe, 'de');
+registerLocaleData(localeIt, 'it');
 
 
 @NgModule({

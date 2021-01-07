@@ -1377,31 +1377,5 @@
         }
       }
     }
-  },
-  "relations": {
-    "isRecordedIn": {
-      "label": "Aufgenommen in Maßnahme"
-    },
-    "liesWithin": {
-      "label": "Liegt in"
-    },
-    "includes": {
-      "label": "Enthält"
-    },
-    "isAbove": {
-      "label": "Liegt über"
-    },
-    "isBelow": {
-      "label": "Liegt unter"
-    },
-    "cuts": {
-      "label": "Schneidet"
-    },
-    "isCutBy": {
-      "label": "Wird geschnitten von"
-    },
-    "borders": {
-      "label": "Grenzt an"
-    }
   }
 }

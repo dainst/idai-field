@@ -3,7 +3,7 @@
     "srcDir": ".",
     "genDir": "src/app/i18n",
     "defaultLanguage": "de",
-    "languages": ["de", "en"],
+    "languages": ["de", "en", "it"],
     "beautifyOutput": true
   }
 }

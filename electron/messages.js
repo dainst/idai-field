@@ -7,8 +7,8 @@ const messageDictionary = {
         'autoUpdate.available.no': 'Nein',
         'autoUpdate.downloaded.title': 'Update installieren',
         'autoUpdate.downloaded.message.1': 'Version ',
-        'autoUpdate.downloaded.message.2': ' von iDAI.field wurde geladen. Starten Sie die Anwendung neu, '
-            + 'um sie zu installieren.',
+        'autoUpdate.downloaded.message.2': ' von iDAI.field wurde geladen. Starten Sie die Anwendung neu, ' +
+            'um sie zu installieren.',
         'menu.about': 'Über iDAI.field',
         'menu.settings': 'Einstellungen',
         'menu.file': 'Datei',
@@ -75,6 +75,44 @@ const messageDictionary = {
         'menu.help': 'Help',
         'menu.help.configuration': 'Form configuration'
     },
+    it: {
+        'autoUpdate.available.title': 'Update disponibile',
+        'autoUpdate.available.message.1': 'Una nuova versione di iDAI.field (',
+        'autoUpdate.available.message.2': ') è disponibile. Si desidera scaricarla e installarla?',
+        'autoUpdate.available.yes': 'Sì',
+        'autoUpdate.available.no': 'No',
+        'autoUpdate.downloaded.title': 'Installa aggiornamento',
+        'autoUpdate.downloaded.message.1': 'La versione ',
+        'autoUpdate.downloaded.message.2': ' di iDAI.field è stata scaricata. Riavviare l’applicazione, '
+            + 'per installarla.',
+        'menu.about': 'Informazioni su iDAI.field',
+        'menu.settings': 'Impostazioni',
+        'menu.file': 'File',
+        'menu.file.import': 'Importa',
+        'menu.file.export': 'Esporta',
+        'menu.file.exit': 'Esci',
+        'menu.edit': 'Modifica',
+        'menu.edit.undo': 'Annulla',
+        'menu.edit.redo': 'Ripristina',
+        'menu.edit.cut': 'Taglia',
+        'menu.edit.copy': 'Copia',
+        'menu.edit.paste': 'Incolla',
+        'menu.edit.selectAll': 'Seleziona tutto',
+        'menu.tools': 'Strumenti',
+        'menu.tools.images': 'Gestione immagini',
+        'menu.tools.types': 'Gestione tipi',
+        'menu.tools.matrix': 'Matrix',
+        'menu.tools.backupCreation': 'Crea Backup',
+        'menu.tools.backupLoading': 'Carica Backup',
+        'menu.view': 'Mostra',
+        'menu.view.reload': 'Aggiorna',
+        'menu.view.toggleFullscreen': 'Schermo intero on/off',
+        'menu.view.toggleDeveloperTools': 'Strumenti per sviluppatori on/off',
+        'menu.window': 'Finestra',
+        'menu.window.minimize': 'Riduci',
+        'menu.help': 'Aiuto',
+        'menu.help.configuration': 'Configurazione formulario',
+    }
 };
 
 

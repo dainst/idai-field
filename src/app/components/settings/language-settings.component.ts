@@ -1,5 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {CdkDragDrop} from '@angular/cdk/drag-drop';
+import {I18n} from '@ngx-translate/i18n-polyfill';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {clone} from 'tsfun/struct';
 import {map} from 'tsfun/associative';
@@ -13,6 +14,7 @@ const remote = typeof window !== 'undefined' ? window.require('electron').remote
 
 type Language = {
     label: string;
+    info?: string;
     isMainLanguage: boolean;
 }
 
@@ -33,9 +35,10 @@ export class LanguageSettingsComponent {
 
 
     constructor(private modalService: NgbModal,
-                private menuService: MenuService) {
+                private menuService: MenuService,
+                private i18n: I18n) {
 
-        this.languages = LanguageSettingsComponent.getAvailableLanguages();
+        this.languages = this.getAvailableLanguages();
     }
 
 
@@ -85,7 +88,7 @@ export class LanguageSettingsComponent {
     }
 
 
-    private static getAvailableLanguages(): { [languageCode: string]: Language } {
+    private getAvailableLanguages(): { [languageCode: string]: Language } {
 
         const languages = cldr.extractLanguageDisplayNames(Settings.getLocale());
         const mainLanguages: string[] = remote.getGlobal('getMainLanguages')();
@@ -93,9 +96,16 @@ export class LanguageSettingsComponent {
         return Object.keys(languages).reduce((result, languageCode) => {
             if (languageCode.length === 2 ) {
                 result[languageCode] = {
-                    label: languages[languageCode],
+                    label: languages[languageCode][0].toUpperCase() + languages[languageCode].slice(1),
                     isMainLanguage: mainLanguages.includes(languageCode)
                 };
+
+                if (languageCode === 'it') {
+                    result[languageCode].info = this.i18n({
+                        id: 'settings.languageInfo.it',
+                        value: 'Die italienische Übersetzung wird bereitgestellt vom DAI Rom. Bei Fragen und Anmerkungen zur Übersetzung wenden Sie sich bitte an:'
+                    });
+                }
             }
             return result;
         }, {});

@@ -15,6 +15,9 @@
             <span class="language-label">{{languages[language].label}}
                 <code>{{language}}</code>
             </span>
+            <span *ngIf="languages[language].info" class="language-info mdi mdi-information-outline"
+                  placement="right" container="body"
+                  ngbTooltip="{{languages[language].info}}"></span>
         </div>
         <div *ngIf="!languages[language].isMainLanguage"
              class="btn btn-light remove-language"
@@ -32,6 +35,6 @@
      [class.dragging]="dragging"
      (click)="addLanguage()"
      ngbTooltip="Sprache hinzufügen"
-     i18n-ngbTooltip="@@settings.addLanguag">
+     i18n-ngbTooltip="@@settings.addLanguage">
     <span class="mdi mdi-plus"></span>
 </div>

@@ -53,6 +53,7 @@ export class ChangesStream {
             if (await ChangesStream.isRemoteChange(
                     document,
                     this.settingsProvider.getSettings().username)
+                || !this.documentCache.get(document.resource.id)
                 || document._conflicts !== undefined) {
 
                 if (this.documentsScheduledToWelcome[document.resource.id]) {

@@ -1,7 +1,5 @@
-import {
-    ERROR_NOT_ALl_IMAGES_EXCLUSIVELY_LINKED,
-    getExportDocuments
-} from '../../../../../src/app/core/export/catalog/get-export-documents';
+import {ERROR_NOT_ALL_IMAGES_EXCLUSIVELY_LINKED,
+    getExportDocuments} from '../../../../../src/app/core/export/catalog/get-export-documents';
 import {makeDocumentsLookup} from '../../../../../src/app/core/import/import/utils';
 
 
@@ -74,11 +72,11 @@ describe('getExportDocuments', () => {
             return option === true
                 ? []
                 : images;
-        })
+        });
 
         const [error, _] = await getExportDocuments(
             datastore, relationsManager, imageRelationsManager, 'C1', 'test-project');
-        expect(error[0]).toEqual(ERROR_NOT_ALl_IMAGES_EXCLUSIVELY_LINKED);
+        expect(error[0]).toEqual(ERROR_NOT_ALL_IMAGES_EXCLUSIVELY_LINKED);
         expect(error[1]).toEqual(images[0].resource.identifier);
         done();
     });

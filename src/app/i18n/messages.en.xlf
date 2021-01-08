@@ -4698,8 +4698,16 @@
         </context-group>
       </trans-unit>
       <trans-unit id="messages.export.error.catalog.images-not-exclusive-to-catalog" datatype="html">
-        <source>Beim Export ist ein Fehler aufgetreten: Bilder des Kataloges dürfen nicht gleichzeitig mit anderen Ressorcen verbunden sein. Bilder: [0]</source>
-        <target state="final">An error has occured during export: Images of the catalog must not be connected to other resources. Images: [0]</target>
+        <source>Beim Export ist ein Fehler aufgetreten: Bilder des Kataloges dürfen nicht gleichzeitig mit anderen Ressourcen verbunden sein. Bilder: [0]</source>
+        <target state="final">An error has occurred during export: Images of the catalog must not be connected to other resources. Images: [0]</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.export.error.catalog.failedToCopyImages" datatype="html">
+        <source>Beim Export ist ein Fehler aufgetreten: Die mit dem Katalog verknüpften Bilder konnten nicht exportiert werden. Bitte prüfen Sie, ob die Original-Bilddateien im Bilderverzeichnis vorhanden sind.</source>
+        <target state="final">An error has occurred during export: The images associated with the catalog could not be exported. Please check if the original image files are present in the image directory.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>

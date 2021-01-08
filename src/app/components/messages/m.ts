@@ -137,6 +137,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static EXPORT_SUCCESS = 'export.success';
     public static EXPORT_ERROR_GENERIC = 'export.error.generic';
     public static EXPORT_CATALOG_IMAGES_NOT_EXCLUSIVE_TO_CATALOG = 'export.error.catalog.imagesNotExclusiveToCatalog';
+    public static EXPORT_CATALOG_FAILED_TO_COPY_IMAGES = 'export.error.catalog.failedToCopyImages';
     public static EXPORT_GEOJSON_ERROR_WRITE = 'export.geojson.error.write';
     public static EXPORT_SHAPEFILE_ERROR_TEMP_FOLDER_CREATION = 'export.shapefile.error.tempFolderCreation';
     public static EXPORT_SHAPEFILE_ERROR_ZIP_FILE_CREATION = 'export.shapefile.error.zipFileCreation';
@@ -1132,7 +1133,16 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.EXPORT_CATALOG_IMAGES_NOT_EXCLUSIVE_TO_CATALOG] = {
             content: i18n({
                 id: 'messages.export.error.catalog.images-not-exclusive-to-catalog',
-                value: 'Beim Export ist ein Fehler aufgetreten: Bilder des Kataloges dürfen nicht gleichzeitig mit anderen Ressorcen verbunden sein. Bilder: [0]'
+                value: 'Beim Export ist ein Fehler aufgetreten: Bilder des Kataloges dürfen nicht gleichzeitig mit anderen Ressourcen verbunden sein. Bilder: [0]'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.EXPORT_CATALOG_FAILED_TO_COPY_IMAGES] = {
+            content: i18n({
+                id: 'messages.export.error.catalog.failedToCopyImages',
+                value: 'Beim Export ist ein Fehler aufgetreten: Die mit dem Katalog verknüpften Bilder konnten nicht exportiert werden. Bitte prüfen Sie, ob die Original-Bilddateien im Bilderverzeichnis vorhanden sind.'
             }),
             level: 'danger',
             params: [],

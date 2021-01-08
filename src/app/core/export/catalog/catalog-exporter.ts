@@ -10,7 +10,9 @@ const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
 const archiver = typeof window !== 'undefined' ? window.require('archiver') : require('archiver');
 const remote = typeof window !== 'undefined' ? window.require('electron').remote : require('electron').remote;
 
-export const CATALOG_JSONL = 'catalog.jsonl'
+export const ERROR_FAILED_TO_COPY_IMAGES = 'export.catalog.failedToCopyImages';
+
+export const CATALOG_JSONL = 'catalog.jsonl';
 export const CATALOG_IMAGES = 'images';
 export const TEMP = 'temp';
 export const APP_DATA = 'appData';
@@ -40,7 +42,11 @@ export module CatalogExporter {
         fs.rmdirSync(tmpDir, { recursive: true });
         fs.mkdirSync(imgDir, { recursive: true });
 
-        copyImageFiles(imgDir, imageResourceIds, settings);
+        try {
+            copyImageFiles(imgDir, imageResourceIds, settings);
+        } catch (err) {
+            throw [ERROR_FAILED_TO_COPY_IMAGES];
+        }
 
         fs.writeFileSync(
             tmpDir + CATALOG_JSONL,

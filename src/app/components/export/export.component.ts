@@ -22,11 +22,11 @@ import {Messages} from '../messages/messages';
 import {Query} from '../../core/datastore/model/query';
 import {ProjectCategories} from '../../core/configuration/project-categories';
 import {MenuContext, MenuService} from '../menu-service';
-import {CatalogExporter} from '../../core/export/catalog/catalog-exporter';
+import {CatalogExporter, ERROR_FAILED_TO_COPY_IMAGES} from '../../core/export/catalog/catalog-exporter';
 import {SettingsProvider} from '../../core/settings/settings-provider';
 import {RelationsManager} from '../../core/model/relations-manager';
 import {ImageRelationsManager} from '../../core/model/image-relations-manager';
-import {ERROR_NOT_ALl_IMAGES_EXCLUSIVELY_LINKED} from '../../core/export/catalog/get-export-documents';
+import {ERROR_NOT_ALL_IMAGES_EXCLUSIVELY_LINKED} from '../../core/export/catalog/get-export-documents';
 import {Named} from '../../core/util/named';
 
 const remote = typeof window !== 'undefined' ? window.require('electron').remote : require('electron').remote;
@@ -54,7 +54,7 @@ export class ExportComponent implements OnInit {
     public categoryCounts: Array<CategoryCount> = [];
     public selectedCategory: Category|undefined = undefined;
     public selectedOperationId: string = 'project';
-    public selectedCatalog: FieldDocument|undefined = undefined;
+    public selectedCatalogId: string;
     public csvExportMode: 'schema' | 'complete' = 'complete';
 
     private modalRef: NgbModalRef|undefined;
@@ -97,7 +97,7 @@ export class ExportComponent implements OnInit {
 
         this.operations = await this.fetchOperations();
         this.catalogs = await this.fetchCatalogs();
-        if (this.catalogs.length > 0) this.selectedCatalog = this.catalogs[0];
+        if (this.catalogs.length > 0) this.selectedCatalogId = this.catalogs[0].resource.id;
         await this.setCategoryCounts();
         this.javaInstalled = await JavaToolExecutor.isJavaInstalled();
 
@@ -129,7 +129,8 @@ export class ExportComponent implements OnInit {
         return !this.isJavaInstallationMissing()
             && !this.initializing
             && !this.running
-            && this.categoryCounts.length > 0;
+            && this.categoryCounts.length > 0
+            && (this.format !== 'catalog' || this.catalogs.length > 0);
     }
 
 
@@ -166,6 +167,7 @@ export class ExportComponent implements OnInit {
         this.closeModal();
     }
 
+
     private async startCatalogExport(filePath: string) {
 
         try {
@@ -174,12 +176,15 @@ export class ExportComponent implements OnInit {
                 this.relationsManager,
                 this.imageRelationsManager,
                 filePath,
-                this.selectedCatalog.resource.id,
+                this.selectedCatalogId,
                 this.settingsProvider.getSettings()
             );
         } catch (err) {
-            if (err.length > 0 && err[0] === ERROR_NOT_ALl_IMAGES_EXCLUSIVELY_LINKED) {
+            if (err.length > 0 && err[0] === ERROR_NOT_ALL_IMAGES_EXCLUSIVELY_LINKED) {
                 err[0] = [M.EXPORT_CATALOG_IMAGES_NOT_EXCLUSIVE_TO_CATALOG];
+                throw err;
+            } else if (err.length > 0 && err[0] === ERROR_FAILED_TO_COPY_IMAGES) {
+                err[0] = [M.EXPORT_CATALOG_FAILED_TO_COPY_IMAGES];
                 throw err;
             }
             console.error(err);
@@ -237,7 +242,7 @@ export class ExportComponent implements OnInit {
             const options: any = { filters: [this.getFileFilter()] };
             if (this.selectedCategory) {
                 if (this.format === 'catalog') {
-                    options.defaultPath = this.selectedCatalog.resource.identifier;
+                    options.defaultPath = this.getSelectedCatalog().resource.identifier;
                 } else {
                     options.defaultPath = this.i18n({ id: 'export.dialog.untitled', value: 'Ohne Titel' });
                 }
@@ -329,5 +334,11 @@ export class ExportComponent implements OnInit {
             this.messages.add(msgWithParams);
             return [];
         }
+    }
+
+
+    private getSelectedCatalog(): FieldDocument {
+
+        return this.catalogs.find(catalog => catalog.resource.id === this.selectedCatalogId);
     }
 }

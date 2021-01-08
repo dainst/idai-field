@@ -7,7 +7,7 @@ import {RelationsManager} from '../../model/relations-manager';
 import {ImageRelationsManager} from '../../model/image-relations-manager';
 
 
-export const ERROR_NOT_ALl_IMAGES_EXCLUSIVELY_LINKED =  'export.catalog.get-export-documents.not-all-images-exlusively-linked';
+export const ERROR_NOT_ALL_IMAGES_EXCLUSIVELY_LINKED = 'export.catalog.get-export-documents.not-all-images-exlusively-linked';
 
 
 export async function getExportDocuments(datastore: DocumentReadDatastore,
@@ -22,13 +22,14 @@ export async function getExportDocuments(datastore: DocumentReadDatastore,
     const linkedImages = await imageRelationsManager.getLinkedImages(catalogAndTypes);
     const exclusivelyLinkedImages = await imageRelationsManager.getLinkedImages(catalogAndTypes, true);
 
+    // TODO Check if this is really necessary
     if (linkedImages.length !== exclusivelyLinkedImages.length) {
 
         const diff = subtract(on(RESOURCE_ID_PATH), exclusivelyLinkedImages)(linkedImages);
         const diffImageIds = diff.map(to(RESOURCE_DOT_IDENTIFIER));
 
         return [
-            [ERROR_NOT_ALl_IMAGES_EXCLUSIVELY_LINKED, diffImageIds.join(',')],
+            [ERROR_NOT_ALL_IMAGES_EXCLUSIVELY_LINKED, diffImageIds.join(',')],
             undefined
         ];
     }

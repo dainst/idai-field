@@ -63,8 +63,8 @@
                         <label class="control-label col-form-label"
                                for="catalogSelect"
                                i18n="@@export.catalogSelect.label">Katalog</label>
-                        <select id="catalogSelect" class="form-control" [(ngModel)]="selectedCatalog">
-                            <option *ngFor="let catalog of catalogs" value="{{catalog}}">
+                        <select id="catalogSelect" class="form-control" [(ngModel)]="selectedCatalogId">
+                            <option *ngFor="let catalog of catalogs" value="{{catalog.resource.id}}">
                                 {{getDocumentLabel(catalog)}}
                             </option>
                         </select>

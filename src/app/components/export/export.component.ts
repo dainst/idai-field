@@ -129,7 +129,8 @@ export class ExportComponent implements OnInit {
         return !this.isJavaInstallationMissing()
             && !this.initializing
             && !this.running
-            && this.categoryCounts.length > 0;
+            && this.categoryCounts.length > 0
+            && (this.format !== 'catalog' || this.catalogs.length > 0);
     }
 
 

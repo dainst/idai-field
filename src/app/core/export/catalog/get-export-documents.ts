@@ -22,6 +22,7 @@ export async function getExportDocuments(datastore: DocumentReadDatastore,
     const linkedImages = await imageRelationsManager.getLinkedImages(catalogAndTypes);
     const exclusivelyLinkedImages = await imageRelationsManager.getLinkedImages(catalogAndTypes, true);
 
+    // TODO Check if this is really necessary
     if (linkedImages.length !== exclusivelyLinkedImages.length) {
 
         const diff = subtract(on(RESOURCE_ID_PATH), exclusivelyLinkedImages)(linkedImages);

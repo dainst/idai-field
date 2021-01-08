@@ -26,7 +26,7 @@ import {CatalogExporter} from '../../core/export/catalog/catalog-exporter';
 import {SettingsProvider} from '../../core/settings/settings-provider';
 import {RelationsManager} from '../../core/model/relations-manager';
 import {ImageRelationsManager} from '../../core/model/image-relations-manager';
-import {ERROR_NOT_ALl_IMAGES_EXCLUSIVELY_LINKED} from '../../core/export/catalog/get-export-documents';
+import {ERROR_NOT_ALL_IMAGES_EXCLUSIVELY_LINKED} from '../../core/export/catalog/get-export-documents';
 import {Named} from '../../core/util/named';
 
 const remote = typeof window !== 'undefined' ? window.require('electron').remote : require('electron').remote;
@@ -167,6 +167,7 @@ export class ExportComponent implements OnInit {
         this.closeModal();
     }
 
+
     private async startCatalogExport(filePath: string) {
 
         try {
@@ -179,7 +180,7 @@ export class ExportComponent implements OnInit {
                 this.settingsProvider.getSettings()
             );
         } catch (err) {
-            if (err.length > 0 && err[0] === ERROR_NOT_ALl_IMAGES_EXCLUSIVELY_LINKED) {
+            if (err.length > 0 && err[0] === ERROR_NOT_ALL_IMAGES_EXCLUSIVELY_LINKED) {
                 err[0] = [M.EXPORT_CATALOG_IMAGES_NOT_EXCLUSIVE_TO_CATALOG];
                 throw err;
             }

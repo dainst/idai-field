@@ -10,7 +10,7 @@ const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
 const archiver = typeof window !== 'undefined' ? window.require('archiver') : require('archiver');
 const remote = typeof window !== 'undefined' ? window.require('electron').remote : require('electron').remote;
 
-export const CATALOG_JSONL = 'catalog.jsonl'
+export const CATALOG_JSONL = 'catalog.jsonl';
 export const CATALOG_IMAGES = 'images';
 export const TEMP = 'temp';
 export const APP_DATA = 'appData';

@@ -54,7 +54,7 @@ export class ExportComponent implements OnInit {
     public categoryCounts: Array<CategoryCount> = [];
     public selectedCategory: Category|undefined = undefined;
     public selectedOperationId: string = 'project';
-    public selectedCatalog: FieldDocument|undefined = undefined;
+    public selectedCatalogId: string;
     public csvExportMode: 'schema' | 'complete' = 'complete';
 
     private modalRef: NgbModalRef|undefined;
@@ -97,7 +97,7 @@ export class ExportComponent implements OnInit {
 
         this.operations = await this.fetchOperations();
         this.catalogs = await this.fetchCatalogs();
-        if (this.catalogs.length > 0) this.selectedCatalog = this.catalogs[0];
+        if (this.catalogs.length > 0) this.selectedCatalogId = this.catalogs[0].resource.id;
         await this.setCategoryCounts();
         this.javaInstalled = await JavaToolExecutor.isJavaInstalled();
 
@@ -174,7 +174,7 @@ export class ExportComponent implements OnInit {
                 this.relationsManager,
                 this.imageRelationsManager,
                 filePath,
-                this.selectedCatalog.resource.id,
+                this.selectedCatalogId,
                 this.settingsProvider.getSettings()
             );
         } catch (err) {
@@ -237,7 +237,7 @@ export class ExportComponent implements OnInit {
             const options: any = { filters: [this.getFileFilter()] };
             if (this.selectedCategory) {
                 if (this.format === 'catalog') {
-                    options.defaultPath = this.selectedCatalog.resource.identifier;
+                    options.defaultPath = this.getSelectedCatalog().resource.identifier;
                 } else {
                     options.defaultPath = this.i18n({ id: 'export.dialog.untitled', value: 'Ohne Titel' });
                 }
@@ -329,5 +329,11 @@ export class ExportComponent implements OnInit {
             this.messages.add(msgWithParams);
             return [];
         }
+    }
+
+
+    private getSelectedCatalog(): FieldDocument {
+
+        return this.catalogs.find(catalog => catalog.resource.id === this.selectedCatalogId);
     }
 }

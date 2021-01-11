@@ -39,8 +39,6 @@ export class ProjectsModalComponent implements AfterViewInit, AfterViewChecked {
 
     @ViewChild('createPopover', { static: false }) private createPopover: NgbPopover;
     @ViewChild('deletePopover', { static: false }) private deletePopover: NgbPopover;
-    @ViewChild('newProjectInput', { static: false }) private newProjectInput: ElementRef;
-    @ViewChild('deleteProjectInput', { static: false }) private deleteProjectInput: ElementRef;
 
 
     constructor(public activeModal: NgbActiveModal,
@@ -63,8 +61,8 @@ export class ProjectsModalComponent implements AfterViewInit, AfterViewChecked {
     ngAfterViewChecked() {
 
         if (this.focusInput) {
-            if (this.newProjectInput) this.newProjectInput.nativeElement.focus();
-            if (this.deleteProjectInput) this.deleteProjectInput.nativeElement.focus();
+            ProjectsModalComponent.focusElement('new-project-input');
+            ProjectsModalComponent.focusElement('delete-project-input');
             this.focusInput = false;
         }
     }
@@ -202,6 +200,13 @@ export class ProjectsModalComponent implements AfterViewInit, AfterViewChecked {
             return false;
         }
         return true;
+    }
+
+
+    private static focusElement(id: string) {
+
+        const element: HTMLElement = document.getElementById(id);
+        if (element) element.focus();
     }
 
 

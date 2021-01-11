@@ -18,7 +18,7 @@ export class TypeGridElementComponent implements OnChanges {
 
     @Input() document: FieldDocument;
     @Input() subtype?: FieldDocument;
-    @Input() images: Array<Blob>;
+    @Input() images?: Array<Blob>;
 
     public imageUrls: Array<SafeResourceUrl> = [];
 
@@ -38,6 +38,8 @@ export class TypeGridElementComponent implements OnChanges {
     private async loadImages() {
 
         this.imageUrls = [];
+
+        if (!this.images) return;
 
         for (let blob of this.images) {
             const url = this.blobMaker.makeBlob(blob);

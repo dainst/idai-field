@@ -1,5 +1,5 @@
 import {ChangeDetectorRef, Component, Input, OnChanges, SimpleChanges} from '@angular/core';
-import {take, flatten, set, flow, filter, map, to, Map, isnt} from 'tsfun';
+import {filter, flatten, flow, isnt, Map, map, set, take, to} from 'tsfun';
 import {Document, FieldDocument} from 'idai-components-2';
 import {ViewFacade} from '../../../core/resources/view/view-facade';
 import {Loading} from '../../widgets/loading';
@@ -20,6 +20,8 @@ import {makeLookup} from 'src/app/core/util/transformers';
 import {ProjectCategories} from '../../../core/configuration/project-categories';
 import {MenuContext, MenuService} from '../../menu-service';
 import {ImageRelations, TypeRelations} from '../../../core/model/relation-constants';
+import {SyncService} from '../../../core/sync/sync-service';
+import {SyncStatus} from '../../../core/sync/sync-process';
 
 
 @Component({
@@ -75,6 +77,7 @@ export class TypesComponent extends BaseList implements OnChanges {
                 private routingService: RoutingService,
                 private tabManager: TabManager,
                 private changeDetectorRef: ChangeDetectorRef,
+                private syncService: SyncService,
                 resourcesComponent: ResourcesComponent,
                 viewFacade: ViewFacade,
                 loading: Loading,
@@ -83,6 +86,7 @@ export class TypesComponent extends BaseList implements OnChanges {
         super(resourcesComponent, viewFacade, loading, menuService);
 
         resourcesComponent.listenToClickEvents().subscribe(event => this.handleClick(event));
+        this.syncService.statusNotifications().subscribe(() => this.update(this.documents));
     }
 
 
@@ -228,7 +232,11 @@ export class TypesComponent extends BaseList implements OnChanges {
             this.mainDocument = newMainDocument;
             await this.updateLinkedDocuments();
         }
-        if (documents.length > 0) await this.loadImages(documents);
+        if (documents.length > 0
+                && this.syncService.getStatus() !== SyncStatus.Pushing
+                && this.syncService.getStatus() !== SyncStatus.Pulling) {
+            await this.loadImages(documents);
+        }
     }
 
 

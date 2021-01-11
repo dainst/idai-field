@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import {Observable, Observer} from 'rxjs';
-import {Document} from 'idai-components-2';
 import {SyncStatus} from './sync-process';
 import {PouchdbManager} from '../datastore/pouchdb/pouchdb-manager';
 import {ObserverUtil} from '../util/observer-util';
@@ -37,7 +36,7 @@ export class SyncService {
     }
 
 
-    public statusNotifications = (): Observable<Document> => ObserverUtil.register(this.statusObservers);
+    public statusNotifications = (): Observable<SyncStatus> => ObserverUtil.register(this.statusObservers);
 
 
     public async startSync() {

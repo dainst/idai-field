@@ -17,6 +17,7 @@ import {ImageOverviewFacade} from '../../../core/images/overview/view/imageoverv
 import {ImageDocumentsManager} from '../../../core/images/overview/view/image-documents-manager';
 import {ImageReadDatastore} from '../../../core/datastore/field/image-read-datastore';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
+import {DeletionInProgressModalComponent} from './deletion-in-progress-modal.component';
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import {ProjectConfiguration} from '../../../core/configuration/project-configur
         ImageOverviewSearchConstraintsComponent,
         LinkModalComponent,
         RemoveLinkModalComponent,
-        DeleteModalComponent
+        DeleteModalComponent,
+        DeletionInProgressModalComponent
     ],
     entryComponents: [
         LinkModalComponent,

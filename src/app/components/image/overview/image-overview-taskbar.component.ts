@@ -11,6 +11,7 @@ import {M} from '../../messages/m';
 import {Messages} from '../../messages/messages';
 import {MenuContext, MenuService} from '../../menu-service';
 import {ImageRelationsManager, ImageRelationsManagerErrors} from '../../../core/model/image-relations-manager';
+import {DeletionInProgressModalComponent} from './deletion-in-progress-modal.component';
 
 
 @Component({
@@ -116,11 +117,16 @@ export class ImageOverviewTaskbarComponent {
 
     private async deleteSelected() {
 
+        const deletionInProgressModalRef: NgbModalRef = this.modalService.open(
+            DeletionInProgressModalComponent, { backdrop: 'static', keyboard: false }
+        );
+        deletionInProgressModalRef.componentInstance.multiple = this.imageOverviewFacade.getSelected().length > 1;
+
         try {
             await this.deleteSelectedImageDocuments();
             this.imageOverviewFacade.clearSelection();
             await this.imageOverviewFacade.fetchDocuments();
-        } catch(msgWithParams) {
+        } catch (msgWithParams) {
             let m = msgWithParams;
             if (msgWithParams.length > 0) {
                 if (msgWithParams[0] === ImageRelationsManagerErrors.IMAGESTORE_ERROR_DELETE) {
@@ -131,6 +137,8 @@ export class ImageOverviewTaskbarComponent {
                 }
             }
             this.messages.add(m);
+        } finally {
+            deletionInProgressModalRef.close();
         }
     }
 

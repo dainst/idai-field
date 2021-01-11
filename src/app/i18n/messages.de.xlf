@@ -5325,6 +5325,22 @@
           <context context-type="linenumber">5</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="imageOverview.deletionInProgressModal.info.single" datatype="html">
+        <source>Bild wird gelöscht...</source>
+        <target state="final">Bild wird gelöscht...</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/image/overview/deletion-in-progress-modal.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="imageOverview.deletionInProgressModal.info.multiple" datatype="html">
+        <source>Bilder werden gelöscht...</source>
+        <target state="final">Bilder werden gelöscht...</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/image/overview/deletion-in-progress-modal.html</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+      </trans-unit>
     </body>
   </file>
 </xliff>

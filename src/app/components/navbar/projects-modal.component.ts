@@ -12,6 +12,7 @@ import {ProjectNameValidatorMsgConversion} from '../messages/project-name-valida
 import {Messages} from '../messages/messages';
 import {reload} from '../../core/common/reload';
 import {SettingsProvider} from '../../core/settings/settings-provider';
+import {AngularUtility} from '../../angular/angular-utility';
 
 const remote = typeof window !== 'undefined' ? window.require('electron').remote : require('electron').remote;
 
@@ -39,8 +40,6 @@ export class ProjectsModalComponent implements AfterViewInit, AfterViewChecked {
 
     @ViewChild('createPopover', { static: false }) private createPopover: NgbPopover;
     @ViewChild('deletePopover', { static: false }) private deletePopover: NgbPopover;
-    @ViewChild('newProjectInput', { static: false }) private newProjectInput: ElementRef;
-    @ViewChild('deleteProjectInput', { static: false }) private deleteProjectInput: ElementRef;
 
 
     constructor(public activeModal: NgbActiveModal,
@@ -63,8 +62,8 @@ export class ProjectsModalComponent implements AfterViewInit, AfterViewChecked {
     ngAfterViewChecked() {
 
         if (this.focusInput) {
-            if (this.newProjectInput) this.newProjectInput.nativeElement.focus();
-            if (this.deleteProjectInput) this.deleteProjectInput.nativeElement.focus();
+            AngularUtility.focusElementInNgTemplate('new-project-input');
+            AngularUtility.focusElementInNgTemplate('delete-project-input');
             this.focusInput = false;
         }
     }

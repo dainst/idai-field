@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import {Observable, Observer} from 'rxjs';
-import {Document} from 'idai-components-2';
 import {SyncStatus} from './sync-process';
 import {PouchdbManager} from '../datastore/pouchdb/pouchdb-manager';
 import {ObserverUtil} from '../util/observer-util';
@@ -37,7 +36,7 @@ export class SyncService {
     }
 
 
-    public statusNotifications = (): Observable<Document> => ObserverUtil.register(this.statusObservers);
+    public statusNotifications = (): Observable<SyncStatus> => ObserverUtil.register(this.statusObservers);
 
 
     public async startSync() {
@@ -48,7 +47,7 @@ export class SyncService {
 
         const url = SyncService.generateSyncUrl(this.syncTarget, this.project, this.password);
         const syncProcess = await this.pouchdbManager.setupSync(url, this.project);
-        syncProcess.observe.subscribe(
+        syncProcess.observer.subscribe(
             status => this.setStatus(status),
             err => {
                 this.setStatus(err);

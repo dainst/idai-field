@@ -4,14 +4,14 @@ import {FieldDocument} from 'idai-components-2';
 import {LinkModalComponent} from './link-modal.component';
 import {RemoveLinkModalComponent} from './remove-link-modal.component';
 import {ImageOverviewFacade} from '../../../core/images/overview/view/imageoverview-facade';
-import {DeleteModalComponent} from './delete-modal.component';
+import {DeleteModalComponent} from './deletion/delete-modal.component';
 import {ImageOverviewComponent} from './image-overview.component';
 import {ViewFacade} from '../../../core/resources/view/view-facade';
 import {M} from '../../messages/m';
 import {Messages} from '../../messages/messages';
 import {MenuContext, MenuService} from '../../menu-service';
 import {ImageRelationsManager, ImageRelationsManagerErrors} from '../../../core/model/image-relations-manager';
-import {DeletionInProgressModalComponent} from './deletion-in-progress-modal.component';
+import {DeletionInProgressModalComponent} from './deletion/deletion-in-progress-modal.component';
 
 
 @Component({

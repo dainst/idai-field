@@ -12,6 +12,7 @@ import {ProjectNameValidatorMsgConversion} from '../messages/project-name-valida
 import {Messages} from '../messages/messages';
 import {reload} from '../../core/common/reload';
 import {SettingsProvider} from '../../core/settings/settings-provider';
+import {AngularUtility} from '../../angular/angular-utility';
 
 const remote = typeof window !== 'undefined' ? window.require('electron').remote : require('electron').remote;
 
@@ -61,8 +62,8 @@ export class ProjectsModalComponent implements AfterViewInit, AfterViewChecked {
     ngAfterViewChecked() {
 
         if (this.focusInput) {
-            ProjectsModalComponent.focusElement('new-project-input');
-            ProjectsModalComponent.focusElement('delete-project-input');
+            AngularUtility.focusElementInNgTemplate('new-project-input');
+            AngularUtility.focusElementInNgTemplate('delete-project-input');
             this.focusInput = false;
         }
     }
@@ -200,13 +201,6 @@ export class ProjectsModalComponent implements AfterViewInit, AfterViewChecked {
             return false;
         }
         return true;
-    }
-
-
-    private static focusElement(id: string) {
-
-        const element: HTMLElement = document.getElementById(id);
-        if (element) element.focus();
     }
 
 

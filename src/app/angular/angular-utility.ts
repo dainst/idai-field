@@ -7,4 +7,11 @@ export module AngularUtility {
 
         await new Promise(resolve => setTimeout(async () => resolve(), duration));
     }
+
+
+    export function focusElementInNgTemplate(id: string) {
+
+        const element: HTMLElement = document.getElementById(id);
+        if (element) element.focus();
+    }
 }

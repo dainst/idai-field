@@ -103,7 +103,7 @@ export class PouchdbManager {
                 sync.cancel();
                 this.syncHandles.splice(this.syncHandles.indexOf(sync as never), 1);
             },
-            observe: Observable.create((obs: Observer<SyncStatus>) => {
+            observer: Observable.create((obs: Observer<SyncStatus>) => {
                 sync.on('change', (info: any) => obs.next(getSyncStatusFromInfo(info)))
                     .on('paused', () => obs.next(SyncStatus.InSync))
                     .on('active', (info: any) => obs.next(getSyncStatusFromInfo(info)))

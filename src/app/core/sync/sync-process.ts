@@ -5,7 +5,7 @@ export interface SyncProcess {
 
     url: string;
     cancel(): void;
-    observe: Observable<SyncStatus>;
+    observer: Observable<SyncStatus>;
 }
 
 

@@ -8,7 +8,7 @@ const autoUpdate = require('./auto-update.js');
 
 let menuContext = 'loading';
 
-const mainLanguages = ['de', 'en', 'it'];
+const mainLanguages = ['de', 'en'];
 
 // needed to fix notifications in win 10
 // see https://github.com/electron/electron/issues/10864

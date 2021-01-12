@@ -14,7 +14,6 @@ const remote = typeof window !== 'undefined' ? window.require('electron').remote
 
 type Language = {
     label: string;
-    info?: string;
     isMainLanguage: boolean;
 }
 
@@ -99,13 +98,6 @@ export class LanguageSettingsComponent {
                     label: languages[languageCode][0].toUpperCase() + languages[languageCode].slice(1),
                     isMainLanguage: mainLanguages.includes(languageCode)
                 };
-
-                if (languageCode === 'it') {
-                    result[languageCode].info = this.i18n({
-                        id: 'settings.languageInfo.it',
-                        value: 'Die italienische Übersetzung wird bereitgestellt vom DAI Rom. Bei Fragen und Anmerkungen zur Übersetzung wenden Sie sich bitte an:'
-                    });
-                }
             }
             return result;
         }, {});

@@ -1444,7 +1444,7 @@
           <context context-type="linenumber">7</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/image/overview/delete-modal.html</context>
+          <context context-type="sourcefile">src/app/components/image/overview/deletion/delete-modal.html</context>
           <context context-type="linenumber">11</context>
         </context-group>
         <context-group purpose="location">
@@ -3174,7 +3174,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/language-settings.html</context>
-          <context context-type="linenumber">37</context>
+          <context context-type="linenumber">34</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.removeLanguage" datatype="html">
@@ -3182,7 +3182,7 @@
         <target state="final">Sprache entfernen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/language-settings.html</context>
-          <context context-type="linenumber">25</context>
+          <context context-type="linenumber">22</context>
         </context-group>
       </trans-unit>
       <trans-unit id="matrix.view.noTrenchesWarning" datatype="html">
@@ -4881,14 +4881,6 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="settings.languageInfo.it" datatype="html">
-        <source>Die italienische Übersetzung wird bereitgestellt vom DAI Rom. Bei Fragen und Anmerkungen zur Übersetzung wenden Sie sich bitte an:</source>
-        <target state="final">Die italienische Übersetzung wird bereitgestellt vom DAI Rom. Bei Fragen und Anmerkungen zur Übersetzung wenden Sie sich bitte an:</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/settings/language-settings.component.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="widgets.documentPicker.project" datatype="html">
         <source>Projekt</source>
         <target state="final">Projekt</target>
@@ -4931,7 +4923,7 @@
           <context context-type="linenumber">12</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/image/overview/delete-modal.html</context>
+          <context context-type="sourcefile">src/app/components/image/overview/deletion/delete-modal.html</context>
           <context context-type="linenumber">15</context>
         </context-group>
         <context-group purpose="location">
@@ -5309,7 +5301,7 @@
         Möchten Sie die <x id="INTERPOLATION" equiv-text="{{numberOfSelectedImages}}"/> markierten Bilder wirklich löschen?
     </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/image/overview/delete-modal.html</context>
+          <context context-type="sourcefile">src/app/components/image/overview/deletion/delete-modal.html</context>
           <context context-type="linenumber">2</context>
         </context-group>
       </trans-unit>
@@ -5321,7 +5313,7 @@
         Möchten Sie das markierte Bild wirklich löschen?
     </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/image/overview/delete-modal.html</context>
+          <context context-type="sourcefile">src/app/components/image/overview/deletion/delete-modal.html</context>
           <context context-type="linenumber">5</context>
         </context-group>
       </trans-unit>
@@ -5329,7 +5321,7 @@
         <source>Bild wird gelöscht...</source>
         <target state="final">Bild wird gelöscht...</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/image/overview/deletion-in-progress-modal.html</context>
+          <context context-type="sourcefile">src/app/components/image/overview/deletion/deletion-in-progress-modal.html</context>
           <context context-type="linenumber">5</context>
         </context-group>
       </trans-unit>
@@ -5337,7 +5329,7 @@
         <source>Bilder werden gelöscht...</source>
         <target state="final">Bilder werden gelöscht...</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/image/overview/deletion-in-progress-modal.html</context>
+          <context context-type="sourcefile">src/app/components/image/overview/deletion/deletion-in-progress-modal.html</context>
           <context context-type="linenumber">7</context>
         </context-group>
       </trans-unit>

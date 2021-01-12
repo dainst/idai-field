@@ -31084,19 +31084,58 @@
       }
     }
   },
-  "Trench-excavationType-ayamonte": {
-    "createdBy": "T.H.",
-    "creationDate": "30.12.2019",
+  "Project-coordinate-reference-system-ayamonte": {
+    "createdBy": "",
+    "creationDate": "",
     "description": {},
     "values": {
-      "Schnitt": {
+      "Eigenes Koordinatenbezugssystem": {
         "labels": {
-          "de": "Schnitt"
+          "de": "Eigenes Koordinatenbezugssystem",
+          "es": "propio sistema de referencia de coordenadas"
         }
       },
+      "EPSG4326 (WGS 84)": {
+        "labels": {
+          "de": "EPSG4326 (WGS 84)",
+          "es": "EPSG4326 (WGS 84)"
+        }
+      },
+      "EPSG3857 (WGS 84 Web Mercator)": {
+        "labels": {
+          "de": "EPSG3857 (WGS 84 Web Mercator)",
+          "es": "EPSG3857 (WGS 84 Web Mercator)"
+        }
+      },
+      "EPSG 23029 (UTM 29N, ED50)": {
+        "labels": {
+          "de": "EPSG 23029 (UTM 29N, ED50)",
+          "es": "EPSG 23029 (UTM 29N, ED50)"
+        }
+      }
+    },
+    "order": [
+      "Eigenes Koordinatenbezugssystem",
+      "EPSG4326 (WGS 84)",
+      "EPSG3857 (WGS 84 Web Mercator)",
+      "EPSG 23029 (UTM 29N, ED50)"
+    ]
+  },
+  "Trench-excavationType-ayamonte": {
+    "createdBy": "T.H.",
+    "creationDate": "16.09.2020",
+    "description": {},
+    "values": {
       "Sektor": {
         "labels": {
-          "de": "Sektor"
+          "de": "Sektor",
+          "es": "sector"
+        }
+      },
+      "Schnitt": {
+        "labels": {
+          "de": "Schnitt",
+          "es": "corte"
         }
       }
     }
@@ -31194,6 +31233,75 @@
       }
     }
   },
+  "Grave-artifacts-ayamonte": {
+    "createdBy": "T.H.",
+    "creationDate": "01.02.2020",
+    "description": {},
+    "values": {
+      "Probe": {
+        "labels": {
+          "de": "Probe",
+          "es": "muestra"
+        }
+      },
+      "Keramik": {
+        "labels": {
+          "de": "Keramik",
+          "es": "cerámica"
+        }
+      }
+    }
+  },
+  "Grave-significanceRemark-ayamonte": {
+    "createdBy": "T.H.",
+    "creationDate": "30.12.2019",
+    "description": {},
+    "values": {
+      "ungestört": {
+        "labels": {
+          "de": "ungestört",
+          "es": "non alterado"
+        }
+      },
+      "gestört": {
+        "labels": {
+          "de": "gestört",
+          "es": "alterado"
+        }
+      },
+      "stratifiziert": {
+        "labels": {
+          "de": "stratifiziert",
+          "es": "estratificado"
+        }
+      },
+      "Bergung nach natürlicher Schichtung": {
+        "labels": {
+          "de": "Bergung nach natürlicher Schichtung",
+          "es": "ecuperación seg. estratigrafía natural"
+        }
+      }
+    }
+  },
+  "Grave-graveType-ayamonte": {
+    "createdBy": "T.H.",
+    "creationDate": "16.09.2020",
+    "description": {},
+    "values": {
+      "Grubengrab": {
+        "labels": {
+          "de": "Grubengrab",
+          "es": "hoyo"
+        }
+      },
+      "andere Klass.": {
+        "labels": {
+          "de": "andere Klass.",
+          "es": "otra clas."
+        }
+      }
+    }
+  },
   "Layer-findMaterial-ayamonte": {
     "createdBy": "T.H.",
     "creationDate": "30.12.2019",
@@ -31273,39 +31381,295 @@
       }
     }
   },
-  "Feature-featureClassification-ayamonte": {
-    "creationDate": "02.01.2020",
+  "Layer-artifacts-ayamonte": {
     "createdBy": "T.H.",
+    "creationDate": "16.09.2020",
     "description": {},
     "values": {
-      "Brandschicht": {
+      "Keramik": {
         "labels": {
-          "de": "Brandschicht"
+          "de": "Keramik",
+          "es": "cerámica"
         }
       },
-      "Kulturschicht": {
+      "Probe": {
         "labels": {
-          "de": "Kulturschicht"
+          "de": "Probe",
+          "es": "muestra"
         }
       },
-      "Laufhorizont": {
+      "Ziegel": {
         "labels": {
-          "de": "Laufhorizont"
+          "de": "Ziegel",
+          "es": "teja"
         }
       },
-      "Planierschicht": {
+      "Knochen": {
         "labels": {
-          "de": "Planierschicht"
+          "de": "Knochen",
+          "es": "hueso"
         }
       },
+      "sonstiger Fund": {
+        "labels": {
+          "de": "sonstiger Fund",
+          "es": "otro hallazgo"
+        }
+      },
+      "Steinobjekt": {
+        "labels": {
+          "de": "Steinobjekt",
+          "es": "lítica"
+        }
+      },
+      "Mollusken": {
+        "labels": {
+          "de": "Mollusken",
+          "es": "molusco"
+        }
+      },
+      "Glas": {
+        "labels": {
+          "de": "Glas",
+          "es": "vidrio"
+        }
+      }
+    }
+  },
+  "Layer-significanceRemark-ayamonte": {
+    "createdBy": "T.H.",
+    "creationDate": "16.09.2020",
+    "description": {},
+    "values": {
+      "stratifiziert": {
+        "labels": {
+          "de": "stratifiziert",
+          "es": "estratificado"
+        }
+      },
+      "Bergung nach natürlicher Schichtung": {
+        "labels": {
+          "de": "Bergung nach natürlicher Schichtung",
+          "es": "ecuperación seg. estratigrafía natural"
+        }
+      },
+      "Bergung in künstlichen Plana": {
+        "labels": {
+          "de": "Bergung in künstlichen Plana",
+          "es": "ecuperación en plana artificiales"
+        }
+      },
+      "ungestört": {
+        "labels": {
+          "de": "ungestört",
+          "es": "non alterado"
+        }
+      }
+    }
+  },
+  "Layer-layerClassificationOther-ayamonte": {
+    "creationDate": "",
+    "createdBy": "",
+    "description": {},
+    "values": {
+      "natürliches Substratum": {
+        "labels": {
+          "de": "natürliches Substratum",
+          "es": "sustrato natural"
+        }
+      },
+      "Anomalie": {
+        "labels": {
+          "de": "Anomalie",
+          "es": "anomalía"
+        }
+      }
+    }
+  },
+  "Layer-layerClassification-ayamonte": {
+    "createdBy": "T.H.",
+    "creationDate": "16.09.2020",
+    "description": {},
+    "values": {
+      "Auffüllung": {
+        "labels": {
+          "de": "Auffüllung",
+          "es": "relleno"
+        }
+      },
+      "andere Klass.": {
+        "labels": {
+          "de": "andere Klass.",
+          "es": "otra clas."
+        }
+      },
+      "Verfüllung": {
+        "labels": {
+          "de": "Verfüllung",
+          "es": "relleno"
+        }
+      },
+      "Erdschicht": {
+        "labels": {
+          "de": "Erdschicht",
+          "es": "estrato de tierra"
+        }
+      }
+    }
+  },
+  "Layer-otherClassification-ayamonte": {
+    "creationDate": "",
+    "createdBy": "",
+    "description": {},
+    "values": {
+      "Störung": {
+        "labels": {
+          "de": "Störung",
+          "es": "alteración"
+        }
+      },
+      "Graben": {
+        "labels": {
+          "de": "Graben",
+          "es": "foso"
+        }
+      }
+    }
+  },
+  "Feature-featureClassification-ayamonte": {
+    "createdBy": "T.H.",
+    "creationDate": "16.09.2020",
+    "description": {},
+    "values": {
       "Archäologisches Planum": {
         "labels": {
-          "de": "Archäologisches Planum"
+          "de": "Archäologisches Planum",
+          "es": "planta arqueológica"
         }
       },
       "Anthropologisches Planum": {
         "labels": {
-          "de": "Anthropologisches Planum"
+          "de": "Anthropologisches Planum",
+          "es": "planta antropológica"
+        }
+      }
+    }
+  },
+  "Feature-featureClassificationOther-ayamonte": {
+    "creationDate": "02.01.2020",
+    "createdBy": "T.H.",
+    "description": {},
+    "values": {
+      "alcorque": {
+        "labels": {
+          "de": "Bewässerungsgraben",
+          "es": "alcorque"
+        }
+      }
+    }
+  },
+  "Feature-featureLayerClassification-ayamonte": {
+    "creationDate": "01.02.2020",
+    "createdBy": "T.H.",
+    "description": {},
+    "values": {
+      "andere Klass.": {
+        "labels": {
+          "de": "andere Klass.",
+          "es": "otra clas."
+        }
+      }
+    }
+  },
+  "Feature-otherClassification-ayamonte": {
+    "creationDate": "02.01.2020",
+    "createdBy": "T.H.",
+    "description": {},
+    "values": {
+      "Grube": {
+        "labels": {
+          "de": "Grube",
+          "es": "fosa"
+        }
+      },
+      "andere Klass.": {
+        "labels": {
+          "de": "andere Klass.",
+          "es": "otra clas."
+        }
+      },
+      "Graben": {
+        "labels": {
+          "de": "Graben",
+          "es": "foso"
+        }
+      },
+      "Störung": {
+        "labels": {
+          "de": "Störung",
+          "es": "alteración"
+        }
+      },
+      "Interface": {
+        "labels": {
+          "de": "Interface",
+          "es": "interface"
+        }
+      }
+    }
+  },
+  "Feature-artifacts-ayamonte": {
+    "createdBy": "T.H.",
+    "creationDate": "16.09.2020",
+    "description": {},
+    "values": {
+      "Steinobjekt": {
+        "labels": {
+          "de": "Steinobjekt",
+          "es": "lítica"
+        }
+      },
+      "Keramik": {
+        "labels": {
+          "de": "Keramik",
+          "es": "cerámica"
+        }
+      },
+      "Probe": {
+        "labels": {
+          "de": "Probe",
+          "es": "muestra"
+        }
+      }
+    }
+  },
+  "Feature-significanceRemark-ayamonte": {
+    "createdBy": "T.H.",
+    "creationDate": "16.09.2020",
+    "description": {},
+    "values": {
+      "stratifiziert": {
+        "labels": {
+          "de": "stratifiziert",
+          "es": "estratificado"
+        }
+      },
+      "Bergung nach natürlicher Schichtung": {
+        "labels": {
+          "de": "Bergung nach natürlicher Schichtung",
+          "es": "ecuperación seg. estratigrafía natural"
+        }
+      },
+      "gestört": {
+        "labels": {
+          "de": "gestört",
+          "es": "alterado"
+        }
+      },
+      "ungestört": {
+        "labels": {
+          "de": "ungestört",
+          "es": "non alterado"
         }
       }
     }
@@ -31328,42 +31692,752 @@
     }
   },
   "Find-findObjectType-ayamonte": {
-    "creationDate": "02.01.2020",
     "createdBy": "T.H.",
+    "creationDate": "16.09.2020",
     "description": {},
     "values": {
       "Amulett": {
         "labels": {
-          "de": "Amulett"
+          "de": "Amulett",
+          "es": "amuleto"
         }
       }
     }
   },
   "Find-materialColor-ayamonte": {
-    "creationDate": "02.01.2020",
     "createdBy": "T.H.",
+    "creationDate": "16.09.2020",
     "description": {},
     "values": {
       "beige": {
         "labels": {
-          "de": "beige"
+          "de": "beige",
+          "es": "beis"
+        }
+      }
+    }
+  },
+  "Find-findType-ayamonte": {
+    "createdBy": "T.H.",
+    "creationDate": "16.09.2020",
+    "description": {},
+    "values": {
+      "Botanik": {
+        "labels": {
+          "de": "Botanik",
+          "es": "muestra botanica"
+        }
+      },
+      "Sonstiges": {
+        "labels": {
+          "de": "Sonstiges",
+          "es": "otro"
+        }
+      }
+    }
+  },
+  "Find-ayamonteCondition-ayamonte": {
+    "createdBy": "T.H.",
+    "creationDate": "16.09.2020",
+    "description": {},
+    "values": {
+      "vollständig und beschädigt": {
+        "labels": {
+          "de": "vollständig und beschädigt",
+          "es": "completo y dañado"
         }
       }
     }
   },
   "Sample-material-ayamonte": {
-    "creationDate": "02.01.2020",
     "createdBy": "T.H.",
+    "creationDate": "16.09.2020",
     "description": {},
     "values": {
-      "Erde": {
-        "labels": {
-          "de": "Erde"
-        }
-      },
       "gebrannter Ton": {
         "labels": {
-          "de": "gebrannter Ton"
+          "de": "gebrannter Ton",
+          "es": "barro quemado"
+        }
+      },
+      "Erde": {
+        "labels": {
+          "de": "Erde",
+          "es": "tierra"
+        }
+      }
+    }
+  },
+  "Find-storagePlace-ayamonte": {
+    "createdBy": "T.H.",
+    "creationDate": "16.09.2020",
+    "description": {
+    },
+    "values": {
+      "Huelva": {
+        "labels": {
+          "de": "Huelva",
+          "es": "Huelva"
+        }
+      }
+    }
+  },
+  "Glass-period-ayamonte": {
+    "createdBy": "T.H.",
+    "creationDate": "01.02.2020",
+    "description": {},
+    "values": {
+      "modern": {
+        "labels": {
+          "de": "modern",
+          "es": "moderno"
+        }
+      },
+      "römisch": {
+        "labels": {
+          "de": "römisch",
+          "es": "romano"
+        }
+      }
+    }
+  },
+  "Glass-objectType-ayamonte": {
+    "createdBy": "T.H.",
+    "creationDate": "16.09.2020",
+    "description": {},
+    "values": {
+      "Gefäß": {
+        "labels": {
+          "de": "Gefäß",
+          "es": "vasija"
+        }
+      }
+    }
+  },
+  "Mollusk-classification-ayamonte": {
+    "createdBy": "T.H.",
+    "creationDate": "16.09.2020",
+    "description": {},
+    "values": {
+      "Muscheln": {
+        "labels": {
+          "de": "Muscheln",
+          "es": "malacofauna"
+        }
+      },
+      "Schnecken": {
+        "labels": {
+          "de": "Schnecken",
+          "es": "gasterópodos"
+        }
+      }
+    }
+  },
+  "Brick-period-ayamonte": {
+    "createdBy": "T.H.",
+    "creationDate": "01.02.2020",
+    "description": {},
+    "values": {
+      "römisch": {
+        "labels": {
+          "de": "römisch",
+          "es": "romano"
+        }
+      }
+    }
+  },
+  "Burial-sexDetermination-ayamonte": {
+    "createdBy": "T.H.",
+    "creationDate": "01.02.2020",
+    "description": {},
+    "values": {
+      "weiblich": {
+        "labels": {
+          "de": "weiblich",
+          "es": "femenino"
+        }
+      },
+      "männlich": {
+        "labels": {
+          "de": "männlich",
+          "es": "masculino"
+        }
+      }
+    }
+  },
+  "Burial-graveFeature-ayamonte": {
+    "createdBy": "T.H.",
+    "creationDate": "01.02.2020",
+    "description": {},
+    "values": {
+      "Brandbestattung": {
+        "labels": {
+          "de": "Brandbestattung",
+          "es": "incineración"
+        }
+      }
+    }
+  },
+  "Wood-objectType-ayamonte": {
+    "createdBy": "T.H.",
+    "creationDate": "16.09.2020",
+    "description": {},
+    "values": {
+      "Holzkohle": {
+        "labels": {
+          "de": "Holzkohle",
+          "es": "carbón"
+        }
+      }
+    }
+  },
+  "Pottery-vesselForm-ayamonte": {
+    "createdBy": "T.H.",
+    "creationDate": "16.09.2020",
+    "description": {},
+    "values": {
+      "Lampe": {
+        "labels": {
+          "de": "Lampe",
+          "es": "lucerna"
+        }
+      },
+      "Kanne": {
+        "labels": {
+          "de": "Kanne",
+          "es": "jarro"
+        }
+      },
+      "Amphore": {
+        "labels": {
+          "de": "Amphore",
+          "es": "ánfora"
+        }
+      },
+      "Teller": {
+        "labels": {
+          "de": "Teller",
+          "es": "plato"
+        }
+      },
+      "Dolium": {
+        "labels": {
+          "de": "Dolium",
+          "es": "dolium"
+        }
+      },
+      "Topf": {
+        "labels": {
+          "de": "Topf",
+          "es": "olla"
+        }
+      },
+      "Parfümfläschchen": {
+        "labels": {
+          "de": "Parfümfläschchen",
+          "es": "frascuito"
+        }
+      }
+    }
+  },
+  "Pottery-specificType-ayamonte": {
+    "createdBy": "T.H.",
+    "creationDate": "16.09.2020",
+    "description": {},
+    "values": {
+      "Handgeformte Keramik": {
+        "labels": {
+          "de": "Handgeformte Keramik",
+          "es": "cerámica a mano"
+        }
+      },
+      "Drehscheibenware": {
+        "labels": {
+          "de": "Drehscheibenware",
+          "es": "cerámica a torno"
+        }
+      }
+    }
+  },
+  "Pottery-vesselFormSpecific-ayamonte": {
+    "createdBy": "T.H.",
+    "creationDate": "16.09.2020",
+    "description": {},
+    "values": {
+      "Halsamphore Cruz del Negro": {
+        "labels": {
+          "de": "Halsamphore Cruz del Negro",
+          "es": "ánfora a cuello Cruz del Negro"
+        }
+      }
+    }
+  },
+  "Pottery-objectType-ayamonte": {
+    "createdBy": "T.H.",
+    "creationDate": "16.09.2020",
+    "description": {},
+    "values": {
+      "Grobkeramik": {
+        "labels": {
+          "de": "Grobkeramik",
+          "es": "cerámica gruesa"
+        }
+      },
+      "Feinkeramik": {
+        "labels": {
+          "de": "Feinkeramik",
+          "es": "cerámica fina"
+        }
+      }
+    }
+  },
+  "Pottery-period-ayamonte": {
+    "createdBy": "T.H.",
+    "creationDate": "01.02.2020",
+    "description": {},
+    "values": {
+      "römisch": {
+        "labels": {
+          "de": "römisch",
+          "es": "romano"
+        }
+      }
+    }
+  },
+  "Pottery-provenance-ayamonte": {
+    "createdBy": "T.H.",
+    "creationDate": "01.02.2020",
+    "description": {},
+    "values": {
+      "Torre del Mar": {
+        "labels": {
+          "de": "Torre del Mar",
+          "es": "Torre del Mar"
+        }
+      }
+    }
+  },
+  "Pottery-condition-ayamonte": {
+    "createdBy": "T.H.",
+    "creationDate": "01.02.2020",
+    "description": {},
+    "values": {
+      "mehrere Fragmente": {
+        "labels": {
+          "de": "mehrere Fragmente",
+          "es": "varios fragmentos"
+        }
+      },
+      "weitgehend vollständiges Gefäß": {
+        "labels": {
+          "de": "weitgehend vollständiges Gefäß",
+          "es": "vasija mas o meno entera"
+        }
+      },
+      "weitgehend vollständiges, zerbrochenes Gefäß": {
+        "labels": {
+          "de": "weitgehend vollständiges, zerbrochenes Gefäß",
+          "es": "vasija mas o meno entera fragementada"
+        }
+      },
+      "mehrere anpassende Fragmente": {
+        "labels": {
+          "de": "mehrere anpassende Fragmente",
+          "es": "varios fragmentos con conexión"
+        }
+      },
+      "vollständiges, zerbrochenes Gefäß": {
+        "labels": {
+          "de": "vollständiges, zerbrochenes Gefäß",
+          "es": "vasija entera fragmentada"
+        }
+      },
+      "Frgte. von Oberfläche": {
+        "labels": {
+          "de": "Frgte. von Oberfläche",
+          "es": "fragm. de superficie"
+        }
+      },
+      "Überzug": {
+        "labels": {
+          "de": "Überzug",
+          "es": "recubrimiento"
+        }
+      }
+    }
+  },
+  "Pottery-ayamonteCondition-ayamonte": {
+    "createdBy": "T.H.",
+    "creationDate": "16.09.2020",
+    "description": {},
+    "values": {
+      "weitgehend vollständiges Gefäß": {
+        "labels": {
+          "de": "weitgehend vollständiges Gefäß",
+          "es": "vasija mas o meno entera"
+        }
+      },
+      "mehrere Fragmente": {
+        "labels": {
+          "de": "mehrere Fragmente",
+          "es": "varios fragmentos"
+        }
+      },
+      "vollständiges, zerbrochenes Gefäß": {
+        "labels": {
+          "de": "vollständiges, zerbrochenes Gefäß",
+          "es": "vasija entera fragmentada"
+        }
+      },
+      "mehrere anpassende Fragmente": {
+        "labels": {
+          "de": "mehrere anpassende Fragmente",
+          "es": "varios fragmentos con conexión"
+        }
+      },
+      "weitgehend vollständiges, zerbrochenes Gefäß": {
+        "labels": {
+          "de": "weitgehend vollständiges, zerbrochenes Gefäß",
+          "es": "vasija mas o meno entera fragementada"
+        }
+      },
+      "Frgte. von Oberfläche": {
+        "labels": {
+          "de": "Frgte. von Oberfläche",
+          "es": "fragm. de superficie"
+        }
+      },
+      "Überzug": {
+        "labels": {
+          "de": "Überzug",
+          "es": "recubrimiento"
+        }
+      }
+    }
+  },
+  "Bone-boneType-ayamonte": {
+    "createdBy": "T.H.",
+    "creationDate": "16.09.2020",
+    "description": {},
+    "values": {
+      "Mensch": {
+        "labels": {
+          "de": "Mensch",
+          "es": "humano"
+        }
+      },
+      "unbestimmbar": {
+        "labels": {
+          "de": "unbestimmbar",
+          "es": "indeterminado"
+        }
+      }
+    }
+  },
+  "Bone-biologicalAge-ayamonte": {
+    "createdBy": "T.H.",
+    "creationDate": "16.09.2020",
+    "description": {},
+    "values": {
+      "adult II (30-39 Jahre)": {
+        "labels": {
+          "de": "adult II (30-39 Jahre)",
+          "es": "adulto II (30-39 años)"
+        }
+      },
+      "senil (> 60 Jahre)": {
+        "labels": {
+          "de": "senil (> 60 Jahre)",
+          "es": "senil (> 60 años)"
+        }
+      },
+      "erwachsen": {
+        "labels": {
+          "de": "erwachsen",
+          "es": "adulto"
+        }
+      },
+      "adult I (19-29 Jahre)": {
+        "labels": {
+          "de": "adult I (19-29 Jahre)",
+          "es": "adulto I (19-29 años)"
+        }
+      },
+      "matur II (50-59 Jahre)": {
+        "labels": {
+          "de": "matur II (50-59 Jahre)",
+          "es": "maduro II (50-59 años)"
+        }
+      },
+      "matur I (40-49 Jahre)": {
+        "labels": {
+          "de": "matur I (40-49 Jahre)",
+          "es": "maduro I (40-49 años)"
+        }
+      }
+    }
+  },
+  "Bone-conditionAmount-ayamonte": {
+    "createdBy": "T.H.",
+    "creationDate": "16.09.2020",
+    "description": {},
+    "values": {
+      "großes Fragment": {
+        "labels": {
+          "de": "großes Fragment",
+          "es": "fragmento grande"
+        }
+      },
+      "kleines Fragment": {
+        "labels": {
+          "de": "kleines Fragment",
+          "es": "fragmento pequeño"
+        }
+      },
+      "winziger Splitter": {
+        "labels": {
+          "de": "winziger Splitter",
+          "es": "astilla pequeña"
+        }
+      }
+    }
+  },
+  "Bone-burningGrade-ayamonte": {
+    "createdBy": "T.H.",
+    "creationDate": "16.09.2020",
+    "description": {},
+    "values": {
+      "II - 300°-400°C - Verfärbung etwa braun-dunkelbraun": {
+        "labels": {
+          "de": "II - 300°-400°C - Verfärbung etwa braun-dunkelbraun",
+          "es": "II - 300°-400°C - descoloramiento aprox. marrón-marrón oscuro"
+        }
+      },
+      "schwarz": {
+        "labels": {
+          "de": "schwarz",
+          "es": "negro"
+        }
+      },
+      "IV - 650°-750°C - Verfärbung etwa milchig weiß-mattweiß": {
+        "labels": {
+          "de": "IV - 650°-750°C - Verfärbung etwa milchig weiß-mattweiß",
+          "es": "IV - 650°-750°C - descoloramiento aprox. blanco lechoso-blanco mate"
+        }
+      },
+      "kreideartig": {
+        "labels": {
+          "de": "kreideartig",
+          "es": "cretáceo"
+        }
+      }
+    }
+  },
+  "Bone-sex-ayamonte": {
+    "createdBy": "T.H.",
+    "creationDate": "16.09.2020",
+    "description": {},
+    "values": {
+      "Weiblich": {
+        "labels": {
+          "de": "Weiblich",
+          "es": "femenino"
+        }
+      },
+      "Männlich": {
+        "labels": {
+          "de": "Männlich",
+          "es": "masculino"
+        }
+      }
+    }
+  },
+  "Bone-boneClassification-ayamonte": {
+    "createdBy": "T.H.",
+    "creationDate": "16.09.2020",
+    "description": {},
+    "values": {
+      "Schädel (Cranius)": {
+        "labels": {
+          "de": "Schädel (Cranius)",
+          "es": "cráneo"
+        }
+      },
+      "Zahn": {
+        "labels": {
+          "de": "Zahn",
+          "es": "diente"
+        }
+      },
+      "Rippe": {
+        "labels": {
+          "de": "Rippe",
+          "es": "costilla"
+        }
+      },
+      "Oberarm (Humerus)": {
+        "labels": {
+          "de": "Oberarm (Humerus)",
+          "es": "húmero"
+        }
+      },
+      "Mittelhand (Metacarpus)": {
+        "labels": {
+          "de": "Mittelhand (Metacarpus)",
+          "es": "metacarpo"
+        }
+      },
+      "Phalanges": {
+        "labels": {
+          "de": "Phalanges",
+          "es": "falanges"
+        }
+      },
+      "Oberschenkel (Femur)": {
+        "labels": {
+          "de": "Oberschenkel (Femur)",
+          "es": "fémur"
+        }
+      },
+      "Elle (Ulna)": {
+        "labels": {
+          "de": "Elle (Ulna)",
+          "es": "cúbito"
+        }
+      },
+      "Speiche (Radius)": {
+        "labels": {
+          "de": "Speiche (Radius)",
+          "es": "radio"
+        }
+      },
+      "Vorderbein (Tibia)": {
+        "labels": {
+          "de": "Vorderbein (Tibia)",
+          "es": "tibia"
+        }
+      },
+      "kleine Langknochen": {
+        "labels": {
+          "de": "kleine Langknochen",
+          "es": "pequeños huesos largos"
+        }
+      },
+      "Hinterbein (Fibula)": {
+        "labels": {
+          "de": "Hinterbein (Fibula)",
+          "es": "fíbula"
+        }
+      },
+      "Schulterblatt (Scapula)": {
+        "labels": {
+          "de": "Schulterblatt (Scapula)",
+          "es": "escápula"
+        }
+      },
+      "Wirbel (Vertebres)": {
+        "labels": {
+          "de": "Wirbel (Vertebres)",
+          "es": "vértebras"
+        }
+      },
+      "Beckenknochen (Pelvis)": {
+        "labels": {
+          "de": "Beckenknochen (Pelvis)",
+          "es": "hueso pélvico"
+        }
+      },
+      "Astragales": {
+        "labels": {
+          "de": "Astragales",
+          "es": "astrágalos"
+        }
+      },
+      "Mittelfuß (Metatarsus)": {
+        "labels": {
+          "de": "Mittelfuß (Metatarsus)",
+          "es": "metatarso"
+        }
+      },
+      "Fußknochen": {
+        "labels": {
+          "de": "Fußknochen",
+          "es": "huesos del pie"
+        }
+      }
+    }
+  },
+  "Drawing-drawingType-ayamonte": {
+    "createdBy": "T.H.",
+    "creationDate": "01.02.2020",
+    "description": {},
+    "values": {
+      "Druckvorlage": {
+        "labels": {
+          "de": "Druckvorlage",
+          "es": "plantilla de impresión"
+        }
+      },
+      "Magnetometrie-Plan": {
+        "labels": {
+          "de": "Magnetometrie-Plan",
+          "es": "planta de magnetometría"
+        }
+      }
+    }
+  },
+  "Sample-sampleType-ayamonte": {
+    "createdBy": "T.H.",
+    "creationDate": "16.09.2020",
+    "description": {},
+    "values": {
+      "Keramikprobe": {
+        "labels": {
+          "de": "Keramikprobe",
+          "es": "muestra cerámica"
+        }
+      },
+      "Erdprobe": {
+        "labels": {
+          "de": "Erdprobe",
+          "es": "muestra sedimentaria"
+        }
+      },
+      "Mischprobe (Boden)": {
+        "labels": {
+          "de": "Mischprobe (Boden)",
+          "es": "muestra mixta (sedimento)"
+        }
+      },
+      "Sedimentprobe": {
+        "labels": {
+          "de": "Sedimentprobe",
+          "es": "muestra sedimentaria"
+        }
+      },
+      "Mikromorphologische Probe (Boden)": {
+        "labels": {
+          "de": "Mikromorphologische Probe (Boden)",
+          "es": "muestra micromorfológica (sedimento)"
+        }
+      }
+    }
+  },
+  "Place-siteClassification-ayamonte": {
+    "createdBy": "T.H.",
+    "creationDate": "16.09.2020",
+    "description": {},
+    "values": {
+      "Nekropole": {
+        "labels": {
+          "de": "Nekropole",
+          "es": "necrópolis"
+        }
+      },
+      "Siedlung": {
+        "labels": {
+          "de": "Siedlung",
+          "es": "poblado"
         }
       }
     }

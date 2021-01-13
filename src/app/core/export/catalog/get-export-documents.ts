@@ -5,6 +5,7 @@ import {Name, RESOURCE_DOT_IDENTIFIER, RESOURCE_ID_PATH, ResourceId} from '../..
 import {HierarchicalRelations, ImageRelations, TypeRelations} from '../../model/relation-constants';
 import {RelationsManager} from '../../model/relations-manager';
 import {ImageRelationsManager} from '../../model/image-relations-manager';
+import {clone} from '../../util/object-util';
 
 
 export const ERROR_NOT_ALL_IMAGES_EXCLUSIVELY_LINKED = 'export.catalog.get-export-documents.not-all-images-exlusively-linked';
@@ -17,9 +18,9 @@ export async function getExportDocuments(datastore: DocumentReadDatastore,
                                          project: Name)
     : Promise<Either<string[] /* msgWithParams */, [Array<Document>, Array<ResourceId>]>> {
 
-    const catalogAndTypes = await relationsManager.get(catalogId, { descendants: true });
+    const catalogAndTypes = clone(await relationsManager.get(catalogId, { descendants: true }));
 
-    const linkedImages = await imageRelationsManager.getLinkedImages(catalogAndTypes);
+    const linkedImages = clone(await imageRelationsManager.getLinkedImages(catalogAndTypes));
     const exclusivelyLinkedImages = await imageRelationsManager.getLinkedImages(catalogAndTypes, true);
 
     // TODO Check if this is really necessary

@@ -1,5 +1,7 @@
 import {update} from 'tsfun/associative';
 import {Name} from '../../core/constants';
+import {ProjectNameValidator} from '../../core/model/project-name-validator';
+import {M} from '../messages/m';
 
 const replicationStream = typeof window !== 'undefined' ? window.require('pouchdb-replication-stream') : require('pouchdb-replication-stream');
 const stream = typeof window !== 'undefined' ? window.require('stream') : require('stream');
@@ -39,10 +41,15 @@ export module Backup {
     }
 
 
-    export async function readDump(filePath: string, project: Name) {
+    /**
+     * Returns warnings as array of msgWithParams
+     */
+    export async function readDump(filePath: string, project: Name): Promise<string[][]> {
 
         if (!fs.existsSync(filePath)) throw FILE_NOT_EXIST;
         if (!fs.lstatSync(filePath).isFile()) throw FILE_NOT_EXIST;
+
+        const warnings: string[][] = [];
 
         const db = new PouchDB(project);
         await db.destroy(); // to prevent pouchdb-load's incremental loading and force a true overwrite of the old db
@@ -54,6 +61,13 @@ export module Backup {
 
         const setIdentifier = update('resource.identifier', project);
         const projectDocument = await db2.get('project');
+
+        if (!ProjectNameValidator.isSimilar(projectDocument.resource.identifier, project)) {
+            warnings.push([M.BACKUP_READ_WARNING_UNSIMILAR_PROJECT_NAME]);
+        }
+
         await db2.put(setIdentifier(projectDocument), { force: true });
+
+        return warnings;
     }
 }

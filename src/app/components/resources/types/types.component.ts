@@ -166,16 +166,13 @@ export class TypesComponent extends BaseList implements OnChanges {
 
     public async openImageViewModal(document: Document) {
 
-        await this.viewModalLauncher.openImageViewModal(document, this.resourcesComponent);
+        await this.viewModalLauncher.openImageViewModal(document);
     }
 
 
     public async openResourceViewModal(document: FieldDocument) {
 
-        const edited: boolean = await this.viewModalLauncher.openResourceViewModal(
-            document, this.resourcesComponent
-        );
-
+        const edited: boolean = await this.viewModalLauncher.openResourceViewModal(document);
         if (edited) this.loadImages([document], true);
     }
 

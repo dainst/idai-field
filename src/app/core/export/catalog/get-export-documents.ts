@@ -8,7 +8,7 @@ import {ImageRelationsManager} from '../../model/image-relations-manager';
 import {clone} from '../../util/object-util';
 
 
-export const ERROR_NOT_ALL_IMAGES_EXCLUSIVELY_LINKED = 'export.catalog.get-export-documents.not-all-images-exlusively-linked';
+export const ERROR_NOT_ALL_IMAGES_EXCLUSIVELY_LINKED = 'export.catalog.get-export-documents.not-all-images-exclusively-linked';
 
 
 export async function getExportDocuments(datastore: DocumentReadDatastore,

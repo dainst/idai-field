@@ -66,7 +66,7 @@ describe('getExportDocuments', () => {
     });
 
 
-    it('not all images exlusively linked', async done => {
+    it('not all images exclusively linked', async done => {
 
         imageRelationsManager.getLinkedImages.and.callFake((_, option) => {
             return option === true

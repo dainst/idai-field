@@ -9,6 +9,7 @@ import {SortUtil} from '../../../core/util/sort-util';
 import {MenuContext, MenuService} from '../../menu-service';
 import {ImageRelations} from '../../../core/model/relation-constants';
 
+
 @Component({
     selector: 'docedit-image-tab',
     templateUrl: './docedit-image-tab.html'
@@ -19,7 +20,7 @@ import {ImageRelations} from '../../../core/model/relation-constants';
  */
 export class DoceditImageTabComponent {
 
-    @ViewChild('imageGrid', {static: false}) public imageGrid: ImageGridComponent;
+    @ViewChild('imageGrid', { static: false }) public imageGrid: ImageGridComponent;
 
     @Input() document: FieldDocument;
 
@@ -123,13 +124,13 @@ export class DoceditImageTabComponent {
 
     private loadImages() {
 
-        const imageDocPromises: any[] = [];
+        const imageDocPromises: Array<Promise<ImageDocument>> = [];
         this.documents = [];
         this.document.resource.relations[ImageRelations.ISDEPICTEDIN].forEach(id => {
             imageDocPromises.push(this.datastore.get(id));
         });
 
-        Promise.all(imageDocPromises as any).then(docs => {
+        Promise.all(imageDocPromises).then(docs => {
             this.documents = docs as any;
             this.documents.sort((a: ImageDocument, b: ImageDocument) => {
                 return SortUtil.alnumCompare(a.resource.identifier, b.resource.identifier);

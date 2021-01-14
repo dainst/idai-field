@@ -130,7 +130,10 @@ export class TypesComponent extends BaseList implements OnChanges {
     public async edit(document: FieldDocument) {
 
         const editedDocument: FieldDocument|undefined = await this.resourcesComponent.editDocument(document);
-        if (editedDocument) await this.updateLinkedDocuments();
+        if (editedDocument) {
+            await this.updateLinkedDocuments();
+            this.loadImages([editedDocument], true);
+        }
     }
 
 

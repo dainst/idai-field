@@ -1449,7 +1449,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
-          <context context-type="linenumber">100</context>
+          <context context-type="linenumber">93</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageOverview.taskbar.tooltips.delete" datatype="html">
@@ -1789,7 +1789,7 @@
         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
-          <context context-type="linenumber">58</context>
+          <context context-type="linenumber">51</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.deleteModal.confirmDeleteInfo.multiple" datatype="html">
@@ -1803,7 +1803,7 @@
         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
-          <context context-type="linenumber">61</context>
+          <context context-type="linenumber">54</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.deleteModal.warning.descendant.single" datatype="html">
@@ -1888,22 +1888,6 @@
           <context context-type="linenumber">38</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="resources.deleteModel.warning.ownedCatalogImages" datatype="html">
-        <source>
-        Bitte beachten Sie bei beabsichtigtem Reimport des Katalogs aus einer vorhandenen Importdatei:
-        Wenn die .catalog-Datei sämtliche Bilder des Katalogs enthält, wird empfohlen, den Katalog mitsamt
-        seiner Bilder zu löschen (siehe Checkbox unten), da der Katalogimport keine bereits vorhandenen Bilder überschreibt.
-    </source>
-        <target state="final">
-        Bitte beachten Sie bei beabsichtigtem Reimport des Katalogs aus einer vorhandenen Importdatei:
-        Wenn die .catalog-Datei sämtliche Bilder des Katalogs enthält, wird empfohlen, den Katalog mitsamt
-        seiner Bilder zu löschen (siehe Checkbox unten), da der Katalogimport keine bereits vorhandenen Bilder überschreibt.
-    </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
-          <context context-type="linenumber">45</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="resources.deleteModel.warning.ownedType" datatype="html">
         <source>
         Bitte beachten Sie,
@@ -1917,7 +1901,7 @@
     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
-          <context context-type="linenumber">52</context>
+          <context context-type="linenumber">45</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.deleteModal.deleteImages.info" datatype="html">
@@ -1929,7 +1913,7 @@
                 </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
-          <context context-type="linenumber">82</context>
+          <context context-type="linenumber">75</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.deleteModal.deleteImages.single" datatype="html">
@@ -1941,7 +1925,7 @@
                 </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
-          <context context-type="linenumber">85</context>
+          <context context-type="linenumber">78</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.deleteModal.deleteImages.multiple" datatype="html">
@@ -1953,7 +1937,7 @@
                 </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
-          <context context-type="linenumber">88</context>
+          <context context-type="linenumber">81</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.deletionInProgressModal.info.single" datatype="html">
@@ -4258,8 +4242,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.catalog.error.connected_type_deleted" datatype="html">
-        <source>Katalogimport abgebrochen. Die bestehende Version enthält Typen, die nicht im Import vorhanden sind, jedoch noch mit Funden verknüpft sind. Betroffene Typen: [0]</source>
-        <target state="final">Katalogimport abgebrochen. Die bestehende Version enthält Typen, die nicht im Import vorhanden sind, jedoch noch mit Funden verknüpft sind. Betroffene Typen: [0]</target>
+        <source>Update eines bestehenden Katalogs abgebrochen. Die bestehende Version enthält mit Funden verknüpfte Typen, die in der Import-Datei nicht mehr vorhanden sind. Bitte entfernen Sie die Verknüpfungen und starten den Import anschließend erneut. Betroffene Typen: [0]</source>
+        <target state="final">Update eines bestehenden Katalogs abgebrochen. Die bestehende Version enthält mit Funden verknüpfte Typen, die in der Import-Datei nicht mehr vorhanden sind. Bitte entfernen Sie die Verknüpfungen und starten den Import anschließend erneut. Betroffene Typen: [0]</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -4948,7 +4932,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
-          <context context-type="linenumber">104</context>
+          <context context-type="linenumber">97</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/editable-map.html</context>

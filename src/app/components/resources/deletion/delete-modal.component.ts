@@ -54,11 +54,6 @@ export class DeleteModalComponent {
         this.documents[0].resource.category === 'TypeCatalog'
         && this.documents[0].project === undefined;
 
-    public showOwnedCatalogImagesMsg = () =>
-        this.documents[0].resource.category === 'TypeCatalog'
-        && this.documents[0].project === undefined
-        && this.relatedImagesCount > 0;
-
     public showOwnedTypeAssociationsMsg = () =>
         this.documents[0].resource.category === 'Type'
         && this.documents[0].project === undefined;

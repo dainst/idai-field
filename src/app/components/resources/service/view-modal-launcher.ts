@@ -5,7 +5,6 @@ import {MenuContext, MenuService} from '../../menu-service';
 import {ImageReadDatastore} from '../../../core/datastore/field/image-read-datastore';
 import {ImageViewModalComponent} from '../../viewmodal/image/image-view-modal.component';
 import {ResourceViewModalComponent} from '../../viewmodal/resource/resource-view-modal.component';
-import {ResourcesComponent} from '../resources.component';
 
 
 @Injectable()
@@ -19,7 +18,7 @@ export class ViewModalLauncher {
                 private menuService: MenuService) {}
 
 
-    public async openImageViewModal(document: Document, resourcesComponent: ResourcesComponent) {
+    public async openImageViewModal(document: Document) {
 
         this.menuService.setContext(MenuContext.MODAL);
 
@@ -45,8 +44,7 @@ export class ViewModalLauncher {
     /**
      * Returns true if the document has been edited via the resource view modal, otherwise false
      */
-    public async openResourceViewModal(document: Document,
-                                       resourcesComponent: ResourcesComponent): Promise<boolean> {
+    public async openResourceViewModal(document: Document): Promise<boolean> {
 
         this.menuService.setContext(MenuContext.MODAL);
 

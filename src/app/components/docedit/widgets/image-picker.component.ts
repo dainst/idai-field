@@ -25,7 +25,7 @@ export class ImagePickerComponent implements OnInit {
 
     private static documentLimit = 24;
 
-    @ViewChild('imageGrid', {static: false}) public imageGrid: ImageGridComponent;
+    @ViewChild('imageGrid', { static: false }) public imageGrid: ImageGridComponent;
     @ViewChild('modalBody') public modalBody: ElementRef;
 
     public documents: Array<ImageDocument>;
@@ -38,18 +38,16 @@ export class ImagePickerComponent implements OnInit {
     private totalDocumentCount = 0;
 
 
-    constructor(
-        public activeModal: NgbActiveModal,
-        private messages: Messages,
-        private datastore: ImageReadDatastore,
-        private el: ElementRef,
-        private projectConfiguration: ProjectConfiguration
-    ) {}
+    constructor(public activeModal: NgbActiveModal,
+                private messages: Messages,
+                private datastore: ImageReadDatastore,
+                private el: ElementRef,
+                private projectConfiguration: ProjectConfiguration) {}
 
 
     public getCurrentPage = () => this.currentOffset / ImagePickerComponent.documentLimit + 1;
 
-    public getPageCount = () => Math.ceil(this.totalDocumentCount / ImagePickerComponent.documentLimit);
+    public getPageCount = () => Math.max(1, Math.ceil(this.totalDocumentCount / ImagePickerComponent.documentLimit));
 
     public canTurnPage = () => (this.currentOffset + ImagePickerComponent.documentLimit) < this.totalDocumentCount;
 

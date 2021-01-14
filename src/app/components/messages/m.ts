@@ -1035,7 +1035,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.IMPORT_CATALOG_ERROR_CONNECTED_TYPE_DELETED] = {
             content: i18n({
                 id: 'messages.import.catalog.error.connected_type_deleted',
-                value: 'Katalogimport abgebrochen. Die bestehende Version enthält Typen, die nicht im Import vorhanden sind, jedoch noch mit Funden verknüpft sind. Betroffene Typen: [0]'
+                value: 'Update eines bestehenden Katalogs abgebrochen. Die bestehende Version enthält mit Funden verknüpfte Typen, die in der Import-Datei nicht mehr vorhanden sind. Bitte entfernen Sie die Verknüpfungen und starten den Import anschließend erneut. Betroffene Typen: [0]'
             }),
             level: 'danger',
             params: [],

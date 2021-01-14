@@ -4009,6 +4009,14 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="messages.backup.read.warning.unsimilarProjectName" datatype="html">
+        <source>Der von Ihnen gewählte Projektname unterscheidet sich stark vom Projektnamen des Originalprojekts. Bitte prüfen Sie, ob Sie die korrekte Backup-Datei ausgewählt haben, bevor Sie Daten aus dem wiederhergestellten Projekt mit anderen iDAI.field-Instanzen oder Datenbanken synchronisieren.</source>
+        <target state="final">The project name you entered differs strongly from the project name of the original project. Please check if you have selected the correct backup file before synchronizing data from the restored project with other iDAI.field instances or databases.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/messages/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="messages.model.validation.error.identifierExists" datatype="html">
         <source>Der Ressourcen-Bezeichner [0] existiert bereits.</source>
         <target state="final">The resource identifier [0] already exists.</target>

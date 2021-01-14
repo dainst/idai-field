@@ -42,6 +42,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static BACKUP_READ_ERROR_FILE_NOT_FOUND = 'backup.read.error.fileNotFound';
     public static BACKUP_READ_ERROR_NO_PROJECT_NAME = 'backup.read.error.noProjectName';
     public static BACKUP_READ_ERROR_SAME_PROJECT_NAME = 'backup.read.error.sameProjectName';
+    public static BACKUP_READ_WARNING_UNSIMILAR_PROJECT_NAME = 'backup.read.warning.unsimilarProjectName';
 
     // ImportPackage - ParserErrors
     public static IMPORT_PARSER_INVALID_JSON = 'M.Import.ParserErrors.invalidJson';
@@ -340,6 +341,15 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
                 value: 'Bitte wählen Sie als Ziel ein anderes als das gerade ausgewählte Projekt.'
             }),
             level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.BACKUP_READ_WARNING_UNSIMILAR_PROJECT_NAME] = {
+            content: i18n({
+                id: 'messages.backup.read.warning.unsimilarProjectName',
+                value: 'Der von Ihnen gewählte Projektname unterscheidet sich stark vom Projektnamen des Originalprojekts. Bitte prüfen Sie, ob Sie die korrekte Backup-Datei ausgewählt haben, bevor Sie Daten aus dem wiederhergestellten Projekt mit anderen iDAI.field-Instanzen oder Datenbanken synchronisieren.'
+            }),
+            level: 'warning',
             params: [],
             hidden: false
         };

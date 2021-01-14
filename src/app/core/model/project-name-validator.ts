@@ -14,6 +14,7 @@ export module ProjectNameValidator {
         export const RESOURCES_ERROR_PROJECT_NAME_SYMBOLS = 'projectNameValidator/errors/resources_error_projectNameSymbols';
     }
 
+
     /**
      * @returns msgWithParams if invalid, otherwise undefined
      */
@@ -30,5 +31,12 @@ export module ProjectNameValidator {
 
         const allowed = /^[0-9a-z\-_]+$/.test(newProjectName);
         if (!allowed) return [Errors.RESOURCES_ERROR_PROJECT_NAME_SYMBOLS];
+    }
+
+
+    export function isSimilar(projectName1: string, projectName2: string): boolean {
+
+        return projectName1.includes(projectName2) || projectName2.includes(projectName1)
+            || (projectName1.substr(0, 3) === projectName2.substr(0, 3));
     }
 }

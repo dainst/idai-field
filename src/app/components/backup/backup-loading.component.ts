@@ -10,7 +10,6 @@ import {TabManager} from '../../core/tabs/tab-manager';
 import {ProjectNameValidatorMsgConversion} from '../messages/project-name-validator-msg-conversion';
 import {Messages} from '../messages/messages';
 import {MenuContext, MenuService} from '../menu-service';
-import {Settings} from '../../core/settings/settings';
 import {SettingsProvider} from '../../core/settings/settings-provider';
 
 
@@ -90,8 +89,9 @@ export class BackupLoadingComponent {
     private async readBackupFile() {
 
         try {
-            await this.backupProvider.readDump(this.path, this.projectName);
+            const warnings: string[][] = await this.backupProvider.readDump(this.path, this.projectName);
             await this.settingsService.addProject(this.projectName);
+            if (warnings) warnings.forEach(warning => this.messages.add(warning));
             this.messages.add([M.BACKUP_READ_SUCCESS]);
         } catch (err) {
             if (err === Backup.FILE_NOT_EXIST) {

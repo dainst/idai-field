@@ -42,10 +42,7 @@ export class ImageGridComponent implements OnChanges {
     public rows = [];
     public resourceIdentifiers: { [id: string]: string } = {};
 
-    // parallel running calls to calcGrid are painfully slow, so we use this to prevent it
-    private calcGridRunning = false;
-    // to be able to reset the timeout on multiple onResize calls
-    private calcGridTimeoutRef: any = undefined;
+    private calcGridPromise: Promise<void>|undefined;
 
 
     constructor(private element: ElementRef,
@@ -55,9 +52,10 @@ export class ImageGridComponent implements OnChanges {
                 private blobMaker: BlobMaker) {}
 
 
-    ngOnChanges(changes: SimpleChanges) {
+    async ngOnChanges(changes: SimpleChanges) {
 
         if (!changes['documents']) return;
+
         if (this.showDropArea) this.insertStubForDropArea();
         this.calcGrid();
     }
@@ -77,17 +75,15 @@ export class ImageGridComponent implements OnChanges {
     }
 
 
-    public calcGrid() {
+    public async calcGrid() {
 
-        clearTimeout(this.calcGridTimeoutRef as any);
-        this.calcGridTimeoutRef = setTimeout(async () => {
-            // we just jump out and do not store the recalc request. this could possibly be improved
-            if (this.calcGridRunning) return;
+        this.calcGridPromise = this.calcGridPromise
+            ? this.calcGridPromise.then(() => this._calcGrid())
+            : this._calcGrid();
 
-            this.calcGridRunning = true;
-            await this._calcGrid();
-            this.calcGridRunning = false;
-        }, 10);
+        await this.calcGridPromise;
+
+        this.calcGridPromise = undefined;
     }
 
 

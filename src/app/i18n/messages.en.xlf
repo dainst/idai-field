@@ -1426,7 +1426,7 @@
           <context context-type="linenumber">7</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/image/overview/delete-modal.html</context>
+          <context context-type="sourcefile">src/app/components/image/overview/deletion/delete-modal.html</context>
           <context context-type="linenumber">11</context>
         </context-group>
         <context-group purpose="location">
@@ -1463,7 +1463,7 @@
           <context context-type="linenumber">12</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/image/overview/delete-modal.html</context>
+          <context context-type="sourcefile">src/app/components/image/overview/deletion/delete-modal.html</context>
           <context context-type="linenumber">15</context>
         </context-group>
         <context-group purpose="location">
@@ -1749,7 +1749,7 @@
             Do you really want to delete the <x id="INTERPOLATION" equiv-text="{{getSelected().length}}"/> selected images?
         </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/image/overview/delete-modal.html</context>
+          <context context-type="sourcefile">src/app/components/image/overview/deletion/delete-modal.html</context>
           <context context-type="linenumber">2</context>
         </context-group>
       </trans-unit>
@@ -1761,7 +1761,7 @@
             Do you really want to delete the selected image?
         </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/image/overview/delete-modal.html</context>
+          <context context-type="sourcefile">src/app/components/image/overview/deletion/delete-modal.html</context>
           <context context-type="linenumber">5</context>
         </context-group>
       </trans-unit>
@@ -1769,7 +1769,7 @@
         <source>Bild wird gelöscht...</source>
         <target state="final">Deleting image...</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/image/overview/deletion-in-progress-modal.html</context>
+          <context context-type="sourcefile">src/app/components/image/overview/deletion/deletion-in-progress-modal.html</context>
           <context context-type="linenumber">5</context>
         </context-group>
       </trans-unit>
@@ -1777,7 +1777,7 @@
         <source>Bilder werden gelöscht...</source>
         <target state="final">Deleting resources...</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/image/overview/deletion-in-progress-modal.html</context>
+          <context context-type="sourcefile">src/app/components/image/overview/deletion/deletion-in-progress-modal.html</context>
           <context context-type="linenumber">7</context>
         </context-group>
       </trans-unit>

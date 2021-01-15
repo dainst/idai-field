@@ -1,5 +1,6 @@
 <div class="image-grid">
-    <div *ngFor="let row of rows; let index = index">
+    <div *ngFor="let row of rows; let index = index"
+         [style.height.px]="row[0]['calculatedHeight'] + 1 + 25">
 
         <div *ngFor="let cell of row; let cell_index = index"
              class="cell-container"
@@ -22,7 +23,7 @@
                  [id]="'resource-' + cell['document'].resource.identifier"
                  class="cell"
                  [class.selected]="selected.includes(cell['document'])">
-                
+
                 <image-grid-cell
                         [cell]="cell"
                         [main]="main"

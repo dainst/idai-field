@@ -42,6 +42,7 @@ export class ImageGridComponent implements OnChanges {
     public rows = [];
     public resourceIdentifiers: { [id: string]: string } = {};
 
+    private calcGridTimeout: any;
     private calcGridPromise: Promise<void>|undefined;
 
 
@@ -77,13 +78,18 @@ export class ImageGridComponent implements OnChanges {
 
     public async calcGrid() {
 
-        this.calcGridPromise = this.calcGridPromise
-            ? this.calcGridPromise.then(() => this._calcGrid())
-            : this._calcGrid();
+        if (this.calcGridTimeout) clearTimeout(this.calcGridTimeout);
 
-        await this.calcGridPromise;
+        this.calcGridTimeout = setTimeout(async () => {
+            this.calcGridPromise = this.calcGridPromise
+                ? this.calcGridPromise.then(() => this._calcGrid())
+                : this._calcGrid();
 
-        this.calcGridPromise = undefined;
+            await this.calcGridPromise;
+
+            this.calcGridPromise = undefined;
+            this.calcGridTimeout = undefined;
+        }, 100);
     }
 
 

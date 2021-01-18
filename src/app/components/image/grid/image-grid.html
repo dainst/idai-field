@@ -1,5 +1,5 @@
 <div class="image-grid">
-    <div *ngFor="let row of rows"
+    <div *ngFor="let row of rows" class="image-grid-row"
          [style.height.px]="row[0]['calculatedHeight'] + 1 + 25">
 
         <div *ngFor="let cell of row"

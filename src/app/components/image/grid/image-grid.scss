@@ -15,6 +15,11 @@
     pointer-events: auto !important;
   }
 
+  .image-grid-row {
+    overflow: visible;
+    width: max-content;
+  }
+
   .cell {
     position: relative;
     user-select: none;

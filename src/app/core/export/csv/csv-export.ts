@@ -20,8 +20,8 @@ export module CSVExport {
     const SEPARATOR = ',';
 
     const getUsableFieldNames =
-        remove(includedIn(['id', 'category', 'geometry', 'georeference', 'originalFilename', 'filename']));
-
+        remove(includedIn(
+            ['id', 'category', 'geometry', 'georeference', 'originalFilename', 'filename', 'featureVectors']));
 
     /**
      * Creates a header line and lines for each record.
@@ -57,7 +57,7 @@ export module CSVExport {
 
     function makeHeadings(fieldDefinitions: Array<FieldDefinition>, relations: string[]) {
 
-        return makeFieldNamesList(fieldDefinitions)
+        return extractExportableFields(fieldDefinitions)
             .concat(
                 relations
                     .filter(isNot(includedIn(HierarchicalRelations.ALL)))
@@ -83,7 +83,7 @@ export module CSVExport {
     }
 
 
-    function makeFieldNamesList(fieldDefinitions: Array<FieldDefinition>): string[] {
+    function extractExportableFields(fieldDefinitions: Array<FieldDefinition>): string[] {
 
         let fieldNames = getUsableFieldNames(fieldDefinitions.map(to(FieldDefinition.NAME)));
         const indexOfShortDescription = fieldNames.indexOf(FieldResource.SHORTDESCRIPTION);

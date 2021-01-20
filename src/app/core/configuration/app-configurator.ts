@@ -270,6 +270,11 @@ export class AppConfigurator {
                     inputType: FieldDefinition.InputType.INPUT, // there is no input type for georeference, really, so we set it simply to 'input'
                     visible: false,
                     editable: false
+                },
+                featureVectors: {
+                    inputType: FieldDefinition.InputType.FEATURE_VECTORS,
+                    visible: false,
+                    editable: false
                 }
             }
         } as BuiltinCategoryDefinition,

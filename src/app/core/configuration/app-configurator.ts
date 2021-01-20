@@ -267,12 +267,12 @@ export class AppConfigurator {
                     editable: false
                 },
                 georeference: {
-                    inputType: FieldDefinition.InputType.INPUT, // there is no input type for georeference, really, so we set it simply to 'input'
+                    inputType: FieldDefinition.InputType.NONE,
                     visible: false,
                     editable: false
                 },
                 featureVectors: {
-                    inputType: FieldDefinition.InputType.FEATURE_VECTORS,
+                    inputType: FieldDefinition.InputType.NONE,
                     visible: false,
                     editable: false
                 }

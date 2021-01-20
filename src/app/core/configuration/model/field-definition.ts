@@ -85,7 +85,7 @@ export module FieldDefinition {
         export const DIMENSION = 'dimension';
         export const LITERATURE = 'literature';
         export const GEOMETRY = 'geometry';
-        export const FEATURE_VECTORS = 'featureVectors';
+        export const NONE = 'none';
         export const DEFAULT = 'default';
     }
 }

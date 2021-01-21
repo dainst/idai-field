@@ -173,7 +173,7 @@ export class RelationsManager {
 
         if (isUndefinedOrEmpty(document.resource.relations[RECORDED_IN])) return;
 
-        const docsToCorrect = (await this.findRecordedInDocs(document.resource.id))
+        const docsToCorrect = ((await this.findLiesWithinDocs(document.resource.id, false)) as FindResult).documents
             .filter(on('resource.relations.' + RECORDED_IN, isArray))
             .filter(isNot(on('resource.relations.' + RECORDED_IN, sameset)(document)));
 
@@ -208,17 +208,9 @@ export class RelationsManager {
     }
 
 
-    private async findRecordedInDocs(resourceId: string): Promise<Array<Document>> {
-
-        return (await this.datastore.find({
-            constraints: { 'isRecordedIn:contain': resourceId },
-        })).documents;
-    }
-
-
     private async findRecordedInDocsIds(resourceId: string,
                                         skipDocuments: boolean,
-                                        idsToSubtract?: string[]): Promise<FindIdsResult> {
+                                        idsToSubtract?: string[]): Promise<FindIdsResult|FindResult> {
 
         const query: Query = {
             constraints: { 'isRecordedIn:contain': resourceId }
@@ -238,7 +230,7 @@ export class RelationsManager {
 
 
     private async findLiesWithinDocs(resourceId: string, skipDocuments: boolean,
-                                     idsToSubtract?: string[]): Promise<FindIdsResult> {
+                                     idsToSubtract?: string[]): Promise<FindIdsResult|FindResult> {
 
         const query: Query = {
             constraints: {

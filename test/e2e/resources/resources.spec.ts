@@ -413,7 +413,7 @@ describe('resources --', () => {
     });
 
 
-    it('contextMenu/moveModal - move a resource', () => {
+    it('contextMenu/moveModal - move a resource with children to another operation', () => {
 
         ResourcesPage.clickOpenContextMenu('SE0');
         ResourcesPage.clickContextMenuMoveButton();
@@ -423,6 +423,10 @@ describe('resources --', () => {
 
         NavbarPage.getActiveNavLinkLabel().then(label => expect(label).toContain('S2'));
         ResourcesPage.getListItemEls().then(elements => expect(elements.length).toBe(7));
+
+        ResourcesPage.clickHierarchyButton('SE0');
+        ResourcesPage.clickOpenChildCollectionButton();
+        ResourcesPage.getListItemEls().then(elements => expect(elements.length).toBe(1));
 
         NavbarPage.clickTab('project');
         ResourcesPage.clickHierarchyButton('S1');

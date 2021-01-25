@@ -37054,6 +37054,12 @@
           "de": "Ackerkrume"
         }
       },
+      "Planierschicht": {
+        "labels":{
+          "it": "Strato di Livellamento",
+          "de": "Planierschicht"
+        }
+      },
       "Auffüllung": {
         "labels": {
           "it": "Riempimento",
@@ -37112,6 +37118,12 @@
         "labels": {
           "it": "Fossa di fondazione",
           "de": "Fundamentgraben"
+        }
+      },
+      "Zerstörungshorizont":{
+        "labels": {
+          "it": "Livello di distruzione",
+          "de": "Zerstörungshorizont"
         }
       },
       "Raubgraben": {
@@ -37293,7 +37305,7 @@
       },
       "Schluff": {
         "labels": {
-          "it": "Limo",
+          "it": "Silt",
           "de": "Schluff"
         }
       },
@@ -37345,15 +37357,21 @@
           "de": "Kiesel"
         }
       },
+      "Asche": {
+        "labels": {
+          "it": "Cenere",
+          "de": "Asche"
+        }
+      },
       "Schlick": {
         "labels": {
-          "it": "Ciottoli",
+          "it": "Limo",
           "de": "Schlick"
         }
       },
       "Organisches": {
         "labels": {
-          "it": "Ciottoli",
+          "it": "Materiali organici",
           "de": "Organisches"
         }
       }
@@ -37363,13 +37381,20 @@
     "creationDate": "16-4-2020",
     "createdBy": "Melanie Jonasch / Fabian Riebschläger",
     "description": {
+      "it": "composizione del terreno", 
       "de": "Zusammensetzung des Bodens"
     },
     "values": {
-      "Ziegel": {
+      "Lehmstein": {
         "labels": {
           "it": "Mattone",
-          "de": "Ziegel"
+          "de": "Lehmstein"
+        }
+      },
+      "Dachziegel": {
+        "labels": {
+          "it": "Tegole",
+          "de": "Dachziegel"
         }
       },
       "Keramik": {
@@ -37414,10 +37439,16 @@
           "de": "Schlacke"
         }
       },
-      "Muscheln": {
+      "Mollusken": {
         "labels": {
-          "it": "Conchiglia",
-          "de": "Muscheln"
+          "it": "Molluschi",
+          "de": "Mollusken"
+        }
+      },
+      "Hüttenlehm": {
+        "labels": {
+          "it": "concotto",
+          "de": "Hüttenlehm"
         }
       },
       "Verputz": {
@@ -37884,36 +37915,43 @@
       },
       "Gebrannte Ziegel": {
         "labels": {
+          "it": "Mattoni cotti",
           "de": "Gebrannte Ziegel"
         }
       },
-      "Ungebrannte Ziegel": {
+      "Ungebrannte Lehmsteine": {
         "labels": {
-          "de": "Ungebrannte Ziegel"
+          "it": "Mattoni crudi",
+          "de": "Ungebrannte Lehmsteine"
         }
       },
       "Dachziegel": {
         "labels": {
+          "it": "Tegole",
           "de": "Dachziegel"
         }
       },
       "Lehm": {
         "labels": {
+          "it": "Argilla",
           "de": "Lehm"
         }
       },
       "Holz": {
         "labels": {
+          "it": "Legno",
           "de": "Holz"
         }
       },
       "Keramik": {
         "labels": {
+          "it": "Ceramica",
           "de": "Keramik"
         }
       },
       "Zement": {
         "labels": {
+          "it": "Cemento",
           "de": "Zement"
         }
       }
@@ -38205,6 +38243,11 @@
       "Chytra": {
         "labels": {
           "de": "Chytra"
+        }
+      },
+      "Cup-skyphos":{
+        "labels": {
+          "de": "Cup-skyphos"
         }
       },
       "Deckel": {
@@ -38873,18 +38916,19 @@
     "creationDate": "24-6-2020",
     "createdBy": "Melanie Jonasch / Fabian Riebschläger",
     "description": {
+      "it": "Materiale organico",
       "de": "Organisches Material"
     },
     "values": {
       "Knochen Tier": {
         "labels": {
-          "it": "Ossa animale",
+          "it": "Ossa di animali",
           "de": "Knochen Tier"
         }
       },
       "Knochen Mensch": {
         "labels": {
-          "it": "Ossa umano",
+          "it": "Ossa umane",
           "de": "Knochen Mensch"
         }
       },
@@ -38900,10 +38944,10 @@
           "de": "Astragal"
         }
       },
-      "Muscheln": {
+      "Mollusken": {
         "labels": {
           "it": "Molluschi",
-          "de": "Muscheln"
+          "de": "Mollusken"
         }
       },
       "Holz": {
@@ -38991,10 +39035,10 @@
           "de": "Lehmziegel gebrannt"
         }
       },
-      "Lehmziegel ungebrannt": {
+      "Lehmstein ungebrannt": {
         "labels": {
           "it": "Mattone crudo",
-          "de": "Lehmziegel ungebrannt"
+          "de": "Lehmstein ungebrannt"
         }
       },
       "Anderes": {
@@ -39054,6 +39098,7 @@
       },
       "Lampe": {
         "labels": {
+          "it": "Lucerna",
           "de": "Lampe"
         }
       },
@@ -39097,11 +39142,13 @@
     "values": {
       "hoch": {
         "labels": {
+          "it": "Alta",
           "de": "hoch"
         }
       },
       "niedrig": {
         "labels": {
+          "it": "Bassa",
           "de": "niedrig"
         }
       }
@@ -39121,7 +39168,7 @@
       "handgeformt": {
         "labels": {
           "de": "Handgeformt",
-          "it": "Al mano"
+          "it": "A mano"
         }
       },
       "in Form gepresst": {
@@ -39138,11 +39185,13 @@
     "values": {
       "Estricht": {
         "labels": {
+          "it": "Battuto",
           "de": "Estricht"
         }
       },
       "Cocciopesto": {
         "labels": {
+          "it": "Cocciopesto",
           "de": "Cocciopesto"
         }
       },
@@ -39183,16 +39232,19 @@
       },
       "Ziegelboden": {
         "labels": {
+          "it": "Pavimentazione in laterizio",
           "de": "Ziegelboden"
         }
       },
       "vergängliches Material": {
         "labels": {
+          "it": "Materiale organico",
           "de": "vergängliches Material"
         }
       },
       "Anderes": {
         "labels": {
+          "it": "Altro",
           "de": "Anderes"
         }
       }
@@ -39205,16 +39257,19 @@
     "values": {
       "Depot": {
         "labels": {
+          "it": "Magazzino",
           "de": "Depot"
         }
       },
       "Museum": {
         "labels": {
+          "it": "Museo",
           "de": "Museum"
         }
       },
       "In situ": {
         "labels": {
+          "it": "In situ",
           "de": "In situ"
         }
       }
@@ -39288,6 +39343,7 @@
       },
       "Hypokaustziegel": {
         "labels": {
+          "it": "mattone di ipocausto",
           "de": "Hypokaustziegel"
         }
       },
@@ -39334,46 +39390,55 @@
     "values": {
       "Becken": {
         "labels": {
+          "it": "Vasca",
           "de": "Becken"
         }
       },
       "Brunnenverkleidung": {
         "labels": {
+          "it": "Rivestimento pozzo",
           "de": "Brunnenverkleidung"
         }
       },
       "Dach": {
         "labels": {
+          "it": "Tetto",
           "de": "Dach"
         }
       },
       "Fussboden": {
         "labels": {
+          "it": "Pavimentazione",
           "de": "Fussboden"
         }
       },
       "Grab": {
         "labels": {
+          "it": "Tomba",
           "de": "Grab"
         }
       },
       "Kanal": {
         "labels": {
+          "it": "Condotto",
           "de": "Kanal"
         }
       },
       "Mauer": {
         "labels": {
+          "it": "Muro",
           "de": "Mauer"
         }
       },
       "Ofen": {
         "labels": {
+          "it": "Forno",
           "de": "Ofen"
         }
       },
       "Wandverkleidung": {
         "labels": {
+          "it": "Rivestimento parete",
           "de": "Wandverkleidung"
         }
       }
@@ -39391,16 +39456,19 @@
       },
       "Fingerabdruck": {
         "labels": {
+          "it": "Impronte digitali",
           "de": "Fingerabdruck"
         }
       },
       "Graffito": {
         "labels": {
+          "it": "Grafitto",
           "de": "Graffito"
         }
       },
       "Inschrift": {
         "labels": {
+          "it": "Iscrizione",
           "de": "Inschrift"
         }
       },
@@ -39411,21 +39479,25 @@
       },
       "Pfotenabdruck": {
         "labels": {
+          "it": "Impronte animali",
           "de": "Pfotenabdruck"
         }
       },
       "Pinselspuren": {
         "labels": {
+          "it": "Traccie di penello",
           "de": "Pinselspuren"
         }
       },
       "Sonstige Abdrücke": {
         "labels": {
+          "it": "Altre impronti",
           "de": "Sonstige Abdrücke"
         }
       },
       "Stempel": {
         "labels": {
+          "it": "Bollo",
           "de": "Stempel"
         }
       }
@@ -39458,12 +39530,8 @@
       },
       "Hohlziegeldach (Mönch + Nonne)": {
         "labels": {
+          "it": "Copertura in coppi",
           "de": "Hohlziegeldach (Mönch + Nonne)"
-        }
-      },
-      "Hohlziegel-Einfachdeckung (Nonnendeckung)": {
-        "labels": {
-          "de": "Hohlziegel-Einfachdeckung (Nonnendeckung)"
         }
       },
       "unklar": {
@@ -41244,6 +41312,506 @@
       "Unklar": {
         "labels": {
           "de": "Unklar"
+        }
+      }
+    }
+  },
+  "Pottery-FineWare-Provenance-Selinunt": {
+    "createdBy": "Melanie Jonasch / Fabian Riebschläger",
+    "creationDate": "",
+    "description": {
+      "de": "Feinkeramik nach Provenienz für Fundzusammenstellung",
+      "it": ""
+    },
+    "values": {
+      "Attisch": {
+        "labels": {
+          "de": "1A. Attisch",
+          "it": "1A. Attica"
+        }
+      },
+      "Korinthisch": {
+        "labels": {
+          "de": "1B. Korinthisch",
+          "it": "1B. Corinzia"
+        }
+      },
+      "Ionisch": {
+        "labels": {
+          "de": "1C. Ionisch",
+          "it": "1C. Greco-orientale"
+        }
+      },
+      "Punisch": {
+        "labels": {
+          "de": "1D. Punisch",
+          "it": "1D. Punica"
+        }
+      },
+      "Megarisch": {
+        "labels": {
+          "de": "1E. Megarisch",
+          "it": "1E. Megarese"
+        }
+      },
+      "Etruskisch": {
+        "labels": {
+          "de": "1F. Etruskisch",
+          "it": "1F. Etrusca"
+        }
+      },
+      "Regional": {
+        "labels": {
+          "de": "1G. Regional",
+          "it": "1G. Regionale, Coloniale"
+        }
+      },
+      "Lokal": {
+        "labels": {
+          "de": "1H. Lokal",
+          "it": "1H. Locale"
+        }
+      },
+      "Indigen": {
+        "labels": {
+          "de": "1I. Indigen",
+          "it": "1I. Indigena"
+        }
+      },
+      "Firnisware unklarer Herkunft": {
+        "labels": {
+          "de": "1J. Firnisware unklarer Herkunft",
+          "it": "1J. Vernice nera di provenienza ignota"
+        }
+      },
+      "Anderes unklarer Herkunft": {
+        "labels": {
+          "de": "1K. Anderes unklarer Herkunft",
+          "it": "1K. Altro di provenienza ignota"
+        }
+      }
+    }
+  },
+  "Pottery-Amphorae-Provenance-Selinunt": {
+    "createdBy": "Melanie Jonasch / Fabian Riebschläger",
+    "creationDate": "",
+    "description": {
+      "de": "Amphoren nach Provenienz für Fundzusammenstellung",
+      "it": "Anfore secondo provenienza per composizione reperti"
+    },
+    "values": {
+      "Westgriechisch ": {
+        "labels": {
+          "de": "2A. Westgriechisch",
+          "it": "2A. Greco-occidentale"
+        }
+      },
+      "MGS": {
+        "labels": {
+          "de": "2B. MGS",
+          "it": "2B. MGS"
+        }
+      },
+      "Ionisch-adriatisch": {
+        "labels": {
+          "de": "2C. Ionisch-adriatisch",
+          "it": "2C. Greco-orientale"
+        }
+      },
+      "Attisch": {
+        "labels": {
+          "de": "2D. Attisch",
+          "it": "2D. Attica"
+        }
+      },
+      "Korinthisch": {
+        "labels": {
+          "de": "2E. Korinthisch",
+          "it": "2E. Corinzia"
+        }
+      },
+      "Nordägäisch": {
+        "labels": {
+          "de": "2F. Nordägäisch",
+          "en": "2F. Nord-Egee"
+        }
+      },
+      "Chiotisch": {
+        "labels": {
+          "de": "2G. Chiotisch",
+          "it": "2G. Chiota"
+        }
+      },
+      "Phönizisch": {
+        "labels": {
+          "de": "2H. Phönizisch",
+          "it": "2H. Fenicia"
+        }
+      },
+      "Punisch": {
+        "labels": {
+          "de": "2I. Punisch",
+          "it": "2I. Punica"
+        }
+      },
+      "Massaliotisch": {
+        "labels": {
+          "de": "2J. Massaliotisch",
+          "it": "2J. Massaliota"
+        }
+      },
+      "Lokal": {
+        "labels": {
+          "de": "2K. Lokal",
+          "it": "2K. Locale"
+        }
+      },
+      "Anderes unklarer Herkunft": {
+        "labels": {
+          "de": "2L. Anderes unklarer Herkunft",
+          "it": "2L. Altro di provenienza ignota"
+        }
+      }
+    }
+  },
+  "Pottery-CoarseWare-Function-Selinunt": {
+    "createdBy": "Melanie Jonasch / Fabian Riebschläger",
+    "creationDate": "",
+    "description": {
+      "de": "Gebrauchskeramik nach Funktion für Fundzusammenstellung",
+      "it": ""
+    },
+    "values": {
+      "Kochware": {
+        "labels": {
+          "de": "3A. Kochware",
+          "it": "3A. da fuoco"
+        }
+      },
+      "Tafelgeschirr": {
+        "labels": {
+          "de": "3B. Tafelgeschirr",
+          "it": "3B. da mensa"
+        }
+      },
+      "Große Behälter": {
+        "labels": {
+          "de": "3C. Große Behälter",
+          "it": "3C. Grande contenitori"
+        }
+      },
+      "Anderes, Unbekannt": {
+        "labels": {
+          "de": "3D. Anderes, Unbekannt",
+          "it": "3D. Altro, ignoto"
+        }
+      }
+    }
+  },
+  "Terracotta-Collection-Selinunt": {
+    "createdBy": "Melanie Jonasch / Fabian Riebschläger",
+    "creationDate": "",
+    "description": {
+      "de": "Terrakotta",
+      "it": ""
+    },
+    "values": {
+      "Figürlich": {
+        "labels": {
+          "de": "5A. Figürlich ",
+          "it": "5A. Figurate"
+        }
+      },
+      "Lampen": {
+        "labels": {
+          "de": "5B. Lampen",
+          "it": "5B. Lucerne"
+        }
+      },
+      "Louteria": {
+        "labels": {
+          "de": "5C. Louteria",
+          "it": "5C. Louteria"
+        }
+      },
+      "Arulae": {
+        "labels": {
+          "de": "5D. Arulae",
+          "it": "5D. Arulae"
+        }
+      },
+      "Gewicht": {
+        "labels": {
+          "de": "5E. Gewicht",
+          "it": "5E. Pesi"
+        }
+      },
+      "Gebrauchsgegenstände varia": {
+        "labels": {
+          "de": "5F. Gebrauchsgegenstände varia",
+          "it": "5F. vari oggetti di uso"
+        }
+      },
+      "Sarkophag": {
+        "labels": {
+          "de": "5G. Sarkophag",
+          "it": "5G. Sarcofago"
+        }
+      },
+      "Anderes, Unbekannt": {
+        "labels": {
+          "de": "5H. Anderes, Unbekannt",
+          "it": "5H. Altro, Ignoto"
+        }
+      }
+    }
+  },
+  "BuildingMaterial-Collection-Selinunt": {
+    "createdBy": "Melanie Jonasch / Fabian Riebschläger",
+    "creationDate": "",
+    "description": {
+      "de": "Baumaterial",
+      "it": ""
+    },
+    "values": {
+      "Bauteile aus Stein": {
+        "labels": {
+          "de": "6A. Bauteile aus Stein",
+          "it": "6A. Elementi architettonici di pietra"
+        }
+      },
+      "Baudekoration": {
+        "labels": {
+          "de": "6B. Baudekoration",
+          "it": "6B. Decorazione architettonica"
+        }
+      },
+      "Dachziegel": {
+        "labels": {
+          "de": "6C. Dachziegel",
+          "it": "6C. Elementi di copertura semplici"
+        }
+      },
+      "Dachterrakotten": {
+        "labels": {
+          "de": "6D. Dachterrakotten",
+          "it": "6D. Decorazione fittile di tetti"
+        }
+      },
+      "Lehmsteine": {
+        "labels": {
+          "de": "6E. Lehmsteine",
+          "it": "6E. Mattoni"
+        }
+      },
+      "Hüttenlehm": {
+        "labels": {
+          "de": "6F. Hüttenlehm",
+          "it": "6F. Concotto"
+        }
+      },
+      "Wandverputz": {
+        "labels": {
+          "de": "6G. Wandverputz",
+          "it": "6G. Intonaco"
+        }
+      },
+      "Bodenbelag": {
+        "labels": {
+          "de": "6H. Bodenbelag",
+          "it": "6H. Pavimentazione"
+        }
+      },
+      "Mosaiksteine": {
+        "labels": {
+          "de": "6I. Mosaiksteine",
+          "it": "6I. Tesserae"
+        }
+      },
+      "Anderes, Unbekannt": {
+        "labels": {
+          "de": "6J. Anderes, Unbekannt",
+          "it": "6J. Altro, Ignoto"
+        }
+      }
+    }
+  },
+  "Stone-Collection-Selinunt": {
+    "createdBy": "Melanie Jonasch / Fabian Riebschläger",
+    "creationDate": "",
+    "description": {
+      "de": "Steine und Steinobjekte",
+      "it": ""
+    },
+    "values": {
+      "Figürlich": {
+        "labels": {
+          "de": "7A. Figürlich ",
+          "it": "7A. Ogetti figurati"
+        }
+      },
+      "Gebrauchsgegenstände": {
+        "labels": {
+          "de": "7B. Gebrauchsgegenstände",
+          "it": "7B. Vari oggetti di uso"
+        }
+      },
+      "Kiesel": {
+        "labels": {
+          "de": "7C. Kiesel",
+          "it": "7C. Ciottoli"
+        }
+      },
+      "Marmor": {
+        "labels": {
+          "de": "7D. Marmor",
+          "it": "7D. Marmo"
+        }
+      },
+      "Flint": {
+        "labels": {
+          "de": "7E. Flint",
+          "it": "7E. Selce"
+        }
+      },
+      "Anderes, Unbekannt": {
+        "labels": {
+          "de": "7F. Anderes, Unbekannt",
+          "it": "7F. Altro, Ignoto"
+        }
+      }
+    }
+  },
+  "MetalAndGlas-Collection-Selinunt": {
+    "createdBy": "Melanie Jonasch / Fabian Riebschläger",
+    "creationDate": "",
+    "description": {
+      "de": "Metalle und Glas",
+      "it": ""
+    },
+    "values": {
+      "Münzen": {
+        "labels": {
+          "de": "8A. Münzen",
+          "it": "8A. Monete"
+        }
+      },
+      "Glas": {
+        "labels": {
+          "de": "8B. Glas",
+          "it": "8B. Vetro"
+        }
+      },
+      "Bronzeobjekte": {
+        "labels": {
+          "de": "8C. Bronzeobjekte",
+          "it": "8C. Oggetti di bronzo"
+        }
+      },
+      "Eisenobjekte": {
+        "labels": {
+          "de": "8D. Eisenobjekte",
+          "it": "8D. Oggetti di ferro"
+        }
+      },
+      "Silberobjekte": {
+        "labels": {
+          "de": "8E. Silberobjekte",
+          "it": "8E. Oggetti d’argento"
+        }
+      },
+      "Bleiobjekte": {
+        "labels": {
+          "de": "8F. Bleiobjekte",
+          "it": "8F. Oggetti di piombo"
+        }
+      },
+      "Goldobjekte": {
+        "labels": {
+          "de": "8G. Goldobjeke",
+          "it": "8G. Oggetti d'oro"
+        }
+      },
+      "Schlacken": {
+        "labels": {
+          "de": "8H. Schlacken",
+          "it": "8H. Scorie"
+        }
+      },
+      "Anderes, Unbekannt": {
+        "labels": {
+          "de": "8J. Anderes, Unbekannt",
+          "it": "8J. Altro, Ignoto"
+        }
+      }
+    }
+  },
+  "OrganicMaterial-Collection-Selinunt": {
+    "createdBy": "Melanie Jonasch / Fabian Riebschläger",
+    "creationDate": "",
+    "description": {
+      "de": "Metalle und Glas",
+      "it": ""
+    },
+    "values": {
+      "Knochen": {
+        "labels": {
+          "de": "9A. Knochen",
+          "it": "9A. Ossa"
+        }
+      },
+      "Zähne": {
+        "labels": {
+          "de": "9B. Zähne",
+          "it": "9B. Denti"
+        }
+      },
+      "Horn": {
+        "labels": {
+          "de": "9C. Horn",
+          "it": "9C. Corna"
+        }
+      },
+      "Mollusken": {
+        "labels": {
+          "de": "9D. Mollusken",
+          "it": "9D. Molluschi"
+        }
+      },
+      "Holz": {
+        "labels": {
+          "de": "9E. Holz",
+          "it": "9E. Legno"
+        }
+      },
+      "Holzkohle": {
+        "labels": {
+          "de": "9F. Holzkohle",
+          "it": "9F. Carbone"
+        }
+      },
+      "Textilien": {
+        "labels": {
+          "de": "9G. Textilien",
+          "it": "9G. Tessuti"
+        }
+      },
+      "LEder": {
+        "labels": {
+          "de": "9H. Leder",
+          "it": "9H. Cuoio"
+        }
+      },
+      "Anderes, Unbekannt": {
+        "labels": {
+          "de": "9J. Anderes, Unbekannt",
+          "it": "9J. Altro, Ignoto"
+        }
+      },
+      "Astragal": {
+        "labels": {
+          "de": "9K. Astragal",
+          "it": "9K. Astragalo"
         }
       }
     }

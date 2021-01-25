@@ -279,27 +279,6 @@
       "distinguishingCriteria": {
         "inputType": "checkboxes"
       },
-      "layerContentPotteryOrigin": {
-        "inputType": "checkboxes"
-      },
-      "layerContentPotteryShape": {
-        "inputType": "checkboxes"
-      },
-      "layerContentPotteryDecoration": {
-        "inputType": "checkboxes"
-      },
-      "layerContentTerracotta": {
-        "inputType": "checkboxes"
-      },
-      "layerContentInorganic": {
-        "inputType": "checkboxes"
-      },
-      "layerContentOrganic": {
-        "inputType": "checkboxes"
-      },
-      "layerContentBuildingMaterial": {
-        "inputType": "checkboxes"
-      },
       "layerBorders": {
         "inputType": "checkboxes"
       },
@@ -738,6 +717,77 @@
       "sides": "Interface-sides-Campidoglio",
       "breakSlopeBase": "Interface-breakSlopeTop-Campidoglio",
       "base": "Interface-base-Campidoglio"
+    }
+  },
+  "FindCollection": {
+    "hidden": [],
+    "fields": {
+      "potteryFormsOverview": {
+        "inputType": "checkboxes"
+      },
+      "potteryFineWareByProvenance": {
+        "inputType": "checkboxes"
+      },
+      "potteryFineWareByProvenanceQuantityWeightDetails": {
+        "inputType": "text"
+      },
+      "potteryAmphoraeByProvenance": {
+        "inputType": "checkboxes"
+      },
+      "potteryAmphoraeByProvenanceQuantityWeightDetails": {
+        "inputType": "text"
+      },
+      "potteryCoarseWareByFunction": {
+        "inputType": "checkboxes"
+      },
+      "potteryCoarseWareByFunctionQuantityWeightDetails": {
+        "inputType": "text"
+      },
+      "miniaturePotteryCollection": {
+        "inputType": "text"
+      },
+      "terracottaCollection": {
+        "inputType": "checkboxes"
+      },
+      "terracottaCollectionQuantityWeightDetails": {
+        "inputType": "text"
+      },
+      "buildingMaterialCollection": {
+        "inputType": "checkboxes"
+      },
+      "buildingMaterialCollectionQuantityWeightDetails": {
+        "inputType": "text"
+      },
+      "stoneCollection": {
+        "inputType": "checkboxes"
+      },
+      "stoneCollectionQuantityWeightDetails": {
+        "inputType": "text"
+      },
+      "metalAndGlasCollection": {
+        "inputType": "checkboxes"
+      },
+      "metalAndGlasCollectionQuantityWeightDetails": {
+        "inputType": "text"
+      },
+      "organicMaterialCollection": {
+        "inputType": "checkboxes"
+      },
+      "organicMaterialCollectionQuantityWeightDetails": {
+        "inputType": "text"
+      }
+    },
+    "parent": "Find",
+    "valuelists": {
+      "potteryFormsOverview": "Pottery-vesselForm-Selinunt",
+      "potteryFineWareByProvenance": "Pottery-FineWare-Provenance-Selinunt",
+      "potteryAmphoraeByProvenance": "Pottery-Amphorae-Provenance-Selinunt",
+      "terracottaCollection": "Terracotta-Collection-Selinunt",
+      "potteryCoarseWareByFunction": "Pottery-CoarseWare-Function-Selinunt",
+      "buildingMaterialCollection": "BuildingMaterial-Collection-Selinunt",
+      "stoneCollection": "Stone-Collection-Selinunt",
+      "metalAndGlasCollection": "MetalAndGlas-Collection-Selinunt",
+      "organicMaterialCollection": "OrganicMaterial-Collection-Selinunt"
     }
   }
 }

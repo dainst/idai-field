@@ -386,6 +386,65 @@
           "label": "Legende"
         }
       }
+    },
+    "FindCollection": {
+      "label": "Fundzusammensetzung",
+      "fields": {
+        "potteryFormsOverview": {
+          "label": "Keramikformen Gesamtübersicht"
+        },
+        "potteryFineWareByProvenance": {
+          "label": "1. Feinkeramik nach Provenienz"
+        },
+        "potteryFineWareByProvenanceQuantityWeightDetails": {
+          "label": "1. Menge, Gewicht, Details"
+        },
+        "potteryAmphoraeByProvenance": {
+          "label": "2. Amphoren nach Provenienz"
+        },
+        "potteryAmphoraeByProvenanceQuantityWeightDetails": {
+          "label": "2. Menge, Gewicht, Details"
+        },
+        "potteryCoarseWareByFunction": {
+          "label": "3. Gebrauchskeramik nach Funktion "
+        },
+        "potteryCoarseWareByFunctionQuantityWeightDetails": {
+          "label": "3. Menge, Gewicht, Details"
+        },
+        "miniaturePotteryCollection": {
+          "label": "4. Miniaturkeramik"
+        },
+        "terracottaCollection": {
+          "label": "5. Terrakotta"
+        },
+        "terracottaCollectionQuantityWeightDetails": {
+          "label": "5. Menge, Gewicht, Details"
+        },
+        "buildingMaterialCollection": {
+          "label": "6. Baumaterialien"
+        },
+        "buildingMaterialCollectionQuantityWeightDetails": {
+          "label": "6. Menge, Gewicht, Details"
+        },
+        "stoneCollection": {
+          "label": "7. Steine und Steinobjekte"
+        },
+        "stoneCollectionQuantityWeightDetails": {
+          "label": "7. Menge, Gewicht, Details"
+        },
+        "metalAndGlasCollection": {
+          "label": "8. Metalle und Glas"
+        },
+        "metalAndGlasCollectionQuantityWeightDetails": {
+          "label": "8. Menge, Gewicht, Details"
+        },
+        "organicMaterialCollection": {
+          "label": "9. Organisches"
+        },
+        "organicMaterialCollectionQuantityWeightDetails": {
+          "label": "9. Menge, Gewicht, Details"
+        }
+      }
     }
   }
 }

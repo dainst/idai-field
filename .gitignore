@@ -66,3 +66,6 @@ src/fonts
 release
 tools
 src/config/Scripts/dist
+
+#private
+*_LSNotes*

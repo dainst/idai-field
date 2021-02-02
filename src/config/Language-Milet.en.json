@@ -1,0 +1,116 @@
+{
+  "categories": {
+    "Find": {
+      "fields": {
+        "measuringPointID": {
+          "label": "Surveying ID (Totalstation)",
+          "description": "MesspunktID, andernfalls 'nicht gemessen' oder 'unklar'"
+        },
+        "storagePlaceOther": {
+          "label": "Other Storage Place",
+          "description": "Please enter place of storage here if it is not an option in the list above."
+        },
+        "measuringPointOrigin": {
+          "label": "Origin of Surveying Data",
+          "description": "Origin of Surveying Data"
+        },
+        "workflow": {
+          "label": "Workflow",
+          "description": "What have you dooooooneeee?"
+        },
+        "OldInventoryNr": {
+          "label": "Old Inventorynumber",
+          "description": "ID in the older Inventory"
+        },
+        "MuseumInventoryNr": {
+          "label": "Museum Inventory (Museum Milet)",
+          "description": "Inventory-ID at Museum Milet"
+        },
+        "YearOfFind": {
+          "label": "Year (in case of Altfund)",
+          "description": "Year in which the object has been found or first recorded, in case of Altfunde"
+        }
+      }
+    },
+    "Sculpture": {
+      "fields": {
+        "material": {
+          "label": "Material",
+          "description": "The material the sculpture mainly consists of."
+        },
+        "materialattr": {
+          "label": "Material: Details",
+          "description": "Beschreibung"
+        },
+        "colour": {
+          "label": "Material: Colour",
+          "description": "Farbe des Materials"
+        },
+        "materialdescr": {
+          "label": "Material: Description",
+          "description": "Platz für zusätzliche Erläuterungen und Beschreibungen"
+        },
+        "bodypart": {
+          "label": "Fragment of Sculpture",
+          "description": "Which parts of the Sculpture are preserved?"
+        },
+        "name": {
+          "label": "Honorand",
+          "description": "Sofern bekannt ist hier der Name der von der Skulptur abgebildeten Person anzugeben."
+        },
+        "gender": {
+          "label": "Gender",
+          "description": "Beschreibung"
+        },
+        "sctype": {
+          "label": "Broad category / Type",
+          "description": "Beschreibung"
+        },
+        "sctypeadd": {
+          "label": "Type: Notes",
+          "description": "Beschreibung"
+        },
+        "clothing": {
+          "label": "Clothing",
+          "description": "Kleidung"
+        },
+        "clothingadd": {
+          "label": "Clothing: Notes",
+          "description": "Beschreibung"
+        },
+        "hairstyle": {
+          "label": "Hairstyle",
+          "description": "Beschreibung"
+        },
+        "hairstyleadd": {
+          "label": "Hairstyle: Notes",
+          "description": "Beschreibung"
+        },
+        "beardstyle": {
+          "label": "Beardstyle",
+          "description": "Beschreibung"
+        },
+        "beardstyleadd": {
+          "label": "Beardstyle: Notes",
+          "description": "Beschreibung"
+        },
+        "attributes": {
+          "label": "Attributes",
+          "description": "Beschreibung"
+        },
+        "attributesadd": {
+          "label": "Attributes: Notes",
+          "description": "Beschreibung"
+        },
+        "reused": {
+          "label": "Reused?",
+          "description": "Ist die Statue wiederverwendet bzw. nachbearbeitet?"
+        },
+        "headheight": {
+          "label": "Height of Head to Crown (in cm)",
+          "description": "Blergh"
+        }
+      }
+    }
+  }
+}

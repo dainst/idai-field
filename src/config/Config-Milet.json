@@ -1,0 +1,282 @@
+{
+  "Project:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Operation:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Survey:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "SurveyUnit:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Place:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Area:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Trench:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Building:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "BuildingPart:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Find:default": {
+    "fields": {
+      "storagePlace": {
+        "inputType": "radio"
+      },
+      "storagePlaceOther": {
+        "inputType": "input"
+      },
+      "measuringPointID": {
+        "inputType": "input"
+      },
+      "measuringPointOrigin": {
+        "inputType": "radio"
+      },
+      "workflow": {
+        "inputType": "checkboxes"
+      },
+      "OldInventoryNr": {
+        "inputType": "input"
+      },
+      "MuseumInventoryNr": {
+        "inputType": "input"
+      },
+      "YearOfFind": {
+        "inputType": "input"
+      }
+    },
+    "valuelists": {
+      "storagePlace": "Find-storagePlace-milet",
+      "measuringPointOrigin": "Find-measuringPointOrigin-milet",
+      "workflow": "Find-workflow-milet"
+    }
+  },
+  "Feature:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Room:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "RoomCeiling:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "RoomFloor:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "RoomWall:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Inscription:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Image:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Glass:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Mollusk:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Brick:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Burial:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Wood:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Architecture:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Layer:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Profile": {
+    "parent": "Feature",
+    "color": "#6da4fc",
+    "commons": [
+      "campaign",
+      "dimensionHeight",
+      "orientation"
+    ],
+    "fields": {
+      "profileClassification": {
+        "inputType": "input"
+      },
+      "verticalPosition": {
+        "inputType": "input"
+      }
+    },
+    "valuelists": {
+      "orientation": "orientation-default-1"
+    }
+  },
+  "Floor:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Pottery:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Metal:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Grave:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Bone:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Terracotta:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Photo:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Drawing:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Stone:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Sculpture": {
+    "color": "#eb0ee7",
+    "parent": "Find",
+    "fields": {
+      "material": {
+        "inputType": "dropdown"
+      },
+      "materialattr": {
+        "inputType": "checkboxes"
+      },
+      "colour": {
+        "inputType": "checkboxes"
+      },
+      "materialdescr": {
+        "inputType": "text"
+      },
+      "bodypart": {
+        "inputType": "checkboxes"
+      },
+      "name": {
+        "inputType": "input"
+      },
+      "gender": {
+        "inputType": "radio"
+      },
+      "sctype": {
+        "inputType": "checkboxes"
+      },
+      "sctypeadd": {
+        "inputType": "text"
+      },
+      "clothing": {
+        "inputType": "checkboxes"
+      },
+      "clothingadd": {
+        "inputType": "text"
+      },
+      "hairstyle": {
+        "inputType": "checkboxes"
+      },
+      "hairstyleadd": {
+        "inputType": "text"
+      },
+      "beardstyle": {
+        "inputType": "checkboxes"
+      },
+      "beardstyleadd": {
+        "inputType": "text"
+      },
+      "attributes": {
+        "inputType": "checkboxes"
+      },
+      "attributesadd": {
+        "inputType": "text"
+      },
+      "reused": {
+        "inputType": "boolean"
+      },
+      "headheight": {
+        "inputType": "unsignedFloat"
+      }
+    },
+    "valuelists": {
+      "material": "Sculpture-material-milet",
+      "materialattr": "Sculpture-materialattr-milet",
+      "colour": "colors-milet",
+      "bodypart": "Sculpture-bodypart-milet",
+      "gender": "Sculpture-gender-milet",
+      "sctype": "Sculpture-sctype-milet",
+      "clothing": "Sculpture-clothing-milet",
+      "hairstyle": "Sculpture-hairstyle-milet",
+      "beardstyle": "Sculpture-beardstyle-milet",
+      "attributes": "Sculpture-attributes-milet"
+    }
+  },
+  "Coin:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "PlasterFragment:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Excavation:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Sample:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "TypeCatalog:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Type:default": {
+    "hidden": [],
+    "fields": {}
+  }
+}

@@ -41854,5 +41854,324 @@
       "Berlin, Staatliche Museen",
       "Fund verloren"
     ]
+  },
+  "Find-storagePlace-milet": {
+    "createdBy": "Lisa Steinmann (Milet)",
+    "creationDate": "25.04.2020",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "Zeytintepedepo": {},
+      "Steindepo": {},
+      "Athenatempeldepo": {},
+      "Kalabaktepedepo": {},
+      "Steingarten": {},
+      "Theater": {},
+      "Museum Milet": {},
+      "Anderer Aufbewahrungsort": {},
+      "in situ": {},
+      "verlustig": {}
+    }
+  },
+  "Find-measuringPointOrigin-milet": {
+    "createdBy": "Lisa Steinmann (Milet)",
+    "creationDate": "25.04.2020",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "Totalstation": {},
+      "Manuell": {}
+    }
+  },
+  "Find-workflow-milet": {
+    "createdBy": "Lisa Steinmann (Milet)",
+    "creationDate": "25.04.2020",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "Keine Angabe": {},
+      "Inventarisiert": {},
+      "Fotografiert": {},
+      "Gezeichnet": {},
+      "Restauriert": {},
+      "Detailbearbeitung fertig": {},
+      "Fehlerhaft": {}
+    }
+  },
+  "Stone-material-milet": {
+    "createdBy": "",
+    "creationDate": "",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "Alabaster": {},
+      "Andesit": {},
+      "Basalt": {},
+      "Bimsstein": {},
+      "Edelstein": {},
+      "Feldspat": {},
+      "Silex/Flint": {},
+      "Granit": {},
+      "Kalk": {},
+      "Kalkstein": {},
+      "Kalzit": {},
+      "Kreide": {},
+      "Marmor": {},
+      "Obsidian": {},
+      "Pophyr": {},
+      "Quarz": {},
+      "Quellgestein": {},
+      "Rhyolith (Quarzporphyr)": {},
+      "Sandstein": {},
+      "Schiefer": {},
+      "Serpentinit": {},
+      "Sinter": {},
+      "Trachyt": {},
+      "Tuff": {},
+      "Vulkangestein": {},
+      "Unsicher bzw. unbestimmbar": {},
+      "Andere": {}
+    }
+  },
+  "Sculpture-material-milet": {
+    "createdBy": "",
+    "creationDate": "",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "Alabaster": {},
+      "Andesit": {},
+      "Basalt": {},
+      "Bronze": {},
+      "Granit": {},
+      "Kalkstein": {},
+      "Marmor": {},
+      "Obsidian": {},
+      "Pophyr": {},
+      "Quarz": {},
+      "Rhyolith (Quarzporphyr)": {},
+      "Sandstein": {},
+      "Serpentinit": {},
+      "Tuff": {},
+      "Vulkangestein": {},
+      "Lokales Gestein": {},
+      "Unsicher bzw. unbestimmbar": {},
+      "Andere": {}
+    }
+  },
+  "Sculpture-materialattr-milet": {
+    "createdBy": "Lisa Steinmann (Milet)",
+    "creationDate": "26.04.2020",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "indeterminable": {},
+      "fine-grained": {},
+      "medium-grained": {},
+      "coarse-grained": {},
+      "coloured": {},
+      "Andere": {}
+    }
+  },
+  "Sculpture-bodypart-milet": {
+    "createdBy": "Lisa Steinmann (Milet)",
+    "creationDate": "26.04.2020",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "left:": {},
+      "right:": {},
+      "Head": {},
+      "Neck": {},
+      "Shoulder": {},
+      "Arm": {},
+      "Hand": {},
+      "Torso": {},
+      "Back": {},
+      "Hip": {},
+      "Leg": {},
+      "Foot": {},
+      "Attributes": {},
+      "indeterminable": {},
+      "other": {}
+    }
+  },
+  "Sculpture-gender-milet": {
+    "createdBy": "Lisa Steinmann (Milet)",
+    "creationDate": "26.04.2020",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "female": {},
+      "male": {},
+      "inconclusive": {},
+      "other": {}
+    }
+  },
+  "Sculpture-sctype-milet": {
+    "createdBy": "Lisa Steinmann (Milet)",
+    "creationDate": "26.04.2020",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "Deities, Personifications and Heroes": {},
+      "Imperial Family": {},
+      "Imperial and Senatorial Office Holders": {},
+      "Provincial Notables": {},
+      "Other": {},
+      "Unknown": {}
+    }
+  },
+  "Sculpture-clothing-milet": {
+    "createdBy": "Lisa Steinmann (Milet)",
+    "creationDate": "26.04.2020",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "Toga": {},
+      "Toga, late antique": {},
+      "Toga, toga contabulata": {},
+      "Toga with umbo": {},
+      "Armour": {},
+      "Tunic / chiton": {},
+      "Tunic, colobium": {},
+      "Boots, Military": {},
+      "Footwear, sandals": {},
+      "Footwear, closed, plain boots": {},
+      "Footwear, closed strapped boots": {},
+      "Footwear, open, strapped shoes": {},
+      "Cloak, paludamentum": {},
+      "Cloak, chlamys": {},
+      "Naked": {},
+      "Other": {}
+    }
+  },
+  "Sculpture-hairstyle-milet": {
+    "createdBy": "Lisa Steinmann (Milet)",
+    "creationDate": "26.04.2020",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "A penna": {},
+      "Brushed forward": {},
+      "Bun": {},
+      "Central": {},
+      "Central braid": {},
+      "Encircling braids": {},
+      "Long, covers ears": {},
+      "Long, to shoulders": {},
+      "Mop": {},
+      "Short": {},
+      "Short-cropped": {},
+      "Turban": {},
+      "Wreath-style": {},
+      "Other": {}
+    }
+  },
+  "Sculpture-beardstyle-milet": {
+    "createdBy": "Lisa Steinmann (Milet)",
+    "creationDate": "26.04.2020",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "Bearded, long": {},
+      "Bearded, short": {},
+      "Bearded, stubble": {},
+      "Bearded, under-chin": {},
+      "Clean-shaven": {},
+      "Other": {}
+    }
+  },
+  "Sculpture-attributes-milet": {
+    "createdBy": "Lisa Steinmann (Milet)",
+    "creationDate": "26.04.2020",
+    "description": {
+      "de": "",
+      "en": ""
+    },
+    "values": {
+      "belt": {},
+      "bust crown": {},
+      "codex / book": {},
+      "corona civica": {},
+      "crown fillet": {},
+      "diadem": {},
+      "diadem, jewelled": {},
+      "diadem, pearl-edged": {},
+      "diadem, plain": {},
+      "earrings": {},
+      "fibula": {},
+      "finger ring": {},
+      "mappa": {},
+      "necklace": {},
+      "orb": {},
+      "sceptre": {},
+      "scroll": {},
+      "scroll bundle": {},
+      "spear": {},
+      "staff": {},
+      "sword": {},
+      "tabellae": {},
+      "wreath": {},
+      "wreath, laurel": {},
+      "other": {}
+    }
+  },
+  "colors-milet": {
+    "creationDate": "26.04.2020",
+    "createdBy": "Lisa Steinmann (Milet)",
+    "description": {
+      "de": "Milet Farbset",
+      "en": ""
+    },
+    "values": {
+      "beige": {},
+      "ocker": {},
+      "cremefarben": {},
+      "hellbraun": {},
+      "braun": {},
+      "mittelbraun": {},
+      "dunkelbraun": {},
+      "rotbraun": {},
+      "dunkelrot": {},
+      "rot": {},
+      "rosa": {},
+      "orangerot": {},
+      "orange": {},
+      "gelb": {},
+      "grün": {},
+      "violett": {},
+      "blau": {},
+      "türkis": {},
+      "hellgrau": {},
+      "grau": {},
+      "dunkelgrau": {},
+      "schwarz": {},
+      "weiß": {}
+    }
   }
 }

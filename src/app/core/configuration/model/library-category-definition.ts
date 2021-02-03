@@ -36,7 +36,9 @@ export interface LibraryFieldDefinition extends BaseFieldDefinition {
 
 const VALID_FIELD_PROPERTIES = [
     'inputType',
-    'positionValues'
+    'positionValues',
+    'creationDate',
+    'createdBy'
 ];
 
 

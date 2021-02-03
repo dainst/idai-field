@@ -1,6 +1,5 @@
-import {LayerManager} from '../../../../../src/app/components/resources/map/map/layer-manager';
 import {ImageDocument} from 'idai-components-2';
-import {FieldDocument} from 'idai-components-2';
+import {LayerManager} from '../../../../../src/app/components/resources/map/map/layer-manager';
 import {Static} from '../../../static';
 
 
@@ -26,7 +25,7 @@ describe('LayerManager', () => {
         mockDatastore.find.and.returnValue(Promise.resolve({ documents: layerDocuments }));
 
         mockViewFacade = jasmine.createSpyObj('viewFacade',
-            ['getActiveLayersIds', 'setActiveLayersIds']);
+            ['getActiveLayersIds', 'setActiveLayersIds', 'getCurrentOperation']);
         mockViewFacade.getActiveLayersIds.and.returnValue([]);
 
         layerManager = new LayerManager(mockDatastore, mockViewFacade);

@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {set, subtract} from 'tsfun';
-import {ImageDocument} from 'idai-components-2';
+import {FieldDocument, ImageDocument} from 'idai-components-2';
 import {ImageReadDatastore} from '../../../../core/datastore/field/image-read-datastore';
 import {ViewFacade} from '../../../../core/resources/view/view-facade';
 
@@ -87,8 +87,15 @@ export class LayerManager {
 
     private async fetchLayers() {
 
+        const currentOperation: FieldDocument|undefined = this.viewFacade.getCurrentOperation();
+
         return (await this.datastore.find({
-            constraints: { 'georeference:exist': 'KNOWN' }
+            constraints: {
+                'georeference:exist': 'KNOWN',
+                'depicts:contain': currentOperation
+                    ? currentOperation.resource.id
+                    : 'project'
+            }
         })).documents;
     }
 

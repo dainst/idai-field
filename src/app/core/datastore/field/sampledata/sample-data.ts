@@ -16,7 +16,9 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
                 SAMPLE_DATA_LABELS[locale]['testCampaign'] + ' 1',
                 SAMPLE_DATA_LABELS[locale]['testCampaign'] + ' 2'
             ],
-            'relations': {},
+            'relations': {
+                'hasLayer': ['o25', 'o26']
+            },
             'category': 'Project'
         }
     },
@@ -25,7 +27,9 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
             'id': 't1',
             'identifier': SAMPLE_DATA_LABELS[locale]['trenchShort'] + '1',
             'shortDescription': SAMPLE_DATA_LABELS[locale]['trench'] + ' 1',
-            'relations': {},
+            'relations': {
+                'hasLayer': ['o25']
+            },
             'geometry': {
                 'type': 'Polygon',
                 'coordinates': [[
@@ -360,9 +364,7 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
             'originalFilename' : 'PE07-So-07_Z001.jpg',
             'height' : 2423,
             'width' : 3513,
-            'relations': {
-                'depicts': ['project', 't1']
-            },
+            'relations': {},
             'georeference': {
                 'bottomLeftCoordinates': [39.1411810096, 27.1892609283],
                 'topLeftCoordinates': [39.1412672328, 27.1892609283],
@@ -379,9 +381,7 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
             'originalFilename' : 'mapLayerTest2.png',
             'height' : 782,
             'width' : 748,
-            'relations': {
-                'depicts': ['project']
-            },
+            'relations': {},
             'georeference': {
                 'bottomLeftCoordinates': [39.1412810096, 27.1893609283],
                 'topLeftCoordinates': [39.1413672328, 27.1893609283],

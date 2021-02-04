@@ -92,7 +92,7 @@ export class LayerManager {
         return (await this.datastore.find({
             constraints: {
                 'georeference:exist': 'KNOWN',
-                'depicts:contain': currentOperation
+                'hasLayer:links': currentOperation
                     ? currentOperation.resource.id
                     : 'project'
             }

@@ -18,6 +18,7 @@ export module IndexerConfiguration {
             'depicts:exist': { path: 'resource.relations.depicts', pathArray: ['resource', 'relations', 'depicts'], type: 'exist' },
             'isDepictedIn:exist': { path: 'resource.relations.isDepictedIn', pathArray: ['resource', 'relations', 'isDepictedIn'], type: 'exist' },
             'isDepictedIn:links': { path: 'resource.relations.isDepictedIn', pathArray: ['resource', 'relations', 'isDepictedIn'], type: 'links' },
+            'hasLayer:links': { path: 'resource.relations.hasLayer', pathArray: ['resource', 'relations', 'hasLayer'], type: 'links' },
             'isInstanceOf:contain': { path: 'resource.relations.isInstanceOf', pathArray: ['resource', 'relations', 'isInstanceOf'], type: 'contain' },
             'identifier:match': { path: 'resource.identifier', pathArray: ['resource', 'identifier'], type: 'match' },
             'id:match': { path: 'resource.id', pathArray: ['resource', 'id'], type: 'match' },

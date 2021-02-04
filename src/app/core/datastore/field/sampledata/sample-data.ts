@@ -360,7 +360,9 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
             'originalFilename' : 'PE07-So-07_Z001.jpg',
             'height' : 2423,
             'width' : 3513,
-            'relations': {},
+            'relations': {
+                'depicts': ['project', 't1']
+            },
             'georeference': {
                 'bottomLeftCoordinates': [39.1411810096, 27.1892609283],
                 'topLeftCoordinates': [39.1412672328, 27.1892609283],
@@ -374,10 +376,12 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
             'identifier': 'mapLayerTest2.png',
             'shortDescription': 'Test Layer 2',
             'category': 'Image',
-            'relations': {},
             'originalFilename' : 'mapLayerTest2.png',
             'height' : 782,
             'width' : 748,
+            'relations': {
+                'depicts': ['project']
+            },
             'georeference': {
                 'bottomLeftCoordinates': [39.1412810096, 27.1893609283],
                 'topLeftCoordinates': [39.1413672328, 27.1893609283],

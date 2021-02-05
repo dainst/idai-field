@@ -173,6 +173,7 @@ export class DoceditImageTabComponent {
         const imagePickerModal: NgbModalRef = this.modalService.open(
             ImagePickerComponent, { size: 'lg', keyboard: false }
         );
+        imagePickerModal.componentInstance.mode = 'depicts';
         imagePickerModal.componentInstance.setDocument(this.document);
 
         try {

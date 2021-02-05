@@ -28,6 +28,7 @@ export class ImagePickerComponent implements OnInit {
     @ViewChild('imageGrid', { static: false }) public imageGrid: ImageGridComponent;
     @ViewChild('modalBody') public modalBody: ElementRef;
 
+    public mode: 'depicts'|'layers';
     public documents: Array<ImageDocument>;
     public document: FieldDocument;
     public selectedDocuments: Array<ImageDocument> = [];
@@ -96,9 +97,6 @@ export class ImagePickerComponent implements OnInit {
     }
 
 
-    /**
-     * @param document the object that should be selected
-     */
     public select(document: ImageDocument) {
 
         if (!this.selectedDocuments.includes(document)) {
@@ -133,10 +131,6 @@ export class ImagePickerComponent implements OnInit {
     }
 
 
-    /**
-     * Populates the document list with all documents from
-     * the datastore which match a <code>query</code>
-     */
     private async fetchDocuments() {
 
         if (this.modalBody) this.modalBody.nativeElement.scrollTop = 0;
@@ -149,11 +143,19 @@ export class ImagePickerComponent implements OnInit {
             offset: this.currentOffset,
             categories: ProjectCategories.getImageCategoryNames(this.projectConfiguration.getCategoryTreelist()),
             constraints: {
-                'depicts:contain': { value: this.document.resource.id, subtract: true },
                 'project:exist': { value: 'KNOWN', subtract: true } // TODO review and or test
             },
             id: this.currentQueryId
         };
+
+        if (this.mode === 'depicts') {
+            query.constraints['depicts:contain'] = { value: this.document.resource.id, subtract: true };
+        } else {
+            query.constraints['georeference:exist'] = { value: 'KNOWN' };
+            if (this.document.resource.relations['hasLayer']) {
+                query.constraints['id:match'] = { value: this.document.resource.relations['hasLayer'], subtract: true };
+            }
+        }
 
         try {
             const result = await this.datastore.find(query);

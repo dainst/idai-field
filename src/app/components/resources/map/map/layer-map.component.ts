@@ -59,6 +59,20 @@ export class LayerMapComponent extends MapComponent {
     }
 
 
+    public async updateLayers(): Promise<void> {
+
+        this.layerImageProvider.reset();
+
+        const { layerGroups, activeLayersChange } = await this.layerManager.initializeLayers();
+
+        this.layerGroups = layerGroups;
+        this.initializePanes();
+        this.handleActiveLayersChange(activeLayersChange);
+
+        this.changeDetectorRef.detectChanges();
+    }
+
+
     public async toggleLayer(layer: ImageDocument) {
 
         this.layerManager.toggleLayer(layer.resource.id as any);
@@ -108,20 +122,6 @@ export class LayerMapComponent extends MapComponent {
             this.layersUpdate = false;
             return this.updateLayers();
         }
-    }
-
-
-    private async updateLayers(): Promise<void> {
-
-        this.layerImageProvider.reset();
-
-        const { layerGroups, activeLayersChange } = await this.layerManager.initializeLayers();
-
-        this.layerGroups = layerGroups;
-        this.initializePanes();
-        this.handleActiveLayersChange(activeLayersChange);
-
-        this.changeDetectorRef.detectChanges();
     }
 
 

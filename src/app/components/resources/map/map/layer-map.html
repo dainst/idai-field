@@ -1,2 +1,5 @@
 <div id="map-container"></div>
-<layer-menu [layerGroups]="layerGroups" (onToggleLayer)="toggleLayer($event)" (onFocusLayer)="focusLayer($event)"></layer-menu>
+<layer-menu [layerGroups]="layerGroups"
+            (onToggleLayer)="toggleLayer($event)"
+            (onFocusLayer)="focusLayer($event)"
+            (onEditLayers)="updateLayers()"></layer-menu>

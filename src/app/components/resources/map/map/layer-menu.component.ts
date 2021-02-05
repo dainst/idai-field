@@ -1,7 +1,14 @@
 import {Input, Output, EventEmitter, Renderer2, Component, ChangeDetectorRef} from '@angular/core';
-import {ImageDocument} from 'idai-components-2';
+import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
+import {FieldDocument, ImageDocument} from 'idai-components-2';
 import {LayerGroup, LayerManager} from './layer-manager';
 import {MenuComponent} from '../../../widgets/menu.component';
+import {MenuContext, MenuService} from '../../../menu-service';
+import {ImagePickerComponent} from '../../../docedit/widgets/image-picker.component';
+import {RelationsManager} from '../../../../core/model/relations-manager';
+import {ImageRelations} from '../../../../core/model/relation-constants';
+import {clone} from '../../../../core/util/object-util';
+
 
 @Component({
     selector: 'layer-menu',
@@ -17,10 +24,14 @@ export class LayerMenuComponent extends MenuComponent {
 
     @Output() onToggleLayer = new EventEmitter<ImageDocument>();
     @Output() onFocusLayer = new EventEmitter<ImageDocument>();
+    @Output() onEditLayers = new EventEmitter<void>();
 
 
     constructor(private layerManager: LayerManager,
                 private changeDetectorRef: ChangeDetectorRef,
+                private modalService: NgbModal,
+                private menuService: MenuService,
+                private relationsManager: RelationsManager,
                 renderer: Renderer2) {
 
         super(renderer, 'layer-button', 'layer-menu');
@@ -48,5 +59,42 @@ export class LayerMenuComponent extends MenuComponent {
         if (label.length > 48) label = label.substring(0, 45) + '...';
 
         return label;
+    }
+
+
+    public async addLayers(group: LayerGroup) {
+
+        const newLayers: Array<ImageDocument> = await this.selectNewLayers(group);
+        if (newLayers.length === 0) return;
+
+        const oldDocument: FieldDocument = clone(group.document);
+
+        const layerIds: string[] = group.document.resource.relations[ImageRelations.HASLAYER] || [];
+        const newLayerIds: string[] = newLayers.map(layer => layer.resource.id);
+        group.document.resource.relations[ImageRelations.HASLAYER] = layerIds.concat(newLayerIds);
+
+        await this.relationsManager.update(group.document, oldDocument);
+        this.onEditLayers.emit();
+    }
+
+
+    private async selectNewLayers(group: LayerGroup): Promise<Array<ImageDocument>> {
+
+        this.menuService.setContext(MenuContext.MODAL);
+
+        const imagePickerModal: NgbModalRef = this.modalService.open(
+            ImagePickerComponent, { size: 'lg', keyboard: false }
+        );
+        imagePickerModal.componentInstance.mode = 'layers';
+        imagePickerModal.componentInstance.setDocument(group.document);
+
+        try {
+            return await imagePickerModal.result;
+        } catch(err) {
+            // Image picker modal has been canceled
+            return [];
+        } finally {
+            this.menuService.setContext(MenuContext.DEFAULT);
+        }
     }
 }

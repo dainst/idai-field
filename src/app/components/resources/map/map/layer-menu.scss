@@ -41,6 +41,16 @@ $layer-menu-button-inactive-color: grey;
         font-size: 15px;
       }
 
+      .btn-success {
+        height: 20px;
+
+        .mdi {
+          position: relative;
+          bottom: 10px;
+          font-size: 12px;
+        }
+      }
+
       .form-group {
         margin-bottom: 0;
 

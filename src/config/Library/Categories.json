@@ -956,7 +956,7 @@
       }
     }
   },
-  "Pottery:wes": {
+  "Pottery:uruk": {
     "parent": "Find",
     "categoryName": "Pottery",
     "description": "",
@@ -1020,21 +1020,21 @@
       }
     },
     "valuelists": {
-      "vesselpart": "Pottery-vesselpart-WES",
-      "Firing": "Pottery-Firing-WES",
-      "condition": "Pottery-condition-WES",
-      "clayColorInside": "Pottery-clayColorInside-WES",
-      "clayColorOutside": "Pottery-clayColorInside-WES",
-      "decorationTechnique": "Pottery-decorationTechnique-WES",
-      "manufacturingMethod": "Pottery-manufacturingMethod-WES",
-      "temper": "Pottery-temper-WES",
-      "temperAmount": "Pottery-temperAmount-WES",
-      "temperParticles": "Pottery-temperParticles-WES",
-      "coatOutsideType": "Pottery-coatOutsideType-WES",
-      "FormComparisonCompendia": "Pottery-FormComparisonCompendia-WES",
-      "DecorationComparisonCompendia": "Pottery-FormComparisonCompendia-WES",
-      "ApplicationComparisonCompendia": "Pottery-FormComparisonCompendia-WES",
-      "vesselForm": "Pottery-vesselForm-WES"
+      "vesselpart": "Pottery-vesselpart-Uruk",
+      "Firing": "Pottery-Firing-Uruk",
+      "condition": "Pottery-condition-Uruk",
+      "clayColorInside": "Pottery-clayColorInside-Uruk",
+      "clayColorOutside": "Pottery-clayColorInside-Uruk",
+      "decorationTechnique": "Pottery-decorationTechnique-Uruk",
+      "manufacturingMethod": "Pottery-manufacturingMethod-Uruk",
+      "temper": "Pottery-temper-Uruk",
+      "temperAmount": "Pottery-temperAmount-Uruk",
+      "temperParticles": "Pottery-temperParticles-Uruk",
+      "coatOutsideType": "Pottery-coatOutsideType-Uruk",
+      "FormComparisonCompendia": "Pottery-FormComparisonCompendia-Uruk",
+      "DecorationComparisonCompendia": "Pottery-FormComparisonCompendia-Uruk",
+      "ApplicationComparisonCompendia": "Pottery-FormComparisonCompendia-Uruk",
+      "vesselForm": "Pottery-vesselForm-Uruk"
     }
   },
   "Grave:default": {

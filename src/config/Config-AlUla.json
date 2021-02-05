@@ -106,21 +106,21 @@
       }
     },
     "valuelists": {
-      "vesselpart": "Pottery-vesselpart-WES",
-      "Firing": "Pottery-Firing-WES",
-      "condition": "Pottery-condition-WES",
-      "clayColorInside": "Pottery-clayColorInside-WES",
-      "clayColorOutside": "Pottery-clayColorInside-WES",
-      "decorationTechnique": "Pottery-decorationTechnique-WES",
-      "manufacturingMethod": "Pottery-manufacturingMethod-WES",
-      "temper": "Pottery-temper-WES",
-      "temperAmount": "Pottery-temperAmount-WES",
-      "temperParticles": "Pottery-temperParticles-WES",
-      "coatOutsideType": "Pottery-coatOutsideType-WES",
-      "FormComparisonCompendia": "Pottery-FormComparisonCompendia-WES",
-      "DecorationComparisonCompendia": "Pottery-FormComparisonCompendia-WES",
-      "ApplicationComparisonCompendia": "Pottery-FormComparisonCompendia-WES",
-      "vesselForm": "Pottery-vesselForm-WES"
+      "vesselpart": "Pottery-vesselpart-Uruk",
+      "Firing": "Pottery-Firing-Uruk",
+      "condition": "Pottery-condition-Uruk",
+      "clayColorInside": "Pottery-clayColorInside-Uruk",
+      "clayColorOutside": "Pottery-clayColorInside-Uruk",
+      "decorationTechnique": "Pottery-decorationTechnique-Uruk",
+      "manufacturingMethod": "Pottery-manufacturingMethod-Uruk",
+      "temper": "Pottery-temper-Uruk",
+      "temperAmount": "Pottery-temperAmount-Uruk",
+      "temperParticles": "Pottery-temperParticles-Uruk",
+      "coatOutsideType": "Pottery-coatOutsideType-Uruk",
+      "FormComparisonCompendia": "Pottery-FormComparisonCompendia-Uruk",
+      "DecorationComparisonCompendia": "Pottery-FormComparisonCompendia-Uruk",
+      "ApplicationComparisonCompendia": "Pottery-FormComparisonCompendia-Uruk",
+      "vesselForm": "Pottery-vesselForm-Uruk"
     }
   },
   "Terracotta:default": {
@@ -161,18 +161,18 @@
       }
     },
     "valuelists": {
-      "clayColorBreak": "Pottery-clayColorInside-WES",
-      "clayColorInside": "Pottery-clayColorInside-WES",
-      "clayColorOutside": "Pottery-clayColorInside-WES",
-      "decorationTechnique": "Pottery-decorationTechnique-WES",
-      "condition": "Pottery-condition-WES",
-      "Firing": "Pottery-Firing-WES",
-      "temper": "Pottery-temper-WES",
-      "temperAmount": "Pottery-temperAmount-WES",
-      "temperParticles": "Pottery-temperParticles-WES",
-      "TerracottaType": "Terracotta-TerracottaType-WES",
-      "TerracottaTypeSpecific": "Terracotta-TerracottaTypeSpecific-WES",
-      "manufacturingMethod": "Pottery-manufacturingMethod-WES"
+      "clayColorBreak": "Pottery-clayColorInside-Uruk",
+      "clayColorInside": "Pottery-clayColorInside-Uruk",
+      "clayColorOutside": "Pottery-clayColorInside-Uruk",
+      "decorationTechnique": "Pottery-decorationTechnique-Uruk",
+      "condition": "Pottery-condition-Uruk",
+      "Firing": "Pottery-Firing-Uruk",
+      "temper": "Pottery-temper-Uruk",
+      "temperAmount": "Pottery-temperAmount-Uruk",
+      "temperParticles": "Pottery-temperParticles-Uruk",
+      "TerracottaType": "Terracotta-TerracottaType-Uruk",
+      "TerracottaTypeSpecific": "Terracotta-TerracottaTypeSpecific-Uruk",
+      "manufacturingMethod": "Pottery-manufacturingMethod-Uruk"
     }
   },
   "KnappingWasteProduct": {
@@ -199,11 +199,11 @@
       }
     },
     "valuelists": {
-      "material": "KnappingWasteProduct-material-WES",
-      "CorticalSurface": "KnappingWasteProduct-CorticalSurface-WES",
-      "PlaceOperationalSequence": "KnappingWasteProduct-PlaceOperationalSequence-WES",
-      "TechnicalMarks": "KnappingWasteProduct-TechnicalMarks-WES",
-      "color": "KnappingWasteProduct-color-WES"
+      "material": "KnappingWasteProduct-material-Uruk",
+      "CorticalSurface": "KnappingWasteProduct-CorticalSurface-Uruk",
+      "PlaceOperationalSequence": "KnappingWasteProduct-PlaceOperationalSequence-Uruk",
+      "TechnicalMarks": "KnappingWasteProduct-TechnicalMarks-Uruk",
+      "color": "KnappingWasteProduct-color-Uruk"
     }
   },
   "KnappedCore": {
@@ -245,14 +245,14 @@
       }
     },
     "valuelists": {
-      "material": "KnappingWasteProduct-material-WES",
-      "CorticalSurface": "KnappedCore-CorticalSurface-WES",
-      "ForceOnKnappingPlatform": "KnappedCore-ForceOnKnappingPlatform-WES",
-      "KnappingPlatformFeatures": "KnappedCore-KnappingPlatformFeatures-WES",
-      "SecondaryKnappingPlatforms": "KnappedCore-SecondaryKnappingPlatforms-WES",
-      "TechnicalMarks": "KnappedCore-TechnicalMarks-WES",
-      "TypicalCoreForms": "KnappedCore-TypicalCoreForms-WES",
-      "color": "KnappingWasteProduct-color-WES"
+      "material": "KnappingWasteProduct-material-Uruk",
+      "CorticalSurface": "KnappedCore-CorticalSurface-Uruk",
+      "ForceOnKnappingPlatform": "KnappedCore-ForceOnKnappingPlatform-Uruk",
+      "KnappingPlatformFeatures": "KnappedCore-KnappingPlatformFeatures-Uruk",
+      "SecondaryKnappingPlatforms": "KnappedCore-SecondaryKnappingPlatforms-Uruk",
+      "TechnicalMarks": "KnappedCore-TechnicalMarks-Uruk",
+      "TypicalCoreForms": "KnappedCore-TypicalCoreForms-Uruk",
+      "color": "KnappingWasteProduct-color-Uruk"
     },
     "positionValuelists": {
       "dimensionLengthOfDebitageSurfaces": "position-values-expansion-default",
@@ -289,15 +289,15 @@
       }
     },
     "valuelists": {
-      "material": "FragmentOfDrill-material-WES",
-      "TypeOfDrill": "FragmentOfDrill-TypeOfDrill-WES",
-      "ProductionMethod": "FragmentOfDrill-ProductionMethod-WES",
-      "TracesOfUse": "FragmentOfDrill-TracesOfUse-WES",
-      "color": "KnappingWasteProduct-color-WES"
+      "material": "FragmentOfDrill-material-Uruk",
+      "TypeOfDrill": "FragmentOfDrill-TypeOfDrill-Uruk",
+      "ProductionMethod": "FragmentOfDrill-ProductionMethod-Uruk",
+      "TracesOfUse": "FragmentOfDrill-TracesOfUse-Uruk",
+      "color": "KnappingWasteProduct-color-Uruk"
     },
     "positionValuelists": {
-      "dimensionPreservedLengthOfDrillingaxis": "position-values-preserved-length-of-drilling-axis-wes",
-      "dimensionWidthOfDrillfragment": "position-values-dimension-width-of-drill-fragment-wes"
+      "dimensionPreservedLengthOfDrillingaxis": "position-values-preserved-length-of-drilling-axis-Uruk",
+      "dimensionWidthOfDrillfragment": "position-values-dimension-width-of-drill-fragment-Uruk"
     }
   },
   "FragmentOfCuttingtool": {
@@ -321,11 +321,11 @@
       }
     },
     "valuelists": {
-      "material": "FragmentOfCuttingtool-material-WES",
-      "TypeOfCutter": "FragmentOfCuttingtool-TypeOfCutter-WES",
-      "ProductionMethod": "FragmentOfCuttingtool-ProductionMethod-WES",
-      "TracesOfUse": "FragmentOfCuttingtool-TracesOfUse-WES",
-      "color": "KnappingWasteProduct-color-WES"
+      "material": "FragmentOfCuttingtool-material-Uruk",
+      "TypeOfCutter": "FragmentOfCuttingtool-TypeOfCutter-Uruk",
+      "ProductionMethod": "FragmentOfCuttingtool-ProductionMethod-Uruk",
+      "TracesOfUse": "FragmentOfCuttingtool-TracesOfUse-Uruk",
+      "color": "KnappingWasteProduct-color-Uruk"
     }
   },
   "FragmentOfHammertool": {
@@ -346,10 +346,10 @@
       }
     },
     "valuelists": {
-      "material": "FragmentOfCuttingtool-material-WES",
-      "ProductionMethod": "FragmentOfCuttingtool-ProductionMethod-WES",
-      "TracesOfUse": "FragmentOfHammertool-TracesOfUse-WES",
-      "color": "KnappingWasteProduct-color-WES"
+      "material": "FragmentOfCuttingtool-material-Uruk",
+      "ProductionMethod": "FragmentOfCuttingtool-ProductionMethod-Uruk",
+      "TracesOfUse": "FragmentOfHammertool-TracesOfUse-Uruk",
+      "color": "KnappingWasteProduct-color-Uruk"
     }
   },
   "FragmentOfChopper": {
@@ -370,10 +370,10 @@
       }
     },
     "valuelists": {
-      "material": "FragmentOfCuttingtool-material-WES",
-      "ProductionMethod": "FragmentOfChopper-ProductionMethod-WES",
-      "TracesOfUse": "FragmentOfHammertool-TracesOfUse-WES",
-      "color": "KnappingWasteProduct-color-WES"
+      "material": "FragmentOfCuttingtool-material-Uruk",
+      "ProductionMethod": "FragmentOfChopper-ProductionMethod-Uruk",
+      "TracesOfUse": "FragmentOfHammertool-TracesOfUse-Uruk",
+      "color": "KnappingWasteProduct-color-Uruk"
     }
   },
   "FragmentofCoating": {
@@ -397,10 +397,10 @@
       }
     },
     "valuelists": {
-      "material": "FragmentofCoating-material-WES",
-      "ContactMaterial": "FragmentofCoating-ContactMaterial-WES",
-      "ProductionMethod": "FragmentofCoating-ProductionMethod-WES",
-      "color": "KnappingWasteProduct-color-WES"
+      "material": "FragmentofCoating-material-Uruk",
+      "ContactMaterial": "FragmentofCoating-ContactMaterial-Uruk",
+      "ProductionMethod": "FragmentofCoating-ProductionMethod-Uruk",
+      "color": "KnappingWasteProduct-color-Uruk"
     }
   },
   "RawMaterial": {
@@ -415,8 +415,8 @@
       }
     },
     "valuelists": {
-      "material": "RawMaterial-material-WES",
-      "color": "KnappingWasteProduct-color-WES"
+      "material": "RawMaterial-material-Uruk",
+      "color": "KnappingWasteProduct-color-Uruk"
     }
   },
   "FragmentofStonevessel": {
@@ -469,17 +469,17 @@
       }
     },
     "valuelists": {
-      "material": "FragmentofStonevessel-material-WES",
-      "vesselpart": "Pottery-vesselpart-WES",
-      "condition": "Pottery-condition-WES",
-      "decorationTechnique": "Pottery-decorationTechnique-WES",
-      "ProductionMethod": "FragmentofStonevessel-ProductionMethod-WES",
-      "coatOutsideType": "Pottery-coatOutsideType-WES",
-      "FormComparisonCompendia": "Pottery-FormComparisonCompendia-WES",
-      "DecorationComparisonCompendia": "Pottery-FormComparisonCompendia-WES",
-      "ApplicationComparisonCompendia": "Pottery-FormComparisonCompendia-WES",
-      "vesselForm": "Pottery-vesselForm-WES",
-      "color": "KnappingWasteProduct-color-WES"
+      "material": "FragmentofStonevessel-material-Uruk",
+      "vesselpart": "Pottery-vesselpart-Uruk",
+      "condition": "Pottery-condition-Uruk",
+      "decorationTechnique": "Pottery-decorationTechnique-Uruk",
+      "ProductionMethod": "FragmentofStonevessel-ProductionMethod-Uruk",
+      "coatOutsideType": "Pottery-coatOutsideType-Uruk",
+      "FormComparisonCompendia": "Pottery-FormComparisonCompendia-Uruk",
+      "DecorationComparisonCompendia": "Pottery-FormComparisonCompendia-Uruk",
+      "ApplicationComparisonCompendia": "Pottery-FormComparisonCompendia-Uruk",
+      "vesselForm": "Pottery-vesselForm-Uruk",
+      "color": "KnappingWasteProduct-color-Uruk"
     }
   },
   "FragmentOfBead": {
@@ -512,14 +512,14 @@
       }
     },
     "valuelists": {
-      "material": "FragmentOfCuttingtool-material-WES",
-      "ShapeofBead": "FragmentOfBead-ShapeofBead-WES",
-      "KnappingProductionMethod": "FragmentOfBead-KnappingProductionMethod-WES",
-      "TracesofPerforationProductionMethodSideA": "FragmentOfBead-TracesofPerforationProductionMethodSideA-WES",
-      "TracesofPerforationProductionMethodSideB": "FragmentOfBead-TracesofPerforationProductionMethodSideB-WES",
-      "TracesofPerforationProductionMethodBreakingedge": "FragmentOfBead-TracesofPerforationProductionMethodBreakingedge-WES",
-      "TracesOfUse": "FragmentOfBead-TracesOfUse-WES",
-      "color": "KnappingWasteProduct-color-WES"
+      "material": "FragmentOfCuttingtool-material-Uruk",
+      "ShapeofBead": "FragmentOfBead-ShapeofBead-Uruk",
+      "KnappingProductionMethod": "FragmentOfBead-KnappingProductionMethod-Uruk",
+      "TracesofPerforationProductionMethodSideA": "FragmentOfBead-TracesofPerforationProductionMethodSideA-Uruk",
+      "TracesofPerforationProductionMethodSideB": "FragmentOfBead-TracesofPerforationProductionMethodSideB-Uruk",
+      "TracesofPerforationProductionMethodBreakingedge": "FragmentOfBead-TracesofPerforationProductionMethodBreakingedge-Uruk",
+      "TracesOfUse": "FragmentOfBead-TracesOfUse-Uruk",
+      "color": "KnappingWasteProduct-color-Uruk"
     }
   },
   "Mollusk": {
@@ -531,7 +531,7 @@
       }
     },
     "valuelists": {
-      "classification": "Mollusk-classification-WES"
+      "classification": "Mollusk-classification-Uruk"
     }
   },
   "TypeCatalog:default": {

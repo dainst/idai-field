@@ -64,7 +64,7 @@
       }
     }
   },
-  "position-values-preserved-length-of-drilling-axis-wes": {
+  "position-values-preserved-length-of-drilling-axis-Uruk": {
     "createdBy": "",
     "creationDate": "",
     "description": {},
@@ -76,7 +76,7 @@
       }
     }
   },
-  "position-values-dimension-width-of-drill-fragment-wes": {
+  "position-values-dimension-width-of-drill-fragment-Uruk": {
     "createdBy": "",
     "creationDate": "",
     "description": {},
@@ -1202,7 +1202,7 @@
       "Modern"
     ]
   },
-  "periods-wes-1": {
+  "periods-Uruk-1": {
     "creationDate": "",
     "createdBy": "IT-Referat, DAI, 2019",
     "description": {},
@@ -26407,7 +26407,7 @@
       "KOMP"
     ]
   },
-  "Pottery-vesselpart-WES": {
+  "Pottery-vesselpart-Uruk": {
     "createdBy": "Max Haibt",
     "creationDate": "27-3-2019",
     "description": {},
@@ -26484,7 +26484,7 @@
       }
     }
   },
-  "Pottery-Firing-WES": {
+  "Pottery-Firing-Uruk": {
     "createdBy": "Max Haibt",
     "creationDate": "27-3-2019",
     "description": {},
@@ -26565,7 +26565,7 @@
       "unbaked"
     ]
   },
-  "Pottery-condition-WES": {
+  "Pottery-condition-Uruk": {
     "createdBy": "Max Haibt",
     "creationDate": "27-3-2019",
     "description": {},
@@ -26582,7 +26582,7 @@
       }
     }
   },
-  "Pottery-clayColorInside-WES": {
+  "Pottery-clayColorInside-Uruk": {
     "createdBy": "Max Haibt",
     "creationDate": "27-3-2019",
     "description": {},
@@ -26694,7 +26694,7 @@
       }
     }
   },
-  "Pottery-decorationTechnique-WES": {
+  "Pottery-decorationTechnique-Uruk": {
     "createdBy": "Max Haibt",
     "creationDate": "27-3-2019",
     "description": {},
@@ -26791,7 +26791,7 @@
       }
     }
   },
-  "Pottery-manufacturingMethod-WES": {
+  "Pottery-manufacturingMethod-Uruk": {
     "createdBy": "Max Haibt",
     "creationDate": "27-3-2019",
     "description": {},
@@ -26843,7 +26843,7 @@
       }
     }
   },
-  "Pottery-temper-WES": {
+  "Pottery-temper-Uruk": {
     "createdBy": "Max Haibt",
     "creationDate": "27-3-2019",
     "description": {},
@@ -26940,7 +26940,7 @@
       }
     }
   },
-  "Pottery-temperAmount-WES": {
+  "Pottery-temperAmount-Uruk": {
     "createdBy": "Max Haibt",
     "creationDate": "27-3-2019",
     "description": {},
@@ -26982,7 +26982,7 @@
       }
     }
   },
-  "Pottery-temperParticles-WES": {
+  "Pottery-temperParticles-Uruk": {
     "createdBy": "Max Haibt",
     "creationDate": "27-3-2019",
     "description": {},
@@ -27019,7 +27019,7 @@
       }
     }
   },
-  "Pottery-coatOutsideType-WES": {
+  "Pottery-coatOutsideType-Uruk": {
     "createdBy": "Max Haibt",
     "creationDate": "27-3-2019",
     "description": {},
@@ -27260,7 +27260,7 @@
       }
     }
   },
-  "Pottery-FormComparisonCompendia-WES": {
+  "Pottery-FormComparisonCompendia-Uruk": {
     "createdBy": "Max Haibt",
     "creationDate": "27-3-2019",
     "description": {},
@@ -27322,7 +27322,7 @@
       }
     }
   },
-  "Pottery-vesselForm-WES": {
+  "Pottery-vesselForm-Uruk": {
     "createdBy": "Max Haibt",
     "creationDate": "27-3-2019",
     "description": {},
@@ -27444,7 +27444,7 @@
       }
     }
   },
-  "Pottery-processor-WES": {
+  "Pottery-processor-Uruk": {
     "createdBy": "Max Haibt",
     "creationDate": "27-3-2019",
     "description": {},
@@ -27476,7 +27476,7 @@
       }
     }
   },
-  "Terracotta-TerracottaType-WES": {
+  "Terracotta-TerracottaType-Uruk": {
     "createdBy": "Max Haibt",
     "creationDate": "27-3-2019",
     "description": {},
@@ -27543,7 +27543,7 @@
       }
     }
   },
-  "Terracotta-TerracottaTypeSpecific-WES": {
+  "Terracotta-TerracottaTypeSpecific-Uruk": {
     "createdBy": "Max Haibt",
     "creationDate": "27-3-2019",
     "description": {},
@@ -27650,7 +27650,7 @@
       }
     }
   },
-  "KnappingWasteProduct-material-WES": {
+  "KnappingWasteProduct-material-Uruk": {
     "createdBy": "Max Haibt",
     "creationDate": "27-3-2019",
     "description": {},
@@ -27787,7 +27787,7 @@
       }
     }
   },
-  "KnappingWasteProduct-CorticalSurface-WES": {
+  "KnappingWasteProduct-CorticalSurface-Uruk": {
     "createdBy": "Max Haibt",
     "creationDate": "27-3-2019",
     "description": {},
@@ -27824,7 +27824,7 @@
       }
     }
   },
-  "KnappingWasteProduct-PlaceOperationalSequence-WES": {
+  "KnappingWasteProduct-PlaceOperationalSequence-Uruk": {
     "createdBy": "Max Haibt",
     "creationDate": "27-3-2019",
     "description": {},
@@ -27891,7 +27891,7 @@
       }
     }
   },
-  "KnappingWasteProduct-TechnicalMarks-WES": {
+  "KnappingWasteProduct-TechnicalMarks-Uruk": {
     "createdBy": "Max Haibt",
     "creationDate": "27-3-2019",
     "description": {},
@@ -27953,7 +27953,7 @@
       }
     }
   },
-  "KnappingWasteProduct-color-WES": {
+  "KnappingWasteProduct-color-Uruk": {
     "createdBy": "Max Haibt",
     "creationDate": "27-3-2019",
     "description": {},
@@ -28070,7 +28070,7 @@
       }
     }
   },
-  "KnappedCore-CorticalSurface-WES": {
+  "KnappedCore-CorticalSurface-Uruk": {
     "createdBy": "Max Haibt",
     "creationDate": "27-3-2019",
     "description": {},
@@ -28092,7 +28092,7 @@
       }
     }
   },
-  "KnappedCore-ForceOnKnappingPlatform-WES": {
+  "KnappedCore-ForceOnKnappingPlatform-Uruk": {
     "createdBy": "Max Haibt",
     "creationDate": "27-3-2019",
     "description": {},
@@ -28109,7 +28109,7 @@
       }
     }
   },
-  "KnappedCore-KnappingPlatformFeatures-WES": {
+  "KnappedCore-KnappingPlatformFeatures-Uruk": {
     "createdBy": "Max Haibt",
     "creationDate": "27-3-2019",
     "description": {},
@@ -28131,7 +28131,7 @@
       }
     }
   },
-  "KnappedCore-SecondaryKnappingPlatforms-WES": {
+  "KnappedCore-SecondaryKnappingPlatforms-Uruk": {
     "createdBy": "Max Haibt",
     "creationDate": "27-3-2019",
     "description": {},
@@ -28158,7 +28158,7 @@
       }
     }
   },
-  "KnappedCore-TechnicalMarks-WES": {
+  "KnappedCore-TechnicalMarks-Uruk": {
     "createdBy": "Max Haibt",
     "creationDate": "27-3-2019",
     "description": {},
@@ -28235,7 +28235,7 @@
       }
     }
   },
-  "KnappedCore-TypicalCoreForms-WES": {
+  "KnappedCore-TypicalCoreForms-Uruk": {
     "createdBy": "Max Haibt",
     "creationDate": "27-3-2019",
     "description": {},
@@ -28257,7 +28257,7 @@
       }
     }
   },
-  "FragmentOfDrill-material-WES": {
+  "FragmentOfDrill-material-Uruk": {
     "createdBy": "Max Haibt",
     "creationDate": "27-3-2019",
     "description": {},
@@ -28424,7 +28424,7 @@
       }
     }
   },
-  "FragmentOfDrill-TypeOfDrill-WES": {
+  "FragmentOfDrill-TypeOfDrill-Uruk": {
     "createdBy": "Max Haibt",
     "creationDate": "27-3-2019",
     "description": {},
@@ -28446,7 +28446,7 @@
       }
     }
   },
-  "FragmentOfDrill-ProductionMethod-WES": {
+  "FragmentOfDrill-ProductionMethod-Uruk": {
     "createdBy": "Max Haibt",
     "creationDate": "27-3-2019",
     "description": {},
@@ -28503,7 +28503,7 @@
       }
     }
   },
-  "FragmentOfDrill-TracesOfUse-WES": {
+  "FragmentOfDrill-TracesOfUse-Uruk": {
     "createdBy": "Max Haibt",
     "creationDate": "27-3-2019",
     "description": {},
@@ -28525,7 +28525,7 @@
       }
     }
   },
-  "FragmentOfCuttingtool-material-WES": {
+  "FragmentOfCuttingtool-material-Uruk": {
     "createdBy": "Max Haibt",
     "creationDate": "27-3-2019",
     "description": {},
@@ -28687,7 +28687,7 @@
       }
     }
   },
-  "FragmentOfCuttingtool-TypeOfCutter-WES": {
+  "FragmentOfCuttingtool-TypeOfCutter-Uruk": {
     "createdBy": "Max Haibt",
     "creationDate": "27-3-2019",
     "description": {},
@@ -28724,7 +28724,7 @@
       }
     }
   },
-  "FragmentOfCuttingtool-ProductionMethod-WES": {
+  "FragmentOfCuttingtool-ProductionMethod-Uruk": {
     "createdBy": "Max Haibt",
     "creationDate": "27-3-2019",
     "description": {},
@@ -28793,7 +28793,7 @@
       "glued on the shaft"
     ]
   },
-  "FragmentOfCuttingtool-TracesOfUse-WES": {
+  "FragmentOfCuttingtool-TracesOfUse-Uruk": {
     "createdBy": "Max Haibt",
     "creationDate": "27-3-2019",
     "description": {},
@@ -28825,7 +28825,7 @@
       }
     }
   },
-  "FragmentOfHammertool-TracesOfUse-WES": {
+  "FragmentOfHammertool-TracesOfUse-Uruk": {
     "createdBy": "Max Haibt",
     "creationDate": "27-3-2019",
     "description": {},
@@ -28852,7 +28852,7 @@
       }
     }
   },
-  "FragmentOfChopper-ProductionMethod-WES": {
+  "FragmentOfChopper-ProductionMethod-Uruk": {
     "createdBy": "Max Haibt",
     "creationDate": "27-3-2019",
     "description": {},
@@ -28933,7 +28933,7 @@
       "glued on the shaft"
     ]
   },
-  "FragmentofCoating-material-WES": {
+  "FragmentofCoating-material-Uruk": {
     "createdBy": "Max Haibt",
     "creationDate": "27-3-2019",
     "description": {},
@@ -29115,7 +29115,7 @@
       }
     }
   },
-  "FragmentofCoating-ContactMaterial-WES": {
+  "FragmentofCoating-ContactMaterial-Uruk": {
     "createdBy": "Max Haibt",
     "creationDate": "27-3-2019",
     "description": {},
@@ -29132,7 +29132,7 @@
       }
     }
   },
-  "FragmentofCoating-ProductionMethod-WES": {
+  "FragmentofCoating-ProductionMethod-Uruk": {
     "createdBy": "Max Haibt",
     "creationDate": "27-3-2019",
     "description": {},
@@ -29144,7 +29144,7 @@
       }
     }
   },
-  "RawMaterial-material-WES": {
+  "RawMaterial-material-Uruk": {
     "createdBy": "Max Haibt",
     "creationDate": "27-3-2019",
     "description": {},
@@ -29311,7 +29311,7 @@
       }
     }
   },
-  "FragmentofStonevessel-material-WES": {
+  "FragmentofStonevessel-material-Uruk": {
     "createdBy": "Max Haibt",
     "creationDate": "27-3-2019",
     "description": {},
@@ -29483,7 +29483,7 @@
       }
     }
   },
-  "FragmentofStonevessel-ProductionMethod-WES": {
+  "FragmentofStonevessel-ProductionMethod-Uruk": {
     "createdBy": "Max Haibt",
     "creationDate": "27-3-2019",
     "description": {},
@@ -29510,7 +29510,7 @@
       }
     }
   },
-  "FragmentOfBead-ShapeofBead-WES": {
+  "FragmentOfBead-ShapeofBead-Uruk": {
     "createdBy": "Max Haibt",
     "creationDate": "27-3-2019",
     "description": {},
@@ -29542,7 +29542,7 @@
       }
     }
   },
-  "FragmentOfBead-KnappingProductionMethod-WES": {
+  "FragmentOfBead-KnappingProductionMethod-Uruk": {
     "createdBy": "Max Haibt",
     "creationDate": "27-3-2019",
     "description": {},
@@ -29581,7 +29581,7 @@
       "retouched"
     ]
   },
-  "FragmentOfBead-TracesofPerforationProductionMethodSideA-WES": {
+  "FragmentOfBead-TracesofPerforationProductionMethodSideA-Uruk": {
     "createdBy": "Max Haibt",
     "creationDate": "27-3-2019",
     "description": {},
@@ -29608,7 +29608,7 @@
       }
     }
   },
-  "FragmentOfBead-TracesofPerforationProductionMethodSideB-WES": {
+  "FragmentOfBead-TracesofPerforationProductionMethodSideB-Uruk": {
     "createdBy": "Max Haibt",
     "creationDate": "27-3-2019",
     "description": {},
@@ -29640,7 +29640,7 @@
       }
     }
   },
-  "FragmentOfBead-TracesofPerforationProductionMethodBreakingedge-WES": {
+  "FragmentOfBead-TracesofPerforationProductionMethodBreakingedge-Uruk": {
     "createdBy": "Max Haibt",
     "creationDate": "27-3-2019",
     "description": {},
@@ -29657,7 +29657,7 @@
       }
     }
   },
-  "FragmentOfBead-TracesOfUse-WES": {
+  "FragmentOfBead-TracesOfUse-Uruk": {
     "createdBy": "Max Haibt",
     "creationDate": "27-3-2019",
     "description": {},
@@ -29674,7 +29674,7 @@
       }
     }
   },
-  "Stone-material-WES": {
+  "Stone-material-Uruk": {
     "createdBy": "Max Haibt",
     "creationDate": "27-3-2019",
     "description": {},
@@ -29786,7 +29786,7 @@
       }
     }
   },
-  "Stone-objectType-WES": {
+  "Stone-objectType-Uruk": {
     "createdBy": "Max Haibt",
     "creationDate": "27-3-2019",
     "description": {},
@@ -29853,7 +29853,7 @@
       }
     }
   },
-  "Stone-objectTypeSpecific-WES": {
+  "Stone-objectTypeSpecific-Uruk": {
     "createdBy": "Max Haibt",
     "creationDate": "27-3-2019",
     "description": {},
@@ -29940,7 +29940,7 @@
       }
     }
   },
-  "Mollusk-classification-WES": {
+  "Mollusk-classification-Uruk": {
     "createdBy": "Max Haibt",
     "creationDate": "27-3-2019",
     "description": {},

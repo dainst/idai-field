@@ -22,7 +22,7 @@ const {remote, ipcRenderer} = typeof window !== 'undefined' ? window.require('el
 export const PROJECT_MAPPING = {
     'meninx-project': { prefix: 'Meninx', label: 'Meninx' },
     'pergamongrabung': { prefix: 'Pergamon', label: 'Pergamon' },
-    'wes': { prefix: 'WES', label: 'Warka Environs Survey' },
+    'uruk': { prefix: 'Uruk', label: 'Uruk' },
     'bogazkoy-hattusa': { prefix: 'Boha', label: 'Boğazköy-Ḫattuša' },
     'campidoglio': { prefix: 'Campidoglio', label: 'Campidoglio' },
     'castiglione': { prefix: 'Castiglione', label: 'Castiglione' },

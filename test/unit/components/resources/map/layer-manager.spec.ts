@@ -21,24 +21,25 @@ describe('LayerManager', () => {
 
     beforeEach(() => {
 
-        const mockDatastore = jasmine.createSpyObj('datastore', ['find']);
+        const mockDatastore = jasmine.createSpyObj('datastore', ['find', 'get']);
         mockDatastore.find.and.returnValue(Promise.resolve({ documents: layerDocuments }));
+        mockDatastore.get.and.returnValue(Promise.resolve({ resource: { id: 'project' } }));
 
         mockViewFacade = jasmine.createSpyObj('viewFacade',
             ['getActiveLayersIds', 'setActiveLayersIds', 'getCurrentOperation']);
         mockViewFacade.getActiveLayersIds.and.returnValue([]);
 
-        layerManager = new LayerManager(mockDatastore, mockViewFacade);
+        layerManager = new LayerManager(mockDatastore, mockDatastore, mockViewFacade);
     });
 
 
     it('initialize layers', async done => {
 
-        const { layers, activeLayersChange } = await layerManager.initializeLayers(true);
+        const { layerGroups, activeLayersChange } = await layerManager.initializeLayers(true);
 
-        expect(layers.length).toBe(2);
-        expect(layers[0].resource.id).toEqual('l1');
-        expect(layers[1].resource.id).toEqual('l2');
+        expect(layerGroups.length).toBe(1);
+        expect(layerGroups[0].layers[0].resource.id).toEqual('l1');
+        expect(layerGroups[0].layers[1].resource.id).toEqual('l2');
 
         expect(activeLayersChange.added.length).toBe(0);
         expect(activeLayersChange.removed.length).toBe(0);

@@ -1,6 +1,6 @@
 <div id="map-container"></div>
 
-<layer-menu [layers]="layers" (onToggleLayer)="toggleLayer($event)" (onFocusLayer)="focusLayer($event)"></layer-menu>
+<layer-menu [layerGroups]="layerGroups" (onToggleLayer)="toggleLayer($event)" (onFocusLayer)="focusLayer($event)"></layer-menu>
 
 <div id="map-editor-buttons" *ngIf="isEditing">
     <div *ngIf="mousePositionCoordinates" id="mouse-position-coordinates-x" class="badge badge-secondary">

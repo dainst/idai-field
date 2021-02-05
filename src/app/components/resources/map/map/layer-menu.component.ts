@@ -1,6 +1,6 @@
 import {Input, Output, EventEmitter, Renderer2, Component, ChangeDetectorRef} from '@angular/core';
 import {ImageDocument} from 'idai-components-2';
-import {LayerManager} from './layer-manager';
+import {LayerGroup, LayerManager} from './layer-manager';
 import {MenuComponent} from '../../../widgets/menu.component';
 
 @Component({
@@ -13,7 +13,7 @@ import {MenuComponent} from '../../../widgets/menu.component';
  */
 export class LayerMenuComponent extends MenuComponent {
 
-    @Input() layers: Array<ImageDocument> = [];
+    @Input() layerGroups: Array<LayerGroup> = [];
 
     @Output() onToggleLayer = new EventEmitter<ImageDocument>();
     @Output() onFocusLayer = new EventEmitter<ImageDocument>();
@@ -27,7 +27,7 @@ export class LayerMenuComponent extends MenuComponent {
     }
 
 
-    public isActiveLayer = (layer: ImageDocument) => this.layerManager.isActiveLayer(layer.resource.id as any);
+    public isActiveLayer = (layer: ImageDocument) => this.layerManager.isActiveLayer(layer.resource.id);
     public toggleLayer = (layer: ImageDocument) => this.onToggleLayer.emit(layer);
     public focusLayer = (layer: ImageDocument) => this.onFocusLayer.emit(layer);
 

@@ -37,7 +37,7 @@ describe('LayerManager', () => {
 
         const { layerGroups, activeLayersChange } = await layerManager.initializeLayers(true);
 
-        expect(layerGroups.length).toBe(1);
+        expect(layerGroups.length).toBe(2);
         expect(layerGroups[0].layers[0].resource.id).toEqual('l1');
         expect(layerGroups[0].layers[1].resource.id).toEqual('l2');
 

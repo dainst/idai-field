@@ -7,7 +7,7 @@
         <div class="card-body">
             <div class="layer-menu-container">
                 <div *ngFor="let layerGroup of layerGroups">
-                    <div class="layer-group-heading">{{layerGroup.document.resource.identifier}}</div>
+                    <div class="layer-group-heading">{{getLayerGroupLabel(layerGroup)}}</div>
                     <form>
                         <fieldset class="form-group">
                             <div *ngFor="let layer of layerGroup.layers" class="layer-entry">
@@ -31,7 +31,7 @@
                             </div>
                         </fieldset>
                     </form>
-                    <div class="btn btn-block btn-success" (click)="addLayers(layerGroup)">
+                    <div *ngIf="layerGroup.document" class="btn btn-block btn-success" (click)="addLayers(layerGroup)">
                         <span class="mdi mdi-plus-circle"></span>
                     </div>
                 </div>

@@ -1,5 +1,6 @@
 import {Input, Output, EventEmitter, Renderer2, Component, ChangeDetectorRef} from '@angular/core';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
+import {I18n} from '@ngx-translate/i18n-polyfill';
 import {FieldDocument, ImageDocument} from 'idai-components-2';
 import {LayerGroup, LayerManager} from './layer-manager';
 import {MenuComponent} from '../../../widgets/menu.component';
@@ -32,6 +33,7 @@ export class LayerMenuComponent extends MenuComponent {
                 private modalService: NgbModal,
                 private menuService: MenuService,
                 private relationsManager: RelationsManager,
+                private i18n: I18n,
                 renderer: Renderer2) {
 
         super(renderer, 'layer-button', 'layer-menu');
@@ -47,6 +49,14 @@ export class LayerMenuComponent extends MenuComponent {
 
         super.close();
         this.changeDetectorRef.detectChanges();
+    }
+
+
+    public getLayerGroupLabel(layerGroup: LayerGroup): string {
+
+        return layerGroup.document
+            ? layerGroup.document.resource.identifier
+            : this.i18n({ id: 'resources.map.layerMenu.unlinkedLayers', value: 'Unverknüpfte Layer' });
     }
 
 

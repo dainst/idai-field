@@ -14,7 +14,7 @@ export interface LayersInitializationResult {
 
 export interface LayerGroup {
 
-    document: FieldDocument,
+    document?: FieldDocument,
     layers: Array<ImageDocument>,
 }
 
@@ -101,28 +101,32 @@ export class LayerManager {
         if (currentOperation) layerGroups.push(await this.createLayerGroup(currentOperation));
 
         layerGroups.push(await this.createLayerGroup(await this.fieldDatastore.get('project')));
+        layerGroups.push(await this.createLayerGroup());
 
         return layerGroups;
     }
 
 
-    private async createLayerGroup(document: FieldDocument): Promise<LayerGroup> {
+    private async createLayerGroup(document?: FieldDocument): Promise<LayerGroup> {
 
         return {
             document: document,
-            layers: await this.fetchLayers(document.resource.id)
+            layers: await this.fetchLayers(document?.resource.id)
         };
     }
 
 
-    private async fetchLayers(operationId: string): Promise<Array<ImageDocument>> {
+    private async fetchLayers(operationId?: string): Promise<Array<ImageDocument>> {
 
-        return (await this.imageDatastore.find({
-            constraints: {
-                'georeference:exist': 'KNOWN',
-                'hasLayer:links': operationId
-            }
-        })).documents;
+        const constraints = { 'georeference:exist': 'KNOWN' };
+
+        if (operationId) {
+            constraints['isLayerOf:contain'] = operationId;
+        } else {
+            constraints['isLayerOf:exist'] = 'UNKNOWN';
+        }
+
+        return (await this.imageDatastore.find({ constraints })).documents;
     }
 
 

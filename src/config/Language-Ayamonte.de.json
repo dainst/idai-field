@@ -53,8 +53,8 @@
     "Project": {
       "fields": {
         "projectProgression": {
-          "label": "Projektverlauf",
-          "description": "Informationen zum Ablauf des Projekts"
+          "label": "Projektverlauf / Curso del proyecto",
+          "description": "Informationen zum Ablauf des Projekts / Información sobre el curso del proyecto"
         }
       }
     },
@@ -198,19 +198,16 @@
           "label": "Anmerkungen zur Aussagekraft / Notas sobre la calidad"
         },
         "featureClassification": {
-          "label": "Klassifikation Stratigraphische Einheit / Clasificación"
-        },
-        "layerClassification": {
-          "label": "Klassifikation Schicht"
+          "label": "Klassifikation Stratigraphische Einheit / Clasificación del estrato"
         },
         "createdAfterSpoil": {
           "label": "Erstellt nach Abhub / Después del rebaje"
         },
         "featureClassificationOther": {
-          "label": "Klassifikation Statigraphische Einheit Sonstiges"
+          "label": "Klassifikation Statigraphische Einheit Sonstiges / Clasificación de la unidad estratigráfica - otro"
         },
         "otherClassification": {
-          "label": "Klassifikation Sonstiges"
+          "label": "Klassifikation Sonstiges / Otra clasificación"
         }
       }
     },
@@ -311,9 +308,6 @@
         },
         "potteryComparableTo": {
           "label": "Vergleichbare(s) Fragment(e) / Fragmento(s) comparable(s)"
-        },
-        "ayamonteCondition": {
-          "label": ""
         }
       }
     },
@@ -391,13 +385,13 @@
     "Photo": {
       "fields": {
         "imageObject": {
-          "label": "Bildgegenstand"
+          "label": "Bildgegenstand / Objeto representado"
         },
         "imageRights": {
-          "label": "Bildrechte"
+          "label": "Bildrechte / Derechos de autor de la imagen"
         },
         "imageContent": {
-          "label": "Bildinhalt"
+          "label": "Bildinhalt / Contenido de la imagen"
         }
       }
     },

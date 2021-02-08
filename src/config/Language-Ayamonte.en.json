@@ -53,8 +53,8 @@
     "Project": {
       "fields": {
         "projectProgression": {
-          "label": "Project Progression",
-          "description": "Information on the course of the project"
+          "label": "Project Progression / Curso del proyecto",
+          "description": "Information on the course of the project / Información sobre el curso del proyecto"
         }
       }
     },
@@ -193,20 +193,17 @@
         "significanceRemark": {
           "label": "Remarks on significance / Notas sobre la calidad"
         },
-        "layerClassification": {
-          "label": "Classification of the layer"
-        },
         "featureClassification": {
-          "label": "Classification of the feature / Clasificación"
+          "label": "Classification of the feature / Clasificación del estrato"
         },
         "createdAfterSpoil": {
           "label": "Created after spoil / Después del rebaje"
         },
         "featureClassificationOther": {
-          "label": "Further classification of the feature"
+          "label": "Further classification of the feature / Clasificación de la unidad estratigráfica - otro"
         },
         "otherClassification": {
-          "label": "Further classification"
+          "label": "Further classification / Otra clasificación"
         }
       }
     },
@@ -384,13 +381,13 @@
     "Photo": {
       "fields": {
         "imageObject": {
-          "label": "Depicted object"
+          "label": "Depicted object / Objeto representado"
         },
         "imageRights": {
-          "label": "Image rights"
+          "label": "Image rights / Derechos de autor de la imagen"
         },
         "imageContent": {
-          "label": "Content of the image"
+          "label": "Content of the image / Contenido de la imagen"
         }
       }
     },

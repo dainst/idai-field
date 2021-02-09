@@ -21,9 +21,10 @@ describe('LayerManager', () => {
 
     beforeEach(() => {
 
-        const mockDatastore = jasmine.createSpyObj('datastore', ['find', 'get']);
+        const mockDatastore = jasmine.createSpyObj('datastore', ['find', 'getMultiple', 'get']);
         mockDatastore.find.and.returnValue(Promise.resolve({ documents: layerDocuments }));
-        mockDatastore.get.and.returnValue(Promise.resolve({ resource: { id: 'project' } }));
+        mockDatastore.getMultiple.and.returnValue(Promise.resolve({ documents: layerDocuments }));
+        mockDatastore.get.and.returnValue(Promise.resolve({ resource: { id: 'project', relations: {} } }));
 
         mockViewFacade = jasmine.createSpyObj('viewFacade',
             ['getActiveLayersIds', 'setActiveLayersIds', 'getCurrentOperation']);
@@ -38,8 +39,8 @@ describe('LayerManager', () => {
         const { layerGroups, activeLayersChange } = await layerManager.initializeLayers(true);
 
         expect(layerGroups.length).toBe(2);
-        expect(layerGroups[0].layers[0].resource.id).toEqual('l1');
-        expect(layerGroups[0].layers[1].resource.id).toEqual('l2');
+        expect(layerGroups[1].layers[0].resource.id).toEqual('l1');
+        expect(layerGroups[1].layers[1].resource.id).toEqual('l2');
 
         expect(activeLayersChange.added.length).toBe(0);
         expect(activeLayersChange.removed.length).toBe(0);

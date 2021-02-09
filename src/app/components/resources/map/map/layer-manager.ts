@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {set, subtract} from 'tsfun';
-import {FieldDocument, ImageDocument} from 'idai-components-2';
+import {FieldDocument, ImageDocument, Document} from 'idai-components-2';
 import {ImageReadDatastore} from '../../../../core/datastore/field/image-read-datastore';
 import {ViewFacade} from '../../../../core/resources/view/view-facade';
 import {FieldReadDatastore} from '../../../../core/datastore/field/field-read-datastore';
@@ -119,9 +119,11 @@ export class LayerManager {
     }
 
 
-    private fetchLinkedLayers(document: FieldDocument): Promise<Array<ImageDocument>> {
+    private async fetchLinkedLayers(document: FieldDocument): Promise<Array<ImageDocument>> {
 
-        return this.imageDatastore.getMultiple(document.resource.relations[ImageRelations.HASLAYER]);
+        return Document.hasRelations(document, ImageRelations.HASLAYER)
+            ? await this.imageDatastore.getMultiple(document.resource.relations[ImageRelations.HASLAYER])
+            : [];
     }
 
 

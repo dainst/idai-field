@@ -67,6 +67,7 @@ export class LayerMapComponent extends MapComponent {
 
         this.layerGroups = layerGroups;
         this.initializePanes();
+        this.updatePaneZIndices();
         this.handleActiveLayersChange(activeLayersChange);
 
         this.changeDetectorRef.detectChanges();
@@ -133,21 +134,25 @@ export class LayerMapComponent extends MapComponent {
 
 
     private initializePanes() {
-        
-        return this.getLayers()
-            .filter(layer => !this.panes[layer.resource.id as any])
-            .reduce((zIndex, layer) => this.createPane(zIndex, layer), 1);
+
+        this.getLayers().filter(layer => !this.panes[layer.resource.id as any])
+            .forEach(layer => this.createPane(layer));
     }
 
 
-    private createPane(zIndex: any, layer: any) {
+    private createPane(layer: any) {
 
         const pane = this.map.createPane(layer.resource.id);
-        pane.style.zIndex = String(zIndex);
         this.panes[layer.resource.id] = pane;
-
-        return zIndex + 1;
     }
+
+
+    private updatePaneZIndices() {
+
+        this.getLayers().reverse().forEach((layer, index) => {
+            this.panes[layer.resource.id].style.zIndex = String(index);
+        })
+    };
 
 
     private async addLayerToMap(resourceId: string) {

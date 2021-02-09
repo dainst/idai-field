@@ -4,6 +4,7 @@ import {FieldDocument, ImageDocument} from 'idai-components-2';
 import {ImageReadDatastore} from '../../../../core/datastore/field/image-read-datastore';
 import {ViewFacade} from '../../../../core/resources/view/view-facade';
 import {FieldReadDatastore} from '../../../../core/datastore/field/field-read-datastore';
+import {ImageRelations} from '../../../../core/model/relation-constants';
 
 
 export interface LayersInitializationResult {
@@ -111,20 +112,25 @@ export class LayerManager {
 
         return {
             document: document,
-            layers: await this.fetchLayers(document?.resource.id)
+            layers: document
+                ? await this.fetchLinkedLayers(document)
+                : await this.fetchUnlinkedLayers()
         };
     }
 
 
-    private async fetchLayers(operationId?: string): Promise<Array<ImageDocument>> {
+    private fetchLinkedLayers(document: FieldDocument): Promise<Array<ImageDocument>> {
 
-        const constraints = { 'georeference:exist': 'KNOWN' };
+        return this.imageDatastore.getMultiple(document.resource.relations[ImageRelations.HASLAYER]);
+    }
 
-        if (operationId) {
-            constraints['isLayerOf:contain'] = operationId;
-        } else {
-            constraints['isLayerOf:exist'] = 'UNKNOWN';
-        }
+
+    private async fetchUnlinkedLayers(): Promise<Array<ImageDocument>> {
+
+        const constraints = {
+            'georeference:exist': 'KNOWN',
+            'isLayerOf:exist': 'UNKNOWN'
+        };
 
         return (await this.imageDatastore.find({ constraints })).documents;
     }

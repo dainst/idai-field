@@ -16,7 +16,6 @@ import {DoceditModule} from '../docedit/docedit.module';
 import {ImageGridModule} from '../image/grid/image-grid.module';
 import {RoutingService} from '../routing-service';
 import {DoceditLauncher} from './service/docedit-launcher';
-import {SettingsService} from '../../core/settings/settings-service';
 import {SidebarListComponent} from './map/list/sidebar-list.component';
 import {FieldDatastore} from '../../core/datastore/field/field-datastore';
 import {LayerManager} from './map/map/layer-manager';

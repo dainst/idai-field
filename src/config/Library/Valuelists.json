@@ -41855,29 +41855,92 @@
       "Fund verloren"
     ]
   },
+  "Survey-researchMethod-milet": {
+    "creationDate": "02-02-2021",
+    "createdBy": "Lisa Steinmann (Milet)",
+    "description": {},
+    "values": {
+      "Befliegung": {
+        "labels": {
+          "de": "Befliegung"
+        }
+      },
+      "Begehung": {
+        "labels": {
+          "de": "Begehung"
+        }
+      },
+      "Fundkatalog": {
+        "labels": {
+          "de": "Fundkatalog",
+          "en": "Catalogue of Finds"
+        }
+      },
+      "Geoelektrik": {
+        "labels": {
+          "de": "Geoelektrik"
+        }
+      },
+      "Geomagnetik": {
+        "labels": {
+          "de": "Geomagnetik"
+        }
+      },
+      "Georadar": {
+        "labels": {
+          "de": "Georadar"
+        }
+      },
+      "LIDAR": {
+        "labels": {
+          "de": "LIDAR"
+        }
+      },
+      "Luft- oder Satellitenbilder": {
+        "labels": {
+          "de": "Luft- oder Satellitenbilder"
+        }
+      },
+      "Quadratisch": {
+        "labels": {
+          "de": "Quadratisch"
+        }
+      },
+      "Regelmäßig": {
+        "labels": {
+          "de": "Regelmäßig"
+        }
+      },
+      "Seismik": {
+        "labels": {
+          "de": "Seismik"
+        }
+      }
+    }
+  },
   "Find-storagePlace-milet": {
     "createdBy": "Lisa Steinmann (Milet)",
-    "creationDate": "25.04.2020",
+    "creationDate": "25-04-2020",
     "description": {
       "de": "",
       "en": ""
     },
     "values": {
-      "Zeytintepedepo": {},
-      "Steindepo": {},
-      "Athenatempeldepo": {},
-      "Kalabaktepedepo": {},
+      "Zeytintepe-Depot": {},
+      "Steindepot": {},
+      "Athenatempel-Depot": {},
+      "Kalabaktepe-Depot": {},
       "Steingarten": {},
       "Theater": {},
       "Museum Milet": {},
       "Anderer Aufbewahrungsort": {},
       "in situ": {},
-      "verlustig": {}
+      "unbekannt": {}
     }
   },
   "Find-measuringPointOrigin-milet": {
     "createdBy": "Lisa Steinmann (Milet)",
-    "creationDate": "25.04.2020",
+    "creationDate": "25-04-2020",
     "description": {
       "de": "",
       "en": ""
@@ -41889,7 +41952,7 @@
   },
   "Find-workflow-milet": {
     "createdBy": "Lisa Steinmann (Milet)",
-    "creationDate": "25.04.2020",
+    "creationDate": "25-04-2020",
     "description": {
       "de": "",
       "en": ""
@@ -41971,7 +42034,7 @@
   },
   "Sculpture-materialattr-milet": {
     "createdBy": "Lisa Steinmann (Milet)",
-    "creationDate": "26.04.2020",
+    "creationDate": "26-04-2020",
     "description": {
       "de": "",
       "en": ""
@@ -41987,7 +42050,7 @@
   },
   "Sculpture-bodypart-milet": {
     "createdBy": "Lisa Steinmann (Milet)",
-    "creationDate": "26.04.2020",
+    "creationDate": "26-04-2020",
     "description": {
       "de": "",
       "en": ""
@@ -42012,7 +42075,7 @@
   },
   "Sculpture-gender-milet": {
     "createdBy": "Lisa Steinmann (Milet)",
-    "creationDate": "26.04.2020",
+    "creationDate": "26-04-2020",
     "description": {
       "de": "",
       "en": ""
@@ -42026,7 +42089,7 @@
   },
   "Sculpture-sctype-milet": {
     "createdBy": "Lisa Steinmann (Milet)",
-    "creationDate": "26.04.2020",
+    "creationDate": "26-04-2020",
     "description": {
       "de": "",
       "en": ""
@@ -42042,7 +42105,7 @@
   },
   "Sculpture-clothing-milet": {
     "createdBy": "Lisa Steinmann (Milet)",
-    "creationDate": "26.04.2020",
+    "creationDate": "26-04-2020",
     "description": {
       "de": "",
       "en": ""
@@ -42068,7 +42131,7 @@
   },
   "Sculpture-hairstyle-milet": {
     "createdBy": "Lisa Steinmann (Milet)",
-    "creationDate": "26.04.2020",
+    "creationDate": "26-04-2020",
     "description": {
       "de": "",
       "en": ""
@@ -42092,7 +42155,7 @@
   },
   "Sculpture-beardstyle-milet": {
     "createdBy": "Lisa Steinmann (Milet)",
-    "creationDate": "26.04.2020",
+    "creationDate": "26-04-2020",
     "description": {
       "de": "",
       "en": ""
@@ -42108,7 +42171,7 @@
   },
   "Sculpture-attributes-milet": {
     "createdBy": "Lisa Steinmann (Milet)",
-    "creationDate": "26.04.2020",
+    "creationDate": "26-04-2020",
     "description": {
       "de": "",
       "en": ""
@@ -42142,11 +42205,11 @@
     }
   },
   "colors-milet": {
-    "creationDate": "26.04.2020",
+    "creationDate": "26-04-2020",
     "createdBy": "Lisa Steinmann (Milet)",
     "description": {
       "de": "Milet Farbset",
-      "en": ""
+      "en": "Miletus color set"
     },
     "values": {
       "beige": {},
@@ -42172,6 +42235,278 @@
       "dunkelgrau": {},
       "schwarz": {},
       "weiß": {}
+    }
+  },
+  "Layer-layerConsistency-milet": {
+    "creationDate": "03-02-2021",
+    "createdBy": "Lisa Steinmann (Milet)",
+    "description": {
+      "de": "Konsistenz des Erdbefunds",
+      "en": "Consistency of Layer"
+    },
+    "values": {
+      "01-sehr hart": {},
+      "02-hart": {},
+      "03-fest": {},
+      "04-steif": {},
+      "05-weich": {},
+      "06-sehr weich": {},
+      "07-flüssig": {}
+    }
+  },
+  "Layer-layerInclusions-milet": {
+    "creationDate": "03-02-2021",
+    "createdBy": "Lisa Steinmann (Milet)",
+    "description": {
+      "de": "Einschlüsse im Erdbefund",
+      "en": "Inclusions in Layer"
+    },
+    "order": [
+      "Kiesel_klein",
+      "Kiesel_mittel",
+      "Kiesel_groß",
+      "Stein_klein",
+      "Stein_mittel",
+      "Stein_groß",
+      "Kalk",
+      "Ziegelbruch_kleinteilig",
+      "HolzkohleAsche",
+      "Wurzeln",
+      "Tiergänge",
+      "Schnecken"
+    ],
+    "values": {
+      "Kiesel_klein": {
+        "labels": {
+          "de": "Kiesel (klein)",
+          "en": "Pebbles (small)"
+        }
+      },
+      "Kiesel_mittel": {
+        "labels": {
+          "de": "Kiesel (mittel)",
+          "en": "Pebbles (medium)"
+        }
+      },
+      "Kiesel_groß": {
+        "labels": {
+          "de": "Kiesel (groß)",
+          "en": "Pebbles (big)"
+        }
+      },
+      "Stein_klein": {
+        "labels": {
+          "de": "Stein (klein)",
+          "en": "Stone (small)"
+        }
+      },
+      "Stein_mittel": {
+        "labels": {
+          "de": "Stein (mittel)",
+          "en": "Stone (medium)"
+        }
+      },
+      "Stein_groß": {
+        "labels": {
+          "de": "Stein (groß)",
+          "en": "Ston (big)"
+        }
+      },
+      "Kalk": {},
+      "Ziegelbruch_kleinteilig": {},
+      "HolzkohleAsche": {},
+      "Wurzeln": {},
+      "Tiergänge": {},
+      "Schnecken": {}
+    }
+  },
+  "Layer-layerClassification-milet": {
+    "creationDate": "03-02-2021",
+    "createdBy": "Lisa Steinmann (Milet)",
+    "description": {},
+    "values": {
+      "Brandschicht": {
+        "labels": {
+          "de": "Brandschicht",
+          "en": "Brandschicht"
+        }
+      },
+      "Kulturschicht": {
+        "labels": {
+          "de": "Kulturschicht",
+          "en": "Kulturschicht"
+        }
+      },
+      "Laufhorizont": {
+        "labels": {
+          "de": "Laufhorizont",
+          "en": "Laufhorizont"
+        }
+      },
+      "Planierschicht": {
+        "labels": {
+          "de": "Planierschicht",
+          "en": "Planierschicht"
+        }
+      },
+      "Schuttschicht": {
+        "labels": {
+          "de": "Schuttschicht",
+          "en": "Schuttschicht"
+        }
+      },
+      "Schuttschicht": {
+        "labels": {
+          "de": "Humusschicht",
+          "en": "Humusschicht"
+        }
+      },
+      "unbekannt": {
+        "labels": {
+          "de": "unbekannt",
+          "en": "unbekannt"
+        }
+      }
+    }
+  },
+  "layerColors-milet": {
+    "creationDate": "03-02-2021",
+    "createdBy": "Lisa Steinmann (Milet)",
+    "description": {
+      "de": "Milet Farbset 1, Erde"
+    },
+    "values": {
+      "schwarz": {
+        "labels": {
+          "de": "schwarz",
+          "en": "black"
+        }
+      }
+    }
+  },
+  "layerColorsIntensity-milet": {
+    "creationDate": "03-02-2021",
+    "createdBy": "Lisa Steinmann (Milet)",
+    "description": {
+      "de": "Milet Farbset 1, Erde (Helligkeit/Intensität)"
+    },
+    "values": {
+      "sehr hell": {
+        "labels": {
+          "de": "sehr hell",
+          "en": "sehr hell"
+        }
+      },
+      "hell": {
+        "labels": {
+          "de": "hell",
+          "en": "hell"
+        }
+      }
+    }
+  },
+  "Feature-featureForm-milet": {
+    "creationDate": "",
+    "createdBy": "",
+    "description": {},
+    "values": {
+      "Schnitt": {
+        "labels": {
+          "de": "Schnitt",
+          "en": " "
+        }
+      },
+      "Schicht": {
+        "labels": {
+          "de": "Schicht",
+          "en": " "
+        }
+      },
+      "Flaeche": {
+        "labels": {
+          "de": "Überblicksskizze",
+          "en": " "
+        }
+      },
+      "Befund": {
+        "labels": {
+          "de": "Befund",
+          "en": " "
+        }
+      },
+      "Anderes": {
+        "labels": {
+          "de": "Anderes",
+          "en": " "
+        }
+      }
+    }
+  },
+  "Feature-featureBorders-milet": {
+    "creationDate": "03-02-2021",
+    "createdBy": "Lisa Steinmann (Milet)",
+    "description": {},
+    "values": {
+      "eingemessen": {
+        "labels": {
+          "de": "Messdaten vorhanden",
+          "en": " "
+        }
+      }
+    }
+  },
+  "Layer-soilType-milet": {
+    "creationDate": "03-02-2021",
+    "createdBy": "Lisa Steinmann (Milet)",
+    "description": {},
+    "values": {
+      "Lehm": {
+        "labels": {
+          "de": "Lehm",
+          "en": " "
+        }
+      },
+      "Sand": {
+        "labels": {
+          "de": "Sand",
+          "en": " "
+        }
+      },
+      "Schluff": {
+        "labels": {
+          "de": "Schluff",
+          "en": " "
+        }
+      },
+      "Ton": {
+        "labels": {
+          "de": "Ton",
+          "en": " "
+        }
+      }
+    }
+  },
+  "Layer-layerFinds-milet": {
+    "creationDate": "03-02-2021",
+    "createdBy": "Lisa Steinmann (Milet)",
+    "description": {
+      "de": "Fundgattungen im Befund",
+      "en": ".."
+    },
+    "values": {
+      "Keramik": {},
+      "Terrakotta": {},
+      "Stein (bearbeitet)": {},
+      "Tesserae": {},
+      "Inkrustationen": {},
+      "Wandputz": {},
+      "Metall": {},
+      "Glas": {},
+      "Münzen": {},
+      "Ziegel": {},
+      "Knochen": {},
+      "Holz": {},
+      "Mollusken": {}
     }
   }
 }

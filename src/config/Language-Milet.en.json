@@ -1,5 +1,14 @@
 {
   "categories": {
+    "Trench": {
+      "label": "Excavation-Area"
+    },
+    "Feature": {
+      "label": "Trench"
+    },
+    "StrUnit": {
+      "label": "Stratigraphical Unit"
+    },
     "Find": {
       "fields": {
         "measuringPointID": {

@@ -1,5 +1,97 @@
 {
+  "fields": {
+    "category": {
+      "label": "Kategorie"
+    },
+    "identifier": {
+      "label": "Name / ID (eindeutig)",
+      "description": "Eindeutiger Bezeichner dieser Ressource"
+    },
+    "shortDescription": {
+      "label": "Kurztitel"
+    }
+  },
   "categories": {
+    "Trench": {
+      "label": "Grabungsareal"
+    },
+    "Feature": {
+      "label": "Schnitt / Fläche",
+      "fields": {
+        "featureForm": {
+          "label": "Art der Einheit",
+          "description": "Um was für eine Einheit handelt es sich?"
+        },
+        "featureBorders": {
+          "label": "Aufnahme der Grenzen der Einheit",
+          "description": "Wird wurde die Einheit lokalisiert?"
+        }
+      }
+    },
+    "StrUnit": {
+      "label": "Stratigraphische Einheit"
+    },
+    "Layer": {
+      "label": "Befund",
+      "fields": {
+        "distinguishingCriteria": {
+          "label": "Unterscheidungskriterium ggü. Umgebung",
+          "description": "Welches Kriterium wurde zur Abgrenzung des Befundes gewählt?"
+        },
+        "layerClassification": {
+          "label": "Befundart",
+          "description": "Um welche Art von Befund handelt es sich?"
+        },
+        "isNatural": {
+          "label": "Natürliche Entstehung",
+          "description": "Ist die Schicht natürlich? ('Ja' z. B. bei Erosion, 'nein' wenn anthropogen)"
+        },
+        "soilType": {
+          "label": "Bodenanteile",
+          "description": "Partikel des Bodens nach bodenkundlicher Anleitung, bitte erläutern und Anteile in der Beschreibung angeben"
+        },
+        "consistency": {
+          "label": "Konsistenz",
+          "description": "Härte bzw. Konsistenz des Bodens"
+        },
+        "01layerSoilContentDesc": {
+          "label": "Beschreibung des Bodens",
+          "description": "Nach dem Formular: Farbe / Bodenart / Konsistenz"
+        },
+        "02layerColor0": {
+          "label": "Grundfarbe des Bodens",
+          "description": "gemeinsam mit Farbintensität auswählen"
+        },
+        "03layerColorIntensity": {
+          "label": "Intensität der Bodenfarbe",
+          "description": "gemeinsam mit Farbe auswählen"
+        },
+        "04layerInclusions": {
+          "label": "Einschlüsse und Bestandteile",
+          "description": "Bodenbestandteile und Einschlüsse"
+        },
+        "05layerInclusionsDesc": {
+          "label": "Einschlüsse: Ergänzungen",
+          "description": "Einschlüsse: Ergänzungen"
+        },
+        "06layerFinds": {
+          "label": "Funde",
+          "description": "Grober Überblick über die im Befund enthaltenen Funde"
+        },
+        "07layerFindsOther": {
+          "label": "Funde (Ergänzungen)",
+          "description": "Grober Überblick über die im Befund enthaltenen Funde"
+        },
+        "layerInterpretation": {
+          "label": "Interpretation",
+          "description": "..."
+        },
+        "layerDatingIndication": {
+          "label": "Datierende Elemente",
+          "description": "Erläuterung der Basis für die Datierung"
+        }
+      }
+    },
     "Find": {
       "fields": {
         "measuringPointID": {
@@ -29,6 +121,15 @@
         "YearOfFind": {
           "label": "Fundjahr (wenn Altfund)",
           "description": "Im Falle der nachträglichen Inventarisierung eines Altfundes einfügen: Jahr des Fundes, bzw. Jahr in dem der Fund bekannt wurde, soweit nachvollziehbar."
+        }
+      }
+    },
+    "Survey": {
+      "label": "Survey-Areal",
+      "fields": {
+        "researchMethod-milet": {
+          "label": "Untersuchungsmethode",
+          "description": "Welche Surveymethode findet Anwendung?"
         }
       }
     },

@@ -110,6 +110,12 @@ export function takeOrMake<T>(o: T, path: string, alternative: any) {
 }
 
 
+export function moveInArray<T>(array: Array<T>, originalIndex: number, targetIndex: number) {
+
+    array.splice(targetIndex, 0, array.splice(originalIndex, 1)[0]);
+}
+
+
 function _setOn(object: any, path: Array<string|number>, val: any) {
 
     const key = path[0];

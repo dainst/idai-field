@@ -1,14 +1,22 @@
 import {Injectable} from '@angular/core';
 import {set, subtract} from 'tsfun';
-import {ImageDocument} from 'idai-components-2';
+import {FieldDocument, ImageDocument, Document} from 'idai-components-2';
 import {ImageReadDatastore} from '../../../../core/datastore/field/image-read-datastore';
 import {ViewFacade} from '../../../../core/resources/view/view-facade';
+import {FieldReadDatastore} from '../../../../core/datastore/field/field-read-datastore';
+import {ImageRelations} from '../../../../core/model/relation-constants';
 
 
 export interface LayersInitializationResult {
 
-    layers: Array<ImageDocument>,
+    layerGroups: Array<LayerGroup>,
     activeLayersChange: ListDiffResult
+}
+
+export interface LayerGroup {
+
+    document?: FieldDocument,
+    layers: Array<ImageDocument>,
 }
 
 export interface ListDiffResult {
@@ -28,7 +36,8 @@ export class LayerManager {
     private activeLayerIds: string[] = [];
 
 
-    constructor(private datastore: ImageReadDatastore,
+    constructor(private imageDatastore: ImageReadDatastore,
+                private fieldDatastore: FieldReadDatastore,
                 private viewFacade: ViewFacade) {}
 
 
@@ -49,7 +58,7 @@ export class LayerManager {
 
         try {
             return {
-                layers: await this.fetchLayers(),
+                layerGroups: await this.createLayerGroups(),
                 activeLayersChange: activeLayersChange
             };
         } catch(e) {
@@ -76,7 +85,7 @@ export class LayerManager {
         let i = newActiveLayersIds.length;
         while (i--) {
             try {
-                await this.datastore.get(newActiveLayersIds[i])
+                await this.imageDatastore.get(newActiveLayersIds[i])
             } catch (_) {
                 newActiveLayersIds.splice(i, 1);
                 this.viewFacade.setActiveLayersIds(newActiveLayersIds);
@@ -85,11 +94,47 @@ export class LayerManager {
     }
 
 
-    private async fetchLayers() {
+    private async createLayerGroups(): Promise<Array<LayerGroup>> {
 
-        return (await this.datastore.find({
-            constraints: { 'georeference:exist': 'KNOWN' }
-        })).documents;
+        const layerGroups: Array<LayerGroup> = [];
+
+        const currentOperation: FieldDocument|undefined = this.viewFacade.getCurrentOperation();
+        if (currentOperation) layerGroups.push(await this.createLayerGroup(currentOperation));
+
+        layerGroups.push(await this.createLayerGroup(await this.fieldDatastore.get('project')));
+        layerGroups.push(await this.createLayerGroup());
+
+        return layerGroups;
+    }
+
+
+    private async createLayerGroup(document?: FieldDocument): Promise<LayerGroup> {
+
+        return {
+            document: document,
+            layers: document
+                ? await this.fetchLinkedLayers(document)
+                : await this.fetchUnlinkedLayers()
+        };
+    }
+
+
+    private async fetchLinkedLayers(document: FieldDocument): Promise<Array<ImageDocument>> {
+
+        return Document.hasRelations(document, ImageRelations.HASLAYER)
+            ? await this.imageDatastore.getMultiple(document.resource.relations[ImageRelations.HASLAYER])
+            : [];
+    }
+
+
+    private async fetchUnlinkedLayers(): Promise<Array<ImageDocument>> {
+
+        const constraints = {
+            'georeference:exist': 'KNOWN',
+            'isLayerOf:exist': 'UNKNOWN'
+        };
+
+        return (await this.imageDatastore.find({ constraints })).documents;
     }
 
 

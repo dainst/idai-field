@@ -29,49 +29,85 @@ $layer-menu-button-inactive-color: grey;
   cursor: default !important;
   user-select: none;
 
-  .layer-menu-container {
-    max-height: 296px;
-    overflow-y: auto;
-    overflow-x: hidden;
+  .card-body {
+    padding: 8px 14px 5px 12px;
 
-    .form-group {
-      margin-bottom: 0;
+    .layer-menu-container {
+      max-height: 296px;
+      overflow-y: auto;
+      overflow-x: hidden;
 
-      .layer-entry {
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-        cursor: default;
+      .layer-group-heading {
+        font-size: 15px;
       }
 
-      .layer-menu-button {
-        padding: 0;
-        margin-right: 5px;
-        font-size: 18px;
+      .btn-success {
+        height: 20px;
+
+        .mdi {
+          position: relative;
+          bottom: 10px;
+          font-size: 12px;
+        }
       }
 
-      .layer-menu-button.layer-active {
-        color: $layer-menu-button-color !important;
-      }
+      .form-group {
+        margin-bottom: 0;
+        cursor: grab;
 
-      .layer-menu-button.layer-inactive {
-        color: $layer-menu-button-inactive-color !important;
-      }
+        .layer-entry {
+          -webkit-user-select: none;
+          -moz-user-select: none;
+          -ms-user-select: none;
+          user-select: none;
+        }
 
-      .layer-menu-button:hover {
-        color: lighten($layer-menu-button-color, 10%) !important;
-      }
+        .layer-menu-button {
+          padding: 0;
+          margin-right: 5px;
+          font-size: 18px;
+        }
 
-      .layer-menu-button.layer-inactive.mdi-image-filter-center-focus {
-        visibility: hidden;
-      }
+        .layer-menu-button.layer-active {
+          color: $layer-menu-button-color !important;
+        }
 
-      .layer-menu-label {
-        position: relative;
-        bottom: 2px;
-        font-size: 14px;
+        .layer-menu-button.layer-inactive {
+          color: $layer-menu-button-inactive-color !important;
+        }
+
+        .layer-menu-button:hover {
+          color: lighten($layer-menu-button-color, 10%) !important;
+        }
+
+        .layer-menu-button.layer-inactive.mdi-image-filter-center-focus {
+          visibility: hidden;
+        }
+
+        .drag-placeholder {
+          min-height: 27px;
+          border: none !important;
+          cursor: grabbing;
+        }
       }
     }
   }
+}
+
+div.cdk-drag-preview {
+  z-index: 1009 !important;
+
+  .mdi {
+    display: none;
+  }
+
+  .layer-menu-label {
+    left: 46px;
+  }
+}
+
+.layer-menu-label {
+  position: relative;
+  bottom: 2px;
+  font-size: 14px;
 }

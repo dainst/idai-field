@@ -1,4 +1,4 @@
-<div *ngIf="layers.length > 0">
+<div *ngIf="layerGroups.length > 0">
     <div id="layer-button" class="btn btn-primary layer-button" [class.active]="opened"
          (click)="toggle()">
         <span class="mdi mdi-layers mdi-18px"></span>
@@ -6,29 +6,42 @@
     <div *ngIf="opened" id="layer-menu" class="card">
         <div class="card-body">
             <div class="layer-menu-container">
-                <form>
-                    <fieldset class="form-group">
-                        <div *ngFor="let layer of layers" class="layer-entry">
-                            <span class="mdi layer-menu-button"
-                                  [class.mdi-eye]="isActiveLayer(layer)"
-                                  [class.mdi-eye-off]="!isActiveLayer(layer)"
-                                  [class.layer-active]="isActiveLayer(layer)"
-                                  [class.layer-inactive]="!isActiveLayer(layer)"
-                                  (click)="toggleLayer(layer)">
-                            </span>
-
-                            <span *ngIf="isActiveLayer(layer)"
-                                  class="mdi mdi-image-filter-center-focus layer-menu-button layer-active"
-                                  (click)="focusLayer(layer)">
-                            </span>
-                            <span *ngIf="!isActiveLayer(layer)"
-                                  class="mdi mdi-image-filter-center-focus layer-menu-button layer-inactive">
-                            </span>
-
-                            <span class="layer-menu-label">{{getLayerLabel(layer)}}</span>
-                        </div>
-                    </fieldset>
-                </form>
+                <div *ngFor="let layerGroup of layerGroups">
+                    <div class="layer-group-heading">{{getLayerGroupLabel(layerGroup)}}</div>
+                    <form>
+                        <fieldset class="form-group"
+                                  cdkDropList [cdkDropListData]="layerGroup.layers"
+                                  (cdkDropListDropped)="onDrop($event, layerGroup)">
+                            <div *ngFor="let layer of layerGroup.layers"
+                                class="layer-entry"
+                                cdkDrag cdkDragLockAxis="y"
+                                cdkDragBoundary=".form-group"
+                                (cdkDragStarted)="dragging = true"
+                                (cdkDragEnded)="dragging = false"
+                                [cdkDragData]="layer">
+                                <span class="mdi layer-menu-button"
+                                    [class.mdi-eye]="isActiveLayer(layer)"
+                                    [class.mdi-eye-off]="!isActiveLayer(layer)"
+                                    [class.layer-active]="isActiveLayer(layer)"
+                                    [class.layer-inactive]="!isActiveLayer(layer)"
+                                    (click)="toggleLayer(layer)">
+                                </span>
+                                <span *ngIf="isActiveLayer(layer)"
+                                    class="mdi mdi-image-filter-center-focus layer-menu-button layer-active"
+                                    (click)="focusLayer(layer)">
+                                </span>
+                                <span *ngIf="!isActiveLayer(layer)"
+                                    class="mdi mdi-image-filter-center-focus layer-menu-button layer-inactive">
+                                </span>
+                                <span class="layer-menu-label">{{getLayerLabel(layer)}}</span>
+                                <div class="drag-placeholder" *cdkDragPlaceholder></div>
+                            </div>
+                        </fieldset>
+                    </form>
+                    <div *ngIf="layerGroup.document" class="btn btn-block btn-success" (click)="addLayers(layerGroup)">
+                        <span class="mdi mdi-plus-circle"></span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

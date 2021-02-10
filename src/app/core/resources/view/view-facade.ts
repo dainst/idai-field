@@ -41,8 +41,7 @@ export class ViewFacade {
             remoteChangesStream,
             resourcesStateManager,
             loading,
-            (indexName: string, matchTerm: string) =>
-                indexFacade.getCount(indexName, matchTerm)
+            (indexName: string, matchTerm: string) => indexFacade.getCount(indexName, matchTerm)
         );
     }
 

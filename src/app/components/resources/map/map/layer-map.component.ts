@@ -1,15 +1,15 @@
 import {ChangeDetectorRef, Component, Input, NgZone, SimpleChanges} from '@angular/core';
 import L from 'leaflet';
+import {flatten} from 'tsfun';
 import {ImageDocument, ImageGeoreference} from 'idai-components-2';
-import {LayerManager, ListDiffResult} from './layer-manager';
+import {LayerGroup, LayerManager, ListDiffResult} from './layer-manager';
 import {LayerImageProvider} from './layer-image-provider';
-import {SettingsService} from '../../../../core/settings/settings-service';
 import {ProjectConfiguration} from '../../../../core/configuration/project-configuration';
 import {MapComponent} from './map.component';
 import {ImageContainer} from '../../../../core/images/imagestore/image-container';
 import {Messages} from '../../../messages/messages';
-import {Settings} from '../../../../core/settings/settings';
 import {SettingsProvider} from '../../../../core/settings/settings-provider';
+
 
 const fs = typeof window !== 'undefined'
   ? window.require('fs')
@@ -28,7 +28,7 @@ export class LayerMapComponent extends MapComponent {
 
     @Input() viewName: string;
 
-    public layers: Array<ImageDocument> = [];
+    public layerGroups: Array<LayerGroup> = [];
 
     private panes: { [resourceId: string]: any } = {};
     private imageOverlays: { [resourceId: string]: L.ImageOverlay } = {};
@@ -56,6 +56,21 @@ export class LayerMapComponent extends MapComponent {
         if (LayerMapComponent.isLayersUpdateNecessary(changes)) this.layersUpdate = true;
 
         await super.ngOnChanges(changes);
+    }
+
+
+    public async updateLayers(): Promise<void> {
+
+        this.layerImageProvider.reset();
+
+        const { layerGroups, activeLayersChange } = await this.layerManager.initializeLayers();
+
+        this.layerGroups = layerGroups;
+        this.initializePanes();
+        this.updatePaneZIndices();
+        this.handleActiveLayersChange(activeLayersChange);
+
+        this.changeDetectorRef.detectChanges();
     }
 
 
@@ -111,20 +126,6 @@ export class LayerMapComponent extends MapComponent {
     }
 
 
-    private async updateLayers(): Promise<void> {
-
-        this.layerImageProvider.reset();
-
-        const { layers, activeLayersChange } = await this.layerManager.initializeLayers();
-
-        this.layers = layers;
-        this.initializePanes();
-        this.handleActiveLayersChange(activeLayersChange);
-
-        this.changeDetectorRef.detectChanges();
-    }
-
-
     private handleActiveLayersChange(change: ListDiffResult) {
 
         change.removed.forEach(layerId => this.removeLayerFromMap(layerId));
@@ -134,25 +135,30 @@ export class LayerMapComponent extends MapComponent {
 
     private initializePanes() {
 
-        this.layers
-            .filter(layer => !this.panes[layer.resource.id as any])
-            .reduce((zIndex, layer) => this.createPane(zIndex, layer), 1);
+        this.getLayers().filter(layer => !this.panes[layer.resource.id as any])
+            .forEach(layer => this.createPane(layer));
     }
 
 
-    private createPane(zIndex: any, layer: any) {
+    private createPane(layer: any) {
 
         const pane = this.map.createPane(layer.resource.id);
-        pane.style.zIndex = String(zIndex);
         this.panes[layer.resource.id] = pane;
-        return zIndex + 1;
     }
+
+
+    private updatePaneZIndices() {
+
+        this.getLayers().reverse().forEach((layer, index) => {
+            this.panes[layer.resource.id].style.zIndex = String(index);
+        })
+    };
 
 
     private async addLayerToMap(resourceId: string) {
 
         const layerDocument: ImageDocument|undefined
-            = this.layers.find(layer => layer.resource.id === resourceId);
+            = this.getLayers().find(layer => layer.resource.id === resourceId);
         if (!layerDocument) return;
 
         const imageContainer: ImageContainer = await this.layerImageProvider.getImageContainer(resourceId);
@@ -176,6 +182,14 @@ export class LayerMapComponent extends MapComponent {
         }
 
         this.map.removeLayer(imageOverlay);
+    }
+
+
+    private getLayers(): Array<ImageDocument> {
+
+        return flatten(
+            this.layerGroups.map(layerGroup => layerGroup.layers)
+        );
     }
 
 

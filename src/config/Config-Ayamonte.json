@@ -126,7 +126,8 @@
       "findObjectType": "Find-findObjectType-ayamonte",
       "materialColor": "Find-materialColor-ayamonte",
       "storagePlace": "Find-storagePlace-ayamonte",
-      "ayamonteCondition": "Find-ayamonteCondition-ayamonte"
+      "ayamonteCondition": "Find-ayamonteCondition-ayamonte",
+      "period": "Find-period-ayamonte"
     }
   },
   "Feature:default": {
@@ -144,9 +145,6 @@
       "featureClassification": {
         "inputType": "checkboxes"
       },
-      "featureLayerClassification": {
-        "inputType": "checkboxes"
-      },
       "createdAfterSpoil": {
         "inputType": "input"
       },
@@ -161,7 +159,6 @@
       "artifacts": "Feature-artifacts-ayamonte",
       "significanceRemark": "Feature-significanceRemark-ayamonte",
       "featureClassification": "Feature-featureClassification-ayamonte",
-      "featureLayerClassification": "Feature-featureLayerClassification-ayamonte",
       "featureClassificationOther": "Feature-featureClassificationOther-ayamonte",
       "otherClassification": "Feature-otherClassification-ayamonte"
     }
@@ -198,7 +195,6 @@
       }
     },
     "valuelists": {
-      "period": "Glass-period-ayamonte",
       "objectType": "Glass-objectType-ayamonte"
     }
   },
@@ -215,10 +211,7 @@
   },
   "Brick:default": {
     "hidden": [],
-    "fields": {},
-    "valuelists": {
-      "period": "Brick-period-ayamonte"
-    }
+    "fields": {}
   },
   "Burial:default": {
     "hidden": [],
@@ -312,9 +305,7 @@
       "specificType": "Pottery-specificType-ayamonte",
       "vesselFormSpecific": "Pottery-vesselFormSpecific-ayamonte",
       "objectType": "Pottery-objectType-ayamonte",
-      "period": "Pottery-period-ayamonte",
-      "provenance": "Pottery-provenance-ayamonte",
-      "ayamonteCondition": "Pottery-ayamonteCondition-ayamonte"
+      "provenance": "Pottery-provenance-ayamonte"
     }
   },
   "Metal:default": {
@@ -334,7 +325,8 @@
     },
     "valuelists": {
       "artifacts": "Grave-artifacts-ayamonte",
-      "significanceRemark": "Grave-significanceRemark-ayamonte"
+      "significanceRemark": "Grave-significanceRemark-ayamonte",
+      "graveType": "Grave-graveType-ayamonte"
     }
   },
   "Bone:default": {

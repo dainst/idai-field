@@ -3,7 +3,8 @@
 <layer-menu [layerGroups]="layerGroups"
             (onToggleLayer)="toggleLayer($event)"
             (onFocusLayer)="focusLayer($event)"
-            (onEditLayers)="updateLayers()"></layer-menu>
+            (onEditLayers)="updateLayers()"
+            (onChangeLayersOrder)="updatePaneZIndices()"></layer-menu>
 
 <div id="map-editor-buttons" *ngIf="isEditing">
     <div *ngIf="mousePositionCoordinates" id="mouse-position-coordinates-x" class="badge badge-secondary">

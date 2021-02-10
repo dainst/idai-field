@@ -2,4 +2,5 @@
 <layer-menu [layerGroups]="layerGroups"
             (onToggleLayer)="toggleLayer($event)"
             (onFocusLayer)="focusLayer($event)"
-            (onEditLayers)="updateLayers()"></layer-menu>
+            (onEditLayers)="updateLayers()"
+            (onChangeLayersOrder)="updatePaneZIndices()"></layer-menu>

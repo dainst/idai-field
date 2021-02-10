@@ -103,6 +103,14 @@ export class LayerMapComponent extends MapComponent {
     }
 
 
+    public updatePaneZIndices() {
+
+        this.getLayers().reverse().forEach((layer, index) => {
+            this.panes[layer.resource.id].style.zIndex = String(index);
+        })
+    };
+
+
     /**
      * Called by MapComponent.ngOnChange
      */
@@ -145,14 +153,6 @@ export class LayerMapComponent extends MapComponent {
         const pane = this.map.createPane(layer.resource.id);
         this.panes[layer.resource.id] = pane;
     }
-
-
-    private updatePaneZIndices() {
-
-        this.getLayers().reverse().forEach((layer, index) => {
-            this.panes[layer.resource.id].style.zIndex = String(index);
-        })
-    };
 
 
     private async addLayerToMap(resourceId: string) {

@@ -1,4 +1,4 @@
-import {Input, Output, EventEmitter, Renderer2, Component, ChangeDetectorRef} from '@angular/core';
+import {Input, Output, EventEmitter, Renderer2, Component, ChangeDetectorRef, OnDestroy} from '@angular/core';
 import {CdkDragDrop} from '@angular/cdk/drag-drop';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {I18n} from '@ngx-translate/i18n-polyfill';
@@ -22,17 +22,18 @@ import {ImageDatastore} from '../../../../core/datastore/field/image-datastore';
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export class LayerMenuComponent extends MenuComponent {
+export class LayerMenuComponent extends MenuComponent implements OnDestroy {
 
     @Input() layerGroups: Array<LayerGroup> = [];
 
     @Output() onToggleLayer = new EventEmitter<ImageDocument>();
     @Output() onFocusLayer = new EventEmitter<ImageDocument>();
     @Output() onEditLayers = new EventEmitter<void>();
+    @Output() onChangeLayersOrder = new EventEmitter<void>();
 
     public dragging: boolean = false;
 
-    private ready: Promise<void> = Promise.resolve();
+    private unsavedDocuments: Array<FieldDocument> = [];
 
 
     constructor(private layerManager: LayerManager,
@@ -53,9 +54,16 @@ export class LayerMenuComponent extends MenuComponent {
     public focusLayer = (layer: ImageDocument) => this.onFocusLayer.emit(layer);
 
 
+    ngOnDestroy() {
+
+        this.saveOrderChanges();
+    }
+
+
     public close() {
 
         super.close();
+        this.saveOrderChanges();
         this.changeDetectorRef.detectChanges();
     }
 
@@ -65,20 +73,12 @@ export class LayerMenuComponent extends MenuComponent {
         const relations: string[] = layerGroup.document.resource.relations[ImageRelations.HASLAYER];
 
         moveInArray(layerGroup.layers, event.previousIndex, event.currentIndex);
-        
-        this.ready = this.ready.then(() => this.updateLayerOrder(
-            layerGroup.document.resource.id, event.previousIndex, event.currentIndex
-        ));
-    }
+        moveInArray(relations, event.previousIndex, event.currentIndex);
+        if (!this.unsavedDocuments.includes(layerGroup.document)) {
+            this.unsavedDocuments.push(layerGroup.document);
+        }
 
-
-    private async updateLayerOrder(id: string, originalIndex: number, targetIndex: number) {
-
-        const document: ImageDocument = await this.imageDatastore.get(id);
-        moveInArray(document.resource.relations[ImageRelations.HASLAYER], originalIndex, targetIndex);
-        
-        await this.relationsManager.update(document);
-        this.onEditLayers.emit();
+        this.onChangeLayersOrder.emit();
     }
 
 
@@ -136,5 +136,15 @@ export class LayerMenuComponent extends MenuComponent {
         } finally {
             this.menuService.setContext(MenuContext.DEFAULT);
         }
+    }
+
+
+    private async saveOrderChanges() {
+
+        for (let document of this.unsavedDocuments) {
+            await this.relationsManager.update(document);
+        }
+
+        this.unsavedDocuments = [];
     }
 }

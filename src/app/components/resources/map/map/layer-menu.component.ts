@@ -23,7 +23,7 @@ export class LayerMenuComponent extends MenuComponent implements OnDestroy {
 
     @Output() onToggleLayer = new EventEmitter<ImageDocument>();
     @Output() onFocusLayer = new EventEmitter<ImageDocument>();
-    @Output() onEditLayers = new EventEmitter<void>();
+    @Output() onAddLayers = new EventEmitter<void>();
     @Output() onChangeLayersOrder = new EventEmitter<void>();
 
     public dragging: boolean = false;
@@ -92,7 +92,7 @@ export class LayerMenuComponent extends MenuComponent implements OnDestroy {
         if (newLayers.length === 0) return;
 
         await this.layerManager.addLayers(group, newLayers);
-        this.onEditLayers.emit();
+        this.onAddLayers.emit();
     }
 
 

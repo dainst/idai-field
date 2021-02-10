@@ -5,6 +5,9 @@ import {ImageReadDatastore} from '../../../../core/datastore/field/image-read-da
 import {ViewFacade} from '../../../../core/resources/view/view-facade';
 import {FieldReadDatastore} from '../../../../core/datastore/field/field-read-datastore';
 import {ImageRelations} from '../../../../core/model/relation-constants';
+import {RelationsManager} from '../../../../core/model/relations-manager';
+import {clone} from '../../../../core/util/object-util';
+import {moveInArray} from '../../../../core/util/utils';
 
 
 export interface LayersInitializationResult {
@@ -34,11 +37,13 @@ export interface ListDiffResult {
 export class LayerManager {
 
     private activeLayerIds: string[] = [];
+    private unsavedDocuments: Array<FieldDocument> = [];
 
 
     constructor(private imageDatastore: ImageReadDatastore,
                 private fieldDatastore: FieldReadDatastore,
-                private viewFacade: ViewFacade) {}
+                private viewFacade: ViewFacade,
+                private relationsManager: RelationsManager) {}
 
 
     public reset = () => this.activeLayerIds = [];
@@ -75,6 +80,40 @@ export class LayerManager {
             set(this.activeLayerIds.concat([resourceId]));
 
         this.viewFacade.setActiveLayersIds(this.activeLayerIds);
+    }
+
+
+    public async addLayers(group: LayerGroup, newLayers: Array<ImageDocument>) {
+
+        const oldDocument: FieldDocument = clone(group.document);
+
+        const layerIds: string[] = group.document.resource.relations[ImageRelations.HASLAYER] || [];
+        const newLayerIds: string[] = newLayers.map(layer => layer.resource.id);
+        group.document.resource.relations[ImageRelations.HASLAYER] = layerIds.concat(newLayerIds);
+
+        await this.relationsManager.update(group.document, oldDocument);
+    }
+
+
+    public async changeOrder(group: LayerGroup, originalIndex: number, targetIndex: number) {
+
+        const relations: string[] = group.document.resource.relations[ImageRelations.HASLAYER];
+
+        moveInArray(group.layers, originalIndex, targetIndex);
+        moveInArray(relations, originalIndex, targetIndex);
+        if (!this.unsavedDocuments.includes(group.document)) {
+            this.unsavedDocuments.push(group.document);
+        }
+    }
+
+
+    public async saveOrderChanges() {
+
+        for (let document of this.unsavedDocuments) {
+            await this.relationsManager.update(document);
+        }
+
+        this.unsavedDocuments = [];
     }
 
 

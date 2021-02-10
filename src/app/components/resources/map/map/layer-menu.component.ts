@@ -2,16 +2,11 @@ import {Input, Output, EventEmitter, Renderer2, Component, ChangeDetectorRef, On
 import {CdkDragDrop} from '@angular/cdk/drag-drop';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {I18n} from '@ngx-translate/i18n-polyfill';
-import {FieldDocument, ImageDocument} from 'idai-components-2';
+import {ImageDocument} from 'idai-components-2';
 import {LayerGroup, LayerManager} from './layer-manager';
 import {MenuComponent} from '../../../widgets/menu.component';
 import {MenuContext, MenuService} from '../../../menu-service';
 import {ImagePickerComponent} from '../../../docedit/widgets/image-picker.component';
-import {RelationsManager} from '../../../../core/model/relations-manager';
-import {ImageRelations} from '../../../../core/model/relation-constants';
-import {clone} from '../../../../core/util/object-util';
-import {moveInArray} from '../../../../core/util/utils';
-import {ImageDatastore} from '../../../../core/datastore/field/image-datastore';
 
 
 @Component({
@@ -33,15 +28,11 @@ export class LayerMenuComponent extends MenuComponent implements OnDestroy {
 
     public dragging: boolean = false;
 
-    private unsavedDocuments: Array<FieldDocument> = [];
-
 
     constructor(private layerManager: LayerManager,
                 private changeDetectorRef: ChangeDetectorRef,
                 private modalService: NgbModal,
                 private menuService: MenuService,
-                private relationsManager: RelationsManager,
-                private imageDatastore: ImageDatastore,
                 private i18n: I18n,
                 renderer: Renderer2) {
 
@@ -56,28 +47,21 @@ export class LayerMenuComponent extends MenuComponent implements OnDestroy {
 
     ngOnDestroy() {
 
-        this.saveOrderChanges();
+        this.layerManager.saveOrderChanges();
     }
 
 
     public close() {
 
         super.close();
-        this.saveOrderChanges();
+        this.layerManager.saveOrderChanges();
         this.changeDetectorRef.detectChanges();
     }
 
 
     public async onDrop(event: CdkDragDrop<string[], any>, layerGroup: LayerGroup) {
 
-        const relations: string[] = layerGroup.document.resource.relations[ImageRelations.HASLAYER];
-
-        moveInArray(layerGroup.layers, event.previousIndex, event.currentIndex);
-        moveInArray(relations, event.previousIndex, event.currentIndex);
-        if (!this.unsavedDocuments.includes(layerGroup.document)) {
-            this.unsavedDocuments.push(layerGroup.document);
-        }
-
+        this.layerManager.changeOrder(layerGroup, event.previousIndex, event.currentIndex);
         this.onChangeLayersOrder.emit();
     }
 
@@ -107,13 +91,7 @@ export class LayerMenuComponent extends MenuComponent implements OnDestroy {
         const newLayers: Array<ImageDocument> = await this.selectNewLayers(group);
         if (newLayers.length === 0) return;
 
-        const oldDocument: FieldDocument = clone(group.document);
-
-        const layerIds: string[] = group.document.resource.relations[ImageRelations.HASLAYER] || [];
-        const newLayerIds: string[] = newLayers.map(layer => layer.resource.id);
-        group.document.resource.relations[ImageRelations.HASLAYER] = layerIds.concat(newLayerIds);
-
-        await this.relationsManager.update(group.document, oldDocument);
+        await this.layerManager.addLayers(group, newLayers);
         this.onEditLayers.emit();
     }
 
@@ -136,15 +114,5 @@ export class LayerMenuComponent extends MenuComponent implements OnDestroy {
         } finally {
             this.menuService.setContext(MenuContext.DEFAULT);
         }
-    }
-
-
-    private async saveOrderChanges() {
-
-        for (let document of this.unsavedDocuments) {
-            await this.relationsManager.update(document);
-        }
-
-        this.unsavedDocuments = [];
     }
 }

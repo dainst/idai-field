@@ -30,7 +30,7 @@ describe('LayerManager', () => {
             ['getActiveLayersIds', 'setActiveLayersIds', 'getCurrentOperation']);
         mockViewFacade.getActiveLayersIds.and.returnValue([]);
 
-        layerManager = new LayerManager(mockDatastore, mockDatastore, mockViewFacade);
+        layerManager = new LayerManager(mockDatastore, mockDatastore, mockViewFacade, undefined);
     });
 
 

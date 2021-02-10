@@ -53,7 +53,10 @@ $layer-menu-button-inactive-color: grey;
 
       .form-group {
         margin-bottom: 0;
-        cursor: grab;
+
+        &.drag-and-drop-group {
+          cursor: grab;
+        }
 
         .layer-entry {
           -webkit-user-select: none;

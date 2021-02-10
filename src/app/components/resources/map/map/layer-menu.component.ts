@@ -10,6 +10,7 @@ import {ImagePickerComponent} from '../../../docedit/widgets/image-picker.compon
 import {RelationsManager} from '../../../../core/model/relations-manager';
 import {ImageRelations} from '../../../../core/model/relation-constants';
 import {clone} from '../../../../core/util/object-util';
+import {moveInArray} from '../../../../core/util/utils';
 
 
 @Component({
@@ -59,17 +60,8 @@ export class LayerMenuComponent extends MenuComponent {
 
         const relations: string[] = layerGroup.document.resource.relations[ImageRelations.HASLAYER];
 
-        layerGroup.layers.splice(
-            event.currentIndex,
-            0,
-            layerGroup.layers.splice(event.previousIndex, 1)[0]
-        );
-
-        relations.splice(
-            event.currentIndex,
-            0,
-            relations.splice(event.previousIndex, 1)[0]
-        );
+        moveInArray(layerGroup.layers, event.previousIndex, event.currentIndex);
+        moveInArray(relations, event.previousIndex, event.currentIndex);
 
         await this.relationsManager.update(layerGroup.document);
         this.onEditLayers.emit();

@@ -7,6 +7,7 @@ import {map} from 'tsfun/associative';
 import {Settings} from '../../core/settings/settings';
 import {LanguagePickerModalComponent} from './language-picker-modal.component';
 import {MenuContext, MenuService} from '../menu-service';
+import {moveInArray} from '../../core/util/utils';
 
 const cldr = typeof window !== 'undefined' ? window.require('cldr') : require('cldr');
 const remote = typeof window !== 'undefined' ? window.require('electron').remote : require('electron').remote;
@@ -50,11 +51,7 @@ export class LanguageSettingsComponent {
 
     public onDrop(event: CdkDragDrop<string[], any>) {
 
-        this.selectedLanguages.splice(
-            event.currentIndex,
-            0,
-            this.selectedLanguages.splice(event.previousIndex, 1)[0]
-        );
+        moveInArray(this.selectedLanguages, event.previousIndex, event.currentIndex);
     }
 
 

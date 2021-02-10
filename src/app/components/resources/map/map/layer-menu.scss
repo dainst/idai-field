@@ -53,13 +53,13 @@ $layer-menu-button-inactive-color: grey;
 
       .form-group {
         margin-bottom: 0;
+        cursor: grab;
 
         .layer-entry {
           -webkit-user-select: none;
           -moz-user-select: none;
           -ms-user-select: none;
           user-select: none;
-          cursor: default;
         }
 
         .layer-menu-button {
@@ -84,12 +84,30 @@ $layer-menu-button-inactive-color: grey;
           visibility: hidden;
         }
 
-        .layer-menu-label {
-          position: relative;
-          bottom: 2px;
-          font-size: 14px;
+        .drag-placeholder {
+          min-height: 27px;
+          border: none !important;
+          cursor: grabbing;
         }
       }
     }
   }
+}
+
+div.cdk-drag-preview {
+  z-index: 1009 !important;
+
+  .mdi {
+    display: none;
+  }
+
+  .layer-menu-label {
+    left: 46px;
+  }
+}
+
+.layer-menu-label {
+  position: relative;
+  bottom: 2px;
+  font-size: 14px;
 }

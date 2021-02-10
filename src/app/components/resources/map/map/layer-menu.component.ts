@@ -1,4 +1,5 @@
 import {Input, Output, EventEmitter, Renderer2, Component, ChangeDetectorRef} from '@angular/core';
+import {CdkDragDrop} from '@angular/cdk/drag-drop';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {FieldDocument, ImageDocument} from 'idai-components-2';
@@ -27,6 +28,8 @@ export class LayerMenuComponent extends MenuComponent {
     @Output() onFocusLayer = new EventEmitter<ImageDocument>();
     @Output() onEditLayers = new EventEmitter<void>();
 
+    public dragging: boolean = false;
+
 
     constructor(private layerManager: LayerManager,
                 private changeDetectorRef: ChangeDetectorRef,
@@ -49,6 +52,27 @@ export class LayerMenuComponent extends MenuComponent {
 
         super.close();
         this.changeDetectorRef.detectChanges();
+    }
+
+
+    public async onDrop(event: CdkDragDrop<string[], any>, layerGroup: LayerGroup) {
+
+        const relations: string[] = layerGroup.document.resource.relations[ImageRelations.HASLAYER];
+
+        layerGroup.layers.splice(
+            event.currentIndex,
+            0,
+            layerGroup.layers.splice(event.previousIndex, 1)[0]
+        );
+
+        relations.splice(
+            event.currentIndex,
+            0,
+            relations.splice(event.previousIndex, 1)[0]
+        );
+
+        await this.relationsManager.update(layerGroup.document);
+        this.onEditLayers.emit();
     }
 
 

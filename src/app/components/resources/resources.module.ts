@@ -2,6 +2,7 @@ import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {FormsModule} from '@angular/forms';
 import {ScrollingModule} from '@angular/cdk/scrolling';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {ResourcesComponent} from './resources.component';
 import {GeometryViewComponent} from './map/list/geometry-view.component';
@@ -69,7 +70,8 @@ const remote = typeof window !== 'undefined'
         ImageGridModule,
         DoceditModule,
         ImageViewerModule,
-        ScrollingModule
+        ScrollingModule,
+        DragDropModule
     ],
     declarations: [
         ResourcesComponent,

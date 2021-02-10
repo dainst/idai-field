@@ -11,6 +11,7 @@ import {RelationsManager} from '../../../../core/model/relations-manager';
 import {ImageRelations} from '../../../../core/model/relation-constants';
 import {clone} from '../../../../core/util/object-util';
 import {moveInArray} from '../../../../core/util/utils';
+import {ImageDatastore} from '../../../../core/datastore/field/image-datastore';
 
 
 @Component({
@@ -31,12 +32,15 @@ export class LayerMenuComponent extends MenuComponent {
 
     public dragging: boolean = false;
 
+    private ready: Promise<void> = Promise.resolve();
+
 
     constructor(private layerManager: LayerManager,
                 private changeDetectorRef: ChangeDetectorRef,
                 private modalService: NgbModal,
                 private menuService: MenuService,
                 private relationsManager: RelationsManager,
+                private imageDatastore: ImageDatastore,
                 private i18n: I18n,
                 renderer: Renderer2) {
 
@@ -61,9 +65,19 @@ export class LayerMenuComponent extends MenuComponent {
         const relations: string[] = layerGroup.document.resource.relations[ImageRelations.HASLAYER];
 
         moveInArray(layerGroup.layers, event.previousIndex, event.currentIndex);
-        moveInArray(relations, event.previousIndex, event.currentIndex);
+        
+        this.ready = this.ready.then(() => this.updateLayerOrder(
+            layerGroup.document.resource.id, event.previousIndex, event.currentIndex
+        ));
+    }
 
-        await this.relationsManager.update(layerGroup.document);
+
+    private async updateLayerOrder(id: string, originalIndex: number, targetIndex: number) {
+
+        const document: ImageDocument = await this.imageDatastore.get(id);
+        moveInArray(document.resource.relations[ImageRelations.HASLAYER], originalIndex, targetIndex);
+        
+        await this.relationsManager.update(document);
         this.onEditLayers.emit();
     }
 

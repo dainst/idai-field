@@ -9,6 +9,9 @@
     },
     "shortDescription": {
       "label": "Kurztitel"
+    },
+    "scale": {
+      "label": "Maßstab"
     }
   },
   "categories": {
@@ -30,6 +33,15 @@
     },
     "StrUnit": {
       "label": "Stratigraphische Einheit"
+    },
+    "TrenchSketch": {
+      "label": "Überblicksskizze",
+      "fields": {
+          "sketchNotes": {
+            "label": "Notizen",
+            "description": "Anmerkungen und Bemerkungen zur Skizze"
+          }
+      }
     },
     "Layer": {
       "label": "Befund",
@@ -210,6 +222,14 @@
         "headheight": {
           "label": "Height of Head to Crown (in cm)",
           "description": "Blergh"
+        }
+      }
+    },
+    "Drawing": {
+      "fields": {
+        "sketchNotes": {
+          "label": "Notizen",
+          "description": "Anmerkungen und Bemerkungen zur Skizze"
         }
       }
     }

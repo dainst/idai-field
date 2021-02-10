@@ -9,7 +9,14 @@
   },
   "Operation:default": {
     "hidden": [],
-    "fields": {}
+    "fields": {
+      "AreaShorthand": {
+        "inputType": "radio"
+      }
+    },
+    "valuelists": {
+      "AreaShorthand": "Operation-AreaShorthand-milet"
+    }
   },
   "Survey:default": {
     "hidden": [],
@@ -42,12 +49,18 @@
   },
   "TrenchSketch": {
     "parent": "Feature",
-    "color": "#d52228",
+    "color": "#3a3168",
     "hidden": [],
     "fields": {
-      "testfield": {
+      "sketchNotes": {
         "inputType": "text"
+      },
+      "scale": {
+        "inputType": "dropdown"
       }
+    }, 
+    "valuelists": {
+      "scale": "Drawing-scale-milet"
     }
   },
   "Building:default": {
@@ -163,29 +176,29 @@
       "layerClassification": {
         "inputType": "dropdown"
       },
+      "isNatural": {
+        "inputType": "boolean"
+      },
       "layerDescription": {
         "inputType": "text"
       },
       "distinguishingCriteria": {
         "inputType": "radio"
       },
-      "isNatural": {
-        "inputType": "boolean"
+      "layerColorIntensity": {
+        "inputType": "checkboxes"
       },
-      "soilType": {
+      "layerColor0": {
         "inputType": "checkboxes"
       },
       "consistency": {
         "inputType": "checkboxes"
       },
+      "soilType": {
+        "inputType": "checkboxes"
+      },
       "layerSoilContentDesc": {
         "inputType": "text"
-      },
-      "layerColor0": {
-        "inputType": "checkboxes"
-      },
-      "layerColorIntensity": {
-        "inputType": "checkboxes"
       },
       "layerInclusions": {
         "inputType": "checkboxes"
@@ -367,5 +380,19 @@
   "Type:default": {
     "hidden": [],
     "fields": {}
+  },
+  "Drawing:default": {
+    "fields": {
+      "scale": {
+        "inputType": "dropdown"
+      },
+      "sketchNotes": {
+        "inputType": "text"
+      }
+    },
+    "valuelists": {
+      "scale": "Drawing-scale-milet",
+      "drawingType": "Drawing-drawingType-milet"
+    }
   }
 }

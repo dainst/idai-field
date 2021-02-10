@@ -42508,5 +42508,91 @@
       "Holz": {},
       "Mollusken": {}
     }
+  },
+  "Drawing-scale-milet": {
+    "creationDate": "10-02-2021",
+    "createdBy": "Lisa Steinmann (Milet)",
+    "description": {
+      "de": "Maßstab",
+      "en": ".."
+    },
+    "order": [
+      "1:1",
+      "1:2",
+      "1:5",
+      "1:10",
+      "1:20",
+      "1:25",
+      "1:50",
+      "1:75",
+      "1:100",
+      "1:200",
+      "1:500",
+      "1:1000",
+      "1:2000",
+      "1:5000",
+      "1:10000",
+      "1:25000",
+      "1:50000"
+    ], 
+    "values": {
+      "1:1": {},
+      "1:2": {},
+      "1:5": {},
+      "1:10": {},
+      "1:20": {},
+      "1:25": {},
+      "1:50": {},
+      "1:75": {},
+      "1:100": {},
+      "1:200": {},
+      "1:500": {},
+      "1:1000": {},
+      "1:2000": {},
+      "1:5000": {},
+      "1:10000": {},
+      "1:25000": {},
+      "1:50000": {}
+    }
+  },
+  "Drawing-drawingType-milet": {
+    "creationDate": "10-02-2021",
+    "createdBy": "Lisa Steinmann (Milet)",
+    "description": {},
+    "values": {
+      "CAD": {
+        "labels": {
+          "de": "CAD-Zeichnung",
+          "en": "CAD-Drawing"
+        }
+      },
+      "Totalstation-direct": {
+        "labels": {
+          "de": "Zeichnung durch Totalstation",
+          "en": "Drawn by Totalstation"
+        }
+      },
+      "Handzeichnung-precise": {
+        "labels": {
+          "de": "maßgetreue Handzeichnung",
+          "en": "precise manual Drawing"
+        }
+      },
+      "sketch": {
+        "labels": {
+          "de": "skizzenhafte Handzeichnung",
+          "en": "manual Drawing (Sketch)"
+        }
+      }
+    }
+  },
+  "Operation-AreaShorthand-milet": {
+    "creationDate": "10-02-2021",
+    "createdBy": "Lisa Steinmann (Milet)",
+    "description": {},
+    "values": {
+      "HU": {},
+      "DT": {}
+    }
   }
 }

@@ -1,455 +1,455 @@
 {
   "commons": {
     "dimensionLength": {
-      "label": "Length / Longitud"
+      "label": "Length"
     },
     "dimensionWidth": {
-      "label": "Width / Anchura"
+      "label": "Width"
     },
     "dimensionHeight": {
-      "label": "Height / Altura"
+      "label": "Height"
     },
     "dimensionVerticalExtent": {
-      "label": "Vertical extent / Nivel"
+      "label": "Vertical extent"
     },
     "processor": {
-      "label": "Processor / Responsable"
+      "label": "Processor"
     },
     "campaign": {
-      "label": "Campaign / Campaña"
+      "label": "Campaign"
     },
     "description": {
-      "label": "Description / Descripción"
+      "label": "Description"
     },
     "period": {
-      "label": "Period / Época"
+      "label": "Period"
     },
     "beginningDate": {
-      "label": "Beginning date / Fecha inicial"
+      "label": "Beginning date"
     },
     "endDate": {
-      "label": "End date / Fecha final"
+      "label": "End date"
     },
     "date": {
-      "label": "Date / Fecha"
+      "label": "Date"
     },
     "orientation": {
-      "label": "Orientation / Orientación"
+      "label": "Orientation"
     },
     "spatialLocation": {
-      "label": "Spatial location / Descripción de la ubicación"
+      "label": "Spatial location"
     },
     "provenance": {
-      "label": "Provenance / Procedencia"
+      "label": "Provenance"
     },
     "shortDescription": {
-      "label": "Short description / Breve descripción"
+      "label": "Short description"
     },
     "category": {
-      "label": "Category / Categoría"
+      "label": "Category"
     }
   },
   "categories": {
     "Project": {
       "fields": {
         "projectProgression": {
-          "label": "Project Progression / Curso del proyecto",
-          "description": "Information on the course of the project / Información sobre el curso del proyecto"
+          "label": "Project Progression",
+          "description": "Information on the course of the project"
         }
       }
     },
     "Place": {
       "fields": {
         "boundary": {
-          "label": "Boundaries / Límite"
+          "label": "Boundaries"
         },
         "placeName": {
-          "label": "Place name / Yacimiento"
+          "label": "Place name"
         },
         "excavationHistory": {
-          "label": "Excavation history / Historia de la excavación"
+          "label": "Excavation history"
         },
         "siteClassification": {
-          "label": "Site classification / Clasificación del yacimiento"
+          "label": "Site classification"
         }
       }
     },
     "Survey": {
       "fields": {
         "siteClassification": {
-          "label": "Site classification / Clasificación del yacimiento"
+          "label": "Site classification"
         }
       }
     },
     "Trench": {
       "fields": {
         "excavationType": {
-          "label": "Excavation type / Tamaño de la excavación"
+          "label": "Excavation type"
         },
         "projectProgression": {
-          "label": "Project Progression / Curso de la excavación",
+          "label": "Project Progression",
           "description": "Information on the course of the project"
         },
         "researchQuestion": {
-          "label": "Research question / Planteamiento"
+          "label": "Research question"
         }
       }
     },
     "Drawing": {
       "fields": {
         "imageRights": {
-          "label": "Image Rights / Derechos de autor de la imagen"
+          "label": "Image Rights"
         },
         "representedObject": {
-          "label": "Represented object / Objeto representado"
+          "label": "Represented object"
         },
         "drawingType": {
-          "label": "Drawing type / Tipo de dibujo"
+          "label": "Drawing type"
         }
       }
     },
     "Find": {
       "fields": {
         "amount": {
-          "label": "Total number / Número (total)"
+          "label": "Total number"
         },
         "conditionComment": {
-          "label": "Condition comment / Comentario sobre estado de conservación"
+          "label": "Condition comment"
         },
         "conditionPercent": {
-          "label": "Condition in percent / Estado de conservación - porcentaje"
+          "label": "Condition in percent"
         },
         "ayamonteCondition": {
-          "label": "Condition (Ayamonte specific) / Estado de conservación (específico Ayamonte)"
+          "label": "Condition (Ayamonte specific)"
         },
         "storageRegion": {
-          "label": "Storage region/state / Deposito - provincia"
+          "label": "Storage region/state"
         },
         "storageMuseum": {
-          "label": "Storage museum / Deposito - museo"
+          "label": "Storage museum"
         },
         "storageProvince": {
-          "label": "Storage province / Deposito - comunidad autónoma"
+          "label": "Storage province"
         },
         "storageState": {
-          "label": "Storage country / Deposito - país"
+          "label": "Storage country"
         },
         "storagePlace": {
-          "label": "Storage place / Deposito - ciudad"
+          "label": "Storage place"
         },
         "isGraveFind": {
-          "label": "Grave find / encontrado en tumba"
+          "label": "Grave find"
         },
         "isStrayFind": {
-          "label": "Stray find / hallazgo aislado"
+          "label": "Stray find"
         },
         "findType": {
-          "label": "Type of find / Clasificación"
+          "label": "Type of find"
         },
         "findObjectType": {
-          "label": "Type of object / Tipo de objeto"
+          "label": "Type of object"
         },
         "findMaterial": {
-          "label": "Material / Material"
+          "label": "Material"
         },
         "material": {
-          "label": "Material / Material"
+          "label": "Material"
         },
         "materialColor": {
-          "label": "Color of the material / Material - color"
+          "label": "Color of the material"
         },
         "materialDescription": {
-          "label": "Description of the material / Material - descripción"
+          "label": "Description of the material"
         },
         "hasRestoration": {
-          "label": "Restoration / Restauración"
+          "label": "Restoration"
         },
         "conditionAmount": {
-          "label": "Preservation assessment / Porcentaje conservado"
+          "label": "Preservation assessment"
         },
         "weight": {
-          "label": "Weight (g) / Peso (g)"
+          "label": "Weight (g)"
         }
       }
     },
     "Profile": {
       "fields": {
         "profileClassification": {
-          "label": "Classification / Clasificación"
+          "label": "Classification"
         },
         "verticalPosition": {
-          "label": "Vertical position / Nivel"
+          "label": "Vertical position"
         }
       }
     },
     "Feature": {
       "fields": {
         "artifacts": {
-          "label": "Artifacts / Hallazgos"
+          "label": "Artifacts"
         },
         "color": {
-          "label": "Color and intensity / Color y intensidad"
+          "label": "Color and intensity"
         },
         "significanceRemark": {
-          "label": "Remarks on significance / Notas sobre la calidad"
+          "label": "Remarks on significance"
         },
         "featureClassification": {
-          "label": "Classification of the feature / Clasificación del estrato"
+          "label": "Classification of the feature"
         },
         "createdAfterSpoil": {
-          "label": "Created after spoil / Después del rebaje"
+          "label": "Created after spoil"
         },
         "featureClassificationOther": {
-          "label": "Further classification of the feature / Clasificación de la unidad estratigráfica - otro"
+          "label": "Further classification of the feature"
         },
         "otherClassification": {
-          "label": "Further classification / Otra clasificación"
+          "label": "Further classification"
         }
       }
     },
     "Grave": {
       "fields": {
         "artifacts": {
-          "label": "Artifacts / Categorías de hallazgo"
+          "label": "Artifacts"
         },
         "significanceRemark": {
-          "label": "Remarks on significance / Notas sobre la calidad"
+          "label": "Remarks on significance"
         },
         "graveType": {
-          "label": "Grave type / Tipo de tumba"
+          "label": "Grave type"
         },
         "specificType": {
-          "label": "Specific grave type / Tipo de tumba especial"
+          "label": "Specific grave type"
         }
       }
     },
     "Layer": {
       "fields": {
         "artifacts": {
-          "label": "Artifacts / Categorías de hallazgo"
+          "label": "Artifacts"
         },
         "significanceRemark": {
-          "label": "Remarks on significance / Notas sobre la calidad"
+          "label": "Remarks on significance"
         },
         "layerClassification": {
-          "label": "Designation or classification of the layer / Clasificación de la unidad estratigráfica"
+          "label": "Designation or classification of the layer"
         },
         "layerClassificationOther": {
-          "label": "Further classification of the layer / Otra clasificación"
+          "label": "Further classification of the layer"
         },
         "otherClassification": {
-          "label": "Further classification / Otro"
+          "label": "Further classification"
         }
       }
     },
     "Wood": {
       "fields": {
         "materialDescription": {
-          "label": "Description of the material / Tipo de madera"
+          "label": "Description of the material"
         },
         "weight": {
-          "label": "Weight (g) / peso (g)"
+          "label": "Weight (g)"
         },
         "objectType": {
-          "label": "Object type / Clasificación del objeto"
+          "label": "Object type"
         }
       }
     },
     "Pottery": {
       "fields": {
         "amount": {
-          "label": "Total number / Número total de fragmentos"
+          "label": "Total number"
         },
         "conservationRemarks": {
-          "label": "Remarks on conservation / Conservación - comentarios"
+          "label": "Remarks on conservation"
         },
         "conservationEarlierMeasures": {
-          "label": "Earlier conservation measures / Conservación - medidas anterioras"
+          "label": "Earlier conservation measures"
         },
         "amountSherdsRim": {
-          "label": "Number of rim sherds / Número de fragmentos de borde"
+          "label": "Number of rim sherds"
         },
         "amountSherdsBase": {
-          "label": "Number of base sherds / Número de fragmentos de fondo"
+          "label": "Number of base sherds"
         },
         "amountSherdsHandles": {
-          "label": "Number of handles / Número de fragmentos de asa"
+          "label": "Number of handles"
         },
         "amountSherdsWall": {
-          "label": "Number of wall sherds / Número de fragmentos de cuerpo"
+          "label": "Number of wall sherds"
         },
         "objectType": {
-          "label": "Object type / Clasificación del material"
+          "label": "Object type"
         },
         "condition": {
-          "label": "Condition / Estado de conservación"
+          "label": "Condition"
         },
         "vesselForm": {
-          "label": "Basic vessel form / Descripción de forma"
+          "label": "Basic vessel form"
         },
         "vesselFormSpecific": {
-          "label": "Specific vessel form / Forma"
+          "label": "Specific vessel form"
         },
         "purpose": {
-          "label": "Purpose / Función"
+          "label": "Purpose"
         },
         "specificType": {
-          "label": "Pottery type, ware / Tipo de cerámica"
+          "label": "Pottery type, ware"
         },
         "potteryBelongsTo": {
-          "label": "Related fragments / Fragmento(s) perteneneciente(s)"
+          "label": "Related fragments"
         },
         "potteryFittingTo": {
-          "label": "Matching fragments / Fragmento(s) conexo(s)"
+          "label": "Matching fragments"
         },
         "potteryComparableTo": {
-          "label": "Comparable fragments / Fragmento(s) comparable(s)"
+          "label": "Comparable fragments"
         }
       }
     },
     "Bone": {
       "fields": {
         "sexDeterminationCertainty": {
-          "label": "Certainty of sex determination / Certitud de la determinación del sexo"
+          "label": "Certainty of sex determination"
         },
         "biologicalAge": {
-          "label": "Biological age / Grupo de edad"
+          "label": "Biological age"
         },
         "boneClassification": {
-          "label": "Bone classification / Clasificación de los huesos"
+          "label": "Bone classification"
         },
         "boneType": {
-          "label": "Grobe Einordnung der Knochen / Tipo de huesos"
+          "label": "Grobe Einordnung der Knochen"
         },
         "burningGrade": {
-          "label": "Burning grade of the bones (according to Wahl 1982) / Grado de cremación del hueso"
+          "label": "Burning grade of the bones (according to Wahl 1982)"
         },
         "sex": {
-          "label": "Sex / Sexo"
+          "label": "Sex"
         },
         "weight": {
-          "label": "Weight (g) / peso (g)"
+          "label": "Weight (g)"
         }
       }
     },
     "Sample": {
       "fields": {
         "sampleTakenBy": {
-          "label": "Sample taken by / Recogida por"
+          "label": "Sample taken by"
         },
         "sampleReason": {
-          "label": "Reason for sample taking / Motivo del muestreo"
+          "label": "Reason for sample taking"
         },
         "material": {
-          "label": "Material / Material"
+          "label": "Material"
         },
         "sampleNumber": {
-          "label": "Sample number / Número de la muestra"
+          "label": "Sample number"
         },
         "analysisResult": {
-          "label": "Result of analysis / Resultado del análisis"
+          "label": "Result of analysis"
         },
         "analysisMethod": {
-          "label": "Analytical method / Método del análisis"
+          "label": "Analytical method"
         },
         "sampleType": {
-          "label": "Sample type / Clasificación"
+          "label": "Sample type"
         },
         "isGraveFind": {
-          "label": "Grave find / encontrado en tumba"
+          "label": "Grave find"
         },
         "storageRegion": {
-          "label": "Storage region/state / Deposito - provincia"
+          "label": "Storage region/state"
         },
         "storageMuseum": {
-          "label": "Storage museum / Deposito - museo"
+          "label": "Storage museum"
         },
         "storageProvince": {
-          "label": "Storage province / Deposito - comunidad autónoma"
+          "label": "Storage province"
         },
         "storageState": {
-          "label": "Storage country / Deposito - país"
+          "label": "Storage country"
         },
         "storagePlace": {
-          "label": "Storage place / Deposito - ciudad"
+          "label": "Storage place"
         },
         "weight": {
-          "label": "Weight (g) / peso (g)"
+          "label": "Weight (g)"
         }
       }
     },
     "Photo": {
       "fields": {
         "imageObject": {
-          "label": "Depicted object / Objeto representado"
+          "label": "Depicted object"
         },
         "imageRights": {
-          "label": "Image rights / Derechos de autor de la imagen"
+          "label": "Image rights"
         },
         "imageContent": {
-          "label": "Content of the image / Contenido de la imagen"
+          "label": "Content of the image"
         }
       }
     },
     "Glass": {
       "fields": {
         "objectType": {
-          "label": "Object type / Tipo del objeto"
+          "label": "Object type"
         }
       }
     },
     "Stone": {
       "fields": {
         "objectType": {
-          "label": "Object type / Tipo de lítica"
+          "label": "Object type"
         }
       }
     },
     "Mollusk": {
       "fields": {
         "classification": {
-          "label": "Mollusk classification / Clasificación malacológica"
+          "label": "Mollusk classification"
         }
       }
     },
     "Burial": {
       "fields": {
         "amountIndividuals": {
-          "label": "Burial type / Número de individuos"
+          "label": "Burial type"
         },
         "graveFeature": {
-          "label": "Method of interment / Tipo de enterramiento"
+          "label": "Method of interment"
         },
         "ageDetermination": {
-          "label": "Age determination / Determinación de la edad"
+          "label": "Age determination"
         },
         "ageDeterminationBasis": {
-          "label": "Basis of age determination / Base de la determinación de la edad"
+          "label": "Basis of age determination"
         },
         "palaeopathologicalReport": {
-          "label": "Palaeopathological report / Diagnóstico paleopatológico"
+          "label": "Palaeopathological report"
         },
         "hasGraveGoods": {
-          "label": "Has grave goods / hay ajuares"
+          "label": "Has grave goods"
         },
         "conditionComment": {
-          "label": "Condition comment / Comentario sobre estado de conservación"
+          "label": "Condition comment"
         },
         "sexDetermination": {
-          "label": "Sex determination / Determinación del sexo"
+          "label": "Sex determination"
         },
         "sexDeterminationBasis": {
-          "label": "Basis of sex determination / Base de la determinación del sexo"
+          "label": "Basis of sex determination"
         }
       }
     }
   },
   "relations": {
     "isAbove": {
-      "label": "Above / Sobre de"
+      "label": "Above"
     },
     "isBelow": {
-      "label": "Below / Debajo de"
+      "label": "Below"
     }
   }
 }

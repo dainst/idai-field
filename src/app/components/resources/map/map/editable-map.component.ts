@@ -12,7 +12,6 @@ import {ProjectConfiguration} from '../../../../core/configuration/project-confi
 import {LayerManager} from './layers/layer-manager';
 import {LayerImageProvider} from './layers/layer-image-provider';
 import {Messages} from '../../../messages/messages';
-import {SettingsService} from '../../../../core/settings/settings-service';
 import {SettingsProvider} from '../../../../core/settings/settings-provider';
 
 

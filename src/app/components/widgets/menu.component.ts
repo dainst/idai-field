@@ -1,4 +1,5 @@
 import {Renderer2} from '@angular/core';
+import {MenuContext, MenuService} from '../menu-service';
 
 
 /**
@@ -13,6 +14,7 @@ export abstract class MenuComponent {
 
 
     constructor(private renderer: Renderer2,
+                protected menuService: MenuService,
                 private buttonElementId: string,
                 private menuElementId: string) {}
 
@@ -47,6 +49,8 @@ export abstract class MenuComponent {
 
 
     private handleMouseEvent(event: any) {
+
+        if (this.menuService.getContext() === MenuContext.MODAL) return;
 
         let target = event.target;
         let inside = false;

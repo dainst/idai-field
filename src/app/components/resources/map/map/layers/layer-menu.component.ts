@@ -34,11 +34,11 @@ export class LayerMenuComponent extends MenuComponent implements OnDestroy {
     constructor(private layerManager: LayerManager,
                 private changeDetectorRef: ChangeDetectorRef,
                 private modalService: NgbModal,
-                private menuService: MenuService,
                 private i18n: I18n,
-                renderer: Renderer2) {
+                renderer: Renderer2,
+                menuService: MenuService) {
 
-        super(renderer, 'layer-button', 'layer-menu');
+        super(renderer, menuService, 'layer-button', 'layer-menu');
     }
 
 
@@ -104,7 +104,7 @@ export class LayerMenuComponent extends MenuComponent implements OnDestroy {
         } catch(err) {
             // Remove layer modal has been canceled
         } finally {
-            this.menuService.setContext(MenuContext.DEFAULT);
+            setTimeout(() => this.menuService.setContext(MenuContext.DEFAULT), 1);
         }
     }
 
@@ -125,7 +125,7 @@ export class LayerMenuComponent extends MenuComponent implements OnDestroy {
             // Image picker modal has been canceled
             return [];
         } finally {
-            this.menuService.setContext(MenuContext.DEFAULT);
+            setTimeout(() => this.menuService.setContext(MenuContext.DEFAULT), 1);
         }
     }
 }

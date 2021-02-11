@@ -1,13 +1,13 @@
 import {Injectable} from '@angular/core';
 import {set, subtract} from 'tsfun';
 import {FieldDocument, ImageDocument, Document} from 'idai-components-2';
-import {ImageReadDatastore} from '../../../../core/datastore/field/image-read-datastore';
-import {ViewFacade} from '../../../../core/resources/view/view-facade';
-import {FieldReadDatastore} from '../../../../core/datastore/field/field-read-datastore';
-import {ImageRelations} from '../../../../core/model/relation-constants';
-import {RelationsManager} from '../../../../core/model/relations-manager';
-import {clone} from '../../../../core/util/object-util';
-import {moveInArray} from '../../../../core/util/utils';
+import {ImageReadDatastore} from '../../../../../core/datastore/field/image-read-datastore';
+import {ViewFacade} from '../../../../../core/resources/view/view-facade';
+import {FieldReadDatastore} from '../../../../../core/datastore/field/field-read-datastore';
+import {ImageRelations} from '../../../../../core/model/relation-constants';
+import {RelationsManager} from '../../../../../core/model/relations-manager';
+import {clone} from '../../../../../core/util/object-util';
+import {moveInArray} from '../../../../../core/util/utils';
 
 
 export interface LayersInitializationResult {

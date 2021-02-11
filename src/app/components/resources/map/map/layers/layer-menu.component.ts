@@ -4,9 +4,9 @@ import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {ImageDocument} from 'idai-components-2';
 import {LayerGroup, LayerManager} from './layer-manager';
-import {MenuComponent} from '../../../widgets/menu.component';
-import {MenuContext, MenuService} from '../../../menu-service';
-import {ImagePickerComponent} from '../../../docedit/widgets/image-picker.component';
+import {MenuComponent} from '../../../../widgets/menu.component';
+import {MenuContext, MenuService} from '../../../../menu-service';
+import {ImagePickerComponent} from '../../../../docedit/widgets/image-picker.component';
 import {RemoveLayerModalComponent} from './remove-layer-modal.component';
 import {LayerUtility} from './layer-utility';
 

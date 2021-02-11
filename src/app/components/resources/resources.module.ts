@@ -18,9 +18,9 @@ import {RoutingService} from '../routing-service';
 import {DoceditLauncher} from './service/docedit-launcher';
 import {SidebarListComponent} from './map/list/sidebar-list.component';
 import {FieldDatastore} from '../../core/datastore/field/field-datastore';
-import {LayerManager} from './map/map/layer-manager';
-import {LayerImageProvider} from './map/map/layer-image-provider';
-import {LayerMenuComponent} from './map/map/layer-menu.component';
+import {LayerManager} from './map/map/layers/layer-manager';
+import {LayerImageProvider} from './map/map/layers/layer-image-provider';
+import {LayerMenuComponent} from './map/map/layers/layer-menu.component';
 import {ChangesStream} from '../../core/datastore/changes/changes-stream';
 import {NavigationComponent} from './navigation/navigation.component';
 import {ResourcesSearchBarComponent} from './searchbar/resources-search-bar.component';
@@ -54,7 +54,7 @@ import {TypeIconComponent} from './types/type-icon.component';
 import {Messages} from '../messages/messages';
 import {SettingsProvider} from '../../core/settings/settings-provider';
 import {SyncService} from '../../core/sync/sync-service';
-import {RemoveLayerModalComponent} from './map/map/remove-layer-modal.component';
+import {RemoveLayerModalComponent} from './map/map/layers/remove-layer-modal.component';
 
 
 const remote = typeof window !== 'undefined'

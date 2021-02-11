@@ -12,6 +12,14 @@
     },
     "scale": {
       "label": "Maßstab"
+    },
+    "measuringPointID": {
+      "label": "Messpunkt-Nummer",
+      "description": "MesspunktID, andernfalls 'nicht gemessen' oder 'unklar'"
+    },
+    "measuringPointOrigin": {
+      "label": "Provenienz der Messdaten",
+      "description": "Provenienz der Messdaten"
     }
   },
   "categories": {
@@ -29,18 +37,6 @@
           "label": "Aufnahme der Grenzen der Einheit",
           "description": "Wird wurde die Einheit lokalisiert?"
         }
-      }
-    },
-    "StrUnit": {
-      "label": "Stratigraphische Einheit"
-    },
-    "TrenchSketch": {
-      "label": "Überblicksskizze",
-      "fields": {
-          "sketchNotes": {
-            "label": "Notizen",
-            "description": "Anmerkungen und Bemerkungen zur Skizze"
-          }
       }
     },
     "Layer": {
@@ -66,31 +62,31 @@
           "label": "Konsistenz",
           "description": "Härte bzw. Konsistenz des Bodens"
         },
-        "01layerSoilContentDesc": {
+        "layerSoilContentDesc": {
           "label": "Beschreibung des Bodens",
           "description": "Nach dem Formular: Farbe / Bodenart / Konsistenz"
         },
-        "02layerColor0": {
+        "layerColor0": {
           "label": "Grundfarbe des Bodens",
           "description": "gemeinsam mit Farbintensität auswählen"
         },
-        "03layerColorIntensity": {
+        "layerColorIntensity": {
           "label": "Intensität der Bodenfarbe",
           "description": "gemeinsam mit Farbe auswählen"
         },
-        "04layerInclusions": {
+        "layerInclusions": {
           "label": "Einschlüsse und Bestandteile",
           "description": "Bodenbestandteile und Einschlüsse"
         },
-        "05layerInclusionsDesc": {
+        "layerInclusionsDesc": {
           "label": "Einschlüsse: Ergänzungen",
           "description": "Einschlüsse: Ergänzungen"
         },
-        "06layerFinds": {
+        "layerFinds": {
           "label": "Funde",
           "description": "Grober Überblick über die im Befund enthaltenen Funde"
         },
-        "07layerFindsOther": {
+        "layerFindsOther": {
           "label": "Funde (Ergänzungen)",
           "description": "Grober Überblick über die im Befund enthaltenen Funde"
         },
@@ -104,19 +100,32 @@
         }
       }
     },
+    "StrUnit": {
+      "label": "Stratigraphische Einheit"
+    },
+    "Profile": {
+      "label": "Profilaufnahme",
+      "fields": {
+        "profileClassification": {
+          "label": "Profilansprache",
+          "description": "Hier die Profilansprache vom Formular übertragen."
+        }
+      }
+    },
+    "TrenchSketch": {
+      "label": "Überblicksskizze",
+      "fields": {
+          "sketchNotes": {
+            "label": "Notizen",
+            "description": "Anmerkungen und Bemerkungen zur Skizze"
+          }
+      }
+    },
     "Find": {
       "fields": {
-        "measuringPointID": {
-          "label": "Messpunkt-Nummer",
-          "description": "MesspunktID, andernfalls 'nicht gemessen' oder 'unklar'"
-        },
         "storagePlaceOther": {
           "label": "Anderer Aufbewahrungsort",
           "description": "Wenn in der Liste oben nicht angegeben, bitte hier den Aufbewahrungsort eintragen."
-        },
-        "measuringPointOrigin": {
-          "label": "Provenienz der Messdaten",
-          "description": "Provenienz der Messdaten"
         },
         "workflow": {
           "label": "Workflow",
@@ -230,6 +239,14 @@
         "sketchNotes": {
           "label": "Notizen",
           "description": "Anmerkungen und Bemerkungen zur Skizze"
+        }
+      }
+    },
+    "Sample": {
+      "fields": {
+        "volume": {
+          "label": "Volumen in ml",
+          "description": "Angabe des Volumens in Millilitern"
         }
       }
     }

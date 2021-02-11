@@ -41636,6 +41636,36 @@
       "Fund verloren"
     ]
   },
+  "coordinate-reference-system-milet": {
+    "createdBy": "",
+    "creationDate": "",
+    "description": {},
+    "values": {
+      "NoCoordinateSystem": {
+        "labels": {
+          "de": "Kein gültiges Koordinatenbezugssystem",
+          "en": "No valid Coordinate System"
+        }
+      },
+      "Bendt": {
+        "labels": {
+          "de": "Bendt (1968, lokales System Milet)",
+          "en": "Bendt (1968, local System Milet)"
+        }
+      },
+      "UTM35N": {
+        "labels": {
+          "de": "EPSG32635 (UTM 35 N WGS84)",
+          "en": "EPSG32635 (UTM 35 N WGS84)"
+        }
+      }
+    },
+    "order": [
+      "NoCoordinateSystem",
+      "Bendt",
+      "UTM35N"
+    ]
+  },
   "Survey-researchMethod-milet": {
     "creationDate": "02-02-2021",
     "createdBy": "Lisa Steinmann (Milet)",
@@ -41989,8 +42019,8 @@
     "creationDate": "26-04-2020",
     "createdBy": "Lisa Steinmann (Milet)",
     "description": {
-      "de": "Milet Farbset",
-      "en": "Miletus color set"
+      "de": "Milet Farbset 2",
+      "en": "Miletus color set 2"
     },
     "values": {
       "beige": {},
@@ -42024,15 +42054,59 @@
     "description": {
       "de": "Konsistenz des Erdbefunds",
       "en": "Consistency of Layer"
-    },
+    }, 
+    "order": [
+      "very_hard",
+      "hard",
+      "solid",
+      "starchy",
+      "soft",
+      "very_soft",
+      "liquid"
+    ],
     "values": {
-      "01-sehr hart": {},
-      "02-hart": {},
-      "03-fest": {},
-      "04-steif": {},
-      "05-weich": {},
-      "06-sehr weich": {},
-      "07-flüssig": {}
+      "very_hard": {
+        "labels": {
+          "de": "sehr hart",
+          "en": "very hard"
+        }
+      },
+      "hard": {
+        "labels": {
+          "de": "hart",
+          "en": "hard"
+        }
+      },
+      "solid": {
+        "labels": {
+          "de": "fest",
+          "en": "solid"
+        }
+      },
+      "starchy": {
+        "labels": {
+          "de": "steif",
+          "en": "starchy"
+        }
+      },
+      "soft": {
+        "labels": {
+          "de": "weich",
+          "en": "soft"
+        }
+      },
+      "very_soft": {
+        "labels": {
+          "de": "sehr weich",
+          "en": "very soft"
+        }
+      },
+      "liquid": {
+        "labels": {
+          "de": "flüssig",
+          "en": "liquid"
+        }
+      }
     }
   },
   "Layer-layerInclusions-milet": {
@@ -42090,15 +42164,45 @@
       "Stein_groß": {
         "labels": {
           "de": "Stein (groß)",
-          "en": "Ston (big)"
+          "en": "Stone (big)"
         }
       },
-      "Kalk": {},
-      "Ziegelbruch_kleinteilig": {},
-      "HolzkohleAsche": {},
-      "Wurzeln": {},
-      "Tiergänge": {},
-      "Schnecken": {}
+      "Kalk": {
+        "labels": {
+          "de": "Kalk",
+          "en": "Lime"
+        }
+      },
+      "Ziegelbruch_kleinteilig": {
+        "labels": {
+          "de": "kleinteiliger Ziegelbruch",
+          "en": "small brick/burnt clay fragments"
+        }
+      },
+      "HolzkohleAsche": {
+        "labels": {
+          "de": "Holzkohle / Asche",
+          "en": "charcoal / ash"
+        }
+      },
+      "Wurzeln": {
+        "labels": {
+          "de": "Wurzeln",
+          "en": "roots"
+        }
+      },
+      "Tiergänge": {
+        "labels": {
+          "de": "Tiergänge",
+          "en": "animal burrows"
+        }
+      },
+      "Schnecken": {
+        "labels": {
+          "de": "Schnecken",
+          "en": "Snails / naturally occuring mollusks"
+        }
+      }
     }
   },
   "Layer-layerClassification-milet": {
@@ -42109,43 +42213,49 @@
       "Brandschicht": {
         "labels": {
           "de": "Brandschicht",
-          "en": "Brandschicht"
+          "en": "burnt layer"
         }
       },
       "Kulturschicht": {
         "labels": {
           "de": "Kulturschicht",
-          "en": "Kulturschicht"
+          "en": "culture layer"
         }
       },
       "Laufhorizont": {
         "labels": {
           "de": "Laufhorizont",
-          "en": "Laufhorizont"
+          "en": "floor"
         }
       },
       "Planierschicht": {
         "labels": {
           "de": "Planierschicht",
-          "en": "Planierschicht"
+          "en": "levelling layer"
         }
       },
       "Schuttschicht": {
         "labels": {
           "de": "Schuttschicht",
-          "en": "Schuttschicht"
+          "en": "debris"
         }
       },
-      "Schuttschicht": {
+      "Humusschicht": {
         "labels": {
           "de": "Humusschicht",
-          "en": "Humusschicht"
+          "en": "humus"
+        }
+      },
+      "other": {
+        "labels": {
+          "de": "andere",
+          "en": "other"
         }
       },
       "unbekannt": {
         "labels": {
           "de": "unbekannt",
-          "en": "unbekannt"
+          "en": "unknown"
         }
       }
     }
@@ -42157,10 +42267,40 @@
       "de": "Milet Farbset 1, Erde"
     },
     "values": {
-      "schwarz": {
+      "black": {
         "labels": {
           "de": "schwarz",
           "en": "black"
+        }
+      },
+      "grey": {
+        "labels": {
+          "de": "grau",
+          "en": "grey"
+        }
+      },
+      "brown": {
+        "labels": {
+          "de": "braun",
+          "en": "brown"
+        }
+      },
+      "yellow": {
+        "labels": {
+          "de": "gelb",
+          "en": "yellow"
+        }
+      },
+      "ochre": {
+        "labels": {
+          "de": "ocker",
+          "en": "ochre"
+        }
+      },
+      "red": {
+        "labels": {
+          "de": "rot",
+          "en": "red"
         }
       }
     }
@@ -42169,19 +42309,40 @@
     "creationDate": "03-02-2021",
     "createdBy": "Lisa Steinmann (Milet)",
     "description": {
-      "de": "Milet Farbset 1, Erde (Helligkeit/Intensität)"
+      "de": "Milet Farbset Helligkeit (Helligkeit/Intensität)"
     },
+    "order": [
+      "very_light", "light", "medium", "dark", "very_dark"
+    ],
     "values": {
-      "sehr hell": {
+      "very_light": {
         "labels": {
           "de": "sehr hell",
-          "en": "sehr hell"
+          "en": "very light"
         }
       },
-      "hell": {
+      "light": {
         "labels": {
           "de": "hell",
-          "en": "hell"
+          "en": "light"
+        }
+      },
+      "medium": {
+        "labels": {
+          "de": "mittel",
+          "en": "medium"
+        }
+      },
+      "dark": {
+        "labels": {
+          "de": "dunkel",
+          "en": "dark"
+        }
+      },
+      "very_dark": {
+        "labels": {
+          "de": "sehr dunkel",
+          "en": "very dark"
         }
       }
     }
@@ -42314,7 +42475,8 @@
       "1:5000",
       "1:10000",
       "1:25000",
-      "1:50000"
+      "1:50000",
+      "other"
     ], 
     "values": {
       "1:1": {},
@@ -42333,7 +42495,19 @@
       "1:5000": {},
       "1:10000": {},
       "1:25000": {},
-      "1:50000": {}
+      "1:50000": {},
+      "other": {
+        "labels": {
+          "de": "andere",
+          "en": "other"
+        }
+      },
+      "NA": {
+        "labels": {
+          "de": "unbekannt",
+          "en": "unknown"
+        }
+      }
     }
   },
   "Drawing-drawingType-milet": {

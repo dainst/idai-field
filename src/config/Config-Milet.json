@@ -1,14 +1,17 @@
 {
   "Project:default": {
     "hidden": [],
-    "fields": {}
+    "fields": {},
+    "valuelists": {
+      "coordinateReferenceSystem": "coordinate-reference-system-milet"
+    }
   },
   "Place:default": {
     "hidden": [],
     "fields": {}
   },
   "Operation:default": {
-    "hidden": [],
+    "hidden": ["diary"],
     "fields": {
       "AreaShorthand": {
         "inputType": "radio"
@@ -36,6 +39,123 @@
   "Trench:default": {
     "hidden": [],
     "fields": {}
+  },
+  "Feature": {
+    "color": "#d5b43c",
+    "commons": [
+      "beginningDate",
+      "endDate",
+      "diary",
+      "description",
+      "processor",
+      "campaign",
+      "dimensionLength",
+      "dimensionWidth",
+      "dimensionVerticalExtent",
+      "area"
+    ],
+    "hidden": ["color"],
+    "fields": {
+      "comparison": {
+        "inputType": "text"
+      },
+      "hasDisturbance": {
+        "inputType": "boolean"
+      },
+      "featureForm": {
+        "inputType": "checkboxes"
+      },
+      "featureBorders": {
+        "inputType": "checkboxes"
+      }
+    },
+    "valuelists": {
+      "featureForm": "Feature-featureForm-milet",
+      "featureBorders": "Feature-featureBorders-milet"
+    }
+  },
+  "Layer:default": {
+    "hidden": [],
+    "color": "#663300",
+    "fields": {
+      "layerClassification": {
+        "inputType": "dropdown"
+      },
+      "isNatural": {
+        "inputType": "boolean"
+      },
+      "layerDescription": {
+        "inputType": "text"
+      },
+      "distinguishingCriteria": {
+        "inputType": "radio"
+      },
+      "layerColorIntensity": {
+        "inputType": "checkboxes"
+      },
+      "layerColor0": {
+        "inputType": "checkboxes"
+      },
+      "consistency": {
+        "inputType": "checkboxes"
+      },
+      "soilType": {
+        "inputType": "checkboxes"
+      },
+      "layerSoilContentDesc": {
+        "inputType": "text"
+      },
+      "layerInclusions": {
+        "inputType": "checkboxes"
+      },
+      "layerInclusionsDesc": {
+        "inputType": "text"
+      },
+      "layerFinds": {
+        "inputType": "checkboxes"
+      },
+      "layerFindsOther": {
+        "inputType": "text"
+      },
+      "layerInterpretation": {
+        "inputType": "text"
+      },
+      "layerDatingIndication": {
+        "inputType": "text"
+      }
+    },
+    "valuelists": {
+      "distinguishingCriteria": "Layer-distinguishingCriteria-default",
+      "layerClassification": "Layer-layerClassification-milet",
+      "soilType": "Layer-soilType-milet",
+      "consistency": "Layer-layerConsistency-milet",
+      "layerColor0": "layerColors-milet",
+      "layerColorIntensity": "layerColorsIntensity-milet",
+      "layerInclusions": "Layer-layerInclusions-milet",
+      "layerFinds": "Layer-layerFinds-milet"
+    }
+  },
+  "Profile": {
+    "parent": "Feature",
+    "color": "#6da4fc",
+    "commons": [
+      "orientation"
+    ],
+    "fields": {
+      "measuringPointID": {
+        "inputType": "input"
+      },
+      "measuringPointOrigin": {
+        "inputType": "radio"
+      },
+      "profileClassification": {
+        "inputType": "text"
+      }
+    },
+    "valuelists": {
+      "orientation": "orientation-default-1",
+      "measuringPointOrigin": "Find-measuringPointOrigin-milet"
+    }
   },
   "StrUnit": {
     "parent": "Feature",
@@ -100,40 +220,6 @@
       "workflow": "Find-workflow-milet"
     }
   },
-  "Feature": {
-    "color": "#d5b43c",
-    "commons": [
-      "beginningDate",
-      "endDate",
-      "diary",
-      "description",
-      "processor",
-      "campaign",
-      "dimensionLength",
-      "dimensionWidth",
-      "dimensionVerticalExtent",
-      "area"
-    ],
-    "hidden": ["color"],
-    "fields": {
-      "comparison": {
-        "inputType": "text"
-      },
-      "hasDisturbance": {
-        "inputType": "boolean"
-      },
-      "featureForm": {
-        "inputType": "checkboxes"
-      },
-      "featureBorders": {
-        "inputType": "checkboxes"
-      }
-    },
-    "valuelists": {
-      "featureForm": "Feature-featureForm-milet",
-      "featureBorders": "Feature-featureBorders-milet"
-    }
-  },
   "Inscription:default": {
     "hidden": [],
     "fields": {}
@@ -166,90 +252,6 @@
     "hidden": [],
     "fields": {}
   },
-  "Layer:default": {
-    "hidden": [],
-    "color": "#663300",
-    "commons": [
-      "dimensionThickness"
-    ],
-    "fields": {
-      "layerClassification": {
-        "inputType": "dropdown"
-      },
-      "isNatural": {
-        "inputType": "boolean"
-      },
-      "layerDescription": {
-        "inputType": "text"
-      },
-      "distinguishingCriteria": {
-        "inputType": "radio"
-      },
-      "layerColorIntensity": {
-        "inputType": "checkboxes"
-      },
-      "layerColor0": {
-        "inputType": "checkboxes"
-      },
-      "consistency": {
-        "inputType": "checkboxes"
-      },
-      "soilType": {
-        "inputType": "checkboxes"
-      },
-      "layerSoilContentDesc": {
-        "inputType": "text"
-      },
-      "layerInclusions": {
-        "inputType": "checkboxes"
-      },
-      "layerInclusionsDesc": {
-        "inputType": "text"
-      },
-      "layerFinds": {
-        "inputType": "checkboxes"
-      },
-      "layerFindsOther": {
-        "inputType": "text"
-      },
-      "layerInterpretation": {
-        "inputType": "text"
-      },
-      "layerDatingIndication": {
-        "inputType": "text"
-      }
-    },
-    "valuelists": {
-      "distinguishingCriteria": "Layer-distinguishingCriteria-default",
-      "layerClassification": "Layer-layerClassification-milet",
-      "soilType": "Layer-soilType-milet",
-      "consistency": "Layer-layerConsistency-milet",
-      "layerColor0": "layerColors-milet",
-      "layerColorIntensity": "layerColorsIntensity-milet",
-      "layerInclusions": "Layer-layerInclusions-milet",
-      "layerFinds": "Layer-layerFinds-milet"
-    }
-  },
-  "Profile": {
-    "parent": "Feature",
-    "color": "#6da4fc",
-    "commons": [
-      "campaign",
-      "dimensionHeight",
-      "orientation"
-    ],
-    "fields": {
-      "profileClassification": {
-        "inputType": "input"
-      },
-      "verticalPosition": {
-        "inputType": "input"
-      }
-    },
-    "valuelists": {
-      "orientation": "orientation-default-1"
-    }
-  },
   "Pottery:default": {
     "hidden": [],
     "fields": {}
@@ -271,10 +273,6 @@
     "fields": {}
   },
   "Photo:default": {
-    "hidden": [],
-    "fields": {}
-  },
-  "Drawing:default": {
     "hidden": [],
     "fields": {}
   },
@@ -371,7 +369,20 @@
   },
   "Sample:default": {
     "hidden": [],
-    "fields": {}
+    "fields": {
+      "measuringPointID": {
+        "inputType": "input"
+      },
+      "measuringPointOrigin": {
+        "inputType": "radio"
+      },
+      "volume": {
+        "inputType": "unsignedFloat"
+      }
+    },
+    "valuelists": {
+      "measuringPointOrigin": "Find-measuringPointOrigin-milet"
+    }
   },
   "TypeCatalog:default": {
     "hidden": [],

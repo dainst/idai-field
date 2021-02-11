@@ -1,5 +1,5 @@
 import {ImageDocument} from 'idai-components-2';
-import {LayerManager} from '../../../../../src/app/components/resources/map/map/layer-manager';
+import {LayerManager} from '../../../../../src/app/components/resources/map/map/layers/layer-manager';
 import {Static} from '../../../static';
 
 

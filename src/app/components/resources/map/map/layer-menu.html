@@ -33,6 +33,9 @@
                                 <span *ngIf="!isActiveLayer(layer)"
                                     class="mdi mdi-image-filter-center-focus layer-menu-button layer-inactive">
                                 </span>
+                                <span class="mdi mdi-link-off layer-menu-button"
+                                    (click)="removeLayer(layerGroup, layer)">
+                                </span>
                                 <span class="layer-menu-label">{{getLayerLabel(layer)}}</span>
                                 <div class="drag-placeholder" *cdkDragPlaceholder></div>
                             </div>

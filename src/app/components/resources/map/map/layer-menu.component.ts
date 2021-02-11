@@ -7,6 +7,8 @@ import {LayerGroup, LayerManager} from './layer-manager';
 import {MenuComponent} from '../../../widgets/menu.component';
 import {MenuContext, MenuService} from '../../../menu-service';
 import {ImagePickerComponent} from '../../../docedit/widgets/image-picker.component';
+import {RemoveLayerModalComponent} from './remove-layer-modal.component';
+import {LayerUtility} from './layer-utility';
 
 
 @Component({
@@ -43,6 +45,7 @@ export class LayerMenuComponent extends MenuComponent implements OnDestroy {
     public isActiveLayer = (layer: ImageDocument) => this.layerManager.isActiveLayer(layer.resource.id);
     public toggleLayer = (layer: ImageDocument) => this.onToggleLayer.emit(layer);
     public focusLayer = (layer: ImageDocument) => this.onFocusLayer.emit(layer);
+    public getLayerLabel = (layer: ImageDocument) => LayerUtility.getLayerLabel(layer);
 
 
     ngOnDestroy() {
@@ -74,18 +77,6 @@ export class LayerMenuComponent extends MenuComponent implements OnDestroy {
     }
 
 
-    public getLayerLabel(layer: ImageDocument): string {
-
-        let label = layer.resource.shortDescription && layer.resource.shortDescription != '' ?
-            layer.resource.shortDescription :
-            layer.resource.identifier;
-
-        if (label.length > 48) label = label.substring(0, 45) + '...';
-
-        return label;
-    }
-
-
     public async addLayers(group: LayerGroup) {
 
         const newLayers: Array<ImageDocument> = await this.selectNewLayers(group);
@@ -93,6 +84,28 @@ export class LayerMenuComponent extends MenuComponent implements OnDestroy {
 
         await this.layerManager.addLayers(group, newLayers);
         this.onAddLayers.emit();
+    }
+
+
+    public async removeLayer(group: LayerGroup, layer: ImageDocument) {
+
+        this.menuService.setContext(MenuContext.MODAL);
+        const removeLayerModal: NgbModalRef = this.modalService.open(
+            RemoveLayerModalComponent, { keyboard: false }
+        );
+        removeLayerModal.componentInstance.layer = layer;
+        removeLayerModal.componentInstance.document = group.document;
+
+        try {
+            if (await removeLayerModal.result === 'remove') {
+                await this.layerManager.removeLayer(group, layer);
+                this.onAddLayers.emit();
+            }
+        } catch(err) {
+            // Remove layer modal has been canceled
+        } finally {
+            this.menuService.setContext(MenuContext.DEFAULT);
+        }
     }
 
 

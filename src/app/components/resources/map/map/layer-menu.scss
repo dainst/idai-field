@@ -4,6 +4,7 @@
 
 $layer-menu-button-color: #657faa;
 $layer-menu-button-inactive-color: grey;
+$layer-menu-remove-button-color: #c82333;
 
 #layer-button,
 #layer-menu {
@@ -85,6 +86,14 @@ $layer-menu-button-inactive-color: grey;
 
         .layer-menu-button.layer-inactive.mdi-image-filter-center-focus {
           visibility: hidden;
+        }
+
+        .mdi-link-off {
+          color: $layer-menu-remove-button-color;
+
+          &:hover {
+            color: lighten($layer-menu-remove-button-color, 20%) !important;
+          }
         }
 
         .drag-placeholder {

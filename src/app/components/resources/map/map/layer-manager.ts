@@ -95,6 +95,19 @@ export class LayerManager {
     }
 
 
+    public async removeLayer(group: LayerGroup, layerToRemove: ImageDocument) {
+
+        const oldDocument: FieldDocument = clone(group.document);
+
+        group.document.resource.relations[ImageRelations.HASLAYER]
+            = group.document.resource.relations[ImageRelations.HASLAYER].filter(id => {
+                return id !== layerToRemove.resource.id;
+            });
+        
+        await this.relationsManager.update(group.document, oldDocument);
+    }
+
+
     public async changeOrder(group: LayerGroup, originalIndex: number, targetIndex: number) {
 
         const relations: string[] = group.document.resource.relations[ImageRelations.HASLAYER];

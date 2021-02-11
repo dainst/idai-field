@@ -2734,8 +2734,8 @@
         <source>
         Entfernen
     </source>
-        <target state="new">
-        Entfernen
+        <target state="final">
+        Remove
     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/layers/remove-layer-modal.html</context>

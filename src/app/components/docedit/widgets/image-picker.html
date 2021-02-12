@@ -6,15 +6,24 @@
                 [disabled]="selectedDocuments.length === 0"
                 [class.disabled] ="selectedDocuments.length === 0">
             <span class="mdi mdi-link"></span>
-            <span class="button-label" i18n="@@docedit.imagePicker.linkImage">Bild verknüpfen</span>
+            <span *ngIf="mode === 'depicts'"
+                class="button-label"
+                i18n="@@docedit.imagePicker.linkImage">Bild verknüpfen</span>
+            <span *ngIf="mode === 'layers'"
+                class="button-label"
+                i18n="@@docedit.imagePicker.linkLayer">Bild als Karten-Layer verknüpfen</span>
         </button>
 
         <button id="add-images" *ngIf="selectedDocuments.length > 1"
                 (click)="applySelection()"
                 class="btn btn-primary">
             <span class="mdi mdi-link"></span>
-            <span class="button-label"
+            <span *ngIf="mode === 'depicts'"
+                    class="button-label"
                     i18n="@@docedit.imagePicker.linkImages">{{selectedDocuments.length}} Bilder verknüpfen</span>
+            <span *ngIf="mode === 'layers'"
+                    class="button-label"
+                    i18n="@@docedit.imagePicker.linkLayers">{{selectedDocuments.length}} Bilder als Karten-Layer verknüpfen</span>
         </button>
 
         <search-bar [class.hidden-search-bar]="selectedDocuments.length"

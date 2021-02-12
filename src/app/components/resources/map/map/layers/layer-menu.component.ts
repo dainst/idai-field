@@ -25,7 +25,7 @@ export class LayerMenuComponent extends MenuComponent implements OnDestroy {
 
     @Output() onToggleLayer = new EventEmitter<ImageDocument>();
     @Output() onFocusLayer = new EventEmitter<ImageDocument>();
-    @Output() onAddLayers = new EventEmitter<void>();
+    @Output() onAddOrRemoveLayers = new EventEmitter<void>();
     @Output() onChangeLayersOrder = new EventEmitter<void>();
 
     public dragging: boolean = false;
@@ -89,7 +89,7 @@ export class LayerMenuComponent extends MenuComponent implements OnDestroy {
         await this.layerManager.addLayers(group, newLayers);
         this.layersInSaveProgress = [];
 
-        this.onAddLayers.emit();
+        this.onAddOrRemoveLayers.emit();
     }
 
 
@@ -107,7 +107,7 @@ export class LayerMenuComponent extends MenuComponent implements OnDestroy {
                 this.layersInSaveProgress = [layer];
                 await this.layerManager.removeLayer(group, layer);
                 this.layersInSaveProgress = [];
-                this.onAddLayers.emit();
+                this.onAddOrRemoveLayers.emit();
             }
         } catch(err) {
             // Remove layer modal has been canceled

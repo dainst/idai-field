@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {empty, filter, flow, forEach, isNot, map, take} from 'tsfun';
+import {empty, filter, flow, forEach, isNot, map, take, copy} from 'tsfun';
 import {Document} from 'idai-components-2';
-import {Importer, ImporterFormat, ImporterReport} from '../../core/import/importer';
+import {Importer, ImporterFormat, ImporterOptions, ImporterReport} from '../../core/import/importer';
 import {Category} from '../../core/configuration/model/category';
 import {UploadModalComponent} from './upload-modal.component';
 import {ModelUtil} from '../../core/model/model-util';
@@ -237,13 +237,16 @@ export class ImportComponent implements OnInit {
 
     private async doImport() {
 
+        const options = copy(this.importState as any) as unknown as ImporterOptions;
+        if (options.mergeMode === true) options.selectedOperationId = "";
+
         const fileContents = await Importer.doRead(
             this.http,
             this.settingsProvider.getSettings(),
-            this.importState
+            options
         )
         const documents = await Importer.doParse(
-            this.importState,
+            options,
             fileContents);
 
         return Importer.doImport(
@@ -258,7 +261,7 @@ export class ImportComponent implements OnInit {
                 projectConfiguration: this.projectConfiguration
             },
             () => this.idGenerator.generateId(),
-            this.importState,
+            options,
             documents);
     }
 

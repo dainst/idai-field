@@ -4,6 +4,7 @@
 
 $layer-menu-button-color: #657faa;
 $layer-menu-button-inactive-color: grey;
+$layer-menu-remove-button-color: #c82333;
 
 #layer-button,
 #layer-menu {
@@ -53,19 +54,28 @@ $layer-menu-button-inactive-color: grey;
 
       .form-group {
         margin-bottom: 0;
-        cursor: grab;
 
         .layer-entry {
           -webkit-user-select: none;
           -moz-user-select: none;
           -ms-user-select: none;
           user-select: none;
+          height: 27px;
+
+          .layer-menu-drag-handle {
+            display: inline-block;
+            cursor: grab;
+            line-height: 1.9;
+            height: 100%;
+            width: calc(100% - 69px);
+          }
         }
 
         .layer-menu-button {
           padding: 0;
           margin-right: 5px;
           font-size: 18px;
+          cursor: default;
         }
 
         .layer-menu-button.layer-active {
@@ -82,6 +92,14 @@ $layer-menu-button-inactive-color: grey;
 
         .layer-menu-button.layer-inactive.mdi-image-filter-center-focus {
           visibility: hidden;
+        }
+
+        .mdi-link-off {
+          color: $layer-menu-remove-button-color;
+
+          &:hover {
+            color: lighten($layer-menu-remove-button-color, 20%) !important;
+          }
         }
 
         .drag-placeholder {
@@ -102,7 +120,7 @@ div.cdk-drag-preview {
   }
 
   .layer-menu-label {
-    left: 46px;
+    left: 69px;
   }
 }
 
@@ -110,4 +128,9 @@ div.cdk-drag-preview {
   position: relative;
   bottom: 2px;
   font-size: 14px;
+
+  &.in-save-progress {
+    left: 69px;
+    color: grey;
+  }
 }

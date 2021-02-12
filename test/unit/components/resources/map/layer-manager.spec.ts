@@ -1,5 +1,5 @@
 import {ImageDocument} from 'idai-components-2';
-import {LayerManager} from '../../../../../src/app/components/resources/map/map/layer-manager';
+import {LayerManager} from '../../../../../src/app/components/resources/map/map/layers/layer-manager';
 import {Static} from '../../../static';
 
 
@@ -30,7 +30,7 @@ describe('LayerManager', () => {
             ['getActiveLayersIds', 'setActiveLayersIds', 'getCurrentOperation']);
         mockViewFacade.getActiveLayersIds.and.returnValue([]);
 
-        layerManager = new LayerManager(mockDatastore, mockDatastore, mockViewFacade);
+        layerManager = new LayerManager(mockDatastore, mockDatastore, mockViewFacade, undefined);
     });
 
 

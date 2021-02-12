@@ -2,8 +2,8 @@ import {ChangeDetectorRef, Component, Input, NgZone, SimpleChanges} from '@angul
 import L from 'leaflet';
 import {flatten} from 'tsfun';
 import {ImageDocument, ImageGeoreference} from 'idai-components-2';
-import {LayerGroup, LayerManager, ListDiffResult} from './layer-manager';
-import {LayerImageProvider} from './layer-image-provider';
+import {LayerGroup, LayerManager, ListDiffResult} from './layers/layer-manager';
+import {LayerImageProvider} from './layers/layer-image-provider';
 import {ProjectConfiguration} from '../../../../core/configuration/project-configuration';
 import {MapComponent} from './map.component';
 import {ImageContainer} from '../../../../core/images/imagestore/image-container';
@@ -103,6 +103,14 @@ export class LayerMapComponent extends MapComponent {
     }
 
 
+    public updatePaneZIndices() {
+
+        this.getLayers().reverse().forEach((layer, index) => {
+            this.panes[layer.resource.id].style.zIndex = String(index);
+        })
+    };
+
+
     /**
      * Called by MapComponent.ngOnChange
      */
@@ -145,14 +153,6 @@ export class LayerMapComponent extends MapComponent {
         const pane = this.map.createPane(layer.resource.id);
         this.panes[layer.resource.id] = pane;
     }
-
-
-    private updatePaneZIndices() {
-
-        this.getLayers().reverse().forEach((layer, index) => {
-            this.panes[layer.resource.id].style.zIndex = String(index);
-        })
-    };
 
 
     private async addLayerToMap(resourceId: string) {

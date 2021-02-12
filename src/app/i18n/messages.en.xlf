@@ -1476,7 +1476,11 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/editable-map.html</context>
-          <context context-type="linenumber">60</context>
+          <context context-type="linenumber">61</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/map/map/layers/remove-layer-modal.html</context>
+          <context context-type="linenumber">14</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dating.html</context>
@@ -2017,7 +2021,7 @@
         <target state="final">Delete</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/editable-map.html</context>
-          <context context-type="linenumber">17</context>
+          <context context-type="linenumber">18</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.map.addPolygon" datatype="html">
@@ -2025,7 +2029,7 @@
         <target state="final">Add polygon</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/editable-map.html</context>
-          <context context-type="linenumber">28</context>
+          <context context-type="linenumber">29</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.map.addPolyline" datatype="html">
@@ -2033,7 +2037,7 @@
         <target state="final">Add polyline</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/editable-map.html</context>
-          <context context-type="linenumber">35</context>
+          <context context-type="linenumber">36</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.map.addPoint" datatype="html">
@@ -2041,7 +2045,7 @@
         <target state="final">Add point</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/editable-map.html</context>
-          <context context-type="linenumber">42</context>
+          <context context-type="linenumber">43</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.map.drag" datatype="html">
@@ -2049,7 +2053,7 @@
         <target state="final">Drag</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/editable-map.html</context>
-          <context context-type="linenumber">49</context>
+          <context context-type="linenumber">50</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.plusButton.selectCategory" datatype="html">
@@ -2702,12 +2706,56 @@
           <context context-type="linenumber">9</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="docedit.imagePicker.linkLayer" datatype="html">
+        <source>Bild als Karten-Layer verknüpfen</source>
+        <target state="final">Link image as map layer</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/docedit/widgets/image-picker.html</context>
+          <context context-type="linenumber">10</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="docedit.imagePicker.linkImages" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="{{selectedDocuments.length}}"/> Bilder verknüpfen</source>
         <target state="final">Link <x id="INTERPOLATION" equiv-text="{{selectedDocuments.length}}"/> images</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/widgets/image-picker.html</context>
-          <context context-type="linenumber">17</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.imagePicker.linkLayers" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{selectedDocuments.length}}"/> Bilder als Karten-Layer verknüpfen</source>
+        <target state="final">Link <x id="INTERPOLATION" equiv-text="{{selectedDocuments.length}}"/> images as map layers</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/docedit/widgets/image-picker.html</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.map.layerMenu.removeLayerModal.question" datatype="html">
+        <source>
+        Möchten Sie den Karten-Layer <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{getLayerLabel(layer)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> wirklich aus der Liste
+        <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION_1" equiv-text="{{document.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> entfernen? Die Bilddatei bleibt in jedem Fall erhalten und
+        kann der Liste zu einem späteren Zeitpunkt erneut hinzugefügt werden.
+    </source>
+        <target state="final">
+        Do you really want to remove map layer <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{getLayerLabel(layer)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> from list
+        <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION_1" equiv-text="{{document.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/>? The image file remains in any case and can be added
+        to the list again at a later time.
+    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/map/map/layers/remove-layer-modal.html</context>
+          <context context-type="linenumber">2</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="buttons.remove" datatype="html">
+        <source>
+        Entfernen
+    </source>
+        <target state="final">
+        Remove
+    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/map/map/layers/remove-layer-modal.html</context>
+          <context context-type="linenumber">10</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.tabs.images.linkImages" datatype="html">
@@ -3133,7 +3181,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/editable-map.html</context>
-          <context context-type="linenumber">57</context>
+          <context context-type="linenumber">58</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dating.html</context>
@@ -5204,7 +5252,7 @@
         <source>Unverknüpfte Layer</source>
         <target state="final">Unlinked layers</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/resources/map/map/layer-menu.component.ts</context>
+          <context context-type="sourcefile">src/app/components/resources/map/map/layers/layer-menu.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>

@@ -1,18 +1,16 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {empty, filter, flow, forEach, isNot, map, take} from 'tsfun';
+import {empty, filter, flow, forEach, isNot, map, take, copy} from 'tsfun';
 import {Document} from 'idai-components-2';
-import {Importer, ImporterFormat, ImporterReport} from '../../core/import/importer';
+import {Importer, ImporterFormat, ImporterOptions, ImporterReport} from '../../core/import/importer';
 import {Category} from '../../core/configuration/model/category';
 import {UploadModalComponent} from './upload-modal.component';
 import {ModelUtil} from '../../core/model/model-util';
-import {ChangesStream} from '../../core/datastore/changes/changes-stream';
 import {SyncService} from '../../core/sync/sync-service';
 import {MessagesConversion} from './messages-conversion';
 import {M} from '../messages/m';
 import {JavaToolExecutor} from '../../core/java/java-tool-executor';
-import {ImportValidator} from '../../core/import/import/process/import-validator';
 import {IdGenerator} from '../../core/datastore/pouchdb/id-generator';
 import {DocumentDatastore} from '../../core/datastore/document-datastore';
 import {ExportRunner} from '../../core/export/export-runner';
@@ -20,7 +18,6 @@ import {ImportState} from './import-state';
 import {ProjectConfiguration} from '../../core/configuration/project-configuration';
 import {AngularUtility} from '../../angular/angular-utility';
 import {TabManager} from '../../core/tabs/tab-manager';
-import {ViewFacade} from '../../core/resources/view/view-facade';
 import {Messages} from '../messages/messages';
 import {ProjectCategories} from '../../core/configuration/project-categories';
 import {ExtensionUtil} from '../../core/util/extension-util';
@@ -63,12 +60,9 @@ export class ImportComponent implements OnInit {
                 private relationsManager: RelationsManager,
                 private imageRelationsManager: ImageRelationsManager,
                 private imagestore: Imagestore,
-                private remoteChangesStream: ChangesStream,
-                private importValidator: ImportValidator,
                 private http: HttpClient,
                 private settingsProvider: SettingsProvider,
                 private projectConfiguration: ProjectConfiguration,
-                private viewFacade: ViewFacade,
                 private modalService: NgbModal,
                 private synchronizationService: SyncService,
                 private idGenerator: IdGenerator,
@@ -180,6 +174,18 @@ export class ImportComponent implements OnInit {
     }
 
 
+    public updateCategories() {
+
+        this.importState.categories = getCategoriesWithoutExcludedCategories(
+            this.projectConfiguration.getCategoriesArray(), this.getCategoriesToExclude()
+        );
+
+        if (!this.importState.selectedCategory || !this.importState.categories.includes(this.importState.selectedCategory)) {
+            this.selectFirstCategory();
+        }
+    }
+
+
     private async resetOperationIfNecessary() {
 
         if (!this.importState.selectedOperationId) return;
@@ -221,18 +227,6 @@ export class ImportComponent implements OnInit {
     }
 
 
-    public updateCategories() {
-
-        this.importState.categories = getCategoriesWithoutExcludedCategories(
-            this.projectConfiguration.getCategoriesArray(), this.getCategoriesToExclude()
-        );
-
-        if (!this.importState.selectedCategory || !this.importState.categories.includes(this.importState.selectedCategory)) {
-            this.selectFirstCategory();
-        }
-    }
-
-
     private getCategoriesToExclude() {
 
         return this.importState.mergeMode
@@ -243,13 +237,16 @@ export class ImportComponent implements OnInit {
 
     private async doImport() {
 
+        const options = copy(this.importState as any) as unknown as ImporterOptions;
+        if (options.mergeMode === true) options.selectedOperationId = "";
+
         const fileContents = await Importer.doRead(
             this.http,
             this.settingsProvider.getSettings(),
-            this.importState
+            options
         )
         const documents = await Importer.doParse(
-            this.importState,
+            options,
             fileContents);
 
         return Importer.doImport(
@@ -264,7 +261,7 @@ export class ImportComponent implements OnInit {
                 projectConfiguration: this.projectConfiguration
             },
             () => this.idGenerator.generateId(),
-            this.importState,
+            options,
             documents);
     }
 

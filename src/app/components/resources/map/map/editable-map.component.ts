@@ -9,10 +9,9 @@ import {FieldPolygon} from './field-polygon';
 import {FieldPolyline} from './field-polyline';
 import {FieldMarker} from './field-marker';
 import {ProjectConfiguration} from '../../../../core/configuration/project-configuration';
-import {LayerManager} from './layer-manager';
-import {LayerImageProvider} from './layer-image-provider';
+import {LayerManager} from './layers/layer-manager';
+import {LayerImageProvider} from './layers/layer-image-provider';
 import {Messages} from '../../../messages/messages';
-import {SettingsService} from '../../../../core/settings/settings-service';
 import {SettingsProvider} from '../../../../core/settings/settings-provider';
 
 
@@ -468,7 +467,7 @@ export class EditableMapComponent extends LayerMapComponent {
     }
 
 
-    private startPolygonEditing() {  
+    private startPolygonEditing() {
 
         this.setupPolygonCreation();
 
@@ -476,23 +475,23 @@ export class EditableMapComponent extends LayerMapComponent {
 
         if (!this.editablePolygons) return;
 
-        for (let polygon of this.editablePolygons) { 
+        for (let polygon of this.editablePolygons) {
             polygon.unbindTooltip();
             polygon.bringToFront();
             this.setupEditablePolygon(polygon);
-        } 
+        }
 
         if (this.editablePolygons.length > 0) {
             this.setSelectedPolygon(this.editablePolygons[0]);
         }
-    }  
+    }
 
 
-    private setupPolygonCreation() {  
+    private setupPolygonCreation() {
 
         const mapComponent = this;
-        this.map.on('pm:create', function(event: L.LayerEvent) { 
-            const polygon: L.Polygon = <L.Polygon> event.layer; 
+        this.map.on('pm:create', function(event: L.LayerEvent) {
+            const polygon: L.Polygon = <L.Polygon> event.layer;
             const latLngs: Array<any> = polygon.getLatLngs();
             if (latLngs.length == 1 && latLngs[0].length >= 3) {
                 mapComponent.editablePolygons.push(polygon);

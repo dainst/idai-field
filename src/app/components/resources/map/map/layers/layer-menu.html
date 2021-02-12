@@ -9,16 +9,44 @@
                 <div *ngFor="let layerGroup of layerGroups">
                     <div class="layer-group-heading">{{getLayerGroupLabel(layerGroup)}}</div>
                     <form>
-                        <fieldset class="form-group"
+                        <fieldset *ngIf="layerGroup.document" class="form-group"
                                   cdkDropList [cdkDropListData]="layerGroup.layers"
                                   (cdkDropListDropped)="onDrop($event, layerGroup)">
                             <div *ngFor="let layer of layerGroup.layers"
                                 class="layer-entry"
                                 cdkDrag cdkDragLockAxis="y"
                                 cdkDragBoundary=".form-group"
+                                [cdkDragDisabled]="isInSaveProgress(layer)"
                                 (cdkDragStarted)="dragging = true"
                                 (cdkDragEnded)="dragging = false"
                                 [cdkDragData]="layer">
+                                <span *ngIf="!isInSaveProgress(layer)" class="mdi layer-menu-button"
+                                    [class.mdi-eye]="isActiveLayer(layer)"
+                                    [class.mdi-eye-off]="!isActiveLayer(layer)"
+                                    [class.layer-active]="isActiveLayer(layer)"
+                                    [class.layer-inactive]="!isActiveLayer(layer)"
+                                    (click)="toggleLayer(layer)">
+                                </span>
+                                <span *ngIf="isActiveLayer(layer) && !isInSaveProgress(layer)"
+                                    class="mdi mdi-image-filter-center-focus layer-menu-button layer-active"
+                                    (click)="focusLayer(layer)">
+                                </span>
+                                <span *ngIf="!isActiveLayer(layer) && !isInSaveProgress(layer)"
+                                    class="mdi mdi-image-filter-center-focus layer-menu-button layer-inactive">
+                                </span>
+                                <span *ngIf="!isInSaveProgress(layer)" class="mdi mdi-link-off layer-menu-button"
+                                    (click)="removeLayer(layerGroup, layer)">
+                                </span>
+                                <div cdkDragHandle class="layer-menu-drag-handle">
+                                    <span class="layer-menu-label" [class.in-save-progress]="isInSaveProgress(layer)">
+                                        {{getLayerLabel(layer)}}
+                                    </span>
+                                </div>
+                                <div class="drag-placeholder" *cdkDragPlaceholder></div>
+                            </div>
+                        </fieldset>
+                        <fieldset *ngIf="!layerGroup.document" class="form-group">
+                            <div *ngFor="let layer of layerGroup.layers" class="layer-entry">
                                 <span class="mdi layer-menu-button"
                                     [class.mdi-eye]="isActiveLayer(layer)"
                                     [class.mdi-eye-off]="!isActiveLayer(layer)"
@@ -34,7 +62,6 @@
                                     class="mdi mdi-image-filter-center-focus layer-menu-button layer-inactive">
                                 </span>
                                 <span class="layer-menu-label">{{getLayerLabel(layer)}}</span>
-                                <div class="drag-placeholder" *cdkDragPlaceholder></div>
                             </div>
                         </fieldset>
                     </form>

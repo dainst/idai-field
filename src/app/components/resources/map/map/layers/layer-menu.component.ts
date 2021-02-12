@@ -25,10 +25,11 @@ export class LayerMenuComponent extends MenuComponent implements OnDestroy {
 
     @Output() onToggleLayer = new EventEmitter<ImageDocument>();
     @Output() onFocusLayer = new EventEmitter<ImageDocument>();
-    @Output() onAddLayers = new EventEmitter<void>();
+    @Output() onAddOrRemoveLayers = new EventEmitter<void>();
     @Output() onChangeLayersOrder = new EventEmitter<void>();
 
     public dragging: boolean = false;
+    public layersInSaveProgress: Array<ImageDocument> = [];
 
 
     constructor(private layerManager: LayerManager,
@@ -46,6 +47,7 @@ export class LayerMenuComponent extends MenuComponent implements OnDestroy {
     public toggleLayer = (layer: ImageDocument) => this.onToggleLayer.emit(layer);
     public focusLayer = (layer: ImageDocument) => this.onFocusLayer.emit(layer);
     public getLayerLabel = (layer: ImageDocument) => LayerUtility.getLayerLabel(layer);
+    public isInSaveProgress = (layer: ImageDocument) => this.layersInSaveProgress.includes(layer);
 
 
     ngOnDestroy() {
@@ -82,8 +84,12 @@ export class LayerMenuComponent extends MenuComponent implements OnDestroy {
         const newLayers: Array<ImageDocument> = await this.selectNewLayers(group);
         if (newLayers.length === 0) return;
 
+        this.layersInSaveProgress = newLayers;
+        group.layers = group.layers.concat(newLayers);
         await this.layerManager.addLayers(group, newLayers);
-        this.onAddLayers.emit();
+        this.layersInSaveProgress = [];
+
+        this.onAddOrRemoveLayers.emit();
     }
 
 
@@ -98,8 +104,10 @@ export class LayerMenuComponent extends MenuComponent implements OnDestroy {
 
         try {
             if (await removeLayerModal.result === 'remove') {
+                this.layersInSaveProgress = [layer];
                 await this.layerManager.removeLayer(group, layer);
-                this.onAddLayers.emit();
+                this.layersInSaveProgress = [];
+                this.onAddOrRemoveLayers.emit();
             }
         } catch(err) {
             // Remove layer modal has been canceled

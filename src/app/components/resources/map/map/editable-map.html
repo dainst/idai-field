@@ -3,7 +3,7 @@
 <layer-menu [layerGroups]="layerGroups"
             (onToggleLayer)="toggleLayer($event)"
             (onFocusLayer)="focusLayer($event)"
-            (onAddLayers)="updateLayers()"
+            (onAddOrRemoveLayers)="updateLayers()"
             (onChangeLayersOrder)="updatePaneZIndices()"></layer-menu>
 
 <div id="map-editor-buttons" *ngIf="isEditing">

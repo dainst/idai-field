@@ -85,6 +85,8 @@ export class LayerManager {
 
     public async addLayers(group: LayerGroup, newLayers: Array<ImageDocument>) {
 
+        await this.saveOrderChanges();
+
         const oldDocument: FieldDocument = clone(group.document);
 
         const layerIds: string[] = group.document.resource.relations[ImageRelations.HASLAYER] || [];
@@ -96,6 +98,8 @@ export class LayerManager {
 
 
     public async removeLayer(group: LayerGroup, layerToRemove: ImageDocument) {
+
+        await this.saveOrderChanges();
 
         const oldDocument: FieldDocument = clone(group.document);
 
@@ -122,11 +126,12 @@ export class LayerManager {
 
     public async saveOrderChanges() {
 
-        for (let document of this.unsavedDocuments) {
+        const documentsToSave: Array<FieldDocument> = clone(this.unsavedDocuments);
+        this.unsavedDocuments = [];
+
+        for (let document of documentsToSave) {
             await this.relationsManager.update(document);
         }
-
-        this.unsavedDocuments = [];
     }
 
 

@@ -55,21 +55,27 @@ $layer-menu-remove-button-color: #c82333;
       .form-group {
         margin-bottom: 0;
 
-        &.drag-and-drop-group {
-          cursor: grab;
-        }
-
         .layer-entry {
           -webkit-user-select: none;
           -moz-user-select: none;
           -ms-user-select: none;
           user-select: none;
+          height: 27px;
+
+          .layer-menu-drag-handle {
+            display: inline-block;
+            cursor: grab;
+            line-height: 1.9;
+            height: 100%;
+            width: calc(100% - 69px);
+          }
         }
 
         .layer-menu-button {
           padding: 0;
           margin-right: 5px;
           font-size: 18px;
+          cursor: default;
         }
 
         .layer-menu-button.layer-active {

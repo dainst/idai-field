@@ -9,7 +9,7 @@
                 <div *ngFor="let layerGroup of layerGroups">
                     <div class="layer-group-heading">{{getLayerGroupLabel(layerGroup)}}</div>
                     <form>
-                        <fieldset *ngIf="layerGroup.document" class="form-group drag-and-drop-group"
+                        <fieldset *ngIf="layerGroup.document" class="form-group"
                                   cdkDropList [cdkDropListData]="layerGroup.layers"
                                   (cdkDropListDropped)="onDrop($event, layerGroup)">
                             <div *ngFor="let layer of layerGroup.layers"
@@ -36,7 +36,9 @@
                                 <span class="mdi mdi-link-off layer-menu-button"
                                     (click)="removeLayer(layerGroup, layer)">
                                 </span>
-                                <span class="layer-menu-label">{{getLayerLabel(layer)}}</span>
+                                <div cdkDragHandle class="layer-menu-drag-handle">
+                                    <span class="layer-menu-label">{{getLayerLabel(layer)}}</span>
+                                </div>
                                 <div class="drag-placeholder" *cdkDragPlaceholder></div>
                             </div>
                         </fieldset>

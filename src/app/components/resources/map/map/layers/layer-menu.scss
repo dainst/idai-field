@@ -128,4 +128,9 @@ div.cdk-drag-preview {
   position: relative;
   bottom: 2px;
   font-size: 14px;
+
+  &.in-save-progress {
+    left: 69px;
+    color: grey;
+  }
 }

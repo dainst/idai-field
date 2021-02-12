@@ -174,6 +174,18 @@ export class ImportComponent implements OnInit {
     }
 
 
+    public updateCategories() {
+
+        this.importState.categories = getCategoriesWithoutExcludedCategories(
+            this.projectConfiguration.getCategoriesArray(), this.getCategoriesToExclude()
+        );
+
+        if (!this.importState.selectedCategory || !this.importState.categories.includes(this.importState.selectedCategory)) {
+            this.selectFirstCategory();
+        }
+    }
+
+
     private async resetOperationIfNecessary() {
 
         if (!this.importState.selectedOperationId) return;
@@ -212,18 +224,6 @@ export class ImportComponent implements OnInit {
         this.menuService.setContext(MenuContext.DEFAULT);
 
         if (importReport) this.showImportResult(importReport);
-    }
-
-
-    public updateCategories() {
-
-        this.importState.categories = getCategoriesWithoutExcludedCategories(
-            this.projectConfiguration.getCategoriesArray(), this.getCategoriesToExclude()
-        );
-
-        if (!this.importState.selectedCategory || !this.importState.categories.includes(this.importState.selectedCategory)) {
-            this.selectFirstCategory();
-        }
     }
 
 

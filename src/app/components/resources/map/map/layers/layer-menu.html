@@ -16,7 +16,7 @@
                                 class="layer-entry"
                                 cdkDrag cdkDragLockAxis="y"
                                 cdkDragBoundary=".form-group"
-                                cdkDragDisabled="isInSaveProgress(layer)"
+                                [cdkDragDisabled]="isInSaveProgress(layer)"
                                 (cdkDragStarted)="dragging = true"
                                 (cdkDragEnded)="dragging = false"
                                 [cdkDragData]="layer">

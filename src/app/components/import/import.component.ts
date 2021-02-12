@@ -7,12 +7,10 @@ import {Importer, ImporterFormat, ImporterReport} from '../../core/import/import
 import {Category} from '../../core/configuration/model/category';
 import {UploadModalComponent} from './upload-modal.component';
 import {ModelUtil} from '../../core/model/model-util';
-import {ChangesStream} from '../../core/datastore/changes/changes-stream';
 import {SyncService} from '../../core/sync/sync-service';
 import {MessagesConversion} from './messages-conversion';
 import {M} from '../messages/m';
 import {JavaToolExecutor} from '../../core/java/java-tool-executor';
-import {ImportValidator} from '../../core/import/import/process/import-validator';
 import {IdGenerator} from '../../core/datastore/pouchdb/id-generator';
 import {DocumentDatastore} from '../../core/datastore/document-datastore';
 import {ExportRunner} from '../../core/export/export-runner';
@@ -20,7 +18,6 @@ import {ImportState} from './import-state';
 import {ProjectConfiguration} from '../../core/configuration/project-configuration';
 import {AngularUtility} from '../../angular/angular-utility';
 import {TabManager} from '../../core/tabs/tab-manager';
-import {ViewFacade} from '../../core/resources/view/view-facade';
 import {Messages} from '../messages/messages';
 import {ProjectCategories} from '../../core/configuration/project-categories';
 import {ExtensionUtil} from '../../core/util/extension-util';
@@ -63,12 +60,9 @@ export class ImportComponent implements OnInit {
                 private relationsManager: RelationsManager,
                 private imageRelationsManager: ImageRelationsManager,
                 private imagestore: Imagestore,
-                private remoteChangesStream: ChangesStream,
-                private importValidator: ImportValidator,
                 private http: HttpClient,
                 private settingsProvider: SettingsProvider,
                 private projectConfiguration: ProjectConfiguration,
-                private viewFacade: ViewFacade,
                 private modalService: NgbModal,
                 private synchronizationService: SyncService,
                 private idGenerator: IdGenerator,

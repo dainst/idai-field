@@ -1,4 +1,3 @@
-import {update} from 'tsfun/associative';
 import {Name} from '../../core/constants';
 import {ProjectNameValidator} from '../../core/model/project-name-validator';
 import {M} from '../messages/m';
@@ -59,14 +58,14 @@ export module Backup {
 
         await db2.load('file://' + filePath);
 
-        const setIdentifier = update('resource.identifier', project);
         const projectDocument = await db2.get('project');
 
         if (!ProjectNameValidator.isSimilar(projectDocument.resource.identifier, project)) {
             warnings.push([M.BACKUP_READ_WARNING_UNSIMILAR_PROJECT_NAME]);
         }
 
-        await db2.put(setIdentifier(projectDocument), { force: true });
+        projectDocument.resource.identifier = project;
+        await db2.put(projectDocument, { force: true });
 
         return warnings;
     }

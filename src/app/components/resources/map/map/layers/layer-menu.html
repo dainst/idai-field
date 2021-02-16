@@ -16,7 +16,7 @@
                           class="mdi mdi-close layer-menu-button layer-group-cancel-button"
                           (click)="abortEditing()"></span>
                     <form>
-                        <fieldset *ngIf="layerGroup.document" class="form-group"
+                        <fieldset class="form-group"
                                   cdkDropList [cdkDropListData]="layerGroup.layers"
                                   (cdkDropListDropped)="onDrop($event)">
                             <div *ngFor="let layer of layerGroup.layers"
@@ -54,27 +54,8 @@
                                 <div class="drag-placeholder" *cdkDragPlaceholder></div>
                             </div>
                         </fieldset>
-                        <fieldset *ngIf="!layerGroup.document" class="form-group">
-                            <div *ngFor="let layer of layerGroup.layers" class="layer-entry">
-                                <span class="mdi layer-menu-button"
-                                    [class.mdi-eye]="isActiveLayer(layer)"
-                                    [class.mdi-eye-off]="!isActiveLayer(layer)"
-                                    [class.layer-active]="isActiveLayer(layer)"
-                                    [class.layer-inactive]="!isActiveLayer(layer)"
-                                    (click)="toggleLayer(layer)">
-                                </span>
-                                <span *ngIf="isActiveLayer(layer)"
-                                    class="mdi mdi-image-filter-center-focus layer-menu-button layer-active"
-                                    (click)="focusLayer(layer)">
-                                </span>
-                                <span *ngIf="!isActiveLayer(layer)"
-                                    class="mdi mdi-image-filter-center-focus layer-menu-button layer-inactive">
-                                </span>
-                                <span class="layer-menu-label">{{getLayerLabel(layer)}}</span>
-                            </div>
-                        </fieldset>
                     </form>
-                    <div *ngIf="isInEditing(layerGroup) && layerGroup.document"
+                    <div *ngIf="isInEditing(layerGroup)"
                             class="btn btn-block btn-success" (click)="addLayers(layerGroup)">
                         <span class="mdi mdi-plus-circle"></span>
                     </div>

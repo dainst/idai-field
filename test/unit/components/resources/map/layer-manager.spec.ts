@@ -21,8 +21,7 @@ describe('LayerManager', () => {
 
     beforeEach(() => {
 
-        const mockDatastore = jasmine.createSpyObj('datastore', ['find', 'getMultiple', 'get']);
-        mockDatastore.find.and.returnValue(Promise.resolve({ documents: layerDocuments }));
+        const mockDatastore = jasmine.createSpyObj('datastore', ['getMultiple', 'get']);
         mockDatastore.getMultiple.and.returnValue(Promise.resolve({ documents: layerDocuments }));
         mockDatastore.get.and.returnValue(Promise.resolve({ resource: { id: 'project', relations: {} } }));
 

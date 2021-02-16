@@ -195,19 +195,16 @@ export class LayerManager {
         if (currentOperation) layerGroups.push(await this.createLayerGroup(currentOperation));
 
         layerGroups.push(await this.createLayerGroup(await this.fieldDatastore.get('project')));
-        layerGroups.push(await this.createLayerGroup());
 
         return layerGroups;
     }
 
 
-    private async createLayerGroup(document?: FieldDocument): Promise<LayerGroup> {
+    private async createLayerGroup(document: FieldDocument): Promise<LayerGroup> {
 
         return {
             document: document,
-            layers: document
-                ? await this.fetchLinkedLayers(document)
-                : await this.fetchUnlinkedLayers()
+            layers: await this.fetchLinkedLayers(document)
         };
     }
 
@@ -217,17 +214,6 @@ export class LayerManager {
         return Document.hasRelations(document, ImageRelations.HASLAYER)
             ? await this.imageDatastore.getMultiple(document.resource.relations[ImageRelations.HASLAYER])
             : [];
-    }
-
-
-    private async fetchUnlinkedLayers(): Promise<Array<ImageDocument>> {
-
-        const constraints = {
-            'georeference:exist': 'KNOWN',
-            'isLayerOf:exist': 'UNKNOWN'
-        };
-
-        return (await this.imageDatastore.find({ constraints })).documents;
     }
 
 

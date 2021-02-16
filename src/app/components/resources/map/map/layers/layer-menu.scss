@@ -4,6 +4,7 @@
 
 $layer-menu-button-color: #657faa;
 $layer-menu-button-inactive-color: grey;
+$layer-menu-add-button-color: #28a745;
 $layer-menu-remove-button-color: #c82333;
 
 #layer-button,
@@ -38,55 +39,63 @@ $layer-menu-remove-button-color: #c82333;
       overflow-y: auto;
       overflow-x: hidden;
 
-      .layer-group-heading {
-        font-size: 15px;
-      }
+      .layer-group {
+        margin-bottom: 5px;
 
-      .layer-group-edit-button {
-        margin-left: 5px;
-      }
-
-      .btn-success {
-        height: 20px;
-
-        .mdi {
-          position: relative;
-          bottom: 10px;
-          font-size: 12px;
+        .layer-group-heading {
+          font-size: 15px;
         }
-      }
-
-      .form-group {
-        margin-bottom: 0;
-
-        .layer-entry {
-          -webkit-user-select: none;
-          -moz-user-select: none;
-          -ms-user-select: none;
-          user-select: none;
-          height: 27px;
-
-          .layer-menu-drag-handle {
-            display: inline-block;
-            cursor: grab;
-            line-height: 1.9;
-            height: 100%;
-            width: calc(100% - 69px);
+  
+        .layer-group-edit-button {
+          margin-left: 5px;
+        }
+  
+        .layer-menu-add-button {
+          height: 20px;
+          border: none;
+  
+          .mdi {
+            position: relative;
+            bottom: 8px;
+          }
+        }
+  
+        .form-group {
+          margin-bottom: 0;
+  
+          .layer-entry {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            height: 27px;
+  
+            .layer-menu-drag-handle {
+              display: inline-block;
+              cursor: grab;
+              line-height: 1.9;
+              height: 100%;
+              width: calc(100% - 69px);
+            }
+          }
+  
+          .mdi-link-off {
+            color: $layer-menu-remove-button-color;
+  
+            &:hover {
+              color: lighten($layer-menu-remove-button-color, 20%) !important;
+            }
+          }
+  
+          .drag-placeholder {
+            min-height: 27px;
+            border: none !important;
+            cursor: grabbing;
           }
         }
 
-        .mdi-link-off {
-          color: $layer-menu-remove-button-color;
-
-          &:hover {
-            color: lighten($layer-menu-remove-button-color, 20%) !important;
-          }
-        }
-
-        .drag-placeholder {
-          min-height: 27px;
-          border: none !important;
-          cursor: grabbing;
+        &:last-child {
+          margin-bottom: 0;
         }
       }
     }

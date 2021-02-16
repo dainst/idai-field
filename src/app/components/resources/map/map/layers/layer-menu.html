@@ -6,7 +6,7 @@
     <div *ngIf="opened" id="layer-menu" class="card">
         <div class="card-body">
             <div class="layer-menu-container">
-                <div *ngFor="let layerGroup of layerGroups; index as i">
+                <div *ngFor="let layerGroup of layerGroups; index as i" class="layer-group">
                     <span class="layer-group-heading">{{getLayerGroupLabel(layerGroup)}}</span>
                     <span *ngIf="i === 0 && !isInEditing(layerGroup)" id="layer-menu-edit-button"
                           class="mdi mdi-pencil layer-menu-button layer-group-edit-button" (click)="editGroup(layerGroup)"></span>
@@ -56,7 +56,8 @@
                         </fieldset>
                     </form>
                     <div *ngIf="isInEditing(layerGroup)"
-                            class="btn btn-block btn-success" (click)="addLayers(layerGroup)">
+                            class="btn btn-block btn-outline-success layer-menu-add-button"
+                            (click)="addLayers(layerGroup)">
                         <span class="mdi mdi-plus-circle"></span>
                     </div>
                 </div>

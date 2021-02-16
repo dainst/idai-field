@@ -116,9 +116,13 @@ export class LayerManager {
 
         if (!this.layerGroupInEditing) return;
 
-        this.layerGroupInEditing.document.resource.relations[ImageRelations.HASLAYER]
+        const relations: string[]
             = this.originalLayerGroupInEditing.document.resource.relations[ImageRelations.HASLAYER];
+
+        this.layerGroupInEditing.document.resource.relations[ImageRelations.HASLAYER] = relations;
         this.layerGroupInEditing.layers = this.originalLayerGroupInEditing.layers;
+
+        this.viewFacade.setActiveLayersIds(this.activeLayerIds.filter(id => relations.includes(id)));
 
         this.layerGroupInEditing = undefined;
         this.originalLayerGroupInEditing = undefined;

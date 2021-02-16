@@ -54,7 +54,6 @@ import {TypeIconComponent} from './types/type-icon.component';
 import {Messages} from '../messages/messages';
 import {SettingsProvider} from '../../core/settings/settings-provider';
 import {SyncService} from '../../core/sync/sync-service';
-import {RemoveLayerModalComponent} from './map/map/layers/remove-layer-modal.component';
 
 
 const remote = typeof window !== 'undefined'
@@ -98,7 +97,6 @@ const remote = typeof window !== 'undefined'
         ContextMenuComponent,
         MoveModalComponent,
         DeletionInProgressModalComponent,
-        RemoveLayerModalComponent,
         ChildrenViewComponent
     ],
     providers: [
@@ -186,8 +184,7 @@ const remote = typeof window !== 'undefined'
     ],
     entryComponents: [
         MoveModalComponent,
-        DeletionInProgressModalComponent,
-        RemoveLayerModalComponent,
+        DeletionInProgressModalComponent
     ]
 })
 

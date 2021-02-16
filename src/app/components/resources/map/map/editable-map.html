@@ -1,9 +1,9 @@
 <div id="map-container"></div>
 
-<layer-menu [layerGroups]="layerGroups"
+<layer-menu [layerGroups]="getLayerGroups()"
             (onToggleLayer)="toggleLayer($event)"
             (onFocusLayer)="focusLayer($event)"
-            (onAddOrRemoveLayers)="updateLayers()"
+            (onAddOrRemoveLayers)="updateLayers(false)"
             (onChangeLayersOrder)="updatePaneZIndices()"></layer-menu>
 
 <div id="map-editor-buttons" *ngIf="isEditing">

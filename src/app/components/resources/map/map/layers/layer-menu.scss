@@ -42,6 +42,10 @@ $layer-menu-remove-button-color: #c82333;
         font-size: 15px;
       }
 
+      .layer-group-edit-button {
+        margin-left: 5px;
+      }
+
       .btn-success {
         height: 20px;
 
@@ -71,29 +75,6 @@ $layer-menu-remove-button-color: #c82333;
           }
         }
 
-        .layer-menu-button {
-          padding: 0;
-          margin-right: 5px;
-          font-size: 18px;
-          cursor: default;
-        }
-
-        .layer-menu-button.layer-active {
-          color: $layer-menu-button-color !important;
-        }
-
-        .layer-menu-button.layer-inactive {
-          color: $layer-menu-button-inactive-color !important;
-        }
-
-        .layer-menu-button:hover {
-          color: lighten($layer-menu-button-color, 10%) !important;
-        }
-
-        .layer-menu-button.layer-inactive.mdi-image-filter-center-focus {
-          visibility: hidden;
-        }
-
         .mdi-link-off {
           color: $layer-menu-remove-button-color;
 
@@ -112,6 +93,32 @@ $layer-menu-remove-button-color: #c82333;
   }
 }
 
+.layer-menu-button,
+.layer-group-edit-button,
+.layer-group-save-button {
+  padding: 0;
+  margin-right: 5px;
+  font-size: 18px;
+  cursor: default;
+}
+
+.layer-menu-button.layer-active {
+  color: $layer-menu-button-color !important;
+}
+
+.layer-menu-button.layer-inactive {
+  color: $layer-menu-button-inactive-color !important;
+}
+
+.layer-menu-button:hover,
+.layer-group-edit-button:hover {
+  color: lighten($layer-menu-button-color, 10%) !important;
+}
+
+.layer-menu-button.layer-inactive.mdi-image-filter-center-focus {
+  visibility: hidden;
+}
+
 div.cdk-drag-preview {
   z-index: 1009 !important;
 
@@ -128,9 +135,4 @@ div.cdk-drag-preview {
   position: relative;
   bottom: 2px;
   font-size: 14px;
-
-  &.in-save-progress {
-    left: 69px;
-    color: grey;
-  }
 }

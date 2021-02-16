@@ -1,8 +1,7 @@
 import {ChangeDetectorRef, Component, Input, NgZone, SimpleChanges} from '@angular/core';
 import L from 'leaflet';
-import {flatten} from 'tsfun';
 import {ImageDocument, ImageGeoreference} from 'idai-components-2';
-import {LayerGroup, LayerManager, ListDiffResult} from './layers/layer-manager';
+import {LayerManager, ListDiffResult} from './layers/layer-manager';
 import {LayerImageProvider} from './layers/layer-image-provider';
 import {ProjectConfiguration} from '../../../../core/configuration/project-configuration';
 import {MapComponent} from './map.component';
@@ -28,8 +27,6 @@ export class LayerMapComponent extends MapComponent {
 
     @Input() viewName: string;
 
-    public layerGroups: Array<LayerGroup> = [];
-
     private panes: { [resourceId: string]: any } = {};
     private imageOverlays: { [resourceId: string]: L.ImageOverlay } = {};
     private layersUpdate: boolean = true;
@@ -51,6 +48,9 @@ export class LayerMapComponent extends MapComponent {
     }
 
 
+    public getLayerGroups = () => this.layerManager.getLayerGroups();
+
+
     async ngOnChanges(changes: SimpleChanges) {
 
         if (LayerMapComponent.isLayersUpdateNecessary(changes)) this.layersUpdate = true;
@@ -59,13 +59,12 @@ export class LayerMapComponent extends MapComponent {
     }
 
 
-    public async updateLayers(): Promise<void> {
+    public async updateLayers(reloadLayerGroups: boolean = true): Promise<void> {
 
         this.layerImageProvider.reset();
 
-        const { layerGroups, activeLayersChange } = await this.layerManager.initializeLayers();
+        const activeLayersChange: ListDiffResult = await this.layerManager.initializeLayers(reloadLayerGroups);
 
-        this.layerGroups = layerGroups;
         this.initializePanes();
         this.updatePaneZIndices();
         this.handleActiveLayersChange(activeLayersChange);
@@ -105,7 +104,7 @@ export class LayerMapComponent extends MapComponent {
 
     public updatePaneZIndices() {
 
-        this.getLayers().reverse().forEach((layer, index) => {
+        this.layerManager.getLayers().reverse().forEach((layer, index) => {
             this.panes[layer.resource.id].style.zIndex = String(index);
         })
     };
@@ -143,7 +142,7 @@ export class LayerMapComponent extends MapComponent {
 
     private initializePanes() {
 
-        this.getLayers().filter(layer => !this.panes[layer.resource.id as any])
+        this.layerManager.getLayers().filter(layer => !this.panes[layer.resource.id as any])
             .forEach(layer => this.createPane(layer));
     }
 
@@ -158,7 +157,7 @@ export class LayerMapComponent extends MapComponent {
     private async addLayerToMap(resourceId: string) {
 
         const layerDocument: ImageDocument|undefined
-            = this.getLayers().find(layer => layer.resource.id === resourceId);
+            = this.layerManager.getLayers().find(layer => layer.resource.id === resourceId);
         if (!layerDocument) return;
 
         const imageContainer: ImageContainer = await this.layerImageProvider.getImageContainer(resourceId);
@@ -182,14 +181,6 @@ export class LayerMapComponent extends MapComponent {
         }
 
         this.map.removeLayer(imageOverlay);
-    }
-
-
-    private getLayers(): Array<ImageDocument> {
-
-        return flatten(
-            this.layerGroups.map(layerGroup => layerGroup.layers)
-        );
     }
 
 

@@ -7,7 +7,6 @@ import {LayerGroup, LayerManager} from './layer-manager';
 import {MenuComponent} from '../../../../widgets/menu.component';
 import {MenuContext, MenuService} from '../../../../menu-service';
 import {ImagePickerComponent} from '../../../../docedit/widgets/image-picker.component';
-import {RemoveLayerModalComponent} from './remove-layer-modal.component';
 import {LayerUtility} from './layer-utility';
 
 
@@ -19,7 +18,7 @@ import {LayerUtility} from './layer-utility';
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export class LayerMenuComponent extends MenuComponent implements OnDestroy {
+export class LayerMenuComponent extends MenuComponent {
 
     @Input() layerGroups: Array<LayerGroup> = [];
 
@@ -44,29 +43,45 @@ export class LayerMenuComponent extends MenuComponent implements OnDestroy {
 
 
     public isActiveLayer = (layer: ImageDocument) => this.layerManager.isActiveLayer(layer.resource.id);
+
     public toggleLayer = (layer: ImageDocument) => this.onToggleLayer.emit(layer);
+
     public focusLayer = (layer: ImageDocument) => this.onFocusLayer.emit(layer);
+
     public getLayerLabel = (layer: ImageDocument) => LayerUtility.getLayerLabel(layer);
-    public isInSaveProgress = (layer: ImageDocument) => this.layersInSaveProgress.includes(layer);
 
-
-    ngOnDestroy() {
-
-        this.layerManager.saveOrderChanges();
-    }
+    public isInEditing = (layerGroup: LayerGroup) => this.layerManager.isInEditing(layerGroup);
 
 
     public close() {
 
         super.close();
-        this.layerManager.saveOrderChanges();
         this.changeDetectorRef.detectChanges();
     }
 
 
-    public async onDrop(event: CdkDragDrop<string[], any>, layerGroup: LayerGroup) {
+    public editGroup(layerGroup: LayerGroup) {
 
-        this.layerManager.changeOrder(layerGroup, event.previousIndex, event.currentIndex);
+        this.layerManager.startEditing(layerGroup);
+    }
+
+
+    public async saveGroup() {
+
+        await this.layerManager.finishEditing();
+    }
+
+
+    public abortEditing() {
+
+        this.layerManager.abortEditing();
+        this.onAddOrRemoveLayers.emit();
+    }
+
+
+    public async onDrop(event: CdkDragDrop<string[], any>) {
+
+        this.layerManager.changeOrder(event.previousIndex, event.currentIndex);
         this.onChangeLayersOrder.emit();
     }
 
@@ -85,35 +100,18 @@ export class LayerMenuComponent extends MenuComponent implements OnDestroy {
         if (newLayers.length === 0) return;
 
         this.layersInSaveProgress = newLayers;
-        group.layers = group.layers.concat(newLayers);
-        await this.layerManager.addLayers(group, newLayers);
+        await this.layerManager.addLayers(newLayers);
         this.layersInSaveProgress = [];
 
         this.onAddOrRemoveLayers.emit();
     }
 
 
-    public async removeLayer(group: LayerGroup, layer: ImageDocument) {
+    public async removeLayer(layer: ImageDocument) {
 
-        this.menuService.setContext(MenuContext.MODAL);
-        const removeLayerModal: NgbModalRef = this.modalService.open(
-            RemoveLayerModalComponent, { keyboard: false }
-        );
-        removeLayerModal.componentInstance.layer = layer;
-        removeLayerModal.componentInstance.document = group.document;
-
-        try {
-            if (await removeLayerModal.result === 'remove') {
-                this.layersInSaveProgress = [layer];
-                await this.layerManager.removeLayer(group, layer);
-                this.layersInSaveProgress = [];
-                this.onAddOrRemoveLayers.emit();
-            }
-        } catch(err) {
-            // Remove layer modal has been canceled
-        } finally {
-            setTimeout(() => this.menuService.setContext(MenuContext.DEFAULT), 1);
-        }
+        await this.layerManager.removeLayer(layer);
+        
+        this.onAddOrRemoveLayers.emit();
     }
 
 

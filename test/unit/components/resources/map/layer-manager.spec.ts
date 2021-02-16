@@ -36,11 +36,11 @@ describe('LayerManager', () => {
 
     it('initialize layers', async done => {
 
-        const { layerGroups, activeLayersChange } = await layerManager.initializeLayers(true);
+        const activeLayersChange = await layerManager.initializeLayers();
 
-        expect(layerGroups.length).toBe(2);
-        expect(layerGroups[1].layers[0].resource.id).toEqual('l1');
-        expect(layerGroups[1].layers[1].resource.id).toEqual('l2');
+        expect(layerManager.getLayerGroups().length).toBe(2);
+        expect(layerManager.getLayerGroups()[1].layers[0].resource.id).toEqual('l1');
+        expect(layerManager.getLayerGroups()[1].layers[1].resource.id).toEqual('l2');
 
         expect(activeLayersChange.added.length).toBe(0);
         expect(activeLayersChange.removed.length).toBe(0);
@@ -53,7 +53,7 @@ describe('LayerManager', () => {
 
         mockViewFacade.getActiveLayersIds.and.returnValue([ 'l2' ]);
 
-        const { activeLayersChange } = await layerManager.initializeLayers(true);
+        const activeLayersChange = await layerManager.initializeLayers();
 
         expect(activeLayersChange.added.length).toBe(1);
         expect(activeLayersChange.added[0]).toEqual('l2');
@@ -68,11 +68,11 @@ describe('LayerManager', () => {
 
         mockViewFacade.getActiveLayersIds.and.returnValue([ 'l2' ]);
 
-        await layerManager.initializeLayers(true);
+        await layerManager.initializeLayers();
 
         mockViewFacade.getActiveLayersIds.and.returnValue([ 'l1' ]);
 
-        const { activeLayersChange } = await layerManager.initializeLayers(true);
+        const activeLayersChange = await layerManager.initializeLayers();
 
         expect(activeLayersChange.added.length).toBe(1);
         expect(activeLayersChange.added[0]).toEqual('l1');
@@ -88,8 +88,8 @@ describe('LayerManager', () => {
 
             mockViewFacade.getActiveLayersIds.and.returnValue([ 'l2' ]);
 
-            await layerManager.initializeLayers(true);
-            const { activeLayersChange } = await layerManager.initializeLayers(true);
+            await layerManager.initializeLayers();
+            const activeLayersChange = await layerManager.initializeLayers();
 
             expect(activeLayersChange.added.length).toBe(0);
             expect(activeLayersChange.removed.length).toBe(0);

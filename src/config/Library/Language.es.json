@@ -1,0 +1,250 @@
+{
+    "groups": {
+        "stem": "Datos maestros",
+        "time": "Cronología",
+        "position": "Ubicación / contexto",
+        "dimension": "Medidas",
+        "identification": "Clasificación"
+      },
+    "commons": {
+        "dimensionLength": {
+            "label": "Longitud"
+        },
+        "dimensionWidth": {
+            "label": "Anchura"
+        },
+        "dimensionHeight": {
+            "label": "Altura"
+        },
+        "dimensionVerticalExtent": {
+            "label": "Nivel"
+        },
+        "processor": {
+            "label": "Responsable"
+        },
+        "campaign": {
+            "label": "Campaña"
+        },
+        "description": {
+            "label": "Descripción"
+        },
+        "period": {
+            "label": "Época"
+        },
+        "beginningDate": {
+            "label": "Fecha inicial"
+        },
+        "endDate": {
+            "label": "Fecha final"
+        },
+        "date": {
+            "label": "Fecha"
+        },
+        "orientation": {
+            "label": "Orientación"
+        },
+        "spatialLocation": {
+            "label": "Descripción de la ubicación"
+        },
+        "provenance": {
+            "label": "Procedencia"
+        }
+    },
+    "categories": {
+        "Place": {
+            "fields": {
+                "placeName": {
+                    "label": "Yacimiento"
+                },
+                "excavationHistory": {
+                    "label": "Historia de la excavación"
+                },
+                "siteClassification": {
+                    "label": "Clasificación del yacimiento"
+                }
+            }
+        },
+        "Trench": {
+            "fields": {
+                "excavationType": {
+                    "label": "Tamaño de la excavación"
+                },
+                "researchQuestion": {
+                    "label": "Planteamiento"
+                }
+            }
+        },
+        "Drawing": {
+            "fields": {
+                "drawingType": {
+                    "label": "Tipo de dibujo"
+                }
+            }
+        },
+        "Find": {
+            "fields": {
+                "amount": {
+                    "label": "Número (total)"
+                },
+                "conditionComment": {
+                    "label": "Comentario sobre estado de conservación"
+                },
+                "conditionPercent": {
+                    "label": "Estado de conservación - porcentaje"
+                },
+                "storagePlace": {
+                    "label": "Deposito - ciudad"
+                },
+                "hasRestoration": {
+                    "label": "Restauración"
+                },
+                "conditionAmount": {
+                    "label": "Porcentaje conservado"
+                },
+                "weight": {
+                    "label": "Peso (g)"
+                }
+            }
+        },
+        "Feature": {
+            "fields": {
+                "color": {
+                    "label": "Color y intensidad"
+                }
+            }
+        },
+        "Grave": {
+            "fields": {
+                "graveType": {
+                    "label": "Tipo de tumba"
+                },
+                "specificType": {
+                    "label": "Tipo de tumba especial"
+                }
+            }
+        },
+        "Layer": {
+            "fields": {
+                "layerClassification": {
+                    "label": "Clasificación de la unidad estratigráfica"
+                }
+            }
+        },
+        "Wood": {
+            "fields": {
+                "objectType": {
+                    "label": "Clasificación del objeto"
+                }
+            }
+        },
+        "Pottery": {
+            "fields": {
+                "amountSherdsRim": {
+                    "label": "Número de fragmentos de borde"
+                },
+                "amountSherdsBase": {
+                    "label": "Número de fragmentos de fondo"
+                },
+                "amountSherdsHandles": {
+                    "label": "Número de fragmentos de asa"
+                },
+                "amountSherdsWall": {
+                    "label": "Número de fragmentos de cuerpo"
+                },
+                "objectType": {
+                    "label": "Clasificación del material"
+                },
+                "vesselForm": {
+                    "label": "Descripción de forma"
+                },
+                "vesselFormSpecific": {
+                    "label": "Forma"
+                },
+                "purpose": {
+                    "label": "Función"
+                },
+                "specificType": {
+                    "label": "Tipo de cerámica"
+                }
+            }
+        },
+        "Bone": {
+            "fields": {
+                "biologicalAge": {
+                    "label": "Grupo de edad"
+                },
+                "boneClassification": {
+                    "label": "Clasificación de los huesos"
+                },
+                "boneType": {
+                    "label": "Tipo de huesos"
+                },
+                "burningGrade": {
+                    "label": "Grado de cremación del hueso"
+                },
+                "sex": {
+                    "label": "Sexo"
+                }
+            }
+        },
+        "Sample": {
+            "fields": {
+                "sampleType": {
+                    "label": "Clasificación"
+                },
+                "weight": {
+                    "label": "Peso (g)"
+                }
+            }
+        },
+        "Glass": {
+            "fields": {
+                "objectType": {
+                    "label": "Tipo del objeto"
+                }
+            }
+        },
+        "Stone": {
+            "fields": {
+                "objectType": {
+                    "label": "Tipo de lítica"
+                }
+            }
+        },
+        "Mollusk": {
+            "fields": {
+                "classification": {
+                    "label": "Clasificación malacológica"
+                }
+            }
+        },
+        "Burial": {
+            "fields": {
+                "amountIndividuals": {
+                    "label": "Número de individuos"
+                },
+                "graveFeature": {
+                    "label": "Tipo de enterramiento"
+                },
+                "ageDetermination": {
+                    "label": "Determinación de la edad"
+                },
+                "ageDeterminationBasis": {
+                    "label": "Base de la determinación de la edad"
+                },
+                "palaeopathologicalReport": {
+                    "label": "Diagnóstico paleopatológico"
+                },
+                "conditionComment": {
+                    "label": "Comentario sobre estado de conservación"
+                },
+                "sexDetermination": {
+                    "label": "Determinación del sexo"
+                },
+                "sexDeterminationBasis": {
+                    "label": "Base de la determinación del sexo"
+                }
+            }
+        }
+    }
+}

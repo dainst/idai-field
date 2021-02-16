@@ -56,7 +56,7 @@ export abstract class MenuComponent {
         let inside = false;
 
         do {
-            if (target.id === this.buttonElementId || target.id.startsWith(this.menuElementsPrefix)) {
+            if (target.id && (target.id === this.buttonElementId || target.id.startsWith(this.menuElementsPrefix))) {
                 inside = true;
                 break;
             }

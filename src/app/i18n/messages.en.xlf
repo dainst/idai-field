@@ -2703,7 +2703,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.imagePicker.linkLayer" datatype="html">
-        <source>Bild als Karten-Layer verknüpfen</source>
+        <source>Bild als Kartenhintergrund verknüpfen</source>
         <target state="final">Link image as map layer</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/widgets/image-picker.html</context>
@@ -2719,7 +2719,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.imagePicker.linkLayers" datatype="html">
-        <source><x id="INTERPOLATION" equiv-text="{{selectedDocuments.length}}"/> Bilder als Karten-Layer verknüpfen</source>
+        <source><x id="INTERPOLATION" equiv-text="{{selectedDocuments.length}}"/> Bilder als Kartenhintergrund verknüpfen</source>
         <target state="final">Link <x id="INTERPOLATION" equiv-text="{{selectedDocuments.length}}"/> images as map layers</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/widgets/image-picker.html</context>

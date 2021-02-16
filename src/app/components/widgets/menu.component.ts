@@ -16,7 +16,7 @@ export abstract class MenuComponent {
     constructor(private renderer: Renderer2,
                 protected menuService: MenuService,
                 private buttonElementId: string,
-                private menuElementId: string) {}
+                private menuElementsPrefix: string) {}
 
 
     public toggle() {
@@ -56,7 +56,7 @@ export abstract class MenuComponent {
         let inside = false;
 
         do {
-            if (target.id === this.buttonElementId || target.id === this.menuElementId) {
+            if (target.id === this.buttonElementId || target.id.startsWith(this.menuElementsPrefix)) {
                 inside = true;
                 break;
             }

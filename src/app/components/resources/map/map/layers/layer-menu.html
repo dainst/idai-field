@@ -8,11 +8,12 @@
             <div class="layer-menu-container">
                 <div *ngFor="let layerGroup of layerGroups; index as i">
                     <span class="layer-group-heading">{{getLayerGroupLabel(layerGroup)}}</span>
-                    <span *ngIf="i === 0 && !isInEditing(layerGroup)"
+                    <span *ngIf="i === 0 && !isInEditing(layerGroup)" id="layer-menu-edit-button"
                           class="mdi mdi-pencil layer-menu-button layer-group-edit-button" (click)="editGroup(layerGroup)"></span>
-                    <span *ngIf="isInEditing(layerGroup)"
+                    <span *ngIf="isInEditing(layerGroup)" id="layer-menu-save-button"
                           class="mdi mdi-content-save layer-group-save-button text-success" (click)="saveGroup()"></span>
-                    <span *ngIf="isInEditing(layerGroup)" class="mdi mdi-close layer-menu-button layer-group-cancel-button"
+                    <span *ngIf="isInEditing(layerGroup)" id="layer-menu-cancel-button"
+                          class="mdi mdi-close layer-menu-button layer-group-cancel-button"
                           (click)="abortEditing()"></span>
                     <form>
                         <fieldset *ngIf="layerGroup.document" class="form-group"
@@ -41,6 +42,7 @@
                                     class="mdi mdi-image-filter-center-focus layer-menu-button layer-inactive">
                                 </span>
                                 <span *ngIf="isInEditing(layerGroup)"
+                                    [id]="'layer-menu-remove-button-' + layer.resource.id"
                                     class="mdi mdi-link-off layer-menu-button"
                                     (click)="removeLayer(layer)">
                                 </span>

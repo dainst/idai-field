@@ -118,8 +118,10 @@ $layer-menu-remove-button-color: #c82333;
   
           .drag-placeholder {
             min-height: 27px;
+            padding-left: 69px;
             border: none !important;
             cursor: grabbing;
+            opacity: 0;
           }
         }
 

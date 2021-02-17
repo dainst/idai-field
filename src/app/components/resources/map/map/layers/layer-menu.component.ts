@@ -12,7 +12,8 @@ import {LayerUtility} from './layer-utility';
 
 @Component({
     selector: 'layer-menu',
-    templateUrl: './layer-menu.html'
+    templateUrl: './layer-menu.html',
+    host: { '(window:keydown)': 'onKeyDown($event)' }
 })
 /**
  * @author Daniel de Oliveira
@@ -57,6 +58,14 @@ export class LayerMenuComponent extends MenuComponent {
 
         super.close();
         this.changeDetectorRef.detectChanges();
+    }
+
+
+    public onKeyDown(event: KeyboardEvent) {
+
+        if (event.key === 'Escape' && this.menuService.getContext() === MenuContext.MAP_LAYERS_EDIT) {
+            this.abortEditing();
+        }
     }
 
 

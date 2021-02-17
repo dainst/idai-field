@@ -15,7 +15,7 @@ import {SettingsProvider} from '../../../core/settings/settings-provider';
 @Component({
     selector: 'resources-map',
     templateUrl: './resources-map.html',
-    host: {'(window:keydown)': 'onKeyDown($event)'}
+    host: { '(window:keydown)': 'onKeyDown($event)' }
 })
 /**
  * @author Daniel de Oliveira

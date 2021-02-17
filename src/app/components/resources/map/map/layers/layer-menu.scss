@@ -33,10 +33,11 @@ $layer-menu-remove-button-color: #c82333;
   user-select: none;
 
   .card-body {
-    padding: 8px 14px 5px 12px;
+    padding: 8px 5px 8px 12px;
 
     .layer-menu-container {
       max-height: calc(100vh - 250px);
+      padding-right: 5px;
       overflow-y: auto;
       overflow-x: hidden;
 

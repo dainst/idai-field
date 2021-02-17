@@ -9,11 +9,22 @@
                 <div *ngFor="let layerGroup of layerGroups; index as i" class="layer-group">
                     <span class="layer-group-heading">{{getLayerGroupLabel(layerGroup)}}</span>
                     <span *ngIf="i === 0 && !isInEditing(layerGroup)" id="layer-menu-edit-button"
-                          class="mdi mdi-pencil layer-menu-button layer-group-edit-button" (click)="editGroup(layerGroup)"></span>
+                          class="mdi mdi-pencil layer-menu-button layer-group-edit-button"
+                          ngbTooltip="Kartenhintergründe bearbeiten"
+                          i18n-ngbTooltip="@@resources.map.layerMenu.editLayers"
+                          placement="bottom" container="body"
+                          (click)="editGroup(layerGroup)"></span>
                     <span *ngIf="isInEditing(layerGroup)" id="layer-menu-save-button"
-                          class="mdi mdi-content-save layer-group-save-button text-success" (click)="saveGroup()"></span>
+                          class="mdi mdi-content-save layer-group-save-button text-success"
+                          ngbTooltip="Speichern"
+                          i18n-ngbTooltip="@@buttons.save"
+                          placement="bottom" container="body"
+                          (click)="saveGroup()"></span>
                     <span *ngIf="isInEditing(layerGroup)" id="layer-menu-cancel-button"
                           class="mdi mdi-close layer-menu-button layer-group-cancel-button"
+                          ngbTooltip="Abbrechen"
+                          i18n-ngbTooltip="@@buttons.cancel"
+                          placement="bottom" container="body"
                           (click)="abortEditing()"></span>
                     <form>
                         <fieldset class="form-group"
@@ -32,10 +43,16 @@
                                     [class.mdi-eye-off]="!isActiveLayer(layer)"
                                     [class.layer-active]="isActiveLayer(layer)"
                                     [class.layer-inactive]="!isActiveLayer(layer)"
+                                    ngbTooltip="Kartenhintergrund ein-/ausblenden"
+                                    i18n-ngbTooltip="@@resources.map.layerMenu.showOrHideLayer"
+                                    placement="bottom" container="body"
                                     (click)="toggleLayer(layer)">
                                 </span>
                                 <span *ngIf="isActiveLayer(layer)"
                                     class="mdi mdi-image-filter-center-focus layer-menu-button layer-active"
+                                    ngbTooltip="Kartenhintergrund fokussieren"
+                                    i18n-ngbTooltip="@@resources.map.layerMenu.focusLayer"
+                                    placement="bottom" container="body"
                                     (click)="focusLayer(layer)">
                                 </span>
                                 <span *ngIf="!isActiveLayer(layer)"
@@ -44,6 +61,9 @@
                                 <span *ngIf="isInEditing(layerGroup)"
                                     [id]="'layer-menu-remove-button-' + layer.resource.id"
                                     class="mdi mdi-link-off layer-menu-button"
+                                    ngbTooltip="Kartenhintergrund entfernen"
+                                    i18n-ngbTooltip="@@resources.map.layerMenu.removeLayer"
+                                    placement="bottom" container="body"
                                     (click)="removeLayer(layer)">
                                 </span>
                                 <div cdkDragHandle class="layer-menu-drag-handle"
@@ -58,6 +78,9 @@
                     </form>
                     <div *ngIf="isInEditing(layerGroup)"
                             class="btn btn-block btn-outline-success layer-menu-add-button"
+                            ngbTooltip="Kartenhintergrund hinzufügen"
+                            i18n-ngbTooltip="@@resources.map.layerMenu.addLayer"
+                            placement="bottom" container="body"
                             (click)="addLayers(layerGroup)">
                         <span class="mdi mdi-plus-circle"></span>
                     </div>

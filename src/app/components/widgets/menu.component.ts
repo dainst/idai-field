@@ -42,6 +42,8 @@ export abstract class MenuComponent {
 
     public close() {
 
+        if (!this.isClosable()) return;
+
         this.opened = false;
 
         if (this.removeMouseEventListener) this.removeMouseEventListener();
@@ -50,7 +52,7 @@ export abstract class MenuComponent {
 
     private handleMouseEvent(event: any) {
 
-        if (this.menuService.getContext() === MenuContext.MODAL) return;
+        if (!this.isClosable()) return;
 
         let target = event.target;
         let inside = false;
@@ -64,5 +66,11 @@ export abstract class MenuComponent {
         } while (target);
 
         if (!inside) this.close();
+    }
+
+
+    protected isClosable(): boolean {
+
+        return this.menuService.getContext() !== MenuContext.MODAL;
     }
 }

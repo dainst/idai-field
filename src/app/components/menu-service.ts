@@ -5,7 +5,7 @@ const ipcRenderer = typeof window !== 'undefined' ? window.require('electron').i
 const remote = typeof window !== 'undefined' ? window.require('electron').remote : require('electron').remote;
 
 
-type MenuContext = 'default'|'docedit'|'modal'|'projects'|'geometryEdit'|'georeferenceEdit';
+type MenuContext = 'default'|'docedit'|'modal'|'projects'|'geometryEdit'|'mapLayersEdit'|'georeferenceEdit';
 
 
 export module MenuContext {
@@ -15,6 +15,7 @@ export module MenuContext {
     export const MODAL = 'modal';
     export const PROJECTS = 'projects';
     export const GEOMETRY_EDIT = 'geometryEdit';
+    export const MAP_LAYERS_EDIT = 'mapLayersEdit';
     export const GEOREFERENCE_EDIT = 'georeferenceEdit';
 }
 

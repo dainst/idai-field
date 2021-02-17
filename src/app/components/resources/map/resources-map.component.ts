@@ -60,6 +60,9 @@ export class ResourcesMapComponent {
 
     public isEditingGeometry = () => this.menuService.getContext() === MenuContext.GEOMETRY_EDIT;
 
+    public isEditing = () => [MenuContext.GEOMETRY_EDIT, MenuContext.MAP_LAYERS_EDIT]
+        .includes(this.menuService.getContext());
+
     public isModalOpened = () => this.menuService.getContext() === MenuContext.MODAL
         || this.menuService.getContext() === MenuContext.DOCEDIT;
 

@@ -63,18 +63,21 @@ export class LayerMenuComponent extends MenuComponent {
     public editGroup(layerGroup: LayerGroup) {
 
         this.layerManager.startEditing(layerGroup);
+        this.menuService.setContext(MenuContext.MAP_LAYERS_EDIT);
     }
 
 
     public async saveGroup() {
 
         await this.layerManager.finishEditing();
+        this.menuService.setContext(MenuContext.DEFAULT);
     }
 
 
     public abortEditing() {
 
         this.layerManager.abortEditing();
+        this.menuService.setContext(MenuContext.DEFAULT);
         this.onAddOrRemoveLayers.emit();
     }
 
@@ -117,8 +120,6 @@ export class LayerMenuComponent extends MenuComponent {
 
     private async selectNewLayers(group: LayerGroup): Promise<Array<ImageDocument>> {
 
-        this.menuService.setContext(MenuContext.MODAL);
-
         const imagePickerModal: NgbModalRef = this.modalService.open(
             ImagePickerComponent, { size: 'lg', keyboard: false }
         );
@@ -130,8 +131,12 @@ export class LayerMenuComponent extends MenuComponent {
         } catch(err) {
             // Image picker modal has been canceled
             return [];
-        } finally {
-            setTimeout(() => this.menuService.setContext(MenuContext.DEFAULT), 1);
         }
+    }
+
+
+    protected isClosable(): boolean {
+
+        return ![MenuContext.MODAL, MenuContext.MAP_LAYERS_EDIT].includes(this.menuService.getContext());
     }
 }

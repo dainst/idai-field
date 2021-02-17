@@ -203,7 +203,6 @@
       }
     },
     "Project": {
-      "label": "Project",
       "fields": {
         "contactMail": {
           "label": "Mail address of the contact person",
@@ -660,7 +659,6 @@
       }
     },
     "Image": {
-      "label": "Image",
       "fields": {
         "draughtsmen": {
           "label": "Creator",

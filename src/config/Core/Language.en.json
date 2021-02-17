@@ -21,6 +21,7 @@
       }
     },
     "Image": {
+      "label": "Image",
       "fields": {
         "height": {
           "label": "Height"

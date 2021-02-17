@@ -4,7 +4,7 @@
 
 $layer-menu-button-color: #657faa;
 $layer-menu-button-inactive-color: grey;
-$layer-menu-add-button-color: #28a745;
+$layer-menu-save-button-color: #28a745;
 $layer-menu-remove-button-color: #c82333;
 
 #layer-button,
@@ -35,7 +35,7 @@ $layer-menu-remove-button-color: #c82333;
     padding: 8px 14px 5px 12px;
 
     .layer-menu-container {
-      max-height: 296px;
+      max-height: calc(100vh - 250px);
       overflow-y: auto;
       overflow-x: hidden;
 
@@ -45,13 +45,33 @@ $layer-menu-remove-button-color: #c82333;
         .layer-group-heading {
           font-size: 15px;
         }
-  
-        .layer-group-edit-button {
+
+        .layer-group-edit-button,
+        .layer-group-save-button {
           margin-left: 5px;
+        }
+
+        .layer-group-save-button,
+        .layer-group-cancel-button {
+          position: relative;
+          top: 1px;
+        }
+
+        .layer-group-cancel-button {
+          right: 2px;
+        }
+
+        .layer-group-edit-button {
+          color: $layer-menu-button-color;
+        }
+
+        .layer-group-save-button:hover {
+          color: lighten($layer-menu-save-button-color, 10%) !important;
         }
   
         .layer-menu-add-button {
           height: 20px;
+          margin-bottom: 2px;
           border: none;
   
           .mdi {

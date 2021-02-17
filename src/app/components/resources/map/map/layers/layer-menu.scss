@@ -92,10 +92,13 @@ $layer-menu-remove-button-color: #c82333;
   
             .layer-menu-drag-handle {
               display: inline-block;
-              cursor: grab;
               line-height: 1.9;
               height: 100%;
               width: calc(100% - 69px);
+
+              &.draggable {
+                cursor: grab;
+              }
             }
           }
   

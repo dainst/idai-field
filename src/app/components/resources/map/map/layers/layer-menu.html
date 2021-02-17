@@ -46,7 +46,8 @@
                                     class="mdi mdi-link-off layer-menu-button"
                                     (click)="removeLayer(layer)">
                                 </span>
-                                <div cdkDragHandle class="layer-menu-drag-handle">
+                                <div cdkDragHandle class="layer-menu-drag-handle"
+                                     [class.draggable]="isInEditing(layerGroup)">
                                     <span class="layer-menu-label">
                                         {{getLayerLabel(layer)}}
                                     </span>

@@ -30,6 +30,12 @@
                         <fieldset class="form-group"
                                   cdkDropList [cdkDropListData]="layerGroup.layers"
                                   (cdkDropListDropped)="onDrop($event)">
+                            <div *ngIf="isNoLayersInfoVisible(layerGroup)"
+                                 i18n="@@resources.map.layerMenu.noLayersInfo"
+                                 class="no-layers-info">
+                                Benutzen Sie den Bearbeiten-Button, um georeferenzierte Bilder als
+                                Kartenhintergründe hinzuzufügen.
+                            </div>
                             <div *ngFor="let layer of layerGroup.layers"
                                 class="layer-entry"
                                 cdkDrag cdkDragLockAxis="y"

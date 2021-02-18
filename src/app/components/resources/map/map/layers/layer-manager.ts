@@ -133,8 +133,6 @@ export class LayerManager {
 
         if (!this.layerGroupInEditing) return;
 
-        const oldDocument: FieldDocument = clone(this.layerGroupInEditing.document);
-
         const layerIds: string[] = this.layerGroupInEditing.document.resource.relations[ImageRelations.HASMAPLAYER] || [];
         const newLayerIds: string[] = newLayers.map(layer => layer.resource.id);
         this.layerGroupInEditing.layers = this.layerGroupInEditing.layers.concat(newLayers);
@@ -145,8 +143,6 @@ export class LayerManager {
     public async removeLayer(layerToRemove: ImageDocument) {
 
         if (!this.layerGroupInEditing) return;
-
-        const oldDocument: FieldDocument = clone(this.layerGroupInEditing.document);
 
         this.layerGroupInEditing.document.resource.relations[ImageRelations.HASMAPLAYER]
             = this.layerGroupInEditing.document.resource.relations[ImageRelations.HASMAPLAYER].filter(id => {

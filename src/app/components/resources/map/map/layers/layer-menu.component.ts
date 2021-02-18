@@ -30,7 +30,6 @@ export class LayerMenuComponent extends MenuComponent {
     @Output() onChangeLayersOrder = new EventEmitter<void>();
 
     public dragging: boolean = false;
-    public layersInSaveProgress: Array<ImageDocument> = [];
 
     private modalOpened: boolean = false;
 
@@ -127,10 +126,8 @@ export class LayerMenuComponent extends MenuComponent {
 
         const newLayers: Array<ImageDocument> = await this.selectNewLayers(group);
         if (newLayers.length === 0) return;
-
-        this.layersInSaveProgress = newLayers;
+        
         await this.layerManager.addLayers(newLayers);
-        this.layersInSaveProgress = [];
 
         this.onAddOrRemoveLayers.emit();
     }

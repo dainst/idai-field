@@ -20,7 +20,7 @@ describe('LayerManager', () => {
         resource: {
             id: 'project',
             relations: {
-                hasLayer: ['l1', 'l2'],
+                hasMapLayer: ['l1', 'l2'],
             }
         }
     };

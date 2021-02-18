@@ -117,9 +117,9 @@ export class LayerManager {
         if (!this.layerGroupInEditing) return;
 
         const relations: string[]
-            = this.originalLayerGroupInEditing.document.resource.relations[ImageRelations.HASLAYER];
+            = this.originalLayerGroupInEditing.document.resource.relations[ImageRelations.HASMAPLAYER];
 
-        this.layerGroupInEditing.document.resource.relations[ImageRelations.HASLAYER] = relations;
+        this.layerGroupInEditing.document.resource.relations[ImageRelations.HASMAPLAYER] = relations;
         this.layerGroupInEditing.layers = this.originalLayerGroupInEditing.layers;
 
         this.viewFacade.setActiveLayersIds(this.activeLayerIds.filter(id => relations.includes(id)));
@@ -135,10 +135,10 @@ export class LayerManager {
 
         const oldDocument: FieldDocument = clone(this.layerGroupInEditing.document);
 
-        const layerIds: string[] = this.layerGroupInEditing.document.resource.relations[ImageRelations.HASLAYER] || [];
+        const layerIds: string[] = this.layerGroupInEditing.document.resource.relations[ImageRelations.HASMAPLAYER] || [];
         const newLayerIds: string[] = newLayers.map(layer => layer.resource.id);
         this.layerGroupInEditing.layers = this.layerGroupInEditing.layers.concat(newLayers);
-        this.layerGroupInEditing.document.resource.relations[ImageRelations.HASLAYER] = layerIds.concat(newLayerIds);
+        this.layerGroupInEditing.document.resource.relations[ImageRelations.HASMAPLAYER] = layerIds.concat(newLayerIds);
     }
 
 
@@ -148,8 +148,8 @@ export class LayerManager {
 
         const oldDocument: FieldDocument = clone(this.layerGroupInEditing.document);
 
-        this.layerGroupInEditing.document.resource.relations[ImageRelations.HASLAYER]
-            = this.layerGroupInEditing.document.resource.relations[ImageRelations.HASLAYER].filter(id => {
+        this.layerGroupInEditing.document.resource.relations[ImageRelations.HASMAPLAYER]
+            = this.layerGroupInEditing.document.resource.relations[ImageRelations.HASMAPLAYER].filter(id => {
                 return id !== layerToRemove.resource.id;
             });
         this.layerGroupInEditing.layers = this.layerGroupInEditing.layers.filter(layer => layer !== layerToRemove);
@@ -164,7 +164,7 @@ export class LayerManager {
 
         if (!this.layerGroupInEditing) return;
 
-        const relations: string[] = this.layerGroupInEditing.document.resource.relations[ImageRelations.HASLAYER];
+        const relations: string[] = this.layerGroupInEditing.document.resource.relations[ImageRelations.HASMAPLAYER];
 
         moveInArray(this.layerGroupInEditing.layers, originalIndex, targetIndex);
         moveInArray(relations, originalIndex, targetIndex);
@@ -211,8 +211,8 @@ export class LayerManager {
 
     private async fetchLinkedLayers(document: FieldDocument): Promise<Array<ImageDocument>> {
 
-        return Document.hasRelations(document, ImageRelations.HASLAYER)
-            ? await this.imageDatastore.getMultiple(document.resource.relations[ImageRelations.HASLAYER])
+        return Document.hasRelations(document, ImageRelations.HASMAPLAYER)
+            ? await this.imageDatastore.getMultiple(document.resource.relations[ImageRelations.HASMAPLAYER])
             : [];
     }
 

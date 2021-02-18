@@ -24,6 +24,7 @@ $layer-menu-remove-button-color: #c82333;
 
 #layer-menu {
   top: 51px;
+  min-width: 223px;
   max-width: 500px;
   box-shadow: 3px 3px 5px 1px rgba(0, 0, 0, 0.3);
   border: 1px solid rgba(0, 0, 0, 0.15) !important;
@@ -55,8 +56,10 @@ $layer-menu-remove-button-color: #c82333;
         }
 
         .no-layers-info {
+          display: table-caption;
+          min-width: 200px;
           font-style: italic;
-          font-size: 14px;
+          font-size: 12px;
         }
 
         .layer-group-edit-button,

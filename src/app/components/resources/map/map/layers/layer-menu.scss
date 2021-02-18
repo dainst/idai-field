@@ -103,9 +103,11 @@ $layer-menu-remove-button-color: #c82333;
               line-height: 1.9;
               height: 100%;
               width: calc(100% - 74px);
+              margin-right: 28px;
 
               &.draggable {
                 cursor: grab;
+                margin-right: 0;
               }
             }
           }

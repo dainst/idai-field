@@ -64,14 +64,6 @@
                                 <span *ngIf="!isActiveLayer(layer)"
                                     class="mdi mdi-image-filter-center-focus layer-menu-button layer-inactive">
                                 </span>
-                                <span *ngIf="isInEditing(layerGroup)"
-                                    [id]="'layer-menu-remove-button-' + layer.resource.id"
-                                    class="mdi mdi-link-off layer-menu-button"
-                                    ngbTooltip="Kartenhintergrund entfernen"
-                                    i18n-ngbTooltip="@@resources.map.layerMenu.removeLayer"
-                                    placement="bottom" container="body"
-                                    (click)="removeLayer(layer)">
-                                </span>
                                 <div cdkDragHandle class="layer-menu-drag-handle"
                                      [class.draggable]="isInEditing(layerGroup)">
                                     <span class="layer-menu-label">
@@ -83,6 +75,14 @@
                                         {{getLayerLabel(layer)}}
                                     </span>
                                 </div>
+                                <span *ngIf="isInEditing(layerGroup)"
+                                    [id]="'layer-menu-remove-button-' + layer.resource.id"
+                                    class="mdi mdi-link-off layer-menu-button layer-menu-remove-button"
+                                    ngbTooltip="Kartenhintergrund entfernen"
+                                    i18n-ngbTooltip="@@resources.map.layerMenu.removeLayer"
+                                    placement="bottom" container="body"
+                                    (click)="removeLayer(layer)">
+                                </span>
                             </div>
                         </fieldset>
                     </form>

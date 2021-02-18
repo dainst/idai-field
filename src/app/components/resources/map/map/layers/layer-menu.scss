@@ -101,7 +101,7 @@ $layer-menu-remove-button-color: #c82333;
               display: inline-block;
               line-height: 1.9;
               height: 100%;
-              width: calc(100% - 69px);
+              width: calc(100% - 74px);
 
               &.draggable {
                 cursor: grab;
@@ -109,7 +109,8 @@ $layer-menu-remove-button-color: #c82333;
             }
           }
   
-          .mdi-link-off {
+          .layer-menu-remove-button {
+            margin-left: 5px;
             color: $layer-menu-remove-button-color;
   
             &:hover {
@@ -119,7 +120,7 @@ $layer-menu-remove-button-color: #c82333;
   
           .drag-placeholder {
             min-height: 27px;
-            padding-left: 69px;
+            padding-left: 74px;
             border: none !important;
             cursor: grabbing;
             opacity: 0;
@@ -168,7 +169,7 @@ div.cdk-drag-preview {
   }
 
   .layer-menu-label {
-    left: 69px;
+    left: 46px;
   }
 }
 

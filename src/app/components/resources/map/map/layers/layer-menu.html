@@ -8,7 +8,8 @@
     </div>
     <div *ngIf="opened" id="layer-menu" class="card">
         <div class="card-body">
-            <div class="layer-menu-container">
+            <loading-icon [context]="'layerMenu'"></loading-icon>
+            <div class="layer-menu-container" [class.loading]="isLoading()">
                 <div *ngFor="let layerGroup of layerGroups; index as i" class="layer-group">
                     <span class="layer-group-heading">{{getLayerGroupLabel(layerGroup)}}</span>
                     <span *ngIf="i === 0 && !isInEditing(layerGroup)" id="layer-menu-edit-button"

@@ -8,6 +8,7 @@ import {MenuComponent} from '../../../../widgets/menu.component';
 import {MenuContext, MenuService} from '../../../../menu-service';
 import {ImagePickerComponent} from '../../../../docedit/widgets/image-picker.component';
 import {LayerUtility} from './layer-utility';
+import {Loading} from '../../../../widgets/loading';
 
 
 @Component({
@@ -38,6 +39,7 @@ export class LayerMenuComponent extends MenuComponent {
                 private changeDetectorRef: ChangeDetectorRef,
                 private modalService: NgbModal,
                 private i18n: I18n,
+                private loading: Loading,
                 renderer: Renderer2,
                 menuService: MenuService) {
 
@@ -60,6 +62,9 @@ export class LayerMenuComponent extends MenuComponent {
     public isNoLayersInfoVisible = (layerGroup: LayerGroup) => layerGroup.layers.length === 0
         && this.layerManager.getLayerGroups()[0] === layerGroup
         && !this.layerManager.isInEditing(layerGroup);
+
+
+    public isLoading = () => this.loading.isLoading('layerMenu');
 
 
     public close() {
@@ -88,7 +93,9 @@ export class LayerMenuComponent extends MenuComponent {
 
     public async saveGroup() {
 
+        this.loading.start('layerMenu');
         await this.layerManager.finishEditing();
+        this.loading.stop('layerMenu');
         this.menuService.setContext(MenuContext.DEFAULT);
     }
 

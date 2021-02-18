@@ -36,10 +36,22 @@ $layer-menu-remove-button-color: #c82333;
   .card-body {
     padding: 7px;
 
+    loading-icon {
+      position: relative;
+      top: 77px;
+      display: flex;
+      z-index: 1;
+    }
+
     .layer-menu-container {
       max-height: calc(100vh - 250px);
       overflow-y: auto;
       overflow-x: hidden;
+
+      &.loading {
+        opacity: 0.3;
+        pointer-events: none;
+      }
 
       .layer-group {
         margin-bottom: 5px;

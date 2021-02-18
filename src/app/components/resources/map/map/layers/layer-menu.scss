@@ -33,16 +33,22 @@ $layer-menu-remove-button-color: #c82333;
   user-select: none;
 
   .card-body {
-    padding: 8px 5px 8px 12px;
+    padding: 7px;
 
     .layer-menu-container {
       max-height: calc(100vh - 250px);
-      padding-right: 5px;
       overflow-y: auto;
       overflow-x: hidden;
 
       .layer-group {
         margin-bottom: 5px;
+        padding-left: 7px;
+        border-radius: 0.25rem;
+        background-color: #e8e8e8;
+
+        &:first-child {
+          background-color: transparent;
+        }
 
         .layer-group-heading {
           font-size: 15px;

@@ -1480,7 +1480,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/layers/layer-menu.html</context>
-          <context context-type="linenumber">25</context>
+          <context context-type="linenumber">29</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dating.html</context>
@@ -1524,7 +1524,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/layers/layer-menu.html</context>
-          <context context-type="linenumber">19</context>
+          <context context-type="linenumber">23</context>
         </context-group>
       </trans-unit>
       <trans-unit id="buttons.discardChanges" datatype="html">
@@ -2739,7 +2739,7 @@
         <target state="final">Edit map layers</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/layers/layer-menu.html</context>
-          <context context-type="linenumber">13</context>
+          <context context-type="linenumber">17</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.map.layerMenu.noLayersInfo" datatype="html">
@@ -2752,7 +2752,7 @@
                             </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/layers/layer-menu.html</context>
-          <context context-type="linenumber">35</context>
+          <context context-type="linenumber">39</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.map.layerMenu.showOrHideLayer" datatype="html">
@@ -2760,7 +2760,7 @@
         <target state="final">Show/hide map layer</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/layers/layer-menu.html</context>
-          <context context-type="linenumber">52</context>
+          <context context-type="linenumber">56</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.map.layerMenu.focusLayer" datatype="html">
@@ -2768,7 +2768,7 @@
         <target state="final">Focus map layer</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/layers/layer-menu.html</context>
-          <context context-type="linenumber">59</context>
+          <context context-type="linenumber">63</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.map.layerMenu.removeLayer" datatype="html">
@@ -2776,7 +2776,7 @@
         <target state="final">Remove map layer</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/layers/layer-menu.html</context>
-          <context context-type="linenumber">70</context>
+          <context context-type="linenumber">85</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.map.layerMenu.addLayer" datatype="html">
@@ -2784,7 +2784,7 @@
         <target state="final">Add map layer</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/layers/layer-menu.html</context>
-          <context context-type="linenumber">87</context>
+          <context context-type="linenumber">95</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.tabs.images.linkImages" datatype="html">

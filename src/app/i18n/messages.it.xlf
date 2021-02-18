@@ -2444,7 +2444,7 @@
         <target state="new">Kartenhintergründe bearbeiten</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/layers/layer-menu.html</context>
-          <context context-type="linenumber">13</context>
+          <context context-type="linenumber">17</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.map.layerMenu.noLayersInfo" datatype="html">
@@ -2458,7 +2458,7 @@
                             </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/layers/layer-menu.html</context>
-          <context context-type="linenumber">35</context>
+          <context context-type="linenumber">39</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.map.layerMenu.showOrHideLayer" datatype="html">
@@ -2466,7 +2466,7 @@
         <target state="new">Kartenhintergrund ein-/ausblenden</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/layers/layer-menu.html</context>
-          <context context-type="linenumber">52</context>
+          <context context-type="linenumber">56</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.map.layerMenu.focusLayer" datatype="html">
@@ -2474,7 +2474,7 @@
         <target state="new">Kartenhintergrund fokussieren</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/layers/layer-menu.html</context>
-          <context context-type="linenumber">59</context>
+          <context context-type="linenumber">63</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.map.layerMenu.removeLayer" datatype="html">
@@ -2482,7 +2482,7 @@
         <target state="new">Kartenhintergrund entfernen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/layers/layer-menu.html</context>
-          <context context-type="linenumber">70</context>
+          <context context-type="linenumber">85</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.map.layerMenu.addLayer" datatype="html">
@@ -2490,7 +2490,7 @@
         <target state="new">Kartenhintergrund hinzufügen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/layers/layer-menu.html</context>
-          <context context-type="linenumber">87</context>
+          <context context-type="linenumber">95</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.tabs.images.linkImages" datatype="html">
@@ -5011,7 +5011,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/layers/layer-menu.html</context>
-          <context context-type="linenumber">25</context>
+          <context context-type="linenumber">29</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dating.html</context>
@@ -5055,7 +5055,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/layers/layer-menu.html</context>
-          <context context-type="linenumber">19</context>
+          <context context-type="linenumber">23</context>
         </context-group>
       </trans-unit>
       <trans-unit id="buttons.discardChanges" datatype="html">

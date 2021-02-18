@@ -68,7 +68,8 @@ $layer-menu-remove-button-color: #c82333;
           right: 2px;
         }
 
-        .layer-group-edit-button {
+        .layer-group-edit-button,
+        .layer-group-cancel-button {
           color: $layer-menu-button-color;
         }
 

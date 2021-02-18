@@ -152,6 +152,7 @@ export class ImagePickerComponent implements OnInit {
             query.constraints['depicts:contain'] = { value: this.document.resource.id, subtract: true };
         } else {
             query.constraints['georeference:exist'] = { value: 'KNOWN' };
+            query.constraints['isLayerOf:exist'] = { value: 'UNKNOWN' };
             if (this.document.resource.relations['hasLayer']) {
                 query.constraints['id:match'] = { value: this.document.resource.relations['hasLayer'], subtract: true };
             }

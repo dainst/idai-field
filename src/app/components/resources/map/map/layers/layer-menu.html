@@ -1,5 +1,8 @@
 <div *ngIf="layerGroups.length > 0">
-    <div id="layer-button" class="btn btn-primary layer-button" [class.active]="opened"
+    <div id="layer-button"
+         class="btn btn-primary layer-button"
+         [class.active]="opened"
+         [class.disabled]="isInEditMode()"
          (click)="toggle()">
         <span class="mdi mdi-layers mdi-18px"></span>
     </div>

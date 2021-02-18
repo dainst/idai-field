@@ -55,6 +55,8 @@ export class LayerMenuComponent extends MenuComponent {
 
     public isInEditing = (layerGroup: LayerGroup) => this.layerManager.isInEditing(layerGroup);
 
+    public isInEditMode = () => this.menuService.getContext() === MenuContext.MAP_LAYERS_EDIT;
+
     public isNoLayersInfoVisible = (layerGroup: LayerGroup) => layerGroup.layers.length === 0
         && this.layerManager.getLayerGroups()[0] === layerGroup
         && !this.layerManager.isInEditing(layerGroup);

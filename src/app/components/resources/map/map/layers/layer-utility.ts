@@ -9,7 +9,7 @@ export module LayerUtility {
             layer.resource.shortDescription :
             layer.resource.identifier;
 
-        if (label.length > 48) label = label.substring(0, 45) + '...';
+        if (label.length > 55) label = label.substring(0, 52) + '...';
 
         return label;
     }

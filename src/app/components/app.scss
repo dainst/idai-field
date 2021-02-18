@@ -36,7 +36,11 @@ $roboto-font-path: '../../fonts/';
 .tooltip > div {
   animation-name: delayedFadeIn;
   animation-duration: 1s; /* Adjust this duration */
-  }
+}
+
+.tooltip {
+  pointer-events: none;
+}
 
 @keyframes delayedFadeIn {
   0% { opacity: 0; }

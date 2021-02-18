@@ -31,6 +31,8 @@ export class LayerMenuComponent extends MenuComponent {
     public dragging: boolean = false;
     public layersInSaveProgress: Array<ImageDocument> = [];
 
+    private modalOpened: boolean = false;
+
 
     constructor(private layerManager: LayerManager,
                 private changeDetectorRef: ChangeDetectorRef,
@@ -67,7 +69,9 @@ export class LayerMenuComponent extends MenuComponent {
 
     public onKeyDown(event: KeyboardEvent) {
 
-        if (event.key === 'Escape' && this.menuService.getContext() === MenuContext.MAP_LAYERS_EDIT) {
+        if (event.key === 'Escape'
+                && this.menuService.getContext() === MenuContext.MAP_LAYERS_EDIT
+                && !this.modalOpened) {
             this.abortEditing();
         }
     }
@@ -133,6 +137,8 @@ export class LayerMenuComponent extends MenuComponent {
 
     private async selectNewLayers(group: LayerGroup): Promise<Array<ImageDocument>> {
 
+        this.modalOpened = true;
+
         const imagePickerModal: NgbModalRef = this.modalService.open(
             ImagePickerComponent, { size: 'lg', keyboard: false }
         );
@@ -144,6 +150,8 @@ export class LayerMenuComponent extends MenuComponent {
         } catch(err) {
             // Image picker modal has been canceled
             return [];
+        } finally {
+            this.modalOpened = false;
         }
     }
 

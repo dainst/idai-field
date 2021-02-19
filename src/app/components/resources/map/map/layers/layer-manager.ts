@@ -93,8 +93,10 @@ export class LayerManager {
 
     public async startEditing(group: LayerGroup) {
 
-        this.layerGroupInEditing = group;
-        this.originalLayerGroupInEditing = clone(group);
+        this.layerGroupInEditing = clone(group);
+        this.originalLayerGroupInEditing = group;
+
+        this.layerGroups[this.layerGroups.indexOf(group)] = this.layerGroupInEditing;
     }
 
 
@@ -107,6 +109,7 @@ export class LayerManager {
             this.originalLayerGroupInEditing.document
         );
 
+        this.layerGroupInEditing.document = this.originalLayerGroupInEditing.document;
         this.layerGroupInEditing = undefined;
         this.originalLayerGroupInEditing = undefined;
     }
@@ -118,12 +121,9 @@ export class LayerManager {
 
         const relations: string[]
             = this.originalLayerGroupInEditing.document.resource.relations[ImageRelations.HASMAPLAYER];
-
-        this.layerGroupInEditing.document.resource.relations[ImageRelations.HASMAPLAYER] = relations;
-        this.layerGroupInEditing.layers = this.originalLayerGroupInEditing.layers;
-
         this.viewFacade.setActiveLayersIds(this.activeLayerIds.filter(id => relations.includes(id)));
 
+        this.layerGroups[this.layerGroups.indexOf(this.layerGroupInEditing)] = this.originalLayerGroupInEditing;
         this.layerGroupInEditing = undefined;
         this.originalLayerGroupInEditing = undefined;
     }

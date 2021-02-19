@@ -13,6 +13,8 @@ import {LayerManager} from './layers/layer-manager';
 import {LayerImageProvider} from './layers/layer-image-provider';
 import {Messages} from '../../../messages/messages';
 import {SettingsProvider} from '../../../../core/settings/settings-provider';
+import {PouchdbDatastore} from '../../../../core/datastore/pouchdb/pouchdb-datastore';
+import {MenuService} from '../../../../components/menu-service';
 
 
 const remote = typeof window !== 'undefined'
@@ -60,11 +62,13 @@ export class EditableMapComponent extends LayerMapComponent {
                 layerImageProvider: LayerImageProvider,
                 messages: Messages,
                 settingsProvider: SettingsProvider,
+                datastore: PouchdbDatastore,
+                menuService: MenuService,
                 protected zone: NgZone,
                 protected changeDetectorRef: ChangeDetectorRef) {
 
         super(projectConfiguration, layerManager, layerImageProvider, messages, settingsProvider, zone,
-            changeDetectorRef);
+            changeDetectorRef, datastore, menuService);
     }
 
 

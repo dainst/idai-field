@@ -1,6 +1,6 @@
 import {ChangeDetectorRef, Component, Input, NgZone, SimpleChanges} from '@angular/core';
 import L from 'leaflet';
-import {ImageDocument, ImageGeoreference} from 'idai-components-2';
+import {ImageDocument, ImageGeoreference, Document} from 'idai-components-2';
 import {LayerManager, ListDiffResult} from './layers/layer-manager';
 import {LayerImageProvider} from './layers/layer-image-provider';
 import {ProjectConfiguration} from '../../../../core/configuration/project-configuration';
@@ -8,6 +8,8 @@ import {MapComponent} from './map.component';
 import {ImageContainer} from '../../../../core/images/imagestore/image-container';
 import {Messages} from '../../../messages/messages';
 import {SettingsProvider} from '../../../../core/settings/settings-provider';
+import {PouchdbDatastore} from '../../../../core/datastore/pouchdb/pouchdb-datastore';
+import {MenuContext, MenuService} from '../../../../components/menu-service';
 
 
 const fs = typeof window !== 'undefined'
@@ -40,11 +42,14 @@ export class LayerMapComponent extends MapComponent {
                 protected messages: Messages,
                 private settingsProvider: SettingsProvider,
                 protected zone: NgZone,
-                protected changeDetectorRef: ChangeDetectorRef) {
+                protected changeDetectorRef: ChangeDetectorRef,
+                private datastore: PouchdbDatastore,
+                private menuService: MenuService) {
 
         super(projectConfiguration, zone);
 
         this.layerManager.reset();
+        this.datastore.changesNotifications().subscribe(document => this.reloadLayersOnChange(document));
     }
 
 
@@ -203,6 +208,16 @@ export class LayerMapComponent extends MapComponent {
             });
             this.tileLayer.addTo(this.map);
             this.map.setMinZoom(2);
+        }
+    }
+
+
+    private async reloadLayersOnChange(document: Document) {
+    
+        if (this.menuService.getContext() === MenuContext.MAP_LAYERS_EDIT) return;
+
+        if (document.resource.id === this.viewName || document.resource.id === 'project') {
+            await this.updateLayers(true);
         }
     }
 

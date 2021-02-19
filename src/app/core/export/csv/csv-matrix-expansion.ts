@@ -121,8 +121,8 @@ export module CSVMatrixExpansion {
             inputUnit, isImprecise } = dimension;
 
         const expandedDimension = [
-            inputValue !== undefined ? inputValue.toString() : '',
-            inputRangeEndValue !== undefined ? inputRangeEndValue.toString() : '',
+            (inputValue !== undefined && inputValue !== null) ? inputValue.toString() : '',
+            (inputRangeEndValue !== undefined && inputRangeEndValue !== null) ? inputRangeEndValue.toString() : '',
             measurementPosition ? measurementPosition : '',
             measurementComment ? measurementComment : '',
             inputUnit ? inputUnit : ''

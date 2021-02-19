@@ -16,20 +16,20 @@
                           class="mdi mdi-pencil layer-menu-button layer-group-edit-button"
                           ngbTooltip="Kartenhintergründe bearbeiten"
                           i18n-ngbTooltip="@@resources.map.layerMenu.editLayers"
-                          placement="bottom" container="body"
+                          placement="left" container="body"
                           (click)="editGroup(layerGroup)"></span>
-                    <span *ngIf="isInEditing(layerGroup)" id="layer-menu-save-button"
-                          class="mdi mdi-content-save layer-group-save-button text-success"
-                          ngbTooltip="Speichern"
-                          i18n-ngbTooltip="@@buttons.save"
-                          placement="bottom" container="body"
-                          (click)="saveGroup()"></span>
                     <span *ngIf="isInEditing(layerGroup)" id="layer-menu-cancel-button"
                           class="mdi mdi-close layer-menu-button layer-group-cancel-button"
                           ngbTooltip="Abbrechen"
                           i18n-ngbTooltip="@@buttons.cancel"
-                          placement="bottom" container="body"
+                          placement="left" container="body"
                           (click)="abortEditing()"></span>
+                    <span *ngIf="isInEditing(layerGroup)" id="layer-menu-save-button"
+                          class="mdi mdi-content-save layer-group-save-button text-success"
+                          ngbTooltip="Speichern"
+                          i18n-ngbTooltip="@@buttons.save"
+                          placement="left" container="body"
+                          (click)="saveGroup()"></span>
                     <form>
                         <fieldset class="form-group"
                                   cdkDropList [cdkDropListData]="layerGroup.layers"

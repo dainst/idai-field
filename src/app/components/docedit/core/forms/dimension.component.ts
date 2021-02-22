@@ -78,8 +78,7 @@ export class DimensionComponent {
 
     public startEditing(dimension: Dimension) {
 
-        if (dimension.inputRangeEndValue !== undefined) (dimension as any)['isRange'] = true;
-        else (dimension as any)['isRange'] = false;
+        dimension.isRange = dimension.inputRangeEndValue ? true : false;
 
         this.dimensionsInEditing.push(dimension);
     }

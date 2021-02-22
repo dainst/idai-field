@@ -13,7 +13,7 @@
 
     <div *ngIf="isInEditing(literature)">
         <ng-container [ngTemplateOutlet]="literatureFormTemplate"
-                      [ngTemplateOutletContext]="{ literature: literature }">
+                      [ngTemplateOutletContext]="{ literature: getClone(literature) }">
         </ng-container>
     </div>
 </div>

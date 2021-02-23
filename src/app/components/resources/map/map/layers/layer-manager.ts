@@ -136,7 +136,7 @@ export class LayerManager {
         if (!this.layerGroupInEditing) return;
 
         const relations: string[]
-            = this.originalLayerGroupInEditing.document.resource.relations[ImageRelations.HASMAPLAYER];
+            = this.originalLayerGroupInEditing.document.resource.relations[ImageRelations.HASMAPLAYER] || [];
         this.viewFacade.setActiveLayersIds(this.activeLayerIds.filter(id => relations.includes(id)));
 
         this.layerGroups[this.layerGroups.indexOf(this.layerGroupInEditing)] = this.originalLayerGroupInEditing;

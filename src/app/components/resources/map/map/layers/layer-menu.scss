@@ -77,17 +77,7 @@ $layer-menu-remove-button-color: #c82333;
         .layer-group-edit-button,
         .layer-group-save-button,
         .layer-group-cancel-button {
-          position: absolute;
-          top: 5px;
-        }
-
-        .layer-group-edit-button,
-        .layer-group-cancel-button {
-          right: 5px;
-        }
-
-        .layer-group-save-button {
-          right: 30px;
+          float: right;
         }
 
         .layer-group-edit-button,
@@ -112,6 +102,7 @@ $layer-menu-remove-button-color: #c82333;
   
         .form-group {
           margin-bottom: 0;
+          clear: right;
   
           .layer-entry {
             -webkit-user-select: none;

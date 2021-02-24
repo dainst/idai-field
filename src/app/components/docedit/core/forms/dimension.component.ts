@@ -1,16 +1,21 @@
 import {Component, Input} from '@angular/core';
 import {DecimalPipe} from '@angular/common';
+import {to} from 'tsfun';
 import {Resource, Dimension} from 'idai-components-2';
 import {UtilTranslations} from '../../../../core/util/util-translations';
 import {FieldDefinition} from '../../../../core/configuration/model/field-definition';
 import {ValuelistUtil} from '../../../../core/util/valuelist-util';
+import {clone} from '../../../../core/util/object-util';
+
+
+
+type DimensionInEditing = { original: Dimension, clone: Dimension };
 
 
 @Component({
     selector: 'dai-dimension',
     templateUrl: './dimension.html'
 })
-
 /**
  * @author Fabian Z.
  * @author Thomas Kleinke
@@ -21,7 +26,7 @@ export class DimensionComponent {
     @Input() field: FieldDefinition;
 
     public newDimension: Dimension|undefined = undefined;
-    public dimensionsInEditing: Array<Dimension> = [];
+    public dimensionsInEditing: Array<DimensionInEditing> = [];
 
 
     constructor(private decimalPipe: DecimalPipe,
@@ -78,23 +83,36 @@ export class DimensionComponent {
 
     public startEditing(dimension: Dimension) {
 
-        if (dimension.inputRangeEndValue !== undefined) (dimension as any)['isRange'] = true;
-        else (dimension as any)['isRange'] = false;
+        const clonedDimension: Dimension = clone(dimension);
+        clonedDimension.isRange = clonedDimension.inputRangeEndValue ? true : false;
 
-        this.dimensionsInEditing.push(dimension);
+        this.dimensionsInEditing.push({ original: dimension, clone: clonedDimension });
     }
 
 
     private stopEditing(dimension: Dimension) {
 
-        const index: number = this.dimensionsInEditing.indexOf(dimension);
-        if (index > -1) this.dimensionsInEditing.splice(index, 1);
+        this.dimensionsInEditing === this.dimensionsInEditing.filter(d => d.clone !== dimension);
     }
 
 
-    public isInEditing(dimension: Dimension) {
+    public isInEditing(dimension: Dimension): boolean {
 
-        return this.dimensionsInEditing.includes(dimension);
+        return this.dimensionsInEditing.find(d => d.original === dimension) !== undefined;
+    }
+
+
+    public getClone(dimension: Dimension): Dimension|undefined {
+
+        const dimensionInEditing = this.dimensionsInEditing.find(d => d.original === dimension);
+        if (dimensionInEditing) return dimensionInEditing.clone;
+    }
+
+
+    public getOriginal(clonedDimension: Dimension): Dimension|undefined {
+
+        const dimensionInEditing = this.dimensionsInEditing.find(d => d.clone === clonedDimension);
+        if (dimensionInEditing) return dimensionInEditing.original;
     }
 
 
@@ -114,7 +132,7 @@ export class DimensionComponent {
 
     public saveDimension(dimension: Dimension) {
 
-        delete (dimension as any)['isRange'];
+        delete dimension.isRange;
         Dimension.addNormalizedValues(dimension);
 
     	if (this.newDimension === dimension) {
@@ -122,6 +140,8 @@ export class DimensionComponent {
     		this.resource[this.field.name].push(dimension);
             this.newDimension = undefined;
     	} else {
+            const index: number = this.resource[this.field.name].indexOf(this.getOriginal(dimension));
+            this.resource[this.field.name].splice(index, 1, dimension);
             this.stopEditing(dimension);
         }
     }

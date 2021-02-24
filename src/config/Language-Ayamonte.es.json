@@ -1,455 +1,266 @@
 {
     "commons": {
-      "dimensionLength": {
-        "label": "Longitud"
-      },
-      "dimensionWidth": {
-        "label": "Anchura"
-      },
-      "dimensionHeight": {
-        "label": "Altura"
-      },
-      "dimensionVerticalExtent": {
-        "label": "Nivel"
-      },
-      "processor": {
-        "label": "Responsable"
-      },
-      "campaign": {
-        "label": "Campaña"
-      },
-      "description": {
-        "label": "Descripción"
-      },
-      "period": {
-        "label": "Época"
-      },
-      "beginningDate": {
-        "label": "Fecha inicial"
-      },
-      "endDate": {
-        "label": "Fecha final"
-      },
-      "date": {
-        "label": "Fecha"
-      },
-      "orientation": {
-        "label": "Orientación"
-      },
-      "spatialLocation": {
-        "label": "Descripción de la ubicación"
-      },
-      "provenance": {
-        "label": "Procedencia"
-      },
-      "shortDescription": {
-        "label": "Breve descripción"
-      },
-      "category": {
-        "label": "Categoría"
-      }
+        "shortDescription": {
+            "label": "Breve descripción"
+        },
+        "category": {
+            "label": "Categoría"
+        }
     },
     "categories": {
-      "Project": {
-        "fields": {
-          "projectProgression": {
-            "label": "Curso del proyecto",
-            "description": "Información sobre el curso del proyecto"
-          }
+        "Project": {
+            "fields": {
+                "projectProgression": {
+                    "label": "Curso del proyecto",
+                    "description": "Información sobre el curso del proyecto"
+                }
+            }
+        },
+        "Place": {
+            "fields": {
+                "boundary": {
+                    "label": "Límite"
+                }
+            }
+        },
+        "Survey": {
+            "fields": {
+                "siteClassification": {
+                    "label": "Clasificación del yacimiento"
+                }
+            }
+        },
+        "Trench": {
+            "fields": {
+                "projectProgression": {
+                    "label": "Curso de la excavación",
+                    "description": "Information on the course of the project"
+                }
+            }
+        },
+        "Drawing": {
+            "fields": {
+                "imageRights": {
+                    "label": "Derechos de autor de la imagen"
+                },
+                "representedObject": {
+                    "label": "Objeto representado"
+                }
+            }
+        },
+        "Find": {
+            "fields": {
+                "ayamonteCondition": {
+                    "label": "Estado de conservación (específico Ayamonte)"
+                },
+                "storageRegion": {
+                    "label": "Deposito - provincia"
+                },
+                "storageMuseum": {
+                    "label": "Deposito - museo"
+                },
+                "storageProvince": {
+                    "label": "Deposito - comunidad autónoma"
+                },
+                "storageState": {
+                    "label": "Deposito - país"
+                },
+                "isGraveFind": {
+                    "label": "Encontrado en tumba"
+                },
+                "isStrayFind": {
+                    "label": "hallazgo aislado"
+                },
+                "findType": {
+                    "label": "Clasificación"
+                },
+                "findObjectType": {
+                    "label": "Tipo de objeto"
+                },
+                "findMaterial": {
+                    "label": "Material"
+                },
+                "material": {
+                    "label": "Material"
+                },
+                "materialColor": {
+                    "label": "Material - color"
+                },
+                "materialDescription": {
+                    "label": "Material - descripción"
+                }
+            }
+        },
+        "Profile": {
+            "fields": {
+                "profileClassification": {
+                    "label": "Clasificación"
+                },
+                "verticalPosition": {
+                    "label": "Nivel"
+                }
+            }
+        },
+        "Feature": {
+            "fields": {
+                "artifacts": {
+                    "label": "Hallazgos"
+                },
+                "significanceRemark": {
+                    "label": "Notas sobre la calidad"
+                },
+                "featureClassification": {
+                    "label": "Clasificación del estrato"
+                },
+                "createdAfterSpoil": {
+                    "label": "Después del rebaje"
+                },
+                "featureClassificationOther": {
+                    "label": "Clasificación de la unidad estratigráfica - otro"
+                },
+                "otherClassification": {
+                    "label": "Otra clasificación"
+                }
+            }
+        },
+        "Grave": {
+            "fields": {
+                "artifacts": {
+                    "label": "Categorías de hallazgo"
+                },
+                "significanceRemark": {
+                    "label": "Notas sobre la calidad"
+                }
+            }
+        },
+        "Layer": {
+            "fields": {
+                "artifacts": {
+                    "label": "Categorías de hallazgo"
+                },
+                "significanceRemark": {
+                    "label": "Notas sobre la calidad"
+                },
+                "layerClassificationOther": {
+                    "label": "Otra clasificación"
+                },
+                "otherClassification": {
+                    "label": "Otro"
+                }
+            }
+        },
+        "Wood": {
+            "fields": {
+                "materialDescription": {
+                    "label": "Tipo de madera"
+                },
+                "weight": {
+                    "label": "Peso (g)"
+                }
+            }
+        },
+        "Pottery": {
+            "fields": {
+                "amount": {
+                    "label": "Número total de fragmentos"
+                },
+                "conservationRemarks": {
+                    "label": "Conservación - comentarios"
+                },
+                "conservationEarlierMeasures": {
+                    "label": "Conservación - medidas anterioras"
+                },
+                "condition": {
+                    "label": "Estado de conservación"
+                },
+                "potteryBelongsTo": {
+                    "label": "Fragmento(s) perteneneciente(s)"
+                },
+                "potteryFittingTo": {
+                    "label": "Fragmento(s) conexo(s)"
+                },
+                "potteryComparableTo": {
+                    "label": "Fragmento(s) comparable(s)"
+                }
+            }
+        },
+        "Bone": {
+            "fields": {
+                "sexDeterminationCertainty": {
+                    "label": "Certitud de la determinación del sexo"
+                },
+                "weight": {
+                    "label": "Peso (g)"
+                }
+            }
+        },
+        "Sample": {
+            "fields": {
+                "sampleTakenBy": {
+                    "label": "Recogida por"
+                },
+                "sampleReason": {
+                    "label": "Motivo del muestreo"
+                },
+                "material": {
+                    "label": "Material"
+                },
+                "sampleNumber": {
+                    "label": "Número de la muestra"
+                },
+                "analysisResult": {
+                    "label": "Resultado del análisis"
+                },
+                "analysisMethod": {
+                    "label": "Método del análisis"
+                },
+                "isGraveFind": {
+                    "label": "Encontrado en tumba"
+                },
+                "storageRegion": {
+                    "label": "Deposito - provincia"
+                },
+                "storageMuseum": {
+                    "label": "Deposito - museo"
+                },
+                "storageProvince": {
+                    "label": "Deposito - comunidad autónoma"
+                },
+                "storageState": {
+                    "label": "Deposito - país"
+                },
+                "storagePlace": {
+                    "label": "Deposito - ciudad"
+                }
+            }
+        },
+        "Photo": {
+            "fields": {
+                "imageObject": {
+                    "label": "Objeto representado"
+                },
+                "imageRights": {
+                    "label": "Derechos de autor de la imagen"
+                },
+                "imageContent": {
+                    "label": "Contenido de la imagen"
+                }
+            }
+        },
+        "Burial": {
+            "fields": {
+                "hasGraveGoods": {
+                    "label": "Hay ajuares"
+                }
+            }
         }
-      },
-      "Place": {
-        "fields": {
-          "boundary": {
-            "label": "Límite"
-          },
-          "placeName": {
-            "label": "Yacimiento"
-          },
-          "excavationHistory": {
-            "label": "Historia de la excavación"
-          },
-          "siteClassification": {
-            "label": "Clasificación del yacimiento"
-          }
-        }
-      },
-      "Survey": {
-        "fields": {
-          "siteClassification": {
-            "label": "Clasificación del yacimiento"
-          }
-        }
-      },
-      "Trench": {
-        "fields": {
-          "excavationType": {
-            "label": "Tamaño de la excavación"
-          },
-          "projectProgression": {
-            "label": "Curso de la excavación",
-            "description": "Information on the course of the project"
-          },
-          "researchQuestion": {
-            "label": "Planteamiento"
-          }
-        }
-      },
-      "Drawing": {
-        "fields": {
-          "imageRights": {
-            "label": "Derechos de autor de la imagen"
-          },
-          "representedObject": {
-            "label": "Objeto representado"
-          },
-          "drawingType": {
-            "label": "Tipo de dibujo"
-          }
-        }
-      },
-      "Find": {
-        "fields": {
-          "amount": {
-            "label": "Número (total)"
-          },
-          "conditionComment": {
-            "label": "Comentario sobre estado de conservación"
-          },
-          "conditionPercent": {
-            "label": "Estado de conservación - porcentaje"
-          },
-          "ayamonteCondition": {
-            "label": "Estado de conservación (específico Ayamonte)"
-          },
-          "storageRegion": {
-            "label": "Deposito - provincia"
-          },
-          "storageMuseum": {
-            "label": "Deposito - museo"
-          },
-          "storageProvince": {
-            "label": "Deposito - comunidad autónoma"
-          },
-          "storageState": {
-            "label": "Deposito - país"
-          },
-          "storagePlace": {
-            "label": "Deposito - ciudad"
-          },
-          "isGraveFind": {
-            "label": "encontrado en tumba"
-          },
-          "isStrayFind": {
-            "label": "hallazgo aislado"
-          },
-          "findType": {
-            "label": "Clasificación"
-          },
-          "findObjectType": {
-            "label": "Tipo de objeto"
-          },
-          "findMaterial": {
-            "label": "Material"
-          },
-          "material": {
-            "label": "Material"
-          },
-          "materialColor": {
-            "label": "Material - color"
-          },
-          "materialDescription": {
-            "label": "Material - descripción"
-          },
-          "hasRestoration": {
-            "label": "Restauración"
-          },
-          "conditionAmount": {
-            "label": "Porcentaje conservado"
-          },
-          "weight": {
-            "label": "Peso (g)"
-          }
-        }
-      },
-      "Profile": {
-        "fields": {
-          "profileClassification": {
-            "label": "Clasificación"
-          },
-          "verticalPosition": {
-            "label": "Nivel"
-          }
-        }
-      },
-      "Feature": {
-        "fields": {
-          "artifacts": {
-            "label": "Hallazgos"
-          },
-          "color": {
-            "label": "Color y intensidad"
-          },
-          "significanceRemark": {
-            "label": "Notas sobre la calidad"
-          },
-          "featureClassification": {
-            "label": "Clasificación del estrato"
-          },
-          "createdAfterSpoil": {
-            "label": "Después del rebaje"
-          },
-          "featureClassificationOther": {
-            "label": "Clasificación de la unidad estratigráfica - otro"
-          },
-          "otherClassification": {
-            "label": "Otra clasificación"
-          }
-        }
-      },
-      "Grave": {
-        "fields": {
-          "artifacts": {
-            "label": "Categorías de hallazgo"
-          },
-          "significanceRemark": {
-            "label": "Notas sobre la calidad"
-          },
-          "graveType": {
-            "label": "Tipo de tumba"
-          },
-          "specificType": {
-            "label": "Tipo de tumba especial"
-          }
-        }
-      },
-      "Layer": {
-        "fields": {
-          "artifacts": {
-            "label": "Categorías de hallazgo"
-          },
-          "significanceRemark": {
-            "label": "Notas sobre la calidad"
-          },
-          "layerClassification": {
-            "label": "Clasificación de la unidad estratigráfica"
-          },
-          "layerClassificationOther": {
-            "label": "Otra clasificación"
-          },
-          "otherClassification": {
-            "label": "Otro"
-          }
-        }
-      },
-      "Wood": {
-        "fields": {
-          "materialDescription": {
-            "label": "Tipo de madera"
-          },
-          "weight": {
-            "label": "Peso (g)"
-          },
-          "objectType": {
-            "label": "Clasificación del objeto"
-          }
-        }
-      },
-      "Pottery": {
-        "fields": {
-          "amount": {
-            "label": "Número total de fragmentos"
-          },
-          "conservationRemarks": {
-            "label": "Conservación - comentarios"
-          },
-          "conservationEarlierMeasures": {
-            "label": "Conservación - medidas anterioras"
-          },
-          "amountSherdsRim": {
-            "label": "Número de fragmentos de borde"
-          },
-          "amountSherdsBase": {
-            "label": "Número de fragmentos de fondo"
-          },
-          "amountSherdsHandles": {
-            "label": "Número de fragmentos de asa"
-          },
-          "amountSherdsWall": {
-            "label": "Número de fragmentos de cuerpo"
-          },
-          "objectType": {
-            "label": "Clasificación del material"
-          },
-          "condition": {
-            "label": "Estado de conservación"
-          },
-          "vesselForm": {
-            "label": "Descripción de forma"
-          },
-          "vesselFormSpecific": {
-            "label": "Forma"
-          },
-          "purpose": {
-            "label": "Función"
-          },
-          "specificType": {
-            "label": "Tipo de cerámica"
-          },
-          "potteryBelongsTo": {
-            "label": "Fragmento(s) perteneneciente(s)"
-          },
-          "potteryFittingTo": {
-            "label": "Fragmento(s) conexo(s)"
-          },
-          "potteryComparableTo": {
-            "label": "Fragmento(s) comparable(s)"
-          }
-        }
-      },
-      "Bone": {
-        "fields": {
-          "sexDeterminationCertainty": {
-            "label": "Certitud de la determinación del sexo"
-          },
-          "biologicalAge": {
-            "label": "Grupo de edad"
-          },
-          "boneClassification": {
-            "label": "Clasificación de los huesos"
-          },
-          "boneType": {
-            "label": "Tipo de huesos"
-          },
-          "burningGrade": {
-            "label": "Grado de cremación del hueso"
-          },
-          "sex": {
-            "label": "Sexo"
-          },
-          "weight": {
-            "label": "Peso (g)"
-          }
-        }
-      },
-      "Sample": {
-        "fields": {
-          "sampleTakenBy": {
-            "label": "Recogida por"
-          },
-          "sampleReason": {
-            "label": "Motivo del muestreo"
-          },
-          "material": {
-            "label": "Material"
-          },
-          "sampleNumber": {
-            "label": "Número de la muestra"
-          },
-          "analysisResult": {
-            "label": "Resultado del análisis"
-          },
-          "analysisMethod": {
-            "label": "Método del análisis"
-          },
-          "sampleType": {
-            "label": "Clasificación"
-          },
-          "isGraveFind": {
-            "label": "encontrado en tumba"
-          },
-          "storageRegion": {
-            "label": "Deposito - provincia"
-          },
-          "storageMuseum": {
-            "label": "Deposito - museo"
-          },
-          "storageProvince": {
-            "label": "Deposito - comunidad autónoma"
-          },
-          "storageState": {
-            "label": "Deposito - país"
-          },
-          "storagePlace": {
-            "label": "Deposito - ciudad"
-          },
-          "weight": {
-            "label": "Peso (g)"
-          }
-        }
-      },
-      "Photo": {
-        "fields": {
-          "imageObject": {
-            "label": "Objeto representado"
-          },
-          "imageRights": {
-            "label": "Derechos de autor de la imagen"
-          },
-          "imageContent": {
-            "label": "Contenido de la imagen"
-          }
-        }
-      },
-      "Glass": {
-        "fields": {
-          "objectType": {
-            "label": "Tipo del objeto"
-          }
-        }
-      },
-      "Stone": {
-        "fields": {
-          "objectType": {
-            "label": "Tipo de lítica"
-          }
-        }
-      },
-      "Mollusk": {
-        "fields": {
-          "classification": {
-            "label": "Clasificación malacológica"
-          }
-        }
-      },
-      "Burial": {
-        "fields": {
-          "amountIndividuals": {
-            "label": "Número de individuos"
-          },
-          "graveFeature": {
-            "label": "Tipo de enterramiento"
-          },
-          "ageDetermination": {
-            "label": "Determinación de la edad"
-          },
-          "ageDeterminationBasis": {
-            "label": "Base de la determinación de la edad"
-          },
-          "palaeopathologicalReport": {
-            "label": "Diagnóstico paleopatológico"
-          },
-          "hasGraveGoods": {
-            "label": "Hay ajuares"
-          },
-          "conditionComment": {
-            "label": "Comentario sobre estado de conservación"
-          },
-          "sexDetermination": {
-            "label": "Determinación del sexo"
-          },
-          "sexDeterminationBasis": {
-            "label": "Base de la determinación del sexo"
-          }
-        }
-      }
     },
     "relations": {
-      "isAbove": {
-        "label": "Sobre de"
-      },
-      "isBelow": {
-        "label": "Debajo de"
-      }
+        "isAbove": {
+            "label": "Sobre de"
+        },
+        "isBelow": {
+            "label": "Debajo de"
+        }
     }
-  }
+}

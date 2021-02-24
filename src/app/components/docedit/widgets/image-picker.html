@@ -11,7 +11,7 @@
                 i18n="@@docedit.imagePicker.linkImage">Bild verknüpfen</span>
             <span *ngIf="mode === 'layers'"
                 class="button-label"
-                i18n="@@docedit.imagePicker.linkLayer">Bild als Karten-Layer verknüpfen</span>
+                i18n="@@docedit.imagePicker.linkLayer">Bild als Kartenhintergrund verknüpfen</span>
         </button>
 
         <button id="add-images" *ngIf="selectedDocuments.length > 1"
@@ -23,7 +23,7 @@
                     i18n="@@docedit.imagePicker.linkImages">{{selectedDocuments.length}} Bilder verknüpfen</span>
             <span *ngIf="mode === 'layers'"
                     class="button-label"
-                    i18n="@@docedit.imagePicker.linkLayers">{{selectedDocuments.length}} Bilder als Karten-Layer verknüpfen</span>
+                    i18n="@@docedit.imagePicker.linkLayers">{{selectedDocuments.length}} Bilder als Kartenhintergrund verknüpfen</span>
         </button>
 
         <search-bar [class.hidden-search-bar]="selectedDocuments.length"

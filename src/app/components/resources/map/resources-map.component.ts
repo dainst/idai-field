@@ -15,7 +15,7 @@ import {SettingsProvider} from '../../../core/settings/settings-provider';
 @Component({
     selector: 'resources-map',
     templateUrl: './resources-map.html',
-    host: {'(window:keydown)': 'onKeyDown($event)'}
+    host: { '(window:keydown)': 'onKeyDown($event)' }
 })
 /**
  * @author Daniel de Oliveira
@@ -59,6 +59,9 @@ export class ResourcesMapComponent {
     public isPopoverMenuOpened = () => this.resourcesComponent.isPopoverMenuOpened();
 
     public isEditingGeometry = () => this.menuService.getContext() === MenuContext.GEOMETRY_EDIT;
+
+    public isEditing = () => [MenuContext.GEOMETRY_EDIT, MenuContext.MAP_LAYERS_EDIT]
+        .includes(this.menuService.getContext());
 
     public isModalOpened = () => this.menuService.getContext() === MenuContext.MODAL
         || this.menuService.getContext() === MenuContext.DOCEDIT;

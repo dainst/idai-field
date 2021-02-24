@@ -2412,15 +2412,15 @@
         <target state="final">Collega immagine</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/widgets/image-picker.html</context>
-          <context context-type="linenumber">9</context>
+          <context context-type="linenumber">11</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.imagePicker.linkLayer" datatype="html">
-        <source>Bild als Karten-Layer verknüpfen</source>
+        <source>Bild als Kartenhintergrund verknüpfen</source>
         <target state="new">Bild als Karten-Layer verknüpfen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/widgets/image-picker.html</context>
-          <context context-type="linenumber">10</context>
+          <context context-type="linenumber">14</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.imagePicker.linkImages" datatype="html">
@@ -2428,43 +2428,69 @@
         <target state="final"><x id="INTERPOLATION" equiv-text="{{selectedDocuments.length}}"/> collega immagini</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/widgets/image-picker.html</context>
-          <context context-type="linenumber">18</context>
+          <context context-type="linenumber">23</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.imagePicker.linkLayers" datatype="html">
-        <source><x id="INTERPOLATION" equiv-text="{{selectedDocuments.length}}"/> Bilder als Karten-Layer verknüpfen</source>
+        <source><x id="INTERPOLATION" equiv-text="{{selectedDocuments.length}}"/> Bilder als Kartenhintergrund verknüpfen</source>
         <target state="new"><x id="INTERPOLATION" equiv-text="{{selectedDocuments.length}}"/> Bilder als Karten-Layer verknüpfen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/widgets/image-picker.html</context>
-          <context context-type="linenumber">20</context>
+          <context context-type="linenumber">26</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="resources.map.layerMenu.removeLayerModal.question" datatype="html">
-        <source>
-        Möchten Sie den Karten-Layer <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{getLayerLabel(layer)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> wirklich aus der Liste
-        <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION_1" equiv-text="{{document.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> entfernen? Die Bilddatei bleibt in jedem Fall erhalten und
-        kann der Liste zu einem späteren Zeitpunkt erneut hinzugefügt werden.
-    </source>
-        <target state="new">
-        Möchten Sie den Karten-Layer <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{getLayerLabel(layer)}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> wirklich aus der Liste
-        <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION_1" equiv-text="{{document.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> entfernen? Die Bilddatei bleibt in jedem Fall erhalten und
-        kann der Liste zu einem späteren Zeitpunkt erneut hinzugefügt werden.
-    </target>
+      <trans-unit id="resources.map.layerMenu.editLayers" datatype="html">
+        <source>Kartenhintergründe bearbeiten</source>
+        <target state="new">Kartenhintergründe bearbeiten</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/resources/map/map/layers/remove-layer-modal.html</context>
-          <context context-type="linenumber">2</context>
+          <context context-type="sourcefile">src/app/components/resources/map/map/layers/layer-menu.html</context>
+          <context context-type="linenumber">17</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="buttons.remove" datatype="html">
+      <trans-unit id="resources.map.layerMenu.noLayersInfo" datatype="html">
         <source>
-        Entfernen
-    </source>
+                                Benutzen Sie den Bearbeiten-Button, um georeferenzierte Bilder als
+                                Kartenhintergründe hinzuzufügen.
+                            </source>
         <target state="new">
-        Entfernen
-    </target>
+                                Benutzen Sie den Bearbeiten-Button, um georeferenzierte Bilder als
+                                Kartenhintergründe hinzuzufügen.
+                            </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/resources/map/map/layers/remove-layer-modal.html</context>
-          <context context-type="linenumber">10</context>
+          <context context-type="sourcefile">src/app/components/resources/map/map/layers/layer-menu.html</context>
+          <context context-type="linenumber">39</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.map.layerMenu.showOrHideLayer" datatype="html">
+        <source>Kartenhintergrund ein-/ausblenden</source>
+        <target state="new">Kartenhintergrund ein-/ausblenden</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/map/map/layers/layer-menu.html</context>
+          <context context-type="linenumber">56</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.map.layerMenu.focusLayer" datatype="html">
+        <source>Kartenhintergrund fokussieren</source>
+        <target state="new">Kartenhintergrund fokussieren</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/map/map/layers/layer-menu.html</context>
+          <context context-type="linenumber">63</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.map.layerMenu.removeLayer" datatype="html">
+        <source>Kartenhintergrund entfernen</source>
+        <target state="new">Kartenhintergrund entfernen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/map/map/layers/layer-menu.html</context>
+          <context context-type="linenumber">85</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.map.layerMenu.addLayer" datatype="html">
+        <source>Kartenhintergrund hinzufügen</source>
+        <target state="new">Kartenhintergrund hinzufügen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/map/map/layers/layer-menu.html</context>
+          <context context-type="linenumber">95</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.tabs.images.linkImages" datatype="html">
@@ -4984,8 +5010,8 @@
           <context context-type="linenumber">61</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/resources/map/map/layers/remove-layer-modal.html</context>
-          <context context-type="linenumber">14</context>
+          <context context-type="sourcefile">src/app/components/resources/map/map/layers/layer-menu.html</context>
+          <context context-type="linenumber">29</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dating.html</context>
@@ -5026,6 +5052,10 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/docedit.html</context>
           <context context-type="linenumber">30</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/resources/map/map/layers/layer-menu.html</context>
+          <context context-type="linenumber">23</context>
         </context-group>
       </trans-unit>
       <trans-unit id="buttons.discardChanges" datatype="html">

@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {set, subtract} from 'tsfun';
+import {flatten, set, subtract, to} from 'tsfun';
 import {FieldDocument, ImageDocument, Document} from 'idai-components-2';
 import {ImageReadDatastore} from '../../../../../core/datastore/field/image-read-datastore';
 import {ViewFacade} from '../../../../../core/resources/view/view-facade';
@@ -36,8 +36,11 @@ export interface ListDiffResult {
  */
 export class LayerManager {
 
+    private layerGroups: Array<LayerGroup> = [];
     private activeLayerIds: string[] = [];
-    private unsavedDocuments: Array<FieldDocument> = [];
+
+    private layerGroupInEditing: LayerGroup|undefined;
+    private originalLayerGroupInEditing: LayerGroup|undefined;
 
 
     constructor(private imageDatastore: ImageReadDatastore,
@@ -50,26 +53,31 @@ export class LayerManager {
 
     public isActiveLayer = (resourceId: string) => this.activeLayerIds.includes(resourceId);
 
+    public getLayerGroups = () => this.layerGroups;
 
-    public async initializeLayers(skipRemoval: boolean = false): Promise<LayersInitializationResult> {
+    public getLayers = () => flatten(this.layerGroups.map(layerGroup => layerGroup.layers));
 
-        if (!skipRemoval) await this.removeNonExistingLayers();
+    public isInEditing = (group: LayerGroup) => group === this.layerGroupInEditing;
+
+
+    public async initializeLayers(reloadLayerGroups: boolean = true): Promise<ListDiffResult> {
+
+        await this.removeNonExistingLayers();
 
         const activeLayersChange = LayerManager.computeActiveLayersChange(
             this.viewFacade.getActiveLayersIds(),
             this.activeLayerIds);
 
         this.activeLayerIds = this.viewFacade.getActiveLayersIds();
-
+        
         try {
-            return {
-                layerGroups: await this.createLayerGroups(),
-                activeLayersChange: activeLayersChange
-            };
-        } catch(e) {
-            console.error('error with datastore.find', e);
+            if (reloadLayerGroups) this.layerGroups = await this.createLayerGroups();
+        } catch(err) {
+            console.error('Error while trying to create layer groups', err);
             throw undefined;
         }
+
+        return activeLayersChange;
     }
 
 
@@ -83,55 +91,95 @@ export class LayerManager {
     }
 
 
-    public async addLayers(group: LayerGroup, newLayers: Array<ImageDocument>) {
+    public deactivateRemovedLayers(document: FieldDocument) {
 
-        await this.saveOrderChanges();
+        const group: LayerGroup = this.layerGroups.find(layerGroup => {
+            return layerGroup.document.resource.id === document.resource.id
+        });
+        if (!group) return;
 
-        const oldDocument: FieldDocument = clone(group.document);
-
-        const layerIds: string[] = group.document.resource.relations[ImageRelations.HASLAYER] || [];
-        const newLayerIds: string[] = newLayers.map(layer => layer.resource.id);
-        group.document.resource.relations[ImageRelations.HASLAYER] = layerIds.concat(newLayerIds);
-
-        await this.relationsManager.update(group.document, oldDocument);
+        const layersToRemoveIds: string[] = group.layers.filter(layer => {
+            return this.isActiveLayer(layer.resource.id)
+                && !document.resource.relations[ImageRelations.HASMAPLAYER]?.includes(layer.resource.id);
+        }).map(to('resource.id'));
+        
+        this.viewFacade.setActiveLayersIds(subtract(layersToRemoveIds)(this.activeLayerIds));
     }
 
 
-    public async removeLayer(group: LayerGroup, layerToRemove: ImageDocument) {
+    public async startEditing(group: LayerGroup) {
 
-        await this.saveOrderChanges();
+        this.layerGroupInEditing = clone(group);
+        this.originalLayerGroupInEditing = group;
 
-        const oldDocument: FieldDocument = clone(group.document);
+        this.layerGroups[this.layerGroups.indexOf(group)] = this.layerGroupInEditing;
+    }
 
-        group.document.resource.relations[ImageRelations.HASLAYER]
-            = group.document.resource.relations[ImageRelations.HASLAYER].filter(id => {
+
+    public async finishEditing() {
+
+        if (!this.layerGroupInEditing) return;
+
+        await this.relationsManager.update(
+            this.layerGroupInEditing.document,
+            this.originalLayerGroupInEditing.document
+        );
+
+        this.layerGroupInEditing.document = this.originalLayerGroupInEditing.document;
+        this.layerGroupInEditing = undefined;
+        this.originalLayerGroupInEditing = undefined;
+    }
+
+
+    public async abortEditing() {
+
+        if (!this.layerGroupInEditing) return;
+
+        const relations: string[]
+            = this.originalLayerGroupInEditing.document.resource.relations[ImageRelations.HASMAPLAYER] || [];
+        this.viewFacade.setActiveLayersIds(this.activeLayerIds.filter(id => relations.includes(id)));
+
+        this.layerGroups[this.layerGroups.indexOf(this.layerGroupInEditing)] = this.originalLayerGroupInEditing;
+        this.layerGroupInEditing = undefined;
+        this.originalLayerGroupInEditing = undefined;
+    }
+
+
+    public async addLayers(newLayers: Array<ImageDocument>) {
+
+        if (!this.layerGroupInEditing) return;
+
+        const layerIds: string[] = this.layerGroupInEditing.document.resource.relations[ImageRelations.HASMAPLAYER] || [];
+        const newLayerIds: string[] = newLayers.map(layer => layer.resource.id);
+        this.layerGroupInEditing.layers = this.layerGroupInEditing.layers.concat(newLayers);
+        this.layerGroupInEditing.document.resource.relations[ImageRelations.HASMAPLAYER] = layerIds.concat(newLayerIds);
+    }
+
+
+    public async removeLayer(layerToRemove: ImageDocument) {
+
+        if (!this.layerGroupInEditing) return;
+
+        this.layerGroupInEditing.document.resource.relations[ImageRelations.HASMAPLAYER]
+            = this.layerGroupInEditing.document.resource.relations[ImageRelations.HASMAPLAYER].filter(id => {
                 return id !== layerToRemove.resource.id;
             });
-        
-        await this.relationsManager.update(group.document, oldDocument);
+        this.layerGroupInEditing.layers = this.layerGroupInEditing.layers.filter(layer => layer !== layerToRemove);
+
+        if (this.isActiveLayer(layerToRemove.resource.id)) {
+            this.viewFacade.setActiveLayersIds(subtract([layerToRemove.resource.id])(this.activeLayerIds));
+        }
     }
 
 
-    public async changeOrder(group: LayerGroup, originalIndex: number, targetIndex: number) {
+    public async changeOrder(originalIndex: number, targetIndex: number) {
 
-        const relations: string[] = group.document.resource.relations[ImageRelations.HASLAYER];
+        if (!this.layerGroupInEditing) return;
 
-        moveInArray(group.layers, originalIndex, targetIndex);
+        const relations: string[] = this.layerGroupInEditing.document.resource.relations[ImageRelations.HASMAPLAYER];
+
+        moveInArray(this.layerGroupInEditing.layers, originalIndex, targetIndex);
         moveInArray(relations, originalIndex, targetIndex);
-        if (!this.unsavedDocuments.includes(group.document)) {
-            this.unsavedDocuments.push(group.document);
-        }
-    }
-
-
-    public async saveOrderChanges() {
-
-        const documentsToSave: Array<FieldDocument> = clone(this.unsavedDocuments);
-        this.unsavedDocuments = [];
-
-        for (let document of documentsToSave) {
-            await this.relationsManager.update(document);
-        }
     }
 
 
@@ -159,39 +207,25 @@ export class LayerManager {
         if (currentOperation) layerGroups.push(await this.createLayerGroup(currentOperation));
 
         layerGroups.push(await this.createLayerGroup(await this.fieldDatastore.get('project')));
-        layerGroups.push(await this.createLayerGroup());
 
         return layerGroups;
     }
 
 
-    private async createLayerGroup(document?: FieldDocument): Promise<LayerGroup> {
+    private async createLayerGroup(document: FieldDocument): Promise<LayerGroup> {
 
         return {
             document: document,
-            layers: document
-                ? await this.fetchLinkedLayers(document)
-                : await this.fetchUnlinkedLayers()
+            layers: await this.fetchLinkedLayers(document)
         };
     }
 
 
     private async fetchLinkedLayers(document: FieldDocument): Promise<Array<ImageDocument>> {
 
-        return Document.hasRelations(document, ImageRelations.HASLAYER)
-            ? await this.imageDatastore.getMultiple(document.resource.relations[ImageRelations.HASLAYER])
+        return Document.hasRelations(document, ImageRelations.HASMAPLAYER)
+            ? await this.imageDatastore.getMultiple(document.resource.relations[ImageRelations.HASMAPLAYER])
             : [];
-    }
-
-
-    private async fetchUnlinkedLayers(): Promise<Array<ImageDocument>> {
-
-        const constraints = {
-            'georeference:exist': 'KNOWN',
-            'isLayerOf:exist': 'UNKNOWN'
-        };
-
-        return (await this.imageDatastore.find({ constraints })).documents;
     }
 
 

@@ -21,6 +21,7 @@
       }
     },
     "Image": {
+      "label": "Abbildung",
       "fields": {
         "height": {
           "label": "Höhe"
@@ -73,6 +74,12 @@
     },
     "isDepictedIn": {
       "label": "Wird gezeigt in"
+    },
+    "isMapLayerOf": {
+      "label": "Kartenhintergrund von"
+    },
+    "hasMapLayer": {
+      "label": "Hat Kartenhintergrund"
     },
     "isInstanceOf": {
       "label": "Typologische Einordnung"

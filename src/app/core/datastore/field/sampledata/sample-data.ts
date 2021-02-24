@@ -17,7 +17,7 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
                 SAMPLE_DATA_LABELS[locale]['testCampaign'] + ' 2'
             ],
             'relations': {
-                'hasLayer': ['o25', 'o26']
+                'hasMapLayer': ['o25', 'o26']
             },
             'category': 'Project'
         }
@@ -27,9 +27,7 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
             'id': 't1',
             'identifier': SAMPLE_DATA_LABELS[locale]['trenchShort'] + '1',
             'shortDescription': SAMPLE_DATA_LABELS[locale]['trench'] + ' 1',
-            'relations': {
-                'hasLayer': ['o25']
-            },
+            'relations': {},
             'geometry': {
                 'type': 'Polygon',
                 'coordinates': [[
@@ -365,7 +363,7 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
             'height' : 2423,
             'width' : 3513,
             'relations': {
-                'isLayerOf': ['project', 't1']
+                'isMapLayerOf': ['project']
             },
             'georeference': {
                 'bottomLeftCoordinates': [39.1411810096, 27.1892609283],
@@ -384,7 +382,7 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
             'height' : 782,
             'width' : 748,
             'relations': {
-                'isLayerOf': ['project']
+                'isMapLayerOf': ['project']
             },
             'georeference': {
                 'bottomLeftCoordinates': [39.1412810096, 27.1893609283],

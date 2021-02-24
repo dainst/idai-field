@@ -1,71 +1,101 @@
 <div *ngIf="layerGroups.length > 0">
-    <div id="layer-button" class="btn btn-primary layer-button" [class.active]="opened"
+    <div id="layer-button"
+         class="btn btn-primary layer-button"
+         [class.active]="opened"
+         [class.disabled]="isInEditMode()"
          (click)="toggle()">
         <span class="mdi mdi-layers mdi-18px"></span>
     </div>
     <div *ngIf="opened" id="layer-menu" class="card">
         <div class="card-body">
-            <div class="layer-menu-container">
-                <div *ngFor="let layerGroup of layerGroups">
-                    <div class="layer-group-heading">{{getLayerGroupLabel(layerGroup)}}</div>
+            <loading-icon [context]="'layerMenu'"></loading-icon>
+            <div class="layer-menu-container" [class.loading]="isLoading()">
+                <div *ngFor="let layerGroup of layerGroups; index as i" class="layer-group">
+                    <span class="layer-group-heading">{{getLayerGroupLabel(layerGroup)}}</span>
+                    <span *ngIf="i === 0 && !isInEditing(layerGroup)" id="layer-menu-edit-button"
+                          class="mdi mdi-pencil layer-menu-button layer-group-edit-button"
+                          ngbTooltip="Kartenhintergründe bearbeiten"
+                          i18n-ngbTooltip="@@resources.map.layerMenu.editLayers"
+                          placement="left" container="body"
+                          (click)="editGroup(layerGroup)"></span>
+                    <span *ngIf="isInEditing(layerGroup)" id="layer-menu-cancel-button"
+                          class="mdi mdi-close layer-menu-button layer-group-cancel-button"
+                          ngbTooltip="Abbrechen"
+                          i18n-ngbTooltip="@@buttons.cancel"
+                          placement="left" container="body"
+                          (click)="abortEditing()"></span>
+                    <span *ngIf="isInEditing(layerGroup)" id="layer-menu-save-button"
+                          class="mdi mdi-content-save layer-group-save-button text-success"
+                          ngbTooltip="Speichern"
+                          i18n-ngbTooltip="@@buttons.save"
+                          placement="left" container="body"
+                          (click)="saveGroup()"></span>
                     <form>
-                        <fieldset *ngIf="layerGroup.document" class="form-group"
+                        <fieldset class="form-group"
                                   cdkDropList [cdkDropListData]="layerGroup.layers"
-                                  (cdkDropListDropped)="onDrop($event, layerGroup)">
+                                  (cdkDropListDropped)="onDrop($event)">
+                            <div *ngIf="isNoLayersInfoVisible(layerGroup)"
+                                 i18n="@@resources.map.layerMenu.noLayersInfo"
+                                 class="no-layers-info">
+                                Benutzen Sie den Bearbeiten-Button, um georeferenzierte Bilder als
+                                Kartenhintergründe hinzuzufügen.
+                            </div>
                             <div *ngFor="let layer of layerGroup.layers"
                                 class="layer-entry"
                                 cdkDrag cdkDragLockAxis="y"
                                 cdkDragBoundary=".form-group"
-                                [cdkDragDisabled]="isInSaveProgress(layer)"
+                                [cdkDragDisabled]="!isInEditing(layerGroup)"
                                 (cdkDragStarted)="dragging = true"
                                 (cdkDragEnded)="dragging = false"
                                 [cdkDragData]="layer">
-                                <span *ngIf="!isInSaveProgress(layer)" class="mdi layer-menu-button"
-                                    [class.mdi-eye]="isActiveLayer(layer)"
-                                    [class.mdi-eye-off]="!isActiveLayer(layer)"
-                                    [class.layer-active]="isActiveLayer(layer)"
-                                    [class.layer-inactive]="!isActiveLayer(layer)"
-                                    (click)="toggleLayer(layer)">
-                                </span>
-                                <span *ngIf="isActiveLayer(layer) && !isInSaveProgress(layer)"
-                                    class="mdi mdi-image-filter-center-focus layer-menu-button layer-active"
-                                    (click)="focusLayer(layer)">
-                                </span>
-                                <span *ngIf="!isActiveLayer(layer) && !isInSaveProgress(layer)"
-                                    class="mdi mdi-image-filter-center-focus layer-menu-button layer-inactive">
-                                </span>
-                                <span *ngIf="!isInSaveProgress(layer)" class="mdi mdi-link-off layer-menu-button"
-                                    (click)="removeLayer(layerGroup, layer)">
-                                </span>
-                                <div cdkDragHandle class="layer-menu-drag-handle">
-                                    <span class="layer-menu-label" [class.in-save-progress]="isInSaveProgress(layer)">
-                                        {{getLayerLabel(layer)}}
-                                    </span>
-                                </div>
-                                <div class="drag-placeholder" *cdkDragPlaceholder></div>
-                            </div>
-                        </fieldset>
-                        <fieldset *ngIf="!layerGroup.document" class="form-group">
-                            <div *ngFor="let layer of layerGroup.layers" class="layer-entry">
                                 <span class="mdi layer-menu-button"
                                     [class.mdi-eye]="isActiveLayer(layer)"
                                     [class.mdi-eye-off]="!isActiveLayer(layer)"
                                     [class.layer-active]="isActiveLayer(layer)"
                                     [class.layer-inactive]="!isActiveLayer(layer)"
+                                    ngbTooltip="Kartenhintergrund ein-/ausblenden"
+                                    i18n-ngbTooltip="@@resources.map.layerMenu.showOrHideLayer"
+                                    placement="bottom" container="body"
                                     (click)="toggleLayer(layer)">
                                 </span>
                                 <span *ngIf="isActiveLayer(layer)"
                                     class="mdi mdi-image-filter-center-focus layer-menu-button layer-active"
+                                    ngbTooltip="Kartenhintergrund fokussieren"
+                                    i18n-ngbTooltip="@@resources.map.layerMenu.focusLayer"
+                                    placement="bottom" container="body"
                                     (click)="focusLayer(layer)">
                                 </span>
                                 <span *ngIf="!isActiveLayer(layer)"
                                     class="mdi mdi-image-filter-center-focus layer-menu-button layer-inactive">
                                 </span>
-                                <span class="layer-menu-label">{{getLayerLabel(layer)}}</span>
+                                <div cdkDragHandle class="layer-menu-drag-handle"
+                                     [class.draggable]="isInEditing(layerGroup)">
+                                    <span class="layer-menu-label">
+                                        {{getLayerLabel(layer)}}
+                                    </span>
+                                </div>
+                                <div class="drag-placeholder" *cdkDragPlaceholder>
+                                    <span class="layer-menu-label">
+                                        {{getLayerLabel(layer)}}
+                                    </span>
+                                </div>
+                                <span *ngIf="isInEditing(layerGroup)"
+                                    [id]="'layer-menu-remove-button-' + layer.resource.id"
+                                    class="mdi mdi-link-off layer-menu-button layer-menu-remove-button"
+                                    ngbTooltip="Kartenhintergrund entfernen"
+                                    i18n-ngbTooltip="@@resources.map.layerMenu.removeLayer"
+                                    placement="left" container="body"
+                                    (click)="removeLayer(layer)">
+                                </span>
                             </div>
                         </fieldset>
                     </form>
-                    <div *ngIf="layerGroup.document" class="btn btn-block btn-success" (click)="addLayers(layerGroup)">
+                    <div *ngIf="isInEditing(layerGroup)"
+                            class="btn btn-block btn-outline-success layer-menu-add-button"
+                            ngbTooltip="Kartenhintergrund hinzufügen"
+                            i18n-ngbTooltip="@@resources.map.layerMenu.addLayer"
+                            placement="bottom" container="body"
+                            (click)="addLayers(layerGroup)">
                         <span class="mdi mdi-plus-circle"></span>
                     </div>
                 </div>

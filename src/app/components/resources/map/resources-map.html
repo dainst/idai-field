@@ -3,8 +3,8 @@
         <sidebar-list [selectedDocument]="viewFacade.getSelectedDocument()"></sidebar-list>
     </div>
 
-    <div *ngIf="isEditingGeometry()" class="layover1"></div>
-    <div *ngIf="isEditingGeometry()" class="layover2"></div>
+    <div *ngIf="isEditing()" class="layover1"></div>
+    <div *ngIf="isEditing()" class="layover2"></div>
 
     <div class="col px-0"
          [class.no-zoom-buttons]="isPopoverMenuOpened() && viewFacade.getSelectedDocument()">

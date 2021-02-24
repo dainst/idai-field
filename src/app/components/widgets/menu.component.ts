@@ -16,7 +16,7 @@ export abstract class MenuComponent {
     constructor(private renderer: Renderer2,
                 protected menuService: MenuService,
                 private buttonElementId: string,
-                private menuElementId: string) {}
+                private menuElementsPrefix: string) {}
 
 
     public toggle() {
@@ -42,6 +42,8 @@ export abstract class MenuComponent {
 
     public close() {
 
+        if (!this.isClosable()) return;
+
         this.opened = false;
 
         if (this.removeMouseEventListener) this.removeMouseEventListener();
@@ -50,13 +52,13 @@ export abstract class MenuComponent {
 
     private handleMouseEvent(event: any) {
 
-        if (this.menuService.getContext() === MenuContext.MODAL) return;
+        if (!this.isClosable()) return;
 
         let target = event.target;
         let inside = false;
 
         do {
-            if (target.id === this.buttonElementId || target.id === this.menuElementId) {
+            if (target.id && (target.id === this.buttonElementId || target.id.startsWith(this.menuElementsPrefix))) {
                 inside = true;
                 break;
             }
@@ -64,5 +66,11 @@ export abstract class MenuComponent {
         } while (target);
 
         if (!inside) this.close();
+    }
+
+
+    protected isClosable(): boolean {
+
+        return this.menuService.getContext() !== MenuContext.MODAL;
     }
 }

@@ -21,6 +21,7 @@
       }
     },
     "Image": {
+      "label": "Image",
       "fields": {
         "height": {
           "label": "Height"
@@ -73,6 +74,12 @@
     },
     "isDepictedIn": {
       "label": "Depicted in"
+    },
+    "isMapLayerOf": {
+      "label": "Map layer of"
+    },
+    "hasMapLayer": {
+      "label": "Has map layer"
     },
     "isInstanceOf": {
       "label": "Typological classification"

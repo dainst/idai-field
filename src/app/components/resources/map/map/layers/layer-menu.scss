@@ -4,6 +4,7 @@
 
 $layer-menu-button-color: #657faa;
 $layer-menu-button-inactive-color: grey;
+$layer-menu-save-button-color: #28a745;
 $layer-menu-remove-button-color: #c82333;
 
 #layer-button,
@@ -23,6 +24,8 @@ $layer-menu-remove-button-color: #c82333;
 
 #layer-menu {
   top: 51px;
+  min-width: 223px;
+  max-width: 500px;
   box-shadow: 3px 3px 5px 1px rgba(0, 0, 0, 0.3);
   border: 1px solid rgba(0, 0, 0, 0.15) !important;
   border-radius: 0.25rem !important;
@@ -31,85 +34,147 @@ $layer-menu-remove-button-color: #c82333;
   user-select: none;
 
   .card-body {
-    padding: 8px 14px 5px 12px;
+    padding: 7px;
+
+    loading-icon {
+      position: relative;
+      top: 50px;
+      display: flex;
+      z-index: 1;
+    }
 
     .layer-menu-container {
-      max-height: 296px;
+      max-height: calc(100vh - 250px);
       overflow-y: auto;
       overflow-x: hidden;
 
-      .layer-group-heading {
-        font-size: 15px;
+      &.loading {
+        opacity: 0.3;
+        pointer-events: none;
       }
 
-      .btn-success {
-        height: 20px;
+      .layer-group {
+        margin-bottom: 5px;
+        padding-left: 7px;
+        border-radius: 0.25rem;
+        background-color: #e8e8e8;
 
-        .mdi {
-          position: relative;
-          bottom: 10px;
+        &:first-child {
+          background-color: transparent;
+        }
+
+        .layer-group-heading {
+          font-size: 15px;
+        }
+
+        .no-layers-info {
+          display: table-caption;
+          min-width: 200px;
+          font-style: italic;
           font-size: 12px;
         }
-      }
 
-      .form-group {
-        margin-bottom: 0;
+        .layer-group-edit-button,
+        .layer-group-save-button,
+        .layer-group-cancel-button {
+          float: right;
+        }
 
-        .layer-entry {
-          -webkit-user-select: none;
-          -moz-user-select: none;
-          -ms-user-select: none;
-          user-select: none;
-          height: 27px;
+        .layer-group-edit-button,
+        .layer-group-cancel-button {
+          color: $layer-menu-button-color;
+        }
 
-          .layer-menu-drag-handle {
-            display: inline-block;
-            cursor: grab;
-            line-height: 1.9;
-            height: 100%;
-            width: calc(100% - 69px);
+        .layer-group-save-button:hover {
+          color: lighten($layer-menu-save-button-color, 10%) !important;
+        }
+  
+        .layer-menu-add-button {
+          height: 20px;
+          margin-bottom: 2px;
+          border: none;
+  
+          .mdi {
+            position: relative;
+            bottom: 8px;
+          }
+        }
+  
+        .form-group {
+          margin-bottom: 0;
+          clear: right;
+  
+          .layer-entry {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            height: 27px;
+  
+            .layer-menu-drag-handle {
+              display: inline-block;
+              line-height: 1.9;
+              height: 100%;
+              width: calc(100% - 74px);
+              margin-right: 28px;
+
+              &.draggable {
+                cursor: grab;
+                margin-right: 0;
+              }
+            }
+          }
+  
+          .layer-menu-remove-button {
+            margin-left: 5px;
+            color: $layer-menu-remove-button-color;
+  
+            &:hover {
+              color: lighten($layer-menu-remove-button-color, 20%) !important;
+            }
+          }
+  
+          .drag-placeholder {
+            min-height: 27px;
+            padding-left: 74px;
+            border: none !important;
+            cursor: grabbing;
+            opacity: 0;
           }
         }
 
-        .layer-menu-button {
-          padding: 0;
-          margin-right: 5px;
-          font-size: 18px;
-          cursor: default;
-        }
-
-        .layer-menu-button.layer-active {
-          color: $layer-menu-button-color !important;
-        }
-
-        .layer-menu-button.layer-inactive {
-          color: $layer-menu-button-inactive-color !important;
-        }
-
-        .layer-menu-button:hover {
-          color: lighten($layer-menu-button-color, 10%) !important;
-        }
-
-        .layer-menu-button.layer-inactive.mdi-image-filter-center-focus {
-          visibility: hidden;
-        }
-
-        .mdi-link-off {
-          color: $layer-menu-remove-button-color;
-
-          &:hover {
-            color: lighten($layer-menu-remove-button-color, 20%) !important;
-          }
-        }
-
-        .drag-placeholder {
-          min-height: 27px;
-          border: none !important;
-          cursor: grabbing;
+        &:last-child {
+          margin-bottom: 0;
         }
       }
     }
   }
+}
+
+.layer-menu-button,
+.layer-group-edit-button,
+.layer-group-save-button {
+  padding: 0;
+  margin-right: 5px;
+  font-size: 18px;
+  cursor: default;
+}
+
+.layer-menu-button.layer-active {
+  color: $layer-menu-button-color !important;
+}
+
+.layer-menu-button.layer-inactive {
+  color: $layer-menu-button-inactive-color !important;
+}
+
+.layer-menu-button:hover,
+.layer-group-edit-button:hover {
+  color: lighten($layer-menu-button-color, 10%) !important;
+}
+
+.layer-menu-button.layer-inactive.mdi-image-filter-center-focus {
+  visibility: hidden;
 }
 
 div.cdk-drag-preview {
@@ -120,7 +185,7 @@ div.cdk-drag-preview {
   }
 
   .layer-menu-label {
-    left: 69px;
+    left: 46px;
   }
 }
 
@@ -128,9 +193,5 @@ div.cdk-drag-preview {
   position: relative;
   bottom: 2px;
   font-size: 14px;
-
-  &.in-save-progress {
-    left: 69px;
-    color: grey;
-  }
+  white-space: nowrap;
 }

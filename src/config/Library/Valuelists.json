@@ -33035,6 +33035,18 @@
       "creationDate": "16.09.2020",
       "description": {},
       "values": {
+          "Knochen": {
+            "labels": {
+                "de": "Knochen",
+                "es": "hueso"
+            }
+          },
+          "sonstiger Fund": {
+            "labels": {
+                "de": "sonstiger Fund",
+                "es": "otro"
+            }
+          },
           "Steinobjekt": {
               "labels": {
                   "de": "Steinobjekt",

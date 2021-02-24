@@ -229,7 +229,6 @@
       }
     },
     "Project": {
-      "label": "Progetto",
       "fields": {
         "contactMail": {
           "label": "Indirizzo e-mail della persona di contatto",
@@ -746,7 +745,6 @@
       }
     },
     "Image": {
-      "label": "Immagine",
       "fields": {
         "draughtsmen": {
           "label": "Autore dell'immagine",

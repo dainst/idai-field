@@ -70,8 +70,9 @@ export module ImageRelations {
 
     export const DEPICTS = 'depicts';
     export const ISDEPICTEDIN = 'isDepictedIn';
-    export const HASLAYER = 'hasLayer';
-    export const ALL = [DEPICTS, ISDEPICTEDIN, HASLAYER];
+    export const HASMAPLAYER = 'hasMapLayer';
+    export const ISMAPLAYEROF = 'isMapLayerOf';
+    export const ALL = [DEPICTS, ISDEPICTEDIN, HASMAPLAYER, ISMAPLAYEROF];
 }
 
 

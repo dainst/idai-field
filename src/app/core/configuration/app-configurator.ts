@@ -323,17 +323,17 @@ export class AppConfigurator {
             label: ''
         },
         {
-            name: 'hasLayer',
-            inverse: 'isLayerOf',
+            name: 'hasMapLayer',
+            inverse: 'isMapLayerOf',
             domain: [],
             range: ['Image:inherit'],
             label: ''
         },
         {
-            name: 'isLayerOf',
-            inverse: 'hasLayer',
-            domain: [],
-            range: ['Image:inherit'],
+            name: 'isMapLayerOf',
+            inverse: 'hasMapLayer',
+            domain: ['Image:inherit'],
+            range: [],
             label: ''
         },
         {

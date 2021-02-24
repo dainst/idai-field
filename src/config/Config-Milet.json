@@ -40,9 +40,10 @@
     "hidden": [],
     "fields": {}
   },
-  "Feature": {
+  "Feature:default": {
     "color": "#d5b43c",
     "commons": [
+      "period",
       "beginningDate",
       "endDate",
       "diary",

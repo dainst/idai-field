@@ -42246,6 +42246,12 @@
           "en": "humus"
         }
       },
+      "Filling": {
+        "labels": {
+          "de": "Verfüllung",
+          "en": "Filling"
+        }
+      },
       "other": {
         "labels": {
           "de": "andere",

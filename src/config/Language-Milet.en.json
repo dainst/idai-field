@@ -1,10 +1,19 @@
 {
+  "isEquivalentTo": {
+    "label": "identical with"
+  },
   "categories": {
     "Trench": {
       "label": "Excavation-Area"
     },
+    "TrenchSketch": {
+      "label": "Sketch / Planum"
+    },
     "Feature": {
       "label": "Trench"
+    },
+    "Layer": {
+      "label": "Context"
     },
     "StrUnit": {
       "label": "Stratigraphical Unit"

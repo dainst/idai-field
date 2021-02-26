@@ -40,6 +40,10 @@
     "hidden": [],
     "fields": {}
   },
+  "Floor:default": {
+    "hidden": [],
+    "fields": {}
+  },
   "Feature:default": {
     "color": "#d5b43c",
     "commons": [
@@ -68,6 +72,9 @@
       },
       "featureBorders": {
         "inputType": "checkboxes"
+      },
+      "FotoNr": {
+        "inputType": "text"
       }
     },
     "valuelists": {
@@ -161,6 +168,15 @@
   "StrUnit": {
     "parent": "Feature",
     "color": "#d52228",
+    "hidden": [],
+    "fields": {
+      "testfield": {
+        "inputType": "text"
+      }
+    }
+  },
+  "Street": {
+    "parent": "Feature",
     "hidden": [],
     "fields": {
       "testfield": {

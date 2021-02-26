@@ -27,7 +27,7 @@
       "label": "Grabungsareal"
     },
     "Feature": {
-      "label": "Schnitt / Fläche",
+      "label": "Schnitt",
       "fields": {
         "featureForm": {
           "label": "Art der Einheit",

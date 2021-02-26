@@ -42373,31 +42373,31 @@
       "Schnitt": {
         "labels": {
           "de": "Schnitt",
-          "en": " "
+          "en": "Trench"
         }
       },
       "Schicht": {
         "labels": {
           "de": "Schicht",
-          "en": " "
+          "en": "Stratigraphical Unit (compound)"
         }
       },
       "Flaeche": {
         "labels": {
           "de": "Überblicksskizze",
-          "en": " "
+          "en": "Trench Sketch / Planum"
         }
       },
       "Befund": {
         "labels": {
           "de": "Befund",
-          "en": " "
+          "en": "Layer"
         }
       },
       "Anderes": {
         "labels": {
           "de": "Anderes",
-          "en": " "
+          "en": "Other"
         }
       }
     }
@@ -42410,7 +42410,7 @@
       "eingemessen": {
         "labels": {
           "de": "Messdaten vorhanden",
-          "en": " "
+          "en": "Surveying data existent"
         }
       }
     }
@@ -42423,25 +42423,25 @@
       "Lehm": {
         "labels": {
           "de": "Lehm",
-          "en": " "
+          "en": "Loam"
         }
       },
       "Sand": {
         "labels": {
           "de": "Sand",
-          "en": " "
+          "en": "Sand"
         }
       },
       "Schluff": {
         "labels": {
           "de": "Schluff",
-          "en": " "
+          "en": "Silt"
         }
       },
       "Ton": {
         "labels": {
           "de": "Ton",
-          "en": " "
+          "en": "Clay"
         }
       }
     }
@@ -42466,7 +42466,8 @@
       "Ziegel": {},
       "Knochen": {},
       "Holz": {},
-      "Mollusken": {}
+      "Mollusken": {},
+      "Sample": {}
     }
   },
   "Drawing-scale-milet": {

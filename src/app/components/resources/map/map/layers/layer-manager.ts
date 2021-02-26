@@ -206,7 +206,8 @@ export class LayerManager {
         const currentOperation: FieldDocument|undefined = this.viewFacade.getCurrentOperation();
         if (currentOperation) layerGroups.push(await this.createLayerGroup(currentOperation));
 
-        layerGroups.push(await this.createLayerGroup(await this.fieldDatastore.get('project')));
+        const projectGroup: LayerGroup = await this.createLayerGroup(await this.fieldDatastore.get('project'));
+        if (projectGroup.layers.length > 0 || layerGroups.length === 0) layerGroups.push(projectGroup);
 
         return layerGroups;
     }

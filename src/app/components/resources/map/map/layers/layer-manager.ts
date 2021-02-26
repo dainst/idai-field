@@ -122,7 +122,7 @@ export class LayerManager {
 
         await this.relationsManager.update(
             this.layerGroupInEditing.document,
-            this.originalLayerGroupInEditing.document
+            clone(this.originalLayerGroupInEditing.document)
         );
 
         this.layerGroupInEditing.document = this.originalLayerGroupInEditing.document;

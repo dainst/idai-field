@@ -20,6 +20,10 @@ $layer-menu-remove-button-color: #c82333;
   top: 10px;
   height: 41px;
   padding-top: 8px;
+
+  &.disabled {
+    opacity: 1;
+  }
 }
 
 #layer-menu {

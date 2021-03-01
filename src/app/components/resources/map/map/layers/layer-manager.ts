@@ -18,7 +18,7 @@ export interface LayersInitializationResult {
 
 export interface LayerGroup {
 
-    document?: FieldDocument,
+    document: FieldDocument,
     layers: Array<ImageDocument>,
 }
 

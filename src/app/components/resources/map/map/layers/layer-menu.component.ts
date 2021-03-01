@@ -116,9 +116,7 @@ export class LayerMenuComponent extends MenuComponent {
 
     public getLayerGroupLabel(layerGroup: LayerGroup): string {
 
-        return layerGroup.document
-            ? layerGroup.document.resource.identifier
-            : this.i18n({ id: 'resources.map.layerMenu.unlinkedLayers', value: 'Unverknüpfte Layer' });
+        return layerGroup.document.resource.identifier;
     }
 
 

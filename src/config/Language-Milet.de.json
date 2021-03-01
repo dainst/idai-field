@@ -5,7 +5,7 @@
     },
     "identifier": {
       "label": "Name / ID (eindeutig)",
-      "description": "Eindeutiger Bezeichner dieser Ressource"
+      "description": "Eindeutiger Bezeichner dieser Ressource, muss sich nach dem milesischen System zur Bennenung richten; also: Areal, Jahr Schnitt ...; für Befunde bspw: HU19_A_01 für Befund 1 aus Schnitt A im Jahr 2019 auf dem Humeitepe."
     },
     "shortDescription": {
       "label": "Kurztitel"
@@ -15,11 +15,32 @@
     },
     "measuringPointID": {
       "label": "Messpunkt-Nummer",
-      "description": "MesspunktID, andernfalls 'nicht gemessen' oder 'unklar'"
+      "description": "Punktnummer(n) in der Totalstation, leer wenn nicht zutreffend"
     },
-    "measuringPointOrigin": {
+    "localization": {
       "label": "Provenienz der Messdaten",
-      "description": "Provenienz der Messdaten"
+      "description": "Wie wurde die Lokalisierung vorgenommen?"
+    },
+    "localization-description": {
+      "label": "Kommentar zu den Messdaten",
+      "description": "Hier kann entweder eine topographische Beschreibung eingegeben werden, falls nur diese Vorhanden ist, oder bei Bedarf die Liste der Punktnummern oder Messdaten in anderer Form nachgehalten werden."
+    },
+    "FotoNr": {
+      "label": "Fotonummer(n)",
+      "description": "Hier können die mit der Ressource assoziierten Fotonummern eingetragen werden. Dies gilt zusätzlich zu den sowie inklusive der in der Datenbank hinterlegten Fotos und entspricht dem Feld 'Fotos' auf dem Befundzettel."
+    },
+    "DrawingNr": {
+      "label": "Zeichnungsnummer(n)",
+      "description": "Hier können die mit der Ressource assoziierten Zeichnungsnummern eingetragen werden. Dies gilt zusätzlich zu den sowie inklusive der in der Datenbank hinterlegten Zeichnung und entspricht dem Feld 'Zeichnungen' auf dem Befundzettel."
+    },
+    "notes": {
+      "label": "Notizen",
+      "description": "..."
+    }
+  },
+  "relations": {
+    "isEquivalentTo": {
+      "label": "Identisch mit"
     }
   },
   "categories": {
@@ -29,13 +50,9 @@
     "Feature": {
       "label": "Schnitt",
       "fields": {
-        "featureForm": {
-          "label": "Art der Einheit",
-          "description": "Um was für eine Einheit handelt es sich?"
-        },
-        "featureBorders": {
-          "label": "Aufnahme der Grenzen der Einheit",
-          "description": "Wird wurde die Einheit lokalisiert?"
+        "hasDisturbance": {
+          "label": "Störung",
+          "description": "Liegt eine Störung des Schnittes/Befundes/der Einheit vor? (Können Funde verunreinigt sein?)"
         }
       }
     },
@@ -53,6 +70,10 @@
         "isNatural": {
           "label": "Natürliche Entstehung",
           "description": "Ist die Schicht natürlich? ('Ja' z. B. bei Erosion, 'nein' wenn anthropogen)"
+        },
+        "contextDescription": {
+          "label": "Beschreibung des Befundes",
+          "description": "Entspricht dem Feld 'Kurzbeschreibung' auf dem Befundzettel"
         },
         "soilType": {
           "label": "Bodenanteile",
@@ -115,10 +136,7 @@
     "TrenchSketch": {
       "label": "Überblicksskizze",
       "fields": {
-          "sketchNotes": {
-            "label": "Notizen",
-            "description": "Anmerkungen und Bemerkungen zur Skizze"
-          }
+        
       }
     },
     "Find": {
@@ -234,12 +252,16 @@
         }
       }
     },
+    "Photo": {
+      "fields": {
+        "viewDirection": {
+          "label": "Blick nach ...",
+          "description": "Blickrichtung des Fotos"
+        }
+      }
+    },
     "Drawing": {
       "fields": {
-        "sketchNotes": {
-          "label": "Notizen",
-          "description": "Anmerkungen und Bemerkungen zur Skizze"
-        }
       }
     },
     "Sample": {

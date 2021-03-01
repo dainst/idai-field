@@ -37,21 +37,20 @@
     "fields": {}
   },
   "Trench:default": {
-    "hidden": [],
+    "hidden": ["trenchComment"],
     "fields": {}
   },
   "Floor:default": {
     "hidden": [],
     "fields": {}
   },
-  "Feature:default": {
-    "color": "#d5b43c",
+  "Feature": {
+    "color": "#121009",
     "commons": [
       "period",
       "beginningDate",
       "endDate",
       "diary",
-      "description",
       "processor",
       "campaign",
       "dimensionLength",
@@ -59,7 +58,7 @@
       "dimensionVerticalExtent",
       "area"
     ],
-    "hidden": ["color"],
+    "hidden": ["color", "featureBorders", "description"],
     "fields": {
       "comparison": {
         "inputType": "text"
@@ -67,24 +66,29 @@
       "hasDisturbance": {
         "inputType": "boolean"
       },
-      "featureForm": {
-        "inputType": "checkboxes"
+      "localization": {
+        "inputType": "radio"
       },
-      "featureBorders": {
-        "inputType": "checkboxes"
+      "localization-description": {
+        "inputType": "text"
       },
       "FotoNr": {
+        "inputType": "text"
+      },
+      "DrawingNr": {
+        "inputType": "text"
+      },
+      "notes": {
         "inputType": "text"
       }
     },
     "valuelists": {
-      "featureForm": "Feature-featureForm-milet",
-      "featureBorders": "Feature-featureBorders-milet"
+      "localization": "localization-milet"
     }
   },
   "Layer:default": {
     "hidden": [],
-    "color": "#663300",
+    "color": "#665432",
     "fields": {
       "layerClassification": {
         "inputType": "dropdown"
@@ -153,16 +157,13 @@
       "measuringPointID": {
         "inputType": "input"
       },
-      "measuringPointOrigin": {
-        "inputType": "radio"
-      },
       "profileClassification": {
         "inputType": "text"
       }
     },
     "valuelists": {
       "orientation": "orientation-default-1",
-      "measuringPointOrigin": "Find-measuringPointOrigin-milet"
+      "localization": "localization-milet"
     }
   },
   "StrUnit": {
@@ -173,22 +174,6 @@
       "testfield": {
         "inputType": "text"
       }
-    }
-  },
-  "TrenchSketch": {
-    "parent": "Feature",
-    "color": "#3a3168",
-    "hidden": [],
-    "fields": {
-      "sketchNotes": {
-        "inputType": "text"
-      },
-      "scale": {
-        "inputType": "dropdown"
-      }
-    }, 
-    "valuelists": {
-      "scale": "Drawing-scale-milet"
     }
   },
   "Building:default": {
@@ -206,7 +191,7 @@
       "measuringPointID": {
         "inputType": "input"
       },
-      "measuringPointOrigin": {
+      "localization": {
         "inputType": "radio"
       },
       "workflow": {
@@ -224,7 +209,7 @@
     },
     "valuelists": {
       "storagePlace": "Find-storagePlace-milet",
-      "measuringPointOrigin": "Find-measuringPointOrigin-milet",
+      "localization": "localization-milet",
       "workflow": "Find-workflow-milet"
     }
   },
@@ -277,10 +262,6 @@
     "fields": {}
   },
   "Terracotta:default": {
-    "hidden": [],
-    "fields": {}
-  },
-  "Photo:default": {
     "hidden": [],
     "fields": {}
   },
@@ -381,7 +362,7 @@
       "measuringPointID": {
         "inputType": "input"
       },
-      "measuringPointOrigin": {
+      "localization": {
         "inputType": "radio"
       },
       "volume": {
@@ -389,7 +370,7 @@
       }
     },
     "valuelists": {
-      "measuringPointOrigin": "Find-measuringPointOrigin-milet"
+      "localization": "localization-milet"
     }
   },
   "TypeCatalog:default": {
@@ -405,13 +386,33 @@
       "scale": {
         "inputType": "dropdown"
       },
-      "sketchNotes": {
+      "notes": {
         "inputType": "text"
+      },
+      "DrawingNr": {
+        "inputType": "input"
       }
     },
     "valuelists": {
       "scale": "Drawing-scale-milet",
       "drawingType": "Drawing-drawingType-milet"
     }
+  },
+  "Photo:default": {
+    "fields": {
+      "notes": {
+        "inputType": "text"
+      },
+      "FotoNr": {
+        "inputType": "input"
+      },
+      "viewDirection": {
+        "inputType": "radio"
+      }
+    },
+    "valuelists": {
+      "viewDirection": "viewDirection-miletus"
+    }
   }
+
 }

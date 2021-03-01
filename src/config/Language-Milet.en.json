@@ -1,6 +1,50 @@
 {
-  "isEquivalentTo": {
-    "label": "identical with"
+  "fields": {
+    "category": {
+      "label": "Category"
+    },
+    "isEquivalentTo": {
+      "label": "identical with"
+    },
+    "identifier": {
+      "label": "Name / ID (eindeutig)",
+      "description": "Unique Identifier of this ressource. If applicable, should use the milesian naming conventions; i.e. Area, Year, Trench...; e.g. for contexts: HU19_A_01 for Context 1 in Trench A in the year 2019 on Humeitepe."
+    },
+    "shortDescription": {
+      "label": "(short) secondary Title"
+    },
+    "scale": {
+      "label": "Scale"
+    },
+    "measuringPointID": {
+      "label": "Measuring-Point-IS",
+      "description": "ID of the data in the Totalstation, empty if not applicable"
+    },
+    "localization": {
+      "label": "Origin of Surveying Data",
+      "description": "How was the spatial data acquired?"
+    },
+    "localization-description": {
+      "label": "Commentary on Surveying Data",
+      "description": "Either enter a (topographical) description of localization, if only that exists, or record the point numbers or surveying data in the appropriate format."
+    },
+    "FotoNr": {
+      "label": "Photograph-ID(s)",
+      "description": "List the IDs of Fotographs according to the paper form. This can also encompass fotos that are not included in the database itself, but instead archived together with the documentation."
+    },
+    "DrawingNr": {
+      "label": "Drawing-ID(s)",
+      "description": "List the IDs of drawings according to the paper form. This can also encompass drawings that are not included in the database itself, but instead archived together with the documentation."
+    },
+    "notes": {
+      "label": "Notes",
+      "description": "..."
+    }
+  },
+  "relations": {
+    "isEquivalentTo": {
+      "label": "identical with"
+    }
   },
   "categories": {
     "Trench": {
@@ -10,7 +54,13 @@
       "label": "Sketch / Planum"
     },
     "Feature": {
-      "label": "Trench"
+      "label": "Trench",
+      "fields": {
+        "hasDisturbance": {
+          "label": "Disturbed",
+          "description": "Is the trench/section/context/unit disturbed? (i.e. can some finds be non-indicative?)"
+        }
+      }
     },
     "Layer": {
       "label": "Context"
@@ -127,6 +177,14 @@
         "headheight": {
           "label": "Height of Head to Crown (in cm)",
           "description": "Blergh"
+        }
+      }
+    },
+    "Photo": {
+      "fields": {
+        "viewDirection": {
+          "label": "View in direction of ...",
+          "description": "Direction the Photograph was shot in."
         }
       }
     }

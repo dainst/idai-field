@@ -41761,16 +41761,37 @@
       "unbekannt": {}
     }
   },
-  "Find-measuringPointOrigin-milet": {
+  "localization-milet": {
     "createdBy": "Lisa Steinmann (Milet)",
     "creationDate": "25-04-2020",
     "description": {
-      "de": "",
-      "en": ""
-    },
-    "values": {
-      "Totalstation": {},
-      "Manuell": {}
+      "de": "Wie wurden die geographischen Daten für ein Objekt generiert?",
+      "en": "How was the spatial data associated with an object acquired?"
+    },"values": {
+      "Totalstation": {
+        "labels": {
+          "de": "Messdaten aus Totalstation",
+          "en": "Surveying data from Totalstation"
+        }
+      },
+      "manuell_kartiert": {
+        "labels": {
+          "de": "Manuell kartiert",
+          "en": "Manual entry on map"
+        }
+      },
+      "nicht_lokalisiert": {
+        "labels": {
+          "de": "nicht lokalisiert / Standort unbekannt",
+          "en": "not located / location unknown"
+        }
+      },
+      "topographical_description": {
+        "labels": {
+          "de": "Standort durch topographische Beschreibung erfasst",
+          "en": "located by topographical Description"
+        }
+      }
     }
   },
   "Find-workflow-milet": {
@@ -42365,56 +42386,6 @@
       }
     }
   },
-  "Feature-featureForm-milet": {
-    "creationDate": "",
-    "createdBy": "",
-    "description": {},
-    "values": {
-      "Schnitt": {
-        "labels": {
-          "de": "Schnitt",
-          "en": "Trench"
-        }
-      },
-      "Schicht": {
-        "labels": {
-          "de": "Schicht",
-          "en": "Stratigraphical Unit (compound)"
-        }
-      },
-      "Flaeche": {
-        "labels": {
-          "de": "Überblicksskizze",
-          "en": "Trench Sketch / Planum"
-        }
-      },
-      "Befund": {
-        "labels": {
-          "de": "Befund",
-          "en": "Layer"
-        }
-      },
-      "Anderes": {
-        "labels": {
-          "de": "Anderes",
-          "en": "Other"
-        }
-      }
-    }
-  },
-  "Feature-featureBorders-milet": {
-    "creationDate": "03-02-2021",
-    "createdBy": "Lisa Steinmann (Milet)",
-    "description": {},
-    "values": {
-      "eingemessen": {
-        "labels": {
-          "de": "Messdaten vorhanden",
-          "en": "Surveying data existent"
-        }
-      }
-    }
-  },
   "Layer-soilType-milet": {
     "creationDate": "03-02-2021",
     "createdBy": "Lisa Steinmann (Milet)",
@@ -42450,24 +42421,94 @@
     "creationDate": "03-02-2021",
     "createdBy": "Lisa Steinmann (Milet)",
     "description": {
-      "de": "Fundgattungen im Befund",
-      "en": ".."
+      "de": "Überblick über die Fundgattungen im Befund",
+      "en": "Overview of finds in the context"
     },
     "values": {
-      "Keramik": {},
-      "Terrakotta": {},
-      "Stein (bearbeitet)": {},
-      "Tesserae": {},
-      "Inkrustationen": {},
-      "Wandputz": {},
-      "Metall": {},
-      "Glas": {},
-      "Münzen": {},
-      "Ziegel": {},
-      "Knochen": {},
-      "Holz": {},
-      "Mollusken": {},
-      "Sample": {}
+      "Keramik": {
+        "labels": {
+          "de": "Keramik",
+          "en": "Pottery"
+        }
+      },
+      "Terrakotta": {
+        "labels": {
+          "de": "Terrakotta",
+          "en": "Terracotta"
+        }
+      },
+      "Stein (bearbeitet)": {
+        "labels": {
+          "de": "Stein (bearbeitet)",
+          "en": "Stone (carved)"
+        }
+      },
+      "Tesserae": {
+        "labels": {
+          "de": "Tesserae",
+          "en": "Tesserae"
+        }
+      },
+      "Inkrustationen": {
+        "labels": {
+          "de": "Inkrustationen",
+          "en": "Inlays"
+        }
+      },
+      "Wandputz": {
+        "labels": {
+          "de": "Wandputz",
+          "en": "Stucco/Plaster"
+        }
+      },
+      "Metall": {
+        "labels": {
+          "de": "Metall",
+          "en": "Metal"
+        }
+      },
+      "Glas": {
+        "labels": {
+          "de": "Glas",
+          "en": "Glass"
+        }
+      },
+      "Münzen": {
+        "labels": {
+          "de": "Münzen",
+          "en": "Coins"
+        }
+      },
+      "Ziegel": {
+        "labels": {
+          "de": "Ziegel",
+          "en": "Bricks"
+        }
+      },
+      "Knochen": {
+        "labels": {
+          "de": "Knochen",
+          "en": "Bone"
+        }
+      },
+      "Holz": {
+        "labels": {
+          "de": "Holz",
+          "en": "Wood"
+        }
+      },
+      "Mollusken": {
+        "labels": {
+          "de": "Mollusken",
+          "en": "Molluscs"
+        }
+      },
+      "Sample": {
+        "labels": {
+          "de": "Probe",
+          "en": "Sample"
+        }
+      }
     }
   },
   "Drawing-scale-milet": {
@@ -42475,7 +42516,7 @@
     "createdBy": "Lisa Steinmann (Milet)",
     "description": {
       "de": "Maßstab",
-      "en": ".."
+      "en": "Scale"
     },
     "order": [
       "1:1",
@@ -42590,6 +42631,80 @@
       "WB": {},
       "WD": {},
       "Z": {}
+    }
+  },
+  "viewDirection-miletus": {
+    "createdBy": "Lisa Steinmann (Milet)",
+    "description": {
+      "de": "Blickrichtung",
+      "en": "Direction of View"
+    },
+    "creationDate": "01.03.2021",
+    "order": [
+      "North",
+      "Northeast",
+      "East",
+      "Southeast",
+      "South",
+      "Southwest",
+      "West",
+      "Northwest",
+      "not_applicable"],
+    "values": {
+      "North": {
+        "labels": {
+          "de": "Nord",
+          "en": "North"
+        }
+      },
+      "Northeast": {
+        "labels": {
+          "de": "Nordost",
+          "en": "Northeast"
+        }
+      },
+      "East": {
+        "labels": {
+          "de": "Ost",
+          "en": "East"
+        }
+      },
+      "Southeast": {
+        "labels": {
+          "de": "Südost",
+          "en": "Southeast"
+        }
+      },
+      "South": {
+        "labels": {
+          "de": "Süd",
+          "en": "South"
+        }
+      },
+      "Southwest": {
+        "labels": {
+          "de": "Südwest",
+          "en": "Southwest"
+        }
+      },
+      "West": {
+        "labels": {
+          "de": "West",
+          "en": "West"
+        }
+      },
+      "Northwest": {
+        "labels": {
+          "de": "Nordwest",
+          "en": "Northwest"
+        }
+      },
+      "not_applicable": {
+        "labels": {
+          "de": "nicht zutreffend",
+          "en": "not_applicable"
+        }
+      }
     }
   }
 }

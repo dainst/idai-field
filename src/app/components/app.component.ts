@@ -119,6 +119,12 @@ export class AppComponent {
             'zenonId', this.i18n({ id: 'util.literature.zenonId', value: 'Zenon-ID' })
         );
         this.utilTranslations.addTranslation(
+            'page', this.i18n({ id: 'util.literature.page', value: 'Seite' })
+        );
+        this.utilTranslations.addTranslation(
+            'figure', this.i18n({ id: 'util.literature.figure', value: 'Abbildung' })
+        );
+        this.utilTranslations.addTranslation(
             'from', this.i18n({ id: 'util.optionalRange.from', value: 'Von: ' })
         );
         this.utilTranslations.addTranslation(

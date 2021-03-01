@@ -175,15 +175,6 @@
       }
     }
   },
-  "Street": {
-    "parent": "Feature",
-    "hidden": [],
-    "fields": {
-      "testfield": {
-        "inputType": "text"
-      }
-    }
-  },
   "TrenchSketch": {
     "parent": "Feature",
     "color": "#3a3168",

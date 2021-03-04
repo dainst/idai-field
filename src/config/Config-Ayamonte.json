@@ -465,7 +465,7 @@
         "inputType": "input"
       },
       "storagePlace": {
-        "inputType": "input"
+        "inputType": "radio"
       },
       "sampleType": {
         "inputType": "checkboxes"
@@ -473,7 +473,8 @@
     },
     "valuelists": {
       "material": "Sample-material-ayamonte",
-      "sampleType": "Sample-sampleType-ayamonte"
+      "sampleType": "Sample-sampleType-ayamonte",
+      "storagePlace": "Find-storagePlace-ayamonte"
     }
   }
 }

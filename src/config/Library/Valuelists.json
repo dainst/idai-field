@@ -46983,5 +46983,84 @@
          "Mörtel",
          "unbestimmbar"
       ]
+   },
+  "Coin-stampPositioning-gadara":{
+      "createdBy":"Hanna Hamel",
+      "creationDate":"19.02.2021",
+      "description":"wie default-Liste, mit Übersetzung",
+      "values":{
+         "- 1 Uhr":{
+            "labels":{
+               "de":"- 1 Uhr",
+               "en":"- 1 h"
+            }
+         },
+         "- 2 Uhr":{
+            "labels":{
+               "de":"- 2 Uhr",
+               "en":"- 2 h"
+            }
+         },
+         "- 3 Uhr":{
+            "labels":{
+               "de":"- 3 Uhr",
+               "en":"- 3 h"
+            }
+         },
+         "- 4 Uhr":{
+            "labels":{
+               "de":"- 4 Uhr",
+               "en":"- 4 h"
+            }
+         },
+         "- 5 Uhr":{
+            "labels":{
+               "de":"- 5 Uhr",
+               "en":"- 5 h"
+            }
+         },
+         "- 6 Uhr":{
+            "labels":{
+               "de":"- 6 Uhr",
+               "en":"- 6 h"
+            }
+         },
+         "- 7 Uhr":{
+            "labels":{
+               "de":"- 7 Uhr",
+               "en":"- 7 h"
+            }
+         },
+         "- 8 Uhr":{
+            "labels":{
+               "de":"- 8 Uhr",
+               "en":"- 8 h"
+            }
+         },
+         "- 9 Uhr":{
+            "labels":{
+               "de":"- 9 Uhr",
+               "en":"- 9 h"
+            }
+         },
+         "- 10 Uhr":{
+            "labels":{
+               "de":"- 10 Uhr",
+               "en":"- 10 h"
+            }
+         },
+         "- 11 Uhr":{
+            "labels":{
+               "de":"- 11 Uhr",
+               "en":"- 11 h"
+            }
+         },
+         "- 12 Uhr":{
+            "labels":{
+               "de":"- 12 Uhr",
+               "en":"- 12 h"
+            }
+         }
+      }
    }
 }

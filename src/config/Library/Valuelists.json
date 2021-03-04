@@ -1121,86 +1121,129 @@
       "Rezent"
     ]
   },
-  "periods-gadara": {
-    "creationDate": "24-12-2019",
-    "createdBy": "Heike Möller, Hanna Hamel DAI, 2019",
-    "description": {},
-    "values": {
-      "Eisenzeitlich": {
-        "labels": {
-          "de": "Eisenzeitlich"
+  "periods-gadara":{
+     "creationDate":"24-12-2019",
+     "createdBy":"Heike Möller, Hanna Hamel DAI, 2019",
+     "description":{
+        "de":"",
+        "en":""
+     },
+     "values":{
+        "Eisenzeitlich":{
+           "labels":{
+              "de":"Eisenzeitlich",
+              "en":"Iron Age"
+           }
+        },
+        "Hellenistisch":{
+           "labels":{
+              "de":"Hellenistisch",
+              "en":"Hellenistic"
+           }
+        },
+        "Hellenistisch/Römisch":{
+           "labels":{
+              "de":"Hellenistisch/Römisch",
+              "en":"Hellenistic/Roman"
+           }
+        },
+        "Römisch":{
+           "labels":{
+              "de":"Römisch",
+              "en":"Roman"
+           }
+        },
+        "Römisch/Byzantinisch":{
+           "labels":{
+              "de":"Römisch/Byzantinisch",
+              "en":"Roman/Byzantine"
+           }
+        },
+        "Byzantinisch":{
+           "labels":{
+              "de":"Byzantinisch",
+              "en":"Byzantine"
+           }
+        },
+        "Byzantinisch/Umayyadisch":{
+           "labels":{
+              "de":"Byzantinisch/Umayyadisch",
+              "en":"Byzantine/Umayyad"
+           }
+        },
+        "Umayyadisch":{
+           "labels":{
+              "de":"Umayyadisch",
+              "en":"Umayyad"
+           }
+        },
+        "Abbasidisch":{
+           "labels":{
+              "de":"Abbasidisch",
+              "en":"Abbasid"
+           }
+        },
+        "Frühislamisch":{
+           "labels":{
+              "de":"Frühislamisch",
+              "en":"early Islamic"
+           }
+        },
+        "Ayyubidisch":{
+           "labels":{
+              "de":"Ayyubidisch",
+              "en":"Ayyubid"
+           }
+        },
+        "Mamlukisch":{
+           "labels":{
+              "de":"Mamlukisch",
+              "en":"Mamluk"
+           }
+        },
+        "Mittelislamisch":{
+           "labels":{
+              "de":"Mittelislamisch",
+              "en":"middle Islamic"
+           }
+        },
+        "Islamisch":{
+           "labels":{
+              "de":"Islamisch",
+              "en":"Islamic"
+           }
+        },
+        "Osmanisch":{
+           "labels":{
+              "de":"Osmanisch",
+              "en":"Ottoman"
+           }
+        },
+        "Modern":{
+           "labels":{
+              "de":"Modern",
+              "en":"Modern"
+           }
         }
-      },
-      "Hellenistisch": {
-        "labels": {
-          "de": "Hellenistisch"
-        }
-      },
-      "Hellenistisch/Römisch": {
-        "labels": {
-          "de": "Hellenistisch/Römisch"
-        }
-      },
-      "Römisch": {
-        "labels": {
-          "de": "Römisch"
-        }
-      },
-      "Römisch/Byzantinisch": {
-        "labels": {
-          "de": "Römisch/Byzantinisch"
-        }
-      },
-      "Byzantinisch": {
-        "labels": {
-          "de": "Byzantinisch"
-        }
-      },
-      "Byzantinisch/Umayyadisch": {
-        "labels": {
-          "de": "Byzantinisch/Umayyadisch"
-        }
-      },
-      "Umayyadisch": {
-        "labels": {
-          "de": "Umayyadisch"
-        }
-      },
-      "Ayyubidisch": {
-        "labels": {
-          "de": "Ayyubidisch"
-        }
-      },
-      "Mamlukisch": {
-        "labels": {
-          "de": "Mamlukisch"
-        }
-      },
-      "Osmanisch": {
-        "labels": {
-          "de": "Osmanisch"
-        }
-      },
-      "Modern": {
-        "labels": {
-          "de": "Modern"
-        }
-      }
-    },
-    "order": [
-      "Eisenzeitlich",
-      "Hellenistisch",
-      "Hellenistisch/Römisch",
-      "Römisch",
-      "Römisch/Byzantinisch",
-      "Byzantinisch",
-      "Byzantinisch/Umayyadisch",
-      "Umayyadisch",
-      "Ayyubidisch",
-      "Mamlukisch",
-      "Osmanisch",
-      "Modern"
-    ]
+     },
+     "order":[
+        "Eisenzeitlich",
+        "Hellenistisch",
+        "Hellenistisch/Römisch",
+        "Römisch",
+        "Römisch/Byzantinisch",
+        "Byzantinisch",
+        "Byzantinisch/Umayyadisch",
+        "Umayyadisch",
+        "Abbasidisch",
+        "Frühislamisch",
+        "Ayyubidisch",
+        "Mamlukisch",
+        "Mittelislamisch",
+        "Islamisch",
+        "Osmanisch",
+        "Modern"
+     ]
   },
   "periods-Uruk-1": {
     "creationDate": "",
@@ -6155,38 +6198,32 @@
       }
     }
   },
-  "Pottery-materialType-gadara": {
-    "creationDate": "Heike Möller, Hanna Hamel; DAI",
-    "createdBy": "",
-    "description": {},
-    "values": {
-      "FK": {
-        "labels": {
-          "de": "FK"
+  "Pottery-materialType-gadara":{
+     "creationDate":"2019",
+     "createdBy":"Heike Möller, Hanna Hamel; DAI",
+     "description":"Grobe Kategorisierung der Keramik. Einteilung wie Typenkatalog - siehe Typenkatalog Gadara",
+     "values":{
+        "FK":{
+           "labels":{
+              "de":"FK"
+           }
+        },
+        "GK":{
+           "labels":{
+              "de":"GK"
+           }
+        },
+        "KK":{
+           "labels":{
+              "de":"KK"
+           }
         }
-      },
-      "GK": {
-        "labels": {
-          "de": "GK"
-        }
-      },
-      "TK": {
-        "labels": {
-          "de": "TK"
-        }
-      },
-      "KK": {
-        "labels": {
-          "de": "KK"
-        }
-      }
-    },
-    "order": [
-      "FK",
-      "GK",
-      "TK",
-      "KK"
-    ]
+     },
+     "order":[
+        "FK",
+        "GK",
+        "KK"
+     ]
   },
   "Pottery-objectType-default": {
     "creationDate": "",
@@ -6514,92 +6551,69 @@
       }
     }
   },
-  "Pottery-specificType-gadara": {
-    "creationDate": "24-12-2019",
-    "createdBy": "Heike Möller, Hanna Hamel DAI 2019",
-    "description": {},
-    "values": {
-      "B": {
-        "labels": {
-          "de": "B"
+  "Pottery-specificType-gadara":{
+     "creationDate":"24-12-2019",
+     "createdBy":"Heike Möller, Hanna Hamel DAI 2019",
+     "description":{
+        "de":"Gundlegende Gefäßform. Einteilung entsprechend Typenkatalog - siehe Typenkatalog Gadara",
+        "en":""
+     },
+     "values":{
+        "B":{
+
+        },
+        "Bö":{
+
+        },
+        "H":{
+
+        },
+        "Ka":{
+
+        },
+        "Kr":{
+
+        },
+        "Sa":{
+
+        },
+        "Sü":{
+
+        },
+        "U":{
+
+        },
+        "A":{
+
+        },
+        "D":{
+
+        },
+        "T":{
+
+        },
+        "P":{
+
+        },
+        "Ks":{
+
         }
-      },
-      "Bö": {
-        "labels": {
-          "de": "Bö"
-        }
-      },
-      "H": {
-        "labels": {
-          "de": "H"
-        }
-      },
-      "Ka": {
-        "labels": {
-          "de": "Ka"
-        }
-      },
-      "Kr": {
-        "labels": {
-          "de": "Kr"
-        }
-      },
-      "Sa": {
-        "labels": {
-          "de": "Sa"
-        }
-      },
-      "Sü": {
-        "labels": {
-          "de": "Sü"
-        }
-      },
-      "U": {
-        "labels": {
-          "de": "U"
-        }
-      },
-      "A": {
-        "labels": {
-          "de": "A"
-        }
-      },
-      "D": {
-        "labels": {
-          "de": "D"
-        }
-      },
-      "T": {
-        "labels": {
-          "de": "T"
-        }
-      },
-      "P": {
-        "labels": {
-          "de": "P"
-        }
-      },
-      "Ks": {
-        "labels": {
-          "de": "Ks"
-        }
-      }
-    },
-    "order": [
-      "B",
-      "Bö",
-      "H",
-      "Ka",
-      "Kr",
-      "Sa",
-      "Sü",
-      "U",
-      "A",
-      "D",
-      "T",
-      "P",
-      "Ks"
-    ]
+     },
+     "order":[
+        "B",
+        "Bö",
+        "H",
+        "Ka",
+        "Kr",
+        "Sa",
+        "Sü",
+        "U",
+        "A",
+        "D",
+        "T",
+        "P",
+        "Ks"
+     ]
   },
   "Pottery-temperAmount-default": {
     "creationDate": "",
@@ -19060,9 +19074,9 @@
           "de": "Terrassierung"
         }
       },
-      "Brücke": {
+      "Brücke": {
         "labels": {
-          "de": "Brücke"
+          "de": "Brücke"
         }
       },
       "Damm/Wall": {
@@ -19987,374 +20001,257 @@
       }
     }
   },
-  "Pottery-potteryTypeSpecific-gadara": {
-    "createdBy": "Heike Möller, Hanna Hamel; DAI",
-    "creationDate": "",
-    "description": {},
-    "values": {
-      "Import": {
-        "labels": {
-          "de": "Import"
+  "Pottery-potteryTypeSpecific-gadara":{
+     "createdBy":"Heike Möller, Hanna Hamel; DAI",
+     "creationDate":"",
+     "description":{
+        "de":"",
+        "en":""
+     },
+     "values":{
+        "A - Import":{
+
+        },
+        "A - Almagro 50 brown":{
+
+        },
+        "A - Ephesos (?)":{
+
+        },
+        "A - Kapitän II coarse":{
+
+        },
+        "A - Kapitän II fine":{
+
+        },
+        "A - Rhodos":{
+
+        },
+        "ähnl. BP":{
+
+        },
+        "ähnl. HBUFF":{
+
+        },
+        "BB":{
+
+        },
+        "BB semi fine":{
+
+        },
+        "BP":{
+
+        },
+        "BP mit ÜZ":{
+
+        },
+        "BROWNQ":{
+
+        },
+        "BSP":{
+
+        },
+        "BSWP":{
+
+        },
+        "CBUFF":{
+
+        },
+        "CBUFF Red":{
+
+        },
+        "CSTRAW":{
+
+        },
+        "FK - ARS":{
+
+        },
+        "FK - LRC":{
+
+        },
+        "FK - TS":{
+
+        },
+        "FK 1":{
+
+        },
+        "FK 2":{
+
+        },
+        "FK 4":{
+
+        },
+        "FK 5":{
+
+        },
+        "FK 6":{
+
+        },
+        "FK Import":{
+
+        },
+        "FK 3 - ESA":{
+
+        },
+        "GB":{
+
+        },
+        "GK Import":{
+
+        },
+        "Glasierte Ware":{
+
+        },
+        "GroW 1":{
+
+        },
+        "Grow 2":{
+
+        },
+        "GroW 3":{
+
+        },
+        "GroW 4":{
+
+        },
+        "GroW VAR":{
+
+        },
+        "Handmade Painted Ware":{
+
+        },
+        "HBUFF":{
+
+        },
+        "HBUFF/BP":{
+
+        },
+        "HRED":{
+
+        },
+        "HREDcalc":{
+
+        },
+        "KK - Jerash?":{
+
+        },
+        "KK 1":{
+
+        },
+        "KK Import":{
+
+        },
+        "MA 1":{
+
+        },
+        "MA 2":{
+
+        },
+        "MA 3":{
+
+        },
+        "MA 4":{
+
+        },
+        "MA 5":{
+
+        },
+        "MA 6":{
+
+        },
+        "Neuzeitlich":{
+
+        },
+        "OG":{
+
+        },
+        "PINK mit ÜZ":{
+
+        },
+        "PK PTD":{
+
+        },
+        "Pompeian redware 1":{
+
+        },
+        "Pompeian Redware 2":{
+
+        },
+        "Porzellan":{
+
+        },
+        "RB":{
+
+        },
+        "REDQ":{
+
+        },
+        "REDQ calc.":{
+
         }
-      },
-      "Almagro 50 brown": {
-        "labels": {
-          "de": "Almagro 50 brown"
-        }
-      },
-      "Ephesos (?)": {
-        "labels": {
-          "de": "Ephesos (?)"
-        }
-      },
-      "Kapitän II coarse": {
-        "labels": {
-          "de": "Kapitän II coarse"
-        }
-      },
-      "Kapitän II fine": {
-        "labels": {
-          "de": "Kapitän II fine"
-        }
-      },
-      "Rhodos": {
-        "labels": {
-          "de": "Rhodos"
-        }
-      },
-      "ähnl. BP": {
-        "labels": {
-          "de": "ähnl. BP"
-        }
-      },
-      "ähnl. HBUFF": {
-        "labels": {
-          "de": "ähnl. HBUFF"
-        }
-      },
-      "BB": {
-        "labels": {
-          "de": "BB"
-        }
-      },
-      "BB semi fine": {
-        "labels": {
-          "de": "BB semi fine"
-        }
-      },
-      "BP": {
-        "labels": {
-          "de": "BP"
-        }
-      },
-      "BP mit ÜZ": {
-        "labels": {
-          "de": "BP mit ÜZ"
-        }
-      },
-      "BROWNQ": {
-        "labels": {
-          "de": "BROWNQ"
-        }
-      },
-      "BSP": {
-        "labels": {
-          "de": "BSP"
-        }
-      },
-      "BSWP": {
-        "labels": {
-          "de": "BSWP"
-        }
-      },
-      "CBUFF": {
-        "labels": {
-          "de": "CBUFF"
-        }
-      },
-      "CBUFF Red": {
-        "labels": {
-          "de": "CBUFF Red"
-        }
-      },
-      "CSTRAW": {
-        "labels": {
-          "de": "CSTRAW"
-        }
-      },
-      "FK - ARS": {
-        "labels": {
-          "de": "FK - ARS"
-        }
-      },
-      "FK - LRC": {
-        "labels": {
-          "de": "FK - LRC"
-        }
-      },
-      "FK - TS": {
-        "labels": {
-          "de": "FK - TS"
-        }
-      },
-      "FK 1": {
-        "labels": {
-          "de": "FK 1"
-        }
-      },
-      "FK 2": {
-        "labels": {
-          "de": "FK 2"
-        }
-      },
-      "FK 4": {
-        "labels": {
-          "de": "FK 4"
-        }
-      },
-      "FK 5": {
-        "labels": {
-          "de": "FK 5"
-        }
-      },
-      "FK 6": {
-        "labels": {
-          "de": "FK 6"
-        }
-      },
-      "FK Import": {
-        "labels": {
-          "de": "FK Import"
-        }
-      },
-      "FK3 - ESA": {
-        "labels": {
-          "de": "FK3 - ESA"
-        }
-      },
-      "GB": {
-        "labels": {
-          "de": "GB"
-        }
-      },
-      "GK Import": {
-        "labels": {
-          "de": "GK Import"
-        }
-      },
-      "Glasierte Ware": {
-        "labels": {
-          "de": "Glasierte Ware"
-        }
-      },
-      "GroW 1": {
-        "labels": {
-          "de": "GroW 1"
-        }
-      },
-      "Grow 2": {
-        "labels": {
-          "de": "Grow 2"
-        }
-      },
-      "GroW 3": {
-        "labels": {
-          "de": "GroW 3"
-        }
-      },
-      "GroW 4": {
-        "labels": {
-          "de": "GroW 4"
-        }
-      },
-      "GroW VAR": {
-        "labels": {
-          "de": "GroW VAR"
-        }
-      },
-      "Handbade Painted Ware": {
-        "labels": {
-          "de": "Handbade Painted Ware"
-        }
-      },
-      "HBUFF": {
-        "labels": {
-          "de": "HBUFF"
-        }
-      },
-      "HBUFF/BP": {
-        "labels": {
-          "de": "HBUFF/BP"
-        }
-      },
-      "HRED": {
-        "labels": {
-          "de": "HRED"
-        }
-      },
-      "HREDcalc": {
-        "labels": {
-          "de": "HREDcalc"
-        }
-      },
-      "KK - Jerash?": {
-        "labels": {
-          "de": "KK - Jerash?"
-        }
-      },
-      "KK 1": {
-        "labels": {
-          "de": "KK 1"
-        }
-      },
-      "KK Import": {
-        "labels": {
-          "de": "KK Import"
-        }
-      },
-      "MA 1": {
-        "labels": {
-          "de": "MA 1"
-        }
-      },
-      "MA 2": {
-        "labels": {
-          "de": "MA 2"
-        }
-      },
-      "MA 3": {
-        "labels": {
-          "de": "MA 3"
-        }
-      },
-      "MA 4": {
-        "labels": {
-          "de": "MA 4"
-        }
-      },
-      "MA 5": {
-        "labels": {
-          "de": "MA 5"
-        }
-      },
-      "MA 6": {
-        "labels": {
-          "de": "MA 6"
-        }
-      },
-      "Neuzeitlich": {
-        "labels": {
-          "de": "Neuzeitlich"
-        }
-      },
-      "OG": {
-        "labels": {
-          "de": "OG"
-        }
-      },
-      "PINK mit ÜZ": {
-        "labels": {
-          "de": "PINK mit ÜZ"
-        }
-      },
-      "PK PTD": {
-        "labels": {
-          "de": "PK PTD"
-        }
-      },
-      "Pompeian redware 1": {
-        "labels": {
-          "de": "Pompeian redware 1"
-        }
-      },
-      "Pompeian Redware 2": {
-        "labels": {
-          "de": "Pompeian Redware 2"
-        }
-      },
-      "Porzellan": {
-        "labels": {
-          "de": "Porzellan"
-        }
-      },
-      "RB": {
-        "labels": {
-          "de": "RB"
-        }
-      },
-      "REDQ": {
-        "labels": {
-          "de": "REDQ"
-        }
-      },
-      "REDQ calc.": {
-        "labels": {
-          "de": "REDQ calc."
-        }
-      }
-    },
-    "order": [
-      "Import",
-      "Almagro 50 brown",
-      "Ephesos (?)",
-      "Kapitän II coarse",
-      "Kapitän II fine",
-      "Rhodos",
-      "ähnl. BP",
-      "ähnl. HBUFF",
-      "BB",
-      "BB semi fine",
-      "BP",
-      "BP mit ÜZ",
-      "BROWNQ",
-      "BSP",
-      "BSWP",
-      "CBUFF",
-      "CBUFF Red",
-      "CSTRAW",
-      "FK - ARS",
-      "FK - LRC",
-      "FK - TS",
-      "FK 1",
-      "FK 2",
-      "FK 4",
-      "FK 5",
-      "FK 6",
-      "FK Import",
-      "FK3 - ESA",
-      "GB",
-      "GK Import",
-      "Glasierte Ware",
-      "GroW 1",
-      "Grow 2",
-      "GroW 3",
-      "GroW 4",
-      "GroW VAR",
-      "Handbade Painted Ware",
-      "HBUFF",
-      "HBUFF/BP",
-      "HRED",
-      "HREDcalc",
-      "KK - Jerash?",
-      "KK 1",
-      "KK Import",
-      "MA 1",
-      "MA 2",
-      "MA 3",
-      "MA 4",
-      "MA 5",
-      "MA 6",
-      "Neuzeitlich",
-      "OG",
-      "PINK mit ÜZ",
-      "PK PTD",
-      "Pompeian redware 1",
-      "Pompeian Redware 2",
-      "Porzellan",
-      "RB",
-      "REDQ",
-      "REDQ calc."
-    ]
+     },
+     "order":[
+        "A - Import",
+        "A - Almagro 50 brown",
+        "A - Ephesos (?)",
+        "A - Kapitän II coarse",
+        "A - Kapitän II fine",
+        "A - Rhodos",
+        "ähnl. BP",
+        "ähnl. HBUFF",
+        "BB",
+        "BB semi fine",
+        "BP",
+        "BP mit ÜZ",
+        "BROWNQ",
+        "BSP",
+        "BSWP",
+        "CBUFF",
+        "CBUFF Red",
+        "CSTRAW",
+        "FK - ARS",
+        "FK - LRC",
+        "FK - TS",
+        "FK 1",
+        "FK 2",
+        "FK 3 - ESA",
+        "FK 4",
+        "FK 5",
+        "FK 6",
+        "FK Import",
+        "GB",
+        "GK Import",
+        "Glasierte Ware",
+        "GroW 1",
+        "Grow 2",
+        "GroW 3",
+        "GroW 4",
+        "GroW VAR",
+        "Handbade Painted Ware",
+        "HBUFF",
+        "HBUFF/BP",
+        "HRED",
+        "HREDcalc",
+        "KK - Jerash?",
+        "KK 1",
+        "KK Import",
+        "MA 1",
+        "MA 2",
+        "MA 3",
+        "MA 4",
+        "MA 5",
+        "MA 6",
+        "Neuzeitlich",
+        "OG",
+        "PINK mit ÜZ",
+        "PK PTD",
+        "Pompeian redware 1",
+        "Pompeian Redware 2",
+        "Porzellan",
+        "RB",
+        "REDQ",
+        "REDQ calc."
+     ]
   },
   "Bone-sex-Meninx": {
     "createdBy": "",
@@ -26350,62 +26247,69 @@
       }
     }
   },
-  "Pottery-vesselpart-gadara": {
-    "createdBy": "Heike Möller, Hanna Hamel DAI 2019",
-    "creationDate": "24-12-2019",
-    "description": {},
-    "values": {
-      "RF": {
-        "labels": {
-          "de": "RF"
+  "Pottery-vesselpart-gadara":{
+     "createdBy":"Heike Möller, Hanna Hamel DAI 2019",
+     "creationDate":"24-12-2019",
+     "description":"Bestimmung des erhaltenen Gefäßteils, fehlt als default-Liste",
+     "values":{
+        "WF":{
+           "labels":{
+              "de":"WF",
+              "en":"WF",
+              "fr":"P"
+           }
+        },
+        "RF":{
+           "labels":{
+              "de":"RF",
+              "en":"RF",
+              "fr":"B"
+           }
+        },
+        "BF":{
+           "labels":{
+              "de":"BF",
+              "en":"BF",
+              "fr":"F"
+           }
+        },
+        "H":{
+           "labels":{
+              "de":"H",
+              "en":"H",
+              "fr":"A"
+           }
+        },
+        "D":{
+           "labels":{
+              "de":"D",
+              "en":"L"
+           }
+        },
+        "KOMP":{
+           "labels":{
+              "de":"KOMP",
+              "en":"COMP",
+              "fr":"C"
+           }
+        },
+        "VAR":{
+           "labels":{
+              "de":"VAR",
+              "en":"VAR",
+              "fr":"E"
+           }
         }
-      },
-      "BF": {
-        "labels": {
-          "de": "BF"
-        }
-      },
-      "WF": {
-        "labels": {
-          "de": "WF"
-        }
-      },
-      "H": {
-        "labels": {
-          "de": "H"
-        }
-      },
-      "RF mit H": {
-        "labels": {
-          "de": "RF mit H"
-        }
-      },
-      "D": {
-        "labels": {
-          "de": "D"
-        }
-      },
-      "VAR": {
-        "labels": {
-          "de": "VAR"
-        }
-      },
-      "KOMP": {
-        "labels": {
-          "de": "KOMP"
-        }
-      }
-    },
-    "order": [
-      "RF",
-      "BF",
-      "WF",
-      "H",
-      "RF mit H",
-      "D",
-      "VAR",
-      "KOMP"
-    ]
+     },
+     "order":[
+        "WF",
+        "RF",
+        "BF",
+        "H",
+        "D",
+        "KOMP",
+        "VAR"
+     ]
   },
   "Pottery-vesselpart-Uruk": {
     "createdBy": "Max Haibt",
@@ -27111,154 +27015,213 @@
       }
     }
   },
-  "Pottery-coatTpe-gadara": {
-    "createdBy": "Heike Möller, Hanna Hamel",
-    "creationDate": "24-12-2019",
-    "description": {},
-    "values": {
-      "Unbehandelt": {
-        "labels": {
-          "de": "Unbehandelt"
+  "Pottery-coatTpe-gadara":{
+     "createdBy":"Heike Möller, Hanna Hamel",
+     "creationDate":"24-12-2019",
+     "description":"Oberflächenbehandlungen, die häufig auf Keramik anzutreffen sind.",
+     "values":{
+        "Unbehandelt":{
+           "labels":{
+              "de":"unbehandelt",
+              "en":"untreated",
+              "fr":"non traitée"
+           }
+        },
+        "Überzug":{
+           "labels":{
+              "de":"Überzug",
+              "en":"slip",
+              "fr":"engobe"
+           }
+        },
+        "Poliert":{
+           "labels":{
+              "de":"poliert",
+              "en":"polished",
+              "fr":"polie"
+           }
+        },
+        "Geglättet":{
+           "labels":{
+              "de":"geglättet",
+              "en":"smoothed",
+              "fr":"lissée"
+           }
+        },
+        "Glasiert":{
+           "labels":{
+              "de":"glasiert",
+              "en":"glazed",
+              "fr":"glaçurée"
+           }
+        },
+        "Bemalung":{
+           "labels":{
+              "de":"bemalt",
+              "en":"painted",
+              "fr":"peinte"
+           }
+        },
+        "Verstrichen":{
+           "labels":{
+              "de":"nass verstrichen",
+              "en":"wet coated"
+           }
+        },
+        "nicht erhalten":{
+           "labels":{
+              "de":"nicht erhalten",
+              "en":"not preserved"
+           }
         }
-      },
-      "Überzug": {
-        "labels": {
-          "de": "Überzug"
-        }
-      },
-      "Poliert": {
-        "labels": {
-          "de": "Poliert"
-        }
-      },
-      "Geglättet": {
-        "labels": {
-          "de": "Geglättet"
-        }
-      },
-      "Glasiert": {
-        "labels": {
-          "de": "Glasiert"
-        }
-      },
-      "Bemalung": {
-        "labels": {
-          "de": "Bemalung"
-        }
-      },
-      "Verstrichen": {
-        "labels": {
-          "de": "Verstrichen"
-        }
-      }
-    }
+     }
   },
-  "Pottery-coatColor-gadara": {
-    "createdBy": "Heike Möller, Hanna Hamel",
-    "creationDate": "24-12-2019",
-    "description": {},
-    "values": {
-      "beige": {
-        "labels": {
-          "de": "beige"
+  "Pottery-coatColor-gadara":{
+     "createdBy":"Heike Möller, Hanna Hamel",
+     "creationDate":"24-12-2019",
+     "description":"Farben wie default mit englischen Übersetzungen",
+     "values":{
+        "beige":{
+           "labels":{
+              "de":"beige",
+              "en":"beige",
+              "fr":"beige"
+           }
+        },
+        "blass-":{
+           "labels":{
+              "de":"blass-",
+              "en":"pale",
+              "fr":"pâle"
+           }
+        },
+        "blau":{
+           "labels":{
+              "de":"blau",
+              "en":"blue",
+              "fr":"bleu"
+           }
+        },
+        "braun":{
+           "labels":{
+              "de":"braun",
+              "en":"brown",
+              "fr":"brune"
+           }
+        },
+        "cremefarben":{
+           "labels":{
+              "de":"cremefarben",
+              "en":"buff",
+              "fr":"crème"
+           }
+        },
+        "dunkel-":{
+           "labels":{
+              "de":"dunkel",
+              "en":"dark",
+              "fr":"foncé"
+           }
+        },
+        "gelb":{
+           "labels":{
+              "de":"gelb",
+              "en":"yellow",
+              "fr":"jaune"
+           }
+        },
+        "glänzend":{
+           "labels":{
+              "de":"glänzend",
+              "en":"shiny",
+              "fr":"lustré"
+           }
+        },
+        "grau":{
+           "labels":{
+              "de":"grau",
+              "en":"grey",
+              "fr":"gris"
+           }
+        },
+        "grün":{
+           "labels":{
+              "de":"grün",
+              "en":"green",
+              "fr":"verde"
+           }
+        },
+        "hell-":{
+           "labels":{
+              "de":"hell-",
+              "en":"light",
+              "fr":"clair"
+           }
+        },
+        "leuchtend-":{
+           "labels":{
+              "de":"leuchtend-",
+              "en":"luminous",
+              "fr":"vive"
+           }
+        },
+        "ocker":{
+           "labels":{
+              "de":"ocker",
+              "en":"ocher",
+              "fr":"ocre"
+           }
+        },
+        "orange":{
+           "labels":{
+              "de":"orange",
+              "en":"orange",
+              "fr":"orange"
+           }
+        },
+        "rosa":{
+           "labels":{
+              "de":"rosa",
+              "en":"pink",
+              "fr":"rose"
+           }
+        },
+        "rot":{
+           "labels":{
+              "de":"rot",
+              "en":"red",
+              "fr":"rouge"
+           }
+        },
+        "schwarz":{
+           "labels":{
+              "de":"schwarz",
+              "en":"black",
+              "fr":"noir"
+           }
+        },
+        "türkis":{
+           "labels":{
+              "de":"türkis",
+              "en":"turquoise",
+              "fr":"turquoise"
+           }
+        },
+        "violett":{
+           "labels":{
+              "de":"violett",
+              "en":"purple",
+              "fr":"violette"
+           }
+        },
+        "weiß":{
+           "labels":{
+              "de":"weiß",
+              "en":"white",
+              "fr":"blanc"
+           }
         }
-      },
-      "blass-": {
-        "labels": {
-          "de": "blass-"
-        }
-      },
-      "blau": {
-        "labels": {
-          "de": "blau"
-        }
-      },
-      "braun": {
-        "labels": {
-          "de": "braun"
-        }
-      },
-      "cremefarben": {
-        "labels": {
-          "de": "cremefarben"
-        }
-      },
-      "dunkel-": {
-        "labels": {
-          "de": "dunkel-"
-        }
-      },
-      "gelb": {
-        "labels": {
-          "de": "gelb"
-        }
-      },
-      "glänzend": {
-        "labels": {
-          "de": "glänzend"
-        }
-      },
-      "grau": {
-        "labels": {
-          "de": "grau"
-        }
-      },
-      "grün": {
-        "labels": {
-          "de": "grün"
-        }
-      },
-      "hell-": {
-        "labels": {
-          "de": "hell-"
-        }
-      },
-      "leuchtend-": {
-        "labels": {
-          "de": "leuchtend-"
-        }
-      },
-      "ocker": {
-        "labels": {
-          "de": "ocker"
-        }
-      },
-      "orange": {
-        "labels": {
-          "de": "orange"
-        }
-      },
-      "rosa": {
-        "labels": {
-          "de": "rosa"
-        }
-      },
-      "rot": {
-        "labels": {
-          "de": "rot"
-        }
-      },
-      "schwarz": {
-        "labels": {
-          "de": "schwarz"
-        }
-      },
-      "türkis": {
-        "labels": {
-          "de": "türkis"
-        }
-      },
-      "violett": {
-        "labels": {
-          "de": "violett"
-        }
-      },
-      "weiß": {
-        "labels": {
-          "de": "weiß"
-        }
-      }
-    }
+     }
   },
   "Pottery-FormComparisonCompendia-Uruk": {
     "createdBy": "Max Haibt",
@@ -30073,37 +30036,57 @@
       }
     }
   },
-  "Find-amountDescription-gadara": {
-    "createdBy": "Heike Möller, Hanna Hamel",
-    "creationDate": "24-12-2019",
-    "description": {},
-    "values": {
-      "Stück": {
-        "labels": {
-          "de": "Stück"
+  "Find-amountDescription-gadara":{
+     "createdBy":"Heike Möller, Hanna Hamel",
+     "creationDate":"24-12-2019",
+     "description":{
+        "de":"",
+        "en":""
+     },
+     "values":{
+        "Kiste (klein)":{
+           "labels":{
+              "de":"Kiste (klein)",
+              "en":"box (small)",
+              "fr":" caisse (petite)"
+           }
+        },
+        "Stück":{
+           "labels":{
+              "de":"Stück",
+              "en":"piece",
+              "fr":"pièce"
+           }
+        },
+        "Eimer":{
+           "labels":{
+              "de":"Eimer",
+              "en":"bucket",
+              "fr":"seau"
+           }
+        },
+        "Kiste (groß)":{
+           "labels":{
+              "de":"Kiste (groß)",
+              "en":"box (big)",
+              "fr":"caisse (grand)"
+           }
+        },
+        "Tüte":{
+           "labels":{
+              "de":"Tüte",
+              "en":"bag",
+              "fr":"sachet"
+           }
         }
-      },
-      "Eimer": {
-        "labels": {
-          "de": "Eimer"
-        }
-      },
-      "Kiste (groß)": {
-        "labels": {
-          "de": "Kiste (groß)"
-        }
-      },
-      "Kiste (klein)": {
-        "labels": {
-          "de": "Kiste (klein)"
-        }
-      },
-      "Tüte": {
-        "labels": {
-          "de": "Tüte"
-        }
-      }
-    }
+     },
+     "order":[
+        "Stück",
+        "Tüte",
+        "Eimer",
+        "Kiste (klein)",
+        "Kiste (groß)"
+     ]
   },
   "Photo-imageSubject-kalapodi": {
     "createdBy": "A.K.",
@@ -37174,7 +37157,7 @@
     "creationDate": "16-4-2020",
     "createdBy": "Melanie Jonasch / Fabian Riebschläger",
     "description": {
-      "it": "composizione del terreno", 
+      "it": "composizione del terreno",
       "de": "Zusammensetzung des Bodens"
     },
     "values": {
@@ -42298,313 +42281,313 @@
       },
       "values":{
          "HB BASK 1":{
-            
+
          },
          "HB BASK 1-2":{
-            
+
          },
          "HB BASK 2":{
-            
+
          },
          "HB BASK 3":{
-            
+
          },
          "HB BOL 1":{
-            
+
          },
          "HB BOL 2":{
-            
+
          },
          "HB BOL 3":{
-            
+
          },
          "HB BOL 4":{
-            
+
          },
          "HB BOL 5":{
-            
+
          },
          "HB BOL 6":{
-            
+
          },
          "HB BOL 6-7":{
-            
+
          },
          "HB BOL 7":{
-            
+
          },
          "HB BOL 8":{
-            
+
          },
          "HB JAR 10":{
-            
+
          },
          "HB MAR 1":{
-            
+
          },
          "HB MAR 2":{
-            
+
          },
          "HB MAR 3":{
-            
+
          },
          "HB MAR 4":{
-            
+
          },
          "HB PLA 2":{
-            
+
          },
          "HB TAJ 1":{
-            
+
          },
          "HB TAJ 2":{
-            
+
          },
          "HB F1":{
-            
+
          },
          "HB F2.1":{
-            
+
          },
          "HB F2.2":{
-            
+
          },
          "HB F3":{
-            
+
          },
          "HB F4":{
-            
+
          },
          "HB F5":{
-            
+
          },
          "HB F6":{
-            
+
          },
          "SUA16, 131 Abb. 3.45, 290432-5, 290421-1":{
-            
+
          },
          "SB 7j":{
-            
+
          },
          "SB 9b":{
-            
+
          },
          "SB 9c":{
-            
+
          },
          "SB 9d":{
-            
+
          },
          "SB 9f":{
-            
+
          },
          "SB 9l":{
-            
+
          },
          "SB 37":{
-            
+
          },
          "SB 52":{
-            
+
          },
          "SB 80":{
-            
+
          },
          "SB 91":{
-            
+
          },
          "SB 91 spät":{
-            
+
          },
          "SB 95":{
-            
+
          },
          "SB 96":{
-            
+
          },
          "SB 100":{
-            
+
          },
          "SB 101":{
-            
+
          },
          "SB 104":{
-            
+
          },
          "SB 104 var":{
-            
+
          },
          "SB 116":{
-            
+
          },
          "SB 118":{
-            
+
          },
          "SB 120":{
-            
+
          },
          "SB 132":{
-            
+
          },
          "SB 145":{
-            
+
          },
          "SB 157":{
-            
+
          },
          "SB 162":{
-            
+
          },
          "SB 180":{
-            
+
          },
          "SB 207":{
-            
+
          },
          "SB 208 var":{
-            
+
          },
          "SB 212":{
-            
+
          },
          "SB 215":{
-            
+
          },
          "SB 221":{
-            
+
          },
          "SB 240":{
-            
+
          },
          "SB 243":{
-            
+
          },
          "SB 256":{
-            
+
          },
          "SB 259":{
-            
+
          },
          "SB 285":{
-            
+
          },
          "SB 326":{
-            
+
          },
          "SB 352":{
-            
+
          },
          "SB 385":{
-            
+
          },
          "SB 391":{
-            
+
          },
          "SB 393":{
-            
+
          },
          "FO 3.1.1":{
-            
+
          },
          "SBT12 42.2":{
-            
+
          },
          "SB 153/Imit OS II.306":{
-            
+
          },
          "PP 2":{
-            
+
          },
          "Imit Pomp. Pl.":{
-            
+
          },
          "HA 181.1":{
-            
+
          },
          "HA 181B":{
-            
+
          },
          "HA 182B":{
-            
+
          },
          "HA 183/BO 17":{
-            
+
          },
          "HA 183A":{
-            
+
          },
          "HA 196":{
-            
+
          },
          "HA 2/3":{
-            
+
          },
          "HA 3A":{
-            
+
          },
          "HA 20":{
-            
+
          },
          "HA94, 30.173":{
-            
+
          },
          "Imit. CSP 21":{
-            
+
          },
          "Imit. CSP 33":{
-            
+
          },
          "Imit. LA 7":{
-            
+
          },
          "LA 22":{
-            
+
          },
          "MAY 35":{
-            
+
          },
          "DRAGD 18":{
-            
+
          },
          "DRAGD 27":{
-            
+
          },
          "DRAGD 27B/C":{
-            
+
          },
          "DRAGD 27C":{
-            
+
          },
          "ION B2":{
-            
+
          },
          "SB 228/DRAM 2":{
-            
+
          },
          "SB 153/BAT 6c":{
-            
+
          },
          "DR 2-4":{
-            
+
          },
          "DR 7/11":{
-            
+
          },
          "GAS Rf 3":{
-            
+
          },
          "GAS Rf 6":{
-            
+
          },
          "GAU 4":{
-            
+
          },
          "NUR 1":{
-            
+
          },
          "RAM T-4.1.1.3":{
-            
+
          }
       },
       "order":[
@@ -43036,169 +43019,169 @@
       },
       "values":{
          "ARS":{
-            
+
          },
          "ARS A":{
-            
+
          },
          "ARS A1":{
-            
+
          },
          "ARS AD":{
-            
+
          },
          "ARS C":{
-            
+
          },
          "ARS CE":{
-            
+
          },
          "ARS D":{
-            
+
          },
          "ARS E":{
-            
+
          },
          "ARS T":{
-            
+
          },
          "ARS konti.":{
-            
+
          },
          "Mod A":{
-            
+
          },
          "Mod B":{
-            
+
          },
          "Mod C":{
-            
+
          },
          "Mod F":{
-            
+
          },
          "Caa E":{
-            
+
          },
          "Caa R":{
-            
+
          },
          "CaaR-G1":{
-            
+
          },
          "CaaR-G2":{
-            
+
          },
          "CaaT-G1":{
-            
+
          },
          "CaaT-G2":{
-            
+
          },
          "Caf A":{
-            
+
          },
          "Caf B":{
-            
+
          },
          "CafB-G1":{
-            
+
          },
          "CafB-G2":{
-            
+
          },
          "Caf C":{
-            
+
          },
          "Caf CA":{
-            
+
          },
          "Caf CB":{
-            
+
          },
          "CafR":{
-            
+
          },
          "CafR-G1":{
-            
+
          },
          "Caf BT":{
-            
+
          },
          "Caf CT":{
-            
+
          },
          "AR-G1":{
-            
+
          },
          "AR-G2":{
-            
+
          },
          "Imp":{
-            
+
          },
          "ImpSSG":{
-            
+
          },
          "ImpSIT":{
-            
+
          },
          "ImpVN-Att":{
-            
+
          },
          "ImpMod-Ita":{
-            
+
          },
          "ImpMod-Ita-PANT":{
-            
+
          },
          "ImpCA-div":{
-            
+
          },
          "ImpCA-Ita":{
-            
+
          },
          "ImpCC-div":{
-            
+
          },
          "ImpCC-Ita":{
-            
+
          },
          "ImpCC-Ita-KAMP":{
-            
+
          },
          "ImpCC-Lev":{
-            
+
          },
          "ImpA-div":{
-            
+
          },
          "ImpA-Bet":{
-            
+
          },
          "ImpA-Etr":{
-            
+
          },
          "ImpA-Gau":{
-            
+
          },
          "ImpA-Ita":{
-            
+
          },
          "ImpA-Ita-KALB":{
-            
+
          },
          "ImpA-Ita-KAMP":{
-            
+
          },
          "ImpA-Ita-SARD":{
-            
+
          },
          "ImpA-Mgr":{
-            
+
          },
          "ImpA-Ori":{
-            
+
          }
       },
       "order":[
@@ -43745,5 +43728,3260 @@
             }
          }
       }
+   },
+   "provenance-gadara":{
+      "createdBy":"Hanna Hamel",
+      "description":"Gegenüber der default-Liste gekürzte Version mit einer Auswahl der für Gadara relevanten Regionen. Einheitliche Schreibweise der Regionen, also Länder- oder Regionsname ohne -isch",
+      "creationDate":"21.01.2021",
+      "values":{
+         "Anatolien":{
+            "labels":{
+               "de":"Anatolien",
+               "en":"Anatolia"
+            }
+         },
+         "Ägypten":{
+            "labels":{
+               "de":"Ägypten",
+               "en":"Egypt"
+            }
+         },
+         "Attisch":{
+            "labels":{
+               "de":"Attika",
+               "en":"Attica"
+            }
+         },
+         "Italien":{
+            "labels":{
+               "de":"Italien",
+               "en":"Italy"
+            }
+         },
+         "Kleinasien":{
+            "labels":{
+               "de":"Kleinasien",
+               "en":"Asia Minor"
+            }
+         },
+         "Levante":{
+            "labels":{
+               "de":"Levante",
+               "en":"Levant"
+            }
+         },
+         "Lokal":{
+            "labels":{
+               "de":"Lokal",
+               "en":"local"
+            }
+         },
+         "Lokal/Regional":{
+            "labels":{
+               "de":"Lokal/Regional",
+               "en":"local/regional"
+            }
+         },
+         "Nordafrika":{
+            "labels":{
+               "de":"Nordafrika",
+               "en":"North Africa"
+            }
+         },
+         "Palästina":{
+            "labels":{
+               "de":"Palästina",
+               "en":"Palestine"
+            }
+         },
+         "Regional":{
+            "labels":{
+               "de":"Regional",
+               "en":"regional"
+            }
+         },
+         "Rhodos":{
+            "labels":{
+               "de":"Rhodos",
+               "en":"Rhodes"
+            }
+         },
+         "Iberia":{
+            "labels":{
+               "de":"Iberia",
+               "en":"Iberia"
+            }
+         },
+         "Syrien":{
+            "labels":{
+               "de":"Syrien",
+               "en":"Syria"
+            }
+         },
+         "Tunesien":{
+            "labels":{
+               "de":"Tunesien",
+               "en":"Tunisia"
+            }
+         },
+         "Zypern":{
+            "labels":{
+               "de":"Zypern",
+               "en":"Cyprus"
+            }
+         }
+      }
+   },
+   "glass-transparency-gadara":{
+      "creationDate":"06.10.2020",
+      "createdBy":"Hanna Hamel",
+      "description":{
+         "de":"Verwendung der üblichen Bezeichnungen für die Durchsichtigkeit des Glases und Anlage der englischen Übersetzungen für das Gadara-Projekt.",
+         "en":""
+      },
+      "values":{
+         "durchscheinend":{
+            "labels":{
+               "de":"transluzent",
+               "en":"translucent"
+            }
+         },
+         "durchsichtig":{
+            "labels":{
+               "de":"transparent",
+               "en":"transparent"
+            }
+         },
+         "opak":{
+            "labels":{
+               "de":"opak",
+               "en":"opaque"
+            }
+         },
+         "verwittert":{
+            "labels":{
+               "de":"verwittert",
+               "en":"weathering"
+            }
+         }
+      }
+   },
+   "glass-formDescription-gadara":{
+      "creationDate":"22.01.2021",
+      "createdBy":"Hanna Hamel",
+      "description":{
+         "de":"Gegenüber der default-Werteliste für das Projekt angepasste Version der Werteliste. Aufteilung wie bei Farben in Formelemente und genauer umschreibende Begriffe (wie halb- oder doppel-)",
+         "en":""
+      },
+      "values":{
+         "bauchig":{
+            "labels":{
+               "de":"bauchig",
+               "en":"globular"
+            }
+         },
+         "breit-":{
+            "labels":{
+               "de":"breit-",
+               "en":"wide-"
+            }
+         },
+         "doppel-":{
+            "labels":{
+               "de":"doppel-",
+               "en":"double-"
+            }
+         },
+         "halb-":{
+            "labels":{
+               "de":"halb-",
+               "en":"half-"
+            }
+         },
+         "hoch-":{
+            "labels":{
+               "de":"hoch-",
+               "en":"high-"
+            }
+         },
+         "konisch":{
+            "labels":{
+               "de":"konisch",
+               "en":"conical"
+            }
+         },
+         "kugelförmig":{
+            "labels":{
+               "de":"kugelförmig",
+               "en":"spherical"
+            }
+         },
+         "quadratisch":{
+            "labels":{
+               "de":"quadratisch",
+               "en":"square"
+            }
+         },
+         "rechteckig":{
+            "labels":{
+               "de":"rechteckig",
+               "en":"rectangular"
+            }
+         },
+         "rund":{
+            "labels":{
+               "de":"rund",
+               "en":"round"
+            }
+         },
+         "schmal":{
+            "labels":{
+               "de":"schmal",
+               "en":"narrow"
+            }
+         },
+         "tonnenförmig":{
+            "labels":{
+               "de":"tonnenförmig",
+               "en":"barrel-shaped"
+            }
+         },
+         "zylinderförmig":{
+            "labels":{
+               "de":"zylinderförmig",
+               "en":"cylindrical"
+            }
+         },
+         "oval":{
+            "labels":{
+               "de":"oval",
+               "en":"oval"
+            }
+         },
+         "würfelförmig":{
+            "labels":{
+               "de":"würfelförmig",
+               "en":"cubic"
+            }
+         },
+         "pyramidal":{
+            "labels":{
+               "de":"pyramidal",
+               "en":"pyramidal"
+            }
+         },
+         "dreieckig":{
+            "labels":{
+               "de":"dreieckig",
+               "en":"triangular"
+            }
+         },
+         "trapezoid":{
+            "labels":{
+               "de":"trapezoid",
+               "en":"trapezoid"
+            }
+         }
+      }
+   },
+   "glass-vesselFormSpecific-gadara":{
+      "creationDate":"06.10.2020",
+      "createdBy":"Hanna Hamel",
+      "description":{
+         "de":"Gegenüber der default-Werteliste gekürzte Version mit den am häufigsten in der Region vorkommenden Formen. Anlage der englischen Übersetzungen für diese Formen",
+         "en":""
+      },
+      "values":{
+         "Balsamarium":{
+            "labels":{
+               "de":"Balsamarium",
+               "en":"balsamarium"
+            }
+         },
+         "Faltenbecher":{
+            "labels":{
+               "de":"Faltenbecher",
+               "en":"folded cup"
+            }
+         },
+         "Kelch":{
+            "labels":{
+               "de":"Stielkelch",
+               "en":"stemmed goblet"
+            }
+         },
+         "Kragenschale":{
+            "labels":{
+               "de":"Kragenschale",
+               "en":"collar rim bowl"
+            }
+         },
+         "Rippenschale":{
+            "labels":{
+               "de":"Rippenschale",
+               "en":"ribbed bowl"
+            }
+         },
+         "Schliffrillenschale":{
+            "labels":{
+               "de":"Schliffrillenschale",
+               "en":"linear cut bowl"
+            }
+         },
+         "Unguentarium":{
+            "labels":{
+               "de":"Unguentarium",
+               "en":"unguentarium"
+            }
+         },
+         "Vierkantflasche":{
+            "labels":{
+               "de":"Vierkantflasche",
+               "en":"square bottle"
+            }
+         },
+         "hexagonale Flasche":{
+            "labels":{
+               "de":"hexagonale Flasche",
+               "en":"hexagonal flask"
+            }
+         },
+         "zarte Rippenschale":{
+            "labels":{
+               "de":"zarte Rippenschale",
+               "en":"'zarte Rippenschale'"
+            }
+         },
+         "zylindrische Flasche":{
+            "labels":{
+               "de":"zylindrische Flasche",
+               "en":"zylindrical flask"
+            }
+         }
+      },
+      "order":[
+         "Balsamarium",
+         "Unguentarium",
+         "zylindrische Flasche",
+         "Vierkantflasche",
+         "hexagonale Flasche",
+         "Faltenbecher",
+         "Kelch",
+         "Rippenschale",
+         "zarte Rippenschale",
+         "Schliffrillenschale",
+         "Kragenschale"
+      ]
+   },
+   "glass-vesselForm-gadara":{
+      "creationDate":"07.10.2020",
+      "createdBy":"Hanna Hamel",
+      "description":{
+         "de":"Gegenüber der default-Werteliste gekürzte Version mit den am häufigsten in der Region vorkommenden Formen. Anlage der englischen Übersetzungen für diese Formen",
+         "en":""
+      },
+      "values":{
+         "Becher":{
+            "labels":{
+               "de":"Becher",
+               "en":"cup"
+            }
+         },
+         "Deckel":{
+            "labels":{
+               "de":"Deckel",
+               "en":"lid"
+            }
+         },
+         "Flasche":{
+            "labels":{
+               "de":"Flasche",
+               "en":"flask"
+            }
+         },
+         "Krug":{
+            "labels":{
+               "de":"Krug",
+               "en":"jar"
+            }
+         },
+         "Schale":{
+            "labels":{
+               "de":"Schale",
+               "en":"small bowl"
+            }
+         },
+         "Schüssel":{
+            "labels":{
+               "de":"Schüssel",
+               "en":"large bowl"
+            }
+         },
+         "Teller":{
+            "labels":{
+               "de":"Teller",
+               "en":"plate"
+            }
+         },
+         "Topf":{
+            "labels":{
+               "de":"Topf",
+               "en":"pot"
+            }
+         },
+         "Unbestimmt":{
+            "labels":{
+               "de":"unbestimmt",
+               "en":"undefined"
+            }
+         },
+         "Kelch":{
+            "labels":{
+               "de":"Kelch",
+               "en":"goblet"
+            }
+         },
+         "Lampe":{
+            "labels":{
+               "de":"Lampe",
+               "en":"lamp"
+            }
+         }
+      },
+      "order":[
+         "Becher",
+         "Kelch",
+         "Schale",
+         "Schüssel",
+         "Teller",
+         "Flasche",
+         "Krug",
+         "Topf",
+         "Deckel",
+         "Lampe",
+         "Unbestimmt"
+      ]
+   },
+   "glass-objectType-gadara":{
+      "creationDate":"27.01.2021",
+      "createdBy":"Hanna Hamel",
+      "description":"Gegenüber der default-Werteliste gekürzte und ins englische übersetzte Version",
+      "values":{
+         "Armreif":{
+            "labels":{
+               "de":"Armreif",
+               "en":"bracelet"
+            }
+         },
+         "Fensterglas":{
+            "labels":{
+               "de":"Fensterglas",
+               "en":"window pane"
+            }
+         },
+         "Gefäß":{
+            "labels":{
+               "de":"Gefäß",
+               "en":"vessel"
+            }
+         },
+         "Gerät":{
+            "labels":{
+               "de":"Gerät",
+               "en":"tool"
+            }
+         },
+         "Glasschlacke":{
+            "labels":{
+               "de":"Schlacke",
+               "en":"slag"
+            }
+         },
+         "Perle":{
+            "labels":{
+               "de":"Perle",
+               "en":"pearl"
+            }
+         },
+         "Produktionsfragment":{
+            "labels":{
+               "de":"Produktionsreste",
+               "en":"production residue"
+            }
+         },
+         "Ring":{
+            "labels":{
+               "de":"Ring",
+               "en":"ring"
+            }
+         },
+         "Rohglas":{
+            "labels":{
+               "de":"Rohglas",
+               "en":"raw glass"
+            }
+         },
+         "Schmuck":{
+            "labels":{
+               "de":"Schmuck",
+               "en":"jewelry"
+            }
+         },
+         "Spielstein":{
+            "labels":{
+               "de":"Spielstein",
+               "en":"game piece"
+            }
+         },
+         "Tessera":{
+            "labels":{
+               "de":"Tessera",
+               "en":"tessera"
+            }
+         },
+         "Unsicher bzw. unbestimmbar":{
+            "labels":{
+               "de":"Unsicher bzw. unbestimmbar",
+               "en":"not recognizable"
+            }
+         }
+      }
+   },
+   "glass-decorationTechnique-gadara":{
+      "creationDate":"27.01.2021",
+      "createdBy":"Hanna Hamel",
+      "description":{
+         "de":"Gegenüber der default-Werteliste gekürzte und allgemeiner gehaltene Werteliste. Englische Übersetzung.",
+         "en":""
+      },
+      "values":{
+         "Bemalung":{
+            "labels":{
+               "de":"Bemalung",
+               "en":"paint"
+            }
+         },
+         "Diatretglas":{
+            "labels":{
+               "de":"Diatretglas",
+               "en":"cage cup"
+            }
+         },
+         "Facettschliffdekor":{
+            "labels":{
+               "de":"Facettschliffdekor",
+               "en":"facet cut"
+            }
+         },
+         "Fadendekor":{
+            "labels":{
+               "de":"Fadendekor",
+               "en":"thread decoration"
+            }
+         },
+         "Mosaikglas":{
+            "labels":{
+               "de":"Mosaikglas",
+               "en":"mosaic glas"
+            }
+         },
+         "Reliefdekor":{
+            "labels":{
+               "de":"Reliefdekor",
+               "en":"relief decoration"
+            }
+         },
+         "Schliffrillendekor":{
+            "labels":{
+               "de":"Schliffrillendekor",
+               "en":"linear cut"
+            }
+         },
+         "Stempeldekor":{
+            "labels":{
+               "de":"Stempeldekor",
+               "en":"stamped decoration"
+            }
+         },
+         "Tropfendekor":{
+            "labels":{
+               "de":"Tropfendekor",
+               "en":"blob decoration"
+            }
+         },
+         "Warzendekor":{
+            "labels":{
+               "de":"Warzendekor",
+               "en":"pincered decoration"
+            }
+         }
+      }
+   },
+   "glass-manufacturingMethod-gadara":{
+      "creationDate":"27.01.2021",
+      "createdBy":"Hanna Hamel",
+      "description":{
+         "de":"Gegenüber der default-Werteliste gekürzte und ins Englische übertragene Liste.",
+         "en":""
+      },
+      "values":{
+         "Formgeblasen":{
+            "labels":{
+               "de":"Formgeblasen",
+               "en":"mould blown"
+            }
+         },
+         "Formgeschmolzen":{
+            "labels":{
+               "de":"Formgeschmolzen",
+               "en":"cast glass"
+            }
+         },
+         "Freigeblasen":{
+            "labels":{
+               "de":"Freigeblasen",
+               "en":"free blown"
+            }
+         },
+         "Kerngeformt":{
+            "labels":{
+               "de":"Kerngeformt",
+               "en":"core formed"
+            }
+         }
+      }
+   },
+   "Brick-temper-gadara":{
+      "creationDate":"29.01.2021",
+      "createdBy":"Hanna Hamel",
+      "description":"wie default, aber mit englischer Übersetzung",
+      "values":{
+         "Glimmer":{
+            "labels":{
+               "de":"Glimmer",
+               "en":"mica"
+            }
+         },
+         "Holzkohle":{
+            "labels":{
+               "de":"Holzkohle",
+               "en":"carcoal"
+            }
+         },
+         "Kalk":{
+            "labels":{
+               "de":"Kalk",
+               "en":"lime"
+            }
+         },
+         "Mineralische Partikel":{
+            "labels":{
+               "de":"Mineralische Partikel",
+               "en":"mineral temper"
+            }
+         },
+         "Muschelgrus":{
+            "labels":{
+               "de":"Muschelgrus",
+               "en":"shell"
+            }
+         },
+         "Organische Partikel":{
+            "labels":{
+               "de":"Organische Partikel",
+               "en":"organic temper"
+            }
+         },
+         "Quarz":{
+            "labels":{
+               "de":"Quartz",
+               "en":"quartz"
+            }
+         },
+         "Sand":{
+            "labels":{
+               "de":"Sand",
+               "en":"sand"
+            }
+         },
+         "Schamotte":{
+            "labels":{
+               "de":"Schamotte/Keramikgrus",
+               "en":"chamotte"
+            }
+         },
+         "Sonstige":{
+            "labels":{
+               "de":"Sonstige",
+               "en":"other"
+            }
+         },
+         "Steinchen":{
+            "labels":{
+               "de":"Steinchen",
+               "en":"(small) stone"
+            }
+         },
+         "Stroh/Spreu":{
+            "labels":{
+               "de":"Stroh/Spreu",
+               "en":"straw/chaff"
+            }
+         },
+         "Vacua":{
+            "labels":{
+               "de":"Vacua",
+               "en":"vacua"
+            }
+         },
+         "Vulkanische Partikel":{
+            "labels":{
+               "de":"Vulkanische Partikel",
+               "en":"volcanic temper"
+            }
+         }
+      }
+   },
+   "Brick-manufacturingMethod-gadara":{
+      "creationDate":"29.01.2021",
+      "createdBy":"Hanna Hamel",
+      "description":"wie default Liste, aber mit englischer Übersetzung",
+      "values":{
+         "gedreht (auf Drehscheibe)":{
+            "labels":{
+               "de":"gedreht (auf Drehscheibe)",
+               "en":"wheel turned"
+            }
+         },
+         "gegossen":{
+            "labels":{
+               "de":"gegossen",
+               "en":"cast"
+            }
+         },
+         "gepresst":{
+            "labels":{
+               "de":"gepresst",
+               "en":"pressed"
+            }
+         },
+         "handgeformt":{
+            "labels":{
+               "de":"handgeformt",
+               "en":"handformed"
+            }
+         },
+         "modelgeformt":{
+            "labels":{
+               "de":"modelgeformt",
+               "en":"mould made"
+            }
+         }
+      }
+   },
+   "Brick-decorationTechnique-gadara":{
+      "creationDate":"08.10.2020",
+      "createdBy":"Hanna Hamel",
+      "description":"Häufige Verzierungstypen auf Ziegeln oder Keramik ohne Oberflächenbehandlungen, welche gesondert erfasst werden. In der default-Werteliste werden beide Kategorien zusammen erfasst.",
+      "values":{
+         "Fingerabdruck":{
+            "labels":{
+               "de":"Fingerabdruck",
+               "en":"finger impressions"
+            }
+         },
+         "Kammritzung":{
+            "labels":{
+               "de":"Kammritzung",
+               "en":"combed decoration"
+            }
+         },
+         "Rädchenverzierung":{
+            "labels":{
+               "de":"Rädchenverzierung",
+               "en":"rouletting"
+            }
+         },
+         "Reliefdekor":{
+            "labels":{
+               "de":"Reliefdekor",
+               "en":"relief decoration"
+            }
+         },
+         "Riefeldekor":{
+            "labels":{
+               "de":"Riefeldekor",
+               "en":"grooved decoration"
+            }
+         },
+         "Ritzungen":{
+            "labels":{
+               "de":"Ritzungen",
+               "en":"scratched decoration"
+            }
+         },
+         "Sonstige Abdrücke":{
+            "labels":{
+               "de":"Sonstige Abdrücke",
+               "en":"other impressions"
+            }
+         },
+         "Stempel":{
+            "labels":{
+               "de":"Stempel",
+               "en":"stamped decoration"
+            }
+         }
+      }
+   },
+   "Brick-brickUsage-Gadara":{
+      "creationDate":"08.10.2020",
+      "createdBy":"Hanna Hamel",
+      "description":{
+         "de":"Für die Bedürfnisse des Projekts angepasste Liste. Größtenteils mit der default-Werteliste übereinstimmend. Begriffe ins Englische übertragen",
+         "en":""
+      },
+      "values":{
+         "Dach":{
+            "labels":{
+               "de":"Dach",
+               "en":"roof"
+            }
+         },
+         "Decke":{
+            "labels":{
+               "de":"Decke",
+               "en":"ceiling"
+            }
+         },
+         "Fenster":{
+            "labels":{
+               "de":"Fenster",
+               "en":"window"
+            }
+         },
+         "Fussboden":{
+            "labels":{
+               "de":"Fussboden",
+               "en":"floor"
+            }
+         },
+         "Gewölbe":{
+            "labels":{
+               "de":"Gewölbe",
+               "en":"vault"
+            }
+         },
+         "Hypokausten":{
+            "labels":{
+               "de":"Hypokausten",
+               "en":"hypocaust"
+            }
+         },
+         "Türrahmen":{
+            "labels":{
+               "de":"Türrahmen",
+               "en":"door frame"
+            }
+         },
+         "Türsturz":{
+            "labels":{
+               "de":"Türsturz",
+               "en":"lintel"
+            }
+         },
+         "Mauerwerk":{
+            "labels":{
+               "de":"Mauerwerk",
+               "en":"brickwork"
+            }
+         },
+         "Wandverkleidung":{
+            "labels":{
+               "de":"Wandverkleidung",
+               "en":"wall panels"
+            }
+         },
+         "Ofen":{
+            "labels":{
+               "de":"Ofen",
+               "en":"oven/hearth"
+            }
+         },
+         "Wasserleitung":{
+            "labels":{
+               "de":"Wasserleitung",
+               "en":"water pipe"
+            }
+         }
+      }
+   },
+   "Brick-brickForm-Gadara":{
+      "creationDate":"23.09.2020",
+      "createdBy":"Hanna Hamel",
+      "description":{
+         "de":"Gegenüber der default-Werteliste gekürzte Version. Anlage der englischen Übersetzungen für diese Formen",
+         "en":""
+      },
+      "values":{
+         "Bodenziegel":{
+            "labels":{
+               "de":"Bodenziegel",
+               "en":"floor brick"
+            }
+         },
+         "Dachziegel":{
+            "labels":{
+               "de":"Dachziegel",
+               "en":"roof tile"
+            }
+         },
+         "Flachziegel":{
+            "labels":{
+               "de":"Flachziegel",
+               "en":"flat brick"
+            }
+         },
+         "Formziegel":{
+            "labels":{
+               "de":"Formziegel",
+               "en":"moulded brick"
+            }
+         },
+         "Imbrex":{
+            "labels":{
+               "de":"Imbrex",
+               "en":"imbrex"
+            }
+         },
+         "Kalypter":{
+            "labels":{
+               "de":"Kalypter",
+               "en":"kalypter"
+            }
+         },
+         "Lochziegel/Hohlziegel":{
+            "labels":{
+               "de":"Lochziegel/Hohlziegel",
+               "en":"hollow brick"
+            }
+         },
+         "Tegula":{
+            "labels":{
+               "de":"Tegula",
+               "en":"tegula"
+            }
+         },
+         "Tonrohr":{
+            "labels":{
+               "de":"Tonrohr",
+               "en":"water pipe"
+            }
+         },
+         "Wandziegel":{
+            "labels":{
+               "de":"Wandziegel",
+               "en":"wall brick"
+            }
+         },
+         "ohne erkennbare Form":{
+            "labels":{
+               "de":"ohne erkennbare Form",
+               "en":"without recognizable form"
+            }
+         }
+      },
+      "order":[
+         "Flachziegel",
+         "Lochziegel/Hohlziegel",
+         "Tonrohr",
+         "Bodenziegel",
+         "Wandziegel",
+         "Dachziegel",
+         "Imbrex",
+         "Tegula",
+         "Kalypter",
+         "Formziegel",
+         "ohne erkennbare Form"
+      ]
+   },
+   "Brick-manufacturing-gadara":{
+      "creationDate":"08.10.2020",
+      "createdBy":"Hanna Hamel",
+      "description":{
+         "de":"Gegenüber der default-Werteliste gekürzte und ins Englische übertragene Version der Werteliste",
+         "en":""
+      },
+      "values":{
+         "Gebrannt":{
+            "labels":{
+               "de":"Gebrannt",
+               "en":"fired"
+            }
+         },
+         "Hart gebrannt":{
+            "labels":{
+               "de":"Hart gebrannt",
+               "en":"hard fired"
+            }
+         },
+         "Luftgetrocknet":{
+            "labels":{
+               "de":"Luftgetrocknet",
+               "en":"air-dried"
+            }
+         },
+         "Sekundär gebrannt":{
+            "labels":{
+               "de":"Sekundär gebrannt",
+               "en":"secondary burned"
+            }
+         },
+         "Weich gebrannt":{
+            "labels":{
+               "de":"Weich gebrannt",
+               "en":"soft fired"
+            }
+         }
+      },
+      "order":[
+         "Luftgetrocknet",
+         "Weich gebrannt",
+         "Gebrannt",
+         "Hart gebrannt",
+         "Sekundär gebrannt"
+      ]
+   },
+   "Wood-typeOfWood-gadara":{
+      "creationDate":"23.02.2021",
+      "createdBy":"Hanna Hamel",
+      "description":"Für das östliche Mittelmeer angepasste Werteliste.",
+      "values":{
+         "Apfel":{
+            "labels":{
+               "de":"Apfel",
+               "en":"Apple"
+            }
+         },
+         "Birne":{
+            "labels":{
+               "de":"Birne",
+               "en":"Pear"
+            }
+         },
+         "Dattelpalme":{
+            "labels":{
+               "de":"Dattelpalme",
+               "en":"Date palm"
+            }
+         },
+         "Eiche":{
+            "labels":{
+               "de":"Eiche",
+               "en":"Oak"
+            }
+         },
+         "Feige":{
+            "labels":{
+               "de":"Feige",
+               "en":"Fig"
+            }
+         },
+         "Granatapfel":{
+            "labels":{
+               "de":"Granatapfel",
+               "en":"Pomegranate"
+            }
+         },
+         "Lorbeer":{
+            "labels":{
+               "de":"Lorbeer",
+               "en":"Laurel"
+            }
+         },
+         "Maulbeere":{
+            "labels":{
+               "de":"Maulbeere",
+               "en":"Mulberry"
+            }
+         },
+         "Mispel":{
+            "labels":{
+               "de":"Mispel",
+               "en":"Medlar"
+            }
+         },
+         "Olive":{
+            "labels":{
+               "de":"Olive",
+               "en":"Olive"
+            }
+         },
+         "Pflaume":{
+            "labels":{
+               "de":"Pflaume",
+               "en":"Plum"
+            }
+         },
+         "Pinie/Kiefer":{
+            "labels":{
+               "de":"Pinie/Kiefer",
+               "en":"Pine"
+            }
+         },
+         "Wacholder":{
+            "labels":{
+               "de":"Wacholder",
+               "en":"Juniper"
+            }
+         },
+         "Walnuss":{
+            "labels":{
+               "de":"Walnuss",
+               "en":"Walnut"
+            }
+         },
+         "Weide":{
+            "labels":{
+               "de":"Weide",
+               "en":"Willow"
+            }
+         },
+         "Weinrebe":{
+            "labels":{
+               "de":"Weinrebe",
+               "en":"Grapevine"
+            }
+         },
+         "Zeder":{
+            "labels":{
+               "de":"Zeder",
+               "en":"Cedar"
+            }
+         },
+         "Zypresse":{
+            "labels":{
+               "de":"Zypresse",
+               "en":"Cypress"
+            }
+         }
+      }
+   },
+   "Wood-decorationTechnique-gadara":{
+      "creationDate":"23.02.2021",
+      "createdBy":"Hanna Hamel",
+      "description":"Vereinfachte und übersetzte default-Liste",
+      "values":{
+         "Bemalung":{
+            "labels":{
+               "de":"Bemalung",
+               "en":"painting"
+            }
+         },
+         "Intarsie":{
+            "labels":{
+               "de":"Intarsie",
+               "en":"intarsia"
+            }
+         },
+         "Relief, figürlich":{
+            "labels":{
+               "de":"Relief, figürlich",
+               "en":"relief, figurative"
+            }
+         },
+         "Relief, ornamental":{
+            "labels":{
+               "de":"Relief, ornamental",
+               "en":"relief, ornamental"
+            }
+         },
+         "Vergoldung/metallischer Überzug":{
+            "labels":{
+               "de":"Vergoldung/metallischer Überzug",
+               "en":"gilding/metallic plating"
+            }
+         }
+      }
+   },
+   "Wood-objectType-gadara":{
+      "creationDate":"23.02.2021",
+      "createdBy":"Hanna Hamel",
+      "description":"vereinfachte und übersetzte default-Liste",
+      "values":{
+         "Architekturelement":{
+            "labels":{
+               "de":"Bauteil",
+               "en":"architectural element"
+            }
+         },
+         "Gefäß":{
+            "labels":{
+               "de":"Gefäß",
+               "en":"vessel"
+            }
+         },
+         "Gerät":{
+            "labels":{
+               "de":"Gerät",
+               "en":"tool"
+            }
+         },
+         "Holzkohle":{
+            "labels":{
+               "de":"Holzkohle",
+               "en":"carcoal"
+            }
+         },
+         "Kasten/Kiste":{
+            "labels":{
+               "de":"Kasten/Kiste",
+               "en":"box/chest"
+            }
+         },
+         "Besteck":{
+            "labels":{
+               "de":"Besteck (auch medizinisch oder kosmetisch)",
+               "en":"cutlery (also medical or cosmetic)"
+            }
+         },
+         "Mobiliar":{
+            "labels":{
+               "de":"(Teil von) Mobiliar",
+               "en":"(part of) furniture"
+            }
+         },
+         "Plastik/Skulptur":{
+            "labels":{
+               "de":"Plastik/Skulptur",
+               "en":"sculpture"
+            }
+         },
+         "Produktionsrest":{
+            "labels":{
+               "de":"Produktionsrest",
+               "en":"residue of production"
+            }
+         },
+         "Schmuck":{
+            "labels":{
+               "de":"Schmuck",
+               "en":"jewelry"
+            }
+         },
+         "Spielzeug":{
+            "labels":{
+               "de":"Spielzeug",
+               "en":"toy"
+            }
+         },
+         "Unsicher bzw. unbestimmbar":{
+            "labels":{
+               "de":"Unsicher bzw. unbestimmbar",
+               "en":"uncertain or indeterminate"
+            }
+         }
+      }
+   },
+   "Wood-manufacturingMethod-gadara":{
+      "creationDate":"23.02.2021",
+      "createdBy":"Hanna Hamel",
+      "description":"übersetzte default-Liste",
+      "values":{
+         "Gebohrt":{
+            "labels":{
+               "de":"Gebohrt",
+               "en":"Drilled"
+            }
+         },
+         "Gedämpft":{
+            "labels":{
+               "de":"Gedämpft",
+               "en":"Steamed"
+            }
+         },
+         "Gedreht":{
+            "labels":{
+               "de":"Gedreht",
+               "en":"Turned"
+            }
+         },
+         "Gefräst":{
+            "labels":{
+               "de":"Gefräst",
+               "en":"Milled"
+            }
+         },
+         "Gehobelt":{
+            "labels":{
+               "de":"Gehobelt",
+               "en":"Planed"
+            }
+         },
+         "Gesägt":{
+            "labels":{
+               "de":"Gesägt",
+               "en":"Sawed"
+            }
+         },
+         "Geschabt":{
+            "labels":{
+               "de":"Geschabt",
+               "en":"Shaved"
+            }
+         },
+         "Geschliffen":{
+            "labels":{
+               "de":"Geschliffen",
+               "en":"Ground"
+            }
+         },
+         "Geschnitzt":{
+            "labels":{
+               "de":"Geschnitzt",
+               "en":"Carved"
+            }
+         },
+         "Gespalten":{
+            "labels":{
+               "de":"Gespalten",
+               "en":"Split"
+            }
+         }
+      }
+   },
+   "Pottery-temperAmount-gadara":{
+      "creationDate":"28.01.2021",
+      "createdBy":"Hanna Hamel",
+      "description":"Wie default. Englische Übersetzung und Sortierung",
+      "values":{
+         "Keine Einschlüsse":{
+            "labels":{
+               "de":"keine",
+               "en":"none"
+            }
+         },
+         "Mittel":{
+            "labels":{
+               "de":"mittel",
+               "en":"middle"
+            }
+         },
+         "Nicht erkennbar":{
+            "labels":{
+               "de":"nicht erkennbar",
+               "en":"not identifiable"
+            }
+         },
+         "Sehr viel":{
+            "labels":{
+               "de":"sehr viel",
+               "en":"a lot"
+            }
+         },
+         "Vereinzelt":{
+            "labels":{
+               "de":"vereinzelt",
+               "en":"scattered"
+            }
+         },
+         "Viel":{
+            "labels":{
+               "de":"viel",
+               "en":"much"
+            }
+         },
+         "Wenig":{
+            "labels":{
+               "de":"wenig",
+               "en":"few"
+            }
+         }
+      },
+      "order":[
+         "keine",
+         "vereinzelt",
+         "wenig",
+         "mittel",
+         "viel",
+         "sehr viel",
+         "nicht erkennbar"
+      ]
+   },
+   "Pottery-temperParticles-gadara":{
+      "creationDate":"28.01.2021",
+      "createdBy":"Hanna Hamel",
+      "description":"Übersetzung und Sortierung, sonst wie default",
+      "values":{
+         "fein":{
+            "labels":{
+               "de":"fein",
+               "en":"fine"
+            }
+         },
+         "grob":{
+            "labels":{
+               "de":"grob",
+               "en":"coarse"
+            }
+         },
+         "mittel":{
+            "labels":{
+               "de":"mittel",
+               "en":"middle"
+            }
+         },
+         "mittelfein":{
+            "labels":{
+               "de":"mittelfein",
+               "en":"middlefine"
+            }
+         },
+         "sehr fein":{
+            "labels":{
+               "de":"sehr fein",
+               "en":"very fine"
+            }
+         },
+         "sehr grob":{
+            "labels":{
+               "de":"sehr grob",
+               "en":"very coarse"
+            }
+         }
+      },
+      "order":[
+         "sehr fein",
+         "fein",
+         "mittelfein",
+         "mittel",
+         "grob",
+         "sehr grob"
+      ]
+   },
+   "Bone-species-gadara":{
+      "creationDate":"08.02.2021",
+      "createdBy":"Hanna Hamel",
+      "description":"Anlage der im Orient häufigen Tierarten, sollte von Spezialisten angepasst/überarbeitet werden.",
+      "values":{
+         "Bär (Ursidae)":{
+            "labels":{
+               "de":"Bär (Ursidae)",
+               "en":"bear (Ursidae)"
+            }
+         },
+         "Fisch":{
+            "labels":{
+               "de":"Fisch",
+               "en":"fish"
+            }
+         },
+         "Gänsevogel (Anseriformes)":{
+            "labels":{
+               "de":"Gänsevogel (Anseriformes)",
+               "en":"Anseriformes"
+            }
+         },
+         "Hasenartige (Lagomorpha)":{
+            "labels":{
+               "de":"Hasenartige (Lagomorpha)",
+               "en":"Lagomorpha"
+            }
+         },
+         "Hirsch (Cervidae)":{
+            "labels":{
+               "de":"Hirsch (Cervidae)",
+               "en":"deer (Cervidae)"
+            }
+         },
+         "Hundeartige (Canidae)":{
+            "labels":{
+               "de":"Hundeartige (Canidae)",
+               "en":"Canidae"
+            }
+         },
+         "Kamel (Camelidae)":{
+            "labels":{
+               "de":"Kamel (Camelidae)",
+               "en":"Camelidae"
+            }
+         },
+         "Muschel":{
+            "labels":{
+               "de":"Muschel (Bivalvia)",
+               "en":"shell (Bivalvia)"
+            }
+         },
+         "Nagetier (Rodentia)":{
+            "labels":{
+               "de":"Nagetier (Rodentia)",
+               "en":"rodent (Rodentia)"
+            }
+         },
+         "Rind (Bovinae)":{
+            "labels":{
+               "de":"Rind (Bovinae)",
+               "en":"Bovinae"
+            }
+         },
+         "Schnecke":{
+            "labels":{
+               "de":"Schnecke (Gastropoda)",
+               "en":"snails (Gastropoda)"
+            }
+         },
+         "Schwein":{
+            "labels":{
+               "de":"Schwein (Suidae)",
+               "en":"Suidae"
+            }
+         },
+         "Vogel":{
+            "labels":{
+               "de":"Vogel",
+               "en":"bird"
+            }
+         },
+         "Ziegenartige (Caprini)":{
+            "labels":{
+               "de":"Ziegenartige (Caprini)",
+               "en":"Caprinae"
+            }
+         },
+         "Einhorn":{
+            "labels":{
+               "de":"Einhorn",
+               "en":"unicorn"
+            }
+         }
+      }
+   },
+   "Bone-boneType-gadara":{
+      "creationDate":"08.02.2021",
+      "createdBy":"Hanna Hamel",
+      "description":"angepasst default-Liste mit englischer Übersetzung. Zahn hinzugefügt",
+      "values":{
+         "Elfenbein":{
+            "labels":{
+               "de":"Elfenbein",
+               "en":"ivory"
+            }
+         },
+         "Horn":{
+            "labels":{
+               "de":"Horn",
+               "en":"horn"
+            }
+         },
+         "Menschenknochen":{
+            "labels":{
+               "de":"Menschenknochen",
+               "en":"human bones"
+            }
+         },
+         "Tierknochen":{
+            "labels":{
+               "de":"Tierknochen",
+               "en":"animal bones"
+            }
+         },
+         "Zahn":{
+            "labels":{
+               "de":"Zahn",
+               "en":"tooth"
+            }
+         },
+         "Mollusken":{
+            "labels":{
+               "de":"Mollusken",
+               "en":"molluscs"
+            }
+         }
+      }
+   },
+   "Bone-objectType-gadara":{
+      "creationDate":"08.02.2021",
+      "createdBy":"Hanna Hamel",
+      "description":"leicht angepasste Variante der default-Liste mit englischen Übersetzungen",
+      "values":{
+         "Armreif":{
+            "labels":{
+               "de":"Armreif",
+               "en":"bracelet"
+            }
+         },
+         "Bearbeitet (allgemein)":{
+            "labels":{
+               "de":"bearbeitet (unspezifisch)",
+               "en":"worked (unspecific)"
+            }
+         },
+         "Einlage":{
+            "labels":{
+               "de":"Einlage",
+               "en":"inlay"
+            }
+         },
+         "Gefäß":{
+            "labels":{
+               "de":"Gefäß/Behälter",
+               "en":"vessel/container"
+            }
+         },
+         "Löffel":{
+            "labels":{
+               "de":"Löffel",
+               "en":"spoon"
+            }
+         },
+         "Perle":{
+            "labels":{
+               "de":"Perle",
+               "en":"pearl"
+            }
+         },
+         "Ring":{
+            "labels":{
+               "de":"Ring",
+               "en":"ring"
+            }
+         },
+         "Schmuck":{
+            "labels":{
+               "de":"Schmuck",
+               "en":"jewelry"
+            }
+         },
+         "Spielstein":{
+            "labels":{
+               "de":"Spielstein",
+               "en":"game piece"
+            }
+         },
+         "Spinnwirtel":{
+            "labels":{
+               "de":"Spinnwirtel",
+               "en":"spindle whorle"
+            }
+         },
+         "Unsicher bzw. unbestimmbar":{
+            "labels":{
+               "de":"unsicher bzw. unbestimmbar",
+               "en":"uncertain or indeterminable"
+            }
+         },
+         "Waffe":{
+            "labels":{
+               "de":"Waffe",
+               "en":"weapon"
+            }
+         },
+         "Werkzeug":{
+            "labels":{
+               "de":"Werkzeug",
+               "en":"tool"
+            }
+         },
+         "Würfel":{
+            "labels":{
+               "de":"Würfel",
+               "en":"dice"
+            }
+         }
+      }
+   },
+   "Bone-sex-gadara":{
+      "createdBy":"Hanna Hamel",
+      "creationDate":"08.02.2021",
+      "description":"wie 'bone-sex-Meninx' aber mit englischer Übersetzung",
+      "values":{
+         "Männlich":{
+            "labels":{
+               "de":"männlich",
+               "en":"male"
+            }
+         },
+         "Weiblich":{
+            "labels":{
+               "de":"weiblich",
+               "en":"female"
+            }
+         },
+         "Männlich oder Kastrat":{
+            "labels":{
+               "de":"männlich oder Kastrat",
+               "en":"male or neuter"
+            }
+         }
+      }
+   },
+   "Bone-boneClassification-gadara":{
+      "createdBy":"Hanna Hamel",
+      "creationDate":"08.02.2021",
+      "description":{
+         "de":"Kopie von bone-boneClassification-Meninx",
+         "en":""
+      },
+      "values":{
+         "Atlas":{
+
+         },
+         "Axis (Epistropheus)":{
+
+         },
+         "Calcaneus":{
+
+         },
+         "Carpale":{
+
+         },
+         "Carpale II+III":{
+
+         },
+         "Carpometacarpus":{
+
+         },
+         "Centroquartale":{
+
+         },
+         "Clavicula":{
+
+         },
+         "Coracoid":{
+
+         },
+         "Costa":{
+
+         },
+         "Coxa":{
+
+         },
+         "Cranium":{
+
+         },
+         "Dens inferior":{
+
+         },
+         "Dens superior":{
+
+         },
+         "Dens superior/inferior":{
+
+         },
+         "Femur":{
+
+         },
+         "Fibula":{
+
+         },
+         "Humerus":{
+
+         },
+         "indet.":{
+
+         },
+         "Mandibula":{
+
+         },
+         "Metacarpus II":{
+
+         },
+         "Metacarpus III":{
+
+         },
+         "Metacarpus III+IV":{
+
+         },
+         "Metacarpus IV":{
+
+         },
+         "Metapodium":{
+
+         },
+         "Metapodium Hauptstrahl":{
+
+         },
+         "Metapodium III+IV":{
+
+         },
+         "Metapodium Nebenstrahl":{
+
+         },
+         "Metatarsus Hauptstrahl":{
+
+         },
+         "Metatarsus II":{
+
+         },
+         "Metatarsus III":{
+
+         },
+         "Metatarsus III+IV":{
+
+         },
+         "Metatarsus indet. Nebenstrahl":{
+
+         },
+         "Metatarsus IV":{
+
+         },
+         "Metatarsus V":{
+
+         },
+         "Os carpi intermedium":{
+
+         },
+         "Os carpi radiale":{
+
+         },
+         "Os carpi ulnare":{
+
+         },
+         "Os hyoideum":{
+
+         },
+         "Os tarsi centrale (Os naviculare)":{
+
+         },
+         "Patella":{
+
+         },
+         "Phalanx 1 ant./post.":{
+
+         },
+         "Phalanx 1 Hauptstrahl":{
+
+         },
+         "Phalanx 1 Nebenstrahl":{
+
+         },
+         "Phalanx 1 post.":{
+
+         },
+         "Phalanx 2 ant.":{
+
+         },
+         "Phalanx 2 ant./post.":{
+
+         },
+         "Phalanx 2 post.":{
+
+         },
+         "Phalanx 3 ant.":{
+
+         },
+         "Phalanx 3 ant./post.":{
+
+         },
+         "Phalanx 3 Hauptstrahl":{
+
+         },
+         "Phalanx 3 post.":{
+
+         },
+         "Processus cornualis":{
+
+         },
+         "Pygale":{
+
+         },
+         "Radius":{
+
+         },
+         "Radius+Ulna (verwachsen)":{
+
+         },
+         "Sacrum/Synsacrum":{
+
+         },
+         "Scapula":{
+
+         },
+         "Schneckenhaus (Gastropoda)":{
+
+         },
+         "Sesamoid":{
+
+         },
+         "Talus (Astragalus)":{
+
+         },
+         "Tarsale":{
+
+         },
+         "Tarsale II+III":{
+
+         },
+         "Tarsometatarsus":{
+
+         },
+         "Tibia/Tibiotarsus":{
+
+         },
+         "Tibia+Fibula (verwachsen)":{
+
+         },
+         "Ulna":{
+
+         },
+         "Vertebra":{
+
+         },
+         "Vertebra caudalis":{
+
+         },
+         "Vertebra cervicalis":{
+
+         },
+         "Vertebra lumbalis":{
+
+         },
+         "Vertebra thoracica":{
+
+         },
+         "Vertebra thoracica 1":{
+
+         },
+         "Vertebra thoracica 2":{
+
+         },
+         "Vertebra thoracica 3":{
+
+         },
+         "Vertebra thoracica 4":{
+
+         },
+         "Vertebra thoracica 5":{
+
+         },
+         "Vertebra thoracica 6":{
+
+         },
+         "Vertebra thoracica 7":{
+
+         },
+         "Vertebra thoracica 8":{
+
+         }
+      }
+   },
+   "Terracotta-objectType-gadara":{
+      "creationDate":"18.02.2021",
+      "createdBy":"Hanna Hamel",
+      "description":"Die gängisten Typen von Tonfunden, bei denen es sich nicht um Gefäßkeramik handelt",
+      "values":{
+         "Amphorenhenkel mit Stempel":{
+            "labels":{
+               "de":"Amphorenhenkel mit Stempel",
+               "en":"stamped handle of amphora"
+            }
+         },
+         "Öllampe":{
+            "labels":{
+               "de":"Öllampe",
+               "en":"oil lamp"
+            }
+         },
+         "Figurine, Tier":{
+            "labels":{
+               "de":"Figurine, Tier",
+               "en":"statuette, animal"
+            }
+         },
+         "Figurine, Mensch":{
+            "labels":{
+               "de":"Figurine, Mensch",
+               "en":"statuette, human"
+            }
+         },
+         "Figurine, unbestimmt":{
+            "labels":{
+               "de":"Figurine, unbestimmt",
+               "en":"statuette, indeterminate"
+            }
+         },
+         "Webgewicht":{
+            "labels":{
+               "de":"Webgewicht",
+               "en":"loom weight"
+            }
+         },
+         "Spinnwirtel":{
+            "labels":{
+               "de":"Spinnwirtel",
+               "en":"spindle whorle"
+            }
+         }
+      }
+   },
+   "Terracotta-surfaceCondition-gadara":{
+      "creationDate":"23.02.2021",
+      "createdBy":"Hanna Hamel",
+      "description":"leicht angepasste default-Liste mit englischer Übersetzung",
+      "values":{
+         "Brandspuren":{
+            "labels":{
+               "de":"Brandspuren (teilweise verbrannt)",
+               "en":"burning marks (partly burned)"
+            }
+         },
+         "Sekundärbrand":{
+            "labels":{
+               "de":"verbrannt (sekundär)",
+               "en":"burned (secondary)"
+            }
+         },
+         "abblätternd":{
+            "labels":{
+               "de":"abblätternd",
+               "en":"flaking"
+            }
+         },
+         "gut erhalten":{
+            "labels":{
+               "de":"gut erhalten",
+               "en":"well preserved"
+            }
+         },
+         "stark abgerieben":{
+            "labels":{
+               "de":"stark abgerieben",
+               "en":"strongly abraded"
+            }
+         },
+         "starke Sinter- oder Mörtelablagerungen":{
+            "labels":{
+               "de":"Sinter- oder Mörtelablagerungen",
+               "en":"sinter or mortar deposits"
+            }
+         },
+         "verrieben":{
+            "labels":{
+               "de":"verrieben",
+               "en":"rubbed"
+            }
+         },
+         "versintert":{
+            "labels":{
+               "de":"versintert",
+               "en":"sintered"
+            }
+         },
+         "verwaschen":{
+            "labels":{
+               "de":"verwaschen",
+               "en":"washed out"
+            }
+         }
+      }
+   },
+   "Stone-material-gadara":{
+      "creationDate":"17.02.2021",
+      "createdBy":"Hanna Hamel",
+      "description":"gekürzte und übersetzte default-Liste",
+      "values":{
+         "Basalt":{
+            "labels":{
+               "de":"Basalt",
+               "en":"basalt"
+            }
+         },
+         "Flint":{
+            "labels":{
+               "de":"Flint",
+               "en":"flint"
+            }
+         },
+         "Granit":{
+            "labels":{
+               "de":"Granit",
+               "en":"granite"
+            }
+         },
+         "Kalkstein":{
+            "labels":{
+               "de":"Kalkstein",
+               "en":"limestone"
+            }
+         },
+         "Marmor":{
+            "labels":{
+               "de":"Marmor",
+               "en":"marble"
+            }
+         },
+         "Porphyr":{
+            "labels":{
+               "de":"Porphyr",
+               "en":"porphyry"
+            }
+         },
+         "Sandstein":{
+            "labels":{
+               "de":"Sandstein",
+               "en":"sandstone"
+            }
+         }
+      }
+   },
+   "Stone-objectType-gadara":{
+      "creationDate":"02.10.2020",
+      "createdBy":"Hanna Hamel",
+      "description":"gekürzte und übersetzte default-Liste",
+      "values":{
+         "Abschlag":{
+            "labels":{
+               "de":"Abschlag",
+               "en":"flake"
+            }
+         },
+         "Bauglied":{
+            "labels":{
+               "de":"Bauteil",
+               "en":"architectural element"
+            }
+         },
+         "Gefäß":{
+            "labels":{
+               "de":"Gefäß",
+               "en":"vessel"
+            }
+         },
+         "Gerät":{
+            "labels":{
+               "de":"Gerät",
+               "en":"tool"
+            }
+         },
+         "Gussform":{
+            "labels":{
+               "de":"Gussform",
+               "en":"mould"
+            }
+         },
+         "Plastik/Skulptur":{
+            "labels":{
+               "de":"Plastik/Skulptur",
+               "en":"sculpture"
+            }
+         },
+         "Platte":{
+            "labels":{
+               "de":"Platte",
+               "en":"panels"
+            }
+         },
+         "Quader":{
+            "labels":{
+               "de":"Quader",
+               "en":"ashlar"
+            }
+         },
+         "Reibschale":{
+            "labels":{
+               "de":"Reibschale",
+               "en":"mortar"
+            }
+         },
+         "Reibstein":{
+            "labels":{
+               "de":"Reibstein/Mahlstein",
+               "en":"grinding stone"
+            }
+         },
+         "Reliefstein":{
+            "labels":{
+               "de":"Reliefstein",
+               "en":"relief stone"
+            }
+         },
+         "Schmuck":{
+            "labels":{
+               "de":"Schmuck",
+               "en":"jewelry"
+            }
+         },
+         "Spielbrett":{
+            "labels":{
+               "de":"Spielbrett",
+               "en":"gameboard"
+            }
+         },
+         "Spielstein":{
+            "labels":{
+               "de":"Spielstein",
+               "en":"game piece"
+            }
+         },
+         "Spinnwirtel":{
+            "labels":{
+               "de":"Spinnwirtel",
+               "en":"spindle whorle"
+            }
+         },
+         "Tessera":{
+            "labels":{
+               "de":"Tessera",
+               "en":"tessera"
+            }
+         },
+         "Unsicher bzw. unbestimmbar":{
+            "labels":{
+               "de":"Unsicher bzw. unbestimmbar",
+               "en":"uncertain or indeterminate"
+            }
+         },
+         "Waffe":{
+            "labels":{
+               "de":"Waffe",
+               "en":"weapon"
+            }
+         },
+         "Webgewicht":{
+            "labels":{
+               "de":"Webgewicht",
+               "en":"loom weight"
+            }
+         }
+      }
+   },
+   "Stone-architectureElement-gadara":{
+      "creationDate":"02.10.2020",
+      "createdBy":"Hanna Hamel",
+      "description":"gekürzte und übersetzte default-Liste",
+      "values":{
+         "Akroter":{
+            "labels":{
+               "de":"Akroter",
+               "en":"acroter"
+            }
+         },
+         "Architrav":{
+            "labels":{
+               "de":"Architrav",
+               "en":"architrave"
+            }
+         },
+         "Basis":{
+            "labels":{
+               "de":"Basis",
+               "en":"basis"
+            }
+         },
+         "Bauplastik":{
+            "labels":{
+               "de":"Bauplastik",
+               "en":"architectural sculpture"
+            }
+         },
+         "Fries":{
+            "labels":{
+               "de":"Fries",
+               "en":"frieze"
+            }
+         },
+         "Fußboden":{
+            "labels":{
+               "de":"Fußboden",
+               "en":"floor"
+            }
+         },
+         "Gesims":{
+            "labels":{
+               "de":"Gesims",
+               "en":"cornice"
+            }
+         },
+         "Kapitell":{
+            "labels":{
+               "de":"Kapitell",
+               "en":"capital"
+            }
+         },
+         "Konsole":{
+            "labels":{
+               "de":"Konsole",
+               "en":"corbel"
+            }
+         },
+         "Profilstück":{
+            "labels":{
+               "de":"profilierter Block ohne Zuordnung",
+               "en":"profiled block without assignment"
+            }
+         },
+         "Schwellenblock":{
+            "labels":{
+               "de":"Türschwelle",
+               "en":"threshold"
+            }
+         },
+         "Sima":{
+            "labels":{
+               "de":"Sima",
+               "en":"sima"
+            }
+         },
+         "Säule":{
+            "labels":{
+               "de":"Säule",
+               "en":"column"
+            }
+         },
+         "Türsturz":{
+            "labels":{
+               "de":"Türsturz",
+               "en":"lintel"
+            }
+         },
+         "Wandverkleidung":{
+            "labels":{
+               "de":"Wandverkleidung",
+               "en":"wall panel"
+            }
+         }
+      }
+   },
+   "Stone-treatment-Gadara":{
+      "createdBy":"Hanna Hamel",
+      "creationDate":"17.02.2021",
+      "description":"anstelle einer freien Eingabe sollte eine Werteliste angelegt werden. Angepasst an Werteliste Structure-structureStoneDressing-Gadara",
+      "values":{
+         "Unbehauen":{
+            "labels":{
+               "de":"Unbehauen",
+               "en":"unhewn"
+            }
+         },
+         "Grob behauen":{
+            "labels":{
+               "de":"Grob behauen",
+               "en":"roughly hewn"
+            }
+         },
+         "Fein behauen":{
+            "labels":{
+               "de":"Fein behauen",
+               "en":"finely hewn"
+            }
+         },
+         "Grob geglättet":{
+            "labels":{
+               "de":"Grob geglättet",
+               "en":"roughly smoothed"
+            }
+         },
+         "Fein geglättet":{
+            "labels":{
+               "de":"Fein geglättet",
+               "en":"finely smoothed"
+            }
+         },
+         "Poliert":{
+            "labels":{
+               "de":"Poliert",
+               "en":"polished"
+            }
+         }
+      },
+      "order":[
+         "Unbehauen",
+         "Grob behauen",
+         "Fein behauen",
+         "Grob geglättet",
+         "Fein geglättet",
+         "Poliert"
+      ]
+   },
+   "Coin-metalMaterial-gadara":{
+      "creationDate":"19.02.2021",
+      "createdBy":"Hanna Hamel",
+      "description":"gekürzte und ins englische übersetzte default-Liste",
+      "values":{
+         "Blei":{
+            "labels":{
+               "de":"Blei",
+               "en":"Lead"
+            }
+         },
+         "Bronze":{
+            "labels":{
+               "de":"Bronze",
+               "en":"Bronze"
+            }
+         },
+         "Eisen":{
+            "labels":{
+               "de":"Eisen",
+               "en":"Iron"
+            }
+         },
+         "Gold":{
+            "labels":{
+               "de":"Gold",
+               "en":"Gold"
+            }
+         },
+         "Kupfer":{
+            "labels":{
+               "de":"Kupfer",
+               "en":"Copper"
+            }
+         },
+         "Messing":{
+            "labels":{
+               "de":"Messing",
+               "en":"Brass"
+            }
+         },
+         "Silber":{
+            "labels":{
+               "de":"Silber",
+               "en":"Silver"
+            }
+         },
+         "Unsicher bzw. unbestimmbar":{
+            "labels":{
+               "de":"Unsicher bzw. unbestimmbar",
+               "en":"uncertain or indeterminate"
+            }
+         }
+      }
+   },
+   "Coin-mintingRuler-gadara":{
+      "createdBy":"Hanna Hamel",
+      "creationDate":"19.02.2021",
+      "description":"Liste der römischen Kaiser bis ins 5. Jh. n. Chr. Sortiert nach Regierungszeit.",
+      "values":{
+         "Augustus (IMPERATOR CAESAR DIVI FILIVS AVGVSTVS)":{
+
+         },
+         "Tiberius (TIBERIVS CAESAR DIVI AVGVSTI FILIVS AVGVSTVS)":{
+
+         },
+         "Caligula (Gaius) (GAIVS IVLIVS CAESAR AVGVSTVS GERMANICVS)":{
+
+         },
+         "Claudius (TIBERIVS CLAVDIVS CAESAR AVGVSTVS GERMANICVS)":{
+
+         },
+         "Nero (NERO CLAVDIVS CAESAR AVGVSTVS GERMANICVS)":{
+
+         },
+         "Galba (SERVIVS GALBA)":{
+
+         },
+         "Otho (MARCVS OTHO)":{
+
+         },
+         "Vitellius (AVLVS VITELLIVS)":{
+
+         },
+         "Vespasian (TITVS FLAVIVS VESPASIANVS)":{
+
+         },
+         "Titus (TITVS FLAVIVS VESPASIANVS)":{
+
+         },
+         "Domitian (TITVS FLAVIVS DOMITIANVS)":{
+
+         },
+         "Nerva (MARCVS COCCEIVS NERVA)":{
+
+         },
+         "Trajan (MARCVS VLPIVS NERVA TRAIANVS)":{
+
+         },
+         "Hadrian (PVPLIVS AELIVS TRAIANVS HADRIANVS)":{
+
+         },
+         "Antoninus Pius (TITVS AELIVS HADRIANVS ANTONINVS)":{
+
+         },
+         "Marcus Aurelius (MARCVS AVRELIVS ANTONINVS)":{
+
+         },
+         "Lucius Verus (LVCIVS AVRELIVS VERVS)":{
+
+         },
+         "Commodus (LVCIVS AELIVS AVRELIVS COMMODVS)":{
+
+         },
+         "Pertinax (PVBLIVS HELVIVS PERTINAX)":{
+
+         },
+         "Didius Julianus (MARCVS DIDIVS SEVERVS IVLIANVS)":{
+
+         },
+         "Septimius Severus (LVCIVS SEPTIMIVS SEVERVS PERTINAX)":{
+
+         },
+         "Caracalla (Antoninus II) (MARCVS AVRELIVS ANTONINVS)":{
+
+         },
+         "Geta (PVBLIVS SEPTIMIVS GETA)":{
+
+         },
+         "Macrinus (MARCVS OPELLIVS SEVERVS MACRINVS)":{
+
+         },
+         "Diadumenian (MARCVS OPELLIVS ANTONINVS DIADVMENIANVS)":{
+
+         },
+         "Elagabalus (Antoninus III) (MARCVS AVRELIVS ANTONINVS)":{
+
+         },
+         "Severus Alexander (Alexander I) (MARCVS AVRELIVS SEVERVS ALEXANDER)":{
+
+         },
+         "Maximinus I Thrax (CAIVS IVLIVS VERVS MAXIMINVS)":{
+
+         },
+         "Gordian I (MARCVS ANTONIVS GORDIANVS SEMPRONIANVS ROMANVS AFRICANVS)":{
+
+         },
+         "Gordian II (MARCVS ANTONIVS GORDIANVS SEMPRONIANVS ROMANVS AFRICANVS)":{
+
+         },
+         "Pupienus (MARCVS CLODIVS PVPIENVS MAXIMVS)":{
+
+         },
+         "Balbinus (DECIMVS CAELIVS CALVINVS BALBINVS PIVS)":{
+
+         },
+         "Gordian III (MARCVS ANTONIVS GORDIANVS PIVS)":{
+
+         },
+         "Philip I the Arab (MARCVS IVLIVS PHILIPPVS)":{
+
+         },
+         "Philip II the Younger (MARCVS IVLIVS SEVERVS PHILIPPVS)":{
+
+         },
+         "Decius (Trajan II Decius) (CAIVS MESSIVS QVINTVS TRAIANVS DECIVS)":{
+
+         },
+         "Herennius Etruscus (QVINTVS HERENNIVS ETRVSCVS MESSIVS DECIVS)":{
+
+         },
+         "Hostilian (CAIVS VALENS HOSTILIANVS MESSIVS QVINTVS)":{
+
+         },
+         "Trebonianus Gallus (CAIVS VIBIVS AFINIVS TREBONIANVS GALLVS)":{
+
+         },
+         "Volusianus (CAIVS VIBIVS VOLVSIANVS)":{
+
+         },
+         "Aemilianus (MARCVS AEMILIVS AEMILIANVS)":{
+
+         },
+         "Valerian (PUBLIVS LICINIVS VALERIANVS)":{
+
+         },
+         "Gallienus (PUBLIVS LICINIVS EGNATIVS GALLIENVS)":{
+
+         },
+         "Claudius II Gothicus (MARCVS AVRELIVS VALERIVS CLAVDIVS)":{
+
+         },
+         "Quintillus (MARCVS AVRELIVS CLAVDIVS QVINTILLVS)":{
+
+         },
+         "Aurelian (LVCIVS DOMITIVS AVRELIANVS)":{
+
+         },
+         "Tacitus (MARCVS CLAVDIVS TACITVS)":{
+
+         },
+         "Florianus (MARCVS ANNIVS FLORIANVS)":{
+
+         },
+         "Probus (MARCVS AVRELIVS PROBVS)":{
+
+         },
+         "Carus (MARCVS AVRELIVS CARVS)":{
+
+         },
+         "Carinus (MARCVS AVRELIVS CARINVS)":{
+
+         },
+         "Numerian (MARCVS AVRELIVS NVMERIVS NVMERIANVS)":{
+
+         },
+         "Diocletian (CAIVS AVRELIVS VALERIVS DIOCLETIANVS)":{
+
+         },
+         "Maximian (MARCVS AVRELIVS VALERIVS MAXIMIANVS HERCVLIVS)":{
+
+         },
+         "Galerius (CAIVS GALERIVS VALERIVS MAXIMIANVS)":{
+
+         },
+         "Constantius I Chlorus (MARCVS FLAVIVS VALERIVS CONSTANTIVS HERCVLIVS)":{
+
+         },
+         "Valerius Severus (Severus II) (FLAVIVS VALERIVS SEVERVS)":{
+
+         },
+         "Maxentius (MARCVS AVRELIVS VALERIVS MAXENTIVS)":{
+
+         },
+         "Licinius (CAIVS VALERIVS LICINIANVS LICINIVS)":{
+
+         },
+         "Maximinus II Daia (CAIVS CALERIVS VALERIVS MAXIMINVS)":{
+
+         },
+         "Constantine I the Great (FLAVIVS VALERIVS AVRELIVS CONSTANTINVS)":{
+
+         },
+         "Constantine II (FLAVIVS CLAVDIVS CONSTANTINVS)":{
+
+         },
+         "Constans I (FLAVIVS IVLIVS CONSTANS)":{
+
+         },
+         "Constantius II (FLAVIVS IVLIVS CONSTANTIVS)":{
+
+         },
+         "Julian the Apostate (FLAVIVS CLAVDIVS IVLIANVS)":{
+
+         },
+         "Jovian (FLAVIVS IOVIANVS)":{
+
+         },
+         "Valentinian I the Great (FLAVIVS VALENTINIANVS)":{
+
+         },
+         "Valens (FLAVIVS IVLIVS VALENS)":{
+
+         },
+         "Gratian (FLAVIVS GRATIANVS)":{
+
+         },
+         "Valentinian II (FLAVIVS VALENTINIANVS)":{
+
+         },
+         "Theodosius I the Great (FLAVIVS THEODOSIVS)":{
+
+         },
+         "Arcadius (FLAVIVS ARCADIVS)":{
+
+         },
+         "Honorius (FLAVIVS HONORIVS)":{
+
+         },
+         "Theodosius II the Calligrapher (FLAVIVS THEODOSIVS IVNIOR)":{
+
+         },
+         "Valentinian III (FLAVIVS PLACIDIVS VALENTINIANVS)":{
+
+         },
+         "Pulcheria (AELIA PVLCHERIA)":{
+
+         },
+         "Marcian (FLAVIVS MARCIANVS)":{
+
+         }
+      },
+      "order":[
+         "Augustus (IMPERATOR CAESAR DIVI FILIVS AVGVSTVS)",
+         "Tiberius (TIBERIVS CAESAR DIVI AVGVSTI FILIVS AVGVSTVS)",
+         "Caligula (Gaius) (GAIVS IVLIVS CAESAR AVGVSTVS GERMANICVS)",
+         "Claudius (TIBERIVS CLAVDIVS CAESAR AVGVSTVS GERMANICVS)",
+         "Nero (NERO CLAVDIVS CAESAR AVGVSTVS GERMANICVS)",
+         "Galba (SERVIVS GALBA)",
+         "Otho (MARCVS OTHO)",
+         "Vitellius (AVLVS VITELLIVS)",
+         "Vespasian (TITVS FLAVIVS VESPASIANVS)",
+         "Titus (TITVS FLAVIVS VESPASIANVS)",
+         "Domitian (TITVS FLAVIVS DOMITIANVS)",
+         "Nerva (MARCVS COCCEIVS NERVA)",
+         "Trajan (MARCVS VLPIVS NERVA TRAIANVS)",
+         "Hadrian (PVPLIVS AELIVS TRAIANVS HADRIANVS)",
+         "Antoninus Pius (TITVS AELIVS HADRIANVS ANTONINVS)",
+         "Marcus Aurelius (MARCVS AVRELIVS ANTONINVS)",
+         "Lucius Verus (LVCIVS AVRELIVS VERVS)",
+         "Commodus (LVCIVS AELIVS AVRELIVS COMMODVS)",
+         "Pertinax (PVBLIVS HELVIVS PERTINAX)",
+         "Didius Julianus (MARCVS DIDIVS SEVERVS IVLIANVS)",
+         "Septimius Severus (LVCIVS SEPTIMIVS SEVERVS PERTINAX)",
+         "Caracalla (Antoninus II) (MARCVS AVRELIVS ANTONINVS)",
+         "Geta (PVBLIVS SEPTIMIVS GETA)",
+         "Macrinus (MARCVS OPELLIVS SEVERVS MACRINVS)",
+         "Diadumenian (MARCVS OPELLIVS ANTONINVS DIADVMENIANVS)",
+         "Elagabalus (Antoninus III) (MARCVS AVRELIVS ANTONINVS)",
+         "Severus Alexander (Alexander I) (MARCVS AVRELIVS SEVERVS ALEXANDER)",
+         "Maximinus I Thrax (CAIVS IVLIVS VERVS MAXIMINVS)",
+         "Gordian I (MARCVS ANTONIVS GORDIANVS SEMPRONIANVS ROMANVS AFRICANVS)",
+         "Gordian II (MARCVS ANTONIVS GORDIANVS SEMPRONIANVS ROMANVS AFRICANVS)",
+         "Pupienus (MARCVS CLODIVS PVPIENVS MAXIMVS)",
+         "Balbinus (DECIMVS CAELIVS CALVINVS BALBINVS PIVS)",
+         "Gordian III (MARCVS ANTONIVS GORDIANVS PIVS)",
+         "Philip I the Arab (MARCVS IVLIVS PHILIPPVS)",
+         "Philip II the Younger (MARCVS IVLIVS SEVERVS PHILIPPVS)",
+         "Decius (Trajan II Decius) (CAIVS MESSIVS QVINTVS TRAIANVS DECIVS)",
+         "Herennius Etruscus (QVINTVS HERENNIVS ETRVSCVS MESSIVS DECIVS)",
+         "Hostilian (CAIVS VALENS HOSTILIANVS MESSIVS QVINTVS)",
+         "Trebonianus Gallus (CAIVS VIBIVS AFINIVS TREBONIANVS GALLVS)",
+         "Volusianus (CAIVS VIBIVS VOLVSIANVS)",
+         "Aemilianus (MARCVS AEMILIVS AEMILIANVS)",
+         "Valerian (PUBLIVS LICINIVS VALERIANVS)",
+         "Gallienus (PUBLIVS LICINIVS EGNATIVS GALLIENVS)",
+         "Claudius II Gothicus (MARCVS AVRELIVS VALERIVS CLAVDIVS)",
+         "Quintillus (MARCVS AVRELIVS CLAVDIVS QVINTILLVS)",
+         "Aurelian (LVCIVS DOMITIVS AVRELIANVS)",
+         "Tacitus (MARCVS CLAVDIVS TACITVS)",
+         "Florianus (MARCVS ANNIVS FLORIANVS)",
+         "Probus (MARCVS AVRELIVS PROBVS)",
+         "Carus (MARCVS AVRELIVS CARVS)",
+         "Carinus (MARCVS AVRELIVS CARINVS)",
+         "Numerian (MARCVS AVRELIVS NVMERIVS NVMERIANVS)",
+         "Diocletian (CAIVS AVRELIVS VALERIVS DIOCLETIANVS)",
+         "Maximian (MARCVS AVRELIVS VALERIVS MAXIMIANVS HERCVLIVS)",
+         "Galerius (CAIVS GALERIVS VALERIVS MAXIMIANVS)",
+         "Constantius I Chlorus (MARCVS FLAVIVS VALERIVS CONSTANTIVS HERCVLIVS)",
+         "Valerius Severus (Severus II) (FLAVIVS VALERIVS SEVERVS)",
+         "Maxentius (MARCVS AVRELIVS VALERIVS MAXENTIVS)",
+         "Licinius (CAIVS VALERIVS LICINIANVS LICINIVS)",
+         "Maximinus II Daia (CAIVS CALERIVS VALERIVS MAXIMINVS)",
+         "Constantine I the Great (FLAVIVS VALERIVS AVRELIVS CONSTANTINVS)",
+         "Constantine II (FLAVIVS CLAVDIVS CONSTANTINVS)",
+         "Constans I (FLAVIVS IVLIVS CONSTANS)",
+         "Constantius II (FLAVIVS IVLIVS CONSTANTIVS)",
+         "Julian the Apostate (FLAVIVS CLAVDIVS IVLIANVS)",
+         "Jovian (FLAVIVS IOVIANVS)",
+         "Valentinian I the Great (FLAVIVS VALENTINIANVS)",
+         "Valens (FLAVIVS IVLIVS VALENS)",
+         "Gratian (FLAVIVS GRATIANVS)",
+         "Valentinian II (FLAVIVS VALENTINIANVS)",
+         "Theodosius I the Great (FLAVIVS THEODOSIVS)",
+         "Arcadius (FLAVIVS ARCADIVS)",
+         "Honorius (FLAVIVS HONORIVS)",
+         "Theodosius II the Calligrapher (FLAVIVS THEODOSIVS IVNIOR)",
+         "Valentinian III (FLAVIVS PLACIDIVS VALENTINIANVS)",
+         "Pulcheria (AELIA PVLCHERIA)",
+         "Marcian (FLAVIVS MARCIANVS)"
+      ]
+   },
+   "Metal-decorationTechnique-gadara":{
+      "createdBy":"Hanna Hamel",
+      "creationDate":"18.02.2021",
+      "description":"gekürzte und übersetzte default-Liste.",
+      "values":{
+         "Emaille":{
+            "labels":{
+               "de":"Emaille",
+               "en":"enamel"
+            }
+         },
+         "Reliefdekor":{
+            "labels":{
+               "de":"Reliefdekor",
+               "en":"relief decoration"
+            }
+         },
+         "Riefeldekor":{
+            "labels":{
+               "de":"Riefeldekor",
+               "en":"grooved decoration"
+            }
+         },
+         "Ritzdekor":{
+            "labels":{
+               "de":"Ritzdekor",
+               "en":"scratched decoration"
+            }
+         },
+         "Stempeldekor":{
+            "labels":{
+               "de":"Stempeldekor",
+               "en":"stamped decoration"
+            }
+         },
+         "Vergoldung":{
+            "labels":{
+               "de":"Vergoldung",
+               "en":"gilding"
+            }
+         }
+      }
+   },
+   "Metal-objectType-gadara":{
+      "createdBy":"Hanna Hamel",
+      "creationDate":"18.02.2021",
+      "description":"gekürzte und übersetzte default-Liste",
+      "values":{
+         "Armreif":{
+            "labels":{
+               "de":"Armreif",
+               "en":"bracelet"
+            }
+         },
+         "Barren":{
+            "labels":{
+               "de":"Barren",
+               "en":"bar"
+            }
+         },
+         "Beschlag":{
+            "labels":{
+               "de":"Beschlag",
+               "en":"fitting"
+            }
+         },
+         "Besteck":{
+            "labels":{
+               "de":"Besteck (auch medizinisch oder kosmetisch)",
+               "en":"cutlery (also medical or cosmetic)"
+            }
+         },
+         "Blech":{
+            "labels":{
+               "de":"Blech",
+               "en":"metal sheet"
+            }
+         },
+         "Fibel":{
+            "labels":{
+               "de":"Fibel",
+               "en":"fibula"
+            }
+         },
+         "Gefäß":{
+            "labels":{
+               "de":"Gefäß",
+               "en":"vessel"
+            }
+         },
+         "Gerät":{
+            "labels":{
+               "de":"Gerät",
+               "en":"tool"
+            }
+         },
+         "Gewicht":{
+            "labels":{
+               "de":"Gewicht",
+               "en":"weight"
+            }
+         },
+         "Glocke":{
+            "labels":{
+               "de":"Glocke",
+               "en":"bell"
+            }
+         },
+         "Gusszapfen":{
+            "labels":{
+               "de":"Gusszapfen",
+               "en":"casting pin"
+            }
+         },
+         "Kette":{
+            "labels":{
+               "de":"Kette",
+               "en":"chain"
+            }
+         },
+         "Klinge":{
+            "labels":{
+               "de":"Klinge",
+               "en":"blade"
+            }
+         },
+         "Knopf":{
+            "labels":{
+               "de":"Knopf",
+               "en":"button"
+            }
+         },
+         "Lampe":{
+            "labels":{
+               "de":"Lampe",
+               "en":"lamp"
+            }
+         },
+         "Mobiliar":{
+            "labels":{
+               "de":"Mobiliar",
+               "en":"furniture"
+            }
+         },
+         "Nadel":{
+            "labels":{
+               "de":"Nadel",
+               "en":"needle"
+            }
+         },
+         "Nagel":{
+            "labels":{
+               "de":"Nagel",
+               "en":"nail"
+            }
+         },
+         "Pfeilspitze":{
+            "labels":{
+               "de":"Pfeil- oder Speerspitze",
+               "en":"arrowhead or spearhead"
+            }
+         },
+         "Plastik/Skulptur":{
+            "labels":{
+               "de":"Plastik/Skulptur",
+               "en":"sculpture"
+            }
+         },
+         "Produktionsfragment":{
+            "labels":{
+               "de":"Produktionsfragment",
+               "en":"production residue"
+            }
+         },
+         "Projektil":{
+            "labels":{
+               "de":"Projektil",
+               "en":"projectile"
+            }
+         },
+         "Ring":{
+            "labels":{
+               "de":"Ring",
+               "en":"ring"
+            }
+         },
+         "Schlacke":{
+            "labels":{
+               "de":"Schlacke",
+               "en":"slag"
+            }
+         },
+         "Schlüssel":{
+            "labels":{
+               "de":"Schlüssel",
+               "en":"key"
+            }
+         },
+         "Schmuck":{
+            "labels":{
+               "de":"Schmuck",
+               "en":"jewelry"
+            }
+         },
+         "Schnalle":{
+            "labels":{
+               "de":"Schnalle",
+               "en":"buckle"
+            }
+         },
+         "Spiegel":{
+            "labels":{
+               "de":"Spiegel",
+               "en":"mirror"
+            }
+         },
+         "Spielstein":{
+            "labels":{
+               "de":"Spielstein",
+               "en":"game piece"
+            }
+         },
+         "Strigilis":{
+            "labels":{
+               "de":"Strigilis",
+               "en":"strigilis"
+            }
+         },
+         "Türschloss":{
+            "labels":{
+               "de":"Schloss",
+               "en":"lock"
+            }
+         },
+         "Unsicher bzw. unbestimmbar":{
+            "labels":{
+               "de":"Unsicher bzw. unbestimmbar",
+               "en":"uncertain or indeterminate"
+            }
+         },
+         "Waffe":{
+            "labels":{
+               "de":"Waffe",
+               "en":"weapon"
+            }
+         },
+         "Wasserleitung":{
+            "labels":{
+               "de":"Wasserleitung",
+               "en":"water pipe"
+            }
+         }
+      }
+   },
+   "Metal-manufacturingMethod-gadara":{
+      "createdBy":"Hanna Hamel",
+      "creationDate":"19.02.2021",
+      "description":"Ins englische übertragene default-Liste. Vereinheitlichung der Begriffe im Deutschen.",
+      "values":{
+         "Getrieben":{
+            "labels":{
+               "de":"Getrieben",
+               "en":"chasing"
+            }
+         },
+         "Gußtechnik":{
+            "labels":{
+               "de":"Gegossen",
+               "en":"cast"
+            }
+         },
+         "Prägearbeit":{
+            "labels":{
+               "de":"Geprägt",
+               "en":"embossed"
+            }
+         },
+         "Schmiedetechnik":{
+            "labels":{
+               "de":"Geschmiedet",
+               "en":"forged"
+            }
+         },
+         "Ziehtechnik":{
+            "labels":{
+               "de":"Gezogen",
+               "en":"drawn"
+            }
+         },
+         "Unsicher bzw. unbestimmbar":{
+            "labels":{
+               "de":"Unsicher bzw. unbestimmbar",
+               "en":"uncertain or indeterminate"
+            }
+         }
+      }
+   },
+   "Find-sample-Gadara":{
+      "createdBy":"Heike Möller, Hanna Hamel",
+      "creationDate":"17-08-2020",
+      "description":{
+         "de":"",
+         "en":""
+      },
+      "values":{
+         "ja":{
+            "labels":{
+               "de":"ja",
+               "en":"yes"
+            }
+         },
+         "nein":{
+            "labels":{
+               "de":"nein",
+               "en":"no"
+            }
+         },
+         "teilweise":{
+            "labels":{
+               "de":"teilweise",
+               "en":"partially"
+            }
+         },
+         "gesamt":{
+            "labels":{
+               "de":"gesamt",
+               "en":"complete"
+            }
+         }
+      },
+      "order":[
+         "ja",
+         "nein",
+         "teilweise",
+         "gesamt"
+      ]
+   },
+   "Find-samplePl-Gadara":{
+      "createdBy":"Heike Möller, Hanna Hamel",
+      "creationDate":"17-08-2020",
+      "description":"",
+      "values":{
+         "Ausfuhr beantragt":{
+            "labels":{
+               "de":"Ausfuhr beantragt",
+               "en":"export requested"
+            }
+         },
+         "Ausfuhr genehmigt":{
+            "labels":{
+               "de":"Ausfuhr genehmigt",
+               "en":"export approved"
+            }
+         },
+         "ausgeführt":{
+            "labels":{
+               "de":"ausgeführt",
+               "en":"exported",
+               "fr":"exporté"
+            }
+         },
+         "an Spezialist/Labor übergeben":{
+            "labels":{
+               "de":"an Spezialist/Labor übergeben",
+               "en":"handed over to specialist/laboratory",
+               "fr":"Remise aux spécialistes/laboratoire"
+            }
+         },
+         "zurückgeführt":{
+            "labels":{
+               "de":"zurückgeführt",
+               "en":"returned",
+               "fr":"ramené"
+            }
+         },
+         "nein":{
+            "labels":{
+               "de":"nein",
+               "en":"no",
+               "fr":"non"
+            }
+         }
+      },
+      "order":[
+         "Ausfuhr beantragt",
+         "Ausfuhr genehmigt",
+         "ausgeführt",
+         "an Spezialist/Labor übergeben",
+         "zurückgeführt",
+         "nein"
+      ]
+   },
+   "Find-Store-Gadara":{
+      "createdBy":"Heike Möller, Hanna Hamel",
+      "creationDate":"18-08-2020",
+      "description":"Liste der Aufbewahrungsorte für Funde des Gadara-Projekts",
+      "values":{
+         "nicht aufbewahrt":{
+            "labels":{
+               "de":"nicht aufbewahrt",
+               "en":"not kept",
+               "fr":"jeté"
+            }
+         },
+         "Werkhof":{
+            "labels":{
+               "de":"Werkhof",
+               "en":"Work yard",
+               "fr":"Chantier de travail"
+            }
+         },
+         "Grabungshaus":{
+            "labels":{
+               "de":"Grabungshaus",
+               "en":"Dig house",
+               "fr":"Maison de fouille/Dépôt"
+            }
+         },
+         "Museum Umm Qays":{
+
+         },
+         "Amman":{
+
+         }
+      },
+      "order":[
+         "Werkhof",
+         "Grabungshaus",
+         "Museum Umm Qays",
+         "Amman"
+      ]
+   },
+   "plasterDecoration-Gadara":{
+      "createdBy":"Hanna Hamel",
+      "creationDate":"02.10.2020",
+      "description":{
+         "de":"Oberflächenbehandlung des Putzes",
+         "en":""
+      },
+      "values":{
+         "Ohne Oberfläche":{
+            "labels":{
+               "de":"Ohne Oberfläche",
+               "en":"without surface"
+            }
+         },
+         "Stuck":{
+            "labels":{
+               "de":"Stuck",
+               "en":"stucco"
+            }
+         },
+         "Einfarbige Bemalung":{
+            "labels":{
+               "de":"Einfarbige Bemalung",
+               "en":"monochrome paint"
+            }
+         },
+         "Polychrome Bemalung":{
+            "labels":{
+               "de":"Polychrome Bemalung",
+               "en":"polychrome paint"
+            }
+         },
+         "Verputzte Oberfläche":{
+            "labels":{
+               "de":"Verputzte Oberfläche",
+               "en":"plastered surface"
+            }
+         }
+      },
+      "order":[
+         "Ohne Oberfläche",
+         "Stuck",
+         "Einfarbig bemalt",
+         "Polychrom bemalt",
+         "Verputzte Oberfläche"
+      ]
+   },
+   "plasterType-Gadara":{
+      "createdBy":"Hanna Hamel",
+      "creationDate":"02.10.2020",
+      "description":{
+         "de":"Verwendung des Putzes",
+         "en":""
+      },
+      "values":{
+         "Wandputz":{
+            "labels":{
+               "de":"Wandputz",
+               "en":"plaster"
+            }
+         },
+         "Boden/Estrich":{
+            "labels":{
+               "de":"Boden/Estrich",
+               "en":"pavement"
+            }
+         },
+         "Mörtel":{
+            "labels":{
+               "de":"Mörtel",
+               "en":"mortar"
+            }
+         },
+         "unbestimmbar":{
+            "labels":{
+               "de":"unbestimmbar",
+               "en":"indeterminate"
+            }
+         }
+      },
+      "order":[
+         "Wandputz",
+         "Boden/Estrich",
+         "Mörtel",
+         "unbestimmbar"
+      ]
    }
 }

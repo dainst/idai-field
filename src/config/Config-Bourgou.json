@@ -67,8 +67,8 @@
     "valuelists": {
       "period": "periods-bourgou",
       "amountDescription": "Find-amountDescription-bourgou",
-	  "sampleStatus": "Find-samplePl-Bourgou",
-	  "storagePlace": "Find-Store-Bourgou"
+	  "sampleStatus": "Find-samplePl-bourgou",
+	  "storagePlace": "Find-Store-bourgou"
     }
   },
   "Feature:default": {

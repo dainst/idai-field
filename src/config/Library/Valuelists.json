@@ -41647,5 +41647,2103 @@
       "Berlin, Staatliche Museen",
       "Fund verloren"
     ]
-  }
+  },
+  "provenance-bourgou":{
+      "createdBy":"Heike Möller",
+      "description":"Übernommen aus Gadara mit weiteren Anpassungen an Region Tunesien",
+      "creationDate":"2021",
+      "values":{
+         "Ägypten":{
+            "labels":{
+               "de":"Ägypten",
+               "en":"Egypt",
+               "fr":"Égypte"
+            }
+         },
+         "Adria":{
+            "labels":{
+               "de":"Adria",
+               "en":"Adria",
+               "fr":"Adria"
+            }
+         },
+         "Attika":{
+            "labels":{
+               "de":"Attika",
+               "en":"Attica",
+               "fr":"Attica"
+            }
+         },
+         "Baetika":{
+            "labels":{
+               "de":"Baetica",
+               "en":"Baetica",
+               "fr":"Bétique"
+            }
+         },
+         "Byzacena":{
+            "labels":{
+               "de":"Byzacena",
+               "en":"Byzacena",
+               "fr":"Byzacène"
+            }
+         },
+         "Gallien":{
+            "labels":{
+               "de":"Gallien",
+               "en":"Gaul",
+               "fr":"Gaule"
+            }
+         },
+         "Ionien":{
+            "labels":{
+               "de":"Ionien",
+               "en":"Ionia",
+               "fr":"Ionie"
+            }
+         },
+         "Italien":{
+            "labels":{
+               "de":"Italien",
+               "en":"Italy",
+               "fr":"Italie"
+            }
+         },
+         "Kampanien":{
+            "labels":{
+               "de":"Kampanien",
+               "en":"Campania",
+               "fr":"Campanie"
+            }
+         },
+         "Kalabrien":{
+            "labels":{
+               "de":"Kalabrien",
+               "en":"Calabria",
+               "fr":"Calabre"
+            }
+         },
+         "Etrurien":{
+            "labels":{
+               "de":"Etrurien",
+               "en":"Etruria",
+               "fr":"Étrurie"
+            }
+         },
+         "Karthago":{
+            "labels":{
+               "de":"Karthago",
+               "en":"Carthage",
+               "fr":"Carthage"
+            }
+         },
+         "Kleinasien":{
+            "labels":{
+               "de":"Kleinasien",
+               "en":"Asia Minor",
+               "fr":"Asie Mineure"
+            }
+         },
+         "Korinth":{
+            "labels":{
+               "de":"Korinth",
+               "en":"Corinth",
+               "fr":"Corinthe"
+            }
+         },
+         "Levante":{
+            "labels":{
+               "de":"Levante",
+               "en":"Levante",
+               "fr":"Levante"
+            }
+         },
+         "Lusitanien":{
+            "labels":{
+               "de":"Lusitanien",
+               "en":"Lusitania",
+               "fr":"Lusitanie"
+            }
+         },
+         "lokal":{
+            "labels":{
+               "de":"lokal",
+               "en":"local",
+               "fr":"locale"
+            }
+         },
+         "Malta":{
+            "labels":{
+               "de":"Malta",
+               "en":"Malte",
+               "fr":"Malte"
+            }
+         },
+         "Nordafrika":{
+            "labels":{
+               "de":"Nordafrika",
+               "en":"North Afrika",
+               "fr":"Afrique du Nord"
+            }
+         },
+         "Tarraconensis":{
+            "labels":{
+               "de":"Tarraconensis",
+               "en":"Tarraconensis",
+               "fr":"Tarraconensis"
+            }
+         },
+         "regional":{
+            "labels":{
+               "de":"regional",
+               "en":"regional",
+               "fr":"regional"
+            }
+         },
+         "lokal/regional":{
+            "labels":{
+               "de":"lokal/regional",
+               "en":"local/regional",
+               "fr":"locale/regional"
+            }
+         },
+         "Rhodos":{
+            "labels":{
+               "de":"Rhodos",
+               "en":"Rhodes",
+               "fr":"Rhodes"
+            }
+         },
+         "Sardinien":{
+            "labels":{
+               "de":"Sardinien",
+               "en":"Sardinia",
+               "fr":"Sardaigne"
+            }
+         },
+         "Sizilien":{
+            "labels":{
+               "de":"Sizilien",
+               "en":"Sicily",
+               "fr":"Sicile"
+            }
+         },
+         "Spanien":{
+            "labels":{
+               "de":"Spanien",
+               "en":"Spain",
+               "fr":"Espagne"
+            }
+         },
+         "Tripolitanien":{
+            "labels":{
+               "de":"Tripolitanien",
+               "en":"Tripolitania",
+               "fr":"Tripolitaine"
+            }
+         },
+         "Tunesien":{
+            "labels":{
+               "de":"Tunesien",
+               "en":"Tunesia",
+               "fr":"Tunesie"
+            }
+         },
+         "Nordtunesien":{
+            "labels":{
+               "de":"Nordtunesien",
+               "en":"Northern Tunisia",
+               "fr":"Tunisie-Nord"
+            }
+         },
+         "Südtunesien":{
+            "labels":{
+               "de":"Südtunesien",
+               "en":"Southern Tunisia",
+               "fr":"Tunisie Sud"
+            }
+         },
+         "Zentraltunesien":{
+            "labels":{
+               "de":"Zentraltunesien",
+               "en":"Central Tunisia",
+               "fr":"Tunisie Centrale"
+            }
+         },
+         "Südgallien":{
+            "labels":{
+               "de":"Südgallien",
+               "en":"South Gaul",
+               "fr":"Gaule Sud"
+            }
+         },
+         "Ostmittelmeerraum":{
+            "labels":{
+               "de":"Ostmittelmeerraum",
+               "en":"Eastern Mediterranean",
+               "fr":"Méditerranée orientale"
+            }
+         },
+         "Ägäis":{
+            "labels":{
+               "de":"Ägäis",
+               "en":"Aegean",
+               "fr":"Egée"
+            }
+         },
+         "Westgriechenland":{
+            "labels":{
+               "de":"Westgriechenland",
+               "en":"Western Greece",
+               "fr":"Grèce occidentale"
+            }
+         },
+         "Zypern":{
+            "labels":{
+               "de":"Zypern",
+               "en":"Cyprus",
+               "fr":"Chypre"
+            }
+         }
+      },
+      "order":[
+         "lokal",
+         "lokal/regional",
+         "regional",
+         "Nordafrika",
+         "Tunesien",
+         "Nordtunesien",
+         "Südtunesien",
+         "Zentraltunesien",
+         "Karthago",
+         "Byzacena",
+         "Tripolitanien",
+         "Italien",
+         "Adria",
+         "Etrurien",
+         "Kampanien",
+         "Kalabrien",
+         "Sardinien",
+         "Sizilien",
+         "Gallien",
+         "Südgallien",
+         "Spanien",
+         "Baetika",
+         "Lusitanien",
+         "Tarraconensis",
+         "Malta",
+         "Ägypten",
+         "Attika",
+         "Ägäis",
+         "Ionien",
+         "Korinth",
+         "Rhodos",
+         "Kleinasien",
+         "Levante",
+         "Ostmittelmeerraum",
+         "Westgriechenland",
+         "Zypern"
+      ]
+   },
+   "periods-bourgou":{
+      "creationDate":"2021",
+      "createdBy":"Heike Möller",
+      "description":"Übernommen aus Meninx-1, angepasst an Bourgou",
+      "values":{
+         "Vorrömisch I. ca. 500 - 146 v. Chr. (punisch)":{
+            "labels":{
+               "de":"Vorrömisch I. ca. 500 - 146 v. Chr. (punisch)"
+            }
+         },
+         "Vorrömisch II. 146 - 31 v. Chr. (neopunisch)":{
+            "labels":{
+               "de":"Vorrömisch II. 146 - 31 v. Chr. (neopunisch)"
+            }
+         },
+         "Frühe Kaiserzeit. 31 v. Chr. - 69 n. Chr. (augusteisch / iulisch-claudisch)":{
+            "labels":{
+               "de":"Frühe Kaiserzeit. 31 v. Chr. - 69 n. Chr. (augusteisch / iulisch-claudisch)"
+            }
+         },
+         "Mittlere Kaiserzeit I. ca. 69 - 117 n. Chr. (flavisch - trajanisch)":{
+            "labels":{
+               "de":"Mittlere Kaiserzeit I. ca. 69 - 117 n. Chr. (flavisch - trajanisch)"
+            }
+         },
+         "Mittlere Kaiserzeit II. 117 - 235 n. Chr. (hadrianisch - severisch)":{
+            "labels":{
+               "de":"Mittlere Kaiserzeit II. 117 - 235 n. Chr. (hadrianisch - severisch)"
+            }
+         },
+         "Späte Kaiserzeit. 235 - 306 n. Chr. (Soldatenkaiser - tetrarchisch)":{
+            "labels":{
+               "de":"Späte Kaiserzeit. 235 - 306 n. Chr. (Soldatenkaiser - tetrarchisch)"
+            }
+         },
+         "Spätantike I.  306 - 530 n. Chr. (konstantinisch - vandalisch)":{
+            "labels":{
+               "de":"Spätantike I.  306 - 530 n. Chr. (konstantinisch - vandalisch)"
+            }
+         },
+         "Spätantike II. 530 - 698 n. Chr. (byzantinisch)":{
+            "labels":{
+               "de":"Spätantike II. 530 - 698 n. Chr. (byzantinisch)"
+            }
+         },
+         "Phase 1":{
+            "labels":{
+               "de":"Phase 1"
+            }
+         },
+         "Phase 2":{
+            "labels":{
+               "de":"Phase 2"
+            }
+         },
+         "Phase 3":{
+            "labels":{
+               "de":"Phase 3"
+            }
+         },
+         "Phase 4":{
+            "labels":{
+               "de":"Phase 4"
+            }
+         },
+         "Phase 5":{
+            "labels":{
+               "de":"Phase 5"
+            }
+         },
+         "Phase 6":{
+            "labels":{
+               "de":"Phase 6"
+            }
+         },
+         "Phase 7":{
+            "labels":{
+               "de":"Phase 7"
+            }
+         },
+         "Phase 8":{
+            "labels":{
+               "de":"Phase 8"
+            }
+         },
+         "Phase 9":{
+            "labels":{
+               "de":"Phase 9"
+            }
+         },
+         "Phase 10":{
+            "labels":{
+               "de":"Phase 10"
+            }
+         }
+      },
+      "order":[
+         "Phase 1",
+         "Phase 2",
+         "Phase 3",
+         "Phase 4",
+         "Phase 5",
+         "Phase 6",
+         "Phase 7",
+         "Phase 8",
+         "Phase 9",
+         "Phase 10",
+         "Vorrömisch I. ca. 500 - 146 v. Chr. (punisch)",
+         "Vorrömisch II. 146 - 31 v. Chr. (neopunisch)",
+         "Frühe Kaiserzeit. 31 v. Chr. - 69 n. Chr. (augusteisch / iulisch-claudisch)",
+         "Mittlere Kaiserzeit I. ca. 69 - 117 n. Chr. (flavisch - trajanisch)",
+         "Mittlere Kaiserzeit II. 117 - 235 n. Chr. (hadrianisch - severisch)",
+         "Späte Kaiserzeit. 235 - 306 n. Chr. (Soldatenkaiser - tetrarchisch)",
+         "Spätantike I.  306 - 530 n. Chr. (konstantinisch - vandalisch)",
+         "Spätantike II. 530 - 698 n. Chr. (byzantinisch)"
+      ]
+   },
+   "Brick-decorationTechnique-bourgou":{
+      "creationDate":"2021",
+      "createdBy":"Hanna Hamel;Heike Möller",
+      "description":"Nach Werteliste Gadara mit leichter Anpassung an Bourgou",
+      "values":{
+         "Flechtwerkabdruck":{
+            "labels":{
+               "de":"Flechtwerkabdruck",
+               "en":"mat pressed",
+               "fr":"mat pressée"
+            }
+         },
+         "Fingerabdruck":{
+            "labels":{
+               "de":"Fingerabdruck",
+               "en":"finger impressions",
+               "fr":"empreinte digitale"
+            }
+         },
+         "Barbotin":{
+            "labels":{
+               "de":"Barbotin",
+               "en":"Barbotin",
+               "fr":"Barbotin"
+            }
+         },
+         "Kammritzung":{
+            "labels":{
+               "de":"Kammritzung",
+               "en":"combed decoration",
+               "fr":"Décoration de peigne"
+            }
+         },
+         "Rädchenverzierung":{
+            "labels":{
+               "de":"Rädchenverzierung",
+               "en":"rouletting",
+               "fr":"guilloche"
+            }
+         },
+         "Ratterdekor":{
+            "labels":{
+               "de":"Ratterdekor",
+               "en":"rouletting",
+               "fr":"guilloche"
+            }
+         },
+         "Reliefdekor":{
+            "labels":{
+               "de":"Reliefdekor",
+               "en":"relief decoration",
+               "fr":"Décor en relief"
+            }
+         },
+         "Riefeldekor":{
+            "labels":{
+               "de":"Riefeldekor",
+               "en":"grooved decoration",
+               "fr":"decor en rainuré"
+            }
+         },
+         "Ritzungen":{
+            "labels":{
+               "de":"Ritzungen",
+               "en":"scratched decoration",
+               "fr":"Décor de scribe"
+            }
+         },
+         "Sonstige Abdrücke":{
+            "labels":{
+               "de":"Sonstige Abdrücke",
+               "en":"other impressions",
+               "fr":"autres impressions"
+            }
+         },
+         "Stempel":{
+            "labels":{
+               "de":"Stempel",
+               "en":"stamped decoration",
+               "fr":"Timbre"
+            }
+         }
+      },
+      "order":[
+         "Barbotin",
+         "Rädchenverzierung",
+         "Ratterdekor",
+         "Stempel",
+         "Reliefdekor",
+         "Riefeldekor",
+         "Ritzungen",
+         "Kammritzung",
+         "Fingerabdruck",
+         "Flechtwerkabdruck",
+         "Sonstige Abdrücke"
+      ]
+   },
+   "Pottery-specificType-bourgou":{
+      "creationDate":"2021",
+      "createdBy":"Heike Möller, Hanna Hamel DAI 2021",
+      "description":{
+         "de":"Gundlegende Gefäßform. Einteilung entsprechend Typenkatalog - siehe Typenkatalog Bourgou",
+         "fr":""
+      },
+      "values":{
+         "Geschl. Gefäß":{
+            "labels":{
+               "de":"Geschl. Gefäß",
+               "fr":"FERM"
+            }
+         },
+         "Offenes Gefäß":{
+            "labels":{
+               "de":"Offenes Gefäß",
+               "fr":"OUV"
+            }
+         },
+         "Boden":{
+            "labels":{
+               "de":"Boden",
+               "fr":"F"
+            }
+         },
+         "Amphora":{
+            "labels":{
+               "de":"Amphora",
+               "fr":"A"
+            }
+         },
+         "Schüssel":{
+            "labels":{
+               "de":"Schüssel",
+               "fr":"BAS"
+            }
+         },
+         "Schale":{
+            "labels":{
+               "de":"Schale",
+               "fr":"BOL"
+            }
+         },
+         "Flasche":{
+            "labels":{
+               "de":"Flasche",
+               "fr":"BOT"
+            }
+         },
+         "Kasserolle":{
+            "labels":{
+               "de":"Kasserolle",
+               "fr":"CAS"
+            }
+         },
+         "Napf":{
+            "labels":{
+               "de":"Napf",
+               "fr":"COP"
+            }
+         },
+         "Deckel":{
+            "labels":{
+               "de":"Deckel",
+               "fr":"COU"
+            }
+         },
+         "Krug/Kanne":{
+            "labels":{
+               "de":"Krug/Kanne",
+               "fr":"CRU"
+            }
+         },
+         "Vorratsgefäß":{
+            "labels":{
+               "de":"Vorratsgefäß",
+               "fr":"JAR"
+            }
+         },
+         "Kohlebecken":{
+            "labels":{
+               "de":"Kohlebecken",
+               "fr":"KAN"
+            }
+         },
+         "Topf":{
+            "labels":{
+               "de":"Topf",
+               "fr":"MAR"
+            }
+         },
+         "Mortaria":{
+            "labels":{
+               "de":"Reibschüssel",
+               "fr":"MOR"
+            }
+         },
+         "Teller/Pfanne":{
+            "labels":{
+               "de":"Teller/Pfanne",
+               "fr":"PLA"
+            }
+         },
+         "Tajine":{
+            "labels":{
+               "de":"Tajine",
+               "fr":"TAJ"
+            }
+         }
+      },
+      "order":[
+         "Geschl. Gefäß",
+         "Offenes Gefäß",
+         "Schüssel",
+         "Schale",
+         "Napf",
+         "Deckel",
+         "Krug/Kanne",
+         "Flasche",
+         "Vorratsgefäß",
+         "Amphora",
+         "Kochtopf",
+         "Kasserolle",
+         "Teller/Pfanne",
+         "Mortaria",
+         "Tajine",
+         "Stövchen"
+      ]
+   },
+   "Pottery-typeNumber-bourgou":{
+      "createdBy":"Heike Möller",
+      "creationDate":"2021",
+      "description":{
+         "de":"Typen nach Typenkatalog Bourgou",
+         "en":""
+      },
+      "values":{
+         "HB BASK 1":{
+            
+         },
+         "HB BASK 1-2":{
+            
+         },
+         "HB BASK 2":{
+            
+         },
+         "HB BASK 3":{
+            
+         },
+         "HB BOL 1":{
+            
+         },
+         "HB BOL 2":{
+            
+         },
+         "HB BOL 3":{
+            
+         },
+         "HB BOL 4":{
+            
+         },
+         "HB BOL 5":{
+            
+         },
+         "HB BOL 6":{
+            
+         },
+         "HB BOL 6-7":{
+            
+         },
+         "HB BOL 7":{
+            
+         },
+         "HB BOL 8":{
+            
+         },
+         "HB JAR 10":{
+            
+         },
+         "HB MAR 1":{
+            
+         },
+         "HB MAR 2":{
+            
+         },
+         "HB MAR 3":{
+            
+         },
+         "HB MAR 4":{
+            
+         },
+         "HB PLA 2":{
+            
+         },
+         "HB TAJ 1":{
+            
+         },
+         "HB TAJ 2":{
+            
+         },
+         "HB F1":{
+            
+         },
+         "HB F2.1":{
+            
+         },
+         "HB F2.2":{
+            
+         },
+         "HB F3":{
+            
+         },
+         "HB F4":{
+            
+         },
+         "HB F5":{
+            
+         },
+         "HB F6":{
+            
+         },
+         "SUA16, 131 Abb. 3.45, 290432-5, 290421-1":{
+            
+         },
+         "SB 7j":{
+            
+         },
+         "SB 9b":{
+            
+         },
+         "SB 9c":{
+            
+         },
+         "SB 9d":{
+            
+         },
+         "SB 9f":{
+            
+         },
+         "SB 9l":{
+            
+         },
+         "SB 37":{
+            
+         },
+         "SB 52":{
+            
+         },
+         "SB 80":{
+            
+         },
+         "SB 91":{
+            
+         },
+         "SB 91 spät":{
+            
+         },
+         "SB 95":{
+            
+         },
+         "SB 96":{
+            
+         },
+         "SB 100":{
+            
+         },
+         "SB 101":{
+            
+         },
+         "SB 104":{
+            
+         },
+         "SB 104 var":{
+            
+         },
+         "SB 116":{
+            
+         },
+         "SB 118":{
+            
+         },
+         "SB 120":{
+            
+         },
+         "SB 132":{
+            
+         },
+         "SB 145":{
+            
+         },
+         "SB 157":{
+            
+         },
+         "SB 162":{
+            
+         },
+         "SB 180":{
+            
+         },
+         "SB 207":{
+            
+         },
+         "SB 208 var":{
+            
+         },
+         "SB 212":{
+            
+         },
+         "SB 215":{
+            
+         },
+         "SB 221":{
+            
+         },
+         "SB 240":{
+            
+         },
+         "SB 243":{
+            
+         },
+         "SB 256":{
+            
+         },
+         "SB 259":{
+            
+         },
+         "SB 285":{
+            
+         },
+         "SB 326":{
+            
+         },
+         "SB 352":{
+            
+         },
+         "SB 385":{
+            
+         },
+         "SB 391":{
+            
+         },
+         "SB 393":{
+            
+         },
+         "FO 3.1.1":{
+            
+         },
+         "SBT12 42.2":{
+            
+         },
+         "SB 153/Imit OS II.306":{
+            
+         },
+         "PP 2":{
+            
+         },
+         "Imit Pomp. Pl.":{
+            
+         },
+         "HA 181.1":{
+            
+         },
+         "HA 181B":{
+            
+         },
+         "HA 182B":{
+            
+         },
+         "HA 183/BO 17":{
+            
+         },
+         "HA 183A":{
+            
+         },
+         "HA 196":{
+            
+         },
+         "HA 2/3":{
+            
+         },
+         "HA 3A":{
+            
+         },
+         "HA 20":{
+            
+         },
+         "HA94, 30.173":{
+            
+         },
+         "Imit. CSP 21":{
+            
+         },
+         "Imit. CSP 33":{
+            
+         },
+         "Imit. LA 7":{
+            
+         },
+         "LA 22":{
+            
+         },
+         "MAY 35":{
+            
+         },
+         "DRAGD 18":{
+            
+         },
+         "DRAGD 27":{
+            
+         },
+         "DRAGD 27B/C":{
+            
+         },
+         "DRAGD 27C":{
+            
+         },
+         "ION B2":{
+            
+         },
+         "SB 228/DRAM 2":{
+            
+         },
+         "SB 153/BAT 6c":{
+            
+         },
+         "DR 2-4":{
+            
+         },
+         "DR 7/11":{
+            
+         },
+         "GAS Rf 3":{
+            
+         },
+         "GAS Rf 6":{
+            
+         },
+         "GAU 4":{
+            
+         },
+         "NUR 1":{
+            
+         },
+         "RAM T-4.1.1.3":{
+            
+         }
+      },
+      "order":[
+         "HB BASK 1",
+         "HB BASK 1-2",
+         "HB BASK 2",
+         "HB BASK 3",
+         "HB BOL 1",
+         "HB BOL 2",
+         "HB BOL 3",
+         "HB BOL 4",
+         "HB BOL 5",
+         "HB BOL 6",
+         "HB BOL 6-7",
+         "HB BOL 7",
+         "HB BOL 8",
+         "HB JAR 10",
+         "HB MAR 1",
+         "HB MAR 2",
+         "HB MAR 3",
+         "HB MAR 4",
+         "HB PLA 2",
+         "HB TAJ 1",
+         "HB TAJ 2",
+         "HB F1",
+         "HB F2.1",
+         "HB F2.2",
+         "HB F3",
+         "HB F4",
+         "HB F5",
+         "HB F6",
+         "SUA16, 131 Abb. 3.45, 290432-5, 290421-1",
+         "SB 7j",
+         "SB 9b",
+         "SB 9c",
+         "SB 9d",
+         "SB 9f",
+         "SB 9l",
+         "SB 37",
+         "SB 52",
+         "SB 80",
+         "SB 91",
+         "SB 91 spät",
+         "SB 95",
+         "SB 96",
+         "SB 100",
+         "SB 101",
+         "SB 104",
+         "SB 104 var",
+         "SB 116",
+         "SB 118",
+         "SB 120",
+         "SB 132",
+         "SB 145",
+         "SB 153/BAT 6c",
+         "SB 157",
+         "SB 162",
+         "SB 180",
+         "SB 207",
+         "SB 208 var",
+         "SB 212",
+         "SB 215",
+         "SB 221",
+         "SB 228/DRAM 2",
+         "SB 240",
+         "SB 243",
+         "SB 256",
+         "SB 259",
+         "SB 285",
+         "SB 326",
+         "SB 352",
+         "SB 385",
+         "SB 391",
+         "SB 393",
+         "FO 3.1.1",
+         "SBT12 42.2",
+         "Imit OS II.306/SB 153",
+         "PP 2",
+         "Imit Pomp. Pl.",
+         "HA 181.1",
+         "HA 181B",
+         "HA 182B",
+         "HA 183/BO 17",
+         "HA 183A",
+         "HA 196",
+         "HA 2/3",
+         "HA 3A",
+         "HA 20",
+         "HA94, 30.173",
+         "Imit. CSP 21",
+         "Imit. CSP 33",
+         "Imit. LA 7",
+         "LA 22",
+         "MAY 35",
+         "DRAGD 18",
+         "DRAGD 27",
+         "DRAGD 27B/C",
+         "DRAGD 27C",
+         "ION B2",
+         "DR 2-4",
+         "DR 7/11",
+         "GAS Rf 3",
+         "GAS Rf 6",
+         "GAU 4",
+         "NUR 1",
+         "RAM T-4.1.1.3"
+      ]
+   },
+   "Pottery-materialType-bourgou":{
+      "creationDate":"2021",
+      "createdBy":"Heike Möller, Hanna Hamel; DAI",
+      "description":{
+         "de":"Kategorisierung der Keramik. Einteilung wie Typenkatalog - siehe Typenkatalog Bourgou",
+         "fr":""
+      },
+      "values":{
+         "Afrikanische Sigillata (ARS)":{
+            "labels":{
+               "de":"Afrikanische Sigillata (ARS)",
+               "fr":"V AER"
+            }
+         },
+         "Afrik. Schwarzfirnis":{
+            "labels":{
+               "de":"Afrik. Schwarzfirnis",
+               "fr":"V AEN"
+            }
+         },
+         "Afrik. Schwarzfirnis pun.":{
+            "labels":{
+               "de":"Afrik. Schwarzfirnis pun.",
+               "fr":"V AEN PUN"
+            }
+         },
+         "Dünnwandkeramik":{
+            "labels":{
+               "de":"Dünnwandkeramik",
+               "fr":"V PFI"
+            }
+         },
+         "Südgallische Sigillata":{
+            "labels":{
+               "de":"Südgallische Sigillata",
+               "fr":"V SSG"
+            }
+         },
+         "Italische Sigillata":{
+            "labels":{
+               "de":"Italische Sigillata",
+               "fr":"V SIT"
+            }
+         },
+         "Eastern Sigillata A (ESA)":{
+            "labels":{
+               "de":"Eastern Sigillata A (ESA)",
+               "fr":"V SOR"
+            }
+         },
+         "Campana A":{
+            "labels":{
+               "de":"Campana A",
+               "fr":"V CAM A"
+            }
+         },
+         "Campana B":{
+            "labels":{
+               "de":"Campana B",
+               "fr":"V CAM B"
+            }
+         },
+         "Campana B-O":{
+            "labels":{
+               "de":"Campana B-O",
+               "fr":"V CAM B-O"
+            }
+         },
+         "Campana C":{
+            "labels":{
+               "de":"Campana C",
+               "fr":"V CAM C"
+            }
+         },
+         "Attische Feinkeramik":{
+            "labels":{
+               "de":"Attische Feinkeramik",
+               "fr":"V ATT"
+            }
+         },
+         "Freigeformte Ware":{
+            "labels":{
+               "de":"Freigeformte Ware div.",
+               "fr":"V MOD"
+            }
+         },
+         "Calcitic Ware":{
+            "labels":{
+               "de":"Calcitic Ware",
+               "fr":"V MOD C"
+            }
+         },
+         "Korbgeformte Ware":{
+            "labels":{
+               "de":"Korbgeformte Ware",
+               "fr":"V MOD F"
+            }
+         },
+         "Freigeformte Ware ital.":{
+            "labels":{
+               "de":"Freigeformte Ware ital.",
+               "fr":"V MOD ITA"
+            }
+         },
+         "Freigeformte Ware pantel.":{
+            "labels":{
+               "de":"Freigeformte Ware pantel.",
+               "fr":"V MOD P"
+            }
+         },
+         "Freigeformte Ware div.":{
+            "labels":{
+               "de":"Freigeformte Ware div.",
+               "fr":"V MOD IND"
+            }
+         },
+         "Afrikanische Schlichte Ware":{
+            "labels":{
+               "de":"Afrikanische Schlichte Ware",
+               "fr":"V CAA"
+            }
+         },
+         "Afrik. Schlichte Ware eisenztl.":{
+            "labels":{
+               "de":"Afrik. Schlichte Ware eisenztl.",
+               "fr":"V CAA FER"
+            }
+         },
+         "Afrik. Schlichte Ware pun.":{
+            "labels":{
+               "de":"Afrik. Schlichte Ware pun.",
+               "fr":"V CAA PUN"
+            }
+         },
+         "Afrik. Schlichte Ware trip.":{
+            "labels":{
+               "de":"Afrik. Schlichte Ware trip.",
+               "fr":"V CAA T"
+            }
+         },
+         "Schlichte Ware ital.":{
+            "labels":{
+               "de":"Schlichte Ware ital.",
+               "fr":"V CITA"
+            }
+         },
+         "Schlichte Ware lev.":{
+            "labels":{
+               "de":"Schlichte Ware lev.",
+               "fr":"V CLEA"
+            }
+         },
+         "Schlichte Ware ion.":{
+            "labels":{
+               "de":"Schlichte Ware ion.",
+               "fr":"V CIOA"
+            }
+         },
+         "Schlichte Ware div.":{
+            "labels":{
+               "de":"Schlichte Ware div.",
+               "fr":"V CINDA"
+            }
+         },
+         "Afrikanische Küchenware":{
+            "labels":{
+               "de":"Afrikanische Küchenware",
+               "fr":"V CAF"
+            }
+         },
+         "Afrik. Küchenware trip.":{
+            "labels":{
+               "de":"Afrik. Küchenware trip.",
+               "fr":"V CAF CT"
+            }
+         },
+         "Afrik. Küchenware pun.":{
+            "labels":{
+               "de":"Afrik. Küchenware pun.",
+               "fr":"V CAF PUN"
+            }
+         },
+         "Küchenware ital.":{
+            "labels":{
+               "de":"Küchenware ital.",
+               "fr":"V CIT"
+            }
+         },
+         "Küchenware ion.":{
+            "labels":{
+               "de":"Küchenware ion.",
+               "fr":"V COR"
+            }
+         },
+         "Küchenware div.":{
+            "labels":{
+               "de":"Küchenware div.",
+               "fr":"V CIND"
+            }
+         },
+         "Amphora div.":{
+            "labels":{
+               "de":"Amphora div.",
+               "fr":"A IND"
+            }
+         },
+         "Afrikanische Amphora":{
+            "labels":{
+               "de":"Afrikanische Amphora",
+               "fr":"A AFR"
+            }
+         },
+         "Punische Amphora":{
+            "labels":{
+               "de":"Punische Amphora",
+               "fr":"A PUN"
+            }
+         },
+         "Neopunische Amphora":{
+            "labels":{
+               "de":"Neopunische Amphora",
+               "fr":"A NPU"
+            }
+         },
+         "Nuraghische Amphora":{
+            "labels":{
+               "de":"Nuraghische Amphora",
+               "fr":"A NUR"
+            }
+         },
+         "Baetische Amphora":{
+            "labels":{
+               "de":"Baetische Amphora",
+               "fr":"A Bet"
+            }
+         },
+         "Etruskische Amphora":{
+            "labels":{
+               "de":"Etruskische Amphora",
+               "fr":"A ETR"
+            }
+         },
+         "Italische Amphora":{
+            "labels":{
+               "de":"Italische Amphora",
+               "fr":"A ITA"
+            }
+         },
+         "Gallische Amphora":{
+            "labels":{
+               "de":"Gallische Amphora",
+               "fr":"A GAU"
+            }
+         },
+         "Westgriechische Amphora":{
+            "labels":{
+               "de":"Westgriechische Amphora",
+               "fr":"A MGR"
+            }
+         },
+         "Ostmediterrane Amphora":{
+            "labels":{
+               "de":"Ostmediterrane Amphora",
+               "fr":"A ORI"
+            }
+         }
+      },
+      "order":[
+         "Afrikanische Sigillata (ARS)",
+         "Afrik. Schwarzfirnis",
+         "Afrik. Schwarzfirnis pun.",
+         "Dünnwandkeramik",
+         "Südgallische Sigillata",
+         "Italische Sigillata",
+         "Eastern Sigillata A (ESA)",
+         "Campana A",
+         "Campana B",
+         "Campana B-O",
+         "Campana C",
+         "Attische Feinkeramik",
+         "Freigeformte Ware",
+         "Korbgeformte Ware",
+         "Calcitic Ware",
+         "Freigeformte Ware ital.",
+         "Freigeformte Ware pantel.",
+         "Freigeformte Ware div.",
+         "Afrikanische Schlichte Ware",
+         "Afrik. Schlichte Ware eisenztl.",
+         "Afrik. Schlichte Ware pun.",
+         "Afrik. Schlichte Ware trip.",
+         "Schlichte Ware ital.",
+         "Schlichte Ware lev.",
+         "Schlichte Ware ion.",
+         "Schlichte Ware div.",
+         "Afrikanische Küchenware",
+         "Afrik. Küchenware pun.",
+         "Küchenware ital.",
+         "Küchenware ion.",
+         "Küchenware div.",
+         "Afrik. Amphora",
+         "Punische Amphora",
+         "Neopunische Amphora",
+         "Nuraghische Amphora",
+         "Baetische Amphora",
+         "Etruskische Amphora",
+         "Italische Amphora",
+         "Gallische Amphora",
+         "Italische Amphora",
+         "Westgriechische Amphora",
+         "Ostmediterrane Amphora",
+         "Amphora div."
+      ]
+   },
+   "Pottery-potteryTypeSpecific-bourgou":{
+      "createdBy":"Heike Möller, Hanna Hamel; DAI",
+      "creationDate":"2021",
+      "description":{
+         "de":"Nach Warenkatalog Bourgou",
+         "en":"",
+         "fr":""
+      },
+      "values":{
+         "ARS":{
+            
+         },
+         "ARS A":{
+            
+         },
+         "ARS A1":{
+            
+         },
+         "ARS AD":{
+            
+         },
+         "ARS C":{
+            
+         },
+         "ARS CE":{
+            
+         },
+         "ARS D":{
+            
+         },
+         "ARS E":{
+            
+         },
+         "ARS T":{
+            
+         },
+         "ARS konti.":{
+            
+         },
+         "Mod A":{
+            
+         },
+         "Mod B":{
+            
+         },
+         "Mod C":{
+            
+         },
+         "Mod F":{
+            
+         },
+         "Caa E":{
+            
+         },
+         "Caa R":{
+            
+         },
+         "CaaR-G1":{
+            
+         },
+         "CaaR-G2":{
+            
+         },
+         "CaaT-G1":{
+            
+         },
+         "CaaT-G2":{
+            
+         },
+         "Caf A":{
+            
+         },
+         "Caf B":{
+            
+         },
+         "CafB-G1":{
+            
+         },
+         "CafB-G2":{
+            
+         },
+         "Caf C":{
+            
+         },
+         "Caf CA":{
+            
+         },
+         "Caf CB":{
+            
+         },
+         "CafR":{
+            
+         },
+         "CafR-G1":{
+            
+         },
+         "Caf BT":{
+            
+         },
+         "Caf CT":{
+            
+         },
+         "AR-G1":{
+            
+         },
+         "AR-G2":{
+            
+         },
+         "Imp":{
+            
+         },
+         "ImpSSG":{
+            
+         },
+         "ImpSIT":{
+            
+         },
+         "ImpVN-Att":{
+            
+         },
+         "ImpMod-Ita":{
+            
+         },
+         "ImpMod-Ita-PANT":{
+            
+         },
+         "ImpCA-div":{
+            
+         },
+         "ImpCA-Ita":{
+            
+         },
+         "ImpCC-div":{
+            
+         },
+         "ImpCC-Ita":{
+            
+         },
+         "ImpCC-Ita-KAMP":{
+            
+         },
+         "ImpCC-Lev":{
+            
+         },
+         "ImpA-div":{
+            
+         },
+         "ImpA-Bet":{
+            
+         },
+         "ImpA-Etr":{
+            
+         },
+         "ImpA-Gau":{
+            
+         },
+         "ImpA-Ita":{
+            
+         },
+         "ImpA-Ita-KALB":{
+            
+         },
+         "ImpA-Ita-KAMP":{
+            
+         },
+         "ImpA-Ita-SARD":{
+            
+         },
+         "ImpA-Mgr":{
+            
+         },
+         "ImpA-Ori":{
+            
+         }
+      },
+      "order":[
+         "ARS",
+         "ARS A",
+         "ARS A1",
+         "ARS AD",
+         "ARS C",
+         "ARS CE",
+         "ARS D",
+         "ARS E",
+         "ARS T",
+         "ARS konti.",
+         "Mod A",
+         "Mod B",
+         "Mod C",
+         "Mod F",
+         "Caa E",
+         "Caa R",
+         "CaaR-G1",
+         "CaaR-G2",
+         "CaaT-G1",
+         "CaaT-G2",
+         "Caf A",
+         "Caf B",
+         "CafB-G1",
+         "CafB-G2",
+         "Caf C",
+         "Caf CA",
+         "Caf CB",
+         "CafR",
+         "CafR-G1",
+         "Caf BT",
+         "Caf CT",
+         "AR-G1",
+         "AR-G2",
+         "Imp",
+         "ImpVN-Att",
+         "ImpSSG",
+         "ImpSIT",
+         "ImpMod-Ita",
+         "ImpMod-Ita-PANT",
+         "ImpCA-div",
+         "ImpCA-Ita",
+         "ImpCC-div",
+         "ImpCC-Ita",
+         "ImpCC-Ita-KAMP",
+         "ImpCC-Lev",
+         "ImpA-div",
+         "ImpA-Bet",
+         "ImpA-Etr",
+         "ImpA-Gau",
+         "ImpA-Ita",
+         "ImpA-Ita-KALB",
+         "ImpA-Ita-KAMP",
+         "ImpA-Ita-SARD",
+         "ImpA-Mgr",
+         "ImpA-Ori"
+      ]
+   },
+   "Pottery-vesselpart-bourgou":{
+      "createdBy":"Heike Möller, Hanna Hamel DAI 2021",
+      "creationDate":"2021",
+      "description":{
+         "de":"Nach Werteliste Gadara mit Ergänzungen für Bourgou",
+         "en":"",
+         "fr":""
+      },
+      "values":{
+         "WF":{
+            "labels":{
+               "de":"WF",
+               "en":"WF",
+               "fr":"P"
+            }
+         },
+         "RF":{
+            "labels":{
+               "de":"RF",
+               "en":"RF",
+               "fr":"B"
+            }
+         },
+         "BF":{
+            "labels":{
+               "de":"BF",
+               "en":"BF",
+               "fr":"F"
+            }
+         },
+         "H":{
+            "labels":{
+               "de":"H",
+               "en":"H",
+               "fr":"A"
+            }
+         },
+         "vollst. Profil":{
+            "labels":{
+               "de":"vollst. Profil",
+               "en":"COMP",
+               "fr":"C"
+            }
+         },
+         "ganzes Gefäß":{
+            "labels":{
+               "de":"ganzes Gefäß",
+               "en":"VAR",
+               "fr":"E"
+            }
+         }
+      },
+      "order":[
+         "WF",
+         "RF",
+         "BF",
+         "H",
+         "vollst. Profil",
+         "ganzes Gefäß"
+      ]
+   },
+   "Pottery-coatTpe-bourgou":{
+      "createdBy":"Heike Möller, Hanna Hamel",
+      "creationDate":"2021",
+      "description":{
+         "de":"Werteliste Gadara übernommen mit Ergänzungen für Bourgou",
+         "en":""
+      },
+      "values":{
+         "unbehandelt":{
+            "labels":{
+               "de":"unbehandelt",
+               "en":"untreated",
+               "fr":"non traitée"
+            }
+         },
+         "verloren":{
+            "labels":{
+               "de":"verloren",
+               "en":"lost",
+               "fr":"perdue"
+            }
+         },
+         "geglättet":{
+            "labels":{
+               "de":"geglättet",
+               "en":"smoothed",
+               "fr":"lissée"
+            }
+         },
+         "fleckig":{
+            "labels":{
+               "de":"fleckig",
+               "en":"wet coated",
+               "fr":"tachée"
+            }
+         },
+         "verstrichen":{
+            "labels":{
+               "de":"verstrichen",
+               "en":"wet coated",
+               "fr":"étalée"
+            }
+         },
+         "glatt verstrichen":{
+            "labels":{
+               "de":"glatt verstrichen",
+               "en":"wet coated",
+               "fr":"bien étalée"
+            }
+         },
+         "rau verstrichen":{
+            "labels":{
+               "de":"rau verstrichen",
+               "en":"rough coated",
+               "fr":"rugueuse"
+            }
+         },
+         "poliert":{
+            "labels":{
+               "de":"poliert",
+               "en":"polished",
+               "fr":"polie"
+            }
+         },
+         "metallisch glänzend":{
+            "labels":{
+               "de":"metallisch glänzend",
+               "en":"metallic shiny",
+               "fr":"metallescente"
+            }
+         },
+         "Überzug":{
+            "labels":{
+               "de":"Überzug",
+               "en":"coat",
+               "fr":"Engobe"
+            }
+         },
+         "Scum":{
+            "labels":{
+               "de":"Scum",
+               "en":"scum",
+               "fr":"Scum"
+            }
+         },
+         "glasiert":{
+            "labels":{
+               "de":"glasiert",
+               "en":"glazed",
+               "fr":"glaçurée"
+            }
+         },
+         "bemalt":{
+            "labels":{
+               "de":"bemalt",
+               "en":"painted",
+               "fr":"peinte"
+            }
+         }
+      },
+      "order":[
+         "verloren",
+         "unbehandelt",
+         "geglättet",
+         "fleckig",
+         "verstrichen",
+         "glatt verstrichen",
+         "rau verstrichen",
+         "poliert",
+         "metallisch glänzend",
+         "glasiert",
+         "bemalt",
+         "Überzug",
+         "Scum"
+      ]
+   },
+   "Pottery-rimTreatment-bourgou":{
+      "createdBy":"Heike Möller, Hanna Hamel",
+      "creationDate":"2021",
+      "description":{
+         "de":"Behandlung des Randes oder Boden, gemäß der Funde Bourgou",
+         "en":""
+      },
+      "values":{
+         "weiss":{
+            "labels":{
+               "de":"weiss",
+               "en":"white",
+               "fr":"blanc"
+            }
+         },
+         "graubraun":{
+            "labels":{
+               "de":"graubraun",
+               "en":"grey-brown",
+               "fr":"brun gris"
+            }
+         },
+         "hellbraun":{
+            "labels":{
+               "de":"hellbraun",
+               "en":"light-brown",
+               "fr":"brun clair"
+            }
+         },
+         "sekundär geschwärzt":{
+            "labels":{
+               "de":"sekundär geschwärzt",
+               "en":"secondary blackened",
+               "fr":"secondairem. noircie"
+            }
+         },
+         "geschwärzt":{
+            "labels":{
+               "de":"geschwärzt",
+               "en":"black-top",
+               "fr":"noircie"
+            }
+         }
+      }
+   },
+   "Pottery-coatColor-bourgou":{
+      "createdBy":"Heike Möller, Hanna Hamel",
+      "creationDate":"2021",
+      "description":{
+         "de":"entspricht der Werteliste von Gadara",
+         "en":""
+      },
+      "values":{
+         "verloren":{
+            "labels":{
+               "de":"verloren",
+               "en":"lost",
+               "fr":"perdue"
+            }
+         },
+         "beige":{
+            "labels":{
+               "de":"beige",
+               "en":"beige",
+               "fr":"beige"
+            }
+         },
+         "blass-":{
+            "labels":{
+               "de":"blass-",
+               "en":"pale-",
+               "fr":"pâle-"
+            }
+         },
+         "blau":{
+            "labels":{
+               "de":"blau",
+               "en":"blue",
+               "fr":"bleu"
+            }
+         },
+         "braun":{
+            "labels":{
+               "de":"braun",
+               "en":"brown",
+               "fr":"brune"
+            }
+         },
+         "cremefarben":{
+            "labels":{
+               "de":"cremefarben",
+               "en":"creme",
+               "fr":"crème"
+            }
+         },
+         "dunkel-":{
+            "labels":{
+               "de":"dunkel-",
+               "en":"dark-",
+               "fr":"foncé-"
+            }
+         },
+         "gelb":{
+            "labels":{
+               "de":"gelb",
+               "en":"yellow",
+               "fr":"jaune"
+            }
+         },
+         "glänzend":{
+            "labels":{
+               "de":"glänzend",
+               "en":"shiny",
+               "fr":"lustré"
+            }
+         },
+         "grau":{
+            "labels":{
+               "de":"grau",
+               "en":"grey",
+               "fr":"gris"
+            }
+         },
+         "grün":{
+            "labels":{
+               "de":"grün",
+               "en":"green",
+               "fr":"verde"
+            }
+         },
+         "hell-":{
+            "labels":{
+               "de":"hell-",
+               "en":"light-",
+               "fr":"clair-"
+            }
+         },
+         "leuchtend-":{
+            "labels":{
+               "de":"leuchtend-",
+               "en":"luminous-",
+               "fr":"vive-"
+            }
+         },
+         "ocker":{
+            "labels":{
+               "de":"ocker",
+               "en":"ocher",
+               "fr":"ocre"
+            }
+         },
+         "orange":{
+            "labels":{
+               "de":"orange",
+               "en":"orange",
+               "fr":"orange"
+            }
+         },
+         "rosa":{
+            "labels":{
+               "de":"rosa",
+               "en":"pink",
+               "fr":"rose"
+            }
+         },
+         "rot":{
+            "labels":{
+               "de":"rot",
+               "en":"red",
+               "fr":"rouge"
+            }
+         },
+         "schwarz":{
+            "labels":{
+               "de":"schwarz",
+               "en":"black",
+               "fr":"noir"
+            }
+         },
+         "türkis":{
+            "labels":{
+               "de":"türkis",
+               "en":"turquoise",
+               "fr":"turquoise"
+            }
+         },
+         "violett":{
+            "labels":{
+               "de":"violett",
+               "en":"purple",
+               "fr":"violette"
+            }
+         },
+         "weiß":{
+            "labels":{
+               "de":"weiß",
+               "en":"white",
+               "fr":"blanc"
+            }
+         }
+      }
+   },
+   "Find-amountDescription-bourgou":{
+      "createdBy":"Heike Möller, Hanna Hamel",
+      "creationDate":"2021",
+      "description":{
+         "de":"übernommen aus Werteliste Gadara und angepasst an Bourgou",
+         "en":"",
+         "fr":""
+      },
+      "values":{
+         "Stück":{
+            "labels":{
+               "de":"Stück",
+               "en":"piece",
+               "fr":"pièce"
+            }
+         },
+         "Eimer":{
+            "labels":{
+               "de":"Eimer",
+               "en":"bucket",
+               "fr":"seau"
+            }
+         },
+         "Kiste":{
+            "labels":{
+               "de":"Kiste",
+               "en":"box",
+               "fr":"caisse"
+            }
+         },
+         "Tüte":{
+            "labels":{
+               "de":"Tüte",
+               "en":"bag",
+               "fr":"sachet"
+            }
+         }
+      }
+   },
+   "Find-samplePl-bourgou":{
+      "createdBy":"Heike Möller, Hanna Hamel",
+      "creationDate":"17-08-2020",
+      "description":{
+         "de":"übernommen aus Werteliste Gadara und angepasst",
+         "en":"",
+         "fr":""
+      },
+      "values":{
+         "ausgeführt":{
+            "labels":{
+               "de":"ausgeführt",
+               "en":"exported",
+               "fr":"exporté"
+            }
+         },
+         "an Spezialist/Labor übergeben":{
+            "labels":{
+               "de":"an Spezialist/Labor übergeben",
+               "en":"handed over to specialist/laboratory",
+               "fr":"Remise aux spécialistes/laboratoire"
+            }
+         },
+         "zurückgeführt":{
+            "labels":{
+               "de":"zurückgeführt",
+               "en":"returned",
+               "fr":"ramené"
+            }
+         }
+      },
+      "order":[
+         "ausgeführt",
+         "an Spezialist/Labor übergeben",
+         "zurückgeführt"
+      ]
+   },
+   "Find-Store-bourgou":{
+      "createdBy":"Heike Möller, Hanna Hamel",
+      "creationDate":"2021",
+      "description":{
+         "de":"übernommen aus Werteliste Gadara und angepasst an Bourgou",
+         "en":"",
+         "fr":""
+      },
+      "values":{
+         "nicht aufbewahrt":{
+            "labels":{
+               "de":"nicht aufbewahrt",
+               "en":"dumped",
+               "fr":"jeté"
+            }
+         },
+         "Grabungshaus/Magazin":{
+            "labels":{
+               "de":"Grabungshaus/Magazin",
+               "en":"Dig house/Depot",
+               "fr":"Maison de fouille/Dépôt"
+            }
+         },
+         "Sonstiges": {
+            "labels":{
+               "de":"Sonstiges",
+               "en":"Other",
+               "fr":"Autres"
+            }
+         }
+      }
+   }
 }

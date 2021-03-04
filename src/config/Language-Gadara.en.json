@@ -1,0 +1,126 @@
+{
+  "categories": {
+    "Brick": {
+	  "createdBy": "Hanna Hamel",
+      "description": "Da hier nicht nur Ziegel, sondern auch andere Formen von Baukeramik erfasst werden (wie Tonrohre), ist die Bezeichnung Ziegel irreführend.",
+      "label": "Ceramic Building Material",
+      "fields": {
+        "clayColorOutside": {
+          "label": "Clay: color and intensity"
+        }
+        }
+    },
+	"Pottery": {
+	  "createdBy": "Hanna Hamel, 28.01.2021",
+      "description": "Um die Abkürzungen aus den Wertelisten aufzulösen, wurden hier eigene Beschreibungen eingefügt",
+      "fields": {
+        "specificType": {
+          "label": "form",
+		  "description": "B: cup, Bö: base, H: handle; Ka: jug, Kr: jar, Sa: bowl, Sü: basin, U: unguentaria, A: amphorae, D: lid, T: pot, P: pan, Ks: casserole"																																																	
+        },
+        "materialType": {
+          "label": "category of the pottery",
+          "description": "FK: fine and table ware (local and imported), GK: common ware (storage, preparation and transport vessels; local and imported), KK: kitchen ware (vessels primarily used for cooking)"
+        },
+		"vesselpart": {
+		  "label": "vesselpart",
+		  "description": "WF = wall fragment/body, RF = rim fragment, BF = base fragment, H = handle, L = lid, COMP = complete vessel profile, VAR = varia"
+		},
+		"potteryTypeSpecific": {
+		  "label": "fabric",
+		  "description": "clay determination (consult the catalogue of fabrics for description)"
+        }
+      }
+    },
+	"Stone": {
+      "label": "Stone",
+      "fields": {
+        "purpose": {
+          "label": "Purpose",
+		  "description": "Short description of the use of the object"
+        },
+        "treatment": {
+          "label": "Treatment",
+		  "description": "Selection of working marks on the surface of the object"
+        },
+        "workmanship": {
+          "label": "Workmanship",
+		  "description": "Description of the quality of the worked stone. If applicable, indication of visible tool marks or other markers for the execution of the handicraft work."
+        },
+        "architectureElement": {
+          "label": "Architectural element",
+		  "description": "Selection of the architectural component for which the object was made."
+        }
+      }
+    },
+	"Terracotta": {
+	  "label": "Clay find",
+      "fields": {
+	    "decorationTechnique": {
+		  "label": "Decoration technique"
+		  },
+		"objectType": {
+		  "label": "Type of object"
+		},
+		"coatInsideType": {
+          "label": "Surface treatment inside"
+		},
+		"coatOutsideType": {
+		  "label": "Surface treatment outside"
+		},
+		"potteryTypeSpecific": {
+		  "label": "Ware"		  }
+	  }
+	},
+	"Coin": {
+	  "fields": {
+	    "mintingRuler": {
+		"label": "Roman emperor",
+		"description": "Selection of the Roman emperor belonging to the coinage, if available."
+		}
+	  }
+	},
+	"Wood": {
+	  "fields": {
+	    "surfaceCondition": {
+		"label": "Preservation of the surface",
+		"description": "Description of the preservation of the surface. If necessary, select the most striking feature and add details in the description."
+		}
+	  }
+	},
+	"Glass": {
+	"fields": {
+		"vesselpart": {
+		  "label": "vesselpart",
+		  "description": "WF = wall fragment/body, RF = rim fragment, BF = base fragment, H = handle, L = lid, COMP = complete vessel profile, VAR = varia"
+		}
+      }
+	},
+	"Find": {
+	"fields": {
+		"sampleGadara": {
+		  "label": "Samples"
+		},
+		"sampleGadaraPlace": {
+		  "label": "Exported samples"
+		},
+		"sampleGadaraComm": {
+		  "label": "comment to sample"
+		},
+		"amountDescription": {
+		  "label": "Amount (unit)"
+		}
+	  }	
+	},
+	"PlasterFragment": {
+    "fields": {
+        "hasDecoration": {
+          "label": "Surface treatment"
+        },
+		"plasterType-Gadara": {
+		  "label": "Use of the plaster"
+        }
+	  }
+	}
+  }
+}

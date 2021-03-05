@@ -2739,6 +2739,22 @@
           <context context-type="linenumber">45</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="docedit.forms.literature.page" datatype="html">
+        <source>Seite:</source>
+        <target state="new">Seite:</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/docedit/core/forms/literature.html</context>
+          <context context-type="linenumber">49</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.forms.literature.figure" datatype="html">
+        <source>Abbildung:</source>
+        <target state="new">Abbildung:</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/docedit/core/forms/literature.html</context>
+          <context context-type="linenumber">53</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="docedit.forms.dating.bce" datatype="html">
         <source>v. Chr.</source>
         <target state="final">a.C.</target>
@@ -2883,7 +2899,7 @@
         <target state="final">Aggiungi...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dimension.html</context>
-          <context context-type="linenumber">17</context>
+          <context context-type="linenumber">16</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dimension.singleValue" datatype="html">
@@ -2891,7 +2907,7 @@
         <target state="final">Valore singolo</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dimension.html</context>
-          <context context-type="linenumber">35</context>
+          <context context-type="linenumber">34</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dimension.range" datatype="html">
@@ -2899,7 +2915,7 @@
         <target state="final">Area</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dimension.html</context>
-          <context context-type="linenumber">36</context>
+          <context context-type="linenumber">35</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dimension.asMeasuredBy" datatype="html">
@@ -2907,7 +2923,7 @@
         <target state="final">Misurato con</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dimension.html</context>
-          <context context-type="linenumber">60</context>
+          <context context-type="linenumber">59</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dimension.imprecise" datatype="html">
@@ -2915,7 +2931,7 @@
         <target state="final">Impreciso</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dimension.html</context>
-          <context context-type="linenumber">76</context>
+          <context context-type="linenumber">75</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dimension.comment" datatype="html">
@@ -2923,7 +2939,7 @@
         <target state="final">Commento:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dimension.html</context>
-          <context context-type="linenumber">82</context>
+          <context context-type="linenumber">81</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dropdownRange.from" datatype="html">
@@ -3435,6 +3451,22 @@
       <trans-unit id="util.literature.zenonId" datatype="html">
         <source>Zenon-ID</source>
         <target state="final">Zenon-ID</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/app.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="util.literature.page" datatype="html">
+        <source>Seite</source>
+        <target state="new">Seite</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/app.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="util.literature.figure" datatype="html">
+        <source>Abbildung</source>
+        <target state="new">Abbildung</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/app.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -4896,14 +4928,6 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="resources.map.layerMenu.unlinkedLayers" datatype="html">
-        <source>Unverknüpfte Layer</source>
-        <target state="new">Unverknüpfte Layer</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/resources/map/map/layers/layer-menu.component.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="resources.navigation.tooltips.deactivateExtendedSearchMode" datatype="html">
         <source>Erweiterten Suchmodus deaktivieren</source>
         <target state="final">Disattiva la modalità di ricerca avanzata</target>
@@ -5011,7 +5035,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/layers/layer-menu.html</context>
-          <context context-type="linenumber">29</context>
+          <context context-type="linenumber">23</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dating.html</context>
@@ -5019,11 +5043,11 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dimension.html</context>
-          <context context-type="linenumber">91</context>
+          <context context-type="linenumber">90</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/literature.html</context>
-          <context context-type="linenumber">57</context>
+          <context context-type="linenumber">65</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.saveModal.header" datatype="html">
@@ -5055,7 +5079,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/layers/layer-menu.html</context>
-          <context context-type="linenumber">23</context>
+          <context context-type="linenumber">29</context>
         </context-group>
       </trans-unit>
       <trans-unit id="buttons.discardChanges" datatype="html">
@@ -5242,11 +5266,11 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dimension.html</context>
-          <context context-type="linenumber">89</context>
+          <context context-type="linenumber">88</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/literature.html</context>
-          <context context-type="linenumber">53</context>
+          <context context-type="linenumber">61</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.projects.deleteProject.enterName" datatype="html">

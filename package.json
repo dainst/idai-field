@@ -111,7 +111,7 @@
     "express-pouchdb": "4.2.0",
     "extract-zip": "2.0.1",
     "geojson-rewind": "0.3.1",
-    "idai-components-2": "1.47.33",
+    "idai-components-2": "1.47.36",
     "jimp": "0.9.8",
     "leaflet": "1.6.0",
     "leaflet-imageoverlay-rotated": "0.1.1",

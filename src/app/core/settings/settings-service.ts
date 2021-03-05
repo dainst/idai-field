@@ -37,6 +37,7 @@ export const PROJECT_MAPPING = {
     'karthagocircus': { prefix: 'KarthagoCircus', label: 'Karthago Circus' },
     'selinunt': { prefix: 'Selinunt', label: 'Selinunt' },
     'olympia_sht': { prefix: 'Olympia', label: 'Olympia' },
+    'bourgou': { prefix: 'Bourgou', label: 'Henchir el Bourgu' },
     'milet': { prefix: 'Milet', label: 'Milet' }
 };
 

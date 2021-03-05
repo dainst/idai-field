@@ -20,6 +20,10 @@ $layer-menu-remove-button-color: #c82333;
   top: 10px;
   height: 41px;
   padding-top: 8px;
+
+  &.disabled {
+    opacity: 1;
+  }
 }
 
 #layer-menu {
@@ -77,6 +81,9 @@ $layer-menu-remove-button-color: #c82333;
         .layer-group-edit-button,
         .layer-group-save-button,
         .layer-group-cancel-button {
+          position: relative;
+          bottom: 2px;
+          left: 2px;
           float: right;
         }
 

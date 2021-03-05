@@ -41,9 +41,19 @@
                 <label i18n="@@docedit.forms.literature.quotation">Literaturzitat nach DAI-Richtlinien:</label>
                 <input [(ngModel)]="literature.quotation" class="form-control" name="quotation" type="text">
             </div>
-            <div class="form-group">
-                <label i18n="@@docedit.forms.literature.zenonId">Zenon-ID:</label>
-                <input [(ngModel)]="literature.zenonId" class="form-control" name="zenonId" type="text">
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label i18n="@@docedit.forms.literature.zenonId">Zenon-ID:</label>
+                    <input [(ngModel)]="literature.zenonId" class="form-control" name="zenonId" type="text">
+                </div>
+                <div class="form-group col-md-4">
+                    <label i18n="@@docedit.forms.literature.page">Seite:</label>
+                    <input [(ngModel)]="literature.page" class="form-control" name="page" type="text">
+                </div>
+                <div class="form-group col-md-4">
+                    <label i18n="@@docedit.forms.literature.figure">Abbildung:</label>
+                    <input [(ngModel)]="literature.figure" class="form-control" name="figure" type="text">
+                </div>
             </div>
         </div>
         <div class="card-footer" align="right">

@@ -18,7 +18,7 @@ export interface LayersInitializationResult {
 
 export interface LayerGroup {
 
-    document?: FieldDocument,
+    document: FieldDocument,
     layers: Array<ImageDocument>,
 }
 
@@ -122,7 +122,7 @@ export class LayerManager {
 
         await this.relationsManager.update(
             this.layerGroupInEditing.document,
-            this.originalLayerGroupInEditing.document
+            clone(this.originalLayerGroupInEditing.document)
         );
 
         this.layerGroupInEditing.document = this.originalLayerGroupInEditing.document;
@@ -206,7 +206,8 @@ export class LayerManager {
         const currentOperation: FieldDocument|undefined = this.viewFacade.getCurrentOperation();
         if (currentOperation) layerGroups.push(await this.createLayerGroup(currentOperation));
 
-        layerGroups.push(await this.createLayerGroup(await this.fieldDatastore.get('project')));
+        const projectGroup: LayerGroup = await this.createLayerGroup(await this.fieldDatastore.get('project'));
+        if (projectGroup.layers.length > 0 || layerGroups.length === 0) layerGroups.push(projectGroup);
 
         return layerGroups;
     }

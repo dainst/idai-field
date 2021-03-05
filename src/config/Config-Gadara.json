@@ -1,183 +1,90 @@
 {
-  "Project:default": {
-    "commons": [],
-    "fields": {},
-    "hidden": []
-  },
-  "Operation:default": {
-    "hidden": [],
-    "commons": [],
-    "fields": {}
-  },
-  "Survey:default": {
-    "commons": [
-      "dating"
-    ],
-    "fields": {},
-    "hidden": []
-  },
-  "SurveyUnit:default": {
-    "commons": [],
-    "fields": {},
-    "hidden": []
-  },
-  "Place:default": {
-    "commons": [],
-    "fields": {},
-    "hidden": []
-  },
-  "Area:default": {
-    "commons": [],
-    "fields": {},
-    "hidden": []
-  },
-  "Trench:default": {
-    "commons": [
-      "dating"
-    ],
-    "fields": {},
-    "hidden": []
-  },
-  "Building:default": {
-    "commons": [],
-    "valuelists": {
-      "period": "periods-gadara"
-    },
-    "fields": {},
-    "hidden": []
-  },
-  "BuildingPart:default": {
-    "commons": [],
-    "fields": {},
-    "hidden": []
-  },
-  "Find:default": {
-    "hidden": ["bibliography", "catalogueNumber", "conditionComment", "conditionPercent", "hasRestoration", "storageInventoryNumber",
-    "condition", "conditionAmount", "storagePlace"],
-    "commons": [
-      "dating"
-    ],
-    "fields": {
-      "amountDescription":{
-        "inputType": "radio"
-      }
-    },
-    "valuelists": {
-      "period": "periods-gadara",
-      "amountDescription": "Find-amountDescription-gadara"
-    }
-  },
-  "Feature:default": {
-    "commons": [
-      "dimensionHeight"
-    ],
-    "hidden": [],
-    "valuelists": {
-      "period": "periods-gadara"
-    },
-    "fields": {
-      "colorSoil": {
-        "inputType": "input"
-      }
-    }
-  },
-  "Room:default": {
-    "commons": [
-      "dating"
-    ],
-    "hidden": [],
-    "valuelists": {
-      "period": "periods-gadara"
-    },
-    "fields": {}
-  },
-  "RoomCeiling:default": {
-    "hidden": [],
-    "fields": {}
-  },
-  "RoomFloor:default": {
-    "hidden": [],
-    "fields": {}
-  },
-  "RoomWall:default": {
-    "hidden": [],
-    "fields": {}
-  },
-  "Inscription:default": {
-    "commons": [
-      "dating"
-    ],
-    "hidden": [],
-    "valuelists": {
-      "period": "periods-gadara"
-    },
-    "fields": {}
-  },
-  "Image:default": {
-    "commons": [],
-    "fields": {},
-    "hidden": []
-  },
   "Glass:default": {
     "commons": [],
-    "fields": {},
-    "hidden": []
-  },
-  "Mollusk:default": {
-    "commons": [],
-    "fields": {},
-    "hidden": []
+    "fields": {"vesselpart": {"inputType": "checkboxes"}
+	},
+    "hidden": [],
+	"valuelists": {
+	  "provenance": "provenance-gadara",
+	  "transparency": "glass-transparency-gadara",
+	  "vesselFormSpecific": "glass-vesselFormSpecific-gadara",
+	  "vesselpart": "Pottery-vesselpart-gadara",
+	  "color": "Pottery-coatColor-gadara",
+	  "vesselForm": "glass-vesselForm-gadara",
+	  "formDescription": "glass-formDescription-gadara",
+	  "objectType": "glass-objectType-gadara",
+	  "decorationTechnique": "glass-decorationTechnique-gadara",
+	  "manufacturingMethod": "glass-manufacturingMethod-gadara"
+	  }
   },
   "Metal:default": {
     "commons": [],
     "fields": {},
-    "hidden": []
-  },
+    "hidden": ["vesselFormSpecific"],
+	"valuelists": {
+	  "provenance": "provenance-gadara",
+	  "formDescription": "glass-formDescription-gadara",
+	  "vesselForm": "glass-vesselForm-gadara",
+	  "objectType": "Metal-objectType-gadara",
+	  "decorationTechnique": "Metal-decorationTechnique-gadara",
+	  "manufacturingMethod": "Metal-manufacturingMethod-gadara",
+	  "metalMaterial": "Coin-metalMaterial-gadara"
+	  }
+	},
   "Brick:default": {
     "commons": [],
-    "fields": {},
-    "hidden": []
-  },
-  "Burial:default": {
-    "commons": [],
-    "fields": {},
-    "hidden": []
+    "fields": {"surfaceTreatment": {"inputType": "checkboxes"}
+	},
+    "hidden": ["specificType", "coatColorInside", "coatColorOutside"],
+	"valuelists": {
+	  "brickForm": "Brick-brickForm-Gadara",
+      "brickUsage": "Brick-brickUsage-Gadara",
+	  "decorationTechnique": "Brick-decorationTechnique-gadara",
+	  "manufacturing": "Brick-manufacturing-gadara",
+	  "clayColorOutside": "Pottery-coatColor-gadara",
+	  "surfaceTreatment": "Pottery-coatTpe-gadara",
+	  "provenance": "provenance-gadara",
+	  "formDescription": "glass-formDescription-gadara",
+	  "manufacturingMethod": "Brick-manufacturingMethod-gadara",
+	  "temper": "Brick-temper-gadara"
+	  }
   },
   "Wood:default": {
     "commons": [],
-    "fields": {},
-    "hidden": []
-  },
-  "Architecture:default": {
-    "commons": [],
-    "fields": {},
-    "hidden": []
-  },
-  "Layer:default": {
-    "commons": [],
-    "fields": {},
-    "hidden": []
-  },
-  "Floor:default": {
-    "commons": [],
-    "fields": {},
-    "hidden": []
+    "fields": {
+	  "color": {
+	    "inputType": "checkboxes"
+	  },
+	  "paintColor": {
+	    "inputType": "checkboxes"
+	  }
+	},
+    "hidden": [
+		"paintCondition", "colorOutsideMunsell", "colorInsideMunsell", "colorBreakMunsell", "paintColorMunsell", "colorBreak", "colorInside", "colorOutside"
+		],
+	"valuelists": {
+	  "provenance": "provenance-gadara",
+	  "surfaceCondition": "Terracotta-surfaceCondition-gadara",
+	  "paintColor": "Pottery-coatColor-gadara",
+	  "color": "Pottery-coatColor-gadara",
+	  "decorationTechnique": "Wood-decorationTechnique-gadara",
+	  "objectType": "Wood-objectType-gadara",
+	  "manufacturingMethod": "Wood-manufacturingMethod-gadara",
+	  "typeOfWood": "Wood-typeOfWood-gadara"
+	  }
   },
   "Pottery:default": {
     "commons": [],
     "hidden": ["amountSherdsWall", "amountSherdsRim", "amountSherdsBase", "amountSherdsHandles", "amountSherdsLip", "amountSherdsPedestal",
     "amountSherdsRimBase", "amountSherdsRimShoulder", "amountSherdsShoulder", "amountSherdsOther", "amountSherdsPercent", "amountSherdsLid", "clayColorBreakMunsell", "clayColorInsideMunsell", "clayColorOutsideMunsell", "hasCoat", "decorationDescription",
-  "breakStructure", "residueAnalysis", "sample", "purpose", "typeNumber", "clayColorBreak", "clayHardness", "coatInside", "coatOutside", "decorationTechnique", "formDescription", "manufacturing", "manufacturingMethod", "objectType", "temper",
-  "temperAmount", "temperParticles", "temperTypeClay", "vesselForm", "vesselFormSpecific", "comment", "provenance"],
+  "breakStructure", "residueAnalysis", "purpose", "clayColorInside", "clayHardness", "coatInside", "coatOutside", "formDescription", "manufacturing", "manufacturingMethod", "objectType", "temper",
+  "temperAmount", "temperParticles", "temperTypeClay", "vesselForm", "vesselFormSpecific", "comment", "provenance", "clayColorOutside", "sample"],
     "fields": {
       "vesselpart": {
         "inputType": "checkboxes"
       },
       "potteryTypeSpecific": {
         "inputType": "dropdown"
-      },
-      "specificTypeDescription": {
-        "inputType": "input"
       },
       "comment": {
         "inputType": "input"
@@ -187,7 +94,9 @@
       },
       "specificType": {
         "inputType": "radio"
-      }
+     },
+	  "decorationTechnique": {
+	    "inputType": "checkboxes"}
     },
     "valuelists": {
       "vesselpart": "Pottery-vesselpart-gadara",
@@ -197,13 +106,14 @@
       "coatColorInside": "Pottery-coatColor-gadara",
       "coatColorOutside": "Pottery-coatColor-gadara",
       "coatInsideType": "Pottery-coatTpe-gadara",
-      "coatOutsideType": "Pottery-coatTpe-gadara"
+      "coatOutsideType": "Pottery-coatTpe-gadara",
+	  "decorationTechnique": "Brick-decorationTechnique-gadara",
+	  "clayColorOutside": "Pottery-coatColor-gadara",
+	  "clayColorBreak": "Pottery-coatColor-gadara",
+	  "temperAmount": "Pottery-temperAmount-gadara",
+	  "temperParticles": "Pottery-temperParticles-gadara",
+	  "temper": "Brick-temper-gadara"
     }
-  },
-  "Grave:default": {
-    "commons": [],
-    "fields": {},
-    "hidden": []
   },
   "Bone:default": {
     "commons": [],
@@ -211,61 +121,99 @@
     "fields": {
       "sex": {
         "inputType": "radio"
-      },
+        },
       "boneClassification": {
         "inputType": "dropdown"
-      }
+        },
+	  "boneType": {
+	    "inputType": "checkboxes"
+		},
+	  "species": {
+	    "inputType": "checkboxes"
+		}
     },
     "valuelists": {
-      "sex": "Bone-sex-Meninx",
-      "boneClassification": "Bone-boneClassification-Meninx"
+      "sex": "Bone-sex-gadara",
+      "boneClassification": "Bone-boneClassification-gadara",
+	  "boneType": "Bone-boneType-gadara",
+	  "objectType": "Bone-objectType-gadara",
+	  "species": "Bone-species-gadara"
     }
   },
   "Terracotta:default": {
     "commons": [],
-    "fields": {},
-    "hidden": []
-  },
-  "Photo:default": {
-    "commons": [],
-    "fields": {},
-    "hidden": []
-  },
-  "Drawing:default": {
-    "commons": [],
-    "fields": {},
-    "hidden": []
+    "fields": {
+	  "coatInsideType": {"inputType": "radio"},
+	  "coatOutsideType": {"inputType": "radio"},
+	  "potteryTypeSpecific": {"inputType": "dropdown"},
+	  "objectType": {"inputType": "dropdown"}
+	},
+	"valuelists": {
+	  "provenance": "provenance-gadara",
+	  "potteryTypeSpecific": "Pottery-potteryTypeSpecific-gadara",
+	  "coatInsideType": "Pottery-coatTpe-gadara",
+      "coatOutsideType": "Pottery-coatTpe-gadara",
+	  "formDescription": "glass-formDescription-gadara",
+	  "clayColorOutside": "Pottery-coatColor-gadara",
+	  "clayColorInside": "Pottery-coatColor-gadara",
+	  "clayColorBreak": "Pottery-coatColor-gadara",
+	  "temperAmount": "Pottery-temperAmount-gadara",
+	  "temperParticles": "Pottery-temperParticles-gadara",
+	  "temper": "Brick-temper-gadara",
+	  "decorationTechnique": "Brick-decorationTechnique-gadara",
+	  "manufacturingMethod": "Brick-manufacturingMethod-gadara",
+	  "objectType": "Terracotta-objectType-gadara",
+	  "surfaceCondition": "Terracotta-surfaceCondition-gadara"
+	  },
+    "hidden": ["vesselFormSpecific", "vesselForm", "coatColorInside", "coatColorOutside"]
   },
   "Stone:default": {
     "commons": [],
-    "fields": {},
-    "hidden": []
+    "fields": {
+	  "treatment": {
+	    "inputType": "dropdown"
+	  }	
+	},
+    "valuelists": {
+	  "provenance": "provenance-gadara",
+	  "formDescription": "glass-formDescription-gadara",
+	  "architectureElement": "Stone-architectureElement-gadara",
+	  "objectType": "Stone-objectType-gadara",
+	  "temperAmount": "Pottery-temperAmount-gadara",
+	  "color": "Pottery-coatColor-gadara",
+	  "treatment": "Stone-treatment-Gadara",
+	  "material": "Stone-material-gadara"
+	},  
+	"hidden": ["origin"]
   },
   "Coin:default": {
     "commons": [],
     "fields": {},
-    "hidden": []
+    "hidden": ["manufacturingMethod", "preservedDiameter"],
+	"valuelists": {
+	  "provenance": "provenance-gadara",
+	  "metalMaterial": "Coin-metalMaterial-gadara",
+	  "mintingRuler": "Coin-mintingRuler-gadara",
+	  "stampPositioning": "Coin-stampPositioning-gadara"
+	  }
   },
   "PlasterFragment:default": {
     "commons": [],
     "hidden": [],
     "fields": {
-      "hasDecorationPattern": {
-        "inputType": "boolean"
-      }
-    }
-  },
-  "Excavation:default": {
-    "commons": [],
-    "fields": {},
-    "hidden": []
-  },
-  "TypeCatalog:default": {
-    "hidden": [],
-    "fields": {}
-  },
-  "Type:default": {
-    "hidden": [],
-    "fields": {}
+      "plasterComponents": {"inputType": "checkboxes"},
+	  "hasDecoration": {"inputType": "radio"},
+	  "plasterType": {"inputType": "radio"},
+	  "temperAmount": {"inputType": "radio"},
+	  "temperParticles": {"inputType": "radio"}
+	  },
+	  "valuelists": {
+	  "hasDecoration": "plasterDecoration-Gadara",
+	  "plasterType": "plasterType-Gadara",
+	  "color": "Pottery-coatColor-gadara",
+	  "plasterComponents": "Brick-temper-gadara",
+  	  "temperAmount": "Pottery-temperAmount-gadara",
+	  "temperParticles": "Pottery-temperParticles-gadara"
+	  }
   }
 }

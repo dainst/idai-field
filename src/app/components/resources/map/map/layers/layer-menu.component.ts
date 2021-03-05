@@ -1,7 +1,6 @@
 import {Input, Output, EventEmitter, Renderer2, Component, ChangeDetectorRef, OnDestroy} from '@angular/core';
 import {CdkDragDrop} from '@angular/cdk/drag-drop';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {I18n} from '@ngx-translate/i18n-polyfill';
 import {ImageDocument} from 'idai-components-2';
 import {LayerGroup, LayerManager} from './layer-manager';
 import {MenuComponent} from '../../../../widgets/menu.component';
@@ -9,6 +8,7 @@ import {MenuContext, MenuService} from '../../../../menu-service';
 import {ImagePickerComponent} from '../../../../docedit/widgets/image-picker.component';
 import {LayerUtility} from './layer-utility';
 import {Loading} from '../../../../widgets/loading';
+import {ProjectConfiguration} from '../../../../../core/configuration/project-configuration';
 
 
 @Component({
@@ -37,8 +37,8 @@ export class LayerMenuComponent extends MenuComponent {
     constructor(private layerManager: LayerManager,
                 private changeDetectorRef: ChangeDetectorRef,
                 private modalService: NgbModal,
-                private i18n: I18n,
                 private loading: Loading,
+                private projectConfiguration: ProjectConfiguration,
                 renderer: Renderer2,
                 menuService: MenuService) {
 
@@ -116,9 +116,9 @@ export class LayerMenuComponent extends MenuComponent {
 
     public getLayerGroupLabel(layerGroup: LayerGroup): string {
 
-        return layerGroup.document
-            ? layerGroup.document.resource.identifier
-            : this.i18n({ id: 'resources.map.layerMenu.unlinkedLayers', value: 'Unverknüpfte Layer' });
+        return layerGroup.document.resource.category === 'Project'
+            ? this.projectConfiguration.getLabelForCategory('Project')
+            : layerGroup.document.resource.identifier;
     }
 
 

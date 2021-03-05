@@ -73,6 +73,7 @@ export module FieldsViewUtil {
                 and(
                     isNot(includedIn(HierarchicalRelations.ALL)),
                     isNot(equalTo(ImageRelations.ISDEPICTEDIN)),
+                    isNot(equalTo(ImageRelations.HASMAPLAYER)),
                     compose(lookup(resource.relations), isNot(undefinedOrEmpty))
                 )
             )

@@ -1,0 +1,414 @@
+{
+  "Project:default": {
+    "commons": [],
+    "fields": {},
+    "hidden": []
+  },
+  "Operation:default": {
+    "hidden": [],
+    "commons": [],
+    "fields": {}
+  },
+  "Survey:default": {
+    "commons": [
+      "dating"
+    ],
+    "fields": {},
+    "hidden": []
+  },
+  "SurveyUnit:default": {
+    "commons": [],
+    "fields": {},
+    "hidden": []
+  },
+  "Place:default": {
+    "commons": [],
+    "fields": {},
+    "hidden": []
+  },
+  "Area:default": {
+    "commons": [],
+    "fields": {},
+    "hidden": []
+  },
+  "Trench:default": {
+    "commons": [
+      "dating"
+    ],
+    "fields": {},
+    "hidden": []
+  },
+  "Building:default": {
+    "commons": [],
+    "valuelists": {
+      "period": "periods-bourgou"
+    },
+    "fields": {},
+    "hidden": []
+  },
+  "BuildingPart:default": {
+    "commons": [],
+    "fields": {},
+    "hidden": []
+  },
+ "Find:default": {
+    "hidden": ["bibliography", "catalogueNumber", "conditionPercent", "hasRestoration", "storageInventoryNumber",
+    "condition", "conditionAmount", "weight"],
+    "commons": [
+      "dating"
+    ],
+    "fields": {
+      "amountDescription":{
+        "inputType": "radio"
+      },
+	  "sampleStatus": {"inputType": "radio"},
+	  "sampleComm": {"inputType": "input"} 
+    },
+    "valuelists": {
+      "period": "periods-bourgou",
+      "amountDescription": "Find-amountDescription-bourgou",
+	  "sampleStatus": "Find-samplePl-bourgou",
+	  "storagePlace": "Find-Store-bourgou"
+    }
+  },
+  "Feature:default": {
+    "commons": [
+      "dimensionHeight"
+    ],
+    "hidden": [],
+    "valuelists": {
+      "period": "periods-bourgou"
+    },
+    "fields": {
+      "colorSoil": {
+        "inputType": "input"
+      }
+    }
+  },
+  "Room:default": {
+    "commons": [
+      "dating"
+    ],
+    "hidden": [],
+    "valuelists": {
+      "period": "periods-bourgou"
+    },
+    "fields": {}
+  },
+  "RoomCeiling:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "RoomFloor:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "RoomWall:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Inscription:default": {
+    "commons": [
+      "dating"
+    ],
+    "hidden": [],
+    "valuelists": {
+      "period": "periods-bourgou"
+    },
+    "fields": {}
+  },
+  "Image:default": {
+    "commons": [],
+    "fields": {},
+    "hidden": []
+  },
+  "Glass:default": {
+    "commons": [],
+    "fields": {},
+    "hidden": []
+  },
+  "Mollusk:default": {
+    "commons": [],
+    "fields": {},
+    "hidden": []
+  },
+  "Metal:default": {
+    "commons": [],
+    "fields": {},
+    "hidden": []
+  },
+  "Brick:default": {
+    "commons": [],
+    "fields": {},
+    "hidden": []
+  },
+  "Burial:default": {
+    "commons": [],
+    "fields": {},
+    "hidden": []
+  },
+  "Wood:default": {
+    "commons": [],
+    "fields": {},
+    "hidden": []
+  },
+  "Architecture:default": {
+    "commons": [],
+    "fields": {},
+    "hidden": []
+  },
+  "Layer:default": {
+    "commons": [],
+    "fields": {},
+    "hidden": []
+  },
+  "Floor:default": {
+    "commons": [],
+    "fields": {},
+    "hidden": []
+  },
+   "Pottery:default": {
+    "commons": [],
+    "hidden": ["amountSherdsWall", "amountSherdsRim", "amountSherdsBase", "amountSherdsHandles", "amountSherdsLip", "amountSherdsPedestal",
+    "amountSherdsRimBase", "amountSherdsRimShoulder", "amountSherdsShoulder", "amountSherdsOther", "amountSherdsPercent", "amountSherdsLid", "clayColorBreakMunsell", "clayColorInsideMunsell", "clayColorOutsideMunsell", "hasCoat", "decorationDescription",
+  "breakStructure", "residueAnalysis", "purpose", "clayColorInside", "clayHardness", "coatInside", "coatOutside", "formDescription", "manufacturing", "manufacturingMethod", "objectType", "temper",
+  "temperAmount", "temperParticles", "temperTypeClay", "vesselForm", "vesselFormSpecific", "comment", "clayColorOutside", "sample"],
+    "fields": {
+      "vesselpart": {
+        "inputType": "checkboxes"
+      },
+      "potteryTypeSpecific": {
+        "inputType": "dropdown"
+      },
+      "comment": {
+        "inputType": "input"
+      },
+      "materialType": {
+        "inputType": "dropdown"
+      },
+      "specificType": {
+        "inputType": "radio"
+      },
+	  "decorationTechnique": {
+	    "inputType": "checkboxes"
+      },       
+      "rimTreatmentType": {
+	    "inputType": "checkboxes"
+      },    
+      "typeNumber": {
+        "inputType": "dropdown"
+     }
+  },    
+    "valuelists": {
+      "vesselpart": "Pottery-vesselpart-bourgou",
+      "materialType": "Pottery-materialType-bourgou",
+      "specificType": "Pottery-specificType-bourgou",
+      "potteryTypeSpecific": "Pottery-potteryTypeSpecific-bourgou",
+      "coatColorInside": "Pottery-coatColor-bourgou",
+      "coatColorOutside": "Pottery-coatColor-bourgou",
+      "coatInsideType": "Pottery-coatTpe-bourgou",
+      "coatOutsideType": "Pottery-coatTpe-bourgou",
+	  "decorationTechnique": "Brick-decorationTechnique-bourgou",
+	  "clayColorOutside": "Pottery-coatColor-bourgou",
+	  "clayColorBreak": "Pottery-coatColor-bourgou",
+	  "rimTreatmentType": "Pottery-rimTreatment-bourgou",
+	  "typeNumber": "Pottery-typeNumber-bourgou",	  
+	  "provenance": "provenance-bourgou"
+    }
+  },
+  "Grave:default": {
+    "commons": [],
+    "fields": {},
+    "hidden": []
+  },
+  "Bone:default": {
+    "commons": [],
+    "hidden": [],
+    "fields": {
+      "sex": {
+        "inputType": "radio"
+      },
+      "boneClassification": {
+        "inputType": "dropdown"
+      }
+    },
+    "valuelists": {
+      "sex": "Bone-sex-Meninx",
+      "boneClassification": "Bone-boneClassification-Meninx"
+    }
+  },
+  "Terracotta:default": {
+    "commons": [],
+    "fields": {},
+    "hidden": []
+  },
+  "Photo:default": {
+    "commons": [],
+    "fields": {},
+    "hidden": []
+  },
+  "Drawing:default": {
+    "commons": [],
+    "fields": {},
+    "hidden": []
+  },
+  "Stone:default": {
+    "commons": [],
+    "fields": {},
+    "hidden": []
+  },
+  "Coin:default": {
+    "commons": [],
+    "fields": {},
+    "hidden": []
+  },
+  "PlasterFragment:default": {
+    "commons": [],
+    "hidden": [],
+    "fields": {
+      "hasDecorationPattern": {
+        "inputType": "boolean"
+      }
+    }
+  },
+  "Wall_surface": {
+    "commons": [
+      "area",
+      "description",
+      "processor",
+      "dating",
+      "dimensionHeight",
+      "dimensionWidth",
+      "period"
+    ],
+    "hidden": [],
+    "valuelists": {
+      "period": "periods-bourgou",
+      "blockTreatment": "Architecture-blockTreatment-default",
+      "buildingTechnique": "Building-buildingTechnique-default",
+      "color": "colors-default-1",
+      "condition": "Wall_surface-condition-Meninx",
+      "conditionAmount": "Building-conditionAmount-default",
+      "constructionDetails": "Wall_surface-constructionDetails-Meninx",
+      "jointsCondition": "Wall_surface-jointsCondition-Meninx",
+      "jointsType": "Wall_surface-jointsType-Meninx",
+      "mark": "Architecture-mark-default",
+      "plasterComponents": "PlasterFragment-plasterComponents-default",
+      "wallOrientation": "Wall_surface-wallOrientation-Meninx",
+      "roomSide": "Wall_surface-wallOrientation-Meninx",
+      "wallSide": "Wall_surface-wallOrientation-Meninx"
+    },
+    "fields": {
+      "conditionComment": {
+        "inputType": "input"
+      },
+      "constructionDetailsDescription": {
+        "inputType": "input"
+      },
+      "markDescription": {
+        "inputType": "input"
+      },
+      "hasPlasterDecoration": {
+        "inputType": "boolean"
+      },
+      "plasterOlder": {
+        "inputType": "input"
+      },
+      "surfaceDecoration": {
+        "inputType": "input"
+      },
+      "wallConstructionTechnique": {
+        "inputType": "input"
+      },
+      "blockTreatment": {
+        "inputType": "radio"
+      },
+      "buildingTechnique": {
+        "inputType": "dropdown"
+      },
+      "color": {
+        "inputType": "checkboxes"
+      },
+      "condition": {
+        "inputType": "dropdown"
+      },
+      "conditionAmount": {
+        "inputType": "dropdown"
+      },
+      "constructionDetails": {
+        "inputType": "dropdown"
+      },
+      "jointsCondition": {
+        "inputType": "radio"
+      },
+      "jointsType": {
+        "inputType": "radio"
+      },
+      "mark": {
+        "inputType": "dropdown"
+      },
+      "plasterComponents": {
+        "inputType": "radio"
+      },
+      "wallOrientation": {
+        "inputType": "checkboxes"
+      },
+      "roomSide": {
+        "inputType": "checkboxes"
+      },
+      "wallSide": {
+        "inputType": "radio"
+      }
+    }
+  },
+  "Other": {
+    "commons": [],
+    "hidden": [],
+    "fields": {
+      "isNatural": {
+        "inputType": "boolean"
+      },
+      "consistency": {
+        "inputType": "checkboxes"
+      },
+      "distinguishingCriteria": {
+        "inputType": "radio"
+      },
+      "otherClassification": {
+        "inputType": "dropdown"
+      },
+      "soilType": {
+        "inputType": "dropdown"
+      }
+    },
+    "valuelists": {
+      "consistency": "Layer-consistency-default",
+      "distinguishingCriteria": "Layer-distinguishingCriteria-default",
+      "otherClassification": "Other-otherClassification-Meninx",
+      "soilType": "Layer-soilType-default"
+    }
+  },
+  "Drilling": {
+    "commons": [
+      "description",
+      "dimensionDiameter",
+      "dimensionHeight",
+      "dimensionVerticalExtent"
+    ],
+    "hidden": [],
+    "fields": {}
+  },
+  "Excavation:default": {
+    "commons": [],
+    "fields": {},
+    "hidden": []
+  },
+  "TypeCatalog:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Type:default": {
+    "hidden": [],
+    "fields": {}
+  }
+}

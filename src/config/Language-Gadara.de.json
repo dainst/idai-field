@@ -1,15 +1,127 @@
 {
   "categories": {
     "Brick": {
+	  "createdBy": "Hanna Hamel",
+      "description": "Da hier nicht nur Ziegel, sondern auch andere Formen von Baukeramik erfasst werden (wie Tonrohre), ist die Bezeichnung Ziegel irreführend.",
       "label": "Baukeramik",
       "fields": {
-        "coatColorInside": {
-          "label": "Oberfläche (innen): Farbe und Intensität"
-        },
-        "coatColorOutside": {
-          "label": "Oberfläche (außen): Farbe und Intensität"
+        "clayColorOutside": {
+          "label": "Ton: Farbe und Intensität"
         }
       }
-    }
+    },
+	"Pottery": {
+	  "createdBy": "Hanna Hamel, 28.01.2021",
+      "description": "Um die Abkürzungen aus den Wertelisten aufzulösen, wurden hier eigene Beschreibungen eingefügt",
+      "fields": {
+        "specificType": {
+          "label": "Form",
+		  "description": "B: Becher, Bö: Böden, H: Henkel; Ka: Kannen, Kr: Krüge, Sa: Schalen, Sü: Schüsseln, U: Unguentaria, A: Amphoren, D: Deckel, T: Töpfe, P: Pfannen/Platten, Ks: Kasserollen"																																																	
+        },
+        "materialType": {
+          "label": "Kategorie der Gefäßkeramik",
+          "description": "FK: Feinkeramik/Tafelgeschirr (lokal und importiert), GK: Gebrauchskeramik (Vorrats-, Zubereitungs- und Transportgefäße; lokal und importiert), KK: Küchengeschirr (vorrangig zum Kochen verwendetes Geschirr)"
+        },
+		"vesselpart": {
+		  "label": "Gefäßteil",
+		  "description": "WF = Wandfragment, RF = Randfragment, BF = Bodenfragment, H = Henkel, D = Deckel, KOMP = vollständiges Gefäß, VAR = Verschiedenes"
+		},
+		"potteryTypeSpecific": {
+		  "label": "Ware",
+		  "description": "Tonbestimmung (zur Aufschlüsselung Warenkatalog hinzuziehen)"
+        }
+      }
+    },
+	"Stone": {
+      "label": "Stein",
+      "fields": {
+        "purpose": {
+          "label": "Verwendung",
+          "description": "kurze Beschreibung zur Verwendung des Objekts"
+        },
+        "treatment": {
+          "label": "Bearbeitung",
+          "description": "Auswahl der Bearbeitungsspuren auf der Oberfläche des Objekts"
+        },
+        "workmanship": {
+          "label": "Ausführung",
+          "description": "Beschreibung der Qualität, in der ein bearbeiteter Stein, vorliegt. Ggf. Angabe der sichtbaren Werkzeugspuren oder anderer Marker für die Ausführung der Handwerksarbeit."
+        },
+        "architectureElement": {
+          "label": "Architektonisches Element",
+		  "description": "Auswahl des Bauteils, für den das Objekt angefertigt wurde"
+        }
+      }
+    },
+	"Terracotta": {
+	  "label": "Tonfund",
+      "fields": {
+	    "decorationTechnique": {
+		  "label": "Dekorationstechnik"
+		},
+		"objectType": {
+		  "label": "Art des Objekts"
+		},
+		"coatInsideType": {
+          "label": "Oberflächenbehandlung innen"
+		},
+		"coatOutsideType": {
+		  "label": "Oberflächenbehandlung außen"
+		},
+		"potteryTypeSpecific": {
+		  "label": "Ware"
+		}
+	  }
+	},
+	"Coin": {
+	  "fields": {
+	    "mintingRuler": {
+		"label": "Römische Kaiser",
+		"description": "Auswahl des zur Prägung gehörenden römischen Kaisers, sofern vorhanden."
+		}
+	  }
+	},
+	"Wood": {
+	  "fields": {
+	    "surfaceCondition": {
+		"label": "Erhaltung der Oberfläche",
+		"description": "Beschreibung der Erhaltung der Oberfläche. Ggf. auffälligstes Merkmal auswählen und Details in der Beschreibung einfügen."
+		}
+	  }
+	},
+	"Glass": {
+	"fields": {
+		"vesselpart": {
+		  "label": "Gefäßteil",
+		  "description": "WF: Wandfragment; RF: Randfragment; BF: Bodenfragment; H: Henkel; D: Deckel; KOMP: komplettes Profil; VAR: andere"
+		}
+      }
+	},
+	"Find": {
+	"fields": {
+		"sampleGadara": {
+		  "label": "entnommene Proben"
+		},
+		"sampleGadaraPlace": {
+		  "label": "Probenausfuhr"
+		},
+		"sampleGadaraComm": {
+		  "label": "Kommentar zur Probe"
+		},
+		"amountDescription": {
+		  "label": "Anzahl (Einheit)"
+		}
+	  }	
+	},
+	"PlasterFragment": {
+    "fields": {
+        "hasDecoration": {
+          "label": "Oberflächenbehandlung"
+        },
+		"plasterType-Gadara": {
+		  "label": "Verwendung des Putzes"
+        }
+	  }
+	}
   }
 }

@@ -61,9 +61,71 @@
           "description": "Is the trench/section/context/unit disturbed? (i.e. can some finds be non-indicative?)"
         }
       }
-    },
+    },    
     "Layer": {
-      "label": "Context"
+      "label": "Context",
+      "fields": {
+        "distinguishingCriteria": {
+          "label": "Distinguishing criteria (in relation to surrounding contexts)",
+          "description": "NA"
+        },
+        "layerClassification": {
+          "label": "Befundart",
+          "description": "Um welche Art von Befund handelt es sich?"
+        },
+        "isNatural": {
+          "label": "Natürliche Entstehung",
+          "description": "Ist die Schicht natürlich? ('Ja' z. B. bei Erosion, 'nein' wenn anthropogen)"
+        },
+        "contextDescription": {
+          "label": "Beschreibung des Befundes",
+          "description": "Entspricht dem Feld 'Kurzbeschreibung' auf dem Befundzettel"
+        },
+        "soilType": {
+          "label": "Bodenanteile",
+          "description": "Partikel des Bodens nach bodenkundlicher Anleitung, bitte erläutern und Anteile in der Beschreibung angeben"
+        },
+        "consistency": {
+          "label": "Konsistenz",
+          "description": "Härte bzw. Konsistenz des Bodens"
+        },
+        "layerSoilContentDesc": {
+          "label": "Beschreibung des Bodens",
+          "description": "Nach dem Formular: Farbe / Bodenart / Konsistenz"
+        },
+        "layerColor0": {
+          "label": "Grundfarbe des Bodens",
+          "description": "gemeinsam mit Farbintensität auswählen"
+        },
+        "layerColorIntensity": {
+          "label": "Intensität der Bodenfarbe",
+          "description": "gemeinsam mit Farbe auswählen"
+        },
+        "layerInclusions": {
+          "label": "Einschlüsse und Bestandteile",
+          "description": "Bodenbestandteile und Einschlüsse"
+        },
+        "layerInclusionsDesc": {
+          "label": "Einschlüsse: Ergänzungen",
+          "description": "Einschlüsse: Ergänzungen"
+        },
+        "layerFinds": {
+          "label": "Funde",
+          "description": "Grober Überblick über die im Befund enthaltenen Funde"
+        },
+        "layerFindsOther": {
+          "label": "Funde (Ergänzungen)",
+          "description": "Grober Überblick über die im Befund enthaltenen Funde"
+        },
+        "layerInterpretation": {
+          "label": "Interpretation",
+          "description": "..."
+        },
+        "layerDatingIndication": {
+          "label": "Datierende Elemente",
+          "description": "Erläuterung der Basis für die Datierung"
+        }
+      }
     },
     "StrUnit": {
       "label": "Stratigraphical Unit"

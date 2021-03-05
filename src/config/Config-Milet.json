@@ -96,7 +96,7 @@
       "isNatural": {
         "inputType": "boolean"
       },
-      "layerDescription": {
+      "contextDescription": {
         "inputType": "text"
       },
       "distinguishingCriteria": {

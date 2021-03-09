@@ -30,7 +30,7 @@ export async function preprocessRelations(documents: Array<Document>,
                                           get: Get,
                                           { mergeMode, permitDeletions, useIdentifiersInRelations}: ImportOptions) {
 
-    const identifierMap: IdentifierMap = mergeMode ? {} : await assignIds(documents, generateId, find);
+    const identifierMap: IdentifierMap = mergeMode ? {} : assignIds(documents, generateId);
 
     for (let document of documents) {
         const relations = document.resource.relations;
@@ -77,18 +77,14 @@ async function assertNoMissingRelationTargets(relations: Relations, get: Get) {
 }
 
 
-async function assignIds(documents: Array<Document>, 
-                         generateId: Function, 
-                         find: Find): Promise<IdentifierMap> {
+function assignIds(documents: Array<Document>,
+                   generateId: Function): IdentifierMap {
 
-    const docs = documents.filter(hasnt(RESOURCE_DOT_ID));
+    return documents
+        .filter(hasnt(RESOURCE_DOT_ID))
+        .reduce((identifierMap, document) => {
 
-    return asyncReduce(docs, async (identifierMap, document) => {
-
-        const found = await find(document.resource.identifier);
-        document.resource.id = found ? found.resource.id : generateId();
-
-        identifierMap[document.resource.identifier] = document.resource.id;
+        identifierMap[document.resource.identifier] = document.resource.id = generateId();
         return identifierMap;
 
     }, {} as IdentifierMap);

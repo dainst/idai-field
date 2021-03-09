@@ -72,6 +72,11 @@ export function buildImportFunction(services: ImportServices,
      */
     return async function importDocuments(documents: Array<Document>): Promise<{ errors: string[][], successfulImports: number }> {
 
+        documents = options.ignoreExistingDocuments !== true
+            ? documents
+            : await asyncFilter(documents, async document =>
+                (await find(document.resource.identifier)) === undefined);
+
         try {
             preprocessFields(documents, options.permitDeletions === true);
             await preprocessRelations(documents,
@@ -79,11 +84,6 @@ export function buildImportFunction(services: ImportServices,
         } catch (errWithParams) {
             return { errors: [errWithParams], successfulImports: 0 };
         }
-
-        documents = options.ignoreExistingDocuments !== true
-            ? documents
-            : await asyncFilter(documents, async document =>
-                (await find(document.resource.identifier)) === undefined);
 
         let processedDocuments: any = undefined;
         try {

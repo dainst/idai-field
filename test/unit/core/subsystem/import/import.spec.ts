@@ -591,17 +591,15 @@ describe('Import/Subsystem', () => {
 
     it('ignoreExistingDocuments - complement leftover relation', async done => {
 
-        // lets assume a previous import from the same import file has been interrupted,
+        // Let's assume a previous import from the same import file has been interrupted,
         // such that only feature1 has been imported.
         //
         // What we want in this case is to continue the import process
         // and also save the time already invested.
         // 
-        // Note that we still require the import file to be consistent in itself,
-        // with regards to its relations, although we do not update existing documents
-        // based on the import files contents. We only update existing documents' relations
-        // where they are relation targets of documents which actually get imported
-        // during THIS import.
+        // Note that we do not require the import file to be consistent in itself.
+        // We just consider all the yet unknown documents as if they were an import
+        // file.
 
         await datastore.create({ resource: {
             id: 'tr1', identifier: 'trench1', category: 'Trench',
@@ -623,11 +621,14 @@ describe('Import/Subsystem', () => {
                 permitDeletions: false,
                 selectedOperationId: 'tr1'
             },
+            // this one gets ignored completely
             '{ "category": "Feature", "identifier": "feature1", "shortDescription": "changed", "relations": { "isAfter": ["feature2"] } }\n'
+            // consider only this one
             + '{ "category": "Feature", "identifier": "feature2", "shortDescription": "new", "relations": { "isBefore": ["feature1"] } }'
         );
 
         const result = await datastore.find({});
+
         expect(result.documents[0].resource.shortDescription).toBe('original');
         expect(result.documents[1].resource.shortDescription).toBe('new');
         expect(result.documents[0].resource.relations['isAfter']).toEqual(

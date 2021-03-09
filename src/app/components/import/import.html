@@ -58,15 +58,15 @@
                         Bildformate können in der <a href="#" routerLink="../images">Bilderverwaltung</a> importiert werden.
                     </div>
 
-                    <div *ngIf="showMergeOption()" class="form-group form-check-inline">
+                    <div *ngIf="shouldDisplayMergeOption()" class="form-group form-check-inline">
                         <input type="checkbox" id="merging-checkbox" class="form-check-input"
-                               [(ngModel)]="importState.mergeMode" (change)="updateCategories()">
+                               [(ngModel)]="importState.mergeMode" (change)="updateMergeMode()">
                         <label for="merging-checkbox" class="form-check-label" i18n="@@import.mergeOption.label">
                             Vorhandene Ressourcen ergänzen
                         </label>
                     </div>
 
-                    <div *ngIf="showMergeOption() && importState.format === 'native'" class="import-info"
+                    <div *ngIf="shouldDisplayMergeOption() && importState.format === 'native'" class="import-info"
                          i18n="@@import.mergeOption.native.info">
                         Ist diese Option aktiviert, so werden bereits existierende Datensätze mit
                         den Daten aus der Importdatei ergänzt. Felder des Importdatensatzes überschreiben
@@ -77,7 +77,7 @@
                         geschieht per Bezeichner (Feld <em>identifier</em>).
                     </div>
 
-                    <div *ngIf="showMergeOption() && importState.format === 'csv'" class="import-info"
+                    <div *ngIf="shouldDisplayMergeOption() && importState.format === 'csv'" class="import-info"
                          i18n="@@import.mergeOption.csv.info">
                         Ist diese Option aktiviert, so werden bereits existierende Datensätze mit
                         den Daten aus der Importdatei ergänzt. Felder des Importdatensatzes überschreiben
@@ -87,7 +87,7 @@
                         geschieht per Bezeichner (Spalte <em>identifier</em>).
                     </div>
 
-                    <div *ngIf="showPermitDeletionsOption()" class="form-group form-check-inline">
+                    <div *ngIf="shouldDisplayPermitDeletionsOption()" class="form-group form-check-inline">
                         <input type="checkbox" id="merging-relations-checkbox" class="form-check-input"
                                [(ngModel)]="importState.permitDeletions">
                         <label for="merging-relations-checkbox" class="form-check-label" i18n="@@import.mergeOption.permitDeletions">
@@ -95,7 +95,15 @@
                         </label>
                     </div>
 
-                    <div *ngIf="showPermitDeletionsOption() && importState.format === 'native'"
+                    <div *ngIf="shouldDisplayDifferentialImportOption()" class="form-group form-check-inline">
+                        <input type="checkbox" id="differential-update-checkbox" class="form-check-input"
+                               [(ngModel)]="importState.differentialUpdate" (change)="updateDifferentialImport()">
+                        <label for="differential-update-checkbox" class="form-check-label" i18n="@@import.differentialImportOption">
+                            Nur neue Ressourcen importieren
+                        </label>
+                    </div>
+
+                    <div *ngIf="shouldDisplayPermitDeletionsOption() && importState.format === 'native'"
                          class="import-info" i18n="@@import.mergeOption.deletionsInfo.jsonl">
                         Ist diese Option aktiviert, so können sowohl Felder als auch Relationen nicht nur
                         verändert, sondern auch entfernt werden. Gelöscht werden alle Felder und Relationen,
@@ -103,7 +111,7 @@
                         Nicht aufgeführte Felder und Relationen bleiben unverändert.
                     </div>
 
-                    <div *ngIf="showPermitDeletionsOption() && importState.format === 'csv'"
+                    <div *ngIf="shouldDisplayPermitDeletionsOption() && importState.format === 'csv'"
                          class="import-info" i18n="@@import.mergeOption.deletionsInfo.csv">
                         Ist diese Option aktiviert, so können sowohl Felder als auch Relationen nicht nur
                         verändert, sondern auch entfernt werden. Gelöscht werden alle Felder und Relationen,
@@ -126,7 +134,7 @@
                         </select>
                     </div>
 
-                    <div class="form-group" *ngIf="showImportIntoOperation()">
+                    <div class="form-group" *ngIf="shouldDisplayImportIntoOperation()">
                         <label class="control-label col-form-label"
                                for="operationSelect"
                                i18n="@@import.assignToOperation.label">Daten einer Maßnahme zuordnen</label>

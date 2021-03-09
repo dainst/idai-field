@@ -1,4 +1,5 @@
 import {hasnt, includedIn, isArray, isnt, isUndefinedOrEmpty} from 'tsfun';
+import {reduce as asyncReduce} from 'tsfun/async';
 import {Document, Relations} from 'idai-components-2';
 import {Find, Get, Id, Identifier, IdentifierMap} from './types';
 import {iterateRelationsInImport} from './utils';
@@ -29,7 +30,7 @@ export async function preprocessRelations(documents: Array<Document>,
                                           get: Get,
                                           { mergeMode, permitDeletions, useIdentifiersInRelations}: ImportOptions) {
 
-    const identifierMap: IdentifierMap = mergeMode ? {} : assignIds(documents, generateId);
+    const identifierMap: IdentifierMap = mergeMode ? {} : await assignIds(documents, generateId, find);
 
     for (let document of documents) {
         const relations = document.resource.relations;
@@ -57,9 +58,9 @@ async function rewriteIdentifiersInRelations(relations: Relations,
         if (identifierMap[identifier]) {
             relations[relation][i] = identifierMap[identifier];
         } else {
-            const _ = await find(identifier);
-            if (!_) throw [E.PREVALIDATION_MISSING_RELATION_TARGET, identifier];
-            relations[relation][i] = _.resource.id;
+            const found = await find(identifier);
+            if (!found) throw [E.PREVALIDATION_MISSING_RELATION_TARGET, identifier];
+            relations[relation][i] = found.resource.id;
         }
     });
 }
@@ -76,14 +77,21 @@ async function assertNoMissingRelationTargets(relations: Relations, get: Get) {
 }
 
 
-function assignIds(documents: Array<Document>, generateId: Function): IdentifierMap {
+async function assignIds(documents: Array<Document>, 
+                         generateId: Function, 
+                         find: Find): Promise<IdentifierMap> {
 
-    return documents
-        .filter(hasnt(RESOURCE_DOT_ID))
-        .reduce((identifierMap, document)  => {
-            identifierMap[document.resource.identifier] = document.resource.id = generateId();
-            return identifierMap;
-        }, {} as IdentifierMap);
+    const docs = documents.filter(hasnt(RESOURCE_DOT_ID));
+
+    return asyncReduce(docs, async (identifierMap, document) => {
+
+        const found = await find(document.resource.identifier);
+        document.resource.id = found ? found.resource.id : generateId();
+
+        identifierMap[document.resource.identifier] = document.resource.id;
+        return identifierMap;
+
+    }, {} as IdentifierMap);
 }
 
 

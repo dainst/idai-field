@@ -727,4 +727,63 @@ describe('Import/Subsystem', () => {
         expect(result.documents[1].resource.shortDescription).toBe('new');
         done();
     });
+
+
+    it('ignoreExistingDocuments - complement leftover relation', async done => {
+
+        // lets assume a previous import from the same import file has been interrupted,
+        // such that only feature1 has been imported.
+        //
+        // What we want in this case is to continue the import process
+        // and also save the time already invested.
+        // 
+        // Note that we still require the import file to be consistent in itself,
+        // with regards to its relations, although we do not update existing documents
+        // based on the import files contents. We only update existing documents' relations
+        // where they are relation targets of documents which actually get imported
+        // during THIS import.
+
+        await datastore.create({ resource: {
+            id: 'tr1', identifier: 'trench1', category: 'Trench',
+            shortDescription: 'original', relations: {} } });
+        await datastore.create({ resource: {
+            id: '99', identifier: 'feature1', category: 'Feature',
+            shortDescription: 'original', 
+            relations: { "isAfter": ["100"]} // this is broken (a previously generated id)
+                                             // the target is not there (yet)
+         } });
+
+        const options: ImporterOptions = {
+            separator: '',
+            sourceType: '',
+            format: 'native',
+            mergeMode: false,
+            ignoreExistingDocuments: true,
+            permitDeletions: false,
+            selectedOperationId: 'tr1'
+        };
+
+        const documents = await Importer.doParse(
+            options,
+            '{ "category": "Feature", "identifier": "feature1", "shortDescription": "changed", "relations": { "isAfter": ["feature2"] } }\n'
+            + '{ "category": "Feature", "identifier": "feature2", "shortDescription": "new", "relations": { "isBefore": ["feature1"] } }'
+        );
+
+        await Importer.doImport(
+            services,
+            { settings: {} as any, projectConfiguration: _projectConfiguration },
+            () => '101',
+            options,
+            documents);
+
+        const result = await datastore.find({});
+        expect(result.documents[0].resource.shortDescription).toBe('original');
+        expect(result.documents[1].resource.shortDescription).toBe('new');
+        expect(result.documents[0].resource.relations['isAfter']).toEqual(
+            ['100', // this is still broken, TODO we may want to clean this up
+            '101']  // this is ok
+            );
+        expect(result.documents[1].resource.relations['isBefore']).toEqual(['99']);
+        done();
+    });
 });

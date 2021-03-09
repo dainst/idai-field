@@ -4,7 +4,7 @@ import {Document} from 'idai-components-2';
 import {ImportValidator} from './process/import-validator';
 import {DocumentDatastore} from '../../datastore/document-datastore';
 import {Updater} from './updater';
-import {ImportFunction} from './types';
+import {Find, ImportFunction} from './types';
 import {assertLegalCombination, findByIdentifier} from './utils';
 import {preprocessRelations} from './preprocess-relations';
 import {preprocessFields} from './preprocess-fields';
@@ -72,11 +72,6 @@ export function buildImportFunction(services: ImportServices,
      */
     return async function importDocuments(documents: Array<Document>): Promise<{ errors: string[][], successfulImports: number }> {
 
-        documents = options.ignoreExistingDocuments !== true
-            ? documents
-            : await asyncFilter(documents, async document =>
-                (await find(document.resource.identifier)) === undefined);
-
         try {
             preprocessFields(documents, options.permitDeletions === true);
             await preprocessRelations(documents,
@@ -84,6 +79,11 @@ export function buildImportFunction(services: ImportServices,
         } catch (errWithParams) {
             return { errors: [errWithParams], successfulImports: 0 };
         }
+
+        documents = options.ignoreExistingDocuments !== true
+            ? documents
+            : await asyncFilter(documents, async document =>
+                (await find(document.resource.identifier)) === undefined);
 
         let processedDocuments: any = undefined;
         try {
@@ -131,7 +131,7 @@ export function buildImportFunction(services: ImportServices,
 }
 
 
-async function preprocessDocuments(find: Function,
+async function preprocessDocuments(find: Find,
                                    preprocess: Function,
                                    mergeMode: boolean,
                                    documents: Array<Document>): Promise<{ [resourceId: string]: Document }> {

@@ -1,5 +1,5 @@
 import {to} from 'tsfun';
-import {createApp, setupSettingsService, setupSyncTestDb} from '../subsystem-helper';
+import {createApp, createHelpers, setupSettingsService, setupSyncTestDb} from '../subsystem-helper';
 import {PouchdbManager} from '../../../../../src/app/core/datastore/pouchdb/pouchdb-manager';
 import {PouchdbServer} from '../../../../../src/app/core/datastore/pouchdb/pouchdb-server';
 import {Importer, ImporterOptions} from '../../../../../src/app/core/import/importer';
@@ -18,6 +18,7 @@ describe('Import/Subsystem', () => {
     let imagestore;
     let services;
     let _projectConfiguration;
+    let getDocument;
 
 
     async function parseAndImport(options: ImporterOptions, importFileContent: string) {
@@ -43,7 +44,10 @@ describe('Import/Subsystem', () => {
         await setupSyncTestDb();
         const {projectConfiguration} = await setupSettingsService(new PouchdbManager(), new PouchdbServer());
         _projectConfiguration = projectConfiguration;
-        const {fieldDocumentDatastore} = await createApp();
+        const app = await createApp();
+        const {fieldDocumentDatastore} = app;
+        const helpers = createHelpers(app);
+        getDocument = helpers.getDocument;
         datastore = fieldDocumentDatastore;
         services = {datastore, relationsManager, imageRelationsManager, imagestore};
         done();
@@ -345,7 +349,7 @@ describe('Import/Subsystem', () => {
     it('update field', async done => {
 
         await datastore.create({ resource: { id: 'a', identifier: 'a', category: 'Trench', relations: {} } });
-        await datastore.create({ resource: { identifier: 'f1', category: 'Feature', shortDescription: 'feature1', relations: { isRecordedIn: ['a']}}});
+        await datastore.create({ resource: { identifier: 'F1', category: 'Feature', shortDescription: 'feature1', relations: { isRecordedIn: ['a']}}});
 
         await parseAndImport(
             {
@@ -356,7 +360,7 @@ describe('Import/Subsystem', () => {
                 permitDeletions: false,
                 selectedOperationId: undefined
             },
-            '{ "category": "Feature", "identifier" : "f1", "shortDescription" : "feature_1" }'
+            '{ "category": "Feature", "identifier" : "F1", "shortDescription" : "feature_1" }'
         );
 
         const result = await datastore.find({});
@@ -369,7 +373,8 @@ describe('Import/Subsystem', () => {
 
         await datastore.create({ resource: { id: 'a', identifier: 'a', category: 'Trench', relations: {} } });
         await datastore.create({ resource: {
-            identifier: 'f1', category: 'Feature',
+            id: 'f1',
+            identifier: 'F1', category: 'Feature',
             shortDescription: 'feature1',
                 relations: { isRecordedIn: ['a'] }
         } });
@@ -383,11 +388,11 @@ describe('Import/Subsystem', () => {
                 permitDeletions: true,
                 selectedOperationId: undefined
             },
-            '{ "category": "Feature", "identifier" : "f1", "shortDescription": null }'
+            '{ "category": "Feature", "identifier" : "F1", "shortDescription": null }'
         );
 
-        const result = await datastore.find({});
-        expect(result.documents[1].resource.shortDescription).toBeUndefined();
+        const feature = (await getDocument('f1')).resource;
+        expect(feature.shortDescription).toBeUndefined();
         done();
     });
 
@@ -397,13 +402,13 @@ describe('Import/Subsystem', () => {
         await datastore.create({ resource: { id: 'a', identifier: 'a', category: 'Trench', relations: { } } });
         await datastore.create({ resource: {
                 id: 'f1',
-                identifier: 'f1',
+                identifier: 'F1',
                 category: 'Feature',
                 relations: { isRecordedIn: ['a'], isAfter: ['f2'] }
             } });
         await datastore.create({ resource: {
                 id: 'f2',
-                identifier: 'f2',
+                identifier: 'F2',
                 category: 'Feature',
                 relations: { isRecordedIn: ['a'], isBefore: ['f1'] }
             } });
@@ -417,12 +422,13 @@ describe('Import/Subsystem', () => {
                 permitDeletions: true,
                 selectedOperationId: undefined
             },
-            '{ "category": "Feature", "identifier" : "f1", "relations": { "isAfter": null } }'
+            '{ "category": "Feature", "identifier" : "F1", "relations": { "isAfter": null } }'
         );
 
-        const result = await datastore.find({});
-        expect(result.documents[1].resource.relations.isAfter).toBeUndefined();
-        expect(result.documents[2].resource.relations.isBefore).toBeUndefined();
+        const feature1 = (await getDocument('f1')).resource;
+        const feature2 = (await getDocument('f2')).resource;
+        expect(feature1.relations.isAfter).toBeUndefined();
+        expect(feature2.relations.isBefore).toBeUndefined();
         done();
     });
 
@@ -431,6 +437,7 @@ describe('Import/Subsystem', () => {
 
         await datastore.create({ resource: { id: 'a', identifier: 'a', category: 'Trench', relations: {} } });
         await datastore.create({ resource: {
+                id: 'f1',
                 identifier: 'f1',
                 category: 'Feature',
                 shortDescription: 'feature1',
@@ -449,8 +456,8 @@ describe('Import/Subsystem', () => {
             '{ "category": "Feature", "identifier" : "f1", "shortDescription": null }'
         );
 
-        const result = await datastore.find({});
-        expect(result.documents[1].resource.shortDescription).toEqual('feature1');
+        const feature = (await getDocument('f1')).resource;
+        expect(feature.shortDescription).toEqual('feature1');
         done();
     });
 
@@ -460,13 +467,13 @@ describe('Import/Subsystem', () => {
         await datastore.create({ resource: { id: 'a', identifier: 'a', category: 'Trench', relations: {} } });
         await datastore.create({ resource: {
                 id: 'f1',
-                identifier: 'f1',
+                identifier: 'F1',
                 category: 'Feature',
                 relations: { isRecordedIn: ['a'], isAfter: ['f2'] }
             } });
         await datastore.create({ resource: {
                 id: 'f2',
-                identifier: 'f2',
+                identifier: 'F2',
                 category: 'Feature',
                 relations: { isRecordedIn: ['a'], isBefore: ['f1'] }
             } });
@@ -480,12 +487,13 @@ describe('Import/Subsystem', () => {
                 permitDeletions: false,
                 selectedOperationId: undefined
             },
-            '{ "category": "Feature", "identifier" : "f1", "relations": { "isAfter": null } }'
+            '{ "category": "Feature", "identifier" : "F1", "relations": { "isAfter": null } }'
         );
 
-        const result = await datastore.find({});
-        expect(result.documents[1].resource.relations.isAfter).toEqual(['f2']);
-        expect(result.documents[2].resource.relations.isBefore).toEqual(['f1']);
+        const feature1 = (await getDocument('f1')).resource;
+        const feature2 = (await getDocument('f2')).resource;
+        expect(feature1.relations.isAfter).toEqual(['f2']);
+        expect(feature2.relations.isBefore).toEqual(['f1']);
         done();
     });
 
@@ -518,7 +526,7 @@ describe('Import/Subsystem', () => {
 
     it('import trench not allowed, when import into operation is activated', async done => {
 
-        await datastore.create({ resource: { identifier: 't1', category: 'Trench', shortDescription: 'Our trench 1', relations: {} } });
+        await datastore.create({ resource: { id: 't1', identifier: 'T1', category: 'Trench', shortDescription: 'Our trench 1', relations: {} } });
 
         const importReport = await parseAndImport(
             {
@@ -529,13 +537,13 @@ describe('Import/Subsystem', () => {
                 permitDeletions: false,
                 selectedOperationId: 'f1'
             },
-            '{ "category": "Trench", "identifier" : "t2", "shortDescription" : "Our Trench 2" }'
+            '{ "category": "Trench", "identifier" : "T2", "shortDescription" : "Our Trench 2" }'
         );
 
         expect(importReport.errors[0][0]).toEqual(ImportErrors.OPERATIONS_NOT_ALLOWED);
 
-        const result = await datastore.find({});
-        expect(result.documents[0].resource.identifier).toBe('t1');
+        const feature = (await getDocument('t1')).resource;
+        expect(feature.identifier).toBe('T1');
         done();
     });
 
@@ -556,8 +564,8 @@ describe('Import/Subsystem', () => {
             '{ "category": "Feature", "identifier": "abc", "dating" : [{ "type": "after", "begin": { "inputYear": 100, "inputType": "bce" } }] }'
         );
 
-        const result = await datastore.find({});
-        expect(result.documents[0].resource['dating'][0]['begin']['year']).toBe(-100);
+        const feature = (await getDocument('101')).resource;
+        expect(feature['dating'][0]['begin']['year']).toBe(-100);
         done();
     });
 
@@ -582,9 +590,11 @@ describe('Import/Subsystem', () => {
             + '{ "category": "Trench", "identifier": "trench2", "shortDescription": "new" }'
         );
 
-        const result = await datastore.find({});
-        expect(result.documents[0].resource.shortDescription).toBe('original');
-        expect(result.documents[1].resource.shortDescription).toBe('new');
+
+        const trench = (await getDocument('tr1')).resource;
+        const feature = (await getDocument('101')).resource;
+        expect(trench.shortDescription).toBe('original');
+        expect(feature.shortDescription).toBe('new');
         done();
     });
 
@@ -627,15 +637,15 @@ describe('Import/Subsystem', () => {
             + '{ "category": "Feature", "identifier": "feature2", "shortDescription": "new", "relations": { "isBefore": ["feature1"] } }'
         );
 
-        const result = await datastore.find({});
-
-        expect(result.documents[0].resource.shortDescription).toBe('original');
-        expect(result.documents[1].resource.shortDescription).toBe('new');
-        expect(result.documents[0].resource.relations['isAfter']).toEqual(
+        const feature1 = (await getDocument('99')).resource;
+        const feature2 = (await getDocument('101')).resource;
+        expect(feature1.shortDescription).toBe('original');
+        expect(feature2.shortDescription).toBe('new');
+        expect(feature1.relations['isAfter']).toEqual(
             ['100', // this is still broken, TODO we may want to clean this up
             '101']  // this is ok
             );
-        expect(result.documents[1].resource.relations['isBefore']).toEqual(['99']);
+        expect(feature2.relations['isBefore']).toEqual(['99']);
         done();
     });
 });

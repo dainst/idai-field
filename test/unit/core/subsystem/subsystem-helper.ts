@@ -215,6 +215,7 @@ export function createHelpers(app) {
         app.documentDatastore, projectImageDir, app.settingsProvider.getSettings().username);
     const updateDocument = makeUpdateDocument(
         app.documentDatastore, app.settingsProvider.getSettings().username);
+    const getDocument = makeGetDocument(app.documentDatastore);
     const expectResources = makeExpectResources(app.documentDatastore);
     const expectImagesExist = makeExpectImagesExist(projectImageDir);
     const expectImagesDontExist = makeExpectImagesDontExist(projectImageDir);
@@ -228,7 +229,8 @@ export function createHelpers(app) {
         expectImagesExist,
         expectImagesDontExist,
         createProjectDir,
-        createImageInProjectDir
+        createImageInProjectDir,
+        getDocument
     }
 }
 
@@ -343,5 +345,14 @@ function makeCreateImageInProjectImageDir(projectImageDir: string) {
 
         fs.closeSync(fs.openSync(projectImageDir + id, 'w'));
         expect(fs.existsSync(projectImageDir + id)).toBeTruthy();
+    }
+}
+
+
+function makeGetDocument(documentDatastore: DocumentDatastore) {
+
+    return async function getDocument(id: ResourceId) {
+
+        return await documentDatastore.get(id);
     }
 }

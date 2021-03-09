@@ -51,7 +51,7 @@ export module Updater {
         for (let i = 0; (i * chunkSize) < documents.length; i++) {
 
             const docs = documents.slice(i*chunkSize,i*chunkSize+chunkSize);
-            console.log(`Bulk-Importing part ${i+1}/${partsInTotal}`);
+            console.debug(`Bulk-importing part ${i+1}/${partsInTotal}`);
 
             if (updateMode) await datastore.bulkUpdate(docs as Array<Document>, username);
             else await datastore.bulkCreate(docs, username);    // throws exception if an id already exists

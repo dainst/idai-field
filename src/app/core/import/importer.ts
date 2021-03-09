@@ -36,6 +36,7 @@ export interface ImporterOptions {
 
     format: ImporterFormat,
     mergeMode: boolean,
+    ignoreExistingDocuments?: true,
     permitDeletions: boolean;
     selectedOperationId: string;
     selectedCategory?: Category|undefined;
@@ -72,7 +73,6 @@ export interface ImporterServices {
  * @author Jan G. Wieners
  */
 export module Importer {
-
 
     export function mergeOptionAvailable(options: ImporterOptions) {
 
@@ -141,8 +141,13 @@ export module Importer {
                     { datastore: services.datastore, validator },
                     { operationCategoryNames, inverseRelationsMap, settings: context.settings },
                     { generateId, preprocessDocument, postprocessDocument },
-                    { mergeMode: options.mergeMode, permitDeletions: options.permitDeletions,
-                        operationId: options.selectedOperationId, useIdentifiersInRelations: true });
+                    {
+                        mergeMode: options.mergeMode,
+                        ignoreExistingDocuments: options.ignoreExistingDocuments,
+                        permitDeletions: options.permitDeletions,
+                        operationId: options.selectedOperationId,
+                        useIdentifiersInRelations: true
+                    });
         }
 
         const { errors, successfulImports } = await importFunction(documents);

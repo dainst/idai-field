@@ -22,6 +22,8 @@ describe('Import/Subsystem', () => {
 
     beforeEach(async done => {
 
+        spyOn(console, 'debug');
+
         await setupSyncTestDb();
         const {projectConfiguration} = await setupSettingsService(new PouchdbManager(), new PouchdbServer());
         _projectConfiguration = projectConfiguration;
@@ -687,6 +689,42 @@ describe('Import/Subsystem', () => {
 
         const result = await datastore.find({});
         expect(result.documents[0].resource['dating'][0]['begin']['year']).toBe(-100);
+        done();
+    });
+
+
+    it('ignoreExistingDocuments', async done => {
+
+        await datastore.create({ resource: {
+            id: 'tr1', identifier: 'trench1', category: 'Trench',
+            shortDescription: 'original', relations: {} } });
+
+        const options: ImporterOptions = {
+            separator: '',
+            sourceType: '',
+            format: 'native',
+            mergeMode: false,
+            ignoreExistingDocuments: true,
+            permitDeletions: false,
+            selectedOperationId: ''
+        };
+
+        const documents = await Importer.doParse(
+            options,
+            '{ "category": "Trench", "identifier": "trench1", "shortDescription": "changed" }\n'
+            + '{ "category": "Trench", "identifier": "trench2", "shortDescription": "new" }'
+        );
+
+        await Importer.doImport(
+            services,
+            { settings: {} as any, projectConfiguration: _projectConfiguration },
+            () => '101',
+            options,
+            documents);
+
+        const result = await datastore.find({});
+        expect(result.documents[0].resource.shortDescription).toBe('original');
+        expect(result.documents[1].resource.shortDescription).toBe('new');
         done();
     });
 });

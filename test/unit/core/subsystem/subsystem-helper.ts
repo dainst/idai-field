@@ -214,6 +214,7 @@ export function createHelpers(app) {
     const updateDocument = makeUpdateDocument(
         app.documentDatastore, app.settingsProvider.getSettings().username);
     const getDocument = makeGetDocument(app.documentDatastore);
+    const expectDocuments = makeExpectDocuments(app.documentDatastore);
     const expectResources = makeExpectResources(app.documentDatastore);
     const expectImagesExist = makeExpectImagesExist(projectImageDir);
     const expectImagesDontExist = makeExpectImagesDontExist(projectImageDir);
@@ -223,6 +224,7 @@ export function createHelpers(app) {
     return {
         createDocuments,
         updateDocument,
+        expectDocuments,
         expectResources,
         expectImagesExist,
         expectImagesDontExist,
@@ -328,14 +330,25 @@ function makeUpdateDocument(documentDatastore: DocumentDatastore, username: stri
     }
 }
 
-function makeExpectResources(documentDatastore: DocumentDatastore) {
+function makeExpectDocuments(documentDatastore: DocumentDatastore) {
 
-    return async function expectResources(...resourceIds: string[]) {
+    return async function expectDocuments(...resourceIds: string[]) {
 
         const documents = (await documentDatastore.find({})).documents;
         expect(sameset(documents.map(toResourceId), resourceIds)).toBeTruthy();
     }
 }
+
+
+function makeExpectResources(documentDatastore: DocumentDatastore) {
+
+    return async function expectDocuments(...resourceIdentifiers: string[]) {
+
+        const documents = (await documentDatastore.find({})).documents;
+        expect(sameset(documents.map(doc => doc.resource.identifier), resourceIdentifiers)).toBeTruthy();
+    }
+}
+
 
 function makeCreateImageInProjectImageDir(projectImageDir: string) {
 

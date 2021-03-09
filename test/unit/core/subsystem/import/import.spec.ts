@@ -18,7 +18,7 @@ describe('Import/Subsystem', () => {
     let imagestore;
     let services;
     let _projectConfiguration;
-    let getDocument;
+    let helpers;
 
 
     async function parseAndImport(options: ImporterOptions, importFileContent: string) {
@@ -46,8 +46,7 @@ describe('Import/Subsystem', () => {
         _projectConfiguration = projectConfiguration;
         const app = await createApp();
         const {fieldDocumentDatastore} = app;
-        const helpers = createHelpers(app);
-        getDocument = helpers.getDocument;
+        helpers = createHelpers(app);
         datastore = fieldDocumentDatastore;
         services = {datastore, relationsManager, imageRelationsManager, imagestore};
         done();
@@ -299,7 +298,7 @@ describe('Import/Subsystem', () => {
 
     it('create one find, connect to existing operation', async done => {
 
-        const stored = await datastore.create({ resource: { identifier: 't1', category: 'Trench', shortDescription: 'Our Trench 1', relations: {}}});
+        const stored = await datastore.create({ resource: { id: 't1', identifier: 'T1', category: 'Trench', shortDescription: 'Our Trench 1', relations: {}}});
 
         await parseAndImport(
             {
@@ -309,13 +308,12 @@ describe('Import/Subsystem', () => {
                 permitDeletions: false,
                 selectedOperationId: stored.resource.id
             },
-            '{ "category": "Find", "identifier" : "f1", "shortDescription" : "Our Find 1"}'
+            '{ "category": "Find", "identifier" : "F1", "shortDescription" : "Our Find 1"}'
         );
 
         const result = await datastore.find({});
         expect(result.documents.length).toBe(2);
-        expect(result.documents.map(to('resource.identifier'))).toContain('t1');
-        expect(result.documents.map(to('resource.identifier'))).toContain('f1');
+        await helpers.expectResources('T1', 'F1');
         done();
     });
 
@@ -391,7 +389,7 @@ describe('Import/Subsystem', () => {
             '{ "category": "Feature", "identifier" : "F1", "shortDescription": null }'
         );
 
-        const feature = (await getDocument('f1')).resource;
+        const feature = (await helpers.getDocument('f1')).resource;
         expect(feature.shortDescription).toBeUndefined();
         done();
     });
@@ -425,8 +423,8 @@ describe('Import/Subsystem', () => {
             '{ "category": "Feature", "identifier" : "F1", "relations": { "isAfter": null } }'
         );
 
-        const feature1 = (await getDocument('f1')).resource;
-        const feature2 = (await getDocument('f2')).resource;
+        const feature1 = (await helpers.getDocument('f1')).resource;
+        const feature2 = (await helpers.getDocument('f2')).resource;
         expect(feature1.relations.isAfter).toBeUndefined();
         expect(feature2.relations.isBefore).toBeUndefined();
         done();
@@ -456,7 +454,7 @@ describe('Import/Subsystem', () => {
             '{ "category": "Feature", "identifier" : "f1", "shortDescription": null }'
         );
 
-        const feature = (await getDocument('f1')).resource;
+        const feature = (await helpers.getDocument('f1')).resource;
         expect(feature.shortDescription).toEqual('feature1');
         done();
     });
@@ -490,8 +488,8 @@ describe('Import/Subsystem', () => {
             '{ "category": "Feature", "identifier" : "F1", "relations": { "isAfter": null } }'
         );
 
-        const feature1 = (await getDocument('f1')).resource;
-        const feature2 = (await getDocument('f2')).resource;
+        const feature1 = (await helpers.getDocument('f1')).resource;
+        const feature2 = (await helpers.getDocument('f2')).resource;
         expect(feature1.relations.isAfter).toEqual(['f2']);
         expect(feature2.relations.isBefore).toEqual(['f1']);
         done();
@@ -542,7 +540,7 @@ describe('Import/Subsystem', () => {
 
         expect(importReport.errors[0][0]).toEqual(ImportErrors.OPERATIONS_NOT_ALLOWED);
 
-        const feature = (await getDocument('t1')).resource;
+        const feature = (await helpers.getDocument('t1')).resource;
         expect(feature.identifier).toBe('T1');
         done();
     });
@@ -564,7 +562,7 @@ describe('Import/Subsystem', () => {
             '{ "category": "Feature", "identifier": "abc", "dating" : [{ "type": "after", "begin": { "inputYear": 100, "inputType": "bce" } }] }'
         );
 
-        const feature = (await getDocument('101')).resource;
+        const feature = (await helpers.getDocument('101')).resource;
         expect(feature['dating'][0]['begin']['year']).toBe(-100);
         done();
     });
@@ -591,8 +589,8 @@ describe('Import/Subsystem', () => {
         );
 
 
-        const trench = (await getDocument('tr1')).resource;
-        const feature = (await getDocument('101')).resource;
+        const trench = (await helpers.getDocument('tr1')).resource;
+        const feature = (await helpers.getDocument('101')).resource;
         expect(trench.shortDescription).toBe('original');
         expect(feature.shortDescription).toBe('new');
         done();
@@ -637,8 +635,8 @@ describe('Import/Subsystem', () => {
             + '{ "category": "Feature", "identifier": "feature2", "shortDescription": "new", "relations": { "isBefore": ["feature1"] } }'
         );
 
-        const feature1 = (await getDocument('99')).resource;
-        const feature2 = (await getDocument('101')).resource;
+        const feature1 = (await helpers.getDocument('99')).resource;
+        const feature2 = (await helpers.getDocument('101')).resource;
         expect(feature1.shortDescription).toBe('original');
         expect(feature2.shortDescription).toBe('new');
         expect(feature1.relations['isAfter']).toEqual(

@@ -26,9 +26,9 @@ export function assertLegalCombination(importOptions: ImportOptions) {
             throw 'FATAL ERROR - illegal argument combination '
             + '- mergeMode and operationId must not be both truthy';
         }
-        if (importOptions.ignoreExistingDocuments) {
+        if (importOptions.differentialImport) {
             throw 'FATAL ERROR - illegal argument combination '
-            + '- mergeMode and ignoreExistingDocuments must not be both true';
+            + '- mergeMode and differentialImport must not be both true';
         }
     }
 }

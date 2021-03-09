@@ -562,7 +562,7 @@ describe('Import/Subsystem', () => {
     });
 
 
-    it('ignoreExistingDocuments', async done => {
+    it('differentialImport', async done => {
 
         await datastore.create({ resource: {
             id: 'tr1', identifier: 'trench1', category: 'Trench',
@@ -574,7 +574,7 @@ describe('Import/Subsystem', () => {
                 sourceType: '',
                 format: 'native',
                 mergeMode: false,
-                ignoreExistingDocuments: true,
+                differentialImport: true,
                 permitDeletions: false,
                 selectedOperationId: ''
             },
@@ -589,7 +589,7 @@ describe('Import/Subsystem', () => {
     });
 
 
-    it('ignoreExistingDocuments - complement leftover relation', async done => {
+    it('differentialImport - complement leftover relation', async done => {
 
         // Let's assume a previous import from the same import file has been interrupted,
         // such that only feature1 has been imported.
@@ -617,7 +617,7 @@ describe('Import/Subsystem', () => {
                 sourceType: '',
                 format: 'native',
                 mergeMode: false,
-                ignoreExistingDocuments: true,
+                differentialImport: true,
                 permitDeletions: false,
                 selectedOperationId: 'tr1'
             },

@@ -33,9 +33,7 @@ import {ImageRelationsManager} from '../../../../src/app/core/model/image-relati
 import {SyncService} from '../../../../src/app/core/sync/sync-service';
 import {createDocuments, NiceDocs} from '../../test-helpers';
 import {sameset} from 'tsfun';
-import {TypeRelations} from '../../../../src/app/core/model/relation-constants';
 import {ResourceId} from '../../../../src/app/core/constants';
-import {helper} from 'showdown';
 import {makeDocumentsLookup} from '../../../../src/app/core/import/import/utils';
 
 const fs = require('fs');

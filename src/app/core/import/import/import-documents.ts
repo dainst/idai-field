@@ -1,9 +1,10 @@
 import {identity} from 'tsfun';
+import {filter as asyncFilter} from 'tsfun/async';
 import {Document} from 'idai-components-2';
 import {ImportValidator} from './process/import-validator';
 import {DocumentDatastore} from '../../datastore/document-datastore';
 import {Updater} from './updater';
-import {ImportFunction} from './types';
+import {Find, ImportFunction} from './types';
 import {assertLegalCombination, findByIdentifier} from './utils';
 import {preprocessRelations} from './preprocess-relations';
 import {preprocessFields} from './preprocess-fields';
@@ -23,6 +24,7 @@ export interface ImportOptions {
     permitDeletions?: boolean;
     operationId?: string;
     useIdentifiersInRelations?: boolean;
+    differentialImport?: true;
 }
 
 
@@ -58,7 +60,9 @@ export function buildImportFunction(services: ImportServices,
                                     helpers: ImportHelpers,
                                     options: ImportOptions = {}): ImportFunction {
 
-    assertLegalCombination(options.mergeMode, options.operationId);
+    assertLegalCombination(options);
+    const get  = (resourceId: string) => services.datastore.get(resourceId);
+    const find = findByIdentifier(services.datastore);
 
     /**
      * @param documents documents with the field resource.identifier set to a non empty string.
@@ -68,12 +72,15 @@ export function buildImportFunction(services: ImportServices,
      */
     return async function importDocuments(documents: Array<Document>): Promise<{ errors: string[][], successfulImports: number }> {
 
-        const get = (resourceId: string) => services.datastore.get(resourceId);
+        documents = options.differentialImport !== true
+            ? documents
+            : await asyncFilter(documents, async document =>
+                (await find(document.resource.identifier)) === undefined);
 
         try {
             preprocessFields(documents, options.permitDeletions === true);
             await preprocessRelations(documents,
-                helpers.generateId, findByIdentifier(services.datastore), get, options);
+                helpers.generateId, find, get, options);
         } catch (errWithParams) {
             return { errors: [errWithParams], successfulImports: 0 };
         }
@@ -81,10 +88,10 @@ export function buildImportFunction(services: ImportServices,
         let processedDocuments: any = undefined;
         try {
             const mergeDocs = await preprocessDocuments(
-                documents,
-                findByIdentifier(services.datastore),
+                find,
                 helpers.preprocessDocument ?? identity,
-                options.mergeMode === true);
+                options.mergeMode === true,
+                documents);
             processedDocuments = processDocuments(documents, mergeDocs, services.validator);
         } catch (msgWithParams) {
             return { errors: [msgWithParams], successfulImports: 0};
@@ -124,10 +131,10 @@ export function buildImportFunction(services: ImportServices,
 }
 
 
-async function preprocessDocuments(documents: Array<Document>,
-                                   find: Function,
+async function preprocessDocuments(find: Find,
                                    preprocess: Function,
-                                   mergeMode: boolean): Promise<{ [resourceId: string]: Document }> {
+                                   mergeMode: boolean,
+                                   documents: Array<Document>): Promise<{ [resourceId: string]: Document }> {
 
     const mergeDocs = {};
 

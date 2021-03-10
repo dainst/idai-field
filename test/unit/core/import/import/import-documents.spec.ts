@@ -14,6 +14,9 @@ describe('importDocuments', () => {
 
 
     beforeEach(() => {
+
+        spyOn(console, 'debug');
+
         datastore = jasmine.createSpyObj('datastore',
             ['bulkCreate', 'bulkUpdate', 'get', 'find']);
         validator = jasmine.createSpyObj('validator', [

@@ -77,11 +77,13 @@ export class ImportComponent implements OnInit {
 
     public isJavaInstallationMissing = () => this.importState.format === 'shapefile' && !this.javaInstalled;
 
-    public showMergeOption = () => Importer.mergeOptionAvailable(this.importState);
+    public shouldDisplayMergeOption = () => !this.importState.differentialUpdate && Importer.mergeOptionAvailable(this.importState);
 
-    public showPermitDeletionsOption = () => Importer.permitDeletionsOptionAvailable(this.importState);
+    public shouldDisplayDifferentialImportOption = () => !this.importState.mergeMode && Importer.differentialImportOptionAvailable(this.importState);
 
-    public showImportIntoOperation = () => Importer.importIntoOperationAvailable(this.importState);
+    public shouldDisplayPermitDeletionsOption = () => Importer.permitDeletionsOptionAvailable(this.importState);
+
+    public shouldDisplayImportIntoOperation = () => Importer.importIntoOperationAvailable(this.importState);
 
     public getSeparator = () => this.importState.separator;
 
@@ -174,6 +176,25 @@ export class ImportComponent implements OnInit {
     }
 
 
+    public updateMergeMode() {
+
+        if (this.importState.mergeMode === true) {
+            this.importState.differentialUpdate = false;
+        }
+        this.updateCategories();
+    }
+
+
+    public updateDifferentialImport() {
+
+        if (this.importState.differentialUpdate === true) {
+            this.importState.mergeMode = false;
+            this.importState.permitDeletions = false;
+        }
+        this.updateCategories();
+    }
+
+
     public updateCategories() {
 
         this.importState.categories = getCategoriesWithoutExcludedCategories(
@@ -238,7 +259,9 @@ export class ImportComponent implements OnInit {
     private async doImport() {
 
         const options = copy(this.importState as any) as unknown as ImporterOptions;
-        if (options.mergeMode === true) options.selectedOperationId = "";
+        if (options.mergeMode === true) {
+            options.selectedOperationId = "";
+        }
 
         const fileContents = await Importer.doRead(
             this.http,

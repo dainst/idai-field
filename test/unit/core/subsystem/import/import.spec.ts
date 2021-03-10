@@ -1,5 +1,5 @@
 import {to} from 'tsfun';
-import {createApp, setupSettingsService, setupSyncTestDb} from '../subsystem-helper';
+import {createApp, createHelpers, setupSettingsService, setupSyncTestDb} from '../subsystem-helper';
 import {PouchdbManager} from '../../../../../src/app/core/datastore/pouchdb/pouchdb-manager';
 import {PouchdbServer} from '../../../../../src/app/core/datastore/pouchdb/pouchdb-server';
 import {Importer, ImporterOptions} from '../../../../../src/app/core/import/importer';
@@ -18,14 +18,35 @@ describe('Import/Subsystem', () => {
     let imagestore;
     let services;
     let _projectConfiguration;
+    let helpers;
+
+
+    async function parseAndImport(options: ImporterOptions, importFileContent: string) {
+
+        const documents = await Importer.doParse(
+            options,
+            importFileContent
+        );
+
+        return await Importer.doImport(
+            services,
+            { settings: {} as any,  projectConfiguration: _projectConfiguration },
+            () => '101',
+            options,
+            documents);
+    }
 
 
     beforeEach(async done => {
 
+        spyOn(console, 'debug');
+
         await setupSyncTestDb();
         const {projectConfiguration} = await setupSettingsService(new PouchdbManager(), new PouchdbServer());
         _projectConfiguration = projectConfiguration;
-        const {fieldDocumentDatastore} = await createApp();
+        const app = await createApp();
+        const {fieldDocumentDatastore} = app;
+        helpers = createHelpers(app);
         datastore = fieldDocumentDatastore;
         services = {datastore, relationsManager, imageRelationsManager, imagestore};
         done();
@@ -49,7 +70,7 @@ describe('Import/Subsystem', () => {
             selectedCategory: undefined
         };
 
-        const documents = await Importer.doParse(
+        await parseAndImport(
             options,
             '{\n' +
             '  "type": "FeatureCollection",\n' +
@@ -63,13 +84,6 @@ describe('Import/Subsystem', () => {
             '  ]\n' +
             ' }'
         );
-
-        await Importer.doImport(
-            services,
-            { settings: {} as any,  projectConfiguration: _projectConfiguration },
-            () => '101',
-            options,
-            documents);
 
         const result = await datastore.find({});
         expect(result.documents.length).toBe(1);
@@ -118,18 +132,11 @@ describe('Import/Subsystem', () => {
             separator: ','
         };
 
-        const documents = await Importer.doParse(
+        await parseAndImport(
             options,
             '"identifier","shortDescription","dating.0.type","dating.0.begin.inputType","dating.0.begin.inputYear","dating.0.end.inputType","dating.0.end.inputYear"\n' +
             '"f1","SD","exact","","","bce","5000"'
         );
-
-        await Importer.doImport(
-            services,
-            { settings: {} as any, projectConfiguration: _projectConfiguration },
-            () => '101',
-            options,
-            documents);
 
         const result = await datastore.find({});
         expect(result.documents.length).toBe(2);
@@ -188,18 +195,11 @@ describe('Import/Subsystem', () => {
             selectedOperationId: undefined
         };
 
-        const documents = await Importer.doParse(
+        await parseAndImport(
             options,
             '"identifier","shortDescription","dating.0.type","dating.0.begin.inputType","dating.0.begin.inputYear","dating.0.end.inputType","dating.0.end.inputYear","dating.0.margin","dating.0.source","dating.0.isImprecise","dating.0.isUncertain","dating.1.type","dating.1.begin.inputType","dating.1.begin.inputYear","dating.1.end.inputType","dating.1.end.inputYear","dating.1.margin","dating.1.source","dating.1.isImprecise","dating.1.isUncertain"\n' +
             '"f1","newSD","exact","","","bce","5000","","","","","","","","","","","","",""'
         );
-
-        await Importer.doImport(
-            services,
-            { settings: {} as any, projectConfiguration: _projectConfiguration },
-            () => '101',
-            options,
-            documents);
 
         const result = await datastore.find({});
         expect(result.documents.length).toBe(1);
@@ -215,29 +215,20 @@ describe('Import/Subsystem', () => {
 
     it('create one operation', async done => {
 
-        const options: ImporterOptions = {
-            file: undefined,
-            selectedCategory: undefined,
-            separator: '',
-            sourceType: '',
-            url: undefined,
-            format: 'native',
-            mergeMode: false,
-            permitDeletions: false,
-            selectedOperationId: undefined
-        };
-
-        const documents = await Importer.doParse(
-            options,
+        await parseAndImport(
+            {
+                file: undefined,
+                selectedCategory: undefined,
+                separator: '',
+                sourceType: '',
+                url: undefined,
+                format: 'native',
+                mergeMode: false,
+                permitDeletions: false,
+                selectedOperationId: undefined
+            },
             '{ "category": "Trench", "identifier" : "t1", "shortDescription" : "Our Trench 1"}'
         );
-
-        await Importer.doImport(
-            services,
-            { settings: {} as any, projectConfiguration: _projectConfiguration },
-            () => '101',
-            options,
-            documents);
 
         const result = await datastore.find({});
         expect(result.documents.length).toBe(1);
@@ -250,26 +241,17 @@ describe('Import/Subsystem', () => {
 
         const trench = await datastore.create({ resource: { identifier: 't1', category: 'Trench', shortDescription: 'Our Trench 1', relations: {}}});
 
-        const options: ImporterOptions = {
-            separator: undefined,
-            sourceType: '',
-            format: 'native',
-            mergeMode: false,
-            permitDeletions: false,
-            selectedOperationId: trench.resource.id
-        };
-
-        const documents = await Importer.doParse(
-            options,
+        const report = await parseAndImport(
+            {
+                separator: undefined,
+                sourceType: '',
+                format: 'native',
+                mergeMode: false,
+                permitDeletions: false,
+                selectedOperationId: trench.resource.id
+            },
             '{ "category": "Find", "identifier" : "obob1", "shortDescription" : "O.B. One", "geometry": { "type": "UnsupportedGeometryType", "coordinates": [1, 2] } }'
         );
-
-        const report = await Importer.doImport(
-            services,
-            { settings: {} as any, projectConfiguration: _projectConfiguration },
-            () => '101',
-            options,
-            documents);
 
         expect(report.errors[0]).toEqual([ValidationErrors.UNSUPPORTED_GEOMETRY_TYPE, "UnsupportedGeometryType"]);
         done();
@@ -278,26 +260,17 @@ describe('Import/Subsystem', () => {
 
     it('liesWithin not set', async done => {
 
-        const options: ImporterOptions = {
-            separator: '',
-            sourceType: '',
-            format: 'native',
-            mergeMode: false,
-            permitDeletions: false,
-            selectedOperationId: undefined
-        };
-
-        const documents = await Importer.doParse(
-            options,
+        const report = await parseAndImport(
+            {
+                separator: '',
+                sourceType: '',
+                format: 'native',
+                mergeMode: false,
+                permitDeletions: false,
+                selectedOperationId: undefined
+            },
             '{ "category": "Find", "identifier" : "obob1", "shortDescription" : "O.B. One" }'
         );
-
-        const report = await Importer.doImport(
-            services,
-            { settings: {} as any, projectConfiguration: _projectConfiguration },
-            () => '101',
-            options,
-            documents);
 
         expect(report.errors[0]).toEqual([ImportErrors.NO_PARENT_ASSIGNED]);
         done();
@@ -306,26 +279,17 @@ describe('Import/Subsystem', () => {
 
     it('liesWithin not set (but does not matter)', async done => {
 
-        const options: ImporterOptions = {
-            separator: '',
-            sourceType: '',
-            format: 'native',
-            mergeMode: false,
-            permitDeletions: false,
-            selectedOperationId: undefined
-        };
-
-        const documents = await Importer.doParse(
-            options,
+        const report = await parseAndImport(
+            {
+                separator: '',
+                sourceType: '',
+                format: 'native',
+                mergeMode: false,
+                permitDeletions: false,
+                selectedOperationId: undefined
+            },
             '{ "category": "Trench", "identifier" : "obob1", "shortDescription" : "O.B. One" }'
         );
-
-        const report = await Importer.doImport(
-            services,
-            { settings: {} as any, projectConfiguration: _projectConfiguration },
-            () => '101',
-            options,
-            documents);
 
         expect(report.errors.length).toBe(0);
         done();
@@ -334,32 +298,22 @@ describe('Import/Subsystem', () => {
 
     it('create one find, connect to existing operation', async done => {
 
-        const stored = await datastore.create({ resource: { identifier: 't1', category: 'Trench', shortDescription: 'Our Trench 1', relations: {}}});
+        const stored = await datastore.create({ resource: { id: 't1', identifier: 'T1', category: 'Trench', shortDescription: 'Our Trench 1', relations: {}}});
 
-        const options: ImporterOptions = {
-            separator: '', sourceType: '',
-            format: 'native',
-            mergeMode: false,
-            permitDeletions: false,
-            selectedOperationId: stored.resource.id
-        };
-
-        const documents = await Importer.doParse(
-            options,
-            '{ "category": "Find", "identifier" : "f1", "shortDescription" : "Our Find 1"}'
+        await parseAndImport(
+            {
+                separator: '', sourceType: '',
+                format: 'native',
+                mergeMode: false,
+                permitDeletions: false,
+                selectedOperationId: stored.resource.id
+            },
+            '{ "category": "Find", "identifier" : "F1", "shortDescription" : "Our Find 1"}'
         );
-
-        await Importer.doImport(
-            services,
-            { settings: {} as any, projectConfiguration: _projectConfiguration },
-            () => '101',
-            options,
-            documents);
 
         const result = await datastore.find({});
         expect(result.documents.length).toBe(2);
-        expect(result.documents.map(to('resource.identifier'))).toContain('t1');
-        expect(result.documents.map(to('resource.identifier'))).toContain('f1');
+        await helpers.expectResources('T1', 'F1');
         done();
     });
 
@@ -370,27 +324,18 @@ describe('Import/Subsystem', () => {
             { resource: { identifier: 't1', category: 'Trench', shortDescription: 'Our Trench 1', relations: {} } }
             )).resource.id;
 
-        const options: ImporterOptions = {
-            separator: '',
-            sourceType: '',
-            format: 'native',
-            mergeMode: false,
-            permitDeletions: false,
-            selectedOperationId: resourceId
-        };
-
-        const documents = await Importer.doParse(
-            options,
+        const importReport = await parseAndImport(
+            {
+                separator: '',
+                sourceType: '',
+                format: 'native',
+                mergeMode: false,
+                permitDeletions: false,
+                selectedOperationId: resourceId
+            },
             '{ "category": "Feature", "identifier" : "f1", "shortDescription" : "feature1" }'+ "\n"
                 + '{ "category": "InvalidCategory", "identifier" : "f2", "shortDescription" : "feature2" }'
         );
-
-        const importReport = await Importer.doImport(
-            services,
-            { settings: {} as any, projectConfiguration: _projectConfiguration },
-            () => '101',
-            options,
-            documents);
 
         expect(importReport.errors[0]).toEqual([ImportErrors.INVALID_CATEGORY, 'InvalidCategory']);
         const result = await datastore.find({});
@@ -402,28 +347,19 @@ describe('Import/Subsystem', () => {
     it('update field', async done => {
 
         await datastore.create({ resource: { id: 'a', identifier: 'a', category: 'Trench', relations: {} } });
-        await datastore.create({ resource: { identifier: 'f1', category: 'Feature', shortDescription: 'feature1', relations: { isRecordedIn: ['a']}}});
+        await datastore.create({ resource: { identifier: 'F1', category: 'Feature', shortDescription: 'feature1', relations: { isRecordedIn: ['a']}}});
 
-        const options: ImporterOptions = {
-            separator: '',
-            sourceType: '',
-            format: 'native',
-            mergeMode: true,
-            permitDeletions: false,
-            selectedOperationId: undefined
-        };
-
-        const documents = await Importer.doParse(
-            options,
-            '{ "category": "Feature", "identifier" : "f1", "shortDescription" : "feature_1" }'
+        await parseAndImport(
+            {
+                separator: '',
+                sourceType: '',
+                format: 'native',
+                mergeMode: true,
+                permitDeletions: false,
+                selectedOperationId: undefined
+            },
+            '{ "category": "Feature", "identifier" : "F1", "shortDescription" : "feature_1" }'
         );
-
-        await Importer.doImport(
-            services,
-            { settings: {} as any, projectConfiguration: _projectConfiguration },
-            () => '101',
-            options,
-            documents);
 
         const result = await datastore.find({});
         expect(result.documents[1].resource.shortDescription).toBe('feature_1');
@@ -435,34 +371,26 @@ describe('Import/Subsystem', () => {
 
         await datastore.create({ resource: { id: 'a', identifier: 'a', category: 'Trench', relations: {} } });
         await datastore.create({ resource: {
-            identifier: 'f1', category: 'Feature',
+            id: 'f1',
+            identifier: 'F1', category: 'Feature',
             shortDescription: 'feature1',
                 relations: { isRecordedIn: ['a'] }
         } });
 
-        const options: ImporterOptions = {
-            separator: '',
-            sourceType: '',
-            format: 'native',
-            mergeMode: true,
-            permitDeletions: true,
-            selectedOperationId: undefined
-        };
-
-        const documents = await Importer.doParse(
-            options,
-            '{ "category": "Feature", "identifier" : "f1", "shortDescription": null }'
+        await parseAndImport(
+            {
+                separator: '',
+                sourceType: '',
+                format: 'native',
+                mergeMode: true,
+                permitDeletions: true,
+                selectedOperationId: undefined
+            },
+            '{ "category": "Feature", "identifier" : "F1", "shortDescription": null }'
         );
 
-        await Importer.doImport(
-            services,
-            { settings: {} as any, projectConfiguration: _projectConfiguration },
-            () => '101',
-            options,
-            documents);
-
-        const result = await datastore.find({});
-        expect(result.documents[1].resource.shortDescription).toBeUndefined();
+        const feature = (await helpers.getDocument('f1')).resource;
+        expect(feature.shortDescription).toBeUndefined();
         done();
     });
 
@@ -472,41 +400,33 @@ describe('Import/Subsystem', () => {
         await datastore.create({ resource: { id: 'a', identifier: 'a', category: 'Trench', relations: { } } });
         await datastore.create({ resource: {
                 id: 'f1',
-                identifier: 'f1',
+                identifier: 'F1',
                 category: 'Feature',
                 relations: { isRecordedIn: ['a'], isAfter: ['f2'] }
             } });
         await datastore.create({ resource: {
                 id: 'f2',
-                identifier: 'f2',
+                identifier: 'F2',
                 category: 'Feature',
                 relations: { isRecordedIn: ['a'], isBefore: ['f1'] }
             } });
 
-        const options: ImporterOptions = {
-            separator: '',
-            sourceType: '',
-            format: 'native',
-            mergeMode: true,
-            permitDeletions: true,
-            selectedOperationId: undefined
-        };
-
-        const documents = await Importer.doParse(
-            options,
-            '{ "category": "Feature", "identifier" : "f1", "relations": { "isAfter": null } }'
+        await parseAndImport(
+            {
+                separator: '',
+                sourceType: '',
+                format: 'native',
+                mergeMode: true,
+                permitDeletions: true,
+                selectedOperationId: undefined
+            },
+            '{ "category": "Feature", "identifier" : "F1", "relations": { "isAfter": null } }'
         );
 
-        await Importer.doImport(
-            services,
-            { settings: {} as any, projectConfiguration: _projectConfiguration },
-            () => '101',
-            options,
-            documents);
-
-        const result = await datastore.find({});
-        expect(result.documents[1].resource.relations.isAfter).toBeUndefined();
-        expect(result.documents[2].resource.relations.isBefore).toBeUndefined();
+        const feature1 = (await helpers.getDocument('f1')).resource;
+        const feature2 = (await helpers.getDocument('f2')).resource;
+        expect(feature1.relations.isAfter).toBeUndefined();
+        expect(feature2.relations.isBefore).toBeUndefined();
         done();
     });
 
@@ -515,35 +435,27 @@ describe('Import/Subsystem', () => {
 
         await datastore.create({ resource: { id: 'a', identifier: 'a', category: 'Trench', relations: {} } });
         await datastore.create({ resource: {
+                id: 'f1',
                 identifier: 'f1',
                 category: 'Feature',
                 shortDescription: 'feature1',
                 relations: { isRecordedIn: ['a'] }
             } });
 
-        const options: ImporterOptions = {
-            separator: '',
-            sourceType: '',
-            format: 'native',
-            mergeMode: true,
-            permitDeletions: false,
-            selectedOperationId: undefined
-        };
-
-        const documents = await Importer.doParse(
-            options,
+        await parseAndImport(
+            {
+                separator: '',
+                sourceType: '',
+                format: 'native',
+                mergeMode: true,
+                permitDeletions: false,
+                selectedOperationId: undefined
+            },
             '{ "category": "Feature", "identifier" : "f1", "shortDescription": null }'
         );
 
-        await Importer.doImport(
-            services,
-            { settings: {} as any, projectConfiguration: _projectConfiguration },
-            () => '101',
-            options,
-            documents);
-
-        const result = await datastore.find({});
-        expect(result.documents[1].resource.shortDescription).toEqual('feature1');
+        const feature = (await helpers.getDocument('f1')).resource;
+        expect(feature.shortDescription).toEqual('feature1');
         done();
     });
 
@@ -553,41 +465,33 @@ describe('Import/Subsystem', () => {
         await datastore.create({ resource: { id: 'a', identifier: 'a', category: 'Trench', relations: {} } });
         await datastore.create({ resource: {
                 id: 'f1',
-                identifier: 'f1',
+                identifier: 'F1',
                 category: 'Feature',
                 relations: { isRecordedIn: ['a'], isAfter: ['f2'] }
             } });
         await datastore.create({ resource: {
                 id: 'f2',
-                identifier: 'f2',
+                identifier: 'F2',
                 category: 'Feature',
                 relations: { isRecordedIn: ['a'], isBefore: ['f1'] }
             } });
 
-        const options: ImporterOptions = {
-            separator: '',
-            sourceType: '',
-            format: 'native',
-            mergeMode: true,
-            permitDeletions: false,
-            selectedOperationId: undefined
-        };
-
-        const documents = await Importer.doParse(
-            options,
-            '{ "category": "Feature", "identifier" : "f1", "relations": { "isAfter": null } }'
+        await parseAndImport(
+            {
+                separator: '',
+                sourceType: '',
+                format: 'native',
+                mergeMode: true,
+                permitDeletions: false,
+                selectedOperationId: undefined
+            },
+            '{ "category": "Feature", "identifier" : "F1", "relations": { "isAfter": null } }'
         );
 
-        await Importer.doImport(
-            services,
-            { settings: {} as any, projectConfiguration: _projectConfiguration },
-            () => '101',
-            options,
-            documents);
-
-        const result = await datastore.find({});
-        expect(result.documents[1].resource.relations.isAfter).toEqual(['f2']);
-        expect(result.documents[2].resource.relations.isBefore).toEqual(['f1']);
+        const feature1 = (await helpers.getDocument('f1')).resource;
+        const feature2 = (await helpers.getDocument('f2')).resource;
+        expect(feature1.relations.isAfter).toEqual(['f2']);
+        expect(feature2.relations.isBefore).toEqual(['f1']);
         done();
     });
 
@@ -596,27 +500,18 @@ describe('Import/Subsystem', () => {
 
         await datastore.create({ resource: { identifier: 'f1', category: 'Feature', shortDescription: 'feature1', relations: { isRecordedIn: ['a'] } } });
 
-        const options: ImporterOptions = {
-            separator: '',
-            sourceType: '',
-            format: 'native',
-            mergeMode: true,
-            permitDeletions: false,
-            selectedOperationId: undefined
-        };
-
-        const documents = await Importer.doParse(
-            options,
+        const importReport = await parseAndImport(
+            {
+                separator: '',
+                sourceType: '',
+                format: 'native',
+                mergeMode: true,
+                permitDeletions: false,
+                selectedOperationId: undefined
+            },
             '{ "category": "Feature", "identifier" : "f1", "shortDescription" : "feature_1" }' + "\n"
                 + '{ "category": "Feature", "identifier" : "notexisting", "shortDescription" : "feature_2" }'
         );
-
-        const importReport = await Importer.doImport(
-            services,
-            { settings: {} as any, projectConfiguration: _projectConfiguration },
-            () => '101',
-            options,
-            documents);
 
         expect(importReport.errors.length).toBe(1);
         expect(importReport.errors[0][0]).toEqual(ImportErrors.UPDATE_TARGET_NOT_FOUND);
@@ -629,33 +524,24 @@ describe('Import/Subsystem', () => {
 
     it('import trench not allowed, when import into operation is activated', async done => {
 
-        await datastore.create({ resource: { identifier: 't1', category: 'Trench', shortDescription: 'Our trench 1', relations: {} } });
+        await datastore.create({ resource: { id: 't1', identifier: 'T1', category: 'Trench', shortDescription: 'Our trench 1', relations: {} } });
 
-        const options: ImporterOptions = {
-            separator: '',
-            sourceType: '',
-            format: 'native',
-            mergeMode: false,
-            permitDeletions: false,
-            selectedOperationId: 'f1'
-        };
-
-        const documents = await Importer.doParse(
-            options,
-            '{ "category": "Trench", "identifier" : "t2", "shortDescription" : "Our Trench 2" }'
+        const importReport = await parseAndImport(
+            {
+                separator: '',
+                sourceType: '',
+                format: 'native',
+                mergeMode: false,
+                permitDeletions: false,
+                selectedOperationId: 'f1'
+            },
+            '{ "category": "Trench", "identifier" : "T2", "shortDescription" : "Our Trench 2" }'
         );
-
-        const importReport = await Importer.doImport(
-            services,
-            { settings: {} as any, projectConfiguration: _projectConfiguration },
-            () => '101',
-            options,
-            documents);
 
         expect(importReport.errors[0][0]).toEqual(ImportErrors.OPERATIONS_NOT_ALLOWED);
 
-        const result = await datastore.find({});
-        expect(result.documents[0].resource.identifier).toBe('t1');
+        const feature = (await helpers.getDocument('t1')).resource;
+        expect(feature.identifier).toBe('T1');
         done();
     });
 
@@ -664,29 +550,100 @@ describe('Import/Subsystem', () => {
 
         await datastore.create({ resource: { id: 'tr1', identifier: 'trench1', category: 'Trench', shortDescription: 'Our trench 1', relations: {} } });
 
-        const options: ImporterOptions = {
-            separator: '',
-            sourceType: '',
-            format: 'native',
-            mergeMode: false,
-            permitDeletions: false,
-            selectedOperationId: 'tr1'
-        };
-
-        const documents = await Importer.doParse(
-            options,
+        await parseAndImport(
+            {
+                separator: '',
+                sourceType: '',
+                format: 'native',
+                mergeMode: false,
+                permitDeletions: false,
+                selectedOperationId: 'tr1'
+            },
             '{ "category": "Feature", "identifier": "abc", "dating" : [{ "type": "after", "begin": { "inputYear": 100, "inputType": "bce" } }] }'
         );
 
-        await Importer.doImport(
-            services,
-            { settings: {} as any, projectConfiguration: _projectConfiguration },
-            () => '101',
-            options,
-            documents);
+        const feature = (await helpers.getDocument('101')).resource;
+        expect(feature['dating'][0]['begin']['year']).toBe(-100);
+        done();
+    });
 
-        const result = await datastore.find({});
-        expect(result.documents[0].resource['dating'][0]['begin']['year']).toBe(-100);
+
+    it('differentialImport', async done => {
+
+        await datastore.create({ resource: {
+            id: 'tr1', identifier: 'trench1', category: 'Trench',
+            shortDescription: 'original', relations: {} } });
+
+        await parseAndImport(
+            {
+                separator: '',
+                sourceType: '',
+                format: 'native',
+                mergeMode: false,
+                differentialImport: true,
+                permitDeletions: false,
+                selectedOperationId: ''
+            },
+            '{ "category": "Trench", "identifier": "trench1", "shortDescription": "changed" }\n'
+            + '{ "category": "Trench", "identifier": "trench2", "shortDescription": "new" }'
+        );
+
+
+        const trench = (await helpers.getDocument('tr1')).resource;
+        const feature = (await helpers.getDocument('101')).resource;
+        expect(trench.shortDescription).toBe('original');
+        expect(feature.shortDescription).toBe('new');
+        done();
+    });
+
+
+    it('differentialImport - complement leftover relation', async done => {
+
+        // Let's assume a previous import from the same import file has been interrupted,
+        // such that only feature1 has been imported.
+        //
+        // What we want in this case is to continue the import process
+        // and also save the time already invested.
+        // 
+        // Note that we do not require the import file to be consistent in itself.
+        // We just consider all the yet unknown documents as if they were an import
+        // file.
+
+        await datastore.create({ resource: {
+            id: 'tr1', identifier: 'trench1', category: 'Trench',
+            shortDescription: 'original', relations: {} } });
+        await datastore.create({ resource: {
+            id: '99', identifier: 'feature1', category: 'Feature',
+            shortDescription: 'original', 
+            relations: { "isAfter": ["100"]} // this is broken (a previously generated id)
+                                             // the target is not there (yet)
+         } });
+
+        await parseAndImport(
+            {
+                separator: '',
+                sourceType: '',
+                format: 'native',
+                mergeMode: false,
+                differentialImport: true,
+                permitDeletions: false,
+                selectedOperationId: 'tr1'
+            },
+            // this one gets ignored completely
+            '{ "category": "Feature", "identifier": "feature1", "shortDescription": "changed", "relations": { "isAfter": ["feature2"] } }\n'
+            // consider only this one
+            + '{ "category": "Feature", "identifier": "feature2", "shortDescription": "new", "relations": { "isBefore": ["feature1"] } }'
+        );
+
+        const feature1 = (await helpers.getDocument('99')).resource;
+        const feature2 = (await helpers.getDocument('101')).resource;
+        expect(feature1.shortDescription).toBe('original');
+        expect(feature2.shortDescription).toBe('new');
+        expect(feature1.relations['isAfter']).toEqual(
+            ['100', // this is still broken, TODO we may want to clean this up
+            '101']  // this is ok
+            );
+        expect(feature2.relations['isBefore']).toEqual(['99']);
         done();
     });
 });

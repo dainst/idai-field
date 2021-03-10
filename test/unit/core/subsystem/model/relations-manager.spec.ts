@@ -122,7 +122,7 @@ describe('subsystem/relations-manager',() => {
         expect((await app.documentDatastore.find({})).totalCount).toBe(7);
         await app.relationsManager.remove(d2, { descendants: true });
 
-        await helpers.expectResources('id1', 'id5', 'id6', 'id7');
+        await helpers.expectDocuments('id1', 'id5', 'id6', 'id7');
         done();
     });
 
@@ -134,7 +134,7 @@ describe('subsystem/relations-manager',() => {
         expect((await app.documentDatastore.find({})).totalCount).toBe(7);
         await app.relationsManager.remove(d1, { descendants: true });
 
-        await helpers.expectResources('id5', 'id6', 'id7');
+        await helpers.expectDocuments('id5', 'id6', 'id7');
         done();
     });
 
@@ -146,7 +146,7 @@ describe('subsystem/relations-manager',() => {
         expect((await app.documentDatastore.find({})).totalCount).toBe(7);
         await app.relationsManager.remove(d1, { descendants: true, descendantsToKeep: [d3] });
 
-        await helpers.expectResources('id3', 'id5', 'id6', 'id7');
+        await helpers.expectDocuments('id3', 'id5', 'id6', 'id7');
         done();
     });
 
@@ -174,7 +174,7 @@ describe('subsystem/relations-manager',() => {
 
         const documents = (await app.documentDatastore.find({})).documents;
         expect(flatten(documents.map(_ => _.resource.relations.depicts))).toEqual([]);
-        await helpers.expectResources('i1', 'i2');
+        await helpers.expectDocuments('i1', 'i2');
         done();
     });
 });

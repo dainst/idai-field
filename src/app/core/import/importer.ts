@@ -36,6 +36,7 @@ export interface ImporterOptions {
 
     format: ImporterFormat,
     mergeMode: boolean,
+    differentialImport?: true,
     permitDeletions: boolean;
     selectedOperationId: string;
     selectedCategory?: Category|undefined;
@@ -73,8 +74,13 @@ export interface ImporterServices {
  */
 export module Importer {
 
-
     export function mergeOptionAvailable(options: ImporterOptions) {
+
+        return options.format === 'native' || options.format === 'csv';
+    }
+
+
+    export function differentialImportOptionAvailable(options: ImporterOptions) {
 
         return options.format === 'native' || options.format === 'csv';
     }
@@ -141,8 +147,13 @@ export module Importer {
                     { datastore: services.datastore, validator },
                     { operationCategoryNames, inverseRelationsMap, settings: context.settings },
                     { generateId, preprocessDocument, postprocessDocument },
-                    { mergeMode: options.mergeMode, permitDeletions: options.permitDeletions,
-                        operationId: options.selectedOperationId, useIdentifiersInRelations: true });
+                    {
+                        mergeMode: options.mergeMode,
+                        differentialImport: options.differentialImport,
+                        permitDeletions: options.permitDeletions,
+                        operationId: options.selectedOperationId,
+                        useIdentifiersInRelations: true
+                    });
         }
 
         const { errors, successfulImports } = await importFunction(documents);

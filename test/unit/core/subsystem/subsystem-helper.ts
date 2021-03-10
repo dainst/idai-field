@@ -33,9 +33,7 @@ import {ImageRelationsManager} from '../../../../src/app/core/model/image-relati
 import {SyncService} from '../../../../src/app/core/sync/sync-service';
 import {createDocuments, NiceDocs} from '../../test-helpers';
 import {sameset} from 'tsfun';
-import {TypeRelations} from '../../../../src/app/core/model/relation-constants';
 import {ResourceId} from '../../../../src/app/core/constants';
-import {helper} from 'showdown';
 import {makeDocumentsLookup} from '../../../../src/app/core/import/import/utils';
 
 const fs = require('fs');
@@ -215,6 +213,8 @@ export function createHelpers(app) {
         app.documentDatastore, projectImageDir, app.settingsProvider.getSettings().username);
     const updateDocument = makeUpdateDocument(
         app.documentDatastore, app.settingsProvider.getSettings().username);
+    const getDocument = makeGetDocument(app.documentDatastore);
+    const expectDocuments = makeExpectDocuments(app.documentDatastore);
     const expectResources = makeExpectResources(app.documentDatastore);
     const expectImagesExist = makeExpectImagesExist(projectImageDir);
     const expectImagesDontExist = makeExpectImagesDontExist(projectImageDir);
@@ -224,11 +224,13 @@ export function createHelpers(app) {
     return {
         createDocuments,
         updateDocument,
+        expectDocuments,
         expectResources,
         expectImagesExist,
         expectImagesDontExist,
         createProjectDir,
-        createImageInProjectDir
+        createImageInProjectDir,
+        getDocument
     }
 }
 
@@ -328,14 +330,25 @@ function makeUpdateDocument(documentDatastore: DocumentDatastore, username: stri
     }
 }
 
-function makeExpectResources(documentDatastore: DocumentDatastore) {
+function makeExpectDocuments(documentDatastore: DocumentDatastore) {
 
-    return async function expectResources(...resourceIds: string[]) {
+    return async function expectDocuments(...resourceIds: string[]) {
 
         const documents = (await documentDatastore.find({})).documents;
         expect(sameset(documents.map(toResourceId), resourceIds)).toBeTruthy();
     }
 }
+
+
+function makeExpectResources(documentDatastore: DocumentDatastore) {
+
+    return async function expectDocuments(...resourceIdentifiers: string[]) {
+
+        const documents = (await documentDatastore.find({})).documents;
+        expect(sameset(documents.map(doc => doc.resource.identifier), resourceIdentifiers)).toBeTruthy();
+    }
+}
+
 
 function makeCreateImageInProjectImageDir(projectImageDir: string) {
 
@@ -343,5 +356,14 @@ function makeCreateImageInProjectImageDir(projectImageDir: string) {
 
         fs.closeSync(fs.openSync(projectImageDir + id, 'w'));
         expect(fs.existsSync(projectImageDir + id)).toBeTruthy();
+    }
+}
+
+
+function makeGetDocument(documentDatastore: DocumentDatastore) {
+
+    return async function getDocument(id: ResourceId) {
+
+        return await documentDatastore.get(id);
     }
 }

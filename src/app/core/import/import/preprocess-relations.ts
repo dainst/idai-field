@@ -1,4 +1,5 @@
 import {hasnt, includedIn, isArray, isnt, isUndefinedOrEmpty} from 'tsfun';
+import {reduce as asyncReduce} from 'tsfun/async';
 import {Document, Relations} from 'idai-components-2';
 import {Find, Get, Id, Identifier, IdentifierMap} from './types';
 import {iterateRelationsInImport} from './utils';
@@ -57,9 +58,9 @@ async function rewriteIdentifiersInRelations(relations: Relations,
         if (identifierMap[identifier]) {
             relations[relation][i] = identifierMap[identifier];
         } else {
-            const _ = await find(identifier);
-            if (!_) throw [E.PREVALIDATION_MISSING_RELATION_TARGET, identifier];
-            relations[relation][i] = _.resource.id;
+            const found = await find(identifier);
+            if (!found) throw [E.PREVALIDATION_MISSING_RELATION_TARGET, identifier];
+            relations[relation][i] = found.resource.id;
         }
     });
 }
@@ -76,14 +77,17 @@ async function assertNoMissingRelationTargets(relations: Relations, get: Get) {
 }
 
 
-function assignIds(documents: Array<Document>, generateId: Function): IdentifierMap {
+function assignIds(documents: Array<Document>,
+                   generateId: Function): IdentifierMap {
 
     return documents
         .filter(hasnt(RESOURCE_DOT_ID))
-        .reduce((identifierMap, document)  => {
-            identifierMap[document.resource.identifier] = document.resource.id = generateId();
-            return identifierMap;
-        }, {} as IdentifierMap);
+        .reduce((identifierMap, document) => {
+
+        identifierMap[document.resource.identifier] = document.resource.id = generateId();
+        return identifierMap;
+
+    }, {} as IdentifierMap);
 }
 
 

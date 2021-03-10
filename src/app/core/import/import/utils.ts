@@ -9,6 +9,7 @@ import {Id, Identifier} from './types';
 import {DocumentDatastore} from '../../datastore/document-datastore';
 import {makeLookup} from '../../util/transformers';
 import {Lookup} from '../../util/utils';
+import {ImportOptions} from './import-documents';
 
 
 export const unionOfDocuments = (docs: Array<Array<Document>>) => union(on('resource.id'), docs);
@@ -17,10 +18,18 @@ export const unionOfDocuments = (docs: Array<Array<Document>>) => union(on('reso
 export const makeDocumentsLookup: (ds: Array<Document>) => Lookup<Document> = makeLookup('resource.id');
 
 
-export function assertLegalCombination(mergeMode: boolean|undefined, operationId: string|undefined) {
+export function assertLegalCombination(importOptions: ImportOptions) {
 
-    if (operationId && mergeMode) {
-        throw 'FATAL ERROR - illegal argument combination - operationId and mergeIfExists must not be both truthy';
+    if (importOptions.mergeMode) {
+
+        if (importOptions.operationId) {
+            throw 'FATAL ERROR - illegal argument combination '
+            + '- mergeMode and operationId must not be both truthy';
+        }
+        if (importOptions.differentialImport) {
+            throw 'FATAL ERROR - illegal argument combination '
+            + '- mergeMode and differentialImport must not be both true';
+        }
     }
 }
 
@@ -29,7 +38,6 @@ export function assertInSameOperationWith(document: Document) { return (targetDo
 
     const documentRecordedIn = get('resource.relations.' + RECORDED_IN, undefined)(document);
     const targetDocumentRecordedIn = get('resource.relations.' + RECORDED_IN, undefined)(targetDocument);
-
 
     if (isNot(undefinedOrEmpty)(documentRecordedIn)
         && isNot(undefinedOrEmpty)(targetDocumentRecordedIn)

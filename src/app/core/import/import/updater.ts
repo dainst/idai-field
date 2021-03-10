@@ -43,7 +43,18 @@ export module Updater {
                                            username: string, updateMode: boolean): Promise<void> {
 
         if (documents.length === 0) return;
-        if (updateMode) await datastore.bulkUpdate(documents as Array<Document>, username);
-        else await datastore.bulkCreate(documents, username);    // throws exception if an id already exists
+
+        // We chunk to show progress on the console
+        const chunkSize = 250;
+        const partsInTotal = Math.floor((documents.length-1)/chunkSize) + 1;
+
+        for (let i = 0; (i * chunkSize) < documents.length; i++) {
+
+            const docs = documents.slice(i*chunkSize,i*chunkSize+chunkSize);
+            console.debug(`Bulk-importing part ${i+1}/${partsInTotal}`);
+
+            if (updateMode) await datastore.bulkUpdate(docs as Array<Document>, username);
+            else await datastore.bulkCreate(docs, username);    // throws exception if an id already exists
+        }
     }
 }

@@ -1,0 +1,301 @@
+{
+  "fields": {
+    "category": {
+      "label": "Kategorie"
+    },
+    "identifier": {
+      "label": "Name / ID (eindeutig)",
+      "description": "Eindeutiger Bezeichner dieser Ressource, muss sich nach dem milesischen System zur Bennenung richten; also: Areal, Jahr Schnitt ...; für Befunde bspw: HU19.A.01 für Befund 1 aus Schnitt A im Jahr 2019 auf dem Humeitepe."
+    },
+    "shortDescription": {
+      "label": "Kurzansprache"
+    },
+    "scale": {
+      "label": "Maßstab"
+    },
+    "measuringPointID": {
+      "label": "Messpunkt-Nummer",
+      "description": "Punktnummer(n) in der Totalstation, leer wenn nicht zutreffend"
+    },
+    "localization": {
+      "label": "Provenienz der Messdaten",
+      "description": "Wie wurde die Lokalisierung vorgenommen?"
+    },
+    "localization-description": {
+      "label": "Kommentar zu den Messdaten",
+      "description": "Hier kann entweder eine topographische Beschreibung eingegeben werden, falls nur diese Vorhanden ist, oder bei Bedarf die Liste der Punktnummern oder Messdaten in anderer Form nachgehalten werden."
+    },
+    "FotoNr": {
+      "label": "Fotonummer(n)",
+      "description": "Hier können die mit der Ressource assoziierten Fotonummern eingetragen werden. Dies gilt zusätzlich zu den sowie inklusive der in der Datenbank hinterlegten Fotos und entspricht dem Feld 'Fotos' auf dem Befundzettel."
+    },
+    "DrawingNr": {
+      "label": "Zeichnungsnummer(n)",
+      "description": "Hier können die mit der Ressource assoziierten Zeichnungsnummern eingetragen werden. Dies gilt zusätzlich zu den sowie inklusive der in der Datenbank hinterlegten Zeichnung und entspricht dem Feld 'Zeichnungen' auf dem Befundzettel."
+    },
+    "notes": {
+      "label": "Notizen",
+      "description": "..."
+    }
+  },
+  "relations": {
+    "isEquivalentTo": {
+      "label": "Identisch mit"
+    },
+    "isFilledBy": {
+      "label": "Verfüllt von"
+    },
+    "fills": {
+      "label": "Verfüllt"
+    }
+  },
+  "categories": {
+    "Trench": {
+      "label": "Grabungsareal"
+    },
+    "Feature": {
+      "label": "Schnitt",
+      "fields": {
+        "hasDisturbance": {
+          "label": "Störung",
+          "description": "Liegt eine Störung des Schnittes/Befundes/der Einheit vor? (Können Funde verunreinigt sein?)"
+        },
+        "contextFindProcessing": {
+          "label": "Empfehlungen an die Fundbearbeitung",
+          "description": "Mit welcher Genauigkeit sollen die Funde aus diesem Kontext aufgenommen werden?"
+        }
+      }
+    },
+    "Layer": {
+      "label": "Befund",
+      "fields": {
+        "sampleTaken": {
+          "label": "Probe entnommen",
+          "description": "Wurde eine Probe aus dem Befund entnommen? Bspw. Erde, Holzkohle etc."
+        },
+        "distinguishingCriteria": {
+          "label": "Unterscheidungskriterium ggü. Umgebung",
+          "description": "Welches Kriterium wurde zur Abgrenzung des Befundes gewählt?"
+        },
+        "layerClassification": {
+          "label": "Befundart",
+          "description": "Um welche Art von Befund handelt es sich?"
+        },
+        "isNatural": {
+          "label": "Natürliche Entstehung",
+          "description": "Ist die Schicht natürlich? ('Ja' z. B. bei Erosion, 'nein' wenn anthropogen)"
+        },
+        "contextDescription": {
+          "label": "Beschreibung des Befundes",
+          "description": "Entspricht dem Feld 'Kurzbeschreibung' auf dem Befundzettel"
+        },
+        "soilType": {
+          "label": "Bodenanteile",
+          "description": "Partikel des Bodens nach bodenkundlicher Anleitung, bitte erläutern und Anteile in der Beschreibung angeben"
+        },
+        "consistency": {
+          "label": "Konsistenz",
+          "description": "Härte bzw. Konsistenz des Bodens"
+        },
+        "layerSoilContentDesc": {
+          "label": "Beschreibung des Bodens",
+          "description": "Nach dem Formular: Farbe / Bodenart / Konsistenz"
+        },
+        "layerColor0": {
+          "label": "Grundfarbe des Bodens",
+          "description": "gemeinsam mit Farbintensität auswählen"
+        },
+        "layerColorIntensity": {
+          "label": "Intensität der Bodenfarbe",
+          "description": "gemeinsam mit Farbe auswählen"
+        },
+        "layerInclusions": {
+          "label": "Einschlüsse und Bestandteile",
+          "description": "Bodenbestandteile und Einschlüsse"
+        },
+        "layerInclusionsDesc": {
+          "label": "Einschlüsse: Ergänzungen",
+          "description": "Einschlüsse: Ergänzungen"
+        },
+        "layerFinds": {
+          "label": "Funde",
+          "description": "Grober Überblick über die im Befund enthaltenen Funde"
+        },
+        "layerFindsComplete": {
+          "label": "Vollständige Fundübergabe",
+          "description": "Wurden alle Funde der Befundes ins Magazin gegeben (ja) oder wurde nur eine Auswahl behalten (nein)."
+        },
+        "layerFindsOther": {
+          "label": "Funde (Ergänzungen)",
+          "description": "Grober Überblick über die im Befund enthaltenen Funde"
+        },
+        "layerInterpretation": {
+          "label": "Interpretation",
+          "description": "..."
+        },
+        "layerDatingIndication": {
+          "label": "Datierende Elemente",
+          "description": "Erläuterung der Basis für die Datierung"
+        }
+      }
+    },
+    "StrUnit": {
+      "label": "Stratigraphische Einheit",
+      "fields": {
+        "unitNotes": {
+          "label": "Notizen",
+          "description": "Notizen"
+        }
+      }
+
+    },
+    "Profile": {
+      "label": "Profilaufnahme",
+      "fields": {
+        "profileClassification": {
+          "label": "Profilansprache",
+          "description": "Hier die Profilansprache vom Formular übertragen."
+        }
+      }
+    },
+    "TrenchSketch": {
+      "label": "Überblicksskizze",
+      "fields": {
+        
+      }
+    },
+    "Find": {
+      "fields": {
+        "storagePlaceOther": {
+          "label": "Anderer Aufbewahrungsort",
+          "description": "Wenn in der Liste oben nicht angegeben, bitte hier den Aufbewahrungsort eintragen."
+        },
+        "workflow": {
+          "label": "Workflow",
+          "description": "Was wurde schon getan?"
+        },
+        "OldInventoryNr": {
+          "label": "Alte Inventarnummer",
+          "description": "Veraltete Inventarnummern (vor Systemänderung)"
+        },
+        "MuseumInventoryNr": {
+          "label": "Inventarnummer (Museum Milet)",
+          "description": "Inventarnummer des Museum Milet"
+        },
+        "YearOfFind": {
+          "label": "Fundjahr (wenn Altfund)",
+          "description": "Im Falle der nachträglichen Inventarisierung eines Altfundes einfügen: Jahr des Fundes, bzw. Jahr in dem der Fund bekannt wurde, soweit nachvollziehbar."
+        }
+      }
+    },
+    "Survey": {
+      "label": "Survey-Areal",
+      "fields": {
+        "researchMethod-milet": {
+          "label": "Untersuchungsmethode",
+          "description": "Welche Surveymethode findet Anwendung?"
+        }
+      }
+    },
+    "Sculpture": {
+      "fields": {
+        "material": {
+          "label": "Grundmaterial der Skulptur",
+          "description": "Das Material, aus dem die Skulptur besteht."
+        },
+        "materialattr": {
+          "label": "Grundmaterial: Genauere Beschreibung",
+          "description": "Beschreibung"
+        },
+        "colour": {
+          "label": "Grundmaterial: Farbe",
+          "description": "Farbe des Materials"
+        },
+        "materialdescr": {
+          "label": "Grundmaterial: Beschreibung und Ergänzung",
+          "description": "Platz für zusätzliche Erläuterungen und Beschreibungen"
+        },
+        "bodypart": {
+          "label": "Erhaltenes Bruchstück",
+          "description": "Welche Teile der Skulptur sind erhalten?"
+        },
+        "name": {
+          "label": "Name des Honoranden",
+          "description": "Sofern bekannt ist hier der Name der von der Skulptur abgebildeten Person anzugeben."
+        },
+        "gender": {
+          "label": "Gender",
+          "description": "Beschreibung"
+        },
+        "sctype": {
+          "label": "Skulpturentyp",
+          "description": "Beschreibung"
+        },
+        "sctypeadd": {
+          "label": "Skulpturentyp: Ergänzung",
+          "description": "Beschreibung"
+        },
+        "clothing": {
+          "label": "Kleidung",
+          "description": "Kleidung"
+        },
+        "clothingadd": {
+          "label": "Kleidung: Ergänzung",
+          "description": "Beschreibung"
+        },
+        "hairstyle": {
+          "label": "Haare",
+          "description": "Beschreibung"
+        },
+        "hairstyleadd": {
+          "label": "Haare: Ergänzung",
+          "description": "Beschreibung"
+        },
+        "beardstyle": {
+          "label": "Bart",
+          "description": "Beschreibung"
+        },
+        "beardstyleadd": {
+          "label": "Bart: Ergänzung",
+          "description": "Beschreibung"
+        },
+        "attributes": {
+          "label": "Attribute",
+          "description": "Beschreibung"
+        },
+        "attributesadd": {
+          "label": "Attribute: Ergänzung",
+          "description": "Beschreibung"
+        },
+        "reused": {
+          "label": "Wiederverwendet?",
+          "description": "Ist die Statue wiederverwendet bzw. nachbearbeitet?"
+        },
+        "headheight": {
+          "label": "Height of Head to Crown (in cm)",
+          "description": "Blergh"
+        }
+      }
+    },
+    "Photo": {
+      "fields": {
+        "viewDirection": {
+          "label": "Blick nach ...",
+          "description": "Blickrichtung des Fotos"
+        }
+      }
+    },
+    "Drawing": {
+      "fields": {
+      }
+    },
+    "Sample": {
+      "fields": {
+        "volume": {
+          "label": "Volumen in ml",
+          "description": "Angabe des Volumens in Millilitern"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,437 @@
+{
+  "Project:default": {
+    "hidden": [],
+    "fields": {},
+    "valuelists": {
+      "coordinateReferenceSystem": "coordinate-reference-system-milet"
+    }
+  },
+  "Place:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Operation:default": {
+    "hidden": ["diary"],
+    "fields": {
+      "AreaShorthand": {
+        "inputType": "radio"
+      }
+    },
+    "valuelists": {
+      "AreaShorthand": "Operation-AreaShorthand-milet"
+    }
+  },
+  "Survey:default": {
+    "hidden": [],
+    "fields": {},
+    "valuelists": {
+      "researchMethod": "Survey-researchMethod-milet"
+      }
+  },
+  "SurveyUnit:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Area:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Trench:default": {
+    "hidden": ["trenchComment"],
+    "fields": {}
+  },
+  "Floor:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Feature": {
+    "color": "#121009",
+    "commons": [
+      "period",
+      "beginningDate",
+      "endDate",
+      "diary",
+      "processor",
+      "campaign",
+      "dimensionLength",
+      "dimensionWidth",
+      "dimensionVerticalExtent",
+      "area"
+    ],
+    "hidden": ["color", "featureBorders", "description"],
+    "fields": {
+      "comparison": {
+        "inputType": "text"
+      },
+      "hasDisturbance": {
+        "inputType": "boolean"
+      },
+      "localization": {
+        "inputType": "radio"
+      },
+      "localization-description": {
+        "inputType": "text"
+      },
+      "measuringPointID": {
+        "inputType": "input"
+      },
+      "FotoNr": {
+        "inputType": "text"
+      },
+      "DrawingNr": {
+        "inputType": "text"
+      },
+      "notes": {
+        "inputType": "text"
+      },
+      "contextFindProcessing": {
+        "inputType": "radio"
+      }
+    },
+    "valuelists": {
+      "localization": "localization-milet",
+      "contextFindProcessing": "contextFindProcessing-milet"
+    }
+  },
+  "Layer:default": {
+    "hidden": [],
+    "color": "#665432",
+    "fields": {
+      "sampleTaken": {
+        "inputType": "boolean"
+      },
+      "layerClassification": {
+        "inputType": "dropdown"
+      },
+      "isNatural": {
+        "inputType": "boolean"
+      },
+      "contextDescription": {
+        "inputType": "text"
+      },
+      "distinguishingCriteria": {
+        "inputType": "radio"
+      },
+      "layerColorIntensity": {
+        "inputType": "checkboxes"
+      },
+      "layerColor0": {
+        "inputType": "checkboxes"
+      },
+      "consistency": {
+        "inputType": "checkboxes"
+      },
+      "soilType": {
+        "inputType": "checkboxes"
+      },
+      "layerSoilContentDesc": {
+        "inputType": "text"
+      },
+      "layerInclusions": {
+        "inputType": "checkboxes"
+      },
+      "layerInclusionsDesc": {
+        "inputType": "text"
+      },
+      "layerFinds": {
+        "inputType": "checkboxes"
+      },
+      "layerFindsComplete": {
+        "inputType":  "boolean"
+      },
+      "layerFindsOther": {
+        "inputType": "text"
+      },
+      "layerInterpretation": {
+        "inputType": "text"
+      },
+      "layerDatingIndication": {
+        "inputType": "text"
+      }
+    },
+    "valuelists": {
+      "distinguishingCriteria": "Layer-distinguishingCriteria-default",
+      "layerClassification": "Layer-layerClassification-milet",
+      "soilType": "Layer-soilType-milet",
+      "consistency": "Layer-layerConsistency-milet",
+      "layerColor0": "layerColors-milet",
+      "layerColorIntensity": "layerColorsIntensity-milet",
+      "layerInclusions": "Layer-layerInclusions-milet",
+      "layerFinds": "Layer-layerFinds-milet"
+    }
+  },
+  "Profile": {
+    "parent": "Feature",
+    "color": "#6da4fc",
+    "commons": [
+      "orientation"
+    ],
+    "fields": {
+      "profileClassification": {
+        "inputType": "text"
+      }
+    },
+    "valuelists": {
+      "orientation": "orientation-default-1",
+      "localization": "localization-milet"
+    }
+  },
+  "StrUnit": {
+    "parent": "Feature",
+    "color": "#d52228",
+    "hidden": [],
+    "fields": {
+      "unitNotes": {
+        "inputType": "text"
+      }
+    }
+  },
+  "Building:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Find:default": {
+    "hidden": [
+      "catalogueNumber",
+      "weight",
+      "bibliography",
+      "storageInventoryNumber",
+      "hasRestoration",
+      "conditionPercent"
+    ],
+    "fields": {
+      "storagePlace": {
+        "inputType": "radio"
+      },
+      "storagePlaceOther": {
+        "inputType": "input"
+      },
+      "measuringPointID": {
+        "inputType": "input"
+      },
+      "localization": {
+        "inputType": "radio"
+      },
+      "workflow": {
+        "inputType": "checkboxes"
+      },
+      "OldInventoryNr": {
+        "inputType": "input"
+      },
+      "MuseumInventoryNr": {
+        "inputType": "input"
+      },
+      "YearOfFind": {
+        "inputType": "input"
+      }
+    },
+    "valuelists": {
+      "storagePlace": "Find-storagePlace-milet",
+      "localization": "localization-milet",
+      "workflow": "Find-workflow-milet",
+      "conditionAmount": "Find-conditionAmount-milet"
+    }
+  },
+  "Inscription:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Image:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Glass:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Mollusk:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Brick:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Burial:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Wood:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Architecture:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Pottery:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Metal:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Grave:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Bone:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Terracotta:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Stone:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Sculpture": {
+    "color": "#eb0ee7",
+    "parent": "Find",
+    "fields": {
+      "material": {
+        "inputType": "dropdown"
+      },
+      "materialattr": {
+        "inputType": "checkboxes"
+      },
+      "colour": {
+        "inputType": "checkboxes"
+      },
+      "materialdescr": {
+        "inputType": "text"
+      },
+      "bodypart": {
+        "inputType": "checkboxes"
+      },
+      "name": {
+        "inputType": "input"
+      },
+      "gender": {
+        "inputType": "radio"
+      },
+      "sctype": {
+        "inputType": "checkboxes"
+      },
+      "sctypeadd": {
+        "inputType": "text"
+      },
+      "clothing": {
+        "inputType": "checkboxes"
+      },
+      "clothingadd": {
+        "inputType": "text"
+      },
+      "hairstyle": {
+        "inputType": "checkboxes"
+      },
+      "hairstyleadd": {
+        "inputType": "text"
+      },
+      "beardstyle": {
+        "inputType": "checkboxes"
+      },
+      "beardstyleadd": {
+        "inputType": "text"
+      },
+      "attributes": {
+        "inputType": "checkboxes"
+      },
+      "attributesadd": {
+        "inputType": "text"
+      },
+      "reused": {
+        "inputType": "boolean"
+      },
+      "headheight": {
+        "inputType": "unsignedFloat"
+      }
+    },
+    "valuelists": {
+      "material": "Sculpture-material-milet",
+      "materialattr": "Sculpture-materialattr-milet",
+      "colour": "colors-milet",
+      "bodypart": "Sculpture-bodypart-milet",
+      "gender": "Sculpture-gender-milet",
+      "sctype": "Sculpture-sctype-milet",
+      "clothing": "Sculpture-clothing-milet",
+      "hairstyle": "Sculpture-hairstyle-milet",
+      "beardstyle": "Sculpture-beardstyle-milet",
+      "attributes": "Sculpture-attributes-milet"
+    }
+  },
+  "Coin:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "PlasterFragment:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Excavation:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Sample:default": {
+    "hidden": [],
+    "fields": {
+      "measuringPointID": {
+        "inputType": "input"
+      },
+      "localization": {
+        "inputType": "radio"
+      },
+      "volume": {
+        "inputType": "unsignedFloat"
+      }
+    },
+    "valuelists": {
+      "localization": "localization-milet"
+    }
+  },
+  "TypeCatalog:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Type:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Drawing:default": {
+    "fields": {
+      "scale": {
+        "inputType": "dropdown"
+      },
+      "notes": {
+        "inputType": "text"
+      },
+      "DrawingNr": {
+        "inputType": "input"
+      }
+    },
+    "valuelists": {
+      "scale": "Drawing-scale-milet",
+      "drawingType": "Drawing-drawingType-milet"
+    }
+  },
+  "Photo:default": {
+    "fields": {
+      "notes": {
+        "inputType": "text"
+      },
+      "FotoNr": {
+        "inputType": "input"
+      },
+      "viewDirection": {
+        "inputType": "radio"
+      }
+    },
+    "valuelists": {
+      "viewDirection": "viewDirection-milet"
+    }
+  }
+
+}

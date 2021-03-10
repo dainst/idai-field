@@ -1,0 +1,265 @@
+{
+  "fields": {
+    "category": {
+      "label": "Category"
+    },
+    "isEquivalentTo": {
+      "label": "identical with"
+    },
+    "identifier": {
+      "label": "Name / ID (eindeutig)",
+      "description": "Unique Identifier of this ressource. If applicable, should use the milesian naming conventions; i.e. Area, Year, Trench...; e.g. for contexts: HU19.A.01 for Context 1 in Trench A in the year 2019 on Humeitepe."
+    },
+    "shortDescription": {
+      "label": "(short) secondary Title"
+    },
+    "scale": {
+      "label": "Scale"
+    },
+    "measuringPointID": {
+      "label": "Measuring-Point-ID",
+      "description": "ID of the data in the Totalstation, empty if not applicable"
+    },
+    "localization": {
+      "label": "Origin of Surveying Data",
+      "description": "How was the spatial data acquired?"
+    },
+    "localization-description": {
+      "label": "Commentary on Surveying Data",
+      "description": "Either enter a (topographical) description of localization, if only that exists, or record the point numbers or surveying data in the appropriate format."
+    },
+    "FotoNr": {
+      "label": "Photograph-ID(s)",
+      "description": "List the IDs of Fotographs according to the paper form. This can also encompass fotos that are not included in the database itself, but instead archived together with the documentation."
+    },
+    "DrawingNr": {
+      "label": "Drawing-ID(s)",
+      "description": "List the IDs of drawings according to the paper form. This can also encompass drawings that are not included in the database itself, but instead archived together with the documentation."
+    },
+    "notes": {
+      "label": "Notes",
+      "description": "..."
+    }
+  },
+  "relations": {
+    "isEquivalentTo": {
+      "label": "identical with"
+    },
+    "isFilledBy": {
+      "label": "is filled by"
+    },
+    "fills": {
+      "label": "fills"
+    }
+  },
+  "categories": {
+    "Trench": {
+      "label": "Excavation-Area"
+    },
+    "Feature": {
+      "label": "Trench",
+      "fields": {
+        "hasDisturbance": {
+          "label": "Disturbed",
+          "description": "Is the trench/section/context/unit disturbed? (i.e. can some finds be non-indicative?)"
+        },
+        "contextFindProcessing": {
+          "label": "Requests to Find Processing",
+          "description": "How should the contents of the context or unit be processed?"
+        }
+      }
+    },    
+    "Layer": {
+      "label": "Context",
+      "fields": { 
+        "sampleTaken": {
+          "label": "Sample taken",
+          "description": "Has a sample been collected from this context? e.g. flotation, earth or charcoal"
+        },
+        "distinguishingCriteria": {
+          "label": "Distinguishing criteria (in relation to surrounding contexts)",
+          "description": "How has this context been distinguished from its surrounding material?"
+        },
+        "layerClassification": {
+          "label": "Classification of Context",
+          "description": "What kind of context is it?"
+        },
+        "isNatural": {
+          "label": "Natural Occurence",
+          "description": "Is this context a naturally occuring layer ('Yes' for e.g erosion, 'no' if anthropogenous)"
+        },
+        "contextDescription": {
+          "label": "Description of Context",
+          "description": "See 'short description' on paper form"
+        },
+        "soilType": {
+          "label": "Soiltype",
+          "description": "What type of Soil is it? Elaborate with a thorough description in the text field below"
+        },
+        "consistency": {
+          "label": "Consistency",
+          "description": "Consistency of the soil"
+        },
+        "layerSoilContentDesc": {
+          "label": "Soil Description",
+          "description": "See Paper form: Colour / Soiltype / Consistency"
+        },
+        "layerColor0": {
+          "label": "Soil base colours",
+          "description": "select the main colour of the soil"
+        },
+        "layerColorIntensity": {
+          "label": "Soil colour intensity",
+          "description": "select the intensity of the soil colour"
+        },
+        "layerInclusions": {
+          "label": "Inclusions",
+          "description": "Bodenbestandteile und Einschlüsse"
+        },
+        "layerInclusionsDesc": {
+          "label": "Inclusions: Description and Addenda",
+          "description": "Einschlüsse: Ergänzungen"
+        },
+        "layerFinds": {
+          "label": "Finds (overview)",
+          "description": "Grober Überblick über die im Befund enthaltenen Funde"
+        },
+        "layerFindsComplete": {
+          "label": "Complete find collection",
+          "description": "Have all the finds of this context been handed to find processing (yes) or has only a sample been archives (no)."
+        },
+        "layerFindsOther": {
+          "label": "Finds (Addenda)",
+          "description": "Grober Überblick über die im Befund enthaltenen Funde"
+        },
+        "layerInterpretation": {
+          "label": "Interpretation",
+          "description": "..."
+        },
+        "layerDatingIndication": {
+          "label": "Dating Elements",
+          "description": "Elaborate on why the context was dated. See Dating in ..."
+        }
+      }
+    },
+    "StrUnit": {
+      "label": "Stratigraphical Unit"
+    },
+    "Find": {
+      "fields": {
+        "storagePlaceOther": {
+          "label": "Other Storage Place",
+          "description": "Please enter place of storage here if it is not an option in the list above."
+        },
+        "measuringPointOrigin": {
+          "label": "Origin of Surveying Data",
+          "description": "Origin of Surveying Data"
+        },
+        "workflow": {
+          "label": "Workflow",
+          "description": "What have you dooooooneeee?"
+        },
+        "OldInventoryNr": {
+          "label": "Old Inventorynumber",
+          "description": "ID in the older Inventory"
+        },
+        "MuseumInventoryNr": {
+          "label": "Museum Inventory (Museum Milet)",
+          "description": "Inventory-ID at Museum Milet"
+        },
+        "YearOfFind": {
+          "label": "Year (in case of Altfund)",
+          "description": "Year in which the object has been found or first recorded, in case of Altfunde"
+        }
+      }
+    },
+    "Sculpture": {
+      "fields": {
+        "material": {
+          "label": "Material",
+          "description": "The material the sculpture mainly consists of."
+        },
+        "materialattr": {
+          "label": "Material: Details",
+          "description": "Beschreibung"
+        },
+        "colour": {
+          "label": "Material: Colour",
+          "description": "Farbe des Materials"
+        },
+        "materialdescr": {
+          "label": "Material: Description",
+          "description": "Platz für zusätzliche Erläuterungen und Beschreibungen"
+        },
+        "bodypart": {
+          "label": "Fragment of Sculpture",
+          "description": "Which parts of the Sculpture are preserved?"
+        },
+        "name": {
+          "label": "Honorand",
+          "description": "Sofern bekannt ist hier der Name der von der Skulptur abgebildeten Person anzugeben."
+        },
+        "gender": {
+          "label": "Gender",
+          "description": "Beschreibung"
+        },
+        "sctype": {
+          "label": "Broad category / Type",
+          "description": "Beschreibung"
+        },
+        "sctypeadd": {
+          "label": "Type: Notes",
+          "description": "Beschreibung"
+        },
+        "clothing": {
+          "label": "Clothing",
+          "description": "Kleidung"
+        },
+        "clothingadd": {
+          "label": "Clothing: Notes",
+          "description": "Beschreibung"
+        },
+        "hairstyle": {
+          "label": "Hairstyle",
+          "description": "Beschreibung"
+        },
+        "hairstyleadd": {
+          "label": "Hairstyle: Notes",
+          "description": "Beschreibung"
+        },
+        "beardstyle": {
+          "label": "Beardstyle",
+          "description": "Beschreibung"
+        },
+        "beardstyleadd": {
+          "label": "Beardstyle: Notes",
+          "description": "Beschreibung"
+        },
+        "attributes": {
+          "label": "Attributes",
+          "description": "Beschreibung"
+        },
+        "attributesadd": {
+          "label": "Attributes: Notes",
+          "description": "Beschreibung"
+        },
+        "reused": {
+          "label": "Reused?",
+          "description": "Ist die Statue wiederverwendet bzw. nachbearbeitet?"
+        },
+        "headheight": {
+          "label": "Height of Head to Crown (in cm)",
+          "description": "Blergh"
+        }
+      }
+    },
+    "Photo": {
+      "fields": {
+        "viewDirection": {
+          "label": "View in direction of ...",
+          "description": "Direction the Photograph was shot in."
+        }
+      }
+    }
+  }
+}

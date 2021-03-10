@@ -47062,5 +47062,1151 @@
             }
          }
       }
+   },
+   "coordinate-reference-system-milet": {
+     "createdBy": "",
+     "creationDate": "",
+     "description": {},
+     "values": {
+       "NoCoordinateSystem": {
+         "labels": {
+           "de": "Kein gültiges Koordinatenbezugssystem",
+           "en": "No valid Coordinate System"
+         }
+       },
+       "Bendt": {
+         "labels": {
+           "de": "Bendt (1968, lokales System Milet)",
+           "en": "Bendt (1968, local System Milet)"
+         }
+       },
+       "UTM35N": {
+         "labels": {
+           "de": "EPSG32635 (UTM 35 N WGS84)",
+           "en": "EPSG32635 (UTM 35 N WGS84)"
+         }
+       }
+     },
+     "order": [
+       "NoCoordinateSystem",
+       "Bendt",
+       "UTM35N"
+     ]
+   },
+   "Survey-researchMethod-milet": {
+     "creationDate": "02-02-2021",
+     "createdBy": "Lisa Steinmann (Milet)",
+     "description": {},
+     "values": {
+       "Befliegung": {
+         "labels": {
+           "de": "Befliegung"
+         }
+       },
+       "Begehung": {
+         "labels": {
+           "de": "Begehung"
+         }
+       },
+       "Fundkatalog": {
+         "labels": {
+           "de": "Fundkatalog",
+           "en": "Catalogue of Finds"
+         }
+       },
+       "Geoelektrik": {
+         "labels": {
+           "de": "Geoelektrik"
+         }
+       },
+       "Geomagnetik": {
+         "labels": {
+           "de": "Geomagnetik"
+         }
+       },
+       "Georadar": {
+         "labels": {
+           "de": "Georadar"
+         }
+       },
+       "LIDAR": {
+         "labels": {
+           "de": "LIDAR"
+         }
+       },
+       "Luft- oder Satellitenbilder": {
+         "labels": {
+           "de": "Luft- oder Satellitenbilder"
+         }
+       },
+       "Quadratisch": {
+         "labels": {
+           "de": "Quadratisch"
+         }
+       },
+       "Regelmäßig": {
+         "labels": {
+           "de": "Regelmäßig"
+         }
+       },
+       "Seismik": {
+         "labels": {
+           "de": "Seismik"
+         }
+       }
+     }
+   },
+   "Find-storagePlace-milet": {
+     "createdBy": "Lisa Steinmann (Milet)",
+     "creationDate": "25-04-2020",
+     "description": {
+       "de": "",
+       "en": ""
+     },
+     "values": {
+       "Zeytintepe-Depot": {},
+       "Steindepot": {},
+       "Athenatempel-Depot": {},
+       "Kalabaktepe-Depot": {},
+       "Steingarten": {},
+       "Theater": {},
+       "Museum Milet": {},
+       "Anderer Aufbewahrungsort": {},
+       "in situ": {},
+       "unbekannt": {}
+     }
+   },
+   "localization-milet": {
+     "createdBy": "Lisa Steinmann (Milet)",
+     "creationDate": "25-04-2020",
+     "description": {
+       "de": "Wie wurden die geographischen Daten für ein Objekt generiert?",
+       "en": "How was the spatial data associated with an object acquired?"
+     },"values": {
+       "Totalstation": {
+         "labels": {
+           "de": "Messdaten aus Totalstation",
+           "en": "Surveying data from Totalstation"
+         }
+       },
+       "manuell_kartiert": {
+         "labels": {
+           "de": "Manuell kartiert",
+           "en": "Manual entry on map"
+         }
+       },
+       "nicht_lokalisiert": {
+         "labels": {
+           "de": "nicht lokalisiert / Standort unbekannt",
+           "en": "not located / location unknown"
+         }
+       },
+       "topographical_description": {
+         "labels": {
+           "de": "Standort durch topographische Beschreibung erfasst",
+           "en": "located by topographical Description"
+         }
+       }
+     }
+   },
+   "Find-workflow-milet": {
+     "createdBy": "Lisa Steinmann (Milet)",
+     "creationDate": "25-04-2020",
+     "description": {
+       "de": "",
+       "en": ""
+     },
+     "values": {
+       "Keine Angabe": {},
+       "Inventarisiert": {},
+       "Fotografiert": {},
+       "Gezeichnet": {},
+       "Restauriert": {},
+       "Detailbearbeitung fertig": {},
+       "Fehlerhaft": {}
+     }
+   },
+   "Stone-material-milet": {
+     "createdBy": "",
+     "creationDate": "",
+     "description": {
+       "de": "",
+       "en": ""
+     },
+     "values": {
+       "Alabaster": {},
+       "Andesit": {},
+       "Basalt": {},
+       "Bimsstein": {},
+       "Edelstein": {},
+       "Feldspat": {},
+       "Silex/Flint": {},
+       "Granit": {},
+       "Kalk": {},
+       "Kalkstein": {},
+       "Kalzit": {},
+       "Kreide": {},
+       "Marmor": {},
+       "Obsidian": {},
+       "Pophyr": {},
+       "Quarz": {},
+       "Quellgestein": {},
+       "Rhyolith (Quarzporphyr)": {},
+       "Sandstein": {},
+       "Schiefer": {},
+       "Serpentinit": {},
+       "Sinter": {},
+       "Trachyt": {},
+       "Tuff": {},
+       "Vulkangestein": {},
+       "Unsicher bzw. unbestimmbar": {},
+       "Andere": {}
+     }
+   },
+   "Sculpture-material-milet": {
+     "createdBy": "",
+     "creationDate": "",
+     "description": {
+       "de": "",
+       "en": ""
+     },
+     "values": {
+       "Alabaster": {},
+       "Andesit": {},
+       "Basalt": {},
+       "Bronze": {},
+       "Granit": {},
+       "Kalkstein": {},
+       "Marmor": {},
+       "Obsidian": {},
+       "Pophyr": {},
+       "Quarz": {},
+       "Rhyolith (Quarzporphyr)": {},
+       "Sandstein": {},
+       "Serpentinit": {},
+       "Tuff": {},
+       "Vulkangestein": {},
+       "Lokales Gestein": {},
+       "Unsicher bzw. unbestimmbar": {},
+       "Andere": {}
+     }
+   },
+   "Sculpture-materialattr-milet": {
+     "createdBy": "Lisa Steinmann (Milet)",
+     "creationDate": "26-04-2020",
+     "description": {
+       "de": "",
+       "en": ""
+     },
+     "values": {
+       "indeterminable": {},
+       "fine-grained": {},
+       "medium-grained": {},
+       "coarse-grained": {},
+       "coloured": {},
+       "Andere": {}
+     }
+   },
+   "Sculpture-bodypart-milet": {
+     "createdBy": "Lisa Steinmann (Milet)",
+     "creationDate": "26-04-2020",
+     "description": {
+       "de": "",
+       "en": ""
+     },
+     "values": {
+       "left:": {},
+       "right:": {},
+       "Head": {},
+       "Neck": {},
+       "Shoulder": {},
+       "Arm": {},
+       "Hand": {},
+       "Torso": {},
+       "Back": {},
+       "Hip": {},
+       "Leg": {},
+       "Foot": {},
+       "Attributes": {},
+       "indeterminable": {},
+       "other": {}
+     }
+   },
+   "Sculpture-gender-milet": {
+     "createdBy": "Lisa Steinmann (Milet)",
+     "creationDate": "26-04-2020",
+     "description": {
+       "de": "",
+       "en": ""
+     },
+     "values": {
+       "female": {},
+       "male": {},
+       "inconclusive": {},
+       "other": {}
+     }
+   },
+   "Sculpture-sctype-milet": {
+     "createdBy": "Lisa Steinmann (Milet)",
+     "creationDate": "26-04-2020",
+     "description": {
+       "de": "",
+       "en": ""
+     },
+     "values": {
+       "Deities, Personifications and Heroes": {},
+       "Imperial Family": {},
+       "Imperial and Senatorial Office Holders": {},
+       "Provincial Notables": {},
+       "Other": {},
+       "Unknown": {}
+     }
+   },
+   "Sculpture-clothing-milet": {
+     "createdBy": "Lisa Steinmann (Milet)",
+     "creationDate": "26-04-2020",
+     "description": {
+       "de": "",
+       "en": ""
+     },
+     "values": {
+       "Toga": {},
+       "Toga, late antique": {},
+       "Toga, toga contabulata": {},
+       "Toga with umbo": {},
+       "Armour": {},
+       "Tunic / chiton": {},
+       "Tunic, colobium": {},
+       "Boots, Military": {},
+       "Footwear, sandals": {},
+       "Footwear, closed, plain boots": {},
+       "Footwear, closed strapped boots": {},
+       "Footwear, open, strapped shoes": {},
+       "Cloak, paludamentum": {},
+       "Cloak, chlamys": {},
+       "Naked": {},
+       "Other": {}
+     }
+   },
+   "Sculpture-hairstyle-milet": {
+     "createdBy": "Lisa Steinmann (Milet)",
+     "creationDate": "26-04-2020",
+     "description": {
+       "de": "",
+       "en": ""
+     },
+     "values": {
+       "A penna": {},
+       "Brushed forward": {},
+       "Bun": {},
+       "Central": {},
+       "Central braid": {},
+       "Encircling braids": {},
+       "Long, covers ears": {},
+       "Long, to shoulders": {},
+       "Mop": {},
+       "Short": {},
+       "Short-cropped": {},
+       "Turban": {},
+       "Wreath-style": {},
+       "Other": {}
+     }
+   },
+   "Sculpture-beardstyle-milet": {
+     "createdBy": "Lisa Steinmann (Milet)",
+     "creationDate": "26-04-2020",
+     "description": {
+       "de": "",
+       "en": ""
+     },
+     "values": {
+       "Bearded, long": {},
+       "Bearded, short": {},
+       "Bearded, stubble": {},
+       "Bearded, under-chin": {},
+       "Clean-shaven": {},
+       "Other": {}
+     }
+   },
+   "Sculpture-attributes-milet": {
+     "createdBy": "Lisa Steinmann (Milet)",
+     "creationDate": "26-04-2020",
+     "description": {
+       "de": "",
+       "en": ""
+     },
+     "values": {
+       "belt": {},
+       "bust crown": {},
+       "codex / book": {},
+       "corona civica": {},
+       "crown fillet": {},
+       "diadem": {},
+       "diadem, jewelled": {},
+       "diadem, pearl-edged": {},
+       "diadem, plain": {},
+       "earrings": {},
+       "fibula": {},
+       "finger ring": {},
+       "mappa": {},
+       "necklace": {},
+       "orb": {},
+       "sceptre": {},
+       "scroll": {},
+       "scroll bundle": {},
+       "spear": {},
+       "staff": {},
+       "sword": {},
+       "tabellae": {},
+       "wreath": {},
+       "wreath, laurel": {},
+       "other": {}
+     }
+   },
+   "colors-milet": {
+     "creationDate": "26-04-2020",
+     "createdBy": "Lisa Steinmann (Milet)",
+     "description": {
+       "de": "Milet Farbset 2",
+       "en": "Miletus color set 2"
+     },
+     "values": {
+       "beige": {},
+       "ocker": {},
+       "cremefarben": {},
+       "hellbraun": {},
+       "braun": {},
+       "mittelbraun": {},
+       "dunkelbraun": {},
+       "rotbraun": {},
+       "dunkelrot": {},
+       "rot": {},
+       "rosa": {},
+       "orangerot": {},
+       "orange": {},
+       "gelb": {},
+       "grün": {},
+       "violett": {},
+       "blau": {},
+       "türkis": {},
+       "hellgrau": {},
+       "grau": {},
+       "dunkelgrau": {},
+       "schwarz": {},
+       "weiß": {}
+     }
+   },
+   "Layer-layerConsistency-milet": {
+     "creationDate": "03-02-2021",
+     "createdBy": "Lisa Steinmann (Milet)",
+     "description": {
+       "de": "Konsistenz des Erdbefunds",
+       "en": "Consistency of Layer"
+     }, 
+     "order": [
+       "very_hard",
+       "hard",
+       "solid",
+       "starchy",
+       "soft",
+       "very_soft",
+       "liquid"
+     ],
+     "values": {
+       "very_hard": {
+         "labels": {
+           "de": "sehr hart",
+           "en": "very hard"
+         }
+       },
+       "hard": {
+         "labels": {
+           "de": "hart",
+           "en": "hard"
+         }
+       },
+       "solid": {
+         "labels": {
+           "de": "fest",
+           "en": "solid"
+         }
+       },
+       "starchy": {
+         "labels": {
+           "de": "steif",
+           "en": "starchy"
+         }
+       },
+       "soft": {
+         "labels": {
+           "de": "weich",
+           "en": "soft"
+         }
+       },
+       "very_soft": {
+         "labels": {
+           "de": "sehr weich",
+           "en": "very soft"
+         }
+       },
+       "liquid": {
+         "labels": {
+           "de": "flüssig",
+           "en": "liquid"
+         }
+       }
+     }
+   },
+   "Layer-layerInclusions-milet": {
+     "creationDate": "03-02-2021",
+     "createdBy": "Lisa Steinmann (Milet)",
+     "description": {
+       "de": "Einschlüsse im Erdbefund",
+       "en": "Inclusions in Layer"
+     },
+     "order": [
+       "Kiesel_klein",
+       "Kiesel_mittel",
+       "Kiesel_groß",
+       "Stein_klein",
+       "Stein_mittel",
+       "Stein_groß",
+       "Kalk",
+       "Ziegelbruch_kleinteilig",
+       "HolzkohleAsche",
+       "Wurzeln",
+       "Tiergänge",
+       "Schnecken"
+     ],
+     "values": {
+       "Kiesel_klein": {
+         "labels": {
+           "de": "Kiesel (klein)",
+           "en": "Pebbles (small)"
+         }
+       },
+       "Kiesel_mittel": {
+         "labels": {
+           "de": "Kiesel (mittel)",
+           "en": "Pebbles (medium)"
+         }
+       },
+       "Kiesel_groß": {
+         "labels": {
+           "de": "Kiesel (groß)",
+           "en": "Pebbles (big)"
+         }
+       },
+       "Stein_klein": {
+         "labels": {
+           "de": "Stein (klein)",
+           "en": "Stone (small)"
+         }
+       },
+       "Stein_mittel": {
+         "labels": {
+           "de": "Stein (mittel)",
+           "en": "Stone (medium)"
+         }
+       },
+       "Stein_groß": {
+         "labels": {
+           "de": "Stein (groß)",
+           "en": "Stone (big)"
+         }
+       },
+       "Kalk": {
+         "labels": {
+           "de": "Kalk",
+           "en": "Lime"
+         }
+       },
+       "Ziegelbruch_kleinteilig": {
+         "labels": {
+           "de": "kleinteiliger Ziegelbruch",
+           "en": "small brick/burnt clay fragments"
+         }
+       },
+       "HolzkohleAsche": {
+         "labels": {
+           "de": "Holzkohle / Asche",
+           "en": "charcoal / ash"
+         }
+       },
+       "Wurzeln": {
+         "labels": {
+           "de": "Wurzeln",
+           "en": "roots"
+         }
+       },
+       "Tiergänge": {
+         "labels": {
+           "de": "Tiergänge",
+           "en": "animal burrows"
+         }
+       },
+       "Schnecken": {
+         "labels": {
+           "de": "Schnecken",
+           "en": "Snails / naturally occuring mollusks"
+         }
+       }
+     }
+   },
+   "Layer-layerClassification-milet": {
+     "creationDate": "03-02-2021",
+     "createdBy": "Lisa Steinmann (Milet)",
+     "description": {},
+     "values": {
+       "Brandschicht": {
+         "labels": {
+           "de": "Brandschicht",
+           "en": "burnt layer"
+         }
+       },
+       "Kulturschicht": {
+         "labels": {
+           "de": "Kulturschicht",
+           "en": "culture layer"
+         }
+       },
+       "Laufhorizont": {
+         "labels": {
+           "de": "Laufhorizont",
+           "en": "floor"
+         }
+       },
+       "Planierschicht": {
+         "labels": {
+           "de": "Planierschicht",
+           "en": "levelling layer"
+         }
+       },
+       "Schuttschicht": {
+         "labels": {
+           "de": "Schuttschicht",
+           "en": "debris"
+         }
+       },
+       "Humusschicht": {
+         "labels": {
+           "de": "Humusschicht",
+           "en": "humus"
+         }
+       },
+       "Filling": {
+         "labels": {
+           "de": "Verfüllung",
+           "en": "Filling"
+         }
+       },
+       "other": {
+         "labels": {
+           "de": "andere",
+           "en": "other"
+         }
+       },
+       "unbekannt": {
+         "labels": {
+           "de": "unbekannt",
+           "en": "unknown"
+         }
+       }
+     }
+   },
+   "layerColors-milet": {
+     "creationDate": "03-02-2021",
+     "createdBy": "Lisa Steinmann (Milet)",
+     "description": {
+       "de": "Milet Farbset 1, Erde"
+     },
+     "values": {
+       "black": {
+         "labels": {
+           "de": "schwarz",
+           "en": "black"
+         }
+       },
+       "grey": {
+         "labels": {
+           "de": "grau",
+           "en": "grey"
+         }
+       },
+       "brown": {
+         "labels": {
+           "de": "braun",
+           "en": "brown"
+         }
+       },
+       "yellow": {
+         "labels": {
+           "de": "gelb",
+           "en": "yellow"
+         }
+       },
+       "ochre": {
+         "labels": {
+           "de": "ocker",
+           "en": "ochre"
+         }
+       },
+       "red": {
+         "labels": {
+           "de": "rot",
+           "en": "red"
+         }
+       }
+     }
+   },
+   "layerColorsIntensity-milet": {
+     "creationDate": "03-02-2021",
+     "createdBy": "Lisa Steinmann (Milet)",
+     "description": {
+       "de": "Milet Farbset Helligkeit (Helligkeit/Intensität)"
+     },
+     "order": [
+       "very_light", "light", "medium", "dark", "very_dark"
+     ],
+     "values": {
+       "very_light": {
+         "labels": {
+           "de": "sehr hell",
+           "en": "very light"
+         }
+       },
+       "light": {
+         "labels": {
+           "de": "hell",
+           "en": "light"
+         }
+       },
+       "medium": {
+         "labels": {
+           "de": "mittel",
+           "en": "medium"
+         }
+       },
+       "dark": {
+         "labels": {
+           "de": "dunkel",
+           "en": "dark"
+         }
+       },
+       "very_dark": {
+         "labels": {
+           "de": "sehr dunkel",
+           "en": "very dark"
+         }
+       }
+     }
+   },
+   "Layer-soilType-milet": {
+     "creationDate": "03-02-2021",
+     "createdBy": "Lisa Steinmann (Milet)",
+     "description": {},
+     "values": {
+       "Lehm": {
+         "labels": {
+           "de": "Lehm",
+           "en": "Loam"
+         }
+       },
+       "Sand": {
+         "labels": {
+           "de": "Sand",
+           "en": "Sand"
+         }
+       },
+       "Schluff": {
+         "labels": {
+           "de": "Schluff",
+           "en": "Silt"
+         }
+       },
+       "Ton": {
+         "labels": {
+           "de": "Ton",
+           "en": "Clay"
+         }
+       }
+     }
+   },
+   "Layer-layerFinds-milet": {
+     "creationDate": "03-02-2021",
+     "createdBy": "Lisa Steinmann (Milet)",
+     "description": {
+       "de": "Überblick über die Fundgattungen im Befund",
+       "en": "Overview of finds in the context"
+     },
+     "values": {
+       "Keramik": {
+         "labels": {
+           "de": "Keramik",
+           "en": "Pottery"
+         }
+       },
+       "Terrakotta": {
+         "labels": {
+           "de": "Terrakotta",
+           "en": "Terracotta"
+         }
+       },
+       "Stein (bearbeitet)": {
+         "labels": {
+           "de": "Stein (bearbeitet)",
+           "en": "Stone (carved)"
+         }
+       },
+       "Tesserae": {
+         "labels": {
+           "de": "Tesserae",
+           "en": "Tesserae"
+         }
+       },
+       "Inkrustationen": {
+         "labels": {
+           "de": "Inkrustationen",
+           "en": "Inlays"
+         }
+       },
+       "Wandputz": {
+         "labels": {
+           "de": "Wandputz",
+           "en": "Stucco/Plaster"
+         }
+       },
+       "Metall": {
+         "labels": {
+           "de": "Metall",
+           "en": "Metal"
+         }
+       },
+       "Glas": {
+         "labels": {
+           "de": "Glas",
+           "en": "Glass"
+         }
+       },
+       "Münzen": {
+         "labels": {
+           "de": "Münzen",
+           "en": "Coins"
+         }
+       },
+       "Ziegel": {
+         "labels": {
+           "de": "Ziegel",
+           "en": "Bricks"
+         }
+       },
+       "Knochen": {
+         "labels": {
+           "de": "Knochen",
+           "en": "Bone"
+         }
+       },
+       "Holz": {
+         "labels": {
+           "de": "Holz",
+           "en": "Wood"
+         }
+       },
+       "Mollusken": {
+         "labels": {
+           "de": "Mollusken",
+           "en": "Molluscs"
+         }
+       },
+       "Sample": {
+         "labels": {
+           "de": "Probe",
+           "en": "Sample"
+         }
+       }
+     }
+   },
+   "Drawing-scale-milet": {
+     "creationDate": "10-02-2021",
+     "createdBy": "Lisa Steinmann (Milet)",
+     "description": {
+       "de": "Maßstab",
+       "en": "Scale"
+     },
+     "order": [
+       "1:1",
+       "1:2",
+       "1:5",
+       "1:10",
+       "1:20",
+       "1:25",
+       "1:50",
+       "1:75",
+       "1:100",
+       "1:200",
+       "1:500",
+       "1:1000",
+       "1:2000",
+       "1:5000",
+       "1:10000",
+       "1:25000",
+       "1:50000",
+       "other"
+     ], 
+     "values": {
+       "1:1": {},
+       "1:2": {},
+       "1:5": {},
+       "1:10": {},
+       "1:20": {},
+       "1:25": {},
+       "1:50": {},
+       "1:75": {},
+       "1:100": {},
+       "1:200": {},
+       "1:500": {},
+       "1:1000": {},
+       "1:2000": {},
+       "1:5000": {},
+       "1:10000": {},
+       "1:25000": {},
+       "1:50000": {},
+       "other": {
+         "labels": {
+           "de": "andere",
+           "en": "other"
+         }
+       },
+       "NA": {
+         "labels": {
+           "de": "unbekannt",
+           "en": "unknown"
+         }
+       }
+     }
+   },
+   "Drawing-drawingType-milet": {
+     "creationDate": "10-02-2021",
+     "createdBy": "Lisa Steinmann (Milet)",
+     "description": {},
+     "values": {
+       "CAD": {
+         "labels": {
+           "de": "CAD-Zeichnung",
+           "en": "CAD-Drawing"
+         }
+       },
+       "Totalstation-direct": {
+         "labels": {
+           "de": "Zeichnung durch Totalstation",
+           "en": "Drawn by Totalstation"
+         }
+       },
+       "Handzeichnung-precise": {
+         "labels": {
+           "de": "maßgetreue Handzeichnung",
+           "en": "precise manual Drawing"
+         }
+       },
+       "sketch": {
+         "labels": {
+           "de": "skizzenhafte Handzeichnung",
+           "en": "manual Drawing (Sketch)"
+         }
+       }
+     }
+   },
+   "Operation-AreaShorthand-milet": {
+     "creationDate": "10-02-2021",
+     "createdBy": "Lisa Steinmann (Milet)",
+     "description": {},
+     "values": {
+       "AS": {},
+       "AT": {},
+       "BN": {},
+       "Ca": {},
+       "D": {},
+       "DT": {},
+       "H III": {},
+       "HU": {},
+       "K": {},
+       "KBA": {},
+       "M": {},
+       "M-AK": {},
+       "MK": {},
+       "BP": {},
+       "N": {},
+       "S": {},
+       "SM": {},
+       "ST": {},
+       "T": {},
+       "TH": {},
+       "TS": {},
+       "W": {},
+       "WB": {},
+       "WD": {},
+       "Z": {}
+     }
+   },
+   "viewDirection-milet": {
+     "createdBy": "Lisa Steinmann (Milet)",
+     "description": {
+       "de": "Blickrichtung",
+       "en": "Direction of View"
+     },
+     "creationDate": "01.03.2021",
+     "order": [
+       "North",
+       "Northeast",
+       "East",
+       "Southeast",
+       "South",
+       "Southwest",
+       "West",
+       "Northwest",
+       "not_applicable"],
+     "values": {
+       "North": {
+         "labels": {
+           "de": "Nord",
+           "en": "North"
+         }
+       },
+       "Northeast": {
+         "labels": {
+           "de": "Nordost",
+           "en": "Northeast"
+         }
+       },
+       "East": {
+         "labels": {
+           "de": "Ost",
+           "en": "East"
+         }
+       },
+       "Southeast": {
+         "labels": {
+           "de": "Südost",
+           "en": "Southeast"
+         }
+       },
+       "South": {
+         "labels": {
+           "de": "Süd",
+           "en": "South"
+         }
+       },
+       "Southwest": {
+         "labels": {
+           "de": "Südwest",
+           "en": "Southwest"
+         }
+       },
+       "West": {
+         "labels": {
+           "de": "West",
+           "en": "West"
+         }
+       },
+       "Northwest": {
+         "labels": {
+           "de": "Nordwest",
+           "en": "Northwest"
+         }
+       },
+       "not_applicable": {
+         "labels": {
+           "de": "nicht zutreffend",
+           "en": "not_applicable"
+         }
+       }
+     }
+   },
+   "contextFindProcessing-milet": {
+     "createdBy": "Lisa Steinmann (Milet)",
+     "description": {
+       "de": "Empfehlung an die Fundbearbeitung",
+       "en": "Requests for find processing"
+     },
+     "creationDate": "10.03.2021",
+     "order": [
+       "North",
+       "Northeast",
+       "East",
+       "Southeast",
+       "South",
+       "Southwest",
+       "West",
+       "Northwest",
+       "not_applicable"],
+     "values": {
+       "none": {
+         "labels": {
+           "de": "keine weitere Bearbeitung",
+           "en": "no further processing required"
+         }
+       },
+       "01_first_impression": {
+         "labels": {
+           "de": "nur Ersteindruck (Stufe 1)",
+           "en": "only cursory impression (Level 1)"
+         }
+       },
+       "02_quantification": {
+         "labels": {
+           "de": "quantitative Aufnahme (Stufe 2)",
+           "en": "quantification (Level 2)"
+         }
+       },
+       "03_complete_processing": {
+         "labels": {
+           "de": "vollständige Aufnahme (Stufe 3)",
+           "en": "complete processing (Level 3)"
+         }
+       }
+     }
+   },
+   "Find-conditionAmount-milet": {
+     "creationDate": "10.03.2021",
+     "createdBy": "Lisa Steinmann (Milet)",
+     "description": {},
+     "values": {
+       "Fragmentarisch": {
+         "labels": {
+           "de": "Fragmentarisch",
+           "en": "Fragmented"
+         }
+       },
+       "Fragmentarisch_0-25": {
+         "labels": {
+           "de": "Fragmentarisch (1-25%)",
+           "en": "Fragmented (1-25%)"
+         }
+       },
+       "Fragmentarisch_25-50": {
+         "labels": {
+           "de": "Fragmentarisch (25-55%)",
+           "en": "Fragmented (25-55%)"
+         }
+       },
+       "Fragmentarisch_50-75": {
+         "labels": {
+           "de": "Fragmentarisch (50-75%)",
+           "en": "Fragmented (50-75%)"
+         }
+       },
+       "Fragmentarisch_75-100": {
+         "labels": {
+           "de": "Fragmentarisch (75-100%)",
+           "en": "Fragmented (75-100%)"
+         }
+       },
+       "intakt": {
+         "labels": {
+           "de": "intakt",
+           "en": "intact"
+         }
+       }
+     }
    }
 }

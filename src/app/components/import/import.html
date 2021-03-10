@@ -96,9 +96,9 @@
                     </div>
 
                     <div *ngIf="shouldDisplayDifferentialImportOption()" class="form-group form-check-inline">
-                        <input type="checkbox" id="differential-update-checkbox" class="form-check-input"
-                               [(ngModel)]="importState.differentialUpdate" (change)="updateDifferentialImport()">
-                        <label for="differential-update-checkbox" class="form-check-label" i18n="@@import.differentialImportOption">
+                        <input type="checkbox" id="differential-import-checkbox" class="form-check-input"
+                               [(ngModel)]="importState.differentialImport" (change)="updateDifferentialImport()">
+                        <label for="differential-import-checkbox" class="form-check-label" i18n="@@import.differentialImportOption">
                             Nur neue Ressourcen importieren
                         </label>
                     </div>

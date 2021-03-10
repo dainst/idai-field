@@ -77,7 +77,7 @@ export class ImportComponent implements OnInit {
 
     public isJavaInstallationMissing = () => this.importState.format === 'shapefile' && !this.javaInstalled;
 
-    public shouldDisplayMergeOption = () => !this.importState.differentialUpdate && Importer.mergeOptionAvailable(this.importState);
+    public shouldDisplayMergeOption = () => !this.importState.differentialImport && Importer.mergeOptionAvailable(this.importState);
 
     public shouldDisplayDifferentialImportOption = () => !this.importState.mergeMode && Importer.differentialImportOptionAvailable(this.importState);
 
@@ -179,7 +179,7 @@ export class ImportComponent implements OnInit {
     public updateMergeMode() {
 
         if (this.importState.mergeMode === true) {
-            this.importState.differentialUpdate = false;
+            this.importState.differentialImport = false;
         }
         this.updateCategories();
     }
@@ -187,7 +187,7 @@ export class ImportComponent implements OnInit {
 
     public updateDifferentialImport() {
 
-        if (this.importState.differentialUpdate === true) {
+        if (this.importState.differentialImport === true) {
             this.importState.mergeMode = false;
             this.importState.permitDeletions = false;
         }

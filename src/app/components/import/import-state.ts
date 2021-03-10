@@ -15,7 +15,7 @@ export class ImportState implements ImporterOptions {
     public selectedOperationId: string = '';
     public mergeMode = false;
     public permitDeletions = false;
-    public differentialUpdate = false;
+    public differentialImport = undefined;
 
     // For CSV import
 

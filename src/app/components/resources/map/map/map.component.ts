@@ -399,19 +399,11 @@ export class MapComponent implements AfterViewInit, OnChanges {
         const panOptions = { animate: true, easeLinearity: 0.3 };
         const selection = this.getSelection().filter(H.getGeometry);
 
-        if (selection.length === 1 && selection[0].resource.geometry.type === 'Point') {
+        const bounds = flatMap(selection,
+        H.addToBounds(this.markers, this.polygons, this.polylines));
 
-            if (this.markers[selection[0].resource.id]) this.map.panTo(
-                this.markers[selection[0].resource.id][0].getLatLng(),
-                panOptions);
-
-        } else {
-            const bounds = flatMap(selection,
-                H.addToBounds(this.markers, this.polygons, this.polylines));
-
-            if (bounds.length === 1) this.map.panTo(bounds[0], panOptions);
-            else if (bounds.length > 1) this.map.fitBounds(bounds);
-        }
+        if (bounds.length === 1) this.map.panTo(bounds[0], panOptions);
+        else if (bounds.length > 1) this.map.fitBounds(bounds);
     }
 
 

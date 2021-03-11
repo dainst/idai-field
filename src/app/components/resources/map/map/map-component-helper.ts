@@ -1,4 +1,4 @@
-import {subtract} from 'tsfun';
+import {flatten, subtract} from 'tsfun';
 import { FieldDocument, FieldGeometry, FieldResource } from "idai-components-2";
 import { CoordinatesUtility } from './coordinates-utility';
 import { SimpleChanges } from '@angular/core';
@@ -6,7 +6,7 @@ import { SimpleChanges } from '@angular/core';
 
 export module MapComponentHelper {
 
-    type Bounds = any[];
+    type Bounds = Array<L.LatLng>;
 
 
     export function addToBounds(markers: { [id: string]: Array<L.CircleMarker> }, 
@@ -19,26 +19,15 @@ export module MapComponentHelper {
             const id = document.resource.id;
             
             if (polygons[id]) {
-                addPathToBounds(polygons[id], bounds);
+                polygons[id].forEach(path => bounds.push(path.getLatLngs()[0]));
             } else if (polylines[id]) {
-                addPathToBounds(polylines[id], bounds);
+                polylines[id].forEach(polyline => bounds.push(polyline.getLatLngs()));
             } else if (markers[id]) {
-                addMarkersToBounds(markers[id], bounds);
+                markers[id].forEach(marker => bounds.push(marker.getLatLng()));
             }
 
-            return bounds;
+            return flatten(1, bounds);
         }
-    }
-
-
-    function addPathToBounds(paths: Array<L.Polyline|L.Polygon>, bounds: Bounds) {
-
-        paths.forEach(path => bounds.push(path.getLatLngs()[0]));
-    }
-
-    function addMarkersToBounds(markers: Array<L.CircleMarker>, bounds: Bounds) {
-
-        markers.forEach(marker => bounds.push(marker.getLatLng()));
     }
 
 

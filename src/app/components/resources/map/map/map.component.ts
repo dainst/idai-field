@@ -1,5 +1,4 @@
 import {AfterViewInit, Component, EventEmitter, Input, NgZone, OnChanges, Output, SimpleChanges} from '@angular/core';
-import {flatMap} from 'tsfun';
 import {FieldDocument, FieldGeometry} from 'idai-components-2';
 import {FieldPolyline} from './field-polyline';
 import {FieldPolygon} from './field-polygon';
@@ -399,8 +398,10 @@ export class MapComponent implements AfterViewInit, OnChanges {
         const panOptions = { animate: true, easeLinearity: 0.3 };
         const selection = this.getSelection().filter(H.getGeometry);
 
-        const bounds = flatMap(selection,
-            H.addToBounds(this.markers, this.polygons, this.polylines));
+        const bounds = H.addToBounds(
+            this.markers, this.polygons, this.polylines, selection);
+
+        console.debug("bounds", bounds);
 
         if (bounds.length === 1) this.map.panTo(bounds[0], panOptions);
         else if (bounds.length > 1) this.map.fitBounds(bounds);

@@ -8,10 +8,13 @@ export module MapComponentHelper {
 
     export function addToBounds(markers: { [id: string]: Array<L.CircleMarker> }, 
                                 polygons: { [id: string]: Array<L.Polygon> }, 
-                                polylines: { [id: string]: Array<L.Polyline> }) {
-        
-        return (document: FieldDocument): Array<L.LatLng> => {
+                                polylines: { [id: string]: Array<L.Polyline> }, 
+                                documents: Array<FieldDocument>): Array<L.LatLng> {
 
+        const allBounds: any = [];
+
+        for (const document of documents) {
+        
             const bounds: any = [];
             const id = document.resource.id;
             
@@ -23,8 +26,10 @@ export module MapComponentHelper {
                 markers[id].forEach(marker => bounds.push(marker.getLatLng()));
             }
 
-            return flatten(1, bounds);
+            allBounds.push(...bounds);
         }
+
+        return flatten(1, allBounds);
     }
 
 

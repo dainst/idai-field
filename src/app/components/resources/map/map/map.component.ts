@@ -401,8 +401,6 @@ export class MapComponent implements AfterViewInit, OnChanges {
         const bounds = H.addToBounds(
             this.markers, this.polygons, this.polylines, selection);
 
-        console.debug("bounds", bounds);
-
         if (bounds.length === 1) this.map.panTo(bounds[0], panOptions);
         else if (bounds.length > 1) this.map.fitBounds(bounds);
     }

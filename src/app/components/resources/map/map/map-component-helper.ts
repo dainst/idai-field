@@ -19,7 +19,7 @@ export module MapComponentHelper {
             const id = document.resource.id;
             
             if (polygons[id]) {
-                polygons[id].forEach(path => bounds.push(path.getLatLngs()[0]));
+                polygons[id].forEach(polygon => bounds.push(polygon.getLatLngs()[0]));
             } else if (polylines[id]) {
                 polylines[id].forEach(polyline => bounds.push(polyline.getLatLngs()));
             } else if (markers[id]) {

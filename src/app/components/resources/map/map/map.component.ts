@@ -400,7 +400,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
         const selection = this.getSelection().filter(H.getGeometry);
 
         const bounds = flatMap(selection,
-        H.addToBounds(this.markers, this.polygons, this.polylines));
+            H.addToBounds(this.markers, this.polygons, this.polylines));
 
         if (bounds.length === 1) this.map.panTo(bounds[0], panOptions);
         else if (bounds.length > 1) this.map.fitBounds(bounds);

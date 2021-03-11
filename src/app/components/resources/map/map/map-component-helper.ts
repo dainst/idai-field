@@ -4,6 +4,10 @@ import { CoordinatesUtility } from './coordinates-utility';
 import { SimpleChanges } from '@angular/core';
 
 
+/** 
+ * @author Thomas Kleinke
+ * @author Daniel de Oliveira
+ */
 export module MapComponentHelper {
 
     export function addToBounds(markers: { [id: string]: Array<L.CircleMarker> }, 

@@ -9,18 +9,21 @@ export module MapComponentHelper {
     type Bounds = any[];
 
 
-    export function addToBounds(markers, polygons, polylines) {
+    export function addToBounds(markers: { [id: string]: Array<L.CircleMarker> }, 
+                                polygons: { [id: string]: Array<L.Polygon> }, 
+                                polylines: { [id: string]: Array<L.Polyline> }) {
         
         return (document: FieldDocument): Bounds => {
 
             const bounds: any = [];
-
-            if (polygons[document.resource.id as any]) {
-                addPathToBounds(polygons[document.resource.id as any], bounds);
-            } else if (polylines[document.resource.id as any]) {
-                addPathToBounds(polylines[document.resource.id as any], bounds);
-            } else if (markers[document.resource.id as any]) {
-                addMarkersToBounds(markers[document.resource.id as any], bounds);
+            const id = document.resource.id;
+            
+            if (polygons[id]) {
+                addPathToBounds(polygons[id], bounds);
+            } else if (polylines[id]) {
+                addPathToBounds(polylines[id], bounds);
+            } else if (markers[id]) {
+                addMarkersToBounds(markers[id], bounds);
             }
 
             return bounds;

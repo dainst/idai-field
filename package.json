@@ -127,7 +127,7 @@
     "showdown": "1.9.1",
     "svg-pan-zoom": "3.6.0",
     "systemjs": "0.21.5",
-    "tsfun": "4.4.60",
+    "tsfun": "4.4.61",
     "tslib": "^1.10.0",
     "viz.js": "1.8.1",
     "zone.js": "~0.10.2"

@@ -402,12 +402,8 @@ export class MapComponent implements AfterViewInit, OnChanges {
             this.panToMarker(geometryDocuments[0]);
         } else {
             
-            const bounds = flatMap((document: FieldDocument) => 
-                H.addToBounds({
-                    markers: this.markers,
-                    polygons: this.polygons,
-                    polylines: this.polylines
-                }, document))(selection);
+            const bounds = flatMap(selection,
+                H.addToBounds(this.markers, this.polygons, this.polylines));
 
             if (bounds.length > 0) this.map.fitBounds(bounds);
         }

@@ -9,23 +9,24 @@ export module MapComponentHelper {
     type Bounds = any[];
 
 
-    export function addToBounds(
-        { polygons, polylines, markers },
-        document: FieldDocument): Bounds {
+    export function addToBounds(markers, polygons, polylines) {
+        
+        return (document: FieldDocument): Bounds => {
 
-        const bounds: any = [];
+            const bounds: any = [];
 
-        if (!getGeometry(document)) return;
+            if (!getGeometry(document)) return;
 
-        if (polygons[document.resource.id as any]) {
-            addPathToBounds(polygons[document.resource.id as any], bounds);
-        } else if (polylines[document.resource.id as any]) {
-            addPathToBounds(polylines[document.resource.id as any], bounds);
-        } else if (markers[document.resource.id as any]) {
-            addMarkersToBounds(markers[document.resource.id as any], bounds);
+            if (polygons[document.resource.id as any]) {
+                addPathToBounds(polygons[document.resource.id as any], bounds);
+            } else if (polylines[document.resource.id as any]) {
+                addPathToBounds(polylines[document.resource.id as any], bounds);
+            } else if (markers[document.resource.id as any]) {
+                addMarkersToBounds(markers[document.resource.id as any], bounds);
+            }
+
+            return bounds;
         }
-
-        return bounds;
     }
 
 

@@ -21,6 +21,15 @@ describe('Import/Subsystem', () => {
     let helpers;
 
 
+    async function create(...resources: any[]) {
+
+        for (const resource of resources) {
+
+            await datastore.create({ resource: resource });
+        }
+    }
+
+
     async function parseAndImport(options: ImporterOptions, importFileContent: string) {
 
         const documents = await Importer.doParse(
@@ -572,9 +581,10 @@ describe('Import/Subsystem', () => {
 
     it('differentialImport', async done => {
 
-        await datastore.create({ resource: {
+        await create({
             id: 'tr1', identifier: 'trench1', category: 'Trench',
-            shortDescription: 'original', relations: {} } });
+            shortDescription: 'original', relations: {} }
+        );
 
         await parseAndImport(
             {
@@ -589,7 +599,6 @@ describe('Import/Subsystem', () => {
             '{ "category": "Trench", "identifier": "trench1", "shortDescription": "changed" }\n'
             + '{ "category": "Trench", "identifier": "trench2", "shortDescription": "new" }'
         );
-
 
         const trench = (await helpers.getDocument('tr1')).resource;
         const feature = (await helpers.getDocument('101')).resource;
@@ -610,15 +619,22 @@ describe('Import/Subsystem', () => {
         // We ignore the records from the import file which already exist in the db;
         // however, we try to reconstruct relations
 
-        await datastore.create({ resource: {
-            id: 'tr1', identifier: 'trench1', category: 'Trench',
-            shortDescription: 'original', relations: {} } });
-        await datastore.create({ resource: {
-            id: '99', identifier: 'feature1', category: 'Feature',
-            shortDescription: 'original', 
-            relations: { "isAfter": ["100"]} // this is broken (a previously generated id)
+        await create(
+            {
+                id: 'tr1', 
+                identifier: 'trench1', 
+                category: 'Trench',
+                shortDescription: 'original', 
+                relations: {} 
+            },
+            {
+                id: '99', 
+                identifier: 'feature1', 
+                category: 'Feature',
+                shortDescription: 'original', 
+                relations: { "isAfter": ["100"]} // this is broken (a previously generated id)
                                              // the target is not there (yet)
-         } });
+            });
 
         await parseAndImport(
             {
@@ -631,7 +647,7 @@ describe('Import/Subsystem', () => {
                 selectedOperationId: 'tr1'
             },
 
-            // This one gets ignored completely
+            // This one gets ignored, exept for its relations
             '{ "category": "Feature", "identifier": "feature1", "shortDescription": "changed", "relations": { "isAfter": ["feature2"] } }\n'
 
             // Consider only this one.

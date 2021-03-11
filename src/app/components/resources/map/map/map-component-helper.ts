@@ -41,7 +41,7 @@ export module MapComponentHelper {
 
         const geometry: FieldGeometry|undefined = document.resource.geometry;
 
-        return (geometry && geometry.coordinates && geometry.coordinates.length > 0)
+        return geometry?.coordinates && geometry.coordinates.length > 0
             ? geometry
             : undefined;
     }

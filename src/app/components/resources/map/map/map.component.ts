@@ -396,12 +396,10 @@ export class MapComponent implements AfterViewInit, OnChanges {
 
     private focusSelection() {
 
-        const selection: Array<FieldDocument> = this.getSelection();
-        const geometryDocuments: Array<FieldDocument> = selection.filter(H.getGeometry);
-        if (geometryDocuments.length === 1 && geometryDocuments[0].resource.geometry.type === 'Point') {
-            this.panToMarker(geometryDocuments[0]);
+        const selection = this.getSelection().filter(H.getGeometry);
+        if (selection.length === 1 && selection[0].resource.geometry.type === 'Point') {
+            this.panToMarker(selection[0]);
         } else {
-            
             const bounds = flatMap(selection,
                 H.addToBounds(this.markers, this.polygons, this.polylines));
 
@@ -509,7 +507,6 @@ export class MapComponent implements AfterViewInit, OnChanges {
 
 
     private getSelection(): Array<FieldDocument> {
-
         
         let result = [];
         if (this.selectedDocument) result.push(this.selectedDocument);

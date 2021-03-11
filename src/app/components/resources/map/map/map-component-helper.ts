@@ -15,8 +15,6 @@ export module MapComponentHelper {
 
             const bounds: any = [];
 
-            if (!getGeometry(document)) return;
-
             if (polygons[document.resource.id as any]) {
                 addPathToBounds(polygons[document.resource.id as any], bounds);
             } else if (polylines[document.resource.id as any]) {

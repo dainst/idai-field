@@ -45,7 +45,7 @@ export module MapComponentHelper {
 
     export function hasGeometries(documents: Array<FieldDocument>): boolean {
 
-        return documents.find(this.getGeometry) !== undefined;
+        return documents.find(getGeometry) !== undefined;
     }
 
 

@@ -6,7 +6,7 @@ import {DocumentDatastore} from '../../datastore/document-datastore';
 import {Updater} from './updater';
 import {Find, ImportFunction} from './types';
 import {assertLegalCombination, findByIdentifier} from './utils';
-import {preprocessRelations} from './preprocess-relations';
+import {complementInverseRelationsBetweenImportDocs, makeSureRelationStructuresExists, preprocessRelations} from './preprocess-relations';
 import {preprocessFields} from './preprocess-fields';
 import {ImportErrors as E} from './import-errors';
 import {HierarchicalRelations, PARENT} from '../../model/relation-constants';
@@ -16,6 +16,8 @@ import {InverseRelationsMap} from '../../configuration/inverse-relations-map';
 import {processDocuments} from './process/process-documents';
 import {processRelations} from './process/process-relations';
 import {Settings} from '../../settings/settings';
+import { makeLookup } from '../../util/transformers';
+import { ImporterOptions } from '../importer';
 
 
 export interface ImportOptions {
@@ -67,19 +69,20 @@ export function buildImportFunction(services: ImportServices,
     /**
      * @param documents documents with the field resource.identifier set to a non empty string.
      *   If resource.id is set, it will be taken as document.id on creation.
-     *   The relations map is assumed to be at least existent, but can be empty.
+     *   The relations map is assumed to be at least existent, but can be empty. // TODO REVIEW, than we can omit creation of it and only assert that it is there
      *   The resource.category field may be empty.
      */
     return async function importDocuments(documents: Array<Document>): Promise<{ errors: string[][], successfulImports: number }> {
 
-        documents = options.differentialImport !== true
-            ? documents
-            : await asyncFilter(documents, async document =>
-                (await find(document.resource.identifier)) === undefined);
+        makeSureRelationStructuresExists(documents);
+        complementInverseRelationsBetweenImportDocs(context, options, documents); // TODO now that we have that here, we could simplify later steps probably
+        const docs = await filterOnDifferentialImport(find, options, documents);
 
         try {
-            preprocessFields(documents, options.permitDeletions === true);
-            await preprocessRelations(documents,
+            preprocessFields(docs,
+                options.permitDeletions === true // TODO eval within function
+            );
+            await preprocessRelations(docs,
                 helpers.generateId, find, get, options);
         } catch (errWithParams) {
             return { errors: [errWithParams], successfulImports: 0 };
@@ -90,9 +93,9 @@ export function buildImportFunction(services: ImportServices,
             const mergeDocs = await preprocessDocuments(
                 find,
                 helpers.preprocessDocument ?? identity,
-                options.mergeMode === true,
-                documents);
-            processedDocuments = processDocuments(documents, mergeDocs, services.validator);
+                options.mergeMode === true, // TODO eval within function
+                docs);
+            processedDocuments = processDocuments(docs, mergeDocs, services.validator);
         } catch (msgWithParams) {
             return { errors: [msgWithParams], successfulImports: 0};
         }
@@ -126,9 +129,21 @@ export function buildImportFunction(services: ImportServices,
         } catch (errWithParams) {
             updateErrors.push(errWithParams)
         }
-        return { errors: updateErrors, successfulImports: documents.length };
+        return { errors: updateErrors, successfulImports: docs.length };
     }
 }
+
+
+async function filterOnDifferentialImport(find: Find,
+                                          options: ImportOptions,
+                                          documents: Array<Document>) {
+
+    return options.differentialImport !== true
+            ? documents
+            : await asyncFilter(documents, async document =>
+                (await find(document.resource.identifier)) === undefined);
+}
+
 
 
 async function preprocessDocuments(find: Find,

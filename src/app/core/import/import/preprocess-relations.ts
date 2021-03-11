@@ -7,7 +7,62 @@ import {ImportErrors as E} from './import-errors';
 import {RESOURCE_DOT_ID} from '../../constants';
 import {HierarchicalRelations, PARENT} from '../../model/relation-constants';
 import LIES_WITHIN = HierarchicalRelations.LIESWITHIN;
-import {ImportOptions} from './import-documents';
+import {ImportContext, ImportOptions} from './import-documents';
+import { makeLookup } from '../../util/transformers';
+
+// @author Thomas Kleinke
+// @author Daniel de Oliveira
+
+
+/**
+ * When useIdentifiersInRelations
+ * sets (defined) inverse relations in relation targets, when not already existent.
+ *
+ * Expects documents to have at least empty relations ({}).
+ * Relations set to null are left untouched.
+ *
+ * @throws FATAL - should not be handled. // TODO use assert?
+ */
+export function complementInverseRelationsBetweenImportDocs(context: ImportContext,
+                                                            options: ImportOptions,
+                                                            documents: Array<Document> /*inplace*/) {
+
+    if (!options.useIdentifiersInRelations) return;
+    const identifierLookup = makeLookup('resource.identifier')(documents); // TODO allow to pass path as array
+
+    for (const document of documents) {
+        const relations = document.resource.relations;
+        for (const relation of Object.keys(relations)) {
+            if (relations[relation] === null) continue;
+
+            const inverseRelation = context.inverseRelationsMap[relation];
+            if (inverseRelation) for (const targetIdentifier of relations[relation]) {
+
+                const targetRelations = identifierLookup[targetIdentifier].resource.relations;
+                if (!targetRelations) throw 'FATAL - relations should exist'; // TODO test for empty map, not only not undefined
+
+                if (targetRelations[inverseRelation] === null) { // TODO maybe another test
+                    // do nothing
+                } else if (targetRelations[inverseRelation] === undefined) {
+                    targetRelations[inverseRelation] = [document.resource.identifier];
+                } else {
+                    targetRelations[inverseRelation].push(document.resource.identifier); // TODO test
+                }
+            }
+        }
+    }
+}
+
+
+export function makeSureRelationStructuresExists(documents: Array<Document>) {
+
+    for (const document of documents) {
+        if (document.resource.relations === undefined) {
+            document.resource.relations = {};
+        }
+    }
+}
+
 
 
 /**
@@ -20,9 +75,6 @@ import {ImportOptions} from './import-documents';
  * @throws [MUST_BE_ARRAY]
  * @throws [INVALID_RELATIONS]
  * @throws [PARENT_MUST_NOT_BE_ARRAY]
- *
- * @author Thomas Kleinke
- * @author Daniel de Oliveira
  */
 export async function preprocessRelations(documents: Array<Document>,
                                           generateId: () => string,
@@ -34,12 +86,10 @@ export async function preprocessRelations(documents: Array<Document>,
 
     for (let document of documents) {
         const relations = document.resource.relations;
-        if (!relations) {
-            document.resource.relations = {};
-            continue;
-        }
+        if (!relations) throw 'FATAL - relations should exist';
+
         adjustRelations(document, relations);
-        removeSelfReferencingIdentifiers(relations, document.resource.identifier);
+        removeSelfReferencingIdentifiers(relations, document.resource.identifier); // TODO do in makeSureRelationStructuresExist; rename that one
         if (!permitDeletions) Relations.removeEmpty(relations);
         if (useIdentifiersInRelations) {
             await rewriteIdentifiersInRelations(relations, find, identifierMap);

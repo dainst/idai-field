@@ -1,4 +1,4 @@
-import {to} from 'tsfun';
+import {is, to} from 'tsfun';
 import {createApp, createHelpers, setupSettingsService, setupSyncTestDb} from '../subsystem-helper';
 import {PouchdbManager} from '../../../../../src/app/core/datastore/pouchdb/pouchdb-manager';
 import {PouchdbServer} from '../../../../../src/app/core/datastore/pouchdb/pouchdb-server';
@@ -28,10 +28,12 @@ describe('Import/Subsystem', () => {
             importFileContent
         );
 
+        let id = 100;
+
         return await Importer.doImport(
             services,
             { settings: {} as any,  projectConfiguration: _projectConfiguration },
-            () => '101',
+            () => { id++; return id.toString(); },
             options,
             documents);
     }
@@ -597,7 +599,7 @@ describe('Import/Subsystem', () => {
     });
 
 
-    it('differentialImport - complement leftover relation', async done => {
+    it('differentialImport - handle broken relation', async done => {
 
         // Let's assume a previous import from the same import file has been interrupted,
         // such that only feature1 has been imported.
@@ -605,9 +607,8 @@ describe('Import/Subsystem', () => {
         // What we want in this case is to continue the import process
         // and also save the time already invested.
         // 
-        // Note that we do not require the import file to be consistent in itself.
-        // We just consider all the yet unknown documents as if they were an import
-        // file.
+        // We ignore the records from the import file which already exist in the db;
+        // however, we try to reconstruct relations
 
         await datastore.create({ resource: {
             id: 'tr1', identifier: 'trench1', category: 'Trench',
@@ -629,10 +630,15 @@ describe('Import/Subsystem', () => {
                 permitDeletions: false,
                 selectedOperationId: 'tr1'
             },
-            // this one gets ignored completely
+
+            // This one gets ignored completely
             '{ "category": "Feature", "identifier": "feature1", "shortDescription": "changed", "relations": { "isAfter": ["feature2"] } }\n'
-            // consider only this one
-            + '{ "category": "Feature", "identifier": "feature2", "shortDescription": "new", "relations": { "isBefore": ["feature1"] } }'
+
+            // Consider only this one.
+            // The inverse relation is only implicit. In a full import, it is supposed
+            // to be generated from the 'feature1' record of the importfile. We
+            // reconstruct this behaviour here also in the differential import case.
+            + '{ "category": "Feature", "identifier": "feature2", "shortDescription": "new" }'
         );
 
         const feature1 = (await helpers.getDocument('99')).resource;

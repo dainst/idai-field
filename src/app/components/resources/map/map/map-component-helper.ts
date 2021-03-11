@@ -6,14 +6,11 @@ import { SimpleChanges } from '@angular/core';
 
 export module MapComponentHelper {
 
-    type Bounds = Array<L.LatLng>;
-
-
     export function addToBounds(markers: { [id: string]: Array<L.CircleMarker> }, 
                                 polygons: { [id: string]: Array<L.Polygon> }, 
                                 polylines: { [id: string]: Array<L.Polyline> }) {
         
-        return (document: FieldDocument): Bounds => {
+        return (document: FieldDocument): Array<L.LatLng> => {
 
             const bounds: any = [];
             const id = document.resource.id;

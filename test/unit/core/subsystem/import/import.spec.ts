@@ -647,7 +647,7 @@ describe('Import/Subsystem', () => {
                 selectedOperationId: 'tr1'
             },
 
-            // This one gets ignored, exept for its relations
+            // This one gets ignored, exept for its relation
             '{ "category": "Feature", "identifier": "feature1", "shortDescription": "changed", "relations": { "isAfter": ["feature2"] } }\n'
 
             // Consider only this one.

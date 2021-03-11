@@ -76,6 +76,9 @@ export function buildImportFunction(services: ImportServices,
 
         makeSureRelationStructuresExists(documents);
         complementInverseRelationsBetweenImportDocs(context, options, documents); // TODO now that we have that here, we could simplify later steps probably
+
+        // TODO create map, from identifier to existing documents in db; use in filterOnDiff.. as well as in preprocessDocuments and preprocessRelations
+
         const docs = await filterOnDifferentialImport(find, options, documents);
 
         try {

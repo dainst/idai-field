@@ -116,6 +116,12 @@ export module Importer {
                                    options: ImporterOptions,
                                    documents: Array<Document>) {
 
+        if (options.format === 'catalog') { // TODO test manually
+            const { errors, successfulImports } = 
+                await (buildImportCatalogFunction(services, context.settings))(documents);
+            return { errors: errors, warnings: [], successfulImports: successfulImports };
+        }
+
         const operationCategoryNames = ProjectCategories.getOverviewCategoryNames(context.projectConfiguration.getCategoryTreelist()).filter(isnt('Place'));
         const validator = new ImportValidator(context.projectConfiguration, services.datastore);
         const inverseRelationsMap = makeInverseRelationsMap(context.projectConfiguration.getAllRelationDefinitions());
@@ -124,9 +130,6 @@ export module Importer {
 
         let importFunction;
         switch (options.format) {
-            case 'catalog':
-                importFunction = buildImportCatalogFunction(services, context.settings);
-                break;
             case 'geojson-gazetteer':
                 importFunction = buildImportFunction(
                     { datastore: services.datastore, validator },

@@ -137,7 +137,6 @@ function filterOnDifferentialImport(existingDocuments: Map<Document>,
 }
 
 
-
 function preprocessDocuments(existingDocuments: Map<Document>,
                              helpers: ImportHelpers,
                              options: ImportOptions,

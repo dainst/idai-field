@@ -81,9 +81,7 @@ export function buildImportFunction(services: ImportServices,
         const docs = filterOnDifferentialImport(existingDocuments, options, documents);
 
         try {
-            preprocessFields(docs,
-                options.permitDeletions === true // TODO eval within function
-                );
+            preprocessFields(docs, options);
             await preprocessRelations(existingDocuments, docs,
                 helpers.generateId, get, options);
         } catch (errWithParams) {

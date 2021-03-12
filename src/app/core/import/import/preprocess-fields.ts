@@ -15,7 +15,8 @@ import {removeNullProperties} from './remove-null-properties';
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-export function preprocessFields(documents: Array<Document>, permitDeletions: boolean): void {
+export function preprocessFields(documents: Array<Document>, 
+                                 { permitDeletions }: {permitDeletions?: boolean}): void {
 
     documents.forEach(preprocessFieldsForResource(!permitDeletions));
 }

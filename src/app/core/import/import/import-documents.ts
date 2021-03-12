@@ -81,10 +81,6 @@ export function buildImportDocuments(services: ImportServices,
     return async function importDocuments(documents: Array<Document>)
         : Promise< Either<ErrWithParams, [CreateDocuments, UpdateDocuments, TargetDocuments]> > {
 
-        let processedDocuments: any = undefined;
-        let targetDocuments;
-        let documentsForImport;
-
         makeSureRelationStructuresExists(documents);
         complementInverseRelationsBetweenImportDocs(context, options, documents); // TODO now that we have that here, we could simplify later steps probably
         
@@ -94,8 +90,8 @@ export function buildImportDocuments(services: ImportServices,
             preprocessFields(docs, options);
             await preprocessRelations(existingDocuments, docs, helpers, get, options);
             const mergeDocs = preprocessDocuments(existingDocuments, helpers, options, docs);
-            processedDocuments = processDocuments(docs, mergeDocs, services.validator);
-            targetDocuments = await processRelations(
+            const processedDocuments = processDocuments(docs, mergeDocs, services.validator);
+            const targetDocuments = await processRelations(
                 processedDocuments,
                 services.validator,
                 context.operationCategoryNames,
@@ -103,7 +99,7 @@ export function buildImportDocuments(services: ImportServices,
                 context.inverseRelationsMap,
                 options
             );
-            documentsForImport = processedDocuments.map(helpers.postprocessDocument ?? identity);
+            const documentsForImport = processedDocuments.map(helpers.postprocessDocument ?? identity);
             return options.mergeMode === true 
                 ? [undefined, [[], documentsForImport, targetDocuments]]
                 : [undefined, [documentsForImport, [], targetDocuments]];

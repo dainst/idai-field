@@ -1,9 +1,8 @@
-import {identity, Map} from 'tsfun';
+import {identity, Map, Pair, Either} from 'tsfun';
 import {Document} from 'idai-components-2';
 import {ImportValidator} from './process/import-validator';
 import {DocumentDatastore} from '../../datastore/document-datastore';
-import {Updater} from './updater';
-import {Find, ImportFunction} from './types';
+import {Find} from './types';
 import {assertLegalCombination, findByIdentifier} from './utils';
 import {complementInverseRelationsBetweenImportDocs, makeSureRelationStructuresExists, preprocessRelations} from './preprocess-relations';
 import {preprocessFields} from './preprocess-fields';
@@ -57,7 +56,7 @@ export interface ImportContext {
 export function buildImportFunction(services: ImportServices,
                                     context: ImportContext,
                                     helpers: ImportHelpers,
-                                    options: ImportOptions = {}): ImportFunction {
+                                    options: ImportOptions = {}): any /* TODO review type */ {
 
     // TODO assert that useIdentifiersInRelations is called with differentialImport
     assertLegalCombination(options);
@@ -72,7 +71,8 @@ export function buildImportFunction(services: ImportServices,
      *   The relations map is assumed to be at least existent, but can be empty. // TODO REVIEW, than we can omit creation of it and only assert that it is there
      *   The resource.category field may be empty.
      */
-    return async function importDocuments(documents: Array<Document>): Promise<{ errors: string[][], successfulImports: number }> {
+    return async function importDocuments(documents: Array<Document>)
+    : Promise< Either<Array<Array<string>>, Pair<Array<Document>, Array<Document>> >> {
 
         let processedDocuments: any = undefined;
         let targetDocuments;
@@ -97,25 +97,14 @@ export function buildImportFunction(services: ImportServices,
                 options
             );
             documentsForImport = processedDocuments.map(helpers.postprocessDocument ?? identity);
-        } catch (msgWithParams) {
-            if (msgWithParams[0] === E.TARGET_CATEGORY_RANGE_MISMATCH
-                && ([LIES_WITHIN, RECORDED_IN].includes(msgWithParams[2]))) msgWithParams[2] = PARENT;
-            return { errors: [msgWithParams], successfulImports: 0 };
-        }
+            return [undefined, [documentsForImport, targetDocuments]];
 
-        // TODO pull that block up
-        const updateErrors = [];
-        try {
-            await Updater.go(
-                documentsForImport,
-                targetDocuments,
-                services.datastore,
-                context.settings.username,
-                options.mergeMode === true);
-        } catch (errWithParams) {
-            updateErrors.push(errWithParams)
+        } catch (msgWithParams) {
+            // if (msgWithParams[0] === E.TARGET_CATEGORY_RANGE_MISMATCH
+            //     && ([LIES_WITHIN, RECORDED_IN].includes(msgWithParams[2]))) msgWithParams[2] = PARENT;
+            // return { errors: [msgWithParams], successfulImports: 0 };
+            return [[msgWithParams], undefined];
         }
-        return { errors: updateErrors, successfulImports: documentsForImport.length };
     }
 }
 

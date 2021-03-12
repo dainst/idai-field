@@ -36,7 +36,7 @@ describe('importDocuments', () => {
         validator.assertHasLiesWithin.and.returnValue();
 
         validator.assertIsRecordedInTargetsExist.and.returnValue(Promise.resolve());
-        datastore.bulkCreate.and.callFake((a) => Promise.resolve(a));
+        datastore.bulkCreate.and.callFake((a) => Promise.resolve(a)); // TODO remove these lines
         datastore.bulkUpdate.and.callFake((a) => Promise.resolve(a));
         datastore.find.and.returnValue(Promise.resolve({ totalCount: 0 }));
 
@@ -67,11 +67,11 @@ describe('importDocuments', () => {
 
     it('should resolve on success', async done => {
 
-        await importFunction([
+        const [_1, [importDocuments, _2]] = await importFunction([
             { resource: { category: 'Find', identifier: 'one', relations: { isChildOf: '0'} } } as any],
             'user1');
 
-        expect(datastore.bulkCreate).toHaveBeenCalled();
+        expect(importDocuments.length).toBe(1);
         done();
     });
 
@@ -87,7 +87,7 @@ describe('importDocuments', () => {
             { resource: { identifier: '123', id: '1', relations: {} } }
         ));
 
-        await (buildImportFunction(
+        const [_1, [importDocuments,_2]] = await (buildImportFunction(
             { datastore, validator },
             { operationCategoryNames: operationCategoryNames, inverseRelationsMap: {}, settings: { username: 'user1'} as Settings },
             {
@@ -98,15 +98,16 @@ describe('importDocuments', () => {
             { mergeMode: true }))(
             [{ resource: { id: '1', relations: {} } } as any]);
 
-        expect(datastore.bulkCreate).not.toHaveBeenCalled();
-        expect(datastore.bulkUpdate).toHaveBeenCalled();
+        expect(importDocuments.length).toBe(1);
+        // expect(datastore.bulkCreate).not.toHaveBeenCalled(); TODO review
+        // expect(datastore.bulkUpdate).toHaveBeenCalled();
         done();
     });
 
 
     it('does not overwrite if exists', async done => {
 
-        await (buildImportFunction(
+        const [_1, [importDocuments,_2]] = await (buildImportFunction(
             { datastore, validator },
             {
                 operationCategoryNames: operationCategoryNames,
@@ -122,13 +123,15 @@ describe('importDocuments', () => {
 
         ([{ resource: { category: 'Find', identifier: 'one', relations: { isChildOf: '0' } } } as any]);
 
-        expect(datastore.bulkCreate).toHaveBeenCalled();
-        expect(datastore.bulkUpdate).not.toHaveBeenCalled();
+        expect(importDocuments.length).toBe(1);
+        // expect(datastore.bulkCreate).toHaveBeenCalled(); TODO review
+        // expect(datastore.bulkUpdate).not.toHaveBeenCalled();
         done();
     });
 
 
-    it('should reject on err in datastore', async done => {
+    // TODO review
+    xit('should reject on err in datastore', async done => {
 
         datastore.bulkCreate.and.returnValue(Promise.reject(['abc']));
 
@@ -145,7 +148,7 @@ describe('importDocuments', () => {
 
         validator.assertIsWellformed.and.callFake(() => { throw [ImportErrors.INVALID_CATEGORY]});
 
-        const {errors} = await importFunction([
+        const [errors, _] = await importFunction([
             { resource: { category: 'Nonexisting', identifier: '1a', relations: { isChildOf: '0' } } } as any
         ], datastore, 'user1');
 
@@ -173,7 +176,7 @@ describe('importDocuments', () => {
 
         datastore.find.and.returnValue(Promise.resolve({ totalCount: 0 }));
 
-        const {errors} = await importFunction([
+        const [errors, _] = await importFunction([
             { resource: { category: 'Feature', identifier: '1a', relations: { isChildOf: 'notfound' } } } as any
         ]);
 
@@ -201,7 +204,7 @@ describe('importDocuments', () => {
 
         datastore.find.and.returnValue(Promise.resolve({ totalCount: 0 }));
 
-        const {errors} = await importFunction([
+        const [errors, _] = await importFunction([
             { resource: { category: 'Feature', identifier: '1a', relations: { isChildOf: 'notfound' } } } as any
         ]);
 
@@ -213,7 +216,7 @@ describe('importDocuments', () => {
 
     it('isChildOf is an array', async done => {
 
-        const {errors} = await importFunction([
+        const [errors, _] = await importFunction([
             { resource: { category: 'Feature', identifier: '1a', relations: { isChildOf: ['a'] } } } as any
         ]);
 
@@ -225,7 +228,7 @@ describe('importDocuments', () => {
 
     it('other relation is not an array', async done => {
 
-        const {errors} = await importFunction([
+        const [errors, _] = await importFunction([
             { resource: { category: 'Feature', identifier: '1a', relations: { isAbove: 'b' } } } as any
         ]);
 
@@ -237,7 +240,7 @@ describe('importDocuments', () => {
 
     it('forbidden hierarchical relation', async done => {
 
-        const {errors} = await importFunction([
+        const [errors, _] = await importFunction([
             { resource: { category: 'Feature', identifier: '1a', relations: { isRecordedIn: ['a'] } } } as any
         ]);
 

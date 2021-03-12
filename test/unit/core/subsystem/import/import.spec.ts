@@ -1,4 +1,3 @@
-import {is, to} from 'tsfun';
 import {createApp, createHelpers, setupSettingsService, setupSyncTestDb} from '../subsystem-helper';
 import {PouchdbManager} from '../../../../../src/app/core/datastore/pouchdb/pouchdb-manager';
 import {PouchdbServer} from '../../../../../src/app/core/datastore/pouchdb/pouchdb-server';

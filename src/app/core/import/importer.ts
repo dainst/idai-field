@@ -1,4 +1,4 @@
-import {isnt} from 'tsfun';
+import {isnt, Pair} from 'tsfun';
 import {Document} from 'idai-components-2';
 import {GeojsonParser} from './parser/geojson-parser';
 import {NativeJsonlParser} from './parser/native-jsonl-parser';
@@ -26,6 +26,7 @@ import {M} from '../../components/messages/m';
 import {RelationsManager} from '../model/relations-manager';
 import {ImageRelationsManager} from '../model/image-relations-manager';
 import {Imagestore} from '../images/imagestore/imagestore';
+import { Updater } from './import/updater';
 
 export type ImporterFormat = 'native' | 'geojson' | 'geojson-gazetteer' | 'shapefile' | 'csv' | 'catalog';
 
@@ -159,8 +160,31 @@ export module Importer {
                     });
         }
 
-        const { errors, successfulImports } = await importFunction(documents);
-        return { errors: errors, warnings: [], successfulImports: successfulImports };
+        const updateErrors = [];
+        let errors: Array<Array<string>>|undefined = undefined;
+        let results: Pair<Array<Document>, Array<Document>>|undefined = undefined;
+        [errors, results] = await importFunction(documents);
+        if (errors === undefined) {
+            const [documentsForImport, targetDocuments] = results;
+            try {
+                await Updater.go(
+                    documentsForImport,
+                    targetDocuments,
+                    services.datastore,
+                    context.settings.username,
+
+                    options.format === 'geojson' // TODO remove
+                        || options.mergeMode === true);
+
+                return { errors: [], warnings: [], successfulImports: documentsForImport.length };
+            } catch (errWithParams) { // TODO review error handling
+                // updateErrors.push(errWithParams)
+                console.log("errors", JSON.stringify(errWithParams))
+                return { errors: updateErrors, successfulImports: 0 }; // TODO review length
+            }
+        } else {
+            return { errors: errors, successfulImports: 0 }
+        }
     }
 
 

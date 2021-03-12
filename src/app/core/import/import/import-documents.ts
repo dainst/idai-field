@@ -66,6 +66,7 @@ export function buildImportDocuments(services: ImportServices,
 
     assertLegalCombination(options);
     
+    // TODO consider pulling up
     const get  = (resourceId: string) => services.datastore.get(resourceId);
     const find = findByIdentifier(services.datastore);
 

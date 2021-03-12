@@ -76,7 +76,6 @@ export function buildImportFunction(services: ImportServices,
 
         let processedDocuments: any = undefined;
         let targetDocuments;
-        let importLength = 0;
 
         makeSureRelationStructuresExists(documents);
         complementInverseRelationsBetweenImportDocs(context, options, documents); // TODO now that we have that here, we could simplify later steps probably
@@ -84,7 +83,6 @@ export function buildImportFunction(services: ImportServices,
         try {
             const existingDocuments = await makeExistingDocumentsMap(find, options, documents); // TODO use everywhere
             const docs = filterOnDifferentialImport(existingDocuments, options, documents);
-            importLength = docs.length;
             preprocessFields(docs, options);
             await preprocessRelations(existingDocuments, docs, helpers, get, options);
             const mergeDocs = preprocessDocuments(existingDocuments, helpers, options, docs);
@@ -115,7 +113,7 @@ export function buildImportFunction(services: ImportServices,
         } catch (errWithParams) {
             updateErrors.push(errWithParams)
         }
-        return { errors: updateErrors, successfulImports: importLength };
+        return { errors: updateErrors, successfulImports: documentsForImport.length };
     }
 }
 

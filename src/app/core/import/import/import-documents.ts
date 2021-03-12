@@ -1,4 +1,4 @@
-import {identity} from 'tsfun';
+import {identity, Map} from 'tsfun';
 import {filter as asyncFilter} from 'tsfun/async';
 import {Document} from 'idai-components-2';
 import {ImportValidator} from './process/import-validator';
@@ -62,6 +62,7 @@ export function buildImportFunction(services: ImportServices,
                                     helpers: ImportHelpers,
                                     options: ImportOptions = {}): ImportFunction {
 
+    // TODO assert that useIdentifiersInRelations is called with differentialImport
     assertLegalCombination(options);
     const get  = (resourceId: string) => services.datastore.get(resourceId);
     const find = findByIdentifier(services.datastore);
@@ -76,10 +77,8 @@ export function buildImportFunction(services: ImportServices,
 
         makeSureRelationStructuresExists(documents);
         complementInverseRelationsBetweenImportDocs(context, options, documents); // TODO now that we have that here, we could simplify later steps probably
-
-        // TODO create map, from identifier to existing documents in db; use in filterOnDiff.. as well as in preprocessDocuments and preprocessRelations
-
-        const docs = await filterOnDifferentialImport(find, options, documents);
+        const existingDocuments = await makeExistingDocumentsMap(find, options, documents); // TODO use everywhere
+        const docs = filterOnDifferentialImport(existingDocuments, options, documents);
 
         try {
             preprocessFields(docs,
@@ -137,14 +136,29 @@ export function buildImportFunction(services: ImportServices,
 }
 
 
-async function filterOnDifferentialImport(find: Find,
-                                          options: ImportOptions,
-                                          documents: Array<Document>) {
+async function makeExistingDocumentsMap(find: Find,
+                                        options: ImportOptions,
+                                        documents: Array<Document>): Promise<Map<Document>> {
+
+    if (!options.useIdentifiersInRelations) return {};
+    const lookup = {};
+    for (const document of documents) {
+        const identifier = document.resource.identifier;
+        const found = await find(identifier);
+        if (found) lookup[identifier] = document;
+    }
+    return lookup;
+}
+
+
+function filterOnDifferentialImport(existingDocuments: Map<Document>,
+                                    options: ImportOptions,
+                                    documents: Array<Document>) {
 
     return options.differentialImport !== true
             ? documents
-            : await asyncFilter(documents, async document =>
-                (await find(document.resource.identifier)) === undefined);
+            : documents.filter(document => 
+                existingDocuments[document.resource.identifier] === undefined);
 }
 
 

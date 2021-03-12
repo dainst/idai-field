@@ -1,3 +1,4 @@
+import {identity} from 'tsfun';
 import {ImportErrors as E, ImportErrors} from '../../../../../src/app/core/import/import/import-errors';
 import {buildImportDocuments} from '../../../../../src/app/core/import/import/import-documents';
 import {Settings} from '../../../../../src/app/core/settings/settings';
@@ -58,8 +59,8 @@ describe('importDocuments', () => {
             { operationCategoryNames: operationCategoryNames, inverseRelationsMap: {}, settings: { username: 'user1'} as Settings },
             {
                 generateId: () => '101',
-                preprocessDocument: undefined,
-                postprocessDocument: undefined
+                preprocessDocument: identity,
+                postprocessDocument: identity
             },
             { mergeMode: false, permitDeletions: false });
     });
@@ -92,8 +93,8 @@ describe('importDocuments', () => {
             { operationCategoryNames: operationCategoryNames, inverseRelationsMap: {}, settings: { username: 'user1'} as Settings },
             {
                 generateId: () => '101',
-                preprocessDocument: undefined,
-                postprocessDocument: undefined
+                preprocessDocument: identity,
+                postprocessDocument: identity
             },
             { mergeMode: true, useIdentifiersInRelations: true }))(
             [{ resource: { id: '1', relations: {} } } as any]);
@@ -116,8 +117,8 @@ describe('importDocuments', () => {
             },
             {
                 generateId: () => '101',
-                preprocessDocument: undefined,
-                postprocessDocument: undefined
+                preprocessDocument: identity,
+                postprocessDocument: identity
             },
             { mergeMode: false }))
 
@@ -168,8 +169,8 @@ describe('importDocuments', () => {
             },
             {
                 generateId: () => '101',
-                preprocessDocument: undefined,
-                postprocessDocument: undefined
+                preprocessDocument: identity,
+                postprocessDocument: identity
             },
             { mergeMode: false, useIdentifiersInRelations: true }); // !
 
@@ -196,8 +197,8 @@ describe('importDocuments', () => {
             },
             {
                 generateId: () => '101',
-                preprocessDocument: undefined,
-                postprocessDocument: undefined
+                preprocessDocument: identity,
+                postprocessDocument: identity
             },
             { mergeMode: false, useIdentifiersInRelations: false}); // !
 

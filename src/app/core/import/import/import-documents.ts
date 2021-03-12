@@ -97,7 +97,7 @@ export function buildImportDocuments(services: ImportServices,
                 context.inverseRelationsMap,
                 options
             );
-            const documentsForImport = processedDocuments.map(helpers.postprocessDocument ?? identity);
+            const documentsForImport = processedDocuments.map(helpers.postprocessDocument);
             return options.mergeMode === true 
                 ? [undefined, [[], documentsForImport, targetDocuments]]
                 : [undefined, [documentsForImport, [], targetDocuments]];

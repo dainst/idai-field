@@ -72,7 +72,6 @@ export function buildImportDocuments(services: ImportServices,
      *   The resource.category field may be empty.
      */
     return async function importDocuments(documents: Array<Document>)
-                                        // TODO make Tuple instead pair to differentiate between documents to be created and documents to be updated
         : Promise< Either<Array<Array<string>>, [Array<Document>, Array<Document>, Array<Document>] >> {
 
         let processedDocuments: any = undefined;

@@ -76,6 +76,7 @@ export function buildImportFunction(services: ImportServices,
 
         let processedDocuments: any = undefined;
         let targetDocuments;
+        let documentsForImport;
 
         makeSureRelationStructuresExists(documents);
         complementInverseRelationsBetweenImportDocs(context, options, documents); // TODO now that we have that here, we could simplify later steps probably
@@ -95,13 +96,13 @@ export function buildImportFunction(services: ImportServices,
                 context.inverseRelationsMap,
                 options
             );
+            documentsForImport = processedDocuments.map(helpers.postprocessDocument ?? identity);
         } catch (msgWithParams) {
             if (msgWithParams[0] === E.TARGET_CATEGORY_RANGE_MISMATCH
                 && ([LIES_WITHIN, RECORDED_IN].includes(msgWithParams[2]))) msgWithParams[2] = PARENT;
             return { errors: [msgWithParams], successfulImports: 0 };
         }
 
-        const documentsForImport = processedDocuments.map(helpers.postprocessDocument ?? identity);
         const updateErrors = [];
         try {
             await Updater.go(

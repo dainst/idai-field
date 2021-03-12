@@ -148,12 +148,11 @@ describe('importDocuments', () => {
 
         validator.assertIsWellformed.and.callFake(() => { throw [ImportErrors.INVALID_CATEGORY]});
 
-        const [errors, _] = await importFunction([
+        const [error, _] = await importFunction([
             { resource: { category: 'Nonexisting', identifier: '1a', relations: { isChildOf: '0' } } } as any
         ], datastore, 'user1');
 
-        expect(errors.length).toBe(1);
-        expect(errors[0][0]).toEqual(ImportErrors.INVALID_CATEGORY);
+        expect(error[0]).toEqual(ImportErrors.INVALID_CATEGORY);
         done();
     });
 
@@ -176,12 +175,12 @@ describe('importDocuments', () => {
 
         datastore.find.and.returnValue(Promise.resolve({ totalCount: 0 }));
 
-        const [errors, _] = await importFunction([
+        const [error, _] = await importFunction([
             { resource: { category: 'Feature', identifier: '1a', relations: { isChildOf: 'notfound' } } } as any
         ]);
 
-        expect(errors[0][0]).toEqual(E.PREVALIDATION_MISSING_RELATION_TARGET);
-        expect(errors[0][1]).toEqual('notfound');
+        expect(error[0]).toEqual(E.PREVALIDATION_MISSING_RELATION_TARGET);
+        expect(error[1]).toEqual('notfound');
         done();
     });
 
@@ -204,48 +203,48 @@ describe('importDocuments', () => {
 
         datastore.find.and.returnValue(Promise.resolve({ totalCount: 0 }));
 
-        const [errors, _] = await importFunction([
+        const [error, _] = await importFunction([
             { resource: { category: 'Feature', identifier: '1a', relations: { isChildOf: 'notfound' } } } as any
         ]);
 
-        expect(errors[0][0]).toEqual(E.PREVALIDATION_MISSING_RELATION_TARGET);
-        expect(errors[0][1]).toEqual('notfound');
+        expect(error[0]).toEqual(E.PREVALIDATION_MISSING_RELATION_TARGET);
+        expect(error[1]).toEqual('notfound');
         done();
     });
 
 
     it('isChildOf is an array', async done => {
 
-        const [errors, _] = await importFunction([
+        const [error, _] = await importFunction([
             { resource: { category: 'Feature', identifier: '1a', relations: { isChildOf: ['a'] } } } as any
         ]);
 
-        expect(errors[0][0]).toEqual(E.PARENT_MUST_NOT_BE_ARRAY);
-        expect(errors[0][1]).toEqual('1a');
+        expect(error[0]).toEqual(E.PARENT_MUST_NOT_BE_ARRAY);
+        expect(error[1]).toEqual('1a');
         done();
     });
 
 
     it('other relation is not an array', async done => {
 
-        const [errors, _] = await importFunction([
+        const [error, _] = await importFunction([
             { resource: { category: 'Feature', identifier: '1a', relations: { isAbove: 'b' } } } as any
         ]);
 
-        expect(errors[0][0]).toEqual(E.MUST_BE_ARRAY);
-        expect(errors[0][1]).toEqual('1a');
+        expect(error[0]).toEqual(E.MUST_BE_ARRAY);
+        expect(error[1]).toEqual('1a');
         done();
     });
 
 
     it('forbidden hierarchical relation', async done => {
 
-        const [errors, _] = await importFunction([
+        const [error, _] = await importFunction([
             { resource: { category: 'Feature', identifier: '1a', relations: { isRecordedIn: ['a'] } } } as any
         ]);
 
-        expect(errors[0][0]).toEqual(E.INVALID_RELATIONS);
-        expect(errors[0][2]).toEqual('isRecordedIn');
+        expect(error[0]).toEqual(E.INVALID_RELATIONS);
+        expect(error[2]).toEqual('isRecordedIn');
         done();
     });
 });

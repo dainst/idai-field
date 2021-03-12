@@ -49,6 +49,13 @@ export interface ImportContext {
 }
 
 
+export type ErrWithParams = Array<string>;
+
+export type CreateDocuments = Array<Document>;
+export type UpdateDocuments = Array<Document>;
+export type TargetDocuments = Array<Document>;
+
+
 /**
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
@@ -72,7 +79,7 @@ export function buildImportDocuments(services: ImportServices,
      *   The resource.category field may be empty.
      */
     return async function importDocuments(documents: Array<Document>)
-        : Promise< Either<Array<Array<string>>, [Array<Document>, Array<Document>, Array<Document>] >> {
+        : Promise< Either<ErrWithParams, [CreateDocuments, UpdateDocuments, TargetDocuments]> > {
 
         let processedDocuments: any = undefined;
         let targetDocuments;
@@ -101,11 +108,10 @@ export function buildImportDocuments(services: ImportServices,
                 ? [undefined, [[], documentsForImport, targetDocuments]]
                 : [undefined, [documentsForImport, [], targetDocuments]];
 
-        } catch (msgWithParams) {
-            // if (msgWithParams[0] === E.TARGET_CATEGORY_RANGE_MISMATCH
-            //     && ([LIES_WITHIN, RECORDED_IN].includes(msgWithParams[2]))) msgWithParams[2] = PARENT;
-            // return { errors: [msgWithParams], successfulImports: 0 };
-            return [[msgWithParams], undefined];
+        } catch (errWithParams) {
+            if (errWithParams[0] === E.TARGET_CATEGORY_RANGE_MISMATCH
+                 && ([LIES_WITHIN, RECORDED_IN].includes(errWithParams[2]))) errWithParams[2] = PARENT;
+            return [errWithParams, undefined];
         }
     }
 }

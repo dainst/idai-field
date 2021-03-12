@@ -10,7 +10,7 @@ import {CsvParser} from './parser/csv-parser';
 import {ProjectConfiguration} from '../configuration/project-configuration';
 import {Category} from '../configuration/model/category';
 import {makeInverseRelationsMap} from '../configuration/inverse-relations-map';
-import {buildImportDocuments} from './import/import-documents';
+import {buildImportDocuments, CreateDocuments, ErrWithParams, TargetDocuments, UpdateDocuments} from './import/import-documents';
 import {FieldConverter} from './field-converter';
 import {ProjectCategories} from '../configuration/project-categories';
 import {CatalogJsonlParser} from './parser/catalog-jsonl-parser';
@@ -160,27 +160,21 @@ export module Importer {
                     });
         }
 
-        const updateErrors = [];
-        let errors: Array<Array<string>>|undefined = undefined;
-        let results: [Array<Document>, Array<Document>, Array<Document>]|undefined = undefined;
-        [errors, results] = await importFunction(documents);
-        if (errors === undefined) {
-            const [createDocuments, updateDocuments, targetDocuments] = results;
-            try {
-                await Updater.go(
-                    createDocuments,
-                    updateDocuments.concat(targetDocuments),
-                    services.datastore,
-                    context.settings.username);
-
-                return { errors: [], warnings: [], successfulImports: createDocuments.concat(updateDocuments).length };
-            } catch (errWithParams) { // TODO review error handling
-                // updateErrors.push(errWithParams)
-                console.log("errors", JSON.stringify(errWithParams))
-                return { errors: updateErrors, successfulImports: 0 }; // TODO review length
-            }
-        } else {
-            return { errors: errors, successfulImports: 0 }
+        let error: ErrWithParams|undefined = undefined;
+        let results: [CreateDocuments, UpdateDocuments, TargetDocuments]|undefined = undefined;
+        [error, results] = await importFunction(documents);
+        if (error !== undefined) return { errors: [error], successfulImports: 0 };
+        
+        const [createDocuments, updateDocuments, targetDocuments] = results;
+        try {
+            await Updater.go(
+                createDocuments,
+                updateDocuments.concat(targetDocuments),
+                services.datastore,
+                context.settings.username);
+            return { errors: [], warnings: [], successfulImports: createDocuments.concat(updateDocuments).length };
+        } catch (errWithParams) {
+            return { errors: [errWithParams], successfulImports: 0 }; // TODO review length
         }
     }
 

@@ -74,16 +74,17 @@ export function buildImportFunction(services: ImportServices,
      */
     return async function importDocuments(documents: Array<Document>): Promise<{ errors: string[][], successfulImports: number }> {
 
-        makeSureRelationStructuresExists(documents);
-        complementInverseRelationsBetweenImportDocs(context, options, documents); // TODO now that we have that here, we could simplify later steps probably
-        const existingDocuments = await makeExistingDocumentsMap(find, options, documents); // TODO use everywhere
-        const docs = filterOnDifferentialImport(existingDocuments, options, documents);
-
         let processedDocuments: any = undefined;
         let targetDocuments;
+        let importLength = 0;
 
+        makeSureRelationStructuresExists(documents);
+        complementInverseRelationsBetweenImportDocs(context, options, documents); // TODO now that we have that here, we could simplify later steps probably
+        
         try {
-            
+            const existingDocuments = await makeExistingDocumentsMap(find, options, documents); // TODO use everywhere
+            const docs = filterOnDifferentialImport(existingDocuments, options, documents);
+            importLength = docs.length;
             preprocessFields(docs, options);
             await preprocessRelations(existingDocuments, docs, helpers, get, options);
             const mergeDocs = preprocessDocuments(existingDocuments, helpers, options, docs);
@@ -96,7 +97,6 @@ export function buildImportFunction(services: ImportServices,
                 context.inverseRelationsMap,
                 options
             );
-
         } catch (msgWithParams) {
             if (msgWithParams[0] === E.TARGET_CATEGORY_RANGE_MISMATCH
                 && ([LIES_WITHIN, RECORDED_IN].includes(msgWithParams[2]))) msgWithParams[2] = PARENT;
@@ -104,7 +104,6 @@ export function buildImportFunction(services: ImportServices,
         }
 
         const documentsForImport = processedDocuments.map(helpers.postprocessDocument ?? identity);
-
         const updateErrors = [];
         try {
             await Updater.go(
@@ -116,7 +115,7 @@ export function buildImportFunction(services: ImportServices,
         } catch (errWithParams) {
             updateErrors.push(errWithParams)
         }
-        return { errors: updateErrors, successfulImports: docs.length };
+        return { errors: updateErrors, successfulImports: importLength };
     }
 }
 

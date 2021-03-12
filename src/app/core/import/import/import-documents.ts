@@ -1,4 +1,4 @@
-import {identity, Map, Pair, Either} from 'tsfun';
+import {identity, Map, Either} from 'tsfun';
 import {Document} from 'idai-components-2';
 import {ImportValidator} from './process/import-validator';
 import {DocumentDatastore} from '../../datastore/document-datastore';

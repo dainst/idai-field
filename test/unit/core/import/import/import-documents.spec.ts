@@ -95,7 +95,7 @@ describe('importDocuments', () => {
                 preprocessDocument: undefined,
                 postprocessDocument: undefined
             },
-            { mergeMode: true }))(
+            { mergeMode: true, useIdentifiersInRelations: true }))(
             [{ resource: { id: '1', relations: {} } } as any]);
 
         expect(createDocuments.length).toBe(0);

@@ -65,9 +65,7 @@ export function buildImportDocuments(services: ImportServices,
                                      helpers: ImportHelpers,
                                      options: ImportOptions = {}) {
 
-    // TODO assert that useIdentifiersInRelations is called with differentialImport
     assertLegalCombination(options);
-    if (options.mergeMode) options.useIdentifiersInRelations = true; // TODO temporary
     
     const get  = (resourceId: string) => services.datastore.get(resourceId);
     const find = findByIdentifier(services.datastore);

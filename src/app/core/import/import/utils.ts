@@ -18,16 +18,23 @@ export const unionOfDocuments = (docs: Array<Array<Document>>) => union(on('reso
 export const makeDocumentsLookup: (ds: Array<Document>) => Lookup<Document> = makeLookup('resource.id');
 
 
-export function assertLegalCombination(importOptions: ImportOptions) {
+export function assertLegalCombination(options: ImportOptions) {
 
-    if (importOptions.mergeMode) {
+    if (options.mergeMode) {
 
-        if (importOptions.operationId) {
-            throw 'FATAL ERROR - illegal argument combination '
+        // TODO assertions instead errors?
+        
+        if (!options.useIdentifiersInRelations) {
+            throw 'FATAL - illegal arguments - '
+            + 'useIdentifiersInRelations must also be set when merge mode selected';
+        }
+
+        if (options.operationId) {
+            throw 'FATAL - illegal argument combination '
             + '- mergeMode and operationId must not be both truthy';
         }
-        if (importOptions.differentialImport) {
-            throw 'FATAL ERROR - illegal argument combination '
+        if (options.differentialImport) {
+            throw 'FATAL - illegal argument combination '
             + '- mergeMode and differentialImport must not be both true';
         }
     }

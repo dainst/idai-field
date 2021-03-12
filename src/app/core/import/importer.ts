@@ -144,7 +144,7 @@ export module Importer {
                     { datastore: services.datastore, validator },
                     { operationCategoryNames, inverseRelationsMap, settings: context.settings },
                     { generateId, preprocessDocument, postprocessDocument },
-                    { mergeMode: true, permitDeletions: false });
+                    { mergeMode: true, permitDeletions: false, useIdentifiersInRelations: true });
                 break;
             default: // native | csv
                 importFunction = buildImportDocuments(

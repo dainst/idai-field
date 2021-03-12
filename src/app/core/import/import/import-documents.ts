@@ -83,13 +83,13 @@ export function buildImportFunction(services: ImportServices,
         try {
             preprocessFields(docs,
                 options.permitDeletions === true // TODO eval within function
-            );
-            await preprocessRelations(docs,
-                helpers.generateId, find, get, options);
+                );
+            await preprocessRelations(existingDocuments, docs,
+                helpers.generateId, get, options);
         } catch (errWithParams) {
             return { errors: [errWithParams], successfulImports: 0 };
         }
-
+        
         let processedDocuments: any = undefined;
         try {
             const mergeDocs = await preprocessDocuments(
@@ -145,7 +145,7 @@ async function makeExistingDocumentsMap(find: Find,
     for (const document of documents) {
         const identifier = document.resource.identifier;
         const found = await find(identifier);
-        if (found) lookup[identifier] = document;
+        if (found) lookup[identifier] = found;
     }
     return lookup;
 }

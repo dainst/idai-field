@@ -1,7 +1,6 @@
-import {hasnt, includedIn, isArray, isnt, isUndefinedOrEmpty} from 'tsfun';
-import {reduce as asyncReduce} from 'tsfun/async';
+import {hasnt, includedIn, isArray, isnt, isUndefinedOrEmpty, Map} from 'tsfun';
 import {Document, Relations} from 'idai-components-2';
-import {Find, Get, Id, Identifier, IdentifierMap} from './types';
+import {Get, Id, Identifier, IdentifierMap} from './types';
 import {iterateRelationsInImport} from './utils';
 import {ImportErrors as E} from './import-errors';
 import {RESOURCE_DOT_ID} from '../../constants';
@@ -85,9 +84,9 @@ export function makeSureRelationStructuresExists(documents: Array<Document>) {
  * @throws [INVALID_RELATIONS]
  * @throws [PARENT_MUST_NOT_BE_ARRAY]
  */
-export async function preprocessRelations(documents: Array<Document>,
+export async function preprocessRelations(existingDocuments: Map<Document>,
+                                          documents: Array<Document>,
                                           generateId: () => string,
-                                          find: Find,
                                           get: Get,
                                           { mergeMode, permitDeletions, useIdentifiersInRelations}: ImportOptions) {
 
@@ -101,7 +100,7 @@ export async function preprocessRelations(documents: Array<Document>,
         removeSelfReferencingIdentifiers(relations, document.resource.identifier); // TODO do in makeSureRelationStructuresExist; rename that one
         if (!permitDeletions) Relations.removeEmpty(relations);
         if (useIdentifiersInRelations) {
-            await rewriteIdentifiersInRelations(relations, find, identifierMap);
+            await rewriteIdentifiersInRelations(relations, existingDocuments, identifierMap);
         } else {
             await assertNoMissingRelationTargets(relations, get)
         }
@@ -109,15 +108,16 @@ export async function preprocessRelations(documents: Array<Document>,
 }
 
 
+// TODO it does not have to be asynchronous anymore
 async function rewriteIdentifiersInRelations(relations: Relations,
-                                             find: Find,
+                                             existingDocuments: Map<Document>,
                                              identifierMap: IdentifierMap) {
 
     return iterateRelationsInImport(relations, (relation: string) => async (identifier: Identifier, i: number) => {
         if (identifierMap[identifier]) {
             relations[relation][i] = identifierMap[identifier];
         } else {
-            const found = await find(identifier);
+            const found = existingDocuments[identifier];
             if (!found) throw [E.PREVALIDATION_MISSING_RELATION_TARGET, identifier];
             relations[relation][i] = found.resource.id;
         }

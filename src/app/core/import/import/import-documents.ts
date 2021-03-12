@@ -143,8 +143,6 @@ function preprocessDocuments(existingDocuments: Map<Document>,
                              options: ImportOptions,
                              documents: Array<Document>): Map<Document> {
 
-    const preprocess = helpers.preprocessDocument ?? identity;                                
-
     const mergeDocs = {};
 
     for (let document of documents) {
@@ -155,7 +153,7 @@ function preprocessDocuments(existingDocuments: Map<Document>,
             document._id = existingDocument._id;
             document.resource.id = existingDocument.resource.id;
 
-            mergeDocs[existingDocument.resource.id] = preprocess(existingDocument);
+            mergeDocs[existingDocument.resource.id] = helpers.preprocessDocument(existingDocument);
         } else if (existingDocument) {
             throw [E.RESOURCE_EXISTS, existingDocument.resource.identifier];
         }

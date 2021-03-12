@@ -53,10 +53,10 @@ export interface ImportContext {
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export function buildImportFunction(services: ImportServices,
-                                    context: ImportContext,
-                                    helpers: ImportHelpers,
-                                    options: ImportOptions = {}): any /* TODO review type */ {
+export function buildImportDocuments(services: ImportServices,
+                                     context: ImportContext,
+                                     helpers: ImportHelpers,
+                                     options: ImportOptions = {}) {
 
     // TODO assert that useIdentifiersInRelations is called with differentialImport
     assertLegalCombination(options);

@@ -10,7 +10,7 @@ import {CsvParser} from './parser/csv-parser';
 import {ProjectConfiguration} from '../configuration/project-configuration';
 import {Category} from '../configuration/model/category';
 import {makeInverseRelationsMap} from '../configuration/inverse-relations-map';
-import {buildImportFunction} from './import/import-documents';
+import {buildImportDocuments} from './import/import-documents';
 import {FieldConverter} from './field-converter';
 import {ProjectCategories} from '../configuration/project-categories';
 import {CatalogJsonlParser} from './parser/catalog-jsonl-parser';
@@ -132,7 +132,7 @@ export module Importer {
         let importFunction;
         switch (options.format) {
             case 'geojson-gazetteer':
-                importFunction = buildImportFunction(
+                importFunction = buildImportDocuments(
                     { datastore: services.datastore, validator },
                     { operationCategoryNames, inverseRelationsMap, settings: context.settings },
                     { generateId, preprocessDocument, postprocessDocument },
@@ -140,14 +140,14 @@ export module Importer {
                 break;
             case 'shapefile':
             case 'geojson':
-                importFunction = buildImportFunction(
+                importFunction = buildImportDocuments(
                     { datastore: services.datastore, validator },
                     { operationCategoryNames, inverseRelationsMap, settings: context.settings },
                     { generateId, preprocessDocument, postprocessDocument },
                     { mergeMode: true, permitDeletions: false });
                 break;
             default: // native | csv
-                importFunction = buildImportFunction(
+                importFunction = buildImportDocuments(
                     { datastore: services.datastore, validator },
                     { operationCategoryNames, inverseRelationsMap, settings: context.settings },
                     { generateId, preprocessDocument, postprocessDocument },

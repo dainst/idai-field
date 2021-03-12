@@ -1,5 +1,5 @@
 import {ImportErrors as E, ImportErrors} from '../../../../../src/app/core/import/import/import-errors';
-import {buildImportFunction} from '../../../../../src/app/core/import/import/import-documents';
+import {buildImportDocuments} from '../../../../../src/app/core/import/import/import-documents';
 import {Settings} from '../../../../../src/app/core/settings/settings';
 
 /**
@@ -53,7 +53,7 @@ describe('importDocuments', () => {
             else throw 'missing';
         });
 
-        importFunction = buildImportFunction(
+        importFunction = buildImportDocuments(
             { datastore, validator },
             { operationCategoryNames: operationCategoryNames, inverseRelationsMap: {}, settings: { username: 'user1'} as Settings },
             {
@@ -87,7 +87,7 @@ describe('importDocuments', () => {
             { resource: { identifier: '123', id: '1', relations: {} } }
         ));
 
-        const [_1, [importDocuments,_2]] = await (buildImportFunction(
+        const [_1, [importDocuments,_2]] = await (buildImportDocuments(
             { datastore, validator },
             { operationCategoryNames: operationCategoryNames, inverseRelationsMap: {}, settings: { username: 'user1'} as Settings },
             {
@@ -107,7 +107,7 @@ describe('importDocuments', () => {
 
     it('does not overwrite if exists', async done => {
 
-        const [_1, [importDocuments,_2]] = await (buildImportFunction(
+        const [_1, [importDocuments,_2]] = await (buildImportDocuments(
             { datastore, validator },
             {
                 operationCategoryNames: operationCategoryNames,
@@ -160,7 +160,7 @@ describe('importDocuments', () => {
 
     it('parent not found', async done => {
 
-        importFunction = buildImportFunction(
+        importFunction = buildImportDocuments(
             { datastore, validator },
             {
                 operationCategoryNames: operationCategoryNames,
@@ -188,7 +188,7 @@ describe('importDocuments', () => {
 
     it('parent not found, when using plain ids', async done => {
 
-        importFunction = buildImportFunction(
+        importFunction = buildImportDocuments(
             { datastore, validator },
             {
                 operationCategoryNames: operationCategoryNames,

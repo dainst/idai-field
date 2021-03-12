@@ -14,7 +14,7 @@ import {buildImportDocuments} from './import/import-documents';
 import {FieldConverter} from './field-converter';
 import {ProjectCategories} from '../configuration/project-categories';
 import {CatalogJsonlParser} from './parser/catalog-jsonl-parser';
-import {buildImportCatalogFunction} from './import/import-catalog';
+import {buildImportCatalog} from './import/import-catalog';
 import {Settings} from '../settings/settings';
 import {HttpClient} from '@angular/common/http';
 import {Reader} from './reader/reader';
@@ -119,7 +119,7 @@ export module Importer {
 
         if (options.format === 'catalog') { // TODO test manually
             const { errors, successfulImports } = 
-                await (buildImportCatalogFunction(services, context.settings))(documents);
+                await (buildImportCatalog(services, context.settings))(documents);
             return { errors: errors, warnings: [], successfulImports: successfulImports };
         }
 

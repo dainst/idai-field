@@ -43,8 +43,8 @@ export module ImportCatalogErrors {
 /**
  * @author Daniel de Oliveira
  */
-export function buildImportCatalogFunction(services: ImportCatalogServices,
-                                           context: ImportCatalogContext) {
+export function buildImportCatalog(services: ImportCatalogServices,
+                                   context: ImportCatalogContext) {
 
     return async function importCatalog(importDocuments: Array<Document>)
         : Promise<{ errors: string[][], successfulImports: number }> {

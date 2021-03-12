@@ -1,6 +1,6 @@
 import {createApp, createHelpers, setupSyncTestDb} from '../../subsystem-helper';
 import {
-    buildImportCatalogFunction,
+    buildImportCatalog,
     ImportCatalogErrors
 } from '../../../../../../src/app/core/import/import/import-catalog';
 import {
@@ -28,7 +28,7 @@ describe('subsystem/import/importCatalog', () => {
         spyOn(console, 'error');
         // spyOn(console, 'warn');
 
-        importCatalog = buildImportCatalogFunction(
+        importCatalog = buildImportCatalog(
             {
                 datastore: app.documentDatastore,
                 relationsManager: app.relationsManager,

@@ -81,7 +81,7 @@ export function buildImportFunction(services: ImportServices,
         complementInverseRelationsBetweenImportDocs(context, options, documents); // TODO now that we have that here, we could simplify later steps probably
         
         try {
-            const existingDocuments = await makeExistingDocumentsMap(find, options, documents); // TODO use everywhere
+            const existingDocuments = await makeExistingDocumentsMap(find, options, documents);
             const docs = filterOnDifferentialImport(existingDocuments, options, documents);
             preprocessFields(docs, options);
             await preprocessRelations(existingDocuments, docs, helpers, get, options);

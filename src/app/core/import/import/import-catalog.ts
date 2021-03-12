@@ -3,7 +3,6 @@ import {map as asyncMap} from 'tsfun/async';
 import {Document} from 'idai-components-2';
 import {DocumentDatastore} from '../../datastore/document-datastore';
 import {clone} from '../../util/object-util';
-import {ImportFunction} from './types';
 import {makeDocumentsLookup} from './utils';
 import {RelationsManager} from '../../model/relations-manager';
 import {ON_RESOURCE_ID} from '../../constants';
@@ -45,7 +44,7 @@ export module ImportCatalogErrors {
  * @author Daniel de Oliveira
  */
 export function buildImportCatalogFunction(services: ImportCatalogServices,
-                                           context: ImportCatalogContext): ImportFunction {
+                                           context: ImportCatalogContext) {
 
     return async function importCatalog(importDocuments: Array<Document>)
         : Promise<{ errors: string[][], successfulImports: number }> {

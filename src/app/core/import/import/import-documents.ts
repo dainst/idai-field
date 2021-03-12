@@ -72,7 +72,7 @@ export function buildImportFunction(services: ImportServices,
      *   The resource.category field may be empty.
      */
     return async function importDocuments(documents: Array<Document>)
-    : Promise< Either<Array<Array<string>>, Pair<Array<Document>, Array<Document>> >> {
+        : Promise< Either<Array<Array<string>>, Pair<Array<Document>, Array<Document>> >> {
 
         let processedDocuments: any = undefined;
         let targetDocuments;

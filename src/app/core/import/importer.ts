@@ -1,4 +1,4 @@
-import {isnt, Pair} from 'tsfun';
+import {isnt} from 'tsfun';
 import {Document} from 'idai-components-2';
 import {GeojsonParser} from './parser/geojson-parser';
 import {NativeJsonlParser} from './parser/native-jsonl-parser';

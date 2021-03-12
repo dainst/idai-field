@@ -6,7 +6,7 @@ import {ImportErrors as E} from './import-errors';
 import {RESOURCE_DOT_ID} from '../../constants';
 import {HierarchicalRelations, PARENT} from '../../model/relation-constants';
 import LIES_WITHIN = HierarchicalRelations.LIESWITHIN;
-import {ImportContext, ImportOptions} from './import-documents';
+import {ImportContext, ImportHelpers, ImportOptions} from './import-documents';
 import { makeLookup } from '../../util/transformers';
 
 // @author Thomas Kleinke
@@ -86,10 +86,11 @@ export function makeSureRelationStructuresExists(documents: Array<Document>) {
  */
 export async function preprocessRelations(existingDocuments: Map<Document>,
                                           documents: Array<Document>,
-                                          generateId: () => string,
+                                          helpers: ImportHelpers,
                                           get: Get,
                                           { mergeMode, permitDeletions, useIdentifiersInRelations}: ImportOptions) {
 
+    const generateId = helpers.generateId;
     const identifierMap: IdentifierMap = mergeMode ? {} : assignIds(documents, generateId);
 
     for (let document of documents) {

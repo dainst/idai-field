@@ -1,5 +1,4 @@
 import {identity, Map} from 'tsfun';
-import {filter as asyncFilter} from 'tsfun/async';
 import {Document} from 'idai-components-2';
 import {ImportValidator} from './process/import-validator';
 import {DocumentDatastore} from '../../datastore/document-datastore';
@@ -16,8 +15,6 @@ import {InverseRelationsMap} from '../../configuration/inverse-relations-map';
 import {processDocuments} from './process/process-documents';
 import {processRelations} from './process/process-relations';
 import {Settings} from '../../settings/settings';
-import { makeLookup } from '../../util/transformers';
-import { ImporterOptions } from '../importer';
 
 
 export interface ImportOptions {
@@ -64,6 +61,8 @@ export function buildImportFunction(services: ImportServices,
 
     // TODO assert that useIdentifiersInRelations is called with differentialImport
     assertLegalCombination(options);
+    if (options.mergeMode) options.useIdentifiersInRelations = true; // TODO temporary
+    
     const get  = (resourceId: string) => services.datastore.get(resourceId);
     const find = findByIdentifier(services.datastore);
 
@@ -80,28 +79,15 @@ export function buildImportFunction(services: ImportServices,
         const existingDocuments = await makeExistingDocumentsMap(find, options, documents); // TODO use everywhere
         const docs = filterOnDifferentialImport(existingDocuments, options, documents);
 
-        try {
-            preprocessFields(docs, options);
-            await preprocessRelations(existingDocuments, docs,
-                helpers.generateId, get, options);
-        } catch (errWithParams) {
-            return { errors: [errWithParams], successfulImports: 0 };
-        }
-        
         let processedDocuments: any = undefined;
-        try {
-            const mergeDocs = await preprocessDocuments(
-                find,
-                helpers.preprocessDocument ?? identity,
-                options.mergeMode === true, // TODO eval within function
-                docs);
-            processedDocuments = processDocuments(docs, mergeDocs, services.validator);
-        } catch (msgWithParams) {
-            return { errors: [msgWithParams], successfulImports: 0};
-        }
-
         let targetDocuments;
+
         try {
+            
+            preprocessFields(docs, options);
+            await preprocessRelations(existingDocuments, docs, helpers, get, options);
+            const mergeDocs = preprocessDocuments(existingDocuments, helpers, options, docs);
+            processedDocuments = processDocuments(docs, mergeDocs, services.validator);
             targetDocuments = await processRelations(
                 processedDocuments,
                 services.validator,
@@ -110,6 +96,7 @@ export function buildImportFunction(services: ImportServices,
                 context.inverseRelationsMap,
                 options
             );
+
         } catch (msgWithParams) {
             if (msgWithParams[0] === E.TARGET_CATEGORY_RANGE_MISMATCH
                 && ([LIES_WITHIN, RECORDED_IN].includes(msgWithParams[2]))) msgWithParams[2] = PARENT;
@@ -161,16 +148,18 @@ function filterOnDifferentialImport(existingDocuments: Map<Document>,
 
 
 
-async function preprocessDocuments(find: Find,
-                                   preprocess: Function,
-                                   mergeMode: boolean,
-                                   documents: Array<Document>): Promise<{ [resourceId: string]: Document }> {
+function preprocessDocuments(existingDocuments: Map<Document>,
+                             helpers: ImportHelpers,
+                             options: ImportOptions,
+                             documents: Array<Document>): Map<Document> {
+
+    const preprocess = helpers.preprocessDocument ?? identity;                                
 
     const mergeDocs = {};
 
     for (let document of documents) {
-        const existingDocument = await find(document.resource.identifier);
-        if (mergeMode) {
+        const existingDocument = existingDocuments[document.resource.identifier];
+        if (options.mergeMode === true) {
             if (!existingDocument) throw [E.UPDATE_TARGET_NOT_FOUND, document.resource.identifier];
 
             document._id = existingDocument._id;

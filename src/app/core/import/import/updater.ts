@@ -9,19 +9,17 @@ import {separate} from 'tsfun';
  */
 export module Updater {
 
-    export async function go(documents: Array<Document>, targetDocuments: Array<Document>|undefined,
-                             datastore: DocumentDatastore, username: string,
-                             useUpdateMethod: boolean /* else new docs, then use create */) {
+    export async function go(documents: Array<Document>, 
+                             targetDocuments: Array<Document>|undefined,
+                             datastore: DocumentDatastore, username: string) {
 
         const hasConflict = (_: any): boolean => (_['_conflicts']);
 
         const [documentsWithConflicts, documentsWithoutConflicts] = separate(hasConflict, documents);
-        await performBulk(documentsWithoutConflicts, datastore, username, useUpdateMethod);
-        await performRegular(documentsWithConflicts, datastore, username, useUpdateMethod);
-
+        await performBulk(documentsWithoutConflicts, datastore, username, false);
+        await performRegular(documentsWithConflicts, datastore, username, false);
 
         if (targetDocuments) {
-
             const [targetDocumentsWithConflicts, targetDocumentsWithoutConflicts] = separate(hasConflict, targetDocuments);
             await performBulk(targetDocumentsWithoutConflicts, datastore, username, true);
             await performRegular(targetDocumentsWithConflicts, datastore, username, true);
@@ -39,8 +37,10 @@ export module Updater {
     }
 
 
-    async function performBulk(documents: Array<NewDocument>, datastore: DocumentDatastore,
-                                           username: string, updateMode: boolean): Promise<void> {
+    async function performBulk(documents: Array<NewDocument>, 
+                               datastore: DocumentDatastore,
+                               username: string, 
+                               updateMode: boolean): Promise<void> {
 
         if (documents.length === 0) return;
 

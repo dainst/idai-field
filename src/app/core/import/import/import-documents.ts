@@ -73,7 +73,7 @@ export function buildImportDocuments(services: ImportServices,
      */
     return async function importDocuments(documents: Array<Document>)
                                         // TODO make Tuple instead pair to differentiate between documents to be created and documents to be updated
-        : Promise< Either<Array<Array<string>>, Pair<Array<Document>, Array<Document>> >> {
+        : Promise< Either<Array<Array<string>>, [Array<Document>, Array<Document>, Array<Document>] >> {
 
         let processedDocuments: any = undefined;
         let targetDocuments;
@@ -98,7 +98,9 @@ export function buildImportDocuments(services: ImportServices,
                 options
             );
             documentsForImport = processedDocuments.map(helpers.postprocessDocument ?? identity);
-            return [undefined, [documentsForImport, targetDocuments]];
+            return options.mergeMode === true 
+                ? [undefined, [[], documentsForImport, targetDocuments]]
+                : [undefined, [documentsForImport, [], targetDocuments]];
 
         } catch (msgWithParams) {
             // if (msgWithParams[0] === E.TARGET_CATEGORY_RANGE_MISMATCH

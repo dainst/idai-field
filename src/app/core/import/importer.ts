@@ -162,21 +162,18 @@ export module Importer {
 
         const updateErrors = [];
         let errors: Array<Array<string>>|undefined = undefined;
-        let results: Pair<Array<Document>, Array<Document>>|undefined = undefined;
+        let results: [Array<Document>, Array<Document>, Array<Document>]|undefined = undefined;
         [errors, results] = await importFunction(documents);
         if (errors === undefined) {
-            const [documentsForImport, targetDocuments] = results;
+            const [createDocuments, updateDocuments, targetDocuments] = results;
             try {
                 await Updater.go(
-                    documentsForImport,
-                    targetDocuments,
+                    createDocuments,
+                    updateDocuments.concat(targetDocuments),
                     services.datastore,
-                    context.settings.username,
+                    context.settings.username);
 
-                    options.format === 'geojson' // TODO remove
-                        || options.mergeMode === true);
-
-                return { errors: [], warnings: [], successfulImports: documentsForImport.length };
+                return { errors: [], warnings: [], successfulImports: createDocuments.concat(updateDocuments).length };
             } catch (errWithParams) { // TODO review error handling
                 // updateErrors.push(errWithParams)
                 console.log("errors", JSON.stringify(errWithParams))

@@ -87,7 +87,7 @@ describe('importDocuments', () => {
             { resource: { identifier: '123', id: '1', relations: {} } }
         ));
 
-        const [_1, [importDocuments,_2]] = await (buildImportDocuments(
+        const [_, [createDocuments, updateDocuments, targetDocuments]] = await (buildImportDocuments(
             { datastore, validator },
             { operationCategoryNames: operationCategoryNames, inverseRelationsMap: {}, settings: { username: 'user1'} as Settings },
             {
@@ -98,16 +98,16 @@ describe('importDocuments', () => {
             { mergeMode: true }))(
             [{ resource: { id: '1', relations: {} } } as any]);
 
-        expect(importDocuments.length).toBe(1);
-        // expect(datastore.bulkCreate).not.toHaveBeenCalled(); TODO review
-        // expect(datastore.bulkUpdate).toHaveBeenCalled();
+        expect(createDocuments.length).toBe(0);
+        expect(updateDocuments.length).toBe(1);
+        expect(targetDocuments.length).toBe(0);
         done();
     });
 
 
     it('does not overwrite if exists', async done => {
 
-        const [_1, [importDocuments,_2]] = await (buildImportDocuments(
+        const [_1, [createDocuments, updateDocuments, targetDocuments]] = await (buildImportDocuments(
             { datastore, validator },
             {
                 operationCategoryNames: operationCategoryNames,
@@ -123,9 +123,9 @@ describe('importDocuments', () => {
 
         ([{ resource: { category: 'Find', identifier: 'one', relations: { isChildOf: '0' } } } as any]);
 
-        expect(importDocuments.length).toBe(1);
-        // expect(datastore.bulkCreate).toHaveBeenCalled(); TODO review
-        // expect(datastore.bulkUpdate).not.toHaveBeenCalled();
+        expect(createDocuments.length).toBe(1);
+        expect(updateDocuments.length).toBe(0);
+        expect(targetDocuments.length).toBe(0);
         done();
     });
 

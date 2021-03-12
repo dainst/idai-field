@@ -74,7 +74,7 @@ export function buildImportDocuments(services: ImportServices,
 
     /**
      * @param documents documents with the field resource.identifier set to a non empty string.
-     *   If resource.id is set, it will be taken as document.id on creation.
+     *   If resource.id is set, it will be taken as document.id on creation.     // TODO review, since this is done by Updater in Importer now
      *   The relations map is assumed to be at least existent, but can be empty. // TODO REVIEW, than we can omit creation of it and only assert that it is there
      *   The resource.category field may be empty.
      */

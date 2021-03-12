@@ -22,6 +22,10 @@ import { makeLookup } from '../../util/transformers';
  * Relations set to null are left untouched.
  *
  * @throws FATAL - should not be handled. // TODO use assert?
+ * 
+ * 
+ * 
+ * // TODO nulls here should not exist, because we are not in merge mode
  */
 export function complementInverseRelationsBetweenImportDocs(context: ImportContext,
                                                             options: ImportOptions,
@@ -31,22 +35,27 @@ export function complementInverseRelationsBetweenImportDocs(context: ImportConte
     const identifierLookup = makeLookup('resource.identifier')(documents); // TODO allow to pass path as array
 
     for (const document of documents) {
+        const identifier = document.resource.identifier;
         const relations = document.resource.relations;
+
         for (const relation of Object.keys(relations)) {
             if (relations[relation] === null) continue;
 
-            const inverseRelation = context.inverseRelationsMap[relation];
-            if (inverseRelation) for (const targetIdentifier of relations[relation]) {
+            const inverse = context.inverseRelationsMap[relation];
+            if (inverse) for (const targetIdentifier of relations[relation]) {
 
                 const targetRelations = identifierLookup[targetIdentifier].resource.relations;
                 if (!targetRelations) throw 'FATAL - relations should exist'; // TODO test for empty map, not only not undefined
 
-                if (targetRelations[inverseRelation] === null) { // TODO maybe another test
+                if (targetRelations[inverse] === null) { 
                     // do nothing
-                } else if (targetRelations[inverseRelation] === undefined) {
-                    targetRelations[inverseRelation] = [document.resource.identifier];
+                } else if (targetRelations[inverse] === undefined) {
+                    targetRelations[inverse] = [identifier];
                 } else {
-                    targetRelations[inverseRelation].push(document.resource.identifier); // TODO test
+                    if (!targetRelations[inverse].includes(identifier)) {
+
+                        targetRelations[inverse].push(identifier); 
+                    }
                 }
             }
         }

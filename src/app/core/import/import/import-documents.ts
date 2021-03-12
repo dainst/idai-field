@@ -3,7 +3,6 @@ import {Document} from 'idai-components-2';
 import {ImportValidator} from './process/import-validator';
 import {DocumentDatastore} from '../../datastore/document-datastore';
 import {Find} from './types';
-import {assertLegalCombination, findByIdentifier} from './utils';
 import {complementInverseRelationsBetweenImportDocs, makeSureRelationStructuresExists, preprocessRelations} from './preprocess-relations';
 import {preprocessFields} from './preprocess-fields';
 import {ImportErrors as E} from './import-errors';
@@ -159,4 +158,40 @@ function preprocessDocuments(existingDocuments: Map<Document>,
     }
 
     return mergeDocs;
+}
+
+
+function assertLegalCombination(options: ImportOptions) {
+
+    if (options.mergeMode) {
+
+        // TODO assertions instead errors?
+        
+        if (!options.useIdentifiersInRelations) {
+            throw 'FATAL - illegal arguments - '
+            + 'useIdentifiersInRelations must also be set when merge mode selected';
+        }
+
+        if (options.operationId) {
+            throw 'FATAL - illegal argument combination '
+            + '- mergeMode and operationId must not be both truthy';
+        }
+        if (options.differentialImport) {
+            throw 'FATAL - illegal argument combination '
+            + '- mergeMode and differentialImport must not be both true';
+        }
+    }
+}
+
+
+function findByIdentifier(datastore: DocumentDatastore) {
+
+    return async (identifier: string): Promise<Document|undefined> => {
+
+        const result = await datastore.find({ constraints: { 'identifier:match': identifier }});
+
+        return result.totalCount === 1
+            ? result.documents[0]
+            : undefined;
+    }
 }

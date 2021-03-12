@@ -6,39 +6,14 @@ import {ImportErrors as E} from './import-errors';
 import {HierarchicalRelations} from '../../model/relation-constants';
 import RECORDED_IN = HierarchicalRelations.RECORDEDIN;
 import {Id, Identifier} from './types';
-import {DocumentDatastore} from '../../datastore/document-datastore';
 import {makeLookup} from '../../util/transformers';
 import {Lookup} from '../../util/utils';
-import {ImportOptions} from './import-documents';
 
 
 export const unionOfDocuments = (docs: Array<Array<Document>>) => union(on('resource.id'), docs);
 
 
 export const makeDocumentsLookup: (ds: Array<Document>) => Lookup<Document> = makeLookup('resource.id');
-
-
-export function assertLegalCombination(options: ImportOptions) {
-
-    if (options.mergeMode) {
-
-        // TODO assertions instead errors?
-        
-        if (!options.useIdentifiersInRelations) {
-            throw 'FATAL - illegal arguments - '
-            + 'useIdentifiersInRelations must also be set when merge mode selected';
-        }
-
-        if (options.operationId) {
-            throw 'FATAL - illegal argument combination '
-            + '- mergeMode and operationId must not be both truthy';
-        }
-        if (options.differentialImport) {
-            throw 'FATAL - illegal argument combination '
-            + '- mergeMode and differentialImport must not be both true';
-        }
-    }
-}
 
 
 export function assertInSameOperationWith(document: Document) { return (targetDocument: Document) => {
@@ -63,18 +38,5 @@ export async function iterateRelationsInImport(
     for (let relation of Object.keys(relations)) {
         if (relations[relation] === null) continue;
         await asyncForEach(asyncIterationFunction(relation))(relations[relation]);
-    }
-}
-
-
-export function findByIdentifier(datastore: DocumentDatastore) {
-
-    return async (identifier: string): Promise<Document|undefined> => {
-
-        const result = await datastore.find({ constraints: { 'identifier:match': identifier }});
-
-        return result.totalCount === 1
-            ? result.documents[0]
-            : undefined;
     }
 }

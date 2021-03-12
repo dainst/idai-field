@@ -103,6 +103,7 @@ export function buildImportFunction(services: ImportServices,
             return { errors: [msgWithParams], successfulImports: 0 };
         }
 
+        // TODO pull that block up
         const updateErrors = [];
         try {
             await Updater.go(

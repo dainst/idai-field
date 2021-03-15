@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {empty, filter, flow, forEach, isNot, map, take, copy} from 'tsfun';
+import {remove, isEmpty, flow, forEach, map, take, copy} from 'tsfun';
 import {Document} from 'idai-components-2';
 import {Importer, ImporterFormat, ImporterOptions, ImporterReport} from '../../core/import/importer';
 import {Category} from '../../core/configuration/model/category';
@@ -317,7 +317,7 @@ export class ImportComponent implements OnInit {
 
         flow(messages,
             map(MessagesConversion.convertMessage),
-            filter(isNot(empty)),
+            remove(isEmpty),
             take(1),
             forEach((msgWithParams: any) => this.messages.add(msgWithParams)));
     }

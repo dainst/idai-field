@@ -574,7 +574,8 @@ export class AppConfigurator {
     public go(configDirPath: string, customConfigurationName: string|undefined,
               languages: string[]): ProjectConfiguration {
 
-        if (customConfigurationName === 'Meninx' || customConfigurationName === 'Pergamon') {
+        if (customConfigurationName === 'Meninx' || customConfigurationName === 'Pergamon'
+                || customConfigurationName === 'Bourgou') {
 
             (this.builtinCategories as any)['Other'] = {
                 color: '#CC6600',
@@ -584,7 +585,7 @@ export class AppConfigurator {
         }
 
 
-        if (customConfigurationName === 'Meninx') {
+        if (customConfigurationName === 'Meninx' || customConfigurationName === 'Bourgou') {
 
             (this.builtinCategories as any)['Wall_surface'] = {
                 color: '#ffff99',

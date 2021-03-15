@@ -49,19 +49,19 @@ export interface ImportContext {
 
 
 export type ErrWithParams = Array<string>;
-
 export type CreateDocuments = Array<Document>;
 export type UpdateDocuments = Array<Document>;
 export type TargetDocuments = Array<Document>;
 
 export type Result = Either<ErrWithParams, [CreateDocuments, UpdateDocuments, TargetDocuments]>;
+export type Documents2Result = (_: Array<Document>) => Promise<Result>;
 
 
 /**
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  * 
- * @returns Documents => Result, 
+ * @returns Documents2Result, which expects
  *   documents with the field resource.identifier set to a non empty string.
  *   If resource.id is set, it will be taken as document.id, otherwise a new id gets generated.
  *   The relations map is assumed to be at least existent, but can be empty. // TODO REVIEW, than we can omit creation of it and only assert that it is there
@@ -70,7 +70,7 @@ export type Result = Either<ErrWithParams, [CreateDocuments, UpdateDocuments, Ta
 export function buildImportDocuments(services: ImportServices,
                                      context: ImportContext,
                                      helpers: ImportHelpers,
-                                     options: ImportOptions = {}): (_: Array<Document>) => Promise<Result> {
+                                     options: ImportOptions = {}): Documents2Result {
 
     if (options.mergeMode) {
         if (!options.useIdentifiersInRelations) {
@@ -90,9 +90,8 @@ export function buildImportDocuments(services: ImportServices,
     const get  = (resourceId: string) => services.datastore.get(resourceId);
     const find = findByIdentifier(services.datastore);
 
-    return (documents: Array<Document>) =>
-        importDocuments(services, context, helpers, options,
-            find, get, documents);
+    return (documents: Array<Document>) => importDocuments(
+            services, context, helpers, options,find, get, documents);
 }
 
 

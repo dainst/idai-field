@@ -72,9 +72,6 @@
                 "findMaterial": {
                     "label": "Material"
                 },
-                "material": {
-                    "label": "Material"
-                },
                 "materialColor": {
                     "label": "Color of the material"
                 },

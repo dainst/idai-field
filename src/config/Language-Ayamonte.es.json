@@ -80,9 +80,6 @@
                 "findMaterial": {
                     "label": "Material"
                 },
-                "material": {
-                    "label": "Material"
-                },
                 "materialColor": {
                     "label": "Material - color"
                 },

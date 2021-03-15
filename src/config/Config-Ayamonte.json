@@ -314,7 +314,9 @@
   },
   "Grave:default": {
     "hidden": [],
-    "commons": [],
+    "commons": [
+      "dimensionHeight"
+    ],
     "fields": {
       "specificType": {
         "inputType": "input"
@@ -365,7 +367,9 @@
     "fields": {}
   },
   "Photo:default": {
-    "hidden": [],
+    "commons": [
+      "date"
+    ],
     "fields": {
       "imageObject": {
         "inputType": "input"
@@ -430,6 +434,12 @@
   },
   "Sample:default": {
     "hidden": [],
+    "commons": [
+      "campaign",
+      "dimensionHeight",
+      "dimensionLength",
+      "dimensionWidth"
+    ],
     "fields": {
       "sampleTakenBy": {
         "inputType": "input"

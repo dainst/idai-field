@@ -187,7 +187,7 @@ function preprocessDocuments(existingDocuments: Map<Document>,
 }
 
 
-function findByIdentifier(datastore: DocumentDatastore) {
+function findByIdentifier(datastore: DocumentDatastore): Find {
 
     return async (identifier: string): Promise<Document|undefined> => {
 

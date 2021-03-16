@@ -89,7 +89,7 @@ export module Importer {
 
     export function permitDeletionsOptionAvailable(options: ImporterOptions) {
 
-        return ['native', 'csv'].includes(options.format) && options.mergeMode;
+        return ['native', 'csv'].includes(options.format) && options.mergeMode === true;
     }
 
 

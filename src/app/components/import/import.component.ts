@@ -77,13 +77,25 @@ export class ImportComponent implements OnInit {
 
     public isJavaInstallationMissing = () => this.importState.format === 'shapefile' && !this.javaInstalled;
 
-    public shouldDisplayMergeOption = () => !this.importState.differentialImport && Importer.mergeOptionAvailable(this.importState);
+    public shouldDisplayMergeImportOption = () => Importer.mergeOptionAvailable(this.importState);
 
-    public shouldDisplayDifferentialImportOption = () => !this.importState.mergeMode && Importer.differentialImportOptionAvailable(this.importState);
+    public isRegularImportOptionSelected = () => this.importState.mergeMode !== true && this.importState.differentialImport !== true;
+
+    public isMergeImportOptionSelected = () => this.importState.mergeMode === true;
+
+    public isDifferentialImportOptionSelected = () => this.importState.differentialImport === true;
+
+    public shouldDisplayDifferentialImportOption = () => Importer.differentialImportOptionAvailable(this.importState);
 
     public shouldDisplayPermitDeletionsOption = () => Importer.permitDeletionsOptionAvailable(this.importState);
 
     public shouldDisplayImportIntoOperation = () => Importer.importIntoOperationAvailable(this.importState);
+
+    public selectRegularImportOption = () => this.updateImportOption('regular');
+
+    public selectMergeImportOption = () => this.updateImportOption('merge');
+    
+    public selectDifferentialImportOption = () => this.updateImportOption('differential');
 
     public getSeparator = () => this.importState.separator;
 
@@ -166,6 +178,15 @@ export class ImportComponent implements OnInit {
     }
 
 
+    public updateImportOption(option: 'regular'|'merge'|'differential') {
+
+        this.importState.mergeMode = option === 'merge';
+        this.importState.differentialImport = option === 'differential';
+        this.importState.permitDeletions = false;
+        this.updateCategories();
+    }
+
+
     public updateFormat() {
 
         this.importState.format = ImportComponent.getImportFormat(
@@ -173,25 +194,6 @@ export class ImportComponent implements OnInit {
                 ? this.importState.file.name
                 : this.importState.url
         );
-    }
-
-
-    public updateMergeMode() {
-
-        if (this.importState.mergeMode === true) {
-            this.importState.differentialImport = false;
-        }
-        this.updateCategories();
-    }
-
-
-    public updateDifferentialImport() {
-
-        if (this.importState.differentialImport === true) {
-            this.importState.mergeMode = false;
-            this.importState.permitDeletions = false;
-        }
-        this.updateCategories();
     }
 
 

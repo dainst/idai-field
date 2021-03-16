@@ -58,18 +58,20 @@
                         Bildformate können in der <a href="#" routerLink="../images">Bilderverwaltung</a> importiert werden.
                     </div>
 
-                    <div *ngIf="isDefaultFormat()" class="form-group form-check">
+                    <div *ngIf="isDefaultFormat()">
                         <div  
                             (click)="selectDifferentialImportOption()"
                             id="radiobutton-existing-documents-option-differential-import-option">
+                            <div class="form-group form-check-inline">
                             <input type="radio" 
                                 class="form-check-input"
                                 name="radiobutton-existing-documents-options" 
                                 [checked]="isDifferentialImportOptionSelected()" />
                             <label for="radiobutton-existing-documents-regular-import-option" 
                                 class="form-check-label"
-                                i18n="@@import.regularOption.label"
-                                >Neue Ressourcen importieren</label>
+                                i18n="@@import.regularOption.label">
+                                Neue Ressourcen importieren</label>
+                            </div>
                             <div class="import-info"
                                 i18n="@@import.defaultOption.info">
                                 Bereits existierende Ressourcen,
@@ -80,14 +82,17 @@
                         <div 
                             (click)="selectMergeImportOption()"
                             id="radiobutton-existing-documents-merge-import-option">
-                            <input type="radio" 
-                                class="form-check-input"
-                                name="radiobutton-existing-documents-options" 
-                                [checked]="isMergeImportOptionSelected()" />
-                            <label for="radiobutton-existing-documents-merge-import-option" 
-                                class="form-check-label"
-                                i18n="@@import.mergeOption.label"
-                                >Vorhandene Ressource ergänzen</label>
+                            <div class="form-group form-check-inline">
+                                <input type="radio" 
+                                    class="form-check-input"
+                                    name="radiobutton-existing-documents-options" 
+                                    [checked]="isMergeImportOptionSelected()" />
+                                <label for="radiobutton-existing-documents-merge-import-option" 
+                                    class="form-check-label"
+                                    i18n="@@import.mergeOption.label">
+                                    Vorhandene Ressource ergänzen
+                                </label>
+                            </div>
                             <div *ngIf="importState.format === 'native'" class="import-info"
                                 i18n="@@import.mergeOption.native.info">
                                 Ist diese Option aktiviert, so werden bereits existierende Datensätze mit

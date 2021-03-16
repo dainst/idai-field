@@ -75,21 +75,9 @@ export interface ImporterServices {
  */
 export module Importer {
 
-    export function mergeOptionAvailable(options: ImporterOptions) {
+    export function isDefault(format: ImporterFormat) {
 
-        return options.format === 'native' || options.format === 'csv';
-    }
-
-
-    export function differentialImportOptionAvailable(options: ImporterOptions) {
-
-        return options.format === 'native' || options.format === 'csv';
-    }
-
-
-    export function permitDeletionsOptionAvailable(options: ImporterOptions) {
-
-        return ['native', 'csv'].includes(options.format) && options.mergeMode === true;
+        return format === 'native' || format === 'csv';
     }
 
 

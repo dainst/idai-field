@@ -58,14 +58,14 @@
                         Bildformate können in der <a href="#" routerLink="../images">Bilderverwaltung</a> importiert werden.
                     </div>
 
-                    <div *ngIf="importState.format" class="form-group form-check">
+                    <div *ngIf="isDefaultFormat()" class="form-group form-check">
                         <div  
-                            (click)="selectRegularImportOption()"
-                            id="radiobutton-existing-documents-option-regular-import-option">
+                            (click)="selectDifferentialImportOption()"
+                            id="radiobutton-existing-documents-option-differential-import-option">
                             <input type="radio" 
                                 class="form-check-input"
                                 name="radiobutton-existing-documents-options" 
-                                [checked]="isRegularImportOptionSelected()" />
+                                [checked]="isDifferentialImportOptionSelected()" />
                             <label for="radiobutton-existing-documents-regular-import-option" 
                                 class="form-check-label"
                                 i18n="@@import.regularOption.label"
@@ -82,7 +82,7 @@
                                 class="form-check-label"
                                 i18n="@@import.mergeOption.label"
                                 >Vorhandene Ressource ergänzen</label>
-                            <div *ngIf="shouldDisplayMergeImportOption() && importState.format === 'native'" class="import-info"
+                            <div *ngIf="importState.format === 'native'" class="import-info"
                                 i18n="@@import.mergeOption.native.info">
                                 Ist diese Option aktiviert, so werden bereits existierende Datensätze mit
                                 den Daten aus der Importdatei ergänzt. Felder des Importdatensatzes überschreiben
@@ -92,7 +92,7 @@
                                 bestehen. Die Kategorie kann nicht verändert werden. Die Zuordnung von Datensätzen
                                 geschieht per Bezeichner (Feld <em>identifier</em>).
                             </div>
-                            <div *ngIf="shouldDisplayMergeImportOption() && importState.format === 'csv'" class="import-info"
+                            <div *ngIf="importState.format === 'csv'" class="import-info"
                                 i18n="@@import.mergeOption.csv.info">
                                 Ist diese Option aktiviert, so werden bereits existierende Datensätze mit
                                 den Daten aus der Importdatei ergänzt. Felder des Importdatensatzes überschreiben
@@ -125,17 +125,6 @@
                                 Nicht in der CSV-Tabelle als Spalte aufgeführte Felder und Relationen bleiben
                                 unverändert.
                             </div>
-                        </div>
-                        <div *ngIf="shouldDisplayDifferentialImportOption()"
-                            (click)="selectDifferentialImportOption()"
-                            id="radiobutton-existing-documents-differential-import-option">
-                            <input type="radio" 
-                                class="form-check-input"
-                                name="radiobutton-existing-documents-options" [checked]="isDifferentialImportOptionSelected()" />
-                            <label for="radiobutton-existing-documents-differential-import-option" 
-                                class="form-check-label"
-                                i18n="@@import.differentialImportOption"
-                                >Vorhandene Ressourcen ignorieren</label>
                         </div>
                     </div>
 

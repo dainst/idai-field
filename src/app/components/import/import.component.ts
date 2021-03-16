@@ -77,25 +77,19 @@ export class ImportComponent implements OnInit {
 
     public isJavaInstallationMissing = () => this.importState.format === 'shapefile' && !this.javaInstalled;
 
-    public shouldDisplayMergeImportOption = () => Importer.mergeOptionAvailable(this.importState);
-
-    public isRegularImportOptionSelected = () => this.importState.mergeMode !== true && this.importState.differentialImport !== true;
-
-    public isMergeImportOptionSelected = () => this.importState.mergeMode === true;
+    public isDefaultFormat = () => Importer.isDefault(this.importState.format);
 
     public isDifferentialImportOptionSelected = () => this.importState.differentialImport === true;
+    
+    public isMergeImportOptionSelected = () => this.importState.mergeMode === true;
 
-    public shouldDisplayDifferentialImportOption = () => Importer.differentialImportOptionAvailable(this.importState);
-
-    public shouldDisplayPermitDeletionsOption = () => Importer.permitDeletionsOptionAvailable(this.importState);
+    public shouldDisplayPermitDeletionsOption = () => this.isDefaultFormat() && this.importState.mergeMode === true;
 
     public shouldDisplayImportIntoOperation = () => Importer.importIntoOperationAvailable(this.importState);
 
-    public selectRegularImportOption = () => this.updateImportOption('regular');
-
-    public selectMergeImportOption = () => this.updateImportOption('merge');
+    public selectMergeImportOption = () => this.updateImportOptionForDefaultImport('merge');
     
-    public selectDifferentialImportOption = () => this.updateImportOption('differential');
+    public selectDifferentialImportOption = () => this.updateImportOptionForDefaultImport('differential');
 
     public getSeparator = () => this.importState.separator;
 
@@ -178,7 +172,7 @@ export class ImportComponent implements OnInit {
     }
 
 
-    public updateImportOption(option: 'regular'|'merge'|'differential') {
+    public updateImportOptionForDefaultImport(option: 'merge'|'differential') {
 
         this.importState.mergeMode = option === 'merge';
         this.importState.differentialImport = option === 'differential';
@@ -194,6 +188,9 @@ export class ImportComponent implements OnInit {
                 ? this.importState.file.name
                 : this.importState.url
         );
+        if (['csv', 'native'].includes(this.importState.format)) {
+            this.updateImportOptionForDefaultImport('differential');
+        }
     }
 
 
@@ -261,9 +258,7 @@ export class ImportComponent implements OnInit {
     private async doImport() {
 
         const options = copy(this.importState as any) as unknown as ImporterOptions;
-        if (options.mergeMode === true) {
-            options.selectedOperationId = "";
-        }
+        if (options.mergeMode === true) options.selectedOperationId = '';
 
         const fileContents = await Importer.doRead(
             this.http,

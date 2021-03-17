@@ -4,7 +4,6 @@ import {Document, NewDocument, Resource} from 'idai-components-2';
 import {Validator} from '../../../model/validator';
 import {Validations} from '../../../model/validations';
 import {ImportErrors as E} from '../import-errors';
-import {ValidationErrors} from '../../../model/validation-errors';
 import {DocumentDatastore} from '../../../datastore/document-datastore';
 import {ResourceId} from '../../../constants';
 import {HierarchicalRelations} from '../../../model/relation-constants';

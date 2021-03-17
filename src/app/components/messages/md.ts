@@ -1,5 +1,3 @@
-import {Injectable} from "@angular/core";
-
 /**
  * This map contains the message bodies
  * messages identified by their key.

@@ -12,7 +12,6 @@ import {FieldDefinition} from '../configuration/model/field-definition';
 import {Category} from '../configuration/model/category';
 import {trimFields} from '../util/trim-fields';
 import {DoceditErrors} from './docedit-errors';
-import {SettingsProvider} from '../settings/settings-provider';
 
 
 /**

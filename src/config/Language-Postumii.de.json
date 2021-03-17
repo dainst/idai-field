@@ -1,0 +1,450 @@
+{
+  "categories": {
+    "Place": {
+      "fields": {
+        "placeCondition": {
+          "label": "Erhaltungszustand"
+        }
+      }
+    },
+    "Architecture": {
+      "label": "Architektur",
+      "fields": {
+        "architectureClassification": {
+          "label": "Ansprache"
+        },
+        "architectureMaterial": {
+          "label": "Baumaterial"
+        },
+        "architectureMasonry": {
+          "label": "Mauer: Mauerwerk"
+        },
+        "masonryJoint": {
+          "label": "Mauer: Verbindung"
+        },
+        "architectureLayerType": {
+          "label": "Mauer: Lagenart"
+        },
+        "architectureMasonryCoating": {
+          "label": "Mauer: Verkleidung"
+        },
+        "floorClassification": {
+          "label": "Fußboden"
+        },
+        "construction": {
+          "label": "Mauer: Konstruktion"
+        },
+        "descriptionOfBuildingTechnique": {
+          "label": "Beschreibung"
+        }
+      }
+    },
+    "Bedrock": {
+      "label": "Natürlich anstehend"
+    },
+    "Feature": {
+      "fields": {
+        "period": {
+          "label": "Epoche"
+        },
+        "featureBibliography": {
+          "label": "Bibliographie"
+        }
+      }
+    },
+    "Layer": {
+      "fields": {
+        "layerClassification": {
+          "label": "Erdbefund: Ansprache"
+        },
+        "layerColorLightness": {
+          "label": "Erdbefund: Farbhelligkeit"
+        },
+        "layerColor": {
+          "label": "Erdbefund: Farbe"
+        },
+        "soilType": {
+          "label": "Erdbefund: Zusammensetzung"
+        },
+        "findComposition": {
+          "label": "Erdbefund: Zusammensetzung Fundmaterial"
+        },
+        "distinguishingCriteria": {
+          "label": "Erdbefund: Unterscheidungskriterium"
+        },
+        "layerContentPotteryOrigin": {
+          "label": "Inhalt: Keramik Provenienz"
+        },
+        "layerContentPotteryShape": {
+          "label": "Inhalt: Keramik Form"
+        },
+        "layerContentPotteryDecoration": {
+          "label": "Inhalt: Keramik Dekoration"
+        },
+        "layerContentTerracotta": {
+          "label": "Inhalt: Terracotta"
+        },
+        "layerContentInorganic": {
+          "label": "Inhalt: Anorganisches Material"
+        },
+        "layerContentOrganic": {
+          "label": "Inhalt: Organisches Material"
+        },
+        "layerContentBuildingMaterial": {
+          "label": "Inhalt: Baumaterial"
+        },
+        "layerForm": {
+          "label": "Erdbefund: Form"
+        },
+        "layerBorders": {
+          "label": "Erdbefund: Grenzen"
+        },
+        "consistency": {
+          "label": "Erdbefund: Konsistenz"
+        },
+        "workflowOptions": {
+          "label": "Erdbefund: Arbeitsschritte"
+        },
+        "workflowSampleDescription": {
+          "label": "Erdbefund: Beschreibung der Probe / Analyse"
+        }
+      }
+    },
+    "Pottery": {
+      "fields": {
+        "vesselForm": {
+          "label": "Form"
+        },
+        "miniatureVesselForm": {
+          "label": "Form Miniatur Keramik"
+        },
+        "potteryProvenance": {
+          "label": "Provenienz"
+        },
+        "vesselDecorationOutside": {
+          "label": "Dekoration Außen"
+        },
+        "vesselDecorationInside": {
+          "label": "Dekoration Innen"
+        },
+        "clayHardness": {
+          "label": "Tonhärte"
+        },
+        "clayDensity": {
+          "label": "Tondichte"
+        },
+        "potteryWeight": {
+          "label": "Gewicht (g)"
+        },
+        "amountSherds": {
+          "label": "Anzahl Fragmente"
+        },
+        "potteryDiameterExternal": {
+          "label": "Durchmesser Rand außen"
+        },
+        "potteryDiameterInternal": {
+          "label": "Durchmesser Rand innen"
+        },
+        "potteryThickness": {
+          "label": "Wandstärke"
+        },
+        "pottyDiameterHandle": {
+          "label": "Durchmesser Henkel"
+        },
+        "potteryDiameterFoot": {
+          "label": "Durchmesser Fuß"
+        },
+        "potteryDiameterBase": {
+          "label": "Durchmesser Boden"
+        },
+        "potteryDiameterLid": {
+          "label": "Durchmesser Deckel"
+        },
+        "potteryHeight": {
+          "label": "Höhe Objekt"
+        },
+        "potteryWidth": {
+          "label": "Breite Objekt"
+        },
+        "coatTypeOutside": {
+          "label": "Überzug Außen"
+        },
+        "coatTypeInside": {
+          "label": "Überzug Innen"
+        },
+        "sample": {
+          "label": "Analyse"
+        },
+        "sampleDescription": {
+          "label": "Beschreibung der Analyse"
+        },
+        "clayColorOutsideMunsell": {
+          "label": "Außen: Tonfarbe (Munsell)"
+        },
+        "clayColorInsideMunsell": {
+          "label": "Innen: Tonfarbe (Munsell)"
+        },
+        "clayColorBreakMunsell": {
+          "label": "Bruch: Tonfarbe (Munsell)"
+        },
+        "coatQuality": {
+          "label": "Qualität des Überzugs"
+        },
+        "potteryInscription": {
+          "label": "Inschrift: Text"
+        },
+        "potteryInscriptionDescription": {
+          "label": "Inschrift: Beschreibung"
+        },
+        "clayDescription": {
+          "label": "Beschreibung: Ton"
+        }
+      }
+    },
+    "StratigraphicSequence": {
+      "label": "Stratigraphische Sequenz"
+    },
+    "Find": {
+      "fields": {
+        "findOtherIdentificationNumber": {
+          "label": "Andere Identifikationsnummer"
+        },
+        "restorationDescription": {
+          "label": "Restaurierungsmaßnahmen"
+        },
+        "alignments": {
+          "label": "Anpassungen"
+        },
+        "conditionComment": {
+          "label": "Erhaltungszustand"
+        }
+      }
+    },
+    "Brick": {
+      "fields": {
+        "brickProvenance": {
+          "label": "Provenienz"
+        },
+        "brickForm": {
+          "label": "Ziegel: Form"
+        },
+        "brickFormDescription": {
+          "label": "Ziegel: Beschreibung der Form"
+        },
+        "manufacturing": {
+          "label": "Ziegel: Herstellungstechnik"
+        },
+        "clayColorInside": {
+          "label": "Innen: Tonfarbe und -intensität"
+        },
+        "featureText": {
+          "label": "Beschreibung Stempel"
+        },
+        "brickWeight": {
+          "label": "Gewicht (g)"
+        },
+        "amountSherds": {
+          "label": "Anzahl Fragmente"
+        },
+        "descriptionDecorationTechnique": {
+          "label": "Beschreibung der Dekoration"
+        },
+        "coatColor": {
+          "label": "Überzug: Farbe und Intensität"
+        },
+        "roofingSystem": {
+          "label": "Dachdeckungssystem"
+        }
+      }
+    },
+    "Metal": {
+      "fields": {
+        "metalProvenance": {
+          "label": "Provenienz"
+        },
+        "metalWeaponsArmor": {
+          "label": "Bestimmung: Waffen und Rüstungsstücke"
+        },
+        "metalSchmuckTrachtbestandteile": {
+          "label": "Bestimmung: Schmuck und Trachtbestandteile"
+        },
+        "metalVesselParts": {
+          "label": "Bestimmung: Gefäßteile"
+        },
+        "metalToolsEquipment": {
+          "label": "Bestimmung: Werkzeug und Gerät"
+        },
+        "metalMiscellaneous": {
+          "label": "Bestimmung: Sonstiges"
+        },
+        "metalWeight": {
+          "label": "Gewicht (g)"
+        },
+        "amountFragments": {
+          "label": "Anzahl Fragmente"
+        }
+      }
+    },
+    "Grave": {
+      "fields": {
+        "graveTypeDescription": {
+          "label": "Beschreibung Grabtyp"
+        }
+      }
+    },
+    "ProcessUnit": {
+      "label": "Profil",
+      "fields": {
+        "operationClassification": {
+          "label": "Klassifikation Profil"
+        },
+        "operationOrientation": {
+          "label": "Orientierung"
+        },
+        "operationHorizontalDescription": {
+          "label": "Horizontalverlauf"
+        },
+        "operationVerticalDescription": {
+          "label": "Vertikalverlauf"
+        },
+        "operationIdentifiability": {
+          "label": "Erkennbarkeit"
+        }
+      }
+    },
+    "Terracotta": {
+      "fields": {
+        "clayColorBreakMunsell": {
+          "label": "Bruch: Tonfarbe (Munsell)"
+        },
+        "clayStructure": {
+          "label": "Härte"
+        },
+        "clayColor": {
+          "label": "Tonfarbe und -intensität"
+        },
+        "clayColorMunsell": {
+          "label": "Tonfarbe (Munsell)"
+        },
+        "coatColor": {
+          "label": "Überzug Farbe"
+        },
+        "coatColorMunsell": {
+          "label": "Überzug Farbe (Munsell)"
+        },
+        "terracottaInscription": {
+          "label": "Inschrift: Text"
+        },
+        "terracottaDecorationDescription": {
+          "label": "Dekoration: Beschreibung"
+        },
+        "architecturalDecorationType": {
+          "label": "Bestimmung: Architekturdekor"
+        },
+        "architecturalScupltureType": {
+          "label": "Bestimmung: Figürlich"
+        },
+        "toolType": {
+          "label": "Bestimmung: Gerät"
+        },
+        "terracottaProvenance": {
+          "label": "Provenienz"
+        }
+      }
+    },
+    "Stone": {
+      "fields": {
+        "colorMunsell": {
+          "label": "Fabrbe (Munsell)"
+        },
+        "objectType": {
+          "label": "Bestimmung: Steinobjekt"
+        },
+        "architectureElement": {
+          "label": "Bestimmung speziell: Bauteil"
+        },
+        "originStone": {
+          "label": "Herkunft Material"
+        },
+        "inscription": {
+          "label": "Inschrift Text"
+        },
+        "inscriptionDescription": {
+          "label": "Inschrift Beschreibung"
+        },
+        "decoration": {
+          "label": "Dekoration"
+        }
+      }
+    },
+    "Coin": {
+      "fields": {
+        "coinWeight": {
+          "label": "Gewicht (g)"
+        },
+        "legend": {
+          "label": "Legende"
+        }
+      }
+    },
+    "FindCollection": {
+      "label": "Fundzusammensetzung",
+      "fields": {
+        "potteryFormsOverview": {
+          "label": "Keramikformen Gesamtübersicht"
+        },
+        "potteryFineWareByProvenance": {
+          "label": "1. Feinkeramik nach Provenienz"
+        },
+        "potteryFineWareByProvenanceQuantityWeightDetails": {
+          "label": "1. Menge, Gewicht, Details"
+        },
+        "potteryAmphoraeByProvenance": {
+          "label": "2. Amphoren nach Provenienz"
+        },
+        "potteryAmphoraeByProvenanceQuantityWeightDetails": {
+          "label": "2. Menge, Gewicht, Details"
+        },
+        "potteryCoarseWareByFunction": {
+          "label": "3. Gebrauchskeramik nach Funktion "
+        },
+        "potteryCoarseWareByFunctionQuantityWeightDetails": {
+          "label": "3. Menge, Gewicht, Details"
+        },
+        "miniaturePotteryCollection": {
+          "label": "4. Miniaturkeramik"
+        },
+        "terracottaCollection": {
+          "label": "5. Terrakotta"
+        },
+        "terracottaCollectionQuantityWeightDetails": {
+          "label": "5. Menge, Gewicht, Details"
+        },
+        "buildingMaterialCollection": {
+          "label": "6. Baumaterialien"
+        },
+        "buildingMaterialCollectionQuantityWeightDetails": {
+          "label": "6. Menge, Gewicht, Details"
+        },
+        "stoneCollection": {
+          "label": "7. Steine und Steinobjekte"
+        },
+        "stoneCollectionQuantityWeightDetails": {
+          "label": "7. Menge, Gewicht, Details"
+        },
+        "metalAndGlasCollection": {
+          "label": "8. Metalle und Glas"
+        },
+        "metalAndGlasCollectionQuantityWeightDetails": {
+          "label": "8. Menge, Gewicht, Details"
+        },
+        "organicMaterialCollection": {
+          "label": "9. Organisches"
+        },
+        "organicMaterialCollectionQuantityWeightDetails": {
+          "label": "9. Menge, Gewicht, Details"
+        }
+      }
+    }
+  }
+}

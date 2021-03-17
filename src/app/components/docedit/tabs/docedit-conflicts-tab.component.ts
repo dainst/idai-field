@@ -1,5 +1,6 @@
 import {ChangeDetectorRef, Component, Input, OnChanges} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
+import { isArray } from 'tsfun';
 import {Relations, Resource, Document} from 'idai-components-2';
 import {DocumentReadDatastore} from '../../../core/datastore/document-read-datastore';
 import {M} from '../../messages/m';
@@ -155,10 +156,7 @@ export class DoceditConflictsTabComponent implements OnChanges {
     public getFieldContent(field: any, revision: Document): string {
 
         const fieldContent: any = revision.resource[field.name];
-
-        return fieldContent instanceof Array
-            ? DoceditConflictsTabComponent.getContentStringFor(fieldContent)
-            : fieldContent;
+        return DoceditConflictsTabComponent.getContentStringFor(fieldContent)
     }
 
 
@@ -281,16 +279,14 @@ export class DoceditConflictsTabComponent implements OnChanges {
     }
 
 
-    private static getContentStringFor(fieldContent: any[]): string {
+    private static getContentStringFor(fieldContent: any): string {
+
+        if (!isArray(fieldContent)) return JSON.stringify(fieldContent);
 
         let contentString: string = '';
         for (let element of fieldContent) {
-            if (element.label) {
-                contentString += '<div>' + element.label + '</div>';
-            } else {
-                if (contentString.length > 0) contentString += ', ';
-                contentString += element;
-            }
+            if (contentString.length > 0) contentString += ', ';
+            contentString += JSON.stringify(element);
         }
         return contentString;
     }

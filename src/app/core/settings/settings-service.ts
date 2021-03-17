@@ -18,27 +18,28 @@ import {SettingsProvider} from './settings-provider';
 
 const {remote, ipcRenderer} = typeof window !== 'undefined' ? window.require('electron') : require('electron');
 
-
+// Ordered by Name
 export const PROJECT_MAPPING = {
-    'meninx-project': { prefix: 'Meninx', label: 'Meninx' },
-    'pergamongrabung': { prefix: 'Pergamon', label: 'Pergamon' },
-    'uruk': { prefix: 'Uruk', label: 'Uruk' },
+    'abbircella': { prefix: 'AbbirCella', label: 'AbbirCella' },
+    'al-ula': { prefix: 'AlUla', label: 'Al Ula' },
+    'ayamonte': { prefix: 'Ayamonte', label: 'Ayamonte' },
     'bogazkoy-hattusa': { prefix: 'Boha', label: 'Boğazköy-Ḫattuša' },
+    'bourgou': { prefix: 'Bourgou', label: 'Henchir el Bourgu' },
     'campidoglio': { prefix: 'Campidoglio', label: 'Campidoglio' },
     'castiglione': { prefix: 'Castiglione', label: 'Castiglione' },
-    'kephissostal': { prefix: 'Kephissostal', label: 'Kephissostal' },
-    'monte-turcisi': { prefix: 'MonTur', label: 'Monte Turcisi' },
-    'al-ula': { prefix: 'AlUla', label: 'Al Ula' },
-    'kalapodi': { prefix: 'Kalapodi', label: 'Kalapodi' },
     'gadara_bm': { prefix: 'Gadara', label: 'Gadara' },
-    'sudan-heritage': { prefix: 'SudanHeritage', label: 'Sudan Heritage' },
-    'ayamonte': { prefix: 'Ayamonte', label: 'Ayamonte' },
-    'abbircella': { prefix: 'AbbirCella', label: 'AbbirCella' },
+    'kalapodi': { prefix: 'Kalapodi', label: 'Kalapodi' },
     'karthagocircus': { prefix: 'KarthagoCircus', label: 'Karthago Circus' },
-    'selinunt': { prefix: 'Selinunt', label: 'Selinunt' },
+    'kephissostal': { prefix: 'Kephissostal', label: 'Kephissostal' },
+    'meninx-project': { prefix: 'Meninx', label: 'Meninx' },
+    'milet': { prefix: 'Milet', label: 'Milet' },
+    'monte-turcisi': { prefix: 'MonTur', label: 'Monte Turcisi' },
     'olympia_sht': { prefix: 'Olympia', label: 'Olympia' },
-    'bourgou': { prefix: 'Bourgou', label: 'Henchir el Bourgu' },
-    'milet': { prefix: 'Milet', label: 'Milet' }
+    'pergamongrabung': { prefix: 'Pergamon', label: 'Pergamon' },
+    'postumii': { prefix: 'Postumii', label: 'Postumii' },
+    'sudan-heritage': { prefix: 'SudanHeritage', label: 'Sudan Heritage' },
+    'selinunt': { prefix: 'Selinunt', label: 'Selinunt' },
+    'uruk': { prefix: 'Uruk', label: 'Uruk' }
 };
 
 

@@ -10,6 +10,10 @@ image:
 
 platform: Any CPU
 
+only_commits:
+  files:
+    - desktop/
+
 cache:
   - desktop\node_modules
   - '%APPDATA%\npm-cache'

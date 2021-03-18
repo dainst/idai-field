@@ -1,14 +1,13 @@
-import { Dating, Dimension, OptionalRange } from 'idai-components-2';
+import { Dating, Dimension, Literature, OptionalRange } from 'idai-components-2';
 import { Map, conds, flow, identity, isArray, otherwise } from 'tsfun';
 
 export type InnerHTML = string;
 
 
-export interface Translations {
-
-    'before': string;
-    'after': string;
-}
+export type Translations 
+    = Literature.Translations
+    |Dating.Translations
+    |Dimension.Translations;
 
 
 /**
@@ -38,15 +37,17 @@ function formatArray(fieldContent: Array<string>): InnerHTML {
 
 const convertArray = (translations: Translations) => (fieldContent: Array<any>): Array<string> => {
 
-    const getTranslation = (s: string) => translations[s];
+    const getTranslations = (s: string) => translations[s]; // TODO remove
 
     return fieldContent.map(conds(
             [Dating.isDating,
-             element => Dating.generateLabel(element, getTranslation)],
+             element => Dating.generateLabel(element, translations as Dating.Translations)],
             [Dimension.isDimension,
-             element => Dimension.generateLabel(element, identity, getTranslation)],
+             element => Dimension.generateLabel(element, identity, translations as Dimension.Translations)],
             [OptionalRange.isOptionalRange,
-             element => OptionalRange.generateLabel(element, getTranslation, getTranslation /* TODO */)],
+             element => OptionalRange.generateLabel(element, getTranslations, identity /* TODO */)],
+            [Literature.isLiterature,
+             element => Literature.generateLabel(element, translations as Literature.Translations /* TODO zenonId? */)],
             [otherwise,
              JSON.stringify]));
 }

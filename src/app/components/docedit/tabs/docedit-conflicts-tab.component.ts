@@ -42,7 +42,17 @@ export class DoceditConflictsTabComponent implements OnChanges {
     public showLoadingIcon = () => this.isLoading() && this.loading.getLoadingTimeInMilliseconds() > 250;
 
     public getFieldContent = (field: any, revision: Document) => 
-        formatContent(revision.resource[field.name], { 'before': 'Vor', 'after': 'Nach' });
+        formatContent(revision.resource[field.name], { // TODO review, translate entries?
+            'asMeasuredBy': 'asMeasuredBy', 
+            'before': 'before',
+            'after': 'after',
+            'bce': 'bce',
+            'ce': 'ce',
+            'bp': 'bp',
+            'zenonId': 'zenonId',
+            'page': 'page',
+            'figure': 'figure'
+        });
 
 
     async ngOnChanges() {

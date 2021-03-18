@@ -58,66 +58,87 @@
                         Bildformate können in der <a href="#" routerLink="../images">Bilderverwaltung</a> importiert werden.
                     </div>
 
-                    <div *ngIf="shouldDisplayMergeOption()" class="form-group form-check-inline">
-                        <input type="checkbox" id="merging-checkbox" class="form-check-input"
-                               [(ngModel)]="importState.mergeMode" (change)="updateMergeMode()">
-                        <label for="merging-checkbox" class="form-check-label" i18n="@@import.mergeOption.label">
-                            Vorhandene Ressourcen ergänzen
-                        </label>
-                    </div>
-
-                    <div *ngIf="shouldDisplayMergeOption() && importState.format === 'native'" class="import-info"
-                         i18n="@@import.mergeOption.native.info">
-                        Ist diese Option aktiviert, so werden bereits existierende Datensätze mit
-                        den Daten aus der Importdatei ergänzt. Felder des Importdatensatzes überschreiben
-                        dabei gleichnamige Felder im existierenden Datensatz. Geometrien des Importdatensatzes
-                        überschreiben bestehende im existierenden Datensatz. Im existierenden Datensatz
-                        vorhandene Felder, die nicht im Importdatensatz vorhanden sind, bleiben unverändert
-                        bestehen. Die Kategorie kann nicht verändert werden. Die Zuordnung von Datensätzen
-                        geschieht per Bezeichner (Feld <em>identifier</em>).
-                    </div>
-
-                    <div *ngIf="shouldDisplayMergeOption() && importState.format === 'csv'" class="import-info"
-                         i18n="@@import.mergeOption.csv.info">
-                        Ist diese Option aktiviert, so werden bereits existierende Datensätze mit
-                        den Daten aus der Importdatei ergänzt. Felder des Importdatensatzes überschreiben
-                        dabei gleichnamige Felder im existierenden Datensatz. Im existierenden Datensatz
-                        vorhandene Felder, die nicht im Importdatensatz vorhanden sind, bleiben unverändert
-                        bestehen. Die Kategorie kann nicht verändert werden. Die Zuordnung von Datensätzen
-                        geschieht per Bezeichner (Spalte <em>identifier</em>).
-                    </div>
-
-                    <div *ngIf="shouldDisplayPermitDeletionsOption()" class="form-group form-check-inline">
-                        <input type="checkbox" id="merging-relations-checkbox" class="form-check-input"
-                               [(ngModel)]="importState.permitDeletions">
-                        <label for="merging-relations-checkbox" class="form-check-label" i18n="@@import.mergeOption.permitDeletions">
-                            Löschen erlauben
-                        </label>
-                    </div>
-
-                    <div *ngIf="shouldDisplayDifferentialImportOption()" class="form-group form-check-inline">
-                        <input type="checkbox" id="differential-import-checkbox" class="form-check-input"
-                               [(ngModel)]="importState.differentialImport" (change)="updateDifferentialImport()">
-                        <label for="differential-import-checkbox" class="form-check-label" i18n="@@import.differentialImportOption">
-                            Nur neue Ressourcen importieren
-                        </label>
-                    </div>
-
-                    <div *ngIf="shouldDisplayPermitDeletionsOption() && importState.format === 'native'"
-                         class="import-info" i18n="@@import.mergeOption.deletionsInfo.jsonl">
-                        Ist diese Option aktiviert, so können sowohl Felder als auch Relationen nicht nur
-                        verändert, sondern auch entfernt werden. Gelöscht werden alle Felder und Relationen,
-                        denen in der Importdatei der Wert <i>null</i> zugewiesen ist.
-                        Nicht aufgeführte Felder und Relationen bleiben unverändert.
-                    </div>
-
-                    <div *ngIf="shouldDisplayPermitDeletionsOption() && importState.format === 'csv'"
-                         class="import-info" i18n="@@import.mergeOption.deletionsInfo.csv">
-                        Ist diese Option aktiviert, so können sowohl Felder als auch Relationen nicht nur
-                        verändert, sondern auch entfernt werden. Gelöscht werden alle Felder und Relationen,
-                        bei denen das Feld in der Importdatei leer ist.
-                        Nicht in der CSV-Tabelle als Spalte aufgeführte Felder und Relationen bleiben
-                        unverändert.
+                    <div *ngIf="isDefaultFormat()">
+                        <div  
+                            (click)="selectDifferentialImportOption()"
+                            id="radiobutton-existing-documents-option-differential-import-option">
+                            <div class="form-group form-check-inline">
+                            <input type="radio" 
+                                class="form-check-input"
+                                name="radiobutton-existing-documents-options" 
+                                [checked]="isDifferentialImportOptionSelected()" />
+                            <label for="radiobutton-existing-documents-regular-import-option" 
+                                class="form-check-label"
+                                i18n="@@import.regularOption.label">
+                                Neue Ressourcen importieren</label>
+                            </div>
+                            <div class="import-info"
+                                i18n="@@import.defaultOption.info">
+                                Bereits existierende Ressourcen,
+                                d.h. wenn die angegebenen Bezeichner (Feld <em>identifier</em>)
+                                bereits vergeben sind, werden ignoriert.
+                            </div>
+                        </div>
+                        <div 
+                            (click)="selectMergeImportOption()"
+                            id="radiobutton-existing-documents-merge-import-option">
+                            <div class="form-group form-check-inline">
+                                <input type="radio" 
+                                    class="form-check-input"
+                                    name="radiobutton-existing-documents-options" 
+                                    [checked]="isMergeImportOptionSelected()" />
+                                <label for="radiobutton-existing-documents-merge-import-option" 
+                                    class="form-check-label"
+                                    i18n="@@import.mergeOption.label">
+                                    Vorhandene Ressource ergänzen
+                                </label>
+                            </div>
+                            <div *ngIf="importState.format === 'native'" class="import-info"
+                                i18n="@@import.mergeOption.native.info">
+                                Ist diese Option aktiviert, so werden bereits existierende Datensätze mit
+                                den Daten aus der Importdatei ergänzt. Felder des Importdatensatzes überschreiben
+                                dabei gleichnamige Felder im existierenden Datensatz. Geometrien des Importdatensatzes
+                                überschreiben bestehende im existierenden Datensatz. Im existierenden Datensatz
+                                vorhandene Felder, die nicht im Importdatensatz vorhanden sind, bleiben unverändert
+                                bestehen. Die Kategorie kann nicht verändert werden. Die Zuordnung von Datensätzen
+                                geschieht per Bezeichner (Feld <em>identifier</em>). Der Import kann nur durchgeführt werden,
+                                wenn sämtliche Identifier zugeordnet werden können.
+                            </div>
+                            <div *ngIf="importState.format === 'csv'" class="import-info"
+                                i18n="@@import.mergeOption.csv.info">
+                                Ist diese Option aktiviert, so werden bereits existierende Datensätze mit
+                                den Daten aus der Importdatei ergänzt. Felder des Importdatensatzes überschreiben
+                                dabei gleichnamige Felder im existierenden Datensatz. Im existierenden Datensatz
+                                vorhandene Felder, die nicht im Importdatensatz vorhanden sind, bleiben unverändert
+                                bestehen. Die Kategorie kann nicht verändert werden. Die Zuordnung von Datensätzen
+                                geschieht per Bezeichner (Spalte <em>identifier</em>). Der Import kann nur durchgeführt werden,
+                                wenn sämtliche Identifier zugeordnet werden können.
+                            </div>
+                        </div>
+                        <div *ngIf="shouldDisplayPermitDeletionsOption()">
+                            <div class="form-group form-check-inline">
+                                <input type="checkbox" id="merging-relations-checkbox" class="form-check-input"
+                                        [(ngModel)]="importState.permitDeletions">
+                                <label for="merging-relations-checkbox" class="form-check-label" i18n="@@import.mergeOption.permitDeletions">
+                                    Löschen erlauben
+                                </label>
+                            </div>
+                            <div *ngIf="importState.format === 'native'"
+                                class="import-info" i18n="@@import.mergeOption.deletionsInfo.jsonl">
+                                Ist diese Option aktiviert, so können sowohl Felder als auch Relationen nicht nur
+                                verändert, sondern auch entfernt werden. Gelöscht werden alle Felder und Relationen,
+                                denen in der Importdatei der Wert <i>null</i> zugewiesen ist.
+                                Nicht aufgeführte Felder und Relationen bleiben unverändert.
+                            </div>
+                            <div *ngIf="importState.format === 'csv'"
+                                class="import-info" i18n="@@import.mergeOption.deletionsInfo.csv">
+                                Ist diese Option aktiviert, so können sowohl Felder als auch Relationen nicht nur
+                                verändert, sondern auch entfernt werden. Gelöscht werden alle Felder und Relationen,
+                                bei denen das Feld in der Importdatei leer ist.
+                                Nicht in der CSV-Tabelle als Spalte aufgeführte Felder und Relationen bleiben
+                                unverändert.
+                            </div>
+                        </div>
                     </div>
 
                     <div class="form-group" *ngIf="importState.format === 'csv' && importState.file && !importState.typeFromFileName">

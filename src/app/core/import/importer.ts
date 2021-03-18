@@ -66,8 +66,6 @@ export interface ImporterServices {
 
 
 /**
- * Maintains contraints on how imports are validly composed
- *
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  * @author Sebastian Cuy
@@ -75,21 +73,9 @@ export interface ImporterServices {
  */
 export module Importer {
 
-    export function mergeOptionAvailable(options: ImporterOptions) {
+    export function isDefault(format: ImporterFormat) {
 
-        return options.format === 'native' || options.format === 'csv';
-    }
-
-
-    export function differentialImportOptionAvailable(options: ImporterOptions) {
-
-        return options.format === 'native' || options.format === 'csv';
-    }
-
-
-    export function permitDeletionsOptionAvailable(options: ImporterOptions) {
-
-        return ['native', 'csv'].includes(options.format) && options.mergeMode;
+        return format === 'native' || format === 'csv';
     }
 
 
@@ -100,13 +86,6 @@ export module Importer {
 
 
     /**
-     * The importer uses the reader and parser, to get documents, which
-     * are updated in the datastore if everything is ok.
-     *
-     * Returns a promise which resolves to an importReport object with detailed information about the import,
-     * containing the number of resources imported successfully as well as information on errors that occurred,
-     * if any.
-     *
      * @returns ImporterReport
      *   importReport.errors: Any error of module ImportErrors or ValidationErrors
      *   importReport.warnings

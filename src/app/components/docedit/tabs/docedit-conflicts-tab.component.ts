@@ -6,6 +6,7 @@ import {M} from '../../messages/m';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
 import {Loading} from '../../widgets/loading';
 import {Messages} from '../../messages/messages';
+import { formatContent } from './format-content';
 
 const moment = require('moment');
 
@@ -39,6 +40,9 @@ export class DoceditConflictsTabComponent implements OnChanges {
     public isLoading = () => this.loading.isLoading('docedit-conflicts-tab');
 
     public showLoadingIcon = () => this.isLoading() && this.loading.getLoadingTimeInMilliseconds() > 250;
+
+    public getFieldContent = (field: any, revision: Document) => 
+        formatContent(revision.resource[field.name], { 'before': 'Vor', 'after': 'Nach' });
 
 
     async ngOnChanges() {
@@ -149,16 +153,6 @@ export class DoceditConflictsTabComponent implements OnChanges {
         return Document.getLastModified(revision).user
             + ' - '
             + moment(Document.getLastModified(revision).date).format('DD. MMMM YYYY HH:mm:ss [Uhr]');
-    }
-
-
-    public getFieldContent(field: any, revision: Document): string {
-
-        const fieldContent: any = revision.resource[field.name];
-
-        return fieldContent instanceof Array
-            ? DoceditConflictsTabComponent.getContentStringFor(fieldContent)
-            : fieldContent;
     }
 
 
@@ -278,20 +272,5 @@ export class DoceditConflictsTabComponent implements OnChanges {
             const targets: Array<Document> = await this.datastore.getMultiple(resource.relations[fieldName]);
             targets.forEach(target => this.relationTargets[target.resource.id] = target);
         }
-    }
-
-
-    private static getContentStringFor(fieldContent: any[]): string {
-
-        let contentString: string = '';
-        for (let element of fieldContent) {
-            if (element.label) {
-                contentString += '<div>' + element.label + '</div>';
-            } else {
-                if (contentString.length > 0) contentString += ', ';
-                contentString += element;
-            }
-        }
-        return contentString;
     }
 }

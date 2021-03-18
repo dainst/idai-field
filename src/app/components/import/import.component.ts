@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {empty, filter, flow, forEach, isNot, map, take, copy} from 'tsfun';
+import {remove, isEmpty, flow, forEach, map, take, copy} from 'tsfun';
 import {Document} from 'idai-components-2';
 import {Importer, ImporterFormat, ImporterOptions, ImporterReport} from '../../core/import/importer';
 import {Category} from '../../core/configuration/model/category';
@@ -77,13 +77,19 @@ export class ImportComponent implements OnInit {
 
     public isJavaInstallationMissing = () => this.importState.format === 'shapefile' && !this.javaInstalled;
 
-    public shouldDisplayMergeOption = () => !this.importState.differentialImport && Importer.mergeOptionAvailable(this.importState);
+    public isDefaultFormat = () => Importer.isDefault(this.importState.format);
 
-    public shouldDisplayDifferentialImportOption = () => !this.importState.mergeMode && Importer.differentialImportOptionAvailable(this.importState);
+    public isDifferentialImportOptionSelected = () => this.importState.differentialImport === true;
+    
+    public isMergeImportOptionSelected = () => this.importState.mergeMode === true;
 
-    public shouldDisplayPermitDeletionsOption = () => Importer.permitDeletionsOptionAvailable(this.importState);
+    public shouldDisplayPermitDeletionsOption = () => this.isDefaultFormat() && this.importState.mergeMode === true;
 
     public shouldDisplayImportIntoOperation = () => Importer.importIntoOperationAvailable(this.importState);
+
+    public selectMergeImportOption = () => this.updateImportOptionForDefaultImport('merge');
+    
+    public selectDifferentialImportOption = () => this.updateImportOptionForDefaultImport('differential');
 
     public getSeparator = () => this.importState.separator;
 
@@ -166,6 +172,15 @@ export class ImportComponent implements OnInit {
     }
 
 
+    public updateImportOptionForDefaultImport(option: 'merge'|'differential') {
+
+        this.importState.mergeMode = option === 'merge';
+        this.importState.differentialImport = option === 'differential';
+        this.importState.permitDeletions = false;
+        this.updateCategories();
+    }
+
+
     public updateFormat() {
 
         this.importState.format = ImportComponent.getImportFormat(
@@ -173,25 +188,9 @@ export class ImportComponent implements OnInit {
                 ? this.importState.file.name
                 : this.importState.url
         );
-    }
-
-
-    public updateMergeMode() {
-
-        if (this.importState.mergeMode === true) {
-            this.importState.differentialImport = false;
+        if (['csv', 'native'].includes(this.importState.format)) {
+            this.updateImportOptionForDefaultImport('differential');
         }
-        this.updateCategories();
-    }
-
-
-    public updateDifferentialImport() {
-
-        if (this.importState.differentialImport === true) {
-            this.importState.mergeMode = false;
-            this.importState.permitDeletions = false;
-        }
-        this.updateCategories();
     }
 
 
@@ -259,9 +258,7 @@ export class ImportComponent implements OnInit {
     private async doImport() {
 
         const options = copy(this.importState as any) as unknown as ImporterOptions;
-        if (options.mergeMode === true) {
-            options.selectedOperationId = "";
-        }
+        if (options.mergeMode === true) options.selectedOperationId = '';
 
         const fileContents = await Importer.doRead(
             this.http,
@@ -317,7 +314,7 @@ export class ImportComponent implements OnInit {
 
         flow(messages,
             map(MessagesConversion.convertMessage),
-            filter(isNot(empty)),
+            remove(isEmpty),
             take(1),
             forEach((msgWithParams: any) => this.messages.add(msgWithParams)));
     }

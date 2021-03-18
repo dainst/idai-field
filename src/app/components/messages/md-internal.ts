@@ -1,4 +1,3 @@
-import {Injectable} from '@angular/core';
 import {Message} from './message'
 import {MD} from './md'
 

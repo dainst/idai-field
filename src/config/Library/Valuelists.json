@@ -41592,6 +41592,4397 @@
       }
     }
   },
+  "Place-siteClassification-Postumii": {
+    "creationDate": "15-03-2021",
+    "createdBy": "CSGIS",
+    "description": {
+      "de": "Ortsklassifikation"
+    },
+    "values": {
+      "Siedlung": {
+        "labels": {
+          "it": "Insediamento",
+          "de": "Siedlung"
+        }
+      },
+      "Baukomplex ": {
+        "labels": {
+          "it": "Complesso edilizio",
+          "de": "Baukomplex"
+        }
+      },
+      "Einzelnes Bauwerk": {
+        "labels": {
+          "it": "Edificio",
+          "de": "Einzelnes Bauwerk"
+        }
+      },
+      "Bestattungsplatz": {
+        "labels": {
+          "it": "Necropoli",
+          "de": "Bestattungsplatz"
+        }
+      },
+      "Produktionsplatz": {
+        "labels": {
+          "it": "Sito di produzione",
+          "de": "Produktionsplatz"
+        }
+      },
+      "Kultstätte": {
+        "labels": {
+          "it": "Area sacra",
+          "de": "Kultstätte"
+        }
+      },
+      "Landwirtschaftliche Nutzfläche": {
+        "labels": {
+          "it": "Terreno coltivabile",
+          "de": "Landwirtschaftliche Nutzfläche"
+        }
+      },
+      "Naturraum": {
+        "labels": {
+          "it": "Spazio naturale",
+          "de": "Naturraum"
+        }
+      }
+    }
+  },
+  "Layer-layerClassification-Postumii": {
+    "creationDate": "15-03-2021",
+    "createdBy": "CSGIS",
+    "description": {
+      "de": "Ansprache des Erdbefunds"
+    },
+    "values": {
+      "Ackerkrume": {
+        "labels": {
+          "it": "Strato arabile",
+          "de": "Ackerkrume"
+        }
+      },
+      "Planierschicht": {
+        "labels":{
+          "it": "Strato di Livellamento",
+          "de": "Planierschicht"
+        }
+      },
+      "Auffüllung": {
+        "labels": {
+          "it": "Riempimento",
+          "de": "Auffüllung"
+        }
+      },
+      "Ablagerung": {
+        "labels": {
+          "it": "Accumulo",
+          "de": "Ablagerung"
+        }
+      },
+      "Alluvialboden": {
+        "labels": {
+          "it": "Alluvialboden",
+          "de": "Alluvialboden"
+        }
+      },
+      "Nutzungshorizont": {
+        "labels": {
+          "it": "Piano funzionale",
+          "de": "Nutzungshorizont"
+        }
+      },
+      "Deponierung": {
+        "labels": {
+          "it": "Deposizione",
+          "de": "Deponierung"
+        }
+      },
+      "Laufhorizont": {
+        "labels": {
+          "it": "Piano di calpestio",
+          "de": "Laufhorizont"
+        }
+      },
+      "Versturz": {
+        "labels": {
+          "it": "Crollo",
+          "de": "Versturz"
+        }
+      },
+      "Brandschicht": {
+        "labels": {
+          "it": "Strato bruciato",
+          "de": "Brandschicht"
+        }
+      },
+      "Grube": {
+        "labels": {
+          "it": "Fossa",
+          "de": "Grube"
+        }
+      },
+      "Fundamentgraben": {
+        "labels": {
+          "it": "Fossa di fondazione",
+          "de": "Fundamentgraben"
+        }
+      },
+      "Zerstörungshorizont":{
+        "labels": {
+          "it": "Livello di distruzione",
+          "de": "Zerstörungshorizont"
+        }
+      },
+      "Raubgraben": {
+        "labels": {
+          "it": "Fossa di spoliazione",
+          "de": "Raubgraben"
+        }
+      },
+      "Pfostenloch": {
+        "labels": {
+          "it": "FoBuco di palo",
+          "de": "Pfostenloch"
+        }
+      },
+      "Geologisch gewachsener Boden": {
+        "labels": {
+          "it": "Terra vergine",
+          "de": "Geologisch gewachsener Boden"
+        }
+      }
+    }
+  },
+  "Layer-colors-Postumii-1": {
+    "creationDate": "15-03-2021",
+    "createdBy": "CSGIS",
+    "description": {
+      "de": "Postumii Farbset 1, Erdbefunde"
+    },
+    "values": {
+      "braun": {
+        "labels": {
+          "it": "Marrone",
+          "de": "braun"
+        }
+      },
+      "gelbbraun": {
+        "labels": {
+          "it": "Giallo-marrone",
+          "de": "gelbbraun"
+        }
+      },
+      "graubraun": {
+        "labels": {
+          "it": "Grigio-marrone",
+          "de": "graubraun"
+        }
+      },
+      "rotbraun": {
+        "labels": {
+          "it": "Marrone-rossastro",
+          "de": "rotbraun"
+        }
+      },
+      "schwarzbraun": {
+        "labels": {
+          "it": "Nero-marrone",
+          "de": "schwarzbraun"
+        }
+      },
+      "beige": {
+        "labels": {
+          "it": "Beige",
+          "de": "beige"
+        }
+      },
+      "ocker": {
+        "labels": {
+          "it": "Ocra",
+          "de": "ocker"
+        }
+      },
+      "gelb": {
+        "labels": {
+          "it": "Giallo",
+          "de": "gelb"
+        }
+      },
+      "grau": {
+        "labels": {
+          "it": "Griglio",
+          "de": "grau"
+        }
+      },
+      "blaugrau": {
+        "labels": {
+          "it": "Griglio-blu",
+          "de": "blaugrau"
+        }
+      },
+      "rot": {
+        "labels": {
+          "it": "Rosso",
+          "de": "rot"
+        }
+      },
+      "orange": {
+        "labels": {
+          "it": "Arrancione",
+          "de": "orange"
+        }
+      },
+      "rosa": {
+        "labels": {
+          "it": "Rosa",
+          "de": "rosa"
+        }
+      },
+      "violett": {
+        "labels": {
+          "it": "Viola",
+          "de": "violett"
+        }
+      },
+      "blau": {
+        "labels": {
+          "it": "Blu",
+          "de": "blau"
+        }
+      },
+      "grün": {
+        "labels": {
+          "it": "Verde",
+          "de": "grün"
+        }
+      },
+      "schwarz": {
+        "labels": {
+          "it": "Nero",
+          "de": "schwarz"
+        }
+      },
+      "weiß": {
+        "labels": {
+          "it": "Bianco",
+          "de": "weiß"
+        }
+      }
+    }
+  },
+  "colorsLightness-Postumii-1": {
+    "creationDate": "15-03-2021",
+    "createdBy": "CSGIS",
+    "description": {
+      "de": "Postumii Farbhelligkeit 1, Verschiedener Nutzen"
+    },
+    "values": {
+      "hell": {
+        "labels": {
+          "it": "Chiaro",
+          "de": "hell"
+        }
+      },
+      "mittel": {
+        "labels": {
+          "it": "Medio",
+          "de": "mittel"
+        }
+      },
+      "dunkel": {
+        "labels": {
+          "it": "Scuro",
+          "de": "dunkel"
+        }
+      }
+    }
+  },
+  "Layer-soilType-Postumii-1": {
+    "creationDate": "15-03-2021",
+    "createdBy": "CSGIS",
+    "description": {
+      "de": "Zusammensetzung des Bodens"
+    },
+    "values": {
+      "Sand": {
+        "labels": {
+          "it": "Sabbia",
+          "de": "Sand"
+        }
+      },
+      "Schluff": {
+        "labels": {
+          "it": "Silt",
+          "de": "Schluff"
+        }
+      },
+      "Lehm": {
+        "labels": {
+          "it": "Argilla",
+          "de": "Lehm"
+        }
+      },
+      "Humus": {
+        "labels": {
+          "it": "Humus",
+          "de": "Humus"
+        }
+      },
+      "Kalk": {
+        "labels": {
+          "it": "Calce",
+          "de": "Kalk"
+        }
+      },
+      "Kalkstein": {
+        "labels": {
+          "it": "Calcare",
+          "de": "Kalkstein"
+        }
+      },
+      "Sandstein": {
+        "labels": {
+          "it": "Arenaria",
+          "de": "Sandstein"
+        }
+      },
+      "Mergel": {
+        "labels": {
+          "it": "Marna",
+          "de": "Mergel"
+        }
+      },
+      "Vulkangestein": {
+        "labels": {
+          "it": "Pietra lavica",
+          "de": "Vulkangestein"
+        }
+      },
+      "Kiesel": {
+        "labels": {
+          "it": "Ciottoli",
+          "de": "Kiesel"
+        }
+      },
+      "Asche": {
+        "labels": {
+          "it": "Cenere",
+          "de": "Asche"
+        }
+      },
+      "Schlick": {
+        "labels": {
+          "it": "Limo",
+          "de": "Schlick"
+        }
+      },
+      "Organisches": {
+        "labels": {
+          "it": "Materiali organici",
+          "de": "Organisches"
+        }
+      }
+    }
+  },
+  "Layer-findComposition-Postumii": {
+    "creationDate": "15-03-2021",
+    "createdBy": "CSGIS",
+    "description": {
+      "it": "composizione del terreno",
+      "de": "Zusammensetzung des Bodens"
+    },
+    "values": {
+      "Lehmstein": {
+        "labels": {
+          "it": "Mattone",
+          "de": "Lehmstein"
+        }
+      },
+      "Dachziegel": {
+        "labels": {
+          "it": "Tegole",
+          "de": "Dachziegel"
+        }
+      },
+      "Keramik": {
+        "labels": {
+          "it": "Ceramica",
+          "de": "Keramik"
+        }
+      },
+      "Metall": {
+        "labels": {
+          "it": "Metallo",
+          "de": "Metall"
+        }
+      },
+      "Münzen": {
+        "labels": {
+          "it": "Moneta",
+          "de": "Münzen"
+        }
+      },
+      "Glas": {
+        "labels": {
+          "it": "Vetro",
+          "de": "Glas"
+        }
+      },
+      "Knochen": {
+        "labels": {
+          "it": "Osso",
+          "de": "Knochen"
+        }
+      },
+      "Holzkohle": {
+        "labels": {
+          "it": "Carbone",
+          "de": "Holzkohle"
+        }
+      },
+      "Schlacke": {
+        "labels": {
+          "it": "Scoria",
+          "de": "Schlacke"
+        }
+      },
+      "Mollusken": {
+        "labels": {
+          "it": "Molluschi",
+          "de": "Mollusken"
+        }
+      },
+      "Hüttenlehm": {
+        "labels": {
+          "it": "concotto",
+          "de": "Hüttenlehm"
+        }
+      },
+      "Verputz": {
+        "labels": {
+          "it": "Intonaco",
+          "de": "Verputz"
+        }
+      }
+    }
+  },
+  "Layer-consistency-Postumii-1": {
+    "creationDate": "15-03-2021",
+    "createdBy": "CSGIS",
+    "description": {
+      "de": "Konsistenz des Erdbefundes"
+    },
+    "values": {
+      "locker": {
+        "labels": {
+          "it": "Sciolta",
+          "de": "locker"
+        }
+      },
+      "porös": {
+        "labels": {
+          "it": "Friabile",
+          "de": "porös"
+        }
+      },
+      "fest": {
+        "labels": {
+          "it": "Solida",
+          "de": "fest"
+        }
+      },
+      "kompakt": {
+        "labels": {
+          "it": "Compatta",
+          "de": "kompakt"
+        }
+      },
+      "zäh": {
+        "labels": {
+          "it": "Tenace plastica",
+          "de": "zäh"
+        }
+      },
+      "hart": {
+        "labels": {
+          "it": "Dura",
+          "de": "hart"
+        }
+      }
+    }
+  },
+  "Feature-featureBorders-Postumii": {
+    "creationDate": "15-03-2021",
+    "createdBy": "CSGIS",
+    "description": {
+      "de": "Befundgrenzen Postumii"
+    },
+    "values": {
+      "Nach oben: deutlich": {
+        "labels": {
+          "it": "Superiore: distinto",
+          "de": "Nach oben: deutlich"
+        }
+      },
+      "Nach oben: diffus": {
+        "labels": {
+          "it": "Superiore: graduale",
+          "de": "Nach oben: diffus"
+        }
+      },
+      "Nach oben: willkürlich": {
+        "labels": {
+          "it": "Superiore: arbitrario",
+          "de": "Nach oben: willkürlich"
+        }
+      },
+      "Nach unten: deutlich": {
+        "labels": {
+          "it": "Inferiore: distinto",
+          "de": "Nach unten: deutlich"
+        }
+      },
+      "Nach unten: diffus": {
+        "labels": {
+          "it": "Inferiore: graduale",
+          "de": "Nach unten: diffus"
+        }
+      },
+      "Nach unten: willkürlich": {
+        "labels": {
+          "it": "Inferiore: arbitrario",
+          "de": "Nach unten: willkürlich"
+        }
+      },
+      "In der Fläche: deutlich": {
+        "labels": {
+          "it": "Laterale: distinto",
+          "de": "In der Fläche: deutlich"
+        }
+      },
+      "In der Fläche: diffus": {
+        "labels": {
+          "it": "Laterale: graduale",
+          "de": "In der Fläche: diffus"
+        }
+      },
+      "In der Fläche: willkürlich": {
+        "labels": {
+          "it": "Laterale: arbitrario",
+          "de": "In der Fläche: willkürlich"
+        }
+      }
+    }
+  },
+  "Feature-featureForm-Postumii": {
+    "creationDate": "15-03-2021",
+    "createdBy": "CSGIS",
+    "description": {
+      "de": "Form der SE, Postumii"
+    },
+    "values": {
+      "eckig": {
+        "labels": {
+          "it": "Anguloso",
+          "de": "eckig"
+        }
+      },
+      "rund": {
+        "labels": {
+          "it": "Tondo",
+          "de": "rund"
+        }
+      },
+      "formlos": {
+        "labels": {
+          "it": "Informe",
+          "de": "formlos"
+        }
+      }
+    }
+  },
+  "Layer-distinguishingCriteria-Postumii": {
+    "creationDate": "15-03-2021",
+    "createdBy": "CSGIS",
+    "description": {},
+    "values": {
+      "Farbe": {
+        "labels": {
+          "it": "Colore",
+          "de": "Farbe"
+        }
+      },
+      "Form": {
+        "labels": {
+          "it": "Forma",
+          "de": "Form"
+        }
+      },
+      "Konsistenz": {
+        "labels": {
+          "it": "Consistenza",
+          "de": "Konsistenz"
+        }
+      },
+      "Zusammensetzung": {
+        "labels": {
+          "it": "Composizione",
+          "de": "Zusammensetzung"
+        }
+      }
+    }
+  },
+  "periods-Postumii-1": {
+    "createdBy": "CSGIS",
+    "creationDate": "15-03-2021",
+    "description": {},
+    "values": {
+      "Frühbronzezeitlich ": {
+        "labels": {
+          "de": "Frühbronzezeit",
+          "it": "Bronzo antico"
+        }
+      },
+      "Bronzezeitlich": {
+        "labels": {
+          "de": "Bronzezeit",
+          "it": "Età del bronzo"
+        }
+      },
+      "Eisenzeitlich": {
+        "labels": {
+          "de": "Eisenzeit",
+          "it": "Età del ferro"
+        }
+      },
+      "Archaisch": {
+        "labels": {
+          "de": "Archaik",
+          "it": "Età arcaica"
+        }
+      },
+      "Spätarchaisch": {
+        "labels": {
+          "de": "Spätarchaik",
+          "it": "Tardo arcaico"
+        }
+      },
+      "Klassisch": {
+        "labels": {
+          "de": "Klassik",
+          "it": "Età classica"
+        }
+      },
+      "Spätklassisch": {
+        "labels": {
+          "de": "Spätklassik",
+          "it": "Tardo classico"
+        }
+      },
+      "Frühhellenistisch": {
+        "labels": {
+          "de": "Frühhellenismus",
+          "it": "Alto ellenismo"
+        }
+      },
+      "Hellenistisch": {
+        "labels": {
+          "de": "Hellenismus",
+          "it": "Ellenismo"
+        }
+      },
+      "Frühkorinthisch": {
+        "labels": {
+          "de": "Frühkorinthisch",
+          "it": "Frühkorinthisch"
+        }
+      },
+      "Mittelkorinthisch": {
+        "labels": {
+          "de": "Mittelkorinthisch",
+          "it": "Mittelkorinthisch"
+        }
+      },
+      "Spätkorinthisch": {
+        "labels": {
+          "de": "Spätkorinthisch",
+          "it": "Spätkorinthisch"
+        }
+      },
+      "Republikanisch": {
+        "labels": {
+          "de": "Römische Republik",
+          "it": "Repubblica Romana"
+        }
+      },
+      "Kaiserzeitlich": {
+        "labels": {
+          "de": "Römische Kaiserzeit",
+          "it": "Età imperiale"
+        }
+      },
+      "Spätkaiserzeitlich": {
+        "labels": {
+          "de": "Späte Kaiserzeit",
+          "it": "Basso impero"
+        }
+      },
+      "Byzantinisch": {
+        "labels": {
+          "de": "Byzantinisches Reich",
+          "it": "Impero bizantino"
+        }
+      },
+      "Arabisch": {
+        "labels": {
+          "de": "Arabische Vorherrschaft",
+          "it": "Periodo islamico"
+        }
+      },
+      "Normannisch": {
+        "labels": {
+          "de": "Normannisches Königreich",
+          "it": "Epoca normanna"
+        }
+      },
+      "Staufisch": {
+        "labels": {
+          "de": "Dynastie der Staufer",
+          "it": "Epoca sveva"
+        }
+      },
+      "Rezent": {
+        "labels": {
+          "de": "Rezent",
+          "it": "Recente"
+        }
+      }
+    }
+  },
+  "Architecture-architectureClassification-Postumii": {
+    "creationDate": "15-03-2021",
+    "createdBy": "CSGIS",
+    "description": {},
+    "values": {
+      "Mauer": {
+        "labels": {
+          "it": "Muro",
+          "de": "Mauer"
+        }
+      },
+      "Fundament": {
+        "labels": {
+          "it": "Fondazione",
+          "de": "Fundament"
+        }
+      },
+      "Schwelle": {
+        "labels": {
+          "it": "Soglia",
+          "de": "Schwelle"
+        }
+      },
+      "Steinsetzung": {
+        "labels": {
+          "it": "Allineamento di pietre",
+          "de": "Steinsetzung"
+        }
+      },
+      "Fußboden": {
+        "labels": {
+          "it": "Pavimento",
+          "de": "Fußboden"
+        }
+      },
+      "Podium, Bank": {
+        "labels": {
+          "it": "Podio, panchina",
+          "de": "Podium, Bank"
+        }
+      },
+      "Treppe": {
+        "labels": {
+          "it": "Scala",
+          "de": "Treppe"
+        }
+      },
+      "Ofen, Herdstelle": {
+        "labels": {
+          "it": "Forno, Focolare",
+          "de": "Ofen, Herdstelle"
+        }
+      },
+      "Becken": {
+        "labels": {
+          "it": "Vasca",
+          "de": "Becken"
+        }
+      },
+      "Kanal, Leitung": {
+        "labels": {
+          "it": "Canale, Conduttura",
+          "de": "Kanal, Leitung"
+        }
+      },
+      "Latrine": {
+        "labels": {
+          "it": "Latrina",
+          "de": "Latrine"
+        }
+      },
+      "Brunnen": {
+        "labels": {
+          "it": "Pozzo",
+          "de": "Brunnen"
+        }
+      },
+      "Zisterne": {
+        "labels": {
+          "it": "Cisterna",
+          "de": "Zisterne"
+        }
+      },
+      "Straße": {
+        "labels": {
+          "it": "Strada",
+          "de": "Straße"
+        }
+      },
+      "Säule": {
+        "labels": {
+          "it": "Colonna",
+          "de": "Säule"
+        }
+      },
+      "Pfeiler": {
+        "labels": {
+          "it": "Pilastro",
+          "de": "Pfeiler"
+        }
+      }
+    }
+  },
+  "Architecture-architectureMaterial-Postumii": {
+    "creationDate": "15-03-2021",
+    "createdBy": "CSGIS",
+    "description": {},
+    "values": {
+      "Kalkstein": {
+        "labels": {
+          "it": "Calcare",
+          "de": "Kalkstein"
+        }
+      },
+      "Marmor": {
+        "labels": {
+          "it": "Marmo",
+          "de": "Marmor"
+        }
+      },
+      "Vulkangestein": {
+        "labels": {
+          "it": "Pietra lavica",
+          "de": "Vulkangestein"
+        }
+      },
+      "Sandstein": {
+        "labels": {
+          "it": "Arenaria",
+          "de": "Sandstein"
+        }
+      },
+      "Granit": {
+        "labels": {
+          "it": "Granito",
+          "de": "Granit"
+        }
+      },
+      "Kiesel": {
+        "labels": {
+          "it": "Ciottoli",
+          "de": "Kiesel"
+        }
+      },
+      "Anstehender Fels": {
+        "labels": {
+          "it": "Roccia affiorante",
+          "de": "Anstehender Fels"
+        }
+      },
+      "Anderer Stein": {
+        "labels": {
+          "it": "Altra pietra",
+          "de": "Anderer Stein"
+        }
+      },
+      "Spolien": {
+        "labels": {
+          "de": "Spolien"
+        }
+      },
+      "Gebrannte Ziegel": {
+        "labels": {
+          "it": "Mattoni cotti",
+          "de": "Gebrannte Ziegel"
+        }
+      },
+      "Ungebrannte Lehmsteine": {
+        "labels": {
+          "it": "Mattoni crudi",
+          "de": "Ungebrannte Lehmsteine"
+        }
+      },
+      "Dachziegel": {
+        "labels": {
+          "it": "Tegole",
+          "de": "Dachziegel"
+        }
+      },
+      "Lehm": {
+        "labels": {
+          "it": "Argilla",
+          "de": "Lehm"
+        }
+      },
+      "Holz": {
+        "labels": {
+          "it": "Legno",
+          "de": "Holz"
+        }
+      },
+      "Keramik": {
+        "labels": {
+          "it": "Ceramica",
+          "de": "Keramik"
+        }
+      },
+      "Zement": {
+        "labels": {
+          "it": "Cemento",
+          "de": "Zement"
+        }
+      }
+    }
+  },
+  "Architecture-brickwork-Postumii": {
+    "creationDate": "15-03-2021",
+    "createdBy": "CSGIS",
+    "description": {},
+    "values": {
+      "Regelloser Verband": {
+        "labels": {
+          "it": "Tessitura irregolare",
+          "de": "Regelloser Verband"
+        }
+      },
+      "Reiner Läuferverband": {
+        "labels": {
+          "it": "Blocchi messi in senso della lunghezza",
+          "de": "Reiner Läuferverband"
+        }
+      },
+      "Reiner Binderverband": {
+        "labels": {
+          "it": "Blocchi messi di testa",
+          "de": "Reiner Binderverband"
+        }
+      },
+      "Läufer-Binder Verband": {
+        "labels": {
+          "de": "Läufer-Binder Verband"
+        }
+      },
+      "Opus africanum": {
+        "labels": {
+          "it": "Opera a telaio",
+          "de": "Opus africanum"
+        }
+      }
+    }
+  },
+  "Architecture-construction-Postumii": {
+    "creationDate": "15-03-2021",
+    "createdBy": "CSGIS",
+    "description": {
+      "de": "Konstruktion, Postumii Grabung"
+    },
+    "values": {
+      "einschalig freistehend": {
+        "labels": {
+          "it": "Singolo paramento",
+          "de": "einschalig freistehend"
+        }
+      },
+      "einschalig vor Hang": {
+        "labels": {
+          "it": "Muro di contentimento",
+          "de": "einschalig vor Hang"
+        }
+      },
+      "zweischalig": {
+        "labels": {
+          "it": "Doppio paramento",
+          "de": "zweischalig"
+        }
+      },
+      "zweischalig mit Kern": {
+        "labels": {
+          "it": "Muro a sacco",
+          "de": "zweischalig mit Kern"
+        }
+      },
+      "zweischalig mit Binderlagen": {
+        "labels": {
+          "it": "Con ammorsamento trasversale",
+          "de": "zweischalig mit Binderlagen"
+        }
+      }
+    }
+  },
+  "Architecture-masonry-Postumii": {
+    "creationDate": "15-03-2021",
+    "createdBy": "CSGIS",
+    "description": {
+      "de": "Mauerwerk, Postumii Grabung"
+    },
+    "values": {
+      "Bruchsteinmauerwerk": {
+        "labels": {
+          "it": "In pietra grezza",
+          "de": "Bruchsteinmauerwerk"
+        }
+      },
+      "Polygonalmauerwerk": {
+        "labels": {
+          "it": "Muro polygonale",
+          "de": "Polygonalmauerwerk"
+        }
+      },
+      "Quadermauerwerk": {
+        "labels": {
+          "it": "Opera quadrata",
+          "de": "Quadermauerwerk"
+        }
+      },
+      "Trapezoidalmauerwerk": {
+        "labels": {
+          "it": "Muro trapezoidale",
+          "de": "Trapezoidalmauerwerk"
+        }
+      },
+      "Ziegelmauerwerk gebrannt": {
+        "labels": {
+          "it": "Muro di mattoni cotti",
+          "de": "Ziegelmauerwerk gebrannt"
+        }
+      },
+      "Ziegelmauerwerk getrocknet": {
+        "labels": {
+          "it": "Muro di mattoni crudi",
+          "de": "Ziegelmauerwerk getrocknet"
+        }
+      },
+      "Stampflehm": {
+        "labels": {
+          "it": "Muro di terra cruda",
+          "de": "Stampflehm"
+        }
+      },
+      "Gussmauerwerk": {
+        "labels": {
+          "it": "Opera cementizia",
+          "de": "Gussmauerwerk"
+        }
+      },
+      "Mischform": {
+        "labels": {
+          "it": "Tecnica mista",
+          "de": "Mischform"
+        }
+      },
+      "Anderes": {
+        "labels": {
+          "it": "Altro",
+          "de": "Anderes"
+        }
+      }
+    }
+  },
+  "Architecture-masonryJoint-Postumii": {
+    "creationDate": "15-03-2021",
+    "createdBy": "CSGIS",
+    "description": {
+      "de": "Mauerwerksverband, Postumii Grabung"
+    },
+    "values": {
+      "Trocken": {
+        "labels": {
+          "it": "A secco",
+          "de": "Trocken"
+        }
+      },
+      "Klammern": {
+        "labels": {
+          "it": "Grappe",
+          "de": "Klammern"
+        }
+      },
+      "Erdmörtel": {
+        "labels": {
+          "it": "Malta",
+          "de": "Erdmörtel"
+        }
+      },
+      "Kalkmörtel": {
+        "labels": {
+          "de": "Kalkmörtel"
+        }
+      },
+      "Ziegelmauerwerk": {
+        "labels": {
+          "it": "Muro di mattoni",
+          "de": "Ziegelmauerwerk"
+        }
+      },
+      "Zement": {
+        "labels": {
+          "it": "Cemento",
+          "de": "Zement"
+        }
+      },
+      "Lehm": {
+        "labels": {
+          "it": "Argilla",
+          "de": "Lehm"
+        }
+      },
+      "Mischtechnik": {
+        "labels": {
+          "it": "Tecnica mista",
+          "de": "Mischtechnik"
+        }
+      }
+    }
+  },
+  "Architecture-masonryLayerType-Postumii": {
+    "creationDate": "15-03-2021",
+    "createdBy": "CSGIS",
+    "description": {
+      "de": "Mauerlage, Postumii Grabung"
+    },
+    "values": {
+      "Isodom": {
+        "labels": {
+          "it": "Isodomo",
+          "de": "Isodom"
+        }
+      },
+      "Pseudoisodom": {
+        "labels": {
+          "it": "Pseudoisodomo",
+          "de": "Pseudoisodom"
+        }
+      },
+      "Unregelmäßig": {
+        "labels": {
+          "it": "Irregolare",
+          "de": "Unregelmäßig"
+        }
+      }
+    }
+  },
+  "Architecture-masonryCoating-Postumii": {
+    "creationDate": "15-03-2021",
+    "createdBy": "CSGIS",
+    "description": {
+      "de": "Mauerwerksverkleidung, Postumii Grabung"
+    },
+    "values": {
+      "Verputz": {
+        "labels": {
+          "it": "Intonaco",
+          "de": "Verputz"
+        }
+      },
+      "Bemalung": {
+        "labels": {
+          "it": "Pittura",
+          "de": "Bemalung"
+        }
+      }
+    }
+  },
+  "Pottery-vesselForm-Postumii": {
+    "creationDate": "15-03-2021",
+    "createdBy": "CSGIS",
+    "description": {},
+    "values": {
+      "Alabastron": {
+        "labels": {
+          "de": "Alabastron"
+        }
+      },
+      "Amphora": {
+        "labels": {
+          "de": "Amphora"
+        }
+      },
+      "Aryballos": {
+        "labels": {
+          "de": "Aryballos"
+        }
+      },
+      "Askos": {
+        "labels": {
+          "de": "Askos"
+        }
+      },
+      "Becher": {
+        "labels": {
+          "de": "Becher"
+        }
+      },
+      "Becken": {
+        "labels": {
+          "de": "Becken"
+        }
+      },
+      "Chytra": {
+        "labels": {
+          "de": "Chytra"
+        }
+      },
+      "Cup-skyphos":{
+        "labels": {
+          "de": "Cup-skyphos"
+        }
+      },
+      "Deckel": {
+        "labels": {
+          "de": "Deckel"
+        }
+      },
+      "Dinos": {
+        "labels": {
+          "de": "Dinos"
+        }
+      },
+      "Exaleiptron": {
+        "labels": {
+          "de": "Exaleiptron"
+        }
+      },
+      "Flasche": {
+        "labels": {
+          "de": "Flasche"
+        }
+      },
+      "Hydria": {
+        "labels": {
+          "de": "Hydria"
+        }
+      },
+      "Kanne": {
+        "labels": {
+          "de": "Kanne"
+        }
+      },
+      "Kantharos": {
+        "labels": {
+          "de": "Kantharos"
+        }
+      },
+      "Kasserolle": {
+        "labels": {
+          "de": "Kasserolle"
+        }
+      },
+      "Kochtopf": {
+        "labels": {
+          "de": "Kochtopf"
+        }
+      },
+      "Kotyle": {
+        "labels": {
+          "de": "Kotyle"
+        }
+      },
+      "Krater": {
+        "labels": {
+          "de": "Krater"
+        }
+      },
+      "Krateriskos": {
+        "labels": {
+          "de": "Krateriskos"
+        }
+      },
+      "Krug": {
+        "labels": {
+          "de": "Krug"
+        }
+      },
+      "Kylix": {
+        "labels": {
+          "de": "Kylix"
+        }
+      },
+      "Lekythos": {
+        "labels": {
+          "de": "Lekythos"
+        }
+      },
+      "Lekanis": {
+        "labels": {
+          "de": "Lekanis"
+        }
+      },
+      "Louterion": {
+        "labels": {
+          "de": "Louterion"
+        }
+      },
+      "Loutrophore": {
+        "labels": {
+          "de": "Loutrophore"
+        }
+      },
+      "Lopas": {
+        "labels": {
+          "de": "Lopas"
+        }
+      },
+      "Lydion": {
+        "labels": {
+          "de": "Lydion"
+        }
+      },
+      "Napf": {
+        "labels": {
+          "de": "Napf"
+        }
+      },
+      "Oinochoe": {
+        "labels": {
+          "de": "Oinochoe"
+        }
+      },
+      "Olpe": {
+        "labels": {
+          "de": "Olpe"
+        }
+      },
+      "Pfanne": {
+        "labels": {
+          "de": "Pfanne"
+        }
+      },
+      "Phiale": {
+        "labels": {
+          "de": "Phiale"
+        }
+      },
+      "Pithos": {
+        "labels": {
+          "de": "Pithos"
+        }
+      },
+      "Pyxis": {
+        "labels": {
+          "de": "Pyxis"
+        }
+      },
+      "Rython": {
+        "labels": {
+          "de": "Rython"
+        }
+      },
+      "Schale": {
+        "labels": {
+          "de": "Schale"
+        }
+      },
+      "Schalenskyphos": {
+        "labels": {
+          "de": "Schalenskyphos"
+        }
+      },
+      "Schüssel": {
+        "labels": {
+          "de": "Schüssel"
+        }
+      },
+      "Sieb": {
+        "labels": {
+          "de": "Sieb"
+        }
+      },
+      "Skyphos": {
+        "labels": {
+          "de": "Skyphos"
+        }
+      },
+      "Stamnos": {
+        "labels": {
+          "de": "Stamnos"
+        }
+      },
+      "Tasse": {
+        "labels": {
+          "de": "Tasse"
+        }
+      },
+      "Teller": {
+        "labels": {
+          "de": "Teller"
+        }
+      },
+      "Unguentarium": {
+        "labels": {
+          "de": "Unguentarium"
+        }
+      },
+      "Offenes Gefäß": {
+        "labels": {
+          "de": "Offenes Gefäß"
+        }
+      },
+      "Geschlossenes Gefäß": {
+        "labels": {
+          "de": "Geschlossenes Gefäß"
+        }
+      },
+      "Sonstiges": {
+        "labels": {
+          "de": "Sonstiges"
+        }
+      },
+      "Unbestimmt": {
+        "labels": {
+          "de": "Unbestimmt"
+        }
+      }
+    }
+  },
+  "Layer-contentPotteryOrigin-Postumii": {
+    "creationDate": "15-03-2021",
+    "createdBy": "CSGIS",
+    "description": {},
+    "values": {
+      "Lokal": {
+        "labels": {
+          "it": "Locale",
+          "de": "Lokal"
+        }
+      },
+      "Indigen": {
+        "labels": {
+          "it": "Indigena",
+          "de": "Indigen"
+        }
+      },
+      "Regional": {
+        "labels": {
+          "it": "Regionale",
+          "de": "Regional"
+        }
+      },
+      "Unteritalisch": {
+        "labels": {
+          "it": "Magnogreca",
+          "de": "Unteritalisch"
+        }
+      },
+      "Attisch": {
+        "labels": {
+          "it": "Attica",
+          "de": "Attisch"
+        }
+      },
+      "Etruskisch": {
+        "labels": {
+          "it": "Etrusca",
+          "de": "Etruskisch"
+        }
+      },
+      "Korinthisch": {
+        "labels": {
+          "it": "Corinzia",
+          "de": "Korinthisch"
+        }
+      },
+      "Lakonisch": {
+        "labels": {
+          "it": "Laconica",
+          "de": "Lakonisch"
+        }
+      },
+      "Ostgriechisch": {
+        "labels": {
+          "it": "Greco-orientale",
+          "de": "Ostgriechisch"
+        }
+      },
+      "Phönizisch/Punisch": {
+        "labels": {
+          "it": "Fenicia/Punica",
+          "de": "Phönizisch/Punisch"
+        }
+      },
+      "Anderes": {
+        "labels": {
+          "it": "Altro",
+          "de": "Anderes"
+        }
+      }
+    }
+  },
+  "Layer-contentPotteryShape-Postumii": {
+    "creationDate": "15-03-2021",
+    "createdBy": "CSGIS",
+    "description": {},
+    "values": {
+      "Alabastron": {
+        "labels": {
+          "de": "Alabastron"
+        }
+      },
+      "Amphora": {
+        "labels": {
+          "de": "Amphora"
+        }
+      },
+      "Aryballos": {
+        "labels": {
+          "de": "Aryballos"
+        }
+      },
+      "Askos": {
+        "labels": {
+          "de": "Askos"
+        }
+      },
+      "Exaleiptron": {
+        "labels": {
+          "de": "Exaleiptron"
+        }
+      },
+      "Hydria": {
+        "labels": {
+          "de": "Hydria"
+        }
+      },
+      "Kanne": {
+        "labels": {
+          "de": "Kanne"
+        }
+      },
+      "Kantharos": {
+        "labels": {
+          "de": "Kantharos"
+        }
+      },
+      "Kotyle": {
+        "labels": {
+          "de": "Kotyle"
+        }
+      },
+      "Krater": {
+        "labels": {
+          "de": "Krater"
+        }
+      },
+      "Kylix": {
+        "labels": {
+          "de": "Kylix"
+        }
+      },
+      "Lekythos": {
+        "labels": {
+          "de": "Lekythos"
+        }
+      },
+      "Lekanis": {
+        "labels": {
+          "de": "Lekanis"
+        }
+      },
+      "Pithos": {
+        "labels": {
+          "de": "Pithos"
+        }
+      },
+      "Pyxis": {
+        "labels": {
+          "de": "Pyxis"
+        }
+      },
+      "Schale": {
+        "labels": {
+          "de": "Schale"
+        }
+      },
+      "Schüssel": {
+        "labels": {
+          "de": "Schüssel"
+        }
+      },
+      "Skyphos": {
+        "labels": {
+          "de": "Skyphos"
+        }
+      },
+      "Stamnos": {
+        "labels": {
+          "de": "Stamnos"
+        }
+      },
+      "Tasse": {
+        "labels": {
+          "de": "Tasse"
+        }
+      },
+      "Teller": {
+        "labels": {
+          "de": "Teller"
+        }
+      },
+      "Topf": {
+        "labels": {
+          "de": "Topf"
+        }
+      },
+      "Unguentarium": {
+        "labels": {
+          "de": "Unguentarium"
+        }
+      },
+      "Miniatur Keramik": {
+        "labels": {
+          "it": "Ceramica miniaturistica",
+          "de": "Miniatur Keramik"
+        }
+      },
+      "Anderes": {
+        "labels": {
+          "it": "Altro",
+          "de": "Anderes"
+        }
+      }
+    }
+  },
+  "Pottery-coat-Postumii": {
+    "creationDate": "15-03-2021",
+    "createdBy": "CSGIS",
+    "description": {},
+    "values": {
+      "Schwarzfirnis": {
+        "labels": {
+          "it": "Vernice Nera",
+          "de": "Schwarzfirnis"
+        }
+      },
+      "Red slip": {
+        "labels": {
+          "de": "Red slip"
+        }
+      },
+      "Relief": {
+        "labels": {
+          "it": "A relieve",
+          "de": "Relief"
+        }
+      },
+      "Glasur": {
+        "labels": {
+          "it": "Invetriata",
+          "de": "Glasur"
+        }
+      },
+      "Tongrundig": {
+        "labels": {
+          "de": "Tongrundig"
+        }
+      },
+      "Anderes": {
+        "labels": {
+          "it": "Altro",
+          "de": "Anderes"
+        }
+      }
+    }
+  },
+  "Layer-contentPotteryDecoration-Postumii": {
+    "creationDate": "15-03-2021",
+    "createdBy": "CSGIS",
+    "description": {},
+    "values": {
+      "Stempeldekor": {
+        "labels": {
+          "it": "A stampa",
+          "de": "Stempeldekor"
+        }
+      },
+      "Figürlich": {
+        "labels": {
+          "it": "Figurata",
+          "de": "Figürlich"
+        }
+      },
+      "Unfigürlich": {
+        "labels": {
+          "it": "Geometrica",
+          "de": "Unfigürlich"
+        }
+      },
+      "Banddekor": {
+        "labels": {
+          "it": "A bande",
+          "de": "Banddekor"
+        }
+      },
+      "Pflanzendekor": {
+        "labels": {
+          "it": "Vegetale",
+          "de": "Pflanzendekor"
+        }
+      },
+      "Ritzlinien": {
+        "labels": {
+          "it": "Incisa",
+          "de": "Ritzlinien"
+        }
+      },
+      "Eingetaucht": {
+        "labels": {
+          "it": "Per immersione",
+          "de": "Eingetaucht"
+        }
+      },
+      "Bemalt": {
+        "labels": {
+          "it": "Dipinta",
+          "de": "Bemalt"
+        }
+      },
+      "Graffito": {
+        "labels": {
+          "it": "Graffito",
+          "de": "Graffito"
+        }
+      },
+      "Aufschrift ": {
+        "labels": {
+          "it": "Scritta",
+          "de": "Aufschrift"
+        }
+      },
+      "Stempel": {
+        "labels": {
+          "it": "Stempel",
+          "de": "Stempel"
+        }
+      },
+      "Anderes": {
+        "labels": {
+          "it": "Altro",
+          "de": "Anderes"
+        }
+      }
+    }
+  },
+  "Layer-contentTerracotta-Postumii": {
+    "creationDate": "15-03-2021",
+    "createdBy": "CSGIS",
+    "description": {},
+    "values": {
+      "Figuren": {
+        "labels": {
+          "it": "Statuine",
+          "de": "Figuren"
+        }
+      },
+      "Lampen": {
+        "labels": {
+          "it": "Lucerne",
+          "de": "Lampen"
+        }
+      },
+      "Webgewichte": {
+        "labels": {
+          "it": "Pesi da telaio",
+          "de": "Webgewichte"
+        }
+      },
+      "Spielstein": {
+        "labels": {
+          "it": "Pedine",
+          "de": "Spielstein"
+        }
+      },
+      "Anderes": {
+        "labels": {
+          "it": "Altro",
+          "de": "Anderes"
+        }
+      }
+    }
+  },
+  "Layer-contentInorganic-Postumii": {
+    "creationDate": "15-03-2021",
+    "createdBy": "CSGIS",
+    "description": {},
+    "values": {
+      "Bronze": {
+        "labels": {
+          "it": "Bronzo",
+          "de": "Bronze"
+        }
+      },
+      "Eisen": {
+        "labels": {
+          "it": "Ferro",
+          "de": "Eisen"
+        }
+      },
+      "Blei": {
+        "labels": {
+          "it": "Piombo",
+          "de": "Blei"
+        }
+      },
+      "Schlacke": {
+        "labels": {
+          "it": "Scorie",
+          "de": "Schlacke"
+        }
+      },
+      "Gold": {
+        "labels": {
+          "it": "Oro",
+          "de": "Gold"
+        }
+      },
+      "Silber": {
+        "labels": {
+          "it": "Argento",
+          "de": "Silber"
+        }
+      },
+      "Münzen": {
+        "labels": {
+          "it": "Monete",
+          "de": "Münzen"
+        }
+      },
+      "Stein bearbeitet": {
+        "labels": {
+          "it": "Pietra lavorate",
+          "de": "Stein bearbeitet"
+        }
+      },
+      "Stein figürlich": {
+        "labels": {
+          "it": "Pietra figurate",
+          "de": "Stein figürlich"
+        }
+      },
+      "Reibsteine": {
+        "labels": {
+          "it": "Macine",
+          "de": "Reibsteine"
+        }
+      },
+      "Kiesel": {
+        "labels": {
+          "it": "Ciottoli",
+          "de": "Kiesel"
+        }
+      },
+      "Glas": {
+        "labels": {
+          "it": "Vetro",
+          "de": "Glas"
+        }
+      },
+      "Spielstein": {
+        "labels": {
+          "it": "Pedine",
+          "de": "Spielstein"
+        }
+      },
+      "Anderes": {
+        "labels": {
+          "it": "Altro",
+          "de": "Anderes"
+        }
+      }
+    }
+  },
+  "Layer-contentOrganic-Postumii": {
+    "creationDate": "15-03-2021",
+    "createdBy": "CSGIS",
+    "description": {
+      "it": "Materiale organico",
+      "de": "Organisches Material"
+    },
+    "values": {
+      "Knochen Tier": {
+        "labels": {
+          "it": "Ossa di animali",
+          "de": "Knochen Tier"
+        }
+      },
+      "Knochen Mensch": {
+        "labels": {
+          "it": "Ossa umane",
+          "de": "Knochen Mensch"
+        }
+      },
+      "Knochen bearbeitet": {
+        "labels": {
+          "it": "Ossa lavorate",
+          "de": "Knochen bearbeitet"
+        }
+      },
+      "Astragal": {
+        "labels": {
+          "it": "Astragalo",
+          "de": "Astragal"
+        }
+      },
+      "Mollusken": {
+        "labels": {
+          "it": "Molluschi",
+          "de": "Mollusken"
+        }
+      },
+      "Holz": {
+        "labels": {
+          "it": "Legno",
+          "de": "Holz"
+        }
+      },
+      "Holzkohle": {
+        "labels": {
+          "it": "Carbone",
+          "de": "Holzkohle"
+        }
+      },
+      "Samen": {
+        "labels": {
+          "it": "Semi",
+          "de": "Samen"
+        }
+      },
+      "Elfenbein": {
+        "labels": {
+          "it": "Avorio",
+          "de": "Elfenbein"
+        }
+      },
+      "Perlen": {
+        "labels": {
+          "it": "Perle",
+          "de": "Perlen"
+        }
+      },
+      "Spielstein": {
+        "labels": {
+          "it": "Pedine",
+          "de": "Spielstein"
+        }
+      },
+      "Anderes": {
+        "labels": {
+          "it": "Altro",
+          "de": "Anderes"
+        }
+      }
+    }
+  },
+  "Layer-contentBuildingMaterial-Postumii": {
+    "creationDate": "15-03-2021",
+    "createdBy": "CSGIS",
+    "description": {},
+    "values": {
+      "Mörtel": {
+        "labels": {
+          "it": "Malta",
+          "de": "Mörtel"
+        }
+      },
+      "Verputz": {
+        "labels": {
+          "it": "Intonaco",
+          "de": "Verputz"
+        }
+      },
+      "Architekturdekor": {
+        "labels": {
+          "it": "Decorazione fittile",
+          "de": "Architekturdekor"
+        }
+      },
+      "Mosaiksteine": {
+        "labels": {
+          "it": "Tessere (mosaico)",
+          "de": "Mosaiksteine"
+        }
+      },
+      "Dachziegel": {
+        "labels": {
+          "it": "Tegole",
+          "de": "Dachziegel"
+        }
+      },
+      "Lehmziegel gebrannt": {
+        "labels": {
+          "it": "Mattone cotto",
+          "de": "Lehmziegel gebrannt"
+        }
+      },
+      "Lehmstein ungebrannt": {
+        "labels": {
+          "it": "Mattone crudo",
+          "de": "Lehmstein ungebrannt"
+        }
+      },
+      "Anderes": {
+        "labels": {
+          "it": "Altro",
+          "de": "Anderes"
+        }
+      }
+    }
+  },
+  "Layer-workflowOptions-Postumii": {
+    "creationDate": "15-03-2021",
+    "createdBy": "CSGIS",
+    "description": {},
+    "values": {
+      "Gesiebt": {
+        "labels": {
+          "de": "Gesiebt"
+        }
+      },
+      "Geschlämmt": {
+        "labels": {
+          "de": "Geschlämmt"
+        }
+      },
+      "Beprobt": {
+        "labels": {
+          "de": "Beprobt"
+        }
+      },
+      "Nicht gegraben": {
+        "labels": {
+          "de": "Nicht gegraben"
+        }
+      }
+    }
+  },
+  "Pottery-miniatureVesselForm-Postumii": {
+    "creationDate": "15-03-2021",
+    "createdBy": "CSGIS",
+    "description": {},
+    "values": {
+      "Kotyle": {
+        "labels": {
+          "de": "Kotyle"
+        }
+      },
+      "Krateriskos": {
+        "labels": {
+          "de": "Krateriskos"
+        }
+      },
+      "Pyxis": {
+        "labels": {
+          "de": "Pyxis"
+        }
+      },
+      "Lampe": {
+        "labels": {
+          "it": "Lucerna",
+          "de": "Lampe"
+        }
+      },
+      "Anderes": {
+        "labels": {
+          "it": "Altro",
+          "de": "Anderes"
+        }
+      }
+    }
+  },
+  "Pottery-clayHardness-Postumii": {
+    "creationDate": "15-03-2021",
+    "createdBy": "CSGIS",
+    "description": {},
+    "values": {
+      "weich": {
+        "labels": {
+          "it": "Tenero",
+          "de": "weich"
+        }
+      },
+      "hart": {
+        "labels": {
+          "it": "Duro",
+          "de": "hart"
+        }
+      },
+      "sehr hart": {
+        "labels": {
+          "it": "Molto duro",
+          "de": "sehr hart"
+        }
+      }
+    }
+  },
+  "Pottery-clayDensity-Postumii": {
+    "creationDate": "15-03-2021",
+    "createdBy": "CSGIS",
+    "description": {},
+    "values": {
+      "hoch": {
+        "labels": {
+          "it": "Alta",
+          "de": "hoch"
+        }
+      },
+      "niedrig": {
+        "labels": {
+          "it": "Bassa",
+          "de": "niedrig"
+        }
+      }
+    }
+  },
+  "Pottery-manufacturingMethod-Postumii": {
+    "createdBy": "CSGIS",
+    "creationDate": "15-03-2021",
+    "description": {},
+    "values": {
+      "gedreht (auf Drehscheibe)": {
+        "labels": {
+          "de": "Scheibengedreht",
+          "it": "Al tornio"
+        }
+      },
+      "handgeformt": {
+        "labels": {
+          "de": "Handgeformt",
+          "it": "A mano"
+        }
+      },
+      "in Form gepresst": {
+        "labels": {
+          "de": "in Form gepresst"
+        }
+      }
+    }
+  },
+  "Floor-floorClassification-Postumii": {
+    "creationDate": "15-03-2021",
+    "createdBy": "CSGIS",
+    "description": {},
+    "values": {
+      "Estricht": {
+        "labels": {
+          "it": "Battuto",
+          "de": "Estricht"
+        }
+      },
+      "Cocciopesto": {
+        "labels": {
+          "it": "Cocciopesto",
+          "de": "Cocciopesto"
+        }
+      },
+      "Mosaik": {
+        "labels": {
+          "de": "Mosaik"
+        }
+      },
+      "Opus sectile": {
+        "labels": {
+          "de": "Opus sectile"
+        }
+      },
+      "Opus signinum": {
+        "labels": {
+          "de": "Opus signinum"
+        }
+      },
+      "Steinboden": {
+        "labels": {
+          "de": "Steinboden"
+        }
+      },
+      "Stampflehm": {
+        "labels": {
+          "de": "Stampflehm"
+        }
+      },
+      "Terrazzo": {
+        "labels": {
+          "de": "Terrazzo"
+        }
+      },
+      "Plattenboden": {
+        "labels": {
+          "de": "Plattenboden"
+        }
+      },
+      "Ziegelboden": {
+        "labels": {
+          "it": "Pavimentazione in laterizio",
+          "de": "Ziegelboden"
+        }
+      },
+      "vergängliches Material": {
+        "labels": {
+          "it": "Materiale organico",
+          "de": "vergängliches Material"
+        }
+      },
+      "Anderes": {
+        "labels": {
+          "it": "Altro",
+          "de": "Anderes"
+        }
+      }
+    }
+  },
+  "Find-storagePlace-Postumii": {
+    "createdBy": "CSGIS",
+    "creationDate": "15-03-2021",
+    "description": {},
+    "values": {
+      "Depot": {
+        "labels": {
+          "it": "Magazzino",
+          "de": "Depot"
+        }
+      },
+      "Museum": {
+        "labels": {
+          "it": "Museo",
+          "de": "Museum"
+        }
+      },
+      "In situ": {
+        "labels": {
+          "it": "In situ",
+          "de": "In situ"
+        }
+      }
+    }
+  },
+  "Pottery-coatQuality-Postumii": {
+    "createdBy": "CSGIS",
+    "creationDate": "15-03-2021",
+    "description": {},
+    "values": {
+      "glänzend": {
+        "labels": {
+          "de": "glänzend"
+        }
+      },
+      "matt": {
+        "labels": {
+          "de": "matt"
+        }
+      },
+      "dicht": {
+        "labels": {
+          "de": "dicht"
+        }
+      },
+      "dünn": {
+        "labels": {
+          "de": "dünn"
+        }
+      },
+      "streifig": {
+        "labels": {
+          "de": "streifig"
+        }
+      },
+      "abgerieben": {
+        "labels": {
+          "de": "abgerieben"
+        }
+      }
+    }
+  },
+  "Metal-metalMaterial-Postumii": {
+    "createdBy": "CSGIS",
+    "creationDate": "15-03-2021",
+    "description": {},
+    "values": {
+      "Blei": {
+        "labels": {
+          "de": "Blei"
+        }
+      },
+      "Bronze": {
+        "labels": {
+          "de": "Bronze"
+        }
+      },
+      "Eisen": {
+        "labels": {
+          "de": "Eisen"
+        }
+      },
+      "Silber": {
+        "labels": {
+          "de": "Silber"
+        }
+      },
+      "Gold": {
+        "labels": {
+          "de": "Gold"
+        }
+      },
+      "Unbestimmt": {
+        "labels": {
+          "de": "Unbestimmt"
+        }
+      }
+    }
+  },
+  "Metal-metalWeaponsArmor-Postumii": {
+    "createdBy": "CSGIS",
+    "creationDate": "15-03-2021",
+    "description": {},
+    "values": {
+      "Helm": {
+        "labels": {
+          "de": "Helm"
+        }
+      },
+      "Panzer": {
+        "labels": {
+          "de": "Panzer"
+        }
+      },
+      "Beinschiene": {
+        "labels": {
+          "de": "Beinschiene"
+        }
+      },
+      "Schild": {
+        "labels": {
+          "de": "Schild"
+        }
+      },
+      "Pfeilspitze": {
+        "labels": {
+          "de": "Pfeilspitze"
+        }
+      },
+      "Lanzenspitze": {
+        "labels": {
+          "de": "Lanzenspitze"
+        }
+      },
+      "Speerspitze": {
+        "labels": {
+          "de": "Speerspitze"
+        }
+      },
+      "Lanzenschuh": {
+        "labels": {
+          "de": "Lanzenschuh"
+        }
+      },
+      "Schwert": {
+        "labels": {
+          "de": "Schwert"
+        }
+      },
+      "Unbestimmt": {
+        "labels": {
+          "de": "Unbestimmt"
+        }
+      }
+    }
+  },
+  "Metal-metalSchmuckTrachtbestandteile-Postumii": {
+    "createdBy": "CSGIS",
+    "creationDate": "15-03-2021",
+    "description": {},
+    "values": {
+      "Gürtel": {
+        "labels": {
+          "de": "Gürtel"
+        }
+      },
+      "Halsring": {
+        "labels": {
+          "de": "Halsring"
+        }
+      },
+      "Armring / Beinring": {
+        "labels": {
+          "de": "Armring / Beinring"
+        }
+      },
+      "Ohrring": {
+        "labels": {
+          "de": "Ohrring"
+        }
+      },
+      "Fingerring": {
+        "labels": {
+          "de": "Fingerring"
+        }
+      },
+      "Anhänger": {
+        "labels": {
+          "de": "Anhänger"
+        }
+      },
+      "Perle": {
+        "labels": {
+          "de": "Perle"
+        }
+      },
+      "Kette": {
+        "labels": {
+          "de": "Kette"
+        }
+      },
+      "Knopf": {
+        "labels": {
+          "de": "Knopf"
+        }
+      },
+      "Fibel": {
+        "labels": {
+          "de": "Fibel"
+        }
+      },
+      "Nadel": {
+        "labels": {
+          "de": "Nadel"
+        }
+      },
+      "Unbestimmt": {
+        "labels": {
+          "de": "Unbestimmt"
+        }
+      }
+    }
+  },
+  "Metal-metalVesselParts-Postumii": {
+    "createdBy": "CSGIS",
+    "creationDate": "15-03-2021",
+    "description": {},
+    "values": {
+      "Dreifuß": {
+        "labels": {
+          "de": "Dreifuß"
+        }
+      },
+      "Situla": {
+        "labels": {
+          "de": "Situla"
+        }
+      },
+      "Kessel": {
+        "labels": {
+          "de": "Kessel"
+        }
+      },
+      "Perlrandbecken": {
+        "labels": {
+          "de": "Perlrandbecken"
+        }
+      },
+      "Henkel / Griff": {
+        "labels": {
+          "de": "Henkel / Griff"
+        }
+      },
+      "Attasche": {
+        "labels": {
+          "de": "Attasche"
+        }
+      },
+      "Standring": {
+        "labels": {
+          "de": "Standring"
+        }
+      },
+      "Anderes": {
+        "labels": {
+          "de": "Anderes"
+        }
+      },
+      "Unbestimmt": {
+        "labels": {
+          "de": "Unbestimmt"
+        }
+      }
+    }
+  },
+  "Metal-metalToolsEquipment-Postumii": {
+    "createdBy": "CSGIS",
+    "creationDate": "15-03-2021",
+    "description": {},
+    "values": {
+      "Beil": {
+        "labels": {
+          "de": "Beil"
+        }
+      },
+      "Klinge": {
+        "labels": {
+          "de": "Klinge"
+        }
+      },
+      "Meißel": {
+        "labels": {
+          "de": "Meißel"
+        }
+      },
+      "Säge": {
+        "labels": {
+          "de": "Säge"
+        }
+      },
+      "Hammer": {
+        "labels": {
+          "de": "Hammer"
+        }
+      },
+      "Punze": {
+        "labels": {
+          "de": "Punze"
+        }
+      },
+      "Pfrieme": {
+        "labels": {
+          "de": "Pfrieme"
+        }
+      },
+      "Nadel": {
+        "labels": {
+          "de": "Nadel"
+        }
+      },
+      "Stichel": {
+        "labels": {
+          "de": "Stichel"
+        }
+      },
+      "Spaten": {
+        "labels": {
+          "de": "Spaten"
+        }
+      },
+      "Hacke": {
+        "labels": {
+          "de": "Hacke"
+        }
+      },
+      "Haken": {
+        "labels": {
+          "de": "Haken"
+        }
+      },
+      "Bratspieß": {
+        "labels": {
+          "de": "Bratspieß"
+        }
+      },
+      "Toilettengerät": {
+        "labels": {
+          "de": "Toilettengerät"
+        }
+      },
+      "Pinzette": {
+        "labels": {
+          "de": "Pinzette"
+        }
+      },
+      "Sonde": {
+        "labels": {
+          "de": "Sonde"
+        }
+      },
+      "Kandelaber": {
+        "labels": {
+          "de": "Kandelaber"
+        }
+      },
+      "Lampe": {
+        "labels": {
+          "de": "Lampe"
+        }
+      },
+      "Gewicht": {
+        "labels": {
+          "de": "Gewicht"
+        }
+      },
+      "Beschlag": {
+        "labels": {
+          "de": "Beschlag"
+        }
+      },
+      "Nagel": {
+        "labels": {
+          "de": "Nagel"
+        }
+      },
+      "sog. Käsereibe": {
+        "labels": {
+          "de": "sog. Käsereibe"
+        }
+      },
+      "Anderes": {
+        "labels": {
+          "de": "Anderes"
+        }
+      },
+      "Unbestimmt": {
+        "labels": {
+          "de": "Unbestimmt"
+        }
+      }
+    }
+  },
+  "Metal-metalMiscellaneous-Postumii": {
+    "createdBy": "CSGIS",
+    "creationDate": "15-03-2021",
+    "description": {},
+    "values": {
+      "Kugel": {
+        "labels": {
+          "de": "Kugel"
+        }
+      },
+      "Blech": {
+        "labels": {
+          "de": "Blech"
+        }
+      },
+      "Spirale / Spiralrolle": {
+        "labels": {
+          "de": "Spirale / Spiralrolle"
+        }
+      },
+      "Tülle": {
+        "labels": {
+          "de": "Tülle"
+        }
+      },
+      "Barren": {
+        "labels": {
+          "de": "Barren"
+        }
+      },
+      "Stab": {
+        "labels": {
+          "de": "Stab"
+        }
+      },
+      "Guss- Werkstattabfall": {
+        "labels": {
+          "de": "Guss- Werkstattabfall"
+        }
+      },
+      "Schlacke": {
+        "labels": {
+          "de": "Schlacke"
+        }
+      },
+      "Anderes": {
+        "labels": {
+          "de": "Anderes"
+        }
+      },
+      "Unbestimmt": {
+        "labels": {
+          "de": "Unbestimmt"
+        }
+      }
+    }
+  },
+  "Terracotta-decorationTechnique-Postumii": {
+    "createdBy": "CSGIS",
+    "creationDate": "15-03-2021",
+    "description": {},
+    "values": {
+      "Bemalung": {
+        "labels": {
+          "de": "Bemalung"
+        }
+      },
+      "Relief": {
+        "labels": {
+          "de": "Relief"
+        }
+      },
+      "Ritzung / Graffito": {
+        "labels": {
+          "de": "Ritzung / Graffito"
+        }
+      },
+      "Stempel": {
+        "labels": {
+          "de": "Stempel"
+        }
+      }
+    }
+  },
+  "Terracotta-architecturalDecorationType-Postumii": {
+    "createdBy": "CSGIS",
+    "creationDate": "15-03-2021",
+    "description": {},
+    "values": {
+      "Antifex": {
+        "labels": {
+          "de": "Antifex"
+        }
+      },
+      "Metope": {
+        "labels": {
+          "de": "Metope"
+        }
+      },
+      "Kapitell": {
+        "labels": {
+          "de": "Kapitell"
+        }
+      },
+      "Firstakroter": {
+        "labels": {
+          "de": "Firstakroter"
+        }
+      },
+      "Eckakroter": {
+        "labels": {
+          "de": "Eckakroter"
+        }
+      },
+      "Giebelskulptur": {
+        "labels": {
+          "de": "Giebelskulptur"
+        }
+      },
+      "Sima": {
+        "labels": {
+          "de": "Sima"
+        }
+      },
+      "Fries": {
+        "labels": {
+          "de": "Fries"
+        }
+      },
+      "Kassette": {
+        "labels": {
+          "de": "Kassette"
+        }
+      },
+      "Miniatursäule": {
+        "labels": {
+          "de": "Miniatursäule"
+        }
+      },
+      "Wasserspeier": {
+        "labels": {
+          "de": "Wasserspeier"
+        }
+      },
+      "Firstkalypter": {
+        "labels": {
+          "de": "Firstkalypter"
+        }
+      },
+      "Wandverkleidung": {
+        "labels": {
+          "de": "Wandverkleidung"
+        }
+      },
+      "Traufziegel": {
+        "labels": {
+          "de": "Traufziegel"
+        }
+      },
+      "Anderes": {
+        "labels": {
+          "de": "Anderes"
+        }
+      },
+      "unbestimmt": {
+        "labels": {
+          "de": "unbestimmt"
+        }
+      }
+    }
+  },
+  "Terracotta-toolType-Postumii": {
+    "createdBy": "CSGIS",
+    "creationDate": "15-03-2021",
+    "description": {},
+    "values": {
+      "Platte": {
+        "labels": {
+          "de": "Platte"
+        }
+      },
+      "Arula": {
+        "labels": {
+          "de": "Arula"
+        }
+      },
+      "Gewicht": {
+        "labels": {
+          "de": "Gewicht"
+        }
+      },
+      "Webgewicht": {
+        "labels": {
+          "de": "Webgewicht"
+        }
+      },
+      "Abstandhalter": {
+        "labels": {
+          "de": "Abstandhalter"
+        }
+      },
+      "Stempel": {
+        "labels": {
+          "de": "Stempel"
+        }
+      },
+      "Lampe": {
+        "labels": {
+          "de": "Lampe"
+        }
+      },
+      "Louterion": {
+        "labels": {
+          "de": "Louterion"
+        }
+      },
+      "Louterionständer": {
+        "labels": {
+          "de": "Louterionständer"
+        }
+      },
+      "Pinax": {
+        "labels": {
+          "de": "Pinax"
+        }
+      },
+      "Sarkophag": {
+        "labels": {
+          "de": "Sarkophag"
+        }
+      },
+      "Spielstein": {
+        "labels": {
+          "de": "Spielstein"
+        }
+      },
+      "Spinnwirtel": {
+        "labels": {
+          "de": "Spinnwirtel"
+        }
+      },
+      "Anderes": {
+        "labels": {
+          "de": "Anderes"
+        }
+      },
+      "unbestimmt": {
+        "labels": {
+          "de": "unbestimmt"
+        }
+      }
+    }
+  },
+  "Terracotta-architecturalScupltureType-Postumii": {
+    "createdBy": "CSGIS",
+    "creationDate": "15-03-2021",
+    "description": {},
+    "values": {
+      "Figur/Statuette": {
+        "labels": {
+          "de": "Figur/Statuette"
+        }
+      },
+      "Matrize": {
+        "labels": {
+          "de": "Matrize"
+        }
+      },
+      "Miniaturmodell": {
+        "labels": {
+          "de": "Miniaturmodell"
+        }
+      },
+      "großformatige Skulptur": {
+        "labels": {
+          "de": "großformatige Skulptur"
+        }
+      },
+      "Anderes": {
+        "labels": {
+          "de": "Anderes"
+        }
+      },
+      "unbestimmt": {
+        "labels": {
+          "de": "unbestimmt"
+        }
+      }
+    }
+  },
+  "Stone-color-Postumii": {
+    "creationDate": "15-03-2021",
+    "createdBy": "CSGIS",
+    "description": {},
+    "values": {
+      "gelb": {
+        "labels": {
+          "de": "gelb"
+        }
+      },
+      "grau": {
+        "labels": {
+          "de": "grau"
+        }
+      },
+      "ocker": {
+        "labels": {
+          "de": "ocker"
+        }
+      },
+      "rot": {
+        "labels": {
+          "de": "rot"
+        }
+      },
+      "schwarz": {
+        "labels": {
+          "de": "schwarz"
+        }
+      },
+      "weiß": {
+        "labels": {
+          "de": "weiß"
+        }
+      }
+    }
+  },
+  "Stone-objectType-Postumii": {
+    "creationDate": "15-03-2021",
+    "createdBy": "CSGIS",
+    "description": {},
+    "values": {
+      "Abschlag": {
+        "labels": {
+          "de": "Abschlag"
+        }
+      },
+      "Altar": {
+        "labels": {
+          "de": "Altar"
+        }
+      },
+      "Architekturdekor": {
+        "labels": {
+          "de": "Architekturdekor"
+        }
+      },
+      "Basis": {
+        "labels": {
+          "de": "Basis"
+        }
+      },
+      "Bauteil": {
+        "labels": {
+          "de": "Bauteil"
+        }
+      },
+      "Becken": {
+        "labels": {
+          "de": "Becken"
+        }
+      },
+      "Gefäß": {
+        "labels": {
+          "de": "Gefäß"
+        }
+      },
+      "Gerät": {
+        "labels": {
+          "de": "Gerät"
+        }
+      },
+      "Gewicht": {
+        "labels": {
+          "de": "Gewicht"
+        }
+      },
+      "Grabplatte": {
+        "labels": {
+          "de": "Grabplatte"
+        }
+      },
+      "Mobiliar": {
+        "labels": {
+          "de": "Mobiliar"
+        }
+      },
+      "Mörser": {
+        "labels": {
+          "de": "Mörser"
+        }
+      },
+      "Plastik/Skulptur": {
+        "labels": {
+          "de": "Plastik/Skulptur"
+        }
+      },
+      "Reibstein": {
+        "labels": {
+          "de": "Reibstein"
+        }
+      },
+      "Sarkophag": {
+        "labels": {
+          "de": "Sarkophag"
+        }
+      },
+      "Schmuck": {
+        "labels": {
+          "de": "Schmuck"
+        }
+      },
+      "Spielstein": {
+        "labels": {
+          "de": "Spielstein"
+        }
+      },
+      "Stele": {
+        "labels": {
+          "de": "Stele"
+        }
+      },
+      "Tessera": {
+        "labels": {
+          "de": "Tessera"
+        }
+      },
+      "Unsicher bzw. unbestimmbar": {
+        "labels": {
+          "de": "Unsicher bzw. unbestimmbar"
+        }
+      },
+      "Waffe": {
+        "labels": {
+          "de": "Waffe"
+        }
+      },
+      "Webgewicht": {
+        "labels": {
+          "de": "Webgewicht"
+        }
+      },
+      "Werkzeug": {
+        "labels": {
+          "de": "Werkzeug"
+        }
+      }
+    }
+  },
+  "Stone-architectureElement-Postumii": {
+    "creationDate": "15-03-2021",
+    "createdBy": "CSGIS",
+    "description": {},
+    "values": {
+      "Quaderblock": {
+        "labels": {
+          "de": "Quaderblock"
+        }
+      },
+      "Basis": {
+        "labels": {
+          "de": "Basis"
+        }
+      },
+      "Säule": {
+        "labels": {
+          "de": "Säule"
+        }
+      },
+      "Säulentrommel": {
+        "labels": {
+          "de": "Säulentrommel"
+        }
+      },
+      "Kapitell": {
+        "labels": {
+          "de": "Kapitell"
+        }
+      },
+      "Architrav": {
+        "labels": {
+          "de": "Architrav"
+        }
+      },
+      "Soffitte": {
+        "labels": {
+          "de": "Soffitte"
+        }
+      },
+      "Fries": {
+        "labels": {
+          "de": "Fries"
+        }
+      },
+      "Metope": {
+        "labels": {
+          "de": "Metope"
+        }
+      },
+      "Triglyphon": {
+        "labels": {
+          "de": "Triglyphon"
+        }
+      },
+      "Konsole": {
+        "labels": {
+          "de": "Konsole"
+        }
+      },
+      "Gesims": {
+        "labels": {
+          "de": "Gesims"
+        }
+      },
+      "Sima": {
+        "labels": {
+          "de": "Sima"
+        }
+      },
+      "Akroter": {
+        "labels": {
+          "de": "Akroter"
+        }
+      },
+      "Pfeiler": {
+        "labels": {
+          "de": "Pfeiler"
+        }
+      },
+      "Pilaster": {
+        "labels": {
+          "de": "Pilaster"
+        }
+      },
+      "Ante": {
+        "labels": {
+          "de": "Ante"
+        }
+      },
+      "Türgewände": {
+        "labels": {
+          "de": "Türgewände"
+        }
+      },
+      "Fensterlaibung": {
+        "labels": {
+          "de": "Fensterlaibung"
+        }
+      },
+      "Tür-/Fenstersturz": {
+        "labels": {
+          "de": "Tür-/Fenstersturz"
+        }
+      },
+      "Schwelle": {
+        "labels": {
+          "de": "Schwelle"
+        }
+      },
+      "Bogenstein": {
+        "labels": {
+          "de": "Bogenstein"
+        }
+      },
+      "Schranke": {
+        "labels": {
+          "de": "Schranke"
+        }
+      },
+      "Bodenbelag": {
+        "labels": {
+          "de": "Bodenbelag"
+        }
+      },
+      "Wandverkleidung": {
+        "labels": {
+          "de": "Wandverkleidung"
+        }
+      },
+      "Profilstück": {
+        "labels": {
+          "de": "Profilstück"
+        }
+      }
+    }
+  },
+  "Stone-material-Postumii": {
+    "creationDate": "15-03-2021",
+    "createdBy": "CSGIS",
+    "description": {},
+    "values": {
+      "Andesit": {
+        "labels": {
+          "de": "Andesit"
+        }
+      },
+      "Basalt": {
+        "labels": {
+          "de": "Basalt"
+        }
+      },
+      "Feldspat": {
+        "labels": {
+          "de": "Feldspat"
+        }
+      },
+      "Flint": {
+        "labels": {
+          "de": "Flint"
+        }
+      },
+      "Glimmer": {
+        "labels": {
+          "de": "Glimmer"
+        }
+      },
+      "Granit": {
+        "labels": {
+          "de": "Granit"
+        }
+      },
+      "Kalk": {
+        "labels": {
+          "de": "Kalk"
+        }
+      },
+      "Kalkmörtel": {
+        "labels": {
+          "de": "Kalkmörtel"
+        }
+      },
+      "Kalkstein": {
+        "labels": {
+          "de": "Kalkstein"
+        }
+      },
+      "Kalzit": {
+        "labels": {
+          "de": "Kalzit"
+        }
+      },
+      "Kieselstein": {
+        "labels": {
+          "de": "Kieselstein"
+        }
+      },
+      "Kreide": {
+        "labels": {
+          "de": "Kreide"
+        }
+      },
+      "Marmor": {
+        "labels": {
+          "de": "Marmor"
+        }
+      },
+      "Pophyr": {
+        "labels": {
+          "de": "Pophyr"
+        }
+      },
+      "Quarz": {
+        "labels": {
+          "de": "Quarz"
+        }
+      },
+      "Sandstein": {
+        "labels": {
+          "de": "Sandstein"
+        }
+      },
+      "Sinter": {
+        "labels": {
+          "de": "Sinter"
+        }
+      },
+      "Silex/Flint": {
+        "labels": {
+          "de": "Silex/Flint"
+        }
+      },
+      "Trachyt": {
+        "labels": {
+          "de": "Trachyt"
+        }
+      },
+      "Tuff": {
+        "labels": {
+          "de": "Tuff"
+        }
+      }
+    }
+  },
+  "Stone-decoration-Postumii": {
+    "creationDate": "15-03-2021",
+    "createdBy": "CSGIS",
+    "description": {},
+    "values": {
+      "Relief": {
+        "labels": {
+          "de": "Relief"
+        }
+      },
+      "Graffito": {
+        "labels": {
+          "de": "Graffito"
+        }
+      },
+      "Inschrift": {
+        "labels": {
+          "de": "Inschrift"
+        }
+      },
+      "Steinmetzzeichen": {
+        "labels": {
+          "de": "Steinmetzzeichen"
+        }
+      },
+      "Anderes": {
+        "labels": {
+          "de": "Anderes"
+        }
+      }
+    }
+  },
+  "Coin-provenance-Postumii": {
+    "createdBy": "CSGIS",
+    "description": {},
+    "creationDate": "15-03-2021",
+    "values": {
+      "Athen": {
+        "labels": {
+          "de": "Athen"
+        }
+      },
+      "Griechenland": {
+        "labels": {
+          "de": "Griechenland"
+        }
+      },
+      "Kleinasien": {
+        "labels": {
+          "de": "Kleinasien"
+        }
+      },
+      "Italien": {
+        "labels": {
+          "de": "Italien"
+        }
+      },
+      "Sizilien": {
+        "labels": {
+          "de": "Sizilien"
+        }
+      },
+      "Karthago": {
+        "labels": {
+          "de": "Karthago"
+        }
+      },
+      "Kampanien": {
+        "labels": {
+          "de": "Kampanien"
+        }
+      },
+      "Apulien": {
+        "labels": {
+          "de": "Apulien"
+        }
+      },
+      "Lukanien": {
+        "labels": {
+          "de": "Lukanien"
+        }
+      },
+      "Bruttium": {
+        "labels": {
+          "de": "Bruttium"
+        }
+      },
+      "Kalabrien": {
+        "labels": {
+          "de": "Kalabrien"
+        }
+      },
+      "Nordafrika": {
+        "labels": {
+          "de": "Nordafrika"
+        }
+      },
+      "Anderes": {
+        "labels": {
+          "de": "Anderes"
+        }
+      }
+    }
+  },
+  "Coin-mint-Postumii": {
+    "createdBy": "CSGIS",
+    "creationDate": "15-03-2021",
+    "description": {},
+    "values": {
+      "Abakainon": {
+        "labels": {
+          "de": "Abakainon"
+        }
+      },
+      "Adranon": {
+        "labels": {
+          "de": "Adranon"
+        }
+      },
+      "Aetna": {
+        "labels": {
+          "de": "Aetna"
+        }
+      },
+      "Agyrion": {
+        "labels": {
+          "de": "Agyrion"
+        }
+      },
+      "Akragas": {
+        "labels": {
+          "de": "Akragas"
+        }
+      },
+      "Akrai": {
+        "labels": {
+          "de": "Akrai"
+        }
+      },
+      "Alaisa": {
+        "labels": {
+          "de": "Alaisa"
+        }
+      },
+      "Alontion": {
+        "labels": {
+          "de": "Alontion"
+        }
+      },
+      "Ameselon": {
+        "labels": {
+          "de": "Ameselon"
+        }
+      },
+      "Assorus": {
+        "labels": {
+          "de": "Assorus"
+        }
+      },
+      "Cossura": {
+        "labels": {
+          "de": "Cossura"
+        }
+      },
+      "Enna": {
+        "labels": {
+          "de": "Enna"
+        }
+      },
+      "Entella": {
+        "labels": {
+          "de": "Entella"
+        }
+      },
+      "Eryx": {
+        "labels": {
+          "de": "Eryx"
+        }
+      },
+      "Gela": {
+        "labels": {
+          "de": "Gela"
+        }
+      },
+      "Herbessos": {
+        "labels": {
+          "de": "Herbessos"
+        }
+      },
+      "Himera": {
+        "labels": {
+          "de": "Himera"
+        }
+      },
+      "Halikarnassos": {
+        "labels": {
+          "de": "Halikarnassos"
+        }
+      },
+      "Harran": {
+        "labels": {
+          "de": "Harran"
+        }
+      },
+      "Hipana": {
+        "labels": {
+          "de": "Hipana"
+        }
+      },
+      "Iaetia": {
+        "labels": {
+          "de": "Iaetia"
+        }
+      },
+      "Kalacte": {
+        "labels": {
+          "de": "Kalacte"
+        }
+      },
+      "Kamarina": {
+        "labels": {
+          "de": "Kamarina"
+        }
+      },
+      "Katane": {
+        "labels": {
+          "de": "Katane"
+        }
+      },
+      "Kentoripai": {
+        "labels": {
+          "de": "Kentoripai"
+        }
+      },
+      "Kephaloidion": {
+        "labels": {
+          "de": "Kephaloidion"
+        }
+      },
+      "Leontini": {
+        "labels": {
+          "de": "Leontini"
+        }
+      },
+      "Lilybaion": {
+        "labels": {
+          "de": "Lilybaion"
+        }
+      },
+      "Lipara": {
+        "labels": {
+          "de": "Lipara"
+        }
+      },
+      "Longane": {
+        "labels": {
+          "de": "Longane"
+        }
+      },
+      "Melita": {
+        "labels": {
+          "de": "Melita"
+        }
+      },
+      "Messana": {
+        "labels": {
+          "de": "Messana"
+        }
+      },
+      "Messana – Mamertini": {
+        "labels": {
+          "de": "Messana – Mamertini"
+        }
+      },
+      "Morgantina": {
+        "labels": {
+          "de": "Morgantina"
+        }
+      },
+      "Motya": {
+        "labels": {
+          "de": "Motya"
+        }
+      },
+      "Nakona": {
+        "labels": {
+          "de": "Nakona"
+        }
+      },
+      "Naxos": {
+        "labels": {
+          "de": "Naxos"
+        }
+      },
+      "Panormos": {
+        "labels": {
+          "de": "Panormos"
+        }
+      },
+      "Piakos": {
+        "labels": {
+          "de": "Piakos"
+        }
+      },
+      "Punisch unspezifisch": {
+        "labels": {
+          "de": "Punisch unspezifisch"
+        }
+      },
+      "Segesta": {
+        "labels": {
+          "de": "Segesta"
+        }
+      },
+      "Selinus": {
+        "labels": {
+          "de": "Selinus"
+        }
+      },
+      "Solus": {
+        "labels": {
+          "de": "Solus"
+        }
+      },
+      "Syrakus": {
+        "labels": {
+          "de": "Syrakus"
+        }
+      },
+      "Tauromenion": {
+        "labels": {
+          "de": "Tauromenion"
+        }
+      },
+      "Thermae Himerenses": {
+        "labels": {
+          "de": "Thermae Himerenses"
+        }
+      },
+      "Tyndaris": {
+        "labels": {
+          "de": "Tyndaris"
+        }
+      },
+      "Anderes": {
+        "labels": {
+          "de": "Anderes"
+        }
+      }
+    }
+  },
+  "Coin-denomination-Postumii": {
+    "creationDate": "15-03-2021",
+    "createdBy": "CSGIS",
+    "description": {},
+    "values": {
+      "Drachme": {
+        "labels": {
+          "de": "Drachme"
+        }
+      },
+      "Didrachme": {
+        "labels": {
+          "de": "Didrachme"
+        }
+      },
+      "Tetradrachme": {
+        "labels": {
+          "de": "Tetradrachme"
+        }
+      },
+      "Dekadrachme": {
+        "labels": {
+          "de": "Dekadrachme"
+        }
+      },
+      "Hemidrachme": {
+        "labels": {
+          "de": "Hemidrachme"
+        }
+      },
+      "Stater": {
+        "labels": {
+          "de": "Stater"
+        }
+      },
+      "Hemistater": {
+        "labels": {
+          "de": "Hemistater"
+        }
+      },
+      "Tetarte": {
+        "labels": {
+          "de": "Tetarte"
+        }
+      },
+      "Obol": {
+        "labels": {
+          "de": "Obol"
+        }
+      },
+      "Hemiobol": {
+        "labels": {
+          "de": "Hemiobol"
+        }
+      },
+      "Aes grave": {
+        "labels": {
+          "de": "Aes grave"
+        }
+      },
+      "Unbestimmbar": {
+        "labels": {
+          "de": "Unbestimmbar"
+        }
+      }
+    }
+  },
+  "Coin-mintingRuler-Postumii": {
+    "createdBy": "CSGIS",
+    "creationDate": "15-03-2021",
+    "description": {},
+    "values": {
+      "Deinomeniden": {
+        "labels": {
+          "de": "Deinomeniden"
+        }
+      },
+      "Gelon II": {
+        "labels": {
+          "de": "Gelon II"
+        }
+      },
+      "1. Demokratie": {
+        "labels": {
+          "de": "1. Demokratie"
+        }
+      },
+      "2. Demokratie": {
+        "labels": {
+          "de": "2. Demokratie"
+        }
+      },
+      "3. Demokratie": {
+        "labels": {
+          "de": "3. Demokratie"
+        }
+      },
+      "4. Demokratie": {
+        "labels": {
+          "de": "4. Demokratie"
+        }
+      },
+      "5. Demokratie": {
+        "labels": {
+          "de": "5. Demokratie"
+        }
+      },
+      "Dionysios I": {
+        "labels": {
+          "de": "Dionysios I"
+        }
+      },
+      "Dionysios II": {
+        "labels": {
+          "de": "Dionysios II"
+        }
+      },
+      "Timoleon": {
+        "labels": {
+          "de": "Timoleon"
+        }
+      },
+      "Agathokles": {
+        "labels": {
+          "de": "Agathokles"
+        }
+      },
+      "Dion": {
+        "labels": {
+          "de": "Dion"
+        }
+      },
+      "Hiketas": {
+        "labels": {
+          "de": "Hiketas"
+        }
+      },
+      "Hieron II": {
+        "labels": {
+          "de": "Hieron II"
+        }
+      },
+      "Pyhrrus": {
+        "labels": {
+          "de": "Pyhrrus"
+        }
+      },
+      "Hieronymos": {
+        "labels": {
+          "de": "Hieronymos"
+        }
+      },
+      "Philistis": {
+        "labels": {
+          "de": "Philistis"
+        }
+      },
+      "Sikeliotes": {
+        "labels": {
+          "de": "Sikeliotes"
+        }
+      },
+      "Mamertini": {
+        "labels": {
+          "de": "Mamertini"
+        }
+      },
+      "Tyrrhenoi": {
+        "labels": {
+          "de": "Tyrrhenoi"
+        }
+      },
+      "Unklar": {
+        "labels": {
+          "de": "Unklar"
+        }
+      }
+    }
+  },
+  "Pottery-FineWare-Provenance-Postumii": {
+    "createdBy": "CSGIS",
+    "creationDate": "15-03-2021",
+    "description": {
+      "de": "Feinkeramik nach Provenienz für Fundzusammenstellung",
+      "it": ""
+    },
+    "values": {
+      "Attisch": {
+        "labels": {
+          "de": "1A. Attisch",
+          "it": "1A. Attica"
+        }
+      },
+      "Korinthisch": {
+        "labels": {
+          "de": "1B. Korinthisch",
+          "it": "1B. Corinzia"
+        }
+      },
+      "Ionisch": {
+        "labels": {
+          "de": "1C. Ionisch",
+          "it": "1C. Greco-orientale"
+        }
+      },
+      "Punisch": {
+        "labels": {
+          "de": "1D. Punisch",
+          "it": "1D. Punica"
+        }
+      },
+      "Megarisch": {
+        "labels": {
+          "de": "1E. Megarisch",
+          "it": "1E. Megarese"
+        }
+      },
+      "Etruskisch": {
+        "labels": {
+          "de": "1F. Etruskisch",
+          "it": "1F. Etrusca"
+        }
+      },
+      "Regional": {
+        "labels": {
+          "de": "1G. Regional",
+          "it": "1G. Regionale, Coloniale"
+        }
+      },
+      "Lokal": {
+        "labels": {
+          "de": "1H. Lokal",
+          "it": "1H. Locale"
+        }
+      },
+      "Indigen": {
+        "labels": {
+          "de": "1I. Indigen",
+          "it": "1I. Indigena"
+        }
+      },
+      "Firnisware unklarer Herkunft": {
+        "labels": {
+          "de": "1J. Firnisware unklarer Herkunft",
+          "it": "1J. Vernice nera di provenienza ignota"
+        }
+      },
+      "Anderes unklarer Herkunft": {
+        "labels": {
+          "de": "1K. Anderes unklarer Herkunft",
+          "it": "1K. Altro di provenienza ignota"
+        }
+      }
+    }
+  },
+  "Pottery-Amphorae-Provenance-Postumii": {
+    "createdBy": "CSGIS",
+    "creationDate": "15-03-2021",
+    "description": {
+      "de": "Amphoren nach Provenienz für Fundzusammenstellung",
+      "it": "Anfore secondo provenienza per composizione reperti"
+    },
+    "values": {
+      "Westgriechisch ": {
+        "labels": {
+          "de": "2A. Westgriechisch",
+          "it": "2A. Greco-occidentale"
+        }
+      },
+      "MGS": {
+        "labels": {
+          "de": "2B. MGS",
+          "it": "2B. MGS"
+        }
+      },
+      "Ionisch-adriatisch": {
+        "labels": {
+          "de": "2C. Ionisch-adriatisch",
+          "it": "2C. Greco-orientale"
+        }
+      },
+      "Attisch": {
+        "labels": {
+          "de": "2D. Attisch",
+          "it": "2D. Attica"
+        }
+      },
+      "Korinthisch": {
+        "labels": {
+          "de": "2E. Korinthisch",
+          "it": "2E. Corinzia"
+        }
+      },
+      "Nordägäisch": {
+        "labels": {
+          "de": "2F. Nordägäisch",
+          "en": "2F. Nord-Egee"
+        }
+      },
+      "Chiotisch": {
+        "labels": {
+          "de": "2G. Chiotisch",
+          "it": "2G. Chiota"
+        }
+      },
+      "Phönizisch": {
+        "labels": {
+          "de": "2H. Phönizisch",
+          "it": "2H. Fenicia"
+        }
+      },
+      "Punisch": {
+        "labels": {
+          "de": "2I. Punisch",
+          "it": "2I. Punica"
+        }
+      },
+      "Massaliotisch": {
+        "labels": {
+          "de": "2J. Massaliotisch",
+          "it": "2J. Massaliota"
+        }
+      },
+      "Lokal": {
+        "labels": {
+          "de": "2K. Lokal",
+          "it": "2K. Locale"
+        }
+      },
+      "Anderes unklarer Herkunft": {
+        "labels": {
+          "de": "2L. Anderes unklarer Herkunft",
+          "it": "2L. Altro di provenienza ignota"
+        }
+      }
+    }
+  },
+  "Pottery-CoarseWare-Function-Postumii": {
+    "createdBy": "CSGIS",
+    "creationDate": "15-03-2021",
+    "description": {
+      "de": "Gebrauchskeramik nach Funktion für Fundzusammenstellung",
+      "it": ""
+    },
+    "values": {
+      "Kochware": {
+        "labels": {
+          "de": "3A. Kochware",
+          "it": "3A. da fuoco"
+        }
+      },
+      "Tafelgeschirr": {
+        "labels": {
+          "de": "3B. Tafelgeschirr",
+          "it": "3B. da mensa"
+        }
+      },
+      "Große Behälter": {
+        "labels": {
+          "de": "3C. Große Behälter",
+          "it": "3C. Grande contenitori"
+        }
+      },
+      "Anderes, Unbekannt": {
+        "labels": {
+          "de": "3D. Anderes, Unbekannt",
+          "it": "3D. Altro, ignoto"
+        }
+      }
+    }
+  },
+  "Terracotta-Collection-Postumii": {
+    "createdBy": "CSGIS",
+    "creationDate": "15-03-2021",
+    "description": {
+      "de": "Terrakotta",
+      "it": ""
+    },
+    "values": {
+      "Figürlich": {
+        "labels": {
+          "de": "5A. Figürlich ",
+          "it": "5A. Figurate"
+        }
+      },
+      "Lampen": {
+        "labels": {
+          "de": "5B. Lampen",
+          "it": "5B. Lucerne"
+        }
+      },
+      "Louteria": {
+        "labels": {
+          "de": "5C. Louteria",
+          "it": "5C. Louteria"
+        }
+      },
+      "Arulae": {
+        "labels": {
+          "de": "5D. Arulae",
+          "it": "5D. Arulae"
+        }
+      },
+      "Gewicht": {
+        "labels": {
+          "de": "5E. Gewicht",
+          "it": "5E. Pesi"
+        }
+      },
+      "Gebrauchsgegenstände varia": {
+        "labels": {
+          "de": "5F. Gebrauchsgegenstände varia",
+          "it": "5F. vari oggetti di uso"
+        }
+      },
+      "Sarkophag": {
+        "labels": {
+          "de": "5G. Sarkophag",
+          "it": "5G. Sarcofago"
+        }
+      },
+      "Anderes, Unbekannt": {
+        "labels": {
+          "de": "5H. Anderes, Unbekannt",
+          "it": "5H. Altro, Ignoto"
+        }
+      }
+    }
+  },
+  "BuildingMaterial-Collection-Postumii": {
+    "createdBy": "CSGIS",
+    "creationDate": "15-03-2021",
+    "description": {
+      "de": "Baumaterial",
+      "it": ""
+    },
+    "values": {
+      "Bauteile aus Stein": {
+        "labels": {
+          "de": "6A. Bauteile aus Stein",
+          "it": "6A. Elementi architettonici di pietra"
+        }
+      },
+      "Baudekoration": {
+        "labels": {
+          "de": "6B. Baudekoration",
+          "it": "6B. Decorazione architettonica"
+        }
+      },
+      "Dachziegel": {
+        "labels": {
+          "de": "6C. Dachziegel",
+          "it": "6C. Elementi di copertura semplici"
+        }
+      },
+      "Dachterrakotten": {
+        "labels": {
+          "de": "6D. Dachterrakotten",
+          "it": "6D. Decorazione fittile di tetti"
+        }
+      },
+      "Lehmsteine": {
+        "labels": {
+          "de": "6E. Lehmsteine",
+          "it": "6E. Mattoni"
+        }
+      },
+      "Hüttenlehm": {
+        "labels": {
+          "de": "6F. Hüttenlehm",
+          "it": "6F. Concotto"
+        }
+      },
+      "Wandverputz": {
+        "labels": {
+          "de": "6G. Wandverputz",
+          "it": "6G. Intonaco"
+        }
+      },
+      "Bodenbelag": {
+        "labels": {
+          "de": "6H. Bodenbelag",
+          "it": "6H. Pavimentazione"
+        }
+      },
+      "Mosaiksteine": {
+        "labels": {
+          "de": "6I. Mosaiksteine",
+          "it": "6I. Tesserae"
+        }
+      },
+      "Anderes, Unbekannt": {
+        "labels": {
+          "de": "6J. Anderes, Unbekannt",
+          "it": "6J. Altro, Ignoto"
+        }
+      }
+    }
+  },
+  "Stone-Collection-Postumii": {
+    "createdBy": "CSGIS",
+    "creationDate": "15-03-2021",
+    "description": {
+      "de": "Steine und Steinobjekte",
+      "it": ""
+    },
+    "values": {
+      "Figürlich": {
+        "labels": {
+          "de": "7A. Figürlich ",
+          "it": "7A. Ogetti figurati"
+        }
+      },
+      "Gebrauchsgegenstände": {
+        "labels": {
+          "de": "7B. Gebrauchsgegenstände",
+          "it": "7B. Vari oggetti di uso"
+        }
+      },
+      "Kiesel": {
+        "labels": {
+          "de": "7C. Kiesel",
+          "it": "7C. Ciottoli"
+        }
+      },
+      "Marmor": {
+        "labels": {
+          "de": "7D. Marmor",
+          "it": "7D. Marmo"
+        }
+      },
+      "Flint": {
+        "labels": {
+          "de": "7E. Flint",
+          "it": "7E. Selce"
+        }
+      },
+      "Anderes, Unbekannt": {
+        "labels": {
+          "de": "7F. Anderes, Unbekannt",
+          "it": "7F. Altro, Ignoto"
+        }
+      }
+    }
+  },
+  "MetalAndGlas-Collection-Postumii": {
+    "createdBy": "CSGIS",
+    "creationDate": "15-03-2021",
+    "description": {
+      "de": "Metalle und Glas",
+      "it": ""
+    },
+    "values": {
+      "Münzen": {
+        "labels": {
+          "de": "8A. Münzen",
+          "it": "8A. Monete"
+        }
+      },
+      "Glas": {
+        "labels": {
+          "de": "8B. Glas",
+          "it": "8B. Vetro"
+        }
+      },
+      "Bronzeobjekte": {
+        "labels": {
+          "de": "8C. Bronzeobjekte",
+          "it": "8C. Oggetti di bronzo"
+        }
+      },
+      "Eisenobjekte": {
+        "labels": {
+          "de": "8D. Eisenobjekte",
+          "it": "8D. Oggetti di ferro"
+        }
+      },
+      "Silberobjekte": {
+        "labels": {
+          "de": "8E. Silberobjekte",
+          "it": "8E. Oggetti d’argento"
+        }
+      },
+      "Bleiobjekte": {
+        "labels": {
+          "de": "8F. Bleiobjekte",
+          "it": "8F. Oggetti di piombo"
+        }
+      },
+      "Goldobjekte": {
+        "labels": {
+          "de": "8G. Goldobjeke",
+          "it": "8G. Oggetti d'oro"
+        }
+      },
+      "Schlacken": {
+        "labels": {
+          "de": "8H. Schlacken",
+          "it": "8H. Scorie"
+        }
+      },
+      "Anderes, Unbekannt": {
+        "labels": {
+          "de": "8J. Anderes, Unbekannt",
+          "it": "8J. Altro, Ignoto"
+        }
+      }
+    }
+  },
+  "OrganicMaterial-Collection-Postumii": {
+    "createdBy": "CSGIS",
+    "creationDate": "15-03-2021",
+    "description": {
+      "de": "Metalle und Glas",
+      "it": ""
+    },
+    "values": {
+      "Knochen": {
+        "labels": {
+          "de": "9A. Knochen",
+          "it": "9A. Ossa"
+        }
+      },
+      "Zähne": {
+        "labels": {
+          "de": "9B. Zähne",
+          "it": "9B. Denti"
+        }
+      },
+      "Horn": {
+        "labels": {
+          "de": "9C. Horn",
+          "it": "9C. Corna"
+        }
+      },
+      "Mollusken": {
+        "labels": {
+          "de": "9D. Mollusken",
+          "it": "9D. Molluschi"
+        }
+      },
+      "Holz": {
+        "labels": {
+          "de": "9E. Holz",
+          "it": "9E. Legno"
+        }
+      },
+      "Holzkohle": {
+        "labels": {
+          "de": "9F. Holzkohle",
+          "it": "9F. Carbone"
+        }
+      },
+      "Textilien": {
+        "labels": {
+          "de": "9G. Textilien",
+          "it": "9G. Tessuti"
+        }
+      },
+      "LEder": {
+        "labels": {
+          "de": "9H. Leder",
+          "it": "9H. Cuoio"
+        }
+      },
+      "Anderes, Unbekannt": {
+        "labels": {
+          "de": "9J. Anderes, Unbekannt",
+          "it": "9J. Altro, Ignoto"
+        }
+      },
+      "Astragal": {
+        "labels": {
+          "de": "9K. Astragal",
+          "it": "9K. Astragalo"
+        }
+      }
+    }
+  },
   "Find-storagePlace-Olympia": {
     "createdBy": "",
     "creationDate": "10-9-2020",
@@ -47502,7 +51893,7 @@
      "description": {
        "de": "Konsistenz des Erdbefunds",
        "en": "Consistency of Layer"
-     }, 
+     },
      "order": [
        "very_hard",
        "hard",
@@ -47952,7 +52343,7 @@
        "1:25000",
        "1:50000",
        "other"
-     ], 
+     ],
      "values": {
        "1:1": {},
        "1:2": {},

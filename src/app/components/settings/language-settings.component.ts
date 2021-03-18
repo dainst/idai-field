@@ -100,7 +100,7 @@ export class LanguageSettingsComponent {
                 if (languageCode === 'it') {
                     result[languageCode].info = this.i18n({
                         id: 'settings.languageInfo.it',
-                        value: 'Die italienische Übersetzung wird bereitgestellt vom DAI Rom. Bei Fragen und Anmerkungen zur Übersetzung wenden Sie sich bitte an:'
+                        value: 'Die italienische Übersetzung wird bereitgestellt vom DAI Rom. Bei Fragen und Anmerkungen zur Übersetzung wenden Sie sich bitte an: idai.field-italiano@dainst.de'
                     });
                 }
             }

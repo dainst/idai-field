@@ -7,6 +7,7 @@ import {ProjectConfiguration} from '../../../core/configuration/project-configur
 import {Loading} from '../../widgets/loading';
 import {Messages} from '../../messages/messages';
 import { formatContent } from './format-content';
+import { identity } from 'tsfun';
 
 const moment = require('moment');
 
@@ -42,18 +43,8 @@ export class DoceditConflictsTabComponent implements OnChanges {
     public showLoadingIcon = () => this.isLoading() && this.loading.getLoadingTimeInMilliseconds() > 250;
 
     public getFieldContent = (field: any, revision: Document) => 
-        formatContent(revision.resource[field.name], { // TODO review, translate entries?
-            'asMeasuredBy': 'asMeasuredBy', 
-            'before': 'before',
-            'after': 'after',
-            'bce': 'bce',
-            'ce': 'ce',
-            'bp': 'bp',
-            'zenonId': 'zenonId',
-            'page': 'page',
-            'figure': 'figure'
-        });
-
+        formatContent(revision.resource[field.name], identity); // TODO review, translate entries?
+            
 
     async ngOnChanges() {
 

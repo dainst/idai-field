@@ -1,5 +1,5 @@
 import { Dating, Dimension, Literature, OptionalRange } from 'idai-components-2';
-import { Map, conds, flow, identity, isArray, otherwise } from 'tsfun';
+import { conds, flow, identity, isArray, otherwise } from 'tsfun';
 
 export type InnerHTML = string;
 
@@ -7,18 +7,19 @@ export type InnerHTML = string;
 export type Translations 
     = Literature.Translations
     |Dating.Translations
-    |Dimension.Translations;
+    |Dimension.Translations
+    |OptionalRange.Translations;
 
 
 /**
  * @author Daniel de Oliveira
  */
-export function formatContent(fieldContent: any, translations: Translations): InnerHTML {
+export function formatContent(fieldContent: any, getTranslation: (term: Translations) => string): InnerHTML {
 
     return !isArray(fieldContent) 
-        ? JSON.stringify(fieldContent)
+        ? JSON.stringify(fieldContent) /* TODO review possible object types */
         : flow(fieldContent, 
-            convertArray(translations), 
+            convertArray(getTranslation), 
             formatArray);
 }
 
@@ -35,19 +36,15 @@ function formatArray(fieldContent: Array<string>): InnerHTML {
 }
 
 
-const convertArray = (translations: Translations) => (fieldContent: Array<any>): Array<string> => {
-
-    const getTranslations = (s: string) => translations[s]; // TODO remove
-
-    return fieldContent.map(conds(
-            [Dating.isDating,
-             element => Dating.generateLabel(element, translations as Dating.Translations)],
-            [Dimension.isDimension,
-             element => Dimension.generateLabel(element, identity, translations as Dimension.Translations)],
-            [OptionalRange.isOptionalRange,
-             element => OptionalRange.generateLabel(element, getTranslations, identity /* TODO */)],
-            [Literature.isLiterature,
-             element => Literature.generateLabel(element, translations as Literature.Translations /* TODO zenonId? */)],
-            [otherwise,
-             JSON.stringify]));
-}
+const convertArray = (getTranslation: (term: Translations) => string) => (fieldContent: Array<any>): Array<string> =>
+    fieldContent.map(conds(
+        [Dating.isDating,
+            element => Dating.generateLabel(element, getTranslation)], // TODO maybe add curryFirst function
+        [Dimension.isDimension,
+            element => Dimension.generateLabel(element, identity, getTranslation)],
+        [OptionalRange.isOptionalRange,
+            element => OptionalRange.generateLabel(element, getTranslation, identity /* TODO, review getLabel */)],
+        [Literature.isLiterature,
+            element => Literature.generateLabel(element, getTranslation /*, TODO zenonId? */)],
+        [otherwise,
+            JSON.stringify]));

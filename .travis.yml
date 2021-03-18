@@ -23,6 +23,7 @@ addons:
     - icnsutils
 
 before_install:
+- cd desktop
 - export CHROME_BIN=chromium-browser
 
 install:

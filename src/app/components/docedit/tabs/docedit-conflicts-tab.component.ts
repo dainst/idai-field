@@ -1,12 +1,12 @@
 import {ChangeDetectorRef, Component, Input, OnChanges} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
-import { isArray } from 'tsfun';
 import {Relations, Resource, Document} from 'idai-components-2';
 import {DocumentReadDatastore} from '../../../core/datastore/document-read-datastore';
 import {M} from '../../messages/m';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
 import {Loading} from '../../widgets/loading';
 import {Messages} from '../../messages/messages';
+import { formatContent } from './format-content';
 
 const moment = require('moment');
 
@@ -40,6 +40,9 @@ export class DoceditConflictsTabComponent implements OnChanges {
     public isLoading = () => this.loading.isLoading('docedit-conflicts-tab');
 
     public showLoadingIcon = () => this.isLoading() && this.loading.getLoadingTimeInMilliseconds() > 250;
+
+    public getFieldContent = (field: any, revision: Document) => 
+        formatContent(revision.resource[field.name], { 'before': 'Vor', 'after': 'Nach' });
 
 
     async ngOnChanges() {
@@ -150,13 +153,6 @@ export class DoceditConflictsTabComponent implements OnChanges {
         return Document.getLastModified(revision).user
             + ' - '
             + moment(Document.getLastModified(revision).date).format('DD. MMMM YYYY HH:mm:ss [Uhr]');
-    }
-
-
-    public getFieldContent(field: any, revision: Document): string {
-
-        const fieldContent: any = revision.resource[field.name];
-        return DoceditConflictsTabComponent.getContentStringFor(fieldContent)
     }
 
 
@@ -276,18 +272,5 @@ export class DoceditConflictsTabComponent implements OnChanges {
             const targets: Array<Document> = await this.datastore.getMultiple(resource.relations[fieldName]);
             targets.forEach(target => this.relationTargets[target.resource.id] = target);
         }
-    }
-
-
-    private static getContentStringFor(fieldContent: any): string {
-
-        if (!isArray(fieldContent)) return JSON.stringify(fieldContent);
-
-        let contentString: string = '';
-        for (let element of fieldContent) {
-            if (contentString.length > 0) contentString += ', ';
-            contentString += JSON.stringify(element);
-        }
-        return contentString;
     }
 }

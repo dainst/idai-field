@@ -39,7 +39,7 @@ function formatArray(fieldContent: Array<string>): InnerHTML {
 const convertArray = (getTranslation: (term: Translations) => string) => (fieldContent: Array<any>): Array<string> =>
     fieldContent.map(conds(
         [Dating.isDating,
-            element => Dating.generateLabel(element, getTranslation)], // TODO maybe add curryFirst function
+            element => Dating.generateLabel(element, getTranslation)],
         [Dimension.isDimension,
             element => Dimension.generateLabel(element, identity, getTranslation)],
         [OptionalRange.isOptionalRange,

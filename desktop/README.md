@@ -1,5 +1,4 @@
-
-# iDAI.field
+# iDAI.field Desktop
  
 ![idai-field](img/README-1.png) 
     
@@ -25,14 +24,15 @@ You can install the latest version of iDAI.field by downloading it from the [git
 
 Development of iDAI.field works under **MacOS**, **Windows** and **Linux**. In any case, before you start, make sure you have [NodeJS](https://nodejs.org/en/) > 12.0.0 as well as Node Package Manager ([NPM](https://www.npmjs.com/)) installed.  
 
-Then clone this repository locally and run the following commands:
+Then clone this repository locally and run the following commands (in the repository root):
 
 ```
-$ npm install
+$ npm run bootstrap
+$ cd desktop
 $ npm start
 ```
 
-`npm install` fetches the necessary dependencies, while `npm start` compiles the Angular app and starts it via Electron.
+`npm run bootstrap` sets up and fetches the necessary dependencies, while `npm start` compiles the Angular app and starts it via Electron.
  
 Shapefile import/export is handled by a Java command line tool which is called by the Electron app. If Java 8 or higher and [Maven](https://maven.apache.org/) are installed, the Java tool can be built via the command:
 ```
@@ -66,10 +66,11 @@ The optional fail fast parameter specifies if test execution stops on the first 
 
 ## Packaging
 
-To create binaries run:
+To create binaries run (in repository root):
 
 ```
 $ npm run build
+$ cd desktop
 $ npm run package:[mac|win|lnx]
 ```
 

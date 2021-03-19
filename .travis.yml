@@ -23,11 +23,11 @@ addons:
     - icnsutils
 
 before_install:
+- npm run bootstrap
 - cd desktop
 - export CHROME_BIN=chromium-browser
 
 install:
-- npm install --force
 - npm add jquery
 - npm add popper.js
 

@@ -74,9 +74,8 @@
                             </div>
                             <div class="import-info"
                                 i18n="@@import.defaultOption.info">
-                                Bereits existierende Ressourcen,
-                                d.h. wenn die angegebenen Bezeichner (Feld <em>identifier</em>)
-                                bereits vergeben sind, werden ignoriert.
+                                Datensätze, deren Bezeichner (Feld <em>identifier</em>)
+                                bereits vergeben ist, werden ignoriert.
                             </div>
                         </div>
                         <div 
@@ -102,7 +101,7 @@
                                 vorhandene Felder, die nicht im Importdatensatz vorhanden sind, bleiben unverändert
                                 bestehen. Die Kategorie kann nicht verändert werden. Die Zuordnung von Datensätzen
                                 geschieht per Bezeichner (Feld <em>identifier</em>). Der Import kann nur durchgeführt werden,
-                                wenn sämtliche Identifier zugeordnet werden können.
+                                wenn sämtliche Bezeichner zugeordnet werden können.
                             </div>
                             <div *ngIf="importState.format === 'csv'" class="import-info"
                                 i18n="@@import.mergeOption.csv.info">
@@ -112,7 +111,7 @@
                                 vorhandene Felder, die nicht im Importdatensatz vorhanden sind, bleiben unverändert
                                 bestehen. Die Kategorie kann nicht verändert werden. Die Zuordnung von Datensätzen
                                 geschieht per Bezeichner (Spalte <em>identifier</em>). Der Import kann nur durchgeführt werden,
-                                wenn sämtliche Identifier zugeordnet werden können.
+                                wenn sämtliche Bezeichner zugeordnet werden können.
                             </div>
                         </div>
                         <div *ngIf="shouldDisplayPermitDeletionsOption()">

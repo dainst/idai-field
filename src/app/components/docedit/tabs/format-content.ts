@@ -1,5 +1,5 @@
 import { Dating, Dimension, Literature, OptionalRange } from 'idai-components-2';
-import { conds, flow, identity, isArray, otherwise } from 'tsfun';
+import { conds, flow, identity, isArray, isString, otherwise } from 'tsfun';
 
 export type InnerHTML = string;
 
@@ -42,7 +42,7 @@ const convertArray = (getTranslation: (term: Translations) => string) => (fieldC
             element => Dating.generateLabel(element, getTranslation)],
         [Dimension.isDimension,
             element => Dimension.generateLabel(element, identity, getTranslation)],
-        [OptionalRange.isOptionalRange,
+        [OptionalRange.buildIsOptionalRange(isString),
             element => OptionalRange.generateLabel(element, getTranslation, identity as any /* TODO, review getLabel */)],
         [Literature.isLiterature,
             element => Literature.generateLabel(element, getTranslation /*, TODO zenonId? */)],

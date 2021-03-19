@@ -1,17 +1,17 @@
-import {Injectable} from '@angular/core';
-import {Observable, Observer} from 'rxjs';
-import {map as asyncMap} from 'tsfun/async';
-import {Action, Document} from 'idai-components-2';
-import {PouchdbDatastore} from '../pouchdb/pouchdb-datastore';
-import {DocumentCache} from '../cached/document-cache';
-import {CategoryConverter} from '../cached/category-converter';
-import {IndexFacade} from '../index/index-facade';
-import {ObserverUtil} from '../../util/observer-util';
-import {CAMPAIGNS, solveProjectDocumentConflict, STAFF} from './solve-project-document-conflicts';
-import {ResourceId, RevisionId} from '../../constants';
-import {isProjectDocument} from '../helpers';
-import {DatastoreErrors} from '../model/datastore-errors';
-import {SettingsProvider} from '../../settings/settings-provider';
+import { Injectable } from '@angular/core';
+import { isProjectDocument } from '@idai-field/core';
+import { Action, Document } from 'idai-components-2';
+import { Observable, Observer } from 'rxjs';
+import { map as asyncMap } from 'tsfun/async';
+import { ResourceId, RevisionId } from '../../constants';
+import { SettingsProvider } from '../../settings/settings-provider';
+import { ObserverUtil } from '../../util/observer-util';
+import { CategoryConverter } from '../cached/category-converter';
+import { DocumentCache } from '../cached/document-cache';
+import { IndexFacade } from '../index/index-facade';
+import { DatastoreErrors } from '../model/datastore-errors';
+import { PouchdbDatastore } from '../pouchdb/pouchdb-datastore';
+import { CAMPAIGNS, solveProjectDocumentConflict, STAFF } from './solve-project-document-conflicts';
 
 
 @Injectable()

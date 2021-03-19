@@ -1,0 +1,8 @@
+{
+    "compilerOptions": {
+        "baseUrl": ".",
+        "paths": {
+            "@idai-field/core": ["core/src/index.ts"]
+        }
+    }
+}

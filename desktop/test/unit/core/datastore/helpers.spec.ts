@@ -1,5 +1,5 @@
-import {Document} from 'idai-components-2';
-import {dissocIndices, sortRevisionsByLastModified} from '../../../../src/app/core/datastore/helpers';
+import { Document } from 'idai-components-2';
+import { dissocIndices, sortRevisionsByLastModified } from '../../../../../core/src/datastore/helpers';
 
 
 describe('helpers', () => {

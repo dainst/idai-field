@@ -1,5 +1,5 @@
 {
-  "name": "idai-field-client",
+  "name": "@idai-field/desktop",
   "description": "iDAI.field 2 Client",
   "version": "2.19.0",
   "main": "electron/main.js",
@@ -95,6 +95,7 @@
     "@angular/platform-browser-dynamic": "~9.1.11",
     "@angular/router": "~9.1.11",
     "@geoman-io/leaflet-geoman-free": "^2.5.0",
+    "@idai-field/core": "^1.0.0",
     "@mdi/font": "5.3.45",
     "@ng-bootstrap/ng-bootstrap": "6.1.0",
     "@ngx-translate/i18n-polyfill": "1.0.0",

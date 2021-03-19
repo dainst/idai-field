@@ -4,22 +4,17 @@ import { conds, flow, identity, isArray, isString, otherwise } from 'tsfun';
 export type InnerHTML = string;
 
 
-export type Translations 
-    = Literature.Translations
-    |Dating.Translations
-    |Dimension.Translations
-    |OptionalRange.Translations;
-
-
 /**
+ * Right now, there is no translation of field entries. // TODO needed?
+ * 
  * @author Daniel de Oliveira
  */
-export function formatContent(fieldContent: any, getTranslation: (term: Translations) => string): InnerHTML {
+export function formatContent(fieldContent: any): InnerHTML {
 
     return !isArray(fieldContent) 
         ? JSON.stringify(fieldContent) /* TODO review possible object types */
         : flow(fieldContent, 
-            convertArray(getTranslation), 
+            convertArray, 
             formatArray);
 }
 
@@ -36,15 +31,15 @@ function formatArray(fieldContent: Array<string>): InnerHTML {
 }
 
 
-const convertArray = (getTranslation: (term: Translations) => string) => (fieldContent: Array<any>): Array<string> =>
+const convertArray = (fieldContent: Array<any>): Array<string> =>
     fieldContent.map(conds(
         [Dating.isDating,
-            element => Dating.generateLabel(element, getTranslation)],
+            element => Dating.generateLabel(element, identity)],
         [Dimension.isDimension,
-            element => Dimension.generateLabel(element, identity, getTranslation)],
+            element => Dimension.generateLabel(element, identity, identity)],
         [OptionalRange.buildIsOptionalRange(isString),
-            element => OptionalRange.generateLabel(element, getTranslation, identity as any /* TODO, review getLabel */)],
+            element => OptionalRange.generateLabel(element, identity, identity as any /* TODO, review getLabel */)],
         [Literature.isLiterature,
-            element => Literature.generateLabel(element, getTranslation /*, TODO zenonId? */)],
+            element => Literature.generateLabel(element, identity /*, TODO zenonId? */)],
         [otherwise,
             JSON.stringify]));

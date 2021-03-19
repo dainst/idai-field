@@ -43,7 +43,7 @@ export class DoceditConflictsTabComponent implements OnChanges {
     public showLoadingIcon = () => this.isLoading() && this.loading.getLoadingTimeInMilliseconds() > 250;
 
     public getFieldContent = (field: any, revision: Document) => 
-        formatContent(revision.resource[field.name], identity); // TODO review, translate entries?
+        formatContent(revision.resource[field.name]);
             
 
     async ngOnChanges() {

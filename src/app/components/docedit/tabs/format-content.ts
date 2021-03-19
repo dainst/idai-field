@@ -52,5 +52,5 @@ const convertArray = (inputType?: FieldDefinition.InputType) =>
             return Literature.generateLabel(element, identity /*, zenonId? */)
         }
         else return JSON.stringify(element);
-    })
+    });
 }

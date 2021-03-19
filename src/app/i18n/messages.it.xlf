@@ -516,29 +516,56 @@
           <context context-type="linenumber">56</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="import.regularOption.label" datatype="html">
+        <source>
+                                Neue Ressourcen importieren</source>
+        <target state="new">
+                                Neue Ressourcen importieren</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/import/import.html</context>
+          <context context-type="linenumber">72</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="import.defaultOption.info" datatype="html">
+        <source>
+                                Bereits existierende Ressourcen,
+                                d.h. wenn die angegebenen Bezeichner (Feld <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>)
+                                bereits vergeben sind, werden ignoriert.
+                            </source>
+        <target state="new">
+                                Bereits existierende Ressourcen,
+                                d.h. wenn die angegebenen Bezeichner (Feld <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>)
+                                bereits vergeben sind, werden ignoriert.
+                            </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/import/import.html</context>
+          <context context-type="linenumber">76</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="import.mergeOption.label" datatype="html">
         <source>
-                            Vorhandene Ressourcen ergänzen
-                        </source>
+                                    Vorhandene Ressource ergänzen
+                                </source>
         <target state="final">
                             Aggiungi alle risorse esistenti
                         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">64</context>
+          <context context-type="linenumber">92</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.mergeOption.native.info" datatype="html">
         <source>
-                        Ist diese Option aktiviert, so werden bereits existierende Datensätze mit
-                        den Daten aus der Importdatei ergänzt. Felder des Importdatensatzes überschreiben
-                        dabei gleichnamige Felder im existierenden Datensatz. Geometrien des Importdatensatzes
-                        überschreiben bestehende im existierenden Datensatz. Im existierenden Datensatz
-                        vorhandene Felder, die nicht im Importdatensatz vorhanden sind, bleiben unverändert
-                        bestehen. Die Kategorie kann nicht verändert werden. Die Zuordnung von Datensätzen
-                        geschieht per Bezeichner (Feld <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>).
-                    </source>
-        <target state="final">
+                                Ist diese Option aktiviert, so werden bereits existierende Datensätze mit
+                                den Daten aus der Importdatei ergänzt. Felder des Importdatensatzes überschreiben
+                                dabei gleichnamige Felder im existierenden Datensatz. Geometrien des Importdatensatzes
+                                überschreiben bestehende im existierenden Datensatz. Im existierenden Datensatz
+                                vorhandene Felder, die nicht im Importdatensatz vorhanden sind, bleiben unverändert
+                                bestehen. Die Kategorie kann nicht verändert werden. Die Zuordnung von Datensätzen
+                                geschieht per Bezeichner (Feld <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>). Der Import kann nur durchgeführt werden,
+                                wenn sämtliche Identifier zugeordnet werden können.
+                            </source>
+        <target state="translated">
                         Se questa opzione è attivata, i record di dati esistenti vengono integrati con
                         i dati del file di importazione. I campi del record dati di importazione sovrascrivono
                         i campi con lo stesso nome nel record dati esistente. Le geometrie die record importati
@@ -549,18 +576,19 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">70</context>
+          <context context-type="linenumber">97</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.mergeOption.csv.info" datatype="html">
         <source>
-                        Ist diese Option aktiviert, so werden bereits existierende Datensätze mit
-                        den Daten aus der Importdatei ergänzt. Felder des Importdatensatzes überschreiben
-                        dabei gleichnamige Felder im existierenden Datensatz. Im existierenden Datensatz
-                        vorhandene Felder, die nicht im Importdatensatz vorhanden sind, bleiben unverändert
-                        bestehen. Die Kategorie kann nicht verändert werden. Die Zuordnung von Datensätzen
-                        geschieht per Bezeichner (Spalte <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>).
-                    </source>
+                                Ist diese Option aktiviert, so werden bereits existierende Datensätze mit
+                                den Daten aus der Importdatei ergänzt. Felder des Importdatensatzes überschreiben
+                                dabei gleichnamige Felder im existierenden Datensatz. Im existierenden Datensatz
+                                vorhandene Felder, die nicht im Importdatensatz vorhanden sind, bleiben unverändert
+                                bestehen. Die Kategorie kann nicht verändert werden. Die Zuordnung von Datensätzen
+                                geschieht per Bezeichner (Spalte <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>). Der Import kann nur durchgeführt werden,
+                                wenn sämtliche Identifier zugeordnet werden können.
+                            </source>
         <target state="final">
                         Se questa opzione è attivata, i record di dati esistenti vengono integrati con
                         i dati del file di importazione. I campi del record dati di importazione sovrascrivono
@@ -571,28 +599,28 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">81</context>
+          <context context-type="linenumber">108</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.mergeOption.permitDeletions" datatype="html">
         <source>
-                            Löschen erlauben
-                        </source>
+                                    Löschen erlauben
+                                </source>
         <target state="final">
                             Consenti eliminazione
                         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">93</context>
+          <context context-type="linenumber">122</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.mergeOption.deletionsInfo.jsonl" datatype="html">
         <source>
-                        Ist diese Option aktiviert, so können sowohl Felder als auch Relationen nicht nur
-                        verändert, sondern auch entfernt werden. Gelöscht werden alle Felder und Relationen,
-                        denen in der Importdatei der Wert <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>null<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/> zugewiesen ist.
-                        Nicht aufgeführte Felder und Relationen bleiben unverändert.
-                    </source>
+                                Ist diese Option aktiviert, so können sowohl Felder als auch Relationen nicht nur
+                                verändert, sondern auch entfernt werden. Gelöscht werden alle Felder und Relationen,
+                                denen in der Importdatei der Wert <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>null<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/> zugewiesen ist.
+                                Nicht aufgeführte Felder und Relationen bleiben unverändert.
+                            </source>
         <target state="final">
                         Se questa opzione è attivata, entrambi i campi e le relazioni non solo
                         possono essere modificati, ma anche rimossi. Tutti i campi e le relazioni,
@@ -601,17 +629,17 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">99</context>
+          <context context-type="linenumber">127</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.mergeOption.deletionsInfo.csv" datatype="html">
         <source>
-                        Ist diese Option aktiviert, so können sowohl Felder als auch Relationen nicht nur
-                        verändert, sondern auch entfernt werden. Gelöscht werden alle Felder und Relationen,
-                        bei denen das Feld in der Importdatei leer ist.
-                        Nicht in der CSV-Tabelle als Spalte aufgeführte Felder und Relationen bleiben
-                        unverändert.
-                    </source>
+                                Ist diese Option aktiviert, so können sowohl Felder als auch Relationen nicht nur
+                                verändert, sondern auch entfernt werden. Gelöscht werden alle Felder und Relationen,
+                                bei denen das Feld in der Importdatei leer ist.
+                                Nicht in der CSV-Tabelle als Spalte aufgeführte Felder und Relationen bleiben
+                                unverändert.
+                            </source>
         <target state="final">
                         Se questa opzione è attivata, entrambi i campi e le relazioni non solo
                         possono essere modificati, ma anche rimossi. Tutti i campi e le relazioni,
@@ -621,7 +649,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">107</context>
+          <context context-type="linenumber">134</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.format.importCategorySelect" datatype="html">
@@ -629,7 +657,7 @@
         <target state="final">Categoria</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">118</context>
+          <context context-type="linenumber">147</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.assignToOperation.label" datatype="html">
@@ -637,7 +665,7 @@
         <target state="final">Assegna dati a un'operazione</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">132</context>
+          <context context-type="linenumber">161</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.assignToOperation.noAssignment" datatype="html">
@@ -645,7 +673,7 @@
         <target state="final">Nessuna assegnazione</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">135</context>
+          <context context-type="linenumber">164</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.csv.separator" datatype="html">
@@ -653,7 +681,7 @@
         <target state="final">Separatore di campo</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">144</context>
+          <context context-type="linenumber">173</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.geojson.info" datatype="html">
@@ -673,7 +701,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">150</context>
+          <context context-type="linenumber">179</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.shapefile.javaWarning" datatype="html">
@@ -687,7 +715,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">158</context>
+          <context context-type="linenumber">187</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.shapefile.info" datatype="html">
@@ -707,7 +735,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">163</context>
+          <context context-type="linenumber">192</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.modal.info" datatype="html">
@@ -944,7 +972,7 @@
                         eines Zielprojekts ein. Der Name des Zielprojekts darf nicht mit dem aktuell geöffneten
                         Projekt übereinstimmen.
                     </source>
-        <target state="final">
+        <target state="new">
                         Geben Sie hier den vollständigen Pfad einer Backup-Datei sowie den Namen einer Zieldatenbank /
                         eines Zielprojekts ein. Der Name des Zielprojekts darf nicht mit dem aktuell geöffneten
                         Projekt übereinstimmen.
@@ -960,8 +988,8 @@
                         errechnet, weshalb die Anwendung zunächst möglicherweise etwas langsamer laufen kann.
                     </source>
         <target state="final">
-                        Nota: dopo il ripristino di un Backup le immagini di anteprima verranno ricalcolate in base ai dati originali
-                        , motivo per cui l'applicazione può inizialmente funzionare più lentamente.
+                        Nota: dopo il ripristino di un Backup le immagini di anteprima verranno ricalcolate in base ai dati originali,
+                        motivo per cui l'applicazione può inizialmente funzionare più lentamente.
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/backup/backup-loading.html</context>
@@ -1379,9 +1407,7 @@
             verknüpft.
         </source>
         <target state="final">
-            Le immagini trasferite saranno collegate alla risorsa <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{depictsRelationTarget.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/>
-.
-
+            Le immagini trasferite saranno collegate alla risorsa <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{depictsRelationTarget.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/>.
         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/upload/image-category-picker-modal.html</context>
@@ -2734,7 +2760,7 @@
         <target state="final">Zenon-ID:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/literature.html</context>
-          <context context-type="linenumber">45</context>
+          <context context-type="linenumber">46</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.literature.page" datatype="html">
@@ -2742,7 +2768,7 @@
         <target state="final">Pagina:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/literature.html</context>
-          <context context-type="linenumber">49</context>
+          <context context-type="linenumber">50</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.literature.figure" datatype="html">
@@ -2750,7 +2776,7 @@
         <target state="final">Figura:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/literature.html</context>
-          <context context-type="linenumber">53</context>
+          <context context-type="linenumber">54</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dating.bce" datatype="html">
@@ -4966,8 +4992,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="settings.languageInfo.it" datatype="html">
-        <source>Die italienische Übersetzung wird bereitgestellt vom DAI Rom. Bei Fragen und Anmerkungen zur Übersetzung wenden Sie sich bitte an:</source>
-        <target state="final">La traduzione italiana è messa a disposizione dalla sede di Roma del DAI. Per domande e commenti sulla traduzione, si prega di contattare:</target>
+        <source>Die italienische Übersetzung wird bereitgestellt vom DAI Rom. Bei Fragen und Anmerkungen zur Übersetzung wenden Sie sich bitte an: idai.field-italiano@dainst.de</source>
+        <target state="final">La traduzione italiana è messa a disposizione dalla sede di Roma del DAI. Per domande e commenti sulla traduzione, si prega di contattare: idai.field-italiano@dainst.de</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/language-settings.component.ts</context>
           <context context-type="linenumber">1</context>
@@ -5044,7 +5070,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/literature.html</context>
-          <context context-type="linenumber">65</context>
+          <context context-type="linenumber">67</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.saveModal.header" datatype="html">
@@ -5267,7 +5293,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/literature.html</context>
-          <context context-type="linenumber">61</context>
+          <context context-type="linenumber">63</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.projects.deleteProject.enterName" datatype="html">

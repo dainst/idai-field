@@ -13,7 +13,7 @@ export class Static {
 
     public static featureDoc = (sd, identifier?, category?, id?) => {
 
-        const doc = Static.doc(sd, identifier, category, id) as FeatureDocument;
+        const doc = Static.doc(sd, identifier, category, id) as FeatureDocument<string>;
         doc.resource.relations.isContemporaryWith = [];
         doc.resource.relations.isBefore = [];
         doc.resource.relations.isAfter = [];

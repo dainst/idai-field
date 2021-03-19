@@ -43,7 +43,7 @@ const convertArray = (getTranslation: (term: Translations) => string) => (fieldC
         [Dimension.isDimension,
             element => Dimension.generateLabel(element, identity, getTranslation)],
         [OptionalRange.isOptionalRange,
-            element => OptionalRange.generateLabel(element, getTranslation, identity /* TODO, review getLabel */)],
+            element => OptionalRange.generateLabel(element, getTranslation, identity as any /* TODO, review getLabel */)],
         [Literature.isLiterature,
             element => Literature.generateLabel(element, getTranslation /*, TODO zenonId? */)],
         [otherwise,

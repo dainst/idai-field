@@ -52,8 +52,8 @@ export const SAMPLE_DATA_LABELS = {
         'roomShort': 'R',
     },
     'it': {
-        'testProject': 'Progetto di test',
-        'testCampaign': 'Campagna di test',
+        'testProject': 'Progetto di prova',
+        'testCampaign': 'Campagna di prova',
         'person': 'Persona',
         'trench': 'Saggio',
         'trenchShort': 'S',
@@ -64,7 +64,7 @@ export const SAMPLE_DATA_LABELS = {
         'grave': 'Tomba',
         'findShort': 'R',
         'coin': 'Moneta',
-        'testFind': 'Reperto di test',
+        'testFind': 'Reperto di prova',
         'testFindShort': 'testr',
         'surveyArea': 'Area del Survey',
         'surveyAreaShort': 'A',
@@ -74,7 +74,7 @@ export const SAMPLE_DATA_LABELS = {
         'stoneShort': 'P',
         'building': 'Edificio',
         'buildingShort': 'E',
-        'room': 'Stanza',
-        'roomShort': 'STA',
+        'room': 'Vano',
+        'roomShort': 'V',
     }
 };

@@ -7,8 +7,6 @@ import {ProjectConfiguration} from '../../../core/configuration/project-configur
 import {Loading} from '../../widgets/loading';
 import {Messages} from '../../messages/messages';
 import { formatContent } from './format-content';
-import { identity } from 'tsfun';
-
 const moment = require('moment');
 
 
@@ -42,8 +40,7 @@ export class DoceditConflictsTabComponent implements OnChanges {
 
     public showLoadingIcon = () => this.isLoading() && this.loading.getLoadingTimeInMilliseconds() > 250;
 
-    public getFieldContent = (field: any, revision: Document) => 
-        formatContent(revision.resource[field.name]);
+    public getFieldContent = (field: any, revision: Document) => formatContent(revision.resource, field);
             
 
     async ngOnChanges() {
@@ -215,8 +212,13 @@ export class DoceditConflictsTabComponent implements OnChanges {
                 label = projectConfiguration.getFieldDefinitionLabel(document.resource.category, fieldName);
             }
 
+            const fd = projectConfiguration
+                .getFieldDefinitions(document.resource.category)
+                .find(fd => fd.name === fieldName);
+            
             differingFields.push({
                 name: fieldName,
+                inputType: fd?.inputType,
                 label: label,
                 type: type,
                 rightSideWinning: false

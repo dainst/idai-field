@@ -1,4 +1,4 @@
-import {is, isArray, isObject, isString, on, Predicate} from 'tsfun';
+import {is, isArray, on, Predicate} from 'tsfun';
 import {Dating, Dimension, Literature, Document, FieldGeometry, NewDocument, NewResource,
     Resource, OptionalRange} from 'idai-components-2';
 import {validateFloat, validateUnsignedFloat, validateUnsignedInt} from '../util/number-util';
@@ -60,8 +60,7 @@ export module Validations {
                                                            projectConfiguration: ProjectConfiguration) {
 
         const invalidFields: string[] = Validations.validateDropdownRangeFields(
-            document.resource, projectConfiguration, 'dropdownRange', OptionalRange.isValid
-        );
+            document.resource, projectConfiguration);
 
         if (invalidFields.length > 0) {
             throw [
@@ -81,7 +80,8 @@ export module Validations {
             projectConfiguration,
             FieldDefinition.InputType.DATING,
             ValidationErrors.INVALID_DATING_VALUES,
-            Dating.isValid);
+            Dating.isValid,
+            Dating.isDating);
     }
 
 
@@ -93,7 +93,8 @@ export module Validations {
             projectConfiguration,
             FieldDefinition.InputType.DIMENSION,
             ValidationErrors.INVALID_DIMENSION_VALUES,
-            Dimension.isValid);
+            Dimension.isValid,
+            Dimension.isDimension);
     }
 
 
@@ -105,7 +106,8 @@ export module Validations {
             projectConfiguration,
             FieldDefinition.InputType.LITERATURE,
             ValidationErrors.INVALID_LITERATURE_VALUES,
-            Literature.isValid);
+            Literature.isValid,
+            Literature.isLiterature);
     }
 
 
@@ -113,10 +115,11 @@ export module Validations {
                                           projectConfiguration: ProjectConfiguration,
                                           inputType: 'dating'|'dimension'|'literature',
                                           error: string,
-                                          isValid: Predicate) {
+                                          isValid: Predicate,
+                                          isOfType: Predicate) {
 
         const invalidFields: string[] = Validations.validateObjectArrayFields(
-            document.resource, projectConfiguration, inputType, isValid
+            document.resource, projectConfiguration, inputType, isValid, isOfType
         );
 
         if (invalidFields.length > 0) {
@@ -419,14 +422,11 @@ export module Validations {
 
 
     export function validateDropdownRangeFields(resource: Resource|NewResource,
-                                                projectConfiguration: ProjectConfiguration,
-                                                inputType: 'dropdownRange',
-                                                isValid: (object: any) => boolean): string[] {
+                                                projectConfiguration: ProjectConfiguration): string[] {
 
-        return validateFields(resource, projectConfiguration, inputType, (fieldContent: any) => {
-            return (!isObject(fieldContent)
-                || !isValid(fieldContent)
-                || !isString(fieldContent.value));
+        return validateFields(resource, projectConfiguration, 'dropdownRange', (fieldContent: any) => {
+            return (!OptionalRange.isOptionalRange(fieldContent)
+                || !OptionalRange.isValid(fieldContent));
         });
     }
 
@@ -434,14 +434,15 @@ export module Validations {
     export function validateObjectArrayFields(resource: Resource|NewResource,
                                               projectConfiguration: ProjectConfiguration,
                                               inputType: 'dating'|'dimension'|'literature',
-                                              isValid: (object: any, options?: any) => boolean): string[] {
+                                              isValid: (object: any, options?: any) => boolean,
+                                              isOfType: Predicate): string[] {
 
         return validateFields(resource, projectConfiguration, inputType,
             (fieldContent: any, options?: any) => {
 
             if (!isArray(fieldContent)) return true;
 
-            return fieldContent.filter((object: any) => !isValid(object, options)).length > 0;
+            return fieldContent.filter((object: any) => !isOfType(object) || !isValid(object, options)).length > 0;
         });
     }
 

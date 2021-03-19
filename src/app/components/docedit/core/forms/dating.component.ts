@@ -60,6 +60,6 @@ export class DatingComponent {
 
         Dating.addNormalizedValues(dating);
 
-        return Dating.isValid(dating);
+        return Dating.isDating(dating) && Dating.isValid(dating);
     }
 }

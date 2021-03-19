@@ -1,8 +1,12 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
+    "baseUrl": ".",
     "outDir": "./out-tsc/app",
-    "types": ["node"]
+    "types": ["node"],
+    // override paths to make sure the compiler looks up packages in node_modules
+    // instead of the paths configured in ../tsconfig.json
+    "paths": {}
   },
   "files": [
     "src/main.ts",

@@ -1,0 +1,22 @@
+{
+    "name": "@idai-field/core",
+    "description": "iDAI.field Core",
+    "version": "1.0.0",
+    "license": "Apache-2.0",
+    "author": "German Archaeological Institute",
+    "main": "dist/index",
+    "types": "dist/index",
+    "files": [
+        "dist"
+    ],
+    "scripts": {
+        "build": "tsc -p ."
+    },
+    "dependencies": {
+        "idai-components-2": "1.47.36",
+        "tsfun": "4.4.61"
+    },
+    "devDependencies": {
+        "typescript": "~3.8.3"
+    }
+}

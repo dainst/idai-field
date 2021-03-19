@@ -1,14 +1,14 @@
 {
   "fields": {
     "category": {
-      "label": "Kategorie"
+      "label": "Categoria"
     },
     "identifier": {
-      "label": "Bezeichner",
-      "description": "Eindeutiger Bezeichner dieser Ressource"
+      "label": "Identificatore",
+      "description": "Identificatore unico di questa risorsa"
     },
     "shortDescription": {
-      "label": "Kurzbeschreibung"
+      "label": "Descrizione breve"
     }
   },
   "categories": {
@@ -16,7 +16,7 @@
       "label": "Progetto",
       "fields": {
         "coordinateReferenceSystem": {
-          "label": "Koordinatenbezugssystem"
+          "label": "Sistema di riferimento delle coordinate"
         }
       }
     },
@@ -24,10 +24,10 @@
       "label": "Immagine",
       "fields": {
         "height": {
-          "label": "Höhe"
+          "label": "Altezza"
         },
         "width": {
-          "label": "Breite"
+          "label": "Larghezza"
         }
       }
     }
@@ -49,7 +49,7 @@
       "label": "Sotto a"
     },
     "isEquivalentTo": {
-      "label": "Gleich wie"
+      "label": "Uguale a"
     },
     "cuts": {
       "label": "Taglia"
@@ -61,31 +61,31 @@
       "label": "Si appoggia a"
     },
     "isAfter": {
-      "label": "Zeitlich nach"
+      "label": "Cronologicamente posteriore a"
     },
     "isBefore": {
-      "label": "Zeitlich vor"
+      "label": "Cronologicamente anteriore a"
     },
     "isContemporaryWith": {
-      "label": "Zeitgleich mit"
+      "label": "Contemporaneo a"
     },
     "depicts": {
-      "label": "Zeigt"
+      "label": "Rappresenta"
     },
     "isDepictedIn": {
-      "label": "Wird gezeigt in"
+      "label": "È rappresentato in"
     },
     "isMapLayerOf": {
-      "label": "Kartenhintergrund von"
+      "label": "Sfondo cartografico di"
     },
     "hasMapLayer": {
-      "label": "Hat Kartenhintergrund"
+      "label": "Ha lo sfondo cartografico"
     },
     "isInstanceOf": {
-      "label": "Typologische Einordnung"
+      "label": "Classificazione tipologica"
     },
     "hasInstance": {
-      "label": "Zugeordnete Funde"
+      "label": "Reperti pertinenti"
     }
   }
 }

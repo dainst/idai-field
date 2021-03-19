@@ -17,6 +17,7 @@ import {Named, namedArrayToNamedMap} from '../../../core/util/named';
 import shouldBeDisplayed = FieldsViewUtil.shouldBeDisplayed;
 import {ReadDatastore} from '../../../core/datastore/model/read-datastore';
 import {ValuelistUtil} from '../../../core/util/valuelist-util';
+import { clone } from '../../../core/util/object-util';
 
 
 type FieldContent = any;
@@ -98,13 +99,16 @@ export class FieldsViewComponent implements OnChanges {
                 (key: string) => this.utilTranslations.getTranslation(key)
             );
         } else if (object.inputUnit) {
+            const clonedObject = clone(object);
+            if (clonedObject.measurementPosition) {
+                clonedObject.measurementPosition = ValuelistUtil.getValueLabel(
+                    field.positionValues, clonedObject.measurementPosition
+                );
+            }
             return Dimension.generateLabel(
-                object,
+                clonedObject,
                 (value: any) => this.decimalPipe.transform(value),
                 (key: string) => this.utilTranslations.getTranslation(key),
-                object.measurementPosition
-                    ? ValuelistUtil.getValueLabel(field.positionValues, object.measurementPosition)
-                    : undefined
             );
         } else if (object.quotation) {
             return Literature.generateLabel(

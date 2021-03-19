@@ -58,7 +58,37 @@ const INITIALIZATION_MESSAGES = {
         'configuration/buildProjectCategories/noValuelistProvided': 'No value list has been specified for field "[1]" of category "[0]".',
         'configuration/buildProjectCategories/noPositionValuelistProvided': 'For field "[1]" of category "[0]" no value list has been specified for the subfield "position".',
         'configuration/buildProjectCategories/triedToOverwriteParentField': 'The field "[0]" defined in category "[1]" must not be redefined in subcategory "[2]".'
-    }
+    },
+    'it': {
+        'loading1': 'Progetto',
+        'loading2': 'in caricamento...',
+        'loadTestProject': 'Caricare progetto di prova',
+        'databaseError': 'Si è verificato un errore: non è stato possibile caricare il database del progetto.',
+        'configurationError': 'Si è verificato un errore: non è stato possibile caricare la configurazione del progetto.',
+        'fetchDocumentsError': 'Si è verificato un errore: le risorse del progetto non possono essere estratte dal database.',
+        'indexingError': 'Si è verificato un errore: indicizzazione delle risorse del progetto non riuscita.',
+        'oneConfigurationError': 'Errore nella configurazione del progetto:',
+        'multipleConfigurationErrors': 'Errori nella configurazione del progetto:',
+        'configuration/error/invalidJson': 'Il file di configurazione "[0]" non contiene un formato JSON valido.',
+        'configuration/error/missingValuelist': 'Impossibile trovare la lista di valori per il campo "[0]" della categoria "[1]".',
+        'configuration/error/missingPositionValuelist': 'Impossibile trovare la lista di valori per il sottocampo "Posizione" del campo "[0]" della categoria "[1]".',
+        'configuration/error/missingFieldName': 'Un campo definito nella configurazione del progetto non ha nome.',
+        'configuration/error/missingRelationCategory': 'Impossibile trovare la categoria "[0]" specificata in una definizione di relazione.',
+        'configuration/fields/custom/parentNotDefined': 'Impossibile trovare la categoria superiore "[0]".',
+        'configuration/fields/custom/tryingToSubtypeANonExtendableCategory': 'Per la categoria "[0]" non è possibile creare sottocategorie.',
+        'configuration/fields/custom/commonFieldValuelistFromProjectDocNotToBeOverwritten': 'Per il campo "[1]" della categoria "[0]" non è possibile impostare liste di valori perchè i valori ammessi provengono dalla risorsa del progetto.',
+        'configuration/buildProjectCategories/duplicationInSelection': 'Per la categoria "[0]" è stato selezionato più di un modulo.',
+        'configuration/buildProjectCategories/mustHaveParent': 'È necessario selezionare una categoria superiore per la categoria "[0]".',
+        'configuration/buildProjectCategories/missingCategoryProperty': 'La proprietà "[0]" deve essere impostata per la categoria "[1]".',
+        'configuration/buildProjectCategories/illegalCategoryProperty': 'La proprietà "[0]" non può essere impostata per la categoria "[1]".',
+        'configuration/buildProjectCategories/missingFieldProperty': 'La proprietà "[0]" deve essere impostata per il campo "[2]" della categoria "[1]".',
+        'configuration/buildProjectCategories/mustNotSetInputType': 'La proprietà "inputType" non può essere modificata per il campo "[1]" della categoria "[0]".',
+        'configuration/buildProjectCategories/illegalFieldInputType': 'Il valore "[0]" indicato per la proprietà "inputType" del campo "[1]" non è valido.',
+        'configuration/buildProjectCategories/illegalFieldProperty': 'La proprietà "[1]" non è valida.',
+        'configuration/buildProjectCategories/noValuelistProvided': 'Per il campo "[1]" della categoria "[0]" non è stata indicata nessuna lista di valori.',
+        'configuration/buildProjectCategories/noPositionValuelistProvided': 'Per il sottocampo "Posizione" del campo "[1]" della categoria "[0]" non è stata indicata nessuna lista di valori.',
+        'configuration/buildProjectCategories/triedToOverwriteParentField': 'Il campo "[0]" della categoria "[1]" non può essere ridefinito nella sottocategoria "[2]".'
+    },
 };
 
 

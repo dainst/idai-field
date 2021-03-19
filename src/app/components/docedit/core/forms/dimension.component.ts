@@ -49,16 +49,18 @@ export class DimensionComponent {
 
     public getLabel(dimension: Dimension): string {
 
-        return dimension.label
-            ? dimension.label
-            : Dimension.generateLabel(
-                dimension,
-                (value: any) => this.decimalPipe.transform(value),
-                (key: string) => this.utilTranslations.getTranslation(key),
-                dimension.measurementPosition
-                    ? this.getPositionValueLabel(dimension.measurementPosition)
-                    : undefined
-                );
+        if (dimension.label) return dimension.label;
+
+        const clonedDimension = clone(dimension);
+        if (clonedDimension.measurementPosition) {
+            clonedDimension.measurementPosition = this.getPositionValueLabel(dimension.measurementPosition);
+        }
+
+        return Dimension.generateLabel(
+            clonedDimension,
+            (value: any) => this.decimalPipe.transform(value),
+            (key: string) => this.utilTranslations.getTranslation(key)
+        );
     }
 
 

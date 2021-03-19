@@ -1,7 +1,8 @@
 {
   "packages": [
     "core",
-    "desktop"
+    "desktop",
+    "mobile"
   ],
   "version": "independent"
 }

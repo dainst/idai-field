@@ -1,25 +1,23 @@
-import { Dating, Dimension, Literature, OptionalRange } from 'idai-components-2';
-import { conds, flow, identity, isArray, otherwise } from 'tsfun';
+import { Dating, Dimension, Literature, OptionalRange, Resource } from 'idai-components-2';
+import { FieldDefinition } from 'src/app/core/configuration/model/field-definition';
+import { flow, identity, isArray, isString } from 'tsfun';
 
 export type InnerHTML = string;
 
 
-export type Translations 
-    = Literature.Translations
-    |Dating.Translations
-    |Dimension.Translations
-    |OptionalRange.Translations;
-
-
 /**
+ * Right now, there is no translation of field entries. // TODO needed?
+ * 
  * @author Daniel de Oliveira
  */
-export function formatContent(fieldContent: any, getTranslation: (term: Translations) => string): InnerHTML {
+export function formatContent(resource: Resource, field: any): InnerHTML {
+
+    const fieldContent = resource[field.name];
 
     return !isArray(fieldContent) 
         ? JSON.stringify(fieldContent) /* TODO review possible object types */
         : flow(fieldContent, 
-            convertArray(getTranslation), 
+            convertArray(field.inputType), 
             formatArray);
 }
 
@@ -36,15 +34,23 @@ function formatArray(fieldContent: Array<string>): InnerHTML {
 }
 
 
-const convertArray = (getTranslation: (term: Translations) => string) => (fieldContent: Array<any>): Array<string> =>
-    fieldContent.map(conds(
-        [Dating.isDating,
-            element => Dating.generateLabel(element, getTranslation)],
-        [Dimension.isDimension,
-            element => Dimension.generateLabel(element, identity, getTranslation)],
-        [OptionalRange.isOptionalRange,
-            element => OptionalRange.generateLabel(element, getTranslation, identity /* TODO, review getLabel */)],
-        [Literature.isLiterature,
-            element => Literature.generateLabel(element, getTranslation /*, TODO zenonId? */)],
-        [otherwise,
-            JSON.stringify]));
+const convertArray = (inputType?: FieldDefinition.InputType) => 
+                     (fieldContent: Array<any>): Array<string> => {
+
+    return fieldContent.map(element => {
+
+        if (inputType === 'dimension' && Dimension.isDimension(element)) {
+            return Dimension.generateLabel(element, identity, identity /* TODO review */);
+        }
+        else if (inputType === 'dating' && Dating.isDating(element)) {
+            return Dating.generateLabel(element, identity);
+        }
+        else if (inputType === 'dropdownRange' && OptionalRange.buildIsOptionalRange(isString)(element)) {
+            return OptionalRange.generateLabel(element, identity, identity /* TODO review */);
+        }
+        else if (inputType === 'literature' && Literature.isLiterature(element)) {
+            return Literature.generateLabel(element, identity /*, zenonId? */)
+        }
+        else return JSON.stringify(element);
+    });
+}

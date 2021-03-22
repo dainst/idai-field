@@ -1,4 +1,4 @@
-import {is, isArray, on, Predicate} from 'tsfun';
+import {is, isArray, on, Predicate, isString, isNot, and} from 'tsfun';
 import {Dating, Dimension, Literature, Document, FieldGeometry, NewDocument, NewResource,
     Resource, OptionalRange} from 'idai-components-2';
 import {validateFloat, validateUnsignedFloat, validateUnsignedInt} from '../util/number-util';
@@ -424,10 +424,10 @@ export module Validations {
     export function validateDropdownRangeFields(resource: Resource|NewResource,
                                                 projectConfiguration: ProjectConfiguration): string[] {
 
-        return validateFields(resource, projectConfiguration, 'dropdownRange', (fieldContent: any) => {
-            return (!OptionalRange.isOptionalRange(fieldContent)
-                || !OptionalRange.isValid(fieldContent));
-        });
+        const isOptionalRange = OptionalRange.buildIsOptionalRange(isString);
+
+        return validateFields(resource, projectConfiguration, 'dropdownRange', 
+            isNot(and(isOptionalRange, OptionalRange.isValid)));
     }
 
 

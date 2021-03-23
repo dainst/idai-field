@@ -6,9 +6,9 @@ This package contains the mobile client for iDAI.field.
 
 Use the following commands to run the app for development in the browser (in the repository root):
 
-    npm run bootstrap
-    cd mobile
-    npm start
+    $ npm run bootstrap
+    $ cd mobile
+    $ npm start
 
 ## Run on (vritual) device
 
@@ -17,16 +17,16 @@ or simulators.
 
 First you need to build the app with
 
-    npm run build
+    $ npm run build
 
 Then copy the resulting web files and any native dependencies with
 
-    npx cap sync
+    $ npx cap sync
 
 You can then open the corresponding IDE with
 
-    npx cap open android
+    $ npx cap open android
 
 or
 
-    npx cap open ios
+    $ npx cap open ios

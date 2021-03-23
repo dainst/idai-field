@@ -10,13 +10,18 @@
         "dist"
     ],
     "scripts": {
-        "build": "tsc -p ."
+        "build": "tsc -p .",
+        "build:watch": "tsc -watch -p .",
+        "test": "jasmine JASMINE_CONFIG_PATH=test/jasmine.json"
     },
     "dependencies": {
         "idai-components-2": "1.47.55",
         "tsfun": "4.4.61"
     },
     "devDependencies": {
-        "typescript": "~3.8.3"
+        "typescript": "~3.8.3",
+        "@types/jasmine": "2.5.41",
+        "jasmine": "2.5.2",
+        "jasmine-core": "2.5.2"
     }
 }

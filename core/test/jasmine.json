@@ -1,0 +1,13 @@
+{
+    "spec_dir": "dist",
+    "spec_files": [
+      "**/*.spec.js"
+    ],
+    "helpers": [
+      "../../node_modules/reflect-metadata/Reflect.js",
+      "../../node_modules/pouchdb/dist/pouchdb.js",
+      "helpers/**/*.js"
+    ],
+    "stopSpecOnExpectationFailure": false,
+    "random": false
+  }

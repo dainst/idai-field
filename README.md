@@ -11,11 +11,11 @@ This is a monorepo containing three packages:
 The repository uses [lerna](https://github.com/lerna/lerna) to manage sub-package dependecies.
 When first checking out the code base, bootstrap the dependencies with:
 
-    npm run bootstrap
+    $ npm run bootstrap
 
 Build all packages with:
 
-    npm run build
+    $ npm run build
 
 Refer to the sub-package READMEs for detailed instructions on how to set up individual
 development environments.

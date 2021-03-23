@@ -1,5 +1,5 @@
+import { FieldDefinition } from '../../../core/configuration/model/field-definition';
 import { Dating, Dimension, Literature, OptionalRange, Resource } from 'idai-components-2';
-import { FieldDefinition } from 'src/app/core/configuration/model/field-definition';
 import { flow, identity, isArray, isObject, isString } from 'tsfun';
 
 export type InnerHTML = string;

@@ -4,7 +4,8 @@ import {isBoolean, isArray, isObject, filter, compose, Mapping, on, isDefined, m
     RIGHT, LEFT} from 'tsfun';
 import {update, lookup} from 'tsfun/associative';
 import {AsyncMapping, flow as asyncFlow, map as asyncMap} from 'tsfun/async';
-import {FieldDocument,  Resource, Dating, Dimension, Literature, OptionalRange} from 'idai-components-2';
+import {Resource, Dating, Dimension, Literature, OptionalRange} from 'idai-components-2';
+import {FieldDocument} from '@idai-field/core';
 import {RoutingService} from '../../routing-service';
 import {Name} from '../../../core/constants';
 import {UtilTranslations} from '../../../core/util/util-translations';

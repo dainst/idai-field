@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, ElementRef, ViewChild, Input, OnChanges} from '@angular/core';
 import {to} from 'tsfun';
-import {FieldDocument} from 'idai-components-2';
+import {FieldDocument} from '@idai-field/core';
 import {ResourcesComponent} from '../../resources.component';
 import {Loading} from '../../../widgets/loading';
 import {BaseList} from '../../base-list';

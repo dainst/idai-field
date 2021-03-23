@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {to} from 'tsfun';
-import {FieldDocument} from 'idai-components-2';
+import {FieldDocument} from '@idai-field/core';
 import {M} from '../messages/m';
 import {ExportModalComponent} from './export-modal.component';
 import {ModelUtil} from '../../core/model/model-util';

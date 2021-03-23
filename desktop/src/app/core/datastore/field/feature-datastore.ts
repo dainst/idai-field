@@ -1,9 +1,9 @@
-import {FeatureDocument} from 'idai-components-2';
 import {PouchdbDatastore} from '../pouchdb/pouchdb-datastore';
 import {DocumentCache} from '../cached/document-cache';
 import {CategoryConverter} from '../cached/category-converter';
 import {CachedDatastore} from '../cached/cached-datastore';
 import {IndexFacade} from '../index/index-facade';
+import { FeatureDocument } from '@idai-field/core';
 
 
 /**

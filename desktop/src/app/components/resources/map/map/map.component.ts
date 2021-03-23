@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, EventEmitter, Input, NgZone, OnChanges, Output, SimpleChanges} from '@angular/core';
-import {FieldDocument, FieldGeometry} from 'idai-components-2';
+import {FieldDocument, FieldGeometry} from '@idai-field/core';
 import {FieldPolyline} from './field-polyline';
 import {FieldPolygon} from './field-polygon';
 import {FieldMarker} from './field-marker';
@@ -494,7 +494,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
 
 
     private getSelection(): Array<FieldDocument> {
-        
+
         let result = [];
         if (this.selectedDocument) result.push(this.selectedDocument);
         result = result.concat(this.additionalSelectedDocuments);

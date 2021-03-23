@@ -6,7 +6,7 @@
         // TypeScript code in other packages.
         // Packages are built with the corresponding local tsconfig.json files.
         "paths": {
-            "@idai-field/core": ["core/src"]
+            "@idai-field/core": ["core"]
         }
     }
 }

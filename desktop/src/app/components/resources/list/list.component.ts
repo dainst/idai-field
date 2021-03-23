@@ -1,5 +1,5 @@
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
-import {FieldDocument} from 'idai-components-2';
+import {FieldDocument} from '@idai-field/core';
 import {ResourcesComponent} from '../resources.component';
 import {Loading} from '../../widgets/loading';
 import {BaseList} from '../base-list';

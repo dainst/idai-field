@@ -1,4 +1,5 @@
-import {Document, FieldDocument} from 'idai-components-2';
+import {Document} from 'idai-components-2';
+import {FieldDocument} from '@idai-field/core'
 import {Lookup} from '../../src/app/core/util/utils';
 import {HierarchicalRelations, ImageRelations} from '../../src/app/core/model/relation-constants';
 import {ResourceId} from '../../src/app/core/constants';

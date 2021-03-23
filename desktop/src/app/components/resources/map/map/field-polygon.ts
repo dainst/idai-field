@@ -1,4 +1,4 @@
-import {FieldDocument} from 'idai-components-2';
+import {FieldDocument} from '@idai-field/core';
 
 export interface FieldPolygon extends L.Polygon {
 

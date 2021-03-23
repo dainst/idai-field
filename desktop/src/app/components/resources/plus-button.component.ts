@@ -1,6 +1,7 @@
 import {Component, Input, ElementRef, ViewChild, OnChanges, EventEmitter, Output} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
-import {Relations, FieldDocument} from 'idai-components-2';
+import {Relations} from 'idai-components-2';
+import {FieldDocument} from '@idai-field/core';
 import {ResourcesComponent} from './resources.component';
 import {M} from '../messages/m';
 import {Category} from '../../core/configuration/model/category';

@@ -1,6 +1,7 @@
 import {ChangeDetectorRef, Component, Input, NgZone, SimpleChanges} from '@angular/core';
 import L from 'leaflet';
-import {ImageDocument, ImageGeoreference, Document, FieldDocument} from 'idai-components-2';
+import {ImageDocument, ImageGeoreference, Document} from 'idai-components-2';
+import {FieldDocument} from '@idai-field/core';
 import {LayerManager, ListDiffResult} from './layers/layer-manager';
 import {LayerImageProvider} from './layers/layer-image-provider';
 import {ProjectConfiguration} from '../../../../core/configuration/project-configuration';
@@ -213,7 +214,7 @@ export class LayerMapComponent extends MapComponent {
 
 
     private async reloadLayersOnChange(document: Document) {
-    
+
         if (this.menuService.getContext() === MenuContext.MAP_LAYERS_EDIT) return;
 
         if (document.resource.id === this.viewName || document.resource.id === 'project') {

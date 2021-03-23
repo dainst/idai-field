@@ -1,6 +1,6 @@
 import {includedIn, isNot, on, to, map, pairWith, val, greaterThan} from 'tsfun';
 import {map as asyncMap, flow as asyncFlow} from 'tsfun/async';
-import {FieldDocument} from 'idai-components-2';
+import {FieldDocument} from '@idai-field/core';
 import {ISRECORDEDIN_CONTAIN} from '../constants';
 import {clone} from '../util/object-util';
 import {Find, GetIdentifierForId, PerformExport, CategoryCount} from './export-helper';

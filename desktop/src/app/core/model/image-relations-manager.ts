@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {flatten, includedIn, isDefined, isNot, on, separate, set, subtract, to} from 'tsfun';
-import {Document, FieldDocument, ImageDocument, toResourceId} from 'idai-components-2';
+import {Document, ImageDocument, toResourceId} from 'idai-components-2';
+import {FieldDocument} from '@idai-field/core';
 import {DocumentDatastore} from '../datastore/document-datastore';
 import {Imagestore} from '../images/imagestore/imagestore';
 import {RelationsManager} from './relations-manager';

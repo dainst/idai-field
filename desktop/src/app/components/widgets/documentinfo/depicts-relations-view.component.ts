@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
-import {ImageResource, FieldDocument} from 'idai-components-2';
+import {ImageResource} from 'idai-components-2';
+import {FieldDocument} from '@idai-field/core';
 import {FieldDatastore} from '../../../core/datastore/field/field-datastore';
 
 

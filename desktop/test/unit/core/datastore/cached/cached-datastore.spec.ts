@@ -1,5 +1,4 @@
-import {FieldDocument} from 'idai-components-2';
-import {CachedDatastore} from '../../../../../src/app/core/datastore/cached/cached-datastore';
+import {FieldDocument} from '@idai-field/core';
 import {DocumentCache} from '../../../../../src/app/core/datastore/cached/document-cache';
 import {FieldDatastore} from '../../../../../src/app/core/datastore/field/field-datastore';
 import {FieldCategoryConverter} from '../../../../../src/app/core/datastore/field/field-category-converter';

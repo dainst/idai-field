@@ -1,5 +1,4 @@
 import {Observer, Observable} from 'rxjs';
-import {FieldDocument} from 'idai-components-2';
 import {ResourcesState} from './state/resources-state';
 import {StateSerializer} from '../../common/state-serializer';
 import {ViewState} from './state/view-state';
@@ -12,6 +11,7 @@ import {TabManager} from '../../tabs/tab-manager';
 import {ResourcesViewMode} from './view-facade';
 import {ProjectCategories} from '../../configuration/project-categories';
 import {ProjectConfiguration} from '../../configuration/project-configuration';
+import {FieldDocument} from '@idai-field/core'
 
 
 /**

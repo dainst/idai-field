@@ -1,7 +1,8 @@
 import {takeWhile, on, is, takeUntil} from 'tsfun';
-import {Document, FieldDocument} from 'idai-components-2';
+import {Document} from 'idai-components-2';
 import {clone} from '../../../util/object-util';
 import {ViewContext} from './view-context';
+import {FieldDocument} from '@idai-field/core';
 import {differentFrom, NavigationPathSegment, toResourceId} from './navigation-path-segment';
 import {ModelUtil} from '../../../model/model-util';
 

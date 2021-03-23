@@ -1,5 +1,5 @@
 import * as PouchDB from 'pouchdb-node';
-import {Document, FieldDocument, ImageDocument, toResourceId} from 'idai-components-2';
+import {Document, ImageDocument, toResourceId} from 'idai-components-2';
 import {ImageDatastore} from '../../../../src/app/core/datastore/field/image-datastore';
 import {FieldDatastore} from '../../../../src/app/core/datastore/field/field-datastore';
 import {DocumentDatastore} from '../../../../src/app/core/datastore/document-datastore';
@@ -35,6 +35,7 @@ import {createDocuments, NiceDocs} from '../../test-helpers';
 import {sameset} from 'tsfun';
 import {ResourceId} from '../../../../src/app/core/constants';
 import {makeDocumentsLookup} from '../../../../src/app/core/import/import/utils';
+import { FieldDocument } from '@idai-field/core';
 
 const fs = require('fs');
 

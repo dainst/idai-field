@@ -1,7 +1,7 @@
 import {Observer, Observable} from 'rxjs';
 import {subtract, set} from 'tsfun';
 import {jsonClone} from 'tsfun/struct';
-import {Document, FieldDocument, Resource} from 'idai-components-2';
+import {Document, Resource} from 'idai-components-2';
 import {FieldReadDatastore} from '../../datastore/field/field-read-datastore';
 import {ChangesStream} from '../../datastore/changes/changes-stream';
 import {ObserverUtil} from '../../util/observer-util';
@@ -14,6 +14,7 @@ import {ModelUtil} from '../../model/model-util';
 import hasId = ModelUtil.hasId;
 import hasEqualId = ModelUtil.hasEqualId;
 import {Query} from '../../datastore/model/query';
+import { FieldDocument } from '@idai-field/core';
 
 
 const LIES_WITHIN_EXIST = 'liesWithin:exist';

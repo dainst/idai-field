@@ -1,5 +1,6 @@
 import {flatten} from 'tsfun';
-import {FieldDocument, ImageDocument} from 'idai-components-2';
+import {ImageDocument} from 'idai-components-2';
+import {FieldDocument} from '@idai-field/core';
 import {createApp, createHelpers, setupSyncTestDb} from '../subsystem-helper';
 import {doc} from '../../../test-helpers';
 import {makeDocumentsLookup} from '../../../../../src/app/core/import/import/utils';

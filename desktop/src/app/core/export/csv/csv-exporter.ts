@@ -1,4 +1,4 @@
-import {FieldResource} from 'idai-components-2';
+import {FieldResource} from '@idai-field/core';
 import {CSVExport} from './csv-export';
 import {M} from '../../../components/messages/m';
 import {PerformExport} from '../export-helper';

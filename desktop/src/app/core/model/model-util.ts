@@ -1,5 +1,6 @@
 import {get} from 'tsfun/associative';
-import {Resource, Document, FieldResource} from 'idai-components-2';
+import {Resource, Document} from 'idai-components-2';
+import {FieldResource} from '@idai-field/core';
 import {ResourceId} from '../constants';
 
 /**

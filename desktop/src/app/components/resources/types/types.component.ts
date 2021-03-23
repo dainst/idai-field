@@ -1,6 +1,6 @@
 import {ChangeDetectorRef, Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {filter, flatten, flow, isnt, Map, map, set, take, to} from 'tsfun';
-import {Document, FieldDocument} from 'idai-components-2';
+import {Document} from 'idai-components-2';
 import {ViewFacade} from '../../../core/resources/view/view-facade';
 import {Loading} from '../../widgets/loading';
 import {BaseList} from '../base-list';
@@ -22,6 +22,7 @@ import {MenuContext, MenuService} from '../../menu-service';
 import {ImageRelations, TypeRelations} from '../../../core/model/relation-constants';
 import {SyncService} from '../../../core/sync/sync-service';
 import {SyncStatus} from '../../../core/sync/sync-process';
+import { FieldDocument } from '@idai-field/core';
 
 
 @Component({

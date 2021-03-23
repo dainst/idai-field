@@ -1,4 +1,4 @@
-import {FieldDocument} from 'idai-components-2';
+import {FieldDocument} from '@idai-field/core';
 import {Static} from '../../../static';
 import {ResourcesStateManager} from '../../../../../src/app/core/resources/view/resources-state-manager';
 import {ResourcesState} from '../../../../../src/app/core/resources/view/state/resources-state';

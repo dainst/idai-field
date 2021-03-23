@@ -1,4 +1,5 @@
-import {Document, FieldDocument, FeatureDocument} from 'idai-components-2';
+import { FeatureDocument, FieldDocument } from '@idai-field/core';
+import {Document} from 'idai-components-2';
 
 
 /**

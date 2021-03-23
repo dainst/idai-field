@@ -1,27 +1,27 @@
 import {flatten, subtract} from 'tsfun';
-import { FieldDocument, FieldGeometry, FieldResource } from "idai-components-2";
+import { FieldDocument, FieldGeometry, FieldResource } from '@idai-field/core';
 import { CoordinatesUtility } from './coordinates-utility';
 import { SimpleChanges } from '@angular/core';
 
 
-/** 
+/**
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
 export module MapComponentHelper {
 
-    export function addToBounds(markers: { [id: string]: Array<L.CircleMarker> }, 
-                                polygons: { [id: string]: Array<L.Polygon> }, 
-                                polylines: { [id: string]: Array<L.Polyline> }, 
+    export function addToBounds(markers: { [id: string]: Array<L.CircleMarker> },
+                                polygons: { [id: string]: Array<L.Polygon> },
+                                polylines: { [id: string]: Array<L.Polyline> },
                                 documents: Array<FieldDocument>): Array<L.LatLng> {
 
         const allBounds: any = [];
 
         for (const document of documents) {
-        
+
             const bounds: any = [];
             const id = document.resource.id;
-            
+
             if (polygons[id]) {
                 polygons[id].forEach(polygon => bounds.push(polygon.getLatLngs()[0]));
             } else if (polylines[id]) {

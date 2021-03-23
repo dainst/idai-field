@@ -1,4 +1,5 @@
-import {Document, FieldDocument} from 'idai-components-2';
+import {FieldDocument} from '@idai-field/core';
+import {Document} from 'idai-components-2';
 import {TabUtil} from './tab-util';
 import {TabSpaceCalculator} from './tab-space-calculator';
 import {Tab} from './tab';

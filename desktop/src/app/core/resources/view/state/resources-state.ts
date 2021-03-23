@@ -1,6 +1,6 @@
 import {flow} from 'tsfun';
 import {lookup, map, forEach} from 'tsfun/associative';
-import {FieldDocument} from 'idai-components-2';
+import {FieldDocument} from '@idai-field/core';
 import {ViewState} from './view-state';
 import {NavigationPath} from './navigation-path';
 import {ViewContext} from './view-context';

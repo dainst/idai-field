@@ -1,4 +1,4 @@
-import {FieldDocument} from 'idai-components-2';
+import {FieldDocument} from '@idai-field/core';
 import {NavigationPath} from './navigation-path';
 import {ViewContext} from './view-context';
 import {ResourcesViewMode} from '../view-facade';

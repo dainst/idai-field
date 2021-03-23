@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {to, on, is, isnt, includedIn, or, any, compose, map, Predicate, longerThan} from 'tsfun';
-import {FieldResource} from 'idai-components-2';
+import {FieldResource} from '@idai-field/core';
 import {ProjectConfiguration} from '../../core/configuration/project-configuration';
 import {Category} from '../../core/configuration/model/category';
 import {Group} from '../../core/configuration/model/group';

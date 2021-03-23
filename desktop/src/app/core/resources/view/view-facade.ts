@@ -1,4 +1,5 @@
-import {Document, FieldDocument} from 'idai-components-2';
+import {Document} from 'idai-components-2';
+import {FieldDocument} from '@idai-field/core';
 import {DocumentsManager} from './documents-manager';
 import {FieldReadDatastore} from '../../datastore/field/field-read-datastore';
 import {ChangesStream} from '../../datastore/changes/changes-stream';

@@ -1,5 +1,5 @@
 import {Component, Input, OnChanges, Renderer2, SimpleChanges} from '@angular/core';
-import {FieldDocument} from 'idai-components-2';
+import {FieldDocument} from '@idai-field/core';
 import {FieldReadDatastore} from '../../../core/datastore/field/field-read-datastore';
 import {RoutingService} from '../../routing-service';
 import {ResourcesComponent} from '../resources.component';

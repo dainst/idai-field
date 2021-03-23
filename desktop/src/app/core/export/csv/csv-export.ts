@@ -1,7 +1,8 @@
 import {flow, includedIn, isDefined, isNot, isnt, to, map, cond, join,
     dense, compose, remove} from 'tsfun';
 import {prepend, append} from 'tsfun/string';
-import {FieldResource, Resource} from 'idai-components-2';
+import {Resource} from 'idai-components-2';
+import {FieldResource} from '@idai-field/core';
 import {HierarchicalRelations} from '../../model/relation-constants';
 import {FieldDefinition} from '../../configuration/model/field-definition';
 import {CSVMatrixExpansion} from './csv-matrix-expansion';

@@ -1,4 +1,5 @@
-import {FieldResource, Document} from 'idai-components-2';
+import {Document} from 'idai-components-2';
+import {FieldResource} from '@idai-field/core';
 import {IdaiFieldFindResult} from '../datastore/cached/cached-read-datastore';
 import {Category} from '../configuration/model/category';
 import {Query} from '../datastore/model/query';

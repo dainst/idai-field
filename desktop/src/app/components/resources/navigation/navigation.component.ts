@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
-import {FieldDocument} from 'idai-components-2';
+import {FieldDocument} from '@idai-field/core';
 import {Loading} from '../../widgets/loading';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
 import {NavigationPath} from '../../../core/resources/view/state/navigation-path';

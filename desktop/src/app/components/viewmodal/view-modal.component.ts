@@ -1,5 +1,6 @@
 import {NgbActiveModal, NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {Document, FieldDocument} from 'idai-components-2';
+import {Document} from 'idai-components-2';
+import {FieldDocument} from '@idai-field/core';
 import {DoceditComponent} from '../docedit/docedit.component';
 import {RoutingService} from '../routing-service';
 import {MenuContext, MenuService} from '../menu-service';

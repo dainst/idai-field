@@ -1,5 +1,5 @@
 import {isDefined, filter, map, flow} from 'tsfun';
-import {FieldDocument} from 'idai-components-2';
+import {FieldDocument} from '@idai-field/core';
 import {FieldReadDatastore} from '../datastore/field/field-read-datastore';
 import {ResourceId} from '../constants';
 import {PLACEHOLDER} from '../images/row/image-row';

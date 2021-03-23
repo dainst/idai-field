@@ -2,7 +2,7 @@ import {Component, SimpleChanges, Input, Output, EventEmitter, HostListener, NgZ
     ChangeDetectorRef} from '@angular/core';
 import L from 'leaflet';
 import '@geoman-io/leaflet-geoman-free';
-import {FieldDocument, FieldGeometry} from 'idai-components-2';
+import {FieldDocument, FieldGeometry} from '@idai-field/core';
 import {LayerMapComponent} from './layer-map.component';
 import {GeometryHelper} from './geometry-helper';
 import {FieldPolygon} from './field-polygon';

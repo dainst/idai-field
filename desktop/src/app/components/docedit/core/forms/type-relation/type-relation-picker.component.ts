@@ -2,7 +2,8 @@ import {Component} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {Pair, Mapping, to, isNot, undefinedOrEmpty, left, on, includedIn, right, map, flow, empty, prune,
     is} from 'tsfun';
-import {FieldDocument, FieldResource, Resource, Document} from 'idai-components-2';
+import {Resource, Document} from 'idai-components-2';
+import {FieldDocument, FieldResource} from '@idai-field/core';
 import {FieldReadDatastore} from '../../../../../core/datastore/field/field-read-datastore';
 import {TypeImagesUtil} from '../../../../../core/util/type-images-util';
 import {TypeRelations} from '../../../../../core/model/relation-constants';

@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {flatten, set, subtract, to} from 'tsfun';
-import {FieldDocument, ImageDocument, Document} from 'idai-components-2';
+import {ImageDocument, Document} from 'idai-components-2';
+import {FieldDocument} from '@idai-field/core';
 import {ImageReadDatastore} from '../../../../../core/datastore/field/image-read-datastore';
 import {ViewFacade} from '../../../../../core/resources/view/view-facade';
 import {FieldReadDatastore} from '../../../../../core/datastore/field/field-read-datastore';
@@ -69,7 +70,7 @@ export class LayerManager {
             this.activeLayerIds);
 
         this.activeLayerIds = this.viewFacade.getActiveLayersIds();
-        
+
         try {
             if (reloadLayerGroups) this.layerGroups = await this.createLayerGroups();
         } catch(err) {
@@ -102,7 +103,7 @@ export class LayerManager {
             return this.isActiveLayer(layer.resource.id)
                 && !document.resource.relations[ImageRelations.HASMAPLAYER]?.includes(layer.resource.id);
         }).map(to('resource.id'));
-        
+
         this.viewFacade.setActiveLayersIds(subtract(layersToRemoveIds)(this.activeLayerIds));
     }
 

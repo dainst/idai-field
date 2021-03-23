@@ -1,6 +1,5 @@
 import {Component, Input} from '@angular/core';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {FieldDocument} from 'idai-components-2';
 import {LinkModalComponent} from './link-modal.component';
 import {RemoveLinkModalComponent} from './remove-link-modal.component';
 import {ImageOverviewFacade} from '../../../core/images/overview/view/imageoverview-facade';
@@ -12,6 +11,7 @@ import {Messages} from '../../messages/messages';
 import {MenuContext, MenuService} from '../../menu-service';
 import {ImageRelationsManager, ImageRelationsManagerErrors} from '../../../core/model/image-relations-manager';
 import {DeletionInProgressModalComponent} from './deletion/deletion-in-progress-modal.component';
+import { FieldDocument } from '@idai-field/core';
 
 
 @Component({

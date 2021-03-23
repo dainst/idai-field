@@ -1,4 +1,4 @@
-import {FieldDocument} from 'idai-components-2';
+import {FieldDocument} from '@idai-field/core';
 import {NavigationPathSegment} from '../../../../../../src/app/core/resources/view/state/navigation-path-segment';
 import {Static} from '../../../../static';
 

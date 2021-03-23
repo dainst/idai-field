@@ -1,4 +1,4 @@
-import {FieldResource} from 'idai-components-2';
+import {FieldResource} from '@idai-field/core';
 import {Groups} from '../../../../../src/app/core/configuration/model/group';
 import {FieldDefinition} from '../../../../../src/app/core/configuration/model/field-definition';
 import {Category} from '../../../../../src/app/core/configuration/model/category';

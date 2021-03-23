@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {Document, NewDocument, FieldDocument} from 'idai-components-2';
+import {Document, NewDocument} from 'idai-components-2';
+import {FieldDocument} from '@idai-field/core';
 import {DoceditComponent} from '../../docedit/docedit.component';
 import {MenuContext, MenuService} from '../../menu-service';
 import {ViewFacade} from '../../../core/resources/view/view-facade';

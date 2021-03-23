@@ -24,6 +24,7 @@ jobs:
     - run: npm i
     - run: npm run bootstrap
     - run: npm run build
+      working-directory: core
     - run: npm run build:all
       working-directory: desktop
     - run: npm run package:${{ matrix.os_short }}

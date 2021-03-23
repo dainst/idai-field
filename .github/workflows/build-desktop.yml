@@ -18,6 +18,8 @@ jobs:
           - os: windows-latest
             os-short: win
     runs-on: ${{ matrix.os }}
+    env:
+      GH_TOKEN: ${{ github.token }}
     steps:
     - uses: actions/checkout@v2
     - uses: actions/setup-node@v1

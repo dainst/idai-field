@@ -6,8 +6,6 @@ export type InnerHTML = string;
 
 
 /**
- * Right now, there is no translation of field entries. // TODO needed?
- *
  * @author Daniel de Oliveira
  */
 export function formatContent(resource: Resource, field: any): InnerHTML {
@@ -56,7 +54,6 @@ const convertObject = (inputType?: FieldDefinition.InputType) =>
 
 const convertArray = (inputType?: FieldDefinition.InputType) =>
                      (fieldContent: Array<any>): Array<string> => {
-
 
     return fieldContent.map(element => {
 

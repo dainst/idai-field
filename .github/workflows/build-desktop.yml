@@ -4,6 +4,7 @@ on:
     paths:
     - "core/**"
     - "desktop/**"
+    - ".github/workflows/build-desktop.yml"
 jobs:
   build-desktop:
     strategy:
@@ -23,4 +24,6 @@ jobs:
     - run: npm i
     - run: npm run bootstrap
     - run: npm run build:all
+      working-directory: desktop
     - run: npm run package:${{ matrix.os_short }}
+      working-directory: desktop

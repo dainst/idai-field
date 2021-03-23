@@ -13,7 +13,7 @@
         "build": "tsc -p ."
     },
     "dependencies": {
-        "idai-components-2": "1.47.36",
+        "idai-components-2": "1.47.55",
         "tsfun": "4.4.61"
     },
     "devDependencies": {

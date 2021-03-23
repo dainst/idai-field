@@ -23,6 +23,7 @@ jobs:
     - uses: actions/setup-node@v1
     - run: npm i
     - run: npm run bootstrap
+    - run: npm run build
     - run: npm run build:all
       working-directory: desktop
     - run: npm run package:${{ matrix.os_short }}

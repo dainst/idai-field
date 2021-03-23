@@ -27,5 +27,5 @@ jobs:
       working-directory: core
     - run: npm run build:all
       working-directory: desktop
-    - run: npm run package:${{ matrix.os_short }}
+    - run: npm run package:${{ matrix.os-short }}
       working-directory: desktop

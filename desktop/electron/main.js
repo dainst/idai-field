@@ -106,7 +106,15 @@ if (env === 'dev') {
 }
 
 if (['production', 'development'].includes(global.mode)) {
-    global.appDataPath = electron.app.getPath('appData') + '/' + electron.app.getName();
+
+    // TODO Quickfix
+    const result = electron.app.getPath('userData').replace("@idai-field/desktop", "idai-field-client")
+    electron.app.setPath('userData', result)
+    // global.appDataPath = electron.app.getPath('appData') + '/' + electron.app.getName()
+    global.appDataPath = result
+    //
+
+    console.log(global.appDataPath)
     copyConfigFile(global.appDataPath + '/config.json', global.appDataPath);
     global.configPath = global.appDataPath + '/config.json';
 } else {

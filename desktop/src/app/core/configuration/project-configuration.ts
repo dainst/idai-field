@@ -2,7 +2,7 @@ import {flow, to, on, isNot, empty, is, Pair, Map, includedIn, map_a, filter} fr
 import {Category} from './model/category';
 import {FieldDefinition} from './model/field-definition';
 import {RelationDefinition} from './model/relation-definition';
-import {Named, namedArrayToNamedMap} from '../util/named';
+import {Named, namedArrayToNamedMap} from '@idai-field/core';
 import {RelationsUtil} from './relations-utils';
 import {flattenTree, ITEMNAMEPATH, TreeList} from '../util/tree-list';
 import {Name} from '../constants';

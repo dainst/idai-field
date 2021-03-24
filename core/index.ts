@@ -15,3 +15,5 @@ export {NewImageResource} from './src/model/new-image-resource';
 export {SortUtil} from './src/tools/sort-util';
 export {assocReduce} from './src/tools/assoc-reduce';
 export {makeLookup, addKeyAsProp, mapToArray} from './src/tools/transformers'
+export {Named, Labelled, namedArrayToNamedMap, sortNamedArray, mapToNamedArray, byName, onName, toName} from './src/tools/named';
+export {sortStructArray} from './src/tools/sort-struct-array';

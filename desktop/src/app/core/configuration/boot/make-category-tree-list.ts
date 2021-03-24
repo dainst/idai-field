@@ -1,11 +1,11 @@
 import {cond, defined, flow, isNot, Map, Mapping, on, isUndefined, copy,
-    separate, dissoc, map, update, reduce, map_a, keysAndValues, values} from 'tsfun';
+    separate, dissoc, map, update, reduce, map_a, values} from 'tsfun';
 import {Category} from '../model/category';
 import {CategoryDefinition} from '../model/category-definition';
 import {Group, Groups} from '../model/group';
 import {FieldDefinition} from '../model/field-definition';
 import {clone} from '../../util/object-util';
-import {mapToNamedArray} from '../../util/named';
+import {mapToNamedArray} from '@idai-field/core';
 import {MDInternal} from '../../../components/messages/md-internal';
 import {mapTreeList, TreeList} from '../../util/tree-list';
 import {linkParentAndChildInstances} from '../category-tree-list';

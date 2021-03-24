@@ -1,13 +1,12 @@
 import {is, isArray, on, Predicate, isString, isNot, and} from 'tsfun';
 import {Dating, Dimension, Literature, Document, NewDocument, NewResource,
     Resource, OptionalRange} from 'idai-components-2';
-import {FieldGeometry} from '@idai-field/core';
+import {FieldGeometry, Named} from '@idai-field/core';
 import {validateFloat, validateUnsignedFloat, validateUnsignedInt} from '../util/number-util';
 import {ValidationErrors} from './validation-errors';
 import {ProjectConfiguration} from '../configuration/project-configuration';
 import {FieldDefinition} from '../configuration/model/field-definition';
 import {RelationDefinition} from '../configuration/model/relation-definition';
-import {Named} from '../util/named';
 
 
 export module Validations {

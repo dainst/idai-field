@@ -1,10 +1,10 @@
-import {filter, flow, includedIn, is, map, map_a, remove, to} from 'tsfun';
+import {filter, flow, includedIn, is, map, remove, to} from 'tsfun';
 import {Category} from './model/category';
-import {Named, onName, toName} from '../util/named';
+import {Named, onName, toName} from '@idai-field/core';
 import {flattenTree, TreeList} from '../util/tree-list';
 import {Name} from '../constants';
 import {filterTrees, isTopLevelItemOrChildThereof, removeTrees} from '../util/named-tree-list';
-import { logWithMessage } from '../util/utils';
+
 
 const TYPE_CATALOG = 'TypeCatalog';
 const TYPE = 'Type';

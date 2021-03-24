@@ -1,4 +1,4 @@
-import {Labelled, Named} from '../../util/named';
+import {Labelled, Named} from '@idai-field/core';
 
 
 /**

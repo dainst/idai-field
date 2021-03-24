@@ -1,4 +1,4 @@
-import {namedArrayToNamedMap, mapToNamedArray, sortNamedArray} from '../../../../src/app/core/util/named';
+import {namedArrayToNamedMap, mapToNamedArray, sortNamedArray} from '../../src/tools/named';
 
 /**
  * @author Daniel de Oliveira

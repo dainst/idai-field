@@ -6,7 +6,7 @@ import {performQuery as performQuery_} from '../../../../../src/app/core/datasto
 import {FulltextIndex} from '../../../../../src/app/core/datastore/index/fulltext-index';
 import {ConstraintIndex} from '../../../../../src/app/core/datastore/index/constraint-index';
 import {Query} from '../../../../../src/app/core/datastore/model/query';
-import {namedArrayToNamedMap} from '../../../../../src/app/core/util/named';
+import {namedArrayToNamedMap} from '@idai-field/core';
 
 /**
  * @author Daniel de Oliveira

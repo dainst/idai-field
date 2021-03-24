@@ -6,7 +6,7 @@ import {ValuelistDefinition} from '../model/valuelist-definition';
 import {TransientCategoryDefinition} from '../model/transient-category-definition';
 import {ConfigurationErrors} from './configuration-errors';
 import {getDefinedParents, iterateOverFieldsOfCategories} from './helpers';
-import {mapToNamedArray, Named} from '../../util/named';
+import {mapToNamedArray, Named} from '@idai-field/core';
 
 
 export module Assertions {

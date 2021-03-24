@@ -1,5 +1,5 @@
 import {Pair, Map, to, identity, isDefined, isString, Associative, isArray, dissoc, isNumber} from 'tsfun';
-import {Named, namedArrayToNamedMap} from './named';
+import {Named, namedArrayToNamedMap} from '@idai-field/core';
 import {assocReduce} from '../../../../../core/src/tools/assoc-reduce';
 
 

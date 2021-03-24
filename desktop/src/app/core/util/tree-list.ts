@@ -14,7 +14,7 @@ import {
     zip, identity
 } from 'tsfun';
 import {Comparator} from 'tsfun';
-import {Named} from './named';
+import {Named} from '@idai-field/core';
 
 
 export type Tree<T = any> = {

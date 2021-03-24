@@ -10,7 +10,7 @@ import {performQuery} from './perform-query';
 import {ResourceId} from '../../constants';
 import {getSortedIds} from './get-sorted-ids';
 import {Query} from '../model/query';
-import {namedArrayToNamedMap} from '../../util/named';
+import {namedArrayToNamedMap} from '@idai-field/core';
 import {InitializationProgress} from '../../initialization-progress';
 
 const TYPE = 'Type';

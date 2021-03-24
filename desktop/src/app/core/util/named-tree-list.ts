@@ -1,6 +1,6 @@
 import {drop, identity, includedIn, is, isArray, isNot, on, take} from 'tsfun';
 import {findInTree, ITEMNAMEPATH, TreeList} from './tree-list';
-import {Named, onName} from './named';
+import {Named, onName} from '@idai-field/core';
 import {Name} from '../constants';
 
 

@@ -1,5 +1,5 @@
 import {FieldDefinition} from './field-definition';
-import {Labelled, Named} from '../../util/named';
+import {Labelled, Named} from '@idai-field/core';
 import {RelationDefinition} from './relation-definition';
 import {HierarchicalRelations, ImageRelations, PositionRelations, TimeRelations, TypeRelations} from '../../model/relation-constants';
 

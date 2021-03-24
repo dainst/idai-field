@@ -1,6 +1,6 @@
 import {filterTrees, findInNamedTreeList, isTopLevelItemOrChildThereof,
     removeTrees} from '../../../src/app/core/util/named-tree-list';
-import {Named} from '../../../src/app/core/util/named';
+import {Named} from '@idai-field/core';
 import {accessTree, buildTreeList, TreeList} from '../../../src/app/core/util/tree-list';
 
 

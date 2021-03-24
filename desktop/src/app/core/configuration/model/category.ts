@@ -1,7 +1,7 @@
 import {flatten, flow, map, to} from 'tsfun';
 import {FieldDefinition} from './field-definition';
 import {Group} from './group';
-import {Named} from '../../util/named';
+import {Named} from '@idai-field/core';
 
 
 export interface Category extends Named {

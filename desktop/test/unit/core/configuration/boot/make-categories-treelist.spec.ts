@@ -3,7 +3,7 @@ import {Groups} from '../../../../../src/app/core/configuration/model/group';
 import {FieldDefinition} from '../../../../../src/app/core/configuration/model/field-definition';
 import {Category} from '../../../../../src/app/core/configuration/model/category';
 import {makeCategoryTreeList} from '../../../../../src/app/core/configuration/boot/make-category-tree-list';
-import {byName, namedArrayToNamedMap} from '../../../../../src/app/core/util/named';
+import {byName, namedArrayToNamedMap} from '@idai-field/core';
 import InputType = FieldDefinition.InputType;
 import {MDInternal} from '../../../../../src/app/components/messages/md-internal';
 import {flattenTree} from '../../../../../src/app/core/util/tree-list';

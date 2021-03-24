@@ -64,7 +64,7 @@ export function dissocIndices<A>(indices: Array<number>) {
         return dissocIndices
                 (dropRight(1, indices))
                 (
-                  take(index)(as)
+                  take(index, as)
                   .concat(
                       drop(index + 1, as)
                   )

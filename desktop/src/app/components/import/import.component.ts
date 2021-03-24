@@ -243,10 +243,7 @@ export class ImportComponent implements OnInit {
         uploadModalRef.close();
         this.menuService.setContext(MenuContext.DEFAULT);
 
-        if (importReport) {
-            this.ignoredIdentifiers = importReport.ignoredIdentifiers;
-            this.showImportResult(importReport);
-        }
+        if (importReport) this.showImportResult(importReport);
     }
 
 
@@ -291,15 +288,39 @@ export class ImportComponent implements OnInit {
 
     private showImportResult(importReport: ImporterReport) {
 
-        if (importReport.errors.length > 0) return this.showMessages(importReport.errors);
-        if (importReport.successfulImports === 0) return this.showEmptyImportWarning();
-        this.showSuccessMessage(importReport.successfulImports);
+        if (importReport.errors.length > 0) {
+            return this.showMessages(importReport.errors);
+        }  else if (importReport.successfulImports === 0 && importReport.ignoredIdentifiers.length === 0) {
+            this.showEmptyImportWarning();
+        } else {
+            this.showSuccessMessage(importReport.successfulImports);
+        }
+
+        this.ignoredIdentifiers = importReport.ignoredIdentifiers;
+        if (this.ignoredIdentifiers.length > 0) this.showIgnoredIdentifiersWarning(this.ignoredIdentifiers);
     }
 
 
     private showEmptyImportWarning() {
 
         this.messages.add([M.IMPORT_WARNING_EMPTY]);
+    }
+
+
+    private showIgnoredIdentifiersWarning(ignoredIdentifiers: string[]) {
+
+        this.messages.add([
+            this.importState.mergeMode
+                ? ignoredIdentifiers.length === 1
+                    ? M.IMPORT_WARNING_IGNORED_MISSING_IDENTIFIER
+                    : M.IMPORT_WARNING_IGNORED_MISSING_IDENTIFIERS
+                : ignoredIdentifiers.length === 1
+                    ? M.IMPORT_WARNING_IGNORED_EXISTING_IDENTIFIER
+                    : M.IMPORT_WARNING_IGNORED_EXISTING_IDENTIFIERS,
+            ignoredIdentifiers.length === 1
+                ? ignoredIdentifiers[0]
+                : ignoredIdentifiers.length.toString()
+        ]);
     }
 
 

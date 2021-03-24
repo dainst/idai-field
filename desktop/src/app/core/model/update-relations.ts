@@ -1,6 +1,5 @@
 import {on, Predicate, flow, isnt, append, isDefined, compose, isEmpty,
-    pairWith, cond, Pair, zip, filter, to, lookup, remove, map_a, values} from 'tsfun';
-import {update, map, forEach} from 'tsfun';
+    pairWith, update, forEach, cond, Pair, zip, filter, to, lookup, remove, map, values} from 'tsfun';
 import {Document, Resource, relationsEquivalent, Relations} from 'idai-components-2';
 import {Name} from '../constants';
 import {clone} from '../util/object-util';
@@ -89,7 +88,7 @@ function setInverseRelations(target: Resource, resource: Resource,
     flow(
         Object.keys(resource.relations),
         filter(hasInverseRelation),
-        map_a(pairWith(getInverse)),
+        map(pairWith(getInverse)),
         values,
         forEach(setInverseRelation(target, resource))
     );

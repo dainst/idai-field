@@ -3,8 +3,7 @@ import {Lookup} from '../../../util/utils';
 import {ResourceId} from '../../../constants';
 import {makeDocumentsLookup} from '../utils';
 import {reduce as asyncReduce} from 'tsfun/async';
-import {lookup, map_a} from 'tsfun';
-import {compose, flatten, flow, isDefined, Pair, remove, subtract, union} from 'tsfun';
+import {compose, lookup, map, flatten, flow, isDefined, Pair, remove, subtract, union} from 'tsfun';
 import {forEach as asyncForEach} from 'tsfun/src/async';
 import {clone} from '../../../util/object-util';
 import {ImportErrors as E} from '../import-errors';
@@ -21,7 +20,7 @@ export async function makeLookups(documents: Array<Document>,
         getTargetIds(mergeMode, get, documentsLookup), {}, documentsLookup);
     const targetDocumentsLookup = await asyncReduce(
         getTargetDocuments(get), {}, targetIdsLookup);
-    const targetsLookup: Lookup<[ResourceId[], Array<Document>]> = map_a(targetIdsLookup, (ids) => {
+    const targetsLookup: Lookup<[ResourceId[], Array<Document>]> = map(targetIdsLookup, (ids) => {
         return [ids[0], union(ids).map(lookup(targetDocumentsLookup))]
     });
 

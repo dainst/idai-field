@@ -1,5 +1,5 @@
 import {isArray, isnt, set, sort, split, flow, filter, isNot, dense, throws,
-    first, startsWith, longerThan, map_a, map, forEach} from 'tsfun';
+    first, startsWith, longerThan, map, forEach} from 'tsfun';
 import {ParserErrors} from './parser-errors';
 import CSV_PATH_ITEM_TYPE_MISMATCH = ParserErrors.CSV_HEADING_PATH_ITEM_TYPE_MISMATCH;
 import CSV_HEADING_ARRAY_INDICES_INVALID_SEQUENCE = ParserErrors.CSV_HEADING_ARRAY_INDICES_INVALID_SEQUENCE;
@@ -44,8 +44,8 @@ export function convertCsvRows(separator: string) {
         assertHeadingsDoNotContainIncompleteArrays(headings);
         assertRowsAndHeadingLengthsMatch(headings, rows);
 
-        return map_a(
-            (row: string[]) => row.reduce(insertFieldIntoDocument(headings), {}),
+        return map(
+            row => row.reduce(insertFieldIntoDocument(headings), {}),
             rows);
     }
 }

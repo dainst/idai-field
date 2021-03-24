@@ -1,4 +1,4 @@
-import {flow, includedIn, filter, isEmpty, isNot, equal, isObject, isString, and, filter_a} from 'tsfun';
+import {flow, includedIn, filter, isEmpty, isNot, equal, isObject, isString, and} from 'tsfun';
 import {Document, NewDocument, Resource} from 'idai-components-2';
 import {clone} from '../util/object-util';
 import {Validator} from '../model/validator';
@@ -209,8 +209,8 @@ export class DocumentHolder {
 
         return flow(
             this.clonedDocument.resource.relations,
-            filter_a(isEmpty),
-            Object.keys);
+            filter(isEmpty),
+            Object.keys); // TODO improve typing of tsfun|keys and try here
     }
 
 
@@ -218,7 +218,7 @@ export class DocumentHolder {
 
         return flow(
             this.clonedDocument.resource,
-            filter_a(and(isString, isEmpty)),
+            filter(and(isString, isEmpty)),
             Object.keys);
     }
 

@@ -1,4 +1,4 @@
-import { map_a } from 'tsfun';
+import { map } from 'tsfun';
 import {CategoryDefinition} from '../model/category-definition';
 import {FieldDefinition} from '../model/field-definition';
 
@@ -9,16 +9,12 @@ import {FieldDefinition} from '../model/field-definition';
  */
 export function orderFields(orderConfiguration: any){
 
-    return (categories_: any): any  => {
-
-        return map_a((category: any, k: string) => {
+    return map((category: any, k: string) => {
 
             category.name = k;
             category.fields = getOrderedFields(category, orderConfiguration);
             return category;
-
-        })(categories_);
-    }
+        });
 }
 
 

@@ -1,4 +1,4 @@
-import {includedIn, isNot, isArray, filter_a} from 'tsfun';
+import {includedIn, isNot, isArray, filter} from 'tsfun';
 import {SortUtil} from '@idai-field/core';
 import {Document, Resource} from 'idai-components-2';
 import {FieldDefinition} from '../configuration/model/field-definition';
@@ -109,7 +109,7 @@ export module ValuelistUtil {
         const parentValues: string[] = parentResource[fieldName] ?? [];
 
         const result: ValuelistDefinition = clone(valuelist);
-        result.values = filter_a((_, key: string) => {
+        result.values = filter((_, key: string) => {
             return parentValues.includes(key);
         })(valuelist.values) as { [key: string]: ValueDefinition };
 

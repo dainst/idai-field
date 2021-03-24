@@ -1,5 +1,5 @@
 import {Observable, Observer} from 'rxjs';
-import {is, on, flow, isDefined, separate, Map, filter_a, values, forEach, lookup} from 'tsfun';
+import {is, on, flow, isDefined, separate, Map, filter, values, forEach, lookup} from 'tsfun';
 import {Document, Resource} from 'idai-components-2';
 import {ConstraintIndex} from './constraint-index';
 import {FulltextIndex} from './fulltext-index';
@@ -176,7 +176,7 @@ export class IndexFacade {
 
         flow(
             items,
-            filter_a(on(INSTANCES, isDefined)),
+            filter(on(INSTANCES, isDefined)),
             values,
             forEach((item: TypeResourceIndexItem) => {
                 delete item[INSTANCES][document.resource.id];

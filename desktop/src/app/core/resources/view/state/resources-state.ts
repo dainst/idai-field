@@ -1,4 +1,4 @@
-import {flow, forEach, keys, lookup, map_a, values} from 'tsfun';
+import {flow, forEach, keys, lookup, map, values} from 'tsfun';
 import {FieldDocument} from '@idai-field/core';
 import {ViewState} from './view-state';
 import {NavigationPath} from './navigation-path';
@@ -232,7 +232,7 @@ export module ResourcesState {
 
         flow(state.operationViewStates,
             keys as any /* TODO review any*/,
-            map_a(lookup(state.operationViewStates)),
+            map(lookup(state.operationViewStates)),
             values,
             forEach(ViewState.complete));
 

@@ -1,5 +1,5 @@
 import {ChangeDetectorRef, Component, Input, OnChanges, SimpleChanges} from '@angular/core';
-import {filter, flatten, flow, isnt, Map, map, set, take, to} from 'tsfun';
+import {curry, filter, flatten, flow, isnt, Map, map, set, take, to} from 'tsfun';
 import {Document} from 'idai-components-2';
 import {ViewFacade} from '../../../core/resources/view/view-facade';
 import {Loading} from '../../widgets/loading';
@@ -85,7 +85,6 @@ export class TypesComponent extends BaseList implements OnChanges {
                 menuService: MenuService) {
 
         super(resourcesComponent, viewFacade, loading, menuService);
-
         resourcesComponent.listenToClickEvents().subscribe(event => this.handleClick(event));
         this.syncService.statusNotifications().subscribe(() => this.update(this.documents));
     }
@@ -280,10 +279,10 @@ export class TypesComponent extends BaseList implements OnChanges {
 
         const linkedResourceIds: string[] = flow(
             [this.mainDocument].concat(Object.values(this.subtypes)),
-            filter(document => Document.hasRelations(document, TypeRelations.HASINSTANCE)),
+            filter(curry(Document.hasRelations, TypeRelations.HASINSTANCE)),
             map(document => document.resource.relations[TypeRelations.HASINSTANCE]),
             flatten(),
-            set as any
+            set as any // TODO review any
         );
 
         return await this.fieldDatastore.getMultiple(linkedResourceIds);

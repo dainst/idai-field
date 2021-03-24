@@ -137,7 +137,7 @@ export class FieldsViewComponent implements OnChanges {
                     filter(on(RIGHT, isDefined)),
                     filter(on(LEFT, FieldsViewUtil.isVisibleField)),
                     map(this.makeField.bind(this)),
-                    flatten()
+                    flatten() as any /* TODO review typing*/
                 )
             )
         );

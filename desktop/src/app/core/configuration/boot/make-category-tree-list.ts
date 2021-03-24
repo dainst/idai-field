@@ -1,5 +1,5 @@
 import {cond, defined, flow, isNot, Map, Mapping, on, isUndefined, copy,
-    separate, dissoc, map, update, reduce, map_a, values} from 'tsfun';
+    separate, dissoc, map, update, reduce, values} from 'tsfun';
 import {Category} from '../model/category';
 import {CategoryDefinition} from '../model/category-definition';
 import {Group, Groups} from '../model/group';
@@ -25,8 +25,8 @@ export function makeCategoryTreeList(categories: any): TreeList<Category> {
 
     const parentCategories = flow(
         parentDefs,
-        map_a(buildCategoryFromDefinition as any /* TODO review any*/),
-        map_a(update(TEMP_FIELDS, ifUndefinedSetGroupTo(Groups.PARENT))) as any,
+        map(buildCategoryFromDefinition),
+        map(update(TEMP_FIELDS, ifUndefinedSetGroupTo(Groups.PARENT))),
         mapToNamedArray,
         map(category => ({ item: category, trees: []}))
     );

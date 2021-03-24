@@ -1,5 +1,5 @@
 import {cond, flow, includedIn, isDefined, isNot, Mapping, Map, on, subtract, undefinedOrEmpty, identity,
-    compose, Pair, dissoc, pairWith, prune, filter, or, copy, update_a as updateAsc, update as updateStruct, lookup, map_a, keysValues, reduce, clone, update_a, update } from 'tsfun';
+    compose, Pair, dissoc, pairWith, prune, filter, or, copy, update_a as updateAsc, update as updateStruct, lookup, map, keysValues, reduce, clone, update_a, update } from 'tsfun';
 import {LibraryCategoryDefinition} from '../model/library-category-definition';
 import {CustomCategoryDefinition} from '../model/custom-category-definition';
 import {ConfigurationErrors} from './configuration-errors';
@@ -168,7 +168,7 @@ function putRelationsIntoGroups(relations: Array<RelationDefinition>) {
 
 
 const sortGroups = (defaultOrder: string[]) => (groups: Map<Group>) =>
-    flow(defaultOrder, map_a(lookup(groups)), prune);
+    flow(defaultOrder, map(lookup(groups)), prune);
 
 
 const orderCategories = (categoriesOrder: string[] = []) => (categories: TreeList<Category>): TreeList<Category> =>
@@ -199,8 +199,8 @@ function setGroupLabels(languageConfigurations: any[]) {
         return update(
             Category.GROUPS,
             compose(
-                map_a(pairWith(groupLabel)),
-                map_a(([group, label]: Pair<Group, string>) => updateAsc(Labelled.LABEL, label)(group as any))))(category);
+                map(pairWith(groupLabel)),
+                map(([group, label]: Pair<Group, string>) => updateAsc(Labelled.LABEL, label)(group as any))))(category);
     };
 }
 
@@ -242,11 +242,11 @@ function insertValuelistIds(mergedCategories: Map<TransientCategoryDefinition>) 
 function replaceValuelistIdsWithValuelists(valuelistDefinitionsMap: Map<ValuelistDefinition>)
     : Mapping<Map<TransientCategoryDefinition>> {
 
-    return map_a(
+    return map(
         cond(
             on(TransientCategoryDefinition.FIELDS, isNot(undefinedOrEmpty)),
             update_a(TransientCategoryDefinition.FIELDS,
-                map_a(
+                map(
                     cond(
                         or(
                             on(TransientFieldDefinition.VALUELISTID, isDefined),
@@ -284,7 +284,7 @@ function eraseUnusedCategories(selectedCategoriesNames: string[])
             keysOfUnselectedCategories,
             reduce(withDissoc, categories),
             getDefinedParents
-        );
+        ) as any /* TODO review any*/;
 
         const categoriesToErase = subtract(parentNamesOfSelectedCategories)(keysOfUnselectedCategories);
         return categoriesToErase.reduce(withDissoc, categories) as Map<TransientCategoryDefinition>;
@@ -295,7 +295,7 @@ function eraseUnusedCategories(selectedCategoriesNames: string[])
 function replaceCommonFields(commonFields: Map)
         : Mapping<Map<TransientCategoryDefinition>> {
 
-    return map_a(
+    return map(
         cond(
             on(TransientCategoryDefinition.COMMONS, isDefined),
             (mergedCategory: TransientCategoryDefinition) => {

@@ -50,6 +50,7 @@ export class ImportComponent implements OnInit {
     public operations: Array<Document> = [];
     public javaInstalled: boolean = true;
     public running: boolean = false;
+    public ignoredIdentifiers: string[] = [];
 
     public readonly allowedFileExtensions: string = '.csv, .jsonl, .geojson, .json, .shp, .catalog';
 
@@ -78,18 +79,12 @@ export class ImportComponent implements OnInit {
     public isJavaInstallationMissing = () => this.importState.format === 'shapefile' && !this.javaInstalled;
 
     public isDefaultFormat = () => Importer.isDefault(this.importState.format);
-
-    public isDifferentialImportOptionSelected = () => this.importState.differentialImport === true;
     
-    public isMergeImportOptionSelected = () => this.importState.mergeMode === true;
+    public isMergeMode = () => this.importState.mergeMode;
 
     public shouldDisplayPermitDeletionsOption = () => this.isDefaultFormat() && this.importState.mergeMode === true;
 
     public shouldDisplayImportIntoOperation = () => Importer.importIntoOperationAvailable(this.importState);
-
-    public selectMergeImportOption = () => this.updateImportOptionForDefaultImport('merge');
-    
-    public selectDifferentialImportOption = () => this.updateImportOptionForDefaultImport('differential');
 
     public getSeparator = () => this.importState.separator;
 
@@ -143,10 +138,15 @@ export class ImportComponent implements OnInit {
         this.importState.file = undefined;
         this.importState.format = undefined;
         this.importState.url = undefined;
+        this.importState.differentialImport = false;
+        this.importState.mergeMode = false;
+        this.importState.permitDeletions = false;
     }
 
 
     public selectFile(event: any) {
+
+        this.reset();
 
         this.importState.typeFromFileName = false;
 
@@ -172,10 +172,9 @@ export class ImportComponent implements OnInit {
     }
 
 
-    public updateImportOptionForDefaultImport(option: 'merge'|'differential') {
+    public setMergeMode(mergeImport: boolean) {
 
-        this.importState.mergeMode = option === 'merge';
-        this.importState.differentialImport = option === 'differential';
+        this.importState.mergeMode = mergeImport;
         this.importState.permitDeletions = false;
         this.updateCategories();
     }
@@ -188,8 +187,9 @@ export class ImportComponent implements OnInit {
                 ? this.importState.file.name
                 : this.importState.url
         );
-        if (['csv', 'native'].includes(this.importState.format)) {
-            this.updateImportOptionForDefaultImport('differential');
+
+        if (this.importState.format === 'csv' || this.importState.format === 'native') {
+            this.importState.differentialImport = true;
         }
     }
 
@@ -288,15 +288,39 @@ export class ImportComponent implements OnInit {
 
     private showImportResult(importReport: ImporterReport) {
 
-        if (importReport.errors.length > 0) return this.showMessages(importReport.errors);
-        if (importReport.successfulImports === 0) return this.showEmptyImportWarning();
-        this.showSuccessMessage(importReport.successfulImports);
+        if (importReport.errors.length > 0) {
+            return this.showMessages(importReport.errors);
+        }  else if (importReport.successfulImports === 0 && importReport.ignoredIdentifiers.length === 0) {
+            this.showEmptyImportWarning();
+        } else {
+            this.showSuccessMessage(importReport.successfulImports);
+        }
+
+        this.ignoredIdentifiers = importReport.ignoredIdentifiers;
+        if (this.ignoredIdentifiers.length > 0) this.showIgnoredIdentifiersWarning(this.ignoredIdentifiers);
     }
 
 
     private showEmptyImportWarning() {
 
         this.messages.add([M.IMPORT_WARNING_EMPTY]);
+    }
+
+
+    private showIgnoredIdentifiersWarning(ignoredIdentifiers: string[]) {
+
+        this.messages.add([
+            this.importState.mergeMode
+                ? ignoredIdentifiers.length === 1
+                    ? M.IMPORT_WARNING_IGNORED_MISSING_IDENTIFIER
+                    : M.IMPORT_WARNING_IGNORED_MISSING_IDENTIFIERS
+                : ignoredIdentifiers.length === 1
+                    ? M.IMPORT_WARNING_IGNORED_EXISTING_IDENTIFIER
+                    : M.IMPORT_WARNING_IGNORED_EXISTING_IDENTIFIERS,
+            ignoredIdentifiers.length === 1
+                ? ignoredIdentifiers[0]
+                : ignoredIdentifiers.length.toString()
+        ]);
     }
 
 

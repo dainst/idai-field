@@ -68,11 +68,11 @@ describe('importDocuments', () => {
 
     it('should resolve on success', async done => {
 
-        const [_1, [importDocuments, _2]] = await importFunction([
+        const [_, result] = await importFunction([
             { resource: { category: 'Find', identifier: 'one', relations: { isChildOf: '0'} } } as any],
             'user1');
 
-        expect(importDocuments.length).toBe(1);
+        expect(result.createDocuments.length).toBe(1);
         done();
     });
 
@@ -88,9 +88,9 @@ describe('importDocuments', () => {
             { resource: { identifier: '123', id: '1', relations: {} } }
         ));
 
-        const [_, [createDocuments, updateDocuments, targetDocuments]] = await (buildImportDocuments(
+        const [_, result] = await (buildImportDocuments(
             { datastore, validator },
-            { operationCategoryNames: operationCategoryNames, inverseRelationsMap: {}, settings: { username: 'user1'} as Settings },
+            { operationCategoryNames: operationCategoryNames, inverseRelationsMap: {}, settings: { username: 'user1' } as Settings },
             {
                 generateId: () => '101',
                 preprocessDocument: identity,
@@ -99,16 +99,16 @@ describe('importDocuments', () => {
             { mergeMode: true, useIdentifiersInRelations: true }))(
             [{ resource: { id: '1', relations: {} } } as any]);
 
-        expect(createDocuments.length).toBe(0);
-        expect(updateDocuments.length).toBe(1);
-        expect(targetDocuments.length).toBe(0);
+        expect(result.createDocuments.length).toBe(0);
+        expect(result.updateDocuments.length).toBe(1);
+        expect(result.targetDocuments.length).toBe(0);
         done();
     });
 
 
     it('does not overwrite if exists', async done => {
 
-        const [_1, [createDocuments, updateDocuments, targetDocuments]] = await (buildImportDocuments(
+        const [_1, result] = await (buildImportDocuments(
             { datastore, validator },
             {
                 operationCategoryNames: operationCategoryNames,
@@ -124,9 +124,9 @@ describe('importDocuments', () => {
 
         ([{ resource: { category: 'Find', identifier: 'one', relations: { isChildOf: '0' } } } as any]);
 
-        expect(createDocuments.length).toBe(1);
-        expect(updateDocuments.length).toBe(0);
-        expect(targetDocuments.length).toBe(0);
+        expect(result.createDocuments.length).toBe(1);
+        expect(result.updateDocuments.length).toBe(0);
+        expect(result.targetDocuments.length).toBe(0);
         done();
     });
 
@@ -136,7 +136,7 @@ describe('importDocuments', () => {
 
         datastore.bulkCreate.and.returnValue(Promise.reject(['abc']));
 
-        const {errors} = await importFunction(
+        const { errors } = await importFunction(
             [{ resource: { category: 'Find', identifier: 'one', relations: { isChildOf: '0' } } } as any],
             datastore, 'user1');
 

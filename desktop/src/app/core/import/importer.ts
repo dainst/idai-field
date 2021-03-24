@@ -30,7 +30,7 @@ import {Updater} from './import/updater';
 
 export type ImporterFormat = 'native' | 'geojson' | 'geojson-gazetteer' | 'shapefile' | 'csv' | 'catalog';
 
-export type ImporterReport = { errors: any[], successfulImports: number };
+export type ImporterReport = { errors: any[], successfulImports: number, ignoredIdentifiers: string[] };
 
 
 export interface ImporterOptions {
@@ -64,7 +64,6 @@ export interface ImporterServices {
 }
 
 
-
 /**
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
@@ -94,12 +93,12 @@ export module Importer {
                                    context: ImporterContext,
                                    generateId: () => string,
                                    options: ImporterOptions,
-                                   documents: Array<Document>) {
+                                   documents: Array<Document>): Promise<ImporterReport> {
 
         if (options.format === 'catalog') { // TODO test manually
             const { errors, successfulImports } = 
                 await (buildImportCatalog(services, context.settings))(documents);
-            return { errors: errors, warnings: [], successfulImports: successfulImports };
+            return { errors: errors, successfulImports: successfulImports, ignoredIdentifiers: [] };
         }
 
         const operationCategoryNames = ProjectCategories.getOverviewCategoryNames(context.projectConfiguration.getCategoryTreelist()).filter(isnt('Place'));
@@ -139,21 +138,22 @@ export module Importer {
                     });
         }
 
-        let error: ErrWithParams|undefined = undefined;
-        let results: [CreateDocuments, UpdateDocuments, TargetDocuments]|undefined = undefined;
-        [error, results] = await importFunction(documents);
-        if (error !== undefined) return { errors: [error], successfulImports: 0 };
+        const [error, result] = await importFunction(documents);
+        if (error !== undefined) return { errors: [error], successfulImports: 0, ignoredIdentifiers: [] };
         
-        const [createDocuments, updateDocuments, targetDocuments] = results;
         try {
             await Updater.go(
-                createDocuments,
-                updateDocuments.concat(targetDocuments),
+                result.createDocuments,
+                result.updateDocuments.concat(result.targetDocuments),
                 services.datastore,
                 context.settings.username);
-            return { errors: [], warnings: [], successfulImports: createDocuments.concat(updateDocuments).length };
+            return {
+                errors: [],
+                successfulImports: result.createDocuments.concat(result.updateDocuments).length,
+                ignoredIdentifiers: result.ignoredIdentifiers
+            };
         } catch (errWithParams) {
-            return { errors: [errWithParams], successfulImports: 0 }; // TODO review length
+            return { errors: [errWithParams], successfulImports: 0, ignoredIdentifiers: [] }; // TODO review length
         }
     }
 

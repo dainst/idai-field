@@ -48,12 +48,21 @@ export interface ImportContext {
 }
 
 
+export interface ImportResult {
+
+    createDocuments: Array<Document>;
+    updateDocuments: Array<Document>;
+    targetDocuments: Array<Document>;
+    ignoredIdentifiers: string[];
+}
+
+
 export type ErrWithParams = Array<string>;
 export type CreateDocuments = Array<Document>;
 export type UpdateDocuments = Array<Document>;
 export type TargetDocuments = Array<Document>;
 
-export type Result = Either<ErrWithParams, [CreateDocuments, UpdateDocuments, TargetDocuments]>;
+export type Result = Either<ErrWithParams, ImportResult>;
 export type Documents2Result = (_: Array<Document>) => Promise<Result>;
 
 
@@ -81,10 +90,6 @@ export function buildImportDocuments(services: ImportServices,
             throw 'FATAL - illegal argument combination '
             + '- mergeMode and operationId must not be both truthy';
         }
-        if (options.differentialImport) {
-            throw 'FATAL - illegal argument combination '
-            + '- mergeMode and differentialImport must not be both true';
-        }
     }
 
     const get  = (resourceId: string) => services.datastore.get(resourceId);
@@ -108,11 +113,11 @@ async function importDocuments(services: ImportServices,
 
     try {
         const existingDocuments = await makeExistingDocumentsMap(find, options, documents);
-        const docs = filterOnDifferentialImport(existingDocuments, options, documents);
-        preprocessFields(docs, options);
-        await preprocessRelations(existingDocuments, docs, helpers, get, options);
-        const mergeDocs = preprocessDocuments(existingDocuments, helpers, options, docs);
-        const processedDocuments = processDocuments(docs, mergeDocs, services.validator);
+        const { documentsToImport, documentsToIgnore } = getDocumentsToImport(existingDocuments, options, documents);
+        preprocessFields(documentsToImport, options);
+        await preprocessRelations(existingDocuments, documentsToImport, helpers, get, options);
+        const mergeDocs = preprocessDocuments(existingDocuments, helpers, options, documentsToImport);
+        const processedDocuments = processDocuments(documentsToImport, mergeDocs, services.validator);
         const targetDocuments = await processRelations(
             processedDocuments,
             services.validator,
@@ -121,10 +126,22 @@ async function importDocuments(services: ImportServices,
             context.inverseRelationsMap,
             options
         );
-        const documentsForImport = processedDocuments.map(helpers.postprocessDocument);
+        const postprocessedDocuments: Array<Document> = processedDocuments.map(helpers.postprocessDocument);
+        const ignoredIdentifiers: string[] = documentsToIgnore.map(document => document.resource.identifier);
+
         return options.mergeMode === true
-            ? [undefined, [[], documentsForImport, targetDocuments]]
-            : [undefined, [documentsForImport, [], targetDocuments]];
+            ? [undefined, {
+                createDocuments: [],
+                updateDocuments: postprocessedDocuments,
+                targetDocuments,
+                ignoredIdentifiers
+            }]
+            : [undefined, {
+                createDocuments: postprocessedDocuments,
+                updateDocuments: [],
+                targetDocuments,
+                ignoredIdentifiers
+            }];
 
     } catch (errWithParams) {
         if (errWithParams[0] === E.TARGET_CATEGORY_RANGE_MISMATCH
@@ -132,7 +149,6 @@ async function importDocuments(services: ImportServices,
         return [errWithParams, undefined];
     }
 }
-
 
 
 async function makeExistingDocumentsMap(find: Find,
@@ -143,6 +159,7 @@ async function makeExistingDocumentsMap(find: Find,
     const lookup = {};
     for (const document of documents) {
         const identifier = document.resource.identifier;
+        // TODO Check if this leads to performance problems
         const found = await find(identifier);
         if (found) lookup[identifier] = found;
     }
@@ -150,14 +167,23 @@ async function makeExistingDocumentsMap(find: Find,
 }
 
 
-function filterOnDifferentialImport(existingDocuments: Map<Document>,
-                                    options: ImportOptions,
-                                    documents: Array<Document>) {
+function getDocumentsToImport(existingDocumentsMap: Map<Document>,
+                              options: ImportOptions,
+                              documents: Array<Document>)
+        : { documentsToImport: Array<Document>, documentsToIgnore: Array<Document> } {
 
-    return options.differentialImport !== true
-            ? documents
-            : documents.filter(document =>
-                existingDocuments[document.resource.identifier] === undefined);
+    if (!options.differentialImport) return { documentsToImport: documents, documentsToIgnore: [] };
+        
+    const existingDocuments: Array<Document> = documents.filter(document => {
+        return existingDocumentsMap[document.resource.identifier] !== undefined;
+    });
+    const missingDocuments: Array<Document> = documents.filter(document => {
+        return existingDocumentsMap[document.resource.identifier] === undefined;
+    });
+
+    return options.mergeMode
+        ? { documentsToImport: existingDocuments, documentsToIgnore: missingDocuments }
+        : { documentsToImport: missingDocuments, documentsToIgnore: existingDocuments };
 }
 
 

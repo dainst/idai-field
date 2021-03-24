@@ -108,6 +108,10 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_ERROR_CATEGORY_ONLY_ALLOWED_ON_UPDATE = 'M.Import.ImportErrors.categoryOnlyAllowedOnUpdate';
     public static IMPORT_ERROR_NOT_UPDATED = 'M.Import.ImportErrors.notUpdated';
     public static IMPORT_WARNING_EMPTY = 'M.Import.warning.empty';
+    public static IMPORT_WARNING_IGNORED_EXISTING_IDENTIFIER = 'M.Import.warning.ignoredExistingIdentifier';
+    public static IMPORT_WARNING_IGNORED_EXISTING_IDENTIFIERS = 'M.Import.warning.ignoredExistingIdentifiers';
+    public static IMPORT_WARNING_IGNORED_MISSING_IDENTIFIER = 'M.Import.warning.ignoredMissingIdentifier';
+    public static IMPORT_WARNING_IGNORED_MISSING_IDENTIFIERS = 'M.Import.warning.ignoredMissingIdentifiers';
     public static IMPORT_SUCCESS_SINGLE = 'M.Import.success.single';
     public static IMPORT_SUCCESS_MULTIPLE = 'M.Import.success.multiple';
     public static IMPORT_EXEC_MISSING_RELATION_TARGET = 'M.Import.ImportErrors.missingRelationTarget';
@@ -424,6 +428,42 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             content: i18n({
                 id: 'messages.import.warning.empty',
                 value: 'Die Import-Datei enthält keine Einträge.'
+            }),
+            level: 'warning',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.IMPORT_WARNING_IGNORED_EXISTING_IDENTIFIER] = {
+            content: i18n({
+                id: 'messages.import.warning.ignoredExistingIdentifier',
+                value: 'Die Ressource \'[0]\' wurde nicht importiert, weil bereits eine Ressource mit dem Bezeichner existiert.'
+            }),
+            level: 'warning',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.IMPORT_WARNING_IGNORED_EXISTING_IDENTIFIERS] = {
+            content: i18n({
+                id: 'messages.import.warning.ignoredExistingIdentifiers',
+                value: '[0] Ressourcen wurden nicht importiert, weil bereits Ressourcen mit dem jeweiligen Bezeichner existieren (vollständige Auflistung unten).'
+            }),
+            level: 'warning',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.IMPORT_WARNING_IGNORED_MISSING_IDENTIFIER] = {
+            content: i18n({
+                id: 'messages.import.warning.ignoredMissingIdentifier',
+                value: 'Die Ressource \'[0]\' wurde nicht importiert, weil keine Ressource mit dem Bezeichner gefunden wurde.'
+            }),
+            level: 'warning',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.IMPORT_WARNING_IGNORED_MISSING_IDENTIFIERS] = {
+            content: i18n({
+                id: 'messages.import.warning.ignoredMissingIdentifiers',
+                value: '[0] Ressourcen wurden nicht importiert, weil keine Ressourcen mit dem jeweiligen Bezeichner gefunden wurden (vollständige Auflistung unten).'
             }),
             level: 'warning',
             params: [],

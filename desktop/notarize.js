@@ -3,12 +3,12 @@ const {notarize} = require('electron-notarize');
 
 exports.default = async function performNotarization(context) {
 
-    if (!process.env.MAC_NOTARIZE === 'true') return;
+    if (process.env.MAC_NOTARIZE !== 'true') return;
 
     const { electronPlatformName, appOutDir } = context;
     if (electronPlatformName !== 'darwin') return;
 
-    console.log("Performing notarization ...")
+    console.log('Performing notarization ...');
 
     const appName = context.packager.appInfo.productFilename;
 

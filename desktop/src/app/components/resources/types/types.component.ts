@@ -3,7 +3,7 @@ import {filter, flatten, flow, isnt, Map, map, set, take, to} from 'tsfun';
 import {Document} from 'idai-components-2';
 import {ViewFacade} from '../../../core/resources/view/view-facade';
 import {Loading} from '../../widgets/loading';
-import {makeLookup} from '../../../core/util/transformers'
+import {makeLookup} from '../../../../../../core/src/tools/transformers'
 import {BaseList} from '../base-list';
 import {ResourcesComponent} from '../resources.component';
 import {TypeImagesUtil} from '../../../core/util/type-images-util';

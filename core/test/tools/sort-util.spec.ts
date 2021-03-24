@@ -1,9 +1,9 @@
-import {SortUtil} from '../../../src/app/core/util/sort-util';
+import { SortUtil } from "../../src/tools/sort-util";
+
 
 /**
  * @author Sebastian Cuy
  */
-
 describe('SortUtil', () => {
 
     it('should sort strings alphanumerically', () => {

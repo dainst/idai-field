@@ -5,7 +5,7 @@ import {ImportErrors as E} from './import-errors';
 import {HierarchicalRelations} from '../../model/relation-constants';
 import RECORDED_IN = HierarchicalRelations.RECORDEDIN;
 import {Id, Identifier} from './types';
-import {makeLookup} from '../../util/transformers';
+import {makeLookup} from '../../../../../../core/src/tools/transformers';
 import {Lookup} from '../../util/utils';
 
 

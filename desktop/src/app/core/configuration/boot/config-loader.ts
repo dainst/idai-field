@@ -8,7 +8,7 @@ import {FieldDefinition} from '../model/field-definition';
 import {buildRawProjectConfiguration} from './build-raw-project-configuration';
 import {BuiltinCategoryDefinition} from '../model/builtin-category-definition';
 import {LibraryCategoryDefinition} from '../model/library-category-definition';
-import {addKeyAsProp} from '../../util/transformers';
+import {addKeyAsProp} from '../../../../../../core/src/tools/transformers';
 import {ValuelistDefinition} from '../model/valuelist-definition';
 
 

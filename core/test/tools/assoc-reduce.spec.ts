@@ -1,4 +1,4 @@
-import {assocReduce} from '../../../../src/app/core/util/assoc-reduce';
+import { assocReduce } from "../../src/tools/assoc-reduce";
 
 
 describe('assocReduce', () => {

@@ -1,6 +1,6 @@
 import {Pair, Map, to, identity, isDefined, isString, Associative, isArray, dissoc, isNumber} from 'tsfun';
 import {Named, namedArrayToNamedMap} from './named';
-import {assocReduce} from './assoc-reduce';
+import {assocReduce} from '../../../../../core/src/tools/assoc-reduce';
 
 
 /**

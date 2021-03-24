@@ -7,7 +7,7 @@ import {RESOURCE_DOT_ID} from '../../constants';
 import {HierarchicalRelations, PARENT} from '../../model/relation-constants';
 import LIES_WITHIN = HierarchicalRelations.LIESWITHIN;
 import {ImportContext, ImportHelpers, ImportOptions} from './import-documents';
-import { makeLookup } from '../../util/transformers';
+import { makeLookup } from '../../../../../../core/src/tools/transformers';
 
 // @author Thomas Kleinke
 // @author Daniel de Oliveira

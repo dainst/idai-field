@@ -1,6 +1,6 @@
-import {Map, on, Predicate, to} from 'tsfun';
-import {SortUtil} from './sort-util';
-import {makeLookup, mapToArray} from './transformers';
+import {Map, on, Predicate} from 'tsfun';
+import {SortUtil} from '@idai-field/core';
+import {makeLookup, mapToArray} from '../../../../../core/src/tools/transformers';
 import {sortStructArray} from './sort-struct-array';
 
 

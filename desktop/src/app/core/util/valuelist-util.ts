@@ -1,9 +1,10 @@
 import {includedIn, isNot, isArray, filter_a} from 'tsfun';
+import {SortUtil} from '@idai-field/core';
 import {Document, Resource} from 'idai-components-2';
 import {FieldDefinition} from '../configuration/model/field-definition';
 import {ValueDefinition, ValuelistDefinition} from '../configuration/model/valuelist-definition';
 import {clone} from './object-util';
-import {SortUtil} from './sort-util';
+
 
 const languages: string[] = typeof window !== 'undefined'
   ? window.require('electron').remote.getGlobal('config').languages

@@ -1,7 +1,7 @@
 import {flow} from 'tsfun';
 import {RelationDefinition} from './model/relation-definition';
 import {toPair} from '../util/utils';
-import {assocReduce} from '../util/assoc-reduce';
+import {assocReduce} from '../../../../../core/src/tools/assoc-reduce';
 
 
 /**

@@ -5,7 +5,7 @@ import {FieldDocument, ImageDocument} from '@idai-field/core';
 import {ImagePickerComponent} from '../widgets/image-picker.component';
 import {ImageGridComponent} from '../../image/grid/image-grid.component';
 import {ImageReadDatastore} from '../../../core/datastore/field/image-read-datastore';
-import {SortUtil} from '../../../core/util/sort-util';
+import {SortUtil} from '@idai-field/core';
 import {MenuContext, MenuService} from '../../menu-service';
 import {ImageRelations} from '../../../core/model/relation-constants';
 

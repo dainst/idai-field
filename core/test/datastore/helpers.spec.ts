@@ -3,7 +3,7 @@ import { isProjectDocument } from "../../src/datastore/helpers";
 
 describe('helpers', () => {
   
-    fit('isProjectDocument', () => {
+    it('isProjectDocument', () => {
 
         const result = isProjectDocument({ resource: { id: 'project' }} as any);
         expect(true).toBeTruthy();

@@ -29,6 +29,10 @@ jobs:
       env:
         CSC_LINK: ${{ secrets.MAC_CERT }}
         CSC_KEY_PASSWORD: ${{ secrets.MAC_CERT_PW }}
+        MAC_NOTARIZE: ${{ contains(github.event.head_commit.message, '[notarize]') && 'true' || 'false' }}
+        MAC_NOTARIZE_AID: ${{ secrets.MAC_NOTARIZE_AID }}
+        MAC_NOTARIZE_PW: ${{ secrets.MAC_NOTARIZE_PW }}
+        MAC_NOTARIZE_TID: ${{ secrets.MAC_NOTARIZE_TID }}
       working-directory: desktop
     - run: npm run package:win
       if: runner.os == 'Windows'

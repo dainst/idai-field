@@ -1,5 +1,6 @@
 import React, { ReactElement } from 'react';
 import { IonApp, IonRouterOutlet } from '@ionic/react';
+import { IonReactRouter } from '@ionic/react-router';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -17,15 +18,18 @@ import '@ionic/react/css/text-transformation.css';
 import '@ionic/react/css/flex-utils.css';
 import '@ionic/react/css/display.css';
 import Home from './pages/Home';
+import { Route } from 'react-router-dom';
 
 
 export default function App(): ReactElement {
 
   return (
     <IonApp>
-        <IonRouterOutlet id="main-content">
-            <Home />
-        </IonRouterOutlet>
+        <IonReactRouter>
+            <IonRouterOutlet id="main-content">
+                <Route path="/" component={ Home } />
+            </IonRouterOutlet>
+        </IonReactRouter>
     </IonApp>
   );
 }

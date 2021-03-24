@@ -194,9 +194,9 @@
                         Bezeichner (Feld <em>identifier</em>). Datensätze im Shapefile, die nicht zugeordnet
                         werden können, werden ignoriert.
                     </div>
-                    <div *ngIf="ignoredIdentifiers.length > 1" class="col-lg-3 mx-lg-auto">
+                    <div *ngIf="ignoredIdentifiers.length > 1">
                         <div class="card bg-light">
-                            <div class="card-header">Ignorierte Ressourcen</div>
+                            <div class="card-header" i18n="@@import.nonImportedResources">Nicht importierte Ressourcen</div>
                             <div class="card-body">
                                 <div *ngFor="let identifier of ignoredIdentifiers">
                                     {{identifier}}

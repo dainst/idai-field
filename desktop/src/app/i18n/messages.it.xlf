@@ -738,6 +738,14 @@
           <context context-type="linenumber">190</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="import.nonImportedResources" datatype="html">
+        <source>Nicht importierte Ressourcen</source>
+        <target state="new">Nicht importierte Ressourcen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/import/import.html</context>
+          <context context-type="linenumber">199</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="export.modal.info" datatype="html">
         <source>Daten werden exportiert...</source>
         <target state="final">Esportazione dati in corso...</target>

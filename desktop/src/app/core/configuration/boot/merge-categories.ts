@@ -1,5 +1,5 @@
 import {includedIn, isNot, isnt, Map, pairWith, union,
-    Pair, flow, filter, clone, update_a, keysAndValues, map, lookup, forEach} from 'tsfun';
+    Pair, flow, filter, clone, update_a, keysAndValues, map, lookup, forEach, lookup_a} from 'tsfun';
 import {CustomCategoryDefinition} from '../model/custom-category-definition';
 import {TransientCategoryDefinition} from '../model/transient-category-definition';
 import {checkFieldCategoryChanges} from './check-field-category-changes';
@@ -84,7 +84,7 @@ function mergePropertiesOfCategory(target: { [_: string]: any }, source: { [_: s
         Object.keys,
         filter(isnt(TransientCategoryDefinition.FIELDS)),
         filter(isNot(includedIn(Object.keys(target)))),
-        map(pairWith(lookup(source))),
+        map(pairWith(lookup_a(source))),
         forEach(overwriteIn(target)));
 }
 

@@ -1,9 +1,9 @@
-import {update, isObject,keysAndValues} from 'tsfun';
+import {update, isObject,keysValues} from 'tsfun';
 
 
 export function completeWithTemplate(struct: any, template: any) {
 
-    return keysAndValues(template).reduce((acc: any, [key,val]) => {
+    return keysValues(template).reduce((acc: any, [key,val]) => {
 
         return acc[key] !== undefined && !isObject(acc[key])
             ? acc

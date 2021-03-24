@@ -8,7 +8,7 @@ import {
     update,
     dissoc,
     update_a as updateAsc,
-    right, to, union as tsfunUnion, lookup_a
+    right, to, union as tsfunUnion, lookup
 } from 'tsfun';
 import { RevisionId } from '../../constants';
 import { clone } from '../../util/object-util';
@@ -67,7 +67,7 @@ function resolve(conflictedRevisions: Array<Resource>, latestRevision: Resource,
             dissocIndices(indicesOfResolvedRevisions.sort()),
             unifyCampaignAndStaffFields(resolvedResource)
         ) as Resource,
-        indicesOfResolvedRevisions.map(lookup_a(conflicts)) as RevisionId[]
+        indicesOfResolvedRevisions.map(lookup(conflicts)) as RevisionId[]
     ];
 }
 

@@ -7,7 +7,7 @@ import {
     isDefined,
     isNot,
     isUndefinedOrEmpty,
-    lookup_a,
+    lookup,
     map,
     pairWith,
     throws,
@@ -31,7 +31,7 @@ import IS_CONTEMPORARY_WITH = TimeRelations.CONTEMPORARY;
 import IS_AFTER = TimeRelations.AFTER;
 import IS_BEFORE = TimeRelations.BEFORE;
 import IS_EQUIVALENT_TO = PositionRelations.EQUIVALENT;
-import {logWithMessage, Lookup} from '../../../util/utils';
+import {Lookup} from '../../../util/utils';
 
 
 /**
@@ -94,7 +94,7 @@ function setInverseRelationsForImportResources(importDocuments: Array<Document>,
 
         flow(importDocument.resource.relations,
             Object.keys,
-            map(pairWith(lookup_a(inverseRelationsMap))),
+            map(pairWith(lookup(inverseRelationsMap))),
             forEach(assertNotBadlyInterrelated(importDocument)),
             forEach(setInverses(importDocument, documentsLookup, assertIsAllowedRelationDomainCategory)));
     }
@@ -117,7 +117,7 @@ function setInverses(importDocument: Document, documentsLookup: { [_: string]: D
 
         const tmp = flow(
             importDocument.resource.relations[relationName],
-            map(lookup_a(documentsLookup)),
+            map(lookup(documentsLookup)),
             filter(isDefined),
             forEach(assertIsAllowedRelationDomainCategory_));
 
@@ -156,7 +156,7 @@ function assertNoForbiddenRelations(forbiddenRelations: string[], relationTarget
                                     document: Document) {
 
     forbiddenRelations
-        .map(lookup_a(document.resource.relations))
+        .map(lookup(document.resource.relations))
         .filter(isNot(undefinedOrEmpty))
         .map(intersect(relationTargets))
         .filter(isNot(empty))

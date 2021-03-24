@@ -1,5 +1,5 @@
 import {cond, empty, flow, includedIn, isNot, on,
-    isDefined, filter, and, Map, remove, keysAndValues, forEach, map_a, values} from 'tsfun';
+    isDefined, filter, and, Map, remove, keysValues, forEach, map_a, values} from 'tsfun';
 import {ConfigurationErrors} from './configuration-errors';
 import {LibraryFieldDefinition} from '../model/library-category-definition';
 import {CustomFieldDefinition} from '../model/custom-category-definition';
@@ -28,7 +28,7 @@ function assertInputTypesAreValid(fields: Map<LibraryFieldDefinition>|Map<Custom
     );
 
     flow(
-        keysAndValues(fields),
+        keysValues(fields),
         filter(on([1, BaseFieldDefinition.INPUTTYPE], isIllegal)),
         forEach(([fieldName, field]: any) => {
             throw [ConfigurationErrors.ILLEGAL_FIELD_INPUT_TYPE, field.inputType, fieldName];

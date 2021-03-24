@@ -16,7 +16,7 @@
     },
     "dependencies": {
         "idai-components-2": "1.48.0",
-        "tsfun": "4.7.18"
+        "tsfun": "4.7.19"
     },
     "devDependencies": {
         "@types/jasmine": "3.5.0",

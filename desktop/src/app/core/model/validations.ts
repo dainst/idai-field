@@ -1,4 +1,4 @@
-import {is, isArray, on, Predicate, isString, isNot, and} from 'tsfun';
+import {is, isArray, on, Predicate, isString, and} from 'tsfun';
 import {Dating, Dimension, Literature, Document, NewDocument, NewResource,
     Resource, OptionalRange} from 'idai-components-2';
 import {FieldGeometry, Named} from '@idai-field/core';

@@ -1,4 +1,4 @@
-import {isNot, includedIn, isObject, isArray, pairWith, lookup_a} from 'tsfun';
+import {isNot, includedIn, isObject, isArray, pairWith, lookup} from 'tsfun';
 import {Resource} from 'idai-components-2';
 
 const defaultFields: string[] = ['id', 'relations', 'category', 'geometry', 'georeference'];
@@ -20,7 +20,7 @@ function trim(object: any, ignoreDefaultFields: boolean) {
 
     (Object.keys(object) as any)
         .filter(isNot(includedIn(fieldsToIgnore)))
-        .map(pairWith(lookup_a(object)))
+        .map(pairWith(lookup(object)))
         .forEach(([fieldName, value]: [string, any]) => {
             if (typeof value === 'string') {
                 object[fieldName] = value.trim();

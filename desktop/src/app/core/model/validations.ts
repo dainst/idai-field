@@ -72,42 +72,6 @@ export module Validations {
     }
 
 
-    // This is to replicate behaviour of Dating.isValid before the change
-    // regarding typeguards and valiation
-    function isValidDating(dating: any) {
-
-        const TYPE = 'type';
-        const BEGIN = 'begin';
-        const END = 'end';
-        const MARGIN = 'margin';
-        const SOURCE = 'source';
-        const IS_IMPRECISE = 'isImprecise';
-        const IS_UNCERTAIN = 'isUncertain';
-        const LABEL = 'label';
-
-        const YEAR = 'year';
-        const INPUT_YEAR = 'inputYear';
-        const INPUT_TYPE = 'inputType';
-
-        const VALID_FIELDS = [TYPE, BEGIN, END, MARGIN, SOURCE, IS_IMPRECISE, IS_UNCERTAIN, LABEL];
-        const VALID_ELEMENT_FIELDS = [YEAR, INPUT_YEAR, INPUT_TYPE];
-
-        for (const fieldName in dating) {
-            if (!VALID_FIELDS.includes(fieldName)) return false;
-        }
-
-        if (dating.begin) for (const fieldName in dating.begin) {
-            if (!VALID_ELEMENT_FIELDS.includes(fieldName)) return false;
-        }
-
-        if (dating.end) for (const fieldName in dating.end) {
-            if (!VALID_ELEMENT_FIELDS.includes(fieldName)) return false;
-        }
-        if (dating.label) return true;
-        return false;
-    }
-
-
     export function assertCorrectnessOfDatingValues(document: Document|NewDocument,
                                                     projectConfiguration: ProjectConfiguration) {
 
@@ -118,35 +82,9 @@ export module Validations {
             ValidationErrors.INVALID_DATING_VALUES,
             (dating: any) => {
 
-                if (isValidDating(dating)) return false; // TODO migrate old datings and get rid of this
+                if (Dating.isValid_deprecated(dating)) return false; // TODO migrate old datings and get rid of this
                 return !(Dating.isDating(dating) && Dating.isValid(dating))
             });
-    }
-
-
-    // This is to replicate behaviour of Dimension.isValid before the change
-    // regarding typeguards and valiation
-    function isValidDimension(dimension: any) {
-        const VALUE = 'value';
-        const LABEL = 'label';
-        const ISRANGE = 'isRange';
-        const RANGEMIN = 'rangeMin';
-        const RANGEMAX = 'rangeMax';
-        const INPUTVALUE = 'inputValue';
-        const INPUTRANGEENDVALUE = 'inputRangeEndValue';
-        const INPUTUNIT = 'inputUnit';
-        const MEASUREMENTPOSITION = 'measurementPosition';
-        const MEASUREMENTCOMMENT = 'measurementComment';
-        const ISIMPRECISE = 'isImprecise';
-
-        const VALID_FIELDS = [VALUE, LABEL, ISRANGE, RANGEMIN, RANGEMAX,
-            INPUTVALUE, INPUTRANGEENDVALUE, INPUTUNIT, MEASUREMENTPOSITION, MEASUREMENTCOMMENT, ISIMPRECISE];
-
-        for (const fieldName in dimension) {
-            if (!VALID_FIELDS.includes(fieldName)) return false;
-        }
-        if (dimension.label) return true;
-        return false;
     }
 
 
@@ -159,7 +97,7 @@ export module Validations {
             FieldDefinition.InputType.DIMENSION,
             ValidationErrors.INVALID_DIMENSION_VALUES,
             (dimension: any, options?: any) => {
-                if (isValidDimension(dimension)) return false; // TODO migrate old dimension and get rid of this
+                if (Dimension.isValid_deprecated(dimension)) return false; // TODO migrate old dimension and get rid of this
                 return !(Dimension.isDimension(dimension) && Dimension.isValid(dimension, options)); // TODO review; remove options
             });
     }

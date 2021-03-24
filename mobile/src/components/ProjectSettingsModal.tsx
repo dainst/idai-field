@@ -1,12 +1,13 @@
 import React, { ReactElement, useState } from 'react';
-import { IonModal, IonList, IonItem, IonLabel, IonInput, IonButton } from '@ionic/react';
+import { IonModal, IonList, IonItem, IonLabel, IonInput, IonButton, IonGrid, IonCol, IonRow } from '@ionic/react';
 
 interface ProjectSettingsModalProps {
     show: boolean;
     settingsSavedClickHandler: (dbName: string, remoteUser: string, remotePassword: string) => void;
+    onCancel: () => void;
 }
 
-export default function ProjectSettingsModal({ show, settingsSavedClickHandler }:
+export default function ProjectSettingsModal({ show, settingsSavedClickHandler, onCancel }:
     ProjectSettingsModalProps ): ReactElement{
 
     const [dbName, setDbName] = useState<string>('test');
@@ -33,9 +34,19 @@ export default function ProjectSettingsModal({ show, settingsSavedClickHandler }
                         onIonChange={ (e) => setRemotePassword(e.detail.value) } />
                 </IonItem>
             </IonList>
-            <IonButton onClick={ () => settingsSavedClickHandler(dbName,remoteUser, remotePassword) }>
-                Speichern
-            </IonButton>
+            <IonGrid>
+                <IonRow>
+                    <IonCol>
+                        <IonButton onClick={ () => settingsSavedClickHandler(dbName,remoteUser, remotePassword) }>
+                            Speichern
+                        </IonButton>
+                    </IonCol>
+                    <IonCol>
+                        <IonButton onClick={ onCancel }>Cancel</IonButton>
+                    </IonCol>
+                </IonRow>
+            </IonGrid>
+           
         </IonModal>
     );
 }

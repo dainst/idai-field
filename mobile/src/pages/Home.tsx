@@ -79,13 +79,21 @@ export default function Home(): ReactElement {
         setShowSettings(false);
     };
 
+    const cancelSettings = () => {
+        setShowSettings(false);
+    };
+
     const cancelAddObject = () => {
         setShowAbbObject(false);
     };
 
+
     return (
         <>
-        <ProjectSettingsModal show={ showSettings } settingsSavedClickHandler={ settingsSaved } />
+        <ProjectSettingsModal
+            show={ showSettings }
+            settingsSavedClickHandler={ settingsSaved }
+            onCancel={ cancelSettings } />
         <AddObjectModal show={ showAbbObject } onCancel={ cancelAddObject } />
         <SideDraw
             operations={ operations }

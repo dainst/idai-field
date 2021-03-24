@@ -3,7 +3,7 @@ import {Lookup} from '../../../util/utils';
 import {ResourceId} from '../../../constants';
 import {makeDocumentsLookup} from '../utils';
 import {reduce as asyncReduce} from 'tsfun/async';
-import {lookup, lookup_a, map_a} from 'tsfun';
+import {lookup_a, map_a} from 'tsfun';
 import {compose, flatten, flow, isDefined, Pair, remove, subtract, union} from 'tsfun';
 import {forEach as asyncForEach} from 'tsfun/src/async';
 import {clone} from '../../../util/object-util';
@@ -86,5 +86,5 @@ function targetIdsReferingToDbResources(document: Document, documentsLookup: { [
         document.resource.relations,
         Object.values,
         flatten(),
-        remove(compose(lookup(documentsLookup), isDefined))) as any /* TODO review */;
+        remove(compose(lookup_a(documentsLookup), isDefined)));
 }

@@ -102,7 +102,7 @@ export class LayerManager {
         const layersToRemoveIds: string[] = group.layers.filter(layer => {
             return this.isActiveLayer(layer.resource.id)
                 && !document.resource.relations[ImageRelations.HASMAPLAYER]?.includes(layer.resource.id);
-        }).map(to('resource.id'));
+        }).map(to(['resource','id']));
 
         this.viewFacade.setActiveLayersIds(subtract(layersToRemoveIds)(this.activeLayerIds));
     }

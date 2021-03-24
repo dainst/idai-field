@@ -1,4 +1,4 @@
-import {FieldResource} from '@idai-field/core';
+import {FieldResource, flattenTree} from '@idai-field/core';
 import {Groups} from '../../../../../src/app/core/configuration/model/group';
 import {FieldDefinition} from '../../../../../src/app/core/configuration/model/field-definition';
 import {Category} from '../../../../../src/app/core/configuration/model/category';
@@ -6,7 +6,6 @@ import {makeCategoryTreeList} from '../../../../../src/app/core/configuration/bo
 import {byName, namedArrayToNamedMap} from '@idai-field/core';
 import InputType = FieldDefinition.InputType;
 import {MDInternal} from '../../../../../src/app/components/messages/md-internal';
-import {flattenTree} from '../../../../../src/app/core/util/tree-list';
 import {ConfigurationErrors} from '../../../../../src/app/core/configuration/boot/configuration-errors';
 
 

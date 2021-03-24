@@ -27,8 +27,7 @@ import {RelationsUtil} from '../relations-utils';
 import {CategoryDefinition} from '../model/category-definition';
 import {ProjectCategories} from '../project-categories';
 import {FieldDefinition} from '../model/field-definition';
-import {mapTrees, mapTreeList, TreeList, ITEMNAMEPATH} from '../../util/tree-list';
-import {sortStructArray} from '@idai-field/core';
+import {mapTrees, mapTreeList, TreeList, ITEMNAMEPATH, sortStructArray} from '@idai-field/core';
 import {linkParentAndChildInstances} from '../category-tree-list';
 import {applyLanguageConfigurations} from './apply-language-configurations';
 

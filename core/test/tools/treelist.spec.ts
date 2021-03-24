@@ -2,7 +2,7 @@ import {equal, is, on, reverse} from 'tsfun';
 import {
     accessTree, findInTree, flattenTree, mapTrees, mapTreeList, Tree,
     TreeList, mapTree, buildTreeList, buildTree, zipTreeList
-} from '../../../src/app/core/util/tree-list';
+} from '../../src/tools/tree-list';
 
 
 describe('TreeList|Tree', () => {

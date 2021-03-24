@@ -1,5 +1,5 @@
 import {linkParentAndChildInstances} from '../../../../src/app/core/configuration/category-tree-list';
-import {accessTree, buildTreeList, flattenTree, TreeList} from '../../../../src/app/core/util/tree-list';
+import {accessTree, buildTreeList, flattenTree, TreeList} from '@idai-field/core';
 import {Category} from '../../../../src/app/core/configuration/model/category';
 
 

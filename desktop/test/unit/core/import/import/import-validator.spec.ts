@@ -2,7 +2,7 @@ import {ImportValidator} from '../../../../../src/app/core/import/import/process
 import {ValidationErrors} from '../../../../../src/app/core/model/validation-errors';
 import {ImportErrors} from '../../../../../src/app/core/import/import/import-errors';
 import {ProjectConfiguration} from '../../../../../src/app/core/configuration/project-configuration';
-import {buildTreeList} from '../../../../../src/app/core/util/tree-list';
+import {buildTreeList} from '@idai-field/core';
 import {FieldDefinition} from '../../../../../src/app/core/configuration/model/field-definition';
 
 

@@ -1,7 +1,6 @@
 import {drop, identity, includedIn, is, isArray, isNot, on, take} from 'tsfun';
-import {findInTree, ITEMNAMEPATH, TreeList} from './tree-list';
-import {Named, onName} from '@idai-field/core';
-import {Name} from '../constants';
+import { Named, Name, onName } from '../../src/tools/named';
+import { findInTree, ITEMNAMEPATH, TreeList } from '../../src/tools/tree-list';
 
 
 export function findInNamedTreeList<N extends Named>(match: Name, t: TreeList<N>): N|undefined {

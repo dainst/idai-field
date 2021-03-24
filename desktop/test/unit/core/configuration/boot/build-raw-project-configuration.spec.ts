@@ -8,8 +8,7 @@ import {LibraryCategoryDefinition} from '../../../../../src/app/core/configurati
 import {ValuelistDefinition} from '../../../../../src/app/core/configuration/model/valuelist-definition';
 import {Groups} from '../../../../../src/app/core/configuration/model/group';
 import InputType = FieldDefinition.InputType;
-import {byName, Named, namedArrayToNamedMap, toName,} from '@idai-field/core';
-import {accessTree, flattenTree} from '../../../../../src/app/core/util/tree-list';
+import {byName, Named, namedArrayToNamedMap, toName, accessTree, flattenTree} from '@idai-field/core';
 import {Category} from '../../../../../src/app/core/configuration/model/category';
 
 

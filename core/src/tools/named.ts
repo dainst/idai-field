@@ -8,9 +8,9 @@ import { SortUtil } from './sort-util';
  * @author Daniel de Oliveira
  */
 
-type Name = string;
+export type Name = string;
 
-type Label = string;
+export type Label = string;
 
 
 export interface Named { name: Name }

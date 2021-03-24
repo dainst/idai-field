@@ -5,9 +5,8 @@ import {CategoryDefinition} from '../model/category-definition';
 import {Group, Groups} from '../model/group';
 import {FieldDefinition} from '../model/field-definition';
 import {clone} from '../../util/object-util';
-import {mapToNamedArray} from '@idai-field/core';
+import {mapToNamedArray, mapTreeList, TreeList} from '@idai-field/core';
 import {MDInternal} from '../../../components/messages/md-internal';
-import {mapTreeList, TreeList} from '../../util/tree-list';
 import {linkParentAndChildInstances} from '../category-tree-list';
 import {ConfigurationErrors} from './configuration-errors';
 

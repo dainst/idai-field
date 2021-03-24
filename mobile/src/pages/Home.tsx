@@ -1,5 +1,5 @@
 import React, { ReactElement, CSSProperties, useEffect, useState } from 'react';
-import { settings } from 'ionicons/icons';
+import { addOutline, settings } from 'ionicons/icons';
 import ProjectSettingsModal from '../components/ProjectSettingsModal';
 import { listOperations, setupDB, setupReplication } from '../pouchdb-service';
 import { Map } from 'ol';
@@ -13,9 +13,13 @@ import {
     IonButton,
     IonIcon,
     IonTitle,
-    IonContent
+    IonContent,
+    isPlatform,
+    IonFab,
+    IonFabButton
     } from '@ionic/react';
 import SideDraw from '../components/SideDraw';
+import AddObjectModal from '../components/AddObjectModal';
 
 const MAPBOX_KEY = 'pk.eyJ1Ijoic2ViYXN0aWFuY3V5IiwiYSI6ImNrOTQxZjA4MzAxaGIzZnBwZzZ4c21idHIifQ._2-exYw4CZRjn9WoLx8i1A';
 
@@ -28,6 +32,7 @@ export default function Home(): ReactElement {
     const [remoteUser, setRemoteUser] = useState<string>('');
     const [remotePassword, setRemotePassword] = useState<string>('');
     const [showSettings, setShowSettings] = useState<boolean>(false);
+    const [showAbbObject, setShowAbbObject] = useState<boolean>(false);
 
     useEffect(() => {
 
@@ -74,9 +79,14 @@ export default function Home(): ReactElement {
         setShowSettings(false);
     };
 
+    const cancelAddObject = () => {
+        setShowAbbObject(false);
+    };
+
     return (
         <>
         <ProjectSettingsModal show={ showSettings } settingsSavedClickHandler={ settingsSaved } />
+        <AddObjectModal show={ showAbbObject } onCancel={ cancelAddObject } />
         <SideDraw
             operations={ operations }
             syncStatus={ syncStatus }
@@ -99,6 +109,11 @@ export default function Home(): ReactElement {
             <IonContent>
                 <div id="ol-map" style={ mapStyle } />
             </IonContent>
+            <IonFab horizontal="start" vertical="bottom" slot="flixed">
+                <IonFabButton color="success" onClick={ () => setShowAbbObject(true) }>
+                    <IonIcon icon={ addOutline } />
+                </IonFabButton>
+            </IonFab>
       </IonPage>
       </>
     );

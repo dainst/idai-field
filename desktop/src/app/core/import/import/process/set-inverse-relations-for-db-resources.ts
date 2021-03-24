@@ -1,4 +1,4 @@
-import {is, on, isNot, includedIn, keysAndValues} from 'tsfun';
+import {is, on, isNot, includedIn, keysValues} from 'tsfun';
 import {Document} from 'idai-components-2';
 import {ResourceId} from '../../../constants';
 import {assertInSameOperationWith, unionOfDocuments} from '../utils';
@@ -98,7 +98,7 @@ function makeIdCategoryMap(targetIds: ResourceId[], documentTargetDocuments: Arr
 function assertCategoryIsInRange(document: Document, idCategoryMap: any,
                                  assertIsAllowedRelationDomainCategory: AssertIsAllowedRelationDomainType) {
 
-    keysAndValues(document.resource.relations).forEach(([relationName, relationTargets]) => {
+    keysValues(document.resource.relations).forEach(([relationName, relationTargets]) => {
         for (let relationTarget of relationTargets) {
             const targetCategory = idCategoryMap[relationTarget];
             if (!targetCategory) continue;

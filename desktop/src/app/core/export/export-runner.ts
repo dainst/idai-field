@@ -1,15 +1,12 @@
-import {includedIn, isNot, on, to, map, pairWith, val, greaterThan} from 'tsfun';
+import {includedIn, isNot, on, to, map, pairWith, val} from 'tsfun';
 import {map as asyncMap, flow as asyncFlow} from 'tsfun/async';
-import {FieldDocument} from '@idai-field/core';
+import {Document} from 'idai-components-2';
+import {FieldDocument, Named} from '@idai-field/core';
 import {ISRECORDEDIN_CONTAIN} from '../constants';
 import {clone} from '../util/object-util';
 import {Find, GetIdentifierForId, PerformExport, CategoryCount} from './export-helper';
 import {Category} from '../configuration/model/category';
 import {Query} from '../datastore/model/query';
-
-
-const NAME = 'name';
-const RESOURCE = 'resource';
 
 
 /**
@@ -36,14 +33,14 @@ export module ExportRunner {
                     ? await fetchDocuments(find, selectedOperationId, selectedCategory)
                     : [],
                 asyncMap(rewriteIdentifiers(getIdentifierForId)),
-                map(to(RESOURCE)),
+                map(to(Document.RESOURCE)),
                 performExport(selectedCategory, relations));
     }
 
 
     export function getCategoriesWithoutExcludedCategories(categories: Array<Category>, exclusion: string[]) {
 
-        return categories.filter(on(NAME, isNot(includedIn(exclusion))))
+        return categories.filter(on(Named.NAME, isNot(includedIn(exclusion))))
     }
 
 
@@ -71,7 +68,7 @@ export module ExportRunner {
                 (await find(query)).totalCount
             ]);
         }
-        return resourceCategoryCounts.filter(on(1, greaterThan(0)));
+        return resourceCategoryCounts.filter(([_category, count]) => count > 0);
     }
 
 

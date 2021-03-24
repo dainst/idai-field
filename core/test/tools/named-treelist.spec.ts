@@ -1,7 +1,7 @@
 import {filterTrees, findInNamedTreeList, isTopLevelItemOrChildThereof,
-    removeTrees} from '../../../src/app/core/util/named-tree-list';
-import {Named} from '@idai-field/core';
-import {accessTree, buildTreeList, TreeList} from '../../../src/app/core/util/tree-list';
+    removeTrees} from '../../src/tools/named-tree-list';
+import {Named} from '../../src/tools/named';
+import {accessTree, buildTreeList, TreeList} from '../../src/tools/tree-list';
 
 
 describe('NamedTreelist', () => {

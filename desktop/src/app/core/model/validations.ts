@@ -1,4 +1,4 @@
-import {is, isArray, on, Predicate, isString, isNot, and} from 'tsfun';
+import {is, isArray, on, Predicate, isString, and} from 'tsfun';
 import {Dating, Dimension, Literature, Document, NewDocument, NewResource,
     Resource, OptionalRange} from 'idai-components-2';
 import {FieldGeometry, Named} from '@idai-field/core';
@@ -72,42 +72,6 @@ export module Validations {
     }
 
 
-    // This is to replicate behaviour of Dating.isValid before the change
-    // regarding typeguards and valiation
-    function isValidDating(dating: any) {
-
-        const TYPE = 'type';
-        const BEGIN = 'begin';
-        const END = 'end';
-        const MARGIN = 'margin';
-        const SOURCE = 'source';
-        const IS_IMPRECISE = 'isImprecise';
-        const IS_UNCERTAIN = 'isUncertain';
-        const LABEL = 'label';
-
-        const YEAR = 'year';
-        const INPUT_YEAR = 'inputYear';
-        const INPUT_TYPE = 'inputType';
-
-        const VALID_FIELDS = [TYPE, BEGIN, END, MARGIN, SOURCE, IS_IMPRECISE, IS_UNCERTAIN, LABEL];
-        const VALID_ELEMENT_FIELDS = [YEAR, INPUT_YEAR, INPUT_TYPE];
-
-        for (const fieldName in dating) {
-            if (!VALID_FIELDS.includes(fieldName)) return false;
-        }
-
-        if (dating.begin) for (const fieldName in dating.begin) {
-            if (!VALID_ELEMENT_FIELDS.includes(fieldName)) return false;
-        }
-
-        if (dating.end) for (const fieldName in dating.end) {
-            if (!VALID_ELEMENT_FIELDS.includes(fieldName)) return false;
-        }
-        if (dating.label) return true;
-        return false;
-    }
-
-
     export function assertCorrectnessOfDatingValues(document: Document|NewDocument,
                                                     projectConfiguration: ProjectConfiguration) {
 
@@ -116,37 +80,10 @@ export module Validations {
             projectConfiguration,
             FieldDefinition.InputType.DATING,
             ValidationErrors.INVALID_DATING_VALUES,
-            (dating: any) => {
-
-                if (isValidDating(dating)) return false; // TODO migrate old datings and get rid of this
-                return !(Dating.isDating(dating) && Dating.isValid(dating))
-            });
-    }
-
-
-    // This is to replicate behaviour of Dimension.isValid before the change
-    // regarding typeguards and valiation
-    function isValidDimension(dimension: any) {
-        const VALUE = 'value';
-        const LABEL = 'label';
-        const ISRANGE = 'isRange';
-        const RANGEMIN = 'rangeMin';
-        const RANGEMAX = 'rangeMax';
-        const INPUTVALUE = 'inputValue';
-        const INPUTRANGEENDVALUE = 'inputRangeEndValue';
-        const INPUTUNIT = 'inputUnit';
-        const MEASUREMENTPOSITION = 'measurementPosition';
-        const MEASUREMENTCOMMENT = 'measurementComment';
-        const ISIMPRECISE = 'isImprecise';
-
-        const VALID_FIELDS = [VALUE, LABEL, ISRANGE, RANGEMIN, RANGEMAX,
-            INPUTVALUE, INPUTRANGEENDVALUE, INPUTUNIT, MEASUREMENTPOSITION, MEASUREMENTCOMMENT, ISIMPRECISE];
-
-        for (const fieldName in dimension) {
-            if (!VALID_FIELDS.includes(fieldName)) return false;
-        }
-        if (dimension.label) return true;
-        return false;
+            (dating: any) =>
+                Dating.isValid_deprecated(dating) // TODO migrate old datings and get rid of this
+                || (Dating.isDating(dating) && Dating.isValid(dating))
+            );
     }
 
 
@@ -158,10 +95,10 @@ export module Validations {
             projectConfiguration,
             FieldDefinition.InputType.DIMENSION,
             ValidationErrors.INVALID_DIMENSION_VALUES,
-            (dimension: any, options?: any) => {
-                if (isValidDimension(dimension)) return false; // TODO migrate old dimension and get rid of this
-                return !(Dimension.isDimension(dimension) && Dimension.isValid(dimension, options)); // TODO review; remove options
-            });
+            (dimension: any, options?: any) =>
+                Dimension.isValid_deprecated(dimension) // TODO migrate old dimension and get rid of this
+                || (Dimension.isDimension(dimension) && Dimension.isValid(dimension, options)) // TODO review; remove options
+            );
     }
 
 
@@ -173,7 +110,7 @@ export module Validations {
             projectConfiguration,
             FieldDefinition.InputType.LITERATURE,
             ValidationErrors.INVALID_LITERATURE_VALUES,
-            isNot(and(Literature.isLiterature, Literature.isValid)));
+            and(Literature.isLiterature, Literature.isValid));
     }
 
 
@@ -181,10 +118,10 @@ export module Validations {
                                           projectConfiguration: ProjectConfiguration,
                                           inputType: 'dating'|'dimension'|'literature',
                                           error: string,
-                                          isInvalid: Predicate) {
+                                          isValid: Predicate) {
 
         const invalidFields: string[] = Validations.validateObjectArrayFields(
-            document.resource, projectConfiguration, inputType, isInvalid
+            document.resource, projectConfiguration, inputType, isValid
         );
 
         if (invalidFields.length > 0) {
@@ -492,31 +429,31 @@ export module Validations {
         const isOptionalRange = OptionalRange.buildIsOptionalRange(isString);
 
         return validateFields(resource, projectConfiguration, 'dropdownRange',
-            isNot(and(isOptionalRange, OptionalRange.isValid)));
+            and(isOptionalRange, OptionalRange.isValid));
     }
 
 
     export function validateObjectArrayFields(resource: Resource|NewResource,
                                               projectConfiguration: ProjectConfiguration,
                                               inputType: 'dating'|'dimension'|'literature',
-                                              isInvalid: (object: any, option?: any) => boolean): string[] {
+                                              isValid: (object: any, option?: any) => boolean): string[] {
 
-        return validateFields(resource, projectConfiguration, inputType, (fieldContent: any, options) => {
-            if (!isArray(fieldContent)) return true;
-            return fieldContent.filter(object => isInvalid(object, options)).length > 0;
-        });
+        return validateFields(resource, projectConfiguration, inputType, (fieldContent: any, options) =>
+            isArray(fieldContent)
+            && fieldContent.filter(item => !isValid(item, options)).length === 0
+        );
     }
 
 
     export function validateFields(resource: Resource|NewResource,
                                    projectConfiguration: ProjectConfiguration,
                                    inputType: string,
-                                   isInvalid: (object: any, options?: any) => boolean): string[] {
+                                   isValid: (object: any, options?: any) => boolean): string[] {
 
         return projectConfiguration.getFieldDefinitions(resource.category)
             .filter(field => field.inputType === inputType)
             .filter(field => resource[field.name] !== undefined)
-            .filter(field => isInvalid(resource[field.name], field.inputTypeOptions?.validation))
+            .filter(field => !isValid(resource[field.name], field.inputTypeOptions?.validation))
             .map(field => field.name);
     }
 }

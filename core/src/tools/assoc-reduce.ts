@@ -1,4 +1,4 @@
-import {copy, keysAndValues, Map} from 'tsfun';
+import {copy, keysValues, Map} from 'tsfun';
 
 
 /**
@@ -14,7 +14,7 @@ export function assocReduce<T,A>(f: (a: A, i?: number|string) => [string, T], ta
     : (source: Array<A>|Map<A>) => Map<T>;
 export function assocReduce<T,A>(f: (a: A, i?: number|string) => [string|number, T], target: Map<T>|Array<T>) {
 
-    return (source: Array<A>|Map<A>) => keysAndValues(/* we do not modify target in place */
+    return (source: Array<A>|Map<A>) => keysValues(/* we do not modify target in place */
         copy(source as any) as any)
         .reduce((copied: any, [i,a]: any) => {
             const [k1, v1] = f(a, i);

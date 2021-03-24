@@ -1,4 +1,4 @@
-import {flow, forEach, is, keysAndValues, Map} from 'tsfun';
+import {flow, forEach, is, keysValues, Map} from 'tsfun';
 import {BuiltinCategoryDefinition} from '../model/builtin-category-definition';
 import {LibraryCategoryDefinition} from '../model/library-category-definition';
 import {CustomCategoryDefinition} from '../model/custom-category-definition';
@@ -138,9 +138,9 @@ export module Assertions {
             builtInCategories, Object.keys(libraryCategories)
         );
 
-        keysAndValues(libraryCategories).forEach(assertLibraryCategoryValid);
-        keysAndValues(customCategories).forEach(assertCustomCategoryValid);
-        keysAndValues(valuelistDefinitions).forEach(ValuelistDefinition.assertIsValid);
+        keysValues(libraryCategories).forEach(assertLibraryCategoryValid);
+        keysValues(customCategories).forEach(assertCustomCategoryValid);
+        keysValues(valuelistDefinitions).forEach(ValuelistDefinition.assertIsValid);
     }
 
 
@@ -155,7 +155,7 @@ export module Assertions {
 
             if (!collected[categoryName]) collected[categoryName] = {};
 
-            keysAndValues(libraryCategory.fields).forEach(([fieldName, field]) => {
+            keysValues(libraryCategory.fields).forEach(([fieldName, field]) => {
 
                 const inputType = field['inputType'];
 

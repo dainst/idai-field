@@ -1,4 +1,4 @@
-import {makeLookup} from '../../../../../core/src/tools/transformers';
+import { makeLookup } from "../../src/tools/transformers";
 
 
 describe('makeLookup', () => {

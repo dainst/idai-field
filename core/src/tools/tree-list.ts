@@ -14,7 +14,7 @@ import {
     zip, identity
 } from 'tsfun';
 import {Comparator} from 'tsfun';
-import {Named} from '@idai-field/core';
+import { Named } from './named';
 
 
 export type Tree<T = any> = {
@@ -141,7 +141,7 @@ export function findInTree<T>(t: TreeList<T>|Tree<T>,
 
     if (isObject(t)) return findInTree([t as any], match, comparator);
 
-    for (let node of t) {
+    for (let node of (t as any /* TODO review any */)) {
         const { item: t, trees: trees } = node;
 
         const matches: Predicate<T> = buildMatches(match, comparator);

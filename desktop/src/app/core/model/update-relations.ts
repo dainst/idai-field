@@ -1,5 +1,5 @@
 import {on, Predicate, flow, isnt, append, isDefined, compose, isEmpty,
-    pairWith, cond, Pair, zip, filter, to, lookup_a, remove, map_a, values} from 'tsfun';
+    pairWith, cond, Pair, zip, filter, to, lookup, remove, map_a, values} from 'tsfun';
 import {update, map, forEach} from 'tsfun';
 import {Document, Resource, relationsEquivalent, Relations} from 'idai-components-2';
 import {Name} from '../constants';
@@ -33,7 +33,7 @@ export function updateRelations(document: Document, targetDocuments: Array<Docum
 
     const cloneOfTargetDocuments = clone(targetDocuments);
 
-    const getInverse = lookup_a(inverseRelationsMap);
+    const getInverse = lookup(inverseRelationsMap);
     const hasInverseRelation = compose(getInverse, isDefined);
 
     for (let targetDocument of targetDocuments) {
@@ -74,7 +74,7 @@ function pruneInverseRelations(relations: Relations,
     return flow(
         Object.keys(relations),
         filter(cond(setInverses, hasInverseRelation, true)),
-        map(pairWith(lookup_a(relations as any) as any /* TODO review typings*/)),
+        map(pairWith(lookup(relations as any) as any /* TODO review typings*/)),
         map(update(1, filter(isnt(resourceId)))),
         replaceIn(relations) as any /* TODO review typings */,
         remove(isEmpty)

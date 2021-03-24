@@ -1,5 +1,5 @@
 import {cond, flow, includedIn, isDefined, isNot, Mapping, Map, on, subtract, undefinedOrEmpty, identity,
-    compose, Pair, dissoc, pairWith, prune, filter, or, copy, update_a as updateAsc, update as updateStruct, lookup_a, map_a, keysAndValues, reduce, clone, update_a, update } from 'tsfun';
+    compose, Pair, dissoc, pairWith, prune, filter, or, copy, update_a as updateAsc, update as updateStruct, lookup, map_a, keysValues, reduce, clone, update_a, update } from 'tsfun';
 import {LibraryCategoryDefinition} from '../model/library-category-definition';
 import {CustomCategoryDefinition} from '../model/custom-category-definition';
 import {ConfigurationErrors} from './configuration-errors';
@@ -27,8 +27,7 @@ import {RelationsUtil} from '../relations-utils';
 import {CategoryDefinition} from '../model/category-definition';
 import {ProjectCategories} from '../project-categories';
 import {FieldDefinition} from '../model/field-definition';
-import {mapTrees, mapTreeList, TreeList, ITEMNAMEPATH} from '../../util/tree-list';
-import {sortStructArray} from '@idai-field/core';
+import {mapTrees, mapTreeList, TreeList, ITEMNAMEPATH, sortStructArray} from '@idai-field/core';
 import {linkParentAndChildInstances} from '../category-tree-list';
 import {applyLanguageConfigurations} from './apply-language-configurations';
 
@@ -169,7 +168,7 @@ function putRelationsIntoGroups(relations: Array<RelationDefinition>) {
 
 
 const sortGroups = (defaultOrder: string[]) => (groups: Map<Group>) =>
-    flow(defaultOrder, map_a(lookup_a(groups)), prune);
+    flow(defaultOrder, map_a(lookup(groups)), prune);
 
 
 const orderCategories = (categoriesOrder: string[] = []) => (categories: TreeList<Category>): TreeList<Category> =>
@@ -324,7 +323,7 @@ function toCategoriesByFamilyNames(transientCategories: Map<TransientCategoryDef
 
     return flow(
         transientCategories,
-        keysAndValues,
+        keysValues,
         reduce(
             (acc: any, [transientCategoryName, transientCategory]: any /* TODO review any*/) => {
                 acc[transientCategory.categoryName

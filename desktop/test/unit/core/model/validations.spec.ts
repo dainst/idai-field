@@ -1,7 +1,7 @@
 import {ValidationErrors} from '../../../../src/app/core/model/validation-errors';
 import {Validations} from '../../../../src/app/core/model/validations';
 import {ProjectConfiguration} from '../../../../src/app/core/configuration/project-configuration';
-import {buildTreeList} from '../../../../src/app/core/util/tree-list';
+import {buildTreeList} from '@idai-field/core';
 import {FieldDefinition} from '../../../../src/app/core/configuration/model/field-definition';
 import InputType = FieldDefinition.InputType;
 

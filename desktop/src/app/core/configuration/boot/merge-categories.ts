@@ -1,5 +1,5 @@
 import {includedIn, isNot, isnt, Map, pairWith, union,
-    Pair, flow, filter, clone, update_a, keysAndValues, map, lookup, forEach, lookup_a} from 'tsfun';
+    Pair, flow, filter, clone, update_a, keysValues, map, forEach, lookup} from 'tsfun';
 import {CustomCategoryDefinition} from '../model/custom-category-definition';
 import {TransientCategoryDefinition} from '../model/transient-category-definition';
 import {checkFieldCategoryChanges} from './check-field-category-changes';
@@ -16,7 +16,7 @@ export function mergeCategories(customCategories: Map<CustomCategoryDefinition>,
 
     return (selectableCategories: Map<TransientCategoryDefinition>) => {
 
-        return keysAndValues(customCategories).reduce(
+        return keysValues(customCategories).reduce(
             (mergedCategories: Map<TransientCategoryDefinition>,
              [customCategoryName, customCategory]: [string, CustomCategoryDefinition]) => {
 
@@ -36,7 +36,7 @@ function handleChildCategoryExtension(customCategoryName: string, customCategory
 
     if (!customCategory.parent) throw [ConfigurationErrors.MUST_HAVE_PARENT, customCategoryName];
 
-    keysAndValues(customCategory.fields).forEach(([fieldName, field]) => {
+    keysValues(customCategory.fields).forEach(([fieldName, field]) => {
         assertInputTypePresentIfNotCommonField(customCategoryName, fieldName, field);
     });
 
@@ -73,7 +73,7 @@ function mergePropertiesOfCategory(target: { [_: string]: any }, source: { [_: s
     if (source[CustomCategoryDefinition.VALUELISTS]) {
         if (!target[CustomCategoryDefinition.VALUELISTS]) target[CustomCategoryDefinition.VALUELISTS] = {};
 
-        keysAndValues(source[CustomCategoryDefinition.VALUELISTS])
+        keysValues(source[CustomCategoryDefinition.VALUELISTS])
         .forEach(([k, v]) => {
             target[CustomCategoryDefinition.VALUELISTS][k] = v;
         });
@@ -84,7 +84,7 @@ function mergePropertiesOfCategory(target: { [_: string]: any }, source: { [_: s
         Object.keys,
         filter(isnt(TransientCategoryDefinition.FIELDS)),
         filter(isNot(includedIn(Object.keys(target)))),
-        map(pairWith(lookup_a(source))),
+        map(pairWith(lookup(source))),
         forEach(overwriteIn(target)));
 }
 

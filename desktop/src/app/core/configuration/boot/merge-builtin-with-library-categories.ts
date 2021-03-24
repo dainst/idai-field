@@ -1,4 +1,4 @@
-import {clone, jsonClone, keysAndValues, Map} from 'tsfun';
+import {clone, jsonClone, keysValues, Map} from 'tsfun';
 import {BuiltinCategoryDefinition} from '../model/builtin-category-definition';
 import {LibraryCategoryDefinition} from '../model/library-category-definition';
 import {TransientCategoryDefinition} from '../model/transient-category-definition';
@@ -12,17 +12,17 @@ export function mergeBuiltInWithLibraryCategories(builtInCategories: Map<Builtin
     const categories: Map<TransientCategoryDefinition>
         = clone(builtInCategories) as unknown as Map<TransientCategoryDefinition>;
 
-    keysAndValues(categories).forEach(([categoryName,category]) => {
+    keysValues(categories).forEach(([categoryName,category]) => {
         (category as any).categoryName = categoryName;
     });
 
-    keysAndValues(libraryCategories).forEach(([libraryCategoryName,libraryCategory]) => {
+    keysValues(libraryCategories).forEach(([libraryCategoryName,libraryCategory]) => {
 
         const extendedBuiltInCategory = builtInCategories[libraryCategory.categoryName];
         if (extendedBuiltInCategory) {
             const newMergedCategory: any = jsonClone(extendedBuiltInCategory);
             merge(newMergedCategory, libraryCategory);
-            keysAndValues(libraryCategory.fields).forEach(([libraryCategoryFieldName, libraryCategoryField]) => {
+            keysValues(libraryCategory.fields).forEach(([libraryCategoryFieldName, libraryCategoryField]) => {
                 if (extendedBuiltInCategory.fields[libraryCategoryFieldName]
                         && (libraryCategoryField as any)['inputType']) {
                     throw [

@@ -2,7 +2,7 @@ import {Resource} from 'idai-components-2';
 import {FieldResource, Labelled, Named} from '@idai-field/core';
 import {ValuelistDefinition} from '../configuration/model/valuelist-definition';
 import {ValuelistUtil} from './valuelist-util';
-import {compose, flow, update_a, lookup_a, and, includedIn, isNot, filter, Filter, map, isString, Map, on, to, undefinedOrEmpty,
+import {compose, flow, update_a, lookup, and, includedIn, isNot, filter, Filter, map, isString, Map, on, to, undefinedOrEmpty,
     Predicate, or, is, empty, equalTo} from 'tsfun';
 import {RelationDefinition} from '../configuration/model/relation-definition';
 import {HierarchicalRelations, ImageRelations} from '../model/relation-constants';
@@ -73,7 +73,7 @@ export module FieldsViewUtil {
                     isNot(includedIn(HierarchicalRelations.ALL)),
                     isNot(equalTo(ImageRelations.ISDEPICTEDIN)),
                     isNot(equalTo(ImageRelations.HASMAPLAYER)),
-                    compose(lookup_a(resource.relations), isNot(undefinedOrEmpty))
+                    compose(lookup(resource.relations), isNot(undefinedOrEmpty))
                 )
             )
         );
@@ -96,7 +96,7 @@ export module FieldsViewUtil {
     export function getGroups(category: string, categories: Map<Category>) {
 
         return flow(category,
-            lookup_a(categories),
+            lookup(categories),
             to(Category.GROUPS),
             map(group =>
                 update_a<any>(

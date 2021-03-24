@@ -52,7 +52,7 @@ export interface Group extends BaseGroup {
 
 export interface BaseGroup extends Named, Labelled {
 
-    fields: Array<any>;
+    fields: Array<any>; // TODO parametrize instead using any
     relations: Array<any>;
 }
 

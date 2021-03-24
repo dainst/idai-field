@@ -1,5 +1,5 @@
 import {set, to, on, is, union} from 'tsfun';
-import {Document, Relations} from 'idai-components-2';
+import {Document, Relations, Resource} from 'idai-components-2';
 import {intoObj} from '../../core/util/utils';
 
 
@@ -46,7 +46,7 @@ export module EdgesBuilder {
         return (document: Document): { resourceId: string, edges: Edges } => {
 
             const aboveTargetIds = getEdgeTargetIds(
-                document, graphDocuments, totalDocuments, relations, 'above'
+                document, graphDocuments, totalDocuments, relations, 'above' // TODO use relation constants
             );
 
             const belowTargetIds = getEdgeTargetIds(
@@ -65,22 +65,24 @@ export module EdgesBuilder {
                 .filter(on('pathType', is('below')))
                 .forEach(id => belowTargetIds.push(id));
 
+            const toResourceId = to<Resource.Id>('targetId');
+
             const edges = {
                 aboveIds:
-                    set(aboveTargetIds.map(to('targetId'))),
+                    set(aboveTargetIds.map(toResourceId)),
                 belowIds:
-                    set(belowTargetIds.map(to('targetId'))),
+                    set(belowTargetIds.map(toResourceId)),
                 sameRankIds:
                     set(
                         sameRankTargetIds
                             .filter(idsResult => !idsResult.pathType || idsResult.pathType === 'sameRank')
-                            .map(to('targetId'))
+                            .map(toResourceId)
                     )
             };
 
             return {
                 resourceId: document.resource.id,
-                edges: edges as any /* TODO review any */
+                edges: edges
             };
         }
     }
@@ -93,9 +95,9 @@ export module EdgesBuilder {
 
         return mergeTargetIdResults(
             getRelationTargetIds(document, getRelationTypesForPathType(pathType, relations))
-                .map(to('targetId'))
+                .map(to<Resource.Id>('targetId'))
                 .map(targetId => {
-                    return getIncludedRelationTargetIds(targetId as any /* TODO review any */, graphDocuments,
+                    return getIncludedRelationTargetIds(targetId, graphDocuments,
                         totalDocuments, relations, [document.resource.id], pathType);
                 })
         );
@@ -137,7 +139,7 @@ export module EdgesBuilder {
 
         processedTargetIds.push(targetId);
 
-        let targetDocument: Document | undefined = graphDocuments.find(on(['resource','id'], is(targetId)));
+        let targetDocument: Document | undefined = graphDocuments.find(on(['resource', 'id'], is(targetId)));
         if (targetDocument) return [{ targetId: targetId, pathType: pathType }];
         targetDocument = totalDocuments.find(on(['resource','id'], is(targetId)));
         if (!targetDocument) return [];

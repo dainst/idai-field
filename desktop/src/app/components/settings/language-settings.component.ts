@@ -1,9 +1,8 @@
+import {clone, map_a} from 'tsfun';
 import {Component, Input} from '@angular/core';
 import {CdkDragDrop} from '@angular/cdk/drag-drop';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {clone} from 'tsfun/struct';
-import {map} from 'tsfun/associative';
 import {Settings} from '../../core/settings/settings';
 import {LanguagePickerModalComponent} from './language-picker-modal.component';
 import {MenuContext, MenuService} from '../menu-service';
@@ -75,7 +74,7 @@ export class LanguageSettingsComponent {
 
     private getUnselectedLanguages(): { [languageCode: string]: string } {
 
-        const result = map(language => language.label)(clone(this.languages));
+        const result = map_a(language => language.label)(clone(this.languages));
 
         Object.keys(this.languages).forEach(languageCode => {
             if (this.selectedLanguages.includes(languageCode)) delete result[languageCode];

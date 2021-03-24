@@ -1,5 +1,6 @@
 import { IonButton, IonCol, IonContent, IonGrid,
-        IonHeader, IonModal, IonRow, IonTitle, IonToolbar } from '@ionic/react';
+        IonHeader, IonIcon, IonLabel, IonModal, IonRow, IonTitle, IonToolbar } from '@ionic/react';
+import { micOutline, qrCodeOutline } from 'ionicons/icons';
 import React, { ReactElement } from 'react';
 
 interface AddObjectModalProps {
@@ -19,12 +20,18 @@ export default function AddObjectModal({ show, onCancel }: AddObjectModalProps):
                 <IonGrid>
                     <IonRow>
                         <IonCol>
-                            add Foto
+                            <IonButton className="ion-padding-vertical" fill="clear">
+                                <IonIcon className="ion-margin-end" icon={ qrCodeOutline } />
+                                <IonLabel>Scan QR code</IonLabel>
+                            </IonButton>
                         </IonCol>
                     </IonRow>
                     <IonRow>
                         <IonCol>
-                            record message
+                            <IonButton className="ion-padding-vertical" fill="clear">
+                                <IonIcon className="ion-margin-end" icon={ micOutline } />
+                                <IonLabel>Record Message</IonLabel>
+                            </IonButton>
                         </IonCol>
                     </IonRow>
                     <IonRow>

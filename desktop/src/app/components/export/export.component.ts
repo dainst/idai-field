@@ -1,8 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {to} from 'tsfun';
-import {FieldDocument, Named} from '@idai-field/core';
+import {FieldDocument} from '@idai-field/core';
 import {M} from '../messages/m';
 import {ExportModalComponent} from './export-modal.component';
 import {ModelUtil} from '../../core/model/model-util';
@@ -17,7 +16,6 @@ import {DocumentReadDatastore} from '../../core/datastore/document-read-datastor
 import {Category} from '../../core/configuration/model/category';
 import {ProjectConfiguration} from '../../core/configuration/project-configuration';
 import {TabManager} from '../../core/tabs/tab-manager';
-import {ViewFacade} from '../../core/resources/view/view-facade';
 import {Messages} from '../messages/messages';
 import {Query} from '../../core/datastore/model/query';
 import {ProjectCategories} from '../../core/configuration/project-categories';
@@ -221,8 +219,9 @@ export class ExportComponent implements OnInit {
                 this.find,
                 this.getOperationIdForMode(),
                 this.selectedCategory,
-                this.projectConfiguration.getRelationDefinitionsForDomainCategory(this.selectedCategory.name)
-                    .map(to(Named.NAME)),
+                this.projectConfiguration
+                    .getRelationDefinitionsForDomainCategory(this.selectedCategory.name)
+                    .map(_ => _.name),
                 (async resourceId => (await this.documentDatastore.get(resourceId)).resource.identifier),
                 CsvExporter.performExport(filePath)
             );

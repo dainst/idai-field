@@ -48,12 +48,21 @@ export interface ImportContext {
 }
 
 
+export interface ImportResult {
+
+    createDocuments: Array<Document>;
+    updateDocuments: Array<Document>;
+    targetDocuments: Array<Document>;
+    ignoredIdentifiers?: string[];
+}
+
+
 export type ErrWithParams = Array<string>;
 export type CreateDocuments = Array<Document>;
 export type UpdateDocuments = Array<Document>;
 export type TargetDocuments = Array<Document>;
 
-export type Result = Either<ErrWithParams, [CreateDocuments, UpdateDocuments, TargetDocuments]>;
+export type Result = Either<ErrWithParams, ImportResult>;
 export type Documents2Result = (_: Array<Document>) => Promise<Result>;
 
 
@@ -123,8 +132,8 @@ async function importDocuments(services: ImportServices,
         );
         const documentsForImport = processedDocuments.map(helpers.postprocessDocument);
         return options.mergeMode === true
-            ? [undefined, [[], documentsForImport, targetDocuments]]
-            : [undefined, [documentsForImport, [], targetDocuments]];
+            ? [undefined, { createDocuments: [], updateDocuments: documentsForImport, targetDocuments }]
+            : [undefined, { createDocuments: documentsForImport, updateDocuments: [], targetDocuments }];
 
     } catch (errWithParams) {
         if (errWithParams[0] === E.TARGET_CATEGORY_RANGE_MISMATCH
@@ -132,7 +141,6 @@ async function importDocuments(services: ImportServices,
         return [errWithParams, undefined];
     }
 }
-
 
 
 async function makeExistingDocumentsMap(find: Find,

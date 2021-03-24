@@ -70,9 +70,9 @@ export function buildRawProjectConfiguration(builtInCategories: Map<BuiltinCateg
         prepareRawProjectConfiguration,
         addRelations(relations),
         applyLanguageConfigurations(languageConfigurations),
-        updateStruct(CATEGORIES as any /* TODO review any*/, processCategories(
+        updateStruct(CATEGORIES, processCategories(
             orderConfiguration, validateFields, languageConfigurations, searchConfiguration, relations)
-        ) as any /* TODO review any*/
+        )
     );
 }
 

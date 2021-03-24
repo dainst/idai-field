@@ -67,7 +67,7 @@ function appendIdentifier(err: any, identifier: string) {
 
 
 const assertArrayHomogeneouslyTyped =
-    (a: any[] /* TODO review */) => a.reduce((arrayItemsType: string|undefined, arrayItem) => {
+    as => as.reduce((arrayItemsType: string|undefined, arrayItem) => {
         // typeof null -> 'object', typeof undefined -> 'undefined'
         const t = typeof arrayItem === 'undefined' ? 'object' : typeof arrayItem;
 

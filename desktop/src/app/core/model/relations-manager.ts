@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {append, flow, isArray, isDefined, isNot, isUndefinedOrEmpty, on, sameset, subtract, to,
     undefinedOrEmpty} from 'tsfun';
-import {Document, NewDocument} from 'idai-components-2';
+import {Document, NewDocument, RevisionId} from 'idai-components-2';
 import {DocumentDatastore} from '../datastore/document-datastore';
 import {ConnectedDocsWriter} from './connected-docs-writer';
 import {clone} from '../util/object-util';
@@ -141,8 +141,8 @@ export class RelationsManager {
     private async updateWithConnections(document: Document, oldVersion: Document,
                                         revisionsToSquash: Array<Document>) {
 
-        const revs = revisionsToSquash.map(to(Document._REV)).filter(isDefined);
-        const updated = await this.persistIt(document, revs as any /* TODO review */);
+        const revs = revisionsToSquash.map(to<RevisionId>(Document._REV)).filter(isDefined);
+        const updated = await this.persistIt(document, revs);
 
         await this.connectedDocsWriter.updateConnectedDocumentsForDocumentUpdate(
             updated, [oldVersion].concat(revisionsToSquash), this.settingsProvider.getSettings().username);
@@ -163,8 +163,8 @@ export class RelationsManager {
         if (isUndefinedOrEmpty(document.resource.relations[RECORDED_IN])) return;
 
         const docsToCorrect = ((await this.findLiesWithinDocs(document.resource.id, false)) as FindResult).documents
-            .filter(on(['resource','relations',RECORDED_IN], isArray))
-            .filter(isNot(on(['resource','relations',RECORDED_IN], sameset)(document) as any)); // TODO review any
+            .filter(on(['resource', 'relations', RECORDED_IN], isArray))
+            .filter(isNot(on(['resource', 'relations', RECORDED_IN], sameset)(document) as any)); // TODO review any
 
         for (let docToCorrect of docsToCorrect) {
             const cloned = clone(docToCorrect);

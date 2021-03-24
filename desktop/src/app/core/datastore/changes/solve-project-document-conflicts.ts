@@ -5,7 +5,7 @@ import {
     isEmpty,
     left, map,
     Pair,
-    update as updateOn,
+    update,
     dissoc,
     update_a as updateAsc,
     right, to, union as tsfunUnion, lookup_a
@@ -49,7 +49,7 @@ export function solveProjectDocumentConflict(latestRevision: Document,
     if (resource[CAMPAIGNS] && resource[CAMPAIGNS].length === 0) delete resource[CAMPAIGNS];
 
     // this is to work with the latest changes history
-    const latestRevisionDocumentWithInsertedResultResource = updateOn(RESOURCE, resource)(clonedLatestRevision) as any /* TODO review */;
+    const latestRevisionDocumentWithInsertedResultResource = update(RESOURCE, resource, clonedLatestRevision);
 
     return [latestRevisionDocumentWithInsertedResultResource, revisionIds];
 }
@@ -135,7 +135,7 @@ function collapse(revisions: Array<Resource>, indicesOfUsedRevisions: Array<Arra
 
 function solveConflictBetweenTwoRevisions(l: Resource, r: Resource): Resource|undefined {
 
-    if (equal(l)(r)) return r;
+    if (equal(l, r)) return r;
 
     const l_ = withoutConstantProjectFields(l);
     const r_ = withoutConstantProjectFields(r);

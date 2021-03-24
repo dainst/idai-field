@@ -33,7 +33,7 @@ export /* package-private */ module ProjectCategories {
             removeTrees('Place', 'Project', TYPE_CATALOG, TYPE, 'Image', 'Operation'),
             flattenTree,
             map(toName)
-        ) as any /* TODO review */;
+        );
     }
 
 
@@ -48,7 +48,7 @@ export /* package-private */ module ProjectCategories {
 
     export function getConcreteFieldCategoryNames(t: TreeList<Category>): Array<Name> {
 
-        return getConcreteFieldCategories(t).map(toName) as any /* TODO review */;
+        return getConcreteFieldCategories(t).map(toName);
     }
 
 
@@ -63,7 +63,7 @@ export /* package-private */ module ProjectCategories {
 
     export function getFieldCategoryNames(t: TreeList<Category>): Array<Name> {
 
-        return getFieldCategories(t).map(toName) as any /* TODO review*/;
+        return getFieldCategories(t).map(toName);
     }
 
 
@@ -72,7 +72,7 @@ export /* package-private */ module ProjectCategories {
         return flow(t,
             filterTrees('Operation', 'Place'),
             flattenTree,
-            map(toName) as any /* TODO review*/
+            map(toName)
         );
     }
 
@@ -83,7 +83,7 @@ export /* package-private */ module ProjectCategories {
             filterTrees('Operation', 'Place'),
             flattenTree,
             remove(onName(is('Operation'))), // TODO review why we do remove this here but not in getOverviewCategoryNames, compare also getOverviewToplevelCategories
-            map(toName) as any /* TODO review */
+            map(toName)
         );
     }
 
@@ -141,6 +141,6 @@ export /* package-private */ module ProjectCategories {
             categories,
             filterTrees(superCategoryName),
             flattenTree,
-            map(toName)) as any /* TODO review any*/;
+            map(toName));
     }
 }

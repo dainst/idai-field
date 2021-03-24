@@ -1,8 +1,9 @@
-import { IonApp, IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonInput, IonItem, IonLabel, IonList, IonMenu, IonMenuToggle, IonModal, IonSplitPane, IonTitle, IonToolbar } from '@ionic/react';
+import { IonApp, IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonMenu, IonMenuToggle, IonSplitPane, IonTitle, IonToolbar } from '@ionic/react';
 import { menu, refresh, settings } from 'ionicons/icons';
 import { Map } from 'ol';
 import olms from 'ol-mapbox-style';
 import React, { CSSProperties, useEffect, useState } from 'react';
+import ProjectSettingsModal from './components/ProjectSettingsModal';
 import { listOperations, setupDB, setupReplication } from './pouchdb-service';
 
 
@@ -19,9 +20,9 @@ function App() {
   const [remoteUser, setRemoteUser] = useState<string>('');
   const [remotePassword, setRemotePassword] = useState<string>('');
 
-  const [tmpDbName, setTmpDbName] = useState<string>('test');
-  const [tmpRemoteUser, setTmpRemoteUser] = useState<string>('');
-  const [tmpRemotePassword, setTmpRemotePassword] = useState<string>('');
+ 
+  
+  
 
   const [showSettings, setShowSettings] = useState<boolean>(false);
 
@@ -62,11 +63,11 @@ function App() {
     }
   }
 
-  const settingsSaved = () => {
+  const settingsSaved = (dbName: string, remoteUser: string, remotePassword: string) => {
 
-    setDbName(tmpDbName);
-    setRemoteUser(tmpRemoteUser);
-    setRemotePassword(tmpRemotePassword);
+    setDbName(dbName);
+    setRemoteUser(remoteUser);
+    setRemotePassword(remotePassword);
     setShowSettings(false);
   }
 
@@ -85,26 +86,8 @@ function App() {
   return <IonApp>
     <IonSplitPane contentId="main-content">
 
-      <IonModal isOpen={ showSettings }>
-        <IonList>
-          <IonItem>
-            <IonLabel>Projekt</IonLabel>
-            <IonInput value={ tmpDbName } onIonChange={ (e) => setTmpDbName(e.detail.value!)}></IonInput>
-          </IonItem>
-          <IonItem>
-            <IonLabel>Nutzername</IonLabel>
-            <IonInput value={ tmpRemoteUser } onIonChange={ (e) => setTmpRemoteUser(e.detail.value!)}></IonInput>
-          </IonItem>
-          <IonItem>
-            <IonLabel>Passwort</IonLabel>
-            <IonInput type="password" value={ tmpRemotePassword } onIonChange={ (e) => setTmpRemotePassword(e.detail.value!)}></IonInput>
-          </IonItem>
-        </IonList>
-        <IonButton onClick={ settingsSaved }>
-          Speichern
-        </IonButton>
-      </IonModal>
-
+      
+      <ProjectSettingsModal show={ showSettings } settingsSavedClickHandler={ settingsSaved }/>
       <IonMenu contentId="main-content">
         <IonHeader>
           { renderToolbar() }

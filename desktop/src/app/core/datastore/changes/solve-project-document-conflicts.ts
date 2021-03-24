@@ -5,10 +5,11 @@ import {
     isEmpty,
     left, map,
     Pair,
-    right, to, union as tsfunUnion
+    update,
+    dissoc,
+    update_a as updateAsc,
+    right, to, union as tsfunUnion, lookup_a
 } from 'tsfun';
-import { dissoc, lookup, update as updateAsc } from 'tsfun/associative';
-import { update as updateOn } from 'tsfun/struct';
 import { RevisionId } from '../../constants';
 import { clone } from '../../util/object-util';
 import { withDissoc } from '../../util/utils';
@@ -48,7 +49,7 @@ export function solveProjectDocumentConflict(latestRevision: Document,
     if (resource[CAMPAIGNS] && resource[CAMPAIGNS].length === 0) delete resource[CAMPAIGNS];
 
     // this is to work with the latest changes history
-    const latestRevisionDocumentWithInsertedResultResource = updateOn(RESOURCE, resource)(clonedLatestRevision);
+    const latestRevisionDocumentWithInsertedResultResource = update(RESOURCE, resource, clonedLatestRevision);
 
     return [latestRevisionDocumentWithInsertedResultResource, revisionIds];
 }
@@ -66,7 +67,7 @@ function resolve(conflictedRevisions: Array<Resource>, latestRevision: Resource,
             dissocIndices(indicesOfResolvedRevisions.sort()),
             unifyCampaignAndStaffFields(resolvedResource)
         ) as Resource,
-        indicesOfResolvedRevisions.map(lookup(conflicts)) as RevisionId[]
+        indicesOfResolvedRevisions.map(lookup_a(conflicts)) as RevisionId[]
     ];
 }
 
@@ -134,7 +135,7 @@ function collapse(revisions: Array<Resource>, indicesOfUsedRevisions: Array<Arra
 
 function solveConflictBetweenTwoRevisions(l: Resource, r: Resource): Resource|undefined {
 
-    if (equal(l)(r)) return r;
+    if (equal(l, r)) return r;
 
     const l_ = withoutConstantProjectFields(l);
     const r_ = withoutConstantProjectFields(r);

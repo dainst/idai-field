@@ -30,11 +30,9 @@ export module Tree {
     export const TREES = 'trees';
 }
 
-export const ITEMPATH: Path = [Tree.ITEM];
-
 export const ITEMNAMEPATH: Path = [Tree.ITEM, Named.NAME];
 
-export const toTreeItem = to(ITEMPATH);
+export const toTreeItem = to(Tree.ITEM);
 
 // Implementation note:
 // Technically it would be no problem to have only a function mapTree

@@ -1,5 +1,4 @@
-import {arrayEqual, isNot, on, undefinedOrEmpty, union} from 'tsfun';
-import {get} from 'tsfun/struct';
+import {arrayEqual, to, isNot, on, undefinedOrEmpty, union} from 'tsfun';
 import {forEach as asyncForEach} from 'tsfun/async';
 import {Document, Relations} from 'idai-components-2';
 import {ImportErrors as E} from './import-errors';
@@ -10,16 +9,16 @@ import {makeLookup} from '../../util/transformers';
 import {Lookup} from '../../util/utils';
 
 
-export const unionOfDocuments = (docs: Array<Array<Document>>) => union(on('resource.id'), docs);
+export const unionOfDocuments = (docs: Array<Array<Document>>) => union(on(['resource', 'id']), docs);
 
 
-export const makeDocumentsLookup: (ds: Array<Document>) => Lookup<Document> = makeLookup('resource.id');
+export const makeDocumentsLookup: (ds: Array<Document>) => Lookup<Document> = makeLookup(['resource', 'id']);
 
 
 export function assertInSameOperationWith(document: Document) { return (targetDocument: Document) => {
 
-    const documentRecordedIn = get('resource.relations.' + RECORDED_IN, undefined)(document);
-    const targetDocumentRecordedIn = get('resource.relations.' + RECORDED_IN, undefined)(targetDocument);
+    const documentRecordedIn = to(['resource','relations',RECORDED_IN], undefined)(document);
+    const targetDocumentRecordedIn = to(['resource','relations',RECORDED_IN], undefined)(targetDocument);
 
     if (isNot(undefinedOrEmpty)(documentRecordedIn)
         && isNot(undefinedOrEmpty)(targetDocumentRecordedIn)

@@ -107,7 +107,7 @@ export class MatrixViewComponent implements OnInit {
     public async edit(resourceId: string) {
 
         await this.openEditorModal(
-            this.featureDocuments.find(on('resource.id', is(resourceId))) as FeatureDocument
+            this.featureDocuments.find(on(['resource','id'], is(resourceId))) as FeatureDocument
         );
     }
 
@@ -168,7 +168,7 @@ export class MatrixViewComponent implements OnInit {
         if (this.trenches.length === 0) return;
 
         const previouslySelectedTrench = this.trenches
-            .find(on('resource.id', is(this.matrixState.getSelectedTrenchId())));
+            .find(on(['resource','id'], is(this.matrixState.getSelectedTrenchId())));
         if (previouslySelectedTrench) return this.selectTrench(previouslySelectedTrench);
 
         await this.selectTrench(this.trenches[0]);

@@ -10,7 +10,7 @@ export function linkParentAndChildInstances(categories: TreeList<Category> /* mo
 
     for (let { item: category, trees: children } of categories) {
 
-        category.children = children.map(toTreeItem);
+        category.children = children.map(toTreeItem) as any /* TODO review any*/;
         category.children.map(child => child.parentCategory = category);
         linkParentAndChildInstances(children);
     }

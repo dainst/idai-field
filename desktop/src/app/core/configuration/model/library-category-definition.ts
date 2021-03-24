@@ -46,7 +46,7 @@ export module LibraryCategoryDefinition {
 
     export function makeAssertIsValid(builtinCategories: string[]) {
 
-        return function assertIsValid(category: LibraryCategoryDefinition, categoryName: Name) {
+        return function assertIsValid([categoryName, category]: [Name, LibraryCategoryDefinition]) {
 
             if (category.description === undefined) throw [ConfigurationErrors.MISSING_CATEGORY_PROPERTY, 'description', categoryName];
             if (category.creationDate === undefined) throw [ConfigurationErrors.MISSING_CATEGORY_PROPERTY, 'creationDate', categoryName];

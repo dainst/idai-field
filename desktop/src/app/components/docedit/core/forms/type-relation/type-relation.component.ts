@@ -9,7 +9,7 @@ import {MenuContext, MenuService} from '../../../../menu-service';
 
 type ResourceIdentifier = string;
 const INSTANCE_OF = 'isInstanceOf';
-const toResourceIdentifier = to('resource.identifier');
+const toResourceIdentifier = to(['resource','identifier']);
 
 @Component({
     selector: 'dai-type-relation',
@@ -61,7 +61,7 @@ export class TypeRelationComponent implements OnChanges {
 
         if (!this.relations()) return;
         const documents = await this.datastore.getMultiple(this.relations());
-        this.relationIdentifiers = documents.map(toResourceIdentifier);
+        this.relationIdentifiers = documents.map(toResourceIdentifier) as any /* TODO review type*/;
     }
 
 

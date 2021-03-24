@@ -41,7 +41,7 @@ export module NavigationPathSegment {
 }
 
 
-export const toResourceId = to('document.resource.id');
+export const toResourceId = to(['document', 'resource', 'id']);
 
 
-export const differentFrom = (what: any) => differentFromBy(on('document.resource.id'), what);
+export const differentFrom = (what: any) => differentFromBy(on(['document','resource','id']), what);

@@ -1,6 +1,5 @@
 import {flow, includedIn, isDefined, isNot, isnt, to, map, cond, join,
     dense, compose, remove} from 'tsfun';
-import {prepend, append} from 'tsfun/string';
 import {Resource} from 'idai-components-2';
 import {FieldResource} from '@idai-field/core';
 import {HierarchicalRelations} from '../../model/relation-constants';
@@ -62,7 +61,7 @@ export module CSVExport {
             .concat(
                 relations
                     .filter(isNot(includedIn(HierarchicalRelations.ALL)))
-                    .map(prepend(Resource.RELATIONS + OBJECT_SEPARATOR)))
+                    .map(s => Resource.RELATIONS + OBJECT_SEPARATOR + s))
             .concat(relations.find(includedIn(HierarchicalRelations.ALL)) ? [RELATIONS_IS_CHILD_OF] : []);
     }
 
@@ -105,7 +104,9 @@ export module CSVExport {
             fields,
             map(
                 cond(isDefined,
-                    compose(getFieldValue, append('"'), prepend('"')),
+                    compose(getFieldValue,
+                        _ => _ + '"',
+                        _ => '"' + _),
                     '""')),
             join(SEPARATOR));
     }

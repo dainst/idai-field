@@ -1,7 +1,5 @@
 import {Observable, Observer} from 'rxjs';
-import {is, on, flow, isDefined, separate, Map} from 'tsfun';
-import {filter} from 'tsfun/collection';
-import {forEach, lookup} from 'tsfun/associative';
+import {is, on, flow, isDefined, separate, Map, filter_a, values, forEach, lookup_a} from 'tsfun';
 import {Document, Resource} from 'idai-components-2';
 import {ConstraintIndex} from './constraint-index';
 import {FulltextIndex} from './fulltext-index';
@@ -63,7 +61,7 @@ export class IndexFacade {
 
     public async putMultiple(documents: Array<Document>, progress?: InitializationProgress) {
 
-        const [typeDocuments, nonTypeDocuments] = separate(on('resource.category', is(TYPE)), documents);
+        const [typeDocuments, nonTypeDocuments] = separate(on(['resource','category'], is(TYPE)), documents);
 
         let count: number = 0;
 
@@ -121,7 +119,7 @@ export class IndexFacade {
         if (query.sort && query.sort.mode === 'none') {
             return queryResult;
         } else {
-            const indexItems = queryResult.map(lookup(this.indexItems));
+            const indexItems = queryResult.map(lookup_a(this.indexItems));
             return getSortedIds(indexItems, query);
         }
     }
@@ -178,7 +176,8 @@ export class IndexFacade {
 
         flow(
             items,
-            filter(on(INSTANCES, isDefined)),
+            filter_a(on(INSTANCES, isDefined)),
+            values,
             forEach((item: TypeResourceIndexItem) => {
                 delete item[INSTANCES][document.resource.id];
             })) ;

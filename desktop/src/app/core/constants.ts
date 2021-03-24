@@ -3,11 +3,10 @@ import {on} from 'tsfun';
 
 // Constants
 
-export const RESOURCE_DOT_IDENTIFIER = 'resource.identifier';
-export const RESOURCE_DOT_ID = 'resource.id';
+export const RESOURCE_DOT_IDENTIFIER: [string,string] = ['resource','identifier'];
+export const RESOURCE_DOT_ID: [string,string] = ['resource','id'];
 
-export const RESOURCE_ID_PATH = [Document.RESOURCE, Resource.ID];
-export const ON_RESOURCE_ID = on(RESOURCE_ID_PATH);
+export const ON_RESOURCE_ID = on([Document.RESOURCE, Resource.ID]);
 
 
 // Indexing

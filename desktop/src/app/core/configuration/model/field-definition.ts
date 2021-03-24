@@ -22,11 +22,13 @@ export interface FieldDefinition {
     fulltextIndexed?: true;
     constraintIndexed?: true;
     allowOnlyValuesOfParent?: true;
-    source?: 'builtin' |'library' |'custom' |'common';
+    source?: FieldDefinition.SOURCE_TYPES;
 }
 
 
 export module FieldDefinition {
+
+    export type SOURCE_TYPES = 'builtin' |'library' |'custom' |'common';
 
     export const INPUTTYPE = 'inputType';
     export const SOURCE = 'source';

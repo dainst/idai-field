@@ -1,6 +1,4 @@
-import {Map} from 'tsfun';
-import {clone, jsonClone} from 'tsfun/struct';
-import {forEach} from 'tsfun/associative';
+import {clone, jsonClone, keysAndValues, Map} from 'tsfun';
 import {BuiltinCategoryDefinition} from '../model/builtin-category-definition';
 import {LibraryCategoryDefinition} from '../model/library-category-definition';
 import {TransientCategoryDefinition} from '../model/transient-category-definition';
@@ -14,23 +12,24 @@ export function mergeBuiltInWithLibraryCategories(builtInCategories: Map<Builtin
     const categories: Map<TransientCategoryDefinition>
         = clone(builtInCategories) as unknown as Map<TransientCategoryDefinition>;
 
-    forEach(categories, (category, categoryName) => {
+    keysAndValues(categories).forEach(([categoryName,category]) => {
         (category as any).categoryName = categoryName;
     });
 
-    forEach(libraryCategories, (libraryCategory, libraryCategoryName) => {
+    keysAndValues(libraryCategories).forEach(([libraryCategoryName,libraryCategory]) => {
+
         const extendedBuiltInCategory = builtInCategories[libraryCategory.categoryName];
         if (extendedBuiltInCategory) {
             const newMergedCategory: any = jsonClone(extendedBuiltInCategory);
             merge(newMergedCategory, libraryCategory);
-                forEach(libraryCategory.fields, (libraryCategoryField, libraryCategoryFieldName) => {
-                    if (extendedBuiltInCategory.fields[libraryCategoryFieldName]
-                            && (libraryCategoryField as any)['inputType']) {
-                        throw [
-                            ConfigurationErrors.MUST_NOT_SET_INPUT_TYPE, libraryCategoryName,
-                            libraryCategoryFieldName
-                        ];
-                    }
+            keysAndValues(libraryCategory.fields).forEach(([libraryCategoryFieldName, libraryCategoryField]) => {
+                if (extendedBuiltInCategory.fields[libraryCategoryFieldName]
+                        && (libraryCategoryField as any)['inputType']) {
+                    throw [
+                        ConfigurationErrors.MUST_NOT_SET_INPUT_TYPE, libraryCategoryName,
+                        libraryCategoryFieldName
+                    ];
+                }
             });
             mergeFields(newMergedCategory.fields, libraryCategory.fields);
             categories[libraryCategoryName] = newMergedCategory;

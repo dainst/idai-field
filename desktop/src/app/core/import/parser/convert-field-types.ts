@@ -1,5 +1,4 @@
-import {includedIn, is, isNot, on, isnt} from 'tsfun';
-import {get} from 'tsfun/struct';
+import {includedIn, to, is, isNot, on, isnt} from 'tsfun';
 import {Resource, Dimension, Dating} from 'idai-components-2';
 import {ParserErrors} from './parser-errors';
 import {PARENT} from '../../model/relation-constants';
@@ -53,8 +52,8 @@ export function convertFieldTypes(category: Category) {
 
 
 // here only string to number, validation in exec
-const convertUnsignedInt = (container: any, path: string) => convertNumber(container, path, 'int');
-const convertUnsignedFloat = (container: any, path: string) => convertNumber(container, path, 'float');
+const convertUnsignedInt = (container: any, path: Array<number|string>|number|string) => convertNumber(container, path, 'int');
+const convertUnsignedFloat = (container: any, path: Array<number|string>|number|string) => convertNumber(container, path, 'float');
 const convertFloat = (container: any, path: string) => convertNumber(container, path, 'float');
 
 
@@ -114,8 +113,8 @@ function convertDating(resource: Resource, fieldName: string) {
         if (dating === null) continue;
 
         try {
-            convertUnsignedInt(dating, 'begin.inputYear');
-            convertUnsignedInt(dating, 'end.inputYear');
+            convertUnsignedInt(dating, ['begin','inputYear']);
+            convertUnsignedInt(dating, ['end','inputYear']);
             convertUnsignedInt(dating, 'margin');
             convertBoolean(dating, 'isImprecise');
             convertBoolean(dating, 'isUncertain');
@@ -131,9 +130,9 @@ function convertDating(resource: Resource, fieldName: string) {
  * Modifies container at path by converting string to number.
  * Returns early if no value at path.
  */
-function convertNumber(container: any, path: string, type: 'int'|'float') {
+function convertNumber(container: any, path: Array<number|string>|number|string, type: 'int'|'float') {
 
-    let value = get(path, undefined)(container);
+    let value = to(path as any /* TODO review type */, undefined)(container);
     if (!value) return;
 
     if (type === 'float') value = value.replace(',', '.');
@@ -148,9 +147,9 @@ function convertNumber(container: any, path: string, type: 'int'|'float') {
  * Modifies container at path by converting string to boolean.
  * Returns early if no value at path.
  */
-function convertBoolean(container: any, path: string) {
+function convertBoolean(container: any, path: Array<number|string>|number|string) {
 
-    const val = get(path, undefined)(container);
+    const val = to(path as any /* TODO review any*/, undefined)(container);
     if (!val) return;
     if (isNot(includedIn(['true', 'false']))(val)) throw [ParserErrors.CSV_NOT_A_BOOLEAN, val, path];
     setOn(container, path)(val === 'true');

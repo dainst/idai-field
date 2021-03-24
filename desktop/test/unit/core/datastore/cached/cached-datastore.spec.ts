@@ -24,7 +24,7 @@ describe('CachedDatastore', () => {
         mockProjectConfiguration.getCategoryTreelist.and.returnValue(
             [
                 {
-                    t: { name: 'Find' },
+                    item: { name: 'Find' },
                     trees: []
                 }
             ]

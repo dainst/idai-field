@@ -1,6 +1,4 @@
-import {Pair, Map, to, identity, isDefined, isString, Associative, isArray} from 'tsfun';
-import {dissoc} from 'tsfun/associative';
-import {path, get} from 'tsfun/struct';
+import {Pair, Map, to, identity, isDefined, isString, Associative, isArray, dissoc, isNumber} from 'tsfun';
 import {Named, namedArrayToNamedMap} from './named';
 import {assocReduce} from './assoc-reduce';
 
@@ -95,18 +93,18 @@ export const intoObj = <T>(keyName: string, valName: string) =>
             : object;
 
 
-export function setOn(object: any, path_: string) {
+export function setOn(object: any, path_: string|number|Array<string|number>) {
 
-    return (val: any): void => _setOn(object, path(path_), val);
+    return (val: any): void => _setOn(object, isString(path_)||isNumber(path_)?[path_]:path_, val);
 }
 
 
 /**
  * if o has not already a value at path, it sets it to alternative
  */
-export function takeOrMake<T>(o: T, path: string, alternative: any) {
+export function takeOrMake<T>(o: T, path: Array<string|number>, alternative: any) {
 
-    return setOn(o, path)(get(path , alternative)(o));
+    return setOn(o, path)(to(path as any /* TODO review */, alternative)(o as any /* TODO review */));
 }
 
 

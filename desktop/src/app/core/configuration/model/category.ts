@@ -37,7 +37,7 @@ export module Category {
         return flow(
             category.groups,
             Object.values,
-            map(to(Group.FIELDS)),
+            map(to<Array<FieldDefinition>>(Group.FIELDS)),
             flatten()
         );
     }
@@ -58,7 +58,7 @@ export module Category {
 
     export function getNamesOfCategoryAndSubcategories(category: Category): string[] {
 
-        return [category.name].concat(category.children.map(to('name')));
+        return [category.name].concat(category.children.map(to(Named.NAME)));
     }
 
 

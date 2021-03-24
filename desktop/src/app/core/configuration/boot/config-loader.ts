@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
-import {isUndefinedOrEmpty, Map, not} from 'tsfun';
-import {map} from 'tsfun/associative';
+import {isUndefinedOrEmpty, Map, map_a, not} from 'tsfun';
 import {ProjectConfiguration} from '../project-configuration';
 import {ConfigurationValidation} from './configuration-validation';
 import {ConfigReader} from './config-reader';
@@ -167,7 +166,7 @@ export class ConfigLoader {
     private readValuelistsConfiguration(path: string): Map<ValuelistDefinition> {
 
         const valuelistsConfiguration = this.configReader.read(path);
-        map((definition: ValuelistDefinition, id: string) => definition.id = id, valuelistsConfiguration);
+        map_a((definition: ValuelistDefinition, id: string) => definition.id = id, valuelistsConfiguration);
 
         return valuelistsConfiguration;
     }

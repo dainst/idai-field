@@ -1,12 +1,10 @@
 import {cond, flow, includedIn, isDefined, isNot, Mapping, Map, on, subtract, undefinedOrEmpty, identity,
-    compose, Pair, dissoc, pairWith, prune, filter, update, or, copy} from 'tsfun';
-import {update as updateAsc, lookup, map, reduce} from 'tsfun/associative';
-import {clone, update as updateStruct} from 'tsfun/struct';
+    compose, Pair, dissoc, pairWith, prune, filter, or, copy, update_a as updateAsc, update as updateStruct, lookup_a, map_a, keysAndValues, reduce, clone, update_a, update } from 'tsfun';
 import {LibraryCategoryDefinition} from '../model/library-category-definition';
 import {CustomCategoryDefinition} from '../model/custom-category-definition';
 import {ConfigurationErrors} from './configuration-errors';
 import {ValuelistDefinition} from '../model/valuelist-definition';
-import {withDissoc} from '../../util/utils';
+import {logWithMessage, withDissoc} from '../../util/utils';
 import {TransientFieldDefinition, TransientCategoryDefinition} from '../model/transient-category-definition';
 import {BuiltinCategoryDefinition} from '../model/builtin-category-definition';
 import {mergeBuiltInWithLibraryCategories} from './merge-builtin-with-library-categories';
@@ -34,7 +32,7 @@ import {sortStructArray} from '../../util/sort-struct-array';
 import {linkParentAndChildInstances} from '../category-tree-list';
 import {applyLanguageConfigurations} from './apply-language-configurations';
 
-const CATEGORIES = [0];
+const CATEGORIES = 0;
 
 
 /**
@@ -171,7 +169,7 @@ function putRelationsIntoGroups(relations: Array<RelationDefinition>) {
 
 
 const sortGroups = (defaultOrder: string[]) => (groups: Map<Group>) =>
-    flow(defaultOrder, map(lookup(groups)), prune);
+    flow(defaultOrder, map_a(lookup_a(groups)), prune);
 
 
 const orderCategories = (categoriesOrder: string[] = []) => (categories: TreeList<Category>): TreeList<Category> =>
@@ -202,8 +200,8 @@ function setGroupLabels(languageConfigurations: any[]) {
         return update(
             Category.GROUPS,
             compose(
-                map(pairWith(groupLabel)),
-                map(([group, label]: Pair<Group, string>) => updateAsc(Labelled.LABEL, label)(group as any))))(category);
+                map_a(pairWith(groupLabel)),
+                map_a(([group, label]: Pair<Group, string>) => updateAsc(Labelled.LABEL, label)(group as any))))(category);
     };
 }
 
@@ -245,11 +243,11 @@ function insertValuelistIds(mergedCategories: Map<TransientCategoryDefinition>) 
 function replaceValuelistIdsWithValuelists(valuelistDefinitionsMap: Map<ValuelistDefinition>)
     : Mapping<Map<TransientCategoryDefinition>> {
 
-    return map(
+    return map_a(
         cond(
             on(TransientCategoryDefinition.FIELDS, isNot(undefinedOrEmpty)),
-            update(TransientCategoryDefinition.FIELDS,
-                map(
+            update_a(TransientCategoryDefinition.FIELDS,
+                map_a(
                     cond(
                         or(
                             on(TransientFieldDefinition.VALUELISTID, isDefined),
@@ -298,7 +296,7 @@ function eraseUnusedCategories(selectedCategoriesNames: string[])
 function replaceCommonFields(commonFields: Map)
         : Mapping<Map<TransientCategoryDefinition>> {
 
-    return map(
+    return map_a(
         cond(
             on(TransientCategoryDefinition.COMMONS, isDefined),
             (mergedCategory: TransientCategoryDefinition) => {
@@ -326,8 +324,9 @@ function toCategoriesByFamilyNames(transientCategories: Map<TransientCategoryDef
 
     return flow(
         transientCategories,
+        keysAndValues,
         reduce(
-            (acc: any, transientCategory, transientCategoryName) => {
+            (acc: any, [transientCategoryName, transientCategory]: any /* TODO review any*/) => {
                 acc[transientCategory.categoryName
                     ? transientCategory.categoryName
                     : transientCategoryName] = transientCategory;

@@ -73,7 +73,7 @@ export class ResourceDeletion {
         }
 
         return (set(descendants))
-            .filter(document => !documents.map(to('resource.id')).includes(document.resource.id));
+            .filter(document => !documents.map(to(['resource','id'])).includes(document.resource.id));
     }
 
 

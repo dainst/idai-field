@@ -1,5 +1,4 @@
-import {is, on, separate, Path} from 'tsfun';
-import {copy} from 'tsfun/src/collection';
+import {is, on, copy, separate, Path} from 'tsfun';
 import {Category} from '../configuration/model/category';
 
 
@@ -12,7 +11,7 @@ export function sortStructArray(order: string[], path: Path) {
 
         for (let categoryName of order) {
             const [match, rest] = separate(on(path, is(categoryName)), source);
-            sortedCategories = sortedCategories.concat(match);
+            sortedCategories = sortedCategories.concat(match as any /* TODO review typing */);
             source = rest;
         }
 

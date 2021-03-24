@@ -12,7 +12,7 @@ import {Category} from '../configuration/model/category';
 import DEPICTS = ImageRelations.DEPICTS;
 import ISDEPICTEDIN = ImageRelations.ISDEPICTEDIN;
 import {ProjectCategories} from '../configuration/project-categories';
-import {ON_RESOURCE_ID, RESOURCE_ID_PATH, ResourceId} from '../constants';
+import {ON_RESOURCE_ID, ResourceId} from '../constants';
 import {clone} from '../util/object-util';
 
 

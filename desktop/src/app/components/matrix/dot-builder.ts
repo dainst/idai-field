@@ -72,7 +72,7 @@ export module DotBuilder {
         return rootDocuments.length === 0 ? '' :
             '{rank=min "'
             + rootDocuments
-                .map(to('resource.identifier'))
+                .map(to(['resource','identifier']))
                 .join('", "')
             + '"} ';
     }
@@ -150,7 +150,7 @@ export module DotBuilder {
 
         return (targetId: string) => {
 
-            const targetDocument = documents.find(on('resource.id', is(targetId)));
+            const targetDocument = documents.find(on(['resource','id'], is(targetId)));
             return (targetDocument
                 && !isRootDocument(documents, edges, processedDocuments)(targetDocument)) === true;
         }
@@ -200,7 +200,7 @@ export module DotBuilder {
 
         return (id: string): string => {
 
-            const document: Document|undefined = documents.find(on('resource.id', is(id)));
+            const document: Document|undefined = documents.find(on(['resource','id'], is(id)));
             return document ? document.resource.identifier : '';
         }
     }

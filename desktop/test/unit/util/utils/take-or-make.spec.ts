@@ -6,7 +6,7 @@ describe('takeOrMake', () => {
     it('takeOrMake makes', () => {
 
         const obj: any = { };
-        takeOrMake(obj, 'a.b.c', []);
+        takeOrMake(obj, ['a','b','c'], []);
         expect(obj['a']['b']['c']).toEqual([]);
     });
 
@@ -14,7 +14,7 @@ describe('takeOrMake', () => {
     it('takeOrMake takes', () => {
 
         const obj: any = {a:{ b: { c: 'a'}}};
-        takeOrMake(obj, 'a.b.c', []);
+        takeOrMake(obj, ['a','b','c'], []);
         expect(obj['a']['b']['c']).toEqual('a')
     });
 });

@@ -1,5 +1,4 @@
-import {flatMap, flow, filter, split, toLowerCase, empty, isNot, isEmpty, Map} from 'tsfun';
-import {lookup, map, forEach} from 'tsfun/associative';
+import {flatMap, flow, filter, split, empty, isNot, isEmpty, Map, lookup, map, forEach, lookup_a} from 'tsfun';
 import {Document, Resource} from 'idai-components-2';
 import {ResultSets} from './result-sets';
 import {Category} from '../../configuration/model/category';
@@ -39,11 +38,11 @@ export module FulltextIndex {
 
         flow(
             getFieldsToIndex(categoriesMap, document.resource.category),
-            filter(lookup(document.resource)),
+            filter(lookup_a(document.resource)),
             filter((field: any) => document.resource[field] !== ''),
-            map(lookup(document.resource)),
+            map(lookup_a(document.resource)),
             flatMap(split(tokenizationPattern)),
-            map(toLowerCase),
+            map(_ => _.toLowerCase()),
             map(toArray),
             forEach(indexToken(index, document)));
     }

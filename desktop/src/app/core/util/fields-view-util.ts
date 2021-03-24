@@ -2,9 +2,8 @@ import {Resource} from 'idai-components-2';
 import {FieldResource} from '@idai-field/core';
 import {ValuelistDefinition} from '../configuration/model/valuelist-definition';
 import {ValuelistUtil} from './valuelist-util';
-import {compose, flow, and, includedIn, isNot, filter, Filter, map, isString, Map, on, to, undefinedOrEmpty,
+import {compose, flow, update_a, lookup_a, and, includedIn, isNot, filter, Filter, map, isString, Map, on, to, undefinedOrEmpty,
     Predicate, or, is, empty, equalTo} from 'tsfun';
-import {update, lookup} from 'tsfun/associative';
 import {RelationDefinition} from '../configuration/model/relation-definition';
 import {HierarchicalRelations, ImageRelations} from '../model/relation-constants';
 import {Labelled, Named} from './named';
@@ -75,7 +74,7 @@ export module FieldsViewUtil {
                     isNot(includedIn(HierarchicalRelations.ALL)),
                     isNot(equalTo(ImageRelations.ISDEPICTEDIN)),
                     isNot(equalTo(ImageRelations.HASMAPLAYER)),
-                    compose(lookup(resource.relations), isNot(undefinedOrEmpty))
+                    compose(lookup_a(resource.relations), isNot(undefinedOrEmpty))
                 )
             )
         );
@@ -98,10 +97,10 @@ export module FieldsViewUtil {
     export function getGroups(category: string, categories: Map<Category>) {
 
         return flow(category,
-            lookup(categories),
+            lookup_a(categories),
             to(Category.GROUPS),
             map(group =>
-                update<any>(
+                update_a<any>(
                     FieldsViewGroup.SHOWN,
                     group.name === Groups.STEM)(group)
             )) as Array<FieldsViewGroup>;

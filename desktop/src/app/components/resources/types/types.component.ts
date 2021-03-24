@@ -3,6 +3,7 @@ import {filter, flatten, flow, isnt, Map, map, set, take, to} from 'tsfun';
 import {Document} from 'idai-components-2';
 import {ViewFacade} from '../../../core/resources/view/view-facade';
 import {Loading} from '../../widgets/loading';
+import {makeLookup} from '../../../core/util/transformers'
 import {BaseList} from '../base-list';
 import {ResourcesComponent} from '../resources.component';
 import {TypeImagesUtil} from '../../../core/util/type-images-util';
@@ -16,7 +17,6 @@ import {NavigationPath} from '../../../core/resources/view/state/navigation-path
 import {RoutingService} from '../../routing-service';
 import {TabManager} from '../../../core/tabs/tab-manager';
 import {PLACEHOLDER} from '../../../core/images/row/image-row';
-import {makeLookup} from 'src/app/core/util/transformers';
 import {ProjectCategories} from '../../../core/configuration/project-categories';
 import {MenuContext, MenuService} from '../../menu-service';
 import {ImageRelations, TypeRelations} from '../../../core/model/relation-constants';
@@ -270,7 +270,7 @@ export class TypesComponent extends BaseList implements OnChanges {
             }
         })).documents;
 
-        return makeLookup('resource.id')(subtypesArray);
+        return makeLookup(['resource', 'id'])(subtypesArray);
     }
 
 
@@ -301,7 +301,7 @@ export class TypesComponent extends BaseList implements OnChanges {
             imageLinks.push({ resourceId: document.resource.id, imageIds: this.getLinkedImageIds(document) });
         }
 
-        const imageIds: string[] = flatten(imageLinks.map(to('imageIds')));
+        const imageIds: string[] = flatten(imageLinks.map(_ => _.imageIds));
 
         const urls: { [imageId: string]: Blob } = await this.imagestore.readThumbnails(imageIds);
 

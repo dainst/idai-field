@@ -1,9 +1,10 @@
-import {filter, flow, includedIn, is, map, remove, to} from 'tsfun';
+import {filter, flow, includedIn, is, map, map_a, remove, to} from 'tsfun';
 import {Category} from './model/category';
 import {Named, onName, toName} from '../util/named';
 import {flattenTree, TreeList} from '../util/tree-list';
 import {Name} from '../constants';
 import {filterTrees, isTopLevelItemOrChildThereof, removeTrees} from '../util/named-tree-list';
+import { logWithMessage } from '../util/utils';
 
 const TYPE_CATALOG = 'TypeCatalog';
 const TYPE = 'Type';
@@ -93,7 +94,7 @@ export /* package-private */ module ProjectCategories {
             filterTrees('Operation', 'Place'),
             flattenTree,
             filter(onName(includedIn(['Operation', 'Place'])))
-        );
+        ) as any /* TODO review */;
     }
 
 
@@ -117,7 +118,7 @@ export /* package-private */ module ProjectCategories {
         return flow(t,
             filterTrees('Image'),
             flattenTree,
-            map(to([Named.NAME]))
+            map(to(Named.NAME))
         );
     }
 

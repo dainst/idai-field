@@ -60,7 +60,7 @@ export type Documents2Result = (_: Array<Document>) => Promise<Result>;
 /**
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
- * 
+ *
  * @returns Documents2Result, which expects
  *   documents with the field resource.identifier set to a non empty string.
  *   If resource.id is set, it will be taken as document.id, otherwise a new id gets generated.
@@ -105,7 +105,7 @@ async function importDocuments(services: ImportServices,
 
     makeSureRelationStructuresExists(documents);
     complementInverseRelationsBetweenImportDocs(context, options, documents); // TODO now that we have that here, we could simplify later steps probably
-    
+
     try {
         const existingDocuments = await makeExistingDocumentsMap(find, options, documents);
         const docs = filterOnDifferentialImport(existingDocuments, options, documents);
@@ -122,7 +122,7 @@ async function importDocuments(services: ImportServices,
             options
         );
         const documentsForImport = processedDocuments.map(helpers.postprocessDocument);
-        return options.mergeMode === true 
+        return options.mergeMode === true
             ? [undefined, [[], documentsForImport, targetDocuments]]
             : [undefined, [documentsForImport, [], targetDocuments]];
 
@@ -156,7 +156,7 @@ function filterOnDifferentialImport(existingDocuments: Map<Document>,
 
     return options.differentialImport !== true
             ? documents
-            : documents.filter(document => 
+            : documents.filter(document =>
                 existingDocuments[document.resource.identifier] === undefined);
 }
 

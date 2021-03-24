@@ -6,7 +6,7 @@ import {Name} from '../constants';
 
 export function findInNamedTreeList<N extends Named>(match: Name, t: TreeList<N>): N|undefined {
 
-    const result = findInTree(t, onName( is(match)));
+    const result: any /* TODO review typing */ = findInTree(t, onName(is(match)));
     return result ? result.item : undefined;
 }
 

@@ -287,7 +287,7 @@ export module ConstraintIndex {
             flatten(),
             getUniqueFields,
             filter(to(FieldDefinition.CONSTRAINTINDEXED))
-        );
+        ) as any /* TODO review */;
     }
 
 

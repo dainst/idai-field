@@ -1,7 +1,5 @@
 import {includedIn, isNot, isnt, Map, pairWith, union,
-    Pair, flow, filter} from 'tsfun';
-import {lookup, update, map, reduce, forEach} from 'tsfun/associative';
-import {clone} from 'tsfun/struct';
+    Pair, flow, filter, clone, update_a, keysAndValues, map, lookup, forEach, lookup_a} from 'tsfun';
 import {CustomCategoryDefinition} from '../model/custom-category-definition';
 import {TransientCategoryDefinition} from '../model/transient-category-definition';
 import {checkFieldCategoryChanges} from './check-field-category-changes';
@@ -18,10 +16,11 @@ export function mergeCategories(customCategories: Map<CustomCategoryDefinition>,
 
     return (selectableCategories: Map<TransientCategoryDefinition>) => {
 
-        return reduce(customCategories, (mergedCategories: Map<TransientCategoryDefinition>,
-                       customCategory: CustomCategoryDefinition, customCategoryName: string) => {
+        return keysAndValues(customCategories).reduce(
+            (mergedCategories: Map<TransientCategoryDefinition>,
+             [customCategoryName, customCategory]: [string, CustomCategoryDefinition]) => {
 
-            return update(customCategoryName,
+            return update_a(customCategoryName,
                 mergedCategories[customCategoryName]
                     ? handleDirectCategoryExtension(customCategoryName, customCategory, mergedCategories[customCategoryName])
                     : handleChildCategoryExtension(customCategoryName, customCategory, assertInputTypePresentIfNotCommonField))
@@ -37,7 +36,7 @@ function handleChildCategoryExtension(customCategoryName: string, customCategory
 
     if (!customCategory.parent) throw [ConfigurationErrors.MUST_HAVE_PARENT, customCategoryName];
 
-    forEach(customCategory.fields, (field, fieldName) => {
+    keysAndValues(customCategory.fields).forEach(([fieldName, field]) => {
         assertInputTypePresentIfNotCommonField(customCategoryName, fieldName, field);
     });
 
@@ -73,7 +72,9 @@ function mergePropertiesOfCategory(target: { [_: string]: any }, source: { [_: s
 
     if (source[CustomCategoryDefinition.VALUELISTS]) {
         if (!target[CustomCategoryDefinition.VALUELISTS]) target[CustomCategoryDefinition.VALUELISTS] = {};
-        forEach(source[CustomCategoryDefinition.VALUELISTS], (v: any, k: any) => {
+
+        keysAndValues(source[CustomCategoryDefinition.VALUELISTS])
+        .forEach(([k, v]) => {
             target[CustomCategoryDefinition.VALUELISTS][k] = v;
         });
     }
@@ -83,7 +84,7 @@ function mergePropertiesOfCategory(target: { [_: string]: any }, source: { [_: s
         Object.keys,
         filter(isnt(TransientCategoryDefinition.FIELDS)),
         filter(isNot(includedIn(Object.keys(target)))),
-        map(pairWith(lookup(source))),
+        map(pairWith(lookup_a(source))),
         forEach(overwriteIn(target)));
 }
 

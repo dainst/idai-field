@@ -1,5 +1,4 @@
-import {is, on, isNot, includedIn} from 'tsfun';
-import {forEach} from 'tsfun/associative';
+import {is, on, isNot, includedIn, keysAndValues} from 'tsfun';
 import {Document} from 'idai-components-2';
 import {ResourceId} from '../../../constants';
 import {assertInSameOperationWith, unionOfDocuments} from '../utils';
@@ -88,7 +87,7 @@ function getRidOfUnnecessaryTargetDocs(document: Document, targetDocuments: Arra
 function makeIdCategoryMap(targetIds: ResourceId[], documentTargetDocuments: Array<Document>) {
 
     return targetIds.reduce((acc, targetId) => {
-        const lookedUp = documentTargetDocuments.find(on('resource.id', is(targetId)));
+        const lookedUp = documentTargetDocuments.find(on(['resource','id'], is(targetId)));
         if (!lookedUp) return acc;
         acc[targetId] = lookedUp.resource.category;
         return acc;
@@ -99,7 +98,7 @@ function makeIdCategoryMap(targetIds: ResourceId[], documentTargetDocuments: Arr
 function assertCategoryIsInRange(document: Document, idCategoryMap: any,
                                  assertIsAllowedRelationDomainCategory: AssertIsAllowedRelationDomainType) {
 
-    forEach(document.resource.relations, (relationTargets: any[], relationName: string) => {
+    keysAndValues(document.resource.relations).forEach(([relationName, relationTargets]) => {
         for (let relationTarget of relationTargets) {
             const targetCategory = idCategoryMap[relationTarget];
             if (!targetCategory) continue;

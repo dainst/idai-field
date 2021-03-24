@@ -1,4 +1,4 @@
-import {jsonClone} from 'tsfun/struct';
+import {jsonClone} from 'tsfun';
 import {Document} from 'idai-components-2';
 import {PouchdbDatastore} from '../pouchdb/pouchdb-datastore';
 import {DocumentCache} from './document-cache';

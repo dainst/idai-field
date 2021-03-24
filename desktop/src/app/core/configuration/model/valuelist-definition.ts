@@ -29,7 +29,7 @@ export interface ValuelistDefinition {
 
 export module ValuelistDefinition {
 
-    export function assertIsValid(valuelistDefinition: ValuelistDefinition, valuelistId: string) {
+    export function assertIsValid([valuelistId, valuelistDefinition]: [string, ValuelistDefinition]) {
 
         if (valuelistDefinition.description === undefined) throw [ConfigurationErrors.MISSING_CATEGORY_PROPERTY, 'description', valuelistId];
         if (valuelistDefinition.createdBy === undefined) throw [ConfigurationErrors.MISSING_CATEGORY_PROPERTY, 'createdBy', valuelistId];

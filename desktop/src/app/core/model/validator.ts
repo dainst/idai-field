@@ -56,7 +56,7 @@ export class Validator {
             throw ([ValidationErrors.GENERIC_DATASTORE]);
         }
 
-        if (result.totalCount > 0 && on('resource.id', isnt(result.documents[0].resource.id))(document)) {
+        if (result.totalCount > 0 && on(['resource', 'id'], isnt(result.documents[0].resource.id))(document)) {
             throw[ValidationErrors.IDENTIFIER_ALREADY_EXISTS, document.resource.identifier];
         }
     }

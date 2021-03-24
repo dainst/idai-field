@@ -51,7 +51,7 @@ export class MatrixSelection {
     public getSelectedDocuments(documents: Array<FeatureDocument>): Array<FeatureDocument> {
 
         return this.selectedDocumentsIds.map(id => {
-            return documents.find(on('resource.id', is(id))) as FeatureDocument;
+            return documents.find(on(['resource','id'], is(id))) as FeatureDocument;
         });
     }
 

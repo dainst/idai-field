@@ -1,10 +1,9 @@
-import {reduce} from 'tsfun/associative';
-import {update, isObject} from 'tsfun';
+import {update, isObject,keysAndValues} from 'tsfun';
 
 
 export function completeWithTemplate(struct: any, template: any) {
 
-    return reduce((acc: any, val: any, key: any) => {
+    return keysAndValues(template).reduce((acc: any, [key,val]) => {
 
         return acc[key] !== undefined && !isObject(acc[key])
             ? acc
@@ -15,5 +14,5 @@ export function completeWithTemplate(struct: any, template: any) {
                     : val,
                 acc)
 
-    }, struct, template);
+    }, struct);
 }

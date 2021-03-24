@@ -1,7 +1,4 @@
-import {compose, Map} from 'tsfun';
-import {map} from 'tsfun/associative';
-import {update} from 'tsfun/associative';
-import {get} from 'tsfun/struct';
+import {compose, Map, map_a, to, update_a} from 'tsfun';
 import {assocReduce} from './assoc-reduce';
 
 
@@ -15,16 +12,16 @@ import {assocReduce} from './assoc-reduce';
  * ->
  * { 17: { d: { e: 17 }}, 19: { d: { e: 19 }}}
  */
-export function makeLookup(path: string) {
+export function makeLookup(path: string|number|Array<string|number>) {
 
     return <A>(as: Array<A>): Map<A> =>
-        assocReduce((a: A) => [get(path)(a), a], {})(as);
+        assocReduce((a: A) => [to(path as any)(a as any) as any /*TODO review typing*/, a], {})(as);
 }
 
 
 export function addKeyAsProp<A extends Map>(prop: string): (m: Map<A>) => Map<A> {
 
-    return map<any>((a: A, key: string) => update(prop, key)(a));
+    return map_a<any>((a: A, key: string) => update_a(prop, key)(a));
 }
 
 

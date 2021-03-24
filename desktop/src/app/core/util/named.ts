@@ -60,7 +60,7 @@ export function byName(a: Named, b: Named) { // to be used with sort
 }
 
 
-export const onName = (p: Predicate) => on([Named.NAME], p);
+export const onName = (p: Predicate) => on(Named.NAME, p);
 
 
-export const toName = to([Named.NAME]);
+export const toName = to(Named.NAME);

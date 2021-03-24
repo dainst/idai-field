@@ -1,7 +1,5 @@
 import {cond, empty, flow, includedIn, isNot, on,
-    isDefined, filter, and, Map} from 'tsfun';
-import {map, forEach, keysAndValues} from 'tsfun/associative';
-import {remove} from 'tsfun/collection';
+    isDefined, filter, and, Map, remove, keysAndValues, forEach, map_a, values} from 'tsfun';
 import {ConfigurationErrors} from './configuration-errors';
 import {LibraryFieldDefinition} from '../model/library-category-definition';
 import {CustomFieldDefinition} from '../model/custom-category-definition';
@@ -51,8 +49,9 @@ function assertFieldKeysAreValid(fields: Map<LibraryFieldDefinition>|Map<CustomF
 
     flow(
         fields,
-        map(Object.keys),
-        map(remove(includedIn(validFieldKeys))),
+        map_a(Object.keys),
+        map_a(remove(includedIn(validFieldKeys))),
+        values as any, // TODO review any
         forEach(throwIllegalFieldPropertyIfNotEmpty)
     );
 }

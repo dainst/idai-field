@@ -107,7 +107,7 @@ export class MatrixViewComponent implements OnInit {
     public async edit(resourceId: string) {
 
         await this.openEditorModal(
-            this.featureDocuments.find(on('resource.id', is(resourceId))) as FeatureDocument
+            this.featureDocuments.find(on(['resource','id'], is(resourceId))) as FeatureDocument
         );
     }
 

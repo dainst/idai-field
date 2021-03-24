@@ -1,5 +1,4 @@
-import {flow, is, Map} from 'tsfun';
-import {forEach} from 'tsfun/associative';
+import {flow, forEach, is, keysAndValues, Map} from 'tsfun';
 import {BuiltinCategoryDefinition} from '../model/builtin-category-definition';
 import {LibraryCategoryDefinition} from '../model/library-category-definition';
 import {CustomCategoryDefinition} from '../model/custom-category-definition';
@@ -85,6 +84,7 @@ export module Assertions {
     export function assertValuelistIdsProvided(mergedCategories: Map<TransientCategoryDefinition>) {
 
         iterateOverFieldsOfCategories(mergedCategories, (categoryName, category, fieldName, field) => {
+
             if (['dropdown', 'checkboxes', 'radio'].includes(field.inputType ? field.inputType : '')) {
                 if (!field.valuelistId && !field.valuelistFromProjectField) {
                     throw [ConfigurationErrors.NO_VALUELIST_PROVIDED, categoryName, fieldName];
@@ -138,9 +138,9 @@ export module Assertions {
             builtInCategories, Object.keys(libraryCategories)
         );
 
-        forEach(libraryCategories, assertLibraryCategoryValid);
-        forEach(customCategories, assertCustomCategoryValid);
-        forEach(valuelistDefinitions, ValuelistDefinition.assertIsValid);
+        keysAndValues(libraryCategories).forEach(assertLibraryCategoryValid);
+        keysAndValues(customCategories).forEach(assertCustomCategoryValid);
+        keysAndValues(valuelistDefinitions).forEach(ValuelistDefinition.assertIsValid);
     }
 
 
@@ -155,7 +155,7 @@ export module Assertions {
 
             if (!collected[categoryName]) collected[categoryName] = {};
 
-            forEach(libraryCategory.fields, (field: any, fieldName: any) => {
+            keysAndValues(libraryCategory.fields).forEach(([fieldName, field]) => {
 
                 const inputType = field['inputType'];
 

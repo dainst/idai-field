@@ -21,9 +21,9 @@ import { makeLookup } from '../../util/transformers';
  * Relations set to null are left untouched.
  *
  * @throws FATAL - should not be handled. // TODO use assert?
- * 
- * 
- * 
+ *
+ *
+ *
  * // TODO nulls here should not exist, because we are not in merge mode
  */
 export function complementInverseRelationsBetweenImportDocs(context: ImportContext,
@@ -31,7 +31,7 @@ export function complementInverseRelationsBetweenImportDocs(context: ImportConte
                                                             documents: Array<Document> /*inplace*/) {
 
     if (!options.useIdentifiersInRelations) return;
-    const identifierLookup = makeLookup('resource.identifier')(documents); // TODO allow to pass path as array
+    const identifierLookup = makeLookup(['resource','identifier'])(documents); // TODO allow to pass path as array
 
     for (const document of documents) {
         const identifier = document.resource.identifier;
@@ -46,14 +46,14 @@ export function complementInverseRelationsBetweenImportDocs(context: ImportConte
                 const targetRelations = identifierLookup[targetIdentifier].resource.relations;
                 if (!targetRelations) throw 'FATAL - relations should exist'; // TODO test for empty map, not only not undefined
 
-                if (targetRelations[inverse] === null) { 
+                if (targetRelations[inverse] === null) {
                     // do nothing
                 } else if (targetRelations[inverse] === undefined) {
                     targetRelations[inverse] = [identifier];
                 } else {
                     if (!targetRelations[inverse].includes(identifier)) {
 
-                        targetRelations[inverse].push(identifier); 
+                        targetRelations[inverse].push(identifier);
                     }
                 }
             }

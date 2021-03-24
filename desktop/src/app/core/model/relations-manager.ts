@@ -142,7 +142,7 @@ export class RelationsManager {
                                         revisionsToSquash: Array<Document>) {
 
         const revs = revisionsToSquash.map(to(Document._REV)).filter(isDefined);
-        const updated = await this.persistIt(document, revs);
+        const updated = await this.persistIt(document, revs as any /* TODO review */);
 
         await this.connectedDocsWriter.updateConnectedDocumentsForDocumentUpdate(
             updated, [oldVersion].concat(revisionsToSquash), this.settingsProvider.getSettings().username);
@@ -163,8 +163,8 @@ export class RelationsManager {
         if (isUndefinedOrEmpty(document.resource.relations[RECORDED_IN])) return;
 
         const docsToCorrect = ((await this.findLiesWithinDocs(document.resource.id, false)) as FindResult).documents
-            .filter(on('resource.relations.' + RECORDED_IN, isArray))
-            .filter(isNot(on('resource.relations.' + RECORDED_IN, sameset)(document)));
+            .filter(on(['resource','relations',RECORDED_IN], isArray))
+            .filter(isNot(on(['resource','relations',RECORDED_IN], sameset)(document) as any)); // TODO review any
 
         for (let docToCorrect of docsToCorrect) {
             const cloned = clone(docToCorrect);

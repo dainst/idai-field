@@ -80,7 +80,7 @@ export module EdgesBuilder {
 
             return {
                 resourceId: document.resource.id,
-                edges: edges
+                edges: edges as any /* TODO review any */
             };
         }
     }
@@ -95,7 +95,7 @@ export module EdgesBuilder {
             getRelationTargetIds(document, getRelationTypesForPathType(pathType, relations))
                 .map(to('targetId'))
                 .map(targetId => {
-                    return getIncludedRelationTargetIds(targetId, graphDocuments,
+                    return getIncludedRelationTargetIds(targetId as any /* TODO review any */, graphDocuments,
                         totalDocuments, relations, [document.resource.id], pathType);
                 })
         );
@@ -137,9 +137,9 @@ export module EdgesBuilder {
 
         processedTargetIds.push(targetId);
 
-        let targetDocument: Document | undefined = graphDocuments.find(on('resource.id', is(targetId)));
+        let targetDocument: Document | undefined = graphDocuments.find(on(['resource','id'], is(targetId)));
         if (targetDocument) return [{ targetId: targetId, pathType: pathType }];
-        targetDocument = totalDocuments.find(on('resource.id', is(targetId)));
+        targetDocument = totalDocuments.find(on(['resource','id'], is(targetId)));
         if (!targetDocument) return [];
 
         return mergeTargetIdResults(

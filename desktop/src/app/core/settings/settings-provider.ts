@@ -1,7 +1,6 @@
 import {Settings} from './settings';
-import {jsonClone} from 'tsfun/struct';
 import {Name} from '../constants';
-import {set} from 'tsfun';
+import {set,jsonClone} from 'tsfun';
 import {SettingsSerializer} from './settings-serializer';
 
 

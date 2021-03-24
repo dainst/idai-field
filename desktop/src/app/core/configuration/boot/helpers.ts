@@ -1,5 +1,4 @@
-import {compose, filter, isDefined, map, Map, to} from 'tsfun';
-import {forEach} from 'tsfun/associative';
+import {compose, filter, isDefined, keysAndValues, map, Map, to} from 'tsfun';
 import {TransientFieldDefinition, TransientCategoryDefinition} from '../model/transient-category-definition';
 
 
@@ -14,8 +13,8 @@ export function iterateOverFieldsOfCategories(categories: Map<TransientCategoryD
                                               f: (categoryName: string, category: TransientCategoryDefinition,
                                                   fieldName: string, field: TransientFieldDefinition) => void) {
 
-    forEach(categories, (category, categoryName) => {
-        forEach((category as any).fields, (field, fieldName: string) => {
+    keysAndValues(categories).forEach(([categoryName, category]) => {
+        keysAndValues((category as any).fields).forEach(([fieldName, field]: any /* TODO review any*/) => {
             f(categoryName, category as any, fieldName, field);
         })
     });

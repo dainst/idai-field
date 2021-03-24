@@ -1,6 +1,5 @@
 import {dense, drop, flow, indices, is, on, first,
-    take, prepend, append, compose, cond, isEmpty, Mapping} from 'tsfun';
-import {reduce} from 'tsfun/associative';
+    take, prepend, append, reduce, compose, cond, isEmpty, Mapping} from 'tsfun';
 import {FieldDefinition} from '../../configuration/model/field-definition';
 import {Resource} from 'idai-components-2';
 import {FieldResource} from '@idai-field/core';

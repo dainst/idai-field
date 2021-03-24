@@ -1,4 +1,4 @@
-import {get} from 'tsfun/associative';
+import {to} from 'tsfun';
 import {Resource, Document} from 'idai-components-2';
 import {FieldResource} from '@idai-field/core';
 import {ResourceId} from '../constants';
@@ -25,7 +25,7 @@ export module ModelUtil {
         const targetIds: string[]|undefined = document.resource.relations[relationName];
         if (!targetIds) return undefined;
 
-        return get(index)(targetIds) as (ResourceId|undefined);
+        return to(index)(targetIds) as (ResourceId|undefined);
     }
 
 

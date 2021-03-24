@@ -1,6 +1,5 @@
 import {isArray, isnt, set, sort, split, flow, filter, isNot, dense, throws,
-    first, startsWith, longerThan} from 'tsfun';
-import {map, reduce, forEach} from 'tsfun/associative';
+    first, startsWith, longerThan, map_a, map, forEach} from 'tsfun';
 import {ParserErrors} from './parser-errors';
 import CSV_PATH_ITEM_TYPE_MISMATCH = ParserErrors.CSV_HEADING_PATH_ITEM_TYPE_MISMATCH;
 import CSV_HEADING_ARRAY_INDICES_INVALID_SEQUENCE = ParserErrors.CSV_HEADING_ARRAY_INDICES_INVALID_SEQUENCE;
@@ -45,8 +44,9 @@ export function convertCsvRows(separator: string) {
         assertHeadingsDoNotContainIncompleteArrays(headings);
         assertRowsAndHeadingLengthsMatch(headings, rows);
 
-        return map((row: string[]) =>
-            reduce(insertFieldIntoDocument(headings), {})(row), rows);
+        return map_a(
+            (row: string[]) => row.reduce(insertFieldIntoDocument(headings), {}),
+            rows);
     }
 }
 
@@ -107,7 +107,7 @@ function extractLeadingIndices(paths: string[]): number[] {
  */
 function groupByFirstSegment(paths: string[]) {
 
-    return reduce((group: {[_:string]: any}, path: string) => {
+    return paths.reduce((group: {[_:string]: any}, path: string) => {
 
         const first = path.split(PATH_SEPARATOR).slice(0)[0];
         const rest = path.split(PATH_SEPARATOR).slice(1).join(PATH_SEPARATOR);
@@ -116,7 +116,7 @@ function groupByFirstSegment(paths: string[]) {
         group[first].push(rest);
         return group;
 
-    }, {})(paths);
+    }, {});
 }
 
 
@@ -137,8 +137,8 @@ function assertHeadingsConsistent(headings: string[]) {
 
         flow(
             headings,
-            filter(startsWith(heading)),
-            filter(longerThan(heading)),
+            filter(startsWith(heading as any) as any /* TODO review*/),
+            filter(longerThan(heading as any) as any),
             filter((otherHeading: string) => otherHeading.substr(heading.length).includes('.')),
             forEach(throws([ParserErrors.CSV_INVALID_HEADING, heading])));
     });

@@ -1,6 +1,4 @@
-import {Map, Pair} from 'tsfun';
-import {clone} from 'tsfun/struct';
-import {forEach} from 'tsfun/associative';
+import {clone, keysAndValues, Map, Pair} from 'tsfun';
 import {CustomCategoryDefinition} from '../model/custom-category-definition';
 import {TransientCategoryDefinition} from '../model/transient-category-definition';
 
@@ -11,11 +9,11 @@ export function hideFields(customCategories: Map<CustomCategoryDefinition>) {
 
         const clonedSelectedCategories = clone(selectedCategories);
 
-        forEach(clonedSelectedCategories,
-            (selectedCategory: TransientCategoryDefinition, selectedCategoryName) => {
+        keysAndValues(clonedSelectedCategories).forEach(
+            ([selectedCategoryName, selectedCategory]: [string, TransientCategoryDefinition]) => {
 
-                forEach(customCategories,
-                    (customCategory: CustomCategoryDefinition, customCategoryName: string) => {
+                keysAndValues(customCategories).forEach(
+                    ([customCategoryName, customCategory]: [string, CustomCategoryDefinition]) => {
 
                         if (customCategoryName === selectedCategoryName && selectedCategory.fields) {
                             Object.keys(selectedCategory.fields).forEach(fieldName => {

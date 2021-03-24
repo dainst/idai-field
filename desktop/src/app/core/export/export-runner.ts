@@ -71,7 +71,7 @@ export module ExportRunner {
                 (await find(query)).totalCount
             ]);
         }
-        return resourceCategoryCounts.filter(on('[1]', greaterThan(0)));
+        return resourceCategoryCounts.filter(on(1, greaterThan(0)));
     }
 
 

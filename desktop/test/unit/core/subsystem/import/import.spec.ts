@@ -614,23 +614,23 @@ describe('Import/Subsystem', () => {
         //
         // What we want in this case is to continue the import process
         // and also save the time already invested.
-        // 
+        //
         // We ignore the records from the import file which already exist in the db;
         // however, we try to reconstruct relations
 
         await create(
             {
-                id: 'tr1', 
-                identifier: 'trench1', 
+                id: 'tr1',
+                identifier: 'trench1',
                 category: 'Trench',
-                shortDescription: 'original', 
-                relations: {} 
+                shortDescription: 'original',
+                relations: {}
             },
             {
-                id: '99', 
-                identifier: 'feature1', 
+                id: '99',
+                identifier: 'feature1',
                 category: 'Feature',
-                shortDescription: 'original', 
+                shortDescription: 'original',
                 relations: { "isAfter": ["100"]} // this is broken (a previously generated id)
                                              // the target is not there (yet)
             });

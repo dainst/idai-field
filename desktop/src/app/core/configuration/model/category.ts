@@ -39,7 +39,7 @@ export module Category {
             Object.values,
             map(to(Group.FIELDS)),
             flatten()
-        );
+        ) as any /* TODO review any*/;
     }
 
 

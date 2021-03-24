@@ -34,6 +34,7 @@ export class FieldCategoryConverter extends CategoryConverter<Document> {
 
     public getCategoriesForClass(categoryClass: string): string[]|undefined {
 
+
         if (categoryClass === 'ImageDocument') {
             return ProjectCategories.getImageCategoryNames(this.projectConfiguration.getCategoryTreelist());
         } else if (categoryClass === 'FeatureDocument') {
@@ -51,11 +52,11 @@ export class FieldCategoryConverter extends CategoryConverter<Document> {
         const convertedDocument: T = Migrator.migrate(document) as T;
 
         if (this.projectConfiguration.isSubcategory(convertedDocument.resource.category, 'Image')) {
-            takeOrMake(convertedDocument, 'resource.identifier','');
-            takeOrMake(convertedDocument, 'resource.relations.depicts', []);
+            takeOrMake(convertedDocument, ['resource','identifier'], '');
+            takeOrMake(convertedDocument, ['resource','relations','depicts'], []);
         } else {
-            takeOrMake(convertedDocument, 'resource.identifier','');
-            takeOrMake(convertedDocument, 'resource.relations.isRecordedIn', []);
+            takeOrMake(convertedDocument, ['resource','identifier'],'');
+            takeOrMake(convertedDocument, ['resource','relations','isRecordedIn'], []);
         }
 
         return convertedDocument;

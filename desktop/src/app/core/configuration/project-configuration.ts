@@ -1,6 +1,4 @@
-import {flow, to, on, isNot, empty, is, Pair, Map, includedIn} from 'tsfun';
-import {map} from 'tsfun/associative';
-import {filter} from 'tsfun/collection';
+import {flow, to, on, isNot, empty, is, Pair, Map, includedIn, map_a, filter} from 'tsfun';
 import {Category} from './model/category';
 import {FieldDefinition} from './model/field-definition';
 import {RelationDefinition} from './model/relation-definition';
@@ -196,7 +194,7 @@ export class ProjectConfiguration {
 
     public getCategoryColors() {
 
-        return map(to(Category.COLOR), this.categoriesMap) as Map<string>;
+        return map_a(to(Category.COLOR), this.categoriesMap) as Map<string>;
     }
 
 

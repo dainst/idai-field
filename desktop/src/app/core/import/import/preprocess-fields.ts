@@ -1,4 +1,4 @@
-import {dissoc} from 'tsfun/associative';
+import {dissoc} from 'tsfun';
 import {Document, Resource} from 'idai-components-2';
 import {trimFields} from '../../util/trim-fields';
 import {removeNullProperties} from './remove-null-properties';
@@ -15,7 +15,7 @@ import {removeNullProperties} from './remove-null-properties';
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-export function preprocessFields(documents: Array<Document>, 
+export function preprocessFields(documents: Array<Document>,
                                  { permitDeletions }: {permitDeletions?: boolean}): void {
 
     documents.forEach(preprocessFieldsForResource(!permitDeletions));

@@ -1,17 +1,19 @@
 import {
     empty,
+    filter,
     flow,
+    forEach,
     intersect,
     isDefined,
     isNot,
     isUndefinedOrEmpty,
+    lookup_a,
+    map,
     pairWith,
     throws,
     to,
     undefinedOrEmpty
 } from 'tsfun';
-import {forEach, lookup, map} from 'tsfun/associative';
-import {filter} from 'tsfun/collection';
 import {Document, Relations} from 'idai-components-2';
 import {ImportErrors as E} from '../import-errors';
 import {
@@ -29,7 +31,7 @@ import IS_CONTEMPORARY_WITH = TimeRelations.CONTEMPORARY;
 import IS_AFTER = TimeRelations.AFTER;
 import IS_BEFORE = TimeRelations.BEFORE;
 import IS_EQUIVALENT_TO = PositionRelations.EQUIVALENT;
-import {Lookup} from '../../../util/utils';
+import {logWithMessage, Lookup} from '../../../util/utils';
 
 
 /**
@@ -92,7 +94,7 @@ function setInverseRelationsForImportResources(importDocuments: Array<Document>,
 
         flow(importDocument.resource.relations,
             Object.keys,
-            map(pairWith(lookup(inverseRelationsMap))),
+            map(pairWith(lookup_a(inverseRelationsMap))),
             forEach(assertNotBadlyInterrelated(importDocument)),
             forEach(setInverses(importDocument, documentsLookup, assertIsAllowedRelationDomainCategory)));
     }
@@ -115,7 +117,7 @@ function setInverses(importDocument: Document, documentsLookup: { [_: string]: D
 
         const tmp = flow(
             importDocument.resource.relations[relationName],
-            map(lookup(documentsLookup)),
+            map(lookup_a(documentsLookup)),
             filter(isDefined),
             forEach(assertIsAllowedRelationDomainCategory_));
 
@@ -123,7 +125,7 @@ function setInverses(importDocument: Document, documentsLookup: { [_: string]: D
 
         flow(tmp,
             forEach(assertInSameOperationWith(importDocument)),
-            map(to('resource.relations')),
+            map(to(['resource', 'relations'])),
             forEach(setInverse(importDocument.resource.id, inverseRelationName as string)));
     }
 }
@@ -154,7 +156,7 @@ function assertNoForbiddenRelations(forbiddenRelations: string[], relationTarget
                                     document: Document) {
 
     forbiddenRelations
-        .map(lookup(document.resource.relations))
+        .map(lookup_a(document.resource.relations))
         .filter(isNot(undefinedOrEmpty))
         .map(intersect(relationTargets))
         .filter(isNot(empty))

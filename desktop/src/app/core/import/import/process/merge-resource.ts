@@ -1,7 +1,5 @@
 import {dropRightWhile, includedIn, is, isArray, isNot, isObject, isAssociative, Map,
-    Associative, isEmpty, isnt, flow, cond, dissoc} from 'tsfun';
-import {update, reduce, forEach} from 'tsfun/associative';
-import {filter} from 'tsfun/collection';
+    Associative, isEmpty, isnt, flow, cond, dissoc, forEach, update, values, filter_a} from 'tsfun';
 import {NewResource, Resource} from 'idai-components-2';
 import {clone} from '../../../util/object-util';
 import {HierarchicalRelations} from '../../../model/relation-constants';
@@ -69,7 +67,7 @@ function appendIdentifier(err: any, identifier: string) {
 
 
 const assertArrayHomogeneouslyTyped =
-    reduce((arrayItemsType: string|undefined, arrayItem) => {
+    (a: any[] /* TODO review */) => a.reduce((arrayItemsType: string|undefined, arrayItem) => {
         // typeof null -> 'object', typeof undefined -> 'undefined'
         const t = typeof arrayItem === 'undefined' ? 'object' : typeof arrayItem;
 
@@ -90,6 +88,7 @@ const assertArrayHomogeneouslyTyped =
 function assertArraysHomogeneouslyTyped(o: Associative<any>) {
 
     flow(o,
+        values,
         forEach(cond(isArray, assertArrayHomogeneouslyTyped)),
         forEach(cond(isAssociative, assertArraysHomogeneouslyTyped)));
 }
@@ -171,7 +170,7 @@ function overwriteOrDeleteProperties(target: Map<any>|undefined,
             } else if (isObject(source[property]) && target[property] === undefined) {
 
                 if (Object.values(source[property]).filter(isnt(null)).length > 0) {
-                    target[property] = filter(source[property], isnt(null));
+                    target[property] = filter_a(source[property], isnt(null));
                 }
 
             } else target[property] = source[property];

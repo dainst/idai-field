@@ -5,7 +5,7 @@ import PouchDBAuthentication from 'pouchdb-authentication';
 import PouchDBFind from 'pouchdb-find';
 
 
-export const setupDB = async (dbName: string) => {
+export const setupDB = async (dbName: string): Promise<PouchDB.Database> => {
 
     PouchDB.plugin(PouchDBFind);
     PouchDB.plugin(PouchDBAuthentication);
@@ -13,7 +13,7 @@ export const setupDB = async (dbName: string) => {
     const db = new PouchDB(dbName);
 
     await db.createIndex({
-        index: {fields: ['resource.type']}
+        index: { fields: ['resource.type'] }
     });
 
     return db;

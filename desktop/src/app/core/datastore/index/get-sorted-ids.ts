@@ -134,4 +134,4 @@ const rankTypeResourceIndexItems = (categoryToMatch: Name): (indexItems: Array<I
     Array<IndexItem> => compose(
         map(pairWith(calcPercentage(categoryToMatch))),
         sort(comparePercentages) as any,
-        map(left));
+        map(left) as any /* TODO review any*/);

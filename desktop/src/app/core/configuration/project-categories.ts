@@ -116,7 +116,7 @@ export /* package-private */ module ProjectCategories {
         return flow(t,
             filterTrees('Image'),
             flattenTree,
-            map(to(Named.NAME))
+            map(_ => _.name)
         );
     }
 

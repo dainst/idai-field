@@ -123,7 +123,7 @@ export module ConstraintIndex {
             matchTerm,
             cond(not(isArray), singleton),
             map(getDescendants(index, definition)),
-            flatten());
+            flatten()) as any /* TODO review any*/;
     }
 
 

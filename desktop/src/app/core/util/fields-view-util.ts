@@ -102,6 +102,6 @@ export module FieldsViewUtil {
                 update_a<any>(
                     FieldsViewGroup.SHOWN,
                     group.name === Groups.STEM)(group)
-            )) as Array<FieldsViewGroup>;
+            )) as unknown /* TODO review unknown */ as Array<FieldsViewGroup>;
     }
 }

@@ -141,7 +141,7 @@ export class RelationsManager {
     private async updateWithConnections(document: Document, oldVersion: Document,
                                         revisionsToSquash: Array<Document>) {
 
-        const revs = revisionsToSquash.map(to<RevisionId>(Document._REV)).filter(isDefined);
+        const revs = revisionsToSquash.map(_ => _._rev).filter(isDefined);
         const updated = await this.persistIt(document, revs);
 
         await this.connectedDocsWriter.updateConnectedDocumentsForDocumentUpdate(

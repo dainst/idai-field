@@ -301,7 +301,7 @@ export class TypesComponent extends BaseList implements OnChanges {
             imageLinks.push({ resourceId: document.resource.id, imageIds: this.getLinkedImageIds(document) });
         }
 
-        const imageIds: string[] = flatten(imageLinks.map(to<string[]>('imageIds')));
+        const imageIds: string[] = flatten(imageLinks.map(_ => _.imageIds));
 
         const urls: { [imageId: string]: Blob } = await this.imagestore.readThumbnails(imageIds);
 

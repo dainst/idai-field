@@ -65,18 +65,16 @@ export module EdgesBuilder {
                 .filter(on('pathType', is('below')))
                 .forEach(id => belowTargetIds.push(id));
 
-            const toResourceId = to<Resource.Id>('targetId');
-
             const edges = {
                 aboveIds:
-                    set(aboveTargetIds.map(toResourceId)),
+                    set(aboveTargetIds.map(_ => _.targetId)),
                 belowIds:
-                    set(belowTargetIds.map(toResourceId)),
+                    set(belowTargetIds.map(_ => _.targetId)),
                 sameRankIds:
                     set(
                         sameRankTargetIds
                             .filter(idsResult => !idsResult.pathType || idsResult.pathType === 'sameRank')
-                            .map(toResourceId)
+                            .map(_ => _.targetId)
                     )
             };
 
@@ -95,7 +93,7 @@ export module EdgesBuilder {
 
         return mergeTargetIdResults(
             getRelationTargetIds(document, getRelationTypesForPathType(pathType, relations))
-                .map(to<Resource.Id>('targetId'))
+                .map(_ => _.targetId)
                 .map(targetId => {
                     return getIncludedRelationTargetIds(targetId, graphDocuments,
                         totalDocuments, relations, [document.resource.id], pathType);

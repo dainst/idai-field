@@ -107,7 +107,7 @@ export class ProjectConfigurationComponent {
 
     public hasCustomFields: Predicate<Group> = compose(
         to<Array<FieldDefinition>>(Group.FIELDS),
-        map(to<FieldDefinition.SOURCE_TYPES>(FieldDefinition.SOURCE)),
+        map(_ => _.source),
         any(is(FieldDefinition.Source.CUSTOM))
     );
 }

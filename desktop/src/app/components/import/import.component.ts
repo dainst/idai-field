@@ -78,18 +78,12 @@ export class ImportComponent implements OnInit {
     public isJavaInstallationMissing = () => this.importState.format === 'shapefile' && !this.javaInstalled;
 
     public isDefaultFormat = () => Importer.isDefault(this.importState.format);
-
-    public isDifferentialImportOptionSelected = () => this.importState.differentialImport === true;
     
-    public isMergeImportOptionSelected = () => this.importState.mergeMode === true;
+    public isMergeMode = () => this.importState.mergeMode;
 
     public shouldDisplayPermitDeletionsOption = () => this.isDefaultFormat() && this.importState.mergeMode === true;
 
     public shouldDisplayImportIntoOperation = () => Importer.importIntoOperationAvailable(this.importState);
-
-    public selectMergeImportOption = () => this.updateImportOptionForDefaultImport('merge');
-    
-    public selectDifferentialImportOption = () => this.updateImportOptionForDefaultImport('differential');
 
     public getSeparator = () => this.importState.separator;
 
@@ -143,10 +137,15 @@ export class ImportComponent implements OnInit {
         this.importState.file = undefined;
         this.importState.format = undefined;
         this.importState.url = undefined;
+        this.importState.differentialImport = false;
+        this.importState.mergeMode = false;
+        this.importState.permitDeletions = false;
     }
 
 
     public selectFile(event: any) {
+
+        this.reset();
 
         this.importState.typeFromFileName = false;
 
@@ -172,10 +171,9 @@ export class ImportComponent implements OnInit {
     }
 
 
-    public updateImportOptionForDefaultImport(option: 'merge'|'differential') {
+    public setMergeMode(mergeImport: boolean) {
 
-        this.importState.mergeMode = option === 'merge';
-        this.importState.differentialImport = option === 'differential';
+        this.importState.mergeMode = mergeImport;
         this.importState.permitDeletions = false;
         this.updateCategories();
     }
@@ -188,8 +186,9 @@ export class ImportComponent implements OnInit {
                 ? this.importState.file.name
                 : this.importState.url
         );
-        if (['csv', 'native'].includes(this.importState.format)) {
-            this.updateImportOptionForDefaultImport('differential');
+
+        if (this.importState.format === 'csv' || this.importState.format === 'native') {
+            this.importState.differentialImport = true;
         }
     }
 

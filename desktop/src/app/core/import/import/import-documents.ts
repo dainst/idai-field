@@ -90,10 +90,6 @@ export function buildImportDocuments(services: ImportServices,
             throw 'FATAL - illegal argument combination '
             + '- mergeMode and operationId must not be both truthy';
         }
-        if (options.differentialImport) {
-            throw 'FATAL - illegal argument combination '
-            + '- mergeMode and differentialImport must not be both true';
-        }
     }
 
     const get  = (resourceId: string) => services.datastore.get(resourceId);
@@ -164,8 +160,11 @@ function filterOnDifferentialImport(existingDocuments: Map<Document>,
 
     return options.differentialImport !== true
             ? documents
-            : documents.filter(document =>
-                existingDocuments[document.resource.identifier] === undefined);
+            : documents.filter(document => {
+                return options.mergeMode
+                    ? existingDocuments[document.resource.identifier] !== undefined
+                    : existingDocuments[document.resource.identifier] === undefined;
+            });
 }
 
 

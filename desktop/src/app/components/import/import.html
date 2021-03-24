@@ -22,8 +22,7 @@
                                 [(ngModel)]="importState.sourceType"
                                 (ngModelChange)="reset()">
                             <option value="file" i18n="@@import.file">Datei</option>
-                            <option *ngIf="importState.format !== 'shapefile'" value="http"
-                                    i18n="@@import.http">HTTP</option>
+                            <option value="http" i18n="@@import.http">HTTP</option>
                         </select>
                     </div>
 
@@ -60,13 +59,13 @@
 
                     <div *ngIf="isDefaultFormat()">
                         <div  
-                            (click)="selectDifferentialImportOption()"
+                            (click)="setMergeMode(false)"
                             id="radiobutton-existing-documents-option-differential-import-option">
                             <div class="form-group form-check-inline">
                             <input type="radio" 
                                 class="form-check-input"
                                 name="radiobutton-existing-documents-options" 
-                                [checked]="isDifferentialImportOptionSelected()" />
+                                [checked]="!isMergeMode()" />
                             <label for="radiobutton-existing-documents-regular-import-option" 
                                 class="form-check-label"
                                 i18n="@@import.regularOption.label">
@@ -79,13 +78,13 @@
                             </div>
                         </div>
                         <div 
-                            (click)="selectMergeImportOption()"
+                            (click)="setMergeMode(true)"
                             id="radiobutton-existing-documents-merge-import-option">
                             <div class="form-group form-check-inline">
                                 <input type="radio" 
                                     class="form-check-input"
                                     name="radiobutton-existing-documents-options" 
-                                    [checked]="isMergeImportOptionSelected()" />
+                                    [checked]="isMergeMode()" />
                                 <label for="radiobutton-existing-documents-merge-import-option" 
                                     class="form-check-label"
                                     i18n="@@import.mergeOption.label">

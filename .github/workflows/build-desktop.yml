@@ -15,16 +15,24 @@ jobs:
     env:
       GH_TOKEN: ${{ github.token }}
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-node@v1
-    - uses: c-hive/gha-npm-cache@v1
-    - run: npm i
-    - run: npm run bootstrap
-    - run: npm run build
+    - name: Checkout repository
+      uses: actions/checkout@v2
+    - name: Setup NodeJS
+      uses: actions/setup-node@v1
+    - name: Setup NPM cache
+      uses: c-hive/gha-npm-cache@v1
+    - name: Install root node modules
+      run: npm i
+    - name: Install and link package node modules 
+      run: npm run bootstrap
+    - name: Build core
+      run: npm run build
       working-directory: core
-    - run: npm run build:all
+    - name: Build desktop
+      run: npm run build:all
       working-directory: desktop
-    - run: npm run package:mac
+    - name: Create macOS package
+      run: npm run package:mac
       if: runner.os == 'macOS'
       env:
         CSC_LINK: ${{ secrets.MAC_CERT }}
@@ -34,12 +42,14 @@ jobs:
         MAC_NOTARIZE_PW: ${{ secrets.MAC_NOTARIZE_PW }}
         MAC_NOTARIZE_TID: ${{ secrets.MAC_NOTARIZE_TID }}
       working-directory: desktop
-    - run: npm run package:win
+    - name: Create Windows package
+      run: npm run package:win
       if: runner.os == 'Windows'
       env:
         CSC_LINK: ${{ secrets.WIN_CERT }}
         CSC_KEY_PASSWORD: ${{ secrets.WIN_CERT_PW }}
       working-directory: desktop
-    - run: npm run package:lnx
+    - name: Create Linux package
+      run: npm run package:lnx
       if: runner.os == 'Linux'
       working-directory: desktop

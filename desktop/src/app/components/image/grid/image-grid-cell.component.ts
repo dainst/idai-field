@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {ImageDocument} from 'idai-components-2';
+import {ImageDocument} from '@idai-field/core';
 
 @Component({
     selector: 'image-grid-cell',
@@ -28,6 +28,6 @@ export class ImageGridCellComponent {
             (Object.keys(this.resourceIdentifiers).length < 1)) {
             return undefined;
         }
-        return this.resourceIdentifiers[id as any];
+        return this.resourceIdentifiers[id];
     }
 }

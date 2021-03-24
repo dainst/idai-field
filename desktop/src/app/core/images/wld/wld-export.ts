@@ -1,4 +1,4 @@
-import {ImageDocument} from 'idai-components-2';
+import {ImageDocument} from '@idai-field/core';
 import {ExtensionUtil} from '../../util/extension-util';
 
 
@@ -6,7 +6,7 @@ export function downloadWldFile(imageDoc: ImageDocument) {
 
     const content = getWldFileContent(imageDoc);
     const fileName = ExtensionUtil.replaceExtension(imageDoc.resource.identifier, 'wld');
-    triggerDownload(content, fileName);    
+    triggerDownload(content, fileName);
 }
 
 
@@ -24,7 +24,7 @@ function getWldFileContent(imageDoc: ImageDocument): string {
 
     if (!imageDoc.resource.georeference)
         throw Error('No georefence present in the document');
-    
+
     let lines: number[] = [];
     const georef = imageDoc.resource.georeference;
     const width = imageDoc.resource.width - 1;

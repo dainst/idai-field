@@ -1,7 +1,6 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import {ImageDocument} from 'idai-components-2';
-import {FieldDocument} from '@idai-field/core';
+import {FieldDocument, ImageDocument} from '@idai-field/core';
 import {ImageGridComponent} from '../../image/grid/image-grid.component';
 import {ImageReadDatastore} from '../../../core/datastore/field/image-read-datastore';
 import {M} from '../../messages/m';

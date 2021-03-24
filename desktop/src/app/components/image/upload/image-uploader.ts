@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {Document, NewImageDocument} from 'idai-components-2';
+import {NewImageDocument} from '@idai-field/core';
+import {Document} from 'idai-components-2';
 import {ImageCategoryPickerModalComponent} from './image-category-picker-modal.component';
 import {UploadModalComponent} from './upload-modal.component';
 import {ExtensionUtil} from '../../../core/util/extension-util';
@@ -15,8 +16,6 @@ import {Imagestore} from '../../../core/images/imagestore/imagestore';
 import {IdaiFieldFindResult} from '../../../core/datastore/cached/cached-read-datastore';
 import {readWldFile} from '../../../core/images/wld/wld-import';
 import {MenuContext, MenuService} from '../../menu-service';
-import {SettingsProvider} from '../../../core/settings/settings-provider';
-
 
 export interface ImageUploadResult {
 

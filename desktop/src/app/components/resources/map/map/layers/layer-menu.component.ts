@@ -1,7 +1,7 @@
-import {Input, Output, EventEmitter, Renderer2, Component, ChangeDetectorRef, OnDestroy} from '@angular/core';
+import {Input, Output, EventEmitter, Renderer2, Component, ChangeDetectorRef} from '@angular/core';
 import {CdkDragDrop} from '@angular/cdk/drag-drop';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {ImageDocument} from 'idai-components-2';
+import {ImageDocument} from '@idai-field/core';
 import {LayerGroup, LayerManager} from './layer-manager';
 import {MenuComponent} from '../../../../widgets/menu.component';
 import {MenuContext, MenuService} from '../../../../menu-service';
@@ -126,7 +126,7 @@ export class LayerMenuComponent extends MenuComponent {
 
         const newLayers: Array<ImageDocument> = await this.selectNewLayers(group);
         if (newLayers.length === 0) return;
-        
+
         await this.layerManager.addLayers(newLayers);
 
         this.onAddOrRemoveLayers.emit();
@@ -136,7 +136,7 @@ export class LayerMenuComponent extends MenuComponent {
     public async removeLayer(layer: ImageDocument) {
 
         await this.layerManager.removeLayer(layer);
-        
+
         this.onAddOrRemoveLayers.emit();
     }
 

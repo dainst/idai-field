@@ -1,4 +1,4 @@
-import {ImageDocument} from 'idai-components-2';
+import {ImageDocument} from '@idai-field/core';
 import {ImageRow} from '../../../../../src/app/core/images/row/image-row';
 
 

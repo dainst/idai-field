@@ -1,4 +1,5 @@
-import {ImageDocument, Document} from 'idai-components-2';
+import {ImageDocument} from '@idai-field/core';
+import {Document} from 'idai-components-2';
 import {getSampleDocuments} from './sample-data';
 import {ImageConverter} from '../../../images/imagestore/image-converter';
 import {InitializationProgress} from '../../../initialization-progress';

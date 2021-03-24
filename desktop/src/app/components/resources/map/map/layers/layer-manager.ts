@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {flatten, set, subtract, to} from 'tsfun';
-import {ImageDocument, Document} from 'idai-components-2';
-import {FieldDocument} from '@idai-field/core';
+import {Document} from 'idai-components-2';
+import {FieldDocument, ImageDocument} from '@idai-field/core';
 import {ImageReadDatastore} from '../../../../../core/datastore/field/image-read-datastore';
 import {ViewFacade} from '../../../../../core/resources/view/view-facade';
 import {FieldReadDatastore} from '../../../../../core/datastore/field/field-read-datastore';

@@ -1,7 +1,7 @@
 import {ChangeDetectorRef, Component, Input, NgZone, SimpleChanges} from '@angular/core';
 import L from 'leaflet';
-import {ImageDocument, ImageGeoreference, Document} from 'idai-components-2';
-import {FieldDocument} from '@idai-field/core';
+import {Document} from 'idai-components-2';
+import {FieldDocument, ImageDocument, ImageGeoreference} from '@idai-field/core';
 import {LayerManager, ListDiffResult} from './layers/layer-manager';
 import {LayerImageProvider} from './layers/layer-image-provider';
 import {ProjectConfiguration} from '../../../../core/configuration/project-configuration';

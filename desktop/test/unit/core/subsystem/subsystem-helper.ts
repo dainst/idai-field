@@ -1,5 +1,6 @@
 import * as PouchDB from 'pouchdb-node';
-import {Document, ImageDocument, toResourceId} from 'idai-components-2';
+import {ImageDocument} from '@idai-field/core';
+import {Document, toResourceId} from 'idai-components-2';
 import {ImageDatastore} from '../../../../src/app/core/datastore/field/image-datastore';
 import {FieldDatastore} from '../../../../src/app/core/datastore/field/field-datastore';
 import {DocumentDatastore} from '../../../../src/app/core/datastore/document-datastore';

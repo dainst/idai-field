@@ -1,4 +1,4 @@
-import {ImageDocument} from 'idai-components-2';
+import {ImageDocument} from '@idai-field/core';
 import {LayerManager} from '../../../../../src/app/components/resources/map/map/layers/layer-manager';
 import {Static} from '../../../static';
 

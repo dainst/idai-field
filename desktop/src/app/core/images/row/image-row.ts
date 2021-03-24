@@ -1,4 +1,5 @@
-import {Document, ImageDocument} from 'idai-components-2';
+import {ImageDocument} from '@idai-field/core';
+import {Document} from 'idai-components-2';
 import {ImageWidthCalculator} from './image-width-calculator';
 
 

@@ -1,8 +1,8 @@
 import {Component} from '@angular/core';
 import {NgbActiveModal, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {on, is} from 'tsfun';
-import {Document, ImageDocument} from 'idai-components-2';
-import {FieldDocument} from '@idai-field/core'
+import {Document} from 'idai-components-2';
+import {FieldDocument, ImageDocument} from '@idai-field/core'
 import {ViewModalComponent} from '../view-modal.component';
 import {ImageReadDatastore} from '../../../core/datastore/field/image-read-datastore';
 import {RoutingService} from '../../routing-service';

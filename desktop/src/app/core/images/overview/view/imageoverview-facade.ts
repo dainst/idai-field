@@ -1,5 +1,5 @@
 import {equal} from 'tsfun';
-import {ImageDocument} from 'idai-components-2';
+import {ImageDocument} from '@idai-field/core';
 import {ImagesState} from './images-state';
 import {ImageDocumentsManager} from './image-documents-manager';
 import {clone} from '../../../util/object-util';

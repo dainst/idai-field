@@ -1,4 +1,5 @@
-import {Document, ImageResource} from 'idai-components-2';
+import {ImageResource} from '@idai-field/core';
+import {Document} from 'idai-components-2';
 import {BlobMaker} from '../imagestore/blob-maker';
 import {ImageContainer} from '../imagestore/image-container';
 

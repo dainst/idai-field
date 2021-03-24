@@ -2,7 +2,7 @@ import {Component, ElementRef, Input, OnChanges, ViewChild, EventEmitter, Output
 import {SafeResourceUrl} from '@angular/platform-browser';
 import {to} from 'tsfun';
 import {reduce as asyncReduce} from 'tsfun/async';
-import {ImageDocument} from 'idai-components-2';
+import {ImageDocument} from '@idai-field/core';
 import {ImageRow, ImageRowItem, ImageRowUpdate, PLACEHOLDER} from '../../../core/images/row/image-row';
 import {ReadImagestore} from '../../../core/images/imagestore/read-imagestore';
 import {ImageReadDatastore} from '../../../core/datastore/field/image-read-datastore';

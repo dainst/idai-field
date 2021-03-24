@@ -1,0 +1,11 @@
+import {Document} from 'idai-components-2';
+import {ImageResource} from './image-resource';
+
+/**
+ * @author Daniel de Oliveira
+ */
+export interface ImageDocument extends Document {
+
+    id?: string;
+    resource: ImageResource;
+}

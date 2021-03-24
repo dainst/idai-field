@@ -1,4 +1,4 @@
-import {ImageDocument} from 'idai-components-2';
+import {ImageDocument} from '@idai-field/core';
 import * as PouchDB from 'pouchdb-node';
 import {createApp, setupSyncTestDb} from '../subsystem-helper';
 import {CachedDatastore} from '../../../../../src/app/core/datastore/cached/cached-datastore';
@@ -13,7 +13,6 @@ import {Static} from '../../../static';
  *
  * @author Daniel de Oliveira
  */
-
 describe('ImageOverviewFacade/Subsystem', () => {
 
     let imageOverviewFacade: ImageOverviewFacade;

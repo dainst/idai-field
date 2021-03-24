@@ -20,8 +20,8 @@
     },
     "devDependencies": {
         "typescript": "~3.8.3",
-        "@types/jasmine": "2.5.41",
+        "@types/jasmine": "3.5.0",
         "jasmine": "2.5.2",
-        "jasmine-core": "2.5.2"
+        "jasmine-core": "~3.5.0"
     }
 }

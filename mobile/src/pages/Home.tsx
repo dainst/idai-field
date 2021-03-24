@@ -5,8 +5,8 @@ import { listOperations, setupDB, setupReplication } from '../pouchdb-service';
 import { Map } from 'ol';
 import olms from 'ol-mapbox-style';
 import {
-    IonPage, 
-    IonHeader, 
+    IonPage,
+    IonHeader,
     IonToolbar,
     IonButtons,
     IonMenuButton,
@@ -56,7 +56,7 @@ export default function Home(): ReactElement {
             .then(() => loadOperations(db))
             .catch(() => setSyncStatus('sync error'));
         }
-    }, [db, remoteUser, remotePassword])
+    }, [db, remoteUser, remotePassword]);
 
     const loadOperations = (db?: PouchDB.Database) => {
 
@@ -64,7 +64,7 @@ export default function Home(): ReactElement {
           setOperations([]);
           listOperations(db).then(setOperations);
         }
-    }
+    };
 
     const settingsSaved = (dbName: string, remoteUser: string, remotePassword: string) => {
 
@@ -72,16 +72,16 @@ export default function Home(): ReactElement {
         setRemoteUser(remoteUser);
         setRemotePassword(remotePassword);
         setShowSettings(false);
-    }
+    };
 
     return (
         <>
-        <ProjectSettingsModal show={ showSettings } settingsSavedClickHandler={ settingsSaved }/>
-        <SideDraw 
-            operations={operations}
-            syncStatus={syncStatus}
-            loadOperations={loadOperations}
-            db={db}/>
+        <ProjectSettingsModal show={ showSettings } settingsSavedClickHandler={ settingsSaved } />
+        <SideDraw
+            operations={ operations }
+            syncStatus={ syncStatus }
+            loadOperations={ loadOperations }
+            db={ db } />
         <IonPage>
             <IonHeader>
                 <IonToolbar>
@@ -101,10 +101,10 @@ export default function Home(): ReactElement {
             </IonContent>
       </IonPage>
       </>
-    )
+    );
 }
 
-const createMap = (): Map => 
+const createMap = (): Map =>
   olms('ol-map', 'https://api.mapbox.com/styles/v1/sebastiancuy/ckff2undp0v1o19mhucq9oycb?access_token=' + MAPBOX_KEY);
 
 

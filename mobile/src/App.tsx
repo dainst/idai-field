@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { IonApp, IonRouterOutlet } from '@ionic/react';
 
 /* Core CSS required for Ionic components to work properly */
@@ -19,7 +19,7 @@ import '@ionic/react/css/display.css';
 import Home from './pages/Home';
 
 
-export default function App() {
+export default function App(): ReactElement {
 
   return (
     <IonApp>

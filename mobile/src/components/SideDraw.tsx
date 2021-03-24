@@ -1,17 +1,17 @@
-import React, {ReactElement} from 'react';
+import React, { ReactElement } from 'react';
 import { refresh } from 'ionicons/icons';
 import {
-    IonMenu, 
-    IonHeader, 
-    IonContent, 
+    IonMenu,
+    IonHeader,
+    IonContent,
     IonList,
     IonItem,
     IonLabel,
     IonToolbar,
     IonTitle,
-    IonButtons, 
+    IonButtons,
     IonButton,
-    IonIcon } from '@ionic/react'
+    IonIcon } from '@ionic/react';
 
 interface SideDrawProps {
     operations: any[];
@@ -20,9 +20,9 @@ interface SideDrawProps {
     db: PouchDB.Database;
 }
 
-export default function SideDraw({operations, syncStatus, loadOperations, db}: SideDrawProps): ReactElement {
+export default function SideDraw({ operations, syncStatus, loadOperations, db }: SideDrawProps): ReactElement {
 
-    const renderToolbar = () => 
+    const renderToolbar = () =>
         <IonToolbar>
             <IonTitle>Status: { syncStatus }</IonTitle>
             <IonButtons slot="primary">
@@ -41,17 +41,17 @@ export default function SideDraw({operations, syncStatus, loadOperations, db}: S
                 { operations?.length ? renderOperations(operations) : 'No operations found' }
             </IonContent>
       </IonMenu>
-    )
+    );
 }
 
 
 const renderOperations = (operations: any[]) =>
     <IonList>
         { operations.map(renderOperation) }
-    </IonList>
+    </IonList>;
 
 
-const renderOperation = (operation: any) => 
+const renderOperation = (operation: any) =>
     <IonItem key={ operation.resource.id }>
         <IonLabel>
         { operation.resource.identifier } - { operation.resource.shortDescription }

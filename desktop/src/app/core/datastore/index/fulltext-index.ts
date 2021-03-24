@@ -42,7 +42,7 @@ export module FulltextIndex {
             filter((field: any) => document.resource[field] !== ''),
             map(lookup_a(document.resource)),
             flatMap(split(tokenizationPattern)),
-            map((s: string) => s.toLowerCase()),
+            map(_ => _.toLowerCase()),
             map(toArray),
             forEach(indexToken(index, document)));
     }

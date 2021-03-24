@@ -30,7 +30,7 @@ import {Updater} from './import/updater';
 
 export type ImporterFormat = 'native' | 'geojson' | 'geojson-gazetteer' | 'shapefile' | 'csv' | 'catalog';
 
-export type ImporterReport = { errors: any[], successfulImports: number };
+export type ImporterReport = { errors: any[], successfulImports: number, ignoredIdentifiers: string[] };
 
 
 export interface ImporterOptions {
@@ -98,7 +98,7 @@ export module Importer {
         if (options.format === 'catalog') { // TODO test manually
             const { errors, successfulImports } = 
                 await (buildImportCatalog(services, context.settings))(documents);
-            return { errors: errors, successfulImports: successfulImports };
+            return { errors: errors, successfulImports: successfulImports, ignoredIdentifiers: [] };
         }
 
         const operationCategoryNames = ProjectCategories.getOverviewCategoryNames(context.projectConfiguration.getCategoryTreelist()).filter(isnt('Place'));
@@ -139,7 +139,7 @@ export module Importer {
         }
 
         const [error, result] = await importFunction(documents);
-        if (error !== undefined) return { errors: [error], successfulImports: 0 };
+        if (error !== undefined) return { errors: [error], successfulImports: 0, ignoredIdentifiers: [] };
         
         try {
             await Updater.go(
@@ -147,9 +147,13 @@ export module Importer {
                 result.updateDocuments.concat(result.targetDocuments),
                 services.datastore,
                 context.settings.username);
-            return { errors: [], successfulImports: result.createDocuments.concat(result.updateDocuments).length };
+            return {
+                errors: [],
+                successfulImports: result.createDocuments.concat(result.updateDocuments).length,
+                ignoredIdentifiers: result.ignoredIdentifiers
+            };
         } catch (errWithParams) {
-            return { errors: [errWithParams], successfulImports: 0 }; // TODO review length
+            return { errors: [errWithParams], successfulImports: 0, ignoredIdentifiers: [] }; // TODO review length
         }
     }
 

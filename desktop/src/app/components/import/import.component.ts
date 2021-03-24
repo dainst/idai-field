@@ -50,6 +50,7 @@ export class ImportComponent implements OnInit {
     public operations: Array<Document> = [];
     public javaInstalled: boolean = true;
     public running: boolean = false;
+    public ignoredIdentifiers: string[] = [];
 
     public readonly allowedFileExtensions: string = '.csv, .jsonl, .geojson, .json, .shp, .catalog';
 
@@ -242,7 +243,10 @@ export class ImportComponent implements OnInit {
         uploadModalRef.close();
         this.menuService.setContext(MenuContext.DEFAULT);
 
-        if (importReport) this.showImportResult(importReport);
+        if (importReport) {
+            this.ignoredIdentifiers = importReport.ignoredIdentifiers;
+            this.showImportResult(importReport);
+        }
     }
 
 

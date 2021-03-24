@@ -3,7 +3,7 @@ const {notarize} = require('electron-notarize');
 
 exports.default = async function performNotarization(context) {
 
-    //return; // comment out to enable notarization
+    if (!process.env.MAC_NOTARIZE === 'true') return;
 
     const { electronPlatformName, appOutDir } = context;
     if (electronPlatformName !== 'darwin') return;
@@ -13,8 +13,8 @@ exports.default = async function performNotarization(context) {
     return await notarize({
         appBundleId: 'org.dainst.field',
         appPath: `${appOutDir}/${appName}.app`,
-        appleId: process.env.NOTARIZATION_AID,
-        appleIdPassword: process.env.NOTARIZATION_PWD,
-        ascProvider: process.env.NOTARIZATION_TID
+        appleId: process.env.MAC_NOTARIZE_AID,
+        appleIdPassword: process.env.MAC_NOTARIZE_PW,
+        ascProvider: process.env.MAC_NOTARIZE_TID
     });
 };

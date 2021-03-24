@@ -65,7 +65,6 @@ export class ExportComponent implements OnInit {
                 private modalService: NgbModal,
                 private messages: Messages,
                 private i18n: I18n,
-                private viewFacade: ViewFacade,
                 private fieldDatastore: FieldReadDatastore,
                 private documentDatastore: DocumentReadDatastore,
                 private tabManager: TabManager,

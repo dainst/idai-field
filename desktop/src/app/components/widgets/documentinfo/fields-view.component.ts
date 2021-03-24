@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import {DecimalPipe} from '@angular/common';
 import {isBoolean, isArray, isObject, filter, compose, Mapping, on, isDefined, map, flatten, to, pairWith,
-    RIGHT, LEFT, update_a, lookup_a} from 'tsfun';
+    RIGHT, LEFT, update_a, lookup} from 'tsfun';
 import {AsyncMapping, flow as asyncFlow, map as asyncMap} from 'tsfun/async';
 import {Resource, Dating, Dimension, Literature, OptionalRange} from 'idai-components-2';
 import {FieldDocument, namedArrayToNamedMap, Named} from '@idai-field/core';
@@ -128,7 +128,7 @@ export class FieldsViewComponent implements OnChanges {
     private putActualResourceFieldsIntoGroups(resource: Resource): Mapping {
 
         const fieldContent: Mapping<FieldDefinition, FieldContent>
-            = compose(to(Named.NAME), lookup_a(resource));
+            = compose(to(Named.NAME), lookup(resource));
 
         return map(
             update_a(Group.FIELDS,

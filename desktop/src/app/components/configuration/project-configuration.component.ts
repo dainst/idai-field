@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {to, on, is, isnt, includedIn, or, any, compose, map, Predicate, longerThan} from 'tsfun';
-import {FieldResource} from '@idai-field/core';
+import {FieldResource, Named} from '@idai-field/core';
 import {ProjectConfiguration} from '../../core/configuration/project-configuration';
 import {Category} from '../../core/configuration/model/category';
 import {Group} from '../../core/configuration/model/group';
@@ -8,7 +8,6 @@ import {FieldDefinition} from '../../core/configuration/model/field-definition';
 import {ValuelistDefinition} from '../../core/configuration/model/valuelist-definition';
 import {ValuelistUtil} from '../../core/util/valuelist-util';
 import {TabManager} from '../../core/tabs/tab-manager';
-import {Named} from '../../core/util/named';
 import {RelationDefinition} from '../../core/configuration/model/relation-definition';
 import {TypeRelations} from '../../core/model/relation-constants';
 import {MenuContext, MenuService} from '../menu-service';

@@ -4,7 +4,7 @@ import {isBoolean, isArray, isObject, filter, compose, Mapping, on, isDefined, m
     RIGHT, LEFT, update_a, lookup_a} from 'tsfun';
 import {AsyncMapping, flow as asyncFlow, map as asyncMap} from 'tsfun/async';
 import {Resource, Dating, Dimension, Literature, OptionalRange} from 'idai-components-2';
-import {FieldDocument} from '@idai-field/core';
+import {FieldDocument, namedArrayToNamedMap, Named} from '@idai-field/core';
 import {RoutingService} from '../../routing-service';
 import {Name} from '../../../core/constants';
 import {UtilTranslations} from '../../../core/util/util-translations';
@@ -13,7 +13,6 @@ import {FieldDefinition} from '../../../core/configuration/model/field-definitio
 import {Group, Groups} from '../../../core/configuration/model/group';
 import {FieldsViewField, FieldsViewGroup, FieldsViewUtil} from '../../../core/util/fields-view-util';
 import {RelationDefinition} from '../../../core/configuration/model/relation-definition';
-import {Named, namedArrayToNamedMap} from '../../../core/util/named';
 import shouldBeDisplayed = FieldsViewUtil.shouldBeDisplayed;
 import {ReadDatastore} from '../../../core/datastore/model/read-datastore';
 import {ValuelistUtil} from '../../../core/util/valuelist-util';

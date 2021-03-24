@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {to} from 'tsfun';
-import {FieldDocument} from '@idai-field/core';
+import {FieldDocument, Named} from '@idai-field/core';
 import {M} from '../messages/m';
 import {ExportModalComponent} from './export-modal.component';
 import {ModelUtil} from '../../core/model/model-util';
@@ -27,7 +27,6 @@ import {SettingsProvider} from '../../core/settings/settings-provider';
 import {RelationsManager} from '../../core/model/relations-manager';
 import {ImageRelationsManager} from '../../core/model/image-relations-manager';
 import {ERROR_NOT_ALL_IMAGES_EXCLUSIVELY_LINKED} from '../../core/export/catalog/get-export-documents';
-import {Named} from '../../core/util/named';
 
 const remote = typeof window !== 'undefined' ? window.require('electron').remote : require('electron').remote;
 

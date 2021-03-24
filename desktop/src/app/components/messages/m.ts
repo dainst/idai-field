@@ -453,7 +453,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         };
         this.msgs[M.IMPORT_WARNING_IGNORED_MISSING_IDENTIFIER] = {
             content: i18n({
-                id: 'messages.import.warning.ignoredMissingIdentifiers',
+                id: 'messages.import.warning.ignoredMissingIdentifier',
                 value: 'Die Ressource \'[0]\' wurde nicht importiert, weil keine Ressource mit dem Bezeichner gefunden wurde.'
             }),
             level: 'warning',

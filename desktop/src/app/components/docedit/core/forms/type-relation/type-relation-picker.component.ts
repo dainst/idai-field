@@ -242,10 +242,10 @@ export class TypeRelationPickerComponent {
     private static getConfiguredCriteria(typeCatalogCategory: Category): Array<Criterion> {
 
         const identificationGroup: Group = typeCatalogCategory.groups
-            .find(onName(is('identification'))) as Group;
+            .find(onName(is('identification')));
 
         const criterionField: FieldDefinition = identificationGroup.fields
-            .find(onName(is('criterion'))) as FieldDefinition;
+            .find(onName(is('criterion')));
 
         const valuelist: ValuelistDefinition = (criterionField.valuelist as ValuelistDefinition);
 

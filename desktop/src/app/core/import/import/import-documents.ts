@@ -125,8 +125,8 @@ async function importDocuments(services: ImportServices,
             context.inverseRelationsMap,
             options
         );
-        const postprocessedDocuments: Array<Document> = processedDocuments.map(helpers.postprocessDocument);
-        const ignoredIdentifiers: string[] = documentsToIgnore.map(document => document.resource.identifier);
+        const postprocessedDocuments = processedDocuments.map(helpers.postprocessDocument);
+        const ignoredIdentifiers = documentsToIgnore.map(_ => _.resource.identifier);
 
         return options.mergeMode === true
             ? [undefined, {

@@ -114,7 +114,7 @@ async function rewriteIdentifiersInRelations(relations: Relations,
                                              existingDocuments: Map<Document>,
                                              identifierMap: IdentifierMap) {
 
-    return iterateRelationsInImport(relations, (relation: string) => async (identifier: Identifier, i: number) => {
+    return iterateRelationsInImport(relations, async (relation: string, identifier: Identifier, i: number) => {
         if (identifierMap[identifier]) {
             relations[relation][i] = identifierMap[identifier];
         } else {
@@ -129,8 +129,7 @@ async function rewriteIdentifiersInRelations(relations: Relations,
 async function assertNoMissingRelationTargets(relations: Relations, get: Get) {
 
     return iterateRelationsInImport(relations,
-        (_: never) => async (id: Id, _: never) => {
-
+        async (_: never, id: Id, __: never) => {
             try { await get(id) }
             catch { throw [E.PREVALIDATION_MISSING_RELATION_TARGET, id] }
         });

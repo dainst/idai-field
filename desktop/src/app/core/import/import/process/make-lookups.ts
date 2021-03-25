@@ -4,7 +4,7 @@ import {ResourceId} from '../../../constants';
 import {makeDocumentsLookup} from '../utils';
 import {reduce as asyncReduce} from 'tsfun/async';
 import {compose, lookup, map, flatten, flow, isDefined, Pair, remove, subtract, union} from 'tsfun';
-import {forEach as asyncForEach} from 'tsfun/src/async';
+import {map as aMap} from 'tsfun/src/async';
 import {clone} from '../../../util/object-util';
 import {ImportErrors as E} from '../import-errors';
 
@@ -30,33 +30,33 @@ export async function makeLookups(documents: Array<Document>,
 
 function getTargetDocuments(get: (_: string) => Promise<Document>) {
 
-    return async (targetDocumentsMap: { [_: string]: Document },
+    return async (documentsById: Lookup<Document>,
                   targetDocIdsPair: Pair<ResourceId[]>) => {
 
         const targetDocIds = union(targetDocIdsPair);
 
-        await asyncForEach(
+        await aMap(
+            targetDocIds,
             async (targetId: ResourceId) => {
-
-                if (!targetDocumentsMap[targetId]) try {
-                    targetDocumentsMap[targetId] = clone(await get(targetId));
+                if (!documentsById[targetId]) try {
+                    documentsById[targetId] = clone(await get(targetId));
                 } catch {
                     throw [E.MISSING_RELATION_TARGET, targetId];
                 }
-            })(targetDocIds);
-        return targetDocumentsMap;
+            });
+        return documentsById;
     }
 }
 
 
 function getTargetIds(mergeMode: boolean,
                       get: (_: string) => Promise<Document>,
-                      importDocumentsLookup: { [_: string]: Document }) {
+                      documentsById: Lookup<Document>) {
 
     return async (targetIdsMap: { [_: string]: [ResourceId[], ResourceId[]] },
                   document: Document) => {
 
-        let targetIds = targetIdsReferingToDbResources(document, importDocumentsLookup);
+        let targetIds = targetIdsReferingToDbResources(document, documentsById);
         if (mergeMode) {
             let oldVersion;
             try {
@@ -67,7 +67,7 @@ function getTargetIds(mergeMode: boolean,
             targetIdsMap[document.resource.id] = [
                 targetIds,
                 subtract<ResourceId>(targetIds)(
-                    targetIdsReferingToDbResources(oldVersion, importDocumentsLookup)
+                    targetIdsReferingToDbResources(oldVersion, documentsById)
                 )
             ];
         } else {
@@ -79,11 +79,11 @@ function getTargetIds(mergeMode: boolean,
 }
 
 
-function targetIdsReferingToDbResources(document: Document, documentsLookup: { [_: string]: Document }) {
+function targetIdsReferingToDbResources(document: Document, documentsLookup: Lookup<Document>) {
 
     return flow(
         document.resource.relations,
         Object.values,
         flatten(),
-        remove(compose(lookup(documentsLookup), isDefined)));
+        remove(compose(lookup(documentsLookup), isDefined))) as any/* TODO review any*/;
 }

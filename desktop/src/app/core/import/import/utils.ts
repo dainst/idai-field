@@ -1,5 +1,5 @@
 import {arrayEqual, to, isNot, on, undefinedOrEmpty, union} from 'tsfun';
-import {forEach as asyncForEach} from 'tsfun/async';
+import {map as aMap} from 'tsfun/async';
 import {Document, Relations} from 'idai-components-2';
 import {ImportErrors as E} from './import-errors';
 import {HierarchicalRelations} from '../../model/relation-constants';
@@ -32,10 +32,15 @@ export function assertInSameOperationWith(document: Document) { return (targetDo
 
 export async function iterateRelationsInImport(
     relations: Relations,
-    asyncIterationFunction: (relation: string) => (idOrIdentifier: Id|Identifier, i: number) => Promise<void>): Promise<void> {
+    asyncIterationFunction: (relation: string, idOrIdentifier: Id|Identifier, i: number) => Promise<void>): Promise<void> {
 
     for (let relation of Object.keys(relations)) {
         if (relations[relation] === null) continue;
-        await asyncForEach(asyncIterationFunction(relation))(relations[relation]);
+        await aMap(
+            relations[relation],
+            async (idOrIdentifier, i) => {
+                await asyncIterationFunction(relation, idOrIdentifier, i);
+            }
+        );
     }
 }

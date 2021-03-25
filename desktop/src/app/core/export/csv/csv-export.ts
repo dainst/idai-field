@@ -1,5 +1,5 @@
 import {flow, includedIn, isDefined, isNot, isnt, to, map, cond, join,
-    dense, compose, remove} from 'tsfun';
+    dense, compose, remove, Associative} from 'tsfun';
 import {Resource} from 'idai-components-2';
 import {FieldResource} from '@idai-field/core';
 import {HierarchicalRelations} from '../../model/relation-constants';
@@ -19,7 +19,7 @@ export module CSVExport {
 
     const SEPARATOR = ',';
 
-    const getUsableFieldNames =
+    const getUsableFieldNames: <T>(a: Associative<T>) => string[] = /* TODO review explicit typing */
         remove(includedIn(
             ['id', 'category', 'geometry', 'georeference', 'originalFilename', 'filename', 'featureVectors']));
 
@@ -85,7 +85,7 @@ export module CSVExport {
 
     function extractExportableFields(fieldDefinitions: Array<FieldDefinition>): string[] {
 
-        let fieldNames = getUsableFieldNames(fieldDefinitions.map(to(FieldDefinition.NAME)));
+        let fieldNames = getUsableFieldNames(fieldDefinitions.map(_ => _.name));
         const indexOfShortDescription = fieldNames.indexOf(FieldResource.SHORTDESCRIPTION);
         if (indexOfShortDescription !== -1) {
             fieldNames.splice(indexOfShortDescription, 1);

@@ -170,7 +170,7 @@ function getDocumentsToImport(existingDocumentsMap: Map<Document>,
                               options: ImportOptions,
                               documents: Array<Document>)
         : { documentsToImport: Array<Document>, documentsToIgnore: Array<Document> } {
-        
+
     const existingDocuments: Array<Document> = documents.filter(document => {
         return existingDocumentsMap[document.resource.identifier] !== undefined;
     });

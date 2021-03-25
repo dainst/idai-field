@@ -3,7 +3,7 @@ import {FieldResource, Labelled, Named} from '@idai-field/core';
 import {ValuelistDefinition} from '../configuration/model/valuelist-definition';
 import {ValuelistUtil} from './valuelist-util';
 import {compose, flow, update_a, lookup, and, includedIn, isNot, filter, Filter, map, isString, Map, on, to, undefinedOrEmpty,
-    Predicate, or, is, empty, equalTo} from 'tsfun';
+    Predicate, or, is, empty, equal} from 'tsfun';
 import {RelationDefinition} from '../configuration/model/relation-definition';
 import {HierarchicalRelations, ImageRelations} from '../model/relation-constants';
 import {Category} from '../configuration/model/category';
@@ -71,8 +71,8 @@ export module FieldsViewUtil {
             on(Named.NAME,
                 and(
                     isNot(includedIn(HierarchicalRelations.ALL)),
-                    isNot(equalTo(ImageRelations.ISDEPICTEDIN)),
-                    isNot(equalTo(ImageRelations.HASMAPLAYER)),
+                    isNot(equal(ImageRelations.ISDEPICTEDIN)),
+                    isNot(equal(ImageRelations.HASMAPLAYER)),
                     compose(lookup(resource.relations), isNot(undefinedOrEmpty))
                 )
             )

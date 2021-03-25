@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import {DecimalPipe} from '@angular/common';
 import {isBoolean, isArray, isObject, filter, compose, Mapping, on, isDefined, map, flatten, to, pairWith,
     RIGHT, LEFT, update_a, lookup} from 'tsfun';
-import {AsyncMapping, flow as asyncFlow, map as asyncMap} from 'tsfun/async';
+import {flow as aFlow, map as aMap} from 'tsfun/async';
 import {Resource, Dating, Dimension, Literature, OptionalRange} from 'idai-components-2';
 import {FieldDocument, namedArrayToNamedMap, Named} from '@idai-field/core';
 import {RoutingService} from '../../routing-service';
@@ -16,7 +16,7 @@ import {RelationDefinition} from '../../../core/configuration/model/relation-def
 import shouldBeDisplayed = FieldsViewUtil.shouldBeDisplayed;
 import {ReadDatastore} from '../../../core/datastore/model/read-datastore';
 import {ValuelistUtil} from '../../../core/util/valuelist-util';
-import { clone } from '../../../core/util/object-util';
+import {clone} from '../../../core/util/object-util';
 
 
 type FieldContent = any;
@@ -57,7 +57,7 @@ export class FieldsViewComponent implements OnChanges {
 
         if (!this.resource) return;
 
-        this.groups = await asyncFlow(
+        this.groups = await aFlow(
             FieldsViewUtil.getGroups(this.resource.category, namedArrayToNamedMap(this.projectConfiguration.getCategoriesArray())),
             await this.putActualResourceRelationsIntoGroups(this.resource),
             this.putActualResourceFieldsIntoGroups(this.resource),
@@ -164,14 +164,14 @@ export class FieldsViewComponent implements OnChanges {
     }
 
 
-    private putActualResourceRelationsIntoGroups(resource: Resource): AsyncMapping {
+    private putActualResourceRelationsIntoGroups(resource: Resource) {
 
-        return ($: any) => asyncMap(async (group: any /* ! modified in place ! */) => {
+        return ($: any) => aMap(async (group: any /* ! modified in place ! */) => {
 
-            group.relations = await asyncFlow(
+            group.relations = await aFlow(
                 group.relations,
                 FieldsViewUtil.filterRelationsToShowFor(resource),
-                asyncMap(async (relation: RelationDefinition) => {
+                aMap(async (relation: RelationDefinition) => {
                     return {
                         label: relation.label,
                         targets: await this.datastore.getMultiple(resource.relations[relation.name])

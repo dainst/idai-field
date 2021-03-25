@@ -138,7 +138,6 @@ export class ImportComponent implements OnInit {
         this.importState.file = undefined;
         this.importState.format = undefined;
         this.importState.url = undefined;
-        this.importState.differentialImport = false;
         this.importState.mergeMode = false;
         this.importState.permitDeletions = false;
     }
@@ -187,10 +186,6 @@ export class ImportComponent implements OnInit {
                 ? this.importState.file.name
                 : this.importState.url
         );
-
-        if (this.importState.format === 'csv' || this.importState.format === 'native') {
-            this.importState.differentialImport = true;
-        }
     }
 
 
@@ -310,7 +305,7 @@ export class ImportComponent implements OnInit {
     private showIgnoredIdentifiersWarning(ignoredIdentifiers: string[]) {
 
         this.messages.add([
-            this.importState.mergeMode
+            (this.importState.mergeMode || ['geojson', 'shapefile'].includes(this.importState.format))
                 ? ignoredIdentifiers.length === 1
                     ? M.IMPORT_WARNING_IGNORED_MISSING_IDENTIFIER
                     : M.IMPORT_WARNING_IGNORED_MISSING_IDENTIFIERS

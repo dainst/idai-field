@@ -506,9 +506,9 @@ describe('Import/Subsystem', () => {
     });
 
 
-    it('unmatched items on merge', async done => {
+    it('ignore unmatched items on merge', async done => {
 
-        await datastore.create({ resource: { identifier: 'f1', category: 'Feature', shortDescription: 'feature1', relations: { isRecordedIn: ['a'] } } });
+        await datastore.create({ resource: { identifier: 'f1', category: 'Feature', shortDescription: 'feature1', relations: {} } });
 
         const importReport = await parseAndImport(
             {
@@ -523,11 +523,9 @@ describe('Import/Subsystem', () => {
                 + '{ "category": "Feature", "identifier" : "notexisting", "shortDescription" : "feature_2" }'
         );
 
-        expect(importReport.errors.length).toBe(1);
-        expect(importReport.errors[0][0]).toEqual(ImportErrors.UPDATE_TARGET_NOT_FOUND);
         const result = await datastore.find({});
         expect(result.documents.length).toBe(1);
-        expect(result.documents[0].resource.shortDescription).toBe('feature1'); // nothing gets updated at all
+        expect(result.documents[0].resource.shortDescription).toBe('feature_1');
         done();
     });
 
@@ -578,7 +576,7 @@ describe('Import/Subsystem', () => {
     });
 
 
-    it('differentialImport', async done => {
+    it('ignore already existing documents', async done => {
 
         await create({
             id: 'tr1', identifier: 'trench1', category: 'Trench',
@@ -591,7 +589,6 @@ describe('Import/Subsystem', () => {
                 sourceType: '',
                 format: 'native',
                 mergeMode: false,
-                differentialImport: true,
                 permitDeletions: false,
                 selectedOperationId: ''
             },
@@ -607,7 +604,7 @@ describe('Import/Subsystem', () => {
     });
 
 
-    it('differentialImport - handle broken relation', async done => {
+    it('handle broken relation', async done => {
 
         // Let's assume a previous import from the same import file has been interrupted,
         // such that only feature1 has been imported.
@@ -641,7 +638,6 @@ describe('Import/Subsystem', () => {
                 sourceType: '',
                 format: 'native',
                 mergeMode: false,
-                differentialImport: true,
                 permitDeletions: false,
                 selectedOperationId: 'tr1'
             },

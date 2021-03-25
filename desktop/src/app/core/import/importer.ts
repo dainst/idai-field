@@ -37,7 +37,6 @@ export interface ImporterOptions {
 
     format: ImporterFormat,
     mergeMode: boolean,
-    differentialImport?: true,
     permitDeletions: boolean;
     selectedOperationId: string;
     selectedCategory?: Category|undefined;
@@ -131,7 +130,6 @@ export module Importer {
                     { generateId, preprocessDocument, postprocessDocument },
                     {
                         mergeMode: options.mergeMode,
-                        differentialImport: options.differentialImport,
                         permitDeletions: options.permitDeletions,
                         operationId: options.selectedOperationId,
                         useIdentifiersInRelations: true

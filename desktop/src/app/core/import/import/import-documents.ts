@@ -21,7 +21,6 @@ export interface ImportOptions {
     permitDeletions?: boolean;
     operationId?: string;
     useIdentifiersInRelations?: boolean;
-    differentialImport?: true;
 }
 
 
@@ -171,8 +170,6 @@ function getDocumentsToImport(existingDocumentsMap: Map<Document>,
                               options: ImportOptions,
                               documents: Array<Document>)
         : { documentsToImport: Array<Document>, documentsToIgnore: Array<Document> } {
-
-    if (!options.differentialImport) return { documentsToImport: documents, documentsToIgnore: [] };
         
     const existingDocuments: Array<Document> = documents.filter(document => {
         return existingDocumentsMap[document.resource.identifier] !== undefined;

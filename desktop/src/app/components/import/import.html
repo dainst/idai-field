@@ -14,7 +14,7 @@
 
         <div class="row">
             <div class="form-group col default-container">
-                <div class="col-lg-6 mx-lg-auto py-4">
+                <div *ngIf="ignoredIdentifiers.length < 2" class="col-lg-6 mx-lg-auto py-4">
                     <div class="form-group">
                         <label class="control-label col-form-label" for="importSourceSelect"
                                i18n="@@import.source">Quelle</label>
@@ -194,16 +194,21 @@
                         Bezeichner (Feld <em>identifier</em>). Datensätze im Shapefile, die nicht zugeordnet
                         werden können, werden ignoriert.
                     </div>
-                    <div *ngIf="ignoredIdentifiers.length > 1">
-                        <div class="card bg-light">
-                            <div class="card-header" i18n="@@import.nonImportedResources">Nicht importierte Ressourcen</div>
-                            <div class="card-body">
-                                <div *ngFor="let identifier of ignoredIdentifiers">
-                                    {{identifier}}
-                                </div>
+                </div>
+                <div *ngIf="ignoredIdentifiers.length > 1" class="col-lg-6 mx-lg-auto py-4">
+                    <div class="card bg-light">
+                        <div class="card-header" i18n="@@import.nonImportedResources">Nicht importierte Ressourcen</div>
+                        <div id="ignored-identifiers" class="card-body">
+                            <div *ngFor="let identifier of ignoredIdentifiers">
+                                {{identifier}}
                             </div>
                         </div>
                     </div>
+                    <button id="back-to-import-button"
+                            class="btn btn-secondary"
+                            (click)="ignoredIdentifiers = []">
+                        <span class="button-label" i18n="@@buttons.back">Zurück</span>
+                    </button>
                 </div>
             </div>
         </div>

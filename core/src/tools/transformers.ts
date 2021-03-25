@@ -27,5 +27,5 @@ export function addKeyAsProp<A extends Map>(prop: string) {
 
 export function mapToArray(prop: string) {
 
-    return compose(addKeyAsProp(prop), Object.values);
+    return compose(addKeyAsProp(prop) as any, Object.values);
 }

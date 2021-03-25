@@ -35,7 +35,7 @@ export module CsvParser {
         return (content: string) => {
 
             try {
-                return Promise.resolve(doParse(category, content, separator));
+                return Promise.resolve(doParse(category, content, separator) as any /* TODO review typing*/);
             } catch (msgWithParams) {
                 return Promise.reject(msgWithParams);
             }

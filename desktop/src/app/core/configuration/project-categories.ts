@@ -82,7 +82,7 @@ export /* package-private */ module ProjectCategories {
             flattenTree,
             remove(onName(is('Operation'))), // TODO review why we do remove this here but not in getOverviewCategoryNames, compare also getOverviewToplevelCategories
             map(toName)
-        );
+        ) as any /* TODO review any*/;
     }
 
 
@@ -92,7 +92,7 @@ export /* package-private */ module ProjectCategories {
             filterTrees('Operation', 'Place'),
             flattenTree,
             filter(onName(includedIn(['Operation', 'Place'])))
-        ) as any /* TODO review */;
+        ) as any /* TODO review any*/;
     }
 
 

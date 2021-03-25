@@ -51,7 +51,7 @@ export function getSortedIds(indexItems: Array<IndexItem>, query: Query): Array<
         rankEntries,
         handleExactMatchIfQuerySaysSo,
         map(to(Resource.ID))
-    );
+    ) as any /* TODO review any*/;
 }
 
 

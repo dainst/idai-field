@@ -27,14 +27,14 @@ export function makeCategoryTreeList(categories: any): TreeList<Category> {
         parentDefs,
         map(buildCategoryFromDefinition),
         map(update(TEMP_FIELDS, ifUndefinedSetGroupTo(Groups.PARENT))),
-        mapToNamedArray,
+        mapToNamedArray as any /* TODO review any*/,
         map(category => ({ item: category, trees: []}))
     );
 
     return flow(
         childDefs,
         values,
-        reduce(addChildCategory, parentCategories),
+        reduce(addChildCategory, parentCategories as any/* TODO review any*/),
         mapTreeList(fillGroups),
         mapTreeList(dissoc(TEMP_FIELDS)),
         linkParentAndChildInstances

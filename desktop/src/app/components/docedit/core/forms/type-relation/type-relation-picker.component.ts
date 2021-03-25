@@ -175,7 +175,7 @@ export class TypeRelationPickerComponent {
             await this.fieldDatastore.find(query),
             to(FindResult.DOCUMENTS),
             map(to(Document.RESOURCE))
-        );
+        ) as any /* TODO review any*/;
     }
 
 

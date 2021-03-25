@@ -210,7 +210,7 @@ function preprocessDocuments(existingDocuments: Map<Document>,
 
 function findByIdentifier(datastore: DocumentDatastore): Find {
 
-    return async (identifier: string): Promise<Document|undefined> => {
+    return async (identifier: string) => {
 
         const result = await datastore.find({ constraints: { 'identifier:match': identifier }});
 

@@ -53,6 +53,7 @@ export class ImportComponent implements OnInit {
     public ignoredIdentifiers: string[] = [];
 
     public readonly allowedFileExtensions: string = '.csv, .jsonl, .geojson, .json, .shp, .catalog';
+    public readonly allowedHttpFileExtensions: string = '.csv, .jsonl, .geojson, .json';
 
 
     constructor(public importState: ImportState,
@@ -89,6 +90,10 @@ export class ImportComponent implements OnInit {
     public getSeparator = () => this.importState.separator;
 
     public setSeparator = (separator: string) => this.importState.setSeparator(separator);
+
+    public getAllowedFileExtensions = () => this.importState.sourceType === 'file'
+        ? this.allowedFileExtensions
+        : this.allowedHttpFileExtensions;
 
 
     async ngOnInit() {

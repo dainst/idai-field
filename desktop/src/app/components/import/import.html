@@ -53,7 +53,7 @@
                     </div>
 
                     <div *ngIf="!importState.format" class="import-info" i18n="@@import.format.info">
-                        Unterstützte Dateiformate: {{allowedFileExtensions}}<br>
+                        Unterstützte Dateiformate: {{getAllowedFileExtensions()}}<br>
                         Bildformate können in der <a href="#" routerLink="../images">Bilderverwaltung</a> importiert werden.
                     </div>
 

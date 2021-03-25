@@ -60,13 +60,13 @@
                     <div *ngIf="isDefaultFormat()">
                         <div  
                             (click)="setMergeMode(false)"
-                            id="radiobutton-existing-documents-option-differential-import-option">
+                            id="radiobutton-merge-mode-false">
                             <div class="form-group form-check-inline">
                             <input type="radio" 
                                 class="form-check-input"
-                                name="radiobutton-existing-documents-options" 
+                                name="radiobutton-merge-mode" 
                                 [checked]="!isMergeMode()" />
-                            <label for="radiobutton-existing-documents-regular-import-option" 
+                            <label for="radiobutton-merge-mode-false" 
                                 class="form-check-label"
                                 i18n="@@import.regularOption.label">
                                 Neue Ressourcen importieren</label>
@@ -79,13 +79,13 @@
                         </div>
                         <div 
                             (click)="setMergeMode(true)"
-                            id="radiobutton-existing-documents-merge-import-option">
+                            id="radiobutton-merge-mode-true">
                             <div class="form-group form-check-inline">
                                 <input type="radio" 
                                     class="form-check-input"
-                                    name="radiobutton-existing-documents-options" 
+                                    name="radiobutton-merge-mode" 
                                     [checked]="isMergeMode()" />
-                                <label for="radiobutton-existing-documents-merge-import-option" 
+                                <label for="radiobutton-merge-mode-true" 
                                     class="form-check-label"
                                     i18n="@@import.mergeOption.label">
                                     Vorhandene Ressource ergänzen

@@ -458,8 +458,8 @@
                                 überschreiben bestehende im existierenden Datensatz. Im existierenden Datensatz
                                 vorhandene Felder, die nicht im Importdatensatz vorhanden sind, bleiben unverändert
                                 bestehen. Die Kategorie kann nicht verändert werden. Die Zuordnung von Datensätzen
-                                geschieht per Bezeichner (Feld <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>). Der Import kann nur durchgeführt werden,
-                                wenn sämtliche Bezeichner zugeordnet werden können.
+                                geschieht per Bezeichner (Feld <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>). Datensätze in der
+                                Importdatei, die nicht zugeordnet werden können, werden ignoriert.
                             </source>
         <target state="final">
                         If this option is active, already existing resources will be merged with the data of the import
@@ -468,7 +468,7 @@
                         original record that are undefined in the import record will remain untouched.
                         The category cannot be changed. The assignment of
                         records is performed based on the field <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>.
-                        An import can only be performed if all identifiers point to existing resources.
+                        Records in the import file that cannot be assigned to a resource will be ignored.
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
@@ -482,8 +482,8 @@
                                 dabei gleichnamige Felder im existierenden Datensatz. Im existierenden Datensatz
                                 vorhandene Felder, die nicht im Importdatensatz vorhanden sind, bleiben unverändert
                                 bestehen. Die Kategorie kann nicht verändert werden. Die Zuordnung von Datensätzen
-                                geschieht per Bezeichner (Spalte <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>). Der Import kann nur durchgeführt werden,
-                                wenn sämtliche Bezeichner zugeordnet werden können.
+                                geschieht per Bezeichner (Spalte <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>). Datensätze in der
+                                Importdatei, die nicht zugeordnet werden können, werden ignoriert.
                             </source>
         <target state="final">
                         If this option is active, already existing resources will be merged with the data of the import
@@ -491,7 +491,7 @@
                         Fields existing in the original record that are undefined in the import record will remain untouched.
                         The category cannot be changed. The assignment of
                         records is performed based on the column <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>.
-                        An import can only be performed if all identifiers point to existing resources.
+                        Records in the import file that cannot be assigned to a resource will be ignored.
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>

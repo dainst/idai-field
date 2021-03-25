@@ -560,8 +560,8 @@
                                 überschreiben bestehende im existierenden Datensatz. Im existierenden Datensatz
                                 vorhandene Felder, die nicht im Importdatensatz vorhanden sind, bleiben unverändert
                                 bestehen. Die Kategorie kann nicht verändert werden. Die Zuordnung von Datensätzen
-                                geschieht per Bezeichner (Feld <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>). Der Import kann nur durchgeführt werden,
-                                wenn sämtliche Bezeichner zugeordnet werden können.
+                                geschieht per Bezeichner (Feld <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>). Datensätze in der
+                                Importdatei, die nicht zugeordnet werden können, werden ignoriert.
                             </source>
         <target state="final">
                         Se questa opzione è attivata, i record di dati esistenti vengono integrati con
@@ -570,8 +570,8 @@
                         sovrascrivono le geometrie dei record esistenti. I campi del record di dati esistenti
                         che non sono nel record di dati di importazione rimangono invariati.
                         La categoria non può essere modificata. L'assegnazione dei record di dati
-                        avviene tramite identificatore (campo <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>). L'importazione può essere eseguita solo se
-                        tutti gli identificatori possono essere assegnati.
+                        avviene tramite identificatore (campo <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>). I record di dati nel
+                        file di importazione che non possono essere assegnati vengono ignorati.
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
@@ -585,8 +585,8 @@
                                 dabei gleichnamige Felder im existierenden Datensatz. Im existierenden Datensatz
                                 vorhandene Felder, die nicht im Importdatensatz vorhanden sind, bleiben unverändert
                                 bestehen. Die Kategorie kann nicht verändert werden. Die Zuordnung von Datensätzen
-                                geschieht per Bezeichner (Spalte <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>). Der Import kann nur durchgeführt werden,
-                                wenn sämtliche Bezeichner zugeordnet werden können.
+                                geschieht per Bezeichner (Spalte <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>). Datensätze in der
+                                Importdatei, die nicht zugeordnet werden können, werden ignoriert.
                             </source>
         <target state="final">
                         Se questa opzione è attivata, i record di dati esistenti vengono integrati con
@@ -594,8 +594,8 @@
                         i campi con lo stesso nome nel record dati esistente. I campi del record di dati esistenti
                         che non sono nel record di dati di importazione rimangono invariati.
                         La categoria non può essere modificata. L'assegnazione dei record di dati
-                        avviene tramite identificatore (colonna <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>). L'importazione può essere eseguita solo se
-                        tutti gli identificatori possono essere assegnati.
+                        avviene tramite identificatore (colonna <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>). I record di dati nel
+                        file di importazione che non possono essere assegnati vengono ignorati.
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>

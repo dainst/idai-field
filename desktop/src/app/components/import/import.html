@@ -99,8 +99,8 @@
                                 überschreiben bestehende im existierenden Datensatz. Im existierenden Datensatz
                                 vorhandene Felder, die nicht im Importdatensatz vorhanden sind, bleiben unverändert
                                 bestehen. Die Kategorie kann nicht verändert werden. Die Zuordnung von Datensätzen
-                                geschieht per Bezeichner (Feld <em>identifier</em>). Der Import kann nur durchgeführt werden,
-                                wenn sämtliche Bezeichner zugeordnet werden können.
+                                geschieht per Bezeichner (Feld <em>identifier</em>). Datensätze in der
+                                Importdatei, die nicht zugeordnet werden können, werden ignoriert.
                             </div>
                             <div *ngIf="importState.format === 'csv'" class="import-info"
                                 i18n="@@import.mergeOption.csv.info">
@@ -109,8 +109,8 @@
                                 dabei gleichnamige Felder im existierenden Datensatz. Im existierenden Datensatz
                                 vorhandene Felder, die nicht im Importdatensatz vorhanden sind, bleiben unverändert
                                 bestehen. Die Kategorie kann nicht verändert werden. Die Zuordnung von Datensätzen
-                                geschieht per Bezeichner (Spalte <em>identifier</em>). Der Import kann nur durchgeführt werden,
-                                wenn sämtliche Bezeichner zugeordnet werden können.
+                                geschieht per Bezeichner (Spalte <em>identifier</em>). Datensätze in der
+                                Importdatei, die nicht zugeordnet werden können, werden ignoriert.
                             </div>
                         </div>
                         <div *ngIf="shouldDisplayPermitDeletionsOption()">

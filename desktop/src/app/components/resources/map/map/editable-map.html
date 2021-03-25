@@ -52,12 +52,16 @@
          placement="top" container="body">
         <span class="mdi mdi-cursor-move mdi-24px"></span>
     </div>
-    <div id="map-editor-button-ok"
-         class="btn btn-primary" [class.near-to-right]="getLocale() === 'en'"
-         (click)="finishEditing()">
-        <span i18n="@@buttons.ok">OK</span>
-    </div>
-    <div id="map-editor-button-abort" class="btn btn-secondary" (click)="abortEditing()">
-        <span i18n="@@buttons.cancel">Abbrechen</span>
+    <div id="map-editor-ok-abort-buttons" class="btn-toolbar">
+        <div id="map-editor-ok-button-group" class="btn-group">
+            <div id="map-editor-button-ok" class="btn btn-primary" (click)="finishEditing()">
+                <span i18n="@@buttons.ok">OK</span>
+            </div>
+        </div>
+        <div class="btn-group">
+            <div id="map-editor-button-abort" class="btn btn-secondary" (click)="abortEditing()">
+                <span i18n="@@buttons.cancel">Abbrechen</span>
+            </div>
+        </div>
     </div>
 </div>

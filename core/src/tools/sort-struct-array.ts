@@ -11,10 +11,10 @@ export function sortStructArray(order: string[], path: Path) {
 
         for (let categoryName of order) {
             const [match, rest] = separate(on(path, is(categoryName)), source);
-            sortedCategories = sortedCategories.concat(match as any /* TODO review typing */);
+            sortedCategories = sortedCategories.concat(match);
             source = rest;
         }
 
-        return sortedCategories.concat(source as any) as any;
+        return sortedCategories.concat(source);
     }
 }

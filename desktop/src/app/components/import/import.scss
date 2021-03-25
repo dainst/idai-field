@@ -24,4 +24,14 @@
       user-select: none;
     }
   }
+
+  #back-to-import-button {
+    margin-top: 22px;
+  }
+
+  #ignored-identifiers {
+    max-height: calc(100vh - 258px);
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
 }

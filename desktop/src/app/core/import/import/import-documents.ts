@@ -111,11 +111,11 @@ async function importDocuments(services: ImportServices,
     complementInverseRelationsBetweenImportDocs(context, options, documents); // TODO now that we have that here, we could simplify later steps probably
 
     try {
-        const existingDocuments = await makeExistingDocumentsMap(find, options, documents);
-        const { documentsToImport, documentsToIgnore } = getDocumentsToImport(existingDocuments, options, documents);
+        const existingImportDocuments = await makeExistingDocumentsMap(find, options, documents);
+        const { documentsToImport, documentsToIgnore } = getDocumentsToImport(existingImportDocuments, options, documents);
         preprocessFields(documentsToImport, options);
-        await preprocessRelations(existingDocuments, documentsToImport, helpers, get, options);
-        const mergeDocs = preprocessDocuments(existingDocuments, helpers, options, documentsToImport);
+        await preprocessRelations(documentsToImport, helpers, get, find, options);
+        const mergeDocs = preprocessDocuments(existingImportDocuments, helpers, options, documentsToImport);
         const processedDocuments = processDocuments(documentsToImport, mergeDocs, services.validator);
         const targetDocuments = await processRelations(
             processedDocuments,

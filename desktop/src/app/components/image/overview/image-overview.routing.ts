@@ -13,4 +13,4 @@ const routes: Routes = [
     }
 ];
 
-export const imagesRouting: ModuleWithProviders = RouterModule.forChild(routes);
+export const imagesRouting: ModuleWithProviders<any /* TODO review any; since angular 10.2.3*/> = RouterModule.forChild(routes);

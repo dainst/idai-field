@@ -1,4 +1,4 @@
-import {Input, OnChanges, Renderer2, SimpleChanges} from '@angular/core';
+import {Component, Input, OnChanges, Renderer2, SimpleChanges} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {on, is} from 'tsfun';
 import {filter as asyncFilter} from 'tsfun/async';
@@ -24,6 +24,9 @@ type ConstraintListItem = {
 type SearchInputType = 'input'|'dropdown'|'boolean'|'exists';
 
 
+@Component({
+   template: ''
+ })
 /**
  * @author Thomas Kleinke
  */

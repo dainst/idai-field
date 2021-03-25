@@ -1,4 +1,4 @@
-import {ViewChild} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
 import {FieldDocument} from '@idai-field/core';
 import {ResourcesComponent} from './resources.component';
@@ -9,11 +9,14 @@ import {ViewFacade} from '../../core/resources/view/view-facade';
 import {MenuContext, MenuService} from '../menu-service';
 
 
+@Component({
+   template: ''
+})
 /**
  * @author Philipp Gerth
  * @author Thomas Kleinke
  */
-export class BaseList {
+export class BaseList { // TODO make abstract
 
     @ViewChild(CdkVirtualScrollViewport) scrollViewport: CdkVirtualScrollViewport;
 

@@ -42,8 +42,8 @@ export function updateRelations(document: Document, targetDocuments: Array<Docum
                 targetDocument.resource.relations,
                 document.resource.id,
                 setInverses,
-                hasInverseRelation /* TODO review any*/
-            ) as any;
+                hasInverseRelation
+            );
 
         if (setInverses) {
             setInverseRelations(

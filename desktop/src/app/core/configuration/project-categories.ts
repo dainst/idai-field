@@ -1,4 +1,4 @@
-import {filter, flow, includedIn, is, map, remove, to} from 'tsfun';
+import {filter, flow, includedIn, is, map, remove} from 'tsfun';
 import {Category} from './model/category';
 import {Named, onName, TreeList, toName, flattenTree, filterTrees, removeTrees, isTopLevelItemOrChildThereof} from '@idai-field/core';
 import {Name} from '../constants';
@@ -40,7 +40,7 @@ export /* package-private */ module ProjectCategories {
         return flow(t,
             removeTrees('Image', 'Project', TYPE_CATALOG, TYPE),
             flattenTree
-        ) as any /* TODO review any*/;
+        );
     }
 
 
@@ -55,7 +55,7 @@ export /* package-private */ module ProjectCategories {
         return flow(t,
             removeTrees('Image', 'Project'),
             flattenTree
-        ) as any /* TODO review any */;
+        );
     }
 
 
@@ -101,7 +101,7 @@ export /* package-private */ module ProjectCategories {
         return flow(t,
             filterTrees('Type', 'TypeCatalog'),
             flattenTree
-        ) as any /* TODO review any*/;
+        );
     }
 
 

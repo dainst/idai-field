@@ -51,7 +51,7 @@ function assertFieldKeysAreValid(fields: Map<LibraryFieldDefinition>|Map<CustomF
         fields,
         map(Object.keys),
         map(remove(includedIn(validFieldKeys))),
-        values as any, // TODO review any
+        values,
         forEach(throwIllegalFieldPropertyIfNotEmpty)
     );
 }

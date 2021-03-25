@@ -231,7 +231,7 @@ export module ResourcesState {
         ViewState.complete(state.overviewState);
 
         flow(state.operationViewStates,
-            keys as any /* TODO review any*/,
+            keys,
             map(lookup(state.operationViewStates)),
             values,
             forEach(ViewState.complete));

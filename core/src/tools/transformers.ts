@@ -19,7 +19,7 @@ export function makeLookup(path: string|number|Array<string|number>) {
 }
 
 
-export function addKeyAsProp<A extends Map>(prop: string): (m: Map<A>) => Map<A> {
+export function addKeyAsProp<A extends Map>(prop: string) {
 
     return map((a: A, key: string) => update_a(prop, key)(a));
 }

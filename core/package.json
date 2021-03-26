@@ -10,12 +10,12 @@
         "dist"
     ],
     "scripts": {
-        "build": "tsc -p .",
+        "build": "rm -rf dist && tsc -p .",
         "build:watch": "tsc -watch -p .",
         "test": "jasmine JASMINE_CONFIG_PATH=test/jasmine.json"
     },
     "dependencies": {
-        "idai-components-2": "1.52.0",
+        "idai-components-2": "1.52.2",
         "tsfun": "4.19.0"
     },
     "devDependencies": {

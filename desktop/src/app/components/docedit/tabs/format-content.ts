@@ -1,6 +1,8 @@
-import { FieldDefinition } from '../../../core/configuration/model/field-definition';
-import { Dating, Dimension, Literature, OptionalRange, Resource } from 'idai-components-2';
-import { flow, identity, isArray, isObject, isString } from 'tsfun';
+import {flow, identity, isArray, isObject, isString} from 'tsfun';
+import {Dating, Dimension, Literature, OptionalRange, Resource} from 'idai-components-2';
+import {FieldDefinition} from '../../../core/configuration/model/field-definition';
+import {ValuelistUtil} from '../../../core/util/valuelist-util';
+
 
 export type InnerHTML = string;
 
@@ -14,7 +16,7 @@ export function formatContent(resource: Resource, field: any): InnerHTML {
 
     return isArray(fieldContent)
         ? flow(fieldContent,
-            convertArray(field.inputType),
+            convertArray(field),
             formatArray)
         : isObject(fieldContent)
         ? flow(fieldContent,
@@ -52,18 +54,18 @@ const convertObject = (inputType?: FieldDefinition.InputType) =>
 }
 
 
-const convertArray = (inputType?: FieldDefinition.InputType) =>
+const convertArray = (field?: FieldDefinition) =>
                      (fieldContent: Array<any>): Array<string> => {
 
     return fieldContent.map(element => {
 
-        if (inputType === 'dimension' && Dimension.isDimension(element)) {
-            return Dimension.generateLabel(element, identity, identity);
+        if (field.inputType === 'dimension' && Dimension.isDimension(element)) {
+            return Dimension.generateLabel(element, identity, identity, ValuelistUtil.getValueLabel(field.positionValues, element.measurementPosition));
         }
-        else if (inputType === 'dating' && Dating.isDating(element)) {
+        else if (field.inputType === 'dating' && Dating.isDating(element)) {
             return Dating.generateLabel(element, identity);
         }
-        else if (inputType === 'literature' && Literature.isLiterature(element)) {
+        else if (field.inputType === 'literature' && Literature.isLiterature(element)) {
             return Literature.generateLabel(element, identity)
         }
         else return JSON.stringify(element);

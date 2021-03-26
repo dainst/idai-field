@@ -51,15 +51,11 @@ export class DimensionComponent {
 
         if (dimension.label) return dimension.label;
 
-        const clonedDimension = clone(dimension);
-        if (clonedDimension.measurementPosition) {
-            clonedDimension.measurementPosition = this.getPositionValueLabel(dimension.measurementPosition);
-        }
-
         return Dimension.generateLabel(
-            clonedDimension,
+            dimension,
             (value: any) => this.decimalPipe.transform(value),
-            (key: string) => this.utilTranslations.getTranslation(key)
+            (key: string) => this.utilTranslations.getTranslation(key),
+            this.getPositionValueLabel(dimension.measurementPosition)
         );
     }
 

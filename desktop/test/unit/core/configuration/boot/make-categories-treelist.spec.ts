@@ -1,4 +1,4 @@
-import {FieldResource, flattenTree} from '@idai-field/core';
+import {FieldResource, Tree} from '@idai-field/core';
 import {Groups} from '../../../../../src/app/core/configuration/model/group';
 import {FieldDefinition} from '../../../../../src/app/core/configuration/model/field-definition';
 import {Category} from '../../../../../src/app/core/configuration/model/category';
@@ -32,7 +32,7 @@ describe('makeCategoriesTreelist', () => {
             }
         };
 
-        const categoriesMap = namedArrayToNamedMap(flattenTree<Category>(makeCategoryTreeList(confDef)));
+        const categoriesMap = namedArrayToNamedMap(Tree.flatten<Category>(makeCategoryTreeList(confDef)));
 
         expect(categoriesMap[P].name).toEqual(P);
         expect(categoriesMap[P].children[0].name).toEqual(A);
@@ -76,7 +76,7 @@ describe('makeCategoriesTreelist', () => {
             }
         };
 
-        const categoriesMap = namedArrayToNamedMap(flattenTree<Category>(makeCategoryTreeList(confDef)));
+        const categoriesMap = namedArrayToNamedMap(Tree.flatten<Category>(makeCategoryTreeList(confDef)));
         const categoryA = categoriesMap[P].children.find(category => category.name === A)!;
         const categoryB = categoriesMap[P].children.find(category => category.name === B)!;
 
@@ -112,7 +112,7 @@ describe('makeCategoriesTreelist', () => {
             }
         };
 
-        const categoriesMap = namedArrayToNamedMap(flattenTree<Category>(makeCategoryTreeList(confDef)));
+        const categoriesMap = namedArrayToNamedMap(Tree.flatten<Category>(makeCategoryTreeList(confDef)));
 
         expect(categoriesMap[T].groups[Groups.STEM].fields[0].name).toEqual(FieldResource.IDENTIFIER);
         expect(categoriesMap[T].groups[Groups.STEM].fields[1].name).toEqual(FieldResource.SHORTDESCRIPTION);

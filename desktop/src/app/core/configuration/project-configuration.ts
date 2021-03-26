@@ -2,7 +2,7 @@ import {flow, to, on, isNot, empty, is, Pair, Map, includedIn, map, filter} from
 import {Category} from './model/category';
 import {FieldDefinition} from './model/field-definition';
 import {RelationDefinition} from './model/relation-definition';
-import {Named, namedArrayToNamedMap, flattenTree, Tree, ITEMNAMEPATH, TreeList} from '@idai-field/core';
+import {Named, namedArrayToNamedMap, Tree, TreeList} from '@idai-field/core';
 import {RelationsUtil} from './relations-utils';
 import {Name} from '../constants';
 import {isTopLevelItemOrChildThereof} from '@idai-field/core';
@@ -39,7 +39,7 @@ export class ProjectConfiguration {
     constructor([categories, relations]: RawProjectConfiguration) {
 
         this.categoryTreelist = categories;
-        this.categoriesArray = flattenTree<Category>(categories) || [];
+        this.categoriesArray = Tree.flatten<Category>(categories) || [];
         this.relations = relations || [];
         this.categoriesMap = namedArrayToNamedMap(this.categoriesArray);
     }
@@ -71,7 +71,7 @@ export class ProjectConfiguration {
         return selectedTopLevelCategories.length === 0
             ? this.categoryTreelist
             : this.categoryTreelist.filter(
-                on(ITEMNAMEPATH, includedIn(selectedTopLevelCategories)));
+                on(Tree.ITEMNAMEPATH, includedIn(selectedTopLevelCategories)));
     }
 
 

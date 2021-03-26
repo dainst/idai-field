@@ -1,11 +1,11 @@
 import {drop, identity, includedIn, is, isArray, isNot, on, take} from 'tsfun';
 import { Named, Name, onName } from '../../src/tools/named';
-import { findInTree, ITEMNAMEPATH, TreeList } from '../../src/tools/tree-list';
+import { Tree, TreeList } from '../../src/tools/tree-list';
 
 
 export function findInNamedTreeList<N extends Named>(match: Name, t: TreeList<N>): N|undefined {
 
-    const result: any /* TODO review typing */ = findInTree(t, onName(is(match)));
+    const result: any /* TODO review typing */ = Tree.find(t, onName(is(match)));
     return result ? result.item : undefined;
 }
 
@@ -39,7 +39,7 @@ export function isTopLevelItemOrChildThereof(t: TreeList<Named>,
 function _filterTrees<N extends Named>(invert: boolean, a: any, bs: any[]): TreeList<N> {
 
     const $ = (t: any, match: any, moreMatches: any) => t.filter(
-        on(ITEMNAMEPATH,
+        on(Tree.ITEMNAMEPATH,
             ((invert ? isNot : identity)(includedIn([match].concat(moreMatches))))
         ));
 

@@ -1,5 +1,5 @@
 import {linkParentAndChildInstances} from '../../../../src/app/core/configuration/category-tree-list';
-import {accessTree, buildTreeList, flattenTree, TreeList} from '@idai-field/core';
+import {Tree, TreeList} from '@idai-field/core';
 import {Category} from '../../../../src/app/core/configuration/model/category';
 
 
@@ -13,7 +13,7 @@ describe('CategoryTreeList', () => {
         const child = { name: 'C1', parentCategory: parent, children: [] };
         parent.children = [child];
 
-        const t: TreeList<{ name: string, children: Array<T>}> = buildTreeList([
+        const t: TreeList<{ name: string, children: Array<T>}> = Tree.buildList([
             [
                 parent,
                 [
@@ -25,7 +25,7 @@ describe('CategoryTreeList', () => {
             ]
         ]);
 
-        const result = flattenTree<Category>(t as any);
+        const result = Tree.flatten<Category>(t as any);
 
         expect(result[0].name).toBe('P1');
         expect(result[0].children.length).toBe(1);
@@ -38,8 +38,8 @@ describe('CategoryTreeList', () => {
         expect(result[1].children).toEqual([]);
 
         // retain configured instance relationships
-        expect(result[0].children[0] === accessTree(t, 0, 0)).toBeTruthy();
-        expect(result[1].parentCategory === accessTree(t, 0)).toBeTruthy();
+        expect(result[0].children[0] === Tree.access(t, 0, 0)).toBeTruthy();
+        expect(result[1].parentCategory === Tree.access(t, 0)).toBeTruthy();
         expect(result[1].parentCategory === result[0]).toBeTruthy();
         expect(result[0].children[0].name === 'C1').toBeTruthy();
         expect(result[1].parentCategory.name === 'P1').toBeTruthy();
@@ -58,7 +58,7 @@ describe('CategoryTreeList', () => {
         const child4 = { name: 'C4', parentCategory: parent2, children: [] };
         parent2.children = [child3,child4];
 
-        const t = buildTreeList([
+        const t = Tree.buildList([
             [
                 parent1,
                 [
@@ -87,7 +87,7 @@ describe('CategoryTreeList', () => {
             ]
         ]);
 
-        const result = flattenTree<Category>(t as any);
+        const result = Tree.flatten<Category>(t as any);
 
         expect(result.length).toBe(6);
 
@@ -122,7 +122,7 @@ describe('CategoryTreeList', () => {
         const child1 = { name: 'C1' };
         const child2 = { name: 'C2' };
 
-        return buildTreeList([
+        return Tree.buildList([
             [
                 parent1,
                 [
@@ -146,17 +146,17 @@ describe('CategoryTreeList', () => {
         const t = threeLevels();
         const result = linkParentAndChildInstances(t);
 
-        expect(accessTree(result, 0).children[0] === accessTree(result, 0, 0)).toBeTruthy();
-        expect(accessTree(result, 0, 0).children[0] === accessTree(result, 0, 0, 0)).toBeTruthy();
-        expect(accessTree(result, 0, 0, 0).parentCategory === accessTree(result, 0, 0)).toBeTruthy();
-        expect(accessTree(result, 0, 0).parentCategory === accessTree(result, 0)).toBeTruthy();
+        expect(Tree.access(result, 0).children[0] === Tree.access(result, 0, 0)).toBeTruthy();
+        expect(Tree.access(result, 0, 0).children[0] === Tree.access(result, 0, 0, 0)).toBeTruthy();
+        expect(Tree.access(result, 0, 0, 0).parentCategory === Tree.access(result, 0, 0)).toBeTruthy();
+        expect(Tree.access(result, 0, 0).parentCategory === Tree.access(result, 0)).toBeTruthy();
     });
 
 
     it('categoryTreeListToArray - recursive', () => {
 
         const t = threeLevels();
-        const result = flattenTree<Category>(linkParentAndChildInstances(t));
+        const result = Tree.flatten<Category>(linkParentAndChildInstances(t));
 
         expect(result[0].name).toBe('P1');
         expect(result[1].name).toBe('C1');

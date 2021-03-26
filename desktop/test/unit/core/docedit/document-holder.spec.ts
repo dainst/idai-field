@@ -3,7 +3,7 @@ import {clone} from '../../../../src/app/core/util/object-util';
 import {M} from '../../../../src/app/components/messages/m';
 import {ProjectConfiguration} from '../../../../src/app/core/configuration/project-configuration';
 import {DocumentHolder} from '../../../../src/app/core/docedit/document-holder';
-import {buildTreeList} from '@idai-field/core';
+import {Tree} from '@idai-field/core';
 
 
 /**
@@ -22,7 +22,7 @@ describe('DocumentHolder', () => {
 
     beforeEach(() => {
 
-        const pconf = new ProjectConfiguration([buildTreeList(
+        const pconf = new ProjectConfiguration([Tree.buildList(
             [
                 [{
                     name: 'Trench',

@@ -1,6 +1,6 @@
 import {filter, flow, includedIn, is, map, remove} from 'tsfun';
 import {Category} from './model/category';
-import {Named, onName, TreeList, toName, flattenTree, filterTrees, removeTrees, isTopLevelItemOrChildThereof} from '@idai-field/core';
+import {Named, onName, TreeList, toName, Tree, filterTrees, removeTrees, isTopLevelItemOrChildThereof} from '@idai-field/core';
 import {Name} from '../constants';
 
 
@@ -29,7 +29,7 @@ export /* package-private */ module ProjectCategories {
 
         return flow(t,
             removeTrees('Place', 'Project', TYPE_CATALOG, TYPE, 'Image', 'Operation'),
-            flattenTree,
+            Tree.flatten,
             map(toName)
         );
     }
@@ -39,7 +39,7 @@ export /* package-private */ module ProjectCategories {
 
         return flow(t,
             removeTrees('Image', 'Project', TYPE_CATALOG, TYPE),
-            flattenTree
+            Tree.flatten
         );
     }
 
@@ -54,7 +54,7 @@ export /* package-private */ module ProjectCategories {
 
         return flow(t,
             removeTrees('Image', 'Project'),
-            flattenTree
+            Tree.flatten
         );
     }
 
@@ -69,7 +69,7 @@ export /* package-private */ module ProjectCategories {
 
         return flow(t,
             filterTrees('Operation', 'Place'),
-            flattenTree,
+            Tree.flatten,
             map(toName)
         );
     }
@@ -79,7 +79,7 @@ export /* package-private */ module ProjectCategories {
 
         return flow(t,
             filterTrees('Operation', 'Place'),
-            flattenTree,
+            Tree.flatten,
             remove(onName(is('Operation'))), // TODO review why we do remove this here but not in getOverviewCategoryNames, compare also getOverviewToplevelCategories
             map(toName)
         ) as any /* TODO review any*/;
@@ -90,7 +90,7 @@ export /* package-private */ module ProjectCategories {
 
         return flow(t,
             filterTrees('Operation', 'Place'),
-            flattenTree,
+            Tree.flatten,
             filter(onName(includedIn(['Operation', 'Place'])))
         ) as any /* TODO review any*/;
     }
@@ -100,7 +100,7 @@ export /* package-private */ module ProjectCategories {
 
         return flow(t,
             filterTrees('Type', 'TypeCatalog'),
-            flattenTree
+            Tree.flatten
         );
     }
 
@@ -115,8 +115,8 @@ export /* package-private */ module ProjectCategories {
 
         return flow(t,
             filterTrees('Image'),
-            flattenTree,
-            map(_ => _.name)
+            Tree.flatten,
+            map(toName)
         );
     }
 
@@ -138,7 +138,7 @@ export /* package-private */ module ProjectCategories {
         return flow(
             categories,
             filterTrees(superCategoryName),
-            flattenTree,
+            Tree.flatten,
             map(toName));
     }
 }

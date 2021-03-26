@@ -1,5 +1,6 @@
 import {cond, flow, includedIn, isDefined, isNot, Mapping, Map, on, subtract, undefinedOrEmpty, identity,
     compose, Pair, dissoc, pairWith, prune, filter, or, copy, update_a as updateAsc, update as updateStruct, lookup, map, keysValues, reduce, clone, update_a, update } from 'tsfun';
+import {Tree} from '@idai-field/core';
 import {LibraryCategoryDefinition} from '../model/library-category-definition';
 import {CustomCategoryDefinition} from '../model/custom-category-definition';
 import {ConfigurationErrors} from './configuration-errors';
@@ -27,7 +28,7 @@ import {RelationsUtil} from '../relations-utils';
 import {CategoryDefinition} from '../model/category-definition';
 import {ProjectCategories} from '../project-categories';
 import {FieldDefinition} from '../model/field-definition';
-import {mapTrees, mapTreeList, TreeList, ITEMNAMEPATH, sortStructArray} from '@idai-field/core';
+import {TreeList, sortStructArray} from '@idai-field/core';
 import {linkParentAndChildInstances} from '../category-tree-list';
 import {applyLanguageConfigurations} from './apply-language-configurations';
 
@@ -93,9 +94,9 @@ function processCategories(orderConfiguration: any,
         orderFields(orderConfiguration),
         validateFields,
         makeCategoryTreeList,
-        mapTreeList(putRelationsIntoGroups(relations)),
-        mapTreeList(sortCategoryGroups),
-        mapTreeList(setGroupLabels(languageConfigurations)),
+        Tree.mapList(putRelationsIntoGroups(relations)),
+        Tree.mapList(sortCategoryGroups),
+        Tree.mapList(setGroupLabels(languageConfigurations)),
         setGeometriesInGroups(languageConfigurations),
         orderCategories(orderConfiguration?.categories),
         linkParentAndChildInstances
@@ -104,7 +105,7 @@ function processCategories(orderConfiguration: any,
 
 
 const setGeometriesInGroups = (languageConfigurations: any[]) => (categoriesTree: TreeList<Category>) =>
-    mapTreeList(adjustCategoryGeometry(languageConfigurations, categoriesTree), categoriesTree);
+    Tree.mapList(adjustCategoryGeometry(languageConfigurations, categoriesTree), categoriesTree);
 
 
 function adjustCategoryGeometry(languageConfigurations: any[], categoriesTree: TreeList<Category>) {
@@ -172,7 +173,7 @@ const sortGroups = (defaultOrder: string[]) => (groups: Map<Group>) =>
 
 
 const orderCategories = (categoriesOrder: string[] = []) => (categories: TreeList<Category>): TreeList<Category> =>
-    mapTrees(sortStructArray(categoriesOrder, ITEMNAMEPATH), categories) as TreeList<Category>;
+    Tree.mapTrees(sortStructArray(categoriesOrder, Tree.ITEMNAMEPATH), categories) as TreeList<Category>;
 
 
 function setGroupLabels(languageConfigurations: any[]) {

@@ -1,7 +1,7 @@
 import {filterTrees, findInNamedTreeList, isTopLevelItemOrChildThereof,
     removeTrees} from '../../src/tools/named-tree-list';
 import {Named} from '../../src/tools/named';
-import {accessTree, buildTreeList, TreeList} from '../../src/tools/tree-list';
+import {Tree, TreeList} from '../../src/tools/tree-list';
 
 
 describe('NamedTreelist', () => {
@@ -12,7 +12,7 @@ describe('NamedTreelist', () => {
         const child1 = { name: 'C1' };
         const child2 = { name: 'C2' };
 
-        return buildTreeList([
+        return Tree.buildList([
             [
                 parent1,
                 [
@@ -41,7 +41,7 @@ describe('NamedTreelist', () => {
 
     it('isTopLevelItemOrChildThereof', () => {
 
-        const categoryTreelist: TreeList<Named> = buildTreeList([
+        const categoryTreelist: TreeList<Named> = Tree.buildList([
             [
                 {name: 'Image'},
                 [
@@ -80,7 +80,7 @@ describe('NamedTreelist', () => {
 
     it('isTopLevelItemOrChildThereof - more firstLevelItems to match', () => {
 
-        const categoryTreelist: TreeList<Named> = buildTreeList([
+        const categoryTreelist: TreeList<Named> = Tree.buildList([
             [
                 {name: 'Image'},
                 [
@@ -115,7 +115,7 @@ describe('NamedTreelist', () => {
 
     it('removeTrees', () => {
 
-        const categoryTreelist: TreeList<Named> = buildTreeList([
+        const categoryTreelist: TreeList<Named> = Tree.buildList([
             [
                 {name: 'Image'},
                 [
@@ -138,26 +138,26 @@ describe('NamedTreelist', () => {
         const result0 = removeTrees(categoryTreelist, 'Operation', 'Inscription');
 
         expect(result0.length).toBe(1);
-        expect(accessTree(result0, 0).name).toBe('Image');
-        expect(accessTree(result0, 0, 0).name).toBe('Drawing');
+        expect(Tree.access(result0, 0).name).toBe('Image');
+        expect(Tree.access(result0, 0, 0).name).toBe('Drawing');
 
         const result1 = removeTrees('Operation', 'Inscription')(categoryTreelist);
 
         expect(result1.length).toBe(1);
-        expect(accessTree(result1, 0).name).toBe('Image');
-        expect(accessTree(result1, 0, 0).name).toBe('Drawing');
+        expect(Tree.access(result1, 0).name).toBe('Image');
+        expect(Tree.access(result1, 0, 0).name).toBe('Drawing');
 
         const result2 = removeTrees('Image')(categoryTreelist);
 
         expect(result2.length).toBe(2);
-        expect(accessTree(result2, 0).name).toBe('Operation');
-        expect(accessTree(result2, 1).name).toBe('Inscription');
+        expect(Tree.access(result2, 0).name).toBe('Operation');
+        expect(Tree.access(result2, 1).name).toBe('Inscription');
 
         const result3 = removeTrees(categoryTreelist, 'Image');
 
         expect(result3.length).toBe(2);
-        expect(accessTree(result3, 0).name).toBe('Operation');
-        expect(accessTree(result3, 1).name).toBe('Inscription');
+        expect(Tree.access(result3, 0).name).toBe('Operation');
+        expect(Tree.access(result3, 1).name).toBe('Inscription');
 
 
         // typing
@@ -169,7 +169,7 @@ describe('NamedTreelist', () => {
 
     it('filterTrees', () => {
 
-        const categoryTreelist: TreeList<Named> = buildTreeList([
+        const categoryTreelist: TreeList<Named> = Tree.buildList([
             [
                 {name: 'Image'},
                 [
@@ -192,24 +192,24 @@ describe('NamedTreelist', () => {
         const result0 = filterTrees(categoryTreelist, 'Operation');
 
         expect(result0.length).toBe(1);
-        expect(accessTree(result0, 0).name).toBe('Operation');
+        expect(Tree.access(result0, 0).name).toBe('Operation');
 
         const result1 = filterTrees(categoryTreelist, 'Operation', 'Inscription');
 
         expect(result1.length).toBe(2);
-        expect(accessTree(result1, 0).name).toBe('Operation');
-        expect(accessTree(result1, 1).name).toBe('Inscription');
+        expect(Tree.access(result1, 0).name).toBe('Operation');
+        expect(Tree.access(result1, 1).name).toBe('Inscription');
 
         const result2 = filterTrees('Operation', 'Inscription')(categoryTreelist);
 
         expect(result2.length).toBe(2);
-        expect(accessTree(result2, 0).name).toBe('Operation');
-        expect(accessTree(result2, 1).name).toBe('Inscription');
+        expect(Tree.access(result2, 0).name).toBe('Operation');
+        expect(Tree.access(result2, 1).name).toBe('Inscription');
 
         const result3 = filterTrees('Operation')(categoryTreelist);
 
         expect(result3.length).toBe(1);
-        expect(accessTree(result3, 0).name).toBe('Operation');
+        expect(Tree.access(result3, 0).name).toBe('Operation');
 
 
         // typing

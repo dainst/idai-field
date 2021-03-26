@@ -2,7 +2,7 @@ import {ProjectCategories} from '../../../../src/app/core/configuration/project-
 import isGeometryCategory = ProjectCategories.isGeometryCategory;
 import getFieldCategories = ProjectCategories.getFieldCategories;
 import {sameset} from 'tsfun';
-import {Named, toName, buildTreeList, TreeList} from '@idai-field/core';
+import {Named, toName, Tree, TreeList} from '@idai-field/core';
 import {Category} from '../../../../src/app/core/configuration/model/category';
 import getConcreteFieldCategories = ProjectCategories.getConcreteFieldCategories;
 import getRegularCategoryNames = ProjectCategories.getRegularCategoryNames;
@@ -16,7 +16,7 @@ import getFeatureCategoryNames = ProjectCategories.getFeatureCategoryNames;
 
 describe('ProjectCategories', () => {
 
-    const categoryTreelist: TreeList<Named> = buildTreeList([
+    const categoryTreelist: TreeList<Named> = Tree.buildList([
         [
             { name: 'Image' },
             [

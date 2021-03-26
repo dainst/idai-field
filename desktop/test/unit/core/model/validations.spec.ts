@@ -1,7 +1,7 @@
 import {ValidationErrors} from '../../../../src/app/core/model/validation-errors';
 import {Validations} from '../../../../src/app/core/model/validations';
 import {ProjectConfiguration} from '../../../../src/app/core/configuration/project-configuration';
-import {buildTreeList} from '@idai-field/core';
+import {Tree} from '@idai-field/core';
 import {FieldDefinition} from '../../../../src/app/core/configuration/model/field-definition';
 import InputType = FieldDefinition.InputType;
 
@@ -14,7 +14,7 @@ import InputType = FieldDefinition.InputType;
 describe('Validations', () => {
 
     const projectConfiguration = new ProjectConfiguration(
-        [buildTreeList(
+        [Tree.buildList(
             [[{
                 name: 'T',
                 groups: [{

@@ -2,7 +2,7 @@ import {ImportValidator} from '../../../../../src/app/core/import/import/process
 import {ValidationErrors} from '../../../../../src/app/core/model/validation-errors';
 import {ImportErrors} from '../../../../../src/app/core/import/import/import-errors';
 import {ProjectConfiguration} from '../../../../../src/app/core/configuration/project-configuration';
-import {buildTreeList} from '@idai-field/core';
+import {Tree} from '@idai-field/core';
 import {FieldDefinition} from '../../../../../src/app/core/configuration/model/field-definition';
 
 
@@ -14,7 +14,7 @@ describe('ImportValidator', () => {
 
     const projectConfiguration = new ProjectConfiguration(
         [
-          buildTreeList([
+          Tree.buildList([
             [ {
                 name: 'T',
                 groups: [{ name: 'stem', fields: [

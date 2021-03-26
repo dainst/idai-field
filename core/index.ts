@@ -17,6 +17,6 @@ export {assocReduce} from './src/tools/assoc-reduce';
 export {makeLookup, addKeyAsProp, mapToArray} from './src/tools/transformers'
 export {Named, Labelled, namedArrayToNamedMap, sortNamedArray, mapToNamedArray, byName, onName, toName} from './src/tools/named';
 export {sortStructArray} from './src/tools/sort-struct-array';
-export {buildTreeList, accessTree, mapTree, mapTreeList, mapTrees, flattenTree, TreeList, Tree, toTreeItem, ITEMNAMEPATH} from './src/tools/tree-list';
+export {TreeList, Tree} from './src/tools/tree-list';
 export {isTopLevelItemOrChildThereof, filterTrees, removeTrees} from './src/tools/named-tree-list';
 export {StringUtils} from './src/tools/string-utils';

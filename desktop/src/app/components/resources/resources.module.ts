@@ -54,6 +54,7 @@ import {TypeIconComponent} from './types/type-icon.component';
 import {Messages} from '../messages/messages';
 import {SettingsProvider} from '../../core/settings/settings-provider';
 import {SyncService} from '../../core/sync/sync-service';
+import { BaseList } from './base-list';
 
 
 const remote = typeof window !== 'undefined'
@@ -97,7 +98,8 @@ const remote = typeof window !== 'undefined'
         ContextMenuComponent,
         MoveModalComponent,
         DeletionInProgressModalComponent,
-        ChildrenViewComponent
+        ChildrenViewComponent,
+        BaseList
     ],
     providers: [
         { provide: StateSerializer, useClass: StandardStateSerializer },

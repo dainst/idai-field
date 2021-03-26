@@ -404,10 +404,10 @@
       </trans-unit>
       <trans-unit id="import.format.info" datatype="html">
         <source>
-                        Unterstützte Dateiformate: <x id="INTERPOLATION" equiv-text="{{allowedFileExtensions}}"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/>"/>
+                        Unterstützte Dateiformate: <x id="INTERPOLATION" equiv-text="{{getAllowedFileExtensions()}}"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/>"/>
                         Bildformate können in der <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>Bilderverwaltung<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> importiert werden.
                     </source>
-        <target state="final">
+        <target state="translated">
                         Supported file formats: <x id="INTERPOLATION" equiv-text="{{allowedFileExtensions}}"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/>"/>
                         Image formats can be imported via the <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>image management<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/>.
                     </target>
@@ -636,7 +636,15 @@
         <target state="final">Non-imported resources</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
-          <context context-type="linenumber">199</context>
+          <context context-type="linenumber">200</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="buttons.back" datatype="html">
+        <source>Zurück</source>
+        <target state="new">Zurück</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/import/import.html</context>
+          <context context-type="linenumber">210</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.modal.info" datatype="html">
@@ -1510,7 +1518,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/editable-map.html</context>
-          <context context-type="linenumber">61</context>
+          <context context-type="linenumber">63</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/map/map/layers/layer-menu.html</context>

@@ -18,6 +18,7 @@ import {DepictsRelationsViewComponent} from './documentinfo/depicts-relations-vi
 import {ThumbnailComponent} from './documentinfo/thumbnail.component';
 import {IdaiMessagesModule} from '../messages/idai-messages.module';
 import {PagingButtonsComponent} from './paging-buttons.component';
+import {SearchConstraintsComponent} from './search-constraints.component';
 
 
 @NgModule({
@@ -41,7 +42,8 @@ import {PagingButtonsComponent} from './paging-buttons.component';
         CategoryPickerComponent,
         ZoomButtonsComponent,
         CategoryIconComponent,
-        PagingButtonsComponent
+        PagingButtonsComponent,
+        SearchConstraintsComponent as any
     ],
     providers: [
         Loading

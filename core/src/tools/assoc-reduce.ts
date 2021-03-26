@@ -15,7 +15,7 @@ export function assocReduce<T,A>(f: (a: A, i?: number|string) => [string, T], ta
 export function assocReduce<T,A>(f: (a: A, i?: number|string) => [string|number, T], target: Map<T>|Array<T>) {
 
     return (source: Array<A>|Map<A>) => keysValues(/* we do not modify target in place */
-        copy(source as any) as any)
+        copy(source as any))
         .reduce((copied: any, [i,a]: any) => {
             const [k1, v1] = f(a, i);
             copied[k1] = v1;

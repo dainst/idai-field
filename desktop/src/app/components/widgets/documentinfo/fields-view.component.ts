@@ -98,16 +98,11 @@ export class FieldsViewComponent implements OnChanges {
                 (key: string) => this.utilTranslations.getTranslation(key)
             );
         } else if (object.inputUnit) {
-            const clonedObject = clone(object);
-            if (clonedObject.measurementPosition) {
-                clonedObject.measurementPosition = ValuelistUtil.getValueLabel(
-                    field.positionValues, clonedObject.measurementPosition
-                );
-            }
             return Dimension.generateLabel(
-                clonedObject,
+                object,
                 (value: any) => this.decimalPipe.transform(value),
                 (key: string) => this.utilTranslations.getTranslation(key),
+                ValuelistUtil.getValueLabel(field.positionValues, object.measurementPosition)
             );
         } else if (object.quotation) {
             return Literature.generateLabel(

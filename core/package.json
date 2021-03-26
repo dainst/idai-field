@@ -10,7 +10,7 @@
         "dist"
     ],
     "scripts": {
-        "build": "tsc -p .",
+        "build": "rm -rf dist && tsc -p .",
         "build:watch": "tsc -watch -p .",
         "test": "jasmine JASMINE_CONFIG_PATH=test/jasmine.json"
     },

@@ -11,6 +11,8 @@ export module StringUtils {
     
     export const prepend = (insert: string) => (to: string) => insert + to
 
+    export const stringify = (o: any) => JSON.stringify(o);
+
 
     export function split(pattern: RegExp|string) {
 

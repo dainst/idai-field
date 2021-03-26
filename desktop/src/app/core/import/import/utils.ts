@@ -1,5 +1,4 @@
-import {arrayEqual, to, isNot, on, undefinedOrEmpty, union} from 'tsfun';
-import {map as aMap} from 'tsfun/async';
+import {aMap, arrayEqual, to, isNot, on, undefinedOrEmpty, union} from 'tsfun';
 import {Document, Relations} from 'idai-components-2';
 import {ImportErrors as E} from './import-errors';
 import {HierarchicalRelations} from '../../model/relation-constants';

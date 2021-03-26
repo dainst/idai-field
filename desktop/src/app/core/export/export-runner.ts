@@ -1,5 +1,4 @@
-import {includedIn, isNot, on, to, map, pairWith, val} from 'tsfun';
-import {map as asyncMap, flow as asyncFlow} from 'tsfun/async';
+import {includedIn, isNot, on, to, map, pairWith, val, aMap, aFlow} from 'tsfun';
 import {Document} from 'idai-components-2';
 import {FieldDocument, Named} from '@idai-field/core';
 import {ISRECORDEDIN_CONTAIN} from '../constants';
@@ -28,11 +27,11 @@ export module ExportRunner {
                                         getIdentifierForId: GetIdentifierForId,
                                         performExport: PerformExport) {
 
-        return await asyncFlow(
+        return await aFlow(
                 selectedOperationId
                     ? await fetchDocuments(find, selectedOperationId, selectedCategory)
                     : [],
-                asyncMap(rewriteIdentifiers(getIdentifierForId)),
+                aMap(rewriteIdentifiers(getIdentifierForId)),
                 map(to(Document.RESOURCE)),
                 performExport(selectedCategory, relations));
     }

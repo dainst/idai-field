@@ -2,9 +2,7 @@ import {Document} from 'idai-components-2';
 import {Lookup} from '../../../util/utils';
 import {ResourceId} from '../../../constants';
 import {makeDocumentsLookup} from '../utils';
-import {reduce as asyncReduce} from 'tsfun/async';
-import {compose, lookup, map, flatten, flow, isDefined, Pair, remove, subtract, union} from 'tsfun';
-import {map as aMap} from 'tsfun/src/async';
+import {compose, lookup, map, flatten, flow, isDefined, Pair, remove, subtract, union, aReduce, aMap} from 'tsfun';
 import {clone} from '../../../util/object-util';
 import {ImportErrors as E} from '../import-errors';
 
@@ -16,9 +14,9 @@ export async function makeLookups(documents: Array<Document>,
 
     const documentsLookup = makeDocumentsLookup(documents);
 
-    const targetIdsLookup = await asyncReduce(
+    const targetIdsLookup = await aReduce(
         getTargetIds(mergeMode, get, documentsLookup), {}, documentsLookup);
-    const targetDocumentsLookup = await asyncReduce(
+    const targetDocumentsLookup = await aReduce(
         getTargetDocuments(get), {}, targetIdsLookup);
     const targetsLookup: Lookup<[ResourceId[], Array<Document>]> = map(targetIdsLookup, (ids) => {
         return [ids[0], union(ids).map(lookup(targetDocumentsLookup))]

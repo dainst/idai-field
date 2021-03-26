@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { isProjectDocument } from '@idai-field/core';
 import { Action, Document } from 'idai-components-2';
 import { Observable, Observer } from 'rxjs';
-import { map as asyncMap } from 'tsfun/async';
+import { aMap } from 'tsfun';
 import { ResourceId, RevisionId } from '../../constants';
 import { SettingsProvider } from '../../settings/settings-provider';
 import { ObserverUtil } from '../../util/observer-util';
@@ -122,7 +122,7 @@ export class ChangesStream {
 
     private async getConflictedDocuments(conflicts: Array<RevisionId>, resourceId: ResourceId) {
 
-        return await asyncMap((revisionId: string) => {
+        return await aMap(revisionId => {
             return this.datastore.fetchRevision(resourceId, revisionId);
         }, conflicts);
     }

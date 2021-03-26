@@ -112,7 +112,7 @@
     "express-pouchdb": "4.2.0",
     "extract-zip": "2.0.1",
     "geojson-rewind": "0.3.1",
-    "idai-components-2": "1.52.2",
+    "idai-components-2": "1.54.0",
     "jimp": "0.9.8",
     "leaflet": "1.6.0",
     "leaflet-imageoverlay-rotated": "0.1.1",
@@ -128,7 +128,7 @@
     "showdown": "1.9.1",
     "svg-pan-zoom": "3.6.0",
     "systemjs": "0.21.5",
-    "tsfun": "4.25.0",
+    "tsfun": "4.26.0",
     "tslib": "^1.10.0",
     "viz.js": "1.8.1",
     "zone.js": "~0.10.2"

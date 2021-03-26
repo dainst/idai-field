@@ -1,8 +1,7 @@
 import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import {DecimalPipe} from '@angular/common';
-import {isBoolean, isArray, isObject, filter, compose, Mapping, on, isDefined, map, flatten, to, pairWith,
+import {isBoolean, isArray, aFlow, aMap, isObject, filter, compose, Mapping, on, isDefined, map, flatten, to, pairWith,
     RIGHT, LEFT, update_a, lookup} from 'tsfun';
-import {flow as aFlow, map as aMap} from 'tsfun/async';
 import {Resource, Dating, Dimension, Literature, OptionalRange} from 'idai-components-2';
 import {FieldDocument, namedArrayToNamedMap, Named} from '@idai-field/core';
 import {RoutingService} from '../../routing-service';
@@ -16,7 +15,6 @@ import {RelationDefinition} from '../../../core/configuration/model/relation-def
 import shouldBeDisplayed = FieldsViewUtil.shouldBeDisplayed;
 import {ReadDatastore} from '../../../core/datastore/model/read-datastore';
 import {ValuelistUtil} from '../../../core/util/valuelist-util';
-import {clone} from '../../../core/util/object-util';
 
 
 type FieldContent = any;

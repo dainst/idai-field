@@ -1,7 +1,6 @@
 import {Component, ElementRef, Input, OnChanges, ViewChild, EventEmitter, Output, SimpleChanges} from '@angular/core';
 import {SafeResourceUrl} from '@angular/platform-browser';
-import {to} from 'tsfun';
-import {reduce as asyncReduce} from 'tsfun/async';
+import {to, aReduce} from 'tsfun';
 import {ImageDocument} from '@idai-field/core';
 import {ImageRow, ImageRowItem, ImageRowUpdate, PLACEHOLDER} from '../../../core/images/row/image-row';
 import {ReadImagestore} from '../../../core/images/imagestore/read-imagestore';
@@ -161,7 +160,7 @@ export class ImageRowComponent implements OnChanges {
 
         const thumbnailUrls: { [imageId: string]: SafeResourceUrl } = this.thumbnailUrls || {};
 
-        await asyncReduce(
+        await aReduce(
             imageIds,
             async (result: { [imageId: string]: SafeResourceUrl }, imageId: string) => {
                 if (imageId !== PLACEHOLDER) {

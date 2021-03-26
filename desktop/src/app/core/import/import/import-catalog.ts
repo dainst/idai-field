@@ -1,5 +1,4 @@
-import {isArray, isNot, isUndefinedOrEmpty, set, subtract, to, undefinedOrEmpty} from 'tsfun';
-import {map as asyncMap} from 'tsfun/async';
+import {isArray, isNot, isUndefinedOrEmpty, aMap, set, subtract, to, undefinedOrEmpty} from 'tsfun';
 import {Document} from 'idai-components-2';
 import {DocumentDatastore} from '../../datastore/document-datastore';
 import {clone} from '../../util/object-util';
@@ -68,7 +67,7 @@ export function buildImportCatalog(services: ImportCatalogServices,
             assertRelationsValid(importDocuments);
             assertNoDeletionOfRelatedTypes(existingCatalogDocuments, importDocuments);
 
-            const updateDocuments = await asyncMap(importDocuments,
+            const updateDocuments = await aMap(importDocuments,
                 importOneDocument(services, context, existingCatalogAndImageDocuments));
 
             await removeRelatedImages(

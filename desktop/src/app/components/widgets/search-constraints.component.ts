@@ -1,7 +1,6 @@
 import {Component, Input, OnChanges, Renderer2, SimpleChanges} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
-import {on, is} from 'tsfun';
-import {filter as asyncFilter} from 'tsfun/async';
+import {on, is, aFilter} from 'tsfun';
 import {ConstraintIndex} from '../../core/datastore/index/constraint-index';
 import {SearchBarComponent} from './search-bar.component';
 import {FieldDefinition} from '../../core/configuration/model/field-definition';
@@ -222,7 +221,7 @@ export abstract class SearchConstraintsComponent implements OnChanges {
 
         const customConstraints: { [name: string]: string } = clone(this.getCustomConstraints());
 
-        const invalidConstraintsNames: string[] = (await asyncFilter(
+        const invalidConstraintsNames: string[] = (await aFilter(
             Object.keys(customConstraints), this.isInvalidConstraint.bind(this))
         );
 

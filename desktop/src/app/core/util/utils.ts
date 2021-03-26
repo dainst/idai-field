@@ -36,12 +36,6 @@ export function toMap<T extends Named>(categories: Associative<T>) {
 }
 
 
-export function toArray(token: any) {
-
-    return Array.from(token);
-}
-
-
 /**
  * to be used with reduce
  */
@@ -71,7 +65,7 @@ export function pick<A>(as: Array<A>, targetId: number): A;
 export function pick<A>(struct: Map<A>|Array<A>, targetId: string|number): A  {
 
     const result = (struct as any)[targetId];
-    if (!result) throw 'assertion violation - given key/index does not exist on associative';
+    if (!result) throw 'illegal argument in pick - given key/index does not exist on associative';
     return result as A;
 }
 
@@ -125,18 +119,4 @@ function _setOn(object: any, path: Array<string|number>, val: any) {
         }
         _setOn(object[key], path, val);
     }
-}
-
-
-// --- please do not remove, even if not used currently ---
-
-/**
- * keys = ['a', 'b']
- * o = { a: 1, b: 2, c: 3 }
- * ->
- * [1, 2]
- */
-export function toTuple(...keys: string[]) {
-
-    return <T>(o: Map<T>) => keys.map(k => to(k)(o));
 }

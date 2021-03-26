@@ -43,7 +43,7 @@ import {SearchConstraintsComponent} from './search-constraints.component';
         ZoomButtonsComponent,
         CategoryIconComponent,
         PagingButtonsComponent,
-        SearchConstraintsComponent as any
+        SearchConstraintsComponent as any // TODO review any; this comes because we declared the class abstract; as it was always and as I saw suggested recently; npm run i18n now works due to this change here
     ],
     providers: [
         Loading

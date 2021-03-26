@@ -238,7 +238,7 @@ export class ImageUploader {
                             this.imageDocumentDatastore.get(doc.resource.id, { skipCache: true })
                         ))
                         .then(() =>
-                            resolve()
+                            resolve(undefined)
                         )
                         .catch(error => {
                             console.error(error);

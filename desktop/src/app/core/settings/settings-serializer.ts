@@ -66,7 +66,7 @@ export class SettingsSerializer {
                 if (err) {
                     reject(err);
                 } else {
-                    resolve();
+                    resolve(undefined);
                 }
             });
         });

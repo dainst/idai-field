@@ -207,7 +207,7 @@ export abstract class SearchConstraintsComponent implements OnChanges {
     protected abstract getCustomConstraints(): { [name: string]: string };
 
 
-    protected abstract async setCustomConstraints(constraints: { [name: string]: string }): Promise<void>;
+    protected abstract setCustomConstraints(constraints: { [name: string]: string }): Promise<void>;
 
 
     protected async reset() {

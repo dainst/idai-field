@@ -32,7 +32,7 @@ export class AppController {
 
         return new Promise(resolve => {
 
-            if (!remote.getGlobal('switches').provide_reset) return resolve();
+            if (!remote.getGlobal('switches').provide_reset) return resolve(undefined);
 
             const control = express();
             control.use(express.json());
@@ -44,7 +44,7 @@ export class AppController {
 
             control.listen(3003, function() {
                 console.log('App Control listening on port 3003');
-                resolve();
+                resolve(undefined);
             });
         });
     }

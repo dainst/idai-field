@@ -17,7 +17,7 @@ describe('map --', function() {
 
         return Promise.resolve()
             .then(() => { return new Promise(function(resolve) {
-                setTimeout(function() { resolve(); }, delays.shortRest);
+                setTimeout(function() { resolve(undefined); }, delays.shortRest);
             })}).then(() => { return MapPage.clickMap(100,100); })
             .then(() => { return MapPage.clickMap(200,200); })
             .then(() => { return MapPage.clickMap(100,200); })
@@ -50,7 +50,7 @@ describe('map --', function() {
 
         return Promise.resolve()
             .then(() => { return new Promise(function(resolve) {
-                setTimeout(function() { resolve(); }, delays.shortRest);
+                setTimeout(function() { resolve(undefined); }, delays.shortRest);
             })}).then(() => { return MapPage.clickMap(100,100); })
             .then(() => { return MapPage.clickMap(200,200); })
             .then(() => { return MapPage.clickMap(300,100); })
@@ -63,7 +63,7 @@ describe('map --', function() {
 
         return Promise.resolve()
             .then(() => { return new Promise(function(resolve) {
-                setTimeout(function() { resolve(); }, delays.shortRest);
+                setTimeout(function() { resolve(undefined); }, delays.shortRest);
             })}).then(() => { return MapPage.clickMap(100,100); })
             .then(() => { return MapPage.clickMap(200,200); })
             .then(() => { return MapPage.clickMap(300,100); })

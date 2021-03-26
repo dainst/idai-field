@@ -23,7 +23,7 @@ export module JavaToolExecutor {
                     } else if (stderr !== '') {
                         reject(stderr);
                     } else {
-                        resolve();
+                        resolve(undefined);
                     }
                 });
         });

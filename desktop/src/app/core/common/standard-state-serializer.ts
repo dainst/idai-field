@@ -44,14 +44,14 @@ export class StandardStateSerializer extends StateSerializer {
 
         return new Promise((resolve, reject) => {
 
-            if (this.settingsProvider.getSettings().selectedProject === 'test') return resolve();
+            if (this.settingsProvider.getSettings().selectedProject === 'test') return resolve(undefined);
 
             fs.writeFile(this.getFilePath(stateType),
                     JSON.stringify(stateObject), (err: any) => {
                 if (err) {
                     reject(err);
                 } else {
-                    resolve();
+                    resolve(undefined);
                 }
             });
         });
@@ -63,13 +63,13 @@ export class StandardStateSerializer extends StateSerializer {
         return new Promise((resolve, reject) => {
 
             const filePath: string = this.getFilePath(stateType);
-            if (!fs.existsSync(filePath)) return resolve();
+            if (!fs.existsSync(filePath)) return resolve(undefined);
 
             fs.unlink(filePath, (err: any) => {
                 if (err) {
                     reject(err);
                 } else {
-                    resolve();
+                    resolve(undefined);
                 }
             });
         });

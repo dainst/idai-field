@@ -79,7 +79,7 @@ function resetConfigJson(): Promise<any> {
     return new Promise(resolve => {
         fs.writeFile(configPath, JSON.stringify(configTemplate), err => {
             if (err) console.error('Failure while resetting config.json', err);
-            resolve();
+            resolve(undefined);
         });
     });
 }
@@ -89,7 +89,7 @@ function resetApp(): Promise<any> {
 
     return new Promise(resolve => {
         require('request').post('http://localhost:3003/reset', () => {
-            resolve();
+            resolve(undefined);
         });
     });
 }

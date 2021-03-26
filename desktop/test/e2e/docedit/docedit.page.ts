@@ -87,9 +87,9 @@ export class DoceditPage {
                         return new Promise(function(resolve) {
                             setTimeout(function() {
                                 if (clickMsgAway) {
-                                    NavbarPage.clickCloseAllMessages().then(() => resolve());
+                                    NavbarPage.clickCloseAllMessages().then(() => resolve(undefined));
                                 } else {
-                                    resolve();
+                                    resolve(undefined);
                                 }
                             }, delays.shortRest / 5);
                         })

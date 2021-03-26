@@ -63,7 +63,7 @@ export class PouchDbFsImagestore /* implements Imagestore */{
                 }
             }
 
-            resolve();
+            resolve(undefined);
         });
     }
 
@@ -207,7 +207,7 @@ export class PouchDbFsImagestore /* implements Imagestore */{
                 this.db.get(key)
                     .then((result: any) => result._rev)
                     .then((rev: any) => this.db.removeAttachment(key, 'thumb', rev))
-                    .then(() => resolve())
+                    .then(() => resolve(undefined))
                     .catch((err: any) => {
                         console.error(err);
                         console.error(key);
@@ -231,10 +231,10 @@ export class PouchDbFsImagestore /* implements Imagestore */{
                 }
                 else {
                     this.putAttachment(data, key, documentExists)
-                        .then(() => resolve()
+                        .then(() => resolve(undefined)
                     ).catch((warning: any) => {
                         console.warn(warning);
-                        resolve();
+                        resolve(undefined);
                     });
                 }
             });

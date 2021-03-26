@@ -17,7 +17,7 @@ export class MapPage {
                         .perform()
                         .then(() => {
                             setTimeout(() => {
-                                resolve()
+                                resolve(undefined)
                             }, delays.shortRest)
                         })
                 })

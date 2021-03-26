@@ -1,7 +1,7 @@
-import {flow, includedIn, isDefined, isNot, isnt, map, cond, join,
+import {flow, includedIn, isDefined, isNot, isnt, map, cond,
     dense, compose, remove} from 'tsfun';
 import {Resource} from 'idai-components-2';
-import {FieldResource} from '@idai-field/core';
+import {FieldResource, StringUtils} from '@idai-field/core';
 import {HierarchicalRelations} from '../../model/relation-constants';
 import {FieldDefinition} from '../../configuration/model/field-definition';
 import {CSVMatrixExpansion} from './csv-matrix-expansion';
@@ -105,10 +105,10 @@ export module CSVExport {
             map(
                 cond(isDefined,
                     compose(getFieldValue,
-                        _ => _ + '"',
-                        _ => '"' + _),
+                        StringUtils.append('"'),
+                        StringUtils.prepend('"')),
                     '""')),
-            join(SEPARATOR));
+            StringUtils.join(SEPARATOR));
     }
 
 

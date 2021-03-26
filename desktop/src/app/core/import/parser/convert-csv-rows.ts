@@ -1,8 +1,9 @@
-import {isArray, isnt, set, sort, split, flow, filter, isNot, dense, throws,
+import {isArray, isnt, set, sort, flow, filter, isNot, dense, throws,
     first, startsWith, longerThan, map, forEach} from 'tsfun';
 import {ParserErrors} from './parser-errors';
 import CSV_PATH_ITEM_TYPE_MISMATCH = ParserErrors.CSV_HEADING_PATH_ITEM_TYPE_MISMATCH;
 import CSV_HEADING_ARRAY_INDICES_INVALID_SEQUENCE = ParserErrors.CSV_HEADING_ARRAY_INDICES_INVALID_SEQUENCE;
+import {StringUtils} from '@idai-field/core';
 
 
 const PATH_SEPARATOR = '.';
@@ -92,7 +93,7 @@ function extractLeadingIndices(paths: string[]): number[] {
 
     return flow(
         paths,
-        map(split(PATH_SEPARATOR)),
+        map(StringUtils.split(PATH_SEPARATOR)),
         map(first),
         map((s: string) => parseInt(s)), // deliberate use of explicit form to avoid cases where '0' was parsed to NaN
         filter(isNot(isNaN)),

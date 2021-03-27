@@ -286,8 +286,8 @@ export module ConstraintIndex {
             map(Category.getFields),
             flatten(),
             getUniqueFields,
-            filter(to(FieldDefinition.CONSTRAINTINDEXED))
-        ) as any /* TODO review */;
+            filter<FieldDefinition>(to(FieldDefinition.CONSTRAINTINDEXED))
+        );
     }
 
 

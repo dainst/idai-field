@@ -12,13 +12,14 @@ import {getSortedIds} from './get-sorted-ids';
 import {Query} from '../model/query';
 import {namedArrayToNamedMap} from '@idai-field/core';
 import {InitializationProgress} from '../../initialization-progress';
+import { getFieldsToIndex } from './get-fields-to-index';
 
 const TYPE = 'Type';
 const INSTANCES = 'instances';
 const INSTANCE_OF = 'isInstanceOf';
 
-
 /**
+ * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
 export class IndexFacade {
@@ -140,7 +141,8 @@ export class IndexFacade {
         }
 
         ConstraintIndex.put(this.constraintIndex, document, skipRemoval);
-        FulltextIndex.put(this.fulltextIndex, document, this.categoriesMap, skipRemoval);
+        FulltextIndex.put(this.fulltextIndex, document,
+            getFieldsToIndex(this.categoriesMap, document.resource.category), skipRemoval);
 
         if (notify) ObserverUtil.notify(this.observers, document);
     }

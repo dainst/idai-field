@@ -7,6 +7,7 @@ import {FulltextIndex} from '../../../../../src/app/core/datastore/index/fulltex
 import {ConstraintIndex} from '../../../../../src/app/core/datastore/index/constraint-index';
 import {Query} from '../../../../../src/app/core/datastore/model/query';
 import {namedArrayToNamedMap} from '@idai-field/core';
+import { getFieldsToIndex } from '../../../../../src/app/core/datastore/index/get-fields-to-index';
 
 /**
  * @author Daniel de Oliveira
@@ -31,7 +32,7 @@ describe('performQuery', () => {
     function put(document: Document) {
 
         ConstraintIndex.put(constraintIndex, document);
-        FulltextIndex.put(fulltextIndex, document, categoriesMap);
+        FulltextIndex.put(fulltextIndex, document, getFieldsToIndex(categoriesMap, document.resource.category));
     }
 
 

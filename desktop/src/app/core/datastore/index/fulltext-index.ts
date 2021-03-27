@@ -1,8 +1,8 @@
-import {flatMap, flow, filter, empty, isNot, isEmpty, Map, map, forEach, lookup} from 'tsfun';
+import {flatMap, flow, filter, empty, isNot, isEmpty, map, forEach, lookup} from 'tsfun';
 import {Document, Resource} from 'idai-components-2';
 import {ResultSets} from './result-sets';
 import {StringUtils} from '@idai-field/core';
-import {Category} from '../../configuration/model/category';
+
 
 
 export interface FulltextIndex {
@@ -20,14 +20,12 @@ export interface FulltextIndex {
  */
 export module FulltextIndex {
 
-    const defaultFieldsToIndex = ['identifier', 'shortDescription'];
-
     const tokenizationPattern: RegExp = /[ \-_]/;
 
 
     export function put(index: FulltextIndex,
                         document: Document,
-                        categoriesMap: { [categoryName: string]: Category },
+                        fieldsToIndex: string[],
                         skipRemoval: boolean = false) {
 
         if (!skipRemoval) remove(index, document);
@@ -37,7 +35,7 @@ export module FulltextIndex {
         index[document.resource.category]['*'][document.resource.id] = true;
 
         flow(
-            getFieldsToIndex(categoriesMap, document.resource.category),
+            fieldsToIndex,
             filter(lookup(document.resource)),
             filter((field: any) => document.resource[field] !== ''),
             map(lookup(document.resource)),
@@ -111,17 +109,6 @@ export module FulltextIndex {
                 return accumulator;
             }, '');
         }
-    }
-
-
-    function getFieldsToIndex(categoriesMap: Map<Category>, categoryName: string): string[] {
-
-        return !categoriesMap[categoryName]
-            ? []
-            : Category.getFields(categoriesMap[categoryName])
-                .filter(field => field.fulltextIndexed)
-                .map(field => field.name)
-                .concat(defaultFieldsToIndex);
     }
 
 

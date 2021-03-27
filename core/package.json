@@ -15,8 +15,8 @@
         "test": "jasmine JASMINE_CONFIG_PATH=test/jasmine.json"
     },
     "dependencies": {
-        "idai-components-2": "1.55.0",
-        "tsfun": "4.27.0"
+        "idai-components-2": "1.56.0",
+        "tsfun": "5.0.0"
     },
     "devDependencies": {
         "@types/jasmine": "3.5.0",

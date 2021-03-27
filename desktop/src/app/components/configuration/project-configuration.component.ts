@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {to, on, is, isnt, includedIn, or, any, compose, map, Predicate, longerThan} from 'tsfun';
+import {to, on, is, isnt, includedIn, or, any, compose, map, Predicate} from 'tsfun';
 import {FieldResource, Named} from '@idai-field/core';
 import {ProjectConfiguration} from '../../core/configuration/project-configuration';
 import {Category} from '../../core/configuration/model/category';
@@ -74,8 +74,8 @@ export class ProjectConfigurationComponent {
 
         return category.groups.filter(
             or(
-                on(Group.FIELDS, longerThan([])),
-                on(Group.RELATIONS, longerThan([]))
+                (_: Group) => _.fields.length > 0,
+                (_: Group) => _.relations.length > 0
             )
         );
     }

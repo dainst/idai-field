@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import {DecimalPipe} from '@angular/common';
 import {isBoolean, isArray, aFlow, aMap, isObject, filter, compose, Mapping, on, isDefined, map, flatten, to, pairWith,
-    RIGHT, LEFT, update_a, lookup} from 'tsfun';
+    R, L, update_a, lookup} from 'tsfun';
 import {Resource, Dating, Dimension, Literature, OptionalRange} from 'idai-components-2';
 import {FieldDocument, namedArrayToNamedMap, Named} from '@idai-field/core';
 import {RoutingService} from '../../routing-service';
@@ -127,8 +127,8 @@ export class FieldsViewComponent implements OnChanges {
             update_a(Group.FIELDS,
                 compose(
                     map(pairWith(fieldContent)),
-                    filter(on(RIGHT, isDefined)),
-                    filter(on(LEFT, FieldsViewUtil.isVisibleField)),
+                    filter(on(R, isDefined)),
+                    filter(on(L, FieldsViewUtil.isVisibleField)),
                     map(this.makeField.bind(this)),
                     flatten() as any /* TODO review typing*/
                 )

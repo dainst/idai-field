@@ -1,4 +1,4 @@
-import {hasnt, includedIn, isArray, isnt, isUndefinedOrEmpty, Map} from 'tsfun';
+import {includedIn, isArray, isnt, isUndefined, isUndefinedOrEmpty, Map, on} from 'tsfun';
 import {Document, Relations} from 'idai-components-2';
 import {Find, Get, Id, Identifier, IdentifierMap} from './types';
 import {iterateRelationsInImport} from './utils';
@@ -140,7 +140,7 @@ function assignIds(documents: Array<Document>,
                    generateId: Function): IdentifierMap {
 
     return documents
-        .filter(hasnt(RESOURCE_DOT_ID))
+        .filter(on(RESOURCE_DOT_ID, isUndefined))
         .reduce((identifierMap, document) => {
 
         identifierMap[document.resource.identifier] = document.resource.id = generateId();

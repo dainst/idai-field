@@ -7,27 +7,21 @@ export module StringUtils {
     
     export const toUpperCase = (s: string) => s.toUpperCase();
 
-    export const append = (insert: string) => (to: string) => to + insert
+    export const append = (insert: string) => (to: string) => to + insert;
     
-    export const prepend = (insert: string) => (to: string) => insert + to
+    export const prepend = (insert: string) => (to: string) => insert + to;
 
     export const stringify = (o: any) => JSON.stringify(o);
 
-
-    export function split(pattern: RegExp|string) {
-
-        return (content: string) => content.split(pattern);
-    }
+    export const startsWith = (what: string) => (source: string) => source.startsWith(what);
     
+    export const endsWith = (what: string) => (source: string) => source.endsWith(what);
+
+    export const size = (s: string) => s.length;
+
+    export const split = (pattern: RegExp|string) => (content: string) => content.split(pattern);
     
-    export function join(pattern: string) {
-    
-        return <A>(content: Array<A>): string => content.join(pattern);
-    }
+    export const join = (pattern: string) => <A>(content: Array<A>): string => content.join(pattern);
 
-
-    export function toArray(s: string) {
-
-        return Array.from(s);
-    }
+    export const toArray = (s: string) => Array.from(s);
 }

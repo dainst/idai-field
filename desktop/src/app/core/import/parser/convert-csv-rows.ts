@@ -1,5 +1,5 @@
 import {isArray, isnt, set, sort, flow, filter, isNot, dense, throws,
-    first, startsWith, longerThan, map, forEach} from 'tsfun';
+    first, startsWith, lt, map, forEach, on, size, gt, reduce, val} from 'tsfun';
 import {ParserErrors} from './parser-errors';
 import CSV_PATH_ITEM_TYPE_MISMATCH = ParserErrors.CSV_HEADING_PATH_ITEM_TYPE_MISMATCH;
 import CSV_HEADING_ARRAY_INDICES_INVALID_SEQUENCE = ParserErrors.CSV_HEADING_ARRAY_INDICES_INVALID_SEQUENCE;
@@ -39,15 +39,14 @@ export function convertCsvRows(separator: string) {
 
         const rows: string[][] = getRows(content, separator);
         if (rows.length < 0) return [];
+
         const headings: string[] = rows.shift() as string[];
         assertHeadingsIsntEmptyandDoesntContainEmptyEntries(headings);
         assertHeadingsConsistent(headings);
         assertHeadingsDoNotContainIncompleteArrays(headings);
         assertRowsAndHeadingLengthsMatch(headings, rows);
 
-        return map(
-            row => row.reduce(insertFieldIntoDocument(headings), {}),
-            rows);
+        return map(rows, _ => _.reduce(insertFieldIntoDocument(headings), {}));
     }
 }
 
@@ -70,9 +69,9 @@ function assertHeadingsDoNotContainIncompleteArrays(headings: string[]) {
     if (indices.length !== 0 && indices.length !== headings.length) {
         throw [CSV_PATH_ITEM_TYPE_MISMATCH, headings];
     }
-    set(indices).forEach((n, i) => {
-        if (n !== i) throw [CSV_HEADING_ARRAY_INDICES_INVALID_SEQUENCE, set(indices)];
-    });
+    set(indices)
+        .filter((n, i) => n !== i)
+        .forEach(throws([CSV_HEADING_ARRAY_INDICES_INVALID_SEQUENCE, set(indices)]));
 
     flow(
         headings,
@@ -138,8 +137,8 @@ function assertHeadingsConsistent(headings: string[]) {
 
         flow(
             headings,
-            filter(startsWith(heading as any) as any /* TODO review*/),
-            filter(longerThan(heading as any) as any),
+            filter(StringUtils.startsWith(heading)),  /* TODO review*/
+            filter(on(StringUtils.size, gt)(heading)),
             filter((otherHeading: string) => otherHeading.substr(heading.length).includes('.')),
             forEach(throws([ParserErrors.CSV_INVALID_HEADING, heading])));
     });

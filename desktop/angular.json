@@ -50,7 +50,7 @@
               "src/manual"
             ],
             "styles": [
-              "src/app/components/app.scss",
+              "src/app.scss",
               "node_modules/leaflet/dist/leaflet.css",
               "node_modules/@geoman-io/leaflet-geoman-free/dist/leaflet-geoman.css"
             ],
@@ -85,7 +85,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "extractLicenses": true,
               "vendorChunk": false,

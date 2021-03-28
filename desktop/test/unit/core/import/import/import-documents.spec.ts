@@ -3,12 +3,16 @@ import {ImportErrors as E, ImportErrors} from '../../../../../src/app/core/impor
 import {buildImportDocuments} from '../../../../../src/app/core/import/import/import-documents';
 import {Settings} from '../../../../../src/app/core/settings/settings';
 
+
 /**
  * @author Daniel de Oliveira
  */
 describe('importDocuments', () => {
 
+    let options: any;
+    let services: any;
     let helpers: any;
+    let context: any;
     let validator;
     let importFunction;
     let operationCategoryNames = ['Trench'];
@@ -33,8 +37,10 @@ describe('importDocuments', () => {
             'assertNoForbiddenRelations']);
 
         validator.assertHasLiesWithin.and.returnValue();
-
         validator.assertIsRecordedInTargetsExist.and.returnValue(Promise.resolve());
+
+        services = { validator };
+
         const find  = (_: string) => Promise.resolve({ totalCount: 0 });
 
         const get = async resourceId => {
@@ -50,6 +56,12 @@ describe('importDocuments', () => {
             else throw 'missing';
         };
 
+        context = {
+            operationCategoryNames,
+            inverseRelationsMap: {},
+            settings: { username: 'user1'} as Settings
+        }
+
         helpers = {
             find,
             get,
@@ -58,19 +70,21 @@ describe('importDocuments', () => {
             postprocessDocument: identity
         };
 
+        options = { mergeMode: false, permitDeletions: false };
+
         importFunction = buildImportDocuments(
-            { validator },
-            { operationCategoryNames: operationCategoryNames, inverseRelationsMap: {}, settings: { username: 'user1'} as Settings },
+            services,
+            context,
             helpers,
-            { mergeMode: false, permitDeletions: false });
+            options);
     });
 
 
     it('should resolve on success', async done => {
 
         const [_, result] = await importFunction([
-            { resource: { category: 'Find', identifier: 'one', relations: { isChildOf: '0'} } } as any],
-            'user1');
+            { resource: { category: 'Find', identifier: 'one', relations: { isChildOf: '0'} } } as any]
+        );
 
         expect(result.createDocuments.length).toBe(1);
         done();
@@ -88,8 +102,8 @@ describe('importDocuments', () => {
         );
 
         const [_, result] = await (buildImportDocuments(
-            { validator },
-            { operationCategoryNames: operationCategoryNames, inverseRelationsMap: {}, settings: { username: 'user1' } as Settings },
+            services,
+            context,
             helpers,
             { mergeMode: true, useIdentifiersInRelations: true }))(
             [{ resource: { id: '1', relations: {} } } as any]);
@@ -104,12 +118,8 @@ describe('importDocuments', () => {
     it('does not overwrite if exists', async done => {
 
         const [_1, result] = await (buildImportDocuments(
-            { validator },
-            {
-                operationCategoryNames: operationCategoryNames,
-                inverseRelationsMap: {},
-                settings: { username: 'user1'} as Settings
-            },
+            services,
+            context,
             helpers,
             { mergeMode: false }))
 
@@ -152,12 +162,8 @@ describe('importDocuments', () => {
     it('parent not found', async done => {
 
         importFunction = buildImportDocuments(
-            { validator },
-            {
-                operationCategoryNames: operationCategoryNames,
-                inverseRelationsMap: {},
-                settings: { username: 'user1'} as Settings
-            },
+            services,
+            context,
             helpers,
             { mergeMode: false, useIdentifiersInRelations: true }); // !
 
@@ -176,12 +182,8 @@ describe('importDocuments', () => {
     it('parent not found, when using plain ids', async done => {
 
         importFunction = buildImportDocuments(
-            { validator },
-            {
-                operationCategoryNames: operationCategoryNames,
-                inverseRelationsMap: {},
-                settings: { username: 'user1'} as Settings
-            },
+            services,
+            context,
             helpers,
             { mergeMode: false, useIdentifiersInRelations: false}); // !
 
@@ -229,6 +231,48 @@ describe('importDocuments', () => {
 
         expect(error[0]).toEqual(E.INVALID_RELATIONS);
         expect(error[2]).toEqual('isRecordedIn');
+        done();
+    });
+
+
+    it('fix - don\'t throw with relations pointing to existing resource, with existing resource' , async done => {
+
+        helpers.get = async resourceId => {
+
+            if (resourceId === '2') return {
+                resource: {
+                    id: '2',
+                    identifier: 'two',
+                    category: 'Feature',
+                    relations: {}
+                }
+            };
+            else throw 'missing';
+        };
+
+        helpers.find = async identifier => {
+
+            if (identifier === 'one') return {
+                resource: {
+                    id: '1',
+                    identifier: 'one',
+                    category: 'Feature',
+                    relations: {}
+                }
+            };
+            else throw 'missing';
+        };
+
+        context.inverseRelationsMap = { 'isAbove': 'isBelow' };
+        options.useIdentifiersInRelations = true;
+
+        const [_, result] = await importFunction([
+            { resource: { category: 'Feature', identifier: 'one', relations: { isAbove: ['2'] } } }]);
+
+        expect(result.createDocuments).toEqual([]);
+        expect(result.updateDocuments).toEqual([]);
+        expect(result.targetDocuments).toEqual([]);
+        expect(result.ignoredIdentifiers).toEqual(['one']);
         done();
     });
 });

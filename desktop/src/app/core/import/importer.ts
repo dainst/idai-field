@@ -27,6 +27,7 @@ import {RelationsManager} from '../model/relations-manager';
 import {ImageRelationsManager} from '../model/image-relations-manager';
 import {Imagestore} from '../images/imagestore/imagestore';
 import {Updater} from './import/updater';
+import { Find } from './import/types';
 
 export type ImporterFormat = 'native' | 'geojson' | 'geojson-gazetteer' | 'shapefile' | 'csv' | 'catalog';
 
@@ -95,7 +96,7 @@ export module Importer {
                                    documents: Array<Document>): Promise<ImporterReport> {
 
         if (options.format === 'catalog') { // TODO test manually
-            const { errors, successfulImports } = 
+            const { errors, successfulImports } =
                 await (buildImportCatalog(services, context.settings))(documents);
             return { errors: errors, successfulImports: successfulImports, ignoredIdentifiers: [] };
         }
@@ -105,29 +106,31 @@ export module Importer {
         const inverseRelationsMap = makeInverseRelationsMap(context.projectConfiguration.getAllRelationDefinitions());
         const preprocessDocument = FieldConverter.preprocessDocument(context.projectConfiguration);
         const postprocessDocument = FieldConverter.postprocessDocument(context.projectConfiguration);
+        const find = findByIdentifier(services.datastore);
+        const get = (resourceId: string) => services.datastore.get(resourceId);
 
         let importFunction;
         switch (options.format) {
             case 'geojson-gazetteer':
                 importFunction = buildImportDocuments(
-                    { datastore: services.datastore, validator },
+                    { validator },
                     { operationCategoryNames, inverseRelationsMap, settings: context.settings },
-                    { generateId, preprocessDocument, postprocessDocument },
+                    { find, get, generateId, preprocessDocument, postprocessDocument },
                     { mergeMode: false, permitDeletions: false });
                 break;
             case 'shapefile':
             case 'geojson':
                 importFunction = buildImportDocuments(
-                    { datastore: services.datastore, validator },
+                    { validator },
                     { operationCategoryNames, inverseRelationsMap, settings: context.settings },
-                    { generateId, preprocessDocument, postprocessDocument },
+                    { find, get, generateId, preprocessDocument, postprocessDocument },
                     { mergeMode: true, permitDeletions: false, useIdentifiersInRelations: true });
                 break;
             default: // native | csv
                 importFunction = buildImportDocuments(
-                    { datastore: services.datastore, validator },
+                    { validator },
                     { operationCategoryNames, inverseRelationsMap, settings: context.settings },
-                    { generateId, preprocessDocument, postprocessDocument },
+                    { find, get, generateId, preprocessDocument, postprocessDocument },
                     {
                         mergeMode: options.mergeMode,
                         permitDeletions: options.permitDeletions,
@@ -138,7 +141,7 @@ export module Importer {
 
         const [error, result] = await importFunction(documents);
         if (error !== undefined) return { errors: [error], successfulImports: 0, ignoredIdentifiers: [] };
-        
+
         try {
             await Updater.go(
                 result.createDocuments,
@@ -220,5 +223,18 @@ export module Importer {
             case 'catalog':
                 return CatalogJsonlParser.parse;
         }
+    }
+}
+
+
+function findByIdentifier(datastore: DocumentDatastore): Find {
+
+    return async (identifier: string) => {
+
+        const result = await datastore.find({ constraints: { 'identifier:match': identifier }});
+
+        return result.totalCount === 1
+            ? result.documents[0]
+            : undefined;
     }
 }

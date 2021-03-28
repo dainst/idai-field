@@ -87,8 +87,6 @@ export function makeSureRelationStructuresExists(documents: Array<Document>) {
  */
 export async function preprocessRelations(documents: Array<Document>,
                                           helpers: ImportHelpers,
-                                          get: Get,
-                                          find: Find,
                                           { mergeMode, permitDeletions, useIdentifiersInRelations}: ImportOptions) {
 
     const generateId = helpers.generateId;
@@ -102,9 +100,9 @@ export async function preprocessRelations(documents: Array<Document>,
         removeSelfReferencingIdentifiers(relations, document.resource.identifier); // TODO do in makeSureRelationStructuresExist; rename that one
         if (!permitDeletions) Relations.removeEmpty(relations);
         if (useIdentifiersInRelations) {
-            await rewriteIdentifiersInRelations(relations, find, identifierMap);
+            await rewriteIdentifiersInRelations(relations, helpers.find, identifierMap);
         } else {
-            await assertNoMissingRelationTargets(relations, get)
+            await assertNoMissingRelationTargets(relations, helpers.get)
         }
     }
 }

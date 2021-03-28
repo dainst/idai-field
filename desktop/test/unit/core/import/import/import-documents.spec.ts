@@ -8,7 +8,7 @@ import {Settings} from '../../../../../src/app/core/settings/settings';
  */
 describe('importDocuments', () => {
 
-    let datastore;
+    let helpers: any;
     let validator;
     let importFunction;
     let operationCategoryNames = ['Trench'];
@@ -18,8 +18,6 @@ describe('importDocuments', () => {
 
         spyOn(console, 'debug');
 
-        datastore = jasmine.createSpyObj('datastore',
-            ['bulkCreate', 'bulkUpdate', 'get', 'find']);
         validator = jasmine.createSpyObj('validator', [
             'assertIsRecordedInTargetsExist',
             'assertRelationsWellformedness',
@@ -37,11 +35,9 @@ describe('importDocuments', () => {
         validator.assertHasLiesWithin.and.returnValue();
 
         validator.assertIsRecordedInTargetsExist.and.returnValue(Promise.resolve());
-        datastore.bulkCreate.and.callFake((a) => Promise.resolve(a)); // TODO remove these lines
-        datastore.bulkUpdate.and.callFake((a) => Promise.resolve(a));
-        datastore.find.and.returnValue(Promise.resolve({ totalCount: 0 }));
+        const find  = (_: string) => Promise.resolve({ totalCount: 0 });
 
-        datastore.get.and.callFake(async resourceId => {
+        const get = async resourceId => {
 
             if (resourceId === '0') return {
                 resource: {
@@ -52,16 +48,20 @@ describe('importDocuments', () => {
                 }
             };
             else throw 'missing';
-        });
+        };
+
+        helpers = {
+            find,
+            get,
+            generateId: () => '101',
+            preprocessDocument: identity,
+            postprocessDocument: identity
+        };
 
         importFunction = buildImportDocuments(
-            { datastore, validator },
+            { validator },
             { operationCategoryNames: operationCategoryNames, inverseRelationsMap: {}, settings: { username: 'user1'} as Settings },
-            {
-                generateId: () => '101',
-                preprocessDocument: identity,
-                postprocessDocument: identity
-            },
+            helpers,
             { mergeMode: false, permitDeletions: false });
     });
 
@@ -80,22 +80,17 @@ describe('importDocuments', () => {
     it('merge if exists', async done => {
 
         validator.assertIsRecordedInTargetsExist.and.returnValue(Promise.resolve(undefined));
-        datastore.find.and.returnValue(Promise.resolve({
-            totalCount: 1,
-            documents: [{ resource: { identifier: '123', id: '1', relations: {} } }]
-        }));
-        datastore.get.and.returnValue(Promise.resolve(
+        helpers.find = (_: string) => Promise.resolve(
             { resource: { identifier: '123', id: '1', relations: {} } }
-        ));
+        );
+        helpers.get = (_: string) => Promise.resolve(
+            { resource: { identifier: '123', id: '1', relations: {} } }
+        );
 
         const [_, result] = await (buildImportDocuments(
-            { datastore, validator },
+            { validator },
             { operationCategoryNames: operationCategoryNames, inverseRelationsMap: {}, settings: { username: 'user1' } as Settings },
-            {
-                generateId: () => '101',
-                preprocessDocument: identity,
-                postprocessDocument: identity
-            },
+            helpers,
             { mergeMode: true, useIdentifiersInRelations: true }))(
             [{ resource: { id: '1', relations: {} } } as any]);
 
@@ -109,17 +104,13 @@ describe('importDocuments', () => {
     it('does not overwrite if exists', async done => {
 
         const [_1, result] = await (buildImportDocuments(
-            { datastore, validator },
+            { validator },
             {
                 operationCategoryNames: operationCategoryNames,
                 inverseRelationsMap: {},
                 settings: { username: 'user1'} as Settings
             },
-            {
-                generateId: () => '101',
-                preprocessDocument: identity,
-                postprocessDocument: identity
-            },
+            helpers,
             { mergeMode: false }))
 
         ([{ resource: { category: 'Find', identifier: 'one', relations: { isChildOf: '0' } } } as any]);
@@ -134,13 +125,13 @@ describe('importDocuments', () => {
     // TODO review
     xit('should reject on err in datastore', async done => {
 
-        datastore.bulkCreate.and.returnValue(Promise.reject(['abc']));
+        // datastore.bulkCreate.and.returnValue(Promise.reject(['abc']));
 
-        const { errors } = await importFunction(
-            [{ resource: { category: 'Find', identifier: 'one', relations: { isChildOf: '0' } } } as any],
-            datastore, 'user1');
+        // const { errors } = await importFunction(
+            // [{ resource: { category: 'Find', identifier: 'one', relations: { isChildOf: '0' } } } as any],
+            // datastore, 'user1');
 
-        expect(errors[0][0]).toBe('abc');
+        // expect(errors[0][0]).toBe('abc');
         done();
     });
 
@@ -151,7 +142,7 @@ describe('importDocuments', () => {
 
         const [error, _] = await importFunction([
             { resource: { category: 'Nonexisting', identifier: '1a', relations: { isChildOf: '0' } } } as any
-        ], datastore, 'user1');
+        ]);
 
         expect(error[0]).toEqual(ImportErrors.INVALID_CATEGORY);
         done();
@@ -161,20 +152,16 @@ describe('importDocuments', () => {
     it('parent not found', async done => {
 
         importFunction = buildImportDocuments(
-            { datastore, validator },
+            { validator },
             {
                 operationCategoryNames: operationCategoryNames,
                 inverseRelationsMap: {},
                 settings: { username: 'user1'} as Settings
             },
-            {
-                generateId: () => '101',
-                preprocessDocument: identity,
-                postprocessDocument: identity
-            },
+            helpers,
             { mergeMode: false, useIdentifiersInRelations: true }); // !
 
-        datastore.find.and.returnValue(Promise.resolve({ totalCount: 0 }));
+        helpers.find = (_: string) => Promise.resolve(undefined);
 
         const [error, _] = await importFunction([
             { resource: { category: 'Feature', identifier: '1a', relations: { isChildOf: 'notfound' } } } as any
@@ -189,20 +176,16 @@ describe('importDocuments', () => {
     it('parent not found, when using plain ids', async done => {
 
         importFunction = buildImportDocuments(
-            { datastore, validator },
+            { validator },
             {
                 operationCategoryNames: operationCategoryNames,
                 inverseRelationsMap: {},
                 settings: { username: 'user1'} as Settings
             },
-            {
-                generateId: () => '101',
-                preprocessDocument: identity,
-                postprocessDocument: identity
-            },
+            helpers,
             { mergeMode: false, useIdentifiersInRelations: false}); // !
 
-        datastore.find.and.returnValue(Promise.resolve({ totalCount: 0 }));
+        helpers.find = (_: string) => Promise.resolve(undefined);
 
         const [error, _] = await importFunction([
             { resource: { category: 'Feature', identifier: '1a', relations: { isChildOf: 'notfound' } } } as any

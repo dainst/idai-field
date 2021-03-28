@@ -26,6 +26,8 @@ export interface ImportOptions {
 
 export interface ImportHelpers {
 
+    get: Get;
+    find: Find;
     generateId: () => string;
     preprocessDocument: (_: Document) => Document;
     postprocessDocument: (_: Document) => Document;
@@ -34,8 +36,7 @@ export interface ImportHelpers {
 
 export interface ImportServices {
 
-    validator: ImportValidator,
-    datastore: DocumentDatastore
+    validator: ImportValidator
 }
 
 
@@ -91,11 +92,8 @@ export function buildImportDocuments(services: ImportServices,
         }
     }
 
-    const get  = (resourceId: string) => services.datastore.get(resourceId);
-    const find = findByIdentifier(services.datastore);
-
     return (documents: Array<Document>) => importDocuments(
-            services, context, helpers, options,find, get, documents);
+            services, context, helpers, options, documents);
 }
 
 
@@ -103,25 +101,23 @@ async function importDocuments(services: ImportServices,
                                context: ImportContext,
                                helpers: ImportHelpers,
                                options: ImportOptions,
-                               find: Find,
-                               get: Get,
                                documents: Array<Document>): Promise<Result> {
 
     makeSureRelationStructuresExists(documents);
     complementInverseRelationsBetweenImportDocs(context, options, documents); // TODO now that we have that here, we could simplify later steps probably
 
     try {
-        const existingImportDocuments = await makeExistingDocumentsMap(find, options, documents);
+        const existingImportDocuments = await makeExistingDocumentsMap(helpers.find, options, documents);
         const { documentsToImport, documentsToIgnore } = getDocumentsToImport(existingImportDocuments, options, documents);
         preprocessFields(documentsToImport, options);
-        await preprocessRelations(documentsToImport, helpers, get, find, options);
+        await preprocessRelations(documentsToImport, helpers, options);
         const mergeDocs = preprocessDocuments(existingImportDocuments, helpers, options, documentsToImport);
         const processedDocuments = processDocuments(documentsToImport, mergeDocs, services.validator);
         const targetDocuments = await processRelations(
             processedDocuments,
             services.validator,
             context.operationCategoryNames,
-            get,
+            helpers.get,
             context.inverseRelationsMap,
             options
         );
@@ -205,17 +201,4 @@ function preprocessDocuments(existingDocuments: Map<Document>,
     }
 
     return mergeDocs;
-}
-
-
-function findByIdentifier(datastore: DocumentDatastore): Find {
-
-    return async (identifier: string) => {
-
-        const result = await datastore.find({ constraints: { 'identifier:match': identifier }});
-
-        return result.totalCount === 1
-            ? result.documents[0]
-            : undefined;
-    }
 }

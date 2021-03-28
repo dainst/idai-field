@@ -1,5 +1,5 @@
 import {Map, Either} from 'tsfun';
-import {Document} from 'idai-components-2';
+import {Document, Resource} from 'idai-components-2';
 import {ImportValidator} from './process/import-validator';
 import {DocumentDatastore} from '../../datastore/document-datastore';
 import {Find, Get} from './types';
@@ -109,6 +109,7 @@ async function importDocuments(services: ImportServices,
     try {
         const existingImportDocuments = await makeExistingDocumentsMap(helpers.find, options, documents);
         const { documentsToImport, documentsToIgnore } = getDocumentsToImport(existingImportDocuments, options, documents);
+
         preprocessFields(documentsToImport, options);
         await preprocessRelations(documentsToImport, helpers, options);
         const mergeDocs = preprocessDocuments(existingImportDocuments, helpers, options, documentsToImport);
@@ -153,7 +154,7 @@ async function makeExistingDocumentsMap(find: Find,
     if (!options.useIdentifiersInRelations) return {};
     const lookup = {};
     for (const document of documents) {
-        const identifier = document.resource['identifier'] as string; // not a FieldDocument yet
+        const identifier = document.resource[Resource.IDENTIFIER] as string; // not a FieldDocument yet
         const found = await find(identifier);
         if (found) lookup[identifier] = found;
     }

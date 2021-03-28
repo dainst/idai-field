@@ -17,6 +17,33 @@ describe('importDocuments', () => {
     let importFunction;
     let operationCategoryNames = ['Trench'];
 
+    const zero = {
+        resource: {
+            id: '0',
+            identifier: '0',
+            category: 'Trench',
+            relations: {}
+        }
+    };
+
+    const one = {
+        resource: {
+            id: '1',
+            identifier: 'one',
+            category: 'Feature',
+            relations: {}
+        }
+    };
+
+    const two = {
+        resource: {
+            id: '2',
+            identifier: 'two',
+            category: 'Feature',
+            relations: {}
+        }
+    };
+
 
     beforeEach(() => {
 
@@ -41,18 +68,11 @@ describe('importDocuments', () => {
 
         services = { validator };
 
-        const find  = (_: string) => Promise.resolve({ totalCount: 0 });
+        const find  = (_: string) => Promise.resolve(undefined);
 
         const get = async resourceId => {
 
-            if (resourceId === '0') return {
-                resource: {
-                    id: '0',
-                    identifier: '0',
-                    category: 'Trench',
-                    relations: {}
-                }
-            };
+            if (resourceId === '0') return zero;
             else throw 'missing';
         };
 
@@ -239,40 +259,56 @@ describe('importDocuments', () => {
 
         helpers.get = async resourceId => {
 
-            if (resourceId === '2') return {
-                resource: {
-                    id: '2',
-                    identifier: 'two',
-                    category: 'Feature',
-                    relations: {}
-                }
-            };
+            if (resourceId === '2') return two;
             else throw 'missing';
         };
 
         helpers.find = async identifier => {
 
-            if (identifier === 'one') return {
-                resource: {
-                    id: '1',
-                    identifier: 'one',
-                    category: 'Feature',
-                    relations: {}
-                }
-            };
+            if (identifier === 'one') return one;
             else throw 'missing';
         };
 
         context.inverseRelationsMap = { 'isAbove': 'isBelow' };
         options.useIdentifiersInRelations = true;
 
-        const [_, result] = await importFunction([
+        const [error, result] = await importFunction([
             { resource: { category: 'Feature', identifier: 'one', relations: { isAbove: ['2'] } } }]);
 
         expect(result.createDocuments).toEqual([]);
         expect(result.updateDocuments).toEqual([]);
         expect(result.targetDocuments).toEqual([]);
         expect(result.ignoredIdentifiers).toEqual(['one']);
+        done();
+    });
+
+
+    it('fix - don\'t throw where identifier lookup only was done in import documents' , async done => {
+
+        helpers.get = async resourceId => {
+
+            if (resourceId === '2') return two;
+            else throw 'missing';
+        };
+
+        helpers.find = async identifier => {
+
+            if (identifier === 'one') return undefined;
+            if (identifier === 'two') return two;
+            else throw 'missing';
+        };
+
+        context.inverseRelationsMap = { 'isAbove': 'isBelow' };
+        options.useIdentifiersInRelations = true;
+
+        const [error, result] = await importFunction([
+            { resource: { category: 'Feature', identifier: 'one', relations: { isAbove: ['two'] } } }]);
+
+        expect(error).toBe(undefined);
+        expect(result.createDocuments.length).toBe(1);
+        expect(result.updateDocuments).toEqual([]);
+        expect(result.targetDocuments.length).toBe(1);
+        expect(result.ignoredIdentifiers).toEqual([]);
         done();
     });
 });

@@ -1,7 +1,7 @@
 import {flatMap, flow, filter, empty, isNot, isEmpty, map, forEach, lookup} from 'tsfun';
 import {Document, Resource} from 'idai-components-2';
 import {ResultSets} from './result-sets';
-import {StringUtils} from '@idai-field/core';
+import {StringUtils} from '../tools/string-utils';
 
 
 

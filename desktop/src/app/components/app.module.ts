@@ -30,7 +30,7 @@ import {PouchdbManager} from '../core/datastore/pouchdb/pouchdb-manager';
 import {PouchdbServer} from '../core/datastore/pouchdb/pouchdb-server';
 import {TaskbarConflictsComponent} from './navbar/taskbar-conflicts.component';
 import {IndexFacade} from '../core/datastore/index/index-facade';
-import {FulltextIndex} from '../core/datastore/index/fulltext-index';
+import {FulltextIndex} from '@idai-field/core';
 import {ConstraintIndex} from '../core/datastore/index/constraint-index';
 import {HelpComponent} from './help/help.component';
 import {TaskbarUpdateComponent} from './navbar/taskbar-update.component';

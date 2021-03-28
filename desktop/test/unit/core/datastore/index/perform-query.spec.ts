@@ -3,7 +3,7 @@ import {IndexerConfiguration} from '../../../../../src/app/indexer-configuration
 import {createMockProjectConfiguration} from './helpers';
 import {Static} from '../../../static';
 import {performQuery as performQuery_} from '../../../../../src/app/core/datastore/index/perform-query';
-import {FulltextIndex} from '../../../../../src/app/core/datastore/index/fulltext-index';
+import {FulltextIndex} from '@idai-field/core';
 import {ConstraintIndex} from '../../../../../src/app/core/datastore/index/constraint-index';
 import {Query} from '../../../../../src/app/core/datastore/model/query';
 import {namedArrayToNamedMap} from '@idai-field/core';

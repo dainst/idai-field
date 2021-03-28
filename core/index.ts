@@ -20,3 +20,6 @@ export {sortStructArray} from './src/tools/sort-struct-array';
 export {TreeList, Tree} from './src/tools/tree-list';
 export {isTopLevelItemOrChildThereof, filterTrees, removeTrees} from './src/tools/named-tree-list';
 export {StringUtils} from './src/tools/string-utils';
+export {FulltextIndex} from './src/index/fulltext-index';
+export {ResultSets} from './src/index/result-sets';
+export {IndexItem, TypeResourceIndexItem} from './src/index/index-item';

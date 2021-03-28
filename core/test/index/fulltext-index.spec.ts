@@ -1,6 +1,6 @@
-import {FulltextIndex} from '../../../../../src/app/core/datastore/index/fulltext-index';
-import {IndexItem} from '../../../../../src/app/core/datastore/index/index-item';
-import {Static} from '../../../static';
+import {FulltextIndex} from '../../src/index/fulltext-index';
+import {IndexItem} from '../../src/index/index-item';
+import { Static } from '../static';
 
 
 /**

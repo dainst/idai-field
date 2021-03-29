@@ -18,7 +18,7 @@ export module ChangeHistoryMerge {
         const changeHistory: Array<Action> = getCombinedChangeHistory([mainDocument, secondDocument]);
         sortChangeHistory(changeHistory);
 
-        if (changeHistory.length == 0) return;
+        if (changeHistory.length === 0) return;
 
         mainDocument.created = changeHistory.shift() as Action;
         mainDocument.modified = changeHistory;

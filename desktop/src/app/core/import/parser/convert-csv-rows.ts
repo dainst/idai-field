@@ -96,7 +96,7 @@ function extractLeadingIndices(paths: string[]): number[] {
         map(first),
         map(StringUtils.parseInt),
         filter(isDefined),
-        sort as any);
+        sort as any /*TODO any*/);
 }
 
 

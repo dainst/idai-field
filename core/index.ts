@@ -32,7 +32,7 @@ export {Category} from './src/model/category';
 export {Group, Groups, BaseGroup} from './src/model/group'
 export {getFieldsToIndex} from './src/index/get-fields-to-index';
 export {ConstraintIndex} from './src/index/constraint-index';
-export {clone} from './src/tools/object-util';
+export {clone, jsonClone} from './src/tools/object-util';
 export {Query} from './src/model/query';
 export {Constraint} from './src/model/constraint';
 export {IndexFacade} from './src/index/index-facade';

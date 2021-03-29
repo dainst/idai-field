@@ -1,4 +1,7 @@
-import {clone as tsfunClone, jsonClone} from 'tsfun';
+import {clone as tsfunClone} from 'tsfun';
+
+
+export function jsonClone(x: any) { return JSON.parse(JSON.stringify(x)); }
 
 
 /**

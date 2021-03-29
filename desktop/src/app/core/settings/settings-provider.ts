@@ -1,6 +1,7 @@
 import {Settings} from './settings';
 import {Name} from '../constants';
-import {set,jsonClone} from 'tsfun';
+import {set} from 'tsfun';
+import {jsonClone} from '@idai-field/core';
 import {SettingsSerializer} from './settings-serializer';
 
 

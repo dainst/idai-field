@@ -16,8 +16,8 @@
     },
     "dependencies": {
         "rxjs": "~6.5.4",
-        "idai-components-2": "1.56.0",
-        "tsfun": "5.0.0"
+        "idai-components-2": "1.57.0",
+        "tsfun": "5.2.1"
     },
     "devDependencies": {
         "@types/jasmine": "3.5.0",

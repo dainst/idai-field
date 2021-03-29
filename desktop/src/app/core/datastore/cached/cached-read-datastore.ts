@@ -1,9 +1,8 @@
-import {jsonClone} from 'tsfun';
 import {Document} from 'idai-components-2';
 import {PouchdbDatastore} from '../pouchdb/pouchdb-datastore';
 import {DocumentCache} from './document-cache';
 import {CategoryConverter} from './category-converter';
-import {IndexFacade, Query} from '@idai-field/core';
+import {IndexFacade, Query, jsonClone} from '@idai-field/core';
 import {DatastoreErrors} from '../model/datastore-errors';
 import {FindIdsResult, FindResult, ReadDatastore} from '../model/read-datastore';
 import {ConfigurationErrors} from '../../configuration/boot/configuration-errors';

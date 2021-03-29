@@ -1,7 +1,6 @@
 import {Document} from 'idai-components-2';
-import {HierarchicalRelations} from '../../../../../../src/app/core/model/relation-constants';
+import {HierarchicalRelations} from '@idai-field/core';
 import RECORDED_IN = HierarchicalRelations.RECORDEDIN;
-import LIES_WITHIN = HierarchicalRelations.LIESWITHIN;
 import {ImportErrors as E} from '../../../../../../src/app/core/import/import/import-errors';
 import {createMockValidator, d} from '../helper';
 import {processDocuments} from '../../../../../../src/app/core/import/import/process/process-documents';
@@ -11,21 +10,7 @@ describe('processDocuments', () => {
 
     let validator;
 
-    let operationCategoryNames = ['Trench'];
-
     const existingFeature = {resource: { category: 'Feature', identifier: 'existingFeature', id: 'ef1', relations: { isRecordedIn: ['et1'] } } };
-    const existingFeature2 = {resource: { category: 'Feature', identifier: 'existingFeature2', id: 'ef2', relations :{ isRecordedIn: ['et2'] } } };
-
-    const relationInverses = { isAfter: 'isBefore' };
-
-    let get = async (resourceId): Promise<any> => {
-
-        if (resourceId === 'ef1') return existingFeature;
-        if (resourceId === 'ef2') return existingFeature2;
-        if (resourceId === 'et1') return { resource: { category: 'Trench', identifier: 'existingTrench', id: 'et1', relations: {} } };
-        if (resourceId === 'et2') return { resource: { category: 'Trench', identifier: 'existingTrench2', id: 'et2', relations: {} } };
-        else throw 'missing';
-    };
 
     let resourceIdCounter;
 

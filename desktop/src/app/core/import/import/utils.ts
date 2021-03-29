@@ -1,7 +1,7 @@
 import {aMap, arrayEqual, to, isNot, on, undefinedOrEmpty, union} from 'tsfun';
 import {Document, Relations} from 'idai-components-2';
 import {ImportErrors as E} from './import-errors';
-import {HierarchicalRelations} from '../../model/relation-constants';
+import {HierarchicalRelations} from '@idai-field/core';
 import RECORDED_IN = HierarchicalRelations.RECORDEDIN;
 import {Id, Identifier} from './types';
 import {makeLookup} from '../../../../../../core/src/tools/transformers';

@@ -2,7 +2,7 @@ import {
     createApp, createHelpers,
     setupSyncTestDb
 } from '../subsystem-helper';
-import {ImageRelations} from '../../../../../src/app/core/model/relation-constants';
+import {ImageRelationsC as ImageRelations} from '@idai-field/core';
 
 
 describe('subsystem/image-relations-manager', () => {

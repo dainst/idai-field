@@ -5,7 +5,7 @@ import {ValuelistUtil} from './valuelist-util';
 import {compose, flow, update_a, lookup, and, includedIn, isNot, filter, Filter, map, isString, Map, on, to, undefinedOrEmpty,
     Predicate, or, is, empty, equal} from 'tsfun';
 import {RelationDefinition} from '../configuration/model/relation-definition';
-import {HierarchicalRelations, ImageRelations} from '../model/relation-constants';
+import {HierarchicalRelations, ImageRelationsC as ImageRelations} from '@idai-field/core';
 import {Category} from '../configuration/model/category';
 import {BaseGroup, Groups} from '../configuration/model/group';
 import {FieldDefinition} from '../configuration/model/field-definition';

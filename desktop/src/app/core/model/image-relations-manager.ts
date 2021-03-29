@@ -5,7 +5,7 @@ import {FieldDocument, ImageDocument, TreeList} from '@idai-field/core';
 import {DocumentDatastore} from '../datastore/document-datastore';
 import {Imagestore} from '../images/imagestore/imagestore';
 import {RelationsManager} from './relations-manager';
-import {ImageRelations} from './relation-constants';
+import {ImageRelationsC as ImageRelations} from '@idai-field/core';
 import {ProjectConfiguration} from '../configuration/project-configuration';
 import {Category} from '../configuration/model/category';
 import DEPICTS = ImageRelations.DEPICTS;

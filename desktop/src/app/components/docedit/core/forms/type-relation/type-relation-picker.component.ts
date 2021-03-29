@@ -6,7 +6,7 @@ import {Resource, Document} from 'idai-components-2';
 import {FieldDocument, FieldResource, onName} from '@idai-field/core';
 import {FieldReadDatastore} from '../../../../../core/datastore/field/field-read-datastore';
 import {TypeImagesUtil} from '../../../../../core/util/type-images-util';
-import {TypeRelations} from '../../../../../core/model/relation-constants';
+import {TypeRelations} from '@idai-field/core';
 import {ProjectConfiguration} from '../../../../../core/configuration/project-configuration';
 import {Category} from '../../../../../core/configuration/model/category';
 import {ValuelistDefinition} from '../../../../../core/configuration/model/valuelist-definition';

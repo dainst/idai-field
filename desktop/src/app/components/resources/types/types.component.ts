@@ -1,5 +1,5 @@
 import {ChangeDetectorRef, Component, Input, OnChanges, SimpleChanges} from '@angular/core';
-import {curry, filter, flatten, flow, isnt, Map, map, set, take, to} from 'tsfun';
+import {curry, filter, flatten, flow, isnt, Map, map, set, take} from 'tsfun';
 import {Document} from 'idai-components-2';
 import {ViewFacade} from '../../../core/resources/view/view-facade';
 import {Loading} from '../../widgets/loading';
@@ -19,7 +19,7 @@ import {TabManager} from '../../../core/tabs/tab-manager';
 import {PLACEHOLDER} from '../../../core/images/row/image-row';
 import {ProjectCategories} from '../../../core/configuration/project-categories';
 import {MenuContext, MenuService} from '../../menu-service';
-import {ImageRelations, TypeRelations} from '../../../core/model/relation-constants';
+import {ImageRelationsC as ImageRelations, TypeRelations} from '@idai-field/core';
 import {SyncService} from '../../../core/sync/sync-service';
 import {SyncStatus} from '../../../core/sync/sync-process';
 import { FieldDocument } from '@idai-field/core';

@@ -6,7 +6,7 @@ import {FieldDefinition} from '../../../core/configuration/model/field-definitio
 import {RelationDefinition} from '../../../core/configuration/model/relation-definition';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
 import {Group, Groups} from '../../../core/configuration/model/group';
-import {TypeRelations} from '../../../core/model/relation-constants';
+import {TypeRelations} from '@idai-field/core';
 import {clone} from '../../../core/util/object-util';
 import {ProjectCategories} from '../../../core/configuration/project-categories';
 

@@ -1,7 +1,7 @@
 import {includedIn, to, is, isNot, on, isnt} from 'tsfun';
 import {Resource, Dimension, Dating} from 'idai-components-2';
 import {ParserErrors} from './parser-errors';
-import {PARENT} from '../../model/relation-constants';
+import {PARENT} from '@idai-field/core';
 import {Category} from '../../configuration/model/category';
 import {setOn} from '../../util/utils';
 import {CsvExportConsts} from '../../export/csv/csv-export-consts';

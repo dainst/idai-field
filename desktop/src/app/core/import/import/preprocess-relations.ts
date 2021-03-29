@@ -4,7 +4,7 @@ import {Find, Get, Id, Identifier, IdentifierMap} from './types';
 import {iterateRelationsInImport} from './utils';
 import {ImportErrors as E} from './import-errors';
 import {RESOURCE_DOT_ID} from '../../constants';
-import {HierarchicalRelations, PARENT} from '../../model/relation-constants';
+import {HierarchicalRelations, PARENT} from '@idai-field/core';
 import LIES_WITHIN = HierarchicalRelations.LIESWITHIN;
 import {ImportContext, ImportHelpers, ImportOptions} from './import-documents';
 import { makeLookup } from '../../../../../../core/src/tools/transformers';

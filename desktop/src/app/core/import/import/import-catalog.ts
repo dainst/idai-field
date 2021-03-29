@@ -5,7 +5,7 @@ import {clone} from '../../util/object-util';
 import {makeDocumentsLookup} from './utils';
 import {RelationsManager} from '../../model/relations-manager';
 import {ON_RESOURCE_ID} from '../../constants';
-import {HierarchicalRelations, ImageRelations, TypeRelations} from '../../model/relation-constants';
+import {HierarchicalRelations, ImageRelationsC as ImageRelations, TypeRelations} from '@idai-field/core';
 import {ImageRelationsManager} from '../../model/image-relations-manager';
 import {Lookup} from '../../util/utils';
 import {Imagestore} from '../../images/imagestore/imagestore';

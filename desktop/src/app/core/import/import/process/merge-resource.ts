@@ -2,7 +2,7 @@ import {dropRightWhile, includedIn, is, isArray, isNot, isObject, isAssociative,
     Associative, isEmpty, isnt, flow, cond, dissoc, forEach, update, values, filter} from 'tsfun';
 import {NewResource, Resource} from 'idai-components-2';
 import {clone} from '../../../util/object-util';
-import {HierarchicalRelations} from '../../../model/relation-constants';
+import {HierarchicalRelations} from '@idai-field/core';
 import {ImportErrors} from '../import-errors';
 import {hasEmptyAssociatives} from '../../util';
 import {typeOf} from '../../../util/utils';

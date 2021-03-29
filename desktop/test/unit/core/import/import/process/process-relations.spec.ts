@@ -2,7 +2,7 @@ import {processRelations} from '../../../../../../src/app/core/import/import/pro
 import {
     HierarchicalRelations,
     PositionRelations
-} from '../../../../../../src/app/core/model/relation-constants';
+} from '@idai-field/core';
 import LIES_WITHIN = HierarchicalRelations.LIESWITHIN;
 import RECORDED_IN = HierarchicalRelations.RECORDEDIN;
 import {createMockValidator, d} from '../helper';

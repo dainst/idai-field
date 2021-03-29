@@ -9,7 +9,7 @@ import {ValuelistDefinition} from '../../core/configuration/model/valuelist-defi
 import {ValuelistUtil} from '../../core/util/valuelist-util';
 import {TabManager} from '../../core/tabs/tab-manager';
 import {RelationDefinition} from '../../core/configuration/model/relation-definition';
-import {TypeRelations} from '../../core/model/relation-constants';
+import {TypeRelations} from '@idai-field/core';
 import {MenuContext, MenuService} from '../menu-service';
 
 const locale: string = typeof window !== 'undefined'

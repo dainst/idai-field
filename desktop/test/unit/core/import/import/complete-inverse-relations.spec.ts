@@ -1,6 +1,6 @@
 import {ImportErrors as E} from '../../../../../src/app/core/import/import/import-errors';
 import {clone} from '../../../../../src/app/core/util/object-util';
-import {HierarchicalRelations, PositionRelations, TimeRelations} from '../../../../../src/app/core/model/relation-constants';
+import {HierarchicalRelations, PositionRelations, TimeRelations} from '@idai-field/core';
 import IS_BELOW = PositionRelations.BELOW;
 import IS_ABOVE = PositionRelations.ABOVE;
 import IS_AFTER = TimeRelations.AFTER;

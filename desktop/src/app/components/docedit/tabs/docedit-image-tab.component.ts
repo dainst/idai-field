@@ -7,7 +7,7 @@ import {ImageGridComponent} from '../../image/grid/image-grid.component';
 import {ImageReadDatastore} from '../../../core/datastore/field/image-read-datastore';
 import {SortUtil} from '@idai-field/core';
 import {MenuContext, MenuService} from '../../menu-service';
-import {ImageRelations} from '../../../core/model/relation-constants';
+import {ImageRelationsC as ImageRelations} from '@idai-field/core';
 
 
 @Component({

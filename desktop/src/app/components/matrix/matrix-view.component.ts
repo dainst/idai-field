@@ -12,7 +12,7 @@ import {DotBuilder} from './dot-builder';
 import {MatrixSelection, MatrixSelectionMode} from './matrix-selection';
 import {Edges, EdgesBuilder, GraphRelationsConfiguration} from './edges-builder';
 import {ProjectConfiguration} from '../../core/configuration/project-configuration';
-import {PositionRelations, TimeRelations} from '../../core/model/relation-constants';
+import {PositionRelations, TimeRelations} from '@idai-field/core';
 import IS_CONTEMPORARY_WITH = TimeRelations.CONTEMPORARY;
 import IS_EQUIVALENT_TO = PositionRelations.EQUIVALENT;
 import IS_BEFORE = TimeRelations.BEFORE;

@@ -1,7 +1,6 @@
 import {FieldDefinition} from './field-definition';
-import {Labelled, Named} from '@idai-field/core';
+import {Labelled, Named, HierarchicalRelations, ImageRelationsC, PositionRelations, TimeRelations, TypeRelations} from '@idai-field/core';
 import {RelationDefinition} from './relation-definition';
-import {HierarchicalRelations, ImageRelations, PositionRelations, TimeRelations, TypeRelations} from '../../model/relation-constants';
 
 
 export module Groups {
@@ -28,7 +27,7 @@ export module Groups {
     export function getGroupNameForRelation(relationName: string): string|undefined {
 
         if (HierarchicalRelations.ALL.includes(relationName)
-                || ImageRelations.ALL.includes(relationName)) {
+                || ImageRelationsC.ALL.includes(relationName)) {
             return STEM;
         } else if (TimeRelations.ALL.includes(relationName)) {
             return TIME;

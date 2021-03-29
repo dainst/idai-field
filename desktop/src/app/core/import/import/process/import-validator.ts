@@ -6,7 +6,7 @@ import {Validations} from '../../../model/validations';
 import {ImportErrors as E} from '../import-errors';
 import {DocumentDatastore} from '../../../datastore/document-datastore';
 import {ResourceId} from '../../../constants';
-import {HierarchicalRelations} from '../../../model/relation-constants';
+import {HierarchicalRelations} from '@idai-field/core';
 import {ProjectConfiguration} from '../../../configuration/project-configuration';
 import {Query} from '../../../datastore/model/query';
 import {ProjectCategories} from '../../../configuration/project-categories';

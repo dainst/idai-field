@@ -5,9 +5,9 @@ import {
 } from '../../../../../../src/app/core/import/import/import-catalog';
 import {
     HierarchicalRelations,
-    ImageRelations,
+    ImageRelationsC as ImageRelations,
     TypeRelations
-} from '../../../../../../src/app/core/model/relation-constants';
+} from '@idai-field/core';
 import {createDocuments, NiceDocs} from '../../../../test-helpers';
 
 

@@ -19,7 +19,7 @@ import {ImportErrors as E} from '../import-errors';
 import {
     PositionRelations,
     TimeRelations, UNIDIRECTIONAL_RELATIONS
-} from '../../../model/relation-constants';
+} from '@idai-field/core';
 import {setInverseRelationsForDbResources} from './set-inverse-relations-for-db-resources';
 import {assertInSameOperationWith} from '../utils';
 import {AssertIsAllowedRelationDomainType} from '../types';

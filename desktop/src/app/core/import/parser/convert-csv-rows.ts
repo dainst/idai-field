@@ -1,5 +1,5 @@
-import {isArray, isnt, set, sort, flow, filter, isNot, dense, throws,
-    first, map, forEach, on, gt} from 'tsfun';
+import {isArray, isnt, set, sort, flow, filter, dense, throws,
+    first, map, forEach, on, gt, isDefined} from 'tsfun';
 import {ParserErrors} from './parser-errors';
 import CSV_PATH_ITEM_TYPE_MISMATCH = ParserErrors.CSV_HEADING_PATH_ITEM_TYPE_MISMATCH;
 import CSV_HEADING_ARRAY_INDICES_INVALID_SEQUENCE = ParserErrors.CSV_HEADING_ARRAY_INDICES_INVALID_SEQUENCE;
@@ -94,8 +94,8 @@ function extractLeadingIndices(paths: string[]): number[] {
         paths,
         map(StringUtils.split(PATH_SEPARATOR)),
         map(first),
-        map((s: string) => parseInt(s)), // deliberate use of explicit form to avoid cases where '0' was parsed to NaN
-        filter(isNot(isNaN)),
+        map(StringUtils.parseInt),
+        filter(isDefined),
         sort as any);
 }
 

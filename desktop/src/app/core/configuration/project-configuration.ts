@@ -1,11 +1,8 @@
-import {flow, to, on, isNot, empty, is, Pair, Map, includedIn, map, filter} from 'tsfun';
-import {Category} from './model/category';
-import {FieldDefinition} from './model/field-definition';
-import {RelationDefinition} from './model/relation-definition';
+import {flow, on, isNot, empty, is, Pair, Map, includedIn, map, filter} from 'tsfun';
 import {Named, namedArrayToNamedMap, Tree, TreeList} from '@idai-field/core';
 import {RelationsUtil} from './relations-utils';
 import {Name} from '../constants';
-import {isTopLevelItemOrChildThereof} from '@idai-field/core';
+import {isTopLevelItemOrChildThereof, Category, RelationDefinition, FieldDefinition} from '@idai-field/core';
 import {ConfigurationErrors} from './boot/configuration-errors';
 
 

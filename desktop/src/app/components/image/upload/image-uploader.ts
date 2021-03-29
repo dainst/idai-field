@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {NewImageDocument} from '@idai-field/core';
+import {NewImageDocument, Category} from '@idai-field/core';
 import {Document} from 'idai-components-2';
 import {ImageCategoryPickerModalComponent} from './image-category-picker-modal.component';
 import {UploadModalComponent} from './upload-modal.component';
@@ -10,7 +10,6 @@ import {RelationsManager} from '../../../core/model/relations-manager';
 import {DocumentReadDatastore} from '../../../core/datastore/document-read-datastore';
 import {ImageReadDatastore} from '../../../core/datastore/field/image-read-datastore';
 import {M} from '../../messages/m';
-import {Category} from '../../../core/configuration/model/category';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
 import {Imagestore} from '../../../core/images/imagestore/imagestore';
 import {IdaiFieldFindResult} from '../../../core/datastore/cached/cached-read-datastore';

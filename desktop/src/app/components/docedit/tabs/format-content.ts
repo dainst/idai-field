@@ -1,6 +1,6 @@
 import {flow, identity, isArray, isObject, isString} from 'tsfun';
 import {Dating, Dimension, Literature, OptionalRange, Resource} from 'idai-components-2';
-import {FieldDefinition} from '../../../core/configuration/model/field-definition';
+import {FieldDefinition} from '@idai-field/core';
 import {ValuelistUtil} from '../../../core/util/valuelist-util';
 
 

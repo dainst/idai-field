@@ -1,6 +1,5 @@
 import {empty, isNot, on, subtract} from 'tsfun';
-import {RelationDefinition} from '../model/relation-definition';
-import {Named} from '@idai-field/core';
+import {Named, RelationDefinition} from '@idai-field/core';
 
 
 /**

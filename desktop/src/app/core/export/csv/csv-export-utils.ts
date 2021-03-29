@@ -1,8 +1,7 @@
 import {dense, drop, flow, indices, is, on, first,
     take, prepend, append, reduce, compose, cond, isEmpty, Mapping} from 'tsfun';
-import {FieldDefinition} from '../../configuration/model/field-definition';
 import {Resource} from 'idai-components-2';
-import {FieldResource} from '@idai-field/core';
+import {FieldResource, FieldDefinition} from '@idai-field/core';
 import {clone} from '../../util/object-util';
 import {CsvExportConsts} from './csv-export-consts';
 import RELATIONS_LIES_WITHIN = CsvExportConsts.RELATIONS_LIES_WITHIN;

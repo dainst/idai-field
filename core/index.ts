@@ -25,3 +25,8 @@ export {ResultSets} from './src/index/result-sets';
 export {IndexItem, TypeResourceIndexItem} from './src/index/index-item';
 export {HierarchicalRelations, TimeRelations, TypeRelations, PositionRelations, ImageRelations as ImageRelationsC /*TODO review*/, UNIDIRECTIONAL_RELATIONS, SAME_AS, PARENT} from './src/model/relation-constants';
 export {ValuelistDefinition} from './src/model/valuelist-definition';
+export {FieldDefinition} from './src/model/field-definition';
+export {RelationDefinition} from './src/model/relation-definition';
+export {CategoryDefinition} from './src/model/category-definition';
+export {Category} from './src/model/category';
+export {Group, Groups, BaseGroup} from './src/model/group'

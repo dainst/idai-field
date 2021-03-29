@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {FieldDocument} from '@idai-field/core';
+import {FieldDocument, Category} from '@idai-field/core';
 import {M} from '../messages/m';
 import {ExportModalComponent} from './export-modal.component';
 import {ModelUtil} from '../../core/model/model-util';
@@ -13,7 +13,6 @@ import {CsvExporter} from '../../core/export/csv/csv-exporter';
 import {CategoryCount} from '../../core/export/export-helper';
 import {ExportRunner} from '../../core/export/export-runner';
 import {DocumentReadDatastore} from '../../core/datastore/document-read-datastore';
-import {Category} from '../../core/configuration/model/category';
 import {ProjectConfiguration} from '../../core/configuration/project-configuration';
 import {TabManager} from '../../core/tabs/tab-manager';
 import {Messages} from '../messages/messages';

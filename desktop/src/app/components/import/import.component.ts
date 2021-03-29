@@ -4,7 +4,7 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {remove, isEmpty, flow, forEach, map, take, copy} from 'tsfun';
 import {Document} from 'idai-components-2';
 import {Importer, ImporterFormat, ImporterOptions, ImporterReport} from '../../core/import/importer';
-import {Category} from '../../core/configuration/model/category';
+import {Category} from '@idai-field/core';
 import {UploadModalComponent} from './upload-modal.component';
 import {ModelUtil} from '../../core/model/model-util';
 import {SyncService} from '../../core/sync/sync-service';
@@ -80,7 +80,7 @@ export class ImportComponent implements OnInit {
     public isJavaInstallationMissing = () => this.importState.format === 'shapefile' && !this.javaInstalled;
 
     public isDefaultFormat = () => Importer.isDefault(this.importState.format);
-    
+
     public isMergeMode = () => this.importState.mergeMode;
 
     public shouldDisplayPermitDeletionsOption = () => this.isDefaultFormat() && this.importState.mergeMode === true;

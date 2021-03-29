@@ -1,5 +1,5 @@
 import {flow} from 'tsfun';
-import {RelationDefinition} from './model/relation-definition';
+import {RelationDefinition} from '@idai-field/core';
 import {toPair} from '../util/utils';
 import {assocReduce} from '../../../../../core/src/tools/assoc-reduce';
 

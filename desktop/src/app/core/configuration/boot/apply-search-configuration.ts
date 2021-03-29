@@ -1,5 +1,5 @@
 import {Map} from 'tsfun';
-import {CategoryDefinition} from '../model/category-definition';
+import {CategoryDefinition} from '@idai-field/core';
 
 
 export function applySearchConfiguration(searchConfiguration: any) {

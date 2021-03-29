@@ -1,10 +1,9 @@
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
-import {FieldDocument, namedArrayToNamedMap} from '@idai-field/core';
+import {FieldDocument, namedArrayToNamedMap, Category} from '@idai-field/core';
 import {ResourcesComponent} from '../resources.component';
 import {Loading} from '../../widgets/loading';
 import {BaseList} from '../base-list';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
-import {Category} from '../../../core/configuration/model/category';
 import {ViewFacade} from '../../../core/resources/view/view-facade';
 import {MenuService} from '../../menu-service';
 

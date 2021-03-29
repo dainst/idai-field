@@ -3,14 +3,11 @@ import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {Pair, Mapping, to, isNot, undefinedOrEmpty, left, on, includedIn, right, map, flow, empty, prune,
     is} from 'tsfun';
 import {Resource, Document} from 'idai-components-2';
-import {FieldDocument, FieldResource, onName} from '@idai-field/core';
+import {FieldDocument, FieldResource, onName, Category, Group, FieldDefinition} from '@idai-field/core';
 import {FieldReadDatastore} from '../../../../../core/datastore/field/field-read-datastore';
 import {TypeImagesUtil} from '../../../../../core/util/type-images-util';
 import {TypeRelations, ValuelistDefinition} from '@idai-field/core';
 import {ProjectConfiguration} from '../../../../../core/configuration/project-configuration';
-import {Category} from '../../../../../core/configuration/model/category';
-import {Group} from '../../../../../core/configuration/model/group';
-import {FieldDefinition} from '../../../../../core/configuration/model/field-definition';
 import {ValuelistUtil} from '../../../../../core/util/valuelist-util';
 import {ImageRowItem} from '../../../../../core/images/row/image-row';
 import {FindResult} from '../../../../../core/datastore/model/read-datastore';

@@ -1,15 +1,12 @@
 import {Map, left, to} from 'tsfun';
 import {buildRawProjectConfiguration} from '../../../../../src/app/core/configuration/boot/build-raw-project-configuration';
 import {ConfigurationErrors} from '../../../../../src/app/core/configuration/boot/configuration-errors';
-import {FieldDefinition} from '../../../../../src/app/core/configuration/model/field-definition';
 import {CustomCategoryDefinition} from '../../../../../src/app/core/configuration/model/custom-category-definition';
 import {BuiltinCategoryDefinition} from '../../../../../src/app/core/configuration/model/builtin-category-definition';
 import {LibraryCategoryDefinition} from '../../../../../src/app/core/configuration/model/library-category-definition';
-import {Groups} from '../../../../../src/app/core/configuration/model/group';
+import {byName, Named, namedArrayToNamedMap, toName, Tree,
+    ValuelistDefinition, Groups, Category, FieldDefinition} from '@idai-field/core';
 import InputType = FieldDefinition.InputType;
-import {byName, Named, namedArrayToNamedMap, toName, Tree, ValuelistDefinition} from '@idai-field/core';
-import {Category} from '../../../../../src/app/core/configuration/model/category';
-
 
 describe('buildRawProjectConfiguration', () => {
 

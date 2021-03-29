@@ -2,7 +2,7 @@ import {Component, Input} from '@angular/core';
 import {DecimalPipe} from '@angular/common';
 import {Resource, Dimension} from 'idai-components-2';
 import {UtilTranslations} from '../../../../core/util/util-translations';
-import {FieldDefinition} from '../../../../core/configuration/model/field-definition';
+import {FieldDefinition} from '@idai-field/core';
 import {ValuelistUtil} from '../../../../core/util/valuelist-util';
 import {clone} from '../../../../core/util/object-util';
 

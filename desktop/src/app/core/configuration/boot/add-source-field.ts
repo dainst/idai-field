@@ -2,7 +2,7 @@ import {Map} from 'tsfun';
 import {BuiltinCategoryDefinition} from '../model/builtin-category-definition';
 import {LibraryCategoryDefinition} from '../model/library-category-definition';
 import {CustomCategoryDefinition} from '../model/custom-category-definition';
-import {FieldDefinition} from '../model/field-definition';
+import {FieldDefinition} from '@idai-field/core';
 import {TransientFieldDefinition, TransientCategoryDefinition} from '../model/transient-category-definition';
 
 

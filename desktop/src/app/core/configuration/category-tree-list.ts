@@ -1,5 +1,4 @@
-import {Category} from './model/category';
-import {Tree, TreeList} from '@idai-field/core';
+import {Tree, TreeList, Category} from '@idai-field/core';
 
 
 /**

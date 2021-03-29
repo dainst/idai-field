@@ -1,12 +1,10 @@
 import {includedIn, to, is, isNot, on, isnt} from 'tsfun';
 import {Resource, Dimension, Dating} from 'idai-components-2';
 import {ParserErrors} from './parser-errors';
-import {PARENT} from '@idai-field/core';
-import {Category} from '../../configuration/model/category';
+import {PARENT, Category, FieldDefinition} from '@idai-field/core';
 import {setOn} from '../../util/utils';
 import {CsvExportConsts} from '../../export/csv/csv-export-consts';
 import ARRAY_SEPARATOR = CsvExportConsts.ARRAY_SEPARATOR;
-import {FieldDefinition} from '../../configuration/model/field-definition';
 
 
 type FieldType = 'dating' | 'date' | 'dimension' | 'literature' | 'radio'

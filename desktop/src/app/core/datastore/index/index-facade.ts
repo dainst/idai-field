@@ -3,12 +3,11 @@ import {is, on, flow, isDefined, separate, Map, filter, values, forEach, lookup}
 import {Document, Resource} from 'idai-components-2';
 import {ConstraintIndex} from './constraint-index';
 import {ObserverUtil} from '../../util/observer-util';
-import {Category} from '../../configuration/model/category';
 import {performQuery} from './perform-query';
 import {ResourceId} from '../../constants';
 import {getSortedIds} from './get-sorted-ids';
 import {Query} from '../model/query';
-import {namedArrayToNamedMap, FulltextIndex, IndexItem, TypeResourceIndexItem} from '@idai-field/core';
+import {namedArrayToNamedMap, Category, FulltextIndex, IndexItem, TypeResourceIndexItem} from '@idai-field/core';
 import {InitializationProgress} from '../../initialization-progress';
 import { getFieldsToIndex } from './get-fields-to-index';
 

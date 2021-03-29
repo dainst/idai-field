@@ -1,6 +1,6 @@
 import {Component, ElementRef, Input, OnChanges} from '@angular/core';
 import {Document, Resource} from 'idai-components-2';
-import {RelationDefinition} from '../../../../core/configuration/model/relation-definition';
+import {RelationDefinition} from '@idai-field/core';
 import {RelationPicker} from './relation-picker';
 import {DefaultRelationPicker} from './default-relation-picker';
 import {FieldReadDatastore} from '../../../../core/datastore/field/field-read-datastore';

@@ -1,4 +1,4 @@
-import {ValuelistDefinition} from '@idai-field/core';
+import { ValuelistDefinition } from "./valuelist-definition";
 
 
 /**

@@ -1,7 +1,7 @@
 import {Map} from 'tsfun';
 import {mergeCategories} from '../../../../../src/app/core/configuration/boot/merge-categories';
 import {CustomCategoryDefinition} from '../../../../../src/app/core/configuration/model/custom-category-definition';
-import {FieldDefinition} from '../../../../../src/app/core/configuration/model/field-definition';
+import {FieldDefinition} from '@idai-field/core';
 import {TransientCategoryDefinition} from '../../../../../src/app/core/configuration/model/transient-category-definition';
 
 

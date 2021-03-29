@@ -1,7 +1,7 @@
 import {CsvParser} from '../../../../../src/app/core/import/parser/csv-parser';
 import {makeFieldDefinitions} from '../../export/csv/csv-export.spec';
 import {ParserErrors} from '../../../../../src/app/core/import/parser/parser-errors';
-import {Category} from '../../../../../src/app/core/configuration/model/category';
+import {Category} from '@idai-field/core';
 
 /**
  * @author Daniel de Oliveira

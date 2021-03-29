@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, Output, ViewChild, ElementRef, OnChanges} from '@angular/core';
 import {sameset} from 'tsfun';
-import {Category} from '../../core/configuration/model/category';
+import {Category} from '@idai-field/core';
 import {ProjectConfiguration} from '../../core/configuration/project-configuration';
 
 

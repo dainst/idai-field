@@ -1,6 +1,6 @@
 import {cond, flow, includedIn, isDefined, isNot, Mapping, Map, on, subtract, undefinedOrEmpty, identity,
     compose, Pair, dissoc, pairWith, prune, filter, or, copy, update_a as updateAsc, update as updateStruct, lookup, map, keysValues, reduce, clone, update_a, update } from 'tsfun';
-import {Tree, ValuelistDefinition} from '@idai-field/core';
+import {Tree, ValuelistDefinition, RelationDefinition, Group, Groups, Category, CategoryDefinition, FieldDefinition} from '@idai-field/core';
 import {LibraryCategoryDefinition} from '../model/library-category-definition';
 import {CustomCategoryDefinition} from '../model/custom-category-definition';
 import {ConfigurationErrors} from './configuration-errors';
@@ -14,19 +14,14 @@ import {addSourceField} from './add-source-field';
 import {mergeCategories} from './merge-categories';
 import {addExtraFields} from './add-extra-fields';
 import {hideFields} from './hide-fields';
-import {RelationDefinition} from '../model/relation-definition';
 import {addRelations} from './add-relations';
 import {applySearchConfiguration} from './apply-search-configuration';
 import {orderFields} from './order-fields';
 import {makeCategoryTreeList} from './make-category-tree-list';
 import {RawProjectConfiguration} from '../project-configuration';
-import {Category} from '../model/category';
-import {Group, Groups} from '../model/group';
 import {Labelled} from '../../../../../../core/src/tools/named';
 import {RelationsUtil} from '../relations-utils';
-import {CategoryDefinition} from '../model/category-definition';
 import {ProjectCategories} from '../project-categories';
-import {FieldDefinition} from '../model/field-definition';
 import {TreeList, sortStructArray} from '@idai-field/core';
 import {linkParentAndChildInstances} from '../category-tree-list';
 import {applyLanguageConfigurations} from './apply-language-configurations';

@@ -1,5 +1,5 @@
 import {Map} from 'tsfun';
-import {RelationDefinition} from '../../../../../src/app/core/configuration/model/relation-definition';
+import {RelationDefinition} from '@idai-field/core';
 import {LibraryCategoryDefinition} from '../../../../../src/app/core/configuration/model/library-category-definition';
 import {addRelations} from '../../../../../src/app/core/configuration/boot/add-relations';
 

@@ -1,7 +1,4 @@
-import {FieldResource, Tree} from '@idai-field/core';
-import {Groups} from '../../../../../src/app/core/configuration/model/group';
-import {FieldDefinition} from '../../../../../src/app/core/configuration/model/field-definition';
-import {Category} from '../../../../../src/app/core/configuration/model/category';
+import {FieldResource, Tree, Groups, FieldDefinition, Category} from '@idai-field/core';
 import {makeCategoryTreeList} from '../../../../../src/app/core/configuration/boot/make-category-tree-list';
 import {byName, namedArrayToNamedMap} from '@idai-field/core';
 import InputType = FieldDefinition.InputType;

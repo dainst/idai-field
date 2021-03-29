@@ -1,10 +1,8 @@
 import {Injectable} from '@angular/core';
 import {ConfigLoader} from './boot/config-loader';
 import {ProjectConfiguration} from './project-configuration';
-import {FieldDefinition} from './model/field-definition';
+import {FieldDefinition, RelationDefinition, Groups} from '@idai-field/core';
 import {BuiltinCategoryDefinition} from './model/builtin-category-definition';
-import {RelationDefinition} from './model/relation-definition';
-import {Groups} from './model/group';
 
 
 export const COMMON_FIELDS = {

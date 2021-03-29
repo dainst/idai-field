@@ -1,5 +1,5 @@
 import {ImporterOptions, ImporterFormat} from '../../core/import/importer';
-import {Category} from '../../core/configuration/model/category';
+import {Category} from '@idai-field/core';
 
 
 /**

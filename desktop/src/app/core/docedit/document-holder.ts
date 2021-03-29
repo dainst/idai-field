@@ -7,8 +7,7 @@ import {DocumentDatastore} from '../datastore/document-datastore';
 import {Validations} from '../model/validations';
 import {DuplicationUtil} from './duplication-util';
 import {ProjectConfiguration} from '../configuration/project-configuration';
-import {FieldDefinition} from '../configuration/model/field-definition';
-import {Category} from '../configuration/model/category';
+import {FieldDefinition, Category} from '@idai-field/core';
 import {trimFields} from '../util/trim-fields';
 import {DoceditErrors} from './docedit-errors';
 

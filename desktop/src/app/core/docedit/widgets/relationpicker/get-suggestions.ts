@@ -1,5 +1,5 @@
 import {Document, Resource} from 'idai-components-2';
-import {RelationDefinition} from '../../../configuration/model/relation-definition';
+import {RelationDefinition} from '@idai-field/core';
 import {Query} from '../../../datastore/model/query';
 import {Constraint} from '../../../datastore/model/constraint';
 import {ReadDatastore} from '../../../datastore/model/read-datastore';

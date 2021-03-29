@@ -4,7 +4,7 @@ import {PouchdbServer} from '../../../../../src/app/core/datastore/pouchdb/pouch
 import {Importer, ImporterOptions} from '../../../../../src/app/core/import/importer';
 import {ValidationErrors} from '../../../../../src/app/core/model/validation-errors';
 import {ImportErrors} from '../../../../../src/app/core/import/import/import-errors';
-import {Category} from '../../../../../src/app/core/configuration/model/category';
+import {Category} from '@idai-field/core';
 
 /**
  * @author Daniel de Oliveira

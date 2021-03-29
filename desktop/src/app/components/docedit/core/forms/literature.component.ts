@@ -1,7 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {is, remove} from 'tsfun';
 import {Literature, Resource} from 'idai-components-2';
-import {FieldDefinition} from '../../../../core/configuration/model/field-definition';
+import {FieldDefinition} from '@idai-field/core';
 import {UtilTranslations} from '../../../../core/util/util-translations';
 import {clone} from '../../../../core/util/object-util';
 
@@ -35,7 +35,7 @@ export class LiteratureComponent {
 
 
     public startEditing(literature: Literature) {
-        
+
         this.inEditing.push({ original: literature, clone: clone(literature) });
     }
 
@@ -82,7 +82,7 @@ export class LiteratureComponent {
             const index: number = this.resource[this.field.name].indexOf(this.getOriginal(literature));
             this.resource[this.field.name].splice(index, 1, literature);
         }
-        
+
         this.inEditing = this.inEditing.filter(l => l.clone !== literature);
     }
 

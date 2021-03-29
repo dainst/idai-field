@@ -1,7 +1,6 @@
 import {Static} from '../../../static';
-import {FieldDefinition} from '../../../../../src/app/core/configuration/model/field-definition';
 import {CSVExport} from '../../../../../src/app/core/export/csv/csv-export';
-import {HierarchicalRelations} from '@idai-field/core';
+import {HierarchicalRelations, FieldDefinition} from '@idai-field/core';
 
 
 export function makeFieldDefinitions(fieldNames: string[]) {

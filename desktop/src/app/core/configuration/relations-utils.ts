@@ -1,4 +1,4 @@
-import {RelationDefinition} from './model/relation-definition';
+import {RelationDefinition} from '@idai-field/core';
 
 
 /**

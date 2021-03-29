@@ -1,10 +1,8 @@
 import {Observable, Observer} from 'rxjs';
 import {Document} from 'idai-components-2';
-import {FieldDocument} from '@idai-field/core';
+import {FieldDocument, RelationDefinition, Category} from '@idai-field/core';
 import {ObserverUtil} from '../../util/observer-util';
 import {ProjectConfiguration} from '../../configuration/project-configuration';
-import {RelationDefinition} from '../../configuration/model/relation-definition';
-import {Category} from '../../configuration/model/category';
 import {ViewFacade} from '../view/view-facade';
 import {RoutingService} from '../../../components/routing-service';
 

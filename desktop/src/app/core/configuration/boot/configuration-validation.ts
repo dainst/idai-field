@@ -1,7 +1,5 @@
-import {CategoryDefinition} from '../model/category-definition';
-import {RelationDefinition} from '../model/relation-definition';
 import {ConfigurationErrors} from './configuration-errors';
-import {ValuelistDefinition} from '@idai-field/core';
+import {ValuelistDefinition, CategoryDefinition, RelationDefinition} from '@idai-field/core';
 
 
 /**

@@ -3,8 +3,7 @@ import {ConfigurationDefinition} from '../../../../../src/app/core/configuration
 import {ConfigLoader} from '../../../../../src/app/core/configuration/boot/config-loader';
 import {ConfigurationErrors} from '../../../../../src/app/core/configuration/boot/configuration-errors';
 import {CustomCategoryDefinition} from '../../../../../src/app/core/configuration/model/custom-category-definition';
-import {namedArrayToNamedMap} from '@idai-field/core';
-import {Category} from '../../../../../src/app/core/configuration/model/category';
+import {namedArrayToNamedMap, Category} from '@idai-field/core';
 
 
 /**

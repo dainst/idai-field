@@ -1,6 +1,5 @@
 import {filter, flow, includedIn, is, map, remove} from 'tsfun';
-import {Category} from './model/category';
-import {Named, onName, TreeList, toName, Tree, filterTrees, removeTrees, isTopLevelItemOrChildThereof} from '@idai-field/core';
+import {Named, onName, Category, TreeList, toName, Tree, filterTrees, removeTrees, isTopLevelItemOrChildThereof} from '@idai-field/core';
 import {Name} from '../constants';
 
 

@@ -3,15 +3,12 @@ import {DecimalPipe} from '@angular/common';
 import {isBoolean, isArray, aFlow, aMap, isObject, filter, compose, Mapping, on, isDefined, map, flatten, to, pairWith,
     R, L, update_a, lookup} from 'tsfun';
 import {Resource, Dating, Dimension, Literature, OptionalRange} from 'idai-components-2';
-import {FieldDocument, namedArrayToNamedMap, Named} from '@idai-field/core';
+import {FieldDocument, namedArrayToNamedMap, Named, FieldDefinition, Group, Groups, RelationDefinition} from '@idai-field/core';
 import {RoutingService} from '../../routing-service';
 import {Name} from '../../../core/constants';
 import {UtilTranslations} from '../../../core/util/util-translations';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
-import {FieldDefinition} from '../../../core/configuration/model/field-definition';
-import {Group, Groups} from '../../../core/configuration/model/group';
 import {FieldsViewField, FieldsViewGroup, FieldsViewUtil} from '../../../core/util/fields-view-util';
-import {RelationDefinition} from '../../../core/configuration/model/relation-definition';
 import shouldBeDisplayed = FieldsViewUtil.shouldBeDisplayed;
 import {ReadDatastore} from '../../../core/datastore/model/read-datastore';
 import {ValuelistUtil} from '../../../core/util/valuelist-util';

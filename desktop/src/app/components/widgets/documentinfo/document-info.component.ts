@@ -1,7 +1,6 @@
 import {Component, Input, Output, ElementRef, ViewChild, EventEmitter, DoCheck} from '@angular/core';
 import {Document} from 'idai-components-2';
-import {FieldDocument} from '@idai-field/core';
-import {Groups} from '../../../core/configuration/model/group';
+import {FieldDocument, Groups} from '@idai-field/core';
 import {ProjectCategories} from '../../../core/configuration/project-categories';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
 

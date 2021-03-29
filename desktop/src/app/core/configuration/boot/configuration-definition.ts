@@ -1,5 +1,4 @@
-import {CategoryDefinition} from '../model/category-definition';
-import {RelationDefinition} from '../model/relation-definition';
+import {RelationDefinition} from '@idai-field/core';
 
 /**
  * @author Daniel de Oliveira

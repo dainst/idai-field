@@ -1,6 +1,6 @@
 import {Document} from 'idai-components-2';
 import {Static} from '../../../../static';
-import {RelationDefinition} from '../../../../../../src/app/core/configuration/model/relation-definition';
+import {RelationDefinition} from '@idai-field/core';
 import {getSuggestions, MAX_SUGGESTIONS} from '../../../../../../src/app/core/docedit/widgets/relationpicker/get-suggestions';
 
 

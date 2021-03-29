@@ -1,5 +1,5 @@
 import {Map} from 'tsfun';
-import {FieldDefinition} from '../../../../../src/app/core/configuration/model/field-definition';
+import {FieldDefinition} from '@idai-field/core';
 import {BuiltinCategoryDefinition} from '../../../../../src/app/core/configuration/model/builtin-category-definition';
 import {LibraryCategoryDefinition} from '../../../../../src/app/core/configuration/model/library-category-definition';
 import {CustomCategoryDefinition} from '../../../../../src/app/core/configuration/model/custom-category-definition';

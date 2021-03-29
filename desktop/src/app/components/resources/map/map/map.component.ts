@@ -1,10 +1,9 @@
 import {AfterViewInit, Component, EventEmitter, Input, NgZone, OnChanges, Output, SimpleChanges} from '@angular/core';
-import {FieldDocument, FieldGeometry} from '@idai-field/core';
+import {FieldDocument, FieldGeometry, Category} from '@idai-field/core';
 import {FieldPolyline} from './field-polyline';
 import {FieldPolygon} from './field-polygon';
 import {FieldMarker} from './field-marker';
 import {ProjectConfiguration} from '../../../../core/configuration/project-configuration';
-import {Category} from '../../../../core/configuration/model/category';
 import {MapComponentHelper as H} from './map-component-helper';
 
 

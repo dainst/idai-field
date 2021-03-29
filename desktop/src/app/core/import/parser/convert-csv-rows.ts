@@ -1,5 +1,5 @@
 import {isArray, isnt, set, sort, flow, filter, isNot, dense, throws,
-    first, startsWith, lt, map, forEach, on, size, gt, reduce, val} from 'tsfun';
+    first, map, forEach, on, gt} from 'tsfun';
 import {ParserErrors} from './parser-errors';
 import CSV_PATH_ITEM_TYPE_MISMATCH = ParserErrors.CSV_HEADING_PATH_ITEM_TYPE_MISMATCH;
 import CSV_HEADING_ARRAY_INDICES_INVALID_SEQUENCE = ParserErrors.CSV_HEADING_ARRAY_INDICES_INVALID_SEQUENCE;

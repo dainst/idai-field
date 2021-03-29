@@ -3,12 +3,10 @@ import {is, on, flow, isDefined, separate, Map, filter, values, forEach, lookup}
 import {Document, Resource} from 'idai-components-2';
 import {ObserverUtil} from '../../util/observer-util';
 import {performQuery} from './perform-query';
-import {ResourceId} from '../../constants';
 import {getSortedIds} from './get-sorted-ids';
 import {Query} from '../model/query';
 import {namedArrayToNamedMap, ConstraintIndex, Category, FulltextIndex, IndexItem, TypeResourceIndexItem} from '@idai-field/core';
-import {InitializationProgress} from '../../initialization-progress';
-import { getFieldsToIndex } from '../../../../../../core/src/index/get-fields-to-index';
+import {getFieldsToIndex} from '../../../../../../core/src/index/get-fields-to-index';
 
 const TYPE = 'Type';
 const INSTANCES = 'instances';
@@ -29,7 +27,7 @@ export class IndexFacade {
     constructor(
         private constraintIndex: ConstraintIndex,
         private fulltextIndex: FulltextIndex,
-        private categories: Array<Category>,
+        categories: Array<Category>,
         private showWarnings: boolean
     ) {
         this.categoriesMap = namedArrayToNamedMap(categories);
@@ -39,7 +37,7 @@ export class IndexFacade {
     public changesNotifications = (): Observable<Document> => ObserverUtil.register(this.observers);
 
 
-    public find(query: Query): Array<ResourceId> {
+    public find(query: Query): Array<string /*resourceId*/> {
 
         const queryResult: Array<Resource.Id> = performQuery(query, this.constraintIndex, this.fulltextIndex);
         return this.getSortedResult(query, queryResult);
@@ -56,7 +54,7 @@ export class IndexFacade {
     }
 
 
-    public async putMultiple(documents: Array<Document>, progress?: InitializationProgress) {
+    public async putMultiple(documents: Array<Document>, setIndexedDocuments?: (count: number) => Promise<void>) {
 
         const [typeDocuments, nonTypeDocuments] = separate(on(['resource','category'], is(TYPE)), documents);
 
@@ -65,15 +63,15 @@ export class IndexFacade {
         for (let document of typeDocuments) {
             this._put(document, true, false);
             count++;
-            if (progress && (count % 250 === 0 || count === documents.length)) {
-                await progress.setIndexedDocuments(count);
+            if (setIndexedDocuments && (count % 250 === 0 || count === documents.length)) {
+                await setIndexedDocuments(count);
             }
         }
         for (let document of nonTypeDocuments) {
             this._put(document, true, false);
             count++;
-            if (progress && (count % 250 === 0 || count === documents.length)) {
-                await progress.setIndexedDocuments(count);
+            if (setIndexedDocuments && (count % 250 === 0 || count === documents.length)) {
+                await setIndexedDocuments(count);
             }
         }
     }

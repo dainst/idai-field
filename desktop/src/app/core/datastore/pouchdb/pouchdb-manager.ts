@@ -177,7 +177,7 @@ export class PouchdbManager {
         try {
             documents = this.convertDocuments(documents, converter);
             documents.forEach(doc => documentCache.set(doc));
-            await indexFacade.putMultiple(documents, progress);
+            await indexFacade.putMultiple(documents, progress ? (count: number) => progress.setIndexedDocuments(count) : undefined);
         } catch (err) {
             console.error(err);
             await progress.setError('indexingError');

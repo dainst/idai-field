@@ -1,7 +1,6 @@
 import {flatten, intersection, set} from 'tsfun';
 import {Document} from 'idai-components-2';
-import {FieldDocument, Category} from '@idai-field/core';
-import {clone} from '../util/object-util';
+import {FieldDocument, Category, clone} from '@idai-field/core';
 import {RelationsManager} from '../model/relations-manager';
 import {IndexFacade} from '../datastore/index/index-facade';
 import {Constraint} from '../datastore/model/constraint';

@@ -1,12 +1,10 @@
 import {Component, Input, OnChanges, Renderer2, SimpleChanges} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {on, is, aFilter} from 'tsfun';
-import {ValuelistDefinition, FieldDefinition, Category} from '@idai-field/core';
-import {ConstraintIndex} from '../../core/datastore/index/constraint-index';
+import {ValuelistDefinition, ConstraintIndex, clone, FieldDefinition, Category} from '@idai-field/core';
 import {SearchBarComponent} from './search-bar.component';
 import {ProjectConfiguration} from '../../core/configuration/project-configuration';
 import {ValuelistUtil} from '../../core/util/valuelist-util';
-import {clone} from '../../core/util/object-util';
 import {DocumentReadDatastore} from '../../core/datastore/document-read-datastore';
 
 

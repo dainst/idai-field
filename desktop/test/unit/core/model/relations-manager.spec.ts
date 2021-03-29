@@ -1,6 +1,6 @@
 import {Document} from 'idai-components-2';
 import {RelationsManager} from '../../../../src/app/core/model/relations-manager';
-import {clone} from '../../../../src/app/core/util/object-util';
+import {clone} from '@idai-field/core';
 import {ProjectConfiguration} from '../../../../src/app/core/configuration/project-configuration';
 
 

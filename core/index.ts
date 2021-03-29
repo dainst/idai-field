@@ -30,3 +30,6 @@ export {RelationDefinition} from './src/model/relation-definition';
 export {CategoryDefinition} from './src/model/category-definition';
 export {Category} from './src/model/category';
 export {Group, Groups, BaseGroup} from './src/model/group'
+export {getFieldsToIndex} from './src/index/get-fields-to-index';
+export {ConstraintIndex} from './src/index/constraint-index';
+export {clone} from './src/tools/object-util';

@@ -3,9 +3,8 @@ import {NgbActiveModal, NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap'
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {includedIn, isNot} from 'tsfun';
 import {Document} from 'idai-components-2';
-import {FieldDocument, ImageDocument, FieldDefinition, Group, Groups} from '@idai-field/core';
+import {FieldDocument, ImageDocument, clone, FieldDefinition, Group, Groups} from '@idai-field/core';
 import {ConflictDeletedModalComponent} from './dialog/conflict-deleted-modal.component';
-import {clone} from '../../core/util/object-util';
 import {EditSaveDialogComponent} from './dialog/edit-save-dialog.component';
 import {DocumentDatastore} from '../../core/datastore/document-datastore';
 import {M} from '../messages/m';

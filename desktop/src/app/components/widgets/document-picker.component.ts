@@ -1,10 +1,9 @@
 import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {union} from 'tsfun';
-import {FieldDocument, Category} from '@idai-field/core';
+import {FieldDocument, clone, Category} from '@idai-field/core';
 import {FieldDatastore} from '../../core/datastore/field/field-datastore';
 import {Loading} from './loading';
-import {clone} from '../../core/util/object-util';
 import {AngularUtility} from '../../angular/angular-utility';
 import {FieldDocumentFindResult} from '../../core/datastore/field/field-read-datastore';
 import {ProjectConfiguration} from '../../core/configuration/project-configuration';

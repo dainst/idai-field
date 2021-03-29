@@ -5,13 +5,12 @@ import {ViewState} from './state/view-state';
 import {NavigationPath} from './state/navigation-path';
 import {ObserverUtil} from '../../util/observer-util';
 import {FieldReadDatastore} from '../../datastore/field/field-read-datastore';
-import {clone} from '../../util/object-util';
 import {IndexFacade} from '../../datastore/index/index-facade';
 import {TabManager} from '../../tabs/tab-manager';
 import {ResourcesViewMode} from './view-facade';
 import {ProjectCategories} from '../../configuration/project-categories';
 import {ProjectConfiguration} from '../../configuration/project-configuration';
-import {FieldDocument} from '@idai-field/core'
+import {FieldDocument, clone} from '@idai-field/core'
 
 
 /**

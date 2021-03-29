@@ -1,11 +1,10 @@
-import {Either, on, subtract, to} from 'tsfun';
+import {Either, subtract, to} from 'tsfun';
 import {Document, toResourceId} from 'idai-components-2';
 import {DocumentReadDatastore} from '../../datastore/document-read-datastore';
 import {Name, RESOURCE_DOT_IDENTIFIER, ResourceId, ON_RESOURCE_ID} from '../../constants';
-import {HierarchicalRelations, ImageRelationsC as ImageRelations, TypeRelations} from '@idai-field/core';
+import {HierarchicalRelations, ImageRelationsC as ImageRelations, TypeRelations, clone} from '@idai-field/core';
 import {RelationsManager} from '../../model/relations-manager';
 import {ImageRelationsManager} from '../../model/image-relations-manager';
-import {clone} from '../../util/object-util';
 
 
 export const ERROR_NOT_ALL_IMAGES_EXCLUSIVELY_LINKED = 'export.catalog.get-export-documents.not-all-images-exclusively-linked';

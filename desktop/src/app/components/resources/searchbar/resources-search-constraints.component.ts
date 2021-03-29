@@ -1,11 +1,10 @@
 import {Component, Renderer2} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {ResourcesSearchBarComponent} from './resources-search-bar.component';
-import {FieldDefinition} from '@idai-field/core';
+import {FieldDefinition, clone} from '@idai-field/core';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
 import {SearchConstraintsComponent} from '../../widgets/search-constraints.component';
 import {DocumentReadDatastore} from '../../../core/datastore/document-read-datastore';
-import {clone} from '../../../core/util/object-util';
 import {ViewFacade} from '../../../core/resources/view/view-facade';
 
 

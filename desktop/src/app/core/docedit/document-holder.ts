@@ -1,13 +1,12 @@
 import {flow, includedIn, filter, isEmpty, isNot, equal, isObject, isString, and} from 'tsfun';
 import {Document, NewDocument, Resource} from 'idai-components-2';
-import {clone} from '../util/object-util';
 import {Validator} from '../model/validator';
 import {RelationsManager} from '../model/relations-manager';
 import {DocumentDatastore} from '../datastore/document-datastore';
 import {Validations} from '../model/validations';
 import {DuplicationUtil} from './duplication-util';
 import {ProjectConfiguration} from '../configuration/project-configuration';
-import {FieldDefinition, Category} from '@idai-field/core';
+import {FieldDefinition, Category, clone} from '@idai-field/core';
 import {trimFields} from '../util/trim-fields';
 import {DoceditErrors} from './docedit-errors';
 

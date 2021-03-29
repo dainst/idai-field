@@ -1,8 +1,7 @@
 import {equal} from 'tsfun';
-import {ImageDocument} from '@idai-field/core';
+import {ImageDocument, clone} from '@idai-field/core';
 import {ImagesState} from './images-state';
 import {ImageDocumentsManager} from './image-documents-manager';
-import {clone} from '../../../util/object-util';
 import {Query} from '../../../datastore/model/query';
 import {ProjectCategories} from '../../../configuration/project-categories';
 import {ProjectConfiguration} from '../../../configuration/project-configuration';

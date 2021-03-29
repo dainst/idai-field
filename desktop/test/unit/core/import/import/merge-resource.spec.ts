@@ -1,8 +1,7 @@
 import {Resource} from 'idai-components-2';
 import {GEOMETRY, mergeResource, RELATIONS} from '../../../../../src/app/core/import/import/process/merge-resource';
 import {ImportErrors} from '../../../../../src/app/core/import/import/import-errors';
-import {clone} from '../../../../../src/app/core/util/object-util';
-import {HierarchicalRelations} from '@idai-field/core';
+import {HierarchicalRelations, clone} from '@idai-field/core';
 import RECORDED_IN = HierarchicalRelations.RECORDEDIN;
 
 

@@ -1,5 +1,5 @@
 import {Map} from 'tsfun';
-import {Category} from '@idai-field/core';
+import { Category } from '../model/category';
 
 
 const defaultFieldsToIndex = ['identifier', 'shortDescription'];

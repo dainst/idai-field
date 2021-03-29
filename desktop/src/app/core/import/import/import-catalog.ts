@@ -1,11 +1,10 @@
 import {isArray, isNot, isUndefinedOrEmpty, aMap, set, subtract, to, undefinedOrEmpty} from 'tsfun';
 import {Document} from 'idai-components-2';
 import {DocumentDatastore} from '../../datastore/document-datastore';
-import {clone} from '../../util/object-util';
 import {makeDocumentsLookup} from './utils';
 import {RelationsManager} from '../../model/relations-manager';
 import {ON_RESOURCE_ID} from '../../constants';
-import {HierarchicalRelations, ImageRelationsC as ImageRelations, TypeRelations} from '@idai-field/core';
+import {HierarchicalRelations, clone, ImageRelationsC as ImageRelations, TypeRelations} from '@idai-field/core';
 import {ImageRelationsManager} from '../../model/image-relations-manager';
 import {Lookup} from '../../util/utils';
 import {Imagestore} from '../../images/imagestore/imagestore';

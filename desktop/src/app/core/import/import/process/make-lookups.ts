@@ -3,7 +3,7 @@ import {Lookup} from '../../../util/utils';
 import {ResourceId} from '../../../constants';
 import {makeDocumentsLookup} from '../utils';
 import {compose, lookup, map, flatten, flow, isDefined, Pair, remove, subtract, union, aReduce, aMap} from 'tsfun';
-import {clone} from '../../../util/object-util';
+import {clone} from '@idai-field/core';
 import {ImportErrors as E} from '../import-errors';
 
 

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {flatten, includedIn, isDefined, isNot, on, separate, set, subtract, to} from 'tsfun';
 import {Document, toResourceId} from 'idai-components-2';
-import {FieldDocument, ImageDocument, TreeList, Category} from '@idai-field/core';
+import {FieldDocument, ImageDocument, TreeList, Category, clone} from '@idai-field/core';
 import {DocumentDatastore} from '../datastore/document-datastore';
 import {Imagestore} from '../images/imagestore/imagestore';
 import {RelationsManager} from './relations-manager';
@@ -11,7 +11,6 @@ import DEPICTS = ImageRelations.DEPICTS;
 import ISDEPICTEDIN = ImageRelations.ISDEPICTEDIN;
 import {ProjectCategories} from '../configuration/project-categories';
 import {ON_RESOURCE_ID, ResourceId} from '../constants';
-import {clone} from '../util/object-util';
 
 
 export module ImageRelationsManagerErrors {

@@ -1,8 +1,7 @@
 import {includedIn, isNot, on, to, map, pairWith, val, aMap, aFlow} from 'tsfun';
 import {Document} from 'idai-components-2';
-import {FieldDocument, Named, Category} from '@idai-field/core';
+import {FieldDocument, Named, Category, clone} from '@idai-field/core';
 import {ISRECORDEDIN_CONTAIN} from '../constants';
-import {clone} from '../util/object-util';
 import {Find, GetIdentifierForId, PerformExport, CategoryCount} from './export-helper';
 import {Query} from '../datastore/model/query';
 

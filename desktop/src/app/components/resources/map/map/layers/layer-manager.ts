@@ -5,9 +5,8 @@ import {FieldDocument, ImageDocument} from '@idai-field/core';
 import {ImageReadDatastore} from '../../../../../core/datastore/field/image-read-datastore';
 import {ViewFacade} from '../../../../../core/resources/view/view-facade';
 import {FieldReadDatastore} from '../../../../../core/datastore/field/field-read-datastore';
-import {ImageRelationsC as ImageRelations} from '@idai-field/core';
+import {ImageRelationsC as ImageRelations, clone} from '@idai-field/core';
 import {RelationsManager} from '../../../../../core/model/relations-manager';
-import {clone} from '../../../../../core/util/object-util';
 import {moveInArray} from '../../../../../core/util/utils';
 
 

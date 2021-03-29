@@ -4,7 +4,7 @@ import {IdGenerator} from './id-generator';
 import {ObserverUtil} from '../../util/observer-util';
 import {PouchdbProxy} from './pouchdb-proxy';
 import {ChangeHistoryMerge} from './change-history-merge';
-import {clone} from '../../util/object-util';
+import {clone} from '@idai-field/core';
 import {DatastoreErrors} from '../model/datastore-errors';
 
 /**

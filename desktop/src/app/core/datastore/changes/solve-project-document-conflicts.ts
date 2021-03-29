@@ -11,7 +11,7 @@ import {
     right, to, union as tsfunUnion, lookup
 } from 'tsfun';
 import { RevisionId } from '../../constants';
-import { clone } from '../../util/object-util';
+import { clone } from '@idai-field/core';
 import { withDissoc } from '../../util/utils';
 import RESOURCE = Document.RESOURCE;
 

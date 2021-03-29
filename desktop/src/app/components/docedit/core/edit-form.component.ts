@@ -4,8 +4,7 @@ import {isUndefinedOrEmpty} from 'tsfun';
 import {Document} from 'idai-components-2';
 import {FieldDefinition, RelationDefinition, Group, Groups} from '@idai-field/core';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
-import {TypeRelations} from '@idai-field/core';
-import {clone} from '../../../core/util/object-util';
+import {TypeRelations, clone} from '@idai-field/core';
 import {ProjectCategories} from '../../../core/configuration/project-categories';
 
 

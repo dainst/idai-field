@@ -2,7 +2,7 @@ import {on, Predicate, flow, isnt, append, isDefined, compose, isEmpty,
     pairWith, update, forEach, cond, Pair, zip, filter, to, lookup, remove, map, values} from 'tsfun';
 import {Document, Resource, relationsEquivalent, Relations} from 'idai-components-2';
 import {Name} from '../constants';
-import {clone} from '../util/object-util';
+import {clone} from '@idai-field/core';
 import {InverseRelationsMap} from '../configuration/inverse-relations-map';
 import {replaceIn} from '../util/utils';
 

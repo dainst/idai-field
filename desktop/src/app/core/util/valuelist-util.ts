@@ -1,8 +1,7 @@
 import {includedIn, isNot, isArray, filter} from 'tsfun';
-import {SortUtil, ValuelistDefinition, FieldDefinition} from '@idai-field/core';
+import {SortUtil, clone, ValuelistDefinition, FieldDefinition} from '@idai-field/core';
 import {Document, Resource} from 'idai-components-2';
 import {ValueDefinition} from '../../../../../core/src/model/valuelist-definition';
-import {clone} from './object-util';
 
 
 const languages: string[] = typeof window !== 'undefined'

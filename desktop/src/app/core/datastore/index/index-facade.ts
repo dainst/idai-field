@@ -1,15 +1,14 @@
 import {Observable, Observer} from 'rxjs';
 import {is, on, flow, isDefined, separate, Map, filter, values, forEach, lookup} from 'tsfun';
 import {Document, Resource} from 'idai-components-2';
-import {ConstraintIndex} from './constraint-index';
 import {ObserverUtil} from '../../util/observer-util';
 import {performQuery} from './perform-query';
 import {ResourceId} from '../../constants';
 import {getSortedIds} from './get-sorted-ids';
 import {Query} from '../model/query';
-import {namedArrayToNamedMap, Category, FulltextIndex, IndexItem, TypeResourceIndexItem} from '@idai-field/core';
+import {namedArrayToNamedMap, ConstraintIndex, Category, FulltextIndex, IndexItem, TypeResourceIndexItem} from '@idai-field/core';
 import {InitializationProgress} from '../../initialization-progress';
-import { getFieldsToIndex } from './get-fields-to-index';
+import { getFieldsToIndex } from '../../../../../../core/src/index/get-fields-to-index';
 
 const TYPE = 'Type';
 const INSTANCES = 'instances';

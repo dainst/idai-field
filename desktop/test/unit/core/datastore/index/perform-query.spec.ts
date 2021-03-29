@@ -3,11 +3,10 @@ import {IndexerConfiguration} from '../../../../../src/app/indexer-configuration
 import {createMockProjectConfiguration} from './helpers';
 import {Static} from '../../../static';
 import {performQuery as performQuery_} from '../../../../../src/app/core/datastore/index/perform-query';
-import {FulltextIndex} from '@idai-field/core';
-import {ConstraintIndex} from '../../../../../src/app/core/datastore/index/constraint-index';
+import {FulltextIndex, ConstraintIndex} from '@idai-field/core';
 import {Query} from '../../../../../src/app/core/datastore/model/query';
 import {namedArrayToNamedMap} from '@idai-field/core';
-import { getFieldsToIndex } from '../../../../../src/app/core/datastore/index/get-fields-to-index';
+import { getFieldsToIndex } from '../../../../../../core/src/index/get-fields-to-index';
 
 /**
  * @author Daniel de Oliveira

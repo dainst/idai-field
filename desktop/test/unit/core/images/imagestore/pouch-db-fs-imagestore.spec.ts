@@ -3,7 +3,7 @@ import rimraf = require('rimraf');
 import PouchDB = require('pouchdb-node');
 import {PouchdbManager} from '../../../../../src/app/core/datastore/pouchdb/pouchdb-manager';
 import {IndexFacade} from '../../../../../src/app/core/datastore/index/index-facade';
-import {ConstraintIndex} from '../../../../../src/app/core/datastore/index/constraint-index';
+import {ConstraintIndex} from '@idai-field/core';
 import {PouchDbFsImagestore} from '../../../../../src/app/core/images/imagestore/pouch-db-fs-imagestore';
 import {ImagestoreErrors} from '../../../../../src/app/core/images/imagestore/imagestore-errors';
 

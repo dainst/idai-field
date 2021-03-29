@@ -1,4 +1,4 @@
-import {ConstraintIndex} from './core/datastore/index/constraint-index';
+import {ConstraintIndex} from '@idai-field/core';
 import {IndexFacade} from './core/datastore/index/index-facade';
 import {ProjectConfiguration} from './core/configuration/project-configuration';
 

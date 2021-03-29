@@ -1,5 +1,4 @@
-import {ConstraintIndex} from '../../../../../src/app/core/datastore/index/constraint-index';
-import {IndexItem, FieldDefinition} from '@idai-field/core';
+import {IndexItem, FieldDefinition, ConstraintIndex} from '@idai-field/core';
 import {doc} from '../../../test-helpers';
 
 

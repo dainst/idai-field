@@ -31,7 +31,7 @@ export module ChangeHistoryMerge {
             (changeHistory: Array<Action>, document: Document) =>
                 (addActionsToChangeHistory(changeHistory, document), changeHistory),
             []);
-}
+    }
 
 
     function addActionsToChangeHistory(changeHistory: Array<Action>, document: Document) {
@@ -45,7 +45,7 @@ export module ChangeHistoryMerge {
                 .filter(action => !isInChangeHistory(action, changeHistory))
                 .forEach(action => changeHistory.push(action));
         }
-}
+    }
 
 
     function isInChangeHistory(action: Action, changeHistory: Array<Action>): boolean {

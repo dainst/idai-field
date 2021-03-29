@@ -3,7 +3,7 @@ import {PouchdbDatastore} from '../pouchdb/pouchdb-datastore';
 import {DocumentCache} from './document-cache';
 import {CachedReadDatastore} from './cached-read-datastore';
 import {CategoryConverter} from './category-converter';
-import {IndexFacade} from "../index/index-facade";
+import {IndexFacade} from "@idai-field/core";
 
 
 /**

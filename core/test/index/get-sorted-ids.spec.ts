@@ -1,4 +1,4 @@
-import {getSortedIds} from '../../../../../src/app/core/datastore/index/get-sorted-ids';
+import { getSortedIds } from "../../src/index/get-sorted-ids";
 
 /**
  * @author Daniel de Oliveira

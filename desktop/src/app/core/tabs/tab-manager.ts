@@ -3,7 +3,7 @@ import {Document} from 'idai-components-2';
 import {TabUtil} from './tab-util';
 import {TabSpaceCalculator} from './tab-space-calculator';
 import {Tab} from './tab';
-import {IndexFacade} from '../datastore/index/index-facade';
+import {IndexFacade} from '@idai-field/core';
 import {StateSerializer} from '../common/state-serializer';
 import {FieldReadDatastore} from '../datastore/field/field-read-datastore';
 

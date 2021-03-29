@@ -26,7 +26,6 @@ import {ViewFacade} from '../../../../src/app/core/resources/view/view-facade';
 import {ResourcesStateManager} from '../../../../src/app/core/resources/view/resources-state-manager';
 import {DocumentHolder} from '../../../../src/app/core/docedit/document-holder';
 import { PouchdbServer } from '../../../../src/app/core/datastore/pouchdb/pouchdb-server';
-import {Query} from '../../../../src/app/core/datastore/model/query';
 import {CategoryConverter} from '../../../../src/app/core/datastore/cached/category-converter';
 import {ConfigReader} from '../../../../src/app/core/configuration/boot/config-reader';
 import {SettingsProvider} from '../../../../src/app/core/settings/settings-provider';
@@ -36,7 +35,7 @@ import {createDocuments, NiceDocs} from '../../test-helpers';
 import {sameset} from 'tsfun';
 import {ResourceId} from '../../../../src/app/core/constants';
 import {makeDocumentsLookup} from '../../../../src/app/core/import/import/utils';
-import { FieldDocument } from '@idai-field/core';
+import { FieldDocument, Query } from '@idai-field/core';
 
 const fs = require('fs');
 

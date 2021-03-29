@@ -3,7 +3,6 @@ import {subtract, set, jsonClone} from 'tsfun';
 import {Document, Resource} from 'idai-components-2';
 import {FieldReadDatastore} from '../../datastore/field/field-read-datastore';
 import {ChangesStream} from '../../datastore/changes/changes-stream';
-import {ObserverUtil} from '../../util/observer-util';
 import {Loading} from '../../../components/widgets/loading';
 import {ResourcesStateManager} from './resources-state-manager';
 import {IdaiFieldFindResult} from '../../datastore/cached/cached-read-datastore';
@@ -12,8 +11,7 @@ import {AngularUtility} from '../../../angular/angular-utility';
 import {ModelUtil} from '../../model/model-util';
 import hasId = ModelUtil.hasId;
 import hasEqualId = ModelUtil.hasEqualId;
-import {Query} from '../../datastore/model/query';
-import { FieldDocument } from '@idai-field/core';
+import { FieldDocument, Query, ObserverUtil } from '@idai-field/core';
 
 
 const LIES_WITHIN_EXIST = 'liesWithin:exist';

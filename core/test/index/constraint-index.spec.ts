@@ -1,5 +1,7 @@
-import {IndexItem, FieldDefinition, ConstraintIndex} from '@idai-field/core';
-import {doc} from '../../../test-helpers';
+import { ConstraintIndex } from "../../src/index/constraint-index";
+import { IndexItem } from "../../src/index/index-item";
+import { FieldDefinition } from "../../src/model/field-definition";
+import { doc } from "../helpers";
 
 
 /**

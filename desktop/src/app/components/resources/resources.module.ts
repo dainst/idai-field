@@ -31,7 +31,7 @@ import {Loading} from '../widgets/loading';
 import {FieldReadDatastore} from '../../core/datastore/field/field-read-datastore';
 import {LayerMapComponent} from './map/map/layer-map.component';
 import {ResourcesSearchConstraintsComponent} from './searchbar/resources-search-constraints.component';
-import {IndexFacade} from '../../core/datastore/index/index-facade';
+import {IndexFacade} from '@idai-field/core';
 import {MoveModalComponent} from './move-modal.component';
 import {ContextMenuComponent} from './widgets/context-menu.component';
 import {ResourceDeletion} from './deletion/resource-deletion';

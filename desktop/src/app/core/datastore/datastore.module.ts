@@ -13,13 +13,12 @@ import {DocumentDatastore} from './document-datastore';
 import {DocumentReadDatastore} from './document-read-datastore';
 import {FieldCategoryConverter} from './field/field-category-converter';
 import {ChangesStream} from './changes/changes-stream';
-import {IndexFacade} from './index/index-facade';
 import {IdGenerator} from './pouchdb/id-generator';
 import {FeatureDatastore} from './field/feature-datastore';
 import {FeatureReadDatastore} from './field/feature-read-datastore';
 import {Datastore} from './model/datastore';
 import {ReadDatastore} from './model/read-datastore';
-import { FeatureDocument, FieldDocument, ImageDocument } from '@idai-field/core';
+import { FeatureDocument, FieldDocument, ImageDocument, IndexFacade } from '@idai-field/core';
 
 /**
  * There is the top level package, in which everything idai-field specific resides,

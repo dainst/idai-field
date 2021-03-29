@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {Observable, Observer} from 'rxjs';
 import {isUndefined, not} from 'tsfun';
 import {Document} from 'idai-components-2';
-import {IndexFacade} from '../index/index-facade';
+import {IndexFacade} from '@idai-field/core';
 import {Name} from '../../constants';
 import {PouchdbProxy} from './pouchdb-proxy';
 import {SampleDataLoader} from '../field/sampledata/sample-data-loader';

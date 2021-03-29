@@ -1,8 +1,7 @@
-import {IndexFacade} from '../../../../../src/app/core/datastore/index/index-facade';
 import {Static} from '../../../static';
 import {IndexerConfiguration} from '../../../../../src/app/indexer-configuration';
-import {createMockProjectConfiguration} from './helpers';
-import {Query} from '../../../../../src/app/core/datastore/model/query';
+import {IndexFacade, Query} from '@idai-field/core';
+import { createMockProjectConfiguration } from './helpers';
 
 
 /**

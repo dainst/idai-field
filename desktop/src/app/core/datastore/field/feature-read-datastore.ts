@@ -1,6 +1,5 @@
-import {FeatureDocument} from '@idai-field/core';
+import {FeatureDocument, Query} from '@idai-field/core';
 import {CachedReadDatastore, IdaiFieldFindResult} from '../cached/cached-read-datastore';
-import {Query} from '../model/query';
 
 
 export interface IdaiFieldFeatureDocumentFindResult extends IdaiFieldFindResult<FeatureDocument> {}

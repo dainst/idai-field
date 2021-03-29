@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {FieldDocument, Category} from '@idai-field/core';
+import {FieldDocument, Category, Query} from '@idai-field/core';
 import {M} from '../messages/m';
 import {ExportModalComponent} from './export-modal.component';
 import {ModelUtil} from '../../core/model/model-util';
@@ -16,7 +16,6 @@ import {DocumentReadDatastore} from '../../core/datastore/document-read-datastor
 import {ProjectConfiguration} from '../../core/configuration/project-configuration';
 import {TabManager} from '../../core/tabs/tab-manager';
 import {Messages} from '../messages/messages';
-import {Query} from '../../core/datastore/model/query';
 import {ProjectCategories} from '../../core/configuration/project-categories';
 import {MenuContext, MenuService} from '../menu-service';
 import {CatalogExporter, ERROR_FAILED_TO_COPY_IMAGES} from '../../core/export/catalog/catalog-exporter';

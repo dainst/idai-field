@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {Observable, Observer} from 'rxjs';
 import {SyncStatus} from './sync-process';
 import {PouchdbManager} from '../datastore/pouchdb/pouchdb-manager';
-import {ObserverUtil} from '../util/observer-util';
+import {ObserverUtil} from '@idai-field/core';
 import {Settings} from '../settings/settings';
 
 

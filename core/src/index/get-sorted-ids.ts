@@ -1,9 +1,10 @@
 import {equal, is, isNot, on, Pair, to, sort, count, flow, map, tuplify, flatten, compose, undefinedOrEmpty, size,
     isUndefinedOrEmpty, separate, cond, pairWith, left} from 'tsfun';
 import {Resource} from 'idai-components-2';
-import {SortUtil, IndexItem, TypeResourceIndexItem} from '@idai-field/core';
-import {Name, ResourceId} from '../../constants';
-import {Query} from '../model/query';
+import { IndexItem, TypeResourceIndexItem } from './index-item';
+import { Query } from '../model/query';
+import { SortUtil } from '../tools/sort-util';
+import { Name } from '../tools/named';
 
 
 /**
@@ -33,7 +34,7 @@ type Percentage = number;
  *     puts an element which matches the query exactly, to the
  *     front of the resulting list.
  */
-export function getSortedIds(indexItems: Array<IndexItem>, query: Query): Array<ResourceId> {
+export function getSortedIds(indexItems: Array<IndexItem>, query: Query): Array<string /* ResourceId*/> {
 
     const rankEntries = shouldRankCategories(query)
         ? rankTypeResourceIndexItems((query.sort as any).matchCategory)

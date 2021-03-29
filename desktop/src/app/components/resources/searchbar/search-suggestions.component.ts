@@ -5,7 +5,7 @@ import {RoutingService} from '../../routing-service';
 import {ResourcesComponent} from '../resources.component';
 import {ResourcesSearchBarComponent} from './resources-search-bar.component';
 import {ViewFacade} from '../../../core/resources/view/view-facade';
-import {Query} from '../../../core/datastore/model/query';
+import {Query} from '@idai-field/core';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
 import {ProjectCategories} from '../../../core/configuration/project-categories';
 

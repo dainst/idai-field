@@ -2,9 +2,7 @@ import {Document} from 'idai-components-2';
 import {IndexerConfiguration} from '../../../../../src/app/indexer-configuration';
 import {createMockProjectConfiguration} from './helpers';
 import {Static} from '../../../static';
-import {performQuery as performQuery_} from '../../../../../src/app/core/datastore/index/perform-query';
-import {FulltextIndex, ConstraintIndex} from '@idai-field/core';
-import {Query} from '../../../../../src/app/core/datastore/model/query';
+import {FulltextIndex, ConstraintIndex, performQuery as performQuery_, Query} from '@idai-field/core';
 import {namedArrayToNamedMap} from '@idai-field/core';
 import { getFieldsToIndex } from '../../../../../../core/src/index/get-fields-to-index';
 

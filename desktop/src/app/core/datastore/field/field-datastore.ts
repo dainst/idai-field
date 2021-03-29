@@ -1,9 +1,8 @@
-import {FieldDocument} from '@idai-field/core';
+import {FieldDocument, IndexFacade} from '@idai-field/core';
 import {PouchdbDatastore} from '../pouchdb/pouchdb-datastore';
 import {DocumentCache} from '../cached/document-cache';
 import {CategoryConverter} from '../cached/category-converter';
 import {CachedDatastore} from '../cached/cached-datastore';
-import {IndexFacade} from '../index/index-facade';
 
 /**
  * Data Access Object

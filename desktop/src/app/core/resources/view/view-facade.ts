@@ -1,12 +1,11 @@
 import {Document} from 'idai-components-2';
-import {FieldDocument} from '@idai-field/core';
+import {FieldDocument, IndexFacade} from '@idai-field/core';
 import {DocumentsManager} from './documents-manager';
 import {FieldReadDatastore} from '../../datastore/field/field-read-datastore';
 import {ChangesStream} from '../../datastore/changes/changes-stream';
 import {Loading} from '../../../components/widgets/loading';
 import {ResourcesStateManager} from './resources-state-manager';
 import {ResourcesState} from './state/resources-state';
-import {IndexFacade} from '../../datastore/index/index-facade';
 import {ProjectConfiguration} from '../../configuration/project-configuration';
 import {M} from '../../../components/messages/m';
 import {Messages} from '../../../components/messages/messages';

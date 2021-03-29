@@ -1,7 +1,9 @@
 import {Resource} from 'idai-components-2';
-import {FulltextIndex, ResultSets, ConstraintIndex} from '@idai-field/core';
-import {Query} from '../model/query';
-import {Constraint} from '../model/constraint';
+import { Constraint } from '../model/constraint';
+import { Query } from '../model/query';
+import { ConstraintIndex } from './constraint-index';
+import { FulltextIndex } from './fulltext-index';
+import { ResultSets } from './result-sets';
 
 
 /**

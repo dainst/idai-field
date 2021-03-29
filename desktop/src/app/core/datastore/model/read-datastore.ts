@@ -1,5 +1,5 @@
 import {Document} from 'idai-components-2';
-import {Query} from './query';
+import {Query} from '@idai-field/core';
 
 /**
  * The interface providing read access methods

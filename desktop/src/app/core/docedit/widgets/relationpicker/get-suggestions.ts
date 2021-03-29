@@ -1,7 +1,5 @@
 import {Document, Resource} from 'idai-components-2';
-import {RelationDefinition} from '@idai-field/core';
-import {Query} from '../../../datastore/model/query';
-import {Constraint} from '../../../datastore/model/constraint';
+import {RelationDefinition, Query, Constraint} from '@idai-field/core';
 import {ReadDatastore} from '../../../datastore/model/read-datastore';
 
 export const MAX_SUGGESTIONS: number = 5;

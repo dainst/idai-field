@@ -3,14 +3,12 @@ import {ResourcesState} from './state/resources-state';
 import {StateSerializer} from '../../common/state-serializer';
 import {ViewState} from './state/view-state';
 import {NavigationPath} from './state/navigation-path';
-import {ObserverUtil} from '../../util/observer-util';
 import {FieldReadDatastore} from '../../datastore/field/field-read-datastore';
-import {IndexFacade} from '../../datastore/index/index-facade';
 import {TabManager} from '../../tabs/tab-manager';
 import {ResourcesViewMode} from './view-facade';
 import {ProjectCategories} from '../../configuration/project-categories';
 import {ProjectConfiguration} from '../../configuration/project-configuration';
-import {FieldDocument, clone} from '@idai-field/core'
+import {FieldDocument, clone, ObserverUtil, IndexFacade} from '@idai-field/core'
 
 
 /**

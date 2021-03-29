@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {isUndefinedOrEmpty, Map, map, not} from 'tsfun';
+import {ValuelistDefinition} from '@idai-field/core';
 import {ProjectConfiguration} from '../project-configuration';
 import {ConfigurationValidation} from './configuration-validation';
 import {ConfigReader} from './config-reader';
@@ -9,7 +10,6 @@ import {buildRawProjectConfiguration} from './build-raw-project-configuration';
 import {BuiltinCategoryDefinition} from '../model/builtin-category-definition';
 import {LibraryCategoryDefinition} from '../model/library-category-definition';
 import {addKeyAsProp} from '../../../../../../core/src/tools/transformers';
-import {ValuelistDefinition} from '../model/valuelist-definition';
 
 
 @Injectable()

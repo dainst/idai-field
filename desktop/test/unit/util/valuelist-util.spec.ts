@@ -1,5 +1,5 @@
 import {ValuelistUtil} from '../../../src/app/core/util/valuelist-util';
-import {ValuelistDefinition} from '../../../src/app/core/configuration/model/valuelist-definition';
+import {ValuelistDefinition} from '@idai-field/core';
 
 
 /**

@@ -1,10 +1,10 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input,} from '@angular/core';
+import {ValuelistDefinition} from '@idai-field/core';
 import {isUndefinedOrEmpty} from 'tsfun';
 import {Resource, OptionalRange} from 'idai-components-2';
 import {ValuelistUtil} from '../../../../core/util/valuelist-util';
 import {HierarchyUtil} from '../../../../core/util/hierarchy-util';
 import {DocumentReadDatastore} from '../../../../core/datastore/document-read-datastore';
-import {ValuelistDefinition} from '../../../../core/configuration/model/valuelist-definition';
 
 const PROJECT = 'project';
 

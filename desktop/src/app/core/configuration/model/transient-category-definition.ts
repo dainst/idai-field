@@ -1,7 +1,7 @@
 import {Map} from 'tsfun';
 import {BuiltinFieldDefinition} from './builtin-category-definition';
 import {LibraryFieldDefinition, LibraryCategoryDefinition} from './library-category-definition';
-import {ValuelistDefinition} from './valuelist-definition';
+import {ValuelistDefinition} from '@idai-field/core';
 
 
 export interface TransientCategoryDefinition extends BuiltinFieldDefinition, LibraryCategoryDefinition {

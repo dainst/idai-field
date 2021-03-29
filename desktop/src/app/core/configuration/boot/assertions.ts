@@ -2,11 +2,10 @@ import {flow, forEach, is, keysValues, Map} from 'tsfun';
 import {BuiltinCategoryDefinition} from '../model/builtin-category-definition';
 import {LibraryCategoryDefinition} from '../model/library-category-definition';
 import {CustomCategoryDefinition} from '../model/custom-category-definition';
-import {ValuelistDefinition} from '../model/valuelist-definition';
 import {TransientCategoryDefinition} from '../model/transient-category-definition';
 import {ConfigurationErrors} from './configuration-errors';
 import {getDefinedParents, iterateOverFieldsOfCategories} from './helpers';
-import {mapToNamedArray, Named} from '@idai-field/core';
+import {mapToNamedArray, Named, ValuelistDefinition} from '@idai-field/core';
 
 
 export module Assertions {
@@ -140,7 +139,12 @@ export module Assertions {
 
         keysValues(libraryCategories).forEach(assertLibraryCategoryValid);
         keysValues(customCategories).forEach(assertCustomCategoryValid);
-        keysValues(valuelistDefinitions).forEach(ValuelistDefinition.assertIsValid);
+        forEach(valuelistDefinitions, (vd, vdId) => {
+            const result = ValuelistDefinition.assertIsValid(vd);
+            if (result !== undefined && result.length > 1 && result[0] === 'missing') {
+                throw [ConfigurationErrors.MISSING_CATEGORY_PROPERTY, result[1], vdId];
+            }
+        });
     }
 
 

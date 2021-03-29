@@ -1,6 +1,3 @@
-import {ConfigurationErrors} from '../boot/configuration-errors';
-
-
 export type ValuelistId = string;
 
 export type Valuelists = { [fieldName: string]: ValuelistId }
@@ -29,11 +26,12 @@ export interface ValuelistDefinition {
 
 export module ValuelistDefinition {
 
-    export function assertIsValid([valuelistId, valuelistDefinition]: [string, ValuelistDefinition]) {
+    export function assertIsValid(valuelistDefinition: ValuelistDefinition) {
 
-        if (valuelistDefinition.description === undefined) throw [ConfigurationErrors.MISSING_CATEGORY_PROPERTY, 'description', valuelistId];
-        if (valuelistDefinition.createdBy === undefined) throw [ConfigurationErrors.MISSING_CATEGORY_PROPERTY, 'createdBy', valuelistId];
-        if (valuelistDefinition.creationDate === undefined) throw [ConfigurationErrors.MISSING_CATEGORY_PROPERTY, 'creationDate', valuelistId];
+        if (valuelistDefinition.description === undefined) return ['missing', 'description'];
+        if (valuelistDefinition.createdBy === undefined) return ['missing', 'createdBy'];
+        if (valuelistDefinition.creationDate === undefined) return ['missing', 'creationDate'];
+        return undefined;
     }
 }
 

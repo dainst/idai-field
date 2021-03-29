@@ -24,3 +24,4 @@ export {FulltextIndex} from './src/index/fulltext-index';
 export {ResultSets} from './src/index/result-sets';
 export {IndexItem, TypeResourceIndexItem} from './src/index/index-item';
 export {HierarchicalRelations, TimeRelations, TypeRelations, PositionRelations, ImageRelations as ImageRelationsC /*TODO review*/, UNIDIRECTIONAL_RELATIONS, SAME_AS, PARENT} from './src/model/relation-constants';
+export {ValuelistDefinition} from './src/model/valuelist-definition';

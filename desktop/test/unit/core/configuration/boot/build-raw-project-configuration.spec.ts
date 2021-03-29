@@ -5,10 +5,9 @@ import {FieldDefinition} from '../../../../../src/app/core/configuration/model/f
 import {CustomCategoryDefinition} from '../../../../../src/app/core/configuration/model/custom-category-definition';
 import {BuiltinCategoryDefinition} from '../../../../../src/app/core/configuration/model/builtin-category-definition';
 import {LibraryCategoryDefinition} from '../../../../../src/app/core/configuration/model/library-category-definition';
-import {ValuelistDefinition} from '../../../../../src/app/core/configuration/model/valuelist-definition';
 import {Groups} from '../../../../../src/app/core/configuration/model/group';
 import InputType = FieldDefinition.InputType;
-import {byName, Named, namedArrayToNamedMap, toName, Tree} from '@idai-field/core';
+import {byName, Named, namedArrayToNamedMap, toName, Tree, ValuelistDefinition} from '@idai-field/core';
 import {Category} from '../../../../../src/app/core/configuration/model/category';
 
 

@@ -5,11 +5,10 @@ import {ProjectConfiguration} from '../../core/configuration/project-configurati
 import {Category} from '../../core/configuration/model/category';
 import {Group} from '../../core/configuration/model/group';
 import {FieldDefinition} from '../../core/configuration/model/field-definition';
-import {ValuelistDefinition} from '../../core/configuration/model/valuelist-definition';
 import {ValuelistUtil} from '../../core/util/valuelist-util';
 import {TabManager} from '../../core/tabs/tab-manager';
 import {RelationDefinition} from '../../core/configuration/model/relation-definition';
-import {TypeRelations} from '@idai-field/core';
+import {TypeRelations, ValuelistDefinition} from '@idai-field/core';
 import {MenuContext, MenuService} from '../menu-service';
 
 const locale: string = typeof window !== 'undefined'

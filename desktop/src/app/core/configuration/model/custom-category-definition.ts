@@ -1,9 +1,9 @@
-import {isNot, includedIn, Map, pairWith, val, swap, throws} from 'tsfun';
+import {isNot, includedIn, Map, throws} from 'tsfun';
 import { Name } from '../../constants';
 import {assertFieldsAreValid} from '../boot/assert-fields-are-valid';
 import {ConfigurationErrors} from '../boot/configuration-errors';
 import {BaseFieldDefinition, BaseCategoryDefinition} from './base-category-definition';
-import {Valuelists} from './valuelist-definition';
+import {Valuelists} from '../../../../../../core/src/model/valuelist-definition';
 
 
 /**

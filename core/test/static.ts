@@ -1,5 +1,6 @@
-import { FeatureDocument, FieldDocument } from '@idai-field/core';
 import {Document} from 'idai-components-2';
+import { FeatureDocument } from '../src/model/feature-document';
+import { FieldDocument } from '../src/model/field-document';
 
 
 // TODO duplicated, get rid of this

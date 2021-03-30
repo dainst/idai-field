@@ -5,7 +5,7 @@ import { doc as helpersDoc } from "../test-helpers";
 
 
 const doc = (id: string, category: string = 'category') =>
-    helpersDoc('sd', 'identifier', category, id);
+    helpersDoc('sd', 'identifier' + id, category, id);
 
 
 /**

@@ -1,5 +1,5 @@
 {
-  "name": "@idai-field/desktop",
+  "name": "idai-field-client",
   "description": "iDAI.field 2 Client",
   "version": "2.19.0",
   "main": "electron/main.js",

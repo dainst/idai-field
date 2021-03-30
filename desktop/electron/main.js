@@ -107,14 +107,13 @@ if (env === 'dev') {
 
 if (['production', 'development'].includes(global.mode)) {
 
-    // TODO Quickfix
-    const result = electron.app.getPath('userData').replace("@idai-field/desktop", "idai-field-client")
-    electron.app.setPath('userData', result)
-    // global.appDataPath = electron.app.getPath('appData') + '/' + electron.app.getName()
-    global.appDataPath = result
-    //
+    // If we want to go from idai-field-client to idai-field-desktop while keeping the link to the existing dbs, use this:
+    // const result = electron.app.getPath('userData').replace("idai-field-desktop", "idai-field-client")
+    // electron.app.setPath('userData', result).
+    // global.appDataPath = result
+    // The next line can then be removed.
+    global.appDataPath = electron.app.getPath('appData') + '/' + electron.app.getName()
 
-    console.log(global.appDataPath)
     copyConfigFile(global.appDataPath + '/config.json', global.appDataPath);
     global.configPath = global.appDataPath + '/config.json';
 } else {

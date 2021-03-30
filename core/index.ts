@@ -1,5 +1,6 @@
 export * from './src/datastore/helpers';
 export { ChangeHistoryMerge } from './src/datastore/pouchdb/change-history-merge';
+export { IdGenerator } from './src/datastore/pouchdb/id-generator';
 export { ConstraintIndex } from './src/index/constraint-index';
 export { FulltextIndex } from './src/index/fulltext-index';
 export { getFieldsToIndex } from './src/index/get-fields-to-index';

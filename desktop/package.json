@@ -129,7 +129,6 @@
     "systemjs": "0.21.5",
     "tsfun": "5.2.1",
     "tslib": "^1.10.0",
-    "uuid": "^8.3.2",
     "viz.js": "1.8.1",
     "zone.js": "~0.10.2"
   },
@@ -146,7 +145,6 @@
     "@types/node": "^12.12.38",
     "@types/pouchdb": "6.4.0",
     "@types/showdown": "1.7.5",
-    "@types/uuid": "^8.3.0",
     "codelyzer": "^5.1.2",
     "cross-var": "^1.1.0",
     "electron": "9.4.0",

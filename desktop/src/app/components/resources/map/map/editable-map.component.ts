@@ -1,20 +1,20 @@
-import {Component, SimpleChanges, Input, Output, EventEmitter, HostListener, NgZone,
-    ChangeDetectorRef} from '@angular/core';
-import L from 'leaflet';
+import {
+    ChangeDetectorRef, Component, EventEmitter, HostListener, Input, NgZone, Output, SimpleChanges
+} from '@angular/core';
 import '@geoman-io/leaflet-geoman-free';
-import {FieldDocument, FieldGeometry} from '@idai-field/core';
-import {LayerMapComponent} from './layer-map.component';
-import {GeometryHelper} from './geometry-helper';
-import {FieldPolygon} from './field-polygon';
-import {FieldPolyline} from './field-polyline';
-import {FieldMarker} from './field-marker';
-import {ProjectConfiguration} from '../../../../core/configuration/project-configuration';
-import {LayerManager} from './layers/layer-manager';
-import {LayerImageProvider} from './layers/layer-image-provider';
-import {Messages} from '../../../messages/messages';
-import {SettingsProvider} from '../../../../core/settings/settings-provider';
-import {PouchdbDatastore} from '../../../../core/datastore/pouchdb/pouchdb-datastore';
-import {MenuService} from '../../../../components/menu-service';
+import { FieldDocument, FieldGeometry, PouchdbDatastore } from '@idai-field/core';
+import L from 'leaflet';
+import { MenuService } from '../../../../components/menu-service';
+import { ProjectConfiguration } from '../../../../core/configuration/project-configuration';
+import { SettingsProvider } from '../../../../core/settings/settings-provider';
+import { Messages } from '../../../messages/messages';
+import { FieldMarker } from './field-marker';
+import { FieldPolygon } from './field-polygon';
+import { FieldPolyline } from './field-polyline';
+import { GeometryHelper } from './geometry-helper';
+import { LayerMapComponent } from './layer-map.component';
+import { LayerImageProvider } from './layers/layer-image-provider';
+import { LayerManager } from './layers/layer-manager';
 
 
 const remote = typeof window !== 'undefined'

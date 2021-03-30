@@ -1,16 +1,15 @@
-import {ChangeDetectorRef, Component, Input, NgZone, SimpleChanges} from '@angular/core';
+import { ChangeDetectorRef, Component, Input, NgZone, SimpleChanges } from '@angular/core';
+import { FieldDocument, ImageDocument, ImageGeoreference, PouchdbDatastore } from '@idai-field/core';
+import { Document } from 'idai-components-2';
 import L from 'leaflet';
-import {Document} from 'idai-components-2';
-import {FieldDocument, ImageDocument, ImageGeoreference} from '@idai-field/core';
-import {LayerManager, ListDiffResult} from './layers/layer-manager';
-import {LayerImageProvider} from './layers/layer-image-provider';
-import {ProjectConfiguration} from '../../../../core/configuration/project-configuration';
-import {MapComponent} from './map.component';
-import {ImageContainer} from '../../../../core/images/imagestore/image-container';
-import {Messages} from '../../../messages/messages';
-import {SettingsProvider} from '../../../../core/settings/settings-provider';
-import {PouchdbDatastore} from '../../../../core/datastore/pouchdb/pouchdb-datastore';
-import {MenuContext, MenuService} from '../../../../components/menu-service';
+import { MenuContext, MenuService } from '../../../../components/menu-service';
+import { ProjectConfiguration } from '../../../../core/configuration/project-configuration';
+import { ImageContainer } from '../../../../core/images/imagestore/image-container';
+import { SettingsProvider } from '../../../../core/settings/settings-provider';
+import { Messages } from '../../../messages/messages';
+import { LayerImageProvider } from './layers/layer-image-provider';
+import { LayerManager, ListDiffResult } from './layers/layer-manager';
+import { MapComponent } from './map.component';
 
 
 const fs = typeof window !== 'undefined'

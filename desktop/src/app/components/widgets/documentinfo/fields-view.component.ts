@@ -1,17 +1,19 @@
-import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
-import {DecimalPipe} from '@angular/common';
-import {isBoolean, isArray, aFlow, aMap, isObject, filter, compose, Mapping, on, isDefined, map, flatten, to, pairWith,
-    R, L, update_a, lookup} from 'tsfun';
-import {Resource, Dating, Dimension, Literature, OptionalRange} from 'idai-components-2';
-import {FieldDocument, namedArrayToNamedMap, Named, FieldDefinition, Group, Groups, RelationDefinition} from '@idai-field/core';
-import {RoutingService} from '../../routing-service';
-import {Name} from '../../../core/constants';
-import {UtilTranslations} from '../../../core/util/util-translations';
-import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
-import {FieldsViewField, FieldsViewGroup, FieldsViewUtil} from '../../../core/util/fields-view-util';
+import { DecimalPipe } from '@angular/common';
+import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
+import { FieldDefinition, FieldDocument, Group, Groups, Name, Named, namedArrayToNamedMap, ReadDatastore, RelationDefinition } from '@idai-field/core';
+import { Dating, Dimension, Literature, OptionalRange, Resource } from 'idai-components-2';
+import {
+    aFlow, aMap, compose, filter, flatten, isArray, isBoolean, isDefined, isObject,
+    L, lookup, map, Mapping, on, pairWith,
+    R, to,
+    update_a
+} from 'tsfun';
+import { ProjectConfiguration } from '../../../core/configuration/project-configuration';
+import { FieldsViewField, FieldsViewGroup, FieldsViewUtil } from '../../../core/util/fields-view-util';
+import { UtilTranslations } from '../../../core/util/util-translations';
+import { ValuelistUtil } from '../../../core/util/valuelist-util';
+import { RoutingService } from '../../routing-service';
 import shouldBeDisplayed = FieldsViewUtil.shouldBeDisplayed;
-import {ReadDatastore} from '../../../core/datastore/model/read-datastore';
-import {ValuelistUtil} from '../../../core/util/valuelist-util';
 
 
 type FieldContent = any;

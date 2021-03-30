@@ -1,24 +1,20 @@
-import {NgModule} from '@angular/core';
-import {Document} from 'idai-components-2';
-import {DocumentCache} from './cached/document-cache';
-import {PouchdbDatastore} from './pouchdb/pouchdb-datastore';
-import {PouchdbManager} from './pouchdb/pouchdb-manager';
-import {PouchdbServer} from './pouchdb/pouchdb-server';
-import {FieldDatastore} from './field/field-datastore';
-import {FieldReadDatastore} from './field/field-read-datastore';
-import {ImageDatastore} from './field/image-datastore';
-import {ImageReadDatastore} from './field/image-read-datastore';
-import {CategoryConverter} from './cached/category-converter';
-import {DocumentDatastore} from './document-datastore';
-import {DocumentReadDatastore} from './document-read-datastore';
-import {FieldCategoryConverter} from './field/field-category-converter';
-import {ChangesStream} from './changes/changes-stream';
-import {IdGenerator} from './pouchdb/id-generator';
-import {FeatureDatastore} from './field/feature-datastore';
-import {FeatureReadDatastore} from './field/feature-read-datastore';
-import {Datastore} from './model/datastore';
-import {ReadDatastore} from './model/read-datastore';
-import { FeatureDocument, FieldDocument, ImageDocument, IndexFacade } from '@idai-field/core';
+import { NgModule } from '@angular/core';
+import { Datastore, FeatureDocument, FieldDocument, IdGenerator, ImageDocument, IndexFacade, PouchdbDatastore, ReadDatastore } from '@idai-field/core';
+import { Document } from 'idai-components-2';
+import { CategoryConverter } from './cached/category-converter';
+import { DocumentCache } from './cached/document-cache';
+import { ChangesStream } from './changes/changes-stream';
+import { DocumentDatastore } from './document-datastore';
+import { DocumentReadDatastore } from './document-read-datastore';
+import { FeatureDatastore } from './field/feature-datastore';
+import { FeatureReadDatastore } from './field/feature-read-datastore';
+import { FieldCategoryConverter } from './field/field-category-converter';
+import { FieldDatastore } from './field/field-datastore';
+import { FieldReadDatastore } from './field/field-read-datastore';
+import { ImageDatastore } from './field/image-datastore';
+import { ImageReadDatastore } from './field/image-read-datastore';
+import { PouchdbManager } from './pouchdb/pouchdb-manager';
+import { PouchdbServer } from './pouchdb/pouchdb-server';
 
 /**
  * There is the top level package, in which everything idai-field specific resides,

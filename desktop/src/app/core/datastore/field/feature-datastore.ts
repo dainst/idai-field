@@ -1,8 +1,7 @@
-import {PouchdbDatastore} from '../pouchdb/pouchdb-datastore';
-import {DocumentCache} from '../cached/document-cache';
-import {CategoryConverter} from '../cached/category-converter';
-import {CachedDatastore} from '../cached/cached-datastore';
-import { FeatureDocument, IndexFacade } from '@idai-field/core';
+import { FeatureDocument, IndexFacade, PouchdbDatastore } from '@idai-field/core';
+import { CachedDatastore } from '../cached/cached-datastore';
+import { CategoryConverter } from '../cached/category-converter';
+import { DocumentCache } from '../cached/document-cache';
 
 
 /**

@@ -1,9 +1,8 @@
-import {isNot, undefinedOrEmpty} from 'tsfun';
-import {Document, Resource} from 'idai-components-2';
-import {RelationPicker} from './relation-picker';
-import {RelationDefinition} from '@idai-field/core';
-import {getSuggestions} from '../../../../core/docedit/widgets/relationpicker/get-suggestions';
-import {ReadDatastore} from '../../../../core/datastore/model/read-datastore';
+import { ReadDatastore, RelationDefinition } from '@idai-field/core';
+import { Document, Resource } from 'idai-components-2';
+import { isNot, undefinedOrEmpty } from 'tsfun';
+import { getSuggestions } from '../../../../core/docedit/widgets/relationpicker/get-suggestions';
+import { RelationPicker } from './relation-picker';
 
 
 /**

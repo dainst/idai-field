@@ -1,17 +1,17 @@
-import {Component} from '@angular/core';
-import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import {Pair, Mapping, to, isNot, undefinedOrEmpty, left, on, includedIn, right, map, flow, empty, prune,
-    is} from 'tsfun';
-import {Resource, Document} from 'idai-components-2';
-import {FieldDocument, FieldResource, onName, Category, Query, Constraint, Group, FieldDefinition} from '@idai-field/core';
-import {FieldReadDatastore} from '../../../../../core/datastore/field/field-read-datastore';
-import {TypeImagesUtil} from '../../../../../core/util/type-images-util';
-import {TypeRelations, ValuelistDefinition} from '@idai-field/core';
-import {ProjectConfiguration} from '../../../../../core/configuration/project-configuration';
-import {ValuelistUtil} from '../../../../../core/util/valuelist-util';
-import {ImageRowItem} from '../../../../../core/images/row/image-row';
-import {FindResult} from '../../../../../core/datastore/model/read-datastore';
-import {ImageReadDatastore} from '../../../../../core/datastore/field/image-read-datastore';
+import { Component } from '@angular/core';
+import { Category, Constraint, FieldDefinition, FieldDocument, FieldResource, FindResult, Group, onName, Query, TypeRelations, ValuelistDefinition } from '@idai-field/core';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { Document, Resource } from 'idai-components-2';
+import {
+    empty, flow, includedIn,
+    is, isNot, left, map, Mapping, on, Pair, prune, right, to, undefinedOrEmpty
+} from 'tsfun';
+import { ProjectConfiguration } from '../../../../../core/configuration/project-configuration';
+import { FieldReadDatastore } from '../../../../../core/datastore/field/field-read-datastore';
+import { ImageReadDatastore } from '../../../../../core/datastore/field/image-read-datastore';
+import { ImageRowItem } from '../../../../../core/images/row/image-row';
+import { TypeImagesUtil } from '../../../../../core/util/type-images-util';
+import { ValuelistUtil } from '../../../../../core/util/valuelist-util';
 
 
 const CRITERION = 'criterion';

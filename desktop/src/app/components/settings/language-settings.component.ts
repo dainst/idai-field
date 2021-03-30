@@ -1,12 +1,12 @@
-import {clone, map} from 'tsfun';
-import {Component, Input} from '@angular/core';
-import {CdkDragDrop} from '@angular/cdk/drag-drop';
-import {I18n} from '@ngx-translate/i18n-polyfill';
-import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {Settings} from '../../core/settings/settings';
-import {LanguagePickerModalComponent} from './language-picker-modal.component';
-import {MenuContext, MenuService} from '../menu-service';
-import {moveInArray} from '../../core/util/utils';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { Component, Input } from '@angular/core';
+import { moveInArray } from '@idai-field/core';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { I18n } from '@ngx-translate/i18n-polyfill';
+import { clone, map } from 'tsfun';
+import { Settings } from '../../core/settings/settings';
+import { MenuContext, MenuService } from '../menu-service';
+import { LanguagePickerModalComponent } from './language-picker-modal.component';
 
 const cldr = typeof window !== 'undefined' ? window.require('cldr') : require('cldr');
 const remote = typeof window !== 'undefined' ? window.require('electron').remote : require('electron').remote;

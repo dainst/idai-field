@@ -1,4 +1,4 @@
-import { isProjectDocument } from "../../src/datastore/helpers";
+import { isProjectDocument } from '../../src/datastore/helpers';
 
 
 describe('helpers', () => {
@@ -6,6 +6,6 @@ describe('helpers', () => {
     it('isProjectDocument', () => {
 
         const result = isProjectDocument({ resource: { id: 'project' }} as any);
-        expect(true).toBeTruthy();
+        expect(result).toBeTruthy();
     });
 });

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { clone, DatastoreErrors, FieldDefinition, FieldDocument, Group, Groups, ImageDocument } from 'idai-field-core';
+import { ObjectUtils, DatastoreErrors, FieldDefinition, FieldDocument, Group, Groups, ImageDocument } from 'idai-field-core';
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { Document } from 'idai-field-core';
@@ -156,7 +156,7 @@ export class DoceditComponent {
         this.operationInProgress = numberOfDuplicates ? 'duplicate' : 'save';
         this.loading.start('docedit');
 
-        const documentBeforeSave: Document = clone(this.documentHolder.clonedDocument);
+        const documentBeforeSave: Document = ObjectUtils.clone(this.documentHolder.clonedDocument);
 
         try {
             const documentAfterSave: Document = numberOfDuplicates

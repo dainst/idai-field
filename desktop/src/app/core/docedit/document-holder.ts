@@ -6,7 +6,7 @@ import {DocumentDatastore} from '../datastore/document-datastore';
 import {Validations} from '../model/validations';
 import {DuplicationUtil} from './duplication-util';
 import {ProjectConfiguration} from '../configuration/project-configuration';
-import {FieldDefinition, Category, clone} from 'idai-field-core';
+import {FieldDefinition, Category, ObjectUtils} from 'idai-field-core';
 import {trimFields} from '../util/trim-fields';
 import {DoceditErrors} from './docedit-errors';
 
@@ -62,8 +62,8 @@ export class DocumentHolder {
 
     public setDocument(document: Document) {
 
-        this.oldVersion = clone(document);
-        this.clonedDocument = clone(document);
+        this.oldVersion = ObjectUtils.clone(document);
+        this.clonedDocument = ObjectUtils.clone(document);
         this.inspectedRevisions = [];
     };
 

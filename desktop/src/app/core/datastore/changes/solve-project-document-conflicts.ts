@@ -1,4 +1,4 @@
-import { clone, dissocIndices, last2, replaceLastPair, RevisionId, sortRevisionsByLastModified, withDissoc } from 'idai-field-core';
+import { ObjectUtils, dissocIndices, last2, replaceLastPair, RevisionId, sortRevisionsByLastModified, withDissoc } from 'idai-field-core';
 import { Document, Resource } from 'idai-field-core';
 import { append, compose, dissoc, equal, filter, flow, isDefined, isEmpty, left, lookup, map, Pair, right, to, union as tsfunUnion, update, update_a as updateAsc } from 'tsfun';
 import RESOURCE = Document.RESOURCE;
@@ -24,7 +24,7 @@ export function solveProjectDocumentConflict(latestRevision: Document,
                                              conflictedRevisions: Array<Document>)
         : [Document, RevisionId[] /* of succesfully resolved conflicts */] {
 
-    const clonedLatestRevision = clone(latestRevision);
+    const clonedLatestRevision = ObjectUtils.clone(latestRevision);
     const conflictedSortedRevisions = sortRevisionsByLastModified(conflictedRevisions);
 
     const [resource, revisionIds] = resolve(

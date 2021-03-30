@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Category, clone, FieldDocument, ImageDocument, ImageRelationsC as ImageRelations, ON_RESOURCE_ID, ResourceId, TreeList } from 'idai-field-core';
+import { Category, ObjectUtils, FieldDocument, ImageDocument, ImageRelationsC as ImageRelations, ON_RESOURCE_ID, ResourceId, TreeList } from 'idai-field-core';
 import { Document, toResourceId } from 'idai-field-core';
 import { flatten, includedIn, isDefined, isNot, on, separate, set, subtract, to } from 'tsfun';
 import { ProjectCategories } from '../configuration/project-categories';
@@ -99,7 +99,7 @@ export class ImageRelationsManager {
         if (projects[0] !== undefined) throw 'illegal argument - link will only operate on owned documents';
 
         for (let imageDocument of selectedImages) {
-            const oldVersion: ImageDocument = clone(imageDocument);
+            const oldVersion: ImageDocument = ObjectUtils.clone(imageDocument);
             const depictsRelations: string[] = imageDocument.resource.relations.depicts;
 
             if (depictsRelations.indexOf(targetDocument.resource.id) === -1) {
@@ -116,7 +116,7 @@ export class ImageRelationsManager {
     public async unlink(...selectedImages: Array<ImageDocument>) {
 
         for (let document of selectedImages) {
-            const oldVersion: ImageDocument = clone(document);
+            const oldVersion: ImageDocument = ObjectUtils.clone(document);
             document.resource.relations.depicts = [];
 
             await this.relationsManager.update(

@@ -8,7 +8,7 @@ import {TabManager} from '../../tabs/tab-manager';
 import {ResourcesViewMode} from './view-facade';
 import {ProjectCategories} from '../../configuration/project-categories';
 import {ProjectConfiguration} from '../../configuration/project-configuration';
-import {FieldDocument, clone, ObserverUtil, IndexFacade} from 'idai-field-core'
+import {FieldDocument, ObjectUtils, ObserverUtil, IndexFacade} from 'idai-field-core'
 
 
 /**
@@ -234,7 +234,7 @@ export class ResourcesStateManager {
 
     private notifyNavigationPathObservers() {
 
-        ObserverUtil.notify(this.navigationPathObservers, clone(ResourcesState.getNavigationPath(this.resourcesState)));
+        ObserverUtil.notify(this.navigationPathObservers, ObjectUtils.clone(ResourcesState.getNavigationPath(this.resourcesState)));
     }
 
 

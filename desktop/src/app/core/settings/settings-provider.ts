@@ -1,4 +1,4 @@
-import { jsonClone, Name } from 'idai-field-core';
+import { ObjectUtils, Name } from 'idai-field-core';
 import { set } from 'tsfun';
 import { Settings } from './settings';
 import { SettingsSerializer } from './settings-serializer';
@@ -28,7 +28,7 @@ export class SettingsProvider {
      */
     public getSettings(): Settings {
 
-        const settings = jsonClone(this.settings);
+        const settings = ObjectUtils.jsonClone(this.settings);
         settings.selectedProject =
             settings.dbs && settings.dbs.length > 0
                 ? settings.dbs[0]
@@ -72,7 +72,7 @@ export class SettingsProvider {
      */
     public setSettings(settings_: Settings) {
 
-        const settings = jsonClone(settings_);
+        const settings = ObjectUtils.jsonClone(settings_);
 
         if (!settings.username) settings.username = 'anonymous';
         if (!settings.dbs || settings.dbs.length === 0) settings.dbs = ['test'];

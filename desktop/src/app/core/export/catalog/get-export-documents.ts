@@ -1,4 +1,4 @@
-import { clone, HierarchicalRelations, ImageRelationsC as ImageRelations, Name, ON_RESOURCE_ID, ResourceId, RESOURCE_DOT_IDENTIFIER, TypeRelations } from 'idai-field-core';
+import { ObjectUtils, HierarchicalRelations, ImageRelationsC as ImageRelations, Name, ON_RESOURCE_ID, ResourceId, RESOURCE_DOT_IDENTIFIER, TypeRelations } from 'idai-field-core';
 import { Document, toResourceId } from 'idai-field-core';
 import { Either, subtract, to } from 'tsfun';
 import { DocumentReadDatastore } from '../../datastore/document-read-datastore';
@@ -16,9 +16,9 @@ export async function getExportDocuments(datastore: DocumentReadDatastore, /*TOD
                                          project: Name)
     : Promise<Either<string[] /* msgWithParams */, [Array<Document>, Array<ResourceId>]>> {
 
-    const catalogAndTypes = clone(await relationsManager.get(catalogId, { descendants: true }));
+    const catalogAndTypes = ObjectUtils.clone(await relationsManager.get(catalogId, { descendants: true }));
 
-    const linkedImages = clone(await imageRelationsManager.getLinkedImages(catalogAndTypes));
+    const linkedImages = ObjectUtils.clone(await imageRelationsManager.getLinkedImages(catalogAndTypes));
     const exclusivelyLinkedImages = await imageRelationsManager.getLinkedImages(catalogAndTypes, true);
 
     if (linkedImages.length !== exclusivelyLinkedImages.length) {

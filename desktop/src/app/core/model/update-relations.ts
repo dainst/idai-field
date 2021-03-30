@@ -1,4 +1,4 @@
-import { clone, Name, replaceIn } from 'idai-field-core';
+import { ObjectUtils, Name, replaceIn } from 'idai-field-core';
 import { Document, Relations, relationsEquivalent, Resource } from 'idai-field-core';
 import {
     append, compose,
@@ -34,7 +34,7 @@ export function updateRelations(document: Document, targetDocuments: Array<Docum
 
     targetDocuments.forEach(document => Relations.removeEmpty(document.resource.relations));
 
-    const cloneOfTargetDocuments = clone(targetDocuments);
+    const cloneOfTargetDocuments = ObjectUtils.clone(targetDocuments);
 
     const getInverse = lookup(inverseRelationsMap);
     const hasInverseRelation = compose(getInverse, isDefined);

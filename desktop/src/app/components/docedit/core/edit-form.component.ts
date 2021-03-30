@@ -4,7 +4,7 @@ import {isUndefinedOrEmpty} from 'tsfun';
 import {Document} from 'idai-field-core';
 import {FieldDefinition, RelationDefinition, Group, Groups} from 'idai-field-core';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
-import {TypeRelations, clone} from 'idai-field-core';
+import {TypeRelations, ObjectUtils} from 'idai-field-core';
 import {ProjectCategories} from '../../../core/configuration/project-categories';
 
 
@@ -80,7 +80,7 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
 
         this.groups = [];
         for (let originalGroup of this.originalGroups) {
-            const group = clone(originalGroup);
+            const group = ObjectUtils.clone(originalGroup);
             this.groups.push(group as any);
         }
         this.groups = this.groups.concat(this.extraGroups);

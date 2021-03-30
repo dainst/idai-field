@@ -1,7 +1,7 @@
 import {Component, Renderer2} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {ResourcesSearchBarComponent} from './resources-search-bar.component';
-import {FieldDefinition, clone} from 'idai-field-core';
+import {FieldDefinition, ObjectUtils} from 'idai-field-core';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
 import {SearchConstraintsComponent} from '../../widgets/search-constraints.component';
 import {DocumentReadDatastore} from '../../../core/datastore/document-read-datastore';
@@ -68,7 +68,7 @@ export class ResourcesSearchConstraintsComponent extends SearchConstraintsCompon
 
     protected getCustomConstraints(): { [name: string]: string } {
 
-        return clone(this.viewFacade.getCustomConstraints());
+        return ObjectUtils.clone(this.viewFacade.getCustomConstraints());
     }
 
 

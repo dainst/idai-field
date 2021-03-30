@@ -1,5 +1,5 @@
 import {Feature, FeatureCollection, GeometryObject} from 'geojson';
-import {FieldDocument, FieldGeometry, Query, jsonClone} from 'idai-field-core';
+import {FieldDocument, FieldGeometry, Query, ObjectUtils} from 'idai-field-core';
 import {FieldReadDatastore} from '../datastore/field/field-read-datastore';
 import {M} from '../../components/messages/m';
 
@@ -97,7 +97,7 @@ export module GeoJsonExporter {
 
     function getCoordinates(geometry: FieldGeometry): any {
 
-        const coordinates: any = jsonClone(geometry.coordinates);
+        const coordinates: any = ObjectUtils.jsonClone(geometry.coordinates);
 
         if (geometry.type === 'Polygon') {
             closeRings(coordinates);

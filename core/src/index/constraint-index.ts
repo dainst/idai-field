@@ -4,7 +4,7 @@ import {Document} from '../model/document';
 import {Resource} from '../model/resource';
 import { Category } from '../model/category';
 import { FieldDefinition } from '../model/field-definition';
-import { clone } from '../tools/object-util';
+import { ObjectUtils } from '../tools/object-utils';
 
 
 export interface IndexDefinition {
@@ -294,7 +294,7 @@ export module ConstraintIndex {
 
     function getUniqueFields(fields: Array<FieldDefinition>): Array<FieldDefinition> {
 
-        return clone(
+        return ObjectUtils.clone(
             fields.filter((field: FieldDefinition, index: number, self: Array<FieldDefinition>) => {
                 return self.indexOf(
                     self.find((f: FieldDefinition) => {

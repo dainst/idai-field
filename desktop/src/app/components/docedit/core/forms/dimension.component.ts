@@ -2,7 +2,7 @@ import {Component, Input} from '@angular/core';
 import {DecimalPipe} from '@angular/common';
 import {Resource, Dimension} from 'idai-field-core';
 import {UtilTranslations} from '../../../../core/util/util-translations';
-import {FieldDefinition, clone} from 'idai-field-core';
+import {FieldDefinition, ObjectUtils} from 'idai-field-core';
 import {ValuelistUtil} from '../../../../core/util/valuelist-util';
 
 
@@ -79,7 +79,7 @@ export class DimensionComponent {
 
     public startEditing(dimension: Dimension) {
 
-        const clonedDimension: Dimension = clone(dimension);
+        const clonedDimension: Dimension = ObjectUtils.clone(dimension);
         clonedDimension.isRange = clonedDimension.inputRangeEndValue ? true : false;
 
         this.dimensionsInEditing.push({ original: dimension, clone: clonedDimension });

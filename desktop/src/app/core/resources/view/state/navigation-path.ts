@@ -1,6 +1,6 @@
 import {takeWhile, on, is, takeUntil} from 'tsfun';
 import {Document} from 'idai-field-core';
-import {clone} from 'idai-field-core';
+import {ObjectUtils} from 'idai-field-core';
 import {ViewContext} from './view-context';
 import {FieldDocument} from 'idai-field-core';
 import {differentFrom, NavigationPathSegment, toResourceId} from './navigation-path-segment';
@@ -129,7 +129,7 @@ export module NavigationPath {
 
     export function shorten(navPath: NavigationPath, firstToBeExcluded: NavigationPathSegment): NavigationPath {
 
-        const oldNavPath = clone(navPath);
+        const oldNavPath = ObjectUtils.clone(navPath);
         (navPath as any /* cast ok on construction */).segments
             = takeWhile(differentFrom(firstToBeExcluded), oldNavPath.segments);
 

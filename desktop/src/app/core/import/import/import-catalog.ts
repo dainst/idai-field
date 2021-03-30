@@ -1,4 +1,4 @@
-import { clone, HierarchicalRelations, ImageRelationsC as ImageRelations, Lookup, ON_RESOURCE_ID, TypeRelations } from 'idai-field-core';
+import { ObjectUtils, HierarchicalRelations, ImageRelationsC as ImageRelations, Lookup, ON_RESOURCE_ID, TypeRelations } from 'idai-field-core';
 import { Document } from 'idai-field-core';
 import { aMap, isArray, isNot, isUndefinedOrEmpty, set, subtract, to, undefinedOrEmpty } from 'tsfun';
 import { DocumentDatastore } from '../../datastore/document-datastore';
@@ -246,17 +246,17 @@ function importOneDocument(services: ImportCatalogServices,
         delete document[Document.CREATED];
 
         const existingDocument: Document | undefined = await existingDocuments[document.resource.id];
-        const updateDocument = clone(existingDocument ?? document);
+        const updateDocument = ObjectUtils.clone(existingDocument ?? document);
 
         if (document.project === context.selectedProject) delete updateDocument.project;
 
         if (existingDocument) {
             if (existingDocument.resource.category === 'Type' || existingDocument.resource.category === 'TypeCatalog') {
-                const oldRelations = clone(existingDocument.resource.relations[TypeRelations.HASINSTANCE]);
-                updateDocument.resource = clone(document.resource);
+                const oldRelations = ObjectUtils.clone(existingDocument.resource.relations[TypeRelations.HASINSTANCE]);
+                updateDocument.resource = ObjectUtils.clone(document.resource);
                 updateDocument.resource.relations[TypeRelations.HASINSTANCE] = oldRelations;
             } else {
-                updateDocument.resource = clone(document.resource);
+                updateDocument.resource = ObjectUtils.clone(document.resource);
             }
             await services.datastore.update(updateDocument, context.username);
         } else {

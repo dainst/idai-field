@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { clone, DatastoreErrors, FindIdsResult, FindResult, HierarchicalRelations, ON_RESOURCE_ID, Query, ResourceId, RESOURCE_DOT_ID } from 'idai-field-core';
+import { ObjectUtils, DatastoreErrors, FindIdsResult, FindResult, HierarchicalRelations, ON_RESOURCE_ID, Query, ResourceId, RESOURCE_DOT_ID } from 'idai-field-core';
 import { Document, NewDocument } from 'idai-field-core';
 import {
     append, flow, isArray, isDefined, isNot, isUndefinedOrEmpty, on, sameset, subtract, to,
@@ -164,7 +164,7 @@ export class RelationsManager {
             .filter(isNot(on(['resource', 'relations', RECORDED_IN], sameset)(document) as any)); // TODO review any
 
         for (let docToCorrect of docsToCorrect) {
-            const cloned = clone(docToCorrect);
+            const cloned = ObjectUtils.clone(docToCorrect);
             cloned.resource.relations[RECORDED_IN] = document.resource.relations[RECORDED_IN];
             await this.datastore.update(cloned, username, undefined);
         }

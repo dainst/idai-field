@@ -1,7 +1,7 @@
 export { assocReduce } from './assoc-reduce';
 export { byName, Labelled, mapToNamedArray, Named, namedArrayToNamedMap, onName, sortNamedArray, toName } from './named';
 export { filterTrees, isTopLevelItemOrChildThereof, removeTrees } from './named-tree-list';
-export { clone, jsonClone } from './object-util';
+export { ObjectUtils } from './object-utils';
 export { ObserverUtil } from './observer-util';
 export { sortStructArray } from './sort-struct-array';
 export { SortUtil } from './sort-util';

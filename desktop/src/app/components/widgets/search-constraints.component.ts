@@ -1,7 +1,7 @@
 import {Component, Input, OnChanges, Renderer2, SimpleChanges} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {on, is, aFilter} from 'tsfun';
-import {ValuelistDefinition, ConstraintIndex, clone, FieldDefinition, Category} from 'idai-field-core';
+import {ValuelistDefinition, ConstraintIndex, ObjectUtils, FieldDefinition, Category} from 'idai-field-core';
 import {SearchBarComponent} from './search-bar.component';
 import {ProjectConfiguration} from '../../core/configuration/project-configuration';
 import {ValuelistUtil} from '../../core/util/valuelist-util';
@@ -215,7 +215,7 @@ export abstract class SearchConstraintsComponent implements OnChanges {
 
     private async removeInvalidConstraints() {
 
-        const customConstraints: { [name: string]: string } = clone(this.getCustomConstraints());
+        const customConstraints: { [name: string]: string } = ObjectUtils.clone(this.getCustomConstraints());
 
         const invalidConstraintsNames: string[] = (await aFilter(
             Object.keys(customConstraints), this.isInvalidConstraint.bind(this))
@@ -305,7 +305,7 @@ export abstract class SearchConstraintsComponent implements OnChanges {
     private async updateFields() {
 
         const fields: Array<FieldDefinition> = this.defaultFields
-            .concat(clone(this.projectConfiguration.getFieldDefinitions(this.category)))
+            .concat(ObjectUtils.clone(this.projectConfiguration.getFieldDefinitions(this.category)))
             .filter(field => field.constraintIndexed && this.getSearchInputType(field));
 
         for (let field of fields) {
@@ -321,7 +321,7 @@ export abstract class SearchConstraintsComponent implements OnChanges {
 
     private configureDropdownRangeFields(fields: Array<FieldDefinition>): Array<FieldDefinition> {
 
-        fields = clone(fields);
+        fields = ObjectUtils.clone(fields);
 
         fields
             .filter(field => field.inputType === 'dropdownRange')

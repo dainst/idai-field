@@ -1,11 +1,12 @@
-import {clone} from "idai-field-core";
 
-/**
+ import { ObjectUtils } from '../../src/tools/object-utils';
+
+
+ /**
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-
-describe('ObjectUtil', () => {
+describe('ObjectUtils', () => {
 
     it('clone object with dates', () => {
 
@@ -18,7 +19,7 @@ describe('ObjectUtil', () => {
             c: ''
         };
 
-        const cloned = clone(original);
+        const cloned = ObjectUtils.clone(original);
 
         expect(cloned.a.a1 instanceof Date).toBeTruthy();
         expect(cloned.a.a2 as any).toEqual('');
@@ -38,7 +39,7 @@ describe('ObjectUtil', () => {
             c: ''
         };
 
-        const cloned = clone(original);
+        const cloned = ObjectUtils.clone(original);
 
         original["a"] = "" as any;
         delete original["b"];

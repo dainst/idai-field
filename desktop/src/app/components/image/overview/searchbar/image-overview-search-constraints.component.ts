@@ -3,7 +3,7 @@ import {I18n} from '@ngx-translate/i18n-polyfill';
 import {ImageOverviewSearchBarComponent} from './image-overview-search-bar.component';
 import {ImageOverviewFacade} from '../../../../core/images/overview/view/imageoverview-facade';
 import {ProjectConfiguration} from '../../../../core/configuration/project-configuration';
-import {FieldDefinition, clone} from 'idai-field-core';
+import {FieldDefinition, ObjectUtils} from 'idai-field-core';
 import {DocumentReadDatastore} from '../../../../core/datastore/document-read-datastore';
 import {SearchConstraintsComponent} from '../../../widgets/search-constraints.component';
 
@@ -46,7 +46,7 @@ export class ImageOverviewSearchConstraintsComponent extends SearchConstraintsCo
 
     protected getCustomConstraints(): { [name: string]: string } {
 
-        return clone(this.imageOverviewFacade.getCustomConstraints());
+        return ObjectUtils.clone(this.imageOverviewFacade.getCustomConstraints());
     }
 
 

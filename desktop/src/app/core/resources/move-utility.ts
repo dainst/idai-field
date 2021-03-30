@@ -1,6 +1,6 @@
 import {flatten, intersection, set} from 'tsfun';
 import {Document} from 'idai-field-core';
-import {FieldDocument, IndexFacade, Constraint, Category, clone} from 'idai-field-core';
+import {FieldDocument, IndexFacade, Constraint, Category, ObjectUtils} from 'idai-field-core';
 import {RelationsManager} from '../model/relations-manager';
 import {ProjectConfiguration} from '../configuration/project-configuration';
 
@@ -14,7 +14,7 @@ export module MoveUtility {
                                        relationsManager: RelationsManager,
                                        isRecordedInTargetCategories: Array<Category>) {
 
-        const oldVersion: FieldDocument = clone(document);
+        const oldVersion: FieldDocument = ObjectUtils.clone(document);
         updateRelations(document, newParent, isRecordedInTargetCategories);
         await relationsManager.update(document, oldVersion);
     }

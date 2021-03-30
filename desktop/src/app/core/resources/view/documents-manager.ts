@@ -11,7 +11,7 @@ import {AngularUtility} from '../../../angular/angular-utility';
 import {ModelUtil} from '../../model/model-util';
 import hasId = ModelUtil.hasId;
 import hasEqualId = ModelUtil.hasEqualId;
-import { FieldDocument, Query, ObserverUtil, jsonClone } from 'idai-field-core';
+import { FieldDocument, Query, ObserverUtil, ObjectUtils } from 'idai-field-core';
 
 
 const LIES_WITHIN_EXIST = 'liesWithin:exist';
@@ -394,7 +394,7 @@ export class DocumentsManager {
                                     liesWithinId: string|undefined,
                                     addLiesWithinConstraints: boolean): { [name: string]: string|string[]} {
 
-        const constraints: { [name: string]: string|string[] } = jsonClone(customConstraints) as any;
+        const constraints: { [name: string]: string|string[] } = ObjectUtils.jsonClone(customConstraints) as any;
 
         if (addLiesWithinConstraints) {
             if (liesWithinId) {

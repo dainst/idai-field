@@ -1,7 +1,7 @@
 import { Document } from '../../model/document';
 import { NewDocument } from '../../model/new-document';
 import { Observable } from 'rxjs';
-import { clone, ObserverUtil } from '../../tools';
+import { ObjectUtils, ObserverUtil } from '../../tools';
 import { DatastoreErrors } from '../model';
 import { ChangeHistoryMerge } from './change-history-merge';
 import { IdGenerator } from './id-generator';
@@ -91,7 +91,7 @@ export class PouchdbDatastore {
 
         const fetchedDocument = await this.fetch(document.resource.id);
 
-        const clonedDocument = clone(document);
+        const clonedDocument = ObjectUtils.clone(document);
         clonedDocument.created = fetchedDocument.created;
         clonedDocument.modified = fetchedDocument.modified;
         if (squashRevisionsIds) {
@@ -310,7 +310,7 @@ export class PouchdbDatastore {
     private static initializeDocument(document: NewDocument, username: string,
                                       generatedId: string): Document {
 
-        const clonedDocument: Document = clone(document) as Document;
+        const clonedDocument: Document = ObjectUtils.clone(document) as Document;
         if (!clonedDocument.resource.id) clonedDocument.resource.id = generatedId;
         (clonedDocument as any)['_id'] = clonedDocument.resource.id;
         (clonedDocument as any)['created'] = { user: username, date: new Date() };
@@ -323,7 +323,7 @@ export class PouchdbDatastore {
     // TODO Remove this in a future version
     private static replaceCategoryWithType(document: Document): Document {
 
-        const clonedDocument: Document = clone(document);
+        const clonedDocument: Document = ObjectUtils.clone(document);
 
         if (clonedDocument.resource.category) {
             clonedDocument.resource.type = clonedDocument.resource.category;

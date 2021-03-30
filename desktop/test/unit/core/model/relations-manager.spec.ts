@@ -1,6 +1,6 @@
 import {Document} from 'idai-field-core';
 import {RelationsManager} from '../../../../src/app/core/model/relations-manager';
-import {clone} from 'idai-field-core';
+import {ObjectUtils} from 'idai-field-core';
 import {ProjectConfiguration} from '../../../../src/app/core/configuration/project-configuration';
 
 
@@ -140,7 +140,7 @@ describe('RelationsManager', () => {
     it('should save the related document for a new document', async done => {
 
         doc.resource.relations['BelongsTo'] = ['2'];
-        const clonedDoc = clone(doc);
+        const clonedDoc = ObjectUtils.clone(doc);
         delete doc.resource.id; // make it a 'new' document
 
         mockDatastore.create.and.returnValue(Promise.resolve(clonedDoc)); // has resourceId, simulates create

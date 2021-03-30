@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { clone, FieldDocument, ImageDocument, ImageRelationsC as ImageRelations, moveInArray } from 'idai-field-core';
+import { ObjectUtils, FieldDocument, ImageDocument, ImageRelationsC as ImageRelations, moveInArray } from 'idai-field-core';
 import { Document } from 'idai-field-core';
 import { flatten, set, subtract, to } from 'tsfun';
 import { FieldReadDatastore } from '../../../../../core/datastore/field/field-read-datastore';
@@ -107,7 +107,7 @@ export class LayerManager {
 
     public async startEditing(group: LayerGroup) {
 
-        this.layerGroupInEditing = clone(group);
+        this.layerGroupInEditing = ObjectUtils.clone(group);
         this.originalLayerGroupInEditing = group;
 
         this.layerGroups[this.layerGroups.indexOf(group)] = this.layerGroupInEditing;
@@ -120,7 +120,7 @@ export class LayerManager {
 
         await this.relationsManager.update(
             this.layerGroupInEditing.document,
-            clone(this.originalLayerGroupInEditing.document)
+            ObjectUtils.clone(this.originalLayerGroupInEditing.document)
         );
 
         this.layerGroupInEditing.document = this.originalLayerGroupInEditing.document;

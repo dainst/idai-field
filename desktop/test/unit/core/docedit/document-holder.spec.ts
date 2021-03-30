@@ -2,7 +2,7 @@ import {Document} from 'idai-field-core';
 import {M} from '../../../../src/app/components/messages/m';
 import {ProjectConfiguration} from '../../../../src/app/core/configuration/project-configuration';
 import {DocumentHolder} from '../../../../src/app/core/docedit/document-holder';
-import {Tree, clone} from 'idai-field-core';
+import {Tree, ObjectUtils} from 'idai-field-core';
 
 
 /**
@@ -114,7 +114,7 @@ describe('DocumentHolder', () => {
 
     it('remove empty and undefined relations', async done => {
 
-        const cloned = clone(defaultDocument);
+        const cloned = ObjectUtils.clone(defaultDocument);
         delete cloned.resource.relations.undefrel;
         docHolder.setDocument(cloned);
 
@@ -129,7 +129,7 @@ describe('DocumentHolder', () => {
 
     it('remove empty and undefined fields', async done => {
 
-        const cloned = clone(defaultDocument);
+        const cloned = ObjectUtils.clone(defaultDocument);
         delete cloned.resource.undeffield;
         docHolder.setDocument(cloned);
 

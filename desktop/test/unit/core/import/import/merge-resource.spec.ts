@@ -1,7 +1,7 @@
 import {Resource} from 'idai-field-core';
 import {GEOMETRY, mergeResource, RELATIONS} from '../../../../../src/app/core/import/import/process/merge-resource';
 import {ImportErrors} from '../../../../../src/app/core/import/import/import-errors';
-import {HierarchicalRelations, clone} from 'idai-field-core';
+import {HierarchicalRelations, ObjectUtils} from 'idai-field-core';
 import RECORDED_IN = HierarchicalRelations.RECORDEDIN;
 
 
@@ -26,9 +26,9 @@ describe('mergeResource', () => {
 
     beforeEach(() => {
 
-        target = clone(template);
+        target = ObjectUtils.clone(template);
         target['anotherField'] = 'field1';
-        source = clone(template);
+        source = ObjectUtils.clone(template);
     });
 
 

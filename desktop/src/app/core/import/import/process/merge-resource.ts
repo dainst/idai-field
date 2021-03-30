@@ -1,4 +1,4 @@
-import { clone, HierarchicalRelations, typeOf } from 'idai-field-core';
+import { ObjectUtils, HierarchicalRelations, typeOf } from 'idai-field-core';
 import { NewResource, Resource } from 'idai-field-core';
 import {
     Associative, cond, dissoc, dropRightWhile,
@@ -41,7 +41,7 @@ export function mergeResource(into: Resource, additional: NewResource): Resource
 
         const target =
             overwriteOrDeleteProperties(
-                clone(into),
+                ObjectUtils.clone(into),
                 additional,
                 Resource.CONSTANT_FIELDS.concat([GEOMETRY]));
 

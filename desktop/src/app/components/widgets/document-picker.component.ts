@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {union} from 'tsfun';
-import {FieldDocument, clone, Category, Query, Constraint} from 'idai-field-core';
+import {FieldDocument, ObjectUtils, Category, Query, Constraint} from 'idai-field-core';
 import {FieldDatastore} from '../../core/datastore/field/field-datastore';
 import {Loading} from './loading';
 import {AngularUtility} from '../../angular/angular-utility';
@@ -106,7 +106,7 @@ export class DocumentPickerComponent implements OnChanges {
         try {
             if (this.getConstraints) this.query.constraints = await this.getConstraints();
             this.query.id = this.currentQueryId;
-            const clonedQuery = clone(this.query);
+            const clonedQuery = ObjectUtils.clone(this.query);
             if (clonedQuery.constraints === undefined) clonedQuery.constraints = {};
             clonedQuery.constraints['project:exist'] = { value: 'KNOWN', subtract: true}; // TODO review
             const result = await this.datastore.find(clonedQuery);

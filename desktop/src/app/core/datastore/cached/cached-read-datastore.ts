@@ -1,4 +1,4 @@
-import { DatastoreErrors, FindIdsResult, FindResult, IndexFacade, jsonClone, PouchdbDatastore, Query, ReadDatastore } from 'idai-field-core';
+import { DatastoreErrors, FindIdsResult, FindResult, IndexFacade, ObjectUtils, PouchdbDatastore, Query, ReadDatastore } from 'idai-field-core';
 import { Document } from 'idai-field-core';
 import { ConfigurationErrors } from '../../configuration/boot/configuration-errors';
 import { CategoryConverter } from './category-converter';
@@ -109,7 +109,7 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
                 this.categoryConverter.assertCategoryToBeOfClass(category, this.categoryClass);
             });
         } else if (!ignoreCategories) {
-            query = jsonClone(query);
+            query = ObjectUtils.jsonClone(query);
             query.categories = this.categoryConverter.getCategoriesForClass(this.categoryClass);
         }
 

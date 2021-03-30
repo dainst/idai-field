@@ -1,6 +1,6 @@
 import {NewDocument, Document} from 'idai-field-core';
 import {Validator} from '../model/validator';
-import {clone} from 'idai-field-core';
+import {ObjectUtils} from 'idai-field-core';
 
 
 /**
@@ -10,7 +10,7 @@ export module DuplicationUtil {
 
     export function createTemplate(document: Document): NewDocument {
 
-        const template: NewDocument = { resource: clone(document.resource) };
+        const template: NewDocument = { resource: ObjectUtils.clone(document.resource) };
 
         delete template.resource.id;
         delete template.resource.geometry;

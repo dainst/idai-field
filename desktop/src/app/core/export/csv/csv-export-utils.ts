@@ -1,7 +1,7 @@
 import {dense, drop, flow, indices, is, on, first,
     take, prepend, append, reduce, compose, cond, isEmpty, Mapping} from 'tsfun';
 import {Resource} from 'idai-field-core';
-import {FieldResource, FieldDefinition, clone} from 'idai-field-core';
+import {FieldResource, FieldDefinition, ObjectUtils} from 'idai-field-core';
 import {CsvExportConsts} from './csv-export-consts';
 import RELATIONS_LIES_WITHIN = CsvExportConsts.RELATIONS_LIES_WITHIN;
 import RELATIONS_IS_CHILD_OF = CsvExportConsts.RELATIONS_IS_CHILD_OF;
@@ -133,7 +133,7 @@ export module CsvExportUtils {
      */
     export function convertToResourceWithFlattenedRelations(resource: FieldResource): FieldResource {
 
-        const cloned = clone(resource); // so we can modify in place
+        const cloned = ObjectUtils.clone(resource); // so we can modify in place
 
         if (!cloned.relations) return cloned;
         for (let relation of Object.keys(cloned.relations)) {

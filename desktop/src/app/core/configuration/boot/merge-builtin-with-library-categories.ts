@@ -1,5 +1,5 @@
 import {clone, keysValues, Map} from 'tsfun';
-import {jsonClone} from 'idai-field-core';
+import {ObjectUtils} from 'idai-field-core';
 import {BuiltinCategoryDefinition} from '../model/builtin-category-definition';
 import {LibraryCategoryDefinition} from '../model/library-category-definition';
 import {TransientCategoryDefinition} from '../model/transient-category-definition';
@@ -21,7 +21,7 @@ export function mergeBuiltInWithLibraryCategories(builtInCategories: Map<Builtin
 
         const extendedBuiltInCategory = builtInCategories[libraryCategory.categoryName];
         if (extendedBuiltInCategory) {
-            const newMergedCategory: any = jsonClone(extendedBuiltInCategory);
+            const newMergedCategory: any = ObjectUtils.jsonClone(extendedBuiltInCategory);
             merge(newMergedCategory, libraryCategory);
             keysValues(libraryCategory.fields).forEach(([libraryCategoryFieldName, libraryCategoryField]) => {
                 if (extendedBuiltInCategory.fields[libraryCategoryFieldName]

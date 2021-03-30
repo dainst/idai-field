@@ -1,5 +1,5 @@
 import {equal} from 'tsfun';
-import {ImageDocument, Query, clone} from 'idai-field-core';
+import {ImageDocument, Query, ObjectUtils} from 'idai-field-core';
 import {ImagesState} from './images-state';
 import {ImageDocumentsManager} from './image-documents-manager';
 import {ProjectCategories} from '../../../configuration/project-categories';
@@ -206,6 +206,6 @@ export class ImageOverviewFacade {
 
     private setQueryConstraints() {
 
-        this.imagesState.getQuery().constraints = clone(this.getCustomConstraints());
+        this.imagesState.getQuery().constraints = ObjectUtils.clone(this.getCustomConstraints());
     }
 }

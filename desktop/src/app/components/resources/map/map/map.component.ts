@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, EventEmitter, Input, NgZone, OnChanges, Output, SimpleChanges} from '@angular/core';
-import {FieldDocument, FieldGeometry, Category} from '@idai-field/core';
+import {FieldDocument, FieldGeometry, Category} from 'idai-field-core';
 import {FieldPolyline} from './field-polyline';
 import {FieldPolygon} from './field-polygon';
 import {FieldMarker} from './field-marker';

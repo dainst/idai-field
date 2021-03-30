@@ -1,4 +1,4 @@
-import {ImageDocument, Query} from '@idai-field/core';
+import {ImageDocument, Query} from 'idai-field-core';
 import {ImagesState} from './images-state';
 import {ImageReadDatastore} from '../../../datastore/field/image-read-datastore';
 

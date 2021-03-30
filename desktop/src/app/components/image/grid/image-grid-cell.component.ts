@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {ImageDocument} from '@idai-field/core';
+import {ImageDocument} from 'idai-field-core';
 
 @Component({
     selector: 'image-grid-cell',

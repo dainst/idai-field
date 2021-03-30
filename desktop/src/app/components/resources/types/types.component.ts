@@ -19,10 +19,10 @@ import {TabManager} from '../../../core/tabs/tab-manager';
 import {PLACEHOLDER} from '../../../core/images/row/image-row';
 import {ProjectCategories} from '../../../core/configuration/project-categories';
 import {MenuContext, MenuService} from '../../menu-service';
-import {ImageRelationsC as ImageRelations, TypeRelations} from '@idai-field/core';
+import {ImageRelationsC as ImageRelations, TypeRelations} from 'idai-field-core';
 import {SyncService} from '../../../core/sync/sync-service';
 import {SyncStatus} from '../../../core/sync/sync-process';
-import { FieldDocument } from '@idai-field/core';
+import { FieldDocument } from 'idai-field-core';
 
 
 @Component({

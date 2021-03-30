@@ -1,4 +1,4 @@
-import {ImageDocument} from '@idai-field/core';
+import {ImageDocument} from 'idai-field-core';
 
 
 export module LayerUtility {

@@ -5,7 +5,7 @@ import {CustomCategoryDefinition} from '../model/custom-category-definition';
 import {TransientCategoryDefinition} from '../model/transient-category-definition';
 import {ConfigurationErrors} from './configuration-errors';
 import {getDefinedParents, iterateOverFieldsOfCategories} from './helpers';
-import {mapToNamedArray, Named, ValuelistDefinition} from '@idai-field/core';
+import {mapToNamedArray, Named, ValuelistDefinition} from 'idai-field-core';
 
 
 export module Assertions {

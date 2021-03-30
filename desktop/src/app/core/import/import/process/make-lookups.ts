@@ -1,4 +1,4 @@
-import { clone, Lookup, ResourceId } from '@idai-field/core';
+import { clone, Lookup, ResourceId } from 'idai-field-core';
 import { Document } from 'idai-components-2';
 import { aMap, aReduce, compose, flatten, flow, isDefined, lookup, map, Pair, remove, subtract, union } from 'tsfun';
 import { ImportErrors as E } from '../import-errors';

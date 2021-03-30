@@ -1,4 +1,4 @@
-import { Category, filterTrees, isTopLevelItemOrChildThereof, Name, Named, onName, removeTrees, toName, Tree, TreeList } from '@idai-field/core';
+import { Category, filterTrees, isTopLevelItemOrChildThereof, Name, Named, onName, removeTrees, toName, Tree, TreeList } from 'idai-field-core';
 import { filter, flow, includedIn, is, map, remove } from 'tsfun';
 
 

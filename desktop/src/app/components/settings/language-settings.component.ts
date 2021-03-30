@@ -1,6 +1,6 @@
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { Component, Input } from '@angular/core';
-import { moveInArray } from '@idai-field/core';
+import { moveInArray } from 'idai-field-core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { clone, map } from 'tsfun';

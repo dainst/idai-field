@@ -1,4 +1,4 @@
-import { FieldDocument, Query, ResourceId } from '@idai-field/core';
+import { FieldDocument, Query, ResourceId } from 'idai-field-core';
 import { filter, flow, isDefined, map } from 'tsfun';
 import { FieldReadDatastore } from '../datastore/field/field-read-datastore';
 import { ImageReadDatastore } from '../datastore/field/image-read-datastore';

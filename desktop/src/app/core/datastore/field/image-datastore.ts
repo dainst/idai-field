@@ -1,4 +1,4 @@
-import { ImageDocument, IndexFacade, PouchdbDatastore } from '@idai-field/core';
+import { ImageDocument, IndexFacade, PouchdbDatastore } from 'idai-field-core';
 import { CachedDatastore } from '../cached/cached-datastore';
 import { CategoryConverter } from '../cached/category-converter';
 import { DocumentCache } from '../cached/document-cache';

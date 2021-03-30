@@ -1,5 +1,5 @@
 import {flatten, subtract} from 'tsfun';
-import { FieldDocument, FieldGeometry, FieldResource } from '@idai-field/core';
+import { FieldDocument, FieldGeometry, FieldResource } from 'idai-field-core';
 import { CoordinatesUtility } from './coordinates-utility';
 import { SimpleChanges } from '@angular/core';
 

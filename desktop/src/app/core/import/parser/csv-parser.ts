@@ -1,7 +1,7 @@
 import {flow, map, update as updateD, update_a} from 'tsfun';
 import {Document, Resource, Relations} from 'idai-components-2';
 import {Parser} from './parser';
-import {Category} from '@idai-field/core';
+import {Category} from 'idai-field-core';
 import {convertCsvRows} from './convert-csv-rows';
 import {convertFieldTypes} from './convert-field-types';
 

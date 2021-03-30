@@ -1,4 +1,4 @@
-import { Name } from '@idai-field/core';
+import { Name } from 'idai-field-core';
 import { ProjectNameValidator } from '../../core/model/project-name-validator';
 import { M } from '../messages/m';
 

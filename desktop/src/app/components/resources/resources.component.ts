@@ -3,7 +3,7 @@ import {ActivatedRoute} from '@angular/router';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {Observable, Subscription} from 'rxjs';
 import {Document} from 'idai-components-2';
-import {FieldDocument, FieldGeometry, Category} from '@idai-field/core';
+import {FieldDocument, FieldGeometry, Category} from 'idai-field-core';
 import {Loading} from '../widgets/loading';
 import {RoutingService} from '../routing-service';
 import {DoceditLauncher} from './service/docedit-launcher';

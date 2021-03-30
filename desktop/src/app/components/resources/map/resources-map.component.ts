@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {FieldDocument, FieldGeometry} from '@idai-field/core';
+import {FieldDocument, FieldGeometry} from 'idai-field-core';
 import {ResourcesComponent} from '../resources.component';
 import {Loading} from '../../widgets/loading';
 import {RelationsManager} from '../../../core/model/relations-manager';

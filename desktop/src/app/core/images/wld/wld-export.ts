@@ -1,4 +1,4 @@
-import {ImageDocument} from '@idai-field/core';
+import {ImageDocument} from 'idai-field-core';
 import {ExtensionUtil} from '../../util/extension-util';
 
 

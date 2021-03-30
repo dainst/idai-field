@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Category, clone, FieldDocument, ImageDocument, ImageRelationsC as ImageRelations, ON_RESOURCE_ID, ResourceId, TreeList } from '@idai-field/core';
+import { Category, clone, FieldDocument, ImageDocument, ImageRelationsC as ImageRelations, ON_RESOURCE_ID, ResourceId, TreeList } from 'idai-field-core';
 import { Document, toResourceId } from 'idai-components-2';
 import { flatten, includedIn, isDefined, isNot, on, separate, set, subtract, to } from 'tsfun';
 import { ProjectCategories } from '../configuration/project-categories';

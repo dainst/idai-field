@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Query} from '@idai-field/core';
+import {Query} from 'idai-field-core';
 import {ProjectCategories} from '../../../configuration/project-categories';
 import {ProjectConfiguration} from '../../../configuration/project-configuration';
 

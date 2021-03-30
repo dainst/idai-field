@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Name } from '@idai-field/core';
+import { Name } from 'idai-field-core';
 import { isString } from 'tsfun';
 import { M } from '../../components/messages/m';
 import { Messages } from '../../components/messages/messages';

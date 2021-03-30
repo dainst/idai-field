@@ -1,5 +1,5 @@
 import { map } from 'tsfun';
-import {CategoryDefinition, FieldDefinition} from '@idai-field/core';
+import {CategoryDefinition, FieldDefinition} from 'idai-field-core';
 
 
 /**

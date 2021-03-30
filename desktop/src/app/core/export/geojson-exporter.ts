@@ -1,5 +1,5 @@
 import {Feature, FeatureCollection, GeometryObject} from 'geojson';
-import {FieldDocument, FieldGeometry, Query, jsonClone} from '@idai-field/core';
+import {FieldDocument, FieldGeometry, Query, jsonClone} from 'idai-field-core';
 import {FieldReadDatastore} from '../datastore/field/field-read-datastore';
 import {M} from '../../components/messages/m';
 

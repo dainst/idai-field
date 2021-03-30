@@ -2,7 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {ImageDocument, Category} from '@idai-field/core';
+import {ImageDocument, Category} from 'idai-field-core';
 import {Document} from 'idai-components-2';
 import {ImageGridComponent} from '../grid/image-grid.component';
 import {ImageOverviewFacade} from '../../../core/images/overview/view/imageoverview-facade';

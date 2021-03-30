@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {isEmpty, on, is} from 'tsfun';
-import {FeatureDocument, FieldDocument} from '@idai-field/core';
+import {FeatureDocument, FieldDocument} from 'idai-field-core';
 import {FieldReadDatastore} from '../../core/datastore/field/field-read-datastore';
 import {ModelUtil} from '../../core/model/model-util';
 import {DoceditComponent} from '../docedit/docedit.component';
@@ -12,7 +12,7 @@ import {DotBuilder} from './dot-builder';
 import {MatrixSelection, MatrixSelectionMode} from './matrix-selection';
 import {Edges, EdgesBuilder, GraphRelationsConfiguration} from './edges-builder';
 import {ProjectConfiguration} from '../../core/configuration/project-configuration';
-import {PositionRelations, TimeRelations} from '@idai-field/core';
+import {PositionRelations, TimeRelations} from 'idai-field-core';
 import IS_CONTEMPORARY_WITH = TimeRelations.CONTEMPORARY;
 import IS_EQUIVALENT_TO = PositionRelations.EQUIVALENT;
 import IS_BEFORE = TimeRelations.BEFORE;

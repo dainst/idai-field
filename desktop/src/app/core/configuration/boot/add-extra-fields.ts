@@ -1,5 +1,5 @@
 import {clone, Map, update} from 'tsfun';
-import {FieldDefinition} from '@idai-field/core';
+import {FieldDefinition} from 'idai-field-core';
 import {TransientCategoryDefinition} from '../model/transient-category-definition';
 
 

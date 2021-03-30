@@ -1,6 +1,6 @@
 import {Component, Input, Output, EventEmitter, OnChanges} from '@angular/core';
 import {on, any, is, compose, map, to, Predicate} from 'tsfun';
-import {Named, FieldDefinition, Category} from '@idai-field/core';
+import {Named, FieldDefinition, Category} from 'idai-field-core';
 
 
 @Component({

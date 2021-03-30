@@ -1,4 +1,4 @@
-import { RESOURCE_DOT_IDENTIFIER } from '@idai-field/core';
+import { RESOURCE_DOT_IDENTIFIER } from 'idai-field-core';
 import { Document } from 'idai-components-2';
 import { duplicates, size, to, update } from 'tsfun';
 import { ImportErrors as E } from '../import-errors';

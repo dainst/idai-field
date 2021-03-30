@@ -1,10 +1,10 @@
 import {Component} from '@angular/core';
 import {to, on, is, isnt, includedIn, or, any, compose, map, Predicate} from 'tsfun';
-import {FieldResource, Named, Category, Group, RelationDefinition, FieldDefinition} from '@idai-field/core';
+import {FieldResource, Named, Category, Group, RelationDefinition, FieldDefinition} from 'idai-field-core';
 import {ProjectConfiguration} from '../../core/configuration/project-configuration';
 import {ValuelistUtil} from '../../core/util/valuelist-util';
 import {TabManager} from '../../core/tabs/tab-manager';
-import {TypeRelations, ValuelistDefinition} from '@idai-field/core';
+import {TypeRelations, ValuelistDefinition} from 'idai-field-core';
 import {MenuContext, MenuService} from '../menu-service';
 
 const locale: string = typeof window !== 'undefined'

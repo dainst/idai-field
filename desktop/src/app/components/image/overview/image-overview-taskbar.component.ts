@@ -11,7 +11,7 @@ import {Messages} from '../../messages/messages';
 import {MenuContext, MenuService} from '../../menu-service';
 import {ImageRelationsManager, ImageRelationsManagerErrors} from '../../../core/model/image-relations-manager';
 import {DeletionInProgressModalComponent} from './deletion/deletion-in-progress-modal.component';
-import { FieldDocument } from '@idai-field/core';
+import { FieldDocument } from 'idai-field-core';
 
 
 @Component({

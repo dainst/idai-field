@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {Document} from 'idai-components-2';
-import {FieldDefinition, RelationDefinition} from '@idai-field/core';
+import {FieldDefinition, RelationDefinition} from 'idai-field-core';
 
 
 @Component({

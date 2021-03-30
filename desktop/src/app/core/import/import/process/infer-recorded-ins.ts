@@ -1,7 +1,7 @@
 import {Document} from 'idai-components-2';
 import {Get, Id, IdMap} from '../types';
 import {Either, isNot, isUndefinedOrEmpty, sameset, undefinedOrEmpty} from 'tsfun';
-import {HierarchicalRelations} from '@idai-field/core';
+import {HierarchicalRelations} from 'idai-field-core';
 import LIESWITHIN = HierarchicalRelations.LIESWITHIN;
 import RECORDEDIN = HierarchicalRelations.RECORDEDIN;
 

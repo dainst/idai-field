@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { takeOrMake } from '@idai-field/core';
+import { takeOrMake } from 'idai-field-core';
 import { Document } from 'idai-components-2';
 import { ProjectCategories } from '../../configuration/project-categories';
 import { ProjectConfiguration } from '../../configuration/project-configuration';

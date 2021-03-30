@@ -1,4 +1,4 @@
-import { clone, HierarchicalRelations, ImageRelationsC as ImageRelations, Lookup, ON_RESOURCE_ID, TypeRelations } from '@idai-field/core';
+import { clone, HierarchicalRelations, ImageRelationsC as ImageRelations, Lookup, ON_RESOURCE_ID, TypeRelations } from 'idai-field-core';
 import { Document } from 'idai-components-2';
 import { aMap, isArray, isNot, isUndefinedOrEmpty, set, subtract, to, undefinedOrEmpty } from 'tsfun';
 import { DocumentDatastore } from '../../datastore/document-datastore';

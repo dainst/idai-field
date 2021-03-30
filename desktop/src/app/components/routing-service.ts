@@ -1,7 +1,7 @@
 import { Location } from '@angular/common';
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DatastoreErrors } from '@idai-field/core';
+import { DatastoreErrors } from 'idai-field-core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Document } from 'idai-components-2';
 import { Observable, Observer } from 'rxjs';

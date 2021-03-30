@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {FieldDocument, Category, Query} from '@idai-field/core';
+import {FieldDocument, Category, Query} from 'idai-field-core';
 import {M} from '../messages/m';
 import {ExportModalComponent} from './export-modal.component';
 import {ModelUtil} from '../../core/model/model-util';

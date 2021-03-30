@@ -1,4 +1,4 @@
-import { Category, FieldDefinition, PARENT, setOn } from '@idai-field/core';
+import { Category, FieldDefinition, PARENT, setOn } from 'idai-field-core';
 import { Dating, Dimension, Resource } from 'idai-components-2';
 import { includedIn, is, isNot, isnt, on, to } from 'tsfun';
 import { CsvExportConsts } from '../../export/csv/csv-export-consts';

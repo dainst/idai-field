@@ -1,4 +1,4 @@
-import { IndexFacade, PouchdbDatastore } from "@idai-field/core";
+import { IndexFacade, PouchdbDatastore } from "idai-field-core";
 import { Document, NewDocument } from 'idai-components-2';
 import { CachedReadDatastore } from './cached-read-datastore';
 import { CategoryConverter } from './category-converter';

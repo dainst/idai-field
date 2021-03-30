@@ -1,4 +1,4 @@
-import { FieldResource, ResourceId } from '@idai-field/core';
+import { FieldResource, ResourceId } from 'idai-field-core';
 import { Document, Resource } from 'idai-components-2';
 import { to } from 'tsfun';
 

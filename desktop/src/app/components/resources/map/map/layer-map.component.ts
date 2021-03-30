@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, Input, NgZone, SimpleChanges } from '@angular/core';
-import { FieldDocument, ImageDocument, ImageGeoreference, PouchdbDatastore } from '@idai-field/core';
+import { FieldDocument, ImageDocument, ImageGeoreference, PouchdbDatastore } from 'idai-field-core';
 import { Document } from 'idai-components-2';
 import L from 'leaflet';
 import { MenuContext, MenuService } from '../../../../components/menu-service';

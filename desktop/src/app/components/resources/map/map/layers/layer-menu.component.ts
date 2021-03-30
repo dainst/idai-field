@@ -1,7 +1,7 @@
 import {Input, Output, EventEmitter, Renderer2, Component, ChangeDetectorRef} from '@angular/core';
 import {CdkDragDrop} from '@angular/cdk/drag-drop';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {ImageDocument} from '@idai-field/core';
+import {ImageDocument} from 'idai-field-core';
 import {LayerGroup, LayerManager} from './layer-manager';
 import {MenuComponent} from '../../../../widgets/menu.component';
 import {MenuContext, MenuService} from '../../../../menu-service';

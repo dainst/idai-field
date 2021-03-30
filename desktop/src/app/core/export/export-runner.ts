@@ -1,4 +1,4 @@
-import { Category, clone, FieldDocument, ISRECORDEDIN_CONTAIN, Named, Query } from '@idai-field/core';
+import { Category, clone, FieldDocument, ISRECORDEDIN_CONTAIN, Named, Query } from 'idai-field-core';
 import { Document } from 'idai-components-2';
 import { aFlow, aMap, includedIn, isNot, map, on, pairWith, to, val } from 'tsfun';
 import { CategoryCount, Find, GetIdentifierForId, PerformExport } from './export-helper';

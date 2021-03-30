@@ -1,4 +1,4 @@
-import { RelationDefinition, toPair } from '@idai-field/core';
+import { RelationDefinition, toPair } from 'idai-field-core';
 import { flow } from 'tsfun';
 import { assocReduce } from '../../../../../core/src/tools/assoc-reduce';
 

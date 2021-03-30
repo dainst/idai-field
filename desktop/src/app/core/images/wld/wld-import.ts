@@ -1,4 +1,4 @@
-import {ImageGeoreference} from '@idai-field/core';
+import {ImageGeoreference} from 'idai-field-core';
 import {Document} from 'idai-components-2';
 
 

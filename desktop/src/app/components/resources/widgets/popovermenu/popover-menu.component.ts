@@ -4,7 +4,7 @@ import {PopoverMenu, ResourcesComponent} from '../../resources.component';
 import {ViewFacade} from '../../../../core/resources/view/view-facade';
 import {RoutingService} from '../../../routing-service';
 import {ViewModalLauncher} from '../../service/view-modal-launcher';
-import { FieldDocument } from '@idai-field/core';
+import { FieldDocument } from 'idai-field-core';
 
 
 @Component({

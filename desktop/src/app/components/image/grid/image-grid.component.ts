@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnChanges, SimpleChanges, Output, ElementRef} from '@angular/core';
 import {flatten} from 'tsfun';
-import {ImageDocument} from '@idai-field/core';
+import {ImageDocument} from 'idai-field-core';
 import {Document} from 'idai-components-2';
 import {FieldReadDatastore} from '../../../core/datastore/field/field-read-datastore';
 import {ImageUploadResult} from '../upload/image-uploader';

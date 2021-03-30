@@ -1,4 +1,4 @@
-import { HierarchicalRelations, Lookup } from '@idai-field/core';
+import { HierarchicalRelations, Lookup } from 'idai-field-core';
 import { Document, Relations } from 'idai-components-2';
 import { aMap, arrayEqual, isNot, on, to, undefinedOrEmpty, union } from 'tsfun';
 import { makeLookup } from '../../../../../../core/src/tools/transformers';

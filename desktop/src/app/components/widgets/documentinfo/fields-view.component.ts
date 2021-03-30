@@ -1,6 +1,6 @@
 import { DecimalPipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
-import { FieldDefinition, FieldDocument, Group, Groups, Name, Named, namedArrayToNamedMap, ReadDatastore, RelationDefinition } from '@idai-field/core';
+import { FieldDefinition, FieldDocument, Group, Groups, Name, Named, namedArrayToNamedMap, ReadDatastore, RelationDefinition } from 'idai-field-core';
 import { Dating, Dimension, Literature, OptionalRange, Resource } from 'idai-components-2';
 import {
     aFlow, aMap, compose, filter, flatten, isArray, isBoolean, isDefined, isObject,

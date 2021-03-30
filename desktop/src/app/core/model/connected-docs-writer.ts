@@ -1,4 +1,4 @@
-import { Name } from '@idai-field/core';
+import { Name } from 'idai-field-core';
 import { Document, Relations, toResourceId } from 'idai-components-2';
 import { flatMap, flow, subtract, to } from 'tsfun';
 import { InverseRelationsMap, makeInverseRelationsMap } from '../configuration/inverse-relations-map';

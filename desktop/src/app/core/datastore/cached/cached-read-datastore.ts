@@ -1,4 +1,4 @@
-import { DatastoreErrors, FindIdsResult, FindResult, IndexFacade, jsonClone, PouchdbDatastore, Query, ReadDatastore } from '@idai-field/core';
+import { DatastoreErrors, FindIdsResult, FindResult, IndexFacade, jsonClone, PouchdbDatastore, Query, ReadDatastore } from 'idai-field-core';
 import { Document } from 'idai-components-2';
 import { ConfigurationErrors } from '../../configuration/boot/configuration-errors';
 import { CategoryConverter } from './category-converter';

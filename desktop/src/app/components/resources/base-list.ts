@@ -1,6 +1,6 @@
 import {Component, ViewChild} from '@angular/core';
 import {CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
-import {FieldDocument} from '@idai-field/core';
+import {FieldDocument} from 'idai-field-core';
 import {ResourcesComponent} from './resources.component';
 import {Loading} from '../widgets/loading';
 import {PlusButtonStatus} from './plus-button.component';

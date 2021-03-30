@@ -3,7 +3,7 @@ import {Document} from 'idai-components-2';
 import {PouchdbManager} from './datastore/pouchdb/pouchdb-manager';
 import {DocumentCache} from './datastore/cached/document-cache';
 import {ImagesState} from './images/overview/view/images-state';
-import {IndexFacade} from '@idai-field/core';
+import {IndexFacade} from 'idai-field-core';
 import {TabManager} from './tabs/tab-manager';
 import {ResourcesStateManager} from './resources/view/resources-state-manager';
 import {ProjectConfiguration} from './configuration/project-configuration';

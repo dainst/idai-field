@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { SafeResourceUrl } from '@angular/platform-browser';
-import { PouchdbProxy } from '@idai-field/core';
+import { PouchdbProxy } from 'idai-field-core';
 import { to } from 'tsfun';
 import { Settings } from '../../settings/settings';
 import { BlobMaker, BlobUrlSet } from './blob-maker';

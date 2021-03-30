@@ -1,7 +1,7 @@
 import {Component, ElementRef, Input, OnChanges, ViewChild, EventEmitter, Output, SimpleChanges} from '@angular/core';
 import {SafeResourceUrl} from '@angular/platform-browser';
 import {to, aReduce} from 'tsfun';
-import {ImageDocument} from '@idai-field/core';
+import {ImageDocument} from 'idai-field-core';
 import {ImageRow, ImageRowItem, ImageRowUpdate, PLACEHOLDER} from '../../../core/images/row/image-row';
 import {ReadImagestore} from '../../../core/images/imagestore/read-imagestore';
 import {ImageReadDatastore} from '../../../core/datastore/field/image-read-datastore';

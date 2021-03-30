@@ -5,7 +5,7 @@ import {Find, Get} from './types';
 import {complementInverseRelationsBetweenImportDocs, makeSureRelationStructuresExists, preprocessRelations} from './preprocess-relations';
 import {preprocessFields} from './preprocess-fields';
 import {ImportErrors as E} from './import-errors';
-import {HierarchicalRelations, PARENT} from '@idai-field/core';
+import {HierarchicalRelations, PARENT} from 'idai-field-core';
 import LIES_WITHIN = HierarchicalRelations.LIESWITHIN;
 import RECORDED_IN = HierarchicalRelations.RECORDEDIN;
 import {InverseRelationsMap} from '../../configuration/inverse-relations-map';

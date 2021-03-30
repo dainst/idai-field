@@ -1,4 +1,4 @@
-import { clone, HierarchicalRelations, ImageRelationsC as ImageRelations, Name, ON_RESOURCE_ID, ResourceId, RESOURCE_DOT_IDENTIFIER, TypeRelations } from '@idai-field/core';
+import { clone, HierarchicalRelations, ImageRelationsC as ImageRelations, Name, ON_RESOURCE_ID, ResourceId, RESOURCE_DOT_IDENTIFIER, TypeRelations } from 'idai-field-core';
 import { Document, toResourceId } from 'idai-components-2';
 import { Either, subtract, to } from 'tsfun';
 import { DocumentReadDatastore } from '../../datastore/document-read-datastore';

@@ -1,4 +1,4 @@
-import {FeatureDocument, Query} from '@idai-field/core';
+import {FeatureDocument, Query} from 'idai-field-core';
 import {CachedReadDatastore, IdaiFieldFindResult} from '../cached/cached-read-datastore';
 
 

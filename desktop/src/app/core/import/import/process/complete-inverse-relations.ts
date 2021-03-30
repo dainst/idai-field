@@ -1,6 +1,6 @@
 import {
     Lookup, PositionRelations, ResourceId, TimeRelations, UNIDIRECTIONAL_RELATIONS
-} from '@idai-field/core';
+} from 'idai-field-core';
 import { Document, Relations } from 'idai-components-2';
 import {
     empty,

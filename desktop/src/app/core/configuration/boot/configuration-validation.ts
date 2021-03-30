@@ -1,5 +1,5 @@
 import {ConfigurationErrors} from './configuration-errors';
-import {ValuelistDefinition, CategoryDefinition, RelationDefinition} from '@idai-field/core';
+import {ValuelistDefinition, CategoryDefinition, RelationDefinition} from 'idai-field-core';
 
 
 /**

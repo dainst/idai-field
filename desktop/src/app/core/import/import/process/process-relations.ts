@@ -10,7 +10,7 @@ import {
 import {Document, NewDocument, Relations} from 'idai-components-2';
 import {ImportValidator} from './import-validator';
 import {ImportErrors as E} from '../import-errors';
-import {HierarchicalRelations} from '@idai-field/core';
+import {HierarchicalRelations} from 'idai-field-core';
 import {Get, Id} from '../types';
 import {completeInverseRelations} from './complete-inverse-relations';
 import {ImportOptions} from '../import-documents';

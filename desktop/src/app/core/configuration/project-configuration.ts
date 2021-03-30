@@ -1,4 +1,4 @@
-import { Category, FieldDefinition, isTopLevelItemOrChildThereof, Name, Named, namedArrayToNamedMap, RelationDefinition, Tree, TreeList } from '@idai-field/core';
+import { Category, FieldDefinition, isTopLevelItemOrChildThereof, Name, Named, namedArrayToNamedMap, RelationDefinition, Tree, TreeList } from 'idai-field-core';
 import { empty, filter, flow, includedIn, is, isNot, Map, map, on, Pair } from 'tsfun';
 import { ConfigurationErrors } from './boot/configuration-errors';
 import { RelationsUtil } from './relations-utils';

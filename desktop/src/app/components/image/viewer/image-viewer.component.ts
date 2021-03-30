@@ -1,5 +1,5 @@
 import {Component, OnChanges, Input, OnInit} from '@angular/core';
-import {ImageDocument} from '@idai-field/core';
+import {ImageDocument} from 'idai-field-core';
 import {ImageContainer} from '../../../core/images/imagestore/image-container';
 import {BlobMaker} from '../../../core/images/imagestore/blob-maker';
 import {showMissingImageMessageOnConsole, showMissingOriginalImageMessageOnConsole} from '../log-messages';

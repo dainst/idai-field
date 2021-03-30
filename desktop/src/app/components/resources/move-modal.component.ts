@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import {FieldDocument, Category, IndexFacade, Constraint} from '@idai-field/core';
+import {FieldDocument, Category, IndexFacade, Constraint} from 'idai-field-core';
 import {RelationsManager} from '../../core/model/relations-manager';
 import {MoveUtility} from '../../core/resources/move-utility';
 import {ProjectConfiguration} from '../../core/configuration/project-configuration';

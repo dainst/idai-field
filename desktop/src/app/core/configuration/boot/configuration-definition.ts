@@ -1,4 +1,4 @@
-import {RelationDefinition} from '@idai-field/core';
+import {RelationDefinition} from 'idai-field-core';
 
 /**
  * @author Daniel de Oliveira

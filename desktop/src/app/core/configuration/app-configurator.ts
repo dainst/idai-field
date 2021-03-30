@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {ConfigLoader} from './boot/config-loader';
 import {ProjectConfiguration} from './project-configuration';
-import {FieldDefinition, RelationDefinition, Groups} from '@idai-field/core';
+import {FieldDefinition, RelationDefinition, Groups} from 'idai-field-core';
 import {BuiltinCategoryDefinition} from './model/builtin-category-definition';
 
 

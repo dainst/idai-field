@@ -1,4 +1,4 @@
-import {ImageDocument, Query} from '@idai-field/core';
+import {ImageDocument, Query} from 'idai-field-core';
 import {CachedReadDatastore, IdaiFieldFindResult} from '../cached/cached-read-datastore';
 
 

@@ -1,4 +1,4 @@
-import { ResourceId, StringUtils } from '@idai-field/core';
+import { ResourceId, StringUtils } from 'idai-field-core';
 import { DocumentReadDatastore } from '../../datastore/document-read-datastore';
 import { ImageRelationsManager } from '../../model/image-relations-manager';
 import { RelationsManager } from '../../model/relations-manager';

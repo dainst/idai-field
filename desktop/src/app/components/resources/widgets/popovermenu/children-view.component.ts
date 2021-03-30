@@ -1,5 +1,5 @@
 import {Component, Input, OnChanges} from '@angular/core';
-import {FieldDocument} from '@idai-field/core';
+import {FieldDocument} from 'idai-field-core';
 import {AngularUtility} from '../../../../angular/angular-utility';
 import {Loading} from '../../../widgets/loading';
 import {FieldReadDatastore} from '../../../../core/datastore/field/field-read-datastore';

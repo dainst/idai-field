@@ -1,4 +1,4 @@
-import { Name } from '@idai-field/core';
+import { Name } from 'idai-field-core';
 import { includedIn, isNot, Map, throws } from 'tsfun';
 import { Valuelists } from '../../../../../../core/src/model/valuelist-definition';
 import { assertFieldsAreValid } from '../boot/assert-fields-are-valid';

@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import {SafeResourceUrl} from '@angular/platform-browser';
 import {I18n} from '@ngx-translate/i18n-polyfill';
-import {FieldResource} from '@idai-field/core';
+import {FieldResource} from 'idai-field-core';
 import {Imagestore} from '../../../core/images/imagestore/imagestore';
 import {BlobMaker} from '../../../core/images/imagestore/blob-maker';
 

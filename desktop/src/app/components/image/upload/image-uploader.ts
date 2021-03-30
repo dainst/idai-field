@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {NewImageDocument, Category} from '@idai-field/core';
+import {NewImageDocument, Category} from 'idai-field-core';
 import {Document} from 'idai-components-2';
 import {ImageCategoryPickerModalComponent} from './image-category-picker-modal.component';
 import {UploadModalComponent} from './upload-modal.component';

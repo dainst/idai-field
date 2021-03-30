@@ -1,4 +1,4 @@
-import { jsonClone, Name } from '@idai-field/core';
+import { jsonClone, Name } from 'idai-field-core';
 import { set } from 'tsfun';
 import { Settings } from './settings';
 import { SettingsSerializer } from './settings-serializer';

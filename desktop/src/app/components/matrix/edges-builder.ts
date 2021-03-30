@@ -1,4 +1,4 @@
-import { intoObj } from '@idai-field/core';
+import { intoObj } from 'idai-field-core';
 import { Document, Relations } from 'idai-components-2';
 import { is, on, set, union } from 'tsfun';
 

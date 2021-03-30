@@ -1,4 +1,4 @@
-import { Category, CategoryDefinition, FieldDefinition, Group, Groups, RelationDefinition, sortStructArray, Tree, TreeList, ValuelistDefinition, withDissoc } from '@idai-field/core';
+import { Category, CategoryDefinition, FieldDefinition, Group, Groups, RelationDefinition, sortStructArray, Tree, TreeList, ValuelistDefinition, withDissoc } from 'idai-field-core';
 import {
     clone, compose, cond,
     copy, dissoc, filter, flow, identity, includedIn, isDefined, isNot,

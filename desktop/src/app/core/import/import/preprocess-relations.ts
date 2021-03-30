@@ -1,4 +1,4 @@
-import { HierarchicalRelations, PARENT, RESOURCE_DOT_ID } from '@idai-field/core';
+import { HierarchicalRelations, PARENT, RESOURCE_DOT_ID } from 'idai-field-core';
 import { Document, Relations } from 'idai-components-2';
 import { includedIn, isArray, isnt, isUndefined, isUndefinedOrEmpty, on } from 'tsfun';
 import { makeLookup } from '../../../../../../core/src/tools/transformers';

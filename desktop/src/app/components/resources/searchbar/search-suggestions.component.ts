@@ -1,11 +1,11 @@
 import {Component, Input, OnChanges, Renderer2, SimpleChanges} from '@angular/core';
-import {FieldDocument} from '@idai-field/core';
+import {FieldDocument} from 'idai-field-core';
 import {FieldReadDatastore} from '../../../core/datastore/field/field-read-datastore';
 import {RoutingService} from '../../routing-service';
 import {ResourcesComponent} from '../resources.component';
 import {ResourcesSearchBarComponent} from './resources-search-bar.component';
 import {ViewFacade} from '../../../core/resources/view/view-facade';
-import {Query} from '@idai-field/core';
+import {Query} from 'idai-field-core';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
 import {ProjectCategories} from '../../../core/configuration/project-categories';
 

@@ -1,4 +1,4 @@
-import {Tree, TreeList, Category} from '@idai-field/core';
+import {Tree, TreeList, Category} from 'idai-field-core';
 
 
 /**

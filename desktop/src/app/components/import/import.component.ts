@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { Category, IdGenerator } from '@idai-field/core';
+import { Category, IdGenerator } from 'idai-field-core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Document } from 'idai-components-2';
 import { copy, flow, forEach, isEmpty, map, remove, take } from 'tsfun';

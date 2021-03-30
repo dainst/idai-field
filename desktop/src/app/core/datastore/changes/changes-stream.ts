@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { DatastoreErrors, IndexFacade, isProjectDocument, ObserverUtil, PouchdbDatastore, ResourceId, RevisionId } from '@idai-field/core';
+import { DatastoreErrors, IndexFacade, isProjectDocument, ObserverUtil, PouchdbDatastore, ResourceId, RevisionId } from 'idai-field-core';
 import { Action, Document } from 'idai-components-2';
 import { Observable, Observer } from 'rxjs';
 import { aMap } from 'tsfun';

@@ -8,7 +8,7 @@ import {ImportValidator} from './import/process/import-validator';
 import {DocumentDatastore} from '../datastore/document-datastore';
 import {CsvParser} from './parser/csv-parser';
 import {ProjectConfiguration} from '../configuration/project-configuration';
-import {Category} from '@idai-field/core';
+import {Category} from 'idai-field-core';
 import {makeInverseRelationsMap} from '../configuration/inverse-relations-map';
 import {buildImportDocuments} from './import/import-documents';
 import {FieldConverter} from './field-converter';

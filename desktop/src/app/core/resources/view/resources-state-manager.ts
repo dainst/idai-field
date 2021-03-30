@@ -8,7 +8,7 @@ import {TabManager} from '../../tabs/tab-manager';
 import {ResourcesViewMode} from './view-facade';
 import {ProjectCategories} from '../../configuration/project-categories';
 import {ProjectConfiguration} from '../../configuration/project-configuration';
-import {FieldDocument, clone, ObserverUtil, IndexFacade} from '@idai-field/core'
+import {FieldDocument, clone, ObserverUtil, IndexFacade} from 'idai-field-core'
 
 
 /**

@@ -7,6 +7,8 @@ import {isAssociative, isPrimitive, map} from 'tsfun';
  */
 export module ObjectUtils {
 
+    export const jsonEqual = (l: any) => (r: any) => JSON.stringify(l) === JSON.stringify(r);
+
     export function jsonClone(x: any) { return JSON.parse(JSON.stringify(x)); }
 
     

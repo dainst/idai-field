@@ -1,7 +1,7 @@
 import {set, isNot, tripleEqual, sameset} from 'tsfun';
+import { ObjectUtils } from '../tools/object-utils';
 import {NewResource} from './new-resource';
 
-const jsonEqual = (l: any) => (r: any) => JSON.stringify(l) === JSON.stringify(r);
 
 export interface Resource extends NewResource {
 
@@ -74,10 +74,10 @@ export module Resource {
         if (type1 !== type2) return false;
 
         if (type1 === 'array' && type2 === 'array') {
-            return sameset(jsonEqual, value1, value2)
+            return sameset(ObjectUtils.jsonEqual, value1, value2)
         }
 
-        return jsonEqual(value1)(value2);
+        return ObjectUtils.jsonEqual(value1)(value2);
     }
 
 

@@ -1,6 +1,6 @@
-import {FulltextIndex} from '../../src/index/fulltext-index';
-import {IndexItem} from '../../src/index/index-item';
-import { Static } from '../static';
+import { FulltextIndex } from '../../src/index/fulltext-index';
+import { IndexItem } from '../../src/index/index-item';
+import { doc as helpersDoc } from '../test-helpers';
 
 
 /**
@@ -15,10 +15,10 @@ describe('FulltextIndex', () => {
 
     function doc(id, identifier, category, shortDescription = 'short') {
 
-        const doc = Static.doc(shortDescription, identifier, category, id);
-        doc.created = { date: '2017-12-31' } as any;
-        doc.modified = [{ date: '2018-01-01' }] as any;
-        return doc;
+        const newDoc = helpersDoc(shortDescription, identifier, category, id);
+        newDoc.created = { date: '2017-12-31' } as any;
+        newDoc.modified = [{ date: '2018-01-01' }] as any;
+        return newDoc;
     }
 
 

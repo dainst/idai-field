@@ -1,7 +1,11 @@
 import { ConstraintIndex } from "../../src/index/constraint-index";
 import { IndexItem } from "../../src/index/index-item";
 import { FieldDefinition } from "../../src/model/field-definition";
-import { doc } from "../helpers";
+import { doc as helpersDoc } from "../test-helpers";
+
+
+const doc = (id: string, category: string = 'category') =>
+    helpersDoc('sd', 'identifier', category, id);
 
 
 /**

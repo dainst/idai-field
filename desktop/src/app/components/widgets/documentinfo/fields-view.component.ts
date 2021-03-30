@@ -6,7 +6,7 @@ import {
     aFlow, aMap, compose, filter, flatten, isArray, isBoolean, isDefined, isObject,
     L, lookup, map, Mapping, on, pairWith,
     R, to,
-    update_a
+    assoc
 } from 'tsfun';
 import { ProjectConfiguration } from '../../../core/configuration/project-configuration';
 import { FieldsViewField, FieldsViewGroup, FieldsViewUtil } from '../../../core/util/fields-view-util';
@@ -123,7 +123,7 @@ export class FieldsViewComponent implements OnChanges {
             = compose(to(Named.NAME), lookup(resource));
 
         return map(
-            update_a(Group.FIELDS,
+            assoc(Group.FIELDS,
                 compose(
                     map(pairWith(fieldContent)),
                     filter(on(R, isDefined)),

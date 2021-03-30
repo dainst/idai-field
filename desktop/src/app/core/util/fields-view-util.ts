@@ -1,7 +1,7 @@
 import {Resource} from 'idai-field-core';
 import {FieldResource, Labelled, Named, RelationDefinition, Category, Groups, BaseGroup, FieldDefinition} from 'idai-field-core';
 import {ValuelistUtil} from './valuelist-util';
-import {compose, flow, update_a, lookup, and, includedIn, isNot, filter, Filter, map, isString, Map, on, to, undefinedOrEmpty,
+import {compose, flow, assoc, lookup, and, includedIn, isNot, filter, Filter, map, isString, Map, on, to, undefinedOrEmpty,
     Predicate, or, is, empty, equal} from 'tsfun';
 import {HierarchicalRelations, ImageRelationsC as ImageRelations, ValuelistDefinition} from 'idai-field-core';
 import {ProjectConfiguration} from '../configuration/project-configuration';
@@ -94,7 +94,7 @@ export module FieldsViewUtil {
             lookup(categories),
             to(Category.GROUPS),
             map(group =>
-                update_a<any>(
+                assoc<any>(
                     FieldsViewGroup.SHOWN,
                     group.name === Groups.STEM)(group)
             ));

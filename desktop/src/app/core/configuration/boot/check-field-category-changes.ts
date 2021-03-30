@@ -1,4 +1,4 @@
-import {filter, flow, forEach, isDefined, lookup, Map, map, on, to, update_a, values} from 'tsfun';
+import {filter, flow, forEach, isDefined, lookup, Map, map, on, to, assoc, values} from 'tsfun';
 import {CustomFieldDefinition} from '../model/custom-category-definition';
 import {TransientFieldDefinition} from '../model/transient-category-definition';
 
@@ -12,8 +12,8 @@ export function checkFieldCategoryChanges(customCategoryName: string,
             [customCategoryName, fieldName, field, lookup(extendedCategoryFields)(fieldName)]),
         filter(on([2, CustomFieldDefinition.INPUTTYPE], isDefined)),
         filter(on([3, CustomFieldDefinition.INPUTTYPE], isDefined)),
-        map(update_a(2, to(CustomFieldDefinition.INPUTTYPE))),
-        map(update_a(3, to(CustomFieldDefinition.INPUTTYPE))),
+        map(assoc(2, to(CustomFieldDefinition.INPUTTYPE))),
+        map(assoc(3, to(CustomFieldDefinition.INPUTTYPE))),
         values,
         forEach(checkFieldTypeChange));
 }

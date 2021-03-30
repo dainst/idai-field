@@ -1,11 +1,12 @@
-import { Category, CategoryDefinition, FieldDefinition, Group, Groups, RelationDefinition, sortStructArray, Tree, TreeList, ValuelistDefinition, withDissoc } from 'idai-field-core';
+import { Category, CategoryDefinition, FieldDefinition, Group, Groups, RelationDefinition,
+    sortStructArray, Tree, TreeList, ValuelistDefinition, withDissoc } from 'idai-field-core';
 import {
     clone, compose, cond,
     copy, dissoc, filter, flow, identity, includedIn, isDefined, isNot,
     keysValues, lookup, Map,
     map, Mapping, on,
     or, Pair, pairWith, prune, reduce, subtract, undefinedOrEmpty,
-    update, update as updateStruct, update_a as updateAsc, update_a
+    update, update as updateStruct, assoc
 } from 'tsfun';
 import { Labelled } from '../../../../../../core/src/tools/named';
 import { linkParentAndChildInstances } from '../category-tree-list';
@@ -199,7 +200,7 @@ function setGroupLabels(languageConfigurations: any[]) {
             Category.GROUPS,
             compose(
                 map(pairWith(groupLabel)),
-                map(([group, label]: Pair<Group, string>) => updateAsc(Labelled.LABEL, label)(group as any))))(category);
+                map(([group, label]: Pair<Group, string>) => assoc(Labelled.LABEL, label)(group as any))))(category);
     };
 }
 
@@ -244,7 +245,7 @@ function replaceValuelistIdsWithValuelists(valuelistDefinitionsMap: Map<Valuelis
     return map(
         cond(
             on(TransientCategoryDefinition.FIELDS, isNot(undefinedOrEmpty)),
-            update_a(TransientCategoryDefinition.FIELDS,
+            assoc(TransientCategoryDefinition.FIELDS,
                 map(
                     cond(
                         or(
@@ -259,8 +260,8 @@ function replaceValuelistIdWithActualValuelist(valuelistDefinitionMap: Map<Value
 
     return (fd: TransientFieldDefinition) =>
         flow(fd,
-            updateAsc(TransientFieldDefinition.VALUELIST, valuelistDefinitionMap[fd.valuelistId!]),
-            updateAsc(TransientFieldDefinition.POSITION_VALUES, valuelistDefinitionMap[fd.positionValuelistId!]),
+            assoc(TransientFieldDefinition.VALUELIST, valuelistDefinitionMap[fd.valuelistId!]),
+            assoc(TransientFieldDefinition.POSITION_VALUES, valuelistDefinitionMap[fd.positionValuelistId!]),
             dissoc(TransientFieldDefinition.VALUELISTID),
             dissoc(TransientFieldDefinition.POSITION_VALUELIST_ID)
         );

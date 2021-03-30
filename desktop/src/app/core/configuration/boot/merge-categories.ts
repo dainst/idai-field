@@ -1,5 +1,5 @@
 import {includedIn, isNot, isnt, Map, pairWith, union,
-    Pair, flow, filter, clone, update_a, keysValues, map, forEach, lookup} from 'tsfun';
+    Pair, flow, filter, clone, assoc, keysValues, map, forEach, lookup} from 'tsfun';
 import {CustomCategoryDefinition} from '../model/custom-category-definition';
 import {TransientCategoryDefinition} from '../model/transient-category-definition';
 import {checkFieldCategoryChanges} from './check-field-category-changes';
@@ -20,7 +20,7 @@ export function mergeCategories(customCategories: Map<CustomCategoryDefinition>,
             (mergedCategories: Map<TransientCategoryDefinition>,
              [customCategoryName, customCategory]: [string, CustomCategoryDefinition]) => {
 
-            return update_a(customCategoryName,
+            return assoc(customCategoryName,
                 mergedCategories[customCategoryName]
                     ? handleDirectCategoryExtension(customCategoryName, customCategory, mergedCategories[customCategoryName])
                     : handleChildCategoryExtension(customCategoryName, customCategory, assertInputTypePresentIfNotCommonField))

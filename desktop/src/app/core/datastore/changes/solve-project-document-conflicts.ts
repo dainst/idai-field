@@ -1,6 +1,6 @@
 import { ObjectUtils, dissocIndices, last2, replaceLastPair, RevisionId, sortRevisionsByLastModified, withDissoc } from 'idai-field-core';
 import { Document, Resource } from 'idai-field-core';
-import { append, compose, dissoc, equal, filter, flow, isDefined, isEmpty, left, lookup, map, Pair, right, to, union as tsfunUnion, update, update_a as updateAsc } from 'tsfun';
+import { append, compose, dissoc, equal, filter, flow, isDefined, isEmpty, left, lookup, map, Pair, right, to, union as tsfunUnion, update, assoc } from 'tsfun';
 import RESOURCE = Document.RESOURCE;
 
 type ArrayIndex = number;
@@ -80,8 +80,8 @@ function unifyCampaignAndStaffFields(latestRevision: Resource) {
         };
 
         return flow(latestRevision,
-            updateAsc(STAFF, unifyFields(STAFF)),
-            updateAsc(CAMPAIGNS, unifyFields(CAMPAIGNS)) as any);
+            assoc(STAFF, unifyFields(STAFF)),
+            assoc(CAMPAIGNS, unifyFields(CAMPAIGNS)) as any);
     }
 }
 
@@ -133,8 +133,8 @@ function solveConflictBetweenTwoRevisions(l: Resource, r: Resource): Resource|un
 
     if (equal(withoutStaffAndCampaigns(l as any), withoutStaffAndCampaigns(r as any))) {
         return flow(r,
-            updateAsc(STAFF, union([l[STAFF], r[STAFF]])),
-            updateAsc(CAMPAIGNS, union([l[CAMPAIGNS], r[CAMPAIGNS]])) as any);
+            assoc(STAFF, union([l[STAFF], r[STAFF]])),
+            assoc(CAMPAIGNS, union([l[CAMPAIGNS], r[CAMPAIGNS]])) as any);
     }
 
     return undefined;

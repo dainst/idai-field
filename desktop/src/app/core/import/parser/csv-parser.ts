@@ -1,4 +1,4 @@
-import {flow, map, update as updateD, update_a} from 'tsfun';
+import {flow, map, update as updateD, assoc} from 'tsfun';
 import {Document, Resource, Relations} from 'idai-field-core';
 import {Parser} from './parser';
 import {Category} from 'idai-field-core';
@@ -14,7 +14,7 @@ export module CsvParser {
     const toDocument = (resource: Resource) => { return { resource: resource } as Document; };
 
 
-    const insertRelations = update_a(
+    const insertRelations = assoc(
             'relations',
             (relations: Relations|undefined) => relations ? relations : {});
 

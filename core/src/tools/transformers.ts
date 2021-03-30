@@ -1,4 +1,4 @@
-import {compose, Map, map, to, update_a} from 'tsfun';
+import {compose, Map, map, to, assoc} from 'tsfun';
 import {assocReduce} from './assoc-reduce';
 
 
@@ -21,7 +21,7 @@ export function makeLookup(path: string|number|Array<string|number>) {
 
 export function addKeyAsProp<A extends Map>(prop: string) {
 
-    return map((a: A, key: string) => update_a(prop, key)(a));
+    return map((a: A, key: string) => assoc(prop, key)(a));
 }
 
 

@@ -1,6 +1,6 @@
-import {Name} from '../../core/constants';
-import {ProjectNameValidator} from '../../core/model/project-name-validator';
-import {M} from '../messages/m';
+import { Name } from '@idai-field/core';
+import { ProjectNameValidator } from '../../core/model/project-name-validator';
+import { M } from '../messages/m';
 
 const replicationStream = typeof window !== 'undefined' ? window.require('pouchdb-replication-stream') : require('pouchdb-replication-stream');
 const stream = typeof window !== 'undefined' ? window.require('stream') : require('stream');

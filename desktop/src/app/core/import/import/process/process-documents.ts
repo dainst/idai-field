@@ -1,9 +1,9 @@
-import {Document} from 'idai-components-2';
-import {update, duplicates, size, to} from 'tsfun';
-import {RESOURCE_DOT_IDENTIFIER} from '../../../constants';
-import {ImportErrors as E} from '../import-errors';
-import {ImportValidator} from './import-validator';
-import {mergeResource} from './merge-resource';
+import { RESOURCE_DOT_IDENTIFIER } from '@idai-field/core';
+import { Document } from 'idai-components-2';
+import { duplicates, size, to, update } from 'tsfun';
+import { ImportErrors as E } from '../import-errors';
+import { ImportValidator } from './import-validator';
+import { mergeResource } from './merge-resource';
 
 
 /**

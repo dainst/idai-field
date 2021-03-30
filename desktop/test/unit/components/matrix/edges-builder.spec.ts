@@ -1,5 +1,5 @@
+import { featureDoc } from '@idai-field/core';
 import { Edges, EdgesBuilder, GraphRelationsConfiguration } from '../../../../src/app/components/matrix/edges-builder';
-import { featureDoc } from '../../test-helpers';
 
 
 /**

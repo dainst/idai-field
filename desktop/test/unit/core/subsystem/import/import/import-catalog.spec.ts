@@ -1,14 +1,12 @@
-import {createApp, createHelpers, setupSyncTestDb} from '../../subsystem-helper';
+import {
+    createDocuments, HierarchicalRelations,
+    ImageRelationsC as ImageRelations, NiceDocs, TypeRelations
+} from '@idai-field/core';
 import {
     buildImportCatalog,
     ImportCatalogErrors
 } from '../../../../../../src/app/core/import/import/import-catalog';
-import {
-    HierarchicalRelations,
-    ImageRelationsC as ImageRelations,
-    TypeRelations
-} from '@idai-field/core';
-import {createDocuments, NiceDocs} from '../../../../test-helpers';
+import { createApp, createHelpers, setupSyncTestDb } from '../../subsystem-helper';
 
 
 describe('subsystem/import/importCatalog', () => {

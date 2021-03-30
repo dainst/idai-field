@@ -1,4 +1,4 @@
-import {intoObj} from '../../../../src/app/core/util/utils';
+import { intoObj } from '../../../src/tools/utils';
 
 
 describe('intoObj', () => {

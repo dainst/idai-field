@@ -1,10 +1,10 @@
-import {flatMap, subtract, to, flow} from 'tsfun';
-import {Document, Relations, toResourceId} from 'idai-components-2';
-import {DocumentDatastore} from '../datastore/document-datastore';
-import {ProjectConfiguration} from '../configuration/project-configuration';
-import {InverseRelationsMap, makeInverseRelationsMap} from '../configuration/inverse-relations-map';
-import {updateRelations} from './update-relations';
-import {Name} from '../constants';
+import { Name } from '@idai-field/core';
+import { Document, Relations, toResourceId } from 'idai-components-2';
+import { flatMap, flow, subtract, to } from 'tsfun';
+import { InverseRelationsMap, makeInverseRelationsMap } from '../configuration/inverse-relations-map';
+import { ProjectConfiguration } from '../configuration/project-configuration';
+import { DocumentDatastore } from '../datastore/document-datastore';
+import { updateRelations } from './update-relations';
 
 const NAME = 'name';
 

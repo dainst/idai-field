@@ -1,3 +1,4 @@
+import { fieldDoc } from '@idai-field/core';
 import { Document } from 'idai-components-2';
 import * as PouchDB from 'pouchdb-node';
 import { FieldDocument } from '../../../../../../core/index';
@@ -5,7 +6,6 @@ import { CachedDatastore } from '../../../../../src/app/core/datastore/cached/ca
 import { ResourcesStateManager } from '../../../../../src/app/core/resources/view/resources-state-manager';
 import { ViewFacade } from '../../../../../src/app/core/resources/view/view-facade';
 import { TabManager } from '../../../../../src/app/core/tabs/tab-manager';
-import { fieldDoc } from '../../../test-helpers';
 import { createApp, setupSyncTestDb } from '../subsystem-helper';
 
 

@@ -1,10 +1,14 @@
-import {dropRightWhile, includedIn, is, isArray, isNot, isObject, isAssociative, Map,
-    Associative, isEmpty, isnt, flow, cond, dissoc, forEach, update, values, filter} from 'tsfun';
-import {NewResource, Resource} from 'idai-components-2';
-import {HierarchicalRelations, clone} from '@idai-field/core';
-import {ImportErrors} from '../import-errors';
-import {hasEmptyAssociatives} from '../../util';
-import {typeOf} from '../../../util/utils';
+import { clone, HierarchicalRelations, typeOf } from '@idai-field/core';
+import { NewResource, Resource } from 'idai-components-2';
+import {
+    Associative, cond, dissoc, dropRightWhile,
+    filter, flow, forEach, includedIn, is, isArray, isAssociative,
+    isEmpty, isNot,
+    isnt, isObject, Map,
+    update, values
+} from 'tsfun';
+import { hasEmptyAssociatives } from '../../util';
+import { ImportErrors } from '../import-errors';
 
 
 export const GEOMETRY = 'geometry';

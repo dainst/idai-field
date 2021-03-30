@@ -1,7 +1,6 @@
-import {to} from 'tsfun';
-import {Resource, Document} from 'idai-components-2';
-import {FieldResource} from '@idai-field/core';
-import {ResourceId} from '../constants';
+import { FieldResource, ResourceId } from '@idai-field/core';
+import { Document, Resource } from 'idai-components-2';
+import { to } from 'tsfun';
 
 /**
  * @author: Thomas Kleinke

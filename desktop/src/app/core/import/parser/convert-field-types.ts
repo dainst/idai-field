@@ -1,9 +1,8 @@
-import {includedIn, to, is, isNot, on, isnt} from 'tsfun';
-import {Resource, Dimension, Dating} from 'idai-components-2';
-import {ParserErrors} from './parser-errors';
-import {PARENT, Category, FieldDefinition} from '@idai-field/core';
-import {setOn} from '../../util/utils';
-import {CsvExportConsts} from '../../export/csv/csv-export-consts';
+import { Category, FieldDefinition, PARENT, setOn } from '@idai-field/core';
+import { Dating, Dimension, Resource } from 'idai-components-2';
+import { includedIn, is, isNot, isnt, on, to } from 'tsfun';
+import { CsvExportConsts } from '../../export/csv/csv-export-consts';
+import { ParserErrors } from './parser-errors';
 import ARRAY_SEPARATOR = CsvExportConsts.ARRAY_SEPARATOR;
 
 

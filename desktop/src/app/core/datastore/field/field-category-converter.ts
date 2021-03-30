@@ -1,10 +1,10 @@
-import {Injectable} from '@angular/core';
-import {Document} from 'idai-components-2';
-import {CategoryConverter} from '../cached/category-converter';
-import {Migrator} from './migrator';
-import {takeOrMake} from '../../util/utils';
-import {ProjectConfiguration} from '../../configuration/project-configuration';
-import {ProjectCategories} from '../../configuration/project-categories';
+import { Injectable } from '@angular/core';
+import { takeOrMake } from '@idai-field/core';
+import { Document } from 'idai-components-2';
+import { ProjectCategories } from '../../configuration/project-categories';
+import { ProjectConfiguration } from '../../configuration/project-configuration';
+import { CategoryConverter } from '../cached/category-converter';
+import { Migrator } from './migrator';
 
 
 @Injectable()

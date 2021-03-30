@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import { DatastoreErrors, IndexFacade, isProjectDocument, ObserverUtil, PouchdbDatastore } from '@idai-field/core';
+import { DatastoreErrors, IndexFacade, isProjectDocument, ObserverUtil, PouchdbDatastore, ResourceId, RevisionId } from '@idai-field/core';
 import { Action, Document } from 'idai-components-2';
 import { Observable, Observer } from 'rxjs';
 import { aMap } from 'tsfun';
-import { ResourceId, RevisionId } from '../../constants';
 import { SettingsProvider } from '../../settings/settings-provider';
 import { CategoryConverter } from '../cached/category-converter';
 import { DocumentCache } from '../cached/document-cache';

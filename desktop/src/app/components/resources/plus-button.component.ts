@@ -1,15 +1,14 @@
-import {Component, Input, ElementRef, ViewChild, OnChanges, EventEmitter, Output} from '@angular/core';
-import {I18n} from '@ngx-translate/i18n-polyfill';
-import {Relations} from 'idai-components-2';
-import {FieldDocument, Category} from '@idai-field/core';
-import {ResourcesComponent} from './resources.component';
-import {M} from '../messages/m';
-import {ProjectConfiguration} from '../../core/configuration/project-configuration';
-import {ViewFacade} from '../../core/resources/view/view-facade';
-import {FieldReadDatastore} from '../../core/datastore/field/field-read-datastore';
-import {Messages} from '../messages/messages';
-import {ProjectCategories} from '../../core/configuration/project-categories';
-import {Name} from '../../core/constants';
+import { Component, ElementRef, EventEmitter, Input, OnChanges, Output, ViewChild } from '@angular/core';
+import { Category, FieldDocument, Name } from '@idai-field/core';
+import { I18n } from '@ngx-translate/i18n-polyfill';
+import { Relations } from 'idai-components-2';
+import { ProjectCategories } from '../../core/configuration/project-categories';
+import { ProjectConfiguration } from '../../core/configuration/project-configuration';
+import { FieldReadDatastore } from '../../core/datastore/field/field-read-datastore';
+import { ViewFacade } from '../../core/resources/view/view-facade';
+import { M } from '../messages/m';
+import { Messages } from '../messages/messages';
+import { ResourcesComponent } from './resources.component';
 
 
 export type PlusButtonStatus = 'enabled'|'disabled-hierarchy';

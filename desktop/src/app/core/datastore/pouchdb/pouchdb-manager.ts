@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
-import { IndexFacade, PouchdbProxy } from '@idai-field/core';
+import { IndexFacade, Name, PouchdbProxy } from '@idai-field/core';
 import { Document } from 'idai-components-2';
 import { Observable, Observer } from 'rxjs';
 import { isUndefined, not } from 'tsfun';
 import { ConfigurationErrors } from '../../configuration/boot/configuration-errors';
-import { Name } from '../../constants';
 import { InitializationProgress } from '../../initialization-progress';
 import { SyncProcess, SyncStatus } from '../../sync/sync-process';
 import { DocumentCache } from '../cached/document-cache';

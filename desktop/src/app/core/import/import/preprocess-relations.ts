@@ -1,13 +1,12 @@
-import {includedIn, isArray, isnt, isUndefined, isUndefinedOrEmpty, Map, on} from 'tsfun';
-import {Document, Relations} from 'idai-components-2';
-import {Find, Get, Id, Identifier, IdentifierMap} from './types';
-import {iterateRelationsInImport} from './utils';
-import {ImportErrors as E} from './import-errors';
-import {RESOURCE_DOT_ID} from '../../constants';
-import {HierarchicalRelations, PARENT} from '@idai-field/core';
-import LIES_WITHIN = HierarchicalRelations.LIESWITHIN;
-import {ImportContext, ImportHelpers, ImportOptions} from './import-documents';
+import { HierarchicalRelations, PARENT, RESOURCE_DOT_ID } from '@idai-field/core';
+import { Document, Relations } from 'idai-components-2';
+import { includedIn, isArray, isnt, isUndefined, isUndefinedOrEmpty, on } from 'tsfun';
 import { makeLookup } from '../../../../../../core/src/tools/transformers';
+import { ImportContext, ImportHelpers, ImportOptions } from './import-documents';
+import { ImportErrors as E } from './import-errors';
+import { Find, Get, Id, Identifier, IdentifierMap } from './types';
+import { iterateRelationsInImport } from './utils';
+import LIES_WITHIN = HierarchicalRelations.LIESWITHIN;
 
 // @author Thomas Kleinke
 // @author Daniel de Oliveira

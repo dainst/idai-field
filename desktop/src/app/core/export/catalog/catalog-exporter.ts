@@ -1,10 +1,9 @@
-import {StringUtils} from '@idai-field/core';
-import {DocumentReadDatastore} from '../../datastore/document-read-datastore';
-import {getExportDocuments} from './get-export-documents';
-import {Settings} from '../../settings/settings';
-import {ResourceId} from '../../constants';
-import {RelationsManager} from '../../model/relations-manager';
-import {ImageRelationsManager} from '../../model/image-relations-manager';
+import { ResourceId, StringUtils } from '@idai-field/core';
+import { DocumentReadDatastore } from '../../datastore/document-read-datastore';
+import { ImageRelationsManager } from '../../model/image-relations-manager';
+import { RelationsManager } from '../../model/relations-manager';
+import { Settings } from '../../settings/settings';
+import { getExportDocuments } from './get-export-documents';
 
 
 const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');

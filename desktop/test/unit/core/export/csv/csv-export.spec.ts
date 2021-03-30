@@ -1,6 +1,5 @@
-import { FieldDefinition, HierarchicalRelations } from '@idai-field/core';
+import { FieldDefinition, fieldDoc, HierarchicalRelations } from '@idai-field/core';
 import { CSVExport } from '../../../../../src/app/core/export/csv/csv-export';
-import { fieldDoc } from '../../../test-helpers';
 
 
 export function makeFieldDefinitions(fieldNames: string[]) {

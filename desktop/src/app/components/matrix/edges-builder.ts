@@ -1,6 +1,6 @@
-import {set, to, on, is, union} from 'tsfun';
-import {Document, Relations, Resource} from 'idai-components-2';
-import {intoObj} from '../../core/util/utils';
+import { intoObj } from '@idai-field/core';
+import { Document, Relations } from 'idai-components-2';
+import { is, on, set, union } from 'tsfun';
 
 
 export type TargetAndRelationType = { targetId: string, relationType: string };

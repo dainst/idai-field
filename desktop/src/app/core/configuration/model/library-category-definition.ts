@@ -1,9 +1,9 @@
-import {Map} from 'tsfun';
-import {assertFieldsAreValid} from '../boot/assert-fields-are-valid';
-import {ConfigurationErrors} from '../boot/configuration-errors';
-import {BaseFieldDefinition, BaseCategoryDefinition} from './base-category-definition';
-import {Valuelists} from '../../../../../../core/src/model/valuelist-definition';
-import {Name} from '../../constants';
+import { Name } from '@idai-field/core';
+import { Map } from 'tsfun';
+import { Valuelists } from '../../../../../../core/src/model/valuelist-definition';
+import { assertFieldsAreValid } from '../boot/assert-fields-are-valid';
+import { ConfigurationErrors } from '../boot/configuration-errors';
+import { BaseCategoryDefinition, BaseFieldDefinition } from './base-category-definition';
 
 
 /**

@@ -1,5 +1,5 @@
+import { doc } from '@idai-field/core';
 import { Document } from 'idai-components-2';
-import { doc } from '../../test-helpers';
 
 
 /**

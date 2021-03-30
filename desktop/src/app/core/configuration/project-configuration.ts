@@ -1,9 +1,7 @@
-import {flow, on, isNot, empty, is, Pair, Map, includedIn, map, filter} from 'tsfun';
-import {Named, namedArrayToNamedMap, Tree, TreeList} from '@idai-field/core';
-import {RelationsUtil} from './relations-utils';
-import {Name} from '../constants';
-import {isTopLevelItemOrChildThereof, Category, RelationDefinition, FieldDefinition} from '@idai-field/core';
-import {ConfigurationErrors} from './boot/configuration-errors';
+import { Category, FieldDefinition, isTopLevelItemOrChildThereof, Name, Named, namedArrayToNamedMap, RelationDefinition, Tree, TreeList } from '@idai-field/core';
+import { empty, filter, flow, includedIn, is, isNot, Map, map, on, Pair } from 'tsfun';
+import { ConfigurationErrors } from './boot/configuration-errors';
+import { RelationsUtil } from './relations-utils';
 
 
 export type RawProjectConfiguration = Pair<TreeList<Category>, Array<RelationDefinition>>;

@@ -1,9 +1,8 @@
-import {isDefined, filter, map, flow} from 'tsfun';
-import {FieldDocument, Query} from '@idai-field/core';
-import {FieldReadDatastore} from '../datastore/field/field-read-datastore';
-import {ResourceId} from '../constants';
-import {PLACEHOLDER} from '../images/row/image-row';
-import {ImageReadDatastore} from '../datastore/field/image-read-datastore';
+import { FieldDocument, Query, ResourceId } from '@idai-field/core';
+import { filter, flow, isDefined, map } from 'tsfun';
+import { FieldReadDatastore } from '../datastore/field/field-read-datastore';
+import { ImageReadDatastore } from '../datastore/field/image-read-datastore';
+import { PLACEHOLDER } from '../images/row/image-row';
 
 
 /**

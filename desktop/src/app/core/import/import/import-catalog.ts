@@ -1,13 +1,11 @@
-import {isArray, isNot, isUndefinedOrEmpty, aMap, set, subtract, to, undefinedOrEmpty} from 'tsfun';
-import {Document} from 'idai-components-2';
-import {DocumentDatastore} from '../../datastore/document-datastore';
-import {makeDocumentsLookup} from './utils';
-import {RelationsManager} from '../../model/relations-manager';
-import {ON_RESOURCE_ID} from '../../constants';
-import {HierarchicalRelations, clone, ImageRelationsC as ImageRelations, TypeRelations} from '@idai-field/core';
-import {ImageRelationsManager} from '../../model/image-relations-manager';
-import {Lookup} from '../../util/utils';
-import {Imagestore} from '../../images/imagestore/imagestore';
+import { clone, HierarchicalRelations, ImageRelationsC as ImageRelations, Lookup, ON_RESOURCE_ID, TypeRelations } from '@idai-field/core';
+import { Document } from 'idai-components-2';
+import { aMap, isArray, isNot, isUndefinedOrEmpty, set, subtract, to, undefinedOrEmpty } from 'tsfun';
+import { DocumentDatastore } from '../../datastore/document-datastore';
+import { Imagestore } from '../../images/imagestore/imagestore';
+import { ImageRelationsManager } from '../../model/image-relations-manager';
+import { RelationsManager } from '../../model/relations-manager';
+import { makeDocumentsLookup } from './utils';
 
 
 export interface ImportCatalogServices {

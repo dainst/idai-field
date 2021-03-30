@@ -1,4 +1,8 @@
 import {
+    Lookup, PositionRelations, ResourceId, TimeRelations, UNIDIRECTIONAL_RELATIONS
+} from '@idai-field/core';
+import { Document, Relations } from 'idai-components-2';
+import {
     empty,
     filter,
     flow,
@@ -14,24 +18,17 @@ import {
     to,
     undefinedOrEmpty
 } from 'tsfun';
-import {Document, Relations} from 'idai-components-2';
-import {ImportErrors as E} from '../import-errors';
-import {
-    PositionRelations,
-    TimeRelations, UNIDIRECTIONAL_RELATIONS
-} from '@idai-field/core';
-import {setInverseRelationsForDbResources} from './set-inverse-relations-for-db-resources';
-import {assertInSameOperationWith} from '../utils';
-import {AssertIsAllowedRelationDomainType} from '../types';
-import {ResourceId} from '../../../constants';
-import {InverseRelationsMap} from '../../../configuration/inverse-relations-map';
+import { InverseRelationsMap } from '../../../configuration/inverse-relations-map';
+import { ImportErrors as E } from '../import-errors';
+import { AssertIsAllowedRelationDomainType } from '../types';
+import { assertInSameOperationWith } from '../utils';
+import { setInverseRelationsForDbResources } from './set-inverse-relations-for-db-resources';
 import IS_BELOW = PositionRelations.BELOW;
 import IS_ABOVE = PositionRelations.ABOVE;
 import IS_CONTEMPORARY_WITH = TimeRelations.CONTEMPORARY;
 import IS_AFTER = TimeRelations.AFTER;
 import IS_BEFORE = TimeRelations.BEFORE;
 import IS_EQUIVALENT_TO = PositionRelations.EQUIVALENT;
-import {Lookup} from '../../../util/utils';
 
 
 /**
@@ -176,4 +173,3 @@ function setInverse(resourceId: string, inverseRelationName: string) {
         }
     }
 }
-

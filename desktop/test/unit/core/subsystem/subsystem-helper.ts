@@ -1,11 +1,10 @@
-import { FieldDocument, ImageDocument, PouchdbDatastore, Query } from '@idai-field/core';
+import { createDocuments, FieldDocument, ImageDocument, NiceDocs, PouchdbDatastore, Query, ResourceId } from '@idai-field/core';
 import { Document, toResourceId } from 'idai-components-2';
 import * as PouchDB from 'pouchdb-node';
 import { sameset } from 'tsfun';
 import { AppConfigurator } from '../../../../src/app/core/configuration/app-configurator';
 import { ConfigLoader } from '../../../../src/app/core/configuration/boot/config-loader';
 import { ConfigReader } from '../../../../src/app/core/configuration/boot/config-reader';
-import { ResourceId } from '../../../../src/app/core/constants';
 import { CategoryConverter } from '../../../../src/app/core/datastore/cached/category-converter';
 import { DocumentCache } from '../../../../src/app/core/datastore/cached/document-cache';
 import { ChangesStream } from '../../../../src/app/core/datastore/changes/changes-stream';
@@ -33,7 +32,6 @@ import { SettingsService } from '../../../../src/app/core/settings/settings-serv
 import { SyncService } from '../../../../src/app/core/sync/sync-service';
 import { TabManager } from '../../../../src/app/core/tabs/tab-manager';
 import { IndexerConfiguration } from '../../../../src/app/indexer-configuration';
-import { createDocuments, NiceDocs } from '../../test-helpers';
 
 const fs = require('fs');
 

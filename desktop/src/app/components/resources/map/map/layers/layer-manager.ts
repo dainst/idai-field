@@ -1,13 +1,11 @@
-import {Injectable} from '@angular/core';
-import {flatten, set, subtract, to} from 'tsfun';
-import {Document} from 'idai-components-2';
-import {FieldDocument, ImageDocument} from '@idai-field/core';
-import {ImageReadDatastore} from '../../../../../core/datastore/field/image-read-datastore';
-import {ViewFacade} from '../../../../../core/resources/view/view-facade';
-import {FieldReadDatastore} from '../../../../../core/datastore/field/field-read-datastore';
-import {ImageRelationsC as ImageRelations, clone} from '@idai-field/core';
-import {RelationsManager} from '../../../../../core/model/relations-manager';
-import {moveInArray} from '../../../../../core/util/utils';
+import { Injectable } from '@angular/core';
+import { clone, FieldDocument, ImageDocument, ImageRelationsC as ImageRelations, moveInArray } from '@idai-field/core';
+import { Document } from 'idai-components-2';
+import { flatten, set, subtract, to } from 'tsfun';
+import { FieldReadDatastore } from '../../../../../core/datastore/field/field-read-datastore';
+import { ImageReadDatastore } from '../../../../../core/datastore/field/image-read-datastore';
+import { RelationsManager } from '../../../../../core/model/relations-manager';
+import { ViewFacade } from '../../../../../core/resources/view/view-facade';
 
 
 export interface LayersInitializationResult {

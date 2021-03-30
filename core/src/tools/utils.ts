@@ -1,6 +1,6 @@
-import {Pair, Map, to, identity, isDefined, isString, Associative, isArray, dissoc, isNumber} from 'tsfun';
-import {Named, namedArrayToNamedMap} from '@idai-field/core';
-import {assocReduce} from '../../../../../core/src/tools/assoc-reduce';
+import { Associative, dissoc, identity, isArray, isDefined, isNumber, isString, Map, Pair, to } from 'tsfun';
+import { assocReduce } from './assoc-reduce';
+import { Named, namedArrayToNamedMap } from './named';
 
 
 /**

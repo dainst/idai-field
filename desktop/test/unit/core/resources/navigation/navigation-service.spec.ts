@@ -1,5 +1,5 @@
+import { fieldDoc } from '@idai-field/core';
 import { NavigationService } from '../../../../../src/app/core/resources/navigation/navigation-service';
-import { fieldDoc } from '../../../test-helpers';
 
 
 describe('NavigationService', () => {

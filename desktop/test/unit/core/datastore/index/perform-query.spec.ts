@@ -1,8 +1,7 @@
-import { ConstraintIndex, FulltextIndex, namedArrayToNamedMap, performQuery as performQuery_, Query } from '@idai-field/core';
+import { ConstraintIndex, doc, FulltextIndex, namedArrayToNamedMap, performQuery as performQuery_, Query } from '@idai-field/core';
 import { Document } from 'idai-components-2';
 import { getFieldsToIndex } from '../../../../../../core/src/index/get-fields-to-index';
 import { IndexerConfiguration } from '../../../../../src/app/indexer-configuration';
-import { doc } from '../../../test-helpers';
 import { createMockProjectConfiguration } from './helpers';
 
 /**

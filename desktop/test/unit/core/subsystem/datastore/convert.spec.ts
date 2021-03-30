@@ -1,6 +1,6 @@
+import { doc } from '@idai-field/core';
 import * as PouchDB from 'pouchdb-node';
 import { ConfigurationErrors } from '../../../../../src/app/core/configuration/boot/configuration-errors';
-import { doc } from '../../../test-helpers';
 import { createApp, setupSyncTestDb } from '../subsystem-helper';
 
 

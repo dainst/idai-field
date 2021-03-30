@@ -1,11 +1,10 @@
-import {is, on, isNot, includedIn, keysValues} from 'tsfun';
-import {Document} from 'idai-components-2';
-import {ResourceId} from '../../../constants';
-import {assertInSameOperationWith, unionOfDocuments} from '../utils';
-import {AssertIsAllowedRelationDomainType} from '../types';
-import {updateRelations} from '../../../model/update-relations';
-import {InverseRelationsMap} from '../../../configuration/inverse-relations-map';
-import {Lookup} from '../../../util/utils';
+import { Lookup, ResourceId } from '@idai-field/core';
+import { Document } from 'idai-components-2';
+import { includedIn, is, isNot, keysValues, on } from 'tsfun';
+import { InverseRelationsMap } from '../../../configuration/inverse-relations-map';
+import { updateRelations } from '../../../model/update-relations';
+import { AssertIsAllowedRelationDomainType } from '../types';
+import { assertInSameOperationWith, unionOfDocuments } from '../utils';
 
 
 /**

@@ -1,11 +1,10 @@
-import {aMap, arrayEqual, to, isNot, on, undefinedOrEmpty, union} from 'tsfun';
-import {Document, Relations} from 'idai-components-2';
-import {ImportErrors as E} from './import-errors';
-import {HierarchicalRelations} from '@idai-field/core';
+import { HierarchicalRelations, Lookup } from '@idai-field/core';
+import { Document, Relations } from 'idai-components-2';
+import { aMap, arrayEqual, isNot, on, to, undefinedOrEmpty, union } from 'tsfun';
+import { makeLookup } from '../../../../../../core/src/tools/transformers';
+import { ImportErrors as E } from './import-errors';
+import { Id, Identifier } from './types';
 import RECORDED_IN = HierarchicalRelations.RECORDEDIN;
-import {Id, Identifier} from './types';
-import {makeLookup} from '../../../../../../core/src/tools/transformers';
-import {Lookup} from '../../util/utils';
 
 
 export const unionOfDocuments = (docs: Array<Array<Document>>) => union(on(['resource', 'id']), docs);

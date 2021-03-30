@@ -1,16 +1,14 @@
-import {Injectable} from '@angular/core';
-import {flatten, includedIn, isDefined, isNot, on, separate, set, subtract, to} from 'tsfun';
-import {Document, toResourceId} from 'idai-components-2';
-import {FieldDocument, ImageDocument, TreeList, Category, clone} from '@idai-field/core';
-import {DocumentDatastore} from '../datastore/document-datastore';
-import {Imagestore} from '../images/imagestore/imagestore';
-import {RelationsManager} from './relations-manager';
-import {ImageRelationsC as ImageRelations} from '@idai-field/core';
-import {ProjectConfiguration} from '../configuration/project-configuration';
+import { Injectable } from '@angular/core';
+import { Category, clone, FieldDocument, ImageDocument, ImageRelationsC as ImageRelations, ON_RESOURCE_ID, ResourceId, TreeList } from '@idai-field/core';
+import { Document, toResourceId } from 'idai-components-2';
+import { flatten, includedIn, isDefined, isNot, on, separate, set, subtract, to } from 'tsfun';
+import { ProjectCategories } from '../configuration/project-categories';
+import { ProjectConfiguration } from '../configuration/project-configuration';
+import { DocumentDatastore } from '../datastore/document-datastore';
+import { Imagestore } from '../images/imagestore/imagestore';
+import { RelationsManager } from './relations-manager';
 import DEPICTS = ImageRelations.DEPICTS;
 import ISDEPICTEDIN = ImageRelations.ISDEPICTEDIN;
-import {ProjectCategories} from '../configuration/project-categories';
-import {ON_RESOURCE_ID, ResourceId} from '../constants';
 
 
 export module ImageRelationsManagerErrors {

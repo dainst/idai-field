@@ -1,20 +1,20 @@
-import {Injectable} from '@angular/core';
-import {isString} from 'tsfun';
-import {Settings} from './settings';
-import {PouchdbManager} from '../datastore/pouchdb/pouchdb-manager';
-import {PouchdbServer} from '../datastore/pouchdb/pouchdb-server';
-import {SampleDataLoader} from '../datastore/field/sampledata/sample-data-loader';
-import {M} from '../../components/messages/m';
-import {SyncService} from '../sync/sync-service';
-import {Name} from '../constants';
-import {AppConfigurator} from '../configuration/app-configurator';
-import {ProjectConfiguration} from '../configuration/project-configuration';
-import {Imagestore} from '../images/imagestore/imagestore';
-import {ImageConverter} from '../images/imagestore/image-converter';
-import {ImagestoreErrors} from '../images/imagestore/imagestore-errors';
-import {Messages} from '../../components/messages/messages';
-import {InitializationProgress} from '../initialization-progress';
-import {SettingsProvider} from './settings-provider';
+import { Injectable } from '@angular/core';
+import { Name } from '@idai-field/core';
+import { isString } from 'tsfun';
+import { M } from '../../components/messages/m';
+import { Messages } from '../../components/messages/messages';
+import { AppConfigurator } from '../configuration/app-configurator';
+import { ProjectConfiguration } from '../configuration/project-configuration';
+import { SampleDataLoader } from '../datastore/field/sampledata/sample-data-loader';
+import { PouchdbManager } from '../datastore/pouchdb/pouchdb-manager';
+import { PouchdbServer } from '../datastore/pouchdb/pouchdb-server';
+import { ImageConverter } from '../images/imagestore/image-converter';
+import { Imagestore } from '../images/imagestore/imagestore';
+import { ImagestoreErrors } from '../images/imagestore/imagestore-errors';
+import { InitializationProgress } from '../initialization-progress';
+import { SyncService } from '../sync/sync-service';
+import { Settings } from './settings';
+import { SettingsProvider } from './settings-provider';
 
 const {remote, ipcRenderer} = typeof window !== 'undefined' ? window.require('electron') : require('electron');
 

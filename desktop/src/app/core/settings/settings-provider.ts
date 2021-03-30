@@ -1,8 +1,7 @@
-import {Settings} from './settings';
-import {Name} from '../constants';
-import {set} from 'tsfun';
-import {jsonClone} from '@idai-field/core';
-import {SettingsSerializer} from './settings-serializer';
+import { jsonClone, Name } from '@idai-field/core';
+import { set } from 'tsfun';
+import { Settings } from './settings';
+import { SettingsSerializer } from './settings-serializer';
 
 
 const {remote} = typeof window !== 'undefined' ? window.require('electron') : require('electron');

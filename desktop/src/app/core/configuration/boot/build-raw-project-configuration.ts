@@ -1,30 +1,34 @@
-import {cond, flow, includedIn, isDefined, isNot, Mapping, Map, on, subtract, undefinedOrEmpty, identity,
-    compose, Pair, dissoc, pairWith, prune, filter, or, copy, update_a as updateAsc, update as updateStruct, lookup, map, keysValues, reduce, clone, update_a, update } from 'tsfun';
-import {Tree, ValuelistDefinition, RelationDefinition, Group, Groups, Category, CategoryDefinition, FieldDefinition} from '@idai-field/core';
-import {LibraryCategoryDefinition} from '../model/library-category-definition';
-import {CustomCategoryDefinition} from '../model/custom-category-definition';
-import {ConfigurationErrors} from './configuration-errors';
-import {withDissoc} from '../../util/utils';
-import {TransientFieldDefinition, TransientCategoryDefinition} from '../model/transient-category-definition';
-import {BuiltinCategoryDefinition} from '../model/builtin-category-definition';
-import {mergeBuiltInWithLibraryCategories} from './merge-builtin-with-library-categories';
-import {Assertions} from './assertions';
-import {getDefinedParents, iterateOverFieldsOfCategories} from './helpers';
-import {addSourceField} from './add-source-field';
-import {mergeCategories} from './merge-categories';
-import {addExtraFields} from './add-extra-fields';
-import {hideFields} from './hide-fields';
-import {addRelations} from './add-relations';
-import {applySearchConfiguration} from './apply-search-configuration';
-import {orderFields} from './order-fields';
-import {makeCategoryTreeList} from './make-category-tree-list';
-import {RawProjectConfiguration} from '../project-configuration';
-import {Labelled} from '../../../../../../core/src/tools/named';
-import {RelationsUtil} from '../relations-utils';
-import {ProjectCategories} from '../project-categories';
-import {TreeList, sortStructArray} from '@idai-field/core';
-import {linkParentAndChildInstances} from '../category-tree-list';
-import {applyLanguageConfigurations} from './apply-language-configurations';
+import { Category, CategoryDefinition, FieldDefinition, Group, Groups, RelationDefinition, sortStructArray, Tree, TreeList, ValuelistDefinition, withDissoc } from '@idai-field/core';
+import {
+    clone, compose, cond,
+    copy, dissoc, filter, flow, identity, includedIn, isDefined, isNot,
+    keysValues, lookup, Map,
+    map, Mapping, on,
+    or, Pair, pairWith, prune, reduce, subtract, undefinedOrEmpty,
+    update, update as updateStruct, update_a as updateAsc, update_a
+} from 'tsfun';
+import { Labelled } from '../../../../../../core/src/tools/named';
+import { linkParentAndChildInstances } from '../category-tree-list';
+import { BuiltinCategoryDefinition } from '../model/builtin-category-definition';
+import { CustomCategoryDefinition } from '../model/custom-category-definition';
+import { LibraryCategoryDefinition } from '../model/library-category-definition';
+import { TransientCategoryDefinition, TransientFieldDefinition } from '../model/transient-category-definition';
+import { ProjectCategories } from '../project-categories';
+import { RawProjectConfiguration } from '../project-configuration';
+import { RelationsUtil } from '../relations-utils';
+import { addExtraFields } from './add-extra-fields';
+import { addRelations } from './add-relations';
+import { addSourceField } from './add-source-field';
+import { applyLanguageConfigurations } from './apply-language-configurations';
+import { applySearchConfiguration } from './apply-search-configuration';
+import { Assertions } from './assertions';
+import { ConfigurationErrors } from './configuration-errors';
+import { getDefinedParents, iterateOverFieldsOfCategories } from './helpers';
+import { hideFields } from './hide-fields';
+import { makeCategoryTreeList } from './make-category-tree-list';
+import { mergeBuiltInWithLibraryCategories } from './merge-builtin-with-library-categories';
+import { mergeCategories } from './merge-categories';
+import { orderFields } from './order-fields';
 
 const CATEGORIES = 0;
 

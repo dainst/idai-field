@@ -8,3 +8,4 @@ export { SortUtil } from './sort-util';
 export { StringUtils } from './string-utils';
 export { addKeyAsProp, makeLookup, mapToArray } from './transformers';
 export { Tree, TreeList } from './tree-list';
+export * from './utils';

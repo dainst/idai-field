@@ -1,4 +1,4 @@
-import {setOn} from '../../../../src/app/core/util/utils';
+import { setOn } from '../../../src/tools/utils';
 
 
 describe('setOn', () => {

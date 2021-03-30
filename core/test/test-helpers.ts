@@ -1,7 +1,7 @@
-import { FeatureDocument, FieldDocument, HierarchicalRelations, ImageRelationsC as ImageRelations } from '@idai-field/core';
 import { Document } from 'idai-components-2';
-import { ResourceId } from '../../src/app/core/constants';
-import { Lookup } from '../../src/app/core/util/utils';
+import { ResourceId } from '../src/constants';
+import { FeatureDocument, FieldDocument, HierarchicalRelations, ImageRelationsC as ImageRelations } from '../src/model';
+import { Lookup } from '../src/tools/utils';
 
 
 export const fieldDoc = (sd, identifier?, category?, id?) =>

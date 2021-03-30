@@ -1,8 +1,7 @@
-import { FieldDocument } from '@idai-field/core';
+import { doc, FieldDocument } from '@idai-field/core';
 import { DocumentCache } from '../../../../../src/app/core/datastore/cached/document-cache';
 import { FieldCategoryConverter } from '../../../../../src/app/core/datastore/field/field-category-converter';
 import { FieldDatastore } from '../../../../../src/app/core/datastore/field/field-datastore';
-import { doc } from '../../../test-helpers';
 
 
 /**

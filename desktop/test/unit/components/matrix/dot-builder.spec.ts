@@ -1,6 +1,6 @@
+import { featureDoc } from '@idai-field/core';
 import { DotBuilder } from '../../../../src/app/components/matrix/dot-builder';
 import { Edges } from '../../../../src/app/components/matrix/edges-builder';
-import { featureDoc } from '../../test-helpers';
 
 
 /**

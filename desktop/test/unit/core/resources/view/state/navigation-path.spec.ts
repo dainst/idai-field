@@ -1,6 +1,6 @@
+import { fieldDoc } from '@idai-field/core';
 import { NavigationPath } from '../../../../../../src/app/core/resources/view/state/navigation-path';
 import { toResourceId } from '../../../../../../src/app/core/resources/view/state/navigation-path-segment';
-import { fieldDoc } from '../../../../test-helpers';
 
 /**
  * @author Daniel de Oliveira

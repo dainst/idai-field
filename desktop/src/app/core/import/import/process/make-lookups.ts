@@ -1,10 +1,8 @@
-import {Document} from 'idai-components-2';
-import {Lookup} from '../../../util/utils';
-import {ResourceId} from '../../../constants';
-import {makeDocumentsLookup} from '../utils';
-import {compose, lookup, map, flatten, flow, isDefined, Pair, remove, subtract, union, aReduce, aMap} from 'tsfun';
-import {clone} from '@idai-field/core';
-import {ImportErrors as E} from '../import-errors';
+import { clone, Lookup, ResourceId } from '@idai-field/core';
+import { Document } from 'idai-components-2';
+import { aMap, aReduce, compose, flatten, flow, isDefined, lookup, map, Pair, remove, subtract, union } from 'tsfun';
+import { ImportErrors as E } from '../import-errors';
+import { makeDocumentsLookup } from '../utils';
 
 
 export async function makeLookups(documents: Array<Document>,

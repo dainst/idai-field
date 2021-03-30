@@ -1,4 +1,4 @@
-import {replaceIn} from '../../../../src/app/core/util/utils';
+import { replaceIn } from '../../../src/tools/utils';
 
 
 describe('replaceIn', () => {

@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
-import { clone, DatastoreErrors, FindIdsResult, FindResult, HierarchicalRelations, Query } from '@idai-field/core';
+import { clone, DatastoreErrors, FindIdsResult, FindResult, HierarchicalRelations, ON_RESOURCE_ID, Query, ResourceId, RESOURCE_DOT_ID } from '@idai-field/core';
 import { Document, NewDocument } from 'idai-components-2';
 import {
     append, flow, isArray, isDefined, isNot, isUndefinedOrEmpty, on, sameset, subtract, to,
     undefinedOrEmpty
 } from 'tsfun';
 import { ProjectConfiguration } from '../configuration/project-configuration';
-import { ON_RESOURCE_ID, ResourceId, RESOURCE_DOT_ID } from '../constants';
 import { DocumentDatastore } from '../datastore/document-datastore';
 import { SettingsProvider } from '../settings/settings-provider';
 import { ConnectedDocsWriter } from './connected-docs-writer';

@@ -1,6 +1,5 @@
-import {filter, flow, includedIn, is, map, remove} from 'tsfun';
-import {Named, onName, Category, TreeList, toName, Tree, filterTrees, removeTrees, isTopLevelItemOrChildThereof} from '@idai-field/core';
-import {Name} from '../constants';
+import { Category, filterTrees, isTopLevelItemOrChildThereof, Name, Named, onName, removeTrees, toName, Tree, TreeList } from '@idai-field/core';
+import { filter, flow, includedIn, is, map, remove } from 'tsfun';
 
 
 const TYPE_CATALOG = 'TypeCatalog';

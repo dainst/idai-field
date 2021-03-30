@@ -1,7 +1,6 @@
-import { DatastoreErrors, FindIdsResult, FindResult, IndexFacade, jsonClone, Query, ReadDatastore } from '@idai-field/core';
+import { DatastoreErrors, FindIdsResult, FindResult, IndexFacade, jsonClone, PouchdbDatastore, Query, ReadDatastore } from '@idai-field/core';
 import { Document } from 'idai-components-2';
 import { ConfigurationErrors } from '../../configuration/boot/configuration-errors';
-import { PouchdbDatastore } from '../pouchdb/pouchdb-datastore';
 import { CategoryConverter } from './category-converter';
 import { DocumentCache } from './document-cache';
 

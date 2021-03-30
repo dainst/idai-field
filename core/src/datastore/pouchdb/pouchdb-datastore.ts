@@ -1,6 +1,10 @@
-import { ChangeHistoryMerge, clone, DatastoreErrors, IdGenerator, ObserverUtil, PouchdbProxy } from '@idai-field/core';
 import { Document, NewDocument } from 'idai-components-2';
 import { Observable } from 'rxjs';
+import { clone, ObserverUtil } from '../../tools';
+import { DatastoreErrors } from '../model';
+import { ChangeHistoryMerge } from './change-history-merge';
+import { IdGenerator } from './id-generator';
+import { PouchdbProxy } from './pouchdb-proxy';
 
 /**
  * @author Sebastian Cuy

@@ -2,7 +2,7 @@ import { Category, CategoryDefinition, FieldDefinition, Group, Groups, RelationD
     sortStructArray, Tree, TreeList, ValuelistDefinition, withDissoc } from 'idai-field-core';
 import {
     clone, compose, cond,
-    copy, dissoc, filter, flow, identity, includedIn, isDefined, isNot,
+    copy, detach, filter, flow, identity, includedIn, isDefined, isNot,
     keysValues, lookup, Map,
     map, Mapping, on,
     or, Pair, pairWith, prune, reduce, subtract, undefinedOrEmpty,
@@ -262,8 +262,8 @@ function replaceValuelistIdWithActualValuelist(valuelistDefinitionMap: Map<Value
         flow(fd,
             assoc(TransientFieldDefinition.VALUELIST, valuelistDefinitionMap[fd.valuelistId!]),
             assoc(TransientFieldDefinition.POSITION_VALUES, valuelistDefinitionMap[fd.positionValuelistId!]),
-            dissoc(TransientFieldDefinition.VALUELISTID),
-            dissoc(TransientFieldDefinition.POSITION_VALUELIST_ID)
+            detach(TransientFieldDefinition.VALUELISTID),
+            detach(TransientFieldDefinition.POSITION_VALUELIST_ID)
         );
 }
 

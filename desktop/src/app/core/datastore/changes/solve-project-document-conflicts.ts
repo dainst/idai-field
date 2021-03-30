@@ -1,6 +1,6 @@
 import { ObjectUtils, dissocIndices, last2, replaceLastPair, RevisionId, sortRevisionsByLastModified, withDissoc } from 'idai-field-core';
 import { Document, Resource } from 'idai-field-core';
-import { append, compose, dissoc, equal, filter, flow, isDefined, isEmpty, left, lookup, map, Pair, right, to, union as tsfunUnion, update, assoc } from 'tsfun';
+import { append, compose, detach, equal, filter, flow, isDefined, isEmpty, left, lookup, map, Pair, right, to, union as tsfunUnion, update, assoc } from 'tsfun';
 import RESOURCE = Document.RESOURCE;
 
 type ArrayIndex = number;
@@ -13,7 +13,7 @@ const constantProjectFields = [CRS].concat(Resource.CONSTANT_FIELDS);
 
 const union = compose(filter(isDefined) as any, tsfunUnion as any);
 const withoutConstantProjectFields = (resource: Resource) => constantProjectFields.reduce(withDissoc, resource);
-const withoutStaffAndCampaigns = compose(dissoc(STAFF), dissoc(CAMPAIGNS));
+const withoutStaffAndCampaigns = compose(detach(STAFF), detach(CAMPAIGNS));
 
 
 /**

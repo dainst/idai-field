@@ -1,4 +1,4 @@
-import {flow, dissoc, isNumber, isObject, isString} from 'tsfun';
+import {flow, detach, isNumber, isObject, isString} from 'tsfun';
 
 
 /**
@@ -118,10 +118,10 @@ export module Dimension {
     export function revert(dimension: Dimension) {
 
         return flow(dimension,
-            dissoc('value'),
-            dissoc('rangeMin'),
-            dissoc('rangeMax'),
-            dissoc('isRange'));
+            detach('value'),
+            detach('rangeMin'),
+            detach('rangeMax'),
+            detach('isRange'));
     }
 
 

@@ -1,4 +1,4 @@
-import {flow, cond, on, isUndefinedOrEmpty, dissoc, isObject} from 'tsfun';
+import {flow, cond, on, isUndefinedOrEmpty, detach, isObject} from 'tsfun';
 
 /**
  * @author Sebastian Cuy
@@ -120,14 +120,14 @@ export module Dating {
     }
 
 
-    const dissocIfEmpty = (path: string) => cond(on(path, isUndefinedOrEmpty), dissoc(path)) as any /* TODO review any */;
+    const dissocIfEmpty = (path: string) => cond(on(path, isUndefinedOrEmpty), detach(path)) as any /*TODO any*/;
 
 
     export function revert(dating: Dating): Dating {
 
         return flow(dating,
-            dissoc(['begin','year']),
-            dissoc(['end','year']),
+            detach(['begin','year']),
+            detach(['end','year']),
             dissocIfEmpty('begin'),
             dissocIfEmpty('end')
          );

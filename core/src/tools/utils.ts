@@ -1,4 +1,4 @@
-import { Associative, dissoc, identity, isArray, isDefined, isNumber, isString, Map, Pair, to } from 'tsfun';
+import { Associative, detach, identity, isArray, isDefined, isNumber, isString, Map, Pair, to } from 'tsfun';
 import { assocReduce } from './assoc-reduce';
 import { Named, namedArrayToNamedMap } from './named';
 
@@ -41,7 +41,7 @@ export function toMap<T extends Named>(categories: Associative<T>) {
  */
 export function withDissoc(struct: any, path: string) {
 
-    return dissoc(path)(struct);
+    return detach(path)(struct);
 }
 // return map(val(undefined))(range(size));
 

@@ -1,5 +1,5 @@
 import {cond, defined, flow, isNot, Map, Mapping, on, isUndefined, copy,
-    separate, dissoc, map, update, reduce, values} from 'tsfun';
+    separate, detach, map, update, reduce, values} from 'tsfun';
 import {mapToNamedArray, Tree, CategoryDefinition, ObjectUtils, TreeList, Category, Group, Groups, FieldDefinition} from 'idai-field-core';
 import {MDInternal} from '../../../components/messages/md-internal';
 import {linkParentAndChildInstances} from '../category-tree-list';
@@ -31,7 +31,7 @@ export function makeCategoryTreeList(categories: any): TreeList<Category> {
         values as any /*TODO any*/,
         reduce(addChildCategory, parentCategories as any/*TODO any*/),
         Tree.mapList(fillGroups),
-        Tree.mapList(dissoc(TEMP_FIELDS)),
+        Tree.mapList(detach(TEMP_FIELDS)),
         linkParentAndChildInstances
     );
 }

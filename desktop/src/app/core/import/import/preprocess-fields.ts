@@ -1,4 +1,4 @@
-import {dissoc} from 'tsfun';
+import {detach} from 'tsfun';
 import {Document, Resource} from 'idai-field-core';
 import {trimFields} from '../../util/trim-fields';
 import {removeNullProperties} from './remove-null-properties';
@@ -28,7 +28,7 @@ function preprocessFieldsForResource(removeNulls: boolean) { return (document: D
 
     if (removeNulls) {
         const relations = document.resource.relations;
-        document.resource = removeNullProperties(dissoc('relations')(document.resource)) as Resource;
+        document.resource = removeNullProperties(detach('relations')(document.resource)) as Resource;
         document.resource.relations = relations;
     }
 }}

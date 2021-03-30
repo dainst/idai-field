@@ -1,7 +1,7 @@
 import { ObjectUtils, HierarchicalRelations, typeOf } from 'idai-field-core';
 import { NewResource, Resource } from 'idai-field-core';
 import {
-    Associative, cond, dissoc, dropRightWhile,
+    Associative, cond, detach, dropRightWhile,
     filter, flow, forEach, includedIn, is, isArray, isAssociative,
     isEmpty, isNot,
     isnt, isObject, Map,
@@ -114,8 +114,8 @@ function assertNoAttemptToChangeCategory(into: Resource, additional: NewResource
 function assertNoEmptyAssociatives(resource: Resource|NewResource) {
 
     flow(resource,
-        dissoc(GEOMETRY),
-        dissoc(RELATIONS),
+        detach(GEOMETRY),
+        detach(RELATIONS),
         cond(hasEmptyAssociatives, () => {
             throw 'Precondition violated in mergeResource. Identifier: ' + resource.identifier;
         }));

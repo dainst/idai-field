@@ -1,5 +1,5 @@
 import {makeLookups} from '../../../../../../src/app/core/import/import/process/make-lookups';
-import {Document} from 'idai-components-2';
+import {Document} from 'idai-field-core';
 import {equal} from 'tsfun';
 
 describe('makeLookup', () => {

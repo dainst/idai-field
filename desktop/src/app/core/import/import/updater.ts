@@ -1,4 +1,4 @@
-import {NewDocument, Document} from 'idai-components-2';
+import {NewDocument, Document} from 'idai-field-core';
 import {DocumentDatastore} from '../../datastore/document-datastore';
 import {separate} from 'tsfun';
 
@@ -9,7 +9,7 @@ import {separate} from 'tsfun';
  */
 export module Updater {
 
-    export async function go(createDocuments: Array<Document>, 
+    export async function go(createDocuments: Array<Document>,
                              updateDocuments: Array<Document>|undefined,
                              datastore: DocumentDatastore, username: string) {
 
@@ -37,9 +37,9 @@ export module Updater {
     }
 
 
-    async function performBulk(documents: Array<NewDocument>, 
+    async function performBulk(documents: Array<NewDocument>,
                                datastore: DocumentDatastore,
-                               username: string, 
+                               username: string,
                                updateMode: boolean): Promise<void> {
 
         if (documents.length === 0) return;

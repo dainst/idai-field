@@ -1,4 +1,4 @@
-import { fieldDoc, FieldDocument } from '@idai-field/core';
+import { fieldDoc, FieldDocument } from 'idai-field-core';
 import { ResourcesStateManager } from '../../../../../src/app/core/resources/view/resources-state-manager';
 import { ResourcesState } from '../../../../../src/app/core/resources/view/state/resources-state';
 

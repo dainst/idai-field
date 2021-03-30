@@ -1,5 +1,5 @@
 import {dissoc} from 'tsfun';
-import {Document, Resource} from 'idai-components-2';
+import {Document, Resource} from 'idai-field-core';
 import {trimFields} from '../../util/trim-fields';
 import {removeNullProperties} from './remove-null-properties';
 

@@ -1,5 +1,5 @@
 import { FindResult, HierarchicalRelations, Query } from 'idai-field-core';
-import { Document, NewDocument } from 'idai-components-2';
+import { Document, NewDocument } from 'idai-field-core';
 import { isnt, on } from 'tsfun';
 import { ProjectCategories } from '../configuration/project-categories';
 import { ProjectConfiguration } from '../configuration/project-configuration';

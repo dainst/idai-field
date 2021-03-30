@@ -1,5 +1,6 @@
-import {Document, Resource} from 'idai-components-2';
 import {on} from 'tsfun';
+import { Resource } from './model/resource';
+import { Document } from './model/document';
 
 // Constants
 

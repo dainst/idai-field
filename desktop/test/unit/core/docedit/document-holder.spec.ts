@@ -1,8 +1,8 @@
-import {Document} from 'idai-components-2';
+import {Document} from 'idai-field-core';
 import {M} from '../../../../src/app/components/messages/m';
 import {ProjectConfiguration} from '../../../../src/app/core/configuration/project-configuration';
 import {DocumentHolder} from '../../../../src/app/core/docedit/document-holder';
-import {Tree, clone} from '@idai-field/core';
+import {Tree, clone} from 'idai-field-core';
 
 
 /**

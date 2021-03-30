@@ -1,5 +1,5 @@
-import { doc, RelationDefinition } from '@idai-field/core';
-import { Document } from 'idai-components-2';
+import { doc, RelationDefinition } from 'idai-field-core';
+import { Document } from 'idai-field-core';
 import { getSuggestions, MAX_SUGGESTIONS } from '../../../../../../src/app/core/docedit/widgets/relationpicker/get-suggestions';
 
 

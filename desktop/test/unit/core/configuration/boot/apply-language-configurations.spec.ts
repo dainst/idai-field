@@ -1,5 +1,5 @@
 import {Map} from 'tsfun';
-import {CategoryDefinition} from '@idai-field/core';
+import {CategoryDefinition} from 'idai-field-core';
 import {LibraryCategoryDefinition} from '../../../../../src/app/core/configuration/model/library-category-definition';
 import {applyLanguageConfigurations} from '../../../../../src/app/core/configuration/boot/apply-language-configurations';
 

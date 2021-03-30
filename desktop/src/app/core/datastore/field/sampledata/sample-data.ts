@@ -1,4 +1,4 @@
-import {NewDocument} from 'idai-components-2';
+import {NewDocument} from 'idai-field-core';
 import {SAMPLE_DATA_LABELS} from './sample-data-labels';
 
 

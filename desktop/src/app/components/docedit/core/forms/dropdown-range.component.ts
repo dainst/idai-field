@@ -1,7 +1,7 @@
 import {Component, Input,} from '@angular/core';
 import {ValuelistDefinition} from 'idai-field-core';
 import {isUndefinedOrEmpty} from 'tsfun';
-import {Resource, OptionalRange} from 'idai-components-2';
+import {Resource, OptionalRange} from 'idai-field-core';
 import {ValuelistUtil} from '../../../../core/util/valuelist-util';
 import {HierarchyUtil} from '../../../../core/util/hierarchy-util';
 import {DocumentReadDatastore} from '../../../../core/datastore/document-read-datastore';

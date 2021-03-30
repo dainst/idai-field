@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DatastoreErrors } from 'idai-field-core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { Document } from 'idai-components-2';
+import { Document } from 'idai-field-core';
 import { Observable, Observer } from 'rxjs';
 import { ProjectCategories } from '../core/configuration/project-categories';
 import { ProjectConfiguration } from '../core/configuration/project-configuration';

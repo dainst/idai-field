@@ -1,5 +1,5 @@
 import {isnt} from 'tsfun';
-import {Document} from 'idai-components-2';
+import {Document} from 'idai-field-core';
 import {GeojsonParser} from './parser/geojson-parser';
 import {NativeJsonlParser} from './parser/native-jsonl-parser';
 import {ShapefileParser} from './parser/shapefile-parser';

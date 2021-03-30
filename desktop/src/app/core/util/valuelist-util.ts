@@ -1,6 +1,6 @@
 import {includedIn, isNot, isArray, filter} from 'tsfun';
 import {SortUtil, clone, ValuelistDefinition, FieldDefinition} from 'idai-field-core';
-import {Document, Resource} from 'idai-components-2';
+import {Document, Resource} from 'idai-field-core';
 import {ValueDefinition} from '../../../../../core/src/model/valuelist-definition';
 
 

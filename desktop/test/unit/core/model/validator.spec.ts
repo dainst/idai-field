@@ -1,4 +1,4 @@
-import { FindResult } from '@idai-field/core';
+import { FindResult } from 'idai-field-core';
 import { ProjectConfiguration } from '../../../../src/app/core/configuration/project-configuration';
 import { ValidationErrors } from '../../../../src/app/core/model/validation-errors';
 import { Validator } from '../../../../src/app/core/model/validator';

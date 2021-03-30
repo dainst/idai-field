@@ -1,4 +1,4 @@
-import {Document} from 'idai-components-2';
+import {Document} from 'idai-field-core';
 import {FieldConverter} from '../../../../src/app/core/import/field-converter';
 
 

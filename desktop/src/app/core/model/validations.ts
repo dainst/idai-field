@@ -1,6 +1,6 @@
 import {is, isArray, on, Predicate, isString, and} from 'tsfun';
 import {Dating, Dimension, Literature, Document, NewDocument, NewResource,
-    Resource, OptionalRange} from 'idai-components-2';
+    Resource, OptionalRange} from 'idai-field-core';
 import {FieldGeometry, Named, FieldDefinition, RelationDefinition} from 'idai-field-core';
 import {validateFloat, validateUnsignedFloat, validateUnsignedInt} from '../util/number-util';
 import {ValidationErrors} from './validation-errors';

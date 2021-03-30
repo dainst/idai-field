@@ -1,4 +1,4 @@
-import {NewDocument} from 'idai-components-2';
+import {NewDocument} from 'idai-field-core';
 import {ParserErrors} from './parser-errors';
 import {makeLines, Parser} from './parser';
 

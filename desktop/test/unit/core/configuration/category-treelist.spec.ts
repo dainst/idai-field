@@ -1,5 +1,5 @@
 import {linkParentAndChildInstances} from '../../../../src/app/core/configuration/category-tree-list';
-import {Tree, TreeList, Category} from '@idai-field/core';
+import {Tree, TreeList, Category} from 'idai-field-core';
 
 
 describe('CategoryTreeList', () => {

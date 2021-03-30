@@ -1,9 +1,9 @@
-import { Document } from 'idai-components-2';
+import { Document } from '../../model/document';
 import { Query } from '../../model';
 
 /**
  * The interface providing read access methods
- * for datastores supporting the idai-components-2 document model.
+ * for datastores supporting the idai-field-core document model.
  * For full access see <code>Datastore</code>
  *
  * Implementations guarantee that any of the methods declared here

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Datastore, FeatureDocument, FieldDocument, IdGenerator, ImageDocument, IndexFacade, PouchdbDatastore, ReadDatastore } from 'idai-field-core';
-import { Document } from 'idai-components-2';
+import { Document } from 'idai-field-core';
 import { CategoryConverter } from './cached/category-converter';
 import { DocumentCache } from './cached/document-cache';
 import { ChangesStream } from './changes/changes-stream';

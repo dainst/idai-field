@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {ValuelistDefinition} from 'idai-field-core';
-import {Resource} from 'idai-components-2';
+import {Resource} from 'idai-field-core';
 import {ValuelistUtil} from '../../../../../core/util/valuelist-util';
 
 

@@ -1,5 +1,5 @@
 import { clone, HierarchicalRelations, ImageRelationsC as ImageRelations, Name, ON_RESOURCE_ID, ResourceId, RESOURCE_DOT_IDENTIFIER, TypeRelations } from 'idai-field-core';
-import { Document, toResourceId } from 'idai-components-2';
+import { Document, toResourceId } from 'idai-field-core';
 import { Either, subtract, to } from 'tsfun';
 import { DocumentReadDatastore } from '../../datastore/document-read-datastore';
 import { ImageRelationsManager } from '../../model/image-relations-manager';

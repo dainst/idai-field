@@ -1,7 +1,7 @@
 import { Component, ElementRef, EventEmitter, Input, OnChanges, Output, ViewChild } from '@angular/core';
 import { Category, FieldDocument, Name } from 'idai-field-core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { Relations } from 'idai-components-2';
+import { Relations } from 'idai-field-core';
 import { ProjectCategories } from '../../core/configuration/project-categories';
 import { ProjectConfiguration } from '../../core/configuration/project-configuration';
 import { FieldReadDatastore } from '../../core/datastore/field/field-read-datastore';

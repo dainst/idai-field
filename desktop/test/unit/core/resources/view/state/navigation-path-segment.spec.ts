@@ -1,4 +1,4 @@
-import { fieldDoc, FieldDocument } from '@idai-field/core';
+import { fieldDoc, FieldDocument } from 'idai-field-core';
 import { NavigationPathSegment } from '../../../../../../src/app/core/resources/view/state/navigation-path-segment';
 
 

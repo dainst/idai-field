@@ -1,4 +1,4 @@
-import { doc, ImageDocument } from '@idai-field/core';
+import { doc, ImageDocument } from 'idai-field-core';
 import { LayerManager } from '../../../../../src/app/components/resources/map/map/layers/layer-manager';
 
 

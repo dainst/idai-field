@@ -1,4 +1,4 @@
-import {Document} from 'idai-components-2';
+import {Document} from '../model/document';
 
 export type TypeName = string;
 

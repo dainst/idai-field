@@ -1,6 +1,6 @@
-import {FieldResource, Tree, Groups, FieldDefinition, Category} from '@idai-field/core';
+import {FieldResource, Tree, Groups, FieldDefinition, Category} from 'idai-field-core';
 import {makeCategoryTreeList} from '../../../../../src/app/core/configuration/boot/make-category-tree-list';
-import {byName, namedArrayToNamedMap} from '@idai-field/core';
+import {byName, namedArrayToNamedMap} from 'idai-field-core';
 import InputType = FieldDefinition.InputType;
 import {MDInternal} from '../../../../../src/app/components/messages/md-internal';
 import {ConfigurationErrors} from '../../../../../src/app/core/configuration/boot/configuration-errors';

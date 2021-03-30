@@ -1,7 +1,7 @@
 import {Component, Input, OnChanges} from '@angular/core';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {to, set} from 'tsfun';
-import {Resource} from 'idai-components-2';
+import {Resource} from 'idai-field-core';
 import {DoceditComponent} from '../../../docedit.component';
 import {TypeRelationPickerComponent} from './type-relation-picker.component';
 import {FieldReadDatastore} from '../../../../../core/datastore/field/field-read-datastore';

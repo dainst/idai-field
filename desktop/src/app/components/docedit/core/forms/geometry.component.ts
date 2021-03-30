@@ -1,6 +1,6 @@
 import {Component, Input, OnChanges} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
-import {Resource} from 'idai-components-2';
+import {Resource} from 'idai-field-core';
 
 
 type GeometryType = 'Point'|'MultiPoint'|'LineString'|'MultiLineString'|'Polygon'|'MultiPolygon';

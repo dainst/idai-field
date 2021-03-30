@@ -1,4 +1,4 @@
-import {clone} from "@idai-field/core";
+import {clone} from "idai-field-core";
 
 /**
  * @author Daniel de Oliveira

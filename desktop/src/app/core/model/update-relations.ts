@@ -1,5 +1,5 @@
 import { clone, Name, replaceIn } from 'idai-field-core';
-import { Document, Relations, relationsEquivalent, Resource } from 'idai-components-2';
+import { Document, Relations, relationsEquivalent, Resource } from 'idai-field-core';
 import {
     append, compose,
     cond, filter, flow,

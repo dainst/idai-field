@@ -1,4 +1,4 @@
-import {Resource} from 'idai-components-2';
+import {Resource} from 'idai-field-core';
 import {DocumentReadDatastore} from '../datastore/document-read-datastore';
 
 

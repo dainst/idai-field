@@ -1,6 +1,6 @@
 import {AfterViewInit, AfterViewChecked, Component, ElementRef, ViewChild} from '@angular/core';
 import {NgbActiveModal, NgbModal, NgbPopover} from '@ng-bootstrap/ng-bootstrap';
-import {Document} from 'idai-components-2';
+import {Document} from 'idai-field-core';
 import {SettingsService} from '../../core/settings/settings-service';
 import {DoceditComponent} from '../docedit/docedit.component';
 import {M} from '../messages/m';

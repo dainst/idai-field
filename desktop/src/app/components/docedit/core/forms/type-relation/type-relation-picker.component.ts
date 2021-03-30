@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Category, Constraint, FieldDefinition, FieldDocument, FieldResource, FindResult, Group, onName, Query, TypeRelations, ValuelistDefinition } from 'idai-field-core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Document, Resource } from 'idai-components-2';
+import { Document, Resource } from 'idai-field-core';
 import {
     empty, flow, includedIn,
     is, isNot, left, map, Mapping, on, Pair, prune, right, to, undefinedOrEmpty

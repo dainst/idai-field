@@ -1,4 +1,4 @@
-import { doc } from '@idai-field/core';
+import { doc } from 'idai-field-core';
 import * as PouchDB from 'pouchdb-node';
 import { createApp, setupSyncTestDb } from '../subsystem-helper';
 

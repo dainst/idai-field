@@ -1,4 +1,5 @@
-import {Action, Document} from 'idai-components-2';
+import {Document} from '../../model/document';
+import { Action } from "../../model/action";
 
 
 /**

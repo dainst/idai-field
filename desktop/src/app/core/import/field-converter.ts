@@ -1,5 +1,5 @@
 import {is, isNot, on, includedIn} from 'tsfun';
-import {Document, Dating, Dimension} from 'idai-components-2';
+import {Document, Dating, Dimension} from 'idai-field-core';
 import {ProjectConfiguration} from '../configuration/project-configuration';
 
 

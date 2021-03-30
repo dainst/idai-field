@@ -1,5 +1,5 @@
 import {NewImageResource} from './new-image-resource';
-import {NewDocument} from 'idai-components-2';
+import {NewDocument} from './new-document';
 
 /**
  * @author Daniel de Oliveira

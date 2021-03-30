@@ -1,5 +1,5 @@
-import { fieldDoc } from '@idai-field/core';
-import { Document } from 'idai-components-2';
+import { fieldDoc } from 'idai-field-core';
+import { Document } from 'idai-field-core';
 import * as PouchDB from 'pouchdb-node';
 import { FieldDocument } from '../../../../../../core/index';
 import { CachedDatastore } from '../../../../../src/app/core/datastore/cached/cached-datastore';

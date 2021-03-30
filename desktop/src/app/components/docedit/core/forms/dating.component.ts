@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {Resource, Dating} from 'idai-components-2';
+import {Resource, Dating} from 'idai-field-core';
 import {UtilTranslations} from '../../../../core/util/util-translations';
 
 

@@ -2,7 +2,7 @@ import {ProjectCategories} from '../../../../src/app/core/configuration/project-
 import isGeometryCategory = ProjectCategories.isGeometryCategory;
 import getFieldCategories = ProjectCategories.getFieldCategories;
 import {sameset} from 'tsfun';
-import {Named, toName, Category, Tree, TreeList} from '@idai-field/core';
+import {Named, toName, Category, Tree, TreeList} from 'idai-field-core';
 import getConcreteFieldCategories = ProjectCategories.getConcreteFieldCategories;
 import getRegularCategoryNames = ProjectCategories.getRegularCategoryNames;
 import getImageCategoryNames = ProjectCategories.getImageCategoryNames;

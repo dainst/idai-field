@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { clone, DatastoreErrors, FieldDefinition, FieldDocument, Group, Groups, ImageDocument } from 'idai-field-core';
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { Document } from 'idai-components-2';
+import { Document } from 'idai-field-core';
 import { includedIn, isNot } from 'tsfun';
 import { ProjectConfiguration } from '../../core/configuration/project-configuration';
 import { DocumentDatastore } from '../../core/datastore/document-datastore';
@@ -27,7 +27,7 @@ import { MessagesConversion } from './messages-conversion';
     }
 })
 /**
- * Uses the document edit forms of idai-components-2 and adds styling
+ * Uses the document edit forms of idai-field-core and adds styling
  * and navigation items like save and back buttons and modals
  * including the relevant functionality like validation,
  * persistence handling, conflict resolution etc.

@@ -1,5 +1,5 @@
 import {FieldDocument} from 'idai-field-core';
-import {Document} from 'idai-components-2';
+import {Document} from 'idai-field-core';
 import {TabUtil} from './tab-util';
 import {TabSpaceCalculator} from './tab-space-calculator';
 import {Tab} from './tab';

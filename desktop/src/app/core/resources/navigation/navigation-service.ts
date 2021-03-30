@@ -1,5 +1,5 @@
 import {Observable, Observer} from 'rxjs';
-import {Document} from 'idai-components-2';
+import {Document} from 'idai-field-core';
 import {FieldDocument, RelationDefinition, Category, ObserverUtil} from 'idai-field-core';
 import {ProjectConfiguration} from '../../configuration/project-configuration';
 import {ViewFacade} from '../view/view-facade';

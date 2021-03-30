@@ -1,4 +1,4 @@
-import {Resource} from 'idai-components-2';
+import {Resource} from 'idai-field-core';
 import {FieldResource, Labelled, Named, RelationDefinition, Category, Groups, BaseGroup, FieldDefinition} from 'idai-field-core';
 import {ValuelistUtil} from './valuelist-util';
 import {compose, flow, update_a, lookup, and, includedIn, isNot, filter, Filter, map, isString, Map, on, to, undefinedOrEmpty,

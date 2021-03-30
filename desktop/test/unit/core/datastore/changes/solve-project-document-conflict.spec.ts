@@ -1,5 +1,5 @@
 import {sameset} from 'tsfun';
-import {Document} from 'idai-components-2';
+import {Document} from 'idai-field-core';
 import {solveProjectDocumentConflict} from '../../../../../src/app/core/datastore/changes/solve-project-document-conflicts';
 
 

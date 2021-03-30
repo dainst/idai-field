@@ -1,7 +1,7 @@
 import {
     createDocuments, HierarchicalRelations,
     ImageRelationsC as ImageRelations, NiceDocs, TypeRelations
-} from '@idai-field/core';
+} from 'idai-field-core';
 import {
     buildImportCatalog,
     ImportCatalogErrors

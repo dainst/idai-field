@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { clone, FieldDocument, ImageDocument, ImageRelationsC as ImageRelations, moveInArray } from 'idai-field-core';
-import { Document } from 'idai-components-2';
+import { Document } from 'idai-field-core';
 import { flatten, set, subtract, to } from 'tsfun';
 import { FieldReadDatastore } from '../../../../../core/datastore/field/field-read-datastore';
 import { ImageReadDatastore } from '../../../../../core/datastore/field/image-read-datastore';

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Category, IdGenerator } from 'idai-field-core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Document } from 'idai-components-2';
+import { Document } from 'idai-field-core';
 import { copy, flow, forEach, isEmpty, map, remove, take } from 'tsfun';
 import { AngularUtility } from '../../angular/angular-utility';
 import { ProjectCategories } from '../../core/configuration/project-categories';

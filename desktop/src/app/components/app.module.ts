@@ -7,7 +7,7 @@ import localeIt from '@angular/common/locales/it';
 import {FormsModule} from '@angular/forms';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import {Document} from 'idai-components-2';
+import {Document} from 'idai-field-core';
 import {routing} from './app.routing';
 import {AppComponent} from './app.component';
 import {ResourcesModule} from './resources/resources.module';

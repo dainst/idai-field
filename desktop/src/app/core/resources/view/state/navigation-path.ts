@@ -1,5 +1,5 @@
 import {takeWhile, on, is, takeUntil} from 'tsfun';
-import {Document} from 'idai-components-2';
+import {Document} from 'idai-field-core';
 import {clone} from 'idai-field-core';
 import {ViewContext} from './view-context';
 import {FieldDocument} from 'idai-field-core';

@@ -1,4 +1,4 @@
-import {Resource} from 'idai-components-2';
+import {Resource} from './resource';
 import {FieldGeometry} from './field-geometry';
 import {FieldRelations} from './field-relations';
 

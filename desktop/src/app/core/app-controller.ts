@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Document} from 'idai-components-2';
+import {Document} from 'idai-field-core';
 import {PouchdbManager} from './datastore/pouchdb/pouchdb-manager';
 import {DocumentCache} from './datastore/cached/document-cache';
 import {ImagesState} from './images/overview/view/images-state';

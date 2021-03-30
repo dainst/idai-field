@@ -1,4 +1,4 @@
-import {Document} from 'idai-components-2';
+import {Document} from 'idai-field-core';
 import {FieldDocument, IndexFacade} from 'idai-field-core';
 import {DocumentsManager} from './documents-manager';
 import {FieldReadDatastore} from '../../datastore/field/field-read-datastore';

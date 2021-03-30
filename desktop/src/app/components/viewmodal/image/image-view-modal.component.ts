@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {NgbActiveModal, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {on, is} from 'tsfun';
 import {ImageDocument} from 'idai-field-core';
-import {Document} from 'idai-components-2';
+import {Document} from 'idai-field-core';
 import {RoutingService} from '../../routing-service';
 import {ImageReadDatastore} from '../../../core/datastore/field/image-read-datastore';
 import {ImagesState} from '../../../core/images/overview/view/images-state';

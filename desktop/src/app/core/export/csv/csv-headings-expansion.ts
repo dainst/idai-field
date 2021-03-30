@@ -1,5 +1,5 @@
 import {flatMap, range} from 'tsfun';
-import {OptionalRange} from 'idai-components-2';
+import {OptionalRange} from 'idai-field-core';
 import {CsvExportConsts} from './csv-export-consts';
 
 

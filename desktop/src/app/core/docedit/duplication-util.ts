@@ -1,4 +1,4 @@
-import {NewDocument, Document} from 'idai-components-2';
+import {NewDocument, Document} from 'idai-field-core';
 import {Validator} from '../model/validator';
 import {clone} from 'idai-field-core';
 

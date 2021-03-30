@@ -1,6 +1,6 @@
 import {Component, Input, OnChanges} from '@angular/core';
 import {on, is} from 'tsfun';
-import {Resource} from 'idai-components-2'
+import {Resource} from 'idai-field-core'
 import {FieldDefinition} from 'idai-field-core';
 import {ValuelistUtil} from '../../../../../core/util/valuelist-util';
 import {ProjectConfiguration} from '../../../../../core/configuration/project-configuration';

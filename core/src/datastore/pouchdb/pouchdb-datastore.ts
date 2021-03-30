@@ -1,4 +1,5 @@
-import { Document, NewDocument } from 'idai-components-2';
+import { Document } from '../../model/document';
+import { NewDocument } from '../../model/new-document';
 import { Observable } from 'rxjs';
 import { clone, ObserverUtil } from '../../tools';
 import { DatastoreErrors } from '../model';

@@ -1,4 +1,4 @@
-import { doc, FieldDocument, ImageDocument } from '@idai-field/core';
+import { doc, FieldDocument, ImageDocument } from 'idai-field-core';
 import { flatten } from 'tsfun';
 import { makeDocumentsLookup } from '../../../../../src/app/core/import/import/utils';
 import { createApp, createHelpers, setupSyncTestDb } from '../subsystem-helper';

@@ -1,4 +1,4 @@
-import {NewDocument, Document} from 'idai-components-2';
+import {NewDocument, Document} from 'idai-field-core';
 import {DuplicationUtil} from '../../../../src/app/core/docedit/duplication-util';
 
 

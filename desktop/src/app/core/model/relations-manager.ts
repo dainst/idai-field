@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { clone, DatastoreErrors, FindIdsResult, FindResult, HierarchicalRelations, ON_RESOURCE_ID, Query, ResourceId, RESOURCE_DOT_ID } from 'idai-field-core';
-import { Document, NewDocument } from 'idai-components-2';
+import { Document, NewDocument } from 'idai-field-core';
 import {
     append, flow, isArray, isDefined, isNot, isUndefinedOrEmpty, on, sameset, subtract, to,
     undefinedOrEmpty

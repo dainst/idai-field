@@ -1,5 +1,5 @@
 import {Component, Output, EventEmitter, Input, ElementRef, ViewChild} from '@angular/core';
-import {Document} from 'idai-components-2';
+import {Document} from 'idai-field-core';
 import {ImageUploader, ImageUploadResult} from '../upload/image-uploader';
 import {Messages} from '../../messages/messages';
 

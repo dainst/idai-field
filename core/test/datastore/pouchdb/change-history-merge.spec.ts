@@ -1,4 +1,4 @@
-import { Document } from 'idai-components-2';
+import { Document } from '../../../src/model/document';
 import { ChangeHistoryMerge } from '../../../src/datastore/pouchdb/change-history-merge';
 
 /**

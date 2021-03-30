@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Document} from 'idai-components-2';
+import {Document} from 'idai-field-core';
 
 
 @Injectable()

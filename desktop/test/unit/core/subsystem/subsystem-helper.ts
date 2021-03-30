@@ -1,5 +1,5 @@
-import { createDocuments, FieldDocument, ImageDocument, NiceDocs, PouchdbDatastore, Query, ResourceId } from '@idai-field/core';
-import { Document, toResourceId } from 'idai-components-2';
+import { createDocuments, FieldDocument, ImageDocument, NiceDocs, PouchdbDatastore, Query, ResourceId } from 'idai-field-core';
+import { Document, toResourceId } from 'idai-field-core';
 import * as PouchDB from 'pouchdb-node';
 import { sameset } from 'tsfun';
 import { AppConfigurator } from '../../../../src/app/core/configuration/app-configurator';

@@ -1,6 +1,7 @@
-import {Dating, OptionalRange} from 'idai-components-2';
+import { Dating } from './dating';
 import { FeatureRelations } from './feature-relations';
 import {FieldResource} from './field-resource';
+import { OptionalRange } from './optional-range';
 
 
 export interface FeatureResource extends FieldResource {

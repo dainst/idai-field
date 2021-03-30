@@ -1,5 +1,5 @@
 import { FieldResource, ResourceId } from 'idai-field-core';
-import { Document, Resource } from 'idai-components-2';
+import { Document, Resource } from 'idai-field-core';
 import { to } from 'tsfun';
 
 /**

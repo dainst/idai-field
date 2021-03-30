@@ -1,4 +1,4 @@
-import {Document} from 'idai-components-2';
+import {Document} from 'idai-field-core';
 import {JavaToolExecutor} from '../java/java-tool-executor';
 import {M} from '../../components/messages/m';
 import {Settings} from '../settings/settings';

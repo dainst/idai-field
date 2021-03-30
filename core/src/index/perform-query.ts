@@ -1,4 +1,4 @@
-import {Resource} from 'idai-components-2';
+import {Resource} from '../model/resource';
 import { Constraint } from '../model/constraint';
 import { Query } from '../model/query';
 import { ConstraintIndex } from './constraint-index';

@@ -1,6 +1,6 @@
 import {flow, includedIn, isDefined, isNot, isnt, map, cond,
     dense, compose, remove} from 'tsfun';
-import {Resource} from 'idai-components-2';
+import {Resource} from 'idai-field-core';
 import {FieldResource, StringUtils, HierarchicalRelations, FieldDefinition} from 'idai-field-core';
 import {CSVMatrixExpansion} from './csv-matrix-expansion';
 import {CsvExportUtils} from './csv-export-utils';

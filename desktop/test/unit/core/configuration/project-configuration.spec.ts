@@ -1,5 +1,5 @@
 import {ProjectConfiguration} from '../../../../src/app/core/configuration/project-configuration';
-import {Tree} from '@idai-field/core';
+import {Tree} from 'idai-field-core';
 
 
 /**

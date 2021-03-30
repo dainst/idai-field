@@ -1,5 +1,5 @@
 import {Map, Either} from 'tsfun';
-import {Document, Resource} from 'idai-components-2';
+import {Document, Resource} from 'idai-field-core';
 import {ImportValidator} from './process/import-validator';
 import {Find, Get} from './types';
 import {complementInverseRelationsBetweenImportDocs, makeSureRelationStructuresExists, preprocessRelations} from './preprocess-relations';

@@ -1,6 +1,6 @@
 import {ChangeDetectorRef, Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {curry, filter, flatten, flow, isnt, Map, map, set, take} from 'tsfun';
-import {Document} from 'idai-components-2';
+import {Document} from 'idai-field-core';
 import {ViewFacade} from '../../../core/resources/view/view-facade';
 import {Loading} from '../../widgets/loading';
 import {makeLookup} from '../../../../../../core/src/tools/transformers'

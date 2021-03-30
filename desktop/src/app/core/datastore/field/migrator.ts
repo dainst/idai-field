@@ -1,5 +1,5 @@
 import {isObject, flow} from 'tsfun';
-import {Document, OptionalRange} from 'idai-components-2';
+import {Document, OptionalRange} from 'idai-field-core';
 
 
 export const singleToMultipleValuesFieldNames: string[] = [

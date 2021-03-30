@@ -1,4 +1,4 @@
-import {Document} from 'idai-components-2';
+import {Document} from './document';
 import {FieldResource} from './field-resource';
 
 

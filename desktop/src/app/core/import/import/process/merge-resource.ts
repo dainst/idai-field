@@ -1,5 +1,5 @@
 import { clone, HierarchicalRelations, typeOf } from 'idai-field-core';
-import { NewResource, Resource } from 'idai-components-2';
+import { NewResource, Resource } from 'idai-field-core';
 import {
     Associative, cond, dissoc, dropRightWhile,
     filter, flow, forEach, includedIn, is, isArray, isAssociative,

@@ -1,6 +1,6 @@
 import {Observer, Observable} from 'rxjs';
 import {subtract, set} from 'tsfun';
-import {Document, Resource} from 'idai-components-2';
+import {Document, Resource} from 'idai-field-core';
 import {FieldReadDatastore} from '../../datastore/field/field-read-datastore';
 import {ChangesStream} from '../../datastore/changes/changes-stream';
 import {Loading} from '../../../components/widgets/loading';

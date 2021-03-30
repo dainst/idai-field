@@ -1,6 +1,7 @@
 import {Observable, Observer} from 'rxjs';
 import {is, on, flow, isDefined, separate, Map, filter, values, forEach, lookup} from 'tsfun';
-import {Document, Resource} from 'idai-components-2';
+import {Document} from '../model/document';
+import {Resource} from '../model/resource';
 import {performQuery} from './perform-query';
 import {getSortedIds} from './get-sorted-ids';
 import { IndexItem, TypeResourceIndexItem } from './index-item';

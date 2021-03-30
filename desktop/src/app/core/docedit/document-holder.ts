@@ -1,5 +1,5 @@
 import {flow, includedIn, filter, isEmpty, isNot, equal, isObject, isString, and} from 'tsfun';
-import {Document, NewDocument, Resource} from 'idai-components-2';
+import {Document, NewDocument, Resource} from 'idai-field-core';
 import {Validator} from '../model/validator';
 import {RelationsManager} from '../model/relations-manager';
 import {DocumentDatastore} from '../datastore/document-datastore';

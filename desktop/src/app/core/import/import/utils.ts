@@ -1,5 +1,5 @@
 import { HierarchicalRelations, Lookup } from 'idai-field-core';
-import { Document, Relations } from 'idai-components-2';
+import { Document, Relations } from 'idai-field-core';
 import { aMap, arrayEqual, isNot, on, to, undefinedOrEmpty, union } from 'tsfun';
 import { makeLookup } from '../../../../../../core/src/tools/transformers';
 import { ImportErrors as E } from './import-errors';

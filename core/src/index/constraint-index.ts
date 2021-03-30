@@ -1,6 +1,7 @@
 import {isArray, map, flatten, flatMap, flow, cond, not, to, isDefined, singleton, Map, filter,
     subtract} from 'tsfun';
-import {Document, Resource} from 'idai-components-2';
+import {Document} from '../model/document';
+import {Resource} from '../model/resource';
 import { Category } from '../model/category';
 import { FieldDefinition } from '../model/field-definition';
 import { clone } from '../tools/object-util';

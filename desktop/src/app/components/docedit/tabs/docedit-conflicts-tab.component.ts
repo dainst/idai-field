@@ -1,6 +1,6 @@
 import {ChangeDetectorRef, Component, Input, OnChanges} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
-import {Relations, Resource, Document} from 'idai-components-2';
+import {Relations, Resource, Document} from 'idai-field-core';
 import {DocumentReadDatastore} from '../../../core/datastore/document-read-datastore';
 import {M} from '../../messages/m';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
@@ -41,7 +41,7 @@ export class DoceditConflictsTabComponent implements OnChanges {
     public showLoadingIcon = () => this.isLoading() && this.loading.getLoadingTimeInMilliseconds() > 250;
 
     public getFieldContent = (field: any, revision: Document) => formatContent(revision.resource, field);
-            
+
 
     async ngOnChanges() {
 
@@ -215,7 +215,7 @@ export class DoceditConflictsTabComponent implements OnChanges {
             const fd = projectConfiguration
                 .getFieldDefinitions(document.resource.category)
                 .find(fd => fd.name === fieldName);
-            
+
             differingFields.push({
                 name: fieldName,
                 inputType: fd?.inputType,

@@ -7,7 +7,7 @@ import {
     to,
     undefinedOrEmpty
 } from 'tsfun';
-import {Document, NewDocument, Relations} from 'idai-components-2';
+import {Document, NewDocument, Relations} from 'idai-field-core';
 import {ImportValidator} from './import-validator';
 import {ImportErrors as E} from '../import-errors';
 import {HierarchicalRelations} from 'idai-field-core';

@@ -5,7 +5,7 @@ import {CustomCategoryDefinition} from '../../../../../src/app/core/configuratio
 import {BuiltinCategoryDefinition} from '../../../../../src/app/core/configuration/model/builtin-category-definition';
 import {LibraryCategoryDefinition} from '../../../../../src/app/core/configuration/model/library-category-definition';
 import {byName, Named, namedArrayToNamedMap, toName, Tree,
-    ValuelistDefinition, Groups, Category, FieldDefinition} from '@idai-field/core';
+    ValuelistDefinition, Groups, Category, FieldDefinition} from 'idai-field-core';
 import InputType = FieldDefinition.InputType;
 
 describe('buildRawProjectConfiguration', () => {

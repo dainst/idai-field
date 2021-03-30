@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HierarchicalRelations, Query, ResourceId } from 'idai-field-core';
-import { Document, NewDocument, Resource } from 'idai-components-2';
+import { Document, NewDocument, Resource } from 'idai-field-core';
 import { is, isnt, on } from 'tsfun';
 import { ProjectCategories } from '../../../configuration/project-categories';
 import { ProjectConfiguration } from '../../../configuration/project-configuration';

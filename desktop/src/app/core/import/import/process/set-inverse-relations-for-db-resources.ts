@@ -1,5 +1,5 @@
 import { Lookup, ResourceId } from 'idai-field-core';
-import { Document } from 'idai-components-2';
+import { Document } from 'idai-field-core';
 import { includedIn, is, isNot, keysValues, on } from 'tsfun';
 import { InverseRelationsMap } from '../../../configuration/inverse-relations-map';
 import { updateRelations } from '../../../model/update-relations';

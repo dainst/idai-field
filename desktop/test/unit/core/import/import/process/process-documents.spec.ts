@@ -1,5 +1,5 @@
-import {Document} from 'idai-components-2';
-import {HierarchicalRelations} from '@idai-field/core';
+import {Document} from 'idai-field-core';
+import {HierarchicalRelations} from 'idai-field-core';
 import RECORDED_IN = HierarchicalRelations.RECORDEDIN;
 import {ImportErrors as E} from '../../../../../../src/app/core/import/import/import-errors';
 import {createMockValidator, d} from '../helper';

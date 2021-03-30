@@ -1,16 +1,16 @@
-import { Document } from 'idai-components-2';
+import { Document } from '../src/model/document';
 import { ResourceId } from '../src/constants';
 import { FeatureDocument, FieldDocument, HierarchicalRelations, ImageRelationsC as ImageRelations } from '../src/model';
 import { Lookup } from '../src/tools/utils';
 
 
 export const fieldDoc = (sd, identifier?, category?, id?) =>
-    doc(sd, identifier, category, id) as FieldDocument;
+    doc(sd, identifier, category, id) as unknown as FieldDocument;
 
 
 export const featureDoc = (sd, identifier?, category?, id?) => {
 
-    const newDoc = doc(sd, identifier, category, id) as FeatureDocument;
+    const newDoc = doc(sd, identifier, category, id) as unknown as FeatureDocument;
     newDoc.resource.relations.isContemporaryWith = [];
     newDoc.resource.relations.isBefore = [];
     newDoc.resource.relations.isAfter = [];

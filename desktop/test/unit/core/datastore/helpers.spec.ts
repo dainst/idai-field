@@ -1,4 +1,4 @@
-import { Document } from 'idai-components-2';
+import { Document } from 'idai-field-core';
 import { dissocIndices, sortRevisionsByLastModified } from '../../../../../core/src/datastore/helpers';
 
 

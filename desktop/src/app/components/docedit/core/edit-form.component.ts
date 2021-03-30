@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, ElementRef, Input, OnChanges, ViewChild} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {isUndefinedOrEmpty} from 'tsfun';
-import {Document} from 'idai-components-2';
+import {Document} from 'idai-field-core';
 import {FieldDefinition, RelationDefinition, Group, Groups} from 'idai-field-core';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
 import {TypeRelations, clone} from 'idai-field-core';

@@ -1,16 +1,15 @@
-import {Injectable} from '@angular/core';
-import {Observable, Observer} from 'rxjs';
-import {isUndefined, not} from 'tsfun';
-import {Document} from 'idai-components-2';
-import {IndexFacade} from '@idai-field/core';
-import {Name} from '../../constants';
-import {PouchdbProxy} from './pouchdb-proxy';
-import {SampleDataLoader} from '../field/sampledata/sample-data-loader';
-import {SyncProcess, SyncStatus} from '../../sync/sync-process';
-import {DocumentCache} from '../cached/document-cache';
-import {FieldCategoryConverter} from '../field/field-category-converter';
-import {InitializationProgress} from '../../initialization-progress';
-import {ConfigurationErrors} from '../../configuration/boot/configuration-errors';
+import { Injectable } from '@angular/core';
+import { IndexFacade, PouchdbProxy } from '@idai-field/core';
+import { Document } from 'idai-components-2';
+import { Observable, Observer } from 'rxjs';
+import { isUndefined, not } from 'tsfun';
+import { ConfigurationErrors } from '../../configuration/boot/configuration-errors';
+import { Name } from '../../constants';
+import { InitializationProgress } from '../../initialization-progress';
+import { SyncProcess, SyncStatus } from '../../sync/sync-process';
+import { DocumentCache } from '../cached/document-cache';
+import { FieldCategoryConverter } from '../field/field-category-converter';
+import { SampleDataLoader } from '../field/sampledata/sample-data-loader';
 
 const PouchDB = typeof window !== 'undefined' ? window.require('pouchdb-browser') : require('pouchdb-node');
 

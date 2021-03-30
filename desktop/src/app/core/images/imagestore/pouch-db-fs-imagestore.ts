@@ -1,11 +1,11 @@
-import {Injectable} from '@angular/core';
-import {SafeResourceUrl} from '@angular/platform-browser';
-import {to} from 'tsfun';
-import {BlobMaker, BlobUrlSet} from './blob-maker';
-import {ImageConverter} from './image-converter';
-import {ImagestoreErrors} from './imagestore-errors';
-import {PouchdbProxy} from '../../datastore/pouchdb/pouchdb-proxy';
-import {Settings} from '../../settings/settings';
+import { Injectable } from '@angular/core';
+import { SafeResourceUrl } from '@angular/platform-browser';
+import { PouchdbProxy } from '@idai-field/core';
+import { to } from 'tsfun';
+import { Settings } from '../../settings/settings';
+import { BlobMaker, BlobUrlSet } from './blob-maker';
+import { ImageConverter } from './image-converter';
+import { ImagestoreErrors } from './imagestore-errors';
 
 const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
 

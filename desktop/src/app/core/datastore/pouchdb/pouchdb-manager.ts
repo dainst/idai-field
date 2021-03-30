@@ -160,7 +160,7 @@ export class PouchdbManager {
             await progress.setPhase('loadingDocuments');
         }
 
-        await indexFacade.clear();
+        indexFacade.clear();
 
         let documents = [];
         try {

@@ -299,7 +299,7 @@ function replaceCommonFields(commonFields: Map)
             on(TransientCategoryDefinition.COMMONS, isDefined),
             (mergedCategory: TransientCategoryDefinition) => {
 
-                const clonedMergedCategory = clone(mergedCategory);
+                const clonedMergedCategory: any = clone(mergedCategory);
                 for (let commonFieldName of clonedMergedCategory.commons) {
                     if (!commonFields[commonFieldName]) {
                         throw [ConfigurationErrors.COMMON_FIELD_NOT_PROVIDED, commonFieldName];

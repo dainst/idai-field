@@ -21,7 +21,7 @@ function addExtraFieldsToCategory(extraFields: Map<FieldDefinition>) {
 
     return (categoryDefinition: TransientCategoryDefinition) => {
 
-        const newCategoryDefinition = clone(categoryDefinition);
+        const newCategoryDefinition: any = clone(categoryDefinition);
         if (!newCategoryDefinition.fields) newCategoryDefinition.fields = {};
         if (newCategoryDefinition.parent === undefined) _addExtraFields(newCategoryDefinition, extraFields);
         return newCategoryDefinition

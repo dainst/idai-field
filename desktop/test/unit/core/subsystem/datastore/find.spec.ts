@@ -1,6 +1,6 @@
-import {createApp, setupSyncTestDb} from '../subsystem-helper';
 import * as PouchDB from 'pouchdb-node';
-import {Static} from '../../../static';
+import { doc } from '../../../test-helpers';
+import { createApp, setupSyncTestDb } from '../subsystem-helper';
 
 
 describe('subsystem/datastore/find', () => {
@@ -72,8 +72,8 @@ describe('subsystem/datastore/find', () => {
 
     it('DocumentDatastore - do not throw and return everything with all categories', async done => {
 
-        image0 = Static.doc('Image','Image','Image','image0');
-        trench0 = Static.doc('Trench','Trench','Trench','trench0');
+        image0 = doc('Image','Image','Image','image0');
+        trench0 = doc('Trench','Trench','Trench','trench0');
 
         await idaiFieldImageDocumentDatastore.create(image0);
         await fieldDocumentDatastore.create(trench0);
@@ -90,8 +90,8 @@ describe('subsystem/datastore/find', () => {
 
     it('DocumentDatastore - return everything when called without categories', async done => {
 
-        image0 = Static.doc('Image','Image','Image','image0');
-        trench0 = Static.doc('Trench','Trench','Trench','trench0');
+        image0 = doc('Image','Image','Image','image0');
+        trench0 = doc('Trench','Trench','Trench','trench0');
 
         await idaiFieldImageDocumentDatastore.create(image0);
         await fieldDocumentDatastore.create(trench0);
@@ -108,8 +108,8 @@ describe('subsystem/datastore/find', () => {
 
     it('ImageDatastore - return only image category documents when called without categories', async done => {
 
-        image0 = Static.doc('Image','Image','Image','image0');
-        trench0 = Static.doc('Trench','Trench','Trench','trench0');
+        image0 = doc('Image','Image','Image','image0');
+        trench0 = doc('Trench','Trench','Trench','trench0');
 
         await idaiFieldImageDocumentDatastore.create(image0);
         await fieldDocumentDatastore.create(trench0);
@@ -127,8 +127,8 @@ describe('subsystem/datastore/find', () => {
 
     it('FieldDatastore - return only non image category documents when called without categories', async done => {
 
-        image0 = Static.doc('Image','Image','Image','image0');
-        trench0 = Static.doc('Trench','Trench','Trench','trench0');
+        image0 = doc('Image','Image','Image','image0');
+        trench0 = doc('Trench','Trench','Trench','trench0');
 
         await idaiFieldImageDocumentDatastore.create(image0);
         await fieldDocumentDatastore.create(trench0);
@@ -146,9 +146,9 @@ describe('subsystem/datastore/find', () => {
 
     it('sort mode', async done => {
 
-        const doc1 = Static.doc('sd1', 'A-B-100', 'Find', '1');
-        const doc2 = Static.doc('sd2', 'B-100', 'Find', '2');
-        const doc3 = Static.doc('sd3', 'C-100', 'Find', '3');
+        const doc1 = doc('sd1', 'A-B-100', 'Find', '1');
+        const doc2 = doc('sd2', 'B-100', 'Find', '2');
+        const doc3 = doc('sd3', 'C-100', 'Find', '3');
 
         await fieldDocumentDatastore.create(doc1, 'u');
         await fieldDocumentDatastore.create(doc2, 'u');

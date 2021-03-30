@@ -1,5 +1,5 @@
-import {Static} from '../../../static';
-import {NavigationService} from '../../../../../src/app/core/resources/navigation/navigation-service';
+import { NavigationService } from '../../../../../src/app/core/resources/navigation/navigation-service';
+import { fieldDoc } from '../../../test-helpers';
 
 
 describe('NavigationService', () => {
@@ -36,7 +36,7 @@ describe('NavigationService', () => {
         });
 
         expect(navigationService.showJumpToViewOption(
-            Static.fieldDoc('abc', 'def', 'operationSubcategory', 'jkl'))
+            fieldDoc('abc', 'def', 'operationSubcategory', 'jkl'))
         ).toEqual(true);
     });
 
@@ -48,7 +48,7 @@ describe('NavigationService', () => {
         );
 
         expect(navigationService.shouldShowArrowBottomRight(
-            Static.fieldDoc('abc', 'def', 'ghi', 'jkl'))
+            fieldDoc('abc', 'def', 'ghi', 'jkl'))
         ).toEqual(true);
     });
 
@@ -60,7 +60,7 @@ describe('NavigationService', () => {
         );
 
         expect(navigationService.shouldShowArrowBottomRight(
-            Static.fieldDoc('abc', 'def', 'ghi', 'jkl'))
+            fieldDoc('abc', 'def', 'ghi', 'jkl'))
         ).toEqual(false);
     });
 
@@ -72,7 +72,7 @@ describe('NavigationService', () => {
         );
 
         expect(navigationService.shouldShowArrowBottomRight(
-            Static.fieldDoc('abc', 'def', 'ghi'))
+            fieldDoc('abc', 'def', 'ghi'))
         ).toEqual(false);
     });
 
@@ -87,11 +87,11 @@ describe('NavigationService', () => {
         });
 
         expect(navigationService.shouldShowArrowBottomRight(
-            Static.fieldDoc('abc', 'def', 'ghi', 'jkl'))
+            fieldDoc('abc', 'def', 'ghi', 'jkl'))
         ).toEqual(false);
 
         expect(navigationService.showJumpToViewOption(
-            Static.fieldDoc('abc', 'def', 'operationSubcategory', 'jkl'))
+            fieldDoc('abc', 'def', 'operationSubcategory', 'jkl'))
         ).toEqual(false);
     });
 });

@@ -1,7 +1,7 @@
 import * as PouchDB from 'pouchdb-node';
-import {createApp, setupSyncTestDb} from '../subsystem-helper';
-import {Static} from '../../../static';
-import {ConfigurationErrors} from '../../../../../src/app/core/configuration/boot/configuration-errors';
+import { ConfigurationErrors } from '../../../../../src/app/core/configuration/boot/configuration-errors';
+import { doc } from '../../../test-helpers';
+import { createApp, setupSyncTestDb } from '../subsystem-helper';
 
 
 /**
@@ -43,8 +43,8 @@ describe('subsystem/datastore/convert', () => {
         fieldDocumentDatastore = f;
         idaiFieldImageDocumentDatastore = i;
 
-        image0 = Static.doc('Image','Image','Image','image0');
-        trench0 = Static.doc('Trench','Trench','Trench','trench0');
+        image0 = doc('Image','Image','Image','image0');
+        trench0 = doc('Trench','Trench','Trench','trench0');
 
         image0 = await idaiFieldImageDocumentDatastore.create(image0);
         trench0 = await fieldDocumentDatastore.create(trench0);
@@ -65,7 +65,7 @@ describe('subsystem/datastore/convert', () => {
 
         try {
             expect((await idaiFieldImageDocumentDatastore.
-            create(Static.doc('Image','Image','Image','image1'))).
+            create(doc('Image','Image','Image','image1'))).
                 resource.relations.depicts).toEqual([]);
         } catch (err) {
             fail(err);
@@ -78,7 +78,7 @@ describe('subsystem/datastore/convert', () => {
 
         try {
             expect((await fieldDocumentDatastore.
-            create(Static.doc('Trench','Trench','Trench','trench1'))).
+            create(doc('Trench','Trench','Trench','trench1'))).
                 resource.relations.isRecordedIn).toEqual([]);
         } catch (err) {
             fail(err);
@@ -91,7 +91,7 @@ describe('subsystem/datastore/convert', () => {
 
         try {
             expect((await fieldDocumentDatastore.
-            create(Static.doc('Trench','Trench','Unknown','trench1'))).
+            create(doc('Trench','Trench','Unknown','trench1'))).
                 resource.relations.isRecordedIn).toEqual([]);
             fail();
         } catch (err) {
@@ -161,4 +161,3 @@ describe('subsystem/datastore/convert', () => {
         done();
     });
 });
-

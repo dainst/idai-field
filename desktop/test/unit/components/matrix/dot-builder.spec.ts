@@ -1,6 +1,6 @@
-import {DotBuilder} from '../../../../src/app/components/matrix/dot-builder';
-import {Static} from '../../static';
-import {Edges} from '../../../../src/app/components/matrix/edges-builder';
+import { DotBuilder } from '../../../../src/app/components/matrix/dot-builder';
+import { Edges } from '../../../../src/app/components/matrix/edges-builder';
+import { featureDoc } from '../../test-helpers';
 
 
 /**
@@ -24,8 +24,8 @@ describe('DotBuilder', () => {
 
     it('build dot string for simple graph', () => {
 
-        const feature1 = Static.featureDoc('Feature 1', 'feature1', 'Feature', 'f1');
-        const feature2 = Static.featureDoc('Feature 2', 'feature2', 'Feature', 'f2');
+        const feature1 = featureDoc('Feature 1', 'feature1', 'Feature', 'f1');
+        const feature2 = featureDoc('Feature 2', 'feature2', 'Feature', 'f2');
 
         const edges: { [resourceId: string]: Edges } = {
             'f1': { aboveIds: ['f2'], belowIds: [], sameRankIds: [] },
@@ -48,9 +48,9 @@ describe('DotBuilder', () => {
 
     it('build dot string for graph with multiple children', () => {
 
-        const feature1 = Static.featureDoc('Feature 1', 'feature1', 'Feature', 'f1');
-        const feature2 = Static.featureDoc('Feature 2', 'feature2', 'Feature', 'f2');
-        const feature3 = Static.featureDoc('Feature 3', 'feature3', 'Feature', 'f3');
+        const feature1 = featureDoc('Feature 1', 'feature1', 'Feature', 'f1');
+        const feature2 = featureDoc('Feature 2', 'feature2', 'Feature', 'f2');
+        const feature3 = featureDoc('Feature 3', 'feature3', 'Feature', 'f3');
 
         const edges: { [resourceId: string]: Edges } = {
             'f1': { aboveIds: ['f2', 'f3'], belowIds: [], sameRankIds: [] },
@@ -76,10 +76,10 @@ describe('DotBuilder', () => {
 
     it('build dot string for diamond formed graph', () => {
 
-        const feature1 = Static.featureDoc('Feature 1', 'feature1', 'Feature', 'f1');
-        const feature2 = Static.featureDoc('Feature 2', 'feature2', 'Feature', 'f2');
-        const feature3 = Static.featureDoc('Feature 3', 'feature3', 'Feature', 'f3');
-        const feature4 = Static.featureDoc('Feature 4', 'feature4', 'Feature', 'f4');
+        const feature1 = featureDoc('Feature 1', 'feature1', 'Feature', 'f1');
+        const feature2 = featureDoc('Feature 2', 'feature2', 'Feature', 'f2');
+        const feature3 = featureDoc('Feature 3', 'feature3', 'Feature', 'f3');
+        const feature4 = featureDoc('Feature 4', 'feature4', 'Feature', 'f4');
 
         const edges: { [resourceId: string]: Edges } = {
             'f1': { aboveIds: ['f2', 'f3'], belowIds: [], sameRankIds: [] },
@@ -111,10 +111,10 @@ describe('DotBuilder', () => {
 
     it('build dot string for graph with sameRank edges', () => {
 
-        const feature1 = Static.featureDoc('Feature 1', 'feature1', 'Feature', 'f1');
-        const feature2 = Static.featureDoc('Feature 2', 'feature2', 'Feature', 'f2');
-        const feature3 = Static.featureDoc('Feature 3', 'feature3', 'Feature', 'f3');
-        const feature4 = Static.featureDoc('Feature 4', 'feature4', 'Feature', 'f4');
+        const feature1 = featureDoc('Feature 1', 'feature1', 'Feature', 'f1');
+        const feature2 = featureDoc('Feature 2', 'feature2', 'Feature', 'f2');
+        const feature3 = featureDoc('Feature 3', 'feature3', 'Feature', 'f3');
+        const feature4 = featureDoc('Feature 4', 'feature4', 'Feature', 'f4');
 
         const edges: { [resourceId: string]: Edges } = {
             'f1': { aboveIds: [], belowIds: [], sameRankIds: ['f2'] },
@@ -145,11 +145,11 @@ describe('DotBuilder', () => {
 
     it('build dot string for graph with above and sameRank edges', () => {
 
-        const feature1 = Static.featureDoc('Feature 1', 'feature1', 'Feature', 'f1');
-        const feature2 = Static.featureDoc('Feature 2', 'feature2', 'Feature', 'f2');
-        const feature3 = Static.featureDoc('Feature 3', 'feature3', 'Feature', 'f3');
-        const feature4 = Static.featureDoc('Feature 4', 'feature4', 'Feature', 'f4');
-        const feature5 = Static.featureDoc('Feature 5', 'feature5', 'Feature', 'f5');
+        const feature1 = featureDoc('Feature 1', 'feature1', 'Feature', 'f1');
+        const feature2 = featureDoc('Feature 2', 'feature2', 'Feature', 'f2');
+        const feature3 = featureDoc('Feature 3', 'feature3', 'Feature', 'f3');
+        const feature4 = featureDoc('Feature 4', 'feature4', 'Feature', 'f4');
+        const feature5 = featureDoc('Feature 5', 'feature5', 'Feature', 'f5');
 
         const edges: { [resourceId: string]: Edges } = {
             'f1': { aboveIds: ['f2'], belowIds: [], sameRankIds: [] },
@@ -188,10 +188,10 @@ describe('DotBuilder', () => {
 
     it('do not make a node a root node if it has a sameRank edge to a non root node', () => {
 
-        const feature1 = Static.featureDoc('Feature 1', 'feature1', 'Feature', 'f1');
-        const feature2 = Static.featureDoc('Feature 2', 'feature2', 'Feature', 'f2');
-        const feature3 = Static.featureDoc('Feature 3', 'feature3', 'Feature', 'f3');
-        const feature4 = Static.featureDoc('Feature 4', 'feature4', 'Feature', 'f4');
+        const feature1 = featureDoc('Feature 1', 'feature1', 'Feature', 'f1');
+        const feature2 = featureDoc('Feature 2', 'feature2', 'Feature', 'f2');
+        const feature3 = featureDoc('Feature 3', 'feature3', 'Feature', 'f3');
+        const feature4 = featureDoc('Feature 4', 'feature4', 'Feature', 'f4');
 
         const edges: { [resourceId: string]: Edges } = {
             'f1': { aboveIds: ['f2'], belowIds: [], sameRankIds: [] },
@@ -223,11 +223,11 @@ describe('DotBuilder', () => {
 
     it('create subgraphs for groups', () => {
 
-        const feature1 = Static.featureDoc('Feature 1', 'feature1', 'Feature', 'f1');
-        const feature2 = Static.featureDoc('Feature 2', 'feature2', 'Feature', 'f2');
-        const feature3 = Static.featureDoc('Feature 3', 'feature3', 'Feature', 'f3');
-        const feature4 = Static.featureDoc('Feature 4', 'feature4', 'Feature', 'f4');
-        const feature5 = Static.featureDoc('Feature 5', 'feature5', 'Feature', 'f5');
+        const feature1 = featureDoc('Feature 1', 'feature1', 'Feature', 'f1');
+        const feature2 = featureDoc('Feature 2', 'feature2', 'Feature', 'f2');
+        const feature3 = featureDoc('Feature 3', 'feature3', 'Feature', 'f3');
+        const feature4 = featureDoc('Feature 4', 'feature4', 'Feature', 'f4');
+        const feature5 = featureDoc('Feature 5', 'feature5', 'Feature', 'f5');
 
         const edges: { [resourceId: string]: Edges } = {
             'f1': { aboveIds: ['f2', 'f4'], belowIds: [], sameRankIds: [] },

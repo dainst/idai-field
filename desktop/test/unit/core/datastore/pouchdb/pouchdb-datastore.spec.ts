@@ -1,6 +1,6 @@
 import { DatastoreErrors, PouchdbDatastore } from '@idai-field/core';
 import { Document } from 'idai-components-2';
-import { Static } from '../../../static';
+import { doc } from '../../../test-helpers';
 
 
 /**
@@ -40,7 +40,7 @@ describe('PouchdbDatastore', () => {
     it('create: create an id', async done => {
 
         try {
-            const result = await datastore.create(Static.doc('sd1'), 'u');
+            const result = await datastore.create(doc('sd1'), 'u');
             expect(result.resource.id).toBe(1 as any);
         } catch (e) {
             fail(e);
@@ -65,7 +65,7 @@ describe('PouchdbDatastore', () => {
             };
         });
 
-        const docToCreate: Document = Static.doc('sd1');
+        const docToCreate: Document = doc('sd1');
         docToCreate.resource.id = 'a1';
 
         await datastore.create(docToCreate, 'u');
@@ -86,9 +86,9 @@ describe('PouchdbDatastore', () => {
 
     it('create: should not create a document with the resource.id of an already existing doc', async done => {
 
-        const docToCreate1: Document = Static.doc('sd1');
+        const docToCreate1: Document = doc('sd1');
         docToCreate1.resource.id = 'a1';
-        const docToCreate2: Document = Static.doc('sd1');
+        const docToCreate2: Document = doc('sd1');
         docToCreate2.resource.id = 'a1';
 
         try {
@@ -104,10 +104,10 @@ describe('PouchdbDatastore', () => {
 
     it('create: create dates', async done => {
 
-        const doc = Static.doc('sd1');
-        delete doc.created;
+        const newDoc = doc('sd1');
+        delete newDoc.created;
 
-        const result = await datastore.create(doc, 'u');
+        const result = await datastore.create(newDoc, 'u');
         expect(result.created.user).toEqual('u');
         expect(result.created.date instanceof Date).toBeTruthy();
         expect(Array.isArray(result.modified)).toBeTruthy();
@@ -120,7 +120,7 @@ describe('PouchdbDatastore', () => {
 
         try {
             const result = await datastore.bulkCreate(
-                [Static.doc('sd1'), Static.doc('sd2')], 'u'
+                [doc('sd1'), doc('sd2')], 'u'
             );
             expect(result[0].resource.id).toBe(1 as any);
             expect(result[1].resource.id).toBe(2 as any);
@@ -133,9 +133,9 @@ describe('PouchdbDatastore', () => {
 
     it('bulkCreate: should not create a document with the resource.id of an already existing doc', async done => {
 
-        const docToCreate1: Document = Static.doc('sd1');
+        const docToCreate1: Document = doc('sd1');
         docToCreate1.resource.id = 'a1';
-        const docToCreate2: Document = Static.doc('sd1');
+        const docToCreate2: Document = doc('sd1');
         docToCreate2.resource.id = 'a1';
 
         try {
@@ -151,8 +151,8 @@ describe('PouchdbDatastore', () => {
 
     it('update: should update an existing document with no identifier conflict', async done => {
 
-        let doc2 = Static.doc('id2');
-        await datastore.create(Static.doc('id1'), 'u');
+        let doc2 = doc('id2');
+        await datastore.create(doc('id1'), 'u');
         doc2 = await datastore.create(doc2, 'u');
         await datastore.update(doc2, 'u');
         done();
@@ -162,7 +162,7 @@ describe('PouchdbDatastore', () => {
     it('update: should not update if resource id not present', async done => {
 
         try {
-            await datastore.update(Static.doc('sd1'), 'u');
+            await datastore.update(doc('sd1'), 'u');
             fail();
         } catch (expected) {
             expect(expected[0]).toBe(DatastoreErrors.DOCUMENT_NO_RESOURCE_ID);
@@ -173,12 +173,12 @@ describe('PouchdbDatastore', () => {
 
     it('update: should not update if created not present', async done => {
 
-        const doc = Static.doc('sd1');
-        doc.resource.id = '1';
-        delete doc.created;
+        const newDoc = doc('sd1');
+        newDoc.resource.id = '1';
+        delete newDoc.created;
 
         try {
-            await datastore.update(doc, 'u');
+            await datastore.update(newDoc, 'u');
             fail();
         } catch (expected) {
             expect(expected[0]).toBe(DatastoreErrors.INVALID_DOCUMENT);
@@ -192,7 +192,7 @@ describe('PouchdbDatastore', () => {
         pouchdbProxy.get.and.returnValue(Promise.reject(undefined));
 
         try {
-            await datastore.update(Static.doc('sd1', 'identifier1', 'Find', 'id1'), 'u');
+            await datastore.update(doc('sd1', 'identifier1', 'Find', 'id1'), 'u');
             fail();
         } catch (expectedErr) {
             expect(expectedErr[0]).toBe(DatastoreErrors.DOCUMENT_NOT_FOUND);
@@ -203,14 +203,14 @@ describe('PouchdbDatastore', () => {
 
     it('update: should squash old revisions', async done => {
 
-        const doc = Static.doc('sd1');
-        doc.resource.id = '1';
+        const newDoc = doc('sd1');
+        newDoc.resource.id = '1';
 
-        const rev = Static.doc('sd1');
+        const rev = doc('sd1');
         rev['_rev'] = 'r-1';
 
         try {
-            const result = await datastore.update(doc, 'u3', ['r-1']);
+            await datastore.update(newDoc, 'u3', ['r-1']);
             expect(pouchdbProxy.remove).toHaveBeenCalledWith('1', 'r-1');
 
         } catch (e) {
@@ -223,13 +223,13 @@ describe('PouchdbDatastore', () => {
 
     it('update: should merge modified dates of squash revisions', async done => {
 
-        const doc = Static.doc('sd1');
-        doc.resource.id = '1';
+        const newDoc = doc('sd1');
+        newDoc.resource.id = '1';
 
         let i = 0;
         pouchdbProxy.get.and.callFake(async (resourceId: string, params?: any) => {
             if (params && params.rev) {
-                const rev = Static.doc('sd1');
+                const rev = doc('sd1');
                 rev.modified[0] = { user: 'u2', date: new Date('2018-04-27T11:07:05.760Z') };
                 rev.created = rev.modified[0];
                 rev.resource.id = '1';
@@ -237,7 +237,7 @@ describe('PouchdbDatastore', () => {
                 return rev;
             } else if (i === 0) {
                 i = i + 1;
-                const existingDoc = Static.doc('sd1');
+                const existingDoc = doc('sd1');
                 existingDoc.created = { user: 'u1', date: new Date('2018-04-26T11:07:05.760Z') };
                 existingDoc.modified = [];
                 existingDoc.resource.id = '1';
@@ -247,7 +247,7 @@ describe('PouchdbDatastore', () => {
             }
         });
 
-        const result = await datastore.update(doc, 'u3', ['r-1']);
+        const result = await datastore.update(newDoc, 'u3', ['r-1']);
 
         expect(result.created.user).toEqual('u1');
         expect(result.modified.length).toBe(2);
@@ -259,14 +259,14 @@ describe('PouchdbDatastore', () => {
 
     it('update: add modified date', async done => {
 
-        const doc = Static.doc('id2');
-        doc.resource.id = '1';
+        const newDoc = doc('id2');
+        newDoc.resource.id = '1';
 
         let i = 0;
         pouchdbProxy.get.and.callFake(async () => {
             if (i === 0) {
                 i = i + 1;
-                const existingDoc = Static.doc('sd1');
+                const existingDoc = doc('sd1');
                 existingDoc.created = { user: 'u1', date: new Date('2018-04-26T11:07:05.760Z') };
                 existingDoc.modified = [];
                 existingDoc.resource.id = '1';
@@ -276,7 +276,7 @@ describe('PouchdbDatastore', () => {
             }
         });
 
-        const result = await datastore.update(doc, 'u', );
+        const result = await datastore.update(newDoc, 'u');
         expect(result.modified.length).toBe(1);
         expect(result.modified[0].user).toEqual('u');
         expect(result.modified[0].date instanceof Date).toBeTruthy();
@@ -287,7 +287,7 @@ describe('PouchdbDatastore', () => {
     it('bulkUpdate: should not update if resource id not present', async done => {
 
         try {
-            await datastore.bulkUpdate([Static.doc('sd1')], 'u');
+            await datastore.bulkUpdate([doc('sd1')], 'u');
             fail();
         } catch (expected) {
             expect(expected[0]).toBe(DatastoreErrors.DOCUMENT_NO_RESOURCE_ID);
@@ -331,7 +331,7 @@ describe('PouchdbDatastore', () => {
 
     it('remove: should remove if existent', async (done) => {
 
-        await datastore.remove(Static.doc('sd1', 'identifier1', 'Find', 'id1'));
+        await datastore.remove(doc('sd1', 'identifier1', 'Find', 'id1'));
         expect(pouchdbProxy.remove).toHaveBeenCalled();
         done();
     });
@@ -340,7 +340,7 @@ describe('PouchdbDatastore', () => {
     it('remove: should throw when no resource id', async done => {
 
         try {
-            await datastore.remove(Static.doc('sd2'));
+            await datastore.remove(doc('sd2'));
             fail();
         } catch (expected) {
             expect(expected[0]).toEqual(DatastoreErrors.DOCUMENT_NO_RESOURCE_ID);
@@ -353,7 +353,7 @@ describe('PouchdbDatastore', () => {
 
         pouchdbProxy.get.and.returnValue(Promise.reject(undefined));
 
-        const d = Static.doc('sd1');
+        const d = doc('sd1');
         d['resource']['id'] = 'hoax';
         try {
             await datastore.remove(d);
@@ -367,7 +367,7 @@ describe('PouchdbDatastore', () => {
 
     it('remove: remove all conflicting revisions', async done => {
 
-        const document = Static.doc('shortDescription1', 'identifier1', 'Find', 'id1');
+        const document = doc('shortDescription1', 'identifier1', 'Find', 'id1');
         document['_conflicts'] = ['revision1', 'revision2'];
 
         pouchdbProxy.get.and.returnValue(Promise.resolve(document));

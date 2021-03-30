@@ -1,9 +1,9 @@
-import {ImageDocument} from '@idai-field/core';
+import { ImageDocument } from '@idai-field/core';
 import * as PouchDB from 'pouchdb-node';
-import {createApp, setupSyncTestDb} from '../subsystem-helper';
-import {CachedDatastore} from '../../../../../src/app/core/datastore/cached/cached-datastore';
-import {ImageOverviewFacade} from '../../../../../src/app/core/images/overview/view/imageoverview-facade';
-import {Static} from '../../../static';
+import { CachedDatastore } from '../../../../../src/app/core/datastore/cached/cached-datastore';
+import { ImageOverviewFacade } from '../../../../../src/app/core/images/overview/view/imageoverview-facade';
+import { fieldDoc } from '../../../test-helpers';
+import { createApp, setupSyncTestDb } from '../subsystem-helper';
 
 
 /**
@@ -27,8 +27,7 @@ describe('ImageOverviewFacade/Subsystem', () => {
 
         for (let i = 0; i < 60; i++) { // create 60 documents
 
-            const imageDocument = Static
-                .fieldDoc('image document ' + i, 'imagedocument' + i, 'Image', 'im' + i);
+            const imageDocument = fieldDoc('image document ' + i, 'imagedocument' + i, 'Image', 'im' + i);
             await datastore.create(imageDocument, 'u');
         }
 
@@ -119,4 +118,3 @@ describe('ImageOverviewFacade/Subsystem', () => {
         done();
     });
 });
-

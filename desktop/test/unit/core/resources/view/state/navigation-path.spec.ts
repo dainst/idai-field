@@ -1,6 +1,6 @@
-import {Static} from '../../../../static';
-import {NavigationPath} from '../../../../../../src/app/core/resources/view/state/navigation-path';
-import {toResourceId} from '../../../../../../src/app/core/resources/view/state/navigation-path-segment';
+import { NavigationPath } from '../../../../../../src/app/core/resources/view/state/navigation-path';
+import { toResourceId } from '../../../../../../src/app/core/resources/view/state/navigation-path-segment';
+import { fieldDoc } from '../../../../test-helpers';
 
 /**
  * @author Daniel de Oliveira
@@ -11,8 +11,8 @@ describe('NavigationPath', () => {
 
         let navPath: NavigationPath = NavigationPath.empty();
 
-        const featureDocument1 = Static.fieldDoc('Feature 1','feature1','Feature', 'f1');
-        const featureDocument2 = Static.fieldDoc('Feature 2','feature2','Feature', 'f2');
+        const featureDocument1 = fieldDoc('Feature 1','feature1','Feature', 'f1');
+        const featureDocument2 = fieldDoc('Feature 2','feature2','Feature', 'f2');
 
         navPath = NavigationPath.setNewSelectedSegmentDoc(navPath, featureDocument1);
 
@@ -42,9 +42,9 @@ describe('NavigationPath', () => {
 
         let navPath: NavigationPath = NavigationPath.empty();
 
-        const featureDocument1 = Static.fieldDoc('Feature 1','feature1','Feature', 'f1');
-        const featureDocument2 = Static.fieldDoc('Feature 2','feature2','Feature', 'f2');
-        const featureDocument3 = Static.fieldDoc('Feature 3','feature3','Feature', 'f3');
+        const featureDocument1 = fieldDoc('Feature 1','feature1','Feature', 'f1');
+        const featureDocument2 = fieldDoc('Feature 2','feature2','Feature', 'f2');
+        const featureDocument3 = fieldDoc('Feature 3','feature3','Feature', 'f3');
 
         navPath = NavigationPath.setNewSelectedSegmentDoc(navPath, featureDocument1);
 
@@ -75,9 +75,9 @@ describe('NavigationPath', () => {
 
         let navPath: NavigationPath = NavigationPath.empty();
 
-        const featureDocument1 = Static.fieldDoc('Feature 1','feature1','Feature', 'f1');
-        const featureDocument2 = Static.fieldDoc('Feature 2','feature2','Feature', 'f2');
-        const featureDocument3 = Static.fieldDoc('Feature 3','feature3','Feature', 'f3');
+        const featureDocument1 = fieldDoc('Feature 1','feature1','Feature', 'f1');
+        const featureDocument2 = fieldDoc('Feature 2','feature2','Feature', 'f2');
+        const featureDocument3 = fieldDoc('Feature 3','feature3','Feature', 'f3');
 
         navPath = NavigationPath.setNewSelectedSegmentDoc(navPath, featureDocument1);
 

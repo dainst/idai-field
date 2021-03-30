@@ -1,6 +1,6 @@
-import {ImageDocument} from '@idai-field/core';
-import {LayerManager} from '../../../../../src/app/components/resources/map/map/layers/layer-manager';
-import {Static} from '../../../static';
+import { ImageDocument } from '@idai-field/core';
+import { LayerManager } from '../../../../../src/app/components/resources/map/map/layers/layer-manager';
+import { doc } from '../../../test-helpers';
 
 
 /**
@@ -12,8 +12,8 @@ describe('LayerManager', () => {
     let layerManager: LayerManager;
 
     const layerDocuments: Array<ImageDocument> = [
-        Static.doc('Layer 1', 'layer1', 'Image', 'l1') as ImageDocument,
-        Static.doc('Layer 2', 'layer2', 'Image', 'l2') as ImageDocument,
+        doc('Layer 1', 'layer1', 'Image', 'l1') as ImageDocument,
+        doc('Layer 2', 'layer2', 'Image', 'l2') as ImageDocument,
     ];
 
     const projectDocument: any = {

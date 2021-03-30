@@ -1,7 +1,7 @@
-import {Document} from 'idai-components-2';
-import {Static} from '../../../../static';
-import {RelationDefinition} from '@idai-field/core';
-import {getSuggestions, MAX_SUGGESTIONS} from '../../../../../../src/app/core/docedit/widgets/relationpicker/get-suggestions';
+import { RelationDefinition } from '@idai-field/core';
+import { Document } from 'idai-components-2';
+import { getSuggestions, MAX_SUGGESTIONS } from '../../../../../../src/app/core/docedit/widgets/relationpicker/get-suggestions';
+import { doc } from '../../../../test-helpers';
 
 
 /**
@@ -22,7 +22,7 @@ describe('getSuggestions', () => {
     it('create suggestions query', async done => {
 
         const document: Document
-            = Static.doc('shortDescription', 'identifier', 'Category','id');
+            = doc('shortDescription', 'identifier', 'Category','id');
         document.resource.relations['relation'] = [''];
 
         const relationDefinition: RelationDefinition = {
@@ -54,7 +54,7 @@ describe('getSuggestions', () => {
     it('do not suggest resources which are already targets of the relation or inverse relation', async done => {
 
         const document: Document
-            = Static.doc('shortDescription', 'identifier', 'Category','id1');
+            = doc('shortDescription', 'identifier', 'Category','id1');
         document.resource.relations['relation'] = ['id2', 'id3'];
         document.resource.relations['inverse'] = ['id4', 'id5'];
 
@@ -89,7 +89,7 @@ describe('getSuggestions', () => {
             'sameMainCategoryResource is set', async done => {
 
         const document: Document
-            = Static.doc('shortDescription', 'identifier', 'Category','id');
+            = doc('shortDescription', 'identifier', 'Category','id');
         document.resource.relations['relation'] = [''];
         document.resource.relations['isRecordedIn'] = ['operationId'];
 
@@ -123,7 +123,7 @@ describe('getSuggestions', () => {
     it('show suggestions for new document without id', async done => {
 
         const document: Document
-            = Static.doc('shortDescription', 'identifier', 'Category','id');
+            = doc('shortDescription', 'identifier', 'Category','id');
         document.resource.relations['relation'] = [''];
         delete document.resource.id;
 

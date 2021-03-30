@@ -1,6 +1,6 @@
-import {createApp, setupSyncTestDb} from '../subsystem-helper';
 import * as PouchDB from 'pouchdb-node';
-import {Static} from '../../../static';
+import { doc } from '../../../test-helpers';
+import { createApp, setupSyncTestDb } from '../subsystem-helper';
 
 
 describe('subsystem/datastore/access', () => {
@@ -34,8 +34,8 @@ describe('subsystem/datastore/access', () => {
 
         spyOn(console, 'error');
 
-        image0 = Static.doc('Image','Image','Image','image0');
-        trench0 = Static.doc('Trench','Trench','Trench','trench0');
+        image0 = doc('Image','Image','Image','image0');
+        trench0 = doc('Trench','Trench','Trench','trench0');
 
         await idaiFieldImageDocumentDatastore.create(image0);
         await fieldDocumentDatastore.create(trench0);

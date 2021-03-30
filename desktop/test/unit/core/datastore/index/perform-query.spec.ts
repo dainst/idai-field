@@ -1,10 +1,9 @@
-import {Document} from 'idai-components-2';
-import {IndexerConfiguration} from '../../../../../src/app/indexer-configuration';
-import {createMockProjectConfiguration} from './helpers';
-import {Static} from '../../../static';
-import {FulltextIndex, ConstraintIndex, performQuery as performQuery_, Query} from '@idai-field/core';
-import {namedArrayToNamedMap} from '@idai-field/core';
+import { ConstraintIndex, FulltextIndex, namedArrayToNamedMap, performQuery as performQuery_, Query } from '@idai-field/core';
+import { Document } from 'idai-components-2';
 import { getFieldsToIndex } from '../../../../../../core/src/index/get-fields-to-index';
+import { IndexerConfiguration } from '../../../../../src/app/indexer-configuration';
+import { doc } from '../../../test-helpers';
+import { createMockProjectConfiguration } from './helpers';
 
 /**
  * @author Daniel de Oliveira
@@ -41,7 +40,7 @@ describe('performQuery', () => {
 
     it('should find with filterSet undefined', () => {
 
-        const doc1 = Static.doc('sd1', 'identifier1', 'Find', 'id1');
+        const doc1 = doc('sd1', 'identifier1', 'Find', 'id1');
         put(doc1);
 
         const result = performQuery({ q: 'identifier' });
@@ -51,7 +50,7 @@ describe('performQuery', () => {
 
     it('should find with prefix query undefined', () => {
 
-        const doc1 = Static.doc('sd1', 'identifier1', 'Find', 'id1');
+        const doc1 = doc('sd1', 'identifier1', 'Find', 'id1');
         put(doc1);
 
         const result = performQuery({ q: undefined });
@@ -61,7 +60,7 @@ describe('performQuery', () => {
 
     it('should find with omitted q', () => {
 
-        const doc1 = Static.doc('sd1', 'identifier1', 'Find', 'id1');
+        const doc1 = doc('sd1', 'identifier1', 'Find', 'id1');
         put(doc1);
 
         const result = performQuery({});
@@ -71,7 +70,7 @@ describe('performQuery', () => {
 
     it('should find with omitted q and ommitted prefix', () => {
 
-        const doc1 = Static.doc('sd1', 'identifier1', 'Find', 'id1');
+        const doc1 = doc('sd1', 'identifier1', 'Find', 'id1');
         put(doc1);
 
         const result = performQuery({});
@@ -81,8 +80,8 @@ describe('performQuery', () => {
 
     it('should match all fields', () => {
 
-        const doc1 = Static.doc('bla', 'identifier1', 'Find', 'id1');
-        const doc2 = Static.doc('sd2', 'bla', 'Find', 'id2');
+        const doc1 = doc('bla', 'identifier1', 'Find', 'id1');
+        const doc2 = doc('sd2', 'bla', 'Find', 'id2');
         put(doc1);
         put(doc2);
 
@@ -93,9 +92,9 @@ describe('performQuery', () => {
 
     it('should filter by one category in find', () => {
 
-        const doc1 = Static.doc('bla1', 'blub', 'category1', 'id1');
-        const doc2 = Static.doc('bla2', 'blub', 'category2', 'id2');
-        const doc3 = Static.doc('bla3', 'blub', 'category3', 'id3');
+        const doc1 = doc('bla1', 'blub', 'category1', 'id1');
+        const doc2 = doc('bla2', 'blub', 'category2', 'id2');
+        const doc3 = doc('bla3', 'blub', 'category3', 'id3');
         put(doc1);
         put(doc2);
         put(doc3);
@@ -109,10 +108,10 @@ describe('performQuery', () => {
 
     it('should filter with constraint', () => {
 
-        const doc1 = Static.doc('bla1', 'blub1', 'category1','id1');
-        const doc2 = Static.doc('bla2', 'blub2', 'category2','id2');
-        const doc3 = Static.doc('bla3', 'blub3', 'category2','id3');
-        const doc4 = Static.doc('bla4', 'blub4', 'category2','id4');
+        const doc1 = doc('bla1', 'blub1', 'category1','id1');
+        const doc2 = doc('bla2', 'blub2', 'category2','id2');
+        const doc3 = doc('bla3', 'blub3', 'category2','id3');
+        const doc4 = doc('bla4', 'blub4', 'category2','id4');
         doc2.resource.relations['isRecordedIn'] = ['id1'];
         doc3.resource.relations['isRecordedIn'] = ['id1'];
         doc4.resource.relations['isRecordedIn'] = ['id2'];
@@ -138,9 +137,9 @@ describe('performQuery', () => {
 
     it('should find by prefix query and filter', () => {
 
-        const doc1 = Static.doc('bla1', 'blub1', 'category1', 'id1');
-        const doc2 = Static.doc('bla2', 'blub2', 'category2', 'id2');
-        const doc3 = Static.doc('bla3', 'blub3', 'category2', 'id3');
+        const doc1 = doc('bla1', 'blub1', 'category1', 'id1');
+        const doc2 = doc('bla2', 'blub2', 'category2', 'id2');
+        const doc3 = doc('bla3', 'blub3', 'category2', 'id3');
         put(doc1);
         put(doc2);
         put(doc3);
@@ -158,10 +157,10 @@ describe('performQuery', () => {
 
     it('should filter with multiple constraints', () => {
 
-        const doc1 = Static.doc('bla1', 'blub1', 'category1','id1');
-        const doc2 = Static.doc('bla2', 'blub2', 'category2','id2');
+        const doc1 = doc('bla1', 'blub1', 'category1','id1');
+        const doc2 = doc('bla2', 'blub2', 'category2','id2');
         doc2.resource.relations['isRecordedIn'] = ['id1'];
-        const doc3 = Static.doc('bla3', 'blub3', 'category2','id3');
+        const doc3 = doc('bla3', 'blub3', 'category2','id3');
         doc3.resource.relations['isRecordedIn'] = ['id1'];
         doc3.resource.relations['liesWithin'] = ['id2'];
 
@@ -185,11 +184,11 @@ describe('performQuery', () => {
 
     it('should filter with a subtract constraint', () => {
 
-        const doc1 = Static.doc('Document 1', 'doc1', 'category1','id1');
-        const doc2 = Static.doc('Document 2', 'doc2', 'category1','id2');
-        const doc3 = Static.doc('Document 3', 'doc3', 'category2','id3');
+        const doc1 = doc('Document 1', 'doc1', 'category1','id1');
+        const doc2 = doc('Document 2', 'doc2', 'category1','id2');
+        const doc3 = doc('Document 3', 'doc3', 'category2','id3');
         doc3.resource.relations['isRecordedIn'] = ['id1'];
-        const doc4 = Static.doc('Document 4', 'doc4', 'category2','id4');
+        const doc4 = doc('Document 4', 'doc4', 'category2','id4');
         doc4.resource.relations['isRecordedIn'] = ['id2'];
 
         const q: Query = {
@@ -212,9 +211,9 @@ describe('performQuery', () => {
 
     it('should get with descendants', () => {
 
-        const doc1 = Static.doc('Document 1', 'doc1', 'category1','id1');
-        const doc2 = Static.doc('Document 2', 'doc2', 'category1','id2');
-        const doc3 = Static.doc('Document 3', 'doc3', 'category2','id3');
+        const doc1 = doc('Document 1', 'doc1', 'category1','id1');
+        const doc2 = doc('Document 2', 'doc2', 'category1','id2');
+        const doc3 = doc('Document 3', 'doc3', 'category2','id3');
         doc2.resource.relations['liesWithin'] = ['id1'];
         doc3.resource.relations['liesWithin'] = ['id2'];
 

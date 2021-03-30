@@ -1,5 +1,5 @@
-import {Document} from 'idai-components-2';
-import {Static} from '../../static';
+import { Document } from 'idai-components-2';
+import { doc } from '../../test-helpers';
 
 
 /**
@@ -13,7 +13,7 @@ describe('ModelUtil', () => {
 
     beforeEach(() => {
 
-        document1 = Static.doc('Document 1', 'doc1', 'Feature', 'd1');
-        document2 = Static.doc('Document 2', 'doc2', 'Feature', 'd2');
+        document1 = doc('Document 1', 'doc1', 'Feature', 'd1');
+        document2 = doc('Document 2', 'doc2', 'Feature', 'd2');
     });
 });

@@ -1,6 +1,6 @@
-import {FieldDocument} from '@idai-field/core';
-import {NavigationPathSegment} from '../../../../../../src/app/core/resources/view/state/navigation-path-segment';
-import {Static} from '../../../../static';
+import { FieldDocument } from '@idai-field/core';
+import { NavigationPathSegment } from '../../../../../../src/app/core/resources/view/state/navigation-path-segment';
+import { fieldDoc } from '../../../../test-helpers';
 
 
 /**
@@ -10,7 +10,7 @@ describe('NavigationPathSegment', () => {
 
     it('consider the first segment valid if the correct isRecordedIn relation is existing', () => {
 
-        const document: FieldDocument = Static.fieldDoc('', 'Feature', 'Feature', 'f');
+        const document: FieldDocument = fieldDoc('', 'Feature', 'Feature', 'f');
         document.resource.relations.isRecordedIn = ['t'];
         const segments: Array<NavigationPathSegment> = [{ document: document, q: '', categories: [] }];
 
@@ -22,7 +22,7 @@ describe('NavigationPathSegment', () => {
 
     it('consider the first segment invalid if the correct isRecordedIn relation is not existing', () => {
 
-        const document: FieldDocument = Static.fieldDoc('', 'Feature', 'Feature', 'f');
+        const document: FieldDocument = fieldDoc('', 'Feature', 'Feature', 'f');
         document.resource.relations.isRecordedIn = ['t2'];
         const segments: Array<NavigationPathSegment> = [{ document: document, q: '', categories: [] }];
 
@@ -34,7 +34,7 @@ describe('NavigationPathSegment', () => {
 
     it('consider the first segment valid if the corresponding document is of category Place', () => {
 
-        const document: FieldDocument = Static.fieldDoc('', 'Place', 'Place', 'p');
+        const document: FieldDocument = fieldDoc('', 'Place', 'Place', 'p');
         const segments: Array<NavigationPathSegment> = [{ document: document, q: '', categories: [] }];
 
         expect(NavigationPathSegment.isValid(
@@ -45,7 +45,7 @@ describe('NavigationPathSegment', () => {
 
     it('consider the first segment valid if the corresponding document is of category TypeCatalog', () => {
 
-        const document: FieldDocument = Static.fieldDoc(
+        const document: FieldDocument = fieldDoc(
             '', 'TypeCatalog', 'TypeCatalog','tc'
         );
         const segments: Array<NavigationPathSegment> = [{ document: document, q: '', categories: [] }];
@@ -59,8 +59,8 @@ describe('NavigationPathSegment', () => {
 
     it('consider a following segment valid if the correct liesWithin relation is existing', () => {
 
-        const document1: FieldDocument = Static.fieldDoc('', 'Feature', 'Feature','f1');
-        const document2: FieldDocument = Static.fieldDoc('', 'Find', 'Find','f2');
+        const document1: FieldDocument = fieldDoc('', 'Feature', 'Feature','f1');
+        const document2: FieldDocument = fieldDoc('', 'Find', 'Find','f2');
         document2.resource.relations.liesWithin = ['f1'];
 
         const segments: Array<NavigationPathSegment> = [
@@ -76,8 +76,8 @@ describe('NavigationPathSegment', () => {
 
     it('consider a following segment invalid if the correct liesWithin relation is not existing', () => {
 
-        const document1: FieldDocument = Static.fieldDoc('', 'Feature', 'Feature','f1');
-        const document2: FieldDocument = Static.fieldDoc('', 'Find', 'Find','f2');
+        const document1: FieldDocument = fieldDoc('', 'Feature', 'Feature','f1');
+        const document2: FieldDocument = fieldDoc('', 'Find', 'Find','f2');
         document2.resource.relations.liesWithin = ['f3'];
 
         const segments: Array<NavigationPathSegment> = [
@@ -93,8 +93,8 @@ describe('NavigationPathSegment', () => {
 
     it('consider a segment invalid if the corresponding document is not existing', () => {
 
-        const document1: FieldDocument = Static.fieldDoc('', 'Feature', 'Feature','f1');
-        const document2: FieldDocument = Static.fieldDoc('', 'Find', 'Find','f2');
+        const document1: FieldDocument = fieldDoc('', 'Feature', 'Feature','f1');
+        const document2: FieldDocument = fieldDoc('', 'Find', 'Find','f2');
         document2.resource.relations.liesWithin = ['f1'];
 
         const segments: Array<NavigationPathSegment> = [

@@ -1,6 +1,6 @@
-import {Static} from '../../../static';
-import {IndexerConfiguration} from '../../../../../src/app/indexer-configuration';
-import {IndexFacade, Query} from '@idai-field/core';
+import { IndexFacade, Query } from '@idai-field/core';
+import { IndexerConfiguration } from '../../../../../src/app/indexer-configuration';
+import { doc } from '../../../test-helpers';
 import { createMockProjectConfiguration } from './helpers';
 
 
@@ -24,10 +24,10 @@ describe('IndexFacade', () => {
 
     it('should put a type and then a find', () => {
 
-        const typeDocB = Static.doc('sd1', 'identifier1', 'Type', 'id1');
-        const typeDocA = Static.doc('sd0', 'identifier0', 'Type', 'id0');
-        const findDocB = Static.doc('sd3', 'identifier3', 'FindB', 'id3');
-        const findDocA = Static.doc('sd2', 'identifier2', 'FindA', 'id2');
+        const typeDocB = doc('sd1', 'identifier1', 'Type', 'id1');
+        const typeDocA = doc('sd0', 'identifier0', 'Type', 'id0');
+        const findDocB = doc('sd3', 'identifier3', 'FindB', 'id3');
+        const findDocA = doc('sd2', 'identifier2', 'FindA', 'id2');
         findDocB.resource.relations = { isInstanceOf: ['id1'] };
         findDocA.resource.relations = { isInstanceOf: ['id0'] };
 
@@ -50,11 +50,11 @@ describe('IndexFacade', () => {
 
     it('put a type, add finds, delete finds afterward', () => {
 
-        const typeDocB = Static.doc('sd1', 'identifier1', 'Type', 'id1');
-        const typeDocA = Static.doc('sd0', 'identifier0', 'Type', 'id0');
-        const findDocC = Static.doc('sd4', 'identifier4', 'Find', 'id4');
-        const findDocB = Static.doc('sd3', 'identifier3', 'Find', 'id3');
-        const findDocA = Static.doc('sd2', 'identifier2', 'Find', 'id2');
+        const typeDocB = doc('sd1', 'identifier1', 'Type', 'id1');
+        const typeDocA = doc('sd0', 'identifier0', 'Type', 'id0');
+        const findDocC = doc('sd4', 'identifier4', 'Find', 'id4');
+        const findDocB = doc('sd3', 'identifier3', 'Find', 'id3');
+        const findDocA = doc('sd2', 'identifier2', 'Find', 'id2');
         findDocA.resource.relations = { isInstanceOf: ['id0'] };
         findDocB.resource.relations = { isInstanceOf: ['id1'] };
         findDocC.resource.relations = { isInstanceOf: ['id1'] };
@@ -83,11 +83,11 @@ describe('IndexFacade', () => {
 
     it('put a type, add finds, put finds afterward again', () => {
 
-        const typeDocB = Static.doc('sd1', 'identifier1', 'Type', 'id1');
-        const typeDocA = Static.doc('sd0', 'identifier0', 'Type', 'id0');
-        const findDocC = Static.doc('sd4', 'identifier4', 'Find', 'id4');
-        const findDocB = Static.doc('sd3', 'identifier3', 'Find', 'id3');
-        const findDocA = Static.doc('sd2', 'identifier2', 'Find', 'id2');
+        const typeDocB = doc('sd1', 'identifier1', 'Type', 'id1');
+        const typeDocA = doc('sd0', 'identifier0', 'Type', 'id0');
+        const findDocC = doc('sd4', 'identifier4', 'Find', 'id4');
+        const findDocB = doc('sd3', 'identifier3', 'Find', 'id3');
+        const findDocA = doc('sd2', 'identifier2', 'Find', 'id2');
         findDocA.resource.relations = { isInstanceOf: ['id0'] };
         findDocB.resource.relations = { isInstanceOf: ['id1'] };
         findDocC.resource.relations = { isInstanceOf: ['id1'] };
@@ -118,11 +118,11 @@ describe('IndexFacade', () => {
 
     it('keep instances after re-putting type', () => {
 
-        const typeDocB = Static.doc('sd1', 'identifier1', 'Type', 'id1');
-        const typeDocA = Static.doc('sd0', 'identifier0', 'Type', 'id0');
-        const findDocC = Static.doc('sd4', 'identifier4', 'Find', 'id4');
-        const findDocB = Static.doc('sd3', 'identifier3', 'Find', 'id3');
-        const findDocA = Static.doc('sd2', 'identifier2', 'Find', 'id2');
+        const typeDocB = doc('sd1', 'identifier1', 'Type', 'id1');
+        const typeDocA = doc('sd0', 'identifier0', 'Type', 'id0');
+        const findDocC = doc('sd4', 'identifier4', 'Find', 'id4');
+        const findDocB = doc('sd3', 'identifier3', 'Find', 'id3');
+        const findDocA = doc('sd2', 'identifier2', 'Find', 'id2');
         findDocA.resource.relations = { isInstanceOf: ['id0'] };
         findDocB.resource.relations = { isInstanceOf: ['id1'] };
         findDocC.resource.relations = { isInstanceOf: ['id1'] };
@@ -150,11 +150,11 @@ describe('IndexFacade', () => {
 
     it('should sort by identifier ascending', () => {
 
-        const doc1 = Static.doc('bla1', 'blub1', 'category1','id1');
-        const doc3 = Static.doc('bla3', 'blub3', 'category3','id3');
+        const doc1 = doc('bla1', 'blub1', 'category1','id1');
+        const doc3 = doc('bla3', 'blub3', 'category3','id3');
         doc3.resource.relations['isRecordedIn'] = ['id1'];
 
-        const doc2 = Static.doc('bla2', 'blub2', 'category2','id2');
+        const doc2 = doc('bla2', 'blub2', 'category2','id2');
         doc2.resource.relations['isRecordedIn'] = ['id1'];
 
         const q: Query = {
@@ -175,9 +175,9 @@ describe('IndexFacade', () => {
 
     it('should not sort', () => {
 
-        const doc1 = Static.doc('1', '1', 'category1','id1');
-        const doc2 = Static.doc('2', '2', 'category2','id2');
-        const doc3 = Static.doc('3', '3', 'category2','id3');
+        const doc1 = doc('1', '1', 'category1','id1');
+        const doc2 = doc('2', '2', 'category2','id2');
+        const doc3 = doc('3', '3', 'category2','id3');
         doc1.resource.relations['isDepictedIn'] = ['id3', 'id2'];
 
         const q: Query = {
@@ -200,9 +200,9 @@ describe('IndexFacade', () => {
 
     it('do not index if no identifier', () => {
 
-        const doc1 = Static.doc('sd0', 'identifier0', 'Type', 'id0');
+        const doc1 = doc('sd0', 'identifier0', 'Type', 'id0');
         delete doc1.resource.identifier;
-        const doc2 = Static.doc('sd1', 'identifier1', 'Type', 'id1');
+        const doc2 = doc('sd1', 'identifier1', 'Type', 'id1');
 
         indexFacade.put(doc1);
         indexFacade.put(doc2);
@@ -214,8 +214,8 @@ describe('IndexFacade', () => {
 
     it('get descendant ids', () => {
 
-        const doc1 = Static.doc('sd0', 'identifier0', 'Type', 'id0');
-        const doc2 = Static.doc('sd1', 'identifier1', 'Type', 'id1');
+        const doc1 = doc('sd0', 'identifier0', 'Type', 'id0');
+        const doc2 = doc('sd1', 'identifier1', 'Type', 'id1');
         doc2.resource.relations['liesWithin'] = ['id0'];
 
         indexFacade.put(doc1);

@@ -1,7 +1,54 @@
-import { FieldDocument, HierarchicalRelations, ImageRelationsC as ImageRelations } from '@idai-field/core';
+import { FeatureDocument, FieldDocument, HierarchicalRelations, ImageRelationsC as ImageRelations } from '@idai-field/core';
+import { Document } from 'idai-components-2';
 import { ResourceId } from '../../src/app/core/constants';
 import { Lookup } from '../../src/app/core/util/utils';
-import { Static } from './static';
+
+
+export const fieldDoc = (sd, identifier?, category?, id?) =>
+    doc(sd, identifier, category, id) as FieldDocument;
+
+
+export const featureDoc = (sd, identifier?, category?, id?) => {
+
+    const newDoc = doc(sd, identifier, category, id) as FeatureDocument;
+    newDoc.resource.relations.isContemporaryWith = [];
+    newDoc.resource.relations.isBefore = [];
+    newDoc.resource.relations.isAfter = [];
+    return newDoc;
+};
+
+
+export const doc = (sd, identifier?, category?, id?): Document => {
+
+    if (!identifier) identifier = 'identifer';
+    if (!category) category = 'Find';
+    const newDoc: Document = {
+        _id: 'A',
+        resource : {
+            id: 'A',
+            shortDescription: sd,
+            identifier: identifier,
+            title: 'title',
+            category: category,
+            relations : {}
+        },
+        created: {
+            user: 'anonymous',
+            date: new Date()
+        },
+        modified: [
+            {
+                user: 'anonymous',
+                date: new Date()
+            }
+        ]
+    };
+    if (id) {
+        newDoc._id = id;
+        newDoc.resource.id = id;
+    } else delete newDoc.resource.id;
+    return newDoc as Document;
+};
 
 
 /**
@@ -26,7 +73,7 @@ export function createDocuments(documents: NiceDocs) {
     const relationsLookup = {};
 
     for (const [id, type, _] of documents) {
-        const d = Static.doc('', 'identifier' + id, type, id) as FieldDocument;
+        const d = doc('', 'identifier' + id, type, id) as FieldDocument;
         if (type !== 'Image') d.resource.relations = { isRecordedIn: [] };
         relationsLookup[id] = d.resource.relations;
         documentsLookup[id] = d;

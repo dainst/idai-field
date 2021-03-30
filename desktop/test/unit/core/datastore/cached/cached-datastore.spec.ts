@@ -1,8 +1,8 @@
-import {FieldDocument} from '@idai-field/core';
-import {DocumentCache} from '../../../../../src/app/core/datastore/cached/document-cache';
-import {FieldDatastore} from '../../../../../src/app/core/datastore/field/field-datastore';
-import {FieldCategoryConverter} from '../../../../../src/app/core/datastore/field/field-category-converter';
-import {Static} from '../../../static';
+import { FieldDocument } from '@idai-field/core';
+import { DocumentCache } from '../../../../../src/app/core/datastore/cached/document-cache';
+import { FieldCategoryConverter } from '../../../../../src/app/core/datastore/field/field-category-converter';
+import { FieldDatastore } from '../../../../../src/app/core/datastore/field/field-datastore';
+import { doc } from '../../../test-helpers';
 
 
 /**
@@ -62,7 +62,7 @@ describe('CachedDatastore', () => {
             return Promise.resolve(dd);
         });
         mockIndexFacade.find.and.callFake(function() {
-            const d = Static.doc('sd1');
+            const d = doc('sd1');
             d.resource.id = '1';
             return ['1'];
         });
@@ -360,7 +360,7 @@ describe('CachedDatastore', () => {
 
     it('should return the cached instance on create', async done => {
 
-        let doc1 = Static.doc('sd1', 'identifier1');
+        let doc1 = doc('sd1', 'identifier1');
 
         mockdb.create.and.callFake(function(dd) {
             // working with the current assumption that the inner pouchdbdatastore datastore returns the same instance
@@ -383,11 +383,11 @@ describe('CachedDatastore', () => {
 
     it('should return cached instance on update', async done => {
 
-        let doc1 = Static.doc('sd1', 'identifier1');
+        let doc1 = doc('sd1', 'identifier1');
         let doc2;
 
         await ds.create(doc1, 'u');
-        doc2 = Static.doc('sd1', 'identifier_');
+        doc2 = doc('sd1', 'identifier_');
         doc2.resource.id = '1';
         await ds.update(doc2, 'u');
 

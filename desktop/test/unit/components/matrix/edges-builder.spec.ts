@@ -1,5 +1,5 @@
-import {Edges, EdgesBuilder, GraphRelationsConfiguration} from '../../../../src/app/components/matrix/edges-builder';
-import {Static} from '../../static';
+import { Edges, EdgesBuilder, GraphRelationsConfiguration } from '../../../../src/app/components/matrix/edges-builder';
+import { featureDoc } from '../../test-helpers';
 
 
 /**
@@ -17,8 +17,8 @@ describe('EdgesBuilder', () => {
 
     it('build edges for simple graph', () => {
 
-        const feature1 = Static.featureDoc('Feature 1', 'feature1', 'Feature', 'f1');
-        const feature2 = Static.featureDoc('Feature 2', 'feature2', 'Feature', 'f2');
+        const feature1 = featureDoc('Feature 1', 'feature1', 'Feature', 'f1');
+        const feature2 = featureDoc('Feature 2', 'feature2', 'Feature', 'f2');
 
         feature1.resource.relations['isAfter'] = ['f2'];
         feature2.resource.relations['isBefore'] = ['f1'];
@@ -36,9 +36,9 @@ describe('EdgesBuilder', () => {
 
     it('build edges for graph with multiple children', () => {
 
-        const feature1 = Static.featureDoc('Feature 1', 'feature1', 'Feature', 'f1');
-        const feature2 = Static.featureDoc('Feature 2', 'feature2', 'Feature', 'f2');
-        const feature3 = Static.featureDoc('Feature 3', 'feature3', 'Feature', 'f3');
+        const feature1 = featureDoc('Feature 1', 'feature1', 'Feature', 'f1');
+        const feature2 = featureDoc('Feature 2', 'feature2', 'Feature', 'f2');
+        const feature3 = featureDoc('Feature 3', 'feature3', 'Feature', 'f3');
 
         feature1.resource.relations['isAfter'] = ['f2', 'f3'];
 
@@ -59,10 +59,10 @@ describe('EdgesBuilder', () => {
 
     it('build edges for diamond formed graph', () => {
 
-        const feature1 = Static.featureDoc('Feature 1', 'feature1', 'Feature', 'f1');
-        const feature2 = Static.featureDoc('Feature 2', 'feature2', 'Feature', 'f2');
-        const feature3 = Static.featureDoc('Feature 3', 'feature3', 'Feature', 'f3');
-        const feature4 = Static.featureDoc('Feature 4', 'feature4', 'Feature', 'f4');
+        const feature1 = featureDoc('Feature 1', 'feature1', 'Feature', 'f1');
+        const feature2 = featureDoc('Feature 2', 'feature2', 'Feature', 'f2');
+        const feature3 = featureDoc('Feature 3', 'feature3', 'Feature', 'f3');
+        const feature4 = featureDoc('Feature 4', 'feature4', 'Feature', 'f4');
 
         feature1.resource.relations['isAfter'] = ['f2', 'f3'];
         feature2.resource.relations['isAfter'] = ['f4'];
@@ -87,10 +87,10 @@ describe('EdgesBuilder', () => {
 
     it('build edges for graph with isContemporaryWith relations', () => {
 
-        const feature1 = Static.featureDoc('Feature 1', 'feature1', 'Feature', 'f1');
-        const feature2 = Static.featureDoc('Feature 2', 'feature2', 'Feature', 'f2');
-        const feature3 = Static.featureDoc('Feature 3', 'feature3', 'Feature', 'f3');
-        const feature4 = Static.featureDoc('Feature 4', 'feature4', 'Feature', 'f4');
+        const feature1 = featureDoc('Feature 1', 'feature1', 'Feature', 'f1');
+        const feature2 = featureDoc('Feature 2', 'feature2', 'Feature', 'f2');
+        const feature3 = featureDoc('Feature 3', 'feature3', 'Feature', 'f3');
+        const feature4 = featureDoc('Feature 4', 'feature4', 'Feature', 'f4');
 
         feature1.resource.relations['isContemporaryWith'] = ['f2'];
         feature2.resource.relations['isContemporaryWith'] = ['f1', 'f4'];
@@ -112,11 +112,11 @@ describe('EdgesBuilder', () => {
 
     it('build edges for graph with isAfter and isContemporaryWith relations', () => {
 
-        const feature1 = Static.featureDoc('Feature 1', 'feature1', 'Feature', 'f1');
-        const feature2 = Static.featureDoc('Feature 2', 'feature2', 'Feature', 'f2');
-        const feature3 = Static.featureDoc('Feature 3', 'feature3', 'Feature', 'f3');
-        const feature4 = Static.featureDoc('Feature 4', 'feature4', 'Feature', 'f4');
-        const feature5 = Static.featureDoc('Feature 5', 'feature5', 'Feature', 'f5');
+        const feature1 = featureDoc('Feature 1', 'feature1', 'Feature', 'f1');
+        const feature2 = featureDoc('Feature 2', 'feature2', 'Feature', 'f2');
+        const feature3 = featureDoc('Feature 3', 'feature3', 'Feature', 'f3');
+        const feature4 = featureDoc('Feature 4', 'feature4', 'Feature', 'f4');
+        const feature5 = featureDoc('Feature 5', 'feature5', 'Feature', 'f5');
 
         feature1.resource.relations['isAfter'] = ['f2'];
         feature2.resource.relations['isAfter'] = ['f5'];
@@ -144,8 +144,8 @@ describe('EdgesBuilder', () => {
 
     it('can deal with missing isAfter relation target', () => {
 
-        const feature1 = Static.featureDoc('Feature 1', 'feature1', 'Feature', 'f1');
-        const feature2 = Static.featureDoc('Feature 2', 'feature2', 'Feature', 'f2');
+        const feature1 = featureDoc('Feature 1', 'feature1', 'Feature', 'f1');
+        const feature2 = featureDoc('Feature 2', 'feature2', 'Feature', 'f2');
 
         feature1.resource.relations['isAfter'] = ['f2', 'f3'];
         feature2.resource.relations['isBefore'] = ['f1'];
@@ -163,7 +163,7 @@ describe('EdgesBuilder', () => {
 
     it('can deal with missing isAfter relation targets (all)', () => {
 
-        const feature1 = Static.featureDoc('Feature 1', 'feature1', 'Feature', 'f1');
+        const feature1 = featureDoc('Feature 1', 'feature1', 'Feature', 'f1');
 
         feature1.resource.relations['isAfter'] = ['f2', 'f3'];
 
@@ -179,8 +179,8 @@ describe('EdgesBuilder', () => {
 
     it('can deal with missing isContemporaryWith relation target', () => {
 
-        const feature1 = Static.featureDoc('Feature 1', 'feature1', 'Feature', 'f1');
-        const feature3 = Static.featureDoc('Feature 3', 'feature3', 'Feature', 'f3');
+        const feature1 = featureDoc('Feature 1', 'feature1', 'Feature', 'f1');
+        const feature3 = featureDoc('Feature 3', 'feature3', 'Feature', 'f3');
 
         feature1.resource.relations['isContemporaryWith'] = ['f2', 'f3'];
         feature3.resource.relations['isContemporaryWith'] = ['f2', 'f1'];
@@ -198,7 +198,7 @@ describe('EdgesBuilder', () => {
 
     it('can deal with missing isContemporaryWith relation targets (all)', () => {
 
-        const feature1 = Static.featureDoc('Feature 1', 'feature1', 'Feature', 'f1');
+        const feature1 = featureDoc('Feature 1', 'feature1', 'Feature', 'f1');
 
         feature1.resource.relations['isContemporaryWith'] = ['f2', 'f3'];
 
@@ -220,12 +220,12 @@ describe('EdgesBuilder', () => {
             sameRank: 'isContemporaryWith'
         };
 
-        const feature1 = Static.featureDoc('Feature 1', 'feature1', 'Feature', 'f1');
-        const feature2 = Static.featureDoc('Feature 2', 'feature2', 'Feature', 'f2');
-        const feature3 = Static.featureDoc('Feature 3', 'feature3', 'Feature', 'f3');
-        const feature4 = Static.featureDoc('Feature 4', 'feature4', 'Feature', 'f4');
-        const feature5 = Static.featureDoc('Feature 5', 'feature5', 'Feature', 'f5');
-        const feature6 = Static.featureDoc('Feature 6', 'feature6', 'Feature', 'f6');
+        const feature1 = featureDoc('Feature 1', 'feature1', 'Feature', 'f1');
+        const feature2 = featureDoc('Feature 2', 'feature2', 'Feature', 'f2');
+        const feature3 = featureDoc('Feature 3', 'feature3', 'Feature', 'f3');
+        const feature4 = featureDoc('Feature 4', 'feature4', 'Feature', 'f4');
+        const feature5 = featureDoc('Feature 5', 'feature5', 'Feature', 'f5');
+        const feature6 = featureDoc('Feature 6', 'feature6', 'Feature', 'f6');
 
         feature1.resource.relations['isAbove'] = ['f2'];
         feature2.resource.relations['isBelow'] = ['f1'];
@@ -260,11 +260,11 @@ describe('EdgesBuilder', () => {
 
     it('create above edges between nodes connected via nodes not included in the graph', () => {
 
-        const feature1 = Static.featureDoc('Feature 1', 'feature1', 'Feature', 'f1');
-        const feature2 = Static.featureDoc('Feature 2', 'feature2', 'Feature', 'f2');
-        const feature3 = Static.featureDoc('Feature 3', 'feature3', 'Feature', 'f3');
-        const feature4 = Static.featureDoc('Feature 4', 'feature4', 'Feature', 'f4');
-        const feature5 = Static.featureDoc('Feature 5', 'feature5', 'Feature', 'f5');
+        const feature1 = featureDoc('Feature 1', 'feature1', 'Feature', 'f1');
+        const feature2 = featureDoc('Feature 2', 'feature2', 'Feature', 'f2');
+        const feature3 = featureDoc('Feature 3', 'feature3', 'Feature', 'f3');
+        const feature4 = featureDoc('Feature 4', 'feature4', 'Feature', 'f4');
+        const feature5 = featureDoc('Feature 5', 'feature5', 'Feature', 'f5');
 
         feature1.resource.relations['isAfter'] = ['f3'];
         feature2.resource.relations['isAfter'] = ['f4'];
@@ -289,10 +289,10 @@ describe('EdgesBuilder', () => {
 
     it('create sameRank edges between nodes connected via nodes not included in the graph', () => {
 
-        const feature1 = Static.featureDoc('Feature 1', 'feature1', 'Feature', 'f1');
-        const feature2 = Static.featureDoc('Feature 2', 'feature2', 'Feature', 'f2');
-        const feature3 = Static.featureDoc('Feature 3', 'feature3', 'Feature', 'f3');
-        const feature4 = Static.featureDoc('Feature 4', 'feature4', 'Feature', 'f4');
+        const feature1 = featureDoc('Feature 1', 'feature1', 'Feature', 'f1');
+        const feature2 = featureDoc('Feature 2', 'feature2', 'Feature', 'f2');
+        const feature3 = featureDoc('Feature 3', 'feature3', 'Feature', 'f3');
+        const feature4 = featureDoc('Feature 4', 'feature4', 'Feature', 'f4');
 
         feature1.resource.relations['isContemporaryWith'] = ['f2'];
         feature2.resource.relations['isContemporaryWith'] = ['f1', 'f3'];
@@ -313,11 +313,11 @@ describe('EdgesBuilder', () => {
     it('create above edges between nodes connected via a combination of above and sameRank relations of '
             + 'nodes not included in the graph', () => {
 
-        const feature1 = Static.featureDoc('Feature 1', 'feature1', 'Feature', 'f1');
-        const feature2 = Static.featureDoc('Feature 2', 'feature2', 'Feature', 'f2');
-        const feature3 = Static.featureDoc('Feature 3', 'feature3', 'Feature', 'f3');
-        const feature4 = Static.featureDoc('Feature 4', 'feature4', 'Feature', 'f4');
-        const feature5 = Static.featureDoc('Feature 5', 'feature5', 'Feature', 'f5');
+        const feature1 = featureDoc('Feature 1', 'feature1', 'Feature', 'f1');
+        const feature2 = featureDoc('Feature 2', 'feature2', 'Feature', 'f2');
+        const feature3 = featureDoc('Feature 3', 'feature3', 'Feature', 'f3');
+        const feature4 = featureDoc('Feature 4', 'feature4', 'Feature', 'f4');
+        const feature5 = featureDoc('Feature 5', 'feature5', 'Feature', 'f5');
 
         feature1.resource.relations['isAfter'] = ['f2'];
         feature2.resource.relations['isBefore'] = ['f1'];
@@ -346,10 +346,10 @@ describe('EdgesBuilder', () => {
     it('create above edges between nodes connected via a combination of above and sameRank relations of '
         + 'nodes not included in the graph (2)', () => {
 
-        const feature1 = Static.featureDoc('Feature 1', 'feature1', 'Feature', 'f1');
-        const feature2 = Static.featureDoc('Feature 2', 'feature2', 'Feature', 'f2');
-        const feature3 = Static.featureDoc('Feature 3', 'feature3', 'Feature', 'f3');
-        const feature4 = Static.featureDoc('Feature 4', 'feature4', 'Feature', 'f4');
+        const feature1 = featureDoc('Feature 1', 'feature1', 'Feature', 'f1');
+        const feature2 = featureDoc('Feature 2', 'feature2', 'Feature', 'f2');
+        const feature3 = featureDoc('Feature 3', 'feature3', 'Feature', 'f3');
+        const feature4 = featureDoc('Feature 4', 'feature4', 'Feature', 'f4');
 
         feature1.resource.relations['isContemporaryWith'] = ['f2'];
         feature2.resource.relations['isContemporaryWith'] = ['f1'];
@@ -373,9 +373,9 @@ describe('EdgesBuilder', () => {
 
     it('do not create duplicate edges', () => {
 
-        const feature1 = Static.featureDoc('Feature 1', 'feature1', 'Feature', 'f1');
-        const feature2 = Static.featureDoc('Feature 2', 'feature2', 'Feature', 'f2');
-        const feature3 = Static.featureDoc('Feature 3', 'feature3', 'Feature', 'f3');
+        const feature1 = featureDoc('Feature 1', 'feature1', 'Feature', 'f1');
+        const feature2 = featureDoc('Feature 2', 'feature2', 'Feature', 'f2');
+        const feature3 = featureDoc('Feature 3', 'feature3', 'Feature', 'f3');
 
         feature1.resource.relations['isAfter'] = ['f2'];
         feature2.resource.relations['isBefore'] = ['f1'];

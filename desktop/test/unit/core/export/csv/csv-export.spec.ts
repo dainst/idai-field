@@ -1,6 +1,6 @@
-import {Static} from '../../../static';
-import {CSVExport} from '../../../../../src/app/core/export/csv/csv-export';
-import {HierarchicalRelations, FieldDefinition} from '@idai-field/core';
+import { FieldDefinition, HierarchicalRelations } from '@idai-field/core';
+import { CSVExport } from '../../../../../src/app/core/export/csv/csv-export';
+import { fieldDoc } from '../../../test-helpers';
 
 
 export function makeFieldDefinitions(fieldNames: string[]) {
@@ -24,7 +24,7 @@ describe('CSVExport', () => {
 
     function ifResource(id: string, identifier: string, sd: string, category: string) {
 
-        return Static.fieldDoc(sd, identifier, category, id).resource;
+        return fieldDoc(sd, identifier, category, id).resource;
     }
 
 

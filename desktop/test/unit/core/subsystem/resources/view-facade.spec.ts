@@ -1,12 +1,12 @@
-import {FieldDocument} from '../../../../../../core/index'
-import {Document} from 'idai-components-2';
+import { Document } from 'idai-components-2';
 import * as PouchDB from 'pouchdb-node';
-import {createApp, setupSyncTestDb} from '../subsystem-helper';
-import {CachedDatastore} from '../../../../../src/app/core/datastore/cached/cached-datastore';
-import {TabManager} from '../../../../../src/app/core/tabs/tab-manager';
-import {ResourcesStateManager} from '../../../../../src/app/core/resources/view/resources-state-manager';
-import {ViewFacade} from '../../../../../src/app/core/resources/view/view-facade';
-import {Static} from '../../../static';
+import { FieldDocument } from '../../../../../../core/index';
+import { CachedDatastore } from '../../../../../src/app/core/datastore/cached/cached-datastore';
+import { ResourcesStateManager } from '../../../../../src/app/core/resources/view/resources-state-manager';
+import { ViewFacade } from '../../../../../src/app/core/resources/view/view-facade';
+import { TabManager } from '../../../../../src/app/core/tabs/tab-manager';
+import { fieldDoc } from '../../../test-helpers';
+import { createApp, setupSyncTestDb } from '../subsystem-helper';
 
 
 /**
@@ -61,24 +61,24 @@ describe('ViewFacade/Subsystem', () => {
 
         spyOn(console, 'debug'); // suppress console.debug
 
-        trenchDocument1 = Static.fieldDoc('trench1', 'trench1', 'Trench', 't1');
+        trenchDocument1 = fieldDoc('trench1', 'trench1', 'Trench', 't1');
         trenchDocument1.resource.relations['isRecordedIn'] = ['testdb'];
-        trenchDocument2 = Static.fieldDoc('trench2','trench2','Trench','t2');
+        trenchDocument2 = fieldDoc('trench2','trench2','Trench','t2');
         trenchDocument2.resource.relations['isRecordedIn'] = ['testdb'];
 
-        findDocument1 = Static.fieldDoc('Find 1', 'find1', 'Find', 'find1');
+        findDocument1 = fieldDoc('Find 1', 'find1', 'Find', 'find1');
         findDocument1.resource.processor = 'person';
         findDocument1.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
-        findDocument2 = Static.fieldDoc('Find 2', 'find2', 'Find', 'find2');
+        findDocument2 = fieldDoc('Find 2', 'find2', 'Find', 'find2');
         findDocument2.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
-        featureDocument1 = Static.fieldDoc('Feature 1', 'feature1', 'Feature', 'feature1');
+        featureDocument1 = fieldDoc('Feature 1', 'feature1', 'Feature', 'feature1');
         featureDocument1.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
         featureDocument1.resource.relations['includes'] = [findDocument1.resource.id,
             findDocument2.resource.id];
         findDocument1.resource.relations['liesWithin'] = [featureDocument1.resource.id];
         findDocument2.resource.relations['liesWithin'] = [featureDocument1.resource.id];
 
-        featureDocument2 = Static.fieldDoc('Feature 2', 'feature2', 'Feature', 'feature2');
+        featureDocument2 = fieldDoc('Feature 2', 'feature2', 'Feature', 'feature2');
         featureDocument2.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
 
         await fieldDocumentDatastore.create(trenchDocument1, 'u');
@@ -163,7 +163,7 @@ describe('ViewFacade/Subsystem', () => {
 
     it('search -- show only resources of the selected category', async done => {
 
-        const findDocument3 = Static.fieldDoc('Find 3','find3','Find', 'find3');
+        const findDocument3 = fieldDoc('Find 3','find3','Find', 'find3');
         findDocument3.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
         await fieldDocumentDatastore.create(findDocument3, 'u');
 
@@ -521,4 +521,3 @@ describe('ViewFacade/Subsystem', () => {
         done();
     });
 });
-

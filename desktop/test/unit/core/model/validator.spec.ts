@@ -1,7 +1,7 @@
-import {Validator} from '../../../../src/app/core/model/validator';
-import {ValidationErrors} from '../../../../src/app/core/model/validation-errors';
-import {ProjectConfiguration} from '../../../../src/app/core/configuration/project-configuration';
-import {FindResult} from '../../../../src/app/core/datastore/model/read-datastore';
+import { FindResult } from '@idai-field/core';
+import { ProjectConfiguration } from '../../../../src/app/core/configuration/project-configuration';
+import { ValidationErrors } from '../../../../src/app/core/model/validation-errors';
+import { Validator } from '../../../../src/app/core/model/validator';
 
 
 /**

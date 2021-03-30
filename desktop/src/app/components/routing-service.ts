@@ -1,16 +1,16 @@
-import {Injectable} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {Location} from '@angular/common';
-import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {Observable, Observer} from 'rxjs';
-import {Document} from 'idai-components-2';
-import {ViewFacade} from '../core/resources/view/view-facade';
-import {ProjectConfiguration} from '../core/configuration/project-configuration';
-import {MenuContext, MenuService} from './menu-service';
-import {ProjectsModalComponent} from './navbar/projects-modal.component';
-import {DatastoreErrors} from '../core/datastore/model/datastore-errors';
-import {ProjectCategories} from '../core/configuration/project-categories';
-import {SettingsProvider} from '../core/settings/settings-provider';
+import { Location } from '@angular/common';
+import { Injectable } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { DatastoreErrors } from '@idai-field/core';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { Document } from 'idai-components-2';
+import { Observable, Observer } from 'rxjs';
+import { ProjectCategories } from '../core/configuration/project-categories';
+import { ProjectConfiguration } from '../core/configuration/project-configuration';
+import { ViewFacade } from '../core/resources/view/view-facade';
+import { SettingsProvider } from '../core/settings/settings-provider';
+import { MenuContext, MenuService } from './menu-service';
+import { ProjectsModalComponent } from './navbar/projects-modal.component';
 
 
 @Injectable()

@@ -1,22 +1,21 @@
-import {Component} from '@angular/core';
-import {NgbActiveModal, NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {I18n} from '@ngx-translate/i18n-polyfill';
-import {includedIn, isNot} from 'tsfun';
-import {Document} from 'idai-components-2';
-import {FieldDocument, ImageDocument, clone, FieldDefinition, Group, Groups} from '@idai-field/core';
-import {ConflictDeletedModalComponent} from './dialog/conflict-deleted-modal.component';
-import {EditSaveDialogComponent} from './dialog/edit-save-dialog.component';
-import {DocumentDatastore} from '../../core/datastore/document-datastore';
-import {M} from '../messages/m';
-import {MessagesConversion} from './messages-conversion';
-import {Loading} from '../widgets/loading';
-import {DuplicateModalComponent} from './dialog/duplicate-modal.component';
-import {ProjectConfiguration} from '../../core/configuration/project-configuration';
-import {DocumentHolder} from '../../core/docedit/document-holder';
-import {DoceditErrors} from '../../core/docedit/docedit-errors';
-import {Messages} from '../messages/messages';
-import {DatastoreErrors} from '../../core/datastore/model/datastore-errors';
-import {MenuContext, MenuService} from '../menu-service';
+import { Component } from '@angular/core';
+import { clone, DatastoreErrors, FieldDefinition, FieldDocument, Group, Groups, ImageDocument } from '@idai-field/core';
+import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { I18n } from '@ngx-translate/i18n-polyfill';
+import { Document } from 'idai-components-2';
+import { includedIn, isNot } from 'tsfun';
+import { ProjectConfiguration } from '../../core/configuration/project-configuration';
+import { DocumentDatastore } from '../../core/datastore/document-datastore';
+import { DoceditErrors } from '../../core/docedit/docedit-errors';
+import { DocumentHolder } from '../../core/docedit/document-holder';
+import { MenuContext, MenuService } from '../menu-service';
+import { M } from '../messages/m';
+import { Messages } from '../messages/messages';
+import { Loading } from '../widgets/loading';
+import { ConflictDeletedModalComponent } from './dialog/conflict-deleted-modal.component';
+import { DuplicateModalComponent } from './dialog/duplicate-modal.component';
+import { EditSaveDialogComponent } from './dialog/edit-save-dialog.component';
+import { MessagesConversion } from './messages-conversion';
 
 
 @Component({

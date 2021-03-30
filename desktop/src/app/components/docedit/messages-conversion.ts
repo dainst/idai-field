@@ -1,7 +1,7 @@
-import {ValidationErrors} from '../../core/model/validation-errors';
-import {M} from '../messages/m';
-import {ProjectConfiguration} from '../../core/configuration/project-configuration';
-import {DatastoreErrors} from '../../core/datastore/model/datastore-errors';
+import { DatastoreErrors } from '@idai-field/core';
+import { ProjectConfiguration } from '../../core/configuration/project-configuration';
+import { ValidationErrors } from '../../core/model/validation-errors';
+import { M } from '../messages/m';
 
 
 /**

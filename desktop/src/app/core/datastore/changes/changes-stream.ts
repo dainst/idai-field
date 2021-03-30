@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { isProjectDocument, IndexFacade, ObserverUtil } from '@idai-field/core';
+import { DatastoreErrors, IndexFacade, isProjectDocument, ObserverUtil } from '@idai-field/core';
 import { Action, Document } from 'idai-components-2';
 import { Observable, Observer } from 'rxjs';
 import { aMap } from 'tsfun';
@@ -7,7 +7,6 @@ import { ResourceId, RevisionId } from '../../constants';
 import { SettingsProvider } from '../../settings/settings-provider';
 import { CategoryConverter } from '../cached/category-converter';
 import { DocumentCache } from '../cached/document-cache';
-import { DatastoreErrors } from '../model/datastore-errors';
 import { PouchdbDatastore } from '../pouchdb/pouchdb-datastore';
 import { CAMPAIGNS, solveProjectDocumentConflict, STAFF } from './solve-project-document-conflicts';
 

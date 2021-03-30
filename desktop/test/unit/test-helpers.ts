@@ -1,33 +1,7 @@
-import {Document} from 'idai-components-2';
-import {FieldDocument} from '@idai-field/core'
-import {Lookup} from '../../src/app/core/util/utils';
-import {HierarchicalRelations, ImageRelationsC as ImageRelations} from '@idai-field/core';
-import {ResourceId} from '../../src/app/core/constants';
-
-
-export function doc(id: string, category: string = 'category'): Document {
-
-    return {
-        _id: id,
-        resource: {
-            id: id,
-            identifier: 'identifier' + id,
-            category: category,
-            relations: {}
-        },
-        created:
-            {
-                date: new Date('2017-12-31'),
-                user: 'testuser'
-            },
-        modified: [
-            {
-                date: new Date('2018-01-01'),
-                user: 'testuser'
-            }
-        ]
-    };
-}
+import { FieldDocument, HierarchicalRelations, ImageRelationsC as ImageRelations } from '@idai-field/core';
+import { ResourceId } from '../../src/app/core/constants';
+import { Lookup } from '../../src/app/core/util/utils';
+import { Static } from './static';
 
 
 /**
@@ -52,7 +26,7 @@ export function createDocuments(documents: NiceDocs) {
     const relationsLookup = {};
 
     for (const [id, type, _] of documents) {
-        const d = doc(id, type) as FieldDocument;
+        const d = Static.doc('', 'identifier' + id, type, id) as FieldDocument;
         if (type !== 'Image') d.resource.relations = { isRecordedIn: [] };
         relationsLookup[id] = d.resource.relations;
         documentsLookup[id] = d;

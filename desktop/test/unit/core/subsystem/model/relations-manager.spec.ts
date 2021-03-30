@@ -1,8 +1,8 @@
-import {flatten} from 'tsfun';
-import {FieldDocument, ImageDocument} from '@idai-field/core';
-import {createApp, createHelpers, setupSyncTestDb} from '../subsystem-helper';
-import {doc} from '../../../test-helpers';
-import {makeDocumentsLookup} from '../../../../../src/app/core/import/import/utils';
+import { FieldDocument, ImageDocument } from '@idai-field/core';
+import { flatten } from 'tsfun';
+import { makeDocumentsLookup } from '../../../../../src/app/core/import/import/utils';
+import { Static } from '../../../static';
+import { createApp, createHelpers, setupSyncTestDb } from '../subsystem-helper';
 
 /**
  * @author Daniel de Oliveira
@@ -29,23 +29,23 @@ describe('subsystem/relations-manager',() => {
 
         const username = app.settingsProvider.getSettings().username;
 
-        const d1 = doc('id1', 'Trench') as FieldDocument;
-        const d2 = doc('id2', 'Feature') as FieldDocument;
+        const d1 = Static.doc('', 'identifierid1', 'Trench', 'id1') as FieldDocument;
+        const d2 = Static.doc('', 'identifierid2', 'Feature', 'id2') as FieldDocument;
         d2.resource.relations['isRecordedIn'] = ['id1'];
-        const d3 = doc('id3', 'Find') as FieldDocument;
+        const d3 = Static.doc('', 'identifierid3', 'Find', 'id3') as FieldDocument;
         d3.resource.relations['isRecordedIn'] = ['id1'];
         d3.resource.relations['liesWithin'] = ['id2'];
-        const d4 = doc('id4', 'Find') as FieldDocument;
+        const d4 = Static.doc('', 'identifierid4', 'Find', 'id4') as FieldDocument;
         d4.resource.relations['isRecordedIn'] = ['id1'];
         d4.resource.relations['liesWithin'] = ['id3'];
         d4.resource.relations['isDepictedIn'] = ['id5', 'id6'];
 
-        const d5 = doc('id5', 'Image');
+        const d5 = Static.doc('', 'identifierid5', 'Image', 'id5');
         d5.resource.relations['depicts'] = ['id4'];
-        const d6 = doc('id6', 'Image');
+        const d6 = Static.doc('', 'identifierid6', 'Image', 'id6');
         d6.resource.relations['depicts'] = ['id4', 'id7'];
 
-        const d7 = doc('id7', 'Find');
+        const d7 = Static.doc('', 'identifierid7', 'Find', 'id7');
         d7.resource.relations['isDepictedIn'] = ['d6'];
 
         await app.documentDatastore.create(d1, username);
@@ -154,10 +154,10 @@ describe('subsystem/relations-manager',() => {
     // TODO review: this was moved from image-relations-manager
     it('skip image deletion', async done => {
 
-        const tc1 = doc('tc1', 'TypeCatalog') as FieldDocument;
-        const t1 = doc('t1', 'Type') as FieldDocument;
-        const i1 = doc('i1', 'Image') as ImageDocument;
-        const i2 = doc('i2', 'Image') as ImageDocument;
+        const tc1 = Static.doc('', 'identifiertc1', 'TypeCatalog', 'tc1') as FieldDocument;
+        const t1 = Static.doc('', 'identifiert1', 'Type', 't1') as FieldDocument;
+        const i1 = Static.doc('', 'identifieri1', 'Image', 'i1') as ImageDocument;
+        const i2 = Static.doc('', 'identifieri2', 'Image', 'i2') as ImageDocument;
         i1.resource.relations = { depicts: ['tc1'] };
         i2.resource.relations = { depicts: ['t1'] };
         tc1.resource.relations = { isDepictedIn: ['i1'], isRecordedIn: [] };

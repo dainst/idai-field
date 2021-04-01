@@ -1,5 +1,4 @@
-import { createDocuments, FieldDocument, ImageDocument, NiceDocs, PouchdbDatastore, Query, ResourceId } from 'idai-field-core';
-import { Document, toResourceId, DocumentCache, CategoryConverter } from 'idai-field-core';
+import { CategoryConverter, createDocuments, Document, DocumentCache, FieldDocument, ImageDocument, NiceDocs, PouchdbDatastore, Query, ResourceId, toResourceId } from 'idai-field-core';
 import * as PouchDB from 'pouchdb-node';
 import { sameset } from 'tsfun';
 import { AppConfigurator } from '../../../../src/app/core/configuration/app-configurator';
@@ -51,7 +50,7 @@ export async function setupSettingsService(pouchdbmanager, pouchdbserver, projec
 
     const settingsService = new SettingsService(
         new PouchDbFsImagestore(
-            undefined, undefined, pouchdbmanager.getDbProxy()) as Imagestore,
+            undefined, undefined, pouchdbmanager.getDb()) as Imagestore,
         pouchdbmanager,
         pouchdbserver,
         undefined,
@@ -94,11 +93,11 @@ export async function createApp(projectName = 'testdb', startSync = false) {
     const {createdIndexFacade} = IndexerConfiguration.configureIndexers(projectConfiguration);
 
     const datastore = new PouchdbDatastore(
-        pouchdbManager.getDbProxy(),
+        pouchdbManager.getDb(),
         new IdGenerator(),
         true);
 
-    const imagestore = new PouchDbFsImagestore(undefined, undefined, pouchdbManager.getDbProxy());
+    const imagestore = new PouchDbFsImagestore(undefined, undefined, pouchdbManager.getDb());
     imagestore.init(settingsProvider.getSettings());
 
     const documentCache = new DocumentCache<Document>();

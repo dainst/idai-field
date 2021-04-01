@@ -1,11 +1,10 @@
+import { Observable } from 'rxjs';
 import { Document } from '../../model/document';
 import { NewDocument } from '../../model/new-document';
-import { Observable } from 'rxjs';
 import { ObjectUtils, ObserverUtil } from '../../tools';
 import { DatastoreErrors } from '../model';
 import { ChangeHistoryMerge } from './change-history-merge';
 import { IdGenerator } from './id-generator';
-import { PouchdbProxy } from './pouchdb-proxy';
 
 /**
  * @author Sebastian Cuy
@@ -13,8 +12,6 @@ import { PouchdbProxy } from './pouchdb-proxy';
  * @author Thomas Kleinke
  */
 export class PouchdbDatastore {
-
-    public ready = () => this.db.ready();
 
     private changesObservers = [];
     private deletedObservers = [];
@@ -28,7 +25,7 @@ export class PouchdbDatastore {
 
 
     constructor(
-        private db: PouchdbProxy,
+        private db: PouchDB.Database,
         private idGenerator: IdGenerator,
         setupChangesEmitter = true
         ) {
@@ -247,32 +244,29 @@ export class PouchdbDatastore {
 
     private setupChangesEmitter(): void {
 
-        this.db.ready().then((db: any) => {
+        this.db.changes({
+            live: true,
+            include_docs: false, // we do this and fetch it later because there is a possible leak, as reported in https://github.com/pouchdb/pouchdb/issues/6502
+            conflicts: true,
+            since: 'now'
+        }).on('change', (change: any) => {
+            // it is noteworthy that currently often after a deletion of a document we get a change that does not reflect deletion.
+            // neither is change.deleted set nor is sure if the document already is deleted (meaning fetch still works)
 
-            db.changes({
-                live: true,
-                include_docs: false, // we do this and fetch it later because there is a possible leak, as reported in https://github.com/pouchdb/pouchdb/issues/6502
-                conflicts: true,
-                since: 'now'
-            }).on('change', (change: any) => {
-                // it is noteworthy that currently often after a deletion of a document we get a change that does not reflect deletion.
-                // neither is change.deleted set nor is sure if the document already is deleted (meaning fetch still works)
+            if (!change || !change.id) return;
+            if (change.id.indexOf('_design') === 0) return; // starts with _design
 
-                if (!change || !change.id) return;
-                if (change.id.indexOf('_design') === 0) return; // starts with _design
+            if (change.deleted || this.deletedOnes.indexOf(change.id as never) != -1) {
+                ObserverUtil.notify(this.deletedObservers, { resource: { id: change.id } } as Document);
+                return;
+            }
 
-                if (change.deleted || this.deletedOnes.indexOf(change.id as never) != -1) {
-                    ObserverUtil.notify(this.deletedObservers, { resource: { id: change.id } } as Document);
-                    return;
-                }
+            this.handleNonDeletionChange(change.id);
 
-                this.handleNonDeletionChange(change.id);
-
-            }).on('complete', (info: any) => {
-                // console.debug('changes stream was canceled', info);
-            }).on('error', (err: any) => {
-                console.error('changes stream errored', err);
-            });
+        }).on('complete', (info: any) => {
+            // console.debug('changes stream was canceled', info);
+        }).on('error', (err: any) => {
+            console.error('changes stream errored', err);
         });
     }
 

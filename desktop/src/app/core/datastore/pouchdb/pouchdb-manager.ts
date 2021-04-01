@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IndexFacade, Name, PouchdbProxy, DocumentCache } from 'idai-field-core';
-import { Document } from 'idai-field-core';
+import { Document, DocumentCache, IndexFacade, Name } from 'idai-field-core';
 import { Observable, Observer } from 'rxjs';
 import { isUndefined, not } from 'tsfun';
 import { ConfigurationErrors } from '../../configuration/boot/configuration-errors';
@@ -21,26 +20,14 @@ const PouchDB = typeof window !== 'undefined' ? window.require('pouchdb-browser'
  */
 export class PouchdbManager {
 
-    private dbHandle: any = undefined;
-    private dbProxy: PouchdbProxy;
+    private db: PouchDB.Database;
+
     private syncHandles = [];
 
     private sampleDataLoader: SampleDataLoader;
-    private resolveDbReady: Function;
 
 
-    constructor() {
-
-        const dbReady = new Promise(resolve => this.resolveDbReady = resolve as any);
-        this.dbProxy = new PouchdbProxy(dbReady);
-    }
-
-
-    /**
-     * @returns {PouchdbProxy} a proxy that automatically hands over method
-     *  calls to the actual PouchDB instance as soon as it is available
-     */
-    public getDbProxy = (): PouchdbProxy => this.dbProxy;
+    public getDb = (): PouchDB.Database => this.db;
 
 
     /**
@@ -52,12 +39,9 @@ export class PouchdbManager {
 
     public async resetForE2E() {
 
-        const dbReady = new Promise(resolve => this.resolveDbReady = resolve);
-        Object.assign(this.dbProxy, new PouchdbProxy(dbReady));
-
-        if (this.dbHandle) {
-            await this.dbHandle.close();
-            this.dbHandle = undefined;
+        if (this.db) {
+            await this.db.close();
+            this.db = undefined;
         }
         if (this.sampleDataLoader) await this.loadProjectDb('test', this.sampleDataLoader);
     }
@@ -74,8 +58,7 @@ export class PouchdbManager {
             await sampleDataLoader.go(db, name);
         }
 
-        this.resolveDbReady(db);
-        this.dbHandle = db;
+        this.db = db;
     }
 
 
@@ -90,8 +73,7 @@ export class PouchdbManager {
         const fullUrl = url + '/' + (project === 'synctest' ? 'synctestremotedb' : project);
         console.log('Start syncing');
 
-        let db = await this.getDbProxy().ready();
-        let sync = db.sync(fullUrl, { live: true, retry: false });
+        let sync = this.db.sync(fullUrl, { live: true, retry: false });
 
         this.syncHandles.push(sync as never);
         return {
@@ -103,7 +85,7 @@ export class PouchdbManager {
             observer: Observable.create((obs: Observer<SyncStatus>) => {
                 sync.on('change', (info: any) => obs.next(getSyncStatusFromInfo(info)))
                     .on('paused', () => obs.next(SyncStatus.InSync))
-                    .on('active', (info: any) => obs.next(getSyncStatusFromInfo(info)))
+                    .on('active', () => obs.next(SyncStatus.Pulling))
                     .on('complete', (info: any) => {
                         obs.next(SyncStatus.Offline);
                         obs.complete();
@@ -154,7 +136,7 @@ export class PouchdbManager {
                          converter: FieldCategoryConverter, progress?: InitializationProgress) {
 
         if (progress) {
-            progress.setDocumentsToIndex((await this.dbHandle.info()).doc_count);
+            progress.setDocumentsToIndex((await this.db.info()).doc_count);
             await progress.setPhase('loadingDocuments');
         }
 
@@ -185,7 +167,7 @@ export class PouchdbManager {
 
     private async fetchAll() {
 
-        return (await this.dbHandle
+        return (await this.db
             .allDocs({
                 include_docs: true,
                 conflicts: true

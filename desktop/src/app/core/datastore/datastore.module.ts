@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Datastore, FeatureDocument, FieldDocument, IdGenerator, ImageDocument, IndexFacade, PouchdbDatastore } from 'idai-field-core';
-import { Document, CategoryConverter, DocumentCache } from 'idai-field-core';
+import { CategoryConverter, Datastore, Document, DocumentCache, FeatureDocument, FieldDocument, IdGenerator, ImageDocument, IndexFacade, PouchdbDatastore } from 'idai-field-core';
 import { ChangesStream } from './changes/changes-stream';
 import { DocumentDatastore } from './document-datastore';
 import { FeatureDatastore } from './field/feature-datastore';
@@ -29,7 +28,7 @@ import { PouchdbServer } from './pouchdb/pouchdb-server';
             useFactory: function(pouchdbManager: PouchdbManager,
                                  idGenerator: IdGenerator): PouchdbDatastore {
 
-                return new PouchdbDatastore(pouchdbManager.getDbProxy(), idGenerator);
+                return new PouchdbDatastore(pouchdbManager.getDb(), idGenerator);
             },
             deps: [PouchdbManager, IdGenerator]
         },

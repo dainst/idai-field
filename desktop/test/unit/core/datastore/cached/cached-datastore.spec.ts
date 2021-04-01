@@ -34,7 +34,6 @@ describe('CachedDatastore', () => {
             mockIndexFacade,
             documentCache,
             new FieldCategoryConverter(mockProjectConfiguration));
-        docDatastore.suppressWait = true;
         return docDatastore;
     }
 

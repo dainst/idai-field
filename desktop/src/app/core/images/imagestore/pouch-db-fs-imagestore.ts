@@ -1,6 +1,4 @@
-import { Injectable } from '@angular/core';
 import { SafeResourceUrl } from '@angular/platform-browser';
-import { PouchdbProxy } from 'idai-field-core';
 import { to } from 'tsfun';
 import { Settings } from '../../settings/settings';
 import { BlobMaker, BlobUrlSet } from './blob-maker';
@@ -10,7 +8,6 @@ import { ImagestoreErrors } from './imagestore-errors';
 const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
 
 
-@Injectable()
 /**
  * A hybrid image store that uses the file system to store the original images
  * but keeps thumbnails as PouchDB attachments in order to be able to sync them.
@@ -29,7 +26,7 @@ export class PouchDbFsImagestore /* implements Imagestore */{
     constructor(
         private converter: ImageConverter,
         private blobMaker: BlobMaker,
-        private db: PouchdbProxy) {
+        private db: PouchDB.Database) {
     }
 
 
@@ -284,7 +281,7 @@ export class PouchDbFsImagestore /* implements Imagestore */{
 
     private readThumb(key: string): Promise<Blob> {
 
-        return this.db.getAttachment(key, 'thumb');
+        return this.db.getAttachment(key, 'thumb') as Promise<Blob>;
     }
 
 

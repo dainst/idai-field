@@ -217,10 +217,10 @@ export class SettingsService {
     private async createProjectDocumentIfMissing() {
 
         try {
-            await this.pouchdbManager.getDbProxy().get('project');
+            await this.pouchdbManager.getDb().get('project');
         } catch {
             console.warn('Didn\'t find project document, creating new one');
-            await this.pouchdbManager.getDbProxy().put(
+            await this.pouchdbManager.getDb().put(
                 SettingsService.createProjectDocument(this.settingsProvider.getSettings())
             );
         }

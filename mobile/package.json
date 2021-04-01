@@ -44,6 +44,7 @@
       "plugin:@typescript-eslint/recommended"
     ],
     "rules": {
+      "react/prop-types": "off",
       "@typescript-eslint/array-type": [
         "warn",
         {

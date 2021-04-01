@@ -1,16 +1,14 @@
-import React, { ReactElement, ReactNode, useRef } from 'react';
-import { StyleSheet, Animated, PanResponder, View } from 'react-native';
+import React, { useRef } from 'react';
+import { StyleSheet, Animated, PanResponder, View, ViewStyle } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import Svg, { G } from 'react-native-svg';
 
 interface SvgMapProps {
-    width: number;
-    height: number;
+    style: ViewStyle;
     viewBox: [number, number, number, number]
-    children?: ReactNode;
 }
 
-const SvgMap = ({ width, height, viewBox, children }: SvgMapProps): ReactElement => {
+const SvgMap: React.FC<SvgMapProps> = ( props ) => {
 
     const pan = useRef(new Animated.ValueXY()).current;
     const AG = Animated.createAnimatedComponent(G);
@@ -35,14 +33,14 @@ const SvgMap = ({ width, height, viewBox, children }: SvgMapProps): ReactElement
 
 
     return (
-        <View style={ { ...styles.map, ...{ width, height } } }>
+        <View style={ { ...styles.map, ...props.style } }>
             <ScrollView
                 minimumZoomScale={ 1 } maximumZoomScale={ 5 } bounces={ false }
                 disableScrollViewPanResponder={ true } contentContainerStyle={ styles.scrollViewStyle }>
                     <Animated.View style={ styles.animatedViewStyle } { ...panResponder.panHandlers }>
-                        <Svg viewBox={ viewBox.join(' ') } style={ styles.svg } >
+                        <Svg viewBox={ props.viewBox.join(' ') } style={ styles.svg } >
                             <AG x={ pan.x } y={ pan.y }>
-                                {children}
+                                {props.children}
                             </AG>
                         </Svg>
                     </Animated.View>

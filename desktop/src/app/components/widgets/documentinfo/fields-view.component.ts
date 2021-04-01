@@ -1,6 +1,6 @@
 import { DecimalPipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
-import { FieldDefinition, FieldDocument, Group, Groups, Name, Named, namedArrayToNamedMap, ReadDatastore, RelationDefinition } from 'idai-field-core';
+import { FieldDefinition, FieldDocument, Group, Groups, Name, Named, namedArrayToNamedMap, RelationDefinition, Datastore } from 'idai-field-core';
 import { Dating, Dimension, Literature, OptionalRange, Resource } from 'idai-field-core';
 import {
     aFlow, aMap, compose, filter, flatten, isArray, isBoolean, isDefined, isObject,
@@ -44,8 +44,8 @@ export class FieldsViewComponent implements OnChanges {
 
 
     constructor(private projectConfiguration: ProjectConfiguration,
-                private datastore: ReadDatastore,
-                private routingService: RoutingService,
+                private datastore: Datastore,
+                routingService: RoutingService,
                 private decimalPipe: DecimalPipe,
                 private utilTranslations: UtilTranslations) {}
 

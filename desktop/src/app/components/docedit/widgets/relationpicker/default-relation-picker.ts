@@ -1,4 +1,4 @@
-import { ReadDatastore, RelationDefinition } from 'idai-field-core';
+import { Datastore, RelationDefinition } from 'idai-field-core';
 import { Document, Resource } from 'idai-field-core';
 import { isNot, undefinedOrEmpty } from 'tsfun';
 import { getSuggestions } from '../../../../core/docedit/widgets/relationpicker/get-suggestions';
@@ -12,7 +12,7 @@ export class DefaultRelationPicker extends RelationPicker {
 
     constructor(private resource: Resource,
                 private relationDefinition: RelationDefinition,
-                private datastore: ReadDatastore,
+                private datastore: Datastore,
                 private relationIndex: number) {
 
         super();

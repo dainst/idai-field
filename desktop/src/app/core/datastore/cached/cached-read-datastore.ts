@@ -1,4 +1,4 @@
-import { DatastoreErrors, FindIdsResult, FindResult, IndexFacade, ObjectUtils, PouchdbDatastore, Query, ReadDatastore } from 'idai-field-core';
+import { DatastoreErrors, FindIdsResult, FindResult, IndexFacade, ObjectUtils, PouchdbDatastore, Query } from 'idai-field-core';
 import { Document } from 'idai-field-core';
 import { ConfigurationErrors } from '../../configuration/boot/configuration-errors';
 import { CategoryConverter } from './category-converter';
@@ -29,7 +29,7 @@ export interface IdaiFieldFindResult<T extends Document> extends FindResult {
  * @author Sebastian Cuy
  * @author Thomas Kleinke
  */
-export abstract class CachedReadDatastore<T extends Document> implements ReadDatastore {
+export abstract class CachedReadDatastore<T extends Document> {
 
     public suppressWait = false;
 

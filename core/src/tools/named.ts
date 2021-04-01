@@ -39,15 +39,15 @@ export function namedArrayToNamedMap<A extends Named>(as: Array<A>): Map<A> {
 }
 
 
-export function mapToNamedArray<A extends Map>(m: Map<A>) {
+export function mapToNamedArray<A extends Map<any>>(m: Map<A>) {
 
-    return mapToArray(Named.NAME)(m) as Array<Named | Map>;
+    return mapToArray(Named.NAME)(m) as Array<Named | Map<any>>;
 }
 
 
 export function sortNamedArray(order: string[]) {
 
-    return <A extends (Named | Map)>(items: Array<A>): Array<A> => {
+    return <A extends (Named | Map<any>)>(items: Array<A>): Array<A> => {
 
         return sortStructArray(order, Named.NAME)(items);
     }

@@ -41,9 +41,9 @@ const CATEGORIES = 0;
 export function buildRawProjectConfiguration(builtInCategories: Map<BuiltinCategoryDefinition>,
                                              libraryCategories: Map<LibraryCategoryDefinition>,
                                              customCategories: Map<CustomCategoryDefinition> = {},
-                                             commonFields: Map = {},
+                                             commonFields: Map<any> = {},
                                              valuelistsConfiguration: Map<ValuelistDefinition> = {},
-                                             extraFields: Map = {},
+                                             extraFields: Map<any> = {},
                                              relations: Array<RelationDefinition> = [],
                                              languageConfigurations: any[] = [],
                                              searchConfiguration: any = {},
@@ -292,7 +292,7 @@ function eraseUnusedCategories(selectedCategoriesNames: string[])
 }
 
 
-function replaceCommonFields(commonFields: Map)
+function replaceCommonFields(commonFields: Map<any>)
         : Mapping<Map<TransientCategoryDefinition>> {
 
     return map(

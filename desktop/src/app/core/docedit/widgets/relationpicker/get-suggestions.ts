@@ -1,4 +1,4 @@
-import { Constraint, Query, ReadDatastore, RelationDefinition } from 'idai-field-core';
+import { Constraint, Query, Datastore, RelationDefinition } from 'idai-field-core';
 import { Document, Resource } from 'idai-field-core';
 
 export const MAX_SUGGESTIONS: number = 5;
@@ -7,7 +7,7 @@ export const MAX_SUGGESTIONS: number = 5;
 /**
  * @author Thomas Kleinke
  */
-export async function getSuggestions(datastore: ReadDatastore, resource: Resource,
+export async function getSuggestions(datastore: Datastore, resource: Resource,
                                      relationDefinition: RelationDefinition,
                                      idSearchString?: string): Promise<Array<Document>> {
 

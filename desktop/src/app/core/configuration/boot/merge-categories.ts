@@ -1,5 +1,5 @@
 import {includedIn, isNot, isnt, Map, pairWith, union,
-    Pair, flow, filter, clone, assoc, keysValues, map, forEach, lookup} from 'tsfun';
+    flow, filter, clone, assoc, keysValues, map, forEach, lookup} from 'tsfun';
 import {CustomCategoryDefinition} from '../model/custom-category-definition';
 import {TransientCategoryDefinition} from '../model/transient-category-definition';
 import {checkFieldCategoryChanges} from './check-field-category-changes';
@@ -89,7 +89,7 @@ function mergePropertiesOfCategory(target: { [_: string]: any }, source: { [_: s
 }
 
 
-function overwriteIn(target: Map) {
+function overwriteIn(target: Map<any>) {
 
     return ([key, value]: [string, any]) => target[key] = value;
 }

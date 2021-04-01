@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Datastore, FeatureDocument, FieldDocument, IdGenerator, ImageDocument, IndexFacade, PouchdbDatastore, ReadDatastore } from 'idai-field-core';
+import { Datastore, FeatureDocument, FieldDocument, IdGenerator, ImageDocument, IndexFacade, PouchdbDatastore } from 'idai-field-core';
 import { Document } from 'idai-field-core';
 import { CategoryConverter } from './cached/category-converter';
 import { DocumentCache } from './cached/document-cache';
@@ -73,7 +73,6 @@ import { PouchdbServer } from './pouchdb/pouchdb-server';
         },
         { provide: DocumentReadDatastore, useExisting: DocumentDatastore },
         { provide: Datastore, useExisting: DocumentDatastore },     // used by components-2 lib
-        { provide: ReadDatastore, useExisting: DocumentDatastore }, // used by components-2 lib
 
 
         // idai-field datastore

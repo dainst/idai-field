@@ -8,9 +8,9 @@ import {ImportErrors} from './import-errors';
  *
  * @author Daniel de Oliveira
  */
-export function removeNullProperties(struct: Map): Map|undefined;
+export function removeNullProperties(struct: Map<any>): Map<any>|undefined;
 export function removeNullProperties(struct: Array<any>): Array<any>|undefined;
-export function removeNullProperties(struct: Map|Array<any>): Map|Array<any>|undefined {
+export function removeNullProperties(struct: Map<any>|Array<any>): Map<any>|Array<any>|undefined {
 
     if (isEmpty(struct)) throw [ImportErrors.EMPTY_OBJECT_IN_RESOURCE];
     let struct_ = copy(struct) as any;

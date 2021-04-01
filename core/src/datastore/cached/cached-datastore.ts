@@ -1,5 +1,5 @@
 import { IndexFacade } from '../../index/index-facade';
-import {Document} from '../../model/document';
+import { Document } from '../../model/document';
 import { NewDocument } from '../../model/new-document';
 import { Query } from '../../model/query';
 import { ObjectUtils } from '../../tools/object-utils';
@@ -190,8 +190,6 @@ export abstract class CachedDatastore<T extends Document> {
      * @throws if query contains categories incompatible with T
      */
     public async find(query: Query, ignoreCategories: boolean = false): Promise<IdaiFieldFindResult<T>> {
-
-        if (!this.suppressWait) await this.datastore.ready();
 
         const { ids } = this.findIds(query, ignoreCategories);
         const { documents, totalCount } = await this.getDocumentsForIds(ids, query.limit, query.offset);

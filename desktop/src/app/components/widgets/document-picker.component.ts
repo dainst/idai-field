@@ -5,7 +5,7 @@ import {FieldDocument, ObjectUtils, Category, Query, Constraint} from 'idai-fiel
 import {FieldDatastore} from '../../core/datastore/field/field-datastore';
 import {Loading} from './loading';
 import {AngularUtility} from '../../angular/angular-utility';
-import {FieldDocumentFindResult} from '../../core/datastore/field/field-read-datastore';
+import {FieldDocumentFindResult} from '../../core/datastore/field/field-datastore';
 import {ProjectConfiguration} from '../../core/configuration/project-configuration';
 import {Messages} from '../messages/messages';
 

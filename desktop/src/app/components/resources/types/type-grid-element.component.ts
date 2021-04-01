@@ -1,7 +1,7 @@
 import {Input, Component, OnChanges, SimpleChanges} from '@angular/core';
 import {SafeResourceUrl} from '@angular/platform-browser';
 import {ReadImagestore} from '../../../core/images/imagestore/read-imagestore';
-import {FieldReadDatastore} from '../../../core/datastore/field/field-read-datastore';
+import {FieldDatastore} from '../../../core/datastore/field/field-datastore';
 import {ImageReadDatastore} from '../../../core/datastore/field/image-read-datastore';
 import {BlobMaker} from '../../../core/images/imagestore/blob-maker';
 import { FieldDocument } from 'idai-field-core';
@@ -24,7 +24,7 @@ export class TypeGridElementComponent implements OnChanges {
 
 
     constructor(private imagestore: ReadImagestore,
-                private fieldDatastore: FieldReadDatastore,
+                private fieldDatastore: FieldDatastore,
                 private imageDatastore: ImageReadDatastore,
                 private blobMaker: BlobMaker) {}
 

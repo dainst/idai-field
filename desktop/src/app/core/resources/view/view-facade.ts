@@ -1,7 +1,7 @@
 import {Document} from 'idai-field-core';
 import {FieldDocument, IndexFacade} from 'idai-field-core';
 import {DocumentsManager} from './documents-manager';
-import {FieldReadDatastore} from '../../datastore/field/field-read-datastore';
+import {FieldDatastore} from '../../datastore/field/field-datastore';
 import {ChangesStream} from '../../datastore/changes/changes-stream';
 import {Loading} from '../../../components/widgets/loading';
 import {ResourcesStateManager} from './resources-state-manager';
@@ -27,12 +27,12 @@ export class ViewFacade {
 
 
     constructor(
-        private projectConfiguration: ProjectConfiguration,
-        private datastore: FieldReadDatastore,
-        private remoteChangesStream: ChangesStream,
+        projectConfiguration: ProjectConfiguration, // TODO unused?
+        datastore: FieldDatastore,
+        remoteChangesStream: ChangesStream,
         private resourcesStateManager: ResourcesStateManager,
-        private loading: Loading,
-        private indexFacade: IndexFacade,
+        loading: Loading,
+        indexFacade: IndexFacade,
         private messages: Messages,
         private syncService: SyncService
     ) {

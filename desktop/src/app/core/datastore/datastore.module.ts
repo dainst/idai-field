@@ -10,7 +10,6 @@ import { FeatureDatastore } from './field/feature-datastore';
 import { FeatureReadDatastore } from './field/feature-read-datastore';
 import { FieldCategoryConverter } from './field/field-category-converter';
 import { FieldDatastore } from './field/field-datastore';
-import { FieldReadDatastore } from './field/field-read-datastore';
 import { ImageDatastore } from './field/image-datastore';
 import { ImageReadDatastore } from './field/image-read-datastore';
 import { PouchdbManager } from './pouchdb/pouchdb-manager';
@@ -90,7 +89,6 @@ import { PouchdbServer } from './pouchdb/pouchdb-server';
             },
             deps: [PouchdbDatastore, IndexFacade, DocumentCache, CategoryConverter]
         },
-        { provide: FieldReadDatastore, useExisting: FieldDatastore }, // read-only version of it
 
 
         // idai-field datastore

@@ -3,7 +3,7 @@ import {Document, Resource} from 'idai-field-core';
 import {RelationDefinition} from 'idai-field-core';
 import {RelationPicker} from './relation-picker';
 import {DefaultRelationPicker} from './default-relation-picker';
-import {FieldReadDatastore} from '../../../../core/datastore/field/field-read-datastore';
+import {FieldDatastore} from '../../../../core/datastore/field/field-datastore';
 
 
 @Component({
@@ -37,7 +37,7 @@ export class RelationPickerComponent implements OnChanges {
 
 
     constructor(private element: ElementRef,
-                private datastore: FieldReadDatastore) {}
+                private datastore: FieldDatastore) {}
 
 
     public deleteRelation = () => this.relationPicker.deleteRelation();

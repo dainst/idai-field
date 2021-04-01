@@ -4,7 +4,7 @@ import { I18n } from '@ngx-translate/i18n-polyfill';
 import { Relations } from 'idai-field-core';
 import { ProjectCategories } from '../../core/configuration/project-categories';
 import { ProjectConfiguration } from '../../core/configuration/project-configuration';
-import { FieldReadDatastore } from '../../core/datastore/field/field-read-datastore';
+import { FieldDatastore } from '../../core/datastore/field/field-datastore';
 import { ViewFacade } from '../../core/resources/view/view-facade';
 import { M } from '../messages/m';
 import { Messages } from '../messages/messages';
@@ -52,7 +52,7 @@ export class PlusButtonComponent implements OnChanges {
         private projectConfiguration: ProjectConfiguration,
         private messages: Messages,
         private viewFacade: ViewFacade,
-        private datastore: FieldReadDatastore,
+        private datastore: FieldDatastore,
         private i18n: I18n) {
 
         this.resourcesComponent.listenToClickEvents().subscribe(event => {

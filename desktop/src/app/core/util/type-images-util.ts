@@ -1,6 +1,6 @@
 import { FieldDocument, Query, ResourceId } from 'idai-field-core';
 import { filter, flow, isDefined, map } from 'tsfun';
-import { FieldReadDatastore } from '../datastore/field/field-read-datastore';
+import { FieldDatastore } from '../datastore/field/field-datastore';
 import { ImageReadDatastore } from '../datastore/field/image-read-datastore';
 import { PLACEHOLDER } from '../images/row/image-row';
 
@@ -18,7 +18,7 @@ export module TypeImagesUtil {
      * type catalog are not directly linked to an image, the images of finds linked to the categories are returned.
      */
     export function getLinkedImageIds(document: FieldDocument,
-                                      fieldDatastore: FieldReadDatastore,
+                                      fieldDatastore: FieldDatastore,
                                       imageDatastore: ImageReadDatastore): string[] {
 
         if (document.resource.category !== 'Type' && document.resource.category !== 'TypeCatalog') {
@@ -31,7 +31,7 @@ export module TypeImagesUtil {
     }
 
 
-    function getLinkedImagesForTypeCatalog(resourceId: ResourceId, fieldDatastore: FieldReadDatastore,
+    function getLinkedImagesForTypeCatalog(resourceId: ResourceId, fieldDatastore: FieldDatastore,
                                                  imageDatastore: ImageReadDatastore): string[] {
 
         const query: Query = {
@@ -47,7 +47,7 @@ export module TypeImagesUtil {
     }
 
 
-    function getTypeImage(fieldDatastore: FieldReadDatastore, imageDatastore: ImageReadDatastore) {
+    function getTypeImage(fieldDatastore: FieldDatastore, imageDatastore: ImageReadDatastore) {
 
         return (resourceId: string): string|undefined => {
 
@@ -66,7 +66,7 @@ export module TypeImagesUtil {
     }
 
 
-    function getLinkedImagesForType(resourceId: ResourceId, fieldDatastore: FieldReadDatastore,
+    function getLinkedImagesForType(resourceId: ResourceId, fieldDatastore: FieldDatastore,
                                           imageDatastore: ImageReadDatastore): string[] {
 
         const query: Query = {

@@ -1,7 +1,7 @@
 import {Observer, Observable} from 'rxjs';
 import {subtract, set} from 'tsfun';
 import {Document, Resource} from 'idai-field-core';
-import {FieldReadDatastore} from '../../datastore/field/field-read-datastore';
+import {FieldDatastore} from '../../datastore/field/field-datastore';
 import {ChangesStream} from '../../datastore/changes/changes-stream';
 import {Loading} from '../../../components/widgets/loading';
 import {ResourcesStateManager} from './resources-state-manager';
@@ -46,8 +46,8 @@ export class DocumentsManager {
 
 
     constructor(
-        private datastore: FieldReadDatastore,
-        private changesStream: ChangesStream,
+        private datastore: FieldDatastore,
+        changesStream: ChangesStream,
         private resourcesStateManager: ResourcesStateManager,
         private loading: Loading,
         private getIndexMatchTermCount: (indexName: string, matchTerm: string) => number

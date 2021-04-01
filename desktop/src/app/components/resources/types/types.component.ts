@@ -7,7 +7,7 @@ import {makeLookup} from '../../../../../../core/src/tools/transformers'
 import {BaseList} from '../base-list';
 import {ResourcesComponent} from '../resources.component';
 import {TypeImagesUtil} from '../../../core/util/type-images-util';
-import {FieldReadDatastore} from '../../../core/datastore/field/field-read-datastore';
+import {FieldDatastore} from '../../../core/datastore/field/field-datastore';
 import {ReadImagestore} from '../../../core/images/imagestore/read-imagestore';
 import {ImageReadDatastore} from '../../../core/datastore/field/image-read-datastore';
 import {ContextMenu} from '../widgets/context-menu';
@@ -71,7 +71,7 @@ export class TypesComponent extends BaseList implements OnChanges {
     private visibleSections = ['types'];
 
 
-    constructor(private fieldDatastore: FieldReadDatastore,
+    constructor(private fieldDatastore: FieldDatastore,
                 private imageDatastore: ImageReadDatastore,
                 private imagestore: ReadImagestore,
                 private viewModalLauncher: ViewModalLauncher,

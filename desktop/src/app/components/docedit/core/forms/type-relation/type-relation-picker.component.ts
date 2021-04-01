@@ -7,7 +7,7 @@ import {
     is, isNot, left, map, Mapping, on, Pair, prune, right, to, undefinedOrEmpty
 } from 'tsfun';
 import { ProjectConfiguration } from '../../../../../core/configuration/project-configuration';
-import { FieldReadDatastore } from '../../../../../core/datastore/field/field-read-datastore';
+import { FieldDatastore } from '../../../../../core/datastore/field/field-datastore';
 import { ImageReadDatastore } from '../../../../../core/datastore/field/image-read-datastore';
 import { ImageRowItem } from '../../../../../core/images/row/image-row';
 import { TypeImagesUtil } from '../../../../../core/util/type-images-util';
@@ -58,7 +58,7 @@ export class TypeRelationPickerComponent {
 
 
     constructor(public activeModal: NgbActiveModal,
-                private fieldDatastore: FieldReadDatastore,
+                private fieldDatastore: FieldDatastore,
                 private imageDatastore: ImageReadDatastore,
                 projectConfiguration: ProjectConfiguration) {
 

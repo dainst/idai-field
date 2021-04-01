@@ -5,7 +5,7 @@ import {TabSpaceCalculator} from './tab-space-calculator';
 import {Tab} from './tab';
 import {IndexFacade} from 'idai-field-core';
 import {StateSerializer} from '../common/state-serializer';
-import {FieldReadDatastore} from '../datastore/field/field-read-datastore';
+import {FieldDatastore} from '../datastore/field/field-datastore';
 
 
 /**
@@ -23,7 +23,7 @@ export class TabManager {
     constructor(indexFacade: IndexFacade,
                 private tabSpaceCalculator: TabSpaceCalculator,
                 private stateSerializer: StateSerializer,
-                private datastore: FieldReadDatastore,
+                private datastore: FieldDatastore,
                 private navigate: (path: string[]) => Promise<void>) {
 
         indexFacade.changesNotifications().subscribe(document => this.updateTabLabels(document));

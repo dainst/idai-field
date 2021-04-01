@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnChanges, SimpleChanges, Output, Elemen
 import {flatten} from 'tsfun';
 import {ImageDocument} from 'idai-field-core';
 import {Document} from 'idai-field-core';
-import {FieldReadDatastore} from '../../../core/datastore/field/field-read-datastore';
+import {FieldDatastore} from '../../../core/datastore/field/field-datastore';
 import {ImageUploadResult} from '../upload/image-uploader';
 import {Imagestore} from '../../../core/images/imagestore/imagestore';
 import {constructGrid} from '../../../core/images/grid/construct-grid';
@@ -50,7 +50,7 @@ export class ImageGridComponent implements OnChanges {
     constructor(private element: ElementRef,
                 private messages: Messages,
                 private imagestore: Imagestore,
-                private datastore: FieldReadDatastore,
+                private datastore: FieldDatastore,
                 private blobMaker: BlobMaker) {}
 
 

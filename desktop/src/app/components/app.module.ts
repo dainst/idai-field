@@ -47,7 +47,7 @@ import {ConfigReader} from '../core/configuration/boot/config-reader';
 import {ConfigLoader} from '../core/configuration/boot/config-loader';
 import {AppConfigurator} from '../core/configuration/app-configurator';
 import {StateSerializer} from '../core/common/state-serializer';
-import {FieldReadDatastore} from '../core/datastore/field/field-read-datastore';
+import {FieldDatastore} from '../core/datastore/field/field-datastore';
 import {Router} from '@angular/router';
 import {TabManager} from '../core/tabs/tab-manager';
 import {TabSpaceCalculator} from '../core/tabs/tab-space-calculator';
@@ -242,7 +242,7 @@ registerLocaleData(localeIt, 'it');
                 indexFacade: IndexFacade,
                 tabSpaceCalculator: TabSpaceCalculator,
                 stateSerializer: StateSerializer,
-                datastore: FieldReadDatastore,
+                datastore: FieldDatastore,
                 router: Router
             ) => {
                 const tabManager = new TabManager(
@@ -251,7 +251,7 @@ registerLocaleData(localeIt, 'it');
                 router.events.subscribe(async () => { await tabManager.routeChanged(router.url) });
                 return tabManager;
             },
-            deps: [IndexFacade, TabSpaceCalculator, StateSerializer, FieldReadDatastore, Router]
+            deps: [IndexFacade, TabSpaceCalculator, StateSerializer, FieldDatastore, Router]
         },
         TabSpaceCalculator,
         MenuService,

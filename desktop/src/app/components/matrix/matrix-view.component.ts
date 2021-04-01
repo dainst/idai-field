@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {isEmpty, on, is} from 'tsfun';
 import {FeatureDocument, FieldDocument} from 'idai-field-core';
-import {FieldReadDatastore} from '../../core/datastore/field/field-read-datastore';
+import {FieldDatastore} from '../../core/datastore/field/field-datastore';
 import {ModelUtil} from '../../core/model/model-util';
 import {DoceditComponent} from '../docedit/docedit.component';
 import {MatrixClusterMode, MatrixRelationsMode, MatrixState} from './matrix-state';
@@ -57,7 +57,7 @@ export class MatrixViewComponent implements OnInit {
     private trenchesLoaded: boolean = false;
 
 
-    constructor(private datastore: FieldReadDatastore,
+    constructor(private datastore: FieldDatastore,
                 private projectConfiguration: ProjectConfiguration,
                 private featureDatastore: FeatureReadDatastore,
                 private modalService: NgbModal,

@@ -3,7 +3,7 @@ import {ResourcesState} from './state/resources-state';
 import {StateSerializer} from '../../common/state-serializer';
 import {ViewState} from './state/view-state';
 import {NavigationPath} from './state/navigation-path';
-import {FieldReadDatastore} from '../../datastore/field/field-read-datastore';
+import {FieldDatastore} from '../../datastore/field/field-datastore';
 import {TabManager} from '../../tabs/tab-manager';
 import {ResourcesViewMode} from './view-facade';
 import {ProjectCategories} from '../../configuration/project-categories';
@@ -42,7 +42,7 @@ export class ResourcesStateManager {
 
 
     constructor(
-        private datastore: FieldReadDatastore,
+        private datastore: FieldDatastore,
         private indexFacade: IndexFacade,
         private serializer: StateSerializer,
         private tabManager: TabManager,

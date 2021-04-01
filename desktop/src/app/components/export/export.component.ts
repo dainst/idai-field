@@ -6,7 +6,7 @@ import {M} from '../messages/m';
 import {ExportModalComponent} from './export-modal.component';
 import {ModelUtil} from '../../core/model/model-util';
 import {JavaToolExecutor} from '../../core/java/java-tool-executor';
-import {FieldReadDatastore} from '../../core/datastore/field/field-read-datastore';
+import {FieldDatastore} from '../../core/datastore/field/field-datastore';
 import {GeoJsonExporter} from '../../core/export/geojson-exporter';
 import {ShapefileExporter} from '../../core/export/shapefile-exporter';
 import {CsvExporter} from '../../core/export/csv/csv-exporter';
@@ -61,7 +61,7 @@ export class ExportComponent implements OnInit {
                 private modalService: NgbModal,
                 private messages: Messages,
                 private i18n: I18n,
-                private fieldDatastore: FieldReadDatastore,
+                private fieldDatastore: FieldDatastore,
                 private documentDatastore: DocumentReadDatastore,
                 private tabManager: TabManager,
                 private projectConfiguration: ProjectConfiguration,

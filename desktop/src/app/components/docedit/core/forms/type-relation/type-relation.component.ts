@@ -4,7 +4,7 @@ import {to, set} from 'tsfun';
 import {Resource} from 'idai-field-core';
 import {DoceditComponent} from '../../../docedit.component';
 import {TypeRelationPickerComponent} from './type-relation-picker.component';
-import {FieldReadDatastore} from '../../../../../core/datastore/field/field-read-datastore';
+import {FieldDatastore} from '../../../../../core/datastore/field/field-datastore';
 import {MenuContext, MenuService} from '../../../../menu-service';
 
 type ResourceIdentifier = string;
@@ -26,7 +26,7 @@ export class TypeRelationComponent implements OnChanges {
     public relationIdentifiers: Array<ResourceIdentifier> = [];
 
 
-    constructor(private datastore: FieldReadDatastore,
+    constructor(private datastore: FieldDatastore,
                 private modalService: NgbModal,
                 private doceditComponent: DoceditComponent,
                 private menuService: MenuService) {}

@@ -17,7 +17,6 @@ import {ImageGridModule} from '../image/grid/image-grid.module';
 import {RoutingService} from '../routing-service';
 import {DoceditLauncher} from './service/docedit-launcher';
 import {SidebarListComponent} from './map/list/sidebar-list.component';
-import {FieldDatastore} from '../../core/datastore/field/field-datastore';
 import {LayerManager} from './map/map/layers/layer-manager';
 import {LayerImageProvider} from './map/map/layers/layer-image-provider';
 import {LayerMenuComponent} from './map/map/layers/layer-menu.component';
@@ -28,7 +27,7 @@ import {SearchSuggestionsComponent} from './searchbar/search-suggestions.compone
 import {StandardStateSerializer} from '../../core/common/standard-state-serializer';
 import {StateSerializer} from '../../core/common/state-serializer';
 import {Loading} from '../widgets/loading';
-import {FieldReadDatastore} from '../../core/datastore/field/field-read-datastore';
+import {FieldDatastore} from '../../core/datastore/field/field-datastore';
 import {LayerMapComponent} from './map/map/layer-map.component';
 import {ResourcesSearchConstraintsComponent} from './searchbar/resources-search-constraints.component';
 import {IndexFacade} from 'idai-field-core';
@@ -121,7 +120,7 @@ const remote = typeof window !== 'undefined'
         },
         {
             provide: ResourcesStateManager,
-            useFactory: (datastore: FieldReadDatastore,
+            useFactory: (datastore: FieldDatastore,
                          indexFacade: IndexFacade,
                          stateSerializer: StateSerializer,
                          projectConfiguration: ProjectConfiguration,
@@ -142,7 +141,7 @@ const remote = typeof window !== 'undefined'
                 );
             },
             deps: [
-                FieldReadDatastore, IndexFacade, StateSerializer, ProjectConfiguration, SettingsProvider,
+                FieldDatastore, IndexFacade, StateSerializer, ProjectConfiguration, SettingsProvider,
                 TabManager
             ]
         },

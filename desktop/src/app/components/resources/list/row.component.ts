@@ -2,7 +2,7 @@ import {AfterViewInit, Component, ElementRef, Input, ViewChild, ChangeDetectorRe
 import {FieldDocument, Category} from 'idai-field-core';
 import {ResourcesComponent} from '../resources.component';
 import {RelationsManager} from '../../../core/model/relations-manager';
-import {FieldReadDatastore} from '../../../core/datastore/field/field-read-datastore';
+import {FieldDatastore} from '../../../core/datastore/field/field-datastore';
 import {Validator} from '../../../core/model/validator';
 import {M} from '../../messages/m';
 import {MessagesConversion} from '../../docedit/messages-conversion';
@@ -36,7 +36,7 @@ export class RowComponent implements AfterViewInit {
                 private messages: Messages,
                 private relationsManager: RelationsManager,
                 private validator: Validator,
-                private datastore: FieldReadDatastore,
+                private datastore: FieldDatastore,
                 private navigationService: NavigationService,
                 private projectConfiguration: ProjectConfiguration,
                 private changeDetectorRef: ChangeDetectorRef) {}

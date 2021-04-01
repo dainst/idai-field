@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ObjectUtils, FieldDocument, ImageDocument, ImageRelationsC as ImageRelations, moveInArray } from 'idai-field-core';
 import { Document } from 'idai-field-core';
 import { flatten, set, subtract, to } from 'tsfun';
-import { FieldReadDatastore } from '../../../../../core/datastore/field/field-read-datastore';
+import { FieldDatastore } from '../../../../../core/datastore/field/field-datastore';
 import { ImageReadDatastore } from '../../../../../core/datastore/field/image-read-datastore';
 import { RelationsManager } from '../../../../../core/model/relations-manager';
 import { ViewFacade } from '../../../../../core/resources/view/view-facade';
@@ -42,7 +42,7 @@ export class LayerManager {
 
 
     constructor(private imageDatastore: ImageReadDatastore,
-                private fieldDatastore: FieldReadDatastore,
+                private fieldDatastore: FieldDatastore,
                 private viewFacade: ViewFacade,
                 private relationsManager: RelationsManager) {}
 

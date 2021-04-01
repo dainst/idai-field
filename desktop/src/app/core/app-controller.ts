@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
-import {Document} from 'idai-field-core';
+import {Document, DocumentCache} from 'idai-field-core';
 import {PouchdbManager} from './datastore/pouchdb/pouchdb-manager';
-import {DocumentCache} from './datastore/cached/document-cache';
 import {ImagesState} from './images/overview/view/images-state';
 import {IndexFacade} from 'idai-field-core';
 import {TabManager} from './tabs/tab-manager';

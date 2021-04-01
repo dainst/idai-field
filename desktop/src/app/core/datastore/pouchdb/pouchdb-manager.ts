@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
-import { IndexFacade, Name, PouchdbProxy } from 'idai-field-core';
+import { IndexFacade, Name, PouchdbProxy, DocumentCache } from 'idai-field-core';
 import { Document } from 'idai-field-core';
 import { Observable, Observer } from 'rxjs';
 import { isUndefined, not } from 'tsfun';
 import { ConfigurationErrors } from '../../configuration/boot/configuration-errors';
 import { InitializationProgress } from '../../initialization-progress';
 import { SyncProcess, SyncStatus } from '../../sync/sync-process';
-import { DocumentCache } from '../cached/document-cache';
 import { FieldCategoryConverter } from '../field/field-category-converter';
 import { SampleDataLoader } from '../field/sampledata/sample-data-loader';
 

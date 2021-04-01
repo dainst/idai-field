@@ -1,4 +1,4 @@
-import {Document} from 'idai-field-core';
+import {Document} from '../../model/document';
 
 /**
  * @author Daniel de Oliveira

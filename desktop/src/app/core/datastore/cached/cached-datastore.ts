@@ -1,8 +1,7 @@
-import { DatastoreErrors, FindIdsResult, FindResult, IndexFacade, ObjectUtils, PouchdbDatastore, Query } from "idai-field-core";
-import { Document, NewDocument } from 'idai-field-core';
-import { ConfigurationErrors } from "../../configuration/boot/configuration-errors";
-import { CategoryConverter } from './category-converter';
-import { DocumentCache } from './document-cache';
+import { DatastoreErrors, FindIdsResult, FindResult, IndexFacade,
+    ObjectUtils, PouchdbDatastore, Query, Document, NewDocument,
+    DocumentCache, CategoryConverter } from "idai-field-core";
+import { ConfigurationErrors } from "../../configuration/boot/configuration-errors"; // TODO remove dependency, should throw from Datastore errors, review where this is handled
 
 
 export interface IdaiFieldFindResult<T extends Document> extends FindResult {

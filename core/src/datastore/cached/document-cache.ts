@@ -1,8 +1,6 @@
-import {Injectable} from '@angular/core';
-import {Document} from 'idai-field-core';
+import {Document} from '../../model/document';
 
 
-@Injectable()
 /**
  * @author Daniel de Oliveira
  */

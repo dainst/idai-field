@@ -1,7 +1,5 @@
-import { ImageDocument, IndexFacade, PouchdbDatastore, Query } from 'idai-field-core';
+import { ImageDocument, IndexFacade, PouchdbDatastore, Query, DocumentCache, CategoryConverter } from 'idai-field-core';
 import { CachedDatastore, IdaiFieldFindResult } from '../cached/cached-datastore';
-import { CategoryConverter } from '../cached/category-converter';
-import { DocumentCache } from '../cached/document-cache';
 
 export interface IdaiFieldImageDocumentFindResult extends IdaiFieldFindResult<ImageDocument> {}
 

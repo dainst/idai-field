@@ -1,12 +1,10 @@
 import { createDocuments, FieldDocument, ImageDocument, NiceDocs, PouchdbDatastore, Query, ResourceId } from 'idai-field-core';
-import { Document, toResourceId } from 'idai-field-core';
+import { Document, toResourceId, DocumentCache, CategoryConverter } from 'idai-field-core';
 import * as PouchDB from 'pouchdb-node';
 import { sameset } from 'tsfun';
 import { AppConfigurator } from '../../../../src/app/core/configuration/app-configurator';
 import { ConfigLoader } from '../../../../src/app/core/configuration/boot/config-loader';
 import { ConfigReader } from '../../../../src/app/core/configuration/boot/config-reader';
-import { CategoryConverter } from '../../../../src/app/core/datastore/cached/category-converter';
-import { DocumentCache } from '../../../../src/app/core/datastore/cached/document-cache';
 import { ChangesStream } from '../../../../src/app/core/datastore/changes/changes-stream';
 import { DocumentDatastore } from '../../../../src/app/core/datastore/document-datastore';
 import { FieldCategoryConverter } from '../../../../src/app/core/datastore/field/field-category-converter';

@@ -1,11 +1,11 @@
 //import liraries
-import React, { Component } from 'react';
+import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
 // create a component
 const Home: React.FC = () => {
     return (
-        <View style={styles.container}>
+        <View style={ styles.container }>
             <Text>Home</Text>
         </View>
     );

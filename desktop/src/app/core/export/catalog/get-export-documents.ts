@@ -1,7 +1,7 @@
 import { ObjectUtils, HierarchicalRelations, ImageRelationsC as ImageRelations, Name, ON_RESOURCE_ID, ResourceId, RESOURCE_DOT_IDENTIFIER, TypeRelations } from 'idai-field-core';
 import { Document, toResourceId } from 'idai-field-core';
 import { Either, subtract, to } from 'tsfun';
-import { DocumentReadDatastore } from '../../datastore/document-read-datastore';
+import { DocumentDatastore } from '../../datastore/document-datastore';
 import { ImageRelationsManager } from '../../model/image-relations-manager';
 import { RelationsManager } from '../../model/relations-manager';
 
@@ -9,7 +9,7 @@ import { RelationsManager } from '../../model/relations-manager';
 export const ERROR_NOT_ALL_IMAGES_EXCLUSIVELY_LINKED = 'export.catalog.get-export-documents.not-all-images-exclusively-linked';
 
 
-export async function getExportDocuments(datastore: DocumentReadDatastore, /*TODO unused*/
+export async function getExportDocuments(datastore: DocumentDatastore, /*TODO unused*/
                                          relationsManager: RelationsManager,
                                          imageRelationsManager: ImageRelationsManager,
                                          catalogId: ResourceId,

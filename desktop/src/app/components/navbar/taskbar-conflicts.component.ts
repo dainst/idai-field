@@ -1,7 +1,7 @@
 import {Component, NgZone, Renderer2, ViewChild} from '@angular/core';
 import {Document} from 'idai-field-core';
 import {RoutingService} from '../routing-service';
-import {DocumentReadDatastore} from '../../core/datastore/document-read-datastore';
+import {DocumentDatastore} from '../../core/datastore/document-datastore';
 import {IndexFacade} from 'idai-field-core';
 import {NavbarComponent} from './navbar.component';
 
@@ -26,7 +26,7 @@ export class TaskbarConflictsComponent {
 
     constructor(private routingService: RoutingService,
                 private renderer: Renderer2,
-                private datastore: DocumentReadDatastore,
+                private datastore: DocumentDatastore,
                 private indexFacade: IndexFacade,
                 private navbarComponent: NavbarComponent,
                 private zone: NgZone) {

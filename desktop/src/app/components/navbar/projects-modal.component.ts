@@ -7,7 +7,7 @@ import {M} from '../messages/m';
 import {ProjectNameValidator} from '../../core/model/project-name-validator';
 import {MenuContext, MenuService} from '../menu-service';
 import {StateSerializer} from '../../core/common/state-serializer';
-import {DocumentReadDatastore} from '../../core/datastore/document-read-datastore';
+import {DocumentDatastore} from '../../core/datastore/document-datastore';
 import {ProjectNameValidatorMsgConversion} from '../messages/project-name-validator-msg-conversion';
 import {Messages} from '../messages/messages';
 import {reload} from '../../core/common/reload';
@@ -48,7 +48,7 @@ export class ProjectsModalComponent implements AfterViewInit, AfterViewChecked {
                 private modalService: NgbModal,
                 private messages: Messages,
                 private stateSerializer: StateSerializer,
-                private datastore: DocumentReadDatastore,
+                private datastore: DocumentDatastore,
                 private menuService: MenuService) {
     }
 

@@ -5,7 +5,6 @@ import { CategoryConverter } from './cached/category-converter';
 import { DocumentCache } from './cached/document-cache';
 import { ChangesStream } from './changes/changes-stream';
 import { DocumentDatastore } from './document-datastore';
-import { DocumentReadDatastore } from './document-read-datastore';
 import { FeatureDatastore } from './field/feature-datastore';
 import { FieldCategoryConverter } from './field/field-category-converter';
 import { FieldDatastore } from './field/field-datastore';
@@ -68,8 +67,7 @@ import { PouchdbServer } from './pouchdb/pouchdb-server';
             },
             deps: [PouchdbDatastore, IndexFacade, DocumentCache, CategoryConverter]
         },
-        { provide: DocumentReadDatastore, useExisting: DocumentDatastore },
-        { provide: Datastore, useExisting: DocumentDatastore },     // used by components-2 lib
+        { provide: Datastore, useExisting: DocumentDatastore },
 
 
         // idai-field datastore

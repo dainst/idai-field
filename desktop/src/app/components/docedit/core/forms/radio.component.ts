@@ -3,7 +3,7 @@ import {ValuelistDefinition} from 'idai-field-core';
 import {Resource} from 'idai-field-core';
 import {ValuelistUtil} from '../../../../core/util/valuelist-util';
 import {HierarchyUtil} from '../../../../core/util/hierarchy-util';
-import {DocumentReadDatastore} from '../../../../core/datastore/document-read-datastore';
+import {DocumentDatastore} from '../../../../core/datastore/document-datastore';
 
 
 @Component({
@@ -24,7 +24,7 @@ export class RadioComponent implements OnChanges {
     public valuelist: ValuelistDefinition;
 
 
-    constructor(private datastore: DocumentReadDatastore) {}
+    constructor(private datastore: DocumentDatastore) {}
 
 
     public getValues = () => this.valuelist ? ValuelistUtil.getOrderedValues(this.valuelist) : [];

@@ -4,7 +4,7 @@ import {ResourcesSearchBarComponent} from './resources-search-bar.component';
 import {FieldDefinition, ObjectUtils} from 'idai-field-core';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
 import {SearchConstraintsComponent} from '../../widgets/search-constraints.component';
-import {DocumentReadDatastore} from '../../../core/datastore/document-read-datastore';
+import {DocumentDatastore} from '../../../core/datastore/document-datastore';
 import {ViewFacade} from '../../../core/resources/view/view-facade';
 
 
@@ -24,7 +24,7 @@ export class ResourcesSearchConstraintsComponent extends SearchConstraintsCompon
 
     constructor(resourcesSearchBarComponent: ResourcesSearchBarComponent,
                 projectConfiguration: ProjectConfiguration,
-                datastore: DocumentReadDatastore,
+                datastore: DocumentDatastore,
                 renderer: Renderer2,
                 i18n: I18n,
                 private viewFacade: ViewFacade) {

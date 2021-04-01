@@ -4,7 +4,7 @@ import {Resource} from 'idai-field-core'
 import {FieldDefinition} from 'idai-field-core';
 import {ValuelistUtil} from '../../../../../core/util/valuelist-util';
 import {ProjectConfiguration} from '../../../../../core/configuration/project-configuration';
-import {DocumentReadDatastore} from '../../../../../core/datastore/document-read-datastore';
+import {DocumentDatastore} from '../../../../../core/datastore/document-datastore';
 
 
 type EmptyValuelistInfoType = 'configuration'|'projectDocumentField'|'parent';
@@ -26,7 +26,7 @@ export class EmptyValuelistInfoComponent implements OnChanges {
     public infoType: EmptyValuelistInfoType;
 
 
-    constructor(private datastore: DocumentReadDatastore,
+    constructor(private datastore: DocumentDatastore,
                 private projectConfiguration: ProjectConfiguration) {}
 
 

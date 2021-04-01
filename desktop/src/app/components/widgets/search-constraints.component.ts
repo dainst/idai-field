@@ -5,7 +5,7 @@ import {ValuelistDefinition, ConstraintIndex, ObjectUtils, FieldDefinition, Cate
 import {SearchBarComponent} from './search-bar.component';
 import {ProjectConfiguration} from '../../core/configuration/project-configuration';
 import {ValuelistUtil} from '../../core/util/valuelist-util';
-import {DocumentReadDatastore} from '../../core/datastore/document-read-datastore';
+import {DocumentDatastore} from '../../core/datastore/document-datastore';
 
 
 type ConstraintListItem = {
@@ -46,7 +46,7 @@ export abstract class SearchConstraintsComponent implements OnChanges {
 
     protected constructor(public searchBarComponent: SearchBarComponent,
                           private projectConfiguration: ProjectConfiguration,
-                          private datastore: DocumentReadDatastore,
+                          private datastore: DocumentDatastore,
                           private renderer: Renderer2,
                           protected i18n: I18n) {}
 

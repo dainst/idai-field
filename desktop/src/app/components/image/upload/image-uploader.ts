@@ -7,7 +7,7 @@ import {UploadModalComponent} from './upload-modal.component';
 import {ExtensionUtil} from '../../../core/util/extension-util';
 import {UploadStatus} from './upload-status';
 import {RelationsManager} from '../../../core/model/relations-manager';
-import {DocumentReadDatastore} from '../../../core/datastore/document-read-datastore';
+import {DocumentDatastore} from '../../../core/datastore/document-datastore';
 import {ImageDatastore} from '../../../core/datastore/field/image-datastore';
 import {M} from '../../messages/m';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
@@ -36,7 +36,7 @@ export class ImageUploader {
 
 
     public constructor(private imagestore: Imagestore,
-                       private datastore: DocumentReadDatastore,
+                       private datastore: DocumentDatastore,
                        private modalService: NgbModal,
                        private relationsManager: RelationsManager,
                        private projectConfiguration: ProjectConfiguration,

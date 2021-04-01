@@ -2,7 +2,7 @@ import {Component, Input, OnChanges} from '@angular/core';
 import {ValuelistDefinition} from 'idai-field-core';
 import {Resource} from 'idai-field-core';
 import {ValuelistUtil} from '../../../../core/util/valuelist-util';
-import {DocumentReadDatastore} from '../../../../core/datastore/document-read-datastore';
+import {DocumentDatastore} from '../../../../core/datastore/document-datastore';
 import {HierarchyUtil} from '../../../../core/util/hierarchy-util';
 
 @Component({
@@ -23,7 +23,7 @@ export class CheckboxesComponent implements OnChanges {
     public valuelist: ValuelistDefinition;
 
 
-    constructor(private datastore: DocumentReadDatastore) {}
+    constructor(private datastore: DocumentDatastore) {}
 
 
     async ngOnChanges() {

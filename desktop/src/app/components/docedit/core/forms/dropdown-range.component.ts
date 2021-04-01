@@ -4,7 +4,7 @@ import {isUndefinedOrEmpty} from 'tsfun';
 import {Resource, OptionalRange} from 'idai-field-core';
 import {ValuelistUtil} from '../../../../core/util/valuelist-util';
 import {HierarchyUtil} from '../../../../core/util/hierarchy-util';
-import {DocumentReadDatastore} from '../../../../core/datastore/document-read-datastore';
+import {DocumentDatastore} from '../../../../core/datastore/document-datastore';
 
 const PROJECT = 'project';
 
@@ -26,7 +26,7 @@ export class DropdownRangeComponent {
     private endActivated: boolean = false;
 
 
-    constructor(private datastore: DocumentReadDatastore) {}
+    constructor(private datastore: DocumentDatastore) {}
 
 
     public getValues = () => this.valuelist ? ValuelistUtil.getOrderedValues(this.valuelist) : [];

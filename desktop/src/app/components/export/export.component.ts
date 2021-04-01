@@ -12,7 +12,7 @@ import {ShapefileExporter} from '../../core/export/shapefile-exporter';
 import {CsvExporter} from '../../core/export/csv/csv-exporter';
 import {CategoryCount} from '../../core/export/export-helper';
 import {ExportRunner} from '../../core/export/export-runner';
-import {DocumentReadDatastore} from '../../core/datastore/document-read-datastore';
+import {DocumentDatastore} from '../../core/datastore/document-datastore';
 import {ProjectConfiguration} from '../../core/configuration/project-configuration';
 import {TabManager} from '../../core/tabs/tab-manager';
 import {Messages} from '../messages/messages';
@@ -62,7 +62,7 @@ export class ExportComponent implements OnInit {
                 private messages: Messages,
                 private i18n: I18n,
                 private fieldDatastore: FieldDatastore,
-                private documentDatastore: DocumentReadDatastore,
+                private documentDatastore: DocumentDatastore,
                 private tabManager: TabManager,
                 private projectConfiguration: ProjectConfiguration,
                 private menuService: MenuService,

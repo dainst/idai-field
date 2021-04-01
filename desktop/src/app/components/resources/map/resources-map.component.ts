@@ -3,7 +3,7 @@ import {FieldDocument, FieldGeometry} from 'idai-field-core';
 import {ResourcesComponent} from '../resources.component';
 import {Loading} from '../../widgets/loading';
 import {RelationsManager} from '../../../core/model/relations-manager';
-import {DocumentReadDatastore} from '../../../core/datastore/document-read-datastore';
+import {DocumentDatastore} from '../../../core/datastore/document-datastore';
 import {ChangesStream} from '../../../core/datastore/changes/changes-stream';
 import {ViewFacade} from '../../../core/resources/view/view-facade';
 import {NavigationPath} from '../../../core/resources/view/state/navigation-path';
@@ -30,7 +30,7 @@ export class ResourcesMapComponent {
     public coordinateReferenceSystem: string;
 
 
-    constructor(datastore: DocumentReadDatastore,
+    constructor(datastore: DocumentDatastore,
                 changesStream: ChangesStream,
                 public loading: Loading,
                 public viewFacade: ViewFacade,

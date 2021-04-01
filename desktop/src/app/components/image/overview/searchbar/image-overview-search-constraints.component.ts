@@ -4,7 +4,7 @@ import {ImageOverviewSearchBarComponent} from './image-overview-search-bar.compo
 import {ImageOverviewFacade} from '../../../../core/images/overview/view/imageoverview-facade';
 import {ProjectConfiguration} from '../../../../core/configuration/project-configuration';
 import {FieldDefinition, ObjectUtils} from 'idai-field-core';
-import {DocumentReadDatastore} from '../../../../core/datastore/document-read-datastore';
+import {DocumentDatastore} from '../../../../core/datastore/document-datastore';
 import {SearchConstraintsComponent} from '../../../widgets/search-constraints.component';
 
 
@@ -35,7 +35,7 @@ export class ImageOverviewSearchConstraintsComponent extends SearchConstraintsCo
 
     constructor(imageOverviewSearchBarComponent: ImageOverviewSearchBarComponent,
                 projectConfiguration: ProjectConfiguration,
-                datastore: DocumentReadDatastore,
+                datastore: DocumentDatastore,
                 renderer: Renderer2,
                 i18n: I18n,
                 private imageOverviewFacade: ImageOverviewFacade) {

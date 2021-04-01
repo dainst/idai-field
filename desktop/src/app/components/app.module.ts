@@ -56,7 +56,7 @@ import {PouchDbFsImagestore} from '../core/images/imagestore/pouch-db-fs-imagest
 import {ImageConverter} from '../core/images/imagestore/image-converter';
 import {BlobMaker} from '../core/images/imagestore/blob-maker';
 import {ReadImagestore} from '../core/images/imagestore/read-imagestore';
-import {DocumentReadDatastore} from '../core/datastore/document-read-datastore';
+import {DocumentDatastore} from '../core/datastore/document-datastore';
 import {TaskbarSyncStatusComponent} from './navbar/taskbar-sync-status.component';
 import {ViewModalModule} from './viewmodal/view-modal.module';
 import {ConfigurationModule} from './configuration/configuration.module';
@@ -223,15 +223,15 @@ registerLocaleData(localeIt, 'it');
         {
             provide: Validator,
             useFactory: (
-                documentReadDatastore: DocumentReadDatastore,
+                DocumentDatastore: DocumentDatastore,
                 projectConfiguration: ProjectConfiguration) => {
 
                 return new Validator(
                     projectConfiguration,
-                    (q: Query) => documentReadDatastore.find(q),
+                    (q: Query) => DocumentDatastore.find(q),
                 )
             },
-            deps: [DocumentReadDatastore, ProjectConfiguration]
+            deps: [DocumentDatastore, ProjectConfiguration]
         },
         ImportValidator,
         { provide: MD, useClass: M},

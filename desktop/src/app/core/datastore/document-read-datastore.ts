@@ -1,8 +1,8 @@
 import {Document} from 'idai-field-core';
-import {CachedReadDatastore} from './cached/cached-read-datastore';
+import { CachedDatastore } from './cached/cached-datastore';
 
 /**
  * @author Daniel de Oliveira
  * @author Thomas Klienke
  */
-export abstract class DocumentReadDatastore extends CachedReadDatastore<Document> {}
+export abstract class DocumentReadDatastore extends CachedDatastore<Document> {}

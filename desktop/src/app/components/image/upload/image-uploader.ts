@@ -12,9 +12,9 @@ import {ImageReadDatastore} from '../../../core/datastore/field/image-read-datas
 import {M} from '../../messages/m';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
 import {Imagestore} from '../../../core/images/imagestore/imagestore';
-import {IdaiFieldFindResult} from '../../../core/datastore/cached/cached-read-datastore';
 import {readWldFile} from '../../../core/images/wld/wld-import';
 import {MenuContext, MenuService} from '../../menu-service';
+import { IdaiFieldFindResult } from '../../../core/datastore/cached/cached-datastore';
 
 export interface ImageUploadResult {
 

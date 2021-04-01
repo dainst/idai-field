@@ -1,5 +1,5 @@
 import {FieldDocument, Query} from 'idai-field-core';
-import {CachedReadDatastore, IdaiFieldFindResult} from '../cached/cached-read-datastore';
+import { CachedDatastore, IdaiFieldFindResult } from '../cached/cached-datastore';
 
 
 export interface FieldDocumentFindResult extends IdaiFieldFindResult<FieldDocument> {}
@@ -9,7 +9,7 @@ export interface FieldDocumentFindResult extends IdaiFieldFindResult<FieldDocume
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export abstract class FieldReadDatastore extends CachedReadDatastore<FieldDocument> {
+export abstract class FieldReadDatastore extends CachedDatastore<FieldDocument> {
 
     public async find(query: Query, ignoreTypes: boolean = false): Promise<FieldDocumentFindResult> {
 

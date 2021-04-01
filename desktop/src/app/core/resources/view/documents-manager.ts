@@ -5,13 +5,13 @@ import {FieldReadDatastore} from '../../datastore/field/field-read-datastore';
 import {ChangesStream} from '../../datastore/changes/changes-stream';
 import {Loading} from '../../../components/widgets/loading';
 import {ResourcesStateManager} from './resources-state-manager';
-import {IdaiFieldFindResult} from '../../datastore/cached/cached-read-datastore';
 import {ResourcesState} from './state/resources-state';
 import {AngularUtility} from '../../../angular/angular-utility';
 import {ModelUtil} from '../../model/model-util';
 import hasId = ModelUtil.hasId;
 import hasEqualId = ModelUtil.hasEqualId;
 import { FieldDocument, Query, ObserverUtil, ObjectUtils } from 'idai-field-core';
+import { IdaiFieldFindResult } from '../../datastore/cached/cached-datastore';
 
 
 const LIES_WITHIN_EXIST = 'liesWithin:exist';

@@ -9,7 +9,7 @@ import {ResourcesComponent} from '../resources.component';
 import {TypeImagesUtil} from '../../../core/util/type-images-util';
 import {FieldDatastore} from '../../../core/datastore/field/field-datastore';
 import {ReadImagestore} from '../../../core/images/imagestore/read-imagestore';
-import {ImageReadDatastore} from '../../../core/datastore/field/image-read-datastore';
+import {ImageDatastore} from '../../../core/datastore/field/image-datastore';
 import {ContextMenu} from '../widgets/context-menu';
 import {ContextMenuAction} from '../widgets/context-menu.component';
 import {ViewModalLauncher} from '../service/view-modal-launcher';
@@ -72,7 +72,7 @@ export class TypesComponent extends BaseList implements OnChanges {
 
 
     constructor(private fieldDatastore: FieldDatastore,
-                private imageDatastore: ImageReadDatastore,
+                private imageDatastore: ImageDatastore,
                 private imagestore: ReadImagestore,
                 private viewModalLauncher: ViewModalLauncher,
                 private routingService: RoutingService,

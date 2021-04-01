@@ -4,7 +4,7 @@ import {on, is} from 'tsfun';
 import {Document} from 'idai-field-core';
 import {FieldDocument, ImageDocument} from 'idai-field-core'
 import {ViewModalComponent} from '../view-modal.component';
-import {ImageReadDatastore} from '../../../core/datastore/field/image-read-datastore';
+import {ImageDatastore} from '../../../core/datastore/field/image-datastore';
 import {RoutingService} from '../../routing-service';
 import {ImagesState} from '../../../core/images/overview/view/images-state';
 import {Messages} from '../../messages/messages';
@@ -31,7 +31,7 @@ export class ResourceViewModalComponent extends ViewModalComponent {
 
 
     constructor(private imagesState: ImagesState,
-                private datastore: ImageReadDatastore,
+                private datastore: ImageDatastore,
                 activeModal: NgbActiveModal,
                 messages: Messages,
                 modalService: NgbModal,

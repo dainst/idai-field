@@ -6,7 +6,7 @@ import {FieldDatastore} from '../../core/datastore/field/field-datastore';
 import {ModelUtil} from '../../core/model/model-util';
 import {DoceditComponent} from '../docedit/docedit.component';
 import {MatrixClusterMode, MatrixRelationsMode, MatrixState} from './matrix-state';
-import {FeatureReadDatastore} from '../../core/datastore/field/feature-read-datastore';
+import {FeatureDatastore} from '../../core/datastore/field/feature-datastore';
 import {Loading} from '../widgets/loading';
 import {DotBuilder} from './dot-builder';
 import {MatrixSelection, MatrixSelectionMode} from './matrix-selection';
@@ -59,7 +59,7 @@ export class MatrixViewComponent implements OnInit {
 
     constructor(private datastore: FieldDatastore,
                 private projectConfiguration: ProjectConfiguration,
-                private featureDatastore: FeatureReadDatastore,
+                private featureDatastore: FeatureDatastore,
                 private modalService: NgbModal,
                 private matrixState: MatrixState,
                 private loading: Loading,

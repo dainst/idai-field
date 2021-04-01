@@ -15,7 +15,7 @@ import {ImageOverviewSearchConstraintsComponent} from './searchbar/image-overvie
 import {DeleteModalComponent} from './deletion/delete-modal.component';
 import {ImageOverviewFacade} from '../../../core/images/overview/view/imageoverview-facade';
 import {ImageDocumentsManager} from '../../../core/images/overview/view/image-documents-manager';
-import {ImageReadDatastore} from '../../../core/datastore/field/image-read-datastore';
+import {ImageDatastore} from '../../../core/datastore/field/image-datastore';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
 import {DeletionInProgressModalComponent} from './deletion/deletion-in-progress-modal.component';
 
@@ -49,7 +49,7 @@ import {DeletionInProgressModalComponent} from './deletion/deletion-in-progress-
         {
             provide: ImageDocumentsManager,
             useClass: ImageDocumentsManager,
-            deps: [ImagesState, ImageReadDatastore]
+            deps: [ImagesState, ImageDatastore]
         },
         {
             provide: ImageOverviewFacade,

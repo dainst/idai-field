@@ -4,7 +4,7 @@ import {to, aReduce} from 'tsfun';
 import {ImageDocument} from 'idai-field-core';
 import {ImageRow, ImageRowItem, ImageRowUpdate, PLACEHOLDER} from '../../../core/images/row/image-row';
 import {ReadImagestore} from '../../../core/images/imagestore/read-imagestore';
-import {ImageReadDatastore} from '../../../core/datastore/field/image-read-datastore';
+import {ImageDatastore} from '../../../core/datastore/field/image-datastore';
 import {AngularUtility} from '../../../angular/angular-utility';
 import {showMissingThumbnailMessageOnConsole} from '../log-messages';
 import {BlobMaker} from '../../../core/images/imagestore/blob-maker';
@@ -47,7 +47,7 @@ export class ImageRowComponent implements OnChanges {
 
 
     constructor(private imagestore: ReadImagestore,
-                private datastore: ImageReadDatastore) {}
+                private datastore: ImageDatastore) {}
 
 
     public hasNextPage = (): boolean => this.imageRow && this.imageRow.hasNextPage();

@@ -3,7 +3,7 @@ import { ObjectUtils, FieldDocument, ImageDocument, ImageRelationsC as ImageRela
 import { Document } from 'idai-field-core';
 import { flatten, set, subtract, to } from 'tsfun';
 import { FieldDatastore } from '../../../../../core/datastore/field/field-datastore';
-import { ImageReadDatastore } from '../../../../../core/datastore/field/image-read-datastore';
+import { ImageDatastore } from '../../../../../core/datastore/field/image-datastore';
 import { RelationsManager } from '../../../../../core/model/relations-manager';
 import { ViewFacade } from '../../../../../core/resources/view/view-facade';
 
@@ -41,7 +41,7 @@ export class LayerManager {
     private originalLayerGroupInEditing: LayerGroup|undefined;
 
 
-    constructor(private imageDatastore: ImageReadDatastore,
+    constructor(private imageDatastore: ImageDatastore,
                 private fieldDatastore: FieldDatastore,
                 private viewFacade: ViewFacade,
                 private relationsManager: RelationsManager) {}

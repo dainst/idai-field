@@ -1,13 +1,14 @@
-import { FeatureDocument, IndexFacade, PouchdbDatastore } from 'idai-field-core';
-import { CachedDatastore } from '../cached/cached-datastore';
+import { FeatureDocument, IndexFacade, PouchdbDatastore, Query } from 'idai-field-core';
+import { CachedDatastore, IdaiFieldFindResult } from '../cached/cached-datastore';
 import { CategoryConverter } from '../cached/category-converter';
 import { DocumentCache } from '../cached/document-cache';
 
 
+export interface IdaiFieldFeatureDocumentFindResult extends IdaiFieldFindResult<FeatureDocument> {}
+
 /**
- * Data Access Object
- *
  * @author Daniel de Oliveira
+ * @author Thomas Kleinke
  */
 export class FeatureDatastore
     extends CachedDatastore<FeatureDocument> {
@@ -18,5 +19,10 @@ export class FeatureDatastore
                 documentConverter: CategoryConverter<FeatureDocument>) {
 
         super(datastore, indexFacade, documentCache, documentConverter, 'FeatureDocument');
+    }
+
+    public async find(query: Query): Promise<IdaiFieldFeatureDocumentFindResult> {
+
+        return super.find(query);
     }
 }

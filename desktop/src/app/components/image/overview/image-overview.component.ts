@@ -14,7 +14,7 @@ import {ProjectConfiguration} from '../../../core/configuration/project-configur
 import {TabManager} from '../../../core/tabs/tab-manager';
 import {ViewFacade} from '../../../core/resources/view/view-facade';
 import {Messages} from '../../messages/messages';
-import {ImageReadDatastore} from '../../../core/datastore/field/image-read-datastore';
+import {ImageDatastore} from '../../../core/datastore/field/image-datastore';
 
 
 @Component({
@@ -40,7 +40,7 @@ export class ImageOverviewComponent implements OnInit {
                 location: Location,
                 public viewFacade: ViewFacade,
                 private imageOverviewFacade: ImageOverviewFacade,
-                private imageDatastore: ImageReadDatastore,
+                private imageDatastore: ImageDatastore,
                 private messages: Messages,
                 private projectConfiguration: ProjectConfiguration,
                 private tabManager: TabManager,

@@ -1,6 +1,6 @@
 import {ImageDocument, Query} from 'idai-field-core';
 import {ImagesState} from './images-state';
-import {ImageReadDatastore} from '../../../datastore/field/image-read-datastore';
+import {ImageDatastore} from '../../../datastore/field/image-datastore';
 
 
 /**
@@ -19,7 +19,7 @@ export class ImageDocumentsManager {
 
 
     constructor(private imagesState: ImagesState,
-                private imageDatastore: ImageReadDatastore) {}
+                private imageDatastore: ImageDatastore) {}
 
 
     public getSelected = (): Array<ImageDocument> => this.selected;

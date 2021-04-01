@@ -8,7 +8,7 @@ import {
 } from 'tsfun';
 import { ProjectConfiguration } from '../../../../../core/configuration/project-configuration';
 import { FieldDatastore } from '../../../../../core/datastore/field/field-datastore';
-import { ImageReadDatastore } from '../../../../../core/datastore/field/image-read-datastore';
+import { ImageDatastore } from '../../../../../core/datastore/field/image-datastore';
 import { ImageRowItem } from '../../../../../core/images/row/image-row';
 import { TypeImagesUtil } from '../../../../../core/util/type-images-util';
 import { ValuelistUtil } from '../../../../../core/util/valuelist-util';
@@ -59,7 +59,7 @@ export class TypeRelationPickerComponent {
 
     constructor(public activeModal: NgbActiveModal,
                 private fieldDatastore: FieldDatastore,
-                private imageDatastore: ImageReadDatastore,
+                private imageDatastore: ImageDatastore,
                 projectConfiguration: ProjectConfiguration) {
 
         this.initialize(projectConfiguration.getCategory(TYPECATALOG));

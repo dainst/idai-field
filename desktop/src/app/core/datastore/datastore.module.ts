@@ -7,11 +7,9 @@ import { ChangesStream } from './changes/changes-stream';
 import { DocumentDatastore } from './document-datastore';
 import { DocumentReadDatastore } from './document-read-datastore';
 import { FeatureDatastore } from './field/feature-datastore';
-import { FeatureReadDatastore } from './field/feature-read-datastore';
 import { FieldCategoryConverter } from './field/field-category-converter';
 import { FieldDatastore } from './field/field-datastore';
 import { ImageDatastore } from './field/image-datastore';
-import { ImageReadDatastore } from './field/image-read-datastore';
 import { PouchdbManager } from './pouchdb/pouchdb-manager';
 import { PouchdbServer } from './pouchdb/pouchdb-server';
 
@@ -106,7 +104,6 @@ import { PouchdbServer } from './pouchdb/pouchdb-server';
                 },
             deps: [PouchdbDatastore, IndexFacade, DocumentCache, CategoryConverter]
         },
-        { provide: ImageReadDatastore, useExisting: ImageDatastore }, // read-only version of it
 
 
         // idai-field datastore
@@ -123,8 +120,7 @@ import { PouchdbServer } from './pouchdb/pouchdb-server';
                 return new FeatureDatastore(pouchdbDatastore, indexFacade, documentCache, documentConverter);
             },
             deps: [PouchdbDatastore, IndexFacade, DocumentCache, CategoryConverter]
-        },
-        { provide: FeatureReadDatastore, useExisting: FeatureDatastore }, // read-only version of it
+        }
     ]
 })
 

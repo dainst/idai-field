@@ -1,7 +1,7 @@
 import { FieldDocument, Query, ResourceId } from 'idai-field-core';
 import { filter, flow, isDefined, map } from 'tsfun';
 import { FieldDatastore } from '../datastore/field/field-datastore';
-import { ImageReadDatastore } from '../datastore/field/image-read-datastore';
+import { ImageDatastore } from '../datastore/field/image-datastore';
 import { PLACEHOLDER } from '../images/row/image-row';
 
 
@@ -19,7 +19,7 @@ export module TypeImagesUtil {
      */
     export function getLinkedImageIds(document: FieldDocument,
                                       fieldDatastore: FieldDatastore,
-                                      imageDatastore: ImageReadDatastore): string[] {
+                                      imageDatastore: ImageDatastore): string[] {
 
         if (document.resource.category !== 'Type' && document.resource.category !== 'TypeCatalog') {
             throw 'Illegal argument: Document must be of category Type or TypeCatalog.';
@@ -32,7 +32,7 @@ export module TypeImagesUtil {
 
 
     function getLinkedImagesForTypeCatalog(resourceId: ResourceId, fieldDatastore: FieldDatastore,
-                                                 imageDatastore: ImageReadDatastore): string[] {
+                                                 imageDatastore: ImageDatastore): string[] {
 
         const query: Query = {
             constraints: { 'liesWithin:contain': resourceId }
@@ -47,7 +47,7 @@ export module TypeImagesUtil {
     }
 
 
-    function getTypeImage(fieldDatastore: FieldDatastore, imageDatastore: ImageReadDatastore) {
+    function getTypeImage(fieldDatastore: FieldDatastore, imageDatastore: ImageDatastore) {
 
         return (resourceId: string): string|undefined => {
 
@@ -67,7 +67,7 @@ export module TypeImagesUtil {
 
 
     function getLinkedImagesForType(resourceId: ResourceId, fieldDatastore: FieldDatastore,
-                                          imageDatastore: ImageReadDatastore): string[] {
+                                          imageDatastore: ImageDatastore): string[] {
 
         const query: Query = {
             constraints: { 'isInstanceOf:contain': resourceId }
@@ -85,7 +85,7 @@ export module TypeImagesUtil {
     }
 
 
-    function getMainImageId(resourceId: string, imageDatastore: ImageReadDatastore): string|undefined {
+    function getMainImageId(resourceId: string, imageDatastore: ImageDatastore): string|undefined {
 
         const query: Query = {
             constraints: { 'isDepictedIn:links': resourceId },

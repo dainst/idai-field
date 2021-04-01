@@ -4,7 +4,7 @@ import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {FieldDocument, ImageDocument} from 'idai-field-core';
 import {ImagePickerComponent} from '../widgets/image-picker.component';
 import {ImageGridComponent} from '../../image/grid/image-grid.component';
-import {ImageReadDatastore} from '../../../core/datastore/field/image-read-datastore';
+import {ImageDatastore} from '../../../core/datastore/field/image-datastore';
 import {SortUtil} from 'idai-field-core';
 import {MenuContext, MenuService} from '../../menu-service';
 import {ImageRelationsC as ImageRelations} from 'idai-field-core';
@@ -28,7 +28,7 @@ export class DoceditImageTabComponent {
     public selected: Array<ImageDocument> = [];
 
 
-    constructor(private datastore: ImageReadDatastore,
+    constructor(private datastore: ImageDatastore,
                 private modalService: NgbModal,
                 private menuService: MenuService,
                 private i18n: I18n) {}

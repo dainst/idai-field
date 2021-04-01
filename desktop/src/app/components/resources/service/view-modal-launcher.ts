@@ -3,7 +3,7 @@ import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {ImageDocument} from 'idai-field-core';
 import {Document} from 'idai-field-core';
 import {MenuContext, MenuService} from '../../menu-service';
-import {ImageReadDatastore} from '../../../core/datastore/field/image-read-datastore';
+import {ImageDatastore} from '../../../core/datastore/field/image-datastore';
 import {ImageViewModalComponent} from '../../viewmodal/image/image-view-modal.component';
 import {ResourceViewModalComponent} from '../../viewmodal/resource/resource-view-modal.component';
 
@@ -15,7 +15,7 @@ import {ResourceViewModalComponent} from '../../viewmodal/resource/resource-view
 export class ViewModalLauncher {
 
     constructor(private modalService: NgbModal,
-                private datastore: ImageReadDatastore,
+                private datastore: ImageDatastore,
                 private menuService: MenuService) {}
 
 

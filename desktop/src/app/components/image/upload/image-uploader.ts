@@ -8,7 +8,7 @@ import {ExtensionUtil} from '../../../core/util/extension-util';
 import {UploadStatus} from './upload-status';
 import {RelationsManager} from '../../../core/model/relations-manager';
 import {DocumentReadDatastore} from '../../../core/datastore/document-read-datastore';
-import {ImageReadDatastore} from '../../../core/datastore/field/image-read-datastore';
+import {ImageDatastore} from '../../../core/datastore/field/image-datastore';
 import {M} from '../../messages/m';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
 import {Imagestore} from '../../../core/images/imagestore/imagestore';
@@ -41,7 +41,7 @@ export class ImageUploader {
                        private relationsManager: RelationsManager,
                        private projectConfiguration: ProjectConfiguration,
                        private uploadStatus: UploadStatus,
-                       private imageDocumentDatastore: ImageReadDatastore,
+                       private imageDocumentDatastore: ImageDatastore,
                        private menuService: MenuService) {}
 
 

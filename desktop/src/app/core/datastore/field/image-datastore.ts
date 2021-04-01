@@ -1,12 +1,13 @@
-import { ImageDocument, IndexFacade, PouchdbDatastore } from 'idai-field-core';
-import { CachedDatastore } from '../cached/cached-datastore';
+import { ImageDocument, IndexFacade, PouchdbDatastore, Query } from 'idai-field-core';
+import { CachedDatastore, IdaiFieldFindResult } from '../cached/cached-datastore';
 import { CategoryConverter } from '../cached/category-converter';
 import { DocumentCache } from '../cached/document-cache';
 
+export interface IdaiFieldImageDocumentFindResult extends IdaiFieldFindResult<ImageDocument> {}
+
 /**
- * Data Access Object
- *
  * @author Daniel de Oliveira
+ * @author Thomas Kleinke
  */
 export class ImageDatastore
     extends CachedDatastore<ImageDocument> {
@@ -18,5 +19,11 @@ export class ImageDatastore
         documentConverter: CategoryConverter<ImageDocument>) {
 
         super(datastore, indexFacade, documentCache, documentConverter, 'ImageDocument');
+    }
+
+
+    public async find(query: Query): Promise<IdaiFieldImageDocumentFindResult> {
+
+        return super.find(query);
     }
 }

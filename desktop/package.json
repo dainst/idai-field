@@ -24,7 +24,7 @@
     "lint": "ng lint",
     "test": "jasmine JASMINE_CONFIG_PATH=test/unit/config/jasmine.json",
     "e2e": "npm-run-all -p -r ng:serve e2e:run",
-    "e2e:run": "wait-on http-get://localhost:4200/dist/ && node test/dist/test/e2e/spectron.js",
+    "e2e:run": "wait-on http-get://localhost:4200/dist/ && node test/dist/desktop/test/e2e/spectron.js",
     "package:mac": "electron-builder -m",
     "package:win": "electron-builder -w nsis --x64 --ia32",
     "package:lnx": "electron-builder -l --x64",

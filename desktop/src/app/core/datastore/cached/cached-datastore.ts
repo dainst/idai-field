@@ -1,7 +1,6 @@
 import { DatastoreErrors, FindIdsResult, FindResult, IndexFacade,
     ObjectUtils, PouchdbDatastore, Query, Document, NewDocument,
-    DocumentCache, CategoryConverter } from "idai-field-core";
-import { ConfigurationErrors } from "../../configuration/boot/configuration-errors"; // TODO remove dependency, should throw from Datastore errors, review where this is handled
+    DocumentCache, CategoryConverter } from 'idai-field-core';
 
 
 export interface IdaiFieldFindResult<T extends Document> extends FindResult {
@@ -321,7 +320,7 @@ export abstract class CachedDatastore<T extends Document> {
                 );
                 documents.push(this.documentCache.set(convertedDocument));
             } catch (errWithParams) {
-                if (errWithParams[0] !== ConfigurationErrors.UNKNOWN_CATEGORY_ERROR) throw errWithParams;
+                if (errWithParams[0] !== DatastoreErrors.UNKNOWN_CATEGORY /* TODO review where this has impact*/) throw errWithParams;
             }
         });
 

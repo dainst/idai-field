@@ -1,13 +1,14 @@
 /**
  * @author Daniel de Oliveira
  */
-export class DatastoreErrors {
+export module DatastoreErrors {
 
-    public static INVALID_DOCUMENT: string = 'datastore/invaliddocument';
-    public static GENERIC_ERROR: string = 'datastore/genericerror';
-    public static DOCUMENT_RESOURCE_ID_EXISTS: string = 'datastore/documentresourceidexists';
-    public static DOCUMENT_NO_RESOURCE_ID: string = 'datastore/documentnoresourceid';
-    public static DOCUMENT_NOT_FOUND: string = 'datastore/documentnotfound';
-    public static SAVE_CONFLICT: string = 'datastore/saveconflict';
-    public static REMOVE_REVISIONS_ERROR: string = 'datastore/removerevisionserror';
+    export const UNKNOWN_CATEGORY = 'datastore/unknowncategory';
+    export const INVALID_DOCUMENT = 'datastore/invaliddocument';
+    export const GENERIC_ERROR = 'datastore/genericerror';
+    export const DOCUMENT_RESOURCE_ID_EXISTS = 'datastore/documentresourceidexists';
+    export const DOCUMENT_NO_RESOURCE_ID = 'datastore/documentnoresourceid';
+    export const DOCUMENT_NOT_FOUND = 'datastore/documentnotfound';
+    export const SAVE_CONFLICT = 'datastore/saveconflict';
+    export const REMOVE_REVISIONS_ERROR = 'datastore/removerevisionserror';
 }

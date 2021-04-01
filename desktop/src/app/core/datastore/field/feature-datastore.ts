@@ -1,5 +1,4 @@
-import { FeatureDocument, IndexFacade, PouchdbDatastore, Query, CategoryConverter, DocumentCache } from 'idai-field-core';
-import { CachedDatastore, IdaiFieldFindResult } from '../cached/cached-datastore';
+import { CachedDatastore, IdaiFieldFindResult, FeatureDocument, IndexFacade, PouchdbDatastore, Query, CategoryConverter, DocumentCache } from 'idai-field-core';
 
 
 export interface IdaiFieldFeatureDocumentFindResult extends IdaiFieldFindResult<FeatureDocument> {}

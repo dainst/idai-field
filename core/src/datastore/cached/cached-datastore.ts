@@ -1,6 +1,13 @@
-import { DatastoreErrors, FindIdsResult, FindResult, IndexFacade,
-    ObjectUtils, PouchdbDatastore, Query, Document, NewDocument,
-    DocumentCache, CategoryConverter } from 'idai-field-core';
+import { IndexFacade } from '../../index/index-facade';
+import {Document} from '../../model/document';
+import { NewDocument } from '../../model/new-document';
+import { Query } from '../../model/query';
+import { ObjectUtils } from '../../tools/object-utils';
+import { FindIdsResult, FindResult } from '../model/datastore';
+import { DatastoreErrors } from '../model/datastore-errors';
+import { PouchdbDatastore } from '../pouchdb/pouchdb-datastore';
+import { CategoryConverter } from './category-converter';
+import { DocumentCache } from './document-cache';
 
 
 export interface IdaiFieldFindResult<T extends Document> extends FindResult {

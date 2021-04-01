@@ -1,5 +1,4 @@
-import { IndexFacade, PouchdbDatastore, DocumentCache, CategoryConverter, Document } from 'idai-field-core';
-import { CachedDatastore } from './cached/cached-datastore';
+import { IndexFacade, CachedDatastore, PouchdbDatastore, DocumentCache, CategoryConverter, Document } from 'idai-field-core';
 
 /**
  * Data Access Object

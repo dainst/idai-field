@@ -10,8 +10,7 @@ import {AngularUtility} from '../../../angular/angular-utility';
 import {ModelUtil} from '../../model/model-util';
 import hasId = ModelUtil.hasId;
 import hasEqualId = ModelUtil.hasEqualId;
-import { FieldDocument, Query, ObserverUtil, ObjectUtils } from 'idai-field-core';
-import { IdaiFieldFindResult } from '../../datastore/cached/cached-datastore';
+import { FieldDocument, Query, ObserverUtil, ObjectUtils, IdaiFieldFindResult } from 'idai-field-core';
 
 
 const LIES_WITHIN_EXIST = 'liesWithin:exist';

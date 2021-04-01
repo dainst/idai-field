@@ -1,8 +1,6 @@
-import { fieldDoc } from 'idai-field-core';
-import { Document } from 'idai-field-core';
+import { fieldDoc, Document, CachedDatastore } from 'idai-field-core';
 import * as PouchDB from 'pouchdb-node';
 import { FieldDocument } from '../../../../../../core/index';
-import { CachedDatastore } from '../../../../../src/app/core/datastore/cached/cached-datastore';
 import { ResourcesStateManager } from '../../../../../src/app/core/resources/view/resources-state-manager';
 import { ViewFacade } from '../../../../../src/app/core/resources/view/view-facade';
 import { TabManager } from '../../../../../src/app/core/tabs/tab-manager';

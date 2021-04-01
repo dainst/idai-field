@@ -1,6 +1,5 @@
-import { fieldDoc, ImageDocument } from 'idai-field-core';
+import { fieldDoc, ImageDocument, CachedDatastore } from 'idai-field-core';
 import * as PouchDB from 'pouchdb-node';
-import { CachedDatastore } from '../../../../../src/app/core/datastore/cached/cached-datastore';
 import { ImageOverviewFacade } from '../../../../../src/app/core/images/overview/view/imageoverview-facade';
 import { createApp, setupSyncTestDb } from '../subsystem-helper';
 

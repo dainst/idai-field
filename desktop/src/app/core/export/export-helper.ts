@@ -1,6 +1,5 @@
 import {Document} from 'idai-field-core';
-import {FieldResource, Category, Query} from 'idai-field-core';
-import { IdaiFieldFindResult } from '../datastore/cached/cached-datastore';
+import {FieldResource, Category, Query, IdaiFieldFindResult} from 'idai-field-core';
 
 
 export type Count = number; // -1 signals that there is not usable count

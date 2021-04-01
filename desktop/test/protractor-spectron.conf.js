@@ -10,12 +10,12 @@ exports.config = {
     baseUrl: fileUrl(path.resolve(__dirname, '../../..') + '/dist/index.html'),
 
     specs: [
-        'dist/test/e2e/matrix/*.spec.js',
-        'dist/test/e2e/images/*.spec.js',
-        'dist/test/e2e/resources/*.spec.js',
-        'dist/test/e2e/map/*.spec.js',
-        'dist/test/e2e/import/*.spec.js',
-        'dist/test/e2e/settings/*.spec.js'
+        'dist/desktop/test/e2e/matrix/*.spec.js',
+        'dist/desktop/test/e2e/images/*.spec.js',
+        'dist/desktop/test/e2e/resources/*.spec.js',
+        'dist/desktop/test/e2e/map/*.spec.js',
+        'dist/desktop/test/e2e/import/*.spec.js',
+        'dist/desktop/test/e2e/settings/*.spec.js'
     ],
 
     allScriptsTimeout: 110000,

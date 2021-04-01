@@ -1,7 +1,0 @@
-<?xml version='1.0' encoding='utf-8'?>
-<resources>
-    <string name="app_name">idai-field-mobile</string>
-    <string name="title_activity_main">idai-field-mobile</string>
-    <string name="package_name">world.idai.field.mobile</string>
-    <string name="custom_url_scheme">world.idai.field.mobile</string>
-</resources>

@@ -70,4 +70,7 @@ app.start()
             .then(() => Promise.resolve(code));
     })
     .then(code => app.stop().then(() => process.exit(code)))
-    .catch(() => process.exit(1));
+    .catch(e => {
+        console.error(e);
+        process.exit(1)
+    });

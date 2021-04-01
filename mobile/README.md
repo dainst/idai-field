@@ -1,6 +1,7 @@
 # iDAI.field Mobile
 
 This package contains the mobile client for iDAI.field.
+The app is developed in [React Native](https://reactnative.dev/) and the [Expo CLI](https://expo.io/).
 
 ## Development
 
@@ -12,21 +13,11 @@ Use the following commands to run the app for development in the browser (in the
 
 ## Run on (vritual) device
 
-You can use the corresponding IDE (Android Studio or XCode) to run the app on Android and iOS devices
-or simulators.
+First run 
+    $npm start
 
-First you need to build the app with
+to start expo cli. From here you can open the app on your mobile device by scanning displayed QR code. Or you can run the app on virtual devices (using Xcode or Android Studio simulators)
 
-    $ npm run build
+## UI Library
 
-Then copy the resulting web files and any native dependencies with
-
-    $ npx cap sync
-
-You can then open the corresponding IDE with
-
-    $ npx cap open android
-
-or
-
-    $ npx cap open ios
+We are using (NativeBase)[https://docs.nativebase.io] as UI component library.

@@ -20,4 +20,4 @@ to start expo cli. From here you can open the app on your mobile device by scann
 
 ## UI Library
 
-We are using [React Native Paper](https://callstack.github.io/react-native-paper/) as UI component library.
+We are using (NativeBase)[https://docs.nativebase.io] as UI component library.

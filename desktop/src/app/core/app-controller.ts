@@ -1,12 +1,11 @@
-import {Injectable} from '@angular/core';
-import {Document, DocumentCache} from 'idai-field-core';
-import {PouchdbManager} from './datastore/pouchdb/pouchdb-manager';
-import {ImagesState} from './images/overview/view/images-state';
-import {IndexFacade} from 'idai-field-core';
-import {TabManager} from './tabs/tab-manager';
-import {ResourcesStateManager} from './resources/view/resources-state-manager';
-import {ProjectConfiguration} from './configuration/project-configuration';
-import {FieldCategoryConverter} from './datastore/field/field-category-converter';
+import { Injectable } from '@angular/core';
+import { Document, DocumentCache, Indexer, IndexFacade } from 'idai-field-core';
+import { ProjectConfiguration } from './configuration/project-configuration';
+import { FieldCategoryConverter } from './datastore/field/field-category-converter';
+import { PouchdbManager } from './datastore/pouchdb/pouchdb-manager';
+import { ImagesState } from './images/overview/view/images-state';
+import { ResourcesStateManager } from './resources/view/resources-state-manager';
+import { TabManager } from './tabs/tab-manager';
 
 const remote = typeof window !== 'undefined' ? window.require('electron').remote : require('electron').remote;
 const express = typeof window !== 'undefined' ? window.require('express') : require('express');
@@ -56,8 +55,8 @@ export class AppController {
         this.tabManager.resetForE2E();
         this.documentCache.resetForE2E();
         await this.pouchdbManager.resetForE2E();
-        await this.pouchdbManager.reindex(
-            this.indexFacade, this.documentCache, new FieldCategoryConverter(this.projectConfiguration)
+        await Indexer.reindex(
+            this.indexFacade, this.pouchdbManager.getDb(), this.documentCache, new FieldCategoryConverter(this.projectConfiguration)
         );
     }
 }

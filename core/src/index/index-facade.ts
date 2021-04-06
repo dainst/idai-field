@@ -1,17 +1,17 @@
-import {Observable, Observer} from 'rxjs';
-import {is, on, flow, isDefined, separate, Map, filter, values, forEach, lookup} from 'tsfun';
-import {Document} from '../model/document';
-import {Resource} from '../model/resource';
-import {performQuery} from './perform-query';
-import {getSortedIds} from './get-sorted-ids';
-import { IndexItem, TypeResourceIndexItem } from './index-item';
+import { Observable, Observer } from 'rxjs';
+import { filter, flow, forEach, is, isDefined, lookup, Map, on, separate, values } from 'tsfun';
 import { Category } from '../model/category';
+import { Document } from '../model/document';
+import { Query } from '../model/query';
+import { Resource } from '../model/resource';
 import { namedArrayToNamedMap } from '../tools/named';
+import { ObserverUtil } from '../tools/observer-util';
 import { ConstraintIndex } from './constraint-index';
 import { FulltextIndex } from './fulltext-index';
-import { Query } from '../model/query';
 import { getFieldsToIndex } from './get-fields-to-index';
-import { ObserverUtil } from '../tools/observer-util';
+import { getSortedIds } from './get-sorted-ids';
+import { IndexItem, TypeResourceIndexItem } from './index-item';
+import { performQuery } from './perform-query';
 
 const TYPE = 'Type';
 const INSTANCES = 'instances';

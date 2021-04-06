@@ -1,7 +1,7 @@
 import fs = require('fs');
 import rimraf = require('rimraf');
 import PouchDB = require('pouchdb-node');
-import { ConstraintIndex, IndexFacade } from 'idai-field-core';
+import { ConstraintIndex, Indexer, IndexFacade } from 'idai-field-core';
 import { PouchdbManager } from '../../../../../src/app/core/datastore/pouchdb/pouchdb-manager';
 import { ImagestoreErrors } from '../../../../../src/app/core/images/imagestore/imagestore-errors';
 import { PouchDbFsImagestore } from '../../../../../src/app/core/images/imagestore/pouch-db-fs-imagestore';
@@ -45,7 +45,8 @@ xdescribe('PouchDbFsImagestore', () => {
         await manager.createDb('unittest', undefined, false);
 
         // TODO Set DocumentCache & Converter before tests are activated again
-        await manager.reindex(new IndexFacade(mockConstraintIndexer, mockFulltextIndexer, undefined, false), null, null);
+        await Indexer.reindex(new IndexFacade(mockConstraintIndexer, mockFulltextIndexer, undefined, false),
+                              manager.getDb(), null, null);
 
         store = new PouchDbFsImagestore(mockImageConverter, mockBlobMaker, manager.getDb());
         await store.init({ imagestorePath: 'test/store/', selectedProject: 'unittest' } as any);

@@ -1,10 +1,6 @@
-import { Document, DocumentCache, IndexFacade, Name } from 'idai-field-core';
+import { Name } from 'idai-field-core';
 import { Observable, Observer } from 'rxjs';
-import { isUndefined, not } from 'tsfun';
-import { ConfigurationErrors } from '../../configuration/boot/configuration-errors';
-import { InitializationProgress } from '../../initialization-progress';
 import { SyncProcess, SyncStatus } from '../../sync/sync-process';
-import { FieldCategoryConverter } from '../field/field-category-converter';
 
 const PouchDB = typeof window !== 'undefined' ? window.require('pouchdb-browser') : require('pouchdb-node');
 
@@ -112,74 +108,11 @@ export class PouchdbManager {
         this.db = db;
     }
 
-    // TODO: Move to index
-    public async reindex(indexFacade: IndexFacade, documentCache: DocumentCache<Document>,
-                         converter: FieldCategoryConverter, progress?: InitializationProgress) {
-
-        if (progress) {
-            progress.setDocumentsToIndex((await this.db.info()).doc_count);
-            await progress.setPhase('loadingDocuments');
-        }
-
-        indexFacade.clear();
-
-        let documents = [];
-        try {
-            documents = await this.fetchAll();
-        } catch (err) {
-            console.error(err);
-            await progress.setError('fetchDocumentsError');
-            throw err;
-        }
-
-        if (progress) await progress.setPhase('indexingDocuments');
-
-        try {
-            documents = this.convertDocuments(documents, converter);
-            documents.forEach(doc => documentCache.set(doc));
-            await indexFacade.putMultiple(documents, progress ? (count: number) => progress.setIndexedDocuments(count) : undefined);
-        } catch (err) {
-            console.error(err);
-            await progress.setError('indexingError');
-            throw err;
-        }
-    }
-
-
-    private async fetchAll() {
-
-        return (await this.db
-            .allDocs({
-                include_docs: true,
-                conflicts: true
-            })).rows
-            .filter(row => !PouchdbManager.isDesignDoc(row))
-            .map(row => row.doc);
-    }
-
-
-    private convertDocuments(documents: Array<Document>, converter: FieldCategoryConverter): Array<Document> {
-
-        return documents.map(doc => {
-            try {
-                return converter.convert(doc);
-            } catch (err) {
-                if (err.length > 0 && err[0] === ConfigurationErrors.UNKNOWN_CATEGORY_ERROR) {
-                    console.warn('Unknown category: ' + err[1]);
-                    return undefined;
-                }
-            }
-        }).filter(not(isUndefined));
-    }
-
 
     private static createPouchDBObject(name: string): any {
 
         return new PouchDB(name);
     }
-
-
-    private static isDesignDoc = (row: any) => row.id.indexOf('_') === 0;
 }
 
 

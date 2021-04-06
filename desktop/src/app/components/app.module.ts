@@ -8,7 +8,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { ConstraintIndex, Document, DocumentCache, FulltextIndex, IndexFacade, Query } from 'idai-field-core';
+import { ConstraintIndex, Document, DocumentCache, FulltextIndex, Indexer, IndexFacade, Query } from 'idai-field-core';
 import { AngularUtility } from '../angular/angular-utility';
 import { Translations } from '../angular/translations';
 import { AppController } from '../core/app-controller';
@@ -143,10 +143,15 @@ registerLocaleData(localeIt, 'it');
                         constraintIndex = createdConstraintIndex;
                         fulltextIndex = createdFulltextIndex;
                         return createdIndexFacade;
-                     }).then(facade => {
+                     }).then(async facade => {
                          indexFacade = facade;
-                         return pouchdbManager.reindex(
-                             indexFacade, documentCache, new FieldCategoryConverter(projectConfiguration), progress
+                         progress.setDocumentsToIndex((await pouchdbManager.getDb().info()).doc_count);
+                         progress.setPhase('loadingDocuments');
+                         return Indexer.reindex(indexFacade, pouchdbManager.getDb(), documentCache,
+                            new FieldCategoryConverter(projectConfiguration),
+                            (count) => progress.setIndexedDocuments(count),
+                            () => progress.setPhase('indexingDocuments'),
+                            (error) => progress.setError(error)
                          );
                     }).then(() => AngularUtility.refresh(700))
         },

@@ -1,0 +1,1 @@
+export const headerBackgroundColor = 'rgba(106,164,184,0.95)';

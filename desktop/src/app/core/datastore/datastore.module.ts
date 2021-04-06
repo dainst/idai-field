@@ -18,7 +18,10 @@ import { PouchdbServer } from './pouchdb/pouchdb-server';
 @NgModule({
     providers: [
         ChangesStream,
-        PouchdbManager,
+        {
+            provide: PouchdbManager,
+            useClass: PouchdbManager
+        },
         PouchdbServer,
         { provide: CategoryConverter, useClass: FieldCategoryConverter },
         DocumentCache,

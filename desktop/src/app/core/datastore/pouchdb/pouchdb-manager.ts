@@ -1,4 +1,3 @@
-import { Injectable } from '@angular/core';
 import { Document, DocumentCache, IndexFacade, Name } from 'idai-field-core';
 import { Observable, Observer } from 'rxjs';
 import { isUndefined, not } from 'tsfun';
@@ -11,7 +10,6 @@ import { SampleDataLoader } from '../field/sampledata/sample-data-loader';
 const PouchDB = typeof window !== 'undefined' ? window.require('pouchdb-browser') : require('pouchdb-node');
 
 
-@Injectable()
 /**
  * Manages the creation of PouchDB instances.
  * Also handles loading of sample data if 'test' database is selected.
@@ -47,6 +45,7 @@ export class PouchdbManager {
     }
 
 
+    // TODO consolidate with createDB, move sample data loading to settings service
     public async loadProjectDb(name: string, sampleDataLoader?: SampleDataLoader) {
 
         let db = PouchdbManager.createPouchDBObject(name);
@@ -131,7 +130,7 @@ export class PouchdbManager {
         }
     }
 
-
+    // TODO: Move to index
     public async reindex(indexFacade: IndexFacade, documentCache: DocumentCache<Document>,
                          converter: FieldCategoryConverter, progress?: InitializationProgress) {
 

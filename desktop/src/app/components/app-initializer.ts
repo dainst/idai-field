@@ -81,10 +81,11 @@ export const appInitializerFactory = (
 
     await pouchdbServer.setupServer();
 
-    await progress.setPhase('loadingSettings');
-    const settings = await (new SettingsSerializer).load();
-    await progress.setEnvironment(settings.dbs[0], Settings.getLocale());
-    await settingsService.bootProjectDb(settings, progress);
+    const settings = await loadSettings(settingsService, progress);
+
+    await setUpDatabase(settingsService, settings, progress);
+
+    await loadSampleData(settingsService, settings, pouchdbManager.getDb(), progress);
 
     const services = await loadConfiguration(settingsService, progress);
     serviceLocator.init(services);
@@ -100,6 +101,32 @@ export const appInitializerFactory = (
 
     return await AngularUtility.refresh(700);
 };
+
+
+const loadSettings = async (settingsService: SettingsService, progress: InitializationProgress): Promise<Settings> => {
+
+    await progress.setPhase('loadingSettings');
+    const settings = await settingsService.updateSettings(await (new SettingsSerializer).load());
+    await progress.setEnvironment(settings.dbs[0], Settings.getLocale());
+
+    return settings;
+}
+
+
+const setUpDatabase = async (settingsService: SettingsService, settings: Settings, progress: InitializationProgress) => {
+
+    await progress.setPhase('settingUpDatabase');
+    await settingsService.bootProjectDb(settings, progress);
+}
+
+
+const loadSampleData = async (settingsService: SettingsService, settings: Settings, db: PouchDB.Database, progress: InitializationProgress) => {
+
+    if (settings.selectedProject === 'test') {
+        await progress.setPhase('loadingSampleObjects');
+        await settingsService.loadSampleData(settings.selectedProject, settings.imagestorePath, db);
+    }
+}
 
 
 const loadConfiguration = async (settingsService: SettingsService, progress: InitializationProgress): Promise<Services> => {

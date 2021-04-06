@@ -70,27 +70,17 @@ export class SettingsService {
     }
 
 
-    public async bootProjectDb(settings_: Settings, progress?: InitializationProgress): Promise<void> {
+    public async bootProjectDb(settings: Settings, progress?: InitializationProgress): Promise<void> {
 
         try {
-            await this.updateSettings(settings_); // TODO pull this out of the function; pass the result as settings
-            const settings = this.settingsProvider.getSettings();
-
-            if (progress) await progress.setPhase('settingUpDatabase');
-
-            const isTestProject = settings.selectedProject === 'test';
 
             await this.pouchdbManager.createDb(
                 settings.selectedProject,
                 SettingsService.createProjectDocument(this.settingsProvider.getSettings()),
-                isTestProject);
-
-            if (isTestProject) {
-                if (progress) await progress.setPhase('loadingSampleObjects');
-                await this.loadSampleData(settings.selectedProject, settings.imagestorePath, this.pouchdbManager.getDb());
-            }
+                settings.selectedProject === 'test');
 
             if (settings.isSyncActive) await this.setupSync();
+
         } catch (msgWithParams) {
             console.error(msgWithParams);
             await progress.setError('databaseError');
@@ -113,7 +103,7 @@ export class SettingsService {
      * Sets, validates and persists the settings state.
      * Project settings have to be set separately.
      */
-    public async updateSettings(settings_: Settings) {
+    public async updateSettings(settings_: Settings): Promise<Settings> {
 
         this.settingsProvider.setSettings(settings_);
         const settings = this.settingsProvider.getSettings();
@@ -136,7 +126,8 @@ export class SettingsService {
                     console.error('Something went wrong with imagestore.setPath', errWithParams);
                 }
             })
-            .then(() => this.settingsProvider.setSettingsAndSerialize(settings));
+            .then(() => this.settingsProvider.setSettingsAndSerialize(settings))
+            .then(() => settings);
     }
 
 
@@ -214,7 +205,7 @@ export class SettingsService {
     }
 
 
-    private async loadSampleData(project: string, imagestorePath: string, db: PouchDB.Database) {
+    public async loadSampleData(project: string, imagestorePath: string, db: PouchDB.Database) {
         const loader = new SampleDataLoader(this.imageConverter, imagestorePath, Settings.getLocale());
         return loader.go(db, project);
     }

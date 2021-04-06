@@ -116,7 +116,11 @@ const loadSettings = async (settingsService: SettingsService, progress: Initiali
 const setUpDatabase = async (settingsService: SettingsService, settings: Settings, progress: InitializationProgress) => {
 
     await progress.setPhase('settingUpDatabase');
-    await settingsService.bootProjectDb(settings, progress);
+    try {
+        await settingsService.bootProjectDb(settings);
+    } catch (msgWithParams) {
+        await progress.setError('databaseError');
+    }
 }
 
 

@@ -11,7 +11,6 @@ import { PouchdbServer } from '../datastore/pouchdb/pouchdb-server';
 import { ImageConverter } from '../images/imagestore/image-converter';
 import { Imagestore } from '../images/imagestore/imagestore';
 import { ImagestoreErrors } from '../images/imagestore/imagestore-errors';
-import { InitializationProgress } from '../initialization-progress';
 import { SyncService } from '../sync/sync-service';
 import { Settings } from './settings';
 import { SettingsProvider } from './settings-provider';
@@ -70,7 +69,7 @@ export class SettingsService {
     }
 
 
-    public async bootProjectDb(settings: Settings, progress?: InitializationProgress): Promise<void> {
+    public async bootProjectDb(settings: Settings): Promise<void> {
 
         try {
 
@@ -83,7 +82,6 @@ export class SettingsService {
 
         } catch (msgWithParams) {
             console.error(msgWithParams);
-            await progress.setError('databaseError');
             throw msgWithParams;
         }
     }

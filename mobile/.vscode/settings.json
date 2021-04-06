@@ -1,3 +1,7 @@
 {
-    "eslint.validate": [ "javascript", "javascriptreact", "html", "typescriptreact" ],
+    "eslint.validate": [ "javascript", "javascriptreact", "html", "typescriptreact", "typescript" ],
+    "editor.rulers": [120],
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": true
+    }
 }

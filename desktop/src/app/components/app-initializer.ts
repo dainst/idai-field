@@ -14,67 +14,58 @@ import { IndexerConfiguration } from '../indexer-configuration';
 const remote = typeof window !== 'undefined' ? window.require('electron').remote : require('electron').remote;
 
 
+interface Services {
+    projectConfiguration?: ProjectConfiguration;
+    fulltextIndex?: FulltextIndex;
+    constraintIndex?: ConstraintIndex;
+    indexFacade?: IndexFacade;
+}
+
+
 export class AppInitializerServiceLocator {
 
-    private _projectConfiguration: ProjectConfiguration;
-    private _fulltextIndex: FulltextIndex;
-    private _constraintIndex: ConstraintIndex;
-    private _indexFacade: IndexFacade;
+    private services: Services = {};
 
 
-    public get projectConfiguration(): ProjectConfiguration {
-        if (!this._projectConfiguration) {
-            console.error('project configuration has not yet been provided');
-            throw 'project configuration has not yet been provided';
-        }
-        return this._projectConfiguration;
+    public init(services: Services) {
+
+        this.services = services;
     }
 
 
-    public set projectConfiguration(value: ProjectConfiguration | undefined) {
-        this._projectConfiguration = value;
+    public get projectConfiguration(): ProjectConfiguration {
+        if (!this.services.projectConfiguration) {
+            console.error('project configuration has not yet been provided');
+            throw 'project configuration has not yet been provided';
+        }
+        return this.services.projectConfiguration;
     }
 
 
     public get fulltextIndex(): FulltextIndex {
-        if (!this._fulltextIndex) {
+        if (!this.services.fulltextIndex) {
             console.error('fulltext index has not yet been provided');
             throw 'fulltext index has not yet been provided';
         }
-        return this._fulltextIndex;
-    }
-
-
-    public set fulltextIndex(value: FulltextIndex | undefined) {
-        this._fulltextIndex = value;
+        return this.services.fulltextIndex;
     }
 
 
     public get constraintIndex(): ConstraintIndex {
-        if (!this._constraintIndex) {
+        if (!this.services.constraintIndex) {
             console.error('constraint index has not yet been provided');
             throw 'constraint index has not yet been provided';
         }
-        return this._constraintIndex;
-    }
-
-
-    public set constraintIndex(value: ConstraintIndex | undefined) {
-        this._constraintIndex = value;
+        return this.services.constraintIndex;
     }
 
 
     public get indexFacade(): IndexFacade {
-        if (!this._indexFacade) {
+        if (!this.services.indexFacade) {
             console.error('index facade has not yet been provided');
             throw 'index facade has not yet been provided';
         }
-        return this._indexFacade;
-    }
-
-
-    public set indexFacade(value: IndexFacade | undefined) {
-        this._indexFacade = value;
+        return this.services.indexFacade;
     }
 }
 
@@ -95,15 +86,11 @@ export const appInitializerFactory = (
     await progress.setEnvironment(settings.dbs[0], Settings.getLocale());
     await settingsService.bootProjectDb(settings, progress);
 
-    const configuration = await settingsService.loadConfiguration(remote.getGlobal('configurationDirPath'), progress);
-    serviceLocator.projectConfiguration = configuration;
-    const { createdConstraintIndex, createdFulltextIndex, createdIndexFacade } = IndexerConfiguration.configureIndexers(configuration);
-    serviceLocator.constraintIndex = createdConstraintIndex;
-    serviceLocator.fulltextIndex = createdFulltextIndex;
-    serviceLocator.indexFacade = createdIndexFacade;
+    const services = await loadConfiguration(settingsService, progress);
+    serviceLocator.init(services);
 
+    await progress.setPhase('loadingDocuments');
     progress.setDocumentsToIndex((await pouchdbManager.getDb().info()).doc_count);
-    progress.setPhase('loadingDocuments');
     await Indexer.reindex(serviceLocator.indexFacade, pouchdbManager.getDb(), documentCache,
         new FieldCategoryConverter(serviceLocator.projectConfiguration),
         (count) => progress.setIndexedDocuments(count),
@@ -112,4 +99,26 @@ export const appInitializerFactory = (
     );
 
     return await AngularUtility.refresh(700);
+};
+
+
+const loadConfiguration = async (settingsService: SettingsService, progress: InitializationProgress): Promise<Services> => {
+
+    await progress.setPhase('loadingConfiguration');
+
+    let configuration: ProjectConfiguration;
+    try {
+        configuration = await settingsService.loadConfiguration(remote.getGlobal('configurationDirPath'));
+    } catch(err) {
+        progress.setError('configurationError', err);
+        return Promise.reject();
+    }
+
+    const { createdConstraintIndex, createdFulltextIndex, createdIndexFacade } = IndexerConfiguration.configureIndexers(configuration);
+    return {
+        projectConfiguration: configuration,
+        constraintIndex: createdConstraintIndex,
+        fulltextIndex: createdFulltextIndex,
+        indexFacade: createdIndexFacade
+    };
 };

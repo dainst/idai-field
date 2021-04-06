@@ -140,10 +140,7 @@ export class SettingsService {
     }
 
 
-    public async loadConfiguration(configurationDirPath: string,
-                                   progress?: InitializationProgress): Promise<ProjectConfiguration> {
-
-        if (progress) await progress.setPhase('loadingConfiguration');
+    public async loadConfiguration(configurationDirPath: string): Promise<ProjectConfiguration> {
 
         try {
             return this.appConfigurator.go(
@@ -163,8 +160,7 @@ export class SettingsService {
                 console.error('Number of errors in project configuration:', msgsWithParams.length);
             }
 
-            await progress.setError('configurationError', msgsWithParams);
-            throw 'Could not boot project';
+            throw msgsWithParams;
         }
     }
 

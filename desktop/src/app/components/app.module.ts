@@ -8,8 +8,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { ConstraintIndex, Document, DocumentCache, FulltextIndex, Indexer, IndexFacade, Query } from 'idai-field-core';
-import { AngularUtility } from '../angular/angular-utility';
+import { ConstraintIndex, DocumentCache, FulltextIndex, IndexFacade, Query } from 'idai-field-core';
 import { Translations } from '../angular/translations';
 import { AppController } from '../core/app-controller';
 import { StateSerializer } from '../core/common/state-serializer';
@@ -19,7 +18,6 @@ import { ConfigReader } from '../core/configuration/boot/config-reader';
 import { ProjectConfiguration } from '../core/configuration/project-configuration';
 import { DatastoreModule } from '../core/datastore/datastore.module';
 import { DocumentDatastore } from '../core/datastore/document-datastore';
-import { FieldCategoryConverter } from '../core/datastore/field/field-category-converter';
 import { FieldDatastore } from '../core/datastore/field/field-datastore';
 import { PouchdbManager } from '../core/datastore/pouchdb/pouchdb-manager';
 import { PouchdbServer } from '../core/datastore/pouchdb/pouchdb-server';
@@ -33,15 +31,13 @@ import { InitializationProgress } from '../core/initialization-progress';
 import { ImageRelationsManager } from '../core/model/image-relations-manager';
 import { RelationsManager } from '../core/model/relations-manager';
 import { Validator } from '../core/model/validator';
-import { Settings } from '../core/settings/settings';
 import { SettingsProvider } from '../core/settings/settings-provider';
-import { SettingsSerializer } from '../core/settings/settings-serializer';
 import { SettingsService } from '../core/settings/settings-service';
 import { SyncService } from '../core/sync/sync-service';
 import { TabManager } from '../core/tabs/tab-manager';
 import { TabSpaceCalculator } from '../core/tabs/tab-space-calculator';
 import { UtilTranslations } from '../core/util/util-translations';
-import { IndexerConfiguration } from '../indexer-configuration';
+import { appInitializerFactory, AppInitializerServiceLocator } from './app-initializer';
 import { AppComponent } from './app.component';
 import { routing } from './app.routing';
 import { BackupModule } from './backup/backup.module';
@@ -69,11 +65,6 @@ import { ViewModalModule } from './viewmodal/view-modal.module';
 import { WidgetsModule } from './widgets/widgets.module';
 
 const remote = typeof window !== 'undefined' ? window.require('electron').remote : require('electron').remote;
-
-let projectConfiguration: ProjectConfiguration|undefined = undefined;
-let fulltextIndex: FulltextIndex|undefined = undefined;
-let constraintIndex: ConstraintIndex|undefined = undefined;
-let indexFacade: IndexFacade|undefined = undefined;
 
 
 registerLocaleData(localeDe, 'de');
@@ -124,36 +115,14 @@ registerLocaleData(localeIt, 'it');
         SettingsProvider,
         SettingsService,
         {
+            provide: AppInitializerServiceLocator,
+            useFactory: () => new AppInitializerServiceLocator
+        },
+        {
             provide: APP_INITIALIZER,
             multi: true,
-            deps: [SettingsService, PouchdbManager, PouchdbServer, DocumentCache, InitializationProgress],
-            useFactory: (settingsService: SettingsService, pouchdbManager: PouchdbManager, pouchdbServer: PouchdbServer, documentCache: DocumentCache<Document>, progress: InitializationProgress) => () =>
-
-                pouchdbServer.setupServer()
-                    .then(() => progress.setPhase('loadingSettings'))
-                    .then(() => (new SettingsSerializer).load())
-                    .then(settings => progress.setEnvironment(settings.dbs[0], Settings.getLocale()).then(() =>
-                        settingsService.bootProjectDb(settings, progress).then(() =>
-                            settingsService.loadConfiguration(remote.getGlobal('configurationDirPath'), progress))))
-                    .then(configuration => {
-                        projectConfiguration = configuration;
-
-                        const { createdConstraintIndex, createdFulltextIndex, createdIndexFacade } =
-                            IndexerConfiguration.configureIndexers(projectConfiguration);
-                        constraintIndex = createdConstraintIndex;
-                        fulltextIndex = createdFulltextIndex;
-                        return createdIndexFacade;
-                     }).then(async facade => {
-                         indexFacade = facade;
-                         progress.setDocumentsToIndex((await pouchdbManager.getDb().info()).doc_count);
-                         progress.setPhase('loadingDocuments');
-                         return Indexer.reindex(indexFacade, pouchdbManager.getDb(), documentCache,
-                            new FieldCategoryConverter(projectConfiguration),
-                            (count) => progress.setIndexedDocuments(count),
-                            () => progress.setPhase('indexingDocuments'),
-                            (error) => progress.setError(error)
-                         );
-                    }).then(() => AngularUtility.refresh(700))
+            deps: [AppInitializerServiceLocator, SettingsService, PouchdbManager, PouchdbServer, DocumentCache, InitializationProgress],
+            useFactory: appInitializerFactory,
         },
         InitializationProgress,
         {
@@ -177,47 +146,47 @@ registerLocaleData(localeIt, 'it');
         AppController,
         {
             provide: ProjectConfiguration,
-            useFactory: () => {
-                if (!projectConfiguration) {
+            useFactory: (serviceLocator: AppInitializerServiceLocator) => {
+                if (!serviceLocator.projectConfiguration) {
                     console.error('project configuration has not yet been provided');
                     throw 'project configuration has not yet been provided';
                 }
-                return projectConfiguration;
+                return serviceLocator.projectConfiguration;
             },
-            deps: []
+            deps: [AppInitializerServiceLocator]
         },
         {
             provide: FulltextIndex,
-            useFactory: () => {
-                if (!fulltextIndex) {
+            useFactory: (serviceLocator: AppInitializerServiceLocator) => {
+                if (!serviceLocator.fulltextIndex) {
                     console.error('fulltext index has not yet been provided');
                     throw 'fulltext index has not yet been provided';
                 }
-                return fulltextIndex;
+                return serviceLocator.fulltextIndex;
             },
-            deps: []
+            deps: [AppInitializerServiceLocator]
         },
         {
             provide: ConstraintIndex,
-            useFactory: () => {
-                if (!constraintIndex) {
+            useFactory: (serviceLocator: AppInitializerServiceLocator) => {
+                if (!serviceLocator.constraintIndex) {
                     console.error('constraint index has not yet been provided');
                     throw 'constraint index has not yet been provided';
                 }
-                return constraintIndex;
+                return serviceLocator.constraintIndex;
             },
-            deps: []
+            deps: [AppInitializerServiceLocator]
         },
         {
             provide: IndexFacade,
-            useFactory: () => {
-                if (!indexFacade) {
+            useFactory: (serviceLocator: AppInitializerServiceLocator) => {
+                if (!serviceLocator.indexFacade) {
                     console.error('index facade has not yet been provided');
                     throw 'index facade has not yet been provided';
                 }
-                return indexFacade;
+                return serviceLocator.indexFacade;
             },
-            deps: []
+            deps: [AppInitializerServiceLocator]
         },
         RelationsManager,
         ImageRelationsManager,

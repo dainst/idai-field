@@ -56,11 +56,10 @@ export async function setupSettingsService(pouchdbmanager, pouchdbserver, projec
         undefined,
         new AppConfigurator(new ConfigLoader(new ConfigReader())),
         undefined,
-        undefined,
         settingsProvider
     );
 
-    await settingsService.bootProjectDb({
+    const settings = await settingsService.updateSettings({
         languages: ['de', 'en'],
         isAutoUpdateActive: false,
         isSyncActive: startSync,
@@ -76,6 +75,8 @@ export async function setupSettingsService(pouchdbmanager, pouchdbserver, projec
         imagestorePath: process.cwd() + '/test/test-temp/imagestore',
         username: 'synctestuser'
     });
+
+    await settingsService.bootProjectDb(settings);
 
     const projectConfiguration = await settingsService.loadConfiguration('src/config/');
     return {settingsService, projectConfiguration, settingsProvider};

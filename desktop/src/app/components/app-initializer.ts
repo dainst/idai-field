@@ -86,31 +86,30 @@ export const appInitializerFactory = (
         pouchdbServer: PouchdbServer,
         documentCache: DocumentCache<Document>,
         progress: InitializationProgress
-    ) => (): Promise<void> => {
+    ) => async (): Promise<void> => {
 
-    return pouchdbServer.setupServer()
-        .then(() => progress.setPhase('loadingSettings'))
-        .then(() => (new SettingsSerializer).load())
-        .then(settings => progress.setEnvironment(settings.dbs[0], Settings.getLocale()).then(() =>
-            settingsService.bootProjectDb(settings, progress).then(() =>
-                settingsService.loadConfiguration(remote.getGlobal('configurationDirPath'), progress))))
-        .then(configuration => {
-            serviceLocator.projectConfiguration = configuration;
+    await pouchdbServer.setupServer();
 
-            const { createdConstraintIndex, createdFulltextIndex, createdIndexFacade } =
-                IndexerConfiguration.configureIndexers(configuration);
-            serviceLocator.constraintIndex = createdConstraintIndex;
-            serviceLocator.fulltextIndex = createdFulltextIndex;
-            return createdIndexFacade;
-            }).then(async facade => {
-                serviceLocator.indexFacade = facade;
-                progress.setDocumentsToIndex((await pouchdbManager.getDb().info()).doc_count);
-                progress.setPhase('loadingDocuments');
-                return Indexer.reindex(facade, pouchdbManager.getDb(), documentCache,
-                new FieldCategoryConverter(serviceLocator.projectConfiguration),
-                (count) => progress.setIndexedDocuments(count),
-                () => progress.setPhase('indexingDocuments'),
-                (error) => progress.setError(error)
-                );
-        }).then(() => AngularUtility.refresh(700));
+    await progress.setPhase('loadingSettings');
+    const settings = await (new SettingsSerializer).load();
+    await progress.setEnvironment(settings.dbs[0], Settings.getLocale());
+    await settingsService.bootProjectDb(settings, progress);
+
+    const configuration = await settingsService.loadConfiguration(remote.getGlobal('configurationDirPath'), progress);
+    serviceLocator.projectConfiguration = configuration;
+    const { createdConstraintIndex, createdFulltextIndex, createdIndexFacade } = IndexerConfiguration.configureIndexers(configuration);
+    serviceLocator.constraintIndex = createdConstraintIndex;
+    serviceLocator.fulltextIndex = createdFulltextIndex;
+    serviceLocator.indexFacade = createdIndexFacade;
+
+    progress.setDocumentsToIndex((await pouchdbManager.getDb().info()).doc_count);
+    progress.setPhase('loadingDocuments');
+    await Indexer.reindex(serviceLocator.indexFacade, pouchdbManager.getDb(), documentCache,
+        new FieldCategoryConverter(serviceLocator.projectConfiguration),
+        (count) => progress.setIndexedDocuments(count),
+        () => progress.setPhase('indexingDocuments'),
+        (error) => progress.setError(error)
+    );
+
+    return await AngularUtility.refresh(700);
 };

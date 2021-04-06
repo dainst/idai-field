@@ -1,4 +1,4 @@
-import { CategoryConverter, createDocuments, Document, DocumentCache, FieldDocument, ImageDocument, NiceDocs, PouchdbDatastore, Query, ResourceId, toResourceId } from 'idai-field-core';
+import { CategoryConverter, createDocuments, Document, DocumentCache, FieldDocument, ImageDocument, NiceDocs, PouchdbDatastore, PouchdbManager, Query, ResourceId, SyncService, toResourceId } from 'idai-field-core';
 import * as PouchDB from 'pouchdb-node';
 import { sameset } from 'tsfun';
 import { AppConfigurator } from '../../../../src/app/core/configuration/app-configurator';
@@ -9,7 +9,6 @@ import { DocumentDatastore } from '../../../../src/app/core/datastore/document-d
 import { FieldCategoryConverter } from '../../../../src/app/core/datastore/field/field-category-converter';
 import { FieldDatastore } from '../../../../src/app/core/datastore/field/field-datastore';
 import { ImageDatastore } from '../../../../src/app/core/datastore/field/image-datastore';
-import { PouchdbManager } from '../../../../src/app/core/datastore/pouchdb/pouchdb-manager';
 import { PouchdbServer } from '../../../../src/app/core/datastore/pouchdb/pouchdb-server';
 import { DocumentHolder } from '../../../../src/app/core/docedit/document-holder';
 import { Imagestore } from '../../../../src/app/core/images/imagestore/imagestore';
@@ -26,7 +25,6 @@ import { ViewFacade } from '../../../../src/app/core/resources/view/view-facade'
 import { SyncTarget } from '../../../../src/app/core/settings/settings';
 import { SettingsProvider } from '../../../../src/app/core/settings/settings-provider';
 import { SettingsService } from '../../../../src/app/core/settings/settings-service';
-import { SyncService } from '../../../../src/app/core/sync/sync-service';
 import { TabManager } from '../../../../src/app/core/tabs/tab-manager';
 import { IndexerConfiguration } from '../../../../src/app/indexer-configuration';
 

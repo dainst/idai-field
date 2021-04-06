@@ -1,12 +1,9 @@
-import {Injectable} from '@angular/core';
-import {Observable, Observer} from 'rxjs';
-import {SyncStatus} from './sync-process';
-import {PouchdbManager} from '../datastore/pouchdb/pouchdb-manager';
-import {ObserverUtil} from 'idai-field-core';
-import {Settings} from '../settings/settings';
+import { Observable, Observer } from 'rxjs';
+import { PouchdbManager } from '../datastore/pouchdb/pouchdb-manager';
+import { ObserverUtil } from '../tools/observer-util';
+import { SyncStatus } from './sync-process';
 
 
-@Injectable()
 /**
  * @author Thomas Kleinke
  * @author Sebastian Cuy
@@ -28,11 +25,11 @@ export class SyncService {
     public getStatus = (): SyncStatus => this.status;
 
 
-    public init(settings: Settings) {
+    public init(syncTarget: string, project: string, password: string) {
 
-        this.syncTarget = settings.syncTarget.address;
-        this.project = settings.selectedProject;
-        this.password = settings.syncTarget.password;
+        this.syncTarget = syncTarget;
+        this.project = project;
+        this.password = password;
     }
 
 

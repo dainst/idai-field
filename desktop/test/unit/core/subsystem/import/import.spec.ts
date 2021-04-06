@@ -1,10 +1,9 @@
-import {createApp, createHelpers, setupSettingsService, setupSyncTestDb} from '../subsystem-helper';
-import {PouchdbManager} from '../../../../../src/app/core/datastore/pouchdb/pouchdb-manager';
-import {PouchdbServer} from '../../../../../src/app/core/datastore/pouchdb/pouchdb-server';
-import {Importer, ImporterOptions} from '../../../../../src/app/core/import/importer';
-import {ValidationErrors} from '../../../../../src/app/core/model/validation-errors';
-import {ImportErrors} from '../../../../../src/app/core/import/import/import-errors';
-import {Category} from 'idai-field-core';
+import { Category, PouchdbManager } from 'idai-field-core';
+import { PouchdbServer } from '../../../../../src/app/core/datastore/pouchdb/pouchdb-server';
+import { ImportErrors } from '../../../../../src/app/core/import/import/import-errors';
+import { Importer, ImporterOptions } from '../../../../../src/app/core/import/importer';
+import { ValidationErrors } from '../../../../../src/app/core/model/validation-errors';
+import { createApp, createHelpers, setupSettingsService, setupSyncTestDb } from '../subsystem-helper';
 
 /**
  * @author Daniel de Oliveira

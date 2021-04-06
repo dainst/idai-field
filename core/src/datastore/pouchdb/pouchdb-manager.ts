@@ -1,6 +1,6 @@
-import { Name } from 'idai-field-core';
 import { Observable, Observer } from 'rxjs';
 import { SyncProcess, SyncStatus } from '../../sync/sync-process';
+import { Name } from '../../tools/named';
 
 const PouchDB = typeof window !== 'undefined' ? window.require('pouchdb-browser') : require('pouchdb-node');
 

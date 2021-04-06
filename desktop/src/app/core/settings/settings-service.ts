@@ -1,15 +1,13 @@
 import { Injectable } from '@angular/core';
-import { Name } from 'idai-field-core';
+import { Name, PouchdbManager, SyncService } from 'idai-field-core';
 import { isString } from 'tsfun';
 import { M } from '../../components/messages/m';
 import { Messages } from '../../components/messages/messages';
 import { AppConfigurator } from '../configuration/app-configurator';
 import { ProjectConfiguration } from '../configuration/project-configuration';
-import { PouchdbManager } from '../datastore/pouchdb/pouchdb-manager';
 import { PouchdbServer } from '../datastore/pouchdb/pouchdb-server';
 import { Imagestore } from '../images/imagestore/imagestore';
 import { ImagestoreErrors } from '../images/imagestore/imagestore-errors';
-import { SyncService } from '../sync/sync-service';
 import { Settings } from './settings';
 import { SettingsProvider } from './settings-provider';
 
@@ -159,7 +157,11 @@ export class SettingsService {
         if (!settings.isSyncActive || !settings.dbs || !(settings.dbs.length > 0)) return;
         if (!SettingsService.isSynchronizationAllowed(this.settingsProvider.getSettings().selectedProject)) return;
 
-        this.synchronizationService.init(this.settingsProvider.getSettings());
+        this.synchronizationService.init(
+            settings.syncTarget.address,
+            settings.selectedProject,
+            settings.syncTarget.password
+        );
         return this.synchronizationService.startSync();
     }
 

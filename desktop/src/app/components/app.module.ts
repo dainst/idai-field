@@ -8,7 +8,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { ConstraintIndex, DocumentCache, FulltextIndex, IndexFacade, Query } from 'idai-field-core';
+import { ConstraintIndex, DocumentCache, FulltextIndex, IndexFacade, PouchdbManager, Query, SyncService } from 'idai-field-core';
 import { Translations } from '../angular/translations';
 import { AppController } from '../core/app-controller';
 import { StateSerializer } from '../core/common/state-serializer';
@@ -19,7 +19,6 @@ import { ProjectConfiguration } from '../core/configuration/project-configuratio
 import { DatastoreModule } from '../core/datastore/datastore.module';
 import { DocumentDatastore } from '../core/datastore/document-datastore';
 import { FieldDatastore } from '../core/datastore/field/field-datastore';
-import { PouchdbManager } from '../core/datastore/pouchdb/pouchdb-manager';
 import { PouchdbServer } from '../core/datastore/pouchdb/pouchdb-server';
 import { BlobMaker } from '../core/images/imagestore/blob-maker';
 import { ImageConverter } from '../core/images/imagestore/image-converter';
@@ -33,7 +32,6 @@ import { RelationsManager } from '../core/model/relations-manager';
 import { Validator } from '../core/model/validator';
 import { SettingsProvider } from '../core/settings/settings-provider';
 import { SettingsService } from '../core/settings/settings-service';
-import { SyncService } from '../core/sync/sync-service';
 import { TabManager } from '../core/tabs/tab-manager';
 import { TabSpaceCalculator } from '../core/tabs/tab-space-calculator';
 import { UtilTranslations } from '../core/util/util-translations';
@@ -63,6 +61,7 @@ import { ResourcesModule } from './resources/resources.module';
 import { SettingsModule } from './settings/settings.module';
 import { ViewModalModule } from './viewmodal/view-modal.module';
 import { WidgetsModule } from './widgets/widgets.module';
+
 
 const remote = typeof window !== 'undefined' ? window.require('electron').remote : require('electron').remote;
 
@@ -181,7 +180,11 @@ registerLocaleData(localeIt, 'it');
         },
         ImportValidator,
         { provide: MD, useClass: M},
-        SyncService,
+        {
+            provide: SyncService,
+            useFactory: (pouchdbManager: PouchdbManager) => new SyncService(pouchdbManager),
+            deps: [PouchdbManager]
+        },
         {
             provide: TabManager,
             useFactory: (

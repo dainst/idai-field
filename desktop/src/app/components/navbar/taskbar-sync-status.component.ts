@@ -1,6 +1,5 @@
-import {ChangeDetectorRef, Component} from '@angular/core';
-import {SyncService} from '../../core/sync/sync-service';
-import {SyncStatus} from '../../core/sync/sync-process';
+import { ChangeDetectorRef, Component } from '@angular/core';
+import { SyncService, SyncStatus } from 'idai-field-core';
 
 
 @Component({

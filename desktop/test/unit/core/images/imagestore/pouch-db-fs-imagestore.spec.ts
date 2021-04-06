@@ -1,8 +1,7 @@
 import fs = require('fs');
 import rimraf = require('rimraf');
 import PouchDB = require('pouchdb-node');
-import { ConstraintIndex, Indexer, IndexFacade } from 'idai-field-core';
-import { PouchdbManager } from '../../../../../src/app/core/datastore/pouchdb/pouchdb-manager';
+import { ConstraintIndex, Indexer, IndexFacade, PouchdbManager } from 'idai-field-core';
 import { ImagestoreErrors } from '../../../../../src/app/core/images/imagestore/imagestore-errors';
 import { PouchDbFsImagestore } from '../../../../../src/app/core/images/imagestore/pouch-db-fs-imagestore';
 

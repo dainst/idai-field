@@ -1,16 +1,13 @@
-import {Document} from 'idai-field-core';
-import {FieldDocument, IndexFacade} from 'idai-field-core';
-import {DocumentsManager} from './documents-manager';
-import {FieldDatastore} from '../../datastore/field/field-datastore';
-import {ChangesStream} from '../../datastore/changes/changes-stream';
-import {Loading} from '../../../components/widgets/loading';
-import {ResourcesStateManager} from './resources-state-manager';
-import {ResourcesState} from './state/resources-state';
-import {ProjectConfiguration} from '../../configuration/project-configuration';
-import {M} from '../../../components/messages/m';
-import {Messages} from '../../../components/messages/messages';
-import {SyncService} from '../../sync/sync-service';
-import {SyncStatus} from '../../sync/sync-process';
+import { Document, FieldDocument, IndexFacade, SyncService, SyncStatus } from 'idai-field-core';
+import { M } from '../../../components/messages/m';
+import { Messages } from '../../../components/messages/messages';
+import { Loading } from '../../../components/widgets/loading';
+import { ProjectConfiguration } from '../../configuration/project-configuration';
+import { ChangesStream } from '../../datastore/changes/changes-stream';
+import { FieldDatastore } from '../../datastore/field/field-datastore';
+import { DocumentsManager } from './documents-manager';
+import { ResourcesStateManager } from './resources-state-manager';
+import { ResourcesState } from './state/resources-state';
 
 
 export type ResourcesViewMode = 'map'|'list'|'types';

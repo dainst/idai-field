@@ -1,28 +1,24 @@
-import {ChangeDetectorRef, Component, Input, OnChanges, SimpleChanges} from '@angular/core';
-import {curry, filter, flatten, flow, isnt, Map, map, set, take} from 'tsfun';
-import {Document} from 'idai-field-core';
-import {ViewFacade} from '../../../core/resources/view/view-facade';
-import {Loading} from '../../widgets/loading';
-import {makeLookup} from '../../../../../../core/src/tools/transformers'
-import {BaseList} from '../base-list';
-import {ResourcesComponent} from '../resources.component';
-import {TypeImagesUtil} from '../../../core/util/type-images-util';
-import {FieldDatastore} from '../../../core/datastore/field/field-datastore';
-import {ReadImagestore} from '../../../core/images/imagestore/read-imagestore';
-import {ImageDatastore} from '../../../core/datastore/field/image-datastore';
-import {ContextMenu} from '../widgets/context-menu';
-import {ContextMenuAction} from '../widgets/context-menu.component';
-import {ViewModalLauncher} from '../service/view-modal-launcher';
-import {NavigationPath} from '../../../core/resources/view/state/navigation-path';
-import {RoutingService} from '../../routing-service';
-import {TabManager} from '../../../core/tabs/tab-manager';
-import {PLACEHOLDER} from '../../../core/images/row/image-row';
-import {ProjectCategories} from '../../../core/configuration/project-categories';
-import {MenuContext, MenuService} from '../../menu-service';
-import {ImageRelationsC as ImageRelations, TypeRelations} from 'idai-field-core';
-import {SyncService} from '../../../core/sync/sync-service';
-import {SyncStatus} from '../../../core/sync/sync-process';
-import { FieldDocument } from 'idai-field-core';
+import { ChangeDetectorRef, Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Document, FieldDocument, ImageRelationsC as ImageRelations, SyncService, SyncStatus, TypeRelations } from 'idai-field-core';
+import { curry, filter, flatten, flow, isnt, Map, map, set, take } from 'tsfun';
+import { makeLookup } from '../../../../../../core/src/tools/transformers';
+import { ProjectCategories } from '../../../core/configuration/project-categories';
+import { FieldDatastore } from '../../../core/datastore/field/field-datastore';
+import { ImageDatastore } from '../../../core/datastore/field/image-datastore';
+import { ReadImagestore } from '../../../core/images/imagestore/read-imagestore';
+import { PLACEHOLDER } from '../../../core/images/row/image-row';
+import { NavigationPath } from '../../../core/resources/view/state/navigation-path';
+import { ViewFacade } from '../../../core/resources/view/view-facade';
+import { TabManager } from '../../../core/tabs/tab-manager';
+import { TypeImagesUtil } from '../../../core/util/type-images-util';
+import { MenuContext, MenuService } from '../../menu-service';
+import { RoutingService } from '../../routing-service';
+import { Loading } from '../../widgets/loading';
+import { BaseList } from '../base-list';
+import { ResourcesComponent } from '../resources.component';
+import { ViewModalLauncher } from '../service/view-modal-launcher';
+import { ContextMenu } from '../widgets/context-menu';
+import { ContextMenuAction } from '../widgets/context-menu.component';
 
 
 @Component({

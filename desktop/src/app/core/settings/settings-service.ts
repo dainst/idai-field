@@ -5,10 +5,8 @@ import { M } from '../../components/messages/m';
 import { Messages } from '../../components/messages/messages';
 import { AppConfigurator } from '../configuration/app-configurator';
 import { ProjectConfiguration } from '../configuration/project-configuration';
-import { SampleDataLoader } from '../datastore/field/sampledata/sample-data-loader';
 import { PouchdbManager } from '../datastore/pouchdb/pouchdb-manager';
 import { PouchdbServer } from '../datastore/pouchdb/pouchdb-server';
-import { ImageConverter } from '../images/imagestore/image-converter';
 import { Imagestore } from '../images/imagestore/imagestore';
 import { ImagestoreErrors } from '../images/imagestore/imagestore-errors';
 import { SyncService } from '../sync/sync-service';
@@ -63,7 +61,6 @@ export class SettingsService {
                 private pouchdbServer: PouchdbServer,
                 private messages: Messages,
                 private appConfigurator: AppConfigurator,
-                private imageConverter: ImageConverter,
                 private synchronizationService: SyncService,
                 private settingsProvider: SettingsProvider) {
     }
@@ -200,12 +197,6 @@ export class SettingsService {
             SettingsService.createProjectDocument(this.settingsProvider.getSettings()),
             destroyBeforeCreate
         );
-    }
-
-
-    public async loadSampleData(project: string, imagestorePath: string, db: PouchDB.Database) {
-        const loader = new SampleDataLoader(this.imageConverter, imagestorePath, Settings.getLocale());
-        return loader.go(db, project);
     }
 
 

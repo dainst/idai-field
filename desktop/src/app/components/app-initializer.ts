@@ -2,8 +2,10 @@ import { ConstraintIndex, Document, DocumentCache, FulltextIndex, Indexer, Index
 import { AngularUtility } from '../angular/angular-utility';
 import { ProjectConfiguration } from '../core/configuration/project-configuration';
 import { FieldCategoryConverter } from '../core/datastore/field/field-category-converter';
+import { SampleDataLoader } from '../core/datastore/field/sampledata/sample-data-loader';
 import { PouchdbManager } from '../core/datastore/pouchdb/pouchdb-manager';
 import { PouchdbServer } from '../core/datastore/pouchdb/pouchdb-server';
+import { ImageConverter } from '../core/images/imagestore/image-converter';
 import { InitializationProgress } from '../core/initialization-progress';
 import { Settings } from '../core/settings/settings';
 import { SettingsSerializer } from '../core/settings/settings-serializer';
@@ -76,6 +78,7 @@ export const appInitializerFactory = (
         pouchdbManager: PouchdbManager,
         pouchdbServer: PouchdbServer,
         documentCache: DocumentCache<Document>,
+        imageConverter: ImageConverter,
         progress: InitializationProgress
     ) => async (): Promise<void> => {
 
@@ -85,7 +88,7 @@ export const appInitializerFactory = (
 
     await setUpDatabase(settingsService, settings, progress);
 
-    await loadSampleData(settingsService, settings, pouchdbManager.getDb(), progress);
+    await loadSampleData(settings, pouchdbManager.getDb(), imageConverter, progress);
 
     const services = await loadConfiguration(settingsService, progress);
     serviceLocator.init(services);
@@ -124,11 +127,12 @@ const setUpDatabase = async (settingsService: SettingsService, settings: Setting
 }
 
 
-const loadSampleData = async (settingsService: SettingsService, settings: Settings, db: PouchDB.Database, progress: InitializationProgress) => {
+const loadSampleData = async (settings: Settings, db: PouchDB.Database, imageConverter: ImageConverter, progress: InitializationProgress) => {
 
     if (settings.selectedProject === 'test') {
         await progress.setPhase('loadingSampleObjects');
-        await settingsService.loadSampleData(settings.selectedProject, settings.imagestorePath, db);
+        const loader = new SampleDataLoader(imageConverter, settings.imagestorePath, Settings.getLocale());
+        return loader.go(db, settings.selectedProject);
     }
 }
 

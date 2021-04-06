@@ -15,10 +15,67 @@ const remote = typeof window !== 'undefined' ? window.require('electron').remote
 
 
 export class AppInitializerServiceLocator {
-    projectConfiguration: ProjectConfiguration|undefined = undefined;
-    fulltextIndex: FulltextIndex|undefined = undefined;
-    constraintIndex: ConstraintIndex|undefined = undefined;
-    indexFacade: IndexFacade|undefined = undefined;
+
+    private _projectConfiguration: ProjectConfiguration;
+    private _fulltextIndex: FulltextIndex;
+    private _constraintIndex: ConstraintIndex;
+    private _indexFacade: IndexFacade;
+
+
+    public get projectConfiguration(): ProjectConfiguration {
+        if (!this._projectConfiguration) {
+            console.error('project configuration has not yet been provided');
+            throw 'project configuration has not yet been provided';
+        }
+        return this._projectConfiguration;
+    }
+
+
+    public set projectConfiguration(value: ProjectConfiguration | undefined) {
+        this._projectConfiguration = value;
+    }
+
+
+    public get fulltextIndex(): FulltextIndex {
+        if (!this._fulltextIndex) {
+            console.error('fulltext index has not yet been provided');
+            throw 'fulltext index has not yet been provided';
+        }
+        return this._fulltextIndex;
+    }
+
+
+    public set fulltextIndex(value: FulltextIndex | undefined) {
+        this._fulltextIndex = value;
+    }
+
+
+    public get constraintIndex(): ConstraintIndex {
+        if (!this._constraintIndex) {
+            console.error('constraint index has not yet been provided');
+            throw 'constraint index has not yet been provided';
+        }
+        return this._constraintIndex;
+    }
+
+
+    public set constraintIndex(value: ConstraintIndex | undefined) {
+        this._constraintIndex = value;
+    }
+
+
+    public get indexFacade(): IndexFacade {
+        if (!this._indexFacade) {
+            console.error('index facade has not yet been provided');
+            throw 'index facade has not yet been provided';
+        }
+        return this._indexFacade;
+    }
+
+
+    public set indexFacade(value: IndexFacade | undefined) {
+        this._indexFacade = value;
+    }
 }
 
 

@@ -146,46 +146,22 @@ registerLocaleData(localeIt, 'it');
         AppController,
         {
             provide: ProjectConfiguration,
-            useFactory: (serviceLocator: AppInitializerServiceLocator) => {
-                if (!serviceLocator.projectConfiguration) {
-                    console.error('project configuration has not yet been provided');
-                    throw 'project configuration has not yet been provided';
-                }
-                return serviceLocator.projectConfiguration;
-            },
+            useFactory: (serviceLocator: AppInitializerServiceLocator) => serviceLocator.projectConfiguration,
             deps: [AppInitializerServiceLocator]
         },
         {
             provide: FulltextIndex,
-            useFactory: (serviceLocator: AppInitializerServiceLocator) => {
-                if (!serviceLocator.fulltextIndex) {
-                    console.error('fulltext index has not yet been provided');
-                    throw 'fulltext index has not yet been provided';
-                }
-                return serviceLocator.fulltextIndex;
-            },
+            useFactory: (serviceLocator: AppInitializerServiceLocator) => serviceLocator.fulltextIndex,
             deps: [AppInitializerServiceLocator]
         },
         {
             provide: ConstraintIndex,
-            useFactory: (serviceLocator: AppInitializerServiceLocator) => {
-                if (!serviceLocator.constraintIndex) {
-                    console.error('constraint index has not yet been provided');
-                    throw 'constraint index has not yet been provided';
-                }
-                return serviceLocator.constraintIndex;
-            },
+            useFactory: (serviceLocator: AppInitializerServiceLocator) => serviceLocator.constraintIndex,
             deps: [AppInitializerServiceLocator]
         },
         {
             provide: IndexFacade,
-            useFactory: (serviceLocator: AppInitializerServiceLocator) => {
-                if (!serviceLocator.indexFacade) {
-                    console.error('index facade has not yet been provided');
-                    throw 'index facade has not yet been provided';
-                }
-                return serviceLocator.indexFacade;
-            },
+            useFactory: (serviceLocator: AppInitializerServiceLocator) => serviceLocator.indexFacade,
             deps: [AppInitializerServiceLocator]
         },
         RelationsManager,

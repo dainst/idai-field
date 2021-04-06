@@ -93,14 +93,7 @@ export const appInitializerFactory = (
     const services = await loadConfiguration(settingsService, progress);
     serviceLocator.init(services);
 
-    await progress.setPhase('loadingDocuments');
-    progress.setDocumentsToIndex((await pouchdbManager.getDb().info()).doc_count);
-    await Indexer.reindex(serviceLocator.indexFacade, pouchdbManager.getDb(), documentCache,
-        new FieldCategoryConverter(serviceLocator.projectConfiguration),
-        (count) => progress.setIndexedDocuments(count),
-        () => progress.setPhase('indexingDocuments'),
-        (error) => progress.setError(error)
-    );
+    await loadDocuments(serviceLocator, pouchdbManager.getDb(), documentCache, progress);
 
     return await AngularUtility.refresh(700);
 };
@@ -157,3 +150,17 @@ const loadConfiguration = async (settingsService: SettingsService, progress: Ini
         indexFacade: createdIndexFacade
     };
 };
+
+
+const loadDocuments = async (serviceLocator: AppInitializerServiceLocator, db: PouchDB.Database<{}>, documentCache: DocumentCache<Document>, progress: InitializationProgress) => {
+
+    await progress.setPhase('loadingDocuments');
+    progress.setDocumentsToIndex((await db.info()).doc_count);
+
+    await Indexer.reindex(serviceLocator.indexFacade, db, documentCache,
+        new FieldCategoryConverter(serviceLocator.projectConfiguration),
+        (count) => progress.setIndexedDocuments(count),
+        () => progress.setPhase('indexingDocuments'),
+        (error) => progress.setError(error)
+    );
+}

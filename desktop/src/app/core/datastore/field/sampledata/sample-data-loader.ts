@@ -1,8 +1,6 @@
-import {ImageDocument} from 'idai-field-core';
-import {Document} from 'idai-field-core';
-import {getSampleDocuments} from './sample-data';
-import {ImageConverter} from '../../../images/imagestore/image-converter';
-import {InitializationProgress} from '../../../initialization-progress';
+import { Document, ImageDocument } from 'idai-field-core';
+import { ImageConverter } from '../../../images/imagestore/image-converter';
+import { getSampleDocuments } from './sample-data';
 
 const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
 const remote = typeof window !== 'undefined' ? window.require('electron').remote : require('electron').remote;
@@ -17,13 +15,10 @@ export class SampleDataLoader {
 
     constructor(private imageConverter: ImageConverter,
                 private imagestorePath: string,
-                private locale: string,
-                private progress?: InitializationProgress) {}
+                private locale: string) {}
 
 
-    public async go(db: any, project: string) {
-
-        if (this.progress) await this.progress.setPhase('loadingSampleObjects');
+    public async go(db: PouchDB.Database, project: string) {
 
         try {
             await this.loadSampleDocuments(db);
@@ -59,7 +54,7 @@ export class SampleDataLoader {
     }
 
 
-    private async createThumbnail(filePath: string, fileName: string, db: any) {
+    private async createThumbnail(filePath: string, fileName: string, db: PouchDB.Database) {
 
         const buffer: Buffer = await this.imageConverter.convert(fs.readFileSync(filePath + fileName)) as Buffer;
         const imageDocument: ImageDocument = await db.get(fileName);
@@ -97,7 +92,7 @@ export class SampleDataLoader {
     }
 
 
-    private static async createDocument(document: Document, db: any) {
+    private static async createDocument(document: Document, db: PouchDB.Database) {
 
         document.created = { user: 'sample_data', date: new Date() };
         document.modified = [{ user: 'sample_data', date: new Date() }];

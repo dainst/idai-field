@@ -42,7 +42,7 @@ xdescribe('PouchDbFsImagestore', () => {
         const mockConstraintIndexer = ConstraintIndex.make(
             {}, {} as any);
 
-        await manager.loadProjectDb('unittest', undefined);
+        await manager.createDb('unittest', undefined, false);
 
         // TODO Set DocumentCache & Converter before tests are activated again
         await manager.reindex(new IndexFacade(mockConstraintIndexer, mockFulltextIndexer, undefined, false), null, null);

@@ -5,14 +5,12 @@ import { ConfigurationErrors } from '../../configuration/boot/configuration-erro
 import { InitializationProgress } from '../../initialization-progress';
 import { SyncProcess, SyncStatus } from '../../sync/sync-process';
 import { FieldCategoryConverter } from '../field/field-category-converter';
-import { SampleDataLoader } from '../field/sampledata/sample-data-loader';
 
 const PouchDB = typeof window !== 'undefined' ? window.require('pouchdb-browser') : require('pouchdb-node');
 
 
 /**
- * Manages the creation of PouchDB instances.
- * Also handles loading of sample data if 'test' database is selected.
+ * Manages the creation and synchronization of PouchDB instances.
  * @author Sebastian Cuy
  * @author Daniel de Oliveira
  */
@@ -21,8 +19,6 @@ export class PouchdbManager {
     private db: PouchDB.Database;
 
     private syncHandles = [];
-
-    private sampleDataLoader: SampleDataLoader;
 
 
     public getDb = (): PouchDB.Database => this.db;
@@ -35,29 +31,13 @@ export class PouchdbManager {
     public destroyDb = (dbName: string) => PouchdbManager.createPouchDBObject(dbName).destroy();
 
 
+    // TODO still necessary?
     public async resetForE2E() {
 
         if (this.db) {
             await this.db.close();
             this.db = undefined;
         }
-        if (this.sampleDataLoader) await this.loadProjectDb('test', this.sampleDataLoader);
-    }
-
-
-    // TODO consolidate with createDB, move sample data loading to settings service
-    public async loadProjectDb(name: string, sampleDataLoader?: SampleDataLoader) {
-
-        let db = PouchdbManager.createPouchDBObject(name);
-
-        if (name === 'test' && sampleDataLoader) {
-            this.sampleDataLoader = sampleDataLoader;
-            await db.destroy();
-            db = PouchdbManager.createPouchDBObject(name);
-            await sampleDataLoader.go(db, name);
-        }
-
-        this.db = db;
     }
 
 
@@ -128,6 +108,8 @@ export class PouchdbManager {
             // which can happen if the db already existed
             await db.put(doc);
         }
+
+        this.db = db;
     }
 
     // TODO: Move to index

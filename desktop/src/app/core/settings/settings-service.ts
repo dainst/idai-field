@@ -78,15 +78,19 @@ export class SettingsService {
 
             if (progress) await progress.setPhase('settingUpDatabase');
 
-            await this.pouchdbManager.loadProjectDb(
+            const isTestProject = settings.selectedProject === 'test';
+
+            await this.pouchdbManager.createDb(
                 settings.selectedProject,
-                new SampleDataLoader(
-                    this.imageConverter, settings.imagestorePath, Settings.getLocale(), progress
-                )
-            );
+                SettingsService.createProjectDocument(this.settingsProvider.getSettings()),
+                isTestProject);
+
+            if (isTestProject) {
+                if (progress) await progress.setPhase('loadingSampleObjects');
+                await this.loadSampleData(settings.selectedProject, settings.imagestorePath, this.pouchdbManager.getDb());
+            }
 
             if (settings.isSyncActive) await this.setupSync();
-            await this.createProjectDocumentIfMissing();
         } catch (msgWithParams) {
             console.error(msgWithParams);
             await progress.setError('databaseError');
@@ -214,16 +218,9 @@ export class SettingsService {
     }
 
 
-    private async createProjectDocumentIfMissing() {
-
-        try {
-            await this.pouchdbManager.getDb().get('project');
-        } catch {
-            console.warn('Didn\'t find project document, creating new one');
-            await this.pouchdbManager.getDb().put(
-                SettingsService.createProjectDocument(this.settingsProvider.getSettings())
-            );
-        }
+    private async loadSampleData(project: string, imagestorePath: string, db: PouchDB.Database) {
+        const loader = new SampleDataLoader(this.imageConverter, imagestorePath, Settings.getLocale());
+        return loader.go(db, project);
     }
 
 

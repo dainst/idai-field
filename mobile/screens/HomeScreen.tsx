@@ -3,7 +3,7 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
 // create a component
-const Home: React.FC = () => {
+const HomeScreen: React.FC = () => {
     return (
         <View style={ styles.container }>
             <Text>Home</Text>
@@ -21,4 +21,4 @@ const styles = StyleSheet.create({
 });
 
 //make this component available to the app
-export default Home;
+export default HomeScreen;

@@ -1,9 +1,10 @@
 import React, { ReactElement, useState } from 'react';
 import { enableScreens } from 'react-native-screens';
-import StackNavigator from './navigation/StackNavigator';
+import TabNavigator from './navigation/TabNavigator';
 import AppLoading from 'expo-app-loading';
 import * as Font from 'expo-font';
 import { Ionicons } from '@expo/vector-icons';
+import { NavigationContainer } from '@react-navigation/native';
 
 
 const fetchFonts = () => {
@@ -28,6 +29,8 @@ export default function App(): ReactElement {
     }
 
     return (
-        <StackNavigator />
+        <NavigationContainer>
+            <TabNavigator />
+        </NavigationContainer>
     );
 }

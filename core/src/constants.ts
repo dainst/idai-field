@@ -1,6 +1,6 @@
-import {on} from 'tsfun';
-import { Resource } from './model/resource';
+import { on } from 'tsfun';
 import { Document } from './model/document';
+import { Resource } from './model/resource';
 
 // Constants
 
@@ -17,6 +17,5 @@ export const ISRECORDEDIN_CONTAIN = 'isRecordedIn:contain';
 
 // Types
 
-export type Name = string;
 export type ResourceId = string;
 export type RevisionId = string;

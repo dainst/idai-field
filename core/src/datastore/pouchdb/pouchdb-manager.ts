@@ -1,6 +1,5 @@
 import { Observable, Observer } from 'rxjs';
 import { SyncProcess, SyncStatus } from '../../sync/sync-process';
-import { Name } from '../../tools/named';
 
 
 /**
@@ -46,7 +45,7 @@ export class PouchdbManager {
      * @param url target datastore
      * @param project
      */
-    public async setupSync(url: string, project: Name): Promise<SyncProcess> {
+    public async setupSync(url: string, project: string): Promise<SyncProcess> {
 
         const fullUrl = url + '/' + (project === 'synctest' ? 'synctestremotedb' : project);
         console.log('Start syncing');

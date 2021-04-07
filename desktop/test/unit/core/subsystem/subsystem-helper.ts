@@ -74,7 +74,7 @@ export async function setupSettingsService(pouchdbmanager, pouchdbserver, projec
         username: 'synctestuser'
     });
 
-    await settingsService.bootProjectDb(settings);
+    await settingsService.bootProjectDb(settings.selectedProject, settings.isSyncActive, true);
 
     const projectConfiguration = await settingsService.loadConfiguration('src/config/');
     return {settingsService, projectConfiguration, settingsProvider};
@@ -270,6 +270,7 @@ function makeExpectImagesDontExist(projectImageDir) {
 
 /**
  * Creates the db that is in the simulated client app
+ * TODO: still necessary now that destroyBeforeCreate is set to true?
  */
 export async function setupSyncTestDb(projectName = 'testdb') {
 

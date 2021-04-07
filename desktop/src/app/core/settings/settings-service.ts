@@ -64,16 +64,17 @@ export class SettingsService {
     }
 
 
-    public async bootProjectDb(settings: Settings): Promise<void> {
+    public async bootProjectDb(selectedProject: string, isSyncActive: boolean,
+                               destroyBeforeCreate: boolean = false): Promise<void> {
 
         try {
 
             await this.pouchdbManager.createDb(
-                settings.selectedProject,
+                selectedProject,
                 SettingsService.createProjectDocument(this.settingsProvider.getSettings()),
-                settings.selectedProject === 'test');
+                destroyBeforeCreate);
 
-            if (settings.isSyncActive) await this.setupSync();
+            if (isSyncActive) await this.setupSync();
 
         } catch (msgWithParams) {
             console.error(msgWithParams);

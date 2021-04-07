@@ -112,7 +112,7 @@ const setUpDatabase = async (settingsService: SettingsService, settings: Setting
 
     await progress.setPhase('settingUpDatabase');
     try {
-        await settingsService.bootProjectDb(settings);
+        await settingsService.bootProjectDb(settings.selectedProject, settings.isSyncActive, settings.selectedProject === 'test');
     } catch (msgWithParams) {
         await progress.setError('databaseError');
     }

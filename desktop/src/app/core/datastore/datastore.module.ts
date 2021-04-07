@@ -8,6 +8,8 @@ import { FieldDatastore } from './field/field-datastore';
 import { ImageDatastore } from './field/image-datastore';
 import { PouchdbServer } from './pouchdb/pouchdb-server';
 
+const PouchDB = window.require('pouchdb-browser');
+
 /**
  * There is the top level package, in which everything idai-field specific resides,
  * FieldDocument, ImageDocument related stuff for example.
@@ -19,7 +21,7 @@ import { PouchdbServer } from './pouchdb/pouchdb-server';
         ChangesStream,
         {
             provide: PouchdbManager,
-            useClass: PouchdbManager
+            useFactory: () => new PouchdbManager((name: string) => new PouchDB(name))
         },
         PouchdbServer,
         { provide: CategoryConverter, useClass: FieldCategoryConverter },

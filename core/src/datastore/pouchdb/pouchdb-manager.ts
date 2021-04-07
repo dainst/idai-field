@@ -2,8 +2,6 @@ import { Observable, Observer } from 'rxjs';
 import { SyncProcess, SyncStatus } from '../../sync/sync-process';
 import { Name } from '../../tools/named';
 
-const PouchDB = typeof window !== 'undefined' ? window.require('pouchdb-browser') : require('pouchdb-node');
-
 
 /**
  * Manages the creation and synchronization of PouchDB instances.
@@ -17,6 +15,11 @@ export class PouchdbManager {
     private syncHandles = [];
 
 
+    constructor(private pouchDbFactory: (name: string) => PouchDB.Database) {
+
+    }
+
+
     public getDb = (): PouchDB.Database => this.db;
 
 
@@ -24,7 +27,7 @@ export class PouchdbManager {
      * Destroys the db named dbName, if it is not the currently selected active database
      * @throws if trying do delete the currently active database
      */
-    public destroyDb = (dbName: string) => PouchdbManager.createPouchDBObject(dbName).destroy();
+    public destroyDb = (dbName: string) => this.pouchDbFactory(dbName).destroy();
 
 
     // TODO still necessary?
@@ -90,11 +93,11 @@ export class PouchdbManager {
      */
     public async createDb(name: string, doc: any, destroyBeforeCreate: boolean) {
 
-        let db = PouchdbManager.createPouchDBObject(name);
+        let db = this.pouchDbFactory(name);
 
         if (destroyBeforeCreate) {
             await db.destroy();
-            db = PouchdbManager.createPouchDBObject(name)
+            db = this.pouchDbFactory(name);
         }
 
         try {
@@ -106,12 +109,6 @@ export class PouchdbManager {
         }
 
         this.db = db;
-    }
-
-
-    private static createPouchDBObject(name: string): any {
-
-        return new PouchDB(name);
     }
 }
 

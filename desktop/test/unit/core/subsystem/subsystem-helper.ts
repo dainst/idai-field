@@ -83,7 +83,7 @@ export async function setupSettingsService(pouchdbmanager, pouchdbserver, projec
 
 export async function createApp(projectName = 'testdb', startSync = false) {
 
-    const pouchdbManager = new PouchdbManager();
+    const pouchdbManager = new PouchdbManager((name: string) => new PouchDB(name));
     const pouchdbServer = new PouchdbServer();
 
     const {settingsService, projectConfiguration, settingsProvider} = await setupSettingsService(

@@ -1,4 +1,5 @@
 import { Category, PouchdbManager } from 'idai-field-core';
+import * as PouchDB from 'pouchdb-node';
 import { PouchdbServer } from '../../../../../src/app/core/datastore/pouchdb/pouchdb-server';
 import { ImportErrors } from '../../../../../src/app/core/import/import/import-errors';
 import { Importer, ImporterOptions } from '../../../../../src/app/core/import/importer';
@@ -51,7 +52,8 @@ describe('Import/Subsystem', () => {
         spyOn(console, 'debug');
 
         await setupSyncTestDb();
-        const {projectConfiguration} = await setupSettingsService(new PouchdbManager(), new PouchdbServer());
+        const pouchdbManager = new PouchdbManager((name: string) => new PouchDB(name));
+        const {projectConfiguration} = await setupSettingsService(pouchdbManager, new PouchdbServer());
         _projectConfiguration = projectConfiguration;
         const app = await createApp();
         const {fieldDocumentDatastore} = app;

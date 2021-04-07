@@ -10,7 +10,7 @@
         "dist"
     ],
     "scripts": {
-        "build": "rm -rf dist && tsc -p .",
+        "build": "rimraf dist && tsc -p .",
         "build:watch": "tsc -watch -p .",
         "test": "jasmine JASMINE_CONFIG_PATH=test/jasmine.json"
     },
@@ -26,6 +26,7 @@
         "@types/uuid": "^8.3.0",
         "jasmine": "2.5.2",
         "jasmine-core": "~3.5.0",
+        "rimraf": "2.6.2",
         "typescript": "~4.1.5"
     }
 }

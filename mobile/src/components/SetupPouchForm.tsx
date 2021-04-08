@@ -26,20 +26,25 @@ const SetupPouchForm: React.FC<SetupPouchFormProps> = ({ dbSetupHandler }) => {
                 <Input placeholder="User"
                     value={ remoteUser }
                     onChange={ e => setRemoteUser(e.nativeEvent.text) }
-                    autoCapitalize="none" />
+                    autoCapitalize="none"
+                    autoCorrect={ false }
+                />
             </Item>
             <Item>
                 <Input placeholder="Project"
                     value={ dbName }
                     onChange={ e => setDbName(e.nativeEvent.text) }
                     autoCapitalize="none"
+                    autoCorrect={ false }
                 />
             </Item>
             <Item>
                 <Input placeholder="Password"
                     value={ password }
                     onChange={ e => setPassword(e.nativeEvent.text) }
-                    autoCapitalize="none" />
+                    autoCapitalize="none"
+                    autoCorrect={ false }
+                />
             </Item>
             <Item style={ { justifyContent: 'center', margin: 20 } } underline={ false }>
                 <Button info onPress={ connectionHandler } style={ { width: '80%', justifyContent: 'center' } }>
@@ -49,5 +54,6 @@ const SetupPouchForm: React.FC<SetupPouchFormProps> = ({ dbSetupHandler }) => {
         </Form>
     );
 };
+
 
 export default SetupPouchForm;

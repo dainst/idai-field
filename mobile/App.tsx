@@ -1,6 +1,6 @@
 import React, { ReactElement, useState } from 'react';
 import { enableScreens } from 'react-native-screens';
-import TabNavigator from './src/navigation/TabNavigator';
+import TabNavigator from './src/navigation/TabNavigator/TabNavigator';
 import AppLoading from 'expo-app-loading';
 import * as Font from 'expo-font';
 import { Ionicons } from '@expo/vector-icons';

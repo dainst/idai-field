@@ -1,9 +1,9 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
-import { headerBackgroundColor } from '../constants/colors';
-import HomeStackNavigator from './HomeStackNavigator/HomeStackNavigator';
-import SettingsStackNavigator from './SettingsStackNavigator/SettingsStackNavigator';
+import { headerBackgroundColor } from '../../constants/colors';
+import HomeStackNavigator from '../HomeStackNavigator/HomeStackNavigator';
+import SettingsStackNavigator from '../SettingsStackNavigator/SettingsStackNavigator';
 
 type possibleIcon = 'home' | 'home-outline' | 'list' | 'list-sharp' | undefined;
 

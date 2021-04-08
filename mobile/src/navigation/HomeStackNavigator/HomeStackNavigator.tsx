@@ -1,9 +1,10 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import Home from '../../screens/HomeScreen';
+import HomeScreen from '../../screens/HomeScreen';
 import { headerBackgroundColor } from '../../constants/colors';
+import { HomeStackParamList } from './HomeStackParamList';
 
-const Stack = createStackNavigator();
+const Stack = createStackNavigator<HomeStackParamList>();
 
 const commonHeaderStyle = {
     backgroundColor: headerBackgroundColor
@@ -17,7 +18,7 @@ const HomeStackNavigator = (): JSX.Element => (
         } }>
         <Stack.Screen
             name="Home"
-            component={ Home }
+            component={ HomeScreen }
             options={
                 { title: 'iDAI field mobile' }
             } />

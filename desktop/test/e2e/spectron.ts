@@ -16,6 +16,7 @@ let app = new Application({
 });
 let appDataPath = undefined;
 
+
 app.start()
     .then(() => app?.electron?.remote?.app?.getPath('appData'))
     .then(appPath => {

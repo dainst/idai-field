@@ -13,10 +13,11 @@ describe('images/state --', () => {
 
     beforeEach(() => {
 
-        browser.sleep(1000);
-
+        browser.sleep(1500);
         MenuPage.navigateToSettings();
-        common.resetApp();
+        browser.sleep(1)
+            .then(() => common.resetApp());
+        browser.sleep(2000);
         MenuPage.navigateToImages();
         ImageOverviewPage.waitForCells();
     });

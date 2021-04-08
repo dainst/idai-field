@@ -14,10 +14,11 @@ describe('resources/list --', () => {
 
     beforeEach(() => {
 
-        browser.sleep(1000);
+        browser.sleep(1500);
 
         MenuPage.navigateToSettings();
-        common.resetApp();
+        browser.sleep(1)
+            .then(() => common.resetApp());
         NavbarPage.clickCloseNonResourcesTab();
         NavbarPage.clickTab('project');
         ResourcesPage.clickHierarchyButton('S1');

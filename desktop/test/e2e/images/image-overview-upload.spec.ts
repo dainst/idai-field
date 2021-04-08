@@ -26,10 +26,11 @@ describe('images/upload --', () => {
 
     beforeEach(() => {
 
-        browser.sleep(1000);
+        browser.sleep(1500);
 
         MenuPage.navigateToSettings();
-        common.resetApp();
+        browser.sleep(1)
+            .then(() => common.resetApp());
         MenuPage.navigateToImages();
         ImageOverviewPage.waitForCells();
     });

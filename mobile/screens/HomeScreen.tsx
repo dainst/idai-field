@@ -1,13 +1,38 @@
 //import liraries
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React, { useContext, useState, useEffect } from 'react';
+import { StyleSheet } from 'react-native';
+import { Container, Text, Card, CardItem } from 'native-base';
+import PouchDbContext from '../data/pouchdb/pouch-context';
 
 // create a component
 const HomeScreen: React.FC = () => {
+    const [operations, setOperations] = useState<any[] | undefined>();
+
+
+    const pouchCtx = useContext(PouchDbContext);
+
+    useEffect(() => {
+        
+        setOperations(pouchCtx.getOperations());
+    }, [pouchCtx, pouchCtx.dbName]);
+
+    const renderStatus = () => {
+        const connected = pouchCtx.status && pouchCtx.status.status === 200 ? true : false;
+        return (
+            <Card style={ styles.card }>
+                <CardItem header bordered >
+                    <Text style={ connected? styles.green : styles.red }>
+                        {connected ? 'Connected' : 'Not Connected'}
+                    </Text>
+                </CardItem>
+            </Card>);
+    };
+
+    
     return (
-        <View style={ styles.container }>
-            <Text>Home</Text>
-        </View>
+        <Container style={ styles.container }>
+            {renderStatus()}
+        </Container>
     );
 };
 
@@ -15,8 +40,17 @@ const HomeScreen: React.FC = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
         alignItems: 'center',
+    },
+    card: {
+        width: '90%',
+        alignItems: 'center'
+    },
+    red: {
+        color: 'red',
+    },
+    green: {
+        color: 'green',
     },
 });
 

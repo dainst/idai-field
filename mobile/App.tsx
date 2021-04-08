@@ -5,6 +5,8 @@ import AppLoading from 'expo-app-loading';
 import * as Font from 'expo-font';
 import { Ionicons } from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
+import PouchDbContextProvider from './data/pouchdb/PouchContextProvider';
+import { Root } from 'native-base';
 
 
 const fetchFonts = () => {
@@ -29,8 +31,12 @@ export default function App(): ReactElement {
     }
 
     return (
-        <NavigationContainer>
-            <TabNavigator />
-        </NavigationContainer>
+        <Root>
+            <NavigationContainer>
+                <PouchDbContextProvider>
+                    <TabNavigator />
+                </PouchDbContextProvider>
+            </NavigationContainer>
+        </Root>
     );
 }

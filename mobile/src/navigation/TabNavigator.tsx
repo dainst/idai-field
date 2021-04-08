@@ -1,9 +1,9 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import SettingsScreen from '../screens/SettingsScreen';
 import { Ionicons } from '@expo/vector-icons';
-import StackNavigator from './HomeStackNavigator/HomeStackNavigator';
 import { headerBackgroundColor } from '../constants/colors';
+import HomeStackNavigator from './HomeStackNavigator/HomeStackNavigator';
+import SettingsStackNavigator from './SettingsStackNavigator/SettingsStackNavigator';
 
 type possibleIcon = 'home' | 'home-outline' | 'list' | 'list-sharp' | undefined;
 
@@ -33,8 +33,8 @@ const TabNavigator = (): JSX.Element => (
                 backgroundColor: headerBackgroundColor
             }
         } }>
-        <Tab.Screen name="Home" component={ StackNavigator } />
-        <Tab.Screen name="Settings" component={ SettingsScreen } />
+        <Tab.Screen name="Home" component={ HomeStackNavigator } />
+        <Tab.Screen name="Settings" component={ SettingsStackNavigator } />
     </Tab.Navigator>
 );
 

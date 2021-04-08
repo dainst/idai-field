@@ -1,10 +1,11 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { ReactElement, useContext, useEffect, useState } from 'react';
 import { Button, Container, Content, Form, Input, Item, Text, Toast } from 'native-base';
 import { StyleSheet, Keyboard } from 'react-native';
 import PouchDbContext from '../data/pouchdb/pouch-context';
+import { TapStackNavProps } from '../navigation/TabNavigator/TapParamList';
 
 
-const SettingsScreen: React.FC = () => {
+const SettingsScreen = ({ navigation }: TapStackNavProps<'Settings'>): ReactElement => {
     const [remoteUser, setRemoteUser] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [dbName, setDbName] = useState<string>('');
@@ -14,7 +15,7 @@ const SettingsScreen: React.FC = () => {
 
     useEffect(() => {
 
-        if(pouchCtx.status)
+        if(pouchCtx.status){
             Toast.show({
                 text: pouchCtx.status.message,
                 buttonText: 'Okay',
@@ -23,6 +24,12 @@ const SettingsScreen: React.FC = () => {
                 
                 textStyle: { color: pouchCtx.status.status !== 200? 'red': 'green' },
             });
+
+            if(pouchCtx.status.status === 200)
+                navigation.navigate('Home');
+
+        }
+            
         
     },[pouchCtx, pouchCtx.status]);
     

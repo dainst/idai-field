@@ -12,10 +12,15 @@ export class DocumentRepository {
     public static async init(project: string, pouchDbFactory: PouchDbFactory): Promise<DocumentRepository> {
 
         const pouchdbManager = new PouchdbManager(pouchDbFactory);
-        const db = await pouchdbManager.createDb(project, {}, false);
+        const db = await pouchdbManager.createDb(project, { _id: 'project' } , false);
         const pouchdbDatastore = new PouchdbDatastore(db, new IdGenerator(), true);
         return new DocumentRepository(pouchdbManager, pouchdbDatastore);
     }
+
+
+    public destroy = (project: string): Promise<void> =>
+        this.pouchdbManager.destroyDb(project);
+
 
     public create = (doc: Document, username: string): Promise<Document> =>
         this.pouchdbDatastore.create(doc, username);

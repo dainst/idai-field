@@ -2,7 +2,7 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import SettingsScreen from '../screens/SettingsScreen';
 import { Ionicons } from '@expo/vector-icons';
-import StackNavigator from './StackNavigator';
+import StackNavigator from './HomeStackNavigator/HomeStackNavigator';
 import { headerBackgroundColor } from '../constants/colors';
 
 type possibleIcon = 'home' | 'home-outline' | 'list' | 'list-sharp' | undefined;

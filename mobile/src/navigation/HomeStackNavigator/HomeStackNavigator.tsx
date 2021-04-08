@@ -1,7 +1,7 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import Home from '../screens/HomeScreen';
-import { headerBackgroundColor } from '../constants/colors';
+import Home from '../../screens/HomeScreen';
+import { headerBackgroundColor } from '../../constants/colors';
 
 const Stack = createStackNavigator();
 
@@ -9,7 +9,7 @@ const commonHeaderStyle = {
     backgroundColor: headerBackgroundColor
 };
 
-const StackNavigator = (): JSX.Element => (
+const HomeStackNavigator = (): JSX.Element => (
     <Stack.Navigator
         screenOptions={ {
             headerStyle: commonHeaderStyle,
@@ -24,4 +24,4 @@ const StackNavigator = (): JSX.Element => (
     </Stack.Navigator>
 );
 
-export default StackNavigator;
+export default HomeStackNavigator;

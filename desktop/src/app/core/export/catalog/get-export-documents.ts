@@ -1,7 +1,5 @@
-import { ObjectUtils, HierarchicalRelations, ImageRelationsC as ImageRelations, Name, ON_RESOURCE_ID, ResourceId, RESOURCE_DOT_IDENTIFIER, TypeRelations } from 'idai-field-core';
-import { Document, toResourceId } from 'idai-field-core';
+import { Document, DocumentDatastore, HierarchicalRelations, ImageRelationsC as ImageRelations, Name, ObjectUtils, ON_RESOURCE_ID, ResourceId, RESOURCE_DOT_IDENTIFIER, toResourceId, TypeRelations } from 'idai-field-core';
 import { Either, subtract, to } from 'tsfun';
-import { DocumentDatastore } from '../../datastore/document-datastore';
 import { ImageRelationsManager } from '../../model/image-relations-manager';
 import { RelationsManager } from '../../model/relations-manager';
 

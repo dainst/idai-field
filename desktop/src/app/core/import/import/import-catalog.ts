@@ -1,7 +1,5 @@
-import { ObjectUtils, HierarchicalRelations, ImageRelationsC as ImageRelations, Lookup, ON_RESOURCE_ID, TypeRelations } from 'idai-field-core';
-import { Document } from 'idai-field-core';
+import { Document, DocumentDatastore, HierarchicalRelations, ImageRelationsC as ImageRelations, Lookup, ObjectUtils, ON_RESOURCE_ID, TypeRelations } from 'idai-field-core';
 import { aMap, isArray, isNot, isUndefinedOrEmpty, set, subtract, to, undefinedOrEmpty } from 'tsfun';
-import { DocumentDatastore } from '../../datastore/document-datastore';
 import { Imagestore } from '../../images/imagestore/imagestore';
 import { ImageRelationsManager } from '../../model/image-relations-manager';
 import { RelationsManager } from '../../model/relations-manager';

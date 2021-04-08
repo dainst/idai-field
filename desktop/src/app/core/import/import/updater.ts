@@ -1,6 +1,5 @@
-import {NewDocument, Document} from 'idai-field-core';
-import {DocumentDatastore} from '../../datastore/document-datastore';
-import {separate} from 'tsfun';
+import { Document, DocumentDatastore, NewDocument } from 'idai-field-core';
+import { separate } from 'tsfun';
 
 
 /**

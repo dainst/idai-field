@@ -1,18 +1,17 @@
-import {AfterViewInit, AfterViewChecked, Component, ElementRef, ViewChild} from '@angular/core';
-import {NgbActiveModal, NgbModal, NgbPopover} from '@ng-bootstrap/ng-bootstrap';
-import {Document} from 'idai-field-core';
-import {SettingsService} from '../../core/settings/settings-service';
-import {DoceditComponent} from '../docedit/docedit.component';
-import {M} from '../messages/m';
-import {ProjectNameValidator} from '../../core/model/project-name-validator';
-import {MenuContext, MenuService} from '../menu-service';
-import {StateSerializer} from '../../core/common/state-serializer';
-import {DocumentDatastore} from '../../core/datastore/document-datastore';
-import {ProjectNameValidatorMsgConversion} from '../messages/project-name-validator-msg-conversion';
-import {Messages} from '../messages/messages';
-import {reload} from '../../core/common/reload';
-import {SettingsProvider} from '../../core/settings/settings-provider';
-import {AngularUtility} from '../../angular/angular-utility';
+import { AfterViewChecked, AfterViewInit, Component, ViewChild } from '@angular/core';
+import { NgbActiveModal, NgbModal, NgbPopover } from '@ng-bootstrap/ng-bootstrap';
+import { Document, DocumentDatastore } from 'idai-field-core';
+import { AngularUtility } from '../../angular/angular-utility';
+import { reload } from '../../core/common/reload';
+import { StateSerializer } from '../../core/common/state-serializer';
+import { ProjectNameValidator } from '../../core/model/project-name-validator';
+import { SettingsProvider } from '../../core/settings/settings-provider';
+import { SettingsService } from '../../core/settings/settings-service';
+import { DoceditComponent } from '../docedit/docedit.component';
+import { MenuContext, MenuService } from '../menu-service';
+import { M } from '../messages/m';
+import { Messages } from '../messages/messages';
+import { ProjectNameValidatorMsgConversion } from '../messages/project-name-validator-msg-conversion';
 
 const remote = typeof window !== 'undefined' ? window.require('electron').remote : require('electron').remote;
 

@@ -1,18 +1,17 @@
-import {Injectable} from '@angular/core';
-import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {Document, IdaiFieldFindResult, NewImageDocument, Category} from 'idai-field-core';
-import {ImageCategoryPickerModalComponent} from './image-category-picker-modal.component';
-import {UploadModalComponent} from './upload-modal.component';
-import {ExtensionUtil} from '../../../core/util/extension-util';
-import {UploadStatus} from './upload-status';
-import {RelationsManager} from '../../../core/model/relations-manager';
-import {DocumentDatastore} from '../../../core/datastore/document-datastore';
-import {ImageDatastore} from '../../../core/datastore/field/image-datastore';
-import {M} from '../../messages/m';
-import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
-import {Imagestore} from '../../../core/images/imagestore/imagestore';
-import {readWldFile} from '../../../core/images/wld/wld-import';
-import {MenuContext, MenuService} from '../../menu-service';
+import { Injectable } from '@angular/core';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { Category, Document, DocumentDatastore, IdaiFieldFindResult, NewImageDocument } from 'idai-field-core';
+import { ProjectConfiguration } from '../../../core/configuration/project-configuration';
+import { ImageDatastore } from '../../../core/datastore/field/image-datastore';
+import { Imagestore } from '../../../core/images/imagestore/imagestore';
+import { readWldFile } from '../../../core/images/wld/wld-import';
+import { RelationsManager } from '../../../core/model/relations-manager';
+import { ExtensionUtil } from '../../../core/util/extension-util';
+import { MenuContext, MenuService } from '../../menu-service';
+import { M } from '../../messages/m';
+import { ImageCategoryPickerModalComponent } from './image-category-picker-modal.component';
+import { UploadModalComponent } from './upload-modal.component';
+import { UploadStatus } from './upload-status';
 
 export interface ImageUploadResult {
 

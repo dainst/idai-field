@@ -1,12 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Category, Document, IdGenerator, SyncService } from 'idai-field-core';
+import { Category, Document, DocumentDatastore, IdGenerator, SyncService } from 'idai-field-core';
 import { copy, flow, forEach, isEmpty, map, remove, take } from 'tsfun';
 import { AngularUtility } from '../../angular/angular-utility';
 import { ProjectCategories } from '../../core/configuration/project-categories';
 import { ProjectConfiguration } from '../../core/configuration/project-configuration';
-import { DocumentDatastore } from '../../core/datastore/document-datastore';
 import { ExportRunner } from '../../core/export/export-runner';
 import { Imagestore } from '../../core/images/imagestore/imagestore';
 import { Importer, ImporterFormat, ImporterOptions, ImporterReport } from '../../core/import/importer';

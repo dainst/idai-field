@@ -1,12 +1,10 @@
 import { Injectable } from '@angular/core';
-import { ObjectUtils, DatastoreErrors, FindIdsResult, FindResult, HierarchicalRelations, ON_RESOURCE_ID, Query, ResourceId, RESOURCE_DOT_ID } from 'idai-field-core';
-import { Document, NewDocument } from 'idai-field-core';
+import { DatastoreErrors, Document, DocumentDatastore, FindIdsResult, FindResult, HierarchicalRelations, NewDocument, ObjectUtils, ON_RESOURCE_ID, Query, ResourceId, RESOURCE_DOT_ID } from 'idai-field-core';
 import {
     append, flow, isArray, isDefined, isNot, isUndefinedOrEmpty, on, sameset, subtract, to,
     undefinedOrEmpty
 } from 'tsfun';
 import { ProjectConfiguration } from '../configuration/project-configuration';
-import { DocumentDatastore } from '../datastore/document-datastore';
 import { SettingsProvider } from '../settings/settings-provider';
 import { ConnectedDocsWriter } from './connected-docs-writer';
 import RECORDED_IN = HierarchicalRelations.RECORDEDIN;

@@ -1,9 +1,7 @@
-import {Component, Input, OnChanges} from '@angular/core';
-import {ValuelistDefinition, FieldDefinition} from 'idai-field-core';
-import {Resource} from 'idai-field-core';
-import {ValuelistUtil} from '../../../../core/util/valuelist-util';
-import {HierarchyUtil} from '../../../../core/util/hierarchy-util';
-import {DocumentDatastore} from '../../../../core/datastore/document-datastore';
+import { Component, Input, OnChanges } from '@angular/core';
+import { DocumentDatastore, FieldDefinition, Resource, ValuelistDefinition } from 'idai-field-core';
+import { HierarchyUtil } from '../../../../core/util/hierarchy-util';
+import { ValuelistUtil } from '../../../../core/util/valuelist-util';
 
 
 @Component({

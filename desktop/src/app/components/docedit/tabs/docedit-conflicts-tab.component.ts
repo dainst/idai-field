@@ -1,11 +1,10 @@
-import {ChangeDetectorRef, Component, Input, OnChanges} from '@angular/core';
-import {I18n} from '@ngx-translate/i18n-polyfill';
-import {Relations, Resource, Document} from 'idai-field-core';
-import {DocumentDatastore} from '../../../core/datastore/document-datastore';
-import {M} from '../../messages/m';
-import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
-import {Loading} from '../../widgets/loading';
-import {Messages} from '../../messages/messages';
+import { ChangeDetectorRef, Component, Input, OnChanges } from '@angular/core';
+import { I18n } from '@ngx-translate/i18n-polyfill';
+import { Document, DocumentDatastore, Relations, Resource } from 'idai-field-core';
+import { ProjectConfiguration } from '../../../core/configuration/project-configuration';
+import { M } from '../../messages/m';
+import { Messages } from '../../messages/messages';
+import { Loading } from '../../widgets/loading';
 import { formatContent } from './format-content';
 const moment = require('moment');
 

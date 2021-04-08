@@ -1,5 +1,4 @@
-import {Resource} from 'idai-field-core';
-import {DocumentDatastore} from '../datastore/document-datastore';
+import { DocumentDatastore, Resource } from 'idai-field-core';
 
 
 /**

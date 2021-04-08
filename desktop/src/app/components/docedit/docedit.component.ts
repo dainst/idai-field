@@ -1,11 +1,9 @@
 import { Component } from '@angular/core';
-import { ObjectUtils, DatastoreErrors, FieldDefinition, FieldDocument, Group, Groups, ImageDocument } from 'idai-field-core';
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { Document } from 'idai-field-core';
+import { DatastoreErrors, Document, DocumentDatastore, FieldDefinition, FieldDocument, Group, Groups, ImageDocument, ObjectUtils } from 'idai-field-core';
 import { includedIn, isNot } from 'tsfun';
 import { ProjectConfiguration } from '../../core/configuration/project-configuration';
-import { DocumentDatastore } from '../../core/datastore/document-datastore';
 import { DoceditErrors } from '../../core/docedit/docedit-errors';
 import { DocumentHolder } from '../../core/docedit/document-holder';
 import { MenuContext, MenuService } from '../menu-service';

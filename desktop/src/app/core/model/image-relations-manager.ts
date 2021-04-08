@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Category, ObjectUtils, FieldDocument, ImageDocument, ImageRelationsC as ImageRelations, ON_RESOURCE_ID, ResourceId, TreeList } from 'idai-field-core';
-import { Document, toResourceId } from 'idai-field-core';
+import { Category, Document, DocumentDatastore, FieldDocument, ImageDocument, ImageRelationsC as ImageRelations, ObjectUtils, ON_RESOURCE_ID, ResourceId, toResourceId, TreeList } from 'idai-field-core';
 import { flatten, includedIn, isDefined, isNot, on, separate, set, subtract, to } from 'tsfun';
 import { ProjectCategories } from '../configuration/project-categories';
 import { ProjectConfiguration } from '../configuration/project-configuration';
-import { DocumentDatastore } from '../datastore/document-datastore';
 import { Imagestore } from '../images/imagestore/imagestore';
 import { RelationsManager } from './relations-manager';
 import DEPICTS = ImageRelations.DEPICTS;

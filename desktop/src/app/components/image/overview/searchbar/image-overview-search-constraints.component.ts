@@ -1,11 +1,10 @@
-import {Component, Renderer2} from '@angular/core';
-import {I18n} from '@ngx-translate/i18n-polyfill';
-import {ImageOverviewSearchBarComponent} from './image-overview-search-bar.component';
-import {ImageOverviewFacade} from '../../../../core/images/overview/view/imageoverview-facade';
-import {ProjectConfiguration} from '../../../../core/configuration/project-configuration';
-import {FieldDefinition, ObjectUtils} from 'idai-field-core';
-import {DocumentDatastore} from '../../../../core/datastore/document-datastore';
-import {SearchConstraintsComponent} from '../../../widgets/search-constraints.component';
+import { Component, Renderer2 } from '@angular/core';
+import { I18n } from '@ngx-translate/i18n-polyfill';
+import { DocumentDatastore, FieldDefinition, ObjectUtils } from 'idai-field-core';
+import { ProjectConfiguration } from '../../../../core/configuration/project-configuration';
+import { ImageOverviewFacade } from '../../../../core/images/overview/view/imageoverview-facade';
+import { SearchConstraintsComponent } from '../../../widgets/search-constraints.component';
+import { ImageOverviewSearchBarComponent } from './image-overview-search-bar.component';
 
 
 @Component({

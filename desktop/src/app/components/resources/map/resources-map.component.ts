@@ -1,15 +1,14 @@
-import {Component, Input} from '@angular/core';
-import {FieldDocument, FieldGeometry} from 'idai-field-core';
-import {ResourcesComponent} from '../resources.component';
-import {Loading} from '../../widgets/loading';
-import {RelationsManager} from '../../../core/model/relations-manager';
-import {DocumentDatastore} from '../../../core/datastore/document-datastore';
-import {ChangesStream} from '../../../core/datastore/changes/changes-stream';
-import {ViewFacade} from '../../../core/resources/view/view-facade';
-import {NavigationPath} from '../../../core/resources/view/state/navigation-path';
-import {MenuContext, MenuService} from '../../menu-service';
-import {Messages} from '../../messages/messages';
-import {SettingsProvider} from '../../../core/settings/settings-provider';
+import { Component, Input } from '@angular/core';
+import { DocumentDatastore, FieldDocument, FieldGeometry } from 'idai-field-core';
+import { ChangesStream } from '../../../core/datastore/changes/changes-stream';
+import { RelationsManager } from '../../../core/model/relations-manager';
+import { NavigationPath } from '../../../core/resources/view/state/navigation-path';
+import { ViewFacade } from '../../../core/resources/view/view-facade';
+import { SettingsProvider } from '../../../core/settings/settings-provider';
+import { MenuContext, MenuService } from '../../menu-service';
+import { Messages } from '../../messages/messages';
+import { Loading } from '../../widgets/loading';
+import { ResourcesComponent } from '../resources.component';
 
 
 @Component({

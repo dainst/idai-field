@@ -1,5 +1,4 @@
-import { ResourceId, StringUtils } from 'idai-field-core';
-import { DocumentDatastore } from '../../datastore/document-datastore';
+import { DocumentDatastore, ResourceId, StringUtils } from 'idai-field-core';
 import { ImageRelationsManager } from '../../model/image-relations-manager';
 import { RelationsManager } from '../../model/relations-manager';
 import { Settings } from '../../settings/settings';

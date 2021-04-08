@@ -1,10 +1,8 @@
-import {Component, Input,} from '@angular/core';
-import {ValuelistDefinition} from 'idai-field-core';
-import {isUndefinedOrEmpty} from 'tsfun';
-import {Resource, OptionalRange} from 'idai-field-core';
-import {ValuelistUtil} from '../../../../core/util/valuelist-util';
-import {HierarchyUtil} from '../../../../core/util/hierarchy-util';
-import {DocumentDatastore} from '../../../../core/datastore/document-datastore';
+import { Component, Input } from '@angular/core';
+import { DocumentDatastore, OptionalRange, Resource, ValuelistDefinition } from 'idai-field-core';
+import { isUndefinedOrEmpty } from 'tsfun';
+import { HierarchyUtil } from '../../../../core/util/hierarchy-util';
+import { ValuelistUtil } from '../../../../core/util/valuelist-util';
 
 const PROJECT = 'project';
 

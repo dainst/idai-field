@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HierarchicalRelations, Query, ResourceId } from 'idai-field-core';
-import { Document, NewDocument, Resource } from 'idai-field-core';
+import { Document, DocumentDatastore, HierarchicalRelations, NewDocument, Query, Resource, ResourceId } from 'idai-field-core';
 import { is, isnt, on } from 'tsfun';
 import { ProjectCategories } from '../../../configuration/project-categories';
 import { ProjectConfiguration } from '../../../configuration/project-configuration';
-import { DocumentDatastore } from '../../../datastore/document-datastore';
 import { Validations } from '../../../model/validations';
 import { Validator } from '../../../model/validator';
 import { ImportErrors as E } from '../import-errors';

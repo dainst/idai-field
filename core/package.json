@@ -15,8 +15,6 @@
         "test": "jasmine JASMINE_CONFIG_PATH=test/jasmine.json"
     },
     "dependencies": {
-        "rxjs": "~6.5.4",
-        "tsfun": "5.5.7",
         "uuid": "^8.3.2"
     },
     "devDependencies": {

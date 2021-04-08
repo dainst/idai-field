@@ -15,13 +15,10 @@ export class PouchdbManager {
     private syncHandles = [];
 
 
-    constructor(private pouchDbFactory: PouchDbFactory) {
-
-    }
+    constructor(private pouchDbFactory: PouchDbFactory) {}
 
 
     public getDb = (): PouchDB.Database => this.db;
-
 
     /**
      * Destroys the db named dbName, if it is not the currently selected active database
@@ -30,13 +27,10 @@ export class PouchdbManager {
     public destroyDb = (dbName: string) => this.pouchDbFactory(dbName).destroy();
 
 
-    // TODO still necessary?
-    public async resetForE2E() {
-
-        if (this.db) {
-            await this.db.close();
-            this.db = undefined;
-        }
+    public createDb_e2e(dbName: string) {
+     
+        this.db = this.pouchDbFactory(dbName);
+        return this.db;
     }
 
 

@@ -1,9 +1,13 @@
 import { Injectable } from '@angular/core';
-import { Document, DocumentCache, Indexer, IndexFacade, PouchdbManager } from 'idai-field-core';
+import { Document, DocumentCache, Indexer, IndexFacade, PouchdbManager, PouchdbDatastore } from 'idai-field-core';
 import { ProjectConfiguration } from './configuration/project-configuration';
 import { FieldCategoryConverter } from './datastore/field/field-category-converter';
+import { SampleDataLoader } from './datastore/field/sampledata/sample-data-loader';
+import { ImageConverter } from './images/imagestore/image-converter';
 import { ImagesState } from './images/overview/view/images-state';
 import { ResourcesStateManager } from './resources/view/resources-state-manager';
+import { Settings } from './settings/settings';
+import { SettingsProvider } from './settings/settings-provider';
 import { TabManager } from './tabs/tab-manager';
 
 const remote = typeof window !== 'undefined' ? window.require('electron').remote : require('electron').remote;
@@ -21,6 +25,9 @@ export class AppController {
                 private documentCache: DocumentCache<Document>,
                 private imagesState: ImagesState,
                 private indexFacade: IndexFacade,
+                private imageConverter: ImageConverter,
+                private pouchdbDatastore: PouchdbDatastore,
+                private settingsProvider: SettingsProvider,
                 private tabManager: TabManager,
                 private projectConfiguration: ProjectConfiguration) {}
 
@@ -49,13 +56,27 @@ export class AppController {
 
     private async reset() {
 
+        await this.pouchdbManager.destroyDb('test');
+
+        const db = this.pouchdbManager.createDb_e2e('test');
+        this.pouchdbDatastore.setDb_e2e(db);
+
         this.resourcesState.resetForE2E();
         this.imagesState.resetForE2E();
         this.tabManager.resetForE2E();
         this.documentCache.resetForE2E();
-        await this.pouchdbManager.resetForE2E();
+
+        await new SampleDataLoader(
+            this.imageConverter,
+            this.settingsProvider.getSettings().imagestorePath,
+            Settings.getLocale())
+            .go(this.pouchdbManager.getDb(),this.settingsProvider.getSettings().selectedProject);
+
         await Indexer.reindex(
-            this.indexFacade, this.pouchdbManager.getDb(), this.documentCache, new FieldCategoryConverter(this.projectConfiguration)
+            this.indexFacade,
+            db,
+            this.documentCache,
+            new FieldCategoryConverter(this.projectConfiguration)
         );
     }
 }

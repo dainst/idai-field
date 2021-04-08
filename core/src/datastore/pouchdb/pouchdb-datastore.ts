@@ -37,6 +37,8 @@ export class PouchdbDatastore {
 
     public deletedNotifications = (): Observable<Document> => ObserverUtil.register(this.deletedObservers);
 
+    public setDb_e2e = (db: PouchDB.Database) => this.db = db;
+
 
     /**
      * @returns newest revision of the document fetched from db

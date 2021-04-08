@@ -147,7 +147,7 @@
     "cross-var": "^1.1.0",
     "electron": "9.4.0",
     "electron-builder": "22.7.0",
-    "electron-chromedriver": "9.0.0",
+    "electron-chromedriver": "10.0.0",
     "electron-notarize": "1.0.0",
     "electron-packager": "14.2.1",
     "file-api": "0.10.4",

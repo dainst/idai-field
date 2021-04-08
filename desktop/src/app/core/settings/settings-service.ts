@@ -64,7 +64,8 @@ export class SettingsService {
     }
 
 
-    public async bootProjectDb(selectedProject: string, isSyncActive: boolean,
+    public async bootProjectDb(selectedProject: string,
+                               isSyncActive: boolean,
                                destroyBeforeCreate: boolean = false): Promise<void> {
 
         try {
@@ -203,21 +204,7 @@ export class SettingsService {
     }
 
 
-    private static isSynchronizationAllowed(project: string): boolean {
-
-        return project !== undefined && (project !== 'test' || remote.getGlobal('mode') === 'test');
-    }
-
-
-    private static validateAddress(address: any) {
-
-        return (address == '')
-            ? true
-            : new RegExp('^(https?:\/\/)?([0-9a-z\.-]+)(:[0-9]+)?(\/.*)?$').test(address);
-    }
-
-
-    private static createProjectDocument(settings: Settings): any {
+    public static createProjectDocument(settings: Settings): any {
 
         return {
             _id: 'project',
@@ -231,5 +218,19 @@ export class SettingsService {
             created: { user: settings.username, date: new Date() },
             modified: [{ user: settings.username, date: new Date() }]
         };
+    }
+
+
+    private static isSynchronizationAllowed(project: string): boolean {
+
+        return project !== undefined && (project !== 'test' || remote.getGlobal('mode') === 'test');
+    }
+
+
+    private static validateAddress(address: any) {
+
+        return (address == '')
+            ? true
+            : new RegExp('^(https?:\/\/)?([0-9a-z\.-]+)(:[0-9]+)?(\/.*)?$').test(address);
     }
 }

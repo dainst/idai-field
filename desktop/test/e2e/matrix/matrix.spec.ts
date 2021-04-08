@@ -14,16 +14,17 @@ const common = require('../common');
  */
 describe('matrix --', () => {
 
-    beforeEach(() => {
+    beforeEach(async done => {
 
         browser.sleep(1000);
 
         MenuPage.navigateToSettings();
-        common.resetApp();
+        await common.resetApp();
         MenuPage.navigateToMatrix();
         MatrixPage.performSelectOperation(1);
 
         browser.wait(EC.presenceOf(MatrixPage.getSvgRoot()), delays.ECWaitTime);
+        done();
     });
 
 

@@ -1,27 +1,28 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import Home from '../screens/HomeScreen';
-import { headerBackgroundColor } from '../constants/colors';
+import { headerBackgroundColor } from '../../constants/colors';
+import { SettingsStackParamList } from './SettingsStackParamList';
+import SettingsScreen from '../../screens/SettingsScreen';
 
-const Stack = createStackNavigator();
+const Stack = createStackNavigator<SettingsStackParamList>();
 
 const commonHeaderStyle = {
     backgroundColor: headerBackgroundColor
 };
 
-const StackNavigator = (): JSX.Element => (
+const SettingsStackNavigator = (): JSX.Element => (
     <Stack.Navigator
         screenOptions={ {
             headerStyle: commonHeaderStyle,
             headerTintColor: 'white',
         } }>
         <Stack.Screen
-            name="Home"
-            component={ Home }
+            name="Settings"
+            component={ SettingsScreen }
             options={
                 { title: 'iDAI field mobile' }
             } />
     </Stack.Navigator>
 );
 
-export default StackNavigator;
+export default SettingsStackNavigator;

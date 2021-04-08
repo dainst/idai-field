@@ -9,6 +9,10 @@ import {Settings} from '../../settings/settings';
  */
 export abstract class Imagestore extends ReadImagestore {
 
+
+    abstract setDb_e2e(db: PouchDB.Database): void;
+
+
     abstract getPath(): string|undefined;
 
 

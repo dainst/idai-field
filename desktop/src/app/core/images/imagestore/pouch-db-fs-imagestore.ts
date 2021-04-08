@@ -29,6 +29,7 @@ export class PouchDbFsImagestore /* implements Imagestore */{
         private db: PouchDB.Database) {
     }
 
+    public setDb_e2e = (db: PouchDB.Database) => this.db = db;
 
     public getPath = (): string|undefined => this.projectPath;
 

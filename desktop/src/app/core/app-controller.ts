@@ -4,6 +4,7 @@ import { ProjectConfiguration } from './configuration/project-configuration';
 import { FieldCategoryConverter } from './datastore/field/field-category-converter';
 import { SampleDataLoader } from './datastore/field/sampledata/sample-data-loader';
 import { ImageConverter } from './images/imagestore/image-converter';
+import { Imagestore } from './images/imagestore/imagestore';
 import { ImagesState } from './images/overview/view/images-state';
 import { ResourcesStateManager } from './resources/view/resources-state-manager';
 import { Settings } from './settings/settings';
@@ -27,6 +28,7 @@ export class AppController {
                 private indexFacade: IndexFacade,
                 private imageConverter: ImageConverter,
                 private pouchdbDatastore: PouchdbDatastore,
+                private imagestore: Imagestore,
                 private settingsProvider: SettingsProvider,
                 private tabManager: TabManager,
                 private projectConfiguration: ProjectConfiguration) {}
@@ -60,6 +62,7 @@ export class AppController {
 
         const db = this.pouchdbManager.createDb_e2e('test');
         this.pouchdbDatastore.setDb_e2e(db);
+        this.imagestore.setDb_e2e(db);
 
         this.resourcesState.resetForE2E();
         this.imagesState.resetForE2E();
@@ -70,7 +73,7 @@ export class AppController {
             this.imageConverter,
             this.settingsProvider.getSettings().imagestorePath,
             Settings.getLocale())
-            .go(this.pouchdbManager.getDb(),this.settingsProvider.getSettings().selectedProject);
+            .go(db,this.settingsProvider.getSettings().selectedProject);
 
         await Indexer.reindex(
             this.indexFacade,

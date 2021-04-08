@@ -4,10 +4,11 @@ import { Ionicons } from '@expo/vector-icons';
 import { headerBackgroundColor } from '../../constants/colors';
 import HomeStackNavigator from '../HomeStackNavigator/HomeStackNavigator';
 import SettingsStackNavigator from '../SettingsStackNavigator/SettingsStackNavigator';
+import { TapParamList } from './TapParamList';
 
 type possibleIcon = 'home' | 'home-outline' | 'list' | 'list-sharp' | undefined;
 
-const Tab = createBottomTabNavigator();
+const Tab = createBottomTabNavigator<TapParamList>();
 
 const TabNavigator = (): JSX.Element => (
     <Tab.Navigator

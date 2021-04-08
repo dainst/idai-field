@@ -35,8 +35,17 @@ const PouchDbContextProvider: React.FC = (props) => {
       }, [dbName, remotePassword, remoteUser]);
 
     const getOperations = () => _operations;
+    const disconnect = () => {
+        setDb(null);
+        setStatus(null);
+        setDbName('');
+        setRemoteUser('');
+        setRemotePassword('');
+    };
+
     return (
-        <PouchDbContext.Provider value={ { db, dbName, remoteUser, remotePassword, status, getOperations, setupDb } }>
+        <PouchDbContext.Provider value={ {
+            db, dbName, remoteUser, remotePassword, status, getOperations, setupDb, disconnect } }>
             {props.children}
         </PouchDbContext.Provider>
     );

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
@@ -16,6 +17,7 @@ interface Context {
 
     getOperations: () => any[] | undefined;
     setupDb: (dbName: string, remoteUser: string, remotePassword: string) => void;
+    disconnect: () => void;
 }
 
 const PouchDbContext = React.createContext<Context>({
@@ -25,8 +27,8 @@ const PouchDbContext = React.createContext<Context>({
     remotePassword: '',
     status: null,
     getOperations: () => [],
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    setupDb: (dbName: string, remoteUser: string, remotePassword: string) => {}
+    setupDb: (dbName: string, remoteUser: string, remotePassword: string) => {},
+    disconnect: () => {},
 });
 
 export default PouchDbContext;

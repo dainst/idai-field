@@ -1,5 +1,6 @@
 import { Observable, Observer } from 'rxjs';
 import { SyncProcess, SyncStatus } from '../../sync/sync-process';
+import { PouchDbFactory } from './types';
 
 
 /**
@@ -14,7 +15,7 @@ export class PouchdbManager {
     private syncHandles = [];
 
 
-    constructor(private pouchDbFactory: (name: string) => PouchDB.Database) {
+    constructor(private pouchDbFactory: PouchDbFactory) {
 
     }
 

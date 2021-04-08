@@ -1,11 +1,11 @@
 import React, { ReactElement, useState } from 'react';
 import { enableScreens } from 'react-native-screens';
-import TabNavigator from './navigation/TabNavigator';
+import TabNavigator from './src/navigation/TabNavigator';
 import AppLoading from 'expo-app-loading';
 import * as Font from 'expo-font';
 import { Ionicons } from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
-import PouchDbContextProvider from './data/pouchdb/PouchContextProvider';
+import PouchDbContextProvider from './src/data/pouchdb/PouchContextProvider';
 import { Root } from 'native-base';
 
 

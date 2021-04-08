@@ -91,7 +91,7 @@ export class PouchdbManager {
      * a possible existing database with the specified name will get used
      * and not overwritten.
      */
-    public async createDb(name: string, doc: any, destroyBeforeCreate: boolean) {
+    public async createDb(name: string, doc: any, destroyBeforeCreate: boolean): Promise<PouchDB.Database> {
 
         let db = this.pouchDbFactory(name);
 
@@ -109,6 +109,8 @@ export class PouchdbManager {
         }
 
         this.db = db;
+
+        return db;
     }
 }
 

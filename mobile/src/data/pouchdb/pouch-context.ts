@@ -14,8 +14,8 @@ interface Context {
     remoteUser: string;
     remotePassword: string;
     status: DbStatus | null;
+    operations: Document[] | undefined;
 
-    getOperations: () => any[] | undefined;
     setupDb: (dbName: string, remoteUser: string, remotePassword: string) => void;
     disconnect: () => void;
 }
@@ -26,7 +26,7 @@ const PouchDbContext = React.createContext<Context>({
     remoteUser: '',
     remotePassword: '',
     status: null,
-    getOperations: () => [],
+    operations: [],
     setupDb: (dbName: string, remoteUser: string, remotePassword: string) => {},
     disconnect: () => {},
 });

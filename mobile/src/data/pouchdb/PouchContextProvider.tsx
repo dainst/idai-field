@@ -9,7 +9,7 @@ const PouchDbContextProvider: React.FC = (props) => {
     const [remoteUser, setRemoteUser] = useState<string>('');
     const [remotePassword, setRemotePassword] = useState<string>('');
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const [_operations, setOperations] = useState<Document[]>();
+    const [operations, setOperations] = useState<Document[]>();
     const [status, setStatus] = useState<DbStatus | null>(null);
 
     const setupDb = (dbName: string, remoteUser: string, remotePassword: string) => {
@@ -38,7 +38,6 @@ const PouchDbContextProvider: React.FC = (props) => {
         }
       }, [dbName, remotePassword, remoteUser]);
 
-    const getOperations = () => _operations;
     const disconnect = () => {
         setDb(null);
         setStatus(null);
@@ -50,7 +49,7 @@ const PouchDbContextProvider: React.FC = (props) => {
 
     return (
         <PouchDbContext.Provider value={ {
-            db, dbName, remoteUser, remotePassword, status, getOperations, setupDb, disconnect } }>
+            db, dbName, remoteUser, remotePassword, status, operations, setupDb, disconnect } }>
             {props.children}
         </PouchDbContext.Provider>
     );

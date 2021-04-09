@@ -12,8 +12,9 @@ const HomeScreen= (): ReactElement => {
 
     useEffect(() => {
         
-        setOperations(pouchCtx.getOperations());
-    }, [pouchCtx, pouchCtx.dbName]);
+        setOperations(pouchCtx.operations);
+    }, [pouchCtx, pouchCtx.operations]);
+
 
     const renderStatus = () => {
         const connected = pouchCtx.status && pouchCtx.status.status === 200 ? true : false;
@@ -24,6 +25,11 @@ const HomeScreen= (): ReactElement => {
                         {connected ? 'Connected' : 'Not Connected'}
                     </Text>
                 </CardItem>
+                {operations && operations.map(operation => (
+                    <CardItem key={ operation._id }>
+                        <Text>{operation.resource.id}</Text>
+                    </CardItem>
+                ))}
             </Card>);
     };
 

@@ -73,5 +73,24 @@ describe('DocumentRepository', () => {
         expect(foundDocs).toHaveLength(1);
         expect(foundDocs[0].resource.id).toEqual('id2');
     });
+    
 
+    it('finds documents by full-text query', async () => {
+
+        const docs = [
+            doc('Test Document', 'T1'),
+            doc('Tester Document', 'T2'),
+            doc('Toast Document', 'T12'),
+        ];
+        await Promise.all(docs.map(async d => await repository.create(d, 'testuser')));
+        
+        const { totalCount: count1 } = await repository.find({});
+        expect(count1).toEqual(3);
+        
+        const { totalCount: count } = await repository.find({ q: 'Test' });
+        expect(count).toEqual(2);
+
+        const { totalCount: count2 } = await repository.find({ q: 'Document' });
+        expect(count2).toEqual(3);
+    });
 });

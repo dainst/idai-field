@@ -11,6 +11,7 @@ This is a monorepo containing three packages:
 The repository uses [lerna](https://github.com/lerna/lerna) to manage sub-package dependecies.
 When first checking out the code base, bootstrap the dependencies with:
 
+    $ npm i
     $ npm run bootstrap
 
 Build all packages with:

@@ -1,11 +1,7 @@
-import { doc } from 'idai-field-core';
+import { createDocuments, doc } from 'idai-field-core';
+import PouchDB from 'pouchdb-node';
 import { last } from 'tsfun';
 import { DocumentRepository } from './document-repository';
-import PouchDB = require('pouchdb-node');
-import PouchDBFind = require('pouchdb-find');
-
-
-// PouchDB.plugin(PouchDBFind);
 
 
 describe('DocumentRepository', () => {
@@ -34,10 +30,10 @@ describe('DocumentRepository', () => {
     });
 
 
-    it('fetch document after creation', async () => {
+    it('get document after creation', async () => {
 
         const testDoc = await repository.create(doc('Test Document'), 'testuser');
-        const fetchedDoc = await repository.fetch(testDoc.resource.id);
+        const fetchedDoc = await repository.get(testDoc.resource.id);
 
         expect(fetchedDoc.resource).toEqual(testDoc.resource);
     });
@@ -60,7 +56,22 @@ describe('DocumentRepository', () => {
         const testDoc = await repository.create(doc('Test Document'), 'testuser');
         await repository.remove(testDoc);
 
-        return expect(repository.fetch(testDoc.resource.id)).rejects.toBeTruthy();
+        return expect(repository.get(testDoc.resource.id)).rejects.toBeTruthy();
+    });
+    
+
+    it('finds document by parent', async () => {
+
+        const docs = Object.values(createDocuments([
+            ['id1', 'Feature', ['id2']],
+            ['id2', 'Find'],
+            ['id3', 'Find']
+        ]));
+        await Promise.all(docs.map(async d => await repository.create(d, 'testuser')));
+        
+        const { documents: foundDocs } = await repository.find({ constraints: { 'liesWithin:contain': 'id1' } });
+        expect(foundDocs).toHaveLength(1);
+        expect(foundDocs[0].resource.id).toEqual('id2');
     });
 
 });

@@ -20,7 +20,7 @@ const SettingsStackNavigator = (): JSX.Element => (
             name="Settings"
             component={ SettingsScreen }
             options={
-                { title: 'iDAI field mobile' }
+                { title: 'Settings' }
             } />
     </Stack.Navigator>
 );

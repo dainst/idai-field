@@ -110,7 +110,8 @@ describe('DocumentRepository', () => {
     it('notifies of changes', async () => {
 
         const testDoc = await repository.create(doc('Test Document'), 'testuser1');
-        await new Promise<void>(resolve => setTimeout(() => resolve(), 100)); // prevent changed() picking up creation
+        // prevent docChanged from picking up creation
+        await new Promise<void>(resolve => setTimeout(() => resolve(), 100));
         const docChanged = new Promise<Document>(resolve => {
             repository.changed().subscribe(async d => resolve(d));
         });

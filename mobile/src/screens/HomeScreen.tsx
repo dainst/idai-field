@@ -1,14 +1,13 @@
 //import liraries
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect, ReactElement } from 'react';
 import { StyleSheet } from 'react-native';
 import { Container, Text, Card, CardItem } from 'native-base';
 import PouchDbContext from '../data/pouchdb/pouch-context';
 
-// create a component
-const HomeScreen: React.FC = () => {
+
+const HomeScreen= (): ReactElement => {
+    
     const [operations, setOperations] = useState<any[] | undefined>();
-
-
     const pouchCtx = useContext(PouchDbContext);
 
     useEffect(() => {
@@ -36,7 +35,7 @@ const HomeScreen: React.FC = () => {
     );
 };
 
-// define your styles
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -54,5 +53,5 @@ const styles = StyleSheet.create({
     },
 });
 
-//make this component available to the app
+
 export default HomeScreen;

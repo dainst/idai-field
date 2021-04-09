@@ -13,6 +13,7 @@ export class DocumentRepository {
 
         const pouchdbManager = new PouchdbManager(pouchDbFactory);
         const db = await pouchdbManager.createDb(project, { _id: 'project' } , false);
+        verifyPlugins(db);
         const pouchdbDatastore = new PouchdbDatastore(db, new IdGenerator(), true);
         return new DocumentRepository(pouchdbManager, pouchdbDatastore);
     }
@@ -59,3 +60,10 @@ export class DocumentRepository {
         this.pouchdbManager.stopSync();
 
 }
+
+
+const verifyPlugins = (db: PouchDB.Database): void => {
+    if (typeof db.find !== 'function') {
+        throw new Error('pouchdb-find plugin not found!');
+    }
+};

@@ -2,6 +2,11 @@ import { doc } from 'idai-field-core';
 import { last } from 'tsfun';
 import { DocumentRepository } from './document-repository';
 import PouchDB = require('pouchdb-node');
+import PouchDBFind = require('pouchdb-find');
+
+
+// PouchDB.plugin(PouchDBFind);
+
 
 describe('DocumentRepository', () => {
 

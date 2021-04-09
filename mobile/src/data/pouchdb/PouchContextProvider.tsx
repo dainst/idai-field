@@ -9,7 +9,7 @@ const PouchDbContextProvider: React.FC = (props) => {
     const [remoteUser, setRemoteUser] = useState<string>('');
     const [remotePassword, setRemotePassword] = useState<string>('');
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const [_operations, setOperations] = useState<any[]>();
+    const [_operations, setOperations] = useState<Document[]>();
     const [status, setStatus] = useState<DbStatus | null>(null);
 
     const setupDb = (dbName: string, remoteUser: string, remotePassword: string) => {
@@ -27,7 +27,11 @@ const PouchDbContextProvider: React.FC = (props) => {
                     setStatus({ status: 200, message:'connected' });
                     return db.allDocs({ include_docs: true });
                 })
-                .then(docs => setOperations(docs.rows.filter(doc => isDocValid(doc))))
+                .then(docs => {
+                    const filteredDocs = docs.rows.filter(doc => isDocValid(doc));
+                    setOperations(filteredDocs.map(doc => doc.doc));
+
+                })
                 .catch(err => {
                     setStatus({ status: err.status, message: err.message });
                 });
@@ -41,6 +45,7 @@ const PouchDbContextProvider: React.FC = (props) => {
         setDbName('');
         setRemoteUser('');
         setRemotePassword('');
+        setOperations([]);
     };
 
     return (

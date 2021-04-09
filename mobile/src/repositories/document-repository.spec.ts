@@ -1,4 +1,4 @@
-import { createDocuments, doc } from 'idai-field-core';
+import { createDocuments, doc, Document } from 'idai-field-core';
 import PouchDB from 'pouchdb-node';
 import { last } from 'tsfun';
 import { DocumentRepository } from './document-repository';
@@ -92,5 +92,45 @@ describe('DocumentRepository', () => {
 
         const { totalCount: count2 } = await repository.find({ q: 'Document' });
         expect(count2).toEqual(3);
+    });
+
+
+    it('notifies of creation', async () => {
+
+        const docChanged = new Promise<Document>(resolve => {
+            repository.changed().subscribe(async d => resolve(d));
+        });
+
+        const testDoc = await repository.create(doc('Test Document'), 'testuser1');
+        const changedDoc = await docChanged;
+        expect(changedDoc.resource.id).toEqual(testDoc.resource.id);
+    });
+
+
+    it('notifies of changes', async () => {
+
+        const testDoc = await repository.create(doc('Test Document'), 'testuser1');
+        await new Promise<void>(resolve => setTimeout(() => resolve(), 100)); // prevent changed() picking up creation
+        const docChanged = new Promise<Document>(resolve => {
+            repository.changed().subscribe(async d => resolve(d));
+        });
+
+        testDoc.resource.shortDescription = 'Toast Document';
+        await repository.update(testDoc, 'testuser1');
+        const changedDoc = await docChanged;
+        expect(changedDoc.resource.shortDescription).toEqual(testDoc.resource.shortDescription);
+    });
+
+
+    it('notifies of deletion', async () => {
+
+        const testDoc = await repository.create(doc('Test Document'), 'testuser1');
+        const docDeleted = new Promise<Document>(resolve => {
+            repository.deleted().subscribe(async d => resolve(d));
+        });
+
+        await repository.remove(testDoc);
+        const deletedDoc = await docDeleted;
+        expect(deletedDoc.resource.id).toEqual(testDoc.resource.id);
     });
 });

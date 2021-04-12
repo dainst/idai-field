@@ -16,8 +16,6 @@ export interface IdaiFieldFindResult<T extends Document> extends FindResult {
 }
 
 /**
- * // TODO merge
- *
  * This datastore provides everything necessary
  * to power a idai-field application:
  *
@@ -27,19 +25,9 @@ export interface IdaiFieldFindResult<T extends Document> extends FindResult {
  *    for clients to work with references to documents.
  *
  * 2) Returns fully checked instances of
- *    FieldDocument and ImageDocument respectively,
+ *    Document,
  *    so that the rest of the app can rely that the declared
  *    fields are present.
- *
- * @author Daniel de Oliveira
- * @author Sebastian Cuy
- * @author Thomas Kleinke
- */
-/**
- * Returns fully checked instances of
- * FieldDocument and ImageDocument respectively,
- * so that the rest of the app can rely that the declared
- * fields are present.
  *
  * @author Daniel de Oliveira
  * @author Sebastian Cuy
@@ -53,6 +41,9 @@ export abstract class CachedDatastore<T extends Document> {
                 private categoryConverter: CategoryConverter<T>,
                 private categoryClass: string) {
     }
+
+
+    public suppressWait = false;
 
 
     /**
@@ -133,15 +124,6 @@ export abstract class CachedDatastore<T extends Document> {
         this.documentCache.remove(document.resource.id);
     }
 
-
-    public suppressWait = false;
-
-    // constructor(protected datastore: PouchdbDatastore,
-                // protected indexFacade: IndexFacade,
-                // protected documentCache: DocumentCache<T>,
-                // protected categoryConverter: CategoryConverter<T>,
-                // protected categoryClass: string) { }
-//
 
     /**
      * Implements {@link ReadDatastore#get}

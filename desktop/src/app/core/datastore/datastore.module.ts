@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CategoryConverter, Datastore, Document, DocumentCache, DocumentDatastore, FeatureDocument, FieldDocument, IdGenerator, ImageDocument, IndexFacade, PouchdbDatastore, PouchdbManager } from 'idai-field-core';
 import { ChangesStream } from './changes/changes-stream';
-import { FeatureDatastore } from './field/feature-datastore';
 import { FieldCategoryConverter } from './field/field-category-converter';
 import { FieldDatastore } from './field/field-datastore';
 import { ImageDatastore } from './field/image-datastore';
@@ -100,23 +99,6 @@ const PouchDB = window.require('pouchdb-browser');
             ): ImageDatastore {
                 return new ImageDatastore(pouchdbDatastore, indexFacade, documentCache, documentConverter);
                 },
-            deps: [PouchdbDatastore, IndexFacade, DocumentCache, CategoryConverter]
-        },
-
-
-        // idai-field datastore
-        // knows FeatureDocument, guarantees for its instances to be null-checked, i.e. all declared fields are defined
-        // guarantees that identifier constraint is available
-        // provides caching
-        {
-            provide: FeatureDatastore,
-            useFactory: function(pouchdbDatastore: PouchdbDatastore,
-                                 indexFacade: IndexFacade,
-                                 documentCache: DocumentCache<FeatureDocument>,
-                                 documentConverter: CategoryConverter<FeatureDocument>,
-            ): FeatureDatastore {
-                return new FeatureDatastore(pouchdbDatastore, indexFacade, documentCache, documentConverter);
-            },
             deps: [PouchdbDatastore, IndexFacade, DocumentCache, CategoryConverter]
         }
     ]

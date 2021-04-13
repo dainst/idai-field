@@ -19,9 +19,9 @@ export class FieldCategoryConverter extends CategoryConverter<Document> {
     public convert<T extends Document>(document: Document): T {
 
         const convertedDocument: T = Migrator.migrate(document) as T;
+        takeOrMake(convertedDocument, ['resource','identifier'], '');
 
         if (this.projectConfiguration.isSubcategory(convertedDocument.resource.category, 'Image')) {
-            takeOrMake(convertedDocument, ['resource','identifier'], '');
             takeOrMake(convertedDocument, ['resource','relations','depicts'], []);
         } else {
             takeOrMake(convertedDocument, ['resource','identifier'],'');

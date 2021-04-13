@@ -1,12 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {isEmpty, on, is} from 'tsfun';
-import {FeatureDocument, FieldDocument} from 'idai-field-core';
-import {FieldDatastore} from '../../core/datastore/field/field-datastore';
+import {isEmpty, on, is, map} from 'tsfun';
+import {DocumentDatastore, FeatureDocument, FieldDocument} from 'idai-field-core';
 import {ModelUtil} from '../../core/model/model-util';
 import {DoceditComponent} from '../docedit/docedit.component';
 import {MatrixClusterMode, MatrixRelationsMode, MatrixState} from './matrix-state';
-import {FeatureDatastore} from '../../core/datastore/field/feature-datastore';
 import {Loading} from '../widgets/loading';
 import {DotBuilder} from './dot-builder';
 import {MatrixSelection, MatrixSelectionMode} from './matrix-selection';
@@ -57,9 +55,8 @@ export class MatrixViewComponent implements OnInit {
     private trenchesLoaded: boolean = false;
 
 
-    constructor(private datastore: FieldDatastore,
-                private projectConfiguration: ProjectConfiguration,
-                private featureDatastore: FeatureDatastore,
+    constructor(private projectConfiguration: ProjectConfiguration,
+                private datastore: DocumentDatastore,
                 private modalService: NgbModal,
                 private matrixState: MatrixState,
                 private loading: Loading,
@@ -164,7 +161,7 @@ export class MatrixViewComponent implements OnInit {
 
         if (!this.projectConfiguration.getCategory('Trench')) return;
 
-        this.trenches = (await this.datastore.find({ categories: ['Trench'] })).documents;
+        this.trenches = map((await this.datastore.find({ categories: ['Trench'] })).documents, FieldDocument.fromDocument);
         if (this.trenches.length === 0) return;
 
         const previouslySelectedTrench = this.trenches
@@ -196,9 +193,9 @@ export class MatrixViewComponent implements OnInit {
 
         this.loading.start();
 
-        this.totalFeatureDocuments = this.featureDocuments = (await this.featureDatastore.find( {
+        this.totalFeatureDocuments = this.featureDocuments = map((await this.datastore.find( {
             constraints: { 'isRecordedIn:contain': trench.resource.id }
-        })).documents;
+        })).documents as any, FeatureDocument.fromDocument) as any /*TODO any*/;
 
         this.loading.stop();
     }

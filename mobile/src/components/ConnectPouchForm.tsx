@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { Button, Form, Input, Item, Text, Card, Body, CardItem } from 'native-base';
 import { Keyboard, StyleSheet } from 'react-native';
 
-interface SetupPouchFormProps {
+interface ConnectPouchFormProps {
     dbSetupHandler: (dbName: string, remoteUser: string, remotePassword: string) => void;
 }
 
-const SetupPouchForm: React.FC<SetupPouchFormProps> = ({ dbSetupHandler }) => {
+const ConnectPouchForm: React.FC<ConnectPouchFormProps> = ({ dbSetupHandler }) => {
 
     const [remoteUser, setRemoteUser] = useState<string>('');
     const [password, setPassword] = useState<string>('');
@@ -77,4 +77,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default SetupPouchForm;
+export default ConnectPouchForm;

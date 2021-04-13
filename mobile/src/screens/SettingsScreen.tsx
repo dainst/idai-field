@@ -52,7 +52,7 @@ const SettingsScreen = ({ navigation }: RootStackNavProps<'Settings'>): ReactEle
                 {isDbConnected ?
                 <DisconectPouchForm
                     dbName={ pouchCtx.dbName } disconnectHandler={ disconnectHandler } />:
-                <SetupPouchForm dbSetupHandler={ pouchCtx.setupDb } /> }
+                <ConnectPouchForm dbSetupHandler={ pouchCtx.setupDb } /> }
             </Content>
         </Container>
     );

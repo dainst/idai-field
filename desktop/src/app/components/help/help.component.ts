@@ -7,7 +7,7 @@ import {TabManager} from '../../core/tabs/tab-manager';
 import {Settings} from '../../core/settings/settings';
 import {MenuContext, MenuService} from '../menu-service';
 
-const remote = typeof window !== 'undefined' ? window.require('electron').remote : require('electron').remote;
+const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
 
 const HELP_LANGUAGES = ['de', 'en'];
 const FALLBACK_LANGUAGE = 'en';

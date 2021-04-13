@@ -3,7 +3,7 @@ import {JavaToolExecutor} from '../java/java-tool-executor';
 import {M} from '../../components/messages/m';
 import {Settings} from '../settings/settings';
 
-const remote = typeof window !== 'undefined' ? window.require('electron').remote : require('electron').remote;
+const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
 
 
 /**

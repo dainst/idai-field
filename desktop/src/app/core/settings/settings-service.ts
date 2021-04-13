@@ -11,7 +11,8 @@ import { ImagestoreErrors } from '../images/imagestore/imagestore-errors';
 import { Settings } from './settings';
 import { SettingsProvider } from './settings-provider';
 
-const {remote, ipcRenderer} = typeof window !== 'undefined' ? window.require('electron') : require('electron');
+const ipcRenderer = typeof window !== 'undefined' ? window.require('electron').ipcRenderer : require('electron').ipcRenderer;
+const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
 
 // Ordered by Name
 export const PROJECT_MAPPING = {
@@ -223,7 +224,7 @@ export class SettingsService {
 
     private static isSynchronizationAllowed(project: string): boolean {
 
-        return project !== undefined && (project !== 'test' || remote.getGlobal('mode') === 'test');
+        return project !== undefined && (project !== 'test' || (!remote || remote.getGlobal('mode') === 'test'));
     }
 
 

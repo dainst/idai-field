@@ -38,11 +38,14 @@
     "react-native-svg": "12.1.0",
     "react-native-web": "~0.13.12",
     "styled-components": "^5.2.3",
-    "styled-system": "^5.1.5"
+    "styled-system": "^5.1.5",
+    "rxjs": "~6.5.4",
+    "tsfun": "5.5.7"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
     "@babel/runtime": "^7.13.10",
+    "@expo/metro-config": "^0.1.61",
     "@types/jest": "^26.0.22",
     "@types/pouchdb": "^6.4.0",
     "@types/react": "~16.9.35",

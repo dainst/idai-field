@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { Category, DocumentDatastore, FieldDocument, Query } from 'idai-field-core';
+import { Category, Datastore, FieldDocument, Query } from 'idai-field-core';
 import { ProjectCategories } from '../../core/configuration/project-categories';
 import { ProjectConfiguration } from '../../core/configuration/project-configuration';
 import { CatalogExporter, ERROR_FAILED_TO_COPY_IMAGES } from '../../core/export/catalog/catalog-exporter';
@@ -59,7 +59,7 @@ export class ExportComponent implements OnInit {
                 private modalService: NgbModal,
                 private messages: Messages,
                 private i18n: I18n,
-                private datastore: DocumentDatastore,
+                private datastore: Datastore,
                 private tabManager: TabManager,
                 private projectConfiguration: ProjectConfiguration,
                 private menuService: MenuService,

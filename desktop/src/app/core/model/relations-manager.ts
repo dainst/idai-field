@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { DatastoreErrors, Document, DocumentDatastore, FindIdsResult, FindResult, HierarchicalRelations, NewDocument, ObjectUtils, ON_RESOURCE_ID, Query, ResourceId, RESOURCE_DOT_ID } from 'idai-field-core';
+import { DatastoreErrors, Document, Datastore, FindIdsResult, FindResult, HierarchicalRelations, NewDocument, ObjectUtils, ON_RESOURCE_ID, Query, ResourceId, RESOURCE_DOT_ID } from 'idai-field-core';
 import {
     append, flow, isArray, isDefined, isNot, isUndefinedOrEmpty, on, sameset, subtract, to,
     undefinedOrEmpty
@@ -23,7 +23,7 @@ export class RelationsManager {
     private connectedDocsWriter: ConnectedDocsWriter;
 
     constructor(
-        private datastore: DocumentDatastore,
+        private datastore: Datastore,
         private projectConfiguration: ProjectConfiguration,
         private settingsProvider: SettingsProvider
     ) {

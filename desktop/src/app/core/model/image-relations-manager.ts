@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Category, Document, DocumentDatastore, FieldDocument, ImageDocument, ImageRelationsC as ImageRelations, ObjectUtils, ON_RESOURCE_ID, ResourceId, toResourceId, TreeList } from 'idai-field-core';
+import { Category, Document, Datastore, FieldDocument, ImageDocument, ImageRelationsC as ImageRelations, ObjectUtils, ON_RESOURCE_ID, ResourceId, toResourceId, TreeList } from 'idai-field-core';
 import { flatten, includedIn, isDefined, isNot, on, separate, set, subtract, to } from 'tsfun';
 import { ProjectCategories } from '../configuration/project-categories';
 import { ProjectConfiguration } from '../configuration/project-configuration';
@@ -21,7 +21,7 @@ export class ImageRelationsManager {
 
     private categoryTreelist: TreeList<Category>;
 
-    constructor(private datastore: DocumentDatastore,
+    constructor(private datastore: Datastore,
                 private relationsManager: RelationsManager,
                 private imagestore: Imagestore,
                 projectConfiguration: ProjectConfiguration) {

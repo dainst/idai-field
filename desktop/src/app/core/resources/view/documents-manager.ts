@@ -1,6 +1,6 @@
 import {Observer, Observable} from 'rxjs';
 import {subtract, set} from 'tsfun';
-import {Document, DocumentDatastore, Resource} from 'idai-field-core';
+import {Document, Datastore, Resource} from 'idai-field-core';
 import {ChangesStream} from '../../datastore/changes/changes-stream';
 import {Loading} from '../../../components/widgets/loading';
 import {ResourcesStateManager} from './resources-state-manager';
@@ -44,7 +44,7 @@ export class DocumentsManager {
 
 
     constructor(
-        private datastore: DocumentDatastore,
+        private datastore: Datastore,
         changesStream: ChangesStream,
         private resourcesStateManager: ResourcesStateManager,
         private loading: Loading,

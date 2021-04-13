@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Category, Document, DocumentDatastore } from 'idai-field-core';
+import { Category, Document, Datastore } from 'idai-field-core';
 import { isnt } from 'tsfun';
 import { M } from '../../components/messages/m';
 import { makeInverseRelationsMap } from '../configuration/inverse-relations-map';
@@ -55,7 +55,7 @@ export interface ImporterContext {
 
 export interface ImporterServices {
 
-    datastore: DocumentDatastore;
+    datastore: Datastore;
     relationsManager: RelationsManager;
     imageRelationsManager: ImageRelationsManager;
     imagestore: Imagestore;
@@ -225,7 +225,7 @@ export module Importer {
 }
 
 
-function findByIdentifier(datastore: DocumentDatastore): Find {
+function findByIdentifier(datastore: Datastore): Find {
 
     return async (identifier: string) => {
 

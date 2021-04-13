@@ -1,5 +1,5 @@
 import {Component, Input, OnChanges} from '@angular/core';
-import {DocumentDatastore, FieldDocument} from 'idai-field-core';
+import {Datastore, FieldDocument} from 'idai-field-core';
 import {AngularUtility} from '../../../../angular/angular-utility';
 import {Loading} from '../../../widgets/loading';
 import {ViewFacade} from '../../../../core/resources/view/view-facade';
@@ -25,7 +25,7 @@ export class ChildrenViewComponent implements OnChanges {
 
     constructor(private viewFacade: ViewFacade,
                 private loading: Loading,
-                private datastore: DocumentDatastore,
+                private datastore: Datastore,
                 private resourcesComponent: ResourcesComponent) {}
 
 

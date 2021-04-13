@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges } from '@angular/core';
-import { DocumentDatastore, Resource, ValuelistDefinition } from 'idai-field-core';
+import { Datastore, Resource, ValuelistDefinition } from 'idai-field-core';
 import { HierarchyUtil } from '../../../../core/util/hierarchy-util';
 import { ValuelistUtil } from '../../../../core/util/valuelist-util';
 
@@ -22,7 +22,7 @@ export class RadioComponent implements OnChanges {
     public valuelist: ValuelistDefinition;
 
 
-    constructor(private datastore: DocumentDatastore) {}
+    constructor(private datastore: Datastore) {}
 
 
     public getValues = () => this.valuelist ? ValuelistUtil.getOrderedValues(this.valuelist) : [];

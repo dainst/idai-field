@@ -1,4 +1,4 @@
-import { Document, DocumentDatastore, FieldDocument, IndexFacade, SyncService, SyncStatus } from 'idai-field-core';
+import { Document, Datastore, FieldDocument, IndexFacade, SyncService, SyncStatus } from 'idai-field-core';
 import { M } from '../../../components/messages/m';
 import { Messages } from '../../../components/messages/messages';
 import { Loading } from '../../../components/widgets/loading';
@@ -24,7 +24,7 @@ export class ViewFacade {
 
     constructor(
         projectConfiguration: ProjectConfiguration, // TODO unused?
-        datastore: DocumentDatastore,
+        datastore: Datastore,
         remoteChangesStream: ChangesStream,
         private resourcesStateManager: ResourcesStateManager,
         loading: Loading,

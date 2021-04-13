@@ -1,4 +1,4 @@
-import { DocumentDatastore, ResourceId, StringUtils } from 'idai-field-core';
+import { Datastore, ResourceId, StringUtils } from 'idai-field-core';
 import { ImageRelationsManager } from '../../model/image-relations-manager';
 import { RelationsManager } from '../../model/relations-manager';
 import { Settings } from '../../settings/settings';
@@ -22,7 +22,7 @@ export module CatalogExporter {
     /**
      * @throws an error if something goes wrong
      */
-    export async function performExport(datastore: DocumentDatastore,
+    export async function performExport(datastore: Datastore,
                                         relationsManager: RelationsManager,
                                         imageRelationsManager: ImageRelationsManager,
                                         outputFilePath: string,

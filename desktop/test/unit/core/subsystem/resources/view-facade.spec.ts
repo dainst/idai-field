@@ -1,4 +1,4 @@
-import { fieldDoc, Document, DocumentDatastore } from 'idai-field-core';
+import { fieldDoc, Document, Datastore } from 'idai-field-core';
 import * as PouchDB from 'pouchdb-node';
 import { FieldDocument } from '../../../../../../core/index';
 import { ResourcesStateManager } from '../../../../../src/app/core/resources/view/resources-state-manager';
@@ -31,7 +31,7 @@ describe('ViewFacade/Subsystem', () => {
     let findDocument2: FieldDocument;
     let featureDocument1: FieldDocument;
     let featureDocument2: FieldDocument;
-    let documentDatastore: DocumentDatastore;
+    let documentDatastore: Datastore;
 
 
     /*

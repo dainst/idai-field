@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { DatastoreErrors, Document, DocumentDatastore, FieldDefinition, FieldDocument, Group, Groups, ImageDocument, ObjectUtils } from 'idai-field-core';
+import { DatastoreErrors, Document, Datastore, FieldDefinition, FieldDocument, Group, Groups, ImageDocument, ObjectUtils } from 'idai-field-core';
 import { includedIn, isNot } from 'tsfun';
 import { ProjectConfiguration } from '../../core/configuration/project-configuration';
 import { DoceditErrors } from '../../core/docedit/docedit-errors';
@@ -49,7 +49,7 @@ export class DoceditComponent {
                 public documentHolder: DocumentHolder,
                 private messages: Messages,
                 private modalService: NgbModal,
-                private datastore: DocumentDatastore,
+                private datastore: Datastore,
                 public projectConfiguration: ProjectConfiguration,
                 private loading: Loading,
                 private menuService: MenuService,

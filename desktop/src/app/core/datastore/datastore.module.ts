@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CategoryConverter, Datastore, Document, DocumentCache, DocumentDatastore, FeatureDocument, FieldDocument, IdGenerator, ImageDocument, IndexFacade, PouchdbDatastore, PouchdbManager } from 'idai-field-core';
+import { CategoryConverter, Document, DocumentCache, Datastore, IdGenerator, ImageDocument, IndexFacade, PouchdbDatastore, PouchdbManager } from 'idai-field-core';
 import { ChangesStream } from './changes/changes-stream';
 import { FieldCategoryConverter } from './field/field-category-converter';
 import { ImageDatastore } from './field/image-datastore';
@@ -55,17 +55,16 @@ const PouchDB = window.require('pouchdb-browser');
         // guarantees that identifier, liesWithin, isRecordedIn constraints are available
         // provides caching
         {
-            provide: DocumentDatastore,
+            provide: Datastore,
             useFactory: function(pouchdbDatastore: PouchdbDatastore,
                                  indexFacade: IndexFacade,
                                  documentCache: DocumentCache<Document>,
                                  documentConverter: CategoryConverter<Document>,
-            ): DocumentDatastore {
-                return new DocumentDatastore(pouchdbDatastore, indexFacade, documentCache, documentConverter);
+            ): Datastore {
+                return new Datastore(pouchdbDatastore, indexFacade, documentCache, documentConverter);
             },
             deps: [PouchdbDatastore, IndexFacade, DocumentCache, CategoryConverter]
         },
-        { provide: Datastore, useExisting: DocumentDatastore },
 
 
         // idai-field datastore

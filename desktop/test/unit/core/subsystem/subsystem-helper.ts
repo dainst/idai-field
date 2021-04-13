@@ -1,4 +1,4 @@
-import { CategoryConverter, createDocuments, Document, DocumentCache, DocumentDatastore, FieldDocument, ImageDocument, NiceDocs, PouchdbDatastore, PouchdbManager, Query, ResourceId, SyncService, toResourceId } from 'idai-field-core';
+import { CategoryConverter, createDocuments, Document, DocumentCache, Datastore, FieldDocument, ImageDocument, NiceDocs, PouchdbDatastore, PouchdbManager, Query, ResourceId, SyncService, toResourceId } from 'idai-field-core';
 import * as PouchDB from 'pouchdb-node';
 import { sameset } from 'tsfun';
 import { AppConfigurator } from '../../../../src/app/core/configuration/app-configurator';
@@ -100,7 +100,7 @@ export async function createApp(projectName = 'testdb', startSync = false) {
     const documentCache = new DocumentCache<Document>();
     const categoryConverter = new FieldCategoryConverter(projectConfiguration);
 
-    const documentDatastore = new DocumentDatastore(
+    const documentDatastore = new Datastore(
         datastore, createdIndexFacade, documentCache, categoryConverter);
     const imageDatastore = new ImageDatastore(datastore, createdIndexFacade,
         documentCache as DocumentCache<ImageDocument>, categoryConverter as CategoryConverter<ImageDocument>);
@@ -284,7 +284,7 @@ export async function setupSyncTestDb(projectName = 'testdb') {
 }
 
 
-function makeCreateDocuments(documentDatastore: DocumentDatastore,
+function makeCreateDocuments(documentDatastore: Datastore,
                              projectImageDir: string,
                              username: string) {
 
@@ -308,7 +308,7 @@ function makeCreateDocuments(documentDatastore: DocumentDatastore,
 }
 
 
-function makeUpdateDocument(documentDatastore: DocumentDatastore, username: string) {
+function makeUpdateDocument(documentDatastore: Datastore, username: string) {
 
     return async function updateDocument(id: ResourceId,
                                          callback: (document: Document) => void) {
@@ -319,7 +319,7 @@ function makeUpdateDocument(documentDatastore: DocumentDatastore, username: stri
     }
 }
 
-function makeExpectDocuments(documentDatastore: DocumentDatastore) {
+function makeExpectDocuments(documentDatastore: Datastore) {
 
     return async function expectDocuments(...resourceIds: string[]) {
 
@@ -329,7 +329,7 @@ function makeExpectDocuments(documentDatastore: DocumentDatastore) {
 }
 
 
-function makeExpectResources(documentDatastore: DocumentDatastore) {
+function makeExpectResources(documentDatastore: Datastore) {
 
     return async function expectDocuments(...resourceIdentifiers: string[]) {
 
@@ -349,7 +349,7 @@ function makeCreateImageInProjectImageDir(projectImageDir: string) {
 }
 
 
-function makeGetDocument(documentDatastore: DocumentDatastore) {
+function makeGetDocument(documentDatastore: Datastore) {
 
     return async function getDocument(id: ResourceId) {
 

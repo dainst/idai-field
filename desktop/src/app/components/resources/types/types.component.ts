@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { Document, DocumentDatastore, FieldDocument, ImageRelationsC as ImageRelations, SyncService, SyncStatus, TypeRelations } from 'idai-field-core';
+import { Document, Datastore, FieldDocument, ImageRelationsC as ImageRelations, SyncService, SyncStatus, TypeRelations } from 'idai-field-core';
 import { curry, filter, flatten, flow, isnt, Map, map, set, take } from 'tsfun';
 import { makeLookup } from '../../../../../../core/src/tools/transformers';
 import { ProjectCategories } from '../../../core/configuration/project-categories';
@@ -66,7 +66,7 @@ export class TypesComponent extends BaseList implements OnChanges {
     private visibleSections = ['types'];
 
 
-    constructor(private datastore: DocumentDatastore,
+    constructor(private datastore: Datastore,
                 private imageDatastore: ImageDatastore,
                 private imagestore: ReadImagestore,
                 private viewModalLauncher: ViewModalLauncher,

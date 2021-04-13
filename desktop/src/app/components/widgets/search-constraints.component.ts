@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, Renderer2, SimpleChanges } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { Category, ConstraintIndex, DocumentDatastore, FieldDefinition, ObjectUtils, ValuelistDefinition } from 'idai-field-core';
+import { Category, ConstraintIndex, Datastore, FieldDefinition, ObjectUtils, ValuelistDefinition } from 'idai-field-core';
 import { aFilter, is, on } from 'tsfun';
 import { ProjectConfiguration } from '../../core/configuration/project-configuration';
 import { ValuelistUtil } from '../../core/util/valuelist-util';
@@ -45,7 +45,7 @@ export abstract class SearchConstraintsComponent implements OnChanges {
 
     protected constructor(public searchBarComponent: SearchBarComponent,
                           private projectConfiguration: ProjectConfiguration,
-                          private datastore: DocumentDatastore,
+                          private datastore: Datastore,
                           private renderer: Renderer2,
                           protected i18n: I18n) {}
 

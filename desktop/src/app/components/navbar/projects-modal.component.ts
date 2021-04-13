@@ -1,6 +1,6 @@
 import { AfterViewChecked, AfterViewInit, Component, ViewChild } from '@angular/core';
 import { NgbActiveModal, NgbModal, NgbPopover } from '@ng-bootstrap/ng-bootstrap';
-import { Document, DocumentDatastore } from 'idai-field-core';
+import { Document, Datastore } from 'idai-field-core';
 import { AngularUtility } from '../../angular/angular-utility';
 import { reload } from '../../core/common/reload';
 import { StateSerializer } from '../../core/common/state-serializer';
@@ -47,7 +47,7 @@ export class ProjectsModalComponent implements AfterViewInit, AfterViewChecked {
                 private modalService: NgbModal,
                 private messages: Messages,
                 private stateSerializer: StateSerializer,
-                private datastore: DocumentDatastore,
+                private datastore: Datastore,
                 private menuService: MenuService) {
     }
 

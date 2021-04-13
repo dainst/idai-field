@@ -1,4 +1,4 @@
-import { Document, DocumentDatastore, HierarchicalRelations, ImageRelationsC as ImageRelations, Lookup, ObjectUtils, ON_RESOURCE_ID, TypeRelations } from 'idai-field-core';
+import { Document, Datastore, HierarchicalRelations, ImageRelationsC as ImageRelations, Lookup, ObjectUtils, ON_RESOURCE_ID, TypeRelations } from 'idai-field-core';
 import { aMap, isArray, isNot, isUndefinedOrEmpty, set, subtract, to, undefinedOrEmpty } from 'tsfun';
 import { Imagestore } from '../../images/imagestore/imagestore';
 import { ImageRelationsManager } from '../../model/image-relations-manager';
@@ -8,7 +8,7 @@ import { makeDocumentsLookup } from './utils';
 
 export interface ImportCatalogServices {
 
-    datastore: DocumentDatastore;
+    datastore: Datastore;
     relationsManager: RelationsManager;
     imageRelationsManager: ImageRelationsManager;
     imagestore: Imagestore

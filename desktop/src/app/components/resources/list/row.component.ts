@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, ElementRef, Input, ViewChild, ChangeDetectorRef} from '@angular/core';
-import {FieldDocument, Category, DocumentDatastore} from 'idai-field-core';
+import {FieldDocument, Category, Datastore} from 'idai-field-core';
 import {ResourcesComponent} from '../resources.component';
 import {RelationsManager} from '../../../core/model/relations-manager';
 import {Validator} from '../../../core/model/validator';
@@ -35,7 +35,7 @@ export class RowComponent implements AfterViewInit {
                 private messages: Messages,
                 private relationsManager: RelationsManager,
                 private validator: Validator,
-                private datastore: DocumentDatastore,
+                private datastore: Datastore,
                 private navigationService: NavigationService,
                 private projectConfiguration: ProjectConfiguration,
                 private changeDetectorRef: ChangeDetectorRef) {}

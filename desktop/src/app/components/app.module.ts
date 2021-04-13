@@ -8,7 +8,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { ConstraintIndex, DocumentCache, DocumentDatastore, FulltextIndex, IndexFacade, PouchdbManager, Query, SyncService } from 'idai-field-core';
+import { ConstraintIndex, DocumentCache, Datastore, FulltextIndex, IndexFacade, PouchdbManager, Query, SyncService } from 'idai-field-core';
 import { Translations } from '../angular/translations';
 import { AppController } from '../core/app-controller';
 import { StateSerializer } from '../core/common/state-serializer';
@@ -166,7 +166,7 @@ registerLocaleData(localeIt, 'it');
         {
             provide: Validator,
             useFactory: (
-                DocumentDatastore: DocumentDatastore,
+                DocumentDatastore: Datastore,
                 projectConfiguration: ProjectConfiguration) => {
 
                 return new Validator(
@@ -174,7 +174,7 @@ registerLocaleData(localeIt, 'it');
                     (q: Query) => DocumentDatastore.find(q),
                 )
             },
-            deps: [DocumentDatastore, ProjectConfiguration]
+            deps: [Datastore, ProjectConfiguration]
         },
         ImportValidator,
         { provide: MD, useClass: M},
@@ -189,7 +189,7 @@ registerLocaleData(localeIt, 'it');
                 indexFacade: IndexFacade,
                 tabSpaceCalculator: TabSpaceCalculator,
                 stateSerializer: StateSerializer,
-                datastore: DocumentDatastore,
+                datastore: Datastore,
                 router: Router
             ) => {
                 const tabManager = new TabManager(
@@ -198,7 +198,7 @@ registerLocaleData(localeIt, 'it');
                 router.events.subscribe(async () => { await tabManager.routeChanged(router.url) });
                 return tabManager;
             },
-            deps: [IndexFacade, TabSpaceCalculator, StateSerializer, DocumentDatastore, Router]
+            deps: [IndexFacade, TabSpaceCalculator, StateSerializer, Datastore, Router]
         },
         TabSpaceCalculator,
         MenuService,

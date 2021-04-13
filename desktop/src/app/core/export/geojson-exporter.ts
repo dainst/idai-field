@@ -1,5 +1,5 @@
 import {Feature, FeatureCollection, GeometryObject} from 'geojson';
-import {FieldDocument, FieldGeometry, Query, ObjectUtils, DocumentDatastore} from 'idai-field-core';
+import {FieldDocument, FieldGeometry, Query, ObjectUtils, Datastore} from 'idai-field-core';
 import {M} from '../../components/messages/m';
 
 const geojsonRewind = typeof window !== 'undefined' ? window.require('geojson-rewind') : require('geojson-rewind');
@@ -11,7 +11,7 @@ const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
  */
 export module GeoJsonExporter {
 
-    export async function performExport(datastore: DocumentDatastore, outputFilePath: string,
+    export async function performExport(datastore: Datastore, outputFilePath: string,
                                         operationId: string): Promise<void> {
 
         const documents: Array<FieldDocument> = await getGeometryDocuments(datastore, operationId);
@@ -21,7 +21,7 @@ export module GeoJsonExporter {
     }
 
 
-    async function getGeometryDocuments(datastore: DocumentDatastore,
+    async function getGeometryDocuments(datastore: Datastore,
                                         operationId: string): Promise<Array<FieldDocument>> {
 
         const query: Query = createQuery(operationId);

@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { DocumentDatastore, OptionalRange, Resource, ValuelistDefinition } from 'idai-field-core';
+import { Datastore, OptionalRange, Resource, ValuelistDefinition } from 'idai-field-core';
 import { isUndefinedOrEmpty } from 'tsfun';
 import { HierarchyUtil } from '../../../../core/util/hierarchy-util';
 import { ValuelistUtil } from '../../../../core/util/valuelist-util';
@@ -24,7 +24,7 @@ export class DropdownRangeComponent {
     private endActivated: boolean = false;
 
 
-    constructor(private datastore: DocumentDatastore) {}
+    constructor(private datastore: Datastore) {}
 
 
     public getValues = () => this.valuelist ? ValuelistUtil.getOrderedValues(this.valuelist) : [];

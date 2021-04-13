@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ObjectUtils, FieldDocument, ImageDocument, ImageRelationsC as ImageRelations, moveInArray, DocumentDatastore } from 'idai-field-core';
+import { ObjectUtils, FieldDocument, ImageDocument, ImageRelationsC as ImageRelations, moveInArray, Datastore } from 'idai-field-core';
 import { Document } from 'idai-field-core';
 import { flatten, set, subtract, to } from 'tsfun';
 import { ImageDatastore } from '../../../../../core/datastore/field/image-datastore';
@@ -41,7 +41,7 @@ export class LayerManager {
 
 
     constructor(private imageDatastore: ImageDatastore,
-                private fieldDatastore: DocumentDatastore,
+                private fieldDatastore: Datastore,
                 private viewFacade: ViewFacade,
                 private relationsManager: RelationsManager) {}
 

@@ -1,4 +1,4 @@
-import { DocumentDatastore, FieldDocument, Query, ResourceId } from 'idai-field-core';
+import { Datastore, FieldDocument, Query, ResourceId } from 'idai-field-core';
 import { filter, flow, isDefined, map } from 'tsfun';
 import { ImageDatastore } from '../datastore/field/image-datastore';
 import { PLACEHOLDER } from '../images/row/image-row';
@@ -17,7 +17,7 @@ export module TypeImagesUtil {
      * type catalog are not directly linked to an image, the images of finds linked to the categories are returned.
      */
     export function getLinkedImageIds(document: FieldDocument,
-                                      datastore: DocumentDatastore,
+                                      datastore: Datastore,
                                       imageDatastore: ImageDatastore): string[] {
 
         if (document.resource.category !== 'Type' && document.resource.category !== 'TypeCatalog') {
@@ -31,7 +31,7 @@ export module TypeImagesUtil {
 
 
     function getLinkedImagesForTypeCatalog(resourceId: ResourceId,
-                                           datastore: DocumentDatastore,
+                                           datastore: Datastore,
                                            imageDatastore: ImageDatastore): string[] {
 
         const query: Query = {
@@ -47,7 +47,7 @@ export module TypeImagesUtil {
     }
 
 
-    function getTypeImage(datastore: DocumentDatastore, imageDatastore: ImageDatastore) {
+    function getTypeImage(datastore: Datastore, imageDatastore: ImageDatastore) {
 
         return (resourceId: string): string|undefined => {
 
@@ -67,7 +67,7 @@ export module TypeImagesUtil {
 
 
     function getLinkedImagesForType(resourceId: ResourceId,
-                                    datastore: DocumentDatastore,
+                                    datastore: Datastore,
                                     imageDatastore: ImageDatastore): string[] {
 
         const query: Query = {

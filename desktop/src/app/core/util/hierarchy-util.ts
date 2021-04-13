@@ -1,4 +1,4 @@
-import { DocumentDatastore, Resource } from 'idai-field-core';
+import { Datastore, Resource } from 'idai-field-core';
 
 
 /**
@@ -7,7 +7,7 @@ import { DocumentDatastore, Resource } from 'idai-field-core';
 export module HierarchyUtil {
 
     export async function getParent(resource: Resource,
-                                    datastore: DocumentDatastore): Promise<Resource|undefined> {
+                                    datastore: Datastore): Promise<Resource|undefined> {
 
         return resource.relations['liesWithin'] && resource.relations['liesWithin'].length > 0
             ? (await datastore.get(resource.relations.liesWithin[0])).resource

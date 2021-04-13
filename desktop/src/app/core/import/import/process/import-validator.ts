@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Document, DocumentDatastore, HierarchicalRelations, NewDocument, Query, Resource, ResourceId } from 'idai-field-core';
+import { Document, Datastore, HierarchicalRelations, NewDocument, Query, Resource, ResourceId } from 'idai-field-core';
 import { is, isnt, on } from 'tsfun';
 import { ProjectCategories } from '../../../configuration/project-categories';
 import { ProjectConfiguration } from '../../../configuration/project-configuration';
@@ -24,7 +24,7 @@ import LIES_WITHIN = HierarchicalRelations.LIESWITHIN;
 export class ImportValidator extends Validator {
 
     constructor(projectConfiguration: ProjectConfiguration,
-                private datastore: DocumentDatastore) {
+                private datastore: Datastore) {
 
         super(projectConfiguration, (q: Query) => datastore.find(q));
     }

@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { NgbDateParserFormatter, NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { DocumentDatastore } from 'idai-field-core';
+import { Datastore } from 'idai-field-core';
 import { ProjectConfiguration } from '../../core/configuration/project-configuration';
 import { DocumentHolder } from '../../core/docedit/document-holder';
 import { RelationsManager } from '../../core/model/relations-manager';
@@ -56,13 +56,13 @@ import { RelationPickerComponent } from './widgets/relationpicker/relation-picke
                          relationsManager: RelationsManager,
                          validator: Validator,
                          settingsProvider: SettingsProvider,
-                         datastore: DocumentDatastore) => {
+                         datastore: Datastore) => {
 
                 return new DocumentHolder(projectConfiguration, relationsManager,
                     validator, datastore);
             },
             deps: [ProjectConfiguration, RelationsManager, Validator,
-                SettingsProvider, DocumentDatastore]
+                SettingsProvider, Datastore]
         },
         { provide: NgbDateParserFormatter, useClass: NgbDateDEParserFormatter }
     ],

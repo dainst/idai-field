@@ -1,5 +1,5 @@
 import { Component, ElementRef, EventEmitter, Input, OnChanges, Output, ViewChild } from '@angular/core';
-import { Category, DocumentDatastore, FieldDocument, Name } from 'idai-field-core';
+import { Category, Datastore, FieldDocument, Name } from 'idai-field-core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { Relations } from 'idai-field-core';
 import { ProjectCategories } from '../../core/configuration/project-categories';
@@ -51,7 +51,7 @@ export class PlusButtonComponent implements OnChanges {
         private projectConfiguration: ProjectConfiguration,
         private messages: Messages,
         private viewFacade: ViewFacade,
-        private datastore: DocumentDatastore,
+        private datastore: Datastore,
         private i18n: I18n) {
 
         this.resourcesComponent.listenToClickEvents().subscribe(event => {

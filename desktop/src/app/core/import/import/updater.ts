@@ -1,4 +1,4 @@
-import { Document, DocumentDatastore, NewDocument } from 'idai-field-core';
+import { Document, Datastore, NewDocument } from 'idai-field-core';
 import { separate } from 'tsfun';
 
 
@@ -10,7 +10,7 @@ export module Updater {
 
     export async function go(createDocuments: Array<Document>,
                              updateDocuments: Array<Document>|undefined,
-                             datastore: DocumentDatastore, username: string) {
+                             datastore: Datastore, username: string) {
 
         const hasConflict = (_: any): boolean => (_['_conflicts']);
 
@@ -26,7 +26,7 @@ export module Updater {
     }
 
 
-    async function performRegular(documents: Array<NewDocument>, datastore: DocumentDatastore,
+    async function performRegular(documents: Array<NewDocument>, datastore: Datastore,
                                                            username: string, updateMode: boolean): Promise<void> {
 
         for (let document of documents) {
@@ -37,7 +37,7 @@ export module Updater {
 
 
     async function performBulk(documents: Array<NewDocument>,
-                               datastore: DocumentDatastore,
+                               datastore: Datastore,
                                username: string,
                                updateMode: boolean): Promise<void> {
 

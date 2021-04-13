@@ -1,6 +1,6 @@
 import { Component, Renderer2 } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { DocumentDatastore, FieldDefinition, ObjectUtils } from 'idai-field-core';
+import { Datastore, FieldDefinition, ObjectUtils } from 'idai-field-core';
 import { ProjectConfiguration } from '../../../core/configuration/project-configuration';
 import { ViewFacade } from '../../../core/resources/view/view-facade';
 import { SearchConstraintsComponent } from '../../widgets/search-constraints.component';
@@ -23,7 +23,7 @@ export class ResourcesSearchConstraintsComponent extends SearchConstraintsCompon
 
     constructor(resourcesSearchBarComponent: ResourcesSearchBarComponent,
                 projectConfiguration: ProjectConfiguration,
-                datastore: DocumentDatastore,
+                datastore: Datastore,
                 renderer: Renderer2,
                 i18n: I18n,
                 private viewFacade: ViewFacade) {

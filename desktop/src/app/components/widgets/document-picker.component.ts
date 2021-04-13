@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {map, union} from 'tsfun';
-import {FieldDocument, ObjectUtils, Document, Category, Query, Constraint, DocumentDatastore, FindResult} from 'idai-field-core';
+import {FieldDocument, ObjectUtils, Document, Category, Query, Constraint, Datastore, FindResult} from 'idai-field-core';
 import {Loading} from './loading';
 import {AngularUtility} from '../../angular/angular-utility';
 import {ProjectConfiguration} from '../../core/configuration/project-configuration';
@@ -31,7 +31,7 @@ export class DocumentPickerComponent implements OnChanges {
     private currentQueryId: string;
 
 
-    constructor(private datastore: DocumentDatastore,
+    constructor(private datastore: Datastore,
                 private projectConfiguration: ProjectConfiguration, // TODO unused
                 private loading: Loading,
                 private messages: Messages,

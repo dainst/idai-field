@@ -7,7 +7,7 @@ import {TabManager} from '../../tabs/tab-manager';
 import {ResourcesViewMode} from './view-facade';
 import {ProjectCategories} from '../../configuration/project-categories';
 import {ProjectConfiguration} from '../../configuration/project-configuration';
-import {FieldDocument, ObjectUtils, ObserverUtil, IndexFacade, DocumentDatastore} from 'idai-field-core'
+import {FieldDocument, ObjectUtils, ObserverUtil, IndexFacade, Datastore} from 'idai-field-core'
 
 
 /**
@@ -41,7 +41,7 @@ export class ResourcesStateManager {
 
 
     constructor(
-        private datastore: DocumentDatastore,
+        private datastore: Datastore,
         private indexFacade: IndexFacade,
         private serializer: StateSerializer,
         private tabManager: TabManager,

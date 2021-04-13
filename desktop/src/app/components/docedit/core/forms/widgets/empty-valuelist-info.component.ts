@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges } from '@angular/core';
-import { DocumentDatastore, FieldDefinition, Resource } from 'idai-field-core';
+import { Datastore, FieldDefinition, Resource } from 'idai-field-core';
 import { is, on } from 'tsfun';
 import { ProjectConfiguration } from '../../../../../core/configuration/project-configuration';
 import { ValuelistUtil } from '../../../../../core/util/valuelist-util';
@@ -24,7 +24,7 @@ export class EmptyValuelistInfoComponent implements OnChanges {
     public infoType: EmptyValuelistInfoType;
 
 
-    constructor(private datastore: DocumentDatastore,
+    constructor(private datastore: Datastore,
                 private projectConfiguration: ProjectConfiguration) {}
 
 

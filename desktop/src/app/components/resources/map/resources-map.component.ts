@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { DocumentDatastore, FieldDocument, FieldGeometry } from 'idai-field-core';
+import { Datastore, FieldDocument, FieldGeometry } from 'idai-field-core';
 import { ChangesStream } from '../../../core/datastore/changes/changes-stream';
 import { RelationsManager } from '../../../core/model/relations-manager';
 import { NavigationPath } from '../../../core/resources/view/state/navigation-path';
@@ -29,7 +29,7 @@ export class ResourcesMapComponent {
     public coordinateReferenceSystem: string;
 
 
-    constructor(datastore: DocumentDatastore,
+    constructor(datastore: Datastore,
                 changesStream: ChangesStream,
                 public loading: Loading,
                 public viewFacade: ViewFacade,

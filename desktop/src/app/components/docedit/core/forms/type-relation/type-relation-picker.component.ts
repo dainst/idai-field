@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Category, Constraint, DocumentDatastore, FieldDefinition, FieldDocument, FieldResource, FindResult, Group, onName, Query, TypeRelations, ValuelistDefinition } from 'idai-field-core';
+import { Category, Constraint, Datastore, FieldDefinition, FieldDocument, FieldResource, FindResult, Group, onName, Query, TypeRelations, ValuelistDefinition } from 'idai-field-core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Document, Resource } from 'idai-field-core';
 import {
@@ -57,7 +57,7 @@ export class TypeRelationPickerComponent {
 
 
     constructor(public activeModal: NgbActiveModal,
-                private datastore: DocumentDatastore,
+                private datastore: Datastore,
                 private imageDatastore: ImageDatastore,
                 projectConfiguration: ProjectConfiguration) {
 

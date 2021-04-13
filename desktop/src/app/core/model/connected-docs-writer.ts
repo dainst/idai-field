@@ -1,4 +1,4 @@
-import { Document, DocumentDatastore, Name, Relations, toResourceId } from 'idai-field-core';
+import { Document, Datastore, Name, Relations, toResourceId } from 'idai-field-core';
 import { flatMap, flow, subtract, to } from 'tsfun';
 import { InverseRelationsMap, makeInverseRelationsMap } from '../configuration/inverse-relations-map';
 import { ProjectConfiguration } from '../configuration/project-configuration';
@@ -22,7 +22,7 @@ export class ConnectedDocsWriter {
     private inverseRelationsMap: InverseRelationsMap;
 
     constructor(
-        private datastore: DocumentDatastore,
+        private datastore: Datastore,
         private projectConfiguration: ProjectConfiguration) {
 
         this.inverseRelationsMap = makeInverseRelationsMap(projectConfiguration.getAllRelationDefinitions());

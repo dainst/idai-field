@@ -3,7 +3,7 @@ import {SafeResourceUrl} from '@angular/platform-browser';
 import {ReadImagestore} from '../../../core/images/imagestore/read-imagestore';
 import {ImageDatastore} from '../../../core/datastore/field/image-datastore';
 import {BlobMaker} from '../../../core/images/imagestore/blob-maker';
-import { DocumentDatastore, FieldDocument } from 'idai-field-core';
+import { Datastore, FieldDocument } from 'idai-field-core';
 
 @Component({
     selector: 'type-grid-element',
@@ -23,7 +23,7 @@ export class TypeGridElementComponent implements OnChanges {
 
 
     constructor(imagestore: ReadImagestore, // TODO unused
-                datastore: DocumentDatastore,
+                datastore: Datastore,
                 imageDatastore: ImageDatastore,
                 private blobMaker: BlobMaker) {}
 

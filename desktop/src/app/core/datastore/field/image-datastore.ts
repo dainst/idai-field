@@ -1,4 +1,4 @@
-import { DocumentDatastore, IdaiFieldFindResult, ImageDocument, IndexFacade, PouchdbDatastore, Query, DocumentCache, CategoryConverter } from 'idai-field-core';
+import { Datastore, IdaiFieldFindResult, ImageDocument, IndexFacade, PouchdbDatastore, Query, DocumentCache, CategoryConverter } from 'idai-field-core';
 
 export interface IdaiFieldImageDocumentFindResult extends IdaiFieldFindResult<ImageDocument> {}
 
@@ -7,7 +7,7 @@ export interface IdaiFieldImageDocumentFindResult extends IdaiFieldFindResult<Im
  * @author Thomas Kleinke
  */
 export class ImageDatastore
-    extends DocumentDatastore<ImageDocument> {
+    extends Datastore<ImageDocument> {
 
     constructor(
         datastore: PouchdbDatastore,

@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {isEmpty, on, is, map} from 'tsfun';
-import {DocumentDatastore, FeatureDocument, FieldDocument} from 'idai-field-core';
+import {Datastore, FeatureDocument, FieldDocument} from 'idai-field-core';
 import {ModelUtil} from '../../core/model/model-util';
 import {DoceditComponent} from '../docedit/docedit.component';
 import {MatrixClusterMode, MatrixRelationsMode, MatrixState} from './matrix-state';
@@ -56,7 +56,7 @@ export class MatrixViewComponent implements OnInit {
 
 
     constructor(private projectConfiguration: ProjectConfiguration,
-                private datastore: DocumentDatastore,
+                private datastore: Datastore,
                 private modalService: NgbModal,
                 private matrixState: MatrixState,
                 private loading: Loading,

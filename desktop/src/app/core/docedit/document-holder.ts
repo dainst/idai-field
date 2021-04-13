@@ -1,4 +1,4 @@
-import { Category, Document, DocumentDatastore, FieldDefinition, NewDocument, ObjectUtils, Resource } from 'idai-field-core';
+import { Category, Document, Datastore, FieldDefinition, NewDocument, ObjectUtils, Resource } from 'idai-field-core';
 import { and, equal, filter, flow, includedIn, isEmpty, isNot, isObject, isString } from 'tsfun';
 import { ProjectConfiguration } from '../configuration/project-configuration';
 import { RelationsManager } from '../model/relations-manager';
@@ -35,7 +35,7 @@ export class DocumentHolder {
         private projectConfiguration: ProjectConfiguration,
         private relationsManager: RelationsManager,
         private validator: Validator,
-        private datastore: DocumentDatastore) {
+        private datastore: Datastore) {
     }
 
 

@@ -1,4 +1,4 @@
-import { doc, FieldDocument, DocumentCache, DocumentDatastore } from 'idai-field-core';
+import { doc, FieldDocument, DocumentCache, Datastore } from 'idai-field-core';
 import { FieldCategoryConverter } from '../../../../../src/app/core/datastore/field/field-category-converter';
 
 
@@ -8,7 +8,7 @@ import { FieldCategoryConverter } from '../../../../../src/app/core/datastore/fi
  */
 describe('CachedDatastore', () => {
 
-    let ds: DocumentDatastore;
+    let ds: Datastore;
     let mockdb: any;
     let mockIndexFacade: any;
 
@@ -28,7 +28,7 @@ describe('CachedDatastore', () => {
         );
 
         const documentCache = new DocumentCache<FieldDocument>();
-        const docDatastore = new DocumentDatastore(
+        const docDatastore = new Datastore(
             mockdb,
             mockIndexFacade,
             documentCache,

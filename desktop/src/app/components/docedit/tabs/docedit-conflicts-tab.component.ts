@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, Input, OnChanges } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { Document, DocumentDatastore, Relations, Resource } from 'idai-field-core';
+import { Document, Datastore, Relations, Resource } from 'idai-field-core';
 import { ProjectConfiguration } from '../../../core/configuration/project-configuration';
 import { M } from '../../messages/m';
 import { Messages } from '../../messages/messages';
@@ -27,7 +27,7 @@ export class DoceditConflictsTabComponent implements OnChanges {
     private relationTargets: { [targetId: string]: Document|undefined };
 
 
-    constructor(private datastore: DocumentDatastore,
+    constructor(private datastore: Datastore,
                 private messages: Messages,
                 private projectConfiguration: ProjectConfiguration,
                 private loading: Loading,

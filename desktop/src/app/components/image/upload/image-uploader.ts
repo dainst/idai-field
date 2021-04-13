@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { Category, Document, DocumentDatastore, IdaiFieldFindResult, NewImageDocument } from 'idai-field-core';
+import { Category, Document, Datastore, IdaiFieldFindResult, NewImageDocument } from 'idai-field-core';
 import { ProjectConfiguration } from '../../../core/configuration/project-configuration';
 import { ImageDatastore } from '../../../core/datastore/field/image-datastore';
 import { Imagestore } from '../../../core/images/imagestore/imagestore';
@@ -33,7 +33,7 @@ export class ImageUploader {
 
 
     public constructor(private imagestore: Imagestore,
-                       private datastore: DocumentDatastore,
+                       private datastore: Datastore,
                        private modalService: NgbModal,
                        private relationsManager: RelationsManager,
                        private projectConfiguration: ProjectConfiguration,

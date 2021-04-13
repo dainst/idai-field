@@ -17,21 +17,6 @@ export class FieldCategoryConverter extends CategoryConverter<Document> {
     }
 
 
-    public getCategoriesForClass(categoryClass: string): string[]|undefined {
-
-
-        if (categoryClass === 'ImageDocument') {
-            return ProjectCategories.getImageCategoryNames(this.projectConfiguration.getCategoryTreelist());
-        } else if (categoryClass === 'FeatureDocument') {
-            return ProjectCategories.getFeatureCategoryNames(this.projectConfiguration.getCategoryTreelist());
-        } else if (categoryClass === 'FieldDocument') {
-            return ProjectCategories.getFieldCategoryNames(this.projectConfiguration.getCategoryTreelist());
-        } else {
-            return undefined;
-        }
-    }
-
-
     public convert<T extends Document>(document: Document): T {
 
         const convertedDocument: T = Migrator.migrate(document) as T;

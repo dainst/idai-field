@@ -80,44 +80,6 @@ describe('subsystem/datastore/find', () => {
     });
 
 
-    it('ImageDatastore - return only image category documents when called without categories', async done => {
-
-        image0 = doc('Image','Image','Image','image0');
-        trench0 = doc('Trench','Trench','Trench','trench0');
-
-        await idaiFieldImageDocumentDatastore.create(image0);
-        await fieldDocumentDatastore.create(trench0);
-
-        try {
-            const result = await idaiFieldImageDocumentDatastore.find({});
-            expect(result.documents.length).toBe(1);
-            expect(result.documents[0].resource.id).toEqual('image0');
-        } catch (expected) {
-            fail();
-        }
-        done();
-    });
-
-
-    it('FieldDatastore - return only non image category documents when called without categories', async done => {
-
-        image0 = doc('Image','Image','Image','image0');
-        trench0 = doc('Trench','Trench','Trench','trench0');
-
-        await idaiFieldImageDocumentDatastore.create(image0);
-        await fieldDocumentDatastore.create(trench0);
-
-        try {
-            const result = await fieldDocumentDatastore.find({});
-            expect(result.documents.length).toBe(1);
-            expect(result.documents[0].resource.id).toEqual('trench0');
-        } catch (expected) {
-            fail();
-        }
-        done();
-    });
-
-
     it('sort mode', async done => {
 
         const doc1 = doc('sd1', 'A-B-100', 'Find', '1');

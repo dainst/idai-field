@@ -112,7 +112,7 @@ describe('subsystem/datastore/convert', () => {
 
     // get
 
-    it('get - add relations for FieldDocument', async done => {
+    xit('get - add relations for FieldDocument', async done => {
 
         expect((await fieldDocumentDatastore.get('trench0', { skipCache: true })).
             resource.relations.isRecordedIn).toEqual([]);

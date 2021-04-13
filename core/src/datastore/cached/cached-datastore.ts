@@ -172,12 +172,11 @@ export abstract class CachedDatastore<T extends Document> {
     }
 
 
-    public findIds(query: Query, ignoreCategories: boolean = false): FindIdsResult {
+    public findIds(query: Query, ignoreCategories: boolean = false /* TODO review */): FindIdsResult {
 
-        if (query.categories) { // TODO simplify
-        } else if (!ignoreCategories) {
+        if (!query.categories && !ignoreCategories) {
             query = ObjectUtils.jsonClone(query);
-            query.categories = this.categoryConverter.getCategoriesForClass(this.categoryClass);
+            query.categories = undefined;
         }
 
         const orderedResults: string[] = this.getIds(query);

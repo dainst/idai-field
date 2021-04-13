@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Document, DocumentCache, Indexer, IndexFacade, PouchdbManager, PouchdbDatastore } from 'idai-field-core';
+import { Document, DocumentCache, Indexer, IndexFacade, PouchdbDatastore, PouchdbManager } from 'idai-field-core';
 import { ProjectConfiguration } from './configuration/project-configuration';
 import { FieldCategoryConverter } from './datastore/field/field-category-converter';
 import { SampleDataLoader } from './datastore/field/sampledata/sample-data-loader';
@@ -62,7 +62,7 @@ export class AppController {
 
         const db = this.pouchdbManager.createDb_e2e('test');
         this.pouchdbDatastore.setDb_e2e(db);
-        this.imagestore.setDb_e2e(db);
+        this.imagestore.setDb(db);
 
         this.resourcesState.resetForE2E();
         this.imagesState.resetForE2E();

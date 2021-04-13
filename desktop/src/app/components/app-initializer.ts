@@ -5,6 +5,7 @@ import { FieldCategoryConverter } from '../core/datastore/field/field-category-c
 import { SampleDataLoader } from '../core/datastore/field/sampledata/sample-data-loader';
 import { PouchdbServer } from '../core/datastore/pouchdb/pouchdb-server';
 import { ImageConverter } from '../core/images/imagestore/image-converter';
+import { Imagestore } from '../core/images/imagestore/imagestore';
 import { InitializationProgress } from '../core/initialization-progress';
 import { Settings } from '../core/settings/settings';
 import { SettingsSerializer } from '../core/settings/settings-serializer';
@@ -78,6 +79,7 @@ export const appInitializerFactory = (
         pouchdbServer: PouchdbServer,
         documentCache: DocumentCache<Document>,
         imageConverter: ImageConverter,
+        imagestore: Imagestore,
         progress: InitializationProgress
     ) => async (): Promise<void> => {
 
@@ -86,6 +88,8 @@ export const appInitializerFactory = (
     const settings = await loadSettings(settingsService, progress);
 
     await setUpDatabase(settingsService, settings, progress);
+
+    imagestore.setDb(pouchdbManager.getDb());
 
     await loadSampleData(settings, pouchdbManager.getDb(), imageConverter, progress);
 

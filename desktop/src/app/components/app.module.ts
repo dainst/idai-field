@@ -119,7 +119,7 @@ registerLocaleData(localeIt, 'it');
         {
             provide: APP_INITIALIZER,
             multi: true,
-            deps: [AppInitializerServiceLocator, SettingsService, PouchdbManager, PouchdbServer, DocumentCache, ImageConverter, InitializationProgress],
+            deps: [AppInitializerServiceLocator, SettingsService, PouchdbManager, PouchdbServer, DocumentCache, ImageConverter, Imagestore, InitializationProgress],
             useFactory: appInitializerFactory,
         },
         InitializationProgress,

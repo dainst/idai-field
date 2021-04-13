@@ -1,5 +1,5 @@
-import {ReadImagestore} from './read-imagestore';
-import {Settings} from '../../settings/settings';
+import { Settings } from '../../settings/settings';
+import { ReadImagestore } from './read-imagestore';
 
 /**
  * The interface for general media stores supporting
@@ -10,7 +10,7 @@ import {Settings} from '../../settings/settings';
 export abstract class Imagestore extends ReadImagestore {
 
 
-    abstract setDb_e2e(db: PouchDB.Database): void;
+    abstract setDb(db: PouchDB.Database): void;
 
 
     abstract getPath(): string|undefined;

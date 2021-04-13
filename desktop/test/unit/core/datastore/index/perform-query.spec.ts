@@ -1,4 +1,4 @@
-import { ConstraintIndex, doc, FulltextIndex, namedArrayToNamedMap, performQuery as performQuery_, Query } from 'idai-field-core';
+import { ConstraintIndex, doc, FulltextIndex, Named, performQuery as performQuery_, Query } from 'idai-field-core';
 import { Document } from 'idai-field-core';
 import { getFieldsToIndex } from '../../../../../../core/src/index/get-fields-to-index';
 import { IndexerConfiguration } from '../../../../../src/app/indexer-configuration';
@@ -20,7 +20,7 @@ describe('performQuery', () => {
             IndexerConfiguration.configureIndexers(projectConfiguration);
         constraintIndex = createdConstraintIndex;
         fulltextIndex = createdFulltextIndex;
-        categoriesMap = namedArrayToNamedMap(projectConfiguration.getCategoriesArray());
+        categoriesMap = Named.arrayToMap(projectConfiguration.getCategoriesArray());
     });
 
 

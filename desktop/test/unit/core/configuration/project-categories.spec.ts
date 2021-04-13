@@ -2,7 +2,7 @@ import {ProjectCategories} from '../../../../src/app/core/configuration/project-
 import isGeometryCategory = ProjectCategories.isGeometryCategory;
 import getFieldCategories = ProjectCategories.getFieldCategories;
 import {sameset} from 'tsfun';
-import {Named, toName, Category, Tree, TreeList} from 'idai-field-core';
+import {Named, Category, Tree, TreeList} from 'idai-field-core';
 import getConcreteFieldCategories = ProjectCategories.getConcreteFieldCategories;
 import getRegularCategoryNames = ProjectCategories.getRegularCategoryNames;
 import getImageCategoryNames = ProjectCategories.getImageCategoryNames;
@@ -87,7 +87,7 @@ describe('ProjectCategories', () => {
 
         expect(
             sameset(
-                getFieldCategories(categoryTreelist as TreeList<Category>).map(toName),
+                getFieldCategories(categoryTreelist as TreeList<Category>).map(Named.toName),
                 ['Operation', 'Trench', 'Inscription', 'Type', 'TypeCatalog', 'Find', 'Place', 'Feature', 'Architecture'])
         ).toBeTruthy();
     });
@@ -97,7 +97,7 @@ describe('ProjectCategories', () => {
 
         expect(
             sameset(
-                getConcreteFieldCategories(categoryTreelist as TreeList<Category>).map(toName),
+                getConcreteFieldCategories(categoryTreelist as TreeList<Category>).map(Named.toName),
                 ['Operation', 'Trench', 'Inscription', 'Find', 'Place', 'Feature', 'Architecture'])
         ).toBeTruthy();
     });
@@ -127,7 +127,7 @@ describe('ProjectCategories', () => {
 
         expect(
             sameset(
-                getTypeCategories(categoryTreelist as TreeList<Category>).map(toName),
+                getTypeCategories(categoryTreelist as TreeList<Category>).map(Named.toName),
                 ['TypeCatalog', 'Type'])
         ).toBeTruthy();
     });
@@ -137,7 +137,7 @@ describe('ProjectCategories', () => {
 
         expect(
             sameset(
-                getOverviewTopLevelCategories(categoryTreelist as TreeList<Category>).map(toName),
+                getOverviewTopLevelCategories(categoryTreelist as TreeList<Category>).map(Named.toName),
                 ['Operation', 'Place'])
         ).toBeTruthy();
     });

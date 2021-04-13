@@ -1,6 +1,6 @@
-import { Associative, detach, identity, isArray, isDefined, isNumber, isString, Map, Pair, to } from 'tsfun';
+import { Associative, detach, identity, isArray, isDefined, isNumber, isString, Map, Pair, Path, to } from 'tsfun';
 import { assocReduce } from './assoc-reduce';
-import { Named, namedArrayToNamedMap } from './named';
+import { Named } from './named';
 
 
 /**
@@ -31,7 +31,7 @@ export function logWithMessage<T>(message: string) {
 export function toMap<T extends Named>(categories: Associative<T>) {
 
     return isArray(categories)
-        ? namedArrayToNamedMap(categories as Array<T>)
+        ? Named.arrayToMap(categories as Array<T>)
         : categories as Map<T>;
 }
 
@@ -92,9 +92,9 @@ export function setOn(object: any, path_: string|number|Array<string|number>) {
 /**
  * if o has not already a value at path, it sets it to alternative
  */
-export function takeOrMake<T>(o: T, path: Array<string|number>, alternative: any) {
+export function takeOrMake<T>(o: T, path: Path, alternative: any) {
 
-    return setOn(o, path)(to(path as any /* TODO review */, alternative)(o));
+    return setOn(o, path)(to(path, alternative)(o));
 }
 
 

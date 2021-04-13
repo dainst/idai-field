@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Category, Constraint, Datastore, FieldDefinition, FieldDocument, FieldResource, FindResult, Group, onName, Query, TypeRelations, ValuelistDefinition } from 'idai-field-core';
+import { Category, Constraint, Datastore, FieldDefinition, FieldDocument, FieldResource, FindResult, Group, Named, Query, TypeRelations, ValuelistDefinition } from 'idai-field-core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Document, Resource } from 'idai-field-core';
 import {
@@ -234,10 +234,10 @@ export class TypeRelationPickerComponent {
     private static getConfiguredCriteria(typeCatalogCategory: Category): Array<Criterion> {
 
         const identificationGroup: Group = typeCatalogCategory.groups
-            .find(onName(is('identification')));
+            .find(Named.onName(is('identification')));
 
         const criterionField: FieldDefinition = identificationGroup.fields
-            .find(onName(is('criterion')));
+            .find(Named.onName(is('criterion')));
 
         const valuelist: ValuelistDefinition = (criterionField.valuelist as ValuelistDefinition);
 

@@ -4,8 +4,7 @@ import {ConfigurationErrors} from '../../../../../src/app/core/configuration/boo
 import {CustomCategoryDefinition} from '../../../../../src/app/core/configuration/model/custom-category-definition';
 import {BuiltinCategoryDefinition} from '../../../../../src/app/core/configuration/model/builtin-category-definition';
 import {LibraryCategoryDefinition} from '../../../../../src/app/core/configuration/model/library-category-definition';
-import {byName, Named, namedArrayToNamedMap, toName, Tree,
-    ValuelistDefinition, Groups, Category, FieldDefinition} from 'idai-field-core';
+import {Named, Tree, ValuelistDefinition, Groups, Category, FieldDefinition} from 'idai-field-core';
 import InputType = FieldDefinition.InputType;
 
 describe('buildRawProjectConfiguration', () => {
@@ -20,7 +19,7 @@ describe('buildRawProjectConfiguration', () => {
 
     function buildRaw(a: any, b: any, ...rest: any[]) {
 
-        return namedArrayToNamedMap(buildRawArray(a, b, ...rest));
+        return Named.arrayToMap(buildRawArray(a, b, ...rest));
     }
 
 
@@ -941,7 +940,7 @@ describe('buildRawProjectConfiguration', () => {
             { 'A:0': { fields: {} } }, {}, valuelistsConfiguration, {}
         );
 
-        result['A'].groups['0'].fields.sort(byName);
+        result['A'].groups['0'].fields.sort(Named.byName);
 
         expect(result['A'].groups['0'].fields[0].valuelist.values).toEqual({
             one: { labels: { de: 'Eins', en: 'One' } },
@@ -1178,7 +1177,7 @@ describe('buildRawProjectConfiguration', () => {
             {}, {}
         );
 
-        result['A'].groups[1].fields.sort(byName);
+        result['A'].groups[1].fields.sort(Named.byName);
 
         expect(result['A'].groups[0].fields[0].source).toBe(FieldDefinition.Source.BUILTIN);
         expect(result['A'].groups[1].fields[0].source).toBe(FieldDefinition.Source.COMMON);
@@ -1247,7 +1246,7 @@ describe('buildRawProjectConfiguration', () => {
 
         const result = buildRawArray(
             builtInCategories, {}, customCategories, {}, {}, {}, [], [], {}, orderConf
-        ).map(toName);
+        ).map(Named.toName);
 
         expect(result).toEqual(['C', 'A', 'B']);
     });

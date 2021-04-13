@@ -5,7 +5,7 @@ import {CustomCategoryDefinition} from '../model/custom-category-definition';
 import {TransientCategoryDefinition} from '../model/transient-category-definition';
 import {ConfigurationErrors} from './configuration-errors';
 import {getDefinedParents, iterateOverFieldsOfCategories} from './helpers';
-import {mapToNamedArray, Named, ValuelistDefinition} from 'idai-field-core';
+import {Named, ValuelistDefinition} from 'idai-field-core';
 
 
 export module Assertions {
@@ -30,7 +30,7 @@ export module Assertions {
                                                                               libraryCategories: Map<LibraryCategoryDefinition>,
                                                                               customCategories: Map<CustomCategoryDefinition>) {
 
-        const categories = mapToNamedArray(libraryCategories).concat(mapToNamedArray(customCategories)) as Array<Named>;
+        const categories = Named.mapToNamedArray(libraryCategories).concat(Named.mapToNamedArray(customCategories)) as Array<Named>;
         for (let category of categories) {
             if (!(category as any)['valuelists']) return;
             for (let fieldName of Object.keys((category as any)['valuelists'])) {

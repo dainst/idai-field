@@ -1,4 +1,4 @@
-import {namedArrayToNamedMap, mapToNamedArray, sortNamedArray} from '../../src/tools/named';
+import { Named } from '../../src/tools/named';
 
 /**
  * @author Daniel de Oliveira
@@ -10,7 +10,7 @@ describe('named', () => {
         const namedAs =  [{ name: '17', e: 3 }, { name: '19', e: 7 }];
 
         expect(
-            namedArrayToNamedMap(namedAs)
+            Named.arrayToMap(namedAs)
         ).toEqual(
             {
                 '17': {e: 3, name: '17'},
@@ -25,7 +25,7 @@ describe('named', () => {
         const namedMap =  {'17': { e: 3 }, '19': { e: 7 }};
 
         expect(
-            mapToNamedArray(namedMap)
+            Named.mapToNamedArray(namedMap)
         ).toEqual(
             [{e: 3, name: '17'}, {e: 7, name: '19'}]
         );
@@ -37,7 +37,7 @@ describe('named', () => {
        const namedArray = [{ name: '18', e: 1}, { name: '17'}, { name: '19'}];
 
         expect(
-            sortNamedArray(['17', '19'])(namedArray)
+            Named.sortArray(['17', '19'])(namedArray)
         ).toEqual(
             [{name: '17'}, {name: '19'}, {name: '18', e: 1}]
         );

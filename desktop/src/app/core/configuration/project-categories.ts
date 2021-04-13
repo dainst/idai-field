@@ -1,4 +1,4 @@
-import { Category, filterTrees, isTopLevelItemOrChildThereof, Name, Named, onName, removeTrees, toName, Tree, TreeList } from 'idai-field-core';
+import { Category, filterTrees, isTopLevelItemOrChildThereof, Name, Named, removeTrees, Tree, TreeList } from 'idai-field-core';
 import { filter, flow, includedIn, is, map, remove } from 'tsfun';
 
 
@@ -28,7 +28,7 @@ export /* package-private */ module ProjectCategories {
         return flow(t,
             removeTrees('Place', 'Project', TYPE_CATALOG, TYPE, 'Image', 'Operation'),
             Tree.flatten,
-            map(toName)
+            map(Named.toName)
         );
     }
 
@@ -44,7 +44,7 @@ export /* package-private */ module ProjectCategories {
 
     export function getConcreteFieldCategoryNames(t: TreeList<Category>): Array<Name> {
 
-        return getConcreteFieldCategories(t).map(toName);
+        return getConcreteFieldCategories(t).map(Named.toName);
     }
 
 
@@ -59,7 +59,7 @@ export /* package-private */ module ProjectCategories {
 
     export function getFieldCategoryNames(t: TreeList<Category>): Array<Name> {
 
-        return getFieldCategories(t).map(toName);
+        return getFieldCategories(t).map(Named.toName);
     }
 
 
@@ -68,7 +68,7 @@ export /* package-private */ module ProjectCategories {
         return flow(t,
             filterTrees('Operation', 'Place'),
             Tree.flatten,
-            map(toName)
+            map(Named.toName)
         );
     }
 
@@ -78,8 +78,8 @@ export /* package-private */ module ProjectCategories {
         return flow(t,
             filterTrees('Operation', 'Place'),
             Tree.flatten,
-            remove(onName(is('Operation'))), // TODO review why we do remove this here but not in getOverviewCategoryNames, compare also getOverviewToplevelCategories
-            map(toName) as any
+            remove(Named.onName(is('Operation'))), // TODO review why we do remove this here but not in getOverviewCategoryNames, compare also getOverviewToplevelCategories
+            map(Named.toName) as any
         );
     }
 
@@ -89,7 +89,7 @@ export /* package-private */ module ProjectCategories {
         return flow(t,
             filterTrees('Operation', 'Place'),
             Tree.flatten,
-            filter(onName(includedIn(['Operation', 'Place']))) as any
+            filter(Named.onName(includedIn(['Operation', 'Place']))) as any
         );
     }
 
@@ -114,7 +114,7 @@ export /* package-private */ module ProjectCategories {
         return flow(t,
             filterTrees('Image'),
             Tree.flatten,
-            map(toName)
+            map(Named.toName)
         );
     }
 
@@ -137,6 +137,6 @@ export /* package-private */ module ProjectCategories {
             categories,
             filterTrees(superCategoryName),
             Tree.flatten,
-            map(toName));
+            map(Named.toName));
     }
 }

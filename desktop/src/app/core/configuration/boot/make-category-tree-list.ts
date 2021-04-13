@@ -1,6 +1,6 @@
 import {cond, defined, flow, isNot, Map, Mapping, on, isUndefined, copy,
-    separate, detach, map, update, reduce, values} from 'tsfun';
-import {mapToNamedArray, Tree, CategoryDefinition, ObjectUtils, TreeList, Category, Group, Groups, FieldDefinition} from 'idai-field-core';
+    separate, detach, map, update, reduce} from 'tsfun';
+import {Named, Tree, CategoryDefinition, ObjectUtils, TreeList, Category, Group, Groups, FieldDefinition} from 'idai-field-core';
 import {MDInternal} from '../../../components/messages/md-internal';
 import {linkParentAndChildInstances} from '../category-tree-list';
 import {ConfigurationErrors} from './configuration-errors';
@@ -22,7 +22,7 @@ export function makeCategoryTreeList(categories: any): TreeList<Category> {
         parentDefs,
         map(buildCategoryFromDefinition),
         map(update(TEMP_FIELDS, ifUndefinedSetGroupTo(Groups.PARENT))),
-        mapToNamedArray as any,
+        Named.mapToNamedArray as any,
         map(category => ({ item: category, trees: []}))
     );
 

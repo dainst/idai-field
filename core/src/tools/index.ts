@@ -1,5 +1,5 @@
 export { assocReduce } from './assoc-reduce';
-export { byName, Labelled, mapToNamedArray, Name, Named, namedArrayToNamedMap, onName, sortNamedArray, toName } from './named';
+export { Labelled, Name, Named } from './named';
 export { filterTrees, isTopLevelItemOrChildThereof, removeTrees } from './named-tree-list';
 export { ObjectUtils } from './object-utils';
 export { ObserverUtil } from './observer-util';

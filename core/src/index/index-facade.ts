@@ -4,7 +4,7 @@ import { Category } from '../model/category';
 import { Document } from '../model/document';
 import { Query } from '../model/query';
 import { Resource } from '../model/resource';
-import { namedArrayToNamedMap } from '../tools/named';
+import { Named } from '../tools/named';
 import { ObserverUtil } from '../tools/observer-util';
 import { ConstraintIndex } from './constraint-index';
 import { FulltextIndex } from './fulltext-index';
@@ -35,7 +35,7 @@ export class IndexFacade {
         categories: Array<Category>,
         private showWarnings: boolean
     ) {
-        this.categoriesMap = namedArrayToNamedMap(categories);
+        this.categoriesMap = Named.arrayToMap(categories);
     }
 
 

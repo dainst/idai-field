@@ -1,4 +1,4 @@
-import {compose, Map, map, to, assoc} from 'tsfun';
+import {compose, Map, map, to, assoc, Path} from 'tsfun';
 import {assocReduce} from './assoc-reduce';
 
 
@@ -12,10 +12,10 @@ import {assocReduce} from './assoc-reduce';
  * ->
  * { 17: { d: { e: 17 }}, 19: { d: { e: 19 }}}
  */
-export function makeLookup(path: string|number|Array<string|number>) {
+export function makeLookup(path: Path) {
 
     return <A>(as: Array<A>): Map<A> =>
-        assocReduce((a: A) => [to(path as any)(a as any) as any /*TODO review typing*/, a], {})(as);
+        assocReduce((a: A) => [to(path)(a), a], {})(as);
 }
 
 

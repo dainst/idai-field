@@ -1,20 +1,19 @@
-import {is, on, copy, separate, Path} from 'tsfun';
-// import {Category} from '../../../desktop/src/app/core/configuration/model/category';
+import {is, on, copy, separate, Path, Mapping} from 'tsfun';
 
 
-export function sortStructArray(order: string[], path: Path) {
+export function sortStructArray<Struct>(order: string[], path: Path): Mapping<Array<Struct>> {
 
-    return <S /* a struct on which we can use path */>(items: Array<S>): Array<S> => {
+    return items => {
 
         let source = copy(items);
-        let sortedCategories: Array<any /* TODO review any and category variable names*/> = [];
+        let sorted = [];
 
-        for (let categoryName of order) {
-            const [match, rest] = separate(on(path, is(categoryName)), source);
-            sortedCategories = sortedCategories.concat(match);
+        for (let name of order) {
+            const [match, rest] = separate(on(path, is(name)), source);
+            sorted = sorted.concat(match);
             source = rest;
         }
 
-        return sortedCategories.concat(source);
+        return sorted.concat(source);
     }
 }

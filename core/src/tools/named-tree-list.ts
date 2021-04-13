@@ -1,18 +1,18 @@
 import {drop, identity, includedIn, is, isArray, isNot, on, take} from 'tsfun';
-import { Named, Name, onName } from '../../src/tools/named';
+import { Named, Name } from '../../src/tools/named';
 import { Tree, TreeList } from '../../src/tools/tree-list';
 
 
 export function findInNamedTreeList<N extends Named>(match: Name, t: TreeList<N>): N|undefined {
 
-    const result: any = Tree.find(t, onName(is(match)));
+    const result: any = Tree.find(t, Named.onName(is(match)));
     return result ? result.item : undefined;
 }
 
 
 export function filterTrees<N extends Named>(t: TreeList<N>, match: Name, ...moreMatches: Name[]): TreeList<N>;
 export function filterTrees<N extends Named>(match: Name, ...moreMatches: Name[]): (t: TreeList<N>) => TreeList<N>;
-export function filterTrees<N extends Named>(a: any, ...bs: any[]): any {
+export function filterTrees(a: any, ...bs: any[]): any {
 
     return _filterTrees(false, a, bs);
 }
@@ -20,7 +20,7 @@ export function filterTrees<N extends Named>(a: any, ...bs: any[]): any {
 
 export function removeTrees<N extends Named>(t: TreeList<N>, match: Name, ...moreMatches: Name[]): TreeList<N>;
 export function removeTrees<N extends Named>(match: Name, ...moreMatches: Name[]): (t: TreeList<N>) => TreeList<N>;
-export function removeTrees<N extends Named>(a: any, ...bs: any[]): any {
+export function removeTrees(a: any, ...bs: any[]): any {
 
     return _filterTrees(true, a, bs);
 }

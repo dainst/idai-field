@@ -1,6 +1,6 @@
 import { DecimalPipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
-import { FieldDefinition, FieldDocument, Group, Groups, Name, Named, namedArrayToNamedMap, RelationDefinition, Datastore } from 'idai-field-core';
+import { FieldDefinition, FieldDocument, Group, Groups, Name, Named, RelationDefinition, Datastore } from 'idai-field-core';
 import { Dating, Dimension, Literature, OptionalRange, Resource } from 'idai-field-core';
 import {
     aFlow, aMap, compose, filter, flatten, isArray, isBoolean, isDefined, isObject,
@@ -55,7 +55,7 @@ export class FieldsViewComponent implements OnChanges {
         if (!this.resource) return;
 
         this.groups = await aFlow(
-            FieldsViewUtil.getGroups(this.resource.category, namedArrayToNamedMap(this.projectConfiguration.getCategoriesArray())),
+            FieldsViewUtil.getGroups(this.resource.category, Named.arrayToMap(this.projectConfiguration.getCategoriesArray())),
             await this.putActualResourceRelationsIntoGroups(this.resource),
             this.putActualResourceFieldsIntoGroups(this.resource),
             filter(shouldBeDisplayed)

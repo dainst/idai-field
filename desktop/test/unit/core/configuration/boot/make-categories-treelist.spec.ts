@@ -1,6 +1,6 @@
 import {FieldResource, Tree, Groups, FieldDefinition, Category} from 'idai-field-core';
 import {makeCategoryTreeList} from '../../../../../src/app/core/configuration/boot/make-category-tree-list';
-import {byName, namedArrayToNamedMap} from 'idai-field-core';
+import {Named} from 'idai-field-core';
 import InputType = FieldDefinition.InputType;
 import {MDInternal} from '../../../../../src/app/components/messages/md-internal';
 import {ConfigurationErrors} from '../../../../../src/app/core/configuration/boot/configuration-errors';
@@ -29,7 +29,7 @@ describe('makeCategoriesTreelist', () => {
             }
         };
 
-        const categoriesMap = namedArrayToNamedMap(Tree.flatten<Category>(makeCategoryTreeList(confDef)));
+        const categoriesMap = Named.arrayToMap(Tree.flatten<Category>(makeCategoryTreeList(confDef)));
 
         expect(categoriesMap[P].name).toEqual(P);
         expect(categoriesMap[P].children[0].name).toEqual(A);
@@ -41,7 +41,7 @@ describe('makeCategoriesTreelist', () => {
         expect(categoryA.name).toEqual(A);
         expect(categoryA.parentCategory.name).toBe(categoriesMap[P].name);
 
-        const sortedFields = Category.getFields(categoryA).sort(byName);
+        const sortedFields = Category.getFields(categoryA).sort(Named.byName);
 
         expect(sortedFields[0].group).toBe(Groups.CHILD);
         expect(sortedFields[1].group).toBe(Groups.PARENT);
@@ -73,7 +73,7 @@ describe('makeCategoriesTreelist', () => {
             }
         };
 
-        const categoriesMap = namedArrayToNamedMap(Tree.flatten<Category>(makeCategoryTreeList(confDef)));
+        const categoriesMap = Named.arrayToMap(Tree.flatten<Category>(makeCategoryTreeList(confDef)));
         const categoryA = categoriesMap[P].children.find(category => category.name === A)!;
         const categoryB = categoriesMap[P].children.find(category => category.name === B)!;
 
@@ -109,7 +109,7 @@ describe('makeCategoriesTreelist', () => {
             }
         };
 
-        const categoriesMap = namedArrayToNamedMap(Tree.flatten<Category>(makeCategoryTreeList(confDef)));
+        const categoriesMap = Named.arrayToMap(Tree.flatten<Category>(makeCategoryTreeList(confDef)));
 
         expect(categoriesMap[T].groups[Groups.STEM].fields[0].name).toEqual(FieldResource.IDENTIFIER);
         expect(categoriesMap[T].groups[Groups.STEM].fields[1].name).toEqual(FieldResource.SHORTDESCRIPTION);

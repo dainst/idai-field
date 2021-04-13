@@ -205,7 +205,7 @@ export class ImageUploader {
     }
 
 
-    private findImageByFilename(filename: string): Promise<IdaiFieldFindResult<Document>> {
+    private findImageByFilename(filename: string): Promise<IdaiFieldFindResult> {
 
         return this.datastore.find({
             constraints: {

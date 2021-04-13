@@ -213,7 +213,7 @@ export class DocumentsManager {
         await AngularUtility.refresh();
 
         this.currentQueryId = new Date().toISOString();
-        const result: IdaiFieldFindResult<Document>
+        const result: IdaiFieldFindResult
             = await this.createUpdatedDocumentList(this.currentQueryId);
 
         await this.updateChildrenCountMap(result.documents.map(FieldDocument.fromDocument));
@@ -232,7 +232,7 @@ export class DocumentsManager {
     }
 
 
-    public async createUpdatedDocumentList(queryId?: string): Promise<IdaiFieldFindResult<Document>> {
+    public async createUpdatedDocumentList(queryId?: string): Promise<IdaiFieldFindResult> {
 
         const isRecordedInTarget = this.makeIsRecordedInTarget();
         if (!isRecordedInTarget && !this.resourcesStateManager.isInSpecialView()) {
@@ -346,7 +346,7 @@ export class DocumentsManager {
     }
 
 
-    private async fetchDocuments(query: Query): Promise<IdaiFieldFindResult<Document>> {
+    private async fetchDocuments(query: Query): Promise<IdaiFieldFindResult> {
 
         try {
             const ignoreCategories = !query.categories

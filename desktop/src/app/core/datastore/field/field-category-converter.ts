@@ -8,7 +8,7 @@ import { Migrator } from './migrator';
 /**
  * @author Daniel de Oliveira
  */
-export class FieldCategoryConverter extends CategoryConverter<Document> {
+export class FieldCategoryConverter extends CategoryConverter {
 
     constructor(private projectConfiguration: ProjectConfiguration) {
 

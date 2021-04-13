@@ -27,8 +27,8 @@ export class ChangesStream {
 
     constructor(private datastore: PouchdbDatastore,
                 private indexFacade: IndexFacade,
-                private documentCache: DocumentCache<Document>,
-                private categoryConverter: CategoryConverter<Document>,
+                private documentCache: DocumentCache,
+                private categoryConverter: CategoryConverter,
                 private settingsProvider: SettingsProvider) {
 
         datastore.deletedNotifications().subscribe(document => {

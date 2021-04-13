@@ -77,7 +77,7 @@ export const appInitializerFactory = (
         settingsService: SettingsService,
         pouchdbManager: PouchdbManager,
         pouchdbServer: PouchdbServer,
-        documentCache: DocumentCache<Document>,
+        documentCache: DocumentCache,
         imageConverter: ImageConverter,
         imagestore: Imagestore,
         progress: InitializationProgress
@@ -155,7 +155,7 @@ const loadConfiguration = async (settingsService: SettingsService, progress: Ini
 };
 
 
-const loadDocuments = async (serviceLocator: AppInitializerServiceLocator, db: PouchDB.Database<{}>, documentCache: DocumentCache<Document>, progress: InitializationProgress) => {
+const loadDocuments = async (serviceLocator: AppInitializerServiceLocator, db: PouchDB.Database<{}>, documentCache: DocumentCache, progress: InitializationProgress) => {
 
     await progress.setPhase('loadingDocuments');
     progress.setDocumentsToIndex((await db.info()).doc_count);

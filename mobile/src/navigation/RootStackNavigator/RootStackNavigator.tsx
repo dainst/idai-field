@@ -26,9 +26,9 @@ const RootStackNavigator = (): JSX.Element => {
             <Stack.Screen
                 name="Settings"
                 component={ SettingsScreen }
-                options={
-                    { title: 'iDAIfield mobile' }
-                }
+                options={ {
+                    headerTitle: 'iDAIfield mobile',
+                } }
             />
             <Stack.Screen
                 name="Home"

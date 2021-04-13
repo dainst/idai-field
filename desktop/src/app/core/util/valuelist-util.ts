@@ -6,7 +6,7 @@ import {ValueDefinition} from '../../../../../core/src/model/valuelist-definitio
 
 const languages: string[] = typeof window !== 'undefined'
   ? window.require('@electron/remote').getGlobal('config').languages
-  : require('@electron/remote') ? require('@electron/remote').getGlobal('config').languages : ['de'];
+  : ['de'];
 
 
 /**

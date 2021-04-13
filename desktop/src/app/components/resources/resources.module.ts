@@ -54,9 +54,7 @@ import { ChildrenViewComponent } from './widgets/popovermenu/children-view.compo
 import { PopoverMenuComponent } from './widgets/popovermenu/popover-menu.component';
 
 
-const remote = typeof window !== 'undefined'
-  ? window.require('@electron/remote')
-  : require('@electron/remote');
+const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
 
 @NgModule({
     imports: [

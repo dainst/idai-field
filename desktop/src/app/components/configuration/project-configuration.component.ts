@@ -9,7 +9,7 @@ import {MenuContext, MenuService} from '../menu-service';
 
 const locale: string = typeof window !== 'undefined'
   ? window.require('@electron/remote').getGlobal('config').locale
-  : require('@electron/remote').getGlobal('config').locale;
+  : 'de';
 
 
 @Component({

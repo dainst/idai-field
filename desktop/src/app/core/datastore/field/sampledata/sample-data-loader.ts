@@ -3,7 +3,7 @@ import { ImageConverter } from '../../../images/imagestore/image-converter';
 import { getSampleDocuments } from './sample-data';
 
 const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
-const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : require('@electron/remote');
+const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
 
 
 /**

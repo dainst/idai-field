@@ -7,7 +7,7 @@ import { getExportDocuments } from './get-export-documents';
 
 const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
 const archiver = typeof window !== 'undefined' ? window.require('archiver') : require('archiver');
-const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : require('@electron/remote');
+const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
 
 export const ERROR_FAILED_TO_COPY_IMAGES = 'export.catalog.failedToCopyImages';
 

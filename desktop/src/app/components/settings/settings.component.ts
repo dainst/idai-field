@@ -10,7 +10,7 @@ import {MenuContext, MenuService} from '../menu-service';
 import {SettingsProvider} from '../../core/settings/settings-provider';
 
 const address = typeof window !== 'undefined' ? window.require('address') : require('address');
-const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : require('@electron/remote');
+const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
 
 
 @Component({

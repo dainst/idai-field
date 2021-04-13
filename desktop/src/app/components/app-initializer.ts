@@ -13,7 +13,7 @@ import { SettingsService } from '../core/settings/settings-service';
 import { IndexerConfiguration } from '../indexer-configuration';
 
 
-const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : require('@electron/remote');
+const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
 
 
 interface Services {

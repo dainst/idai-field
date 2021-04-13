@@ -2,12 +2,11 @@ import React, { ReactElement, useContext } from 'react';
 import { Container, Content, Toast } from 'native-base';
 import { StyleSheet } from 'react-native';
 import PouchDbContext from '../data/pouchdb/pouch-context';
-import ConnectPouchForm from '../components/ConnectPouchForm';
-import DisconectPouchForm from '../components/DisconnectPouchForm';
-import { RootStackNavProps } from '../navigation/RootStackNavigator/RootStackParamList';
+import ConnectPouchForm from './ConnectPouchForm';
+import DisconectPouchForm from './DisconnectPouchForm';
 
 
-const SettingsScreen = ({ navigation }: RootStackNavProps<'Settings'>): ReactElement => {
+const Settings = (): ReactElement => {
     
     const { connect, isDbConnected, disconnect, dbName } = useContext(PouchDbContext);
 
@@ -23,17 +22,9 @@ const SettingsScreen = ({ navigation }: RootStackNavProps<'Settings'>): ReactEle
         });
     };
 
-    const connectHandler = async (dbName: string, remoteUser: string, remotePassword: string) => {
+    const connectHandler = (dbName: string, remoteUser: string, remotePassword: string) => {
 
-        const status = await connect(dbName, remoteUser, remotePassword);
-        if( status?.status === 200)
-            navigation.reset({
-                index: 1,
-                routes: [
-                    { name: 'Home' }
-                ]
-            });
-
+        connect(dbName, remoteUser, remotePassword);
     };
 
 
@@ -56,4 +47,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default SettingsScreen;
+export default Settings;

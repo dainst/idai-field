@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
+import { Document } from 'idai-field-core';
 
 export interface DbStatus {
     status: number;
@@ -14,7 +15,7 @@ interface Context {
     remoteUser: string;
     remotePassword: string;
     status: DbStatus | null;
-    operations: Document[] | undefined;
+    operations: Document[];
 
     isDbConnected: () => boolean;
     connect: (dbName: string, remoteUser: string, remotePassword: string) => Promise<DbStatus | undefined>;

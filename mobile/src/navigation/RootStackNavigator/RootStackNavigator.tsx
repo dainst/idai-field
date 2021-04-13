@@ -4,7 +4,7 @@ import HomeScreen from '../../screens/HomeScreen';
 import { headerBackgroundColor } from '../../constants/colors';
 import { RootStackParamList } from './RootStackParamList';
 import PouchDbContext from '../../data/pouchdb/pouch-context';
-import SettingsScreen from '../../screens/SettingsScreen';
+import SettingsScreen from '../../components/Settings';
 import { Button, Icon } from 'native-base';
 
 const Stack = createStackNavigator<RootStackParamList>();

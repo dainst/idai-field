@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PouchDbContext, { DbStatus } from './pouch-context';
 import { setupDB } from './pouchdb-service';
+import { Document } from 'idai-field-core';
 
 const PouchDbContextProvider: React.FC = (props) => {
     
@@ -8,7 +9,7 @@ const PouchDbContextProvider: React.FC = (props) => {
     const [dbName, setDbName] = useState<string>('');
     const [remoteUser, setRemoteUser] = useState<string>('');
     const [remotePassword, setRemotePassword] = useState<string>('');
-    const [operations, setOperations] = useState<Document[]>();
+    const [operations, setOperations] = useState<Document[]>([]);
     const [status, setStatus] = useState<DbStatus | null>(null);
 
     const isDbConnected = () => status?.status === 200;

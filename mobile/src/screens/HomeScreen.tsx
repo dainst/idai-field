@@ -1,42 +1,28 @@
 //import liraries
-import React, { useContext, useState, useEffect, ReactElement } from 'react';
+import React, { useContext, ReactElement } from 'react';
 import { StyleSheet } from 'react-native';
-import { Container, Text, Card, CardItem } from 'native-base';
+import { Container, Content, } from 'native-base';
 import PouchDbContext from '../data/pouchdb/pouch-context';
+import Settings from '../components/Settings';
+import AppHeader from '../components/AppHeader';
+import Map from '../components/Map';
 
 
 const HomeScreen= (): ReactElement => {
     
-    const [operations, setOperations] = useState<any[] | undefined>();
-    const pouchCtx = useContext(PouchDbContext);
+    const { dbName, isDbConnected, operations } = useContext(PouchDbContext);
 
-    useEffect(() => {
-        
-        setOperations(pouchCtx.operations);
-    }, [pouchCtx, pouchCtx.operations]);
-
-
-    const renderStatus = () => {
-        const connected = pouchCtx.status && pouchCtx.status.status === 200 ? true : false;
-        return (
-            <Card style={ styles.card }>
-                <CardItem header bordered >
-                    <Text style={ connected? styles.green : styles.red }>
-                        {connected ? 'Connected' : 'Not Connected'}
-                    </Text>
-                </CardItem>
-                {operations && operations.map(operation => (
-                    <CardItem key={ operation._id }>
-                        <Text>{operation.resource.id}</Text>
-                    </CardItem>
-                ))}
-            </Card>);
-    };
-
-    
     return (
-        <Container style={ styles.container }>
-            {renderStatus()}
+        <Container >
+            <AppHeader
+                title={ isDbConnected()? dbName : 'iDAI field mobile' }
+            />
+            <Content contentContainerStyle={ styles.container }>
+                {isDbConnected() ?
+                    <Map documents={ operations } />:
+                    <Settings />
+                }
+            </Content>
         </Container>
     );
 };
@@ -44,13 +30,11 @@ const HomeScreen= (): ReactElement => {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        justifyContent: 'center',
         alignItems: 'center',
+        flex: 1,
     },
-    card: {
-        width: '90%',
-        alignItems: 'center'
-    },
+
     red: {
         color: 'red',
     },

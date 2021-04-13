@@ -1,4 +1,4 @@
-import React, { ReactElement, useContext, useEffect, useState } from 'react';
+import React, { ReactElement, useContext } from 'react';
 import { Container, Content, Toast } from 'native-base';
 import { StyleSheet } from 'react-native';
 import PouchDbContext from '../data/pouchdb/pouch-context';
@@ -9,35 +9,13 @@ import { RootStackNavProps } from '../navigation/RootStackNavigator/RootStackPar
 
 const SettingsScreen = ({ navigation }: RootStackNavProps<'Settings'>): ReactElement => {
     
-    const pouchCtx = useContext(PouchDbContext);
-    const [isDbConnected, setIsDbConnected] = useState(false);
+    const { connect, isDbConnected, disconnect, dbName } = useContext(PouchDbContext);
 
-    useEffect(() => {
-
-        if(pouchCtx.status){
-            Toast.show({
-                text: pouchCtx.status.message,
-                buttonText: 'Okay',
-                duration: 2000,
-                position: 'top',
-                
-                textStyle: { color: pouchCtx.status.status !== 200? 'red': 'green' },
-            });
-
-            if(pouchCtx.status.status === 200){
-                setIsDbConnected(true);
-                navigation.navigate('Home');
-            }
-
-        } else setIsDbConnected(false);
-            
-        
-    },[pouchCtx, pouchCtx.status, navigation]);
 
     const disconnectHandler = () => {
-        pouchCtx.disconnect();
+        disconnect();
         Toast.show({
-            text: `Disconnected from ${pouchCtx.dbName}`,
+            text: `Disconnected from ${dbName}`,
             buttonText: 'Okay',
             duration: 2000,
             position: 'top',
@@ -45,14 +23,27 @@ const SettingsScreen = ({ navigation }: RootStackNavProps<'Settings'>): ReactEle
         });
     };
 
+    const connectHandler = async (dbName: string, remoteUser: string, remotePassword: string) => {
+
+        const status = await connect(dbName, remoteUser, remotePassword);
+        if( status?.status === 200)
+            navigation.reset({
+                index: 1,
+                routes: [
+                    { name: 'Home' }
+                ]
+            });
+
+    };
+
 
     return (
         <Container style={ styles.container }>
             <Content>
-                {isDbConnected ?
+                {isDbConnected() ?
                 <DisconectPouchForm
-                    dbName={ pouchCtx.dbName } disconnectHandler={ disconnectHandler } />:
-                <ConnectPouchForm dbSetupHandler={ pouchCtx.setupDb } /> }
+                    dbName={ dbName } disconnectHandler={ disconnectHandler } />:
+                <ConnectPouchForm dbSetupHandler={ connectHandler } /> }
             </Content>
         </Container>
     );

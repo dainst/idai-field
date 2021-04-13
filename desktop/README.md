@@ -27,7 +27,6 @@ Development of iDAI.field works under **MacOS**, **Windows** and **Linux**. In a
 Then clone this repository locally and run the following commands (in the repository root):
 
 ```
-$ npm i
 $ npm run bootstrap
 $ npm run build
 $ cd desktop

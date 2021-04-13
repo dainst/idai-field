@@ -96,10 +96,10 @@ export class PouchdbManager {
 
         try {
             await db.get('project');
-        } catch (_) {
+        } catch {
             // create project only if it does not exist,
             // which can happen if the db already existed
-            if (doc) /*TODO review*/ await db.put(doc);
+            await db.put(doc);
         }
 
         this.db = db;

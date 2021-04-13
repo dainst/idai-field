@@ -1,5 +1,5 @@
 import { doc, DocumentCache, Datastore } from 'idai-field-core';
-import { FieldCategoryConverter } from '../../../../src/app/core/datastore/field/field-category-converter';
+import { FieldConverter } from '../../../../src/app/core/datastore/field/category-converter';
 
 
 /**
@@ -32,7 +32,7 @@ describe('Datastore', () => {
             mockdb,
             mockIndexFacade,
             documentCache,
-            new FieldCategoryConverter(mockProjectConfiguration));
+            new FieldConverter(mockProjectConfiguration));
     }
 
 

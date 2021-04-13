@@ -5,7 +5,7 @@ import { Query } from '../model/query';
 import { ObjectUtils } from '../tools/object-utils';
 import { DatastoreErrors } from './datastore-errors';
 import { PouchdbDatastore } from './pouchdb/pouchdb-datastore';
-import { CategoryConverter } from './category-converter';
+import { Converter } from './converter';
 import { DocumentCache } from './document-cache';
 
 
@@ -65,7 +65,7 @@ export class Datastore {
     constructor(private datastore: PouchdbDatastore,
                 private indexFacade: IndexFacade,
                 private documentCache: DocumentCache,
-                private categoryConverter: CategoryConverter) {
+                private categoryConverter: Converter) {
     }
 
 

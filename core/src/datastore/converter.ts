@@ -1,9 +1,7 @@
 import {Document} from '../model/document';
 
-/**
- * @author Daniel de Oliveira
- */
-export abstract class CategoryConverter {
+
+export abstract class Converter {
 
     public abstract convert(document: Document): Document;
 }

@@ -5,7 +5,7 @@ import { AppConfigurator } from '../../../../src/app/core/configuration/app-conf
 import { ConfigLoader } from '../../../../src/app/core/configuration/boot/config-loader';
 import { ConfigReader } from '../../../../src/app/core/configuration/boot/config-reader';
 import { ChangesStream } from '../../../../src/app/core/datastore/changes/changes-stream';
-import { FieldCategoryConverter } from '../../../../src/app/core/datastore/field/field-category-converter';
+import { FieldConverter } from '../../../../src/app/core/datastore/field/category-converter';
 import { PouchdbServer } from '../../../../src/app/core/datastore/pouchdb/pouchdb-server';
 import { DocumentHolder } from '../../../../src/app/core/docedit/document-holder';
 import { Imagestore } from '../../../../src/app/core/images/imagestore/imagestore';
@@ -97,7 +97,7 @@ export async function createApp(projectName = 'testdb', startSync = false) {
     imagestore.init(settingsProvider.getSettings());
 
     const documentCache = new DocumentCache();
-    const categoryConverter = new FieldCategoryConverter(projectConfiguration);
+    const categoryConverter = new FieldConverter(projectConfiguration);
 
     const datastore = new Datastore(
         pouchdbDatastore, createdIndexFacade, documentCache, categoryConverter);

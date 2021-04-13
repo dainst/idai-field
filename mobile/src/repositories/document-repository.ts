@@ -1,5 +1,5 @@
 import {
-    CategoryConverter, ConstraintIndex, Document, DocumentCache, DocumentDatastore, IdaiFieldFindResult,
+    CategoryConverter, ConstraintIndex, Document, DocumentCache, Datastore, IdaiFieldFindResult,
     IdGenerator, IndexFacade, PouchdbDatastore, PouchDbFactory, PouchdbManager, Query, SyncProcess
 } from 'idai-field-core';
 import { Observable } from 'rxjs';
@@ -8,16 +8,16 @@ export class DocumentRepository {
 
     private constructor(private pouchdbManager: PouchdbManager,
                         private pouchdbDatastore: PouchdbDatastore,
-                        private datastore: DocumentDatastore) {}
+                        private datastore: Datastore) {}
 
     public static async init(project: string, pouchDbFactory: PouchDbFactory): Promise<DocumentRepository> {
 
         const pouchdbManager = new PouchdbManager(pouchDbFactory);
         const db = await pouchdbManager.createDb(project, { _id: 'project' } , false);
         const pouchdbDatastore = new PouchdbDatastore(db, new IdGenerator(), true);
-        const documentDatastore = buildDocumentDatastore(pouchdbDatastore);
+        const datastore = buildDatastore(pouchdbDatastore);
 
-        return new DocumentRepository(pouchdbManager, pouchdbDatastore, documentDatastore);
+        return new DocumentRepository(pouchdbManager, pouchdbDatastore, datastore);
     }
 
 
@@ -63,13 +63,13 @@ export class DocumentRepository {
 }
 
 
-const buildDocumentDatastore = (pouchdbDatastore: PouchdbDatastore): DocumentDatastore => {
+const buildDatastore = (pouchdbDatastore: PouchdbDatastore): Datastore => {
 
     const indexFacade = buildIndexFacade();
     const documentCache = new DocumentCache<Document>();
     const categoryConverter = buildDummyCategoryConverter();
 
-    return new DocumentDatastore(pouchdbDatastore, indexFacade, documentCache, categoryConverter);
+    return new Datastore(pouchdbDatastore, indexFacade, documentCache, categoryConverter);
 };
 
 
@@ -104,7 +104,5 @@ const buildIndexFacade = (showWarnings = true): IndexFacade => {
 const buildDummyCategoryConverter = (): CategoryConverter<Document> => ({
 
         // eslint-disable-next-line @typescript-eslint/no-empty-function
-        assertCategoryToBeOfClass: (_categories: string, _categoryClass: string) => {},
-        convert: (document: Document) => document,
-        getCategoriesForClass: (categoryClass: string) => [categoryClass]
+        convert: (document: Document) => document
 });

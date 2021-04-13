@@ -5,8 +5,6 @@ import {Document} from '../../model/document';
  */
 export abstract class CategoryConverter<T> {
 
-    public abstract assertCategoryToBeOfClass(categories: string, categoryClass: string): void;
-
     public abstract convert(document: Document): T;
 
     public abstract getCategoriesForClass(categoryClass: string): string[]|undefined;

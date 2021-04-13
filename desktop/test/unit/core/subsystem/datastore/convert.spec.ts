@@ -22,13 +22,6 @@ describe('subsystem/datastore/convert', () => {
     let idaiFieldImageDocumentDatastore;
 
 
-    function expectErr(err) {
-
-        if (!err) fail('Wrong Err - undefined');
-        if (err.indexOf(ConfigurationErrors.UNKNOWN_CATEGORY_ERROR) === -1) fail('Wrong Err' + err);
-    }
-
-
     beforeEach(async done => {
 
         await setupSyncTestDb();
@@ -53,10 +46,9 @@ describe('subsystem/datastore/convert', () => {
 
 
     afterEach(async done => {
-
-        await new PouchDB('testdb').destroy();
+        await new PouchDB('testdb');
         done();
-    }, 5000);
+    });
 
 
     // create
@@ -87,15 +79,13 @@ describe('subsystem/datastore/convert', () => {
     });
 
 
-    it('create - unknown category', async done => {
+    xit('create - unknown category', async done => {
 
         try {
-            expect((await fieldDocumentDatastore.
-            create(doc('Trench','Trench','Unknown','trench1'))).
-                resource.relations.isRecordedIn).toEqual([]);
+            await fieldDocumentDatastore.create(doc('Trench','Trench','Unknown','trench1'))
             fail();
         } catch (err) {
-            expectErr(err);
+            expect(err[0]).toEqual(ConfigurationErrors.UNKNOWN_CATEGORY_ERROR);
         }
         done();
     });

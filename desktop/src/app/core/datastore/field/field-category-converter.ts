@@ -17,19 +17,6 @@ export class FieldCategoryConverter extends CategoryConverter<Document> {
     }
 
 
-    public assertCategoryToBeOfClass(category: string, categoryClass: string): void {
-
-        if (categoryClass === 'ImageDocument') {
-            if (!this.projectConfiguration.isSubcategory(category, 'Image')) throw 'Wrong category class: must be ImageDocument';
-        } else if (categoryClass === 'FeatureDocument') {
-            if (!this.projectConfiguration.isSubcategory(category, 'Feature')) throw 'Wrong category class: must be FeatureDocument';
-        } else if (categoryClass === 'FieldDocument') {
-            if (this.projectConfiguration.isSubcategory(category, 'Image')) throw 'Wrong category class: must not be ImageDocument';
-            // feature documents are allowed to also be field documents
-        }
-    }
-
-
     public getCategoriesForClass(categoryClass: string): string[]|undefined {
 
 

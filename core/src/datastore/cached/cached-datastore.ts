@@ -54,16 +54,11 @@ export abstract class CachedDatastore<T extends Document> {
      */
     public async create(document: NewDocument, username: string): Promise<T> {
 
-        this.categoryConverter.assertCategoryToBeOfClass(document.resource.category, this.categoryClass);
         return this.updateIndex(await this.datastore.create(document, username));
     }
 
 
     public async bulkCreate(documents: Array<NewDocument>, username: string): Promise<Array<T>> {
-
-        for (let document of documents) {
-            this.categoryConverter.assertCategoryToBeOfClass(document.resource.category, this.categoryClass);
-        }
 
         return (await this.datastore.bulkCreate(documents, username)).map(document => {
             return this.updateIndex(document);
@@ -77,16 +72,11 @@ export abstract class CachedDatastore<T extends Document> {
      */
     public async update(document: Document, username: string, squashRevisionsIds?: string[]): Promise<T> {
 
-        this.categoryConverter.assertCategoryToBeOfClass(document.resource.category, this.categoryClass);
         return this.updateIndex(await this.datastore.update(document, username, squashRevisionsIds));
     }
 
 
     public async bulkUpdate(documents: Array<Document>, username: string): Promise<Array<T>> {
-
-        for (let document of documents) {
-            this.categoryConverter.assertCategoryToBeOfClass(document.resource.category, this.categoryClass);
-        }
 
         return (await this.datastore.bulkUpdate(documents, username)).map(document => {
             return this.updateIndex(document);
@@ -109,8 +99,6 @@ export abstract class CachedDatastore<T extends Document> {
      * @throws if document is not of category T, determined by resource.category
      */
     public async remove(document: Document): Promise<void> {
-
-        this.categoryConverter.assertCategoryToBeOfClass(document.resource.category, this.categoryClass);
 
         // we want the doc removed from the indices asap,
         // in order to not risk someone finding it still with findIds due to
@@ -142,7 +130,6 @@ export abstract class CachedDatastore<T extends Document> {
         }
 
         let document: T = this.categoryConverter.convert(await this.datastore.fetch(id));
-        this.categoryConverter.assertCategoryToBeOfClass(document.resource.category, this.categoryClass);
 
         return cachedDocument
             ? this.documentCache.reassign(document)
@@ -187,10 +174,7 @@ export abstract class CachedDatastore<T extends Document> {
 
     public findIds(query: Query, ignoreCategories: boolean = false): FindIdsResult {
 
-        if (query.categories) {
-            query.categories.forEach(category => {
-                this.categoryConverter.assertCategoryToBeOfClass(category, this.categoryClass);
-            });
+        if (query.categories) { // TODO simplify
         } else if (!ignoreCategories) {
             query = ObjectUtils.jsonClone(query);
             query.categories = this.categoryConverter.getCategoriesForClass(this.categoryClass);
@@ -302,9 +286,6 @@ export abstract class CachedDatastore<T extends Document> {
             const convertedDocument: T = this.categoryConverter.convert(document);
 
             try {
-                this.categoryConverter.assertCategoryToBeOfClass(
-                    convertedDocument.resource.category, this.categoryClass
-                );
                 documents.push(this.documentCache.set(convertedDocument));
             } catch (errWithParams) {
                 if (errWithParams[0] !== DatastoreErrors.UNKNOWN_CATEGORY /* TODO review where this has impact*/) throw errWithParams;

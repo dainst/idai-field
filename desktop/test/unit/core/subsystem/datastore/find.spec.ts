@@ -44,32 +44,6 @@ describe('subsystem/datastore/find', () => {
     }, 5000);
 
 
-    it('FieldDatastore - throw when find called with image category ', async done => {
-
-
-
-        try {
-            await fieldDocumentDatastore.find({ categories: ['Image'] });
-            fail();
-        } catch (expected) {
-            expectErr1(expected);
-        }
-        done();
-    });
-
-
-    it('ImageDatastore - throw when find called with non image category ', async done => {
-
-        try {
-            await idaiFieldImageDocumentDatastore.find({ categories: ['Trench'] });
-            fail();
-        } catch (expected) {
-            expectErr1(expected);
-        }
-        done();
-    });
-
-
     it('DocumentDatastore - do not throw and return everything with all categories', async done => {
 
         image0 = doc('Image','Image','Image','image0');

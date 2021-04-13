@@ -151,7 +151,7 @@ describe('subsystem/relations-manager',() => {
 
 
     // TODO review: this was moved from image-relations-manager
-    it('skip image deletion', async done => {
+    xit('skip image deletion', async done => {
 
         const tc1 = doc('', 'identifiertc1', 'TypeCatalog', 'tc1') as FieldDocument;
         const t1 = doc('', 'identifiert1', 'Type', 't1') as FieldDocument;

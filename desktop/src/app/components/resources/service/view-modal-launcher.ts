@@ -1,9 +1,8 @@
 import {Injectable} from '@angular/core';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {ImageDocument} from 'idai-field-core';
+import {Datastore, ImageDocument} from 'idai-field-core';
 import {Document} from 'idai-field-core';
 import {MenuContext, MenuService} from '../../menu-service';
-import {ImageDatastore} from '../../../core/datastore/field/image-datastore';
 import {ImageViewModalComponent} from '../../viewmodal/image/image-view-modal.component';
 import {ResourceViewModalComponent} from '../../viewmodal/resource/resource-view-modal.component';
 
@@ -15,7 +14,7 @@ import {ResourceViewModalComponent} from '../../viewmodal/resource/resource-view
 export class ViewModalLauncher {
 
     constructor(private modalService: NgbModal,
-                private datastore: ImageDatastore,
+                private datastore: Datastore,
                 private menuService: MenuService) {}
 
 
@@ -65,7 +64,7 @@ export class ViewModalLauncher {
     private async getImageDocuments(relations: string[]|undefined): Promise<Array<ImageDocument>> {
 
         return relations
-            ? this.datastore.getMultiple(relations)
+            ? (await this.datastore.getMultiple(relations)).map(ImageDocument.fromDocument) // TODO ImageDocuments
             : [];
     }
 }

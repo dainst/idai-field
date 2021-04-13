@@ -2,7 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {ImageDocument, Category} from 'idai-field-core';
+import {ImageDocument, Category, Datastore} from 'idai-field-core';
 import {Document} from 'idai-field-core';
 import {ImageGridComponent} from '../grid/image-grid.component';
 import {ImageOverviewFacade} from '../../../core/images/overview/view/imageoverview-facade';
@@ -14,7 +14,6 @@ import {ProjectConfiguration} from '../../../core/configuration/project-configur
 import {TabManager} from '../../../core/tabs/tab-manager';
 import {ViewFacade} from '../../../core/resources/view/view-facade';
 import {Messages} from '../../messages/messages';
-import {ImageDatastore} from '../../../core/datastore/field/image-datastore';
 
 
 @Component({
@@ -40,7 +39,7 @@ export class ImageOverviewComponent implements OnInit {
                 location: Location,
                 public viewFacade: ViewFacade,
                 private imageOverviewFacade: ImageOverviewFacade,
-                private imageDatastore: ImageDatastore,
+                private datastore: Datastore,
                 private messages: Messages,
                 private projectConfiguration: ProjectConfiguration,
                 private tabManager: TabManager,
@@ -163,7 +162,7 @@ export class ImageOverviewComponent implements OnInit {
 
     private async openConflictResolver(id: string) {
 
-        const image: ImageDocument = await this.imageDatastore.get(id);
+        const image: ImageDocument = ImageDocument.fromDocument(await this.datastore.get(id));
         this.showImage(image, true);
     }
 }

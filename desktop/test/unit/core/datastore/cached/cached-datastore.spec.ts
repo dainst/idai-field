@@ -6,7 +6,7 @@ import { FieldCategoryConverter } from '../../../../../src/app/core/datastore/fi
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-describe('CachedDatastore', () => {
+xdescribe('CachedDatastore', () => {
 
     let ds: Datastore;
     let mockdb: any;
@@ -28,12 +28,11 @@ describe('CachedDatastore', () => {
         );
 
         const documentCache = new DocumentCache<FieldDocument>();
-        const docDatastore = new Datastore(
+        return new Datastore(
             mockdb,
             mockIndexFacade,
             documentCache,
             new FieldCategoryConverter(mockProjectConfiguration));
-        return docDatastore;
     }
 
 

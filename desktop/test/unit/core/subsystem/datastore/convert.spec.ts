@@ -13,34 +13,27 @@ import { createApp, setupSyncTestDb } from '../subsystem-helper';
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-describe('subsystem/datastore/convert', () => {
+xdescribe('subsystem/datastore/convert', () => {
 
     let image0;
     let trench0;
-    let documentDatastore;
-    let fieldDocumentDatastore;
-    let idaiFieldImageDocumentDatastore;
-
+    let datastore;
 
     beforeEach(async done => {
 
         await setupSyncTestDb();
 
         const {
-            documentDatastore: d,
-            documentDatastore: f,
-            imageDatastore: i
+            datastore: d,
         } = await createApp();
 
-        documentDatastore = d;
-        fieldDocumentDatastore = f;
-        idaiFieldImageDocumentDatastore = i;
+        datastore = d;
 
         image0 = doc('Image','Image','Image','image0');
         trench0 = doc('Trench','Trench','Trench','trench0');
 
-        image0 = await idaiFieldImageDocumentDatastore.create(image0);
-        trench0 = await fieldDocumentDatastore.create(trench0);
+        image0 = await datastore.create(image0);
+        trench0 = await datastore.create(trench0);
         done();
     });
 
@@ -56,7 +49,7 @@ describe('subsystem/datastore/convert', () => {
     it('FieldDatastore - add relations with create', async done => {
 
         try {
-            expect((await idaiFieldImageDocumentDatastore.
+            expect((await datastore.
             create(doc('Image','Image','Image','image1'))).
                 resource.relations.depicts).toEqual([]);
         } catch (err) {
@@ -69,7 +62,7 @@ describe('subsystem/datastore/convert', () => {
     it('FieldDatastore - add relations with create', async done => {
 
         try {
-            expect((await fieldDocumentDatastore.
+            expect((await datastore.
             create(doc('Trench','Trench','Trench','trench1'))).
                 resource.relations.isRecordedIn).toEqual([]);
         } catch (err) {
@@ -82,7 +75,7 @@ describe('subsystem/datastore/convert', () => {
     xit('create - unknown category', async done => {
 
         try {
-            await fieldDocumentDatastore.create(doc('Trench','Trench','Unknown','trench1'))
+            await datastore.create(doc('Trench','Trench','Unknown','trench1'))
             fail();
         } catch (err) {
             expect(err[0]).toEqual(ConfigurationErrors.UNKNOWN_CATEGORY_ERROR);
@@ -96,7 +89,7 @@ describe('subsystem/datastore/convert', () => {
     it('ImageDatastore - add relations with update', async done => {
 
         delete image0.resource.relations.depicts;
-        expect((await idaiFieldImageDocumentDatastore.update(image0)).resource.relations.depicts).toEqual([]);
+        expect((await datastore.update(image0)).resource.relations.depicts).toEqual([]);
         done();
     });
 
@@ -104,7 +97,7 @@ describe('subsystem/datastore/convert', () => {
     it('FieldDatastore - add relations with update', async done => {
 
         delete trench0.resource.relations.isRecordedIn;
-        expect((await fieldDocumentDatastore.
+        expect((await datastore.
         update(trench0)).resource.relations.isRecordedIn).toEqual([]);
         done();
     });
@@ -114,13 +107,13 @@ describe('subsystem/datastore/convert', () => {
 
     xit('get - add relations for FieldDocument', async done => {
 
-        expect((await fieldDocumentDatastore.get('trench0', { skipCache: true })).
+        expect((await datastore.get('trench0', { skipCache: true })).
             resource.relations.isRecordedIn).toEqual([]);
-        expect((await fieldDocumentDatastore.get('trench0', { skipCache: false })).
+        expect((await datastore.get('trench0', { skipCache: false })).
             resource.relations.isRecordedIn).toEqual([]);
-        expect((await documentDatastore.get('trench0', { skipCache: true })).
+        expect((await datastore.get('trench0', { skipCache: true })).
             resource.relations.isRecordedIn).toEqual([]);
-        expect((await documentDatastore.get('trench0', { skipCache: false })).
+        expect((await datastore.get('trench0', { skipCache: false })).
             resource.relations.isRecordedIn).toEqual([]);
         done();
     });
@@ -128,13 +121,13 @@ describe('subsystem/datastore/convert', () => {
 
     it('get - add relations for ImageDocument', async done => {
 
-        expect((await idaiFieldImageDocumentDatastore.get('image0', { skipCache: true })).
+        expect((await datastore.get('image0', { skipCache: true })).
             resource.relations.depicts).toEqual([]);
-        expect((await idaiFieldImageDocumentDatastore.get('image0', { skipCache: false })).
+        expect((await datastore.get('image0', { skipCache: false })).
             resource.relations.depicts).toEqual([]);
-        expect((await documentDatastore.get('image0', { skipCache: true })).
+        expect((await datastore.get('image0', { skipCache: true })).
             resource.relations.depicts).toEqual([]);
-        expect((await documentDatastore.get('image0', { skipCache: false })).
+        expect((await datastore.get('image0', { skipCache: false })).
             resource.relations.depicts).toEqual([]);
         done();
     });
@@ -144,9 +137,9 @@ describe('subsystem/datastore/convert', () => {
 
     xit('find - add relations for FieldDocument', async done => {
 
-        expect((await fieldDocumentDatastore.find({})). // result coming from cache
+        expect((await datastore.find({})). // result coming from cache
             documents[0].resource.relations.isRecordedIn).toEqual([]);
-        expect((await idaiFieldImageDocumentDatastore.find({})). // result coming from cache
+        expect((await datastore.find({})). // result coming from cache
             documents[0].resource.relations.depicts).toEqual([]);
         done();
     });

@@ -15,9 +15,9 @@ import {ImageOverviewSearchConstraintsComponent} from './searchbar/image-overvie
 import {DeleteModalComponent} from './deletion/delete-modal.component';
 import {ImageOverviewFacade} from '../../../core/images/overview/view/imageoverview-facade';
 import {ImageDocumentsManager} from '../../../core/images/overview/view/image-documents-manager';
-import {ImageDatastore} from '../../../core/datastore/field/image-datastore';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
 import {DeletionInProgressModalComponent} from './deletion/deletion-in-progress-modal.component';
+import { Datastore } from 'idai-field-core';
 
 
 @NgModule({
@@ -49,7 +49,7 @@ import {DeletionInProgressModalComponent} from './deletion/deletion-in-progress-
         {
             provide: ImageDocumentsManager,
             useClass: ImageDocumentsManager,
-            deps: [ImagesState, ImageDatastore]
+            deps: [ImagesState, Datastore]
         },
         {
             provide: ImageOverviewFacade,

@@ -1,8 +1,7 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import {FieldDocument, ImageDocument, Query} from 'idai-field-core';
+import {Datastore, FieldDocument, ImageDocument, Query} from 'idai-field-core';
 import {ImageGridComponent} from '../../image/grid/image-grid.component';
-import {ImageDatastore} from '../../../core/datastore/field/image-datastore';
 import {M} from '../../messages/m';
 import {Messages} from '../../messages/messages';
 import {ProjectCategories} from '../../../core/configuration/project-categories';
@@ -40,7 +39,7 @@ export class ImagePickerComponent implements OnInit {
 
     constructor(public activeModal: NgbActiveModal,
                 private messages: Messages,
-                private datastore: ImageDatastore,
+                private datastore: Datastore,
                 private el: ElementRef,
                 private projectConfiguration: ProjectConfiguration) {}
 
@@ -160,7 +159,7 @@ export class ImagePickerComponent implements OnInit {
         try {
             const result = await this.datastore.find(query);
             this.totalDocumentCount = result.totalCount;
-            if (result.queryId === this.currentQueryId) this.documents = result.documents;
+            if (result.queryId === this.currentQueryId) this.documents = result.documents.map(ImageDocument.fromDocument);
         }
         catch (errWithParams) {
             console.error('Error in find with query', query);

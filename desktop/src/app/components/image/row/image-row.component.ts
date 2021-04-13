@@ -1,10 +1,9 @@
 import {Component, ElementRef, Input, OnChanges, ViewChild, EventEmitter, Output, SimpleChanges} from '@angular/core';
 import {SafeResourceUrl} from '@angular/platform-browser';
 import {to, aReduce} from 'tsfun';
-import {ImageDocument} from 'idai-field-core';
+import {Datastore, ImageDocument} from 'idai-field-core';
 import {ImageRow, ImageRowItem, ImageRowUpdate, PLACEHOLDER} from '../../../core/images/row/image-row';
 import {ReadImagestore} from '../../../core/images/imagestore/read-imagestore';
-import {ImageDatastore} from '../../../core/datastore/field/image-datastore';
 import {AngularUtility} from '../../../angular/angular-utility';
 import {showMissingThumbnailMessageOnConsole} from '../log-messages';
 import {BlobMaker} from '../../../core/images/imagestore/blob-maker';
@@ -47,7 +46,7 @@ export class ImageRowComponent implements OnChanges {
 
 
     constructor(private imagestore: ReadImagestore,
-                private datastore: ImageDatastore) {}
+                private datastore: Datastore) {}
 
 
     public hasNextPage = (): boolean => this.imageRow && this.imageRow.hasNextPage();
@@ -192,10 +191,10 @@ export class ImageRowComponent implements OnChanges {
 
     private async fetchImageDocuments(images: Array<ImageRowItem>): Promise<Array<ImageDocument>> {
 
-        const imageDocuments: Array<ImageDocument> = await this.datastore.getMultiple(
+        const imageDocuments: Array<ImageDocument> = (await this.datastore.getMultiple( // TODO ImageDocuments
             images.filter(image => image.imageId !== PLACEHOLDER)
                 .map(to('imageId'))
-        );
+        )).map(ImageDocument.fromDocument);
 
         return images.map(image => {
             const document: ImageDocument|undefined

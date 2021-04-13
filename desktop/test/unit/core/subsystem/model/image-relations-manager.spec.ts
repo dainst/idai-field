@@ -5,7 +5,7 @@ import {
 import {ImageRelationsC as ImageRelations} from 'idai-field-core';
 
 
-describe('subsystem/image-relations-manager', () => {
+xdescribe('subsystem/image-relations-manager', () => {
 
     let app;
     let helpers;

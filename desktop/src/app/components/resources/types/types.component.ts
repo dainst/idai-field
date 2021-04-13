@@ -3,7 +3,6 @@ import { Document, Datastore, FieldDocument, ImageRelationsC as ImageRelations, 
 import { curry, filter, flatten, flow, isnt, Map, map, set, take } from 'tsfun';
 import { makeLookup } from '../../../../../../core/src/tools/transformers';
 import { ProjectCategories } from '../../../core/configuration/project-categories';
-import { ImageDatastore } from '../../../core/datastore/field/image-datastore';
 import { ReadImagestore } from '../../../core/images/imagestore/read-imagestore';
 import { PLACEHOLDER } from '../../../core/images/row/image-row';
 import { NavigationPath } from '../../../core/resources/view/state/navigation-path';
@@ -67,7 +66,6 @@ export class TypesComponent extends BaseList implements OnChanges {
 
 
     constructor(private datastore: Datastore,
-                private imageDatastore: ImageDatastore,
                 private imagestore: ReadImagestore,
                 private viewModalLauncher: ViewModalLauncher,
                 private routingService: RoutingService,
@@ -317,7 +315,7 @@ export class TypesComponent extends BaseList implements OnChanges {
 
     private getImageIdsOfLinkedResources(document: FieldDocument): string[] {
 
-        const imageIds: string[] = TypeImagesUtil.getLinkedImageIds(document, this.datastore, this.imageDatastore)
+        const imageIds: string[] = TypeImagesUtil.getLinkedImageIds(document, this.datastore)
             .filter(isnt(PLACEHOLDER));
 
         return take(4, imageIds);

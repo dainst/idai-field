@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { ObjectUtils, FieldDocument, ImageDocument, ImageRelationsC as ImageRelations, moveInArray, Datastore } from 'idai-field-core';
 import { Document } from 'idai-field-core';
 import { flatten, set, subtract, to } from 'tsfun';
-import { ImageDatastore } from '../../../../../core/datastore/field/image-datastore';
 import { RelationsManager } from '../../../../../core/model/relations-manager';
 import { ViewFacade } from '../../../../../core/resources/view/view-facade';
 
@@ -40,7 +39,7 @@ export class LayerManager {
     private originalLayerGroupInEditing: LayerGroup|undefined;
 
 
-    constructor(private imageDatastore: ImageDatastore,
+    constructor(private datastore: Datastore,
                 private fieldDatastore: Datastore,
                 private viewFacade: ViewFacade,
                 private relationsManager: RelationsManager) {}
@@ -187,7 +186,7 @@ export class LayerManager {
         let i = newActiveLayersIds.length;
         while (i--) {
             try {
-                await this.imageDatastore.get(newActiveLayersIds[i])
+                await this.datastore.get(newActiveLayersIds[i])
             } catch (_) {
                 newActiveLayersIds.splice(i, 1);
                 this.viewFacade.setActiveLayersIds(newActiveLayersIds);
@@ -222,7 +221,7 @@ export class LayerManager {
     private async fetchLinkedLayers(document: FieldDocument): Promise<Array<ImageDocument>> {
 
         return Document.hasRelations(document, ImageRelations.HASMAPLAYER)
-            ? await this.imageDatastore.getMultiple(document.resource.relations[ImageRelations.HASMAPLAYER])
+            ? (await this.datastore.getMultiple(document.resource.relations[ImageRelations.HASMAPLAYER])).map(ImageDocument.fromDocument) // TODO ImageDocuments
             : [];
     }
 

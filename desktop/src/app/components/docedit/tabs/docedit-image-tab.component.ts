@@ -1,10 +1,9 @@
 import {Component, Input, ViewChild} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {FieldDocument, ImageDocument} from 'idai-field-core';
+import {Datastore, FieldDocument, Document, ImageDocument} from 'idai-field-core';
 import {ImagePickerComponent} from '../widgets/image-picker.component';
 import {ImageGridComponent} from '../../image/grid/image-grid.component';
-import {ImageDatastore} from '../../../core/datastore/field/image-datastore';
 import {SortUtil} from 'idai-field-core';
 import {MenuContext, MenuService} from '../../menu-service';
 import {ImageRelationsC as ImageRelations} from 'idai-field-core';
@@ -28,7 +27,7 @@ export class DoceditImageTabComponent {
     public selected: Array<ImageDocument> = [];
 
 
-    constructor(private datastore: ImageDatastore,
+    constructor(private datastore: Datastore,
                 private modalService: NgbModal,
                 private menuService: MenuService,
                 private i18n: I18n) {}
@@ -124,14 +123,14 @@ export class DoceditImageTabComponent {
 
     private loadImages() {
 
-        const imageDocPromises: Array<Promise<ImageDocument>> = [];
+        const imageDocPromises: Array<Promise<Document>> = [];
         this.documents = [];
         this.document.resource.relations[ImageRelations.ISDEPICTEDIN].forEach(id => {
             imageDocPromises.push(this.datastore.get(id));
         });
 
         Promise.all(imageDocPromises).then(docs => {
-            this.documents = docs as any;
+            this.documents = (docs as any).map(ImageDocument.fromDocument);
             this.documents.sort((a: ImageDocument, b: ImageDocument) => {
                 return SortUtil.alnumCompare(a.resource.identifier, b.resource.identifier);
             });

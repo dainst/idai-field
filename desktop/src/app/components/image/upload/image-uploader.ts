@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { Category, Document, Datastore, IdaiFieldFindResult, NewImageDocument } from 'idai-field-core';
+import { Category, Document, Datastore, IdaiFieldFindResult, NewImageDocument, ImageDocument } from 'idai-field-core';
 import { ProjectConfiguration } from '../../../core/configuration/project-configuration';
-import { ImageDatastore } from '../../../core/datastore/field/image-datastore';
 import { Imagestore } from '../../../core/images/imagestore/imagestore';
 import { readWldFile } from '../../../core/images/wld/wld-import';
 import { RelationsManager } from '../../../core/model/relations-manager';
@@ -38,7 +37,6 @@ export class ImageUploader {
                        private relationsManager: RelationsManager,
                        private projectConfiguration: ProjectConfiguration,
                        private uploadStatus: UploadStatus,
-                       private imageDocumentDatastore: ImageDatastore,
                        private menuService: MenuService) {}
 
 
@@ -229,9 +227,9 @@ export class ImageUploader {
                             console.error(error);
                             reject([M.IMAGESTORE_ERROR_UPLOAD, file.name]);
                         })
-                        .then(doc => that.imagestore.create(doc.resource.id, reader.result as any, true).then(() =>
+                        .then(doc => that.imagestore.create(doc.resource.id, reader.result as any, true).then(async () =>
                             // to refresh the thumbnail in cache, which is done to prevent a conflict afterwards
-                            this.imageDocumentDatastore.get(doc.resource.id, { skipCache: true })
+                            ImageDocument.fromDocument(await this.datastore.get(doc.resource.id, { skipCache: true }))
                         ))
                         .then(() =>
                             resolve(undefined)

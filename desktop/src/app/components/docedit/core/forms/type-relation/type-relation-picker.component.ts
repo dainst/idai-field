@@ -7,7 +7,6 @@ import {
     is, isNot, left, map, Mapping, on, Pair, prune, right, to, undefinedOrEmpty
 } from 'tsfun';
 import { ProjectConfiguration } from '../../../../../core/configuration/project-configuration';
-import { ImageDatastore } from '../../../../../core/datastore/field/image-datastore';
 import { ImageRowItem } from '../../../../../core/images/row/image-row';
 import { TypeImagesUtil } from '../../../../../core/util/type-images-util';
 import { ValuelistUtil } from '../../../../../core/util/valuelist-util';
@@ -58,7 +57,6 @@ export class TypeRelationPickerComponent {
 
     constructor(public activeModal: NgbActiveModal,
                 private datastore: Datastore,
-                private imageDatastore: ImageDatastore,
                 projectConfiguration: ProjectConfiguration) {
 
         this.initialize(projectConfiguration.getCategory(TYPECATALOG));
@@ -195,7 +193,7 @@ export class TypeRelationPickerComponent {
         = (documents: Array<FieldDocument>) => map((document: FieldDocument) => {
             return [
                 document,
-                TypeImagesUtil.getLinkedImageIds(document, this.datastore, this.imageDatastore)
+                TypeImagesUtil.getLinkedImageIds(document, this.datastore)
                     .map(id => ({ imageId: id }))
             ] as Pair<FieldDocument, Array<ImageRowItem>>;
         })(documents);

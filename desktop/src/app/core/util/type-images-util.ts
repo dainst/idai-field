@@ -1,6 +1,5 @@
 import { Datastore, FieldDocument, Query, ResourceId } from 'idai-field-core';
 import { filter, flow, isDefined, map } from 'tsfun';
-import { ImageDatastore } from '../datastore/field/image-datastore';
 import { PLACEHOLDER } from '../images/row/image-row';
 
 
@@ -17,22 +16,20 @@ export module TypeImagesUtil {
      * type catalog are not directly linked to an image, the images of finds linked to the categories are returned.
      */
     export function getLinkedImageIds(document: FieldDocument,
-                                      datastore: Datastore,
-                                      imageDatastore: ImageDatastore): string[] {
+                                      datastore: Datastore): string[] {
 
         if (document.resource.category !== 'Type' && document.resource.category !== 'TypeCatalog') {
             throw 'Illegal argument: Document must be of category Type or TypeCatalog.';
         }
 
         return document.resource.category === 'TypeCatalog'
-            ? getLinkedImagesForTypeCatalog(document.resource.id, datastore, imageDatastore)
-            : getLinkedImagesForType(document.resource.id, datastore, imageDatastore);
+            ? getLinkedImagesForTypeCatalog(document.resource.id, datastore)
+            : getLinkedImagesForType(document.resource.id, datastore);
     }
 
 
     function getLinkedImagesForTypeCatalog(resourceId: ResourceId,
-                                           datastore: Datastore,
-                                           imageDatastore: ImageDatastore): string[] {
+                                           datastore: Datastore): string[] {
 
         const query: Query = {
             constraints: { 'liesWithin:contain': resourceId }
@@ -42,21 +39,21 @@ export module TypeImagesUtil {
 
         return flow(
             resourceIds,
-            map(getTypeImage(datastore, imageDatastore)),
+            map(getTypeImage(datastore)),
             filter(isDefined));
     }
 
 
-    function getTypeImage(datastore: Datastore, imageDatastore: ImageDatastore) {
+    function getTypeImage(datastore: Datastore) {
 
         return (resourceId: string): string|undefined => {
 
-            let imageId: string|undefined = getMainImageId(resourceId, imageDatastore);
+            let imageId: string|undefined = getMainImageId(resourceId, datastore);
 
             if (imageId) {
                 return imageId;
             } else {
-                const linkedImageIds: string[] = getLinkedImagesForType(resourceId, datastore, imageDatastore);
+                const linkedImageIds: string[] = getLinkedImagesForType(resourceId, datastore);
 
                 return linkedImageIds.length > 0
                     ? linkedImageIds[0]
@@ -67,8 +64,7 @@ export module TypeImagesUtil {
 
 
     function getLinkedImagesForType(resourceId: ResourceId,
-                                    datastore: Datastore,
-                                    imageDatastore: ImageDatastore): string[] {
+                                    datastore: Datastore): string[] {
 
         const query: Query = {
             constraints: { 'isInstanceOf:contain': resourceId }
@@ -78,7 +74,7 @@ export module TypeImagesUtil {
         const result: string[] = [];
 
         for (let id of ids) {
-            const imageId: string|undefined = getMainImageId(id, imageDatastore);
+            const imageId: string|undefined = getMainImageId(id, datastore);
             result.push(imageId ? imageId : PLACEHOLDER);
         }
 
@@ -86,14 +82,14 @@ export module TypeImagesUtil {
     }
 
 
-    function getMainImageId(resourceId: string, imageDatastore: ImageDatastore): string|undefined {
+    function getMainImageId(resourceId: string, datastore: Datastore): string|undefined {
 
         const query: Query = {
             constraints: { 'isDepictedIn:links': resourceId },
             sort: { mode: 'none' }
         };
 
-        const ids: string[] = imageDatastore.findIds(query, true).ids;
+        const ids: string[] = datastore.findIds(query, true).ids;
 
         return ids.length > 0 ? ids[0] : undefined;
     }

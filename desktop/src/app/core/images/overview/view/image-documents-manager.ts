@@ -1,6 +1,5 @@
-import {ImageDocument, Query} from 'idai-field-core';
+import {Datastore, ImageDocument, Query} from 'idai-field-core';
 import {ImagesState} from './images-state';
-import {ImageDatastore} from '../../../datastore/field/image-datastore';
 
 
 /**
@@ -19,7 +18,7 @@ export class ImageDocumentsManager {
 
 
     constructor(private imagesState: ImagesState,
-                private imageDatastore: ImageDatastore) {}
+                private datastore: Datastore) {} // TODO ImageDocuments
 
 
     public getSelected = (): Array<ImageDocument> => this.selected;
@@ -85,10 +84,10 @@ export class ImageDocumentsManager {
         query.constraints['project:exist'] = 'UNKNOWN';
 
         try {
-            const {documents, totalCount, queryId} = await this.imageDatastore.find(query);
+            const {documents, totalCount, queryId} = await this.datastore.find(query);
             if (queryId !== this.currentQueryId) return;
 
-            this.documents = documents;
+            this.documents = documents.map(ImageDocument.fromDocument);
             this.totalDocumentCount = totalCount;
         } catch (errWithParams) {
             console.error('ERROR with find using query', query);

@@ -7,9 +7,7 @@ describe('subsystem/datastore/find', () => {
 
     let image0;
     let trench0;
-    let documentDatastore;
-    let fieldDocumentDatastore;
-    let idaiFieldImageDocumentDatastore;
+    let datastore;
 
     function expectErr1(err) {
 
@@ -24,13 +22,9 @@ describe('subsystem/datastore/find', () => {
 
         const {
             documentDatastore: d,
-            documentDatastore: f,
-            imageDatastore: i
         } = await createApp();
 
-        documentDatastore = d;
-        fieldDocumentDatastore = f;
-        idaiFieldImageDocumentDatastore = i;
+        datastore = d;
 
         spyOn(console, 'error');
         done();
@@ -49,11 +43,11 @@ describe('subsystem/datastore/find', () => {
         image0 = doc('Image','Image','Image','image0');
         trench0 = doc('Trench','Trench','Trench','trench0');
 
-        await idaiFieldImageDocumentDatastore.create(image0);
-        await fieldDocumentDatastore.create(trench0);
+        await datastore.create(image0);
+        await datastore.create(trench0);
 
         try {
-            const result = await documentDatastore.find({ categories: ['Trench', 'Image'] });
+            const result = await datastore.find({ categories: ['Trench', 'Image'] });
             expect(result.documents.length).toBe(2);
         } catch (err) {
             fail(err);
@@ -67,11 +61,11 @@ describe('subsystem/datastore/find', () => {
         image0 = doc('Image','Image','Image','image0');
         trench0 = doc('Trench','Trench','Trench','trench0');
 
-        await idaiFieldImageDocumentDatastore.create(image0);
-        await fieldDocumentDatastore.create(trench0);
+        await datastore.create(image0);
+        await datastore.create(trench0);
 
         try {
-            const result = await documentDatastore.find({});
+            const result = await datastore.find({});
             expect(result.documents.length).toBe(2);
         } catch (err) {
             fail(err);
@@ -86,12 +80,12 @@ describe('subsystem/datastore/find', () => {
         const doc2 = doc('sd2', 'B-100', 'Find', '2');
         const doc3 = doc('sd3', 'C-100', 'Find', '3');
 
-        await fieldDocumentDatastore.create(doc1, 'u');
-        await fieldDocumentDatastore.create(doc2, 'u');
-        await fieldDocumentDatastore.create(doc3, 'u');
+        await datastore.create(doc1, 'u');
+        await datastore.create(doc2, 'u');
+        await datastore.create(doc3, 'u');
 
         const { documents: documents1, totalCount: totalCount1 } =
-            await fieldDocumentDatastore.find({ q: 'B-100', sort: { mode: 'default' }});
+            await datastore.find({ q: 'B-100', sort: { mode: 'default' }});
 
         expect(documents1.length).toBe(2);
         expect(totalCount1).toBe(2);
@@ -100,7 +94,7 @@ describe('subsystem/datastore/find', () => {
         expect(documents1[1].resource.id).toBe('2');
 
         const { documents: documents2, totalCount: totalCount2 } =
-            await fieldDocumentDatastore.find({ q: 'B-100', sort: { mode: 'exactMatchFirst' }});
+            await datastore.find({ q: 'B-100', sort: { mode: 'exactMatchFirst' }});
 
         expect(documents2.length).toBe(2);
         expect(totalCount2).toBe(2);

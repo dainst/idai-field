@@ -21,12 +21,12 @@ export class FieldCategoryConverter extends CategoryConverter<Document> {
         const convertedDocument: T = Migrator.migrate(document) as T;
         takeOrMake(convertedDocument, ['resource','identifier'], '');
 
-        if (this.projectConfiguration.isSubcategory(convertedDocument.resource.category, 'Image')) {
-            takeOrMake(convertedDocument, ['resource','relations','depicts'], []);
-        } else {
-            takeOrMake(convertedDocument, ['resource','identifier'],'');
-            takeOrMake(convertedDocument, ['resource','relations','isRecordedIn'], []);
-        }
+        // if (this.projectConfiguration.isSubcategory(convertedDocument.resource.category, 'Image')) {
+            // takeOrMake(convertedDocument, ['resource','relations','depicts'], []);
+        // } else {
+            // takeOrMake(convertedDocument, ['resource','identifier'],'');
+            // takeOrMake(convertedDocument, ['resource','relations','isRecordedIn'], []);
+        // }
 
         return convertedDocument;
     }

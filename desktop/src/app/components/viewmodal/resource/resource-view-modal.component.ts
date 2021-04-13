@@ -1,10 +1,9 @@
 import {Component} from '@angular/core';
 import {NgbActiveModal, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {on, is} from 'tsfun';
-import {Document} from 'idai-field-core';
+import {Datastore, Document} from 'idai-field-core';
 import {FieldDocument, ImageDocument} from 'idai-field-core'
 import {ViewModalComponent} from '../view-modal.component';
-import {ImageDatastore} from '../../../core/datastore/field/image-datastore';
 import {RoutingService} from '../../routing-service';
 import {ImagesState} from '../../../core/images/overview/view/images-state';
 import {Messages} from '../../messages/messages';
@@ -31,7 +30,7 @@ export class ResourceViewModalComponent extends ViewModalComponent {
 
 
     constructor(private imagesState: ImagesState,
-                private datastore: ImageDatastore,
+                private datastore: Datastore,
                 activeModal: NgbActiveModal,
                 messages: Messages,
                 modalService: NgbModal,
@@ -108,9 +107,9 @@ export class ResourceViewModalComponent extends ViewModalComponent {
 
         if (!Document.hasRelations(this.document, 'isDepictedIn')) return [];
 
-        const images: Array<ImageDocument> = await this.datastore.getMultiple(
+        const images: Array<ImageDocument> = (await this.datastore.getMultiple( // TODO ImageDocuments
             this.document.resource.relations['isDepictedIn']
-        );
+        )).map(ImageDocument.fromDocument);
 
         return images.map((document: ImageDocument) => {
             return { imageId: document.resource.id, document: document }

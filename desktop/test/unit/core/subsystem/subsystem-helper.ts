@@ -6,7 +6,6 @@ import { ConfigLoader } from '../../../../src/app/core/configuration/boot/config
 import { ConfigReader } from '../../../../src/app/core/configuration/boot/config-reader';
 import { ChangesStream } from '../../../../src/app/core/datastore/changes/changes-stream';
 import { FieldCategoryConverter } from '../../../../src/app/core/datastore/field/field-category-converter';
-import { ImageDatastore } from '../../../../src/app/core/datastore/field/image-datastore';
 import { PouchdbServer } from '../../../../src/app/core/datastore/pouchdb/pouchdb-server';
 import { DocumentHolder } from '../../../../src/app/core/docedit/document-holder';
 import { Imagestore } from '../../../../src/app/core/images/imagestore/imagestore';
@@ -89,7 +88,7 @@ export async function createApp(projectName = 'testdb', startSync = false) {
 
     const {createdIndexFacade} = IndexerConfiguration.configureIndexers(projectConfiguration);
 
-    const datastore = new PouchdbDatastore(
+    const pouchdbDatastore = new PouchdbDatastore(
         pouchdbManager.getDb(),
         new IdGenerator(),
         true);
@@ -100,13 +99,11 @@ export async function createApp(projectName = 'testdb', startSync = false) {
     const documentCache = new DocumentCache<Document>();
     const categoryConverter = new FieldCategoryConverter(projectConfiguration);
 
-    const documentDatastore = new Datastore(
-        datastore, createdIndexFacade, documentCache, categoryConverter);
-    const imageDatastore = new ImageDatastore(datastore, createdIndexFacade,
-        documentCache as DocumentCache<ImageDocument>, categoryConverter as CategoryConverter<ImageDocument>);
+    const datastore = new Datastore(
+        pouchdbDatastore, createdIndexFacade, documentCache, categoryConverter);
 
     const remoteChangesStream = new ChangesStream(
-        datastore,
+        pouchdbDatastore,
         createdIndexFacade,
         documentCache,
         categoryConverter,
@@ -122,12 +119,12 @@ export async function createApp(projectName = 'testdb', startSync = false) {
     tabSpaceCalculator.getTabWidth.and.returnValue(0);
 
     const tabManager = new TabManager(createdIndexFacade, tabSpaceCalculator, stateSerializer,
-        documentDatastore,
+        datastore,
         () => Promise.resolve());
     tabManager.routeChanged('/project');
 
     const resourcesStateManager = new ResourcesStateManager(
-        documentDatastore,
+        datastore,
         createdIndexFacade,
         stateSerializer,
         tabManager,
@@ -140,7 +137,7 @@ export async function createApp(projectName = 'testdb', startSync = false) {
 
     const viewFacade = new ViewFacade(
         projectConfiguration,
-        documentDatastore,
+        datastore,
         remoteChangesStream,
         resourcesStateManager,
         undefined,
@@ -150,13 +147,13 @@ export async function createApp(projectName = 'testdb', startSync = false) {
     );
 
     const relationsManager = new RelationsManager(
-        documentDatastore,
+        datastore,
         projectConfiguration,
         settingsProvider
     );
 
     const imageRelationsManager = new ImageRelationsManager(
-        documentDatastore,
+        datastore,
         relationsManager,
         imagestore,
         projectConfiguration
@@ -165,20 +162,20 @@ export async function createApp(projectName = 'testdb', startSync = false) {
     const documentHolder = new DocumentHolder(
         projectConfiguration,
         relationsManager,
-        new Validator(projectConfiguration, (q: Query) => documentDatastore.find(q)),
-        documentDatastore
+        new Validator(projectConfiguration, (q: Query) => datastore.find(q)),
+        datastore
     );
 
     const imagesState = new ImagesState(projectConfiguration);
-    const imageDocumentsManager = new ImageDocumentsManager(imagesState, imageDatastore);
+    const imageDocumentsManager = new ImageDocumentsManager(imagesState, datastore);
     const imageOverviewFacade = new ImageOverviewFacade(imageDocumentsManager, imagesState, projectConfiguration);
 
     return {
         remoteChangesStream,
         viewFacade,
         documentHolder,
-        documentDatastore,
-        imageDatastore,
+        documentDatastore: datastore,
+        datastore,
         settingsService,
         settingsProvider,
         resourcesStateManager,

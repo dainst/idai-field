@@ -9,7 +9,7 @@ import { MenuContext, MenuService } from '../menu-service';
 import { LanguagePickerModalComponent } from './language-picker-modal.component';
 
 const cldr = typeof window !== 'undefined' ? window.require('cldr') : require('cldr');
-const remote = typeof window !== 'undefined' ? window.require('electron').remote : require('electron').remote;
+const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : require('@electron/remote');
 
 
 type Language = {

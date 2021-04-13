@@ -6,6 +6,8 @@ const os = require('os');
 const url = require('url');
 const autoUpdate = require('./auto-update.js');
 
+require('@electron/remote/main').initialize();
+
 let menuContext = 'loading';
 
 const mainLanguages = ['de', 'en', 'it'];
@@ -182,6 +184,7 @@ const createWindow = () => {
         webPreferences: {
             nodeIntegration: true,
             enableRemoteModule: true,
+            contextIsolation: false,
             webSecurity: global.mode === 'production'
         },
         titleBarStyle: 'hiddenInset'

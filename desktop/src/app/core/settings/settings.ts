@@ -1,4 +1,4 @@
-const remote = typeof window !== 'undefined' ? window.require('electron').remote : require('electron').remote;
+const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : require('@electron/remote');
 
 
 export interface SyncTarget {

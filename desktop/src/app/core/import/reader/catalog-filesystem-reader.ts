@@ -5,7 +5,7 @@ import {APP_DATA, CATALOG_IMAGES, CATALOG_JSONL, TEMP} from '../../export/catalo
 
 const fs = typeof window !== 'undefined' ? window.require('fs') : require('fs');
 const extract = typeof window !== 'undefined' ? window.require('extract-zip') : require('extract-zip');
-const remote = typeof window !== 'undefined' ? window.require('electron').remote : require('electron').remote;
+const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : require('@electron/remote');
 
 const UTF8 = 'utf-8';
 

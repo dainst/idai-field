@@ -55,8 +55,8 @@ import { PopoverMenuComponent } from './widgets/popovermenu/popover-menu.compone
 
 
 const remote = typeof window !== 'undefined'
-  ? window.require('electron').remote
-  : require('electron').remote;
+  ? window.require('@electron/remote')
+  : require('@electron/remote');
 
 @NgModule({
     imports: [

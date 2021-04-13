@@ -8,8 +8,8 @@ import {TypeRelations, ValuelistDefinition} from 'idai-field-core';
 import {MenuContext, MenuService} from '../menu-service';
 
 const locale: string = typeof window !== 'undefined'
-  ? window.require('electron').remote.getGlobal('config').locale
-  : require('electron').remote.getGlobal('config').locale;
+  ? window.require('@electron/remote').getGlobal('config').locale
+  : require('@electron/remote').getGlobal('config').locale;
 
 
 @Component({

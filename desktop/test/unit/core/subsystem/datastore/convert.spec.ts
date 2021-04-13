@@ -13,7 +13,7 @@ import { createApp, setupSyncTestDb } from '../subsystem-helper';
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-xdescribe('subsystem/datastore/convert', () => {
+describe('subsystem/datastore/convert', () => { // TODO review, maybe remove
 
     let image0;
     let trench0;
@@ -46,32 +46,6 @@ xdescribe('subsystem/datastore/convert', () => {
 
     // create
 
-    it('FieldDatastore - add relations with create', async done => {
-
-        try {
-            expect((await datastore.
-            create(doc('Image','Image','Image','image1'))).
-                resource.relations.depicts).toEqual([]);
-        } catch (err) {
-            fail(err);
-        }
-        done();
-    });
-
-
-    it('FieldDatastore - add relations with create', async done => {
-
-        try {
-            expect((await datastore.
-            create(doc('Trench','Trench','Trench','trench1'))).
-                resource.relations.isRecordedIn).toEqual([]);
-        } catch (err) {
-            fail(err);
-        }
-        done();
-    });
-
-
     xit('create - unknown category', async done => {
 
         try {
@@ -80,67 +54,6 @@ xdescribe('subsystem/datastore/convert', () => {
         } catch (err) {
             expect(err[0]).toEqual(ConfigurationErrors.UNKNOWN_CATEGORY_ERROR);
         }
-        done();
-    });
-
-
-    // update
-
-    it('ImageDatastore - add relations with update', async done => {
-
-        delete image0.resource.relations.depicts;
-        expect((await datastore.update(image0)).resource.relations.depicts).toEqual([]);
-        done();
-    });
-
-
-    it('FieldDatastore - add relations with update', async done => {
-
-        delete trench0.resource.relations.isRecordedIn;
-        expect((await datastore.
-        update(trench0)).resource.relations.isRecordedIn).toEqual([]);
-        done();
-    });
-
-
-    // get
-
-    xit('get - add relations for FieldDocument', async done => {
-
-        expect((await datastore.get('trench0', { skipCache: true })).
-            resource.relations.isRecordedIn).toEqual([]);
-        expect((await datastore.get('trench0', { skipCache: false })).
-            resource.relations.isRecordedIn).toEqual([]);
-        expect((await datastore.get('trench0', { skipCache: true })).
-            resource.relations.isRecordedIn).toEqual([]);
-        expect((await datastore.get('trench0', { skipCache: false })).
-            resource.relations.isRecordedIn).toEqual([]);
-        done();
-    });
-
-
-    it('get - add relations for ImageDocument', async done => {
-
-        expect((await datastore.get('image0', { skipCache: true })).
-            resource.relations.depicts).toEqual([]);
-        expect((await datastore.get('image0', { skipCache: false })).
-            resource.relations.depicts).toEqual([]);
-        expect((await datastore.get('image0', { skipCache: true })).
-            resource.relations.depicts).toEqual([]);
-        expect((await datastore.get('image0', { skipCache: false })).
-            resource.relations.depicts).toEqual([]);
-        done();
-    });
-
-
-    // find
-
-    xit('find - add relations for FieldDocument', async done => {
-
-        expect((await datastore.find({})). // result coming from cache
-            documents[0].resource.relations.isRecordedIn).toEqual([]);
-        expect((await datastore.find({})). // result coming from cache
-            documents[0].resource.relations.depicts).toEqual([]);
         done();
     });
 });

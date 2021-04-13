@@ -2,16 +2,17 @@ import React, { useContext } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from '../../screens/HomeScreen';
 import { headerBackgroundColor } from '../../constants/colors';
-import { HomeStackParamList } from './HomeStackParamList';
+import { RootStackParamList } from './RootStackParamList';
 import PouchDbContext from '../../data/pouchdb/pouch-context';
+import SettingsScreen from '../../screens/SettingsScreen';
 
-const Stack = createStackNavigator<HomeStackParamList>();
+const Stack = createStackNavigator<RootStackParamList>();
 
 const commonHeaderStyle = {
     backgroundColor: headerBackgroundColor
 };
 
-const HomeStackNavigator = (): JSX.Element => {
+const RootStackNavigator = (): JSX.Element => {
 
     const pouchCtx = useContext(PouchDbContext);
 
@@ -20,7 +21,15 @@ const HomeStackNavigator = (): JSX.Element => {
             screenOptions={ {
                 headerStyle: commonHeaderStyle,
                 headerTintColor: 'white',
-            } }>
+            } }
+            initialRouteName="Settings">
+            <Stack.Screen
+                name="Settings"
+                component={ SettingsScreen }
+                options={
+                    { title: 'Settings' }
+                }
+            />
             <Stack.Screen
                 name="Home"
                 component={ HomeScreen }
@@ -33,4 +42,4 @@ const HomeStackNavigator = (): JSX.Element => {
     );
 };
 
-export default HomeStackNavigator;
+export default RootStackNavigator;

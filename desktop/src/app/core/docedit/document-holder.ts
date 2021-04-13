@@ -1,5 +1,5 @@
 import { Category, Document, Datastore, FieldDefinition, NewDocument, ObjectUtils, Resource } from 'idai-field-core';
-import { and, equal, filter, flow, includedIn, isEmpty, isNot, isObject, isString } from 'tsfun';
+import { and, equal, filter, flow, includedIn, isEmpty, isNot, isObject, isString, keys } from 'tsfun';
 import { ProjectConfiguration } from '../configuration/project-configuration';
 import { RelationsManager } from '../model/relations-manager';
 import { Validations } from '../model/validations';
@@ -206,7 +206,7 @@ export class DocumentHolder {
         return flow(
             this.clonedDocument.resource.relations,
             filter(isEmpty),
-            Object.keys); // TODO improve typing of tsfun|keys and try here
+            keys);
     }
 
 
@@ -215,7 +215,7 @@ export class DocumentHolder {
         return flow(
             this.clonedDocument.resource,
             filter(and(isString, isEmpty)),
-            Object.keys);
+            keys);
     }
 
 

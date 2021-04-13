@@ -5,7 +5,7 @@ import { Query } from '../model/query';
 import { ObjectUtils } from '../tools/object-utils';
 import { DatastoreErrors } from './datastore-errors';
 import { PouchdbDatastore } from './pouchdb/pouchdb-datastore';
-import { CategoryConverter } from './category-converter';
+import { Converter } from './converter';
 import { DocumentCache } from './document-cache';
 
 
@@ -30,10 +30,11 @@ export module FindResult {
 }
 
 
-export interface IdaiFieldFindResult<T extends Document> extends FindResult {
+export interface IdaiFieldFindResult extends FindResult {
 
-    documents: Array<T>
+    documents: Array<Document>
 }
+
 
 /**
  * This datastore provides everything necessary
@@ -49,16 +50,22 @@ export interface IdaiFieldFindResult<T extends Document> extends FindResult {
  *    so that the rest of the app can rely that the declared
  *    fields are present.
  *
+ * The errors with which the methods reject, like GENERIC_SAVE_ERROR,
+ * are constants of {@link DatastoreErrors}, so GENERIC_SAVE_ERROR really
+ * is DatastoreErrors.GENERIC_SAVE_ERROR. The brackets [] are array indicators,
+ * so [GENERIC_SAVE_ERROR] is an array containing one element, which is the string
+ * corresponding to GENERIC_SAVE_ERROR.
+ * 
+ * @author Thomas Kleinke
  * @author Daniel de Oliveira
  * @author Sebastian Cuy
- * @author Thomas Kleinke
  */
-export class Datastore<T extends Document = Document> {
+export class Datastore {
 
     constructor(private datastore: PouchdbDatastore,
                 private indexFacade: IndexFacade,
-                private documentCache: DocumentCache<T>,
-                private categoryConverter: CategoryConverter<T>) {
+                private documentCache: DocumentCache,
+                private categoryConverter: Converter) {
     }
 
 
@@ -66,18 +73,27 @@ export class Datastore<T extends Document = Document> {
 
 
     /**
-     * Implements {@link Datastore#create}
+     * Persists a given document. If document.resource.id is not set,
+     * it will be set to a generated value. In case of an error it remains undefined.
      *
-     * @throws if document is not of category T, determined by resource.category
+     * In case of a successful call, document.modified and document.created get set,
+     * otherwise they remain undefined.
+     *
+     * @param doc
+     * @param username
+     * @returns {Promise<Document>} a document
+     * @throws [GENERIC_ERROR (, cause: any)] - in case of error, optionally including a cause
+     * @throws [DOCUMENT_RESOURCE_ID_EXISTS] - if a document with doc.resource.id already exists
+     * @throws [INVALID_DOCUMENT] - in case doc is not valid
      * @throws if resource.category is unknown
      */
-    public async create(document: NewDocument, username: string): Promise<T> {
+    public async create(document: NewDocument, username: string): Promise<Document> {
 
         return this.updateIndex(await this.datastore.create(document, username));
     }
 
 
-    public async bulkCreate(documents: Array<NewDocument>, username: string): Promise<Array<T>> {
+    public async bulkCreate(documents: Array<NewDocument>, username: string): Promise<Array<Document>> {
 
         return (await this.datastore.bulkCreate(documents, username)).map(document => {
             return this.updateIndex(document);
@@ -86,16 +102,25 @@ export class Datastore<T extends Document = Document> {
 
 
     /**
-     * Implements {@link Datastore#update}
-     * @throws if document is not of category T, determined by resource.category
+     * Updates an existing document
+     *
+     * @param doc
+     * @param username
+     * @param squashRevisionsIds
+     * @returns {Promise<Document>} a document
+     * @throws [GENERIC_ERROR (, cause: any)] - in case of error, optionally including a cause
+     * @throws [SAVE_CONFLICT] - in case of conflict
+     * @throws [DOCUMENT_NO_RESOURCE_ID] - if doc has no resource id
+     * @throws [INVALID_DOCUMENT] - in case doc is not valid
+     * @throws [DOCUMENT_NOT_FOUND] - if document has a resource id, but does not exist in the db
      */
-    public async update(document: Document, username: string, squashRevisionsIds?: string[]): Promise<T> {
+    public async update(document: Document, username: string, squashRevisionsIds?: string[]): Promise<Document> {
 
         return this.updateIndex(await this.datastore.update(document, username, squashRevisionsIds));
     }
 
 
-    public async bulkUpdate(documents: Array<Document>, username: string): Promise<Array<T>> {
+    public async bulkUpdate(documents: Array<Document>, username: string): Promise<Array<Document>> {
 
         return (await this.datastore.bulkUpdate(documents, username)).map(document => {
             return this.updateIndex(document);
@@ -114,8 +139,14 @@ export class Datastore<T extends Document = Document> {
     }
 
 
-    /**
-     * @throws if document is not of category T, determined by resource.category
+     /**
+     * Removes an existing document
+     *
+     * @param doc
+     * @returns {Promise<undefined>} undefined
+     * @throws [DOCUMENT_NO_RESOURCE_ID] - if document has no resource id
+     * @throws [DOCUMENT_NOT_FOUND] - if document has a resource id, but does not exist in the db
+     * @throws [GENERIC_ERROR (, cause: any)] - in case of error, optionally including a cause
      */
     public async remove(document: Document): Promise<void> {
 
@@ -133,22 +164,22 @@ export class Datastore<T extends Document = Document> {
 
 
     /**
-     * Implements {@link ReadDatastore#get}
-     *
-     * Additional specs:
-     *
+     * @param resourceId the desired document's resource id
      * @param options.skipCache: boolean
-     * @throws if fetched doc is not of category T, determined by resource.category
+     * @param options to control implementation specific behaviour
+     * @returns {Promise<Document>} a document (rejects with msgWithParams in case of error)
+     * @throws [DOCUMENT_NOT_FOUND] - in case document is missing
+     * @throws [INVALID_DOCUMENT] - in case document is not valid
      */
-    public async get(id: string, options?: { skipCache: boolean }): Promise<T> {
+    public async get(id: string, options?: { skipCache: boolean }): Promise<Document> {
 
-        const cachedDocument: T = this.documentCache.get(id);
+        const cachedDocument = this.documentCache.get(id);
 
         if ((!options || !options.skipCache) && cachedDocument) {
             return cachedDocument;
         }
 
-        let document: T = this.categoryConverter.convert(await this.datastore.fetch(id));
+        let document = this.categoryConverter.convert(await this.datastore.fetch(id));
 
         return cachedDocument
             ? this.documentCache.reassign(document)
@@ -156,28 +187,31 @@ export class Datastore<T extends Document = Document> {
     }
 
 
-    public async getMultiple(ids: string[]): Promise<Array<T>> {
+    /**
+      * @param resourceIds the resource ids of the documents to find
+      * @returns {Promise<Array<Document>>} list of found documents
+      */
+    public async getMultiple(ids: string[]): Promise<Array<Document>> {
 
         return (await this.getDocumentsForIds(ids)).documents;
     }
 
 
     /**
-     * Implements {@link ReadDatastore#find}
-     *
-     *
-     * Additional specs:
-     *
+     * Perform a fulltext query
      * Find sorts the documents by identifier ascending
-     *
+     * 
      * @param query
      * @param ignoreCategories to make queries faster, the facility to return only the
      *   categories the datastore is supposed to return, can be turned off. This can make sense if
      *   one performs constraint queries, where one knows that all documents returned are of
      *   allowed categories, due to the nature of the relations to which the constraints refer.
-     * @throws if query contains categories incompatible with T
+     * 
+     * @param query the query object
+     * @returns {Promise<Document[]>} an array of documents
+     * @throws [GENERIC_ERROR (, cause: any)] - in case of error, optionally including a cause
      */
-    public async find(query: Query, ignoreCategories: boolean = false): Promise<IdaiFieldFindResult<T>> {
+    public async find(query: Query, ignoreCategories: boolean = false): Promise<IdaiFieldFindResult> {
 
         const { ids } = this.findIds(query, ignoreCategories);
         const { documents, totalCount } = await this.getDocumentsForIds(ids, query.limit, query.offset);
@@ -214,7 +248,7 @@ export class Datastore<T extends Document = Document> {
      *
      * @throws [DOCUMENT_NOT_FOUND] - in case of error
      */
-    public async getRevision(docId: string, revisionId: string): Promise<T> {
+    public async getRevision(docId: string, revisionId: string): Promise<Document> {
 
         return this.categoryConverter.convert(
             await this.datastore.fetchRevision(docId, revisionId));
@@ -240,7 +274,7 @@ export class Datastore<T extends Document = Document> {
 
 
     private async getDocumentsForIds(ids: string[], limit?: number,
-                                     offset?: number): Promise<{documents: Array<T>, totalCount: number}> {
+                                     offset?: number): Promise<{documents: Array<Document>, totalCount: number}> {
 
         let totalCount: number = ids.length;
         let idsToFetch: string[] = ids;
@@ -253,7 +287,7 @@ export class Datastore<T extends Document = Document> {
         }
 
         const {documentsFromCache, notCachedIds} = await this.getDocumentsFromCache(idsToFetch);
-        let documents: Array<T> = documentsFromCache;
+        let documents = documentsFromCache;
 
         if (notCachedIds.length > 0) {
             try {
@@ -274,13 +308,13 @@ export class Datastore<T extends Document = Document> {
 
 
     private async getDocumentsFromCache(ids: string[])
-            : Promise<{ documentsFromCache: Array<T>, notCachedIds: string[] }> {
+            : Promise<{ documentsFromCache: Array<Document>, notCachedIds: string[] }> {
 
-        const documents: Array<T> = [];
+        const documents: Array<Document> = [];
         const notCachedIds: string[] = [];
 
         for (let id of ids) {
-            const document: T = this.documentCache.get(id);
+            const document = this.documentCache.get(id);
             if (document) {
                 documents.push(document);
             } else {
@@ -295,13 +329,13 @@ export class Datastore<T extends Document = Document> {
     }
 
 
-    private async getDocumentsFromDatastore(ids: string[]): Promise<Array<T>> {
+    private async getDocumentsFromDatastore(ids: string[]): Promise<Array<Document>> {
 
-        const documents: Array<T> = [];
+        const documents: Array<Document> = [];
         const result: Array<Document> = await this.datastore.bulkFetch(ids);
 
         result.forEach(document => {
-            const convertedDocument: T = this.categoryConverter.convert(document);
+            const convertedDocument = this.categoryConverter.convert(document);
 
             try {
                 documents.push(this.documentCache.set(convertedDocument));
@@ -314,12 +348,13 @@ export class Datastore<T extends Document = Document> {
     }
 
 
-    private mergeDocuments(documentsFromCache: Array<T>, documentsFromDatastore: Array<T>,
-                           idsInOrder: string[]): Array<T> {
+    private mergeDocuments(documentsFromCache: Array<Document>, 
+                           documentsFromDatastore: Array<Document>,
+                           idsInOrder: string[]): Array<Document> {
 
-        const documents: Array<T> = documentsFromCache.concat(documentsFromDatastore);
+        const documents = documentsFromCache.concat(documentsFromDatastore);
 
-        documents.sort((a: T, b: T) => {
+        documents.sort((a: Document, b: Document) => {
             return idsInOrder.indexOf(a.resource.id) < idsInOrder.indexOf(b.resource.id)
                 ? -1
                 : 1;
@@ -328,106 +363,3 @@ export class Datastore<T extends Document = Document> {
         return documents;
     }
 }
-
-
-/**
- * TODO merge apidocs
- * 
- * The interface providing read access methods
- * for datastores supporting the idai-field-core document model.
- * For full access see <code>Datastore</code>
- *
- * Implementations guarantee that any of the methods declared here
- * have no effect on any of the documents within the datastore.
- *
- * @author Sebastian Cuy
- * @author Daniel de Oliveira
- * @author Thomas Kleinke
- */
-/**
- * The interface for datastores supporting
- * the idai-components document model.
- *
- * The errors with which the methods reject, like GENERIC_SAVE_ERROR,
- * are constants of {@link DatastoreErrors}, so GENERIC_SAVE_ERROR really
- * is DatastoreErrors.GENERIC_SAVE_ERROR. The brackets [] are array indicators,
- * so [GENERIC_SAVE_ERROR] is an array containing one element, which is the string
- * corresponding to GENERIC_SAVE_ERROR.
- *
- * @author Sebastian Cuy
- * @author Daniel de Oliveira
- */
-//  export abstract class Datastore {
-// 
-    // /**
-    //  * Persists a given document. If document.resource.id is not set,
-    //  * it will be set to a generated value. In case of an error it remains undefined.
-    //  *
-    //  * In case of a successful call, document.modified and document.created get set,
-    //  * otherwise they remain undefined.
-    //  *
-    //  * @param doc
-    //  * @param username
-    //  * @returns {Promise<Document>} a document
-    //  * @throws [GENERIC_ERROR (, cause: any)] - in case of error, optionally including a cause
-    //  * @throws [DOCUMENT_RESOURCE_ID_EXISTS] - if a document with doc.resource.id already exists
-    //  * @throws [INVALID_DOCUMENT] - in case doc is not valid
-    //  */
-    // abstract create(doc: Document, username: string): Promise<Document>;
-// 
-    // /**
-    //  * Updates an existing document
-    //  *
-    //  * @param doc
-    //  * @param username
-    //  * @param squashRevisionsIds
-    //  * @returns {Promise<Document>} a document
-    //  * @throws [GENERIC_ERROR (, cause: any)] - in case of error, optionally including a cause
-    //  * @throws [SAVE_CONFLICT] - in case of conflict
-    //  * @throws [DOCUMENT_NO_RESOURCE_ID] - if doc has no resource id
-    //  * @throws [INVALID_DOCUMENT] - in case doc is not valid
-    //  * @throws [DOCUMENT_NOT_FOUND] - if document has a resource id, but does not exist in the db
-    //  */
-    // abstract update(doc: Document, username: string, squashRevisionsIds?: string[]): Promise<Document>;
-// 
-    // /**
-    //  * Removes an existing document
-    //  *
-    //  * @param doc
-    //  * @returns {Promise<undefined>} undefined
-    //  * @throws [DOCUMENT_NO_RESOURCE_ID] - if document has no resource id
-    //  * @throws [DOCUMENT_NOT_FOUND] - if document has a resource id, but does not exist in the db
-    //  * @throws [GENERIC_ERROR (, cause: any)] - in case of error, optionally including a cause
-    //  */
-    // abstract remove(doc: Document): Promise<undefined>;
-// 
-// 
-    // /**
-    //  * @param resourceId the desired document's resource id
-    //  * @param options to control implementation specific behaviour
-    //  * @returns {Promise<Document>} a document (rejects with msgWithParams in case of error)
-    //  * @throws [DOCUMENT_NOT_FOUND] - in case document is missing
-    //  * @throws [INVALID_DOCUMENT] - in case document is not valid
-    //  */
-    //  abstract get(resourceId: string, options?: Object): Promise<Document>;
-// 
-// 
-    //  /**
-    //   * @param resourceIds the resource ids of the documents to find
-    //   * @returns {Promise<Array<Document>>} list of found documents
-    //   */
-    //  abstract getMultiple(resourceIds: string[]): Promise<Array<Document>>;
-//  
-//  
-    //  /**
-    //   * Perform a fulltext query
-//  
-    //   * @param query the query object
-    //   * @returns {Promise<Document[]>} an array of documents
-    //   * @throws [GENERIC_ERROR (, cause: any)] - in case of error, optionally including a cause
-    //   */
-    //  abstract find(query: Query): Promise<FindResult>;
-//  
-//  
-    //  abstract findIds(query: Query): FindIdsResult;
-// }

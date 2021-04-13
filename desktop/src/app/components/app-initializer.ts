@@ -1,7 +1,7 @@
 import { ConstraintIndex, Document, DocumentCache, FulltextIndex, Indexer, IndexFacade, PouchdbManager } from 'idai-field-core';
 import { AngularUtility } from '../angular/angular-utility';
 import { ProjectConfiguration } from '../core/configuration/project-configuration';
-import { FieldCategoryConverter } from '../core/datastore/field/field-category-converter';
+import { FieldConverter } from '../core/datastore/field/category-converter';
 import { SampleDataLoader } from '../core/datastore/field/sampledata/sample-data-loader';
 import { PouchdbServer } from '../core/datastore/pouchdb/pouchdb-server';
 import { ImageConverter } from '../core/images/imagestore/image-converter';
@@ -77,7 +77,7 @@ export const appInitializerFactory = (
         settingsService: SettingsService,
         pouchdbManager: PouchdbManager,
         pouchdbServer: PouchdbServer,
-        documentCache: DocumentCache<Document>,
+        documentCache: DocumentCache,
         imageConverter: ImageConverter,
         imagestore: Imagestore,
         progress: InitializationProgress
@@ -155,13 +155,13 @@ const loadConfiguration = async (settingsService: SettingsService, progress: Ini
 };
 
 
-const loadDocuments = async (serviceLocator: AppInitializerServiceLocator, db: PouchDB.Database<{}>, documentCache: DocumentCache<Document>, progress: InitializationProgress) => {
+const loadDocuments = async (serviceLocator: AppInitializerServiceLocator, db: PouchDB.Database<{}>, documentCache: DocumentCache, progress: InitializationProgress) => {
 
     await progress.setPhase('loadingDocuments');
     progress.setDocumentsToIndex((await db.info()).doc_count);
 
     await Indexer.reindex(serviceLocator.indexFacade, db, documentCache,
-        new FieldCategoryConverter(serviceLocator.projectConfiguration),
+        new FieldConverter(serviceLocator.projectConfiguration),
         (count) => progress.setIndexedDocuments(count),
         () => progress.setPhase('indexingDocuments'),
         (error) => progress.setError(error)

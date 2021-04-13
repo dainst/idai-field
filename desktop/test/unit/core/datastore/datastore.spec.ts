@@ -1,12 +1,12 @@
-import { doc, FieldDocument, DocumentCache, Datastore } from 'idai-field-core';
-import { FieldCategoryConverter } from '../../../../../src/app/core/datastore/field/field-category-converter';
+import { doc, DocumentCache, Datastore } from 'idai-field-core';
+import { FieldConverter } from '../../../../src/app/core/datastore/field/category-converter';
 
 
 /**
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-xdescribe('CachedDatastore', () => {
+describe('Datastore', () => {
 
     let ds: Datastore;
     let mockdb: any;
@@ -27,19 +27,18 @@ xdescribe('CachedDatastore', () => {
             ]
         );
 
-        const documentCache = new DocumentCache<FieldDocument>();
+        const documentCache = new DocumentCache();
         return new Datastore(
             mockdb,
             mockIndexFacade,
             documentCache,
-            new FieldCategoryConverter(mockProjectConfiguration));
+            new FieldConverter(mockProjectConfiguration));
     }
 
 
-    function verifyIsFieldDocument(document) {
+    function verifyIsDocument(document) {
 
         expect(document.resource.identifier).toEqual('');
-        expect(document.resource.relations.isRecordedIn).toEqual([]);
     }
 
 
@@ -84,7 +83,7 @@ xdescribe('CachedDatastore', () => {
         }));
 
         const document = await ds.get('1'); // fetch from mockdb
-        verifyIsFieldDocument(document);
+        verifyIsDocument(document);
         done();
     });
 
@@ -109,8 +108,8 @@ xdescribe('CachedDatastore', () => {
 
         const documents = await ds.getMultiple(['1', '2']);
         expect(documents.length).toBe(2);
-        verifyIsFieldDocument(documents[0]);
-        verifyIsFieldDocument(documents[1]);
+        verifyIsDocument(documents[0]);
+        verifyIsDocument(documents[1]);
         done();
     });
 
@@ -162,7 +161,7 @@ xdescribe('CachedDatastore', () => {
         }));
 
         const document = await ds.getRevision('1', '1'); // fetch from mockdb
-        verifyIsFieldDocument(document);
+        verifyIsDocument(document);
         done();
     });
 
@@ -183,7 +182,7 @@ xdescribe('CachedDatastore', () => {
 
         const documents = (await ds.find({})).documents; // fetch from mockdb
         expect(documents.length).toBe(1);
-        verifyIsFieldDocument(documents[0]);
+        verifyIsDocument(documents[0]);
         done();
     });
 
@@ -198,7 +197,7 @@ xdescribe('CachedDatastore', () => {
 
         const documents = (await ds.find({})).documents; // fetch from cache
         expect(documents.length).toBe(1);
-        verifyIsFieldDocument(documents[0]);
+        verifyIsDocument(documents[0]);
         done();
     });
 
@@ -213,7 +212,7 @@ xdescribe('CachedDatastore', () => {
         const { documents, totalCount } = await ds.find({ limit: 1 });
         expect(documents.length).toBe(1);
         expect(totalCount).toBe(2);
-        verifyIsFieldDocument(documents[0]);
+        verifyIsDocument(documents[0]);
         done();
     });
 
@@ -229,7 +228,7 @@ xdescribe('CachedDatastore', () => {
         const { documents, totalCount } = await ds.find({ limit: 1, offset: 1 });
         expect(documents.length).toBe(1);
         expect(totalCount).toBe(3);
-        verifyIsFieldDocument(documents[0]);
+        verifyIsDocument(documents[0]);
 
         expect(documents[0].resource.id).toBe('1');
         done();
@@ -314,7 +313,7 @@ xdescribe('CachedDatastore', () => {
             relations: {}
         } } as any, 'u');
         const document = await ds.get('1'); // fetch from cache
-        verifyIsFieldDocument(document);
+        verifyIsDocument(document);
         done();
     });
 
@@ -333,7 +332,7 @@ xdescribe('CachedDatastore', () => {
         } } as any, 'u');
         const document = await ds.get('1'); // fetch from cache
         expect(document.resource['val']).toEqual('b');
-        verifyIsFieldDocument(document);
+        verifyIsDocument(document);
         done();
     });
 
@@ -348,7 +347,7 @@ xdescribe('CachedDatastore', () => {
         } } as any, 'u');
 
         const document = await ds.get('1'); // fetch from cache
-        verifyIsFieldDocument(document);
+        verifyIsDocument(document);
         done();
     });
 

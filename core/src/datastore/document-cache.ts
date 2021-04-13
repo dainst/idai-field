@@ -4,18 +4,18 @@ import {Document} from '../model/document';
 /**
  * @author Daniel de Oliveira
  */
-export class DocumentCache<T extends Document> {
+export class DocumentCache {
 
-    protected _: { [resourceId: string]: T } = {};
+    protected _: { [resourceId: string]: Document } = {};
 
 
-    public set(document: T): T {
+    public set(document: Document): Document {
 
         return this._[document.resource.id as any] = document;
     }
 
 
-    public get(resourceId: string): T {
+    public get(resourceId: string): Document {
 
         return this._[resourceId];
     }
@@ -27,7 +27,7 @@ export class DocumentCache<T extends Document> {
     }
 
 
-    public reassign(document: T) {
+    public reassign(document: Document) {
 
         if (!document._conflicts) {
             delete (this.get(document.resource.id) as any)._conflicts;

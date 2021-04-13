@@ -274,8 +274,10 @@ export module ConstraintIndex {
     function getIndexDefinitions(defaultIndexDefinitions: Map<IndexDefinition>,
                                  categories: Array<Category>): Map<IndexDefinition> {
 
+        const fieldsToIndex = getFieldsToIndex(categories);
+
         return combine(
-            flatMap(makeIndexDefinitions)(getFieldsToIndex(categories)),
+            flatMap(makeIndexDefinitions, fieldsToIndex),
             defaultIndexDefinitions
         );
     }

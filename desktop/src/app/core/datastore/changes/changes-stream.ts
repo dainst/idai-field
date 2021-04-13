@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { DatastoreErrors, IndexFacade, isProjectDocument, ObserverUtil, PouchdbDatastore, ResourceId, RevisionId } from 'idai-field-core';
-import { Action, Document, CategoryConverter, DocumentCache } from 'idai-field-core';
+import { Action, Document, Converter, DocumentCache } from 'idai-field-core';
 import { Observable, Observer } from 'rxjs';
 import { aMap } from 'tsfun';
 import { SettingsProvider } from '../../settings/settings-provider';
@@ -27,8 +27,8 @@ export class ChangesStream {
 
     constructor(private datastore: PouchdbDatastore,
                 private indexFacade: IndexFacade,
-                private documentCache: DocumentCache<Document>,
-                private categoryConverter: CategoryConverter<Document>,
+                private documentCache: DocumentCache,
+                private categoryConverter: Converter,
                 private settingsProvider: SettingsProvider) {
 
         datastore.deletedNotifications().subscribe(document => {

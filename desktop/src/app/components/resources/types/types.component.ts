@@ -1,9 +1,9 @@
 import { ChangeDetectorRef, Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Imagestore } from '../../../core/images/imagestore/imagestore';
 import { Document, Datastore, FieldDocument, ImageRelationsC as ImageRelations, SyncService, SyncStatus, TypeRelations } from 'idai-field-core';
 import { curry, filter, flatten, flow, isnt, Map, map, set, take } from 'tsfun';
 import { makeLookup } from '../../../../../../core/src/tools/transformers';
 import { ProjectCategories } from '../../../core/configuration/project-categories';
-import { ReadImagestore } from '../../../core/images/imagestore/read-imagestore';
 import { PLACEHOLDER } from '../../../core/images/row/image-row';
 import { NavigationPath } from '../../../core/resources/view/state/navigation-path';
 import { ViewFacade } from '../../../core/resources/view/view-facade';
@@ -66,7 +66,7 @@ export class TypesComponent extends BaseList implements OnChanges {
 
 
     constructor(private datastore: Datastore,
-                private imagestore: ReadImagestore,
+                private imagestore: Imagestore,
                 private viewModalLauncher: ViewModalLauncher,
                 private routingService: RoutingService,
                 private tabManager: TabManager,

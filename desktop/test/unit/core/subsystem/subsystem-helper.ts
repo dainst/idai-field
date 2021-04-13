@@ -1,11 +1,11 @@
-import { CategoryConverter, createDocuments, Document, DocumentCache, Datastore, FieldDocument, ImageDocument, NiceDocs, PouchdbDatastore, PouchdbManager, Query, ResourceId, SyncService, toResourceId } from 'idai-field-core';
+import { createDocuments, Document, DocumentCache, Datastore, FieldDocument, ImageDocument, NiceDocs, PouchdbDatastore, PouchdbManager, Query, ResourceId, SyncService, toResourceId } from 'idai-field-core';
 import * as PouchDB from 'pouchdb-node';
-import { sameset } from 'tsfun';
+import { identity, sameset } from 'tsfun';
 import { AppConfigurator } from '../../../../src/app/core/configuration/app-configurator';
 import { ConfigLoader } from '../../../../src/app/core/configuration/boot/config-loader';
 import { ConfigReader } from '../../../../src/app/core/configuration/boot/config-reader';
 import { ChangesStream } from '../../../../src/app/core/datastore/changes/changes-stream';
-import { FieldCategoryConverter } from '../../../../src/app/core/datastore/field/field-category-converter';
+import { FieldConverter } from '../../../../src/app/core/datastore/field/category-converter';
 import { PouchdbServer } from '../../../../src/app/core/datastore/pouchdb/pouchdb-server';
 import { DocumentHolder } from '../../../../src/app/core/docedit/document-holder';
 import { Imagestore } from '../../../../src/app/core/images/imagestore/imagestore';
@@ -96,8 +96,8 @@ export async function createApp(projectName = 'testdb', startSync = false) {
     const imagestore = new PouchDbFsImagestore(undefined, undefined, pouchdbManager.getDb());
     imagestore.init(settingsProvider.getSettings());
 
-    const documentCache = new DocumentCache<Document>();
-    const categoryConverter = new FieldCategoryConverter(projectConfiguration);
+    const documentCache = new DocumentCache();
+    const categoryConverter = new FieldConverter(projectConfiguration);
 
     const datastore = new Datastore(
         pouchdbDatastore, createdIndexFacade, documentCache, categoryConverter);
@@ -281,7 +281,7 @@ export async function setupSyncTestDb(projectName = 'testdb') {
 }
 
 
-function makeCreateDocuments(documentDatastore: Datastore,
+function makeCreateDocuments(datastore: Datastore,
                              projectImageDir: string,
                              username: string) {
 
@@ -290,7 +290,7 @@ function makeCreateDocuments(documentDatastore: Datastore,
         const documentsLookup = createDocuments(documents);
         for (const document of Object.values(documentsLookup)) {
             if (project) document.project = project;
-            await documentDatastore.create(document, username);
+            await datastore.create(document, username);
         }
         for (const [id, type, _] of documents) {
             if (type === 'Image') makeCreateImageInProjectImageDir(projectImageDir)(id);
@@ -298,7 +298,10 @@ function makeCreateDocuments(documentDatastore: Datastore,
 
         const storedDocuments = [];
         for (const doc of Object.values(documentsLookup)) {
-            storedDocuments.push(await documentDatastore.get(doc.resource.id));
+            storedDocuments.push(
+                (doc.resource.category === 'Image'? ImageDocument.fromDocument : identity)
+                (await datastore.get(doc.resource.id))
+            );
         }
         return makeDocumentsLookup(storedDocuments);
     }

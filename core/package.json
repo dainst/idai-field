@@ -15,9 +15,12 @@
         "test": "jasmine JASMINE_CONFIG_PATH=test/jasmine.json"
     },
     "dependencies": {
+        "rxjs": "~6.5.4",
+        "tsfun": "5.5.7",
         "uuid": "^8.3.2"
     },
     "devDependencies": {
+        "@babel/runtime": "^7.13.10",
         "@types/jasmine": "3.5.0",
         "@types/node": "^12.12.38",
         "@types/pouchdb": "6.4.0",

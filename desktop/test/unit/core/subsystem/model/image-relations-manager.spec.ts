@@ -5,7 +5,7 @@ import {
 import {ImageRelationsC as ImageRelations} from 'idai-field-core';
 
 
-xdescribe('subsystem/image-relations-manager', () => {
+describe('subsystem/image-relations-manager', () => {
 
     let app;
     let helpers;
@@ -232,8 +232,8 @@ xdescribe('subsystem/image-relations-manager', () => {
 
         await app.imageRelationsManager.link(documentsLookup['tc1'], documentsLookup['i1']);
 
-        const tc1 = await app.documentDatastore.get('tc1');
-        const i1 = await app.documentDatastore.get('i1');
+        const tc1 = await app.datastore.get('tc1');
+        const i1 = await app.datastore.get('i1');
         expect(tc1.resource.relations[ImageRelations.ISDEPICTEDIN]).toEqual(['i1']);
         expect(i1.resource.relations[ImageRelations.DEPICTS]).toEqual(['tc1']);
         done();

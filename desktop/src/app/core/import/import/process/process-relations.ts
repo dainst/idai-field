@@ -137,7 +137,7 @@ async function replaceTopLevelLiesWithins(documents: Array<Document>, operationC
     const relationsForDocumentsWhereLiesWithinIsDefined: Array<Relations> = documents
         .map(to(['resource','relations']))
         .filter(isDefined)
-        .filter(on(LIESWITHIN, and(isDefined, isNot(empty)))) as any /* TODO review*/;
+        .filter(on(LIESWITHIN, and(isDefined, isNot(empty))));
 
     for (let relations of relationsForDocumentsWhereLiesWithinIsDefined) {
 

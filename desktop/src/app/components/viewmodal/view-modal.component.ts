@@ -4,7 +4,6 @@ import {FieldDocument} from 'idai-field-core';
 import {DoceditComponent} from '../docedit/docedit.component';
 import {RoutingService} from '../routing-service';
 import {MenuContext, MenuService} from '../menu-service';
-import {Messages} from '../messages/messages';
 import {ImageRowItem} from '../../core/images/row/image-row';
 
 
@@ -18,7 +17,6 @@ export abstract class ViewModalComponent {
 
 
     constructor(protected activeModal: NgbActiveModal,
-                private messages: Messages, // TODO unused
                 private modalService: NgbModal,
                 private routingService: RoutingService,
                 private menuService: MenuService) {}

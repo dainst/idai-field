@@ -1,7 +1,6 @@
 import {Component, Input, OnChanges, Renderer2, SimpleChanges} from '@angular/core';
 import {Datastore, FieldDocument} from 'idai-field-core';
 import {RoutingService} from '../../routing-service';
-import {ResourcesComponent} from '../resources.component';
 import {ResourcesSearchBarComponent} from './resources-search-bar.component';
 import {ViewFacade} from '../../../core/resources/view/view-facade';
 import {Query} from 'idai-field-core';
@@ -32,7 +31,6 @@ export class SearchSuggestionsComponent implements OnChanges {
                 private datastore: Datastore,
                 private viewFacade: ViewFacade,
                 private resourcesSearchBarComponent: ResourcesSearchBarComponent,
-                private resourcesComponent: ResourcesComponent, // TODO unused
                 private renderer: Renderer2,
                 private projectConfiguration: ProjectConfiguration) {
 

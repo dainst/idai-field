@@ -72,7 +72,7 @@ export class ConnectedDocsWriter {
 
         return this.projectConfiguration
             .getAllRelationDefinitions()
-            .map(to(NAME)) as string[] /* TODO review */;
+            .map(to(NAME));
     }
 
 

@@ -34,24 +34,24 @@ type Percentage = number;
  *     puts an element which matches the query exactly, to the
  *     front of the resulting list.
  */
-export function getSortedIds(indexItems: Array<IndexItem>, query: Query): Array<string /* ResourceId*/> {
+export function getSortedIds(indexItems: Array<IndexItem>, query: Query): Array<Resource.Id> {
 
     const rankEntries = shouldRankCategories(query)
-        ? rankTypeResourceIndexItems((query.sort as any).matchCategory)
+        ? rankTypeResourceIndexItems(query.sort.matchCategory)
         : rankRegularIndexItems;
 
     const handleExactMatchIfQuerySaysSo =
         cond(
             shouldHandleExactMatch(query),
-            handleExactMatch(query.q as string)
+            handleExactMatch(query.q)
         );
 
     return flow(
         indexItems,
         rankEntries,
         handleExactMatchIfQuerySaysSo,
-        map(to(Resource.ID))
-    ) as any /* TODO review any*/;
+        map(to(Resource.ID)) as any
+    );
 }
 
 
@@ -130,8 +130,8 @@ const rankRegularIndexItems
  *  {id: '2', instances: {'4': 'T1', '6': 'T2'}}            // 50%
  *  {id: '3', instances: {'7': 'T2'}}]                      // 0%
  */
-const rankTypeResourceIndexItems = (categoryToMatch: Name): (indexItems: Array<IndexItem>) =>
-    Array<IndexItem> => compose(
+const rankTypeResourceIndexItems = (categoryToMatch: Name): (indexItems: Array<IndexItem>) => Array<IndexItem> => 
+    compose(
         map(pairWith(calcPercentage(categoryToMatch))),
         sort(comparePercentages) as any,
-        map(left) as any /* TODO review any*/);
+        map(left) as any);

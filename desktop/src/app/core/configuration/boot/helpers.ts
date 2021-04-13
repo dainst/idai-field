@@ -14,7 +14,7 @@ export function iterateOverFieldsOfCategories(categories: Map<TransientCategoryD
                                                   fieldName: string, field: TransientFieldDefinition) => void) {
 
     keysValues(categories).forEach(([categoryName, category]) => {
-        keysValues((category as any).fields).forEach(([fieldName, field]: any /* TODO review any*/) => {
+        keysValues((category as any).fields).forEach(([fieldName, field]) => {
             f(categoryName, category as any, fieldName, field);
         })
     });

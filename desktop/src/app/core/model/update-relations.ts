@@ -77,9 +77,9 @@ function pruneInverseRelations(relations: Relations,
     return flow(
         Object.keys(relations),
         filter(cond(setInverses, hasInverseRelation, true)),
-        map(pairWith(lookup(relations as any) as any /* TODO review typings*/)),
+        map(pairWith(lookup(relations))),
         map(update(1, filter(isnt(resourceId)))),
-        replaceIn(relations) as any /* TODO review typings */,
+        replaceIn(relations),
         remove(isEmpty)
     );
 }

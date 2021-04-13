@@ -6,7 +6,6 @@ import {Document} from 'idai-field-core';
 import {RoutingService} from '../../routing-service';
 import {ImagesState} from '../../../core/images/overview/view/images-state';
 import {ViewModalComponent} from '../view-modal.component';
-import {Messages} from '../../messages/messages';
 import {ImageRowItem} from '../../../core/images/row/image-row';
 import {MenuService} from '../../menu-service';
 
@@ -28,12 +27,11 @@ export class ImageViewModalComponent extends ViewModalComponent {
 
     constructor(private imagesState: ImagesState,
                 activeModal: NgbActiveModal,
-                messages: Messages,
                 modalService: NgbModal,
                 routingService: RoutingService,
                 menuService: MenuService) {
 
-        super(activeModal, messages, modalService, routingService, menuService);
+        super(activeModal, modalService, routingService, menuService);
     }
 
 

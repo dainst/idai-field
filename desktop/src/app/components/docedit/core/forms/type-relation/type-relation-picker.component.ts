@@ -162,11 +162,12 @@ export class TypeRelationPickerComponent {
         };
         if (this.selectedCriterion) query.constraints = { 'criterion:match': this.selectedCriterion };
 
+        const result = await this.datastore.find(query);
         this.availableCatalogs = flow(
-            await this.datastore.find(query),
-            to(FindResult.DOCUMENTS),
+            result.documents,
+            map(FieldDocument.fromDocument),
             map(to(Document.RESOURCE))
-        ) as any /* TODO review any*/;
+        );
     }
 
 

@@ -1,13 +1,11 @@
 import {Component, DoCheck, ElementRef, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 import {I18n} from '@ngx-translate/i18n-polyfill';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {TabManager} from '../../core/tabs/tab-manager';
 import {Tab} from '../../core/tabs/tab';
 import {TabUtil} from '../../core/tabs/tab-util';
 import {ViewFacade} from '../../core/resources/view/view-facade';
 import {RoutingService} from '../routing-service';
-import {SettingsProvider} from '../../core/settings/settings-provider';
 
 
 @Component({
@@ -33,8 +31,6 @@ export class NavbarComponent implements DoCheck {
     constructor(public router: Router,
                 private viewFacade: ViewFacade,
                 private tabManager: TabManager,
-                private modalService: NgbModal,                    // TODO review, remove
-                private settingsProvider: SettingsProvider,
                 private routingService: RoutingService,
                 private i18n: I18n) {
 

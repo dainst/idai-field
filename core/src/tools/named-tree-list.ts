@@ -5,7 +5,7 @@ import { Tree, TreeList } from '../../src/tools/tree-list';
 
 export function findInNamedTreeList<N extends Named>(match: Name, t: TreeList<N>): N|undefined {
 
-    const result: any /* TODO review typing */ = Tree.find(t, onName(is(match)));
+    const result: any = Tree.find(t, onName(is(match)));
     return result ? result.item : undefined;
 }
 

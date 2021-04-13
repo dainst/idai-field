@@ -94,7 +94,7 @@ export function setOn(object: any, path_: string|number|Array<string|number>) {
  */
 export function takeOrMake<T>(o: T, path: Array<string|number>, alternative: any) {
 
-    return setOn(o, path)(to(path as any /* TODO review */, alternative)(o as any /* TODO review */));
+    return setOn(o, path)(to(path as any /* TODO review */, alternative)(o));
 }
 
 

@@ -16,7 +16,7 @@ import {MenuContext, MenuService} from '../menu-service';
  * @author Philipp Gerth
  * @author Thomas Kleinke
  */
-export class BaseList { // TODO make abstract
+export class BaseList {
 
     @ViewChild(CdkVirtualScrollViewport) scrollViewport: CdkVirtualScrollViewport;
 

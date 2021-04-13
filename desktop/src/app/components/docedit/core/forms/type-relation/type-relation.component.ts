@@ -2,7 +2,6 @@ import {Component, Input, OnChanges} from '@angular/core';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {to, set} from 'tsfun';
 import {Datastore, Resource} from 'idai-field-core';
-import {DoceditComponent} from '../../../docedit.component';
 import {TypeRelationPickerComponent} from './type-relation-picker.component';
 import {MenuContext, MenuService} from '../../../../menu-service';
 
@@ -28,7 +27,6 @@ export class TypeRelationComponent implements OnChanges {
 
     constructor(private datastore: Datastore,
                 private modalService: NgbModal,
-                private doceditComponent: DoceditComponent, // TODO unused
                 private menuService: MenuService) {}
 
 
@@ -61,7 +59,7 @@ export class TypeRelationComponent implements OnChanges {
 
         if (!this.relations()) return;
         const documents = await this.datastore.getMultiple(this.relations());
-        this.relationIdentifiers = documents.map(toResourceIdentifier) as any /* TODO review type*/;
+        this.relationIdentifiers = documents.map(toResourceIdentifier);
     }
 
 

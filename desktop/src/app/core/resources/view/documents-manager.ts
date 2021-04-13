@@ -167,7 +167,7 @@ export class DocumentsManager {
 
         this.removeNewDocument();
 
-        const documentToSelect = await this.datastore.get(resourceId) as any /*TODO any*/;
+        const documentToSelect = FieldDocument.fromDocument(await this.datastore.get(resourceId));
         this.newDocumentsFromRemote
             = subtract([documentToSelect.resource.id])(this.newDocumentsFromRemote);
 

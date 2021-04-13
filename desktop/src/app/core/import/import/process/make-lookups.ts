@@ -81,5 +81,5 @@ function targetIdsReferingToDbResources(document: Document, documentsLookup: Loo
         document.resource.relations,
         Object.values,
         flatten(),
-        remove(compose(lookup(documentsLookup), isDefined))) as any/* TODO review any*/;
+        remove(compose(lookup(documentsLookup), isDefined))) as any;
 }

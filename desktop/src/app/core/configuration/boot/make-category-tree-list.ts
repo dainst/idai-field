@@ -16,20 +16,19 @@ const TEMP_FIELDS = 'fields';
 export function makeCategoryTreeList(categories: any): TreeList<Category> {
 
     const [parentDefs, childDefs] =
-        separate(on(CategoryDefinition.PARENT, isNot(defined)), categories);
+        separate<CategoryDefinition>(on(CategoryDefinition.PARENT, isNot(defined)), categories);
 
     const parentCategories = flow(
         parentDefs,
         map(buildCategoryFromDefinition),
         map(update(TEMP_FIELDS, ifUndefinedSetGroupTo(Groups.PARENT))),
-        mapToNamedArray as any /*TODO any*/,
+        mapToNamedArray as any,
         map(category => ({ item: category, trees: []}))
     );
 
     return flow(
         childDefs,
-        values as any /*TODO any*/,
-        reduce(addChildCategory, parentCategories as any/*TODO any*/),
+        reduce(addChildCategory, parentCategories as any),
         Tree.mapList(fillGroups),
         Tree.mapList(detach(TEMP_FIELDS)),
         linkParentAndChildInstances

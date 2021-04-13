@@ -1,5 +1,5 @@
 import {isArray, isnt, set, sort, flow, filter, dense, throws,
-    first, map, forEach, on, gt, isDefined} from 'tsfun';
+    first, map, forEach, on, gt, prune} from 'tsfun';
 import {ParserErrors} from './parser-errors';
 import CSV_PATH_ITEM_TYPE_MISMATCH = ParserErrors.CSV_HEADING_PATH_ITEM_TYPE_MISMATCH;
 import CSV_HEADING_ARRAY_INDICES_INVALID_SEQUENCE = ParserErrors.CSV_HEADING_ARRAY_INDICES_INVALID_SEQUENCE;
@@ -95,8 +95,8 @@ function extractLeadingIndices(paths: string[]): number[] {
         map(StringUtils.split(PATH_SEPARATOR)),
         map(first),
         map(StringUtils.parseInt),
-        filter(isDefined),
-        sort as any /*TODO any*/);
+        prune,
+        sort as any);
 }
 
 

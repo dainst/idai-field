@@ -32,10 +32,10 @@ export module CsvParser {
          * @throws [CSV_NOT_A_NUMBER]
          * @throws [CSV_INVALID_HEADING]
          */
-        return (content: string) => {
+        return content => {
 
             try {
-                return Promise.resolve(doParse(category, content, separator) as any /* TODO review typing*/);
+                return Promise.resolve(doParse(category, content, separator));
             } catch (msgWithParams) {
                 return Promise.reject(msgWithParams);
             }
@@ -43,13 +43,13 @@ export module CsvParser {
     };
 
 
-    function doParse(category: Category, content: string, separator: string) {
+    function doParse(category: Category, content: string, separator: string): Array<Document> {
 
         return flow(content,
             convertCsvRows(separator),
             map(updateD('category', category.name)),
             map(insertRelations),
             map(convertFieldTypes(category)),
-            map(toDocument));
+            map(toDocument) as any);
     }
 }

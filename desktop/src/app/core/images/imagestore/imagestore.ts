@@ -3,14 +3,6 @@ import { Settings } from '../../settings/settings';
 
 
 /**
- * TODO merge
- *
- * The interface for general media stores supporting
- * the storage of general binary data
- *
- * @author Sebastian Cuy
- */
-/**
  * The interface for general media stores supporting
  * the storage of general binary data
  *

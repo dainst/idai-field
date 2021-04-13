@@ -136,7 +136,6 @@ export async function createApp(projectName = 'testdb', startSync = false) {
     const messages = jasmine.createSpyObj('messages', ['add']);
 
     const viewFacade = new ViewFacade(
-        projectConfiguration,
         datastore,
         remoteChangesStream,
         resourcesStateManager,
@@ -224,7 +223,7 @@ function makeCreateProjectDir(projectImageDir) {
 
     return function createProjectDir() {
         try {
-            // node 12 supports fs.rmdirSync(path, {recursive: true})
+            // TODO node 12 supports fs.rmdirSync(path, {recursive: true})
             const files = fs.readdirSync(projectImageDir);
             for (const file of files) {
                 fs.unlinkSync(projectImageDir + file);

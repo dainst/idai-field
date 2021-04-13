@@ -1,7 +1,7 @@
-import { Labelled, Named } from "../tools/named";
-import { FieldDefinition } from "./field-definition";
-import { HierarchicalRelations, ImageRelations, PositionRelations, TimeRelations, TypeRelations } from "./relation-constants";
-import { RelationDefinition } from "./relation-definition";
+import { Labelled, Named } from '../tools/named';
+import { FieldDefinition } from './field-definition';
+import { HierarchicalRelations, ImageRelations, PositionRelations, TimeRelations, TypeRelations } from './relation-constants';
+import { RelationDefinition } from './relation-definition';
 
 
 export module Groups {

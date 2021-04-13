@@ -6,7 +6,6 @@ import {FieldDocument, ImageDocument} from 'idai-field-core'
 import {ViewModalComponent} from '../view-modal.component';
 import {RoutingService} from '../../routing-service';
 import {ImagesState} from '../../../core/images/overview/view/images-state';
-import {Messages} from '../../messages/messages';
 import {ImageRowItem} from '../../../core/images/row/image-row';
 import {MenuService} from '../../menu-service';
 
@@ -32,12 +31,11 @@ export class ResourceViewModalComponent extends ViewModalComponent {
     constructor(private imagesState: ImagesState,
                 private datastore: Datastore,
                 activeModal: NgbActiveModal,
-                messages: Messages,
                 modalService: NgbModal,
                 routingService: RoutingService,
                 menuService: MenuService) {
 
-        super(activeModal, messages, modalService, routingService, menuService);
+        super(activeModal, modalService, routingService, menuService);
     }
 
 
@@ -107,7 +105,7 @@ export class ResourceViewModalComponent extends ViewModalComponent {
 
         if (!Document.hasRelations(this.document, 'isDepictedIn')) return [];
 
-        const images: Array<ImageDocument> = (await this.datastore.getMultiple( // TODO ImageDocuments
+        const images: Array<ImageDocument> = (await this.datastore.getMultiple(
             this.document.resource.relations['isDepictedIn']
         )).map(ImageDocument.fromDocument);
 

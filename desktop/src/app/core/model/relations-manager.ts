@@ -157,9 +157,12 @@ export class RelationsManager {
 
         if (isUndefinedOrEmpty(document.resource.relations[RECORDED_IN])) return;
 
-        const docsToCorrect = ((await this.findLiesWithinDocs(document.resource.id, false)) as FindResult).documents
-            .filter(on(['resource', 'relations', RECORDED_IN], isArray))
-            .filter(isNot(on(['resource', 'relations', RECORDED_IN], sameset)(document) as any)); // TODO review any
+        const findResult = await this.findLiesWithinDocs(document.resource.id, false) as FindResult;
+        const docsToCorrect =
+            findResult
+                .documents
+                .filter(on(['resource', 'relations', RECORDED_IN], isArray))
+                .filter(isNot(on(['resource', 'relations', RECORDED_IN], sameset)(document) as any));
 
         for (let docToCorrect of docsToCorrect) {
             const cloned = ObjectUtils.clone(docToCorrect);

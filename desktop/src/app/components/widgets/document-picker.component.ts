@@ -4,7 +4,6 @@ import {map, union} from 'tsfun';
 import {FieldDocument, ObjectUtils, Document, Category, Query, Constraint, Datastore, FindResult} from 'idai-field-core';
 import {Loading} from './loading';
 import {AngularUtility} from '../../angular/angular-utility';
-import {ProjectConfiguration} from '../../core/configuration/project-configuration';
 import {Messages} from '../messages/messages';
 
 
@@ -32,7 +31,6 @@ export class DocumentPickerComponent implements OnChanges {
 
 
     constructor(private datastore: Datastore,
-                private projectConfiguration: ProjectConfiguration, // TODO unused
                 private loading: Loading,
                 private messages: Messages,
                 private i18n: I18n) {}
@@ -121,7 +119,10 @@ export class DocumentPickerComponent implements OnChanges {
 
         return map(this.isProjectOptionVisible()
             ? [this.getProjectOption()].concat(
-                result.documents.filter(document => document.resource.category !== 'Project') as any /*TODO any*/
+                result
+                    .documents
+                    .filter(document => document.resource.category !== 'Project')
+                    .map(FieldDocument.fromDocument)
             )
             : result.documents, FieldDocument.fromDocument);
     }

@@ -19,7 +19,7 @@ export interface Document extends NewDocument {
 }
 
 
-export const toResourceId = (doc: Document): Resource.Id => to(['resource','id'])(doc) as any /* TODO review any*/;
+export const toResourceId = (doc: Document): Resource.Id => to(['resource','id'])(doc);
 
 
 /**

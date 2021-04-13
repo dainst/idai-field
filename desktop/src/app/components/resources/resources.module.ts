@@ -146,7 +146,6 @@ const remote = typeof window !== 'undefined'
         {
             provide: ViewFacade,
             useFactory: function(
-                projectConfiguration: ProjectConfiguration,
                 datastore: Datastore,
                 changesStream: ChangesStream,
                 resourcesStateManager: ResourcesStateManager,
@@ -156,7 +155,6 @@ const remote = typeof window !== 'undefined'
                 syncService: SyncService
             ) {
                 return new ViewFacade(
-                    projectConfiguration,
                     datastore,
                     changesStream,
                     resourcesStateManager,
@@ -167,7 +165,6 @@ const remote = typeof window !== 'undefined'
                 );
             },
             deps: [
-                ProjectConfiguration,
                 Datastore,
                 ChangesStream,
                 ResourcesStateManager,

@@ -45,7 +45,7 @@ export class RelationPickerComponent implements OnChanges {
     public async ngOnChanges() {
 
         this.relationPicker = new DefaultRelationPicker(
-            this.resource, this.relationDefinition, this.datastore as any /*TODO review*/, this.relationIndex
+            this.resource, this.relationDefinition, this.datastore, this.relationIndex
         );
 
         this.suggestions = [];

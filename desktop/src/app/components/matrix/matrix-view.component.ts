@@ -193,9 +193,10 @@ export class MatrixViewComponent implements OnInit {
 
         this.loading.start();
 
-        this.totalFeatureDocuments = this.featureDocuments = map((await this.datastore.find( {
+        const result = await this.datastore.find( {
             constraints: { 'isRecordedIn:contain': trench.resource.id }
-        })).documents as any, FeatureDocument.fromDocument) as any /*TODO any*/;
+        });
+        this.totalFeatureDocuments = this.featureDocuments = result.documents.map(FeatureDocument.fromDocument);
 
         this.loading.stop();
     }

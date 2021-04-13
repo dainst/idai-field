@@ -40,7 +40,6 @@ export class LayerManager {
 
 
     constructor(private datastore: Datastore,
-                private fieldDatastore: Datastore,
                 private viewFacade: ViewFacade,
                 private relationsManager: RelationsManager) {}
 
@@ -202,7 +201,7 @@ export class LayerManager {
         const currentOperation: FieldDocument|undefined = this.viewFacade.getCurrentOperation();
         if (currentOperation) layerGroups.push(await this.createLayerGroup(currentOperation));
 
-        const projectGroup: LayerGroup = await this.createLayerGroup(await this.fieldDatastore.get('project') as any /*TODO any*/);
+        const projectGroup: LayerGroup = await this.createLayerGroup(FieldDocument.fromDocument(await this.datastore.get('project')));
         if (projectGroup.layers.length > 0 || layerGroups.length === 0) layerGroups.push(projectGroup);
 
         return layerGroups;
@@ -221,7 +220,7 @@ export class LayerManager {
     private async fetchLinkedLayers(document: FieldDocument): Promise<Array<ImageDocument>> {
 
         return Document.hasRelations(document, ImageRelations.HASMAPLAYER)
-            ? (await this.datastore.getMultiple(document.resource.relations[ImageRelations.HASMAPLAYER])).map(ImageDocument.fromDocument) // TODO ImageDocuments
+            ? (await this.datastore.getMultiple(document.resource.relations[ImageRelations.HASMAPLAYER])).map(ImageDocument.fromDocument)
             : [];
     }
 

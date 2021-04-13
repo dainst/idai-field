@@ -158,7 +158,7 @@ export module Tree {
 
         if (isObject(t)) return find([t as any], match, comparator);
 
-        for (let node of (t as any /* TODO review any */)) {
+        for (let node of (t as any)) {
             const { item: t, trees: trees } = node;
 
             const matches: Predicate<T> = buildMatches(match, comparator);

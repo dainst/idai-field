@@ -1,4 +1,5 @@
-import { ObjectUtils, takeOrMake } from '../tools';
+import {Document} from './document';
+import {ObjectUtils, takeOrMake} from '../tools';
 import {FeatureResource} from './feature-resource';
 import {FieldDocument} from './field-document';
 

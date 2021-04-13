@@ -1,6 +1,6 @@
 import { Category, FieldDefinition, PARENT, setOn } from 'idai-field-core';
 import { Dating, Dimension, Resource } from 'idai-field-core';
-import { includedIn, is, isNot, isnt, on, to } from 'tsfun';
+import { includedIn, is, isNot, isnt, on, Path, to } from 'tsfun';
 import { CsvExportConsts } from '../../export/csv/csv-export-consts';
 import { ParserErrors } from './parser-errors';
 import ARRAY_SEPARATOR = CsvExportConsts.ARRAY_SEPARATOR;
@@ -49,8 +49,8 @@ export function convertFieldTypes(category: Category) {
 
 
 // here only string to number, validation in exec
-const convertUnsignedInt = (container: any, path: Array<number|string>|number|string) => convertNumber(container, path, 'int');
-const convertUnsignedFloat = (container: any, path: Array<number|string>|number|string) => convertNumber(container, path, 'float');
+const convertUnsignedInt = (container: any, path: Path) => convertNumber(container, path, 'int');
+const convertUnsignedFloat = (container: any, path: Path) => convertNumber(container, path, 'float');
 const convertFloat = (container: any, path: string) => convertNumber(container, path, 'float');
 
 
@@ -127,9 +127,9 @@ function convertDating(resource: Resource, fieldName: string) {
  * Modifies container at path by converting string to number.
  * Returns early if no value at path.
  */
-function convertNumber(container: any, path: Array<number|string>|number|string, type: 'int'|'float') {
+function convertNumber(container: any, path: Path, type: 'int'|'float') {
 
-    let value = to(path as any /* TODO review type */, undefined)(container);
+    let value = to(path, undefined)(container);
     if (!value) return;
 
     if (type === 'float') value = value.replace(',', '.');
@@ -144,9 +144,9 @@ function convertNumber(container: any, path: Array<number|string>|number|string,
  * Modifies container at path by converting string to boolean.
  * Returns early if no value at path.
  */
-function convertBoolean(container: any, path: Array<number|string>|number|string) {
+function convertBoolean(container: any, path: Path) {
 
-    const val = to(path as any /* TODO review any*/, undefined)(container);
+    const val = to(path, undefined)(container);
     if (!val) return;
     if (isNot(includedIn(['true', 'false']))(val)) throw [ParserErrors.CSV_NOT_A_BOOLEAN, val, path];
     setOn(container, path)(val === 'true');

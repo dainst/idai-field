@@ -2,7 +2,6 @@ import { Document, Datastore, FieldDocument, IndexFacade, SyncService, SyncStatu
 import { M } from '../../../components/messages/m';
 import { Messages } from '../../../components/messages/messages';
 import { Loading } from '../../../components/widgets/loading';
-import { ProjectConfiguration } from '../../configuration/project-configuration';
 import { ChangesStream } from '../../datastore/changes/changes-stream';
 import { DocumentsManager } from './documents-manager';
 import { ResourcesStateManager } from './resources-state-manager';
@@ -23,7 +22,6 @@ export class ViewFacade {
 
 
     constructor(
-        projectConfiguration: ProjectConfiguration, // TODO unused?
         datastore: Datastore,
         remoteChangesStream: ChangesStream,
         private resourcesStateManager: ResourcesStateManager,

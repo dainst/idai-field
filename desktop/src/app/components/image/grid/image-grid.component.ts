@@ -5,7 +5,6 @@ import {Document} from 'idai-field-core';
 import {ImageUploadResult} from '../upload/image-uploader';
 import {Imagestore} from '../../../core/images/imagestore/imagestore';
 import {constructGrid} from '../../../core/images/grid/construct-grid';
-import {Messages} from '../../messages/messages';
 import {BlobMaker} from '../../../core/images/imagestore/blob-maker';
 
 
@@ -47,7 +46,6 @@ export class ImageGridComponent implements OnChanges {
 
 
     constructor(private element: ElementRef,
-                private messages: Messages, // TODO unused
                 private imagestore: Imagestore,
                 private datastore: Datastore,
                 private blobMaker: BlobMaker) {}

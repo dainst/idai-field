@@ -120,7 +120,7 @@ export module Dating {
     }
 
 
-    const dissocIfEmpty = (path: string) => cond(on(path, isUndefinedOrEmpty), detach(path)) as any /*TODO any*/;
+    const dissocIfEmpty = (path: string) => cond(on(path, isUndefinedOrEmpty), detach(path)) as any;
 
 
     export function revert(dating: Dating): Dating {

@@ -35,6 +35,7 @@ export interface IdaiFieldFindResult extends FindResult {
     documents: Array<Document>
 }
 
+
 /**
  * This datastore provides everything necessary
  * to power a idai-field application:
@@ -49,9 +50,15 @@ export interface IdaiFieldFindResult extends FindResult {
  *    so that the rest of the app can rely that the declared
  *    fields are present.
  *
+ * The errors with which the methods reject, like GENERIC_SAVE_ERROR,
+ * are constants of {@link DatastoreErrors}, so GENERIC_SAVE_ERROR really
+ * is DatastoreErrors.GENERIC_SAVE_ERROR. The brackets [] are array indicators,
+ * so [GENERIC_SAVE_ERROR] is an array containing one element, which is the string
+ * corresponding to GENERIC_SAVE_ERROR.
+ * 
+ * @author Thomas Kleinke
  * @author Daniel de Oliveira
  * @author Sebastian Cuy
- * @author Thomas Kleinke
  */
 export class Datastore {
 
@@ -66,9 +73,18 @@ export class Datastore {
 
 
     /**
-     * Implements {@link Datastore#create}
+     * Persists a given document. If document.resource.id is not set,
+     * it will be set to a generated value. In case of an error it remains undefined.
      *
-     * @throws if document is not of category T, determined by resource.category
+     * In case of a successful call, document.modified and document.created get set,
+     * otherwise they remain undefined.
+     *
+     * @param doc
+     * @param username
+     * @returns {Promise<Document>} a document
+     * @throws [GENERIC_ERROR (, cause: any)] - in case of error, optionally including a cause
+     * @throws [DOCUMENT_RESOURCE_ID_EXISTS] - if a document with doc.resource.id already exists
+     * @throws [INVALID_DOCUMENT] - in case doc is not valid
      * @throws if resource.category is unknown
      */
     public async create(document: NewDocument, username: string): Promise<Document> {
@@ -86,8 +102,17 @@ export class Datastore {
 
 
     /**
-     * Implements {@link Datastore#update}
-     * @throws if document is not of category T, determined by resource.category
+     * Updates an existing document
+     *
+     * @param doc
+     * @param username
+     * @param squashRevisionsIds
+     * @returns {Promise<Document>} a document
+     * @throws [GENERIC_ERROR (, cause: any)] - in case of error, optionally including a cause
+     * @throws [SAVE_CONFLICT] - in case of conflict
+     * @throws [DOCUMENT_NO_RESOURCE_ID] - if doc has no resource id
+     * @throws [INVALID_DOCUMENT] - in case doc is not valid
+     * @throws [DOCUMENT_NOT_FOUND] - if document has a resource id, but does not exist in the db
      */
     public async update(document: Document, username: string, squashRevisionsIds?: string[]): Promise<Document> {
 
@@ -114,8 +139,14 @@ export class Datastore {
     }
 
 
-    /**
-     * @throws if document is not of category T, determined by resource.category
+     /**
+     * Removes an existing document
+     *
+     * @param doc
+     * @returns {Promise<undefined>} undefined
+     * @throws [DOCUMENT_NO_RESOURCE_ID] - if document has no resource id
+     * @throws [DOCUMENT_NOT_FOUND] - if document has a resource id, but does not exist in the db
+     * @throws [GENERIC_ERROR (, cause: any)] - in case of error, optionally including a cause
      */
     public async remove(document: Document): Promise<void> {
 
@@ -133,12 +164,12 @@ export class Datastore {
 
 
     /**
-     * Implements {@link ReadDatastore#get}
-     *
-     * Additional specs:
-     *
+     * @param resourceId the desired document's resource id
      * @param options.skipCache: boolean
-     * @throws if fetched doc is not of category T, determined by resource.category
+     * @param options to control implementation specific behaviour
+     * @returns {Promise<Document>} a document (rejects with msgWithParams in case of error)
+     * @throws [DOCUMENT_NOT_FOUND] - in case document is missing
+     * @throws [INVALID_DOCUMENT] - in case document is not valid
      */
     public async get(id: string, options?: { skipCache: boolean }): Promise<Document> {
 
@@ -156,6 +187,10 @@ export class Datastore {
     }
 
 
+    /**
+      * @param resourceIds the resource ids of the documents to find
+      * @returns {Promise<Array<Document>>} list of found documents
+      */
     public async getMultiple(ids: string[]): Promise<Array<Document>> {
 
         return (await this.getDocumentsForIds(ids)).documents;
@@ -163,19 +198,18 @@ export class Datastore {
 
 
     /**
-     * Implements {@link ReadDatastore#find}
-     *
-     *
-     * Additional specs:
-     *
+     * Perform a fulltext query
      * Find sorts the documents by identifier ascending
-     *
+     * 
      * @param query
      * @param ignoreCategories to make queries faster, the facility to return only the
      *   categories the datastore is supposed to return, can be turned off. This can make sense if
      *   one performs constraint queries, where one knows that all documents returned are of
      *   allowed categories, due to the nature of the relations to which the constraints refer.
-     * @throws if query contains categories incompatible with T
+     * 
+     * @param query the query object
+     * @returns {Promise<Document[]>} an array of documents
+     * @throws [GENERIC_ERROR (, cause: any)] - in case of error, optionally including a cause
      */
     public async find(query: Query, ignoreCategories: boolean = false): Promise<IdaiFieldFindResult> {
 
@@ -329,106 +363,3 @@ export class Datastore {
         return documents;
     }
 }
-
-
-/**
- * TODO merge apidocs
- * 
- * The interface providing read access methods
- * for datastores supporting the idai-field-core document model.
- * For full access see <code>Datastore</code>
- *
- * Implementations guarantee that any of the methods declared here
- * have no effect on any of the documents within the datastore.
- *
- * @author Sebastian Cuy
- * @author Daniel de Oliveira
- * @author Thomas Kleinke
- */
-/**
- * The interface for datastores supporting
- * the idai-components document model.
- *
- * The errors with which the methods reject, like GENERIC_SAVE_ERROR,
- * are constants of {@link DatastoreErrors}, so GENERIC_SAVE_ERROR really
- * is DatastoreErrors.GENERIC_SAVE_ERROR. The brackets [] are array indicators,
- * so [GENERIC_SAVE_ERROR] is an array containing one element, which is the string
- * corresponding to GENERIC_SAVE_ERROR.
- *
- * @author Sebastian Cuy
- * @author Daniel de Oliveira
- */
-//  export abstract class Datastore {
-// 
-    // /**
-    //  * Persists a given document. If document.resource.id is not set,
-    //  * it will be set to a generated value. In case of an error it remains undefined.
-    //  *
-    //  * In case of a successful call, document.modified and document.created get set,
-    //  * otherwise they remain undefined.
-    //  *
-    //  * @param doc
-    //  * @param username
-    //  * @returns {Promise<Document>} a document
-    //  * @throws [GENERIC_ERROR (, cause: any)] - in case of error, optionally including a cause
-    //  * @throws [DOCUMENT_RESOURCE_ID_EXISTS] - if a document with doc.resource.id already exists
-    //  * @throws [INVALID_DOCUMENT] - in case doc is not valid
-    //  */
-    // abstract create(doc: Document, username: string): Promise<Document>;
-// 
-    // /**
-    //  * Updates an existing document
-    //  *
-    //  * @param doc
-    //  * @param username
-    //  * @param squashRevisionsIds
-    //  * @returns {Promise<Document>} a document
-    //  * @throws [GENERIC_ERROR (, cause: any)] - in case of error, optionally including a cause
-    //  * @throws [SAVE_CONFLICT] - in case of conflict
-    //  * @throws [DOCUMENT_NO_RESOURCE_ID] - if doc has no resource id
-    //  * @throws [INVALID_DOCUMENT] - in case doc is not valid
-    //  * @throws [DOCUMENT_NOT_FOUND] - if document has a resource id, but does not exist in the db
-    //  */
-    // abstract update(doc: Document, username: string, squashRevisionsIds?: string[]): Promise<Document>;
-// 
-    // /**
-    //  * Removes an existing document
-    //  *
-    //  * @param doc
-    //  * @returns {Promise<undefined>} undefined
-    //  * @throws [DOCUMENT_NO_RESOURCE_ID] - if document has no resource id
-    //  * @throws [DOCUMENT_NOT_FOUND] - if document has a resource id, but does not exist in the db
-    //  * @throws [GENERIC_ERROR (, cause: any)] - in case of error, optionally including a cause
-    //  */
-    // abstract remove(doc: Document): Promise<undefined>;
-// 
-// 
-    // /**
-    //  * @param resourceId the desired document's resource id
-    //  * @param options to control implementation specific behaviour
-    //  * @returns {Promise<Document>} a document (rejects with msgWithParams in case of error)
-    //  * @throws [DOCUMENT_NOT_FOUND] - in case document is missing
-    //  * @throws [INVALID_DOCUMENT] - in case document is not valid
-    //  */
-    //  abstract get(resourceId: string, options?: Object): Promise<Document>;
-// 
-// 
-    //  /**
-    //   * @param resourceIds the resource ids of the documents to find
-    //   * @returns {Promise<Array<Document>>} list of found documents
-    //   */
-    //  abstract getMultiple(resourceIds: string[]): Promise<Array<Document>>;
-//  
-//  
-    //  /**
-    //   * Perform a fulltext query
-//  
-    //   * @param query the query object
-    //   * @returns {Promise<Document[]>} an array of documents
-    //   * @throws [GENERIC_ERROR (, cause: any)] - in case of error, optionally including a cause
-    //   */
-    //  abstract find(query: Query): Promise<FindResult>;
-//  
-//  
-    //  abstract findIds(query: Query): FindIdsResult;
-// }

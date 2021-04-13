@@ -73,6 +73,6 @@ export class CategoryPickerComponent implements OnChanges {
     public hasCustomFields: Predicate<Category> = compose(
         Category.getFields,
         map(to(FieldDefinition.SOURCE)),
-        any(is(FieldDefinition.Source.CUSTOM)) as any /* TODO review any */
+        any(is(FieldDefinition.Source.CUSTOM))
     );
 }

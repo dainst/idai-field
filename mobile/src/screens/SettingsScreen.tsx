@@ -2,12 +2,12 @@ import React, { ReactElement, useContext, useEffect, useState } from 'react';
 import { Container, Content, Toast } from 'native-base';
 import { StyleSheet } from 'react-native';
 import PouchDbContext from '../data/pouchdb/pouch-context';
-import { TapStackNavProps } from '../navigation/TabNavigator/TapParamList';
-import SetupPouchForm from '../components/SetupPouchForm';
+import ConnectPouchForm from '../components/ConnectPouchForm';
 import DisconectPouchForm from '../components/DisconnectPouchForm';
+import { RootStackNavProps } from '../navigation/RootStackNavigator/RootStackParamList';
 
 
-const SettingsScreen = ({ navigation }: TapStackNavProps<'Settings'>): ReactElement => {
+const SettingsScreen = ({ navigation }: RootStackNavProps<'Settings'>): ReactElement => {
     
     const pouchCtx = useContext(PouchDbContext);
     const [isDbConnected, setIsDbConnected] = useState(false);

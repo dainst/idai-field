@@ -32,7 +32,7 @@ export default function App(): ReactElement {
         <Root>
             <NavigationContainer>
                 <PouchDbContextProvider>
-                    <TabNavigator />
+                    <RootStackNavigator />
                 </PouchDbContextProvider>
             </NavigationContainer>
         </Root>

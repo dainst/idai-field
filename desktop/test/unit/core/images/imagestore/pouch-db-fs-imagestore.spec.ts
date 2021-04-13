@@ -21,7 +21,7 @@ function str2ab(str: string): ArrayBuffer {
 }
 
 
-xdescribe('PouchDbFsImagestore', () => {
+describe('PouchDbFsImagestore', () => {
 
     let store: PouchDbFsImagestore;
     let manager: PouchdbManager;
@@ -31,15 +31,15 @@ xdescribe('PouchDbFsImagestore', () => {
     beforeEach(async done => {
         const mockBlobMaker = jasmine.createSpyObj('blobProxy',['makeBlob']);
         mockBlobMaker.makeBlob.and.callFake(data => { return { safeResourceUrl: data }; });
-        const mockImageConverter = jasmine.createSpyObj('imageConverter',['convert']);
+        const mockImageConverter = jasmine.createSpyObj('imageConverter', ['convert']);
         mockImageConverter.convert.and.callFake(data => { return data; });
-        const mockConfigProvider =  jasmine.createSpyObj('configProvider',['getProjectConfiguration']);
+        const mockConfigProvider =  jasmine.createSpyObj('configProvider', ['getProjectConfiguration']);
         mockConfigProvider.getProjectConfiguration.and.callFake(() =>{ return {} });
-        const mockFulltextIndexer = jasmine.createSpyObj('mockFulltextIndexer',['add', 'clear']);
+        const mockFulltextIndexer = jasmine.createSpyObj('mockFulltextIndexer', ['add', 'clear']);
         manager = new PouchdbManager((name: string) => new PouchDB(name));
 
         const mockConstraintIndexer = ConstraintIndex.make(
-            {}, {} as any);
+            {}, [] as any);
 
         await manager.createDb('unittest', undefined, false);
 

@@ -4,8 +4,8 @@ import {I18n} from '@ngx-translate/i18n-polyfill';
 import {AppController} from '../core/app-controller';
 import {MenuService} from './menu-service';
 import {UtilTranslations} from '../core/util/util-translations';
-import {ReadImagestore} from '../core/images/imagestore/read-imagestore';
 import {Messages} from './messages/messages';
+import { Imagestore } from '../core/images/imagestore/imagestore';
 
 const remote = typeof window !== 'undefined'
   ? window.require('electron').remote
@@ -24,14 +24,14 @@ export class AppComponent {
 
     public alwaysShowClose = remote.getGlobal('switches').messages_timeout == undefined;
 
-    constructor(private router: Router,
+    constructor(router: Router,
                 private messages: Messages,
                 private renderer: Renderer2,
                 private menuService: MenuService,
                 private i18n: I18n,
                 private utilTranslations: UtilTranslations,
                 appController: AppController,
-                imagestore: ReadImagestore) {
+                imagestore: Imagestore) {
 
         // To get rid of stale messages when changing routes.
         // Note that if you want show a message to the user

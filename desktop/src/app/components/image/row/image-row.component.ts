@@ -3,10 +3,10 @@ import {SafeResourceUrl} from '@angular/platform-browser';
 import {to, aReduce} from 'tsfun';
 import {Datastore, ImageDocument} from 'idai-field-core';
 import {ImageRow, ImageRowItem, ImageRowUpdate, PLACEHOLDER} from '../../../core/images/row/image-row';
-import {ReadImagestore} from '../../../core/images/imagestore/read-imagestore';
 import {AngularUtility} from '../../../angular/angular-utility';
 import {showMissingThumbnailMessageOnConsole} from '../log-messages';
 import {BlobMaker} from '../../../core/images/imagestore/blob-maker';
+import { Imagestore } from '../../../core/images/imagestore/imagestore';
 
 
 const MAX_IMAGE_WIDTH: number = 600;
@@ -45,7 +45,7 @@ export class ImageRowComponent implements OnChanges {
     private imageRow: ImageRow;
 
 
-    constructor(private imagestore: ReadImagestore,
+    constructor(private imagestore: Imagestore,
                 private datastore: Datastore) {}
 
 

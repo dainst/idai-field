@@ -22,7 +22,6 @@ import { BlobMaker } from '../core/images/imagestore/blob-maker';
 import { ImageConverter } from '../core/images/imagestore/image-converter';
 import { Imagestore } from '../core/images/imagestore/imagestore';
 import { PouchDbFsImagestore } from '../core/images/imagestore/pouch-db-fs-imagestore';
-import { ReadImagestore } from '../core/images/imagestore/read-imagestore';
 import { ImportValidator } from '../core/import/import/process/import-validator';
 import { InitializationProgress } from '../core/initialization-progress';
 import { ImageRelationsManager } from '../core/model/image-relations-manager';
@@ -136,7 +135,6 @@ registerLocaleData(localeIt, 'it');
             },
             deps: [PouchdbManager, ImageConverter, BlobMaker]
         },
-        { provide: ReadImagestore, useExisting: Imagestore },
         { provide: LocationStrategy, useClass: HashLocationStrategy },
         BlobMaker,
         ImageConverter,

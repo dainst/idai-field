@@ -2,8 +2,8 @@ import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import {SafeResourceUrl} from '@angular/platform-browser';
 import {FieldDocument} from 'idai-field-core';
 import {ModelUtil} from '../../../../../core/model/model-util';
-import {ReadImagestore} from '../../../../../core/images/imagestore/read-imagestore';
 import {ImageRowItem} from '../../../../../core/images/row/image-row';
+import {Imagestore} from '../../../../../core/images/imagestore/imagestore';
 
 
 @Component({
@@ -22,7 +22,7 @@ export class TypeRowComponent implements OnChanges {
     @Output() onSelect: EventEmitter<void> = new EventEmitter<void>();
 
 
-    constructor(private imagestore: ReadImagestore) {}
+    constructor(private imagestore: Imagestore) {}
 
 
     async ngOnChanges() {

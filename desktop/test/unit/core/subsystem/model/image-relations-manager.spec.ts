@@ -5,7 +5,7 @@ import {
 import {ImageRelationsC as ImageRelations} from 'idai-field-core';
 
 
-xdescribe('subsystem/image-relations-manager', () => {
+describe('subsystem/image-relations-manager', () => {
 
     let app;
     let helpers;
@@ -218,7 +218,7 @@ xdescribe('subsystem/image-relations-manager', () => {
     });
 
 
-    it('add depicts relation', async done => {
+    xit('add depicts relation', async done => {
 
         const documentsLookup = await helpers.createDocuments(
             [

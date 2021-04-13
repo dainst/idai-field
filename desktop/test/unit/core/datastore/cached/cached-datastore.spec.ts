@@ -1,6 +1,5 @@
-import { doc, FieldDocument, DocumentCache } from 'idai-field-core';
+import { doc, FieldDocument, DocumentCache, DocumentDatastore } from 'idai-field-core';
 import { FieldCategoryConverter } from '../../../../../src/app/core/datastore/field/field-category-converter';
-import { FieldDatastore } from '../../../../../src/app/core/datastore/field/field-datastore';
 
 
 /**
@@ -9,7 +8,7 @@ import { FieldDatastore } from '../../../../../src/app/core/datastore/field/fiel
  */
 describe('CachedDatastore', () => {
 
-    let ds: FieldDatastore;
+    let ds: DocumentDatastore;
     let mockdb: any;
     let mockIndexFacade: any;
 
@@ -29,7 +28,7 @@ describe('CachedDatastore', () => {
         );
 
         const documentCache = new DocumentCache<FieldDocument>();
-        const docDatastore = new FieldDatastore(
+        const docDatastore = new DocumentDatastore(
             mockdb,
             mockIndexFacade,
             documentCache,
@@ -109,7 +108,7 @@ describe('CachedDatastore', () => {
             }
         ]));
 
-        const documents: Array<FieldDocument> = await ds.getMultiple(['1', '2']);
+        const documents = await ds.getMultiple(['1', '2']);
         expect(documents.length).toBe(2);
         verifyIsFieldDocument(documents[0]);
         verifyIsFieldDocument(documents[1]);
@@ -143,7 +142,7 @@ describe('CachedDatastore', () => {
 
         await ds.get('2');  // Save in cache
 
-        const documents: Array<FieldDocument> = await ds.getMultiple(['1', '2', '3']);
+        const documents = await ds.getMultiple(['1', '2', '3']);
         expect(documents.length).toBe(3);
         expect(documents[0].resource.id).toEqual('1');
         expect(documents[1].resource.id).toEqual('2');

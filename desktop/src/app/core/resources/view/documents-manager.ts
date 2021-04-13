@@ -1,7 +1,6 @@
 import {Observer, Observable} from 'rxjs';
 import {subtract, set} from 'tsfun';
-import {Document, Resource} from 'idai-field-core';
-import {FieldDatastore} from '../../datastore/field/field-datastore';
+import {Document, DocumentDatastore, Resource} from 'idai-field-core';
 import {ChangesStream} from '../../datastore/changes/changes-stream';
 import {Loading} from '../../../components/widgets/loading';
 import {ResourcesStateManager} from './resources-state-manager';
@@ -45,7 +44,7 @@ export class DocumentsManager {
 
 
     constructor(
-        private datastore: FieldDatastore,
+        private datastore: DocumentDatastore,
         changesStream: ChangesStream,
         private resourcesStateManager: ResourcesStateManager,
         private loading: Loading,
@@ -114,7 +113,7 @@ export class DocumentsManager {
 
         try {
             if (typeof (document) === 'string') {
-                document = await this.datastore.get(document);
+                document = FieldDocument.fromDocument(await this.datastore.get(document));
             } else if (document) {
                 await this.datastore.get(document.resource.id);
             }
@@ -168,7 +167,7 @@ export class DocumentsManager {
 
         this.removeNewDocument();
 
-        const documentToSelect: FieldDocument = await this.datastore.get(resourceId);
+        const documentToSelect = await this.datastore.get(resourceId) as any /*TODO any*/;
         this.newDocumentsFromRemote
             = subtract([documentToSelect.resource.id])(this.newDocumentsFromRemote);
 
@@ -214,10 +213,10 @@ export class DocumentsManager {
         await AngularUtility.refresh();
 
         this.currentQueryId = new Date().toISOString();
-        const result: IdaiFieldFindResult<FieldDocument>
+        const result: IdaiFieldFindResult<Document>
             = await this.createUpdatedDocumentList(this.currentQueryId);
 
-        await this.updateChildrenCountMap(result.documents);
+        await this.updateChildrenCountMap(result.documents.map(FieldDocument.fromDocument));
 
         if (this.loading) this.loading.stop();
         if (result.queryId !== this.currentQueryId) {
@@ -225,7 +224,7 @@ export class DocumentsManager {
             return;
         }
 
-        this.documents = result.documents;
+        this.documents = result.documents.map(FieldDocument.fromDocument);
         this.totalDocumentCount = result.totalCount;
 
         this.populateInProgress = false;
@@ -233,7 +232,7 @@ export class DocumentsManager {
     }
 
 
-    public async createUpdatedDocumentList(queryId?: string): Promise<IdaiFieldFindResult<FieldDocument>> {
+    public async createUpdatedDocumentList(queryId?: string): Promise<IdaiFieldFindResult<Document>> {
 
         const isRecordedInTarget = this.makeIsRecordedInTarget();
         if (!isRecordedInTarget && !this.resourcesStateManager.isInSpecialView()) {
@@ -347,7 +346,7 @@ export class DocumentsManager {
     }
 
 
-    private async fetchDocuments(query: Query): Promise<IdaiFieldFindResult<FieldDocument>> {
+    private async fetchDocuments(query: Query): Promise<IdaiFieldFindResult<Document>> {
 
         try {
             const ignoreCategories = !query.categories

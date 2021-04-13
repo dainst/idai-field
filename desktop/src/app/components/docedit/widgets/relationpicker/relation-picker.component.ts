@@ -1,9 +1,8 @@
 import {Component, ElementRef, Input, OnChanges} from '@angular/core';
-import {Document, Resource} from 'idai-field-core';
+import {Document, DocumentDatastore, Resource} from 'idai-field-core';
 import {RelationDefinition} from 'idai-field-core';
 import {RelationPicker} from './relation-picker';
 import {DefaultRelationPicker} from './default-relation-picker';
-import {FieldDatastore} from '../../../../core/datastore/field/field-datastore';
 
 
 @Component({
@@ -37,7 +36,7 @@ export class RelationPickerComponent implements OnChanges {
 
 
     constructor(private element: ElementRef,
-                private datastore: FieldDatastore) {}
+                private datastore: DocumentDatastore) {}
 
 
     public deleteRelation = () => this.relationPicker.deleteRelation();

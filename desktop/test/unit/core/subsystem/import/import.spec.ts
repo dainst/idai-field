@@ -56,9 +56,9 @@ describe('Import/Subsystem', () => {
         const {projectConfiguration} = await setupSettingsService(pouchdbManager, new PouchdbServer());
         _projectConfiguration = projectConfiguration;
         const app = await createApp();
-        const {fieldDocumentDatastore} = app;
+        const {documentDatastore} = app;
         helpers = createHelpers(app);
-        datastore = fieldDocumentDatastore;
+        datastore = documentDatastore;
         services = {datastore, relationsManager, imageRelationsManager, imagestore};
         done();
     });

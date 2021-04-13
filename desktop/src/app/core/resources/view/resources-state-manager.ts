@@ -3,12 +3,11 @@ import {ResourcesState} from './state/resources-state';
 import {StateSerializer} from '../../common/state-serializer';
 import {ViewState} from './state/view-state';
 import {NavigationPath} from './state/navigation-path';
-import {FieldDatastore} from '../../datastore/field/field-datastore';
 import {TabManager} from '../../tabs/tab-manager';
 import {ResourcesViewMode} from './view-facade';
 import {ProjectCategories} from '../../configuration/project-categories';
 import {ProjectConfiguration} from '../../configuration/project-configuration';
-import {FieldDocument, ObjectUtils, ObserverUtil, IndexFacade} from 'idai-field-core'
+import {FieldDocument, ObjectUtils, ObserverUtil, IndexFacade, DocumentDatastore} from 'idai-field-core'
 
 
 /**
@@ -42,7 +41,7 @@ export class ResourcesStateManager {
 
 
     constructor(
-        private datastore: FieldDatastore,
+        private datastore: DocumentDatastore,
         private indexFacade: IndexFacade,
         private serializer: StateSerializer,
         private tabManager: TabManager,
@@ -90,7 +89,7 @@ export class ResourcesStateManager {
             }
 
             const state: ViewState = this.resourcesState.operationViewStates[viewName];
-            if (!state.operation) state.operation = await this.datastore.get(viewName);
+            if (!state.operation) state.operation = FieldDocument.fromDocument(await this.datastore.get(viewName));
             if (!this.tabManager.isOpen('resources', viewName)) state.mode = currentMode;
 
             this.serialize();
@@ -242,7 +241,7 @@ export class ResourcesStateManager {
                                                   documentAsContext: boolean = false) {
 
         const segments = await NavigationPath.makeSegments(
-            document, resourceId => this.datastore.get(resourceId), documentAsContext
+            document, async resourceId => FieldDocument.fromDocument(await this.datastore.get(resourceId)), documentAsContext
         );
         if (segments.length === 0) return await this.moveInto(undefined);
 
@@ -287,7 +286,7 @@ export class ResourcesStateManager {
 
         for (let id of Object.keys(resourcesState.operationViewStates)) {
             try {
-                resourcesState.operationViewStates[id].operation = await this.datastore.get(id);
+                resourcesState.operationViewStates[id].operation = FieldDocument.fromDocument(await this.datastore.get(id));
             } catch (err) {
                 console.warn('Failed to load operation document for view: ' + id);
                 delete resourcesState.operationViewStates[id];
@@ -306,7 +305,7 @@ export class ResourcesStateManager {
         try {
             NavigationPath.setSelectedDocument(
                 navigationPath,
-                await this.datastore.get(selectedDocument.resource.id)
+                FieldDocument.fromDocument(await this.datastore.get(selectedDocument.resource.id))
             );
         } catch (err) {
             NavigationPath.setSelectedDocument(navigationPath, undefined);

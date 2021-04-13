@@ -1,11 +1,10 @@
-import {FieldDocument} from 'idai-field-core';
+import {DocumentDatastore} from 'idai-field-core';
 import {Document} from 'idai-field-core';
 import {TabUtil} from './tab-util';
 import {TabSpaceCalculator} from './tab-space-calculator';
 import {Tab} from './tab';
 import {IndexFacade} from 'idai-field-core';
 import {StateSerializer} from '../common/state-serializer';
-import {FieldDatastore} from '../datastore/field/field-datastore';
 
 
 /**
@@ -23,7 +22,7 @@ export class TabManager {
     constructor(indexFacade: IndexFacade,
                 private tabSpaceCalculator: TabSpaceCalculator,
                 private stateSerializer: StateSerializer,
-                private datastore: FieldDatastore,
+                private datastore: DocumentDatastore,
                 private navigate: (path: string[]) => Promise<void>) {
 
         indexFacade.changesNotifications().subscribe(document => this.updateTabLabels(document));
@@ -149,7 +148,7 @@ export class TabManager {
         const validatedTabs: Array<Tab> = [];
         const operationIds: string[] = this.tabs.map(tab => tab.operationId);
 
-        const operations: Array<FieldDocument> = await this.datastore.getMultiple(operationIds);
+        const operations = await this.datastore.getMultiple(operationIds);
 
         for (let operation of operations) {
             const tab: Tab|undefined = this.tabs.find(tab => {
@@ -213,7 +212,7 @@ export class TabManager {
         if (operationId && operationId !== 'project' && operationId !== 'types'
                 && !this.getTab(routeName, operationId) && routeName === 'resources') {
             try {
-                const document: FieldDocument = await this.datastore.get(operationId);
+                const document = await this.datastore.get(operationId);
                 await this.openTab(
                     routeName, operationId, document.resource.identifier,document.resource.category
                 );

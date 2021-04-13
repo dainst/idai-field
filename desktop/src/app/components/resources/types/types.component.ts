@@ -1,9 +1,8 @@
 import { ChangeDetectorRef, Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { Document, FieldDocument, ImageRelationsC as ImageRelations, SyncService, SyncStatus, TypeRelations } from 'idai-field-core';
+import { Document, DocumentDatastore, FieldDocument, ImageRelationsC as ImageRelations, SyncService, SyncStatus, TypeRelations } from 'idai-field-core';
 import { curry, filter, flatten, flow, isnt, Map, map, set, take } from 'tsfun';
 import { makeLookup } from '../../../../../../core/src/tools/transformers';
 import { ProjectCategories } from '../../../core/configuration/project-categories';
-import { FieldDatastore } from '../../../core/datastore/field/field-datastore';
 import { ImageDatastore } from '../../../core/datastore/field/image-datastore';
 import { ReadImagestore } from '../../../core/images/imagestore/read-imagestore';
 import { PLACEHOLDER } from '../../../core/images/row/image-row';
@@ -67,7 +66,7 @@ export class TypesComponent extends BaseList implements OnChanges {
     private visibleSections = ['types'];
 
 
-    constructor(private fieldDatastore: FieldDatastore,
+    constructor(private datastore: DocumentDatastore,
                 private imageDatastore: ImageDatastore,
                 private imagestore: ReadImagestore,
                 private viewModalLauncher: ViewModalLauncher,
@@ -256,14 +255,14 @@ export class TypesComponent extends BaseList implements OnChanges {
 
         if (!this.mainDocument) return {};
 
-        const subtypesArray = (await this.fieldDatastore.find({
+        const subtypesArray = map((await this.datastore.find({
             constraints: {
                 'liesWithin:contain': {
                     value: this.mainDocument.resource.id,
                     searchRecursively: true
                 }
             }
-        })).documents;
+        })).documents, FieldDocument.fromDocument);
 
         return makeLookup(['resource', 'id'])(subtypesArray);
     }
@@ -278,10 +277,10 @@ export class TypesComponent extends BaseList implements OnChanges {
             filter(curry(Document.hasRelations, TypeRelations.HASINSTANCE)),
             map(document => document.resource.relations[TypeRelations.HASINSTANCE]),
             flatten(),
-            set as any // TODO review any
+            set as any // TODO any
         );
 
-        return await this.fieldDatastore.getMultiple(linkedResourceIds);
+        return map(await this.datastore.getMultiple(linkedResourceIds), FieldDocument.fromDocument);
     }
 
 
@@ -318,7 +317,7 @@ export class TypesComponent extends BaseList implements OnChanges {
 
     private getImageIdsOfLinkedResources(document: FieldDocument): string[] {
 
-        const imageIds: string[] = TypeImagesUtil.getLinkedImageIds(document, this.fieldDatastore, this.imageDatastore)
+        const imageIds: string[] = TypeImagesUtil.getLinkedImageIds(document, this.datastore, this.imageDatastore)
             .filter(isnt(PLACEHOLDER));
 
         return take(4, imageIds);

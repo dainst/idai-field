@@ -17,7 +17,6 @@ import { ConfigLoader } from '../core/configuration/boot/config-loader';
 import { ConfigReader } from '../core/configuration/boot/config-reader';
 import { ProjectConfiguration } from '../core/configuration/project-configuration';
 import { DatastoreModule } from '../core/datastore/datastore.module';
-import { FieldDatastore } from '../core/datastore/field/field-datastore';
 import { PouchdbServer } from '../core/datastore/pouchdb/pouchdb-server';
 import { BlobMaker } from '../core/images/imagestore/blob-maker';
 import { ImageConverter } from '../core/images/imagestore/image-converter';
@@ -190,7 +189,7 @@ registerLocaleData(localeIt, 'it');
                 indexFacade: IndexFacade,
                 tabSpaceCalculator: TabSpaceCalculator,
                 stateSerializer: StateSerializer,
-                datastore: FieldDatastore,
+                datastore: DocumentDatastore,
                 router: Router
             ) => {
                 const tabManager = new TabManager(
@@ -199,7 +198,7 @@ registerLocaleData(localeIt, 'it');
                 router.events.subscribe(async () => { await tabManager.routeChanged(router.url) });
                 return tabManager;
             },
-            deps: [IndexFacade, TabSpaceCalculator, StateSerializer, FieldDatastore, Router]
+            deps: [IndexFacade, TabSpaceCalculator, StateSerializer, DocumentDatastore, Router]
         },
         TabSpaceCalculator,
         MenuService,

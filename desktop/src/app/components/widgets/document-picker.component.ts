@@ -1,11 +1,9 @@
 import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
-import {union} from 'tsfun';
-import {FieldDocument, ObjectUtils, Category, Query, Constraint} from 'idai-field-core';
-import {FieldDatastore} from '../../core/datastore/field/field-datastore';
+import {map, union} from 'tsfun';
+import {FieldDocument, ObjectUtils, Document, Category, Query, Constraint, DocumentDatastore, FindResult} from 'idai-field-core';
 import {Loading} from './loading';
 import {AngularUtility} from '../../angular/angular-utility';
-import {FieldDocumentFindResult} from '../../core/datastore/field/field-datastore';
 import {ProjectConfiguration} from '../../core/configuration/project-configuration';
 import {Messages} from '../messages/messages';
 
@@ -33,8 +31,8 @@ export class DocumentPickerComponent implements OnChanges {
     private currentQueryId: string;
 
 
-    constructor(private datastore: FieldDatastore,
-                private projectConfiguration: ProjectConfiguration,
+    constructor(private datastore: DocumentDatastore,
+                private projectConfiguration: ProjectConfiguration, // TODO unused
                 private loading: Loading,
                 private messages: Messages,
                 private i18n: I18n) {}
@@ -119,13 +117,13 @@ export class DocumentPickerComponent implements OnChanges {
     }
 
 
-    private getDocuments(result: FieldDocumentFindResult): Array<FieldDocument> {
+    private getDocuments(result: FindResult): Array<FieldDocument> {
 
-        return this.isProjectOptionVisible()
+        return map(this.isProjectOptionVisible()
             ? [this.getProjectOption()].concat(
-                result.documents.filter(document => document.resource.category !== 'Project')
+                result.documents.filter(document => document.resource.category !== 'Project') as any /*TODO any*/
             )
-            : result.documents;
+            : result.documents, FieldDocument.fromDocument);
     }
 
 

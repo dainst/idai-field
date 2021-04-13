@@ -1,6 +1,5 @@
 import {Component, Input, OnChanges, Renderer2, SimpleChanges} from '@angular/core';
-import {FieldDocument} from 'idai-field-core';
-import {FieldDatastore} from '../../../core/datastore/field/field-datastore';
+import {DocumentDatastore, FieldDocument} from 'idai-field-core';
 import {RoutingService} from '../../routing-service';
 import {ResourcesComponent} from '../resources.component';
 import {ResourcesSearchBarComponent} from './resources-search-bar.component';
@@ -30,10 +29,10 @@ export class SearchSuggestionsComponent implements OnChanges {
 
 
     constructor(private routingService: RoutingService,
-                private datastore: FieldDatastore,
+                private datastore: DocumentDatastore,
                 private viewFacade: ViewFacade,
                 private resourcesSearchBarComponent: ResourcesSearchBarComponent,
-                private resourcesComponent: ResourcesComponent,
+                private resourcesComponent: ResourcesComponent, // TODO unused
                 private renderer: Renderer2,
                 private projectConfiguration: ProjectConfiguration) {
 
@@ -106,7 +105,7 @@ export class SearchSuggestionsComponent implements OnChanges {
             return this.suggestedDocuments = [];
         }
 
-        this.suggestedDocuments = (await this.datastore.find(this.makeQuery())).documents;
+        this.suggestedDocuments = (await this.datastore.find(this.makeQuery())).documents.map(FieldDocument.fromDocument);
         this.selectedSuggestion = undefined;
     }
 

@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { ObjectUtils, FieldDocument, ImageDocument, ImageRelationsC as ImageRelations, moveInArray } from 'idai-field-core';
+import { ObjectUtils, FieldDocument, ImageDocument, ImageRelationsC as ImageRelations, moveInArray, DocumentDatastore } from 'idai-field-core';
 import { Document } from 'idai-field-core';
 import { flatten, set, subtract, to } from 'tsfun';
-import { FieldDatastore } from '../../../../../core/datastore/field/field-datastore';
 import { ImageDatastore } from '../../../../../core/datastore/field/image-datastore';
 import { RelationsManager } from '../../../../../core/model/relations-manager';
 import { ViewFacade } from '../../../../../core/resources/view/view-facade';
@@ -42,7 +41,7 @@ export class LayerManager {
 
 
     constructor(private imageDatastore: ImageDatastore,
-                private fieldDatastore: FieldDatastore,
+                private fieldDatastore: DocumentDatastore,
                 private viewFacade: ViewFacade,
                 private relationsManager: RelationsManager) {}
 
@@ -204,7 +203,7 @@ export class LayerManager {
         const currentOperation: FieldDocument|undefined = this.viewFacade.getCurrentOperation();
         if (currentOperation) layerGroups.push(await this.createLayerGroup(currentOperation));
 
-        const projectGroup: LayerGroup = await this.createLayerGroup(await this.fieldDatastore.get('project'));
+        const projectGroup: LayerGroup = await this.createLayerGroup(await this.fieldDatastore.get('project') as any /*TODO any*/);
         if (projectGroup.layers.length > 0 || layerGroups.length === 0) layerGroups.push(projectGroup);
 
         return layerGroups;

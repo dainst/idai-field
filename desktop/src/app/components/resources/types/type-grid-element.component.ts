@@ -1,10 +1,9 @@
 import {Input, Component, OnChanges, SimpleChanges} from '@angular/core';
 import {SafeResourceUrl} from '@angular/platform-browser';
 import {ReadImagestore} from '../../../core/images/imagestore/read-imagestore';
-import {FieldDatastore} from '../../../core/datastore/field/field-datastore';
 import {ImageDatastore} from '../../../core/datastore/field/image-datastore';
 import {BlobMaker} from '../../../core/images/imagestore/blob-maker';
-import { FieldDocument } from 'idai-field-core';
+import { DocumentDatastore, FieldDocument } from 'idai-field-core';
 
 @Component({
     selector: 'type-grid-element',
@@ -24,7 +23,7 @@ export class TypeGridElementComponent implements OnChanges {
 
 
     constructor(imagestore: ReadImagestore, // TODO unused
-                fieldDatastore: FieldDatastore,
+                datastore: DocumentDatastore,
                 imageDatastore: ImageDatastore,
                 private blobMaker: BlobMaker) {}
 

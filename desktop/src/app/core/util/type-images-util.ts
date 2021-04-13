@@ -1,6 +1,5 @@
-import { FieldDocument, Query, ResourceId } from 'idai-field-core';
+import { DocumentDatastore, FieldDocument, Query, ResourceId } from 'idai-field-core';
 import { filter, flow, isDefined, map } from 'tsfun';
-import { FieldDatastore } from '../datastore/field/field-datastore';
 import { ImageDatastore } from '../datastore/field/image-datastore';
 import { PLACEHOLDER } from '../images/row/image-row';
 
@@ -18,7 +17,7 @@ export module TypeImagesUtil {
      * type catalog are not directly linked to an image, the images of finds linked to the categories are returned.
      */
     export function getLinkedImageIds(document: FieldDocument,
-                                      fieldDatastore: FieldDatastore,
+                                      datastore: DocumentDatastore,
                                       imageDatastore: ImageDatastore): string[] {
 
         if (document.resource.category !== 'Type' && document.resource.category !== 'TypeCatalog') {
@@ -26,28 +25,29 @@ export module TypeImagesUtil {
         }
 
         return document.resource.category === 'TypeCatalog'
-            ? getLinkedImagesForTypeCatalog(document.resource.id, fieldDatastore, imageDatastore)
-            : getLinkedImagesForType(document.resource.id, fieldDatastore, imageDatastore);
+            ? getLinkedImagesForTypeCatalog(document.resource.id, datastore, imageDatastore)
+            : getLinkedImagesForType(document.resource.id, datastore, imageDatastore);
     }
 
 
-    function getLinkedImagesForTypeCatalog(resourceId: ResourceId, fieldDatastore: FieldDatastore,
-                                                 imageDatastore: ImageDatastore): string[] {
+    function getLinkedImagesForTypeCatalog(resourceId: ResourceId,
+                                           datastore: DocumentDatastore,
+                                           imageDatastore: ImageDatastore): string[] {
 
         const query: Query = {
             constraints: { 'liesWithin:contain': resourceId }
         };
 
-        const resourceIds: string[] = fieldDatastore.findIds(query, true).ids;
+        const resourceIds: string[] = datastore.findIds(query, true).ids;
 
         return flow(
             resourceIds,
-            map(getTypeImage(fieldDatastore, imageDatastore)),
+            map(getTypeImage(datastore, imageDatastore)),
             filter(isDefined));
     }
 
 
-    function getTypeImage(fieldDatastore: FieldDatastore, imageDatastore: ImageDatastore) {
+    function getTypeImage(datastore: DocumentDatastore, imageDatastore: ImageDatastore) {
 
         return (resourceId: string): string|undefined => {
 
@@ -56,7 +56,7 @@ export module TypeImagesUtil {
             if (imageId) {
                 return imageId;
             } else {
-                const linkedImageIds: string[] = getLinkedImagesForType(resourceId, fieldDatastore, imageDatastore);
+                const linkedImageIds: string[] = getLinkedImagesForType(resourceId, datastore, imageDatastore);
 
                 return linkedImageIds.length > 0
                     ? linkedImageIds[0]
@@ -66,14 +66,15 @@ export module TypeImagesUtil {
     }
 
 
-    function getLinkedImagesForType(resourceId: ResourceId, fieldDatastore: FieldDatastore,
-                                          imageDatastore: ImageDatastore): string[] {
+    function getLinkedImagesForType(resourceId: ResourceId,
+                                    datastore: DocumentDatastore,
+                                    imageDatastore: ImageDatastore): string[] {
 
         const query: Query = {
             constraints: { 'isInstanceOf:contain': resourceId }
         };
 
-        const ids: string[] = fieldDatastore.findIds(query, true).ids;
+        const ids: string[] = datastore.findIds(query, true).ids;
         const result: string[] = [];
 
         for (let id of ids) {

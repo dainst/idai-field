@@ -4,12 +4,11 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { IndexFacade, SyncService } from 'idai-field-core';
+import { DocumentDatastore, IndexFacade, SyncService } from 'idai-field-core';
 import { StandardStateSerializer } from '../../core/common/standard-state-serializer';
 import { StateSerializer } from '../../core/common/state-serializer';
 import { ProjectConfiguration } from '../../core/configuration/project-configuration';
 import { ChangesStream } from '../../core/datastore/changes/changes-stream';
-import { FieldDatastore } from '../../core/datastore/field/field-datastore';
 import { NavigationService } from '../../core/resources/navigation/navigation-service';
 import { ResourcesStateManager } from '../../core/resources/view/resources-state-manager';
 import { ViewFacade } from '../../core/resources/view/view-facade';
@@ -119,7 +118,7 @@ const remote = typeof window !== 'undefined'
         },
         {
             provide: ResourcesStateManager,
-            useFactory: (datastore: FieldDatastore,
+            useFactory: (datastore: DocumentDatastore,
                          indexFacade: IndexFacade,
                          stateSerializer: StateSerializer,
                          projectConfiguration: ProjectConfiguration,
@@ -140,7 +139,7 @@ const remote = typeof window !== 'undefined'
                 );
             },
             deps: [
-                FieldDatastore, IndexFacade, StateSerializer, ProjectConfiguration, SettingsProvider,
+                DocumentDatastore, IndexFacade, StateSerializer, ProjectConfiguration, SettingsProvider,
                 TabManager
             ]
         },
@@ -148,7 +147,7 @@ const remote = typeof window !== 'undefined'
             provide: ViewFacade,
             useFactory: function(
                 projectConfiguration: ProjectConfiguration,
-                datastore: FieldDatastore,
+                datastore: DocumentDatastore,
                 changesStream: ChangesStream,
                 resourcesStateManager: ResourcesStateManager,
                 loading: Loading,
@@ -169,7 +168,7 @@ const remote = typeof window !== 'undefined'
             },
             deps: [
                 ProjectConfiguration,
-                FieldDatastore,
+                DocumentDatastore,
                 ChangesStream,
                 ResourcesStateManager,
                 Loading,

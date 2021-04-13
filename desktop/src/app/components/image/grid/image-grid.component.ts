@@ -1,8 +1,7 @@
 import {Component, EventEmitter, Input, OnChanges, SimpleChanges, Output, ElementRef} from '@angular/core';
 import {flatten} from 'tsfun';
-import {ImageDocument} from 'idai-field-core';
+import {DocumentDatastore, ImageDocument} from 'idai-field-core';
 import {Document} from 'idai-field-core';
-import {FieldDatastore} from '../../../core/datastore/field/field-datastore';
 import {ImageUploadResult} from '../upload/image-uploader';
 import {Imagestore} from '../../../core/images/imagestore/imagestore';
 import {constructGrid} from '../../../core/images/grid/construct-grid';
@@ -48,9 +47,9 @@ export class ImageGridComponent implements OnChanges {
 
 
     constructor(private element: ElementRef,
-                private messages: Messages,
+                private messages: Messages, // TODO unused
                 private imagestore: Imagestore,
-                private datastore: FieldDatastore,
+                private datastore: DocumentDatastore,
                 private blobMaker: BlobMaker) {}
 
 

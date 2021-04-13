@@ -24,7 +24,7 @@ describe('subsystem/datastore/find', () => {
 
         const {
             documentDatastore: d,
-            fieldDocumentDatastore: f,
+            documentDatastore: f,
             imageDatastore: i
         } = await createApp();
 

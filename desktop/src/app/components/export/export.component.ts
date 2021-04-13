@@ -4,7 +4,6 @@ import { I18n } from '@ngx-translate/i18n-polyfill';
 import { Category, DocumentDatastore, FieldDocument, Query } from 'idai-field-core';
 import { ProjectCategories } from '../../core/configuration/project-categories';
 import { ProjectConfiguration } from '../../core/configuration/project-configuration';
-import { FieldDatastore } from '../../core/datastore/field/field-datastore';
 import { CatalogExporter, ERROR_FAILED_TO_COPY_IMAGES } from '../../core/export/catalog/catalog-exporter';
 import { ERROR_NOT_ALL_IMAGES_EXCLUSIVELY_LINKED } from '../../core/export/catalog/get-export-documents';
 import { CsvExporter } from '../../core/export/csv/csv-exporter';
@@ -60,8 +59,7 @@ export class ExportComponent implements OnInit {
                 private modalService: NgbModal,
                 private messages: Messages,
                 private i18n: I18n,
-                private fieldDatastore: FieldDatastore,
-                private documentDatastore: DocumentDatastore,
+                private datastore: DocumentDatastore,
                 private tabManager: TabManager,
                 private projectConfiguration: ProjectConfiguration,
                 private menuService: MenuService,
@@ -77,7 +75,7 @@ export class ExportComponent implements OnInit {
 
     public noCatalogsFound = () => this.catalogs.length === 0 && !this.initializing;
 
-    public find = (query: Query) => this.documentDatastore.find(query);
+    public find = (query: Query) => this.datastore.find(query);
 
     public showOperations = () => this.format === 'csv' ? this.csvExportMode === 'complete' : this.format !== 'catalog';
 
@@ -165,7 +163,7 @@ export class ExportComponent implements OnInit {
 
         try {
             await CatalogExporter.performExport(
-                this.documentDatastore,
+                this.datastore,
                 this.relationsManager,
                 this.imageRelationsManager,
                 filePath,
@@ -189,7 +187,7 @@ export class ExportComponent implements OnInit {
     private async startGeojsonExport(filePath: string) {
 
         await GeoJsonExporter.performExport(
-            this.fieldDatastore,
+            this.datastore,
             filePath,
             this.selectedOperationId
         );
@@ -200,7 +198,7 @@ export class ExportComponent implements OnInit {
 
         await ShapefileExporter.performExport(
             this.settingsProvider.getSettings(),
-            await this.documentDatastore.get('project'),
+            await this.datastore.get('project'),
             filePath,
             this.selectedOperationId
         );
@@ -219,7 +217,7 @@ export class ExportComponent implements OnInit {
                 this.projectConfiguration
                     .getRelationDefinitionsForDomainCategory(this.selectedCategory.name)
                     .map(_ => _.name),
-                (async resourceId => (await this.documentDatastore.get(resourceId)).resource.identifier),
+                (async resourceId => (await this.datastore.get(resourceId)).resource.identifier),
                 CsvExporter.performExport(filePath)
             );
         } catch(err) {
@@ -307,10 +305,10 @@ export class ExportComponent implements OnInit {
     private async fetchCatalogs(): Promise<Array<FieldDocument>> {
 
         try {
-            return (await this.fieldDatastore.find({
+            return (await this.datastore.find({
                 categories: ['TypeCatalog'],
                 constraints: { 'project:exist': 'UNKNOWN' }
-            })).documents;
+            })).documents.map(FieldDocument.fromDocument);
         } catch (msgWithParams) {
             this.messages.add(msgWithParams);
             return [];
@@ -321,9 +319,9 @@ export class ExportComponent implements OnInit {
     private async fetchOperations(): Promise<Array<FieldDocument>> {
 
         try {
-            return (await this.fieldDatastore.find({
+            return (await this.datastore.find({
                 categories: ProjectCategories.getOperationCategoryNames(this.projectConfiguration.getCategoryTreelist())
-            })).documents;
+            })).documents.map(FieldDocument.fromDocument);
         } catch (msgWithParams) {
             this.messages.add(msgWithParams);
             return [];

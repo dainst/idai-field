@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Category, Constraint, FieldDefinition, FieldDocument, FieldResource, FindResult, Group, onName, Query, TypeRelations, ValuelistDefinition } from 'idai-field-core';
+import { Category, Constraint, DocumentDatastore, FieldDefinition, FieldDocument, FieldResource, FindResult, Group, onName, Query, TypeRelations, ValuelistDefinition } from 'idai-field-core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Document, Resource } from 'idai-field-core';
 import {
@@ -7,7 +7,6 @@ import {
     is, isNot, left, map, Mapping, on, Pair, prune, right, to, undefinedOrEmpty
 } from 'tsfun';
 import { ProjectConfiguration } from '../../../../../core/configuration/project-configuration';
-import { FieldDatastore } from '../../../../../core/datastore/field/field-datastore';
 import { ImageDatastore } from '../../../../../core/datastore/field/image-datastore';
 import { ImageRowItem } from '../../../../../core/images/row/image-row';
 import { TypeImagesUtil } from '../../../../../core/util/type-images-util';
@@ -58,7 +57,7 @@ export class TypeRelationPickerComponent {
 
 
     constructor(public activeModal: NgbActiveModal,
-                private fieldDatastore: FieldDatastore,
+                private datastore: DocumentDatastore,
                 private imageDatastore: ImageDatastore,
                 projectConfiguration: ProjectConfiguration) {
 
@@ -148,7 +147,7 @@ export class TypeRelationPickerComponent {
     private async getUsedCatalogCriteria(): Promise<string[]> {
 
         return flow(
-            await this.fieldDatastore.find({ categories: [TYPECATALOG] }),
+            await this.datastore.find({ categories: [TYPECATALOG] }),
             to(FindResult.DOCUMENTS),
             map(to(Document.RESOURCE)),
             map(to(CRITERION)),
@@ -166,7 +165,7 @@ export class TypeRelationPickerComponent {
         if (this.selectedCriterion) query.constraints = { 'criterion:match': this.selectedCriterion };
 
         this.availableCatalogs = flow(
-            await this.fieldDatastore.find(query),
+            await this.datastore.find(query),
             to(FindResult.DOCUMENTS),
             map(to(Document.RESOURCE))
         ) as any /* TODO review any*/;
@@ -186,7 +185,7 @@ export class TypeRelationPickerComponent {
             this.currentOffset
         );
 
-        const result: FindResult = await this.fieldDatastore.find(query);
+        const result: FindResult = await this.datastore.find(query);
         this.totalDocumentCount = result.totalCount;
         this.typeDocumentsWithLinkedImages = this.pairWithLinkedImages(result.documents);
     }
@@ -196,7 +195,7 @@ export class TypeRelationPickerComponent {
         = (documents: Array<FieldDocument>) => map((document: FieldDocument) => {
             return [
                 document,
-                TypeImagesUtil.getLinkedImageIds(document, this.fieldDatastore, this.imageDatastore)
+                TypeImagesUtil.getLinkedImageIds(document, this.datastore, this.imageDatastore)
                     .map(id => ({ imageId: id }))
             ] as Pair<FieldDocument, Array<ImageRowItem>>;
         })(documents);

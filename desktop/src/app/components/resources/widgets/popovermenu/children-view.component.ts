@@ -1,10 +1,10 @@
 import {Component, Input, OnChanges} from '@angular/core';
-import {FieldDocument} from 'idai-field-core';
+import {DocumentDatastore, FieldDocument} from 'idai-field-core';
 import {AngularUtility} from '../../../../angular/angular-utility';
 import {Loading} from '../../../widgets/loading';
-import {FieldDatastore} from '../../../../core/datastore/field/field-datastore';
 import {ViewFacade} from '../../../../core/resources/view/view-facade';
 import {ResourcesComponent} from '../../resources.component';
+import { map } from 'tsfun';
 
 
 @Component({
@@ -25,7 +25,7 @@ export class ChildrenViewComponent implements OnChanges {
 
     constructor(private viewFacade: ViewFacade,
                 private loading: Loading,
-                private datastore: FieldDatastore,
+                private datastore: DocumentDatastore,
                 private resourcesComponent: ResourcesComponent) {}
 
 
@@ -75,8 +75,8 @@ export class ChildrenViewComponent implements OnChanges {
 
         if (!document) return [];
 
-        return (await this.datastore.find({constraints: {
+        return map((await this.datastore.find({constraints: {
                 'liesWithin:contain' : document.resource.id
-            }}, true)).documents;
+            }}, true)).documents, FieldDocument.fromDocument);
     }
 }

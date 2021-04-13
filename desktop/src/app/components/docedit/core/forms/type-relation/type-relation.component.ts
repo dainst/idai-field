@@ -1,11 +1,11 @@
 import {Component, Input, OnChanges} from '@angular/core';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {to, set} from 'tsfun';
-import {Resource} from 'idai-field-core';
+import {DocumentDatastore, Resource} from 'idai-field-core';
 import {DoceditComponent} from '../../../docedit.component';
 import {TypeRelationPickerComponent} from './type-relation-picker.component';
-import {FieldDatastore} from '../../../../../core/datastore/field/field-datastore';
 import {MenuContext, MenuService} from '../../../../menu-service';
+
 
 type ResourceIdentifier = string;
 const INSTANCE_OF = 'isInstanceOf';
@@ -26,9 +26,9 @@ export class TypeRelationComponent implements OnChanges {
     public relationIdentifiers: Array<ResourceIdentifier> = [];
 
 
-    constructor(private datastore: FieldDatastore,
+    constructor(private datastore: DocumentDatastore,
                 private modalService: NgbModal,
-                private doceditComponent: DoceditComponent,
+                private doceditComponent: DoceditComponent, // TODO unused
                 private menuService: MenuService) {}
 
 

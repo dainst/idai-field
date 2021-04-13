@@ -6,7 +6,6 @@ import { ConfigLoader } from '../../../../src/app/core/configuration/boot/config
 import { ConfigReader } from '../../../../src/app/core/configuration/boot/config-reader';
 import { ChangesStream } from '../../../../src/app/core/datastore/changes/changes-stream';
 import { FieldCategoryConverter } from '../../../../src/app/core/datastore/field/field-category-converter';
-import { FieldDatastore } from '../../../../src/app/core/datastore/field/field-datastore';
 import { ImageDatastore } from '../../../../src/app/core/datastore/field/image-datastore';
 import { PouchdbServer } from '../../../../src/app/core/datastore/pouchdb/pouchdb-server';
 import { DocumentHolder } from '../../../../src/app/core/docedit/document-holder';
@@ -101,8 +100,6 @@ export async function createApp(projectName = 'testdb', startSync = false) {
     const documentCache = new DocumentCache<Document>();
     const categoryConverter = new FieldCategoryConverter(projectConfiguration);
 
-    const fieldDocumentDatastore = new FieldDatastore(
-        datastore, createdIndexFacade, documentCache as any, categoryConverter as CategoryConverter<FieldDocument>);
     const documentDatastore = new DocumentDatastore(
         datastore, createdIndexFacade, documentCache, categoryConverter);
     const imageDatastore = new ImageDatastore(datastore, createdIndexFacade,
@@ -125,12 +122,12 @@ export async function createApp(projectName = 'testdb', startSync = false) {
     tabSpaceCalculator.getTabWidth.and.returnValue(0);
 
     const tabManager = new TabManager(createdIndexFacade, tabSpaceCalculator, stateSerializer,
-        fieldDocumentDatastore,
+        documentDatastore,
         () => Promise.resolve());
     tabManager.routeChanged('/project');
 
     const resourcesStateManager = new ResourcesStateManager(
-        fieldDocumentDatastore,
+        documentDatastore,
         createdIndexFacade,
         stateSerializer,
         tabManager,
@@ -143,7 +140,7 @@ export async function createApp(projectName = 'testdb', startSync = false) {
 
     const viewFacade = new ViewFacade(
         projectConfiguration,
-        fieldDocumentDatastore,
+        documentDatastore,
         remoteChangesStream,
         resourcesStateManager,
         undefined,
@@ -168,7 +165,7 @@ export async function createApp(projectName = 'testdb', startSync = false) {
     const documentHolder = new DocumentHolder(
         projectConfiguration,
         relationsManager,
-        new Validator(projectConfiguration, (q: Query) => fieldDocumentDatastore.find(q)),
+        new Validator(projectConfiguration, (q: Query) => documentDatastore.find(q)),
         documentDatastore
     );
 
@@ -181,7 +178,6 @@ export async function createApp(projectName = 'testdb', startSync = false) {
         viewFacade,
         documentHolder,
         documentDatastore,
-        fieldDocumentDatastore,
         imageDatastore,
         settingsService,
         settingsProvider,

@@ -5,6 +5,7 @@ import { headerBackgroundColor } from '../../constants/colors';
 import { RootStackParamList } from './RootStackParamList';
 import PouchDbContext from '../../data/pouchdb/pouch-context';
 import SettingsScreen from '../../screens/SettingsScreen';
+import { Button, Icon } from 'native-base';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -14,7 +15,7 @@ const commonHeaderStyle = {
 
 const RootStackNavigator = (): JSX.Element => {
 
-    const pouchCtx = useContext(PouchDbContext);
+    const { dbName } = useContext(PouchDbContext);
 
     return (
         <Stack.Navigator
@@ -33,11 +34,16 @@ const RootStackNavigator = (): JSX.Element => {
             <Stack.Screen
                 name="Home"
                 component={ HomeScreen }
-                options={ {
-                    headerTitle: pouchCtx.dbName ?
-                        `Connected to ${pouchCtx.dbName}` :
-                        'iDAIfield mobile'
-                } } />
+                options={ ({ navigation }) => ({
+                    headerTitle: dbName ? `Connected to ${dbName}` : 'iDAIfield mobile',
+                    // eslint-disable-next-line react/display-name
+                    headerRight: () => (
+                        <Button onPress={ () => navigation.navigate('Settings') } transparent>
+                            <Icon type="Ionicons" name="settings-outline" style={ { color: 'white' } } />
+                        </Button>
+                    )
+                  }) }
+                />
         </Stack.Navigator>
     );
 };

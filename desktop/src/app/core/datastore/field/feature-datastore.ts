@@ -1,4 +1,4 @@
-import { CachedDatastore, IdaiFieldFindResult, FeatureDocument, IndexFacade, PouchdbDatastore, Query, CategoryConverter, DocumentCache } from 'idai-field-core';
+import { DocumentDatastore, IdaiFieldFindResult, FeatureDocument, IndexFacade, PouchdbDatastore, Query, CategoryConverter, DocumentCache } from 'idai-field-core';
 
 
 export interface IdaiFieldFeatureDocumentFindResult extends IdaiFieldFindResult<FeatureDocument> {}
@@ -8,14 +8,14 @@ export interface IdaiFieldFeatureDocumentFindResult extends IdaiFieldFindResult<
  * @author Thomas Kleinke
  */
 export class FeatureDatastore
-    extends CachedDatastore<FeatureDocument> {
+    extends DocumentDatastore<FeatureDocument> {
 
     constructor(datastore: PouchdbDatastore,
                 indexFacade: IndexFacade,
                 documentCache: DocumentCache<FeatureDocument>,
                 documentConverter: CategoryConverter<FeatureDocument>) {
 
-        super(datastore, indexFacade, documentCache, documentConverter, 'FeatureDocument');
+        super(datastore, indexFacade, documentCache, documentConverter);
     }
 
     public async find(query: Query): Promise<IdaiFieldFeatureDocumentFindResult> {

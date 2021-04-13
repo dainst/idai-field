@@ -1,4 +1,4 @@
-import { IdaiFieldFindResult, FieldDocument, IndexFacade, CachedDatastore, PouchdbDatastore, Query, CategoryConverter, DocumentCache } from 'idai-field-core';
+import { IdaiFieldFindResult, FieldDocument, IndexFacade, DocumentDatastore, PouchdbDatastore, Query, CategoryConverter, DocumentCache } from 'idai-field-core';
 
 
 export interface FieldDocumentFindResult extends IdaiFieldFindResult<FieldDocument> {}
@@ -8,14 +8,14 @@ export interface FieldDocumentFindResult extends IdaiFieldFindResult<FieldDocume
  *
  * @author Daniel de Oliveira
  */
-export class FieldDatastore extends CachedDatastore<FieldDocument> {
+export class FieldDatastore extends DocumentDatastore<FieldDocument> {
 
     constructor(datastore: PouchdbDatastore,
                 indexFacade: IndexFacade,
                 documentCache: DocumentCache<FieldDocument>,
                 documentConverter: CategoryConverter<FieldDocument>) {
 
-        super(datastore, indexFacade, documentCache, documentConverter, 'FieldDocument');
+        super(datastore, indexFacade, documentCache, documentConverter);
     }
 
 

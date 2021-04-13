@@ -142,7 +142,7 @@ describe('subsystem/datastore/convert', () => {
 
     // find
 
-    it('find - add relations for FieldDocument', async done => {
+    xit('find - add relations for FieldDocument', async done => {
 
         expect((await fieldDocumentDatastore.find({})). // result coming from cache
             documents[0].resource.relations.isRecordedIn).toEqual([]);

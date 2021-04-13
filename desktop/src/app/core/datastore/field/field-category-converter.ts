@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { takeOrMake, CategoryConverter, Document } from 'idai-field-core';
-import { ProjectCategories } from '../../configuration/project-categories';
 import { ProjectConfiguration } from '../../configuration/project-configuration';
 import { Migrator } from './migrator';
 

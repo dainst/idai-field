@@ -1,4 +1,4 @@
-import { fieldDoc, ImageDocument, CachedDatastore } from 'idai-field-core';
+import { fieldDoc, ImageDocument, DocumentDatastore } from 'idai-field-core';
 import * as PouchDB from 'pouchdb-node';
 import { ImageOverviewFacade } from '../../../../../src/app/core/images/overview/view/imageoverview-facade';
 import { createApp, setupSyncTestDb } from '../subsystem-helper';
@@ -20,7 +20,7 @@ describe('ImageOverviewFacade/Subsystem', () => {
         await setupSyncTestDb();
         const result = await createApp();
 
-        const datastore: CachedDatastore<ImageDocument> = result.imageDatastore;
+        const datastore: DocumentDatastore<ImageDocument> = result.imageDatastore;
         imageOverviewFacade = result.imageOverviewFacade;
 
         for (let i = 0; i < 60; i++) { // create 60 documents

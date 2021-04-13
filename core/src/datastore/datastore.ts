@@ -1,5 +1,5 @@
-import {Document} from '../../model/document';
-import { Query } from '../../model/query';
+import {Document} from '../model/document';
+import { Query } from '../model/query';
 
 
 /**

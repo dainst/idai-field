@@ -2,7 +2,7 @@ import { Observable } from 'rxjs';
 import { Document } from '../../model/document';
 import { NewDocument } from '../../model/new-document';
 import { ObjectUtils, ObserverUtil } from '../../tools';
-import { DatastoreErrors } from '../model';
+import { DatastoreErrors } from '../datastore-errors';
 import { ChangeHistoryMerge } from './change-history-merge';
 import { IdGenerator } from './id-generator';
 

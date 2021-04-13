@@ -99,7 +99,7 @@ export module Importer {
             return { errors: errors, successfulImports: successfulImports, ignoredIdentifiers: [] };
         }
 
-        const operationCategoryNames = ProjectCategories.getOverviewCategoryNames(context.projectConfiguration.getCategoryTreelist()).filter(isnt('Place'));
+        const operationCategoryNames = ProjectCategories.getOverviewCategoryNames(context.projectConfiguration.getCategoryForest()).filter(isnt('Place'));
         const validator = new ImportValidator(context.projectConfiguration, services.datastore);
         const inverseRelationsMap = makeInverseRelationsMap(context.projectConfiguration.getAllRelationDefinitions());
         const preprocessDocument = FieldConverter.preprocessDocument(context.projectConfiguration);

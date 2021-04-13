@@ -13,7 +13,7 @@ import InputType = FieldDefinition.InputType;
 describe('Validations', () => {
 
     const projectConfiguration = new ProjectConfiguration(
-        [Tree.buildList(
+        [Tree.buildForest(
             [[{
                 name: 'T',
                 groups: [{

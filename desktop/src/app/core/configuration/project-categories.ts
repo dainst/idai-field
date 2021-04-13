@@ -1,4 +1,4 @@
-import { Category, filterTrees, isTopLevelItemOrChildThereof, Name, Named, removeTrees, Tree, TreeList } from 'idai-field-core';
+import { Category, filterTrees, isTopLevelItemOrChildThereof, Name, Named, removeTrees, Tree, Forest } from 'idai-field-core';
 import { filter, flow, includedIn, is, map, remove } from 'tsfun';
 
 
@@ -16,14 +16,14 @@ const TYPE_CATALOG_AND_TYPE = [TYPE_CATALOG, TYPE];
  */
 export /* package-private */ module ProjectCategories {
 
-    export function isGeometryCategory(t: TreeList<Named>, category: Name): boolean {
+    export function isGeometryCategory(t: Forest<Named>, category: Name): boolean {
 
         return !isTopLevelItemOrChildThereof(t, category,
             'Image', 'Inscription', 'Type', 'TypeCatalog', 'Project');
     }
 
 
-    export function getRegularCategoryNames(t: TreeList<Category>): Array<Name> {
+    export function getRegularCategoryNames(t: Forest<Category>): Array<Name> {
 
         return flow(t,
             removeTrees('Place', 'Project', TYPE_CATALOG, TYPE, 'Image', 'Operation'),
@@ -33,7 +33,7 @@ export /* package-private */ module ProjectCategories {
     }
 
 
-    export function getConcreteFieldCategories(t: TreeList<Category>): Array<Category> {
+    export function getConcreteFieldCategories(t: Forest<Category>): Array<Category> {
 
         return flow(t,
             removeTrees('Image', 'Project', TYPE_CATALOG, TYPE),
@@ -42,13 +42,13 @@ export /* package-private */ module ProjectCategories {
     }
 
 
-    export function getConcreteFieldCategoryNames(t: TreeList<Category>): Array<Name> {
+    export function getConcreteFieldCategoryNames(t: Forest<Category>): Array<Name> {
 
         return getConcreteFieldCategories(t).map(Named.toName);
     }
 
 
-    export function getFieldCategories(t: TreeList<Category>): Array<Category> {
+    export function getFieldCategories(t: Forest<Category>): Array<Category> {
 
         return flow(t,
             removeTrees('Image', 'Project'),
@@ -57,13 +57,13 @@ export /* package-private */ module ProjectCategories {
     }
 
 
-    export function getFieldCategoryNames(t: TreeList<Category>): Array<Name> {
+    export function getFieldCategoryNames(t: Forest<Category>): Array<Name> {
 
         return getFieldCategories(t).map(Named.toName);
     }
 
 
-    export function getOverviewCategoryNames(t: TreeList<Category>): Array<Name> {
+    export function getOverviewCategoryNames(t: Forest<Category>): Array<Name> {
 
         return flow(t,
             filterTrees('Operation', 'Place'),
@@ -73,7 +73,7 @@ export /* package-private */ module ProjectCategories {
     }
 
 
-    export function getOverviewCategories(t: TreeList<Category>): Array<Name> {
+    export function getOverviewCategories(t: Forest<Category>): Array<Name> {
 
         return flow(t,
             filterTrees('Operation', 'Place'),
@@ -84,7 +84,7 @@ export /* package-private */ module ProjectCategories {
     }
 
 
-    export function getOverviewToplevelCategories(t: TreeList<Category>): Array<Category> {
+    export function getOverviewToplevelCategories(t: Forest<Category>): Array<Category> {
 
         return flow(t,
             filterTrees('Operation', 'Place'),
@@ -94,7 +94,7 @@ export /* package-private */ module ProjectCategories {
     }
 
 
-    export function getTypeCategories(t: TreeList<Category>): Array<Category> {
+    export function getTypeCategories(t: Forest<Category>): Array<Category> {
 
         return flow(t,
             filterTrees('Type', 'TypeCatalog'),
@@ -109,7 +109,7 @@ export /* package-private */ module ProjectCategories {
     }
 
 
-    export function getImageCategoryNames(t: TreeList<Category>): Array<Name> {
+    export function getImageCategoryNames(t: Forest<Category>): Array<Name> {
 
         return flow(t,
             filterTrees('Image'),
@@ -119,19 +119,19 @@ export /* package-private */ module ProjectCategories {
     }
 
 
-    export function getFeatureCategoryNames(categories: TreeList<Category>): string[] {
+    export function getFeatureCategoryNames(categories: Forest<Category>): string[] {
 
         return getSuperCategoryNames(categories, 'Feature');
     }
 
 
-    export function getOperationCategoryNames(categories: TreeList<Category>): string[] {
+    export function getOperationCategoryNames(categories: Forest<Category>): string[] {
 
         return getSuperCategoryNames(categories, 'Operation');
     }
 
 
-    function getSuperCategoryNames(categories: TreeList<Category>, superCategoryName: string) {
+    function getSuperCategoryNames(categories: Forest<Category>, superCategoryName: string) {
 
         return flow(
             categories,

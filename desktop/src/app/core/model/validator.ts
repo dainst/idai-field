@@ -92,7 +92,7 @@ export class Validator {
     protected isExpectedToHaveIsRecordedInRelation(document: Document|NewDocument): boolean {
 
         return ProjectCategories
-            .getRegularCategoryNames(this.projectConfiguration.getCategoryTreelist())
+            .getRegularCategoryNames(this.projectConfiguration.getCategoryForest())
             .includes(document.resource.category);
     }
 

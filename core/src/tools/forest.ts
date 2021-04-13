@@ -19,10 +19,10 @@ import { Named } from './named';
 
 export type Tree<T = any> = {
     item: T,
-    trees: TreeList<T>
+    trees: Forest<T>
 }
 
-export type TreeList<T = any> = Array<Tree<T>>;
+export type Forest<T = any> = Array<Tree<T>>;
 
 
 // ArrayTree and ArrayTreeList data structures //////
@@ -37,9 +37,9 @@ export type TreeList<T = any> = Array<Tree<T>>;
 
 export type Node<ITEM,TREES> = Pair<ITEM,TREES>;
 
-export type ArrayTree<T = any> = Node<T, ArrayTreeList<T>>;
+export type ArrayTree<T = any> = Node<T, ArrayForest<T>>;
 
-export type ArrayTreeList<T = any> = Array<ArrayTree<T>>;
+export type ArrayForest<T = any> = Array<ArrayTree<T>>;
 
 
 export module Tree {
@@ -59,8 +59,8 @@ export module Tree {
     // in flows, which we want to avoid  (same consideration which in tsfun led
     // to having various packages containing various functions versions).
 
-    export function mapList<A,B>(f: Mapping<A,B>, t: TreeList<A>): TreeList<B>;
-    export function mapList<A,B>(f: Mapping<A,B>): Mapping<TreeList<A>,TreeList<B>>;
+    export function mapList<A,B>(f: Mapping<A,B>, t: Forest<A>): Forest<B>;
+    export function mapList<A,B>(f: Mapping<A,B>): Mapping<Forest<A>,Forest<B>>;
     export function mapList(...args: any[]): any {
 
         const $ = (f: any) => (treeList: any) => {
@@ -78,12 +78,12 @@ export module Tree {
     }
 
 
-    export function zipList<T>(ts: Array<TreeList<T>>): TreeList<Array<T>>;
-    export function zipList<T>(zipItems: (items: Array<T>) => T, ts: Array<TreeList<T>>): TreeList<T>;
+    export function zipList<T>(ts: Array<Forest<T>>): Forest<Array<T>>;
+    export function zipList<T>(zipItems: (items: Array<T>) => T, ts: Array<Forest<T>>): Forest<T>;
     export function zipList<T>(...args: any): any {
 
         const $ = (zipItems: any) =>
-            (ts: Array<TreeList<T>>) => zip(ts).map((ns: any[]) =>
+            (ts: Array<Forest<T>>) => zip(ts).map((ns: any[]) =>
             ({
                 item: zipItems(ns.map(to(Tree.ITEM))),
                 trees: zipList(zipItems, ns.map(to(Tree.TREES)))
@@ -114,7 +114,7 @@ export module Tree {
     }
 
 
-    export function access<T>(t: TreeList<T>|Tree<T>, ...path: number[]): T {
+    export function access<T>(t: Forest<T>|Tree<T>, ...path: number[]): T {
 
         function _accessTree<T>(t: Tree<T>, path: number[]): T {
 
@@ -124,7 +124,7 @@ export module Tree {
             return _accessTreelist(t.trees, path);
         }
 
-        function _accessTreelist<T>(t: TreeList<T>, path: number[]) {
+        function _accessTreelist<T>(t: Forest<T>, path: number[]) {
 
             const segment = first(path);
             if (!isNumber(segment)) return t[0] as any;
@@ -137,22 +137,22 @@ export module Tree {
     }
 
 
-    export function mapTrees<T>(f: Mapping<TreeList<T>>, t: TreeList<T>): TreeList<T> {
+    export function mapTrees<T>(f: Mapping<Forest<T>>, t: Forest<T>): Forest<T> {
 
         return f(t).map(({ item: t, trees: children }) => ({ item: t, trees: mapTrees(f, children)}));
     }
 
 
-    export function flatten<A>(t: Tree<A>|TreeList<A>): Array<A> {
+    export function flatten<A>(t: Tree<A>|Forest<A>): Array<A> {
 
-        const reduced = ((isArray(t) ? t : (t as Tree<A>).trees) as TreeList<A>)
+        const reduced = ((isArray(t) ? t : (t as Tree<A>).trees) as Forest<A>)
             .reduce((as, { item: a, trees: children }) => as.concat([a]).concat(flatten(children)), []);
 
         return (isArray(t) ? [] : [(t as Tree<A>).item]).concat(reduced);
     }
 
 
-    export function find<T>(t: TreeList<T>|Tree<T>,
+    export function find<T>(t: Forest<T>|Tree<T>,
                             match: T|Predicate<T>,
                             comparator?: Comparator): Tree<T>|undefined {
 
@@ -181,9 +181,9 @@ export module Tree {
     }
 
     
-    export function buildList<T>(t: ArrayTreeList<T>): TreeList<T> {
+    export function buildForest<T>(t: ArrayForest<T>): Forest<T> {
 
-        return t.map(([t,trees]) => ({ item: t, trees: buildList(trees)}));
+        return t.map(([t,trees]) => ({ item: t, trees: buildForest(trees)}));
     }
 
     
@@ -191,7 +191,7 @@ export module Tree {
 
         return {
             item: item,
-            trees: children.map(([t,trees]) => ({ item: t, trees: buildList(trees)}))
+            trees: children.map(([t,trees]) => ({ item: t, trees: buildForest(trees)}))
         };
     }
 }

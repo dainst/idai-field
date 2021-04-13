@@ -1,5 +1,5 @@
 import { Category, CategoryDefinition, FieldDefinition, Group, Groups, RelationDefinition,
-    sortStructArray, Tree, TreeList, ValuelistDefinition, withDissoc } from 'idai-field-core';
+    sortStructArray, Tree, Forest, ValuelistDefinition, withDissoc } from 'idai-field-core';
 import {
     clone, compose, cond,
     copy, detach, filter, flow, identity, includedIn, isDefined, isNot,
@@ -9,7 +9,7 @@ import {
     update, update as updateStruct, assoc
 } from 'tsfun';
 import { Labelled } from '../../../../../../core/src/tools/named';
-import { linkParentAndChildInstances } from '../category-tree-list';
+import { linkParentAndChildInstances } from '../category-forest';
 import { BuiltinCategoryDefinition } from '../model/builtin-category-definition';
 import { CustomCategoryDefinition } from '../model/custom-category-definition';
 import { LibraryCategoryDefinition } from '../model/library-category-definition';
@@ -26,7 +26,7 @@ import { Assertions } from './assertions';
 import { ConfigurationErrors } from './configuration-errors';
 import { getDefinedParents, iterateOverFieldsOfCategories } from './helpers';
 import { hideFields } from './hide-fields';
-import { makeCategoryTreeList } from './make-category-tree-list';
+import { makeCategoryForest } from './make-category-forest';
 import { mergeBuiltInWithLibraryCategories } from './merge-builtin-with-library-categories';
 import { mergeCategories } from './merge-categories';
 import { orderFields } from './order-fields';
@@ -83,7 +83,7 @@ function processCategories(orderConfiguration: any,
                            validateFields: any,
                            languageConfigurations: any[][],
                            searchConfiguration: any,
-                           relations: Array<RelationDefinition>): Mapping<Map<CategoryDefinition>, TreeList<Category>> {
+                           relations: Array<RelationDefinition>): Mapping<Map<CategoryDefinition>, Forest<Category>> {
 
     const sortCategoryGroups = update(Category.GROUPS, sortGroups(Groups.DEFAULT_ORDER));
 
@@ -92,7 +92,7 @@ function processCategories(orderConfiguration: any,
         addExtraFieldsOrder(orderConfiguration),
         orderFields(orderConfiguration),
         validateFields,
-        makeCategoryTreeList,
+        makeCategoryForest,
         Tree.mapList(putRelationsIntoGroups(relations)),
         Tree.mapList(sortCategoryGroups),
         Tree.mapList(setGroupLabels(languageConfigurations)),
@@ -103,11 +103,11 @@ function processCategories(orderConfiguration: any,
 }
 
 
-const setGeometriesInGroups = (languageConfigurations: any[]) => (categoriesTree: TreeList<Category>) =>
+const setGeometriesInGroups = (languageConfigurations: any[]) => (categoriesTree: Forest<Category>) =>
     Tree.mapList(adjustCategoryGeometry(languageConfigurations, categoriesTree), categoriesTree);
 
 
-function adjustCategoryGeometry(languageConfigurations: any[], categoriesTree: TreeList<Category>) {
+function adjustCategoryGeometry(languageConfigurations: any[], categoriesTree: Forest<Category>) {
 
     return (category: Category /* modified in place */): Category => {
 
@@ -171,8 +171,8 @@ const sortGroups = (defaultOrder: string[]) => (groups: Map<Group>) =>
     flow(defaultOrder, map(lookup(groups)), prune);
 
 
-const orderCategories = (categoriesOrder: string[] = []) => (categories: TreeList<Category>): TreeList<Category> =>
-    Tree.mapTrees(sortStructArray(categoriesOrder, Tree.ITEMNAMEPATH), categories) as TreeList<Category>;
+const orderCategories = (categoriesOrder: string[] = []) => (categories: Forest<Category>): Forest<Category> =>
+    Tree.mapTrees(sortStructArray(categoriesOrder, Tree.ITEMNAMEPATH), categories) as Forest<Category>;
 
 
 function setGroupLabels(languageConfigurations: any[]) {

@@ -61,7 +61,7 @@ export class PlusButtonComponent implements OnChanges {
 
 
     public isGeometryCategory = (category: Name) =>
-        ProjectCategories.isGeometryCategory(this.projectConfiguration.getCategoryTreelist(), category);
+        ProjectCategories.isGeometryCategory(this.projectConfiguration.getCategoryForest(), category);
 
 
     ngOnChanges() {
@@ -205,7 +205,7 @@ export class PlusButtonComponent implements OnChanges {
             }
         } else {
             if (!(this.viewFacade.isInOverview()
-                    ? ProjectCategories.getOverviewCategories(this.projectConfiguration.getCategoryTreelist()).includes(category.name)
+                    ? ProjectCategories.getOverviewCategories(this.projectConfiguration.getCategoryForest()).includes(category.name)
                     : ProjectCategories.getTypeCategoryNames().includes(category.name))) {
                 return false;
             }

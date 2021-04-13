@@ -1,22 +1,22 @@
 import {equal, is, on, reverse} from 'tsfun';
 import {
-    Tree, TreeList
-} from '../../src/tools/tree-list';
+    Tree, Forest
+} from '../../src/tools/forest';
 
 
-describe('TreeList|Tree', () => {
+describe('Forest|Tree', () => {
 
-    it('Treelist', () => {
+    it('Forest', () => {
 
-        const t: TreeList<number> = [{ item: 1, trees: []}];
+        const t: Forest<number> = [{ item: 1, trees: []}];
     });
 
 
-    it('buildTreelist', () => {
+    it('buildForest', () => {
 
         expect(
             equal(
-                Tree.buildList([[3, [[17, []]]]]),
+                Tree.buildForest([[3, [[17, []]]]]),
                 [
                     {
                         item: 3,
@@ -68,7 +68,7 @@ describe('TreeList|Tree', () => {
 
     it('mapTreelist', () => {
 
-        const t: TreeList<number> = Tree.buildList(
+        const t: Forest<number> = Tree.buildForest(
             [
                 [1, [
                         [13, []],
@@ -77,7 +77,7 @@ describe('TreeList|Tree', () => {
                 [3, []]
             ]);
 
-        const exp: TreeList<number> = Tree.buildList(
+        const exp: Forest<number> = Tree.buildForest(
             [
                 [2, [
                         [26, []],
@@ -93,7 +93,7 @@ describe('TreeList|Tree', () => {
 
     it('mapTreelists', () => {
 
-        const t: TreeList<number> = Tree.buildList(
+        const t: Forest<number> = Tree.buildForest(
             [
                 [1, [
                         [13, []],
@@ -102,7 +102,7 @@ describe('TreeList|Tree', () => {
                 [3, []]
             ]);
 
-        const exp: TreeList<number> = Tree.buildList(
+        const exp: Forest<number> = Tree.buildForest(
             [
                 [3, []],
                 [1, [
@@ -120,7 +120,7 @@ describe('TreeList|Tree', () => {
 
         const a = { a: 1 };
 
-        const t: TreeList<any> = Tree.buildList<any>(
+        const t: Forest<any> = Tree.buildForest<any>(
             [
                 [1, [
                         [13, [[a, []]]],
@@ -175,7 +175,7 @@ describe('TreeList|Tree', () => {
 
     it('findInTreelist', () => {
 
-        const t: TreeList<any> = Tree.buildList<any>(
+        const t: Forest<any> = Tree.buildForest<any>(
             [
                 [1, [
                         [13, [[17, []]]],
@@ -213,7 +213,7 @@ describe('TreeList|Tree', () => {
 
         const a = { a: 3 };
 
-        const t: TreeList = Tree.buildList<any>(
+        const t: Forest = Tree.buildForest<any>(
             [
                 [1, [
                         [a, [[17, []]]],
@@ -230,7 +230,7 @@ describe('TreeList|Tree', () => {
     it('findInTreelist with Comparator', () => {
 
         const a = { a: 3 };
-        const t: TreeList = Tree.buildList<any>(
+        const t: Forest = Tree.buildForest<any>(
             [
                 [1, [
                         [a, [[17, []]]],
@@ -253,7 +253,7 @@ describe('TreeList|Tree', () => {
 
     it('accessTreelist - first level', () => {
 
-        expect(Tree.access(Tree.buildList(
+        expect(Tree.access(Tree.buildForest(
             [
                 [
                     7,
@@ -267,7 +267,7 @@ describe('TreeList|Tree', () => {
 
     it('accessTreelist - second level', () => {
 
-        expect(Tree.access(Tree.buildList(
+        expect(Tree.access(Tree.buildForest(
             [
                 [
                     7,
@@ -350,37 +350,37 @@ describe('TreeList|Tree', () => {
 
     it('zipTreeListWith', () => {
 
-        const tl1 = Tree.buildList([[3, []]]);
-        const tl2 = Tree.buildList([[76, []]]);
+        const tl1 = Tree.buildForest([[3, []]]);
+        const tl2 = Tree.buildForest([[76, []]]);
 
         const result = Tree.zipList(([item1, item2]: [any, any]) => {
             return item1 + item2;
         }, [tl1, tl2]);
 
-        expect(equal(result, Tree.buildList([[79,[]]]))).toBeTruthy();
+        expect(equal(result, Tree.buildForest([[79,[]]]))).toBeTruthy();
     });
 
 
     it('zipTreeListWith - recursive', () => {
 
-        const tl1 = Tree.buildList([[3, [[5, []]]]]);
-        const tl2 = Tree.buildList([[76, [[7, []]]]]);
+        const tl1 = Tree.buildForest([[3, [[5, []]]]]);
+        const tl2 = Tree.buildForest([[76, [[7, []]]]]);
 
         const result = Tree.zipList(([item1, item2]: [any, any]) => {
             return item1 + item2;
         }, [tl1, tl2]);
 
-        expect(equal(result, Tree.buildList([[79,[[12,[]]]]]))).toBeTruthy();
+        expect(equal(result, Tree.buildForest([[79,[[12,[]]]]]))).toBeTruthy();
     });
 
 
     it('zipTreeListWith - no zipper, recursive', () => {
 
-        const tl1 = Tree.buildList([[3, [[5, []]]]]);
-        const tl2 = Tree.buildList([[76, [[7, []]]]]);
+        const tl1 = Tree.buildForest([[3, [[5, []]]]]);
+        const tl2 = Tree.buildForest([[76, [[7, []]]]]);
 
         const result = Tree.zipList([tl1, tl2]);
 
-        expect(equal(result, Tree.buildList([[[3,76],[[[5,7],[]]]]]))).toBeTruthy();
+        expect(equal(result, Tree.buildForest([[[3,76],[[[5,7],[]]]]]))).toBeTruthy();
     })
 });

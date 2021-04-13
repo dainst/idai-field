@@ -7,6 +7,7 @@ import {LibraryCategoryDefinition} from '../../../../../src/app/core/configurati
 import {Named, Tree, ValuelistDefinition, Groups, Category, FieldDefinition} from 'idai-field-core';
 import InputType = FieldDefinition.InputType;
 
+
 describe('buildRawProjectConfiguration', () => {
 
     const categories = left;
@@ -1369,13 +1370,13 @@ describe('buildRawProjectConfiguration', () => {
             builtInCategories, {}, customCategories, {}, {}, {}, [], [{ other: { geometry: 'Geometry' } }]
         )[0];
 
-        expect(Tree.access(categoriesTree, 0).children[0].name).toBe('C');
-        expect(Tree.access(categoriesTree, 0, 0).name).toBe('C');
-        expect(Tree.access(categoriesTree, 0).children[0] === Tree.access(categoriesTree, 0, 0)).toBeTruthy();
+        expect((Tree.access(categoriesTree, 0) as any).children[0].name).toBe('C');
+        expect((Tree.access(categoriesTree, 0, 0) as any).name).toBe('C');
+        expect((Tree.access(categoriesTree, 0) as any).children[0] === Tree.access(categoriesTree, 0, 0)).toBeTruthy();
 
-        expect(Tree.access(categoriesTree, 0).name).toBe('P');
-        expect(Tree.access(categoriesTree, 0, 0).parentCategory.name).toBe('P');
-        expect(Tree.access(categoriesTree, 0, 0).parentCategory === Tree.access(categoriesTree, 0)).toBeTruthy();
+        expect((Tree.access(categoriesTree, 0) as any).name).toBe('P');
+        expect((Tree.access(categoriesTree, 0, 0) as any).parentCategory.name).toBe('P');
+        expect((Tree.access(categoriesTree, 0, 0) as any).parentCategory === Tree.access(categoriesTree, 0)).toBeTruthy();
     });
 
 

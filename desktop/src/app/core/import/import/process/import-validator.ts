@@ -99,7 +99,7 @@ export class ImportValidator extends Validator {
 
     public async assertIsNotOverviewCategory(document: Document|NewDocument) {
 
-        if (ProjectCategories.getOverviewCategoryNames(this.projectConfiguration.getCategoryTreelist())
+        if (ProjectCategories.getOverviewCategoryNames(this.projectConfiguration.getCategoryForest())
                 .includes(document.resource.category)) {
 
             throw [E.OPERATIONS_NOT_ALLOWED];

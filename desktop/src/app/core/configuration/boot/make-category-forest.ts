@@ -1,8 +1,8 @@
 import {cond, defined, flow, isNot, Map, Mapping, on, isUndefined, copy,
     separate, detach, map, update, reduce} from 'tsfun';
-import {Named, Tree, CategoryDefinition, ObjectUtils, TreeList, Category, Group, Groups, FieldDefinition} from 'idai-field-core';
+import {Named, Tree, CategoryDefinition, ObjectUtils, Forest, Category, Group, Groups, FieldDefinition} from 'idai-field-core';
 import {MDInternal} from '../../../components/messages/md-internal';
-import {linkParentAndChildInstances} from '../category-tree-list';
+import {linkParentAndChildInstances} from '../category-forest';
 import {ConfigurationErrors} from './configuration-errors';
 
 
@@ -13,7 +13,7 @@ const TEMP_FIELDS = 'fields';
  * @author Daniel de Oliveira
  * @author Sebastian Cuy
  */
-export function makeCategoryTreeList(categories: any): TreeList<Category> {
+export function makeCategoryForest(categories: any): Forest<Category> {
 
     const [parentDefs, childDefs] =
         separate<CategoryDefinition>(on(CategoryDefinition.PARENT, isNot(defined)), categories);
@@ -66,8 +66,8 @@ function makeGroupsMap(fields: Array<FieldDefinition>): Map<Group> {
 }
 
 
-function addChildCategory(categoryTree: TreeList<Category>,
-                          childDefinition: CategoryDefinition): TreeList<Category> {
+function addChildCategory(categoryTree: Forest<Category>,
+                          childDefinition: CategoryDefinition): Forest<Category> {
 
     const found = categoryTree
         .find(({ item: category }) => category.name === childDefinition.parent);

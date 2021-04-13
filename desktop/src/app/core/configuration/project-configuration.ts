@@ -1,10 +1,10 @@
-import { Category, FieldDefinition, isTopLevelItemOrChildThereof, Name, Named, RelationDefinition, Tree, TreeList } from 'idai-field-core';
+import { Category, FieldDefinition, isTopLevelItemOrChildThereof, Name, Named, RelationDefinition, Tree, Forest } from 'idai-field-core';
 import { empty, filter, flow, includedIn, is, isNot, Map, map, on, Pair } from 'tsfun';
 import { ConfigurationErrors } from './boot/configuration-errors';
 import { RelationsUtil } from './relations-utils';
 
 
-export type RawProjectConfiguration = Pair<TreeList<Category>, Array<RelationDefinition>>;
+export type RawProjectConfiguration = Pair<Forest<Category>, Array<RelationDefinition>>;
 
 
 /**
@@ -23,17 +23,17 @@ export type RawProjectConfiguration = Pair<TreeList<Category>, Array<RelationDef
 export class ProjectConfiguration {
 
     private readonly categoriesArray: Array<Category>;
-    private readonly categoryTreelist: TreeList<Category>;
+    private readonly categoryForest: Forest<Category>;
     private readonly relations: Array<RelationDefinition>;
 
     // internal use only, we deliberately don't provide accessor for this any longer
-    // use getCategory, getCategoryTreelist, getCategoriesArray instead
+    // use getCategory, getCategoryForest, getCategoriesArray instead
     private readonly categoriesMap: Map<Category>;
 
 
     constructor([categories, relations]: RawProjectConfiguration) {
 
-        this.categoryTreelist = categories;
+        this.categoryForest = categories;
         this.categoriesArray = Tree.flatten<Category>(categories) || [];
         this.relations = relations || [];
         this.categoriesMap = Named.arrayToMap(this.categoriesArray);
@@ -61,11 +61,11 @@ export class ProjectConfiguration {
     }
 
 
-    public getCategoryTreelist(...selectedTopLevelCategories: Array<Name>): TreeList<Category> {
+    public getCategoryForest(...selectedTopLevelCategories: Array<Name>): Forest<Category> {
 
         return selectedTopLevelCategories.length === 0
-            ? this.categoryTreelist
-            : this.categoryTreelist.filter(
+            ? this.categoryForest
+            : this.categoryForest.filter(
                 on(Tree.ITEMNAMEPATH, includedIn(selectedTopLevelCategories)));
     }
 
@@ -150,7 +150,7 @@ export class ProjectConfiguration {
     public isSubcategory(category: Name, superCategoryName: string): boolean {
 
         if (!this.getCategory(category)) throw [ConfigurationErrors.UNKNOWN_CATEGORY_ERROR, category];
-        return isTopLevelItemOrChildThereof(this.categoryTreelist, category, superCategoryName);
+        return isTopLevelItemOrChildThereof(this.categoryForest, category, superCategoryName);
     }
 
 

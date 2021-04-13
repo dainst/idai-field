@@ -21,7 +21,7 @@ describe('DocumentHolder', () => {
 
     beforeEach(() => {
 
-        const pconf = new ProjectConfiguration([Tree.buildList(
+        const pconf = new ProjectConfiguration([Tree.buildForest(
             [
                 [{
                     name: 'Trench',

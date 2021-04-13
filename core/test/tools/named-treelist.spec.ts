@@ -1,7 +1,7 @@
 import {filterTrees, findInNamedTreeList, isTopLevelItemOrChildThereof,
-    removeTrees} from '../../src/tools/named-tree-list';
+    removeTrees} from '../../src/tools/named-forest';
 import {Named} from '../../src/tools/named';
-import {Tree, TreeList} from '../../src/tools/tree-list';
+import {Tree, Forest} from '../../src/tools/forest';
 
 
 describe('NamedTreelist', () => {
@@ -12,7 +12,7 @@ describe('NamedTreelist', () => {
         const child1 = { name: 'C1' };
         const child2 = { name: 'C2' };
 
-        return Tree.buildList([
+        return Tree.buildForest([
             [
                 parent1,
                 [
@@ -41,7 +41,7 @@ describe('NamedTreelist', () => {
 
     it('isTopLevelItemOrChildThereof', () => {
 
-        const categoryTreelist: TreeList<Named> = Tree.buildList([
+        const categoryTreelist: Forest<Named> = Tree.buildForest([
             [
                 {name: 'Image'},
                 [
@@ -80,7 +80,7 @@ describe('NamedTreelist', () => {
 
     it('isTopLevelItemOrChildThereof - more firstLevelItems to match', () => {
 
-        const categoryTreelist: TreeList<Named> = Tree.buildList([
+        const categoryTreelist: Forest<Named> = Tree.buildForest([
             [
                 {name: 'Image'},
                 [
@@ -115,7 +115,7 @@ describe('NamedTreelist', () => {
 
     it('removeTrees', () => {
 
-        const categoryTreelist: TreeList<Named> = Tree.buildList([
+        const categoryTreelist: Forest<Named> = Tree.buildForest([
             [
                 {name: 'Image'},
                 [
@@ -169,7 +169,7 @@ describe('NamedTreelist', () => {
 
     it('filterTrees', () => {
 
-        const categoryTreelist: TreeList<Named> = Tree.buildList([
+        const categoryTreelist: Forest<Named> = Tree.buildForest([
             [
                 {name: 'Image'},
                 [

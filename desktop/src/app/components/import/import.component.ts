@@ -248,7 +248,7 @@ export class ImportComponent implements OnInit {
 
         return this.importState.mergeMode
             ? BASE_EXCLUSION
-            : BASE_EXCLUSION.concat(ProjectCategories.getImageCategoryNames(this.projectConfiguration.getCategoryTreelist()));
+            : BASE_EXCLUSION.concat(ProjectCategories.getImageCategoryNames(this.projectConfiguration.getCategoryForest()));
     }
 
 
@@ -345,7 +345,7 @@ export class ImportComponent implements OnInit {
 
         try {
             return (await this.datastore.find({
-                categories: ProjectCategories.getOperationCategoryNames(this.projectConfiguration.getCategoryTreelist())
+                categories: ProjectCategories.getOperationCategoryNames(this.projectConfiguration.getCategoryForest())
             })).documents;
         } catch (msgWithParams) {
             this.messages.add(msgWithParams);

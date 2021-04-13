@@ -187,7 +187,7 @@ export class ImageOverviewFacade {
 
         return {
             q: '',
-            categories: ProjectCategories.getImageCategoryNames(this.projectConfiguration.getCategoryTreelist())
+            categories: ProjectCategories.getImageCategoryNames(this.projectConfiguration.getCategoryForest())
         };
     }
 

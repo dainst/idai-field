@@ -2,7 +2,7 @@ import {ProjectCategories} from '../../../../src/app/core/configuration/project-
 import isGeometryCategory = ProjectCategories.isGeometryCategory;
 import getFieldCategories = ProjectCategories.getFieldCategories;
 import {sameset} from 'tsfun';
-import {Named, Category, Tree, TreeList} from 'idai-field-core';
+import {Named, Category, Tree, Forest} from 'idai-field-core';
 import getConcreteFieldCategories = ProjectCategories.getConcreteFieldCategories;
 import getRegularCategoryNames = ProjectCategories.getRegularCategoryNames;
 import getImageCategoryNames = ProjectCategories.getImageCategoryNames;
@@ -15,7 +15,7 @@ import getFeatureCategoryNames = ProjectCategories.getFeatureCategoryNames;
 
 describe('ProjectCategories', () => {
 
-    const categoryTreelist: TreeList<Named> = Tree.buildList([
+    const categoryForest: Forest<Named> = Tree.buildForest([
         [
             { name: 'Image' },
             [
@@ -72,14 +72,14 @@ describe('ProjectCategories', () => {
 
     it('isGeometryCategory', () => {
 
-        expect(isGeometryCategory(categoryTreelist, 'Image')).toBeFalsy();
-        expect(isGeometryCategory(categoryTreelist, 'Drawing')).toBeFalsy();
-        expect(isGeometryCategory(categoryTreelist, 'Type')).toBeFalsy();
-        expect(isGeometryCategory(categoryTreelist, 'TypeCatalog')).toBeFalsy();
-        expect(isGeometryCategory(categoryTreelist, 'Inscription')).toBeFalsy();
-        expect(isGeometryCategory(categoryTreelist, 'Project')).toBeFalsy();
-        expect(isGeometryCategory(categoryTreelist, 'Operation')).toBeTruthy();
-        expect(isGeometryCategory(categoryTreelist, 'Project')).toBeFalsy();
+        expect(isGeometryCategory(categoryForest, 'Image')).toBeFalsy();
+        expect(isGeometryCategory(categoryForest, 'Drawing')).toBeFalsy();
+        expect(isGeometryCategory(categoryForest, 'Type')).toBeFalsy();
+        expect(isGeometryCategory(categoryForest, 'TypeCatalog')).toBeFalsy();
+        expect(isGeometryCategory(categoryForest, 'Inscription')).toBeFalsy();
+        expect(isGeometryCategory(categoryForest, 'Project')).toBeFalsy();
+        expect(isGeometryCategory(categoryForest, 'Operation')).toBeTruthy();
+        expect(isGeometryCategory(categoryForest, 'Project')).toBeFalsy();
     });
 
 
@@ -87,7 +87,7 @@ describe('ProjectCategories', () => {
 
         expect(
             sameset(
-                getFieldCategories(categoryTreelist as TreeList<Category>).map(Named.toName),
+                getFieldCategories(categoryForest as Forest<Category>).map(Named.toName),
                 ['Operation', 'Trench', 'Inscription', 'Type', 'TypeCatalog', 'Find', 'Place', 'Feature', 'Architecture'])
         ).toBeTruthy();
     });
@@ -97,7 +97,7 @@ describe('ProjectCategories', () => {
 
         expect(
             sameset(
-                getConcreteFieldCategories(categoryTreelist as TreeList<Category>).map(Named.toName),
+                getConcreteFieldCategories(categoryForest as Forest<Category>).map(Named.toName),
                 ['Operation', 'Trench', 'Inscription', 'Find', 'Place', 'Feature', 'Architecture'])
         ).toBeTruthy();
     });
@@ -107,7 +107,7 @@ describe('ProjectCategories', () => {
 
         expect(
             sameset(
-                getRegularCategoryNames(categoryTreelist as TreeList<Category>),
+                getRegularCategoryNames(categoryForest as Forest<Category>),
                 ['Inscription', 'Find', 'Feature', 'Architecture'])
         ).toBeTruthy();
     });
@@ -117,7 +117,7 @@ describe('ProjectCategories', () => {
 
         expect(
             sameset(
-                getImageCategoryNames(categoryTreelist as TreeList<Category>),
+                getImageCategoryNames(categoryForest as Forest<Category>),
                 ['Image', 'Drawing'])
         ).toBeTruthy();
     });
@@ -127,7 +127,7 @@ describe('ProjectCategories', () => {
 
         expect(
             sameset(
-                getTypeCategories(categoryTreelist as TreeList<Category>).map(Named.toName),
+                getTypeCategories(categoryForest as Forest<Category>).map(Named.toName),
                 ['TypeCatalog', 'Type'])
         ).toBeTruthy();
     });
@@ -137,7 +137,7 @@ describe('ProjectCategories', () => {
 
         expect(
             sameset(
-                getOverviewTopLevelCategories(categoryTreelist as TreeList<Category>).map(Named.toName),
+                getOverviewTopLevelCategories(categoryForest as Forest<Category>).map(Named.toName),
                 ['Operation', 'Place'])
         ).toBeTruthy();
     });
@@ -147,7 +147,7 @@ describe('ProjectCategories', () => {
 
         expect(
             sameset(
-                getOverviewCategories(categoryTreelist as TreeList<Category>),
+                getOverviewCategories(categoryForest as Forest<Category>),
                 ['Trench', 'Place'])
         ).toBeTruthy();
     });
@@ -157,7 +157,7 @@ describe('ProjectCategories', () => {
 
         expect(
             sameset(
-                getOverviewCategoryNames(categoryTreelist as TreeList<Category>),
+                getOverviewCategoryNames(categoryForest as Forest<Category>),
                 ['Operation', 'Trench', 'Place'])
         ).toBeTruthy();
     });
@@ -167,7 +167,7 @@ describe('ProjectCategories', () => {
 
         expect(
             sameset(
-                getFeatureCategoryNames(categoryTreelist as TreeList<Category>),
+                getFeatureCategoryNames(categoryForest as Forest<Category>),
                 ['Feature', 'Architecture'])
         ).toBeTruthy();
     });

@@ -71,7 +71,7 @@ export class ImagesState {
 
         if (this.query) {
             this.query.q = '';
-            this.query.categories = ProjectCategories.getImageCategoryNames(this.projectConfiguration.getCategoryTreelist());
+            this.query.categories = ProjectCategories.getImageCategoryNames(this.projectConfiguration.getCategoryForest());
         }
 
         this.customConstraints = {};

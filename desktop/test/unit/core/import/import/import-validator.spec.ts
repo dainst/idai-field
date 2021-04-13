@@ -13,7 +13,7 @@ describe('ImportValidator', () => {
 
     const projectConfiguration = new ProjectConfiguration(
         [
-          Tree.buildList([
+          Tree.buildForest([
             [ {
                 name: 'T',
                 groups: [{ name: 'stem', fields: [

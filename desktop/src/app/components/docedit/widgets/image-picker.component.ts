@@ -139,7 +139,7 @@ export class ImagePickerComponent implements OnInit {
             q: this.queryString,
             limit: ImagePickerComponent.documentLimit,
             offset: this.currentOffset,
-            categories: ProjectCategories.getImageCategoryNames(this.projectConfiguration.getCategoryTreelist()),
+            categories: ProjectCategories.getImageCategoryNames(this.projectConfiguration.getCategoryForest()),
             constraints: {
                 'project:exist': { value: 'KNOWN', subtract: true } // TODO review and or test
             },

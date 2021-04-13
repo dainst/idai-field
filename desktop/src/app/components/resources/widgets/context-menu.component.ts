@@ -81,7 +81,7 @@ export class ContextMenuComponent implements OnChanges {
         if (this.isReadonly()) return false;
         return this.contextMenu.documents.length === 1
             && ProjectCategories.isGeometryCategory(
-                this.projectConfiguration.getCategoryTreelist(), this.contextMenu.documents[0].resource.category)
+                this.projectConfiguration.getCategoryForest(), this.contextMenu.documents[0].resource.category)
             && !this.contextMenu.documents[0].resource.geometry;
     }
 
@@ -91,7 +91,7 @@ export class ContextMenuComponent implements OnChanges {
         if (this.isReadonly()) return false;
         return this.contextMenu.documents.length === 1
             && ProjectCategories.isGeometryCategory(
-                this.projectConfiguration.getCategoryTreelist(), this.contextMenu.documents[0].resource.category)
+                this.projectConfiguration.getCategoryForest(), this.contextMenu.documents[0].resource.category)
             && this.contextMenu.documents[0].resource.geometry !== undefined;
     }
 

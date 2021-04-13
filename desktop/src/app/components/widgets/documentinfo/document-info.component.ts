@@ -61,7 +61,7 @@ export class DocumentInfoComponent implements DoCheck {
 
     public isImageDocument() {
 
-        return ProjectCategories.getImageCategoryNames(this.projectConfiguration.getCategoryTreelist()).includes(this.document.resource.category);
+        return ProjectCategories.getImageCategoryNames(this.projectConfiguration.getCategoryForest()).includes(this.document.resource.category);
     }
 
 

@@ -1,32 +1,32 @@
 import {drop, identity, includedIn, is, isArray, isNot, on, take} from 'tsfun';
-import { Named, Name } from '../../src/tools/named';
-import { Tree, TreeList } from '../../src/tools/tree-list';
+import { Named, Name } from './named';
+import { Tree, Forest } from './forest';
 
 
-export function findInNamedTreeList<N extends Named>(match: Name, t: TreeList<N>): N|undefined {
+export function findInNamedTreeList<N extends Named>(match: Name, t: Forest<N>): N|undefined {
 
     const result: any = Tree.find(t, Named.onName(is(match)));
     return result ? result.item : undefined;
 }
 
 
-export function filterTrees<N extends Named>(t: TreeList<N>, match: Name, ...moreMatches: Name[]): TreeList<N>;
-export function filterTrees<N extends Named>(match: Name, ...moreMatches: Name[]): (t: TreeList<N>) => TreeList<N>;
+export function filterTrees<N extends Named>(t: Forest<N>, match: Name, ...moreMatches: Name[]): Forest<N>;
+export function filterTrees<N extends Named>(match: Name, ...moreMatches: Name[]): (t: Forest<N>) => Forest<N>;
 export function filterTrees(a: any, ...bs: any[]): any {
 
     return _filterTrees(false, a, bs);
 }
 
 
-export function removeTrees<N extends Named>(t: TreeList<N>, match: Name, ...moreMatches: Name[]): TreeList<N>;
-export function removeTrees<N extends Named>(match: Name, ...moreMatches: Name[]): (t: TreeList<N>) => TreeList<N>;
+export function removeTrees<N extends Named>(t: Forest<N>, match: Name, ...moreMatches: Name[]): Forest<N>;
+export function removeTrees<N extends Named>(match: Name, ...moreMatches: Name[]): (t: Forest<N>) => Forest<N>;
 export function removeTrees(a: any, ...bs: any[]): any {
 
     return _filterTrees(true, a, bs);
 }
 
 
-export function isTopLevelItemOrChildThereof(t: TreeList<Named>,
+export function isTopLevelItemOrChildThereof(t: Forest<Named>,
                                              match: Name,
                                              firstLevelItem: Name,
                                              ...moreFirstLevelItems: Name[]): boolean {
@@ -36,7 +36,7 @@ export function isTopLevelItemOrChildThereof(t: TreeList<Named>,
 }
 
 
-function _filterTrees<N extends Named>(invert: boolean, a: any, bs: any[]): TreeList<N> {
+function _filterTrees<N extends Named>(invert: boolean, a: any, bs: any[]): Forest<N> {
 
     const $ = (t: any, match: any, moreMatches: any) => t.filter(
         on(Tree.ITEMNAMEPATH,

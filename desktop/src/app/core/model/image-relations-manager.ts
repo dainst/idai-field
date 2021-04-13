@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Category, Document, Datastore, FieldDocument, ImageDocument, ImageRelationsC as ImageRelations, ObjectUtils, ON_RESOURCE_ID, ResourceId, toResourceId, TreeList } from 'idai-field-core';
+import { Category, Document, Datastore, FieldDocument, ImageDocument, ImageRelationsC as ImageRelations, ObjectUtils, ON_RESOURCE_ID, ResourceId, toResourceId, Forest } from 'idai-field-core';
 import { flatten, includedIn, isDefined, isNot, on, separate, set, subtract, to } from 'tsfun';
 import { ProjectCategories } from '../configuration/project-categories';
 import { ProjectConfiguration } from '../configuration/project-configuration';
@@ -19,14 +19,14 @@ export module ImageRelationsManagerErrors {
 @Injectable()
 export class ImageRelationsManager {
 
-    private categoryTreelist: TreeList<Category>;
+    private categoryForest: Forest<Category>;
 
     constructor(private datastore: Datastore,
                 private relationsManager: RelationsManager,
                 private imagestore: Imagestore,
                 projectConfiguration: ProjectConfiguration) {
 
-        this.categoryTreelist = projectConfiguration.getCategoryTreelist();
+        this.categoryForest = projectConfiguration.getCategoryForest();
     }
 
 
@@ -71,7 +71,7 @@ export class ImageRelationsManager {
             throw [ImageRelationsManagerErrors.IMAGESTORE_ERROR_INVALID_PATH_DELETE];
         }
         const [imageDocuments, nonImageDocuments] = separate(documents,
-                document => ProjectCategories.getImageCategoryNames(this.categoryTreelist).includes(document.resource.category));
+                document => ProjectCategories.getImageCategoryNames(this.categoryForest).includes(document.resource.category));
         await this.removeImages(imageDocuments as any);
 
         const documentsToBeDeleted = [];

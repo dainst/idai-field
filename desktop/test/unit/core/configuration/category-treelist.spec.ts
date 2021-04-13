@@ -1,18 +1,18 @@
-import {linkParentAndChildInstances} from '../../../../src/app/core/configuration/category-tree-list';
-import {Tree, TreeList, Category} from 'idai-field-core';
+import {linkParentAndChildInstances} from '../../../../src/app/core/configuration/category-forest';
+import {Tree, Forest, Category} from 'idai-field-core';
 
 
-describe('CategoryTreeList', () => {
+describe('CategoryForest', () => {
 
     type T = { name: string, children: Array<T>, parentCategory?: T};
 
-    it('categoryTreeListToArray', () => {
+    it('categoryForestToArray', () => {
 
         const parent = { name: 'P1', children: [] };
         const child = { name: 'C1', parentCategory: parent, children: [] };
         parent.children = [child];
 
-        const t: TreeList<{ name: string, children: Array<T>}> = Tree.buildList([
+        const t: Forest<{ name: string, children: Array<T>}> = Tree.buildForest([
             [
                 parent,
                 [
@@ -57,7 +57,7 @@ describe('CategoryTreeList', () => {
         const child4 = { name: 'C4', parentCategory: parent2, children: [] };
         parent2.children = [child3,child4];
 
-        const t = Tree.buildList([
+        const t = Tree.buildForest([
             [
                 parent1,
                 [
@@ -121,7 +121,7 @@ describe('CategoryTreeList', () => {
         const child1 = { name: 'C1' };
         const child2 = { name: 'C2' };
 
-        return Tree.buildList([
+        return Tree.buildForest([
             [
                 parent1,
                 [
@@ -145,14 +145,14 @@ describe('CategoryTreeList', () => {
         const t = threeLevels();
         const result = linkParentAndChildInstances(t);
 
-        expect(Tree.access(result, 0).children[0] === Tree.access(result, 0, 0)).toBeTruthy();
-        expect(Tree.access(result, 0, 0).children[0] === Tree.access(result, 0, 0, 0)).toBeTruthy();
-        expect(Tree.access(result, 0, 0, 0).parentCategory === Tree.access(result, 0, 0)).toBeTruthy();
-        expect(Tree.access(result, 0, 0).parentCategory === Tree.access(result, 0)).toBeTruthy();
+        expect((Tree.access(result, 0) as any).children[0] === Tree.access(result, 0, 0)).toBeTruthy();
+        expect((Tree.access(result, 0, 0) as any).children[0] === Tree.access(result, 0, 0, 0)).toBeTruthy();
+        expect((Tree.access(result, 0, 0, 0) as any).parentCategory === Tree.access(result, 0, 0)).toBeTruthy();
+        expect((Tree.access(result, 0, 0) as any).parentCategory === Tree.access(result, 0)).toBeTruthy();
     });
 
 
-    it('categoryTreeListToArray - recursive', () => {
+    it('categoryForestToArray - recursive', () => {
 
         const t = threeLevels();
         const result = Tree.flatten<Category>(linkParentAndChildInstances(t));

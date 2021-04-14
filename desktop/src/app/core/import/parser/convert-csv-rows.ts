@@ -137,7 +137,7 @@ function assertHeadingsConsistent(headings: string[]) {
 
         flow(
             headings,
-            filter(StringUtils.startsWith(heading)),  /* TODO review*/
+            filter(StringUtils.startsWith(heading)),
             filter(on(StringUtils.size, gt)(heading)),
             filter((otherHeading: string) => otherHeading.substr(heading.length).includes('.')),
             forEach(throws([ParserErrors.CSV_INVALID_HEADING, heading])));

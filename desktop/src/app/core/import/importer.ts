@@ -93,7 +93,7 @@ export module Importer {
                                    options: ImporterOptions,
                                    documents: Array<Document>): Promise<ImporterReport> {
 
-        if (options.format === 'catalog') { // TODO test manually
+        if (options.format === 'catalog') {
             const { errors, successfulImports } =
                 await (buildImportCatalog(services, context.settings))(documents);
             return { errors: errors, successfulImports: successfulImports, ignoredIdentifiers: [] };

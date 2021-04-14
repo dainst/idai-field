@@ -136,7 +136,7 @@ function determineChangedDocs(targetDocuments: Array<Document>,
 function changedDocsReducer(changedDocs: Array<Document>, [targetDoc, cloneOfTargetDoc]: Pair<Document, Document>) {
 
     return changedDocs.concat(
-        !documentsRelationsEquivalent(targetDoc as any /* TODO review typings */)(cloneOfTargetDoc as any /* TODO review typigns*/)
+        !documentsRelationsEquivalent(targetDoc as any /* TODO review typings */)(cloneOfTargetDoc as any)
             ? targetDoc
             : []
     );

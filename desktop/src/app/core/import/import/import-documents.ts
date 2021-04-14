@@ -103,7 +103,7 @@ async function importDocuments(services: ImportServices,
                                documents: Array<Document>): Promise<Result> {
 
     makeSureRelationStructuresExists(documents);
-    complementInverseRelationsBetweenImportDocs(context, options, documents); // TODO now that we have that here, we could simplify later steps probably
+    complementInverseRelationsBetweenImportDocs(context, options, documents);
 
     try {
         const existingImportDocuments = await makeExistingDocumentsMap(helpers.find, options, documents);

@@ -9,6 +9,10 @@ export type ErrMsgs = Array<Array<any>>;
 export type Result = [Array<ImageDocument>, TotalCount];
 
 
+/**
+ * @author Thomas Kleinke
+ * @author Daniel de Oliveira
+ */
 export async function getImageSuggestions(datastore: Datastore,
                                           document: Document,
                                           mode: 'depicts'|'layers',

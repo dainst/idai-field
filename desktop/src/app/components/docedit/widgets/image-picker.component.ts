@@ -20,6 +20,7 @@ import { ProjectCategories } from '../../../core/configuration/project-categorie
 /**
  * @author Fabian Z.
  * @author Thomas Kleinke
+ * @author Daniel de Oliveira
  */
 export class ImagePickerComponent implements OnInit {
 

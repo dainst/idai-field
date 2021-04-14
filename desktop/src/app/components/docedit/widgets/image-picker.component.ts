@@ -149,8 +149,8 @@ export class ImagePickerComponent implements OnInit {
                 this.currentOffset);
 
         if (isSuccess(result)) {
-            const [suggestions, totalCount] = getSuccess(result);
             if (queryId === this.currentQueryId) {
+                const [suggestions, totalCount] = getSuccess(result);
                 this.documents = suggestions;
                 this.totalDocumentCount = totalCount;
             }

@@ -79,7 +79,7 @@ export module Validations {
             FieldDefinition.InputType.DATING,
             ValidationErrors.INVALID_DATING_VALUES,
             (dating: any) =>
-                Dating.isValid_deprecated(dating) // TODO migrate old datings and get rid of this
+                Dating.isValid_deprecated(dating)
                 || (Dating.isDating(dating) && Dating.isValid(dating))
             );
     }
@@ -94,8 +94,8 @@ export module Validations {
             FieldDefinition.InputType.DIMENSION,
             ValidationErrors.INVALID_DIMENSION_VALUES,
             (dimension: any, options?: any) =>
-                Dimension.isValid_deprecated(dimension) // TODO migrate old dimension and get rid of this
-                || (Dimension.isDimension(dimension) && Dimension.isValid(dimension, options)) // TODO review; remove options
+                Dimension.isValid_deprecated(dimension)
+                || (Dimension.isDimension(dimension) && Dimension.isValid(dimension, options))
             );
     }
 

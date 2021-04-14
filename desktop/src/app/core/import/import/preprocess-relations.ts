@@ -1,6 +1,6 @@
 import { HierarchicalRelations, PARENT, RESOURCE_DOT_ID } from 'idai-field-core';
 import { Document, Relations } from 'idai-field-core';
-import { includedIn, isArray, isnt, isUndefined, isUndefinedOrEmpty, on } from 'tsfun';
+import { includedIn, isArray, isnt, isUndefined, isUndefinedOrEmpty, on, isObject } from 'tsfun';
 import { makeLookup } from '../../../../../../core/src/tools/transformers';
 import { ImportContext, ImportHelpers, ImportOptions } from './import-documents';
 import { ImportErrors as E } from './import-errors';
@@ -19,9 +19,7 @@ import LIES_WITHIN = HierarchicalRelations.LIESWITHIN;
  * Expects documents to have at least empty relations ({}).
  * Relations set to null are left untouched.
  *
- * @throws FATAL - should not be handled. // TODO use assert?
- *
- *
+ * @throws FATAL - should not be handled.
  *
  * // TODO nulls here should not exist, because we are not in merge mode
  */
@@ -44,7 +42,7 @@ export function complementInverseRelationsBetweenImportDocs(context: ImportConte
                 if (!identifierLookup[targetIdentifier]) continue; // this means it must point to an existing resource, which gets validated later
 
                 const targetRelations = identifierLookup[targetIdentifier].resource.relations;
-                if (!targetRelations) throw 'FATAL - relations should exist'; // TODO test for empty map, not only not undefined
+                if (!isObject(targetRelations)) throw 'FATAL - relations should exist';
 
                 if (targetRelations[inverse] === null) {
                     // do nothing

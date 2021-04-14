@@ -2,20 +2,17 @@ import { Either } from 'tsfun';
 import { Query, Document, Name, ImageDocument, Datastore } from 'idai-field-core';
 
 
-export type QueryId = string;
-
 export type TotalCount = number;
 
 export type ErrMsgs = Array<Array<any>>;
 
-export type Result = [Array<ImageDocument>, TotalCount, QueryId];
+export type Result = [Array<ImageDocument>, TotalCount];
 
 
 export async function getImageSuggestions(datastore: Datastore,
                                           imageCategoryNames: Array<Name>,
                                           document: Document,
                                           mode: 'depicts'|'layers',
-                                          queryId: QueryId,
                                           queryString: string,
                                           limit: number,
                                           offset: number): Promise<Either<ErrMsgs, Result>> {
@@ -27,8 +24,7 @@ export async function getImageSuggestions(datastore: Datastore,
         categories: imageCategoryNames,
         constraints: {
             'project:exist': { value: 'KNOWN', subtract: true }
-        },
-        id: queryId
+        }
     };
 
     if (mode === 'depicts') {
@@ -47,8 +43,7 @@ export async function getImageSuggestions(datastore: Datastore,
             undefined,
             [
                result.documents.map(ImageDocument.fromDocument),
-               result.totalCount,
-               result.queryId
+               result.totalCount
             ]
         ];
     } catch (errWithParams) {

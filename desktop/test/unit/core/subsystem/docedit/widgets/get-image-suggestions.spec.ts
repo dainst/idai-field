@@ -31,7 +31,6 @@ describe('subsystem/getImageSuggestions', () => {
             { resource: {} } as Document,
             'depicts',
             '',
-            '',
             1,
             0
         );
@@ -51,7 +50,6 @@ describe('subsystem/getImageSuggestions', () => {
             { resource: { id: '2' } } as Document,
             'depicts',
             '',
-            '',
             1,
             0
         );
@@ -70,7 +68,6 @@ describe('subsystem/getImageSuggestions', () => {
             ['Image'],
             { resource: {} } as Document,
             'depicts',
-            '',
             '',
             1,
             0

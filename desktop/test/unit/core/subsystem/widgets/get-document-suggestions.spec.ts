@@ -24,13 +24,12 @@ describe('subsystem/getDocumentSuggestions', () => {
 
         await datastore.create(doc, 'test')
 
-        const [documents, queryId] = await getDocumentSuggestions(
+        const documents  = await getDocumentSuggestions(
             datastore,
             undefined,
             { id: '1', categories: ['Feature'] }, /* TODO why do we need to specify the category? */
         );
         expect(documents.length).toBe(1);
-        expect(queryId).toBe('1');
         done();
     });
 
@@ -39,13 +38,12 @@ describe('subsystem/getDocumentSuggestions', () => {
 
         await datastore.create(tsfun.update('project', 'other', doc), 'test')
 
-        const [documents, queryId] = await getDocumentSuggestions(
+        const documents = await getDocumentSuggestions(
             datastore,
             undefined,
             { id: '1', categories: ['Feature'] },
         );
         expect(documents.length).toBe(0);
-        expect(queryId).toBe('1');
         done();
     });
 });

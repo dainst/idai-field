@@ -99,9 +99,10 @@ export class DocumentPickerComponent implements OnChanges {
         await AngularUtility.refresh();
 
         this.currentQueryId = new Date().toISOString();
+        const queryId = this.currentQueryId;
 
         try {
-            const [documents, queryId] = await getDocumentSuggestions(
+            const documents = await getDocumentSuggestions(
                 this.datastore,
                 this.getConstraints,
                 tsfun.update('id', this.currentQueryId, this.query));

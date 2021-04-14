@@ -6,7 +6,7 @@ import {ImageGridComponent} from '../../image/grid/image-grid.component';
 import {M} from '../../messages/m';
 import {Messages} from '../../messages/messages';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
-import { getImageSuggestions, QueryId } from '../../../core/docedit/widgets/get-image-suggestions';
+import { getImageSuggestions } from '../../../core/docedit/widgets/get-image-suggestions';
 import { ProjectCategories } from '../../../core/configuration/project-categories';
 
 
@@ -33,7 +33,7 @@ export class ImagePickerComponent implements OnInit {
     public document: FieldDocument;
     public selectedDocuments: Array<ImageDocument> = [];
 
-    private currentQueryId: QueryId;
+    private currentQueryId: string;
     private queryString = '';
     private currentOffset = 0;
     private totalDocumentCount = 0;
@@ -136,6 +136,7 @@ export class ImagePickerComponent implements OnInit {
         if (this.modalBody) this.modalBody.nativeElement.scrollTop = 0;
 
         this.currentQueryId = new Date().toISOString();
+        const queryId = this.currentQueryId;
 
         const result =
             await getImageSuggestions(
@@ -143,13 +144,12 @@ export class ImagePickerComponent implements OnInit {
                 ProjectCategories.getImageCategoryNames(this.projectConfiguration.getCategoryForest()),
                 this.document,
                 this.mode,
-                this.currentQueryId,
                 this.queryString,
                 ImagePickerComponent.documentLimit,
                 this.currentOffset);
 
         if (isSuccess(result)) {
-            const [suggestions, totalCount, queryId] = getSuccess(result);
+            const [suggestions, totalCount] = getSuccess(result);
             if (queryId === this.currentQueryId) {
                 this.documents = suggestions;
                 this.totalDocumentCount = totalCount;

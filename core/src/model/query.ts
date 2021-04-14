@@ -32,7 +32,7 @@ export interface Query {
         mode?: 'default'|'exactMatchFirst'|'none',
         matchCategory?: string
     };
-    id?: string;
+    id?: string; // TODO remove, see for image-picker.component for why it is not necessary
 }
 
 

@@ -28,7 +28,7 @@ describe('subsystem/import/importCatalog', () => {
 
         importCatalog = buildImportCatalog(
             {
-                datastore: app.documentDatastore,
+                datastore: app.datastore,
                 relationsManager: app.relationsManager,
                 imageRelationsManager: app.imageRelationsManager,
                 imagestore: app.imagestore
@@ -70,7 +70,7 @@ describe('subsystem/import/importCatalog', () => {
         const result = await importCatalog([documentsLookup['tc1'], documentsLookup['t1']]);
         expect(result.successfulImports).toBe(2);
 
-        const newDocument = await app.documentDatastore.get('t1');
+        const newDocument = await app.datastore.get('t1');
         expect(newDocument.resource.relations['hasInstance']).toEqual(['f1'])
         done();
     });
@@ -92,7 +92,7 @@ describe('subsystem/import/importCatalog', () => {
         await importCatalog([documentsLookup['tc1'], documentsLookup['t1']]);
 
         helpers.expectImagesDontExist('i1');
-        const newDocument = await app.documentDatastore.get('t1');
+        const newDocument = await app.datastore.get('t1');
         expect(newDocument.resource.relations[ImageRelations.ISDEPICTEDIN]).toBeUndefined();
         done();
     });

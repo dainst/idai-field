@@ -1,11 +1,13 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import {Datastore, FieldDocument, ImageDocument, Query} from 'idai-field-core';
+import { isSuccess, getSuccess } from 'tsfun';
+import {Datastore, FieldDocument, ImageDocument} from 'idai-field-core';
 import {ImageGridComponent} from '../../image/grid/image-grid.component';
 import {M} from '../../messages/m';
 import {Messages} from '../../messages/messages';
-import {ProjectCategories} from '../../../core/configuration/project-categories';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
+import { getImageSuggestions, QueryId } from '../../../core/docedit/widgets/get-image-suggestions';
+import { ProjectCategories } from '../../../core/configuration/project-categories';
 
 
 @Component({
@@ -31,8 +33,8 @@ export class ImagePickerComponent implements OnInit {
     public document: FieldDocument;
     public selectedDocuments: Array<ImageDocument> = [];
 
+    private currentQueryId: QueryId;
     private queryString = '';
-    private currentQueryId: string;
     private currentOffset = 0;
     private totalDocumentCount = 0;
 
@@ -135,37 +137,26 @@ export class ImagePickerComponent implements OnInit {
 
         this.currentQueryId = new Date().toISOString();
 
-        const query: Query = {
-            q: this.queryString,
-            limit: ImagePickerComponent.documentLimit,
-            offset: this.currentOffset,
-            categories: ProjectCategories.getImageCategoryNames(this.projectConfiguration.getCategoryForest()),
-            constraints: {
-                'project:exist': { value: 'KNOWN', subtract: true } // TODO review and or test
-            },
-            id: this.currentQueryId
-        };
+        const result =
+            await getImageSuggestions(
+                this.datastore,
+                ProjectCategories.getImageCategoryNames(this.projectConfiguration.getCategoryForest()),
+                this.document,
+                this.mode,
+                this.currentQueryId,
+                this.queryString,
+                ImagePickerComponent.documentLimit,
+                this.currentOffset);
 
-        if (this.mode === 'depicts') {
-            query.constraints['depicts:contain'] = { value: this.document.resource.id, subtract: true };
+        if (isSuccess(result)) {
+            const [suggestions, totalCount, queryId] = getSuccess(result);
+            if (queryId === this.currentQueryId) {
+                this.documents = suggestions;
+                this.totalDocumentCount = totalCount;
+            }
         } else {
-            query.constraints['georeference:exist'] = { value: 'KNOWN' };
-            query.constraints['isMapLayerOf:exist'] = { value: 'UNKNOWN' };
-            if (this.document.resource.relations['hasMapLayer']) {
-                query.constraints['id:match'] = { value: this.document.resource.relations['hasMapLayer'], subtract: true };
-            }
-        }
-
-        try {
-            const result = await this.datastore.find(query);
-            this.totalDocumentCount = result.totalCount;
-            if (result.queryId === this.currentQueryId) this.documents = result.documents.map(ImageDocument.fromDocument);
-        }
-        catch (errWithParams) {
-            console.error('Error in find with query', query);
-            if (errWithParams.length === 2) {
-                console.error('Error in find', errWithParams[1]);
-            }
+            const [msgs] = result;
+            for (const msg of msgs) console.error(...msg);
             this.messages.add([M.ALL_ERROR_FIND]);
         }
     }

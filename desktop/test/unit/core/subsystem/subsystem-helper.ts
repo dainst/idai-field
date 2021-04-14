@@ -173,7 +173,6 @@ export async function createApp(projectName = 'testdb', startSync = false) {
         remoteChangesStream,
         viewFacade,
         documentHolder,
-        documentDatastore: datastore,
         datastore,
         settingsService,
         settingsProvider,
@@ -194,12 +193,12 @@ export function createHelpers(app) {
         + app.settingsProvider.getSettings().selectedProject
         + '/';
     const createDocuments = makeCreateDocuments(
-        app.documentDatastore, projectImageDir, app.settingsProvider.getSettings().username);
+        app.datastore, projectImageDir, app.settingsProvider.getSettings().username);
     const updateDocument = makeUpdateDocument(
-        app.documentDatastore, app.settingsProvider.getSettings().username);
-    const getDocument = makeGetDocument(app.documentDatastore);
-    const expectDocuments = makeExpectDocuments(app.documentDatastore);
-    const expectResources = makeExpectResources(app.documentDatastore);
+        app.datastore, app.settingsProvider.getSettings().username);
+    const getDocument = makeGetDocument(app.datastore);
+    const expectDocuments = makeExpectDocuments(app.datastore);
+    const expectResources = makeExpectResources(app.datastore);
     const expectImagesExist = makeExpectImagesExist(projectImageDir);
     const expectImagesDontExist = makeExpectImagesDontExist(projectImageDir);
     const createProjectDir = makeCreateProjectDir(projectImageDir);
@@ -307,32 +306,32 @@ function makeCreateDocuments(datastore: Datastore,
 }
 
 
-function makeUpdateDocument(documentDatastore: Datastore, username: string) {
+function makeUpdateDocument(datastore: Datastore, username: string) {
 
     return async function updateDocument(id: ResourceId,
                                          callback: (document: Document) => void) {
 
-        const oldDocument = await documentDatastore.get(id);
+        const oldDocument = await datastore.get(id);
         callback(oldDocument);
-        await documentDatastore.update(oldDocument, username);
+        await datastore.update(oldDocument, username);
     }
 }
 
-function makeExpectDocuments(documentDatastore: Datastore) {
+function makeExpectDocuments(datastore: Datastore) {
 
     return async function expectDocuments(...resourceIds: string[]) {
 
-        const documents = (await documentDatastore.find({})).documents;
+        const documents = (await datastore.find({})).documents;
         expect(sameset(documents.map(toResourceId), resourceIds)).toBeTruthy();
     }
 }
 
 
-function makeExpectResources(documentDatastore: Datastore) {
+function makeExpectResources(datastore: Datastore) {
 
     return async function expectDocuments(...resourceIdentifiers: string[]) {
 
-        const documents = (await documentDatastore.find({})).documents;
+        const documents = (await datastore.find({})).documents;
         expect(sameset(documents.map(doc => doc.resource.identifier), resourceIdentifiers)).toBeTruthy();
     }
 }
@@ -348,10 +347,10 @@ function makeCreateImageInProjectImageDir(projectImageDir: string) {
 }
 
 
-function makeGetDocument(documentDatastore: Datastore) {
+function makeGetDocument(datastore: Datastore) {
 
     return async function getDocument(id: ResourceId) {
 
-        return await documentDatastore.get(id);
+        return await datastore.get(id);
     }
 }

@@ -43,7 +43,7 @@ import {SearchConstraintsComponent} from './search-constraints.component';
         ZoomButtonsComponent,
         CategoryIconComponent,
         PagingButtonsComponent,
-        SearchConstraintsComponent as any // TODO review any; this comes because we declared the class abstract; as it was always and as I saw suggested recently; npm run i18n now works due to this change here
+        SearchConstraintsComponent as any // any became necessary after an angular update because class is abstract, which has always been like this and I also saw it being recommended; npm run i18n now works due to this change here
     ],
     providers: [
         Loading

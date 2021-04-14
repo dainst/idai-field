@@ -1,10 +1,11 @@
 import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
-import {map, union} from 'tsfun';
-import {FieldDocument, ObjectUtils, Document, Category, Query, Constraint, Datastore, FindResult} from 'idai-field-core';
+import * as tsfun from 'tsfun';
+import {FieldDocument, Category, Query, Datastore} from 'idai-field-core';
 import {Loading} from './loading';
 import {AngularUtility} from '../../angular/angular-utility';
 import {Messages} from '../messages/messages';
+import { GetConstraints, getDocumentSuggestions } from '../../core/widgets/get-document-suggestions';
 
 
 @Component({
@@ -19,7 +20,7 @@ import {Messages} from '../messages/messages';
 export class DocumentPickerComponent implements OnChanges {
 
     @Input() filterOptions: Array<Category>;
-    @Input() getConstraints: () => Promise<{ [name: string]: string|Constraint }>;
+    @Input() getConstraints: GetConstraints;
     @Input() showProjectOption: boolean = false;
 
     @Output() documentSelected: EventEmitter<FieldDocument> = new EventEmitter<FieldDocument>();
@@ -100,13 +101,12 @@ export class DocumentPickerComponent implements OnChanges {
         this.currentQueryId = new Date().toISOString();
 
         try {
-            if (this.getConstraints) this.query.constraints = await this.getConstraints();
-            this.query.id = this.currentQueryId;
-            const clonedQuery = ObjectUtils.clone(this.query);
-            if (clonedQuery.constraints === undefined) clonedQuery.constraints = {};
-            clonedQuery.constraints['project:exist'] = { value: 'KNOWN', subtract: true}; // TODO review
-            const result = await this.datastore.find(clonedQuery);
-            if (result.queryId === this.currentQueryId) this.documents = this.getDocuments(result);
+            const [documents, queryId] = await getDocumentSuggestions(
+                this.datastore,
+                this.getConstraints,
+                tsfun.update('id', this.currentQueryId, this.query));
+            if (this.currentQueryId === queryId) this.documents = this.filterDocuments(documents);
+
         } catch (msgWithParams) {
             this.messages.add(msgWithParams);
         } finally {
@@ -115,22 +115,9 @@ export class DocumentPickerComponent implements OnChanges {
     }
 
 
-    private getDocuments(result: FindResult): Array<FieldDocument> {
-
-        return map(this.isProjectOptionVisible()
-            ? [this.getProjectOption()].concat(
-                result
-                    .documents
-                    .filter(document => document.resource.category !== 'Project')
-                    .map(FieldDocument.fromDocument)
-            )
-            : result.documents, FieldDocument.fromDocument);
-    }
-
-
     private getAllAvailableCategoryNames(): string[] {
 
-        return union(this.filterOptions.map(category => {
+        return tsfun.union(this.filterOptions.map(category => {
             return category.children
                 ? [category.name].concat(category.children.map(child => child.name))
                 : [category.name];
@@ -157,5 +144,16 @@ export class DocumentPickerComponent implements OnChanges {
                 && this.i18n({ id: 'widgets.documentPicker.project', value: 'Projekt' })
                     .toLowerCase().startsWith(this.query.q.toLowerCase()))
                 || (this.query.categories !== undefined && this.query.categories.includes('Project')));
+    }
+
+
+    private filterDocuments(documents: Array<FieldDocument>): Array<FieldDocument> {
+
+        return this.isProjectOptionVisible()
+            ? [this.getProjectOption()].concat(
+                documents
+                    .filter(document => document.resource.category !== 'Project')
+            )
+            : documents;
     }
 }

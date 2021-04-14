@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react';
-import { Body, Header, Left, Right, Title } from 'native-base';
+import { AppBar } from 'native-base';
 import { StyleSheet } from 'react-native';
 import { headerBackgroundColor } from '../constants/colors';
 
@@ -10,15 +10,14 @@ interface AppHeaderProps {
 
 const AppHeader: React.FC<AppHeaderProps> = ({ title, right= null }) => {
     return (
-        <Header style={ styles.container }>
-            <Left />
-            <Body>
-                <Title style={ styles.header }>{title}</Title>
-            </Body>
-            <Right>
+        <AppBar style={ styles.container }>
+            <AppBar.Content>
+                {title}
+            </AppBar.Content>
+            <AppBar.Right>
                 {right}
-            </Right>
-        </Header>
+            </AppBar.Right>
+        </AppBar>
     );
 };
 

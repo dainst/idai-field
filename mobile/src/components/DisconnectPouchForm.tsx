@@ -1,5 +1,5 @@
 import React from 'react';
-import { Body, Button, Card, CardItem , Text } from 'native-base';
+import { VStack, Box, Divider, Text, Button } from 'native-base';
 
 interface DisconnectPouchFormProps {
     dbName: string;
@@ -8,17 +8,13 @@ interface DisconnectPouchFormProps {
 
 const DisconnectPouchForm: React.FC<DisconnectPouchFormProps> = ({ dbName, disconnectHandler }) => {
     return (
-        <Card>
-            <CardItem header bordered>
-                <Text>Disconnect {dbName}</Text>
-            </CardItem>
-            <Body>
-                <Button danger onPress={ disconnectHandler }>
-                    <Text>Disconnect</Text>
-                </Button>
-            </Body>
-
-        </Card>
+        <Box border={ 1 }>
+            <VStack space={ 4 } divider={ <Divider /> }></VStack>
+            <Text>Disconnect {dbName}</Text>
+            <Button danger onPress={ disconnectHandler }>
+                <Text>Disconnect</Text>
+            </Button>
+        </Box>
     );
 };
 

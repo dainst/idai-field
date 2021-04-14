@@ -1,17 +1,13 @@
-import { Ionicons } from '@expo/vector-icons';
-import { NavigationContainer } from '@react-navigation/native';
-import AppLoading from 'expo-app-loading';
-import * as Font from 'expo-font';
-import { Root } from 'native-base';
 import PouchDB from 'pouchdb-react-native';
 import React, { Dispatch, ReactElement, SetStateAction, useState } from 'react';
 import { enableScreens } from 'react-native-screens';
 import PouchDbContextProvider from './src/data/pouchdb/PouchContextProvider';
-import TabNavigator from './src/navigation/TabNavigator/TabNavigator';
 import { DocumentRepository } from './src/repositories/document-repository';
+import { NativeBaseProvider } from 'native-base';
+import HomeScreen from './src/screens/HomeScreen';
+import AppLoading from 'expo-app-loading';
 
 enableScreens();
-
 
 type SetDocumentRepository = Dispatch<SetStateAction<DocumentRepository | undefined>>;
 
@@ -29,31 +25,18 @@ export default function App(): ReactElement {
     }
 
     return (
-        <Root>
-            <NavigationContainer>
-                <PouchDbContextProvider>
-                    <HomeScreen />
-                </PouchDbContextProvider>
-            </NavigationContainer>
-        </Root>
+        <NativeBaseProvider>
+            <PouchDbContextProvider>
+                <HomeScreen />
+            </PouchDbContextProvider>
+        </NativeBaseProvider>
     );
 }
 
 
 const initializeApp = (setDocumentRepository: SetDocumentRepository) => async () => {
-    await Promise.all([
-        fetchFonts(),
-        setupRepository(setDocumentRepository)
-    ]);
-};
+    await setupRepository(setDocumentRepository);
 
-
-const fetchFonts = () => {
-    return Font.loadAsync({
-        Roboto: require('native-base/Fonts/Roboto.ttf'),
-        Roboto_medium: require('native-base/Fonts/Roboto_medium.ttf'),
-        ...Ionicons.font,
-    });
 };
 
 

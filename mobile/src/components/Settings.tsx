@@ -1,5 +1,5 @@
 import React, { ReactElement, useContext } from 'react';
-import { Container, Content, Toast } from 'native-base';
+import { Center } from 'native-base';
 import { StyleSheet } from 'react-native';
 import PouchDbContext from '../data/pouchdb/pouch-context';
 import ConnectPouchForm from './ConnectPouchForm';
@@ -13,13 +13,6 @@ const Settings = (): ReactElement => {
 
     const disconnectHandler = () => {
         disconnect();
-        Toast.show({
-            text: `Disconnected from ${dbName}`,
-            buttonText: 'Okay',
-            duration: 2000,
-            position: 'top',
-            textStyle: { color:  'green' },
-        });
     };
 
     const connectHandler = (dbName: string, remoteUser: string, remotePassword: string) => {
@@ -29,14 +22,12 @@ const Settings = (): ReactElement => {
 
 
     return (
-        <Container style={ styles.container }>
-            <Content>
+        <Center style={ styles.container }>
                 {isDbConnected() ?
                 <DisconectPouchForm
                     dbName={ dbName } disconnectHandler={ disconnectHandler } />:
                 <ConnectPouchForm dbSetupHandler={ connectHandler } /> }
-            </Content>
-        </Container>
+        </Center>
     );
 };
 

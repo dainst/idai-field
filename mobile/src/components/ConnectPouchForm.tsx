@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Form, Input, Item, Text, Card, Body, CardItem } from 'native-base';
+import { Button, Center, Input, Stack, Text } from 'native-base';
 import { Keyboard, StyleSheet } from 'react-native';
 
 interface ConnectPouchFormProps {
@@ -21,44 +21,32 @@ const ConnectPouchForm: React.FC<ConnectPouchFormProps> = ({ dbSetupHandler }) =
     };
 
     return (
-        <Card>
-            <CardItem header style={ styles.header }>
-                <Text>Connect to project</Text>
-            </CardItem>
-            <Body>
-                <Form>
-                    <Item>
-                        <Input placeholder="User"
-                            value={ remoteUser }
-                            onChange={ e => setRemoteUser(e.nativeEvent.text) }
-                            autoCapitalize="none"
-                            autoCorrect={ false }
-                        />
-                    </Item>
-                    <Item>
-                        <Input placeholder="Project"
-                            value={ dbName }
-                            onChange={ e => setDbName(e.nativeEvent.text) }
-                            autoCapitalize="none"
-                            autoCorrect={ false }
-                        />
-                    </Item>
-                    <Item>
-                        <Input placeholder="Password"
-                            value={ password }
-                            onChange={ e => setPassword(e.nativeEvent.text) }
-                            autoCapitalize="none"
-                            autoCorrect={ false }
-                        />
-                    </Item>
-                    <Item style={ styles.connectBtnContainer } >
-                        <Button info onPress={ connectionHandler } style={ styles.connectBtn }>
-                            <Text>Connect</Text>
-                        </Button>
-                    </Item>
-                </Form>
-            </Body>
-        </Card>
+        <Center>
+            <Text>Connect to project</Text>
+            <Stack>
+                <Input placeholder="User"
+                    value={ remoteUser }
+                    onChange={ e => setRemoteUser(e.nativeEvent.text) }
+                    autoCapitalize="none"
+                    autoCorrect={ false }
+                />
+                <Input placeholder="Project"
+                    value={ dbName }
+                    onChange={ e => setDbName(e.nativeEvent.text) }
+                    autoCapitalize="none"
+                    autoCorrect={ false }
+                />
+                <Input placeholder="Password"
+                    value={ password }
+                    onChange={ e => setPassword(e.nativeEvent.text) }
+                    autoCapitalize="none"
+                    autoCorrect={ false }
+                />
+                <Button info onPress={ connectionHandler } style={ styles.connectBtn }>
+                    <Text>Connect</Text>
+                </Button>
+        </Stack>
+        </Center>
     );
 };
 

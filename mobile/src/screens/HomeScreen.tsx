@@ -1,7 +1,6 @@
-//import liraries
 import React, { useContext, ReactElement } from 'react';
 import { StyleSheet } from 'react-native';
-import { Container, Content, } from 'native-base';
+import { Center, View } from 'native-base';
 import PouchDbContext from '../data/pouchdb/pouch-context';
 import Settings from '../components/Settings';
 import AppHeader from '../components/AppHeader';
@@ -13,17 +12,17 @@ const HomeScreen= (): ReactElement => {
     const { dbName, isDbConnected, operations } = useContext(PouchDbContext);
 
     return (
-        <Container >
+        <Center >
             <AppHeader
                 title={ isDbConnected()? dbName : 'iDAI field mobile' }
             />
-            <Content contentContainerStyle={ styles.container }>
+            <View contentContainerStyle={ styles.container }>
                 {isDbConnected() ?
                     <Map documents={ operations } />:
                     <Settings />
                 }
-            </Content>
-        </Container>
+            </View>
+        </Center>
     );
 };
 
@@ -33,14 +32,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         flex: 1,
-    },
-
-    red: {
-        color: 'red',
-    },
-    green: {
-        color: 'green',
-    },
+    }
 });
 
 

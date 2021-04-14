@@ -46,7 +46,7 @@ export module EdgesBuilder {
         return (document: Document): { resourceId: string, edges: Edges } => {
 
             const aboveTargetIds = getEdgeTargetIds(
-                document, graphDocuments, totalDocuments, relations, 'above' // TODO use relation constants
+                document, graphDocuments, totalDocuments, relations, 'above'
             );
 
             const belowTargetIds = getEdgeTargetIds(

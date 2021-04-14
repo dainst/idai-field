@@ -63,7 +63,7 @@ describe('subsystem/getImageSuggestions', () => {
 
     it('exclude documents from other projects', async done => {
 
-        await datastore.create(update('project', true, doc), 'test')
+        await datastore.create(update('project', 'other', doc), 'test')
 
         const [,[images, totalCount]] = await getImageSuggestions(
             datastore,

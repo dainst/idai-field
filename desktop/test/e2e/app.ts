@@ -1,7 +1,10 @@
+import { isString } from 'tsfun';
+
 const Application = require('spectron').Application;
 const electron = require('electron');
 
 const WAIT_FOR_ELEMENT_TIMEOUT = 30000;
+
 
 const app = new Application({
     path: electron,
@@ -50,7 +53,7 @@ export function getElement(selector: string) {
 
 export async function click(element) {
 
-    if (typeof element === 'string') element = await getElement(element);
+    if (isString(element)) element = await getElement(element);
     await element.waitForClickable({ timeout: WAIT_FOR_ELEMENT_TIMEOUT });
     return element.click();
 }
@@ -58,7 +61,7 @@ export async function click(element) {
 
 export async function doubleClick(element) {
 
-    if (typeof element === 'string') element = await getElement(element);
+    if (isString(element)) element = await getElement(element);
     await element.waitForClickable({ timeout: WAIT_FOR_ELEMENT_TIMEOUT });
     return element.doubleClick();
 }
@@ -66,7 +69,7 @@ export async function doubleClick(element) {
 
 export async function rightClick(element) {
 
-    if (typeof element === 'string') element = await getElement(element);
+    if (isString(element)) element = await getElement(element);
     await element.waitForClickable({ timeout: WAIT_FOR_ELEMENT_TIMEOUT });
     return element.click({ button: 'right' });
 }
@@ -74,7 +77,7 @@ export async function rightClick(element) {
 
 export async function hover(element) {
 
-    if (typeof element === 'string') element = await getElement(element);
+    if (isString(element)) element = await getElement(element);
     await element.waitForExists({ timeout: WAIT_FOR_ELEMENT_TIMEOUT });
     return element.moveTo();
 }
@@ -82,21 +85,21 @@ export async function hover(element) {
 
 export async function waitForExist(element) {
 
-    if (typeof element === 'string') element = await getElement(element);
+    if (isString(element)) element = await getElement(element);
     return element.waitForExist({ timeout: WAIT_FOR_ELEMENT_TIMEOUT });
 }
 
 
 export async function waitForNotExist(element) {
 
-    if (typeof element === 'string') element = await getElement(element);
+    if (isString(element)) element = await getElement(element);
     return element.waitForExist({ timeout: WAIT_FOR_ELEMENT_TIMEOUT, reverse: true });
 }
 
 
 export async function input(element, text) {
 
-    if (typeof element === 'string') element = await getElement(element);
+    if (isString(element)) element = await getElement(element);
     return element.setValue(text);
 }
 

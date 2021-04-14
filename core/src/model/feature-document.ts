@@ -14,11 +14,13 @@ export interface FeatureDocument extends FieldDocument {
 
 export module FeatureDocument {
 
-    // TODO review, dating?
     export function fromDocument(document: Document): FeatureDocument {
 
-        const doc = ObjectUtils.clone(document);
-        takeOrMake(doc, ['resource','relations','isRecordedIn'], []);
+        const doc = FieldDocument.fromDocument(ObjectUtils.clone(document));
+
+        takeOrMake(doc, ['resource','relations','isAfter'], []);
+        takeOrMake(doc, ['resource','relations','isBefore'], []);
+        takeOrMake(doc, ['resource','relations','isContemporaryWith'], []);
         return doc as any;
     }
 }

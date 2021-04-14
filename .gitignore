@@ -6,3 +6,6 @@ node_modules
 # System Files
 .DS_Store
 Thumbs.db
+
+#lerna files
+lerna-debug.log

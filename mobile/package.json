@@ -33,13 +33,13 @@
     "react-native": "https://github.com/expo/react-native/archive/sdk-40.0.1.tar.gz",
     "react-native-gesture-handler": "~1.8.0",
     "react-native-reanimated": "~1.13.0",
-    "react-native-safe-area-context": "^3.2.0",
+    "react-native-safe-area-context": "3.1.9",
     "react-native-screens": "~2.15.2",
     "react-native-svg": "12.1.0",
     "react-native-web": "~0.13.12",
+    "rxjs": "~6.5.4",
     "styled-components": "^5.2.3",
     "styled-system": "^5.1.5",
-    "rxjs": "~6.5.4",
     "tsfun": "5.5.7"
   },
   "devDependencies": {

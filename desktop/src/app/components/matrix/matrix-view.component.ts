@@ -21,6 +21,7 @@ import IS_CUT_BY = PositionRelations.CUTBY;
 import CUTS = PositionRelations.CUTS;
 import {TabManager} from '../../core/tabs/tab-manager';
 import {MenuContext, MenuService} from '../menu-service';
+import { ProjectCategories } from '../../core/configuration/project-categories';
 
 const Viz = require('viz.js');
 
@@ -193,8 +194,11 @@ export class MatrixViewComponent implements OnInit {
 
         this.loading.start();
 
+        const categories = ProjectCategories.getFeatureCategoryNames(this.projectConfiguration.getCategoryForest());
+
         const result = await this.datastore.find( {
-            constraints: { 'isRecordedIn:contain': trench.resource.id }
+            constraints: { 'isRecordedIn:contain': trench.resource.id },
+            categories: categories
         });
         this.totalFeatureDocuments = this.featureDocuments = result.documents.map(FeatureDocument.fromDocument);
 

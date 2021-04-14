@@ -138,10 +138,11 @@ export class ImagePickerComponent implements OnInit {
         this.currentQueryId = new Date().toISOString();
         const queryId = this.currentQueryId;
 
+        const categories = ProjectCategories.getImageCategoryNames(this.projectConfiguration.getCategoryForest())
         const result =
-            await getImageSuggestions(
+            await getImageSuggestions( // TODO pass query
                 this.datastore,
-                ProjectCategories.getImageCategoryNames(this.projectConfiguration.getCategoryForest()),
+                categories,
                 this.document,
                 this.mode,
                 this.queryString,

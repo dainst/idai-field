@@ -1,6 +1,6 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import { isSuccess } from 'tsfun';
+import { isSuccess, getSuccess } from 'tsfun';
 import {Datastore, FieldDocument, ImageDocument} from 'idai-field-core';
 import {ImageGridComponent} from '../../image/grid/image-grid.component';
 import {M} from '../../messages/m';
@@ -149,7 +149,7 @@ export class ImagePickerComponent implements OnInit {
                 this.currentOffset);
 
         if (isSuccess(result)) {
-            const [,[suggestions, totalCount, queryId]] = result;
+            const [suggestions, totalCount, queryId] = getSuccess(result);
             if (queryId === this.currentQueryId) {
                 this.documents = suggestions;
                 this.totalDocumentCount = totalCount;

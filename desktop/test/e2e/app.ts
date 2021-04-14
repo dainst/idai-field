@@ -6,6 +6,9 @@ const electron = require('electron');
 const WAIT_FOR_ELEMENT_TIMEOUT = 30000;
 
 
+jasmine.DEFAULT_TIMEOUT_INTERVAL = 100000;
+
+
 const app = new Application({
     path: electron,
     args: ['.', 'test']

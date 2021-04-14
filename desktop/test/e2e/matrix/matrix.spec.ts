@@ -14,7 +14,7 @@ describe('matrix --', () => {
         await start();
         await waitForExist('#buttons-container'); // TODO Check for something less specific
         done();
-    }, 100000);
+    });
 
 
     beforeEach(async done => {
@@ -26,14 +26,14 @@ describe('matrix --', () => {
         await waitForExist(await MatrixPage.getSvgRoot());
 
         done();
-    }, 100000);
+    });
 
 
     afterAll(async done => {
 
         await stop();
         done();
-    }, 100000);
+    });
 
 
     const testDefaultMatrix = async () => {
@@ -77,7 +77,7 @@ describe('matrix --', () => {
         expect(selected.length).toBe(0);
 
         done();
-    }, 100000);
+    });
 
 
     it('clear selection when switching trenches', async done => {
@@ -90,7 +90,7 @@ describe('matrix --', () => {
         expect((await(await MatrixPage.getCreateGraphFromSelectionButton()).getAttribute('class'))).toMatch('disabled');
 
         done();
-    }, 100000);
+    });
 
 
     /*it('edit relations and show updated matrix', async done => {
@@ -108,7 +108,7 @@ describe('matrix --', () => {
         await waitForExist(await MatrixPage.getAboveEdge('si1', 'si4'));
 
         done();
-    }, 100000);*/
+    });*/
 
 
     it('create matrix from selected resources', async done => {
@@ -133,7 +133,7 @@ describe('matrix --', () => {
         await testDefaultMatrix();
 
         done();
-    }, 100000);
+    });
 
 
     it('switch between spatial and temporal relations', async done => {
@@ -149,7 +149,7 @@ describe('matrix --', () => {
         await testDefaultMatrix();
 
         done();
-    }, 100000);
+    });
 
 
     it('toggle period clusters', async done => {
@@ -167,7 +167,7 @@ describe('matrix --', () => {
         expect(clusters.length).toBe(2);
         
         done();
-    }, 100000);
+    });
 
 
     it('show matrix for different trenches', async done => {
@@ -186,5 +186,5 @@ describe('matrix --', () => {
         await testDefaultMatrix();
 
         done();
-    }, 100000);
+    });
 });

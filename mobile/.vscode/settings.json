@@ -3,5 +3,16 @@
     "editor.rulers": [120],
     "editor.codeActionsOnSave": {
         "source.fixAll.eslint": true
+    },
+    "typescript.preferences.quoteStyle": "single",
+    "[typescript]": {
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": true
+        }
+    },
+    "[typescriptreact]": {
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": true
+        }
     }
 }

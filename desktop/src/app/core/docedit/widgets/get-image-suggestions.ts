@@ -51,10 +51,8 @@ export async function getImageSuggestions(datastore: Datastore,
                result.queryId
             ]
         ];
-
     } catch (errWithParams) {
 
-        // TODO test handling of messages in imagepickercomponent manually
         const msgs = [['Error in find with query', query]];
         if (errWithParams.length === 2) {
             msgs.push(['Error in find', errWithParams[1]]);

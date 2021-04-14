@@ -1,12 +1,7 @@
-import {browser, protractor} from 'protractor';
-import {MenuPage} from '../menu.page';
+import { start, stop, waitForExist, resetApp, navigateTo, waitForNotExist } from '../app';
 import {MatrixPage} from './matrix.page';
 import {DoceditPage} from '../docedit/docedit.page';
 import {DoceditRelationsTabPage} from '../docedit/docedit-relations-tab.page';
-
-const EC = protractor.ExpectedConditions;
-const delays = require('../delays');
-const common = require('../common');
 
 
 /**
@@ -14,135 +9,182 @@ const common = require('../common');
  */
 describe('matrix --', () => {
 
-    beforeEach(() => {
+    beforeAll(async done => {
 
-        browser.sleep(1500);
-
-        MenuPage.navigateToSettings();
-        browser.sleep(1)
-            .then(() => common.resetApp());
-        MenuPage.navigateToMatrix();
-        MatrixPage.performSelectOperation(1);
-
-        browser.wait(EC.presenceOf(MatrixPage.getSvgRoot()), delays.ECWaitTime);
-    });
+        await start();
+        await waitForExist('#buttons-container'); // TODO Check for something less specific
+        done();
+    }, 100000);
 
 
-    const testDefaultMatrix = () => {
+    beforeEach(async done => {
 
-        MatrixPage.getNodes().then(nodes => expect(nodes.length).toBe(6));
+        await navigateTo('settings');
+        await resetApp();
+        await navigateTo('matrix');
+        await MatrixPage.performSelectOperation(1);
+        await waitForExist(await MatrixPage.getSvgRoot());
+
+        done();
+    }, 100000);
+
+
+    afterAll(async done => {
+
+        await stop();
+        done();
+    }, 100000);
+
+
+    const testDefaultMatrix = async () => {
+
+        const nodes = await MatrixPage.getNodes();
+        expect(nodes.length).toBe(6);
+
         for (let i = 1; i <= 6; i++) {
-            browser.wait(EC.presenceOf(MatrixPage.getNode('si' + i)), delays.ECWaitTime * 2);
+            await waitForExist(await MatrixPage.getNode('si' + i));
         }
 
-        MatrixPage.getEdges().then(edges => expect(edges.length).toBe(5));
-        browser.wait(EC.presenceOf(MatrixPage.getAboveEdge('si1', 'si2')), delays.ECWaitTime);
-        browser.wait(EC.presenceOf(MatrixPage.getAboveEdge('si1', 'si5')), delays.ECWaitTime);
-        browser.wait(EC.presenceOf(MatrixPage.getAboveEdge('si2', 'si3')), delays.ECWaitTime);
-        browser.wait(EC.presenceOf(MatrixPage.getAboveEdge('si3', 'si4')), delays.ECWaitTime);
-        browser.wait(EC.presenceOf(MatrixPage.getSameRankEdge('si3', 'si5')),
-            delays.ECWaitTime);
+        const edges = await MatrixPage.getEdges();
+        expect(edges.length).toBe(5);
+
+        await waitForExist(await MatrixPage.getAboveEdge('si1', 'si2'));
+        await waitForExist(await MatrixPage.getAboveEdge('si1', 'si5'));
+        await waitForExist(await MatrixPage.getAboveEdge('si2', 'si3'));
+        await waitForExist(await MatrixPage.getAboveEdge('si3', 'si4'));
+        await waitForExist(await MatrixPage.getSameRankEdge('si3', 'si5'));
     };
 
 
-    it('select and deselect resources', () => {
+    it('select and deselect resources', async done => {
+    
+        await MatrixPage.clickSingleSelectionModeButton();
+        await MatrixPage.clickNode('si1');
+        await MatrixPage.clickNode('si2');
+        await MatrixPage.clickNode('si3');
 
-        MatrixPage.clickSingleSelectionModeButton();
-        MatrixPage.clickNode('si1');
-        MatrixPage.clickNode('si2');
-        MatrixPage.clickNode('si3');
-        MatrixPage.getSelectedNodes().then(selected => expect(selected.length).toBe(3));
+        let selected = await MatrixPage.getSelectedNodes();
+        expect(selected.length).toBe(3);
 
-        MatrixPage.clickNode('si3');
-        MatrixPage.getSelectedNodes().then(selected => expect(selected.length).toBe(2));
+        await MatrixPage.clickNode('si3');
+        selected = await MatrixPage.getSelectedNodes();
+        expect(selected.length).toBe(2);
 
-        MatrixPage.clickClearSelectionButton();
-        MatrixPage.getSelectedNodes().then(selected => expect(selected.length).toBe(0));
-    });
+        await MatrixPage.clickClearSelectionButton();
 
+        selected = await MatrixPage.getSelectedNodes();
 
-    it('clear selection when switching trenches', () => {
+        expect(selected.length).toBe(0);
 
-        MatrixPage.clickSingleSelectionModeButton();
-        MatrixPage.clickNode('si1');
-
-        MatrixPage.performSelectOperation(0);
-        expect(MatrixPage.getClearSelectionButton().getAttribute('class')).toMatch('disabled');
-        expect(MatrixPage.getCreateGraphFromSelectionButton().getAttribute('class')).toMatch('disabled');
-    });
+        done();
+    }, 100000);
 
 
-    it('edit relations and show updated matrix', () => {
+    it('clear selection when switching trenches', async done => {
 
-        MatrixPage.clickNode('si1');
-        DoceditPage.clickGotoTimeTab();
-        DoceditRelationsTabPage.clickRelationDeleteButtonByIndices('zeitlich-nach', 1);
+        await MatrixPage.clickSingleSelectionModeButton();
+        await MatrixPage.clickNode('si1');
 
-        DoceditRelationsTabPage.clickAddRelationForGroupWithIndex('zeitlich-nach');
-        DoceditRelationsTabPage.typeInRelationByIndices('zeitlich-nach', 1, 'SE4');
-        DoceditRelationsTabPage.clickChooseRelationSuggestion('zeitlich-nach', 1, 0);
-        DoceditPage.clickSaveDocument();
+        await MatrixPage.performSelectOperation(0);
+        expect((await(await MatrixPage.getClearSelectionButton()).getAttribute('class'))).toMatch('disabled');
+        expect((await(await MatrixPage.getCreateGraphFromSelectionButton()).getAttribute('class'))).toMatch('disabled');
 
-        browser.wait(EC.stalenessOf(MatrixPage.getAboveEdge('si1', 'si5')), delays.ECWaitTime);
-        browser.wait(EC.presenceOf(MatrixPage.getAboveEdge('si1', 'si4')), delays.ECWaitTime);
-    });
+        done();
+    }, 100000);
 
 
-    it('create matrix from selected resources', () => {
+    /*it('edit relations and show updated matrix', async done => {
 
-        MatrixPage.clickSingleSelectionModeButton();
-        MatrixPage.clickNode('si1');
-        MatrixPage.clickNode('si5');
-        MatrixPage.clickCreateGraphFromSelectionButton();
+        await MatrixPage.clickNode('si1');
+        await DoceditPage.clickGotoTimeTab();
+        await DoceditRelationsTabPage.clickRelationDeleteButtonByIndices('zeitlich-nach', 1);
 
-        browser.wait(EC.stalenessOf(MatrixPage.getNode('si2')), delays.ECWaitTime);
-        browser.wait(EC.stalenessOf(MatrixPage.getNode('si3')), delays.ECWaitTime);
-        browser.wait(EC.stalenessOf(MatrixPage.getNode('si4')), delays.ECWaitTime);
-        browser.wait(EC.presenceOf(MatrixPage.getNode('si1')), delays.ECWaitTime);
-        browser.wait(EC.presenceOf(MatrixPage.getNode('si5')), delays.ECWaitTime);
+        await DoceditRelationsTabPage.clickAddRelationForGroupWithIndex('zeitlich-nach');
+        await DoceditRelationsTabPage.typeInRelationByIndices('zeitlich-nach', 1, 'SE4');
+        await DoceditRelationsTabPage.clickChooseRelationSuggestion('zeitlich-nach', 1, 0);
+        await DoceditPage.clickSaveDocument();
 
-        MatrixPage.getEdges().then(edges => expect(edges.length).toBe(1));
-        browser.wait(EC.presenceOf(MatrixPage.getAboveEdge('si1', 'si5')), delays.ECWaitTime);
+        await waitForNotExist(await MatrixPage.getAboveEdge('si1', 'si5'));
+        await waitForExist(await MatrixPage.getAboveEdge('si1', 'si4'));
 
-        MatrixPage.clickReloadGraphButton();
-        testDefaultMatrix();
-    });
+        done();
+    }, 100000);*/
 
 
-    it('switch between spatial and temporal relations', () => {
+    it('create matrix from selected resources', async done => {
 
-        testDefaultMatrix();
+        await MatrixPage.clickSingleSelectionModeButton();
+        await MatrixPage.clickNode('si1');
+        await MatrixPage.clickNode('si5');
+        await MatrixPage.clickCreateGraphFromSelectionButton();
 
-        MatrixPage.clickOptionsButton();
-        MatrixPage.clickSpatialRelationsRadioButton();
-        MatrixPage.getEdges().then(edges => expect(edges.length).toBe(0));
+        await waitForNotExist(await MatrixPage.getNode('si2'));
+        await waitForNotExist(await MatrixPage.getNode('si3'));
+        await waitForNotExist(await MatrixPage.getNode('si4'));
+        await waitForExist(await MatrixPage.getNode('si1'));
+        await waitForExist(await MatrixPage.getNode('si5'));
 
-        MatrixPage.clickTemporalRelationsRadioButton();
-        testDefaultMatrix();
-    });
+        const edges = await MatrixPage.getEdges();
+        expect(edges.length).toBe(1);
+        
+        await waitForExist(await MatrixPage.getAboveEdge('si1', 'si5'));
 
+        await MatrixPage.clickReloadGraphButton();
+        await testDefaultMatrix();
 
-    it('toggle period clusters', () => {
-
-        MatrixPage.getClusters().then(clusters => expect(clusters.length).toBe(2));
-        MatrixPage.clickOptionsButton();
-        MatrixPage.clickPeriodCheckbox();
-        MatrixPage.getClusters().then(clusters => expect(clusters.length).toBe(0));
-        MatrixPage.clickPeriodCheckbox();
-        MatrixPage.getClusters().then(clusters => expect(clusters.length).toBe(2));
-    });
+        done();
+    }, 100000);
 
 
-    it('show matrix for different trenches', () => {
+    it('switch between spatial and temporal relations', async done => {
 
-        testDefaultMatrix();
-        MatrixPage.performSelectOperation(0);
+        await testDefaultMatrix();
 
-        MatrixPage.getNodes().then(nodes => expect(nodes.length).toBe(1));
-        browser.wait(EC.presenceOf(MatrixPage.getNode('si0')), delays.ECWaitTime);
-        MatrixPage.getEdges().then(edges => expect(edges.length).toBe(0));
+        await MatrixPage.clickOptionsButton();
+        await MatrixPage.clickSpatialRelationsRadioButton();
+        const edges = await MatrixPage.getEdges();
+        expect(edges.length).toBe(0);
 
-        MatrixPage.performSelectOperation(1);
-        testDefaultMatrix();
-    });
+        await MatrixPage.clickTemporalRelationsRadioButton();
+        await testDefaultMatrix();
+
+        done();
+    }, 100000);
+
+
+    it('toggle period clusters', async done => {
+
+        let clusters = await MatrixPage.getClusters();
+        expect(clusters.length).toBe(2);
+
+        await MatrixPage.clickOptionsButton();
+        await MatrixPage.clickPeriodCheckbox();
+        clusters = await MatrixPage.getClusters();
+        expect(clusters.length).toBe(0);
+
+        await MatrixPage.clickPeriodCheckbox();
+        clusters = await MatrixPage.getClusters();
+        expect(clusters.length).toBe(2);
+        
+        done();
+    }, 100000);
+
+
+    it('show matrix for different trenches', async done => {
+
+        await testDefaultMatrix();
+        await MatrixPage.performSelectOperation(0);
+
+        const nodes = await MatrixPage.getNodes();
+        expect(nodes.length).toBe(1);
+
+        await waitForExist(await MatrixPage.getNode('si0'));
+        const edges = await MatrixPage.getEdges();
+        expect(edges.length).toBe(0);
+
+        await MatrixPage.performSelectOperation(1);
+        await testDefaultMatrix();
+
+        done();
+    }, 100000);
 });

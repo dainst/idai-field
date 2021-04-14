@@ -51,6 +51,12 @@ export function getElement(selector: string) {
 }
 
 
+export function getElements(selector: string) {
+
+    return app.client.$$(selector);
+}
+
+
 export async function click(element) {
 
     if (isString(element)) element = await getElement(element);

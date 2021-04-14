@@ -1,8 +1,5 @@
-import {browser, element, by, protractor} from 'protractor';
+import { click, waitForExist, getElement, getElements } from '../app';
 
-const EC = protractor.ExpectedConditions;
-const common = require('../common');
-const delays = require('../delays');
 
 /**
  * @author Thomas Kleinke
@@ -11,57 +8,57 @@ export class MatrixPage {
 
     // click
 
-    public static clickNode(id: string) {
+    public static async clickNode(id: string) {
 
-        return common.click(this.getNode(id));
+        return click(await this.getNode(id));
     }
 
 
     public static clickSingleSelectionModeButton() {
 
-        return common.click(element(by.id('single-selection-mode-button')));
+        return click('#single-selection-mode-button');
     }
 
 
-    public static clickClearSelectionButton() {
+    public static async clickClearSelectionButton() {
 
-        return common.click(MatrixPage.getClearSelectionButton());
+        return click('#clear-selection-button');
     }
 
 
-    public static clickCreateGraphFromSelectionButton() {
+    public static async clickCreateGraphFromSelectionButton() {
 
-        return common.click(MatrixPage.getCreateGraphFromSelectionButton());
+        return click('#create-graph-from-selection-button');
     }
 
 
     public static clickReloadGraphButton() {
 
-        return common.click(element(by.id('reload-graph-button')));
+        return click('#reload-graph-button');
     }
 
 
     public static clickOptionsButton() {
 
-        return common.click(element(by.id('matrix-options-button')));
+        return click('#matrix-options-button');
     }
 
 
     public static clickTemporalRelationsRadioButton() {
 
-        return common.click(element(by.id('relations-radio-temporal-label')));
+        return click('#relations-radio-temporal-label');
     }
 
 
     public static clickSpatialRelationsRadioButton() {
 
-        return common.click(element(by.id('relations-radio-spatial-label')));
+        return click('#relations-radio-spatial-label');
     }
 
 
     public static clickPeriodCheckbox() {
 
-        return common.click(element(by.id('period-check-label')));
+        return click('#period-check-label');
     }
 
 
@@ -69,73 +66,71 @@ export class MatrixPage {
 
     public static getSvgRoot() {
 
-        return element(by.tagName('svg'));
+        return getElement('<svg />');
     }
 
 
     public static getNodes() {
 
-        return element.all(by.css('.node'));
+        return getElements('.node');
     }
 
 
     public static getNode(id: string) {
 
-        return element(by.id('node-' + id));
+        return getElement('#node-' + id);
     }
 
 
     public static getEdges() {
 
-        return element.all(by.css('.edge'));
+        return getElements('.edge');
     }
 
 
     public static getAboveEdge(aboveId: string, belowId: string) {
 
-        return element(by.css('.edge.above-' + aboveId + '.below-' + belowId));
+        return getElement('.edge.above-' + aboveId + '.below-' + belowId);
     }
 
 
     public static getSameRankEdge(sameRankId1: string, sameRankId2: string) {
 
-        return element(by.css('.edge.same-rank-' + sameRankId1 + '.same-rank-' + sameRankId2));
+        return getElement('.edge.same-rank-' + sameRankId1 + '.same-rank-' + sameRankId2);
     }
 
 
     public static getClusters() {
 
-        return element.all(by.css('.cluster'));
+        return getElements('.cluster');
     }
 
 
     public static getSelectedNodes() {
 
-        return element.all(by.css('.node .selected'));
+        return getElements('.node .selected');
     }
 
 
-    public static performSelectOperation(index) {
+    public static async performSelectOperation(index) {
 
-        browser.wait(EC.presenceOf(element(by.css('.dropdown'))), delays.ECWaitTime);
-        element.all(by.css('.dropdown .dropdown-toggle-split')).click();
-        browser.wait(EC.presenceOf(element(by.css('.dropdown .dropdown-menu'))),
-            delays.ECWaitTime);
-        element.all(by.css('.dropdown .dropdown-menu button')).get(index).click();
-        browser.wait(EC.stalenessOf(element(by.css('.loading-icon'))), delays.ECWaitTime);
+        await waitForExist('.dropdown');
+        await click('.dropdown .dropdown-toggle-split');
+        await waitForExist('.dropdown .dropdown-menu');
+        await click((await getElements('.dropdown .dropdown-menu button'))[index]);
     }
 
 
-    public static getClearSelectionButton() {
+    public static async getClearSelectionButton() {
 
-        browser.wait(EC.presenceOf(element(by.id('clear-selection-button'))), delays.ECWaitTime);
-        return element(by.id('clear-selection-button'));
+        await waitForExist('#clear-selection-button');
+        return getElement('#clear-selection-button');
     }
 
 
-    public static getCreateGraphFromSelectionButton() {
+    public static async getCreateGraphFromSelectionButton() {
 
-        browser.wait(EC.presenceOf(element(by.id('create-graph-from-selection-button'))), delays.ECWaitTime);
-        return element(by.id('create-graph-from-selection-button'));
+        await waitForExist('#create-graph-from-selection-button');
+        return getElement('#create-graph-from-selection-button');
     }
 }

@@ -5,7 +5,7 @@ const WAIT_FOR_ELEMENT_TIMEOUT = 30000;
 
 const app = new Application({
     path: electron,
-    args: ['.', 'dev']
+    args: ['.', 'test']
 });
 
 
@@ -21,12 +21,23 @@ export function stop() {
 }
 
 
-export function reset() {
+export function resetApp() {
 
     return new Promise(resolve => {
         require('request').post('http://localhost:3003/reset', () => {
             resolve(undefined);
         });
+    });
+}
+
+
+export function navigateTo(menu) {
+
+    return new Promise(resolve => {
+        require('request').post('http://localhost:3003/navigate', {
+            headers: { 'content-type' : 'application/json' },
+            body: JSON.stringify({ menu: menu }) 
+        } , () => { resolve(undefined); });
     });
 }
 
@@ -80,6 +91,13 @@ export async function waitForNotExist(element) {
 
     if (typeof element === 'string') element = await getElement(element);
     return element.waitForExist({ timeout: WAIT_FOR_ELEMENT_TIMEOUT, reverse: true });
+}
+
+
+export async function input(element, text) {
+
+    if (typeof element === 'string') element = await getElement(element);
+    return element.setValue(text);
 }
 
 

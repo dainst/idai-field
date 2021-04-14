@@ -20,10 +20,7 @@ describe('subsystem/datastore/find', () => {
 
         await setupSyncTestDb();
 
-        const {
-            documentDatastore: d,
-        } = await createApp();
-
+        const { datastore: d } = await createApp();
         datastore = d;
 
         spyOn(console, 'error');

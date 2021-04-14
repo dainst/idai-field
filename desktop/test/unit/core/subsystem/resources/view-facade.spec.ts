@@ -31,7 +31,7 @@ describe('ViewFacade/Subsystem', () => {
     let findDocument2: FieldDocument;
     let featureDocument1: FieldDocument;
     let featureDocument2: FieldDocument;
-    let documentDatastore: Datastore;
+    let datastore: Datastore;
 
 
     /*
@@ -51,7 +51,7 @@ describe('ViewFacade/Subsystem', () => {
 
         const result = await createApp();
 
-        documentDatastore = result.documentDatastore;
+        datastore = result.datastore;
         viewFacade = result.viewFacade;
         resourcesStateManager = result.resourcesStateManager;
         stateSerializer = result.stateSerializer;
@@ -79,12 +79,12 @@ describe('ViewFacade/Subsystem', () => {
         featureDocument2 = fieldDoc('Feature 2', 'feature2', 'Feature', 'feature2');
         featureDocument2.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
 
-        await documentDatastore.create(trenchDocument1, 'u');
-        await documentDatastore.create(trenchDocument2, 'u');
-        await documentDatastore.create(findDocument1, 'u');
-        await documentDatastore.create(findDocument2, 'u');
-        await documentDatastore.create(featureDocument1, 'u');
-        await documentDatastore.create(featureDocument2, 'u');
+        await datastore.create(trenchDocument1, 'u');
+        await datastore.create(trenchDocument2, 'u');
+        await datastore.create(findDocument1, 'u');
+        await datastore.create(findDocument2, 'u');
+        await datastore.create(featureDocument1, 'u');
+        await datastore.create(featureDocument2, 'u');
 
         changesStream = jasmine.createSpyObj('changesStream', ['notifications']);
         changesStream.notifications.and.returnValue({
@@ -163,7 +163,7 @@ describe('ViewFacade/Subsystem', () => {
 
         const findDocument3 = fieldDoc('Find 3','find3','Find', 'find3');
         findDocument3.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
-        await documentDatastore.create(findDocument3, 'u');
+        await datastore.create(findDocument3, 'u');
 
         await viewFacade.selectView('t1');
         expect(viewFacade.getDocuments().map(_ => _.resource.id)).toContain('feature1');

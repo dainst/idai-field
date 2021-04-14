@@ -47,13 +47,13 @@ describe('subsystem/relations-manager',() => {
         const d7 = doc('', 'identifierid7', 'Find', 'id7');
         d7.resource.relations['isDepictedIn'] = ['d6'];
 
-        await app.documentDatastore.create(d1, username);
-        await app.documentDatastore.create(d2, username);
-        await app.documentDatastore.create(d3, username);
-        await app.documentDatastore.create(d4, username);
-        await app.documentDatastore.create(d5, username);
-        await app.documentDatastore.create(d6, username);
-        await app.documentDatastore.create(d7, username);
+        await app.datastore.create(d1, username);
+        await app.datastore.create(d2, username);
+        await app.datastore.create(d3, username);
+        await app.datastore.create(d4, username);
+        await app.datastore.create(d5, username);
+        await app.datastore.create(d6, username);
+        await app.datastore.create(d7, username);
 
         return [d1, d2, d3, d4, d5];
     }
@@ -118,7 +118,7 @@ describe('subsystem/relations-manager',() => {
 
         const [_, d2] = await createTestResourcesForRemoveTests();
 
-        expect((await app.documentDatastore.find({})).totalCount).toBe(7);
+        expect((await app.datastore.find({})).totalCount).toBe(7);
         await app.relationsManager.remove(d2, { descendants: true });
 
         await helpers.expectDocuments('id1', 'id5', 'id6', 'id7');
@@ -130,7 +130,7 @@ describe('subsystem/relations-manager',() => {
 
         const [d1, _] = await createTestResourcesForRemoveTests();
 
-        expect((await app.documentDatastore.find({})).totalCount).toBe(7);
+        expect((await app.datastore.find({})).totalCount).toBe(7);
         await app.relationsManager.remove(d1, { descendants: true });
 
         await helpers.expectDocuments('id5', 'id6', 'id7');
@@ -142,7 +142,7 @@ describe('subsystem/relations-manager',() => {
 
         const [d1, _, d3] = await createTestResourcesForRemoveTests();
 
-        expect((await app.documentDatastore.find({})).totalCount).toBe(7);
+        expect((await app.datastore.find({})).totalCount).toBe(7);
         await app.relationsManager.remove(d1, { descendants: true, descendantsToKeep: [d3] });
 
         await helpers.expectDocuments('id3', 'id5', 'id6', 'id7');
@@ -162,16 +162,16 @@ describe('subsystem/relations-manager',() => {
         tc1.resource.relations = { isDepictedIn: ['i1'], isRecordedIn: [] };
         t1.resource.relations = { isDepictedIn: ['i2'], isRecordedIn: [], liesWithin: ['tc1'] };
 
-        await app.documentDatastore.create(tc1, 'test');
-        await app.documentDatastore.create(t1, 'test');
-        await app.documentDatastore.create(i1, 'test');
-        await app.documentDatastore.create(i2, 'test');
+        await app.datastore.create(tc1, 'test');
+        await app.datastore.create(t1, 'test');
+        await app.datastore.create(i1, 'test');
+        await app.datastore.create(i2, 'test');
 
-        expect((await app.documentDatastore.find({})).documents.length).toBe(4);
+        expect((await app.datastore.find({})).documents.length).toBe(4);
 
         await app.relationsManager.remove(tc1, { descendants: true });
 
-        const documents = (await app.documentDatastore.find({})).documents;
+        const documents = (await app.datastore.find({})).documents;
         expect(flatten(documents.map(_ => _.resource.relations.depicts))).toEqual([]);
         await helpers.expectDocuments('i1', 'i2');
         done();

@@ -155,7 +155,7 @@ export class ImagePickerComponent implements OnInit {
                 this.totalDocumentCount = totalCount;
             }
         } else {
-            const [msgs,] = result;
+            const [msgs] = result;
             for (const msg of msgs) console.error(...msg);
             this.messages.add([M.ALL_ERROR_FIND]);
         }

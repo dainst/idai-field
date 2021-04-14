@@ -27,12 +27,14 @@ describe('subsystem/getImageSuggestions', () => {
 
         const [,[[image], totalCount]] = await getImageSuggestions(
             datastore,
-            ['Image'],
             { resource: {} } as Document,
             'depicts',
-            '',
-            1,
-            0
+            {
+                q: '',
+                categories: ['Image'],
+                offset: 0,
+                limit: 1
+            }
         );
         expect(image.resource.id).toBe('1');
         expect(totalCount).toBe(1);
@@ -46,12 +48,14 @@ describe('subsystem/getImageSuggestions', () => {
 
         const [,[images, totalCount]] = await getImageSuggestions(
             datastore,
-            ['Image'],
             { resource: { id: '2' } } as Document,
             'depicts',
-            '',
-            1,
-            0
+            {
+                q: '',
+                categories: ['Image'],
+                offset: 0,
+                limit: 1
+            }
         );
         expect(images.length).toBe(0);
         expect(totalCount).toBe(0);
@@ -65,12 +69,14 @@ describe('subsystem/getImageSuggestions', () => {
 
         const [,[images, totalCount]] = await getImageSuggestions(
             datastore,
-            ['Image'],
             { resource: {} } as Document,
             'depicts',
-            '',
-            1,
-            0
+            {
+                q: '',
+                categories: ['Image'],
+                offset: 0,
+                limit: 1
+            }
         );
         expect(images.length).toBe(0);
         expect(totalCount).toBe(0);

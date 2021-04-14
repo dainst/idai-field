@@ -138,16 +138,12 @@ export class ImagePickerComponent implements OnInit {
         this.currentQueryId = new Date().toISOString();
         const queryId = this.currentQueryId;
 
-        const categories = ProjectCategories.getImageCategoryNames(this.projectConfiguration.getCategoryForest())
         const result =
-            await getImageSuggestions( // TODO pass query
+            await getImageSuggestions(
                 this.datastore,
-                categories,
                 this.document,
                 this.mode,
-                this.queryString,
-                ImagePickerComponent.documentLimit,
-                this.currentOffset);
+                this.getQuery());
 
         if (isSuccess(result)) {
             if (queryId === this.currentQueryId) {
@@ -160,5 +156,17 @@ export class ImagePickerComponent implements OnInit {
             for (const msg of msgs) console.error(...msg);
             this.messages.add([M.ALL_ERROR_FIND]);
         }
+    }
+
+
+    private getQuery() {
+
+        const categories = ProjectCategories.getImageCategoryNames(this.projectConfiguration.getCategoryForest())
+        return {
+            categories: categories,
+            offset: this.currentOffset,
+            limit: ImagePickerComponent.documentLimit,
+            q: this.queryString
+        };
     }
 }

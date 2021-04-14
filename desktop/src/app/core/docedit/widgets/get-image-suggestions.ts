@@ -1,5 +1,5 @@
-import { Either } from 'tsfun';
-import { Query, Document, Name, ImageDocument, Datastore } from 'idai-field-core';
+import { Either, update } from 'tsfun';
+import { Query, Document, ImageDocument, Datastore } from 'idai-field-core';
 
 
 export type TotalCount = number;
@@ -10,22 +10,11 @@ export type Result = [Array<ImageDocument>, TotalCount];
 
 
 export async function getImageSuggestions(datastore: Datastore,
-                                          imageCategoryNames: Array<Name>,
                                           document: Document,
                                           mode: 'depicts'|'layers',
-                                          queryString: string,
-                                          limit: number,
-                                          offset: number): Promise<Either<ErrMsgs, Result>> {
+                                          query_: Query): Promise<Either<ErrMsgs, Result>> {
 
-    const query: Query = {
-        q: queryString,
-        limit: limit,
-        offset: offset,
-        categories: imageCategoryNames,
-        constraints: {
-            'project:exist': { value: 'KNOWN', subtract: true }
-        }
-    };
+    const query = update('constraints', {'project:exist': { value: 'KNOWN', subtract: true }}, query_);
 
     if (mode === 'depicts') {
         query.constraints['depicts:contain'] = { value: document.resource.id, subtract: true };

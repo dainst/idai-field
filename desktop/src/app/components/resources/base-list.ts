@@ -68,14 +68,9 @@ export class BaseList {
 
         setTimeout(() => {
             if (doc && !this.isVisible(doc)) {
-                let i = 0;
-                for (const document of this.viewFacade.getDocuments()) {
-                    if (document.resource.id === doc.resource.id) {
-                        this.scrollViewport.scrollToIndex(i, 'auto');
-                        break;
-                    }
-                    i++;
-                }
+                const index = this.viewFacade.getDocuments()
+                    .findIndex(document => document.resource.id === doc.resource.id);
+                this.scrollViewport.scrollToIndex(index, 'auto');
             }
         }, 0);
     }

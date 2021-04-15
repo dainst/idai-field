@@ -1,5 +1,5 @@
 import { element } from 'protractor';
-import { click, waitForVisible, getElements, getElement, waitForExist } from './app';
+import { click, getElements, waitForExist, getText } from './app';
 
 
 export class NavbarPage {
@@ -72,24 +72,18 @@ export class NavbarPage {
 
     public static async getMessageText() {
 
-        const element = await getElement('#message-0');
-        await waitForExist(element);
-        return element.getText();
+        return getText('#message-0');
     }
 
 
     public static async getActiveNavLinkLabel() {
 
-        const element = await getElement('#navbarSupportedContent .nav-link.active');
-        await waitForVisible(element);
-        return element.getText();
+        return getText('#navbarSupportedContent .nav-link.active');
     }
 
 
     public static async getTabLabel(routeName: string, resourceIdentifier?: string) {
 
-        const element = await this.getTab(routeName, resourceIdentifier);
-        await waitForVisible(element);
-        return element.getText();
+        return getText(await this.getTab(routeName, resourceIdentifier));
     }
 }

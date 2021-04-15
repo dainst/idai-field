@@ -1,4 +1,4 @@
-import { Document, Datastore, HierarchicalRelations, ImageRelationsC as ImageRelations, Name, ObjectUtils, ON_RESOURCE_ID, ResourceId, RESOURCE_DOT_IDENTIFIER, toResourceId, TypeRelations } from 'idai-field-core';
+import { Document, Datastore, Relations, Name, ObjectUtils, ON_RESOURCE_ID, ResourceId, RESOURCE_DOT_IDENTIFIER, toResourceId } from 'idai-field-core';
 import { Either, subtract, to } from 'tsfun';
 import { ImageRelationsManager } from '../../model/image-relations-manager';
 import { RelationsManager } from '../../model/relations-manager';
@@ -52,7 +52,7 @@ function cleanImageDocuments(images: Array<Document>) {
     const relatedImageDocuments = [];
     for (let image of images) {
         image.resource.relations = {
-            depicts: image.resource.relations[ImageRelations.DEPICTS] // we know it depicts only catalog exclusive resources
+            depicts: image.resource.relations[Relations.Image.DEPICTS] // we know it depicts only catalog exclusive resources
         } as any;
         relatedImageDocuments.push(image);
     }
@@ -67,7 +67,7 @@ function cleanDocument(document: Document) {
     delete document['_id'];
     delete document[Document.CREATED];
     delete document[Document.MODIFIED];
-    delete document.resource.relations[TypeRelations.HASINSTANCE];
-    delete document.resource.relations[HierarchicalRelations.RECORDEDIN];
+    delete document.resource.relations[Relations.Type.HASINSTANCE];
+    delete document.resource.relations[Relations.Hierarchy.RECORDEDIN];
     return document;
 }

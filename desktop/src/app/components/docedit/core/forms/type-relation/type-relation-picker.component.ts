@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Category, Constraint, Datastore, FieldDefinition, FieldDocument, FieldResource, FindResult, Group, Named, Query, TypeRelations, ValuelistDefinition } from 'idai-field-core';
+import { Category, Constraint, Datastore, FieldDefinition, FieldDocument, FieldResource, FindResult, Group, Named, Query, Relations, ValuelistDefinition } from 'idai-field-core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Document, Resource } from 'idai-field-core';
 import {
@@ -214,9 +214,9 @@ export class TypeRelationPickerComponent {
             },
             constraints: {}
         };
-        if (isNot(undefinedOrEmpty)(resource.relations[TypeRelations.INSTANCEOF])) {
+        if (isNot(undefinedOrEmpty)(resource.relations[Relations.Type.INSTANCEOF])) {
             (query.constraints as any)['id:match'] = {
-                value: resource.relations[TypeRelations.INSTANCEOF],
+                value: resource.relations[Relations.Type.INSTANCEOF],
                 subtract: true
             };
         }

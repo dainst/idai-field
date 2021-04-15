@@ -1,14 +1,14 @@
 import {ImportErrors as E} from '../../../../../src/app/core/import/import/import-errors';
-import {HierarchicalRelations, PositionRelations, ObjectUtils, TimeRelations} from 'idai-field-core';
-import IS_BELOW = PositionRelations.BELOW;
-import IS_ABOVE = PositionRelations.ABOVE;
-import IS_AFTER = TimeRelations.AFTER;
-import IS_BEFORE = TimeRelations.BEFORE;
-import IS_CONTEMPORARY_WITH = TimeRelations.CONTEMPORARY;
-import RECORDED_IN = HierarchicalRelations.RECORDEDIN;
-import LIES_WITHIN = HierarchicalRelations.LIESWITHIN;
+import {Relations, ObjectUtils} from 'idai-field-core';
+import IS_BELOW = Relations.Position.BELOW;
+import IS_ABOVE = Relations.Position.ABOVE;
+import IS_AFTER = Relations.Time.AFTER;
+import IS_BEFORE = Relations.Time.BEFORE;
+import IS_CONTEMPORARY_WITH = Relations.Time.CONTEMPORARY;
+import RECORDED_IN = Relations.Hierarchy.RECORDEDIN;
+import LIES_WITHIN = Relations.Hierarchy.LIESWITHIN;
 import {completeInverseRelations} from '../../../../../src/app/core/import/import/process/complete-inverse-relations';
-import IS_EQUIVALENT_TO = PositionRelations.EQUIVALENT;
+import IS_EQUIVALENT_TO = Relations.Position.EQUIVALENT;
 import {makeDocumentsLookup} from '../../../../../src/app/core/import/import/utils';
 
 

@@ -4,7 +4,7 @@ import {FieldResource, Named, Category, Group, RelationDefinition, FieldDefiniti
 import {ProjectConfiguration} from '../../core/configuration/project-configuration';
 import {ValuelistUtil} from '../../core/util/valuelist-util';
 import {TabManager} from '../../core/tabs/tab-manager';
-import {TypeRelations, ValuelistDefinition} from 'idai-field-core';
+import {Relations, ValuelistDefinition} from 'idai-field-core';
 import {MenuContext, MenuService} from '../menu-service';
 
 const locale: string = typeof window !== 'undefined'
@@ -30,7 +30,7 @@ export class ProjectConfigurationComponent {
     private OVERRIDE_VISIBLE_FIELDS = [FieldResource.IDENTIFIER, FieldResource.SHORTDESCRIPTION];
 
 
-    constructor(private projectConfiguration: ProjectConfiguration,
+    constructor(projectConfiguration: ProjectConfiguration,
                 private tabManager: TabManager,
                 private menuService: MenuService) {
 
@@ -95,7 +95,7 @@ export class ProjectConfigurationComponent {
         return category.groups
             .find(on(Named.NAME, is(this.selectedGroup)))!
             .relations
-            .filter(on(Named.NAME, isnt(TypeRelations.INSTANCEOF)));
+            .filter(on(Named.NAME, isnt(Relations.Type.INSTANCEOF)));
     }
 
 

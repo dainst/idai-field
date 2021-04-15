@@ -1,5 +1,5 @@
 import {
-    Lookup, PositionRelations, ResourceId, TimeRelations, UNIDIRECTIONAL_RELATIONS
+    Lookup, ResourceId,
 } from 'idai-field-core';
 import { Document, Relations } from 'idai-field-core';
 import {
@@ -23,12 +23,12 @@ import { ImportErrors as E } from '../import-errors';
 import { AssertIsAllowedRelationDomainType } from '../types';
 import { assertInSameOperationWith } from '../utils';
 import { setInverseRelationsForDbResources } from './set-inverse-relations-for-db-resources';
-import IS_BELOW = PositionRelations.BELOW;
-import IS_ABOVE = PositionRelations.ABOVE;
-import IS_CONTEMPORARY_WITH = TimeRelations.CONTEMPORARY;
-import IS_AFTER = TimeRelations.AFTER;
-import IS_BEFORE = TimeRelations.BEFORE;
-import IS_EQUIVALENT_TO = PositionRelations.EQUIVALENT;
+import IS_BELOW = Relations.Position.BELOW;
+import IS_ABOVE = Relations.Position.ABOVE;
+import IS_CONTEMPORARY_WITH = Relations.Time.CONTEMPORARY;
+import IS_AFTER = Relations.Time.AFTER;
+import IS_BEFORE = Relations.Time.BEFORE;
+import IS_EQUIVALENT_TO = Relations.Position.EQUIVALENT;
 
 
 /**
@@ -78,7 +78,7 @@ export function completeInverseRelations(documentsLookup: Lookup<Document>,
         targetsLookup as any,
         inverseRelationsMap,
         assertIsAllowedRelationDomainCategory,
-        UNIDIRECTIONAL_RELATIONS);
+        Relations.UNIDIRECTIONAL);
 }
 
 

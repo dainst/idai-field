@@ -1,6 +1,6 @@
 import {Document} from 'idai-field-core';
-import {HierarchicalRelations} from 'idai-field-core';
-import RECORDED_IN = HierarchicalRelations.RECORDEDIN;
+import {Relations} from 'idai-field-core';
+import RECORDED_IN = Relations.Hierarchy.RECORDEDIN;
 import {ImportErrors as E} from '../../../../../../src/app/core/import/import/import-errors';
 import {createMockValidator, d} from '../helper';
 import {processDocuments} from '../../../../../../src/app/core/import/import/process/process-documents';

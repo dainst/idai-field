@@ -3,7 +3,7 @@ import {ObjectUtils, takeOrMake} from '../tools';
 import {FeatureResource} from './feature-resource';
 import {FieldDocument} from './field-document';
 import { Resource } from './resource';
-import { TimeRelations } from './relation-constants';
+import {Relations} from './relations';
 
 /**
  * @author Daniel de Oliveira
@@ -20,9 +20,9 @@ export module FeatureDocument {
 
         const doc = FieldDocument.fromDocument(ObjectUtils.clone(document));
 
-        takeOrMake(doc, [Document.RESOURCE, Resource.RELATIONS, TimeRelations.AFTER], []);
-        takeOrMake(doc, [Document.RESOURCE, Resource.RELATIONS, TimeRelations.BEFORE], []);
-        takeOrMake(doc, [Document.RESOURCE, Resource.RELATIONS, TimeRelations.CONTEMPORARY], []);
+        takeOrMake(doc, [Document.RESOURCE, Resource.RELATIONS, Relations.Time.AFTER], []);
+        takeOrMake(doc, [Document.RESOURCE, Resource.RELATIONS, Relations.Time.BEFORE], []);
+        takeOrMake(doc, [Document.RESOURCE, Resource.RELATIONS, Relations.Time.CONTEMPORARY], []);
         return doc as any;
     }
 }

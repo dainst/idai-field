@@ -1,4 +1,4 @@
-import { HierarchicalRelations, PARENT, RESOURCE_DOT_ID } from 'idai-field-core';
+import { RESOURCE_DOT_ID } from 'idai-field-core';
 import { Document, Relations } from 'idai-field-core';
 import { includedIn, isArray, isnt, isUndefined, isUndefinedOrEmpty, on, isObject } from 'tsfun';
 import { makeLookup } from '../../../../../../core/src/tools/transformers';
@@ -6,7 +6,7 @@ import { ImportContext, ImportHelpers, ImportOptions } from './import-documents'
 import { ImportErrors as E } from './import-errors';
 import { Find, Get, Id, Identifier, IdentifierMap } from './types';
 import { iterateRelationsInImport } from './utils';
-import LIES_WITHIN = HierarchicalRelations.LIESWITHIN;
+import LIES_WITHIN = Relations.Hierarchy.LIESWITHIN;
 
 // @author Thomas Kleinke
 // @author Daniel de Oliveira
@@ -151,12 +151,12 @@ function adjustRelations(document: Document, relations: Relations) {
     const assertIsntArrayRelation = assertIsNotArrayRelation(document);
 
     Object.keys(document.resource.relations)
-        .filter(isnt(PARENT))
+        .filter(isnt(Relations.PARENT))
         .forEach(assertIsntArrayRelation);
 
-    assertParentNotArray(relations[PARENT], document.resource.identifier);
-    if (relations[PARENT]) {
-        (relations[LIES_WITHIN] = [relations[PARENT] as any]) && delete relations[PARENT];
+    assertParentNotArray(relations[Relations.PARENT], document.resource.identifier);
+    if (relations[Relations.PARENT]) {
+        (relations[LIES_WITHIN] = [relations[Relations.PARENT] as any]) && delete relations[Relations.PARENT];
     }
 }
 
@@ -167,7 +167,7 @@ function adjustRelations(document: Document, relations: Relations) {
 function assertHasNoHierarchicalRelations(document: Document) {
 
     const foundForbiddenRelations = Object.keys(document.resource.relations)
-        .filter(includedIn(HierarchicalRelations.ALL))
+        .filter(includedIn(Relations.Hierarchy.ALL))
         .join(', ');
     if (foundForbiddenRelations) {
         throw [E.INVALID_RELATIONS, document.resource.category, foundForbiddenRelations];

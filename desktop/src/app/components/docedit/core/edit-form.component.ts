@@ -4,7 +4,7 @@ import {isUndefinedOrEmpty} from 'tsfun';
 import {Document} from 'idai-field-core';
 import {FieldDefinition, RelationDefinition, Group, Groups} from 'idai-field-core';
 import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
-import {TypeRelations, ObjectUtils} from 'idai-field-core';
+import {Relations, ObjectUtils} from 'idai-field-core';
 import {ProjectCategories} from '../../../core/configuration/project-categories';
 
 
@@ -64,7 +64,7 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
         if (groupName === Groups.STEM) return [];
 
         return (this.groups.find((group: Group) => group.name === groupName) as any).relations
-            .filter((relation: RelationDefinition) => relation.name !== TypeRelations.INSTANCEOF);
+            .filter((relation: RelationDefinition) => relation.name !== Relations.Type.INSTANCEOF);
     }
 
 

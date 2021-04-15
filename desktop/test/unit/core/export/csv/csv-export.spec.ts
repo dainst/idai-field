@@ -1,4 +1,4 @@
-import { FieldDefinition, fieldDoc, HierarchicalRelations } from 'idai-field-core';
+import { FieldDefinition, fieldDoc, Relations } from 'idai-field-core';
 import { CSVExport } from '../../../../../src/app/core/export/csv/csv-export';
 
 
@@ -66,7 +66,7 @@ describe('CSVExport', () => {
 
     function expectCorrectChildOfTarget(resource, t, expectation) {
 
-        const result = CSVExport.createExportable([resource], t, HierarchicalRelations.ALL);
+        const result = CSVExport.createExportable([resource], t, Relations.Hierarchy.ALL);
         expect(result[0]).toBe('"identifier","shortDescription","relations.isChildOf"');
         expect(result[1]).toBe('"identifier1","shortDescription1",' + expectation);
     }

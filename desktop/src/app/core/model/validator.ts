@@ -1,11 +1,11 @@
-import { FindResult, HierarchicalRelations, Query } from 'idai-field-core';
+import { FindResult, Relations, Query } from 'idai-field-core';
 import { Document, NewDocument } from 'idai-field-core';
 import { isnt, on } from 'tsfun';
 import { ProjectCategories } from '../configuration/project-categories';
 import { ProjectConfiguration } from '../configuration/project-configuration';
 import { ValidationErrors } from './validation-errors';
 import { Validations } from './validations';
-import RECORDED_IN = HierarchicalRelations.RECORDEDIN;
+import RECORDED_IN = Relations.Hierarchy.RECORDEDIN;
 
 
 /**

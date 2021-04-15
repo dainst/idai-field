@@ -1,3 +1,4 @@
+import * as tsfun from 'tsfun';
 import {Component, ViewChild} from '@angular/core';
 import {CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
 import {FieldDocument} from 'idai-field-core';
@@ -67,8 +68,14 @@ export class BaseList {
 
         setTimeout(() => {
             if (doc && !this.isVisible(doc)) {
-                const index: number = this.viewFacade.getDocuments().indexOf(doc);
-                this.scrollViewport.scrollToIndex(index, 'auto');
+                let i = 0;
+                for (const document of this.viewFacade.getDocuments()) {
+                    if (document.resource.id === doc.resource.id) {
+                        this.scrollViewport.scrollToIndex(i, 'auto');
+                        break;
+                    }
+                    i++;
+                }
             }
         }, 0);
     }

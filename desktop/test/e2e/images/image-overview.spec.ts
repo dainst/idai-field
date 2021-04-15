@@ -55,11 +55,14 @@ describe('images --', function() {
     async function _expectLinkBadgePresence(toBeTruthy, relatedResourceId) {
 
         const cell = await ImageOverviewPage.getCell(0);
-        const badge = (await cell.$$('#related-resource-' + relatedResourceId))[0]
-        const expectation = await badge.isPresent();
-
-        if (toBeTruthy) expectation.toBeTruthy();
-        else expectation.toBeFalsy();
+        await waitForExist(cell);
+        const badge = (await cell.$$('#related-resource-' + relatedResourceId))[0];
+        
+        if (toBeTruthy) {
+            expect(badge).toBeTruthy();
+        } else {
+            expect(badge).toBeFalsy();
+        }
     }
 
 

@@ -106,9 +106,24 @@ export async function waitForNotExist(element) {
 }
 
 
-export async function input(element, text) {
+export async function waitForVisible(element) {
 
     if (isString(element)) element = await getElement(element);
+    return element.waitForDisplayed({ timeout: WAIT_FOR_ELEMENT_TIMEOUT });
+}
+
+
+export async function waitForInvisible(element) {
+
+    if (isString(element)) element = await getElement(element);
+    return element.waitForDisplayed({ timeout: WAIT_FOR_ELEMENT_TIMEOUT, reverse: true });
+}
+
+
+export async function typeIn(element, text) {
+
+    if (isString(element)) element = await getElement(element);
+    await element.waitForExist({ timeout: WAIT_FOR_ELEMENT_TIMEOUT });
     return element.setValue(text);
 }
 

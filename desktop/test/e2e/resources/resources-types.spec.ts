@@ -44,10 +44,8 @@ describe('resources/types --', () => {
         ResourcesTypeGridPage.clickEditButton();
         DoceditPage.clickGotoIdentificationTab();
         DoceditRelationsTabPage.clickAddRelationForGroupWithIndex('zugeordnete-funde');
-        DoceditRelationsTabPage.typeInRelationByIndices('zugeordnete-funde', 0,
-            'testf1');
-        DoceditRelationsTabPage.clickChooseRelationSuggestion('zugeordnete-funde', 0,
-            0);
+        DoceditRelationsTabPage.typeInRelation('zugeordnete-funde', 'testf1');
+        DoceditRelationsTabPage.clickChooseRelationSuggestion(0);
         DoceditPage.clickSaveDocument();
     }
 

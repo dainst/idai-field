@@ -1,9 +1,6 @@
-import {browser, protractor, element, by} from 'protractor';
-import {NavbarPage} from '../navbar.page';
+import { waitForNotExist, click, waitForVisible, getElements, getElement, typeIn } from '../app';
+import { NavbarPage } from '../navbar.page';
 
-let common = require('../common.js');
-const delays = require('../delays');
-let EC = protractor.ExpectedConditions;
 
 /**
  * @author Daniel de Oliveira
@@ -11,170 +8,153 @@ let EC = protractor.ExpectedConditions;
  */
 export class DoceditPage {
 
-    private static clickSaveInModal() {
+    private static async clickSaveInModal() {
 
-        common.click(element(by.id('overview-save-confirmation-modal-save-button')));
-        browser.wait(EC.stalenessOf(element(by.id('document-edit-wrapper'))));
+        await click('#overview-save-confirmation-modal-save-button');
+        return waitForNotExist('#document-edit-wrapper');
     }
 
 
     private static clickCancelInModal() {
 
-        common.click(element(by.id('overview-save-confirmation-modal-cancel-button')));
+        return click('#overview-save-confirmation-modal-cancel-button');
     }
 
 
-    private static clickDiscardInModal() {
+    private static async clickDiscardInModal() {
 
-        common.click(element(by.id('overview-save-confirmation-modal-discard-button')));
-        browser.wait(EC.stalenessOf(element(by.id('document-edit-wrapper'))));
+        await click('#overview-save-confirmation-modal-discard-button');
+        return waitForNotExist('#document-edit-wrapper');
     }
 
 
-     public static clickCloseEdit(action?: 'discard'|'cancel'|'save') {
+     public static async clickCloseEdit(action?: 'discard'|'cancel'|'save') {
 
-        browser.wait(EC.visibilityOf(element(by.id('document-edit-button-goto-view'))), delays.ECWaitTime);
-        element(by.id('document-edit-button-goto-view')).click();
+        await waitForVisible('#document-edit-button-goto-view');
+        await click('#document-edit-button-goto-view');
 
-        if (action === 'discard') this.clickDiscardInModal();
-        if (action === 'cancel') this.clickCancelInModal();
-        if (action === 'save') this.clickSaveInModal();
+        if (action === 'discard') return this.clickDiscardInModal();
+        if (action === 'cancel') return this.clickCancelInModal();
+        if (action === 'save') return this.clickSaveInModal();
     };
 
 
     public static clickGotoTimeTab() {
 
-        common.click(element(by.id('edit-form-goto-time')));
+        return click('#edit-form-goto-time');
     };
 
 
     public static clickGotoParentTab() {
 
-        common.click(element(by.id('edit-form-goto-parent')));
+        return click('#edit-form-goto-parent');
     }
 
 
     public static clickGotoChildTab() {
 
-        common.click(element(by.id('edit-form-goto-child')));
+        return click('#edit-form-goto-child');
     }
 
 
     public static clickGotoImagesTab() {
 
-        common.click(element(by.id('edit-form-goto-images')));
+        return click('#edit-form-goto-images');
     }
 
 
     public static clickGotoIdentificationTab() {
 
-        common.click(element(by.id('edit-form-goto-identification')));
+        return click('#edit-form-goto-identification');
     }
 
 
     public static clickGotoPositionTab() {
 
-        common.click(element(by.id('edit-form-goto-position')));
+        return click('#edit-form-goto-position');
     }
 
 
-    public static clickSaveDocument(clickMsgAway: boolean = false, waitForModalToClose: boolean = true) {
+    public static async clickSaveDocument(clickMsgAway: boolean = false, waitForModalToClose: boolean = true) {
 
-        return browser.wait(EC.visibilityOf(element(by.id('document-edit-button-save-document'))), delays.ECWaitTime)
-            .then(function() {
-                element(by.id('document-edit-button-save-document')).click().then(
-                    function() {
-                        return new Promise(function(resolve) {
-                            setTimeout(function() {
-                                if (clickMsgAway) {
-                                    NavbarPage.clickCloseAllMessages().then(() => resolve(undefined));
-                                } else {
-                                    resolve(undefined);
-                                }
-                            }, delays.shortRest / 5);
-                        })
-                    }
-                )
-            }).then(() => {
-                if (waitForModalToClose) {
-                    browser.wait(EC.stalenessOf(element(by.id('document-edit-wrapper'))), delays.ECWaitTime);
-                }
-            });
+        await waitForVisible('#document-edit-button-save-document');
+        await click('#document-edit-button-save-document');
+                    
+        if (clickMsgAway) await NavbarPage.clickCloseAllMessages();
+        if (waitForModalToClose) await waitForNotExist('#document-edit-wrapper');
     };
 
 
-    public static clickDuplicateDocument() {
+    public static async clickDuplicateDocument() {
 
-        common.click(element(by.id('document-edit-button-dropdown')));
-        common.click(element(by.id('document-edit-button-duplicate-document')));
+        await click('#document-edit-button-dropdown');
+        return click('#document-edit-button-duplicate-document');
     };
 
 
-    public static clickConfirmDuplicateInModal() {
+    public static async clickConfirmDuplicateInModal() {
 
-        common.click(element(by.id('duplicate-confirm')));
-        browser.wait(EC.stalenessOf(element(by.id('document-edit-wrapper'))));
+        await click('#duplicate-confirm');
+        return waitForNotExist('#document-edit-wrapper');
     };
 
 
-    public static clickChooseRightRevision() {
+    public static async clickChooseRightRevision() {
 
-        browser.wait(EC.visibilityOf(element.all(by.css('input[type=radio]')).get(1)), delays.ECWaitTime);
-        element.all(by.css('input[type=radio]')).get(1).click();
+        const radioButton = (await getElements('input[type=radio]'))[1];
+        return click(radioButton);
     };
 
 
     public static clickSolveConflictButton() {
 
-        browser.wait(EC.visibilityOf(element(by.id('solve-conflict-button'))), delays.ECWaitTime);
-        element(by.id('solve-conflict-button')).click();
+        return click('#solve-conflict-button');
     };
 
 
     public static clickCategorySwitcherButton() {
 
-        browser.wait(EC.visibilityOf(element(by.id('category-switcher-button'))), delays.ECWaitTime);
-        element(by.id('category-switcher-button')).click();
+        return click('#category-switcher-button');
     };
 
 
     public static clickCategorySwitcherOption(categoryName: string) {
-
-        browser.wait(EC.visibilityOf(element(by.id('choose-category-option-' + categoryName))),
-            delays.ECWaitTime);
-        element(by.id('choose-category-option-' + categoryName)).click();
+    
+        return click('#choose-category-option-' + categoryName);
     };
 
 
-    public static clickSelectOption(fieldName: string, optionIndex: number) {
+    public static async clickSelectOption(fieldName: string, optionIndex: number) {
 
-        browser.wait(EC.visibilityOf(element(by.css('#edit-form-element-' + fieldName + ' select'))),
-            delays.ECWaitTime);
-        element.all(by.css('#edit-form-element-' + fieldName + ' select option')).get(optionIndex).click();
+        await waitForVisible('#edit-form-element-' + fieldName + ' select');
+        const element = (await getElements('#edit-form-element-' + fieldName + ' select option'))[optionIndex];
+        return click(element);
     };
 
 
-    public static clickCheckbox(fieldName: string, checkboxIndex: number) {
+    public static async clickCheckbox(fieldName: string, checkboxIndex: number) {
 
-        browser.wait(EC.visibilityOf(element(by.css('#edit-form-element-' + fieldName))),
-            delays.ECWaitTime);
-        element.all(by.css('#edit-form-element-' + fieldName + ' .checkbox')).get(checkboxIndex).click();
+        await waitForVisible('#edit-form-element-' + fieldName);
+        const element = (await getElements('#edit-form-element-' + fieldName + ' .checkbox'))[checkboxIndex];
+        return click(element);
     };
 
 
-    public static clickBooleanRadioButton(fieldName: string, radioButtonIndex: number) {
+    public static async clickBooleanRadioButton(fieldName: string, radioButtonIndex: number) {
 
-        browser.wait(EC.visibilityOf(element(by.id('edit-form-element-' + fieldName))), delays.ECWaitTime);
-        element.all(by.css('#edit-form-element-' + fieldName + ' input')).get(radioButtonIndex).click();
+        await waitForVisible('#edit-form-element-' + fieldName);
+        const element = (await getElements('#edit-form-element-' + fieldName + ' input'))[radioButtonIndex];
+        return click(element);
     }
 
 
     // get text
 
-    public static getInputFieldValue(index) {
+    public static async getInputFieldValue(index) {
 
-        browser.wait(EC.visibilityOf(element.all(by.tagName('dai-input input')).get(index)), delays.ECWaitTime);
-        return element.all(by.tagName('dai-input input')).get(index).getAttribute('value');
+        const element = (await getElements('dai-input input'))[index];
+        await waitForVisible(element);
+        return element.getAttribute('value');
     };
 
 
@@ -182,19 +162,19 @@ export class DoceditPage {
 
     public static getNumberOfDuplicatesInputField() {
 
-        return element(by.id('duplicate-input'));
+        return getElement('#duplicate-input');
     }
 
 
     public static getCheckboxes(fieldName: string) {
 
-        return element.all(by.css('#edit-form-element-' + fieldName + ' .checkbox'));
+        return getElements('#edit-form-element-' + fieldName + ' .checkbox');
     }
 
 
     public static getGeometryEditWidget() {
 
-        return element(by.css('dai-geometry'));
+        return getElement('dai-geometry');
     }
 
 
@@ -202,14 +182,12 @@ export class DoceditPage {
 
     public static typeInInputField(fieldName: string, text: string) {
 
-        browser.wait(EC.visibilityOf(element(by.css('#edit-form-element-' + fieldName + ' input'))),
-            delays.ECWaitTime);
-        common.typeIn(element(by.css('#edit-form-element-' + fieldName + ' input')), text);
+        return typeIn('#edit-form-element-' + fieldName + ' input', text);
     };
 
 
     public static typeInNumberOfDuplicates(numberOfDuplicates: string) {
 
-        return common.typeIn(this.getNumberOfDuplicatesInputField(), numberOfDuplicates);
+        return typeIn(this.getNumberOfDuplicatesInputField(), numberOfDuplicates);
     }
 }

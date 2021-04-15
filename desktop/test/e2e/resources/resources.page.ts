@@ -380,8 +380,8 @@ export class ResourcesPage {
         this.openEditByDoubleClickResource(identifier);
         DoceditPage.clickGotoTimeTab();
         DoceditRelationsTabPage.clickAddRelationForGroupWithIndex(relationGroupName);
-        DoceditRelationsTabPage.typeInRelationByIndices(relationGroupName, 0, targetIdentifier);
-        DoceditRelationsTabPage.clickChooseRelationSuggestion(relationGroupName, 0, 0);
+        DoceditRelationsTabPage.typeInRelation(relationGroupName, targetIdentifier);
+        DoceditRelationsTabPage.clickChooseRelationSuggestion(0);
         DoceditPage.clickSaveDocument();
         browser.sleep(delays.shortRest);
     }

@@ -1,9 +1,5 @@
-import {browser, protractor, element, by} from 'protractor';
+import { click, getElements, getElement, typeIn } from '../app';
 import {DoceditPage} from './docedit.page';
-
-const common = require('../common.js');
-const delays = require('../delays');
-const EC = protractor.ExpectedConditions;
 
 
 /**
@@ -14,49 +10,49 @@ export class DoceditRelationsTabPage {
 
     // click
 
-    public static clickChooseRelationSuggestion(groupName, pickerIndex, suggestionIndex) {
+    public static async clickChooseRelationSuggestion(suggestionIndex) {
 
-        browser.wait(EC.visibilityOf(element.all(by.css('.suggestion')).get(suggestionIndex)),
-            delays.ECWaitTime);
-        common.click(element(by.id(groupName)).all(by.css('.suggestion')).get(suggestionIndex));
+        const element = (await getElements('.suggestion'))[suggestionIndex];
+        return click(element);
     };
 
 
     public static clickAddRelationForGroupWithIndex(groupName) {
 
-        common.click(element(by.id(groupName)).element(by.css('.circular-button.add-relation')));
+        return click('#' + groupName + ' .circular-button.add-relation');
     };
 
 
-    public static clickRelationDeleteButtonByIndices(groupName, pickerIndex = 0) {
+    public static async clickRelationDeleteButtonByIndices(groupName, pickerIndex = 0) {
 
-        common.click(this.getRelationElByName(groupName, pickerIndex)
-            .element(by.css('.delete-relation')));
+        const element = await this.getRelationElementByName(groupName, pickerIndex);
+        return click(await element.$('.delete-relation'));
     };
 
 
     // get text
 
-    public static getRelationButtonText(groupName, pickerIndex = 0, relationIndex = 0) {
+    public static async getRelationButtonText(groupName, pickerIndex = 0) {
 
-        DoceditPage.clickGotoTimeTab();
-        return this.getRelationElByName(groupName, pickerIndex)
-            .element(by.className('badge')).getText();
+        await DoceditPage.clickGotoTimeTab();
+        const element = await this.getRelationElementByName(groupName, pickerIndex);
+        return (await element.$('.badge')).getText();
     };
 
 
     // elements
 
-    public static getRelationElByName(groupName, pickerIndex) {
+    public static async getRelationElementByName(groupName, pickerIndex) {
 
-        return element(by.id(groupName)).all(by.id('relation-picker')).get(pickerIndex);
+        const groupElement = await getElement('#' + groupName);
+        return (await groupElement.$$('#relation-picker'))[pickerIndex];
     };
 
 
     // type in
 
-    public static typeInRelationByIndices(groupName, pickerIndex, input) {
+    public static typeInRelation(groupName, input) {
 
-        common.typeIn(element(by.id(groupName)).element(by.tagName('input')), input);
+        return typeIn('#' + groupName + ' input', input);
     };
 }

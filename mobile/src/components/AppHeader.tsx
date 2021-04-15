@@ -1,5 +1,5 @@
+import { AppBar, Text } from 'native-base';
 import React, { ReactNode } from 'react';
-import { AppBar } from 'native-base';
 import { StyleSheet } from 'react-native';
 import { headerBackgroundColor } from '../constants/colors';
 
@@ -10,9 +10,10 @@ interface AppHeaderProps {
 
 const AppHeader: React.FC<AppHeaderProps> = ({ title, right= null }) => {
     return (
-        <AppBar style={ styles.container }>
+        <AppBar style={ styles.container } >
+            <AppBar.Left></AppBar.Left>
             <AppBar.Content>
-                {title}
+                <Text color="white" fontWeight="bold">{title}</Text>
             </AppBar.Content>
             <AppBar.Right>
                 {right}
@@ -24,11 +25,8 @@ const AppHeader: React.FC<AppHeaderProps> = ({ title, right= null }) => {
 const styles = StyleSheet.create({
     container: {
         backgroundColor: headerBackgroundColor,
-        width: '100%',
+        minHeight:'5%'
     },
-    header: {
-        color: 'white'
-    }
 });
 
 export default AppHeader;

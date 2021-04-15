@@ -1,6 +1,6 @@
-import React from 'react';
-import { View, Box, Text } from 'native-base';
 import { Document } from 'idai-field-core';
+import { Box, HStack, Text } from 'native-base';
+import React from 'react';
 import { StyleSheet } from 'react-native';
 
 interface MapProps {
@@ -12,9 +12,10 @@ const Map: React.FC<MapProps> = ({ documents }) => {
     return (
         <Box style={ styles.card }>
             {documents && documents.map(document => (
-                <View key={ document._id }>
+                <HStack key={ document._id } space={ 2 }>
                     <Text>{document.resource.id}</Text>
-                </View>
+                    <Text>{document.resource.shortDescription}</Text>
+                </HStack>
             ))}
         </Box>
     );

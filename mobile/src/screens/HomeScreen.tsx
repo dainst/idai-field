@@ -1,10 +1,10 @@
-import React, { useContext, ReactElement } from 'react';
-import { StyleSheet } from 'react-native';
 import { Center, View } from 'native-base';
-import PouchDbContext from '../data/pouchdb/pouch-context';
-import Settings from '../components/Settings';
+import React, { ReactElement, useContext } from 'react';
+import { StyleSheet } from 'react-native';
 import AppHeader from '../components/AppHeader';
 import Map from '../components/Map';
+import Settings from '../components/Settings';
+import PouchDbContext from '../data/pouchdb/pouch-context';
 
 
 const HomeScreen= (): ReactElement => {
@@ -12,25 +12,21 @@ const HomeScreen= (): ReactElement => {
     const { dbName, isDbConnected, operations } = useContext(PouchDbContext);
 
     return (
-        <Center >
-            <AppHeader
-                title={ isDbConnected()? dbName : 'iDAI field mobile' }
-            />
-            <View contentContainerStyle={ styles.container }>
+        <View style={ styles.container }>
+            <AppHeader title={ isDbConnected()? dbName : 'iDAI field mobile' } />
+            <Center flex={ 1 } >
                 {isDbConnected() ?
                     <Map documents={ operations } />:
                     <Settings />
                 }
-            </View>
-        </Center>
+            </Center>
+        </View>
     );
 };
 
 
 const styles = StyleSheet.create({
     container: {
-        justifyContent: 'center',
-        alignItems: 'center',
         flex: 1,
     }
 });

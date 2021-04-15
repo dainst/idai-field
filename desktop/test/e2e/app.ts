@@ -128,6 +128,12 @@ export async function typeIn(element, text) {
 }
 
 
+export async function pressKeys(keys) {
+
+    await app.client.keys(keys);
+}
+
+
 export async function getText(element) {
 
     if (isString(element)) element = await getElement(element);

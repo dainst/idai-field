@@ -1,10 +1,5 @@
-'use strict';
+import { click, getElements, getText, waitForVisible } from '../app';
 
-import {browser, by, element, protractor} from 'protractor';
-
-const common = require('../common.js');
-const EC = protractor.ExpectedConditions;
-const delays = require('../delays');
 
 /**
  * @author Daniel de Oliveira
@@ -13,8 +8,7 @@ export class FieldsViewPage {
 
     public static getTabs() {
 
-        const elDescriptor = 'fields-view div .card-header';
-        return element.all(by.css(elDescriptor));
+        return getElements('fields-view div .card-header');
     }
 
 
@@ -23,15 +17,14 @@ export class FieldsViewPage {
      */
     public static clickAccordionTab(cardIndex) {
 
-        const elDescriptor = 'fields-view div:nth-child(' + (cardIndex + 1) + ') .card-header';
-        return common.click(element(by.css(elDescriptor)));
+        return click('fields-view div:nth-child(' + (cardIndex + 1) + ') .card-header');
     };
 
 
-    public static clickRelation(cardIndex, relationIndex) {
+    public static async clickRelation(cardIndex, relationIndex) {
 
-        const elDescriptor = 'fields-view div:nth-child(' + (cardIndex + 1) + ') .relation-value';
-        return element.all(by.css(elDescriptor)).get(relationIndex).click();
+        const elements = await getElements('fields-view div:nth-child(' + (cardIndex + 1) + ') .relation-value');
+        return click(elements[relationIndex]);
     };
 
 
@@ -41,11 +34,8 @@ export class FieldsViewPage {
      */
     public static getFieldValue(cardIndex, index) {
 
-        const elDescriptor = 'fields-view div:nth-child(' + (cardIndex + 1) + ') .card-body ' +
-            'div:nth-child(' + (index + 1) + ') .field-value';
-
-        browser.wait(EC.visibilityOf(element(by.css(elDescriptor))), delays.ECWaitTime);
-        return element(by.css(elDescriptor)).getText();
+        return getText('fields-view div:nth-child(' + (cardIndex + 1) + ') .card-body ' +
+            'div:nth-child(' + (index + 1) + ') .field-value');
     };
 
 
@@ -55,22 +45,15 @@ export class FieldsViewPage {
      */
     public static getFieldName(cardIndex, index) {
 
-        const elDescriptor = 'fields-view div:nth-child(' + (cardIndex + 1) + ') .card-body ' +
-            'div:nth-child(' + (index + 1) + ') .field-label';
-
-        browser.wait(EC.visibilityOf(element(by.css(elDescriptor))), delays.ECWaitTime);
-        return element(by.css(elDescriptor)).getText();
+        return getText('fields-view div:nth-child(' + (cardIndex + 1) + ') .card-body ' +
+            'div:nth-child(' + (index + 1) + ') .field-label');
     };
 
 
-    public static getFields(cardIndex) {
+    public static async getFields(cardIndex) {
 
-        const fieldsViewElementDescriptor = 'fields-view';
-        const elementsDescriptor = fieldsViewElementDescriptor + ' div:nth-child(' + (cardIndex + 1)
-            + ') .card-body > div';
-
-        browser.wait(EC.visibilityOf(element(by.css(fieldsViewElementDescriptor))), delays.ECWaitTime);
-        return element.all(by.css(elementsDescriptor));
+        await waitForVisible('fields-view');
+        return getElements('fields-view div:nth-child(' + (cardIndex + 1) + ') .card-body > div');
     };
 
 
@@ -78,9 +61,11 @@ export class FieldsViewPage {
      * @param cardIndex
      * @param index counting from 0 for the first field
      */
-    public static getRelationValue(cardIndex, index) {
+    public static async getRelationValue(cardIndex, index) {
 
-        return element.all(by.className('card')).get(cardIndex).all(by.className('relation-value')).get(index).getText();
+        const cardElement = (await getElements('card'))[cardIndex];
+        const relationElement = (await cardElement.$$('relation-value'))[index];
+        return getText(relationElement);
     };
 
 
@@ -88,17 +73,20 @@ export class FieldsViewPage {
      * @param cardIndex
      * @param index counting from 0 for the first field
      */
-    public static getRelationName(cardIndex, index) {
+    public static async getRelationName(cardIndex, index) {
 
-        return element.all(by.className('card')).get(cardIndex).all(by.className('field-label')).get(index).getText();
+        const cardElement = (await getElements('card'))[cardIndex];
+        const labelElement = (await cardElement.$$('field-label'))[index];
+        return getText(labelElement);
     };
 
 
     /**
      * @param cardIndex
      */
-    public static getRelations(cardIndex) {
+    public static async getRelations(cardIndex) {
 
-        return element.all(by.className('card')).get(cardIndex).all(by.className('relation-value'));
+        const cardElement = (await getElements('card'))[cardIndex];
+        return cardElement.$$('relation-value');
     };
 }

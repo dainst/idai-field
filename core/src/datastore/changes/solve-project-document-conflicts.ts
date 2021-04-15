@@ -1,6 +1,9 @@
-import { ObjectUtils, dissocIndices, last2, replaceLastPair, RevisionId, sortRevisionsByLastModified, withDissoc } from 'idai-field-core';
-import { Document, Resource } from 'idai-field-core';
-import { append, compose, detach, equal, filter, flow, isDefined, isEmpty, left, lookup, map, Pair, right, to, union as tsfunUnion, update, assoc } from 'tsfun';
+import { append, assoc, compose, detach, equal, filter, flow, isDefined, isEmpty, left, lookup, map, Pair, right, to, union as tsfunUnion, update } from 'tsfun';
+import { Document, RevisionId } from '../../model/document';
+import { Resource } from '../../model/resource';
+import { ObjectUtils } from '../../tools/object-utils';
+import { withDissoc } from '../../tools/utils';
+import { dissocIndices, last2, replaceLastPair, sortRevisionsByLastModified } from '../helpers';
 import RESOURCE = Document.RESOURCE;
 
 type ArrayIndex = number;

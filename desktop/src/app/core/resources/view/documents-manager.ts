@@ -1,15 +1,13 @@
-import {Observer, Observable} from 'rxjs';
+import { ChangesStream, Datastore, Document, FieldDocument, IdaiFieldFindResult, ObserverUtil, Query, Resource } from 'idai-field-core';
+import { Observable, Observer } from 'rxjs';
 import * as tsfun from 'tsfun';
-import {Document, Datastore, Resource} from 'idai-field-core';
-import {ChangesStream} from '../../datastore/changes/changes-stream';
-import {Loading} from '../../../components/widgets/loading';
-import {ResourcesStateManager} from './resources-state-manager';
-import {ResourcesState} from './state/resources-state';
-import {AngularUtility} from '../../../angular/angular-utility';
-import {ModelUtil} from '../../model/model-util';
+import { AngularUtility } from '../../../angular/angular-utility';
+import { Loading } from '../../../components/widgets/loading';
+import { ModelUtil } from '../../model/model-util';
+import { ResourcesStateManager } from './resources-state-manager';
+import { ResourcesState } from './state/resources-state';
 import hasId = ModelUtil.hasId;
 import hasEqualId = ModelUtil.hasEqualId;
-import { FieldDocument, Query, ObserverUtil, ObjectUtils, IdaiFieldFindResult } from 'idai-field-core';
 
 
 const LIES_WITHIN_EXIST = 'liesWithin:exist';

@@ -1,12 +1,5 @@
-'use strict';
-
-import {browser, protractor, element, by} from 'protractor';
-import {NavbarPage} from '../navbar.page';
-import {MenuPage} from '../menu.page';
-
-const EC = protractor.ExpectedConditions;
-const delays = require('../delays');
-const common = require('../common.js');
+import { click, doubleClick, getElement, getElements, navigateTo, typeIn, waitForExist } from '../app';
+import { NavbarPage } from '../navbar.page';
 
 
 export module ImageOverviewPage {
@@ -16,84 +9,83 @@ export module ImageOverviewPage {
 
     export function waitForCells() {
 
-        return browser.wait(EC.presenceOf(element(by.css('.cell'))), delays.ECWaitTime,
-            'Waiting for image cells.');
+        return waitForExist('.cell');
     }
 
 
     // click
 
-    export function clickCell(index) {
+    export async function clickCell(index) {
 
-        return ImageOverviewPage.getCell(index).click();
+        return click(await ImageOverviewPage.getCell(index));
     }
 
 
     export function chooseImageSubcategory(index) {
 
-        return common.click(element(by.id('choose-image-subcategory-option-' + index)));
+        return click('#choose-image-subcategory-option-' + index)
     }
 
 
     export function clickDeselectButton() {
 
-        return common.click(element(by.id('deselect-images')));
+        return click('#deselect-images');
     }
 
 
     export function clickDeleteButton() {
 
-        return common.click(element(by.id('delete-images')));
+        return click('#delete-images');
     }
 
 
     export function clickConfirmUnlinkButton() {
 
-        return common.click(element(by.id('remove-link-confirm')));
+        return click('#remove-link-confirm');
     }
 
 
     export function clickLinkButton() {
 
-        return common.click(element(by.id('create-link-btn')));
+        return click('#create-link-btn');
     }
 
 
     export function clickUnlinkButton() {
 
-        return common.click(element(by.id('remove-link-btn')));
+        return click('#remove-link-btn');
     }
 
 
     export function clickCancelLinkModalButton() {
 
-        return common.click(element(by.id('link-modal-cancel-button')));
+        return click('#link-modal-cancel-button');
     }
 
 
     export function clickConfirmDeleteButton() {
 
-        return common.click(element(by.id('delete-images-confirm')));
+        return click('#delete-images-confirm');
     }
 
 
     export function clickCancelDeleteButton() {
 
-        return common.click(element(by.id('delete-images-cancel')));
+        return click('#delete-images-cancel');
     }
 
 
     export function clickIncreaseGridSizeButton() {
 
-        common.click(element(by.id('increase-grid-size-button')));
+        return click('#increase-grid-size-button');
     }
 
 
     // double click
 
-    export function doubleClickCell(index) {
+    export async function doubleClickCell(index) {
 
-        browser.actions().doubleClick(ImageOverviewPage.getCell(index)).perform();
+        return doubleClick(await ImageOverviewPage.getCell(index));
     }
 
 
@@ -101,10 +93,7 @@ export module ImageOverviewPage {
 
     export function clickUploadArea() {
 
-        return browser.actions()
-            .mouseMove(element(by.css('.droparea')), {x: 10, y: 10})
-            .click()
-            .perform();
+        return click('.droparea');
     }
 
 
@@ -112,90 +101,92 @@ export module ImageOverviewPage {
 
     export function uploadImage(filePath) {
 
-        return element(by.id('file')).sendKeys(filePath);
+        return typeIn('#file', filePath);
     }
 
 
     // text
 
-    export function getCellImageName(index) {
+    export async function getCellImageName(index) {
 
-        return ImageOverviewPage.getCell(index).getAttribute('id').then(id => id.substring('resource-'.length));
+        const cell = await ImageOverviewPage.getCell(index);
+        return (await cell.getAttribute('id')).substring('resource-'.length);
     }
 
 
-    export function getGridSizeSliderValue() {
+    export async function getGridSizeSliderValue() {
 
-        return element(by.id('grid-size-slider')).getAttribute('value');
+        return (await getElement('#grid-size-slider')).getAttribute('value');
     }
+
 
     // elements
 
     export function getAllCells() {
 
-        return element.all(by.css('.cell'));
+        return getElements('.cell');
     }
 
 
-    export function getCell(index) {
+    export async function getCell(index) {
 
-        return ImageOverviewPage.getAllCells().get(index);
+        return (await ImageOverviewPage.getAllCells())[index];
     }
 
 
     export function getCellByIdentifier(identifier: string) {
 
-        return element(by.id('resource-' + identifier));
+        return getElement('#resource-' + identifier.replace('.', '_'));
     }
 
 
     export function getDeleteConfirmationModal() {
 
-        return element(by.css('.modal-dialog'));
+        return getElement('.modal-dialog');
     }
 
 
     export function getLinkModal() {
 
-        return element(by.id('link-modal'));
+        return getElement('#link-modal');
     }
 
 
-    export function getLinkModalListEntries() {
+    export async function getLinkModalListEntries() {
 
-        browser.wait(EC.presenceOf(element(by.css('#document-picker ul'))), delays.ECWaitTime);
-        return element.all(by.css('#document-picker ul li'));
+        await waitForExist('#document-picker ul');
+        return getElements('#document-picker ul li');
     }
 
 
     export function getSuggestedResourcesInLinkModalByIdentifier(identifier) {
 
-        return ImageOverviewPage.getLinkModal().element(by.id('document-picker-resource-' + identifier))
+        return getElement('#document-picker-resource-' + identifier);
     }
 
 
     // type in
 
-    export function typeInIdentifierInLinkModal(identifier) {
-
-        return common.typeIn(ImageOverviewPage.getLinkModal().element(by.css('.search-bar-input')), identifier);
+    export async function typeInIdentifierInLinkModal(identifier) {
+        
+        const linkModalElement = await ImageOverviewPage.getLinkModal();
+        return typeIn(await linkModalElement.$('.search-bar-input'), identifier);
     }
 
 
     // sequences
 
-    export function createDepictsRelation(identifier) {
+    export async function createDepictsRelation(identifier) {
 
-        const imageToConnect = ImageOverviewPage.getCell(0);
+        const imageToConnect = await ImageOverviewPage.getCell(0);
 
-        imageToConnect.click();
-        expect(imageToConnect.getAttribute('class')).toMatch(selectedClass);
-        ImageOverviewPage.clickLinkButton();
-        ImageOverviewPage.typeInIdentifierInLinkModal(identifier);
-        ImageOverviewPage.getSuggestedResourcesInLinkModalByIdentifier(identifier).click();
-        NavbarPage.clickCloseNonResourcesTab();
-        NavbarPage.clickTab('project');
-        MenuPage.navigateToImages();
-        browser.sleep(delays.shortRest * 5);
+        await click(imageToConnect);
+        expect(await imageToConnect.getAttribute('class')).toMatch(selectedClass);
+        await this.clickLinkButton();
+        await this.typeInIdentifierInLinkModal(identifier);
+        await click(await this.getSuggestedResourcesInLinkModalByIdentifier(identifier));
+        await NavbarPage.clickCloseNonResourcesTab();
+        await NavbarPage.clickTab('project');
+        return navigateTo('images');
     }
 }

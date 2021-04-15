@@ -79,7 +79,7 @@ export class ImageDocumentsManager {
         this.currentQueryId = new Date().toISOString();
         const queryId = this.currentQueryId;
 
-        const query = tsfun.clone(this.imagesState.getQuery()); // TODO review typing of clone
+        const query = tsfun.clone(this.imagesState.getQuery());
         if (offset) query.offset = offset;
         query.limit = limit;
         query.constraints['project:exist'] = 'UNKNOWN';

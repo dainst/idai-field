@@ -1,4 +1,4 @@
-import {ChangesStream} from '../../../../../src/app/core/datastore/changes/changes-stream';
+import { ChangesStream } from '../../../src/datastore/changes/changes-stream';
 
 /**
  * @author Thomas Kleinke
@@ -12,7 +12,7 @@ describe('RemoteChangesStream', () => {
     let indexFacade;
     let categoryConverter;
     let documentCache;
-    let settingsService;
+    let getUsername;
     let fun;
 
 
@@ -41,9 +41,8 @@ describe('RemoteChangesStream', () => {
         indexFacade = jasmine.createSpyObj('MockIndexFacade', ['put', 'get', 'remove']);
         categoryConverter = jasmine.createSpyObj('MockCategoryConverter', ['convert']);
         documentCache = jasmine.createSpyObj('MockDocumentCache', ['get', 'reassign']);
-        settingsService = jasmine.createSpyObj('MockSettingsService', ['getSettings']);
 
-        settingsService.getSettings.and.returnValue({ username: 'localuser' });
+        getUsername = () => 'localuser';
         categoryConverter.convert.and.returnValue(doc);
         indexFacade.put.and.returnValue(doc);
         documentCache.get.and.returnValue(1); // just to trigger reassignment
@@ -60,7 +59,7 @@ describe('RemoteChangesStream', () => {
             indexFacade,
             documentCache,
             categoryConverter,
-            settingsService);
+            getUsername);
     });
 
 

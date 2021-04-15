@@ -1,8 +1,7 @@
-import { Document, Datastore, FieldDocument, IndexFacade, SyncService, SyncStatus } from 'idai-field-core';
+import { ChangesStream, Datastore, Document, FieldDocument, IndexFacade, SyncService, SyncStatus } from 'idai-field-core';
 import { M } from '../../../components/messages/m';
 import { Messages } from '../../../components/messages/messages';
 import { Loading } from '../../../components/widgets/loading';
-import { ChangesStream } from '../../datastore/changes/changes-stream';
 import { DocumentsManager } from './documents-manager';
 import { ResourcesStateManager } from './resources-state-manager';
 import { ResourcesState } from './state/resources-state';

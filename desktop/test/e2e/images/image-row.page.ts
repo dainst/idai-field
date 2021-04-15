@@ -1,4 +1,4 @@
-import {element, by} from 'protractor';
+import { getElements } from '../app';
 
 
 /**
@@ -8,6 +8,6 @@ export module ImageRowPage {
 
     export function getImages() {
 
-        return element.all(by.className('image-container'));
+        return getElements('.image-container');
     }
 }

@@ -1,36 +1,34 @@
-import {element, by} from 'protractor';
-
-const common = require('../common.js');
+import { click, getElements, getText } from '../app';
 
 
 export module ImageViewPage {
 
     export function editDocument() {
 
-        common.click(element(by.className('mdi-pencil')));
+        return click('.mdi-pencil');
     }
 
 
     export function clickCloseButton() {
 
-        common.click(element(by.id('close-button')));
+        return click('#close-button');
     }
 
 
-    export function openRelationsTab() {
+    export async function openRelationsTab() {
 
-        common.click(element.all(by.className('card-header')).get(3));
+        return click((await getElements('.card-header'))[3]);
     }
 
 
-    export function clickRelation() {
+    export async function clickRelation() {
 
-        element.all(by.className('resources-listing-item')).get(0).click();
+        return click((await getElements('resources-listing-item'))[0]);
     }
 
 
     export function getIdentifier() {
 
-        return element(by.css('.identifier-label')).getText();
+        return getText('.identifier-label');
     }
 }

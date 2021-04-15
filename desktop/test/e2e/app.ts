@@ -2,6 +2,7 @@ import { isString } from 'tsfun';
 
 const Application = require('spectron').Application;
 const electron = require('electron');
+const fs = require('fs');
 
 const WAIT_FOR_ELEMENT_TIMEOUT = 30000;
 
@@ -37,6 +38,20 @@ export function resetApp() {
 }
 
 
+export function resetConfigJson() {
+
+    const configPath = app.electron.getGlobal('configPath');
+    const configTemplate = app.electron.getGlobal('configTemplate')
+
+    return new Promise(resolve => {
+        fs.writeFile(configPath, JSON.stringify(configTemplate), err => {
+            if (err) console.error('Failure while resetting config.json', err);
+            resolve(undefined);
+        });
+    });
+}
+
+
 export function navigateTo(menu) {
 
     return new Promise(resolve => {
@@ -63,7 +78,7 @@ export function getElements(selector: string) {
 export async function click(element) {
 
     if (isString(element)) element = await getElement(element);
-    await element.waitForClickable({ timeout: WAIT_FOR_ELEMENT_TIMEOUT });
+    await element.waitForExist({ timeout: WAIT_FOR_ELEMENT_TIMEOUT });
     return element.click();
 }
 
@@ -71,7 +86,7 @@ export async function click(element) {
 export async function doubleClick(element) {
 
     if (isString(element)) element = await getElement(element);
-    await element.waitForClickable({ timeout: WAIT_FOR_ELEMENT_TIMEOUT });
+    await element.waitForExist({ timeout: WAIT_FOR_ELEMENT_TIMEOUT });
     return element.doubleClick();
 }
 
@@ -79,7 +94,7 @@ export async function doubleClick(element) {
 export async function rightClick(element) {
 
     if (isString(element)) element = await getElement(element);
-    await element.waitForClickable({ timeout: WAIT_FOR_ELEMENT_TIMEOUT });
+    await element.waitForExist({ timeout: WAIT_FOR_ELEMENT_TIMEOUT });
     return element.click({ button: 'right' });
 }
 
@@ -87,7 +102,7 @@ export async function rightClick(element) {
 export async function hover(element) {
 
     if (isString(element)) element = await getElement(element);
-    await element.waitForExists({ timeout: WAIT_FOR_ELEMENT_TIMEOUT });
+    await element.waitForExist({ timeout: WAIT_FOR_ELEMENT_TIMEOUT });
     return element.moveTo();
 }
 

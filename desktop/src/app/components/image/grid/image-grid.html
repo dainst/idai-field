@@ -20,7 +20,7 @@
                  (click)="onClick.emit(cell['document'])"
                  (dblclick)="onDoubleClick.emit(cell['document'])"
                  (mouseenter)="onCellMouseEnter(cell['document'])"
-                 [id]="'resource-' + cell['document'].resource.identifier"
+                 [id]="'resource-' + cell['document'].resource.identifier.replace('.', '_')"
                  class="cell"
                  [class.selected]="selected.includes(cell['document'])">
 

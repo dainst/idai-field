@@ -1,4 +1,3 @@
-import * as tsfun from 'tsfun';
 import {Component, ViewChild} from '@angular/core';
 import {CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
 import {FieldDocument} from 'idai-field-core';
@@ -36,7 +35,7 @@ export class BaseList {
 
     public getCurrentFilterCategory()  {
 
-        const filterCategories: string[] = this.viewFacade.getFilterCategories();
+        const filterCategories = this.viewFacade.getFilterCategories();
         return filterCategories && filterCategories.length > 0 ? filterCategories[0] : undefined;
     }
 

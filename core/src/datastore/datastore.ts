@@ -219,8 +219,7 @@ export class Datastore {
         return {
             documents: documents,
             ids: ids,
-            totalCount: totalCount,
-            queryId: query.id
+            totalCount: totalCount
         }
     }
 
@@ -236,8 +235,7 @@ export class Datastore {
 
         return {
             ids: orderedResults,
-            totalCount: orderedResults.length,
-            queryId: query.id
+            totalCount: orderedResults.length
         };
     }
 
@@ -332,9 +330,8 @@ export class Datastore {
     private async getDocumentsFromDatastore(ids: string[]): Promise<Array<Document>> {
 
         const documents: Array<Document> = [];
-        const result: Array<Document> = await this.datastore.bulkFetch(ids);
 
-        result.forEach(document => {
+        (await this.datastore.bulkFetch(ids)).forEach(document => {
             const convertedDocument = this.categoryConverter.convert(document);
 
             try {

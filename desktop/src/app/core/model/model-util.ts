@@ -10,7 +10,7 @@ export module ModelUtil {
     export type Label = string;
 
 
-    export function getDocumentLabel(document: Document): Label {
+    export function getDocumentLabel(document: Document): Label { // TODO move to Document
 
         return (document.resource.shortDescription)
             ? document.resource.shortDescription + ' (' + document.resource.identifier + ')'
@@ -36,7 +36,7 @@ export module ModelUtil {
     }
 
 
-    export const hasEqualId = (l: Document|undefined) => (r: Document): boolean => (l != undefined && l.resource.id === r.resource.id);
+    export const hasEqualId = (l: Document|undefined) => (r: Document): boolean => (l != undefined && l.resource.id === r.resource.id); // TODO use ? to test for undefined
 
-    export const hasId = (doc: Document) => doc.resource.id !== undefined;
+    export const hasId = (doc: Document) => doc.resource.id !== undefined; // TODO this could be done with a NewDocument typeguard
 }

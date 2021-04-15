@@ -133,7 +133,7 @@ describe('map --', function() {
             function() {
                 MapPage.clickMapOption('ok');
                 DoceditPage.typeInInputField('identifier', identifier);
-                ResourcesPage.scrollUp();
+                //ResourcesPage.scrollUp();
                 DoceditPage.clickSaveDocument();
             });
     }

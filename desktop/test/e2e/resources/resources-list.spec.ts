@@ -4,6 +4,7 @@ import {MenuPage} from '../menu.page';
 import {ResourcesPage} from './resources.page';
 import {DoceditPage} from '../docedit/docedit.page';
 import {FieldsViewPage} from '../widgets/fields-view.page';
+import { click } from '../app';
 
 const EC = protractor.ExpectedConditions;
 const delays = require('../delays');
@@ -46,7 +47,7 @@ describe('resources/list --', () => {
         ResourcesPage.performCreateResourceInList('2', 'feature-architecture');
 
         ResourcesPage.typeInListModeInputField('1', 1, 'Changed resource 1');
-        ResourcesPage.getListModeInputField('2', 0).click();
+        click(ResourcesPage.getListModeInputField('2', 0));
 
         NavbarPage.clickTab('project');
         ResourcesPage.clickHierarchyButton('S1');
@@ -78,7 +79,7 @@ describe('resources/list --', () => {
         ResourcesPage.performCreateResourceInList('3', 'feature-architecture');
 
         ResourcesPage.typeInListModeInputField('2', 0, '1');
-        ResourcesPage.getListModeInputField('3', 0).click();
+        click(ResourcesPage.getListModeInputField('3', 0));
 
         expect(NavbarPage.getMessageText()).toContain('existiert bereits');
 

@@ -219,7 +219,7 @@ describe('resources/state --', function() {
             } else {
                 ResourcesPage.clickSelectGeometryType();
                 DoceditPage.typeInInputField('identifier', identifier);
-                ResourcesPage.scrollUp();
+                //ResourcesPage.scrollUp();
                 DoceditPage.clickSaveDocument();
             }
 

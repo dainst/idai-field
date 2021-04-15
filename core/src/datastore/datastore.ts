@@ -208,7 +208,7 @@ export class Datastore {
      *   allowed categories, due to the nature of the relations to which the constraints refer.
      * 
      * @param query the query object
-     * @returns {Promise<Document[]>} an array of documents
+     * @returns {Promise<IdaiFieldFindResult>} result object
      * @throws [GENERIC_ERROR (, cause: any)] - in case of error, optionally including a cause
      */
     public async find(query: Query, ignoreCategories: boolean = false): Promise<IdaiFieldFindResult> {

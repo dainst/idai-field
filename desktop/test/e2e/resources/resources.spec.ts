@@ -232,8 +232,8 @@ describe('resources --', () => {
         DetailSidebarPage.doubleClickEditDocument('1');
         DoceditPage.clickGotoTimeTab();
         DoceditRelationsTabPage.clickAddRelationForGroupWithIndex('zeitgleich-mit');
-        DoceditRelationsTabPage.typeInRelationByIndices('zeitgleich-mit', 0, '2');
-        DoceditRelationsTabPage.clickChooseRelationSuggestion('zeitgleich-mit', 0, 0);
+        DoceditRelationsTabPage.typeInRelation('zeitgleich-mit', '2');
+        DoceditRelationsTabPage.clickChooseRelationSuggestion(0);
         DoceditPage.clickCloseEdit('discard');
 
         ResourcesPage.clickSelectResource('1', 'info');

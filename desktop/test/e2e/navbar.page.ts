@@ -1,8 +1,5 @@
-import {browser, protractor, element, by} from 'protractor';
-
-const EC = protractor.ExpectedConditions;
-const delays = require('./delays');
-const common = require('./common');
+import { element } from 'protractor';
+import { click, waitForVisible, getElements, getElement, waitForExist } from './app';
 
 
 export class NavbarPage {
@@ -11,43 +8,43 @@ export class NavbarPage {
 
     public static clickTab(tabName: string) {
 
-        return common.click(element(by.id('navbar-' + tabName)));
+        return click('#navbar-' + tabName);
     }
 
 
     public static clickCloseNonResourcesTab() {
 
-        return common.click(element(by.css('#non-resources-tab .btn')));
+        return click('#non-resources-tab .btn');
     }
 
 
     public static clickConflictsButton() {
 
-        return common.click(element(by.id('taskbar-conflicts-button')));
+        return click('#taskbar-conflicts-button');
     }
 
 
     public static clickConflictResolverLink(identifier: string) {
 
-        return common.click(element(by.id('taskbar-conflict-' + identifier)));
+        return click('#taskbar-conflict-' + identifier);
     }
 
 
-    public static clickSelectProject(option) {
+    public static async clickSelectProject(option) {
 
-        browser.wait(EC.presenceOf(element(by.id('projectSelectBox'))), delays.ECWaitTime);
-        element.all(by.css('#projectSelectBox option')).get(option).click();
+        await waitForExist('#projectSelectBox');
+        const element = (await getElements('#projectSelectBox option'))[option];
+        return click(element);
     }
 
 
-    public static clickCloseAllMessages() {
+    public static async clickCloseAllMessages() {
 
-        browser.wait(EC.presenceOf(element.all(by.css('.alert button')).first()), delays.ECWaitTime);
-        return element.all(by.css('.alert button')).then(buttonEls => {
-            for (let buttonEl of buttonEls.reverse()) {
-                buttonEl.click();
-            }
-        })
+        await waitForExist('.alert button');
+        const elements = await getElements('.alert button');
+        for (let element of elements) {
+            await click(element);
+        }
     }
 
 
@@ -56,10 +53,9 @@ export class NavbarPage {
     public static awaitAlert(text: string, matchExactly: boolean = true) {
 
         if (matchExactly) {
-            browser.wait(EC.presenceOf(element(by.xpath("//span[@class='message-content' and normalize-space(text())='"+text+"']"))), delays.ECWaitTime);
-        }
-        else {
-            browser.wait(EC.presenceOf(element(by.xpath("//span[@class='message-content' and contains(text(),'"+text+"')]"))), delays.ECWaitTime);
+            return waitForExist("//span[@class='message-content' and normalize-space(text())='"+text+"']");
+        } else {
+            return waitForExist("//span[@class='message-content' and contains(text(),'"+text+"')]");
         }
     };
 
@@ -68,30 +64,32 @@ export class NavbarPage {
 
     public static getTab(routeName: string, resourceIdentifier?: string) {
 
-        return element(by.id('navbar-' + routeName + (resourceIdentifier ? '-' + resourceIdentifier : '')));
+        return element('#navbar-' + routeName + (resourceIdentifier ? '-' + resourceIdentifier : ''));
     }
 
 
     // get text
 
-    public static getMessageText() {
+    public static async getMessageText() {
 
-        browser.sleep(200);
-        return element(by.id('message-0')).getText();
+        const element = await getElement('#message-0');
+        await waitForExist(element);
+        return element.getText();
     }
 
 
-    public static getActiveNavLinkLabel() {
+    public static async getActiveNavLinkLabel() {
 
-        browser.wait(EC.visibilityOf(element(by.css('#navbarSupportedContent .nav-link.active'))),
-            delays.ECWaitTime);
-        return element(by.css('#navbarSupportedContent .nav-link.active')).getText();
+        const element = await getElement('#navbarSupportedContent .nav-link.active');
+        await waitForVisible(element);
+        return element.getText();
     }
 
 
-    public static getTabLabel(routeName: string, resourceIdentifier?: string) {
+    public static async getTabLabel(routeName: string, resourceIdentifier?: string) {
 
-        browser.wait(EC.visibilityOf(this.getTab(routeName, resourceIdentifier)), delays.ECWaitTime);
-        return this.getTab(routeName, resourceIdentifier).getText();
+        const element = await this.getTab(routeName, resourceIdentifier);
+        await waitForVisible(element);
+        return element.getText();
     }
 }

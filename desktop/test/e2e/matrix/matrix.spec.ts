@@ -93,22 +93,22 @@ describe('matrix --', () => {
     });
 
 
-    /*it('edit relations and show updated matrix', async done => {
+    it('edit relations and show updated matrix', async done => {
 
         await MatrixPage.clickNode('si1');
         await DoceditPage.clickGotoTimeTab();
         await DoceditRelationsTabPage.clickRelationDeleteButtonByIndices('zeitlich-nach', 1);
 
         await DoceditRelationsTabPage.clickAddRelationForGroupWithIndex('zeitlich-nach');
-        await DoceditRelationsTabPage.typeInRelationByIndices('zeitlich-nach', 1, 'SE4');
-        await DoceditRelationsTabPage.clickChooseRelationSuggestion('zeitlich-nach', 1, 0);
+        await DoceditRelationsTabPage.typeInRelation('zeitlich-nach', 'SE4');
+        await DoceditRelationsTabPage.clickChooseRelationSuggestion(0);
         await DoceditPage.clickSaveDocument();
 
         await waitForNotExist(await MatrixPage.getAboveEdge('si1', 'si5'));
         await waitForExist(await MatrixPage.getAboveEdge('si1', 'si4'));
 
         done();
-    });*/
+    });
 
 
     it('create matrix from selected resources', async done => {

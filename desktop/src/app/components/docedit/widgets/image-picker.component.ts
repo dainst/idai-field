@@ -1,6 +1,6 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import { isOk, ok } from 'tsfun';
+import { err, isOk, ok } from 'tsfun';
 import {Datastore, FieldDocument, ImageDocument} from 'idai-field-core';
 import {ImageGridComponent} from '../../image/grid/image-grid.component';
 import {M} from '../../messages/m';
@@ -153,8 +153,7 @@ export class ImagePickerComponent implements OnInit {
                 this.totalDocumentCount = totalCount;
             }
         } else {
-            const [msgs] = result;
-            for (const msg of msgs) console.error(...msg);
+            for (const msg of err(result)) console.error(...msg);
             this.messages.add([M.ALL_ERROR_FIND]);
         }
     }

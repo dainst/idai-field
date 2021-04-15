@@ -40,7 +40,7 @@
     "rxjs": "~6.5.4",
     "styled-components": "^5.2.3",
     "styled-system": "^5.1.5",
-    "tsfun": "5.5.14"
+    "tsfun": "5.5.15"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",

@@ -4,7 +4,8 @@ import { Datastore, FieldDocument, Query } from 'idai-field-core';
 export async function getDocumentSuggestions(datastore: Datastore,
                                              query: Query): Promise<Array<FieldDocument>> {
 
-    return (await datastore.find(
+    return (await datastore
+        .find(
             {
                 ...query,
                 constraints: {
@@ -14,7 +15,8 @@ export async function getDocumentSuggestions(datastore: Datastore,
                         subtract: true
                     }
                 }
-            }))
+            }
+        ))
         .documents
         .map(FieldDocument.fromDocument);
 }

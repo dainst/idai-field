@@ -1,8 +1,5 @@
-'use strict';
+import { click, doubleClick } from '../app';
 
-import {by, element} from 'protractor';
-
-const common = require('../common.js');
 
 /**
  * @author Daniel de Oliveira
@@ -11,12 +8,12 @@ export class DetailSidebarPage {
 
     public static clickSolveConflicts() {
 
-        common.click(element(by.css('.detail-sidebar .solve-button')));
+        return click('.detail-sidebar .solve-button');
     };
 
 
     public static doubleClickEditDocument(identifier) {
 
-        return common.doubleClick(element(by.id('resource-' + identifier)));
+        return doubleClick('#resource-' + identifier);
     };
 }

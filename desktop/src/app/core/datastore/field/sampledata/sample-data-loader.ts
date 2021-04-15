@@ -100,6 +100,11 @@ export class SampleDataLoader {
         document.resource.type = document.resource.category;
         delete document.resource.category;
 
-        db.put(document, { force: true });
+        if (document.resource.id === 'project') {
+
+            const project = await db.get('project');
+            await db.remove('project', project._rev);
+        }
+        await db.put(document);
     }
 }

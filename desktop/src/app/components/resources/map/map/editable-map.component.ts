@@ -123,38 +123,54 @@ export class EditableMapComponent extends LayerMapComponent {
 
     public finishEditing() {
 
-        let geometry: FieldGeometry | undefined | null = { type: '', coordinates: [] };
+        let geometry: FieldGeometry|null = null;
 
         this.zone.runOutsideAngular(() => {
             if (this.drawMode !== 'None') this.finishDrawing();
-
-            if (this.editablePolygons.length === 1) {
-                geometry.type = 'Polygon';
-                geometry.coordinates = GeometryHelper.getCoordinatesFromPolygon(this.editablePolygons[0]);
-            } else if (this.editablePolygons.length > 1) {
-                geometry.type = 'MultiPolygon';
-                geometry.coordinates = GeometryHelper.getCoordinatesFromPolygons(this.editablePolygons);
-            } else if (this.editablePolylines.length === 1) {
-                geometry.type = 'LineString';
-                geometry.coordinates = GeometryHelper.getCoordinatesFromPolyline(this.editablePolylines[0]);
-            } else if (this.editablePolylines.length > 1) {
-                geometry.type = 'MultiLineString';
-                geometry.coordinates = GeometryHelper.getCoordinatesFromPolylines(this.editablePolylines);
-            } else if (this.editableMarkers.length === 1) {
-                geometry.type = 'Point';
-                geometry.coordinates = GeometryHelper.getCoordinatesFromMarker(this.editableMarkers[0]);
-            } else if (this.editableMarkers.length > 1) {
-                geometry.type = 'MultiPoint';
-                geometry.coordinates = GeometryHelper.getCoordinatesFromMarkers(this.editableMarkers);
-            } else {
-                geometry = null;
-            }
-
+            geometry = this.createGeometry();
             this.fadeInMapElements();
             this.resetEditing();
         });
+        
+        this.onQuitEditing.emit(geometry);
+    }
 
-        this.onQuitEditing.emit(geometry as any);
+
+    private createGeometry(): FieldGeometry|null {
+
+        if (this.editablePolygons.length === 1) {
+            return {
+                type: 'Polygon',
+                coordinates: GeometryHelper.getCoordinatesFromPolygon(this.editablePolygons[0])
+            };
+        } else if (this.editablePolygons.length > 1) {
+            return {
+                type: 'MultiPolygon',
+                coordinates: GeometryHelper.getCoordinatesFromPolygons(this.editablePolygons)
+            };
+        } else if (this.editablePolylines.length === 1) {
+            return {
+                type: 'LineString',
+                coordinates: GeometryHelper.getCoordinatesFromPolyline(this.editablePolylines[0])
+            };
+        } else if (this.editablePolylines.length > 1) {
+            return {
+                type: 'MultiLineString',
+                coordinates: GeometryHelper.getCoordinatesFromPolylines(this.editablePolylines)
+            };
+        } else if (this.editableMarkers.length === 1) {
+            return {
+                type: 'Point',
+                coordinates: GeometryHelper.getCoordinatesFromMarker(this.editableMarkers[0])
+            };
+        } else if (this.editableMarkers.length > 1) {
+            return {
+                type: 'MultiPoint',
+                coordinates: GeometryHelper.getCoordinatesFromMarkers(this.editableMarkers)
+            };
+        } else {
+            return null;
+        }
     }
 
 
@@ -230,7 +246,6 @@ export class EditableMapComponent extends LayerMapComponent {
             this.redrawGeometries();
         });
     }
-
 
 
     private finishDrawing() {

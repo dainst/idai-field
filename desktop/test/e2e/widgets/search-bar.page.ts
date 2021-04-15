@@ -1,8 +1,4 @@
-import {browser, protractor, element, by} from 'protractor';
-
-const EC = protractor.ExpectedConditions;
-const common = require('../common.js');
-const delays = require('../delays');
+import { click, getElement, getElements, getText, typeIn, waitForExist } from '../app';
 
 export type SearchBarContext = 'resources'|'images'|'modal';
 
@@ -14,53 +10,48 @@ export class SearchBarPage {
 
     // text
 
-    public static getSearchBarInputFieldValue() {
+    public static async getSearchBarInputFieldValue() {
 
-        return SearchBarPage.getSearchBarInputField().getAttribute('value');
+        return (await SearchBarPage.getSearchBarInputField()).getAttribute('value');
     }
 
 
-    public static getSelectedCategoryFilterCharacter(context: SearchBarContext = 'resources') {
+    public static async getSelectedCategoryFilterCharacter(context: SearchBarContext = 'resources') {
 
-        browser.wait(EC.presenceOf(SearchBarPage.getSelectedCategoryFilterButton(context)), delays.ECWaitTime);
-        return SearchBarPage.getSelectedCategoryFilterButton(context).element(by.css('.character')).getText();
-    }
-
-
-    public static getCategoryFilterOptionLabels() {
-
-        browser.wait(EC.presenceOf(element(by.css('.category-picker'))), delays.ECWaitTime);
-        return element.all(by.css('.category-label'));
+        const element = await SearchBarPage.getSelectedCategoryFilterButton(context);
+        await waitForExist(element);
+        return getText(element.$('.character'));
     }
 
 
     // click
 
-    public static clickChooseCategoryFilter(categoryName: string, context: SearchBarContext = 'resources') {
+    public static async clickChooseCategoryFilter(categoryName: string, context: SearchBarContext = 'resources') {
 
-        this.clickCategoryFilterButton(context);
-        common.click(element(by.id('choose-category-option-' + categoryName)));
-        this.clickCategoryFilterButton(context);
+        await this.clickCategoryFilterButton(context);
+        await click('#choose-category-option-' + categoryName);
+        return this.clickCategoryFilterButton(context);
     }
 
 
-    public static clickCategoryFilterButton(context: SearchBarContext = 'resources') {
+    public static async clickCategoryFilterButton(context: SearchBarContext = 'resources') {
 
-        common.click(this.getFilterButton(context).element(by.css('.search-filter')));
+        const filterButtonElement = await this.getFilterButton(context);
+        return click(filterButtonElement.$('.search-filter'));
     }
 
 
-    public static clickSearchBarInputField() {
+    public static async clickSearchBarInputField() {
 
-        return common.click(SearchBarPage.getSearchBarInputField());
+        return click(await SearchBarPage.getSearchBarInputField());
     }
 
 
     // type in
 
-    public static typeInSearchField(text) {
+    public static async typeInSearchField(text) {
 
-        return common.typeIn(SearchBarPage.getSearchBarInputField(), text);
+        return typeIn(await SearchBarPage.getSearchBarInputField(), text);
     }
 
 
@@ -69,18 +60,26 @@ export class SearchBarPage {
     private static getFilterButton(context: SearchBarContext) {
 
         const prefix: string = context !== 'modal' ? context + '-search-bar-' : '';
-        return element(by.id(prefix + 'filter-button'));
+        return getElement('#' + prefix + 'filter-button');
     }
 
 
-    private static getSelectedCategoryFilterButton(context: SearchBarContext) {
+    private static async getSelectedCategoryFilterButton(context: SearchBarContext) {
 
-        return this.getFilterButton(context).element(by.css('category-icon'));
+        const filterButtonElement = await this.getFilterButton(context);
+        return filterButtonElement.$('category-icon');
     }
 
 
     private static getSearchBarInputField() {
 
-        return element(by.css('.search-bar-input'));
+        return getElement('.search-bar-input');
+    }
+
+
+    public static async getCategoryFilterOptionLabels() {
+
+        await waitForExist('.category-picker');
+        return getElements('.category-label');
     }
 }

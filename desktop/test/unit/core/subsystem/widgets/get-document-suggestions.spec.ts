@@ -26,7 +26,6 @@ describe('subsystem/getDocumentSuggestions', () => {
 
         const documents  = await getDocumentSuggestions(
             datastore,
-            undefined,
             { categories: ['Feature'] }, /* TODO why do we need to specify the category? */
         );
         expect(documents.length).toBe(1);
@@ -40,7 +39,6 @@ describe('subsystem/getDocumentSuggestions', () => {
 
         const documents = await getDocumentSuggestions(
             datastore,
-            undefined,
             { categories: ['Feature'] },
         );
         expect(documents.length).toBe(0);

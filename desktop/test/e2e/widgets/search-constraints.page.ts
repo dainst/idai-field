@@ -1,9 +1,4 @@
-import {element, by, browser, protractor} from 'protractor';
-
-const common = require('../common.js');
-const EC = protractor.ExpectedConditions;
-const delays = require('../delays');
-
+import { click, getElement, getElements, typeIn, waitForVisible } from '../app';
 
 /**
  * @author Thomas Kleinke
@@ -14,46 +9,47 @@ export class SearchConstraintsPage {
 
     public static clickConstraintsMenuButton() {
 
-        return common.click(element(by.id('constraints-menu-button')));
+        return click('#constraints-menu-button');
     }
 
 
-    public static clickSelectConstraintField(fieldName: string) {
+    public static async clickSelectConstraintField(fieldName: string) {
 
-        common.click(this.getConstraintFieldOption(fieldName));
+        return click(await this.getConstraintFieldOption(fieldName));
     };
 
 
-    public static clickSelectDropdownValue(optionIndex: number) {
+    public static async clickSelectDropdownValue(optionIndex: number) {
 
-        browser.wait(EC.visibilityOf(element(by.id('constraint-search-term-select'))), delays.ECWaitTime);
-        element.all(by.css('#constraint-search-term-select option')).get(optionIndex + 1).click();
+        await waitForVisible('#constraint-search-term-select');
+        const element = (await getElements('#constraint-search-term-select option'))[optionIndex + 1];
+        return click(element);
     }
 
 
-    public static clickSelectExistsDropdownValue(optionIndex: number) {
+    public static async clickSelectExistsDropdownValue(optionIndex: number) {
 
-        browser.wait(EC.visibilityOf(element(by.id('constraint-search-term-exists-select'))),
-            delays.ECWaitTime);
-        element.all(by.css('#constraint-search-term-exists-select option')).get(optionIndex + 1).click();
+        await waitForVisible('#constraint-search-term-exists-select');
+        const element = (await getElements('#constraint-search-term-exists-select option'))[optionIndex + 1];
+        return click(element);
     }
 
 
     public static clickSelectBooleanValue(value: boolean) {
 
-        common.click(element(by.id('constraint-search-term-boolean-select-option-' + value)));
+        return click ('#constraint-search-term-boolean-select-option-' + value);
     }
 
 
     public static clickAddConstraintButton() {
 
-        common.click(element(by.id('add-constraint-button')));
+        return click('#add-constraint-button')
     }
 
 
     public static clickRemoveConstraintButton(fieldName: string) {
 
-        common.click(element(by.id('remove-constraint-button-' + fieldName)));
+        return click('remove-constraint-button-' + fieldName);
     }
 
 
@@ -61,13 +57,13 @@ export class SearchConstraintsPage {
 
     public static getConstraintFieldOption(fieldName: string) {
 
-        return element(by.id('constraint-field-select-option-' + fieldName));
+        return getElement('#constraint-field-select-option-' + fieldName);
     }
 
 
     public static getRemoveConstraintButton(fieldName: string) {
 
-        return element(by.id('remove-constraint-button-' + fieldName));
+        return getElement('#remove-constraint-button-' + fieldName);
     }
 
 
@@ -75,6 +71,6 @@ export class SearchConstraintsPage {
 
     public static typeInConstraintSearchTerm(inputText: string) {
 
-        return common.typeIn(element(by.id('constraint-search-term-input')), inputText);
+        return typeIn('#constraint-search-term-input', inputText);
     }
 }

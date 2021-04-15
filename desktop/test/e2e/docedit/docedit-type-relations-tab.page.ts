@@ -1,6 +1,4 @@
-import {by, element} from 'protractor';
-
-const common = require('../common.js');
+import { click, getElements, getElement } from '../app';
 
 
 /**
@@ -12,25 +10,27 @@ export class DoceditTypeRelationsTabPage {
 
     public static clickAddTypeRelationButton(fieldName: string) {
 
-        common.click(element(by.css('#edit-form-element-' + fieldName + ' .add-type-relation')));
+        return click('#edit-form-element-' + fieldName + ' .add-type-relation');
     }
 
 
     public static clickType(identifier: string) {
 
-        common.click(element(by.css('#type-row-' + identifier + ' .type-info')));
+        return click('#type-row-' + identifier + ' .type-info');
     }
 
 
-    public static clickCriterionOption(index: number) {
+    public static async clickCriterionOption(index: number) {
 
-        common.click(element.all(by.css('#criterion-select option')).get(index));
+        const options = await getElements('#criterion-select option');
+        return click(options[index]);
     }
 
 
-    public static clickCatalogOption(index: number) {
+    public static async clickCatalogOption(index: number) {
 
-        common.click(element.all(by.css('#catalog-select option')).get(index));
+        const options = await getElements('#catalog-select option');
+        return click(options[index]);
     }
 
 
@@ -38,18 +38,18 @@ export class DoceditTypeRelationsTabPage {
 
     public static getCriterionOptions() {
 
-        return element.all(by.css('#criterion-select option'));
+        return getElements('#criterion-select option');
     }
 
 
     public static getCatalogOptions() {
 
-        return element.all(by.css('#catalog-select option'));
+        return getElements('#catalog-select option');
     }
 
 
     public static getTypeRow(identifier: string) {
 
-        return element(by.id('type-row-' + identifier));
+        return getElement('#type-row-' + identifier);
     }
 }

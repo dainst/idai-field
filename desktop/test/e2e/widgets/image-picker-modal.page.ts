@@ -1,8 +1,5 @@
-'use strict';
+import { click, getElements, typeIn } from '../app';
 
-import {element, by} from 'protractor';
-
-const common = require('../common.js');
 
 /**
  * @author Daniel de Oliveira
@@ -13,13 +10,13 @@ export class ImagePickerModalPage {
 
     public static clickAddImage() {
 
-        common.click(element(by.css('#image-picker-modal-header #add-image')));
+        return click('#image-picker-modal-header #add-image');
     }
 
 
     public static clickAddImages() {
 
-        common.click(element(by.css('#image-picker-modal-header #add-images')));
+        return click('#image-picker-modal-header #add-images');
     }
 
 
@@ -27,7 +24,7 @@ export class ImagePickerModalPage {
 
     public static typeInIdentifierInSearchField(identifier) {
 
-       common.typeIn(element(by.css('#image-picker-modal .search-bar-input')), identifier);
+       return typeIn('#image-picker-modal .search-bar-input', identifier);
     }
 
 
@@ -35,6 +32,6 @@ export class ImagePickerModalPage {
 
     public static getCells() {
 
-        return element.all(by.css('.cell'));
+        return getElements('.cell');
     }
 }

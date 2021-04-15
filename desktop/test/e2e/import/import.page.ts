@@ -1,79 +1,68 @@
-'use strict';
-
-import {browser, protractor, element, by} from 'protractor';
-
-let EC = protractor.ExpectedConditions;
-let delays = require('../delays');
+import { waitForExist, getElements, click, getElement, getText } from '../app';
 
 
 export class ImportPage {
 
     public static getSourceOptions() {
 
-        return element(by.id('importSourceSelect')).all(by.css('select option'));
+        return getElements('#importSourceSelect option');
     };
 
 
-    public static clickSourceOption(index) {
+    public static async clickSourceOption(index) {
 
-        return this.getSourceOptions().get(index).click();
+        const sourceOptionElements = await this.getSourceOptions();
+        return click(sourceOptionElements[index]);
     };
 
 
-    public static getSourceOptionValue(index) {
+    public static async getSourceOptionValue(index) {
 
-        return this.getSourceOptions().get(index).getAttribute("value");
+        const sourceOptionElements = await this.getSourceOptions();
+        return sourceOptionElements[index].getAttribute('value');
     };
 
 
-    public static getOperationOptions() {
+    public static async getOperationOptions() {
 
-        browser.wait(EC.presenceOf(element(by.id('operationSelect'))), delays.ECWaitTime);
-        return element(by.id('operationSelect')).all(by.css('select option'));
+        await waitForExist('#operationSelect');
+        return getElements('#operationSelect option');
     };
 
 
-    public static clickOperationOption(index) {
+    public static async clickOperationOption(index) {
 
-        browser.wait(EC.presenceOf(this.getOperationOptions().get(index)), delays.ECWaitTime);
-        return this.getOperationOptions().get(index).click();
+        const operationOptionElements = await this.getOperationOptions();
+        return click(operationOptionElements[index]);
     };
 
 
     public static getImportURLInput() {
 
-        return element(by.id('importUrlInput'));
+        return getElement('#importUrlInput');
     };
 
 
     public static getMessageEl(index) {
 
-        return element(by.id('message-' + index));
+        return getElement('#message-' + index);
     };
 
 
-    public static getMessageText(index) {
+    public static async getMessageText(index) {
 
-        browser.wait(EC.presenceOf(this.getMessageEl(index)), delays.ECWaitTime);
-        return this.getMessageEl(index).getText();
+        return getText(await this.getMessageEl(index));
     };
 
 
     public static clickStartImportButton() {
 
-        browser.wait(EC.visibilityOf(element(by.id('importStartButton'))), delays.ECWaitTime);
-        return element(by.id('importStartButton')).click();
+        return click('#importStartButton');
     };
 
 
     public static getImportModal() {
 
-        return element(by.id('import-upload-modal'));
-    };
-
-
-    public static get() {
-
-        return browser.get('#/import/');
+        return getElement('#import-upload-modal');
     };
 }

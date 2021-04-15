@@ -1,8 +1,4 @@
-import {element, by, browser, protractor} from 'protractor';
-
-const EC = protractor.ExpectedConditions;
-const delays = require('../delays');
-const common = require('../common.js');
+import { click, getElements, waitForExist } from '../app';
 
 
 /**
@@ -13,8 +9,7 @@ export class DoceditImageTabPage {
 
     public static waitForCells() {
 
-        return browser.wait(EC.presenceOf(element(by.css('.cell'))), delays.ECWaitTime,
-            'Waiting for image cells.');
+        return waitForExist('.cell');
     }
 
 
@@ -22,13 +17,13 @@ export class DoceditImageTabPage {
 
     public static clickDeleteImages() {
 
-        return common.click(element(by.id('delete-images')));
+        return click('#delete-images');
     }
 
 
     public static clickInsertImage = function() {
 
-        common.click(element(by.id('create-depicts-relations-btn')));
+        return click('#create-depicts-relations-btn');
     };
 
 
@@ -36,6 +31,6 @@ export class DoceditImageTabPage {
 
     public static getCells() {
 
-        return element.all(by.css('.cell'));
+        return getElements('.cell');
     }
 }

@@ -1,12 +1,8 @@
-import {browser, by, element, protractor} from 'protractor';
+import { start, stop, waitForExist, resetApp, navigateTo, waitForNotExist, typeIn } from '../app';
 import {ImportPage} from './import.page';
 import {ResourcesPage} from '../resources/resources.page';
 import {NavbarPage} from '../navbar.page';
-import {MenuPage} from '../menu.page';
 
-const common = require('../common.js');
-const delays = require('../delays');
-const EC = protractor.ExpectedConditions;
 
 /**
  * @author Thomas Kleinke
@@ -14,54 +10,71 @@ const EC = protractor.ExpectedConditions;
  */
 describe('import --', () => {
 
-    beforeEach(() => {
+    beforeAll(async done => {
 
-        browser.sleep(1500);
-
-        MenuPage.navigateToSettings();
-        browser.sleep(1)
-            .then(() => common.resetApp());
-        NavbarPage.clickCloseNonResourcesTab();
-        NavbarPage.clickTab('project');
-        MenuPage.navigateToImport();
+        await start();
+        await waitForExist('#buttons-container'); // TODO Check for something less specific
+        done();
     });
 
 
-    const importIt = (url: string, operationOption: number = 0) => {
+    beforeEach(async done => {
 
-        expect(ImportPage.getSourceOptionValue(1)).toEqual('http');
-        ImportPage.clickSourceOption(1);
-        common.typeIn(ImportPage.getImportURLInput(), url);
-        ImportPage.clickOperationOption(operationOption);
-        ImportPage.clickStartImportButton();
-        browser.wait(EC.stalenessOf(ImportPage.getImportModal()), delays.ECWaitTime);
+        await navigateTo('settings');
+        await resetApp();
+        await NavbarPage.clickCloseNonResourcesTab();
+        await NavbarPage.clickTab('project');
+        await navigateTo('import');
+        done();
+    });
+
+
+    afterAll(async done => {
+
+        await stop();
+        done();
+    });
+
+
+    const performImport = async (url: string, operationOption: number = 0) => {
+
+        expect(await ImportPage.getSourceOptionValue(1)).toEqual('http');
+        await ImportPage.clickSourceOption(1);
+        await typeIn(await ImportPage.getImportURLInput(), url);
+        await ImportPage.clickOperationOption(operationOption);
+        await ImportPage.clickStartImportButton();
+        await waitForNotExist(await ImportPage.getImportModal());
     };
 
 
-    it('perform successful import', () => {
+    it('perform successful import', async done => {
 
-        importIt('./test-data/importer-test-ok.jsonl');
-        browser.sleep(delays.shortRest * 4);
+        await performImport('./test-data/importer-test-ok.jsonl');
 
-        NavbarPage.clickCloseNonResourcesTab();
-        ResourcesPage.clickHierarchyButton('importedTrench');
+        await NavbarPage.clickCloseNonResourcesTab();
+        await ResourcesPage.clickHierarchyButton('importedTrench');
 
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('obob1')), delays.ECWaitTime);
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('obob2')), delays.ECWaitTime);
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('obob3')), delays.ECWaitTime);
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('obob4')), delays.ECWaitTime);
+        await waitForExist(await ResourcesPage.getListItemEl('obob1'));
+        await waitForExist(await ResourcesPage.getListItemEl('obob2'));
+        await waitForExist(await ResourcesPage.getListItemEl('obob3'));
+        await waitForExist(await ResourcesPage.getListItemEl('obob4'));
+
+        done();
     });
 
 
-    it('err case', () => {
+    it('warn in case of an already existing resource', async done => {
 
-        importIt('./test-data/importer-test-constraint-violation.jsonl');
+        await performImport('./test-data/importer-test-constraint-violation.jsonl');
 
-        NavbarPage.awaitAlert('existiert bereits', false);
-        element(by.css('.alert button')).click();
-        NavbarPage.clickCloseNonResourcesTab();
-        ResourcesPage.clickHierarchyButton('S1');
+        await NavbarPage.awaitAlert('wurde nicht importiert, weil bereits eine Ressource ' +
+            'mit dem Bezeichner existiert', false);
+        await NavbarPage.clickCloseAllMessages();
+        await NavbarPage.clickCloseNonResourcesTab();
+        await ResourcesPage.clickHierarchyButton('S1');
 
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('SE0')), delays.ECWaitTime);
+        await waitForExist(await ResourcesPage.getListItemEl('SE0'));
+
+        done();
     });
 });

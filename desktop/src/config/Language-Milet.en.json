@@ -8,10 +8,14 @@
     },
     "identifier": {
       "label": "Name / ID (eindeutig)",
-      "description": "Unique Identifier of this ressource. If applicable, should use the milesian naming conventions; i.e. Area, Year, Trench...; e.g. for contexts: HU19.A.01 for Context 1 in Trench A in the year 2019 on Humeitepe."
+      "description": "Unique Identifier of this ressource. If applicable, should use the milesian naming conventions; i.e. Area, Year, Trench...; e.g. for contexts: HU19.A.01 for Context 1 in Trench A in the year 2019 on Humeitepe. (Omit Trench if not applicable.)"
+    },
+    "dimensionHeadHeight": {
+      "label": "Height of the Head",
+      "description": "Height of the Head from Crown to ??? "
     },
     "shortDescription": {
-      "label": "(short) secondary Title"
+      "label": "Short title"
     },
     "scale": {
       "label": "Scale"
@@ -24,8 +28,8 @@
       "label": "Origin of Surveying Data",
       "description": "How was the spatial data acquired?"
     },
-    "localization-description": {
-      "label": "Commentary on Surveying Data",
+    "localizationDescription": {
+      "label": "Description of Localization (if Surveying Data are missing)",
       "description": "Either enter a (topographical) description of localization, if only that exists, or record the point numbers or surveying data in the appropriate format."
     },
     "FotoNr": {
@@ -39,6 +43,14 @@
     "notes": {
       "label": "Notes",
       "description": "..."
+    },
+    "otherNotes": {
+      "label": "Notes",
+      "description": "..."
+    },
+    "quantificationOther": {
+      "label": "Other elements (not on form)",
+      "description": "Record other pottery fragments that cannot be entered into the form above - use this carefully and only if absolutely neccessary."
     }
   },
   "relations": {
@@ -50,6 +62,14 @@
     },
     "fills": {
       "label": "fills"
+    },
+    "wasFoundIn": {
+      "label": "was found in",
+      "description": "Building, Place or Survey they find came from."
+    },
+    "hasFinds": {
+      "label": "Contains Finds",
+      "description": "Objects that were found within this Building, Place or Survey. Please only use this for the Inventory of finds from older excavations such as the Steindepot-Records!"
     }
   },
   "categories": {
@@ -65,7 +85,7 @@
         },
         "contextFindProcessing": {
           "label": "Requests to Find Processing",
-          "description": "How should the contents of the context or unit be processed?"
+          "description": "State the precision with which the contents of the context or unit should be processed. This can be found on the second page of the paper form under the same heading."
         }
       }
     },    
@@ -74,71 +94,71 @@
       "fields": { 
         "sampleTaken": {
           "label": "Sample taken",
-          "description": "Has a sample been collected from this context? e.g. flotation, earth or charcoal"
-        },
-        "distinguishingCriteria": {
-          "label": "Distinguishing criteria (in relation to surrounding contexts)",
-          "description": "How has this context been distinguished from its surrounding material?"
+          "description": "'Yes' if a sample has been collected from the context, e.g. flotation, charcoal, etc.; 'No' if no sample has been taken."
         },
         "layerClassification": {
           "label": "Classification of Context",
-          "description": "What kind of context is it?"
-        },
-        "isNatural": {
-          "label": "Natural Occurence",
-          "description": "Is this context a naturally occuring layer ('Yes' for e.g erosion, 'no' if anthropogenous)"
+          "description": "Should be identical with the field '' from the paper form. If any terminology is used their often but not present in the database, please let us know."
         },
         "contextDescription": {
-          "label": "Description of Context",
-          "description": "See 'short description' on paper form"
+          "label": "Short Description",
+          "description": "Corresponds to the field 'short description' on the paper form."
+        },
+        "distinguishingCriteria": {
+          "label": "Distinguishing Criteria (in relation to surrounding contexts)",
+          "description": "Which criteria have been used to distinguish the context from its surrounding material? (Has to be interpolated from the short Description, there is no corresponding field on the paperform.)"
         },
         "soilType": {
           "label": "Soiltype",
-          "description": "What type of Soil is it? Elaborate with a thorough description in the text field below"
+          "description": "What main type of Soil is it? Elaborate with a thorough description in the text field for 'Colour / Soiltype / Consistency'."
         },
         "consistency": {
           "label": "Consistency",
-          "description": "Consistency of the soil"
+          "description": "Consistency of the soil. "
         },
         "layerSoilContentDesc": {
-          "label": "Soil Description",
-          "description": "See Paper form: Colour / Soiltype / Consistency"
+          "label": "Colour / Soiltype / Consistency",
+          "description": "Contents of the paper form: Colour / Soiltype / Consistency"
         },
         "layerColor0": {
-          "label": "Soil base colours",
-          "description": "select the main colour of the soil"
+          "label": "Soil base colours intensity",
+          "description": "Select the main colour of the soil together with 'Soil colour intensity'"
         },
         "layerColorIntensity": {
-          "label": "Soil colour intensity",
-          "description": "select the intensity of the soil colour"
+          "label": "Soil base colour intensity",
+          "description": "Select intensity of the soils base colour"
         },
         "layerInclusions": {
-          "label": "Inclusions",
-          "description": "Bodenbestandteile und Einschlüsse"
+          "label": "Material / Inclusions",
+          "description": "Select any material that is not a find but present in the soil. Addenda in the text field below."
         },
         "layerInclusionsDesc": {
-          "label": "Inclusions: Description and Addenda",
-          "description": "Einschlüsse: Ergänzungen"
+          "label": "Material / Inclusions: Description and Addenda",
+          "description": "Contents of the paper form 'Material / Inclusions'."
         },
         "layerFinds": {
           "label": "Finds (overview)",
-          "description": "Grober Überblick über die im Befund enthaltenen Funde"
+          "description": "An overview of the types of finds present in this context."
         },
         "layerFindsComplete": {
           "label": "Complete find collection",
-          "description": "Have all the finds of this context been handed to find processing (yes) or has only a sample been archives (no)."
+          "description": "Have all the finds of this context been handed to find processing (yes) or has only a sample been archives (no). (Present on paper form.)"
         },
         "layerFindsOther": {
-          "label": "Finds (Addenda)",
-          "description": "Grober Überblick über die im Befund enthaltenen Funde"
+          "label": "Other finds and special finds",
+          "description": "Addenda to 'Finds (overview'). Additionally add the inventory numbers of any special finds associated with this layer. (Additional Finds and Special Finds on the paper form.)"
+        },
+        "isNatural": {
+          "label": "Natural Occurence",
+          "description": "Is this context a naturally occuring layer ('Yes' for e.g erosion, 'no' if anthropogenous). No corresponding field on the paper form. Can be decided in post-processing."
         },
         "layerInterpretation": {
           "label": "Interpretation",
-          "description": "..."
+          "description": "Contents of 'Interpretation' on the paper form. Can be amended in post-processing."
         },
         "layerDatingIndication": {
           "label": "Dating Elements",
-          "description": "Elaborate on why the context was dated. See Dating in ..."
+          "description": "Elaborate on the basis of this contexts dating as recorded in the 'Time' tab under 'Period'. (See corresponding field on paper form.)"
         }
       }
     },
@@ -157,15 +177,15 @@
         },
         "workflow": {
           "label": "Workflow",
-          "description": "What have you dooooooneeee?"
+          "description": "What has already been done with this find?"
         },
         "OldInventoryNr": {
           "label": "Old Inventorynumber",
-          "description": "ID in the older Inventory"
+          "description": "One or many inventory number(s) from old inventory systems."
         },
         "MuseumInventoryNr": {
-          "label": "Museum Inventory (Museum Milet)",
-          "description": "Inventory-ID at Museum Milet"
+          "label": "Museum of Miletus Inventorynumber",
+          "description": "Inventory-ID at the Museum of Miletus"
         },
         "YearOfFind": {
           "label": "Year (in case of Altfund)",
@@ -174,82 +194,90 @@
       }
     },
     "Sculpture": {
+      "label": "Sculpture",
       "fields": {
-        "material": {
+        "reused": {
+          "label": "Reused / Reworked / Recarved",
+          "description": "Has this Statue been reused and / or recarved?"
+        },
+        "sculptureMaterial": {
           "label": "Material",
           "description": "The material the sculpture mainly consists of."
         },
-        "materialattr": {
+        "sculptureMaterialAttr": {
           "label": "Material: Details",
-          "description": "Beschreibung"
+          "description": "The specification of different variants of the scultprues Material."
         },
         "colour": {
           "label": "Material: Colour",
-          "description": "Farbe des Materials"
+          "description": "Main colours of the Sculptures material."
         },
-        "materialdescr": {
-          "label": "Material: Description",
-          "description": "Platz für zusätzliche Erläuterungen und Beschreibungen"
+        "sculptureMarbleType": {
+          "label": "Type of Marble"
         },
-        "bodypart": {
+        "materialDescription": {
+          "label": "Material: Description and Addenda",
+          "description": "More detailed description of the finds material and any addenda, e.g. other materials and their descriptions."
+        },
+        "sculptureBodypart": {
           "label": "Fragment of Sculpture",
           "description": "Which parts of the Sculpture are preserved?"
         },
-        "name": {
+        "sculptureBodypartOther": {
+          "label": "Other type of fragment",
+          "description": "If the type of fragment is not listed, you can enter it here."
+        },
+        "sculptureName": {
           "label": "Honorand",
-          "description": "Sofern bekannt ist hier der Name der von der Skulptur abgebildeten Person anzugeben."
+          "description": "If it is known, who is the person depicted in this sculpture?"
         },
-        "gender": {
+        "sculptureGender": {
           "label": "Gender",
-          "description": "Beschreibung"
+          "description": "Gender of the sculpture."
         },
-        "sctype": {
+        "sculptureType": {
           "label": "Broad category / Type",
-          "description": "Beschreibung"
+          "description": "Type or broad category the sculpture can be assigned to."
         },
-        "sctypeadd": {
-          "label": "Type: Notes",
-          "description": "Beschreibung"
+        "sculptureTypeDescription": {
+          "label": "Broad category / Type: Notes and Addenda",
+          "description": "Additional notes regarding the Type of this sculpture."
         },
-        "clothing": {
+        "sculptureClothing": {
           "label": "Clothing",
-          "description": "Kleidung"
+          "description": "Clothing visible on the sculpture."
         },
-        "clothingadd": {
-          "label": "Clothing: Notes",
-          "description": "Beschreibung"
+        "sculptureClothingDescription": {
+          "label": "Clothing: Addenda",
+          "description": "Additional information or descriptions of the Sculptures Clothing"
         },
-        "hairstyle": {
+        "sculptureHairstyle": {
           "label": "Hairstyle",
-          "description": "Beschreibung"
+          "description": ""
         },
-        "hairstyleadd": {
+        "sculptureHairstyleDescription": {
           "label": "Hairstyle: Notes",
-          "description": "Beschreibung"
+          "description": "Additional information or descriptions of the Sculptures hair."
         },
-        "beardstyle": {
+        "sculptureBeardstyle": {
           "label": "Beardstyle",
-          "description": "Beschreibung"
+          "description": ""
         },
-        "beardstyleadd": {
+        "sculptureBeardstyleDescription": {
           "label": "Beardstyle: Notes",
-          "description": "Beschreibung"
+          "description": "Additional information or descriptions of the Sculptures beard."
         },
-        "attributes": {
+        "sculptureAttributes": {
           "label": "Attributes",
-          "description": "Beschreibung"
+          "description": ""
         },
-        "attributesadd": {
+        "sculptureAttributesDescription": {
           "label": "Attributes: Notes",
-          "description": "Beschreibung"
+          "description": "Additional information or descriptions of the Sculptures attributes"
         },
-        "reused": {
-          "label": "Reused?",
-          "description": "Ist die Statue wiederverwendet bzw. nachbearbeitet?"
-        },
-        "headheight": {
-          "label": "Height of Head to Crown (in cm)",
-          "description": "Blergh"
+        "sculptureQuality": {
+          "label": "Quality of the worksmanship and sculpture",
+          "description": ""
         }
       }
     },
@@ -259,6 +287,267 @@
           "label": "View in direction of ...",
           "description": "Direction the Photograph was shot in."
         }
+      }
+    }
+  },
+  
+  "Quantification": {
+    "label": "Quantification",
+    "fields": {
+      "quantificationType": {
+        "label": "Type of Find",
+        "description": ""
+      },
+      "countTotal": {
+        "label": "Fragment Count (total)",
+        "description": ""
+      },
+      "weightTotal": {
+        "label": "Weight (total)",
+        "description": ""
+      },
+      "quantificationNotes": {
+        "label": "Remarks and Comments on Quantification",
+        "description": ""
+      }
+    }
+  },
+  "Pottery_Quantification_A": {
+    "label": "Quantification Pottery A",
+    "fields": {
+      "countArchitecturalCeramics": {
+        "label": "Architectural Ceramics (Fragment count)",
+        "description": ""
+      }, 
+      "weightArchitecturalCeramics": {
+        "label": "Architectural Ceramics (Weight in g)",
+        "description": ""
+      },
+      "countTransportamphorae": {
+        "label": "Transportamphorae (Fragment count)",
+        "description": ""
+      }, 
+      "weightTransportamphorae": {
+        "label": "Transportamphorae (Weight in g)",
+        "description": ""
+      },
+      "countHouseholdwares": {
+        "label": "Household pottery (Fragment count)",
+        "description": ""
+      }, 
+      "weightHouseholdwares": {
+        "label": "Household pottery (Weight in g)",
+        "description": ""
+      },
+      "countCookingwares": {
+        "label": "Cooking pottery (Fragment count)",
+        "description": ""
+      }, 
+      "weightCookingwares": {
+        "label": "Cooking pottery (Weight in g)",
+        "description": ""
+      },
+      "countStoragevessels": {
+        "label": "Storage vessels (Fragment count)",
+        "description": ""
+      }, 
+      "weightStoragevessels": {
+        "label": "Storage vessels (Weight in g)",
+        "description": ""
+      },
+      "countTablewares": {
+        "label": "Tablewares (Fragment count)",
+        "description": ""
+      }, 
+      "weightTablewares": {
+        "label": "Tablewares (Weight in g)",
+        "description": ""
+      },
+      "countFinepottery": {
+        "label": "Fine pottery (Fragment count)",
+        "description": ""
+      }, 
+      "weightFinepottery": {
+        "label": "Fine pottery (Weight in g)",
+        "description": ""
+      },
+      "countOilcontainers": {
+        "label": "Oil containers = Lekythoi, Unguentaria etc. (Fragment count)",
+        "description": ""
+      }, 
+      "weightOilcontainers": {
+        "label": "Oil containers = Lekythoi, Unguentaria etc. (Weight in g)",
+        "description": ""
+      },
+      "countTools": {
+        "label": "Tools = Lamps, Weights, Beehives etc. (Fragment count)",
+        "description": ""
+      }, 
+      "weightTools": {
+        "label": "Tools = Lamps, Weights, Beehives etc. (Weight in g)",
+        "description": ""
+      },
+      "countUnspecified": {
+        "label": "undetermined (Fragment count)",
+        "description": ""
+      }, 
+      "weightUnspecified": {
+        "label": "undetermined (Weight in g)",
+        "description": ""
+      }
+    }
+  },
+  "Pottery_Quantification_B": {
+    "label": "Quantification Pottery B",
+    "fields": {
+      "countTransportamphoraeRim": {
+        "label": "Transportamphorae (Rim fragments)",
+        "description": ""
+      }, 
+      "countTransportamphoraeBase": {
+        "label": "Transportamphorae (Base fragments)",
+        "description": ""
+      }, 
+      "countTransportamphoraeHandle": {
+        "label": "Transportamphorae (Handle fragments)",
+        "description": ""
+      }, 
+      "countHouseholdwaresRim": {
+        "label": "Household pottery (Rim fragments)",
+        "description": ""
+      }, 
+      "countHouseholdwaresBase": {
+        "label": "Household pottery (Base fragments)",
+        "description": ""
+      }, 
+      "countHouseholdwaresHandle": {
+        "label": "Household pottery (Handle fragments)",
+        "description": ""
+      },
+      "countCookingwaresRim": {
+        "label": "Cooking pottery (Rim fragments)",
+        "description": ""
+      }, 
+      "countCookingwaresBase": {
+        "label": "Cooking pottery (Base fragments)",
+        "description": ""
+      }, 
+      "countCookingwaresHandle": {
+        "label": "Cooking pottery (Handle fragments)",
+        "description": ""
+      }, 
+      "countStoragevesselsRim": {
+        "label": "Storage vessels (Rim fragments)",
+        "description": ""
+      },  
+      "countStoragevesselsBase": {
+        "label": "Storage vessels (Base fragments)",
+        "description": ""
+      },  
+      "countStoragevesselsHandle": {
+        "label": "Storage vessels (Handle fragments)",
+        "description": ""
+      }, 
+      "countTablewaresRim": {
+        "label": "Tablewares (Rim fragments)",
+        "description": ""
+      }, 
+      "countTablewaresBase": {
+        "label": "Tablewares (Base fragments)",
+        "description": ""
+      }, 
+      "countTablewaresHandle": {
+        "label": "Tablewares (Handle fragments)",
+        "description": ""
+      }, 
+      "countFinepotteryRim": {
+        "label": "Fine pottery (Rim fragments)",
+        "description": ""
+      }, 
+      "countFinepotteryBase": {
+        "label": "Fine pottery (Base fragments)",
+        "description": ""
+      }, 
+      "countFinepotteryHandle": {
+        "label": "Fine pottery (Handle fragments)",
+        "description": ""
+      }, 
+      "countOilcontainersRim": {
+        "label": "Öl = Lekythen, Unguentarien etc.",
+        "description": ""
+      }, 
+      "countOilcontainersBase": {
+        "label": "Oil containers = Lekythoi, Unguentaria etc. (Base fragments)",
+        "description": ""
+      }, 
+      "countOilcontainersHandle": {
+        "label": "Oil containers = Lekythoi, Unguentaria etc. (Handle fragments)",
+        "description": ""
+      }, 
+      "countLampsRim": {
+        "label": "Lamps (Rim fragments)",
+        "description": ""
+      }, 
+      "countLampsBase": {
+        "label": "Lamps (Base fragments)",
+        "description": ""
+      }, 
+      "countLampsHandle": {
+        "label": "Lamps (Handle fragments)",
+        "description": ""
+      }
+    }
+  },
+  "Impression": {
+    "label": "First Impression (Context)",
+    "fields": {
+      "infoFromField": {
+        "label": "Assessment of the context by the trench director",
+        "description": ""
+      },
+      "closedContext": {
+        "label": "closed Context",
+        "description": ""
+      },
+      "checkAgainstOtherContexts": {
+        "label": "(Possible) affiliation with other contexts",
+        "description": ""
+      },
+      "findProcessingWorkflow": {
+        "label": "Processing Workflow",
+        "description": ""
+      },
+      "workflowDone": {
+        "label": "Processing finished",
+        "description": ""
+      },
+      "relativeAmount": {
+        "label": "Relative amount of finds",
+        "description": ""
+      },
+      "relativeAmountCheck": {
+        "label": "Relative amount of finds",
+        "description": ""
+      },
+      "materialCondition": {
+        "label": "Condition (of finds)",
+        "description": ""
+      },
+      "fitsOtherContexts": {
+        "label": "Affiliation with other context as assessed by find processing",
+        "description": ""
+      },
+      "findSpectrum": {
+        "label": "Composition of form spectrum, quantitative relations",
+        "description": ""
+      },
+      "specialFinds": {
+        "label": "Special / remarkable forms and finds",
+        "description": ""
+      },
+      "generalNotes": {
+        "label": "Generalized first impression, comments",
+        "description": ""
       }
     }
   }

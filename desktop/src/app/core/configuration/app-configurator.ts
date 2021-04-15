@@ -679,6 +679,127 @@ export class AppConfigurator {
             });
         }
 
+        if (customConfigurationName === 'Milet') {
+            
+            (this.builtinCategories as any)['Quantification'] = {
+                color: '#c6dbef',
+                supercategory: true,
+                userDefinedSubcategoriesAllowed: true,
+                abstract: false,
+                fields: {}
+            };
+
+            (this.builtinCategories as any)['Building'] = {
+                userDefinedSubcategoriesAllowed: true,
+                parent: 'Operation',
+                fields: {
+                    gazId: {
+                    inputType: FieldDefinition.InputType.UNSIGNEDINT,
+                    group: Groups.POSITION
+                    }
+                }
+            };
+
+            (this.builtinCategories as any)['Find'] = {
+                supercategory: true,
+                userDefinedSubcategoriesAllowed: true,
+                fields: {
+                    instanceOf: {
+                        inputType: 'instanceOf',
+                        group: Groups.IDENTIFICATION
+                    },
+                    diameterPercentage: {
+                        inputType: FieldDefinition.InputType.UNSIGNEDFLOAT,
+                        group: Groups.DIMENSION
+                    },
+                }
+            };
+
+            (this.builtinCategories as any)['Impression'] = {
+                supercategory: false,
+                userDefinedSubcategoriesAllowed: false,
+                fields: {}
+            };
+
+            this.defaultRelations.push({
+                name: 'isRecordedIn',
+                label: '',
+                domain: ['Quantification:inherit', 'Impression'],
+                range: ['Trench:inherit']
+            });
+
+            this.defaultRelations.push({
+                name: 'liesWithin',
+                label: '',
+                domain: ['Find:inherit'],
+                range: ['Feature:inherit', 'Area:inherit', 'Quantification:inherit']
+            });
+
+            this.defaultRelations.push({
+                name: 'liesWithin',
+                label: '',
+                domain: ['Impression'],
+                range: ['Feature:inherit']
+            });
+
+            this.defaultRelations.push({
+                name: 'liesWithin',
+                label: '',
+                domain: ['Quantification:inherit'],
+                range: ['Feature:inherit', 'Quantification:inherit']
+            });
+         
+            this.defaultRelations.push({
+                name: 'fills',
+                inverse: 'isFilledBy',
+                label: '',
+                domain: ['Feature:inherit'],
+                range: ['Feature:inherit'],
+                sameMainCategoryResource: true
+            });
+
+            this.defaultRelations.push({
+                name: 'isFilledBy',
+                inverse: 'fills',
+                label: '',
+                domain: ['Feature:inherit'],
+                range: ['Feature:inherit'],
+                sameMainCategoryResource: true
+            });
+
+            this.defaultRelations.push({
+                name: 'wasFoundIn',
+                inverse: 'hasFinds',
+                label: '',
+                domain: ['Find:inherit'],
+                range: ['Building', 'Place', 'Survey', 'Trench']
+            });
+            
+            this.defaultRelations.push({
+                name: 'hasFinds',
+                inverse: 'wasFoundIn',
+                label: '',
+                domain: ['Building', 'Place', 'Survey', 'Trench'],
+                range: ['Find:inherit']
+            });
+
+            (this.defaultFields as any)['datingAddenda'] = {
+                visible: true,
+                editable: true,
+                mandatory: false,
+                inputType: 'text',
+                group: Groups.TIME
+            };
+
+            (this.defaultFields as any)['notes'] = {
+                visible: true,
+                editable: true,
+                mandatory: false,
+                inputType: 'text',
+                group: Groups.STEM
+            };
+        }
+
 
         return this.configLoader.go(
             configDirPath,

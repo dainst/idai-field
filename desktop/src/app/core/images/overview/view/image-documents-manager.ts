@@ -1,4 +1,5 @@
-import {Datastore, ImageDocument, Query} from 'idai-field-core';
+import * as tsfun from 'tsfun';
+import {Datastore, ImageDocument} from 'idai-field-core';
 import {ImagesState} from './images-state';
 
 
@@ -18,7 +19,7 @@ export class ImageDocumentsManager {
 
 
     constructor(private imagesState: ImagesState,
-                private datastore: Datastore) {} // TODO ImageDocuments
+                private datastore: Datastore) {}
 
 
     public getSelected = (): Array<ImageDocument> => this.selected;
@@ -76,15 +77,15 @@ export class ImageDocumentsManager {
     public async fetchDocuments(limit: number, offset?: number) {
 
         this.currentQueryId = new Date().toISOString();
+        const queryId = this.currentQueryId;
 
-        const query: Query = JSON.parse(JSON.stringify(this.imagesState.getQuery()));
+        const query = tsfun.clone(this.imagesState.getQuery()); // TODO review typing of clone
         if (offset) query.offset = offset;
         query.limit = limit;
-        query.id = this.currentQueryId;
         query.constraints['project:exist'] = 'UNKNOWN';
 
         try {
-            const {documents, totalCount, queryId} = await this.datastore.find(query);
+            const {documents, totalCount} = await this.datastore.find(query);
             if (queryId !== this.currentQueryId) return;
 
             this.documents = documents.map(ImageDocument.fromDocument);

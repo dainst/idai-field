@@ -1,4 +1,4 @@
-import {equal} from 'tsfun';
+import * as tsfun from 'tsfun';
 import {ImageDocument, Query, ObjectUtils} from 'idai-field-core';
 import {ImagesState} from './images-state';
 import {ImageDocumentsManager} from './image-documents-manager';
@@ -140,7 +140,7 @@ export class ImageOverviewFacade {
 
     public setCustomConstraints(customConstraints: { [name: string]: string }) {
 
-        if (equal(this.imagesState.getCustomConstraints())(customConstraints)) return;
+        if (tsfun.equal(this.imagesState.getCustomConstraints(), customConstraints)) return;
 
         this.currentOffset = 0;
 
@@ -155,7 +155,7 @@ export class ImageOverviewFacade {
 
         this.currentOffset = 0;
 
-        const query: Query = this.imagesState.getQuery();
+        const query = this.imagesState.getQuery();
         query.q = q;
         this.imagesState.setQuery(query);
 
@@ -167,7 +167,7 @@ export class ImageOverviewFacade {
 
         this.currentOffset = 0;
 
-        const query: Query = this.imagesState.getQuery();
+        const query = this.imagesState.getQuery();
         query.categories = categories;
         this.imagesState.setQuery(query);
 
@@ -206,6 +206,6 @@ export class ImageOverviewFacade {
 
     private setQueryConstraints() {
 
-        this.imagesState.getQuery().constraints = ObjectUtils.clone(this.getCustomConstraints());
+        this.imagesState.getQuery().constraints = tsfun.clone(this.getCustomConstraints());
     }
 }

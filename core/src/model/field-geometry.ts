@@ -1,5 +1,5 @@
 export interface FieldGeometry {
 
-    type: string;
+    type:  'Polygon' | 'MultiPolygon' | 'LineString' | 'MultiLineString' | 'Point' | 'MultiPoint';
     coordinates: Array<any>;
 }

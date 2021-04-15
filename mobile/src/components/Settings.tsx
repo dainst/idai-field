@@ -1,5 +1,5 @@
-import React, { ReactElement, useContext } from 'react';
 import { Center } from 'native-base';
+import React, { ReactElement, useContext } from 'react';
 import { StyleSheet } from 'react-native';
 import PouchDbContext from '../data/pouchdb/pouch-context';
 import ConnectPouchForm from './ConnectPouchForm';
@@ -16,7 +16,6 @@ const Settings = (): ReactElement => {
     };
 
     const connectHandler = (dbName: string, remoteUser: string, remotePassword: string) => {
-
         connect(dbName, remoteUser, remotePassword);
     };
 

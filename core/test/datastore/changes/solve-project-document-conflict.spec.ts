@@ -1,6 +1,6 @@
-import {sameset} from 'tsfun';
-import {Document} from 'idai-field-core';
-import {solveProjectDocumentConflict} from '../../../../../src/app/core/datastore/changes/solve-project-document-conflicts';
+import { sameset } from 'tsfun';
+import { solveProjectDocumentConflict } from '../../../src/datastore/changes/solve-project-document-conflicts';
+import { Document } from '../../../src/model/document';
 
 
 describe('solveProjectDocumentConflict', () => {

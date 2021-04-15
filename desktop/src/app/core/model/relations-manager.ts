@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { DatastoreErrors, Document, Datastore, FindIdsResult, FindResult, HierarchicalRelations, NewDocument, ObjectUtils, ON_RESOURCE_ID, Query, ResourceId, RESOURCE_DOT_ID } from 'idai-field-core';
+import { DatastoreErrors, Document, Datastore, FindIdsResult, FindResult, Relations, NewDocument, ObjectUtils, ON_RESOURCE_ID, Query, ResourceId, RESOURCE_DOT_ID } from 'idai-field-core';
 import {
     append, flow, isArray, isDefined, isNot, isUndefinedOrEmpty, on, sameset, subtract, to,
     undefinedOrEmpty
@@ -7,7 +7,7 @@ import {
 import { ProjectConfiguration } from '../configuration/project-configuration';
 import { SettingsProvider } from '../settings/settings-provider';
 import { ConnectedDocsWriter } from './connected-docs-writer';
-import RECORDED_IN = HierarchicalRelations.RECORDEDIN;
+import RECORDED_IN = Relations.Hierarchy.RECORDEDIN;
 
 
 @Injectable()
@@ -79,7 +79,7 @@ export class RelationsManager {
             if (returnSingleItem) return documents [0];
             if (options?.toplevel !== false) return documents;
 
-            return documents.filter(on(['resource', 'relations', HierarchicalRelations.LIESWITHIN], isNot(undefinedOrEmpty)));
+            return documents.filter(on(['resource', 'relations', Relations.Hierarchy.LIESWITHIN], isNot(undefinedOrEmpty)));
 
         } catch {
             if (returnSingleItem) throw DatastoreErrors.DOCUMENT_NOT_FOUND;

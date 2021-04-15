@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
-import { Document, Datastore, HierarchicalRelations, NewDocument, Query, Resource, ResourceId } from 'idai-field-core';
+import { Document, Datastore, Relations, NewDocument, Query, Resource, ResourceId } from 'idai-field-core';
 import { is, isnt, on } from 'tsfun';
 import { ProjectCategories } from '../../../configuration/project-categories';
 import { ProjectConfiguration } from '../../../configuration/project-configuration';
 import { Validations } from '../../../model/validations';
 import { Validator } from '../../../model/validator';
 import { ImportErrors as E } from '../import-errors';
-import RECORDED_IN = HierarchicalRelations.RECORDEDIN;
-import LIES_WITHIN = HierarchicalRelations.LIESWITHIN;
+import RECORDED_IN = Relations.Hierarchy.RECORDEDIN;
+import LIES_WITHIN = Relations.Hierarchy.LIESWITHIN;
 
 
 @Injectable()

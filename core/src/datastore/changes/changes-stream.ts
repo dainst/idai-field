@@ -1,13 +1,18 @@
-import { Injectable } from '@angular/core';
-import { DatastoreErrors, IndexFacade, isProjectDocument, ObserverUtil, PouchdbDatastore, ResourceId, RevisionId } from 'idai-field-core';
-import { Action, Document, Converter, DocumentCache } from 'idai-field-core';
 import { Observable, Observer } from 'rxjs';
 import { aMap } from 'tsfun';
-import { SettingsProvider } from '../../settings/settings-provider';
+import { ResourceId } from '../../constants';
+import { IndexFacade } from '../../index/index-facade';
+import { Action } from '../../model/action';
+import { Document, RevisionId } from '../../model/document';
+import { ObserverUtil } from '../../tools/observer-util';
+import { Converter } from '../converter';
+import { DatastoreErrors } from '../datastore-errors';
+import { DocumentCache } from '../document-cache';
+import { isProjectDocument } from '../helpers';
+import { PouchdbDatastore } from '../pouchdb/pouchdb-datastore';
 import { CAMPAIGNS, solveProjectDocumentConflict, STAFF } from './solve-project-document-conflicts';
 
 
-@Injectable()
 /**
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
@@ -29,7 +34,7 @@ export class ChangesStream {
                 private indexFacade: IndexFacade,
                 private documentCache: DocumentCache,
                 private categoryConverter: Converter,
-                private settingsProvider: SettingsProvider) {
+                private getUsername: () => string) {
 
         datastore.deletedNotifications().subscribe(document => {
 
@@ -45,7 +50,7 @@ export class ChangesStream {
 
             if (await ChangesStream.isRemoteChange(
                     document,
-                    this.settingsProvider.getSettings().username)
+                    this.getUsername())
                 || !this.documentCache.get(document.resource.id)
                 || document._conflicts !== undefined) {
 
@@ -140,7 +145,7 @@ export class ChangesStream {
         try {
             return await this.datastore.update(
                 document,
-                this.settingsProvider.getSettings().username,
+                this.getUsername(),
                 conflicts
             );
         } catch (errWithParams) {

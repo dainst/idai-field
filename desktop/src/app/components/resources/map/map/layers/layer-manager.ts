@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { ObjectUtils, FieldDocument, ImageDocument, ImageRelationsC as ImageRelations, moveInArray, Datastore } from 'idai-field-core';
+import { ObjectUtils, FieldDocument, ImageDocument, Relations, moveInArray, Datastore } from 'idai-field-core';
 import { Document } from 'idai-field-core';
-import { flatten, set, subtract, to } from 'tsfun';
+import * as tsfun from 'tsfun';
 import { RelationsManager } from '../../../../../core/model/relations-manager';
 import { ViewFacade } from '../../../../../core/resources/view/view-facade';
 
@@ -50,7 +50,7 @@ export class LayerManager {
 
     public getLayerGroups = () => this.layerGroups;
 
-    public getLayers = () => flatten(this.layerGroups.map(layerGroup => layerGroup.layers));
+    public getLayers = () => tsfun.flatten(this.layerGroups.map(layerGroup => layerGroup.layers));
 
     public isInEditing = (group: LayerGroup) => group === this.layerGroupInEditing;
 
@@ -79,8 +79,8 @@ export class LayerManager {
     public toggleLayer(resourceId: string) {
 
         this.activeLayerIds = this.isActiveLayer(resourceId) ?
-            subtract([resourceId])(this.activeLayerIds) :
-            set(this.activeLayerIds.concat([resourceId]));
+            tsfun.subtract([resourceId])(this.activeLayerIds) :
+            tsfun.set(this.activeLayerIds.concat([resourceId]));
 
         this.viewFacade.setActiveLayersIds(this.activeLayerIds);
     }
@@ -95,10 +95,10 @@ export class LayerManager {
 
         const layersToRemoveIds: string[] = group.layers.filter(layer => {
             return this.isActiveLayer(layer.resource.id)
-                && !document.resource.relations[ImageRelations.HASMAPLAYER]?.includes(layer.resource.id);
-        }).map(to(['resource','id']));
+                && !document.resource.relations[Relations.Image.HASMAPLAYER]?.includes(layer.resource.id);
+        }).map(tsfun.to(['resource','id']));
 
-        this.viewFacade.setActiveLayersIds(subtract(layersToRemoveIds)(this.activeLayerIds));
+        this.viewFacade.setActiveLayersIds(tsfun.subtract(layersToRemoveIds)(this.activeLayerIds));
     }
 
 
@@ -131,7 +131,7 @@ export class LayerManager {
         if (!this.layerGroupInEditing) return;
 
         const relations: string[]
-            = this.originalLayerGroupInEditing.document.resource.relations[ImageRelations.HASMAPLAYER] || [];
+            = this.originalLayerGroupInEditing.document.resource.relations[Relations.Image.HASMAPLAYER] || [];
         this.viewFacade.setActiveLayersIds(this.activeLayerIds.filter(id => relations.includes(id)));
 
         this.layerGroups[this.layerGroups.indexOf(this.layerGroupInEditing)] = this.originalLayerGroupInEditing;
@@ -144,10 +144,10 @@ export class LayerManager {
 
         if (!this.layerGroupInEditing) return;
 
-        const layerIds: string[] = this.layerGroupInEditing.document.resource.relations[ImageRelations.HASMAPLAYER] || [];
+        const layerIds: string[] = this.layerGroupInEditing.document.resource.relations[Relations.Image.HASMAPLAYER] || [];
         const newLayerIds: string[] = newLayers.map(layer => layer.resource.id);
         this.layerGroupInEditing.layers = this.layerGroupInEditing.layers.concat(newLayers);
-        this.layerGroupInEditing.document.resource.relations[ImageRelations.HASMAPLAYER] = layerIds.concat(newLayerIds);
+        this.layerGroupInEditing.document.resource.relations[Relations.Image.HASMAPLAYER] = layerIds.concat(newLayerIds);
     }
 
 
@@ -155,14 +155,14 @@ export class LayerManager {
 
         if (!this.layerGroupInEditing) return;
 
-        this.layerGroupInEditing.document.resource.relations[ImageRelations.HASMAPLAYER]
-            = this.layerGroupInEditing.document.resource.relations[ImageRelations.HASMAPLAYER].filter(id => {
+        this.layerGroupInEditing.document.resource.relations[Relations.Image.HASMAPLAYER]
+            = this.layerGroupInEditing.document.resource.relations[Relations.Image.HASMAPLAYER].filter(id => {
                 return id !== layerToRemove.resource.id;
             });
         this.layerGroupInEditing.layers = this.layerGroupInEditing.layers.filter(layer => layer !== layerToRemove);
 
         if (this.isActiveLayer(layerToRemove.resource.id)) {
-            this.viewFacade.setActiveLayersIds(subtract([layerToRemove.resource.id])(this.activeLayerIds));
+            this.viewFacade.setActiveLayersIds(tsfun.subtract([layerToRemove.resource.id])(this.activeLayerIds));
         }
     }
 
@@ -171,7 +171,7 @@ export class LayerManager {
 
         if (!this.layerGroupInEditing) return;
 
-        const relations: string[] = this.layerGroupInEditing.document.resource.relations[ImageRelations.HASMAPLAYER];
+        const relations: string[] = this.layerGroupInEditing.document.resource.relations[Relations.Image.HASMAPLAYER];
 
         moveInArray(this.layerGroupInEditing.layers, originalIndex, targetIndex);
         moveInArray(relations, originalIndex, targetIndex);
@@ -219,8 +219,8 @@ export class LayerManager {
 
     private async fetchLinkedLayers(document: FieldDocument): Promise<Array<ImageDocument>> {
 
-        return Document.hasRelations(document, ImageRelations.HASMAPLAYER)
-            ? (await this.datastore.getMultiple(document.resource.relations[ImageRelations.HASMAPLAYER])).map(ImageDocument.fromDocument)
+        return Document.hasRelations(document, Relations.Image.HASMAPLAYER)
+            ? (await this.datastore.getMultiple(document.resource.relations[Relations.Image.HASMAPLAYER])).map(ImageDocument.fromDocument)
             : [];
     }
 
@@ -229,8 +229,8 @@ export class LayerManager {
                                              oldActiveLayerIds: string[]): ListDiffResult {
 
         return {
-            removed: subtract(newActiveLayerIds)(oldActiveLayerIds),
-            added: subtract(oldActiveLayerIds)(newActiveLayerIds)
+            removed: tsfun.subtract(newActiveLayerIds)(oldActiveLayerIds),
+            added: tsfun.subtract(oldActiveLayerIds)(newActiveLayerIds)
         };
     }
 }

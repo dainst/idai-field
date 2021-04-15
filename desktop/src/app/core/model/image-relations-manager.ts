@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Category, Document, Datastore, FieldDocument, ImageDocument, ImageRelationsC as ImageRelations, ObjectUtils, ON_RESOURCE_ID, ResourceId, toResourceId, Forest } from 'idai-field-core';
+import { Category, Document, Datastore, FieldDocument, ImageDocument, Relations, ObjectUtils, ON_RESOURCE_ID, ResourceId, toResourceId, Forest } from 'idai-field-core';
 import { flatten, includedIn, isDefined, isNot, on, separate, set, subtract, to } from 'tsfun';
 import { ProjectCategories } from '../configuration/project-categories';
 import { ProjectConfiguration } from '../configuration/project-configuration';
 import { Imagestore } from '../images/imagestore/imagestore';
 import { RelationsManager } from './relations-manager';
-import DEPICTS = ImageRelations.DEPICTS;
-import ISDEPICTEDIN = ImageRelations.ISDEPICTEDIN;
+import DEPICTS = Relations.Image.DEPICTS;
+import ISDEPICTEDIN = Relations.Image.ISDEPICTEDIN;
 
 
 export module ImageRelationsManagerErrors {

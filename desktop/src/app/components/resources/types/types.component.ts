@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Imagestore } from '../../../core/images/imagestore/imagestore';
-import { Document, Datastore, FieldDocument, ImageRelationsC as ImageRelations, SyncService, SyncStatus, TypeRelations } from 'idai-field-core';
+import { Document, Datastore, FieldDocument, Relations, SyncService, SyncStatus } from 'idai-field-core';
 import { curry, filter, flatten, flow, isnt, Map, map, set, take } from 'tsfun';
 import { makeLookup } from '../../../../../../core/src/tools/transformers';
 import { ProjectCategories } from '../../../core/configuration/project-categories';
@@ -172,7 +172,7 @@ export class TypesComponent extends BaseList implements OnChanges {
 
     public getLinkedSubtype(document: FieldDocument): FieldDocument|undefined {
 
-        if (!Document.hasRelations(document, TypeRelations.INSTANCEOF)) return undefined;
+        if (!Document.hasRelations(document, Relations.Type.INSTANCEOF)) return undefined;
 
         for (const typeId of document.resource.relations.isInstanceOf) {
             const type = this.subtypes[typeId];
@@ -272,8 +272,8 @@ export class TypesComponent extends BaseList implements OnChanges {
 
         const linkedResourceIds: string[] = flow(
             [this.mainDocument].concat(Object.values(this.subtypes)),
-            filter(curry(Document.hasRelations, TypeRelations.HASINSTANCE)),
-            map(document => document.resource.relations[TypeRelations.HASINSTANCE]),
+            filter(curry(Document.hasRelations, Relations.Type.HASINSTANCE)),
+            map(document => document.resource.relations[Relations.Type.HASINSTANCE]),
             flatten(),
             set as any // TODO any
         );
@@ -303,8 +303,8 @@ export class TypesComponent extends BaseList implements OnChanges {
 
     private getLinkedImageIds(document: FieldDocument): string[] {
 
-        if (Document.hasRelations(document, ImageRelations.ISDEPICTEDIN)) {
-            return [document.resource.relations[ImageRelations.ISDEPICTEDIN][0]];
+        if (Document.hasRelations(document, Relations.Image.ISDEPICTEDIN)) {
+            return [document.resource.relations[Relations.Image.ISDEPICTEDIN][0]];
         } else if (TypesComponent.isCatalogOrType(document)) {
             return this.getImageIdsOfLinkedResources(document);
         } else {

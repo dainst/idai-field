@@ -25,12 +25,6 @@ export { NewImageResource } from './new-image-resource';
 export { NewResource } from './new-resource';
 export { OptionalRange } from './optional-range';
 export { Query } from './query';
-export { HierarchicalRelations, 
-    ImageRelations as ImageRelationsC /*
-        TODO the name clash here is between the ImageRelation constants and the ImageRelations of ImageDocument. They clearly relate, so we maybe should move the constants into Document and other models
-    */
-    , 
-    PARENT, PositionRelations, SAME_AS, TimeRelations, TypeRelations, UNIDIRECTIONAL_RELATIONS } from './relation-constants';
 export { RelationDefinition } from './relation-definition';
 export { Relations, relationsEquivalent } from './relations';
 export { Resource } from './resource';

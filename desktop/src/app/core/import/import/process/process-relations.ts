@@ -10,15 +10,14 @@ import {
 import {Document, NewDocument, Relations} from 'idai-field-core';
 import {ImportValidator} from './import-validator';
 import {ImportErrors as E} from '../import-errors';
-import {HierarchicalRelations} from 'idai-field-core';
 import {Get, Id} from '../types';
 import {completeInverseRelations} from './complete-inverse-relations';
 import {ImportOptions} from '../import-documents';
 import {InverseRelationsMap} from '../../../configuration/inverse-relations-map';
 import {makeLookups} from './make-lookups';
 import {inferRecordedIns} from './infer-recorded-ins';
-import RECORDEDIN = HierarchicalRelations.RECORDEDIN;
-import LIESWITHIN = HierarchicalRelations.LIESWITHIN;
+import RECORDEDIN = Relations.Hierarchy.RECORDEDIN;
+import LIESWITHIN = Relations.Hierarchy.LIESWITHIN;
 
 
 /**

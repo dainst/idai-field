@@ -2,7 +2,7 @@ import { Center, View } from 'native-base';
 import React, { ReactElement, useContext } from 'react';
 import { StyleSheet } from 'react-native';
 import AppHeader from '../components/AppHeader';
-import Map from '../components/Map';
+import Map from '../components/Map/Map';
 import Settings from '../components/Settings';
 import PouchDbContext from '../data/pouchdb/pouch-context';
 

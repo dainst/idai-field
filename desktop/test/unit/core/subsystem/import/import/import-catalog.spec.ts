@@ -1,6 +1,5 @@
 import {
-    createDocuments, HierarchicalRelations,
-    ImageRelationsC as ImageRelations, NiceDocs, TypeRelations
+    createDocuments, NiceDocs, Relations
 } from 'idai-field-core';
 import {
     buildImportCatalog,
@@ -60,10 +59,10 @@ describe('subsystem/import/importCatalog', () => {
         ];
         await helpers.createDocuments(documents, 'imported');
         await helpers.updateDocument('t1', document => {
-            document.resource.relations[TypeRelations.HASINSTANCE] = ['f1'];
+            document.resource.relations[Relations.Type.HASINSTANCE] = ['f1'];
         });
         await helpers.updateDocument('f1', document => {
-            document.resource.relations[TypeRelations.INSTANCEOF] = ['t1'];
+            document.resource.relations[Relations.Type.INSTANCEOF] = ['t1'];
         });
 
         const documentsLookup = createDocuments(documents);
@@ -93,7 +92,7 @@ describe('subsystem/import/importCatalog', () => {
 
         helpers.expectImagesDontExist('i1');
         const newDocument = await app.datastore.get('t1');
-        expect(newDocument.resource.relations[ImageRelations.ISDEPICTEDIN]).toBeUndefined();
+        expect(newDocument.resource.relations[Relations.Image.ISDEPICTEDIN]).toBeUndefined();
         done();
     });
 
@@ -107,7 +106,7 @@ describe('subsystem/import/importCatalog', () => {
 
         await helpers.createDocuments(documents, 'imported');
         await helpers.updateDocument('t1', document => {
-            document.resource.relations[TypeRelations.HASINSTANCE] = ['F1'];
+            document.resource.relations[Relations.Type.HASINSTANCE] = ['F1'];
         });
 
         const documentsLookup = createDocuments(documents);
@@ -238,10 +237,10 @@ describe('subsystem/import/importCatalog', () => {
             ['i2', 'Image']
         ]);
 
-        catalog['i1'].resource.relations[ImageRelations.DEPICTS] = ['tc1'];
-        catalog['i2'].resource.relations[ImageRelations.DEPICTS] = ['t1'];
-        catalog['tc1'].resource.relations[ImageRelations.ISDEPICTEDIN] = ['i2'];
-        catalog['t1'].resource.relations[ImageRelations.ISDEPICTEDIN] = ['i1'];
+        catalog['i1'].resource.relations[Relations.Image.DEPICTS] = ['tc1'];
+        catalog['i2'].resource.relations[Relations.Image.DEPICTS] = ['t1'];
+        catalog['tc1'].resource.relations[Relations.Image.ISDEPICTEDIN] = ['i2'];
+        catalog['t1'].resource.relations[Relations.Image.ISDEPICTEDIN] = ['i1'];
 
         const result = await importCatalog(Object.values(catalog));
         expect(result.successfulImports).toBe(0);
@@ -257,7 +256,7 @@ describe('subsystem/import/importCatalog', () => {
             ['t1', 'Type'],
         ]);
 
-        catalog['t1'].resource.relations[HierarchicalRelations.LIESWITHIN] = ['c1'];
+        catalog['t1'].resource.relations[Relations.Hierarchy.LIESWITHIN] = ['c1'];
 
         const result = await importCatalog(Object.values(catalog));
         expect(result.successfulImports).toBe(0);

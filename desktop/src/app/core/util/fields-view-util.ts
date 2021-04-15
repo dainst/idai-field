@@ -1,9 +1,9 @@
 import {Resource} from 'idai-field-core';
-import {FieldResource, Labelled, Named, RelationDefinition, Category, Groups, BaseGroup, FieldDefinition} from 'idai-field-core';
+import {FieldResource, Labelled, Named, RelationDefinition, Category, Groups, BaseGroup, FieldDefinition, Relations} from 'idai-field-core';
 import {ValuelistUtil} from './valuelist-util';
 import {compose, flow, assoc, lookup, and, includedIn, isNot, filter, Filter, map, isString, Map, on, to, undefinedOrEmpty,
     Predicate, or, is, empty, equal} from 'tsfun';
-import {HierarchicalRelations, ImageRelationsC as ImageRelations, ValuelistDefinition} from 'idai-field-core';
+import {ValuelistDefinition} from 'idai-field-core';
 import {ProjectConfiguration} from '../configuration/project-configuration';
 
 
@@ -65,9 +65,9 @@ export module FieldsViewUtil {
         return filter(
             on(Named.NAME,
                 and(
-                    isNot(includedIn(HierarchicalRelations.ALL)),
-                    isNot(equal(ImageRelations.ISDEPICTEDIN)),
-                    isNot(equal(ImageRelations.HASMAPLAYER)),
+                    isNot(includedIn(Relations.Hierarchy.ALL)),
+                    isNot(equal(Relations.Image.ISDEPICTEDIN)),
+                    isNot(equal(Relations.Image.HASMAPLAYER)),
                     compose(lookup(resource.relations), isNot(undefinedOrEmpty))
                 )
             )

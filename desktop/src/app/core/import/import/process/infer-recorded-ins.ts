@@ -1,9 +1,9 @@
 import {Document} from 'idai-field-core';
 import {Get, Id, IdMap} from '../types';
 import {Either, isNot, isUndefinedOrEmpty, sameset, undefinedOrEmpty} from 'tsfun';
-import {HierarchicalRelations} from 'idai-field-core';
-import LIESWITHIN = HierarchicalRelations.LIESWITHIN;
-import RECORDEDIN = HierarchicalRelations.RECORDEDIN;
+import {Relations} from 'idai-field-core';
+import LIESWITHIN = Relations.Hierarchy.LIESWITHIN;
+import RECORDEDIN = Relations.Hierarchy.RECORDEDIN;
 
 /**
  * Sets RECORDED_IN relations in documents, as inferred from LIES_WITHIN.

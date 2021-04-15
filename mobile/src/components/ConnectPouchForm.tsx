@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
 import { Button, Center, Input, Stack, Text } from 'native-base';
+import React, { useState } from 'react';
 import { Keyboard, StyleSheet } from 'react-native';
 
 interface ConnectPouchFormProps {
@@ -23,28 +23,33 @@ const ConnectPouchForm: React.FC<ConnectPouchFormProps> = ({ dbSetupHandler }) =
     return (
         <Center>
             <Text>Connect to project</Text>
-            <Stack>
+            <Stack width={ 400 } m={ 2 }>
                 <Input placeholder="User"
                     value={ remoteUser }
                     onChange={ e => setRemoteUser(e.nativeEvent.text) }
                     autoCapitalize="none"
                     autoCorrect={ false }
+                    m={ 1 }
                 />
                 <Input placeholder="Project"
                     value={ dbName }
                     onChange={ e => setDbName(e.nativeEvent.text) }
                     autoCapitalize="none"
                     autoCorrect={ false }
+                    m={ 1 }
                 />
                 <Input placeholder="Password"
                     value={ password }
                     onChange={ e => setPassword(e.nativeEvent.text) }
                     autoCapitalize="none"
                     autoCorrect={ false }
+                    m={ 1 }
                 />
-                <Button info onPress={ connectionHandler } style={ styles.connectBtn }>
-                    <Text>Connect</Text>
-                </Button>
+                <Center m={ 2 }>
+                    <Button info onPress={ connectionHandler } style={ styles.connectBtn }>
+                        <Text>Connect</Text>
+                    </Button>
+                </Center>
         </Stack>
         </Center>
     );

@@ -1,11 +1,11 @@
 import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import * as tsfun from 'tsfun';
-import {FieldDocument, Category, Query, Datastore} from 'idai-field-core';
+import {FieldDocument, Category, Query, Datastore, Constraint} from 'idai-field-core';
 import {Loading} from './loading';
 import {AngularUtility} from '../../angular/angular-utility';
 import {Messages} from '../messages/messages';
-import { GetConstraints, getDocumentSuggestions } from '../../core/widgets/get-document-suggestions';
+import { getDocumentSuggestions } from '../../core/widgets/get-document-suggestions';
 
 
 @Component({
@@ -20,7 +20,7 @@ import { GetConstraints, getDocumentSuggestions } from '../../core/widgets/get-d
 export class DocumentPickerComponent implements OnChanges {
 
     @Input() filterOptions: Array<Category>;
-    @Input() getConstraints: GetConstraints;
+    @Input() getConstraints: () => Promise<{ [name: string]: string|Constraint }>;;
     @Input() showProjectOption: boolean = false;
 
     @Output() documentSelected: EventEmitter<FieldDocument> = new EventEmitter<FieldDocument>();
@@ -100,12 +100,9 @@ export class DocumentPickerComponent implements OnChanges {
 
         this.currentQueryId = new Date().toISOString();
         const queryId = this.currentQueryId;
-
+        const query = tsfun.update('constraints', await this.getConstraints(), this.query);
         try {
-            const documents = await getDocumentSuggestions(
-                this.datastore,
-                this.getConstraints,
-                this.query);
+            const documents = await getDocumentSuggestions(this.datastore, query);
             if (this.currentQueryId === queryId) this.documents = this.filterDocuments(documents);
 
         } catch (msgWithParams) {

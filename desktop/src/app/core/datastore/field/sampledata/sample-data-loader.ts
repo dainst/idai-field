@@ -104,7 +104,7 @@ export class SampleDataLoader {
             try {
                 const project = await db.get('project');
                 await db.remove('project', project._rev);
-            } catch (_) {
+            } catch {
                 // Ignore errors
             }
         }

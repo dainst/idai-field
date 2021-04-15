@@ -38,7 +38,7 @@ export module NavigationPath {
     export function getSelectedSegment(navPath: NavigationPath): NavigationPathSegment {
 
         return navPath.segments
-            .find(on(['document','resource','id'], is(navPath.selectedSegmentId))) as NavigationPathSegment;
+            .find(on(['document', 'resource', 'id'], is(navPath.selectedSegmentId))) as NavigationPathSegment;
     }
 
 
@@ -176,7 +176,7 @@ export module NavigationPath {
             return true;
         }
 
-        return (!navPath.selectedSegmentId && operationId != undefined
+        return (!navPath.selectedSegmentId && operationId !== undefined
             && Document.hasRelationTarget(document, 'isRecordedIn',
                 operationId)
             && !Document.hasRelations(document, 'liesWithin'));
@@ -229,7 +229,7 @@ export module NavigationPath {
         return oldSegments.map(toResourceId).includes(newSelectedSegmentDoc.resource.id)
             ? oldSegments
             : (oldSelectedSegmentId
-                    ? takeUntil(on(['document','resource','id'], is(oldSelectedSegmentId)))(oldSegments)
+                    ? takeUntil(on(['document', 'resource', 'id'], is(oldSelectedSegmentId)))(oldSegments)
                     : []
             ).concat([{ document: newSelectedSegmentDoc, q: '', categories: [] }]) as NavigationPathSegment[];
     }

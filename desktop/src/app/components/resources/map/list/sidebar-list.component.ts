@@ -6,7 +6,6 @@ import {Loading} from '../../../widgets/loading';
 import {BaseList} from '../../base-list';
 import {ContextMenuAction} from '../../widgets/context-menu.component';
 import {ViewFacade} from '../../../../core/resources/view/view-facade';
-import {NavigationPath} from '../../../../core/resources/view/state/navigation-path';
 import {NavigationService} from '../../../../core/resources/navigation/navigation-service';
 import {ContextMenu} from '../../widgets/context-menu';
 import {MenuContext, MenuService} from '../../../menu-service';
@@ -172,7 +171,7 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
         if (!this.contextMenu.position) return;
 
         let target = event.target;
-        let inside: boolean = false;
+        let inside = false;
 
         do {
             if (target.id === 'context-menu'
@@ -193,8 +192,8 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
     private selectBetween(document1: FieldDocument, document2: FieldDocument) {
 
         const documents: Array<FieldDocument> = this.viewFacade.getDocuments();
-        const index1: number = documents.indexOf(document1);
-        const index2: number = documents.indexOf(document2);
+        const index1 = documents.indexOf(document1);
+        const index2 = documents.indexOf(document2);
 
         for (let i = Math.min(index1, index2); i <= Math.max(index1, index2); i++) {
             const document: FieldDocument = documents[i];
@@ -217,18 +216,18 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
 
     private async openChildCollection() {
 
-        const selectedDocument: FieldDocument|undefined = this.selectedDocument;
+        const selectedDocument = this.selectedDocument;
         if (selectedDocument) await this.navigationService.moveInto(selectedDocument);
     }
 
 
     private async goToUpperHierarchyLevel() {
 
-        const navigationPath: NavigationPath = this.viewFacade.getNavigationPath();
+        const navigationPath = this.viewFacade.getNavigationPath();
         if (!navigationPath.selectedSegmentId || navigationPath.segments.length === 0) return;
 
         const newSegmentIndex: number = navigationPath.segments
-            .map(to('document.resource.id'))
+            .map(to(['document', 'resource', 'id']))
             .indexOf(navigationPath.selectedSegmentId) - 1;
 
         await this.navigationService.moveInto(

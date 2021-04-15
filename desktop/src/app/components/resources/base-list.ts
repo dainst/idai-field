@@ -35,7 +35,7 @@ export class BaseList {
 
     public getCurrentFilterCategory()  {
 
-        const filterCategories: string[] = this.viewFacade.getFilterCategories();
+        const filterCategories = this.viewFacade.getFilterCategories();
         return filterCategories && filterCategories.length > 0 ? filterCategories[0] : undefined;
     }
 
@@ -67,7 +67,8 @@ export class BaseList {
 
         setTimeout(() => {
             if (doc && !this.isVisible(doc)) {
-                const index: number = this.viewFacade.getDocuments().indexOf(doc);
+                const index = this.viewFacade.getDocuments()
+                    .findIndex(document => document.resource.id === doc.resource.id);
                 this.scrollViewport.scrollToIndex(index, 'auto');
             }
         }, 0);

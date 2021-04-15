@@ -1,6 +1,6 @@
 import {Observable, Observer} from 'rxjs';
 import {Document} from 'idai-field-core';
-import {FieldDocument, RelationDefinition, Category, ObserverUtil} from 'idai-field-core';
+import {FieldDocument, Category, ObserverUtil} from 'idai-field-core';
 import {ProjectConfiguration} from '../../configuration/project-configuration';
 import {ViewFacade} from '../view/view-facade';
 import {RoutingService} from '../../../components/routing-service';
@@ -68,7 +68,7 @@ export class NavigationService {
 
         return (this.projectConfiguration
             .getRelationDefinitionsForRangeCategory(document.resource.category)
-            .map((_: RelationDefinition) => _.name)
+            .map(relationDefinition => relationDefinition.name)
             .indexOf('liesWithin') !== -1);
     }
 
@@ -104,7 +104,7 @@ export class NavigationService {
 
         return operationCategory !== undefined && operationCategory.children !== undefined
             && operationCategory.children
-                .map((category: Category) => category.name)
+                .map(category => category.name)
                 .includes(document.resource.category);
     }
 }

@@ -20,7 +20,7 @@ import { getDocumentSuggestions } from '../../core/widgets/get-document-suggesti
 export class DocumentPickerComponent implements OnChanges {
 
     @Input() filterOptions: Array<Category>;
-    @Input() getConstraints: () => Promise<{ [name: string]: string|Constraint }>;;
+    @Input() getConstraints: () => Promise<{ [name: string]: string|Constraint }>;
     @Input() showProjectOption: boolean = false;
 
     @Output() documentSelected: EventEmitter<FieldDocument> = new EventEmitter<FieldDocument>();
@@ -100,7 +100,8 @@ export class DocumentPickerComponent implements OnChanges {
 
         this.currentQueryId = new Date().toISOString();
         const queryId = this.currentQueryId;
-        const query = tsfun.update('constraints', await this.getConstraints(), this.query);
+        const constraints = this.getConstraints ? await this.getConstraints() : undefined;
+        const query = tsfun.update('constraints', constraints, this.query);
         try {
             const documents = await getDocumentSuggestions(this.datastore, query);
             if (this.currentQueryId === queryId) this.documents = this.filterDocuments(documents);

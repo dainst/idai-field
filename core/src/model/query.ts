@@ -19,7 +19,6 @@ import {Constraint} from './constraint';
  *   documents, only the first documents are returned.
  * @property offset
  * @property sort
- * @property id an optional id used to attribute find results to a query
  */
 export interface Query {
 
@@ -32,7 +31,6 @@ export interface Query {
         mode?: 'default'|'exactMatchFirst'|'none',
         matchCategory?: string
     };
-    id?: string; // TODO remove, see for image-picker.component for why it is not necessary
 }
 
 

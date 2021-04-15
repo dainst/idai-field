@@ -27,7 +27,7 @@ describe('subsystem/getDocumentSuggestions', () => {
         const documents  = await getDocumentSuggestions(
             datastore,
             undefined,
-            { id: '1', categories: ['Feature'] }, /* TODO why do we need to specify the category? */
+            { categories: ['Feature'] }, /* TODO why do we need to specify the category? */
         );
         expect(documents.length).toBe(1);
         done();
@@ -41,7 +41,7 @@ describe('subsystem/getDocumentSuggestions', () => {
         const documents = await getDocumentSuggestions(
             datastore,
             undefined,
-            { id: '1', categories: ['Feature'] },
+            { categories: ['Feature'] },
         );
         expect(documents.length).toBe(0);
         done();

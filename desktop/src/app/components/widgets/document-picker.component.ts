@@ -105,7 +105,7 @@ export class DocumentPickerComponent implements OnChanges {
             const documents = await getDocumentSuggestions(
                 this.datastore,
                 this.getConstraints,
-                tsfun.update('id', this.currentQueryId, this.query));
+                this.query);
             if (this.currentQueryId === queryId) this.documents = this.filterDocuments(documents);
 
         } catch (msgWithParams) {

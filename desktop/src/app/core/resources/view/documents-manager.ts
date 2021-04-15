@@ -1,5 +1,5 @@
 import {Observer, Observable} from 'rxjs';
-import {subtract, set} from 'tsfun';
+import * as tsfun from 'tsfun';
 import {Document, Datastore, Resource} from 'idai-field-core';
 import {ChangesStream} from '../../datastore/changes/changes-stream';
 import {Loading} from '../../../components/widgets/loading';
@@ -169,7 +169,7 @@ export class DocumentsManager {
 
         const documentToSelect = FieldDocument.fromDocument(await this.datastore.get(resourceId));
         this.newDocumentsFromRemote
-            = subtract([documentToSelect.resource.id])(this.newDocumentsFromRemote);
+            = tsfun.subtract([documentToSelect.resource.id])(this.newDocumentsFromRemote);
 
         if (adjustListIfNecessary && !(await this.isDocumentInList(documentToSelect))) {
             await this.makeSureSelectedDocumentAppearsInList(documentToSelect);
@@ -213,13 +213,14 @@ export class DocumentsManager {
         await AngularUtility.refresh();
 
         this.currentQueryId = new Date().toISOString();
+        const queryId = this.currentQueryId;
         const result: IdaiFieldFindResult
-            = await this.createUpdatedDocumentList(this.currentQueryId);
+            = await this.createUpdatedDocumentList();
 
         await this.updateChildrenCountMap(result.documents.map(FieldDocument.fromDocument));
 
         if (this.loading) this.loading.stop();
-        if (result.queryId !== this.currentQueryId) {
+        if (queryId !== this.currentQueryId) {
             this.populateInProgress = false;
             return;
         }
@@ -232,7 +233,7 @@ export class DocumentsManager {
     }
 
 
-    public async createUpdatedDocumentList(queryId?: string): Promise<IdaiFieldFindResult> {
+    public async createUpdatedDocumentList(): Promise<IdaiFieldFindResult> {
 
         const isRecordedInTarget = this.makeIsRecordedInTarget();
         if (!isRecordedInTarget && !this.resourcesStateManager.isInSpecialView()) {
@@ -246,8 +247,7 @@ export class DocumentsManager {
         const query = DocumentsManager.buildQuery(
             operationId,
             this.resourcesStateManager,
-            this.getAllowedTypeNames(),
-            queryId
+            this.getAllowedTypeNames()
         );
 
         return (await this.fetchDocuments(query));
@@ -310,7 +310,7 @@ export class DocumentsManager {
             return ObserverUtil.notify(this.documentChangedFromRemoteObservers, undefined);
         }
 
-        this.newDocumentsFromRemote = set(this.newDocumentsFromRemote.concat([changedDocument.resource.id]));
+        this.newDocumentsFromRemote = tsfun.set(this.newDocumentsFromRemote.concat([changedDocument.resource.id]));
         await this.populateDocumentList(false);
     }
 
@@ -360,13 +360,14 @@ export class DocumentsManager {
     }
 
 
-    private static buildQuery(operationId: string|undefined, resourcesStateManager: ResourcesStateManager,
-                              allowedCategoryNames: string[], queryId?: string): Query {
+    private static buildQuery(operationId: string|undefined,
+                              resourcesStateManager: ResourcesStateManager,
+                              allowedCategoryNames: string[]): Query {
 
-        const extendedSearchMode: boolean = resourcesStateManager.isInExtendedSearchMode();
-        const state: ResourcesState = resourcesStateManager.get();
-        const categoryFilters: string[] = ResourcesState.getCategoryFilters(state);
-        const customConstraints: { [name: string]: string } = ResourcesState.getCustomConstraints(state);
+        const extendedSearchMode = resourcesStateManager.isInExtendedSearchMode();
+        const state = resourcesStateManager.get();
+        const categoryFilters = ResourcesState.getCategoryFilters(state);
+        const customConstraints = ResourcesState.getCustomConstraints(state);
 
         return {
             q: ResourcesState.getQueryString(state),
@@ -381,8 +382,7 @@ export class DocumentsManager {
                 : allowedCategoryNames,
             limit: extendedSearchMode && ResourcesState.isLimitSearchResults(state)
                 ? this.getDocumentsLimit(resourcesStateManager)
-                : undefined,
-            id: queryId
+                : undefined
         };
     }
 
@@ -392,7 +392,7 @@ export class DocumentsManager {
                                     liesWithinId: string|undefined,
                                     addLiesWithinConstraints: boolean): { [name: string]: string|string[]} {
 
-        const constraints: { [name: string]: string|string[] } = ObjectUtils.jsonClone(customConstraints) as any;
+        const constraints = tsfun.clone(customConstraints);
 
         if (addLiesWithinConstraints) {
             if (liesWithinId) {
@@ -421,5 +421,4 @@ export class DocumentsManager {
             ? TYPES_MANAGEMENT_DOCUMENTS_LIMIT
             : DEFAULT_DOCUMENTS_LIMIT;
     }
-
 }

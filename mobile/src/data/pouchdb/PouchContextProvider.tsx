@@ -1,7 +1,7 @@
+import { Document } from 'idai-field-core';
 import React, { useState } from 'react';
 import PouchDbContext, { DbStatus } from './pouch-context';
 import { setupDB } from './pouchdb-service';
-import { Document } from 'idai-field-core';
 
 const PouchDbContextProvider: React.FC = (props) => {
     
@@ -62,7 +62,9 @@ const isDocValid = (doc: any):boolean => {
     
     if( doc.doc.resource.type === 'Trench'||
         doc.doc.resource.type === 'Survey'||
-        doc.doc.resource.type === 'Building')
+        doc.doc.resource.type === 'Building' ||
+        doc.doc.resource.type === 'Room' ||
+        doc.doc.resource.type === 'Survey unit')
     return true;
     else return false;
 };

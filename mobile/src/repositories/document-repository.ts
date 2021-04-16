@@ -1,7 +1,7 @@
 import {
     ChangesStream,
     ConstraintIndex, Converter, Datastore, Document, DocumentCache, IdaiFieldFindResult,
-    IdGenerator, IndexFacade, PouchdbDatastore, PouchDbFactory, PouchdbManager, Query, SyncProcess
+    IdGenerator, Indexer, IndexFacade, PouchdbDatastore, PouchDbFactory, PouchdbManager, Query, SyncProcess
 } from 'idai-field-core';
 import { Observable } from 'rxjs';
 
@@ -16,9 +16,9 @@ export class DocumentRepository {
             : Promise<DocumentRepository> {
 
         const pouchdbManager = new PouchdbManager(pouchDbFactory);
-        const db = await pouchdbManager.createDb(project, { _id: 'project' } , false);
+        const db = await pouchdbManager.createDb(project, { _id: 'project', resource: { id: 'project' } }, false);
         const pouchdbDatastore = new PouchdbDatastore(db, new IdGenerator(), true);
-        const [datastore, changesStream] = buildDatastore(pouchdbDatastore, username);
+        const [datastore, changesStream] = await buildDatastore(pouchdbDatastore, db, username);
 
         return new DocumentRepository(pouchdbManager, pouchdbDatastore, datastore, changesStream);
     }
@@ -61,7 +61,7 @@ export class DocumentRepository {
 
 
     public setupSync = (url: string, project: string): Promise<SyncProcess> =>
-        this.pouchdbManager.setupSync(url, project);
+        this.pouchdbManager.setupSync(url, project, isNotAnImage);
 
 
     public stopSync = (): void =>
@@ -70,15 +70,20 @@ export class DocumentRepository {
 }
 
 
-const buildDatastore = (pouchdbDatastore: PouchdbDatastore, username: string): [Datastore, ChangesStream] => {
+const buildDatastore = async (pouchdbDatastore: PouchdbDatastore,
+        db: PouchDB.Database,
+        username: string
+    ): Promise<[Datastore, ChangesStream]> => {
 
     const indexFacade = buildIndexFacade();
     const documentCache = new DocumentCache();
-    const categoryConverter = buildDummyCategoryConverter();
+    const converter = buildDummyCategoryConverter();
+
+    await Indexer.reindex(indexFacade, db, documentCache, converter);
 
     return [
-        new Datastore(pouchdbDatastore, indexFacade, documentCache, categoryConverter),
-        new ChangesStream(pouchdbDatastore, indexFacade, documentCache, categoryConverter, () => username)
+        new Datastore(pouchdbDatastore, indexFacade, documentCache, converter),
+        new ChangesStream(pouchdbDatastore, indexFacade, documentCache, converter, () => username)
     ];
 };
 
@@ -116,3 +121,6 @@ const buildDummyCategoryConverter = (): Converter => ({
         // eslint-disable-next-line @typescript-eslint/no-empty-function
         convert: (document: Document) => document
 });
+
+
+const isNotAnImage = (doc: Document) => !['Image', 'Photo', 'Drawing'].includes(doc.resource.type);

@@ -1,17 +1,17 @@
+import { Box, Button, Divider, Text, VStack } from 'native-base';
 import React from 'react';
-import { VStack, Box, Divider, Text, Button } from 'native-base';
 
 interface DisconnectPouchFormProps {
-    dbName: string;
-    disconnectHandler: () => void;
+    project: string;
+    onDisconnect: () => void;
 }
 
-const DisconnectPouchForm: React.FC<DisconnectPouchFormProps> = ({ dbName, disconnectHandler }) => {
+const DisconnectPouchForm: React.FC<DisconnectPouchFormProps> = ({ project, onDisconnect }) => {
     return (
         <Box border={ 1 }>
             <VStack space={ 4 } divider={ <Divider /> }></VStack>
-            <Text>Disconnect {dbName}</Text>
-            <Button danger onPress={ disconnectHandler }>
+            <Text>Disconnect {project}</Text>
+            <Button danger onPress={ onDisconnect }>
                 <Text>Disconnect</Text>
             </Button>
         </Box>

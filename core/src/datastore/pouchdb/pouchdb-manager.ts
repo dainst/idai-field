@@ -40,12 +40,12 @@ export class PouchdbManager {
      * @param url target datastore
      * @param project
      */
-    public async setupSync(url: string, project: string): Promise<SyncProcess> {
+    public async setupSync(url: string, project: string, filter?: (doc: any) => boolean): Promise<SyncProcess> {
 
         const fullUrl = url + '/' + (project === 'synctest' ? 'synctestremotedb' : project);
         console.log('Start syncing');
 
-        let sync = this.db.sync(fullUrl, { live: true, retry: false });
+        let sync = this.db.sync(fullUrl, { live: true, retry: false, filter });
 
         this.syncHandles.push(sync as never);
         return {

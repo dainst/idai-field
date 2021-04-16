@@ -1,31 +1,45 @@
 import { Center } from 'native-base';
-import React, { ReactElement, useContext } from 'react';
+import React, { ReactElement } from 'react';
 import { StyleSheet } from 'react-native';
-import PouchDbContext from '../data/pouchdb/pouch-context';
+import { clone } from 'tsfun';
+import { SyncSettings } from '../model/sync-settings';
+import { DocumentRepository } from '../repositories/document-repository';
 import ConnectPouchForm from './ConnectPouchForm';
 import DisconectPouchForm from './DisconnectPouchForm';
 
 
-const Settings = (): ReactElement => {
-    
-    const { connect, isDbConnected, disconnect, dbName } = useContext(PouchDbContext);
+interface SettingsProps {
+    repository: DocumentRepository;
+    syncSettings: SyncSettings;
+    onSyncSettingsSet: (syncSettings: SyncSettings) => void;
+}
 
 
-    const disconnectHandler = () => {
-        disconnect();
+const Settings: React.FC<SettingsProps> = ({ repository, syncSettings, onSyncSettingsSet }): ReactElement => {
+
+    const onDisconnect = () => {
+
+        repository.stopSync();
+        const newSyncSettings = clone(syncSettings);
+        newSyncSettings.connected = false;
+        onSyncSettingsSet(newSyncSettings);
     };
 
-    const connectHandler = (dbName: string, remoteUser: string, remotePassword: string) => {
-        connect(dbName, remoteUser, remotePassword);
-    };
+    const onConnect = (syncSettings: SyncSettings) => {
 
+        const { url, project, password } = syncSettings;
+        const fullUrl = url.replace(/(https?:\/\/)/, `$1${project}:${password}@`);
+        repository.setupSync(fullUrl, project);
+        onSyncSettingsSet(syncSettings);
+    };
 
     return (
         <Center style={ styles.container }>
-                {isDbConnected() ?
+                { syncSettings.connected ?
                 <DisconectPouchForm
-                    dbName={ dbName } disconnectHandler={ disconnectHandler } />:
-                <ConnectPouchForm dbSetupHandler={ connectHandler } /> }
+                    project={ syncSettings.project }
+                    onDisconnect={ onDisconnect } /> :
+                <ConnectPouchForm onConnect={ onConnect } /> }
         </Center>
     );
 };

@@ -5,6 +5,7 @@
       "test/e2e/**/import.spec.js",
       "test/e2e/**/image-overview.spec.js",
       "test/e2e/**/image-overview-upload.spec.js",
+      "test/e2e/**/image-overview-state.spec.js",
       "test/e2e/**/settings.spec.js"
     ],
     "stopSpecOnExpectationFailure": false,

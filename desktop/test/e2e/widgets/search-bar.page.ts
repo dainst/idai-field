@@ -1,5 +1,6 @@
 import { click, getElement, getElements, getText, typeIn, waitForExist } from '../app';
 
+
 export type SearchBarContext = 'resources'|'images'|'modal';
 
 
@@ -20,7 +21,7 @@ export class SearchBarPage {
 
         const element = await SearchBarPage.getSelectedCategoryFilterButton(context);
         await waitForExist(element);
-        return getText(element.$('.character'));
+        return getText(await element.$('.character'));
     }
 
 

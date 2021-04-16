@@ -12,7 +12,7 @@ export const defineViewBox = (documents: Document[]): string => {
 };
 
 export const getMinMaxCoords = (geos: FieldGeometry[]): [number, number, number, number] => {
-
+    
     const xCoords: number[] = [];
     const yCoords: number[] = [];
     geos.forEach(geo => {

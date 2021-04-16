@@ -29,6 +29,7 @@ describe('view-box-utils functions', () => {
         expect(extractCoordsPositions2d(positionArray2d)).toEqual(expectedArray2d);
     });
 
+
     it('returns array of x coordinate and array of y coords for Position[][][]', () => {
 
         const positionArray3d = [

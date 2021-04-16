@@ -1,16 +1,11 @@
-import {browser, protractor} from 'protractor';
-import {MenuPage} from '../menu.page';
-import {ResourcesPage} from './resources.page';
-import {ResourcesTypeGridPage} from './resources-type-grid.page';
-import {DoceditPage} from '../docedit/docedit.page';
-import {DoceditRelationsTabPage} from '../docedit/docedit-relations-tab.page';
-import {NavbarPage} from '../navbar.page';
-import {DoceditTypeRelationsTabPage} from '../docedit/docedit-type-relations-tab.page';
-import {FieldsViewPage} from '../widgets/fields-view.page';
-
-const EC = protractor.ExpectedConditions;
-const delays = require('../delays');
-const common = require('../common');
+import { getText, navigateTo, resetApp, start, stop, waitForExist, waitForNotExist } from '../app';
+import { ResourcesPage } from './resources.page';
+import { ResourcesTypeGridPage } from './resources-type-grid.page';
+import { DoceditPage } from '../docedit/docedit.page';
+import { DoceditRelationsTabPage } from '../docedit/docedit-relations-tab.page';
+import { NavbarPage } from '../navbar.page';
+import { DoceditTypeRelationsTabPage } from '../docedit/docedit-type-relations-tab.page';
+import { FieldsViewPage } from '../widgets/fields-view.page';
 
 
 /**
@@ -18,230 +13,238 @@ const common = require('../common');
  */
 describe('resources/types --', () => {
 
-    beforeEach( () => {
+    beforeAll(async done => {
 
-        browser.sleep(1500);
-
-        MenuPage.navigateToSettings();
-        browser.sleep(1)
-            .then(() => common.resetApp());
-        MenuPage.navigateToTypes();
+        await start();
+        done();
     });
 
 
-    function createTypeCatalogAndType(typeCatalogIdentifier: string = 'TC1', typeIdentifier: string = 'T1') {
+    beforeEach(async done => {
 
-        ResourcesPage.performCreateResource(typeCatalogIdentifier, 'TypeCatalog',
-            undefined, undefined, true, true);
-        ResourcesTypeGridPage.clickGridElement(typeCatalogIdentifier);
-        ResourcesPage.performCreateResource(typeIdentifier, 'Type', undefined,
+        await navigateTo('settings');
+        await resetApp();
+        await navigateTo('resources/types');
+        done();
+    });
+
+
+    afterAll(async done => {
+
+        await stop();
+        done();
+    });
+
+
+    async function createTypeCatalogAndType(typeCatalogIdentifier: string = 'TC1', typeIdentifier: string = 'T1') {
+
+        await ResourcesPage.performCreateResource(typeCatalogIdentifier, 'TypeCatalog', undefined,
             undefined, true, true);
+        await ResourcesTypeGridPage.clickGridElement(typeCatalogIdentifier);
+        return ResourcesPage.performCreateResource(typeIdentifier, 'Type', undefined, undefined, true, true);
     }
 
 
-    function linkWithFind() {
+    async function linkWithFind() {
 
-        ResourcesTypeGridPage.clickEditButton();
-        DoceditPage.clickGotoIdentificationTab();
-        DoceditRelationsTabPage.clickAddRelationForGroupWithIndex('zugeordnete-funde');
-        DoceditRelationsTabPage.typeInRelation('zugeordnete-funde', 'testf1');
-        DoceditRelationsTabPage.clickChooseRelationSuggestion(0);
-        DoceditPage.clickSaveDocument();
+        await ResourcesTypeGridPage.clickEditButton();
+        await DoceditPage.clickGotoIdentificationTab();
+        await DoceditRelationsTabPage.clickAddRelationForGroupWithIndex('zugeordnete-funde');
+        await DoceditRelationsTabPage.typeInRelation('zugeordnete-funde', 'testf1');
+        await DoceditRelationsTabPage.clickChooseRelationSuggestion(0);
+        return DoceditPage.clickSaveDocument();
     }
 
 
-    function setCriterion(criterionIndex: number) {
+    async function setCriterion(criterionIndex: number) {
 
-        ResourcesTypeGridPage.clickEditButton();
-        DoceditPage.clickGotoIdentificationTab();
-        DoceditPage.clickSelectOption('criterion', criterionIndex);
-        DoceditPage.clickSaveDocument();
+        await ResourcesTypeGridPage.clickEditButton();
+        await DoceditPage.clickGotoIdentificationTab();
+        await DoceditPage.clickSelectOption('criterion', criterionIndex);
+        return DoceditPage.clickSaveDocument();
     }
 
 
-    function checkCriterionOptions(expectedOptions: string[]) {
+    async function checkCriterionOptions(expectedOptions: string[]) {
 
-        DoceditTypeRelationsTabPage.getCriterionOptions().then(options => {
-            expect(options.length).toBe(expectedOptions.length);
-            for (let i = 0; i < options.length; i++) {
-                expect(options[i].getText()).toEqual(expectedOptions[i]);
-            }
-        });
+        const options = await DoceditTypeRelationsTabPage.getCriterionOptions();
+        expect(options.length).toBe(expectedOptions.length);
+        for (let i = 0; i < options.length; i++) {
+            expect(await getText(options[i])).toEqual(expectedOptions[i]);
+        }
     }
 
 
-    function checkCatalogOptions(expectedOptions: string[]) {
+    async function checkCatalogOptions(expectedOptions: string[]) {
 
-        DoceditTypeRelationsTabPage.getCatalogOptions().then(options => {
-            expect(options.length).toBe(expectedOptions.length);
-            for (let i = 0; i < options.length; i++) {
-                expect(options[i].getText()).toEqual(expectedOptions[i]);
-            }
-        });
+        const options = await DoceditTypeRelationsTabPage.getCatalogOptions();
+        expect(options.length).toBe(expectedOptions.length);
+        for (let i = 0; i < options.length; i++) {
+            expect(await getText(options[i])).toEqual(expectedOptions[i]);
+        }
     }
 
 
-    it('Show linked find for type', () => {
+    it('Show linked find for type', async done => {
 
-        createTypeCatalogAndType();
+        await createTypeCatalogAndType();
 
-        ResourcesTypeGridPage.clickGridElement('T1');
-        browser.wait(EC.stalenessOf(ResourcesTypeGridPage.getLinkedDocumentsGrid()), delays.ECWaitTime);
+        await ResourcesTypeGridPage.clickGridElement('T1');
+        await waitForNotExist(await ResourcesTypeGridPage.getLinkedDocumentsGrid());
 
-        linkWithFind();
+        await linkWithFind();
 
-        ResourcesTypeGridPage.clickToggleFindsSectionButton();
-        browser.wait(EC.presenceOf(ResourcesTypeGridPage.getGridElement('testf1')),
-            delays.ECWaitTime);
+        await ResourcesTypeGridPage.clickToggleFindsSectionButton();
+        await waitForExist(await ResourcesTypeGridPage.getGridElement('testf1'));
 
-        ResourcesPage.clickNavigationButton('TC1');
-        browser.sleep(delays.shortRest);
-        browser.wait(EC.presenceOf(ResourcesTypeGridPage.getGridElement('testf1')),
-            delays.ECWaitTime);
+        await ResourcesPage.clickNavigationButton('TC1');
+        await waitForExist(await ResourcesTypeGridPage.getGridElement('testf1'));
 
-        ResourcesTypeGridPage.getTypeBadgeText('testf1').then(text => {
-            expect(text).toBe('T1');
-        });
+        const text = await ResourcesTypeGridPage.getTypeBadgeText('testf1');
+        expect(text).toBe('T1');
+
+        done();
     });
 
 
-    it('Do not show linked finds in extended search mode', () => {
+    it('Do not show linked finds in extended search mode', async done => {
 
-        createTypeCatalogAndType();
-        ResourcesTypeGridPage.clickGridElement('T1');
-        linkWithFind();
+        await createTypeCatalogAndType();
+        await ResourcesTypeGridPage.clickGridElement('T1');
+        await linkWithFind();
 
-        ResourcesPage.clickSwitchHierarchyMode();
-        ResourcesTypeGridPage.getGridElements().then(elements => {
-            expect(elements.length).toBe(2);
-        });
+        await ResourcesPage.clickSwitchHierarchyMode();
+        const elements = await ResourcesTypeGridPage.getGridElements();
+        expect(elements.length).toBe(2);
 
-        browser.wait(EC.stalenessOf(ResourcesTypeGridPage.getToggleFindsSectionButton()));
-        browser.wait(EC.stalenessOf(ResourcesTypeGridPage.getLinkedDocumentsGrid()));
+        await waitForNotExist(await ResourcesTypeGridPage.getToggleFindsSectionButton());
+        await waitForNotExist(await ResourcesTypeGridPage.getLinkedDocumentsGrid());
+
+        done();
     });
 
 
-    it('Move a type to another catalog', () => {
+    it('Move a type to another catalog', async done => {
 
-        createTypeCatalogAndType();
+        await createTypeCatalogAndType();
 
-        ResourcesTypeGridPage.clickTypeCatalogsNavigationButton();
-        ResourcesPage.performCreateResource('TC2', 'TypeCatalog', undefined,
+        await ResourcesTypeGridPage.clickTypeCatalogsNavigationButton();
+        await ResourcesPage.performCreateResource('TC2', 'TypeCatalog', undefined,
             undefined, true, true);
 
-        ResourcesTypeGridPage.clickGridElement('TC1');
-        ResourcesTypeGridPage.clickOpenContextMenu('T1');
-        ResourcesPage.clickContextMenuMoveButton();
-        ResourcesPage.typeInMoveModalSearchBarInput('TC2');
-        ResourcesPage.clickResourceListItemInMoveModal('TC2');
-        browser.wait(EC.stalenessOf(ResourcesPage.getMoveModal()), delays.ECWaitTime);
+        await ResourcesTypeGridPage.clickGridElement('TC1');
+        await ResourcesTypeGridPage.clickOpenContextMenu('T1');
+        await ResourcesPage.clickContextMenuMoveButton();
+        await ResourcesPage.typeInMoveModalSearchBarInput('TC2');
+        await ResourcesPage.clickResourceListItemInMoveModal('TC2');
+        await waitForNotExist(await ResourcesPage.getMoveModal());
 
-        browser.sleep(delays.shortRest);
-        browser.wait(EC.presenceOf(ResourcesTypeGridPage.getGridElement('T1')),
-            delays.ECWaitTime);
+        await waitForExist(await ResourcesTypeGridPage.getGridElement('T1'));
 
-        ResourcesTypeGridPage.getActiveNavigationButtonText().then(text => {
-            expect(text).toEqual('TC2');
-        });
+        const text = await ResourcesTypeGridPage.getActiveNavigationButtonText();
+        expect(text).toEqual('TC2');
+
+        done();
     });
 
 
-    it('Delete a type', () => {
+    it('Delete a type', async done => {
 
-        createTypeCatalogAndType();
-        ResourcesTypeGridPage.clickGridElement('T1');
-        linkWithFind();
+        await createTypeCatalogAndType();
+        await ResourcesTypeGridPage.clickGridElement('T1');
+        await linkWithFind();
 
-        ResourcesPage.clickNavigationButton('TC1');
+        await ResourcesPage.clickNavigationButton('TC1');
 
-        ResourcesTypeGridPage.clickToggleFindsSectionButton();
-        browser.wait(EC.presenceOf(ResourcesTypeGridPage.getGridElement('testf1')),
-            delays.ECWaitTime);
+        await ResourcesTypeGridPage.clickToggleFindsSectionButton();
+        await waitForExist(await ResourcesTypeGridPage.getGridElement('testf1'));
 
-        ResourcesTypeGridPage.clickOpenContextMenu('T1');
-        ResourcesPage.clickContextMenuDeleteButton();
-        ResourcesPage.typeInIdentifierInConfirmDeletionInputField('T1');
-        ResourcesPage.clickConfirmDeleteInModal();
+        await ResourcesTypeGridPage.clickOpenContextMenu('T1');
+        await ResourcesPage.clickContextMenuDeleteButton();
+        await ResourcesPage.typeInIdentifierInConfirmDeletionInputField('T1');
+        await ResourcesPage.clickConfirmDeleteInModal();
 
-        browser.wait(EC.stalenessOf(ResourcesTypeGridPage.getGridElement('T1')),
-            delays.ECWaitTime);
-        browser.wait(EC.stalenessOf(ResourcesTypeGridPage.getGridElement('testf1')),
-            delays.ECWaitTime);
+        await waitForNotExist(await ResourcesTypeGridPage.getGridElement('T1'));
+        await waitForNotExist(await ResourcesTypeGridPage.getGridElement('testf1'));
+
+        done();
     });
 
 
-    it('Link find with type via type relation picker', () => {
+    it('Link find with type via type relation picker', async done => {
 
-        createTypeCatalogAndType();
+        await createTypeCatalogAndType();
 
-        NavbarPage.clickCloseNonResourcesTab();
-        ResourcesPage.clickHierarchyButton('S1');
-        ResourcesPage.clickHierarchyButton('SE0');
-        ResourcesPage.clickOpenChildCollectionButton();
+        await NavbarPage.clickCloseNonResourcesTab();
+        await ResourcesPage.clickHierarchyButton('S1');
+        await ResourcesPage.clickHierarchyButton('SE0');
+        await ResourcesPage.clickOpenChildCollectionButton();
 
-        ResourcesPage.openEditByDoubleClickResource('testf1');
-        DoceditPage.clickGotoIdentificationTab();
-        DoceditTypeRelationsTabPage.clickAddTypeRelationButton('instanceOf');
-        DoceditTypeRelationsTabPage.clickType('T1');
-        DoceditPage.clickSaveDocument();
+        await ResourcesPage.openEditByDoubleClickResource('testf1');
+        await DoceditPage.clickGotoIdentificationTab();
+        await DoceditTypeRelationsTabPage.clickAddTypeRelationButton('instanceOf');
+        await DoceditTypeRelationsTabPage.clickType('T1');
+        await DoceditPage.clickSaveDocument();
 
-        ResourcesPage.clickSelectResource('testf1', 'info');
-        FieldsViewPage.clickAccordionTab(1);
-        FieldsViewPage.getRelationValue(1, 0).then(relationValue => {
-            expect(relationValue).toEqual('T1');
-        });
+        await ResourcesPage.clickSelectResource('testf1', 'info');
+        await FieldsViewPage.clickAccordionTab(1);
+        const relationValue = await FieldsViewPage.getRelationValue(1, 0);
+        expect(relationValue).toEqual('T1');
 
-        MenuPage.navigateToTypes();
-        ResourcesTypeGridPage.clickToggleFindsSectionButton();
-        browser.wait(EC.presenceOf(ResourcesTypeGridPage.getGridElement('testf1')),
-            delays.ECWaitTime);
+        navigateTo('resources/types');
+        await ResourcesTypeGridPage.clickToggleFindsSectionButton();
+        await waitForExist(await ResourcesTypeGridPage.getGridElement('testf1'));
+
+        done();
     });
 
 
-    it('Filter types in type relation picker by criterion & catalog', () => {
+    it('Filter types in type relation picker by criterion & catalog', async done => {
 
-        createTypeCatalogAndType();
-        setCriterion(1);
+        await createTypeCatalogAndType();
+        await setCriterion(1);
 
-        ResourcesTypeGridPage.clickTypeCatalogsNavigationButton();
-        createTypeCatalogAndType('TC2', 'T2');
-        setCriterion(2);
+        await ResourcesTypeGridPage.clickTypeCatalogsNavigationButton();
+        await createTypeCatalogAndType('TC2', 'T2');
+        await setCriterion(2);
 
-        NavbarPage.clickCloseNonResourcesTab();
-        ResourcesPage.clickHierarchyButton('S1');
-        ResourcesPage.clickHierarchyButton('SE0');
-        ResourcesPage.clickOpenChildCollectionButton();
+        await NavbarPage.clickCloseNonResourcesTab();
+        await ResourcesPage.clickHierarchyButton('S1');
+        await ResourcesPage.clickHierarchyButton('SE0');
+        await ResourcesPage.clickOpenChildCollectionButton();
 
-        ResourcesPage.openEditByDoubleClickResource('testf1');
-        DoceditPage.clickGotoIdentificationTab();
-        DoceditTypeRelationsTabPage.clickAddTypeRelationButton('instanceOf');
+        await ResourcesPage.openEditByDoubleClickResource('testf1');
+        await DoceditPage.clickGotoIdentificationTab();
+        await DoceditTypeRelationsTabPage.clickAddTypeRelationButton('instanceOf');
 
-        checkCriterionOptions(['Kein Kriterium', 'Dekoration', 'Form']);
-        checkCatalogOptions(['Alle Kataloge', 'TC1', 'TC2']);
-        browser.wait(EC.presenceOf(DoceditTypeRelationsTabPage.getTypeRow('T1')), delays.ECWaitTime);
-        browser.wait(EC.presenceOf(DoceditTypeRelationsTabPage.getTypeRow('T2')), delays.ECWaitTime);
+        await checkCriterionOptions(['Kein Kriterium', 'Dekoration', 'Form']);
+        await checkCatalogOptions(['Alle Kataloge', 'TC1', 'TC2']);
+        await waitForExist(await DoceditTypeRelationsTabPage.getTypeRow('T1'));
+        await waitForExist(await DoceditTypeRelationsTabPage.getTypeRow('T2'));
 
-        DoceditTypeRelationsTabPage.clickCriterionOption(1);
-        checkCatalogOptions(['Alle Kataloge', 'TC1']);
-        browser.wait(EC.stalenessOf(DoceditTypeRelationsTabPage.getTypeRow('T2')), delays.ECWaitTime);
+        await DoceditTypeRelationsTabPage.clickCriterionOption(1);
+        await checkCatalogOptions(['Alle Kataloge', 'TC1']);
+        await waitForNotExist(await DoceditTypeRelationsTabPage.getTypeRow('T2'));
 
-        DoceditTypeRelationsTabPage.clickCriterionOption(2);
-        checkCatalogOptions(['Alle Kataloge', 'TC2']);
-        browser.wait(EC.stalenessOf(DoceditTypeRelationsTabPage.getTypeRow('T1')), delays.ECWaitTime);
-        browser.wait(EC.presenceOf(DoceditTypeRelationsTabPage.getTypeRow('T2')), delays.ECWaitTime);
+        await DoceditTypeRelationsTabPage.clickCriterionOption(2);
+        await checkCatalogOptions(['Alle Kataloge', 'TC2']);
+        await waitForNotExist(await DoceditTypeRelationsTabPage.getTypeRow('T1'));
+        await waitForExist(await DoceditTypeRelationsTabPage.getTypeRow('T2'));
 
-        DoceditTypeRelationsTabPage.clickCriterionOption(0);
-        checkCatalogOptions(['Alle Kataloge', 'TC1', 'TC2']);
-        browser.wait(EC.presenceOf(DoceditTypeRelationsTabPage.getTypeRow('T1')), delays.ECWaitTime);
+        await DoceditTypeRelationsTabPage.clickCriterionOption(0);
+        await checkCatalogOptions(['Alle Kataloge', 'TC1', 'TC2']);
+        await waitForExist(await DoceditTypeRelationsTabPage.getTypeRow('T1'));
 
-        DoceditTypeRelationsTabPage.clickCatalogOption(1);
-        browser.wait(EC.stalenessOf(DoceditTypeRelationsTabPage.getTypeRow('T2')), delays.ECWaitTime);
+        await DoceditTypeRelationsTabPage.clickCatalogOption(1);
+        await waitForNotExist(await DoceditTypeRelationsTabPage.getTypeRow('T2'));
 
-        DoceditTypeRelationsTabPage.clickCatalogOption(2);
-        browser.wait(EC.stalenessOf(DoceditTypeRelationsTabPage.getTypeRow('T1')), delays.ECWaitTime);
-        browser.wait(EC.presenceOf(DoceditTypeRelationsTabPage.getTypeRow('T2')), delays.ECWaitTime);
+        await DoceditTypeRelationsTabPage.clickCatalogOption(2);
+        await waitForNotExist(await DoceditTypeRelationsTabPage.getTypeRow('T1'));
+        await waitForExist(await DoceditTypeRelationsTabPage.getTypeRow('T2'));
 
-        DoceditTypeRelationsTabPage.clickType('T2');
-        DoceditPage.clickCloseEdit('discard');
+        await DoceditTypeRelationsTabPage.clickType('T2');
+        await DoceditPage.clickCloseEdit('discard');
+
+        done();
     });
 });

@@ -63,8 +63,8 @@ export class FieldsViewPage {
      */
     public static async getRelationValue(cardIndex, index) {
 
-        const cardElement = (await getElements('card'))[cardIndex];
-        const relationElement = (await cardElement.$$('relation-value'))[index];
+        const cardElement = (await getElements('.card'))[cardIndex];
+        const relationElement = (await cardElement.$$('.relation-value'))[index];
         return getText(relationElement);
     };
 
@@ -75,8 +75,8 @@ export class FieldsViewPage {
      */
     public static async getRelationName(cardIndex, index) {
 
-        const cardElement = (await getElements('card'))[cardIndex];
-        const labelElement = (await cardElement.$$('field-label'))[index];
+        const cardElement = (await getElements('.card'))[cardIndex];
+        const labelElement = (await cardElement.$$('.field-label'))[index];
         return getText(labelElement);
     };
 
@@ -86,7 +86,7 @@ export class FieldsViewPage {
      */
     public static async getRelations(cardIndex) {
 
-        const cardElement = (await getElements('card'))[cardIndex];
-        return cardElement.$$('relation-value');
+        const cardElement = (await getElements('.card'))[cardIndex];
+        return cardElement.$$('.relation-value');
     };
 }

@@ -9,7 +9,7 @@ interface ConnectPouchFormProps {
 const ConnectPouchForm: React.FC<ConnectPouchFormProps> = ({ dbSetupHandler }) => {
 
     const [remoteUser, setRemoteUser] = useState<string>('test467');
-    const [password, setPassword] = useState<string>('Celt1!wedged');
+    const [password, setPassword] = useState<string>('');
     const [dbName, setDbName] = useState<string>('test467');
 
     const connectionHandler = () => {

@@ -1,4 +1,5 @@
 import {
+    ChangesStream,
     ConstraintIndex, Converter, Datastore, Document, DocumentCache, IdaiFieldFindResult,
     IdGenerator, IndexFacade, PouchdbDatastore, PouchDbFactory, PouchdbManager, Query, SyncProcess
 } from 'idai-field-core';
@@ -8,16 +9,18 @@ export class DocumentRepository {
 
     private constructor(private pouchdbManager: PouchdbManager,
                         private pouchdbDatastore: PouchdbDatastore,
-                        private datastore: Datastore) {}
+                        private datastore: Datastore,
+                        private changesStream: ChangesStream) {}
 
-    public static async init(project: string, pouchDbFactory: PouchDbFactory): Promise<DocumentRepository> {
+    public static async init(project: string, pouchDbFactory: PouchDbFactory, username: string)
+            : Promise<DocumentRepository> {
 
         const pouchdbManager = new PouchdbManager(pouchDbFactory);
         const db = await pouchdbManager.createDb(project, { _id: 'project' } , false);
         const pouchdbDatastore = new PouchdbDatastore(db, new IdGenerator(), true);
-        const datastore = buildDatastore(pouchdbDatastore);
+        const [datastore, changesStream] = buildDatastore(pouchdbDatastore, username);
 
-        return new DocumentRepository(pouchdbManager, pouchdbDatastore, datastore);
+        return new DocumentRepository(pouchdbManager, pouchdbDatastore, datastore, changesStream);
     }
 
 
@@ -53,6 +56,10 @@ export class DocumentRepository {
         this.pouchdbDatastore.deletedNotifications();
 
 
+    public remoteChanged = (): Observable<Document> =>
+        this.changesStream.remoteChangesNotifications();
+
+
     public setupSync = (url: string, project: string): Promise<SyncProcess> =>
         this.pouchdbManager.setupSync(url, project);
 
@@ -63,13 +70,16 @@ export class DocumentRepository {
 }
 
 
-const buildDatastore = (pouchdbDatastore: PouchdbDatastore): Datastore => {
+const buildDatastore = (pouchdbDatastore: PouchdbDatastore, username: string): [Datastore, ChangesStream] => {
 
     const indexFacade = buildIndexFacade();
     const documentCache = new DocumentCache();
     const categoryConverter = buildDummyCategoryConverter();
 
-    return new Datastore(pouchdbDatastore, indexFacade, documentCache, categoryConverter);
+    return [
+        new Datastore(pouchdbDatastore, indexFacade, documentCache, categoryConverter),
+        new ChangesStream(pouchdbDatastore, indexFacade, documentCache, categoryConverter, () => username)
+    ];
 };
 
 

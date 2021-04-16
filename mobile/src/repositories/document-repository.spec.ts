@@ -13,7 +13,7 @@ describe('DocumentRepository', () => {
     
     beforeEach(async () => {
         
-        repository = await DocumentRepository.init(project, (name: string) => new PouchDB(name));
+        repository = await DocumentRepository.init(project, (name: string) => new PouchDB(name), 'testuser');
     });
 
 

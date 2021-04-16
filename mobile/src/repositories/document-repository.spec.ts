@@ -1,4 +1,4 @@
-import { createDocuments, doc, Document } from 'idai-field-core';
+import { createDocuments, doc, Document, SyncStatus } from 'idai-field-core';
 import PouchDB from 'pouchdb-node';
 import { last } from 'tsfun';
 import { DocumentRepository } from './document-repository';
@@ -133,5 +133,22 @@ describe('DocumentRepository', () => {
         await repository.remove(testDoc);
         const deletedDoc = await docDeleted;
         expect(deletedDoc.resource.id).toEqual(testDoc.resource.id);
+    });
+
+    xit('syncs with server', async () => {
+
+        const sync = await repository.setupSync('https://test467:xxxxxxx@field.dainst.org/sync', 'test467');
+        const inSync = new Promise<boolean>((resolve, reject) => {
+            sync.observer.subscribe(
+                status => {
+                    console.log({ status });
+                    (status === SyncStatus.InSync) && resolve(true);
+                },
+                err => reject(err)
+            );
+        });
+        repository.remoteChanged().subscribe(async d => console.log('changed', d));
+
+        expect(await inSync).toBe(true);
     });
 });

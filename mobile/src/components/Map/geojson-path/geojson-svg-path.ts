@@ -15,6 +15,7 @@ export const multiPolygonToPath = (multiPolygon: Position[][][]): string => {
     return path;
 };
 
+
 /**
  * PolygonToPath
  * Convert GEOJSON Polygon to path string <Path d=PolygonToPath(pol) />

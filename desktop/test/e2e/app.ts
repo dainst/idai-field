@@ -106,6 +106,53 @@ export async function rightClick(element) {
 }
 
 
+export function clickWithControlKey(element) {
+
+    return clickWithKey(element, '\uE009');
+}
+
+
+export function clickWithShiftKey(element) {
+
+    return clickWithKey(element, '\uE008');
+}
+
+
+async function clickWithKey(element, keyCode) {
+
+    if (isString(element)) element = await getElement(element);
+
+    const position = await element.getLocation();
+    const size = await element.getSize();
+    const x = position.x + (size.width / 2);
+    const y = position.y + (size.height / 2);
+
+    await app.client.performActions([
+        {
+            type: 'key',
+            id: 'keyboard',
+            actions: [
+                { type: 'keyDown', value: keyCode }
+            ]
+        },
+        {
+            type: 'pointer',
+            id: 'mouse',
+            parameters: { pointerType: 'mouse' },
+            actions: [
+                { type: 'pointerMove', x: x, y: y, duration: 0 },
+                { type: 'pause', duration: 100 },
+                { type: 'pointerDown', button: 0 },
+                { type: 'pause', duration: 100 },
+                { type: 'pointerUp', button: 0 }
+            ]
+        }
+    ]);
+
+    return app.client.releaseActions();
+}
+
+
 export async function hover(element) {
 
     if (isString(element)) element = await getElement(element);

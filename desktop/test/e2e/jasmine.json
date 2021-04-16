@@ -10,7 +10,8 @@
       "test/e2e/**/resources-list.spec.js",
       "test/e2e/**/resources-types.spec.js",
       "test/e2e/**/resources.spec.js",
-      "test/e2e/**/resources-state.spec.js"
+      "test/e2e/**/resources-state.spec.js",
+      "test/e2e/**/resources-multi-select.spec.js"
     ],
     "stopSpecOnExpectationFailure": false,
     "random": false

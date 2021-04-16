@@ -1,118 +1,133 @@
-import {browser, protractor} from 'protractor';
-import {MenuPage} from '../menu.page';
-import {NavbarPage} from '../navbar.page';
-import {ResourcesPage} from './resources.page';
-
-const EC = protractor.ExpectedConditions;
-const delays = require('../delays');
-const common = require('../common');
+import { click, clickWithControlKey, clickWithShiftKey, navigateTo, resetApp, start, stop, waitForExist, waitForNotExist } from '../app';
+import { NavbarPage } from '../navbar.page';
+import { ResourcesPage } from './resources.page';
 
 
 describe('resources/multi-select --', () => {
 
-    beforeEach(() => {
+    beforeAll(async done => {
 
-        browser.sleep(1500);
-
-        MenuPage.navigateToSettings();
-        browser.sleep(1)
-            .then(() => common.resetApp());
-        NavbarPage.clickCloseNonResourcesTab();
-        NavbarPage.clickTab('project');
-        ResourcesPage.clickHierarchyButton('S1');
+        await start();
+        done();
     });
 
 
-    const createResources = () => {
+    beforeEach(async done => {
 
-        ResourcesPage.performCreateResource('1');
-        ResourcesPage.performCreateResource('2');
-        ResourcesPage.performCreateResource('3');
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('2')), delays.ECWaitTime);
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('3')), delays.ECWaitTime);
+        await navigateTo('settings');
+        await resetApp();
+        await NavbarPage.clickCloseNonResourcesTab();
+        await NavbarPage.clickTab('project');
+        await ResourcesPage.clickHierarchyButton('S1');
+        done();
+    });
+
+
+    afterAll(async done => {
+
+        await stop();
+        done();
+    });
+
+
+    const createResources = async () => {
+
+        await ResourcesPage.performCreateResource('1');
+        await ResourcesPage.performCreateResource('2');
+        await ResourcesPage.performCreateResource('3');
+        await waitForExist(await ResourcesPage.getListItemEl('1'));
+        await waitForExist(await ResourcesPage.getListItemEl('2'));
+        await waitForExist(await ResourcesPage.getListItemEl('3'));
     };
 
 
-    const testDeletingResources = () => {
+    const testDeletingResources = async () => {
 
-        ResourcesPage.clickOpenContextMenu('1');
-        ResourcesPage.clickContextMenuDeleteButton();
-        ResourcesPage.typeInIdentifierInConfirmDeletionInputField('2');
-        ResourcesPage.clickConfirmDeleteInModal();
-        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
-        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('2')), delays.ECWaitTime);
-        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('3')), delays.ECWaitTime);
+        await ResourcesPage.clickOpenContextMenu('1');
+        await ResourcesPage.clickContextMenuDeleteButton();
+        await ResourcesPage.typeInIdentifierInConfirmDeletionInputField('2');
+        await ResourcesPage.clickConfirmDeleteInModal();
+        await waitForNotExist(await ResourcesPage.getListItemEl('1'));
+        await waitForNotExist(await ResourcesPage.getListItemEl('2'));
+        await waitForNotExist(await ResourcesPage.getListItemEl('3'));
     };
 
 
-    const testMovingResources = () => {
+    const testMovingResources = async () => {
 
-        ResourcesPage.clickOpenContextMenu('1');
-        ResourcesPage.clickContextMenuMoveButton();
-        ResourcesPage.typeInMoveModalSearchBarInput('S2');
-        ResourcesPage.clickResourceListItemInMoveModal('S2');
-        browser.wait(EC.stalenessOf(ResourcesPage.getMoveModal()), delays.ECWaitTime);
+        await ResourcesPage.clickOpenContextMenu('1');
+        await ResourcesPage.clickContextMenuMoveButton();
+        await ResourcesPage.typeInMoveModalSearchBarInput('S2');
+        await ResourcesPage.clickResourceListItemInMoveModal('S2');
+        await waitForNotExist(await ResourcesPage.getMoveModal());
 
-        NavbarPage.getActiveNavLinkLabel().then(label => expect(label).toContain('S2'));
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('2')), delays.ECWaitTime);
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('3')), delays.ECWaitTime);
+        expect(await NavbarPage.getActiveNavLinkLabel()).toContain('S2');
+        await waitForExist(await ResourcesPage.getListItemEl('1'));
+        await waitForExist(await ResourcesPage.getListItemEl('2'));
+        await waitForExist(await ResourcesPage.getListItemEl('3'));
 
-        NavbarPage.clickTab('project');
-        ResourcesPage.clickHierarchyButton('S1');
-        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
-        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('2')), delays.ECWaitTime);
-        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('3')), delays.ECWaitTime);
+        await NavbarPage.clickTab('project');
+        await ResourcesPage.clickHierarchyButton('S1');
+        await waitForNotExist(await ResourcesPage.getListItemEl('1'));
+        await waitForNotExist(await ResourcesPage.getListItemEl('2'));
+        await waitForNotExist(await ResourcesPage.getListItemEl('3'));
     };
 
 
-    it('delete multiple resources with control key selection', () => {
+    it('delete multiple resources with control key selection', async done => {
 
-        createResources();
-        common.click(ResourcesPage.getListItemEl('3'));
-        common.clickWithControlKey(ResourcesPage.getListItemEl('2'));
-        common.clickWithControlKey(ResourcesPage.getListItemEl('1'));
-        testDeletingResources();
+        await createResources();
+        await click(await ResourcesPage.getListItemEl('3'));
+        await clickWithControlKey(await ResourcesPage.getListItemEl('2'));
+        await clickWithControlKey(await ResourcesPage.getListItemEl('1'));
+        await testDeletingResources();
+
+        done();
     });
 
 
-    it('delete multiple resources with shift key selection', () => {
+    it('delete multiple resources with shift key selection', async done => {
 
-        createResources();
-        common.click(ResourcesPage.getListItemEl('1'));
-        common.clickWithShiftKey(ResourcesPage.getListItemEl('3'));
-        testDeletingResources();
+        await createResources();
+        await click(await ResourcesPage.getListItemEl('1'));
+        await clickWithShiftKey(await ResourcesPage.getListItemEl('3'));
+        await testDeletingResources();
+
+        done();
     });
 
 
-    it('delete multi resources on different hierarchy levels', () => {
+    it('delete multiple resources on different hierarchy levels', async done => {
 
-        NavbarPage.clickTab('project');
-        ResourcesPage.clickSwitchHierarchyMode();
+        await NavbarPage.clickTab('project');
+        await ResourcesPage.clickSwitchHierarchyMode();
 
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('PQ1')), delays.ECWaitTime);
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('PQ1-ST1')), delays.ECWaitTime);
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('PQ2')), delays.ECWaitTime);
+        await waitForExist(await ResourcesPage.getListItemEl('PQ1'));
+        await waitForExist(await ResourcesPage.getListItemEl('PQ1-ST1'));
+        await waitForExist(await ResourcesPage.getListItemEl('PQ2'));
 
-        common.click(ResourcesPage.getListItemEl('PQ2'));
-        common.clickWithShiftKey(ResourcesPage.getListItemEl('PQ1'));
-        ResourcesPage.clickOpenContextMenu('PQ2');
-        ResourcesPage.clickContextMenuDeleteButton();
-        ResourcesPage.typeInIdentifierInConfirmDeletionInputField('PQ1');
-        ResourcesPage.clickConfirmDeleteInModal();
+        await click(await ResourcesPage.getListItemEl('PQ2'));
+        await clickWithShiftKey(await ResourcesPage.getListItemEl('PQ1'));
+        await ResourcesPage.clickOpenContextMenu('PQ2');
+        await ResourcesPage.clickContextMenuDeleteButton();
+        await ResourcesPage.typeInIdentifierInConfirmDeletionInputField('PQ1');
+        await ResourcesPage.clickConfirmDeleteInModal();
 
-        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('PQ1')), delays.ECWaitTime);
-        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('PQ1-ST1')), delays.ECWaitTime);
-        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('PQ2')), delays.ECWaitTime);
+        await waitForNotExist(await ResourcesPage.getListItemEl('PQ1'));
+        await waitForNotExist(await ResourcesPage.getListItemEl('PQ1-ST1'));
+        await waitForNotExist(await ResourcesPage.getListItemEl('PQ2'));
+
+        done();
     });
 
 
-    it('move multiple resources', () => {
+    it('move multiple resources', async done => {
 
-        createResources();
-        common.click(ResourcesPage.getListItemEl('1'));
-        common.clickWithShiftKey(ResourcesPage.getListItemEl('3'));
-        testMovingResources();
+        await createResources();
+        await click(await ResourcesPage.getListItemEl('1'));
+        await clickWithShiftKey(await ResourcesPage.getListItemEl('3'));
+        await testMovingResources();
+
+        done();
     });
 });

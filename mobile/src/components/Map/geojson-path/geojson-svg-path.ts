@@ -6,6 +6,7 @@
  */
 import { Position } from 'geojson';
 
+
 /**
  * PolygonToPath
  * Convert GEOJSON Polygon to path string <Path d=PolygonToPath(pol) />
@@ -14,17 +15,18 @@ import { Position } from 'geojson';
  * @param polygon Polygon coordinates
  * @returns string to be used with SVG path element
  */
-export const PolygonToPath = (polygon: Position[][]): string => {
+export const polygonToPath = (polygon: Position[][]): string => {
    
     let path = '';
     polygon.forEach((ringCoordinates, i) => {
-        path += ' ' + LineStringToPath(i === 0 ? ringCoordinates.slice().reverse() : ringCoordinates);
+        path += ' ' + lineStringToPath(i === 0 ? ringCoordinates.slice().reverse() : ringCoordinates);
     });
 
     return path;
 };
 
-export const LineStringToPath = (lineString: Position[]): string => {
+
+export const lineStringToPath = (lineString: Position[]): string => {
 
     let path = `M${lineString[0][0]} ${lineString[0][1]}`;
     for(let i = 1; i < lineString.length; i++)

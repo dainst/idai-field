@@ -35,6 +35,16 @@ export const polygonToPath = (polygon: Position[][]): string => {
 };
 
 
+/**
+ * multiLineStringToPath
+ * Regarding GeoJSON standards MultiLineString can be converted
+ * to path just like the polygon
+ * @param multiLineString MutliLineString coordinates
+ * @returns string to be used with SVG path element
+ */
+export const multiLineStringToPath = (multiLineString: Position[][]): string => polygonToPath(multiLineString);
+
+
 export const lineStringToPath = (lineString: Position[]): string => {
 
     let path = `M${lineString[0][0]} ${lineString[0][1]}`;

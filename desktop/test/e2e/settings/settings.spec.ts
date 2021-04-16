@@ -16,7 +16,6 @@ describe('settings --', function() {
     beforeAll(async done => {
 
         await start();
-        await waitForExist('#buttons-container'); // TODO Check for something less specific
         done();
     });
 

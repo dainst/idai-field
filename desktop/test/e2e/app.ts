@@ -16,9 +16,10 @@ const app = new Application({
 });
 
 
-export function start() {
+export async function start() {
 
-    return app.start();
+    await app.start();
+    return waitForExist('router-outlet');
 }
 
 

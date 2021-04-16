@@ -1,4 +1,4 @@
-import { navigateTo, resetApp, resetConfigJson, start, stop, typeIn, waitForExist } from '../app';
+import { navigateTo, resetApp, resetConfigJson, start, stop, typeIn } from '../app';
 import { NavbarPage } from '../navbar.page';
 import { SettingsPage } from './settings.page';
 import { ImageOverviewPage } from '../images/image-overview.page';

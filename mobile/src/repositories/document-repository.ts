@@ -1,5 +1,5 @@
 import {
-    CategoryConverter, ConstraintIndex, Document, DocumentCache, Datastore, IdaiFieldFindResult,
+    ConstraintIndex, Converter, Datastore, Document, DocumentCache, IdaiFieldFindResult,
     IdGenerator, IndexFacade, PouchdbDatastore, PouchDbFactory, PouchdbManager, Query, SyncProcess
 } from 'idai-field-core';
 import { Observable } from 'rxjs';
@@ -41,7 +41,7 @@ export class DocumentRepository {
         this.datastore.get(resourceId);
 
     
-    public find = (query: Query): Promise<IdaiFieldFindResult<Document>> =>
+    public find = (query: Query): Promise<IdaiFieldFindResult> =>
         this.datastore.find(query, true);
 
 
@@ -66,7 +66,7 @@ export class DocumentRepository {
 const buildDatastore = (pouchdbDatastore: PouchdbDatastore): Datastore => {
 
     const indexFacade = buildIndexFacade();
-    const documentCache = new DocumentCache<Document>();
+    const documentCache = new DocumentCache();
     const categoryConverter = buildDummyCategoryConverter();
 
     return new Datastore(pouchdbDatastore, indexFacade, documentCache, categoryConverter);
@@ -101,7 +101,7 @@ const buildIndexFacade = (showWarnings = true): IndexFacade => {
 };
 
 
-const buildDummyCategoryConverter = (): CategoryConverter<Document> => ({
+const buildDummyCategoryConverter = (): Converter => ({
 
         // eslint-disable-next-line @typescript-eslint/no-empty-function
         convert: (document: Document) => document

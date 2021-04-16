@@ -21,7 +21,7 @@ const Map: React.FC<MapProps> = ({ documents }) => {
     );
 };
 
-const styles= StyleSheet.create({
+const styles = StyleSheet.create({
     card: {
         width: '90%',
         alignItems: 'center'

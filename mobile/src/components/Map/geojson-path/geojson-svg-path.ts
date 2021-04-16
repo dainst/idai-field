@@ -6,6 +6,14 @@
  */
 import { Position } from 'geojson';
 
+export const multiPolygonToPath = (multiPolygon: Position[][][]): string => {
+
+    let path = '';
+    for (const polygon of multiPolygon)
+        path += polygonToPath(polygon);
+    
+    return path;
+};
 
 /**
  * PolygonToPath

@@ -1,6 +1,4 @@
-import {element, by} from 'protractor';
-
-const common = require('../common.js');
+import { click, getElement, getElements, rightClick, getText } from '../app';
 
 
 /**
@@ -10,33 +8,33 @@ export class ResourcesTypeGridPage {
 
     // click
 
-    public static clickGridElement(identifier: string) {
+    public static async clickGridElement(identifier: string) {
 
-        return common.click(this.getGridElement(identifier));
+        return click(await this.getGridElement(identifier));
     }
 
 
     public static clickEditButton() {
 
-        return common.click(element(by.css('.edit-button')));
+        return click('.edit-button');
     }
 
 
     public static clickTypeCatalogsNavigationButton() {
 
-        return common.click(element(by.id('types-navigation-root')));
+        return click('#types-navigation-root');
     }
 
 
-    public static clickOpenContextMenu(identifier: string) {
+    public static async clickOpenContextMenu(identifier: string) {
 
-        common.rightClick(this.getGridElement(identifier));
+        return rightClick(await this.getGridElement(identifier));
     }
 
 
     public static clickToggleFindsSectionButton() {
 
-        common.click(element(by.id('toggle-finds-section-button')));
+        return click('#toggle-finds-section-button');
     }
 
 
@@ -44,25 +42,25 @@ export class ResourcesTypeGridPage {
 
     public static getLinkedDocumentsGrid() {
 
-        return element(by.id('linked-documents-grid'));
+        return getElement('#linked-documents-grid');
     }
 
 
     public static getGridElements() {
 
-        return element.all(by.css('.type-grid-element'));
+        return getElements('.type-grid-element');
     }
 
 
     public static getGridElement(identifier: string) {
 
-        return element(by.id('type-grid-element-' + identifier));
+        return getElement('#type-grid-element-' + identifier);
     }
 
 
     public static getToggleFindsSectionButton() {
 
-        return element(by.id('toggle-finds-section-button'));
+        return getElement('#toggle-finds-section-button');
     }
 
 
@@ -70,13 +68,12 @@ export class ResourcesTypeGridPage {
 
     public static getTypeBadgeText(identifier: string) {
 
-        return element(by.css('#type-grid-element-' + identifier + ' .badge'))
-            .getText();
+        return getText('#type-grid-element-' + identifier + ' .badge');
     }
 
 
     public static getActiveNavigationButtonText() {
 
-        return element(by.css('.navigation-button.root-document')).getText();
+        return getText('.navigation-button.root-document');
     }
 }

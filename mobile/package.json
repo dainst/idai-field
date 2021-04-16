@@ -136,6 +136,12 @@
       ],
       "no-multi-spaces": [
         "warn"
+      ],
+      "eqeqeq": [
+        "warn"
+      ],
+      "space-infix-ops": [
+        "warn"
       ]
     }
   }

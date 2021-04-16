@@ -1,124 +1,147 @@
-import {browser, protractor} from 'protractor';
-import {NavbarPage} from '../navbar.page';
-import {MenuPage} from '../menu.page';
-import {ResourcesPage} from './resources.page';
-import {DoceditPage} from '../docedit/docedit.page';
-import {FieldsViewPage} from '../widgets/fields-view.page';
-import { click } from '../app';
-
-const EC = protractor.ExpectedConditions;
-const delays = require('../delays');
-const common = require('../common');
+import { click, navigateTo, resetApp, start, stop, waitForExist, waitForNotExist } from '../app';
+import { NavbarPage } from '../navbar.page';
+import { ResourcesPage } from './resources.page';
+import { DoceditPage } from '../docedit/docedit.page';
+import { FieldsViewPage } from '../widgets/fields-view.page';
 
 
 describe('resources/list --', () => {
 
-    beforeEach(() => {
+    beforeAll(async done => {
 
-        browser.sleep(1500);
-
-        MenuPage.navigateToSettings();
-        browser.sleep(1)
-            .then(() => common.resetApp());
-        NavbarPage.clickCloseNonResourcesTab();
-        NavbarPage.clickTab('project');
-        ResourcesPage.clickHierarchyButton('S1');
-        ResourcesPage.clickListModeButton();
+        await start();
+        done();
     });
 
 
-    afterAll(() => {
+    beforeEach(async done => {
 
-        ResourcesPage.clickMapModeButton();
+        await navigateTo('settings');
+        await resetApp();
+        await NavbarPage.clickCloseNonResourcesTab();
+        await NavbarPage.clickTab('project');
+        await ResourcesPage.clickHierarchyButton('S1');
+        await ResourcesPage.clickListModeButton();
+
+        done();
     });
 
 
-   it('show newly created resource in list view', () => {
+    afterAll(async done => {
 
-        ResourcesPage.performCreateResourceInList('1', 'feature-architecture');
-        ResourcesPage.getListModeInputFieldValue('1', 0)
-            .then(inputValue => expect(inputValue).toEqual('1'));
+        // TODO This can be deleted if we keep stopping the application after each test suite
+        await ResourcesPage.clickMapModeButton();
+
+        await stop();
+        done();
     });
 
 
-    it('save changes on input field blur', () => {
+   it('show newly created resource in list view', async done => {
 
-        ResourcesPage.performCreateResourceInList('1', 'feature-architecture');
-        ResourcesPage.performCreateResourceInList('2', 'feature-architecture');
+        await ResourcesPage.performCreateResourceInList('1', 'feature-architecture');
 
-        ResourcesPage.typeInListModeInputField('1', 1, 'Changed resource 1');
-        click(ResourcesPage.getListModeInputField('2', 0));
+        const inputValue = await ResourcesPage.getListModeInputFieldValue('1', 0);
+        expect(inputValue).toEqual('1');
 
-        NavbarPage.clickTab('project');
-        ResourcesPage.clickHierarchyButton('S1');
-        ResourcesPage.clickMapModeButton();
-        ResourcesPage.clickSelectResource('1', 'info');
-        FieldsViewPage
-            .getFieldValue(0, 1)
-            .then(categoryLabel => expect(categoryLabel).toEqual('Changed resource 1'));
+        done();
     });
 
 
-    it('navigate to child item view in list mode and create a new child object', () => {
+    it('save changes on input field blur', async done => {
 
-        ResourcesPage.performCreateResourceInList('5', 'feature-architecture');
-        ResourcesPage.clickHierarchyButton('5');
-        ResourcesPage.performCreateResourceInList('child1', 'find');
-        NavbarPage.clickTab('project');
-        ResourcesPage.clickHierarchyButton('S1');
+        await ResourcesPage.performCreateResourceInList('1', 'feature-architecture');
+        await ResourcesPage.performCreateResourceInList('2', 'feature-architecture');
 
-        ResourcesPage.getListModeInputFieldValue('child1', 0)
-            .then(inputValue => expect(inputValue).toEqual('child1'));
+        await ResourcesPage.typeInListModeInputField('1', 1, 'Changed resource 1');
+        await click(await ResourcesPage.getListModeInputField('2', 0));
+
+        await NavbarPage.clickTab('project');
+        await ResourcesPage.clickHierarchyButton('S1');
+        await ResourcesPage.clickMapModeButton();
+        await ResourcesPage.clickSelectResource('1', 'info');
+
+        const categoryLabel = await FieldsViewPage.getFieldValue(0, 1);
+        expect(categoryLabel).toEqual('Changed resource 1');
+
+        done();
     });
 
 
-    it('restore identifier from database if a duplicate identifier is typed in', () => {
+    it('navigate to child item view in list mode and create a new child object', async done => {
 
-        ResourcesPage.performCreateResourceInList('1', 'feature-architecture');
-        ResourcesPage.performCreateResourceInList('2', 'feature-architecture');
-        ResourcesPage.performCreateResourceInList('3', 'feature-architecture');
+        await ResourcesPage.performCreateResourceInList('5', 'feature-architecture');
+        await ResourcesPage.clickHierarchyButton('5');
+        await ResourcesPage.performCreateResourceInList('child1', 'find');
+        await NavbarPage.clickTab('project');
+        await ResourcesPage.clickHierarchyButton('S1');
 
-        ResourcesPage.typeInListModeInputField('2', 0, '1');
-        click(ResourcesPage.getListModeInputField('3', 0));
+        const inputValue = await ResourcesPage.getListModeInputFieldValue('child1', 0);
+        expect(inputValue).toEqual('child1');
 
-        expect(NavbarPage.getMessageText()).toContain('existiert bereits');
-
-        ResourcesPage.getListModeInputFieldValue('2', 0)
-            .then(inputValue => expect(inputValue).toEqual('2'));
-        NavbarPage.clickCloseAllMessages();
+        done();
     });
 
 
-    it('edit a resource via editor modal', () => {
+    it('restore identifier from database if a duplicate identifier is typed in', async done => {
 
-       ResourcesPage.clickListEditButton('SE0');
-       DoceditPage.typeInInputField('shortDescription', 'Test');
-       DoceditPage.clickSaveDocument();
-       ResourcesPage.getListModeInputFieldValue('SE0', 0)
-           .then(inputValue => expect(inputValue).toEqual('SE0'));
-       ResourcesPage.getListModeInputFieldValue('SE0', 1)
-           .then(inputValue => expect(inputValue).toEqual('Test'));
+        await ResourcesPage.performCreateResourceInList('1', 'feature-architecture');
+        await ResourcesPage.performCreateResourceInList('2', 'feature-architecture');
+        await ResourcesPage.performCreateResourceInList('3', 'feature-architecture');
+
+        await ResourcesPage.typeInListModeInputField('2', 0, '1');
+        await click(await ResourcesPage.getListModeInputField('3', 0));
+
+        expect(await NavbarPage.getMessageText()).toContain('existiert bereits');
+
+        const inputValue = await ResourcesPage.getListModeInputFieldValue('2', 0);
+        expect(inputValue).toEqual('2');
+
+        await NavbarPage.clickCloseAllMessages();
+
+        done();
     });
 
 
-    it('move a resource', () => {
+    it('edit a resource via editor modal', async done => {
 
-        ResourcesPage.clickListMoveButton('SE0');
-        ResourcesPage.typeInMoveModalSearchBarInput('S2');
-        ResourcesPage.clickResourceListItemInMoveModal('S2');
-        browser.wait(EC.stalenessOf(ResourcesPage.getMoveModal()), delays.ECWaitTime);
+        await ResourcesPage.clickListEditButton('SE0');
+        await DoceditPage.typeInInputField('shortDescription', 'Test');
+        await DoceditPage.clickSaveDocument();
+        let inputValue = await ResourcesPage.getListModeInputFieldValue('SE0', 0);
+        expect(inputValue).toEqual('SE0');
+        inputValue = await ResourcesPage.getListModeInputFieldValue('SE0', 1);
+        expect(inputValue).toEqual('Test'); 
 
-        NavbarPage.getActiveNavLinkLabel().then(label => expect(label).toContain('S2'));
-        ResourcesPage.getListRows().then(rows => expect(rows.length).toBe(7));
+        done();
     });
 
 
-    it('delete a resource', () => {
+    it('move a resource', async done => {
 
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('SE0')), delays.ECWaitTime);
-        ResourcesPage.clickListDeleteButton('SE0');
-        ResourcesPage.typeInIdentifierInConfirmDeletionInputField('SE0');
-        ResourcesPage.clickConfirmDeleteInModal();
-        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('SE0')), delays.ECWaitTime);
+        await ResourcesPage.clickListMoveButton('SE0');
+        await ResourcesPage.typeInMoveModalSearchBarInput('S2');
+        await ResourcesPage.clickResourceListItemInMoveModal('S2');
+        await waitForNotExist(await ResourcesPage.getMoveModal());
+
+        const label = await NavbarPage.getActiveNavLinkLabel();
+        expect(label).toContain('S2');
+        
+        const rows = await ResourcesPage.getListRows();
+        expect(rows.length).toBe(7);
+
+        done();
+    });
+
+
+    it('delete a resource', async done => {
+
+        await waitForExist(await ResourcesPage.getListItemEl('SE0'));
+        await ResourcesPage.clickListDeleteButton('SE0');
+        await ResourcesPage.typeInIdentifierInConfirmDeletionInputField('SE0');
+        await ResourcesPage.clickConfirmDeleteInModal();
+        await waitForNotExist(await ResourcesPage.getListItemEl('SE0'));
+
+        done();
     });
 });

@@ -1,8 +1,8 @@
 import { click, getElement, getElements, rightClick, hover, waitForNotExist, doubleClick, getText,
     typeIn, pressKeys } from '../app';
-import {DoceditPage} from '../docedit/docedit.page';
-import {DoceditRelationsTabPage} from '../docedit/docedit-relations-tab.page';
-import {NavbarPage} from '../navbar.page';
+import { DoceditPage } from '../docedit/docedit.page';
+import { DoceditRelationsTabPage } from '../docedit/docedit-relations-tab.page';
+import { NavbarPage } from '../navbar.page';
 
 
 export class ResourcesPage {
@@ -297,9 +297,9 @@ export class ResourcesPage {
     }
 
 
-    public static typeInIdentifierInConfirmDeletionInputField(identifier: string) {
+    public static async typeInIdentifierInConfirmDeletionInputField(identifier: string) {
 
-        return typeIn(this.getConfirmDeletionInputField(), identifier);
+        return typeIn(await this.getConfirmDeletionInputField(), identifier);
     }
 
 

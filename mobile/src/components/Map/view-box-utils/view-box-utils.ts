@@ -45,7 +45,7 @@ export const getMinMaxCoords = (geos: FieldGeometry[]): [number, number, number,
     });
     return [
         Math.min(...xCoords), Math.min(...yCoords),
-        Math.max(...xCoords), Math.min(...yCoords)];
+        Math.max(...xCoords), Math.max(...yCoords)];
 
 };
 

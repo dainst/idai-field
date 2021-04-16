@@ -4,7 +4,6 @@ import { lineBuilding } from '../../../../test_data/test_docs/lineBuilding';
 import { multiPointSurvey } from '../../../../test_data/test_docs/multiPointSurvey';
 import { multiPolyTrench } from '../../../../test_data/test_docs/multiPolyTrench';
 import { pointBuilding } from '../../../../test_data/test_docs/pointBuilding';
-//import { multiPointSurvey } from "../../../../test_data/test_docs/multiPointSurvey";
 import {
     defineViewBox,
     extractCoordsPositions,

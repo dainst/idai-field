@@ -1,6 +1,4 @@
-import {element, by} from 'protractor';
-
-const common = require('../common.js');
+import { click, getElement, getElements, rightClick, getText } from '../app';
 
 
 /**
@@ -10,9 +8,9 @@ export class ResourcesSearchBarPage {
 
     // click
 
-    public static clickFirstSuggestion() {
+    public static async clickFirstSuggestion() {
 
-        return common.click(ResourcesSearchBarPage.getFirstSuggestion());
+        return click(await ResourcesSearchBarPage.getFirstSuggestion());
     }
 
 
@@ -20,18 +18,18 @@ export class ResourcesSearchBarPage {
 
     public static getSuggestionsBox() {
 
-        return element(by.id('search-suggestions'));
+        return getElement('#search-suggestions');
     }
 
 
     public static getSuggestions() {
 
-        return element.all(by.css('.suggestion-container .title'));
+        return getElements('.suggestion-container .title');
     }
 
 
     public static getFirstSuggestion() {
 
-        return element(by.css('.suggestion-container .title'));
+        return getElement('.suggestion-container .title');
     }
 }

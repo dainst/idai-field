@@ -39,6 +39,12 @@ export function resetApp() {
 }
 
 
+export function getAppDataPath(): Promise<string> {
+
+    return app.electron.remote.getGlobal('appDataPath');
+}
+
+
 export function navigateTo(menu) {
 
     return new Promise(resolve => {

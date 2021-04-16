@@ -49,7 +49,7 @@ export class SearchConstraintsPage {
 
     public static clickRemoveConstraintButton(fieldName: string) {
 
-        return click('remove-constraint-button-' + fieldName);
+        return click('#remove-constraint-button-' + fieldName);
     }
 
 

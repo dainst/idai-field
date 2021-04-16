@@ -1,6 +1,6 @@
-import {browser, protractor} from 'protractor';
+import { click, getAppDataPath, getText, navigateTo, pause, resetApp, resetConfigJson, start, stop, waitForExist,
+    waitForInvisible, waitForNotExist } from '../app';
 import {NavbarPage} from '../navbar.page';
-import {MenuPage} from '../menu.page';
 import {SearchBarPage} from '../widgets/search-bar.page';
 import {ResourcesPage} from './resources.page';
 import {ImageOverviewPage} from '../images/image-overview.page';
@@ -11,9 +11,7 @@ import {FieldsViewPage} from '../widgets/fields-view.page';
 import {ImageViewPage} from '../images/image-view.page';
 
 const fs = require('fs');
-const delays = require('../delays');
-const EC = protractor.ExpectedConditions;
-const common = require('../common');
+
 
 /**
  * filter
@@ -25,611 +23,624 @@ const common = require('../common');
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-describe('resources/state --', function() {
+describe('resources/state --', () => {
 
-    const appDataPath = browser.params.appDataPath;
+    beforeAll(async done => {
 
-
-    beforeAll(() => {
-
-        removeResourcesStateFile();
+        await start();
+        done();
     });
 
 
-    beforeEach(() => {
+    beforeEach(async done => {
 
-        browser.sleep(1500);
-
-        MenuPage.navigateToSettings();
-        browser.sleep(1)
-            .then(() => common.resetApp());
-        NavbarPage.clickCloseNonResourcesTab();
-        NavbarPage.clickTab('project');
+        await removeResourcesStateFile();
+        await navigateTo('settings');
+        await resetApp();
+        await NavbarPage.clickCloseNonResourcesTab();
+        await NavbarPage.clickTab('project');
+        done();
     });
 
 
-    afterEach(done => {
+    afterEach(async done => {
 
-        removeResourcesStateFile();
-        common.resetConfigJson().then(done);
+        await resetConfigJson();
+        done();
     });
 
 
-    function removeResourcesStateFile() {
+    afterAll(async done => {
 
-        const filePath = appDataPath + '/resources-state-' + 'abc.json';
+        await stop();
+        done();
+    });
+
+
+    async function removeResourcesStateFile() {
+
+        const filePath = (await getAppDataPath()) + '/resources-state-' + 'abc.json';
         if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
     }
 
 
-    function createDepictsRelation() {
+    async function createDepictsRelation() {
 
-        MenuPage.navigateToImages();
-        browser.sleep(delays.shortRest * 5);
-        ImageOverviewPage.createDepictsRelation('S1');
+        await navigateTo('images');
+        await ImageOverviewPage.createDepictsRelation('S1');
     }
 
 
-    function clickDepictsRelationLink() {
+    async function clickDepictsRelationLink() {
 
-        ImageOverviewPage.doubleClickCell(0);
-        ImageViewPage.openRelationsTab();
-        ImageViewPage.clickRelation();
+        await ImageOverviewPage.doubleClickCell(0);
+        await ImageViewPage.openRelationsTab();
+        await ImageViewPage.clickRelation();
     }
 
 
-    it('filter', () => {
+    it('filter', async done => {
 
         // map
-        ResourcesPage.clickHierarchyButton('S1');
-        ResourcesPage.performCreateResource('1');
-        SearchBarPage.typeInSearchField('1');
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
+        await ResourcesPage.clickHierarchyButton('S1');
+        await ResourcesPage.performCreateResource('1');
+        await SearchBarPage.typeInSearchField('1');
+        await pause(1000);
+        await waitForExist(await ResourcesPage.getListItemEl('1'));
 
         // list
-        NavbarPage.clickTab('project');
-        ResourcesPage.clickHierarchyButton('S2');
-        ResourcesPage.clickListModeButton();
+        await NavbarPage.clickTab('project');
+        await ResourcesPage.clickHierarchyButton('S2');
+        await ResourcesPage.clickListModeButton();
 
         // fulltext
-        browser.wait(EC.visibilityOf(ResourcesPage.getListItemEl('SE2')), delays.ECWaitTime);
-        SearchBarPage.typeInSearchField('SE1');
-        browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('SE2')), delays.ECWaitTime);
+        await waitForExist(await ResourcesPage.getListItemEl('SE2'));
+        await SearchBarPage.typeInSearchField('SE1');
+        await waitForNotExist(await ResourcesPage.getListItemEl('SE2'));
 
         // filter
-        SearchBarPage.typeInSearchField(' ');
-        browser.wait(EC.visibilityOf(ResourcesPage.getListItemEl('SE2')), delays.ECWaitTime);
-        SearchBarPage.clickChooseCategoryFilter('feature-architecture');
-        browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('SE2')), delays.ECWaitTime);
+        await SearchBarPage.typeInSearchField(' ');
+        await waitForExist(await ResourcesPage.getListItemEl('SE2'));
+        await SearchBarPage.clickChooseCategoryFilter('feature-architecture');
+        await waitForNotExist(await ResourcesPage.getListItemEl('SE2'));
+
+        done();
     });
 
 
     it('filter - suggestions', async done => {
 
         // show suggestion for resource from different context
-        SearchBarPage.typeInSearchField('SE0');
-        browser.wait(EC.presenceOf(ResourcesSearchBarPage.getSuggestionsBox()), delays.ECWaitTime);
-        ResourcesSearchBarPage.getSuggestions().then(suggestions => {
-            expect(suggestions.length).toBe(1);
-            expect(suggestions[0].getText()).toEqual('SE0');
-        });
+        await SearchBarPage.typeInSearchField('SE0');
+        await waitForExist(await ResourcesSearchBarPage.getSuggestionsBox());
+        let suggestions = await ResourcesSearchBarPage.getSuggestions();
+        expect(suggestions.length).toBe(1);
+        expect(await getText(suggestions[0])).toEqual('SE0');
 
         // do not show suggestions if any resources in current context are found
-        SearchBarPage.typeInSearchField('S');
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('S1')), delays.ECWaitTime);
-        browser.wait(EC.invisibilityOf(ResourcesSearchBarPage.getSuggestionsBox()), delays.ECWaitTime);
-        ResourcesSearchBarPage.getSuggestions().then(suggestions => expect(suggestions.length).toBe(0));
+        await SearchBarPage.typeInSearchField('S');
+        await waitForExist(await ResourcesPage.getListItemEl('S1'));
+        await waitForInvisible(await ResourcesSearchBarPage.getSuggestionsBox());
+        suggestions = await ResourcesSearchBarPage.getSuggestions();
+        expect(suggestions.length).toBe(0);
 
         // do not suggest project document
-        SearchBarPage.typeInSearchField('te');
-        browser.wait(EC.presenceOf(ResourcesSearchBarPage.getSuggestionsBox()), delays.ECWaitTime);
-        ResourcesSearchBarPage.getSuggestions().then(suggestions => {
-            expect(suggestions.length).toBe(1);
-            expect(suggestions[0].getText()).toEqual('testf1');
-        });
+        await SearchBarPage.typeInSearchField('te');
+        await waitForExist(await ResourcesSearchBarPage.getSuggestionsBox());
+        suggestions = await ResourcesSearchBarPage.getSuggestions();
+        expect(suggestions.length).toBe(1);
+        expect(await getText(suggestions[0])).toEqual('testf1');
 
         // delete query string after following suggestion link
-        SearchBarPage.typeInSearchField('SE0');
-        browser.wait(EC.presenceOf(ResourcesSearchBarPage.getSuggestionsBox()), delays.ECWaitTime);
-        ResourcesSearchBarPage.clickFirstSuggestion();
+        await SearchBarPage.typeInSearchField('SE0');
+        await waitForExist(await ResourcesSearchBarPage.getSuggestionsBox());
+        await ResourcesSearchBarPage.clickFirstSuggestion();
 
-        NavbarPage.clickTab('project');
+        await NavbarPage.clickTab('project');
         expect(await SearchBarPage.getSearchBarInputFieldValue()).toEqual('');
 
         done();
     });
 
 
-    it('filter -- select all', () => {
+    it('filter -- select all', async done => {
 
-        ResourcesPage.clickHierarchyButton('S1');
+        await ResourcesPage.clickHierarchyButton('S1');
 
-        ResourcesPage.performCreateResource('1', 'feature-architecture');
-        ResourcesPage.performCreateResource('2', 'feature-floor');
-        SearchBarPage.clickChooseCategoryFilter('inscription');
-        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
-        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('2')), delays.ECWaitTime);
-        SearchBarPage.clickChooseCategoryFilter('all');
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('2')), delays.ECWaitTime);
-    });
-
-
-    it('filter -- show correct categories in plus button menu after choosing category filter', () => {
-
-        ResourcesPage.clickHierarchyButton('S1');
-
-        const checkCategoryOptions = () => {
-
-            SearchBarPage.clickChooseCategoryFilter('feature');
-            ResourcesPage.clickCreateResource();
-            browser.wait(EC.presenceOf(ResourcesPage.getCategoryOption('feature')), delays.ECWaitTime);
-            browser.wait(EC.presenceOf(ResourcesPage.getCategoryOption('feature-architecture')), delays.ECWaitTime);
-            browser.wait(EC.stalenessOf(ResourcesPage.getCategoryOption('find')), delays.ECWaitTime);
-            browser.wait(EC.stalenessOf(ResourcesPage.getCategoryOption('find-pottery')), delays.ECWaitTime);
-
-            SearchBarPage.clickChooseCategoryFilter('find');
-            ResourcesPage.clickCreateResource();
-            browser.wait(EC.presenceOf(ResourcesPage.getCategoryOption('find')), delays.ECWaitTime);
-            browser.wait(EC.presenceOf(ResourcesPage.getCategoryOption('find-pottery')), delays.ECWaitTime);
-            browser.wait(EC.stalenessOf(ResourcesPage.getCategoryOption('feature')), delays.ECWaitTime);
-            browser.wait(EC.stalenessOf(ResourcesPage.getCategoryOption('feature-architecture')), delays.ECWaitTime);
-
-            SearchBarPage.clickChooseCategoryFilter('all');
-            ResourcesPage.clickCreateResource();
-            browser.wait(EC.presenceOf(ResourcesPage.getCategoryOption('feature')), delays.ECWaitTime);
-            browser.wait(EC.presenceOf(ResourcesPage.getCategoryOption('feature-architecture')), delays.ECWaitTime);
-            browser.wait(EC.presenceOf(ResourcesPage.getCategoryOption('find')), delays.ECWaitTime);
-            browser.wait(EC.presenceOf(ResourcesPage.getCategoryOption('find-pottery')), delays.ECWaitTime);
-        };
-
-        checkCategoryOptions();
-        ResourcesPage.clickListModeButton();
-        checkCategoryOptions();
-    });
-
-
-    it('filter -- set category of newly created resource to filter category if a child category is chosen as filter category', () => {
-
-        ResourcesPage.clickHierarchyButton('S1');
-        browser.sleep(delays.shortRest * 3);
-
-        const checkCategoryIcon = () => {
-
-            SearchBarPage.clickChooseCategoryFilter('feature-architecture');
-            ResourcesPage.getCreateDocumentButtonCategoryCharacter()
-                .then(character => expect(character).toEqual('A'));
-
-            SearchBarPage.clickChooseCategoryFilter('feature');
-            browser.wait(EC.stalenessOf(ResourcesPage.getCreateDocumentButtonCategoryIcon()), delays.ECWaitTime);
-
-            SearchBarPage.clickChooseCategoryFilter('all');
-            browser.wait(EC.stalenessOf(ResourcesPage.getCreateDocumentButtonCategoryIcon()), delays.ECWaitTime);
-        };
-
-        const createResourceWithPresetCategory = (identifier: string, listMode: boolean) => {
-
-            SearchBarPage.clickChooseCategoryFilter('feature-layer');
-            ResourcesPage.getCreateDocumentButtonCategoryCharacter()
-                .then(character => expect(character).toEqual('E'));
-            ResourcesPage.clickCreateResource();
-
-            if (listMode) {
-                ResourcesPage.typeInNewResourceAndHitEnterInList(identifier);
-            } else {
-                ResourcesPage.clickSelectGeometryType();
-                DoceditPage.typeInInputField('identifier', identifier);
-                //ResourcesPage.scrollUp();
-                DoceditPage.clickSaveDocument();
-            }
-
-            browser.sleep(delays.shortRest);
-        };
-
-        checkCategoryIcon();
-        createResourceWithPresetCategory('1', false);
-        ResourcesPage.clickSelectResource('1', 'info');
-        FieldsViewPage.getFieldValue(0, 0).then(categoryLabel => {
-            expect(categoryLabel).toEqual('Erdbefund');
-        });
-
-        ResourcesPage.clickListModeButton();
-        checkCategoryIcon();
-        createResourceWithPresetCategory('2', true);
-        ResourcesPage.clickMapModeButton();
-        ResourcesPage.clickSelectResource('2', 'info');
-        FieldsViewPage.getFieldValue(0, 0).then(categoryLabel => {
-            expect(categoryLabel).toEqual('Erdbefund');
-        });
-    });
-
-
-    it('filter -- by parent category', () => {
-
-        ResourcesPage.clickHierarchyButton('S1');
-        browser.sleep(delays.shortRest * 3);
-
-        ResourcesPage.performCreateResource('1', 'feature-architecture');
-        ResourcesPage.performCreateResource('2', 'find-glass');
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('2')), delays.ECWaitTime);
-        SearchBarPage.clickChooseCategoryFilter('feature');
-        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('2')), delays.ECWaitTime);
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
-    });
-
-
-    it('search -- show suggestion for extended search query', done => {
-
-        ResourcesPage.clickSwitchHierarchyMode();
-
-        ResourcesPage.openEditByDoubleClickResource('SE2');
-        DoceditPage.clickGotoChildTab();
-        DoceditPage.clickSelectOption('layerClassification', 1);
-        DoceditPage.clickSaveDocument();
-
-        ResourcesPage.clickSwitchHierarchyMode();
-        ResourcesPage.clickHierarchyButton('S1');
-        ResourcesPage.clickSwitchHierarchyMode();
-
-        SearchBarPage.clickChooseCategoryFilter('feature-layer');
-        SearchConstraintsPage.clickConstraintsMenuButton();
-        SearchConstraintsPage.clickSelectConstraintField('layerClassification');
-        SearchConstraintsPage.clickSelectDropdownValue(1);
-        SearchConstraintsPage.clickAddConstraintButton();
-        SearchBarPage.clickSearchBarInputField();
-
-        browser.wait(EC.presenceOf(ResourcesSearchBarPage.getSuggestionsBox()), delays.ECWaitTime);
-        ResourcesSearchBarPage.getSuggestions().then(suggestions => {
-            expect(suggestions.length).toBe(1);
-            expect(suggestions[0].getText()).toEqual('SE2');
-        });
+        await ResourcesPage.performCreateResource('1', 'feature-architecture');
+        await ResourcesPage.performCreateResource('2', 'feature-floor');
+        await SearchBarPage.clickChooseCategoryFilter('inscription');
+        await waitForNotExist(await ResourcesPage.getListItemEl('1'));
+        await waitForNotExist(await ResourcesPage.getListItemEl('2'));
+        await SearchBarPage.clickChooseCategoryFilter('all');
+        await waitForExist(await ResourcesPage.getListItemEl('1'));
+        await waitForExist(await ResourcesPage.getListItemEl('2'));
 
         done();
     });
 
 
-    it('filter - jump into right context', () => {
+    it('filter -- show correct categories in plus button menu after choosing category filter', async done => {
+
+        await ResourcesPage.clickHierarchyButton('S1');
+
+        const checkCategoryOptions = async () => {
+
+            await SearchBarPage.clickChooseCategoryFilter('feature');
+            await ResourcesPage.clickCreateResource();
+            await waitForExist(await ResourcesPage.getCategoryOption('feature'));
+            await waitForExist(await ResourcesPage.getCategoryOption('feature-architecture'));
+            await waitForNotExist(await ResourcesPage.getCategoryOption('find'));
+            await waitForNotExist(await ResourcesPage.getCategoryOption('find-pottery'));
+
+            await SearchBarPage.clickChooseCategoryFilter('find');
+            await ResourcesPage.clickCreateResource();
+            await waitForExist(await ResourcesPage.getCategoryOption('find'));
+            await waitForExist(await ResourcesPage.getCategoryOption('find-pottery'));
+            await waitForNotExist(await ResourcesPage.getCategoryOption('feature'));
+            await waitForNotExist(await ResourcesPage.getCategoryOption('feature-architecture'));
+
+            await SearchBarPage.clickChooseCategoryFilter('all');
+            await ResourcesPage.clickCreateResource();
+            await waitForExist(await ResourcesPage.getCategoryOption('feature'));
+            await waitForExist(await ResourcesPage.getCategoryOption('feature-architecture'));
+            await waitForExist(await ResourcesPage.getCategoryOption('find'));
+            await waitForExist(await ResourcesPage.getCategoryOption('find-pottery'));
+        };
+
+        await checkCategoryOptions();
+        await ResourcesPage.clickListModeButton();
+        await checkCategoryOptions();
+
+        done();
+    });
+
+
+    it('filter -- set category of newly created resource to filter category if a child category is chosen as filter category', async done => {
+
+        await ResourcesPage.clickHierarchyButton('S1');
+
+        const checkCategoryIcon = async () => {
+
+            await SearchBarPage.clickChooseCategoryFilter('feature-architecture');
+            expect(await ResourcesPage.getCreateDocumentButtonCategoryCharacter()).toEqual('A');
+
+            await SearchBarPage.clickChooseCategoryFilter('feature');
+            await waitForNotExist(await ResourcesPage.getCreateDocumentButtonCategoryIcon());
+
+            await SearchBarPage.clickChooseCategoryFilter('all');
+            await waitForNotExist(await ResourcesPage.getCreateDocumentButtonCategoryIcon());
+        };
+
+        const createResourceWithPresetCategory = async (identifier: string, listMode: boolean) => {
+
+            await SearchBarPage.clickChooseCategoryFilter('feature-layer');
+            expect(await ResourcesPage.getCreateDocumentButtonCategoryCharacter()).toEqual('E');
+            await ResourcesPage.clickCreateResource();
+
+            if (listMode) {
+                await ResourcesPage.typeInNewResourceAndHitEnterInList(identifier);
+            } else {
+                await ResourcesPage.clickSelectGeometryType();
+                await DoceditPage.typeInInputField('identifier', identifier);
+                await DoceditPage.clickSaveDocument();
+            }
+        };
+
+        await checkCategoryIcon();
+        await createResourceWithPresetCategory('1', false);
+        await ResourcesPage.clickSelectResource('1', 'info');
+        expect(await FieldsViewPage.getFieldValue(0, 0)).toEqual('Erdbefund');
+
+        await ResourcesPage.clickListModeButton();
+        await checkCategoryIcon();
+        await createResourceWithPresetCategory('2', true);
+        await ResourcesPage.clickMapModeButton();
+        await ResourcesPage.clickSelectResource('2', 'info');
+        expect(await FieldsViewPage.getFieldValue(0, 0)).toEqual('Erdbefund');
+
+        done();
+    });
+
+
+    it('filter -- by parent category', async done => {
+
+        await ResourcesPage.clickHierarchyButton('S1');
+        await ResourcesPage.performCreateResource('1', 'feature-architecture');
+        await ResourcesPage.performCreateResource('2', 'find-glass');
+        await waitForExist(await ResourcesPage.getListItemEl('1'));
+        await waitForExist(await ResourcesPage.getListItemEl('2'));
+        await SearchBarPage.clickChooseCategoryFilter('feature');
+        await waitForNotExist(await ResourcesPage.getListItemEl('2'));
+        await waitForExist(await ResourcesPage.getListItemEl('1'));
+
+        done();
+    });
+
+
+    it('search -- show suggestion for extended search query', async done => {
+
+        await ResourcesPage.clickSwitchHierarchyMode();
+
+        await ResourcesPage.openEditByDoubleClickResource('SE2');
+        await DoceditPage.clickGotoChildTab();
+        await DoceditPage.clickSelectOption('layerClassification', 1);
+        await DoceditPage.clickSaveDocument();
+
+        await ResourcesPage.clickSwitchHierarchyMode();
+        await ResourcesPage.clickHierarchyButton('S1');
+        await ResourcesPage.clickSwitchHierarchyMode();
+
+        await SearchBarPage.clickChooseCategoryFilter('feature-layer');
+        await SearchConstraintsPage.clickConstraintsMenuButton();
+        await SearchConstraintsPage.clickSelectConstraintField('layerClassification');
+        await SearchConstraintsPage.clickSelectDropdownValue(1);
+        await SearchConstraintsPage.clickAddConstraintButton();
+        await SearchBarPage.clickSearchBarInputField();
+
+        await waitForExist(await ResourcesSearchBarPage.getSuggestionsBox());
+        const suggestions = await ResourcesSearchBarPage.getSuggestions();
+        expect(suggestions.length).toBe(1);
+        expect(await getText(suggestions[0])).toEqual('SE2');
+
+        done();
+    });
+
+
+    it('filter - jump into right context', async done => {
 
         // map - stay in overview
-        NavbarPage.clickTab('project');
-        ResourcesPage.clickSwitchHierarchyMode();
-        ResourcesPage.clickHierarchyButton('S1');
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('S1')));
-        ResourcesPage.getSelectedListItemIdentifierText().then(text => expect(text).toBe('S1'));
+        await NavbarPage.clickTab('project');
+        await ResourcesPage.clickSwitchHierarchyMode();
+        await ResourcesPage.clickHierarchyButton('S1');
+        await waitForExist(await ResourcesPage.getListItemEl('S1'));
+        let text = await ResourcesPage.getSelectedListItemIdentifierText();
+        expect(text).toBe('S1');
 
         // list - stay in overview
-        ResourcesPage.clickListModeButton();
-        ResourcesPage.clickSwitchHierarchyMode();
-        ResourcesPage.clickHierarchyButton('S1');
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('S1')));
+        await ResourcesPage.clickListModeButton();
+        await ResourcesPage.clickSwitchHierarchyMode();
+        await ResourcesPage.clickHierarchyButton('S1');
+        await waitForExist(await ResourcesPage.getListItemEl('S1'));
 
         // map - goto other tab and into navpath
-        ResourcesPage.clickMapModeButton();
-        ResourcesPage.clickSwitchHierarchyMode();
-        SearchBarPage.clickChooseCategoryFilter('find');
-        ResourcesPage.clickHierarchyButton('testf1');
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('testf1')));
-        ResourcesPage.getSelectedListItemIdentifierText().then(text => expect(text).toBe('testf1'));
-        ResourcesPage.getNavigationButtons().then(navigationButtons => {
-            expect(navigationButtons.length).toBe(2);
-            expect(navigationButtons[0].getText()).toEqual('S1');
-            expect(navigationButtons[1].getText()).toEqual('SE0');
-        });
+        await ResourcesPage.clickMapModeButton();
+        await ResourcesPage.clickSwitchHierarchyMode();
+        await SearchBarPage.clickChooseCategoryFilter('find');
+        await ResourcesPage.clickHierarchyButton('testf1');
+        await waitForExist(await ResourcesPage.getListItemEl('testf1'));
+        text = await ResourcesPage.getSelectedListItemIdentifierText();
+        expect(text).toBe('testf1');
+        let navigationButtons = await ResourcesPage.getNavigationButtons();
+        expect(navigationButtons.length).toBe(2);
+        expect(await getText(navigationButtons[0])).toEqual('S1');
+        expect(await getText(navigationButtons[1])).toEqual('SE0');
 
         // list - goto other tab and into navpath
-        NavbarPage.clickTab('project');
-        ResourcesPage.clickListModeButton();
-        ResourcesPage.clickHierarchyButton('testf1');
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('testf1')));
-        ResourcesPage.getNavigationButtons().then(navigationButtons => {
-            expect(navigationButtons.length).toBe(2);
-            expect(navigationButtons[0].getText()).toEqual('S1');
-            expect(navigationButtons[1].getText()).toEqual('SE0');
-        });
+        await NavbarPage.clickTab('project');
+        await ResourcesPage.clickListModeButton();
+        await ResourcesPage.clickHierarchyButton('testf1');
+        await waitForExist(await ResourcesPage.getListItemEl('testf1'));
+        navigationButtons = await ResourcesPage.getNavigationButtons();
+        expect(navigationButtons.length).toBe(2);
+        expect(await getText(navigationButtons[0])).toEqual('S1');
+        expect(await getText(navigationButtons[1])).toEqual('SE0');
+
+        done();
     });
 
 
-    it('search -- perform constraint search for simple input field', () => {
+    it('search -- perform constraint search for simple input field', async done => {
 
-        ResourcesPage.clickSwitchHierarchyMode();
+        await ResourcesPage.clickSwitchHierarchyMode();
 
-        ResourcesPage.openEditByDoubleClickResource('S1');
-        DoceditPage.typeInInputField('diary', 'testvalue');
-        DoceditPage.clickSaveDocument();
+        await ResourcesPage.openEditByDoubleClickResource('S1');
+        await DoceditPage.typeInInputField('diary', 'testvalue');
+        await DoceditPage.clickSaveDocument();
 
-        SearchBarPage.clickChooseCategoryFilter('operation-trench');
-        SearchConstraintsPage.clickConstraintsMenuButton();
-        SearchConstraintsPage.clickSelectConstraintField('diary');
-        SearchConstraintsPage.typeInConstraintSearchTerm('testvalue');
-        SearchConstraintsPage.clickAddConstraintButton();
+        await SearchBarPage.clickChooseCategoryFilter('operation-trench');
+        await SearchConstraintsPage.clickConstraintsMenuButton();
+        await SearchConstraintsPage.clickSelectConstraintField('diary');
+        await SearchConstraintsPage.typeInConstraintSearchTerm('testvalue');
+        await SearchConstraintsPage.clickAddConstraintButton();
 
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('S1')));
-        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('S2')));
+        await waitForExist(await ResourcesPage.getListItemEl('S1'));
+        await waitForNotExist(await ResourcesPage.getListItemEl('S2'));
+
+        done();
     });
 
 
-    it('search -- perform constraint search for dropdown field', () => {
+    it('search -- perform constraint search for dropdown field', async done => {
 
-        ResourcesPage.clickSwitchHierarchyMode();
+        await ResourcesPage.clickSwitchHierarchyMode();
 
-        ResourcesPage.openEditByDoubleClickResource('SE2');
-        DoceditPage.clickGotoChildTab();
-        DoceditPage.clickSelectOption('layerClassification', 1);
-        DoceditPage.clickSaveDocument();
+        await ResourcesPage.openEditByDoubleClickResource('SE2');
+        await DoceditPage.clickGotoChildTab();
+        await DoceditPage.clickSelectOption('layerClassification', 1);
+        await DoceditPage.clickSaveDocument();
 
-        SearchBarPage.clickChooseCategoryFilter('feature-layer');
-        SearchConstraintsPage.clickConstraintsMenuButton();
-        SearchConstraintsPage.clickSelectConstraintField('layerClassification');
-        SearchConstraintsPage.clickSelectDropdownValue(1);
-        SearchConstraintsPage.clickAddConstraintButton();
+        await SearchBarPage.clickChooseCategoryFilter('feature-layer');
+        await SearchConstraintsPage.clickConstraintsMenuButton();
+        await SearchConstraintsPage.clickSelectConstraintField('layerClassification');
+        await SearchConstraintsPage.clickSelectDropdownValue(1);
+        await SearchConstraintsPage.clickAddConstraintButton();
 
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('SE2')));
-        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('SE5')));
+        await waitForExist(await ResourcesPage.getListItemEl('SE2'));
+        await waitForNotExist(await ResourcesPage.getListItemEl('SE5'));
+
+        done();
     });
 
 
-    it('search -- perform constraint search for boolean field', () => {
+    it('search -- perform constraint search for boolean field', async done => {
 
-        ResourcesPage.clickSwitchHierarchyMode();
+        await ResourcesPage.clickSwitchHierarchyMode();
 
-        ResourcesPage.openEditByDoubleClickResource('SE0');
-        DoceditPage.clickGotoParentTab();
-        DoceditPage.clickBooleanRadioButton('hasDisturbance', 0);
-        DoceditPage.clickSaveDocument();
-        ResourcesPage.openEditByDoubleClickResource('SE1');
-        DoceditPage.clickGotoParentTab();
-        DoceditPage.clickBooleanRadioButton('hasDisturbance', 1);
-        DoceditPage.clickSaveDocument();
+        await ResourcesPage.openEditByDoubleClickResource('SE0');
+        await DoceditPage.clickGotoParentTab();
+        await DoceditPage.clickBooleanRadioButton('hasDisturbance', 0);
+        await DoceditPage.clickSaveDocument();
+        await ResourcesPage.openEditByDoubleClickResource('SE1');
+        await DoceditPage.clickGotoParentTab();
+        await DoceditPage.clickBooleanRadioButton('hasDisturbance', 1);
+        await DoceditPage.clickSaveDocument();
 
-        SearchBarPage.clickChooseCategoryFilter('feature');
-        SearchConstraintsPage.clickConstraintsMenuButton();
-        SearchConstraintsPage.clickSelectConstraintField('hasDisturbance');
-        SearchConstraintsPage.clickSelectBooleanValue(true);
-        SearchConstraintsPage.clickAddConstraintButton();
+        await SearchBarPage.clickChooseCategoryFilter('feature');
+        await SearchConstraintsPage.clickConstraintsMenuButton();
+        await SearchConstraintsPage.clickSelectConstraintField('hasDisturbance');
+        await SearchConstraintsPage.clickSelectBooleanValue(true);
+        await SearchConstraintsPage.clickAddConstraintButton();
 
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('SE0')));
-        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('SE1')));
+        await waitForExist(await ResourcesPage.getListItemEl('SE0'));
+        await waitForNotExist(await ResourcesPage.getListItemEl('SE1'));
 
-        SearchConstraintsPage.clickRemoveConstraintButton('hasDisturbance');
+        await SearchConstraintsPage.clickRemoveConstraintButton('hasDisturbance');
 
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('SE0')));
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('SE1')));
+        await waitForExist(await ResourcesPage.getListItemEl('SE0'));
+        await waitForExist(await ResourcesPage.getListItemEl('SE1'));
 
-        SearchConstraintsPage.clickSelectConstraintField('hasDisturbance');
-        SearchConstraintsPage.clickSelectBooleanValue(false);
-        SearchConstraintsPage.clickAddConstraintButton();
+        await SearchConstraintsPage.clickSelectConstraintField('hasDisturbance');
+        await SearchConstraintsPage.clickSelectBooleanValue(false);
+        await SearchConstraintsPage.clickAddConstraintButton();
 
-        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('SE0')));
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('SE1')));
+        await waitForNotExist(await ResourcesPage.getListItemEl('SE0'));
+        await waitForExist(await ResourcesPage.getListItemEl('SE1'));
+
+        done();
     });
 
 
-    it('search -- remove field from dropdown after adding constraint', () => {
+    it('search -- remove field from dropdown after adding constraint', async done => {
 
-        ResourcesPage.clickSwitchHierarchyMode();
+        await ResourcesPage.clickSwitchHierarchyMode();
 
-        SearchBarPage.clickChooseCategoryFilter('operation-trench');
-        SearchConstraintsPage.clickConstraintsMenuButton();
-        SearchConstraintsPage.clickSelectConstraintField('diary');
+        await SearchBarPage.clickChooseCategoryFilter('operation-trench');
+        await SearchConstraintsPage.clickConstraintsMenuButton();
+        await SearchConstraintsPage.clickSelectConstraintField('diary');
+        await SearchConstraintsPage.typeInConstraintSearchTerm('testvalue');
+        await SearchConstraintsPage.clickAddConstraintButton();
 
-        SearchConstraintsPage.typeInConstraintSearchTerm('testvalue');
-        SearchConstraintsPage.clickAddConstraintButton();
+        await waitForNotExist(await SearchConstraintsPage.getConstraintFieldOption('diary'));
 
-        browser.wait(EC.stalenessOf(
-            SearchConstraintsPage.getConstraintFieldOption('diary')
-        ));
+        done();
     });
 
 
-    it('search -- remove constraints if invalid after filter category change', () => {
+    it('search -- remove constraints if invalid after filter category change', async done => {
 
-        ResourcesPage.clickSwitchHierarchyMode();
+        await ResourcesPage.clickSwitchHierarchyMode();
 
-        SearchConstraintsPage.clickConstraintsMenuButton();
-        SearchConstraintsPage.clickSelectConstraintField('geometry');
-        SearchConstraintsPage.clickSelectExistsDropdownValue(1);
-        SearchConstraintsPage.clickAddConstraintButton();
+        await SearchConstraintsPage.clickConstraintsMenuButton();
+        await SearchConstraintsPage.clickSelectConstraintField('geometry');
+        await SearchConstraintsPage.clickSelectExistsDropdownValue(1);
+        await SearchConstraintsPage.clickAddConstraintButton();
 
-        SearchBarPage.clickChooseCategoryFilter('feature');
-        SearchConstraintsPage.clickConstraintsMenuButton();
-        browser.wait(EC.presenceOf(SearchConstraintsPage.getRemoveConstraintButton('geometry')),
-            delays.ECWaitTime);
+        await SearchBarPage.clickChooseCategoryFilter('feature');
+        await SearchConstraintsPage.clickConstraintsMenuButton();
+        await waitForExist(await SearchConstraintsPage.getRemoveConstraintButton('geometry'));
 
-        SearchConstraintsPage.clickSelectConstraintField('hasDisturbance');
-        SearchConstraintsPage.clickSelectBooleanValue(true);
-        SearchConstraintsPage.clickAddConstraintButton();
+        await SearchConstraintsPage.clickSelectConstraintField('hasDisturbance');
+        await SearchConstraintsPage.clickSelectBooleanValue(true);
+        await SearchConstraintsPage.clickAddConstraintButton();
 
-        SearchBarPage.clickChooseCategoryFilter('feature-layer');
-        SearchConstraintsPage.clickConstraintsMenuButton();
-        browser.wait(EC.presenceOf(SearchConstraintsPage.getRemoveConstraintButton('geometry')),
-            delays.ECWaitTime);
-        browser.wait(
-            EC.presenceOf(SearchConstraintsPage.getRemoveConstraintButton('hasDisturbance')),
-            delays.ECWaitTime
-        );
+        await SearchBarPage.clickChooseCategoryFilter('feature-layer');
+        await SearchConstraintsPage.clickConstraintsMenuButton();
+        await waitForExist(await SearchConstraintsPage.getRemoveConstraintButton('geometry'));
+        await waitForExist(await SearchConstraintsPage.getRemoveConstraintButton('hasDisturbance'));
 
-        SearchBarPage.clickChooseCategoryFilter('find');
-        SearchConstraintsPage.clickConstraintsMenuButton();
-        browser.wait(EC.presenceOf(SearchConstraintsPage.getRemoveConstraintButton('geometry')),
-            delays.ECWaitTime);
-        browser.wait(
-            EC.stalenessOf(SearchConstraintsPage.getRemoveConstraintButton('hasDisturbance')),
-            delays.ECWaitTime
-        );
+        await SearchBarPage.clickChooseCategoryFilter('find');
+        await SearchConstraintsPage.clickConstraintsMenuButton();
+        await waitForExist(await SearchConstraintsPage.getRemoveConstraintButton('geometry'));
+        await waitForNotExist(await SearchConstraintsPage.getRemoveConstraintButton('hasDisturbance'));
+
+        done();
     });
 
 
-    it('switch from image to map view after click on depicts relation link', () => {
+    it('switch from image to map view after click on depicts relation link', async done => {
 
-        createDepictsRelation();
-        clickDepictsRelationLink();
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('S1')), delays.ECWaitTime);
+        await createDepictsRelation();
+        await clickDepictsRelationLink();
+        await waitForExist(await ResourcesPage.getListItemEl('S1'));
+
+        done();
     });
 
 
-    it('invalidate filter (if necessary) when switching from image to map view after click on depicts relation link', () => {
+    it('invalidate filter (if necessary) when switching from image to map view after click on depicts relation link', async done => {
 
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('S1')), delays.ECWaitTime);
-        SearchBarPage.clickChooseCategoryFilter('place');
-        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('S1')), delays.ECWaitTime);
+        await waitForExist(await ResourcesPage.getListItemEl('S1'));
+        await SearchBarPage.clickChooseCategoryFilter('place');
+        await waitForNotExist(await ResourcesPage.getListItemEl('S1'));
 
-        createDepictsRelation();
-        clickDepictsRelationLink();
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('S1')), delays.ECWaitTime);
+        await createDepictsRelation();
+        await clickDepictsRelationLink();
+        await waitForExist(await ResourcesPage.getListItemEl('S1'));
+
+        done();
     });
 
 
-    it('invalidate query string (if necessary) when switching from image to map view after click on depicts relation link', () => {
+    it('invalidate query string (if necessary) when switching from image to map view after click on depicts relation link', async done => {
 
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('S1')), delays.ECWaitTime);
-        SearchBarPage.typeInSearchField('xyz');
-        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('S1')), delays.ECWaitTime);
+        await waitForExist(await ResourcesPage.getListItemEl('S1'));
+        await SearchBarPage.typeInSearchField('xyz');
+        await waitForNotExist(await ResourcesPage.getListItemEl('S1'));
 
-        createDepictsRelation();
-        clickDepictsRelationLink();
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('S1')), delays.ECWaitTime);
-        SearchBarPage.getSearchBarInputFieldValue().then(value => expect(value).toEqual(''));
+        await createDepictsRelation();
+        await clickDepictsRelationLink();
+        await waitForExist(await ResourcesPage.getListItemEl('S1'));
+        const value = await SearchBarPage.getSearchBarInputFieldValue();
+        expect(value).toEqual('');
+
+        done();
     });
 
 
-    it('navpath -- show correct navigation path after click on relation link', () => {
+    it('navpath -- show correct navigation path after click on relation link', async done => {
 
-        ResourcesPage.clickHierarchyButton('S1');
+        await ResourcesPage.clickHierarchyButton('S1');
 
-        ResourcesPage.performCreateResource('c2', 'feature');
-        ResourcesPage.performDescendHierarchy('c2');
-        ResourcesPage.performCreateResource('c3', 'feature');
-        ResourcesPage.getNavigationButtons().get(0).click();
+        await ResourcesPage.performCreateResource('c2', 'feature');
+        await ResourcesPage.performDescendHierarchy('c2');
+        await ResourcesPage.performCreateResource('c3', 'feature');
+        await click((await ResourcesPage.getNavigationButtons())[0]);
 
-        ResourcesPage.performCreateResource('c4', 'feature');
-        ResourcesPage.performDescendHierarchy('c4');
-        ResourcesPage.performCreateResource('c5', 'feature');
-        ResourcesPage.performCreateRelation('c5', 'c3', 'zeitgleich-mit');
+        await ResourcesPage.performCreateResource('c4', 'feature');
+        await ResourcesPage.performDescendHierarchy('c4');
+        await ResourcesPage.performCreateResource('c5', 'feature');
+        await ResourcesPage.performCreateRelation('c5', 'c3', 'zeitgleich-mit');
 
-        ResourcesPage.clickSelectResource('c5', 'info');
-        FieldsViewPage.clickAccordionTab(1);
-        FieldsViewPage.clickRelation(1, 0);
+        await ResourcesPage.clickSelectResource('c5', 'info');
+        await FieldsViewPage.clickAccordionTab(1);
+        await FieldsViewPage.clickRelation(1, 0);
 
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('c3')), delays.ECWaitTime);
-        ResourcesPage.getSelectedListItemIdentifierText().then(text => expect(text).toEqual('c3'));
+        await waitForExist(await ResourcesPage.getListItemEl('c3'));
+        const text = await ResourcesPage.getSelectedListItemIdentifierText();
+        expect(text).toEqual('c3');
 
-        ResourcesPage.getNavigationButtons().then(navigationButtons => {
-            expect(navigationButtons.length).toBe(2);
-            expect(navigationButtons[0].getText()).toEqual('S1');
-            expect(navigationButtons[1].getText()).toEqual('c2');
-        });
+        const navigationButtons = await ResourcesPage.getNavigationButtons();
+        expect(navigationButtons.length).toBe(2);
+        expect(await getText(navigationButtons[0])).toEqual('S1');
+        expect(await getText(navigationButtons[1])).toEqual('c2');
+
+        done();
     });
 
 
-    it('navpath -- update navigation path after editing resource', () => {
+    it('navpath -- update navigation path after editing resource', async done => {
 
-        ResourcesPage.clickHierarchyButton('S1');
-        ResourcesPage.clickHierarchyButton('SE0');
-        ResourcesPage.clickOpenChildCollectionButton();
+        await ResourcesPage.clickHierarchyButton('S1');
+        await ResourcesPage.clickHierarchyButton('SE0');
+        await ResourcesPage.clickOpenChildCollectionButton();
 
-        ResourcesPage.getNavigationButtons().then(navigationButtons => {
-            expect(navigationButtons.length).toBe(2);
-            expect(navigationButtons[0].getText()).toEqual('S1');
-            expect(navigationButtons[1].getText()).toEqual('SE0');
-        });
+        let navigationButtons = await ResourcesPage.getNavigationButtons();
+        expect(navigationButtons.length).toBe(2);
+        expect(await getText(navigationButtons[0])).toEqual('S1');
+        expect(await getText(navigationButtons[1])).toEqual('SE0');
 
-        ResourcesPage.clickOperationNavigationButton();
+        await ResourcesPage.clickOperationNavigationButton();
 
-        ResourcesPage.openEditByDoubleClickResource('SE0');
-        DoceditPage.typeInInputField('identifier', 'Edit');
-        DoceditPage.clickSaveDocument();
+        await ResourcesPage.openEditByDoubleClickResource('SE0');
+        await DoceditPage.typeInInputField('identifier', 'Edit');
+        await DoceditPage.clickSaveDocument();
 
-        ResourcesPage.getNavigationButtons().then(navigationButtons => {
-            expect(navigationButtons.length).toBe(2);
-            expect(navigationButtons[0].getText()).toEqual('S1');
-            expect(navigationButtons[1].getText()).toEqual('Edit');
-        });
+        navigationButtons = await ResourcesPage.getNavigationButtons();
+        expect(navigationButtons.length).toBe(2);
+        expect(await getText(navigationButtons[0])).toEqual('S1');
+        expect(await getText(navigationButtons[1])).toEqual('Edit');
+
+        done();
     });
 
 
-    it('navpath -- update navigation path after deleting resource', () => {
+    it('navpath -- update navigation path after deleting resource', async done => {
 
-        ResourcesPage.clickHierarchyButton('S1');
-        ResourcesPage.clickHierarchyButton('SE0');
-        ResourcesPage.clickOpenChildCollectionButton();
+        await ResourcesPage.clickHierarchyButton('S1');
+        await ResourcesPage.clickHierarchyButton('SE0');
+        await ResourcesPage.clickOpenChildCollectionButton();
 
-        ResourcesPage.getNavigationButtons().then(navigationButtons => {
-            expect(navigationButtons.length).toBe(2);
-            expect(navigationButtons[0].getText()).toEqual('S1');
-            expect(navigationButtons[1].getText()).toEqual('SE0');
-        });
+        let navigationButtons = await ResourcesPage.getNavigationButtons();
+        expect(navigationButtons.length).toBe(2);
+        expect(await getText(navigationButtons[0])).toEqual('S1');
+        expect(await getText(navigationButtons[1])).toEqual('SE0');
 
-        ResourcesPage.clickOperationNavigationButton();
+        await ResourcesPage.clickOperationNavigationButton();
 
-        ResourcesPage.clickOpenContextMenu('SE0');
-        ResourcesPage.clickContextMenuDeleteButton();
-        ResourcesPage.typeInIdentifierInConfirmDeletionInputField('SE0');
-        ResourcesPage.clickConfirmDeleteInModal();
+        await ResourcesPage.clickOpenContextMenu('SE0');
+        await ResourcesPage.clickContextMenuDeleteButton();
+        await ResourcesPage.typeInIdentifierInConfirmDeletionInputField('SE0');
+        await ResourcesPage.clickConfirmDeleteInModal();
 
-        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('SE0')), delays.ECWaitTime);
-        ResourcesPage.getNavigationButtons().then(navigationButtons => {
-            expect(navigationButtons.length).toBe(1);
-            expect(navigationButtons[0].getText()).toEqual('S1');
-        });
+        await waitForNotExist(await ResourcesPage.getListItemEl('SE0'));
+        navigationButtons = await ResourcesPage.getNavigationButtons();
+        expect(navigationButtons.length).toBe(1);
+        expect(await getText(navigationButtons[0])).toEqual('S1');
+
+        done();
     });
 
 
-    it('navpath - update when moving a resource within the same operation', () => {
+    it('navpath - update when moving a resource within the same operation', async done => {
 
-        ResourcesPage.clickHierarchyButton('S1');
-        ResourcesPage.performCreateResource('S-New', 'feature');
+        await ResourcesPage.clickHierarchyButton('S1');
+        await ResourcesPage.performCreateResource('S-New', 'feature');
 
-        ResourcesPage.performDescendHierarchy('SE0');
-        ResourcesPage.clickOpenContextMenu('testf1');
-        ResourcesPage.clickContextMenuMoveButton();
-        ResourcesPage.typeInMoveModalSearchBarInput('S-New');
-        ResourcesPage.clickResourceListItemInMoveModal('S-New');
-        browser.wait(EC.stalenessOf(ResourcesPage.getMoveModal()), delays.ECWaitTime);
+        await ResourcesPage.performDescendHierarchy('SE0');
+        await ResourcesPage.clickOpenContextMenu('testf1');
+        await ResourcesPage.clickContextMenuMoveButton();
+        await ResourcesPage.typeInMoveModalSearchBarInput('S-New');
+        await ResourcesPage.clickResourceListItemInMoveModal('S-New');
+        await waitForNotExist(await ResourcesPage.getMoveModal());
 
-        ResourcesPage.getNavigationButtons().then(navigationButtons => {
-            expect(navigationButtons.length).toBe(2);
-            expect(navigationButtons[0].getText()).toEqual('S1');
-            expect(navigationButtons[1].getText()).toEqual('S-New');
-        });
+        const navigationButtons = await ResourcesPage.getNavigationButtons();
+        expect(navigationButtons.length).toBe(2);
+        expect(await getText(navigationButtons[0])).toEqual('S1');
+        expect(await getText(navigationButtons[1])).toEqual('S-New');
+
+
+        done();
     });
 
 
-    it('navpath - update when moving a resource to another operation', () => {
+    it('navpath - update when moving a resource to another operation', async done => {
 
-        ResourcesPage.clickHierarchyButton('S1');
-        ResourcesPage.performDescendHierarchy('SE0');
-        ResourcesPage.clickOperationNavigationButton();
+        await ResourcesPage.clickHierarchyButton('S1');
+        await ResourcesPage.performDescendHierarchy('SE0');
+        await ResourcesPage.clickOperationNavigationButton();
 
-        ResourcesPage.clickOpenContextMenu('SE0');
-        ResourcesPage.clickContextMenuMoveButton();
-        ResourcesPage.typeInMoveModalSearchBarInput('S2');
-        ResourcesPage.clickResourceListItemInMoveModal('S2');
-        browser.wait(EC.stalenessOf(ResourcesPage.getMoveModal()), delays.ECWaitTime);
+        await ResourcesPage.clickOpenContextMenu('SE0');
+        await ResourcesPage.clickContextMenuMoveButton();
+        await ResourcesPage.typeInMoveModalSearchBarInput('S2');
+        await ResourcesPage.clickResourceListItemInMoveModal('S2');
+        await waitForNotExist(await ResourcesPage.getMoveModal());
 
-        ResourcesPage.getNavigationButtons().then(navigationButtons => {
-            expect(navigationButtons.length).toBe(1);
-            expect(navigationButtons[0].getText()).toEqual('S2');
-        });
+        let navigationButtons = await ResourcesPage.getNavigationButtons();
+        expect(navigationButtons.length).toBe(1);
+        expect(await getText(navigationButtons[0])).toEqual('S2');
 
-        NavbarPage.clickTab('project');
-        ResourcesPage.clickHierarchyButton('S1');
-        ResourcesPage.getNavigationButtons().then(navigationButtons => {
-            expect(navigationButtons.length).toBe(1);
-            expect(navigationButtons[0].getText()).toEqual('S1');
-        });
+        await NavbarPage.clickTab('project');
+        await ResourcesPage.clickHierarchyButton('S1');
+        navigationButtons = await ResourcesPage.getNavigationButtons();
+        expect(navigationButtons.length).toBe(1);
+        expect(await getText(navigationButtons[0])).toEqual('S1');
+
+        done();
     });
 
 
-    it('navpath/hierarchy - switch between modes', () => {
+    it('navpath/hierarchy - switch between modes', async done => {
 
-        ResourcesPage.clickHierarchyButton('S1');
+        await ResourcesPage.clickHierarchyButton('S1');
 
-        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('SE0'));
-        ResourcesPage.performDescendHierarchy('SE0');
-        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('testf1'));
-        ResourcesPage.clickSwitchHierarchyMode();
-        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('SE0'));
-        ResourcesPage.getListItemIdentifierText(1).then(text => expect(text).toEqual('testf1'));
+        expect(await ResourcesPage.getListItemIdentifierText(0)).toEqual('SE0');
+        await ResourcesPage.performDescendHierarchy('SE0');
+        expect(await ResourcesPage.getListItemIdentifierText(0)).toEqual('testf1');
+        await ResourcesPage.clickSwitchHierarchyMode();
+        expect(await ResourcesPage.getListItemIdentifierText(0)).toEqual('SE0');
+        expect(await ResourcesPage.getListItemIdentifierText(1)).toEqual('testf1');
+        
+        done();
     });
 });

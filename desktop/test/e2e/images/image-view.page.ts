@@ -23,7 +23,7 @@ export module ImageViewPage {
 
     export async function clickRelation() {
 
-        return click((await getElements('resources-listing-item'))[0]);
+        return click((await getElements('.resources-listing-item'))[0]);
     }
 
 

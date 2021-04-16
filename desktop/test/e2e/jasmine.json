@@ -8,7 +8,8 @@
       "test/e2e/**/image-overview-state.spec.js",
       "test/e2e/**/settings.spec.js",
       "test/e2e/**/resources-list.spec.js",
-      "test/e2e/**/resources-types.spec.js"
+      "test/e2e/**/resources-types.spec.js",
+      "test/e2e/**/resources.spec.js"
     ],
     "stopSpecOnExpectationFailure": false,
     "random": false

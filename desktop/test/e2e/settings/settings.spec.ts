@@ -1,13 +1,10 @@
-import {browser} from 'protractor';
-import {NavbarPage} from '../navbar.page';
-import {MenuPage} from '../menu.page';
-import {SettingsPage} from './settings.page';
-import {ImageOverviewPage} from '../images/image-overview.page';
-import {ImageViewPage} from '../images/image-view.page';
+import { navigateTo, resetApp, start, stop, typeIn, waitForExist } from '../app';
+import { NavbarPage } from '../navbar.page';
+import { SettingsPage } from './settings.page';
+import { ImageOverviewPage } from '../images/image-overview.page';
+import { ImageViewPage } from '../images/image-view.page';
 
-const delays = require('../delays');
 const path = require('path');
-const common = require('../common');
 
 
 /**
@@ -16,52 +13,51 @@ const common = require('../common');
  */
 describe('settings --', function() {
 
-    beforeAll(done => {
+    beforeAll(async done => {
 
-        common.resetConfigJson().then(done);
+        await start();
+        await waitForExist('#buttons-container'); // TODO Check for something less specific
+        done();
     });
 
 
-    beforeEach(() => {
+    beforeEach(async done => {
 
-        browser.sleep(1500);
-
-        MenuPage.navigateToSettings();
-        browser.sleep(1)
-            .then(() => common.resetApp());
+        await navigateTo('settings');
+        await resetApp();
+        done();
     });
 
 
-    afterEach(done => {
+    afterAll(async done => {
 
-        common.resetConfigJson().then(done);
+        await stop();
+        done();
     });
 
 
-    it('show warnings if an invalid imagestore path is set', () => {
+    it('show warnings if an invalid imagestore path is set', async done => {
 
-        common.typeIn(SettingsPage.getImagestorePathInput(), '/invalid/path/to/imagestore');
-        SettingsPage.clickSaveSettingsButton();
-        NavbarPage.awaitAlert('Das Bilderverzeichnis konnte nicht gefunden werden', false);
-        NavbarPage.clickCloseAllMessages();
+        await typeIn(await SettingsPage.getImagestorePathInput(), '/invalid/path/to/imagestore');
+        await SettingsPage.clickSaveSettingsButton();
+        await NavbarPage.awaitAlert('Das Bilderverzeichnis konnte nicht gefunden werden', false);
+        await NavbarPage.clickCloseAllMessages();
 
-        MenuPage.navigateToImages();
-        browser.sleep(delays.shortRest * 50);
-        ImageOverviewPage.clickUploadArea();
-        ImageOverviewPage.uploadImage(path.resolve(__dirname, '../../../../test-data/Aldrin_Apollo_11.jpg'));
-        NavbarPage.awaitAlert('Es können keine Dateien im Bilderverzeichnis gespeichert werden', false);
-        NavbarPage.clickCloseAllMessages();
+        await navigateTo('images');
+        await ImageOverviewPage.uploadImage(path.resolve(__dirname, '../../../../../test-data/Aldrin_Apollo_11.jpg'));
+        await NavbarPage.awaitAlert('Es können keine Dateien im Bilderverzeichnis gespeichert werden', false);
+        await NavbarPage.clickCloseAllMessages();
 
-        ImageOverviewPage.doubleClickCell(0);
-        NavbarPage.awaitAlert('Es können keine Dateien aus dem Bilderverzeichnis gelesen werden', false);
-        NavbarPage.clickCloseAllMessages();
-        ImageViewPage.clickCloseButton();
+        await ImageOverviewPage.doubleClickCell(0);
+        await NavbarPage.awaitAlert('Es können keine Dateien aus dem Bilderverzeichnis gelesen werden', false);
+        await NavbarPage.clickCloseAllMessages();
+        await ImageViewPage.clickCloseButton();
 
-        ImageOverviewPage.clickCell(1);
-        ImageOverviewPage.clickDeleteButton();
-        ImageOverviewPage.clickConfirmDeleteButton();
-        NavbarPage.awaitAlert('Es können keine Dateien aus dem Bilderverzeichnis gelöscht werden', false);
+        await ImageOverviewPage.clickCell(1);
+        await ImageOverviewPage.clickDeleteButton();
+        await ImageOverviewPage.clickConfirmDeleteButton();
+        await NavbarPage.awaitAlert('Es können keine Dateien aus dem Bilderverzeichnis gelöscht werden', false);
+
+        done();
     });
 });
-
-

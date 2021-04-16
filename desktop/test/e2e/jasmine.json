@@ -1,7 +1,10 @@
 {
     "spec_dir": "test/dist/desktop",
     "spec_files": [
-      "test/e2e/**/matrix.spec.js"
+      "test/e2e/**/matrix.spec.js",
+      "test/e2e/**/import.spec.js",
+      "test/e2e/**/image-overview.spec.js",
+      "test/e2e/**/settings.spec.js"
     ],
     "stopSpecOnExpectationFailure": false,
     "random": false

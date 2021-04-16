@@ -38,20 +38,6 @@ export function resetApp() {
 }
 
 
-export function resetConfigJson() {
-
-    const configPath = app.electron.getGlobal('configPath');
-    const configTemplate = app.electron.getGlobal('configTemplate')
-
-    return new Promise(resolve => {
-        fs.writeFile(configPath, JSON.stringify(configTemplate), err => {
-            if (err) console.error('Failure while resetting config.json', err);
-            resolve(undefined);
-        });
-    });
-}
-
-
 export function navigateTo(menu) {
 
     return new Promise(resolve => {
@@ -154,6 +140,14 @@ export async function getText(element) {
     if (isString(element)) element = await getElement(element);
     await waitForExist(element);
     return element.getText();
+}
+
+
+export async function uploadInFileInput(element, filePath) {
+    
+    if (isString(element)) element = await getElement(element);
+    const file = await app.client.uploadFile(filePath);
+    return element.addValue(file);
 }
 
 

@@ -1,36 +1,19 @@
-import {browser, protractor, element, by} from 'protractor';
+import { click, getElement } from '../app';
 
-let EC = protractor.ExpectedConditions;
-let delays = require('../delays');
-let common = require('../common.js');
 
 /**
  * @author Thomas Kleinke
  */
 export class SettingsPage {
 
-    public static clickSaveSettingsButton = function() {
+    public static clickSaveSettingsButton() {
 
-        common.click(element(by.id('save-settings-button')));
+        return click('#save-settings-button');
     };
 
 
-    public static getUserName = function() {
+    public static getImagestorePathInput() {
 
-        return this.getUserNameInput().getAttribute('value');
-    };
-
-
-    public static getUserNameInput = function() {
-
-        browser.wait(EC.visibilityOf(element(by.id('username-input'))), delays.ECWaitTime);
-        return element(by.id('username-input'));
-    };
-
-
-    public static getImagestorePathInput = function() {
-
-        browser.wait(EC.visibilityOf(element(by.id('imagestorepath-input'))), delays.ECWaitTime);
-        return element(by.id('imagestorepath-input'));
+        return getElement('#imagestorepath-input');
     };
 }

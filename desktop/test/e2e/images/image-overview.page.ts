@@ -1,4 +1,4 @@
-import { click, doubleClick, getElement, getElements, navigateTo, typeIn, waitForExist } from '../app';
+import { click, doubleClick, getElement, getElements, navigateTo, typeIn, uploadInFileInput, waitForExist } from '../app';
 import { NavbarPage } from '../navbar.page';
 
 
@@ -101,7 +101,7 @@ export module ImageOverviewPage {
 
     export function uploadImage(filePath) {
 
-        return typeIn('#file', filePath);
+        return uploadInFileInput('#file', filePath);
     }
 
 

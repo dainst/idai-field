@@ -1,5 +1,4 @@
-import { element } from 'protractor';
-import { click, getElements, waitForExist, getText } from './app';
+import { click, getElements, waitForExist, getText, getElement } from './app';
 
 
 export class NavbarPage {
@@ -64,7 +63,7 @@ export class NavbarPage {
 
     public static getTab(routeName: string, resourceIdentifier?: string) {
 
-        return element('#navbar-' + routeName + (resourceIdentifier ? '-' + resourceIdentifier : ''));
+        return getElement('#navbar-' + routeName + (resourceIdentifier ? '-' + resourceIdentifier : ''));
     }
 
 

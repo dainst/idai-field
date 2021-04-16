@@ -1,15 +1,12 @@
-import {browser, protractor, element, by} from 'protractor';
-
-let delays = require('../delays');
-let EC = protractor.ExpectedConditions;
+import { click, getElement } from '../app';
 
 
 export class MapPage {
 
-    public static clickMap = function(x, y) {
+    public static clickMap(x, y) {
 
         return new Promise(function(resolve){
-            return browser.wait(EC.visibilityOf(element(by.id('map-container'))), delays.ECWaitTime)
+            /*return browser.wait(EC.visibilityOf(element(by.id('map-container'))), delays.ECWaitTime)
                 .then(function() {
                     browser.actions()
                         .mouseMove(element(by.id("map-container")), {x: x, y: y})
@@ -20,32 +17,31 @@ export class MapPage {
                                 resolve(undefined)
                             }, delays.shortRest)
                         })
-                })
+                })*/
         });
     };
 
 
-    public static setMarker = function(x, y) {
+    public static setMarker(x, y) {
 
         return this.clickMap(x, y);
     };
 
 
-    public static getMapOption = function(optionName) {
+    public static getMapOption(optionName) {
 
-        return element(by.id('map-editor-button-' + optionName));
+        return getElement('#map-editor-button-' + optionName);
     };
 
 
-    public static clickMapOption = function(optionName) {
+    public static async clickMapOption(optionName) {
 
-        browser.wait(EC.presenceOf(MapPage.getMapOption(optionName)), delays.ECWaitTime);
-        return MapPage.getMapOption(optionName).click();
+        return click(await MapPage.getMapOption(optionName));
     };
 
 
     public static getLayerButton() {
 
-        return element(by.id('layer-button'));
+        return getElement('#layer-button');
     }
 }

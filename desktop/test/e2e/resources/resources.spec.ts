@@ -1,21 +1,16 @@
-import {browser, protractor, element, by} from 'protractor';
-import {DoceditPage} from '../docedit/docedit.page';
-import {SearchBarPage} from '../widgets/search-bar.page';
-import {ResourcesPage} from './resources.page';
-import {NavbarPage} from '../navbar.page';
-import {MenuPage} from '../menu.page';
-import {DetailSidebarPage} from '../widgets/detail-sidebar.page';
-import {FieldsViewPage} from '../widgets/fields-view.page';
-import {DoceditRelationsTabPage} from '../docedit/docedit-relations-tab.page';
-import {DoceditImageTabPage} from '../docedit/docedit-image-tab.page';
-import {ImagePickerModalPage} from '../widgets/image-picker-modal.page';
-import {MapPage} from '../map/map.page';
-import {ImageViewPage} from '../images/image-view.page';
-import {ImageRowPage} from '../images/image-row.page';
-
-const EC = protractor.ExpectedConditions;
-const delays = require('../delays');
-const common = require('../common');
+import { click, getText, navigateTo, pause, resetApp, start, stop, waitForExist, waitForNotExist, waitForVisible } from '../app';
+import { DoceditPage} from '../docedit/docedit.page';
+import { SearchBarPage } from '../widgets/search-bar.page';
+import { ResourcesPage } from './resources.page';
+import { NavbarPage } from '../navbar.page';
+import { DetailSidebarPage } from '../widgets/detail-sidebar.page';
+import { FieldsViewPage } from '../widgets/fields-view.page';
+import { DoceditRelationsTabPage } from '../docedit/docedit-relations-tab.page';
+import { DoceditImageTabPage } from '../docedit/docedit-image-tab.page';
+import { ImagePickerModalPage } from '../widgets/image-picker-modal.page';
+import { MapPage } from '../map/map.page';
+import { ImageViewPage } from '../images/image-view.page';
+import { ImageRowPage } from '../images/image-row.page';
 
 
 /**
@@ -42,182 +37,205 @@ const common = require('../common');
  */
 describe('resources --', () => {
 
-    beforeEach(() => {
+    beforeAll(async done => {
 
-        browser.sleep(1000);
-
-        MenuPage.navigateToSettings();
-        common.resetApp();
-        NavbarPage.clickCloseNonResourcesTab();
-        NavbarPage.clickTab('project');
-        ResourcesPage.clickHierarchyButton('S1');
+        await start();
+        done();
     });
 
 
-    function addTwoImages(identifier) {
+    beforeEach(async done => {
 
-        ResourcesPage.openEditByDoubleClickResource(identifier);
-        DoceditPage.clickGotoImagesTab();
-        DoceditImageTabPage.clickInsertImage();
+        await navigateTo('settings');
+        await resetApp();
+        await NavbarPage.clickCloseNonResourcesTab();
+        await NavbarPage.clickTab('project');
+        await ResourcesPage.clickHierarchyButton('S1');
 
-        DoceditImageTabPage.waitForCells();
-        ImagePickerModalPage.getCells().get(0).click();
-        ImagePickerModalPage.getCells().get(1).click();
-        ImagePickerModalPage.clickAddImages();
-        DoceditPage.clickSaveDocument();
-        browser.sleep(delays.shortSleep * 80);
+        done();
+    });
+
+
+    afterAll(async done => {
+
+        await stop();
+        done();
+    });
+
+
+    async function addTwoImages(identifier) {
+
+        await ResourcesPage.openEditByDoubleClickResource(identifier);
+        await DoceditPage.clickGotoImagesTab();
+        await DoceditImageTabPage.clickInsertImage();
+
+        await DoceditImageTabPage.waitForCells();
+        await click((await ImagePickerModalPage.getCells())[0]);
+        await click((await ImagePickerModalPage.getCells())[1]);
+        await ImagePickerModalPage.clickAddImages();
+        await DoceditPage.clickSaveDocument();
     }
 
 
-    it('messages - everything fine / missing identifier', () => {
+    it('messages - everything fine / missing identifier', async done => {
 
-        ResourcesPage.performCreateResource('12');
-
-        browser.sleep(2500);
+        await ResourcesPage.performCreateResource('12');
 
         // warn if identifier is missing
-        ResourcesPage.performCreateResource('', 'feature', 'diary',
-            'p', false, false, false);
+        await ResourcesPage.performCreateResource('', 'feature', 'diary', 'p', false, false, false);
 
-        NavbarPage.awaitAlert('Bitte füllen Sie das Feld', false);
-        NavbarPage.awaitAlert('Bezeichner', false);
-        NavbarPage.clickCloseAllMessages();
-        DoceditPage.clickCloseEdit('discard');
+        await NavbarPage.awaitAlert('Bitte füllen Sie das Feld', false);
+        await NavbarPage.awaitAlert('Bezeichner', false);
+        await NavbarPage.clickCloseAllMessages();
+        await DoceditPage.clickCloseEdit('discard');
+
+        done();
     });
 
 
-    it('messages - same identifier', () => {
+    it('messages - same identifier', async done => {
 
-        ResourcesPage.performCreateResource('12',undefined,undefined,
-            undefined,false, false,false);
+        await ResourcesPage.performCreateResource('12', undefined, undefined, undefined, false, false, false);
 
         // do not warn if two different identifiers start with the same string
-        ResourcesPage.performCreateResource('120',undefined,undefined,
-            undefined,false, false,false);
+        await ResourcesPage.performCreateResource('120', undefined, undefined, undefined, false, false, false);
 
         // same identifier
-        ResourcesPage.performCreateResource('12',undefined,undefined,
-            undefined,false, false,false);
+        await ResourcesPage.performCreateResource('12', undefined, undefined, undefined, false, false, false);
 
-        NavbarPage.awaitAlert('existiert bereits', false);
-        NavbarPage.clickCloseAllMessages();
-        DoceditPage.clickCloseEdit('discard');
+        await NavbarPage.awaitAlert('existiert bereits', false);
+        await NavbarPage.clickCloseAllMessages();
+        await DoceditPage.clickCloseEdit('discard');
+
+        done();
     });
 
 
-    it('creation/docedit/savedialog -- save changes via dialog modal', () => {
+    it('creation/docedit/savedialog -- save changes via dialog modal', async done => {
 
-        ResourcesPage.performCreateResource('1');
-        DetailSidebarPage.doubleClickEditDocument('1');
-        DoceditPage.typeInInputField('identifier', '2');
-        DoceditPage.clickCloseEdit('save');
+        await ResourcesPage.performCreateResource('1');
+        await DetailSidebarPage.doubleClickEditDocument('1');
+        await DoceditPage.typeInInputField('identifier', '2');
+        await DoceditPage.clickCloseEdit('save');
 
-        ResourcesPage.getSelectedListItemIdentifierText().then(identifier => expect(identifier).toBe('2'));
+        const identifier = await ResourcesPage.getSelectedListItemIdentifierText();
+        expect(identifier).toBe('2');
+        
+        done();
     });
 
 
-    it('creation/docedit/savedialog -- discard changes via dialog modal', () => {
+    it('creation/docedit/savedialog -- discard changes via dialog modal', async done => {
 
-        ResourcesPage.performCreateResource('1');
-        DetailSidebarPage.doubleClickEditDocument('1');
-        DoceditPage.typeInInputField('identifier', '2');
-        DoceditPage.clickCloseEdit('discard');
+        await ResourcesPage.performCreateResource('1');
+        await DetailSidebarPage.doubleClickEditDocument('1');
+        await DoceditPage.typeInInputField('identifier', '2');
+        await DoceditPage.clickCloseEdit('discard');
 
-        ResourcesPage.getSelectedListItemIdentifierText().then(identifier => expect(identifier).toBe('1'));
+        const identifier = await ResourcesPage.getSelectedListItemIdentifierText();
+        expect(identifier).toBe('1');
+
+        done();
     });
 
 
-    it('creation/docedit/savedialog -- cancel dialog modal', () => {
+    it('creation/docedit/savedialog -- cancel dialog modal', async done => {
 
-        ResourcesPage.performCreateResource('1');
-        DetailSidebarPage.doubleClickEditDocument('1');
-        DoceditPage.typeInInputField('identifier', '2');
-        DoceditPage.clickCloseEdit('cancel');
-        expect<any>(DoceditPage.getInputFieldValue(0)).toEqual('2');
-        DoceditPage.clickCloseEdit('discard');
+        await ResourcesPage.performCreateResource('1');
+        await DetailSidebarPage.doubleClickEditDocument('1');
+        await DoceditPage.typeInInputField('identifier', '2');
+        await DoceditPage.clickCloseEdit('cancel');
+        await expect(await DoceditPage.getInputFieldValue(0)).toEqual('2');
+        await DoceditPage.clickCloseEdit('discard');
+
+        done();
     });
 
 
-    it('create/edit/delete an operation and update navbar', () => {
+    it('create/edit/delete an operation and update navbar', async done => {
 
         // edit
-        NavbarPage.clickTab('project');
-        NavbarPage.getTabLabel('resources', 't1').then(label => expect(label).toContain('S1'));
+        await NavbarPage.clickTab('project');
+        let label = await NavbarPage.getTabLabel('resources', 't1');
+        expect(label).toContain('S1');
 
-        ResourcesPage.openEditByDoubleClickResource('S1');
-        DoceditPage.typeInInputField('identifier', 'newIdentifier');
-        DoceditPage.clickSaveDocument();
-        browser.sleep(delays.shortRest * 2);
-        NavbarPage.getTabLabel('resources', 't1').then(label => expect(label).toContain('newIdentifier'));
+        await ResourcesPage.openEditByDoubleClickResource('S1');
+        await DoceditPage.typeInInputField('identifier', 'newIdentifier');
+        await DoceditPage.clickSaveDocument();
+        label = await NavbarPage.getTabLabel('resources', 't1');
+        expect(label).toContain('newIdentifier');
 
         // delete
-        ResourcesPage.clickOpenContextMenu('newIdentifier');
-        ResourcesPage.clickContextMenuDeleteButton();
-        ResourcesPage.typeInIdentifierInConfirmDeletionInputField('newIdentifier');
-        ResourcesPage.clickConfirmDeleteInModal();
-        browser.wait(EC.stalenessOf(NavbarPage.getTab('resources', 't1')), delays.ECWaitTime);
+        await ResourcesPage.clickOpenContextMenu('newIdentifier');
+        await ResourcesPage.clickContextMenuDeleteButton();
+        await ResourcesPage.typeInIdentifierInConfirmDeletionInputField('newIdentifier');
+        await ResourcesPage.clickConfirmDeleteInModal();
+        await waitForNotExist(await NavbarPage.getTab('resources', 't1'));
 
         // create
-        ResourcesPage.performCreateOperation('newTrench');
-        NavbarPage.getActiveNavLinkLabel().then(label => expect(label).toContain('newTrench'));
-        ResourcesPage.getListItemEls().then(elements => expect(elements.length).toBe(0));
+        await ResourcesPage.performCreateOperation('newTrench');
+        label = await NavbarPage.getActiveNavLinkLabel();
+        expect(label).toContain('newTrench');
+        const elements = await ResourcesPage.getListItemEls();
+        expect(elements.length).toBe(0);
+        
+        done();
     });
 
 
-    it('fields', () => { // formerly sidebar/info
+    it('fields', async done => {
 
-        ResourcesPage.performCreateResource('1', 'feature-architecture',
-            'diary', '100');
-        ResourcesPage.clickSelectResource('1', 'info');
-        FieldsViewPage.getFieldName(0, 1).then(value => {
-            expect(value).toBe('Tagebuch'); // with the correct field label
-        });
-        FieldsViewPage.getFieldValue(0, 1).then(value => {
-            expect(value).toBe('100');
-        });
+        await ResourcesPage.performCreateResource('1', 'feature-architecture', 'diary', '100');
+        await ResourcesPage.clickSelectResource('1', 'info');
 
-        // Make sure there are only so much as expected
-        FieldsViewPage.getFields(1).then(items => {
-            expect(items.length).toBe(2);
-        });
+        const fieldName = await FieldsViewPage.getFieldName(0, 1);
+        expect(fieldName).toBe('Tagebuch');
+        const fieldValue = await FieldsViewPage.getFieldValue(0, 1);
+        expect(fieldValue).toBe('100');
+        const items = await FieldsViewPage.getFields(1);
+        expect(items.length).toBe(2);
+
+        done();
     });
 
 
-    it('relations', () => {
+    it('relations', async done => {
 
-        ResourcesPage.performCreateLink();
+        await ResourcesPage.performCreateLink();
+        await ResourcesPage.clickSelectResource('1', 'info');
+        await FieldsViewPage.clickAccordionTab(1);
 
-        // sidebar
-        ResourcesPage.clickSelectResource('1', 'info');
-        FieldsViewPage.clickAccordionTab(1);
+        let relationValue = await FieldsViewPage.getRelationValue(1, 0);
+        expect(relationValue).toBe('2');
+        let relationName = await FieldsViewPage.getRelationName(1, 0);
+        expect(relationName).toBe('Zeitlich nach');
+        const relations = await FieldsViewPage.getRelations(1);
+        expect(relations.length).toBe(1);
 
-        FieldsViewPage.getRelationValue(1, 0).then(value => {
-            expect(value).toBe('2');
-        });
-        FieldsViewPage.getRelationName(1, 0).then(value => {
-            expect(value).toBe('Zeitlich nach');
-        });
-        // Make sure there are only so much as expected
-        FieldsViewPage.getRelations(1).then(relations => expect(relations.length).toBe(1));
-
-        ResourcesPage.clickSelectResource('2', 'info');
-        FieldsViewPage.getRelationName(1, 0).then(value => expect(value).toBe('Zeitlich vor'));
-        FieldsViewPage.getRelationValue(1, 0).then(value => expect(value).toBe('1'));
+        await ResourcesPage.clickSelectResource('2', 'info');
+        relationValue = await FieldsViewPage.getRelationValue(1, 0);
+        expect(relationValue).toBe('1');
+        relationName = await FieldsViewPage.getRelationName(1, 0);
+        expect(relationName).toBe('Zeitlich vor');
 
         // docedit
-        ResourcesPage.openEditByDoubleClickResource('1');
-        expect(DoceditRelationsTabPage.getRelationButtonText('zeitlich-nach')).toEqual('2');
-        DoceditPage.clickCloseEdit();
-        ResourcesPage.openEditByDoubleClickResource('2');
-        expect(DoceditRelationsTabPage.getRelationButtonText('zeitlich-vor')).toEqual('1');
+        await ResourcesPage.openEditByDoubleClickResource('1');
+        expect(await DoceditRelationsTabPage.getRelationButtonText('zeitlich-nach')).toEqual('2');
+        await DoceditPage.clickCloseEdit();
+        await ResourcesPage.openEditByDoubleClickResource('2');
+        expect(await DoceditRelationsTabPage.getRelationButtonText('zeitlich-vor')).toEqual('1');
 
         // deletion
-        DoceditRelationsTabPage.clickRelationDeleteButtonByIndices('zeitlich-vor');
-        DoceditPage.clickSaveDocument();
-        ResourcesPage.clickSelectResource('1', 'info');
-        FieldsViewPage.getTabs().then(tabs => expect(tabs.length).toBe(1));
-        ResourcesPage.clickSelectResource('2', 'info');
-        FieldsViewPage.getTabs().then(tabs => expect(tabs.length).toBe(1));
+        await DoceditRelationsTabPage.clickRelationDeleteButtonByIndices('zeitlich-vor');
+        await DoceditPage.clickSaveDocument();
+        await ResourcesPage.clickSelectResource('1', 'info');
+        let tabs = await FieldsViewPage.getTabs();
+        expect(tabs.length).toBe(1);
+        await ResourcesPage.clickSelectResource('2', 'info');
+        tabs = await FieldsViewPage.getTabs();
+        expect(tabs.length).toBe(1);
+
+        done();
     });
 
 
@@ -225,356 +243,399 @@ describe('resources --', () => {
      * Addresses an issue where relations were still shown after cancelling edit and discarding changes
      * (they were not saved though).
      */
-    it('relations -- do not show new relations after cancelling edit', () => {
+    it('relations -- do not show new relations after cancelling edit', async done => {
 
-        ResourcesPage.performCreateResource('1', 'feature-architecture');
-        ResourcesPage.performCreateResource('2', 'feature-architecture');
-        DetailSidebarPage.doubleClickEditDocument('1');
-        DoceditPage.clickGotoTimeTab();
-        DoceditRelationsTabPage.clickAddRelationForGroupWithIndex('zeitgleich-mit');
-        DoceditRelationsTabPage.typeInRelation('zeitgleich-mit', '2');
-        DoceditRelationsTabPage.clickChooseRelationSuggestion(0);
-        DoceditPage.clickCloseEdit('discard');
+        await ResourcesPage.performCreateResource('1', 'feature-architecture');
+        await ResourcesPage.performCreateResource('2', 'feature-architecture');
+        await DetailSidebarPage.doubleClickEditDocument('1');
+        await DoceditPage.clickGotoTimeTab();
+        await DoceditRelationsTabPage.clickAddRelationForGroupWithIndex('zeitgleich-mit');
+        await DoceditRelationsTabPage.typeInRelation('zeitgleich-mit', '2');
+        await DoceditRelationsTabPage.clickChooseRelationSuggestion(0);
+        await DoceditPage.clickCloseEdit('discard');
 
-        ResourcesPage.clickSelectResource('1', 'info');
-        browser.wait(EC.visibilityOf(element(by.id('popover-menu'))), delays.ECWaitTime);
-        FieldsViewPage.getTabs().then(tabs => expect(tabs.length).toBe(1)); // Only core
+        await ResourcesPage.clickSelectResource('1', 'info');
+        await waitForVisible('#popover-menu');
+        const tabs = await FieldsViewPage.getTabs();
+        expect(tabs.length).toBe(1); // Only core
+
+        done();
     });
 
 
-    it('show only values of parent resource for campaign field in editor', () => {
+    it('show only values of parent resource for campaign field in editor', async done => {
 
-        NavbarPage.clickTab('project');
-        ResourcesPage.performCreateResource('trench', 'trench');
-        ResourcesPage.clickHierarchyButton('trench');
-        ResourcesPage.performCreateResource('feature', 'feature');
-        ResourcesPage.openEditByDoubleClickResource('feature');
-        DoceditPage.getCheckboxes('campaign')
-            .then(checkboxes => expect(checkboxes.length).toBe(0));
+        await NavbarPage.clickTab('project');
+        await ResourcesPage.performCreateResource('trench', 'trench');
+        await ResourcesPage.clickHierarchyButton('trench');
+        await ResourcesPage.performCreateResource('feature', 'feature');
+        await ResourcesPage.openEditByDoubleClickResource('feature');
+        let checkboxes = await DoceditPage.getCheckboxes('campaign');
+        expect(checkboxes.length).toBe(0);
 
-        DoceditPage.clickCloseEdit();
-        NavbarPage.clickTab('project');
-        ResourcesPage.openEditByDoubleClickResource('trench');
-        DoceditPage.getCheckboxes('campaign')
-            .then(checkboxes => {
-                expect(checkboxes.length).toBe(2);
-                expect(checkboxes[0].getText()).toEqual('Testkampagne 1');
-                expect(checkboxes[1].getText()).toEqual('Testkampagne 2');
-            });
+        await DoceditPage.clickCloseEdit();
+        await NavbarPage.clickTab('project');
+        await ResourcesPage.openEditByDoubleClickResource('trench');
+        checkboxes = await DoceditPage.getCheckboxes('campaign');
+        expect(checkboxes.length).toBe(2);
+        expect(await getText(checkboxes[0])).toEqual('Testkampagne 1');
+        expect(await getText(checkboxes[1])).toEqual('Testkampagne 2');
 
-        DoceditPage.clickCheckbox('campaign', 0);
-        DoceditPage.clickSaveDocument();
-        ResourcesPage.clickHierarchyButton('trench');
-        ResourcesPage.openEditByDoubleClickResource('feature');
-        DoceditPage.getCheckboxes('campaign')
-            .then(checkboxes => {
-                expect(checkboxes.length).toBe(1);
-                expect(checkboxes[0].getText()).toEqual('Testkampagne 1');
-            });
+        await DoceditPage.clickCheckbox('campaign', 0);
+        await DoceditPage.clickSaveDocument();
+        await ResourcesPage.clickHierarchyButton('trench');
+        await ResourcesPage.openEditByDoubleClickResource('feature');
+        checkboxes = await DoceditPage.getCheckboxes('campaign');
+        expect(checkboxes.length).toBe(1);
+        expect(await getText(checkboxes[0])).toEqual('Testkampagne 1');
 
-        DoceditPage.clickCloseEdit();
+        await DoceditPage.clickCloseEdit();
+
+        done();
     });
 
 
-    it('show geometry edit widget for suitable categories', () => {
+    it('show geometry edit widget for suitable categories', async done => {
 
-        ResourcesPage.performCreateResource('1', 'feature');
-        ResourcesPage.openEditByDoubleClickResource('1');
-        DoceditPage.clickGotoPositionTab();
-        browser.wait(EC.presenceOf(DoceditPage.getGeometryEditWidget()), delays.ECWaitTime);
-        DoceditPage.clickCloseEdit();
+        await ResourcesPage.performCreateResource('1', 'feature');
+        await ResourcesPage.openEditByDoubleClickResource('1');
+        await DoceditPage.clickGotoPositionTab();
+        await waitForExist(await DoceditPage.getGeometryEditWidget());
+        await DoceditPage.clickCloseEdit();
+
+        done();
     });
 
 
-    it('deletion', () => {
+    it('deletion', async done => {
 
-        ResourcesPage.performCreateLink();
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('2')), delays.ECWaitTime);
-        ResourcesPage.clickOpenContextMenu('2');
-        ResourcesPage.clickContextMenuDeleteButton();
-        ResourcesPage.typeInIdentifierInConfirmDeletionInputField('2');
-        ResourcesPage.clickConfirmDeleteInModal();
-        browser.sleep(delays.shortRest);
-        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('2')), delays.ECWaitTime);
+        await ResourcesPage.performCreateLink();
+        await waitForExist(await ResourcesPage.getListItemEl('2'));
+        await ResourcesPage.clickOpenContextMenu('2');
+        await ResourcesPage.clickContextMenuDeleteButton();
+        await ResourcesPage.typeInIdentifierInConfirmDeletionInputField('2');
+        await ResourcesPage.clickConfirmDeleteInModal();
+        await waitForNotExist(await ResourcesPage.getListItemEl('2'));
 
         // relations
-        ResourcesPage.clickSelectResource('1', 'info');
-        // browser.wait(EC.visibilityOf(element(by.id('#relations-view'))), delays.ECWaitTime); // make sure relations view is really open
-        FieldsViewPage.getTabs().then(tabs => expect(tabs.length).toBe(1)); // Only core
+        await ResourcesPage.clickSelectResource('1', 'info');
+        const tabs = await FieldsViewPage.getTabs();
+        expect(tabs.length).toBe(1); // Only core
+
+        done();
     });
 
 
-    it('do not reflect changes in list while editing resource', () => {
+    it('do not reflect changes in list while editing resource', async done => {
 
-        ResourcesPage.performCreateResource('1a');
-        DetailSidebarPage.doubleClickEditDocument('1a');
-        DoceditPage.typeInInputField('identifier', '1b');
-        ResourcesPage.getSelectedListItemIdentifierText().then(identifier => {
-            expect(identifier).toBe('1a');
-        });
-        DoceditPage.clickCloseEdit('discard');
+        await ResourcesPage.performCreateResource('1a');
+        await DetailSidebarPage.doubleClickEditDocument('1a');
+        await DoceditPage.typeInInputField('identifier', '1b');
+        const identifier = await ResourcesPage.getSelectedListItemIdentifierText();
+        expect(identifier).toBe('1a');
+        await DoceditPage.clickCloseEdit('discard');
+
+        done();
     });
 
 
-    it('change category', () => {
+    it('change category', async done => {
 
         // toggleRangeOnOff to child category
-        ResourcesPage.performCreateResource('1', 'feature');
-        DetailSidebarPage.doubleClickEditDocument('1');
-        DoceditPage.clickCategorySwitcherButton();
-        DoceditPage.clickCategorySwitcherOption('feature-architecture');
-        browser.wait(EC.stalenessOf(element(by.id('message-0'))), delays.ECWaitTime);
-        DoceditPage.clickSaveDocument();
-        ResourcesPage.clickSelectResource('1', 'info');
-        FieldsViewPage.getFieldValue(0, 0).then(categoryLabel => {
-            expect(categoryLabel).toEqual('Architektur');
-        });
-
+        await ResourcesPage.performCreateResource('1', 'feature');
+        await DetailSidebarPage.doubleClickEditDocument('1');
+        await DoceditPage.clickCategorySwitcherButton();
+        await DoceditPage.clickCategorySwitcherOption('feature-architecture');
+        await waitForNotExist('#message-0');
+        await DoceditPage.clickSaveDocument();
+        await ResourcesPage.clickSelectResource('1', 'info');
+        const categoryLabel = await FieldsViewPage.getFieldValue(0, 0);
+        expect(categoryLabel).toEqual('Architektur');
 
         // delete invalid fields when changing the category of a resource to its parent category
-        DetailSidebarPage.doubleClickEditDocument('1');
+        await DetailSidebarPage.doubleClickEditDocument('1');
 
-        DoceditPage.clickGotoChildTab();
-        DoceditPage.clickSelectOption('wallType', 1);
-        DoceditPage.clickSaveDocument();
+        await DoceditPage.clickGotoChildTab();
+        await DoceditPage.clickSelectOption('wallType', 1);
+        await DoceditPage.clickSaveDocument();
 
-        browser.sleep(delays.shortRest);
-        // ResourcesPage.clickSelectResource('1', 'info');
         FieldsViewPage.clickAccordionTab(1);
-        FieldsViewPage.getFieldValue(1, 0).then(fieldValue => {
-            expect(fieldValue).toEqual('Außenmauer');
-        });
-        DetailSidebarPage.doubleClickEditDocument('1');
-        DoceditPage.clickCategorySwitcherButton();
-        DoceditPage.clickCategorySwitcherOption('feature');
-        NavbarPage.awaitAlert('Bitte beachten Sie, dass die Daten der folgenden Felder beim Speichern ' +
+        let fieldValue = await FieldsViewPage.getFieldValue(1, 0);
+        expect(fieldValue).toEqual('Außenmauer');
+        
+        await DetailSidebarPage.doubleClickEditDocument('1');
+        await DoceditPage.clickCategorySwitcherButton();
+        await DoceditPage.clickCategorySwitcherOption('feature');
+        await NavbarPage.awaitAlert('Bitte beachten Sie, dass die Daten der folgenden Felder beim Speichern ' +
             'verloren gehen: Mauertyp');
-        NavbarPage.clickCloseAllMessages();
-        DoceditPage.clickSaveDocument();
+            await NavbarPage.clickCloseAllMessages();
+            await DoceditPage.clickSaveDocument();
 
-        FieldsViewPage.clickAccordionTab(0);
-        FieldsViewPage.getFieldValue(0, 0).then(fieldValue => {
-            expect(fieldValue).toEqual('Stratigraphische Einheit');
-        });
-        FieldsViewPage.getTabs().then(tabs => expect(tabs.length).toBe(1));
+            await FieldsViewPage.clickAccordionTab(0);
+        fieldValue = await FieldsViewPage.getFieldValue(0, 0);
+        expect(fieldValue).toEqual('Stratigraphische Einheit');
+        const tabs = await FieldsViewPage.getTabs();
+        expect(tabs.length).toBe(1);
+
+        done();
     });
 
 
-    it('hide the new resource button while creating a new resource', () => {
+    it('hide the new resource button while creating a new resource', async done => {
 
-        ResourcesPage.clickCreateResource();
-        ResourcesPage.clickSelectCategory();
-        ResourcesPage.clickSelectGeometryType('point');
-        ResourcesPage.getListItemMarkedNewEls().then(els => expect(els.length).toBe(1));
-        browser.wait(EC.stalenessOf(ResourcesPage.getCreateDocumentButton()), delays.ECWaitTime);
-        MapPage.clickMapOption('abort');
-        browser.wait(EC.presenceOf(ResourcesPage.getCreateDocumentButton()), delays.ECWaitTime);
+        await ResourcesPage.clickCreateResource();
+        await ResourcesPage.clickSelectCategory();
+        await ResourcesPage.clickSelectGeometryType('point');
+        const elements = await ResourcesPage.getListItemMarkedNewEls();
+        expect(elements.length).toBe(1);
+        await waitForNotExist(await ResourcesPage.getCreateDocumentButton());
+        await MapPage.clickMapOption('abort');
+        await waitForExist(await ResourcesPage.getCreateDocumentButton());
+
+        done();
     });
 
 
-    it('remove new resource from list if docedit modal is canceled during resource creation', () => {
+    it('remove new resource from list if docedit modal is canceled during resource creation', async done => {
 
-        ResourcesPage.clickCreateResource();
-        ResourcesPage.clickSelectCategory();
-        ResourcesPage.clickSelectGeometryType('point');
-        ResourcesPage.getListItemMarkedNewEls().then(els => expect(els.length).toBe(1));
-        MapPage.clickMapOption('ok');
-        DoceditPage.clickCloseEdit();
-        ResourcesPage.getListItemMarkedNewEls().then(els => expect(els.length).toBe(0));
+        await ResourcesPage.clickCreateResource();
+        await ResourcesPage.clickSelectCategory();
+        await ResourcesPage.clickSelectGeometryType('point');
+        let elements = await ResourcesPage.getListItemMarkedNewEls();
+        expect(elements.length).toBe(1);
+        
+        await MapPage.clickMapOption('ok');
+        await DoceditPage.clickCloseEdit();
+        elements = await ResourcesPage.getListItemMarkedNewEls();
+        expect(elements.length).toBe(0);
+
+        done();
     });
 
 
-    it('duplicate a resource', () => {
+    it('duplicate a resource', async done => {
 
-        ResourcesPage.performCreateResource('resource1', 'feature');
-        ResourcesPage.openEditByDoubleClickResource('resource1');
-        DoceditPage.clickDuplicateDocument();
-        DoceditPage.typeInNumberOfDuplicates('2');
-        DoceditPage.clickConfirmDuplicateInModal();
+        await ResourcesPage.performCreateResource('resource1', 'feature');
+        await ResourcesPage.openEditByDoubleClickResource('resource1');
+        await DoceditPage.clickDuplicateDocument();
+        await DoceditPage.typeInNumberOfDuplicates('2');
+        await DoceditPage.clickConfirmDuplicateInModal();
 
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('resource1')), delays.ECWaitTime);
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('resource2')), delays.ECWaitTime);
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('resource3')), delays.ECWaitTime);
+        await waitForExist(await ResourcesPage.getListItemEl('resource1'));
+        await waitForExist(await ResourcesPage.getListItemEl('resource2'));
+        await waitForExist(await ResourcesPage.getListItemEl('resource3'));
+
+        done();
     });
 
 
-    it('create two instances of a new resource', () => {
+    it('create two instances of a new resource', async done => {
 
-        ResourcesPage.clickCreateResource();
-        ResourcesPage.clickSelectCategory();
-        ResourcesPage.clickSelectGeometryType();
-        DoceditPage.typeInInputField('identifier', 'resource1');
-        DoceditPage.clickDuplicateDocument();
-        DoceditPage.typeInNumberOfDuplicates('2');
-        DoceditPage.clickConfirmDuplicateInModal();
+        await ResourcesPage.clickCreateResource();
+        await ResourcesPage.clickSelectCategory();
+        await ResourcesPage.clickSelectGeometryType();
+        await DoceditPage.typeInInputField('identifier', 'resource1');
+        await DoceditPage.clickDuplicateDocument();
+        await DoceditPage.typeInNumberOfDuplicates('2');
+        await DoceditPage.clickConfirmDuplicateInModal();
 
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('resource1')), delays.ECWaitTime);
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('resource2')), delays.ECWaitTime);
+        await waitForExist(await ResourcesPage.getListItemEl('resource1'));
+        await waitForExist(await ResourcesPage.getListItemEl('resource2'));
+
+        done();
     });
 
 
-    it('contextMenu/moveModal - move a resource with children to another operation', () => {
+    it('contextMenu/moveModal - move a resource with children to another operation', async done => {
 
-        ResourcesPage.clickOpenContextMenu('SE0');
-        ResourcesPage.clickContextMenuMoveButton();
-        ResourcesPage.typeInMoveModalSearchBarInput('S2');
-        ResourcesPage.clickResourceListItemInMoveModal('S2');
-        browser.wait(EC.stalenessOf(ResourcesPage.getMoveModal()), delays.ECWaitTime);
+        await ResourcesPage.clickOpenContextMenu('SE0');
+        await ResourcesPage.clickContextMenuMoveButton();
+        await ResourcesPage.typeInMoveModalSearchBarInput('S2');
+        await pause(2000);
+        await ResourcesPage.clickResourceListItemInMoveModal('S2');
+        await waitForNotExist(await ResourcesPage.getMoveModal());
 
-        NavbarPage.getActiveNavLinkLabel().then(label => expect(label).toContain('S2'));
-        ResourcesPage.getListItemEls().then(elements => expect(elements.length).toBe(7));
+        await pause(2000);
+        const label = await NavbarPage.getActiveNavLinkLabel();
+        expect(label).toContain('S2');
+        await pause(2000);
+        let elements = await ResourcesPage.getListItemEls();
+        expect(elements.length).toBe(7);
+        await pause(2000);
 
-        ResourcesPage.clickHierarchyButton('SE0');
-        ResourcesPage.clickOpenChildCollectionButton();
-        ResourcesPage.getListItemEls().then(elements => expect(elements.length).toBe(1));
+        await ResourcesPage.clickHierarchyButton('SE0');
+        await ResourcesPage.clickOpenChildCollectionButton();
+        elements = await ResourcesPage.getListItemEls();
+        expect(elements.length).toBe(1);
 
-        NavbarPage.clickTab('project');
-        ResourcesPage.clickHierarchyButton('S1');
-        ResourcesPage.getListItemEls().then(elements => expect(elements.length).toBe(0));
+        await NavbarPage.clickTab('project');
+        await ResourcesPage.clickHierarchyButton('S1');
+        elements = await ResourcesPage.getListItemEls();
+        expect(elements.length).toBe(0);
+
+        done();
     });
 
 
-    it('contextMenu/moveModal - move an operation to root level', () => {
+    it('contextMenu/moveModal - move an operation to root level', async done => {
 
-        NavbarPage.clickTab('project');
-        browser.sleep(delays.shortRest * 2);
-        ResourcesPage.performCreateResource('P1', 'place');
-        ResourcesPage.clickOpenContextMenu('S1');
-        ResourcesPage.clickContextMenuMoveButton();
-        ResourcesPage.typeInMoveModalSearchBarInput('P');
-        ResourcesPage.getResourceIdentifierLabelsInMoveModal().then(labels => {
-            for (let label of labels) expect(label.getText()).not.toEqual('Projekt');
-        });
-        ResourcesPage.typeInMoveModalSearchBarInput('P1');
-        ResourcesPage.clickResourceListItemInMoveModal('P1');
-        browser.wait(EC.stalenessOf(ResourcesPage.getMoveModal()), delays.ECWaitTime);
-        ResourcesPage.getListItemEls().then(elements => expect(elements.length).toBe(1));
+        await NavbarPage.clickTab('project');
+        await ResourcesPage.performCreateResource('P1', 'place');
+        await ResourcesPage.clickOpenContextMenu('S1');
+        await ResourcesPage.clickContextMenuMoveButton();
+        await ResourcesPage.typeInMoveModalSearchBarInput('P');
+        
+        let labels = await ResourcesPage.getResourceIdentifierLabelsInMoveModal();
+        for (let label of labels) {
+            expect(await getText(label)).not.toEqual('Projekt');
+        }
 
-        ResourcesPage.clickOpenContextMenu('S1');
-        ResourcesPage.clickContextMenuMoveButton();
-        ResourcesPage.typeInMoveModalSearchBarInput('P');
-        ResourcesPage.getResourceIdentifierLabelsInMoveModal().then(labels => {
-            expect(labels[0].getText()).toEqual('Projekt');
-        });
-        ResourcesPage.clickResourceListItemInMoveModal('Projekt');
-        browser.wait(EC.stalenessOf(ResourcesPage.getMoveModal()), delays.ECWaitTime);
-        ResourcesPage.getListItemEls().then(elements => expect(elements.length).toBe(5));
+        await ResourcesPage.typeInMoveModalSearchBarInput('P1');
+        await ResourcesPage.clickResourceListItemInMoveModal('P1');
+        await waitForNotExist(await ResourcesPage.getMoveModal());
+        let elements = await ResourcesPage.getListItemEls();
+        expect(elements.length).toBe(1);
+
+        await ResourcesPage.clickOpenContextMenu('S1');
+        await ResourcesPage.clickContextMenuMoveButton();
+        await ResourcesPage.typeInMoveModalSearchBarInput('P');
+        labels = await ResourcesPage.getResourceIdentifierLabelsInMoveModal();
+        expect(await getText(labels[0])).toEqual('Projekt');
+
+        await ResourcesPage.clickResourceListItemInMoveModal('Projekt');
+        await waitForNotExist(await ResourcesPage.getMoveModal());
+        elements = await ResourcesPage.getListItemEls();
+        expect(elements.length).toBe(5);
+
+        done();
     });
 
 
-    it('contextMenu/moveModal - show only category filter options for allowed parent categories in move modal', () => {
+    it('contextMenu/moveModal - show only category filter options for allowed parent categories in move modal', async done => {
 
-        ResourcesPage.clickOpenContextMenu('SE0');
-        ResourcesPage.clickContextMenuMoveButton();
-        SearchBarPage.clickCategoryFilterButton('modal');
-        SearchBarPage.getCategoryFilterOptionLabels().then(labels => {
-            expect(labels.length).toBe(7);
-            expect(labels[0].getText()).toEqual('Schnitt');
-            expect(labels[1].getText()).toEqual('Stratigraphische Einheit');
-        });
-        SearchBarPage.clickCategoryFilterButton('modal');
-        ResourcesPage.clickCancelInMoveModal();
+        await ResourcesPage.clickOpenContextMenu('SE0');
+        await ResourcesPage.clickContextMenuMoveButton();
+        await SearchBarPage.clickCategoryFilterButton('modal');
 
-        NavbarPage.clickTab('project');
-        ResourcesPage.clickOpenContextMenu('S1');
-        ResourcesPage.clickContextMenuMoveButton();
-        SearchBarPage.clickCategoryFilterButton('modal');
-        SearchBarPage.getCategoryFilterOptionLabels().then(labels => {
-            expect(labels.length).toBe(1);
-            expect(labels[0].getText()).toEqual('Ort');
-        });
-        SearchBarPage.clickCategoryFilterButton('modal');
-        ResourcesPage.clickCancelInMoveModal();
+        let labels = await SearchBarPage.getCategoryFilterOptionLabels();
+        expect(labels.length).toBe(7);
+        expect(await getText(labels[0])).toEqual('Schnitt');
+        expect(await getText(labels[1])).toEqual('Stratigraphische Einheit');
+
+        await SearchBarPage.clickCategoryFilterButton('modal');
+        await ResourcesPage.clickCancelInMoveModal();
+
+        await NavbarPage.clickTab('project');
+        await ResourcesPage.clickOpenContextMenu('S1');
+        await ResourcesPage.clickContextMenuMoveButton();
+        await SearchBarPage.clickCategoryFilterButton('modal');
+        labels = await SearchBarPage.getCategoryFilterOptionLabels();
+        expect(labels.length).toBe(1);
+        expect(await getText(labels[0])).toEqual('Ort');
+
+        await SearchBarPage.clickCategoryFilterButton('modal');
+        await ResourcesPage.clickCancelInMoveModal();
+
+        done();
     });
 
 
-    it('contextMenu/moveModal - do not suggest current parent resource', () => {
+    it('contextMenu/moveModal - do not suggest current parent resource', async done => {
 
-        ResourcesPage.clickOpenContextMenu('SE0');
-        ResourcesPage.clickContextMenuMoveButton();
-        SearchBarPage.clickChooseCategoryFilter('trench', 'modal');
-        ResourcesPage.getResourceIdentifierLabelsInMoveModal().then(labels => {
-           for (let label of labels) expect(label.getText()).not.toEqual('S1');
-        });
-        ResourcesPage.clickCancelInMoveModal();
+        await ResourcesPage.clickOpenContextMenu('SE0');
+        await ResourcesPage.clickContextMenuMoveButton();
+        await SearchBarPage.clickChooseCategoryFilter('trench', 'modal');
+        
+        let labels = await ResourcesPage.getResourceIdentifierLabelsInMoveModal();
+        for (let label of labels) {
+            expect(await getText(label)).not.toEqual('S1');
+        }
 
-        ResourcesPage.performDescendHierarchy('SE0');
+        await ResourcesPage.clickCancelInMoveModal();
+        await ResourcesPage.performDescendHierarchy('SE0');
+        await ResourcesPage.clickOpenContextMenu('testf1');
+        await ResourcesPage.clickContextMenuMoveButton();
+        await SearchBarPage.clickChooseCategoryFilter('feature', 'modal');
 
-        ResourcesPage.clickOpenContextMenu('testf1');
-        browser.sleep(delays.shortRest * 2);
-        ResourcesPage.clickContextMenuMoveButton();
-        SearchBarPage.clickChooseCategoryFilter('feature', 'modal');
-        ResourcesPage.getResourceIdentifierLabelsInMoveModal().then(labels => {
-            for (let label of labels) expect(label.getText()).not.toEqual('SE0');
-        });
-        ResourcesPage.clickCancelInMoveModal();
+        labels = await ResourcesPage.getResourceIdentifierLabelsInMoveModal();
+        for (let label of labels) {
+            expect(await getText(label)).not.toEqual('SE0');
+        }
+
+        await ResourcesPage.clickCancelInMoveModal();
+
+        done();
     });
 
 
-    it('contextMenu/moveModal - do not suggest descendants of current resource', () => {
+    it('contextMenu/moveModal - do not suggest descendants of current resource', async done => {
 
-        ResourcesPage.performDescendHierarchy('SE0');
-        ResourcesPage.performCreateResource('SE-D1', 'feature');
-        ResourcesPage.performDescendHierarchy('SE-D1');
-        ResourcesPage.performCreateResource('SE-D2', 'feature');
+        await ResourcesPage.performDescendHierarchy('SE0');
+        await ResourcesPage.performCreateResource('SE-D1', 'feature');
+        await ResourcesPage.performDescendHierarchy('SE-D1');
+        await ResourcesPage.performCreateResource('SE-D2', 'feature');
 
-        ResourcesPage.clickOperationNavigationButton();
-        ResourcesPage.clickOpenContextMenu('SE0');
-        ResourcesPage.clickContextMenuMoveButton();
-        SearchBarPage.clickChooseCategoryFilter('feature', 'modal');
-        ResourcesPage.getResourceIdentifierLabelsInMoveModal().then(labels => {
-            for (let label of labels) {
-                expect(label.getText()).not.toEqual('SE-D1');
-                expect(label.getText()).not.toEqual('SE-D2');
-            }
-        });
-        ResourcesPage.clickCancelInMoveModal();
+        await ResourcesPage.clickOperationNavigationButton();
+        await ResourcesPage.clickOpenContextMenu('SE0');
+        await ResourcesPage.clickContextMenuMoveButton();
+        await SearchBarPage.clickChooseCategoryFilter('feature', 'modal');
+
+        const labels = await ResourcesPage.getResourceIdentifierLabelsInMoveModal();
+        for (let label of labels) {
+            expect(await getText(label)).not.toEqual('SE-D1');
+            expect(await getText(label)).not.toEqual('SE-D2');
+        }
+
+        await ResourcesPage.clickCancelInMoveModal();
+
+        done();
     });
 
 
-    it('images', () => {
+    it('images', async done => {
 
         // create links for images
+        await addTwoImages('SE0');
+        await ResourcesPage.clickSelectResource('SE0', 'info');
+        await ResourcesPage.clickThumbnail();
+        let images = await ImageRowPage.getImages();
+        expect(images.length).toBe(2);
 
-        addTwoImages('SE0');
-        ResourcesPage.clickSelectResource('SE0', 'info');
-        ResourcesPage.clickThumbnail();
-        ImageRowPage.getImages().then(images => expect(images.length).toBe(2));
-
-        ImageViewPage.clickCloseButton();
-
+        await ImageViewPage.clickCloseButton();
 
         // delete links to one image
+        await ResourcesPage.openEditByDoubleClickResource('SE0');
+        await DoceditPage.clickGotoImagesTab();
 
-        ResourcesPage.openEditByDoubleClickResource('SE0');
-        DoceditPage.clickGotoImagesTab();
+        await DoceditImageTabPage.waitForCells();
+        await click((await DoceditImageTabPage.getCells())[0]);
+        await DoceditImageTabPage.clickDeleteImages();
+        await pause(1000);
+        let cells = await DoceditImageTabPage.getCells();
+        expect(cells.length).toBe(1);
+        await DoceditPage.clickSaveDocument();
 
-        DoceditImageTabPage.waitForCells();
-        DoceditImageTabPage.getCells().get(0).click();
-        DoceditImageTabPage.clickDeleteImages();
-        DoceditImageTabPage.getCells().then(cells => {
-            expect(cells.length).toBe(1);
-        });
-        DoceditPage.clickSaveDocument();
+        await ResourcesPage.clickThumbnail();
+        images = await ImageRowPage.getImages();
+        expect(images.length).toBe(1);
 
-        ResourcesPage.clickThumbnail();
-        ImageRowPage.getImages().then(images => expect(images.length).toBe(1));
-
-        ImageViewPage.clickCloseButton();
-
+        await ImageViewPage.clickCloseButton();
 
         // delete links to the other
+        await waitForExist(await ResourcesPage.getThumbnail());
 
-        browser.wait(EC.presenceOf(ResourcesPage.getThumbnail()), delays.ECWaitTime);
+        await ResourcesPage.openEditByDoubleClickResource('SE0');
+        await DoceditPage.clickGotoImagesTab();
+        await DoceditImageTabPage.waitForCells();
+        await click((await DoceditImageTabPage.getCells())[0]);
+        await DoceditImageTabPage.clickDeleteImages();
+        await pause(1000);
+        cells = await DoceditImageTabPage.getCells();
+        expect(cells.length).toBe(0);
+        await DoceditPage.clickSaveDocument();
 
-        ResourcesPage.openEditByDoubleClickResource('SE0');
-        DoceditPage.clickGotoImagesTab();
-        DoceditImageTabPage.waitForCells();
-        DoceditImageTabPage.getCells().get(0).click();
-        DoceditImageTabPage.clickDeleteImages();
-        DoceditImageTabPage.getCells().then(cells => expect(cells.length).toBe(0));
-        DoceditPage.clickSaveDocument();
+        await waitForNotExist(await ResourcesPage.getThumbnail());
 
-        browser.wait(EC.stalenessOf(ResourcesPage.getThumbnail()), delays.ECWaitTime);
+        done();
     });
 });

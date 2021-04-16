@@ -186,8 +186,8 @@ export class DoceditPage {
     };
 
 
-    public static typeInNumberOfDuplicates(numberOfDuplicates: string) {
+    public static async typeInNumberOfDuplicates(numberOfDuplicates: string) {
 
-        return typeIn(this.getNumberOfDuplicatesInputField(), numberOfDuplicates);
+        return typeIn(await this.getNumberOfDuplicatesInputField(), numberOfDuplicates);
     }
 }

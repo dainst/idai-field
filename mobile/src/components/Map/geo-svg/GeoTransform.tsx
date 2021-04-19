@@ -2,7 +2,7 @@ import React from 'react';
 import { G } from 'react-native-svg';
 
 export interface GeoTransformProps {
-    viewBoxHeight: number
+    viewBox: [number, number, number, number],
 }
 
 /**
@@ -13,7 +13,9 @@ export interface GeoTransformProps {
  * @param viewBoxHeight
  * @returns JSX element to be wrapped around Geo.. component
  */
-const GeoTransform: React.FC<GeoTransformProps> = ({ viewBoxHeight, children }) => {
+const GeoTransform: React.FC<GeoTransformProps> = ({ viewBox, children }) => {
+    const viewBoxHeight = viewBox[3];
+    
     return (
         <G translate={ `0,${viewBoxHeight}` } scale="1,-1" >
             {children}

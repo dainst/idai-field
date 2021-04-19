@@ -5,11 +5,13 @@ import { Document, FieldGeometry } from 'idai-field-core';
 type extractFunc = ((geometry: Position[]) => [number[], number[]] )|
                     ((geometry: Position[][]) => [number[], number[]]);
 
+                    
 export const defineViewBox = (documents: Document[]): string => {
 
     const [minX, minY, maxX, maxY] = getMinMaxCoords(documents.map(doc => doc.resource.geometry));
     return `${minX} ${minY} ${maxX - minX} ${maxY - minY}`;
 };
+
 
 export const getMinMaxCoords = (geos: FieldGeometry[]): [number, number, number, number] => {
     
@@ -69,6 +71,7 @@ const extractCoords = (geometries: Position[][] | Position[][][], extractFunc: e
     });
     return [xCoords, yCoords];
 };
+
 
 export const extractCoordsPositions = (geometries: Position[]): [number[], number[]] => {
     const xCoords: number[] = [];

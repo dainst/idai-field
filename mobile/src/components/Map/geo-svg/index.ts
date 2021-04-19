@@ -4,4 +4,11 @@ import { GeoMultiPolygon } from './GeoMultiPolygon';
 import { GeoPoint } from './GeoPoint';
 import { GeoPolygon } from './GeoPolygon';
 
-export { GeoMultiPolygon, GeoPolygon, GeoMultiLineString, GeoLineString, GeoPoint };
+export {
+    GeoMultiPolygon,
+    GeoPolygon,
+    GeoMultiLineString,
+    GeoLineString,
+    GeoPoint
+};
+

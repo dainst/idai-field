@@ -205,7 +205,7 @@ export class ResourcesPage {
 
     public static getListItemMarkedNewEl() {
 
-        return getElements('#objectList .list-group-item .new');
+        return getElement('#sidebar .resources-listing-item .new');
     }
 
 

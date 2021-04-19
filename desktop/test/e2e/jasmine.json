@@ -11,7 +11,8 @@
       "test/e2e/**/resources-types.spec.js",
       "test/e2e/**/resources.spec.js",
       "test/e2e/**/resources-state.spec.js",
-      "test/e2e/**/resources-multi-select.spec.js"
+      "test/e2e/**/resources-multi-select.spec.js",
+      "test/e2e/**/map.spec.js"
     ],
     "stopSpecOnExpectationFailure": false,
     "random": false

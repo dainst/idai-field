@@ -1,463 +1,483 @@
-import {browser, protractor} from 'protractor';
-import {MapPage} from './map.page';
-import {ResourcesPage} from '../resources/resources.page';
-import {DoceditPage} from '../docedit/docedit.page';
-import {NavbarPage} from '../navbar.page';
-import {MenuPage} from '../menu.page';
-import {GeometryViewPage} from '../widgets/geometry-view.page';
-
-const EC = protractor.ExpectedConditions;
-const delays = require('../delays');
-const common = require('../common');
+import { start, stop, waitForExist, resetApp, navigateTo, waitForNotExist, getUrl, pause } from '../app';
+import { MapPage } from './map.page';
+import { ResourcesPage } from '../resources/resources.page';
+import { DoceditPage } from '../docedit/docedit.page';
+import { NavbarPage } from '../navbar.page';
+import { GeometryViewPage } from '../widgets/geometry-view.page';
 
 
 describe('map --', function() {
 
-    function setPolygon() {
+    beforeAll(async done => {
 
-        return Promise.resolve()
-            .then(() => { return new Promise(function(resolve) {
-                setTimeout(function() { resolve(undefined); }, delays.shortRest);
-            })}).then(() => { return MapPage.clickMap(100,100); })
-            .then(() => { return MapPage.clickMap(200,200); })
-            .then(() => { return MapPage.clickMap(100,200); })
-            .then(() => { return MapPage.clickMap(100,100); });
+        await start();
+        done();
+    });
+
+
+    beforeEach(async done => {
+
+        await navigateTo('settings');
+        await resetApp();
+        await NavbarPage.clickCloseNonResourcesTab();
+        await NavbarPage.clickTab('project');
+        await ResourcesPage.clickHierarchyButton('S1');
+
+        done();
+    });
+
+
+    afterAll(async done => {
+
+        await stop();
+        done();
+    });
+
+
+    async function setPolygon() {
+
+        await MapPage.clickMap(100, 100);
+        await MapPage.clickMap(200, 200);
+        await MapPage.clickMap(100, 200);
+        return MapPage.clickMap(100, 100);
     }
 
 
-    function setMultiPolygon() {
+    async function setMultiPolygon() {
 
-        return Promise.resolve()
-            .then(() => {
-                browser.sleep(3000);
-                return MapPage.clickMap(100, 100);
-            }).then(() => { return MapPage.clickMap(200, 200); })
-            .then(() => { return MapPage.clickMap(100, 200); })
-            .then(() => { return MapPage.clickMap(100, 175); })
-            .then(() => { return MapPage.clickMap(100, 150); })
-            .then(() => { return MapPage.clickMap(100, 100); })
-            .then(() => { return MapPage.clickMapOption('add-polygon') as any; })
-            .then(() => { return MapPage.clickMap(300, 300); })
-            .then(() => { return MapPage.clickMap(500, 400); })
-            .then(() => { return MapPage.clickMap(300, 400); })
-            .then(() => { return MapPage.clickMap(300, 350); })
-            .then(() => { return MapPage.clickMap(300, 325); })
-            .then(() => { return MapPage.clickMap(300, 300); });
+        await MapPage.clickMap(100, 100);
+        await MapPage.clickMap(200, 200);
+        await MapPage.clickMap(100, 200);
+        await MapPage.clickMap(100, 175);
+        await MapPage.clickMap(100, 150);
+        await MapPage.clickMap(100, 100);
+
+        await MapPage.clickMapOption('add-polygon');
+
+        await MapPage.clickMap(300, 300);
+        await MapPage.clickMap(250, 200);
+        await MapPage.clickMap(300, 200);
+        await MapPage.clickMap(300, 250);
+        await MapPage.clickMap(300, 275);
+        return MapPage.clickMap(300, 300);
     }
 
 
-    function setPolyline() {
+    async function setPolyline() {
 
-        return Promise.resolve()
-            .then(() => { return new Promise(function(resolve) {
-                setTimeout(function() { resolve(undefined); }, delays.shortRest);
-            })}).then(() => { return MapPage.clickMap(100,100); })
-            .then(() => { return MapPage.clickMap(200,200); })
-            .then(() => { return MapPage.clickMap(300,100); })
-            .then(() => { return MapPage.clickMap(400,200); })
-            .then(() => { return MapPage.clickMap(400,200); });
+        await MapPage.clickMap(100, 100);
+        await MapPage.clickMap(200, 200);
+        await MapPage.clickMap(300, 100);
+        await MapPage.clickMap(400, 200);
+        return MapPage.clickMap(400, 200);
     }
 
 
-    function setUnfinishedPolyline() {
+    async function setUnfinishedPolyline() {
 
-        return Promise.resolve()
-            .then(() => { return new Promise(function(resolve) {
-                setTimeout(function() { resolve(undefined); }, delays.shortRest);
-            })}).then(() => { return MapPage.clickMap(100,100); })
-            .then(() => { return MapPage.clickMap(200,200); })
-            .then(() => { return MapPage.clickMap(300,100); })
-            .then(() => { return MapPage.clickMap(400,200); });
+        await MapPage.clickMap(100, 100);
+        await MapPage.clickMap(200, 200);
+        await MapPage.clickMap(300, 100);
+        return MapPage.clickMap(400, 200);
     }
 
 
-    function setMultiPolyline() {
+    async function setMultiPolyline() {
 
-        return Promise.resolve()
-            .then(() => {
-                browser.sleep(1000);
-                return MapPage.clickMap(100,100);
-            }).then(() => { return MapPage.clickMap(200,200); })
-            .then(() => { return MapPage.clickMap(300,100); })
-            .then(() => { return MapPage.clickMap(400,200); })
-            .then(() => { return MapPage.clickMap(400,200); })
-            .then(() => { return MapPage.clickMapOption('add-polyline') as any; })
-            .then(() => { return MapPage.clickMap(500,200); })
-            .then(() => { return MapPage.clickMap(500,100); })
-            .then(() => { return MapPage.clickMap(400,300); })
-            .then(() => { return MapPage.clickMap(400,400); })
-            .then(() => { return MapPage.clickMap(400,400); });
+        await MapPage.clickMap(50, 50);
+        await MapPage.clickMap(100, 100);
+        await MapPage.clickMap(150, 50);
+        await MapPage.clickMap(200, 100);
+        await MapPage.clickMap(200, 100);
+
+        await MapPage.clickMapOption('add-polyline');
+
+        await MapPage.clickMap(150, 100);
+        await MapPage.clickMap(150, 75);
+        await MapPage.clickMap(200, 150);
+        await MapPage.clickMap(200, 50);
+        return MapPage.clickMap(200, 50);
     }
 
 
-    function setUnfinishedMultiPolyline() {
+    async function setUnfinishedMultiPolyline() {
 
-        return Promise.resolve()
-            .then(() => {
-                browser.sleep(1000);
-                return MapPage.clickMap(100,100);
-            }).then(() => { return MapPage.clickMap(200,200); })
-            .then(() => { return MapPage.clickMap(300,100); })
-            .then(() => { return MapPage.clickMap(400,200); })
-            .then(() => { return MapPage.clickMapOption('add-polyline') as any; })
-            .then(() => { return MapPage.clickMap(500,200); })
-            .then(() => { return MapPage.clickMap(500,100); })
-            .then(() => { return MapPage.clickMap(400,300); })
-            .then(() => { return MapPage.clickMap(400,400); });
+        await MapPage.clickMap(50, 50);
+        await MapPage.clickMap(100, 100);
+        await MapPage.clickMap(150, 50);
+        await MapPage.clickMap(200, 100);
+
+        await MapPage.clickMapOption('add-polyline');
+
+        await MapPage.clickMap(150, 100);
+        await MapPage.clickMap(150, 75);
+        await MapPage.clickMap(200, 150);
+        await MapPage.clickMap(200, 50);
     }
 
 
-    function setMultiPoint() {
+    function setPoint() {
 
-        return Promise.resolve()
-            .then(() => {
-                browser.sleep(1000);
-                return MapPage.clickMap(100,100);
-            }).then(() => { return MapPage.clickMapOption('add-point') as any; })
-            .then(() => { return MapPage.clickMap(200,200); });
+        return MapPage.setMarker(100, 100);
     }
 
 
-    function beginCreateDocWithGeometry(geometry, mapClickCallback) {
+    async function setMultiPoint() {
 
-        ResourcesPage.clickCreateResource();
-        ResourcesPage.clickSelectCategory();
-        return ResourcesPage.clickSelectGeometryType(geometry)
-            .then(function() { return mapClickCallback(); });
+        await MapPage.clickMap(100, 100);
+        await MapPage.clickMapOption('add-point');
+        return MapPage.clickMap(200, 200);
     }
 
 
-    function createDocWithGeometry(identifier, geometry, mapClickCallback) {
+    async function beginCreateDocWithGeometry(geometry) {
 
-        beginCreateDocWithGeometry(geometry, mapClickCallback).then(
-            function() {
-                MapPage.clickMapOption('ok');
-                DoceditPage.typeInInputField('identifier', identifier);
-                //ResourcesPage.scrollUp();
-                DoceditPage.clickSaveDocument();
-            });
+        await ResourcesPage.clickCreateResource();
+        await ResourcesPage.clickSelectCategory();
+        await ResourcesPage.clickSelectGeometryType(geometry);
+        return pause(500);
     }
 
 
-    function createDoc(identifier, geometryType, mapClickCallback) {
+    async function createDocWithGeometry(identifier, geometry, createGeometryFunction) {
 
-        if (geometryType) {
-            createDocWithGeometry(identifier, geometryType, mapClickCallback)
-        } else {
-            ResourcesPage.performCreateResource(identifier);
-        }
+        await beginCreateDocWithGeometry(geometry);
+        await createGeometryFunction();
+        await MapPage.clickMapOption('ok');
+        await DoceditPage.typeInInputField('identifier', identifier);
+        //ResourcesPage.scrollUp();
+        return DoceditPage.clickSaveDocument();
     }
 
 
-    function createDocThenReedit(identifier, geometryType, mapClickCallback) {
+    async function createDoc(identifier, geometryType, createGeometryFunction) {
 
-        createDoc(identifier, geometryType, mapClickCallback);
-        GeometryViewPage.performReeditGeometry(identifier);
+        return geometryType
+            ? createDocWithGeometry(identifier, geometryType, createGeometryFunction)
+            : ResourcesPage.performCreateResource(identifier);
     }
 
 
-    beforeEach( () => {
+    async function createDocThenReedit(identifier, geometryType, createGeometryFunction) {
 
-        browser.sleep(1000);
+        await createDoc(identifier, geometryType, createGeometryFunction);
+        return GeometryViewPage.performReeditGeometry(identifier);
+    }
 
-        MenuPage.navigateToSettings();
-        common.resetApp();
-        NavbarPage.clickCloseNonResourcesTab();
-        NavbarPage.clickTab('project');
-        ResourcesPage.clickHierarchyButton('S1');
+
+    it('create a new item with point geometry', async done => {
+
+        await createDoc('doc', 'point', setPoint);
+
+        expect(await GeometryViewPage.getSelectedGeometryTypeText('doc')).toContain('Punkt');
+
+        done();
     });
 
 
-    it('create a new item with point geometry', () => {
+    it('create a new item with multipoint geometry', async done => {
 
-        createDoc('doc','point', function() { return MapPage.setMarker(100, 100); });
-
-        GeometryViewPage.getSelectedGeometryTypeText('doc').then(text => {
-            expect(text).toContain('Punkt');
-        });
+        await createDoc('doc', 'point', setMultiPoint);
+        expect(await GeometryViewPage.getSelectedGeometryTypeText('doc')).toContain('Multipunkt');
+        
+        done();
     });
 
 
-    it('create a new item with multipoint geometry', () => {
+    it('create a new item with polyline geometry', async done => {
+        
+        await createDoc('doc', 'polyline', setPolyline);
+        expect(await GeometryViewPage.getSelectedGeometryTypeText('doc')).toContain('Polyline');
 
-        createDoc('doc','point', setMultiPoint);
-        GeometryViewPage.getSelectedGeometryTypeText('doc').then(text => {
-            expect(text).toContain('Multipunkt');
-        });
+        done();
     });
 
 
-    it('create a new item with polyline geometry', () => {
-        createDoc('doc', 'polyline', setPolyline);
-        GeometryViewPage.getSelectedGeometryTypeText('doc').then(text => {
-            expect(text).toContain('Polyline');
-        });
+    it('create a new item with multipolyline geometry', async done => {
+
+        await createDoc('doc', 'polyline', setMultiPolyline);
+        expect(await GeometryViewPage.getSelectedGeometryTypeText('doc')).toContain('Multipolyline');
+
+        done();
     });
 
 
-    it('create a new item with multipolyline geometry', () => {
-        createDoc('doc', 'polyline', setMultiPolyline);
-        GeometryViewPage.getSelectedGeometryTypeText('doc').then(text => {
-            expect(text).toContain('Multipolyline');
-        });
+    it('create a new item with polygon geometry', async done => {
+        
+        await createDoc('doc', 'polygon', setPolygon);
+        expect(await GeometryViewPage.getSelectedGeometryTypeText('doc')).toContain('Polygon');
+
+        done();
     });
 
 
-    it('create a new item with polygon geometry', () => {
-        createDoc('doc', 'polygon', setPolygon);
-        GeometryViewPage.getSelectedGeometryTypeText('doc').then(text => {
-            expect(text).toContain('Polygon');
-        });
+    it('create a new item with multipolygon geometry', async done => {
+
+        await createDoc('doc', 'polygon', setMultiPolygon);
+        expect(await GeometryViewPage.getSelectedGeometryTypeText('doc')).toContain('Multipolygon');
+
+        done();
     });
 
 
-    it('create a new item with multipolygon geometry', () => {
-        createDoc('doc', 'polygon', setMultiPolygon);
-        GeometryViewPage.getSelectedGeometryTypeText('doc').then(text => {
-            expect(text).toContain('Multipolygon');
-        });
+    it('delete a point geometry', async done => {
+
+        await createDocThenReedit('doc', 'point', setPoint);
+        await MapPage.clickMapOption('delete');
+        await MapPage.clickMapOption('ok');
+        await GeometryViewPage.waitForCreateGeoButtons('doc');
+
+        done();
     });
 
 
-    it('delete a point geometry', () => {
+    it('delete a polyline geometry', async done => {
 
-        createDocThenReedit('doc', 'point', function() { return MapPage.setMarker(100, 100); });
-        MapPage.clickMapOption('delete');
-        MapPage.clickMapOption('ok');
-        GeometryViewPage.waitForCreateGeoButtons('doc');
+        await createDocThenReedit('doc', 'polyline', setPolyline);
+        await MapPage.clickMapOption('delete');
+        await MapPage.clickMapOption('ok');
+        await GeometryViewPage.waitForCreateGeoButtons('doc');
+
+        done();
     });
 
 
-    it('delete a polyline geometry', () => {
+    it('delete a polygon geometry', async done => {
 
-        createDocThenReedit('doc', 'polyline', setPolyline);
-        MapPage.clickMapOption('delete');
-        MapPage.clickMapOption('ok');
-        GeometryViewPage.waitForCreateGeoButtons('doc');
+        await createDocThenReedit('doc', 'polygon', setPolygon);
+        await MapPage.clickMapOption('delete');
+        await MapPage.clickMapOption('ok');
+        await GeometryViewPage.waitForCreateGeoButtons('doc');
+
+        done();
     });
 
 
-    it('delete a polygon geometry', () => {
+    it('delete single polygons of a multipolygon', async done => {
 
-        createDocThenReedit('doc', 'polygon', setPolygon);
-        MapPage.clickMapOption('delete');
-        MapPage.clickMapOption('ok');
-        GeometryViewPage.waitForCreateGeoButtons('doc');
+        await createDocThenReedit('doc', 'polygon', setMultiPolygon);
+        await MapPage.clickMapOption('delete');
+        await MapPage.clickMapOption('ok');
+        await GeometryViewPage.waitForLayoverToDisappear();
+        expect(await GeometryViewPage.getSelectedGeometryTypeText('doc')).toContain('Polygon');
+
+        await ResourcesPage.clickSelectResource('doc');
+        await GeometryViewPage.performReeditGeometry('doc');
+        await MapPage.clickMapOption('delete');
+        await MapPage.clickMapOption('ok');
+        await GeometryViewPage.waitForCreateGeoButtons('doc');
+
+        done();
     });
 
 
-    it('delete single polygons of a multipolygon', () => {
+    it('delete single polylines of a multipolyline', async done => {
 
-        createDocThenReedit('doc', 'polygon', setMultiPolygon);
-        MapPage.clickMapOption('delete');
-        MapPage.clickMapOption('ok');
-        GeometryViewPage.waitForLayoverToDisappear();
-        GeometryViewPage.getSelectedGeometryTypeText('doc').then(text => {
-            expect(text).toContain('Polygon');
-        });
+        await createDocThenReedit('doc', 'polyline', setMultiPolyline);
+        await MapPage.clickMapOption('delete');
+        await MapPage.clickMapOption('ok');
+        await GeometryViewPage.waitForLayoverToDisappear();
+        expect(await GeometryViewPage.getSelectedGeometryTypeText('doc')).toContain('Polyline');
 
-        ResourcesPage.clickSelectResource('doc');
-        GeometryViewPage.performReeditGeometry('doc');
-        MapPage.clickMapOption('delete');
-        MapPage.clickMapOption('ok');
-        GeometryViewPage.waitForCreateGeoButtons('doc');
+        await ResourcesPage.clickSelectResource('doc');
+        await GeometryViewPage.performReeditGeometry('doc');
+        await MapPage.clickMapOption('delete');
+        await MapPage.clickMapOption('ok');
+        await GeometryViewPage.waitForCreateGeoButtons('doc');
+
+        done();
     });
 
 
-    it('delete single polylines of a multipolyline', () => {
+    it('delete single points of a multipoint', async done => {
 
-        createDocThenReedit('doc', 'polyline', setMultiPolyline);
-        MapPage.clickMapOption('delete');
-        MapPage.clickMapOption('ok');
-        GeometryViewPage.waitForLayoverToDisappear();
-        GeometryViewPage.getSelectedGeometryTypeText('doc').then(text => {
-            expect(text).toContain('Polyline');
-        });
+        await createDocThenReedit('doc', 'point', setMultiPoint);
+        await MapPage.clickMapOption('delete');
+        await MapPage.clickMapOption('ok');
+        await GeometryViewPage.waitForLayoverToDisappear();
+        expect(await GeometryViewPage.getSelectedGeometryTypeText('doc')).toContain('Punkt');
 
-        ResourcesPage.clickSelectResource('doc');
-        GeometryViewPage.performReeditGeometry('doc');
-        MapPage.clickMapOption('delete');
-        MapPage.clickMapOption('ok');
-        GeometryViewPage.waitForCreateGeoButtons('doc');
+        await ResourcesPage.clickSelectResource('doc');
+        await GeometryViewPage.performReeditGeometry('doc');
+        await MapPage.clickMapOption('delete');
+        await MapPage.clickMapOption('ok');
+        await GeometryViewPage.waitForCreateGeoButtons('doc');
+
+        done();
     });
 
 
-    it('delete single points of a multipoint', () => {
+    it('create a point geometry later', async done => {
 
-        createDocThenReedit('doc', 'point', setMultiPoint);
-        MapPage.clickMapOption('delete');
-        MapPage.clickMapOption('ok');
-        GeometryViewPage.waitForLayoverToDisappear();
-        GeometryViewPage.getSelectedGeometryTypeText('doc').then(text => {
-            expect(text).toContain('Punkt');
-        });
+        await ResourcesPage.performCreateResource('doc');
+        await GeometryViewPage.clickCreateGeometry('doc', 'point');
+        await MapPage.setMarker(100, 100);
+        await MapPage.clickMapOption('ok');
+        expect(await GeometryViewPage.getSelectedGeometryTypeText('doc')).toContain('Punkt');
 
-        ResourcesPage.clickSelectResource('doc');
-        GeometryViewPage.performReeditGeometry('doc');
-        MapPage.clickMapOption('delete');
-        MapPage.clickMapOption('ok');
-        GeometryViewPage.waitForCreateGeoButtons('doc');
+        done();
     });
 
 
-    it('create a point geometry later', () => {
+    it('create a multipoint geometry later', async done => {
 
-        ResourcesPage.performCreateResource('doc');
-        GeometryViewPage.clickCreateGeometry('doc', 'point');
-        MapPage.setMarker(100, 100);
-        MapPage.clickMapOption('ok');
-        GeometryViewPage.getSelectedGeometryTypeText('doc').then(text => {
-            expect(text).toContain('Punkt');
-        });
+        await ResourcesPage.performCreateResource('doc');
+        await GeometryViewPage.clickCreateGeometry('doc', 'point').then(setMultiPoint);
+        await MapPage.clickMapOption('ok');
+        expect(await GeometryViewPage.getSelectedGeometryTypeText('doc')).toContain('Multipunkt');
+
+        done();
     });
 
 
-    it('create a multipoint geometry later', () => {
+    it('create a polyline geometry later', async done => {
 
-        ResourcesPage.performCreateResource('doc');
-        GeometryViewPage.clickCreateGeometry('doc', 'point').then(setMultiPoint);
-        MapPage.clickMapOption('ok');
-        GeometryViewPage.getSelectedGeometryTypeText('doc').then(text => {
-            expect(text).toContain('Multipunkt');
-        });
+        await ResourcesPage.performCreateResource('doc');
+        await GeometryViewPage.clickCreateGeometry('doc', 'polyline').then(setPolyline);
+        await MapPage.clickMapOption('ok');
+        expect(await GeometryViewPage.getSelectedGeometryTypeText('doc')).toContain('Polyline');
+
+        done();
     });
 
 
-    it('create a polyline geometry later', () => {
+    it('create a multipolyline geometry later', async done => {
 
-        ResourcesPage.performCreateResource('doc');
-        GeometryViewPage.clickCreateGeometry('doc', 'polyline').then(setPolyline);
-        MapPage.clickMapOption('ok');
-        GeometryViewPage.getSelectedGeometryTypeText('doc').then(text => {
-            expect(text).toContain('Polyline');
-        });
+        await ResourcesPage.performCreateResource('doc');
+        await GeometryViewPage.clickCreateGeometry('doc', 'polyline').then(setMultiPolyline);
+        await MapPage.clickMapOption('ok');
+        expect(await GeometryViewPage.getSelectedGeometryTypeText('doc')).toContain('Multipolyline');
+
+        done();
     });
 
 
-    it('create a multipolyline geometry later', () => {
+    it('create a polygon geometry later', async done => {
 
-        ResourcesPage.performCreateResource('doc');
-        GeometryViewPage.clickCreateGeometry('doc', 'polyline').then(setMultiPolyline);
-        MapPage.clickMapOption('ok');
-        GeometryViewPage.getSelectedGeometryTypeText('doc').then(text => {
-            expect(text).toContain('Multipolyline');
-        });
+        await ResourcesPage.performCreateResource('doc');
+        await GeometryViewPage.clickCreateGeometry('doc', 'polygon').then(setPolygon);
+        await MapPage.clickMapOption('ok');
+        expect(await GeometryViewPage.getSelectedGeometryTypeText('doc')).toContain('Polygon');
+
+        done();
     });
 
 
-    it('create a polygon geometry later', () => {
+    it('create a multipolygon geometry later', async done => {
 
-        ResourcesPage.performCreateResource('doc');
-        GeometryViewPage.clickCreateGeometry('doc', 'polygon').then(setPolygon);
-        MapPage.clickMapOption('ok');
-        GeometryViewPage.getSelectedGeometryTypeText('doc').then(text => {
-            expect(text).toContain('Polygon');
-        });
+        await ResourcesPage.performCreateResource('doc');
+        await GeometryViewPage.clickCreateGeometry('doc', 'polygon').then(setMultiPolygon);
+        await MapPage.clickMapOption('ok');
+        expect(await GeometryViewPage.getSelectedGeometryTypeText('doc')).toContain('Multipolygon');
+
+        done();
     });
 
 
-    it('create a multipolygon geometry later', () => {
+    it('cancel creating a point geometry', async done => {
 
-        ResourcesPage.performCreateResource('doc');
-        GeometryViewPage.clickCreateGeometry('doc', 'polygon').then(setMultiPolygon);
-        MapPage.clickMapOption('ok');
-        GeometryViewPage.getSelectedGeometryTypeText('doc').then(text => {
-            expect(text).toContain('Multipolygon');
-        });
+        await ResourcesPage.performCreateResource('doc');
+        await GeometryViewPage.clickCreateGeometry('doc', 'point');
+        await MapPage.setMarker(100, 100);
+        await MapPage.clickMapOption('abort');
+        await GeometryViewPage.waitForCreateGeoButtons('doc');
+
+        done();
     });
 
 
-    it('cancel creating a point geometry', () => {
+    it('cancel creating a polyline geometry', async done => {
 
-        ResourcesPage.performCreateResource('doc');
-        GeometryViewPage.clickCreateGeometry('doc', 'point');
-        MapPage.setMarker(100, 100);
-        MapPage.clickMapOption('abort');
-        GeometryViewPage.waitForCreateGeoButtons('doc');
+        await ResourcesPage.performCreateResource('doc');
+        await GeometryViewPage.clickCreateGeometry('doc', 'polyline');
+        await setPolyline();
+        await MapPage.clickMapOption('abort');
+        await GeometryViewPage.waitForCreateGeoButtons('doc');
+
+        done();
     });
 
 
-    it('cancel creating a polyline geometry', () => {
+    it('cancel creating a polygon geometry', async done => {
 
-        ResourcesPage.performCreateResource('doc');
-        GeometryViewPage.clickCreateGeometry('doc', 'polyline').then(setPolyline);
-        MapPage.clickMapOption('abort');
-        GeometryViewPage.waitForCreateGeoButtons('doc');
+        await ResourcesPage.performCreateResource('doc');
+        await GeometryViewPage.clickCreateGeometry('doc', 'polygon').then(setPolygon);
+        await MapPage.clickMapOption('abort');
+        await GeometryViewPage.waitForCreateGeoButtons('doc');
+
+        done();
     });
 
 
-    it('cancel creating a polygon geometry', () => {
+    it('cancel deleting a point geometry', async done => {
 
-        ResourcesPage.performCreateResource('doc');
-        GeometryViewPage.clickCreateGeometry('doc', 'polygon').then(setPolygon);
-        MapPage.clickMapOption('abort');
-        GeometryViewPage.waitForCreateGeoButtons('doc');
+        await createDocThenReedit('doc', 'point', setPoint);
+        await MapPage.clickMapOption('delete');
+        await MapPage.clickMapOption('abort');
+        expect(await GeometryViewPage.getSelectedGeometryTypeText('doc')).toContain('Punkt');
+
+        done();
     });
 
 
-    it('cancel deleting a point geometry', () => {
+    it('cancel deleting a polyline geometry', async done => {
 
-        createDocThenReedit('doc', 'point', function() { return MapPage.setMarker(100, 100); });
-        MapPage.clickMapOption('delete');
-        MapPage.clickMapOption('abort');
-        GeometryViewPage.getSelectedGeometryTypeText('doc').then(text => {
-            expect(text).toContain('Punkt');
-        });
+        await createDocThenReedit('doc', 'polyline', setPolyline);
+        await MapPage.clickMapOption('delete');
+        await MapPage.clickMapOption('abort');
+        expect(await GeometryViewPage.getSelectedGeometryTypeText('doc')).toContain('Polyline');
+
+        done();
     });
 
 
-    it('cancel deleting a polyline geometry', () => {
+    it('cancel deleting a polygon geometry', async done => {
 
-        createDocThenReedit('doc', 'polyline', setPolyline);
-        MapPage.clickMapOption('delete');
-        MapPage.clickMapOption('abort');
-        GeometryViewPage.getSelectedGeometryTypeText('doc').then(text => {
-            expect(text).toContain('Polyline');
-        });
+        await createDocThenReedit('doc', 'polygon', setPolygon);
+        await MapPage.clickMapOption('delete');
+        await MapPage.clickMapOption('abort');
+        expect(await GeometryViewPage.getSelectedGeometryTypeText('doc')).toContain('Polygon');
+
+        done();
     });
 
 
-    it('cancel deleting a polygon geometry', () => {
+    it('abort item creation completely when aborting geometry editing', async done => {
 
-        createDocThenReedit('doc', 'polygon', setPolygon);
-        MapPage.clickMapOption('delete');
-        MapPage.clickMapOption('abort');
-        GeometryViewPage.getSelectedGeometryTypeText('doc').then(text => {
-            expect(text).toContain('Polygon');
-        });
+        await beginCreateDocWithGeometry('point');
+        await waitForExist(await ResourcesPage.getListItemMarkedNewEl());
+        await setPoint();
+        await MapPage.clickMapOption('abort');
+        await waitForNotExist(await ResourcesPage.getListItemMarkedNewEl());
+        expect(await getUrl()).toContain('resources');
+        expect(await getUrl()).not.toContain('edit');
+
+        done();
     });
 
 
-    it('abort item creation completely when aborting geometry editing', () => {
+    it('autofinish polyline geometry', async done => {
 
-        beginCreateDocWithGeometry('point', function() { return MapPage.setMarker(100, 100); });
-        MapPage.clickMapOption('abort');
-        browser.wait(EC.stalenessOf(ResourcesPage.getListItemMarkedNewEl()), delays.ECWaitTime);
-        expect(browser.getCurrentUrl()).toContain('resources');
-        expect(browser.getCurrentUrl()).not.toContain('edit');
+        await createDoc('doc', 'polyline', setUnfinishedPolyline);
+        expect(await GeometryViewPage.getSelectedGeometryTypeText('doc')).toContain('Polyline');
+
+        done();
     });
 
 
-    it('autofinish polyline geometry', () => {
+    it('autofinish multipolyline geometry', async done => {
 
-        createDoc('doc', 'polyline', setUnfinishedPolyline);
-        GeometryViewPage.getSelectedGeometryTypeText('doc').then(text => {
-            expect(text).toContain('Polyline');
-        });
+        await createDoc('doc', 'polyline', setUnfinishedMultiPolyline);
+        expect(await GeometryViewPage.getSelectedGeometryTypeText('doc')).toContain('Multipolyline');
+
+        done();
     });
 
 
-    it('autofinish multipolyline geometry', () => {
+    it('show layer menu', async done => {
 
-        createDoc('doc', 'polyline', setUnfinishedMultiPolyline);
-        GeometryViewPage.getSelectedGeometryTypeText('doc').then(text => {
-            expect(text).toContain('Multipolyline');
-        });
-    });
+        await waitForExist(await MapPage.getLayerButton());
 
-
-    it('show layer menu', () => {
-
-        browser.wait(EC.presenceOf(MapPage.getLayerButton()));
+        done();
     });
 });

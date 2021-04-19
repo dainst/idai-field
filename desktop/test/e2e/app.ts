@@ -45,6 +45,12 @@ export function getAppDataPath(): Promise<string> {
 }
 
 
+export function getUrl(): Promise<string> {
+
+    return app.client.getUrl();
+}
+
+
 export function navigateTo(menu) {
 
     return new Promise(resolve => {
@@ -82,11 +88,12 @@ export function getElements(selector: string) {
 }
 
 
-export async function click(element) {
+export async function click(element, x?, y?) {
 
     if (isString(element)) element = await getElement(element);
     await element.waitForExist({ timeout: WAIT_FOR_ELEMENT_TIMEOUT });
-    return element.click();
+    const options = x && y ? { x, y } : {};
+    return element.click(options);
 }
 
 

@@ -4,7 +4,7 @@ import React, { ReactElement } from 'react';
 import { StyleSheet } from 'react-native';
 import Svg, { Circle, G } from 'react-native-svg';
 import { GeoLineString, GeoMultiLineString, GeoMultiPoint, GeoMultiPolygon, GeoPoint, GeoPolygon } from './geo-svg';
-import { defineViewBox, getViewBoxHeight } from './view-box-utils';
+import { defineViewBox, getViewBoxHeight } from './geomerty-scaling-utils';
 interface MapProps {
     geoDocuments: Document[]
 }

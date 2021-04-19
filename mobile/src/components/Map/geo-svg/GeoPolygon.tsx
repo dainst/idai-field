@@ -17,5 +17,3 @@ export const GeoPolygon: React.FC<GeoPolygonProps> = (props) => {
                 d={ polygonToPath(props.coordinates) } />
         </GeoTransform>);
 };
-
-//export default GeoPolygon;

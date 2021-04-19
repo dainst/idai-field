@@ -17,5 +17,3 @@ export const GeoMultiPolygon: React.FC<GeoMultiPolygonProps> = (props) => {
                 d={ multiPolygonToPath(props.coordinates) } />
         </GeoTransform>);
 };
-
-//export GeoMultiPolygon;

@@ -4,14 +4,14 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 
 interface MapProps {
-    documents: Document[]
+    geoDocuments: Document[]
 }
 
 const Map: React.FC<MapProps> = ({ documents }) => {
 
     return (
         <Box style={ styles.card }>
-            {documents && documents.map(document => (
+            {geoDocuments && geoDocuments.map(document => (
                 <HStack key={ document._id } space={ 2 }>
                     <Text>{document.resource.id}</Text>
                     <Text>{document.resource.shortDescription}</Text>

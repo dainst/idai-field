@@ -44,7 +44,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ repository }): ReactElement => 
                         onSyncSettingsSet={ (syncSettings) => setSyncSettings(syncSettings) } />
                     : <>
                         <Button onPress={ () => issueSearch() }>Refresh</Button>
-                        <Map documents={ documents } />
+                        <Map geoDocuments={ documents.filter(doc => doc && doc.resource.geometry ? true : false) } />
                     </>
                 }
             </Center>

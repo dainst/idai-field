@@ -15,7 +15,7 @@ export interface GeoTransformProps {
  */
 const GeoTransform: React.FC<GeoTransformProps> = ({ viewBoxHeight, children }) => {
     return (
-        <G rotation={ 0 } >
+        <G translate={ `0,${viewBoxHeight}` } scale="1,-1" >
             {children}
         </G>
     );

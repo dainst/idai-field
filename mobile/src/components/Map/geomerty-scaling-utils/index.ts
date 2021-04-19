@@ -1,3 +1,3 @@
-import { defineViewBox, getViewBoxHeight } from './view-box-utils';
+import { GeometryBoundings, getGeometryBoundings } from './geometry-scaling-utils';
 
-export { defineViewBox, getViewBoxHeight };
+export { getGeometryBoundings, GeometryBoundings };

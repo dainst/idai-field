@@ -5,12 +5,13 @@ import { multiPointSurvey } from '../../../../test_data/test_docs/multiPointSurv
 import { multiPolyTrench } from '../../../../test_data/test_docs/multiPolyTrench';
 import { pointBuilding } from '../../../../test_data/test_docs/pointBuilding';
 import {
-    defineViewBox,
     extractCoordsPositions,
     extractCoordsPositions2d,
     extractCoordsPositions3d,
+    GeometryBoundings,
+    getGeometryBoundings,
     getMinMaxCoords
-} from './view-box-utils';
+} from './geometry-scaling-utils';
 
 const positionArray = [[1,4], [3,5], [6,9], [0,5.5]];
 const expectedArray = [
@@ -31,7 +32,7 @@ const expectedXmin = 27.189085960388184;
 const expectedYmax = 39.141438484191895;
 const expectedYmin = 39.14105033874512;
 
-describe('view-box-utils functions', () => {
+describe('geometry-utils functions', () => {
 
 
     it('returns array of x coordinate and array of y coords for Position[]', () => {
@@ -64,24 +65,30 @@ describe('view-box-utils functions', () => {
 
     it('gets min and max x and y coordinates of FieldGeometry[]', () => {
 
-        const [xMin, yMin, xMax, yMax] = getMinMaxCoords([
+        const boundigs = getMinMaxCoords([
             bu1.resource.geometry, lineBuilding.resource.geometry, multiPointSurvey.resource.geometry,
             multiPolyTrench.resource.geometry, pointBuilding.resource.geometry
         ]);
 
 
-        expect(xMin).toBe(expectedXmin);
-        expect(xMax).toBe(expectedXmax);
-        expect(yMin).toBe(expectedYmin);
-        expect(yMax).toBe(expectedYmax);
+        expect(boundigs.minX).toBe(expectedXmin);
+        expect(boundigs.maxX).toBe(expectedXmax);
+        expect(boundigs.minY).toBe(expectedYmin);
+        expect(boundigs.maxY).toBe(expectedYmax);
     });
 
 
     it('defines the viewBox of a SVG', () => {
 
         // eslint-disable-next-line max-len
-        const expectedViewBox = `${expectedXmin} ${expectedYmin} ${expectedXmax - expectedXmin} ${expectedYmax - expectedYmin}`;
-        const calculatedViewBox = defineViewBox([bu1, pointBuilding, lineBuilding, multiPointSurvey, multiPolyTrench]);
+        const expectedViewBox: GeometryBoundings = {
+            minX: expectedXmin,
+            minY: expectedYmin,
+            maxX: expectedXmax,
+            maxY: expectedYmax,
+        };
+        const calculatedViewBox = getGeometryBoundings(
+            [bu1, pointBuilding, lineBuilding, multiPointSurvey, multiPolyTrench]);
         
         expect(calculatedViewBox).toEqual(expectedViewBox);
     });

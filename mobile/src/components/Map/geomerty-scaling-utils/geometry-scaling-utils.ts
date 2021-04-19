@@ -5,19 +5,22 @@ import { Document, FieldGeometry } from 'idai-field-core';
 type extractFunc = ((geometry: Position[]) => [number[], number[]] )|
                     ((geometry: Position[][]) => [number[], number[]]);
 
-                    
-export const getViewBoxHeight = (viewBox: string): number => parseFloat(viewBox.split(' ')[3]);
 
+export interface GeometryBoundings {
+    minX: number;
+    minY: number;
+    maxX: number;
+    maxY: number;
+}
 
-export const defineViewBox = (documents: Document[]): string => {
+export const getGeometryBoundings = (documents: Document[]): GeometryBoundings | null => {
 
-    if(!documents.length) return '';
-    const [minX, minY, maxX, maxY] = getMinMaxCoords(documents.map(doc => doc.resource.geometry));
-    return `${minX} ${minY} ${maxX - minX} ${maxY - minY}`;
+    if(!documents.length) return null;
+    return getMinMaxCoords(documents.map(doc => doc.resource.geometry));
 };
 
 
-export const getMinMaxCoords = (geos: FieldGeometry[]): [number, number, number, number] => {
+export const getMinMaxCoords = (geos: FieldGeometry[]): GeometryBoundings => {
     
     const xCoords: number[] = [];
     const yCoords: number[] = [];
@@ -49,9 +52,9 @@ export const getMinMaxCoords = (geos: FieldGeometry[]): [number, number, number,
                 throw TypeError('No valid GeoJSON type');
         }
     });
-    return [
-        Math.min(...xCoords), Math.min(...yCoords),
-        Math.max(...xCoords), Math.max(...yCoords)];
+    return {
+        minX: Math.min(...xCoords), minY: Math.min(...yCoords),
+        maxX: Math.max(...xCoords), maxY: Math.max(...yCoords) };
 
 };
 

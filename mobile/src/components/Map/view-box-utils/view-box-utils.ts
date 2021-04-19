@@ -6,6 +6,9 @@ type extractFunc = ((geometry: Position[]) => [number[], number[]] )|
                     ((geometry: Position[][]) => [number[], number[]]);
 
                     
+export const getViewBoxHeight = (viewBox: string): number => parseFloat(viewBox.split(' ')[3]);
+
+
 export const defineViewBox = (documents: Document[]): string => {
 
     const [minX, minY, maxX, maxY] = getMinMaxCoords(documents.map(doc => doc.resource.geometry));

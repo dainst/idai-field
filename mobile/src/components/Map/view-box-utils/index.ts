@@ -1,3 +1,3 @@
-import { defineViewBox } from './view-box-utils';
+import { defineViewBox, getViewBoxHeight } from './view-box-utils';
 
-export { defineViewBox };
+export { defineViewBox, getViewBoxHeight };

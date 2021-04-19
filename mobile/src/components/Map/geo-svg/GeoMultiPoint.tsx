@@ -1,6 +1,6 @@
 import { Position } from 'geojson';
 import React from 'react';
-import { CircleProps, G } from 'react-native-svg';
+import { CircleProps } from 'react-native-svg';
 import { GeoPoint } from './GeoPoint';
 import { GeoTransformProps } from './GeoTransform';
 
@@ -10,7 +10,7 @@ interface GeoMultiPointProps extends GeoTransformProps, CircleProps {
 
 export const GeoMultiPoint: React.FC<GeoMultiPointProps> = (props) => {
     return (
-        <G>
+        <>
             {props.points.map(point => (
                 <GeoPoint
                     { ...props }
@@ -19,6 +19,6 @@ export const GeoMultiPoint: React.FC<GeoMultiPointProps> = (props) => {
                     viewBoxHeight={ props.viewBoxHeight }
                 />
             ))}
-        </G>
+        </>
     );
 };

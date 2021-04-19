@@ -1,4 +1,4 @@
-import { click, getText, navigateTo, pause, resetApp, start, stop, waitForExist, waitForNotExist, waitForVisible } from '../app';
+import { click, getText, navigateTo, pause, resetApp, start, stop, waitForNotExist, waitForExist } from '../app';
 import { DoceditPage} from '../docedit/docedit.page';
 import { SearchBarPage } from '../widgets/search-bar.page';
 import { ResourcesPage } from './resources.page';
@@ -255,7 +255,7 @@ describe('resources --', () => {
         await DoceditPage.clickCloseEdit('discard');
 
         await ResourcesPage.clickSelectResource('1', 'info');
-        await waitForVisible('#popover-menu');
+        await waitForExist('#popover-menu');
         const tabs = await FieldsViewPage.getTabs();
         expect(tabs.length).toBe(1); // Only core
 

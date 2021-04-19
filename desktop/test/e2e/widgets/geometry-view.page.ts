@@ -1,4 +1,4 @@
-import { click, getElement, getText, waitForNotExist, waitForVisible } from '../app';
+import { click, getElement, getText, waitForNotExist, waitForExist } from '../app';
 import {ResourcesPage} from '../resources/resources.page';
 
 type Identifier = string;
@@ -38,7 +38,7 @@ export class GeometryViewPage {
 
         if (identifier) await ResourcesPage.clickOpenContextMenu(identifier);
         const element = await getElement('#context-menu #context-menu-edit-geo-button');
-        await waitForVisible(element);
+        await waitForExist(element);
         return getText(await element.$('.fieldvalue'));
     };
 
@@ -48,9 +48,9 @@ export class GeometryViewPage {
         await this.waitForLayoverToDisappear();
 
         if (identifier) await ResourcesPage.clickOpenContextMenu(identifier);
-        await waitForVisible('#context-menu #context-menu-create-geo-1-button');
-        await waitForVisible('#context-menu #context-menu-create-geo-2-button');
-        return waitForVisible('#context-menu #context-menu-create-geo-3-button');
+        await waitForExist('#context-menu #context-menu-create-geo-1-button');
+        await waitForExist('#context-menu #context-menu-create-geo-2-button');
+        return waitForExist('#context-menu #context-menu-create-geo-3-button');
     };
 
 

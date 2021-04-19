@@ -1,4 +1,4 @@
-import { click, getElement, getElements, typeIn, waitForVisible } from '../app';
+import { click, getElement, getElements, typeIn, waitForExist } from '../app';
 
 /**
  * @author Thomas Kleinke
@@ -21,7 +21,7 @@ export class SearchConstraintsPage {
 
     public static async clickSelectDropdownValue(optionIndex: number) {
 
-        await waitForVisible('#constraint-search-term-select');
+        await waitForExist('#constraint-search-term-select');
         const element = (await getElements('#constraint-search-term-select option'))[optionIndex + 1];
         return click(element);
     }
@@ -29,7 +29,7 @@ export class SearchConstraintsPage {
 
     public static async clickSelectExistsDropdownValue(optionIndex: number) {
 
-        await waitForVisible('#constraint-search-term-exists-select');
+        await waitForExist('#constraint-search-term-exists-select');
         const element = (await getElements('#constraint-search-term-exists-select option'))[optionIndex + 1];
         return click(element);
     }

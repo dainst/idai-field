@@ -1,4 +1,4 @@
-import { waitForNotExist, click, waitForVisible, getElements, getElement, typeIn } from '../app';
+import { waitForNotExist, click, waitForExist, getElements, getElement, typeIn } from '../app';
 import { NavbarPage } from '../navbar.page';
 
 
@@ -30,7 +30,7 @@ export class DoceditPage {
 
      public static async clickCloseEdit(action?: 'discard'|'cancel'|'save') {
 
-        await waitForVisible('#document-edit-button-goto-view');
+        await waitForExist('#document-edit-button-goto-view');
         await click('#document-edit-button-goto-view');
 
         if (action === 'discard') return this.clickDiscardInModal();
@@ -77,7 +77,7 @@ export class DoceditPage {
 
     public static async clickSaveDocument(clickMsgAway: boolean = false, waitForModalToClose: boolean = true) {
 
-        await waitForVisible('#document-edit-button-save-document');
+        await waitForExist('#document-edit-button-save-document');
         await click('#document-edit-button-save-document');
                     
         if (clickMsgAway) await NavbarPage.clickCloseAllMessages();
@@ -126,7 +126,7 @@ export class DoceditPage {
 
     public static async clickSelectOption(fieldName: string, optionIndex: number) {
 
-        await waitForVisible('#edit-form-element-' + fieldName + ' select');
+        await waitForExist('#edit-form-element-' + fieldName + ' select');
         const element = (await getElements('#edit-form-element-' + fieldName + ' select option'))[optionIndex];
         return click(element);
     };
@@ -134,7 +134,7 @@ export class DoceditPage {
 
     public static async clickCheckbox(fieldName: string, checkboxIndex: number) {
 
-        await waitForVisible('#edit-form-element-' + fieldName);
+        await waitForExist('#edit-form-element-' + fieldName);
         const element = (await getElements('#edit-form-element-' + fieldName + ' .checkbox'))[checkboxIndex];
         return click(element);
     };
@@ -142,7 +142,7 @@ export class DoceditPage {
 
     public static async clickBooleanRadioButton(fieldName: string, radioButtonIndex: number) {
 
-        await waitForVisible('#edit-form-element-' + fieldName);
+        await waitForExist('#edit-form-element-' + fieldName);
         const element = (await getElements('#edit-form-element-' + fieldName + ' input'))[radioButtonIndex];
         return click(element);
     }
@@ -153,7 +153,7 @@ export class DoceditPage {
     public static async getInputFieldValue(index) {
 
         const element = (await getElements('dai-input input'))[index];
-        await waitForVisible(element);
+        await waitForExist(element);
         return element.getAttribute('value');
     };
 

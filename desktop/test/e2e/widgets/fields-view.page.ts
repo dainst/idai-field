@@ -1,4 +1,4 @@
-import { click, getElements, getText, waitForVisible } from '../app';
+import { click, getElements, getText, waitForExist } from '../app';
 
 
 /**
@@ -52,7 +52,7 @@ export class FieldsViewPage {
 
     public static async getFields(cardIndex) {
 
-        await waitForVisible('fields-view');
+        await waitForExist('fields-view');
         return getElements('fields-view div:nth-child(' + (cardIndex + 1) + ') .card-body > div');
     };
 

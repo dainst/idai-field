@@ -1,5 +1,5 @@
 import { click, getAppDataPath, getText, navigateTo, pause, resetApp, resetConfigJson, start, stop, waitForExist,
-    waitForInvisible, waitForNotExist } from '../app';
+    waitForNotExist } from '../app';
 import {NavbarPage} from '../navbar.page';
 import {SearchBarPage} from '../widgets/search-bar.page';
 import {ResourcesPage} from './resources.page';
@@ -120,7 +120,7 @@ describe('resources/state --', () => {
         // do not show suggestions if any resources in current context are found
         await SearchBarPage.typeInSearchField('S');
         await waitForExist(await ResourcesPage.getListItemEl('S1'));
-        await waitForInvisible(await ResourcesSearchBarPage.getSuggestionsBox());
+        await waitForNotExist(await ResourcesSearchBarPage.getSuggestionsBox());
         suggestions = await ResourcesSearchBarPage.getSuggestions();
         expect(suggestions.length).toBe(0);
 

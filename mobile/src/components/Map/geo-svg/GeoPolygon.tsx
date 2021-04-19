@@ -2,18 +2,20 @@ import { Position } from 'geojson';
 import React from 'react';
 import { CommonPathProps, Path } from 'react-native-svg';
 import { polygonToPath } from '../geojson-path/geojson-svg-path';
+import GeoTransform, { GeoTransformProps } from './GeoTransform';
 
-interface GeoPolygonProps extends CommonPathProps {
+interface GeoPolygonProps extends CommonPathProps, GeoTransformProps {
     coordinates: Position[][];
 }
 
-const GeoPolygon: React.FC<GeoPolygonProps> = (props) => {
+export const GeoPolygon: React.FC<GeoPolygonProps> = (props) => {
     
     return (
-        <Path
-            { ...props }
-            d={ polygonToPath(props.coordinates) } />
-        );
+        <GeoTransform viewBoxHeight={ props.viewBoxHeight }>
+            <Path
+                { ...props }
+                d={ polygonToPath(props.coordinates) } />
+        </GeoTransform>);
 };
 
-export default GeoPolygon;
+//export default GeoPolygon;

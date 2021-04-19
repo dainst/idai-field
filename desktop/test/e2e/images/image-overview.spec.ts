@@ -242,7 +242,7 @@ describe('images --', function() {
 
         await SearchConstraintsPage.clickConstraintsMenuButton();
         await SearchConstraintsPage.clickSelectConstraintField('processor');
-        await SearchConstraintsPage.clickSelectDropdownValue(3);
+        await SearchConstraintsPage.clickSelectDropdownValue('Person 1');
         await SearchConstraintsPage.clickAddConstraintButton();
 
         await waitForNotExist(await ImageOverviewPage.getCellByIdentifier('PE07-So-07_Z001.jpg'));

@@ -264,7 +264,7 @@ describe('resources/state --', () => {
 
         await ResourcesPage.openEditByDoubleClickResource('SE2');
         await DoceditPage.clickGotoChildTab();
-        await DoceditPage.clickSelectOption('layerClassification', 1);
+        await DoceditPage.clickSelectOption('layerClassification', 'Brandschicht');
         await DoceditPage.clickSaveDocument();
 
         await ResourcesPage.clickSwitchHierarchyMode();
@@ -274,7 +274,7 @@ describe('resources/state --', () => {
         await SearchBarPage.clickChooseCategoryFilter('feature-layer');
         await SearchConstraintsPage.clickConstraintsMenuButton();
         await SearchConstraintsPage.clickSelectConstraintField('layerClassification');
-        await SearchConstraintsPage.clickSelectDropdownValue(1);
+        await SearchConstraintsPage.clickSelectDropdownValue('Brandschicht');
         await SearchConstraintsPage.clickAddConstraintButton();
         await SearchBarPage.clickSearchBarInputField();
 
@@ -357,13 +357,13 @@ describe('resources/state --', () => {
 
         await ResourcesPage.openEditByDoubleClickResource('SE2');
         await DoceditPage.clickGotoChildTab();
-        await DoceditPage.clickSelectOption('layerClassification', 1);
+        await DoceditPage.clickSelectOption('layerClassification', 'Brandschicht');
         await DoceditPage.clickSaveDocument();
 
         await SearchBarPage.clickChooseCategoryFilter('feature-layer');
         await SearchConstraintsPage.clickConstraintsMenuButton();
         await SearchConstraintsPage.clickSelectConstraintField('layerClassification');
-        await SearchConstraintsPage.clickSelectDropdownValue(1);
+        await SearchConstraintsPage.clickSelectDropdownValue('Brandschicht');
         await SearchConstraintsPage.clickAddConstraintButton();
 
         await waitForExist(await ResourcesPage.getListItemEl('SE2'));
@@ -433,7 +433,7 @@ describe('resources/state --', () => {
 
         await SearchConstraintsPage.clickConstraintsMenuButton();
         await SearchConstraintsPage.clickSelectConstraintField('geometry');
-        await SearchConstraintsPage.clickSelectExistsDropdownValue(1);
+        await SearchConstraintsPage.clickSelectExistsDropdownValue('KNOWN');
         await SearchConstraintsPage.clickAddConstraintButton();
 
         await SearchBarPage.clickChooseCategoryFilter('feature');

@@ -1,4 +1,5 @@
-import { click, getElement, getElements, typeIn, waitForExist } from '../app';
+import { click, getElement, selectOption, typeIn } from '../app';
+
 
 /**
  * @author Thomas Kleinke
@@ -13,31 +14,27 @@ export class SearchConstraintsPage {
     }
 
 
-    public static async clickSelectConstraintField(fieldName: string) {
+    public static clickSelectConstraintField(fieldName: string) {
 
-        return click(await this.getConstraintFieldOption(fieldName));
+        return selectOption('#constraint-field-select', fieldName);
     };
-
-
-    public static async clickSelectDropdownValue(optionIndex: number) {
-
-        await waitForExist('#constraint-search-term-select');
-        const element = (await getElements('#constraint-search-term-select option'))[optionIndex + 1];
-        return click(element);
-    }
-
-
-    public static async clickSelectExistsDropdownValue(optionIndex: number) {
-
-        await waitForExist('#constraint-search-term-exists-select');
-        const element = (await getElements('#constraint-search-term-exists-select option'))[optionIndex + 1];
-        return click(element);
-    }
 
 
     public static clickSelectBooleanValue(value: boolean) {
 
-        return click ('#constraint-search-term-boolean-select-option-' + value);
+        return selectOption('#constraint-search-term-boolean-select', value ? 'true' : 'false');
+    }
+
+
+    public static clickSelectDropdownValue(value: string) {
+
+        return selectOption('#constraint-search-term-select', value);
+    }
+
+
+    public static clickSelectExistsDropdownValue(value: string) {
+
+        return selectOption('#constraint-search-term-exists-select', value);
     }
 
 

@@ -356,7 +356,7 @@ describe('resources --', () => {
         await DetailSidebarPage.doubleClickEditDocument('1');
 
         await DoceditPage.clickGotoChildTab();
-        await DoceditPage.clickSelectOption('wallType', 1);
+        await DoceditPage.clickSelectOption('wallType', 'Außenmauer');
         await DoceditPage.clickSaveDocument();
 
         FieldsViewPage.clickAccordionTab(1);

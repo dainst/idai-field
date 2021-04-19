@@ -56,11 +56,11 @@ describe('resources/types --', () => {
     }
 
 
-    async function setCriterion(criterionIndex: number) {
+    async function setCriterion(criterion: string) {
 
         await ResourcesTypeGridPage.clickEditButton();
         await DoceditPage.clickGotoIdentificationTab();
-        await DoceditPage.clickSelectOption('criterion', criterionIndex);
+        await DoceditPage.clickSelectOption('criterion', criterion);
         return DoceditPage.clickSaveDocument();
     }
 
@@ -202,11 +202,11 @@ describe('resources/types --', () => {
     it('Filter types in type relation picker by criterion & catalog', async done => {
 
         await createTypeCatalogAndType();
-        await setCriterion(1);
+        await setCriterion('Dekoration');
 
         await ResourcesTypeGridPage.clickTypeCatalogsNavigationButton();
         await createTypeCatalogAndType('TC2', 'T2');
-        await setCriterion(2);
+        await setCriterion('Form');
 
         await NavbarPage.clickCloseNonResourcesTab();
         await ResourcesPage.clickHierarchyButton('S1');

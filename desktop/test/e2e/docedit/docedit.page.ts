@@ -1,4 +1,4 @@
-import { waitForNotExist, click, waitForExist, getElements, getElement, typeIn } from '../app';
+import { waitForNotExist, click, waitForExist, getElements, getElement, typeIn, selectOption } from '../app';
 import { NavbarPage } from '../navbar.page';
 
 
@@ -124,11 +124,9 @@ export class DoceditPage {
     };
 
 
-    public static async clickSelectOption(fieldName: string, optionIndex: number) {
+    public static async clickSelectOption(fieldName: string, optionValue: string) {
 
-        await waitForExist('#edit-form-element-' + fieldName + ' select');
-        const element = (await getElements('#edit-form-element-' + fieldName + ' select option'))[optionIndex];
-        return click(element);
+        return selectOption('#edit-form-element-' + fieldName + ' select', optionValue);
     };
 
 

@@ -196,6 +196,13 @@ export async function pressKeys(keys) {
 }
 
 
+export async function selectOption(element, optionValue) {
+
+    if (isString(element)) element = await getElement(element);
+    return element.selectByAttribute('value', optionValue);
+}
+
+
 export async function getText(element) {
 
     if (isString(element)) element = await getElement(element);

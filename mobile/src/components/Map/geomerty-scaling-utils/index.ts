@@ -1,3 +1,3 @@
-import { GeometryBoundings, getGeometryBoundings } from './geometry-scaling-utils';
+import { GeometryBoundings, getGeometryBoundings, mapValueToNewRange } from './geometry-scaling-utils';
 
-export { getGeometryBoundings, GeometryBoundings };
+export { getGeometryBoundings, GeometryBoundings, mapValueToNewRange };

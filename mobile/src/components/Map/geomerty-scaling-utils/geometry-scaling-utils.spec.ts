@@ -10,7 +10,8 @@ import {
     extractCoordsPositions3d,
     GeometryBoundings,
     getGeometryBoundings,
-    getMinMaxCoords
+    getMinMaxCoords,
+    mapValueToNewRange
 } from './geometry-scaling-utils';
 
 const positionArray = [[1,4], [3,5], [6,9], [0,5.5]];
@@ -91,6 +92,20 @@ describe('geometry-utils functions', () => {
             [bu1, pointBuilding, lineBuilding, multiPointSurvey, multiPolyTrench]);
         
         expect(calculatedViewBox).toEqual(expectedViewBox);
+    });
+
+
+    it('maps value from one range to another range', () => {
+        const newMax = 400;
+        const newMin = 100;
+        const expectedMappedValue = 125.2;
+
+        const oldMin = 50;
+        const oldMax = 300;
+        const value = 71;
+
+        expect(mapValueToNewRange(newMax, newMin, value, oldMax, oldMin)).toBe(expectedMappedValue);
+
     });
     
 });

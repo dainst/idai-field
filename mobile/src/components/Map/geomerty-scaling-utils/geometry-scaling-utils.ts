@@ -89,3 +89,11 @@ export const extractCoordsPositions = (geometries: Position[]): [number[], numbe
     });
     return [xCoords, yCoords];
 };
+
+
+/**
+ * Maps value from range [oldMin,oldMax] to range [newMin,newMax]
+ * @returns value between newMin and newMax
+ */
+export const mapValueToNewRange = (newMax: number, newMin: number, value: number, oldMax: number, oldMin: number): number =>
+    (newMax - newMin) * (value - oldMin) / (oldMax - oldMin) + newMin;

@@ -1,14 +1,11 @@
+import { View } from 'native-base';
 import React, { useRef } from 'react';
-import { StyleSheet, Animated, PanResponder, View, ViewStyle } from 'react-native';
+import { Animated, PanResponder, StyleSheet } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import Svg, { G } from 'react-native-svg';
+import Svg, { G, SvgProps } from 'react-native-svg';
 
-interface SvgMapProps {
-    style: ViewStyle;
-    viewBox: [number, number, number, number]
-}
 
-const SvgMap: React.FC<SvgMapProps> = ( props ) => {
+const SvgMap: React.FC<SvgProps> = ( props ) => {
 
     const pan = useRef(new Animated.ValueXY()).current;
     const AG = Animated.createAnimatedComponent(G);
@@ -38,7 +35,7 @@ const SvgMap: React.FC<SvgMapProps> = ( props ) => {
                 minimumZoomScale={ 1 } maximumZoomScale={ 5 } bounces={ false }
                 disableScrollViewPanResponder={ true } contentContainerStyle={ styles.scrollViewStyle }>
                     <Animated.View style={ styles.animatedViewStyle } { ...panResponder.panHandlers }>
-                        <Svg viewBox={ props.viewBox.join(' ') } style={ styles.svg } >
+                        <Svg viewBox={ props.viewBox } style={ styles.svg }>
                             <AG x={ pan.x } y={ pan.y }>
                                 {props.children}
                             </AG>

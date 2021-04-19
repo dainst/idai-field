@@ -11,6 +11,7 @@ export const getViewBoxHeight = (viewBox: string): number => parseFloat(viewBox.
 
 export const defineViewBox = (documents: Document[]): string => {
 
+    if(!documents.length) return '';
     const [minX, minY, maxX, maxY] = getMinMaxCoords(documents.map(doc => doc.resource.geometry));
     return `${minX} ${minY} ${maxX - minX} ${maxY - minY}`;
 };

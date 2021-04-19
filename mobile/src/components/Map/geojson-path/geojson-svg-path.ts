@@ -5,12 +5,16 @@
  * (Polygon, Multipolygon, Linestring, Multilinestring, Point, Multipoint)
  */
 import { Position } from 'geojson';
+import { GeometryBoundings, mapValueToNewRange } from '../geomerty-scaling-utils';
 
-export const multiPolygonToPath = (multiPolygon: Position[][][]): string => {
+export const multiPolygonToPath = (
+    multiPolygon: Position[][][],
+    geometryBounds: GeometryBoundings,
+    viewBox: [number, number, number, number]): string => {
 
     let path = '';
     for (const polygon of multiPolygon)
-        path += polygonToPath(polygon);
+        path += polygonToPath(polygon, geometryBounds, viewBox);
     
     return path;
 };
@@ -24,11 +28,15 @@ export const multiPolygonToPath = (multiPolygon: Position[][][]): string => {
  * @param polygon Polygon coordinates
  * @returns string to be used with SVG path element
  */
-export const polygonToPath = (polygon: Position[][]): string => {
+export const polygonToPath = (
+    polygon: Position[][],
+    geometryBounds: GeometryBoundings,
+    viewBox: [number, number, number, number]): string => {
    
     let path = '';
     polygon.forEach((ringCoordinates, i) => {
-        path += ' ' + lineStringToPath(i === 0 ? ringCoordinates.slice().reverse() : ringCoordinates);
+        path += ' ' + lineStringToPath(i === 0 ? ringCoordinates.slice().reverse() : ringCoordinates,
+                            geometryBounds, viewBox);
     });
 
     return path;
@@ -42,14 +50,26 @@ export const polygonToPath = (polygon: Position[][]): string => {
  * @param multiLineString MutliLineString coordinates
  * @returns string to be used with SVG path element
  */
-export const multiLineStringToPath = (multiLineString: Position[][]): string => polygonToPath(multiLineString);
+export const multiLineStringToPath = (
+    multiLineString: Position[][],
+    geometryBounds: GeometryBoundings,
+    viewBox: [number, number, number, number]): string =>
+    polygonToPath(multiLineString, geometryBounds, viewBox);
 
 
-export const lineStringToPath = (lineString: Position[]): string => {
+export const lineStringToPath = (
+    lineString: Position[],
+    geometryBounds: GeometryBoundings,
+    viewBox: [number, number, number, number]): string => {
+    
+    /* eslint-disable max-len */
+    const mapX = (value: number) => mapValueToNewRange(viewBox[2], viewBox[0], value, geometryBounds.maxX, geometryBounds.minX);
+    const mapY = (value: number) => mapValueToNewRange(viewBox[3], viewBox[1], value, geometryBounds.maxY, geometryBounds.minY);
+    /* eslint-enable max-len */
 
-    let path = `M${lineString[0][0]} ${lineString[0][1]}`;
+    let path = `M${mapX(lineString[0][0])} ${mapY(lineString[0][1])}`;
     for(let i = 1; i < lineString.length; i++)
-        path += ` L${lineString[i][0]} ${lineString[i][1]}`;
+        path += ` L${mapX(lineString[i][0])} ${mapY(lineString[i][1])}`;
 
     return path;
 

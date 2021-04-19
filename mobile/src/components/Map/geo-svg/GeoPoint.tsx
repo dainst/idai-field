@@ -8,11 +8,14 @@ interface GeoPointProps extends GeoTransformProps, CircleProps {
 }
 
 export const GeoPoint: React.FC<GeoPointProps> = (props) => {
+
     return (
         <GeoTransform viewBoxHeight={ props.viewBoxHeight }>
             <Circle
                 { ...props }
-                r={ props.viewBoxHeight * 0.002 } />
+                cx={ props.point[0] }
+                cy={ props.point[1] }
+                r={ props.viewBoxHeight * 0.008 } />
         </GeoTransform>
     );
 };

@@ -56,7 +56,7 @@ export function navigateTo(menu) {
     return new Promise(resolve => {
         require('request').post('http://localhost:3003/navigate', {
             headers: { 'content-type' : 'application/json' },
-            body: JSON.stringify({ menu: menu }) 
+            body: JSON.stringify({ menu: menu })
         } , () => { resolve(undefined); });
     });
 }
@@ -131,8 +131,8 @@ async function clickWithKey(element, keyCode) {
 
     const position = await element.getLocation();
     const size = await element.getSize();
-    const x = position.x + (size.width / 2);
-    const y = position.y + (size.height / 2);
+    const x = Math.floor(position.x + (size.width / 2));
+    const y = Math.floor(position.y + (size.height / 2));
 
     await app.client.performActions([
         {
@@ -212,7 +212,7 @@ export async function getText(element) {
 
 
 export async function uploadInFileInput(element, filePath) {
-    
+
     if (isString(element)) element = await getElement(element);
     const file = await app.client.uploadFile(filePath);
     return element.addValue(file);

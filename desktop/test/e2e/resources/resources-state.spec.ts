@@ -599,7 +599,6 @@ describe('resources/state --', () => {
         expect(await getText(navigationButtons[0])).toEqual('S1');
         expect(await getText(navigationButtons[1])).toEqual('S-New');
 
-
         done();
     });
 
@@ -640,7 +639,7 @@ describe('resources/state --', () => {
         await ResourcesPage.clickSwitchHierarchyMode();
         expect(await ResourcesPage.getListItemIdentifierText(0)).toEqual('SE0');
         expect(await ResourcesPage.getListItemIdentifierText(1)).toEqual('testf1');
-        
+
         done();
     });
 });

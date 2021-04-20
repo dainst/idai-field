@@ -14,7 +14,8 @@ export module FieldDocument {
 
     export function fromDocument(document: Document): FieldDocument {
 
-        const doc = ObjectUtils.clone(document);
+        // const doc = ObjectUtils.clone(document); TODO review after release of 2.19
+        const doc = document;
         takeOrMake(doc, ['resource','relations','isRecordedIn'], []);
         return doc as any;
     }

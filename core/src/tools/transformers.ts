@@ -6,6 +6,7 @@ import {assocReduce} from './assoc-reduce';
 // @author Sebastian Cuy
 
 
+// TODO add uncurried version
 /**
  * path: 'd.e'
  * as: [{ d: { e: 17 }}, { d: { e: 19 }}]

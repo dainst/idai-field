@@ -39,8 +39,6 @@ const styles = StyleSheet.create({
     svg: {
         height: 500,
         width: 500,
-        borderWidth: 1,
-        borderColor: 'black'
     }
 });
 

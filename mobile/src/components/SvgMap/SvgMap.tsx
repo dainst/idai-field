@@ -1,4 +1,3 @@
-import { View } from 'native-base';
 import React, { useRef } from 'react';
 import { Animated, PanResponder, StyleSheet } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -30,19 +29,17 @@ const SvgMap: React.FC<SvgProps> = ( props ) => {
 
 
     return (
-        <View style={ { ...styles.map, ...props.style } }>
-            <ScrollView
-                minimumZoomScale={ 1 } maximumZoomScale={ 5 } bounces={ false }
-                disableScrollViewPanResponder={ true } contentContainerStyle={ styles.scrollViewStyle }>
-                    <Animated.View style={ styles.animatedViewStyle } { ...panResponder.panHandlers }>
-                        <Svg viewBox={ props.viewBox } style={ styles.svg }>
-                            <AG x={ pan.x } y={ pan.y }>
-                                {props.children}
-                            </AG>
-                        </Svg>
-                    </Animated.View>
-            </ScrollView>
-        </View>
+        <ScrollView
+            minimumZoomScale={ 1 } maximumZoomScale={ 5 } bounces={ false }
+            disableScrollViewPanResponder={ true } contentContainerStyle={ props.style }>
+                <Animated.View style={ styles.animatedViewStyle } { ...panResponder.panHandlers }>
+                    <Svg viewBox={ props.viewBox } style={ styles.svg }>
+                        <AG x={ pan.x } y={ pan.y }>
+                            {props.children}
+                        </AG>
+                    </Svg>
+                </Animated.View>
+        </ScrollView>
     );
 };
 

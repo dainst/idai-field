@@ -18,7 +18,8 @@ export module FeatureDocument {
 
     export function fromDocument(document: Document): FeatureDocument {
 
-        const doc = FieldDocument.fromDocument(ObjectUtils.clone(document));
+        // const doc = FieldDocument.fromDocument(ObjectUtils.clone(document)); TODO review after release of 2.19
+        const doc = document;
 
         takeOrMake(doc, [Document.RESOURCE, Resource.RELATIONS, Relations.Time.AFTER], []);
         takeOrMake(doc, [Document.RESOURCE, Resource.RELATIONS, Relations.Time.BEFORE], []);

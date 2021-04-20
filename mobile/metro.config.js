@@ -28,6 +28,4 @@ const customConfig = {
     ]
 };
 
-console.log(mergeConfig(defaultConfig, customConfig));
-
 module.exports = mergeConfig(defaultConfig, customConfig);

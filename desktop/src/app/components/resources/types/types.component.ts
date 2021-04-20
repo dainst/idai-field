@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Imagestore } from '../../../core/images/imagestore/imagestore';
 import { Document, Datastore, FieldDocument, Relations, SyncService, SyncStatus } from 'idai-field-core';
-import { curry, filter, flatten, flow, isnt, Map, map, set, take } from 'tsfun';
+import { curry, filter, flatten, flow, is, Map, map, remove, set, take } from 'tsfun';
 import { makeLookup } from '../../../../../../core/src/tools/transformers';
 import { ProjectCategories } from '../../../core/configuration/project-categories';
 import { PLACEHOLDER } from '../../../core/images/row/image-row';
@@ -315,10 +315,12 @@ export class TypesComponent extends BaseList implements OnChanges {
 
     private getImageIdsOfLinkedResources(document: FieldDocument): string[] {
 
-        const imageIds: string[] = TypeImagesUtil.getLinkedImageIds(document, this.datastore)
-            .filter(isnt(PLACEHOLDER));
+        const getLinkedImageIds = curry(TypeImagesUtil.getLinkedImageIds, this.datastore);
 
-        return take(4, imageIds);
+        return flow(document,
+            getLinkedImageIds,
+            remove(is(PLACEHOLDER)),
+            take(4));
     }
 
 

@@ -94,10 +94,8 @@ describe('resources/types --', () => {
 
         await linkWithFind();
 
-        await ResourcesTypeGridPage.clickToggleFindsSectionButton();
-        await waitForExist(await ResourcesTypeGridPage.getGridElement('testf1'));
-
         await ResourcesPage.clickNavigationButton('TC1');
+        await ResourcesTypeGridPage.clickToggleFindsSectionButton();
         await waitForExist(await ResourcesTypeGridPage.getGridElement('testf1'));
 
         const text = await ResourcesTypeGridPage.getTypeBadgeText('testf1');

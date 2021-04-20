@@ -13,7 +13,7 @@ const AppHeader: React.FC<AppHeaderProps> = ({ title, right = null }) => {
         <AppBar style={ styles.container } >
             <AppBar.Left></AppBar.Left>
             <AppBar.Content>
-                <Text color="white" fontWeight="bold">{title}</Text>
+                <Text color="white" fontWeight="bold" fontSize="lg">{title}</Text>
             </AppBar.Content>
             <AppBar.Right>
                 {right}
@@ -24,9 +24,7 @@ const AppHeader: React.FC<AppHeaderProps> = ({ title, right = null }) => {
 
 const styles = StyleSheet.create({
     container: {
-        width : '100%',
-        backgroundColor: headerBackgroundColor,
-        height:'10%'
+        backgroundColor: headerBackgroundColor
     },
 });
 

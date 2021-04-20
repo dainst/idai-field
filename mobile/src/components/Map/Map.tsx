@@ -37,8 +37,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     svg: {
-        height: 500,
-        width: 500,
+        height: '100%',
+        width: '100%'
     }
 });
 

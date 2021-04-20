@@ -1,5 +1,5 @@
 import { Document } from 'idai-field-core';
-import { Button, Center, Container } from 'native-base';
+import { Icon, IconButton, View } from 'native-base';
 import React, { ReactElement, useCallback, useEffect, useState } from 'react';
 import { StyleSheet } from 'react-native';
 import AppHeader from '../components/AppHeader';
@@ -32,30 +32,44 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ repository }): ReactElement => 
     }, [issueSearch]);
 
     return (
-        <Center flex={ 1 }>
-            <AppHeader title={ syncSettings ? syncSettings.project : 'iDAI field mobile' } />
-
-            <Button onPress={ () => setShowSettings(current => !current) }>Settings</Button>
-            <Container >
+        <View safeArea>
+            <AppHeader title={ syncSettings.project ? syncSettings.project : 'iDAI.field mobile' }
+                right={ renderSettingsButton(setShowSettings) } />
+            <View style={ styles.container }>
                 { showSettings
                     ? <Settings
                         repository={ repository }
                         syncSettings={ syncSettings }
                         onSyncSettingsSet={ (syncSettings) => setSyncSettings(syncSettings) } />
                     : <>
-                        <Button onPress={ () => issueSearch() }>Refresh</Button>
+                        <IconButton
+                            onPress={ () => issueSearch() }
+                            icon={ <Icon type="Ionicons" name="refresh" color="black" /> }
+                            style={ styles.refreshBtn } />
                         <Map geoDocuments={ documents.filter(doc => doc && doc.resource.geometry ? true : false) } />
                     </>
                 }
-            </Container>
-        </Center>
+            </View>
+        </View>
     );
 };
 
 
+const renderSettingsButton = (setShowSettings: React.Dispatch<React.SetStateAction<boolean>>) =>
+    <IconButton
+        variant="ghost"
+        icon={ <Icon type="Ionicons" name="settings" color="white" /> }
+        onPress={ () => setShowSettings(current => !current) }>Settings</IconButton>;
+
+
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        height: '100%'
+    },
+    refreshBtn: {
+        position: 'absolute',
+        top: 5,
+        left: 8
     }
 });
 

@@ -1,4 +1,3 @@
-import { Center } from 'native-base';
 import React, { ReactElement } from 'react';
 import { StyleSheet } from 'react-native';
 import { clone } from 'tsfun';
@@ -33,20 +32,19 @@ const Settings: React.FC<SettingsProps> = ({ repository, syncSettings, onSyncSet
         onSyncSettingsSet(syncSettings);
     };
 
-    return (
-        <Center style={ styles.container }>
-                { syncSettings.connected ?
-                <DisconectPouchForm
-                    project={ syncSettings.project }
-                    onDisconnect={ onDisconnect } /> :
-                <ConnectPouchForm onConnect={ onConnect } /> }
-        </Center>
-    );
+    return <>
+        { syncSettings.connected
+            ? <DisconectPouchForm
+                project={ syncSettings.project }
+                onDisconnect={ onDisconnect } />
+            : <ConnectPouchForm onConnect={ onConnect } />
+        }
+    </>;
 };
 
 const styles = StyleSheet.create({
-    container: {
-        padding: 50,
+    form: {
+        flex: 1
     }
 });
 

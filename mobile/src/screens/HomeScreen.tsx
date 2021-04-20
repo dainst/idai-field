@@ -1,5 +1,5 @@
 import { Document } from 'idai-field-core';
-import { Button, Center, View } from 'native-base';
+import { Button, Center, Container } from 'native-base';
 import React, { ReactElement, useCallback, useEffect, useState } from 'react';
 import { StyleSheet } from 'react-native';
 import AppHeader from '../components/AppHeader';
@@ -32,11 +32,11 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ repository }): ReactElement => 
     }, [issueSearch]);
 
     return (
-        <View style={ styles.container }>
+        <Center flex={ 1 }>
             <AppHeader title={ syncSettings ? syncSettings.project : 'iDAI field mobile' } />
 
             <Button onPress={ () => setShowSettings(current => !current) }>Settings</Button>
-            <Center flex={ 1 } >
+            <Container >
                 { showSettings
                     ? <Settings
                         repository={ repository }
@@ -47,8 +47,8 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ repository }): ReactElement => 
                         <Map geoDocuments={ documents.filter(doc => doc && doc.resource.geometry ? true : false) } />
                     </>
                 }
-            </Center>
-        </View>
+            </Container>
+        </Center>
     );
 };
 

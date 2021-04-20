@@ -8,7 +8,7 @@ interface AppHeaderProps {
     right?: ReactNode | null;
 }
 
-const AppHeader: React.FC<AppHeaderProps> = ({ title, right= null }) => {
+const AppHeader: React.FC<AppHeaderProps> = ({ title, right = null }) => {
     return (
         <AppBar style={ styles.container } >
             <AppBar.Left></AppBar.Left>
@@ -24,8 +24,9 @@ const AppHeader: React.FC<AppHeaderProps> = ({ title, right= null }) => {
 
 const styles = StyleSheet.create({
     container: {
+        width : '100%',
         backgroundColor: headerBackgroundColor,
-        minHeight:'5%'
+        height:'10%'
     },
 });
 

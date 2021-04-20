@@ -15,6 +15,7 @@ export const GeoMultiLineString: React.FC<GeoMultiLineStringProps> = (props) => 
             <Path
                 { ...props }
                 fill="none"
+                strokeWidth={ 0.3 }
                 d={ multiLineStringToPath(props.coordinates, props.geometryBoundings, props.viewBox) } />
         </GeoTransform>
     );

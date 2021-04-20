@@ -9,6 +9,7 @@ Use the following commands to run the app for development in the browser (in the
 
     $ npm run bootstrap
     $ cd mobile
+    $ npm install --global expo-cli
     $ npm start
 
 ## Run on (vritual) device

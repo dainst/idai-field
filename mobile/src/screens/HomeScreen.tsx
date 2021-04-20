@@ -32,8 +32,9 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ repository }): ReactElement => 
     }, [issueSearch]);
 
     return (
-        <View safeArea>
-            <AppHeader title={ syncSettings.project ? syncSettings.project : 'iDAI.field mobile' }
+        <View flex={ 1 } safeArea>
+            <AppHeader
+                title={ syncSettings.project ? syncSettings.project : 'iDAI.field mobile' }
                 right={ renderSettingsButton(setShowSettings) } />
             <View style={ styles.container }>
                 { showSettings
@@ -64,7 +65,7 @@ const renderSettingsButton = (setShowSettings: React.Dispatch<React.SetStateActi
 
 const styles = StyleSheet.create({
     container: {
-        height: '100%'
+        flex: 1
     },
     refreshBtn: {
         position: 'absolute',

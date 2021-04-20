@@ -10,7 +10,7 @@ interface AppHeaderProps {
 
 const AppHeader: React.FC<AppHeaderProps> = ({ title, right = null }) => {
     return (
-        <AppBar style={ styles.container } >
+        <AppBar style={ styles.container } mt={ 0 }>
             <AppBar.Left></AppBar.Left>
             <AppBar.Content>
                 <Text color="white" fontWeight="bold" fontSize="lg">{title}</Text>

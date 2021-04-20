@@ -15,7 +15,7 @@ export const GeoLineString: React.FC<GeoLineStringProps> = (props) => {
             <Path
                 { ...props }
                 fill="none"
-                strokeWidth={ 1 }
+                strokeWidth={ 0.3 }
                 d={ lineStringToPath(props.coordinates, props.geometryBoundings, props.viewBox ) } />
         </GeoTransform>
     );

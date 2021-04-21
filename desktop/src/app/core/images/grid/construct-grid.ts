@@ -16,7 +16,9 @@ import {ImageContainer} from '../imagestore/image-container';
  * @author Daniel de Oliveira
  * @author Sebastian Cuy
  */
-export function constructGrid(documents: Array<Document>, nrOfColumns: number, gridWidth: number,
+export function constructGrid(documents: Array<Document>,
+                              nrOfColumns: number,
+                              gridWidth: number,
                               paddingRight: number): any {
 
     if (!Number.isInteger(nrOfColumns)) throw ('nrOfColumns must be an integer');

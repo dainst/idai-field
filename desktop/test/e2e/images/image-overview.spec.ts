@@ -56,7 +56,7 @@ describe('images --', function() {
         const cell = await ImageOverviewPage.getCell(0);
         await waitForExist(cell);
         const badge = (await cell.$$('#related-resource-' + relatedResourceId))[0];
-        
+
         if (toBeTruthy) {
             expect(badge).toBeTruthy();
         } else {
@@ -153,7 +153,7 @@ describe('images --', function() {
         await ImageOverviewPage.clickDeselectButton();
         expect(await (await ImageOverviewPage.getCell(0)).getAttribute('class'))
             .not.toMatch(ImageOverviewPage.selectedClass);
-        
+
         done();
     });
 
@@ -227,7 +227,7 @@ describe('images --', function() {
         await waitForExist(await ImageOverviewPage.getCell(0));
         const name = await ImageOverviewPage.getCellImageName(0);
         expect(name).toContain(imageName);
-        
+
         done();
     });
 

@@ -1,5 +1,6 @@
-import { Category, Document, Datastore, FieldDefinition, NewDocument, ObjectUtils, Resource } from 'idai-field-core';
-import { and, equal, filter, flow, includedIn, isEmpty, isNot, isObject, isString, keys } from 'tsfun';
+import { Category, Document, Datastore, FieldDefinition, NewDocument, ObjectUtils, Resource, ImageDocument } from 'idai-field-core';
+import { and, equal, filter, flow, identity, includedIn, isEmpty, isNot, isObject, isString, keys } from 'tsfun';
+import {ProjectCategories} from '../configuration/project-categories';
 import { ProjectConfiguration } from '../configuration/project-configuration';
 import { RelationsManager } from '../model/relations-manager';
 import { Validations } from '../model/validations';
@@ -74,11 +75,19 @@ export class DocumentHolder {
         await this.performAssertions();
         this.convertStringsToNumbers();
 
-        const savedDocument: Document = await this.relationsManager.update(
-            this.cleanup(this.clonedDocument),
-            this.oldVersion,
-            this.inspectedRevisions
-        );
+        const adjust =
+            ProjectCategories.getImageCategoryNames(this.projectConfiguration.getCategoryForest())
+                .includes(this.clonedDocument.resource.category)
+                ? ImageDocument.fromDocument
+                : identity;
+
+        const savedDocument: Document =
+            adjust(
+                await this.relationsManager.update(
+                    this.cleanup(this.clonedDocument),
+                    this.oldVersion,
+                    this.inspectedRevisions)
+            );
 
         return this.fetchLatestRevision(savedDocument.resource.id);
     }

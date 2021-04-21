@@ -96,7 +96,9 @@ export class ImageGridComponent implements OnChanges {
         if (!this.documents) return;
 
         const rows = constructGrid(
-            this.documents, this.nrOfColumns, this.element.nativeElement.children[0].clientWidth,
+            this.documents,
+            this.nrOfColumns,
+            this.element.nativeElement.children[0].clientWidth,
             this.paddingRight
         );
 
@@ -126,8 +128,9 @@ export class ImageGridComponent implements OnChanges {
 
     private getImageData(rows: any): Promise<{ [imageId: string]: Blob }> {
 
-        const imageIds: string[] = (flatten(rows.map(row => row.map(cell => cell.document.resource.id))) as any)
-            .filter(id => id !== 'droparea');
+        const imageIds: string[] =
+            (flatten(rows.map(row => row.map(cell => cell.document.resource.id))) as any)
+                .filter(id => id !== 'droparea');
 
         return this.imagestore.readThumbnails(imageIds);
     }

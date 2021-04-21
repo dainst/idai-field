@@ -749,6 +749,9 @@
         "draughtsmen": {
           "label": "Bildersteller/Bilderstellerin",
           "description": "Ersteller der Abbildung, Fotograf/Fotografin bzw. Zeichner/Zeichnerin"
+        },
+        "processor": {
+          "label": "Bearbeiterin/Bearbeiter"
         }
       }
     },

@@ -46,7 +46,7 @@ const Settings: React.FC<SettingsProps> = ({ repository, syncSettings, onSyncSet
             <Modal.Content>
                 <Modal.Header style={ styles.header }>
                     <Text bold>
-                        {syncSettings.connected ? `Disconnect ${syncSettings.project}` : 'Connect to project'}
+                        {syncSettings.connected ? `Connected to ${syncSettings.project}` : 'Connect to project'}
                     </Text>
                 </Modal.Header>
                 <Modal.Body>

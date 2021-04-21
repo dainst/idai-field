@@ -35,7 +35,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ repository }): ReactElement => 
         <View flex={ 1 } safeArea>
             <AppHeader
                 title={ syncSettings.project ? syncSettings.project : 'iDAI.field mobile' }
-                right={ renderSettingsButton(setShowSettings, () => issueSearch()) } />
+                right={ renderSettingsButton(setShowSettings, () => issueSearch(), syncSettings) } />
             <View style={ styles.container }>
                 <Settings
                     repository={ repository }
@@ -53,10 +53,11 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ repository }): ReactElement => 
 
 const renderSettingsButton = (
     setShowSettings: React.Dispatch<React.SetStateAction<boolean>>,
-    issueSearch: () => void) => (
+    issueSearch: () => void, syncSettings: SyncSettings) => (
         <HStack>
             <IconButton
                 onPress={ issueSearch }
+                isDisabled={ syncSettings.connected ? false : true }
                 icon={ <Icon type="Ionicons" name="refresh" color="white" /> }
             />
             <IconButton

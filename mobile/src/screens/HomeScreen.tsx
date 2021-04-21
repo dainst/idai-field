@@ -61,7 +61,7 @@ const renderSettingsButton = (setShowSettings: React.Dispatch<React.SetStateActi
     <IconButton
         variant="ghost"
         icon={ <Icon type="Ionicons" name="settings" color="white" /> }
-        onPress={ () => setShowSettings(current => !current) }>Settings</IconButton>;
+        onPress={ () => setShowSettings(current => !current) } />;
 
 
 const styles = StyleSheet.create({

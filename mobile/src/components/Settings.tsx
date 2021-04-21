@@ -33,7 +33,7 @@ const Settings: React.FC<SettingsProps> = ({ repository, syncSettings, onSyncSet
         repository.setupSync(fullUrl, project);
         onSyncSettingsSet(syncSettings);
     };
-    console.log(isOpen);
+
     return (
         <Modal
             isCentered

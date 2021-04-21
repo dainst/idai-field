@@ -31,6 +31,8 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ repository }): ReactElement => 
 
     const onSyncSettingsSet = (syncSettings: SyncSettings, syncProcess?: SyncProcess) => {
 
+        setShowSettings(false);
+
         setSyncSettings(syncSettings);
         if (syncProcess) {
             const sub = syncProcess.observer.subscribe(

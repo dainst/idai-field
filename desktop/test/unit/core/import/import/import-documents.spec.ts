@@ -152,20 +152,6 @@ describe('importDocuments', () => {
     });
 
 
-    // TODO review
-    xit('should reject on err in datastore', async done => {
-
-        // datastore.bulkCreate.and.returnValue(Promise.reject(['abc']));
-
-        // const { errors } = await importFunction(
-            // [{ resource: { category: 'Find', identifier: 'one', relations: { isChildOf: '0' } } } as any],
-            // datastore, 'user1');
-
-        // expect(errors[0][0]).toBe('abc');
-        done();
-    });
-
-
     it('not well formed', async done => { // shows that err from default-import-calc gets propagated
 
         validator.assertIsWellformed.and.callFake(() => { throw [ImportErrors.INVALID_CATEGORY]});

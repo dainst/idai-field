@@ -21,7 +21,6 @@ const ConnectPouchForm: React.FC<ConnectPouchFormProps> = ({ onConnect }) => {
 
     return (
         <Center>
-            <Text>Connect to project</Text>
             <Stack width={ 400 } m={ 2 }>
                 <Input placeholder="URL"
                     value={ url }
@@ -46,8 +45,8 @@ const ConnectPouchForm: React.FC<ConnectPouchFormProps> = ({ onConnect }) => {
                     m={ 1 }
                 />
                 <Center m={ 2 }>
-                    <Button info onPress={ onSubmit } style={ styles.connectBtn }>
-                        <Text>Connect</Text>
+                    <Button colorScheme="blue" onPress={ onSubmit } style={ styles.connectBtn }>
+                        <Text color="white">Connect</Text>
                     </Button>
                 </Center>
         </Stack>

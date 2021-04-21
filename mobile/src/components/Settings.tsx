@@ -1,4 +1,5 @@
-import React, { ReactElement } from 'react';
+import { Modal, Text } from 'native-base';
+import React from 'react';
 import { StyleSheet } from 'react-native';
 import { clone } from 'tsfun';
 import { SyncSettings } from '../model/sync-settings';
@@ -6,15 +7,16 @@ import { DocumentRepository } from '../repositories/document-repository';
 import ConnectPouchForm from './ConnectPouchForm';
 import DisconectPouchForm from './DisconnectPouchForm';
 
-
 interface SettingsProps {
     repository: DocumentRepository;
     syncSettings: SyncSettings;
     onSyncSettingsSet: (syncSettings: SyncSettings) => void;
+    isOpen: boolean;
+    onClose: () => void;
 }
 
 
-const Settings: React.FC<SettingsProps> = ({ repository, syncSettings, onSyncSettingsSet }): ReactElement => {
+const Settings: React.FC<SettingsProps> = ({ repository, syncSettings, onSyncSettingsSet, isOpen, onClose }) => {
 
     const onDisconnect = () => {
 
@@ -31,20 +33,36 @@ const Settings: React.FC<SettingsProps> = ({ repository, syncSettings, onSyncSet
         repository.setupSync(fullUrl, project);
         onSyncSettingsSet(syncSettings);
     };
-
-    return <>
-        { syncSettings.connected
-            ? <DisconectPouchForm
-                project={ syncSettings.project }
-                onDisconnect={ onDisconnect } />
-            : <ConnectPouchForm onConnect={ onConnect } />
-        }
-    </>;
+    console.log(isOpen);
+    return (
+        <Modal
+            isCentered
+            isOpen={ isOpen }
+            motionPreset="fade"
+            closeOnOverlayClick
+            onClose={ onClose }
+        >
+            <Modal.Content>
+                <Modal.Header style={ styles.header }>
+                    <Text bold>
+                        {syncSettings.connected ? `Disconnect ${syncSettings.project}` : 'Connect to project'}
+                    </Text>
+                </Modal.Header>
+                <Modal.Body>
+                { syncSettings.connected
+                    ? <DisconectPouchForm
+                        project={ syncSettings.project }
+                        onDisconnect={ onDisconnect } />
+                    : <ConnectPouchForm onConnect={ onConnect } />
+                }
+                </Modal.Body >
+            </Modal.Content>
+        </Modal>);
 };
 
 const styles = StyleSheet.create({
-    form: {
-        flex: 1
+    header: {
+        alignItems: 'center'
     }
 });
 

@@ -37,19 +37,20 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ repository }): ReactElement => 
                 title={ syncSettings.project ? syncSettings.project : 'iDAI.field mobile' }
                 right={ renderSettingsButton(setShowSettings) } />
             <View style={ styles.container }>
-                { showSettings
-                    ? <Settings
-                        repository={ repository }
-                        syncSettings={ syncSettings }
-                        onSyncSettingsSet={ (syncSettings) => setSyncSettings(syncSettings) } />
-                    : <>
-                        <IconButton
-                            onPress={ () => issueSearch() }
-                            icon={ <Icon type="Ionicons" name="refresh" color="black" /> }
-                            style={ styles.refreshBtn } />
-                        <Map geoDocuments={ documents.filter(doc => doc && doc.resource.geometry ? true : false) } />
-                    </>
-                }
+                <Settings
+                    repository={ repository }
+                    syncSettings={ syncSettings }
+                    onSyncSettingsSet={ (syncSettings) => setSyncSettings(syncSettings) }
+                    isOpen={ showSettings }
+                    onClose={ () => setShowSettings(current => !current) }
+                />
+                    <>
+                    <IconButton
+                        onPress={ () => issueSearch() }
+                        icon={ <Icon type="Ionicons" name="refresh" color="black" /> }
+                        style={ styles.refreshBtn } />
+                    <Map geoDocuments={ documents.filter(doc => doc && doc.resource.geometry ? true : false) } />
+                </>
             </View>
         </View>
     );

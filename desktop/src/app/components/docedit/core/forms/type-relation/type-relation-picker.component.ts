@@ -11,8 +11,10 @@ import { ImageRowItem } from '../../../../../core/images/row/image-row';
 import { TypeImagesUtil } from '../../../../../core/util/type-images-util';
 import { ValuelistUtil } from '../../../../../core/util/valuelist-util';
 
-
+const ALLCATALOGS = 'all-catalogs';
+const NOCRITERION = 'no-criterion';
 const CRITERION = 'criterion';
+const IDENTIFICATION = 'identification';
 const TYPECATALOG = 'TypeCatalog';
 const TYPE = 'Type';
 
@@ -39,8 +41,9 @@ type Criterion = {
 export class TypeRelationPickerComponent {
 
     public selectedCatalog: FieldResource|undefined;
+    public selectedCatalogIdentifier = ALLCATALOGS;
     public availableCatalogs: Array<FieldResource> = [];
-    public selectedCriterion: string = '';
+    public selectedCriterion = NOCRITERION;
     public availableCriteria: Array<Criterion> = [];
 
     public typeDocumentsWithLinkedImages: Array<Pair<FieldDocument, Array<ImageRowItem>>> = [];
@@ -88,6 +91,11 @@ export class TypeRelationPickerComponent {
 
     public async onSelectCatalog() {
 
+        this.selectedCatalog = this.selectedCatalogIdentifier === ALLCATALOGS
+            ? undefined
+            : this.availableCatalogs.find(
+                catalog => catalog.identifier === this.selectedCatalogIdentifier);
+
         this.currentOffset = 0;
         await this.fetchTypes();
     }
@@ -97,6 +105,7 @@ export class TypeRelationPickerComponent {
 
         await this.fetchCatalogs();
         this.selectedCatalog = undefined;
+        this.selectedCatalogIdentifier = ALLCATALOGS;
         this.currentOffset = 0;
         await this.fetchTypes();
     }
@@ -136,7 +145,7 @@ export class TypeRelationPickerComponent {
         const usedCriteria = await this.getUsedCatalogCriteria();
 
         this.availableCriteria = TypeRelationPickerComponent.getConfiguredCriteria(typeCatalogCategory)
-            .filter(on('name', includedIn(usedCriteria)));
+            .filter(on(Named.NAME, includedIn(usedCriteria)));
 
         this.fetchCatalogs();
     }
@@ -160,7 +169,9 @@ export class TypeRelationPickerComponent {
             categories: [TYPECATALOG],
             constraints: {}
         };
-        if (this.selectedCriterion) query.constraints = { 'criterion:match': this.selectedCriterion };
+        if (this.selectedCriterion !== NOCRITERION) {
+            query.constraints = { 'criterion:match': this.selectedCriterion };
+        }
 
         const result = await this.datastore.find(query);
         this.availableCatalogs = flow(
@@ -184,20 +195,20 @@ export class TypeRelationPickerComponent {
             this.currentOffset
         );
 
-        const result: FindResult = await this.datastore.find(query);
+        const result = await this.datastore.find(query);
         this.totalDocumentCount = result.totalCount;
         this.typeDocumentsWithLinkedImages = this.pairWithLinkedImages(result.documents);
     }
 
 
     private pairWithLinkedImages: Mapping
-        = (documents: Array<FieldDocument>) => map((document: FieldDocument) => {
+        = (documents: Array<FieldDocument>) => map(documents, document => {
             return [
                 document,
                 TypeImagesUtil.getLinkedImageIds(document, this.datastore)
                     .map(id => ({ imageId: id }))
             ] as Pair<FieldDocument, Array<ImageRowItem>>;
-        })(documents);
+        });
 
 
     private static constructQuery(resource: Resource, q: string, selectedCatalogs: Array<FieldResource>,
@@ -234,10 +245,10 @@ export class TypeRelationPickerComponent {
     private static getConfiguredCriteria(typeCatalogCategory: Category): Array<Criterion> {
 
         const identificationGroup: Group = typeCatalogCategory.groups
-            .find(Named.onName(is('identification')));
+            .find(Named.onName(is(IDENTIFICATION)));
 
         const criterionField: FieldDefinition = identificationGroup.fields
-            .find(Named.onName(is('criterion')));
+            .find(Named.onName(is(CRITERION)));
 
         const valuelist: ValuelistDefinition = (criterionField.valuelist as ValuelistDefinition);
 

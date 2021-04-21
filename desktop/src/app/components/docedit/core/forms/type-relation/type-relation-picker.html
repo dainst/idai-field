@@ -3,17 +3,17 @@
         <select *ngIf="availableCriteria.length > 0"
                 id="criterion-select" class="form-control"
                 [(ngModel)]="selectedCriterion" (change)="onSelectCriterion()">
-            <option value="" i18n="@@docedit.catalogCriteria.none">Kein Kriterium</option>
+            <option value="no-criterion" i18n="@@docedit.catalogCriteria.none">Kein Kriterium</option>
             <option *ngFor="let criterion of availableCriteria"
-                    [ngValue]="criterion.name">{{criterion.label}}</option>
+                    value="{{criterion.name}}">{{criterion.label}}</option>
         </select>
 
         <select id="catalog-select" class="form-control"
-                [(ngModel)]="selectedCatalog" (change)="onSelectCatalog()">
-            <option [ngValue]="undefined"
+                [(ngModel)]="selectedCatalogIdentifier" (change)="onSelectCatalog()">
+            <option value="all-catalogs"
                     i18n="@@docedit.forms.typeRelationPicker.allCatalogs">Alle Kataloge</option>
             <option *ngFor="let catalog of availableCatalogs"
-                    [ngValue]="catalog">{{catalog.identifier}}</option>
+                    value={{catalog.identifier}}>{{catalog.identifier}}</option>
         </select>
         <div class="type-search-bar float-left">
             <search-bar [showFiltersMenu]="false"

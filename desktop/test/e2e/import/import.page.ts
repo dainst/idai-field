@@ -1,4 +1,4 @@
-import { waitForExist, getElements, click, getElement, getText } from '../app';
+import { waitForExist, getElements, click, getElement, getText, selectOption } from '../app';
 
 
 export class ImportPage {
@@ -9,10 +9,9 @@ export class ImportPage {
     };
 
 
-    public static async clickSourceOption(index) {
+    public static async clickSourceOption(value: string) {
 
-        const sourceOptionElements = await this.getSourceOptions();
-        return click(sourceOptionElements[index]);
+        return selectOption('#importSourceSelect', value)
     };
 
 
@@ -27,13 +26,6 @@ export class ImportPage {
 
         await waitForExist('#operationSelect');
         return getElements('#operationSelect option');
-    };
-
-
-    public static async clickOperationOption(index) {
-
-        const operationOptionElements = await this.getOperationOptions();
-        return click(operationOptionElements[index]);
     };
 
 

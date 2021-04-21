@@ -35,12 +35,11 @@ describe('import --', () => {
     });
 
 
-    const performImport = async (url: string, operationOption: number = 0) => {
+    const performImport = async (url: string) => {
 
         expect(await ImportPage.getSourceOptionValue(1)).toEqual('http');
-        await ImportPage.clickSourceOption(1);
+        await ImportPage.clickSourceOption('http');
         await typeIn(await ImportPage.getImportURLInput(), url);
-        await ImportPage.clickOperationOption(operationOption);
         await ImportPage.clickStartImportButton();
         await waitForNotExist(await ImportPage.getImportModal());
     };

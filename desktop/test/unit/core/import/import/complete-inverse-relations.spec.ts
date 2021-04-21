@@ -481,7 +481,7 @@ describe('completeInverseRelations', () => {
     });
 
 
-    xit('mutually exclusive directions targeting same resource' +
+    it('mutually exclusive directions targeting same resource' +
         ' - import resource to import resource' +
         ' - set one direction in each resource', () => {
 
@@ -497,7 +497,7 @@ describe('completeInverseRelations', () => {
     });
 
 
-    xit('opposing directions targeting same resource' +
+    it('opposing directions targeting same resource' +
         ' - import resource to db resource', () => {
 
         const targetsLookup: any = {
@@ -511,7 +511,7 @@ describe('completeInverseRelations', () => {
     });
 
 
-    xit('mutually exclusive directions targeting same resource' +
+    it('mutually exclusive directions targeting same resource' +
         ' - import resource to db resource', () => {
 
         const targetsLookup: any = {

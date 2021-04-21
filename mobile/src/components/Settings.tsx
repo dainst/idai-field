@@ -1,3 +1,4 @@
+import { SyncProcess } from 'idai-field-core';
 import { Modal, Text } from 'native-base';
 import React from 'react';
 import { StyleSheet } from 'react-native';
@@ -10,7 +11,7 @@ import DisconectPouchForm from './DisconnectPouchForm';
 interface SettingsProps {
     repository: DocumentRepository;
     syncSettings: SyncSettings;
-    onSyncSettingsSet: (syncSettings: SyncSettings) => void;
+    onSyncSettingsSet: (syncSettings: SyncSettings, syncProcess?: SyncProcess) => void;
     isOpen: boolean;
     onClose: () => void;
 }
@@ -26,12 +27,12 @@ const Settings: React.FC<SettingsProps> = ({ repository, syncSettings, onSyncSet
         onSyncSettingsSet(newSyncSettings);
     };
 
-    const onConnect = (syncSettings: SyncSettings) => {
+    const onConnect = async (syncSettings: SyncSettings) => {
 
         const { url, project, password } = syncSettings;
         const fullUrl = url.replace(/(https?:\/\/)/, `$1${project}:${password}@`);
-        repository.setupSync(fullUrl, project);
-        onSyncSettingsSet(syncSettings);
+        const syncProcess = await repository.setupSync(fullUrl, project);
+        onSyncSettingsSet(syncSettings, syncProcess);
     };
 
     return (

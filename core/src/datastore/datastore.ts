@@ -30,12 +30,6 @@ export module FindResult {
 }
 
 
-export interface IdaiFieldFindResult extends FindResult {
-
-    documents: Array<Document>
-}
-
-
 /**
  * This datastore provides everything necessary
  * to power a idai-field application:
@@ -211,7 +205,7 @@ export class Datastore {
      * @returns {Promise<IdaiFieldFindResult>} result object
      * @throws [GENERIC_ERROR (, cause: any)] - in case of error, optionally including a cause
      */
-    public async find(query: Query, ignoreCategories: boolean = false): Promise<IdaiFieldFindResult> {
+    public async find(query: Query, ignoreCategories: boolean = false): Promise<FindResult> {
 
         const { ids } = this.findIds(query, ignoreCategories);
         const { documents, totalCount } = await this.getDocumentsForIds(ids, query.limit, query.offset);

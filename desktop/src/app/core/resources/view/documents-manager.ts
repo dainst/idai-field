@@ -1,4 +1,4 @@
-import { ChangesStream, Datastore, Document, FieldDocument, IdaiFieldFindResult, ObserverUtil, Query, Resource } from 'idai-field-core';
+import { ChangesStream, Datastore, Document, FieldDocument, FindResult, ObserverUtil, Query, Resource } from 'idai-field-core';
 import { Observable, Observer } from 'rxjs';
 import * as tsfun from 'tsfun';
 import { AngularUtility } from '../../../angular/angular-utility';
@@ -110,7 +110,7 @@ export class DocumentsManager {
                           rebuildNavigationPath: boolean = false) {
 
         try {
-            if (typeof (document) === 'string') {
+            if (tsfun.isString(document)) {
                 document = FieldDocument.fromDocument(await this.datastore.get(document));
             } else if (document) {
                 await this.datastore.get(document.resource.id);
@@ -212,8 +212,7 @@ export class DocumentsManager {
 
         this.currentQueryId = new Date().toISOString();
         const queryId = this.currentQueryId;
-        const result: IdaiFieldFindResult
-            = await this.createUpdatedDocumentList();
+        const result = await this.createUpdatedDocumentList();
 
         await this.updateChildrenCountMap(result.documents.map(FieldDocument.fromDocument));
 
@@ -231,7 +230,7 @@ export class DocumentsManager {
     }
 
 
-    public async createUpdatedDocumentList(): Promise<IdaiFieldFindResult> {
+    public async createUpdatedDocumentList(): Promise<FindResult> {
 
         const isRecordedInTarget = this.makeIsRecordedInTarget();
         if (!isRecordedInTarget && !this.resourcesStateManager.isInSpecialView()) {
@@ -344,7 +343,7 @@ export class DocumentsManager {
     }
 
 
-    private async fetchDocuments(query: Query): Promise<IdaiFieldFindResult> {
+    private async fetchDocuments(query: Query): Promise<FindResult> {
 
         try {
             const ignoreCategories = !query.categories

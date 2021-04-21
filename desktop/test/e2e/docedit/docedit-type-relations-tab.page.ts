@@ -1,4 +1,4 @@
-import { click, getElements, getElement } from '../app';
+import { click, getElements, getElement, selectOption } from '../app';
 
 
 /**
@@ -20,17 +20,15 @@ export class DoceditTypeRelationsTabPage {
     }
 
 
-    public static async clickCriterionOption(index: number) {
+    public static async clickCriterionOption(value: string) {
 
-        const options = await getElements('#criterion-select option');
-        return click(options[index]);
+        return selectOption('#criterion-select', value);
     }
 
 
-    public static async clickCatalogOption(index: number) {
+    public static async clickCatalogOption(value: string) {
 
-        const options = await getElements('#catalog-select option');
-        return click(options[index]);
+        return selectOption('#catalog-select', value);
     }
 
 

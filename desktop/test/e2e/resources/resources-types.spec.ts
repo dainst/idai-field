@@ -222,23 +222,23 @@ describe('resources/types --', () => {
         await waitForExist(await DoceditTypeRelationsTabPage.getTypeRow('T1'));
         await waitForExist(await DoceditTypeRelationsTabPage.getTypeRow('T2'));
 
-        await DoceditTypeRelationsTabPage.clickCriterionOption(1);
+        await DoceditTypeRelationsTabPage.clickCriterionOption('Dekoration');
         await checkCatalogOptions(['Alle Kataloge', 'TC1']);
         await waitForNotExist(await DoceditTypeRelationsTabPage.getTypeRow('T2'));
 
-        await DoceditTypeRelationsTabPage.clickCriterionOption(2);
+        await DoceditTypeRelationsTabPage.clickCriterionOption('Form');
         await checkCatalogOptions(['Alle Kataloge', 'TC2']);
         await waitForNotExist(await DoceditTypeRelationsTabPage.getTypeRow('T1'));
         await waitForExist(await DoceditTypeRelationsTabPage.getTypeRow('T2'));
 
-        await DoceditTypeRelationsTabPage.clickCriterionOption(0);
+        await DoceditTypeRelationsTabPage.clickCriterionOption('no-criterion');
         await checkCatalogOptions(['Alle Kataloge', 'TC1', 'TC2']);
         await waitForExist(await DoceditTypeRelationsTabPage.getTypeRow('T1'));
 
-        await DoceditTypeRelationsTabPage.clickCatalogOption(1);
+        await DoceditTypeRelationsTabPage.clickCatalogOption('TC1');
         await waitForNotExist(await DoceditTypeRelationsTabPage.getTypeRow('T2'));
 
-        await DoceditTypeRelationsTabPage.clickCatalogOption(2);
+        await DoceditTypeRelationsTabPage.clickCatalogOption('TC2');
         await waitForNotExist(await DoceditTypeRelationsTabPage.getTypeRow('T1'));
         await waitForExist(await DoceditTypeRelationsTabPage.getTypeRow('T2'));
 

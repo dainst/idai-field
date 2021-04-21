@@ -44,6 +44,7 @@ const Settings: React.FC<SettingsProps> = ({ repository, syncSettings, onSyncSet
             onClose={ onClose }
         >
             <Modal.Content>
+                <Modal.CloseButton />
                 <Modal.Header style={ styles.header }>
                     <Text bold>
                         {syncSettings.connected ? `Connected to ${syncSettings.project}` : 'Connect to project'}

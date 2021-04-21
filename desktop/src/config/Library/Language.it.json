@@ -749,6 +749,9 @@
         "draughtsmen": {
           "label": "Autore dell'immagine",
           "description": "Creatore dell'immagine, fotografo o disegnatore"
+        },
+        "processor": {
+          "label": "Responsabile"
         }
       }
     },

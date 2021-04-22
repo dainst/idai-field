@@ -1,6 +1,6 @@
 import { ObjectUtils, takeOrMake } from '../tools';
-import {Document} from './document';
-import {ImageResource} from './image-resource';
+import { Document } from './document';
+import { ImageResource } from './image-resource';
 
 /**
  * @author Daniel de Oliveira
@@ -18,7 +18,7 @@ export module ImageDocument {
 
         // const doc = ObjectUtils.clone(document); TODO review after release of 2.19
         const doc = document;
-        takeOrMake(doc, ['resource','relations','depicts'], []);
+        takeOrMake(doc, ['resource', 'relations', 'depicts'], []);
         return doc as any;
     }
 }

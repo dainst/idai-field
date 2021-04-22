@@ -1,9 +1,9 @@
 import { Position } from 'geojson';
 import { Document, FieldGeometry } from 'idai-field-core';
-import { Box, Text } from 'native-base';
+import { Box, Circle, Text } from 'native-base';
 import React, { ReactElement } from 'react';
 import { StyleSheet } from 'react-native';
-import Svg, { Circle, G } from 'react-native-svg';
+import Svg, { G } from 'react-native-svg';
 import { viewBox } from './constants';
 import { getGeometryBoundings } from './cs-transform-utils';
 import {
@@ -48,39 +48,26 @@ const styles = StyleSheet.create({
 const renderGeoSvgElement = (document: Document, csTransformFunc: (pos: Position) => Position): ReactElement => {
     
     const geometry: FieldGeometry = document.resource.geometry;
+    const props = {
+        coordinates: geometry.coordinates,
+        csTransformFunction: csTransformFunc,
+    };
 
     switch(geometry.type){
         case('Polygon'):
-            return <GeoPolygon
-                coordinates={ geometry.coordinates }
-                fill="blue"
-                csTransformFunction={ csTransformFunc } />;
+            return <GeoPolygon { ...props } fill="blue" />;
         case('MultiPolygon'):
-            return <GeoMultiPolygon
-                coordinates={ geometry.coordinates }
-                fill="red"
-                csTransformFunction={ csTransformFunc } />;
+            return <GeoMultiPolygon { ...props } fill="red" />;
         case('LineString'):
-            return <GeoLineString
-                coordinates={ geometry.coordinates }
-                stroke="green"
-                csTransformFunction={ csTransformFunc } />;
+            return <GeoLineString { ...props } stroke="green" />;
         case('MultiLineString'):
-            return <GeoMultiLineString
-                coordinates={ geometry.coordinates }
-                stroke="green"
-                csTransformFunction={ csTransformFunc } />;
+            return <GeoMultiLineString { ...props } stroke="green" />;
         case('Point'):
-            return <GeoPoint
-                coordinates={ geometry.coordinates }
-                fill="black"
-                csTransformFunction={ csTransformFunc } />;
+            return <GeoPoint { ...props } fill="#7f32a8" />;
         case('MultiPoint'):
-            return <GeoMultiPoint
-                coordinates={ geometry.coordinates }
-                fill="yellow"
-                csTransformFunction={ csTransformFunc } />;
+            return <GeoMultiPoint { ...props } fill="yellow" />;
         default:
+            console.error(`Unknown type: ${geometry.type}`);
             return <Circle />;
 
     }

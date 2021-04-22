@@ -41,10 +41,6 @@
   </dependencies>
   <repositories>
     <repository>
-      <id>Boundless</id>
-      <url>http://repo.boundlessgeo.com/main</url>
-    </repository>
-    <repository>
       <id>Geomajas</id>
       <url>http://maven.geomajas.org/</url>
     </repository>

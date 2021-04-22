@@ -39,7 +39,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ repository }): ReactElement => 
             <View style={ styles.container }>
                 <SyncSettingsModal
                     settings={ syncSettings }
-                    setSettings={ (newSyncSettings) => {
+                    onSettingsSet={ (newSyncSettings) => {
                         setSyncSettings(newSyncSettings);
                         setShowSyncSettings(false);
                     } }

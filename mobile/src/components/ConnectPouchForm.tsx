@@ -1,4 +1,4 @@
-import { Button, Center, Input, Stack, Text } from 'native-base';
+import { Button, Center, Input, Stack, Text, View } from 'native-base';
 import React, { useState } from 'react';
 import { Keyboard, StyleSheet } from 'react-native';
 import { SyncSettings } from '../model/sync-settings';
@@ -20,8 +20,8 @@ const ConnectPouchForm: React.FC<ConnectPouchFormProps> = ({ onConnect }) => {
     };
 
     return (
-        <Center>
-            <Stack width={ 400 } m={ 2 }>
+        <View>
+            <Stack m={ 2 }>
                 <Input placeholder="URL"
                     value={ url }
                     onChangeText={ setUrl }
@@ -49,18 +49,17 @@ const ConnectPouchForm: React.FC<ConnectPouchFormProps> = ({ onConnect }) => {
                         <Text color="white">Connect</Text>
                     </Button>
                 </Center>
-        </Stack>
-        </Center>
+            </Stack>
+        </View>
     );
 };
 
 const styles = StyleSheet.create({
     header: {
-        justifyContent: 'center',
+        justifyContent: 'center'
     },
     connectBtnContainer: {
-        justifyContent: 'center',
-        margin: 20,
+        justifyContent: 'center'
     },
     connectBtn: {
         width: '80%',

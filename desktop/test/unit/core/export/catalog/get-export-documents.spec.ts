@@ -5,7 +5,6 @@ import {makeDocumentsLookup} from '../../../../../src/app/core/import/import/uti
 
 describe('getExportDocuments', () => {
 
-    let datastore;
     let relationsManager;
     let imageRelationsManager;
 
@@ -13,7 +12,6 @@ describe('getExportDocuments', () => {
 
     beforeEach(() => {
 
-        datastore = jasmine.createSpyObj('datastore', ['find']);
         relationsManager = jasmine.createSpyObj('relationsManager', ['get']);
         imageRelationsManager = jasmine.createSpyObj('imageRelationsManager', ['getLinkedImages']);
 
@@ -55,7 +53,7 @@ describe('getExportDocuments', () => {
     it('basic', async done => {
 
         const [_, [exportDocuments, imageResourceIds]] = await getExportDocuments(
-            datastore, relationsManager, imageRelationsManager, 'C1', 'test-project');
+            relationsManager, imageRelationsManager, 'C1', 'test-project');
         const exportDocumentsLookup = makeDocumentsLookup(exportDocuments);
         expect(exportDocuments.length).toBe(3);
         expect(exportDocumentsLookup['C1']['project']).toBe('test-project');
@@ -75,7 +73,7 @@ describe('getExportDocuments', () => {
         });
 
         const [error, _] = await getExportDocuments(
-            datastore, relationsManager, imageRelationsManager, 'C1', 'test-project');
+            relationsManager, imageRelationsManager, 'C1', 'test-project');
         expect(error[0]).toEqual(ERROR_NOT_ALL_IMAGES_EXCLUSIVELY_LINKED);
         expect(error[1]).toEqual(images[0].resource.identifier);
         done();

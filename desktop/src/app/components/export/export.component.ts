@@ -163,7 +163,6 @@ export class ExportComponent implements OnInit {
 
         try {
             await CatalogExporter.performExport(
-                this.datastore,
                 this.relationsManager,
                 this.imageRelationsManager,
                 filePath,

@@ -1,4 +1,4 @@
-import { Document, Datastore, Relations, Name, ObjectUtils, ON_RESOURCE_ID, ResourceId, RESOURCE_DOT_IDENTIFIER, toResourceId } from 'idai-field-core';
+import { Document, Relations, Name, ObjectUtils, ON_RESOURCE_ID, ResourceId, RESOURCE_DOT_IDENTIFIER, toResourceId } from 'idai-field-core';
 import { Either, subtract, to } from 'tsfun';
 import { ImageRelationsManager } from '../../model/image-relations-manager';
 import { RelationsManager } from '../../model/relations-manager';
@@ -7,8 +7,7 @@ import { RelationsManager } from '../../model/relations-manager';
 export const ERROR_NOT_ALL_IMAGES_EXCLUSIVELY_LINKED = 'export.catalog.get-export-documents.not-all-images-exclusively-linked';
 
 
-export async function getExportDocuments(datastore: Datastore, /*TODO unused*/
-                                         relationsManager: RelationsManager,
+export async function getExportDocuments(relationsManager: RelationsManager,
                                          imageRelationsManager: ImageRelationsManager,
                                          catalogId: ResourceId,
                                          project: Name)

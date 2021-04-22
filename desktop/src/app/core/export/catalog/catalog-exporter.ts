@@ -22,15 +22,14 @@ export module CatalogExporter {
     /**
      * @throws an error if something goes wrong
      */
-    export async function performExport(datastore: Datastore,
-                                        relationsManager: RelationsManager,
+    export async function performExport(relationsManager: RelationsManager,
                                         imageRelationsManager: ImageRelationsManager,
                                         outputFilePath: string,
                                         catalogId: string,
                                         settings: Settings): Promise<void> {
 
         const [error, results] =
-            await getExportDocuments(datastore, relationsManager, imageRelationsManager, catalogId, settings.selectedProject);
+            await getExportDocuments(relationsManager, imageRelationsManager, catalogId, settings.selectedProject);
         if (error !== undefined) throw error;
         const [exportDocuments, imageResourceIds] = results;
 

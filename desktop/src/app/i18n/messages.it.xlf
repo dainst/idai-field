@@ -141,7 +141,7 @@
       <trans-unit id="ngb.progressbar.value" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="*
    * Supp"/>%</source>
-        <target state="translated"><x id="INTERPOLATION" equiv-text="{{getPercentValue()}}"/>%</target>
+        <target state="final"><x id="INTERPOLATION" equiv-text="{{getPercentValue()}}"/>%</target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/ng-bootstrap/__ivy_ngcc__/fesm2015/@ng-bootstrap/ng-bootstrap/progressbar/progressbar.ts</context>
           <context context-type="linenumber">59</context>
@@ -245,7 +245,7 @@
       </trans-unit>
       <trans-unit id="ngb.timepicker.PM" datatype="html">
         <source><x id="INTERPOLATION"/></source>
-        <target state="translated"><x id="INTERPOLATION" equiv-text="{{ i18n.getAfternoonPeriod() }}"/></target>
+        <target state="final"><x id="INTERPOLATION" equiv-text="{{ i18n.getAfternoonPeriod() }}"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/ng-bootstrap/__ivy_ngcc__/fesm2015/@ng-bootstrap/ng-bootstrap/timepicker/timepicker.ts</context>
           <context context-type="linenumber">296</context>
@@ -253,7 +253,7 @@
       </trans-unit>
       <trans-unit id="ngb.timepicker.AM" datatype="html">
         <source><x id="INTERPOLATION"/></source>
-        <target state="translated"><x id="INTERPOLATION" equiv-text="{{ i18n.getMorningPeriod() }}"/></target>
+        <target state="final"><x id="INTERPOLATION" equiv-text="{{ i18n.getMorningPeriod() }}"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/ng-bootstrap/__ivy_ngcc__/fesm2015/@ng-bootstrap/ng-bootstrap/timepicker/timepicker.ts</context>
           <context context-type="linenumber">296</context>
@@ -505,8 +505,8 @@
       </trans-unit>
       <trans-unit id="import.format.info" datatype="html">
         <source> Unterstützte Dateiformate: <x id="INTERPOLATION" equiv-text="{{getAllowedFileExtensions()}}"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br>"/> Bildformate können in der <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;../images&quot;>"/>Bilderverwaltung<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> importiert werden. </source>
-        <target state="translated">
-                        Formati di file supportati: <x id="INTERPOLATION" equiv-text="{{allowedFileExtensions}}"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/>"/>
+        <target state="final">
+                        Formati di file supportati: <x id="INTERPOLATION" equiv-text="{{getAllowedFileExtensions()}}"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/>"/>
                         I formati immagine possono essere importati nel <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>Gestore immagini<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/>.
                    </target>
         <context-group purpose="location">
@@ -516,7 +516,7 @@
       </trans-unit>
       <trans-unit id="import.regularOption.label" datatype="html">
         <source> Neue Ressourcen importieren</source>
-        <target state="translated">
+        <target state="final">
                                 Importazione di nuove risorse</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
@@ -525,7 +525,7 @@
       </trans-unit>
       <trans-unit id="import.defaultOption.info" datatype="html">
         <source> Datensätze, deren Bezeichner (Feld <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>) bereits vergeben ist, werden ignoriert. </source>
-        <target state="translated">
+        <target state="final">
                                 I record il cui identificatore (campo <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>)
                                 è già stato assegnato, vengono ignorati.
                             </target>
@@ -536,7 +536,7 @@
       </trans-unit>
       <trans-unit id="import.mergeOption.label" datatype="html">
         <source> Vorhandene Ressource ergänzen </source>
-        <target state="translated">
+        <target state="final">
                             Aggiungi alle risorse esistenti
                         </target>
         <context-group purpose="location">
@@ -546,7 +546,7 @@
       </trans-unit>
       <trans-unit id="import.mergeOption.native.info" datatype="html">
         <source> Ist diese Option aktiviert, so werden bereits existierende Datensätze mit den Daten aus der Importdatei ergänzt. Felder des Importdatensatzes überschreiben dabei gleichnamige Felder im existierenden Datensatz. Geometrien des Importdatensatzes überschreiben bestehende im existierenden Datensatz. Im existierenden Datensatz vorhandene Felder, die nicht im Importdatensatz vorhanden sind, bleiben unverändert bestehen. Die Kategorie kann nicht verändert werden. Die Zuordnung von Datensätzen geschieht per Bezeichner (Feld <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>). Datensätze in der Importdatei, die nicht zugeordnet werden können, werden ignoriert. </source>
-        <target state="translated">
+        <target state="final">
                         Se questa opzione è attivata, i record di dati esistenti vengono integrati con
                         i dati del file di importazione. I campi del record dati di importazione sovrascrivono
                         i campi con lo stesso nome nel record dati esistente. Le geometrie die record importati
@@ -563,7 +563,7 @@
       </trans-unit>
       <trans-unit id="import.mergeOption.csv.info" datatype="html">
         <source> Ist diese Option aktiviert, so werden bereits existierende Datensätze mit den Daten aus der Importdatei ergänzt. Felder des Importdatensatzes überschreiben dabei gleichnamige Felder im existierenden Datensatz. Im existierenden Datensatz vorhandene Felder, die nicht im Importdatensatz vorhanden sind, bleiben unverändert bestehen. Die Kategorie kann nicht verändert werden. Die Zuordnung von Datensätzen geschieht per Bezeichner (Spalte <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>). Datensätze in der Importdatei, die nicht zugeordnet werden können, werden ignoriert. </source>
-        <target state="translated">
+        <target state="final">
                         Se questa opzione è attivata, i record di dati esistenti vengono integrati con
                         i dati del file di importazione. I campi del record dati di importazione sovrascrivono
                         i campi con lo stesso nome nel record dati esistente. I campi del record di dati esistenti
@@ -579,7 +579,7 @@
       </trans-unit>
       <trans-unit id="import.mergeOption.permitDeletions" datatype="html">
         <source> Löschen erlauben </source>
-        <target state="translated">
+        <target state="final">
                             Consenti eliminazione
                         </target>
         <context-group purpose="location">
@@ -589,7 +589,7 @@
       </trans-unit>
       <trans-unit id="import.mergeOption.deletionsInfo.jsonl" datatype="html">
         <source> Ist diese Option aktiviert, so können sowohl Felder als auch Relationen nicht nur verändert, sondern auch entfernt werden. Gelöscht werden alle Felder und Relationen, denen in der Importdatei der Wert <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>null<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/> zugewiesen ist. Nicht aufgeführte Felder und Relationen bleiben unverändert. </source>
-        <target state="translated">
+        <target state="final">
                         Se questa opzione è attivata, entrambi i campi e le relazioni non solo
                         possono essere modificati, ma anche rimossi. Tutti i campi e le relazioni,
                         a cui viene assegnato il valore <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>null<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/> nel file di importazione vengono cancellati.
@@ -602,7 +602,7 @@
       </trans-unit>
       <trans-unit id="import.mergeOption.deletionsInfo.csv" datatype="html">
         <source> Ist diese Option aktiviert, so können sowohl Felder als auch Relationen nicht nur verändert, sondern auch entfernt werden. Gelöscht werden alle Felder und Relationen, bei denen das Feld in der Importdatei leer ist. Nicht in der CSV-Tabelle als Spalte aufgeführte Felder und Relationen bleiben unverändert. </source>
-        <target state="translated">
+        <target state="final">
                         Se questa opzione è attivata, entrambi i campi e le relazioni non solo
                         possono essere modificati, ma anche rimossi. Tutti i campi e le relazioni,
                         in cui il campo del file di importazione è vuoto vengono cancellati.
@@ -648,7 +648,7 @@
       </trans-unit>
       <trans-unit id="import.geojson.info" datatype="html">
         <source> Beim GeoJSON-Import werden keine neuen Ressourcen angelegt, sondern existierenden Ressourcen Geometrien hinzugefügt. Bitte beachten Sie, dass bereits vorhandene Geometrien dabei überschrieben werden. Die Zuordnung von Datensätzen geschieht per Bezeichner (Feld <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> im Objekt <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>properties<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>). Datensätze in der Importdatei, die nicht zugeordnet werden können, werden ignoriert. </source>
-        <target state="translated">
+        <target state="final">
                         L'importazione di GeoJSON non crea nuove risorse, ma aggiunge
                         la geometria alle risorse esistenti. Si prega di notare che le geometrie esistenti
                         sono sovrascritte. L'assegnazione dei set di dati avviene per
@@ -662,7 +662,7 @@
       </trans-unit>
       <trans-unit id="import.shapefile.javaWarning" datatype="html">
         <source> Zur Durchführung eines Shapefile-Imports ist die Installation von Java 8 oder höher erforderlich. </source>
-        <target state="translated">
+        <target state="final">
                         Per eseguire un'importazione dello Shapefile è necessario installare Java 8 o versione
                         successiva.
                     </target>
@@ -673,7 +673,7 @@
       </trans-unit>
       <trans-unit id="import.shapefile.info" datatype="html">
         <source> Beim Shapefile-Import werden keine neuen Ressourcen angelegt, sondern existierenden Ressourcen Geometrien hinzugefügt. Bitte beachten Sie, dass bereits vorhandene Geometrien dabei überschrieben werden. Die Zuordnung von Datensätzen geschieht per Bezeichner (Feld <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>). Datensätze im Shapefile, die nicht zugeordnet werden können, werden ignoriert. </source>
-        <target state="translated">
+        <target state="final">
                         Durante l'importazione di shapefile non vengono create nuove risorse, ma
                         ma vengono aggiunte le geometrie delle risorse esistenti. Si prega di notare che le geometrie
                         sono sovrascritte. L'assegnazione dei record di dati avviene per
@@ -807,7 +807,7 @@
       </trans-unit>
       <trans-unit id="export.csv.noResources" datatype="html">
         <source> Keine Ressourcen gefunden. </source>
-        <target state="translated">
+        <target state="final">
                         Nessuna risorsa trovata.
                     </target>
         <context-group purpose="location">
@@ -817,7 +817,7 @@
       </trans-unit>
       <trans-unit id="export.csv.noCatalogs" datatype="html">
         <source> Keine Kataloge gefunden. </source>
-        <target state="translated">
+        <target state="final">
                         Nessun catalogo trovato.
                     </target>
         <context-group purpose="location">
@@ -827,7 +827,7 @@
       </trans-unit>
       <trans-unit id="export.geojson.info" datatype="html">
         <source> Exportiert werden Geometrien und die Felder <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Bezeichner<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (identifier), <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Kurzbeschreibung<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (shortDescription) und <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Kategorie<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (category) der jeweiligen Ressourcen. </source>
-        <target state="translated">
+        <target state="final">
                         Verranno esportati geodati e i campi <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>identificatore<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (identifier),
                         <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>breve descrizione<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (shortDescription) e <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>categoria<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (category) delle
                         rispettive risorse.
@@ -839,7 +839,7 @@
       </trans-unit>
       <trans-unit id="export.shapefile.javaWarning" datatype="html">
         <source> Zur Durchführung eines Shapefile-Exports ist die Installation von Java 8 oder höher erforderlich. </source>
-        <target state="translated">
+        <target state="final">
                         Per eseguire un'esportazione dello Shapefile è necessario installare Java 8 o versione
                         successiva.
                     </target>
@@ -850,7 +850,7 @@
       </trans-unit>
       <trans-unit id="export.shapefile.info" datatype="html">
         <source> Exportiert werden Geometrien und die Felder <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Bezeichner<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (identifier), <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Kurzbeschreibung<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (shortdesc) und <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Kategorie<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (category) der jeweiligen Ressourcen. </source>
-        <target state="translated">
+        <target state="final">
                         Verranno esportati geodati e i campi <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>identificatore<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (identifier),
                         <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>breve descrizione<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (shortdesc) e <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>categoria<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (category) delle rispettive
                         risorse.
@@ -878,7 +878,7 @@
       </trans-unit>
       <trans-unit id="backup.creation.info" datatype="html">
         <source> Erstellt ein Backup des aktuell geöffneten Projekts. Regelmäßige Backups erhöhen die Datensicherheit und erlauben es bei Datenverlusten, die Datenbank aus dem letzten gesicherten Zwischenstand wiederherzustellen. <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br>"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br>"/> Bitte beachten Sie, dass Originale von Bildern nicht mitgesichert werden. Diese befinden sich in dem unter <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>Einstellungen<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/> angezeigten Pfad und sollten separat gesichert werden. </source>
-        <target state="translated">
+        <target state="final">
                         Crea una copia di backup del progetto attualmente aperto. I backup regolari aumentano la sicurezza dei dati
                         e in caso di perdita dei dati, consentono di ripristinare il database dall'ultimo
                         stato salvato.
@@ -909,7 +909,7 @@
       </trans-unit>
       <trans-unit id="backup.loading.info.1" datatype="html">
         <source> Geben Sie hier den vollständigen Pfad einer Backup-Datei sowie den Namen einer Zieldatenbank / eines Zielprojekts ein. Der Name des Zielprojekts darf nicht mit dem aktuell geöffneten Projekt übereinstimmen. </source>
-        <target state="translated">
+        <target state="final">
                         Inserire qui il path completo di un file di backup e il nome di un database / un progetto di destinazione.
                         Il nome del progetto di destinazione non può corrispondere a quello del progetto attualmente aperto.
                     </target>
@@ -920,7 +920,7 @@
       </trans-unit>
       <trans-unit id="backup.loading.info.2" datatype="html">
         <source> Hinweis: Nach dem Einspielen eines Backups werden Vorschaubilder erneut aus den Originaldaten errechnet, weshalb die Anwendung zunächst möglicherweise etwas langsamer laufen kann. </source>
-        <target state="translated">
+        <target state="final">
                         Nota: dopo il ripristino di un Backup le immagini di anteprima verranno ricalcolate in base ai dati originali,
                         motivo per cui l'applicazione può inizialmente funzionare più lentamente.
                     </target>
@@ -931,7 +931,7 @@
       </trans-unit>
       <trans-unit id="backup.loading.info.3" datatype="html">
         <source><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>Achtung:<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> Beim Einspielen einer Backup-Datei wird eine eventuell vorhandene Zieldatenbank mit dem angegebenen Namen <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>vollständig überschrieben<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/>. </source>
-        <target state="translated"><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>Attenzione:<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> Durante l'importazione di un file di Backup un possibile database di destinazione
+        <target state="final"><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>Attenzione:<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> Durante l'importazione di un file di Backup un possibile database di destinazione
                         con il nome specificato <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>verrà completamente sovrascritto<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/>.
                     </target>
         <context-group purpose="location">
@@ -1309,7 +1309,7 @@
       </trans-unit>
       <trans-unit id="imageUpload.imageCategoryPickerModal.warning" datatype="html">
         <source> Bitte beachten Sie, dass das Einlesen von <x id="INTERPOLATION" equiv-text="{{fileCount}}"/> Bilddateien einige Zeit in Anspruch nehmen kann. </source>
-        <target state="translated">
+        <target state="final">
        Si prega di notare che il trasferimento dei <x id="INTERPOLATION" equiv-text="{{fileCount}}"/> file di immagini può richiedere del tempo.
     </target>
         <context-group purpose="location">
@@ -1319,7 +1319,7 @@
       </trans-unit>
       <trans-unit id="imageUpload.imageCategoryPickerModal.linkInfo.single" datatype="html">
         <source> Das importierte Bild wird mit der Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{depictsRelationTarget.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> verknüpft. </source>
-        <target state="translated">
+        <target state="final">
             L'immagine trasferita sarà collegata alla risorsa <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{depictsRelationTarget.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/>.
         </target>
         <context-group purpose="location">
@@ -1329,7 +1329,7 @@
       </trans-unit>
       <trans-unit id="imageUpload.imageCategoryPickerModal.linkInfo.multiple" datatype="html">
         <source> Die importierten Bilder werden mit der Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{depictsRelationTarget.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> verknüpft. </source>
-        <target state="translated">
+        <target state="final">
             Le immagini trasferite saranno collegate alla risorsa <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{depictsRelationTarget.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/>.
         </target>
         <context-group purpose="location">
@@ -1339,7 +1339,7 @@
       </trans-unit>
       <trans-unit id="imageUpload.imageCategoryPickerModal.chooseCategory" datatype="html">
         <source> Bitte wählen Sie die gewünschte Kategorie aus. </source>
-        <target state="translated">
+        <target state="final">
             Seleziona la categoria desiderata.
         </target>
         <context-group purpose="location">
@@ -1357,7 +1357,7 @@
       </trans-unit>
       <trans-unit id="docedit.conflictDeletedModal.info" datatype="html">
         <source> Die aktuelle Ressource wurde in der Zwischenzeit von jemand anderem gelöscht. Sie können die Ressource neu anlegen, indem Sie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>Speichern<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> wählen. Bei Klick auf <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>Abbrechen<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> wird sie verworfen. </source>
-        <target state="translated">
+        <target state="final">
         L'attuale risorsa è stata nel frattempo cancellata da qualcun altro.
         È possibile creare nuovamente la risorsa scegliendo <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>Salva<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/>. Cliccando su
         <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>Annulla<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> verrà scartata.
@@ -1369,7 +1369,7 @@
       </trans-unit>
       <trans-unit id="docedit.conflictDeletedModal.close" datatype="html">
         <source> Zurück zur Editieransicht </source>
-        <target state="translated">
+        <target state="final">
         Torna al modulo di modifica
     </target>
         <context-group purpose="location">
@@ -1379,7 +1379,7 @@
       </trans-unit>
       <trans-unit id="buttons.delete" datatype="html">
         <source> Löschen </source>
-        <target state="translated">Elimina</target>
+        <target state="final">Elimina</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/overview/deletion/delete-modal.component.ts</context>
           <context context-type="linenumber">28</context>
@@ -1571,7 +1571,7 @@
       </trans-unit>
       <trans-unit id="resources.moveModal.chooseParentResource.single" datatype="html">
         <source> Bitte wählen Sie die neue übergeordnete Ressource aus, der die Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{documents[0].resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> zugewiesen werden soll: </source>
-        <target state="translated">
+        <target state="final">
             Selezionare la nuova risorsa sovraordinata, alla quale assegnare la risorsa
             <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{documents[0].resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/>:
         </target>
@@ -1582,7 +1582,7 @@
       </trans-unit>
       <trans-unit id="resources.moveModal.chooseParentResource.multiple" datatype="html">
         <source> Bitte wählen Sie die neue übergeordnete Ressource aus, der die ausgewählten <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{documents.length}}"/> Ressourcen<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> zugewiesen werden sollen: </source>
-        <target state="translated">
+        <target state="final">
             Selezionare le nuove risorse sovraordinate, alle quali assegnare le risorse
             selezionate <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>{{documents[0].resource.identifier}}<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/>:
       </target>
@@ -1593,7 +1593,7 @@
       </trans-unit>
       <trans-unit id="resources.moveModal.moving.single" datatype="html">
         <source> Ressource wird verschoben... </source>
-        <target state="translated">
+        <target state="final">
                 La risorsa viene spostata...
             </target>
         <context-group purpose="location">
@@ -1603,7 +1603,7 @@
       </trans-unit>
       <trans-unit id="resources.moveModal.moving.multiple" datatype="html">
         <source> <x id="INTERPOLATION" equiv-text="{{documents.length}}"/> Ressourcen werden verschoben... </source>
-        <target state="translated"><x id="INTERPOLATION" equiv-text="{{documents.length}}"/> Le risorse vengono spostate...
+        <target state="final"><x id="INTERPOLATION" equiv-text="{{documents.length}}"/> Le risorse vengono spostate...
             </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/move-modal.html</context>
@@ -1612,7 +1612,7 @@
       </trans-unit>
       <trans-unit id="resources.deleteModal.header.single" datatype="html">
         <source> Ressource <x id="INTERPOLATION" equiv-text="{{documents[0].resource.identifier}}"/> löschen? </source>
-        <target state="translated">
+        <target state="final">
         Cancellare la risorsa <x id="INTERPOLATION" equiv-text="{{documents[0].resource.identifier}}"/> ?
     </target>
         <context-group purpose="location">
@@ -1622,7 +1622,7 @@
       </trans-unit>
       <trans-unit id="resources.deleteModal.header.multiple" datatype="html">
         <source> <x id="INTERPOLATION" equiv-text="{{documents.length}}"/> Ressourcen löschen? </source>
-        <target state="translated"><x id="INTERPOLATION" equiv-text="{{documents.length}}"/> Cancellare le risorse?
+        <target state="final"><x id="INTERPOLATION" equiv-text="{{documents.length}}"/> Cancellare le risorse?
     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/deletion/delete-modal.html</context>
@@ -1631,7 +1631,7 @@
       </trans-unit>
       <trans-unit id="resources.deleteModal.warning.descendant.single" datatype="html">
         <source> Zu dieser Ressource gehört eine weitere Ressource, die beim Löschen ebenfalls entfernt wird. </source>
-        <target state="translated">
+        <target state="final">
         A questa risorsa appartiene un'altra risorsa che verrà rimossa con la cancellazione.
     </target>
         <context-group purpose="location">
@@ -1641,7 +1641,7 @@
       </trans-unit>
       <trans-unit id="resources.deleteModal.warning.descendants.single" datatype="html">
         <source> Zu dieser Ressource gehören insgesamt <x id="INTERPOLATION" equiv-text="{{descendantsCount}}"/> weitere Ressourcen, die beim Löschen ebenfalls entfernt werden. </source>
-        <target state="translated">
+        <target state="final">
         A questa risorsa appartengono <x id="INTERPOLATION" equiv-text="{{descendantsCount}}"/> altre risorse che verranno rimosse
         con la cancellazione.
     </target>
@@ -1652,7 +1652,7 @@
       </trans-unit>
       <trans-unit id="resources.deleteModal.warning.descendant.multiple" datatype="html">
         <source> Zu diesen Ressourcen gehört eine weitere Ressource, die beim Löschen ebenfalls entfernt wird. </source>
-        <target state="translated">
+        <target state="final">
         A queste risorse appartiene un'altra risorsa che verrà rimossa con la cancellazione.
     </target>
         <context-group purpose="location">
@@ -1662,7 +1662,7 @@
       </trans-unit>
       <trans-unit id="resources.deleteModal.warning.descendants.multiple" datatype="html">
         <source> Zu diesen Ressourcen gehören insgesamt <x id="INTERPOLATION" equiv-text="{{descendantsCount}}"/> weitere Ressourcen, die beim Löschen ebenfalls entfernt werden. </source>
-        <target state="translated">
+        <target state="final">
         A queste risorse appartengono in totale <x id="INTERPOLATION" equiv-text="{{descendantsCount}}"/> altre risorse che verranno rimosse
         con la cancellazione.
     </target>
@@ -1673,7 +1673,7 @@
       </trans-unit>
       <trans-unit id="resources.deleteModel.warning.importedCatalog" datatype="html">
         <source> Dies ist ein importierter Katalog. Bitte beachten Sie, dass beim Löschen auch Zuordnungen von Funden zu Typen des Katalogs entfernt werden. </source>
-        <target state="translated">
+        <target state="final">
         Questo è un catalogo importato. Si noti che la cancellazione
         rimuove anche le assegnazioni di reperti ai tipi in questo catalogo.
     </target>
@@ -1684,7 +1684,7 @@
       </trans-unit>
       <trans-unit id="resources.deleteModel.warning.ownedCatalog" datatype="html">
         <source> Bitte beachten Sie, dass beim Löschen von Katalogen sämtliche enthaltenen Typen sowie Zuordnungen von Funden zu Typen des Katalogs entfernt werden. </source>
-        <target state="translated">
+        <target state="final">
         Si prega di notare
         che quando si cancellano i cataloghi, tutti i tipi contenuti così come
         le assegnazioni di reperti ai tipi del catalogo vengono rimossi.
@@ -1696,7 +1696,7 @@
       </trans-unit>
       <trans-unit id="resources.deleteModel.warning.ownedType" datatype="html">
         <source> Bitte beachten Sie, dass beim Löschen von Typen sämtliche Untertypen sowie Zuordnungen von Funden zu Typen und Untertypen entfernt werden. </source>
-        <target state="translated">
+        <target state="final">
         Si prega di notare
         che la cancellazione di tipi comporta la rimozione di tutti i sottotipi
         e delle assegnazioni di reperti a tipi e sottotipi.
@@ -1708,7 +1708,7 @@
       </trans-unit>
       <trans-unit id="resources.deleteModal.confirmDeleteInfo.single" datatype="html">
         <source> Bitte geben Sie den Bezeichner der Ressource ein, um den Löschvorgang zu bestätigen. </source>
-        <target state="translated">
+        <target state="final">
              Inserire l'identificatore della risorsa per confermare la cancellazione.
         </target>
         <context-group purpose="location">
@@ -1718,7 +1718,7 @@
       </trans-unit>
       <trans-unit id="resources.deleteModal.confirmDeleteInfo.multiple" datatype="html">
         <source> Bitte geben Sie den Bezeichner einer der zu löschenden Ressourcen ein, um den Löschvorgang zu bestätigen. </source>
-        <target state="translated">
+        <target state="final">
             Inserire l'identificatore di una delle risorse da cancellare 
             per confermare la cancellazione.
          </target>
@@ -1729,7 +1729,7 @@
       </trans-unit>
       <trans-unit id="resources.deleteModal.deleteImages.info" datatype="html">
         <source> Verknüpfte Bilder löschen, bei denen keine Verknüpfungen zu anderen Ressourcen bestehen </source>
-        <target state="translated">
+        <target state="final">
                     Eliminare le immagini collegate che non hanno collegamenti ad altre risorse
                 </target>
         <context-group purpose="location">
@@ -1739,7 +1739,7 @@
       </trans-unit>
       <trans-unit id="resources.deleteModal.deleteImages.single" datatype="html">
         <source> (Ein Bild) </source>
-        <target state="translated">
+        <target state="final">
                     (Una immagine)
                 </target>
         <context-group purpose="location">
@@ -1749,7 +1749,7 @@
       </trans-unit>
       <trans-unit id="resources.deleteModal.deleteImages.multiple" datatype="html">
         <source> (<x id="INTERPOLATION" equiv-text="{{relatedImagesCount}}"/> Bilder) </source>
-        <target state="translated">
+        <target state="final">
                     (<x id="INTERPOLATION" equiv-text="{{relatedImagesCount}}"/> Immagini)
                 </target>
         <context-group purpose="location">
@@ -1783,7 +1783,7 @@
       </trans-unit>
       <trans-unit id="imageView.georeferenceView.deleteModal.question" datatype="html">
         <source> Möchten Sie die Georeferenzdaten, die für dieses Bild hinterlegt wurden, wirklich löschen? </source>
-        <target state="translated">
+        <target state="final">
         Sei sicuro di voler eliminare i dati di georiferimento memorizzati per questa immagine?
     </target>
         <context-group purpose="location">
@@ -1849,7 +1849,7 @@
       </trans-unit>
       <trans-unit id="resources.searchResultsInfo.resourcesFound.single" datatype="html">
         <source> Eine Ressource gefunden </source>
-        <target state="translated">
+        <target state="final">
                 Trovata una risorsa
             </target>
         <context-group purpose="location">
@@ -1859,7 +1859,7 @@
       </trans-unit>
       <trans-unit id="resources.searchResultsInfo.resourcesFound.multiple" datatype="html">
         <source> <x id="INTERPOLATION" equiv-text="{{viewFacade.getTotalDocumentCount()}}"/> Ressourcen gefunden </source>
-        <target state="translated"><x id="INTERPOLATION" equiv-text="{{viewFacade.getTotalDocumentCount()}}"/> Risorse trovate
+        <target state="final"><x id="INTERPOLATION" equiv-text="{{viewFacade.getTotalDocumentCount()}}"/> Risorse trovate
             </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/resources.component.ts</context>
@@ -1868,7 +1868,7 @@
       </trans-unit>
       <trans-unit id="resources.searchResultsInfo.documentLimitExceeded" datatype="html">
         <source> Limitiert auf <x id="INTERPOLATION" equiv-text="{{viewFacade.getDocuments().length}}"/> Ressourcen </source>
-        <target state="translated"><x id="INTERPOLATION" equiv-text="{{viewFacade.getDocuments().length}}"/> visualizzato
+        <target state="final"><x id="INTERPOLATION" equiv-text="{{viewFacade.getDocuments().length}}"/> visualizzato
                 </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/resources.html</context>
@@ -2113,7 +2113,7 @@
       </trans-unit>
       <trans-unit id="resources.typeGrid.linkedFinds" datatype="html">
         <source><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span [ngClass]=&quot;isSectionVisible('finds') ? 'mdi mdi-chevron-down' : 'mdi mdi-chevron-right'&quot;>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/> Zugeordnete Funde </source>
-        <target state="translated">
+        <target state="final">
             <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span>"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/>
             Reperti associati
         </target>
@@ -2280,7 +2280,7 @@
       </trans-unit>
       <trans-unit id="resources.childrenView.resources" datatype="html">
         <source> <x id="INTERPOLATION" equiv-text="{{childrenCount}}"/> Ressourcen </source>
-        <target state="translated"><x id="INTERPOLATION" equiv-text="{{childrenCount}}"/> Risorse
+        <target state="final"><x id="INTERPOLATION" equiv-text="{{childrenCount}}"/> Risorse
     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/resources/widgets/popovermenu/children-view.component.ts</context>
@@ -2329,7 +2329,7 @@
       </trans-unit>
       <trans-unit id="resources.map.layerMenu.noLayersInfo" datatype="html">
         <source> Benutzen Sie den Bearbeiten-Button, um georeferenzierte Bilder als Kartenhintergründe hinzuzufügen. </source>
-        <target state="translated">
+        <target state="final">
                                 Usare il pulsante Modifica per aggiungere immagini georeferenziate 
                                 come sfondi della mappa.
                           </target>
@@ -2396,7 +2396,7 @@
       </trans-unit>
       <trans-unit id="docedit.tabs.conflicts.header.allResolved" datatype="html">
         <source> Alle Konflikte wurden gelöst. </source>
-        <target state="translated">
+        <target state="final">
                 Tutti i conflitti sono stati risolti.
             </target>
         <context-group purpose="location">
@@ -2406,7 +2406,7 @@
       </trans-unit>
       <trans-unit id="docedit.tabs.conflicts.header.oneConflict" datatype="html">
         <source> Es besteht <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>ein<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> Konflikt. </source>
-        <target state="translated">
+        <target state="final">
                 C'è <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>un<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> conflitto.
             </target>
         <context-group purpose="location">
@@ -2416,7 +2416,7 @@
       </trans-unit>
       <trans-unit id="docedit.tabs.conflicts.header.multipleConflicts" datatype="html">
         <source> Es bestehen <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{conflictedRevisions.length}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> Konflikte. </source>
-        <target state="translated">
+        <target state="final">
                 Ci sono <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{conflictedRevisions.length}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> conflitti.
             </target>
         <context-group purpose="location">
@@ -2478,7 +2478,7 @@
       </trans-unit>
       <trans-unit id="docedit.tabs.conflicts.geometryOfType" datatype="html">
         <source> Geometrie vom Typ <x id="INTERPOLATION" equiv-text="{{document.resource.geometry.type}}"/> </source>
-        <target state="translated">
+        <target state="final">
                         Geometria del tipo <x id="INTERPOLATION" equiv-text="{{document.resource.geometry.type}}"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/tabs/docedit-conflicts-tab.html</context>
@@ -2491,7 +2491,7 @@
       </trans-unit>
       <trans-unit id="docedit.tabs.conflicts.georeferenceData" datatype="html">
         <source> Georeferenzdaten </source>
-        <target state="translated">
+        <target state="final">
                         Dati di georeferenziazione
                     </target>
         <context-group purpose="location">
@@ -2529,7 +2529,7 @@
       </trans-unit>
       <trans-unit id="docedit.forms.outliersInfo" datatype="html">
         <source> Das Feld beinhaltet nicht in der Werteliste enthaltene Einträge: </source>
-        <target state="translated">
+        <target state="final">
         Il campo contiene voci non incluse nella lista valori:
     </target>
         <context-group purpose="location">
@@ -2540,7 +2540,7 @@
       <trans-unit id="deb511940e193e9e5b019171fa6f20ffda230f91" datatype="html">
         <source> Die in der Projektkonfiguration für das Feld angegebene Werteliste ist leer.
 </source>
-        <target state="translated">
+        <target state="final">
     La lista dei valori specificata per il campo nella configurazione del progetto è vuota.
 </target>
         <note priority="1" from="description">docedit.forms.missingValuelistInfo.configuration</note>
@@ -2552,7 +2552,7 @@
       <trans-unit id="5a6d4a32a0f157311ec23f017c2d57fdc9e8be2c" datatype="html">
         <source> Bitte tragen Sie die erlaubten Werte für dieses Feld in den Projektdaten (Feld <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/><x id="INTERPOLATION" equiv-text="{{getProjectDocumentFieldLabel()}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/>) ein.
 </source>
-        <target state="translated">
+        <target state="final">
     Inserire i valori consentiti per questo campo nei dati del progetto
     (campo <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/><x id="INTERPOLATION" equiv-text="{{getProjectDocumentFieldLabel()}}"/><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/>).
 </target>
@@ -2565,7 +2565,7 @@
       <trans-unit id="175491c173cba82a8e28fc5aa08c7fcef82b7df7" datatype="html">
         <source> Für dieses Feld stehen keine Werte zur Auswahl, da das entsprechende Feld der übergeordneten Ressource nicht ausgefüllt ist.
 </source>
-        <target state="translated">
+        <target state="final">
     Non sono disponibili valori per questo campo perché il campo corrispondente della risorsa principale
     non è compilato.
 </target>
@@ -2722,7 +2722,7 @@
       <trans-unit id="docedit.date.notParsedInfo" datatype="html">
         <source><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>Achtung.<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> Das Datum liegt in einem veralteten Format vor und konnte nicht eingelesen werden. <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br>"/><x id="START_PARAGRAPH" ctype="x-p" equiv-text="&lt;p>"/> Gespeicherter Wert: <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>"<x id="INTERPOLATION" equiv-text="{{resource[_field.name]}}"/>"<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/><x id="CLOSE_PARAGRAPH" ctype="x-p" equiv-text="&lt;/p>"/> Bitte tragen Sie das Datum erneut ein und es wird beim nächsten Speichern ersetzt.
 </source>
-        <target state="translated"><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>Attenzione.<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> La data è in un formato obsoleto e non può essere letta.
+        <target state="final"><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>Attenzione.<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> La data è in un formato obsoleto e non può essere letta.
     <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/>"/><x id="START_PARAGRAPH" ctype="x-p" equiv-text="&lt;p>"/>
     Valore salvato: <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>"<x id="INTERPOLATION" equiv-text="{{resource[_field.name]}}"/>"<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/><x id="CLOSE_PARAGRAPH" ctype="x-p" equiv-text="&lt;/p>"/>
     Si prega di reinserire la data e verrà sostituita al prossimo salvataggio.
@@ -2894,7 +2894,7 @@
       </trans-unit>
       <trans-unit id="settings.languages" datatype="html">
         <source> Sprachen </source>
-        <target state="translated">
+        <target state="final">
                             Lingue
                         </target>
         <context-group purpose="location">
@@ -2904,7 +2904,7 @@
       </trans-unit>
       <trans-unit id="settings.languages.info" datatype="html">
         <source> Sprachen können nach Priorität sortiert werden. Für fett gedruckte Sprachen ist eine übersetzte Benutzeroberfläche verfügbar. Darüber hinaus können für weitere Sprachen Übersetzungen von Kategorie- und Feldbezeichnungen sowie Wertelisten in der Projektkonfiguration hinterlegt sein. </source>
-        <target state="translated">
+        <target state="final">
                              Le lingue possono essere ordinate per priorità. Per le lingue evidenziate in grassetto
                              è disponibile un'interfaccia tradotta. Per le altre lingue, traduzioni di singole categorie
                              e campi, oppure di liste possono essere presenti nella configurazione del progetto.
@@ -2916,7 +2916,7 @@
       </trans-unit>
       <trans-unit id="settings.userName" datatype="html">
         <source> Name des Bearbeiters/der Bearbeiterin </source>
-        <target state="translated">
+        <target state="final">
                             Nome del revisore
                         </target>
         <context-group purpose="location">
@@ -2926,7 +2926,7 @@
       </trans-unit>
       <trans-unit id="settings.userName.info" datatype="html">
         <source> Dieser Name wird in der Bearbeitungshistorie gespeichert, damit Änderungen an Datensätzen einer Person zugeordnet werden können. Diese Einstellung ist sehr <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>wichtig<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> bei der Datenbanksynchronisation, sowohl zwischen Nutzern bzw. Nutzerinnen als auch zum iDAI.field-Server, da das System so eventuelle Konflikte besser zuordnen und lösen kann. Sie sollte also in jedem Fall vor Inbetriebnahme gesetzt werden. Empfohlen wird, den vollen Namen des aktuellen Datenbanknutzers bzw. der Datenbanknutzerin einzutragen. </source>
-        <target state="translated">
+        <target state="final">
                         Questo nome viene salvato nella cronologia di modifica,
                         in modo che le modifiche ai record di dati possano essere assegnate a una persona.
                         Questa impostazione è molto <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>importante<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> per la sincronizzazione del database,
@@ -2990,7 +2990,7 @@
       </trans-unit>
       <trans-unit id="settings.synchronization.info" datatype="html">
         <source> Diese Adresse und dieses Passwort müssen in anderen iDAI.field-Clients eingetragen werden, damit dieser Computer als Synchronisationsziel eingerichtet werden kann. </source>
-        <target state="translated">
+        <target state="final">
                             Questo indirizzo e questa password devono essere inseriti in altri client iDAI.field
                             per poter sincronizzare i dati
                             su questo computer.
@@ -3010,7 +3010,7 @@
       </trans-unit>
       <trans-unit id="settings.images.path" datatype="html">
         <source> Pfad </source>
-        <target state="translated">
+        <target state="final">
                             Path
                         </target>
         <context-group purpose="location">
@@ -3020,7 +3020,7 @@
       </trans-unit>
       <trans-unit id="settings.images.path.info" datatype="html">
         <source> Dieser Pfad kann normalerweise auf seiner Grundeinstellung belassen werden. Es kann nötig sein, ihn zu verändern, wenn das von iDAI.field genutzte Bilderverzeichnis auf einem Netzwerk-Gerät (NAS) liegt, das von verschiedenen Nutzern bzw. Nutzerinnen geteilt wird. Die Anwendung legt unterhalb dieses Pfades für jedes Projekt ein Unterverzeichnis an. Die in diesen Verzeichnissen abgelegten Bilddateien werden vollständig durch iDAI.field verwaltet. Bilddateien sollten nicht per Hand dort abgelegt werden, sondern in der Bilderübersicht oder dem Bilder-Tab der Ressourcenansicht importiert werden. </source>
-        <target state="translated">
+        <target state="final">
                             Questo path può normalmente essere lasciato all'impostazione di default.
                             Potrebbe essere necessario modificarlo se la directory delle immagini utilizzata da iDAI.field
                             si trova su un dispositivo di rete (NAS) condiviso da diversi utenti.
@@ -3072,7 +3072,7 @@
       </trans-unit>
       <trans-unit id="matrix.view.noTrenchesWarning" datatype="html">
         <source> Legen Sie eine Ressource der Kategorie 'Schnitt' in der <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;#&quot; routerLink=&quot;/resources/project&quot;>"/>Übersicht<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> an, um hier mit ihr arbeiten zu können. </source>
-        <target state="translated">
+        <target state="final">
             Crea una risorsa della categoria 'Saggio' nella
             <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>panoramica<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> per poter lavorare con essa qui.
         </target>
@@ -3131,7 +3131,7 @@
       </trans-unit>
       <trans-unit id="matrix.view.noResourcesWarning" datatype="html">
         <source> Legen Sie für den ausgewählten Schnitt Ressourcen der Kategorie 'Stratigraphische Einheit' in der Ausgrabungsansicht an und verknüpfen Sie sie mit zeitlichen oder räumlichen Relationen. </source>
-        <target state="translated">
+        <target state="final">
             Per il Saggio selezionato crea risorse della categoria 'Unità stratigrafica' nella
             vista di scavo e collegale alle relazioni temporali o spaziali.
         </target>
@@ -3150,7 +3150,7 @@
       </trans-unit>
       <trans-unit id="matrix.optionsMenu.relations.temporal" datatype="html">
         <source> Zeitlich </source>
-        <target state="translated">
+        <target state="final">
                         Temporale
                     </target>
         <context-group purpose="location">
@@ -3160,7 +3160,7 @@
       </trans-unit>
       <trans-unit id="matrix.optionsMenu.relations.spatial" datatype="html">
         <source> Räumlich </source>
-        <target state="translated">
+        <target state="final">
                         Spaziale
                     </target>
         <context-group purpose="location">
@@ -3178,7 +3178,7 @@
       </trans-unit>
       <trans-unit id="matrix.optionsMenu.edges.straight" datatype="html">
         <source> Gerade </source>
-        <target state="translated">
+        <target state="final">
                         Dritto
                     </target>
         <context-group purpose="location">
@@ -3188,7 +3188,7 @@
       </trans-unit>
       <trans-unit id="matrix.optionsMenu.edges.curved" datatype="html">
         <source> Gebogen </source>
-        <target state="translated">
+        <target state="final">
                         Curvo
                     </target>
         <context-group purpose="location">
@@ -3198,7 +3198,7 @@
       </trans-unit>
       <trans-unit id="matrix.optionsMenu.clusterOption" datatype="html">
         <source> Gruppierung nach Grobdatierung </source>
-        <target state="translated">
+        <target state="final">
                         Raggruppamento per datazione approssimativa
                     </target>
         <context-group purpose="location">
@@ -4832,7 +4832,7 @@
       </trans-unit>
       <trans-unit id="buttons.cancel" datatype="html">
         <source>Abbrechen</source>
-        <target state="translated">Annulla
+        <target state="final">Annulla
     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/core/forms/dating.component.ts</context>
@@ -4949,7 +4949,7 @@
       </trans-unit>
       <trans-unit id="docedit.duplicateModal.info.createMultipleTimes" datatype="html">
         <source> Wie viele Ressourcen möchten Sie anlegen? </source>
-        <target state="translated">
+        <target state="final">
               Quante risorse si desidera creare?
         </target>
         <context-group purpose="location">
@@ -4959,7 +4959,7 @@
       </trans-unit>
       <trans-unit id="docedit.duplicateModal.info.duplicate" datatype="html">
         <source> Wie viele Kopien der Ressource möchten Sie anlegen? </source>
-        <target state="translated">
+        <target state="final">
             Quante copie della risorsa si desidera creare?
         </target>
         <context-group purpose="location">
@@ -4993,7 +4993,7 @@
       </trans-unit>
       <trans-unit id="docedit.header.create" datatype="html">
         <source> <x id="INTERPOLATION" equiv-text="{{projectConfiguration.getLabelForCategory(this.documentHolder.clonedDocument.resource.category)}}"/> in <x id="INTERPOLATION_1" equiv-text="{{parentLabel}}"/> anlegen </source>
-        <target state="translated"><x id="INTERPOLATION" equiv-text="{{projectConfiguration.getLabelForCategory(this.documentHolder.clonedDocument.resource.category)}}"/>
+        <target state="final"><x id="INTERPOLATION" equiv-text="{{projectConfiguration.getLabelForCategory(this.documentHolder.clonedDocument.resource.category)}}"/>
                     crea in <x id="INTERPOLATION_1" equiv-text="{{parentLabel}}"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/docedit.component.ts</context>
@@ -5002,7 +5002,7 @@
       </trans-unit>
       <trans-unit id="docedit.header.edit" datatype="html">
         <source> <x id="INTERPOLATION" equiv-text="{{projectConfiguration.getLabelForCategory(this.documentHolder.clonedDocument.resource.category)}}"/> bearbeiten </source>
-        <target state="translated"><x id="INTERPOLATION" equiv-text="{{projectConfiguration.getLabelForCategory(this.documentHolder.clonedDocument.resource.category)}}"/> modifica
+        <target state="final"><x id="INTERPOLATION" equiv-text="{{projectConfiguration.getLabelForCategory(this.documentHolder.clonedDocument.resource.category)}}"/> modifica
                 </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/docedit/docedit.html</context>
@@ -5019,7 +5019,7 @@
       </trans-unit>
       <trans-unit id="docedit.loadingInfo.save" datatype="html">
         <source> Ressource wird gespeichert... </source>
-        <target state="translated">
+        <target state="final">
                         Salvataggio risorsa in corso...
                     </target>
         <context-group purpose="location">
@@ -5029,7 +5029,7 @@
       </trans-unit>
       <trans-unit id="docedit.loadingInfo.createMultipleInstances" datatype="html">
         <source> Ressourcen werden erstellt... </source>
-        <target state="translated">
+        <target state="final">
                         Creazione risorse in corso...
                     </target>
         <context-group purpose="location">
@@ -5039,7 +5039,7 @@
       </trans-unit>
       <trans-unit id="docedit.loadingInfo.duplicate" datatype="html">
         <source> Ressource wird vervielfältigt... </source>
-        <target state="translated">
+        <target state="final">
                         Duplicazione risorsa in corso...
                     </target>
         <context-group purpose="location">
@@ -5057,7 +5057,7 @@
       </trans-unit>
       <trans-unit id="navbar.projects.newProject.enterName" datatype="html">
         <source> Bitte geben Sie den Namen des neuen Projekts ein. </source>
-        <target state="translated">
+        <target state="final">
                 Inserisci il nome del nuovo progetto.
             </target>
         <context-group purpose="location">
@@ -5099,7 +5099,7 @@
       </trans-unit>
       <trans-unit id="navbar.projects.deleteProject.enterName" datatype="html">
         <source> Bitte bestätigen Sie den Namen des ausgewählten Projekts, um es zu löschen. </source>
-        <target state="translated">
+        <target state="final">
                 Conferma il nome del progetto selezionato per eliminarlo.
             </target>
         <context-group purpose="location">
@@ -5121,7 +5121,7 @@
       </trans-unit>
       <trans-unit id="imageUpload.uploadModal.info.single" datatype="html">
         <source> Bild wird eingelesen... </source>
-        <target state="translated">
+        <target state="final">
                 Trasferimento immagine in corso...
             </target>
         <context-group purpose="location">
@@ -5131,7 +5131,7 @@
       </trans-unit>
       <trans-unit id="imageUpload.uploadModal.info.multiple" datatype="html">
         <source> <x id="INTERPOLATION" equiv-text="{{uploadStatus.getHandledImages()}}"/> / <x id="INTERPOLATION_1" equiv-text="{{uploadStatus.getTotalImages()}}"/> Bilder eingelesen... </source>
-        <target state="translated"><x id="INTERPOLATION" equiv-text="{{uploadStatus.getHandledImages()}}"/> / <x id="INTERPOLATION_1" equiv-text="{{uploadStatus.getTotalImages()}}"/> Immagini trasferite...
+        <target state="final"><x id="INTERPOLATION" equiv-text="{{uploadStatus.getHandledImages()}}"/> / <x id="INTERPOLATION_1" equiv-text="{{uploadStatus.getTotalImages()}}"/> Immagini trasferite...
             </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/upload/upload-modal.component.ts</context>
@@ -5140,7 +5140,7 @@
       </trans-unit>
       <trans-unit id="image.originalNotFoundWarning" datatype="html">
         <source> Die Original-Version des Bilds befindet sich nicht im Bilderverzeichnis. </source>
-        <target state="translated">
+        <target state="final">
             La versione originale dell'immagine non si trova nella directory delle immagini.
         </target>
         <context-group purpose="location">
@@ -5158,7 +5158,7 @@
       </trans-unit>
       <trans-unit id="imageView.linkedImages" datatype="html">
         <source> Mit <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong>"/><x id="INTERPOLATION" equiv-text="{{linkedResourceIdentifier}}"/><x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong>"/> verknüpfte Bilder </source>
-        <target state="translated">
+        <target state="final">
         Immagini collegate a <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong>"/><x id="INTERPOLATION" equiv-text="{{linkedResourceIdentifier}}"/><x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong>"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/viewmodal/image/image-view-modal.component.ts</context>
@@ -5167,7 +5167,7 @@
       </trans-unit>
       <trans-unit id="resourceViewModal.noImages" datatype="html">
         <source> Mit dieser Ressource sind keine Bilder verknüpft. </source>
-        <target state="translated">
+        <target state="final">
                 Nessuna immagine è collegata a questa risorsa.
             </target>
         <context-group purpose="location">
@@ -5186,7 +5186,7 @@
       <trans-unit id="imageOverview.removeLinkModal.info" datatype="html">
         <source> Bei den ausgewählten Bildern werden sämtliche Verknüpfungen zu anderen Ressourcen entfernt.
 </source>
-        <target state="translated">
+        <target state="final">
     Tutti i collegamenti ad altre risorse saranno rimossi dalle immagini selezionate.
 </target>
         <context-group purpose="location">
@@ -5204,7 +5204,7 @@
       </trans-unit>
       <trans-unit id="imageOverview.taskbar.deleteModal.question.multiple" datatype="html">
         <source> Möchten Sie die <x id="INTERPOLATION" equiv-text="{{numberOfSelectedImages}}"/> markierten Bilder wirklich löschen? </source>
-        <target state="translated">
+        <target state="final">
         Sei sicuro di voler eliminare <x id="INTERPOLATION" equiv-text="{{numberOfSelectedImages}}"/> le immagini selezionate?
     </target>
         <context-group purpose="location">
@@ -5214,7 +5214,7 @@
       </trans-unit>
       <trans-unit id="imageOverview.taskbar.deleteModal.question.single" datatype="html">
         <source> Möchten Sie das markierte Bild wirklich löschen? </source>
-        <target state="translated">
+        <target state="final">
         Sei sicuro di voler eliminare l'immagine selezionata?
     </target>
         <context-group purpose="location">

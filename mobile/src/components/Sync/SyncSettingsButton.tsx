@@ -41,15 +41,15 @@ const getSyncStatusIcon = (syncStatus: SyncStatus) => {
     
     switch (syncStatus) {
         case SyncStatus.Offline:
-            return <Icon type="MaterialIcons" name="cloud-off" color="white" />;
+            return <Icon type="MaterialIcons" name="cloud-off" />;
         case SyncStatus.Pulling:
-            return <Icon type="MaterialIcons" name="cloud-download" color="white" />;
+            return <Icon type="MaterialIcons" name="cloud-download" />;
         case SyncStatus.Pushing:
-            return <Icon type="MaterialIcons" name="cloud-upload" color="white" />;
+            return <Icon type="MaterialIcons" name="cloud-upload" />;
         case SyncStatus.InSync:
-            return <Icon type="MaterialCommunityIcons" name="cloud-check" color="white" />;
+            return <Icon type="MaterialCommunityIcons" name="cloud-check" />;
         default:
-            return <Icon type="MaterialCommunityIcons" name="cloud-alert" color="white" />;
+            return <Icon type="MaterialCommunityIcons" name="cloud-alert" />;
     }
 };
 

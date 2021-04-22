@@ -1,7 +1,7 @@
 import { Button, Center, Input, Stack, Text, View } from 'native-base';
 import React, { useState } from 'react';
 import { Keyboard, StyleSheet } from 'react-native';
-import { SyncSettings } from '../model/sync-settings';
+import { SyncSettings } from '../../model/sync-settings';
 
 interface ConnectPouchFormProps {
     settings: SyncSettings,

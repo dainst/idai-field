@@ -4,7 +4,7 @@ import React, { ReactElement, useCallback, useEffect, useState } from 'react';
 import { StyleSheet } from 'react-native';
 import AppHeader from '../../components/AppHeader';
 import Map from '../../components/Map/Map';
-import SyncSettingsModal from '../../components/SyncSettingsModal';
+import SyncSettingsModal from '../../components/Sync/SyncSettingsModal';
 import { DocumentRepository } from '../../repositories/document-repository';
 import useSync from './use-sync';
 
@@ -39,7 +39,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ repository }): ReactElement => 
             <View style={ styles.container }>
                 <SyncSettingsModal
                     settings={ syncSettings }
-                    onSettingsSet={ (newSyncSettings) => {
+                    onSettingsSet={ newSyncSettings => {
                         setSyncSettings(newSyncSettings);
                         setShowSyncSettings(false);
                     } }

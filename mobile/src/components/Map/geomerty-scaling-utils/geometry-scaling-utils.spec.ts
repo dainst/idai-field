@@ -79,10 +79,10 @@ describe('geometry-utils functions', () => {
     });
 
 
-    it('defines the viewBox of a SVG', () => {
+    it('defines the boundings of a list of Documents', () => {
 
         // eslint-disable-next-line max-len
-        const expectedViewBox: GeometryBoundings = {
+        const expectedBoundings: GeometryBoundings = {
             minX: expectedXmin,
             minY: expectedYmin,
             maxX: expectedXmax,
@@ -91,7 +91,7 @@ describe('geometry-utils functions', () => {
         const calculatedViewBox = getGeometryBoundings(
             [bu1, pointBuilding, lineBuilding, multiPointSurvey, multiPolyTrench]);
         
-        expect(calculatedViewBox).toEqual(expectedViewBox);
+        expect(calculatedViewBox).toEqual(expectedBoundings);
     });
 
 

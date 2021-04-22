@@ -1,4 +1,4 @@
-import { GeometryBoundings } from '../geomerty-scaling-utils';
+import { GeometryBoundings } from '../cs-transform-utils';
 
 export interface GeoElementsCommonProps {
     geometryBoundings: GeometryBoundings

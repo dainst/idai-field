@@ -1,4 +1,4 @@
-import { GeometryBoundings } from '../geomerty-scaling-utils';
+import { GeometryBoundings } from '../cs-transform-utils';
 import { lineStringToPath, multiPolygonToPath, polygonToPath } from './geojson-svg-path';
 
 describe('GeoJSON to SVG path string', () => {

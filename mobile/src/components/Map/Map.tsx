@@ -3,8 +3,8 @@ import { Box, Text } from 'native-base';
 import React, { ReactElement } from 'react';
 import { StyleSheet } from 'react-native';
 import Svg, { Circle, G } from 'react-native-svg';
+import { GeometryBoundings, getGeometryBoundings } from './cs-transform-utils';
 import { GeoLineString, GeoMultiLineString, GeoMultiPoint, GeoMultiPolygon, GeoPoint, GeoPolygon } from './geo-svg';
-import { GeometryBoundings, getGeometryBoundings } from './geomerty-scaling-utils';
 
 interface MapProps {
     geoDocuments: Document[]

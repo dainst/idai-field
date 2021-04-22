@@ -97,3 +97,9 @@ export const extractCoordsPositions = (geometries: Position[]): [number[], numbe
  */
 export const mapValueToNewRange = (newMax: number, newMin: number, value: number, oldMax: number, oldMin: number): number =>
     (newMax - newMin) * (value - oldMin) / (oldMax - oldMin) + newMin;
+
+
+export const arrayDim = (a: any, dim:number = 0):number => {
+    if(Array.isArray(a)) return arrayDim(a[0], dim + 1);
+    else return dim;
+};

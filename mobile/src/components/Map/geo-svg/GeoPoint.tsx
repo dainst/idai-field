@@ -1,7 +1,7 @@
 import { Position } from 'geojson';
 import React from 'react';
 import { Circle, CircleProps } from 'react-native-svg';
-import { mapValueToNewRange } from '../geomerty-scaling-utils';
+import { mapValueToNewRange } from '../cs-transform-utils';
 import { GeoElementsCommonProps } from './common-props';
 import GeoTransform, { GeoTransformProps } from './GeoTransform';
 

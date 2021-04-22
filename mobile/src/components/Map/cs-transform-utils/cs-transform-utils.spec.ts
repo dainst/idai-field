@@ -5,6 +5,7 @@ import { multiPointSurvey } from '../../../../test_data/test_docs/multiPointSurv
 import { multiPolyTrench } from '../../../../test_data/test_docs/multiPolyTrench';
 import { pointBuilding } from '../../../../test_data/test_docs/pointBuilding';
 import {
+    arrayDim,
     extractCoordsPositions,
     extractCoordsPositions2d,
     extractCoordsPositions3d,
@@ -12,7 +13,7 @@ import {
     getGeometryBoundings,
     getMinMaxCoords,
     mapValueToNewRange
-} from './geometry-scaling-utils';
+} from './cs-transform-utils';
 
 const positionArray = [[1,4], [3,5], [6,9], [0,5.5]];
 const expectedArray = [
@@ -106,6 +107,13 @@ describe('geometry-utils functions', () => {
 
         expect(mapValueToNewRange(newMax, newMin, value, oldMax, oldMin)).toBe(expectedMappedValue);
 
+    });
+
+    it('returns correct number of array dimensions',() => {
+
+        expect(arrayDim(positionArray)).toBe(2);
+        expect(arrayDim(positionArray2d)).toBe(3);
+        expect(arrayDim(5)).toBe(0);
     });
     
 });

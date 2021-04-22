@@ -5,7 +5,7 @@
  * (Polygon, Multipolygon, Linestring, Multilinestring, Point, Multipoint)
  */
 import { Position } from 'geojson';
-import { GeometryBoundings, mapValueToNewRange } from '../geomerty-scaling-utils';
+import { GeometryBoundings, mapValueToNewRange } from '../cs-transform-utils';
 
 export const multiPolygonToPath = (
     multiPolygon: Position[][][],

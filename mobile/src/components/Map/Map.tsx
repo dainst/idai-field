@@ -1,9 +1,9 @@
 import { Position } from 'geojson';
 import { Document, FieldGeometry } from 'idai-field-core';
-import { Box, Circle, Text } from 'native-base';
+import { Box, Text } from 'native-base';
 import React, { ReactElement } from 'react';
 import { StyleSheet } from 'react-native';
-import Svg, { G } from 'react-native-svg';
+import Svg, { Circle, G } from 'react-native-svg';
 import { viewBox } from './constants';
 import { getGeometryBoundings } from './cs-transform-utils';
 import {

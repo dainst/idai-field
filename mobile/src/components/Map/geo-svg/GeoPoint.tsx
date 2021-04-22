@@ -3,13 +3,11 @@ import React from 'react';
 import { Circle, CircleProps } from 'react-native-svg';
 import { GeoElementsCommonProps } from './common-props';
 
-interface GeoPointProps extends CircleProps, GeoElementsCommonProps {
-    point: Position
-}
+interface GeoPointProps extends CircleProps, GeoElementsCommonProps {}
 
 export const GeoPoint: React.FC<GeoPointProps> = (props) => {
 
-    const [x, y] = props.csTransformFunction(props.point);
+    const [x, y] = props.csTransformFunction(props.coordinates as Position);
 
     return (
         <Circle

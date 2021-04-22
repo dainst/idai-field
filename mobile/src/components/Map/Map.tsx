@@ -72,12 +72,12 @@ const renderGeoSvgElement = (document: Document, csTransformFunc: (pos: Position
                 csTransformFunction={ csTransformFunc } />;
         case('Point'):
             return <GeoPoint
-                point={ geometry.coordinates }
+                coordinates={ geometry.coordinates }
                 fill="black"
                 csTransformFunction={ csTransformFunc } />;
         case('MultiPoint'):
             return <GeoMultiPoint
-                points={ geometry.coordinates }
+                coordinates={ geometry.coordinates }
                 fill="yellow"
                 csTransformFunction={ csTransformFunc } />;
         default:

@@ -4,18 +4,16 @@ import { CircleProps } from 'react-native-svg';
 import { GeoElementsCommonProps } from './common-props';
 import { GeoPoint } from './GeoPoint';
 
-interface GeoMultiPointProps extends CircleProps, GeoElementsCommonProps {
-    points: Position[]
-}
+interface GeoMultiPointProps extends CircleProps, GeoElementsCommonProps {}
 
 export const GeoMultiPoint: React.FC<GeoMultiPointProps> = (props) => {
     return (
         <>
-            {props.points.map(point => (
+            {(props.coordinates as Position[]).map((point: Position) => (
                 <GeoPoint
                     { ...props }
                     key={ point.toString() }
-                    point={ point }
+                    coordinates={ point }
                     csTransformFunction={ props.csTransformFunction }
                 />
             ))}

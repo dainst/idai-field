@@ -4,9 +4,7 @@ import { CommonPathProps, Path } from 'react-native-svg';
 import { lineStringToPath } from '../geojson-path/geojson-svg-path';
 import { GeoElementsCommonProps } from './common-props';
 
-interface GeoLineStringProps extends CommonPathProps, GeoElementsCommonProps {
-    coordinates: Position[]
-}
+interface GeoLineStringProps extends CommonPathProps, GeoElementsCommonProps {}
 
 export const GeoLineString: React.FC<GeoLineStringProps> = (props) => {
 
@@ -15,6 +13,6 @@ export const GeoLineString: React.FC<GeoLineStringProps> = (props) => {
             { ...props }
             fill="none"
             strokeWidth={ 0.3 }
-            d={ lineStringToPath(props.coordinates, props.csTransformFunction) } />
+            d={ lineStringToPath(props.coordinates as Position[], props.csTransformFunction) } />
     );
 };

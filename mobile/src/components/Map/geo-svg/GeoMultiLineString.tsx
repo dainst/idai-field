@@ -3,11 +3,8 @@ import React from 'react';
 import { CommonPathProps, Path } from 'react-native-svg';
 import { multiLineStringToPath } from '../geojson-path/geojson-svg-path';
 import { GeoElementsCommonProps } from './common-props';
-import { GeoTransformProps } from './GeoTransform';
 
-interface GeoMultiLineStringProps extends CommonPathProps, GeoTransformProps, GeoElementsCommonProps {
-    coordinates: Position[][];
-}
+interface GeoMultiLineStringProps extends CommonPathProps, GeoElementsCommonProps {}
 
 export const GeoMultiLineString: React.FC<GeoMultiLineStringProps> = (props) => {
     return (
@@ -15,6 +12,6 @@ export const GeoMultiLineString: React.FC<GeoMultiLineStringProps> = (props) => 
             { ...props }
             fill="none"
             strokeWidth={ 0.3 }
-            d={ multiLineStringToPath(props.coordinates, props.csTransformFunction) } />
+            d={ multiLineStringToPath(props.coordinates as Position[][], props.csTransformFunction) } />
     );
 };

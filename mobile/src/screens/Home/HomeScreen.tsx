@@ -4,7 +4,8 @@ import React, { ReactElement, useCallback, useEffect, useState } from 'react';
 import { StyleSheet } from 'react-native';
 import AppHeader from '../../components/AppHeader';
 import Map from '../../components/Map/Map';
-import SyncSettingsModal from '../../components/Sync/SyncSettingsModal';
+import SyncSettingsButton from '../../components/Sync/SyncSettingsButton';
+import { SyncSettings } from '../../model/sync-settings';
 import { DocumentRepository } from '../../repositories/document-repository';
 import useSync from './use-sync';
 
@@ -16,7 +17,6 @@ interface HomeScreenProps {
 
 const HomeScreen: React.FC<HomeScreenProps> = ({ repository }): ReactElement => {
     
-    const [showSyncSettings, setShowSyncSettings] = useState<boolean>(false);
     const [documents, setDocuments] = useState<Document[]>([]);
     const [syncSettings, setSyncSettings, syncStatus] = useSync(repository);
 
@@ -31,21 +31,8 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ repository }): ReactElement => 
         <View flex={ 1 } safeArea>
             <AppHeader
                 title={ syncSettings.project ? syncSettings.project : 'iDAI.field mobile' }
-                right={ renderSyncSettingsButtons(
-                    syncStatus,
-                    setShowSyncSettings,
-                    () => issueSearch()
-                ) } />
+                right={ renderHeaderButtons(() => issueSearch(), syncSettings, setSyncSettings, syncStatus) } />
             <View style={ styles.container }>
-                <SyncSettingsModal
-                    settings={ syncSettings }
-                    onSettingsSet={ newSyncSettings => {
-                        setSyncSettings(newSyncSettings);
-                        setShowSyncSettings(false);
-                    } }
-                    isOpen={ showSyncSettings }
-                    onClose={ () => setShowSyncSettings(false) }
-                />
                 <Map geoDocuments={ documents.filter(doc => doc && doc.resource.geometry ? true : false) } />
             </View>
         </View>
@@ -53,41 +40,25 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ repository }): ReactElement => 
 };
 
 
-const renderSyncSettingsButtons = (
-    syncStatus: SyncStatus,
-    setShowSettings: React.Dispatch<React.SetStateAction<boolean>>,
-    issueSearch: () => void
-) => (
-
-    <HStack>
-        <IconButton
-            onPress={ issueSearch }
-            isDisabled={ syncStatus === SyncStatus.Offline ? false : true }
-            icon={ <Icon type="Ionicons" name="refresh" color="white" /> }
-        />
-        <IconButton
-            variant="ghost"
-            icon={ getSyncStatusIcon(syncStatus) }
-            onPress={ () => setShowSettings(true) } />
-    </HStack>
-);
-
-
-const getSyncStatusIcon = (syncStatus: SyncStatus) => {
+const renderHeaderButtons = (
+    issueSearch: () => void,
+    syncSettings: SyncSettings,
+    setSyncSettings: (settings: SyncSettings) => void,
+    syncStatus: SyncStatus
+) =>
     
-    switch (syncStatus) {
-        case SyncStatus.Offline:
-            return <Icon type="MaterialIcons" name="cloud-off" color="white" />;
-        case SyncStatus.Pulling:
-            return <Icon type="MaterialIcons" name="cloud-download" color="white" />;
-        case SyncStatus.Pushing:
-            return <Icon type="MaterialIcons" name="cloud-upload" color="white" />;
-        case SyncStatus.InSync:
-            return <Icon type="MaterialCommunityIcons" name="cloud-check" color="white" />;
-        default:
-            return <Icon type="MaterialCommunityIcons" name="cloud-alert" color="white" />;
-    }
-};
+<HStack>
+    <IconButton
+        onPress={ issueSearch }
+        isDisabled={ syncStatus === SyncStatus.Offline ? true : false }
+        icon={ <Icon type="Ionicons" name="refresh" color="white" /> }
+    />
+    <SyncSettingsButton
+        settings={ syncSettings }
+        setSyncSettings={ setSyncSettings }
+        status={ syncStatus }
+    />
+</HStack>;
 
 
 const styles = StyleSheet.create({

@@ -14,7 +14,6 @@ const useSync = (repository: DocumentRepository):
 
     return [settings, setSettings, status];
 };
-export default useSync;
 
 
 const getDefaultSettings = () => ({
@@ -39,3 +38,6 @@ const setupSync = async (
         repository.stopSync();
     }
 };
+
+
+export default useSync;

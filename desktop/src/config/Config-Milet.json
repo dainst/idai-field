@@ -1,6 +1,6 @@
 {
   "Project:default": {
-    "hidden": [],
+    "hidden": ["diary"],
     "fields": {},
     "valuelists": {
       "coordinateReferenceSystem": "coordinate-reference-system-milet"
@@ -11,7 +11,7 @@
     "fields": {}
   },
   "Operation:default": {
-    "hidden": ["diary"],
+    "hidden": [],
     "fields": {
       "AreaShorthand": {
         "inputType": "radio"
@@ -30,6 +30,7 @@
   },
   "SurveyUnit:default": {
     "hidden": [],
+    "commons": ["processor", "date"],
     "fields": {}
   },
   "Area:default": {
@@ -48,9 +49,9 @@
     "color": "#121009",
     "commons": [
       "period",
+      "dating",
       "beginningDate",
       "endDate",
-      "diary",
       "processor",
       "campaign",
       "dimensionLength",
@@ -69,7 +70,7 @@
       "localization": {
         "inputType": "radio"
       },
-      "localization-description": {
+      "localizationDescription": {
         "inputType": "text"
       },
       "measuringPointID": {
@@ -81,7 +82,7 @@
       "DrawingNr": {
         "inputType": "text"
       },
-      "notes": {
+      "otherNotes": {
         "inputType": "text"
       },
       "contextFindProcessing": {
@@ -90,7 +91,8 @@
     },
     "valuelists": {
       "localization": "localization-milet",
-      "contextFindProcessing": "contextFindProcessing-milet"
+      "contextFindProcessing": "findProcessingWorkflow-milet",
+      "period": "periods-default-1"
     }
   },
   "Layer:default": {
@@ -181,55 +183,287 @@
     "color": "#d52228",
     "hidden": [],
     "fields": {
-      "unitNotes": {
+      "otherNotesS": {
         "inputType": "text"
       }
     }
   },
-  "Building:default": {
-    "hidden": [],
-    "fields": {}
+  "Building": {
+    "hidden": ["buildingCategorySpecific"],
+    "commons": [
+      "period",
+      "dating",
+      "literature",
+      "dimensionLength",
+      "dimensionWidth",
+      "dimensionOther"
+    ],
+    "fields": {
+      "buildingType": {
+        "inputType": "radio"
+      },
+      "buildingCategory": {
+        "inputType": "dropdown"
+      },
+      "context": {
+        "inputType": "dropdown"
+      },
+      "buildingContractor": {
+        "inputType": "multiInput"
+      },
+      "associatedDeity": {
+        "inputType": "multiInput"
+      },
+      "architecturalOrder": {
+        "inputType": "dropdown"
+      },
+      "buildingTechnique": {
+        "inputType": "checkboxes"
+      },
+      "material": {
+        "inputType": "checkboxes"
+      },
+      "condition": {
+        "inputType": "dropdown"
+      },
+      "conditionAmount": {
+        "inputType": "dropdown"
+      },
+      "hasRestoration": {
+        "inputType": "boolean"
+      },
+      "conditionComment": {
+        "inputType": "input"
+      },
+      "excavatedIn": {
+        "inputType": "multiInput"
+      },
+      "excavatedBy": {
+        "inputType": "multiInput"
+      },
+      "buildingResearchHistory": {
+        "inputType": "text"
+      }
+    }, 
+    "valuelists": {
+      "buildingType": "Building-buildingType-milet",
+      "buildingCategory": "Building-buildingCategory-milet",
+      "architecturalOrder": "architecturalOrder-milet",
+      "conditionAmount": "Building-conditionAmount-default",
+      "condition": "Building-condition-default",
+      "material": "Building-material-default",
+      "context": "Building-context-milet",
+      "buildingTechnique": "Building-buildingTechnique-default",
+      "period": "periods-default-1"
+    }
   },
-  "Find:default": {
+  "Find": {
+    "color": "#CF3737",
     "hidden": [
       "catalogueNumber",
       "weight",
       "bibliography",
       "storageInventoryNumber",
       "hasRestoration",
+      "description",
       "conditionPercent"
     ],
+    "commons": [
+      "spatialLocation",
+      "processor",
+      "campaign",
+      "period",
+      "dating",
+      "dimensionHeight",
+      "dimensionHeight",
+      "dimensionLength",
+      "dimensionWidth",
+      "dimensionPerimeter",
+      "dimensionDiameter",
+      "dimensionThickness",
+      "dimensionVerticalExtent",
+      "dimensionOther",
+      "date"
+    ],
     "fields": {
+      "workflow": {
+        "inputType": "checkboxes"
+      },
       "storagePlace": {
         "inputType": "radio"
       },
       "storagePlaceOther": {
         "inputType": "input"
       },
-      "measuringPointID": {
-        "inputType": "input"
-      },
       "localization": {
         "inputType": "radio"
       },
-      "workflow": {
-        "inputType": "checkboxes"
-      },
-      "OldInventoryNr": {
+      "measuringPointID": {
         "inputType": "input"
+      },
+      "localizationDescription": {
+        "inputType": "text"
+      },
+      "amount": {
+        "inputType": "unsignedFloat"
+      },
+      "condition": {
+        "inputType": "dropdown"
+      },
+      "conditionAmount": {
+        "inputType": "dropdown"
+      },
+      "conditionComment": {
+        "inputType": "input"
+      },
+      "comparison": {
+        "inputType": "text"
       },
       "MuseumInventoryNr": {
         "inputType": "input"
       },
+      "OldInventoryNr": {
+        "inputType": "input"
+      },
       "YearOfFind": {
         "inputType": "input"
+      },
+      "FotoNr": {
+        "inputType": "text"
+      },
+      "DrawingNr": {
+        "inputType": "text"
       }
     },
     "valuelists": {
       "storagePlace": "Find-storagePlace-milet",
       "localization": "localization-milet",
       "workflow": "Find-workflow-milet",
-      "conditionAmount": "Find-conditionAmount-milet"
+      "condition": "Building-condition-default",
+      "conditionAmount": "Find-conditionAmount-milet",
+      "period": "periods-default-1"
+    }
+  },
+  "Pottery": {
+    "parent": "Find",
+    "hidden": ["condition", "conditionAmount", "conditionComment", "dimensionHeight"],
+    "commons": ["provenance"],
+    "fields": {
+      "potteryGroup": {
+        "inputType": "dropdown"
+      },
+      "functionalCategory": {
+        "inputType": "dropdown"
+      },
+      "vesselForm": {
+        "inputType": "dropdown"
+      },
+      "vesselFormDescription": {
+        "inputType": "text"
+      },
+      "vesselType": {
+        "inputType": "input"
+      },
+      "provenanceInput": {
+        "inputType": "input"
+      },
+      "amountSherdsTotal": {
+        "inputType": "unsignedInt"
+      },
+      "amountSherdsRim": {
+        "inputType": "unsignedInt"
+      },
+      "amountSherdsWall": {
+        "inputType": "unsignedInt"
+      },
+      "amountSherdsBase": {
+        "inputType": "unsignedInt"
+      },
+      "amountSherdsHandles": {
+        "inputType": "unsignedInt"
+      },
+      "amountSherdsLid": {
+        "inputType": "unsignedInt"
+      },
+      "amountSherdsOther": {
+        "inputType": "unsignedInt"
+      },
+      "amountSherdsWholeProfile": {
+        "inputType": "unsignedInt"
+      },
+      "weightTotal": {
+        "inputType": "unsignedFloat"
+      },
+      "potteryCondition": {
+        "inputType": "dropdown"
+      },
+      "fabricGroup": {
+        "inputType": "input"
+      },
+      "fabricColorInsideMunsell": {
+        "inputType": "input"
+      },
+      "fabricColorOutsideMunsell": {
+        "inputType": "input"
+      },
+      "fabricColorBreakMunsell": {
+        "inputType": "input"
+      },
+      "fabricHardness": {
+        "inputType": "dropdown"
+      },
+      "fabricStructure": {
+        "inputType": "text"
+      }, 
+      "temperType": {
+        "inputType": "checkboxes"
+      },
+      "temperTypeOther": {
+        "inputType": "input"
+      }, 
+      "temperAmount": {
+        "inputType": "checkboxes"
+      }, 
+      "temperGrain": {
+        "inputType": "checkboxes"
+      }, 
+      "surfaceTreatment": {
+        "inputType": "checkboxes"
+      }, 
+      "surfaceTreatmentDescription": {
+        "inputType": "text"
+      }, 
+      "analysisMethod": {
+        "inputType": "checkboxes"
+      }, 
+      "analysisMethodOther": {
+        "inputType": "multiInput"
+      }, 
+      "analysisAim": {
+        "inputType": "text"
+      }, 
+      "analysisActor": {
+        "inputType": "multiInput"
+      }, 
+      "analysisResult": {
+        "inputType": "text"
+      }, 
+      "otherNotes": {
+        "inputType": "text"
+      }
+    },
+    "valuelists": {
+      "potteryGroup": "Pottery-potteryGroup-milet",
+      "functionalCategory": "Pottery-functionalCategory-milet",
+      "vesselForm": "Pottery-vesselForm-milet",
+      "provenance": "provenance-default-1",
+      "potteryCondition": "Pottery-potteryCondition-milet",
+      "fabricHardness": "Pottery-fabricHardness-milet",
+      "temperType": "Pottery-temperType-milet",
+      "temperAmount": "Pottery-temperAmount-milet",
+      "temperGrain": "Pottery-temperGrain-milet",
+      "surfaceTreatment": "Pottery-surfaceTreatment-milet",
+      "analysisMethod": "Pottery-analysisMethod-milet"
     }
   },
   "Inscription:default": {
@@ -264,10 +498,6 @@
     "hidden": [],
     "fields": {}
   },
-  "Pottery:default": {
-    "hidden": [],
-    "fields": {}
-  },
   "Metal:default": {
     "hidden": [],
     "fields": {}
@@ -291,76 +521,85 @@
   "Sculpture": {
     "color": "#eb0ee7",
     "parent": "Find",
+    "commons": [],
     "fields": {
-      "material": {
+      "reused": {
+        "inputType": "boolean"
+      },
+      "sculptureMaterial": {
         "inputType": "dropdown"
       },
-      "materialattr": {
+      "sculptureMaterialAttr": {
         "inputType": "checkboxes"
       },
       "colour": {
         "inputType": "checkboxes"
       },
-      "materialdescr": {
-        "inputType": "text"
-      },
-      "bodypart": {
+      "sculptureMarbleType": {
         "inputType": "checkboxes"
       },
-      "name": {
+      "materialDescription": {
+        "inputType": "text"
+      },
+      "sculptureBodypart": {
+        "inputType": "checkboxes"
+      },
+      "sculptureBodypartOther": {
         "inputType": "input"
       },
-      "gender": {
+      "sculptureName": {
+        "inputType": "input"
+      },
+      "sculptureGender": {
         "inputType": "radio"
       },
-      "sctype": {
+      "sculptureType": {
         "inputType": "checkboxes"
       },
-      "sctypeadd": {
+      "sculptureTypeDescription": {
         "inputType": "text"
       },
-      "clothing": {
+      "sculptureClothing": {
         "inputType": "checkboxes"
       },
-      "clothingadd": {
+      "sculptureClothingDescription": {
         "inputType": "text"
       },
-      "hairstyle": {
+      "sculptureHairstyle": {
         "inputType": "checkboxes"
       },
-      "hairstyleadd": {
+      "sculptureHairstyleDescription": {
         "inputType": "text"
       },
-      "beardstyle": {
+      "sculptureBeardstyle": {
         "inputType": "checkboxes"
       },
-      "beardstyleadd": {
+      "sculptureBeardstyleDescription": {
         "inputType": "text"
       },
-      "attributes": {
+      "sculptureAttributes": {
         "inputType": "checkboxes"
       },
-      "attributesadd": {
+      "sculptureAttributesDescription": {
         "inputType": "text"
       },
-      "reused": {
-        "inputType": "boolean"
-      },
-      "headheight": {
-        "inputType": "unsignedFloat"
+      "sculptureQuality": {
+        "inputType": "radio"
       }
     },
     "valuelists": {
-      "material": "Sculpture-material-milet",
-      "materialattr": "Sculpture-materialattr-milet",
-      "colour": "colors-milet",
-      "bodypart": "Sculpture-bodypart-milet",
-      "gender": "Sculpture-gender-milet",
-      "sctype": "Sculpture-sctype-milet",
-      "clothing": "Sculpture-clothing-milet",
-      "hairstyle": "Sculpture-hairstyle-milet",
-      "beardstyle": "Sculpture-beardstyle-milet",
-      "attributes": "Sculpture-attributes-milet"
+      "sculptureMaterial": "Sculpture-sculptureMaterial-milet",
+      "sculptureMaterialAttr": "Sculpture-sculptureMaterialAttr-milet",
+      "colour": "Sculpture-colors-milet",
+      "sculptureMarbleType": "Sculpture-marbleType-milet",
+      "sculptureBodypart": "Sculpture-sculptureBodypart-milet",
+      "sculptureGender": "Sculpture-sculptureGender-milet",
+      "sculptureType": "Sculpture-sculptureType-milet",
+      "sculptureClothing": "Sculpture-sculptureClothing-milet",
+      "sculptureHairstyle": "Sculpture-sculptureHairstyle-milet",
+      "sculptureBeardstyle": "Sculpture-sculptureBeardstyle-milet",
+      "sculptureAttributes": "Sculpture-sculptureAttributes-milet",
+      "sculptureQuality": "quality-milet"
     }
   },
   "Coin:default": {
@@ -405,7 +644,7 @@
       "scale": {
         "inputType": "dropdown"
       },
-      "notes": {
+      "otherNotes": {
         "inputType": "text"
       },
       "DrawingNr": {
@@ -419,7 +658,7 @@
   },
   "Photo:default": {
     "fields": {
-      "notes": {
+      "otherNotes": {
         "inputType": "text"
       },
       "FotoNr": {
@@ -432,6 +671,234 @@
     "valuelists": {
       "viewDirection": "viewDirection-milet"
     }
+  }, 
+  "Quantification": {
+    "color": "#1E6161",
+    "commons": [
+      "processor"
+    ],
+    "fields": {
+      "quantificationType": {
+        "inputType": "dropdown"
+      },
+      "countTotal": {
+        "inputType": "unsignedInt"
+      },
+      "weightTotal": {
+        "inputType": "unsignedFloat"
+      },
+      "quantificationNotes": {
+        "inputType": "text"
+      }
+    },
+    "valuelists": {
+      "quantificationType": "quantificationType-milet"
+    }
+  },
+  "Pottery_Quantification_A": {
+    "parent": "Quantification",
+    "color": "#32A1A1",
+    "fields": {
+      "countArchitecturalCeramics": {
+        "inputType": "unsignedInt"
+      }, 
+      "weightArchitecturalCeramics": {
+        "inputType": "unsignedFloat"
+      },
+      "countTransportamphorae": {
+        "inputType": "unsignedInt"
+      }, 
+      "weightTransportamphorae": {
+        "inputType": "unsignedFloat"
+      },
+      "countHouseholdwares": {
+        "inputType": "unsignedInt"
+      }, 
+      "weightHouseholdwares": {
+        "inputType": "unsignedFloat"
+      },
+      "countCookingwares": {
+        "inputType": "unsignedInt"
+      }, 
+      "weightCookingwares": {
+        "inputType": "unsignedFloat"
+      },
+      "countStoragevessels": {
+        "inputType": "unsignedInt"
+      }, 
+      "weightStoragevessels": {
+        "inputType": "unsignedFloat"
+      },
+      "countTablewares": {
+        "inputType": "unsignedInt"
+      }, 
+      "weightTablewares": {
+        "inputType": "unsignedFloat"
+      },
+      "countFinepottery": {
+        "inputType": "unsignedInt"
+      }, 
+      "weightFinepottery": {
+        "inputType": "unsignedFloat"
+      },
+      "countOilcontainers": {
+        "inputType": "unsignedInt"
+      }, 
+      "weightOilcontainers": {
+        "inputType": "unsignedFloat"
+      },
+      "countTools": {
+        "inputType": "unsignedInt"
+      }, 
+      "weightTools": {
+        "inputType": "unsignedFloat"
+      },
+      "countUnspecified": {
+        "inputType": "unsignedInt"
+      }, 
+      "weightUnspecified": {
+        "inputType": "unsignedFloat"
+      },
+      "quantificationOther": {
+        "inputType": "text"
+      }
+    }
+  },
+  "Pottery_Quantification_B": {
+    "parent": "Quantification",
+    "color": "#46DFE0",
+    "commons": [
+      "period"
+    ],
+    "fields": {
+      "countTransportamphoraeRim": {
+        "inputType": "unsignedInt"
+      }, 
+      "countTransportamphoraeBase": {
+        "inputType": "unsignedInt"
+      }, 
+      "countTransportamphoraeHandle": {
+        "inputType": "unsignedInt"
+      }, 
+      "countHouseholdwaresRim": {
+        "inputType": "unsignedInt"
+      }, 
+      "countHouseholdwaresBase": {
+        "inputType": "unsignedInt"
+      }, 
+      "countHouseholdwaresHandle": {
+        "inputType": "unsignedInt"
+      },
+      "countCookingwaresRim": {
+        "inputType": "unsignedInt"
+      }, 
+      "countCookingwaresBase": {
+        "inputType": "unsignedInt"
+      }, 
+      "countCookingwaresHandle": {
+        "inputType": "unsignedInt"
+      }, 
+      "countStoragevesselsRim": {
+        "inputType": "unsignedInt"
+      },  
+      "countStoragevesselsBase": {
+        "inputType": "unsignedInt"
+      },  
+      "countStoragevesselsHandle": {
+        "inputType": "unsignedInt"
+      }, 
+      "countTablewaresRim": {
+        "inputType": "unsignedInt"
+      }, 
+      "countTablewaresBase": {
+        "inputType": "unsignedInt"
+      }, 
+      "countTablewaresHandle": {
+        "inputType": "unsignedInt"
+      }, 
+      "countFinepotteryRim": {
+        "inputType": "unsignedInt"
+      }, 
+      "countFinepotteryBase": {
+        "inputType": "unsignedInt"
+      }, 
+      "countFinepotteryHandle": {
+        "inputType": "unsignedInt"
+      }, 
+      "countOilcontainersRim": {
+        "inputType": "unsignedInt"
+      }, 
+      "countOilcontainersBase": {
+        "inputType": "unsignedInt"
+      }, 
+      "countOilcontainersHandle": {
+        "inputType": "unsignedInt"
+      }, 
+      "countLampsRim": {
+        "inputType": "unsignedInt"
+      }, 
+      "countLampsBase": {
+        "inputType": "unsignedInt"
+      }, 
+      "countLampsHandle": {
+        "inputType": "unsignedInt"
+      },
+      "quantificationOther": {
+        "inputType": "text"
+      }
+    },
+    "valuelists": {
+      "period": "periods-default-1"
+    }
+  },
+  "Impression": {
+    "commons": [
+      "processor",
+      "date",
+      "period"
+    ],
+    "fields": {
+      "infoFromField": {
+        "inputType": "text"
+      },
+      "closedContext": {
+        "inputType": "boolean"
+      },
+      "checkAgainstOtherContexts": {
+        "inputType": "text"
+      },
+      "findProcessingWorkflow": {
+        "inputType": "checkboxes"
+      },
+      "workflowDone": {
+        "inputType": "boolean"
+      },
+      "relativeAmount": {
+        "inputType": "text"
+      },
+      "relativeAmountCheck": {
+        "inputType": "radio"
+      },
+      "materialCondition": {
+        "inputType": "text"
+      },
+      "fitsOtherContexts": {
+        "inputType": "text"
+      },
+      "findSpectrum": {
+        "inputType": "text"
+      },
+      "specialFinds": {
+        "inputType": "text"
+      },
+      "generalNotes": {
+        "inputType": "text"
+      }
+    },
+    "valuelists": {
+      "findProcessingWorkflow": "findProcessingWorkflow-milet",
+      "relativeAmountCheck": "relativeAmountCheck-milet",
+      "period": "periods-default-1"
+    }
   }
-
 }

@@ -26,12 +26,12 @@
     <dependency>
       <groupId>org.geotools</groupId>
       <artifactId>gt-epsg-hsql</artifactId>
-      <version>22.3</version>
+      <version>22.5</version>
     </dependency>
     <dependency>
       <groupId>org.geotools</groupId>
       <artifactId>gt-shapefile</artifactId>
-      <version>22.3</version>
+      <version>22.5</version>
     </dependency>
     <dependency>
       <groupId>commons-io</groupId>
@@ -41,8 +41,8 @@
   </dependencies>
   <repositories>
     <repository>
-      <id>Geomajas</id>
-      <url>http://maven.geomajas.org/</url>
+      <id>OSGeo</id>
+      <url>https://repo.osgeo.org/repository/release/</url>
     </repository>
   </repositories>
   <build>

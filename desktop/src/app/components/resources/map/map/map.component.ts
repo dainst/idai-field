@@ -43,7 +43,7 @@ export class MapComponent implements AfterViewInit, OnChanges {
     protected bounds: any[] = []; // in fact L.LatLng[], but leaflet typings are incomplete
     protected categoryColors: { [categoryName: string]: string } = {};
 
-    private canvasRenderer: L.Canvas = L.canvas({ padding: 0.5 });
+    private canvasRenderer: L.Canvas = L.canvas({ padding: 1 });
 
 
     constructor(projectConfiguration: ProjectConfiguration,

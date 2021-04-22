@@ -11,7 +11,6 @@ const useSearch = (repository: DocumentRepository): [Document[], (q: string) => 
 
         return (q: string) => {
          
-            console.log({ q });
             repository.find({ q }).then(result => setDocuments(result.documents));
         };
     }, [repository]);

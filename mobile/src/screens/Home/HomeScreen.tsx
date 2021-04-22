@@ -6,8 +6,8 @@ import React, { ReactElement, useCallback } from 'react';
 import { StyleSheet } from 'react-native';
 import Map from '../../components/Map/Map';
 import SearchBar from '../../components/SearchBar';
+import useSync from '../../hooks/use-sync';
 import { DocumentRepository } from '../../repositories/document-repository';
-import useSync from './use-sync';
 
 
 interface HomeScreenProps {

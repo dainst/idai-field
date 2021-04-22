@@ -1,6 +1,6 @@
 import { Document } from 'idai-field-core';
 import { useEffect, useMemo, useState } from 'react';
-import { DocumentRepository } from '../../repositories/document-repository';
+import { DocumentRepository } from '../repositories/document-repository';
 
 
 const useSearch = (repository: DocumentRepository): [Document[], (q: string) => void] => {

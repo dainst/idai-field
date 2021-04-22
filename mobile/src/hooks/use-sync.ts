@@ -1,7 +1,7 @@
 import { SyncStatus } from 'idai-field-core';
-import { SyncSettings } from 'mobile/src/model/sync-settings';
-import { DocumentRepository } from 'mobile/src/repositories/document-repository';
 import { useEffect, useState } from 'react';
+import { SyncSettings } from '../model/sync-settings';
+import { DocumentRepository } from '../repositories/document-repository';
 
 
 const useSync = (repository: DocumentRepository):

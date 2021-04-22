@@ -1,4 +1,6 @@
+import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { SyncStatus } from 'idai-field-core';
+import RootDrawerParamList from 'mobile/src/navigation/root-drawer-param-list';
 import { HStack, Icon, IconButton, View } from 'native-base';
 import React, { ReactElement } from 'react';
 import { StyleSheet } from 'react-native';
@@ -13,10 +15,11 @@ import useSync from './use-sync';
 
 interface HomeScreenProps {
     repository: DocumentRepository;
+    navigation: DrawerNavigationProp<RootDrawerParamList, 'Home'>;
 }
 
 
-const HomeScreen: React.FC<HomeScreenProps> = ({ repository }): ReactElement => {
+const HomeScreen: React.FC<HomeScreenProps> = ({ repository, navigation }): ReactElement => {
 
     const [syncSettings, setSyncSettings, syncStatus] = useSync(repository);
     const [documents, issueSearch] = useSearch(repository);
@@ -24,8 +27,13 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ repository }): ReactElement => 
     return (
         <View flex={ 1 } safeArea>
             <AppHeader
+                left={ <IconButton
+                    onPress={ () => navigation.toggleDrawer() }
+                    icon={ <Icon type="Ionicons" name="menu" color="white" /> }
+                /> }
                 title={ syncSettings.project ? syncSettings.project : 'iDAI.field mobile' }
-                right={ renderHeaderButtons(() => issueSearch(), syncSettings, setSyncSettings, syncStatus) } />
+                right={ renderHeaderButtons(() => issueSearch(), syncSettings, setSyncSettings, syncStatus) }
+            />
             <View style={ styles.container }>
                 <Map geoDocuments={ documents.filter(doc => doc && doc.resource.geometry ? true : false) } />
             </View>
@@ -58,6 +66,9 @@ const renderHeaderButtons = (
 const styles = StyleSheet.create({
     container: {
         flex: 1
+    },
+    drawer: {
+        
     }
 });
 

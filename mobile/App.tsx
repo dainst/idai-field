@@ -1,10 +1,11 @@
+import { NavigationContainer } from '@react-navigation/native';
 import AppLoading from 'expo-app-loading';
 import { NativeBaseProvider } from 'native-base';
 import PouchDB from 'pouchdb-react-native';
 import React, { Dispatch, ReactElement, SetStateAction, useState } from 'react';
 import { enableScreens } from 'react-native-screens';
+import RootDrawer from './src/navigation/RootDrawer';
 import { DocumentRepository } from './src/repositories/document-repository';
-import HomeScreen from './src/screens/Home/HomeScreen';
 
 enableScreens();
 
@@ -25,7 +26,9 @@ export default function App(): ReactElement {
 
     return (
         <NativeBaseProvider>
-            <HomeScreen repository={ repository } />
+            <NavigationContainer>
+                <RootDrawer repository={ repository } />
+            </NavigationContainer>
         </NativeBaseProvider>
     );
 }

@@ -4,14 +4,17 @@ import { StyleSheet } from 'react-native';
 import { headerBackgroundColor } from '../constants/colors';
 
 interface AppHeaderProps {
+    left?: ReactNode;
     title: string;
-    right?: ReactNode | null;
+    right?: ReactNode;
 }
 
-const AppHeader: React.FC<AppHeaderProps> = ({ title, right = null }) => {
+const AppHeader: React.FC<AppHeaderProps> = ({ left, title, right }) => {
     return (
         <AppBar style={ styles.container } mt={ 0 }>
-            <AppBar.Left></AppBar.Left>
+            <AppBar.Left>
+                {left}
+            </AppBar.Left>
             <AppBar.Content>
                 <Text color="white" fontWeight="bold" fontSize="lg">{title}</Text>
             </AppBar.Content>

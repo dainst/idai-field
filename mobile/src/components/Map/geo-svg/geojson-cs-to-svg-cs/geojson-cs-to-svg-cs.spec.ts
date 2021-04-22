@@ -14,7 +14,7 @@ describe('geojson-cs-to-svg',() => {
     it('transform GeoJSON to SVG',() => {
         
         const position = [8,14.5];
-        const expectedTransformedPos = [6, 9];
+        const expectedTransformedPos = [6, 71];
         expect(transformGeojsonToSvg(geoBoundings, position)).toEqual(expectedTransformedPos);
     });
 });

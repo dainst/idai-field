@@ -13,7 +13,7 @@ import useSync from './use-sync';
 interface HomeScreenProps {
     repository: DocumentRepository;
     documents: Document[];
-    issueSearch: () => void;
+    issueSearch: (q: string) => void;
     navigation: DrawerNavigationProp<RootDrawerParamList, 'Home'>;
 }
 

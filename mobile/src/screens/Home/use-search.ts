@@ -1,18 +1,22 @@
 import { Document } from 'idai-field-core';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { DocumentRepository } from '../../repositories/document-repository';
 
 
-const useSearch = (repository: DocumentRepository): [Document[], () => void] => {
+const useSearch = (repository: DocumentRepository): [Document[], (q: string) => void] => {
     
     const [documents, setDocuments] = useState<Document[]>([]);
 
-    const issueSearch = useCallback(() => {
+    const issueSearch = useMemo(() => {
 
-        repository.find({ q: '*' }).then(result => setDocuments(result.documents));
+        return (q: string) => {
+         
+            console.log({ q });
+            repository.find({ q }).then(result => setDocuments(result.documents));
+        };
     }, [repository]);
 
-    useEffect(() => { issueSearch(); }, [issueSearch]);
+    useEffect(() => { issueSearch('*'); }, [issueSearch]);
 
     return [documents, issueSearch];
 

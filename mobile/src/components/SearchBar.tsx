@@ -26,7 +26,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
                 placeholder="Search..."
                 variant="rounded"
                 style={ styles.input }
-                onChange={ issueSearch }
+                onChangeText={ issueSearch }
                 InputLeftElement={ renderLeftIcons(toggleDrawer) }
                 InputRightElement={ renderRightIcons(issueSearch, syncSettings, setSyncSettings, syncStatus) }
             />

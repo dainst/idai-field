@@ -5,16 +5,14 @@
  * (Polygon, Multipolygon, Linestring, Multilinestring, Point, Multipoint)
  */
 import { Position } from 'geojson';
-import { GeometryBoundings, mapValueToNewRange } from '../cs-transform-utils';
 
-export const multiPolygonToPath = (
-    multiPolygon: Position[][][],
-    geometryBounds: GeometryBoundings,
-    viewBox: [number, number, number, number]): string => {
+type csTransformFunc = (position: Position) => Position;
+
+export const multiPolygonToPath = (multiPolygon: Position[][][], csTransform: csTransformFunc): string => {
 
     let path = '';
     for (const polygon of multiPolygon)
-        path += polygonToPath(polygon, geometryBounds, viewBox);
+        path += polygonToPath(polygon, csTransform);
     
     return path;
 };
@@ -28,15 +26,11 @@ export const multiPolygonToPath = (
  * @param polygon Polygon coordinates
  * @returns string to be used with SVG path element
  */
-export const polygonToPath = (
-    polygon: Position[][],
-    geometryBounds: GeometryBoundings,
-    viewBox: [number, number, number, number]): string => {
+export const polygonToPath = (polygon: Position[][], csTransform: csTransformFunc): string => {
    
     let path = '';
     polygon.forEach((ringCoordinates, i) => {
-        path += ' ' + lineStringToPath(i === 0 ? ringCoordinates.slice().reverse() : ringCoordinates,
-                            geometryBounds, viewBox);
+        path += ' ' + lineStringToPath(i === 0 ? ringCoordinates.slice().reverse() : ringCoordinates,csTransform);
     });
 
     return path;
@@ -50,28 +44,19 @@ export const polygonToPath = (
  * @param multiLineString MutliLineString coordinates
  * @returns string to be used with SVG path element
  */
-export const multiLineStringToPath = (
-    multiLineString: Position[][],
-    geometryBounds: GeometryBoundings,
-    viewBox: [number, number, number, number]): string =>
-    polygonToPath(multiLineString, geometryBounds, viewBox);
+export const multiLineStringToPath = (multiLineString: Position[][], csTransform: csTransformFunc): string =>
+    polygonToPath(multiLineString, csTransform);
 
 
-export const lineStringToPath = (
-    lineString: Position[],
-    geometryBounds: GeometryBoundings,
-    viewBox: [number, number, number, number]): string => {
+export const lineStringToPath = (lineString: Position[], csTransform: csTransformFunc): string => {
     
-    /* eslint-disable max-len */
-    const mapX = (value: number) => mapValueToNewRange(viewBox[2], viewBox[0], value, geometryBounds.maxX, geometryBounds.minX);
-    const mapY = (value: number) => mapValueToNewRange(viewBox[3], viewBox[1], value, geometryBounds.maxY, geometryBounds.minY);
-    /* eslint-enable max-len */
-
-    let path = `M${mapX(lineString[0][0])} ${mapY(lineString[0][1])}`;
-    for(let i = 1; i < lineString.length; i++)
-        path += ` L${mapX(lineString[i][0])} ${mapY(lineString[i][1])}`;
+    let path = '';
+    lineString.forEach((pos: Position, i: number) => {
+        const transformedPos = csTransform(pos);
+        if(i === 0) path = `M${transformedPos[0]} ${transformedPos[1]}`;
+        else path += ` L${transformedPos[0]} ${transformedPos[1]}`;
+    });
 
     return path;
-
 };
 

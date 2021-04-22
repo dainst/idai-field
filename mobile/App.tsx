@@ -4,7 +4,7 @@ import PouchDB from 'pouchdb-react-native';
 import React, { Dispatch, ReactElement, SetStateAction, useState } from 'react';
 import { enableScreens } from 'react-native-screens';
 import { DocumentRepository } from './src/repositories/document-repository';
-import HomeScreen from './src/screens/HomeScreen';
+import HomeScreen from './src/screens/Home/HomeScreen';
 
 enableScreens();
 

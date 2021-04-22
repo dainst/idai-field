@@ -1,3 +1,4 @@
+
 export interface SyncSettings {
     url: string;
     project: string;

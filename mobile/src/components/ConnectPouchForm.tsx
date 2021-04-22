@@ -4,18 +4,19 @@ import { Keyboard, StyleSheet } from 'react-native';
 import { SyncSettings } from '../model/sync-settings';
 
 interface ConnectPouchFormProps {
-    onConnect: (syncSettings: SyncSettings) => void;
+    settings: SyncSettings,
+    onConnect: (settings: SyncSettings) => void;
 }
 
-const ConnectPouchForm: React.FC<ConnectPouchFormProps> = ({ onConnect }) => {
+const ConnectPouchForm: React.FC<ConnectPouchFormProps> = ({ settings, onConnect }) => {
 
-    const [url, setUrl] = useState<string>('');
-    const [project, setProject] = useState<string>('');
-    const [password, setPassword] = useState<string>('');
+    const [url, setUrl] = useState<string>(settings.url);
+    const [project, setProject] = useState<string>(settings.project);
+    const [password, setPassword] = useState<string>(settings.password);
 
     const onSubmit = () => {
+
         Keyboard.dismiss();
-        console.log(url, project, password);
         onConnect({ url, project, password, connected: true });
     };
 

@@ -210,6 +210,7 @@ describe('images --', function() {
         expect(entries.length).toBe(2);
 
         await ImageOverviewPage.clickCancelLinkModalButton();
+        await ImageOverviewPage.clickCell(0);
 
         done();
     });

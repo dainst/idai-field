@@ -1,6 +1,6 @@
 import {
     ChangesStream,
-    ConstraintIndex, Converter, Datastore, Document, DocumentCache, IdaiFieldFindResult,
+    ConstraintIndex, Converter, Datastore, Document, DocumentCache, FindResult,
     IdGenerator, Indexer, IndexFacade, PouchdbDatastore, PouchDbFactory, PouchdbManager, Query, SyncProcess
 } from 'idai-field-core';
 import { Observable } from 'rxjs';
@@ -44,7 +44,7 @@ export class DocumentRepository {
         this.datastore.get(resourceId);
 
     
-    public find = (query: Query): Promise<IdaiFieldFindResult> =>
+    public find = (query: Query): Promise<FindResult> =>
         this.datastore.find(query, true);
 
 

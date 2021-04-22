@@ -1,12 +1,13 @@
-import { Document, SyncStatus } from 'idai-field-core';
+import { SyncStatus } from 'idai-field-core';
 import { HStack, Icon, IconButton, View } from 'native-base';
-import React, { ReactElement, useCallback, useEffect, useState } from 'react';
+import React, { ReactElement } from 'react';
 import { StyleSheet } from 'react-native';
 import AppHeader from '../../components/AppHeader';
 import Map from '../../components/Map/Map';
 import SyncSettingsButton from '../../components/Sync/SyncSettingsButton';
 import { SyncSettings } from '../../model/sync-settings';
 import { DocumentRepository } from '../../repositories/document-repository';
+import useSearch from './use-search';
 import useSync from './use-sync';
 
 
@@ -16,16 +17,9 @@ interface HomeScreenProps {
 
 
 const HomeScreen: React.FC<HomeScreenProps> = ({ repository }): ReactElement => {
-    
-    const [documents, setDocuments] = useState<Document[]>([]);
+
     const [syncSettings, setSyncSettings, syncStatus] = useSync(repository);
-
-    const issueSearch = useCallback(() => {
-
-        repository.find({ q: '*' }).then(result => setDocuments(result.documents));
-    }, [repository]);
-
-    useEffect(() => { issueSearch(); }, [issueSearch]);
+    const [documents, issueSearch] = useSearch(repository);
 
     return (
         <View flex={ 1 } safeArea>

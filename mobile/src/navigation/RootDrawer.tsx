@@ -1,8 +1,9 @@
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import { Text } from 'native-base';
 import React from 'react';
+import DrawerContent from '../components/DrawerContent';
 import { DocumentRepository } from '../repositories/document-repository';
 import HomeScreen from '../screens/Home/HomeScreen';
+import useSearch from '../screens/Home/use-search';
 import RootDrawerParamList from './root-drawer-param-list';
 
 
@@ -15,10 +16,16 @@ interface RootDrawerProps {
 
 
 const RootDrawer: React.FC<RootDrawerProps> = ({ repository }) => {
+
+    const [documents, issueSearch] = useSearch(repository);
+
     return (
-        <Drawer.Navigator drawerContent={ () => <Text>Test</Text> }>
+        <Drawer.Navigator drawerContent={ () => <DrawerContent documents={ documents } /> }>
             <Drawer.Screen name="Home">
-                { (props) => <HomeScreen { ...props } repository={ repository } /> }
+                { (props) => <HomeScreen { ...props }
+                    repository={ repository }
+                    documents={ documents }
+                    issueSearch={ issueSearch } /> }
             </Drawer.Screen>
         </Drawer.Navigator>
     );

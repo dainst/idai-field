@@ -4,7 +4,7 @@ import { DocumentRepository } from 'mobile/src/repositories/document-repository'
 import { useEffect, useState } from 'react';
 
 
-const useSyncSettings = (repository: DocumentRepository):
+const useSync = (repository: DocumentRepository):
     [SyncSettings, (syncSettings: SyncSettings) => void, SyncStatus] => {
     
     const [settings, setSettings] = useState<SyncSettings>(getDefaultSettings());
@@ -14,7 +14,7 @@ const useSyncSettings = (repository: DocumentRepository):
 
     return [settings, setSettings, status];
 };
-export default useSyncSettings;
+export default useSync;
 
 
 const getDefaultSettings = () => ({

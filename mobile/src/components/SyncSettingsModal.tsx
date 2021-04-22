@@ -6,24 +6,24 @@ import { SyncSettings } from '../model/sync-settings';
 import ConnectPouchForm from './ConnectPouchForm';
 import DisconectPouchForm from './DisconnectPouchForm';
 
-interface SettingsProps {
+interface SyncSettingsModalProps {
     settings: SyncSettings;
-    setSettings: (syncSettings: SyncSettings) => void,
+    onSettingsSet: (syncSettings: SyncSettings) => void,
     isOpen: boolean;
     onClose: () => void;
 }
 
 
-const Settings: React.FC<SettingsProps> = ({ settings, setSettings, isOpen, onClose }) => {
+const SyncSettingsModal: React.FC<SyncSettingsModalProps> = ({ settings, onSettingsSet, isOpen, onClose }) => {
 
     const onDisconnect = () => {
 
         const newSettings = clone(settings);
         newSettings.connected = false;
-        setSettings(newSettings);
+        onSettingsSet(newSettings);
     };
 
-    const onConnect = (newSettings: SyncSettings) => setSettings(newSettings);
+    const onConnect = (newSettings: SyncSettings) => onSettingsSet(newSettings);
 
     return (
         <Modal
@@ -60,4 +60,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default Settings;
+export default SyncSettingsModal;

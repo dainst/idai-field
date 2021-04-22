@@ -4,9 +4,9 @@ import React, { ReactElement, useCallback, useEffect, useState } from 'react';
 import { StyleSheet } from 'react-native';
 import AppHeader from '../../components/AppHeader';
 import Map from '../../components/Map/Map';
-import Settings from '../../components/Settings';
+import SyncSettingsModal from '../../components/SyncSettingsModal';
 import { DocumentRepository } from '../../repositories/document-repository';
-import useSyncSettings from './use-sync-settings';
+import useSync from './use-sync';
 
 
 interface HomeScreenProps {
@@ -16,9 +16,9 @@ interface HomeScreenProps {
 
 const HomeScreen: React.FC<HomeScreenProps> = ({ repository }): ReactElement => {
     
-    const [showSettings, setShowSettings] = useState<boolean>(false);
+    const [showSyncSettings, setShowSyncSettings] = useState<boolean>(false);
     const [documents, setDocuments] = useState<Document[]>([]);
-    const [syncSettings, setSyncSettings, syncStatus] = useSyncSettings(repository);
+    const [syncSettings, setSyncSettings, syncStatus] = useSync(repository);
 
     const issueSearch = useCallback(() => {
 
@@ -31,20 +31,20 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ repository }): ReactElement => 
         <View flex={ 1 } safeArea>
             <AppHeader
                 title={ syncSettings.project ? syncSettings.project : 'iDAI.field mobile' }
-                right={ renderSettingsButtons(
+                right={ renderSyncSettingsButtons(
                     syncStatus,
-                    setShowSettings,
+                    setShowSyncSettings,
                     () => issueSearch()
                 ) } />
             <View style={ styles.container }>
-                <Settings
+                <SyncSettingsModal
                     settings={ syncSettings }
                     setSettings={ (newSyncSettings) => {
                         setSyncSettings(newSyncSettings);
-                        setShowSettings(false);
+                        setShowSyncSettings(false);
                     } }
-                    isOpen={ showSettings }
-                    onClose={ () => setShowSettings(false) }
+                    isOpen={ showSyncSettings }
+                    onClose={ () => setShowSyncSettings(false) }
                 />
                 <Map geoDocuments={ documents.filter(doc => doc && doc.resource.geometry ? true : false) } />
             </View>
@@ -53,7 +53,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ repository }): ReactElement => 
 };
 
 
-const renderSettingsButtons = (
+const renderSyncSettingsButtons = (
     syncStatus: SyncStatus,
     setShowSettings: React.Dispatch<React.SetStateAction<boolean>>,
     issueSearch: () => void

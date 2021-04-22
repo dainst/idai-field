@@ -1,5 +1,5 @@
 import { ObjectUtils, Name, replaceIn } from 'idai-field-core';
-import { Document, Relations, relationsEquivalent, Resource } from 'idai-field-core';
+import { Document, Relations, Resource } from 'idai-field-core';
 import {
     append, compose,
     cond, filter, flow,
@@ -143,4 +143,4 @@ function changedDocsReducer(changedDocs: Array<Document>, [targetDoc, cloneOfTar
 }
 
 
-const documentsRelationsEquivalent = on(['resource','relations'], relationsEquivalent);
+const documentsRelationsEquivalent = on(['resource','relations'], Relations.equivalent);

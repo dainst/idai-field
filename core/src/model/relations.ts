@@ -7,12 +7,6 @@ export interface Relations {
 }
 
 
-export const relationsEquivalent = (r1: Relations) => (r2: Relations) => {
-
-    return objectEqual(sameset as any, r1)(r2);
-};
-
-
 /**
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
@@ -112,7 +106,7 @@ export namespace Relations {
             ? ownKeys.filter(includedIn(allowedRelations))
             : ownKeys;
 
-        return flatMap((prop: string) => relations[prop as string])(usableRelations);
+        return flatMap(usableRelations, (prop: string) => relations[prop as string]);
     }
 
 
@@ -134,6 +128,9 @@ export namespace Relations {
     }
 
 
+    export const equivalent = (r1: Relations) => (r2: Relations) => objectEqual(sameset as any, r1)(r2);
+
+
     function findDifferingFieldsInRelations(relations1: Object, relations2: Object): string[] {
 
         return Object.keys(relations1)
@@ -144,10 +141,5 @@ export namespace Relations {
     }
 
 
-    const notBothSameset = (l: any, r: any) => (key: string) => {
-
-        if (!r[key]) return true;
-
-        return !sameset(l[key])(r[key]);
-    };
+    const notBothSameset = (l: any, r: any) => (key: string) => !r[key] || !sameset(l[key], r[key]);
 }

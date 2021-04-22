@@ -63,4 +63,13 @@ describe('Relations', () => {
 
         expect(relations).toEqual({ 'c': ['value'] } as any);
     });
+
+
+    it('equivalent', () => {
+
+        const relA = { a: ['1', '2'], b: ['1', '2'] };
+        const relB = { b: ['2', '1'], a: ['2', '1'] };
+        
+        expect(Relations.equivalent(relA)(relB)).toBeTruthy();
+    });
 });

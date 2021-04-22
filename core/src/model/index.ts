@@ -26,6 +26,6 @@ export { NewResource } from './new-resource';
 export { OptionalRange } from './optional-range';
 export { Query } from './query';
 export { RelationDefinition } from './relation-definition';
-export { Relations, relationsEquivalent } from './relations';
+export { Relations } from './relations';
 export { Resource } from './resource';
 export { ValuelistDefinition } from './valuelist-definition';

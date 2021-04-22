@@ -1,5 +1,4 @@
-import { GeometryBoundings } from '../cs-transform-utils';
-
+import { Position } from 'geojson';
 export interface GeoElementsCommonProps {
-    geometryBoundings: GeometryBoundings
+    csTransformFunction: (pos: Position) => Position
 }

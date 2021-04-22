@@ -1,17 +1,20 @@
+import { Position } from 'geojson';
 import { Document, FieldGeometry } from 'idai-field-core';
 import { Box, Text } from 'native-base';
 import React, { ReactElement } from 'react';
 import { StyleSheet } from 'react-native';
 import Svg, { Circle, G } from 'react-native-svg';
-import { GeometryBoundings, getGeometryBoundings } from './cs-transform-utils';
-import { GeoLineString, GeoMultiLineString, GeoMultiPoint, GeoMultiPolygon, GeoPoint, GeoPolygon } from './geo-svg';
-
+import { viewBox } from './constants';
+import { getGeometryBoundings } from './cs-transform-utils';
+import {
+    GeoLineString, GeoMultiLineString, GeoMultiPoint,
+    GeoMultiPolygon, GeoPoint, GeoPolygon, transformGeojsonToSvg
+} from './geo-svg';
 interface MapProps {
     geoDocuments: Document[]
 }
 const Map: React.FC<MapProps> = ({ geoDocuments }) => {
 
-    const viewBox: [number, number, number, number] = [0, 0, 100, 100];
     const geometryBoundings = getGeometryBoundings(geoDocuments);
   
     return (
@@ -20,7 +23,7 @@ const Map: React.FC<MapProps> = ({ geoDocuments }) => {
                 <Svg style={ styles.svg } viewBox={ viewBox.join(' ') } >
                     {geoDocuments.map(doc =>(
                         <G key={ doc._id }>
-                            {renderGeoSvgElement(doc, viewBox, geometryBoundings)}
+                            {renderGeoSvgElement(doc, transformGeojsonToSvg.bind(this, geometryBoundings) )}
                         </G>))
                     }
                 </Svg> :
@@ -42,10 +45,7 @@ const styles = StyleSheet.create({
     }
 });
 
-const renderGeoSvgElement = (
-    document: Document,
-    viewBox: [number, number, number, number],
-    geometryBoundings: GeometryBoundings): ReactElement => {
+const renderGeoSvgElement = (document: Document, csTransformFunc: (pos: Position) => Position): ReactElement => {
     
     const geometry: FieldGeometry = document.resource.geometry;
 
@@ -54,38 +54,32 @@ const renderGeoSvgElement = (
             return <GeoPolygon
                 coordinates={ geometry.coordinates }
                 fill="blue"
-                viewBox={ viewBox }
-                geometryBoundings={ geometryBoundings } />;
+                csTransformFunction={ csTransformFunc } />;
         case('MultiPolygon'):
             return <GeoMultiPolygon
                 coordinates={ geometry.coordinates }
                 fill="red"
-                viewBox={ viewBox }
-                geometryBoundings={ geometryBoundings } />;
+                csTransformFunction={ csTransformFunc } />;
         case('LineString'):
             return <GeoLineString
                 coordinates={ geometry.coordinates }
                 stroke="green"
-                viewBox={ viewBox }
-                geometryBoundings={ geometryBoundings } />;
+                csTransformFunction={ csTransformFunc } />;
         case('MultiLineString'):
             return <GeoMultiLineString
                 coordinates={ geometry.coordinates }
                 stroke="green"
-                viewBox={ viewBox }
-                geometryBoundings={ geometryBoundings } />;
+                csTransformFunction={ csTransformFunc } />;
         case('Point'):
             return <GeoPoint
                 point={ geometry.coordinates }
                 fill="black"
-                viewBox={ viewBox }
-                geometryBoundings={ geometryBoundings } />;
+                csTransformFunction={ csTransformFunc } />;
         case('MultiPoint'):
             return <GeoMultiPoint
                 points={ geometry.coordinates }
                 fill="yellow"
-                viewBox={ viewBox }
-                geometryBoundings={ geometryBoundings } />;
+                csTransformFunction={ csTransformFunc } />;
         default:
             return <Circle />;
 

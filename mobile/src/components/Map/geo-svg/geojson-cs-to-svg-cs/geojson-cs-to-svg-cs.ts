@@ -8,9 +8,13 @@ export const transformGeojsonToSvg = (geoBoundings: GeometryBoundings, position:
     const { minX, minY, maxX, maxY } = geoBoundings;
     const height = (maxY - minY) / (maxX - minX) * viewWidth; //keep aspect ratio
 
-    const mappedX = mapValueToNewRange(viewWidth,viewStartX,position[0], maxX, minX);
+    let mappedX = mapValueToNewRange(viewWidth,viewStartX,position[0], maxX, minX);
     let mappedY = mapValueToNewRange(height,viewStartY,position[1], maxY, minY);
     mappedY = correctYCoordinateDirection(mappedY, height);
+
+    //handle edge cases
+    if(isNaN(mappedX) || !isFinite(mappedX)) mappedX = 50;
+    if(isNaN(mappedY) || !isFinite(mappedY)) mappedY = 50;
 
     return [mappedX, mappedY];
 };

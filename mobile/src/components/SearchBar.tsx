@@ -24,7 +24,6 @@ const SearchBar: React.FC<SearchBarProps> = ({
         <Box style={ styles.box }>
             <Input
                 placeholder="Search..."
-                variant="rounded"
                 style={ styles.input }
                 onChangeText={ issueSearch }
                 InputLeftElement={ renderLeftIcons(toggleDrawer) }

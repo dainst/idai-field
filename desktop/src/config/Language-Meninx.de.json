@@ -12,6 +12,13 @@
         }
       }
     },
+    "Bone": {
+      "fields": {
+        "species": {
+          "label": "Klasse"
+        }
+      }
+    },
     "Wall_surface": {
       "label": "Wandoberfläche",
       "fields": {

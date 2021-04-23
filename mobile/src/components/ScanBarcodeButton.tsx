@@ -52,6 +52,7 @@ const renderBarcodeScanner = (
 const renderFab = (setScannerActive: (active: boolean) => void) =>
     <Fab
         bg="white"
+        style={ styles.fab }
         icon={ <Icon name="qr-code" type="Ionicons" /> }
         onPress={ () => setScannerActive(true) }
     />;
@@ -63,6 +64,16 @@ const styles = {
             backgroundColor: 'black',
             flex: 1
         }
+    },
+    fab: {
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
     }
 };
 

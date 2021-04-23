@@ -7,6 +7,7 @@ import React, { ReactElement, useCallback } from 'react';
 import { StyleSheet } from 'react-native';
 import DocumentDetails from '../components/DocumentDetails';
 import Map from '../components/Map/Map';
+import ScanBarcodeButton from '../components/ScanBarcodeButton';
 import SearchBar from '../components/SearchBar';
 import useSync from '../hooks/use-sync';
 import { DocumentRepository } from '../repositories/document-repository';
@@ -41,6 +42,16 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
 
     const toggleDrawer = useCallback(() => navigation.toggleDrawer(), [navigation]);
 
+    const onBarCodeScanned = useCallback((data: string) => {
+
+        repository.find({ constraints: { 'identifier:match': data } })
+            .then(({ documents: [doc] }) =>
+                navigation.navigate('Home', { screen: 'DocumentDetails', params: { docId: doc.resource.id } })
+            )
+            .catch(() => console.log(`Document with identifier '${data}' not found`));
+    }, [repository, navigation]);
+        
+
     return (
         <View flex={ 1 } safeArea>
             <SearchBar { ...{ issueSearch, syncSettings, setSyncSettings, syncStatus, toggleDrawer } } />
@@ -57,6 +68,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
                     </Stack.Screen>
                 </Stack.Navigator>
             </View>
+            <ScanBarcodeButton onBarCodeScanned={ onBarCodeScanned } />
         </View>
     );
 };

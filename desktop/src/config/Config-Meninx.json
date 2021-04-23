@@ -194,7 +194,8 @@
     },
     "valuelists": {
       "sex": "Bone-sex-Meninx",
-      "boneClassification": "Bone-boneClassification-Meninx"
+      "boneClassification": "Bone-boneClassification-Meninx",
+      "species": "Bone-species-Meninx"
     }
   },
   "Terracotta:default": {

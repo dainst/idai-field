@@ -436,7 +436,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.IMPORT_WARNING_IGNORED_EXISTING_IDENTIFIER] = {
             content: i18n({
                 id: 'messages.import.warning.ignoredExistingIdentifier',
-                value: 'Die Ressource \'[0]\' wurde nicht importiert, weil bereits eine Ressource mit dem Bezeichner existiert.'
+                value: 'Die Ressource \'[0]\' wurde nicht importiert, weil bereits eine Ressource mit dem gleichen Bezeichner existiert.'
             }),
             level: 'warning',
             params: [],

@@ -67,7 +67,7 @@ const convertObject = (field: any, getTranslation: (key: string) => string) =>
     } else {
         return JSON.stringify(fieldContent);
     }
-}
+};
 
 
 const convertArray = (field: any, getTranslation: (key: string) => string, transform: (value: any) => string|null) =>
@@ -88,4 +88,4 @@ const convertArray = (field: any, getTranslation: (key: string) => string, trans
             return JSON.stringify(element);
         }
     });
-}
+};

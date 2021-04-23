@@ -65,7 +65,7 @@ export module Resource {
 
     export function compare(value1: any, value2: any): boolean {
 
-        if (!value1 && !value2) return true;
+        if (value1 === undefined && value2 === undefined) return true;
         if ((value1 && !value2) || (!value1 && value2)) return false;
 
         const type1: string = getType(value1);

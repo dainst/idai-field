@@ -28,29 +28,43 @@ const ScanBarcodeButton: React.FC<ScanBarcodeButtonProps> = ({ onBarCodeScanned 
 
     return hasPermission
         ? scannerActive
-            ? renderBarcodeScanner(handleBarCodeScanned)
+            ? renderBarcodeScanner(handleBarCodeScanned, setScannerActive)
             : renderFab(setScannerActive)
         : null;
 };
 
 
-const renderBarcodeScanner = (handleBarCodeScanned: ({ data }: { data: string }) => void) =>
-    <BarCodeScanner
-        onBarCodeScanned={ handleBarCodeScanned }
-        style={ StyleSheet.absoluteFill }
-    />;
+const renderBarcodeScanner = (
+    handleBarCodeScanned: ({ data }: { data: string }) => void,
+    setScannerActive: (active: boolean) => void
+) =>
+        <BarCodeScanner style={ [StyleSheet.absoluteFill, styles.scanner.container] }
+            onBarCodeScanned={ handleBarCodeScanned }
+        >
+            <Fab
+                bg="white"
+                icon={ <Icon name="close" type="Ionicons" /> }
+                onPress={ () => setScannerActive(false) }
+            />
+        </BarCodeScanner>;
 
 
 const renderFab = (setScannerActive: (active: boolean) => void) =>
     <Fab
         bg="white"
-        shadow={ 9 }
-        position="absolute"
-        bottom={ 4 }
-        right={ 4 }
         icon={ <Icon name="qr-code" type="Ionicons" /> }
         onPress={ () => setScannerActive(true) }
     />;
+
+
+const styles = {
+    scanner: {
+        container: {
+            backgroundColor: 'black',
+            flex: 1
+        }
+    }
+};
 
 
 export default ScanBarcodeButton;

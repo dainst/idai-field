@@ -1,5 +1,5 @@
-import { flow, identity, isArray, isObject, isString } from 'tsfun';
-import { Dating, Dimension, Literature, OptionalRange, Resource, FieldDefinition } from 'idai-field-core';
+import { flow, isArray, isObject, isString } from 'tsfun';
+import { Dating, Dimension, Literature, OptionalRange, Resource } from 'idai-field-core';
 import { ValuelistUtil } from '../../../core/util/valuelist-util';
 
 
@@ -9,19 +9,21 @@ export type InnerHTML = string;
 /**
  * @author Daniel de Oliveira
  */
-export function formatContent(resource: Resource, field: any): InnerHTML {
+export function formatContent(resource: Resource, field: any,
+        getTranslation: (key: string) => string,
+        transform: (value: any) => string|null): InnerHTML {
 
     const fieldContent = resource[field.name];
 
     return isArray(fieldContent)
         ? flow(fieldContent,
-            convertArray(field),
+            convertArray(field, getTranslation, transform),
             formatArray)
         : isObject(fieldContent)
         ? flow(fieldContent,
-            convertObject(field.inputType),
+            convertObject(field, getTranslation),
             formatObject)
-        : fieldContent;
+        : formatSingleValue(fieldContent, field, getTranslation);
 }
 
 
@@ -43,29 +45,45 @@ function formatObject(fieldContent: string): InnerHTML {
 }
 
 
-const convertObject = (inputType?: FieldDefinition.InputType) =>
-                      (fieldContent: any) => {
+const formatSingleValue = (fieldContent: any, field: any, getTranslation: (key: string) => string) => {
 
-    if (inputType === 'dropdownRange' && OptionalRange.buildIsOptionalRange(isString)(fieldContent)) {
-        return OptionalRange.generateLabel(fieldContent, identity, identity);
+    if (field.inputType === 'boolean') {
+        return getTranslation(JSON.stringify(fieldContent));
+    } else {
+        return fieldContent;
     }
-    return JSON.stringify(fieldContent);
+};
+
+
+const convertObject = (field: any, getTranslation: (key: string) => string) =>
+        (fieldContent: any) => {
+
+    if (field.inputType === 'dropdownRange' && OptionalRange.buildIsOptionalRange(isString)(fieldContent)) {
+        return OptionalRange.generateLabel(
+            fieldContent,
+            getTranslation,
+            (value: string) => ValuelistUtil.getValueLabel(field.valuelist, value)
+        );
+    } else {
+        return JSON.stringify(fieldContent);
+    }
 }
 
 
-const convertArray = (field?: FieldDefinition) =>
-                     (fieldContent: Array<any>): Array<string> => {
+const convertArray = (field: any, getTranslation: (key: string) => string, transform: (value: any) => string|null) =>
+        (fieldContent: Array<any>): Array<string> => {
 
     return fieldContent.map(element => {
 
         if (field.inputType === 'dimension' && Dimension.isDimension(element)) {
-            return Dimension.generateLabel(element, identity, identity, ValuelistUtil.getValueLabel(field.positionValues, element.measurementPosition));
+            return Dimension.generateLabel(element, transform, getTranslation,
+                ValuelistUtil.getValueLabel(field.positionValues, element.measurementPosition));
         } else if (field.inputType === 'dating' && Dating.isDating(element)) {
-            return Dating.generateLabel(element, identity);
+            return Dating.generateLabel(element, getTranslation);
         } else if (field.inputType === 'literature' && Literature.isLiterature(element)) {
-            return Literature.generateLabel(element, identity)
+            return Literature.generateLabel(element, getTranslation)
         } else if (isString(element)) {
-            return element;
+            return ValuelistUtil.getValueLabel(field.valuelist, element);
         } else {
             return JSON.stringify(element);
         }

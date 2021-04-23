@@ -32,7 +32,7 @@ export module ValuelistUtil {
 
     export function getValueLabel(valuelist: ValuelistDefinition, valueId: string): string {
 
-        const value: ValueDefinition|undefined = valuelist.values[valueId];
+        const value: ValueDefinition|undefined = valuelist ? valuelist.values[valueId] : undefined;
         if (!value) return valueId;
 
         const language: string = languages.find(languageCode => {

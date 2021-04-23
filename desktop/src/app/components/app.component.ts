@@ -128,5 +128,11 @@ export class AppComponent {
         this.utilTranslations.addTranslation(
             'to', this.i18n({ id: 'util.optionalRange.to', value: ', bis: ' })
         );
+        this.utilTranslations.addTranslation(
+            'true', this.i18n({ id: 'boolean.yes', value: 'Ja' })
+        );
+        this.utilTranslations.addTranslation(
+            'false', this.i18n({ id: 'boolean.no', value: 'Nein' })
+        );
     }
 }

@@ -1,5 +1,7 @@
+import { DecimalPipe } from '@angular/common';
 import { ChangeDetectorRef, Component, Input, OnChanges } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
+import { UtilTranslations } from '../../../core/util/util-translations';
 import { Document, Datastore, Relations, Resource } from 'idai-field-core';
 import { ProjectConfiguration } from '../../../core/configuration/project-configuration';
 import { M } from '../../messages/m';
@@ -33,6 +35,8 @@ export class DoceditConflictsTabComponent implements OnChanges {
                 private projectConfiguration: ProjectConfiguration,
                 private loading: Loading,
                 private changeDetectorRef: ChangeDetectorRef,
+                private decimalPipe: DecimalPipe,
+                private utilTranslations: UtilTranslations,
                 private i18n: I18n) {}
 
 
@@ -40,7 +44,12 @@ export class DoceditConflictsTabComponent implements OnChanges {
 
     public showLoadingIcon = () => this.isLoading() && this.loading.getLoadingTimeInMilliseconds() > 250;
 
-    public getFieldContent = (field: any, revision: Document) => formatContent(revision.resource, field);
+    public getFieldContent = (field: any, revision: Document) => formatContent(
+        revision.resource,
+        field,
+        (key: string) => this.utilTranslations.getTranslation(key),
+        (value: string) => this.decimalPipe.transform(value)
+    );
 
 
     async ngOnChanges() {
@@ -221,6 +230,8 @@ export class DoceditConflictsTabComponent implements OnChanges {
                 inputType: fd?.inputType,
                 label: label,
                 type: type,
+                valuelist: fd?.valuelist,
+                positionValues: fd?.positionValues,
                 rightSideWinning: false
             });
         }

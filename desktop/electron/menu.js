@@ -171,7 +171,11 @@ const getTemplate = (mainWindow, context) => {
                     parent: BrowserWindow.getFocusedWindow(),
                     modal: true,
                     show: false,
-                    webPreferences: { nodeIntegration: true }
+                    webPreferences: {
+                        nodeIntegration: true,
+                        contextIsolation: false,
+                        enableRemoteModule: true
+                    }
                 });
 
                 infoWindow.once('ready-to-show', function() {

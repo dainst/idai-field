@@ -4,6 +4,7 @@ import RootDrawerParamList from 'mobile/src/navigation/root-drawer-param-list';
 import { View } from 'native-base';
 import React, { ReactElement, useCallback } from 'react';
 import { StyleSheet } from 'react-native';
+import DocumentDetails from '../components/DocumentDetails';
 import Map from '../components/Map/Map';
 import SearchBar from '../components/SearchBar';
 import useSync from '../hooks/use-sync';
@@ -15,10 +16,17 @@ interface HomeScreenProps {
     documents: Document[];
     issueSearch: (q: string) => void;
     navigation: DrawerNavigationProp<RootDrawerParamList, 'Home'>;
+    selectedDocument?: Document;
 }
 
 
-const HomeScreen: React.FC<HomeScreenProps> = ({ repository, navigation, documents, issueSearch }): ReactElement => {
+const HomeScreen: React.FC<HomeScreenProps> = ({
+    repository,
+    navigation,
+    documents,
+    issueSearch,
+    selectedDocument
+}): ReactElement => {
 
     const [syncSettings, setSyncSettings, syncStatus] = useSync(repository);
 
@@ -28,7 +36,11 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ repository, navigation, documen
         <View flex={ 1 } safeArea>
             <SearchBar { ...{ issueSearch, syncSettings, setSyncSettings, syncStatus, toggleDrawer } } />
             <View style={ styles.container }>
-                <Map geoDocuments={ documents.filter(doc => doc && doc.resource.geometry ? true : false) } />
+                { selectedDocument
+                    ? <DocumentDetails document={ selectedDocument } />
+                    : <Map geoDocuments={ documents.filter(doc => doc && doc.resource.geometry ? true : false) } />
+                }
+                
             </View>
         </View>
     );

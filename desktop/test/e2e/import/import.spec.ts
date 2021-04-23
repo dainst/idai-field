@@ -1,7 +1,7 @@
 import { start, stop, waitForExist, resetApp, navigateTo, waitForNotExist, typeIn } from '../app';
-import {ImportPage} from './import.page';
-import {ResourcesPage} from '../resources/resources.page';
-import {NavbarPage} from '../navbar.page';
+import { ImportPage } from './import.page';
+import { ResourcesPage } from '../resources/resources.page';
+import { NavbarPage } from '../navbar.page';
 
 
 /**
@@ -66,7 +66,7 @@ describe('import --', () => {
         await performImport('./test-data/importer-test-constraint-violation.jsonl');
 
         await NavbarPage.awaitAlert('wurde nicht importiert, weil bereits eine Ressource ' +
-            'mit dem Bezeichner existiert', false);
+            'mit dem gleichen Bezeichner existiert', false);
         await NavbarPage.clickCloseAllMessages();
         await NavbarPage.clickCloseNonResourcesTab();
         await ResourcesPage.clickHierarchyButton('S1');

@@ -2,7 +2,7 @@ import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Document } from 'idai-field-core';
 import RootDrawerParamList from 'mobile/src/navigation/root-drawer-param-list';
-import { View } from 'native-base';
+import { useToast, View } from 'native-base';
 import React, { ReactElement, useCallback } from 'react';
 import { StyleSheet } from 'react-native';
 import DocumentDetails from '../components/DocumentDetails';
@@ -39,6 +39,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
 }): ReactElement => {
 
     const [syncSettings, setSyncSettings, syncStatus] = useSync(repository);
+    const toast = useToast();
 
     const toggleDrawer = useCallback(() => navigation.toggleDrawer(), [navigation]);
 
@@ -48,8 +49,8 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
             .then(({ documents: [doc] }) =>
                 navigation.navigate('Home', { screen: 'DocumentDetails', params: { docId: doc.resource.id } })
             )
-            .catch(() => console.log(`Document with identifier '${data}' not found`));
-    }, [repository, navigation]);
+            .catch(() => toast({ title: `Resource  '${data}' not found`, position: 'center' }));
+    }, [repository, navigation, toast]);
         
 
     return (

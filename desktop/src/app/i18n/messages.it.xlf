@@ -687,7 +687,7 @@
       </trans-unit>
       <trans-unit id="import.nonImportedResources" datatype="html">
         <source>Nicht importierte Ressourcen</source>
-        <target state="new">Nicht importierte Ressourcen</target>
+        <target state="final">Risorse non importate</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
           <context context-type="linenumber">201</context>
@@ -695,7 +695,7 @@
       </trans-unit>
       <trans-unit id="buttons.back" datatype="html">
         <source>Zurück</source>
-        <target state="new">Zurück</target>
+        <target state="final">Indietro</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/import/import.html</context>
           <context context-type="linenumber">217</context>
@@ -3608,7 +3608,7 @@
       </trans-unit>
       <trans-unit id="messages.import.warning.ignoredExistingIdentifier" datatype="html">
         <source>Die Ressource '[0]' wurde nicht importiert, weil bereits eine Ressource mit dem Bezeichner existiert.</source>
-        <target state="new">Die Ressource '[0]' wurde nicht importiert, weil bereits eine Ressource mit dem Bezeichner existiert.</target>
+        <target state="final">La risorsa '[0]' non è stata importata perché esiste già una risorsa con lo stesso identificatore.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -3616,7 +3616,7 @@
       </trans-unit>
       <trans-unit id="messages.import.warning.ignoredExistingIdentifiers" datatype="html">
         <source>[0] Ressourcen wurden nicht importiert, weil bereits Ressourcen mit dem jeweiligen Bezeichner existieren (vollständige Auflistung unten).</source>
-        <target state="new">[0] Ressourcen wurden nicht importiert, weil bereits Ressourcen mit dem jeweiligen Bezeichner existieren (vollständige Auflistung unten).</target>
+        <target state="final">[0] risorse non sono state importate perché esistono già risorse con gli stessi identificatori (elenco completo qui sotto).</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -3624,7 +3624,7 @@
       </trans-unit>
       <trans-unit id="messages.import.warning.ignoredMissingIdentifier" datatype="html">
         <source>Die Ressource '[0]' wurde nicht importiert, weil keine Ressource mit dem Bezeichner gefunden wurde.</source>
-        <target state="new">Die Ressource '[0]' wurde nicht importiert, weil keine Ressource mit dem Bezeichner gefunden wurde.</target>
+        <target state="final">La risorsa '[0]' non è stata importata perché non è stata trovata nessuna risorsa con questo identificatore.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -3632,7 +3632,7 @@
       </trans-unit>
       <trans-unit id="messages.import.warning.ignoredMissingIdentifiers" datatype="html">
         <source>[0] Ressourcen wurden nicht importiert, weil keine Ressourcen mit dem jeweiligen Bezeichner gefunden wurden (vollständige Auflistung unten).</source>
-        <target state="new">[0] Ressourcen wurden nicht importiert, weil keine Ressourcen mit dem jeweiligen Bezeichner gefunden wurden (vollständige Auflistung unten).</target>
+        <target state="final">[0] risorse non sono state importate perché non sono state trovate risorse con questi identificatori (elenco completo qui sotto).</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/messages/m.ts</context>
           <context context-type="linenumber">1</context>

@@ -10,6 +10,13 @@
         }
       }
     },
+    "Bone": {
+      "fields": {
+        "species": {
+          "label": "class"
+        }
+      }
+    }, 
     "Wall_surface": {
       "label": "Wall surface",
       "fields": {

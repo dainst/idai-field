@@ -1,4 +1,5 @@
 import { DrawerNavigationProp } from '@react-navigation/drawer';
+import { createStackNavigator } from '@react-navigation/stack';
 import { Document } from 'idai-field-core';
 import RootDrawerParamList from 'mobile/src/navigation/root-drawer-param-list';
 import { View } from 'native-base';
@@ -9,6 +10,15 @@ import Map from '../components/Map/Map';
 import SearchBar from '../components/SearchBar';
 import useSync from '../hooks/use-sync';
 import { DocumentRepository } from '../repositories/document-repository';
+
+
+export type HomeStackParamList = {
+    Map: undefined;
+    DocumentDetails: { docId: string }
+};
+
+
+const Stack = createStackNavigator<HomeStackParamList>();
 
 
 interface HomeScreenProps {
@@ -24,8 +34,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
     repository,
     navigation,
     documents,
-    issueSearch,
-    selectedDocument
+    issueSearch
 }): ReactElement => {
 
     const [syncSettings, setSyncSettings, syncStatus] = useSync(repository);
@@ -36,11 +45,17 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
         <View flex={ 1 } safeArea>
             <SearchBar { ...{ issueSearch, syncSettings, setSyncSettings, syncStatus, toggleDrawer } } />
             <View style={ styles.container }>
-                { selectedDocument
-                    ? <DocumentDetails document={ selectedDocument } />
-                    : <Map geoDocuments={ documents.filter(doc => doc && doc.resource.geometry ? true : false) } />
-                }
-                
+                <Stack.Navigator initialRouteName="Map">
+                    <Stack.Screen name="Map">
+                        { (props) => <Map { ...props }
+                            geoDocuments={ documents.filter(doc => doc?.resource.geometry) } /> }
+                    </Stack.Screen>
+                    <Stack.Screen name="DocumentDetails">
+                        { (props) => <DocumentDetails { ...props }
+                            docId={ props.route.params.docId }
+                            repository={ repository } /> }
+                    </Stack.Screen>
+                </Stack.Navigator>
             </View>
         </View>
     );

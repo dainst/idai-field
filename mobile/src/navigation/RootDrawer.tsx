@@ -1,6 +1,6 @@
-import { createDrawerNavigator } from '@react-navigation/drawer';
+import { createDrawerNavigator, DrawerNavigationProp } from '@react-navigation/drawer';
 import { Document } from 'idai-field-core';
-import React, { useState } from 'react';
+import React from 'react';
 import DrawerContent from '../components/DrawerContent';
 import useSearch from '../hooks/use-search';
 import { DocumentRepository } from '../repositories/document-repository';
@@ -16,33 +16,30 @@ interface RootDrawerProps {
 }
 
 
-interface DrawerNavigationCloseAction {
-    closeDrawer: () => void;
-}
-
-
 const RootDrawer: React.FC<RootDrawerProps> = ({ repository }) => {
 
     const [documents, issueSearch] = useSearch(repository);
-    const [selectedDocument, setSelectedDocument] = useState<Document>();
 
 
-    const onDocumentSelected = (doc: Document, navigation: DrawerNavigationCloseAction) => {
+    const onDocumentSelected = (doc: Document, navigation: DrawerNavigationProp<RootDrawerParamList, 'Home'>) => {
     
         navigation.closeDrawer();
-        setSelectedDocument(doc);
+        navigation.navigate('Home', { screen: 'DocumentDetails', params: { docId: doc.resource.id } });
     };
 
     return (
-        <Drawer.Navigator drawerContent={ ({ navigation }) =>
-            <DrawerContent documents={ documents } onDocumentSelected={ doc => onDocumentSelected(doc, navigation) } />
-        }>
+        <Drawer.Navigator drawerContent={ ({ navigation }) => {
+
+            const nav = navigation as unknown as DrawerNavigationProp<RootDrawerParamList, 'Home'>;
+            return <DrawerContent
+                documents={ documents }
+                onDocumentSelected={ doc => onDocumentSelected(doc, nav) } />;
+        } }>
             <Drawer.Screen name="Home">
                 { (props) => <HomeScreen { ...props }
                     repository={ repository }
                     documents={ documents }
-                    issueSearch={ issueSearch }
-                    selectedDocument={ selectedDocument } /> }
+                    issueSearch={ issueSearch } /> }
             </Drawer.Screen>
         </Drawer.Navigator>
     );

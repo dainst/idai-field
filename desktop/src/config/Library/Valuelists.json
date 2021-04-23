@@ -20276,6 +20276,55 @@
       }
     }
   },
+  "Bone-species-Meninx": {
+    "creationDate": "23-04-2021",
+    "createdBy": "Lisa Bauer",
+    "description": {
+      "de": "Zum Import von Ossobookdaten verändert, vorher Bone-species-default"
+    },
+    "values": {
+      "Mammalia": {
+        "labels": {
+          "de": "Mammalia"
+        }
+      },
+      "Aves": {
+        "labels": {
+          "de": "Aves"
+        }
+      },
+      "Reptilia": {
+        "labels": {
+          "de": "Reptilia"
+        }
+      },
+      "Pisces/Osteichthyes": {
+        "labels": {
+          "de": "Pisces/Osteichthyes"
+        }
+      },
+      "Pisces/Chondrichthyes": {
+        "labels": {
+          "de": "Pisces/Chondrichthyes"
+        }
+      },
+      "Malacostraca": {
+        "labels": {
+          "de": "Malacostraca"
+        }
+      },
+      "Bivalvia": {
+        "labels": {
+          "de": "Bivalvia"
+        }
+      },
+      "Cephalopoda": {
+        "labels": {
+          "de": "Cephalopoda"
+        }
+      }
+    }
+  },
   "Bone-boneClassification-Meninx": {
     "createdBy": "",
     "creationDate": "",

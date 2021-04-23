@@ -6,6 +6,7 @@ import { M } from '../../messages/m';
 import { Messages } from '../../messages/messages';
 import { Loading } from '../../widgets/loading';
 import { formatContent } from './format-content';
+
 const moment = require('moment');
 
 

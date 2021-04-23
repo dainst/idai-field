@@ -1,7 +1,8 @@
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Document } from 'idai-field-core';
-import { Avatar, Code, Column, Icon, IconButton, Row, Text } from 'native-base';
+import { Avatar, Column, Icon, IconButton, Row, Text } from 'native-base';
 import React, { useEffect, useState } from 'react';
+import { Platform, ScrollView } from 'react-native';
 import { DocumentRepository } from '../repositories/document-repository';
 import { HomeStackParamList } from '../screens/HomeScreen';
 
@@ -30,19 +31,21 @@ const DrawerContent: React.FC<DocumentDetailsProps> = ({ repository, docId, navi
                 icon={ <Icon type="Ionicons" name="chevron-back" /> }
             />
             <Row alignItems="center" px={ 4 } pt={ 4 }>
-                <Avatar size="lg" _text={ styles.avatar.text }>
-                    { doc.resource.type[0].toUpperCase() }
-                </Avatar>
-                <Column ml={ 2 } space={ 2 }>
-                    <Text fontSize="lg" bold underline>
-                        { doc.resource.identifier }
-                    </Text>
-                    <Text>{ doc.resource.shortDescription }</Text>
-                </Column>
+                    <Avatar size="lg" _text={ styles.avatar.text }>
+                        { doc.resource.type[0].toUpperCase() }
+                    </Avatar>
+                    <Column ml={ 2 } space={ 2 }>
+                        <Text fontSize="lg" bold underline>
+                            { doc.resource.identifier }
+                        </Text>
+                        <Text>{ doc.resource.shortDescription }</Text>
+                    </Column>
             </Row>
-            <Code>
-                { JSON.stringify(doc, null, 4) }
-            </Code>
+            <ScrollView>
+                <Text style={ styles.json }>
+                    { JSON.stringify(doc, null, 4) }
+                </Text>
+            </ScrollView>
         </Column>
     );
 };
@@ -53,6 +56,9 @@ const styles = {
         text: {
             fontSize: '50'
         }
+    },
+    json: {
+        fontFamily: (Platform.OS === 'ios') ? 'Menlo' : 'monospace'
     }
 };
 

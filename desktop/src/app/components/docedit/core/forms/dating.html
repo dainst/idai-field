@@ -35,7 +35,7 @@
         <div class="card">
             <div class="card-header">
                 <div>
-                    <select class="form-control" [(ngModel)]="dating.type" name="type">
+                    <select class="form-control" [(ngModel)]="dating.type" name="type" (ngModelChange)="createNewDating()">
                         <option value="range" i18n="@@docedit.forms.dating.period">Zeitraum</option>
                         <option value="exact" i18n="@@docedit.forms.dating.exact">Exakt</option>
                         <option value="before" i18n="@@docedit.forms.dating.before">Vor</option>

@@ -1,15 +1,18 @@
+import { StackNavigationProp } from '@react-navigation/stack';
 import { Document } from 'idai-field-core';
-import { Avatar, Code, Column, Row, Text } from 'native-base';
+import { Avatar, Code, Column, Icon, IconButton, Row, Text } from 'native-base';
 import React, { useEffect, useState } from 'react';
 import { DocumentRepository } from '../repositories/document-repository';
+import { HomeStackParamList } from '../screens/HomeScreen';
 
 interface DocumentDetailsProps {
     repository: DocumentRepository;
     docId: string;
+    navigation: StackNavigationProp<HomeStackParamList, 'DocumentDetails'>;
 }
 
 
-const DrawerContent: React.FC<DocumentDetailsProps> = ({ repository, docId }) => {
+const DrawerContent: React.FC<DocumentDetailsProps> = ({ repository, docId, navigation }) => {
 
     const [doc, setDoc] = useState<Document>();
 
@@ -21,7 +24,11 @@ const DrawerContent: React.FC<DocumentDetailsProps> = ({ repository, docId }) =>
     if (!doc) return null;
 
     return (
-        <Column m={ 4 } space={ 4 }>
+        <Column m={ 4 } space={ 4 } alignItems="flex-start">
+            <IconButton
+                onPress={ () => navigation.navigate('Map') }
+                icon={ <Icon type="Ionicons" name="chevron-back" /> }
+            />
             <Row alignItems="center" px={ 4 } pt={ 4 }>
                 <Avatar size="lg" _text={ styles.avatar.text }>
                     { doc.resource.type[0].toUpperCase() }

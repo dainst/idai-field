@@ -45,7 +45,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
         <View flex={ 1 } safeArea>
             <SearchBar { ...{ issueSearch, syncSettings, setSyncSettings, syncStatus, toggleDrawer } } />
             <View style={ styles.container }>
-                <Stack.Navigator initialRouteName="Map">
+                <Stack.Navigator initialRouteName="Map" screenOptions={ { headerShown: false } }>
                     <Stack.Screen name="Map">
                         { (props) => <Map { ...props }
                             geoDocuments={ documents.filter(doc => doc?.resource.geometry) } /> }

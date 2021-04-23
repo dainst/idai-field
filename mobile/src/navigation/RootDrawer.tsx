@@ -3,7 +3,7 @@ import React from 'react';
 import DrawerContent from '../components/DrawerContent';
 import useSearch from '../hooks/use-search';
 import { DocumentRepository } from '../repositories/document-repository';
-import HomeScreen from '../screens/Home/HomeScreen';
+import HomeScreen from '../screens/HomeScreen';
 import RootDrawerParamList from './root-drawer-param-list';
 
 

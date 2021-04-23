@@ -984,6 +984,14 @@
           <context context-type="linenumber">108</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="config.inputType.dating" datatype="html">
+        <source>Datierungsangabe</source>
+        <target state="final">Datierungsangabe</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/configuration/project-configuration.component.ts</context>
+          <context context-type="linenumber">108</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="config.inputType.date" datatype="html">
         <source>Datum</source>
         <target state="final">Datum</target>
@@ -1281,8 +1289,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="buttons.delete" datatype="html">
-        <source> Löschen </source>
-        <target state="final"> Löschen </target>
+        <source>Löschen</source>
+        <target state="final">Löschen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/overview/deletion/delete-modal.component.ts</context>
           <context context-type="linenumber">28</context>
@@ -4970,7 +4978,7 @@
         <target state="final"> Möchten Sie das markierte Bild wirklich löschen? </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/image/overview/deletion/delete-modal.html</context>
-          <context context-type="linenumber">19</context>
+          <context context-type="linenumber">15</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageOverview.deletionInProgressModal.info.single" datatype="html">

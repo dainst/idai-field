@@ -13,7 +13,7 @@
             </p>
         </div>
         <script>
-            const remote = require('@electron/remote');
+            const remote = window.require('@electron/remote');
 
             document.getElementById('about-version').textContent = 'Version ' + remote.app.getVersion();
 

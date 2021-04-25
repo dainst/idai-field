@@ -1,10 +1,9 @@
-import { ObjectUtils, Name } from 'idai-field-core';
 import { set } from 'tsfun';
+import { ObjectUtils, Name } from 'idai-field-core';
 import { Settings } from './settings';
 import { SettingsSerializer } from './settings-serializer';
 
-
-const {remote} = typeof window !== 'undefined' ? window.require('electron') : require('electron');
+const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
 
 
 /**

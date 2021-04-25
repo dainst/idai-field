@@ -2,11 +2,12 @@ import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Document } from 'idai-field-core';
 import RootDrawerParamList from 'mobile/src/navigation/root-drawer-param-list';
-import { View } from 'native-base';
+import { useToast, View } from 'native-base';
 import React, { ReactElement, useCallback } from 'react';
 import { StyleSheet } from 'react-native';
 import DocumentDetails from '../components/DocumentDetails';
 import Map from '../components/Map/Map';
+import ScanBarcodeButton from '../components/ScanBarcodeButton';
 import SearchBar from '../components/SearchBar';
 import useSync from '../hooks/use-sync';
 import { DocumentRepository } from '../repositories/document-repository';
@@ -38,8 +39,19 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
 }): ReactElement => {
 
     const [syncSettings, setSyncSettings, syncStatus] = useSync(repository);
+    const toast = useToast();
 
     const toggleDrawer = useCallback(() => navigation.toggleDrawer(), [navigation]);
+
+    const onBarCodeScanned = useCallback((data: string) => {
+
+        repository.find({ constraints: { 'identifier:match': data } })
+            .then(({ documents: [doc] }) =>
+                navigation.navigate('Home', { screen: 'DocumentDetails', params: { docId: doc.resource.id } })
+            )
+            .catch(() => toast({ title: `Resource  '${data}' not found`, position: 'center' }));
+    }, [repository, navigation, toast]);
+        
 
     return (
         <View flex={ 1 } safeArea>
@@ -57,6 +69,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
                     </Stack.Screen>
                 </Stack.Navigator>
             </View>
+            <ScanBarcodeButton onBarCodeScanned={ onBarCodeScanned } />
         </View>
     );
 };

@@ -38,7 +38,7 @@ class IdGenerator {
 /**
  * Boot project via settings service such that it immediately starts syncinc with http://localhost:3003/synctestremotedb
  */
-export async function setupSettingsService(pouchdbmanager, pouchdbserver, projectName = 'testdb', startSync = false) {
+export async function setupSettingsService(pouchdbmanager, pouchdbserver, projectName = 'testdb') {
 
     const settingsProvider = new SettingsProvider();
 
@@ -56,7 +56,7 @@ export async function setupSettingsService(pouchdbmanager, pouchdbserver, projec
     const settings = await settingsService.updateSettings({
         languages: ['de', 'en'],
         isAutoUpdateActive: false,
-        isSyncActive: startSync,
+        isSyncActive: false,
         remoteSites: [],
         hostPassword: '',
         syncTarget: new class implements SyncTarget {
@@ -70,20 +70,20 @@ export async function setupSettingsService(pouchdbmanager, pouchdbserver, projec
         username: 'synctestuser'
     });
 
-    await settingsService.bootProjectDb(settings.selectedProject, settings.isSyncActive, true);
+    await settingsService.bootProjectDb(settings.selectedProject, true);
 
     const projectConfiguration = await settingsService.loadConfiguration('src/config/');
     return {settingsService, projectConfiguration, settingsProvider};
 }
 
 
-export async function createApp(projectName = 'testdb', startSync = false) {
+export async function createApp(projectName = 'testdb') {
 
     const pouchdbManager = new PouchdbManager((name: string) => new PouchDB(name));
     const pouchdbServer = new PouchdbServer();
 
     const {settingsService, projectConfiguration, settingsProvider} = await setupSettingsService(
-        pouchdbManager, pouchdbServer, projectName, startSync);
+        pouchdbManager, pouchdbServer, projectName);
 
     const {createdIndexFacade} = IndexerConfiguration.configureIndexers(projectConfiguration);
 

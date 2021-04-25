@@ -1,11 +1,12 @@
-import {Component, Renderer2} from '@angular/core';
-import {Event, NavigationStart, Router} from '@angular/router';
-import {I18n} from '@ngx-translate/i18n-polyfill';
-import {AppController} from '../core/app-controller';
-import {MenuService} from './menu-service';
-import {UtilTranslations} from '../core/util/util-translations';
-import {Messages} from './messages/messages';
+import { Component, Renderer2 } from '@angular/core';
+import { Event, NavigationStart, Router } from '@angular/router';
+import { I18n } from '@ngx-translate/i18n-polyfill';
+import { AppController } from '../core/app-controller';
+import { MenuService } from './menu-service';
+import { UtilTranslations } from '../core/util/util-translations';
+import { Messages } from './messages/messages';
 import { Imagestore } from '../core/images/imagestore/imagestore';
+import { SettingsService } from '../core/settings/settings-service';
 
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
 
@@ -29,7 +30,8 @@ export class AppComponent {
                 private i18n: I18n,
                 private utilTranslations: UtilTranslations,
                 appController: AppController,
-                imagestore: Imagestore) {
+                imagestore: Imagestore,
+                settingsService: SettingsService) {
 
         // To get rid of stale messages when changing routes.
         // Note that if you want show a message to the user
@@ -44,6 +46,7 @@ export class AppComponent {
             }
         });
 
+        settingsService.setupSync();
         appController.setupServer();
         menuService.initialize();
 

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Name, PouchdbManager, SyncService } from 'idai-field-core';
 import { isString } from 'tsfun';
+import { Name, PouchdbManager, SyncService } from 'idai-field-core';
 import { M } from '../../components/messages/m';
 import { Messages } from '../../components/messages/messages';
 import { AppConfigurator } from '../configuration/app-configurator';
@@ -66,18 +66,14 @@ export class SettingsService {
 
 
     public async bootProjectDb(selectedProject: string,
-                               isSyncActive: boolean,
                                destroyBeforeCreate: boolean = false): Promise<void> {
 
         try {
-
             await this.pouchdbManager.createDb(
                 selectedProject,
                 SettingsService.createProjectDocument(this.settingsProvider.getSettings()),
-                destroyBeforeCreate);
-
-            if (isSyncActive) await this.setupSync();
-
+                destroyBeforeCreate
+            );
         } catch (msgWithParams) {
             console.error(msgWithParams);
             throw msgWithParams;

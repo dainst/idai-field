@@ -1,4 +1,5 @@
 import { Observable } from 'rxjs';
+import { filter, flow, isEmpty, keys } from 'tsfun';
 import { Document } from '../../model/document';
 import { NewDocument } from '../../model/new-document';
 import { ObserverUtil } from '../../tools';
@@ -206,18 +207,19 @@ export class PouchdbDatastore {
 
     private async performPut(document: Document) {
 
-        document = PouchdbDatastore.replaceCategoryWithType(document);
+        const cleanedDocument = PouchdbDatastore.cleanUp(document);
 
-        await this.db.put(document, { force: true });
-        return this.fetch(document.resource.id);
+        await this.db.put(cleanedDocument, { force: true });
+        return this.fetch(cleanedDocument.resource.id);
     }
 
 
     private async performBulkDocs(documents: Array<Document>): Promise<Array<Document>> {
 
-        documents = documents.map(PouchdbDatastore.replaceCategoryWithType);
-        await this.db.bulkDocs(documents);
-        return this.bulkFetch(documents.map(document => document.resource.id));
+        const cleanedUpDocuments = documents.map(PouchdbDatastore.cleanUp);
+
+        await this.db.bulkDocs(cleanedUpDocuments);
+        return this.bulkFetch(cleanedUpDocuments.map(document => document.resource.id));
     }
 
 
@@ -316,16 +318,36 @@ export class PouchdbDatastore {
     }
 
 
-    // TODO Remove this in a future version
-    private static replaceCategoryWithType(document: Document): Document {
+    private static cleanUp(document: Document): Document {
 
         const clonedDocument = Document.clone(document);
+        PouchdbDatastore.replaceCategoryWithType(clonedDocument);
+        return PouchdbDatastore.removeEmptyRelationArrays(clonedDocument);
+    }
 
-        if (clonedDocument.resource.category) {
-            clonedDocument.resource.type = clonedDocument.resource.category;
-            delete clonedDocument.resource.category;
+
+    // TODO Remove this in a future version
+    private static replaceCategoryWithType(document: Document) {
+
+        if (document.resource.category) {
+            document.resource.type = document.resource.category;
+            delete document.resource.category;
         }
+    }
 
-        return clonedDocument;
+
+    private static removeEmptyRelationArrays(document: Document): Document {
+
+        return Document.removeRelations(PouchdbDatastore.getEmptyRelationFields(document))(document);
+    }
+
+
+    private static getEmptyRelationFields(document: Document): string[] {
+
+        return flow(
+            document.resource.relations,
+            filter(isEmpty),
+            keys
+        );
     }
 }

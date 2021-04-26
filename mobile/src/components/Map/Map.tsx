@@ -1,9 +1,10 @@
 import { Position } from 'geojson';
 import { Document, FieldGeometry } from 'idai-field-core';
-import { Box, Text } from 'native-base';
+import { Text } from 'native-base';
 import React, { ReactElement } from 'react';
 import { StyleSheet } from 'react-native';
-import Svg, { Circle, G } from 'react-native-svg';
+import { Circle, G } from 'react-native-svg';
+import SvgMap from '../SvgMap/SvgMap';
 import { viewBox } from './constants';
 import { getGeometryBoundings } from './cs-transform-utils';
 import {
@@ -18,18 +19,18 @@ const Map: React.FC<MapProps> = ({ geoDocuments }) => {
     const geometryBoundings = getGeometryBoundings(geoDocuments);
   
     return (
-        <Box style={ styles.container }>
+        <>
             {geoDocuments && geometryBoundings ?
-                <Svg style={ styles.svg } viewBox={ viewBox.join(' ') } >
+                <SvgMap style={ styles.svg } viewBox={ viewBox.join(' ') } >
                     {geoDocuments.map(doc =>(
                         <G key={ doc._id }>
                             {renderGeoSvgElement(doc, transformGeojsonToSvg.bind(this, geometryBoundings) )}
                         </G>))
                     }
-                </Svg> :
+                </SvgMap> :
                 <Text>No docs available</Text>
             }
-        </Box>
+        </>
     );
 };
 
@@ -37,11 +38,12 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
     },
     svg: {
-        height: '100%',
-        width: '100%'
+        flex: 1,
+        borderColor: 'black',
+        borderWidth: 1
     }
 });
 

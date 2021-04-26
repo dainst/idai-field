@@ -1,15 +1,16 @@
-import { StackNavigationProp } from '@react-navigation/stack';
+import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { Document } from 'idai-field-core';
 import { Avatar, Column, Icon, IconButton, Row, Text } from 'native-base';
 import React, { useEffect, useState } from 'react';
 import { Platform, ScrollView } from 'react-native';
 import { DocumentRepository } from '../repositories/document-repository';
-import { HomeStackParamList } from '../screens/HomeScreen';
+import { DocumentsScreenDrawerParamList } from '../screens/DocumentsScreen';
+
 
 interface DocumentDetailsProps {
     repository: DocumentRepository;
     docId: string;
-    navigation: StackNavigationProp<HomeStackParamList, 'DocumentDetails'>;
+    navigation: DrawerNavigationProp<DocumentsScreenDrawerParamList, 'DocumentDetails'>;
 }
 
 
@@ -27,7 +28,7 @@ const DrawerContent: React.FC<DocumentDetailsProps> = ({ repository, docId, navi
     return (
         <Column m={ 4 } space={ 4 } alignItems="flex-start">
             <IconButton
-                onPress={ () => navigation.navigate('Map') }
+                onPress={ () => navigation.navigate('DocumentsMap') }
                 icon={ <Icon type="Ionicons" name="chevron-back" /> }
             />
             <Row alignItems="center" px={ 4 } pt={ 4 }>
@@ -54,7 +55,7 @@ const DrawerContent: React.FC<DocumentDetailsProps> = ({ repository, docId, navi
 const styles = {
     avatar: {
         text: {
-            fontSize: '50'
+            fontSize: '50px'
         }
     },
     json: {

@@ -49,7 +49,7 @@ export module Literature {
                                   getTranslation: (term: Literature.Translations) => string,
                                   includeZenonId: boolean = true): string {
 
-        if (!isValid(literature)) {
+        if (isValid(literature)) {
 
             let additionalInformation: string[] = [];
     

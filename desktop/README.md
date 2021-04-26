@@ -22,7 +22,7 @@ You can install the latest version of iDAI.field by downloading it from the [git
    
 ## Development
 
-Development of iDAI.field works under **MacOS**, **Windows** and **Linux**. In any case, before you start, make sure you have [NodeJS](https://nodejs.org/en/) > 12.0.0 as well as Node Package Manager ([NPM](https://www.npmjs.com/)) installed.  
+Development of iDAI.field works under **MacOS**, **Windows** and **Linux**. In any case, before you start, make sure you have [NodeJS](https://nodejs.org/en/) > 14 as well as Node Package Manager ([NPM](https://www.npmjs.com/)) installed.  
 
 Then clone this repository locally and run the following commands (in the repository root):
 
@@ -67,10 +67,9 @@ For troubleshooting information see [here](docs/unit-test-troubleshooting.md).
 To execute **e2e tests**, run 
 
 ```
-$ npm run e2e [noff|ff]
+$ npm run e2e
 ```
 
-The optional fail fast parameter specifies if test execution stops on the first error (`ff`) or continues until all tests are finished (`noff`). If not specified, the default mode is `noff`. 
 
 ## Packaging
 
@@ -87,4 +86,3 @@ Only packages for the selected target platform are created. When the command has
 Please note that when using **Windows**, due to nested node_modules and the 
 windows default maximum path length you might be running into errors while attempting
 to extract the package. In that case, please use a different archiver, for example [7-Zip](http://www.7-zip.org/download.html).
-

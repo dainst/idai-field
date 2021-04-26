@@ -54,7 +54,7 @@ const DrawerContent: React.FC<DocumentDetailsProps> = ({ repository, docId, navi
 const styles = {
     avatar: {
         text: {
-            fontSize: '50'
+            fontSize: '50px'
         }
     },
     json: {

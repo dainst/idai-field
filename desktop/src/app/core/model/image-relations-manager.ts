@@ -40,8 +40,7 @@ export class ImageRelationsManager {
                 .filter(isDefined))
             .filter(isNot(includedIn(documentsIds))));
 
-        const result = (await this.datastore.getMultiple(idsOfRelatedDocuments))
-            .map(ImageDocument.fromDocument);
+        const result = (await this.datastore.getMultiple(idsOfRelatedDocuments));
 
         return onlyExclusivelyRelated
             ? result.filter(imageDocument => {

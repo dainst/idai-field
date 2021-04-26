@@ -161,7 +161,7 @@ export class ImageOverviewComponent implements OnInit {
 
     private async openConflictResolver(id: string) {
 
-        const image: ImageDocument = ImageDocument.fromDocument(await this.datastore.get(id));
+        const image = (await this.datastore.get(id)) as ImageDocument;
         this.showImage(image, true);
     }
 }

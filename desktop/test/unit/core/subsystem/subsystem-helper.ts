@@ -295,10 +295,7 @@ function makeCreateDocuments(datastore: Datastore,
 
         const storedDocuments = [];
         for (const doc of Object.values(documentsLookup)) {
-            storedDocuments.push(
-                (doc.resource.category === 'Image'? ImageDocument.fromDocument : identity)
-                (await datastore.get(doc.resource.id))
-            );
+            storedDocuments.push( await datastore.get(doc.resource.id) );
         }
         return makeDocumentsLookup(storedDocuments);
     }

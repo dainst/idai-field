@@ -75,19 +75,11 @@ export class DocumentHolder {
         await this.performAssertions();
         this.convertStringsToNumbers();
 
-        const adjust =
-            ProjectCategories.getImageCategoryNames(this.projectConfiguration.getCategoryForest())
-                .includes(this.clonedDocument.resource.category)
-                ? ImageDocument.fromDocument
-                : identity;
-
         const savedDocument: Document =
-            adjust(
                 await this.relationsManager.update(
                     this.cleanup(this.clonedDocument),
                     this.oldVersion,
                     this.inspectedRevisions)
-            );
 
         return this.fetchLatestRevision(savedDocument.resource.id);
     }

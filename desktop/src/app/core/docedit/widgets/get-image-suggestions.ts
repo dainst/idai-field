@@ -35,7 +35,7 @@ export async function getImageSuggestions(datastore: Datastore,
         return [
             undefined,
             [
-               result.documents.map(ImageDocument.fromDocument),
+               result.documents as Array<ImageDocument>,
                result.totalCount
             ]
         ];

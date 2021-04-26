@@ -26,7 +26,7 @@ export class DepictsRelationsViewComponent implements OnChanges {
 
     async ngOnChanges() {
 
-        this.relationTargets = (await this.datastore.getMultiple(this.resource.relations.depicts)).map(FieldDocument.fromDocument);
+        this.relationTargets = (await this.datastore.getMultiple(this.resource.relations.depicts)) as Array<FieldDocument>;
     }
 
 

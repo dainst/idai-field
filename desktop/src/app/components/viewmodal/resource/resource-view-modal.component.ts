@@ -105,9 +105,9 @@ export class ResourceViewModalComponent extends ViewModalComponent {
 
         if (!Document.hasRelations(this.document, 'isDepictedIn')) return [];
 
-        const images: Array<ImageDocument> = (await this.datastore.getMultiple(
+        const images = (await this.datastore.getMultiple(
             this.document.resource.relations['isDepictedIn']
-        )).map(ImageDocument.fromDocument);
+        )) as Array<ImageDocument>;
 
         return images.map((document: ImageDocument) => {
             return { imageId: document.resource.id, document: document }

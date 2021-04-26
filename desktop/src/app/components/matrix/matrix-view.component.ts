@@ -162,7 +162,7 @@ export class MatrixViewComponent implements OnInit {
 
         if (!this.projectConfiguration.getCategory('Trench')) return;
 
-        this.trenches = map((await this.datastore.find({ categories: ['Trench'] })).documents, FieldDocument.fromDocument);
+        this.trenches = (await this.datastore.find({ categories: ['Trench'] })).documents as Array<FieldDocument>;
         if (this.trenches.length === 0) return;
 
         const previouslySelectedTrench = this.trenches
@@ -200,7 +200,7 @@ export class MatrixViewComponent implements OnInit {
             constraints: { 'isRecordedIn:contain': trench.resource.id },
             categories: categories
         });
-        this.totalFeatureDocuments = this.featureDocuments = result.documents.map(FeatureDocument.fromDocument);
+        this.totalFeatureDocuments = this.featureDocuments = result.documents as Array<FeatureDocument>;
 
         this.loading.stop();
     }

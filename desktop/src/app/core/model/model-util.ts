@@ -18,7 +18,8 @@ export module ModelUtil {
     }
 
 
-    export function getRelationTargetId(document: Document, relationName: string,
+    export function getRelationTargetId(document: Document,
+                                        relationName: string,
                                         index: number): ResourceId|undefined {
 
         const targetIds: string[]|undefined = document.resource.relations[relationName];

@@ -111,7 +111,7 @@ export class DocumentsManager {
 
         try {
             if (tsfun.isString(document)) {
-                document = FieldDocument.fromDocument(await this.datastore.get(document));
+                document = (await this.datastore.get(document)) as FieldDocument;
             } else if (document) {
                 await this.datastore.get(document.resource.id);
             }
@@ -165,7 +165,7 @@ export class DocumentsManager {
 
         this.removeNewDocument();
 
-        const documentToSelect = FieldDocument.fromDocument(await this.datastore.get(resourceId));
+        const documentToSelect = await this.datastore.get(resourceId) as FieldDocument;
         this.newDocumentsFromRemote
             = tsfun.subtract([documentToSelect.resource.id])(this.newDocumentsFromRemote);
 
@@ -214,7 +214,7 @@ export class DocumentsManager {
         const queryId = this.currentQueryId;
         const result = await this.createUpdatedDocumentList();
 
-        await this.updateChildrenCountMap(result.documents.map(FieldDocument.fromDocument));
+        await this.updateChildrenCountMap(result.documents as Array<FieldDocument>);
 
         if (this.loading) this.loading.stop();
         if (queryId !== this.currentQueryId) {
@@ -222,7 +222,7 @@ export class DocumentsManager {
             return;
         }
 
-        this.documents = result.documents.map(FieldDocument.fromDocument);
+        this.documents = result.documents as Array<FieldDocument>;
         this.totalDocumentCount = result.totalCount;
 
         this.populateInProgress = false;

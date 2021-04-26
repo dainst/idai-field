@@ -1,8 +1,8 @@
-import { Datastore, FieldDocument, Query } from 'idai-field-core';
+import { Datastore, Document, Query } from 'idai-field-core';
 
 
 export async function getDocumentSuggestions(datastore: Datastore,
-                                             query: Query): Promise<Array<FieldDocument>> {
+                                             query: Query): Promise<Array<Document>> {
 
     return (await datastore
         .find(
@@ -17,6 +17,5 @@ export async function getDocumentSuggestions(datastore: Datastore,
                 }
             }
         ))
-        .documents
-        .map(FieldDocument.fromDocument);
+        .documents;
 }

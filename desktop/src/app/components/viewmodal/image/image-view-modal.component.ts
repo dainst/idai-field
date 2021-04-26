@@ -41,7 +41,7 @@ export class ImageViewModalComponent extends ViewModalComponent {
 
     protected getDocument = () => (this.selectedImage as ImageRowItem).document;
 
-    protected setDocument = (document: Document) => (this.selectedImage as ImageRowItem).document = ImageDocument.fromDocument(document);
+    protected setDocument = (document: Document) => (this.selectedImage as ImageRowItem).document = document;
 
 
     public async initialize(documents: Array<ImageDocument>,

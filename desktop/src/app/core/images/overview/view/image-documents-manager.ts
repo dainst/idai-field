@@ -88,7 +88,7 @@ export class ImageDocumentsManager {
             const {documents, totalCount} = await this.datastore.find(query);
             if (queryId !== this.currentQueryId) return;
 
-            this.documents = documents.map(ImageDocument.fromDocument);
+            this.documents = documents as Array<ImageDocument>;
             this.totalDocumentCount = totalCount;
         } catch (errWithParams) {
             console.error('ERROR with find using query', query);

@@ -130,7 +130,7 @@ export class DoceditImageTabComponent {
         });
 
         Promise.all(imageDocPromises).then(docs => {
-            this.documents = (docs as any).map(ImageDocument.fromDocument);
+            this.documents = docs as Array<ImageDocument>;
             this.documents.sort((a: ImageDocument, b: ImageDocument) => {
                 return SortUtil.alnumCompare(a.resource.identifier, b.resource.identifier);
             });
@@ -145,8 +145,8 @@ export class DoceditImageTabComponent {
             ? this.document.resource.relations[Relations.Image.ISDEPICTEDIN].slice() : [];
 
         for (let i in imageDocuments) {
-            if (relations.indexOf(imageDocuments[i].resource.id as any) == -1) {
-                relations.push(imageDocuments[i].resource.id as any);
+            if (relations.indexOf(imageDocuments[i].resource.id) == -1) {
+                relations.push(imageDocuments[i].resource.id);
             }
         }
 

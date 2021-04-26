@@ -89,7 +89,7 @@ export class ResourcesStateManager {
             }
 
             const state: ViewState = this.resourcesState.operationViewStates[viewName];
-            if (!state.operation) state.operation = FieldDocument.fromDocument(await this.datastore.get(viewName));
+            if (!state.operation) state.operation = (await this.datastore.get(viewName)) as FieldDocument;
             if (!this.tabManager.isOpen('resources', viewName)) state.mode = currentMode;
 
             this.serialize();
@@ -241,7 +241,7 @@ export class ResourcesStateManager {
                                                   documentAsContext: boolean = false) {
 
         const segments = await NavigationPath.makeSegments(
-            document, async resourceId => FieldDocument.fromDocument(await this.datastore.get(resourceId)), documentAsContext
+            document, async resourceId => await this.datastore.get(resourceId) as FieldDocument, documentAsContext
         );
         if (segments.length === 0) return await this.moveInto(undefined);
 
@@ -286,7 +286,7 @@ export class ResourcesStateManager {
 
         for (let id of Object.keys(resourcesState.operationViewStates)) {
             try {
-                resourcesState.operationViewStates[id].operation = FieldDocument.fromDocument(await this.datastore.get(id));
+                resourcesState.operationViewStates[id].operation = await this.datastore.get(id) as FieldDocument;
             } catch (err) {
                 console.warn('Failed to load operation document for view: ' + id);
                 delete resourcesState.operationViewStates[id];
@@ -305,7 +305,7 @@ export class ResourcesStateManager {
         try {
             NavigationPath.setSelectedDocument(
                 navigationPath,
-                FieldDocument.fromDocument(await this.datastore.get(selectedDocument.resource.id))
+                await this.datastore.get(selectedDocument.resource.id) as FieldDocument
             );
         } catch (err) {
             NavigationPath.setSelectedDocument(navigationPath, undefined);

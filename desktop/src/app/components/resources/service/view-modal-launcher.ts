@@ -64,7 +64,7 @@ export class ViewModalLauncher {
     private async getImageDocuments(relations: string[]|undefined): Promise<Array<ImageDocument>> {
 
         return relations
-            ? (await this.datastore.getMultiple(relations)).map(ImageDocument.fromDocument)
+            ? (await this.datastore.getMultiple(relations)) as Array<ImageDocument>
             : [];
     }
 }

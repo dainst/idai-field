@@ -176,7 +176,6 @@ export class TypeRelationPickerComponent {
         const result = await this.datastore.find(query);
         this.availableCatalogs = flow(
             result.documents,
-            map(FieldDocument.fromDocument),
             map(to(Document.RESOURCE))
         );
     }

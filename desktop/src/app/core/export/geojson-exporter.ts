@@ -26,7 +26,7 @@ export module GeoJsonExporter {
 
         const query: Query = createQuery(operationId);
         const result = await datastore.find(query);
-        return result.documents.map(FieldDocument.fromDocument);
+        return result.documents as Array<FieldDocument>;
     }
 
 

@@ -229,7 +229,7 @@ export class ImageUploader {
                         })
                         .then(doc => that.imagestore.create(doc.resource.id, reader.result as any, true).then(async () =>
                             // to refresh the thumbnail in cache, which is done to prevent a conflict afterwards
-                            ImageDocument.fromDocument(await this.datastore.get(doc.resource.id, { skipCache: true }))
+                            (await this.datastore.get(doc.resource.id, { skipCache: true })) as ImageDocument
                         ))
                         .then(() =>
                             resolve(undefined)

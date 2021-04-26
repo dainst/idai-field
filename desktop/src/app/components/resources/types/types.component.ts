@@ -253,14 +253,14 @@ export class TypesComponent extends BaseList implements OnChanges {
 
         if (!this.mainDocument) return {};
 
-        const subtypesArray = map((await this.datastore.find({
+        const subtypesArray = (await this.datastore.find({
             constraints: {
                 'liesWithin:contain': {
                     value: this.mainDocument.resource.id,
                     searchRecursively: true
                 }
             }
-        })).documents, FieldDocument.fromDocument);
+        })).documents as Array<FieldDocument>;
 
         return makeLookup([Document.RESOURCE, Resource.ID])(subtypesArray);
     }
@@ -278,7 +278,7 @@ export class TypesComponent extends BaseList implements OnChanges {
             set as any // TODO any
         );
 
-        return map(await this.datastore.getMultiple(linkedResourceIds), FieldDocument.fromDocument);
+        return (await this.datastore.getMultiple(linkedResourceIds)) as Array<FieldDocument>;
     }
 
 

@@ -307,7 +307,7 @@ export class ExportComponent implements OnInit {
             return (await this.datastore.find({
                 categories: ['TypeCatalog'],
                 constraints: { 'project:exist': 'UNKNOWN' }
-            })).documents.map(FieldDocument.fromDocument);
+            })).documents as Array<FieldDocument>;
         } catch (msgWithParams) {
             this.messages.add(msgWithParams);
             return [];
@@ -320,7 +320,7 @@ export class ExportComponent implements OnInit {
         try {
             return (await this.datastore.find({
                 categories: ProjectCategories.getOperationCategoryNames(this.projectConfiguration.getCategoryForest())
-            })).documents.map(FieldDocument.fromDocument);
+            })).documents as Array<FieldDocument>;
         } catch (msgWithParams) {
             this.messages.add(msgWithParams);
             return [];

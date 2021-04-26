@@ -103,7 +103,7 @@ export class SearchSuggestionsComponent implements OnChanges {
             return this.suggestedDocuments = [];
         }
 
-        this.suggestedDocuments = (await this.datastore.find(this.makeQuery())).documents.map(FieldDocument.fromDocument);
+        this.suggestedDocuments = (await this.datastore.find(this.makeQuery())).documents as Array<FieldDocument>;
         this.selectedSuggestion = undefined;
     }
 

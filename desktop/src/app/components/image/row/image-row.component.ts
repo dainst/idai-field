@@ -191,10 +191,10 @@ export class ImageRowComponent implements OnChanges {
 
     private async fetchImageDocuments(images: Array<ImageRowItem>): Promise<Array<ImageDocument>> {
 
-        const imageDocuments: Array<ImageDocument> = (await this.datastore.getMultiple(
+        const imageDocuments = (await this.datastore.getMultiple(
             images.filter(image => image.imageId !== PLACEHOLDER)
                 .map(to('imageId'))
-        )).map(ImageDocument.fromDocument);
+        )) as Array<ImageDocument>;
 
         return images.map(image => {
             const document: ImageDocument|undefined

@@ -186,7 +186,7 @@ export module NavigationPath {
     }
 
 
-    export async function makeSegments(document: FieldDocument, get: (_: string) => Promise<FieldDocument>,
+    export async function makeSegments(document: Document, get: (_: string) => Promise<FieldDocument>,
                                        documentAsContext: boolean = false): Promise<Array<NavigationPathSegment>> {
 
         const segments: Array<NavigationPathSegment> = [];

@@ -75,8 +75,8 @@ export class ChildrenViewComponent implements OnChanges {
 
         if (!document) return [];
 
-        return map((await this.datastore.find({constraints: {
+        return (await this.datastore.find({constraints: {
                 'liesWithin:contain' : document.resource.id
-            }}, true)).documents, FieldDocument.fromDocument);
+            }}, true)).documents as Array<FieldDocument>;
     }
 }

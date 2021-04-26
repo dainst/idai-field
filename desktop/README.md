@@ -22,7 +22,7 @@ You can install the latest version of iDAI.field by downloading it from the [git
    
 ## Development
 
-Development of iDAI.field works under **MacOS**, **Windows** and **Linux**. In any case, before you start, make sure you have [NodeJS](https://nodejs.org/en/) > 14 as well as Node Package Manager ([NPM](https://www.npmjs.com/)) installed.  
+Development of iDAI.field works under **MacOS**, **Windows** and **Linux**. In any case, before you start, make sure you have [NodeJS](https://nodejs.org/en/) >= 14 as well as Node Package Manager ([NPM](https://www.npmjs.com/)) installed.  
 
 Then clone this repository locally and run the following commands (in the repository root):
 

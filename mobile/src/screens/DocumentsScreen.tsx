@@ -1,88 +1,57 @@
-import { DrawerNavigationProp } from '@react-navigation/drawer';
-import { createStackNavigator } from '@react-navigation/stack';
+import { NavigatorScreenParams } from '@react-navigation/core';
+import { createDrawerNavigator, DrawerNavigationProp } from '@react-navigation/drawer';
 import { Document } from 'idai-field-core';
-import RootDrawerParamList from 'mobile/src/navigation/root-drawer-param-list';
-import { useToast, View } from 'native-base';
-import React, { ReactElement, useCallback } from 'react';
-import { StyleSheet } from 'react-native';
-import DocumentDetails from '../components/DocumentDetails';
-import Map from '../components/Map/Map';
-import ScanBarcodeButton from '../components/ScanBarcodeButton';
-import SearchBar from '../components/SearchBar';
-import useSync from '../hooks/use-sync';
+import React from 'react';
+import DocumentsMap, { DocumentsMapStackParamList } from '../components/DocumentsMap';
+import DrawerContent from '../components/DrawerContent';
+import useSearch from '../hooks/use-search';
 import { DocumentRepository } from '../repositories/document-repository';
 
 
-export type DocumentsStackParamList = {
-    Map: undefined;
-    DocumentDetails: { docId: string }
+export type DocumentsScreenDrawerParamList = {
+    Documents: NavigatorScreenParams<DocumentsMapStackParamList>;
 };
 
 
-const Stack = createStackNavigator<DocumentsStackParamList>();
+const Drawer = createDrawerNavigator<DocumentsScreenDrawerParamList>();
 
 
 interface DocumentsScreenProps {
     repository: DocumentRepository;
-    documents: Document[];
-    issueSearch: (q: string) => void;
-    navigation: DrawerNavigationProp<RootDrawerParamList, 'Documents'>;
-    selectedDocument?: Document;
 }
 
 
-const DocumentsScreen: React.FC<DocumentsScreenProps> = ({
-    repository,
-    navigation,
-    documents,
-    issueSearch
-}): ReactElement => {
+const DocumentsScreen: React.FC<DocumentsScreenProps> = ({ repository }) => {
 
-    const [syncSettings, setSyncSettings, syncStatus] = useSync(repository);
-    const toast = useToast();
+    const [documents, issueSearch] = useSearch(repository);
 
-    const toggleDrawer = useCallback(() => navigation.toggleDrawer(), [navigation]);
 
-    const onBarCodeScanned = useCallback((data: string) => {
-
-        repository.find({ constraints: { 'identifier:match': data } })
-            .then(({ documents: [doc] }) =>
-                navigation.navigate('Documents', { screen: 'DocumentDetails', params: { docId: doc.resource.id } })
-            )
-            .catch(() => toast({ title: `Resource  '${data}' not found`, position: 'center' }));
-    }, [repository, navigation, toast]);
-        
+    const onDocumentSelected = (
+            doc: Document,
+            navigation: DrawerNavigationProp<DocumentsScreenDrawerParamList, 'Documents'>
+    ) => {
+    
+        navigation.closeDrawer();
+        navigation.navigate('Documents', { screen: 'DocumentDetails', params: { docId: doc.resource.id } });
+    };
 
     return (
-        <View flex={ 1 } safeArea>
-            <SearchBar { ...{ issueSearch, syncSettings, setSyncSettings, syncStatus, toggleDrawer } } />
-            <View style={ styles.container }>
-                <Stack.Navigator initialRouteName="Map" screenOptions={ { headerShown: false } }>
-                    <Stack.Screen name="Map">
-                        { (props) => <Map { ...props }
-                            geoDocuments={ documents.filter(doc => doc?.resource.geometry) } /> }
-                    </Stack.Screen>
-                    <Stack.Screen name="DocumentDetails">
-                        { (props) => <DocumentDetails { ...props }
-                            docId={ props.route.params.docId }
-                            repository={ repository } /> }
-                    </Stack.Screen>
-                </Stack.Navigator>
-            </View>
-            <ScanBarcodeButton onBarCodeScanned={ onBarCodeScanned } />
-        </View>
+        <Drawer.Navigator drawerContent={ ({ navigation }) => {
+
+            const nav = navigation as unknown as DrawerNavigationProp<DocumentsScreenDrawerParamList, 'Documents'>;
+            return <DrawerContent
+                documents={ documents }
+                onDocumentSelected={ doc => onDocumentSelected(doc, nav) } />;
+        } }>
+            <Drawer.Screen name="Documents">
+                { (props) => <DocumentsMap { ...props }
+                    repository={ repository }
+                    documents={ documents }
+                    issueSearch={ issueSearch } /> }
+            </Drawer.Screen>
+        </Drawer.Navigator>
     );
 };
-
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
-    input: {
-        backgroundColor: 'white',
-    }
-});
 
 
 export default DocumentsScreen;

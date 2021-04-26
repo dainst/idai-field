@@ -1,11 +1,11 @@
-import { ObjectUtils, Relations, typeOf } from 'idai-field-core';
+import { Relations, typeOf } from 'idai-field-core';
 import { NewResource, Resource } from 'idai-field-core';
 import {
     Associative, cond, detach, dropRightWhile,
     filter, flow, forEach, includedIn, is, isArray, isAssociative,
     isEmpty, isNot,
     isnt, isObject, Map,
-    update, values
+    update, values, clone
 } from 'tsfun';
 import { hasEmptyAssociatives } from '../../util';
 import { ImportErrors } from '../import-errors';
@@ -41,7 +41,7 @@ export function mergeResource(into: Resource, additional: NewResource): Resource
 
         const target =
             overwriteOrDeleteProperties(
-                ObjectUtils.clone(into),
+                clone(into),
                 additional,
                 Resource.CONSTANT_FIELDS.concat([GEOMETRY]));
 

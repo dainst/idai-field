@@ -1,5 +1,4 @@
-import { Category, ObjectUtils, FieldDocument, ISRECORDEDIN_CONTAIN, Named, Query } from 'idai-field-core';
-import { Document } from 'idai-field-core';
+import { Category, Document, FieldDocument, ISRECORDEDIN_CONTAIN, Named, Query } from 'idai-field-core';
 import { aFlow, aMap, includedIn, isNot, map, on, pairWith, to, val } from 'tsfun';
 import { CategoryCount, Find, GetIdentifierForId, PerformExport } from './export-helper';
 
@@ -99,7 +98,7 @@ export module ExportRunner {
 
         return async (document: FieldDocument): Promise<FieldDocument> => {
 
-            const clonedDocument: FieldDocument = ObjectUtils.clone(document); // because we will modify it
+            const clonedDocument: FieldDocument = Document.clone(document);
             if (!clonedDocument.resource.relations) return clonedDocument;
 
             for (let relation of Object.keys(clonedDocument.resource.relations)) {

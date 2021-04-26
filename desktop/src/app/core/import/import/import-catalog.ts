@@ -1,5 +1,5 @@
-import { Document, Datastore, Relations, Lookup, ObjectUtils, ON_RESOURCE_ID } from 'idai-field-core';
-import { aMap, isArray, isNot, isUndefinedOrEmpty, set, subtract, to, undefinedOrEmpty } from 'tsfun';
+import { Document, Datastore, Relations, Lookup, ON_RESOURCE_ID } from 'idai-field-core';
+import { aMap, isArray, clone, isNot, isUndefinedOrEmpty, set, subtract, to, undefinedOrEmpty } from 'tsfun';
 import { Imagestore } from '../../images/imagestore/imagestore';
 import { ImageRelationsManager } from '../../model/image-relations-manager';
 import { RelationsManager } from '../../model/relations-manager';
@@ -244,17 +244,17 @@ function importOneDocument(services: ImportCatalogServices,
         delete document[Document.CREATED];
 
         const existingDocument: Document | undefined = await existingDocuments[document.resource.id];
-        const updateDocument = ObjectUtils.clone(existingDocument ?? document);
+        const updateDocument = Document.clone(existingDocument ?? document);
 
         if (document.project === context.selectedProject) delete updateDocument.project;
 
         if (existingDocument) {
             if (existingDocument.resource.category === 'Type' || existingDocument.resource.category === 'TypeCatalog') {
-                const oldRelations = ObjectUtils.clone(existingDocument.resource.relations[Relations.Type.HASINSTANCE]);
-                updateDocument.resource = ObjectUtils.clone(document.resource);
+                const oldRelations = clone(existingDocument.resource.relations[Relations.Type.HASINSTANCE]);
+                updateDocument.resource = clone(document.resource);
                 updateDocument.resource.relations[Relations.Type.HASINSTANCE] = oldRelations;
             } else {
-                updateDocument.resource = ObjectUtils.clone(document.resource);
+                updateDocument.resource = clone(document.resource);
             }
             await services.datastore.update(updateDocument, context.username);
         } else {

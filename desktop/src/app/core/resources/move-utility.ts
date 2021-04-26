@@ -1,6 +1,6 @@
 import {flatten, intersection, set} from 'tsfun';
 import {Document} from 'idai-field-core';
-import {FieldDocument, IndexFacade, Constraint, Category, ObjectUtils} from 'idai-field-core';
+import {FieldDocument, IndexFacade, Constraint, Category} from 'idai-field-core';
 import {RelationsManager} from '../model/relations-manager';
 import {ProjectConfiguration} from '../configuration/project-configuration';
 
@@ -14,7 +14,7 @@ export module MoveUtility {
                                        relationsManager: RelationsManager,
                                        isRecordedInTargetCategories: Array<Category>) {
 
-        const oldVersion: FieldDocument = ObjectUtils.clone(document);
+        const oldVersion = Document.clone(document);
         updateRelations(document, newParent, isRecordedInTargetCategories);
         await relationsManager.update(document, oldVersion);
     }
@@ -36,7 +36,7 @@ export module MoveUtility {
                                                projectConfiguration: ProjectConfiguration,
                                                isInOverview: boolean): Array<Category> {
 
-        const result: Array<Category> = set(getIsRecordedInTargetCategories(documents, projectConfiguration)
+        const result = set(getIsRecordedInTargetCategories(documents, projectConfiguration)
             .concat(getLiesWithinTargetCategories(documents, projectConfiguration)));
 
         return (isProjectOptionAllowed(documents, isInOverview))
@@ -83,7 +83,7 @@ export module MoveUtility {
 
     function getResourceIdsToSubtract(document: FieldDocument, indexFacade: IndexFacade): string[] {
 
-        const ids: string[] = [document.resource.id];
+        const ids = [document.resource.id];
 
         const parentId: string|undefined = getParentId(document);
         if (parentId) ids.push(parentId);

@@ -165,7 +165,7 @@ export class RelationsManager {
                 .filter(isNot(on(['resource', 'relations', RECORDED_IN], sameset)(document) as any));
 
         for (let docToCorrect of docsToCorrect) {
-            const cloned = ObjectUtils.clone(docToCorrect);
+            const cloned = Document.clone(docToCorrect);
             cloned.resource.relations[RECORDED_IN] = document.resource.relations[RECORDED_IN];
             await this.datastore.update(cloned, username, undefined);
         }

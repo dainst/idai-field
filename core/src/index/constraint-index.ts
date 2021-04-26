@@ -1,5 +1,6 @@
 import {isArray, map, flatten, flatMap, flow, cond, not, to, isDefined, singleton, Map, filter,
-    subtract} from 'tsfun';
+    subtract,
+    clone} from 'tsfun';
 import {Document} from '../model/document';
 import {Resource} from '../model/resource';
 import { Category } from '../model/category';
@@ -296,7 +297,7 @@ export module ConstraintIndex {
 
     function getUniqueFields(fields: Array<FieldDefinition>): Array<FieldDefinition> {
 
-        return ObjectUtils.clone(
+        return clone(
             fields.filter((field: FieldDefinition, index: number, self: Array<FieldDefinition>) => {
                 return self.indexOf(
                     self.find((f: FieldDefinition) => {

@@ -1,7 +1,7 @@
 import {Component, Input} from '@angular/core';
-import {is, remove} from 'tsfun';
+import {is, remove, clone} from 'tsfun';
 import {Literature, Resource} from 'idai-field-core';
-import {FieldDefinition, ObjectUtils} from 'idai-field-core';
+import {FieldDefinition} from 'idai-field-core';
 import {UtilTranslations} from '../../../../core/util/util-translations';
 
 
@@ -35,7 +35,7 @@ export class LiteratureComponent {
 
     public startEditing(literature: Literature) {
 
-        this.inEditing.push({ original: literature, clone: ObjectUtils.clone(literature) });
+        this.inEditing.push({ original: literature, clone: clone(literature) });
     }
 
 

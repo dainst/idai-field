@@ -1,6 +1,5 @@
 import {takeWhile, on, is, takeUntil} from 'tsfun';
 import {Document} from 'idai-field-core';
-import {ObjectUtils} from 'idai-field-core';
 import {ViewContext} from './view-context';
 import {FieldDocument} from 'idai-field-core';
 import {differentFrom, NavigationPathSegment, toResourceId} from './navigation-path-segment';
@@ -32,6 +31,12 @@ export module NavigationPath {
             segments: [],
             basicContext: ViewContext.empty(),
         };
+    }
+
+
+    export function clone(navigationPath: NavigationPath): NavigationPath {
+
+        return Document.clone(navigationPath as any) as any;
     }
 
 
@@ -129,8 +134,8 @@ export module NavigationPath {
 
     export function shorten(navPath: NavigationPath, firstToBeExcluded: NavigationPathSegment): NavigationPath {
 
-        const oldNavPath = ObjectUtils.clone(navPath);
-        (navPath as any /* cast ok on construction */).segments
+        const oldNavPath = NavigationPath.clone(navPath);
+        navPath.segments
             = takeWhile(differentFrom(firstToBeExcluded), oldNavPath.segments);
 
         if (navPath.selectedSegmentId) {
@@ -138,9 +143,7 @@ export module NavigationPath {
             const stillSelectedSegment = navPath.segments
                 .find(_ => _.document.resource.id === navPath.selectedSegmentId);
 
-            if (!stillSelectedSegment) {
-                (navPath as any /* cast ok on construction */).selectedSegmentId = undefined;
-            }
+            if (!stillSelectedSegment) navPath.selectedSegmentId = undefined;
         }
 
         return navPath;

@@ -140,7 +140,7 @@ describe('RelationsManager', () => {
     it('should save the related document for a new document', async done => {
 
         doc.resource.relations['BelongsTo'] = ['2'];
-        const clonedDoc = ObjectUtils.clone(doc);
+        const clonedDoc = Document.clone(doc);
         delete doc.resource.id; // make it a 'new' document
 
         mockDatastore.create.and.returnValue(Promise.resolve(clonedDoc)); // has resourceId, simulates create

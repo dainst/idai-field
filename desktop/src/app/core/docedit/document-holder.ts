@@ -1,4 +1,4 @@
-import { Category, Document, Datastore, FieldDefinition, NewDocument, ObjectUtils, Resource, ImageDocument } from 'idai-field-core';
+import { Category, Document, Datastore, FieldDefinition, NewDocument, Resource, ImageDocument } from 'idai-field-core';
 import { and, equal, filter, flow, identity, includedIn, isEmpty, isNot, isObject, isString, keys } from 'tsfun';
 import {ProjectCategories} from '../configuration/project-categories';
 import { ProjectConfiguration } from '../configuration/project-configuration';
@@ -61,8 +61,8 @@ export class DocumentHolder {
 
     public setDocument(document: Document) {
 
-        this.oldVersion = ObjectUtils.clone(document);
-        this.clonedDocument = ObjectUtils.clone(document);
+        this.oldVersion = Document.clone(document);
+        this.clonedDocument = Document.clone(document);
         this.inspectedRevisions = [];
     };
 

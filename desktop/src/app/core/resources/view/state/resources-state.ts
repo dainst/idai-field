@@ -57,7 +57,7 @@ export module ResourcesState {
 
     export function getNavigationPath(state: ResourcesState): NavigationPath {
 
-        const path: NavigationPath = viewState(state).navigationPath;
+        const path = viewState(state).navigationPath;
         return path ? path : NavigationPath.empty();
     }
 

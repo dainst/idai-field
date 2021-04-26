@@ -1,4 +1,4 @@
-import { ObjectUtils, Lookup, ResourceId } from 'idai-field-core';
+import { Lookup, ResourceId } from 'idai-field-core';
 import { Document } from 'idai-field-core';
 import { aMap, aReduce, compose, flatten, flow, isDefined, lookup, map, Pair, remove, subtract, union } from 'tsfun';
 import { ImportErrors as E } from '../import-errors';
@@ -35,7 +35,7 @@ function getTargetDocuments(get: (_: string) => Promise<Document>) {
             targetDocIds,
             async (targetId: ResourceId) => {
                 if (!documentsById[targetId]) try {
-                    documentsById[targetId] = ObjectUtils.clone(await get(targetId));
+                    documentsById[targetId] = Document.clone(await get(targetId));
                 } catch {
                     throw [E.MISSING_RELATION_TARGET, targetId];
                 }

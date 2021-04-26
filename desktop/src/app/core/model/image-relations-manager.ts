@@ -98,7 +98,7 @@ export class ImageRelationsManager {
         if (projects[0] !== undefined) throw 'illegal argument - link will only operate on owned documents';
 
         for (let imageDocument of selectedImages) {
-            const oldVersion: ImageDocument = ObjectUtils.clone(imageDocument);
+            const oldVersion = Document.clone(imageDocument);
             const depictsRelations: string[] = imageDocument.resource.relations.depicts;
 
             if (depictsRelations.indexOf(targetDocument.resource.id) === -1) {
@@ -115,7 +115,7 @@ export class ImageRelationsManager {
     public async unlink(...selectedImages: Array<ImageDocument>) {
 
         for (let document of selectedImages) {
-            const oldVersion: ImageDocument = ObjectUtils.clone(document);
+            const oldVersion = Document.clone(document);
             document.resource.relations.depicts = [];
 
             await this.relationsManager.update(

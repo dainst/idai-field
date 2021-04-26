@@ -1,5 +1,5 @@
 import {cond, defined, flow, isNot, Map, Mapping, on, isUndefined, copy,
-    separate, detach, map, update, reduce} from 'tsfun';
+    separate, detach, map, update, reduce, clone} from 'tsfun';
 import {Named, Tree, CategoryDefinition, ObjectUtils, Forest, Category, Group, Groups, FieldDefinition} from 'idai-field-core';
 import {MDInternal} from '../../../components/messages/md-internal';
 import {linkParentAndChildInstances} from '../category-forest';
@@ -84,7 +84,7 @@ function addChildCategory(categoryTree: Forest<Category>,
 
 function sortGroupFields(group: Group): Group {
 
-    const clonedGroup: Group = ObjectUtils.clone(group);
+    const clonedGroup: Group = clone(group);
     clonedGroup.fields = sortGroups(clonedGroup.fields, clonedGroup.name);
 
     return clonedGroup;
@@ -126,7 +126,7 @@ function makeChildFields(category: Category, child: Category): Array<FieldDefini
 function getCombinedFields(parentFields: Array<FieldDefinition>,
                            childFields: Array<FieldDefinition>): Array<FieldDefinition> {
 
-    const fields: Array<FieldDefinition> = ObjectUtils.clone(parentFields);
+    const fields = clone(parentFields);
 
     childFields.forEach(childField => {
         const field: FieldDefinition|undefined

@@ -1,5 +1,5 @@
 import {ImportErrors as E} from '../../../../../src/app/core/import/import/import-errors';
-import {Relations, ObjectUtils} from 'idai-field-core';
+import {Relations, Document} from 'idai-field-core';
 import IS_BELOW = Relations.Position.BELOW;
 import IS_ABOVE = Relations.Position.ABOVE;
 import IS_AFTER = Relations.Time.AFTER;
@@ -245,7 +245,7 @@ describe('completeInverseRelations', () => {
         doc2.resource.relations[IS_ABOVE] = ['1'];
         doc1.resource.relations[IS_BELOW] = ['2'];
 
-        const doc1New = ObjectUtils.clone(doc1);
+        const doc1New = Document.clone(doc1);
         doc1New.resource.relations = { isRecordedIn: [] };
 
         const documents = completeInverseRelations(

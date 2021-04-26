@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { DatastoreErrors, Document, Datastore, FieldDefinition, FieldDocument, Group, Groups, ImageDocument, ObjectUtils } from 'idai-field-core';
+import { DatastoreErrors, Document, Datastore, FieldDefinition, FieldDocument, Group, Groups, ImageDocument } from 'idai-field-core';
 import { includedIn, isNot } from 'tsfun';
 import { ProjectConfiguration } from '../../core/configuration/project-configuration';
 import { DoceditErrors } from '../../core/docedit/docedit-errors';
@@ -154,7 +154,7 @@ export class DoceditComponent {
         this.operationInProgress = numberOfDuplicates ? 'duplicate' : 'save';
         this.loading.start('docedit');
 
-        const documentBeforeSave: Document = ObjectUtils.clone(this.documentHolder.clonedDocument);
+        const documentBeforeSave: Document = Document.clone(this.documentHolder.clonedDocument);
 
         try {
             const documentAfterSave: Document = numberOfDuplicates
@@ -333,8 +333,8 @@ export class DoceditComponent {
 
     private static detectSaveConflicts(documentBeforeSave: Document, documentAfterSave: Document): boolean {
 
-        const conflictsBeforeSave: string[] = documentBeforeSave._conflicts as string[];
-        const conflictsAfterSave: string[] = documentAfterSave._conflicts as string[];
+        const conflictsBeforeSave: string[] = documentBeforeSave._conflicts;
+        const conflictsAfterSave: string[] = documentAfterSave._conflicts;
 
         if (!conflictsBeforeSave && conflictsAfterSave && conflictsAfterSave.length >= 1) return true;
         if (!conflictsAfterSave) return false;

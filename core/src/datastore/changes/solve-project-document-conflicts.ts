@@ -1,7 +1,6 @@
 import { append, assoc, compose, detach, equal, filter, flow, isDefined, isEmpty, left, lookup, map, Pair, right, to, union as tsfunUnion, update } from 'tsfun';
 import { Document, RevisionId } from '../../model/document';
 import { Resource } from '../../model/resource';
-import { ObjectUtils } from '../../tools/object-utils';
 import { withDissoc } from '../../tools/utils';
 import { dissocIndices, last2, replaceLastPair, sortRevisionsByLastModified } from '../helpers';
 import RESOURCE = Document.RESOURCE;
@@ -27,7 +26,7 @@ export function solveProjectDocumentConflict(latestRevision: Document,
                                              conflictedRevisions: Array<Document>)
         : [Document, RevisionId[] /* of succesfully resolved conflicts */] {
 
-    const clonedLatestRevision = ObjectUtils.clone(latestRevision);
+    const clonedLatestRevision = Document.clone(latestRevision);
     const conflictedSortedRevisions = sortRevisionsByLastModified(conflictedRevisions);
 
     const [resource, revisionIds] = resolve(

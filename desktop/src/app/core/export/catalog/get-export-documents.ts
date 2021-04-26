@@ -1,4 +1,4 @@
-import { Document, Relations, Name, ObjectUtils, ON_RESOURCE_ID, ResourceId, RESOURCE_DOT_IDENTIFIER, toResourceId } from 'idai-field-core';
+import { Document, Relations, Name, ON_RESOURCE_ID, ResourceId, RESOURCE_DOT_IDENTIFIER, toResourceId } from 'idai-field-core';
 import { Either, subtract, to } from 'tsfun';
 import { ImageRelationsManager } from '../../model/image-relations-manager';
 import { RelationsManager } from '../../model/relations-manager';
@@ -13,9 +13,9 @@ export async function getExportDocuments(relationsManager: RelationsManager,
                                          project: Name)
     : Promise<Either<string[] /* msgWithParams */, [Array<Document>, Array<ResourceId>]>> {
 
-    const catalogAndTypes = ObjectUtils.clone(await relationsManager.get(catalogId, { descendants: true }));
+    const catalogAndTypes = (await relationsManager.get(catalogId, { descendants: true })).map(Document.clone);
 
-    const linkedImages = ObjectUtils.clone(await imageRelationsManager.getLinkedImages(catalogAndTypes));
+    const linkedImages = (await imageRelationsManager.getLinkedImages(catalogAndTypes)).map(Document.clone);
     const exclusivelyLinkedImages = await imageRelationsManager.getLinkedImages(catalogAndTypes, true);
 
     if (linkedImages.length !== exclusivelyLinkedImages.length) {

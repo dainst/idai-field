@@ -1,8 +1,8 @@
 import {Resource} from './resource';
-import {filter, to} from 'tsfun';
+import {filter, to, isAssociative, isPrimitive, map} from 'tsfun';
 import {NewDocument} from './new-document';
 import {Action} from './action';
-
+import {ObjectUtils} from '../tools/object-utils';
 
 export type RevisionId = string;
 export type DocumentId = string;
@@ -19,7 +19,7 @@ export interface Document extends NewDocument {
 }
 
 
-export const toResourceId = (doc: Document): Resource.Id => to(['resource','id'])(doc);
+export const toResourceId = (doc: Document): Resource.Id => to([Document.RESOURCE, Resource.ID])(doc);
 
 
 /**
@@ -32,6 +32,18 @@ export module Document {
     export const PROJECT = 'project';
     export const RESOURCE = 'resource';
     export const _REV = '_rev';
+
+
+    export function clone<D extends NewDocument>(document: D): D {
+    
+        if (isAssociative(document)) return map(document, clone as any) as any;
+        if (isPrimitive(document)) return document;
+        
+        return (document as any) instanceof Date
+            ? new Date(document)
+            : ObjectUtils.jsonClone(document);
+    }
+
 
     export function getLastModified(document: Document): Action {
 

@@ -44,7 +44,7 @@ const SvgMap: React.FC<SvgProps> = ( props ) => {
             translateX: pan.x
           }
         ]
-      };
+    };
 
     return (
         <Animated.View style={ styles.animatedViewStyle } { ...panResponder.panHandlers }>

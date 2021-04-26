@@ -61,7 +61,10 @@
                 "node_modules/@mdi/font/scss/"
               ]
             },
-            "scripts": []
+            "scripts": [],
+            "allowedCommonJsDependencies": [
+              "idai-field-core"
+            ]
           },
           "configurations": {
             "en": {

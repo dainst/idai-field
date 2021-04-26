@@ -1,7 +1,8 @@
-import {Component, Input, Output, EventEmitter, OnChanges, ViewChild} from '@angular/core';
-import {Loading} from '../../widgets/loading';
-import {Category} from 'idai-field-core';
-import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
+import { Component, Input, Output, EventEmitter, OnChanges, ViewChild } from '@angular/core';
+import { Category } from 'idai-field-core';
+import { Loading } from '../../widgets/loading';
+import { ProjectConfiguration } from '../../../core/configuration/project-configuration';
+
 
 @Component({
     selector: 'category-switcher-button',
@@ -41,7 +42,7 @@ export class CategorySwitcherButtonComponent implements OnChanges{
             && this.selectableCategoriesArray.length > 0
             && this.selectableCategoriesArray[0].children
             && this.selectableCategoriesArray[0].children.length > 0
-            && !this.loading.isLoading();
+            && !this.loading.isLoading('docedit');
     }
 
 

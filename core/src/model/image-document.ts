@@ -17,8 +17,6 @@ export module ImageDocument {
     export function fromDocument(document: Document): ImageDocument {
 
         // const doc = ObjectUtils.clone(document); TODO review after release of 2.19
-        const doc = document;
-        takeOrMake(doc, ['resource', 'relations', 'depicts'], []);
-        return doc as any;
+        return document as any;
     }
 }

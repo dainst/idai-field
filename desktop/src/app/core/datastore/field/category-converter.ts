@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
-import { takeOrMake, Converter as Converter, Document } from 'idai-field-core';
+import {isFunction} from 'tsfun';
+import { takeOrMake, Converter as Converter, Document, Resource, Relations } from 'idai-field-core';
+import {ProjectCategories} from '../../configuration/project-categories';
 import { ProjectConfiguration } from '../../configuration/project-configuration';
 import { Migrator } from './migrator';
 
@@ -13,7 +15,27 @@ export class FieldConverter extends Converter {
     public convert<T extends Document>(document: Document): T {
 
         const convertedDocument: T = Migrator.migrate(document) as T;
-        takeOrMake(convertedDocument, ['resource','identifier'], '');
+
+        takeOrMake(convertedDocument, [Document.RESOURCE, Resource.IDENTIFIER], '');
+
+        // TODO review after 2.19 released
+        if (isFunction(this.projectConfiguration.getCategoryForest)) {
+
+            if (ProjectCategories.getImageCategoryNames(this.projectConfiguration.getCategoryForest())
+                .includes(convertedDocument.resource.category)) {
+                    takeOrMake(convertedDocument, [Document.RESOURCE, Resource.RELATIONS, Relations.Image.DEPICTS], []);
+                } else {
+                    takeOrMake(convertedDocument, [Document.RESOURCE, Resource.RELATIONS, Relations.Hierarchy.RECORDEDIN], []);
+
+                    if (ProjectCategories.getFeatureCategoryNames(this.projectConfiguration.getCategoryForest())
+                        .includes(convertedDocument.resource.category)) {
+                        takeOrMake(convertedDocument, [Document.RESOURCE, Resource.RELATIONS, Relations.Time.AFTER], []);
+                        takeOrMake(convertedDocument, [Document.RESOURCE, Resource.RELATIONS, Relations.Time.BEFORE], []);
+                        takeOrMake(convertedDocument, [Document.RESOURCE, Resource.RELATIONS, Relations.Time.CONTEMPORARY], []);
+                    }
+                }
+        }
+
         return convertedDocument;
     }
 }

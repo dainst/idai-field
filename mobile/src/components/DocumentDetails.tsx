@@ -4,12 +4,12 @@ import { Avatar, Column, Icon, IconButton, Row, Text } from 'native-base';
 import React, { useEffect, useState } from 'react';
 import { Platform, ScrollView } from 'react-native';
 import { DocumentRepository } from '../repositories/document-repository';
-import { ResourcesStackParamList } from '../screens/ResourcesScreen';
+import { DocumentsStackParamList } from '../screens/DocumentsScreen';
 
 interface DocumentDetailsProps {
     repository: DocumentRepository;
     docId: string;
-    navigation: StackNavigationProp<ResourcesStackParamList, 'DocumentDetails'>;
+    navigation: StackNavigationProp<DocumentsStackParamList, 'DocumentDetails'>;
 }
 
 

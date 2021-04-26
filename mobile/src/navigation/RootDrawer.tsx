@@ -4,7 +4,7 @@ import React from 'react';
 import DrawerContent from '../components/DrawerContent';
 import useSearch from '../hooks/use-search';
 import { DocumentRepository } from '../repositories/document-repository';
-import ResourcesScreen from '../screens/ResourcesScreen';
+import DocumentsScreen from '../screens/DocumentsScreen';
 import RootDrawerParamList from './root-drawer-param-list';
 
 
@@ -21,22 +21,22 @@ const RootDrawer: React.FC<RootDrawerProps> = ({ repository }) => {
     const [documents, issueSearch] = useSearch(repository);
 
 
-    const onDocumentSelected = (doc: Document, navigation: DrawerNavigationProp<RootDrawerParamList, 'Resources'>) => {
+    const onDocumentSelected = (doc: Document, navigation: DrawerNavigationProp<RootDrawerParamList, 'Documents'>) => {
     
         navigation.closeDrawer();
-        navigation.navigate('Resources', { screen: 'DocumentDetails', params: { docId: doc.resource.id } });
+        navigation.navigate('Documents', { screen: 'DocumentDetails', params: { docId: doc.resource.id } });
     };
 
     return (
         <Drawer.Navigator drawerContent={ ({ navigation }) => {
 
-            const nav = navigation as unknown as DrawerNavigationProp<RootDrawerParamList, 'Resources'>;
+            const nav = navigation as unknown as DrawerNavigationProp<RootDrawerParamList, 'Documents'>;
             return <DrawerContent
                 documents={ documents }
                 onDocumentSelected={ doc => onDocumentSelected(doc, nav) } />;
         } }>
-            <Drawer.Screen name="Resources">
-                { (props) => <ResourcesScreen { ...props }
+            <Drawer.Screen name="Documents">
+                { (props) => <DocumentsScreen { ...props }
                     repository={ repository }
                     documents={ documents }
                     issueSearch={ issueSearch } /> }

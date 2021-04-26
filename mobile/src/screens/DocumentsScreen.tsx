@@ -13,25 +13,25 @@ import useSync from '../hooks/use-sync';
 import { DocumentRepository } from '../repositories/document-repository';
 
 
-export type ResourcesStackParamList = {
+export type DocumentsStackParamList = {
     Map: undefined;
     DocumentDetails: { docId: string }
 };
 
 
-const Stack = createStackNavigator<ResourcesStackParamList>();
+const Stack = createStackNavigator<DocumentsStackParamList>();
 
 
-interface ResourcesScreenProps {
+interface DocumentsScreenProps {
     repository: DocumentRepository;
     documents: Document[];
     issueSearch: (q: string) => void;
-    navigation: DrawerNavigationProp<RootDrawerParamList, 'Resources'>;
+    navigation: DrawerNavigationProp<RootDrawerParamList, 'Documents'>;
     selectedDocument?: Document;
 }
 
 
-const ResourcesScreen: React.FC<ResourcesScreenProps> = ({
+const DocumentsScreen: React.FC<DocumentsScreenProps> = ({
     repository,
     navigation,
     documents,
@@ -47,7 +47,7 @@ const ResourcesScreen: React.FC<ResourcesScreenProps> = ({
 
         repository.find({ constraints: { 'identifier:match': data } })
             .then(({ documents: [doc] }) =>
-                navigation.navigate('Resources', { screen: 'DocumentDetails', params: { docId: doc.resource.id } })
+                navigation.navigate('Documents', { screen: 'DocumentDetails', params: { docId: doc.resource.id } })
             )
             .catch(() => toast({ title: `Resource  '${data}' not found`, position: 'center' }));
     }, [repository, navigation, toast]);
@@ -85,4 +85,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default ResourcesScreen;
+export default DocumentsScreen;

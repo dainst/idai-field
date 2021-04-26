@@ -59,6 +59,7 @@ export function buildImportCatalog(services: ImportCatalogServices,
                 existingCatalogAndImageDocuments
             ] = await getExistingDocuments(services, importCatalog.resource.id);
 
+
             assertRelationsValid(importDocuments);
             assertNoDeletionOfRelatedTypes(existingCatalogDocuments, importDocuments);
 
@@ -252,7 +253,7 @@ function importOneDocument(services: ImportCatalogServices,
             if (existingDocument.resource.category === 'Type' || existingDocument.resource.category === 'TypeCatalog') {
                 const oldRelations = clone(existingDocument.resource.relations[Relations.Type.HASINSTANCE]);
                 updateDocument.resource = clone(document.resource);
-                updateDocument.resource.relations[Relations.Type.HASINSTANCE] = oldRelations;
+                if (oldRelations) updateDocument.resource.relations[Relations.Type.HASINSTANCE] = oldRelations;
             } else {
                 updateDocument.resource = clone(document.resource);
             }

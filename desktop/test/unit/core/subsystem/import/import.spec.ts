@@ -436,8 +436,8 @@ describe('Import/Subsystem', () => {
 
         const feature1 = (await helpers.getDocument('f1')).resource;
         const feature2 = (await helpers.getDocument('f2')).resource;
-        expect(feature1.relations.isAfter).toBeUndefined();
-        expect(feature2.relations.isBefore).toBeUndefined();
+        expect(feature1.relations.isAfter.length).toBe(0);
+        expect(feature2.relations.isBefore.length).toBe(0);
         done();
     });
 

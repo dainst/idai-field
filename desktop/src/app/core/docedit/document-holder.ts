@@ -169,7 +169,6 @@ export class DocumentHolder {
             document,
             DocumentHolder.cleanEmptyObjects,
             Document.removeRelations(this.validateRelationFields()),
-            Document.removeRelations(this.getEmptyRelationFields()),
             Document.removeFields(this.validateFields()),
             Document.removeFields(this.getEmptyFields()));
 
@@ -207,15 +206,6 @@ export class DocumentHolder {
         const validationResultOldVersion = validate(this.oldVersion.resource, this.projectConfiguration);
 
         return validationResultClonedVersion.filter(isNot(includedIn(validationResultOldVersion)));
-    }
-
-
-    private getEmptyRelationFields(): string[] {
-
-        return flow(
-            this.clonedDocument.resource.relations,
-            filter(isEmpty),
-            keys);
     }
 
 

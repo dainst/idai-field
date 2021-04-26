@@ -1,15 +1,23 @@
-import { NavigatorScreenParams } from '@react-navigation/core';
 import { createDrawerNavigator, DrawerNavigationProp } from '@react-navigation/drawer';
+import { RouteProp } from '@react-navigation/native';
 import { Document } from 'idai-field-core';
 import React from 'react';
-import DocumentsMap, { DocumentsMapStackParamList } from '../components/DocumentsMap';
+import DocumentDetails from '../components/DocumentDetails';
+import DocumentsMap from '../components/DocumentsMap';
 import DrawerContent from '../components/DrawerContent';
 import useSearch from '../hooks/use-search';
 import { DocumentRepository } from '../repositories/document-repository';
 
 
 export type DocumentsScreenDrawerParamList = {
-    Documents: NavigatorScreenParams<DocumentsMapStackParamList>;
+    DocumentsMap: undefined;
+    DocumentDetails: { docId: string };
+};
+
+
+export type DocumentsScreenDrawerNavProps<T extends keyof DocumentsScreenDrawerParamList> = {
+    navigation: DrawerNavigationProp<DocumentsScreenDrawerParamList, T>;
+    route: RouteProp<DocumentsScreenDrawerParamList, T>;
 };
 
 
@@ -23,31 +31,38 @@ interface DocumentsScreenProps {
 
 const DocumentsScreen: React.FC<DocumentsScreenProps> = ({ repository }) => {
 
+    
     const [documents, issueSearch] = useSearch(repository);
 
 
     const onDocumentSelected = (
             doc: Document,
-            navigation: DrawerNavigationProp<DocumentsScreenDrawerParamList, 'Documents'>
+            navigation: DrawerNavigationProp<DocumentsScreenDrawerParamList, 'DocumentsMap' | 'DocumentDetails'>
     ) => {
     
         navigation.closeDrawer();
-        navigation.navigate('Documents', { screen: 'DocumentDetails', params: { docId: doc.resource.id } });
+        navigation.navigate('DocumentDetails', { docId: doc.resource.id } );
     };
 
     return (
-        <Drawer.Navigator drawerContent={ ({ navigation }) => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        <Drawer.Navigator drawerContent={ ({ navigation }: { navigation: any }) => {
 
-            const nav = navigation as unknown as DrawerNavigationProp<DocumentsScreenDrawerParamList, 'Documents'>;
             return <DrawerContent
                 documents={ documents }
-                onDocumentSelected={ doc => onDocumentSelected(doc, nav) } />;
+                onDocumentSelected={ doc => onDocumentSelected(doc, navigation) } />;
         } }>
-            <Drawer.Screen name="Documents">
+            <Drawer.Screen name="DocumentsMap">
                 { (props) => <DocumentsMap { ...props }
                     repository={ repository }
                     documents={ documents }
                     issueSearch={ issueSearch } /> }
+            </Drawer.Screen>
+            <Drawer.Screen name="DocumentDetails">
+                { (props) => <DocumentDetails { ...props }
+                    docId={ props.route.params.docId }
+                    repository={ repository }
+                /> }
             </Drawer.Screen>
         </Drawer.Navigator>
     );

@@ -1,10 +1,8 @@
 import { DrawerNavigationProp } from '@react-navigation/drawer';
-import { createStackNavigator } from '@react-navigation/stack';
 import { Document } from 'idai-field-core';
 import { useToast, View } from 'native-base';
 import React, { ReactElement, useCallback } from 'react';
 import { StyleSheet } from 'react-native';
-import DocumentDetails from '../components/DocumentDetails';
 import Map from '../components/Map/Map';
 import ScanBarcodeButton from '../components/ScanBarcodeButton';
 import SearchBar from '../components/SearchBar';
@@ -13,20 +11,11 @@ import { DocumentRepository } from '../repositories/document-repository';
 import { DocumentsScreenDrawerParamList } from '../screens/DocumentsScreen';
 
 
-export type DocumentsMapStackParamList = {
-    Map: undefined;
-    DocumentDetails: { docId: string }
-};
-
-
-const Stack = createStackNavigator<DocumentsMapStackParamList>();
-
-
 interface DocumentsMapProps {
     repository: DocumentRepository;
     documents: Document[];
     issueSearch: (q: string) => void;
-    navigation: DrawerNavigationProp<DocumentsScreenDrawerParamList, 'Documents'>;
+    navigation: DrawerNavigationProp<DocumentsScreenDrawerParamList, 'DocumentsMap'>;
     selectedDocument?: Document;
 }
 
@@ -47,7 +36,7 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
 
         repository.find({ constraints: { 'identifier:match': data } })
             .then(({ documents: [doc] }) =>
-                navigation.navigate('Documents', { screen: 'DocumentDetails', params: { docId: doc.resource.id } })
+                navigation.navigate('DocumentDetails', { docId: doc.resource.id })
             )
             .catch(() => toast({ title: `Resource  '${data}' not found`, position: 'center' }));
     }, [repository, navigation, toast]);
@@ -57,17 +46,7 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
         <View flex={ 1 } safeArea>
             <SearchBar { ...{ issueSearch, syncSettings, setSyncSettings, syncStatus, toggleDrawer } } />
             <View style={ styles.container }>
-                <Stack.Navigator initialRouteName="Map" screenOptions={ { headerShown: false } }>
-                    <Stack.Screen name="Map">
-                        { (props) => <Map { ...props }
-                            geoDocuments={ documents.filter(doc => doc?.resource.geometry) } /> }
-                    </Stack.Screen>
-                    <Stack.Screen name="DocumentDetails">
-                        { (props) => <DocumentDetails { ...props }
-                            docId={ props.route.params.docId }
-                            repository={ repository } /> }
-                    </Stack.Screen>
-                </Stack.Navigator>
+                <Map geoDocuments={ documents.filter(doc => doc?.resource.geometry) } />
             </View>
             <ScanBarcodeButton onBarCodeScanned={ onBarCodeScanned } />
         </View>

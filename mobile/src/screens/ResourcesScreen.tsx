@@ -13,25 +13,25 @@ import useSync from '../hooks/use-sync';
 import { DocumentRepository } from '../repositories/document-repository';
 
 
-export type HomeStackParamList = {
+export type ResourcesStackParamList = {
     Map: undefined;
     DocumentDetails: { docId: string }
 };
 
 
-const Stack = createStackNavigator<HomeStackParamList>();
+const Stack = createStackNavigator<ResourcesStackParamList>();
 
 
-interface HomeScreenProps {
+interface ResourcesScreenProps {
     repository: DocumentRepository;
     documents: Document[];
     issueSearch: (q: string) => void;
-    navigation: DrawerNavigationProp<RootDrawerParamList, 'Home'>;
+    navigation: DrawerNavigationProp<RootDrawerParamList, 'Resources'>;
     selectedDocument?: Document;
 }
 
 
-const HomeScreen: React.FC<HomeScreenProps> = ({
+const ResourcesScreen: React.FC<ResourcesScreenProps> = ({
     repository,
     navigation,
     documents,
@@ -47,7 +47,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
 
         repository.find({ constraints: { 'identifier:match': data } })
             .then(({ documents: [doc] }) =>
-                navigation.navigate('Home', { screen: 'DocumentDetails', params: { docId: doc.resource.id } })
+                navigation.navigate('Resources', { screen: 'DocumentDetails', params: { docId: doc.resource.id } })
             )
             .catch(() => toast({ title: `Resource  '${data}' not found`, position: 'center' }));
     }, [repository, navigation, toast]);
@@ -85,4 +85,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default HomeScreen;
+export default ResourcesScreen;

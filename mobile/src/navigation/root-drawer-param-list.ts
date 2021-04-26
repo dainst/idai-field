@@ -1,8 +1,8 @@
 import { NavigatorScreenParams } from '@react-navigation/core';
-import { HomeStackParamList } from '../screens/HomeScreen';
+import { ResourcesStackParamList } from '../screens/ResourcesScreen';
 
 type RootDrawerParamList = {
-    Home: NavigatorScreenParams<HomeStackParamList>;
+    Resources: NavigatorScreenParams<ResourcesStackParamList>;
 };
 
 export default RootDrawerParamList;

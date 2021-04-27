@@ -1,5 +1,5 @@
-import {set, sameset, flatMap, includedIn, objectEqual} from 'tsfun';
-import {Resource} from './resource';
+import { set, sameset, flatMap, includedIn, objectEqual } from 'tsfun';
+import { Resource } from './resource';
 
 
 export interface Relations {
@@ -135,11 +135,11 @@ export namespace Relations {
 
         return Object.keys(relations1)
             .reduce(
-                concatIf(notBothSameset(relations1, relations2)),
+                concatIf(notBothEqual(relations1, relations2)),
                 []
             );
     }
 
 
-    const notBothSameset = (l: any, r: any) => (key: string) => !r[key] || !sameset(l[key], r[key]);
+    const notBothEqual = (l: any, r: any) => (key: string) => !r[key] || JSON.stringify(l[key]) !== JSON.stringify(r[key]);
 }

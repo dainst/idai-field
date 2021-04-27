@@ -249,13 +249,13 @@ export class TypeRelationPickerComponent {
         const criterionFieldDefinition = identificationGroup.fields
             .find(Named.onName(is(CRITERION)));
 
-        const valuelist: ValuelistDefinition = criterionFieldDefinition.valuelist;
+        const valuelistDefinition = criterionFieldDefinition.valuelist;
 
-        return ValuelistUtil.getOrderedValues(valuelist).map((valueName: string) => {
-            return {
+        return ValuelistUtil.getOrderedValues(valuelistDefinition)
+            .map(valueName => ({
                 name: valueName,
-                label: ValuelistUtil.getValueLabel(valuelist, valueName)
-            };
-        });
+                label: ValuelistUtil.getValueLabel(valuelistDefinition, valueName)
+            })
+        );
     }
 }

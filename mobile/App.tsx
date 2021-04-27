@@ -5,6 +5,7 @@ import { NativeBaseProvider } from 'native-base';
 import PouchDB from 'pouchdb-react-native';
 import React, { Dispatch, ReactElement, SetStateAction, useState } from 'react';
 import { enableScreens } from 'react-native-screens';
+import { Settings } from './src/model/settings';
 import { DocumentRepository } from './src/repositories/document-repository';
 import DocumentsScreen from './src/screens/DocumentsScreen';
 import SettingsScreen from './src/screens/SettingsScreen';
@@ -36,6 +37,7 @@ const Stack = createStackNavigator();
 export default function App(): ReactElement {
 
     const [repository, setRepository] = useState<DocumentRepository>();
+    const [settings, setSettings] = useState<Settings>(getDefaultSettings());
     const [finishedLoading, setFinishedLoading] = useState(false);
 
     if (!finishedLoading || !repository) {
@@ -53,7 +55,7 @@ export default function App(): ReactElement {
                         { (props) => <SplashScreen { ...props } /> }
                     </Stack.Screen>
                     <Stack.Screen name="DocumentsScreen">
-                        { () => <DocumentsScreen repository={ repository } /> }
+                        { () => <DocumentsScreen { ... { repository, settings, setSettings } } /> }
                     </Stack.Screen>
                     <Stack.Screen name="SettingsScreen">
                         { () => <SettingsScreen /> }
@@ -75,3 +77,14 @@ const setupRepository = async (setDocumentRepository: SetDocumentRepository) => 
     const repository = await DocumentRepository.init('test', (name: string) => new PouchDB(name), 'testuser');
     setDocumentRepository(repository);
 };
+
+
+const getDefaultSettings = () => ({
+    project: 'test467',
+    username: 'testuser',
+    sync: {
+        url: '',
+        password: '',
+        connected: false
+    }
+});

@@ -1,11 +1,12 @@
 import { createDrawerNavigator, DrawerNavigationProp } from '@react-navigation/drawer';
 import { RouteProp } from '@react-navigation/native';
 import { Document } from 'idai-field-core';
-import React from 'react';
+import React, { SetStateAction } from 'react';
 import DocumentDetails from '../components/DocumentDetails';
 import DocumentsMap from '../components/DocumentsMap';
 import DrawerContent from '../components/DrawerContent';
 import useSearch from '../hooks/use-search';
+import { Settings } from '../model/settings';
 import { DocumentRepository } from '../repositories/document-repository';
 
 
@@ -26,10 +27,12 @@ const Drawer = createDrawerNavigator<DocumentsScreenDrawerParamList>();
 
 interface DocumentsScreenProps {
     repository: DocumentRepository;
+    settings: Settings;
+    setSettings: React.Dispatch<SetStateAction<Settings>>;
 }
 
 
-const DocumentsScreen: React.FC<DocumentsScreenProps> = ({ repository }) => {
+const DocumentsScreen: React.FC<DocumentsScreenProps> = ({ repository, settings, setSettings }) => {
 
     
     const [documents, issueSearch] = useSearch(repository);
@@ -56,7 +59,9 @@ const DocumentsScreen: React.FC<DocumentsScreenProps> = ({ repository }) => {
                 { (props) => <DocumentsMap { ...props }
                     repository={ repository }
                     documents={ documents }
-                    issueSearch={ issueSearch } /> }
+                    issueSearch={ issueSearch }
+                    settings={ settings }
+                    setSettings={ setSettings } /> }
             </Drawer.Screen>
             <Drawer.Screen name="DocumentDetails">
                 { (props) => <DocumentDetails { ...props }

@@ -34,13 +34,11 @@ interface DocumentsContainerProps {
 
 const DocumentsContainer: React.FC<DocumentsContainerProps> = ({ repository, settings, setSettings }) => {
 
-    
     const [documents, issueSearch] = useSearch(repository);
 
-
     const onDocumentSelected = (
-            doc: Document,
-            navigation: DrawerNavigationProp<DocumentsContainerDrawerParamList, 'DocumentsMap' | 'DocumentDetails'>
+        doc: Document,
+        navigation: DrawerNavigationProp<DocumentsContainerDrawerParamList, 'DocumentsMap' | 'DocumentDetails'>
     ) => {
     
         navigation.closeDrawer();

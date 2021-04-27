@@ -14,7 +14,7 @@ interface HomeScreenProps {
 
 const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, setSettings }) => {
 
-    const [selectedProject, setSelectedProject] = useState<string>('');
+    const [selectedProject, setSelectedProject] = useState<string>('test467');
 
     const openProject = useCallback((project: string) => {
 

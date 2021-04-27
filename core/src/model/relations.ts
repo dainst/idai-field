@@ -1,4 +1,4 @@
-import { set, sameset, flatMap, includedIn, objectEqual } from 'tsfun';
+import { set, sameset, arrayEqual, flatMap, includedIn, objectEqual } from 'tsfun';
 import { Resource } from './resource';
 
 
@@ -141,5 +141,5 @@ export namespace Relations {
     }
 
 
-    const notBothEqual = (l: any, r: any) => (key: string) => !r[key] || JSON.stringify(l[key]) !== JSON.stringify(r[key]);
+    const notBothEqual = (l: any, r: any) => (key: string) => !r[key] || !arrayEqual(l[key])(r[key]);
 }

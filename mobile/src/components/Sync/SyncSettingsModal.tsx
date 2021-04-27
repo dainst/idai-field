@@ -2,7 +2,7 @@ import { Modal, Text } from 'native-base';
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { clone } from 'tsfun';
-import { SyncSettings } from '../../model/sync-settings';
+import { SyncSettings } from '../../model/settings';
 import ConnectPouchForm from './ConnectPouchForm';
 import DisconectPouchForm from './DisconnectPouchForm';
 
@@ -37,7 +37,7 @@ const SyncSettingsModal: React.FC<SyncSettingsModalProps> = ({ settings, onSetti
                 <Modal.CloseButton />
                 <Modal.Header style={ styles.header }>
                     <Text bold>
-                        {settings.connected ? `Connected to ${settings.project}` : 'Connect to project'}
+                        {settings.connected ? 'Connected' : 'Connect to project'}
                     </Text>
                 </Modal.Header>
                 <Modal.Body>

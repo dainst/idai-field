@@ -1,7 +1,7 @@
 import { Button, Center, Input, Stack, Text, View } from 'native-base';
 import React, { useState } from 'react';
 import { Keyboard, StyleSheet } from 'react-native';
-import { SyncSettings } from '../../model/sync-settings';
+import { SyncSettings } from '../../model/settings';
 
 interface ConnectPouchFormProps {
     settings: SyncSettings,
@@ -11,13 +11,12 @@ interface ConnectPouchFormProps {
 const ConnectPouchForm: React.FC<ConnectPouchFormProps> = ({ settings, onConnect }) => {
 
     const [url, setUrl] = useState<string>(settings.url);
-    const [project, setProject] = useState<string>(settings.project);
     const [password, setPassword] = useState<string>(settings.password);
 
     const onSubmit = () => {
 
         Keyboard.dismiss();
-        onConnect({ url, project, password, connected: true });
+        onConnect({ url, password, connected: true });
     };
 
     return (
@@ -26,13 +25,6 @@ const ConnectPouchForm: React.FC<ConnectPouchFormProps> = ({ settings, onConnect
                 <Input placeholder="URL"
                     value={ url }
                     onChangeText={ setUrl }
-                    autoCapitalize="none"
-                    autoCorrect={ false }
-                    m={ 1 }
-                />
-                <Input placeholder="Project"
-                    value={ project }
-                    onChangeText={ setProject }
                     autoCapitalize="none"
                     autoCorrect={ false }
                     m={ 1 }

@@ -4,13 +4,13 @@ import { Avatar, Column, Icon, IconButton, Row, Text } from 'native-base';
 import React, { useEffect, useState } from 'react';
 import { Platform, ScrollView } from 'react-native';
 import { DocumentRepository } from '../repositories/document-repository';
-import { DocumentsScreenDrawerParamList } from '../screens/DocumentsScreen';
+import { DocumentsContainerDrawerParamList } from './DocumentsContainer';
 
 
 interface DocumentDetailsProps {
     repository: DocumentRepository;
     docId: string;
-    navigation: DrawerNavigationProp<DocumentsScreenDrawerParamList, 'DocumentDetails'>;
+    navigation: DrawerNavigationProp<DocumentsContainerDrawerParamList, 'DocumentDetails'>;
 }
 
 

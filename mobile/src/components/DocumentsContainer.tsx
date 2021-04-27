@@ -35,6 +35,7 @@ interface DocumentsContainerProps {
 const DocumentsContainer: React.FC<DocumentsContainerProps> = ({ repository, settings, setSettings }) => {
 
     const [documents, issueSearch] = useSearch(repository);
+    const [allDocuments, _] = useSearch(repository);
 
     const onDocumentSelected = (
         doc: Document,
@@ -57,6 +58,7 @@ const DocumentsContainer: React.FC<DocumentsContainerProps> = ({ repository, set
                 { (props) => <DocumentsMap { ...props }
                     repository={ repository }
                     documents={ documents }
+                    allDocuments={ allDocuments }
                     issueSearch={ issueSearch }
                     settings={ settings }
                     setSettings={ setSettings } /> }

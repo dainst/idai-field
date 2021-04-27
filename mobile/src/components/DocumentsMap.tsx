@@ -16,6 +16,7 @@ import { DocumentsContainerDrawerParamList } from './DocumentsContainer';
 interface DocumentsMapProps {
     repository: DocumentRepository;
     documents: Document[];
+    allDocuments: Document[];
     issueSearch: (q: string) => void;
     navigation: DrawerNavigationProp<DocumentsContainerDrawerParamList, 'DocumentsMap'>;
     selectedDocument?: Document;
@@ -28,6 +29,7 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
     repository,
     navigation,
     documents,
+    allDocuments,
     settings,
     setSettings,
     issueSearch
@@ -55,7 +57,9 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
         <View flex={ 1 } safeArea>
             <SearchBar { ...{ issueSearch, syncSettings: settings.sync, setSyncSettings, syncStatus, toggleDrawer } } />
             <View style={ styles.container }>
-                <Map geoDocuments={ documents.filter(doc => doc?.resource.geometry) } />
+                <Map
+                    selectedGeoDocuments={ documents.filter(doc => doc?.resource.geometry) }
+                    geoDocuments={ allDocuments.filter(doc => doc?.resource.geometry) } />
             </View>
             <ScanBarcodeButton onBarCodeScanned={ onBarCodeScanned } />
         </View>

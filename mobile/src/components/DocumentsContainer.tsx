@@ -32,28 +32,33 @@ interface DocumentsContainerProps {
 }
 
 
+type DrawerNavigation = DrawerNavigationProp<DocumentsContainerDrawerParamList, 'DocumentsMap' | 'DocumentDetails'>;
+
+
 const DocumentsContainer: React.FC<DocumentsContainerProps> = ({ repository, settings, setSettings }) => {
 
     const [documents, issueSearch] = useSearch(repository);
     const [allDocuments, _] = useSearch(repository);
 
-    const onDocumentSelected = (
-        doc: Document,
-        navigation: DrawerNavigationProp<DocumentsContainerDrawerParamList, 'DocumentsMap' | 'DocumentDetails'>
-    ) => {
+    const onDocumentSelected = (doc: Document, navigation: DrawerNavigation) => {
     
         navigation.closeDrawer();
         navigation.navigate('DocumentDetails', { docId: doc.resource.id } );
     };
 
     return (
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        <Drawer.Navigator drawerContent={ ({ navigation }: { navigation: any }) => {
+        
+        <Drawer.Navigator
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            drawerContent={ ({ navigation }: { navigation: any }) => {
 
-            return <DrawerContent
-                documents={ documents }
-                onDocumentSelected={ doc => onDocumentSelected(doc, navigation) } />;
-        } }>
+                return <DrawerContent
+                    documents={ documents }
+                    onDocumentSelected={ doc => onDocumentSelected(doc, navigation) }
+                    onHomeButtonPressed={ () => navigation.navigate('HomeScreen') }
+                    onSettingsButtonPressed={ () => navigation.navigate('SettingsScreen') } />;
+            } }
+        >
             <Drawer.Screen name="DocumentsMap">
                 { (props) => <DocumentsMap { ...props }
                     repository={ repository }

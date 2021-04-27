@@ -1,13 +1,6 @@
-import { Name, replaceIn } from 'idai-field-core';
-import { Document, Relations, Resource } from 'idai-field-core';
-import {
-    append, compose,
-    cond, filter, flow,
-    forEach, isDefined, isEmpty, isnt,
-    lookup, map, on,
-    Pair, pairWith, Predicate,
-    remove, to, update, values, zip
-} from 'tsfun';
+import { append, compose, cond, filter, flow, forEach, isDefined, isEmpty, isnt, lookup, map, on,
+    Pair, pairWith, Predicate, remove, to, update, values, zip } from 'tsfun';
+import { Document, Relations, Resource, Name, replaceIn } from 'idai-field-core';
 import { InverseRelationsMap } from '../configuration/inverse-relations-map';
 
 
@@ -32,15 +25,12 @@ export function updateRelations(document: Document, targetDocuments: Array<Docum
                                 inverseRelationsMap: InverseRelationsMap,
                                 setInverses: boolean = true): Array<Document> {
 
-    targetDocuments.forEach(document => Relations.removeEmpty(document.resource.relations));
-
     const cloneOfTargetDocuments = targetDocuments.map(Document.clone);
 
     const getInverse = lookup(inverseRelationsMap);
     const hasInverseRelation = compose(getInverse, isDefined);
 
     for (let targetDocument of targetDocuments) {
-
         targetDocument.resource.relations =
             pruneInverseRelations(
                 targetDocument.resource.relations,

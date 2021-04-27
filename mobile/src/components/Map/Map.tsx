@@ -9,10 +9,13 @@ import {
     GeoLineString, GeoMultiLineString, GeoMultiPoint,
     GeoMultiPolygon, GeoPoint, GeoPolygon, transformGeojsonToSvg
 } from './geo-svg';
+
 interface MapProps {
     geoDocuments: Document[];
     selectedGeoDocuments: Document[];
 }
+
+
 const Map: React.FC<MapProps> = ({ geoDocuments, selectedGeoDocuments }) => {
 
     const geometryBoundings = getGeometryBoundings(geoDocuments);

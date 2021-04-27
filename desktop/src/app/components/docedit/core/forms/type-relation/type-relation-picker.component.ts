@@ -50,11 +50,11 @@ export class TypeRelationPickerComponent {
     public typeDocument = left;
     public images = right;
 
-    public currentOffset: number = 0;
-    public totalDocumentCount: number = 0;
+    public currentOffset = 0;
+    public totalDocumentCount = 0;
 
     private resource: Resource|undefined = undefined;
-    private q: string = '';
+    private q = '';
     private timeoutRef: any;
 
 
@@ -214,10 +214,10 @@ export class TypeRelationPickerComponent {
                                   offset: number) {
 
         const query: Query = {
-            q: q,
+            q,
             categories: [TYPE],
             limit: DOCUMENT_LIMIT,
-            offset: offset,
+            offset,
             sort: {
                 matchCategory: resource.category,
                 mode: Query.SORT_MODE_EXACTMATCHFIRST,
@@ -243,19 +243,19 @@ export class TypeRelationPickerComponent {
 
     private static getConfiguredCriteria(typeCatalogCategory: Category): Array<Criterion> {
 
-        const identificationGroup: Group = typeCatalogCategory.groups
+        const identificationGroup = typeCatalogCategory.groups
             .find(Named.onName(is(IDENTIFICATION)));
 
-        const criterionField: FieldDefinition = identificationGroup.fields
+        const criterionFieldDefinition = identificationGroup.fields
             .find(Named.onName(is(CRITERION)));
 
-        const valuelist: ValuelistDefinition = (criterionField.valuelist as ValuelistDefinition);
+        const valuelist: ValuelistDefinition = criterionFieldDefinition.valuelist;
 
         return ValuelistUtil.getOrderedValues(valuelist).map((valueName: string) => {
             return {
                 name: valueName,
                 label: ValuelistUtil.getValueLabel(valuelist, valueName)
-            }
+            };
         });
     }
 }

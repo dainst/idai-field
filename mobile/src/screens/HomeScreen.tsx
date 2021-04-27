@@ -4,12 +4,12 @@ import { Button, Center } from 'native-base';
 import React from 'react';
 
 
-interface SplashScreenProps {
+interface HomeScreenProps {
     navigation: StackNavigationProp<AppStackParamList, 'SplashScreen'>;
 }
 
 
-const SplashScreen: React.FC<SplashScreenProps> = ({ navigation }) => {
+const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
 
     return (
         <Center flex={ 1 } safeArea>
@@ -20,4 +20,4 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ navigation }) => {
     );
 };
 
-export default SplashScreen;
+export default HomeScreen;

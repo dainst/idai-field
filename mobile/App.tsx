@@ -8,8 +8,8 @@ import { enableScreens } from 'react-native-screens';
 import { Settings } from './src/model/settings';
 import { DocumentRepository } from './src/repositories/document-repository';
 import DocumentsScreen from './src/screens/DocumentsScreen';
+import HomeScreen from './src/screens/HomeScreen';
 import SettingsScreen from './src/screens/SettingsScreen';
-import SplashScreen from './src/screens/SplashScreen';
 
 
 export type AppStackParamList = {
@@ -50,9 +50,9 @@ export default function App(): ReactElement {
     return (
         <NativeBaseProvider>
             <NavigationContainer>
-                <Stack.Navigator initialRouteName="SplashScreen" screenOptions={ { headerShown: false } }>
-                    <Stack.Screen name="SplashScreen">
-                        { (props) => <SplashScreen { ...props } /> }
+                <Stack.Navigator initialRouteName="HomeScreen" screenOptions={ { headerShown: false } }>
+                    <Stack.Screen name="HomeScreen">
+                        { (props) => <HomeScreen { ...props } /> }
                     </Stack.Screen>
                     <Stack.Screen name="DocumentsScreen">
                         { () => <DocumentsScreen { ... { repository, settings, setSettings } } /> }

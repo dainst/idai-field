@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Category, Constraint, Datastore, FieldDefinition, FieldDocument, FieldResource, FindResult, Group, Named, Query, Relations, ValuelistDefinition } from 'idai-field-core';
+import { Category, Constraint, Datastore, FieldDocument, FieldResource, FindResult, Named, Query, Relations } from 'idai-field-core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Document, Resource } from 'idai-field-core';
 import {
@@ -18,7 +18,7 @@ const IDENTIFICATION = 'identification';
 const TYPECATALOG = 'TypeCatalog';
 const TYPE = 'Type';
 
-const DOCUMENT_LIMIT: number = 5;
+const DOCUMENT_LIMIT = 5;
 
 
 type Criterion = {
@@ -207,7 +207,7 @@ export class TypeRelationPickerComponent {
                 TypeImagesUtil.getLinkedImageIds(document, this.datastore)
                     .map(id => ({ imageId: id }))
             ] as Pair<FieldDocument, Array<ImageRowItem>>;
-        });
+        })
 
 
     private static constructQuery(resource: Resource, q: string, selectedCatalogs: Array<FieldResource>,
@@ -243,13 +243,13 @@ export class TypeRelationPickerComponent {
 
     private static getConfiguredCriteria(typeCatalogCategory: Category): Array<Criterion> {
 
-        const identificationGroup = typeCatalogCategory.groups
-            .find(Named.onName(is(IDENTIFICATION)));
-
-        const criterionFieldDefinition = identificationGroup.fields
-            .find(Named.onName(is(CRITERION)));
-
-        const valuelistDefinition = criterionFieldDefinition.valuelist;
+        const valuelistDefinition =
+            typeCatalogCategory
+                .groups
+                .find(Named.onName(is(IDENTIFICATION)))
+                .fields
+                .find(Named.onName(is(CRITERION)))
+                .valuelist;
 
         return ValuelistUtil.getOrderedValues(valuelistDefinition)
             .map(valueName => ({

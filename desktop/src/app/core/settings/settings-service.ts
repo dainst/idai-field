@@ -30,7 +30,7 @@ export const PROJECT_MAPPING = {
     'meninx-project': { prefix: 'Meninx', label: 'Meninx' },
     'milet': { prefix: 'Milet', label: 'Milet' },
     'monte-turcisi': { prefix: 'MonTur', label: 'Monte Turcisi' },
-    'olympia_sht': { prefix: 'Olympia', label: 'Olympia' },
+    'olympia': { prefix: 'Olympia', label: 'Olympia' },
     'pergamongrabung': { prefix: 'Pergamon', label: 'Pergamon' },
     'postumii': { prefix: 'Postumii', label: 'Postumii' },
     'sudan-heritage': { prefix: 'SudanHeritage', label: 'Sudan Heritage' },

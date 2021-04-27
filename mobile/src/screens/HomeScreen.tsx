@@ -1,6 +1,6 @@
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList } from 'mobile/App';
-import { Button, Center, Column, Icon, IconButton, Row, Select, View } from 'native-base';
+import { Button, Center, Column, Icon, IconButton, Select, Text, View } from 'native-base';
 import React, { SetStateAction, useCallback, useState } from 'react';
 import { update } from 'tsfun';
 import { Settings } from '../model/settings';
@@ -28,29 +28,31 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, setSettings }) => {
             <Center flex={ 1 }>
                 <Column space={ 3 }>
                     <Center rounded="lg" p={ 5 } bg="gray.200">
-                        <Row space={ 3 }>
-                            <Center flex={ 1 } _text={ { fontWeight: 'bold' } }>
+                        <Column space={ 3 }>
+                            <Text style={ { fontWeight: 'bold' } }>
                                 Open existing project:
-                            </Center>
+                            </Text>
                             <Select
+                                variant="native"
                                 selectedValue={ selectedProject }
                                 minWidth={ 200 }
+                                minHeight={ 10 }
                                 onValueChange={ setSelectedProject }
+                                androidIconColor="gray"
+                                androidPrompt="Select project:"
                             >
                                 <Select.Item label="test467" value="test467" />
                                 <Select.Item label="meninx-project" value="meninx-project" />
                                 <Select.Item label="uruk" value="uruk" />
                                 <Select.Item label="asdf" value="asdf" />
                             </Select>
-                            <Center flex={ 1 }>
-                                <IconButton
-                                    colorScheme="blue"
-                                    variant="solid"
-                                    icon={ <Icon name="folder-open" size={ 6 } type="Ionicons" color="white" /> }
-                                    onPress={ () => openProject(selectedProject) }
-                                />
-                            </Center>
-                        </Row>
+                            <IconButton
+                                colorScheme="blue"
+                                variant="solid"
+                                icon={ <Icon name="folder-open" size={ 6 } type="Ionicons" color="white" /> }
+                                onPress={ () => openProject(selectedProject) }
+                            />
+                        </Column>
                     </Center>
                     <Button
                         colorScheme="green"

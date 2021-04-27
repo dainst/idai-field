@@ -3,7 +3,7 @@ import { Category, Constraint, Datastore, FieldDocument, FieldResource, FindResu
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Document, Resource } from 'idai-field-core';
 import {
-    empty, flow, includedIn,
+    empty, flow, includedIn, pairWith,
     is, isNot, left, map, Mapping, on, Pair, prune, right, to, undefinedOrEmpty
 } from 'tsfun';
 import { ProjectConfiguration } from '../../../../../core/configuration/project-configuration';
@@ -252,10 +252,8 @@ export class TypeRelationPickerComponent {
                 .valuelist;
 
         return ValuelistUtil.getOrderedValues(valuelistDefinition)
-            .map(valueName => ({
-                name: valueName,
-                label: ValuelistUtil.getValueLabel(valuelistDefinition, valueName)
-            })
-        );
+            .map(pairWith(name => ValuelistUtil.getValueLabel(valuelistDefinition, name)))
+            .map(([name, label]) => ({ name, label }));
     }
+    // TODO use curry or provide curried variant of getValueLabel
 }

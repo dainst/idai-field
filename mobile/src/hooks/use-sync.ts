@@ -1,13 +1,13 @@
 import { SyncStatus } from 'idai-field-core';
 import { useEffect, useState } from 'react';
-import { SyncSettings } from '../model/sync-settings';
+import { Settings } from '../model/settings';
 import { DocumentRepository } from '../repositories/document-repository';
 
 
 const useSync = (repository: DocumentRepository):
-    [SyncSettings, (syncSettings: SyncSettings) => void, SyncStatus] => {
+    [Settings, (settings: Settings) => void, SyncStatus] => {
     
-    const [settings, setSettings] = useState<SyncSettings>(getDefaultSettings());
+    const [settings, setSettings] = useState<Settings>(getDefaultSettings());
     const [status, setStatus] = useState<SyncStatus>(SyncStatus.Offline);
 
     useEffect(() => { setupSync(repository, settings, setStatus); }, [repository, settings]);
@@ -17,16 +17,19 @@ const useSync = (repository: DocumentRepository):
 
 
 const getDefaultSettings = () => ({
-    url: '',
     project: '',
-    password: '',
-    connected: false
+    username: '',
+    sync: {
+        url: '',
+        password: '',
+        connected: false
+    }
 });
 
 
 const setupSync = async (
     repository: DocumentRepository,
-    { url, project, password, connected }: SyncSettings,
+    { project, sync: { url, password, connected } }: Settings,
     setStatus: (status: SyncStatus) => void
 ) => {
 

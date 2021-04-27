@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { Category, Constraint, Datastore, FieldDefinition, FieldDocument, FieldResource, FindResult, Group, Named, Query, Relations, ValuelistDefinition } from 'idai-field-core';
+import { Category, Constraint, Datastore, FieldDocument, FieldResource, FindResult, Named, Query, Relations } from 'idai-field-core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Document, Resource } from 'idai-field-core';
 import {
-    empty, flow, includedIn,
+    empty, flow, includedIn, pairWith,
     is, isNot, left, map, Mapping, on, Pair, prune, right, to, undefinedOrEmpty
 } from 'tsfun';
 import { ProjectConfiguration } from '../../../../../core/configuration/project-configuration';
@@ -18,7 +18,7 @@ const IDENTIFICATION = 'identification';
 const TYPECATALOG = 'TypeCatalog';
 const TYPE = 'Type';
 
-const DOCUMENT_LIMIT: number = 5;
+const DOCUMENT_LIMIT = 5;
 
 
 type Criterion = {
@@ -50,11 +50,11 @@ export class TypeRelationPickerComponent {
     public typeDocument = left;
     public images = right;
 
-    public currentOffset: number = 0;
-    public totalDocumentCount: number = 0;
+    public currentOffset = 0;
+    public totalDocumentCount = 0;
 
     private resource: Resource|undefined = undefined;
-    private q: string = '';
+    private q = '';
     private timeoutRef: any;
 
 
@@ -207,17 +207,17 @@ export class TypeRelationPickerComponent {
                 TypeImagesUtil.getLinkedImageIds(document, this.datastore)
                     .map(id => ({ imageId: id }))
             ] as Pair<FieldDocument, Array<ImageRowItem>>;
-        });
+        })
 
 
     private static constructQuery(resource: Resource, q: string, selectedCatalogs: Array<FieldResource>,
                                   offset: number) {
 
         const query: Query = {
-            q: q,
+            q,
             categories: [TYPE],
             limit: DOCUMENT_LIMIT,
-            offset: offset,
+            offset,
             sort: {
                 matchCategory: resource.category,
                 mode: Query.SORT_MODE_EXACTMATCHFIRST,
@@ -243,19 +243,17 @@ export class TypeRelationPickerComponent {
 
     private static getConfiguredCriteria(typeCatalogCategory: Category): Array<Criterion> {
 
-        const identificationGroup: Group = typeCatalogCategory.groups
-            .find(Named.onName(is(IDENTIFICATION)));
+        const valuelistDefinition =
+            typeCatalogCategory
+                .groups
+                .find(Named.onName(is(IDENTIFICATION)))
+                .fields
+                .find(Named.onName(is(CRITERION)))
+                .valuelist;
 
-        const criterionField: FieldDefinition = identificationGroup.fields
-            .find(Named.onName(is(CRITERION)));
-
-        const valuelist: ValuelistDefinition = (criterionField.valuelist as ValuelistDefinition);
-
-        return ValuelistUtil.getOrderedValues(valuelist).map((valueName: string) => {
-            return {
-                name: valueName,
-                label: ValuelistUtil.getValueLabel(valuelist, valueName)
-            }
-        });
+        return ValuelistUtil.getOrderedValues(valuelistDefinition)
+            .map(pairWith(name => ValuelistUtil.getValueLabel(valuelistDefinition, name)))
+            .map(([name, label]) => ({ name, label }));
     }
+    // TODO use curry or provide curried variant of getValueLabel
 }

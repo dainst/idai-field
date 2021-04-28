@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useRef } from 'react';
 import {
     Animated, Dimensions, GestureResponderEvent, PanResponder, PanResponderGestureState
@@ -42,6 +43,7 @@ const NSvgMap: React.FC<SvgProps> = ( props ) => {
     const { width, height } = Dimensions.get('window');
     const moveThreshold = 5;
     const AG = Animated.createAnimatedComponent(G);
+    const AnimatedSvg = Animated.createAnimatedComponent(Svg);
 
     useEffect(() => {
         const transforms = getViewPortTransform(props.viewBox, props.preserveAspectRatio, width, height);
@@ -86,19 +88,19 @@ const NSvgMap: React.FC<SvgProps> = ( props ) => {
     
     const touchHandler = (x: number, y: number): void => {
 
-        if(!isMoving._value || isZooming._value){
+        if(!(isMoving as any)._value || (isZooming as any)._value){
             isMoving.setValue(1);
             isZooming.setValue(0);
-            initialLeft.setValue(left._value);
-            initialTop.setValue(top._value);
+            initialLeft.setValue((left as any)._value);
+            initialTop.setValue((top as any)._value);
             initialX.setValue(x);
             initialY.setValue(y);
         } else {
-            const dx = x - initialX._value;
-            const dy = y - initialY._value;
+            const dx = x - (initialX as any)._value;
+            const dy = y - (initialY as any)._value;
 
-            left.setValue(initialLeft._value + dx);
-            top.setValue(initialTop._value + dy );
+            left.setValue((initialLeft as any)._value + dx);
+            top.setValue((initialTop as any)._value + dy );
         }
     };
 
@@ -106,52 +108,36 @@ const NSvgMap: React.FC<SvgProps> = ( props ) => {
         const distance = calcDistance(x1, y1, x2, y2);
         const { x, y } = calcCenter(x1, y1, x2, y2);
 
-        if(!isZooming._value){
+        if(!(isZooming as any)._value){
             isZooming.setValue(1);
             initialX.setValue(x);
             initialY.setValue(y);
-            initialTop.setValue(top._value);
-            initialLeft.setValue(left._value);
-            initialZoom.setValue(zoom._value);
+            initialTop.setValue((top as any)._value);
+            initialLeft.setValue((left as any)._value);
+            initialZoom.setValue((zoom as any)._value);
             initialDistance.setValue(distance);
         } else {
-            const touchZoom = distance / initialDistance._value;
-            const dx = x - initialX._value;
-            const dy = y - initialY._value;
+            const touchZoom = distance / (initialDistance as any)._value;
+            const dx = x - (initialX as any)._value;
+            const dy = y - (initialY as any)._value;
 
-            left.setValue( (initialLeft._value + dx - x) * touchZoom + x);
-            top.setValue ( (initialTop._value + dy - y) * touchZoom + y);
-            zoom.setValue ( initialZoom._value * touchZoom);
+            left.setValue( ((initialLeft as any)._value + dx - x) * touchZoom + x);
+            top.setValue ( ((initialTop as any)._value + dy - y) * touchZoom + y);
+            zoom.setValue ( (initialZoom as any)._value * touchZoom);
         }
     };
 
-    const animatedStyle = {
-        transform: [
-          {
-            translateY: Animated.add(top, Animated.multiply(zoom, translateY))
-          },
-          {
-            scaleX: Animated.multiply(scaleX, zoom)
-          },
-          {
-            scaleY: Animated.multiply(scaleY, zoom)
-          },
-          {
-            translateX: Animated.add(left, Animated.multiply(zoom, translateX))
-          }
-        ]
-    };
     
-
     return (
         <Animated.View style={ props.style } { ...panResponder.panHandlers } >
-            <Svg width={ width } height={ height }>
-                <AG translateX={ Animated.add(left, Animated.multiply(zoom, translateX)) }
-                    translateY={ Animated.add(top, Animated.multiply(zoom, translateY)) }
-                    scaleX={ Animated.multiply(scaleX, zoom) } scaleY={ Animated.multiply(scaleY, zoom) }>
+            <AnimatedSvg width={ width } height={ height } >
+            <AG
+                x={ Animated.add(left, Animated.multiply(zoom, translateX)) }
+                y={ Animated.add(top, Animated.multiply(zoom, translateY)) }
+                scale={ Animated.multiply(scaleX, zoom) }>
                     {props.children}
                 </AG>
-            </Svg>
+            </AnimatedSvg>
         </Animated.View>
     );
 };

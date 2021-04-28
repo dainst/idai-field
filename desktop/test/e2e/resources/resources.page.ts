@@ -1,5 +1,5 @@
 import { click, getElement, getElements, rightClick, hover, waitForNotExist, doubleClick, getText,
-    typeIn, pressKeys } from '../app';
+    typeIn, pressKeys, pause } from '../app';
 import { DoceditPage } from '../docedit/docedit.page';
 import { DoceditRelationsTabPage } from '../docedit/docedit-relations-tab.page';
 import { NavbarPage } from '../navbar.page';
@@ -356,6 +356,7 @@ export class ResourcesPage {
         await DoceditPage.clickGotoTimeTab();
         await DoceditRelationsTabPage.clickAddRelationForGroupWithIndex(relationGroupName);
         await DoceditRelationsTabPage.typeInRelation(relationGroupName, targetIdentifier);
+        await pause(1000);
         await DoceditRelationsTabPage.clickChooseRelationSuggestion(0);
         await DoceditPage.clickSaveDocument();
     }

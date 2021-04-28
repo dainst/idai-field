@@ -23,6 +23,7 @@ export class FieldsViewPage {
 
     public static async clickRelation(cardIndex, relationIndex) {
 
+        await waitForExist('fields-view div:nth-child(' + (cardIndex + 1) + ') .relation-value');
         const elements = await getElements('fields-view div:nth-child(' + (cardIndex + 1) + ') .relation-value');
         return click(elements[relationIndex]);
     };

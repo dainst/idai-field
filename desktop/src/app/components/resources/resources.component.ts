@@ -16,8 +16,8 @@ import {ResourcesViewMode, ViewFacade} from '../../core/resources/view/view-faca
 import {NavigationService} from '../../core/resources/navigation/navigation-service';
 import {MenuContext, MenuService} from '../menu-service';
 import {Messages} from '../messages/messages';
-import {ProjectCategories} from '../../core/configuration/project-categories';
-import {ProjectConfiguration} from '../../core/configuration/project-configuration';
+import {ProjectCategories} from 'idai-field-core';
+import {ProjectConfiguration} from 'idai-field-core';
 import {NavigationPath} from '../../core/resources/view/state/navigation-path';
 
 

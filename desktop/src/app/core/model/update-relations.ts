@@ -1,7 +1,6 @@
 import { append, compose, cond, filter, flow, forEach, isDefined, isEmpty, isnt, lookup, map, on,
     Pair, pairWith, Predicate, remove, to, update, values, zip } from 'tsfun';
-import { Document, Relations, Resource, Name, replaceIn } from 'idai-field-core';
-import { InverseRelationsMap } from '../configuration/inverse-relations-map';
+import { Document, Relations, Resource, Name, replaceIn, InverseRelationsMap } from 'idai-field-core';
 
 
 /**

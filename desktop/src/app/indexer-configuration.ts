@@ -1,5 +1,4 @@
-import {ConstraintIndex, IndexFacade} from 'idai-field-core';
-import {ProjectConfiguration} from './core/configuration/project-configuration';
+import {ConstraintIndex, IndexFacade, ProjectConfiguration} from 'idai-field-core';
 
 /**
  * @author Thomas Kleinke

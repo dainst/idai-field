@@ -7,7 +7,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ChangesStream, Datastore, IndexFacade, SyncService } from 'idai-field-core';
 import { StandardStateSerializer } from '../../core/common/standard-state-serializer';
 import { StateSerializer } from '../../core/common/state-serializer';
-import { ProjectConfiguration } from '../../core/configuration/project-configuration';
+import { ProjectConfiguration } from 'idai-field-core';
 import { NavigationService } from '../../core/resources/navigation/navigation-service';
 import { ResourcesStateManager } from '../../core/resources/view/resources-state-manager';
 import { ViewFacade } from '../../core/resources/view/view-facade';

@@ -1,9 +1,9 @@
 import * as tsfun from 'tsfun';
-import {ImageDocument, Query, ObjectUtils} from 'idai-field-core';
+import {ImageDocument, Query} from 'idai-field-core';
 import {ImagesState} from './images-state';
 import {ImageDocumentsManager} from './image-documents-manager';
-import {ProjectCategories} from '../../../configuration/project-categories';
-import {ProjectConfiguration} from '../../../configuration/project-configuration';
+import {ProjectCategories} from 'idai-field-core';
+import {ProjectConfiguration} from 'idai-field-core';
 
 
 /**

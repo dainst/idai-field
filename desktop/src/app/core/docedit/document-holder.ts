@@ -1,7 +1,6 @@
-import { Category, Document, Datastore, FieldDefinition, NewDocument, Resource, ImageDocument } from 'idai-field-core';
-import { and, equal, filter, flow, identity, includedIn, isEmpty, isNot, isObject, isString, keys } from 'tsfun';
-import {ProjectCategories} from '../configuration/project-categories';
-import { ProjectConfiguration } from '../configuration/project-configuration';
+import { Category, Document, Datastore, FieldDefinition, NewDocument, Resource} from 'idai-field-core';
+import { and, equal, filter, flow, includedIn, isEmpty, isNot, isObject, isString, keys } from 'tsfun';
+import { ProjectConfiguration } from 'idai-field-core';
 import { RelationsManager } from '../model/relations-manager';
 import { Validations } from '../model/validations';
 import { Validator } from '../model/validator';

@@ -2,8 +2,8 @@ import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import {ResourcesComponent} from '../resources.component';
 import {ViewFacade} from '../../../core/resources/view/view-facade';
 import {ContextMenu} from './context-menu';
-import {ProjectCategories} from '../../../core/configuration/project-categories';
-import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
+import {ProjectCategories} from 'idai-field-core';
+import {ProjectConfiguration} from 'idai-field-core';
 import {MoveUtility} from '../../../core/resources/move-utility';
 
 

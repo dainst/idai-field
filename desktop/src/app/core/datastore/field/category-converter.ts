@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { isFunction } from 'tsfun';
 import { takeOrMake, Converter, Document, Resource, Relations } from 'idai-field-core';
-import { ProjectCategories } from '../../configuration/project-categories';
-import { ProjectConfiguration } from '../../configuration/project-configuration';
+import { ProjectCategories } from 'idai-field-core';
+import { ProjectConfiguration } from 'idai-field-core';
 import { Migrator } from './migrator';
 
 

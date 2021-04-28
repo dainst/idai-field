@@ -8,7 +8,7 @@ import {
     R, to,
     assoc
 } from 'tsfun';
-import { ProjectConfiguration } from '../../../core/configuration/project-configuration';
+import { ProjectConfiguration } from 'idai-field-core';
 import { FieldsViewField, FieldsViewGroup, FieldsViewUtil } from '../../../core/util/fields-view-util';
 import { UtilTranslations } from '../../../core/util/util-translations';
 import { ValuelistUtil } from '../../../core/util/valuelist-util';
@@ -45,7 +45,7 @@ export class FieldsViewComponent implements OnChanges {
 
     constructor(private projectConfiguration: ProjectConfiguration,
                 private datastore: Datastore,
-                routingService: RoutingService,
+                routingService: RoutingService, // TODO unused
                 private decimalPipe: DecimalPipe,
                 private utilTranslations: UtilTranslations) {}
 

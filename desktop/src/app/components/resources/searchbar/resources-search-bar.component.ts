@@ -1,6 +1,6 @@
 import {Component, ElementRef, Input} from '@angular/core';
 import {SearchBarComponent} from '../../widgets/search-bar.component';
-import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
+import {ProjectConfiguration} from 'idai-field-core';
 
 
 @Component({

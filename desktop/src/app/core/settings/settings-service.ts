@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
 import { isString } from 'tsfun';
-import { Name, PouchdbManager, SyncService } from 'idai-field-core';
+import { Name, PouchdbManager, SyncService, AppConfigurator, ProjectConfiguration } from 'idai-field-core';
 import { M } from '../../components/messages/m';
 import { Messages } from '../../components/messages/messages';
-import { AppConfigurator } from '../configuration/app-configurator';
-import { ProjectConfiguration } from '../configuration/project-configuration';
 import { PouchdbServer } from '../datastore/pouchdb/pouchdb-server';
 import { Imagestore } from '../images/imagestore/imagestore';
 import { ImagestoreErrors } from '../images/imagestore/imagestore-errors';

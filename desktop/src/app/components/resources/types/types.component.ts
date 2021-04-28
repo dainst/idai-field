@@ -3,7 +3,7 @@ import { Imagestore } from '../../../core/images/imagestore/imagestore';
 import { Document, Datastore, FieldDocument, Relations, SyncService, SyncStatus, Resource } from 'idai-field-core';
 import { curry, filter, flatten, flow, is, Map, map, remove, set, take } from 'tsfun';
 import { makeLookup } from '../../../../../../core/src/tools/transformers';
-import { ProjectCategories } from '../../../core/configuration/project-categories';
+import { ProjectCategories } from 'idai-field-core';
 import { PLACEHOLDER } from '../../../core/images/row/image-row';
 import { NavigationPath } from '../../../core/resources/view/state/navigation-path';
 import { ViewFacade } from '../../../core/resources/view/view-facade';

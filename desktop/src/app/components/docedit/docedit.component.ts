@@ -3,7 +3,7 @@ import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstra
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { DatastoreErrors, Document, Datastore, FieldDefinition, FieldDocument, Group, Groups, ImageDocument } from 'idai-field-core';
 import { includedIn, isNot } from 'tsfun';
-import { ProjectConfiguration } from '../../core/configuration/project-configuration';
+import { ProjectConfiguration } from 'idai-field-core';
 import { DoceditErrors } from '../../core/docedit/docedit-errors';
 import { DocumentHolder } from '../../core/docedit/document-holder';
 import { MenuContext, MenuService } from '../menu-service';

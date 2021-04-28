@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter, OnChanges, ViewChild } from '@angular/core';
 import { Category } from 'idai-field-core';
 import { Loading } from '../../widgets/loading';
-import { ProjectConfiguration } from '../../../core/configuration/project-configuration';
+import { ProjectConfiguration } from 'idai-field-core';
 
 
 @Component({

@@ -5,9 +5,9 @@ import {Datastore, FieldDocument, ImageDocument} from 'idai-field-core';
 import {ImageGridComponent} from '../../image/grid/image-grid.component';
 import {M} from '../../messages/m';
 import {Messages} from '../../messages/messages';
-import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
+import {ProjectConfiguration} from 'idai-field-core';
 import { getImageSuggestions } from '../../../core/docedit/widgets/get-image-suggestions';
-import { ProjectCategories } from '../../../core/configuration/project-categories';
+import { ProjectCategories } from 'idai-field-core';
 
 
 @Component({

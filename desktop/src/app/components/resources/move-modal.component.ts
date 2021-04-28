@@ -3,7 +3,7 @@ import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {FieldDocument, Category, IndexFacade, Constraint} from 'idai-field-core';
 import {RelationsManager} from '../../core/model/relations-manager';
 import {MoveUtility} from '../../core/resources/move-utility';
-import {ProjectConfiguration} from '../../core/configuration/project-configuration';
+import {ProjectConfiguration} from 'idai-field-core';
 import {ViewFacade} from '../../core/resources/view/view-facade';
 import {Messages} from '../messages/messages';
 import {Loading} from '../widgets/loading';

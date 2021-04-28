@@ -4,7 +4,7 @@ import {ValuelistUtil} from './valuelist-util';
 import {compose, flow, assoc, lookup, and, includedIn, isNot, filter, Filter, map, isString, Map, on, to, undefinedOrEmpty,
     Predicate, or, is, empty, equal} from 'tsfun';
 import {ValuelistDefinition} from 'idai-field-core';
-import {ProjectConfiguration} from '../configuration/project-configuration';
+import {ProjectConfiguration} from 'idai-field-core';
 
 
 export interface FieldsViewGroup extends BaseGroup {

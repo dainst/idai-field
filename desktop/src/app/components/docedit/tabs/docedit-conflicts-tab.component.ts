@@ -3,7 +3,7 @@ import { ChangeDetectorRef, Component, Input, OnChanges } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { UtilTranslations } from '../../../core/util/util-translations';
 import { Document, Datastore, Relations, Resource } from 'idai-field-core';
-import { ProjectConfiguration } from '../../../core/configuration/project-configuration';
+import { ProjectConfiguration } from 'idai-field-core';
 import { M } from '../../messages/m';
 import { Messages } from '../../messages/messages';
 import { Loading } from '../../widgets/loading';

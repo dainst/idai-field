@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {Category} from 'idai-field-core';
-import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
+import {ProjectConfiguration} from 'idai-field-core';
 
 
 @Component({

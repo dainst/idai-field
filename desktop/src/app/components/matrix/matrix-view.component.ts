@@ -9,7 +9,7 @@ import {Loading} from '../widgets/loading';
 import {DotBuilder} from './dot-builder';
 import {MatrixSelection, MatrixSelectionMode} from './matrix-selection';
 import {Edges, EdgesBuilder, GraphRelationsConfiguration} from './edges-builder';
-import {ProjectConfiguration} from '../../core/configuration/project-configuration';
+import {ProjectConfiguration} from 'idai-field-core';
 import {Relations} from 'idai-field-core';
 import IS_CONTEMPORARY_WITH = Relations.Time.CONTEMPORARY;
 import IS_EQUIVALENT_TO = Relations.Position.EQUIVALENT;
@@ -21,7 +21,7 @@ import IS_CUT_BY = Relations.Position.CUTBY;
 import CUTS = Relations.Position.CUTS;
 import {TabManager} from '../../core/tabs/tab-manager';
 import {MenuContext, MenuService} from '../menu-service';
-import { ProjectCategories } from '../../core/configuration/project-categories';
+import { ProjectCategories } from 'idai-field-core';
 
 const Viz = require('viz.js');
 

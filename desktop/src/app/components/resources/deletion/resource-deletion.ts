@@ -6,7 +6,7 @@ import {DeleteModalComponent} from './delete-modal.component';
 import {RelationsManager} from '../../../core/model/relations-manager';
 import {DeletionInProgressModalComponent} from './deletion-in-progress-modal.component';
 import {ImageRelationsManager} from '../../../core/model/image-relations-manager';
-import {ProjectCategories} from '../../../core/configuration/project-categories';
+import {ProjectCategories} from 'idai-field-core';
 
 
 /**

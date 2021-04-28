@@ -1,9 +1,8 @@
-import { ChangesStream, createDocuments, Datastore, Document, DocumentCache, ImageDocument, NiceDocs, PouchdbDatastore, PouchdbManager, Query, ResourceId, SyncService, toResourceId } from 'idai-field-core';
+import { ChangesStream, createDocuments, Datastore, Document, DocumentCache,
+    AppConfigurator, ConfigLoader, ConfigReader, NiceDocs, PouchdbDatastore, PouchdbManager,
+    Query, ResourceId, SyncService, toResourceId } from 'idai-field-core';
 import * as PouchDB from 'pouchdb-node';
 import { identity, sameset } from 'tsfun';
-import { AppConfigurator } from '../../../../src/app/core/configuration/app-configurator';
-import { ConfigLoader } from '../../../../src/app/core/configuration/boot/config-loader';
-import { ConfigReader } from '../../../../src/app/core/configuration/boot/config-reader';
 import { FieldConverter } from '../../../../src/app/core/datastore/field/category-converter';
 import { PouchdbServer } from '../../../../src/app/core/datastore/pouchdb/pouchdb-server';
 import { DocumentHolder } from '../../../../src/app/core/docedit/document-holder';

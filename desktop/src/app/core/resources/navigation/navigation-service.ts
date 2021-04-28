@@ -1,7 +1,6 @@
 import {Observable, Observer} from 'rxjs';
-import {Document} from 'idai-field-core';
+import {Document, ProjectConfiguration} from 'idai-field-core';
 import {FieldDocument, Category, ObserverUtil} from 'idai-field-core';
-import {ProjectConfiguration} from '../../configuration/project-configuration';
 import {ViewFacade} from '../view/view-facade';
 import {RoutingService} from '../../../components/routing-service';
 

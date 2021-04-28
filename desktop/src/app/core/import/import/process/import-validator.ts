@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Document, Datastore, Relations, NewDocument, Query, Resource, ResourceId } from 'idai-field-core';
 import { is, isnt, on } from 'tsfun';
-import { ProjectCategories } from '../../../configuration/project-categories';
-import { ProjectConfiguration } from '../../../configuration/project-configuration';
+import { ProjectCategories } from 'idai-field-core';
+import { ProjectConfiguration } from 'idai-field-core';
 import { Validations } from '../../../model/validations';
 import { Validator } from '../../../model/validator';
 import { ImportErrors as E } from '../import-errors';

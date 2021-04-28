@@ -1,7 +1,7 @@
 import {Document} from 'idai-field-core';
 import {isNot, includedIn, isDefined, isEmpty, flatMap, to, on, empty, copy, is} from 'tsfun';
 import {Edges} from './edges-builder';
-import {ProjectConfiguration} from '../../core/configuration/project-configuration';
+import {ProjectConfiguration} from 'idai-field-core';
 
 
 /**

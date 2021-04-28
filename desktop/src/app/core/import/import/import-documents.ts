@@ -8,7 +8,7 @@ import {ImportErrors as E} from './import-errors';
 import {Relations} from 'idai-field-core';
 import LIES_WITHIN = Relations.Hierarchy.LIESWITHIN;
 import RECORDED_IN = Relations.Hierarchy.RECORDEDIN;
-import {InverseRelationsMap} from '../../configuration/inverse-relations-map';
+import {InverseRelationsMap} from 'idai-field-core';
 import {processDocuments} from './process/process-documents';
 import {processRelations} from './process/process-relations';
 import {Settings} from '../../settings/settings';

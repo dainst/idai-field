@@ -13,7 +13,7 @@ import {ImportErrors as E} from '../import-errors';
 import {Get, Id} from '../types';
 import {completeInverseRelations} from './complete-inverse-relations';
 import {ImportOptions} from '../import-documents';
-import {InverseRelationsMap} from '../../../configuration/inverse-relations-map';
+import {InverseRelationsMap} from 'idai-field-core';
 import {makeLookups} from './make-lookups';
 import {inferRecordedIns} from './infer-recorded-ins';
 import RECORDEDIN = Relations.Hierarchy.RECORDEDIN;

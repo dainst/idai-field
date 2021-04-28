@@ -5,9 +5,7 @@ import {ViewState} from './state/view-state';
 import {NavigationPath} from './state/navigation-path';
 import {TabManager} from '../../tabs/tab-manager';
 import {ResourcesViewMode} from './view-facade';
-import {ProjectCategories} from '../../configuration/project-categories';
-import {ProjectConfiguration} from '../../configuration/project-configuration';
-import {FieldDocument, Document, ObserverUtil, IndexFacade, Datastore} from 'idai-field-core'
+import {FieldDocument, ObserverUtil, ProjectConfiguration, ProjectCategories, IndexFacade, Datastore} from 'idai-field-core'
 
 
 /**

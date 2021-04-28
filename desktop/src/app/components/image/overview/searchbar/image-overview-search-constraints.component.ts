@@ -2,7 +2,7 @@ import { Component, Renderer2 } from '@angular/core';
 import { I18n } from '@ngx-translate/i18n-polyfill';
 import { clone } from 'tsfun'
 import { Datastore, FieldDefinition } from 'idai-field-core';
-import { ProjectConfiguration } from '../../../../core/configuration/project-configuration';
+import { ProjectConfiguration } from 'idai-field-core';
 import { ImageOverviewFacade } from '../../../../core/images/overview/view/imageoverview-facade';
 import { SearchConstraintsComponent } from '../../../widgets/search-constraints.component';
 import { ImageOverviewSearchBarComponent } from './image-overview-search-bar.component';

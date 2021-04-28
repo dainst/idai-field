@@ -3,7 +3,7 @@ import { FieldDocument, ImageDocument, ImageGeoreference, PouchdbDatastore } fro
 import { Document } from 'idai-field-core';
 import L from 'leaflet';
 import { MenuContext, MenuService } from '../../../../components/menu-service';
-import { ProjectConfiguration } from '../../../../core/configuration/project-configuration';
+import { ProjectConfiguration } from 'idai-field-core';
 import { ImageContainer } from '../../../../core/images/imagestore/image-container';
 import { SettingsProvider } from '../../../../core/settings/settings-provider';
 import { Messages } from '../../../messages/messages';

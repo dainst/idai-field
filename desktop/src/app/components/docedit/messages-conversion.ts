@@ -1,5 +1,5 @@
 import { DatastoreErrors } from 'idai-field-core';
-import { ProjectConfiguration } from '../../core/configuration/project-configuration';
+import { ProjectConfiguration } from 'idai-field-core';
 import { ValidationErrors } from '../../core/model/validation-errors';
 import { M } from '../messages/m';
 

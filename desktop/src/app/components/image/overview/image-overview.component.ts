@@ -9,7 +9,7 @@ import {ImageUploadResult} from '../upload/image-uploader';
 import {ImageViewModalComponent} from '../../viewmodal/image/image-view-modal.component';
 import {MenuContext, MenuService} from '../../menu-service';
 import {M} from '../../messages/m';
-import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
+import {ProjectConfiguration} from 'idai-field-core';
 import {TabManager} from '../../../core/tabs/tab-manager';
 import {ViewFacade} from '../../../core/resources/view/view-facade';
 import {Messages} from '../../messages/messages';

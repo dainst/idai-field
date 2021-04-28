@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Category, Document, Datastore, FindResult, NewImageDocument, ImageDocument } from 'idai-field-core';
-import { ProjectConfiguration } from '../../../core/configuration/project-configuration';
+import { ProjectConfiguration } from 'idai-field-core';
 import { Imagestore } from '../../../core/images/imagestore/imagestore';
 import { readWldFile } from '../../../core/images/wld/wld-import';
 import { RelationsManager } from '../../../core/model/relations-manager';

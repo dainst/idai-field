@@ -18,7 +18,7 @@ import {
     to,
     undefinedOrEmpty
 } from 'tsfun';
-import { InverseRelationsMap } from '../../../configuration/inverse-relations-map';
+import { InverseRelationsMap } from 'idai-field-core';
 import { ImportErrors as E } from '../import-errors';
 import { AssertIsAllowedRelationDomainType } from '../types';
 import { assertInSameOperationWith } from '../utils';

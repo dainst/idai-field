@@ -5,7 +5,7 @@ import {RelationsManager} from '../../../core/model/relations-manager';
 import {Validator} from '../../../core/model/validator';
 import {M} from '../../messages/m';
 import {MessagesConversion} from '../../docedit/messages-conversion';
-import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
+import {ProjectConfiguration} from 'idai-field-core';
 import {ViewFacade} from '../../../core/resources/view/view-facade';
 import {NavigationService} from '../../../core/resources/navigation/navigation-service';
 import {Messages} from '../../messages/messages';

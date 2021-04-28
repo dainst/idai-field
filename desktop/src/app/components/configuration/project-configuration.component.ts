@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {to, on, is, isnt, includedIn, or, any, compose, map, Predicate} from 'tsfun';
 import {FieldResource, Named, Category, Group, RelationDefinition, FieldDefinition} from 'idai-field-core';
-import {ProjectConfiguration} from '../../core/configuration/project-configuration';
+import {ProjectConfiguration} from 'idai-field-core';
 import {ValuelistUtil} from '../../core/util/valuelist-util';
 import {TabManager} from '../../core/tabs/tab-manager';
 import {Relations, ValuelistDefinition} from 'idai-field-core';

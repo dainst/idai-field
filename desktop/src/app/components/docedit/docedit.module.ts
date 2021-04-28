@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { NgbDateParserFormatter, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { Datastore } from 'idai-field-core';
-import { ProjectConfiguration } from '../../core/configuration/project-configuration';
+import { ProjectConfiguration } from 'idai-field-core';
 import { DocumentHolder } from '../../core/docedit/document-holder';
 import { RelationsManager } from '../../core/model/relations-manager';
 import { Validator } from '../../core/model/validator';

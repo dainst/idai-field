@@ -1,7 +1,7 @@
 import { Document, Datastore, Name, Relations, toResourceId } from 'idai-field-core';
 import { flatMap, flow, subtract, to } from 'tsfun';
-import { InverseRelationsMap, makeInverseRelationsMap } from '../configuration/inverse-relations-map';
-import { ProjectConfiguration } from '../configuration/project-configuration';
+import { InverseRelationsMap, makeInverseRelationsMap } from 'idai-field-core';
+import { ProjectConfiguration } from 'idai-field-core';
 import { updateRelations } from './update-relations';
 
 const NAME = 'name';

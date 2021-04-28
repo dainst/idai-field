@@ -1,8 +1,8 @@
 import {Component, Input, Output, ElementRef, ViewChild, EventEmitter, DoCheck} from '@angular/core';
 import {Document} from 'idai-field-core';
 import {FieldDocument, Groups} from 'idai-field-core';
-import {ProjectCategories} from '../../../core/configuration/project-categories';
-import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
+import {ProjectCategories} from 'idai-field-core';
+import {ProjectConfiguration} from 'idai-field-core';
 
 
 @Component({   selector: 'document-info',

@@ -1,5 +1,5 @@
 import {Component, OnChanges, Input} from '@angular/core';
-import {ProjectConfiguration} from '../../core/configuration/project-configuration';
+import {ProjectConfiguration} from 'idai-field-core';
 
 
 @Component({

@@ -3,7 +3,7 @@ import {FieldDocument, Named, Category} from 'idai-field-core';
 import {ResourcesComponent} from '../resources.component';
 import {Loading} from '../../widgets/loading';
 import {BaseList} from '../base-list';
-import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
+import {ProjectConfiguration} from 'idai-field-core';
 import {ViewFacade} from '../../../core/resources/view/view-facade';
 import {MenuService} from '../../menu-service';
 

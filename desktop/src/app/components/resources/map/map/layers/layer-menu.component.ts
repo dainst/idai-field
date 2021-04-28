@@ -8,7 +8,7 @@ import {MenuContext, MenuService} from '../../../../menu-service';
 import {ImagePickerComponent} from '../../../../docedit/widgets/image-picker.component';
 import {LayerUtility} from './layer-utility';
 import {Loading} from '../../../../widgets/loading';
-import {ProjectConfiguration} from '../../../../../core/configuration/project-configuration';
+import {ProjectConfiguration} from 'idai-field-core';
 
 
 @Component({

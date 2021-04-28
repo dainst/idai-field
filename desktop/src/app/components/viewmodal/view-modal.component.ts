@@ -1,6 +1,5 @@
 import {NgbActiveModal, NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import * as tsfun from 'tsfun';
-import {Document, ImageDocument} from 'idai-field-core';
+import {Document} from 'idai-field-core';
 import {FieldDocument} from 'idai-field-core';
 import {DoceditComponent} from '../docedit/docedit.component';
 import {RoutingService} from '../routing-service';

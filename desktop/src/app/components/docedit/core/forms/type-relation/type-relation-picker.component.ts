@@ -6,7 +6,7 @@ import {
     empty, flow, includedIn, pairWith,
     is, isNot, left, map, Mapping, on, Pair, prune, right, to, undefinedOrEmpty
 } from 'tsfun';
-import { ProjectConfiguration } from '../../../../../core/configuration/project-configuration';
+import { ProjectConfiguration } from 'idai-field-core';
 import { ImageRowItem } from '../../../../../core/images/row/image-row';
 import { TypeImagesUtil } from '../../../../../core/util/type-images-util';
 import { ValuelistUtil } from '../../../../../core/util/valuelist-util';

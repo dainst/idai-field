@@ -3,7 +3,7 @@ import {FieldDocument, FieldGeometry, Category} from 'idai-field-core';
 import {FieldPolyline} from './field-polyline';
 import {FieldPolygon} from './field-polygon';
 import {FieldMarker} from './field-marker';
-import {ProjectConfiguration} from '../../../../core/configuration/project-configuration';
+import {ProjectConfiguration} from 'idai-field-core';
 import {MapComponentHelper as H} from './map-component-helper';
 
 

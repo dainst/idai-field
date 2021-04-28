@@ -3,9 +3,9 @@ import {I18n} from '@ngx-translate/i18n-polyfill';
 import {isUndefinedOrEmpty, clone} from 'tsfun';
 import {Document} from 'idai-field-core';
 import {FieldDefinition, RelationDefinition, Group, Groups} from 'idai-field-core';
-import {ProjectConfiguration} from '../../../core/configuration/project-configuration';
+import {ProjectConfiguration} from 'idai-field-core';
 import {Relations} from 'idai-field-core';
-import {ProjectCategories} from '../../../core/configuration/project-categories';
+import {ProjectCategories} from 'idai-field-core';
 
 
 @Component({

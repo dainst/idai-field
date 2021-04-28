@@ -1,12 +1,28 @@
-import { Text, View } from 'native-base';
-import React from 'react';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { AppStackParamList } from 'mobile/App';
+import { Button, Center, View } from 'native-base';
+import React, { SetStateAction } from 'react';
+import { Settings } from '../model/settings';
 
 
-const SettingsScreen: React.FC = () => {
+interface SettingsScreenProps {
+    navigation: StackNavigationProp<AppStackParamList, 'SplashScreen'>;
+    setSettings: React.Dispatch<SetStateAction<Settings>>;
+}
+
+
+const SettingsScreen: React.FC<SettingsScreenProps> = ({
+    navigation,
+    setSettings
+}) => {
 
     return (
         <View flex={ 1 } safeArea>
-            <Text>Settings</Text>
+            <Center flex={ 1 }>
+                <Button onPress={ () => navigation.goBack() }>
+                    Cancel
+                </Button>
+            </Center>
         </View>
     );
 };

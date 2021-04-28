@@ -9,10 +9,14 @@ import {
     GeoLineString, GeoMultiLineString, GeoMultiPoint,
     GeoMultiPolygon, GeoPoint, GeoPolygon, transformGeojsonToSvg
 } from './geo-svg';
+
 interface MapProps {
-    geoDocuments: Document[]
+    geoDocuments: Document[];
+    selectedGeoDocuments: Document[];
 }
-const Map: React.FC<MapProps> = ({ geoDocuments }) => {
+
+
+const Map: React.FC<MapProps> = ({ geoDocuments, selectedGeoDocuments }) => {
 
     const geometryBoundings = getGeometryBoundings(geoDocuments);
   
@@ -22,7 +26,8 @@ const Map: React.FC<MapProps> = ({ geoDocuments }) => {
                 <SvgMap>
                     {geoDocuments.map(doc =>(
                         <G key={ doc._id }>
-                            {renderGeoSvgElement(doc, transformGeojsonToSvg.bind(this, geometryBoundings) )}
+                            {renderGeoSvgElement(doc, transformGeojsonToSvg.bind(this, geometryBoundings),
+                                selectedGeoDocuments )}
                         </G>))
                     }
                 </SvgMap> :
@@ -33,12 +38,14 @@ const Map: React.FC<MapProps> = ({ geoDocuments }) => {
 };
 
 
-const renderGeoSvgElement = (document: Document, csTransformFunc: (pos: Position) => Position): ReactElement => {
+const renderGeoSvgElement = (document: Document, csTransformFunc: (pos: Position) => Position,
+    selectedDocuments: Document[]): ReactElement => {
     
     const geometry: FieldGeometry = document.resource.geometry;
     const props = {
         coordinates: geometry.coordinates,
         csTransformFunction: csTransformFunc,
+        opacity: selectedDocuments.find((doc: Document) => doc.resource.id === document.resource.id) ? 1 : 0.5
     };
 
     switch(geometry.type){

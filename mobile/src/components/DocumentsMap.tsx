@@ -3,21 +3,22 @@ import { Document } from 'idai-field-core';
 import { useToast, View } from 'native-base';
 import React, { ReactElement, SetStateAction, useCallback } from 'react';
 import { StyleSheet } from 'react-native';
-import { update, val } from 'tsfun';
+import { update } from 'tsfun';
 import Map from '../components/Map/Map';
 import ScanBarcodeButton from '../components/ScanBarcodeButton';
 import SearchBar from '../components/SearchBar';
 import useSync from '../hooks/use-sync';
 import { Settings, SyncSettings } from '../model/settings';
 import { DocumentRepository } from '../repositories/document-repository';
-import { DocumentsScreenDrawerParamList } from '../screens/DocumentsScreen';
+import { DocumentsContainerDrawerParamList } from './DocumentsContainer';
 
 
 interface DocumentsMapProps {
     repository: DocumentRepository;
     documents: Document[];
+    allDocuments: Document[];
     issueSearch: (q: string) => void;
-    navigation: DrawerNavigationProp<DocumentsScreenDrawerParamList, 'DocumentsMap'>;
+    navigation: DrawerNavigationProp<DocumentsContainerDrawerParamList, 'DocumentsMap'>;
     selectedDocument?: Document;
     settings: Settings;
     setSettings: React.Dispatch<SetStateAction<Settings>>;
@@ -28,6 +29,7 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
     repository,
     navigation,
     documents,
+    allDocuments,
     settings,
     setSettings,
     issueSearch
@@ -39,7 +41,7 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
     const toggleDrawer = useCallback(() => navigation.toggleDrawer(), [navigation]);
 
     const setSyncSettings = (syncSettings: SyncSettings) =>
-        setSettings(oldSettings => update('sync', val(syncSettings), oldSettings));
+        setSettings(oldSettings => update('sync', syncSettings, oldSettings));
 
     const onBarCodeScanned = useCallback((data: string) => {
 
@@ -55,7 +57,9 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
         <View flex={ 1 } safeArea>
             <SearchBar { ...{ issueSearch, syncSettings: settings.sync, setSyncSettings, syncStatus, toggleDrawer } } />
             <View style={ styles.container }>
-                <Map geoDocuments={ documents.filter(doc => doc?.resource.geometry) } />
+                <Map
+                    selectedGeoDocuments={ documents.filter(doc => doc?.resource.geometry) }
+                    geoDocuments={ allDocuments.filter(doc => doc?.resource.geometry) } />
             </View>
             <ScanBarcodeButton onBarCodeScanned={ onBarCodeScanned } />
         </View>

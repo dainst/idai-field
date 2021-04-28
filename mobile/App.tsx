@@ -1,15 +1,14 @@
 import { NavigationContainer, RouteProp } from '@react-navigation/native';
 import { createStackNavigator, StackNavigationProp } from '@react-navigation/stack';
-import AppLoading from 'expo-app-loading';
 import { NativeBaseProvider } from 'native-base';
 import PouchDB from 'pouchdb-react-native';
-import React, { Dispatch, ReactElement, SetStateAction, useState } from 'react';
+import React, { Dispatch, ReactElement, SetStateAction, useEffect, useState } from 'react';
 import { enableScreens } from 'react-native-screens';
 import { Settings } from './src/model/settings';
 import { DocumentRepository } from './src/repositories/document-repository';
 import DocumentsScreen from './src/screens/DocumentsScreen';
+import HomeScreen from './src/screens/HomeScreen';
 import SettingsScreen from './src/screens/SettingsScreen';
-import SplashScreen from './src/screens/SplashScreen';
 
 
 export type AppStackParamList = {
@@ -25,7 +24,7 @@ export type AppStackNavProps<T extends keyof AppStackParamList> = {
 };
 
 
-type SetDocumentRepository = Dispatch<SetStateAction<DocumentRepository | undefined>>;
+type SetRepository = Dispatch<SetStateAction<DocumentRepository | undefined>>;
 
 
 enableScreens();
@@ -38,27 +37,26 @@ export default function App(): ReactElement {
 
     const [repository, setRepository] = useState<DocumentRepository>();
     const [settings, setSettings] = useState<Settings>(getDefaultSettings());
-    const [finishedLoading, setFinishedLoading] = useState(false);
 
-    if (!finishedLoading || !repository) {
-        return <AppLoading
-                    startAsync={ initializeApp(setRepository) }
-                    onFinish={ () => setFinishedLoading(true) }
-                    onError={ (err) => console.log(err) } />;
-    }
+
+    useEffect(() => {
+
+        setupRepository(settings.project, settings.username, setRepository);
+    }, [settings]);
+
 
     return (
         <NativeBaseProvider>
             <NavigationContainer>
-                <Stack.Navigator initialRouteName="SplashScreen" screenOptions={ { headerShown: false } }>
-                    <Stack.Screen name="SplashScreen">
-                        { (props) => <SplashScreen { ...props } /> }
+                <Stack.Navigator initialRouteName="HomeScreen" screenOptions={ { headerShown: false } }>
+                    <Stack.Screen name="HomeScreen">
+                        { (props) => <HomeScreen { ... { ...props, setSettings } } /> }
                     </Stack.Screen>
                     <Stack.Screen name="DocumentsScreen">
                         { () => <DocumentsScreen { ... { repository, settings, setSettings } } /> }
                     </Stack.Screen>
                     <Stack.Screen name="SettingsScreen">
-                        { () => <SettingsScreen /> }
+                        { (props) => <SettingsScreen { ... { ...props, setSettings } } /> }
                     </Stack.Screen>
                 </Stack.Navigator>
             </NavigationContainer>
@@ -67,20 +65,14 @@ export default function App(): ReactElement {
 }
 
 
-const initializeApp = (setDocumentRepository: SetDocumentRepository) => async () => {
-    await setupRepository(setDocumentRepository);
-
-};
-
-
-const setupRepository = async (setDocumentRepository: SetDocumentRepository) => {
-    const repository = await DocumentRepository.init('test', (name: string) => new PouchDB(name), 'testuser');
-    setDocumentRepository(repository);
+const setupRepository = async (project: string, username: string, setRepository: SetRepository) => {
+    const repository = await DocumentRepository.init(project, (name: string) => new PouchDB(name), username);
+    setRepository(repository);
 };
 
 
 const getDefaultSettings = () => ({
-    project: 'test467',
+    project: 'test',
     username: 'testuser',
     sync: {
         url: '',

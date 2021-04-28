@@ -96,11 +96,11 @@ const NSvgMap: React.FC<SvgProps> = ( props ) => {
             initialX.setValue(x);
             initialY.setValue(y);
         } else {
-            const dx = x - (initialX as any)._value;
-            const dy = y - (initialY as any)._value;
+            const dx = Animated.subtract(x,initialX);
+            const dy = Animated.subtract(y,initialY);
 
-            left.setValue((initialLeft as any)._value + dx);
-            top.setValue((initialTop as any)._value + dy );
+            left.setValue((Animated.add(initialLeft, dx) as any).__getValue());
+            top.setValue((Animated.add(initialTop, dy) as any).__getValue());
         }
     };
 

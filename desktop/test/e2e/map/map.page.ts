@@ -1,4 +1,4 @@
-import { click, getElement } from '../app';
+import { click, getElement, getElements, waitForNotExist } from '../app';
 
 
 export class MapPage {
@@ -7,6 +7,44 @@ export class MapPage {
 
         return click('#map-container', x, y);
     };
+
+
+    public static async clickLayerButton() {
+
+        await waitForNotExist('.loading-icon');
+        return click('#layer-button');
+    }
+
+
+    public static clickEditLayersButton() {
+
+        return click('#layer-menu-edit-button');
+    }
+
+
+    public static clickAddLayersButton() {
+
+        return click('.layer-menu-add-button');
+    }
+
+
+    public static clickRemoveLayerButton(layerIndex) {
+
+        return click('#layer-menu-remove-button-' + layerIndex);
+    }
+
+
+    public static async clickSaveLayersButton() {
+
+        await click('#layer-menu-save-button');
+        await waitForNotExist('.loading-icon');
+    }
+
+
+    public static getLayerLabels(groupIndex) {
+
+        return getElements('#layer-group-' + groupIndex + ' .layer-menu-drag-handle .layer-menu-label');
+    }
 
 
     public static setMarker(x, y) {
@@ -25,10 +63,4 @@ export class MapPage {
 
         return click(await MapPage.getMapOption(optionName));
     };
-
-
-    public static getLayerButton() {
-
-        return getElement('#layer-button');
-    }
 }

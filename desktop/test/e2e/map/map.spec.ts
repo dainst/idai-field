@@ -1,9 +1,10 @@
-import { start, stop, waitForExist, resetApp, navigateTo, waitForNotExist, getUrl, pause } from '../app';
+import { start, stop, waitForExist, resetApp, navigateTo, waitForNotExist, getUrl, pause, getText, click } from '../app';
 import { MapPage } from './map.page';
 import { ResourcesPage } from '../resources/resources.page';
 import { DoceditPage } from '../docedit/docedit.page';
 import { NavbarPage } from '../navbar.page';
 import { GeometryViewPage } from '../widgets/geometry-view.page';
+import { ImagePickerModalPage } from '../widgets/image-picker-modal.page';
 
 
 describe('map --', function() {
@@ -474,9 +475,48 @@ describe('map --', function() {
     });
 
 
-    it('show layer menu', async done => {
+    it('remove and add layers in layer menu', async done => {
 
-        await waitForExist(await MapPage.getLayerButton());
+        await NavbarPage.clickTab('project');
+        await MapPage.clickLayerButton();
+
+        let labels = await MapPage.getLayerLabels(0);
+        expect(labels.length).toBe(2);
+        expect(await getText(labels[0])).toEqual('Test Layer 1');
+        expect(await getText(labels[1])).toEqual('Test Layer 2');
+
+        await MapPage.clickEditLayersButton();
+        await MapPage.clickRemoveLayerButton(0);
+        await MapPage.clickSaveLayersButton();
+
+        labels = await MapPage.getLayerLabels(0);
+        expect(labels.length).toBe(1);
+        expect(await getText(labels[0])).toEqual('Test Layer 2');
+
+        await MapPage.clickLayerButton();
+        await ResourcesPage.clickHierarchyButton('S1');
+        await MapPage.clickLayerButton();
+
+        labels = await MapPage.getLayerLabels(0);
+        expect(labels.length).toBe(0);
+        labels = await MapPage.getLayerLabels(1);
+        expect(labels.length).toBe(1);
+        expect(await getText(labels[0])).toEqual('Test Layer 2');
+
+        await MapPage.clickEditLayersButton();
+        await MapPage.clickAddLayersButton();
+        await ImagePickerModalPage.waitForCells();
+        await click((await ImagePickerModalPage.getCells())[0]);
+        await ImagePickerModalPage.clickAddImage();
+        await MapPage.clickSaveLayersButton();
+
+        labels = await MapPage.getLayerLabels(0);
+        expect(labels.length).toBe(1);
+        expect(await getText(labels[0])).toEqual('Test Layer 1');
+        labels = await MapPage.getLayerLabels(1);
+        expect(labels.length).toBe(1);
+        expect(await getText(labels[0])).toEqual('Test Layer 2');
+        await MapPage.clickLayerButton();
 
         done();
     });

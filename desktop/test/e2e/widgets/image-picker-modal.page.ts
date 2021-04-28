@@ -1,4 +1,4 @@
-import { click, getElements, typeIn } from '../app';
+import { click, getElements, typeIn, waitForExist } from '../app';
 
 
 /**
@@ -33,5 +33,13 @@ export class ImagePickerModalPage {
     public static getCells() {
 
         return getElements('.cell');
+    }
+
+
+    // wait
+    
+    public static waitForCells() {
+
+        return waitForExist('.cell');
     }
 }

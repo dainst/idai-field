@@ -10,7 +10,9 @@
         <div class="card-body">
             <loading-icon [context]="'layerMenu'"></loading-icon>
             <div class="layer-menu-container" [class.loading]="isLoading()">
-                <div *ngFor="let layerGroup of layerGroups; index as i" class="layer-group">
+                <div *ngFor="let layerGroup of layerGroups; index as i"
+                        [id]="'layer-group-' + i"
+                        class="layer-group">
                     <span class="layer-group-heading">{{getLayerGroupLabel(layerGroup)}}</span>
                     <span *ngIf="i === 0 && !isInEditing(layerGroup)" id="layer-menu-edit-button"
                           class="mdi mdi-pencil layer-menu-button layer-group-edit-button"
@@ -40,7 +42,7 @@
                                 Benutzen Sie den Bearbeiten-Button, um georeferenzierte Bilder als
                                 Kartenhintergründe hinzuzufügen.
                             </div>
-                            <div *ngFor="let layer of layerGroup.layers"
+                            <div *ngFor="let layer of layerGroup.layers; index as j"
                                 class="layer-entry"
                                 cdkDrag cdkDragLockAxis="y"
                                 cdkDragBoundary=".form-group"
@@ -80,7 +82,7 @@
                                     </span>
                                 </div>
                                 <span *ngIf="isInEditing(layerGroup)"
-                                    [id]="'layer-menu-remove-button-' + layer.resource.id"
+                                    [id]="'layer-menu-remove-button-' + j"
                                     class="mdi mdi-link-off layer-menu-button layer-menu-remove-button"
                                     ngbTooltip="Kartenhintergrund entfernen"
                                     i18n-ngbTooltip="@@resources.map.layerMenu.removeLayer"

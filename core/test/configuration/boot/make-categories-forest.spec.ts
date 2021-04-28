@@ -151,7 +151,7 @@ describe('makeCategoriesForest', () => {
     });
 
 
-    xit('should fail if parent category is not defined', () => {
+    xit('should result in failure if parent category is not defined', () => {
 
         const secondLevelCategory = {
             name: 'SecondLevelCategory',

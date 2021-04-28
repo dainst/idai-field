@@ -97,8 +97,12 @@ describe('resources --', () => {
 
         await ResourcesPage.performCreateResource('12', undefined, undefined, undefined, false, false, false);
 
+        await pause(1000);
+
         // do not warn if two different identifiers start with the same string
         await ResourcesPage.performCreateResource('120', undefined, undefined, undefined, false, false, false);
+
+        await pause(1000);
 
         // same identifier
         await ResourcesPage.performCreateResource('12', undefined, undefined, undefined, false, false, false);
@@ -368,10 +372,9 @@ describe('resources --', () => {
         await DoceditPage.clickCategorySwitcherOption('feature');
         await NavbarPage.awaitAlert('Bitte beachten Sie, dass die Daten der folgenden Felder beim Speichern ' +
             'verloren gehen: Mauertyp');
-            await NavbarPage.clickCloseAllMessages();
-            await DoceditPage.clickSaveDocument();
+        await NavbarPage.clickCloseAllMessages();
+        await DoceditPage.clickSaveDocument();
 
-            await FieldsViewPage.clickAccordionTab(0);
         fieldValue = await FieldsViewPage.getFieldValue(0, 0);
         expect(fieldValue).toEqual('Stratigraphische Einheit');
         const tabs = await FieldsViewPage.getTabs();

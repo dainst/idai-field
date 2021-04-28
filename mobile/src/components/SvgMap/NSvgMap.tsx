@@ -1,8 +1,9 @@
 import React, { useEffect, useRef } from 'react';
 import {
-    Animated, GestureResponderEvent, PanResponder, PanResponderGestureState, StyleSheet
+    Animated, Dimensions, GestureResponderEvent, PanResponder, PanResponderGestureState
 } from 'react-native';
 import Svg, { G, SvgProps } from 'react-native-svg';
+import { calcCenter, calcDistance } from './math-utils';
 import { getViewPortTransform } from './viewbox-utils';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -34,12 +35,11 @@ const NSvgMap: React.FC<SvgProps> = ( props ) => {
     const initialY = useRef<Animated.Value>(new Animated.Value(0)).current;
     const initialLeft = useRef<Animated.Value>(new Animated.Value(0)).current;
     const initialTop = useRef<Animated.Value>(new Animated.Value(0)).current;
+    const initialZoom = useRef<Animated.Value>(new Animated.Value(0)).current;
+    const initialDistance = useRef<Animated.Value>(new Animated.Value(0)).current;
 
 
-    // const { width, height } = Dimensions.get('window');
-    // console.log(width, height);
-    const width = 1000;
-    const height = 1000;
+    const { width, height } = Dimensions.get('window');
     const moveThreshold = 5;
     const AG = Animated.createAnimatedComponent(G);
 
@@ -71,6 +71,9 @@ const NSvgMap: React.FC<SvgProps> = ( props ) => {
             if(touches.length === 1){
                 const [{ pageX, pageY }] = touches;
                 touchHandler(pageX, pageY);
+            } else if(touches.length === 2) {
+                const [touch1, touch2] = touches;
+                zoomHandler(touch1.pageX, touch1.pageY, touch2.pageX, touch2.pageY);
             } else return;
             e.preventDefault();
         },
@@ -91,12 +94,34 @@ const NSvgMap: React.FC<SvgProps> = ( props ) => {
             initialX.setValue(x);
             initialY.setValue(y);
         } else {
-            //console.log('inside handler');
             const dx = x - initialX._value;
             const dy = y - initialY._value;
 
             left.setValue(initialLeft._value + dx);
             top.setValue(initialTop._value + dy );
+        }
+    };
+
+    const zoomHandler = (x1: number, y1: number, x2: number, y2: number ): void => {
+        const distance = calcDistance(x1, y1, x2, y2);
+        const { x, y } = calcCenter(x1, y1, x2, y2);
+
+        if(!isZooming._value){
+            isZooming.setValue(1);
+            initialX.setValue(x);
+            initialY.setValue(y);
+            initialTop.setValue(top._value);
+            initialLeft.setValue(left._value);
+            initialZoom.setValue(zoom._value);
+            initialDistance.setValue(distance);
+        } else {
+            const touchZoom = distance / initialDistance._value;
+            const dx = x - initialX._value;
+            const dy = y - initialY._value;
+
+            left.setValue( (initialLeft._value + dx - x) * touchZoom + x);
+            top.setValue ( (initialTop._value + dy - y) * touchZoom + y);
+            zoom.setValue ( initialZoom._value * touchZoom);
         }
     };
 
@@ -120,24 +145,16 @@ const NSvgMap: React.FC<SvgProps> = ( props ) => {
 
     return (
         <Animated.View style={ props.style } { ...panResponder.panHandlers } >
-            <Svg >
-                {/* <AG transform={ getZoomTransform(left._value, top._value, zoom._value, scaleX._value, scaleY._value, translateX._value, translateY._value) }> */}
-                <AG style={ animatedStyle }>
+            <Svg width={ width } height={ height }>
+                <AG translateX={ Animated.add(left, Animated.multiply(zoom, translateX)) }
+                    translateY={ Animated.add(top, Animated.multiply(zoom, translateY)) }
+                    scaleX={ Animated.multiply(scaleX, zoom) } scaleY={ Animated.multiply(scaleY, zoom) }>
                     {props.children}
                 </AG>
             </Svg>
         </Animated.View>
     );
 };
-
-const styles = StyleSheet.create({
-    box: {
-        backgroundColor: '#61dafb',
-        width: 80,
-        height: 80,
-        borderRadius: 4,
-      },
-});
 
 
 export default NSvgMap;

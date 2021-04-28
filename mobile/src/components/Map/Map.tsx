@@ -2,8 +2,10 @@ import { Position } from 'geojson';
 import { Document, FieldGeometry } from 'idai-field-core';
 import { Text } from 'native-base';
 import React, { ReactElement } from 'react';
+import { StyleSheet } from 'react-native';
 import { Circle, G } from 'react-native-svg';
-import SvgMap from '../SvgMap/SvgMap';
+import NSvgMap from '../SvgMap/NSvgMap';
+import { viewBox } from './constants';
 import { getGeometryBoundings } from './cs-transform-utils';
 import {
     GeoLineString, GeoMultiLineString, GeoMultiPoint,
@@ -23,19 +25,26 @@ const Map: React.FC<MapProps> = ({ geoDocuments, selectedGeoDocuments }) => {
     return (
         <>
             {geoDocuments && geometryBoundings ?
-                <SvgMap>
+                <NSvgMap viewBox={ viewBox.join(' ') } style={ styles.svg }>
                     {geoDocuments.map(doc =>(
                         <G key={ doc._id }>
                             {renderGeoSvgElement(doc, transformGeojsonToSvg.bind(this, geometryBoundings),
                                 selectedGeoDocuments )}
                         </G>))
                     }
-                </SvgMap> :
+                </NSvgMap> :
                 <Text>No docs available</Text>
             }
         </>
     );
 };
+
+const styles = StyleSheet.create({
+    svg: {
+        height: '100%',
+        width: '100%'
+    },
+});
 
 
 const renderGeoSvgElement = (document: Document, csTransformFunc: (pos: Position) => Position,

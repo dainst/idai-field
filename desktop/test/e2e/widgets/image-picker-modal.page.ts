@@ -20,6 +20,12 @@ export class ImagePickerModalPage {
     }
 
 
+    public static clickCloseButton() {
+        
+        return click('#image-picker-close-button');
+    }
+
+
     // typeIn
 
     public static typeInIdentifierInSearchField(identifier) {

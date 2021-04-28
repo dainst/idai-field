@@ -37,7 +37,13 @@ export class MapPage {
     public static async clickSaveLayersButton() {
 
         await click('#layer-menu-save-button');
-        await waitForNotExist('.loading-icon');
+        return waitForNotExist('.loading-icon');
+    }
+
+
+    public static clickCancelEditingLayersButton() {
+
+        return click('#layer-menu-cancel-button');
     }
 
 

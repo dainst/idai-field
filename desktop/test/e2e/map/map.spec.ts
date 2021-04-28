@@ -520,4 +520,40 @@ describe('map --', function() {
 
         done();
     });
+
+
+    it('do not allow adding an image to more than one layer group', async done => {
+
+        await MapPage.clickLayerButton();
+
+        await MapPage.clickEditLayersButton();
+        await MapPage.clickAddLayersButton();
+        await pause(500);
+        expect((await ImagePickerModalPage.getCells()).length).toBe(0);
+        
+        await ImagePickerModalPage.clickCloseButton();
+        await MapPage.clickCancelEditingLayersButton();
+        await MapPage.clickLayerButton();
+
+        await NavbarPage.clickTab('project');
+        await MapPage.clickLayerButton();
+        await MapPage.clickEditLayersButton();
+        await MapPage.clickRemoveLayerButton(0);
+        await MapPage.clickSaveLayersButton();
+        await MapPage.clickLayerButton();
+
+        await ResourcesPage.clickHierarchyButton('S1');
+        await MapPage.clickLayerButton();
+
+        await MapPage.clickEditLayersButton();
+        await MapPage.clickAddLayersButton();
+        await ImagePickerModalPage.waitForCells();
+        expect((await ImagePickerModalPage.getCells()).length).toBe(1);
+
+        await ImagePickerModalPage.clickCloseButton();
+        await MapPage.clickCancelEditingLayersButton();
+        await MapPage.clickLayerButton();
+
+        done();
+    });
 });

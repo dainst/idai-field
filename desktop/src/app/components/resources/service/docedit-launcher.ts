@@ -1,10 +1,9 @@
-import {Injectable} from '@angular/core';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {Document, NewDocument} from 'idai-field-core';
-import {FieldDocument} from 'idai-field-core';
-import {DoceditComponent} from '../../docedit/docedit.component';
-import {MenuContext, MenuService} from '../../menu-service';
-import {ViewFacade} from '../../../core/resources/view/view-facade';
+import { Injectable } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Document, NewDocument, FieldDocument } from 'idai-field-core';
+import { DoceditComponent } from '../../docedit/docedit.component';
+import { MenuContext, MenuService } from '../../menu-service';
+import { ViewFacade } from '../../../core/resources/view/view-facade';
 
 
 @Injectable()
@@ -47,6 +46,7 @@ export class DoceditLauncher {
 
     private async handleSaveResult(document: FieldDocument) {
 
+        await this.viewFacade.deselect();
         await this.viewFacade.populateDocumentList();
         await this.viewFacade.rebuildNavigationPath();
 

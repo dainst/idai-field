@@ -1,14 +1,14 @@
-import {AfterViewInit, Component, ElementRef, ViewChild, Input, OnChanges} from '@angular/core';
-import {to} from 'tsfun';
-import {FieldDocument} from 'idai-field-core';
-import {ResourcesComponent} from '../../resources.component';
-import {Loading} from '../../../widgets/loading';
-import {BaseList} from '../../base-list';
-import {ContextMenuAction} from '../../widgets/context-menu.component';
-import {ViewFacade} from '../../../../core/resources/view/view-facade';
-import {NavigationService} from '../../../../core/resources/navigation/navigation-service';
-import {ContextMenu} from '../../widgets/context-menu';
-import {MenuContext, MenuService} from '../../../menu-service';
+import { AfterViewInit, Component, ElementRef, ViewChild, Input, OnChanges } from '@angular/core';
+import { to } from 'tsfun';
+import { FieldDocument } from 'idai-field-core';
+import { ResourcesComponent } from '../../resources.component';
+import { Loading } from '../../../widgets/loading';
+import { BaseList } from '../../base-list';
+import { ContextMenuAction } from '../../widgets/context-menu.component';
+import { ViewFacade } from '../../../../core/resources/view/view-facade';
+import { NavigationService } from '../../../../core/resources/navigation/navigation-service';
+import { ContextMenu } from '../../widgets/context-menu';
+import { MenuContext, MenuService } from '../../../menu-service';
 
 
 @Component({
@@ -62,7 +62,7 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
     }
 
 
-    ngOnChanges(): void {
+    ngOnChanges() {
 
         this.resourcesComponent.additionalSelectedDocuments = [];
         this.lastSelectedDocument = undefined;

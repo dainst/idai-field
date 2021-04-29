@@ -11,6 +11,7 @@ import { addKeyAsProp } from '../../tools';
 import { ValuelistDefinition } from '../../model/valuelist-definition';
 import { PouchdbManager } from '../../datastore';
 import { ConfigurationDocument } from '../../model/configuration-document';
+import { CustomCategoryDefinition } from '../model';
 
 
 /**
@@ -140,21 +141,8 @@ export class ConfigLoader {
             return await this.pouchdbManager.getDb().get('configuration') as ConfigurationDocument;
         } catch (_) {
             const categories = await this.configReader.read(filePath);
-            const configuration: ConfigurationDocument = {
-                _id: 'configuration',
-                created: {
-                    user: username,
-                    date: new Date()
-                },
-                modified: [],
-                resource: {
-                    id: 'configuration',
-                    identifier: 'Configuration',
-                    category: 'Configuration',
-                    relations: {},
-                    categories: categories
-                }
-            };
+            const configuration: ConfigurationDocument
+                = ConfigLoader.createConfigurationDocument(categories, username);
             try {
                 await this.pouchdbManager.getDb().put(configuration);
                 return configuration;
@@ -205,5 +193,26 @@ export class ConfigLoader {
         map((definition: ValuelistDefinition, id: string) => definition.id = id, valuelistsConfiguration);
 
         return valuelistsConfiguration;
+    }
+    
+
+    private static createConfigurationDocument(categories: { [formName: string]: CustomCategoryDefinition },
+                                               username: string): ConfigurationDocument {
+
+        return {
+            _id: 'configuration',
+            created: {
+                user: username,
+                date: new Date()
+            },
+            modified: [],
+            resource: {
+                id: 'configuration',
+                identifier: 'Configuration',
+                category: 'Configuration',
+                relations: {},
+                categories: categories
+            }
+        };
     }
 }

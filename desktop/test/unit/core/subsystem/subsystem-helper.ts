@@ -1,8 +1,12 @@
-import { ChangesStream, createDocuments, Datastore, Document, DocumentCache,
-    AppConfigurator, ConfigLoader, ConfigReader, NiceDocs, PouchdbDatastore, PouchdbManager,
-    Query, ResourceId, SyncService, toResourceId } from 'idai-field-core';
+import {
+    AppConfigurator, ChangesStream,
+    ConfigLoader, createDocuments, Datastore, Document, DocumentCache,
+    NiceDocs, PouchdbDatastore, PouchdbManager,
+    Query, ResourceId, SyncService, toResourceId
+} from 'idai-field-core';
 import * as PouchDB from 'pouchdb-node';
-import { identity, sameset } from 'tsfun';
+import { sameset } from 'tsfun';
+import { FsConfigReader } from '../../../../src/app/core/configuration/fs-config-reader';
 import { FieldConverter } from '../../../../src/app/core/datastore/field/category-converter';
 import { PouchdbServer } from '../../../../src/app/core/datastore/pouchdb/pouchdb-server';
 import { DocumentHolder } from '../../../../src/app/core/docedit/document-holder';
@@ -47,7 +51,7 @@ export async function setupSettingsService(pouchdbmanager, pouchdbserver, projec
         pouchdbmanager,
         pouchdbserver,
         undefined,
-        new AppConfigurator(new ConfigLoader(new ConfigReader())),
+        new AppConfigurator(new ConfigLoader(new FsConfigReader())),
         undefined,
         settingsProvider
     );

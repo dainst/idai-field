@@ -105,8 +105,8 @@ registerLocaleData(localeIt, 'it');
         { provide: FsConfigReader, useClass: FsConfigReader },
         {
             provide: ConfigLoader,
-            useFactory: function(configReader: ConfigReader) { return new ConfigLoader(configReader); },
-            deps: [FsConfigReader]
+            useFactory: function(configReader: ConfigReader, pouchdbManager: PouchdbManager) { return new ConfigLoader(configReader, pouchdbManager); },
+            deps: [FsConfigReader, PouchdbManager]
         },
         {
             provide: AppConfigurator,

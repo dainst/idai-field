@@ -1,6 +1,7 @@
-import {NewResource} from "./new-resource";
+import { NewResource } from './new-resource';
+
 
 export interface NewDocument {
 
-    resource : NewResource;
+    resource: NewResource;
 }

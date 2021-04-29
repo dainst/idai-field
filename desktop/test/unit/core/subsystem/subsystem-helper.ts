@@ -1,11 +1,7 @@
-import {
-    AppConfigurator, ChangesStream,
-    ConfigLoader, createDocuments, Datastore, Document, DocumentCache,
-    NiceDocs, PouchdbDatastore, PouchdbManager,
-    Query, ResourceId, SyncService, toResourceId
-} from 'idai-field-core';
 import * as PouchDB from 'pouchdb-node';
 import { sameset } from 'tsfun';
+import { AppConfigurator, ChangesStream, ConfigLoader, createDocuments, Datastore, Document, DocumentCache,
+    NiceDocs, PouchdbDatastore, PouchdbManager, Query, ResourceId, SyncService, toResourceId } from 'idai-field-core';
 import { FsConfigReader } from '../../../../src/app/core/configuration/fs-config-reader';
 import { FieldConverter } from '../../../../src/app/core/datastore/field/category-converter';
 import { PouchdbServer } from '../../../../src/app/core/datastore/pouchdb/pouchdb-server';
@@ -30,7 +26,6 @@ import { IndexerConfiguration } from '../../../../src/app/indexer-configuration'
 const fs = require('fs');
 
 
-
 class IdGenerator {
     public generateId() {
         return Math.floor(Math.random() * 10000000).toString();
@@ -51,7 +46,7 @@ export async function setupSettingsService(pouchdbmanager, pouchdbserver, projec
         pouchdbmanager,
         pouchdbserver,
         undefined,
-        new AppConfigurator(new ConfigLoader(new FsConfigReader())),
+        new AppConfigurator(new ConfigLoader(new FsConfigReader(), pouchdbmanager)),
         undefined,
         settingsProvider
     );

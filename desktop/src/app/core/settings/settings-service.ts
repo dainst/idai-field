@@ -127,7 +127,8 @@ export class SettingsService {
             return this.appConfigurator.go(
                 configurationDirPath,
                 SettingsService.getConfigurationName(this.settingsProvider.getSettings().selectedProject),
-                this.settingsProvider.getSettings().languages
+                this.settingsProvider.getSettings().languages,
+                this.settingsProvider.getSettings().username
             );
         } catch (msgsWithParams) {
             if (isString(msgsWithParams)) {

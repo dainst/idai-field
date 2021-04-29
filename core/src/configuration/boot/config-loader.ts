@@ -1,14 +1,16 @@
-import {isUndefinedOrEmpty, Map, map, not} from 'tsfun';
-import {ProjectConfiguration} from '../project-configuration';
-import {ConfigurationValidation} from './configuration-validation';
-import {ConfigReader} from './config-reader';
-import {buildRawProjectConfiguration} from './build-raw-project-configuration';
-import {BuiltinCategoryDefinition} from '../model/builtin-category-definition';
-import {LibraryCategoryDefinition} from '../model/library-category-definition';
-import {FieldDefinition} from '../../model/field-definition';
-import {RelationDefinition} from '../../model/relation-definition';
-import {addKeyAsProp} from '../../tools';
-import {ValuelistDefinition} from '../../model';
+import { isUndefinedOrEmpty, Map, map, not } from 'tsfun';
+import { ProjectConfiguration } from '../project-configuration';
+import { ConfigurationValidation } from './configuration-validation';
+import { ConfigReader } from './config-reader';
+import { buildRawProjectConfiguration } from './build-raw-project-configuration';
+import { BuiltinCategoryDefinition } from '../model/builtin-category-definition';
+import { LibraryCategoryDefinition } from '../model/library-category-definition';
+import { FieldDefinition } from '../../model/field-definition';
+import { RelationDefinition } from '../../model/relation-definition';
+import { addKeyAsProp } from '../../tools';
+import { ValuelistDefinition } from '../../model/valuelist-definition';
+import { PouchdbManager } from '../../datastore';
+import { ConfigurationDocument } from '../../model/configuration-document';
 
 
 /**
@@ -26,13 +28,14 @@ import {ValuelistDefinition} from '../../model';
  */
 export class ConfigLoader {
 
-    constructor(private configReader: ConfigReader) {}
+    constructor(private configReader: ConfigReader,
+                private pouchdbManager: PouchdbManager) {}
 
-    public go(configDirPath: string, commonFields: { [fieldName: string]: any },
-              builtinCategories: Map<BuiltinCategoryDefinition>, relations: Array<RelationDefinition>,
-              extraFields: {[fieldName: string]: FieldDefinition },
-              customConfigurationName: string|undefined,
-              languages: string[]): ProjectConfiguration {
+    public async go(configDirPath: string, commonFields: { [fieldName: string]: any },
+                    builtinCategories: Map<BuiltinCategoryDefinition>, relations: Array<RelationDefinition>,
+                    extraFields: {[fieldName: string]: FieldDefinition },
+                    customConfigurationName: string|undefined,
+                    languages: string[], username: string): Promise<ProjectConfiguration> {
 
         if (customConfigurationName) console.log('Load custom configuration', customConfigurationName);
 
@@ -51,7 +54,8 @@ export class ConfigLoader {
             relations,
             extraFields,
             customConfigurationName,
-            languages);
+            languages,
+            username);
     }
 
 
@@ -67,14 +71,15 @@ export class ConfigLoader {
     }
 
 
-    private preprocess(configDirPath: string,
-                       libraryCategories: Map<LibraryCategoryDefinition>,
-                       commonFields: any,
-                       builtinCategories: Map<BuiltinCategoryDefinition>,
-                       relations: Array<RelationDefinition>,
-                       extraFields: { [fieldName: string]: FieldDefinition },
-                       customConfigurationName: string|undefined,
-                       languages: string[]): ProjectConfiguration {
+    private async preprocess(configDirPath: string,
+                             libraryCategories: Map<LibraryCategoryDefinition>,
+                             commonFields: any,
+                             builtinCategories: Map<BuiltinCategoryDefinition>,
+                             relations: Array<RelationDefinition>,
+                             extraFields: { [fieldName: string]: FieldDefinition },
+                             customConfigurationName: string|undefined,
+                             languages: string[],
+                             username: string): Promise<ProjectConfiguration> {
 
         const orderConfigurationPath = configDirPath + '/Order.json';
         const searchConfigurationPath = configDirPath + '/Search.json';
@@ -92,7 +97,7 @@ export class ConfigLoader {
             languageConfigurations = this.readLanguageConfigurations(
                 configDirPath, languages, customConfigurationName
             );
-            customCategories = this.configReader.read(customConfigPath);
+            customCategories = (await this.readCustomConfiguration(customConfigPath, username)).resource.categories;
             searchConfiguration = this.configReader.read(searchConfigurationPath);
             valuelistsConfiguration = this.readValuelistsConfiguration(valuelistsConfigurationPath);
             orderConfiguration = this.configReader.read(orderConfigurationPath);
@@ -125,6 +130,39 @@ export class ConfigLoader {
 
         } catch (msgWithParams) {
             throw msgWithParams;
+        }
+    }
+
+
+    private async readCustomConfiguration(filePath: string, username: string): Promise<ConfigurationDocument> {
+
+        try {
+            return await this.pouchdbManager.getDb().get('configuration') as ConfigurationDocument;
+        } catch (_) {
+            const categories = await this.configReader.read(filePath);
+            const configuration: ConfigurationDocument = {
+                _id: 'configuration',
+                created: {
+                    user: username,
+                    date: new Date()
+                },
+                modified: [],
+                resource: {
+                    id: 'configuration',
+                    identifier: 'Configuration',
+                    category: 'Configuration',
+                    relations: {},
+                    categories: categories
+                }
+            };
+            try {
+                await this.pouchdbManager.getDb().put(configuration);
+                return configuration;
+            } catch (err) {
+                // TODO Throw msgWithParams
+                console.error('Failed to create configuration document!', err);
+                throw ['Failed to create configuration document!'];
+            }
         }
     }
 

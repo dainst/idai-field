@@ -1,8 +1,8 @@
-import {Map} from 'tsfun';
-import {ConfigLoader, ConfigurationDefinition, ConfigurationErrors} from '../../../src/configuration/boot';
-import {CustomCategoryDefinition} from '../../../src/configuration/model';
-import {Category} from '../../../src/model';
-import {Named} from '../../../src/tools';
+import { Map } from 'tsfun';
+import { ConfigLoader, ConfigurationDefinition, ConfigurationErrors } from '../../../src/configuration/boot';
+import { CustomCategoryDefinition } from '../../../src/configuration/model';
+import { Category } from '../../../src/model';
+import { Named } from '../../../src/tools';
 
 
 /**
@@ -14,6 +14,7 @@ describe('ConfigLoader', () => {
     let libraryCategories = {} as ConfigurationDefinition;
     let configLoader: ConfigLoader;
     let configReader;
+    let pouchdbManager;
 
     function applyConfig(customFieldsConfiguration = {},
                          languageConfiguration = {},
@@ -25,12 +26,19 @@ describe('ConfigLoader', () => {
             customLanguageConfiguration,
             languageConfiguration,
             {},
-            customFieldsConfiguration,
             {},
             {},
             orderConfiguration
         );
         configReader.exists.and.returnValue(true);
+
+        pouchdbManager.getDb.and.returnValue({
+            get: (_: string) => Promise.resolve({
+                resource: {
+                    categories: customFieldsConfiguration
+                }
+            })
+        });
     }
 
 
@@ -39,13 +47,14 @@ describe('ConfigLoader', () => {
         libraryCategories = {} as ConfigurationDefinition;
 
         configReader = jasmine.createSpyObj('configReader', ['read', 'exists']);
+        pouchdbManager = jasmine.createSpyObj('pouchdbManager', ['getDb']);
         applyConfig();
 
-        configLoader = new ConfigLoader(configReader);
+        configLoader = new ConfigLoader(configReader, pouchdbManager);
     });
 
 
-    it('mix in common fields', () => {
+    it('mix in common fields', async done => {
 
         Object.assign(libraryCategories, {
             'B:0': {
@@ -71,24 +80,27 @@ describe('ConfigLoader', () => {
 
         let pconf;
         try {
-            pconf = configLoader.go(
+            pconf = await configLoader.go(
                 'yo',
                 { processor : { inputType: 'input', group: 'stem' }},
                 { 'A': { fields: {}, userDefinedSubcategoriesAllowed: true, supercategory: true } },
                 [],
                 {},
                 undefined,
-                ['de']
+                ['de'],
+                'User'
             );
         } catch(err) {
             fail(err);
         }
 
         expect(pconf.getCategory('B').groups[0].fields[0]['name']).toBe('processor');
+        
+        done();
     });
 
 
-    it('translate common fields', () => {
+    it('translate common fields', async done => {
 
         Object.assign(libraryCategories, {
             'B:0': {
@@ -115,26 +127,29 @@ describe('ConfigLoader', () => {
 
         let pconf;
         try {
-            pconf = configLoader.go(
+            pconf = await configLoader.go(
                 'yo',
-                { processor : { inputType: 'input', group: 'stem' }},
-                { 'A': { fields: {}, supercategory: true, userDefinedSubcategoriesAllowed: true }},
+                { processor: { inputType: 'input', group: 'stem' } },
+                { 'A': { fields: {}, supercategory: true, userDefinedSubcategoriesAllowed: true } },
                 [],
                 {},
                 undefined,
-                ['de']
+                ['de'],
+                'User'
             );
         } catch(err) {
-            console.log('err',err);
+            console.log('err', err);
             fail(err);
         }
 
         expect(pconf.getCategory('B').groups[0].fields[0]['label']).toBe('Bearbeiter/Bearbeiterin');
         expect(pconf.getCategory('B').groups[0].fields[0]['description']).toBe('abc');
+
+        done();
     });
 
 
-    it('mix existing externally configured with internal inherits relation', () => {
+    it('mix existing externally configured with internal inherits relation', async done => {
 
         Object.assign(libraryCategories, {
             'A1': { categoryName: 'A1', parent: 'A', fields: {}, valuelists: {}, creationDate: '', createdBy: '', description: {}, commons: [] },
@@ -161,7 +176,7 @@ describe('ConfigLoader', () => {
         let pconf;
 
         try {
-            pconf = configLoader.go(
+            pconf = await configLoader.go(
                 'yo',
                 {},
                 {
@@ -184,7 +199,8 @@ describe('ConfigLoader', () => {
                     }],
                 {},
                 undefined,
-                ['de']
+                ['de'],
+                'User'
             );
         } catch(err) {
             fail(err);
@@ -194,10 +210,12 @@ describe('ConfigLoader', () => {
         expect((pconf.getRelationDefinitionsForDomainCategory('A1') as any)[0].range).toContain('B');
         expect((pconf.getRelationDefinitionsForDomainCategory('A2') as any)[0].range).toContain('B2');
         expect((pconf.getRelationDefinitionsForDomainCategory('C') as any)[0].range).toContain('D');
+
+        done();
     });
 
 
-    it('preprocess - convert sameOperation to sameMainCategoryResource', () => {
+    it('preprocess - convert sameOperation to sameMainCategoryResource', async done => {
 
         Object.assign(libraryCategories, {
             'A': { categoryName: 'A', parent: 'T', fields: {}, valuelists: {}, creationDate: '', createdBy: '', description: {}, commons: []  },
@@ -208,7 +226,7 @@ describe('ConfigLoader', () => {
 
         let pconf;
         try {
-            pconf = configLoader.go(
+            pconf = await configLoader.go(
                 'yo',
                 {},
                 {
@@ -216,16 +234,18 @@ describe('ConfigLoader', () => {
                     B: { fields: {}},
                     T: { fields: {}, supercategory: true, userDefinedSubcategoriesAllowed: true }},
                 [{ name: 'abc', label: '', domain: ['A'], range: ['B'], sameMainCategoryResource: false }], {},
-                undefined, ['de']);
+                undefined, ['de'], 'User');
         } catch(err) {
             fail(err);
         }
 
         expect(pconf.getRelationDefinitionsForDomainCategory('A')[0].sameMainCategoryResource).toBe(false);
+
+        done();
     });
 
 
-    it('preprocess - apply language confs', () => {
+    it('preprocess - apply language confs', async done => {
 
         Object.assign(libraryCategories, {
             'A': { categoryName: 'A', parent: 'Parent', fields: {}, valuelists: {}, creationDate: '', createdBy: '', description: {}, commons: [] },
@@ -257,7 +277,7 @@ describe('ConfigLoader', () => {
 
         let pconf;
         try {
-            pconf = configLoader.go(
+            pconf = await configLoader.go(
                 'yo', {},
                 {
                         Parent: { fields: {}, userDefinedSubcategoriesAllowed: true, supercategory: true },
@@ -267,7 +287,7 @@ describe('ConfigLoader', () => {
                 [{ name: 'r1', label: '', domain: ['A'], range: ['B']},
                          { name: 'r2', label: '', domain: ['A'], range: ['B']}],
                 {},
-                 undefined, ['de']);
+                 undefined, ['de'], 'User');
         } catch(err) {
             fail(err);
         }
@@ -278,10 +298,12 @@ describe('ConfigLoader', () => {
 
         expect(pconf.getRelationDefinitionsForDomainCategory('A')[1].label).toEqual('r1_');
         expect(pconf.getRelationDefinitionsForDomainCategory('A')[0].label).toBeFalsy();
+
+        done();
     });
 
 
-    it('preprocess - apply custom fields configuration', () => {
+    it('preprocess - apply custom fields configuration', async done => {
 
         Object.assign(libraryCategories, {
             'A': {
@@ -321,11 +343,11 @@ describe('ConfigLoader', () => {
 
         let pconf;
         try {
-            pconf = configLoader.go('', {},
+            pconf = await configLoader.go('', {},
                 {
                     'F': { fields: {}, userDefinedSubcategoriesAllowed: true, supercategory: true },
                     'G': { fields: {}, userDefinedSubcategoriesAllowed: true, supercategory: true }},[], {},
-                undefined, ['de']
+                undefined, ['de'], 'User'
             );
 
             expect(pconf.getCategory('A').groups[0].fields.find(field => field.name == 'fieldA1')
@@ -338,10 +360,12 @@ describe('ConfigLoader', () => {
         } catch(err) {
             fail(err);
         }
+
+        done();
     });
 
 
-    it('preprocess - apply custom fields configuration - add subcategories', () => {
+    it('preprocess - apply custom fields configuration - add subcategories', async done => {
 
         Object.assign(libraryCategories, {
             'Find:0': {
@@ -371,9 +395,9 @@ describe('ConfigLoader', () => {
 
         let pconf;
         try {
-            pconf = configLoader.go('', {},
+            pconf = await configLoader.go('', {},
                 { 'Find': { fields: {}, userDefinedSubcategoriesAllowed: true, supercategory: true }},[], {},
-                undefined, ['de']
+                undefined, ['de'], 'User'
             );
 
             expect(Named.arrayToMap<Category>(pconf.getCategoriesArray())['B:0'].groups[1].fields.find(field => field.name == 'fieldC1')
@@ -382,10 +406,12 @@ describe('ConfigLoader', () => {
         } catch(err) {
             fail(err);
         }
+
+        done();
     });
 
 
-    it('preprocess - apply custom fields configuration - add subcategories - parent not defined', () => {
+    it('preprocess - apply custom fields configuration - add subcategories - parent not defined', async done => {
 
         Object.assign(libraryCategories, {});
 
@@ -406,18 +432,20 @@ describe('ConfigLoader', () => {
         );
 
         try {
-            configLoader.go('', {}, {},[], {},
-                undefined, ['de']
+            await configLoader.go('', {}, {},[], {},
+                undefined, ['de'], 'User'
             );
 
             fail();
         } catch(err) {
             expect(err).toEqual([ConfigurationErrors.INVALID_CONFIG_PARENT_NOT_DEFINED, 'Find']);
         }
+
+        done();
     });
 
 
-    it('preprocess - apply custom fields configuration - add subcategories - non extendable categories not allowed', () => {
+    it('preprocess - apply custom fields configuration - add subcategories - non extendable categories not allowed', async done => {
 
         Object.assign(libraryCategories, {});
 
@@ -432,18 +460,18 @@ describe('ConfigLoader', () => {
         applyConfig(customFieldsConfiguration);
 
         try {
-                configLoader.go('', {}, { Place: { fields: { fieldA1: { inputType: 'unsignedInt' }}}},[], {},
-                undefined, ['de']
-            );
+            await configLoader.go('', {}, { Place: { fields: { fieldA1: { inputType: 'unsignedInt' }}}},[], {},
+                undefined, ['de'], 'User');
             fail();
-
         } catch(err) {
             expect(err).toEqual([ConfigurationErrors.TRYING_TO_SUBTYPE_A_NON_EXTENDABLE_CATEGORY, 'Place']);
         }
+
+        done();
     });
 
 
-    it('apply order configuration', () => {
+    it('apply order configuration', async done => {
 
         Object.assign(libraryCategories, {
             'B': {
@@ -499,10 +527,10 @@ describe('ConfigLoader', () => {
 
         let pconf;
         try {
-            pconf = configLoader.go('', {},
+            pconf = await configLoader.go('', {},
                 { Parent: { fields: {}, userDefinedSubcategoriesAllowed: true, supercategory: true }},
                 [], {},
-                 undefined, ['de']
+                 undefined, ['de'], 'User'
             );
 
             const result = Named.arrayToMap<Category>(pconf.getCategoriesArray());
@@ -520,11 +548,13 @@ describe('ConfigLoader', () => {
         } catch(err) {
             fail(err);
         }
+
+        done();
     });
 
 
     it('add categories and fields only once even if they are mentioned multiple times in order configuration',
-        () => {
+            async done => {
 
         Object.assign(libraryCategories, {
             A: {
@@ -550,9 +580,9 @@ describe('ConfigLoader', () => {
 
         let pconf;
         try {
-            pconf = configLoader.go('', {},
+            pconf = await configLoader.go('', {},
                 { Parent: { fields: {}, supercategory: true, userDefinedSubcategoriesAllowed: true }}, [], {},
-                undefined, ['de']
+                undefined, ['de'], 'User'
             );
 
             expect(pconf.getCategoriesArray().length).toBe(2);
@@ -562,10 +592,12 @@ describe('ConfigLoader', () => {
         } catch(err) {
             fail(err);
         }
+
+        done();
     });
 
 
-    it('apply hidden', () => {
+    it('apply hidden', async done => {
 
         Object.assign(libraryCategories, {
             'A:0': {
@@ -590,8 +622,8 @@ describe('ConfigLoader', () => {
 
         let pconf;
         try {
-            pconf = configLoader.go('', {}, { A: { fields: {} }}, [], {},
-                undefined, ['de']
+            pconf = await configLoader.go('', {}, { A: { fields: {} }}, [], {},
+                undefined, ['de'], 'User'
             );
             const result = pconf.getCategory('A').groups[0];
 
@@ -607,5 +639,7 @@ describe('ConfigLoader', () => {
         } catch(err) {
             fail(err);
         }
+
+        done();
     });
 });

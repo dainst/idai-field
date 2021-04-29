@@ -567,8 +567,8 @@ export class AppConfigurator {
     constructor(private configLoader: ConfigLoader) {}
 
 
-    public go(configDirPath: string, customConfigurationName: string|undefined,
-              languages: string[]): ProjectConfiguration {
+    public async go(configDirPath: string, customConfigurationName: string|undefined,
+                    languages: string[], username: string): Promise<ProjectConfiguration> {
 
         if (customConfigurationName === 'Meninx' || customConfigurationName === 'Pergamon'
                 || customConfigurationName === 'Bourgou') {
@@ -806,7 +806,8 @@ export class AppConfigurator {
             this.defaultRelations,
             this.defaultFields,
             customConfigurationName,
-            languages
+            languages,
+            username
         );
     }
 }

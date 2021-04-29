@@ -2,7 +2,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList } from 'mobile/App';
 import { Button, Center, Column, Icon, IconButton, Row, Select, Text, View } from 'native-base';
 import React, { SetStateAction, useCallback, useState } from 'react';
-import { prepend, update } from 'tsfun';
+import { prepend, set, update } from 'tsfun';
 import CreateProjectModal from '../components/CreateProjectModal';
 import { Settings } from '../model/settings';
 
@@ -22,7 +22,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, settings, setSettin
 
     const openProject = useCallback((project: string) => {
 
-        setRecentProjects(old => prepend(project)(old));
+        setRecentProjects(old => set(prepend(project)(old)));
         setSettings(oldSettings => update('project', project, oldSettings));
         navigation.navigate('DocumentsScreen');
     }, [navigation, setSettings]);

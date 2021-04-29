@@ -46,7 +46,7 @@ const NSvgMap: React.FC<SvgProps> = ( props ) => {
     const AnimatedSvg = Animated.createAnimatedComponent(Svg);
 
     useEffect(() => {
-        const transforms = getViewPortTransform(props.viewBox, props.preserveAspectRatio, width, height);
+        const transforms = getViewPortTransform(props.viewBox, props.preserveAspectRatio, { x: 0, y:0, width, height });
         translateX.setValue(transforms.translateX);
         translateY.setValue(transforms.translateY);
         scaleY.setValue(transforms.scaleY);

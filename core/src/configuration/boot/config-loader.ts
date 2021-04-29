@@ -98,7 +98,7 @@ export class ConfigLoader {
             languageConfigurations = this.readLanguageConfigurations(
                 configDirPath, languages, customConfigurationName
             );
-            customCategories = (await this.readCustomConfiguration(customConfigPath, username)).resource.categories;
+            customCategories = (await this.loadCustomConfiguration(customConfigPath, username)).resource.categories;
             searchConfiguration = this.configReader.read(searchConfigurationPath);
             valuelistsConfiguration = this.readValuelistsConfiguration(valuelistsConfigurationPath);
             orderConfiguration = this.configReader.read(orderConfigurationPath);
@@ -135,12 +135,20 @@ export class ConfigLoader {
     }
 
 
-    private async readCustomConfiguration(filePath: string, username: string): Promise<ConfigurationDocument> {
+    private async loadCustomConfiguration(filePath: string, username: string): Promise<ConfigurationDocument> {
 
         try {
             return await this.pouchdbManager.getDb().get('configuration') as ConfigurationDocument;
         } catch (_) {
-            const categories = await this.configReader.read(filePath);
+            return await this.storeCustomConfigurationInDatabase(filePath, username);
+        }
+    }
+
+
+    private async storeCustomConfigurationInDatabase(filePath: string,
+                                                     username: string): Promise<ConfigurationDocument> {
+
+        const categories = await this.configReader.read(filePath);
             const configuration: ConfigurationDocument
                 = ConfigLoader.createConfigurationDocument(categories, username);
             try {
@@ -151,7 +159,6 @@ export class ConfigLoader {
                 console.error('Failed to create configuration document!', err);
                 throw ['Failed to create configuration document!'];
             }
-        }
     }
 
 

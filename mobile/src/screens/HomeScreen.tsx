@@ -24,7 +24,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
     setRecentProjects
 }) => {
 
-    const [selectedProject, setSelectedProject] = useState<string>('test');
+    const [selectedProject, setSelectedProject] = useState<string>(recentProjects[0] || '');
     const [isProjectModalOpen, setIsProjectModalOpen] = useState<boolean>(false);
 
     const openProject = useCallback((project: string) => {

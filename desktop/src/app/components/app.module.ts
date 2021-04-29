@@ -8,14 +8,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { I18n } from '@ngx-translate/i18n-polyfill';
-import { ConstraintIndex, DocumentCache, Datastore, FulltextIndex, IndexFacade, PouchdbManager, Query, SyncService } from 'idai-field-core';
+import { AppConfigurator, ConfigLoader, ConfigReader, ConstraintIndex, Datastore, DocumentCache, FulltextIndex, IndexFacade, PouchdbManager, ProjectConfiguration, Query, SyncService } from 'idai-field-core';
 import { Translations } from '../angular/translations';
 import { AppController } from '../core/app-controller';
 import { StateSerializer } from '../core/common/state-serializer';
-import { AppConfigurator } from 'idai-field-core';
-import { ConfigLoader } from 'idai-field-core';
-import { ConfigReader } from 'idai-field-core';
-import { ProjectConfiguration } from 'idai-field-core';
+import { FsConfigReader } from '../core/configuration/fs-config-reader';
 import { DatastoreModule } from '../core/datastore/datastore.module';
 import { PouchdbServer } from '../core/datastore/pouchdb/pouchdb-server';
 import { BlobMaker } from '../core/images/imagestore/blob-maker';
@@ -105,11 +102,11 @@ registerLocaleData(localeIt, 'it');
         { provide: TRANSLATIONS, useValue: Translations.getTranslations() },
         { provide: TRANSLATIONS_FORMAT, useValue: 'xlf' },
         I18n,
-        { provide: ConfigReader, useClass: ConfigReader },
+        { provide: FsConfigReader, useClass: FsConfigReader },
         {
             provide: ConfigLoader,
             useFactory: function(configReader: ConfigReader) { return new ConfigLoader(configReader); },
-            deps: [ConfigReader]
+            deps: [FsConfigReader]
         },
         {
             provide: AppConfigurator,

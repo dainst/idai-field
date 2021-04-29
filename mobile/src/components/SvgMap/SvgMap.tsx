@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import {
-    Animated, Dimensions, GestureResponderEvent, PanResponder, PanResponderGestureState
+    Animated, GestureResponderEvent, LayoutChangeEvent, PanResponder, PanResponderGestureState
 } from 'react-native';
 import Svg, { G, SvgProps } from 'react-native-svg';
 import { calcCenter, calcDistance } from './math-utils';
-import { getViewPortTransform } from './viewbox-utils';
+import { getViewPortTransform } from './viewbox-utils/viewbox-utils';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 const no = () => {};
@@ -39,20 +39,20 @@ const NSvgMap: React.FC<SvgProps> = ( props ) => {
     const initialZoom = useRef<Animated.Value>(new Animated.Value(0)).current;
     const initialDistance = useRef<Animated.Value>(new Animated.Value(0)).current;
 
-
-    const { width, height } = Dimensions.get('window');
     const moveThreshold = 5;
     const AG = Animated.createAnimatedComponent(G);
     const AnimatedSvg = Animated.createAnimatedComponent(Svg);
 
-    useEffect(() => {
-        const transforms = getViewPortTransform(props.viewBox, props.preserveAspectRatio, width, height);
+    
+    const handleLayoutChange = (event: LayoutChangeEvent) => {
+        
+        const { x, y, width, height } = event.nativeEvent.layout;
+        const transforms = getViewPortTransform(props.viewBox, props.preserveAspectRatio, { x, y, width, height });
         translateX.setValue(transforms.translateX);
         translateY.setValue(transforms.translateY);
         scaleY.setValue(transforms.scaleY);
         scaleX.setValue(transforms.scaleX);
-    });
-    
+    };
    
     const shouldRespond = (e: GestureResponderEvent, gestureState: PanResponderGestureState):boolean =>
         e.nativeEvent.touches.length === 2 ||
@@ -129,8 +129,8 @@ const NSvgMap: React.FC<SvgProps> = ( props ) => {
 
     
     return (
-        <Animated.View style={ props.style } { ...panResponder.panHandlers } >
-            <AnimatedSvg width={ width } height={ height } >
+        <Animated.View style={ props.style } { ...panResponder.panHandlers } onLayout={ handleLayoutChange }>
+            <AnimatedSvg>
             <AG
                 x={ Animated.add(left, Animated.multiply(zoom, translateX)) }
                 y={ Animated.add(top, Animated.multiply(zoom, translateY)) }

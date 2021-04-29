@@ -10,22 +10,29 @@ import { Settings } from '../model/settings';
 interface HomeScreenProps {
     navigation: StackNavigationProp<AppStackParamList, 'SplashScreen'>;
     settings: Settings;
+    recentProjects: string[];
     setSettings: React.Dispatch<SetStateAction<Settings>>;
+    setRecentProjects: React.Dispatch<SetStateAction<string[]>>;
 }
 
 
-const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, settings, setSettings }) => {
+const HomeScreen: React.FC<HomeScreenProps> = ({
+    navigation,
+    settings,
+    recentProjects,
+    setSettings,
+    setRecentProjects
+}) => {
 
-    const [selectedProject, setSelectedProject] = useState<string>('test467');
+    const [selectedProject, setSelectedProject] = useState<string>('test');
     const [isProjectModalOpen, setIsProjectModalOpen] = useState<boolean>(false);
-    const [recentProjects, setRecentProjects] = useState<string[]>(['test467', 'meninx-project', 'uruk']);
 
     const openProject = useCallback((project: string) => {
 
         setRecentProjects(old => set(prepend(project)(old)));
         setSettings(oldSettings => update('project', project, oldSettings));
         navigation.navigate('DocumentsScreen');
-    }, [navigation, setSettings]);
+    }, [navigation, setSettings, setRecentProjects]);
 
 
     return <>

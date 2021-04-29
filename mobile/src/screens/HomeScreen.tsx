@@ -2,7 +2,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList } from 'mobile/App';
 import { Button, Center, Column, Icon, IconButton, Row, Select, Text, View } from 'native-base';
 import React, { SetStateAction, useCallback, useState } from 'react';
-import { update } from 'tsfun';
+import { prepend, update } from 'tsfun';
 import CreateProjectModal from '../components/CreateProjectModal';
 import { Settings } from '../model/settings';
 
@@ -16,11 +16,13 @@ interface HomeScreenProps {
 
 const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, settings, setSettings }) => {
 
-    const [selectedProject, setSelectedProject] = useState<string>('test467');
+    const [selectedProject, setSelectedProject] = useState<string>('test');
     const [isProjectModalOpen, setIsProjectModalOpen] = useState<boolean>(false);
+    const [recentProjects, setRecentProjects] = useState<string[]>(['test467', 'meninx-project', 'uruk']);
 
     const openProject = useCallback((project: string) => {
 
+        setRecentProjects(old => prepend(project)(old));
         setSettings(oldSettings => update('project', project, oldSettings));
         navigation.navigate('DocumentsScreen');
     }, [navigation, setSettings]);
@@ -62,10 +64,8 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, settings, setSettin
                                 androidIconColor="gray"
                                 androidPrompt="Select project:"
                             >
-                                <Select.Item label="test467" value="test467" />
-                                <Select.Item label="meninx-project" value="meninx-project" />
-                                <Select.Item label="uruk" value="uruk" />
-                                <Select.Item label="asdf" value="asdf" />
+                                { recentProjects.map(project =>
+                                    <Select.Item label={ project }value={ project } key={ project } /> ) }
                             </Select>
                             <IconButton
                                 colorScheme="blue"

@@ -30,8 +30,12 @@ const Map: React.FC<MapProps> = ({ geoDocuments, selectedGeoDocuments, navigateT
                 <SvgMap viewBox={ viewBox.join(' ') } style={ styles.svg }>
                     {geoDocuments.map(doc =>(
                         <G key={ doc._id }>
-                            {renderGeoSvgElement(doc, transformGeojsonToSvg.bind(this, geometryBoundings),
-                                selectedGeoDocuments, selectedGeoDocuments.length === geoDocuments.length , navigateToDocument)}
+                            {renderGeoSvgElement(
+                                doc,
+                                transformGeojsonToSvg.bind(this, geometryBoundings),
+                                selectedGeoDocuments,
+                                selectedGeoDocuments.length === geoDocuments.length,
+                                navigateToDocument)}
                         </G>))
                     }
                 </SvgMap> :
@@ -49,14 +53,18 @@ const styles = StyleSheet.create({
 });
 
 
-const renderGeoSvgElement = (document: Document, csTransformFunc: (pos: Position) => Position,
-    selectedDocuments: Document[], noSelectedDocs: boolean, onPressHandler: (id: string) => void): ReactElement => {
+const renderGeoSvgElement = (
+        document: Document,
+        csTransformFunc: (pos: Position) => Position,
+        selectedDocuments: Document[],
+        noDocsSelected: boolean,
+        onPressHandler: (id: string) => void): ReactElement => {
     
     const geometry: FieldGeometry = document.resource.geometry;
     const props = {
         coordinates: geometry.coordinates,
         csTransformFunction: csTransformFunc,
-        ...getDocumentFillAndOpacity(document, selectedDocuments, noSelectedDocs),
+        ...getDocumentFillAndOpacity(document, selectedDocuments, noDocsSelected),
         onPress: () => onPressHandler(document.resource.id)
     };
  

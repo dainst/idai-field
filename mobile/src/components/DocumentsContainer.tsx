@@ -1,12 +1,12 @@
 import { createDrawerNavigator, DrawerNavigationProp } from '@react-navigation/drawer';
 import { RouteProp } from '@react-navigation/native';
-import { Document } from 'idai-field-core';
+import { Document, SyncStatus } from 'idai-field-core';
 import React, { SetStateAction } from 'react';
 import DocumentDetails from '../components/DocumentDetails';
 import DocumentsMap from '../components/DocumentsMap';
 import DrawerContent from '../components/DrawerContent';
 import useSearch from '../hooks/use-search';
-import { Settings } from '../model/settings';
+import { SyncSettings } from '../model/settings';
 import { DocumentRepository } from '../repositories/document-repository';
 
 
@@ -27,15 +27,21 @@ const Drawer = createDrawerNavigator<DocumentsContainerDrawerParamList>();
 
 interface DocumentsContainerProps {
     repository: DocumentRepository;
-    settings: Settings;
-    setSettings: React.Dispatch<SetStateAction<Settings>>;
+    syncStatus: SyncStatus;
+    syncSettings: SyncSettings;
+    setSyncSettings: React.Dispatch<SetStateAction<SyncSettings>>;
 }
 
 
 type DrawerNavigation = DrawerNavigationProp<DocumentsContainerDrawerParamList, 'DocumentsMap' | 'DocumentDetails'>;
 
 
-const DocumentsContainer: React.FC<DocumentsContainerProps> = ({ repository, settings, setSettings }) => {
+const DocumentsContainer: React.FC<DocumentsContainerProps> = ({
+    repository,
+    syncStatus,
+    syncSettings,
+    setSyncSettings
+}) => {
 
     const [documents, issueSearch] = useSearch(repository);
     const [allDocuments, _] = useSearch(repository);
@@ -65,8 +71,9 @@ const DocumentsContainer: React.FC<DocumentsContainerProps> = ({ repository, set
                     documents={ documents }
                     allDocuments={ allDocuments }
                     issueSearch={ issueSearch }
-                    settings={ settings }
-                    setSettings={ setSettings } /> }
+                    syncStatus={ syncStatus }
+                    syncSettings={ syncSettings }
+                    setSyncSettings={ setSyncSettings } /> }
             </Drawer.Screen>
             <Drawer.Screen name="DocumentDetails">
                 { (props) => <DocumentDetails { ...props }

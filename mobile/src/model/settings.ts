@@ -1,7 +1,6 @@
 export interface Settings {
     project: string;
     username: string;
-    sync: SyncSettings;
 }
 
 export interface SyncSettings {

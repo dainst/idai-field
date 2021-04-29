@@ -1,47 +1,43 @@
 import { DrawerNavigationProp } from '@react-navigation/drawer';
-import { Document } from 'idai-field-core';
+import { Document, SyncStatus } from 'idai-field-core';
 import { useToast, View } from 'native-base';
 import React, { ReactElement, SetStateAction, useCallback } from 'react';
 import { StyleSheet } from 'react-native';
-import { update } from 'tsfun';
 import Map from '../components/Map/Map';
 import ScanBarcodeButton from '../components/ScanBarcodeButton';
 import SearchBar from '../components/SearchBar';
-import useSync from '../hooks/use-sync';
-import { Settings, SyncSettings } from '../model/settings';
+import { SyncSettings } from '../model/settings';
 import { DocumentRepository } from '../repositories/document-repository';
 import { DocumentsContainerDrawerParamList } from './DocumentsContainer';
 
 
 interface DocumentsMapProps {
+    navigation: DrawerNavigationProp<DocumentsContainerDrawerParamList, 'DocumentsMap'>;
     repository: DocumentRepository;
     documents: Document[];
     allDocuments: Document[];
-    issueSearch: (q: string) => void;
-    navigation: DrawerNavigationProp<DocumentsContainerDrawerParamList, 'DocumentsMap'>;
     selectedDocument?: Document;
-    settings: Settings;
-    setSettings: React.Dispatch<SetStateAction<Settings>>;
+    syncStatus: SyncStatus;
+    syncSettings: SyncSettings;
+    setSyncSettings: React.Dispatch<SetStateAction<SyncSettings>>;
+    issueSearch: (q: string) => void;
 }
 
 
 const DocumentsMap: React.FC<DocumentsMapProps> = ({
-    repository,
     navigation,
+    repository,
     documents,
     allDocuments,
-    settings,
-    setSettings,
+    syncStatus,
+    syncSettings,
+    setSyncSettings,
     issueSearch
 }): ReactElement => {
 
-    const syncStatus = useSync(repository, settings);
     const toast = useToast();
 
     const toggleDrawer = useCallback(() => navigation.toggleDrawer(), [navigation]);
-
-    const setSyncSettings = (syncSettings: SyncSettings) =>
-        setSettings(oldSettings => update('sync', syncSettings, oldSettings));
 
     const onBarCodeScanned = useCallback((data: string) => {
 
@@ -55,7 +51,7 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
 
     return (
         <View flex={ 1 } safeArea>
-            <SearchBar { ...{ issueSearch, syncSettings: settings.sync, setSyncSettings, syncStatus, toggleDrawer } } />
+            <SearchBar { ...{ issueSearch, syncSettings, setSyncSettings, syncStatus, toggleDrawer } } />
             <View style={ styles.container }>
                 <Map
                     selectedGeoDocuments={ documents.filter(doc => doc?.resource.geometry) }

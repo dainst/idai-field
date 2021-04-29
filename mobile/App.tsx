@@ -4,7 +4,8 @@ import { NativeBaseProvider } from 'native-base';
 import PouchDB from 'pouchdb-react-native';
 import React, { Dispatch, ReactElement, SetStateAction, useEffect, useState } from 'react';
 import { enableScreens } from 'react-native-screens';
-import { Settings } from './src/model/settings';
+import useSync from './src/hooks/use-sync';
+import { Settings, SyncSettings } from './src/model/settings';
 import { DocumentRepository } from './src/repositories/document-repository';
 import DocumentsScreen from './src/screens/DocumentsScreen';
 import HomeScreen from './src/screens/HomeScreen';
@@ -37,10 +38,13 @@ export default function App(): ReactElement {
 
     const [repository, setRepository] = useState<DocumentRepository>();
     const [settings, setSettings] = useState<Settings>(getDefaultSettings());
+    const [syncSettings, setSyncSettings] = useState<SyncSettings>(getDefaultSyncSettings());
+    const syncStatus = useSync(settings.project, syncSettings, repository);
 
 
     useEffect(() => {
 
+        setSyncSettings(getDefaultSyncSettings());
         setupRepository(settings.project, settings.username, setRepository);
     }, [settings]);
 
@@ -53,7 +57,7 @@ export default function App(): ReactElement {
                         { (props) => <HomeScreen { ... { ...props, settings, setSettings } } /> }
                     </Stack.Screen>
                     <Stack.Screen name="DocumentsScreen">
-                        { () => <DocumentsScreen { ... { repository, settings, setSettings } } /> }
+                        { () => <DocumentsScreen { ... { repository, syncStatus, syncSettings, setSyncSettings } } /> }
                     </Stack.Screen>
                     <Stack.Screen name="SettingsScreen">
                         { (props) => <SettingsScreen { ... { ...props, settings, setSettings } } /> }
@@ -67,16 +71,22 @@ export default function App(): ReactElement {
 
 const setupRepository = async (project: string, username: string, setRepository: SetRepository) => {
     const repository = await DocumentRepository.init(project, (name: string) => new PouchDB(name), username);
-    setRepository(repository);
+    setRepository(old => {
+
+        old?.stopSync();
+        return repository;
+    });
 };
 
 
 const getDefaultSettings = () => ({
     project: 'test',
-    username: '',
-    sync: {
-        url: '',
-        password: '',
-        connected: false
-    }
+    username: ''
+});
+
+
+const getDefaultSyncSettings = () => ({
+    url: '',
+    password: '',
+    connected: false
 });

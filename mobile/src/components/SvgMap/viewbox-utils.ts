@@ -13,8 +13,8 @@ interface Rect {
 }
 
 
-export const getViewPortTransform = (
-    viewBox: string | undefined, preserveAspectRatio: string | undefined, viewPort: Rect): viewBoxToViewPortTransform => {
+export const getViewPortTransform = (viewBox: string | undefined, preserveAspectRatio: string | undefined,
+        viewPort: Rect): viewBoxToViewPortTransform => {
     // based on https://svgwg.org/svg2-draft/coords.html#ComputingAViewportsTransform
     
   

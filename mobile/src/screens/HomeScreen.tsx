@@ -3,6 +3,7 @@ import { AppStackParamList } from 'mobile/App';
 import { Button, Center, Column, Icon, IconButton, Row, Select, Text, View } from 'native-base';
 import React, { SetStateAction, useCallback, useState } from 'react';
 import { update } from 'tsfun';
+import CreateProjectModal from '../components/CreateProjectModal';
 import { Settings } from '../model/settings';
 
 
@@ -16,6 +17,7 @@ interface HomeScreenProps {
 const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, settings, setSettings }) => {
 
     const [selectedProject, setSelectedProject] = useState<string>('test467');
+    const [isProjectModalOpen, setIsProjectModalOpen] = useState<boolean>(false);
 
     const openProject = useCallback((project: string) => {
 
@@ -24,7 +26,12 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, settings, setSettin
     }, [navigation, setSettings]);
 
 
-    return (
+    return <>
+        <CreateProjectModal
+            isOpen={ isProjectModalOpen }
+            onProjectCreated={ openProject }
+            onClose={ () => setIsProjectModalOpen(false) }
+        />
         <View flex={ 1 } safeArea>
             <Row justifyContent="flex-end">
                 { settings.username === '' &&
@@ -71,6 +78,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, settings, setSettin
                     <Button
                         colorScheme="green"
                         startIcon={ <Icon name="add-circle" size={ 6 } type="Ionicons" color="white" /> }
+                        onPress={ () => setIsProjectModalOpen(true) }
                     >
                         Create new project
                     </Button>
@@ -84,7 +92,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, settings, setSettin
                 </Column>
             </Center>
         </View>
-    );
+    </>;
 };
 
 export default HomeScreen;

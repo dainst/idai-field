@@ -11,6 +11,7 @@ import {
     GeoLineString, GeoMultiLineString, GeoMultiPoint,
     GeoMultiPolygon, GeoPoint, GeoPolygon, transformGeojsonToSvg
 } from './geo-svg';
+import { getDocumentFillAndOpacity } from './svg-element-style';
 
 interface MapProps {
     geoDocuments: Document[];
@@ -29,7 +30,7 @@ const Map: React.FC<MapProps> = ({ geoDocuments, selectedGeoDocuments }) => {
                     {geoDocuments.map(doc =>(
                         <G key={ doc._id }>
                             {renderGeoSvgElement(doc, transformGeojsonToSvg.bind(this, geometryBoundings),
-                                selectedGeoDocuments )}
+                                selectedGeoDocuments, selectedGeoDocuments.length === geoDocuments.length )}
                         </G>))
                     }
                 </SvgMap> :
@@ -48,28 +49,29 @@ const styles = StyleSheet.create({
 
 
 const renderGeoSvgElement = (document: Document, csTransformFunc: (pos: Position) => Position,
-    selectedDocuments: Document[]): ReactElement => {
+    selectedDocuments: Document[], noSelectedDocs: boolean): ReactElement => {
     
     const geometry: FieldGeometry = document.resource.geometry;
     const props = {
         coordinates: geometry.coordinates,
         csTransformFunction: csTransformFunc,
-        opacity: selectedDocuments.find((doc: Document) => doc.resource.id === document.resource.id) ? 1 : 0.5
+        ...getDocumentFillAndOpacity(document, selectedDocuments, noSelectedDocs),
     };
+ 
 
     switch(geometry.type){
         case('Polygon'):
-            return <GeoPolygon { ...props } fill="blue" />;
+            return <GeoPolygon { ...props } />;
         case('MultiPolygon'):
-            return <GeoMultiPolygon { ...props } fill="red" />;
+            return <GeoMultiPolygon { ...props } />;
         case('LineString'):
-            return <GeoLineString { ...props } stroke="green" />;
+            return <GeoLineString { ...props } />;
         case('MultiLineString'):
-            return <GeoMultiLineString { ...props } stroke="green" />;
+            return <GeoMultiLineString { ...props } />;
         case('Point'):
-            return <GeoPoint { ...props } fill="#7f32a8" />;
+            return <GeoPoint { ...props } />;
         case('MultiPoint'):
-            return <GeoMultiPoint { ...props } fill="yellow" />;
+            return <GeoMultiPoint { ...props } />;
         default:
             console.error(`Unknown type: ${geometry.type}`);
             return <Circle />;

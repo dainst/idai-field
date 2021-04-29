@@ -57,7 +57,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
             </Row>
             <Center flex={ 1 }>
                 <Column space={ 3 }>
-                    <Center rounded="lg" p={ 5 } bg="gray.200">
+                    { recentProjects.length > 0 && <Center rounded="lg" p={ 5 } bg="gray.200">
                         <Column space={ 3 }>
                             <Text style={ { fontWeight: 'bold' } }>
                                 Open existing project:
@@ -81,7 +81,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
                                 onPress={ () => openProject(selectedProject) }
                             />
                         </Column>
-                    </Center>
+                    </Center> }
                     <Button
                         colorScheme="green"
                         startIcon={ <Icon name="add-circle" size={ 6 } type="Ionicons" color="white" /> }

@@ -1,4 +1,4 @@
-import { SyncStatus } from 'idai-field-core';
+import { SyncProcess, SyncStatus } from 'idai-field-core';
 import { useEffect, useState } from 'react';
 import { SyncSettings } from '../model/settings';
 import { DocumentRepository } from '../repositories/document-repository';
@@ -10,7 +10,14 @@ const useSync = (project: string, syncSettings: SyncSettings, repository?: Docum
 
     useEffect(() => {
         
-        if (repository) setupSync(repository, project, syncSettings, setStatus);
+        if (repository) {
+            const syncProcess = setupSync(repository, project, syncSettings, setStatus);
+            return () => {
+                syncProcess.then(process => {
+                    process && process.cancel();
+                });
+            };
+        }
     }, [repository, project, syncSettings]);
 
     if (!repository) return SyncStatus.Offline;
@@ -24,7 +31,7 @@ const setupSync = async (
     project: string,
     { url, password, connected } : SyncSettings,
     setStatus: (status: SyncStatus) => void
-) => {
+): Promise<SyncProcess | undefined> => {
 
     if (connected) {
         const fullUrl = url.replace(/(https?:\/\/)/, `$1${project}:${password}@`);
@@ -36,8 +43,7 @@ const setupSync = async (
                 setStatus(err);
             }
         });
-    } else {
-        repository.stopSync();
+        return syncProcess;
     }
 };
 

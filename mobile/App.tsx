@@ -4,6 +4,7 @@ import { NativeBaseProvider } from 'native-base';
 import PouchDB from 'pouchdb-react-native';
 import React, { Dispatch, ReactElement, SetStateAction, useEffect, useState } from 'react';
 import { enableScreens } from 'react-native-screens';
+import { update } from 'tsfun';
 import useSync from './src/hooks/use-sync';
 import { Settings, SyncSettings } from './src/model/settings';
 import { DocumentRepository } from './src/repositories/document-repository';
@@ -44,7 +45,7 @@ export default function App(): ReactElement {
 
     useEffect(() => {
 
-        setSyncSettings(getDefaultSyncSettings());
+        setSyncSettings(old => update('connected', false, old));
         setupRepository(settings.project, settings.username, setRepository);
     }, [settings]);
 
@@ -71,16 +72,12 @@ export default function App(): ReactElement {
 
 const setupRepository = async (project: string, username: string, setRepository: SetRepository) => {
     const repository = await DocumentRepository.init(project, (name: string) => new PouchDB(name), username);
-    setRepository(old => {
-
-        old?.stopSync();
-        return repository;
-    });
+    setRepository(repository);
 };
 
 
 const getDefaultSettings = () => ({
-    project: 'test',
+    project: 'test467',
     username: ''
 });
 

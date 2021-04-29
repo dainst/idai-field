@@ -16,7 +16,7 @@ interface HomeScreenProps {
 
 const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, settings, setSettings }) => {
 
-    const [selectedProject, setSelectedProject] = useState<string>('test');
+    const [selectedProject, setSelectedProject] = useState<string>('test467');
     const [isProjectModalOpen, setIsProjectModalOpen] = useState<boolean>(false);
     const [recentProjects, setRecentProjects] = useState<string[]>(['test467', 'meninx-project', 'uruk']);
 

@@ -10,22 +10,29 @@ import { Settings } from '../model/settings';
 interface HomeScreenProps {
     navigation: StackNavigationProp<AppStackParamList, 'SplashScreen'>;
     settings: Settings;
+    recentProjects: string[];
     setSettings: React.Dispatch<SetStateAction<Settings>>;
+    setRecentProjects: React.Dispatch<SetStateAction<string[]>>;
 }
 
 
-const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, settings, setSettings }) => {
+const HomeScreen: React.FC<HomeScreenProps> = ({
+    navigation,
+    settings,
+    recentProjects,
+    setSettings,
+    setRecentProjects
+}) => {
 
-    const [selectedProject, setSelectedProject] = useState<string>('test');
+    const [selectedProject, setSelectedProject] = useState<string>(recentProjects[0] || '');
     const [isProjectModalOpen, setIsProjectModalOpen] = useState<boolean>(false);
-    const [recentProjects, setRecentProjects] = useState<string[]>(['test467', 'meninx-project', 'uruk']);
 
     const openProject = useCallback((project: string) => {
 
         setRecentProjects(old => set(prepend(project)(old)));
         setSettings(oldSettings => update('project', project, oldSettings));
         navigation.navigate('DocumentsScreen');
-    }, [navigation, setSettings]);
+    }, [navigation, setSettings, setRecentProjects]);
 
 
     return <>
@@ -50,7 +57,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, settings, setSettin
             </Row>
             <Center flex={ 1 }>
                 <Column space={ 3 }>
-                    <Center rounded="lg" p={ 5 } bg="gray.200">
+                    { recentProjects.length > 0 && <Center rounded="lg" p={ 5 } bg="gray.200">
                         <Column space={ 3 }>
                             <Text style={ { fontWeight: 'bold' } }>
                                 Open existing project:
@@ -74,7 +81,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, settings, setSettin
                                 onPress={ () => openProject(selectedProject) }
                             />
                         </Column>
-                    </Center>
+                    </Center> }
                     <Button
                         colorScheme="green"
                         startIcon={ <Icon name="add-circle" size={ 6 } type="Ionicons" color="white" /> }

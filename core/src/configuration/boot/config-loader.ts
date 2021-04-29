@@ -149,16 +149,16 @@ export class ConfigLoader {
                                                      username: string): Promise<ConfigurationDocument> {
 
         const categories = await this.configReader.read(filePath);
-            const configuration: ConfigurationDocument
-                = ConfigLoader.createConfigurationDocument(categories, username);
-            try {
-                await this.pouchdbManager.getDb().put(configuration);
-                return configuration;
-            } catch (err) {
-                // TODO Throw msgWithParams
-                console.error('Failed to create configuration document!', err);
-                throw ['Failed to create configuration document!'];
-            }
+        const configuration: ConfigurationDocument
+            = ConfigLoader.createConfigurationDocument(categories, username);
+        try {
+            await this.pouchdbManager.getDb().put(configuration);
+            return configuration;
+        } catch (err) {
+            // TODO Throw msgWithParams
+            console.error('Failed to create configuration document!', err);
+            throw ['Failed to create configuration document!'];
+        }
     }
 
 

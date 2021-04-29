@@ -27,7 +27,7 @@ describe('GeoJSON to SVG path string', () => {
 
     it('converts Polygon with holes to path',() => {
         
-        const expectedPath = ' M1 1 L1 6 L6 6 L6 1 L1 1 M3 2 L5 2 L3 4 L3 2 M4 4 L5 4 L5 5 L4 5 L4 4';
+        const expectedPath = ' M1 1 L1 6 L6 6 L6 1 L1 1 M3 2 L5 2 L3 4 L3 2 M4 4 L5 4 L5 5 L4 5 L4 4 Z';
         expect(polygonToPath(polygon, csTransformFunction)).toEqual(expectedPath);
     });
 
@@ -40,7 +40,7 @@ describe('GeoJSON to SVG path string', () => {
             ]
         ];
         // eslint-disable-next-line max-len
-        const expectedPath = ' M1 1 L1 6 L6 6 L6 1 L1 1 M3 2 L5 2 L3 4 L3 2 M4 4 L5 4 L5 5 L4 5 L4 4 M8 3 L8 6 L11 6 L11 3 L8 3 M10 4 L10 5 L9 5 L10 4';
+        const expectedPath = ' M1 1 L1 6 L6 6 L6 1 L1 1 M3 2 L5 2 L3 4 L3 2 M4 4 L5 4 L5 5 L4 5 L4 4 Z M8 3 L8 6 L11 6 L11 3 L8 3 M10 4 L10 5 L9 5 L10 4 Z';
         expect(multiPolygonToPath(multiPolygon, csTransformFunction)).toEqual(expectedPath);
     });
 });

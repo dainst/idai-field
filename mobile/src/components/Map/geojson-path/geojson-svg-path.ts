@@ -33,7 +33,7 @@ export const polygonToPath = (polygon: Position[][], csTransform: csTransformFun
         path += ' ' + lineStringToPath(i === 0 ? ringCoordinates.slice().reverse() : ringCoordinates,csTransform);
     });
 
-    return path;
+    return path + ' Z';
 };
 
 

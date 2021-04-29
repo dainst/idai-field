@@ -50,7 +50,7 @@ export default function App(): ReactElement {
             <NavigationContainer>
                 <Stack.Navigator initialRouteName="HomeScreen" screenOptions={ { headerShown: false } }>
                     <Stack.Screen name="HomeScreen">
-                        { (props) => <HomeScreen { ... { ...props, setSettings } } /> }
+                        { (props) => <HomeScreen { ... { ...props, settings, setSettings } } /> }
                     </Stack.Screen>
                     <Stack.Screen name="DocumentsScreen">
                         { () => <DocumentsScreen { ... { repository, settings, setSettings } } /> }
@@ -73,7 +73,7 @@ const setupRepository = async (project: string, username: string, setRepository:
 
 const getDefaultSettings = () => ({
     project: 'test',
-    username: 'testuser',
+    username: '',
     sync: {
         url: '',
         password: '',

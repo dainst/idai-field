@@ -1,6 +1,6 @@
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList } from 'mobile/App';
-import { Button, Center, Column, Icon, IconButton, Select, Text, View } from 'native-base';
+import { Button, Center, Column, Icon, IconButton, Row, Select, Text, View } from 'native-base';
 import React, { SetStateAction, useCallback, useState } from 'react';
 import { update } from 'tsfun';
 import { Settings } from '../model/settings';
@@ -8,11 +8,12 @@ import { Settings } from '../model/settings';
 
 interface HomeScreenProps {
     navigation: StackNavigationProp<AppStackParamList, 'SplashScreen'>;
+    settings: Settings;
     setSettings: React.Dispatch<SetStateAction<Settings>>;
 }
 
 
-const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, setSettings }) => {
+const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, settings, setSettings }) => {
 
     const [selectedProject, setSelectedProject] = useState<string>('test467');
 
@@ -25,6 +26,19 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, setSettings }) => {
 
     return (
         <View flex={ 1 } safeArea>
+            <Row justifyContent="flex-end">
+                { settings.username === '' &&
+                    <Row bg="red.200" p={ 2 } alignItems="center" rounded="lg" space={ 2 }>
+                        <Icon type="Ionicons" name="alert-circle" color="red" />
+                        <Text color="red.600" bold>Make sure to set your name!</Text>
+                        <Icon type="Ionicons" name="arrow-forward" />
+                    </Row>
+                }
+                <IconButton
+                    icon={ <Icon type="Ionicons" name="settings" /> }
+                    onPress={ () => navigation.navigate('SettingsScreen') }
+                />
+            </Row>
             <Center flex={ 1 }>
                 <Column space={ 3 }>
                     <Center rounded="lg" p={ 5 } bg="gray.200">

@@ -56,7 +56,7 @@ export default function App(): ReactElement {
                         { () => <DocumentsScreen { ... { repository, settings, setSettings } } /> }
                     </Stack.Screen>
                     <Stack.Screen name="SettingsScreen">
-                        { (props) => <SettingsScreen { ... { ...props, setSettings } } /> }
+                        { (props) => <SettingsScreen { ... { ...props, settings, setSettings } } /> }
                     </Stack.Screen>
                 </Stack.Navigator>
             </NavigationContainer>

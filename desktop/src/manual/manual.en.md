@@ -369,7 +369,7 @@ After setting *Address* and *Password*, you can complete the configuration by se
 
 The cloud icon in the top right corner of the navigation bar shows the current state of your configured synchronization connection.
 
-<p align="center"><img src="images/de/synchronization/synchronization_icon.png" alt="Synchronization icon"/></p>
+<p align="center"><img src="images/en/synchronization/synchronization_icon.png" alt="Synchronization icon"/></p>
 
 If a connection has been successfully established, the icon shows a checkmark. When data is being uploaded or downloaded, this is indicated by an arrow. In case of errors an exclamation mark is shown. Additional information regarding the synchronization state can be obtained by hovering the mouse pointer over the icon.
 
@@ -379,7 +379,7 @@ Conflicts can occur when a resource is edited at the same time on multiple compu
 
 Conflicted resources are marked by a red border in the resources list. In addition to that an icon will appear in the navigation bar, indicating the number of conflicts within the current project.
 
-<p align="center"><img src="images/de/synchronization/conflicts_icon.png" alt="Conflicts icon"/></p>
+<p align="center"><img src="images/en/synchronization/conflicts_icon.png" alt="Conflicts icon"/></p>
 
 Click the icon to see the list of all conflicted resources. Selecting one of these resources will open the conflicts tab of the editor, where you can clean up the resource.
 

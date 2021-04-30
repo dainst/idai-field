@@ -348,19 +348,19 @@ from the current selection:
 
 ## Synchronization
 
-In order to work collectively on a single project, data can be syncrhonized between multiple iDAI.field instances on different computers. This means that changes (new resources, deleted resources or editings of existing resources) coming from an iDAI.field desktop application running on another machine will transfered automatically to the local database. This enables all participants to work simultaneously with the latest state of the project. Synchronization works both via the internet or via a local network. Of course one can also continue to work with a project when offline, even if synchronization is enabled - in that case the databases get synchronized as soon as one gets re-connected to the network.
+In order to collaborate on a single project, data can be syncrhonized between multiple iDAI.field instances on different computers. This means that changes (new resources, deleted resources or editings of existing resources) coming from an iDAI.field application running on another machine will be transfered automatically to the local database and vice versa. This enables all participants to work simultaneously with the latest state of the project. Synchronization works both via the internet or via a local network. You can still continue working on a project, even if synchronization is enabled - in that case the databases get synchronized as soon as the network connection is established again.
 
-Data gets only synchronized between projects of the same name. To load data from another iDAI.field database, simply start by creating an empty project with the name of the database existing elsewhere. When a connection to the other is established the data get downloaded automatically (this process can take a while with bigger projects).
+Data only is synchronized between projects of the same name. To load data from another iDAI.field database, simply start by creating an empty project with the name of the existing remote database. When a connection is established data gets downloaded automatically (this process can take a while for larger projects).
 
 ### Configuration
 
 Synchronization is configured via the **Settings** submenu (menu "iDAI.field" (MacOS) or "File" (Windows)).
 
-Please note to make sure to fill in the **Editor name** field before setting up the configuration.
+Please make sure to fill in the **Editor name** field before setting up the configuration.
 
 * *Address*: Enter the address of the synchronization target. This can be the network address of another machine which runs an iDAI.field instance, or the address of a CouchDB database accessible via the internet or a local network (for example *http://field.dainst.org/sync* for the iDAI.field database server of the DAI).
 * *Password*: Enter the password of the target database.
-* *Your address*: Your network address, which others can use to connect their iDAI.field desktop applications to your instance. You can hand over this address and your password to allow others to connect to your machine.
+* *Your address*: Your network address, which others can use to connect their iDAI.field applications to your instance. You can hand over this address and your password to allow others to connect to your machine.
 * *Your password*: By default the database is protected with a randomly generated password. Here you can change that password.
 
 After setting *Address* and *Password*, the configuration gets activated by selecting *Activate synchronization* and then saving these settings by clicking *Apply settings*.
@@ -369,7 +369,7 @@ After setting *Address* and *Password*, the configuration gets activated by sele
 
 The cloud icon in the top right corner of the navbar shows the current state of your configured synchronization connection.
 
-<p align="center"><img src="images/de/synchronization/synchronization_icon.png" alt="synchronization icon"/></p>
+<p align="center"><img src="images/de/synchronization/synchronization_icon.png" alt="Synchronization icon"/></p>
 
 If a connection has been successfully established, the icon shows a checkmark. When data gets uploaded or downloaded this is indicated by an arrow. In case of errors an exclamation mark is shown. Additional information regarding the synchronization state can be obtained by hovering the mouse pointer over the icon.
 
@@ -379,8 +379,8 @@ Conflicts can occur, if a resource gets edited at the same time on multiple comp
 
 Conflicted resources are marked by a red border in the resources list. In addition to that an icon will appear in the navbar, indicating the number of conflicts within the current project.
 
-<p align="center"><img src="images/de/synchronization/conflicts_icon.png" alt="Konflikte-Icon"/></p>
+<p align="center"><img src="images/de/synchronization/conflicts_icon.png" alt="Conflicts icon"/></p>
 
 Click the icon to see the list of all conflicted resources. Selecting one of these resources will open the conflicts tab of the editor, where the resource can be cleaned up.
 
-To resolve conflicts, for each field with differing values it a decision must be made which version is valid. Alternatively one can just select either the *Current version* or the *Competing version* as a whole. Confirm the decision by clicking **Resolve conflict**. In case there are multiple conflicts on a single resource, this process has to be repeated until all conflicts are resolved. It is possible to make changes in other editor groups as well while the editor is open. To apply the changes, the resource finally should be saved via the **Save** button.
+To resolve conflicts, for each field with differing values a decision must be made on which version is valid. Alternatively one can just select either the *Current version* or the *Competing version* as a whole. Confirm the decision by clicking **Resolve conflict**. In case there are multiple conflicts on a single resource, this process has to be repeated until all conflicts are resolved. It is possible to make changes in other editor groups as well while the editor is open. To apply the changes, the resource finally should be saved via the **Save** button.

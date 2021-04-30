@@ -376,9 +376,9 @@ selektieren und eine neue Teilmatrix aus der aktuellen Selektion zu erstellen:
 
 ## Synchronisation
 
-Um mit mehreren Computern an einem Projekt zu arbeiten, können Daten zwischen verschiedenen iDAI.field-Datenbanken synchronisiert werden. Das bedeutet, dass Änderungen (neue Ressourcen, gelöschte Ressourcen oder Editierungen bestehender Ressourcen), die über die iDAI.field-Desktopanwendung auf einem anderen Rechner vorgenommen werden, automatisch auch in die eigene Datenbank übertragen werden. So wird erreicht, dass alle Mitarbeitenden zu jeder Zeit mit dem aktuellen Stand des Projekts arbeiten können. Die Synchronisation kann dabei über das Internet oder über ein lokales Netzwerk stattfinden. Natürlich können Sie auch bei konfigurierter Synchronisation offline mit dem Projekt arbeiten – die Datenbanken werden dann synchronisiert, sobald Sie wieder mit dem Netzwerk verbunden sind.
+Um mit mehreren Computern an einem Projekt zu arbeiten, können Daten zwischen verschiedenen iDAI.field-Instanzen synchronisiert werden. Das bedeutet, dass Änderungen (neue Ressourcen, gelöschte Ressourcen oder Editierungen bestehender Ressourcen), die über die iDAI.field-Anwendung auf einem anderen Rechner vorgenommen werden, automatisch auch in die eigene Datenbank übertragen werden und umgekehrt. So wird erreicht, dass alle Mitarbeitenden zu jeder Zeit mit dem aktuellen Stand des Projekts arbeiten können. Die Synchronisation kann dabei über das Internet oder über ein lokales Netzwerk stattfinden. Sie können weiterhin auch bei konfigurierter Synchronisation offline mit dem Projekt arbeiten – die Datenbanken werden dann synchronisiert, sobald Sie wieder mit dem Netzwerk verbunden sind.
 
-Daten werden stets nur zwischen Projekten gleichen Namens synchronisiert. Um also Daten aus einer anderen iDAI.field-Datenbank zu laden, legen Sie zunächst ein neues leeres Projekt mit dem gleichen Namen an. Bei bestehender Synchronisationsverbindung werden die Daten anschließend automatisch in Ihre Datenbank heruntergeladen (dieser Vorgang kann bei größeren Projekten unter Umständen eine längere Zeit dauern).
+Daten werden stets nur zwischen Projekten gleichen Namens synchronisiert. Um also Daten aus einer anderen iDAI.field-Instanz zu laden, legen Sie zunächst ein neues leeres Projekt mit dem gleichen Namen an. Bei bestehender Synchronisationsverbindung werden die Daten anschließend automatisch in Ihre Datenbank heruntergeladen (dieser Vorgang kann bei größeren Projekten unter Umständen eine längere Zeit dauern).
 
 ### Konfiguration
 
@@ -388,7 +388,7 @@ Bitte beachten Sie, dass vor der Einrichtung der Synchronisation in jedem Fall d
 
 * *Adresse*: Tragen Sie hier die Adresse des Synchronisationsziels ein. Das kann die Netzwerkadresse eines anderen Computers sein, auf dem iDAI.field gerade geöffnet ist, oder die Adresse einer CouchDB-Datenbank, die über das Internet oder ein lokales Netzwerk erreichbar ist (z. B. *http://field.dainst.org/sync* für den iDAI.field-Datenbankserver des DAI).
 * *Passwort*: Tragen Sie hier das Passwort der Zieldatenbank ein.
-* *Eigene Adresse*: Ihre Netzwerkdresse, über die sich andere aus ihrer iDAI.field-Installation heraus mit Ihrer Datenbank verbinden können. Sie können diese Adresse zusammen mit Ihrem Passwort weitergeben, um anderen zu ermöglichen, ihre Projektdatenbank mit Ihnen zu synchronisieren.
+* *Eigene Adresse*: Ihre Netzwerkdresse, über die sich andere aus ihrer iDAI.field-Installation heraus mit Ihrer Datenbank verbinden können. Sie können diese Adresse zusammen mit Ihrem Passwort weitergeben, um anderen zu ermöglichen, ihre Projektdaten mit Ihnen zu synchronisieren.
 * *Eigenes Passwort*: Standardmäßig wird die Datenbank mit einem zufällig generierten Passwort vor unbefugtem Zugriff geschützt. An dieser Stelle können Sie das Passwort ändern.
 
 Sind die Felder *Adresse* und *Passwort* ausgefüllt, können Sie die Konfiguration abschließen, indem Sie die Option *Konfiguration aktivieren* auswählen und die Einstellungen anschließend über den Button *Einstellungen übernehmen* speichern.

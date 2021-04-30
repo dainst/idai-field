@@ -1,6 +1,6 @@
 import { SyncProcess, SyncStatus } from 'idai-field-core';
 import { useEffect, useState } from 'react';
-import { SyncSettings } from '../model/settings';
+import { SyncSettings } from '../model/preferences';
 import { DocumentRepository } from '../repositories/document-repository';
 
 

@@ -7,7 +7,7 @@ import React, { Dispatch, ReactElement, SetStateAction, useEffect, useState } fr
 import { enableScreens } from 'react-native-screens';
 import { update } from 'tsfun';
 import useSync from './src/hooks/use-sync';
-import { Settings, SyncSettings } from './src/model/settings';
+import { Settings, SyncSettings } from './src/model/preferences';
 import { DocumentRepository } from './src/repositories/document-repository';
 import DocumentsScreen from './src/screens/DocumentsScreen';
 import HomeScreen from './src/screens/HomeScreen';

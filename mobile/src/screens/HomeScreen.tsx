@@ -4,7 +4,7 @@ import { Button, Center, Column, Icon, IconButton, Row, Select, Text, View } fro
 import React, { SetStateAction, useCallback, useState } from 'react';
 import { prepend, set, update } from 'tsfun';
 import CreateProjectModal from '../components/CreateProjectModal';
-import { Settings } from '../model/settings';
+import { Settings } from '../model/preferences';
 
 
 interface HomeScreenProps {

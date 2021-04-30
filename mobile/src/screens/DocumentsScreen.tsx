@@ -1,7 +1,7 @@
 import { SyncStatus } from 'idai-field-core';
 import React, { SetStateAction } from 'react';
 import DocumentsContainer from '../components/DocumentsContainer';
-import { SyncSettings } from '../model/settings';
+import { SyncSettings } from '../model/preferences';
 import { DocumentRepository } from '../repositories/document-repository';
 
 

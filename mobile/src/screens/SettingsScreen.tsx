@@ -3,7 +3,7 @@ import { AppStackParamList } from 'mobile/App';
 import { Button, Center, FormControl, Input, Row, Stack, View } from 'native-base';
 import React, { SetStateAction, useState } from 'react';
 import { update } from 'tsfun';
-import { Settings } from '../model/settings';
+import { Settings } from '../model/preferences';
 
 
 interface SettingsScreenProps {

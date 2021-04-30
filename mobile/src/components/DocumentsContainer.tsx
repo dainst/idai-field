@@ -6,7 +6,7 @@ import DocumentDetails from '../components/DocumentDetails';
 import DocumentsMap from '../components/DocumentsMap';
 import DrawerContent from '../components/DrawerContent';
 import useSearch from '../hooks/use-search';
-import { SyncSettings } from '../model/settings';
+import { SyncSettings } from '../model/preferences';
 import { DocumentRepository } from '../repositories/document-repository';
 
 

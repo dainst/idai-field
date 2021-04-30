@@ -6,7 +6,7 @@ import { StyleSheet } from 'react-native';
 import Map from '../components/Map/Map';
 import ScanBarcodeButton from '../components/ScanBarcodeButton';
 import SearchBar from '../components/SearchBar';
-import { SyncSettings } from '../model/settings';
+import { SyncSettings } from '../model/preferences';
 import { DocumentRepository } from '../repositories/document-repository';
 import { DocumentsContainerDrawerParamList } from './DocumentsContainer';
 

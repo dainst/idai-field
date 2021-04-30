@@ -1,7 +1,7 @@
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { Document, SyncStatus } from 'idai-field-core';
 import { useToast, View } from 'native-base';
-import React, { ReactElement, SetStateAction, useCallback } from 'react';
+import React, { ReactElement, useCallback } from 'react';
 import { StyleSheet } from 'react-native';
 import Map from '../components/Map/Map';
 import ScanBarcodeButton from '../components/ScanBarcodeButton';
@@ -19,7 +19,7 @@ interface DocumentsMapProps {
     selectedDocument?: Document;
     syncStatus: SyncStatus;
     syncSettings: SyncSettings;
-    setSyncSettings: React.Dispatch<SetStateAction<SyncSettings>>;
+    setSyncSettings: (syncSettings: SyncSettings) => void;
     issueSearch: (q: string) => void;
 }
 

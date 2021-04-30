@@ -2,11 +2,12 @@ import { createDrawerNavigator, DrawerNavigationProp } from '@react-navigation/d
 import { RouteProp } from '@react-navigation/native';
 import { Document, SyncStatus } from 'idai-field-core';
 import React, { SetStateAction } from 'react';
+import { update } from 'tsfun';
 import DocumentDetails from '../components/DocumentDetails';
 import DocumentsMap from '../components/DocumentsMap';
 import DrawerContent from '../components/DrawerContent';
 import useSearch from '../hooks/use-search';
-import { SyncSettings } from '../model/preferences';
+import { Preferences, SyncSettings } from '../model/preferences';
 import { DocumentRepository } from '../repositories/document-repository';
 
 
@@ -28,8 +29,8 @@ const Drawer = createDrawerNavigator<DocumentsContainerDrawerParamList>();
 interface DocumentsContainerProps {
     repository: DocumentRepository;
     syncStatus: SyncStatus;
-    syncSettings: SyncSettings;
-    setSyncSettings: React.Dispatch<SetStateAction<SyncSettings>>;
+    preferences: Preferences;
+    setPreferences: React.Dispatch<SetStateAction<Preferences>>;
 }
 
 
@@ -39,8 +40,8 @@ type DrawerNavigation = DrawerNavigationProp<DocumentsContainerDrawerParamList, 
 const DocumentsContainer: React.FC<DocumentsContainerProps> = ({
     repository,
     syncStatus,
-    syncSettings,
-    setSyncSettings
+    preferences,
+    setPreferences
 }) => {
 
     const [documents, issueSearch] = useSearch(repository);
@@ -51,6 +52,9 @@ const DocumentsContainer: React.FC<DocumentsContainerProps> = ({
         navigation.closeDrawer();
         navigation.navigate('DocumentDetails', { docId: doc.resource.id } );
     };
+
+    const setSyncSettings = (newSyncSettings: SyncSettings) =>
+        setPreferences(old => update('syncSettings', newSyncSettings, old));
 
     return (
         
@@ -72,7 +76,7 @@ const DocumentsContainer: React.FC<DocumentsContainerProps> = ({
                     allDocuments={ allDocuments }
                     issueSearch={ issueSearch }
                     syncStatus={ syncStatus }
-                    syncSettings={ syncSettings }
+                    syncSettings={ preferences.syncSettings }
                     setSyncSettings={ setSyncSettings } /> }
             </Drawer.Screen>
             <Drawer.Screen name="DocumentDetails">

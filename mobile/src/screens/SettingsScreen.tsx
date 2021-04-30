@@ -3,28 +3,28 @@ import { AppStackParamList } from 'mobile/App';
 import { Button, Center, FormControl, Input, Row, Stack, View } from 'native-base';
 import React, { SetStateAction, useState } from 'react';
 import { update } from 'tsfun';
-import { Settings } from '../model/preferences';
+import { Preferences } from '../model/preferences';
 
 
 interface SettingsScreenProps {
     navigation: StackNavigationProp<AppStackParamList, 'SplashScreen'>;
-    settings: Settings;
-    setSettings: React.Dispatch<SetStateAction<Settings>>;
+    preferences: Preferences;
+    setPreferences: React.Dispatch<SetStateAction<Preferences>>;
 }
 
 
 const SettingsScreen: React.FC<SettingsScreenProps> = ({
     navigation,
-    settings,
-    setSettings
+    preferences,
+    setPreferences
 }) => {
 
-    const [username, setUsername] = useState(settings.username);
+    const [username, setUsername] = useState(preferences.settings.username);
 
     const saveSettings = () => {
 
-        const newSettings = update('username', username, settings);
-        setSettings(newSettings);
+        const newPreferences = update(['settings','username'], username, preferences);
+        setPreferences(newPreferences);
         navigation.goBack();
     };
 

@@ -4,35 +4,32 @@ import { Button, Center, Column, Icon, IconButton, Row, Select, Text, View } fro
 import React, { SetStateAction, useCallback, useState } from 'react';
 import { prepend, set, update } from 'tsfun';
 import CreateProjectModal from '../components/CreateProjectModal';
-import { Settings } from '../model/preferences';
+import { Preferences } from '../model/preferences';
 
 
 interface HomeScreenProps {
     navigation: StackNavigationProp<AppStackParamList, 'SplashScreen'>;
-    settings: Settings;
-    recentProjects: string[];
-    setSettings: React.Dispatch<SetStateAction<Settings>>;
-    setRecentProjects: React.Dispatch<SetStateAction<string[]>>;
+    preferences: Preferences;
+    setPreferences: React.Dispatch<SetStateAction<Preferences>>;
 }
 
 
 const HomeScreen: React.FC<HomeScreenProps> = ({
     navigation,
-    settings,
-    recentProjects,
-    setSettings,
-    setRecentProjects
+    preferences,
+    setPreferences
 }) => {
 
-    const [selectedProject, setSelectedProject] = useState<string>(recentProjects[0] || '');
+    const [selectedProject, setSelectedProject] = useState<string>(preferences.recentProjects[0] || '');
     const [isProjectModalOpen, setIsProjectModalOpen] = useState<boolean>(false);
 
     const openProject = useCallback((project: string) => {
 
-        setRecentProjects(old => set(prepend(project)(old)));
-        setSettings(oldSettings => update('project', project, oldSettings));
+        let newPreferences = update(['settings','project'], project, preferences);
+        newPreferences = update('recentProjects', old => set(prepend(project)(old)), newPreferences);
+        setPreferences(newPreferences);
         navigation.navigate('DocumentsScreen');
-    }, [navigation, setSettings, setRecentProjects]);
+    }, [navigation, preferences, setPreferences]);
 
 
     return <>
@@ -43,7 +40,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
         />
         <View flex={ 1 } safeArea>
             <Row justifyContent="flex-end">
-                { settings.username === '' &&
+                { preferences.settings.username === '' &&
                     <Row bg="red.200" p={ 2 } alignItems="center" rounded="lg" space={ 2 }>
                         <Icon type="Ionicons" name="alert-circle" color="red" />
                         <Text color="red.600" bold>Make sure to set your name!</Text>
@@ -57,7 +54,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
             </Row>
             <Center flex={ 1 }>
                 <Column space={ 3 }>
-                    { recentProjects.length > 0 && <Center rounded="lg" p={ 5 } bg="gray.200">
+                    { preferences.recentProjects.length > 0 && <Center rounded="lg" p={ 5 } bg="gray.200">
                         <Column space={ 3 }>
                             <Text style={ { fontWeight: 'bold' } }>
                                 Open existing project:
@@ -71,7 +68,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
                                 androidIconColor="gray"
                                 androidPrompt="Select project:"
                             >
-                                { recentProjects.map(project =>
+                                { preferences.recentProjects.map(project =>
                                     <Select.Item label={ project }value={ project } key={ project } /> ) }
                             </Select>
                             <IconButton

@@ -7,7 +7,7 @@ import React, { Dispatch, ReactElement, SetStateAction, useEffect, useState } fr
 import { enableScreens } from 'react-native-screens';
 import { update } from 'tsfun';
 import useSync from './src/hooks/use-sync';
-import { Settings, SyncSettings } from './src/model/preferences';
+import { Preferences } from './src/model/preferences';
 import { DocumentRepository } from './src/repositories/document-repository';
 import DocumentsScreen from './src/screens/DocumentsScreen';
 import HomeScreen from './src/screens/HomeScreen';
@@ -27,13 +27,6 @@ export type AppStackNavProps<T extends keyof AppStackParamList> = {
 };
 
 
-interface Preferences {
-    settings: Settings;
-    syncSettings: SyncSettings;
-    recentProjects: string[];
-}
-
-
 type SetRepository = Dispatch<SetStateAction<DocumentRepository | undefined>>;
 
 
@@ -46,33 +39,24 @@ const Stack = createStackNavigator();
 export default function App(): ReactElement {
 
     const [repository, setRepository] = useState<DocumentRepository>();
-    const [settings, setSettings] = useState<Settings>(getDefaultSettings());
-    const [syncSettings, setSyncSettings] = useState<SyncSettings>(getDefaultSyncSettings());
-    const [recentProjects, setRecentProjects] = useState<string[]>([]);
-    const syncStatus = useSync(settings.project, syncSettings, repository);
+    const [preferences, setPreferences] = useState<Preferences>(getDefaultPreferences());
+    const syncStatus = useSync(preferences.settings.project, preferences.syncSettings, repository);
 
     useEffect(() => {
 
-        (async () => {
-            const preferences = await loadPreferences();
-            if (preferences) {
-                setSettings(preferences.settings);
-                setSyncSettings(preferences.syncSettings);
-                setRecentProjects(preferences.recentProjects);
-            }
-        })();
+        loadPreferences().then(setPreferences);
     }, []);
 
     useEffect(() => {
 
-        setSyncSettings(old => update('connected', false, old));
-        setupRepository(settings.project, settings.username, setRepository);
-    }, [settings]);
+        setPreferences(old => update(['syncSettings','connected'], false, old));
+        setupRepository(preferences.settings.project, preferences.settings.username, setRepository);
+    }, [preferences.settings]);
 
     useEffect(() => {
 
-        savePreferences({ settings, syncSettings, recentProjects });
-    }, [settings, syncSettings, recentProjects]);
+        savePreferences(preferences);
+    }, [preferences]);
 
 
     return (
@@ -80,15 +64,13 @@ export default function App(): ReactElement {
             <NavigationContainer>
                 <Stack.Navigator initialRouteName="HomeScreen" screenOptions={ { headerShown: false } }>
                     <Stack.Screen name="HomeScreen">
-                        { (props) => <HomeScreen { ... {
-                            ...props, settings, recentProjects, setRecentProjects, setSettings
-                        } } /> }
+                        { (props) => <HomeScreen { ... { ...props, preferences, setPreferences } } /> }
                     </Stack.Screen>
                     <Stack.Screen name="DocumentsScreen">
-                        { () => <DocumentsScreen { ... { repository, syncStatus, syncSettings, setSyncSettings } } /> }
+                        { () => <DocumentsScreen { ... { repository, syncStatus, preferences, setPreferences } } /> }
                     </Stack.Screen>
                     <Stack.Screen name="SettingsScreen">
-                        { (props) => <SettingsScreen { ... { ...props, settings, setSettings } } /> }
+                        { (props) => <SettingsScreen { ... { ...props, preferences, setPreferences } } /> }
                     </Stack.Screen>
                 </Stack.Navigator>
             </NavigationContainer>
@@ -97,10 +79,10 @@ export default function App(): ReactElement {
 }
 
 
-const loadPreferences = async (): Promise<Preferences | null> => {
+const loadPreferences = async (): Promise<Preferences> => {
 
     const prefString = await AsyncStorage.getItem('preferences');
-    return prefString ? JSON.parse(prefString) : null;
+    return prefString ? JSON.parse(prefString) : getDefaultPreferences();
 };
 
 
@@ -115,14 +97,15 @@ const setupRepository = async (project: string, username: string, setRepository:
 };
 
 
-const getDefaultSettings = () => ({
-    project: 'test467',
-    username: ''
-});
-
-
-const getDefaultSyncSettings = () => ({
-    url: '',
-    password: '',
-    connected: false
+const getDefaultPreferences = () => ({
+    settings: {
+        project: 'test467',
+        username: ''
+    },
+    syncSettings: {
+        url: '',
+        password: '',
+        connected: false
+    },
+    recentProjects: []
 });

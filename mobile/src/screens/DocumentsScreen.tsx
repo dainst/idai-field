@@ -1,15 +1,15 @@
 import { SyncStatus } from 'idai-field-core';
 import React, { SetStateAction } from 'react';
 import DocumentsContainer from '../components/DocumentsContainer';
-import { SyncSettings } from '../model/preferences';
+import { Preferences } from '../model/preferences';
 import { DocumentRepository } from '../repositories/document-repository';
 
 
 interface DocumentsScreenProps {
     repository?: DocumentRepository;
     syncStatus: SyncStatus;
-    syncSettings: SyncSettings;
-    setSyncSettings: React.Dispatch<SetStateAction<SyncSettings>>;
+    preferences: Preferences;
+    setPreferences: React.Dispatch<SetStateAction<Preferences>>;
 }
 
 

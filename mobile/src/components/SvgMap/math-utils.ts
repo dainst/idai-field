@@ -8,7 +8,7 @@ export const calcDistance = (x1: number, y1: number, x2: number, y2: number): nu
 
     const dx = x1 - x2;
     const dy = y1 - y2;
-    return Math.sqrt(dx * dx + dy * dy);
+    return Math.sqrt(Math.pow(dx,2) + Math.pow(dy,2));
 };
   
 

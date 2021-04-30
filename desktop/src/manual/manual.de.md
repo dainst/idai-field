@@ -378,7 +378,7 @@ selektieren und eine neue Teilmatrix aus der aktuellen Selektion zu erstellen:
 
 Um mit mehreren Computern an einem Projekt zu arbeiten, können Daten zwischen verschiedenen iDAI.field-Intallationen synchronisiert werden. Das bedeutet, dass Änderungen (neue Ressourcen, gelöschte Ressourcen oder Editierungen bestehender Ressourcen), die über die iDAI.field-Anwendung auf einem anderen Rechner vorgenommen werden, automatisch auch in die eigene Datenbank übertragen werden und umgekehrt. So wird erreicht, dass alle Mitarbeitenden zu jeder Zeit mit dem aktuellen Stand des Projekts arbeiten können. Die Synchronisation kann dabei über das Internet oder über ein lokales Netzwerk stattfinden. Sie können weiterhin auch bei konfigurierter Synchronisation offline mit dem Projekt arbeiten – die Datenbanken werden dann synchronisiert, sobald Sie wieder mit dem Netzwerk verbunden sind.
 
-Daten werden stets nur zwischen Projekten gleichen Namens synchronisiert. Um also Daten aus einer anderen iDAI.field-Intallation zu laden, legen Sie zunächst ein neues leeres Projekt mit dem gleichen Namen an. Bei bestehender Synchronisationsverbindung werden die Daten anschließend automatisch in Ihre Datenbank heruntergeladen (dieser Vorgang kann bei größeren Projekten unter Umständen eine längere Zeit dauern).
+Daten werden stets nur zwischen Projekten gleichen Namens synchronisiert. Um also Daten aus einer anderen iDAI.field-Intallation zu laden, legen Sie zunächst ein neues leeres Projekt mit dem Namen des Projekts an, das Sie in Ihre Anwendung laden möchten. Bei bestehender Synchronisationsverbindung werden die Daten anschließend automatisch heruntergeladen (dieser Vorgang kann bei größeren Projekten unter Umständen eine längere Zeit dauern).
 
 ### Konfiguration
 

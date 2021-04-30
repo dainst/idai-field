@@ -12,7 +12,7 @@ const no = () => {};
 const yes = () => true;
 
 
-const NSvgMap: React.FC<SvgProps> = ( props ) => {
+const SvgMap: React.FC<SvgProps> = ( props ) => {
 
     //absolute positions
     const left = useRef<Animated.Value>(new Animated.Value(0)).current;
@@ -143,4 +143,4 @@ const NSvgMap: React.FC<SvgProps> = ( props ) => {
 };
 
 
-export default NSvgMap;
+export default SvgMap;

@@ -22,7 +22,7 @@ interface MapProps {
 
 const Map: React.FC<MapProps> = ({ geoDocuments, selectedGeoDocuments, navigateToDocument }) => {
 
-    const geometryBoundings = useMemo(()=> getGeometryBoundings(geoDocuments),[geoDocuments]) ;
+    const geometryBoundings = useMemo(()=> getGeometryBoundings(geoDocuments),[geoDocuments]);
 
   
     return (

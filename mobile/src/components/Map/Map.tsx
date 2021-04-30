@@ -1,7 +1,7 @@
 import { Position } from 'geojson';
 import { Document, FieldGeometry } from 'idai-field-core';
 import { Text } from 'native-base';
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useMemo } from 'react';
 import { StyleSheet } from 'react-native';
 import { Circle, G } from 'react-native-svg';
 import SvgMap from '../SvgMap/SvgMap';
@@ -22,7 +22,8 @@ interface MapProps {
 
 const Map: React.FC<MapProps> = ({ geoDocuments, selectedGeoDocuments, navigateToDocument }) => {
 
-    const geometryBoundings = getGeometryBoundings(geoDocuments);
+    const geometryBoundings = useMemo(()=> getGeometryBoundings(geoDocuments),[geoDocuments]) ;
+
   
     return (
         <>

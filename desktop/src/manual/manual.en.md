@@ -348,39 +348,39 @@ from the current selection:
 
 ## Synchronization
 
-In order to collaborate on a single project, data can be syncrhonized between multiple iDAI.field instances on different computers. This means that changes (new resources, deleted resources or editings of existing resources) coming from an iDAI.field application running on another machine will be transfered automatically to the local database and vice versa. This enables all participants to work simultaneously with the latest state of the project. Synchronization works both via the internet or via a local network. You can still continue working on a project, even if synchronization is enabled - in that case the databases get synchronized as soon as the network connection is established again.
+In order to collaborate on a single project, data can be synchronized between multiple iDAI.field installations on different computers. This means that changes (new resources, deleted resources or editings of existing resources) coming from an iDAI.field application running on another machine will be transferred automatically to the local database and vice versa. This enables all participants to work simultaneously with the latest state of the project. Synchronization works both via the internet or via a local network. You can still continue working on a project while offline - in that case the databases will be synchronized as soon as the network connection is established again.
 
-Data only is synchronized between projects of the same name. To load data from another iDAI.field database, simply start by creating an empty project with the name of the existing remote database. When a connection is established data gets downloaded automatically (this process can take a while for larger projects).
+Data only is synchronized between projects of the same name. To load data from another iDAI.field installation, simply start by creating an empty project with the name of the project you want to load into your application. When a connection is established, the data will be downloaded automatically (this process can take a while for larger projects).
 
 ### Configuration
 
 Synchronization is configured via the **Settings** submenu (menu "iDAI.field" (MacOS) or "File" (Windows)).
 
-Please make sure to fill in the **Editor name** field before setting up the configuration.
+Please make sure to fill in the field **Editor name** before setting up the configuration.
 
-* *Address*: Enter the address of the synchronization target. This can be the network address of another machine which runs an iDAI.field instance, or the address of a CouchDB database accessible via the internet or a local network (for example *http://field.dainst.org/sync* for the iDAI.field database server of the DAI).
+* *Address*: Enter the address of the synchronization target. This can be the network address of another machine which runs an iDAI.field installation, or the address of a CouchDB database accessible via the internet or a local network (for example *http://field.dainst.org/sync* for the iDAI.field database server of the DAI).
 * *Password*: Enter the password of the target database.
-* *Your address*: Your network address, which others can use to connect their iDAI.field applications to your instance. You can hand over this address and your password to allow others to connect to your machine.
+* *Your address*: Your network address, which others can use to connect their iDAI.field applications to your installation. You can hand over this address and your password to allow others to connect to your machine.
 * *Your password*: By default the database is protected with a randomly generated password. Here you can change that password.
 
-After setting *Address* and *Password*, the configuration gets activated by selecting *Activate synchronization* and then saving these settings by clicking *Apply settings*.
+After setting *Address* and *Password*, you can complete the configuration by selecting *Activate synchronization* and then saving these settings by clicking *Apply settings*.
 
 ### Synchronization state
 
-The cloud icon in the top right corner of the navbar shows the current state of your configured synchronization connection.
+The cloud icon in the top right corner of the navigation bar shows the current state of your configured synchronization connection.
 
 <p align="center"><img src="images/de/synchronization/synchronization_icon.png" alt="Synchronization icon"/></p>
 
-If a connection has been successfully established, the icon shows a checkmark. When data gets uploaded or downloaded this is indicated by an arrow. In case of errors an exclamation mark is shown. Additional information regarding the synchronization state can be obtained by hovering the mouse pointer over the icon.
+If a connection has been successfully established, the icon shows a checkmark. When data is being uploaded or downloaded, this is indicated by an arrow. In case of errors an exclamation mark is shown. Additional information regarding the synchronization state can be obtained by hovering the mouse pointer over the icon.
 
 ### Conflicts
 
-Conflicts can occur, if a resource gets edited at the same time on multiple computers or if two database synchronize where the same resource has been edited while the computers were not connected. In these cases there are two different versions of the same resource: the *Current version* (which is the one which continues to get displayed in different places in the application) and the *Competing version* (which is stored in the background, but is not shown without taking further steps). The version can differ in the number of filled-in fields, but also by having different values in the same fields.
+Conflicts can occur when a resource is edited at the same time on multiple computers or when two databases synchronize where the same resource has been edited while the computers were not connected. In these cases there are two different versions of the same resource: the *current version* (which is displayed in resource management and other areas of the application) and the *competing version* (which is stored in the background, but is not shown without taking further steps). The two versions can differ in the number of filled-in fields, but also by having different values in the same fields.
 
-Conflicted resources are marked by a red border in the resources list. In addition to that an icon will appear in the navbar, indicating the number of conflicts within the current project.
+Conflicted resources are marked by a red border in the resources list. In addition to that an icon will appear in the navigation bar, indicating the number of conflicts within the current project.
 
 <p align="center"><img src="images/de/synchronization/conflicts_icon.png" alt="Conflicts icon"/></p>
 
-Click the icon to see the list of all conflicted resources. Selecting one of these resources will open the conflicts tab of the editor, where the resource can be cleaned up.
+Click the icon to see the list of all conflicted resources. Selecting one of these resources will open the conflicts tab of the editor, where you can clean up the resource.
 
-To resolve conflicts, for each field with differing values a decision must be made on which version is valid. Alternatively one can just select either the *Current version* or the *Competing version* as a whole. Confirm the decision by clicking **Resolve conflict**. In case there are multiple conflicts on a single resource, this process has to be repeated until all conflicts are resolved. It is possible to make changes in other editor groups as well while the editor is open. To apply the changes, the resource finally should be saved via the **Save** button.
+To resolve conflicts, for each field with differing values a decision must be made on which version is valid. Alternatively you can just select either the *current version* or the *competing version* as a whole. Confirm the decision by clicking **Resolve conflict**. In case there are multiple conflicts on a single resource, this process has to be repeated until all conflicts are resolved. It is possible to make changes in other editor groups as well while the editor is open. To apply the changes, the resource finally should be saved via the **Save** button.

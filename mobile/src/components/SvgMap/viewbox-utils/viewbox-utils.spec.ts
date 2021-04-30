@@ -94,5 +94,34 @@ describe('getViewPortTransform',() => {
 
         expect(getViewPortTransform(viewBox,'xMidYMid meet',viewPort)).toEqual(expectedTransform);
     });
+
+    it('transform the testproject without problems', () => {
+      
+        
+        const viewBox = [
+            27.188940048217773,
+            39.14105033874512,
+            27.189414739608765 - 27.188940048217773,
+            39.141438484191895 - 39.14105033874512].join(' ');
+        const viewPort = {
+                x: 20,
+                y: 40,
+                width: 1200,
+                height: 500,
+        };
+        const expectedTransform = {
+            translateX: -68732190.0124547,
+            translateY: -50420557.05159705,
+            scaleX: 1288176.9041769041,
+            scaleY: 1288176.9041769041,
+        };
+        const viewPortTransform = getViewPortTransform(viewBox,'xMidYMid meet',viewPort);
+
+        expect(viewPortTransform.translateX).toBeCloseTo(expectedTransform.translateX,4);
+        expect(viewPortTransform.translateY).toBeCloseTo(expectedTransform.translateY,4);
+        expect(viewPortTransform.scaleX).toBeCloseTo(expectedTransform.scaleX,4);
+        expect(viewPortTransform.scaleY).toBeCloseTo(expectedTransform.scaleY,4);
+
+    });
   
 });

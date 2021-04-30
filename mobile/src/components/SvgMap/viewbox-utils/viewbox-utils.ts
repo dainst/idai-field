@@ -20,7 +20,7 @@ export const getViewPortTransform = (viewBox: string | undefined, preserveAspect
   
     // Let vb-x, vb-y, vb-width, vb-height be the min-x, min-y, width and height values
     // of the viewBox attribute respectively.
-    const [vbX, vbY, vbWidth, vbHeight] = (viewBox ? viewBox : '0 0 100 100').split(' ').map(num => parseInt(num));
+    const [vbX, vbY, vbWidth, vbHeight] = (viewBox ? viewBox : '0 0 100 100').split(' ').map(num => parseFloat(num));
     const [align, meetOrSlice] = (preserveAspectRatio ? preserveAspectRatio : 'xMidYMid meet').split(' ');
 
   

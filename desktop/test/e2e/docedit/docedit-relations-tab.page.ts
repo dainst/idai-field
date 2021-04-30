@@ -1,4 +1,4 @@
-import { click, getElements, getElement, typeIn } from '../app';
+import { click, getElements, getElement, typeIn, pause } from '../app';
 import {DoceditPage} from './docedit.page';
 
 
@@ -51,8 +51,9 @@ export class DoceditRelationsTabPage {
 
     // type in
 
-    public static typeInRelation(groupName, input) {
+    public static async typeInRelation(groupName, input) {
 
-        return typeIn('#' + groupName + ' input', input);
+        await typeIn('#' + groupName + ' input', input);
+        return pause(1000);
     };
 }

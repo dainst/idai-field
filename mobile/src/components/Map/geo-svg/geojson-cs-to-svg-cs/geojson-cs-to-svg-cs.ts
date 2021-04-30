@@ -1,10 +1,10 @@
 import { Position } from 'geojson';
-import { viewBox } from '../../constants';
+import { standardViewBox } from '../../constants';
 import { GeometryBoundings, mapValueToNewRange } from '../../cs-transform-utils';
 
 export const transformGeojsonToSvg = (geoBoundings: GeometryBoundings, position: Position): Position => {
 
-    const [viewStartX, viewStartY, viewWidth, _viewHeigt] = viewBox;
+    const [viewStartX, viewStartY, viewWidth, _viewHeigt] = standardViewBox;
     const { minX, minY, maxX, maxY } = geoBoundings;
     const height = (maxY - minY) / (maxX - minX) * viewWidth; //keep aspect ratio
 

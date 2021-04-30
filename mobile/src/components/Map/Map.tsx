@@ -5,7 +5,7 @@ import React, { ReactElement, useMemo } from 'react';
 import { StyleSheet } from 'react-native';
 import { Circle, G } from 'react-native-svg';
 import SvgMap from '../SvgMap/SvgMap';
-import { viewBox } from './constants';
+import { standardViewBox } from './constants';
 import { getGeometryBoundings } from './cs-transform-utils';
 import {
     GeoLineString, GeoMultiLineString, GeoMultiPoint,
@@ -28,7 +28,7 @@ const Map: React.FC<MapProps> = ({ geoDocuments, selectedGeoDocuments, navigateT
     return (
         <>
             {geoDocuments && geometryBoundings ?
-                <SvgMap viewBox={ viewBox.join(' ') } style={ styles.svg }>
+                <SvgMap viewBox={ standardViewBox.join(' ') } style={ styles.svg }>
                     {geoDocuments.map(doc =>(
                         <G key={ doc._id }>
                             {renderGeoSvgElement(

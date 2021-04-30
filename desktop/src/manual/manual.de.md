@@ -4,7 +4,7 @@ Nach dem ersten Start der iDAI.field-Desktopanwendung befinden Sie sich zunächs
 Ihnen ermöglicht, die Funktionen des Programms anhand einiger Testdaten auszuprobieren.
 Bitte beachten Sie, dass neu angelegte Datensätze nach einem Neustart der Anwendung
 gelöscht und alle Änderungen zurückgesetzt werden, solange das Testprojekt ausgewählt ist.
-Aus diesem Grund findet im Testprojekt grundsätzlich keine Synchronisation mit anderen iDAI.field-Instanzen
+Aus diesem Grund findet im Testprojekt grundsätzlich keine Synchronisation mit anderen iDAI.field-Installationen
 oder Datenbanken statt.
 
 Um mit iDAI.field produktiv zu arbeiten, sollten Sie zunächst die folgenden Schritte durchführen:
@@ -376,9 +376,9 @@ selektieren und eine neue Teilmatrix aus der aktuellen Selektion zu erstellen:
 
 ## Synchronisation
 
-Um mit mehreren Computern an einem Projekt zu arbeiten, können Daten zwischen verschiedenen iDAI.field-Instanzen synchronisiert werden. Das bedeutet, dass Änderungen (neue Ressourcen, gelöschte Ressourcen oder Editierungen bestehender Ressourcen), die über die iDAI.field-Anwendung auf einem anderen Rechner vorgenommen werden, automatisch auch in die eigene Datenbank übertragen werden und umgekehrt. So wird erreicht, dass alle Mitarbeitenden zu jeder Zeit mit dem aktuellen Stand des Projekts arbeiten können. Die Synchronisation kann dabei über das Internet oder über ein lokales Netzwerk stattfinden. Sie können weiterhin auch bei konfigurierter Synchronisation offline mit dem Projekt arbeiten – die Datenbanken werden dann synchronisiert, sobald Sie wieder mit dem Netzwerk verbunden sind.
+Um mit mehreren Computern an einem Projekt zu arbeiten, können Daten zwischen verschiedenen iDAI.field-Intallationen synchronisiert werden. Das bedeutet, dass Änderungen (neue Ressourcen, gelöschte Ressourcen oder Editierungen bestehender Ressourcen), die über die iDAI.field-Anwendung auf einem anderen Rechner vorgenommen werden, automatisch auch in die eigene Datenbank übertragen werden und umgekehrt. So wird erreicht, dass alle Mitarbeitenden zu jeder Zeit mit dem aktuellen Stand des Projekts arbeiten können. Die Synchronisation kann dabei über das Internet oder über ein lokales Netzwerk stattfinden. Sie können weiterhin auch bei konfigurierter Synchronisation offline mit dem Projekt arbeiten – die Datenbanken werden dann synchronisiert, sobald Sie wieder mit dem Netzwerk verbunden sind.
 
-Daten werden stets nur zwischen Projekten gleichen Namens synchronisiert. Um also Daten aus einer anderen iDAI.field-Instanz zu laden, legen Sie zunächst ein neues leeres Projekt mit dem gleichen Namen an. Bei bestehender Synchronisationsverbindung werden die Daten anschließend automatisch in Ihre Datenbank heruntergeladen (dieser Vorgang kann bei größeren Projekten unter Umständen eine längere Zeit dauern).
+Daten werden stets nur zwischen Projekten gleichen Namens synchronisiert. Um also Daten aus einer anderen iDAI.field-Intallation zu laden, legen Sie zunächst ein neues leeres Projekt mit dem gleichen Namen an. Bei bestehender Synchronisationsverbindung werden die Daten anschließend automatisch in Ihre Datenbank heruntergeladen (dieser Vorgang kann bei größeren Projekten unter Umständen eine längere Zeit dauern).
 
 ### Konfiguration
 

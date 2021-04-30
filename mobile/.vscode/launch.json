@@ -5,6 +5,19 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Debug unit test",
+            "request": "launch",
+            "runtimeArgs": [
+                "test",
+                "viewbox-utils.spec.ts"
+            ],
+            "runtimeExecutable": "npm",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "pwa-node"
+        },
+        {
             "name": "Debug in Exponent",
             "request": "launch",
             "type": "reactnative",

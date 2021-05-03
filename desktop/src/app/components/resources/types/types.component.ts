@@ -139,7 +139,7 @@ export class TypesComponent extends BaseList implements OnChanges {
     public async performContextMenuAction(action: ContextMenuAction) {
 
         if (this.contextMenu.documents.length !== 1) return;
-        const document: FieldDocument = this.contextMenu.documents[0];
+        const document: FieldDocument = this.contextMenu.documents[0] as FieldDocument;
 
         this.contextMenu.close();
 

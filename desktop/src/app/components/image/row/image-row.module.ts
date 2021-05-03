@@ -1,6 +1,7 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {WidgetsModule} from '../../widgets/widgets.module';
+import {ImageRowContextMenuComponent} from './image-row-context-menu.component';
 import {ImageRowComponent} from './image-row.component';
 
 
@@ -10,7 +11,8 @@ import {ImageRowComponent} from './image-row.component';
         WidgetsModule
     ],
     declarations: [
-        ImageRowComponent
+        ImageRowComponent,
+        ImageRowContextMenuComponent
     ],
     exports: [
         ImageRowComponent

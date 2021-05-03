@@ -1,16 +1,13 @@
 import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
-import {ResourcesComponent} from '../resources.component';
 import {ViewFacade} from '../../../core/resources/view/view-facade';
-import {ContextMenu} from './context-menu';
-import {ProjectCategories} from 'idai-field-core';
+import {ContextMenu, ContextMenuOrientation} from './context-menu';
+import {FieldDocument, ProjectCategories} from 'idai-field-core';
 import {ProjectConfiguration} from 'idai-field-core';
 import {MoveUtility} from '../../../core/resources/move-utility';
 
 
 export type ContextMenuAction = 'edit'|'move'|'delete'|'edit-images'|'create-polygon'|'create-line-string'
     |'create-point'|'edit-geometry';
-
-type ContextMenuOrientation = 'top'|'bottom';
 
 
 @Component({
@@ -30,14 +27,13 @@ export class ContextMenuComponent implements OnChanges {
     public orientation: ContextMenuOrientation = 'top';
 
 
-    constructor(private resourcesComponent: ResourcesComponent, // TODO remove unused
-                private viewFacade: ViewFacade,
+    constructor(private viewFacade: ViewFacade,
                 private projectConfiguration: ProjectConfiguration) {}
 
 
     ngOnChanges() {
 
-        this.orientation = ContextMenuComponent.computeOrientation(this.contextMenu.position?.y);
+        this.orientation = ContextMenu.computeOrientation(this.contextMenu.position?.y);
     }
 
 
@@ -108,7 +104,7 @@ export class ContextMenuComponent implements OnChanges {
         if (this.isReadonly() || this.contextMenu.documents.length === 0) return false;
 
         return MoveUtility.getAllowedTargetCategories(
-            this.contextMenu.documents, this.projectConfiguration, this.viewFacade.isInOverview()
+            this.contextMenu.documents as Array<FieldDocument>, this.projectConfiguration, this.viewFacade.isInOverview()
         ).length > 0;
     }
 
@@ -116,13 +112,5 @@ export class ContextMenuComponent implements OnChanges {
     private isReadonly(): boolean {
 
         return this.contextMenu.documents.find(document => document.project !== undefined) !== undefined;
-    }
-
-
-    private static computeOrientation(yPosition?: number): ContextMenuOrientation {
-
-        return !yPosition || yPosition <= window.innerHeight * 0.6
-            ? 'top'
-            : 'bottom';
     }
 }

@@ -7,6 +7,8 @@ import {AngularUtility} from '../../../angular/angular-utility';
 import {showMissingThumbnailMessageOnConsole} from '../log-messages';
 import {BlobMaker} from '../../../core/images/imagestore/blob-maker';
 import { Imagestore } from '../../../core/images/imagestore/imagestore';
+import {ContextMenu} from '../../resources/widgets/context-menu';
+import {ImageRowContextMenuAction} from './image-row-context-menu.component';
 
 
 const MAX_IMAGE_WIDTH: number = 600;
@@ -38,11 +40,14 @@ export class ImageRowComponent implements OnChanges {
 
     @Output() onImageClicked: EventEmitter<ImageRowItem> = new EventEmitter<ImageRowItem>();
     @Output() onImageSelected: EventEmitter<ImageRowItem> = new EventEmitter<ImageRowItem>();
+    @Output() onContextMenuItemClicked: EventEmitter<ImageRowContextMenuAction> = new EventEmitter<ImageRowContextMenuAction>();
 
     public thumbnailUrls: { [imageId: string]: SafeResourceUrl };
     public initializing: boolean;
 
     private imageRow: ImageRow;
+
+    public contextMenu = new ContextMenu();
 
 
     constructor(private imagestore: Imagestore,
@@ -102,6 +107,12 @@ export class ImageRowComponent implements OnChanges {
         this.allowSelection
             ? this.select(image)
             : this.onImageClicked.emit(image);
+    }
+
+
+    public performContextMenuAction(event: any) {
+
+        this.onContextMenuItemClicked.emit(event);
     }
 
 
@@ -193,7 +204,7 @@ export class ImageRowComponent implements OnChanges {
 
         const imageDocuments = (await this.datastore.getMultiple(
             images.filter(image => image.imageId !== PLACEHOLDER)
-                .map(to('imageId'))
+                .map(to(ImageRowItem.IMAGE_ID))
         )) as Array<ImageDocument>;
 
         return images.map(image => {

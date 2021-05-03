@@ -1,4 +1,7 @@
-import {FieldDocument} from 'idai-field-core';
+import {Document} from 'idai-field-core';
+
+
+export type ContextMenuOrientation = 'top'|'bottom';
 
 
 /**
@@ -7,10 +10,10 @@ import {FieldDocument} from 'idai-field-core';
 export class ContextMenu {
 
     public position: { x: number, y: number }|undefined;
-    public documents: Array<FieldDocument> = [];
+    public documents: Array<Document> = [];
 
 
-    public open(event: MouseEvent, documents: Array<FieldDocument>) {
+    public open(event: MouseEvent, documents: Array<Document>) {
 
         if (documents.find(document => !document.resource.id)) return this.close();
 
@@ -29,5 +32,13 @@ export class ContextMenu {
     public isOpen(): boolean {
 
         return this.position !== undefined;
+    }
+
+
+    public static computeOrientation(yPosition?: number): ContextMenuOrientation {
+
+        return !yPosition || yPosition <= window.innerHeight * 0.6
+            ? 'top'
+            : 'bottom';
     }
 }

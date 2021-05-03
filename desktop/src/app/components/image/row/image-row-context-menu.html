@@ -1,0 +1,10 @@
+<div *ngIf="contextMenu && areAnyOptionsAvailable()" id="context-menu" class="dropdown-menu show"
+    [class.orientation-top]="orientation === 'top'" [class.orientation-bottom]="orientation === 'bottom'"
+    [style.left]="contextMenu.position.x + 'px'" [style.top]="contextMenu.position.y + 'px'"
+    [style.bottom]="getBottomPosition(contextMenu.position.y) + 'px'">
+
+    <div (click)="selectAction('something')">
+        <span class="mdi mdi-map-marker-plus"></span>
+        <span class="dropdown-entry-label" i18n="@@resources.contextMenu.createGeometry.point">Hallo</span>
+    </div>
+</div>

@@ -63,6 +63,11 @@ export class ImageViewModalComponent extends ViewModalComponent {
         }
     }
 
+    public onContextMenuItemClicked(event: any) {
+
+        console.log('TODO', 'onContextMenuItemClicked', event);
+    }
+
 
     public async startEditImages() {
 

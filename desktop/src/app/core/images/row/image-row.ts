@@ -9,6 +9,14 @@ export type ImageRowItem = {
 
   imageId: string|'PLACEHOLDER';
   document?: Document;
+};
+
+
+export namespace ImageRowItem {
+
+    export const IMAGE_ID = 'imageId';
+
+    export const ofDocument = (document: ImageDocument): ImageRowItem => ({ imageId: document.resource.id, document });
 }
 
 type PageInfo = 'same'|'previous'|'next'|'notFound';

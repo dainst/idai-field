@@ -1,15 +1,22 @@
 <div id="view-modal-header" class="d-flex justify-content-between">
-    <div *ngIf="!linkedResourceIdentifier" class="text-truncate" i18n="@@imageView.images">Bilder</div>
-    <div *ngIf="linkedResourceIdentifier" class="text-truncate" i18n="@@imageView.linkedImages">
-        Mit <strong>{{linkedResourceIdentifier}}</strong> verknüpfte Bilder
+    <div *ngIf="!linkedDocument" class="text-truncate" i18n="@@imageView.images">Bilder</div>
+    <div *ngIf="linkedDocument" class="text-truncate" i18n="@@imageView.linkedImages">
+        Mit <strong>{{linkedDocument.resource.identifier}}</strong> verknüpfte Bilder
     </div>
 
-    <button class="btn btn-primary"
+    <div>
+        <button *ngIf="linkedDocument" class="btn btn-primary" id="manage-images-button" tabindex="-1"
+            (click)="startEditImages()">
+            <span class="mdi mdi-plus-circle"></span>
+            Bilder verknüpfen
+        </button>
+        <button class="btn btn-primary"
             id="close-button"
             tabindex="-1"
             (click)="close()">
         <span class="mdi mdi-close"></span>
     </button>
+</div>
 </div>
 
 <div id="view-modal-body" class="modal-body px-0">

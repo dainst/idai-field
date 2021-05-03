@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {Datastore, ImageDocument} from 'idai-field-core';
 import {Document} from 'idai-field-core';
 import {MenuContext, MenuService} from '../../menu-service';
 import {ImageViewModalComponent} from '../../viewmodal/image/image-view-modal.component';
@@ -14,7 +13,6 @@ import {ResourceViewModalComponent} from '../../viewmodal/resource/resource-view
 export class ViewModalLauncher {
 
     constructor(private modalService: NgbModal,
-                private datastore: Datastore,
                 private menuService: MenuService) {}
 
 
@@ -22,18 +20,14 @@ export class ViewModalLauncher {
 
         this.menuService.setContext(MenuContext.MODAL);
 
-        const images: Array<ImageDocument> = await this.getImageDocuments(
-            document.resource.relations.isDepictedIn
-        );
-
         const modalRef: NgbModalRef = this.modalService.open(
             ImageViewModalComponent,
             { size: 'lg', backdrop: 'static', keyboard: false }
         );
         await modalRef.componentInstance.initialize(
-            images,
-            images.length > 0 ? images[0] : undefined,
-            document.resource.identifier
+            undefined,
+            undefined,
+            document
         );
         await modalRef.result;
 
@@ -58,14 +52,6 @@ export class ViewModalLauncher {
         this.menuService.setContext(MenuContext.DEFAULT);
 
         return edited;
-    }
-
-
-    private async getImageDocuments(relations: string[]|undefined): Promise<Array<ImageDocument>> {
-
-        return relations
-            ? (await this.datastore.getMultiple(relations)) as Array<ImageDocument>
-            : [];
     }
 }
 

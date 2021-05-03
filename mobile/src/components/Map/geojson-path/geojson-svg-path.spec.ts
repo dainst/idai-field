@@ -43,4 +43,18 @@ describe('GeoJSON to SVG path string', () => {
         const expectedPath = ' M1 1 L1 6 L6 6 L6 1 L1 1 M3 2 L5 2 L3 4 L3 2 M4 4 L5 4 L5 5 L4 5 L4 4 Z M8 3 L8 6 L11 6 L11 3 L8 3 M10 4 L10 5 L9 5 L10 4 Z';
         expect(multiPolygonToPath(multiPolygon, csTransformFunction)).toEqual(expectedPath);
     });
+
+    
+    it('converts floating point values with decimal places',() => {
+        
+        const polygon = [
+            [[27.18925452232361, 39.14129686355591 ],
+            [27.189281702041626, 39.14129686355591],
+            [27.189281702041626, 39.14131808280945],
+            [27.18925452232361, 39.14131808280945]]];
+            
+        // eslint-disable-next-line max-len
+        const expectedPath = ' M27.18925452232361 39.14131808280945 L27.189281702041626 39.14131808280945 L27.189281702041626 39.14129686355591 L27.18925452232361 39.14129686355591 Z';
+        expect(polygonToPath(polygon, csTransformFunction)).toEqual(expectedPath);
+    });
 });

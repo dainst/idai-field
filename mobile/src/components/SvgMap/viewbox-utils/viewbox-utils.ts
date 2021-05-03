@@ -6,8 +6,8 @@ interface viewBoxToViewPortTransform {
 }
 
 interface Rect {
-    y: number;
     x: number;
+    y: number;
     width: number;
     height:number;
 }

@@ -21,7 +21,7 @@ export abstract class ViewModalComponent {
                 private routingService: RoutingService,
                 private menuService: MenuService) {}
 
-i;
+
     protected abstract getDocument(isImageDocument?: boolean): Document;
 
     protected abstract setDocument(document: Document, isImageDocument?: boolean): void;

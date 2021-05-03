@@ -42,7 +42,6 @@ export const getMinMaxCoords = (geos: FieldGeometry[]): GeometryBoundings => {
                 xCoords.push(...x);
                 yCoords.push(...y);
                 break;}
-                break;
             case('MultiPolygon'):
                 {const [x, y] = extractCoordsPositions3d(geo.coordinates);
                 xCoords.push(...x);

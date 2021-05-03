@@ -19,6 +19,7 @@ import {Messages} from '../messages/messages';
 import {ProjectCategories} from 'idai-field-core';
 import {ProjectConfiguration} from 'idai-field-core';
 import {NavigationPath} from '../../core/resources/view/state/navigation-path';
+import {ViewModalLauncher} from './service/view-modal-launcher';
 
 
 export type PopoverMenu = 'none'|'info'|'children';
@@ -50,6 +51,7 @@ export class ResourcesComponent implements OnDestroy {
                 public viewFacade: ViewFacade,
                 private routingService: RoutingService,
                 private doceditLauncher: DoceditLauncher,
+                private viewModalLauncher: ViewModalLauncher,
                 private renderer: Renderer2,
                 private messages: Messages,
                 private loading: Loading,
@@ -157,13 +159,19 @@ export class ResourcesComponent implements OnDestroy {
 
 
     public editDocument(document: Document|undefined,
-                              activeGroup?: string): Promise<FieldDocument|undefined> {
+                        activeGroup?: string): Promise<FieldDocument|undefined> {
 
         if (!document) throw 'Called edit document with undefined document';
 
         this.quitGeometryEditing(document);
 
         return this.doceditLauncher.editDocument(document, activeGroup);
+    }
+
+
+    public editImages(document: Document) {
+
+        this.viewModalLauncher.openImageViewModal(document);
     }
 
 

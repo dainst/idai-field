@@ -32,7 +32,7 @@ export class ViewModalLauncher {
         );
         await modalRef.componentInstance.initialize(
             images,
-            images[0],
+            images.length > 0 ? images[0] : undefined,
             document.resource.identifier
         );
         await modalRef.result;

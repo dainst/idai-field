@@ -7,7 +7,7 @@ import {ProjectConfiguration} from 'idai-field-core';
 import {MoveUtility} from '../../../core/resources/move-utility';
 
 
-export type ContextMenuAction = 'edit'|'move'|'delete'|'create-polygon'|'create-line-string'
+export type ContextMenuAction = 'edit'|'move'|'delete'|'edit-images'|'create-polygon'|'create-line-string'
     |'create-point'|'edit-geometry';
 
 type ContextMenuOrientation = 'top'|'bottom';
@@ -30,7 +30,7 @@ export class ContextMenuComponent implements OnChanges {
     public orientation: ContextMenuOrientation = 'top';
 
 
-    constructor(private resourcesComponent: ResourcesComponent,
+    constructor(private resourcesComponent: ResourcesComponent, // TODO remove unused
                 private viewFacade: ViewFacade,
                 private projectConfiguration: ProjectConfiguration) {}
 
@@ -60,8 +60,15 @@ export class ContextMenuComponent implements OnChanges {
             || this.isCreateGeometryOptionAvailable()
             || this.isEditGeometryOptionAvailable()
             || this.isMoveOptionAvailable()
+            || this.isEditImagesOptionAvailable();
     }
 
+
+    // TODO implement properly
+    public isEditImagesOptionAvailable(): boolean {
+
+        return true;
+    }
 
     public isEditOptionAvailable(): boolean {
 

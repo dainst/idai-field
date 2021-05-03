@@ -45,7 +45,7 @@ export class ImageViewModalComponent extends ViewModalComponent {
 
 
     public async initialize(documents: Array<ImageDocument>,
-                            selectedDocument: ImageDocument,
+                            selectedDocument: ImageDocument|undefined,
                             linkedResourceIdentifier?: string) {
 
         this.linkedResourceIdentifier = linkedResourceIdentifier;
@@ -57,8 +57,11 @@ export class ImageViewModalComponent extends ViewModalComponent {
             };
         });
 
-        this.selectedImage = this.images.find(
-            on('imageId', is(selectedDocument.resource.id))
-        ) as ImageRowItem;
+        if (selectedDocument) {
+
+            this.selectedImage = this.images.find(
+                on('imageId', is(selectedDocument.resource.id))
+            ) as ImageRowItem;
+        }
     }
 }

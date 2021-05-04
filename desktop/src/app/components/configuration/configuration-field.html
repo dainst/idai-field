@@ -16,7 +16,7 @@
         <code> {{field.name}}</code>
         <div *ngIf="editable" class="btn-group right hide-buttons">
             <button *ngIf="!hidden"
-                    class="btn btn-primary hide-field-button"
+                    class="btn btn-secondary hide-field-button"
                     (click)="toggleHidden()"
                     placement="left" container="body"
                     ngbTooltip="Feld ausblenden"
@@ -24,7 +24,7 @@
                 <span class="mdi mdi-eye-off"></span>
             </button>
             <button *ngIf="hidden"
-                    class="btn btn-primary show-field-button"
+                    class="btn btn-light show-field-button"
                     (click)="toggleHidden()"
                     placement="left" container="body"
                     ngbTooltip="Feld einblenden"

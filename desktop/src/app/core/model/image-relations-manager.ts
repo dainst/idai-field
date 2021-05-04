@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Category, Document, Datastore, FieldDocument, ImageDocument, Relations, ProjectConfiguration, ProjectCategories, ON_RESOURCE_ID, ResourceId, toResourceId, Forest } from 'idai-field-core';
+import { Category, Document, Datastore, FieldDocument, ImageDocument, Relations, ProjectConfiguration, ProjectCategories, ON_RESOURCE_ID, ResourceId, toResourceId, Forest, Named, Name } from 'idai-field-core';
 import { flatten, flow, includedIn, isDefined, isNot, map, on, separate, set, subtract, to } from 'tsfun';
 import { Imagestore } from '../images/imagestore/imagestore';
 import { RelationsManager } from './relations-manager';
@@ -89,7 +89,7 @@ export class ImageRelationsManager {
 
     public async link(targetDocument: FieldDocument, ...selectedImages: Array<ImageDocument>) {
 
-        const projects: Array<Document> =
+        const projects =
             flow(
                 set(on(Document.PROJECT), [targetDocument as Document].concat(selectedImages)),
                 map(to(Document.PROJECT)));

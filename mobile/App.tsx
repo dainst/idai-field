@@ -12,7 +12,7 @@ import SettingsScreen from './src/screens/SettingsScreen';
 
 
 export type AppStackParamList = {
-    SplashScreen: undefined;
+    HomeScreen: undefined;
     DocumentsScreen: undefined;
     SettingsScreen: undefined;
 };

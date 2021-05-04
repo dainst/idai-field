@@ -6,7 +6,7 @@ import { Preferences } from '../model/preferences';
 
 
 interface SettingsScreenProps {
-    navigation: StackNavigationProp<AppStackParamList, 'SplashScreen'>;
+    navigation: StackNavigationProp<AppStackParamList, 'SettingsScreen'>;
     preferences: Preferences;
     setUsername: (username: string) => void;
 }

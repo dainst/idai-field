@@ -8,7 +8,7 @@ import { Preferences } from '../model/preferences';
 
 
 interface HomeScreenProps {
-    navigation: StackNavigationProp<AppStackParamList, 'SplashScreen'>;
+    navigation: StackNavigationProp<AppStackParamList, 'HomeScreen'>;
     preferences: Preferences;
     setCurrentProject: (project: string) => void;
     deleteProject: (project: string) => void;

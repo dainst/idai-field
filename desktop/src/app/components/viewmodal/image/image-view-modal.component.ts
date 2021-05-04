@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, Renderer2} from '@angular/core';
 import {NgbActiveModal, NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {on, is, first, isEmpty} from 'tsfun';
 import {Datastore, Document, FieldDocument, ImageDocument} from 'idai-field-core';
@@ -9,6 +9,7 @@ import {ImageRowItem} from '../../../core/images/row/image-row';
 import {MenuService} from '../../menu-service';
 import {ImagePickerComponent} from '../../docedit/widgets/image-picker.component';
 import {ImageRelationsManager} from '../../../core/model/image-relations-manager';
+import {Observable} from 'rxjs/internal/Observable';
 
 
 @Component({
@@ -25,16 +26,23 @@ export class ImageViewModalComponent extends ViewModalComponent {
 
     public linkedDocument: Document;
 
+    private clickEventObservers: Array<any> = [];
+
+    public boundedListen: any;
 
     constructor(private imagesState: ImagesState,
                 activeModal: NgbActiveModal,
                 modalService: NgbModal,
                 routingService: RoutingService,
+                private renderer: Renderer2,
                 menuService: MenuService,
                 private datastore: Datastore,
                 private imageRelationsManager: ImageRelationsManager) {
 
         super(activeModal, modalService, routingService, menuService);
+
+        this.initializeClickEventListener();
+        this.boundedListen = this.listenToClickEvents.bind(this);
     }
 
 
@@ -112,5 +120,21 @@ export class ImageViewModalComponent extends ViewModalComponent {
         return relations
             ? (await this.datastore.getMultiple(relations)) as Array<ImageDocument>
             : [];
+    }
+
+
+    // TODO review duplication with resources component, also work here - and there - with observer util
+    private initializeClickEventListener() {
+
+        this.renderer.listen('document', 'click', (event: any) => {
+            this.clickEventObservers.forEach(observer => observer.next(event))
+        });
+    }
+
+    // TODO same
+    public listenToClickEvents(): Observable<Event> {
+
+        console.log('listenToClickEvents');
+        return Observable.create((observer: any) => { this.clickEventObservers.push(observer) });
     }
 }

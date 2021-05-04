@@ -35,6 +35,7 @@
                    [highlightOnHover]="true"
                    [allowSelection]="true"
                    (onImageSelected)="onSelected($event)"
-                   (onContextMenuItemClicked)=onContextMenuItemClicked($event)></image-row>
+                   [listenToClickEvents]="boundedListen"
+                   (onContextMenuItemClicked)="onContextMenuItemClicked($event)"></image-row>
     </div>
 </div>

@@ -38,6 +38,10 @@ export class ImageRowComponent implements OnChanges {
     @Input() highlightOnHover: boolean = false;
     @Input() allowSelection: boolean = false;
 
+    // TODO unsubscribe?
+    private subscribed = false;
+    @Input() listenToClickEvents: any;
+
     @Output() onImageClicked: EventEmitter<ImageRowItem> = new EventEmitter<ImageRowItem>();
     @Output() onImageSelected: EventEmitter<ImageRowItem> = new EventEmitter<ImageRowItem>();
     @Output() onContextMenuItemClicked: EventEmitter<ImageRowContextMenuAction> = new EventEmitter<ImageRowContextMenuAction>();
@@ -66,6 +70,10 @@ export class ImageRowComponent implements OnChanges {
 
 
     async ngOnChanges(changes: SimpleChanges) {
+
+        if (!this.subscribed && this.listenToClickEvents) {
+            this.listenToClickEvents().subscribe(event => this.handleClick(event));
+        }
 
         if (!this.images || !changes['images']) return;
 
@@ -109,18 +117,22 @@ export class ImageRowComponent implements OnChanges {
             : this.onImageClicked.emit(image);
     }
 
-    // TODO review duplication with sidebar-list.component#handleClick
+
     public handleClick(event: any, rightClick: boolean = false) {
 
-        if (!this.contextMenu.position) return;
+        if (!this.contextMenu.position) {
+            this.contextMenu.close();
+            return;
+        }
 
         let target = event.target;
         let inside = false;
 
         console.log('handleClick', event, rightClick, target.tagName)
 
+        // TODO review duplication with sidebar-list.component#handleClick
         do {
-            if (target.tagName === 'IMG' && rightClick) {
+            if (target.className?.includes('imageRowImage') && rightClick) {
                 inside = true;
                 break;
             }

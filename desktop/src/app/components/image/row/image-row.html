@@ -10,6 +10,7 @@
              [class.selected-image]="image === selectedImage"
              (click)="onThumbnailClicked(image)">
             <img *ngIf="hasImageUrl(image)"
+                class="imageRowImage"
                  [src]="thumbnailUrls[image.imageId]"
                  [class.highlightOnHover]="highlightOnHover"
                  [style.width]="getImageWidth(image) + 'px'"

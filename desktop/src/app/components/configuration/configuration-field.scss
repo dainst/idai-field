@@ -26,13 +26,40 @@ configuration-field {
     color: initial;
   }
 
-  .text-white code {
-    color: #ffafd4;
+  .card-header {
+    height: 55px;
+
+    .hide-buttons {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+    }
+
+    .category-icon {
+      position: relative;
+      top: 2px;
+      left: -6px;
+      margin-right: 2px;
+    }
+
+    b,
+    code,
+    .mdi-alert-circle-outline {
+      position: relative;
+      top: 4px;
+    }
+
+    &.parent-field {
+      b,
+      code,
+      .mdi-alert-circle-outline {
+        position: relative;
+        top: -2px;
+      }
+    }
   }
 
-  .hide-buttons {
-    position: absolute;
-    top: 5px;
-    right: 5px;
+  .text-white code {
+    color: #ffafd4;
   }
 }

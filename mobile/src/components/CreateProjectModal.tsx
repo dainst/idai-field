@@ -54,7 +54,7 @@ const CreateProjectModal: React.FC<CreateProjectModalProps> = ({ isOpen, onProje
                             autoCapitalize={ false }
                             autoCompleteType="off"
                             autoCorrect={ false }
-                            autoFocus={ true }
+                            autoFocus
                         />
                         <FormControl.HelperText mt={ 1 }>
                             The project name is the unique identifier for the project.

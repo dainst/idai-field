@@ -32,7 +32,15 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({
                 <FormControl isRequired isInvalid={ usernameVal === '' }>
                     <Stack mx={ 8 }>
                         <FormControl.Label>Editor name</FormControl.Label>
-                        <Input p={ 2 } mt={ 2 } value={ usernameVal } onChangeText={ setUsernameVal } />
+                        <Input
+                            p={ 2 }
+                            mt={ 2 }
+                            value={ usernameVal }
+                            onChangeText={ setUsernameVal }
+                            autoCompleteType="name"
+                            autoCorrect={ false }
+                            autoFocus
+                        />
                         <FormControl.HelperText mt={ 1 }>
                             The editor name is saved in the editing history in order
                             to allow dataset changes to be attributable to a person.

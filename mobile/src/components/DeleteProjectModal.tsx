@@ -59,7 +59,7 @@ const DeleteProjectModal: React.FC<DeleteProjectModalProps> = ({ project, isOpen
                         autoCapitalize={ false }
                         autoCompleteType="off"
                         autoCorrect={ false }
-                        autoFocus={ true }
+                        autoFocus
                     />
                 </Column>
             </Modal.Body>

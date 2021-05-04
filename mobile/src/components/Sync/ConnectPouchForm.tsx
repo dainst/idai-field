@@ -27,6 +27,7 @@ const ConnectPouchForm: React.FC<ConnectPouchFormProps> = ({ settings, onConnect
                     onChangeText={ setUrl }
                     autoCapitalize="none"
                     autoCorrect={ false }
+                    autoFocus
                     m={ 1 }
                 />
                 <Input placeholder="Password"

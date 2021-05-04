@@ -46,7 +46,16 @@ const CreateProjectModal: React.FC<CreateProjectModalProps> = ({ isOpen, onProje
                 <FormControl isRequired isInvalid={ project === '' }>
                     <Stack>
                         <FormControl.Label>Project name</FormControl.Label>
-                        <Input p={ 2 } mt={ 2 } value={ project } onChangeText={ setProject } />
+                        <Input
+                            p={ 2 }
+                            mt={ 2 }
+                            value={ project }
+                            onChangeText={ setProject }
+                            autoCapitalize={ false }
+                            autoCompleteType="off"
+                            autoCorrect={ false }
+                            autoFocus={ true }
+                        />
                         <FormControl.HelperText mt={ 1 }>
                             The project name is the unique identifier for the project.
                             Make sure to use the exact same project name if you intend to sync

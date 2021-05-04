@@ -51,7 +51,16 @@ const DeleteProjectModal: React.FC<DeleteProjectModalProps> = ({ project, isOpen
                     <Text>
                         Type <Text bold>{ project }</Text> to confirm.
                     </Text>
-                    <Input p={ 2 } mt={ 2 } value={ projectVal } onChangeText={ setProjectVal } />
+                    <Input
+                        p={ 2 }
+                        mt={ 2 }
+                        value={ projectVal }
+                        onChangeText={ setProjectVal }
+                        autoCapitalize={ false }
+                        autoCompleteType="off"
+                        autoCorrect={ false }
+                        autoFocus={ true }
+                    />
                 </Column>
             </Modal.Body>
             <Modal.Footer space={ 2 }>

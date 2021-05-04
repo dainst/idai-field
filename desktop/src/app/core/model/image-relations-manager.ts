@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Category, Document, Datastore, FieldDocument, ImageDocument, Relations, ProjectConfiguration, ProjectCategories, ON_RESOURCE_ID, ResourceId, toResourceId, Forest } from 'idai-field-core';
-import { flatten, includedIn, isDefined, isNot, on, separate, set, subtract, to } from 'tsfun';
+import { Category, Document, Datastore, FieldDocument, ImageDocument, Relations, ProjectConfiguration, ProjectCategories, ON_RESOURCE_ID, ResourceId, toResourceId, Forest, Named, Name } from 'idai-field-core';
+import { flatten, flow, includedIn, isDefined, isNot, map, on, separate, set, subtract, to } from 'tsfun';
 import { Imagestore } from '../images/imagestore/imagestore';
 import { RelationsManager } from './relations-manager';
 import DEPICTS = Relations.Image.DEPICTS;
@@ -89,8 +89,11 @@ export class ImageRelationsManager {
 
     public async link(targetDocument: FieldDocument, ...selectedImages: Array<ImageDocument>) {
 
-        const projects = set(on(Document.PROJECT), [targetDocument].concat(selectedImages as any))
-            .map(to(Document.PROJECT));
+        const projects =
+            flow(
+                set(on(Document.PROJECT), [targetDocument as Document].concat(selectedImages)),
+                map(to(Document.PROJECT)));
+
         if (projects.length !== 1) throw 'illegal argument - link will only operate on owned documents';
         if (projects[0] !== undefined) throw 'illegal argument - link will only operate on owned documents';
 

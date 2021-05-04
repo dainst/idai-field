@@ -28,7 +28,7 @@ export class ImageViewModalComponent extends ViewModalComponent {
 
     private clickEventObservers: Array<any> = [];
 
-    public boundedListen: any;
+    public boundListenToClickEvents: () => Observable<Event>;
 
     constructor(private imagesState: ImagesState,
                 activeModal: NgbActiveModal,
@@ -42,7 +42,7 @@ export class ImageViewModalComponent extends ViewModalComponent {
         super(activeModal, modalService, routingService, menuService);
 
         this.initializeClickEventListener();
-        this.boundedListen = this.listenToClickEvents.bind(this);
+        this.boundListenToClickEvents = this.listenToClickEvents.bind(this);
     }
 
 
@@ -135,6 +135,6 @@ export class ImageViewModalComponent extends ViewModalComponent {
     public listenToClickEvents(): Observable<Event> {
 
         console.log('listenToClickEvents');
-        return Observable.create((observer: any) => { this.clickEventObservers.push(observer) });
+        return new Observable((observer: any) => { this.clickEventObservers.push(observer) });
     }
 }

@@ -9,6 +9,8 @@ import {BlobMaker} from '../../../core/images/imagestore/blob-maker';
 import { Imagestore } from '../../../core/images/imagestore/imagestore';
 import {ContextMenu} from '../../resources/widgets/context-menu';
 import {ImageRowContextMenuAction} from './image-row-context-menu.component';
+import {Observable} from 'rxjs/internal/Observable';
+import {ComponentHelpers} from '../../component-helpers';
 
 
 const MAX_IMAGE_WIDTH: number = 600;
@@ -40,7 +42,7 @@ export class ImageRowComponent implements OnChanges {
 
     // TODO unsubscribe?
     private subscribed = false;
-    @Input() listenToClickEvents: any;
+    @Input() listenToClickEvents: () => Observable<Event>;
 
     @Output() onImageClicked: EventEmitter<ImageRowItem> = new EventEmitter<ImageRowItem>();
     @Output() onImageSelected: EventEmitter<ImageRowItem> = new EventEmitter<ImageRowItem>();
@@ -120,26 +122,13 @@ export class ImageRowComponent implements OnChanges {
 
     public handleClick(event: any, rightClick: boolean = false) {
 
-        if (!this.contextMenu.position) {
+        if (!this.contextMenu.position
+            || !ComponentHelpers.isInside(
+                    event.target,
+                    target => target.className?.includes('imageRowImage') && rightClick)) {
+
             this.contextMenu.close();
-            return;
         }
-
-        let target = event.target;
-        let inside = false;
-
-        console.log('handleClick', event, rightClick, target.tagName)
-
-        // TODO review duplication with sidebar-list.component#handleClick
-        do {
-            if (target.className?.includes('imageRowImage') && rightClick) {
-                inside = true;
-                break;
-            }
-            target = target.parentNode;
-        } while (target);
-
-        if (!inside) this.contextMenu.close();
     }
 
 
@@ -170,7 +159,7 @@ export class ImageRowComponent implements OnChanges {
 
         if (!this.selectedImage || this.images.length < 2) return;
 
-        let index: number = this.images.indexOf(this.selectedImage);
+        let index = this.images.indexOf(this.selectedImage);
         index = index === 0
             ? this.images.length - 1
             : index - 1;
@@ -183,7 +172,7 @@ export class ImageRowComponent implements OnChanges {
 
         if (!this.selectedImage || this.images.length < 2) return;
 
-        let index: number = this.images.indexOf(this.selectedImage);
+        let index = this.images.indexOf(this.selectedImage);
         index = index === this.images.length - 1
             ? 0
             : index + 1;
@@ -202,9 +191,7 @@ export class ImageRowComponent implements OnChanges {
 
     private async updateThumbnailUrls(imageIds: string[]) {
 
-        const thumbnailUrls: { [imageId: string]: SafeResourceUrl } = this.thumbnailUrls || {};
-
-        await aReduce(
+        this.thumbnailUrls = await aReduce(
             imageIds,
             async (result: { [imageId: string]: SafeResourceUrl }, imageId: string) => {
                 if (imageId !== PLACEHOLDER) {
@@ -217,9 +204,7 @@ export class ImageRowComponent implements OnChanges {
                 }
                 return result;
             },
-            thumbnailUrls);
-
-        this.thumbnailUrls = thumbnailUrls;
+            this.thumbnailUrls || {});
     }
 
 

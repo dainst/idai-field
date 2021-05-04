@@ -2,7 +2,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList } from 'mobile/App';
 import { Button, Center, Column, Icon, IconButton, Row, Select, Text, View } from 'native-base';
 import React, { useCallback, useState } from 'react';
-import { Preferences } from '../../model/preferences';
+import { Preferences } from '../../models/preferences';
 import CreateProjectModal from './CreateProjectModal';
 import DeleteProjectModal from './DeleteProjectModal';
 

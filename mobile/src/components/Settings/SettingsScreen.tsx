@@ -2,7 +2,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList } from 'mobile/App';
 import { Button, Center, FormControl, Input, Row, Stack, View } from 'native-base';
 import React, { useState } from 'react';
-import { Preferences } from '../../model/preferences';
+import { Preferences } from '../../models/preferences';
 
 
 interface SettingsScreenProps {

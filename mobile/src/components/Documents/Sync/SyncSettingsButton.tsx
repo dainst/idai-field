@@ -1,7 +1,7 @@
 import { SyncStatus } from 'idai-field-core';
 import { Icon, IconButton } from 'native-base';
 import React, { useState } from 'react';
-import { ProjectSettings } from '../../../model/preferences';
+import { ProjectSettings } from '../../../models/preferences';
 import SyncSettingsModal from './SyncSettingsModal';
 
 

@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect, useState } from 'react';
 import { assoc, compose, detach, prepend, set, subtract, update } from 'tsfun';
-import { Preferences, ProjectSettings } from '../model/preferences';
+import { Preferences, ProjectSettings } from '../models/preferences';
 
 
 interface UsePreferences {

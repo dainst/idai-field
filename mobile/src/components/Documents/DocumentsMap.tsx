@@ -3,7 +3,7 @@ import { Document, SyncStatus } from 'idai-field-core';
 import { useToast, View } from 'native-base';
 import React, { ReactElement, useCallback } from 'react';
 import { StyleSheet } from 'react-native';
-import { ProjectSettings } from '../../model/preferences';
+import { ProjectSettings } from '../../models/preferences';
 import { DocumentRepository } from '../../repositories/document-repository';
 import { DocumentsContainerDrawerParamList } from './DocumentsContainer';
 import Map from './Map/Map';

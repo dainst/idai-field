@@ -1,7 +1,7 @@
 import { Button, Center, Input, Stack, Text, View } from 'native-base';
 import React, { useState } from 'react';
 import { Keyboard, StyleSheet } from 'react-native';
-import { ProjectSettings } from '../../../model/preferences';
+import { ProjectSettings } from '../../../models/preferences';
 
 interface ConnectPouchFormProps {
     settings: ProjectSettings,

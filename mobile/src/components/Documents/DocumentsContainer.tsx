@@ -3,7 +3,7 @@ import { RouteProp } from '@react-navigation/native';
 import { Document, SyncStatus } from 'idai-field-core';
 import React from 'react';
 import useSearch from '../../hooks/use-search';
-import { ProjectSettings } from '../../model/preferences';
+import { ProjectSettings } from '../../models/preferences';
 import { DocumentRepository } from '../../repositories/document-repository';
 import DocumentDetails from './DocumentDetails';
 import DocumentsMap from './DocumentsMap';

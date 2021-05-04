@@ -22,7 +22,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
     deleteProject
 }) => {
 
-    const [selectedProject, setSelectedProject] = useState<string>('');
+    const [selectedProject, setSelectedProject] = useState<string>(preferences.recentProjects[0] || '');
     const [isProjectModalOpen, setIsProjectModalOpen] = useState<boolean>(false);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
     

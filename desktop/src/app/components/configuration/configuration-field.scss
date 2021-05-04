@@ -49,10 +49,6 @@ configuration-field {
       top: 4px;
     }
 
-    code.text-white {
-      color: #ffafd4;
-    }
-
     &.parent-field {
       b,
       code,
@@ -61,5 +57,9 @@ configuration-field {
         top: -2px;
       }
     }
+  }
+
+  .text-white code {
+    color: #ffafd4;
   }
 }

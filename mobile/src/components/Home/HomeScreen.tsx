@@ -2,9 +2,9 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList } from 'mobile/App';
 import { Button, Center, Column, Icon, IconButton, Row, Select, Text, View } from 'native-base';
 import React, { useCallback, useState } from 'react';
-import CreateProjectModal from '../components/CreateProjectModal';
-import DeleteProjectModal from '../components/DeleteProjectModal';
-import { Preferences } from '../model/preferences';
+import { Preferences } from '../../model/preferences';
+import CreateProjectModal from './CreateProjectModal';
+import DeleteProjectModal from './DeleteProjectModal';
 
 
 interface HomeScreenProps {

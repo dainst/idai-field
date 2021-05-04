@@ -1,8 +1,8 @@
 import { SyncStatus } from 'idai-field-core';
 import React from 'react';
-import DocumentsContainer from '../components/DocumentsContainer';
-import { ProjectSettings } from '../model/preferences';
-import { DocumentRepository } from '../repositories/document-repository';
+import { ProjectSettings } from '../../model/preferences';
+import { DocumentRepository } from '../../repositories/document-repository';
+import DocumentsContainer from './DocumentsContainer';
 
 
 interface DocumentsScreenProps {

@@ -1,9 +1,9 @@
 
-import { bu1 } from '../../../../test_data/test_docs/bu1';
-import { lineBuilding } from '../../../../test_data/test_docs/lineBuilding';
-import { multiPointSurvey } from '../../../../test_data/test_docs/multiPointSurvey';
-import { multiPolyTrench } from '../../../../test_data/test_docs/multiPolyTrench';
-import { pointBuilding } from '../../../../test_data/test_docs/pointBuilding';
+import { bu1 } from '../../../../../test_data/test_docs/bu1';
+import { lineBuilding } from '../../../../../test_data/test_docs/lineBuilding';
+import { multiPointSurvey } from '../../../../../test_data/test_docs/multiPointSurvey';
+import { multiPolyTrench } from '../../../../../test_data/test_docs/multiPolyTrench';
+import { pointBuilding } from '../../../../../test_data/test_docs/pointBuilding';
 import {
     arrayDim,
     extractCoordsPositions,

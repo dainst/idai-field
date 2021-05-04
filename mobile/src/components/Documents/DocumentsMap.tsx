@@ -3,12 +3,12 @@ import { Document, SyncStatus } from 'idai-field-core';
 import { useToast, View } from 'native-base';
 import React, { ReactElement, useCallback } from 'react';
 import { StyleSheet } from 'react-native';
-import Map from '../components/Map/Map';
-import ScanBarcodeButton from '../components/ScanBarcodeButton';
-import SearchBar from '../components/SearchBar';
-import { ProjectSettings } from '../model/preferences';
-import { DocumentRepository } from '../repositories/document-repository';
+import { ProjectSettings } from '../../model/preferences';
+import { DocumentRepository } from '../../repositories/document-repository';
 import { DocumentsContainerDrawerParamList } from './DocumentsContainer';
+import Map from './Map/Map';
+import ScanBarcodeButton from './ScanBarcodeButton';
+import SearchBar from './SearchBar';
 
 
 interface DocumentsMapProps {

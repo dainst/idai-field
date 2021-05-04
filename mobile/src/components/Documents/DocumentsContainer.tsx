@@ -2,12 +2,12 @@ import { createDrawerNavigator, DrawerNavigationProp } from '@react-navigation/d
 import { RouteProp } from '@react-navigation/native';
 import { Document, SyncStatus } from 'idai-field-core';
 import React from 'react';
-import DocumentDetails from '../components/DocumentDetails';
-import DocumentsMap from '../components/DocumentsMap';
-import DrawerContent from '../components/DrawerContent';
-import useSearch from '../hooks/use-search';
-import { ProjectSettings } from '../model/preferences';
-import { DocumentRepository } from '../repositories/document-repository';
+import useSearch from '../../hooks/use-search';
+import { ProjectSettings } from '../../model/preferences';
+import { DocumentRepository } from '../../repositories/document-repository';
+import DocumentDetails from './DocumentDetails';
+import DocumentsMap from './DocumentsMap';
+import DrawerContent from './DrawerContent';
 
 
 export type DocumentsContainerDrawerParamList = {

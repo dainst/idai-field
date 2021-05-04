@@ -284,4 +284,52 @@ describe('subsystem/image-relations-manager', () => {
         expect(i1.resource.relations[Relations.Image.DEPICTS]).toEqual([]);
         done();
     });
+
+
+    it('remove depicts relation between image documennt document', async done => {
+
+        const documentsLookup = await helpers.createDocuments(
+            [
+                ['tc1', 'TypeCatalog'],
+                ['tc2', 'TypeCatalog'],
+                ['i1', 'Image', ['tc1', 'tc2']]
+            ]
+        );
+
+        expect(documentsLookup['tc1'].resource.relations[Relations.Image.ISDEPICTEDIN]).toEqual(['i1']);
+        expect(documentsLookup['tc2'].resource.relations[Relations.Image.ISDEPICTEDIN]).toEqual(['i1']);
+        expect(documentsLookup['i1'].resource.relations[Relations.Image.DEPICTS]).toEqual(['tc1', 'tc2']);
+
+        await app.imageRelationsManager.unlink(documentsLookup['tc1'], documentsLookup['i1']);
+
+        const tc1 = await app.datastore.get('tc1');
+        const tc2 = await app.datastore.get('tc2');
+        const i1 = await app.datastore.get('i1');
+
+        expect(tc1.resource.relations[Relations.Image.ISDEPICTEDIN]).toBeUndefined();
+        expect(tc2.resource.relations[Relations.Image.ISDEPICTEDIN]).toEqual(['i1']);
+        expect(i1.resource.relations[Relations.Image.DEPICTS]).toEqual(['tc2']);
+
+        done();
+    });
+
+
+    it('only first might be non image document', async done => {
+
+        const documentsLookup = await helpers.createDocuments(
+            [
+                ['tc1', 'TypeCatalog'],
+                ['tc2', 'TypeCatalog']
+            ]
+        );
+
+        try {
+            await app.imageRelationsManager.unlink(documentsLookup['tc1'], documentsLookup['tc2']);
+            fail();
+        } catch (err) {
+            expect(err.includes('illegal argument')).toBeTruthy();
+        } finally {
+            done();
+        }
+    });
 });

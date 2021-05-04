@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
-import { Category, Document, Datastore, FieldDocument, ImageDocument, Relations, ProjectConfiguration, ProjectCategories, ON_RESOURCE_ID, ResourceId, toResourceId, Forest, Named, Name } from 'idai-field-core';
-import { flatten, includedIn, isDefined, isNot, on, separate, set, subtract, to } from 'tsfun';
+import { Category, Document, Datastore, FieldDocument, ImageDocument, Relations, ProjectConfiguration, ProjectCategories,
+    ON_RESOURCE_ID, ResourceId, toResourceId, Forest } from 'idai-field-core';
+import { flatten, includedIn, all, isDefined, isNot, on, separate, set, subtract, to, isnt, update, filter, not } from 'tsfun';
 import { Imagestore } from '../images/imagestore/imagestore';
 import { RelationsManager } from './relations-manager';
 import DEPICTS = Relations.Image.DEPICTS;
 import ISDEPICTEDIN = Relations.Image.ISDEPICTEDIN;
 
 
-export module ImageRelationsManagerErrors {
+export namespace ImageRelationsManagerErrors {
 
     export const IMAGESTORE_ERROR_INVALID_PATH_DELETE = 'imageRelationsManagerErrors/imagestoreInvalidPathDelete';
     export const IMAGESTORE_ERROR_DELETE = 'imageRelationsManagerErrors/imagestoreErrorDelete';
@@ -111,15 +112,30 @@ export class ImageRelationsManager {
     }
 
 
-    public async unlink(...selectedImages: Array<ImageDocument>) {
+    public async unlink(first: ImageDocument|FieldDocument,
+                        ...selectedImages: Array<ImageDocument>) {
 
-        for (let document of selectedImages) {
-            const oldVersion = Document.clone(document);
-            document.resource.relations.depicts = [];
+        const imageDocumentNames = ProjectCategories.getImageCategoryNames(this.categoryForest);
+        const isImageDocument = document => imageDocumentNames.includes(document.resource.category);
 
-            await this.relationsManager.update(
-                document, oldVersion
-            );
+        if (selectedImages.some(not(isImageDocument))) {
+            throw 'illegal argument - selectedImages must be image documents';
+        }
+
+        const imageDocuments =
+            isImageDocument(first)
+                ? [first].concat(selectedImages)
+                : selectedImages;
+
+        for (const imageDocument of imageDocuments) {
+            const oldVersion = Document.clone(imageDocument);
+            imageDocument.resource.relations.depicts =
+                isImageDocument(first)
+                    ? []
+                    : imageDocument.resource.relations.depicts
+                        .filter(isnt(first.resource.id));
+
+            await this.relationsManager.update(imageDocument, oldVersion);
         }
     }
 
@@ -129,9 +145,9 @@ export class ImageRelationsManager {
         const idsOfDocumentsToBeDeleted = documentsToBeDeleted.map(toResourceId);
 
         const leftovers = [];
-        for (let imageDocument of (await this.getLinkedImages(documentsToBeDeleted))) {
+        for (const imageDocument of (await this.getLinkedImages(documentsToBeDeleted))) {
             let depictsOnlyDocumentsToBeDeleted = true;
-            for (let depictsTargetId of imageDocument.resource.relations[DEPICTS]) {
+            for (const depictsTargetId of imageDocument.resource.relations[DEPICTS]) {
                 if (!idsOfDocumentsToBeDeleted.includes(depictsTargetId)) depictsOnlyDocumentsToBeDeleted = false;
             }
             if (depictsOnlyDocumentsToBeDeleted) leftovers.push(imageDocument);
@@ -142,7 +158,7 @@ export class ImageRelationsManager {
 
     private async removeImages(imageDocuments: Array<ImageDocument>) {
 
-        for (let imageDocument of imageDocuments) {
+        for (const imageDocument of imageDocuments) {
             if (!imageDocument.resource.id) continue;
             const resourceId: string = imageDocument.resource.id;
             try {

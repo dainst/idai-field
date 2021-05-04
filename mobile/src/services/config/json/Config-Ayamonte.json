@@ -1,0 +1,490 @@
+{
+  "Project:default": {
+    "hidden": [],
+    "fields": {
+      "projectProgression": {
+        "inputType": "input"
+      }
+    },
+    "valuelists": {
+      "coordinateReferenceSystem": "Project-coordinate-reference-system-ayamonte"
+    }
+  },
+  "Operation:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Survey:default": {
+    "hidden": [],
+    "fields": {
+      "siteClassification": {
+        "inputType": "text"
+      }
+    }
+  },
+  "SurveyUnit:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Place:default": {
+    "hidden": [],
+    "fields": {
+      "boundary": {
+        "inputType": "text"
+      },
+      "siteClassification": {
+        "inputType": "checkboxes"
+      }
+    },
+    "commons": [
+      "spatialLocation",
+      "campaign"
+    ],
+    "valuelists": {
+      "siteClassification": "Place-siteClassification-ayamonte"
+    }
+  },
+  "Area:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Trench:default": {
+    "hidden": [],
+    "fields": {
+      "projectProgression": {
+        "inputType": "input"
+      },
+      "researchQuestion": {
+        "inputType": "input"
+      },
+      "excavationType": {
+        "inputType": "checkboxes"
+      }
+    },
+    "commons": [],
+    "valuelists": {
+      "excavationType": "Trench-excavationType-ayamonte"
+    }
+  },
+  "Building:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "BuildingPart:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Find:default": {
+    "hidden": [],
+    "commons": [
+      "date",
+      "campaign"
+    ],
+    "fields": {
+      "storageMuseum": {
+        "inputType": "input"
+      },
+      "storageRegion": {
+        "inputType": "input"
+      },
+      "storageProvince": {
+        "inputType": "input"
+      },
+      "storageState": {
+        "inputType": "input"
+      },
+      "isGraveFind": {
+        "inputType": "boolean"
+      },
+      "isStrayFind": {
+        "inputType": "boolean"
+      },
+      "findType": {
+        "inputType": "checkboxes"
+      },
+      "findObjectType": {
+        "inputType": "checkboxes"
+      },
+      "findMaterial": {
+        "inputType": "input"
+      },
+      "materialColor": {
+        "inputType": "checkboxes"
+      },
+      "materialDescription": {
+        "inputType": "text"
+      },
+      "ayamonteCondition": {
+        "inputType": "checkboxes"
+      },
+      "conditionAmount": {
+        "inputType": "checkboxes"
+      }
+    },
+    "valuelists": {
+      "findType": "Find-findType-ayamonte",
+      "findObjectType": "Find-findObjectType-ayamonte",
+      "materialColor": "Find-materialColor-ayamonte",
+      "storagePlace": "Find-storagePlace-ayamonte",
+      "ayamonteCondition": "Find-ayamonteCondition-ayamonte",
+      "period": "Find-period-ayamonte"
+    }
+  },
+  "Feature:default": {
+    "hidden": [],
+    "commons": [
+      "date"
+    ],
+    "fields": {
+      "artifacts": {
+        "inputType": "checkboxes"
+      },
+      "significanceRemark": {
+        "inputType": "checkboxes"
+      },
+      "featureClassification": {
+        "inputType": "checkboxes"
+      },
+      "createdAfterSpoil": {
+        "inputType": "input"
+      },
+      "featureClassificationOther": {
+        "inputType": "dropdown"
+      },
+      "otherClassification": {
+        "inputType": "dropdown"
+      }
+    },
+    "valuelists": {
+      "artifacts": "Feature-artifacts-ayamonte",
+      "significanceRemark": "Feature-significanceRemark-ayamonte",
+      "featureClassification": "Feature-featureClassification-ayamonte",
+      "featureClassificationOther": "Feature-featureClassificationOther-ayamonte",
+      "otherClassification": "Feature-otherClassification-ayamonte"
+    }
+  },
+  "Room:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "RoomCeiling:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "RoomFloor:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "RoomWall:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Inscription:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Image:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Glass:default": {
+    "hidden": [],
+    "fields": {
+      "objectType": {
+        "inputType": "checkboxes"
+      }
+    },
+    "valuelists": {
+      "objectType": "Glass-objectType-ayamonte"
+    }
+  },
+  "Mollusk:default": {
+    "hidden": [],
+    "fields": {
+      "classification": {
+        "inputType": "checkboxes"
+      }
+    },
+    "valuelists": {
+      "classification": "Mollusk-classification-ayamonte"
+    }
+  },
+  "Brick:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Burial:default": {
+    "hidden": [],
+    "fields": {
+      "hasGraveGoods": {
+        "inputType": "boolean"
+      },
+      "amountIndividuals": {
+        "inputType": "input"
+      }
+    },
+    "valuelists": {
+      "sexDetermination": "Burial-sexDetermination-ayamonte",
+      "graveFeature": "Burial-graveFeature-ayamonte"
+    }
+  },
+  "Wood:default": {
+    "hidden": [],
+    "fields": {
+      "objectType": {
+        "inputType": "checkboxes"
+      }
+    },
+    "valuelists": {
+      "objectType": "Wood-objectType-ayamonte"
+    }
+  },
+  "Architecture:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Layer:default": {
+    "hidden": [],
+    "fields": {
+      "layerClassificationOther": {
+        "inputType": "checkboxes"
+      },
+      "layerClassification": {
+        "inputType": "checkboxes"
+      }
+    },
+    "valuelists": {
+      "artifacts": "Layer-artifacts-ayamonte",
+      "significanceRemark": "Layer-significanceRemark-ayamonte",
+      "layerClassificationOther": "Layer-layerClassificationOther-ayamonte",
+      "otherClassification": "Layer-otherClassification-ayamonte",
+      "layerClassification": "Layer-layerClassification-ayamonte"
+    },
+    "commons": [
+      "campaign"
+    ]
+  },
+  "Floor:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Pottery:default": {
+    "hidden": [],
+    "fields": {
+      "conservationRemarks": {
+        "inputType": "input"
+      },
+      "conservationEarlierMeasures": {
+        "inputType": "input"
+      },
+      "potteryBelongsTo": {
+        "inputType": "input"
+      },
+      "potteryFittingTo": {
+        "inputType": "input"
+      },
+      "potteryComparableTo": {
+        "inputType": "input"
+      },
+      "specificType": {
+        "inputType": "checkboxes"
+      },
+      "objectType": {
+        "inputType": "checkboxes"
+      },
+      "vesselForm": {
+        "inputType": "checkboxes"
+      },
+      "vesselFormSpecific": {
+        "inputType": "checkboxes"
+      }
+    },
+    "valuelists": {
+      "condition": "Pottery-condition-ayamonte",
+      "vesselForm": "Pottery-vesselForm-ayamonte",
+      "specificType": "Pottery-specificType-ayamonte",
+      "vesselFormSpecific": "Pottery-vesselFormSpecific-ayamonte",
+      "objectType": "Pottery-objectType-ayamonte",
+      "provenance": "Pottery-provenance-ayamonte"
+    }
+  },
+  "Metal:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Grave:default": {
+    "hidden": [],
+    "commons": [
+      "dimensionHeight"
+    ],
+    "fields": {
+      "specificType": {
+        "inputType": "input"
+      },
+      "graveType": {
+        "inputType": "checkboxes"
+      }
+    },
+    "valuelists": {
+      "artifacts": "Grave-artifacts-ayamonte",
+      "significanceRemark": "Grave-significanceRemark-ayamonte",
+      "graveType": "Grave-graveType-ayamonte"
+    }
+  },
+  "Bone:default": {
+    "hidden": [],
+    "fields": {
+      "sexDeterminationCertainty": {
+        "inputType": "input"
+      },
+      "biologicalAge": {
+        "inputType": "checkboxes"
+      },
+      "burningGrade": {
+        "inputType": "checkboxes"
+      },
+      "sex": {
+        "inputType": "checkboxes"
+      },
+      "boneType": {
+        "inputType": "checkboxes"
+      },
+      "boneClassification": {
+        "inputType": "checkboxes"
+      }
+    },
+    "valuelists": {
+      "boneType": "Bone-boneType-ayamonte",
+      "biologicalAge": "Bone-biologicalAge-ayamonte",
+      "conditionAmount": "Bone-conditionAmount-ayamonte",
+      "boneClassification": "Bone-boneClassification-ayamonte",
+      "burningGrade": "Bone-burningGrade-ayamonte",
+      "sex": "Bone-sex-ayamonte"
+    }
+  },
+  "Terracotta:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Photo:default": {
+    "commons": [
+      "date"
+    ],
+    "fields": {
+      "imageObject": {
+        "inputType": "input"
+      },
+      "imageRights": {
+        "inputType": "input"
+      },
+      "imageContent": {
+        "inputType": "input"
+      }
+    }
+  },
+  "Drawing:default": {
+    "hidden": [],
+    "fields": {
+      "imageRights": {
+        "inputType": "input"
+      },
+      "representedObject": {
+        "inputType": "input"
+      }
+    },
+    "valuelists": {
+      "drawingType": "Drawing-drawingType-ayamonte"
+    }
+  },
+  "Stone:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Coin:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "PlasterFragment:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Excavation:default": {
+    "hidden": [],
+    "fields": {}
+  },
+  "Profile": {
+    "parent": "Feature",
+    "color": "#6da4fc",
+    "commons": [
+      "campaign",
+      "dimensionHeight",
+      "orientation"
+    ],
+    "fields": {
+      "profileClassification": {
+        "inputType": "input"
+      },
+      "verticalPosition": {
+        "inputType": "input"
+      }
+    },
+    "valuelists": {
+      "orientation": "orientation-default-1"
+    }
+  },
+  "Sample:default": {
+    "hidden": [],
+    "commons": [
+      "campaign",
+      "dimensionHeight",
+      "dimensionLength",
+      "dimensionWidth"
+    ],
+    "fields": {
+      "sampleTakenBy": {
+        "inputType": "input"
+      },
+      "sampleReason": {
+        "inputType": "input"
+      },
+      "material": {
+        "inputType": "checkboxes"
+      },
+      "sampleNumber": {
+        "inputType": "input"
+      },
+      "analysisResult": {
+        "inputType": "input"
+      },
+      "analysisMethod": {
+        "inputType": "input"
+      },
+      "isGraveFind": {
+        "inputType": "boolean"
+      },
+      "storageMuseum": {
+        "inputType": "input"
+      },
+      "storageRegion": {
+        "inputType": "input"
+      },
+      "storageProvince": {
+        "inputType": "input"
+      },
+      "storageState": {
+        "inputType": "input"
+      },
+      "storagePlace": {
+        "inputType": "radio"
+      },
+      "sampleType": {
+        "inputType": "checkboxes"
+      }
+    },
+    "valuelists": {
+      "material": "Sample-material-ayamonte",
+      "sampleType": "Sample-sampleType-ayamonte",
+      "storagePlace": "Find-storagePlace-ayamonte"
+    }
+  }
+}

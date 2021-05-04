@@ -1,0 +1,1658 @@
+{
+  "RoomCeiling:default": {
+    "categoryName": "RoomCeiling",
+    "createdBy": "IT-Referat",
+    "creationDate": "2019",
+    "description": {},
+    "valuelists": {},
+    "commons": [
+      "area",
+      "spatialLocation",
+      "processor",
+      "campaign",
+      "description",
+      "period",
+      "dating",
+      "diary",
+      "dimensionLength",
+      "dimensionWidth"
+    ],
+    "fields": {}
+  },
+  "RoomFloor:default": {
+    "categoryName": "RoomFloor",
+    "createdBy": "IT-Referat",
+    "creationDate": "2019",
+    "description": {},
+    "valuelists": {},
+    "commons": [
+      "area",
+      "spatialLocation",
+      "processor",
+      "campaign",
+      "description",
+      "period",
+      "dating",
+      "diary",
+      "dimensionLength",
+      "dimensionWidth"
+    ],
+    "fields": {}
+  },
+  "RoomWall:default": {
+    "categoryName": "RoomWall",
+    "createdBy": "IT-Referat",
+    "creationDate": "2019",
+    "description": {},
+    "valuelists": {},
+    "commons": [
+      "spatialLocation",
+      "processor",
+      "campaign",
+      "description",
+      "period",
+      "dating",
+      "diary",
+      "dimensionLength",
+      "dimensionWidth"
+    ],
+    "fields": {}
+  },
+  "Trench:default": {
+    "categoryName": "Trench",
+    "createdBy": "IT-Referat",
+    "creationDate": "2019",
+    "description": { "de": "Schnitt; IT-Referat, 2019" },
+    "color": "blue",
+    "commons": [
+      "diary",
+      "dimensionLength",
+      "dimensionWidth",
+      "dimensionVerticalExtent",
+      "orientation"
+    ],
+    "valuelists": {
+      "orientation": "orientation-default-1",
+      "excavationType": "trench-excavationType-default"
+    },
+    "fields": {
+      "trenchComment": {
+        "inputType": "text"
+      }
+    }
+  },
+  "Glass:default": {
+    "categoryName": "Glass",
+    "parent": "Find",
+    "createdBy": "IT-Referat",
+    "creationDate": "2019",
+    "description": { "de": "Glass; IT-Referat, 2019" },
+    "color": "#99CC33",
+    "commons": [
+      "provenance"
+    ],
+    "valuelists": {
+      "provenance": "provenance-default-1",
+      "color": "colors-default-1",
+      "decorationTechnique": "glass-decorationTechnique-default",
+      "formDescription": "glass-formDescription-default",
+      "manufacturingMethod": "glass-manufacturingMethod-default",
+      "objectType": "glass-objectType-default",
+      "transparency": "glass-transparency-default",
+      "vesselForm": "glass-vesselForm-default",
+      "vesselFormSpecific": "glass-vesselFormSpecific-default"
+    },
+    "fields": {
+      "decorationDescription": {
+        "inputType": "input"
+      },
+      "color": {
+        "inputType": "checkboxes"
+      },
+      "decorationTechnique": {
+        "inputType": "dropdown"
+      },
+      "formDescription": {
+        "inputType": "checkboxes"
+      },
+      "manufacturingMethod": {
+        "inputType": "dropdown"
+      },
+      "objectType": {
+        "inputType": "dropdown"
+      },
+      "transparency": {
+        "inputType": "radio"
+      },
+      "vesselForm": {
+        "inputType": "dropdown"
+      },
+      "vesselFormSpecific": {
+        "inputType": "dropdown"
+      }
+    }
+  },
+  "Mollusk:default": {
+    "categoryName": "Mollusk",
+    "parent": "Find",
+    "description": {},
+    "createdBy": "",
+    "creationDate": "",
+    "color": "#ff99ff",
+    "commons": [],
+    "valuelists": {
+      "classification": "Mollusk-classification-default"
+    },
+    "fields": {
+      "classification": {
+        "inputType": "radio"
+      }
+    }
+  },
+  "Brick:default": {
+    "categoryName": "Brick",
+    "parent": "Find",
+    "description": {},
+    "createdBy": "",
+    "creationDate": "",
+    "color": "#CC0000",
+    "commons": [
+      "provenance"
+    ],
+    "valuelists": {
+      "provenance": "provenance-default-1",
+      "brickForm": "Brick-brickForm-default",
+      "brickUsage": "Brick-brickUsage-default",
+      "clayColorOutside": "colors-default-1",
+      "coatColorInside": "colors-default-1",
+      "coatColorOutside": "colors-default-1",
+      "decorationTechnique": "Brick-decorationTechnique-default",
+      "formDescription": "glass-formDescription-default",
+      "manufacturing": "Brick-manufacturing-default",
+      "manufacturingMethod": "Brick-manufacturingMethod-default",
+      "specificType": "Brick-specificType-default",
+      "temper": "Brick-temper-default"
+    },
+    "fields": {
+      "featureText": {
+        "inputType": "input"
+      },
+      "brickForm": {
+        "inputType": "checkboxes"
+      },
+      "brickUsage": {
+        "inputType": "radio"
+      },
+      "clayColorOutside": {
+        "inputType": "checkboxes"
+      },
+      "coatColorInside": {
+        "inputType": "checkboxes"
+      },
+      "coatColorOutside": {
+        "inputType": "checkboxes"
+      },
+      "decorationTechnique": {
+        "inputType": "dropdown"
+      },
+      "formDescription": {
+        "inputType": "checkboxes"
+      },
+      "manufacturing": {
+        "inputType": "checkboxes"
+      },
+      "manufacturingMethod": {
+        "inputType": "radio"
+      },
+      "specificType": {
+        "inputType": "dropdown"
+      },
+      "temper": {
+        "inputType": "checkboxes"
+      }
+    }
+  },
+  "Project:default": {
+    "categoryName": "Project",
+    "description": {},
+    "createdBy": "",
+    "creationDate": "",
+    "commons": [
+      "description"
+    ],
+    "valuelists": {
+      "coordinateReferenceSystem": "coordinate-reference-system-default-1"
+    },
+    "fields": {
+      "contactMail": {
+        "inputType": "input"
+      },
+      "contactPerson": {
+        "inputType": "input"
+      },
+      "epsgId": {
+        "inputType": "unsignedInt"
+      },
+      "externalReference": {
+        "inputType": "input"
+      },
+      "gazId": {
+        "inputType": "unsignedInt"
+      },
+      "institution": {
+        "inputType": "input"
+      },
+      "latitude": {
+        "inputType": "float"
+      },
+      "longitude": {
+        "inputType": "float"
+      },
+      "projectURI": {
+        "inputType": "input"
+      },
+      "projectSupervisor": {
+        "inputType": "input"
+      }
+    }
+  },
+  "Burial:default": {
+    "categoryName": "Burial",
+    "parent": "Feature",
+    "description": {},
+    "createdBy": "",
+    "creationDate": "",
+    "commons": [],
+    "valuelists": {
+      "amountIndividuals": "Burial-amountIndividuals-default",
+      "burialCharacteristic": "Burial-burialCharacteristic-default",
+      "burialDocumentation": "Burial-burialDocumentation-default",
+      "graveFeature": "Burial-graveFeature-default",
+      "positionArms": "Burial-positionArms-default",
+      "positionLegs": "Burial-positionLegs-default",
+      "positioningIndividuals": "Burial-positioningIndividuals-default"
+    },
+    "fields": {
+      "ageDetermination": {
+        "inputType": "input"
+      },
+      "ageDeterminationBasis": {
+        "inputType": "input"
+      },
+      "bodyHeightAndRobustness": {
+        "inputType": "input"
+      },
+      "burialRite": {
+        "inputType": "input"
+      },
+      "conditionComment": {
+        "inputType": "input"
+      },
+      "dietReconstruction": {
+        "inputType": "input"
+      },
+      "palaeopathologicalReport": {
+        "inputType": "input"
+      },
+      "sexDetermination": {
+        "inputType": "input"
+      },
+      "sexDeterminationBasis": {
+        "inputType": "input"
+      },
+      "amountIndividuals": {
+        "inputType": "dropdown"
+      },
+      "burialCharacteristic": {
+        "inputType": "dropdown"
+      },
+      "burialDocumentation": {
+        "inputType": "checkboxes"
+      },
+      "graveFeature": {
+        "inputType": "checkboxes"
+      },
+      "positionArms": {
+        "inputType": "checkboxes"
+      },
+      "positionLegs": {
+        "inputType": "checkboxes"
+      },
+      "positioningIndividuals": {
+        "inputType": "checkboxes"
+      }
+    }
+  },
+  "Building:default": {
+    "categoryName": "Building",
+    "description": {},
+    "createdBy": "",
+    "creationDate": "",
+    "commons": [
+      "period",
+      "dating",
+      "dimensionWidth",
+      "dimensionLength"
+    ],
+    "valuelists": {
+      "buildingCategory": "Building-buildingCategory-default",
+      "buildingCategorySpecific": "Building-buildingCategorySpecific-default",
+      "buildingTechnique": "Building-buildingTechnique-default",
+      "buildingType": "Building-buildingType-default",
+      "condition": "Building-condition-default",
+      "conditionAmount": "Building-conditionAmount-default",
+      "context": "Building-context-default",
+      "material": "Building-material-default",
+      "period": "periods-default-1"
+    },
+    "fields": {
+      "buildingResearchHistory": {
+        "inputType": "text"
+      },
+      "conditionComment": {
+        "inputType": "input"
+      },
+      "hasRestoration": {
+        "inputType": "boolean"
+      },
+      "buildingCategory": {
+        "inputType": "dropdown"
+      },
+      "buildingCategorySpecific": {
+        "inputType": "dropdown"
+      },
+      "buildingTechnique": {
+        "inputType": "dropdown"
+      },
+      "buildingType": {
+        "inputType": "radio"
+      },
+      "condition": {
+        "inputType": "dropdown"
+      },
+      "conditionAmount": {
+        "inputType": "dropdown"
+      },
+      "context": {
+        "inputType": "dropdown"
+      },
+      "material": {
+        "inputType": "checkboxes"
+      }
+    }
+  },
+  "Wood:default": {
+    "categoryName": "Wood",
+    "parent": "Find",
+    "description": {},
+    "creationDate": "",
+    "createdBy": "",
+    "color": "#660000",
+    "commons": [
+      "provenance"
+    ],
+    "valuelists": {
+      "provenance": "provenance-default-1",
+      "color": "Wood-color-default",
+      "objectType": "Wood-objectType-default",
+      "typeOfWood": "Wood-typeOfWood-default",
+      "manufacturingMethod":  "Wood-manufacturingMethod-default",
+      "surfaceCondition": "Wood-surfaceCondition-default",
+      "decorationTechnique": "Wood-decorationTechnique-default",
+      "paintCondition": "Wood-paintCondition-default"
+    },
+    "fields": {
+      "color": {
+        "inputType": "dropdown"
+      },
+      "objectType": {
+        "inputType": "dropdown"
+      },
+      "typeOfWood": {
+        "inputType": "dropdown"
+      },
+      "manufacturingMethod": {
+        "inputType": "radio"
+      },
+      "colorOutside": {
+        "inputType": "input"
+      },
+      "colorOutsideMunsell": {
+        "inputType": "input"
+      },
+      "colorInside": {
+        "inputType": "input"
+      },
+      "colorInsideMunsell": {
+        "inputType": "input"
+      },
+      "colorBreak": {
+        "inputType": "input"
+      },
+      "colorBreakMunsell": {
+        "inputType": "input"
+      },
+      "surfaceCondition": {
+        "inputType": "radio"
+      },
+      "decorationTechnique": {
+        "inputType": "radio"
+      },
+      "paintColor": {
+        "inputType": "input"
+      },
+      "paintColorMunsell": {
+        "inputType": "input"
+      },
+      "paintCondition": {
+        "inputType": "dropdown"
+      }
+    }
+  },
+  "Architecture:default": {
+    "categoryName": "Architecture",
+    "parent": "Feature",
+    "description": {},
+    "createdBy": "",
+    "creationDate": "",
+    "color": "#707070",
+    "commons": [
+      "spatialLocation",
+      "orientation"
+    ],
+    "valuelists": {
+      "orientation": "orientation-default-1",
+      "blockProcessing": "Architecture-blockProcessing-default",
+      "blockTreatment": "Architecture-blockTreatment-default",
+      "brickwork": "Architecture-brickwork-default",
+      "condition": "Building-condition-default",
+      "conditionAmount": "Building-conditionAmount-default",
+      "construction": "Architecture-construction-default",
+      "mortarBinder": "Architecture-mortarBinder-default",
+      "mortarColor": "colors-default-2",
+      "mortarConsistency": "Architecture-mortarConsistency-default",
+      "wallClassification": "Architecture-wallClassification-default",
+      "wallType": "Architecture-wallType-default"
+    },
+    "fields": {
+      "bibliography": {
+        "inputType": "text"
+      },
+      "conditionComment": {
+        "inputType": "input"
+      },
+      "constructionDetailsDescription": {
+        "inputType": "input"
+      },
+      "descriptionOfBuildingTechnique": {
+        "inputType": "input"
+      },
+      "hasGrouting": {
+        "inputType": "boolean"
+      },
+      "layerAmount": {
+        "inputType": "unsignedInt"
+      },
+      "layerHeight": {
+        "inputType": "unsignedFloat"
+      },
+      "materialCharacteristic": {
+        "inputType": "input"
+      },
+      "materialForm": {
+        "inputType": "input"
+      },
+      "muralCrown": {
+        "inputType": "input"
+      },
+      "blockProcessing": {
+        "inputType": "checkboxes"
+      },
+      "blockTreatment": {
+        "inputType": "radio"
+      },
+      "brickwork": {
+        "inputType": "checkboxes"
+      },
+      "condition": {
+        "inputType": "dropdown"
+      },
+      "conditionAmount": {
+        "inputType": "dropdown"
+      },
+      "construction": {
+        "inputType": "dropdown"
+      },
+      "mortarBinder": {
+        "inputType": "radio"
+      },
+      "mortarColor": {
+        "inputType": "dropdown"
+      },
+      "mortarConsistency": {
+        "inputType": "radio"
+      },
+      "wallClassification": {
+        "inputType": "dropdown"
+      },
+      "wallType": {
+        "inputType": "dropdown"
+      }
+    }
+  },
+  "Operation:default": {
+    "categoryName": "Operation",
+    "description": {},
+    "createdBy": "",
+    "creationDate": "",
+    "commons": [
+      "beginningDate",
+      "endDate",
+      "supervisor",
+      "processor",
+      "campaign",
+      "description",
+      "area",
+      "spatialLocation"
+    ],
+    "valuelists": {},
+    "fields": {
+      "diaryAbstract": {
+        "inputType": "text"
+      }
+    }
+  },
+  "Place:default": {
+    "categoryName": "Place",
+    "description": {},
+    "createdBy": "",
+    "creationDate": "",
+    "color": "#5572A1",
+    "commons": [
+      "dating",
+      "description",
+      "spatialLocation"
+    ],
+    "valuelists": {
+      "findspotClassification": "Place-findspotClassification-default",
+      "siteClassification": "Place-siteClassification-default"
+    },
+    "fields": {
+      "placeName": {
+        "inputType": "input"
+      },
+      "buildingHistory": {
+        "inputType": "text"
+      },
+      "buildingResearchHistory": {
+        "inputType": "text"
+      },
+      "excavationHistory": {
+        "inputType": "text"
+      },
+      "findSituation": {
+        "inputType": "text"
+      },
+      "modernIntervention": {
+        "inputType": "input"
+      },
+      "findspotClassification": {
+        "inputType": "dropdown"
+      },
+      "siteClassification": {
+        "inputType": "dropdown"
+      }
+    }
+  },
+  "Layer:default": {
+    "categoryName": "Layer",
+    "parent": "Feature",
+    "description": {},
+    "createdBy": "",
+    "creationDate": "",
+    "color": "#663300",
+    "commons": [
+      "dimensionThickness"
+    ],
+    "valuelists": {
+      "consistency": "Layer-consistency-default",
+      "distinguishingCriteria": "Layer-distinguishingCriteria-default",
+      "layerClassification": "Layer-layerClassification-default",
+      "soilType": "Layer-soilType-default"
+    },
+    "fields": {
+      "isNatural": {
+        "inputType": "boolean"
+      },
+      "consistency": {
+        "inputType": "checkboxes"
+      },
+      "distinguishingCriteria": {
+        "inputType": "radio"
+      },
+      "layerClassification": {
+        "inputType": "dropdown"
+      },
+      "soilType": {
+        "inputType": "dropdown"
+      }
+    }
+  },
+  "Feature:default": {
+    "categoryName": "Feature",
+    "description": {},
+    "createdBy": "",
+    "creationDate": "",
+    "color": "black",
+    "commons": [
+      "beginningDate",
+      "endDate",
+      "diary",
+      "description",
+      "processor",
+      "campaign",
+      "dimensionLength",
+      "dimensionWidth",
+      "dimensionVerticalExtent",
+      "area"
+    ],
+    "valuelists": {
+      "color": "colors-default-1",
+      "featureBorders": "Feature-featureBorders-default",
+      "featureForm": "Feature-featureForm-default",
+      "period": "periods-default-1"
+
+    },
+    "fields": {
+      "comparison": {
+        "inputType": "text"
+      },
+      "hasDisturbance": {
+        "inputType": "boolean"
+      },
+      "color": {
+        "inputType": "checkboxes"
+      },
+      "featureBorders": {
+        "inputType": "checkboxes"
+      },
+      "featureForm": {
+        "inputType": "checkboxes"
+      }
+    }
+  },
+  "Floor:default": {
+    "parent": "Feature",
+    "categoryName": "Floor",
+    "color": "#6600cc",
+    "creationDate": "",
+    "createdBy": "",
+    "description": {},
+    "commons": [],
+    "valuelists": {
+      "condition": "Building-condition-default",
+      "conditionAmount": "Building-conditionAmount-default",
+      "consistency": "Layer-consistency-default",
+      "distinguishingCriteria": "Layer-distinguishingCriteria-default",
+      "floorClassification": "Floor-floorClassification-default",
+      "layerClassification": "Layer-layerClassification-default",
+      "mortarBinder": "Architecture-mortarBinder-default"
+    },
+    "fields": {
+      "conditionComment": {
+        "inputType": "input"
+      },
+      "condition": {
+        "inputType": "dropdown"
+      },
+      "conditionAmount": {
+        "inputType": "dropdown"
+      },
+      "consistency": {
+        "inputType": "checkboxes"
+      },
+      "distinguishingCriteria": {
+        "inputType": "radio"
+      },
+      "floorClassification": {
+        "inputType": "dropdown"
+      },
+      "layerClassification": {
+        "inputType": "dropdown"
+      },
+      "mortarBinder": {
+        "inputType": "radio"
+      }
+    }
+  },
+  "Inscription:default": {
+    "categoryName": "Inscription",
+    "description": {},
+    "createdBy": "",
+    "creationDate": "",
+    "commons": [
+      "description",
+      "processor",
+      "campaign",
+      "period",
+      "dating",
+      "dimensionWidth",
+      "dimensionHeight"
+    ],
+    "valuelists": {
+      "condition": "Building-condition-default",
+      "conditionAmount": "Building-conditionAmount-default",
+      "objectType": "Inscription-objectType-default",
+      "period": "periods-default-1"
+    },
+    "fields": {
+      "comparison": {
+        "inputType": "text"
+      },
+      "conditionComment": {
+        "inputType": "input"
+      },
+      "content": {
+        "inputType": "text"
+      },
+      "language": {
+        "inputType": "input"
+      },
+      "condition": {
+        "inputType": "dropdown"
+      },
+      "conditionAmount": {
+        "inputType": "dropdown"
+      },
+      "objectType": {
+        "inputType": "checkboxes"
+      }
+    }
+  },
+  "Image:default": {
+    "categoryName": "Image",
+    "description": {},
+    "createdBy": "",
+    "creationDate": "",
+    "commons": [
+      "processor",
+      "campaign",
+      "description",
+      "draughtsmen",
+      "literature"
+    ],
+    "valuelists": {},
+    "fields": {}
+  },
+  "Pottery:default": {
+    "parent": "Find",
+    "categoryName": "Pottery",
+    "description": {},
+    "createdBy": "",
+    "creationDate": "",
+    "commons": [
+      "provenance"
+    ],
+    "valuelists": {
+      "provenance": "provenance-default-1",
+      "clayColorBreak": "colors-default-1",
+      "clayColorInside": "colors-default-1",
+      "clayColorOutside": "colors-default-1",
+      "clayHardness": "Pottery-clayHardness-default",
+      "coatColorInside": "colors-default-1",
+      "coatColorOutside": "colors-default-1",
+      "coatInside": "Pottery-coatInside-default",
+      "coatInsideType": "Pottery-coatInsideType-default",
+      "coatOutside": "Pottery-coatInside-default",
+      "coatOutsideType": "Pottery-coatInsideType-default",
+      "decorationTechnique": "Pottery-decorationTechnique-default",
+      "formDescription": "glass-formDescription-default",
+      "manufacturing": "Brick-manufacturing-default",
+      "manufacturingMethod": "Pottery-manufacturingMethod-default",
+      "materialType": "Pottery-materialType-default",
+      "objectType": "Pottery-objectType-default",
+      "specificType": "Pottery-specificType-default",
+      "temper": "Brick-temper-default",
+      "temperAmount": "Pottery-temperAmount-default",
+      "temperParticles": "Pottery-temperParticles-default",
+      "vesselForm": "Pottery-vesselForm-default",
+      "vesselFormSpecific": "Pottery-vesselFormSpecific-default"
+    },
+    "fields": {
+      "amountSherdsWall": {
+        "inputType": "unsignedInt"
+      },
+      "amountSherdsRim": {
+        "inputType": "unsignedInt"
+      },
+      "amountSherdsBase": {
+        "inputType": "unsignedInt"
+      },
+      "amountSherdsHandles": {
+        "inputType": "unsignedInt"
+      },
+      "amountSherdsLip": {
+        "inputType": "unsignedInt"
+      },
+      "amountSherdsPedestal": {
+        "inputType": "unsignedInt"
+      },
+      "amountSherdsRimBase": {
+        "inputType": "unsignedInt"
+      },
+      "amountSherdsRimShoulder": {
+        "inputType": "unsignedInt"
+      },
+      "amountSherdsShoulder": {
+        "inputType": "unsignedInt"
+      },
+      "amountSherdsOther": {
+        "inputType": "unsignedInt"
+      },
+      "amountSherdsPercent": {
+        "inputType": "unsignedFloat"
+      },
+      "amountSherdsLid": {
+        "inputType": "unsignedInt"
+      },
+      "clayColorBreakMunsell": {
+        "inputType": "input"
+      },
+      "clayColorInsideMunsell": {
+        "inputType": "input"
+      },
+      "clayColorOutsideMunsell": {
+        "inputType": "input"
+      },
+      "hasCoat": {
+        "inputType": "boolean"
+      },
+      "decorationDescription": {
+        "inputType": "input"
+      },
+      "breakStructure": {
+        "inputType": "input"
+      },
+      "residueAnalysis": {
+        "inputType": "input"
+      },
+      "sample": {
+        "inputType": "input"
+      },
+      "purpose": {
+        "inputType": "input"
+      },
+      "typeNumber": {
+        "inputType": "input"
+      },
+      "clayColorBreak": {
+        "inputType": "checkboxes"
+      },
+      "clayColorInside": {
+        "inputType": "checkboxes"
+      },
+      "clayColorOutside": {
+        "inputType": "checkboxes"
+      },
+      "clayHardness": {
+        "inputType": "dropdown"
+      },
+      "coatColorInside": {
+        "inputType": "checkboxes"
+      },
+      "coatColorOutside": {
+        "inputType": "checkboxes"
+      },
+      "coatInside": {
+        "inputType": "dropdown"
+      },
+      "coatInsideType": {
+        "inputType": "checkboxes"
+      },
+      "coatOutside": {
+        "inputType": "dropdown"
+      },
+      "coatOutsideType": {
+        "inputType": "checkboxes"
+      },
+      "decorationTechnique": {
+        "inputType": "dropdown"
+      },
+      "formDescription": {
+        "inputType": "checkboxes"
+      },
+      "manufacturing": {
+        "inputType": "checkboxes"
+      },
+      "manufacturingMethod": {
+        "inputType": "checkboxes"
+      },
+      "materialType": {
+        "inputType": "dropdown"
+      },
+      "objectType": {
+        "inputType": "dropdown"
+      },
+      "specificType": {
+        "inputType": "radio"
+      },
+      "temper": {
+        "inputType": "checkboxes"
+      },
+      "temperAmount": {
+        "inputType": "radio"
+      },
+      "temperParticles": {
+        "inputType": "radio"
+      },
+      "temperTypeClay": {
+        "inputType": "input"
+      },
+      "vesselForm": {
+        "inputType": "dropdown"
+      },
+      "vesselFormSpecific": {
+        "inputType": "dropdown"
+      }
+    }
+  },
+  "Pottery:uruk": {
+    "parent": "Find",
+    "categoryName": "Pottery",
+    "description": "",
+    "createdBy": "",
+    "creationDate": "",
+    "commons": [],
+    "fields": {
+      "vesselpart": {
+        "inputType": "checkboxes"
+      },
+      "Firing": {
+        "inputType": "checkboxes"
+      },
+      "clayColorInside": {
+        "inputType": "checkboxes"
+      },
+      "clayColorOutside": {
+        "inputType": "checkboxes"
+      },
+      "decorationTechnique": {
+        "inputType": "dropdown"
+      },
+      "manufacturingMethod": {
+        "inputType": "checkboxes"
+      },
+      "temper": {
+        "inputType": "checkboxes"
+      },
+      "temperAmount": {
+        "inputType": "radio"
+      },
+      "temperParticles": {
+        "inputType": "radio"
+      },
+      "coatOutsideType": {
+        "inputType": "checkboxes"
+      },
+      "FormComparisonCompendia": {
+        "inputType": "dropdown"
+      },
+      "FormComparisonCompendiadetail": {
+        "inputType": "input"
+      },
+      "DecorationComparisonCompendia": {
+        "inputType": "dropdown"
+      },
+      "DecorationComparisonCompendiadetail": {
+        "inputType": "input"
+      },
+      "ApplicationComparisonCompendia": {
+        "inputType": "dropdown"
+      },
+      "ApplicationComparisonCompendiadetail": {
+        "inputType": "input"
+      },
+      "Drawing": {
+        "inputType": "boolean"
+      },
+      "vesselForm": {
+        "inputType": "dropdown"
+      }
+    },
+    "valuelists": {
+      "vesselpart": "Pottery-vesselpart-Uruk",
+      "Firing": "Pottery-Firing-Uruk",
+      "condition": "Pottery-condition-Uruk",
+      "clayColorInside": "Pottery-clayColorInside-Uruk",
+      "clayColorOutside": "Pottery-clayColorInside-Uruk",
+      "decorationTechnique": "Pottery-decorationTechnique-Uruk",
+      "manufacturingMethod": "Pottery-manufacturingMethod-Uruk",
+      "temper": "Pottery-temper-Uruk",
+      "temperAmount": "Pottery-temperAmount-Uruk",
+      "temperParticles": "Pottery-temperParticles-Uruk",
+      "coatOutsideType": "Pottery-coatOutsideType-Uruk",
+      "FormComparisonCompendia": "Pottery-FormComparisonCompendia-Uruk",
+      "DecorationComparisonCompendia": "Pottery-FormComparisonCompendia-Uruk",
+      "ApplicationComparisonCompendia": "Pottery-FormComparisonCompendia-Uruk",
+      "vesselForm": "Pottery-vesselForm-Uruk"
+    }
+  },
+  "Grave:default": {
+    "categoryName": "Grave",
+    "parent": "Feature",
+    "description": {},
+    "createdBy": "",
+    "creationDate": "",
+    "color": "#339900",
+    "commons": [
+      "spatialLocation"
+    ],
+    "valuelists": {
+      "condition": "Building-condition-default",
+      "conditionAmount": "Building-conditionAmount-default",
+      "distinguishingCriteria": "Layer-distinguishingCriteria-default",
+      "graveType": "Grave-graveType-default",
+      "specificType": "Grave-specificType-default",
+      "soilType": "Layer-soilType-default",
+      "tombBuilding": "Grave-tombBuilding-default"
+    },
+    "fields": {
+      "bibliography": {
+        "inputType": "text"
+      },
+      "conditionComment": {
+        "inputType": "input"
+      },
+      "findingPlace": {
+        "inputType": "input"
+      },
+      "publicationDatingFinds": {
+        "inputType": "text"
+      },
+      "publicationDatingScientific": {
+        "inputType": "text"
+      },
+      "publicationDatingStratigraphy": {
+        "inputType": "text"
+      },
+      "publicationRemark": {
+        "inputType": "input"
+      },
+      "condition": {
+        "inputType": "dropdown"
+      },
+      "conditionAmount": {
+        "inputType": "dropdown"
+      },
+      "distinguishingCriteria": {
+        "inputType": "radio"
+      },
+      "graveType": {
+        "inputType": "dropdown"
+      },
+      "specificType": {
+        "inputType": "checkboxes"
+      },
+      "soilType": {
+        "inputType": "dropdown"
+      },
+      "tombBuilding": {
+        "inputType": "checkboxes"
+      }
+    }
+  },
+  "Bone:default": {
+    "parent": "Find",
+    "categoryName": "Bone",
+    "description": {},
+    "createdBy": "",
+    "creationDate": "",
+    "color": "#CCFFFF",
+    "commons": [],
+    "valuelists": {
+      "biologicalAge": "Bone-biologicalAge-default",
+      "boneClassification": "Bone-boneClassification-default",
+      "boneType": "Bone-boneType-default",
+      "burningGrade": "Bone-burningGrade-default",
+      "sex": "Bone-sex-default",
+      "objectType": "Bone-objectType-default",
+      "species": "Bone-species-default"
+    },
+    "fields": {
+      "biologicalAge": {
+        "inputType": "dropdown"
+      },
+      "boneClassification": {
+        "inputType": "dropdown"
+      },
+      "boneType": {
+        "inputType": "radio"
+      },
+      "burningGrade": {
+        "inputType": "dropdown"
+      },
+      "sex": {
+        "inputType": "radio"
+      },
+      "objectType": {
+        "inputType": "dropdown"
+      },
+      "species": {
+        "inputType": "dropdown"
+      }
+    }
+  },
+  "Room:default": {
+    "categoryName": "Room",
+    "description": {},
+    "createdBy": "",
+    "creationDate": "",
+    "commons": [
+      "processor",
+      "campaign",
+      "description",
+      "period",
+      "dating",
+      "dimensionHeight",
+      "dimensionLength",
+      "dimensionWidth",
+      "dimensionVerticalExtent",
+      "area"
+    ],
+    "valuelists": {
+      "condition": "Building-condition-default",
+      "conditionAmount": "Building-conditionAmount-default",
+      "period": "periods-default-1"
+    },
+    "fields": {
+      "conditionComment": {
+        "inputType": "input"
+      },
+      "condition": {
+        "inputType": "dropdown"
+      },
+      "conditionAmount": {
+        "inputType": "dropdown"
+      }
+    }
+  },
+  "Terracotta:default": {
+    "categoryName": "Terracotta",
+    "parent": "Find",
+    "description": {},
+    "createdBy": "",
+    "creationDate": "",
+    "color": "#FF6600",
+    "commons": [
+      "provenance"
+    ],
+    "valuelists": {
+      "provenance": "provenance-default-1",
+      "clayColorBreak": "colors-default-1",
+      "clayColorInside": "colors-default-1",
+      "clayColorOutside": "colors-default-1",
+      "clayStructure": "Terracotta-clayStructure-default",
+      "coatColorInside": "colors-default-1",
+      "coatColorOutside": "colors-default-1",
+      "decorationTechnique": "Pottery-decorationTechnique-default",
+      "formDescription": "glass-formDescription-default",
+      "manufacturingMethod": "Pottery-manufacturingMethod-default",
+      "surfaceCondition": "Terracotta-surfaceCondition-default",
+      "temper": "Brick-temper-default",
+      "temperAmount": "Pottery-temperAmount-default",
+      "temperParticles": "Pottery-temperParticles-default",
+      "vesselForm": "Terracotta-vesselForm-default",
+      "vesselFormSpecific": "Terracotta-vesselFormSpecific-default"
+    },
+    "fields": {
+      "clayColorBreak": {
+        "inputType": "checkboxes"
+      },
+      "clayColorInside": {
+        "inputType": "checkboxes"
+      },
+      "clayColorOutside": {
+        "inputType": "checkboxes"
+      },
+      "clayStructure": {
+        "inputType": "radio"
+      },
+      "coatColorInside": {
+        "inputType": "checkboxes"
+      },
+      "coatColorOutside": {
+        "inputType": "checkboxes"
+      },
+      "decorationTechnique": {
+        "inputType": "dropdown"
+      },
+      "formDescription": {
+        "inputType": "checkboxes"
+      },
+      "manufacturingMethod": {
+        "inputType": "checkboxes"
+      },
+      "surfaceCondition": {
+        "inputType": "dropdown"
+      },
+      "temper": {
+        "inputType": "checkboxes"
+      },
+      "temperAmount": {
+        "inputType": "radio"
+      },
+      "temperParticles": {
+        "inputType": "radio"
+      },
+      "vesselForm": {
+        "inputType": "dropdown"
+      },
+      "vesselFormSpecific": {
+        "inputType": "dropdown"
+      }
+    }
+  },
+  "Drawing:default": {
+    "categoryName": "Drawing",
+    "parent": "Image",
+    "description": {},
+    "createdBy": "",
+    "creationDate": "",
+    "commons": [],
+    "valuelists": {
+      "drawingMaterial": "Drawing-drawingMaterial-default",
+      "drawingTool": "Drawing-drawingTool-default",
+      "drawingType": "Drawing-drawingType-default",
+      "scale": "Drawing-scale-default"
+    },
+    "fields": {
+      "drawingMaterial": {
+        "inputType": "radio"
+      },
+      "drawingTool": {
+        "inputType": "radio"
+      },
+      "drawingType": {
+        "inputType": "radio"
+      },
+      "scale": {
+        "inputType": "dropdown"
+      }
+    }
+  },
+  "Survey:default": {
+    "categoryName": "Survey",
+    "description": {},
+    "createdBy": "",
+    "creationDate": "",
+    "commons": [],
+    "valuelists": {
+      "researchMethod": "Survey-researchMethod-default"
+    },
+    "fields": {
+      "researchMethod": {
+        "inputType": "checkboxes"
+      }
+    }
+  },
+  "Stone:default": {
+    "categoryName": "Stone",
+    "parent": "Find",
+    "description": {},
+    "createdBy": "IT-Referat",
+    "creationDate": "2019",
+    "color": "#5c5c8a",
+    "commons": [
+      "provenance"
+    ],
+    "valuelists": {
+      "provenance": "provenance-default-1",
+      "architectureElement": "Stone-architectureElement-default",
+      "color": "colors-default-1",
+      "formDescription": "glass-formDescription-default",
+      "material": "Stone-material-default",
+      "objectType": "Stone-objectType-default",
+      "origin": "Stone-origin-default",
+      "temperAmount": "Pottery-temperAmount-default"
+    },
+    "fields": {
+      "purpose": {
+        "inputType": "input"
+      },
+      "treatment": {
+        "inputType": "input"
+      },
+      "workmanship": {
+        "inputType": "input"
+      },
+      "architectureElement": {
+        "inputType": "dropdown"
+      },
+      "color": {
+        "inputType": "checkboxes"
+      },
+      "formDescription": {
+        "inputType": "checkboxes"
+      },
+      "material": {
+        "inputType": "checkboxes"
+      },
+      "objectType": {
+        "inputType": "dropdown"
+      },
+      "origin": {
+        "inputType": "dropdown"
+      },
+      "temperAmount": {
+        "inputType": "radio"
+      }
+    }
+  },
+  "Coin:default": {
+    "categoryName": "Coin",
+    "parent": "Find",
+    "description": {},
+    "createdBy": "",
+    "creationDate": "",
+    "color": "#cc9900",
+    "commons": [
+      "provenance"
+    ],
+    "valuelists": {
+      "provenance": "provenance-default-1",
+      "denomination": "Coin-denomination-default",
+      "manufacturingMethod": "Coin-manufacturingMethod-default",
+      "metalMaterial": "Coin-metalMaterial-default",
+      "mint": "Coin-mint-default",
+      "mintingRuler": "Coin-mintingRuler-default",
+      "stampPositioning": "Coin-stampPositioning-default"
+    },
+    "fields": {
+      "frontSideDescription": {
+        "inputType": "input"
+      },
+      "preservedDiameter": {
+        "inputType": "unsignedFloat"
+      },
+      "reverseSideDescription": {
+        "inputType": "input"
+      },
+      "denomination": {
+        "inputType": "dropdown"
+      },
+      "manufacturingMethod": {
+        "inputType": "input"
+      },
+      "metalMaterial": {
+        "inputType": "checkboxes"
+      },
+      "mint": {
+        "inputType": "dropdown"
+      },
+      "mintingRuler": {
+        "inputType": "dropdown"
+      },
+      "stampPositioning": {
+        "inputType": "dropdown"
+      }
+    }
+  },
+  "Find:default": {
+    "description": {},
+    "createdBy": "",
+    "creationDate": "",
+    "categoryName": "Find",
+    "color": "black",
+    "commons": [
+      "spatialLocation",
+      "processor",
+      "campaign",
+      "description",
+      "period",
+      "dating",
+      "dimensionHeight",
+      "dimensionLength",
+      "dimensionWidth",
+      "dimensionPerimeter",
+      "dimensionDiameter",
+      "dimensionThickness",
+      "dimensionVerticalExtent",
+      "dimensionOther",
+      "date"
+    ],
+    "valuelists": {
+      "condition": "Building-condition-default",
+      "conditionAmount": "Building-conditionAmount-default",
+      "period": "periods-default-1",
+      "storagePlace": "Find-storagePlace-default"
+    },
+    "fields": {
+      "amount": {
+        "inputType": "unsignedInt"
+      },
+      "bibliography": {
+        "inputType": "text"
+      },
+      "catalogueNumber": {
+        "inputType": "input"
+      },
+      "comparison": {
+        "inputType": "text"
+      },
+      "conditionComment": {
+        "inputType": "input"
+      },
+      "conditionPercent": {
+        "inputType": "unsignedFloat"
+      },
+      "hasRestoration": {
+        "inputType": "boolean"
+      },
+      "storageInventoryNumber": {
+        "inputType": "input"
+      },
+      "weight": {
+        "inputType": "unsignedFloat"
+      },
+      "condition": {
+        "inputType": "dropdown"
+      },
+      "conditionAmount": {
+        "inputType": "dropdown"
+      },
+      "storagePlace": {
+        "inputType": "radio"
+      }
+    }
+  },
+  "PlasterFragment:default": {
+    "categoryName": "PlasterFragment",
+    "description": {},
+    "createdBy": "",
+    "creationDate": "",
+    "parent": "Find",
+    "color": "#737373",
+    "commons": [
+      "area"
+    ],
+    "valuelists": {
+      "plasterComponents": "PlasterFragment-plasterComponents-default",
+      "color": "colors-default-1"
+    },
+    "fields": {
+      "composition": {
+        "inputType": "input"
+      },
+      "hasDecoration": {
+        "inputType": "boolean"
+      },
+      "color": {
+        "inputType": "checkboxes"
+      },
+      "plasterComponents": {
+        "inputType": "radio"
+      }
+    }
+  },
+  "Photo:default": {
+    "description": {},
+    "createdBy": "",
+    "creationDate": "",
+    "parent": "Image",
+    "categoryName": "Photo",
+    "commons": [],
+    "valuelists": {},
+    "fields": {}
+  },
+  "Metal:default": {
+    "description": {},
+    "createdBy": "",
+    "creationDate": "",
+    "color": "#995f25",
+    "parent": "Find",
+    "categoryName": "Metal",
+    "commons": [
+      "provenance"
+    ],
+    "valuelists": {
+      "provenance": "provenance-default-1",
+      "decorationTechnique": "Metal-decorationTechnique-default",
+      "formDescription": "glass-formDescription-default",
+      "manufacturingMethod": "Metal-manufacturingMethod-default",
+      "metalMaterial": "Coin-metalMaterial-default",
+      "objectType": "Metal-objectType-default",
+      "vesselForm": "glass-vesselForm-default",
+      "vesselFormSpecific": "Metal-vesselFormSpecific-default"
+    },
+    "fields": {
+      "decorationTechnique": {
+        "inputType": "dropdown"
+      },
+      "formDescription": {
+        "inputType": "checkboxes"
+      },
+      "manufacturingMethod": {
+        "inputType": "checkboxes"
+      },
+      "metalMaterial": {
+        "inputType": "checkboxes"
+      },
+      "objectType": {
+        "inputType": "dropdown"
+      },
+      "vesselForm": {
+        "inputType": "dropdown"
+      },
+      "vesselFormSpecific": {
+        "inputType": "dropdown"
+      }
+    }
+  },
+  "BuildingPart:default": {
+    "description": {},
+    "createdBy": "",
+    "creationDate": "",
+    "categoryName": "BuildingPart",
+    "color": "#707070",
+    "valuelists": {},
+    "fields": {},
+    "commons": [
+      "processor",
+      "campaign"
+    ]
+  },
+  "Area:default": {
+    "description": {},
+    "createdBy": "",
+    "creationDate": "",
+    "categoryName": "Area",
+    "commons": [
+      "description",
+      "campaign",
+      "area",
+      "dimensionLength",
+      "dimensionWidth"
+    ],
+    "valuelists": {},
+    "fields": {
+      "dimensionVerticalExtent": {
+        "positionValues": [
+          "Oberkante",
+          "Unterkante"
+        ]
+      }
+    }
+  },
+  "SurveyUnit:default": {
+    "description": {},
+    "createdBy": "",
+    "creationDate": "",
+    "parent": "Area",
+    "categoryName": "SurveyUnit",
+    "color": "#6baed6",
+    "fields": {},
+    "valuelists": {},
+    "commons": []
+  },
+  "Excavation:default": {
+    "description": {},
+    "createdBy": "",
+    "creationDate": "",
+    "parent": "Area",
+    "categoryName": "Excavation",
+    "commons": [],
+    "valuelists": {},
+    "fields": {
+      "isIllegal": {
+        "inputType": "boolean"
+      }
+    }
+  },
+  "Sample:default": {
+    "description": {},
+    "createdBy": "",
+    "creationDate": "",
+    "categoryName": "Sample",
+    "color": "#9ecae1",
+    "commons": [
+      "date",
+      "description",
+      "processor",
+      "spatialLocation"
+    ],
+    "valuelists": {
+      "sampleType": "Sample-sampleType-default"
+    },
+    "fields": {
+      "labNumber": {
+        "inputType": "input"
+      },
+      "weight": {
+        "inputType": "unsignedFloat"
+      },
+      "sampleType": {
+        "inputType": "radio"
+      }
+    }
+  },
+  "TypeCatalog:default": {
+    "description": {},
+    "createdBy": "",
+    "creationDate": "",
+    "categoryName": "TypeCatalog",
+    "commons": ["literature"],
+    "valuelists": {
+      "criterion": "TypeCatalog-criterion-default"
+    },
+    "fields": {}
+  },
+  "Type:default": {
+    "description": {},
+    "createdBy": "",
+    "creationDate": "",
+    "categoryName": "Type",
+    "commons": ["literature","description"],
+    "valuelists": {},
+    "fields": {}
+  }
+}

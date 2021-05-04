@@ -1,0 +1,91 @@
+{
+  "fields": {
+    "category": {
+      "label": "Categoria"
+    },
+    "identifier": {
+      "label": "Identificatore",
+      "description": "Identificatore unico di questa risorsa"
+    },
+    "shortDescription": {
+      "label": "Descrizione breve"
+    }
+  },
+  "categories": {
+    "Project": {
+      "label": "Progetto",
+      "fields": {
+        "coordinateReferenceSystem": {
+          "label": "Sistema di riferimento delle coordinate"
+        }
+      }
+    },
+    "Image": {
+      "label": "Immagine",
+      "fields": {
+        "height": {
+          "label": "Altezza"
+        },
+        "width": {
+          "label": "Larghezza"
+        }
+      }
+    }
+  },
+  "relations": {
+    "isRecordedIn": {
+      "label": "Inserito nell'operazione"
+    },
+    "liesWithin": {
+      "label": "Dentro a"
+    },
+    "includes": {
+      "label": "Include"
+    },
+    "isAbove": {
+      "label": "Sopra a"
+    },
+    "isBelow": {
+      "label": "Sotto a"
+    },
+    "isEquivalentTo": {
+      "label": "Uguale a"
+    },
+    "cuts": {
+      "label": "Taglia"
+    },
+    "isCutBy": {
+      "label": "Tagliato da"
+    },
+    "borders": {
+      "label": "Si appoggia a"
+    },
+    "isAfter": {
+      "label": "Cronologicamente posteriore a"
+    },
+    "isBefore": {
+      "label": "Cronologicamente anteriore a"
+    },
+    "isContemporaryWith": {
+      "label": "Contemporaneo a"
+    },
+    "depicts": {
+      "label": "Rappresenta"
+    },
+    "isDepictedIn": {
+      "label": "È rappresentato in"
+    },
+    "isMapLayerOf": {
+      "label": "Sfondo cartografico di"
+    },
+    "hasMapLayer": {
+      "label": "Ha lo sfondo cartografico"
+    },
+    "isInstanceOf": {
+      "label": "Classificazione tipologica"
+    },
+    "hasInstance": {
+      "label": "Reperti pertinenti"
+    }
+  }
+}

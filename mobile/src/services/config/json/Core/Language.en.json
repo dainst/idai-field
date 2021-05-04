@@ -1,0 +1,91 @@
+{
+  "fields": {
+    "category": {
+      "label": "Category"
+    },
+    "identifier": {
+      "label": "Identifier",
+      "description": "Unique identifier of this resource"
+    },
+    "shortDescription": {
+      "label": "Short description"
+    }
+  },
+  "categories": {
+    "Project": {
+      "label": "Project",
+      "fields": {
+        "coordinateReferenceSystem": {
+          "label": "Coordinate reference system"
+        }
+      }
+    },
+    "Image": {
+      "label": "Image",
+      "fields": {
+        "height": {
+          "label": "Height"
+        },
+        "width": {
+          "label": "Width"
+        }
+      }
+    }
+  },
+  "relations": {
+    "isRecordedIn": {
+      "label": "Recorded in operation"
+    },
+    "liesWithin": {
+      "label": "Lies within"
+    },
+    "includes": {
+      "label": "Includes"
+    },
+    "isAbove": {
+      "label": "Above"
+    },
+    "isBelow": {
+      "label": "Below"
+    },
+    "isEquivalentTo": {
+      "label": "Equivalent to"
+    },
+    "cuts": {
+      "label": "Cuts"
+    },
+    "isCutBy": {
+      "label": "Cut by"
+    },
+    "borders": {
+      "label": "Borders"
+    },
+    "isAfter": {
+      "label": "After"
+    },
+    "isBefore": {
+      "label": "Before"
+    },
+    "isContemporaryWith": {
+      "label": "Contemporary with"
+    },
+    "depicts": {
+      "label": "Depicts"
+    },
+    "isDepictedIn": {
+      "label": "Depicted in"
+    },
+    "isMapLayerOf": {
+      "label": "Map layer of"
+    },
+    "hasMapLayer": {
+      "label": "Has map layer"
+    },
+    "isInstanceOf": {
+      "label": "Typological classification"
+    },
+    "hasInstance": {
+      "label": "Associated finds"
+    }
+  }
+}

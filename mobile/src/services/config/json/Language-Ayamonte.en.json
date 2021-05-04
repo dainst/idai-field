@@ -1,0 +1,268 @@
+{
+    "categories": {
+        "Project": {
+            "fields": {
+                "projectProgression": {
+                    "label": "Project Progression",
+                    "description": "Information on the course of the project"
+                }
+            }
+        },
+        "Place": {
+            "fields": {
+                "boundary": {
+                    "label": "Boundaries"
+                }
+            }
+        },
+        "Survey": {
+            "fields": {
+                "siteClassification": {
+                    "label": "Site classification"
+                }
+            }
+        },
+        "Trench": {
+            "fields": {
+                "projectProgression": {
+                    "label": "Project Progression",
+                    "description": "Information on the course of the project"
+                }
+            }
+        },
+        "Drawing": {
+            "fields": {
+                "imageRights": {
+                    "label": "Image Rights"
+                },
+                "representedObject": {
+                    "label": "Represented object"
+                }
+            }
+        },
+        "Find": {
+            "fields": {
+                "ayamonteCondition": {
+                    "label": "Condition (Ayamonte specific)"
+                },
+                "storageRegion": {
+                    "label": "Storage region/state"
+                },
+                "storageMuseum": {
+                    "label": "Storage museum"
+                },
+                "storageProvince": {
+                    "label": "Storage province"
+                },
+                "storageState": {
+                    "label": "Storage country"
+                },
+                "isGraveFind": {
+                    "label": "Grave find"
+                },
+                "isStrayFind": {
+                    "label": "Stray find"
+                },
+                "findType": {
+                    "label": "Type of find"
+                },
+                "findObjectType": {
+                    "label": "Type of object"
+                },
+                "findMaterial": {
+                    "label": "Material"
+                },
+                "materialColor": {
+                    "label": "Color of the material"
+                },
+                "materialDescription": {
+                    "label": "Description of the material"
+                }
+            }
+        },
+        "Profile": {
+            "fields": {
+                "profileClassification": {
+                    "label": "Classification"
+                },
+                "verticalPosition": {
+                    "label": "Vertical position"
+                }
+            }
+        },
+        "Feature": {
+            "fields": {
+                "artifacts": {
+                    "label": "Artifacts"
+                },
+                "significanceRemark": {
+                    "label": "Remarks on significance"
+                },
+                "featureClassification": {
+                    "label": "Classification of the feature"
+                },
+                "createdAfterSpoil": {
+                    "label": "Created after spoil"
+                },
+                "featureClassificationOther": {
+                    "label": "Further classification of the feature"
+                },
+                "otherClassification": {
+                    "label": "Further classification"
+                }
+            }
+        },
+        "Grave": {
+            "fields": {
+                "artifacts": {
+                    "label": "Artifacts"
+                },
+                "significanceRemark": {
+                    "label": "Remarks on significance"
+                }
+            }
+        },
+        "Layer": {
+            "fields": {
+                "artifacts": {
+                    "label": "Artifacts"
+                },
+                "significanceRemark": {
+                    "label": "Remarks on significance"
+                },
+                "layerClassificationOther": {
+                    "label": "Further classification of the layer"
+                },
+                "otherClassification": {
+                    "label": "Further classification"
+                }
+            }
+        },
+        "Wood": {
+            "fields": {
+                "materialDescription": {
+                    "label": "Description of the material"
+                },
+                "weight": {
+                    "label": "Weight (g)"
+                },
+                "objectType": {
+                    "label": "Object type"
+                }
+            }
+        },
+        "Pottery": {
+            "fields": {
+                "amount": {
+                    "label": "Total number"
+                },
+                "conservationRemarks": {
+                    "label": "Remarks on conservation"
+                },
+                "conservationEarlierMeasures": {
+                    "label": "Earlier conservation measures"
+                },
+                "condition": {
+                    "label": "Condition"
+                },
+                "potteryBelongsTo": {
+                    "label": "Related fragments"
+                },
+                "potteryFittingTo": {
+                    "label": "Matching fragments"
+                },
+                "potteryComparableTo": {
+                    "label": "Comparable fragments"
+                }
+            }
+        },
+        "Bone": {
+            "fields": {
+                "sexDeterminationCertainty": {
+                    "label": "Certainty of sex determination"
+                },
+                "boneType": {
+                    "label": "Grobe Einordnung der Knochen"
+                },
+                "weight": {
+                    "label": "Weight (g)"
+                }
+            }
+        },
+        "Sample": {
+            "fields": {
+                "sampleTakenBy": {
+                    "label": "Sample taken by"
+                },
+                "sampleReason": {
+                    "label": "Reason for sample taking"
+                },
+                "material": {
+                    "label": "Material"
+                },
+                "sampleNumber": {
+                    "label": "Sample number"
+                },
+                "analysisResult": {
+                    "label": "Result of analysis"
+                },
+                "analysisMethod": {
+                    "label": "Analytical method"
+                },
+                "isGraveFind": {
+                    "label": "Grave find"
+                },
+                "storageRegion": {
+                    "label": "Storage region/state"
+                },
+                "storageMuseum": {
+                    "label": "Storage museum"
+                },
+                "storageProvince": {
+                    "label": "Storage province"
+                },
+                "storageState": {
+                    "label": "Storage country"
+                },
+                "storagePlace": {
+                    "label": "Storage place"
+                }
+            }
+        },
+        "Photo": {
+            "fields": {
+                "imageObject": {
+                    "label": "Depicted object"
+                },
+                "imageRights": {
+                    "label": "Image rights"
+                },
+                "imageContent": {
+                    "label": "Content of the image"
+                }
+            }
+        },
+        "Glass": {
+            "fields": {
+                "objectType": {
+                    "label": "Object type"
+                }
+            }
+        },
+        "Burial": {
+            "fields": {
+                "hasGraveGoods": {
+                    "label": "Has grave goods"
+                }
+            }
+        }
+    },
+    "relations": {
+        "isAbove": {
+            "label": "Above"
+        },
+        "isBelow": {
+            "label": "Below"
+        }
+    }
+}

@@ -1,0 +1,263 @@
+{
+    "commons": {
+        "shortDescription": {
+            "label": "Breve descripción"
+        },
+        "category": {
+            "label": "Categoría"
+        }
+    },
+    "categories": {
+        "Project": {
+            "fields": {
+                "projectProgression": {
+                    "label": "Curso del proyecto",
+                    "description": "Información sobre el curso del proyecto"
+                }
+            }
+        },
+        "Place": {
+            "fields": {
+                "boundary": {
+                    "label": "Límite"
+                }
+            }
+        },
+        "Survey": {
+            "fields": {
+                "siteClassification": {
+                    "label": "Clasificación del yacimiento"
+                }
+            }
+        },
+        "Trench": {
+            "fields": {
+                "projectProgression": {
+                    "label": "Curso de la excavación",
+                    "description": "Information on the course of the project"
+                }
+            }
+        },
+        "Drawing": {
+            "fields": {
+                "imageRights": {
+                    "label": "Derechos de autor de la imagen"
+                },
+                "representedObject": {
+                    "label": "Objeto representado"
+                }
+            }
+        },
+        "Find": {
+            "fields": {
+                "ayamonteCondition": {
+                    "label": "Estado de conservación (específico Ayamonte)"
+                },
+                "storageRegion": {
+                    "label": "Deposito - provincia"
+                },
+                "storageMuseum": {
+                    "label": "Deposito - museo"
+                },
+                "storageProvince": {
+                    "label": "Deposito - comunidad autónoma"
+                },
+                "storageState": {
+                    "label": "Deposito - país"
+                },
+                "isGraveFind": {
+                    "label": "Encontrado en tumba"
+                },
+                "isStrayFind": {
+                    "label": "hallazgo aislado"
+                },
+                "findType": {
+                    "label": "Clasificación"
+                },
+                "findObjectType": {
+                    "label": "Tipo de objeto"
+                },
+                "findMaterial": {
+                    "label": "Material"
+                },
+                "materialColor": {
+                    "label": "Material - color"
+                },
+                "materialDescription": {
+                    "label": "Material - descripción"
+                }
+            }
+        },
+        "Profile": {
+            "fields": {
+                "profileClassification": {
+                    "label": "Clasificación"
+                },
+                "verticalPosition": {
+                    "label": "Nivel"
+                }
+            }
+        },
+        "Feature": {
+            "fields": {
+                "artifacts": {
+                    "label": "Hallazgos"
+                },
+                "significanceRemark": {
+                    "label": "Notas sobre la calidad"
+                },
+                "featureClassification": {
+                    "label": "Clasificación del estrato"
+                },
+                "createdAfterSpoil": {
+                    "label": "Después del rebaje"
+                },
+                "featureClassificationOther": {
+                    "label": "Clasificación de la unidad estratigráfica - otro"
+                },
+                "otherClassification": {
+                    "label": "Otra clasificación"
+                }
+            }
+        },
+        "Grave": {
+            "fields": {
+                "artifacts": {
+                    "label": "Categorías de hallazgo"
+                },
+                "significanceRemark": {
+                    "label": "Notas sobre la calidad"
+                }
+            }
+        },
+        "Layer": {
+            "fields": {
+                "artifacts": {
+                    "label": "Categorías de hallazgo"
+                },
+                "significanceRemark": {
+                    "label": "Notas sobre la calidad"
+                },
+                "layerClassificationOther": {
+                    "label": "Otra clasificación"
+                },
+                "otherClassification": {
+                    "label": "Otro"
+                }
+            }
+        },
+        "Wood": {
+            "fields": {
+                "materialDescription": {
+                    "label": "Tipo de madera"
+                },
+                "weight": {
+                    "label": "Peso (g)"
+                }
+            }
+        },
+        "Pottery": {
+            "fields": {
+                "amount": {
+                    "label": "Número total de fragmentos"
+                },
+                "conservationRemarks": {
+                    "label": "Conservación - comentarios"
+                },
+                "conservationEarlierMeasures": {
+                    "label": "Conservación - medidas anterioras"
+                },
+                "condition": {
+                    "label": "Estado de conservación"
+                },
+                "potteryBelongsTo": {
+                    "label": "Fragmento(s) perteneneciente(s)"
+                },
+                "potteryFittingTo": {
+                    "label": "Fragmento(s) conexo(s)"
+                },
+                "potteryComparableTo": {
+                    "label": "Fragmento(s) comparable(s)"
+                }
+            }
+        },
+        "Bone": {
+            "fields": {
+                "sexDeterminationCertainty": {
+                    "label": "Certitud de la determinación del sexo"
+                },
+                "weight": {
+                    "label": "Peso (g)"
+                }
+            }
+        },
+        "Sample": {
+            "fields": {
+                "sampleTakenBy": {
+                    "label": "Recogida por"
+                },
+                "sampleReason": {
+                    "label": "Motivo del muestreo"
+                },
+                "material": {
+                    "label": "Material"
+                },
+                "sampleNumber": {
+                    "label": "Número de la muestra"
+                },
+                "analysisResult": {
+                    "label": "Resultado del análisis"
+                },
+                "analysisMethod": {
+                    "label": "Método del análisis"
+                },
+                "isGraveFind": {
+                    "label": "Encontrado en tumba"
+                },
+                "storageRegion": {
+                    "label": "Deposito - provincia"
+                },
+                "storageMuseum": {
+                    "label": "Deposito - museo"
+                },
+                "storageProvince": {
+                    "label": "Deposito - comunidad autónoma"
+                },
+                "storageState": {
+                    "label": "Deposito - país"
+                },
+                "storagePlace": {
+                    "label": "Deposito - ciudad"
+                }
+            }
+        },
+        "Photo": {
+            "fields": {
+                "imageObject": {
+                    "label": "Objeto representado"
+                },
+                "imageRights": {
+                    "label": "Derechos de autor de la imagen"
+                },
+                "imageContent": {
+                    "label": "Contenido de la imagen"
+                }
+            }
+        },
+        "Burial": {
+            "fields": {
+                "hasGraveGoods": {
+                    "label": "Hay ajuares"
+                }
+            }
+        }
+    },
+    "relations": {
+        "isAbove": {
+            "label": "Sobre de"
+        },
+        "isBelow": {
+            "label": "Debajo de"
+        }
+    }
+}

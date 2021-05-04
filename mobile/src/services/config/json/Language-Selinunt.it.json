@@ -1,0 +1,202 @@
+{
+  "categories": {
+    "Place": {
+      "fields": {
+        "placeName": {
+          "label": "Nome del luogo"
+        },
+        "siteClassification": {
+          "label": "Classificazione"
+        },
+        "buildingResearchHistory": {
+          "label": "Storia della ricerca"
+        },
+        "placeCondition": {
+          "label": "Stato di conservazione"
+        },
+        "description": {
+          "label": "Descrizione"
+        }
+      }
+    },
+    "Architecture": {
+      "label": "Costruzione",
+      "fields": {
+        "architectureClassification": {
+          "label": "Designazione"
+        },
+        "architectureMaterial": {
+          "label": "Materiale"
+        },
+        "brickwork": {
+          "label": "Tessitura"
+        },
+        "construction": {
+          "label": "Muro: Construzione"
+        },
+        "architectureMasonry": {
+          "label": "Muro: Opera"
+        },
+        "masonryJoint": {
+          "label": "Muro: Adesione"
+        },
+        "architectureLayerType": {
+          "label": "Muro: Tipo dei filari"
+        },
+        "architectureMasonryCoating": {
+          "label": "Muro: Rivestimento"
+        },
+        "floorClassification": {
+          "label": "Pavimento"
+        }
+      }
+    },
+    "Bedrock": {
+      "label": "Naturale"
+    },
+    "Feature": {
+      "fields": {
+        "featureForm": {
+          "label": "Forma"
+        },
+        "featureBorders": {
+          "label": "Distinzione"
+        },
+        "period": {
+          "label": "Epoca"
+        }
+      }
+    },
+    "Layer": {
+      "label": "Strato di terra",
+      "fields": {
+        "layerClassification": {
+          "label": "Strato di terra: Designazione"
+        },
+        "layerColorLightness": {
+          "label": "Strato di terra: Tono"
+        },
+        "layerColor": {
+          "label": "Strato di terra: Colore"
+        },
+        "consistency": {
+          "label": "Strato di terra: Consistenza"
+        },
+        "soilType": {
+          "label": "Strato di terra: Composizione"
+        },
+        "distinguishingCriteria": {
+          "label": "Strato di terra: Criterio discriminante "
+        },
+        "layerContentPotteryOrigin": {
+          "label": "Contenuto: Ceramica provenienza"
+        },
+        "layerContentPotteryShape": {
+          "label": "Contenuto: Ceramica forma"
+        },
+        "layerContentPotteryDecoration": {
+          "label": "Contenuto: Ceramica decorazione"
+        },
+        "layerContentTerracotta": {
+          "label": "Contenuto: Ogetti di terracotta"
+        },
+        "layerContentInorganic": {
+          "label": "Contenuto: Materiale anorganico"
+        },
+        "layerContentOrganic": {
+          "label": "Contenuto: Materiale organico"
+        },
+        "layerContentBuildingMaterial": {
+          "label": "Contenuto: Materiale da costruzione"
+        },
+        "layerForm": {
+          "label": "Strato di terra: Forma"
+        },
+        "layerBorders": {
+          "label": "Strato di terra: Limiti"
+        }
+      }
+    },
+    "Burial": {
+      "label": "Sepoltura"
+    },
+    "Grave": {
+      "label": "Tomba"
+    },
+    "Pottery": {
+      "fields": {
+        "vesselForm": {
+          "label": "Forma"
+        },
+        "miniatureVesselForm": {
+          "label": "Forma ceramica miniaturistica"
+        },
+        "potteryProvenance": {
+          "label": "Provenienza"
+        },
+        "vesselDecoration": {
+          "label": "Decorazione"
+        }
+      }
+    },
+    "FindCollection": {
+      "label": "Composizione reperti",
+      "fields": {
+        "potteryFormsOverview": {
+          "label": "Rassegna delle forme di ceramica"
+        },
+        "potteryFineWareByProvenance": {
+          "label": "1. Ceramica fine secondo la provenienza"
+        },
+        "potteryFineWareByProvenanceQuantityWeightDetails": {
+          "label": "1. Quantità, Peso, Particolari"
+        },
+        "potteryAmphoraeByProvenance": {
+          "label": "2. Anfore secondo la provenienza"
+        },
+        "potteryAmphoraeByProvenanceQuantityWeightDetails": {
+          "label": "2. Quantità, Peso, Particolari"
+        },
+        "potteryCoarseWareByFunction": {
+          "label": "3. Ceramica comune secondo la funzione"
+        },
+        "potteryCoarseWareByFunctionQuantityWeightDetails": {
+          "label": "3. Quantità, Peso, Particolari"
+        },
+        "miniaturePotteryCollection": {
+          "label": "4. Ceramica Miniaturistica "
+        },
+        "terracottaCollection": {
+          "label": "5. Terrecotte"
+        },
+        "terracottaCollectionQuantityWeightDetails": {
+          "label": "5. Quantità, Peso, Particolari"
+        },
+        "buildingMaterialCollection": {
+          "label": "6. Materiali di costruzione"
+        },
+        "buildingMaterialCollectionQuantityWeightDetails": {
+          "label": "6. Quantità, Peso, Particolari"
+        },
+        "stoneCollection": {
+          "label": "7. Pietre e oggetti di pietra"
+        },
+        "stoneCollectionQuantityWeightDetails": {
+          "label": "7. Quantità, Peso, Particolari"
+        },
+        "metalAndGlasCollection": {
+          "label": "8. Metalli e vetro"
+        },
+        "metalAndGlasCollectionQuantityWeightDetails": {
+          "label": "8. Quantità, Peso, Particolari"
+        },
+        "organicMaterialCollection": {
+          "label": "9. Materiali organici"
+        },
+        "organicMaterialCollectionQuantityWeightDetails": {
+          "label": "9. Quantità, Peso, Particolari"
+        }
+      }
+    }
+  }
+}

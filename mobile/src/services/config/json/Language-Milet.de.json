@@ -1,0 +1,776 @@
+{
+  "fields": {
+    "category": {
+      "label": "Kategorie"
+    },
+    "identifier": {
+      "label": "Name / ID (eindeutig)",
+      "description": "Eindeutiger Bezeichner dieser Ressource, muss sich nach dem milesischen System zur Bennenung richten; also: Areal, Jahr Schnitt ...; für Befunde bspw: HU19.A.01 für Befund 1 aus Schnitt A im Jahr 2019 auf dem Humeitepe."
+    },
+    "dimensionHeadHeight": {
+      "label": "Höhe des Kopfes",
+      "description": "Angabe der Höhe des Kopfes an der maximalen/minimalen Ausdehnung"
+    },
+    "diameterPercentage": {
+      "label": "Erhaltener Durchmesser in Prozent"
+    },
+    "shortDescription": {
+      "label": "Kurzansprache"
+    },
+    "scale": {
+      "label": "Maßstab"
+    },
+    "gazId": {
+      "label": "Gazetteer-ID (siehe https://gazetteer.dainst.org/)",
+      "description": "Bitte nur die eindeutige ID angeben. Bspw. nur die Nummer am Ende in der URL: https://gazetteer.dainst.org/place/2091612 (also: 2091612)."
+    },
+    "datingAddenda": {
+      "label": "Ergänzende Informationen zur Datierung"
+    },
+    "measuringPointID": {
+      "label": "Messpunkt-Nummer",
+      "description": "Punktnummer(n) in der Totalstation, leer wenn nicht zutreffend"
+    },
+    "localization": {
+      "label": "Provenienz der Messdaten",
+      "description": "Wie wurde die Lokalisierung vorgenommen?"
+    },
+    "localizationDescription": {
+      "label": "Beschreibung der Lokalisierung (wenn Messdaten fehlen)",
+      "description": "Hier kann entweder eine topographische Beschreibung eingegeben werden, falls nur diese Vorhanden ist, oder bei Bedarf die Liste der Punktnummern oder Messdaten in anderer Form nachgehalten werden."
+    },
+    "FotoNr": {
+      "label": "Fotonummer(n)",
+      "description": "Hier können die mit der Ressource assoziierten Fotonummern eingetragen werden. Dies gilt zusätzlich zu den sowie inklusive der in der Datenbank hinterlegten Fotos und entspricht dem Feld 'Fotos' auf dem Befundzettel."
+    },
+    "DrawingNr": {
+      "label": "Zeichnungsnummer(n)",
+      "description": "Hier können die mit der Ressource assoziierten Zeichnungsnummern eingetragen werden. Dies gilt zusätzlich zu den sowie inklusive der in der Datenbank hinterlegten Zeichnung und entspricht dem Feld 'Zeichnungen' auf dem Befundzettel."
+    },
+    "notes": {
+      "label": "Notizen",
+      "description": "..."
+    },
+    "otherNotes": {
+      "label": "Notizen",
+      "description": "..."
+    },
+    "quantificationOther": {
+      "label": "Andere Elemente (nicht in Formular vorgesehen)",
+      "description": "Zum Nachhalten von Bestandteilen die nicht in dem Formular widergegeben werden können - bitte vorsichtig und nur wenn absolut nötig benutzen!"
+    }
+  },
+  "relations": {
+    "isEquivalentTo": {
+      "label": "Identisch mit"
+    },
+    "isFilledBy": {
+      "label": "Verfüllt von"
+    },
+    "fills": {
+      "label": "Verfüllt"
+    },
+    "wasFoundIn": {
+      "label": "gefunden in",
+      "description": "Gebäude, Ort oder Survey dem der Fund zugeordnet werden kann."
+    },
+    "hasFinds": {
+      "label": "Zugeordnete Funde",
+      "description": "Funde die diesem Gebäude, Ort oder Survey zugeordnet werden. Bitte nur für das Inventar von Altfunden verwenden, wie bspw. die Steindepot-Aufnahme!"
+    }
+  },
+  "categories": {
+    "Operation": {
+      "fields": {
+        "AreaShorthand": {
+          "label": "Kürzel Grabungsareal",
+          "description": "Mit welchem Kürzel werden Identifikatoren und Funde aus Grabungen in diesem Areal versehen?"
+        }
+      }
+    },
+    "Trench": {
+      "label": "Grabungsareal"
+    },
+    "Feature": {
+      "label": "Schnitt",
+      "fields": {
+        "hasDisturbance": {
+          "label": "Störung",
+          "description": "Liegt eine Störung des Schnittes/Befundes/der Einheit vor? (Können Funde verunreinigt sein?)"
+        },
+        "contextFindProcessing": {
+          "label": "Empfehlungen an die Fundbearbeitung",
+          "description": "Mit welcher Genauigkeit sollen die Funde aus diesem Kontext aufgenommen werden? Auf der zweiten Seite des Papierformulares unter 'Empfehlung an Fundbearbeitung' zu finden."
+        }
+      }
+    },
+    "Layer": {
+      "label": "Befund",
+      "fields": {
+        "sampleTaken": {
+          "label": "Probe entnommen",
+          "description": "Wenn aus dem Befund eine Probe entnommen wurde (bspw. Holzkohle, Schlämmprobe, etc.) dann bitte 'Ja' angeben. (Enthalten in Papierformular)"
+        },
+        "distinguishingCriteria": {
+          "label": "Unterscheidungskriterium ggü. Umgebung",
+          "description": "Welches Kriterium wurde zur Abgrenzung des Befundes gegenüber den umliegenden Befunden gewählt? (Aus Kurzbeschreibung erschließen, nicht auf dem Papierformular enthalten.)"
+        },
+        "layerClassification": {
+          "label": "Befundart",
+          "description": "Sollte dem Feld 'Befundart' auf dem Papierformular entsprechen. Dort häufig verwendete aber hier fehlende Begriffe bitte für die Datenbank nachreichen!"
+        },
+        "isNatural": {
+          "label": "Natürliche Entstehung",
+          "description": "Ist der Befund natürlich entstanden? ('Ja' z. B. bei Erosion, 'nein' wenn anthropogen). Wenn während der Ausgrabung Unklarheit herrscht bitte erst in der Nachbearbeitung ergänzen. (Nicht im Papierformular enthalten.)"
+        },
+        "contextDescription": {
+          "label": "Kurzbeschreibung des Befundes",
+          "description": "Entspricht dem Feld 'Kurzbeschreibung' auf dem Papierformular."
+        },
+        "soilType": {
+          "label": "Bodenanteile",
+          "description": "Partikel des Bodens nach bodenkundlicher Anleitung, bitte erläutern und Anteile in der Beschreibung angeben"
+        },
+        "consistency": {
+          "label": "Konsistenz",
+          "description": "Härte bzw. Konsistenz des Bodens"
+        },
+        "layerSoilContentDesc": {
+          "label": "Farbe / Bodenart / Konsistenz",
+          "description": "Beschreibung des Bodens: Inhalt des Felds 'Farbe / Bodenart / Konsistenz' im Papierformular"
+        },
+        "layerColor0": {
+          "label": "Grundfarbe des Bodens",
+          "description": "Gemeinsam mit Farbintensität auswählen (nach Papierformular)."
+        },
+        "layerColorIntensity": {
+          "label": "Intensität der Bodenfarbe",
+          "description": "Gemeinsam mit Grundfarbe auswählen (nach Papierformular)."
+        },
+        "layerInclusions": {
+          "label": "Material / Beimengungen",
+          "description": "Bodenbestandteile und Einschlüsse"
+        },
+        "layerInclusionsDesc": {
+          "label": "Material / Beimengungen: Ergänzungen",
+          "description": "Bodenbestandteile und Einschlüsse: Inhalt des Feld 'Material / Beimengungen' im Papierformular."
+        },
+        "layerFinds": {
+          "label": "Funde",
+          "description": "Grober Überblick über die im Befund enthaltenen Funde"
+        },
+        "layerFindsComplete": {
+          "label": "Vollständige Fundübergabe",
+          "description": "Wurden alle Funde der Befundes ins Magazin gegeben (ja) oder wurde nur eine Auswahl behalten (nein)."
+        },
+        "layerFindsOther": {
+          "label": "Weitere Funde und Sonderfunde",
+          "description": "Grober Überblick über die im Befund enthaltenen Funde, nach dem Papierformular: 'Weitere Funde und Sonderfunde'"
+        },
+        "layerInterpretation": {
+          "label": "Interpretation",
+          "description": "Nach dem Papierformular: 'Interpretation'. Gibt eine Deutung des Befundes im Feld an, die in der Aufarbeitung modifiziert werden kann."
+        },
+        "layerDatingIndication": {
+          "label": "Datierende Elemente",
+          "description": "Erläuterung der Basis für die Datierung. Nach dem Papierformular: 'Datierende Elemente, Erläuterung'. Sollte zusätzlich zu der und im Bezug auf die Grobdatierung im Reiter 'Zeit' ausgefüllt werden."
+        }
+      }
+    },
+    "StrUnit": {
+      "label": "Stratigraphische Einheit",
+      "fields": {
+        "unitNotes": {
+          "label": "Notizen",
+          "description": "Notizen"
+        }
+      }
+
+    },
+    "Profile": {
+      "label": "Profilaufnahme",
+      "fields": {
+        "profileClassification": {
+          "label": "Profilansprache",
+          "description": "Hier die Profilansprache vom Formular übertragen."
+        }
+      }
+    },
+    "TrenchSketch": {
+      "label": "Überblicksskizze",
+      "fields": {
+        
+      }
+    },
+    "Find": {
+      "fields": {
+        "storagePlaceOther": {
+          "label": "Anderer Aufbewahrungsort",
+          "description": "Wenn in der Liste oben nicht angegeben, bitte hier den Aufbewahrungsort eintragen."
+        },
+        "workflow": {
+          "label": "Workflow",
+          "description": "Was wurde schon getan?"
+        },
+        "OldInventoryNr": {
+          "label": "Alte Inventarnummer",
+          "description": "Veraltete Inventarnummern (vor Systemänderung)"
+        },
+        "MuseumInventoryNr": {
+          "label": "Inventarnummer (Museum Milet)",
+          "description": "Inventarnummer des Museum Milet"
+        },
+        "YearOfFind": {
+          "label": "Fundjahr (wenn Altfund)",
+          "description": "Im Falle der nachträglichen Inventarisierung eines Altfundes einfügen: Jahr des Fundes, bzw. Jahr in dem der Fund bekannt wurde, soweit nachvollziehbar."
+        }
+      }
+    },
+    "Pottery": {
+      "label": "Keramik",
+      "fields": {
+        "potteryGroup": {
+          "label": "Keramikklasse",
+          "description": ""
+        },
+        "functionalCategory": {
+          "label": "Funktionskategorie",
+          "description": ""
+        },
+        "vesselForm": {
+          "label": "Gefäßform",
+          "description": ""
+        },
+        "vesselFormDescription": {
+          "label": "Beschreibung der Form",
+          "description": ""
+        },
+        "vesselType": {
+          "label": "Typus",
+          "description": ""
+        },
+        "provenanceInput": {
+          "label": "Provenienz",
+          "description": ""
+        },
+        "amountSherdsTotal": {
+          "label": "Quantifizierung: Anzahl Fragmente (gesamt)",
+          "description": ""
+        },
+        "amountSherdsRim": {
+          "label": "Quantifizierung: Anzahl Randfragmente",
+          "description": ""
+        },
+        "amountSherdsWall": {
+          "label": "Quantifizierung: Anzahl Wandfragmente",
+          "description": ""
+        },
+        "amountSherdsBase": {
+          "label": "Quantifizierung: Anzahl Bodenfragmente",
+          "description": ""
+        },
+        "amountSherdsHandles": {
+          "label": "Quantifizierung: Anzahl Henkelfragmente",
+          "description": ""
+        },
+        "amountSherdsLid": {
+          "label": "Quantifizierung: Anzahl Deckelfragmente",
+          "description": ""
+        },
+        "amountSherdsOther": {
+          "label": "Quantifizierung: Anzahl Sonstige Fragmente",
+          "description": ""
+        },
+        "amountSherdsWholeProfile": {
+          "label": "Quantifizierung: Anzahl Fragmente mit gesamtem Profil",
+          "description": ""
+        },
+        "weightTotal": {
+          "label": "Quantifizierung: Gewicht gesamt (in g)",
+          "description": ""
+        },
+        "potteryCondition": {
+          "label": "Quantifizierung und Erhaltung: Erhaltungszustand",
+          "description": ""
+        },
+        "fabricGroup": {
+          "label": "Fabrikat: Gruppe",
+          "description": ""
+        },
+        "fabricColorInsideMunsell": {
+          "label": "Fabrikat: Farbe innen (Munsell, Format!)",
+          "description": ""
+        },
+        "fabricColorOutsideMunsell": {
+          "label": "Fabrikat: Farbe außen (Munsell, Format!)",
+          "description": ""
+        },
+        "fabricColorBreakMunsell": {
+          "label": "Fabrikat: Farbe Bruchkern (Munsell, Format!)",
+          "description": ""
+        },
+        "fabricHardness": {
+          "label": "Fabrikat: Härte",
+          "description": ""
+        },
+        "fabricStructure": {
+          "label": "Fabrikat: Bruchstruktur",
+          "description": ""
+        },
+        "temperType": {
+          "label": "Fabrikat: Magerungsart",
+          "description": ""
+        },
+        "temperTypeOther": {
+          "label": "Fabrikat: Magerungsart (Sonstige Bestandteile)",
+          "description": ""
+        },
+        "temperAmount": {
+          "label": "Fabrikat: Menge",
+          "description": ""
+        },
+        "temperGrain": {
+          "label": "Fabrikat: Körnung",
+          "description": ""
+        },
+        "surfaceTreatment": {
+          "label": "Oberfläche und Dekoration: Behandlung",
+          "description": ""
+        },
+        "surfaceTreatmentDescription": {
+          "label": "Oberfläche und Dekoration: Behandlung - Beschreibung",
+          "description": ""
+        },
+        "analysisMethod": {
+          "label": "Analyse: Methode",
+          "description": ""
+        },
+        "analysisMethodOther": {
+          "label": "Analyse: Methode (andere)",
+          "description": ""
+        },
+        "analysisAim": {
+          "label": "Analyse: Ziel",
+          "description": ""
+        },
+        "analysisActor": {
+          "label": "Analyse: Ausführende Person / Labor",
+          "description": ""
+        },
+        "analysisResult": {
+          "label": "Analyse: Ergebnis",
+          "description": ""
+        },
+        "otherNotes": {
+          "label": "Arbeitsnotiz",
+          "description": ""
+        }
+      }
+    },
+    "Survey": {
+      "label": "Survey-Areal",
+      "fields": {
+        "researchMethod-milet": {
+          "label": "Untersuchungsmethode",
+          "description": "Welche Surveymethode findet Anwendung?"
+        }
+      }
+    },
+    "Sculpture": {
+      "label": "Skulptur",
+      "fields": {
+        "reused": {
+          "label": "Wiederverwendet?",
+          "description": "Ist die Statue wiederverwendet bzw. nachbearbeitet? (Umgearbeitet, Wiederverwendet)"
+        },
+        "sculptureMaterial": {
+          "label": "Grundmaterial der Skulptur",
+          "description": "Das Material, aus dem die Skulptur überwiegend besteht."
+        },
+        "sculptureMaterialAttr": {
+          "label": "Grundmaterial: Genauere Bestimmung",
+          "description": "Beschreibung"
+        },
+        "colour": {
+          "label": "Grundmaterial: Farbe",
+          "description": "Grundfarben des Materials"
+        },
+        "sculptureMarbleType": {
+          "label": "Art des Marmors"
+        },
+        "materialDescription": {
+          "label": "Grundmaterial: Beschreibung und Ergänzung",
+          "description": "Detailierte Beschreibung des Materials; Platz für zusätzliche Erläuterungen und Beschreibungen"
+        },
+        "sculptureBodypart": {
+          "label": "Erhaltenes Bruchstück",
+          "description": "Welche Teile der Skulptur sind erhalten?"
+        },
+        "sculptureBodypartOther": {
+          "label": "Anderes Fragment",
+          "description": "Auszufüllen wenn in der Liste nichts zutreffendes zu finden ist."
+        },
+        "sculptureName": {
+          "label": "Name des Honoranden",
+          "description": "Sofern bekannt ist hier der Name der von der Skulptur abgebildeten Person anzugeben."
+        },
+        "sculptureGender": {
+          "label": "Gender",
+          "description": "Geschlecht der dargestellten Figur"
+        },
+        "sculptureType": {
+          "label": "Kategorie / Skulpturentyp",
+          "description": ""
+        },
+        "sculptureTypeDescription": {
+          "label": "Skulpturentyp: Ergänzung",
+          "description": "Zusätzliche Erläuterungen zum Skulpturtypen."
+        },
+        "sculptureClothing": {
+          "label": "Kleidung",
+          "description": ""
+        },
+        "sculptureClothingDescription": {
+          "label": "Kleidung: Ergänzung",
+          "description": "Beschreibung"
+        },
+        "sculptureHairstyle": {
+          "label": "Haare",
+          "description": "Beschreibung"
+        },
+        "sculptureHairstyleDescription": {
+          "label": "Haare: Ergänzung",
+          "description": "Beschreibung"
+        },
+        "sculptureBeardstyle": {
+          "label": "Bart",
+          "description": "Beschreibung"
+        },
+        "sculptureBeardstyleDescription": {
+          "label": "Bart: Ergänzung",
+          "description": "Beschreibung"
+        },
+        "sculptureAttributes": {
+          "label": "Attribute",
+          "description": "Beschreibung"
+        },
+        "sculptureAttributesDescription": {
+          "label": "Attribute: Ergänzung",
+          "description": "Beschreibung"
+        },
+        "sculptureQuality": {
+          "label": "Qualität der Arbeit / Ausführung der Skulptur",
+          "description": ""
+        }
+      }
+    },
+    "Building": {
+      "fields": {
+        "buildingType": {
+          "label": "Funktion des Bauwerks",
+          "description": ""
+        },
+        "buildingCategory": {
+          "label": "Art des Bauwerks",
+          "description": ""
+        },
+        "buildingContractor": {
+          "label": "Bauherr*in (oder Auftraggeber*in)",
+          "description": "Kann Stadt oder einzelne Person sein."
+        },
+        "associatedDeity": {
+          "label": "Assoziierte Gottheit",
+          "description": "Bei Weihungen oder Tempeln, oder wenn anderweitig zutreffend. Keine Epiklesen!"
+        },
+        "excavatedIn": {
+          "label": "Ausgrabungsjahre",
+          "description": "Wann wurde hier gearbeitet?"
+        },
+        "excavatedBy": {
+          "label": "Ausgrabungsleiter*innen",
+          "description": "Wer war für die Arbeiten am Gebäude verantwortlich?"
+        }
+      }
+    },
+    "Photo": {
+      "fields": {
+        "viewDirection": {
+          "label": "Blick nach ...",
+          "description": "Blickrichtung des Fotos"
+        }
+      }
+    },
+    "Drawing": {
+      "fields": {
+      }
+    },
+    "Sample": {
+      "fields": {
+        "volume": {
+          "label": "Volumen in ml",
+          "description": "Angabe des Volumens in Millilitern"
+        }
+      }
+    },
+    "Quantification": {
+      "label": "Quantifizierung",
+      "fields": {
+        "quantificationType": {
+          "label": "Art des Fundes",
+          "description": ""
+        },
+        "countTotal": {
+          "label": "Anzahl der Fragmente (gesamt)",
+          "description": ""
+        },
+        "weightTotal": {
+          "label": "Gewicht (gesamt)",
+          "description": ""
+        },
+        "quantificationNotes": {
+          "label": "Bemerkungen zur Quantifizierung",
+          "description": ""
+        }
+      }
+    },
+    "Pottery_Quantification_A": {
+      "label": "Quantifizierung Keramik A",
+      "fields": {
+        "countArchitecturalCeramics": {
+          "label": "Architektonische Keramik (Anzahl der Fragmente)",
+          "description": ""
+        }, 
+        "weightArchitecturalCeramics": {
+          "label": "Architektonische Keramik (Gewicht in g)",
+          "description": ""
+        },
+        "countTransportamphorae": {
+          "label": "Transportamphoren (Anzahl der Fragmente)",
+          "description": ""
+        }, 
+        "weightTransportamphorae": {
+          "label": "Transportamphoren (Gewicht in g)",
+          "description": ""
+        },
+        "countHouseholdwares": {
+          "label": "Haushaltskeramik (Anzahl der Fragmente)",
+          "description": ""
+        }, 
+        "weightHouseholdwares": {
+          "label": "Haushaltskeramik (Gewicht in g)",
+          "description": ""
+        },
+        "countCookingwares": {
+          "label": "Küchengeschirr (Anzahl der Fragmente)",
+          "description": ""
+        }, 
+        "weightCookingwares": {
+          "label": "Küchengeschirr (Gewicht in g)",
+          "description": ""
+        },
+        "countStoragevessels": {
+          "label": "Vorratsgeschirr (Anzahl der Fragmente)",
+          "description": ""
+        }, 
+        "weightStoragevessels": {
+          "label": "Vorratsgeschirr (Gewicht in g)",
+          "description": ""
+        },
+        "countTablewares": {
+          "label": "Tafelgeschirr (Anzahl der Fragmente)",
+          "description": ""
+        }, 
+        "weightTablewares": {
+          "label": "Tafelgeschirr (Gewicht in g)",
+          "description": ""
+        },
+        "countFinepottery": {
+          "label": "Feinkeramik (Anzahl der Fragmente)",
+          "description": ""
+        }, 
+        "weightFinepottery": {
+          "label": "Feinkeramik (Gewicht in g)",
+          "description": ""
+        },
+        "countOilcontainers": {
+          "label": "Öl = Lekythen, Unguentarien etc. (Anzahl der Fragmente)",
+          "description": ""
+        }, 
+        "weightOilcontainers": {
+          "label": "Öl = Lekythen, Unguentarien etc. (Gewicht in g)",
+          "description": ""
+        },
+        "countTools": {
+          "label": "Geräte = Lampen, Gewichte, Bienenkorb etc. (Anzahl der Fragmente)",
+          "description": ""
+        }, 
+        "weightTools": {
+          "label": "Geräte = Lampen, Gewichte, Bienenkorb etc. (Gewicht in g)",
+          "description": ""
+        },
+        "countUnspecified": {
+          "label": "unbestimmt (Anzahl der Fragmente)",
+          "description": ""
+        }, 
+        "weightUnspecified": {
+          "label": "unbestimmt (Gewicht in g)",
+          "description": ""
+        }
+      }
+    },
+    "Pottery_Quantification_B": {
+      "label": "Quantifizierung Keramik B",
+      "fields": {
+        "countTransportamphoraeRim": {
+          "label": "Transportamphoren (Randfragmente)",
+          "description": ""
+        }, 
+        "countTransportamphoraeBase": {
+          "label": "Transportamphoren (Bodenfragmente)",
+          "description": ""
+        }, 
+        "countTransportamphoraeHandle": {
+          "label": "Transportamphoren (Henkelfragmente)",
+          "description": ""
+        }, 
+        "countHouseholdwaresRim": {
+          "label": "Haushaltskeramik (Randfragmente)",
+          "description": ""
+        }, 
+        "countHouseholdwaresBase": {
+          "label": "Haushaltskeramik (Bodenfragmente)",
+          "description": ""
+        }, 
+        "countHouseholdwaresHandle": {
+          "label": "Haushaltskeramik (Henkelfragmente)",
+          "description": ""
+        },
+        "countCookingwaresRim": {
+          "label": "Küchengeschirr (Randfragmente)",
+          "description": ""
+        }, 
+        "countCookingwaresBase": {
+          "label": "Küchengeschirr (Bodenfragmente)",
+          "description": ""
+        }, 
+        "countCookingwaresHandle": {
+          "label": "Küchengeschirr (Henkelfragmente)",
+          "description": ""
+        }, 
+        "countStoragevesselsRim": {
+          "label": "Vorratsgeschirr (Randfragmente)",
+          "description": ""
+        },  
+        "countStoragevesselsBase": {
+          "label": "Vorratsgeschirr (Bodenfragmente)",
+          "description": ""
+        },  
+        "countStoragevesselsHandle": {
+          "label": "Vorratsgeschirr (Henkelfragmente)",
+          "description": ""
+        }, 
+        "countTablewaresRim": {
+          "label": "Tischgeschirr (Randfragmente)",
+          "description": ""
+        }, 
+        "countTablewaresBase": {
+          "label": "Tischgeschirr (Bodenfragmente)",
+          "description": ""
+        }, 
+        "countTablewaresHandle": {
+          "label": "Tischgeschirr (Henkelfragmente)",
+          "description": ""
+        }, 
+        "countFinepotteryRim": {
+          "label": "Feinkeramik (Randfragmente)",
+          "description": ""
+        }, 
+        "countFinepotteryBase": {
+          "label": "Feinkeramik (Bodenfragmente)",
+          "description": ""
+        }, 
+        "countFinepotteryHandle": {
+          "label": "Feinkeramik (Henkelfragmente)",
+          "description": ""
+        }, 
+        "countOilcontainersRim": {
+          "label": "Öl = Lekythen, Unguentarien etc.",
+          "description": ""
+        }, 
+        "countOilcontainersBase": {
+          "label": "Öl = Lekythen, Unguentarien etc. (Bodenfragmente)",
+          "description": ""
+        }, 
+        "countOilcontainersHandle": {
+          "label": "Öl = Lekythen, Unguentarien etc. (Henkelfragmente)",
+          "description": ""
+        }, 
+        "countLampsRim": {
+          "label": "Lampen (Randfragmente)",
+          "description": ""
+        }, 
+        "countLampsBase": {
+          "label": "Lampen (Bodenfragmente)",
+          "description": ""
+        }, 
+        "countLampsHandle": {
+          "label": "Lampen (Henkelfragmente)",
+          "description": ""
+        }
+      }
+    },
+    "Impression": {
+      "label": "Ersteindruck",
+      "fields": {
+        "infoFromField": {
+          "label": "Einschätzung des Befundes durch die Schnittleitung",
+          "description": ""
+        },
+        "closedContext": {
+          "label": "geschlossener Kontext",
+          "description": ""
+        },
+        "checkAgainstOtherContexts": {
+          "label": "(mögliche) Zugehörigkeit zu anderen Befunden",
+          "description": ""
+        },
+        "findProcessingWorkflow": {
+          "label": "weitere Bearbeitung",
+          "description": ""
+        },
+        "workflowDone": {
+          "label": "Bearbeitung abgeschlossen",
+          "description": ""
+        },
+        "relativeAmount": {
+          "label": "relative Fundmenge",
+          "description": ""
+        },
+        "relativeAmountCheck": {
+          "label": "relative Fundmenge",
+          "description": ""
+        },
+        "materialCondition": {
+          "label": "Erhaltungszustand",
+          "description": ""
+        },
+        "fitsOtherContexts": {
+          "label": "Zugehörigkeit zu anderen Befunden seitens des Fundbearbeitung",
+          "description": ""
+        },
+        "findSpectrum": {
+          "label": "Zusammensetzung des Formenspektrums, quantitative Relationen",
+          "description": ""
+        },
+        "specialFinds": {
+          "label": "Sonderformen und Sonderfunde",
+          "description": ""
+        },
+        "generalNotes": {
+          "label": "Allgemeiner Ersteindruck, Kommentare",
+          "description": ""
+        }
+      }
+    }
+  }
+}

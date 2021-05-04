@@ -1,0 +1,83 @@
+{
+  "categories": {
+    "Feature": {
+      "fields": {
+        "stratigraphicReliability": {
+          "label": "Stratigraphische Bewertung"
+        }
+      }
+    },
+    "PlasterFragment": {
+      "label": "Verputz",
+      "fields": {
+        "decorationColor": {
+          "label": "Farben der Bemalung"
+        },
+        "decorationDescription": {
+          "label": "Motiv der Bemalung"
+        }
+      }
+    },
+    "Mollusk": {
+      "label": "Muschel",
+      "fields": {
+        "treatment": {
+          "label": "Bearbeitung"
+        },
+        "classification": {
+          "label": "Art der Muschel"
+        }
+      }
+    },
+    "Find": {
+      "fields": {
+        "photographed": {
+          "label": "Foto"
+        },
+        "drawn": {
+          "label": "Zeichnung"
+        },
+        "sketched": {
+          "label": "Skizze"
+        },
+        "storageInventoryNumber": {
+          "label": "Etütlük Numarası"
+        },
+        "storageInventoryNumberAdditional": {
+          "label": "Envanterlik Numarası"
+        }
+      }
+    },
+    "Bone": {
+      "fields": {
+        "treatment": {
+          "label": "Bearbeitung"
+        }
+      }
+    },
+    "Sample": {
+      "fields": {
+        "soilType": {
+          "label": "Bodenart",
+          "description": "Bezeichnung des Bodens nach bodenkundlicher Kartieranleitung"
+        },
+        "comment": {
+          "label": "Kommentar"
+        },
+        "photographed": {
+          "label": "Foto"
+        },
+        "drawn": {
+          "label": "Zeichnung"
+        },
+        "sketched": {
+          "label": "Skizze"
+        },
+        "hasRestoration": {
+          "label": "Restaurierung",
+          "description": "Wurden Maßnahmen zur Restaurierung und Konservierung unternommen?"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,269 @@
+{
+    "categories": {
+        "Project": {
+            "fields": {
+                "projectProgression": {
+                    "label": "Projektverlauf",
+                    "description": "Informationen zum Ablauf des Projekts"
+                }
+            }
+        },
+        "Place": {
+            "fields": {
+                "boundary": {
+                    "label": "Begrenzung"
+                }
+            }
+        },
+        "Survey": {
+            "fields": {
+                "siteClassification": {
+                    "label": "Klassifikation Fundplatz"
+                }
+            }
+        },
+        "Trench": {
+            "fields": {
+                "projectProgression": {
+                    "label": "Projektverlauf",
+                    "description": "Informationen zum Ablauf des Projekts"
+                }
+            }
+        },
+        "Drawing": {
+            "fields": {
+                "imageRights": {
+                    "label": "Bildrechte"
+                },
+                "representedObject": {
+                    "label": "Darstellungsgegenstand"
+                }
+            }
+        },
+        "Find": {
+            "fields": {
+                "ayamonteCondition": {
+                    "label": "Erhaltungszustand (Ayamonte spezifisch)"
+                },
+                "storageRegion": {
+                    "label": "Aufbewahrung Region/Bundesland"
+                },
+                "storageMuseum": {
+                    "label": "Aufbewahrung Museum"
+                },
+                "storageProvince": {
+                    "label": "Aufbewahrung Provinz"
+                },
+                "storageState": {
+                    "label": "Aufbewahrung Staat"
+                },
+                "isGraveFind": {
+                    "label": "Grabfund"
+                },
+                "isStrayFind": {
+                    "label": "Lesefund"
+                },
+                "findType": {
+                    "label": "Fundgattung"
+                },
+                "findObjectType": {
+                    "label": "Objektart"
+                },
+                "findMaterial": {
+                    "label": "Material"
+                },
+                "materialColor": {
+                    "label": "Materialfarbe"
+                },
+                "materialDescription": {
+                    "label": "Materialbeschreibung"
+                }
+            }
+        },
+        "Profile": {
+            "fields": {
+                "profileClassification": {
+                    "label": "Klassifizierung"
+                },
+                "verticalPosition": {
+                    "label": "Vertikallage"
+                }
+            }
+        },
+        "Feature": {
+            "fields": {
+                "artifacts": {
+                    "label": "Fundmaterial"
+                },
+                "significanceRemark": {
+                    "label": "Anmerkungen zur Aussagekraft"
+                },
+                "featureClassification": {
+                    "label": "Klassifikation Stratigraphische Einheit"
+                },
+                "createdAfterSpoil": {
+                    "label": "Erstellt nach Abhub"
+                },
+                "featureClassificationOther": {
+                    "label": "Klassifikation Statigraphische Einheit Sonstiges"
+                },
+                "otherClassification": {
+                    "label": "Klassifikation Sonstiges"
+                }
+            }
+        },
+        "Grave": {
+            "fields": {
+                "artifacts": {
+                    "label": "Fundmaterial"
+                },
+                "significanceRemark": {
+                    "label": "Anmerkungen zur Aussagekraft"
+                }
+            }
+        },
+        "Layer": {
+            "fields": {
+                "artifacts": {
+                    "label": "Fundmaterial"
+                },
+                "significanceRemark": {
+                    "label": "Anmerkungen zur Aussagekraft"
+                },
+                "layerClassificationOther": {
+                    "label": "Klassifikation Statigraphische Einheit Sonstiges"
+                },
+                "otherClassification": {
+                    "label": "Klassifikation Sonstiges"
+                }
+            }
+        },
+        "Wood": {
+            "fields": {
+                "materialDescription": {
+                    "label": "Beschreibung des Materials"
+                },
+                "weight": {
+                    "label": "Gewicht (g)"
+                }
+            }
+        },
+        "Pottery": {
+            "fields": {
+                "amount": {
+                    "label": "Anzahl (gesamt)"
+                },
+                "conservationRemarks": {
+                    "label": "Anmerkungen zur Konservierung"
+                },
+                "conservationEarlierMeasures": {
+                    "label": "Frühere Maßnahmen zur Konservierung"
+                },
+                "condition": {
+                    "label": "Erhaltungszustand"
+                },
+                "potteryBelongsTo": {
+                    "label": "Zugehörige(s) Fragment(e)"
+                },
+                "potteryFittingTo": {
+                    "label": "Anpassende(s) Fragment(e)"
+                },
+                "potteryComparableTo": {
+                    "label": "Vergleichbare(s) Fragment(e)"
+                }
+            }
+        },
+        "Bone": {
+            "fields": {
+                "sexDeterminationCertainty": {
+                    "label": "Sicherheit der Geschlechtsbestimmung"
+                },
+                "weight": {
+                    "label": "Gewicht (g)"
+                }
+            }
+        },
+        "Sample": {
+            "fields": {
+                "sampleTakenBy": {
+                    "label": "Entnahme durch"
+                },
+                "sampleReason": {
+                    "label": "Grund für Beprobung"
+                },
+                "material": {
+                    "label": "Material"
+                },
+                "sampleNumber": {
+                    "label": "Probennummer"
+                },
+                "analysisResult": {
+                    "label": "Untersuchungsergebnis"
+                },
+                "analysisMethod": {
+                    "label": "Untersuchungsmethode"
+                },
+                "isGraveFind": {
+                    "label": "Grabfund"
+                },
+                "storageRegion": {
+                    "label": "Aufbewahrung Region/Bundesland"
+                },
+                "storageMuseum": {
+                    "label": "Aufbewahrung Museum"
+                },
+                "storageProvince": {
+                    "label": "Aufbewahrung Provinz"
+                },
+                "storageState": {
+                    "label": "Aufbewahrung Staat"
+                },
+                "storagePlace": {
+                    "label": "Aufbewahrungsort"
+                }
+            }
+        },
+        "Photo": {
+            "fields": {
+                "imageObject": {
+                    "label": "Bildgegenstand"
+                },
+                "imageRights": {
+                    "label": "Bildrechte"
+                },
+                "imageContent": {
+                    "label": "Bildinhalt"
+                }
+            }
+        },
+        "Stone": {
+            "fields": {
+                "objectType": {
+                    "label": "Ansprache bzw. Art des Objekts"
+                }
+            }
+        },
+        "Mollusk": {
+            "fields": {
+                "classification": {
+                    "label": "Klassifikation der Molluske"
+                }
+            }
+        },
+        "Burial": {
+            "fields": {
+                "hasGraveGoods": {
+                    "label": "Hat Grabbeigaben"
+                }
+            }
+        }
+    },
+    "relations": {
+        "isAbove": {
+            "label": "Liegt über"
+        },
+        "isBelow": {
+            "label": "Liegt unter"
+        }
+    }
+}

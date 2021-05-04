@@ -1,0 +1,253 @@
+{
+  "categories": {
+    "Feature": {
+      "fields": {
+        "colorSoil": {
+          "label": "Soil color"
+        },
+        "stratigraphicReliability": {
+          "label": "Stratigraphic Reliability"
+        },
+        "featureCondition": {
+          "label": "State of Preservation"
+        },
+        "interpretation": {
+          "label": "Interpretation"
+        },
+        "drawn": {
+          "label": "Drawing"
+        },
+        "photographed": {
+          "label": "Photo"
+        },
+        "heights": {
+          "label": "Heights"
+        }
+      }
+    },
+    "Architecture": {
+      "fields": {
+        "buildingTechnique": {
+          "label": "Building technique / tecnica edilizia"
+        },
+        "walling": {
+          "label": "Walling / apparecchi murari"
+        },
+        "bindingAgent": {
+          "label": "Binding agent / agente legante"
+        },
+        "mortar": {
+          "label": "Mortar / malta",
+          "description": "Mortar (binder, components, consistency, color) / malta (legante, componenti, consistenza, colore)"
+        },
+        "wallDescription": {
+          "label": "Description of wall / descrizione unità stratigrafica muraria",
+          "description": "layers, stones used (form, dimension), bricks used (form, dimension), installation system (regular, random, uneven,…), traces of processing, quarry/factory marks, decorative elements"
+        },
+        "stones": {
+          "label": "Stone type / tipo di pietra",
+          "description": "If applicable, type and provenance of the stone used"
+        }
+      }
+    },
+    "Stone": {
+      "fields": {
+        "constructionDetails": {
+        "label": "Construction Details"
+        },
+        "decorationTechnique": {
+        "label": "Decoration Technique"
+        },
+        "paintColor": {
+        "label": "Painted decoration: color of paint"
+        },
+        "paintColorMunsell": {
+        "label": "Painted decoration: color of paint (Munsell)"
+        },
+        "paintCondition": {
+        "label": "Painted decoration: condition"
+        },
+        "usedAsSpolia": {
+        "label": "Used as spolia"
+        }
+      }
+    },
+    "Brick": {
+      "fields": {
+        "descriptionFabric": {
+          "label": "Description fabric / Descrizione materiale",
+          "description": "Temper, number of inclusions, temper particles, clay hardness / Inclusi, numero, tipo di inclusi, durezza argilla"
+        },
+        "clayColorInside": {
+          "label": "Inside: Clay color and intensity"
+        },
+        "colorBreak": {
+          "label": "Break: Clay color and intensity"
+        },
+        "surfaceCondition": {
+          "label": "Surface condition"
+        },
+        "coatQuality": {
+          "label": "Coat quality"
+        },
+        "coatCondition": {
+          "label": "Coat condition"
+        },
+        "typologyType": {
+          "label": "Typology and Type / Tipologia e tipo"
+        },
+        "clayColorBreakMunsell": {
+          "label": "Break clay color (Munsell)"
+        },
+        "clayColorInsideMunsell": {
+          "label": "Inside clay color (Munsell)"
+        },
+        "clayColorOutsideMunsell": {
+          "label": "Outside clay color (Munsell)"
+        },
+        "coatColorOutsideMunsell": {
+          "label": "Outside coat color (Munsell)"
+        },
+        "coatColorInsideMunsell": {
+          "label": "Inside coat color (Munsell)"
+        }
+      }
+    },
+    "Layer": {
+      "fields": {
+        "distinguishingCriteriaDescription": {
+          "label": "Distinguishing Criteria from",
+          "description": "If necessary indicate distinguishing criteria from multiple SUs in the form SU Number:criterion,criterion;"
+        },
+        "layerInclusions": {
+          "label": "Inclusions",
+          "description": "Natural inclusions and their quantity and size (fine, medium, coarse pebbles/gravel, cobbles, boulders), shape (rounded, sub-rounded, angular), concentrations (sporadic, low, middle, high, very high), sorting (well, moderately, poorly, very poorly sorted)"
+        },
+        "layerFinds": {
+          "label": "Finds list",
+          "description": "Material found in the Layer"
+        },
+        "layerFindsDescription": {
+          "label": "Finds quantities",
+          "description": "Quantities and general description of found material"
+        }
+      }
+    },
+    "Interface": {
+      "fields": {
+        "interfaceClassification": {
+          "label": "Type of interface"
+        },
+        "breakSlopeTop": {
+          "label": "Break of slope - Top"
+        },
+        "sides": {
+          "label": "Sides"
+        },
+        "breakSlopeBase": {
+          "label": "Break of slope - Base"
+        },
+        "base": {
+          "label": "Base"
+        },
+        "interfaceComment": {
+          "label": "Interface comment"
+        }
+      }
+    },
+    "Find": {
+      "fields": {
+        "photographed": {
+          "label": "Photo"
+        },
+        "drawn": {
+          "label": "Drawing"
+        }
+      }
+    },
+    "Sample": {
+      "fields": {
+        "comment": {
+          "label": "Comment"
+        },
+        "descriptionSample": {
+          "label": "Description"
+        },
+        "researchQuestion": {
+          "label": "Research Question"
+        },
+        "analyzedBy": {
+          "label": "Laboratory"
+        },
+        "sampleState": {
+          "label": "State"
+        }
+      }
+    },
+    "Pottery": {
+      "label": "Pottery",
+      "fields": {
+        "amountSherdsWall": {
+          "label": "Number of wall sherds / N. frr. parete"
+        },
+        "amountSherdsRim": {
+          "label": "Number of rim sherds / N. frr. orlo"
+        },
+        "amountSherdsBase": {
+          "label": "Number of base sherds / N. frr. fondo"
+        },
+        "amountSherdsHandles": {
+          "label": "Number of handles / N. frr. anse e prese"
+        },
+        "amountSherdsPedestal": {
+          "label": "Number of pedestal sherds / N. frr. piedi"
+        },
+        "amountSherdsOther": {
+          "label": "Number of other sherds / N. altri frr."
+        },
+        "amountSherdsLid": {
+          "label": "Number of lids / N. frr. coperchio"
+        },
+        "clayColorBreakMunsell": {
+          "label": "Color of break (Munsell) / Colore frattura"
+        },
+        "clayColorInsideMunsell": {
+          "label": "Color inside (Munsell) / Colore parete interna"
+        },
+        "clayColorOutsideMunsell": {
+          "label": "Color outside (Munsell) / Colore parete esterna"
+        },
+        "hasCoat": {
+          "label": "Coat / Ingubbiatura"
+        },
+        "descriptionFabric": {
+          "label": "Description fabric / Descrizione materiale",
+          "description": "Temper, number of inclusions, temper particles, clay hardness / Inclusi, numero, tipo di inclusi, durezza argilla"
+        },
+        "typologyType": {
+          "label": "Typology and Type / Tipologia e tipo"
+        },
+        "descriptionFormPottery": {
+          "label": "Description form / Descrizione forma",
+          "description": "Description of rim, lip, neck, shoulder, body, base, pedestal, handles, decoration / Descrizione orlo, labbro, collo, spalla, corpo, base, piede, anse, decorazione"
+        }
+      }
+    },
+    "Metal": {
+      "fields": {
+        "formDescription": {
+          "label": "Description form / Descrizione forma",
+          "description": "Description of rim, lip, neck, shoulder, body, base, pedestal, handles, decoration / Descrizione orlo, labbro, collo, spalla, corpo, base, piede, anse, decorazione"
+        }
+      }
+    },
+    "Floor": {
+      "fields": {
+        "mortar": {
+          "label": "Mortar / malta",
+          "description": "Mortar (binder, components, consistency, color) / malta (legante, componenti, consistenza, colore)"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,208 @@
+{
+  "categories": {
+    "Operation": {
+      "fields": {
+        "fixMe": {
+          "label": "+Korrigiere mich!"
+        }
+      }
+    },
+    "Trench": {
+      "fields": {
+        "researchQuestion": {
+          "label": "+researchQuestion"
+        }
+      }
+    },
+    "Find": {
+      "fields": {
+        "measuringPointID": {
+          "label": "+MesspunktID vom Tachy",
+          "description": "MesspunktID oder 'nicht gemessen' oder 'unklar'"
+        },
+        "measuringPointOrigin": {
+          "label": "+measuringPointOrigin",
+          "description": "Stammt der Messpunkt aus idaifield1 oder aus der Fotoliste"
+        },
+        "workflow": {
+          "label": "+Workflow",
+          "description": "Was wurde schon getan?"
+        },
+        "MasseSonstige": {
+          "label": "+MasseSonstige",
+          "description": "Sonstige Maße aus idaifield1"
+        },
+        "MasseFixMe": {
+          "label": "+Zu korrigierende Maße",
+          "description": "Maße aus idaifield1, die unzureichend sind."
+        },
+        "fixMe": {
+          "label": "+Korrigiere mich!",
+          "description": "Beschreibung dessen, was am Datensatz korrigiert werden muss."
+        }
+      }
+    },
+    "Sample": {
+      "fields": {
+        "descriptionSample": {
+          "label": "descriptionSample"
+        },
+        "researchQuestion": {
+          "label": "researchQuestion"
+        },
+        "analyzedBy": {
+          "label": "analyzedBy"
+        },
+        "labNumber": {
+          "label": "labNumber"
+        },
+        "sampleType": {
+          "label": "sampleType"
+        },
+        "sampleRelatedTo": {
+          "label": "sampleRelatedTo"
+        },
+        "comment": {
+          "label": "comment"
+        },
+        "sampleState": {
+          "label": "sampleState"
+        }
+      }
+    },
+    "BrickCluster": {
+      "label": "Sammelfund Ziegel"
+    },
+    "PotteryCluster": {
+      "label": "Sammelfund Keramik"
+    },
+    "Feature": {
+      "label": "Befund",
+      "fields": {
+        "if1Befundart": {
+          "label": "+if1Befundart"
+        },
+        "if1SchichtKuenstlichNatuerlich": {
+          "label": "+if1SchichtKuenstlichNatuerlich"
+        },
+        "if1AutoKlassifizierungOhneBefundart": {
+          "label": "+if1AutoKlassifizierungOhneBefundart"
+        },
+        "if1SchichtPartikel": {
+          "label": "+if1SchichtPartikel"
+        },
+        "if1SchichtBrocken": {
+          "label": "+if1SchichtBrocken"
+        },
+        "if1SchichtBroeckchen": {
+          "label": "+if1SchichtBroeckchen"
+        },
+        "if1SchichtMaxGroesze": {
+          "label": "+if1SchichtMaxGroesze"
+        },
+        "if1SchichtKonsistenz": {
+          "label": "+if1SchichtKonsistenz"
+        },
+        "if1SchichtBesondereBeobachtungen": {
+          "label": "+if1SchichtBesondereBeobachtungen"
+        },
+        "if1SchichtFormat": {
+          "label": "+if1SchichtFormat"
+        },
+        "if1SchichtKlassifizSonst": {
+          "label": "+if1SchichtKlassifizSonst"
+        },
+        "if1MasseSonstige": {
+          "label": "+if1MasseSonstige"
+        },
+        "fixMe": {
+          "label": "+Korrigiere mich!"
+        }
+      }
+    },
+    "Image": {
+      "fields": {
+        "fixMe": {
+          "label": "+Korrigiere mich!"
+        }
+      }
+    },
+    "Photo": {
+      "fields": {
+        "imageSubject": {
+          "label": "+Fotomotiv",
+          "description": "Wählen Sie einen Wert aus. Im Zweifelsfall wählen Sie 'unklar'."
+        },
+        "originalType": {
+          "label": "+originalType",
+          "description": "Wählen Sie einen Wert aus. Im Zweifelsfall lassen Sie das Feld leer."
+        }
+      }
+    },
+    "Drawing": {
+      "fields": {
+        "imageSubject": {
+          "label": "+Fotomotiv",
+          "description": "Wählen Sie einen Wert aus. Im Zweifelsfall wählen Sie 'unklar'."
+        },
+        "if1ZeichnungsGegenstand": {
+          "label": "+if1ZeichnungsGegenstand"
+        }
+      }
+    },
+    "Metal": {
+      "fields": {
+        "objectTypeGeneral": {
+          "label": "+objectTypeGeneral"
+        },
+        "objectTypeSpecific": {
+          "label": "+objectTypeSpecific"
+        }
+      }
+    },
+    "Inscription": {
+      "label": "Inschrift/Graffito"
+    },
+    "Brick": {
+      "fields": {
+        "if1Verwendung": {
+          "label": "+if1Verwendung"
+        }
+      }
+    },
+    "PlasterFragment": {
+      "fields": {
+        "if1Klassifizierung": {
+          "label": "+if1Klassifizierung"
+        }
+      }
+    },
+    "Planum": {
+      "fields": {
+        "objectOrigin": {
+          "label": "+objectOrigin"
+        },
+        "if1TiefeRelativ": {
+          "label": "+if1TiefeRelativ"
+        }
+      }
+    },
+    "Pottery": {
+      "fields": {
+        "if1Klassifizierung": {
+          "label": "+if1Klassifizierung"
+        }
+      }
+    },
+    "Layer": {
+      "fields": {
+        "if1Farbe2": {
+          "label": "+if1Farbe2"
+        },
+        "if1SchichtUnterscheidungsKrit": {
+          "label": "+if1SchichtUnterscheidungsKrit"
+        }
+      }
+    }
+  }
+}

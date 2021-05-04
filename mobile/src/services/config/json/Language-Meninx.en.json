@@ -1,0 +1,146 @@
+{
+  "categories": {
+    "Feature": {
+      "fields": {
+        "colorSoil": {
+          "label": "Soil color"
+        },
+        "dimensionHeight": {
+          "label": "Height"
+        }
+      }
+    },
+    "Bone": {
+      "fields": {
+        "species": {
+          "label": "class"
+        }
+      }
+    }, 
+    "Wall_surface": {
+      "label": "Wall surface",
+      "fields": {
+        "area": {
+          "label": "Area in m2"
+        },
+        "conditionComment": {
+          "label": "Condition comment"
+        },
+        "constructionDetailsDescription": {
+          "label": "Description of construction details"
+        },
+        "description": {
+          "label": "Description"
+        },
+        "markDescription": {
+          "label": "Description of mark"
+        },
+        "hasPlasterDecoration": {
+          "label": "Plaster decoration"
+        },
+        "plasterOlder": {
+          "label": "Older plaster"
+        },
+        "processor": {
+          "label": "Processor"
+        },
+        "surfaceDecoration": {
+          "label": "Surface decoration"
+        },
+        "wallConstructionTechnique": {
+          "label": "Wall construction technique"
+        },
+        "blockTreatment": {
+          "label": "Block treatment"
+        },
+        "buildingTechnique": {
+          "label": "Building technique"
+        },
+        "color": {
+          "label": "Color and intensity"
+        },
+        "condition": {
+          "label": "Condition"
+        },
+        "conditionAmount": {
+          "label": "Preservation assessment",
+          "description": "Preserved amount in comparison to the original"
+        },
+        "constructionDetails": {
+          "label": "Construction details"
+        },
+        "period": {
+          "label": "Period"
+        },
+        "dating": {
+          "label": "Dating"
+        },
+        "dimensionHeight": {
+          "label": "Height"
+        },
+        "dimensionWidth": {
+          "label": "Width"
+        },
+        "jointsCondition": {
+          "label": "Joints condition"
+        },
+        "jointsType": {
+          "label": "Joints type"
+        },
+        "mark": {
+          "label": "Masonry seal(s)"
+        },
+        "plasterComponents": {
+          "label": "Plaster components"
+        },
+        "wallOrientation": {
+          "label": "Wall orientation"
+        },
+        "roomSide": {
+          "label": "Room side"
+        },
+        "wallSide": {
+          "label": "Wall side"
+        }
+      }
+    },
+    "Inscription": {
+      "fields": {
+        "dimensionHeight": {
+          "label": "Height"
+        }
+      }
+    },
+    "Pottery": {
+      "fields": {
+        "comment": {
+            "label": "Comment"
+        }
+      }
+    },
+    "PlasterFragment": {
+      "fields": {
+        "hasDecorationPattern": {
+          "label": "Decoration pattern"
+        }
+      }
+    },
+    "Drilling": {
+      "label": "Drilling",
+      "fields": {
+        "description": {
+          "label": "Description"
+        },
+        "dimensionDiameter": {
+          "label": "Diameter"
+        },
+        "dimensionHeight": {
+          "label": "Height"
+        },
+        "dimensionVerticalExtent": {
+          "label": "Vertical extent"
+        }
+      }
+    }
+  }
+}

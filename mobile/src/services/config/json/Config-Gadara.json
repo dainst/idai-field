@@ -1,0 +1,219 @@
+{
+  "Glass:default": {
+    "commons": [],
+    "fields": {"vesselpart": {"inputType": "checkboxes"}
+	},
+    "hidden": [],
+	"valuelists": {
+	  "provenance": "provenance-gadara",
+	  "transparency": "glass-transparency-gadara",
+	  "vesselFormSpecific": "glass-vesselFormSpecific-gadara",
+	  "vesselpart": "Pottery-vesselpart-gadara",
+	  "color": "Pottery-coatColor-gadara",
+	  "vesselForm": "glass-vesselForm-gadara",
+	  "formDescription": "glass-formDescription-gadara",
+	  "objectType": "glass-objectType-gadara",
+	  "decorationTechnique": "glass-decorationTechnique-gadara",
+	  "manufacturingMethod": "glass-manufacturingMethod-gadara"
+	  }
+  },
+  "Metal:default": {
+    "commons": [],
+    "fields": {},
+    "hidden": ["vesselFormSpecific"],
+	"valuelists": {
+	  "provenance": "provenance-gadara",
+	  "formDescription": "glass-formDescription-gadara",
+	  "vesselForm": "glass-vesselForm-gadara",
+	  "objectType": "Metal-objectType-gadara",
+	  "decorationTechnique": "Metal-decorationTechnique-gadara",
+	  "manufacturingMethod": "Metal-manufacturingMethod-gadara",
+	  "metalMaterial": "Coin-metalMaterial-gadara"
+	  }
+	},
+  "Brick:default": {
+    "commons": [],
+    "fields": {"surfaceTreatment": {"inputType": "checkboxes"}
+	},
+    "hidden": ["specificType", "coatColorInside", "coatColorOutside"],
+	"valuelists": {
+	  "brickForm": "Brick-brickForm-Gadara",
+      "brickUsage": "Brick-brickUsage-Gadara",
+	  "decorationTechnique": "Brick-decorationTechnique-gadara",
+	  "manufacturing": "Brick-manufacturing-gadara",
+	  "clayColorOutside": "Pottery-coatColor-gadara",
+	  "surfaceTreatment": "Pottery-coatTpe-gadara",
+	  "provenance": "provenance-gadara",
+	  "formDescription": "glass-formDescription-gadara",
+	  "manufacturingMethod": "Brick-manufacturingMethod-gadara",
+	  "temper": "Brick-temper-gadara"
+	  }
+  },
+  "Wood:default": {
+    "commons": [],
+    "fields": {
+	  "color": {
+	    "inputType": "checkboxes"
+	  },
+	  "paintColor": {
+	    "inputType": "checkboxes"
+	  }
+	},
+    "hidden": [
+		"paintCondition", "colorOutsideMunsell", "colorInsideMunsell", "colorBreakMunsell", "paintColorMunsell", "colorBreak", "colorInside", "colorOutside"
+		],
+	"valuelists": {
+	  "provenance": "provenance-gadara",
+	  "surfaceCondition": "Terracotta-surfaceCondition-gadara",
+	  "paintColor": "Pottery-coatColor-gadara",
+	  "color": "Pottery-coatColor-gadara",
+	  "decorationTechnique": "Wood-decorationTechnique-gadara",
+	  "objectType": "Wood-objectType-gadara",
+	  "manufacturingMethod": "Wood-manufacturingMethod-gadara",
+	  "typeOfWood": "Wood-typeOfWood-gadara"
+	  }
+  },
+  "Pottery:default": {
+    "commons": [],
+    "hidden": ["amountSherdsWall", "amountSherdsRim", "amountSherdsBase", "amountSherdsHandles", "amountSherdsLip", "amountSherdsPedestal",
+    "amountSherdsRimBase", "amountSherdsRimShoulder", "amountSherdsShoulder", "amountSherdsOther", "amountSherdsPercent", "amountSherdsLid", "clayColorBreakMunsell", "clayColorInsideMunsell", "clayColorOutsideMunsell", "hasCoat", "decorationDescription",
+  "breakStructure", "residueAnalysis", "purpose", "clayColorInside", "clayHardness", "coatInside", "coatOutside", "formDescription", "manufacturing", "manufacturingMethod", "objectType", "temper",
+  "temperAmount", "temperParticles", "temperTypeClay", "vesselForm", "vesselFormSpecific", "comment", "provenance", "clayColorOutside", "sample"],
+    "fields": {
+      "vesselpart": {
+        "inputType": "checkboxes"
+      },
+      "potteryTypeSpecific": {
+        "inputType": "dropdown"
+      },
+      "comment": {
+        "inputType": "input"
+      },
+      "materialType": {
+        "inputType": "radio"
+      },
+      "specificType": {
+        "inputType": "radio"
+     },
+	  "decorationTechnique": {
+	    "inputType": "checkboxes"}
+    },
+    "valuelists": {
+      "vesselpart": "Pottery-vesselpart-gadara",
+      "materialType": "Pottery-materialType-gadara",
+      "specificType": "Pottery-specificType-gadara",
+      "potteryTypeSpecific": "Pottery-potteryTypeSpecific-gadara",
+      "coatColorInside": "Pottery-coatColor-gadara",
+      "coatColorOutside": "Pottery-coatColor-gadara",
+      "coatInsideType": "Pottery-coatTpe-gadara",
+      "coatOutsideType": "Pottery-coatTpe-gadara",
+	  "decorationTechnique": "Brick-decorationTechnique-gadara",
+	  "clayColorOutside": "Pottery-coatColor-gadara",
+	  "clayColorBreak": "Pottery-coatColor-gadara",
+	  "temperAmount": "Pottery-temperAmount-gadara",
+	  "temperParticles": "Pottery-temperParticles-gadara",
+	  "temper": "Brick-temper-gadara"
+    }
+  },
+  "Bone:default": {
+    "commons": [],
+    "hidden": [],
+    "fields": {
+      "sex": {
+        "inputType": "radio"
+        },
+      "boneClassification": {
+        "inputType": "dropdown"
+        },
+	  "boneType": {
+	    "inputType": "checkboxes"
+		},
+	  "species": {
+	    "inputType": "checkboxes"
+		}
+    },
+    "valuelists": {
+      "sex": "Bone-sex-gadara",
+      "boneClassification": "Bone-boneClassification-gadara",
+	  "boneType": "Bone-boneType-gadara",
+	  "objectType": "Bone-objectType-gadara",
+	  "species": "Bone-species-gadara"
+    }
+  },
+  "Terracotta:default": {
+    "commons": [],
+    "fields": {
+	  "coatInsideType": {"inputType": "radio"},
+	  "coatOutsideType": {"inputType": "radio"},
+	  "potteryTypeSpecific": {"inputType": "dropdown"},
+	  "objectType": {"inputType": "dropdown"}
+	},
+	"valuelists": {
+	  "provenance": "provenance-gadara",
+	  "potteryTypeSpecific": "Pottery-potteryTypeSpecific-gadara",
+	  "coatInsideType": "Pottery-coatTpe-gadara",
+      "coatOutsideType": "Pottery-coatTpe-gadara",
+	  "formDescription": "glass-formDescription-gadara",
+	  "clayColorOutside": "Pottery-coatColor-gadara",
+	  "clayColorInside": "Pottery-coatColor-gadara",
+	  "clayColorBreak": "Pottery-coatColor-gadara",
+	  "temperAmount": "Pottery-temperAmount-gadara",
+	  "temperParticles": "Pottery-temperParticles-gadara",
+	  "temper": "Brick-temper-gadara",
+	  "decorationTechnique": "Brick-decorationTechnique-gadara",
+	  "manufacturingMethod": "Brick-manufacturingMethod-gadara",
+	  "objectType": "Terracotta-objectType-gadara",
+	  "surfaceCondition": "Terracotta-surfaceCondition-gadara"
+	  },
+    "hidden": ["vesselFormSpecific", "vesselForm", "coatColorInside", "coatColorOutside"]
+  },
+  "Stone:default": {
+    "commons": [],
+    "fields": {
+	  "treatment": {
+	    "inputType": "dropdown"
+	  }	
+	},
+    "valuelists": {
+	  "provenance": "provenance-gadara",
+	  "formDescription": "glass-formDescription-gadara",
+	  "architectureElement": "Stone-architectureElement-gadara",
+	  "objectType": "Stone-objectType-gadara",
+	  "temperAmount": "Pottery-temperAmount-gadara",
+	  "color": "Pottery-coatColor-gadara",
+	  "treatment": "Stone-treatment-Gadara",
+	  "material": "Stone-material-gadara"
+	},  
+	"hidden": ["origin"]
+  },
+  "Coin:default": {
+    "commons": [],
+    "fields": {},
+    "hidden": ["manufacturingMethod", "preservedDiameter"],
+	"valuelists": {
+	  "provenance": "provenance-gadara",
+	  "metalMaterial": "Coin-metalMaterial-gadara",
+	  "mintingRuler": "Coin-mintingRuler-gadara",
+	  "stampPositioning": "Coin-stampPositioning-gadara"
+	  }
+  },
+  "PlasterFragment:default": {
+    "commons": [],
+    "hidden": [],
+    "fields": {
+      "plasterComponents": {"inputType": "checkboxes"},
+	  "hasDecoration": {"inputType": "radio"},
+	  "plasterType": {"inputType": "radio"},
+	  "temperAmount": {"inputType": "radio"},
+	  "temperParticles": {"inputType": "radio"}
+	  },
+	  "valuelists": {
+	  "hasDecoration": "plasterDecoration-Gadara",
+	  "plasterType": "plasterType-Gadara",
+	  "color": "Pottery-coatColor-gadara",
+	  "plasterComponents": "Brick-temper-gadara",
+  	  "temperAmount": "Pottery-temperAmount-gadara",
+	  "temperParticles": "Pottery-temperParticles-gadara"
+	  }
+  }
+}

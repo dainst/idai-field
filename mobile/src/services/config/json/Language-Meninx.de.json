@@ -1,0 +1,171 @@
+{
+  "categories": {
+    "Feature": {
+      "fields": {
+        "colorSoil": {
+          "label": "Farbe des Bodens",
+          "description": "Farbe des Sediments"
+        },
+        "dimensionHeight": {
+          "label": "Höhe",
+          "description": "Angabe der Objekthöhe"
+        }
+      }
+    },
+    "Bone": {
+      "fields": {
+        "species": {
+          "label": "Klasse"
+        }
+      }
+    },
+    "Wall_surface": {
+      "label": "Wandoberfläche",
+      "fields": {
+        "area": {
+          "label": "Fläche in m2",
+          "description": "Flächenangabe in Quadratmetern"
+        },
+        "conditionComment": {
+          "label": "Kommentar zum Erhaltungszustand"
+        },
+        "constructionDetailsDescription": {
+          "label": "Beschreibung Konstruktionsdetails",
+          "description": "Nähere Beschreibung zur Konstruktion der Fundamente/Ecken/Lagen o. Ä."
+        },
+        "description": {
+          "label": "Beschreibung",
+          "description": "Freies Beschreibungsfeld"
+        },
+        "markDescription": {
+          "label": "Werkzeichen-Beschreibung",
+          "description": "Erklärungen und Erkenntnisse zum vorhandenen Werkzeichen"
+        },
+        "hasPlasterDecoration": {
+          "label": "Putzdekoration",
+          "description": "Beschreibung der Dekoration des Putzes"
+        },
+        "plasterOlder": {
+          "label": "Älterer Putz",
+          "description": "Beschreibung der älteren Putzschichten"
+        },
+        "processor": {
+          "label": "Bearbeiter/Bearbeiterin",
+          "description": "Bearbeiter bzw. Bearbeiterin der Wandoberfläche"
+        },
+        "surfaceDecoration": {
+          "label": "Oberflächendekoration",
+          "description": "Z. B. Bemalung oder sonstige Verzierungen"
+        },
+        "wallConstructionTechnique": {
+          "label": "Mauertechnik",
+          "description": "Beschreibung zu möglichen Bindern/Abfolge von Lagen o. Ä."
+        },
+        "blockTreatment": {
+          "label": "Steinblockbearbeitung",
+          "description": "Bearbeitung des Blocks/Bearbeitungsspuren"
+        },
+        "buildingTechnique": {
+          "label": "Bautechnik",
+          "description": "Bezeichnung der verwendeten Technik bei der Errichtung des Bauwerks"
+        },
+        "color": {
+          "label": "Farbe und Intensität",
+          "description": "Farbe, soweit erkennbar"
+        },
+        "condition": {
+          "label": "Erhaltungszustand",
+          "description": "Beschreibung des Erhaltungszustands"
+        },
+        "conditionAmount": {
+          "label": "Erhaltener Anteil",
+          "description": "Erhaltener Anteil im Vergleich zum Original"
+        },
+        "constructionDetails": {
+          "label": "Konstruktionsdetails",
+          "description": "Welcher Art ist die Mauerkonstruktion?"
+        },
+        "period": {
+          "label": "Grobdatierung"
+        },
+        "dating": {
+          "label": "Datierung"
+        },
+        "dimensionHeight": {
+          "label": "Höhe",
+          "description": "Angabe der Objekthöhe"
+        },
+        "dimensionWidth": {
+          "label": "Breite",
+          "description": "Angabe der Breite an der maximalen/minimalen Ausdehnung"
+        },
+        "jointsCondition": {
+          "label": "Fugenerhaltung",
+          "description": "Aktueller Erhaltungszustand der Fugen"
+        },
+        "jointsType": {
+          "label": "Fugengestaltung",
+          "description": "Gestaltung und Erhalt der Mauerfugen"
+        },
+        "mark": {
+          "label": "Steinmetzzeichen",
+          "description": "Auflistung möglicher Steinmetzzeichen"
+        },
+        "plasterComponents": {
+          "label": "Putz-Komponenten"
+        },
+        "wallOrientation": {
+          "label": "Wandorientierung",
+          "description": "Orientierung der Wand"
+        },
+        "roomSide": {
+          "label": "Raumseite",
+          "description": "Auf welcher Seite des Raumes wird die Wand aufgenommen?"
+        },
+        "wallSide": {
+          "label": "Wandseite",
+          "description": "Angabe der 'Blickrichtung' der Wandoberfläche"
+        }
+      }
+    },
+    "Inscription": {
+      "fields": {
+        "dimensionHeight": {
+          "label": "Höhe",
+          "description": "Angabe der Objekthöhe"
+        }
+      }
+    },
+    "Pottery": {
+      "fields": {
+        "comment": {
+            "label": "Kommentar"
+        }
+      }
+    },
+    "PlasterFragment": {
+      "fields": {
+        "hasDecorationPattern": {
+          "label": "Dekorationsmuster"
+        }
+      }
+    },
+    "Drilling": {
+      "label": "Bohrung",
+      "fields": {
+        "description": {
+          "label": "Beschreibung"
+        },
+        "dimensionDiameter": {
+          "label": "Durchmesser"
+        },
+        "dimensionHeight": {
+          "label": "Höhe"
+        },
+        "dimensionVerticalExtent": {
+          "label": "Niveau"
+        }
+      }
+    }
+  }
+}

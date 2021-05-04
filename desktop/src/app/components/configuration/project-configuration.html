@@ -1,5 +1,26 @@
-<div class="project-configuration row">
+<div *ngIf="customConfigurationDocument" class="project-configuration row">
     <div class="col">
+        <div class="row">
+            <div class="col default-nav bg-light">
+                <div class="btn-group mr-2">
+                    <button id="show-hidden-fields-button"
+                            class="btn btn-secondary"
+                            [class.active]="showHiddenFields"
+                            (click)="showHiddenFields = !showHiddenFields"
+                            placement="right" container="body"
+                            ngbTooltip="Ausgeblendete Felder anzeigen"
+                            i18n-ngbTooltip="@@configuration.showHiddenFields">
+                        <span class="mdi mdi-eye"></span>
+                    </button>
+                </div>
+                <button id="save-button" class="btn btn-primary"
+                        [ngClass]="{ 'disabled': saving }"
+                        (click)="saving || save()">
+                    <span class="mdi mdi-content-save"></span>
+                    <span class="button-label" i18n="@@buttons.save">Speichern</span>
+                </button>
+            </div>
+        </div>
         <div class="row">
             <div class="col-2 sidebar">
                 <category-picker *ngIf="toplevelCategoriesArray"
@@ -57,62 +78,12 @@
                     </div>
 
                     <div class="col-10 content" [class.shortened]="getCategoryDescription(selectedCategory)">
-                        <div *ngFor="let field of getVisibleFields(selectedCategory)"
-                                class="card"
-                                [class.bg-warning]="field.source === 'custom'">
-
-                            <div class="card-header">
-                                <span *ngIf="field.source === 'custom'"
-                                    class="mdi mdi-alert-circle-outline"
-                                    ngbTooltip="Projektspezifisches Feld"
-                                    i18n-ngbTooltip="@@config.source.custom"
-                                    placement="right">
-                                </span>
-                                <b *ngIf="field.label"> {{field.label}}</b>
-                                <code> {{field.name}}</code>
-                            </div>
-
-                            <div class="card-body">
-                                <p *ngIf="field.description" class="card-text">{{field.description}}</p>
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item">
-                                        <b i18n="@@configuration.field.inputType">Eingabetyp</b>:
-                                        <span *ngIf="field.inputType === 'input'" i18n="@@config.inputType.input">Einzeiliger Text</span>
-                                        <span *ngIf="field.inputType === 'unsignedInt'" i18n="@@config.inputType.unsignedInt">Positive Ganzzahl</span>
-                                        <span *ngIf="field.inputType === 'float'" i18n="@@config.inputType.float">Kommazahl</span>
-                                        <span *ngIf="field.inputType === 'unsignedFloat'" i18n="@@config.inputType.unsignedFloat">Positive Kommazahl</span>
-                                        <span *ngIf="field.inputType === 'multiInput'" i18n="@@config.inputType.multiInput">Einzeiliger Text mit Mehrfachauswahl</span>
-                                        <span *ngIf="field.inputType === 'text'" i18n="@@config.inputType.text">Mehrzeiliger Text</span>
-                                        <span *ngIf="field.inputType === 'dropdown'" i18n="@@config.inputType.dropdown">Dropdown-Liste</span>
-                                        <span *ngIf="field.inputType === 'dropdownRange'" i18n="@@config.inputType.dropdownRange">Dropdown-Liste (Bereich)</span>
-                                        <span *ngIf="field.inputType === 'radio'" i18n="@@config.inputType.radio">Radiobutton</span>
-                                        <span *ngIf="field.inputType === 'boolean'" i18n="@@config.inputType.boolean">Ja / Nein</span>
-                                        <span *ngIf="field.inputType === 'checkboxes'" i18n="@@config.inputType.checkboxes">Checkboxen</span>
-                                        <span *ngIf="field.inputType === 'dating'" i18n="@@config.inputType.dating">Datierungsangabe</span>
-                                        <span *ngIf="field.inputType === 'date'" i18n="@@config.inputType.date">Datum</span>
-                                        <span *ngIf="field.inputType === 'dimension'" i18n="@@config.inputType.dimension">Maßangabe</span>
-                                        <span *ngIf="field.inputType === 'literature'" i18n="@@config.inputType.literature">Literaturangabe</span>
-                                        <span *ngIf="field.inputType === 'geometry'" i18n="@@config.inputType.geometry">Geometrie</span>
-                                        <span *ngIf="field.inputType === 'instanceOf'" i18n="@@config.inputType.instanceOf">Typenauswahl</span>
-                                    </li>
-
-                                    <li *ngIf="field.valuelist" class="list-group-item">
-                                        <div *ngIf="getValuelistDescription(field.valuelist)"
-                                                class="valuelist-description">
-                                            {{getValuelistDescription(field.valuelist)}}
-                                        </div>
-                                        <div class="row valuelist">
-                                            <div *ngFor="let value of getValues(field.valuelist)"
-                                                    class="col-2 value-col">
-                                                <span class="badge badge-light value-badge">
-                                                    {{getValueLabel(field.valuelist, value)}}
-                                                    <code>{{value}}</code>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
+                        
+                        <div *ngFor="let field of getFields(selectedCategory)">
+                            <configuration-field [field]="field"
+                                                 [hidden]="isHidden(selectedCategory)(field)"
+                                                 (onToggleHidden)="toggleHidden(selectedCategory, field)">
+                            </configuration-field>
                         </div>
 
                         <div *ngFor="let relation of getRelations(selectedCategory)" class="card">

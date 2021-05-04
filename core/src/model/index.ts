@@ -29,3 +29,5 @@ export { RelationDefinition } from './relation-definition';
 export { Relations } from './relations';
 export { Resource } from './resource';
 export { ValuelistDefinition } from './valuelist-definition';
+export { ConfigurationDocument } from './configuration-document';
+export { ConfigurationResource } from './configuration-resource';

@@ -1,0 +1,38 @@
+configuration-field {
+  .valuelist-description {
+    margin: 0 0.2rem 0.7rem;
+    font-size: 0.8rem;
+  }
+
+  .valuelist .value-badge {
+    overflow: hidden;
+    max-width: 100%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: default;
+    border: 1px solid white;
+
+    &:hover {
+      position: relative;
+      max-width: none;
+      z-index: 50;
+      border: 1px solid grey;
+      white-space: normal;
+      text-align: left;
+    }
+  }
+
+  .list-group {
+    color: initial;
+  }
+
+  .text-white code {
+    color: #ffafd4;
+  }
+
+  .hide-buttons {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+  }
+}

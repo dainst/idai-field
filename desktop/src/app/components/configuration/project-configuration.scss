@@ -1,7 +1,8 @@
-.project-configuration {
+@import './configuration-field';
 
+.project-configuration {
   .sidebar {
-    height: calc(100vh - 50px);
+    height: calc(100vh - 100px);
     overflow-y: auto;
     overflow-x: hidden;
     padding: 0;
@@ -64,13 +65,13 @@
 
   .content {
     padding-top: 1rem;
-    height: calc(100vh - 104px);
+    height: calc(100vh - 154px);
     overflow-y: auto;
     overflow-x: hidden;
     padding: 15px;
 
     &.shortened {
-      height: calc(100vh - 160px);
+      height: calc(100vh - 210px);
     }
 
     .card {
@@ -79,29 +80,24 @@
       .value-col {
           height: 1.69rem;
       }
+    }
+  }
 
-      .valuelist-description {
-          margin: 0 0.2rem 0.7rem;
-          font-size: 0.8rem;
+  .default-nav {
+    padding: 5px;
+
+    #show-hidden-fields-button {
+      &.active {
+        box-shadow: inset 1px 1px 2px 1px rgb(0 0 0 / 20%) !important;
       }
-
-      .valuelist .value-badge {
-        overflow: hidden;
-        max-width: 100%;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        cursor: default;
-        border: 1px solid white;
-
-        &:hover {
-          position: relative;
-          max-width: none;
-          z-index: 50;
-          border: 1px solid grey;
-          white-space: normal;
-          text-align: left;
-        }
+      &:focus {
+        box-shadow: none;
       }
+    }
+
+    #save-button {
+      position: absolute;
+      right: 5px;
     }
   }
 }

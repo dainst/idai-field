@@ -15,6 +15,7 @@ const CreateProjectModal: React.FC<CreateProjectModalProps> = ({ isOpen, onProje
 
     const onCreate = () => {
 
+        setProject('');
         onProjectCreated(project);
         onClose();
     };

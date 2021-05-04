@@ -3,6 +3,7 @@ import { AppStackParamList } from 'mobile/App';
 import { Button, Center, Column, Icon, IconButton, Row, Select, Text, View } from 'native-base';
 import React, { useCallback, useState } from 'react';
 import CreateProjectModal from '../components/CreateProjectModal';
+import DeleteProjectModal from '../components/DeleteProjectModal';
 import { Preferences } from '../model/preferences';
 
 
@@ -10,23 +11,36 @@ interface HomeScreenProps {
     navigation: StackNavigationProp<AppStackParamList, 'SplashScreen'>;
     preferences: Preferences;
     setCurrentProject: (project: string) => void;
+    deleteProject: (project: string) => void;
 }
 
 
 const HomeScreen: React.FC<HomeScreenProps> = ({
     navigation,
     preferences,
-    setCurrentProject
+    setCurrentProject,
+    deleteProject
 }) => {
 
-    const [selectedProject, setSelectedProject] = useState<string>(preferences.currentProject || '');
+    const [selectedProject, setSelectedProject] = useState<string>('');
     const [isProjectModalOpen, setIsProjectModalOpen] = useState<boolean>(false);
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
+    
 
     const openProject = useCallback((project: string) => {
+
+        if (!project) return;
 
         setCurrentProject(project);
         navigation.navigate('DocumentsScreen');
     }, [navigation, setCurrentProject]);
+
+
+    const onDeleteProject = useCallback((project: string) => {
+
+        if (selectedProject === project) setSelectedProject('');
+        deleteProject(project);
+    }, [selectedProject, setSelectedProject, deleteProject]);
 
 
     return <>
@@ -34,6 +48,12 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
             isOpen={ isProjectModalOpen }
             onProjectCreated={ openProject }
             onClose={ () => setIsProjectModalOpen(false) }
+        />
+        <DeleteProjectModal
+            project={ selectedProject }
+            isOpen={ isDeleteModalOpen }
+            onProjectDeleted={ onDeleteProject }
+            onClose={ () => setIsDeleteModalOpen(false) }
         />
         <View flex={ 1 } safeArea>
             <Row justifyContent="flex-end">
@@ -68,12 +88,25 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
                                 { preferences.recentProjects.map(project =>
                                     <Select.Item label={ project }value={ project } key={ project } /> ) }
                             </Select>
-                            <IconButton
-                                colorScheme="blue"
-                                variant="solid"
-                                icon={ <Icon name="folder-open" size={ 6 } type="Ionicons" color="white" /> }
-                                onPress={ () => openProject(selectedProject) }
-                            />
+                            <View style={ { flexDirection: 'row' } }>
+                                <Button
+                                    style={ { flex: 1 } }
+                                    mr={ 1 }
+                                    colorScheme="blue"
+                                    variant="solid"
+                                    startIcon={ <Icon name="folder-open" size={ 6 } type="Ionicons" color="white" /> }
+                                    onPress={ () => openProject(selectedProject) }
+                                >
+                                    Open
+                                </Button>
+                                <IconButton
+                                    p={ 3 }
+                                    colorScheme="red"
+                                    variant="solid"
+                                    icon={ <Icon name="trash" size={ 6 } type="Ionicons" color="white" /> }
+                                    onPress={ () => setIsDeleteModalOpen(true) }
+                                />
+                            </View>
                         </Column>
                     </Center> }
                     <Button

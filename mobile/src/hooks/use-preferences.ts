@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect, useState } from 'react';
-import { assoc, compose, prepend, set, update } from 'tsfun';
+import { assoc, compose, detach, prepend, set, subtract, update } from 'tsfun';
 import { Preferences, ProjectSettings } from '../model/preferences';
 
 
@@ -9,6 +9,7 @@ interface UsePreferences {
     setCurrentProject: (project: string) => void;
     setUsername: (project: string) => void;
     setProjectSettings: (projectSettings: ProjectSettings) => void;
+    removeProject: (project: string) => void;
 }
 
 
@@ -16,15 +17,18 @@ const usePreferences = (): UsePreferences => {
     
     const [preferences, setPreferences] = useState<Preferences>(getDefaultPreferences());
 
+
     useEffect(() => {
 
         loadPreferences().then(setPreferences);
     }, []);
 
+
     useEffect(() => {
 
         savePreferences(preferences);
     }, [preferences]);
+
 
     const setCurrentProject = (project: string) =>
         setPreferences(
@@ -36,13 +40,25 @@ const usePreferences = (): UsePreferences => {
             )
         );
 
+
     const setProjectSettings = (projectSettings: ProjectSettings) =>
         setPreferences(update(['projects', preferences.currentProject], projectSettings));
+
 
     const setUsername = (username: string) =>
         setPreferences(update('username', username));
 
-    return { preferences, setCurrentProject, setUsername, setProjectSettings };
+
+    const removeProject = (project: string) =>
+        setPreferences(
+            compose(
+                update('projects', detach(project)),
+                update('recentProjects', subtract([project]))
+            )
+        );
+
+
+    return { preferences, setCurrentProject, setUsername, setProjectSettings, removeProject };
 
 };
 
@@ -61,7 +77,7 @@ const savePreferences = async (preferences: Preferences) =>
 
 
 const getDefaultPreferences = (): Preferences => ({
-    currentProject: 'test',
+    currentProject: '',
     username: '',
     recentProjects: [],
     projects: {}

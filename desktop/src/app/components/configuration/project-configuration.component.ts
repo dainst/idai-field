@@ -119,7 +119,12 @@ export class ProjectConfigurationComponent {
         const customCategoryDefinition: CustomCategoryDefinition
             = this.customConfigurationDocument.resource.categories[category.libraryId];
 
-        return (customCategoryDefinition.hidden ?? []).includes(field.name);
+        const parentCustomCategoryDefinition = category.parentCategory
+            ? this.customConfigurationDocument.resource.categories[category.parentCategory.libraryId]
+            : undefined;
+
+        return (customCategoryDefinition.hidden ?? []).includes(field.name) || 
+            (parentCustomCategoryDefinition?.hidden ?? []).includes(field.name);
     }
 
 

@@ -54,6 +54,8 @@
     "@babel/core": "^7.9.0",
     "@babel/runtime": "^7.13.10",
     "@expo/metro-config": "^0.1.61",
+    "@testing-library/jest-native": "^4.0.1",
+    "@testing-library/react-native": "^7.2.0",
     "@types/jest": "^26.0.22",
     "@types/pouchdb": "^6.4.0",
     "@types/react": "~16.9.35",

@@ -10,6 +10,7 @@ import {MenuService} from '../../menu-service';
 import {ImagePickerComponent} from '../../docedit/widgets/image-picker.component';
 import {ImageRelationsManager} from '../../../core/model/image-relations-manager';
 import {Observable} from 'rxjs/internal/Observable';
+import {Observer} from 'rxjs/internal/types';
 
 
 @Component({
@@ -125,14 +126,13 @@ export class ImageViewModalComponent extends ViewModalComponent {
     private initializeClickEventListener() {
 
         this.renderer.listen('document', 'click', (event: any) => {
-            this.clickEventObservers.forEach(observer => observer.next(event))
+            this.clickEventObservers.forEach(observer => observer.next(event));
         });
     }
 
     // TODO same
     public listenToClickEvents(): Observable<Event> {
 
-        console.log('listenToClickEvents');
-        return new Observable((observer: any) => { this.clickEventObservers.push(observer) });
+        return new Observable((observer: Observer<Event>) => { this.clickEventObservers.push(observer); });
     }
 }

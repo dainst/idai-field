@@ -75,10 +75,8 @@ export class ImageViewModalComponent extends ViewModalComponent {
 
         const document = first(documents);
 
-        // TODO beware! this must be implemented properly, i.e. we need another unlink function, because
-        //      this one removes all links from the field-document. This is not what we want, we want only to remove
-        //      the links to the current field-document.
-        await this.imageRelationsManager.unlink(document as any);
+        await this.imageRelationsManager.unlink(
+            this.linkedDocument as FieldDocument, document as ImageDocument);
 
         // this.linkedDocument = await this.datastore.get(this.linkedDocument.resource.id);
         this.images = (await this.getImageDocuments(this.linkedDocument.resource.relations.isDepictedIn))

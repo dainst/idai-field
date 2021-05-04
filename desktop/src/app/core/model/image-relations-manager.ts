@@ -112,6 +112,8 @@ export class ImageRelationsManager {
     }
 
 
+    public async unlink(first: FieldDocument, ...selectedImages: Array<ImageDocument>);
+    public async unlink(...selectedImages: Array<ImageDocument>);
     public async unlink(first: ImageDocument|FieldDocument,
                         ...selectedImages: Array<ImageDocument>) {
 

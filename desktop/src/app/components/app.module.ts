@@ -102,7 +102,10 @@ registerLocaleData(localeIt, 'it');
         { provide: TRANSLATIONS, useValue: Translations.getTranslations() },
         { provide: TRANSLATIONS_FORMAT, useValue: 'xlf' },
         I18n,
-        { provide: FsConfigReader, useClass: FsConfigReader },
+        {
+            provide: FsConfigReader,
+            useFactory: function() { return new FsConfigReader(remote.getGlobal('configurationDirPath')); }
+        },
         {
             provide: ConfigLoader,
             useFactory: function(configReader: ConfigReader, pouchdbManager: PouchdbManager) { return new ConfigLoader(configReader, pouchdbManager); },

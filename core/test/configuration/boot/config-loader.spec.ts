@@ -81,7 +81,6 @@ describe('ConfigLoader', () => {
         let pconf;
         try {
             pconf = await configLoader.go(
-                'yo',
                 { processor : { inputType: 'input', group: 'stem' }},
                 { 'A': { fields: {}, userDefinedSubcategoriesAllowed: true, supercategory: true } },
                 [],
@@ -128,7 +127,6 @@ describe('ConfigLoader', () => {
         let pconf;
         try {
             pconf = await configLoader.go(
-                'yo',
                 { processor: { inputType: 'input', group: 'stem' } },
                 { 'A': { fields: {}, supercategory: true, userDefinedSubcategoriesAllowed: true } },
                 [],
@@ -177,7 +175,6 @@ describe('ConfigLoader', () => {
 
         try {
             pconf = await configLoader.go(
-                'yo',
                 {},
                 {
                     'A': { fields: {}, supercategory: true, userDefinedSubcategoriesAllowed: true},
@@ -227,7 +224,6 @@ describe('ConfigLoader', () => {
         let pconf;
         try {
             pconf = await configLoader.go(
-                'yo',
                 {},
                 {
                     A: { fields: {}},
@@ -278,7 +274,7 @@ describe('ConfigLoader', () => {
         let pconf;
         try {
             pconf = await configLoader.go(
-                'yo', {},
+                {},
                 {
                         Parent: { fields: {}, userDefinedSubcategoriesAllowed: true, supercategory: true },
                         A: { fields: {} },
@@ -343,7 +339,7 @@ describe('ConfigLoader', () => {
 
         let pconf;
         try {
-            pconf = await configLoader.go('', {},
+            pconf = await configLoader.go({},
                 {
                     'F': { fields: {}, userDefinedSubcategoriesAllowed: true, supercategory: true },
                     'G': { fields: {}, userDefinedSubcategoriesAllowed: true, supercategory: true }},[], {},
@@ -395,7 +391,7 @@ describe('ConfigLoader', () => {
 
         let pconf;
         try {
-            pconf = await configLoader.go('', {},
+            pconf = await configLoader.go({},
                 { 'Find': { fields: {}, userDefinedSubcategoriesAllowed: true, supercategory: true }},[], {},
                 undefined, ['de'], 'User'
             );
@@ -432,7 +428,7 @@ describe('ConfigLoader', () => {
         );
 
         try {
-            await configLoader.go('', {}, {},[], {},
+            await configLoader.go({}, {},[], {},
                 undefined, ['de'], 'User'
             );
 
@@ -460,7 +456,7 @@ describe('ConfigLoader', () => {
         applyConfig(customFieldsConfiguration);
 
         try {
-            await configLoader.go('', {}, { Place: { fields: { fieldA1: { inputType: 'unsignedInt' }}}},[], {},
+            await configLoader.go({}, { Place: { fields: { fieldA1: { inputType: 'unsignedInt' }}}},[], {},
                 undefined, ['de'], 'User');
             fail();
         } catch(err) {
@@ -527,7 +523,7 @@ describe('ConfigLoader', () => {
 
         let pconf;
         try {
-            pconf = await configLoader.go('', {},
+            pconf = await configLoader.go({},
                 { Parent: { fields: {}, userDefinedSubcategoriesAllowed: true, supercategory: true }},
                 [], {},
                  undefined, ['de'], 'User'
@@ -580,7 +576,7 @@ describe('ConfigLoader', () => {
 
         let pconf;
         try {
-            pconf = await configLoader.go('', {},
+            pconf = await configLoader.go({},
                 { Parent: { fields: {}, supercategory: true, userDefinedSubcategoriesAllowed: true }}, [], {},
                 undefined, ['de'], 'User'
             );
@@ -622,7 +618,7 @@ describe('ConfigLoader', () => {
 
         let pconf;
         try {
-            pconf = await configLoader.go('', {}, { A: { fields: {} }}, [], {},
+            pconf = await configLoader.go({}, { A: { fields: {} }}, [], {},
                 undefined, ['de'], 'User'
             );
             const result = pconf.getCategory('A').groups[0];

@@ -1,7 +1,9 @@
+import {
+    AppConfigurator, ChangesStream, ConfigLoader, createDocuments, Datastore, Document, DocumentCache,
+    NiceDocs, PouchdbDatastore, PouchdbManager, Query, ResourceId, SyncService, toResourceId
+} from 'idai-field-core';
 import * as PouchDB from 'pouchdb-node';
 import { sameset } from 'tsfun';
-import { AppConfigurator, ChangesStream, ConfigLoader, createDocuments, Datastore, Document, DocumentCache,
-    NiceDocs, PouchdbDatastore, PouchdbManager, Query, ResourceId, SyncService, toResourceId } from 'idai-field-core';
 import { FsConfigReader } from '../../../../src/app/core/configuration/fs-config-reader';
 import { FieldConverter } from '../../../../src/app/core/datastore/field/category-converter';
 import { PouchdbServer } from '../../../../src/app/core/datastore/pouchdb/pouchdb-server';
@@ -46,7 +48,7 @@ export async function setupSettingsService(pouchdbmanager, pouchdbserver, projec
         pouchdbmanager,
         pouchdbserver,
         undefined,
-        new AppConfigurator(new ConfigLoader(new FsConfigReader(), pouchdbmanager)),
+        new AppConfigurator(new ConfigLoader(new FsConfigReader('src/config/'), pouchdbmanager)),
         undefined,
         settingsProvider
     );
@@ -70,7 +72,7 @@ export async function setupSettingsService(pouchdbmanager, pouchdbserver, projec
 
     await settingsService.bootProjectDb(settings.selectedProject, true);
 
-    const projectConfiguration = await settingsService.loadConfiguration('src/config/');
+    const projectConfiguration = await settingsService.loadConfiguration();
     return {settingsService, projectConfiguration, settingsProvider};
 }
 

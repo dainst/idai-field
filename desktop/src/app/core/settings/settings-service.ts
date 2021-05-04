@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AppConfigurator, Name, PouchdbManager, ProjectConfiguration, SyncService } from 'idai-field-core';
+import { AppConfigurator, getConfigurationName, Name, PouchdbManager, ProjectConfiguration, SyncService } from 'idai-field-core';
 import { isString } from 'tsfun';
 import { M } from '../../components/messages/m';
 import { Messages } from '../../components/messages/messages';
@@ -11,30 +11,6 @@ import { SettingsProvider } from './settings-provider';
 
 const ipcRenderer = typeof window !== 'undefined' ? window.require('electron').ipcRenderer : require('electron').ipcRenderer;
 const remote = typeof window !== 'undefined' ? window.require('@electron/remote') : undefined;
-
-// Ordered by Name
-export const PROJECT_MAPPING = {
-    'abbircella': { prefix: 'AbbirCella', label: 'AbbirCella' },
-    'al-ula': { prefix: 'AlUla', label: 'Al Ula' },
-    'ayamonte': { prefix: 'Ayamonte', label: 'Ayamonte' },
-    'bogazkoy-hattusa': { prefix: 'Boha', label: 'Boğazköy-Ḫattuša' },
-    'bourgou': { prefix: 'Bourgou', label: 'Henchir el Bourgu' },
-    'campidoglio': { prefix: 'Campidoglio', label: 'Campidoglio' },
-    'castiglione': { prefix: 'Castiglione', label: 'Castiglione' },
-    'gadara_bm': { prefix: 'Gadara', label: 'Gadara' },
-    'kalapodi': { prefix: 'Kalapodi', label: 'Kalapodi' },
-    'karthagocircus': { prefix: 'KarthagoCircus', label: 'Karthago Circus' },
-    'kephissostal': { prefix: 'Kephissostal', label: 'Kephissostal' },
-    'meninx-project': { prefix: 'Meninx', label: 'Meninx' },
-    'milet': { prefix: 'Milet', label: 'Milet' },
-    'monte-turcisi': { prefix: 'MonTur', label: 'Monte Turcisi' },
-    'olympia': { prefix: 'Olympia', label: 'Olympia' },
-    'pergamongrabung': { prefix: 'Pergamon', label: 'Pergamon' },
-    'postumii': { prefix: 'Postumii', label: 'Postumii' },
-    'sudan-heritage': { prefix: 'SudanHeritage', label: 'Sudan Heritage' },
-    'selinunt': { prefix: 'Selinunt', label: 'Selinunt' },
-    'uruk': { prefix: 'Uruk', label: 'Uruk' }
-};
 
 
 @Injectable()
@@ -79,16 +55,6 @@ export class SettingsService {
     }
 
 
-    private static getConfigurationName(projectName: Name): Name|undefined {
-
-        for (let [name, project] of Object.entries(PROJECT_MAPPING)) {
-            if (projectName === name || projectName.startsWith(name + '-')) return project.prefix;
-        }
-
-        return undefined;
-    }
-
-
     /**
      * Sets, validates and persists the settings state.
      * Project settings have to be set separately.
@@ -125,7 +91,7 @@ export class SettingsService {
 
         try {
             return this.appConfigurator.go(
-                SettingsService.getConfigurationName(this.settingsProvider.getSettings().selectedProject),
+                getConfigurationName(this.settingsProvider.getSettings().selectedProject),
                 this.settingsProvider.getSettings().languages,
                 this.settingsProvider.getSettings().username
             );

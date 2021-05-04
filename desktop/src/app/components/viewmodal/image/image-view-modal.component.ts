@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {NgbActiveModal, NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {on, is} from 'tsfun';
+import {on, is, first, isEmpty} from 'tsfun';
 import {Datastore, Document, FieldDocument, ImageDocument} from 'idai-field-core';
 import {RoutingService} from '../../routing-service';
 import {ImagesState} from '../../../core/images/overview/view/images-state';
@@ -63,9 +63,23 @@ export class ImageViewModalComponent extends ViewModalComponent {
         }
     }
 
-    public onContextMenuItemClicked(event: any) {
+    public async onContextMenuItemClicked([_, documents]: [any, Array<Document /* should be ImageDocument*/>]) {
 
-        console.log('TODO', 'onContextMenuItemClicked', event);
+        const document = first(documents);
+
+        // TODO beware! this must be implemented properly, i.e. we need another unlink function, because
+        //      this one removes all links from the field-document. This is not what we want, we want only to remove
+        //      the links to the current field-document.
+        await this.imageRelationsManager.unlink(document as any);
+
+        // this.linkedDocument = await this.datastore.get(this.linkedDocument.resource.id);
+        this.images = (await this.getImageDocuments(this.linkedDocument.resource.relations.isDepictedIn))
+            .map(ImageRowItem.ofDocument);
+        this.selectedImage =
+            isEmpty(this.images)
+                ? undefined
+                : first(this.images);
+        console.log(this.selectedImage)
     }
 
 

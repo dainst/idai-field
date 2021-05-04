@@ -1,4 +1,5 @@
 import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
+import {Document} from 'idai-field-core';
 import {ContextMenu, ContextMenuOrientation} from '../../resources/widgets/context-menu';
 
 
@@ -17,7 +18,8 @@ export class ImageRowContextMenuComponent implements OnChanges {
     @Input() contextMenu: ContextMenu;
     @Input() showViewOption: boolean = false;
 
-    @Output() onSelectAction: EventEmitter<ImageRowContextMenuAction> = new EventEmitter<ImageRowContextMenuAction>();
+    @Output() onSelectAction: EventEmitter<[ImageRowContextMenuAction, Array<Document>]> =
+        new EventEmitter<[ImageRowContextMenuAction, Array<Document>]>();
 
     public orientation: ContextMenuOrientation = 'top';
 
@@ -33,7 +35,7 @@ export class ImageRowContextMenuComponent implements OnChanges {
 
     public selectAction(action: ImageRowContextMenuAction) {
 
-        this.onSelectAction.emit(action);
+        this.onSelectAction.emit([action, this.contextMenu.documents]);
     }
 
 

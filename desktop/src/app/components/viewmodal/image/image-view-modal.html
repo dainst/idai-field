@@ -27,7 +27,8 @@
                        (onStartEdit)="startEdit(true)"
                        (onJumpToResource)="jumpToResource($event)"></document-info>
 
-        <image-viewer [image]="selectedImage?.document"></image-viewer>
+                    <!-- TODO review added *ngIf -->
+                    <image-viewer *ngIf="selectedImage" [image]="selectedImage?.document"></image-viewer>
 
         <image-row [images]="images"
                    [selectedImage]="selectedImage"

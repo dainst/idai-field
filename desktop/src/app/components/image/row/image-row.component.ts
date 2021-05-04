@@ -14,13 +14,13 @@ import {ImageRowContextMenuAction} from './image-row-context-menu.component';
 const MAX_IMAGE_WIDTH: number = 600;
 const PLACEHOLDER_WIDTH: number = 150;
 
-
 @Component({
     selector: 'image-row',
     templateUrl: './image-row.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)',
-        '(window:resize)': 'onResize()'
+        '(window:resize)': 'onResize()',
+        '(window:contextmenu)': 'handleClick($event, true)'
     }
 })
 /**
@@ -109,9 +109,31 @@ export class ImageRowComponent implements OnChanges {
             : this.onImageClicked.emit(image);
     }
 
+    // TODO review duplication with sidebar-list.component#handleClick
+    public handleClick(event: any, rightClick: boolean = false) {
+
+        if (!this.contextMenu.position) return;
+
+        let target = event.target;
+        let inside = false;
+
+        console.log('handleClick', event, rightClick, target.tagName)
+
+        do {
+            if (target.tagName === 'IMG' && rightClick) {
+                inside = true;
+                break;
+            }
+            target = target.parentNode;
+        } while (target);
+
+        if (!inside) this.contextMenu.close();
+    }
+
 
     public performContextMenuAction(event: any) {
 
+        this.contextMenu.close();
         this.onContextMenuItemClicked.emit(event);
     }
 

@@ -1,6 +1,5 @@
-import { ConstraintIndex, Document, DocumentCache, FulltextIndex, Indexer, IndexFacade, PouchdbManager } from 'idai-field-core';
+import { ConstraintIndex, DocumentCache, FulltextIndex, Indexer, IndexFacade, PouchdbManager, ProjectConfiguration } from 'idai-field-core';
 import { AngularUtility } from '../angular/angular-utility';
-import { ProjectConfiguration } from 'idai-field-core';
 import { FieldConverter } from '../core/datastore/field/category-converter';
 import { SampleDataLoader } from '../core/datastore/field/sampledata/sample-data-loader';
 import { PouchdbServer } from '../core/datastore/pouchdb/pouchdb-server';
@@ -139,7 +138,7 @@ const loadConfiguration = async (settingsService: SettingsService, progress: Ini
 
     let configuration: ProjectConfiguration;
     try {
-        configuration = await settingsService.loadConfiguration(remote.getGlobal('configurationDirPath'));
+        configuration = await settingsService.loadConfiguration();
     } catch(err) {
         progress.setError('configurationError', err);
         return Promise.reject();

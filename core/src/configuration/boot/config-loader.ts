@@ -1,17 +1,17 @@
 import { isUndefinedOrEmpty, Map, map, not } from 'tsfun';
-import { ProjectConfiguration } from '../project-configuration';
-import { ConfigurationValidation } from './configuration-validation';
-import { ConfigReader } from './config-reader';
-import { buildRawProjectConfiguration } from './build-raw-project-configuration';
-import { BuiltinCategoryDefinition } from '../model/builtin-category-definition';
-import { LibraryCategoryDefinition } from '../model/library-category-definition';
-import { FieldDefinition } from '../../model/field-definition';
-import { RelationDefinition } from '../../model/relation-definition';
-import { addKeyAsProp } from '../../tools';
-import { ValuelistDefinition } from '../../model/valuelist-definition';
 import { PouchdbManager } from '../../datastore';
 import { ConfigurationDocument } from '../../model/configuration-document';
+import { FieldDefinition } from '../../model/field-definition';
+import { RelationDefinition } from '../../model/relation-definition';
+import { ValuelistDefinition } from '../../model/valuelist-definition';
+import { addKeyAsProp } from '../../tools';
 import { CustomCategoryDefinition } from '../model';
+import { BuiltinCategoryDefinition } from '../model/builtin-category-definition';
+import { LibraryCategoryDefinition } from '../model/library-category-definition';
+import { ProjectConfiguration } from '../project-configuration';
+import { buildRawProjectConfiguration } from './build-raw-project-configuration';
+import { ConfigReader } from './config-reader';
+import { ConfigurationValidation } from './configuration-validation';
 
 
 /**
@@ -32,7 +32,7 @@ export class ConfigLoader {
     constructor(private configReader: ConfigReader,
                 private pouchdbManager: PouchdbManager) {}
 
-    public async go(configDirPath: string, commonFields: { [fieldName: string]: any },
+    public async go(commonFields: { [fieldName: string]: any },
                     builtinCategories: Map<BuiltinCategoryDefinition>, relations: Array<RelationDefinition>,
                     extraFields: {[fieldName: string]: FieldDefinition },
                     customConfigurationName: string|undefined,
@@ -40,7 +40,7 @@ export class ConfigLoader {
 
         if (customConfigurationName) console.log('Load custom configuration', customConfigurationName);
 
-        const libraryCategories: Map<LibraryCategoryDefinition> = this.readLibraryCategories(configDirPath);
+        const libraryCategories: Map<LibraryCategoryDefinition> = this.readLibraryCategories();
 
         const missingRelationCategoryErrors = ConfigurationValidation.findMissingRelationType(
             relations, Object.keys(builtinCategories as any)
@@ -48,7 +48,6 @@ export class ConfigLoader {
         if (missingRelationCategoryErrors.length > 0) throw missingRelationCategoryErrors;
 
         return this.preprocess(
-            configDirPath,
             libraryCategories,
             commonFields,
             builtinCategories,
@@ -60,9 +59,9 @@ export class ConfigLoader {
     }
 
 
-    private readLibraryCategories(configDirPath: string): any {
+    private readLibraryCategories(): any {
 
-        const appConfigurationPath = configDirPath + '/Library/Categories.json';
+        const appConfigurationPath = '/Library/Categories.json';
 
         try {
             return addKeyAsProp('libraryId')(this.configReader.read(appConfigurationPath));
@@ -72,8 +71,7 @@ export class ConfigLoader {
     }
 
 
-    private async preprocess(configDirPath: string,
-                             libraryCategories: Map<LibraryCategoryDefinition>,
+    private async preprocess(libraryCategories: Map<LibraryCategoryDefinition>,
                              commonFields: any,
                              builtinCategories: Map<BuiltinCategoryDefinition>,
                              relations: Array<RelationDefinition>,
@@ -82,11 +80,10 @@ export class ConfigLoader {
                              languages: string[],
                              username: string): Promise<ProjectConfiguration> {
 
-        const orderConfigurationPath = configDirPath + '/Order.json';
-        const searchConfigurationPath = configDirPath + '/Search.json';
-        const valuelistsConfigurationPath = configDirPath + '/Library/Valuelists.json';
-        const customConfigPath = configDirPath
-            + '/Config-' + (customConfigurationName ? customConfigurationName : 'Default') + '.json';
+        const orderConfigurationPath = '/Order.json';
+        const searchConfigurationPath = '/Search.json';
+        const valuelistsConfigurationPath = '/Library/Valuelists.json';
+        const customConfigPath = '/Config-' + (customConfigurationName ? customConfigurationName : 'Default') + '.json';
 
         let customCategories;
         let languageConfigurations: any[];
@@ -96,7 +93,7 @@ export class ConfigLoader {
 
         try {
             languageConfigurations = this.readLanguageConfigurations(
-                configDirPath, languages, customConfigurationName
+                languages, customConfigurationName
             );
             customCategories = (await this.loadCustomConfiguration(customConfigPath, username)).resource.categories;
             searchConfiguration = this.configReader.read(searchConfigurationPath);
@@ -162,24 +159,23 @@ export class ConfigLoader {
     }
 
 
-    private readLanguageConfigurations(configDirPath: string, languages: string[],
-                                       customConfigurationName: string): any[] {
+    private readLanguageConfigurations(languages: string[], customConfigurationName: string): any[] {
 
         const configurations = [];
 
         for (const language of languages) {
             configurations.push(
-                this.readLanguageConfiguration(configDirPath + '/Language-' +
+                this.readLanguageConfiguration('/Language-' +
                     (customConfigurationName
                         ? customConfigurationName
                         : 'Custom')
                     + '.' + language + '.json')
             );
             configurations.push(
-                this.readLanguageConfiguration(configDirPath + '/Library/Language.' + language + '.json')
+                this.readLanguageConfiguration('/Library/Language.' + language + '.json')
             );
             configurations.push(
-                this.readLanguageConfiguration(configDirPath + '/Core/Language.' + language + '.json')
+                this.readLanguageConfiguration('/Core/Language.' + language + '.json')
             );
         }
 

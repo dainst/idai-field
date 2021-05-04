@@ -1,7 +1,7 @@
-import {ConfigLoader} from './boot/config-loader';
-import {ProjectConfiguration} from './project-configuration';
-import {BuiltinCategoryDefinition} from './model/builtin-category-definition';
-import {FieldDefinition,Groups,RelationDefinition} from '../model';
+import { FieldDefinition, Groups, RelationDefinition } from '../model';
+import { ConfigLoader } from './boot/config-loader';
+import { BuiltinCategoryDefinition } from './model/builtin-category-definition';
+import { ProjectConfiguration } from './project-configuration';
 
 
 export const COMMON_FIELDS = {
@@ -567,7 +567,7 @@ export class AppConfigurator {
     constructor(private configLoader: ConfigLoader) {}
 
 
-    public async go(configDirPath: string, customConfigurationName: string|undefined,
+    public async go(customConfigurationName: string|undefined,
                     languages: string[], username: string): Promise<ProjectConfiguration> {
 
         if (customConfigurationName === 'Meninx' || customConfigurationName === 'Pergamon'
@@ -800,7 +800,6 @@ export class AppConfigurator {
 
 
         return this.configLoader.go(
-            configDirPath,
             COMMON_FIELDS,
             this.builtinCategories,
             this.defaultRelations,

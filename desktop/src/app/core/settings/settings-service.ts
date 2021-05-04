@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
+import { AppConfigurator, Name, PouchdbManager, ProjectConfiguration, SyncService } from 'idai-field-core';
 import { isString } from 'tsfun';
-import { Name, PouchdbManager, SyncService, AppConfigurator, ProjectConfiguration } from 'idai-field-core';
 import { M } from '../../components/messages/m';
 import { Messages } from '../../components/messages/messages';
 import { PouchdbServer } from '../datastore/pouchdb/pouchdb-server';
@@ -121,11 +121,10 @@ export class SettingsService {
     }
 
 
-    public async loadConfiguration(configurationDirPath: string): Promise<ProjectConfiguration> {
+    public async loadConfiguration(): Promise<ProjectConfiguration> {
 
         try {
             return this.appConfigurator.go(
-                configurationDirPath,
                 SettingsService.getConfigurationName(this.settingsProvider.getSettings().selectedProject),
                 this.settingsProvider.getSettings().languages,
                 this.settingsProvider.getSettings().username

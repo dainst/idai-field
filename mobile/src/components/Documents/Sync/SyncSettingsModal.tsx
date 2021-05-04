@@ -2,7 +2,7 @@ import { Modal, Text } from 'native-base';
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { clone } from 'tsfun';
-import { ProjectSettings } from '../../../model/preferences';
+import { ProjectSettings } from '../../../models/preferences';
 import ConnectPouchForm from './ConnectPouchForm';
 import DisconectPouchForm from './DisconnectPouchForm';
 

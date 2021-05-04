@@ -1,6 +1,6 @@
 import { SyncStatus } from 'idai-field-core';
 import React from 'react';
-import { ProjectSettings } from '../../model/preferences';
+import { ProjectSettings } from '../../models/preferences';
 import { DocumentRepository } from '../../repositories/document-repository';
 import DocumentsContainer from './DocumentsContainer';
 

@@ -1,4 +1,4 @@
-<div class="card"
+<div *ngIf="field && category" class="card"
      [class.bg-warning]="field.source === 'custom'"
      [class.bg-secondary]="hidden"
      [class.text-white]="hidden">
@@ -11,7 +11,7 @@
         </span>
         <b *ngIf="field.label"> {{field.label}}</b>
         <code> {{field.name}}</code>
-        <div *ngIf="field.source !== 'custom'" class="btn-group right hide-buttons">
+        <div *ngIf="editable" class="btn-group right hide-buttons">
             <button *ngIf="!hidden"
                     class="btn btn-primary hide-field-button"
                     (click)="toggleHidden()"

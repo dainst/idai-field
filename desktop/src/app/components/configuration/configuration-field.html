@@ -2,7 +2,10 @@
      [class.bg-warning]="field.source === 'custom'"
      [class.bg-secondary]="hidden"
      [class.text-white]="hidden">
-    <div class="card-header">
+    <div class="card-header" [class.parent-field]="parentField">
+        <category-icon *ngIf="parentField"
+            [size]="28"
+            [category]="category.parentCategory.name"></category-icon>
         <span *ngIf="field.source === 'custom'"
             class="mdi mdi-alert-circle-outline"
             ngbTooltip="Projektspezifisches Feld"

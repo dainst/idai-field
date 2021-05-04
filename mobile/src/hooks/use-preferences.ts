@@ -61,7 +61,7 @@ const savePreferences = async (preferences: Preferences) =>
 
 
 const getDefaultPreferences = (): Preferences => ({
-    currentProject: '',
+    currentProject: 'test',
     username: '',
     recentProjects: [],
     projects: {}

@@ -54,9 +54,7 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({
                     <Button colorScheme="green" size="md" onPress={ () => saveSettings() }>
                         Save
                     </Button>
-                    <Button colorScheme="red" size="md" _text={ { color: 'white', fontWeight: 'semibold' } }
-                        onPress={ () => navigation.goBack() }
-                    >
+                    <Button size="md" onPress={ () => navigation.goBack() }>
                         Cancel
                     </Button>
                 </Row>

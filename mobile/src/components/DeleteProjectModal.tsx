@@ -73,7 +73,7 @@ const DeleteProjectModal: React.FC<DeleteProjectModalProps> = ({ project, isOpen
                 >
                     Delete
                 </Button>
-                <Button colorScheme="gray" size="md" onPress={ onCancel }>
+                <Button size="md" onPress={ onCancel }>
                     Cancel
                 </Button>
             </Modal.Footer>

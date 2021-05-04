@@ -71,9 +71,7 @@ const CreateProjectModal: React.FC<CreateProjectModalProps> = ({ isOpen, onProje
                 <Button colorScheme="green" size="md" onPress={ onCreate } isDisabled={ !project }>
                     Create
                 </Button>
-                <Button colorScheme="red" size="md" _text={ { color: 'white', fontWeight: 'semibold' } }
-                    onPress={ onCancel }
-                >
+                <Button size="md" onPress={ onCancel }>
                     Cancel
                 </Button>
             </Modal.Footer>

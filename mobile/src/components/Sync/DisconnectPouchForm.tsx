@@ -8,7 +8,7 @@ interface DisconnectPouchFormProps {
 const DisconnectPouchForm: React.FC<DisconnectPouchFormProps> = ({ onDisconnect }) => {
     return (
         <Box>
-            <Button colorScheme="red" onPress={ onDisconnect }>
+            <Button onPress={ onDisconnect }>
                 <Text color="white">Disconnect</Text>
             </Button>
         </Box>

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Category, Document, Datastore, FieldDocument, ImageDocument, Relations, ProjectConfiguration, ProjectCategories,
     ON_RESOURCE_ID, ResourceId, toResourceId, Forest } from 'idai-field-core';
-import { flatten, includedIn, all, isDefined, isNot, on, separate, set, subtract, to, isnt, update, filter, not } from 'tsfun';
+import { flatten, includedIn, all, isDefined, isNot, on, separate, set, subtract, to, isnt, update, filter, not, rest, first } from 'tsfun';
 import { Imagestore } from '../images/imagestore/imagestore';
 import { RelationsManager } from './relations-manager';
 import DEPICTS = Relations.Image.DEPICTS;
@@ -114,28 +114,27 @@ export class ImageRelationsManager {
 
     public async unlink(first: FieldDocument, ...selectedImages: Array<ImageDocument>);
     public async unlink(...selectedImages: Array<ImageDocument>);
-    public async unlink(first: ImageDocument|FieldDocument,
-                        ...selectedImages: Array<ImageDocument>) {
+    public async unlink(...documents: Array<Document>) {
 
         const imageDocumentNames = ProjectCategories.getImageCategoryNames(this.categoryForest);
         const isImageDocument = document => imageDocumentNames.includes(document.resource.category);
 
-        if (selectedImages.some(not(isImageDocument))) {
+        if (rest(documents).some(not(isImageDocument))) {
             throw 'illegal argument - selectedImages must be image documents';
         }
 
         const imageDocuments =
-            isImageDocument(first)
-                ? [first].concat(selectedImages)
-                : selectedImages;
+            isImageDocument(first(documents))
+                ? documents
+                : rest(documents);
 
         for (const imageDocument of imageDocuments) {
             const oldVersion = Document.clone(imageDocument);
             imageDocument.resource.relations.depicts =
-                isImageDocument(first)
+                isImageDocument(first(documents))
                     ? []
                     : imageDocument.resource.relations.depicts
-                        .filter(isnt(first.resource.id));
+                        .filter(isnt(first(documents).resource.id));
 
             await this.relationsManager.update(imageDocument, oldVersion);
         }

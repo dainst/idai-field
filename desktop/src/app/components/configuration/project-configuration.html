@@ -81,6 +81,7 @@
                         
                         <div *ngFor="let field of getFields(selectedCategory)">
                             <configuration-field [field]="field"
+                                                 [category]="selectedCategory"
                                                  [hidden]="isHidden(selectedCategory)(field)"
                                                  (onToggleHidden)="toggleHidden(selectedCategory, field)">
                             </configuration-field>

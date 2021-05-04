@@ -13,6 +13,8 @@ const locale: string = typeof window !== 'undefined'
   ? window.require('@electron/remote').getGlobal('config').locale
   : 'de';
 
+export const OVERRIDE_VISIBLE_FIELDS = [FieldResource.IDENTIFIER, FieldResource.SHORTDESCRIPTION];
+
 
 @Component({
     templateUrl: './project-configuration.html',
@@ -33,8 +35,6 @@ export class ProjectConfigurationComponent {
     public saving: boolean = false;
     public showHiddenFields: boolean = true;
     public permanentlyHiddenFields: { [categoryName: string]: string[] };
-
-    private OVERRIDE_VISIBLE_FIELDS = [FieldResource.IDENTIFIER, FieldResource.SHORTDESCRIPTION];
 
 
     constructor(private projectConfiguration: ProjectConfiguration,
@@ -119,7 +119,12 @@ export class ProjectConfigurationComponent {
         const customCategoryDefinition: CustomCategoryDefinition
             = this.customConfigurationDocument.resource.categories[category.libraryId];
 
-        return (customCategoryDefinition.hidden ?? []).includes(field.name);
+        const parentCustomCategoryDefinition = category.parentCategory
+            ? this.customConfigurationDocument.resource.categories[category.parentCategory.libraryId]
+            : undefined;
+
+        return (customCategoryDefinition.hidden ?? []).includes(field.name) || 
+            (parentCustomCategoryDefinition?.hidden ?? []).includes(field.name);
     }
 
 
@@ -159,7 +164,7 @@ export class ProjectConfigurationComponent {
         return categories.reduce((result, category) => {
             result[category.name] = flatten(category.groups.map(to('fields')))
                 .filter(field => !field.visible
-                    && !this.OVERRIDE_VISIBLE_FIELDS.includes(field.name)
+                    && !OVERRIDE_VISIBLE_FIELDS.includes(field.name)
                     && (!category.libraryId || !this.isHidden(category)(field)))
                 .map(to('name'));
             return result;

@@ -1,8 +1,7 @@
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList } from 'mobile/App';
 import { Button, Center, Column, Icon, IconButton, Row, Select, Text, View } from 'native-base';
-import React, { SetStateAction, useCallback, useState } from 'react';
-import { prepend, set, update } from 'tsfun';
+import React, { useCallback, useState } from 'react';
 import CreateProjectModal from '../components/CreateProjectModal';
 import { Preferences } from '../model/preferences';
 
@@ -10,26 +9,24 @@ import { Preferences } from '../model/preferences';
 interface HomeScreenProps {
     navigation: StackNavigationProp<AppStackParamList, 'SplashScreen'>;
     preferences: Preferences;
-    setPreferences: React.Dispatch<SetStateAction<Preferences>>;
+    setCurrentProject: (project: string) => void;
 }
 
 
 const HomeScreen: React.FC<HomeScreenProps> = ({
     navigation,
     preferences,
-    setPreferences
+    setCurrentProject
 }) => {
 
-    const [selectedProject, setSelectedProject] = useState<string>(preferences.recentProjects[0] || '');
+    const [selectedProject, setSelectedProject] = useState<string>(preferences.currentProject || '');
     const [isProjectModalOpen, setIsProjectModalOpen] = useState<boolean>(false);
 
     const openProject = useCallback((project: string) => {
 
-        let newPreferences = update(['settings','project'], project, preferences);
-        newPreferences = update('recentProjects', old => set(prepend(project)(old)), newPreferences);
-        setPreferences(newPreferences);
+        setCurrentProject(project);
         navigation.navigate('DocumentsScreen');
-    }, [navigation, preferences, setPreferences]);
+    }, [navigation, setCurrentProject]);
 
 
     return <>
@@ -40,7 +37,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
         />
         <View flex={ 1 } safeArea>
             <Row justifyContent="flex-end">
-                { preferences.settings.username === '' &&
+                { preferences.username === '' &&
                     <Row bg="red.200" p={ 2 } alignItems="center" rounded="lg" space={ 2 }>
                         <Icon type="Ionicons" name="alert-circle" color="red" />
                         <Text color="red.600" bold>Make sure to set your name!</Text>

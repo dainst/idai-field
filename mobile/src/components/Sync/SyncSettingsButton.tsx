@@ -1,18 +1,18 @@
 import { SyncStatus } from 'idai-field-core';
 import { Icon, IconButton } from 'native-base';
 import React, { useState } from 'react';
-import { SyncSettings } from '../../model/preferences';
+import { ProjectSettings } from '../../model/preferences';
 import SyncSettingsModal from './SyncSettingsModal';
 
 
 interface SyncSettingsButtonProps {
-    settings: SyncSettings;
-    setSyncSettings: (settings: SyncSettings) => void;
+    settings: ProjectSettings;
+    setSettings: (settings: ProjectSettings) => void;
     status: SyncStatus;
 }
 
 
-const SyncSettingsButton: React.FC<SyncSettingsButtonProps> = ({ settings, setSyncSettings, status }) => {
+const SyncSettingsButton: React.FC<SyncSettingsButtonProps> = ({ settings, setSettings, status }) => {
 
     const [showSettings, setShowSettings] = useState<boolean>(false);
 
@@ -20,8 +20,8 @@ const SyncSettingsButton: React.FC<SyncSettingsButtonProps> = ({ settings, setSy
     
         <SyncSettingsModal
             settings={ settings }
-            onSettingsSet={ newSyncSettings => {
-                setSyncSettings(newSyncSettings);
+            onSettingsSet={ newSettings => {
+                setSettings(newSettings);
                 setShowSettings(false);
             } }
             isOpen={ showSettings }

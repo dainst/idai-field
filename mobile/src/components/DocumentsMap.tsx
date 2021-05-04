@@ -6,7 +6,7 @@ import { StyleSheet } from 'react-native';
 import Map from '../components/Map/Map';
 import ScanBarcodeButton from '../components/ScanBarcodeButton';
 import SearchBar from '../components/SearchBar';
-import { SyncSettings } from '../model/preferences';
+import { ProjectSettings } from '../model/preferences';
 import { DocumentRepository } from '../repositories/document-repository';
 import { DocumentsContainerDrawerParamList } from './DocumentsContainer';
 
@@ -18,8 +18,8 @@ interface DocumentsMapProps {
     allDocuments: Document[];
     selectedDocument?: Document;
     syncStatus: SyncStatus;
-    syncSettings: SyncSettings;
-    setSyncSettings: (syncSettings: SyncSettings) => void;
+    projectSettings: ProjectSettings;
+    setProjectSettings: (projectSettings: ProjectSettings) => void;
     issueSearch: (q: string) => void;
 }
 
@@ -30,8 +30,8 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
     documents,
     allDocuments,
     syncStatus,
-    syncSettings,
-    setSyncSettings,
+    projectSettings,
+    setProjectSettings,
     issueSearch
 }): ReactElement => {
 
@@ -53,7 +53,7 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
 
     return (
         <View flex={ 1 } safeArea>
-            <SearchBar { ...{ issueSearch, syncSettings, setSyncSettings, syncStatus, toggleDrawer } } />
+            <SearchBar { ...{ issueSearch, projectSettings, setProjectSettings, syncStatus, toggleDrawer } } />
             <View style={ styles.container }>
                 <Map
                     selectedGeoDocuments={ documents.filter(doc => doc?.resource.geometry) }

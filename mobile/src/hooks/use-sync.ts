@@ -1,24 +1,24 @@
 import { SyncProcess, SyncStatus } from 'idai-field-core';
 import { useEffect, useState } from 'react';
-import { SyncSettings } from '../model/preferences';
+import { ProjectSettings } from '../model/preferences';
 import { DocumentRepository } from '../repositories/document-repository';
 
 
-const useSync = (project: string, syncSettings: SyncSettings, repository?: DocumentRepository): SyncStatus => {
+const useSync = (project: string, projectSettings: ProjectSettings, repository?: DocumentRepository): SyncStatus => {
     
     const [status, setStatus] = useState<SyncStatus>(SyncStatus.Offline);
 
     useEffect(() => {
         
         if (repository) {
-            const syncProcess = setupSync(repository, project, syncSettings, setStatus);
+            const syncProcess = setupSync(repository, project, projectSettings, setStatus);
             return () => {
                 syncProcess.then(process => {
                     process && process.cancel();
                 });
             };
         }
-    }, [repository, project, syncSettings]);
+    }, [repository, project, projectSettings]);
 
     if (!repository) return SyncStatus.Offline;
 
@@ -29,7 +29,7 @@ const useSync = (project: string, syncSettings: SyncSettings, repository?: Docum
 const setupSync = async (
     repository: DocumentRepository,
     project: string,
-    { url, password, connected } : SyncSettings,
+    { url, password, connected } : ProjectSettings,
     setStatus: (status: SyncStatus) => void
 ): Promise<SyncProcess | undefined> => {
 

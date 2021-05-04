@@ -1,45 +1,43 @@
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList } from 'mobile/App';
 import { Button, Center, FormControl, Input, Row, Stack, View } from 'native-base';
-import React, { SetStateAction, useState } from 'react';
-import { update } from 'tsfun';
+import React, { useState } from 'react';
 import { Preferences } from '../model/preferences';
 
 
 interface SettingsScreenProps {
     navigation: StackNavigationProp<AppStackParamList, 'SplashScreen'>;
     preferences: Preferences;
-    setPreferences: React.Dispatch<SetStateAction<Preferences>>;
+    setUsername: (username: string) => void;
 }
 
 
 const SettingsScreen: React.FC<SettingsScreenProps> = ({
     navigation,
     preferences,
-    setPreferences
+    setUsername
 }) => {
 
-    const [username, setUsername] = useState(preferences.settings.username);
+    const [usernameVal, setUsernameVal] = useState(preferences.username);
 
     const saveSettings = () => {
 
-        const newPreferences = update(['settings','username'], username, preferences);
-        setPreferences(newPreferences);
+        setUsername(usernameVal);
         navigation.goBack();
     };
 
     return (
         <View flex={ 1 } safeArea>
             <Center flex={ 1 }>
-                <FormControl isRequired isInvalid={ username === '' }>
+                <FormControl isRequired isInvalid={ usernameVal === '' }>
                     <Stack mx={ 8 }>
                         <FormControl.Label>Editor name</FormControl.Label>
-                        <Input p={ 2 } mt={ 2 } value={ username } onChangeText={ setUsername } />
+                        <Input p={ 2 } mt={ 2 } value={ usernameVal } onChangeText={ setUsernameVal } />
                         <FormControl.HelperText mt={ 1 }>
                             The editor name is saved in the editing history in order
                             to allow dataset changes to be attributable to a person.
                         </FormControl.HelperText>
-                        { username === '' && <FormControl.ErrorMessage mt={ 1 }>
+                        { usernameVal === '' && <FormControl.ErrorMessage mt={ 1 }>
                             Editor name must not be empty.
                         </FormControl.ErrorMessage> }
                     </Stack>

@@ -3,12 +3,12 @@ import { createStackNavigator, StackNavigationProp } from '@react-navigation/sta
 import { NativeBaseProvider } from 'native-base';
 import React, { ReactElement, useCallback } from 'react';
 import { enableScreens } from 'react-native-screens';
+import DocumentsScreen from './src/components/Documents/DocumentsScreen';
+import HomeScreen from './src/components/Home/HomeScreen';
+import SettingsScreen from './src/components/Settings/SettingsScreen';
 import usePreferences from './src/hooks/use-preferences';
 import useRepository from './src/hooks/use-repository';
 import useSync from './src/hooks/use-sync';
-import DocumentsScreen from './src/screens/DocumentsScreen';
-import HomeScreen from './src/screens/HomeScreen';
-import SettingsScreen from './src/screens/SettingsScreen';
 
 
 export type AppStackParamList = {

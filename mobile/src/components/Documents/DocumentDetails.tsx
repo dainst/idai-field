@@ -3,7 +3,7 @@ import { Document } from 'idai-field-core';
 import { Avatar, Column, Icon, IconButton, Row, Text } from 'native-base';
 import React, { useEffect, useState } from 'react';
 import { Platform, ScrollView } from 'react-native';
-import { DocumentRepository } from '../repositories/document-repository';
+import { DocumentRepository } from '../../repositories/document-repository';
 import { DocumentsContainerDrawerParamList } from './DocumentsContainer';
 
 

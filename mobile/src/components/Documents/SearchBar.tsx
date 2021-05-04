@@ -1,7 +1,7 @@
 import { SyncStatus } from 'idai-field-core';
 import { Box, HStack, Icon, IconButton, Input } from 'native-base';
 import React from 'react';
-import { ProjectSettings } from '../model/preferences';
+import { ProjectSettings } from '../../model/preferences';
 import SyncSettingsButton from './Sync/SyncSettingsButton';
 
 interface SearchBarProps {

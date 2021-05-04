@@ -4,7 +4,6 @@ import { Text } from 'native-base';
 import React, { ReactElement, useMemo } from 'react';
 import { StyleSheet } from 'react-native';
 import { Circle, G } from 'react-native-svg';
-import SvgMap from '../SvgMap/SvgMap';
 import { standardViewBox } from './constants';
 import { getGeometryBoundings } from './cs-transform-utils';
 import {
@@ -12,6 +11,7 @@ import {
     GeoMultiPolygon, GeoPoint, GeoPolygon, transformGeojsonToSvg
 } from './geo-svg';
 import { getDocumentFillAndOpacity } from './svg-element-style';
+import SvgMap from './SvgMap/SvgMap';
 
 interface MapProps {
     geoDocuments: Document[];

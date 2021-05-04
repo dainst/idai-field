@@ -2,19 +2,24 @@ import { Modal, Text } from 'native-base';
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { clone } from 'tsfun';
-import { SyncSettings } from '../../model/settings';
+import { ProjectSettings } from '../../model/preferences';
 import ConnectPouchForm from './ConnectPouchForm';
 import DisconectPouchForm from './DisconnectPouchForm';
 
 interface SyncSettingsModalProps {
-    settings: SyncSettings;
-    onSettingsSet: (syncSettings: SyncSettings) => void,
+    settings: ProjectSettings;
     isOpen: boolean;
+    onSettingsSet: (syncSettings: ProjectSettings) => void,
     onClose: () => void;
 }
 
 
-const SyncSettingsModal: React.FC<SyncSettingsModalProps> = ({ settings, onSettingsSet, isOpen, onClose }) => {
+const SyncSettingsModal: React.FC<SyncSettingsModalProps> = ({
+    settings,
+    isOpen,
+    onSettingsSet,
+    onClose
+}) => {
 
     const onDisconnect = () => {
 
@@ -23,7 +28,7 @@ const SyncSettingsModal: React.FC<SyncSettingsModalProps> = ({ settings, onSetti
         onSettingsSet(newSettings);
     };
 
-    const onConnect = (newSettings: SyncSettings) => onSettingsSet(newSettings);
+    const onConnect = (newSettings: ProjectSettings) => onSettingsSet(newSettings);
 
     return (
         <Modal

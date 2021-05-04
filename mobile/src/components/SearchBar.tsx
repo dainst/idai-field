@@ -5,18 +5,18 @@ import { ProjectSettings } from '../model/preferences';
 import SyncSettingsButton from './Sync/SyncSettingsButton';
 
 interface SearchBarProps {
-    issueSearch: (q: string) => void;
     projectSettings: ProjectSettings;
-    setProjectSettings: (settings: ProjectSettings) => void;
     syncStatus: SyncStatus;
+    setProjectSettings: (settings: ProjectSettings) => void;
+    issueSearch: (q: string) => void;
     toggleDrawer: () => void
 }
 
 const SearchBar: React.FC<SearchBarProps> = ({
-    issueSearch,
     projectSettings,
-    setProjectSettings,
     syncStatus,
+    setProjectSettings,
+    issueSearch,
     toggleDrawer
 }) => {
 

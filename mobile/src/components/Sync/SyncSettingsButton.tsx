@@ -7,12 +7,16 @@ import SyncSettingsModal from './SyncSettingsModal';
 
 interface SyncSettingsButtonProps {
     settings: ProjectSettings;
-    setSettings: (settings: ProjectSettings) => void;
     status: SyncStatus;
+    setSettings: (settings: ProjectSettings) => void;
 }
 
 
-const SyncSettingsButton: React.FC<SyncSettingsButtonProps> = ({ settings, setSettings, status }) => {
+const SyncSettingsButton: React.FC<SyncSettingsButtonProps> = ({
+    settings,
+    status,
+    setSettings
+}) => {
 
     const [showSettings, setShowSettings] = useState<boolean>(false);
 

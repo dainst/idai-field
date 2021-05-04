@@ -31,6 +31,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
 
         if (!project) return;
 
+        setSelectedProject(project);
         setCurrentProject(project);
         navigation.navigate('DocumentsScreen');
     }, [navigation, setCurrentProject]);

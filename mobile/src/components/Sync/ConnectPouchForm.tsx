@@ -1,11 +1,11 @@
 import { Button, Center, Input, Stack, Text, View } from 'native-base';
 import React, { useState } from 'react';
 import { Keyboard, StyleSheet } from 'react-native';
-import { SyncSettings } from '../../model/settings';
+import { ProjectSettings } from '../../model/preferences';
 
 interface ConnectPouchFormProps {
-    settings: SyncSettings,
-    onConnect: (settings: SyncSettings) => void;
+    settings: ProjectSettings,
+    onConnect: (settings: ProjectSettings) => void;
 }
 
 const ConnectPouchForm: React.FC<ConnectPouchFormProps> = ({ settings, onConnect }) => {

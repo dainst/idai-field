@@ -1,15 +1,11 @@
 export interface Preferences {
-    settings: Settings;
-    syncSettings: SyncSettings;
-    recentProjects: string[];
-}
-
-export interface Settings {
-    project: string;
     username: string;
+    currentProject: string;
+    recentProjects: string[];
+    projects: Record<string, ProjectSettings>;
 }
 
-export interface SyncSettings {
+export interface ProjectSettings {
     url: string;
     password: string;
     connected: boolean;

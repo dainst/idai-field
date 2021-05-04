@@ -1,14 +1,11 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NavigationContainer, RouteProp } from '@react-navigation/native';
 import { createStackNavigator, StackNavigationProp } from '@react-navigation/stack';
 import { NativeBaseProvider } from 'native-base';
-import PouchDB from 'pouchdb-react-native';
-import React, { Dispatch, ReactElement, SetStateAction, useEffect, useState } from 'react';
+import React, { ReactElement } from 'react';
 import { enableScreens } from 'react-native-screens';
-import { update } from 'tsfun';
+import usePreferences from './src/hooks/use-preferences';
+import useRepository from './src/hooks/use-repository';
 import useSync from './src/hooks/use-sync';
-import { Preferences } from './src/model/preferences';
-import { DocumentRepository } from './src/repositories/document-repository';
 import DocumentsScreen from './src/screens/DocumentsScreen';
 import HomeScreen from './src/screens/HomeScreen';
 import SettingsScreen from './src/screens/SettingsScreen';
@@ -27,9 +24,6 @@ export type AppStackNavProps<T extends keyof AppStackParamList> = {
 };
 
 
-type SetRepository = Dispatch<SetStateAction<DocumentRepository | undefined>>;
-
-
 enableScreens();
 
 
@@ -38,25 +32,13 @@ const Stack = createStackNavigator();
 
 export default function App(): ReactElement {
 
-    const [repository, setRepository] = useState<DocumentRepository>();
-    const [preferences, setPreferences] = useState<Preferences>(getDefaultPreferences());
-    const syncStatus = useSync(preferences.settings.project, preferences.syncSettings, repository);
-
-    useEffect(() => {
-
-        loadPreferences().then(setPreferences);
-    }, []);
-
-    useEffect(() => {
-
-        setPreferences(old => update(['syncSettings','connected'], false, old));
-        setupRepository(preferences.settings.project, preferences.settings.username, setRepository);
-    }, [preferences.settings]);
-
-    useEffect(() => {
-
-        savePreferences(preferences);
-    }, [preferences]);
+    const { preferences, setCurrentProject, setUsername, setProjectSettings } = usePreferences();
+    const repository = useRepository(preferences.currentProject, preferences.username);
+    const syncStatus = useSync(
+        preferences.currentProject,
+        preferences.projects[preferences.currentProject],
+        repository
+    );
 
 
     return (
@@ -64,48 +46,21 @@ export default function App(): ReactElement {
             <NavigationContainer>
                 <Stack.Navigator initialRouteName="HomeScreen" screenOptions={ { headerShown: false } }>
                     <Stack.Screen name="HomeScreen">
-                        { (props) => <HomeScreen { ... { ...props, preferences, setPreferences } } /> }
+                        { (props) => <HomeScreen { ... { ...props, preferences, setCurrentProject } } /> }
                     </Stack.Screen>
                     <Stack.Screen name="DocumentsScreen">
-                        { () => <DocumentsScreen { ... { repository, syncStatus, preferences, setPreferences } } /> }
+                        { () => <DocumentsScreen
+                            repository={ repository }
+                            syncStatus={ syncStatus }
+                            projectSettings={ preferences.projects[preferences.currentProject] }
+                            setProjectSettings={ setProjectSettings }
+                        /> }
                     </Stack.Screen>
                     <Stack.Screen name="SettingsScreen">
-                        { (props) => <SettingsScreen { ... { ...props, preferences, setPreferences } } /> }
+                        { (props) => <SettingsScreen { ... { ...props, preferences, setUsername } } /> }
                     </Stack.Screen>
                 </Stack.Navigator>
             </NavigationContainer>
         </NativeBaseProvider>
     );
 }
-
-
-const loadPreferences = async (): Promise<Preferences> => {
-
-    const prefString = await AsyncStorage.getItem('preferences');
-    return prefString ? JSON.parse(prefString) : getDefaultPreferences();
-};
-
-
-const savePreferences = async (preferences: Preferences) =>
-    await AsyncStorage.setItem('preferences', JSON.stringify(preferences));
-
-
-const setupRepository = async (project: string, username: string, setRepository: SetRepository) => {
-
-    const repository = await DocumentRepository.init(project, (name: string) => new PouchDB(name), username);
-    setRepository(repository);
-};
-
-
-const getDefaultPreferences = () => ({
-    settings: {
-        project: 'test467',
-        username: ''
-    },
-    syncSettings: {
-        url: '',
-        password: '',
-        connected: false
-    },
-    recentProjects: []
-});

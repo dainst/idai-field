@@ -1,21 +1,21 @@
 import { SyncStatus } from 'idai-field-core';
 import { Box, HStack, Icon, IconButton, Input } from 'native-base';
 import React from 'react';
-import { SyncSettings } from '../model/settings';
+import { ProjectSettings } from '../model/preferences';
 import SyncSettingsButton from './Sync/SyncSettingsButton';
 
 interface SearchBarProps {
     issueSearch: (q: string) => void;
-    syncSettings: SyncSettings;
-    setSyncSettings: (settings: SyncSettings) => void;
+    projectSettings: ProjectSettings;
+    setProjectSettings: (settings: ProjectSettings) => void;
     syncStatus: SyncStatus;
     toggleDrawer: () => void
 }
 
 const SearchBar: React.FC<SearchBarProps> = ({
     issueSearch,
-    syncSettings,
-    setSyncSettings,
+    projectSettings,
+    setProjectSettings,
     syncStatus,
     toggleDrawer
 }) => {
@@ -27,7 +27,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
                 style={ styles.input }
                 onChangeText={ issueSearch }
                 InputLeftElement={ renderLeftIcons(toggleDrawer) }
-                InputRightElement={ renderRightIcons(issueSearch, syncSettings, setSyncSettings, syncStatus) }
+                InputRightElement={ renderRightIcons(issueSearch, projectSettings, setProjectSettings, syncStatus) }
             />
         </Box>
     );
@@ -43,8 +43,8 @@ const renderLeftIcons = (onPress: () => void) =>
 
 const renderRightIcons = (
     issueSearch: (q: string) => void,
-    syncSettings: SyncSettings,
-    setSyncSettings: (settings: SyncSettings) => void,
+    projectSettings: ProjectSettings,
+    setProjectSettings: (settings: ProjectSettings) => void,
     syncStatus: SyncStatus
 ) =>
     <HStack>
@@ -54,8 +54,8 @@ const renderRightIcons = (
             icon={ <Icon type="Ionicons" name="refresh" /> }
         />
         <SyncSettingsButton
-            settings={ syncSettings }
-            setSyncSettings={ setSyncSettings }
+            settings={ projectSettings }
+            setSettings={ setProjectSettings }
             status={ syncStatus }
         />
     </HStack>;

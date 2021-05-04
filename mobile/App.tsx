@@ -1,12 +1,11 @@
 import { NavigationContainer, RouteProp } from '@react-navigation/native';
 import { createStackNavigator, StackNavigationProp } from '@react-navigation/stack';
 import { NativeBaseProvider } from 'native-base';
-import PouchDB from 'pouchdb-react-native';
-import React, { Dispatch, ReactElement, SetStateAction, useEffect, useState } from 'react';
+import React, { ReactElement } from 'react';
 import { enableScreens } from 'react-native-screens';
 import usePreferences from './src/hooks/use-preferences';
+import useRepository from './src/hooks/use-repository';
 import useSync from './src/hooks/use-sync';
-import { DocumentRepository } from './src/repositories/document-repository';
 import DocumentsScreen from './src/screens/DocumentsScreen';
 import HomeScreen from './src/screens/HomeScreen';
 import SettingsScreen from './src/screens/SettingsScreen';
@@ -25,9 +24,6 @@ export type AppStackNavProps<T extends keyof AppStackParamList> = {
 };
 
 
-type SetRepository = Dispatch<SetStateAction<DocumentRepository | undefined>>;
-
-
 enableScreens();
 
 
@@ -36,18 +32,13 @@ const Stack = createStackNavigator();
 
 export default function App(): ReactElement {
 
-    const [repository, setRepository] = useState<DocumentRepository>();
     const { preferences, setCurrentProject, setUsername, setProjectSettings } = usePreferences();
+    const repository = useRepository(preferences.currentProject, preferences.username);
     const syncStatus = useSync(
         preferences.currentProject,
         preferences.projects[preferences.currentProject],
         repository
     );
-
-    useEffect(() => {
-
-        setupRepository(preferences.currentProject, preferences.username, setRepository);
-    }, [preferences.currentProject, preferences.username]);
 
 
     return (
@@ -73,10 +64,3 @@ export default function App(): ReactElement {
         </NativeBaseProvider>
     );
 }
-
-
-const setupRepository = async (project: string, username: string, setRepository: SetRepository) => {
-
-    const repository = await DocumentRepository.init(project, (name: string) => new PouchDB(name), username);
-    setRepository(repository);
-};

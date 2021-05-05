@@ -12,13 +12,13 @@ describe('loadConfiguration()', () => {
     let pouchdbManager: PouchdbManager;
     
 
-    beforeEach(async () => {
+    beforeEach(() => {
         pouchdbManager = new PouchdbManager((name: string) => new PouchDB(name));
         pouchdbManager.createDb_e2e(project);
     });
 
 
-    afterEach(async () => pouchdbManager.destroyDb(project));
+    afterEach(async () => await pouchdbManager.destroyDb(project));
 
 
     it('loads meninx config via config reader', async () => {

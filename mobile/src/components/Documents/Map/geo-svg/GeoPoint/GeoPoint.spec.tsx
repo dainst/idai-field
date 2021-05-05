@@ -2,7 +2,7 @@ import { configure, shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import React from 'react';
 import { Circle } from 'react-native-svg';
-import { GeoElementsCommonProps } from './common-props';
+import { GeoElementsCommonProps } from '../common-props';
 import { GeoPoint } from './GeoPoint';
 
 const point: GeoElementsCommonProps = {

@@ -1,8 +1,8 @@
 import { Position } from 'geojson';
 import React from 'react';
 import { CircleProps } from 'react-native-svg';
-import { GeoElementsCommonProps } from './common-props';
-import { GeoPoint } from './GeoPoint/GeoPoint';
+import { GeoElementsCommonProps } from '../common-props';
+import { GeoPoint } from '../GeoPoint/GeoPoint';
 
 interface GeoMultiPointProps extends CircleProps, GeoElementsCommonProps {}
 

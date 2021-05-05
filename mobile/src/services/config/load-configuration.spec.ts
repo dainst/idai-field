@@ -18,22 +18,25 @@ describe('loadConfiguration()', () => {
     });
 
 
-    afterEach(async () => await pouchdbManager.destroyDb(project));
-
-
-    it('loads meninx config via config reader', async () => {
-
-        const config = await loadConfiguration(pouchdbManager, 'meninx-project', ['de', 'en'], 'Testuser');
-
-        expect(config.getLabelForCategory('Wall_surface')).toEqual('Wandoberfläche');
+    afterEach(async (done) => {
+        await pouchdbManager.destroyDb(project);
+        done();
     });
 
 
-    xit('loads default config via config reader', async () => {
+    it('loads default config via config reader', async () => {
 
-        const config = await loadConfiguration(pouchdbManager, 'default', ['de', 'en'], 'Testuser');
+        const config = await loadConfiguration(pouchdbManager, 'asdflkjhasdflj', ['de', 'en'], 'Testuser');
         
         expect(config.getLabelForCategory('Trench')).toEqual('Schnitt');
+    });
+
+
+    it('throw error if custom conf not present', async () => {
+
+        const config = loadConfiguration(pouchdbManager, 'meninx-project', ['de', 'en'], 'Testuser');
+        
+        await expect(config).rejects.toBeTruthy();
     });
 
 });

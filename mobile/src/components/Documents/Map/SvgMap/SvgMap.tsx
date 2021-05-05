@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import {
-    Animated, GestureResponderEvent, LayoutChangeEvent, PanResponder, PanResponderGestureState
+    Animated, GestureResponderEvent, PanResponder, PanResponderGestureState
 } from 'react-native';
 import Svg, { G, SvgProps } from 'react-native-svg';
+import { ViewPort } from '../geo-svg/geojson-cs-to-svg-cs/geojson-cs-to-svg-cs';
 import { getViewPortTransform } from '../viewbox-utils/viewbox-utils';
 import { calcCenter, calcDistance } from './math-utils';
 
@@ -16,8 +17,12 @@ interface Coordinate {
     y: number;
 }
 
+interface SvgMapProps extends SvgProps {
+    viewPort: ViewPort;
+}
 
-const SvgMap: React.FC<SvgProps> = ( props ) => {
+
+const SvgMap: React.FC<SvgMapProps> = ( props ) => {
 
     //absolute positions
     const left = useRef<Animated.Value>(new Animated.Value(0)).current;
@@ -47,16 +52,25 @@ const SvgMap: React.FC<SvgProps> = ( props ) => {
     const AG = Animated.createAnimatedComponent(G);
     const AnimatedSvg = Animated.createAnimatedComponent(Svg);
 
+    useEffect(() => {
+
+        const transforms = getViewPortTransform(props.viewBox, props.preserveAspectRatio, props.viewPort);
+        translateX.setValue(transforms.translateX );
+        translateY.setValue(transforms.translateY );
+        scaleY.setValue(transforms.scaleY );
+        scaleX.setValue(transforms.scaleX );
+    },[props.viewPort]);
     
-    const handleLayoutChange = (event: LayoutChangeEvent) => {
+    // const handleLayoutChange = (event: LayoutChangeEvent) => {
         
-        const { x, y, width, height } = event.nativeEvent.layout;
-        const transforms = getViewPortTransform(props.viewBox, props.preserveAspectRatio, { x, y, width, height });
-        translateX.setValue(transforms.translateX);
-        translateY.setValue(transforms.translateY);
-        scaleY.setValue(transforms.scaleY);
-        scaleX.setValue(transforms.scaleX);
-    };
+    //     const { x, y, width, height } = event.nativeEvent.layout;
+    //     const transforms = getViewPortTransform(props.viewBox, props.preserveAspectRatio, { x, y, width, height });
+    //     translateX.setValue(transforms.translateX);
+    //     translateY.setValue(transforms.translateY);
+    //     scaleY.setValue(transforms.scaleY);
+    //     scaleX.setValue(transforms.scaleX);
+    //     console.log({ x, y, width, height });
+    // };
    
     const shouldRespond = (e: GestureResponderEvent, gestureState: PanResponderGestureState):boolean =>
         e.nativeEvent.touches.length === 2 ||
@@ -131,7 +145,7 @@ const SvgMap: React.FC<SvgProps> = ( props ) => {
 
     
     return (
-        <Animated.View style={ props.style } { ...panResponder.panHandlers } onLayout={ handleLayoutChange }>
+        <Animated.View style={ props.style } { ...panResponder.panHandlers }>
             <AnimatedSvg>
             <AG
                 x={ Animated.add(left, Animated.multiply(zoom, translateX)) }

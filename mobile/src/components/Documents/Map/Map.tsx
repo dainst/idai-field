@@ -1,8 +1,8 @@
 import { Position } from 'geojson';
 import { Document, FieldGeometry } from 'idai-field-core';
-import { Text } from 'native-base';
-import React, { ReactElement, useMemo } from 'react';
-import { StyleSheet } from 'react-native';
+import { Text, View } from 'native-base';
+import React, { ReactElement, useMemo, useRef } from 'react';
+import { LayoutChangeEvent, StyleSheet } from 'react-native';
 import { Circle, G } from 'react-native-svg';
 import { standardViewBox } from './constants';
 import { getGeometryBoundings } from './cs-transform-utils';
@@ -10,6 +10,7 @@ import {
     GeoLineString, GeoMultiLineString, GeoMultiPoint,
     GeoMultiPolygon, GeoPoint, GeoPolygon, transformGeojsonToSvgViewPort
 } from './geo-svg';
+import { ViewPort } from './geo-svg/geojson-cs-to-svg-cs/geojson-cs-to-svg-cs';
 import { getDocumentFillAndOpacity } from './svg-element-style';
 import SvgMap from './SvgMap/SvgMap';
 
@@ -23,12 +24,17 @@ interface MapProps {
 const Map: React.FC<MapProps> = ({ geoDocuments, selectedGeoDocuments, navigateToDocument }) => {
 
     const geometryBoundings = useMemo(()=> getGeometryBoundings(geoDocuments),[geoDocuments]);
+    const viewPort = useRef<ViewPort>();
 
+    const handleLayoutChange = (event: LayoutChangeEvent) => {
+        viewPort.current = event.nativeEvent.layout;
+        
+    };
   
     return (
-        <>
-            {geoDocuments && geometryBoundings ?
-                <SvgMap viewBox={ standardViewBox.join(' ') } style={ styles.svg }>
+        <View onLayout={ handleLayoutChange }>
+            {geoDocuments && geometryBoundings && viewPort.current ?
+                <SvgMap viewBox={ standardViewBox.join(' ') } style={ styles.svg } viewPort={ viewPort.current }>
                     {geoDocuments.map(doc =>(
                         <G key={ doc._id }>
                             {renderGeoSvgElement(
@@ -42,7 +48,7 @@ const Map: React.FC<MapProps> = ({ geoDocuments, selectedGeoDocuments, navigateT
                 </SvgMap> :
                 <Text>No docs available</Text>
             }
-        </>
+        </View>
     );
 };
 

@@ -5,7 +5,7 @@ import { Circle } from 'react-native-svg';
 import { GeoElementsCommonProps } from '../common-props';
 import { GeoPoint } from './GeoPoint';
 
-const point: GeoElementsCommonProps = {
+const props: GeoElementsCommonProps = {
     csTransformFunction: (pos) => [pos[0] * 4, pos[1] + 5],
     coordinates: [2,2],
 };
@@ -16,7 +16,7 @@ describe('<GeoPoint />', () => {
     let wrapper: any;
     beforeAll(() => {
         wrapper = shallow(
-            <GeoPoint coordinates={ point.coordinates } csTransformFunction={ point.csTransformFunction } />);
+            <GeoPoint { ...props } />);
     });
 
     it('Renders one SVG circle child', () => {

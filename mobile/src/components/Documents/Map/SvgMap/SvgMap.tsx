@@ -4,8 +4,8 @@ import {
     Animated, GestureResponderEvent, LayoutChangeEvent, PanResponder, PanResponderGestureState
 } from 'react-native';
 import Svg, { G, SvgProps } from 'react-native-svg';
+import { getViewPortTransform } from '../viewbox-utils/viewbox-utils';
 import { calcCenter, calcDistance } from './math-utils';
-import { getViewPortTransform } from './viewbox-utils/viewbox-utils';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 const no = () => {};

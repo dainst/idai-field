@@ -2,7 +2,7 @@ import { Position } from 'geojson';
 import { standardViewBox } from '../../constants';
 import { GeometryBoundings, mapValueToNewRange } from '../../cs-transform-utils';
 
-export const transformGeojsonToSvg = (geoBoundings: GeometryBoundings, position: Position): Position => {
+export const transformGeojsonToSvgViewPort = (geoBoundings: GeometryBoundings, position: Position): Position => {
 
     const [viewStartX, viewStartY, viewWidth, _viewHeigt] = standardViewBox;
     const { minX, minY, maxX, maxY } = geoBoundings;

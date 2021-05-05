@@ -1,4 +1,4 @@
-import { transformGeojsonToSvg } from './geojson-cs-to-svg-cs/geojson-cs-to-svg-cs';
+import { transformGeojsonToSvgViewPort } from './geojson-cs-to-svg-cs/geojson-cs-to-svg-cs';
 import { GeoLineString } from './GeoLineString';
 import { GeoMultiLineString } from './GeoMultiLineString';
 import { GeoMultiPoint } from './GeoMultiPoint/GeoMultiPoint';
@@ -13,6 +13,6 @@ export {
     GeoLineString,
     GeoPoint,
     GeoMultiPoint,
-    transformGeojsonToSvg
+    transformGeojsonToSvgViewPort
 };
 

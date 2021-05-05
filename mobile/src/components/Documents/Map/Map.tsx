@@ -8,7 +8,7 @@ import { standardViewBox } from './constants';
 import { getGeometryBoundings } from './cs-transform-utils';
 import {
     GeoLineString, GeoMultiLineString, GeoMultiPoint,
-    GeoMultiPolygon, GeoPoint, GeoPolygon, transformGeojsonToSvg
+    GeoMultiPolygon, GeoPoint, GeoPolygon, transformGeojsonToSvgViewPort
 } from './geo-svg';
 import { getDocumentFillAndOpacity } from './svg-element-style';
 import SvgMap from './SvgMap/SvgMap';
@@ -33,7 +33,7 @@ const Map: React.FC<MapProps> = ({ geoDocuments, selectedGeoDocuments, navigateT
                         <G key={ doc._id }>
                             {renderGeoSvgElement(
                                 doc,
-                                transformGeojsonToSvg.bind(this, geometryBoundings),
+                                transformGeojsonToSvgViewPort.bind(this, geometryBoundings),
                                 selectedGeoDocuments,
                                 selectedGeoDocuments.length === geoDocuments.length,
                                 navigateToDocument)}

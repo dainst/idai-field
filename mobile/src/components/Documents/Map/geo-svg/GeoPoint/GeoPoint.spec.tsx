@@ -14,12 +14,12 @@ configure({ adapter: new Adapter() });
 
 describe('<GeoPoint />', () => {
     let wrapper: any;
-    beforeEach(() => {
+    beforeAll(() => {
         wrapper = shallow(
             <GeoPoint coordinates={ point.coordinates } csTransformFunction={ point.csTransformFunction } />);
     });
 
-    it('has 1 child', () => {
+    it('Renders one SVG circle child', () => {
         
         expect(wrapper.find(Circle)).toHaveLength(1);
     });

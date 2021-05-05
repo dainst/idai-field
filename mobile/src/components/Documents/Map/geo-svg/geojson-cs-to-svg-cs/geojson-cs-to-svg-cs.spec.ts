@@ -18,6 +18,7 @@ describe('geojson-cs-to-svg',() => {
         expect(transformGeojsonToSvgViewPort(geoBoundings, position)).toEqual(expectedTransformedPos);
     });
 
+    
     it('handles case if geometry boundings are minX === minY and minY === maxY',() => {
         const geoBoundings: GeometryBoundings = {
             minX: 5,

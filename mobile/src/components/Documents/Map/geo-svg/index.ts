@@ -3,8 +3,8 @@ import { GeoLineString } from './GeoLineString';
 import { GeoMultiLineString } from './GeoMultiLineString';
 import { GeoMultiPoint } from './GeoMultiPoint';
 import { GeoMultiPolygon } from './GeoMultiPolygon';
-import { GeoPoint } from './GeoPoint';
-import { GeoPolygon } from './GeoPolygon';
+import { GeoPoint } from './GeoPoint/GeoPoint';
+import { GeoPolygon } from './GeoPolygon/GeoPolygon';
 
 export {
     GeoMultiPolygon,

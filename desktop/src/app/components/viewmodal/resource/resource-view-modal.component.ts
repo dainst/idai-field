@@ -22,10 +22,10 @@ import {MenuService} from '../../menu-service';
 export class ResourceViewModalComponent extends ViewModalComponent {
 
     public document: FieldDocument;
-    public ready: boolean = false;
+    public ready = false;
 
-    private resourceEdited: boolean = false;
-    private expandAllGroups: boolean = false;
+    private resourceEdited = false;
+    private expandAllGroups = false;
 
 
     constructor(private imagesState: ImagesState,
@@ -107,10 +107,8 @@ export class ResourceViewModalComponent extends ViewModalComponent {
 
         const images = (await this.datastore.getMultiple(
             this.document.resource.relations['isDepictedIn']
-        )) as Array<ImageDocument>;
+        ));
 
-        return images.map((document: ImageDocument) => {
-            return { imageId: document.resource.id, document: document }
-        });
+        return images.map(document => ({ imageId: document.resource.id, document }));
     }
 }

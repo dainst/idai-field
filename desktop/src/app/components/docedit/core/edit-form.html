@@ -26,11 +26,6 @@
                 </edit-form-group>
             </div>
 
-            <div *ngIf="activeGroup === 'images'" id="docedit-images-tab">
-                <docedit-image-tab [document]="document"></docedit-image-tab>
-            </div>
-
-
             <div *ngIf="activeGroup === 'conflicts'" id="docedit-conflicts-tab">
                 <docedit-conflicts-tab [document]="document" [inspectedRevisions]="inspectedRevisions">
                 </docedit-conflicts-tab>

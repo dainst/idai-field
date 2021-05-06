@@ -1,23 +1,20 @@
-import {Component, Input, ViewChild} from '@angular/core';
+import {Component, Input, OnChanges, ViewChild} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
-import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {Datastore, FieldDocument, Document, ImageDocument} from 'idai-field-core';
-import {ImagePickerComponent} from '../widgets/image-picker.component';
 import {ImageGridComponent} from '../../image/grid/image-grid.component';
 import {SortUtil} from 'idai-field-core';
-import {MenuContext, MenuService} from '../../menu-service';
 import {Relations} from 'idai-field-core';
 
 
 @Component({
-    selector: 'docedit-image-tab',
-    templateUrl: './docedit-image-tab.html'
+    selector: 'image-view-multiple',
+    templateUrl: './image-view-multiple.html'
 })
 /**
  * @author F.Z.
  * @author Daniel de Oliveira
  */
-export class DoceditImageTabComponent {
+export class ImageViewMultipleComponent implements OnChanges {
 
     @ViewChild('imageGrid', { static: false }) public imageGrid: ImageGridComponent;
 
@@ -28,8 +25,6 @@ export class DoceditImageTabComponent {
 
 
     constructor(private datastore: Datastore,
-                private modalService: NgbModal,
-                private menuService: MenuService,
                 private i18n: I18n) {}
 
 
@@ -47,7 +42,7 @@ export class DoceditImageTabComponent {
      */
     public select(document: ImageDocument) {
 
-        if (this.selected.indexOf(document) == -1) this.selected.push(document);
+        if (this.selected.indexOf(document) === -1) this.selected.push(document);
         else this.selected.splice(this.selected.indexOf(document), 1);
     }
 
@@ -61,21 +56,21 @@ export class DoceditImageTabComponent {
     public removeLinks() {
 
         const isDepictedIn = this.document.resource.relations[Relations.Image.ISDEPICTEDIN];
-        const targetsToRemove = [] as any;
+        const targetsToRemove = [];
 
-        for (let target of isDepictedIn) {
-            for (let sel of this.selected) {
-                if (sel.resource.id == target) targetsToRemove.push(target as never);
+        for (const target of isDepictedIn) {
+            for (const sel of this.selected) {
+                if (sel.resource.id === target) targetsToRemove.push(target);
             }
         }
 
         if (!targetsToRemove) return;
 
-        for (let targetToRemove of targetsToRemove) {
+        for (const targetToRemove of targetsToRemove) {
             isDepictedIn.splice(isDepictedIn.indexOf(targetToRemove), 1);
         }
 
-        if (isDepictedIn.length == 0) {
+        if (isDepictedIn.length === 0) {
             this.document.resource.relations[Relations.Image.ISDEPICTEDIN] = [];
             this.documents = [];
             this.clearSelection();
@@ -131,7 +126,7 @@ export class DoceditImageTabComponent {
 
         Promise.all(imageDocPromises).then(docs => {
             this.documents = docs as Array<ImageDocument>;
-            this.documents.sort((a: ImageDocument, b: ImageDocument) => {
+            this.documents.sort((a, b) => {
                 return SortUtil.alnumCompare(a.resource.identifier, b.resource.identifier);
             });
             this.clearSelection();
@@ -139,49 +134,9 @@ export class DoceditImageTabComponent {
     }
 
 
-    private addIsDepictedInRelations(imageDocuments: ImageDocument[]) {
-
-        const relations = this.document.resource.relations[Relations.Image.ISDEPICTEDIN]
-            ? this.document.resource.relations[Relations.Image.ISDEPICTEDIN].slice() : [];
-
-        for (let i in imageDocuments) {
-            if (relations.indexOf(imageDocuments[i].resource.id) == -1) {
-                relations.push(imageDocuments[i].resource.id);
-            }
-        }
-
-        this.document.resource.relations[Relations.Image.ISDEPICTEDIN] = relations;
-
-        this.loadImages();
-    }
-
-
     public onResize() {
 
-        if (!this.documents || this.documents.length == 0) return;
+        if (!this.documents || this.documents.length === 0) return;
         this.imageGrid.calcGrid();
-    }
-
-
-    public async openImagePicker() {
-
-        this.menuService.setContext(MenuContext.MODAL);
-
-        if (document.activeElement) (document.activeElement as HTMLElement).blur();
-
-        const imagePickerModal: NgbModalRef = this.modalService.open(
-            ImagePickerComponent, { size: 'lg', keyboard: false }
-        );
-        imagePickerModal.componentInstance.mode = 'depicts';
-        imagePickerModal.componentInstance.setDocument(this.document);
-
-        try {
-            const selectedImages: Array<ImageDocument> = await imagePickerModal.result;
-            this.addIsDepictedInRelations(selectedImages);
-        } catch(err) {
-            // Image picker modal has been canceled
-        } finally {
-            this.menuService.setContext(MenuContext.DOCEDIT);
-        }
     }
 }

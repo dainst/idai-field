@@ -41,7 +41,6 @@ import { DuplicateModalComponent } from './dialog/duplicate-modal.component';
 import { EditSaveDialogComponent } from './dialog/edit-save-dialog.component';
 import { DoceditComponent } from './docedit.component';
 import { DoceditConflictsTabComponent } from './tabs/docedit-conflicts-tab.component';
-import { DoceditImageTabComponent } from './tabs/docedit-image-tab.component';
 import { CategorySwitcherButtonComponent } from './widgets/category-switcher-button.component';
 import { ImagePickerComponent } from './widgets/image-picker.component';
 import { RelationPickerGroupComponent } from './widgets/relationpicker/relation-picker-group.component';
@@ -82,7 +81,6 @@ import { RelationPickerComponent } from './widgets/relationpicker/relation-picke
         DeleteModalComponent,
         DoceditComponent,
         EditSaveDialogComponent,
-        DoceditImageTabComponent,
         DoceditConflictsTabComponent,
         CategorySwitcherButtonComponent,
         ImagePickerComponent,

@@ -7,6 +7,7 @@ import {WidgetsModule} from '../widgets/widgets.module';
 import {ImageGridModule} from '../image/grid/image-grid.module';
 import {ImageRowModule} from '../image/row/image-row.module';
 import {ImageViewerModule} from '../image/viewer/image-viewer.module';
+import {ImageViewMultipleComponent} from './image/image-tab.component';
 
 
 @NgModule({
@@ -20,6 +21,7 @@ import {ImageViewerModule} from '../image/viewer/image-viewer.module';
     ],
     declarations: [
         ImageViewModalComponent,
+        ImageViewMultipleComponent,
         ResourceViewModalComponent
     ],
     entryComponents: [

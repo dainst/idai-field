@@ -1,7 +1,7 @@
 import { Position } from 'geojson';
 import { identityMatrix4, Matrix4, matrixVecMul4, multiply4, processTransform3d } from 'react-native-redash';
 import { GeometryBoundings } from './cs-transform-utils';
-import { getViewPortTransform, ViewBox, ViewPort } from './viewbox-utils/viewbox-utils';
+import { getViewPortTransform, ViewBox, ViewPort } from './viewport-utils/viewport-utils';
 
 
 export const processTransform2d = (transformationMatrix: Matrix4, position: Position): Position => {

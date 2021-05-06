@@ -11,7 +11,7 @@ import {
     processTransform2d, setupTransformationMatrix
 } from './geo-svg';
 import { getGeometryBoundings } from './geo-svg/geojson-cs-to-svg-cs/cs-transform-utils';
-import { ViewPort } from './geo-svg/geojson-cs-to-svg-cs/viewbox-utils/viewbox-utils';
+import { ViewPort } from './geo-svg/geojson-cs-to-svg-cs/viewport-utils/viewport-utils';
 import { getDocumentFillAndOpacity } from './svg-element-style';
 import SvgMap from './SvgMap/SvgMap';
 

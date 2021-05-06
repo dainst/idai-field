@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import { getViewPortTransform, ViewBox } from './viewbox-utils';
+import { getViewPortTransform, ViewBox } from './viewport-utils';
 
 
 describe('getViewPortTransform',() => {

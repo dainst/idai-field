@@ -69,7 +69,7 @@ export class ImageViewModalComponent extends ViewModalComponent {
 
     public isMainImage(imageDocument: ImageDocument): boolean {
 
-        return imageDocument.resource.id === this.linkedDocument.resource.relations[Relations.Image.ISDEPICTEDIN][0];
+        return imageDocument.resource.id === this.linkedDocument.resource.relations[Relations.Image.ISDEPICTEDIN]?.[0];
     }
 
     public getMainImage(): ImageDocument|undefined {
@@ -120,45 +120,14 @@ export class ImageViewModalComponent extends ViewModalComponent {
 
     public async onContextMenuItemClicked([_, documents]: [any, Array<Document /* should be ImageDocument*/>]) {
 
-        const document = first(documents);
-
-        await this.imageRelationsManager.unlink(
-            this.linkedDocument as FieldDocument, document as ImageDocument);
-
-        // this.linkedDocument = await this.datastore.get(this.linkedDocument.resource.id);
-        this.images = (await this.getImageDocuments(this.linkedDocument.resource.relations.isDepictedIn))
-            .map(ImageRowItem.ofDocument);
-        this.selectedImage =
-            isEmpty(this.images)
-                ? undefined
-                : first(this.images);
+        await this.removeImageLinks(documents as Array<ImageDocument>);
     }
 
 
-    public removeLinks() {
+    public async removeLinks() {
 
-        const isDepictedIn = this.linkedDocument.resource.relations[Relations.Image.ISDEPICTEDIN];
-        const targetsToRemove = [];
-
-        for (const target of isDepictedIn) {
-            for (const sel of this.selected) {
-                if (sel.resource.id === target) targetsToRemove.push(target);
-            }
-        }
-
-        if (!targetsToRemove) return;
-
-        for (const targetToRemove of targetsToRemove) {
-            isDepictedIn.splice(isDepictedIn.indexOf(targetToRemove), 1);
-        }
-
-        if (isDepictedIn.length === 0) {
-            this.linkedDocument.resource.relations[Relations.Image.ISDEPICTEDIN] = [];
-            // this.documents = []; // TODO enable
-            // this.clearSelection();
-        } else {
-            // this.loadImages();
-        }
+        await this.removeImageLinks(this.selected);
+        this.selected = [];
     }
 
 
@@ -197,6 +166,21 @@ export class ImageViewModalComponent extends ViewModalComponent {
         } finally {
             // this.menuService.setContext(MenuContext.DOCEDIT);
         }
+    }
+
+
+    private async removeImageLinks(documents: Array<ImageDocument>) {
+
+        await this.imageRelationsManager.unlink(
+            this.linkedDocument as FieldDocument, ...documents);
+
+        // this.linkedDocument = await this.datastore.get(this.linkedDocument.resource.id);
+        this.images = (await this.getImageDocuments(this.linkedDocument.resource.relations.isDepictedIn))
+            .map(ImageRowItem.ofDocument);
+        this.selectedImage =
+            isEmpty(this.images)
+                ? undefined
+                : first(this.images);
     }
 
 

@@ -24,8 +24,8 @@
 
     <div *ngIf="isEditImagesOptionAvailable()" id="context-menu-images-button" class="dropdown-item"
         (click)="selectAction('edit-images')">
-        <span class="mdi mdi-pencil"></span>
-        <span class="dropdown-entry-label">Bilder</span>
+        <span class="mdi mdi-image-multiple"></span>
+        <span class="dropdown-entry-label">Bilder</span><!-- TODO translate -->
     </div>
 
     <hr *ngIf="isCreateGeometryOptionAvailable() || isEditGeometryOptionAvailable()">

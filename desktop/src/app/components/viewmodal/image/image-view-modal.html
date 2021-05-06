@@ -5,6 +5,23 @@
     </div>
 
     <div>
+        <span *ngIf="selected.length" class="btn-group selection-actions">
+            <button *ngIf="selected.length === 1 && !isMainImage(selected[0])" id="set-main-image" type="button"
+                class="btn btn-primary" (click)="setMainImage()" ngbTooltip="Als Hauptbild festlegen"
+                i18n-ngbTooltip="@@docedit.tabs.images.tooltips.setMainImage" placement="bottom" container="body">
+                <span class="mdi mdi-star"></span>
+            </button>
+            <button id="delete-images" type="button" class="btn btn-danger" (click)="removeLinks()"
+                ngbTooltip="{{getRemoveLinksTooltip()}}" placement="bottom" container="body">
+                <span class="mdi mdi-link-off"></span>
+            </button>
+            <button id="deselect-images" type="button" class="btn btn-secondary" (click)="clearSelection()"
+                ngbTooltip="Auswahl aufheben" i18n-ngbTooltip="@@docedit.tabs.images.tooltips.deselect" placement="bottom"
+                container="body">
+                <span class="mdi mdi-selection-off"></span>
+            </button>
+        </span>
+
         <button *ngIf="linkedDocument" class="btn btn-primary" id="manage-images-button" tabindex="-1"
             (click)="startEditImages()">
             <span class="mdi mdi-plus-circle"></span>
@@ -48,6 +65,7 @@
 
 <div *ngIf="mode === 'multiple'" id="view-modal-body" class="modal-body px-0">
     <div id="view-modal-content" class="flew-nowrap bg-light px-0">
-        <image-view-multiple [document]="linkedDocument"></image-view-multiple>
+        <image-view-multiple [document]="linkedDocument" [(selected)]="selected">
+        </image-view-multiple>
     </div>
 </div>

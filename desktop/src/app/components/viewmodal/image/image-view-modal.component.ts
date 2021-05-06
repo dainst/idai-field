@@ -1,7 +1,8 @@
 import {Component, Renderer2} from '@angular/core';
+import {I18n} from '@ngx-translate/i18n-polyfill';
 import {NgbActiveModal, NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {on, is, first, isEmpty} from 'tsfun';
-import {Datastore, Document, FieldDocument, ImageDocument} from 'idai-field-core';
+import {Datastore, Document, FieldDocument, ImageDocument, Relations} from 'idai-field-core';
 import {RoutingService} from '../../routing-service';
 import {ImagesState} from '../../../core/images/overview/view/images-state';
 import {ViewModalComponent} from '../view-modal.component';
@@ -38,6 +39,9 @@ export class ImageViewModalComponent extends ViewModalComponent {
     public mode: ImageViewModalComponent.Mode = 'single';
 
 
+    public selected: Array<ImageDocument> = [];
+
+
     constructor(private imagesState: ImagesState,
                 activeModal: NgbActiveModal,
                 modalService: NgbModal,
@@ -45,7 +49,8 @@ export class ImageViewModalComponent extends ViewModalComponent {
                 private renderer: Renderer2,
                 menuService: MenuService,
                 private datastore: Datastore,
-                private imageRelationsManager: ImageRelationsManager) {
+                private imageRelationsManager: ImageRelationsManager,
+                private i18n: I18n) {
 
         super(activeModal, modalService, routingService, menuService);
 
@@ -61,6 +66,34 @@ export class ImageViewModalComponent extends ViewModalComponent {
     protected getDocument = () => (this.selectedImage as ImageRowItem).document;
 
     protected setDocument = (document: Document) => (this.selectedImage as ImageRowItem).document = document;
+
+
+    public isMainImage(imageDocument: ImageDocument): boolean {
+
+        return imageDocument.resource.id === this.linkedDocument.resource.relations[Relations.Image.ISDEPICTEDIN][0];
+    }
+
+    public getMainImage(): ImageDocument|undefined {
+
+        // return this.documents.find(document => this.isMainImage(document)); TODO enable
+        return undefined;
+    }
+
+
+    public setMainImage() {
+
+        if (this.selected.length !== 1) return;
+
+        const mainImageId: string = this.selected[0].resource.id;
+
+        this.linkedDocument.resource.relations[Relations.Image.ISDEPICTEDIN] = [mainImageId].concat(
+            this.linkedDocument.resource.relations[Relations.Image.ISDEPICTEDIN].filter(targetId => {
+                return targetId !== mainImageId;
+            })
+        );
+
+        // this.loadImages(); TODO
+    }
 
 
     public async initialize(documents?: Array<ImageDocument>,
@@ -100,6 +133,47 @@ export class ImageViewModalComponent extends ViewModalComponent {
             isEmpty(this.images)
                 ? undefined
                 : first(this.images);
+    }
+
+
+    public removeLinks() {
+
+        const isDepictedIn = this.linkedDocument.resource.relations[Relations.Image.ISDEPICTEDIN];
+        const targetsToRemove = [];
+
+        for (const target of isDepictedIn) {
+            for (const sel of this.selected) {
+                if (sel.resource.id === target) targetsToRemove.push(target);
+            }
+        }
+
+        if (!targetsToRemove) return;
+
+        for (const targetToRemove of targetsToRemove) {
+            isDepictedIn.splice(isDepictedIn.indexOf(targetToRemove), 1);
+        }
+
+        if (isDepictedIn.length === 0) {
+            this.linkedDocument.resource.relations[Relations.Image.ISDEPICTEDIN] = [];
+            // this.documents = []; // TODO enable
+            // this.clearSelection();
+        } else {
+            // this.loadImages();
+        }
+    }
+
+
+    public getRemoveLinksTooltip(): string {
+
+        return this.selected.length === 1
+            ? this.i18n({ id: 'docedit.tabs.images.tooltips.removeLink', value: 'Verknüpfung löschen' })
+            : this.i18n({ id: 'docedit.tabs.images.tooltips.removeLinks', value: 'Verknüpfungen löschen' });
+    }
+
+
+    public clearSelection() {
+
+        this.selected = [];
     }
 
 

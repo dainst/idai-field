@@ -18,7 +18,7 @@ import { FieldDocument } from 'idai-field-core';
 export class PopoverMenuComponent {
 
     @Input() document: FieldDocument;
-    @Input() showThumbnail: boolean = true;
+    @Input() showThumbnail = true;
 
 
     constructor(private resourcesComponent: ResourcesComponent,
@@ -48,6 +48,6 @@ export class PopoverMenuComponent {
 
     public async openImageViewModal() {
 
-        await this.viewModalLauncher.openImageViewModal(this.document)
+        await this.viewModalLauncher.openImageViewModal(this.document, 'single');
     }
 }

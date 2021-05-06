@@ -18,13 +18,13 @@ export class DocumentInfoComponent implements DoCheck {
     @Input() document: Document;
     @Input() getExpandAllGroups: () => boolean;
     @Input() setExpandAllGroups: (expandAllGroups: boolean) => void;
-    @Input() showThumbnail: boolean = false;
+    @Input() showThumbnail = false;
 
     @Output() onStartEdit: EventEmitter<void> = new EventEmitter<void>();
     @Output() onJumpToResource: EventEmitter<FieldDocument> = new EventEmitter<FieldDocument>();
     @Output() onThumbnailClicked: EventEmitter<void> = new EventEmitter<void>();
 
-    public scrollbarVisible: boolean = false;
+    public scrollbarVisible = false;
     public openSection: string|undefined = Groups.STEM;
 
 

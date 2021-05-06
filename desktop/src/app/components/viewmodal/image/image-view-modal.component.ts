@@ -12,6 +12,10 @@ import {ImageRelationsManager} from '../../../core/model/image-relations-manager
 import {Observable} from 'rxjs/internal/Observable';
 import {Observer} from 'rxjs/internal/types';
 
+export namespace ImageViewModalComponent {
+
+    export type Mode = 'single'|'multiple';
+}
 
 @Component({
     templateUrl: './image-view-modal.html',
@@ -31,7 +35,7 @@ export class ImageViewModalComponent extends ViewModalComponent {
 
     public boundListenToClickEvents: () => Observable<Event>;
 
-    public mode: 'single'|'multiple' = 'single';
+    public mode: ImageViewModalComponent.Mode = 'single';
 
 
     constructor(private imagesState: ImagesState,
@@ -76,7 +80,7 @@ export class ImageViewModalComponent extends ViewModalComponent {
     }
 
 
-    public toggleMode(mode: 'single'|'multiple') {
+    public setMode(mode: ImageViewModalComponent.Mode) {
 
         this.mode = mode;
     }
@@ -96,7 +100,6 @@ export class ImageViewModalComponent extends ViewModalComponent {
             isEmpty(this.images)
                 ? undefined
                 : first(this.images);
-        console.log(this.selectedImage)
     }
 
 

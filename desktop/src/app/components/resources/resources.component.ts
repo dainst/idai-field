@@ -171,7 +171,7 @@ export class ResourcesComponent implements OnDestroy {
 
     public editImages(document: Document) {
 
-        this.viewModalLauncher.openImageViewModal(document);
+        this.viewModalLauncher.openImageViewModal(document, 'multiple');
     }
 
 
@@ -180,7 +180,7 @@ export class ResourcesComponent implements OnDestroy {
         this.quitGeometryEditing();
         this.menuService.setContext(MenuContext.MODAL);
 
-        const modalRef: NgbModalRef = this.modalService.open(MoveModalComponent, { keyboard: false });
+        const modalRef = this.modalService.open(MoveModalComponent, { keyboard: false });
         modalRef.componentInstance.initialize(documents);
 
         try {
@@ -305,7 +305,7 @@ export class ResourcesComponent implements OnDestroy {
     public closePopover() {
 
         this.activePopoverMenu = 'none';
-    };
+    }
 
 
     public async navigatePopoverMenus(direction: 'previous'|'next') {
@@ -315,7 +315,7 @@ export class ResourcesComponent implements OnDestroy {
 
         const availablePopoverMenus: string[] = this.getAvailablePopoverMenus(selectedDocument);
 
-        let index: number = availablePopoverMenus.indexOf(this.activePopoverMenu)
+        let index = availablePopoverMenus.indexOf(this.activePopoverMenu)
             + (direction === 'next' ? 1 : -1);
         if (index < 0) index = availablePopoverMenus.length - 1;
         if (index >= availablePopoverMenus.length) index = 0;

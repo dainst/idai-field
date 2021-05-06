@@ -16,14 +16,15 @@ export class ViewModalLauncher {
                 private menuService: MenuService) {}
 
 
-    public async openImageViewModal(document: Document) {
+    public async openImageViewModal(document: Document, mode: ImageViewModalComponent.Mode) {
 
         this.menuService.setContext(MenuContext.MODAL);
 
-        const modalRef: NgbModalRef = this.modalService.open(
+        const modalRef = this.modalService.open(
             ImageViewModalComponent,
             { size: 'lg', backdrop: 'static', keyboard: false }
         );
+        modalRef.componentInstance.setMode(mode);
         await modalRef.componentInstance.initialize(
             undefined,
             undefined,

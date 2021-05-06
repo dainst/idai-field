@@ -147,7 +147,7 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
                 await this.resourcesComponent.deleteDocument(this.getSelection());
                 break;
             case 'edit-images':
-                await this.resourcesComponent.editImages(this.selectedDocument)
+                await this.resourcesComponent.editImages(this.selectedDocument);
                 break;
             case 'edit-geometry':
                 await this.viewFacade.setSelectedDocument(this.selectedDocument.resource.id);

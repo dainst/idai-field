@@ -31,6 +31,9 @@ export class ImageViewModalComponent extends ViewModalComponent {
 
     public boundListenToClickEvents: () => Observable<Event>;
 
+    public mode: 'single'|'multiple' = 'single';
+
+
     constructor(private imagesState: ImagesState,
                 activeModal: NgbActiveModal,
                 modalService: NgbModal,
@@ -71,6 +74,13 @@ export class ImageViewModalComponent extends ViewModalComponent {
             );
         }
     }
+
+
+    public toggleMode(mode: 'single'|'multiple') {
+
+        this.mode = mode;
+    }
+
 
     public async onContextMenuItemClicked([_, documents]: [any, Array<Document /* should be ImageDocument*/>]) {
 

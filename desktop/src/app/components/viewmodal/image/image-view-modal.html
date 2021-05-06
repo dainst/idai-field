@@ -10,6 +10,12 @@
             <span class="mdi mdi-plus-circle"></span>
             Bilder verknüpfen
         </button>
+        <button class="btn btn-primary" id="viewer-mode-button" tabindex="-1" (click)="toggleMode('single')">
+            <span class="mdi mdi-image"></span>
+        </button>
+        <button class="btn btn-primary" id="tiles-mode-button" tabindex="-1" (click)="toggleMode('multiple')">
+            <span class="mdi mdi-image-multiple"></span>
+        </button>
         <button class="btn btn-primary"
             id="close-button"
             tabindex="-1"
@@ -19,7 +25,7 @@
 </div>
 </div>
 
-<div id="view-modal-body" class="modal-body px-0">
+<div *ngIf="mode === 'single'" id="view-modal-body" class="modal-body px-0">
     <div id="view-modal-content" class="flex-nowrap bg-light px-0">
         <document-info [document]="selectedImage?.document"
                        [getExpandAllGroups]="getExpandAllGroups"
@@ -37,5 +43,11 @@
                    (onImageSelected)="onSelected($event)"
                    [listenToClickEvents]="boundListenToClickEvents"
                    (onContextMenuItemClicked)="onContextMenuItemClicked($event)"></image-row>
+    </div>
+</div>
+
+<div *ngIf="mode === 'multiple'" id="view-modal-body" class="modal-body px-0">
+    <div id="view-modal-content" class="flew-nowrap bg-light px-0">
+        Multiple
     </div>
 </div>

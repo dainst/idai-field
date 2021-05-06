@@ -50,24 +50,6 @@ export class ImageViewMultipleComponent implements OnChanges {
     }
 
 
-    // private loadImages() {
-//
-        // const imageDocPromises: Array<Promise<Document>> = [];
-        // this.documents = [];
-        // this.document.resource.relations[Relations.Image.ISDEPICTEDIN].forEach(id => {
-            // imageDocPromises.push(this.datastore.get(id));
-        // });
-//
-        // Promise.all(imageDocPromises).then(docs => {
-            // this.documents = docs as Array<ImageDocument>;
-            // this.documents.sort((a, b) => {
-                // return SortUtil.alnumCompare(a.resource.identifier, b.resource.identifier);
-            // });
-            // this.clearSelection(); TODO enable
-        // });
-    // }
-
-
     public onResize() {
 
         if (!this.images || this.images.length === 0) return;

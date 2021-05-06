@@ -185,6 +185,24 @@ export class ImageViewModalComponent extends ViewModalComponent {
     }
 
 
+    // private loadImages() {
+//
+        // const imageDocPromises: Array<Promise<Document>> = [];
+        // this.documents = [];
+        // this.document.resource.relations[Relations.Image.ISDEPICTEDIN].forEach(id => {
+            // imageDocPromises.push(this.datastore.get(id));
+        // });
+//
+        // Promise.all(imageDocPromises).then(docs => {
+            // this.documents = docs as Array<ImageDocument>;
+            // this.documents.sort((a, b) => {
+                // return SortUtil.alnumCompare(a.resource.identifier, b.resource.identifier);
+            // });
+            // this.clearSelection(); TODO enable
+        // });
+    // }
+
+
     private async getImageDocuments(relations: string[]|undefined): Promise<Array<ImageDocument>> {
 
         return relations

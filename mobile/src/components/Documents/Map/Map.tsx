@@ -5,7 +5,7 @@ import React, { ReactElement, useMemo, useRef } from 'react';
 import { LayoutChangeEvent, StyleSheet } from 'react-native';
 import { Circle, G } from 'react-native-svg';
 import { standardViewBox } from './constants';
-import { getGeometryBoundings } from './cs-transform-utils';
+import { getGeometryBoundings } from './geo-svg/geojson-cs-to-svg-cs/cs-transform-utils';
 import {
     GeoLineString, GeoMultiLineString, GeoMultiPoint,
     GeoMultiPolygon, GeoPoint, GeoPolygon, transformGeojsonToSvgViewPort

@@ -5,7 +5,7 @@ import {
 } from 'react-native';
 import Svg, { G, SvgProps } from 'react-native-svg';
 import { ViewPort } from '../geo-svg/geojson-cs-to-svg-cs/geojson-cs-to-svg-cs';
-import { getViewPortTransform } from '../viewbox-utils/viewbox-utils';
+import { getViewPortTransform } from '../geo-svg/geojson-cs-to-svg-cs/viewbox-utils/viewbox-utils';
 import { calcCenter, calcDistance } from './math-utils';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function

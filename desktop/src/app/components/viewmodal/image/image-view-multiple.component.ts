@@ -1,8 +1,8 @@
-import {Component, EventEmitter, Input, OnChanges, Output, ViewChild} from '@angular/core';
-import {Datastore, FieldDocument, Document, ImageDocument} from 'idai-field-core';
+import {Component, Input, OnChanges, ViewChild} from '@angular/core';
+import {Datastore, FieldDocument, ImageDocument} from 'idai-field-core';
 import {ImageGridComponent} from '../../image/grid/image-grid.component';
-import {SortUtil} from 'idai-field-core';
 import {Relations} from 'idai-field-core';
+import {ImageRowItem} from '../../../core/images/row/image-row';
 
 
 @Component({
@@ -19,7 +19,10 @@ export class ImageViewMultipleComponent implements OnChanges {
 
     @Input() document: FieldDocument;
 
-    public documents: Array<ImageDocument> = [];
+    // This set up was introduced to get rid of flickering of images
+    @Input() images: Array<ImageRowItem> = [];
+    public documents: Array<ImageDocument>;
+    // -
 
     @Input() selected: Array<ImageDocument> = [];
 
@@ -31,8 +34,10 @@ export class ImageViewMultipleComponent implements OnChanges {
 
         if (!this.document) return;
         if (this.document.resource.relations[Relations.Image.ISDEPICTEDIN]) {
-            this.loadImages();
+         //   this.loadImages();
         }
+
+        if (this.images) this.documents = this.images.map(_ => _.document) as any;
     }
 
 
@@ -46,27 +51,27 @@ export class ImageViewMultipleComponent implements OnChanges {
     }
 
 
-    private loadImages() {
-
-        const imageDocPromises: Array<Promise<Document>> = [];
-        this.documents = [];
-        this.document.resource.relations[Relations.Image.ISDEPICTEDIN].forEach(id => {
-            imageDocPromises.push(this.datastore.get(id));
-        });
-
-        Promise.all(imageDocPromises).then(docs => {
-            this.documents = docs as Array<ImageDocument>;
-            this.documents.sort((a, b) => {
-                return SortUtil.alnumCompare(a.resource.identifier, b.resource.identifier);
-            });
+    // private loadImages() {
+//
+        // const imageDocPromises: Array<Promise<Document>> = [];
+        // this.documents = [];
+        // this.document.resource.relations[Relations.Image.ISDEPICTEDIN].forEach(id => {
+            // imageDocPromises.push(this.datastore.get(id));
+        // });
+//
+        // Promise.all(imageDocPromises).then(docs => {
+            // this.documents = docs as Array<ImageDocument>;
+            // this.documents.sort((a, b) => {
+                // return SortUtil.alnumCompare(a.resource.identifier, b.resource.identifier);
+            // });
             // this.clearSelection(); TODO enable
-        });
-    }
+        // });
+    // }
 
 
     public onResize() {
 
-        if (!this.documents || this.documents.length === 0) return;
+        if (!this.images || this.images.length === 0) return;
         this.imageGrid.calcGrid();
     }
 }

@@ -58,7 +58,6 @@ export class ImageViewModalComponent extends ViewModalComponent {
         this.boundListenToClickEvents = this.listenToClickEvents.bind(this);
     }
 
-
     public getExpandAllGroups = () => this.imagesState.getExpandAllGroups();
 
     public setExpandAllGroups = (expand: boolean) => this.imagesState.setExpandAllGroups(expand);

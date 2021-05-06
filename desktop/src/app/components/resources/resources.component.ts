@@ -117,14 +117,14 @@ export class ResourcesComponent implements OnDestroy {
 
         this.viewFacade.setLimitSearchResults(true);
         await this.viewFacade.setSearchString(q);
-    };
+    }
 
 
     public async setCategoryFilters(categories: string[]|undefined) {
 
         this.viewFacade.setLimitSearchResults(true);
         await this.viewFacade.setFilterCategories(categories ? categories : []);
-    };
+    }
 
 
     private updateFilterOptions() {

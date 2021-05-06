@@ -13,8 +13,8 @@ import {Observable} from 'rxjs/internal/Observable';
 import {ComponentHelpers} from '../../component-helpers';
 
 
-const MAX_IMAGE_WIDTH: number = 600;
-const PLACEHOLDER_WIDTH: number = 150;
+const MAX_IMAGE_WIDTH = 600;
+const PLACEHOLDER_WIDTH = 150;
 
 @Component({
     selector: 'image-row',
@@ -37,8 +37,8 @@ export class ImageRowComponent implements OnChanges {
     @Input() images: Array<ImageRowItem>;
     @Input() selectedImage: ImageRowItem;
 
-    @Input() highlightOnHover: boolean = false;
-    @Input() allowSelection: boolean = false;
+    @Input() highlightOnHover = false;
+    @Input() allowSelection = false;
 
     // TODO unsubscribe?
     private subscribed = false;
@@ -226,11 +226,9 @@ export class ImageRowComponent implements OnChanges {
                 .map(to(ImageRowItem.IMAGE_ID))
         )) as Array<ImageDocument>;
 
-        return images.map(image => {
-            const document: ImageDocument|undefined
-                = imageDocuments.find(imageDocument => imageDocument.resource.id === image.imageId);
-
-            return document || { resource: { id: PLACEHOLDER, width: PLACEHOLDER_WIDTH }} as ImageDocument;
-        });
+        return images.map(image =>
+            imageDocuments.find(imageDocument => imageDocument.resource.id === image.imageId)
+            ?? { resource: { id: PLACEHOLDER, width: PLACEHOLDER_WIDTH }} as ImageDocument
+        );
     }
 }

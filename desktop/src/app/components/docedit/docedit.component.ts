@@ -40,9 +40,8 @@ export class DoceditComponent {
     public groups: Array<Group>|undefined;
 
     public parentLabel: string|undefined = undefined;
-    private showDoceditImagesTab: boolean = false;
     public operationInProgress: 'save'|'duplicate'|'none' = 'none';
-    private escapeKeyPressed: boolean = false;
+    private escapeKeyPressed = false;
 
 
     constructor(public activeModal: NgbActiveModal,
@@ -98,9 +97,6 @@ export class DoceditComponent {
 
         this.documentHolder.setDocument(document);
 
-        this.showDoceditImagesTab
-            = !this.projectConfiguration.isSubcategory(document.resource.category, 'Image');
-
         this.getFieldDefinitionLabel = (fieldName: string) =>
             this.projectConfiguration.getFieldDefinitionLabel(document.resource.category, fieldName);
 
@@ -139,7 +135,7 @@ export class DoceditComponent {
             );
             modalRef.componentInstance.initialize(!this.documentHolder.clonedDocument.resource.id);
             numberOfDuplicates = await modalRef.result;
-        } catch(err) {
+        } catch (err) {
             // DuplicateModal has been canceled
         } finally {
             this.menuService.setContext(MenuContext.DOCEDIT);
@@ -200,7 +196,7 @@ export class DoceditComponent {
 
     private async handleSaveError(errorWithParams: any) {
 
-        if (errorWithParams[0] == DatastoreErrors.DOCUMENT_NOT_FOUND) {
+        if (errorWithParams[0] === DatastoreErrors.DOCUMENT_NOT_FOUND) {
             await this.handleDeletedConflict();
             return undefined;
         }

@@ -30,7 +30,6 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
     public categories: string[];
 
     public extraGroups: Array<Group> = [
-        { name: 'images', label: this.i18n({ id: 'docedit.group.images', value: 'Bilder' }), fields: [], relations: [] },
         { name: 'conflicts', label: this.i18n({ id: 'docedit.group.conflicts', value: 'Konflikte' }), fields: [], relations: [] }];
 
     public groups: Array<Group> = [];
@@ -46,7 +45,8 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
     public shouldShow(groupName: string) {
 
         return (groupName === 'images'
-                && !ProjectCategories.getImageCategoryNames(this.projectConfiguration.getCategoryForest()).includes(this.document.resource.category))
+                && !ProjectCategories.getImageCategoryNames(
+                    this.projectConfiguration.getCategoryForest()).includes(this.document.resource.category))
             || (groupName === 'conflicts' && this.document._conflicts)
             || this.getFieldDefinitions(groupName).filter(field => field.editable).length > 0
             || this.getRelationDefinitions(groupName).length > 0;
@@ -55,7 +55,7 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
 
     public getFieldDefinitions(groupName: string): Array<FieldDefinition> {
 
-        return (this.groups.find((group: Group) => group.name === groupName) as any).fields;
+        return this.groups.find((group: Group) => group.name === groupName).fields;
     }
 
 
@@ -63,8 +63,8 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
 
         if (groupName === Groups.STEM) return [];
 
-        return (this.groups.find((group: Group) => group.name === groupName) as any).relations
-            .filter((relation: RelationDefinition) => relation.name !== Relations.Type.INSTANCEOF);
+        return (this.groups.find(group => group.name === groupName) as any).relations
+            .filter(relation => relation.name !== Relations.Type.INSTANCEOF);
     }
 
 
@@ -79,9 +79,9 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
         if (isUndefinedOrEmpty(this.originalGroups)) return;
 
         this.groups = [];
-        for (let originalGroup of this.originalGroups) {
+        for (const originalGroup of this.originalGroups) {
             const group = clone(originalGroup);
-            this.groups.push(group as any);
+            this.groups.push(group);
         }
         this.groups = this.groups.concat(this.extraGroups);
     }

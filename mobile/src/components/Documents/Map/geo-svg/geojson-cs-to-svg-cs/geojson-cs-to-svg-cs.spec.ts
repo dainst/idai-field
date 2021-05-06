@@ -2,7 +2,7 @@
 import { Matrix4 } from 'react-native-redash';
 import { GeometryBoundings } from './cs-transform-utils';
 import { processTransform2d, setupTransformationMatrix } from './geojson-cs-to-svg-cs';
-import { ViewPort } from './viewbox-utils/viewbox-utils';
+import { ViewPort } from './viewport-utils/viewport-utils';
 
 
 describe('geojson-cs-to-svg',() => {

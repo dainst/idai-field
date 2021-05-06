@@ -3,10 +3,9 @@
         <div id="image-tab-container" (window:resize)="onResize()">
             <div class="image-grid-container">
                 <image-grid #imageGrid [nrOfColumns]="3" [selected]="selected" [documents]="documents"
-                    [showLinkBadges]="false" [showShortDescription]="false" [paddingRight]="15" [main]="undefined"
+                    [showLinkBadges]="false" [showShortDescription]="false" [paddingRight]="15" [main]="documents && documents[0]"
                     (onClick)="select($event)">
                 </image-grid>
-                <!-- TODO set main image -->
             </div>
         </div>
     </div>

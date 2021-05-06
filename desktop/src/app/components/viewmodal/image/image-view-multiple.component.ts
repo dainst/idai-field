@@ -26,7 +26,6 @@ export class ImageViewMultipleComponent implements OnChanges {
 
     @Input() selected: Array<ImageDocument> = [];
 
-
     constructor(private datastore: Datastore) {}
 
 

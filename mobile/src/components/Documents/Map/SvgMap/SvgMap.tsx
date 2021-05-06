@@ -1,11 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import {
     Animated, GestureResponderEvent, PanResponder, PanResponderGestureState
 } from 'react-native';
 import Svg, { G, SvgProps } from 'react-native-svg';
 import { ViewPort } from '../geo-svg/geojson-cs-to-svg-cs/geojson-cs-to-svg-cs';
-import { getViewPortTransform } from '../geo-svg/geojson-cs-to-svg-cs/viewbox-utils/viewbox-utils';
 import { calcCenter, calcDistance } from './math-utils';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -29,14 +28,6 @@ const SvgMap: React.FC<SvgMapProps> = ( props ) => {
     const top = useRef<Animated.Value>(new Animated.Value(0)).current;
     const zoom = useRef<Animated.Value>(new Animated.Value(1)).current;
 
-
-    //viewbox transform only set at beginning
-    const translateX = useRef<Animated.Value>(new Animated.Value(0)).current;
-    const translateY = useRef<Animated.Value>(new Animated.Value(0)).current;
-    const scaleX = useRef<Animated.Value>(new Animated.Value(0)).current;
-    const scaleY = useRef<Animated.Value>(new Animated.Value(0)).current;
-
-
     //boolean to init gestures
     const isZooming = useRef<boolean>(false);
     const isMoving = useRef<boolean>(false);
@@ -52,26 +43,6 @@ const SvgMap: React.FC<SvgMapProps> = ( props ) => {
     const AG = Animated.createAnimatedComponent(G);
     const AnimatedSvg = Animated.createAnimatedComponent(Svg);
 
-    useEffect(() => {
-
-        const transforms = getViewPortTransform(props.viewBox, props.preserveAspectRatio, props.viewPort);
-        translateX.setValue(transforms.translateX );
-        translateY.setValue(transforms.translateY );
-        scaleY.setValue(transforms.scaleY );
-        scaleX.setValue(transforms.scaleX );
-    },[props.viewPort]);
-    
-    // const handleLayoutChange = (event: LayoutChangeEvent) => {
-        
-    //     const { x, y, width, height } = event.nativeEvent.layout;
-    //     const transforms = getViewPortTransform(props.viewBox, props.preserveAspectRatio, { x, y, width, height });
-    //     translateX.setValue(transforms.translateX);
-    //     translateY.setValue(transforms.translateY);
-    //     scaleY.setValue(transforms.scaleY);
-    //     scaleX.setValue(transforms.scaleX);
-    //     console.log({ x, y, width, height });
-    // };
-   
     const shouldRespond = (e: GestureResponderEvent, gestureState: PanResponderGestureState):boolean =>
         e.nativeEvent.touches.length === 2 ||
         Math.pow(gestureState.dx,2) + Math.pow(gestureState.dy,2) >= moveThreshold;
@@ -102,7 +73,7 @@ const SvgMap: React.FC<SvgMapProps> = ( props ) => {
             isZooming.current = false;
         }
     })).current;
-
+    
     
     const touchHandler = (x: number, y: number): void => {
 
@@ -148,9 +119,9 @@ const SvgMap: React.FC<SvgMapProps> = ( props ) => {
         <Animated.View style={ props.style } { ...panResponder.panHandlers }>
             <AnimatedSvg>
             <AG
-                x={ Animated.add(left, Animated.multiply(zoom, translateX)) }
-                y={ Animated.add(top, Animated.multiply(zoom, translateY)) }
-                scale={ Animated.multiply(scaleX, zoom) }>
+                x={ Animated.add(left, zoom) }
+                y={ Animated.add(top, zoom) }
+                scale={ zoom }>
                     {props.children}
                 </AG>
             </AnimatedSvg>

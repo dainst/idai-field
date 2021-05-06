@@ -5,12 +5,13 @@ import React, { ReactElement, useMemo, useRef } from 'react';
 import { LayoutChangeEvent, StyleSheet } from 'react-native';
 import { Circle, G } from 'react-native-svg';
 import { standardViewBox } from './constants';
-import { getGeometryBoundings } from './geo-svg/geojson-cs-to-svg-cs/cs-transform-utils';
 import {
     GeoLineString, GeoMultiLineString, GeoMultiPoint,
-    GeoMultiPolygon, GeoPoint, GeoPolygon, transformGeojsonToSvgViewPort
+    GeoMultiPolygon, GeoPoint, GeoPolygon,
+    processTransform2d, setupTransformationMatrix
 } from './geo-svg';
-import { ViewPort } from './geo-svg/geojson-cs-to-svg-cs/geojson-cs-to-svg-cs';
+import { getGeometryBoundings } from './geo-svg/geojson-cs-to-svg-cs/cs-transform-utils';
+import { ViewPort } from './geo-svg/geojson-cs-to-svg-cs/viewbox-utils/viewbox-utils';
 import { getDocumentFillAndOpacity } from './svg-element-style';
 import SvgMap from './SvgMap/SvgMap';
 
@@ -25,21 +26,22 @@ const Map: React.FC<MapProps> = ({ geoDocuments, selectedGeoDocuments, navigateT
 
     const geometryBoundings = useMemo(()=> getGeometryBoundings(geoDocuments),[geoDocuments]);
     const viewPort = useRef<ViewPort>();
+    const transformationMatrix = setupTransformationMatrix(geometryBoundings,viewPort.current);
 
     const handleLayoutChange = (event: LayoutChangeEvent) => {
+
         viewPort.current = event.nativeEvent.layout;
-        
     };
   
     return (
-        <View onLayout={ handleLayoutChange }>
+        <View onLayout={ handleLayoutChange } style={ { flex: 1 } }>
             {geoDocuments && geometryBoundings && viewPort.current ?
                 <SvgMap viewBox={ standardViewBox.join(' ') } style={ styles.svg } viewPort={ viewPort.current }>
                     {geoDocuments.map(doc =>(
                         <G key={ doc._id }>
                             {renderGeoSvgElement(
                                 doc,
-                                transformGeojsonToSvgViewPort.bind(this, geometryBoundings),
+                                processTransform2d.bind(this, transformationMatrix),
                                 selectedGeoDocuments,
                                 selectedGeoDocuments.length === geoDocuments.length,
                                 navigateToDocument)}

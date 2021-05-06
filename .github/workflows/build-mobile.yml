@@ -1,0 +1,27 @@
+name: build-mobile
+on:
+  push:
+    paths:
+    - "core/**"
+    - "mobile/**"
+    - ".github/workflows/build-mobile.yml"
+jobs:
+  build-mobile:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Setup NodeJS
+        uses: actions/setup-node@v1
+      - name: Setup NPM cache
+        uses: c-hive/gha-npm-cache@v1
+      - name: Install root node modules
+        run: npm i
+      - name: Install and link package node modules 
+        run: npm run bootstrap
+      - name: Build core
+        run: npm run build
+        working-directory: core
+      - name: Unit test mobile
+        run:  npm test
+        working-directory: mobile

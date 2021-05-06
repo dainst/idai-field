@@ -2,6 +2,7 @@
 import { Matrix4 } from 'react-native-redash';
 import { GeometryBoundings } from './cs-transform-utils';
 import { processTransform2d, setupTransformationMatrix } from './geojson-cs-to-svg-cs';
+import { matrixInverse4 } from './matrix-utils/matrix-utils';
 import { ViewPort } from './viewport-utils/viewport-utils';
 
 
@@ -65,5 +66,22 @@ describe('geojson-cs-to-svg',() => {
         transformedPosition.forEach((coord: number, i: number) => {
             expect(coord).toBeCloseTo(expectedTransformedPos[i],4);
         });
+    });
+
+
+    it('is possible to transform a point csWorld -> csViewPort -> csWorld', () => {
+        
+        const transformationMat: Matrix4 = [
+            [2,0,0,4],
+            [0,2,0,-2],
+            [0,0,1,0],
+            [0,0,0,1]];
+        const position = [8,14.5];
+        const transformedPosition = processTransform2d(transformationMat, position);
+        const expectedTransformedPos = [20, 27];
+        
+        expect(transformedPosition).toEqual(expectedTransformedPos);
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        expect(processTransform2d(matrixInverse4(transformationMat)!, transformedPosition)).toEqual(position);
     });
 });

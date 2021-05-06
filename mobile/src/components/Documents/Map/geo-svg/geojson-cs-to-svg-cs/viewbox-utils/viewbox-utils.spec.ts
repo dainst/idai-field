@@ -1,10 +1,10 @@
 /* eslint-disable max-len */
-import { getViewPortTransform } from './viewbox-utils';
+import { getViewPortTransform, ViewBox } from './viewbox-utils';
 
 
 describe('getViewPortTransform',() => {
 
-    const viewBox = '0 0 100 100';
+    const viewBox: ViewBox = [0,0,100,100];
     const eRect = { x:0, y:0, width: 500, height: 200 };
     
 
@@ -17,7 +17,7 @@ describe('getViewPortTransform',() => {
             scaleY: 2,
         };
 
-        expect(getViewPortTransform(viewBox,'none none',eRect)).toEqual(expectedTransform);
+        expect(getViewPortTransform(viewBox,eRect, 'none none')).toEqual(expectedTransform);
     });
 
 
@@ -29,7 +29,7 @@ describe('getViewPortTransform',() => {
             scaleX: 2,
             scaleY: 2,
         };
-        expect(getViewPortTransform(viewBox,'xMidYMid meet',eRect)).toEqual(expectedTransform);
+        expect(getViewPortTransform(viewBox,eRect, 'xMidYMid meet')).toEqual(expectedTransform);
         
     });
 
@@ -41,7 +41,7 @@ describe('getViewPortTransform',() => {
             scaleX: 2,
             scaleY: 2,
         };
-        expect(getViewPortTransform(viewBox,undefined,eRect)).toEqual(expectedTransform);
+        expect(getViewPortTransform(viewBox,eRect)).toEqual(expectedTransform);
     });
 
 
@@ -53,7 +53,7 @@ describe('getViewPortTransform',() => {
             scaleX: 5,
             scaleY: 5,
         };
-        expect(getViewPortTransform(viewBox,'xMidYMid slice',eRect)).toEqual(expectedTransform);
+        expect(getViewPortTransform(viewBox,eRect, 'xMidYMid slice')).toEqual(expectedTransform);
     });
 
 
@@ -66,12 +66,12 @@ describe('getViewPortTransform',() => {
             scaleY: 2,
         };
 
-        expect(getViewPortTransform(viewBox,'xMaxYMid meet',eRect)).toEqual(expectedTransform);
+        expect(getViewPortTransform(viewBox,eRect, 'xMaxYMid meet')).toEqual(expectedTransform);
     });
 
     it('scales and translates correct if viewbox and viewport x and y values are != 0', () => {
 
-        const viewBox = '5 10 100 50';
+        const viewBox: ViewBox = [5, 10, 100, 50];
         const viewPort = {
             x: 20,
             y: 40,
@@ -92,17 +92,17 @@ describe('getViewPortTransform',() => {
             scaleY: 10,
         };
 
-        expect(getViewPortTransform(viewBox,'xMidYMid meet',viewPort)).toEqual(expectedTransform);
+        expect(getViewPortTransform(viewBox,viewPort, 'xMidYMid meet')).toEqual(expectedTransform);
     });
 
     it('transform the testproject without problems', () => {
       
         
-        const viewBox = [
+        const viewBox: ViewBox = [
             27.188940048217773,
             39.14105033874512,
             27.189414739608765 - 27.188940048217773,
-            39.141438484191895 - 39.14105033874512].join(' ');
+            39.141438484191895 - 39.14105033874512];
         const viewPort = {
                 x: 20,
                 y: 40,
@@ -115,7 +115,7 @@ describe('getViewPortTransform',() => {
             scaleX: 1288176.9041769041,
             scaleY: 1288176.9041769041,
         };
-        const viewPortTransform = getViewPortTransform(viewBox,'xMidYMid meet',viewPort);
+        const viewPortTransform = getViewPortTransform(viewBox,viewPort,'xMidYMid meet');
 
         expect(viewPortTransform.translateX).toBeCloseTo(expectedTransform.translateX,4);
         expect(viewPortTransform.translateY).toBeCloseTo(expectedTransform.translateY,4);

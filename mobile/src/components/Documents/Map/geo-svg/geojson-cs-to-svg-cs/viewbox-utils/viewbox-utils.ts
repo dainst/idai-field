@@ -5,22 +5,24 @@ interface viewBoxToViewPortTransform {
     scaleY: number;
 }
 
-interface Rect {
+export interface ViewPort {
     x: number;
     y: number;
     width: number;
-    height:number;
+    height: number;
 }
 
+export type ViewBox = [number, number, number, number];
 
-export const getViewPortTransform = (viewBox: string | undefined, preserveAspectRatio: string | undefined,
-        viewPort: Rect): viewBoxToViewPortTransform => {
+
+export const getViewPortTransform = (viewBox: ViewBox | undefined, viewPort: ViewPort,
+    preserveAspectRatio?: string ): viewBoxToViewPortTransform => {
     // based on https://svgwg.org/svg2-draft/coords.html#ComputingAViewportsTransform
     
   
     // Let vb-x, vb-y, vb-width, vb-height be the min-x, min-y, width and height values
     // of the viewBox attribute respectively.
-    const [vbX, vbY, vbWidth, vbHeight] = (viewBox ? viewBox : '0 0 100 100').split(' ').map(num => parseFloat(num));
+    const [vbX, vbY, vbWidth, vbHeight] = viewBox ? viewBox : [0,0,100,100];
     const [align, meetOrSlice] = (preserveAspectRatio ? preserveAspectRatio : 'xMidYMid meet').split(' ');
 
   

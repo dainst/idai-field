@@ -1,7 +1,6 @@
 import {Component, Input, OnChanges, ViewChild} from '@angular/core';
-import {Datastore, FieldDocument, ImageDocument} from 'idai-field-core';
+import {FieldDocument, ImageDocument} from 'idai-field-core';
 import {ImageGridComponent} from '../../image/grid/image-grid.component';
-import {Relations} from 'idai-field-core';
 import {ImageRowItem} from '../../../core/images/row/image-row';
 
 
@@ -26,15 +25,8 @@ export class ImageViewMultipleComponent implements OnChanges {
 
     @Input() selected: Array<ImageDocument> = [];
 
-    constructor(private datastore: Datastore) {}
-
 
     ngOnChanges() {
-
-        if (!this.document) return;
-        if (this.document.resource.relations[Relations.Image.ISDEPICTEDIN]) {
-         //   this.loadImages();
-        }
 
         if (this.images) this.documents = this.images.map(_ => _.document) as any;
     }
@@ -50,7 +42,7 @@ export class ImageViewMultipleComponent implements OnChanges {
     }
 
 
-    public onResize() {
+    public onResize() { // TODO review
 
         if (!this.images || this.images.length === 0) return;
         this.imageGrid.calcGrid();

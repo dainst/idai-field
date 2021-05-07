@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, Output, ViewChild, ElementRef, OnChanges
 import {sameset} from 'tsfun';
 import {Category} from 'idai-field-core';
 import {ProjectConfiguration} from 'idai-field-core';
+import {ComponentHelpers} from '../component-helpers';
 
 
 @Component({
@@ -91,17 +92,10 @@ export class SearchBarComponent implements OnChanges {
 
         if (!this.popover) return;
 
-        let target = event.target;
-        let inside: boolean = false;
+        if (!ComponentHelpers.isInside(event.target, target =>
+                target.id && target.id.includes('filter-button'))) {
 
-        do {
-            if (target.id && target.id.includes('filter-button')) {
-                inside = true;
-                break;
-            }
-            target = target.parentNode;
-        } while (target);
-
-        if (!inside) this.popover.close();
+            this.popover.close();
+        }
     }
 }

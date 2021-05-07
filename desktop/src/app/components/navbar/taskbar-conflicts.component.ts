@@ -1,5 +1,6 @@
 import { Component, NgZone, Renderer2, ViewChild } from '@angular/core';
 import { Document, Datastore, IndexFacade } from 'idai-field-core';
+import {ComponentHelpers} from '../component-helpers';
 import { RoutingService } from '../routing-service';
 import { NavbarComponent } from './navbar.component';
 
@@ -78,20 +79,13 @@ export class TaskbarConflictsComponent {
 
     private handleClick(event: any) {
 
-        let target = event.target;
-        let inside = false;
-
-        do {
-            if (target.id === 'taskbar-conflicts-button-icon'
+        if (!ComponentHelpers.isInside(event.target, target =>
+               target.id === 'taskbar-conflicts-button-icon'
                     || target.id === 'taskbar-conflicts-button-pill'
-                    || target.id === 'ngb-popover-1') {
-                inside = true;
-                break;
-            }
-            target = target.parentNode;
-        } while (target);
+                    || target.id === 'ngb-popover-1')) {
 
-        if (!inside) this.closePopover();
+            this.closePopover();
+        }
     }
 
 

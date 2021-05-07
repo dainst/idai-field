@@ -1,4 +1,5 @@
 import {Renderer2} from '@angular/core';
+import {ComponentHelpers} from '../component-helpers';
 import {MenuContext, MenuService} from '../menu-service';
 
 
@@ -54,18 +55,11 @@ export abstract class MenuComponent {
 
         if (!this.isClosable()) return;
 
-        let target = event.target;
-        let inside = false;
+        if (!ComponentHelpers.isInside(event.target, target =>
+               target.id && (target.id === this.buttonElementId || target.id.startsWith(this.menuElementsPrefix)))) {
 
-        do {
-            if (target.id && (target.id === this.buttonElementId || target.id.startsWith(this.menuElementsPrefix))) {
-                inside = true;
-                break;
-            }
-            target = target.parentNode;
-        } while (target);
-
-        if (!inside) this.close();
+            this.close();
+        }
     }
 
 

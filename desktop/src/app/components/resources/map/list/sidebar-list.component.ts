@@ -9,6 +9,7 @@ import { ViewFacade } from '../../../../core/resources/view/view-facade';
 import { NavigationService } from '../../../../core/resources/navigation/navigation-service';
 import { ContextMenu } from '../../widgets/context-menu';
 import { MenuContext, MenuService } from '../../../menu-service';
+import {ComponentHelpers} from '../../../component-helpers';
 
 
 @Component({
@@ -173,19 +174,11 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
 
         if (!this.contextMenu.position) return;
 
-        let target = event.target;
-        let inside = false;
+        if (!ComponentHelpers.isInside(event.target, target => target.id === 'context-menu'
+            || rightClick && target.id && target.id.startsWith('resource-'))) {
 
-        do {
-            if (target.id === 'context-menu'
-                || (rightClick && target.id && target.id.startsWith('resource-'))) {
-                inside = true;
-                break;
-            }
-            target = target.parentNode;
-        } while (target);
-
-        if (!inside) this.contextMenu.close();
+            this.contextMenu.close();
+        }
     }
 
 
@@ -194,12 +187,12 @@ export class SidebarListComponent extends BaseList implements AfterViewInit, OnC
 
     private selectBetween(document1: FieldDocument, document2: FieldDocument) {
 
-        const documents: Array<FieldDocument> = this.viewFacade.getDocuments();
+        const documents = this.viewFacade.getDocuments();
         const index1 = documents.indexOf(document1);
         const index2 = documents.indexOf(document2);
 
         for (let i = Math.min(index1, index2); i <= Math.max(index1, index2); i++) {
-            const document: FieldDocument = documents[i];
+            const document = documents[i];
             if (this.selectedDocument !== document
                     && !this.resourcesComponent.additionalSelectedDocuments.includes(document)) {
                 this.resourcesComponent.additionalSelectedDocuments.push(document);

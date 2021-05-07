@@ -17,6 +17,7 @@ import { ResourcesComponent } from '../resources.component';
 import { ViewModalLauncher } from '../service/view-modal-launcher';
 import { ContextMenu } from '../widgets/context-menu';
 import { ContextMenuAction } from '../widgets/context-menu.component';
+import {ComponentHelpers} from '../../component-helpers';
 
 
 @Component({
@@ -186,19 +187,12 @@ export class TypesComponent extends BaseList implements OnChanges {
 
         if (!this.contextMenu.position) return;
 
-        let target = event.target;
-        let inside: boolean = false;
+        if (!ComponentHelpers.isInside(event.target, target =>
+                target.id === 'context-menu'
+                    || (rightClick && target.id && target.id.startsWith('type-grid-element')))) {
 
-        do {
-            if (target.id === 'context-menu'
-                || (rightClick && target.id && target.id.startsWith('type-grid-element'))) {
-                inside = true;
-                break;
-            }
-            target = target.parentNode;
-        } while (target);
-
-        if (!inside) this.contextMenu.close();
+            this.contextMenu.close();
+        }
     }
 
 

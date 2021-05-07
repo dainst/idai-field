@@ -8,6 +8,7 @@ import { ViewFacade } from '../../core/resources/view/view-facade';
 import { M } from '../messages/m';
 import { Messages } from '../messages/messages';
 import { ResourcesComponent } from './resources.component';
+import {ComponentHelpers} from '../component-helpers';
 
 
 export type PlusButtonStatus = 'enabled'|'disabled-hierarchy';
@@ -142,20 +143,13 @@ export class PlusButtonComponent implements OnChanges {
 
         if (!this.popover) return;
 
-        let target = event.target;
-        let inside = false;
+        if (!ComponentHelpers.isInside(event.target, target =>
+                target === this.elementRef.nativeElement
+                    || target.id === 'new-object-menu'
+                    || target.id === 'geometry-type-selection')) {
 
-        do {
-            if (target === this.elementRef.nativeElement
-                || target.id === 'new-object-menu'
-                || target.id === 'geometry-type-selection') {
-                inside = true;
-                break;
-            }
-            target = target.parentNode;
-        } while (target);
-
-        if (!inside) this.popover.close();
+            this.popover.close();
+        }
     }
 
 

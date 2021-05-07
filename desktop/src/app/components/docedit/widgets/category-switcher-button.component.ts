@@ -2,6 +2,7 @@ import { Component, Input, Output, EventEmitter, OnChanges, ViewChild } from '@a
 import { Category } from 'idai-field-core';
 import { Loading } from '../../widgets/loading';
 import { ProjectConfiguration } from 'idai-field-core';
+import {ComponentHelpers} from '../../component-helpers';
 
 
 @Component({
@@ -57,18 +58,9 @@ export class CategorySwitcherButtonComponent implements OnChanges{
 
         if (!this.popover) return;
 
-        let target = event.target;
-        let inside = false;
+        if (!ComponentHelpers.isInside(event.target, target =>
+                target.id === 'category-switcher-button' || target.id === 'category-changer-menu')) {
 
-        do {
-            if (target.id === 'category-switcher-button' || target.id === 'category-changer-menu') {
-                inside = true;
-                break;
-            }
-            target = target.parentNode;
-        } while (target);
-
-        if (!inside) {
             this.popover.close();
         }
     }

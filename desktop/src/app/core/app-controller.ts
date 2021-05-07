@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { DocumentCache, Indexer, IndexFacade, PouchdbDatastore, PouchdbManager } from 'idai-field-core';
+import { DocumentCache, Indexer, IndexFacade, PouchdbDatastore, PouchdbManager, ProjectConfiguration } from 'idai-field-core';
 import { MenuService } from '../components/menu-service';
-import { ProjectConfiguration } from 'idai-field-core';
-import { FieldConverter } from './datastore/field/category-converter';
+import { CategoryConverter } from './datastore/field/category-converter';
 import { SampleDataLoader } from './datastore/field/sampledata/sample-data-loader';
 import { ImageConverter } from './images/imagestore/image-converter';
 import { Imagestore } from './images/imagestore/imagestore';
@@ -86,7 +85,7 @@ export class AppController {
             this.indexFacade,
             db,
             this.documentCache,
-            new FieldConverter(this.projectConfiguration)
+            new CategoryConverter(this.projectConfiguration)
         );
     }
 }

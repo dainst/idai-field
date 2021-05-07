@@ -5,7 +5,7 @@ import {
 import * as PouchDB from 'pouchdb-node';
 import { sameset } from 'tsfun';
 import { FsConfigReader } from '../../../../src/app/core/configuration/fs-config-reader';
-import { FieldConverter } from '../../../../src/app/core/datastore/field/category-converter';
+import { CategoryConverter } from '../../../../src/app/core/datastore/field/category-converter';
 import { PouchdbServer } from '../../../../src/app/core/datastore/pouchdb/pouchdb-server';
 import { DocumentHolder } from '../../../../src/app/core/docedit/document-holder';
 import { Imagestore } from '../../../../src/app/core/images/imagestore/imagestore';
@@ -96,7 +96,7 @@ export async function createApp(projectName = 'testdb') {
     imagestore.init(settingsProvider.getSettings());
 
     const documentCache = new DocumentCache();
-    const categoryConverter = new FieldConverter(projectConfiguration);
+    const categoryConverter = new CategoryConverter(projectConfiguration);
 
     const datastore = new Datastore(
         pouchdbDatastore, createdIndexFacade, documentCache, categoryConverter);

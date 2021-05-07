@@ -1,13 +1,9 @@
-import { Injectable } from '@angular/core';
+import { Converter, Document, ProjectCategories, ProjectConfiguration, Relations, Resource, takeOrMake } from 'idai-field-core';
 import { isFunction } from 'tsfun';
-import { takeOrMake, Converter, Document, Resource, Relations } from 'idai-field-core';
-import { ProjectCategories } from 'idai-field-core';
-import { ProjectConfiguration } from 'idai-field-core';
 import { Migrator } from './migrator';
 
 
-@Injectable()
-export class FieldConverter extends Converter {
+export class CategoryConverter extends Converter {
 
     constructor(private projectConfiguration: ProjectConfiguration) { super(); }
 

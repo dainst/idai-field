@@ -62,6 +62,7 @@ const DocumentsContainer: React.FC<DocumentsContainerProps> = ({
 
                 return <DrawerContent
                     documents={ documents }
+                    config={ config }
                     onDocumentSelected={ doc => onDocumentSelected(doc, navigation) }
                     onHomeButtonPressed={ () => navigation.navigate('HomeScreen') }
                     onSettingsButtonPressed={ () => navigation.navigate('SettingsScreen') } />;
@@ -75,10 +76,12 @@ const DocumentsContainer: React.FC<DocumentsContainerProps> = ({
                     issueSearch={ issueSearch }
                     syncStatus={ syncStatus }
                     projectSettings={ projectSettings }
+                    config={ config }
                     setProjectSettings={ setProjectSettings } /> }
             </Drawer.Screen>
             <Drawer.Screen name="DocumentDetails">
                 { (props) => <DocumentDetails { ...props }
+                    config={ config }
                     docId={ props.route.params.docId }
                     repository={ repository }
                 /> }

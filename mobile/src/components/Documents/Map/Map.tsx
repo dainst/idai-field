@@ -1,5 +1,5 @@
 import { Position } from 'geojson';
-import { Document, FieldGeometry } from 'idai-field-core';
+import { Document, FieldGeometry, ProjectConfiguration } from 'idai-field-core';
 import { Text, View } from 'native-base';
 import React, { ReactElement, useMemo, useRef } from 'react';
 import { LayoutChangeEvent, StyleSheet } from 'react-native';
@@ -18,11 +18,12 @@ import SvgMap from './SvgMap/SvgMap';
 interface MapProps {
     geoDocuments: Document[];
     selectedGeoDocuments: Document[];
+    config: ProjectConfiguration;
     navigateToDocument: (docId: string) => void;
 }
 
 
-const Map: React.FC<MapProps> = ({ geoDocuments, selectedGeoDocuments, navigateToDocument }) => {
+const Map: React.FC<MapProps> = ({ geoDocuments, selectedGeoDocuments, config, navigateToDocument }) => {
 
     const geometryBoundings = useMemo(()=> getGeometryBoundings(geoDocuments),[geoDocuments]);
     const viewPort = useRef<ViewPort>();
@@ -44,6 +45,7 @@ const Map: React.FC<MapProps> = ({ geoDocuments, selectedGeoDocuments, navigateT
                                 processTransform2d.bind(this, transformationMatrix),
                                 selectedGeoDocuments,
                                 selectedGeoDocuments.length === geoDocuments.length,
+                                config,
                                 navigateToDocument)}
                         </G>))
                     }
@@ -67,13 +69,14 @@ const renderGeoSvgElement = (
         csTransformFunc: (pos: Position) => Position,
         selectedDocuments: Document[],
         noDocsSelected: boolean,
+        config: ProjectConfiguration,
         onPressHandler: (id: string) => void): ReactElement => {
     
     const geometry: FieldGeometry = document.resource.geometry;
     const props = {
         coordinates: geometry.coordinates,
         csTransformFunction: csTransformFunc,
-        ...getDocumentFillAndOpacity(document, selectedDocuments, noDocsSelected),
+        ...getDocumentFillAndOpacity(document, selectedDocuments, noDocsSelected, config),
         onPress: () => onPressHandler(document.resource.id)
     };
  

@@ -1,7 +1,8 @@
 import {
+    Category,
     ChangesStream,
     ConstraintIndex, Converter, Datastore, Document, DocumentCache, FindResult,
-    IdGenerator, Indexer, IndexFacade, PouchdbDatastore, PouchDbFactory, PouchdbManager, Query, SyncProcess
+    IdGenerator, Indexer, IndexFacade, PouchdbDatastore, PouchdbManager, Query, SyncProcess
 } from 'idai-field-core';
 import { Observable } from 'rxjs';
 
@@ -12,13 +13,16 @@ export class DocumentRepository {
                         private datastore: Datastore,
                         private changesStream: ChangesStream) {}
 
-    public static async init(project: string, pouchDbFactory: PouchDbFactory, username: string)
-            : Promise<DocumentRepository> {
+    public static async init(
+        project: string,
+        username: string,
+        categories: Category[],
+        pouchdbManager: PouchdbManager,
+    ) : Promise<DocumentRepository> {
 
-        const pouchdbManager = new PouchdbManager(pouchDbFactory);
-        const db = await pouchdbManager.createDb(project, { _id: 'project', resource: { id: 'project' } }, false);
+        const db = pouchdbManager.getDb();
         const pouchdbDatastore = new PouchdbDatastore(db, new IdGenerator(), true);
-        const [datastore, changesStream] = await buildDatastore(pouchdbDatastore, db, username);
+        const [datastore, changesStream] = await buildDatastore(categories, pouchdbDatastore, db, username);
 
         return new DocumentRepository(pouchdbManager, pouchdbDatastore, datastore, changesStream);
     }
@@ -45,7 +49,7 @@ export class DocumentRepository {
 
     
     public find = (query: Query): Promise<FindResult> =>
-        this.datastore.find(query, true);
+        this.datastore.find(query);
 
 
     public changed = (): Observable<Document> =>
@@ -70,12 +74,14 @@ export class DocumentRepository {
 }
 
 
-const buildDatastore = async (pouchdbDatastore: PouchdbDatastore,
+const buildDatastore = async (
+        categories: Category[],
+        pouchdbDatastore: PouchdbDatastore,
         db: PouchDB.Database,
         username: string
     ): Promise<[Datastore, ChangesStream]> => {
 
-    const indexFacade = buildIndexFacade();
+    const indexFacade = buildIndexFacade(categories);
     const documentCache = new DocumentCache();
     const converter = buildDummyCategoryConverter();
 
@@ -88,7 +94,7 @@ const buildDatastore = async (pouchdbDatastore: PouchdbDatastore,
 };
 
 
-const buildIndexFacade = (showWarnings = true): IndexFacade => {
+const buildIndexFacade = (categories: Category[]): IndexFacade => {
 
     const createdConstraintIndex = ConstraintIndex.make({
         /* eslint-disable max-len */
@@ -105,21 +111,26 @@ const buildIndexFacade = (showWarnings = true): IndexFacade => {
         'geometry:exist': { path: 'resource.geometry', pathArray: ['resource', 'geometry'], type: 'exist' },
         'georeference:exist': { path: 'resource.georeference', pathArray: ['resource', 'georeference'], type: 'exist' },
         /* eslint-enble max-len */
-    }, []);
+    }, categories);
 
     return new IndexFacade(
         createdConstraintIndex,
         {},
-        [],
-        showWarnings
+        categories,
+        false
     );
 };
 
 
 const buildDummyCategoryConverter = (): Converter => ({
-
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
-        convert: (document: Document) => document
+        // TODO remove when the corrresponding function in PouchDbDatastore gets removed
+        convert: (document: Document) => {
+            if (document.resource.type) {
+                document.resource.category = document.resource.type;
+                delete document.resource.type;
+            }
+            return document;
+        }
 });
 
 

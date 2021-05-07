@@ -16,9 +16,6 @@ import order from './json/Order.json';
 import search from './json/Search.json';
 
 
-const MISSING_CUSTOM_CONF = 'configuration/error/missingCustomConf';
-
-
 const PATH_MAP: Record<string, any> = {
     '/Core/Language.de.json': coreLanguageDe,
     '/Core/Language.en.json': coreLanguageEn,
@@ -40,12 +37,6 @@ export default class RequireConfigReader implements ConfigReader {
 
     exists = (path: string): boolean => (path in PATH_MAP);
 
-    read = (path: string): any => {
-
-        // eslint-disable-next-line no-throw-literal
-        if (!this.exists(path)) throw MISSING_CUSTOM_CONF;
-
-        return clone(PATH_MAP[path]);
-    };
+    read = (path: string): any => clone(PATH_MAP[path]);
 
 }

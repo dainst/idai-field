@@ -31,12 +31,4 @@ describe('loadConfiguration()', () => {
         expect(config.getLabelForCategory('Trench')).toEqual('Schnitt');
     });
 
-
-    it('throw error if custom conf not present', async () => {
-
-        const config = loadConfiguration(pouchdbManager, 'meninx-project', ['de', 'en'], 'Testuser');
-        
-        await expect(config).rejects.toBeTruthy();
-    });
-
 });

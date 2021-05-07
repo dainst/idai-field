@@ -33,7 +33,7 @@ const DrawerContent: React.FC<DocumentDetailsProps> = ({ repository, docId, navi
             />
             <Row alignItems="center" px={ 4 } pt={ 4 }>
                     <Avatar size="lg" _text={ styles.avatar.text }>
-                        { doc.resource.type[0].toUpperCase() }
+                        { doc.resource.category[0].toUpperCase() }
                     </Avatar>
                     <Column ml={ 2 } space={ 2 }>
                         <Text fontSize="lg" bold underline>

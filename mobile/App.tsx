@@ -6,6 +6,8 @@ import { enableScreens } from 'react-native-screens';
 import DocumentsScreen from './src/components/Documents/DocumentsScreen';
 import HomeScreen from './src/components/Home/HomeScreen';
 import SettingsScreen from './src/components/Settings/SettingsScreen';
+import useConfiguration from './src/hooks/use-configuration';
+import usePouchdbManager from './src/hooks/use-pouchdb-manager';
 import usePreferences from './src/hooks/use-preferences';
 import useRepository from './src/hooks/use-repository';
 import useSync from './src/hooks/use-sync';
@@ -40,12 +42,26 @@ export default function App(): ReactElement {
         removeProject,
     } = usePreferences();
 
-    const repository = useRepository(preferences.currentProject, preferences.username);
+    const pouchdbManager = usePouchdbManager(preferences.currentProject);
+
+    const config = useConfiguration(
+        preferences.currentProject,
+        preferences.languages,
+        preferences.username,
+        pouchdbManager,
+    );
+
+    const repository = useRepository(
+        preferences.currentProject,
+        preferences.username,
+        config?.getCategoriesArray() || [],
+        pouchdbManager,
+    );
 
     const syncStatus = useSync(
         preferences.currentProject,
         preferences.projects[preferences.currentProject],
-        repository
+        repository,
     );
 
 
@@ -74,6 +90,7 @@ export default function App(): ReactElement {
                             syncStatus={ syncStatus }
                             projectSettings={ preferences.projects[preferences.currentProject] }
                             setProjectSettings={ setProjectSettings }
+                            config={ config }
                         /> }
                     </Stack.Screen>
                     <Stack.Screen name="SettingsScreen">

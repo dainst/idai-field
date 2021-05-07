@@ -29,7 +29,7 @@ const DrawerContent: React.FC<DrawerContentProps> = ({
                     key={ doc.resource.id }
                     label={ doc.resource.identifier }
                     onPress={ () => onDocumentSelected(doc) }
-                    icon={ () => <Avatar size="xs">{ doc.resource.type[0].toUpperCase() }</Avatar> } />
+                    icon={ () => <Avatar size="xs">{ doc.resource.category[0].toUpperCase() }</Avatar> } />
                 )}
             </DrawerContentScrollView>
             <IconButton

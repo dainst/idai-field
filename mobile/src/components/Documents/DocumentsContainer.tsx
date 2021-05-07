@@ -1,6 +1,6 @@
 import { createDrawerNavigator, DrawerNavigationProp } from '@react-navigation/drawer';
 import { RouteProp } from '@react-navigation/native';
-import { Document, SyncStatus } from 'idai-field-core';
+import { Document, ProjectConfiguration, SyncStatus } from 'idai-field-core';
 import React from 'react';
 import useSearch from '../../hooks/use-search';
 import { ProjectSettings } from '../../models/preferences';
@@ -29,6 +29,7 @@ interface DocumentsContainerProps {
     repository: DocumentRepository;
     syncStatus: SyncStatus;
     projectSettings: ProjectSettings;
+    config: ProjectConfiguration;
     setProjectSettings: (projectSettings: ProjectSettings) => void;
 }
 
@@ -40,11 +41,14 @@ const DocumentsContainer: React.FC<DocumentsContainerProps> = ({
     repository,
     syncStatus,
     projectSettings,
+    config,
     setProjectSettings
 }) => {
 
-    const [documents, issueSearch] = useSearch(repository);
-    const [allDocuments, _] = useSearch(repository);
+    const [documents, issueSearch] = useSearch(repository, config);
+    const [allDocuments, _] = useSearch(repository, config);
+
+    console.log(documents);
 
     const onDocumentSelected = (doc: Document, navigation: DrawerNavigation) => {
     

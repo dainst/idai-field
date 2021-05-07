@@ -1,4 +1,4 @@
-import { createDocuments, doc, Document, SyncStatus } from 'idai-field-core';
+import { Category, createDocuments, doc, Document, PouchdbManager, SyncStatus } from 'idai-field-core';
 import PouchDB from 'pouchdb-node';
 import { last } from 'tsfun';
 import { DocumentRepository } from './document-repository';
@@ -13,7 +13,10 @@ describe('DocumentRepository', () => {
     
     beforeEach(async () => {
         
-        repository = await DocumentRepository.init(project, (name: string) => new PouchDB(name), 'testuser');
+        const manager = new PouchdbManager((name: string) => new PouchDB(name));
+        await manager.createDb(project, { _id: 'project', resource: { id: 'project' } }, true);
+        const categories: Category[] = [createCategory('Feature'), createCategory('Find')];
+        repository = await DocumentRepository.init(project, 'testuser', categories, manager);
     });
 
 
@@ -65,7 +68,7 @@ describe('DocumentRepository', () => {
         const docs = Object.values(createDocuments([
             ['id1', 'Feature', ['id2']],
             ['id2', 'Find'],
-            ['id3', 'Find']
+            ['id3', 'Find'],
         ]));
         await Promise.all(docs.map(async d => await repository.create(d, 'testuser')));
         
@@ -92,6 +95,21 @@ describe('DocumentRepository', () => {
 
         const { totalCount: count2 } = await repository.find({ q: 'Document' });
         expect(count2).toEqual(3);
+    });
+
+
+    it('finds documents by category', async () => {
+
+        const docs = [
+            doc('Test Document', 'T1', 'Feature', 'id1'),
+            doc('Tester Document', 'T2', 'Find'),
+            doc('Toast Document', 'T12', 'Find'),
+        ];
+        await Promise.all(docs.map(async d => await repository.create(d, 'testuser')));
+        
+        const { documents: foundDocs } = await repository.find({ categories: ['Feature'] });
+        expect(foundDocs).toHaveLength(1);
+        expect(foundDocs[0].resource.id).toEqual('id1');
     });
 
 
@@ -151,4 +169,17 @@ describe('DocumentRepository', () => {
 
         expect(await inSync).toBe(true);
     });
+});
+
+
+const createCategory = (name: string) => ({
+    name,
+    label: name,
+    isAbstract: false,
+    children: [],
+    parentCategory: undefined,
+    description: {},
+    color: '',
+    groups: [],
+    mustLieWithin: undefined
 });

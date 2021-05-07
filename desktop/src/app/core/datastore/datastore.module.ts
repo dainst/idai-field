@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
-import { ChangesStream, Converter, Datastore, DocumentCache, IdGenerator, IndexFacade, PouchdbDatastore, PouchdbManager } from 'idai-field-core';
+import { CategoryConverter, ChangesStream, Datastore, DocumentCache, IdGenerator, IndexFacade, PouchdbDatastore, PouchdbManager, ProjectConfiguration } from 'idai-field-core';
 import { SettingsProvider } from '../settings/settings-provider';
-import { FieldConverter } from './field/category-converter';
 import { PouchdbServer } from './pouchdb/pouchdb-server';
 
 const PouchDB = window.require('pouchdb-browser');
@@ -19,7 +18,7 @@ const PouchDB = window.require('pouchdb-browser');
             useFactory: function(pouchdbDatastore: PouchdbDatastore,
                                  indexFacade: IndexFacade,
                                  documentCache: DocumentCache,
-                                 documentConverter: Converter,
+                                 documentConverter: CategoryConverter,
                                  settingsProvider: SettingsProvider
             ): ChangesStream {
 
@@ -28,14 +27,21 @@ const PouchDB = window.require('pouchdb-browser');
                     () => settingsProvider.getSettings().username
                 );
             },
-            deps: [PouchdbDatastore, IndexFacade, DocumentCache, Converter, SettingsProvider]
+            deps: [PouchdbDatastore, IndexFacade, DocumentCache, CategoryConverter, SettingsProvider]
         },
         {
             provide: PouchdbManager,
             useFactory: () => new PouchdbManager((name: string) => new PouchDB(name))
         },
         PouchdbServer,
-        { provide: Converter, useClass: FieldConverter },
+        {
+            provide: CategoryConverter,
+            useFactory: function(projectConfiguration: ProjectConfiguration) {
+
+                return new CategoryConverter(projectConfiguration.getCategoryForest());
+            },
+            deps: [ProjectConfiguration]
+        },
         DocumentCache,
         IdGenerator,
         {
@@ -57,11 +63,11 @@ const PouchDB = window.require('pouchdb-browser');
             useFactory: function(pouchdbDatastore: PouchdbDatastore,
                                  indexFacade: IndexFacade,
                                  documentCache: DocumentCache,
-                                 documentConverter: Converter,
+                                 documentConverter: CategoryConverter,
             ): Datastore {
                 return new Datastore(pouchdbDatastore, indexFacade, documentCache, documentConverter);
             },
-            deps: [PouchdbDatastore, IndexFacade, DocumentCache, Converter]
+            deps: [PouchdbDatastore, IndexFacade, DocumentCache, CategoryConverter]
         }
     ]
 })

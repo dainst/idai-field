@@ -12,26 +12,21 @@ describe('loadConfiguration()', () => {
     let pouchdbManager: PouchdbManager;
     
 
-    beforeEach(async () => {
+    beforeEach(() => {
         pouchdbManager = new PouchdbManager((name: string) => new PouchDB(name));
         pouchdbManager.createDb_e2e(project);
     });
 
 
-    afterEach(async () => pouchdbManager.destroyDb(project));
-
-
-    it('loads meninx config via config reader', async () => {
-
-        const config = await loadConfiguration(pouchdbManager, 'meninx-project', ['de', 'en'], 'Testuser');
-
-        expect(config.getLabelForCategory('Wall_surface')).toEqual('Wandoberfläche');
+    afterEach(async (done) => {
+        await pouchdbManager.destroyDb(project);
+        done();
     });
 
 
-    xit('loads default config via config reader', async () => {
+    it('loads default config via config reader', async () => {
 
-        const config = await loadConfiguration(pouchdbManager, 'default', ['de', 'en'], 'Testuser');
+        const config = await loadConfiguration(pouchdbManager, 'asdflkjhasdflj', ['de', 'en'], 'Testuser');
         
         expect(config.getLabelForCategory('Trench')).toEqual('Schnitt');
     });

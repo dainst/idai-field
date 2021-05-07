@@ -1,4 +1,4 @@
-import PouchDB from 'pouchdb-react-native';
+import { Category, Forest, PouchdbManager } from 'idai-field-core';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { DocumentRepository } from '../repositories/document-repository';
 
@@ -6,22 +6,35 @@ import { DocumentRepository } from '../repositories/document-repository';
 type SetRepository = Dispatch<SetStateAction<DocumentRepository | undefined>>;
 
 
-const useRepository = (project: string, username: string): DocumentRepository | undefined => {
+const useRepository = (
+    project: string,
+    username: string,
+    categories: Forest<Category>,
+    pouchdbManager: PouchdbManager | undefined
+): DocumentRepository | undefined => {
 
     const [repository, setRepository] = useState<DocumentRepository>();
 
     useEffect(() => {
 
-        setupRepository(project, username, setRepository);
-    }, [project, username]);
+        if (!pouchdbManager) return;
+        
+        setupRepository(project, username, categories, pouchdbManager, setRepository);
+    }, [project, username, categories, pouchdbManager]);
 
     return repository;
 };
 
 
-const setupRepository = async (project: string, username: string, setRepository: SetRepository) => {
+const setupRepository = async (
+    project: string,
+    username: string,
+    categories: Forest<Category>,
+    pouchdbManager: PouchdbManager,
+    setRepository: SetRepository
+) => {
 
-    const repository = await DocumentRepository.init(project, (name: string) => new PouchDB(name), username);
+    const repository = await DocumentRepository.init(project, username, categories, pouchdbManager);
     setRepository(repository);
 };
 

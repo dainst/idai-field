@@ -1,9 +1,12 @@
-import { Document } from 'idai-field-core';
+import { Document, ProjectCategories, ProjectConfiguration } from 'idai-field-core';
 import { useEffect, useMemo, useState } from 'react';
 import { DocumentRepository } from '../repositories/document-repository';
 
 
-const useSearch = (repository: DocumentRepository): [Document[], (q: string) => void] => {
+const useSearch = (
+    repository: DocumentRepository,
+    config: ProjectConfiguration
+): [Document[], (q: string) => void] => {
     
     const [documents, setDocuments] = useState<Document[]>([]);
 
@@ -11,9 +14,10 @@ const useSearch = (repository: DocumentRepository): [Document[], (q: string) => 
 
         return (q: string) => {
          
-            repository.find({ q }).then(result => setDocuments(result.documents));
+            const query = { q, categories: getCategoryNames(config) };
+            repository.find(query).then(result => setDocuments(result.documents));
         };
-    }, [repository]);
+    }, [repository, config]);
 
     useEffect(() => { issueSearch('*'); }, [issueSearch]);
 
@@ -22,3 +26,7 @@ const useSearch = (repository: DocumentRepository): [Document[], (q: string) => 
 };
 
 export default useSearch;
+
+
+const getCategoryNames = (config: ProjectConfiguration) =>
+    ProjectCategories.getConcreteFieldCategoryNames(config.getCategoryForest());

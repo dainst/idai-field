@@ -1,5 +1,6 @@
-import {isObject, flow} from 'tsfun';
-import {Document, OptionalRange} from 'idai-field-core';
+import { flow, isObject } from 'tsfun';
+import { Document } from '../model/document';
+import { OptionalRange } from '../model/optional-range';
 
 
 export const singleToMultipleValuesFieldNames: string[] = [

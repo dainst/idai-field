@@ -2,7 +2,7 @@
      [class.bg-warning]="field.source === 'custom'"
      [class.bg-secondary]="hidden"
      [class.text-white]="hidden">
-    <div class="card-header" [class.parent-field]="parentField">
+    <div class="card-header" [class.parent-element]="parentField">
         <category-icon *ngIf="parentField"
             [size]="28"
             [category]="category.parentCategory.name"></category-icon>

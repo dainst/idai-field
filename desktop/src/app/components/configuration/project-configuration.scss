@@ -80,6 +80,33 @@
       .value-col {
           height: 1.69rem;
       }
+
+      .card-header {
+        height: 55px;
+
+        .category-icon {
+          position: relative;
+          top: 2px;
+          left: -6px;
+          margin-right: 2px;
+        }
+
+        b,
+        code,
+        .mdi-alert-circle-outline {
+          position: relative;
+          top: 4px;
+        }
+    
+        &.parent-element {
+          b,
+          code,
+          .mdi-alert-circle-outline {
+            position: relative;
+            top: -2px;
+          }
+        }
+      }
     }
   }
 

@@ -86,7 +86,9 @@
                             </configuration-field>
                         </div>
                         <div *ngFor="let relation of getRelations(selectedCategory)">
-                            <configuration-relation [relation]="relation"></configuration-relation>
+                            <configuration-relation [relation]="relation"
+                                                    [category]="selectedCategory">
+                            </configuration-relation>
                         </div>
                     </div>
                 </div>

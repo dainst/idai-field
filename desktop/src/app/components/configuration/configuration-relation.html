@@ -1,10 +1,13 @@
 <div class="card">
-    <div class="card-header">
+    <div class="card-header" [class.parent-element]="parentRelation">
+        <category-icon *ngIf="parentRelation"
+            [size]="28"
+            [category]="category.parentCategory.name"></category-icon>
         <b *ngIf="relation.label">{{relation.label}}</b>
         <code> {{relation.name}}</code>
     </div>
 
-    <div class="card-body">
+    <div *ngIf="!parentRelation" class="card-body">
         <ul class="list-group list-group-flush">
             <li class="list-group-item">
                 <b i18n="@@configuration.field.inputType">Eingabetyp</b>:

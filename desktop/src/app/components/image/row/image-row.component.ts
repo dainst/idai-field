@@ -8,8 +8,6 @@ import {showMissingThumbnailMessageOnConsole} from '../log-messages';
 import {BlobMaker} from '../../../core/images/imagestore/blob-maker';
 import { Imagestore } from '../../../core/images/imagestore/imagestore';
 import {ContextMenu} from '../../resources/widgets/context-menu';
-import {ImageRowContextMenuAction} from './image-row-context-menu.component';
-import {Observable} from 'rxjs/internal/Observable';
 import {ComponentHelpers} from '../../component-helpers';
 
 
@@ -40,13 +38,8 @@ export class ImageRowComponent implements OnChanges {
     @Input() highlightOnHover = false;
     @Input() allowSelection = false;
 
-    // TODO unsubscribe?
-    private subscribed = false;
-    @Input() listenToClickEvents: () => Observable<Event>;
-
     @Output() onImageClicked: EventEmitter<ImageRowItem> = new EventEmitter<ImageRowItem>();
     @Output() onImageSelected: EventEmitter<ImageRowItem> = new EventEmitter<ImageRowItem>();
-    @Output() onContextMenuItemClicked: EventEmitter<ImageRowContextMenuAction> = new EventEmitter<ImageRowContextMenuAction>();
 
     public thumbnailUrls: { [imageId: string]: SafeResourceUrl };
     public initializing: boolean;
@@ -72,10 +65,6 @@ export class ImageRowComponent implements OnChanges {
 
 
     async ngOnChanges(changes: SimpleChanges) {
-
-        if (!this.subscribed && this.listenToClickEvents) {
-            this.listenToClickEvents().subscribe(event => this.handleClick(event));
-        }
 
         if (!this.images || !changes['images']) return;
 
@@ -129,13 +118,6 @@ export class ImageRowComponent implements OnChanges {
 
             this.contextMenu.close();
         }
-    }
-
-
-    public performContextMenuAction(event: any) {
-
-        this.contextMenu.close();
-        this.onContextMenuItemClicked.emit(event);
     }
 
 

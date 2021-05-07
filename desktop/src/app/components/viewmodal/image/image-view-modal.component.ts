@@ -34,8 +34,6 @@ export class ImageViewModalComponent extends ViewModalComponent {
 
     private clickEventObservers: Array<any> = [];
 
-    public boundListenToClickEvents: () => Observable<Event>;
-
     public mode: ImageViewModalComponent.Mode = 'single';
 
 
@@ -55,7 +53,6 @@ export class ImageViewModalComponent extends ViewModalComponent {
         super(activeModal, modalService, routingService, menuService);
 
         this.initializeClickEventListener();
-        this.boundListenToClickEvents = this.listenToClickEvents.bind(this);
     }
 
     public getExpandAllGroups = () => this.imagesState.getExpandAllGroups();

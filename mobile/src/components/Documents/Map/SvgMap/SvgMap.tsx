@@ -4,7 +4,7 @@ import {
     Animated, GestureResponderEvent, PanResponder, PanResponderGestureState
 } from 'react-native';
 import Svg, { G, SvgProps } from 'react-native-svg';
-import { ViewPort } from '../geo-svg/geojson-cs-to-svg-cs/geojson-cs-to-svg-cs';
+import { ViewPort } from '../geo-svg/geojson-cs-to-svg-cs/viewport-utils/viewport-utils';
 import { calcCenter, calcDistance } from './math-utils';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function

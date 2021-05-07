@@ -34,7 +34,7 @@
         </div>
     </div>
 
-    <div class="card-body">
+    <div *ngIf="!parentField" class="card-body">
         <p *ngIf="field.description" class="card-text">{{field.description}}</p>
         <ul class="list-group list-group-flush">
             <li class="list-group-item">

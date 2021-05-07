@@ -20,7 +20,7 @@ export class ChildrenViewComponent implements OnChanges {
     @Input() document: FieldDocument;
 
     public children: Array<FieldDocument> = [];
-    public childrenCount: number = 0;
+    public childrenCount = 0;
 
 
     constructor(private viewFacade: ViewFacade,

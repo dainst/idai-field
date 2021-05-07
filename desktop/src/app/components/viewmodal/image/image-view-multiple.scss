@@ -1,28 +1,47 @@
-#image-tab-container {
-  margin-top: 0;
+$bg-c: #f8f9fa;
 
-  .card-block {
-    padding-top: 0;
-  }
+.modal-content {
+    background-color: $bg-c;
 
-  #create-depicts-relations-btn,
-  #delete-images,
-  #deselect-images,
-  #set-main-image {
-    height: 40px;
-  }
+    #view-modal-body {
+        background-color: $bg-c;
 
-  .image-grid-container {
-    height: calc(100vh - 223px);
-    overflow-y: auto;
-    margin: 10px 0;
+        #image-grid-container {
+            margin-top: 0;
 
-    .image-grid {
-      margin-top: 0;
+            background-color:$bg-c;
+
+            .card-block {
+                padding-top: 0;
+            }
+
+            #create-depicts-relations-btn,
+            #delete-images,
+            #deselect-images,
+            #set-main-image {
+                height: 40px;
+            }
+
+            padding-left: 20px;
+            padding-right: 18px;
+            height: calc(100vh - 131px);
+            overflow-y: auto;
+            margin: 10px 0;
+
+            // .image-grid-container { TODO clean up
+              // height: calc(100vh - 101px);
+              // overflow-x: hidden;
+              // padding: 0 !important;
+              // margin: 0 -15px;
+            // }
+
+            .btn-group .btn {
+                margin-left: 0.5rem;
+            }
+
+            .image-grid {
+                margin-top: 0;
+            }
+        }
     }
-  }
-
-  .btn-group .btn {
-    margin-left: 0.5rem;
-  }
 }

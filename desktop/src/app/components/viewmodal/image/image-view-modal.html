@@ -5,7 +5,7 @@
     </div>
 
     <div>
-        <span *ngIf="selected.length" class="btn-group selection-actions">
+        <span *ngIf="selected.length && mode === 'multiple'" class="btn-group selection-actions">
             <button *ngIf="selected.length === 1 && !isMainImage(selected[0])" id="set-main-image" type="button"
                 class="btn btn-primary" (click)="setMainImage()" ngbTooltip="Als Hauptbild festlegen"
                 i18n-ngbTooltip="@@docedit.tabs.images.tooltips.setMainImage" placement="bottom" container="body">

@@ -1,6 +1,5 @@
-import { ConstraintIndex, DocumentCache, FulltextIndex, Indexer, IndexFacade, PouchdbManager, ProjectConfiguration } from 'idai-field-core';
+import { CategoryConverter, ConstraintIndex, DocumentCache, FulltextIndex, Indexer, IndexFacade, PouchdbManager, ProjectConfiguration } from 'idai-field-core';
 import { AngularUtility } from '../angular/angular-utility';
-import { CategoryConverter } from '../core/datastore/field/category-converter';
 import { SampleDataLoader } from '../core/datastore/field/sampledata/sample-data-loader';
 import { PouchdbServer } from '../core/datastore/pouchdb/pouchdb-server';
 import { ImageConverter } from '../core/images/imagestore/image-converter';

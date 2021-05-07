@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
-import { ChangesStream, Converter, Datastore, DocumentCache, IdGenerator, IndexFacade, PouchdbDatastore, PouchdbManager, ProjectConfiguration } from 'idai-field-core';
+import { CategoryConverter, ChangesStream, Converter, Datastore, DocumentCache, IdGenerator, IndexFacade, PouchdbDatastore, PouchdbManager, ProjectConfiguration } from 'idai-field-core';
 import { SettingsProvider } from '../settings/settings-provider';
-import { CategoryConverter } from './field/category-converter';
 import { PouchdbServer } from './pouchdb/pouchdb-server';
 
 const PouchDB = window.require('pouchdb-browser');

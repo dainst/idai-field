@@ -1,5 +1,11 @@
-import { Converter, Document, ProjectCategories, ProjectConfiguration, Relations, Resource, takeOrMake } from 'idai-field-core';
 import { isFunction } from 'tsfun';
+import { ProjectCategories } from '../configuration/project-categories';
+import { ProjectConfiguration } from '../configuration/project-configuration';
+import { Document } from '../model/document';
+import { Relations } from '../model/relations';
+import { Resource } from '../model/resource';
+import { takeOrMake } from '../tools/utils';
+import { Converter } from './converter';
 import { Migrator } from './migrator';
 
 

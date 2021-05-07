@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { DocumentCache, Indexer, IndexFacade, PouchdbDatastore, PouchdbManager, ProjectConfiguration } from 'idai-field-core';
+import { CategoryConverter, DocumentCache, Indexer, IndexFacade, PouchdbDatastore, PouchdbManager, ProjectConfiguration } from 'idai-field-core';
 import { MenuService } from '../components/menu-service';
-import { CategoryConverter } from './datastore/field/category-converter';
 import { SampleDataLoader } from './datastore/field/sampledata/sample-data-loader';
 import { ImageConverter } from './images/imagestore/image-converter';
 import { Imagestore } from './images/imagestore/imagestore';

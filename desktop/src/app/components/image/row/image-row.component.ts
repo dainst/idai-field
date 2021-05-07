@@ -8,7 +8,6 @@ import {showMissingThumbnailMessageOnConsole} from '../log-messages';
 import {BlobMaker} from '../../../core/images/imagestore/blob-maker';
 import { Imagestore } from '../../../core/images/imagestore/imagestore';
 import {ContextMenu} from '../../resources/widgets/context-menu';
-import {ComponentHelpers} from '../../component-helpers';
 
 
 const MAX_IMAGE_WIDTH = 600;
@@ -19,8 +18,7 @@ const PLACEHOLDER_WIDTH = 150;
     templateUrl: './image-row.html',
     host: {
         '(window:keydown)': 'onKeyDown($event)',
-        '(window:resize)': 'onResize()',
-        '(window:contextmenu)': 'handleClick($event, true)'
+        '(window:resize)': 'onResize()'
     }
 })
 /**
@@ -106,18 +104,6 @@ export class ImageRowComponent implements OnChanges {
         this.allowSelection
             ? this.select(image)
             : this.onImageClicked.emit(image);
-    }
-
-
-    public handleClick(event: any, rightClick: boolean = false) {
-
-        if (!this.contextMenu.position
-            || !ComponentHelpers.isInside(
-                    event.target,
-                    target => target.className?.includes('imageRowImage') && rightClick)) {
-
-            this.contextMenu.close();
-        }
     }
 
 

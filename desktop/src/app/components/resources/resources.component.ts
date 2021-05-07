@@ -1,6 +1,6 @@
 import {ChangeDetectorRef, Component, OnDestroy, Renderer2} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {Observable, Subscription} from 'rxjs';
 import {Document} from 'idai-field-core';
 import {FieldDocument, FieldGeometry, Category} from 'idai-field-core';
@@ -205,7 +205,7 @@ export class ResourcesComponent implements OnDestroy {
         try {
             await this.resourceDeletion.delete(documents);
             await this.viewFacade.deselect();
-            for (let document of documents) {
+            for (const document of documents) {
                 await this.tabManager.closeTab('resources', document.resource.id);
                 this.viewFacade.removeView(document.resource.id);
             }

@@ -1,11 +1,10 @@
 import {
-    AppConfigurator, ChangesStream, ConfigLoader, createDocuments, Datastore, Document, DocumentCache,
+    AppConfigurator, CategoryConverter, ChangesStream, ConfigLoader, createDocuments, Datastore, Document, DocumentCache,
     NiceDocs, PouchdbDatastore, PouchdbManager, Query, ResourceId, SyncService, toResourceId
 } from 'idai-field-core';
 import * as PouchDB from 'pouchdb-node';
 import { sameset } from 'tsfun';
 import { FsConfigReader } from '../../../../src/app/core/configuration/fs-config-reader';
-import { CategoryConverter } from '../../../../src/app/core/datastore/field/category-converter';
 import { PouchdbServer } from '../../../../src/app/core/datastore/pouchdb/pouchdb-server';
 import { DocumentHolder } from '../../../../src/app/core/docedit/document-holder';
 import { Imagestore } from '../../../../src/app/core/images/imagestore/imagestore';
@@ -96,7 +95,7 @@ export async function createApp(projectName = 'testdb') {
     imagestore.init(settingsProvider.getSettings());
 
     const documentCache = new DocumentCache();
-    const categoryConverter = new CategoryConverter(projectConfiguration);
+    const categoryConverter = new CategoryConverter(projectConfiguration.getCategoryForest());
 
     const datastore = new Datastore(
         pouchdbDatastore, createdIndexFacade, documentCache, categoryConverter);

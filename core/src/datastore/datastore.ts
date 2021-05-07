@@ -3,10 +3,10 @@ import { Document } from '../model/document';
 import { NewDocument } from '../model/new-document';
 import { Query } from '../model/query';
 import { ObjectUtils } from '../tools/object-utils';
+import { CategoryConverter } from './category-converter';
 import { DatastoreErrors } from './datastore-errors';
-import { PouchdbDatastore } from './pouchdb/pouchdb-datastore';
-import { Converter } from './converter';
 import { DocumentCache } from './document-cache';
+import { PouchdbDatastore } from './pouchdb/pouchdb-datastore';
 
 
 export interface FindIdsResult {
@@ -59,7 +59,7 @@ export class Datastore {
     constructor(private datastore: PouchdbDatastore,
                 private indexFacade: IndexFacade,
                 private documentCache: DocumentCache,
-                private categoryConverter: Converter) {
+                private categoryConverter: CategoryConverter) {
     }
 
 

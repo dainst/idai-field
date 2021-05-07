@@ -1,4 +1,7 @@
-import { Category, createDocuments, doc, Document, PouchdbManager, SyncStatus } from 'idai-field-core';
+import {
+    Category, createCategory, createDocuments, doc, Document, Forest,
+    PouchdbManager, SyncStatus
+} from 'idai-field-core';
 import PouchDB from 'pouchdb-node';
 import { last } from 'tsfun';
 import { DocumentRepository } from './document-repository';
@@ -15,7 +18,7 @@ describe('DocumentRepository', () => {
         
         const manager = new PouchdbManager((name: string) => new PouchDB(name));
         await manager.createDb(project, { _id: 'project', resource: { id: 'project' } }, true);
-        const categories: Category[] = [createCategory('Feature'), createCategory('Find')];
+        const categories: Forest<Category> = [createCategory('Feature'), createCategory('Find')];
         repository = await DocumentRepository.init(project, 'testuser', categories, manager);
     });
 
@@ -169,17 +172,4 @@ describe('DocumentRepository', () => {
 
         expect(await inSync).toBe(true);
     });
-});
-
-
-const createCategory = (name: string) => ({
-    name,
-    label: name,
-    isAbstract: false,
-    children: [],
-    parentCategory: undefined,
-    description: {},
-    color: '',
-    groups: [],
-    mustLieWithin: undefined
 });

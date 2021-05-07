@@ -1,5 +1,4 @@
-import { Datastore, doc, DocumentCache } from 'idai-field-core';
-import { CategoryConverter } from '../../../../src/app/core/datastore/field/category-converter';
+import { CategoryConverter, createCategory, Datastore, doc, DocumentCache } from 'idai-field-core';
 
 
 /**
@@ -14,25 +13,14 @@ describe('Datastore', () => {
 
     function createMockedDatastore(mockdb: any) {
 
-        const mockProjectCategories = jasmine.createSpyObj('mockProjectCategories', ['getFieldCategoryNames']);
-        const mockProjectConfiguration = jasmine.createSpyObj('mockProjectConfiguration', ['isSubcategory', 'getCategoryTreelist']);
-        mockProjectConfiguration.isSubcategory.and.returnValue(false);
-        mockProjectCategories.getFieldCategoryNames.and.returnValue(['Find']);
-        mockProjectConfiguration.getCategoryTreelist.and.returnValue(
-            [
-                {
-                    item: { name: 'Find' },
-                    trees: []
-                }
-            ]
-        );
+        const categories = [createCategory('Find')];
 
         const documentCache = new DocumentCache();
         return new Datastore(
             mockdb,
             mockIndexFacade,
             documentCache,
-            new CategoryConverter(mockProjectConfiguration));
+            new CategoryConverter(categories));
     }
 
 

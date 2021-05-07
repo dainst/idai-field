@@ -84,7 +84,7 @@ export class AppController {
             this.indexFacade,
             db,
             this.documentCache,
-            new CategoryConverter(this.projectConfiguration)
+            new CategoryConverter(this.projectConfiguration.getCategoryForest())
         );
     }
 }

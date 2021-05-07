@@ -5,7 +5,7 @@ import { IndexFacade } from '../../index/index-facade';
 import { Action } from '../../model/action';
 import { Document, RevisionId } from '../../model/document';
 import { ObserverUtil } from '../../tools/observer-util';
-import { Converter } from '../converter';
+import { CategoryConverter } from '../category-converter';
 import { DatastoreErrors } from '../datastore-errors';
 import { DocumentCache } from '../document-cache';
 import { isProjectDocument } from '../helpers';
@@ -33,7 +33,7 @@ export class ChangesStream {
     constructor(private datastore: PouchdbDatastore,
                 private indexFacade: IndexFacade,
                 private documentCache: DocumentCache,
-                private categoryConverter: Converter,
+                private categoryConverter: CategoryConverter,
                 private getUsername: () => string) {
 
         datastore.deletedNotifications().subscribe(document => {

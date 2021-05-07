@@ -1,8 +1,10 @@
 import {
     Category,
-    ChangesStream,
-    ConstraintIndex, Converter, Datastore, Document, DocumentCache, FindResult,
-    IdGenerator, Indexer, IndexFacade, PouchdbDatastore, PouchdbManager, Query, SyncProcess
+
+    CategoryConverter, ChangesStream,
+    ConstraintIndex, Datastore, Document, DocumentCache, FindResult,
+    Forest,
+    IdGenerator, Indexer, IndexFacade, PouchdbDatastore, PouchdbManager, Query, SyncProcess, Tree
 } from 'idai-field-core';
 import { Observable } from 'rxjs';
 
@@ -16,7 +18,7 @@ export class DocumentRepository {
     public static async init(
         project: string,
         username: string,
-        categories: Category[],
+        categories: Forest<Category>,
         pouchdbManager: PouchdbManager,
     ) : Promise<DocumentRepository> {
 
@@ -75,15 +77,15 @@ export class DocumentRepository {
 
 
 const buildDatastore = async (
-        categories: Category[],
+        categories: Forest<Category>,
         pouchdbDatastore: PouchdbDatastore,
         db: PouchDB.Database,
         username: string
     ): Promise<[Datastore, ChangesStream]> => {
 
-    const indexFacade = buildIndexFacade(categories);
+    const indexFacade = buildIndexFacade(Tree.flatten<Category>(categories));
     const documentCache = new DocumentCache();
-    const converter = buildDummyCategoryConverter();
+    const converter = new CategoryConverter(categories);
 
     await Indexer.reindex(indexFacade, db, documentCache, converter);
 
@@ -120,18 +122,6 @@ const buildIndexFacade = (categories: Category[]): IndexFacade => {
         false
     );
 };
-
-
-const buildDummyCategoryConverter = (): Converter => ({
-        // TODO remove when the corrresponding function in PouchDbDatastore gets removed
-        convert: (document: Document) => {
-            if (document.resource.type) {
-                document.resource.category = document.resource.type;
-                delete document.resource.type;
-            }
-            return document;
-        }
-});
 
 
 const isNotAnImage = (doc: Document) => !['Image', 'Photo', 'Drawing'].includes(doc.resource.type);

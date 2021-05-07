@@ -54,7 +54,7 @@ export default function App(): ReactElement {
     const repository = useRepository(
         preferences.currentProject,
         preferences.username,
-        config?.getCategoriesArray() || [],
+        config?.getCategoryForest() || [],
         pouchdbManager,
     );
 

@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CategoryConverter, ChangesStream, Converter, Datastore, DocumentCache, IdGenerator, IndexFacade, PouchdbDatastore, PouchdbManager, ProjectConfiguration } from 'idai-field-core';
+import { CategoryConverter, ChangesStream, Datastore, DocumentCache, IdGenerator, IndexFacade, PouchdbDatastore, PouchdbManager, ProjectConfiguration } from 'idai-field-core';
 import { SettingsProvider } from '../settings/settings-provider';
 import { PouchdbServer } from './pouchdb/pouchdb-server';
 
@@ -18,7 +18,7 @@ const PouchDB = window.require('pouchdb-browser');
             useFactory: function(pouchdbDatastore: PouchdbDatastore,
                                  indexFacade: IndexFacade,
                                  documentCache: DocumentCache,
-                                 documentConverter: Converter,
+                                 documentConverter: CategoryConverter,
                                  settingsProvider: SettingsProvider
             ): ChangesStream {
 
@@ -27,7 +27,7 @@ const PouchDB = window.require('pouchdb-browser');
                     () => settingsProvider.getSettings().username
                 );
             },
-            deps: [PouchdbDatastore, IndexFacade, DocumentCache, Converter, SettingsProvider]
+            deps: [PouchdbDatastore, IndexFacade, DocumentCache, CategoryConverter, SettingsProvider]
         },
         {
             provide: PouchdbManager,
@@ -35,10 +35,10 @@ const PouchDB = window.require('pouchdb-browser');
         },
         PouchdbServer,
         {
-            provide: Converter,
+            provide: CategoryConverter,
             useFactory: function(projectConfiguration: ProjectConfiguration) {
 
-                return new CategoryConverter(projectConfiguration);
+                return new CategoryConverter(projectConfiguration.getCategoryForest());
             },
             deps: [ProjectConfiguration]
         },
@@ -63,11 +63,11 @@ const PouchDB = window.require('pouchdb-browser');
             useFactory: function(pouchdbDatastore: PouchdbDatastore,
                                  indexFacade: IndexFacade,
                                  documentCache: DocumentCache,
-                                 documentConverter: Converter,
+                                 documentConverter: CategoryConverter,
             ): Datastore {
                 return new Datastore(pouchdbDatastore, indexFacade, documentCache, documentConverter);
             },
-            deps: [PouchdbDatastore, IndexFacade, DocumentCache, Converter]
+            deps: [PouchdbDatastore, IndexFacade, DocumentCache, CategoryConverter]
         }
     ]
 })

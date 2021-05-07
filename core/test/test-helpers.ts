@@ -1,6 +1,7 @@
-import { Document } from '../src/model/document';
 import { ResourceId } from '../src/constants';
-import { FeatureDocument, FieldDocument, Relations } from '../src/model';
+import { Category, FeatureDocument, FieldDocument, Relations } from '../src/model';
+import { Document } from '../src/model/document';
+import { Tree } from '../src/tools/forest';
 import { Lookup } from '../src/tools/utils';
 
 
@@ -90,3 +91,19 @@ export function createDocuments(documents: NiceDocs) {
 
     return documentsLookup;
 }
+
+
+export const createCategory = (name: string): Tree<Category> => ({
+    item: {
+        name,
+        label: name,
+        isAbstract: false,
+        children: [],
+        parentCategory: undefined,
+        description: {},
+        color: '',
+        groups: [],
+        mustLieWithin: undefined
+    },
+    trees: []
+});

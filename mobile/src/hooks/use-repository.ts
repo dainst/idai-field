@@ -1,4 +1,4 @@
-import { Category, PouchdbManager } from 'idai-field-core';
+import { Category, Forest, PouchdbManager } from 'idai-field-core';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { DocumentRepository } from '../repositories/document-repository';
 
@@ -9,7 +9,7 @@ type SetRepository = Dispatch<SetStateAction<DocumentRepository | undefined>>;
 const useRepository = (
     project: string,
     username: string,
-    categories: Category[],
+    categories: Forest<Category>,
     pouchdbManager: PouchdbManager | undefined
 ): DocumentRepository | undefined => {
 
@@ -29,7 +29,7 @@ const useRepository = (
 const setupRepository = async (
     project: string,
     username: string,
-    categories: Category[],
+    categories: Forest<Category>,
     pouchdbManager: PouchdbManager,
     setRepository: SetRepository
 ) => {

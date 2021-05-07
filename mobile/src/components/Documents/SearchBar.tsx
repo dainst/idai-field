@@ -1,4 +1,4 @@
-import { SyncStatus } from 'idai-field-core';
+import { Query, SyncStatus } from 'idai-field-core';
 import { Box, HStack, Icon, IconButton, Input } from 'native-base';
 import React from 'react';
 import { ProjectSettings } from '../../models/preferences';
@@ -8,7 +8,7 @@ interface SearchBarProps {
     projectSettings: ProjectSettings;
     syncStatus: SyncStatus;
     setProjectSettings: (settings: ProjectSettings) => void;
-    issueSearch: (q: string) => void;
+    issueSearch: (q: Query) => void;
     toggleDrawer: () => void
 }
 
@@ -42,14 +42,14 @@ const renderLeftIcons = (onPress: () => void) =>
     
 
 const renderRightIcons = (
-    issueSearch: (q: string) => void,
+    issueSearch: (q: Query) => void,
     projectSettings: ProjectSettings,
     setProjectSettings: (settings: ProjectSettings) => void,
     syncStatus: SyncStatus
 ) =>
     <HStack>
         <IconButton
-            onPress={ () => issueSearch('*') }
+            onPress={ () => issueSearch({ q: '*' }) }
             isDisabled={ syncStatus === SyncStatus.Offline ? true : false }
             icon={ <Icon type="Ionicons" name="refresh" /> }
         />

@@ -1,32 +1,31 @@
-import { Document, ProjectCategories, ProjectConfiguration } from 'idai-field-core';
-import { useEffect, useMemo, useState } from 'react';
+import { Document, Query } from 'idai-field-core';
+import { useCallback, useEffect, useState } from 'react';
 import { DocumentRepository } from '../repositories/document-repository';
 
 
 const useSearch = (
-    repository: DocumentRepository,
-    config: ProjectConfiguration
-): [Document[], (q: string) => void] => {
+    repository: DocumentRepository
+): [Document[], (q: Query) => void] => {
     
     const [documents, setDocuments] = useState<Document[]>([]);
+    const [currentQuery, setCurrentQuery] = useState<Query>({ q: '*' });
 
-    const issueSearch = useMemo(() => {
+    const issueSearch = useCallback(
+        () => repository.find(currentQuery).then(result => setDocuments(result.documents)),
+        [repository, currentQuery]
+    );
 
-        return (q: string) => {
-         
-            const query = { q, categories: getCategoryNames(config) };
-            repository.find(query).then(result => setDocuments(result.documents));
-        };
-    }, [repository, config]);
+    useEffect(() => { issueSearch(); }, [issueSearch]);
 
-    useEffect(() => { issueSearch('*'); }, [issueSearch]);
+    useEffect(() => {
 
-    return [documents, issueSearch];
+        // TODO only react to remote changes
+        const s = repository.changed().subscribe(() => issueSearch());
+        return s.unsubscribe();
+    }, [repository, issueSearch]);
+
+    return [documents, setCurrentQuery];
 
 };
 
 export default useSearch;
-
-
-const getCategoryNames = (config: ProjectConfiguration) =>
-    ProjectCategories.getConcreteFieldCategoryNames(config.getCategoryForest());

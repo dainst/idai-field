@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import {
     Animated, GestureResponderEvent, PanResponder, PanResponderGestureState
 } from 'react-native';
 import Svg, { G, SvgProps } from 'react-native-svg';
-import { ViewPort } from '../geo-svg/geojson-cs-to-svg-cs/viewport-utils/viewport-utils';
+import { adjustViewPortAndBoxToKeepAspectRatio } from '../geo-svg/geojson-cs-to-svg-cs/geojson-cs-to-svg-cs';
+import { getViewPortTransform, ViewBox, ViewPort } from '../geo-svg/geojson-cs-to-svg-cs/viewport-utils/viewport-utils';
 import { calcCenter, calcDistance } from './math-utils';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -73,6 +74,18 @@ const SvgMap: React.FC<SvgMapProps> = ( props ) => {
             isZooming.current = false;
         }
     })).current;
+
+    useEffect(() => {
+        
+        const { aspect_vb, aspect_vp } = adjustViewPortAndBoxToKeepAspectRatio(
+                                                props.viewPort,
+                                                viewBoxStringToArray(props.viewBox));
+        const transforms = getViewPortTransform(aspect_vb, aspect_vp);
+        left.setValue(transforms.translateX );
+        top.setValue(transforms.translateY);
+        zoom.setValue (transforms.scaleX);
+        
+    },[left, props.viewBox, props.viewPort, top, zoom]);
     
     
     const touchHandler = (x: number, y: number): void => {
@@ -129,5 +142,7 @@ const SvgMap: React.FC<SvgMapProps> = ( props ) => {
     );
 };
 
+const viewBoxStringToArray = (viewBox: string | undefined): ViewBox =>
+    (viewBox ? viewBox : '0 0 100 100').split(' ').map((num :string)=> parseFloat(num)) as ViewBox;
 
 export default SvgMap;

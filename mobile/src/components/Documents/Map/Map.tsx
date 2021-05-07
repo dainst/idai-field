@@ -3,6 +3,7 @@ import { Document, FieldGeometry, ProjectConfiguration } from 'idai-field-core';
 import { Text, View } from 'native-base';
 import React, { ReactElement, useMemo, useRef } from 'react';
 import { LayoutChangeEvent, StyleSheet } from 'react-native';
+import { Matrix4 } from 'react-native-redash';
 import { Circle, G } from 'react-native-svg';
 import {
     GeoLineString, GeoMultiLineString, GeoMultiPoint,
@@ -32,11 +33,12 @@ const Map: React.FC<MapProps> = ({ geoDocuments, selectedGeoDocuments, config, n
 
         viewPort.current = event.nativeEvent.layout;
     };
-  
+
     return (
         <View onLayout={ handleLayoutChange } style={ { flex: 1 } }>
             {geoDocuments && geometryBoundings && viewPort.current ?
-                <SvgMap style={ styles.svg } viewPort={ viewPort.current }>
+                <SvgMap style={ styles.svg } viewPort={ viewPort.current }
+                    viewBox={ computeViewBox(selectedGeoDocuments, transformationMatrix, viewPort.current).join(' ') }>
                     {geoDocuments.map(doc =>(
                         <G key={ doc._id }>
                             {renderGeoSvgElement(
@@ -100,5 +102,19 @@ const renderGeoSvgElement = (
     }
 };
 
+
+const computeViewBox = (selectedDocuments: Document[], transformationMatrix: Matrix4, viewPort: ViewPort): number[] => {
+    
+    if(!selectedDocuments.length ) return [viewPort.x,viewPort.y,viewPort.width, viewPort.height];
+    const padding = 20;
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const { minX, minY, maxX, maxY } = getGeometryBoundings(selectedDocuments)!;
+    const [xMinVp, yMinVp] = processTransform2d(transformationMatrix,[minX, minY]);
+    const [xMaxVp, yMaxVp] = processTransform2d(transformationMatrix,[maxX, maxY]);
+
+    const viewBox = [xMinVp - padding, yMaxVp - padding, xMaxVp - xMinVp + 2 * padding, yMinVp - yMaxVp + 2 * padding];
+    return viewBox;
+
+};
 
 export default Map;

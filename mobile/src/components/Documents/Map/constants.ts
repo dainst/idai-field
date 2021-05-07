@@ -1,1 +1,0 @@
-export const standardViewBox: [number, number, number, number] = [0, 0, 100, 100];

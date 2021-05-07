@@ -4,7 +4,6 @@ import { Text, View } from 'native-base';
 import React, { ReactElement, useMemo, useRef } from 'react';
 import { LayoutChangeEvent, StyleSheet } from 'react-native';
 import { Circle, G } from 'react-native-svg';
-import { standardViewBox } from './constants';
 import {
     GeoLineString, GeoMultiLineString, GeoMultiPoint,
     GeoMultiPolygon, GeoPoint, GeoPolygon,
@@ -37,7 +36,7 @@ const Map: React.FC<MapProps> = ({ geoDocuments, selectedGeoDocuments, config, n
     return (
         <View onLayout={ handleLayoutChange } style={ { flex: 1 } }>
             {geoDocuments && geometryBoundings && viewPort.current ?
-                <SvgMap viewBox={ standardViewBox.join(' ') } style={ styles.svg } viewPort={ viewPort.current }>
+                <SvgMap style={ styles.svg } viewPort={ viewPort.current }>
                     {geoDocuments.map(doc =>(
                         <G key={ doc._id }>
                             {renderGeoSvgElement(

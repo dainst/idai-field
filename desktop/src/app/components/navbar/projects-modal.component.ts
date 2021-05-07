@@ -168,8 +168,8 @@ export class ProjectsModalComponent implements AfterViewInit, AfterViewChecked {
     public handleClick(event: Event) {
 
         let target: any = event.target;
-        let insideCreatePopover: boolean = false;
-        let insideDeletePopover: boolean = false;
+        let insideCreatePopover = false;
+        let insideDeletePopover = false;
 
         do {
             if (target.id === 'new-project-menu' || target.id === 'new-project-button') {

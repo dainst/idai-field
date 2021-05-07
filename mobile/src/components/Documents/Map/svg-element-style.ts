@@ -1,4 +1,4 @@
-import { Document } from 'idai-field-core';
+import { Document, ProjectConfiguration } from 'idai-field-core';
 
 interface FillOpacity {
     fill: string;
@@ -12,11 +12,12 @@ interface FillOpacity {
 export const getDocumentFillAndOpacity = (
     document: Document,
     selectedDocuments: Document[],
-    noSelectedDocs: boolean): FillOpacity => {
+    noSelectedDocs: boolean,
+    config: ProjectConfiguration): FillOpacity => {
 
      
     const doc_id = document.resource.id;
-    const color = getColorForCategory(document.resource.category);
+    const color = config.getColorForCategory(document.resource.category);
     const strokeWidth = 0.3;
 
     if(noSelectedDocs) return {
@@ -38,20 +39,6 @@ export const getDocumentFillAndOpacity = (
     }
 
     return { opacity: 0.5, fill: 'none', stroke: color, strokeOpacity: 0.3, strokeWidth };
-};
-
-const getColorForCategory = (type: string): string => {
-
-    switch(type){
-        case('Feature'): return '#9E7B51';
-        case('Building'): return '#8033FF';
-        case('Survey'): return '#519E63';
-        case('Architecture'): return '#5D635B';
-        case('Room'): return '#A9DDD6';
-        case('Trench'): return '#33A2FF';
-        case('Layer'): return '#C3C7AF';
-        default: return '#D14233';
-    }
 };
 
 const documentHasNoParents = (document: Document): boolean => !Object.keys(document.resource.relations).length;

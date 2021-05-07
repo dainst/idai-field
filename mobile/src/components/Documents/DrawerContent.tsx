@@ -1,10 +1,11 @@
 import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
-import { Document } from 'idai-field-core';
+import { Document, ProjectConfiguration } from 'idai-field-core';
 import { Avatar, Icon, IconButton, View } from 'native-base';
 import React from 'react';
 
 interface DrawerContentProps {
     documents: Document[];
+    config: ProjectConfiguration;
     onDocumentSelected: (document: Document) => void;
     onHomeButtonPressed: () => void;
     onSettingsButtonPressed: () => void;
@@ -13,6 +14,7 @@ interface DrawerContentProps {
 
 const DrawerContent: React.FC<DrawerContentProps> = ({
     documents,
+    config,
     onDocumentSelected,
     onHomeButtonPressed,
     onSettingsButtonPressed
@@ -29,7 +31,9 @@ const DrawerContent: React.FC<DrawerContentProps> = ({
                     key={ doc.resource.id }
                     label={ doc.resource.identifier }
                     onPress={ () => onDocumentSelected(doc) }
-                    icon={ () => <Avatar size="xs">{ doc.resource.category[0].toUpperCase() }</Avatar> } />
+                    icon={ () => <Avatar size="xs" bg={ config.getColorForCategory(doc.resource.category) } >
+                        { doc.resource.category[0].toUpperCase() }
+                    </Avatar> } />
                 )}
             </DrawerContentScrollView>
             <IconButton

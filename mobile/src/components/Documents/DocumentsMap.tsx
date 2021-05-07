@@ -1,5 +1,5 @@
 import { DrawerNavigationProp } from '@react-navigation/drawer';
-import { Document, SyncStatus } from 'idai-field-core';
+import { Document, ProjectConfiguration, SyncStatus } from 'idai-field-core';
 import { useToast, View } from 'native-base';
 import React, { ReactElement, useCallback } from 'react';
 import { StyleSheet } from 'react-native';
@@ -19,6 +19,7 @@ interface DocumentsMapProps {
     selectedDocument?: Document;
     syncStatus: SyncStatus;
     projectSettings: ProjectSettings;
+    config: ProjectConfiguration;
     setProjectSettings: (projectSettings: ProjectSettings) => void;
     issueSearch: (q: string) => void;
 }
@@ -31,6 +32,7 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
     allDocuments,
     syncStatus,
     projectSettings,
+    config,
     setProjectSettings,
     issueSearch
 }): ReactElement => {
@@ -58,6 +60,7 @@ const DocumentsMap: React.FC<DocumentsMapProps> = ({
                 <Map
                     selectedGeoDocuments={ documents.filter(doc => doc?.resource.geometry) }
                     geoDocuments={ allDocuments.filter(doc => doc?.resource.geometry) }
+                    config={ config }
                     navigateToDocument={ navigateToDocument } />
             </View>
             <ScanBarcodeButton onBarCodeScanned={ onBarCodeScanned } />

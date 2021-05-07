@@ -22,7 +22,7 @@
             </button>
         </span>
 
-        <button *ngIf="linkedDocument" class="btn btn-primary" id="manage-images-button" tabindex="-1"
+        <button *ngIf="linkedDocument && mode === 'multiple'" class="btn btn-primary" id="manage-images-button" tabindex="-1"
             (click)="startEditImages()">
             <span class="mdi mdi-plus-circle"></span>
             Bilder verknüpfen

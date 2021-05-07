@@ -48,8 +48,6 @@ const DocumentsContainer: React.FC<DocumentsContainerProps> = ({
     const [documents, issueSearch] = useSearch(repository, config);
     const [allDocuments, _] = useSearch(repository, config);
 
-    console.log(documents);
-
     const onDocumentSelected = (doc: Document, navigation: DrawerNavigation) => {
     
         navigation.closeDrawer();

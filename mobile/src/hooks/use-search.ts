@@ -15,7 +15,6 @@ const useSearch = (
         return (q: string) => {
          
             const query = { q, categories: getCategoryNames(config) };
-            console.log({ query });
             repository.find(query).then(result => setDocuments(result.documents));
         };
     }, [repository, config]);

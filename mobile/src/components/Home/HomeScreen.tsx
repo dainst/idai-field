@@ -39,8 +39,8 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
 
     const onDeleteProject = useCallback((project: string) => {
 
-        if (selectedProject === project) setSelectedProject(preferences.recentProjects[0]);
         deleteProject(project);
+        if (selectedProject === project) setSelectedProject(preferences.recentProjects[0]);
     }, [selectedProject, setSelectedProject, deleteProject, preferences.recentProjects]);
 
 

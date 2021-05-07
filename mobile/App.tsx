@@ -1,5 +1,6 @@
 import { NavigationContainer, RouteProp } from '@react-navigation/native';
 import { createStackNavigator, StackNavigationProp } from '@react-navigation/stack';
+import AppLoading from 'expo-app-loading';
 import { NativeBaseProvider } from 'native-base';
 import React, { ReactElement, useCallback } from 'react';
 import { enableScreens } from 'react-native-screens';
@@ -72,32 +73,36 @@ export default function App(): ReactElement {
     }, [removeProject, repository]);
 
 
-    return (
-        <NativeBaseProvider>
-            <NavigationContainer>
-                <Stack.Navigator initialRouteName="HomeScreen" screenOptions={ { headerShown: false } }>
-                    <Stack.Screen name="HomeScreen">
-                        { (props) => <HomeScreen
-                            { ...props }
-                            preferences={ preferences }
-                            setCurrentProject={ setCurrentProject }
-                            deleteProject={ deleteProject }
-                        /> }
-                    </Stack.Screen>
-                    <Stack.Screen name="DocumentsScreen">
-                        { () => <DocumentsScreen
-                            repository={ repository }
-                            syncStatus={ syncStatus }
-                            projectSettings={ preferences.projects[preferences.currentProject] }
-                            setProjectSettings={ setProjectSettings }
-                            config={ config }
-                        /> }
-                    </Stack.Screen>
-                    <Stack.Screen name="SettingsScreen">
-                        { (props) => <SettingsScreen { ... { ...props, preferences, setUsername } } /> }
-                    </Stack.Screen>
-                </Stack.Navigator>
-            </NavigationContainer>
-        </NativeBaseProvider>
-    );
+    if (preferences && repository && config) {
+        return (
+            <NativeBaseProvider>
+                <NavigationContainer>
+                    <Stack.Navigator initialRouteName="HomeScreen" screenOptions={ { headerShown: false } }>
+                        <Stack.Screen name="HomeScreen">
+                            { (props) => <HomeScreen
+                                { ...props }
+                                preferences={ preferences }
+                                setCurrentProject={ setCurrentProject }
+                                deleteProject={ deleteProject }
+                            /> }
+                        </Stack.Screen>
+                        <Stack.Screen name="DocumentsScreen">
+                            { () => <DocumentsScreen
+                                repository={ repository }
+                                syncStatus={ syncStatus }
+                                projectSettings={ preferences.projects[preferences.currentProject] }
+                                setProjectSettings={ setProjectSettings }
+                                config={ config }
+                            /> }
+                        </Stack.Screen>
+                        <Stack.Screen name="SettingsScreen">
+                            { (props) => <SettingsScreen { ... { ...props, preferences, setUsername } } /> }
+                        </Stack.Screen>
+                    </Stack.Navigator>
+                </NavigationContainer>
+            </NativeBaseProvider>
+        );
+    } else {
+        return <AppLoading />;
+    }
 }

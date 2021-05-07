@@ -56,6 +56,12 @@ export class ImageViewModalComponent extends ViewModalComponent {
     protected setDocument = (document: Document) => (this.selectedImage as ImageRowItem).document = document;
 
 
+    public isActive(mode: ImageViewModalComponent.Mode) {
+
+        return this.mode === mode;
+    }
+
+
     public isMainImage(imageDocument: ImageDocument): boolean {
 
         return imageDocument.resource.id === this.linkedDocument.resource.relations[Relations.Image.ISDEPICTEDIN]?.[0];

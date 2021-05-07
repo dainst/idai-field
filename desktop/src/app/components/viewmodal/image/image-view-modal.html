@@ -27,10 +27,12 @@
             <span class="mdi mdi-plus-circle"></span>
             Bilder verknüpfen
         </button>
-        <button class="btn btn-primary" id="viewer-mode-button" tabindex="-1" (click)="setMode('single')">
+        <button class="btn btn-primary" id="viewer-mode-button" tabindex="-1" [class.active]="isActive('single')"
+            (click)="setMode('single')">
             <span class="mdi mdi-image"></span>
         </button>
-        <button class="btn btn-primary" id="tiles-mode-button" tabindex="-1" (click)="setMode('multiple')">
+        <button class="btn btn-primary" id="tiles-mode-button" tabindex="-1" [class.active]="isActive('multiple')"
+            (click)="setMode('multiple')">
             <span class="mdi mdi-image-multiple"></span>
         </button>
         <button class="btn btn-primary"

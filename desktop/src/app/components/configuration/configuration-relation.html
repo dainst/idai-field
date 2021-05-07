@@ -1,0 +1,15 @@
+<div class="card">
+    <div class="card-header">
+        <b *ngIf="relation.label">{{relation.label}}</b>
+        <code> {{relation.name}}</code>
+    </div>
+
+    <div class="card-body">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                <b i18n="@@configuration.field.inputType">Eingabetyp</b>:
+                <span i18n="@@config.inputType.relation">Relation</span>
+            </li>
+        </ul>
+    </div>
+</div>

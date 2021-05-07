@@ -5,6 +5,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ProjectConfigurationComponent } from './project-configuration.component';
 import { WidgetsModule } from '../widgets/widgets.module';
 import { ConfigurationFieldComponent } from './configuration-field.component';
+import { ConfigurationRelationComponent } from './configuration-relation.component';
+
 
 @NgModule({
     imports: [
@@ -15,7 +17,8 @@ import { ConfigurationFieldComponent } from './configuration-field.component';
     ],
     declarations: [
         ProjectConfigurationComponent,
-        ConfigurationFieldComponent
+        ConfigurationFieldComponent,
+        ConfigurationRelationComponent
     ],
     exports: [
         ProjectConfigurationComponent

@@ -288,7 +288,7 @@ export class TypesComponent extends BaseList implements OnChanges {
 
         const imageLinks: Array<{ resourceId: string, imageIds: string[] }> = [];
 
-        for (let document of documents) {
+        for (const document of documents) {
             if (!reload && this.images[document.resource.id]) continue;
             imageLinks.push({ resourceId: document.resource.id, imageIds: this.getLinkedImageIds(document) });
         }

@@ -1,4 +1,4 @@
-import {Component, Renderer2} from '@angular/core';
+import {Component} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {NgbActiveModal, NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {on, is, first, isEmpty} from 'tsfun';
@@ -10,8 +10,6 @@ import {ImageRowItem} from '../../../core/images/row/image-row';
 import {MenuService} from '../../menu-service';
 import {ImagePickerComponent} from '../../docedit/widgets/image-picker.component';
 import {ImageRelationsManager} from '../../../core/model/image-relations-manager';
-import {Observable} from 'rxjs/internal/Observable';
-import {Observer} from 'rxjs/internal/types';
 
 export namespace ImageViewModalComponent {
 
@@ -32,10 +30,7 @@ export class ImageViewModalComponent extends ViewModalComponent {
 
     public linkedDocument: Document;
 
-    private clickEventObservers: Array<any> = [];
-
     public mode: ImageViewModalComponent.Mode = 'single';
-
 
     public selected: Array<ImageDocument> = [];
 
@@ -44,15 +39,12 @@ export class ImageViewModalComponent extends ViewModalComponent {
                 activeModal: NgbActiveModal,
                 modalService: NgbModal,
                 routingService: RoutingService,
-                private renderer: Renderer2,
                 menuService: MenuService,
                 private datastore: Datastore,
                 private imageRelationsManager: ImageRelationsManager,
                 private i18n: I18n) {
 
         super(activeModal, modalService, routingService, menuService);
-
-        this.initializeClickEventListener();
     }
 
     public getExpandAllGroups = () => this.imagesState.getExpandAllGroups();
@@ -205,20 +197,5 @@ export class ImageViewModalComponent extends ViewModalComponent {
         return relations
             ? (await this.datastore.getMultiple(relations)) as Array<ImageDocument>
             : [];
-    }
-
-
-    // TODO review duplication with resources component, also work here - and there - with observer util
-    private initializeClickEventListener() {
-
-        this.renderer.listen('document', 'click', (event: any) => {
-            this.clickEventObservers.forEach(observer => observer.next(event));
-        });
-    }
-
-    // TODO same
-    public listenToClickEvents(): Observable<Event> {
-
-        return new Observable((observer: Observer<Event>) => { this.clickEventObservers.push(observer); });
     }
 }

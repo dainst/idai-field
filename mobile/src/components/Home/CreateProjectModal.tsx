@@ -51,7 +51,7 @@ const CreateProjectModal: React.FC<CreateProjectModalProps> = ({ isOpen, onProje
                             mt={ 2 }
                             value={ project }
                             onChangeText={ setProject }
-                            autoCapitalize={ false }
+                            autoCapitalize="none"
                             autoCompleteType="off"
                             autoCorrect={ false }
                             autoFocus

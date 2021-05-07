@@ -56,7 +56,7 @@ const DeleteProjectModal: React.FC<DeleteProjectModalProps> = ({ project, isOpen
                         mt={ 2 }
                         value={ projectVal }
                         onChangeText={ setProjectVal }
-                        autoCapitalize={ false }
+                        autoCapitalize="none"
                         autoCompleteType="off"
                         autoCorrect={ false }
                         autoFocus

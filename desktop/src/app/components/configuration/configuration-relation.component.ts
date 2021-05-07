@@ -1,13 +1,5 @@
-import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
-import { flatten, to } from 'tsfun';
-import { Category, FieldDefinition, RelationDefinition, ValuelistDefinition } from 'idai-field-core';
-import { ValuelistUtil } from '../../core/util/valuelist-util';
-import { OVERRIDE_VISIBLE_FIELDS } from './project-configuration.component';
-
-const locale: string = typeof window !== 'undefined'
-    ? window.require('@electron/remote').getGlobal('config').locale
-    : 'de';
-
+import { Component, Input } from '@angular/core';
+import { RelationDefinition } from 'idai-field-core';
 
 @Component({
     selector: 'configuration-relation',

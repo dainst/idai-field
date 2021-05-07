@@ -14,15 +14,12 @@ export const processTransform2d = (transformationMatrix: Matrix4, position: Posi
 export const setupTransformationMatrix = (geoBoundings: GeometryBoundings | null, viewPort: ViewPort | undefined): Matrix4 => {
 
     if(!geoBoundings || !viewPort) return identityMatrix4;
-    const { minX, minY, maxX, maxY } = geoBoundings;
 
-    const viewPortHeight = adjustViewPortHeightToKeepAspectRatio(
-        viewPort.width,
-        { height: maxY - minY , width: maxX - minX });
+    const { minX, minY, maxX, maxY } = geoBoundings;
     const viewBox: ViewBox = [minX, minY, maxX - minX, maxY - minY];
-    
-    const { scaleX, scaleY,
-        translateX, translateY } = getViewPortTransform(viewBox,{ ...viewPort, height: viewPortHeight });
+
+    const { aspect_vb, aspect_vp } = adjustViewPortAndBoxToKeepAspectRatio(viewPort, viewBox);
+    const { scaleX, scaleY, translateX, translateY } = getViewPortTransform( aspect_vb, aspect_vp);
     const worldToViewPort: Matrix4 = [
         [scaleX, 0, 0, translateX],
         [0, scaleY, 0, translateY],
@@ -30,12 +27,21 @@ export const setupTransformationMatrix = (geoBoundings: GeometryBoundings | null
         [0,0,0,1]
     ];
 
-    return multiply4(correctYCoordinateDirection(viewPortHeight), worldToViewPort);
+    return multiply4(correctYCoordinateDirection(Math.max(viewPort.width, viewPort.height)), worldToViewPort);
 };
 
 
-const adjustViewPortHeightToKeepAspectRatio = (viewPortWidth: number, worldCsRange: {width: number, height: number}) =>
-    worldCsRange.height / worldCsRange.width * viewPortWidth;
+export const adjustViewPortAndBoxToKeepAspectRatio = (viewPort: ViewPort, viewBox: ViewBox):
+    //see https://www.albany.edu/faculty/jmower/geog/gog530Python/src/NormalizingCoordinatesManual.html
+    {aspect_vp: ViewPort, aspect_vb: ViewBox} => {
+
+    const viewPortDim = Math.max(viewPort.width, viewPort.height);
+    const viewBoxDim = Math.max(viewBox[2], viewBox[3]);
+    return {
+        aspect_vp: { ...viewPort, width: viewPortDim, height: viewPortDim },
+        aspect_vb: [viewBox[0], viewBox[1], viewBoxDim, viewBoxDim]
+    };
+};
 
 
 /**

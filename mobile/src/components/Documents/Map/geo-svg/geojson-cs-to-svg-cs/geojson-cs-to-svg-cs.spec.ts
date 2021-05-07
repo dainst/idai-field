@@ -39,8 +39,8 @@ describe('geojson-cs-to-svg',() => {
         };
 
         const expectedResult: Matrix4 = [
-            [8,0,0,0],
-            [0,-8,0,800],
+            [12,0,0,0],
+            [0,-12,0,1200],
             [0,0,1,0],
             [0,0,0,1]];
         
@@ -58,7 +58,7 @@ describe('geojson-cs-to-svg',() => {
         };
         const viewPort: ViewPort = { x: 0,y: 0, width: 752.941162109375,height: 1067.2940673828125 };
         const position = [27.189346313476562,39.141404151916504];
-        const expectedTransformedPos = [644.4056957438588, 54.456819362938404];
+        const expectedTransformedPos = [913.4450481235981, 271.78206537663937];
 
         const transformationMat = setupTransformationMatrix(geoBoundings, viewPort);
         const transformedPosition = processTransform2d(transformationMat, position);

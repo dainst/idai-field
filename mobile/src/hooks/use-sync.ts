@@ -10,7 +10,7 @@ const useSync = (project: string, projectSettings: ProjectSettings, repository?:
 
     useEffect(() => {
         
-        if (repository) {
+        if (false && repository) {
             const syncProcess = setupSync(repository, project, projectSettings, setStatus);
             return () => {
                 syncProcess.then(process => {

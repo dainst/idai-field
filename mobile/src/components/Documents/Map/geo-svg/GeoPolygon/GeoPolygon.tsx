@@ -11,5 +11,6 @@ export const GeoPolygon: React.FC<GeoPolygonProps> = (props) => {
     return (
         <Path
             { ...props }
+            vectorEffect="non-scaling-stroke"
             d={ polygonToPath(props.coordinates as Position[][], props.csTransformFunction) } />);
 };

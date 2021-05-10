@@ -13,6 +13,7 @@ export const GeoLineString: React.FC<GeoLineStringProps> = (props) => {
             { ...props }
             fill="none"
             strokeWidth={ 1 }
+            vectorEffect="non-scaling-stroke"
             d={ lineStringToPath(props.coordinates as Position[], props.csTransformFunction) } />
     );
 };

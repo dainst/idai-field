@@ -12,7 +12,7 @@ export const GeoLineString: React.FC<GeoLineStringProps> = (props) => {
         <Path
             { ...props }
             fill="none"
-            strokeWidth={ 0.3 }
+            strokeWidth={ 1 }
             d={ lineStringToPath(props.coordinates as Position[], props.csTransformFunction) } />
     );
 };

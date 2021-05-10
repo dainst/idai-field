@@ -18,7 +18,7 @@ export const getDocumentFillAndOpacity = (
      
     const doc_id = document.resource.id;
     const color = config.getColorForCategory(document.resource.category);
-    const strokeWidth = 0.3;
+    const strokeWidth = 1;
 
     if(noSelectedDocs) return {
         opacity: 0.8,

@@ -14,7 +14,7 @@ export const GeoPoint: React.FC<GeoPointProps> = (props) => {
             { ...props }
             cx={ x }
             cy={ y }
-            r={ 1 }
+            r={ 2 }
             vectorEffect="non-scaling-stroke" />
     );
 };

@@ -63,6 +63,7 @@ export default function App(): ReactElement {
         preferences.currentProject,
         preferences.projects[preferences.currentProject],
         repository,
+        pouchdbManager
     );
 
 

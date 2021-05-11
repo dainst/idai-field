@@ -14,6 +14,8 @@ export class PouchdbManager {
 
     private syncHandles = [];
 
+    public open = true;
+
 
     constructor(private pouchDbFactory: PouchDbFactory) {}
 
@@ -30,6 +32,7 @@ export class PouchdbManager {
     public createDb_e2e(dbName: string) {
      
         this.db = this.pouchDbFactory(dbName);
+        this.open = true;
         return this.db;
     }
 
@@ -103,8 +106,17 @@ export class PouchdbManager {
         }
 
         this.db = db;
+        this.open = true;
 
         return db;
+    }
+
+    
+    public close() {
+        if (this.db) {
+            this.db.close();
+        }
+        this.open = false;
     }
 }
 

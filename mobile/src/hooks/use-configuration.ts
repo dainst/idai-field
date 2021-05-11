@@ -13,11 +13,11 @@ const useConfiguration = (
 
     useEffect(() => {
 
-        if (!pouchdbManager || !project) return;
+        if (!pouchdbManager || !pouchdbManager.open || !project) return;
         
         loadConfiguration(pouchdbManager, project, languages, username)
             .then(setConfig);
-    }, [pouchdbManager, project, languages, username]);
+    }, [pouchdbManager, pouchdbManager?.open, project, languages, username]);
 
     return config;
 };

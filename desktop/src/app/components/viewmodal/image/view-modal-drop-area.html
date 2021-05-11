@@ -2,18 +2,36 @@
      (dragover)="onDragOver($event)"
      (dragleave)="onDragLeave($event)"
      (drop)="onDrop($event)">
-    <input #fileInput
-           class="file"
-           type="file"
-           name="files[]"
-           id="file"
-           multiple
-           accept="{{getSupportedFileExtensions()}}"
-           (change)="onSelectImages($event)">
+
+    <span
+        class="mdi mdi-48px mdi-plus-circle"
+        [ngbPopover]="linkOrAddMenu"
+        #popover="ngbPopover"></span>
+</div>
+
+<input
+    #fileInput
+    class="file"
+    type="file"
+    hidden
+    name="files[]"
+    id="file"
+    multiple
+    accept="{{getSupportedFileExtensions()}}"
+    (change)="onSelectImages($event)">
+
+<ng-template #linkOrAddMenu>
     <label for="file"
            ngbTooltip="Um Bilder hinzuzufügen, ziehen Sie sie in die markierte Fläche oder öffnen Sie per Klick ein Auswahlmenü"
            i18n-ngbTooltip="@@imageGrid.dropArea.tooltip"
            placement="bottom">
-        <span class="mdi mdi-48px mdi-plus-circle "></span>
+        <span class="btn btn-primary">Neues Bild Hinzufügen</span>
     </label>
-</div>
+    <button class="btn btn-primary"
+            id="manage-images-button"
+            tabindex="-1"
+            (click)="startEditImages.emit()">
+            <span class="mdi mdi-plus-circle"></span>
+            Bilder verknüpfen
+    </button>
+</ng-template>

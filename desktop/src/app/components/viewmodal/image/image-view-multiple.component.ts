@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnChanges, Output, ViewChild} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, Output, ViewChild} from '@angular/core';
 import {FieldDocument, ImageDocument} from 'idai-field-core';
 import {ImageGridComponent} from '../../image/grid/image-grid.component';
 import {ImageRowItem} from '../../../core/images/row/image-row';
@@ -27,6 +27,8 @@ export class ImageViewMultipleComponent implements OnChanges {
     @Input() selected: Array<ImageDocument> = [];
 
     @Output() onImagesUploaded = new EventEmitter<ImageUploadResult>();
+
+    @Output() startEditImages = new EventEmitter<any>();
 
 
     ngOnChanges() {

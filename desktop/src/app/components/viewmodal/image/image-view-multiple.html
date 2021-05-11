@@ -2,7 +2,7 @@
     <image-grid #imageGrid [nrOfColumns]="5" [showDropArea]="true" [selected]="selected" [documents]="documents"
         [showLinkBadges]="false" [showShortDescription]="false" [paddingRight]="15" [main]="documents && documents[0]"
         (onClick)="select($event)">
-        <drop-area (onImagesUploaded)="onImagesUploaded.emit($event)" [depictsRelationTarget]="document">
-        </drop-area>
+        <view-modal-drop-area (onImagesUploaded)="onImagesUploaded.emit($event)" [depictsRelationTarget]="document">
+        </view-modal-drop-area>
     </image-grid>
 </div>

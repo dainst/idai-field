@@ -21,12 +21,12 @@ export class DropAreaComponent {
 
     @ViewChild('fileInput', { static: false }) fileInputElement: ElementRef;
 
-    private dragOverActive: boolean = false;
+    protected dragOverActive: boolean = false;
 
 
     public constructor(
-        private imageUploader: ImageUploader,
-        private messages: Messages
+        protected imageUploader: ImageUploader,
+        protected messages: Messages
     ) {}
 
 

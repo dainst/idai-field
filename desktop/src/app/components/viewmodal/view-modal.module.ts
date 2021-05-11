@@ -8,6 +8,7 @@ import {ImageGridModule} from '../image/grid/image-grid.module';
 import {ImageRowModule} from '../image/row/image-row.module';
 import {ImageViewerModule} from '../image/viewer/image-viewer.module';
 import {ImageViewMultipleComponent} from './image/image-view-multiple.component';
+import {ViewModalDropAreaComponent} from './image/view-modal-drop-area.component';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import {ImageViewMultipleComponent} from './image/image-view-multiple.component'
     declarations: [
         ImageViewModalComponent,
         ImageViewMultipleComponent,
-        ResourceViewModalComponent
+        ResourceViewModalComponent,
+        ViewModalDropAreaComponent
     ],
     entryComponents: [
         ImageViewModalComponent,

@@ -34,7 +34,6 @@ export class ImageGridComponent implements OnChanges {
     @Input() showTooltips = false;
     @Input() showDropArea = false;
     @Input() compressDropArea = false;
-    @Input() dropAreaDepictsRelationTarget: Document;
     @Input() paddingRight: number;
 
     @Output() onClick = new EventEmitter<any>();

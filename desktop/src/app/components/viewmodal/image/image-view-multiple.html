@@ -1,7 +1,8 @@
 <div id="image-grid-container" (window:resize)="onResize()">
     <image-grid #imageGrid [nrOfColumns]="5" [showDropArea]="true" [selected]="selected" [documents]="documents"
         [showLinkBadges]="false" [showShortDescription]="false" [paddingRight]="15" [main]="documents && documents[0]"
-        (onImagesUploaded)="onImagesUploaded.emit($event)" [dropAreaDepictsRelationTarget]="document"
         (onClick)="select($event)">
+        <drop-area (onImagesUploaded)="onImagesUploaded.emit($event)" [depictsRelationTarget]="document">
+        </drop-area>
     </image-grid>
 </div>

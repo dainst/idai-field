@@ -56,6 +56,13 @@ export class ImageViewModalComponent extends ViewModalComponent {
     protected setDocument = (document: Document) => (this.selectedImage as ImageRowItem).document = document;
 
 
+    public onImagesUploaded(event: any) {
+
+        console.log("imagesUploaded", event);
+        this.loadImages();
+    }
+
+
     public isActive(mode: ImageViewModalComponent.Mode) {
 
         return this.mode === mode;
@@ -170,6 +177,16 @@ export class ImageViewModalComponent extends ViewModalComponent {
         await this.imageRelationsManager.unlink(
             this.linkedDocument as FieldDocument, ...documents);
 
+        await this.loadImages();
+    }
+
+
+    private async loadImages() {
+
+        // this.documents.sort((a, b) => {
+                // return SortUtil.alnumCompare(a.resource.identifier, b.resource.identifier);
+            // }); ??
+
         // this.linkedDocument = await this.datastore.get(this.linkedDocument.resource.id);
         this.images = (await this.getImageDocuments(this.linkedDocument.resource.relations.isDepictedIn))
             .map(ImageRowItem.ofDocument);
@@ -177,25 +194,8 @@ export class ImageViewModalComponent extends ViewModalComponent {
             isEmpty(this.images)
                 ? undefined
                 : first(this.images);
+        this.selected = [];
     }
-
-
-    // private loadImages() {
-//
-        // const imageDocPromises: Array<Promise<Document>> = [];
-        // this.documents = [];
-        // this.document.resource.relations[Relations.Image.ISDEPICTEDIN].forEach(id => {
-            // imageDocPromises.push(this.datastore.get(id));
-        // });
-//
-        // Promise.all(imageDocPromises).then(docs => {
-            // this.documents = docs as Array<ImageDocument>;
-            // this.documents.sort((a, b) => {
-                // return SortUtil.alnumCompare(a.resource.identifier, b.resource.identifier);
-            // });
-            // this.clearSelection(); TODO enable
-        // });
-    // }
 
 
     private async getImageDocuments(relations: string[]|undefined): Promise<Array<ImageDocument>> {

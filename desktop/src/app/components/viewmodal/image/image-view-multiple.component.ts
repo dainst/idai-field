@@ -1,7 +1,8 @@
-import {Component, Input, OnChanges, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, Output, ViewChild} from '@angular/core';
 import {FieldDocument, ImageDocument} from 'idai-field-core';
 import {ImageGridComponent} from '../../image/grid/image-grid.component';
 import {ImageRowItem} from '../../../core/images/row/image-row';
+import {ImageUploadResult} from '../../image/upload/image-uploader';
 
 
 @Component({
@@ -24,6 +25,8 @@ export class ImageViewMultipleComponent implements OnChanges {
     // -
 
     @Input() selected: Array<ImageDocument> = [];
+
+    @Output() onImagesUploaded = new EventEmitter<ImageUploadResult>();
 
 
     ngOnChanges() {

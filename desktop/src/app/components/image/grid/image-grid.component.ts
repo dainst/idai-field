@@ -8,6 +8,9 @@ import {constructGrid} from '../../../core/images/grid/construct-grid';
 import {BlobMaker} from '../../../core/images/imagestore/blob-maker';
 
 
+const DROPAREA = 'droparea';
+
+
 @Component({
     selector: 'image-grid',
     templateUrl: './image-grid.html'
@@ -23,20 +26,20 @@ export class ImageGridComponent implements OnChanges {
     @Input() documents: Array<ImageDocument>;
     @Input() selected: Array<ImageDocument> = [];
     @Input() main: ImageDocument|undefined;
-    @Input() totalDocumentCount: number = 0;
-    @Input() showLinkBadges: boolean = true;
-    @Input() showIdentifier: boolean = true;
-    @Input() showShortDescription: boolean = true;
-    @Input() showGeoIcon: boolean = false;
-    @Input() showTooltips: boolean = false;
-    @Input() showDropArea: boolean = false;
-    @Input() compressDropArea: boolean = false;
+    @Input() totalDocumentCount = 0;
+    @Input() showLinkBadges = true;
+    @Input() showIdentifier = true;
+    @Input() showShortDescription = true;
+    @Input() showGeoIcon = false;
+    @Input() showTooltips = false;
+    @Input() showDropArea = false;
+    @Input() compressDropArea = false;
     @Input() dropAreaDepictsRelationTarget: Document;
     @Input() paddingRight: number;
 
-    @Output() onClick: EventEmitter<any> = new EventEmitter<any>();
-    @Output() onDoubleClick: EventEmitter<any> = new EventEmitter<any>();
-    @Output() onImagesUploaded: EventEmitter<ImageUploadResult> = new EventEmitter<ImageUploadResult>();
+    @Output() onClick = new EventEmitter<any>();
+    @Output() onDoubleClick = new EventEmitter<any>();
+    @Output() onImagesUploaded = new EventEmitter<ImageUploadResult>();
 
     public rows = [];
     public resourceIdentifiers: { [id: string]: string } = {};
@@ -116,7 +119,7 @@ export class ImageGridComponent implements OnChanges {
                 if (!cell.document
                     || !cell.document.resource
                     || !cell.document.resource.id
-                    || cell.document.resource.id === 'droparea') continue;
+                    || cell.document.resource.id === DROPAREA) continue;
 
                 if (imageData[cell.document.resource.id] ) {
                     cell.imgSrc = this.blobMaker.makeBlob(imageData[cell.document.resource.id]).safeResourceUrl;
@@ -130,7 +133,7 @@ export class ImageGridComponent implements OnChanges {
 
         const imageIds: string[] =
             (flatten(rows.map(row => row.map(cell => cell.document.resource.id))) as any)
-                .filter(id => id !== 'droparea');
+                .filter(id => id !== DROPAREA);
 
         return this.imagestore.readThumbnails(imageIds);
     }
@@ -141,18 +144,20 @@ export class ImageGridComponent implements OnChanges {
      */
     private insertStubForDropArea() {
 
-        if (this.documents &&
-            this.documents.length > 0 &&
-            this.documents[0] &&
-            this.documents[0].id &&
-            this.documents[0].id == 'droparea') return;
+        if (this.documents?.[0]?.id === DROPAREA) return;
 
         if (!this.documents) this.documents = [];
 
         this.documents.unshift({
-            id: 'droparea',
-            resource: { id: 'droparea', identifier: '', shortDescription:'', category: '',
-                originalFilename: '', width: 1, height: this.compressDropArea ? 0.2 : 1,
+            id: DROPAREA,
+            resource: {
+                id: DROPAREA,
+                identifier: '',
+                shortDescription:'',
+                category: '',
+                originalFilename: '',
+                width: 1,
+                height: this.compressDropArea ? 0.2 : 1,
                 relations: { depicts: [] }
             }
         } as any);

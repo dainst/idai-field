@@ -17,7 +17,7 @@ export class DropAreaComponent {
 
     @Input() depictsRelationTarget: Document|undefined;
 
-    @Output() onImagesUploaded: EventEmitter<ImageUploadResult> = new EventEmitter<ImageUploadResult>();
+    @Output() onImagesUploaded = new EventEmitter<ImageUploadResult>();
 
     @ViewChild('fileInput', { static: false }) fileInputElement: ElementRef;
 

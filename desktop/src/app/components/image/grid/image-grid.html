@@ -11,9 +11,7 @@
                  class="droparea-container"
                  [style.width.px]="cell['calculatedWidth']"
                  [style.height.px]="cell['calculatedHeight'] + 25">
-                <drop-area [depictsRelationTarget]="dropAreaDepictsRelationTarget"
-                           (onImagesUploaded)="onImagesUploaded.emit($event)">
-                </drop-area>
+                <ng-content></ng-content>
             </div>
 
             <div *ngIf="cell['document'].id != 'droparea'"

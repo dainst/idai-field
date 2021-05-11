@@ -51,8 +51,9 @@
                     [showTooltips]="true"
                     [paddingRight]="20"
                     (onClick)="toggleSelected($event)"
-                    (onDoubleClick)="showImage($event)"
-                    (onImagesUploaded)="onImagesUploaded($event)">
+                    (onDoubleClick)="showImage($event)">
+                <drop-area (onImagesUploaded)="onImagesUploaded($event)">
+                </drop-area>
             </image-grid>
         </div>
     </div>

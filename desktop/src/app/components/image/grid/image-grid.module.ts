@@ -23,7 +23,8 @@ import {ImageGridCellComponent} from './image-grid-cell.component';
         DropAreaComponent
     ],
     exports: [
-        ImageGridComponent
+        ImageGridComponent,
+        DropAreaComponent
     ]
 })
 

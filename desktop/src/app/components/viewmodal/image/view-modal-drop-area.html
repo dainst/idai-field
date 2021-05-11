@@ -6,7 +6,9 @@
     <span
         class="mdi mdi-48px mdi-plus-circle"
         [ngbPopover]="linkOrAddMenu"
-        placement="bottom"
+        ngbTooltip="Bilder hinzufügen per Drag&Drop. Klicken Sie den Plus-Button für weitere Optionen"
+        i18n-ngbTooltip="@@image-view-modal.dropArea.add-images-tooltip"
+        placement="right"
         #popover="ngbPopover"></span>
 </div>
 
@@ -23,15 +25,13 @@
 
 <ng-template #linkOrAddMenu>
     <label for="file"
-           ngbTooltip="Um Bilder hinzuzufügen, ziehen Sie sie in die markierte Fläche oder öffnen Sie per Klick ein Auswahlmenü"
-           i18n-ngbTooltip="@@imageGrid.dropArea.tooltip"
            placement="bottom">
-        <span id="add-images-button" class="btn btn-primary">Neues Bild Hinzufügen</span>
+        <span id="add-images-button" class="btn btn-primary">Neue Bilder hinzufügen</span>
     </label>
     <span class="btn btn-primary"
             id="link-images-button"
             tabindex="-1"
             (click)="startEditImages.emit()">
-            Bilder verknüpfen
+            Existierende Bilder verknüpfen
     </span>
 </ng-template>

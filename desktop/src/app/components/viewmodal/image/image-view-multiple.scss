@@ -55,9 +55,13 @@ $bg-c: #f8f9fa;
                 }
             }
 
+            .popover-body {
+                padding: 5px !important;
+            }
+
             #add-images-button {
                 border-bottom-style: solid;
-                border-bottom-color: #5572a1;
+                border-bottom-color: lighten(#5572a1, 33%);
             }
         }
     }

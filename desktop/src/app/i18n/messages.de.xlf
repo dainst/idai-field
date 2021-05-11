@@ -2260,6 +2260,14 @@
           <context context-type="linenumber">25</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="image-view-modal.no-images" datatype="html">
+        <source> Keine Bilder verknüpft </source>
+        <target state="final"> Keine Bilder verknüpft </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/viewmodal/image/image-view-modal.html</context>
+          <context context-type="linenumber">46,54</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="image-view-modal.dropArea.add-images-tooltip" datatype="html">
         <source>Bilder hinzufügen per Drag&amp;Drop. Klicken Sie den Plus-Button für weitere Optionen</source>
         <target state="final">Bilder hinzufügen per Drag&amp;Drop. Klicken Sie den Plus-Button für weitere Optionen</target>
@@ -2277,8 +2285,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="image-view-modal.dropArea.link-images" datatype="html">
-        <source> Existierende Bilder verknüpfen </source>
-        <target state="final"> Existierende Bilder verknüpfen </target>
+        <source>Existierende Bilder verknüpfen</source>
+        <target state="final">Existierende Bilder verknüpfen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/viewmodal/image/view-modal-drop-area.component.ts</context>
           <context context-type="linenumber">30</context>

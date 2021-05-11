@@ -3,6 +3,14 @@ $bg-c: #f8f9fa;
 .modal-content {
     background-color: $bg-c;
 
+    .no-images-message {
+        top: 50%;
+        padding: 20px;
+        background-color: white;
+        text-align: center;
+        position: relative;
+    }
+
     #view-modal-body {
         background-color: $bg-c;
 

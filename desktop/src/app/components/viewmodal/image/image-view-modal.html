@@ -40,6 +40,11 @@
 
 <div *ngIf="mode === 'single'" id="view-modal-body" class="modal-body px-0">
     <div id="view-modal-content" class="flex-nowrap bg-light px-0">
+
+        <div *ngIf="!images || images.length === 0"
+            i18n="@@image-view-modal.no-images"
+            class="no-images-message">Keine Bilder verknüpft</div>
+
         <document-info [document]="selectedImage?.document"
                        [getExpandAllGroups]="getExpandAllGroups"
                        [setExpandAllGroups]="setExpandAllGroups"

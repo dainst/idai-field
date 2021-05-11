@@ -1,8 +1,8 @@
+import { detach } from 'tsfun';
 import { IndexFacade } from '../index/index-facade';
 import { Document } from '../model/document';
 import { NewDocument } from '../model/new-document';
 import { Query } from '../model/query';
-import { ObjectUtils } from '../tools/object-utils';
 import { CategoryConverter } from './category-converter';
 import { DatastoreErrors } from './datastore-errors';
 import { DocumentCache } from './document-cache';
@@ -221,8 +221,7 @@ export class Datastore {
     public findIds(query: Query, ignoreCategories: boolean = false /* TODO review */): FindIdsResult {
 
         if (!query.categories && !ignoreCategories) {
-            query = ObjectUtils.jsonClone(query);
-            query.categories = undefined;
+            query = detach('categories', query);
         }
 
         const orderedResults: string[] = this.getIds(query);

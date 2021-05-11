@@ -9,8 +9,8 @@ const useSync = (project: string, projectSettings: ProjectSettings, repository?:
     const [status, setStatus] = useState<SyncStatus>(SyncStatus.Offline);
 
     useEffect(() => {
-        
-        if (repository) {
+
+        if (repository && projectSettings) {
             const syncProcess = setupSync(repository, project, projectSettings, setStatus);
             return () => {
                 syncProcess.then(process => {
@@ -33,7 +33,7 @@ const setupSync = async (
     setStatus: (status: SyncStatus) => void
 ): Promise<SyncProcess | undefined> => {
 
-    if (connected) {
+    if (connected && url) {
         const fullUrl = url.replace(/(https?:\/\/)/, `$1${project}:${password}@`);
         const syncProcess = await repository.setupSync(fullUrl, project);
         syncProcess.observer.subscribe({

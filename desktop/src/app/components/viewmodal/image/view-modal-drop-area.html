@@ -6,6 +6,7 @@
     <span
         class="mdi mdi-48px mdi-plus-circle"
         [ngbPopover]="linkOrAddMenu"
+        placement="bottom"
         #popover="ngbPopover"></span>
 </div>
 
@@ -25,13 +26,12 @@
            ngbTooltip="Um Bilder hinzuzufügen, ziehen Sie sie in die markierte Fläche oder öffnen Sie per Klick ein Auswahlmenü"
            i18n-ngbTooltip="@@imageGrid.dropArea.tooltip"
            placement="bottom">
-        <span class="btn btn-primary">Neues Bild Hinzufügen</span>
+        <span id="add-images-button" class="btn btn-primary">Neues Bild Hinzufügen</span>
     </label>
-    <button class="btn btn-primary"
-            id="manage-images-button"
+    <span class="btn btn-primary"
+            id="link-images-button"
             tabindex="-1"
             (click)="startEditImages.emit()">
-            <span class="mdi mdi-plus-circle"></span>
             Bilder verknüpfen
-    </button>
+    </span>
 </ng-template>

@@ -42,6 +42,23 @@ $bg-c: #f8f9fa;
             .image-grid {
                 margin-top: 0;
             }
+
+            #link-images-button,
+            #add-images-button {
+                border-style: none;
+                width: 100%;
+                background-color: white;
+                color: #5572a1;
+
+                &:hover {
+                    background: darken(white, 5%)
+                }
+            }
+
+            #add-images-button {
+                border-bottom-style: solid;
+                border-bottom-color: #5572a1;
+            }
         }
     }
 }

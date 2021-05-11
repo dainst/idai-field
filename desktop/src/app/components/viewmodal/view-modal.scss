@@ -1,6 +1,10 @@
 @import 'image/image-view-multiple.scss';
 @import 'resource/resource-view-modal';
 
+ngb-modal-window {
+    overflow-y: hidden !important;
+}
+
 /**
  * @author Thomas Kleinke
  * @author Sebastian Cuy

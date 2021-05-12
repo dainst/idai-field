@@ -91,9 +91,9 @@ export class ImageViewModalComponent extends ViewModalComponent {
             this.linkedDocument.resource.relations[Relations.Image.ISDEPICTEDIN].filter(targetId => {
                 return targetId !== mainImageId;
             })
-        ); // TODO persist!
+        );
 
-        // this.loadImages(); TODO
+        this.loadImages();
     }
 
 

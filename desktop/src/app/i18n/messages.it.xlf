@@ -2411,15 +2411,15 @@
         <target state="final">Deseleziona</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/viewmodal/image/image-view-modal.html</context>
-          <context context-type="linenumber">25</context>
+          <context context-type="linenumber">27</context>
         </context-group>
       </trans-unit>
       <trans-unit id="image-view-modal.no-images" datatype="html">
-        <source> Keine Bilder verknüpft </source>
+        <source>Keine Bilder verknüpft</source>
         <target state="new"> Keine Bilder verknüpft </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/viewmodal/image/image-view-modal.html</context>
-          <context context-type="linenumber">46,54</context>
+          <context context-type="linenumber">48</context>
         </context-group>
       </trans-unit>
       <trans-unit id="image-view-modal.dropArea.add-images-tooltip" datatype="html">
@@ -3100,6 +3100,22 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/settings/settings.html</context>
           <context context-type="linenumber">170</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="image-view-modal.modal.view" datatype="html">
+        <source>Ansicht</source>
+        <target state="new">Detailansicht</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/viewmodal/image/image-view-modal.component.ts</context>
+          <context context-type="linenumber">45,54</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="image-view-modal.modal-edit" datatype="html">
+        <source>Bearbeiten</source>
+        <target state="new">Bearbeiten</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/viewmodal/image/image-view-modal.component.ts</context>
+          <context context-type="linenumber">73,85</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.addLanguage" datatype="html">
@@ -5201,7 +5217,7 @@
         <target state="final">Immagini</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/viewmodal/image/image-view-modal.component.ts</context>
-          <context context-type="linenumber">45</context>
+          <context context-type="linenumber">94</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageView.linkedImages" datatype="html">
@@ -5210,7 +5226,7 @@
         Immagini collegate a <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong>"/><x id="INTERPOLATION" equiv-text="{{linkedDocument.resource.identifier}}"/><x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong>"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/viewmodal/image/image-view-modal.component.ts</context>
-          <context context-type="linenumber">74</context>
+          <context context-type="linenumber">123</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resourceViewModal.noImages" datatype="html">

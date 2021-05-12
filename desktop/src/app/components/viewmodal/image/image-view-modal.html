@@ -1,6 +1,6 @@
 <div id="view-modal-header" class="d-flex justify-content-between">
     <div *ngIf="!linkedDocument" class="text-truncate" i18n="@@imageView.images">Bilder</div>
-    <div *ngIf="linkedDocument" class="text-truncate" i18n="@@imageView.linkedImages">
+    <div *ngIf="linkedDocument" class="text-truncate heading" i18n="@@imageView.linkedImages">
         Mit <strong>{{linkedDocument.resource.identifier}}</strong> verknüpfte Bilder
     </div>
 
@@ -21,12 +21,24 @@
                 <span class="mdi mdi-selection-off"></span>
             </button>
         </span>
-        <button class="btn btn-primary" id="viewer-mode-button" tabindex="-1" [class.active]="isActive('view')"
-            (click)="setMode('view')">
+        <button class="btn btn-primary"
+            id="viewer-mode-button"
+            tabindex="-1"
+            [class.active]="isActive('view')"
+            (click)="setMode('view')"
+            ngbTooltip="Ansicht"
+            i18n-ngbTooltip="@@image-view-modal.modal.view"
+            placement="left">
             <span class="mdi mdi-image"></span>
         </button>
-        <button class="btn btn-primary" id="tiles-mode-button" tabindex="-1" [class.active]="isActive('edit')"
-            (click)="setMode('edit')">
+        <button class="btn btn-primary"
+            id="tiles-mode-button"
+            tabindex="-1"
+            [class.active]="isActive('edit')"
+            (click)="setMode('edit')"
+            ngbTooltip="Bearbeiten"
+            i18n-ngbTooltip="@@image-view-modal.modal-edit"
+            placement="left">
             <span class="mdi mdi-image-edit"></span>
         </button>
         <button class="btn btn-primary"

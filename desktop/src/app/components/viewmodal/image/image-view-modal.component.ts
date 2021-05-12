@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {NgbActiveModal, NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {on, is, first, isEmpty} from 'tsfun';
@@ -13,7 +13,7 @@ import {ImageRelationsManager} from '../../../core/model/image-relations-manager
 
 export namespace ImageViewModalComponent {
 
-    export type Mode = 'single'|'multiple';
+    export type Mode = 'view'|'edit';
 }
 
 @Component({
@@ -30,7 +30,7 @@ export class ImageViewModalComponent extends ViewModalComponent {
 
     public linkedDocument: Document;
 
-    public mode: ImageViewModalComponent.Mode = 'single';
+    public mode: ImageViewModalComponent.Mode = 'view';
 
     public selected: Array<ImageDocument> = [];
 
@@ -58,7 +58,6 @@ export class ImageViewModalComponent extends ViewModalComponent {
 
     public onImagesUploaded(event: any) {
 
-        console.log("imagesUploaded", event);
         this.loadImages();
     }
 

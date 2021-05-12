@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, Output, ViewChild} from '@angular/core';
 import {FieldDocument, ImageDocument} from 'idai-field-core';
 import {ImageGridComponent} from '../../image/grid/image-grid.component';
 import {ImageRowItem} from '../../../core/images/row/image-row';
@@ -6,14 +6,14 @@ import {ImageUploadResult} from '../../image/upload/image-uploader';
 
 
 @Component({
-    selector: 'image-view-multiple',
-    templateUrl: './image-view-multiple.html'
+    selector: 'image-view-edit',
+    templateUrl: './image-view-edit.html'
 })
 /**
  * @author F.Z.
  * @author Daniel de Oliveira
  */
-export class ImageViewMultipleComponent implements OnChanges {
+export class ImageViewEditComponent implements OnChanges {
 
     @ViewChild('imageGrid', { static: false }) public imageGrid: ImageGridComponent;
 

@@ -5,7 +5,7 @@
     </div>
 
     <div>
-        <span *ngIf="selected.length && mode === 'multiple'" class="btn-group selection-actions">
+        <span *ngIf="selected.length && mode === 'edit'" class="btn-group selection-actions">
             <button *ngIf="selected.length === 1 && !isMainImage(selected[0])" id="set-main-image" type="button"
                 class="btn btn-primary" (click)="setMainImage()" ngbTooltip="Als Hauptbild festlegen"
                 i18n-ngbTooltip="@@docedit.tabs.images.tooltips.setMainImage" placement="bottom" container="body">
@@ -21,12 +21,12 @@
                 <span class="mdi mdi-selection-off"></span>
             </button>
         </span>
-        <button class="btn btn-primary" id="viewer-mode-button" tabindex="-1" [class.active]="isActive('single')"
-            (click)="setMode('single')">
+        <button class="btn btn-primary" id="viewer-mode-button" tabindex="-1" [class.active]="isActive('view')"
+            (click)="setMode('view')">
             <span class="mdi mdi-image"></span>
         </button>
-        <button class="btn btn-primary" id="tiles-mode-button" tabindex="-1" [class.active]="isActive('multiple')"
-            (click)="setMode('multiple')">
+        <button class="btn btn-primary" id="tiles-mode-button" tabindex="-1" [class.active]="isActive('edit')"
+            (click)="setMode('edit')">
             <span class="mdi mdi-image-edit"></span>
         </button>
         <button class="btn btn-primary"
@@ -38,7 +38,7 @@
 </div>
 </div>
 
-<div *ngIf="mode === 'single'" id="view-modal-body" class="modal-body px-0">
+<div *ngIf="mode === 'view'" id="view-modal-body" class="modal-body px-0">
     <div id="view-modal-content" class="flex-nowrap bg-light px-0">
 
         <div *ngIf="!images || images.length === 0"
@@ -63,14 +63,14 @@
     </div>
 </div>
 
-<div *ngIf="mode === 'multiple'" id="view-modal-body" class="modal-body px-0">
+<div *ngIf="mode === 'edit'" id="view-modal-body" class="modal-body px-0">
     <div id="view-modal-content" class="flew-nowrap bg-light px-0">
-        <image-view-multiple
+        <image-view-edit
             [document]="linkedDocument"
             [images]="images"
             [(selected)]="selected"
             (onImagesUploaded)="onImagesUploaded($event)"
             (startEditImages)="startEditImages()">
-        </image-view-multiple>
+        </image-view-edit>
     </div>
 </div>

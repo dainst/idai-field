@@ -160,7 +160,7 @@ export class TypesComponent extends BaseList implements OnChanges {
 
     public async openImageViewModal(document: Document) {
 
-        await this.viewModalLauncher.openImageViewModal(document, 'single');
+        await this.viewModalLauncher.openImageViewModal(document, 'view');
     }
 
 

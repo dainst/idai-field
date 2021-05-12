@@ -171,7 +171,7 @@ export class ResourcesComponent implements OnDestroy {
 
     public editImages(document: Document) {
 
-        this.viewModalLauncher.openImageViewModal(document, 'multiple');
+        this.viewModalLauncher.openImageViewModal(document, 'edit');
     }
 
 

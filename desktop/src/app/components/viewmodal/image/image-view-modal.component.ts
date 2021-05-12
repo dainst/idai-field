@@ -90,14 +90,12 @@ export class ImageViewModalComponent extends ViewModalComponent {
     }
 
 
-    public async initialize(documents?: Array<ImageDocument>,
-                            selectedDocument?: ImageDocument,
-                            linkedDocument?: Document) {
+    public async initialize(linkedDocument: Document) {
 
         this.linkedDocument = linkedDocument;
-        const docs = documents ?? await this.getImageDocuments(linkedDocument?.resource.relations.isDepictedIn);
+        const docs = await this.getImageDocuments(linkedDocument?.resource.relations.isDepictedIn);
         this.images = docs.map(ImageRowItem.ofDocument);
-        selectedDocument = selectedDocument ?? docs.length > 0 ? docs[0] : undefined;
+        const selectedDocument = docs.length > 0 ? docs[0] : undefined;
 
         if (selectedDocument) {
             this.selectedImage = this.images.find(
@@ -156,8 +154,7 @@ export class ImageViewModalComponent extends ViewModalComponent {
             this.linkedDocument = await this.datastore.get(this.linkedDocument.resource.id);
             this.images = (await this.getImageDocuments(this.linkedDocument.resource.relations.isDepictedIn))
                 .map(ImageRowItem.ofDocument);
-        } catch {
-            // Image picker modal has been canceled
+        } catch { // modal cancelled
         } finally {
             // this.menuService.setContext(MenuContext.DOCEDIT);
         }

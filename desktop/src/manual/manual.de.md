@@ -4,7 +4,7 @@ Nach dem ersten Start der iDAI.field-Desktopanwendung befinden Sie sich zunächs
 Ihnen ermöglicht, die Funktionen des Programms anhand einiger Testdaten auszuprobieren.
 Bitte beachten Sie, dass neu angelegte Datensätze nach einem Neustart der Anwendung
 gelöscht und alle Änderungen zurückgesetzt werden, solange das Testprojekt ausgewählt ist.
-Aus diesem Grund findet im Testprojekt grundsätzlich keine Synchronisation mit anderen iDAI.field-Instanzen
+Aus diesem Grund findet im Testprojekt grundsätzlich keine Synchronisation mit anderen iDAI.field-Installationen
 oder Datenbanken statt.
 
 Um mit iDAI.field produktiv zu arbeiten, sollten Sie zunächst die folgenden Schritte durchführen:
@@ -369,3 +369,46 @@ selektieren und eine neue Teilmatrix aus der aktuellen Selektion zu erstellen:
   verknüpft sind.
 * *Matrix neu laden*: Die ursprüngliche Matrix mit allen stratigraphischen Einheiten des gewählten Schnitts
   wird wiederhergestellt.
+
+
+<hr>
+
+
+## Synchronisation
+
+Um mit mehreren Computern an einem Projekt zu arbeiten, können Daten zwischen verschiedenen iDAI.field-Intallationen synchronisiert werden. Das bedeutet, dass Änderungen (neue Ressourcen, gelöschte Ressourcen oder Editierungen bestehender Ressourcen), die über die iDAI.field-Anwendung auf einem anderen Rechner vorgenommen werden, automatisch auch in die eigene Datenbank übertragen werden und umgekehrt. So wird erreicht, dass alle Mitarbeitenden zu jeder Zeit mit dem aktuellen Stand des Projekts arbeiten können. Die Synchronisation kann dabei über das Internet oder über ein lokales Netzwerk stattfinden. Sie können weiterhin auch bei konfigurierter Synchronisation offline mit dem Projekt arbeiten – die Datenbanken werden dann synchronisiert, sobald Sie wieder mit dem Netzwerk verbunden sind.
+
+Daten werden stets nur zwischen Projekten gleichen Namens synchronisiert. Um also Daten aus einer anderen iDAI.field-Intallation zu laden, legen Sie zunächst ein neues leeres Projekt mit dem Namen des Projekts an, das Sie in Ihre Anwendung laden möchten. Bei bestehender Synchronisationsverbindung werden die Daten anschließend automatisch heruntergeladen (dieser Vorgang kann bei größeren Projekten unter Umständen eine längere Zeit dauern).
+
+### Konfiguration
+
+Die Synchronisation kann im Untermenü **Einstellungen** (Menü "iDAI.field" (MacOS) bzw. "Datei" (Windows)) konfiguriert werden.
+
+Bitte beachten Sie, dass vor der Einrichtung der Synchronisation in jedem Fall das Feld **Name des Bearbeiters/der Bearbeiterin** ausgefüllt sein sollte.
+
+* *Adresse*: Tragen Sie hier die Adresse des Synchronisationsziels ein. Das kann die Netzwerkadresse eines anderen Computers sein, auf dem iDAI.field gerade geöffnet ist, oder die Adresse einer CouchDB-Datenbank, die über das Internet oder ein lokales Netzwerk erreichbar ist (z. B. *http://field.dainst.org/sync* für den iDAI.field-Datenbankserver des DAI).
+* *Passwort*: Tragen Sie hier das Passwort der Zieldatenbank ein.
+* *Eigene Adresse*: Ihre Netzwerkdresse, über die sich andere aus ihrer iDAI.field-Installation heraus mit Ihrer Datenbank verbinden können. Sie können diese Adresse zusammen mit Ihrem Passwort weitergeben, um anderen zu ermöglichen, ihre Projektdaten mit Ihnen zu synchronisieren.
+* *Eigenes Passwort*: Standardmäßig wird die Datenbank mit einem zufällig generierten Passwort vor unbefugtem Zugriff geschützt. An dieser Stelle können Sie das Passwort ändern.
+
+Sind die Felder *Adresse* und *Passwort* ausgefüllt, können Sie die Konfiguration abschließen, indem Sie die Option *Konfiguration aktivieren* auswählen und die Einstellungen anschließend über den Button *Einstellungen übernehmen* speichern.
+
+### Synchronisationsstatus
+
+Das Wolken-Icon oben rechts in der Navigationsleiste zeigt den atuellen Status der von Ihnen eingerichteten Synchronisationsverbindung an.
+
+<p align="center"><img src="images/de/synchronization/synchronization_icon.png" alt="Synchronisations-Icon"/></p>
+
+Konnte die Verbindung erfolgreich hergestellt werden, zeigt das Icon einen Haken an. Werden gerade Dateien herunter- oder hochgeladen, wird dies durch einen Pfeil signalisiert. Im Falle eines Fehlers erscheint ein Ausrufezeichen. Zusätzliche Informationen zum Synchronisationsstatus können Sie abfragen, indem Sie den Mauszeiger über das Icon bewegen.
+
+### Konflikte
+
+Zu Konflikten kann es kommen, wenn eine Ressource gleichzeitig auf mehreren Computern bearbeitet wird oder wenn sich zwei Datenbanken miteinander synchronisieren, in denen zuvor die gleiche Ressource bearbeitet wurde. In solchen Fällen stehen sich zwei unterschiedliche Versionen der Ressource gegenüber: die *aktuelle Version* (die in der Ressourcenverwaltung und anderen Bereichen der Anwendung angezeigt wird) und die *konkurrierende Version* (die im Hintergrund gespeichert bleibt, aber vorerst nicht angezeigt wird). Die Versionen können sich in der Anzahl der ausgefüllten Felder unterscheiden; möglicherweise wurden auch verschiedene Werte in die gleichen Felder eingetragen.
+
+Ressourcen mit Konflikten werden in der Liste mit einer roten Linie markiert. Darüber hinaus erscheint in der Navigationsleiste ein Icon, das die Anzahl der Konflikte im Projekt mitteilt:
+
+<p align="center"><img src="images/de/synchronization/conflicts_icon.png" alt="Konflikte-Icon"/></p>
+
+Klicken Sie auf das Icon, um eine Liste sämtlicher Ressourcen mit Konflikten zu öffnen. Wenn Sie eine der Ressourcen anwählen, gelangen Sie in den **Konflikte**-Tab des Editors, wo Sie die Ressource bereinigen können.
+
+Um den Konflikt aufzulösen, muss für jedes Feld mit voneinander abweichenden Werten entschieden werden, welche Version die jeweils gültige ist. Alternativ können Sie per Klick auf *Aktuelle Version* oder *Konkurrierende Version* eine der beiden Versionen in Gänze übernehmen. Bestätigen Sie Ihre Entscheidung anschließend über den Button **Konflikt lösen**. Falls in der Ressource mehrere Konflikte aufgetreten sind, können Sie diese auf die gleiche Weise der Reihe nach lösen. Sie können dabei auch weitere Anpassungen in den anderen Editor-Tabs vornehmen. Um die Änderungen zu übernehmen, muss die Ressource zum Schluss über den **Speichern**-Button gesichert werden. 

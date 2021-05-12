@@ -74,13 +74,6 @@ export class ImageViewModalComponent extends ViewModalComponent {
     }
 
 
-    public getMainImage(): ImageDocument|undefined {
-
-        // return this.documents.find(document => this.isMainImage(document)); TODO enable
-        return undefined;
-    }
-
-
     public setMainImage() {
 
         if (this.selected.length !== 1) return;
